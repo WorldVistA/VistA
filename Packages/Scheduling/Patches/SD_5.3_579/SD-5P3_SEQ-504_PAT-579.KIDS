@@ -1,0 +1,1399 @@
+Released SD*5.3*579 SEQ #504
+Extracted from mail message
+**KIDS**:SD*5.3*579^
+
+**INSTALL NAME**
+SD*5.3*579
+"BLD",9476,0)
+SD*5.3*579^SCHEDULING^0^3130905^y
+"BLD",9476,1,0)
+^^19^19^3130904^^
+"BLD",9476,1,1,0)
+This patch will fix the following several issues:
+"BLD",9476,1,2,0)
+ 
+"BLD",9476,1,3,0)
+1. Add date letter printed and first letter of patient's last name and
+"BLD",9476,1,4,0)
+   last four digits of patient's social security number to the recall 
+"BLD",9476,1,5,0)
+   letters.
+"BLD",9476,1,6,0)
+ 
+"BLD",9476,1,7,0)
+2. Fix <UNDEFINED>DATE+21^SDRRTSK error.
+"BLD",9476,1,8,0)
+ 
+"BLD",9476,1,9,0)
+3. Fix <UNDEFINED>DQD1+7^SDRRRECL error.
+"BLD",9476,1,10,0)
+ 
+"BLD",9476,1,11,0)
+4. Fix <UNDEFINED>DQD4+7^SDRRRECL error.
+"BLD",9476,1,12,0)
+ 
+"BLD",9476,1,13,0)
+5. Fix <UNDEFINED>START+17^SDRRTSK1 error.
+"BLD",9476,1,14,0)
+ 
+"BLD",9476,1,15,0)
+6. Fix the problem of the suffix in a patient's name is printing before
+"BLD",9476,1,16,0)
+   the last name in the letter salutation.
+"BLD",9476,1,17,0)
+ 
+"BLD",9476,1,18,0)
+7. Remove the comma between city and state when printing recall patient's 
+"BLD",9476,1,19,0)
+   address.
+"BLD",9476,4,0)
+^9.64PA^^
+"BLD",9476,6.3)
+3
+"BLD",9476,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9476,"KRN",.4,0)
+.4
+"BLD",9476,"KRN",.401,0)
+.401
+"BLD",9476,"KRN",.402,0)
+.402
+"BLD",9476,"KRN",.403,0)
+.403
+"BLD",9476,"KRN",.5,0)
+.5
+"BLD",9476,"KRN",.84,0)
+.84
+"BLD",9476,"KRN",3.6,0)
+3.6
+"BLD",9476,"KRN",3.8,0)
+3.8
+"BLD",9476,"KRN",9.2,0)
+9.2
+"BLD",9476,"KRN",9.8,0)
+9.8
+"BLD",9476,"KRN",9.8,"NM",0)
+^9.68A^4^4
+"BLD",9476,"KRN",9.8,"NM",1,0)
+SDRRTSK^^0^B16436609
+"BLD",9476,"KRN",9.8,"NM",2,0)
+SDRRTSK1^^0^B9538954
+"BLD",9476,"KRN",9.8,"NM",3,0)
+SDRRRECL^^0^B102965608
+"BLD",9476,"KRN",9.8,"NM",4,0)
+SDRRRECP^^0^B69269047
+"BLD",9476,"KRN",9.8,"NM","B","SDRRRECL",3)
+
+"BLD",9476,"KRN",9.8,"NM","B","SDRRRECP",4)
+
+"BLD",9476,"KRN",9.8,"NM","B","SDRRTSK",1)
+
+"BLD",9476,"KRN",9.8,"NM","B","SDRRTSK1",2)
+
+"BLD",9476,"KRN",19,0)
+19
+"BLD",9476,"KRN",19.1,0)
+19.1
+"BLD",9476,"KRN",101,0)
+101
+"BLD",9476,"KRN",409.61,0)
+409.61
+"BLD",9476,"KRN",771,0)
+771
+"BLD",9476,"KRN",779.2,0)
+779.2
+"BLD",9476,"KRN",870,0)
+870
+"BLD",9476,"KRN",8989.51,0)
+8989.51
+"BLD",9476,"KRN",8989.52,0)
+8989.52
+"BLD",9476,"KRN",8994,0)
+8994
+"BLD",9476,"KRN","B",.4,.4)
+
+"BLD",9476,"KRN","B",.401,.401)
+
+"BLD",9476,"KRN","B",.402,.402)
+
+"BLD",9476,"KRN","B",.403,.403)
+
+"BLD",9476,"KRN","B",.5,.5)
+
+"BLD",9476,"KRN","B",.84,.84)
+
+"BLD",9476,"KRN","B",3.6,3.6)
+
+"BLD",9476,"KRN","B",3.8,3.8)
+
+"BLD",9476,"KRN","B",9.2,9.2)
+
+"BLD",9476,"KRN","B",9.8,9.8)
+
+"BLD",9476,"KRN","B",19,19)
+
+"BLD",9476,"KRN","B",19.1,19.1)
+
+"BLD",9476,"KRN","B",101,101)
+
+"BLD",9476,"KRN","B",409.61,409.61)
+
+"BLD",9476,"KRN","B",771,771)
+
+"BLD",9476,"KRN","B",779.2,779.2)
+
+"BLD",9476,"KRN","B",870,870)
+
+"BLD",9476,"KRN","B",8989.51,8989.51)
+
+"BLD",9476,"KRN","B",8989.52,8989.52)
+
+"BLD",9476,"KRN","B",8994,8994)
+
+"BLD",9476,"QDEF")
+^^^^NO^^^^^^YES
+"BLD",9476,"QUES",0)
+^9.62^^
+"BLD",9476,"REQB",0)
+^9.611^1^1
+"BLD",9476,"REQB",1,0)
+SD*5.3*569^2
+"BLD",9476,"REQB","B","SD*5.3*569",1)
+
+"MBREQ")
+0
+"PKG",16,-1)
+1^1
+"PKG",16,0)
+SCHEDULING^SD^APPOINTMENTS,PROFILES,LETTERS,AMIS REPORTS
+"PKG",16,20,0)
+^9.402P^^
+"PKG",16,22,0)
+^9.49I^1^1
+"PKG",16,22,1,0)
+5.3^2930813
+"PKG",16,22,1,"PAH",1,0)
+579^3130905
+"PKG",16,22,1,"PAH",1,1,0)
+^^19^19^3130905
+"PKG",16,22,1,"PAH",1,1,1,0)
+This patch will fix the following several issues:
+"PKG",16,22,1,"PAH",1,1,2,0)
+ 
+"PKG",16,22,1,"PAH",1,1,3,0)
+1. Add date letter printed and first letter of patient's last name and
+"PKG",16,22,1,"PAH",1,1,4,0)
+   last four digits of patient's social security number to the recall 
+"PKG",16,22,1,"PAH",1,1,5,0)
+   letters.
+"PKG",16,22,1,"PAH",1,1,6,0)
+ 
+"PKG",16,22,1,"PAH",1,1,7,0)
+2. Fix <UNDEFINED>DATE+21^SDRRTSK error.
+"PKG",16,22,1,"PAH",1,1,8,0)
+ 
+"PKG",16,22,1,"PAH",1,1,9,0)
+3. Fix <UNDEFINED>DQD1+7^SDRRRECL error.
+"PKG",16,22,1,"PAH",1,1,10,0)
+ 
+"PKG",16,22,1,"PAH",1,1,11,0)
+4. Fix <UNDEFINED>DQD4+7^SDRRRECL error.
+"PKG",16,22,1,"PAH",1,1,12,0)
+ 
+"PKG",16,22,1,"PAH",1,1,13,0)
+5. Fix <UNDEFINED>START+17^SDRRTSK1 error.
+"PKG",16,22,1,"PAH",1,1,14,0)
+ 
+"PKG",16,22,1,"PAH",1,1,15,0)
+6. Fix the problem of the suffix in a patient's name is printing before
+"PKG",16,22,1,"PAH",1,1,16,0)
+   the last name in the letter salutation.
+"PKG",16,22,1,"PAH",1,1,17,0)
+ 
+"PKG",16,22,1,"PAH",1,1,18,0)
+7. Remove the comma between city and state when printing recall patient's 
+"PKG",16,22,1,"PAH",1,1,19,0)
+   address.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","SDRRRECL")
+0^3^B102965608^B91056668
+"RTN","SDRRRECL",1,0)
+SDRRRECL ;10N20/MAH;Recall Reminder Manual Printing; 09/20/2004
+"RTN","SDRRRECL",2,0)
+ ;;5.3;Scheduling;**536,561,569,579**;Aug 13, 1993;Build 3
+"RTN","SDRRRECL",3,0)
+ ;;This routine is called from SDRRLRP 
+"RTN","SDRRRECL",4,0)
+ ;;If the site has set TYPE OF NOTIFICATION to LETTER this routine
+"RTN","SDRRRECL",5,0)
+ ;;will run.
+"RTN","SDRRRECL",6,0)
+ K TYPE
+"RTN","SDRRRECL",7,0)
+MEN ;SET UP WHAT ARE THEY WOULD LIKE TO PRINT FOR LETTERS
+"RTN","SDRRRECL",8,0)
+ K DIR,Y,DTOUT,DIROUT,DIRUT,DUOUT
+"RTN","SDRRRECL",9,0)
+ S DIR(0)="SO^1:Print Letters by Clinic;2:Print Letters by Provider;3:Print Letters by Team;4:Print a Letter by Patient;5:Print Letters for Nonresponsive Patients"
+"RTN","SDRRRECL",10,0)
+ W ! S DIR("A")="Please select what you are looking for"
+"RTN","SDRRRECL",11,0)
+ D ^DIR G:$D(DUOUT)!($D(DTOUT)!($D(DIRUT))) QUIT S Q=Y
+"RTN","SDRRRECL",12,0)
+ I Q=1 G EN
+"RTN","SDRRRECL",13,0)
+ I Q=2 G EN1
+"RTN","SDRRRECL",14,0)
+ I Q=3 G EN3
+"RTN","SDRRRECL",15,0)
+ I Q=4 G EN4
+"RTN","SDRRRECL",16,0)
+ I Q=5 G EN5
+"RTN","SDRRRECL",17,0)
+ Q
+"RTN","SDRRRECL",18,0)
+EN ;PRINT BY CLINIC
+"RTN","SDRRRECL",19,0)
+ S DIC="^SC(",DIC(0)="AEQMZ" D ^DIC Q:Y<0  S DIV=+Y G:Y<0 QUIT
+"RTN","SDRRRECL",20,0)
+ I '$D(^SD(403.52,"B",DIV)) W !,?5,"**NO RECALL LETTER ON FILE**" G QUIT
+"RTN","SDRRRECL",21,0)
+ D SELDT G:Y<0 QUIT  ;SD*561 quit if no date range entered
+"RTN","SDRRRECL",22,0)
+ S %ZIS="QM" D ^%ZIS G:POP QUIT I $D(IO("Q")) S ZTDESC="Print Recall Letters by Clinic",ZTRTN="DQD^SDRRRECL" S ZTSAVE("*")="" D ^%ZTLOAD G QUIT
+"RTN","SDRRRECL",23,0)
+DQD K ^TMP($J)
+"RTN","SDRRRECL",24,0)
+ U IO S D0=0 F  S D0=$O(^SD(403.5,"E",DIV,D0)) Q:D0=""  S DTA=$G(^SD(403.5,D0,0)) D:DTA]""
+"RTN","SDRRRECL",25,0)
+ .S TIME=""
+"RTN","SDRRRECL",26,0)
+ .I $P(^SD(403.5,D0,0),"^",9)>30 S TIME=$P(^SD(403.5,D0,0),"^",9) S TIME="**"_TIME_"**"
+"RTN","SDRRRECL",27,0)
+ .S LAB=$S($P($G(^SD(403.5,D0,0)),"^",8)="f":"Lab test(s) have been ordered that require you to FAST",$P(^SD(403.5,D0,0),"^",8)="n":"Lab test(s) have been ordered, which need to be done before an appointment is made",1:"")
+"RTN","SDRRRECL",28,0)
+ .S DFN=+DTA
+"RTN","SDRRRECL",29,0)
+ .Q:$P(DTA,U,6)<SDT!($P(DTA,U,6)>EDT)
+"RTN","SDRRRECL",30,0)
+ .Q:$$TESTPAT^VADPT(DFN)
+"RTN","SDRRRECL",31,0)
+ .D ADD^VADPT,DEM^VADPT
+"RTN","SDRRRECL",32,0)
+ .S STATE=$P(VAPA(5),"^",1),STATE=$$GET1^DIQ(5,STATE_",",1)
+"RTN","SDRRRECL",33,0)
+ .S PN=$P(VADM(1),U)
+"RTN","SDRRRECL",34,0)
+ .I $G(VADM(6),U)'="" Q
+"RTN","SDRRRECL",35,0)
+ .S CHECK=$$BADADR^DGUTL3 I CHECK>0 S XMSUB="Bad Address for Recall Reminder Patient",XMTEXT="SDRR(" D
+"RTN","SDRRRECL",36,0)
+ ..S XMY("G.SDRR BAD ADDRESS")="",XMDUZ=.5
+"RTN","SDRRRECL",37,0)
+ ..S SDRR(1)="Bad Address- card will not be printed for:"_"   "_PN_"   "_VA("BID")
+"RTN","SDRRRECL",38,0)
+ ..D ^XMD
+"RTN","SDRRRECL",39,0)
+ ..K XMY,XMSUB,XMTEXT,XMDUZ
+"RTN","SDRRRECL",40,0)
+ .;ADDED THE DATE INFORMATION
+"RTN","SDRRRECL",41,0)
+ .S $P(^SD(403.5,D0,0),"^",10)=DT
+"RTN","SDRRRECL",42,0)
+ .D PR
+"RTN","SDRRRECL",43,0)
+ D ^%ZISC G QUIT
+"RTN","SDRRRECL",44,0)
+ ;;done and tested
+"RTN","SDRRRECL",45,0)
+QUIT K ADTA,D0,DFN,DIC,DIR,DIRUT,DTA,I,L,PN,POP,Y,DIV,EDT,PR,SDT,FAST,TIME,ACC
+"RTN","SDRRRECL",46,0)
+ K LINE,LETTER,MESSAGE,TEST,DOD,CLINIC,FAIL,TEAM,LAB,SDRR,Q,%DT,%ZIS,CHECK,VA,ZTDESC,ZTIO,ZTRTN,ZTSAVE,STATE Q
+"RTN","SDRRRECL",47,0)
+ D KVAR^VADPT
+"RTN","SDRRRECL",48,0)
+ Q
+"RTN","SDRRRECL",49,0)
+SELDT S %DT="AEX",%DT("A")="Start with RECALL DATE: " D ^%DT Q:Y<0  S SDT=Y,%DT("A")="End with RECALL DATE: " D ^%DT I Y<SDT W $C(7),"  ??" G SELDT
+"RTN","SDRRRECL",50,0)
+ S EDT=Y Q
+"RTN","SDRRRECL",51,0)
+PR S LETTER=0
+"RTN","SDRRRECL",52,0)
+ ; SD*579 - Add date printed and last 4
+"RTN","SDRRRECL",53,0)
+ S PRNDT=$TR($$FMTE^XLFDT(DT,"5DF")," ","0")
+"RTN","SDRRRECL",54,0)
+ S LAST4=$E($P(VA("BID"),U),1,4)
+"RTN","SDRRRECL",55,0)
+ W @IOF
+"RTN","SDRRRECL",56,0)
+ W !,?65,PRNDT
+"RTN","SDRRRECL",57,0)
+ W !,?65,$E(PN,1)_LAST4
+"RTN","SDRRRECL",58,0)
+ F L=1:1:9 W !
+"RTN","SDRRRECL",59,0)
+ ;
+"RTN","SDRRRECL",60,0)
+ ; SD*579 - Fix suffix listed problem
+"RTN","SDRRRECL",61,0)
+ S PNAME=$$NAMEFMT^XLFNAME(PN,"G","")
+"RTN","SDRRRECL",62,0)
+ W !?20,PNAME
+"RTN","SDRRRECL",63,0)
+ I $P(VAPA(1),U)'="" W !?20,$P(VAPA(1),U)
+"RTN","SDRRRECL",64,0)
+ I $P(VAPA(2),U)'="" W !?20,$P(VAPA(2),U)
+"RTN","SDRRRECL",65,0)
+ I $P(VAPA(3),U)'="" W !?20,$P(VAPA(3),U)
+"RTN","SDRRRECL",66,0)
+ W !?20,$P(VAPA(4),U)," "_STATE_"  ",$P(VAPA(6),U)
+"RTN","SDRRRECL",67,0)
+ I $D(MESSAGE) W !!!!!,?25,MESSAGE
+"RTN","SDRRRECL",68,0)
+ ; SD*569 - Adjust the tab starting position
+"RTN","SDRRRECL",69,0)
+ I TIME'="" W !!!!?2,TIME
+"RTN","SDRRRECL",70,0)
+ I LAB'="" W !!!!!,?2,"*"_LAB
+"RTN","SDRRRECL",71,0)
+ W !!!
+"RTN","SDRRRECL",72,0)
+ S:'$D(MESSAGE) LETTER=$O(^SD(403.52,"B",DIV,LETTER))
+"RTN","SDRRRECL",73,0)
+ I LETTER>0 S LINE=0 F  S LINE=$O(^SD(403.52,LETTER,1,LINE)) Q:'LINE  W !,?2,$P(^SD(403.52,LETTER,1,LINE,0),"^",1)
+"RTN","SDRRRECL",74,0)
+ K MESSAGE,PRNDT,LAST4,PNAME
+"RTN","SDRRRECL",75,0)
+ Q
+"RTN","SDRRRECL",76,0)
+EN1 ;print letters by provider
+"RTN","SDRRRECL",77,0)
+ S DIC="^SD(403.54,",DIC(0)="AEQMZ",DIC("A")="Select Provider: " D ^DIC G:Y<0 QUIT S PR=+Y
+"RTN","SDRRRECL",78,0)
+ D SELDT G:Y<0 QUIT  ;SD*5.3*561 quit if no date range entered
+"RTN","SDRRRECL",79,0)
+ S %ZIS="QM" D ^%ZIS G:POP QUIT I $D(IO("Q")) S ZTDESC="Print Recall Letters by Provider",ZTRTN="DQD1^SDRRRECL" S ZTSAVE("*")="" D ^%ZTLOAD G QUIT
+"RTN","SDRRRECL",80,0)
+DQD1 K ^TMP($J)
+"RTN","SDRRRECL",81,0)
+ U IO S D0=0 F  S D0=$O(^SD(403.5,"C",PR,D0)) Q:D0=""  S (CLINIC,FAIL)=0 S CLINIC=$P($G(^SD(403.5,D0,0)),"^",2) D
+"RTN","SDRRRECL",82,0)
+ .; SD*579 - If entry not exist, kill x-refs and quit.
+"RTN","SDRRRECL",83,0)
+ .I '$D(^SD(403.5,D0)) D KXREF Q
+"RTN","SDRRRECL",84,0)
+ .S DTA=$G(^SD(403.5,D0,0))
+"RTN","SDRRRECL",85,0)
+ .I CLINIC="" S FAIL=1 S MESSAGE="***NO CLINIC ON FILE**"
+"RTN","SDRRRECL",86,0)
+ .I CLINIC'=""  I '$D(^SD(403.52,"B",CLINIC))  S MESSAGE="***NO CLINIC LETTER ON FILE**" S FAIL=1
+"RTN","SDRRRECL",87,0)
+ .I CLINIC'="",(FAIL=0) S DIV=CLINIC S LETTER=0,LETTER=$O(^SD(403.52,"B",CLINIC,LETTER))
+"RTN","SDRRRECL",88,0)
+ .S TIME=""
+"RTN","SDRRRECL",89,0)
+ .I $P($G(^SD(403.5,D0,0)),"^",9)>30 S TIME=$P($G(^SD(403.5,D0,0)),"^",9) S TIME="**"_TIME_"**"
+"RTN","SDRRRECL",90,0)
+ .S LAB=$S($P($G(^SD(403.5,D0,0)),"^",8)="f":"Lab test(s) have been ordered that require you to FAST",$P(^SD(403.5,D0,0),"^",8)="n":"Lab test(s) have been ordered, which need to be done before an appointment is made",1:"")
+"RTN","SDRRRECL",91,0)
+ .S DFN=+DTA
+"RTN","SDRRRECL",92,0)
+ .Q:$P(DTA,U,6)<SDT!($P(DTA,U,6)>EDT)
+"RTN","SDRRRECL",93,0)
+ .Q:$$TESTPAT^VADPT(DFN)
+"RTN","SDRRRECL",94,0)
+ .D ADD^VADPT,DEM^VADPT
+"RTN","SDRRRECL",95,0)
+ .S STATE=$P(VAPA(5),"^",1),STATE=$$GET1^DIQ(5,STATE_",",1)
+"RTN","SDRRRECL",96,0)
+ .S PN=$P(VADM(1),U)
+"RTN","SDRRRECL",97,0)
+ .I $G(VADM(6),U)'="" Q
+"RTN","SDRRRECL",98,0)
+ .S CHECK=$$BADADR^DGUTL3 I CHECK>0 S XMSUB="Bad Address for Recall Reminder Patient",XMTEXT="SDRR(" D
+"RTN","SDRRRECL",99,0)
+ ..S XMY("G.SDRR BAD ADDRESS")="",XMDUZ=.5
+"RTN","SDRRRECL",100,0)
+ ..S SDRR(1)="Bad Address- card will not be printed for:"_"   "_PN_"   "_VA("BID")
+"RTN","SDRRRECL",101,0)
+ ..D ^XMD
+"RTN","SDRRRECL",102,0)
+ ..K XMY,XMSUB,XMTEXT,XMDUZ
+"RTN","SDRRRECL",103,0)
+ .;ADDED THE DATE INFORMATION
+"RTN","SDRRRECL",104,0)
+ .S $P(^SD(403.5,D0,0),"^",10)=DT
+"RTN","SDRRRECL",105,0)
+ .D PR
+"RTN","SDRRRECL",106,0)
+ D ^%ZISC G QUIT
+"RTN","SDRRRECL",107,0)
+EN3 ;PRINT LETTER FOR A TEAM
+"RTN","SDRRRECL",108,0)
+ W ! S DIC="^SD(403.55,",DIC(0)="AEQMZ",DIC("A")="Select Clinic Recall Team: " D ^DIC S TEAM=+Y K DIC G:Y<0 QUIT
+"RTN","SDRRRECL",109,0)
+ D SELDT G:Y<0 QUIT  ;SD*561 quit if no date range entered
+"RTN","SDRRRECL",110,0)
+ S %ZIS="QM" D ^%ZIS G:POP QUIT I $D(IO("Q")) S ZTDESC="Print Recall Letters for a Team",ZTRTN="DQD4^SDRRRECL" S ZTSAVE("*")="" D ^%ZTLOAD G QUIT
+"RTN","SDRRRECL",111,0)
+DQD4 S PR=0 F  S PR=$O(^SD(403.54,"C",TEAM,PR)) Q:'PR  S D0=0 D
+"RTN","SDRRRECL",112,0)
+ .F  S D0=$O(^SD(403.5,"C",PR,D0)) Q:D0=""  S (CLINIC,FAIL)=0 S CLINIC=$P($G(^SD(403.5,D0,0)),"^",2) D
+"RTN","SDRRRECL",113,0)
+ ..; SD*579 - If entry not exist, kill x-refs and quit.
+"RTN","SDRRRECL",114,0)
+ ..I '$D(^SD(403.5,D0)) D KXREF Q
+"RTN","SDRRRECL",115,0)
+ ..S DTA=$G(^SD(403.5,D0,0))
+"RTN","SDRRRECL",116,0)
+ ..I CLINIC="" S FAIL=1 S MESSAGE="***NO CLINIC ON FILE**"
+"RTN","SDRRRECL",117,0)
+ ..I CLINIC'=""  I '$D(^SD(403.52,"B",CLINIC))  S MESSAGE="***NO CLINIC LETTER ON FILE**" S FAIL=1
+"RTN","SDRRRECL",118,0)
+ ..I CLINIC'="",(FAIL=0) S DIV=CLINIC S LETTER=0,LETTER=$O(^SD(403.52,"B",CLINIC,LETTER))
+"RTN","SDRRRECL",119,0)
+ ..S TIME=""
+"RTN","SDRRRECL",120,0)
+ ..I $P($G(^SD(403.5,D0,0)),"^",9)>30 S TIME=$P($G(^SD(403.5,D0,0)),"^",9) S TIME="**"_TIME_"**"
+"RTN","SDRRRECL",121,0)
+ ..S LAB=$S($P($G(^SD(403.5,D0,0)),"^",8)="f":"Lab test(s) have been ordered that require you to FAST",$P(^SD(403.5,D0,0),"^",8)="n":"Lab test(s) have been ordered, which need to be done before an appointment is made",1:"")
+"RTN","SDRRRECL",122,0)
+ ..S DFN=+DTA
+"RTN","SDRRRECL",123,0)
+ ..Q:$P(DTA,U,6)<SDT!($P(DTA,U,6)>EDT)  ;SD*561 check selected date range
+"RTN","SDRRRECL",124,0)
+ ..Q:$$TESTPAT^VADPT(DFN)
+"RTN","SDRRRECL",125,0)
+ ..D ADD^VADPT,DEM^VADPT
+"RTN","SDRRRECL",126,0)
+ ..S STATE=$P(VAPA(5),"^",1),STATE=$$GET1^DIQ(5,STATE_",",1)
+"RTN","SDRRRECL",127,0)
+ ..S PN=$P(VADM(1),U)
+"RTN","SDRRRECL",128,0)
+ ..I $G(VADM(6),U)'="" Q
+"RTN","SDRRRECL",129,0)
+ ..S CHECK=$$BADADR^DGUTL3 I CHECK>0 S XMSUB="Bad Address for Recall Reminder Patient",XMTEXT="SDRR(" D
+"RTN","SDRRRECL",130,0)
+ ...S XMY("G.SDRR BAD ADDRESS")="",XMDUZ=.5
+"RTN","SDRRRECL",131,0)
+ ...S SDRR(1)="Bad Address- card will not be printed for:"_"   "_PN_"   "_VA("BID")
+"RTN","SDRRRECL",132,0)
+ ...D ^XMD
+"RTN","SDRRRECL",133,0)
+ ...K XMY,XMSUB,XMTEXT,XMDUZ
+"RTN","SDRRRECL",134,0)
+ ..;ADDED THE DATE INFORMATION
+"RTN","SDRRRECL",135,0)
+ ..S $P(^SD(403.5,D0,0),"^",10)=DT
+"RTN","SDRRRECL",136,0)
+ ..D PR
+"RTN","SDRRRECL",137,0)
+ D ^%ZISC G QUIT
+"RTN","SDRRRECL",138,0)
+ ;done and tested
+"RTN","SDRRRECL",139,0)
+EN4 ;PRINT LETTER FOR ONE PATIENT
+"RTN","SDRRRECL",140,0)
+ W ! S DIC="^SD(403.5,",DIC(0)="AEQMZ",DIC("A")="Select Patient: " D ^DIC S D0=+Y K DIC G:Y<0 QUIT
+"RTN","SDRRRECL",141,0)
+ S DIC="^SC(",DIC(0)="AEQMZ" D ^DIC Q:Y<0  S DIV=+Y K DIC G:Y<0 QUIT
+"RTN","SDRRRECL",142,0)
+ I '$D(^SD(403.52,"B",DIV)) W !,?5,"**NO RECALL LETTER ON FILE**" G QUIT
+"RTN","SDRRRECL",143,0)
+ I '$D(^SD(403.5,"E",DIV,D0)) W *7,!!,?5,"**This patient does not have a recall reminder for the selected clinic**",!! G QUIT
+"RTN","SDRRRECL",144,0)
+ S %ZIS="QM" D ^%ZIS G:POP QUIT I $D(IO("Q")) S ZTDESC="Print Recall Letters for a Patient",ZTRTN="DQD3^SDRRRECL" S ZTSAVE("*")="" D ^%ZTLOAD G QUIT
+"RTN","SDRRRECL",145,0)
+DQD3 K ^TMP($J)
+"RTN","SDRRRECL",146,0)
+ S DTA=$G(^SD(403.5,D0,0)) D:DTA]""
+"RTN","SDRRRECL",147,0)
+ .; SD*569 - Quit if patient's clinic does not match the selected hospital location.
+"RTN","SDRRRECL",148,0)
+ .I $P(DTA,"^",2)'=DIV Q
+"RTN","SDRRRECL",149,0)
+ .S TIME=""
+"RTN","SDRRRECL",150,0)
+ .I $P(^SD(403.5,D0,0),"^",9)>30 S TIME=$P(^SD(403.5,D0,0),"^",9) S TIME="**"_TIME_"**"
+"RTN","SDRRRECL",151,0)
+ .S LAB=$S($P($G(^SD(403.5,D0,0)),"^",8)="f":"Lab test(s) have been ordered that require you to FAST",$P(^SD(403.5,D0,0),"^",8)="n":"Lab test(s) have been ordered, which need to be done before an appointment is made",1:"")
+"RTN","SDRRRECL",152,0)
+ .S DFN=+DTA
+"RTN","SDRRRECL",153,0)
+ .Q:$$TESTPAT^VADPT(DFN)
+"RTN","SDRRRECL",154,0)
+ .D ADD^VADPT,DEM^VADPT
+"RTN","SDRRRECL",155,0)
+ .S STATE=$P(VAPA(5),"^",1),STATE=$$GET1^DIQ(5,STATE_",",1)
+"RTN","SDRRRECL",156,0)
+ .S PN=$P(VADM(1),U)
+"RTN","SDRRRECL",157,0)
+ .I $G(VADM(6),U)'="" Q
+"RTN","SDRRRECL",158,0)
+ .S CHECK=$$BADADR^DGUTL3 I CHECK>0 S XMSUB="Bad Address for Recall Reminder Patient",XMTEXT="SDRR(" D
+"RTN","SDRRRECL",159,0)
+ ..S XMY("G.SDRR BAD ADDRESS")="",XMDUZ=.5
+"RTN","SDRRRECL",160,0)
+ ..S SDRR(1)="Bad Address- card will not be printed for:"_"   "_PN_"   "_VA("BID")
+"RTN","SDRRRECL",161,0)
+ ..D ^XMD
+"RTN","SDRRRECL",162,0)
+ ..K XMY,XMSUB,XMTEXT,XMDUZ
+"RTN","SDRRRECL",163,0)
+ .;ADDED THE DATE INFORMATION
+"RTN","SDRRRECL",164,0)
+ .S $P(^SD(403.5,D0,0),"^",10)=DT
+"RTN","SDRRRECL",165,0)
+ .D PR
+"RTN","SDRRRECL",166,0)
+ D ^%ZISC G QUIT
+"RTN","SDRRRECL",167,0)
+EN5 ;Print LETTERS for Nonresponsive
+"RTN","SDRRRECL",168,0)
+ S TEAM=""
+"RTN","SDRRRECL",169,0)
+ S DIC="^SD(403.55,",DIC(0)="AEQMZ",DIC("A")="Select Clinic Recall Team: " D ^DIC S TEAM=+Y K DIC G:TEAM<0 QUIT
+"RTN","SDRRRECL",170,0)
+ S %ZIS="QM" D ^%ZIS G:POP QUIT I $D(IO("Q")) S ZTDESC="Print Recall Letters for Nonresponsive",ZTRTN="DQD5^SDRRRECL" S ZTSAVE("*")="" D ^%ZTLOAD G QUIT
+"RTN","SDRRRECL",171,0)
+DQD5 N CHKDATE
+"RTN","SDRRRECL",172,0)
+ ;SD*5.3*561 remove extraneous write command following $O on next line
+"RTN","SDRRRECL",173,0)
+ S PR=0,CHKDATE=5 F  S PR=$O(^SD(403.54,"C",TEAM,PR)) Q:'PR  D
+"RTN","SDRRRECL",174,0)
+ .S D0=0 F  S D0=$O(^SD(403.5,"C",PR,D0)) Q:'D0  S (CLINIC,FAIL)=0 S CLINIC=$P($G(^SD(403.5,D0,0)),"^",2) D
+"RTN","SDRRRECL",175,0)
+ ..; SD*579 - If entry not exist, kill x-refs and quit
+"RTN","SDRRRECL",176,0)
+ ..I '$D(^SD(403.5,D0)) D KXREF Q
+"RTN","SDRRRECL",177,0)
+ ..I $P($G(^SD(403.5,D0,0)),"^",10)="" QUIT
+"RTN","SDRRRECL",178,0)
+ ..; SD*569 - Prevent from printing more than ONE second letter.
+"RTN","SDRRRECL",179,0)
+ ..I $P($G(^SD(403.5,D0,0)),"^",13)'="" QUIT
+"RTN","SDRRRECL",180,0)
+ ..S RDATE=$P($G(^SD(403.5,D0,0)),"^",6) S CHECK=$$FMDIFF^XLFDT(RDATE,DT) I CHECK>CHKDATE K RDATE QUIT
+"RTN","SDRRRECL",181,0)
+ ..S DTA=$G(^SD(403.5,D0,0))
+"RTN","SDRRRECL",182,0)
+ ..I CLINIC="" S FAIL=1 S MESSAGE="***NO CLINIC ON FILE**"
+"RTN","SDRRRECL",183,0)
+ ..I CLINIC'=""  I '$D(^SD(403.52,"B",CLINIC))  S MESSAGE="***NO CLINIC LETTER ON FILE**" S FAIL=1
+"RTN","SDRRRECL",184,0)
+ ..I CLINIC'="",(FAIL=0) S DIV=CLINIC S LETTER=0,LETTER=$O(^SD(403.52,"B",CLINIC,LETTER))
+"RTN","SDRRRECL",185,0)
+ ..S TIME=""
+"RTN","SDRRRECL",186,0)
+ ..I $P(^SD(403.5,D0,0),"^",9)>30 S TIME=$P(^SD(403.5,D0,0),"^",9) S TIME="**"_TIME_"**"
+"RTN","SDRRRECL",187,0)
+ ..S LAB=$S($P($G(^SD(403.5,D0,0)),"^",8)="f":"Lab test(s) have been ordered that require you to FAST",$P(^SD(403.5,D0,0),"^",8)="n":"Lab test(s) have been ordered, which need to be done before an appointment is made",1:"")
+"RTN","SDRRRECL",188,0)
+ ..S DFN=+DTA
+"RTN","SDRRRECL",189,0)
+ ..Q:$$TESTPAT^VADPT(DFN)
+"RTN","SDRRRECL",190,0)
+ ..D ADD^VADPT,DEM^VADPT
+"RTN","SDRRRECL",191,0)
+ ..S STATE=$P(VAPA(5),"^",1),STATE=$$GET1^DIQ(5,STATE_",",1)
+"RTN","SDRRRECL",192,0)
+ ..S PN=$P(VADM(1),U)
+"RTN","SDRRRECL",193,0)
+ ..I $G(VADM(6),U)'="" Q
+"RTN","SDRRRECL",194,0)
+ ..S CHECK=$$BADADR^DGUTL3 I CHECK>0 S XMSUB="Bad Address for Recall Reminder Patient",XMTEXT="SDRR(" D
+"RTN","SDRRRECL",195,0)
+ ...S XMY("G.SDRR BAD ADDRESS")="",XMDUZ=.5
+"RTN","SDRRRECL",196,0)
+ ...S SDRR(1)="Bad Address- card will not be printed for:"_"   "_PN_"   "_VA("BID")
+"RTN","SDRRRECL",197,0)
+ ...D ^XMD
+"RTN","SDRRRECL",198,0)
+ ...K XMY,XMSUB,XMTEXT,XMDUZ
+"RTN","SDRRRECL",199,0)
+ ..;ADDED THE DATE INFORMATION
+"RTN","SDRRRECL",200,0)
+ ..S $P(^SD(403.5,D0,0),"^",13)=DT
+"RTN","SDRRRECL",201,0)
+ ..D PR
+"RTN","SDRRRECL",202,0)
+ D ^%ZISC G QUIT
+"RTN","SDRRRECL",203,0)
+ Q
+"RTN","SDRRRECL",204,0)
+ ;
+"RTN","SDRRRECL",205,0)
+KXREF ; SD*579 - kill x-refs if entry not exist
+"RTN","SDRRRECL",206,0)
+ S STR="BCDE"
+"RTN","SDRRRECL",207,0)
+ F I=1:1:$L(STR) D
+"RTN","SDRRRECL",208,0)
+ .S X=$E(STR,I,I)
+"RTN","SDRRRECL",209,0)
+ .S N3=0 F  S N3=$O(^SD(403.5,X,N3)) Q:N3'>0  D
+"RTN","SDRRRECL",210,0)
+ ..S N4=0 F  S N4=$O(^SD(403.5,X,N3,N4)) Q:N4'>0  D
+"RTN","SDRRRECL",211,0)
+ ...I N4=D0 K ^SD(403.5,X,N3,N4)
+"RTN","SDRRRECL",212,0)
+ K I,STR,X,N3,N4
+"RTN","SDRRRECL",213,0)
+ Q
+"RTN","SDRRRECP")
+0^4^B69269047^B68844995
+"RTN","SDRRRECP",1,0)
+SDRRRECP ;10N20/MAH;Recall Reminder Manual Printing; 09/20/2004
+"RTN","SDRRRECP",2,0)
+ ;;5.3;Scheduling;**536,569,579**;Aug 13, 1993;Build 3
+"RTN","SDRRRECP",3,0)
+ ;;This routine is called from SDRRLRP 
+"RTN","SDRRRECP",4,0)
+ ;;If the site has set TYPE OF NOTIFICATION to CARDS this routine
+"RTN","SDRRRECP",5,0)
+ ;;will run.
+"RTN","SDRRRECP",6,0)
+ K TYPE
+"RTN","SDRRRECP",7,0)
+MEN ;SET UP WHAT ARE THEY WOULD LIKE TO PRINT FOR CARDS
+"RTN","SDRRRECP",8,0)
+ K DIR,Y,DTOUT,DIROUT,DIRUT,DUOUT
+"RTN","SDRRRECP",9,0)
+ S DIR(0)="SO^1:Print Cards by Division;2:Print Cards by Clinic;3:Print Cards by Provider;4:Print Cards by Team;5:Print a Card by Patient;6:Print Cards for Nonresponsive Patients"
+"RTN","SDRRRECP",10,0)
+ W ! S DIR("A")="Please select what you are looking for"
+"RTN","SDRRRECP",11,0)
+ D ^DIR G:$D(DUOUT)!($D(DTOUT)!($D(DIRUT))) QUIT S Q=Y
+"RTN","SDRRRECP",12,0)
+ I Q=1 G EN3
+"RTN","SDRRRECP",13,0)
+ I Q=2 G EN
+"RTN","SDRRRECP",14,0)
+ I Q=3 G EN2
+"RTN","SDRRRECP",15,0)
+ I Q=4 G EN1
+"RTN","SDRRRECP",16,0)
+ I Q=5 G EN4
+"RTN","SDRRRECP",17,0)
+ I Q=6 G EN5
+"RTN","SDRRRECP",18,0)
+ Q
+"RTN","SDRRRECP",19,0)
+ ;ALLK Q,Y,DIR
+"RTN","SDRRRECP",20,0)
+EN3 ;PRINT BY DIVISION
+"RTN","SDRRRECP",21,0)
+ S DIC="^DG(40.8,",DIC(0)="AEQMZ" D ^DIC G:Y<0 QUIT S DIV=+Y D SELDT G:Y<0 QUIT
+"RTN","SDRRRECP",22,0)
+ S %ZIS="QM" D ^%ZIS G:POP QUIT I $D(IO("Q")) S ZTDSC="Print Recall Cards by Division",ZTRTN="DQD1^SDRRRECP" S ZTSAVE("*")="" D ^%ZTLOAD G QUIT
+"RTN","SDRRRECP",23,0)
+DQD1 K ^TMP($J)
+"RTN","SDRRRECP",24,0)
+ S PR=0 F  S PR=$O(^SD(403.5,"C",PR)) Q:PR=""  I $P($G(^SD(403.54,PR,0)),"^",3)=DIV S D0=0 F  S D0=$O(^SD(403.5,"C",PR,D0)) Q:D0=""  S DTA=$G(^SD(403.5,D0,0)) D:DTA]""
+"RTN","SDRRRECP",25,0)
+ .S TIME=""
+"RTN","SDRRRECP",26,0)
+ .I $P(^SD(403.5,D0,0),"^",9)["60" S TIME=$P(^SD(403.5,D0,0),"^",9) S TIME="**"_TIME_"**"
+"RTN","SDRRRECP",27,0)
+ .S LAB=$S($P($G(^SD(403.5,D0,0)),"^",8)="f":"**FL",$P(^SD(403.5,D0,0),"^",8)="n":"**NFL",1:"")
+"RTN","SDRRRECP",28,0)
+ .S DFN=+DTA
+"RTN","SDRRRECP",29,0)
+ .Q:$$TESTPAT^VADPT(DFN)
+"RTN","SDRRRECP",30,0)
+ .D ADD^VADPT,DEM^VADPT
+"RTN","SDRRRECP",31,0)
+ .S PN=$P(VADM(1),U)
+"RTN","SDRRRECP",32,0)
+ .S STATE=$P(VAPA(5),"^",1),STATE=$$GET1^DIQ(5,STATE_",",1)
+"RTN","SDRRRECP",33,0)
+ .I $G(VADM(6),U)'="" Q
+"RTN","SDRRRECP",34,0)
+ .Q:$P(DTA,"^",6)<SDT!($P(DTA,"^",6)>EDT) 
+"RTN","SDRRRECP",35,0)
+ .S CHECK=$$BADADR^DGUTL3 I CHECK>0 S XMSUB="Bad Address for Recall Reminder Patient",XMTEXT="SDRR(" D
+"RTN","SDRRRECP",36,0)
+ ..S XMY("G.SDRR BAD ADDRESS")="",XMDUZ=.5
+"RTN","SDRRRECP",37,0)
+ ..S SDRR(1)="Bad Address- card will not be printed for:"_"   "_PN_"   "_VA("BID")
+"RTN","SDRRRECP",38,0)
+ ..D ^XMD
+"RTN","SDRRRECP",39,0)
+ ..K XMY,XMSUB,XMTEXT,XMDUZ
+"RTN","SDRRRECP",40,0)
+ .;ADDED THE DATE INFORMATION
+"RTN","SDRRRECP",41,0)
+ .S $P(^SD(403.5,D0,0),"^",10)=DT
+"RTN","SDRRRECP",42,0)
+ .D PR
+"RTN","SDRRRECP",43,0)
+ D ^%ZISC G QUIT
+"RTN","SDRRRECP",44,0)
+EN ;PRINT BY CLINIC
+"RTN","SDRRRECP",45,0)
+ S DIC="^SC(",DIC(0)="AEQMZ" D ^DIC Q:Y<0  S DIV=+Y D SELDT G:Y<0 QUIT
+"RTN","SDRRRECP",46,0)
+ S %ZIS="QM" D ^%ZIS G:POP QUIT I $D(IO("Q")) S ZTDESC="Print Recall Cards by Clinic",ZTRTN="DQD^SDRRRECP" S ZTSAVE("*")="" D ^%ZTLOAD G QUIT
+"RTN","SDRRRECP",47,0)
+DQD K ^TMP($J)
+"RTN","SDRRRECP",48,0)
+ S D0=0 F  S D0=$O(^SD(403.5,"E",DIV,D0)) Q:D0=""  S DTA=$G(^SD(403.5,D0,0)) D:DTA]""
+"RTN","SDRRRECP",49,0)
+ .S TIME=""
+"RTN","SDRRRECP",50,0)
+ .I $P(^SD(403.5,D0,0),"^",9)["60" S TIME=$P(^SD(403.5,D0,0),"^",9) S TIME="**"_TIME_"**"
+"RTN","SDRRRECP",51,0)
+ .S LAB=$S($P($G(^SD(403.5,D0,0)),"^",8)="f":"**FL",$P(^SD(403.5,D0,0),"^",8)="n":"**NFL",1:"")
+"RTN","SDRRRECP",52,0)
+ .S DFN=+DTA
+"RTN","SDRRRECP",53,0)
+ .Q:$$TESTPAT^VADPT(DFN)
+"RTN","SDRRRECP",54,0)
+ .D ADD^VADPT,DEM^VADPT
+"RTN","SDRRRECP",55,0)
+ .S STATE=$P(VAPA(5),"^",1),STATE=$$GET1^DIQ(5,STATE_",",1)
+"RTN","SDRRRECP",56,0)
+ .S PN=$P(VADM(1),U)
+"RTN","SDRRRECP",57,0)
+ .I $G(VADM(6),U)'="" Q
+"RTN","SDRRRECP",58,0)
+ .Q:$P(DTA,"^",6)<SDT!($P(DTA,"^",6)>EDT) 
+"RTN","SDRRRECP",59,0)
+ .S CHECK=$$BADADR^DGUTL3 I CHECK>0 S XMSUB="Bad Address for Recall Reminder Patient",XMTEXT="SDRR(" D
+"RTN","SDRRRECP",60,0)
+ ..S XMY("G.SDRR BAD ADDRESS")="",XMDUZ=.5
+"RTN","SDRRRECP",61,0)
+ ..S SDRR(1)="Bad Address- card will not be printed for:"_"   "_PN_"   "_VA("BID")
+"RTN","SDRRRECP",62,0)
+ ..D ^XMD
+"RTN","SDRRRECP",63,0)
+ ..K XMY,XMSUB,XMTEXT,XMDUZ
+"RTN","SDRRRECP",64,0)
+ .;ADDED THE DATE INFORMATION
+"RTN","SDRRRECP",65,0)
+ .S $P(^SD(403.5,D0,0),"^",10)=DT
+"RTN","SDRRRECP",66,0)
+ .D PR
+"RTN","SDRRRECP",67,0)
+ D ^%ZISC G QUIT
+"RTN","SDRRRECP",68,0)
+QUIT K ADTA,D0,DFN,DIC,DIR,DIRUT,DTA,I,L,PN,POP,Y,DIV,EDT,PR,SDT,TIME,LAB,Y,STATE,PNAME
+"RTN","SDRRRECP",69,0)
+ K DATE,DOD,X,Q,%DT,%ZIS,SDRR,VA,CHECK,ZTDESC,ZTDSC,ZTEAM,ZTIO,ZTRTN,ZTSAVE
+"RTN","SDRRRECP",70,0)
+ Q
+"RTN","SDRRRECP",71,0)
+SELDT S %DT="AEX",%DT("A")="Start with RECALL DATE: " D ^%DT Q:Y<0  S SDT=Y,%DT("A")="End with RECALL DATE: " D ^%DT I Y<SDT W $C(7),"  ??" G SELDT
+"RTN","SDRRRECP",72,0)
+ S EDT=Y Q
+"RTN","SDRRRECP",73,0)
+PR W @IOF F L=1:1:7 W !
+"RTN","SDRRRECP",74,0)
+ S PNAME=$$NAMEFMT^XLFNAME(PN,"G","")
+"RTN","SDRRRECP",75,0)
+ W !?20,PNAME
+"RTN","SDRRRECP",76,0)
+ I $P(VAPA(1),U)'="" W !?20,$P(VAPA(1),U)
+"RTN","SDRRRECP",77,0)
+ I $P(VAPA(2),U)'="" W !?20,$P(VAPA(2),U)
+"RTN","SDRRRECP",78,0)
+ I $P(VAPA(3),U)'="" W !?20,$P(VAPA(3),U)
+"RTN","SDRRRECP",79,0)
+ W !?20,$P(VAPA(4),U)," "_STATE_"  ",$P(VAPA(6),U)
+"RTN","SDRRRECP",80,0)
+ I TIME'="" W !!?45,TIME
+"RTN","SDRRRECP",81,0)
+ I LAB'="" W !!?45,LAB
+"RTN","SDRRRECP",82,0)
+ Q
+"RTN","SDRRRECP",83,0)
+EN1 ;PRINT BY TEAM
+"RTN","SDRRRECP",84,0)
+ S DIC="^SD(403.55,",DIC(0)="AEQMZ",DIC("A")="Select Clinic Team: " D ^DIC Q:Y<0  S ZTEAM=+Y D SELDT G:Y<0 QUIT
+"RTN","SDRRRECP",85,0)
+ S %ZIS="QM" D ^%ZIS G:POP QUIT I $D(IO("Q")) S ZTDESC="Print Recall Cards by Team",ZTRTN="DQT^SDRRRECP" S ZTSAVE("*")="" D ^%ZTLOAD G QUIT
+"RTN","SDRRRECP",86,0)
+DQT K ^TMP($J)
+"RTN","SDRRRECP",87,0)
+ S PR=0 F  S PR=$O(^SD(403.5,"C",PR)) Q:PR=""  I $P($G(^SD(403.54,PR,0)),U,2)=+ZTEAM S D0=0 F  S D0=$O(^SD(403.5,"C",PR,D0)) Q:D0=""  S DTA=$G(^SD(403.5,D0,0)) D:DTA]""
+"RTN","SDRRRECP",88,0)
+ .S TIME=""
+"RTN","SDRRRECP",89,0)
+ .I $P(^SD(403.5,D0,0),"^",9)["60" S TIME=$P(^SD(403.5,D0,0),"^",9) S TIME="**"_TIME_"**"
+"RTN","SDRRRECP",90,0)
+ .S LAB=$S($P($G(^SD(403.5,D0,0)),"^",8)="f":"**FL",$P(^SD(403.5,D0,0),"^",8)="n":"**NFL",1:"")
+"RTN","SDRRRECP",91,0)
+ .S DFN=+DTA
+"RTN","SDRRRECP",92,0)
+ .Q:$$TESTPAT^VADPT(DFN)
+"RTN","SDRRRECP",93,0)
+ .D ADD^VADPT,DEM^VADPT
+"RTN","SDRRRECP",94,0)
+ .S PN=$P(VADM(1),U)
+"RTN","SDRRRECP",95,0)
+ .S STATE=$P(VAPA(5),"^",1),STATE=$$GET1^DIQ(5,STATE_",",1)
+"RTN","SDRRRECP",96,0)
+ .I $G(VADM(6),U)'="" Q
+"RTN","SDRRRECP",97,0)
+ .Q:$P(DTA,"^",6)<SDT!($P(DTA,"^",6)>EDT) 
+"RTN","SDRRRECP",98,0)
+ .S CHECK=$$BADADR^DGUTL3 I CHECK>0 S XMSUB="Bad Address for Recall Reminder Patient",XMTEXT="SDRR(" D
+"RTN","SDRRRECP",99,0)
+ ..S XMY("G.SDRR BAD ADDRESS")="",XMDUZ=.5
+"RTN","SDRRRECP",100,0)
+ ..S SDRR(1)="Bad Address- card will not be printed for:"_"   "_PN_"   "_VA("BID")
+"RTN","SDRRRECP",101,0)
+ ..D ^XMD
+"RTN","SDRRRECP",102,0)
+ ..K XMY,XMSUB,XMTEXT,XMDUZ
+"RTN","SDRRRECP",103,0)
+ ..D ^%ZISC G QUIT
+"RTN","SDRRRECP",104,0)
+ .;ADDED THE DATE INFORMATION
+"RTN","SDRRRECP",105,0)
+ .S $P(^SD(403.5,D0,0),"^",10)=DT
+"RTN","SDRRRECP",106,0)
+ .D PR
+"RTN","SDRRRECP",107,0)
+ D ^%ZISC G QUIT
+"RTN","SDRRRECP",108,0)
+EN2 ;PRINT BY PROV
+"RTN","SDRRRECP",109,0)
+ S DIC="^SD(403.54,",DIC(0)="AEQMZ",DIC("A")="Select Provider: " D ^DIC G:Y<0 QUIT S PR=+Y  D SELDT G:Y<0 QUIT
+"RTN","SDRRRECP",110,0)
+ S %ZIS="QM" D ^%ZIS G:POP QUIT I $D(IO("Q")) S ZTDESC="Print Recall Cards by Prov",ZTRTN="DQP^SDRRRECP" S ZTSAVE("*")="" D ^%ZTLOAD G QUIT
+"RTN","SDRRRECP",111,0)
+DQP K ^TMP($J)
+"RTN","SDRRRECP",112,0)
+ S D0=0 F  S D0=$O(^SD(403.5,"C",PR,D0)) Q:D0=""  S DTA=$G(^SD(403.5,D0,0)) D:DTA]""
+"RTN","SDRRRECP",113,0)
+ .S TIME=""
+"RTN","SDRRRECP",114,0)
+ .I $P(^SD(403.5,D0,0),"^",9)>30 S TIME=$P(^SD(403.5,D0,0),"^",9) S TIME="**"_TIME_"**"
+"RTN","SDRRRECP",115,0)
+ .S LAB=$S($P($G(^SD(403.5,D0,0)),"^",8)="f":"**FL",$P(^SD(403.5,D0,0),"^",8)="n":"**NFL",1:"")
+"RTN","SDRRRECP",116,0)
+ .S DFN=+DTA
+"RTN","SDRRRECP",117,0)
+ .Q:$$TESTPAT^VADPT(DFN)
+"RTN","SDRRRECP",118,0)
+ .D ADD^VADPT,DEM^VADPT
+"RTN","SDRRRECP",119,0)
+ .S STATE=$P(VAPA(5),"^",1),STATE=$$GET1^DIQ(5,STATE_",",1)
+"RTN","SDRRRECP",120,0)
+ .S PN=$P(VADM(1),U)
+"RTN","SDRRRECP",121,0)
+ .I $G(VADM(6),U)'="" Q
+"RTN","SDRRRECP",122,0)
+ .Q:$P(DTA,"^",6)<SDT!($P(DTA,"^",6)>EDT) 
+"RTN","SDRRRECP",123,0)
+ .S CHECK=$$BADADR^DGUTL3 I CHECK>0 S XMSUB="Bad Address for Recall Reminder Patient",XMTEXT="SDRR(" D
+"RTN","SDRRRECP",124,0)
+ ..S XMY("G.SDRR BAD ADDRESS")="",XMDUZ=.5
+"RTN","SDRRRECP",125,0)
+ ..S SDRR(1)="Bad Address- card will not be printed for:"_"   "_PN_"   "_VA("BID")
+"RTN","SDRRRECP",126,0)
+ ..D ^XMD
+"RTN","SDRRRECP",127,0)
+ ..K XMY,XMSUB,XMTEXT,XMDUZ
+"RTN","SDRRRECP",128,0)
+ .;ADDED THE DATE INFORMATION
+"RTN","SDRRRECP",129,0)
+ .S $P(^SD(403.5,D0,0),"^",10)=DT
+"RTN","SDRRRECP",130,0)
+ .D PR
+"RTN","SDRRRECP",131,0)
+ D ^%ZISC G QUIT
+"RTN","SDRRRECP",132,0)
+EN4 ;PRINT BY Patient
+"RTN","SDRRRECP",133,0)
+ W ! S DIC="^SD(403.5,",DIC(0)="AEQMZ",DIC("A")="Select Patient: " D ^DIC G:Y<0 QUIT S D0=+Y
+"RTN","SDRRRECP",134,0)
+ S %ZIS="QM" D ^%ZIS G:POP QUIT I $D(IO("Q")) S ZTDESC="Print Recall Cards by Prov",ZTRTN="DPP^SDRRRECP" S ZTSAVE("*")="" D ^%ZTLOAD G QUIT
+"RTN","SDRRRECP",135,0)
+DPP K ^TMP($J)
+"RTN","SDRRRECP",136,0)
+ S DTA=$G(^SD(403.5,D0,0)) D:DTA]""
+"RTN","SDRRRECP",137,0)
+ .S TIME=""
+"RTN","SDRRRECP",138,0)
+ .I $P(^SD(403.5,D0,0),"^",9)>30 S TIME=$P(^SD(403.5,D0,0),"^",9) S TIME="**"_TIME_"**"
+"RTN","SDRRRECP",139,0)
+ .S LAB=$S($P($G(^SD(403.5,D0,0)),"^",8)="f":"**FL",$P(^SD(403.5,D0,0),"^",8)="n":"**NFL",1:"")
+"RTN","SDRRRECP",140,0)
+ .S DFN=+DTA
+"RTN","SDRRRECP",141,0)
+ .Q:$$TESTPAT^VADPT(DFN)
+"RTN","SDRRRECP",142,0)
+ .D ADD^VADPT,DEM^VADPT
+"RTN","SDRRRECP",143,0)
+ .S STATE=$P(VAPA(5),"^",1),STATE=$$GET1^DIQ(5,STATE_",",1)
+"RTN","SDRRRECP",144,0)
+ .S PN=$P(VADM(1),U)
+"RTN","SDRRRECP",145,0)
+ .I $G(VADM(6),U)'="" Q 
+"RTN","SDRRRECP",146,0)
+ .S CHECK=$$BADADR^DGUTL3 I CHECK>0 S XMSUB="Bad Address for Recall Reminder Patient",XMTEXT="SDRR(" D
+"RTN","SDRRRECP",147,0)
+ ..S XMY("G.SDRR BAD ADDRESS")="",XMDUZ=.5
+"RTN","SDRRRECP",148,0)
+ ..S SDRR(1)="Bad Address- card will not be printed for:"_"   "_PN_"   "_VA("BID")
+"RTN","SDRRRECP",149,0)
+ ..D ^XMD
+"RTN","SDRRRECP",150,0)
+ ..K XMY,XMSUB,XMTEXT,XMDUZ
+"RTN","SDRRRECP",151,0)
+ .;ADDED THE DATE INFORMATION
+"RTN","SDRRRECP",152,0)
+ .S $P(^SD(403.5,D0,0),"^",10)=DT
+"RTN","SDRRRECP",153,0)
+ .D PR
+"RTN","SDRRRECP",154,0)
+ D ^%ZISC G QUIT
+"RTN","SDRRRECP",155,0)
+EN5 ;PRINT BY TEAM
+"RTN","SDRRRECP",156,0)
+ S DIC="^SD(403.55,",DIC(0)="AEQMZ",DIC("A")="Select Clinic Team: " D ^DIC S ZTEAM=+Y G:Y<0 QUIT
+"RTN","SDRRRECP",157,0)
+ S %ZIS="QM" D ^%ZIS G:POP QUIT I $D(IO("Q")) S ZTDESC="Print Nonresponsive Recall Cards by Team",ZTRTN="DQDD^SDRRRECP" S ZTSAVE("*")="" D ^%ZTLOAD G QUIT
+"RTN","SDRRRECP",158,0)
+DQDD K ^TMP($J)
+"RTN","SDRRRECP",159,0)
+ N CHKDATE
+"RTN","SDRRRECP",160,0)
+ S PR=0 F  S PR=$O(^SD(403.5,"C",PR)) Q:PR=""  I $P($G(^SD(403.54,PR,0)),U,2)=+ZTEAM S D0=0 F  S D0=$O(^SD(403.5,"C",PR,D0)) Q:D0=""  S DTA=$G(^SD(403.5,D0,0)) D:DTA]""
+"RTN","SDRRRECP",161,0)
+ .I $P($G(^SD(403.5,D0,0)),"^",10)="" QUIT
+"RTN","SDRRRECP",162,0)
+ .; SD*569 - Prevent from printing more than ONE second card
+"RTN","SDRRRECP",163,0)
+ .I $P($G(^SD(403.5,D0,0)),"^",13)'="" QUIT
+"RTN","SDRRRECP",164,0)
+ .S CHKDATE=5 S RDATE=$P($G(^SD(403.5,D0,0)),"^",6) S CHECK=$$FMDIFF^XLFDT(RDATE,DT) I CHECK>CHKDATE K RDATE QUIT
+"RTN","SDRRRECP",165,0)
+ .S TIME=""
+"RTN","SDRRRECP",166,0)
+ .I $P(^SD(403.5,D0,0),"^",9)["60" S TIME=$P(^SD(403.5,D0,0),"^",9) S TIME="**"_TIME_"**"
+"RTN","SDRRRECP",167,0)
+ .S LAB=$S($P($G(^SD(403.5,D0,0)),"^",8)="f":"**FL",$P(^SD(403.5,D0,0),"^",8)="n":"**NFL",1:"")
+"RTN","SDRRRECP",168,0)
+ .S DFN=+DTA
+"RTN","SDRRRECP",169,0)
+ .Q:$$TESTPAT^VADPT(DFN)
+"RTN","SDRRRECP",170,0)
+ .D ADD^VADPT,DEM^VADPT
+"RTN","SDRRRECP",171,0)
+ .S STATE=$P(VAPA(5),"^",1),STATE=$$GET1^DIQ(5,STATE_",",1)
+"RTN","SDRRRECP",172,0)
+ .S PN=$P(VADM(1),U)
+"RTN","SDRRRECP",173,0)
+ .I $G(VADM(6),U)'="" Q
+"RTN","SDRRRECP",174,0)
+ .S CHECK=$$BADADR^DGUTL3 I CHECK>0 S XMSUB="Bad Address for Recall Reminder Patient",XMTEXT="SDRR(" D
+"RTN","SDRRRECP",175,0)
+ ..S XMY("G.SDRR BAD ADDRESS")="",XMDUZ=.5
+"RTN","SDRRRECP",176,0)
+ ..S SDRR(1)="Bad Address- card will not be printed for:"_"   "_PN_"   "_VA("BID")
+"RTN","SDRRRECP",177,0)
+ ..D ^XMD
+"RTN","SDRRRECP",178,0)
+ ..K XMY,XMSUB,XMTEXT,XMDUZ
+"RTN","SDRRRECP",179,0)
+ .;ADDED THE DATE INFORMATION
+"RTN","SDRRRECP",180,0)
+ .S $P(^SD(403.5,D0,0),"^",13)=DT
+"RTN","SDRRRECP",181,0)
+ .D PR
+"RTN","SDRRRECP",182,0)
+ D ^%ZISC G QUIT
+"RTN","SDRRRECP",183,0)
+ Q
+"RTN","SDRRTSK")
+0^1^B16436609^B13148697
+"RTN","SDRRTSK",1,0)
+SDRRTSK ;10N20/MAH;Recall Reminder-Clinic Print Task; 01/15/2008
+"RTN","SDRRTSK",2,0)
+ ;;5.3;Scheduling;**536,579**;Aug 13, 1993;Build 3
+"RTN","SDRRTSK",3,0)
+ ;THIS ROUTINE WILL PRINT LETTER FOR SELECTED METHOD OF PRINTING
+"RTN","SDRRTSK",4,0)
+ ;WILL LOOK AT CLINIC RECALL LOCATION
+"RTN","SDRRTSK",5,0)
+DATE ;lOOKS TO SEE HOW MANY DAYS IN ADVANCE TO PRINT LETTER
+"RTN","SDRRTSK",6,0)
+ Q:'$D(^SD(403.53,0))
+"RTN","SDRRTSK",7,0)
+ S CRP=0
+"RTN","SDRRTSK",8,0)
+ F  S CRP=$O(^SD(403.53,CRP)) Q:'CRP  D
+"RTN","SDRRTSK",9,0)
+ .S TYPE=$P($G(^SD(403.53,CRP,0)),"^",2)
+"RTN","SDRRTSK",10,0)
+ .Q:TYPE["C"
+"RTN","SDRRTSK",11,0)
+ .S DATE=$P($G(^SD(403.53,CRP,0)),"^",4) Q:DATE=""   ;IF NOT SET ROUTINE WILL QUIT
+"RTN","SDRRTSK",12,0)
+ .S X="T+"_DATE D ^%DT S (ZSDT,ZEDT)=Y K Y
+"RTN","SDRRTSK",13,0)
+ .S (PRT,TEAM)=0
+"RTN","SDRRTSK",14,0)
+ .F  S TEAM=$O(^SD(403.55,"C",CRP,TEAM)) Q:TEAM=""  S PRT=$P($G(^SD(403.55,TEAM,0)),"^",3) D
+"RTN","SDRRTSK",15,0)
+ ..Q:PRT=""
+"RTN","SDRRTSK",16,0)
+ ..S DA=PRT
+"RTN","SDRRTSK",17,0)
+ ..S DIC="^%ZIS(1,",DR=".01;1;3",DIQ="DPTR",DIQ(0)="I" D EN^DIQ1
+"RTN","SDRRTSK",18,0)
+ ..N IOP S IOP=$G(DPTR("3.5",DA,".01","I")) D ^%ZIS
+"RTN","SDRRTSK",19,0)
+ ..S PROV=0 F  S PROV=$O(^SD(403.54,"C",TEAM,PROV)) Q:PROV=""  D
+"RTN","SDRRTSK",20,0)
+ ...S (MESSAGE,D0,LETTER)=0 F  S D0=$O(^SD(403.5,"C",PROV,D0)) Q:D0=""  S (CLINIC,FAIL)=0 S CLINIC=$P($G(^SD(403.5,D0,0)),"^",2) D
+"RTN","SDRRTSK",21,0)
+ ....; SD*579 - Kill x-refs and quit if entry not exist
+"RTN","SDRRTSK",22,0)
+ ....I '$D(^SD(403.5,D0)) D KXREF Q
+"RTN","SDRRTSK",23,0)
+ ....S DTA=$G(^SD(403.5,D0,0))
+"RTN","SDRRTSK",24,0)
+ ....I CLINIC="" S MESSAGE="***NO CLINIC ON FILE**"
+"RTN","SDRRTSK",25,0)
+ ....I CLINIC'=""  I '$D(^SD(403.52,"B",CLINIC)) S MESSAGE="***NO CLINIC LETTER ON FILE**" S FAIL=1
+"RTN","SDRRTSK",26,0)
+ ....I CLINIC'="",(FAIL=0) S ZDIV=CLINIC S LETTER=0,LETTER=$O(^SD(403.52,"B",CLINIC,LETTER))
+"RTN","SDRRTSK",27,0)
+ ....S TIME=""
+"RTN","SDRRTSK",28,0)
+ ....I $P($G(^SD(403.5,D0,0)),"^",9)>45 S TIME=$P($G(^SD(403.5,D0,0)),"^",9) S TIME="**"_TIME_"**"
+"RTN","SDRRTSK",29,0)
+ ....S LAB=$S($P($G(^SD(403.5,D0,0)),"^",8)="f":"Lab test(s) have been ordered that require you to FAST",$P(^SD(403.5,D0,0),"^",8)="n":"Lab test(s) have been ordered, which need to be done before an appointment is made",1:"")
+"RTN","SDRRTSK",30,0)
+ ....S DFN=+DTA
+"RTN","SDRRTSK",31,0)
+ ....Q:$P(DTA,U,6)<ZSDT!($P(DTA,U,6)>ZEDT)
+"RTN","SDRRTSK",32,0)
+ ....Q:$$TESTPAT^VADPT(DFN)
+"RTN","SDRRTSK",33,0)
+ ....D ADD^VADPT,DEM^VADPT
+"RTN","SDRRTSK",34,0)
+ ....S STATE=$P(VAPA(5),"^",1),STATE=$$GET1^DIQ(5,STATE_",",1)
+"RTN","SDRRTSK",35,0)
+ ....S PN=$P(VADM(1),U)
+"RTN","SDRRTSK",36,0)
+ ....I $G(VADM(6),U)'="" Q
+"RTN","SDRRTSK",37,0)
+ ....N CHECK
+"RTN","SDRRTSK",38,0)
+ ....I $$BADADR^DGUTL3(DFN) S CHECK=1 S XMSUB="Bad Address for Recall Reminder Patient",XMTEXT="SDRR(" D
+"RTN","SDRRTSK",39,0)
+ .....S XMY("G.SDRR BAD ADDRESS")="",XMDUZ=.5
+"RTN","SDRRTSK",40,0)
+ .....S SDRR(1)="Bad Address- card will not be printed for:"_"   "_PN_"   "_VA("BID")
+"RTN","SDRRTSK",41,0)
+ .....D ^XMD
+"RTN","SDRRTSK",42,0)
+ .....K XMY,XMSUB,XMTEXT,XMDUZ
+"RTN","SDRRTSK",43,0)
+ .....Q
+"RTN","SDRRTSK",44,0)
+ ....;ADDED THE DATE INFORMATION
+"RTN","SDRRTSK",45,0)
+ ....I '$D(CHECK) S $P(^SD(403.5,D0,0),"^",10)=DT   ;NEW CODE
+"RTN","SDRRTSK",46,0)
+ ....Q:$D(CHECK)
+"RTN","SDRRTSK",47,0)
+ ....U IO
+"RTN","SDRRTSK",48,0)
+ ....; SD*579 - Add date printed and last 4
+"RTN","SDRRTSK",49,0)
+ ....S PRNDT=$TR($$FMTE^XLFDT(DT,"5DF")," ","0")
+"RTN","SDRRTSK",50,0)
+ ....S LAST4=$E($P(VA("BID"),U),1,4)
+"RTN","SDRRTSK",51,0)
+ ....W @IOF
+"RTN","SDRRTSK",52,0)
+ ....W !,?65,PRNDT
+"RTN","SDRRTSK",53,0)
+ ....W !,?65,$E(PN,1)_LAST4
+"RTN","SDRRTSK",54,0)
+ ....F L=1:1:9 W !
+"RTN","SDRRTSK",55,0)
+ ....; SD*579 - Fix suffix problem
+"RTN","SDRRTSK",56,0)
+ ....S PNAME=$$NAMEFMT^XLFNAME(PN,"G","")
+"RTN","SDRRTSK",57,0)
+ ....W !?20,PNAME
+"RTN","SDRRTSK",58,0)
+ ....I $P(VAPA(1),U)'="" W !?20,$P(VAPA(1),U)
+"RTN","SDRRTSK",59,0)
+ ....I $P(VAPA(2),U)'="" W !?20,$P(VAPA(2),U)
+"RTN","SDRRTSK",60,0)
+ ....I $P(VAPA(3),U)'="" W !?20,$P(VAPA(3),U)
+"RTN","SDRRTSK",61,0)
+ ....W !?20,$P(VAPA(4),U)," "_STATE_"  ",$P(VAPA(6),U)
+"RTN","SDRRTSK",62,0)
+ ....I LETTER=0 W !!!!!,?25,MESSAGE
+"RTN","SDRRTSK",63,0)
+ ....I TIME'="" W !!!!?2,"**"_TIME
+"RTN","SDRRTSK",64,0)
+ ....I LAB'="" W !!!!!,?2,"*"_LAB
+"RTN","SDRRTSK",65,0)
+ ....W !!!
+"RTN","SDRRTSK",66,0)
+ ....S:'$D(MESSAGE) LETTER=$O(^SD(403.52,"B",CLINIC,LETTER))
+"RTN","SDRRTSK",67,0)
+ ....I LETTER>0 S LINE=0 F  S LINE=$O(^SD(403.52,LETTER,1,LINE)) Q:'LINE  W !,?2,$P(^SD(403.52,LETTER,1,LINE,0),"^",1)
+"RTN","SDRRTSK",68,0)
+ ..D ^%ZISC
+"RTN","SDRRTSK",69,0)
+ K DPTR,DEVSB,DEVSB1,DIQ,DEVSB1,DA,DA1,DR
+"RTN","SDRRTSK",70,0)
+ K MESSAGE,LETTER,PRNDT,LAST4,PNAME
+"RTN","SDRRTSK",71,0)
+QUIT K DEV,PRT,ADTA,D0,DFN,DIC,DIR,DIRUT,DTA,I,L,PN,POP,Y,ZDIV,ZEDT,ZPR,ZSDT,FAST,TIME,ACC,LAB,STATE
+"RTN","SDRRTSK",72,0)
+ K LINE,LETTER,MESSAGE,TEST,CLINIC,DA,DATE,DEV1,DEVSB,DOD,FAIL,PROV,TEAM,X,PROV,TEAM,CRP,DATE,TYPE,SDRR,DPT,VA
+"RTN","SDRRTSK",73,0)
+ D KVAR^VADPT
+"RTN","SDRRTSK",74,0)
+ Q
+"RTN","SDRRTSK",75,0)
+ ;
+"RTN","SDRRTSK",76,0)
+KXREF ; SD*579 - If entry not exist, kill all the x-refs.
+"RTN","SDRRTSK",77,0)
+ S STR="BCDE"
+"RTN","SDRRTSK",78,0)
+ F I=1:1:$L(STR) D
+"RTN","SDRRTSK",79,0)
+ .S X=$E(STR,I,I)
+"RTN","SDRRTSK",80,0)
+ .S N3=0 F  S N3=$O(^SD(403.5,X,N3)) Q:N3'>0  D
+"RTN","SDRRTSK",81,0)
+ ..S N4=0 F  S N4=$O(^SD(403.5,X,N3,N4)) Q:N4'>0  D
+"RTN","SDRRTSK",82,0)
+ ...I N4=D0 K ^SD(403.5,X,N3,N4)
+"RTN","SDRRTSK",83,0)
+ K I,STR,X,N3,N4
+"RTN","SDRRTSK",84,0)
+ Q
+"RTN","SDRRTSK1")
+0^2^B9538954^B7882942
+"RTN","SDRRTSK1",1,0)
+SDRRTSK1 ;10N20/MAH;Recall Reminder-Clinic Print Task; 09/20/2004
+"RTN","SDRRTSK1",2,0)
+ ;;5.3;Scheduling;**536,579**;Aug 13, 1993;Build 3
+"RTN","SDRRTSK1",3,0)
+ ;;This routine is called from SDRR TASK JOB CARD
+"RTN","SDRRTSK1",4,0)
+ ;;and will be called if PARAM IS cards
+"RTN","SDRRTSK1",5,0)
+START Q:'$D(^SD(403.53,0))
+"RTN","SDRRTSK1",6,0)
+ S CRP=0
+"RTN","SDRRTSK1",7,0)
+ F  S CRP=$O(^SD(403.53,CRP)) Q:'CRP  D
+"RTN","SDRRTSK1",8,0)
+ .S TYPE=$P($G(^SD(403.53,CRP,0)),"^",2)
+"RTN","SDRRTSK1",9,0)
+ .Q:TYPE["L"
+"RTN","SDRRTSK1",10,0)
+ .S DATE=$P($G(^SD(403.53,CRP,0)),"^",4) Q:DATE=""  ;IF NOT SET ROUTINE WILL QUIT
+"RTN","SDRRTSK1",11,0)
+ .S X="T+"_DATE D ^%DT S (ZSDT,ZEDT)=Y K Y
+"RTN","SDRRTSK1",12,0)
+ .S (PRT,TEAM)=0
+"RTN","SDRRTSK1",13,0)
+ .F  S TEAM=$O(^SD(403.55,"C",CRP,TEAM)) Q:TEAM=""  S PRT=$P($G(^SD(403.55,TEAM,0)),"^",3) D
+"RTN","SDRRTSK1",14,0)
+ ..Q:PRT=""
+"RTN","SDRRTSK1",15,0)
+ ..S DA=PRT
+"RTN","SDRRTSK1",16,0)
+ ..S DIC="^%ZIS(1,",DR=".01;1;3",DIQ="DPTR",DIQ(0)="I" D EN^DIQ1
+"RTN","SDRRTSK1",17,0)
+ ..N IOP S IOP=$G(DPTR("3.5",DA,".01","I")) D ^%ZIS
+"RTN","SDRRTSK1",18,0)
+ ..S PROV=0 F  S PROV=$O(^SD(403.54,"C",TEAM,PROV)) Q:PROV=""  D
+"RTN","SDRRTSK1",19,0)
+ ...S D0=0 F  S D0=$O(^SD(403.5,"C",PROV,D0)) Q:D0=""  D
+"RTN","SDRRTSK1",20,0)
+ ....; SD*579 - if entry not exist, kill x-refs and quit
+"RTN","SDRRTSK1",21,0)
+ ....I '$D(^SD(403.5,D0)) D KXREF Q
+"RTN","SDRRTSK1",22,0)
+ ....S DTA=$G(^SD(403.5,D0,0))
+"RTN","SDRRTSK1",23,0)
+ ....S TIME=""
+"RTN","SDRRTSK1",24,0)
+ ....I $P($G(^SD(403.5,D0,0)),"^",9)>45 S TIME=$P($G(^SD(403.5,D0,0)),"^",9) S TIME="**"_TIME_"**"
+"RTN","SDRRTSK1",25,0)
+ ....S LAB=$S($P($G(^SD(403.5,D0,0)),"^",8)="f":"**FL",$P(^SD(403.5,D0,0),"^",8)="n":"**NFL",1:"")
+"RTN","SDRRTSK1",26,0)
+ ....S DFN=+DTA
+"RTN","SDRRTSK1",27,0)
+ ....Q:$P(DTA,U,6)<ZSDT!($P(DTA,U,6)>ZEDT)
+"RTN","SDRRTSK1",28,0)
+ ....Q:$$TESTPAT^VADPT(DFN)
+"RTN","SDRRTSK1",29,0)
+ ....D ADD^VADPT,DEM^VADPT
+"RTN","SDRRTSK1",30,0)
+ ....S STATE=$P(VAPA(5),"^",1),STATE=$$GET1^DIQ(5,STATE_",",1)
+"RTN","SDRRTSK1",31,0)
+ ....S PN=$P(VADM(1),U)
+"RTN","SDRRTSK1",32,0)
+ ....I $G(VADM(6),U)'="" Q
+"RTN","SDRRTSK1",33,0)
+ ....N CHECK
+"RTN","SDRRTSK1",34,0)
+ ....I $$BADADR^DGUTL3(DFN) S CHECK=1 S XMSUB="Bad Address for Recall Reminder Patient",XMTEXT="SDRR(" D
+"RTN","SDRRTSK1",35,0)
+ .....S XMY("G.SDRR BAD ADDRESS")="",XMDUZ=.5
+"RTN","SDRRTSK1",36,0)
+ .....S SDRR(1)="Bad Address- card will not be printed for:"_"   "_PN_"   "_VA("BID")
+"RTN","SDRRTSK1",37,0)
+ .....D ^XMD
+"RTN","SDRRTSK1",38,0)
+ .....K XMY,XMSUB,XMTEXT,XMDUZ
+"RTN","SDRRTSK1",39,0)
+ .....Q
+"RTN","SDRRTSK1",40,0)
+ .....;ADDED THE DATE INFORMATION
+"RTN","SDRRTSK1",41,0)
+ ....I '$D(CHECK) S $P(^SD(403.5,D0,0),"^",10)=DT
+"RTN","SDRRTSK1",42,0)
+ ....Q:$D(CHECK)
+"RTN","SDRRTSK1",43,0)
+ ....U IO
+"RTN","SDRRTSK1",44,0)
+ ....W @IOF F L=1:1:7 W !
+"RTN","SDRRTSK1",45,0)
+ ....S PNAME=$$NAMEFMT^XLFNAME(PN,"G","")
+"RTN","SDRRTSK1",46,0)
+ ....W !?20,PNAME
+"RTN","SDRRTSK1",47,0)
+ ....I $P(VAPA(1),U)'="" W !?20,$P(VAPA(1),U)
+"RTN","SDRRTSK1",48,0)
+ ....I $P(VAPA(2),U)'="" W !?20,$P(VAPA(2),U)
+"RTN","SDRRTSK1",49,0)
+ ....I $P(VAPA(3),U)'="" W !?20,$P(VAPA(3),U)
+"RTN","SDRRTSK1",50,0)
+ ....W !?20,$P(VAPA(4),U)," "_STATE_"  ",$P(VAPA(6),U)
+"RTN","SDRRTSK1",51,0)
+ ....I TIME'="" W !!?45,TIME
+"RTN","SDRRTSK1",52,0)
+ ....I LAB'="" W !,?45,LAB
+"RTN","SDRRTSK1",53,0)
+ ..D ^%ZISC
+"RTN","SDRRTSK1",54,0)
+ K DPTR,DEVSB,DEVSB1,DIQ,DEVSB1,DA,DA1,DR
+"RTN","SDRRTSK1",55,0)
+QUIT K DEV,PRT,ADTA,D0,DFN,DIC,DIR,DIRUT,DTA,I,L,PN,POP,Y,ZDIV,ZEDT,ZPR,ZSDT,FAST,TIME,ACC,TYPE,PTN,CRP,STATE,PNAME
+"RTN","SDRRTSK1",56,0)
+ K LINE,LETTER,MESSAGE,TEST,CLINIC,DA,DATE,DEV1,DEVSB,DOD,FAIL,PROV,TEAM,X,DPT,LAB,SDRR,VA,LAB,DPT,SDRR,VA
+"RTN","SDRRTSK1",57,0)
+ D KVAR^VADPT
+"RTN","SDRRTSK1",58,0)
+ Q
+"RTN","SDRRTSK1",59,0)
+ ;
+"RTN","SDRRTSK1",60,0)
+KXREF ; SD*579 - If entry does not exist, kill all the x-refs.
+"RTN","SDRRTSK1",61,0)
+ S STR="BCDE"
+"RTN","SDRRTSK1",62,0)
+ F I=1:1:$L(STR) D
+"RTN","SDRRTSK1",63,0)
+ .S X=$E(STR,I,I)
+"RTN","SDRRTSK1",64,0)
+ .S N3=0 F  S N3=$O(^SD(403.5,X,N3)) Q:N3'>0  D
+"RTN","SDRRTSK1",65,0)
+ ..S N4=0 F  S N4=$O(^SD(403.5,X,N3,N4)) Q:N4'>0  D
+"RTN","SDRRTSK1",66,0)
+ ...I N4=D0 K ^SD(403.5,X,N3,N4)
+"RTN","SDRRTSK1",67,0)
+ K I,STR,X,N3,N4
+"RTN","SDRRTSK1",68,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",9476,6)
+^504
+**END**
+**END**
+

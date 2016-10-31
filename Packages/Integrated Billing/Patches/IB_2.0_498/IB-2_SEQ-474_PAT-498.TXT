@@ -1,0 +1,177 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 05/30/13 at 14:52
+=============================================================================
+Run Date: MAY 19, 2014                     Designation: IB*2*498
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #474                      Status: Released
+                  Compliance Date: JUN 18, 2014
+=============================================================================
+
+Associated patches: (v)IB*2*307    <<= must be installed BEFORE `IB*2*498'
+                    (v)IB*2*474    <<= must be installed BEFORE `IB*2*498'
+
+Subject: CHAMPVA & CHAMPVA REIM. INS. CHARGE SETS UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains two issues:
+  
+ 1. The first issue involves three non-billable HCPCS (Healthcare Common
+    Procedure Coding System) codes for prosthetic items that need to be
+    filtered out of the Claims Tracking module. 
+  
+ 2. The second issue concerns the CHAMPVA & CHAMPVA REIMBURSEMENT INSURANCE
+    rate schedules linking to RC (Reasonable Charges) charge sets are not
+    automatically updated in the Rate Schedule file(#363).
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000000852299 Integrated Billing - Claims Tracking
+ 2. INC000000394830 Tricare/CHAMPVA are not automatically updated
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Plains HCS
+ Maryland HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000852299 Integrated Billing - Claims Tracking
+  
+  Problem:
+  --------
+  The Chief Business Office (CBO) has requested a patch to filter prosthetics
+  out of the Claims Tracking module when their HCPCS codes have 2 alpha
+  characters beginning with BA, HI and TM.
+  
+  Resolution:
+  -----------
+  Routine IBTRKR5 was modified to exclude prosthetics items in claims
+  tracking if the associated HCPCS codes start with 2 alpha characters
+  of BA, HI and TM.
+  
+ ROUTINE: IBTRKR5
+  
+ 2. INC000000394830 Tricare/CHAMPVA are not automatically updated
+  
+  Problem:
+  --------
+  When new divisions are added or existing ones convert to provider base
+  rates in the RC host file load process, CHAMPVA & CHAMPVA REIMBURSEMENT
+  INSURANCE rate schedules linking with RC charge sets are not automatically
+  updated in the Rate Schedule file.
+  
+  Resolution:
+  -----------
+  Routine IBCRHU2 was modified to automatically update CHAMPVA & CHAMPVA
+  REIMBURSEMENT INSURANCE rate schedules linking to RC charge sets in the
+  Rate Schedule file. A post-init routine IB20P498 was also created to update
+  CHAMPVA & CHAMPVA REIMBURSEMENT INSURANCE rate schedules with charge sets
+  to keep them up to date.
+  
+ ROUTINE: IBCRHU2 and IB20P498
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+ **** Do not install this patch when the IB MT NIGHT COMP background job
+ is running or scheduled to run. ****
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+  
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*498):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s)
+  
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+  
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P498.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 27
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P498
+    Before:       n/a   After: B10244521  **498**
+Routine Name: IBCRHU2
+    Before: B51490441   After: B53250983  **106,138,245,175,307,498**
+Routine Name: IBTRKR5
+    Before: B34965270   After: B35067366  **13,260,312,339,389,474,498**
+ 
+Routine list of preceding patches: 307, 474
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 04, 2013
+Completed By:                               Date Completed: MAY 05, 2014
+Released By :                               Date Released : MAY 19, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

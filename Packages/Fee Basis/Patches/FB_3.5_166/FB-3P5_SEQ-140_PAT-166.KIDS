@@ -1,0 +1,1215 @@
+Released FB*3.5*166 SEQ #140
+Extracted from mail message
+**KIDS**:FB*3.5*166^
+
+**INSTALL NAME**
+FB*3.5*166
+"BLD",10064,0)
+FB*3.5*166^FEE BASIS^0^3160324^y
+"BLD",10064,1,0)
+^^14^14^3160309^
+"BLD",10064,1,1,0)
+This patch addresses the following 3 issues:
+"BLD",10064,1,2,0)
+ 
+"BLD",10064,1,3,0)
+1. Items are missing from the Potential Cost Recovery (PCR) report when a
+"BLD",10064,1,4,0)
+   patient has multiple authorizations on the same day.
+"BLD",10064,1,5,0)
+ 
+"BLD",10064,1,6,0)
+2. The direct global read of the SHORT NAME (#2) field in the CPT (#81)
+"BLD",10064,1,7,0)
+   file must be updated to the current Application Programming 
+"BLD",10064,1,8,0)
+   Interface (API) for the short name to continue to display on the Fee
+"BLD",10064,1,9,0)
+   Basis Patch 135 Unique Claim Identifier Display report after the 
+"BLD",10064,1,10,0)
+   release of IPCT*4.0*46.
+"BLD",10064,1,11,0)
+ 
+"BLD",10064,1,12,0)
+3. The ANESTHESIA MINUTES (#43) field in the FEE BASIS PAYMENT (#162) 
+"BLD",10064,1,13,0)
+   file needs to be expanded from 3 to 4 digits to properly process 
+"BLD",10064,1,14,0)
+   anesthesia for labor and delivery.
+"BLD",10064,4,0)
+^9.64PA^162^1
+"BLD",10064,4,162,0)
+162
+"BLD",10064,4,162,2,0)
+^9.641^162.03^1
+"BLD",10064,4,162,2,162.03,0)
+SERVICE PROVIDED  (sub-file)
+"BLD",10064,4,162,2,162.03,1,0)
+^9.6411^43^1
+"BLD",10064,4,162,2,162.03,1,43,0)
+ANESTHESIA TIME (MINUTES)
+"BLD",10064,4,162,222)
+y^y^p^^^^n^^n
+"BLD",10064,4,162,224)
+
+"BLD",10064,4,"APDD",162,162.03)
+
+"BLD",10064,4,"APDD",162,162.03,43)
+
+"BLD",10064,4,"B",162,162)
+
+"BLD",10064,6.3)
+7
+"BLD",10064,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10064,"KRN",.4,0)
+.4
+"BLD",10064,"KRN",.401,0)
+.401
+"BLD",10064,"KRN",.402,0)
+.402
+"BLD",10064,"KRN",.403,0)
+.403
+"BLD",10064,"KRN",.5,0)
+.5
+"BLD",10064,"KRN",.84,0)
+.84
+"BLD",10064,"KRN",3.6,0)
+3.6
+"BLD",10064,"KRN",3.8,0)
+3.8
+"BLD",10064,"KRN",9.2,0)
+9.2
+"BLD",10064,"KRN",9.8,0)
+9.8
+"BLD",10064,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",10064,"KRN",9.8,"NM",1,0)
+FBPCR3^^0^B26362342
+"BLD",10064,"KRN",9.8,"NM",2,0)
+FBUTL135^^0^B143925629
+"BLD",10064,"KRN",9.8,"NM","B","FBPCR3",1)
+
+"BLD",10064,"KRN",9.8,"NM","B","FBUTL135",2)
+
+"BLD",10064,"KRN",19,0)
+19
+"BLD",10064,"KRN",19.1,0)
+19.1
+"BLD",10064,"KRN",101,0)
+101
+"BLD",10064,"KRN",409.61,0)
+409.61
+"BLD",10064,"KRN",771,0)
+771
+"BLD",10064,"KRN",779.2,0)
+779.2
+"BLD",10064,"KRN",870,0)
+870
+"BLD",10064,"KRN",8989.51,0)
+8989.51
+"BLD",10064,"KRN",8989.52,0)
+8989.52
+"BLD",10064,"KRN",8994,0)
+8994
+"BLD",10064,"KRN","B",.4,.4)
+
+"BLD",10064,"KRN","B",.401,.401)
+
+"BLD",10064,"KRN","B",.402,.402)
+
+"BLD",10064,"KRN","B",.403,.403)
+
+"BLD",10064,"KRN","B",.5,.5)
+
+"BLD",10064,"KRN","B",.84,.84)
+
+"BLD",10064,"KRN","B",3.6,3.6)
+
+"BLD",10064,"KRN","B",3.8,3.8)
+
+"BLD",10064,"KRN","B",9.2,9.2)
+
+"BLD",10064,"KRN","B",9.8,9.8)
+
+"BLD",10064,"KRN","B",19,19)
+
+"BLD",10064,"KRN","B",19.1,19.1)
+
+"BLD",10064,"KRN","B",101,101)
+
+"BLD",10064,"KRN","B",409.61,409.61)
+
+"BLD",10064,"KRN","B",771,771)
+
+"BLD",10064,"KRN","B",779.2,779.2)
+
+"BLD",10064,"KRN","B",870,870)
+
+"BLD",10064,"KRN","B",8989.51,8989.51)
+
+"BLD",10064,"KRN","B",8989.52,8989.52)
+
+"BLD",10064,"KRN","B",8994,8994)
+
+"BLD",10064,"QDEF")
+^^^^^^^^^^YES
+"BLD",10064,"QUES",0)
+^9.62^^
+"BLD",10064,"REQB",0)
+^9.611^2^2
+"BLD",10064,"REQB",1,0)
+FB*3.5*98^2
+"BLD",10064,"REQB",2,0)
+FB*3.5*135^2
+"BLD",10064,"REQB","B","FB*3.5*135",2)
+
+"BLD",10064,"REQB","B","FB*3.5*98",1)
+
+"FIA",162)
+FEE BASIS PAYMENT
+"FIA",162,0)
+^FBAAC(
+"FIA",162,0,0)
+162P
+"FIA",162,0,1)
+y^y^p^^^^n^^n
+"FIA",162,0,10)
+
+"FIA",162,0,11)
+
+"FIA",162,0,"RLRO")
+
+"FIA",162,0,"VR")
+3.5^FB
+"FIA",162,162)
+1
+"FIA",162,162.03)
+1
+"FIA",162,162.03,43)
+
+"MBREQ")
+0
+"PKG",60,-1)
+1^1
+"PKG",60,0)
+FEE BASIS^FB^Used to pay private vendors
+"PKG",60,20,0)
+^9.402P^1^1
+"PKG",60,20,1,0)
+2^^FBPMRG
+"PKG",60,20,1,1)
+
+"PKG",60,20,"B",2,1)
+
+"PKG",60,22,0)
+^9.49I^1^1
+"PKG",60,22,1,0)
+3.5^2950130^2950313
+"PKG",60,22,1,"PAH",1,0)
+166^3160324
+"PKG",60,22,1,"PAH",1,1,0)
+^^14^14^3160324
+"PKG",60,22,1,"PAH",1,1,1,0)
+This patch addresses the following 3 issues:
+"PKG",60,22,1,"PAH",1,1,2,0)
+ 
+"PKG",60,22,1,"PAH",1,1,3,0)
+1. Items are missing from the Potential Cost Recovery (PCR) report when a
+"PKG",60,22,1,"PAH",1,1,4,0)
+   patient has multiple authorizations on the same day.
+"PKG",60,22,1,"PAH",1,1,5,0)
+ 
+"PKG",60,22,1,"PAH",1,1,6,0)
+2. The direct global read of the SHORT NAME (#2) field in the CPT (#81)
+"PKG",60,22,1,"PAH",1,1,7,0)
+   file must be updated to the current Application Programming 
+"PKG",60,22,1,"PAH",1,1,8,0)
+   Interface (API) for the short name to continue to display on the Fee
+"PKG",60,22,1,"PAH",1,1,9,0)
+   Basis Patch 135 Unique Claim Identifier Display report after the 
+"PKG",60,22,1,"PAH",1,1,10,0)
+   release of IPCT*4.0*46.
+"PKG",60,22,1,"PAH",1,1,11,0)
+ 
+"PKG",60,22,1,"PAH",1,1,12,0)
+3. The ANESTHESIA MINUTES (#43) field in the FEE BASIS PAYMENT (#162) 
+"PKG",60,22,1,"PAH",1,1,13,0)
+   file needs to be expanded from 3 to 4 digits to properly process 
+"PKG",60,22,1,"PAH",1,1,14,0)
+   anesthesia for labor and delivery.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","FBPCR3")
+0^1^B26362342^B24986170
+"RTN","FBPCR3",1,0)
+FBPCR3 ;AISC/GRR,TET-PHARMACY POTENTIAL COST RECOVERY, SORT/PRINT ;30 Jun 2006  1:49 PM
+"RTN","FBPCR3",2,0)
+ ;;3.5;FEE BASIS;**48,69,98,166**;JAN 30, 1995;Build 7
+"RTN","FBPCR3",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","FBPCR3",4,0)
+EN ;entry point
+"RTN","FBPCR3",5,0)
+ S (FBCATC,FBINS,FBPSF)=0
+"RTN","FBPCR3",6,0)
+SORT ;sort by date certified for payment, patient, invoice number ien, rx ien
+"RTN","FBPCR3",7,0)
+ S I=FBBDATE-.1 F  S I=$O(^FBAA(162.1,"AA",I)) Q:'I!(I>FBEDATE)  S J=0 F  S J=$O(^FBAA(162.1,"AA",I,J)) Q:'J  D
+"RTN","FBPCR3",8,0)
+ .S DFN=J D VET^FBPCR
+"RTN","FBPCR3",9,0)
+ .S K=0 F  S K=$O(^FBAA(162.1,"AA",I,J,K)) Q:K'>0  S L=0 F  S L=$O(^FBAA(162.1,"AA",I,J,K,L)) Q:L'>0  D  S (FBCATC,FBINS,FBPSF)=0
+"RTN","FBPCR3",10,0)
+ ..D SET Q:'FBPSV&('$D(FBPSV(FBPSF)))  I FBCATC!FBINS D SETTMP
+"RTN","FBPCR3",11,0)
+KILL ;kill variables set in sort
+"RTN","FBPCR3",12,0)
+ K A1,A2,DFN,FBAAA,FBAC,FBAP,FBBATCH,FBCATC,FBDA1,FBDRUG,FBFD,FBFD1,FBIN,FBINS,FBINVN,FBLOC,FBPAT,FBPD,FBPSF,FBPV,FBQTY,FBREIM,FBRX,FBSC,FBSTR,FBSUSP,FBVEN,FBVI,I,J,K,L,N,V,Y
+"RTN","FBPCR3",13,0)
+ K FBVNAME,FBVID,FBVCHAIN,FBPNAME,FBPID,FBDOB
+"RTN","FBPCR3",14,0)
+ K FBADJLA,FBADJLR,TAMT,FBRRMKL
+"RTN","FBPCR3",15,0)
+ D KILL^FBPCR2
+"RTN","FBPCR3",16,0)
+ Q
+"RTN","FBPCR3",17,0)
+SET ;set variables
+"RTN","FBPCR3",18,0)
+ N FBX
+"RTN","FBPCR3",19,0)
+ S Y(0)=$G(^FBAA(162.1,+K,"RX",+L,0)) I Y(0)']""!($P(Y(0),U,9)=1) Q
+"RTN","FBPCR3",20,0)
+ I $G(^FBAA(162.1,+K,"RX",+L,"FBREJ"))]"" Q
+"RTN","FBPCR3",21,0)
+ S Y(2)=$G(^FBAA(162.1,+K,0))
+"RTN","FBPCR3",22,0)
+ S Y(1)=$G(^FBAA(162.1,+K,"RX",+L,2))
+"RTN","FBPCR3",23,0)
+ S FBX=$$ADJLRA^FBRXFA(+L_","_+K_",")
+"RTN","FBPCR3",24,0)
+ S FBADJLR=$P(FBX,U) ;adjustment code
+"RTN","FBPCR3",25,0)
+ S FBADJLA=$P(FBX,U,2) ;adjustment amount
+"RTN","FBPCR3",26,0)
+ S TAMT=$FN($P(Y(0),"^",7),"",2) ;suspend amount
+"RTN","FBPCR3",27,0)
+ S FBRRMKL=$$RRL^FBRXFR(+L_","_+K_",") ;remitt remarks
+"RTN","FBPCR3",28,0)
+ S FBPSF=+$P(Y(1),U,5),FBFD=$P(Y(0),U,3),FBAAA=$P(Y(0),U,5)
+"RTN","FBPCR3",29,0)
+ Q:'FBPSV&('$D(FBPSV(FBPSF)))  S FBCATC=$$CATC^FBPCR(DFN,FBFD)
+"RTN","FBPCR3",30,0)
+ ;,FBINS=$S($O(^FBAAA("AIC",FBAAA,+$O(^FBAAA("AIC",FBAAA,-FBFD)),0))="Y":1,1:0)
+"RTN","FBPCR3",31,0)
+ S FBINS=$S($$INSCK(FBFD,FBAAA,FBPI)=1:$$INSURED^FBPCR4(DFN,FBFD),1:0)
+"RTN","FBPCR3",32,0)
+ Q:'FBCATC&'FBINS
+"RTN","FBPCR3",33,0)
+ S FBINVN=$P(Y(2),U) D VEN
+"RTN","FBPCR3",34,0)
+ S FBRX=$P(Y(0),U,1),FBDRUG=$P(Y(0),U,2),FBAC=$P(Y(0),U,4),FBAP=$P(Y(0),U,16),FBSUSP=$P(Y(0),U,8),FBPD=$P(Y(0),U,19),FBBATCH=$P(Y(0),U,17),FBBATCH=$P($G(^FBAA(161.7,+FBBATCH,0)),U)
+"RTN","FBPCR3",35,0)
+ I FBSUSP]"" S FBSUSP=$P($G(^FBAA(161.27,+FBSUSP,0)),U)
+"RTN","FBPCR3",36,0)
+ S FBREIM=$S($P(Y(0),U,20)="R":"*",1:""),FBSTR=$P(Y(0),U,12),FBQTY=$P(Y(0),U,13),A1=$J(FBAC,6,2),A2=$J(FBAP,6,2),FBPV=""
+"RTN","FBPCR3",37,0)
+ S FBPD=$$DATX^FBAAUTL(FBPD),FBFD=$$DATX^FBAAUTL(FBFD)
+"RTN","FBPCR3",38,0)
+ S FBPV=$S($P(Y(1),U,3)="V":"#",1:""),FBFD1=$S(FBPV="":" ",1:FBPV)_$S(FBREIM="":" ",1:FBREIM)_FBFD,FBRX="Rx: "_FBRX
+"RTN","FBPCR3",39,0)
+ S FBVEN=FBVNAME_";"_FBVID,FBPAT=FBPNAME_";"_DFN
+"RTN","FBPCR3",40,0)
+ Q
+"RTN","FBPCR3",41,0)
+SETTMP ;sort data by primary service facility, patient, fee program, vendor, date
+"RTN","FBPCR3",42,0)
+ Q:$$FILTER^FBPCR4()=0
+"RTN","FBPCR3",43,0)
+ S ^TMP($J,"FB",FBPSF,FBPAT,FBPI,FBVEN,I,K_L)=FBFD1_U_FBRX_U_FBDRUG_U_FBSTR_U_FBQTY_U_A1_U_A2_U_FBSUSP_U_FBINVN_U_FBBATCH_U_FBPD_U_FBDOB_U_FBVCHAIN_U_FBPI_U_FBCATC_U_FBINS
+"RTN","FBPCR3",44,0)
+ S ^TMP($J,"FB",FBPSF,FBPAT,FBPI,FBVEN,I,K_L,"FBADJ")=FBADJLR_U_FBADJLA_U_FBRRMKL_U_TAMT
+"RTN","FBPCR3",45,0)
+ S ^TMP($J,"FB",FBPSF,FBPAT,FBPI,FBVEN)=FBVCHAIN,^TMP($J,"FB",FBPSF,FBPAT)=FBDOB
+"RTN","FBPCR3",46,0)
+ ;S FBIN(5)=$P(Y(1),U,6) I FBIN(5)]"",$D(^TMP($J,"FB",FBPSF,FBPAT,FBPI,FBVEN,I,L)) D ANC^FBPCR67
+"RTN","FBPCR3",47,0)
+ Q
+"RTN","FBPCR3",48,0)
+VEN ;set variables for vendor
+"RTN","FBPCR3",49,0)
+ S V=$G(^FBAAV(+$P(Y(2),U,4),0)),FBVNAME=$E($P(V,U),1,23),FBVID=$P(V,U,2),FBVCHAIN=$P(V,U,10)
+"RTN","FBPCR3",50,0)
+ Q
+"RTN","FBPCR3",51,0)
+PRINT ;write output
+"RTN","FBPCR3",52,0)
+ I FBPG>1&(($Y+10)>IOSL) D HDR Q:FBOUT
+"RTN","FBPCR3",53,0)
+ E  D HDR1
+"RTN","FBPCR3",54,0)
+ S FBVI="" F  S FBVI=$O(^TMP($J,"FB",FBPSF,FBPT,FBPI,FBVI)) Q:FBVI']""!(FBOUT)  D SH Q:FBOUT  D  Q:FBOUT
+"RTN","FBPCR3",55,0)
+ .S FBDT=0 F  S FBDT=$O(^TMP($J,"FB",FBPSF,FBPT,FBPI,FBVI,FBDT)) Q:'FBDT  S L=0 F  S L=$O(^TMP($J,"FB",FBPSF,FBPT,FBPI,FBVI,FBDT,L)) Q:'L  D  Q:FBOUT
+"RTN","FBPCR3",56,0)
+ ..I ($Y+6)>IOSL D PAGE Q:FBOUT
+"RTN","FBPCR3",57,0)
+ ..S FBDATA=^TMP($J,"FB",FBPSF,FBPT,FBPI,FBVI,FBDT,L),FBCATC=$P(FBDATA,U,15),FBINS=$P(FBDATA,U,16)
+"RTN","FBPCR3",58,0)
+ ..S FBADJ=^TMP($J,"FB",FBPSF,FBPT,FBPI,FBVI,FBDT,L,"FBADJ")
+"RTN","FBPCR3",59,0)
+ ..W !,$P(FBDATA,U),?64,$P(FBDATA,U,11),!
+"RTN","FBPCR3",60,0)
+ ..W ?2,$P(FBDATA,U,2),?15,$P(FBDATA,U,3),?45,$P(FBDATA,U,4),?63,$P(FBDATA,U,5)
+"RTN","FBPCR3",61,0)
+ ..W !?4,$P(FBDATA,U,6),?12,$P(FBDATA,U,7)
+"RTN","FBPCR3",62,0)
+ ..W ?20 I $P(FBADJ,U,1)]"" W $P(FBADJ,U,1),?30,$J($P(FBADJ,U,2),14)
+"RTN","FBPCR3",63,0)
+ ..;If no adjustment code then print suspend cpde amd amount
+"RTN","FBPCR3",64,0)
+ ..I $P(FBADJ,U,1)="" W $P(FBDATA,U,8),?30,$J($P(FBADJ,U,4),14)
+"RTN","FBPCR3",65,0)
+ ..W ?47,$P(FBDATA,U,9),?58,$P(FBDATA,U,10),?66,$P(FBADJ,U,3)
+"RTN","FBPCR3",66,0)
+ ..I FBCATC!FBINS W !?5,">>> Cost recover from "_$S(FBCATC:"means testing",FBINS:"insurance",1:"") W:FBCATC&FBINS " and insurance" W "."
+"RTN","FBPCR3",67,0)
+ ..W !
+"RTN","FBPCR3",68,0)
+EXIT ;kill and quit
+"RTN","FBPCR3",69,0)
+ Q
+"RTN","FBPCR3",70,0)
+HDR ;main header
+"RTN","FBPCR3",71,0)
+ D HDR^FBPCR Q:FBOUT
+"RTN","FBPCR3",72,0)
+HDR1 W !!?(IOM-(13+$L(FBXPROG))/2),"FEE PROGRAM: ",FBXPROG
+"RTN","FBPCR3",73,0)
+ W !?4,"Fill Date",?64,"Date Certified"
+"RTN","FBPCR3",74,0)
+ W !,?15,"Drug Name",?44,"Strength",?60,"Quantity"
+"RTN","FBPCR3",75,0)
+ W !?2,"Claimed",?12,"Paid",?20,"Adj Code",?33,"Adj Amounts",?47,"Invoice #",?58,"Batch #",?66,"Remit Remarks",!,FBDASH
+"RTN","FBPCR3",76,0)
+ Q
+"RTN","FBPCR3",77,0)
+SH ;subheader - vendor, prints when name changes
+"RTN","FBPCR3",78,0)
+ I ($Y+4)>IOSL D HDR Q:FBOUT
+"RTN","FBPCR3",79,0)
+ W !!,"Vendor: ",$P(FBVI,";"),?41,"Vendor ID: ",$P($P(FBVI,";",2),"/",1),?65,"Chain #: ",$P($G(^TMP($J,"FB",FBPSF,FBPT,FBPI,FBVI)),U)
+"RTN","FBPCR3",80,0)
+ W !?20,"Fee Basis Billing Provider NPI: ",$P(FBVI,"/",2)
+"RTN","FBPCR3",81,0)
+ Q
+"RTN","FBPCR3",82,0)
+CR ;read for display
+"RTN","FBPCR3",83,0)
+ S DIR(0)="E" W ! D ^DIR K DIR S:$D(DUOUT)!($D(DTOUT)) FBOUT=1
+"RTN","FBPCR3",84,0)
+ Q
+"RTN","FBPCR3",85,0)
+PAGE ;new page
+"RTN","FBPCR3",86,0)
+ D HDR Q:FBOUT  D SH
+"RTN","FBPCR3",87,0)
+ Q
+"RTN","FBPCR3",88,0)
+INSCK(FBDT,FBDA1,FBPI) ;possible cost recovery fcn call
+"RTN","FBPCR3",89,0)
+ ;Passed variables:  fbdt=fill date or treatment from date
+"RTN","FBPCR3",90,0)
+ ;                   fbda1=ien if fee patient file, patient ien
+"RTN","FBPCR3",91,0)
+ ;                    fbpi=fee program
+"RTN","FBPCR3",92,0)
+ ;Output variables:   fbins=1 if possible recovery, 0 if no
+"RTN","FBPCR3",93,0)
+ N FBDA,FBFLAG,FBINS
+"RTN","FBPCR3",94,0)
+ S FBINS=0,FBFLAG=0,FBDT=FBDT+.1,FBDT=+$O(^FBAAA("AIC",FBDA1,-FBDT))
+"RTN","FBPCR3",95,0)
+ I FBDT S FBINS=$O(^FBAAA("AIC",FBDA1,FBDT,"N")) I FBINS="Y" D
+"RTN","FBPCR3",96,0)
+ .S FBDA=0 F  S FBDA=$O(^FBAAA("AIC",FBDA1,FBDT,FBINS,FBDA)) Q:'FBDA  D  ; Get both inpatient and outpatient pcr - FB*3.5*166
+"RTN","FBPCR3",97,0)
+ ..I $P($G(^FBAAA(FBDA1,1,FBDA,0)),U,3)=FBPI S FBFLAG=1
+"RTN","FBPCR3",98,0)
+ I 'FBFLAG S FBINS=0
+"RTN","FBPCR3",99,0)
+ Q $S(FBINS="Y":1,1:0)
+"RTN","FBUTL135")
+0^2^B143925629^B139327633
+"RTN","FBUTL135",1,0)
+FBUTL135 ;DSS/LJF - FEE BASIS UTILITY FOR UNIQUE CLAIM ID - FEE5010 ;3/23/2012
+"RTN","FBUTL135",2,0)
+ ;;3.5;FEE BASIS;**135,166**;JAN 30, 1995;Build 7
+"RTN","FBUTL135",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","FBUTL135",4,0)
+ ;
+"RTN","FBUTL135",5,0)
+ Q
+"RTN","FBUTL135",6,0)
+UCLAIMNO(FBSTA,FBSRC,FBINT,FBCLT,FBCLAIMS) ; Unique Claim Identifier for patch 135
+"RTN","FBUTL135",7,0)
+ N FBFDA,FBHELD,FBYEAR,FBINTDF,FBCLTDF,FBSRCDF,FBSTADF
+"RTN","FBUTL135",8,0)
+ ; Input:  FBSTA = Station
+"RTN","FBUTL135",9,0)
+ ;         FBSRC = Source
+"RTN","FBUTL135",10,0)
+ ;         FBINT = Initiation Type
+"RTN","FBUTL135",11,0)
+ ;         FBCLT = Claim Type
+"RTN","FBUTL135",12,0)
+ ;         FBCLAIMS = FPPS CLAIM ID - replaces sequence number
+"RTN","FBUTL135",13,0)
+ ; Output: 21 character string composed of the following characters:
+"RTN","FBUTL135",14,0)
+ ;           1-5    5 Character Station ID - left justified with trailing Zero's
+"RTN","FBUTL135",15,0)
+ ;           6      1 Character Source - 1=Fee, 2=FBCS, 3=VAPM, 4-9 - Future Use, default is 1
+"RTN","FBUTL135",16,0)
+ ;           7      1 character Initiation Type - (S)canned, (E)DI, (M)anual   ; default is M
+"RTN","FBUTL135",17,0)
+ ;           8      1 Character Claim Type - (I)nstitutional, (P)rofessional, (D)ental, (N)on-Standard    ; default is N
+"RTN","FBUTL135",18,0)
+ ;           9-12   4 digit year
+"RTN","FBUTL135",19,0)
+ ;           13     1 character "-" 
+"RTN","FBUTL135",20,0)
+ ;           14-28  15 character SEQUENCE NUMBER unique to the year - reinitialized when year changes
+"RTN","FBUTL135",21,0)
+ ;                  or:  the number supplied in FBCLAIMS - NOTE: this value will be limited to 15 digits
+"RTN","FBUTL135",22,0)
+ ; UCID example without FBCLAIMS supplied : 500001MN2012-291
+"RTN","FBUTL135",23,0)
+ ;
+"RTN","FBUTL135",24,0)
+ S FBSRCDF="1",FBINTDF="M",FBCLTDF="N",FBCLAIMS=$G(FBCLAIMS)   ; Defaults
+"RTN","FBUTL135",25,0)
+ S FBSTA=$E($S($G(FBSTA)]"":FBSTA,1:$$STATION)_"00000",1,5)   ; Station
+"RTN","FBUTL135",26,0)
+ ; Get first non space character for each input string;
+"RTN","FBUTL135",27,0)
+ S FBSRC=$E($S(+$G(FBSRC):+FBSRC,1:FBSRCDF),1)              ; Source
+"RTN","FBUTL135",28,0)
+ S FBINT=$E($TR($G(FBINT,FBINTDF)," ")),FBINT=$S(FBINT="":FBINTDF,"SEM"[FBINT:FBINT,1:FBINTDF)   ; Initiation Type
+"RTN","FBUTL135",29,0)
+ S FBCLT=$E($TR($G(FBCLT,FBCLTDF)," ")),FBCLT=$S(FBCLT="":FBCLTDF,"IPDN"[FBCLT:FBCLT,1:FBCLTDF)  ; Claim Type
+"RTN","FBUTL135",30,0)
+ I FBCLAIMS="" S FBCLAIMS=$$CLAIMNO                                             ; Generate Claim number if needed
+"RTN","FBUTL135",31,0)
+ Q (FBSTA_FBSRC_FBINT_FBCLT_$E(FBCLAIMS,1,20))
+"RTN","FBUTL135",32,0)
+ ;
+"RTN","FBUTL135",33,0)
+CLAIMNO() ; Return the value of field 39: UNIQUE CLAIM IDENTIFIER SEQ from file 161.4: FEE BASIS SITE PARAMETERS - incremented by one
+"RTN","FBUTL135",34,0)
+ N FBCLAIMS,FBYEAR
+"RTN","FBUTL135",35,0)
+ S FBCLAIMS=$E($TR($$NOW^XLFDT,".")_"000000000",1,15)  ;default if can't lock global
+"RTN","FBUTL135",36,0)
+ ; Lock the global node and set sequence number
+"RTN","FBUTL135",37,0)
+ F FBHELD=1:1:10 L +^FBAA(161.4,1,2):$G(DILOCTM,3) I  D  L -^FBAA(161.4,1,2) Q
+"RTN","FBUTL135",38,0)
+ . S FBCLAIMS=$$GET1^DIQ(161.4,1,39,"I"),FBYEAR=+$P($$HTE^XLFDT($H)," ",3)
+"RTN","FBUTL135",39,0)
+ . I FBYEAR'=$P(FBCLAIMS,"-") S FBCLAIMS="-0" ;reinit sequence when year changes
+"RTN","FBUTL135",40,0)
+ . S FBCLAIMS=FBYEAR_"-"_(1+$P(FBCLAIMS,"-",2))
+"RTN","FBUTL135",41,0)
+ . S FBFDA(161.4,"1,",39)=FBCLAIMS D FILE^DIE(,"FBFDA") ; increment and file
+"RTN","FBUTL135",42,0)
+ Q FBCLAIMS
+"RTN","FBUTL135",43,0)
+ ;
+"RTN","FBUTL135",44,0)
+VALIDATE(TYPE,UCID) ;
+"RTN","FBUTL135",45,0)
+ N VALID,FBSTA,FBSRC,FBINT,FBCLMT
+"RTN","FBUTL135",46,0)
+ S VALID=0
+"RTN","FBUTL135",47,0)
+ I TYPE="I" D  Q VALID
+"RTN","FBUTL135",48,0)
+ . I $L(UCID)<14 Q  ; needs to be at least 14 characters long
+"RTN","FBUTL135",49,0)
+ . S FBSTA=$E(UCID,1,5)
+"RTN","FBUTL135",50,0)
+ . S FBSRC=$E(UCID,6)
+"RTN","FBUTL135",51,0)
+ . S FBINT=$E(UCID,7)
+"RTN","FBUTL135",52,0)
+ . S FBCLMT=$E(UCID,8)
+"RTN","FBUTL135",53,0)
+ . S $E(UCID,1,8)=""
+"RTN","FBUTL135",54,0)
+ . I FBSRC,"SEM"[FBINT,FBCLMT="I",UCID?4N1"-"1.15N S VALID=1
+"RTN","FBUTL135",55,0)
+ I TYPE="O" D  Q VALID
+"RTN","FBUTL135",56,0)
+ . I $L(UCID)<14 Q  ; needs to be at least 14 characters long
+"RTN","FBUTL135",57,0)
+ . S FBSTA=$E(UCID,1,5)
+"RTN","FBUTL135",58,0)
+ . S FBSRC=$E(UCID,6)
+"RTN","FBUTL135",59,0)
+ . S FBINT=$E(UCID,7)
+"RTN","FBUTL135",60,0)
+ . S FBCLMT=$E(UCID,8)
+"RTN","FBUTL135",61,0)
+ . S $E(UCID,1,8)=""
+"RTN","FBUTL135",62,0)
+ . I FBSRC,"SEM"[FBINT,"PDN"[FBCLMT,UCID?4N1"-"1.15N S VALID=1
+"RTN","FBUTL135",63,0)
+ Q VALID
+"RTN","FBUTL135",64,0)
+ ;
+"RTN","FBUTL135",65,0)
+STATION() ;  Set station
+"RTN","FBUTL135",66,0)
+ N FBAASN,FBPOP,FBSITE,FBSN,FB
+"RTN","FBUTL135",67,0)
+ D STATION^FBAAUTL S FBSN=$E(FBSN_"00000",1,5)
+"RTN","FBUTL135",68,0)
+ Q FBSN
+"RTN","FBUTL135",69,0)
+ ;
+"RTN","FBUTL135",70,0)
+INVUCID(FBAAIN,FBSTA,FBSRC,FBINTYP,FBCLAIMS)  ; populates file 162.5 field UCID and returns UCID
+"RTN","FBUTL135",71,0)
+ N UCID,FBDAT,FBMSG,FBCLTYP
+"RTN","FBUTL135",72,0)
+ ;FBAAIN = IEN of entry in file 162.5
+"RTN","FBUTL135",73,0)
+ ;FBSTA = Station ID
+"RTN","FBUTL135",74,0)
+ ;FBSRC = Source - 1=Fee, 2=FBCS, 3=VAPM, 4-9 - Future Use
+"RTN","FBUTL135",75,0)
+ ;FBINTYP = Initiation Type - (S)canned, (E)DI, (M)anual
+"RTN","FBUTL135",76,0)
+ ;FBCLAIMS = Claim Number in format YYYY-nnnn format
+"RTN","FBUTL135",77,0)
+ ;
+"RTN","FBUTL135",78,0)
+ S UCID="-1",FBCLTYP="I" ;- Claim Type is always - 'I'nstitution - for this API
+"RTN","FBUTL135",79,0)
+ I $G(FBAAIN),$G(FBSTA)]"",$G(FBSRC)]"",$G(FBINTYP)]"",$G(FBCLAIMS)]""     ; Validate all input parameters populated
+"RTN","FBUTL135",80,0)
+ E  D  Q UCID
+"RTN","FBUTL135",81,0)
+ . S:'$G(FBAAIN) UCID=UCID_U_"UNDEFINED INVOICE IEN" S:$G(FBSTA)="" UCID=UCID_U_"UNDEFINED STATION"
+"RTN","FBUTL135",82,0)
+ . S:$G(FBSRC)="" UCID=UCID_U_"UNDEFINED SOURCE" S:$G(FBINTYP)="" UCID=UCID_U_"UNDEFINED INITIATION TYPE"
+"RTN","FBUTL135",83,0)
+ . S:$G(FBCLAIMS)="" UCID=UCID_U_"UNDEFINED CLAIM NUMBER"
+"RTN","FBUTL135",84,0)
+ ; Validate paramaters contain acceptable values
+"RTN","FBUTL135",85,0)
+ I $L(FBSTA)<3 S UCID=UCID_U_"INVALID STATION PARAMETER"
+"RTN","FBUTL135",86,0)
+ I FBSRC,FBSRC?1N
+"RTN","FBUTL135",87,0)
+ E  S UCID=UCID_U_"INVALID SOURCE PARAMETER"
+"RTN","FBUTL135",88,0)
+ I "SEM"[FBINTYP,$L(FBINTYP)=1
+"RTN","FBUTL135",89,0)
+ E  S UCID=UCID_U_"INVALID INITIATION TYPE PARAMETER"
+"RTN","FBUTL135",90,0)
+ I FBCLAIMS'?4N1"-"1.15N S UCID=UCID_U_"INVALID CLAIM NUMBER PARAMETER"
+"RTN","FBUTL135",91,0)
+ I '$D(^FBAAI(FBAAIN)) S UCID=UCID_U_"INVALID ENTRY IN FILE 162.5: "_$NA(^FBAAI(FBAAIN))
+"RTN","FBUTL135",92,0)
+ I $L(UCID)>2 Q UCID
+"RTN","FBUTL135",93,0)
+ ; parameters passed muster
+"RTN","FBUTL135",94,0)
+ S UCID=$$UCLAIMNO(FBSTA,FBSRC,FBINTYP,FBCLTYP,FBCLAIMS)
+"RTN","FBUTL135",95,0)
+ S FBDAT(162.5,FBAAIN_",",85)=UCID
+"RTN","FBUTL135",96,0)
+ D FILE^DIE(,"FBDAT","FBMSG")
+"RTN","FBUTL135",97,0)
+ I $D(FBMSG("DIERR")) S UCID="-1^"_"DIERR TEXT: "_$G(FBMSG("DIERR","1","TEXT",1))_$NA(^FBAAI(FBAAIN))_"^UCID: "_UCID
+"RTN","FBUTL135",98,0)
+ Q UCID
+"RTN","FBUTL135",99,0)
+ ;
+"RTN","FBUTL135",100,0)
+PAYUCID(DFN,FBV,FBSDI,FBAACPI,FBSTA,FBSRC,FBINTYP,FBCLTYP,FBCLAIMS)  ;populates file 162 field UCID and returns UCID - Outpatient
+"RTN","FBUTL135",101,0)
+ N C,UCID,FBDAT,FBMSG
+"RTN","FBUTL135",102,0)
+ ;DFN = IEN of PATIENT in 162
+"RTN","FBUTL135",103,0)
+ ;FBV = IEN of VENDOR in 162
+"RTN","FBUTL135",104,0)
+ ;FBSDI = IEN of INITIAL TREATMENT DATE multiple in 162
+"RTN","FBUTL135",105,0)
+ ;FBAACPI = IEN of SERVICE PROVIDED multiple in 162
+"RTN","FBUTL135",106,0)
+ ;FBSTA = Station ID
+"RTN","FBUTL135",107,0)
+ ;FBSRC = Source - 1=Fee, 2=FBCS, 3=VAPM, 4-9 - Future Use
+"RTN","FBUTL135",108,0)
+ ;FBINTYP = Initiation Type - (S)canned, (E)DI, (M)anual
+"RTN","FBUTL135",109,0)
+ ;FBCLTYP = Claim Type - (I)nstitutional, (P)rofessional, (D)ental, (N)on-Standard
+"RTN","FBUTL135",110,0)
+ ;FBCLAIMS = Claim Number in format YYYY-nnnn format
+"RTN","FBUTL135",111,0)
+ ;
+"RTN","FBUTL135",112,0)
+ S C=",",UCID="-1"
+"RTN","FBUTL135",113,0)
+ I $G(DFN),$G(FBV),$G(FBSDI),$G(FBAACPI),$G(FBSTA)]"",$G(FBSRC),$G(FBINTYP)]"",$G(FBCLTYP)]"",$G(FBCLAIMS)]""  ; Validate all input parameters populated
+"RTN","FBUTL135",114,0)
+ E  D  Q UCID
+"RTN","FBUTL135",115,0)
+ . S:'$G(DFN) UCID=UCID_U_"UNDEFINED IEN of PATIENT" S:'$G(FBV) UCID=UCID_U_"UNDEFINED IEN of VENDOR"
+"RTN","FBUTL135",116,0)
+ . S:'$G(FBSDI) UCID=UCID_U_"UNDEFINED IEN of INITIAL TREATMENT DATE" S:'$G(FBAACPI) UCID=UCID_U_"UNDEFINED IEN of SERVICE PROVIDED"
+"RTN","FBUTL135",117,0)
+ . S:$G(FBSTA)="" UCID=UCID_U_"UNDEFINED STATION" S:'$G(FBSRC) UCID=UCID_U_"UNDEFINED SOURCE VALUE"
+"RTN","FBUTL135",118,0)
+ . S:$G(FBINTYP)="" UCID=UCID_U_"UNDEFINED INITIATION TYPE" S:$G(FBCLTYP)="" UCID=UCID_U_"UNDEFINED CLAIM TYPE"
+"RTN","FBUTL135",119,0)
+ . S:$G(FBCLAIMS)="" UCID=UCID_U_"UNDEFINED CLAIM NUMBER"
+"RTN","FBUTL135",120,0)
+ ; Validate paramaters contain acceptable values
+"RTN","FBUTL135",121,0)
+ I $L(FBSTA)<3 S UCID=UCID_U_"INVALID STATION PARAMETER"
+"RTN","FBUTL135",122,0)
+ I FBSRC,FBSRC?1N
+"RTN","FBUTL135",123,0)
+ E  S UCID=UCID_U_"INVALID SOURCE PARAMETER"
+"RTN","FBUTL135",124,0)
+ I "SEM"[FBINTYP,$L(FBINTYP)=1
+"RTN","FBUTL135",125,0)
+ E  S UCID=UCID_U_"INVALID INITIATION TYPE PARAMETER"
+"RTN","FBUTL135",126,0)
+ I "PDN"[FBCLTYP,$L(FBCLTYP)=1
+"RTN","FBUTL135",127,0)
+ E  S UCID=UCID_U_"INVALID CLAIM TYPE PARAMETER"
+"RTN","FBUTL135",128,0)
+ I FBCLAIMS'?4N1"-"1.15NUL S UCID=UCID_U_"INVALID CLAIM NUMBER PARAMETER"
+"RTN","FBUTL135",129,0)
+ I '$D(^FBAAC(DFN,1,FBV,1,FBSDI,1,FBAACPI)) S UCID=UCID_U_"INVALID ENTRY IN FILE 162: "_$NA(^FBAAC(DFN,1,FBV,1,FBSDI,1,FBAACPI))
+"RTN","FBUTL135",130,0)
+ I $L(UCID)>2 Q UCID
+"RTN","FBUTL135",131,0)
+ ; parameters passed muster
+"RTN","FBUTL135",132,0)
+ S UCID=$$UCLAIMNO(FBSTA,FBSRC,FBINTYP,FBCLTYP,FBCLAIMS)
+"RTN","FBUTL135",133,0)
+ S FBDAT(162.03,FBAACPI_C_FBSDI_C_FBV_C_DFN_C,81)=UCID
+"RTN","FBUTL135",134,0)
+ D FILE^DIE(,"FBDAT","FBMSG")
+"RTN","FBUTL135",135,0)
+ I $D(FBMSG("DIERR")) S UCID="-1^"_"DIERR TEXT: "_$G(FBMSG("DIERR","1","TEXT",1))_$NA(^FBAAC(DFN,1,FBV,1,FBSDI,1,FBAACPI))_"^UCID: "_UCID
+"RTN","FBUTL135",136,0)
+ Q UCID
+"RTN","FBUTL135",137,0)
+ ;
+"RTN","FBUTL135",138,0)
+OCLMTYP(FBCURVAL) ; Get Outpatient Claim Type from the user
+"RTN","FBUTL135",139,0)
+ N DIR,X,Y,DTOUT,DUOUT,DIRUT,DTOCNT
+"RTN","FBUTL135",140,0)
+ S FBCURVAL=$G(FBCURVAL) I $G(FBCURVAL)]"","PDN"[FBCURVAL S DIR("B")=FBCURVAL
+"RTN","FBUTL135",141,0)
+ S DIR(0)="SO^P:P;D:D;N:N"
+"RTN","FBUTL135",142,0)
+ S DIR("L",1)="Select the Claim Type:"
+"RTN","FBUTL135",143,0)
+ S DIR("L",2)=""
+"RTN","FBUTL135",144,0)
+ S DIR("L")=" P - Professional,  D - Dental, N - Non-Standard"
+"RTN","FBUTL135",145,0)
+ S DTOCNT=0
+"RTN","FBUTL135",146,0)
+ F  D ^DIR D  Q:Y]""
+"RTN","FBUTL135",147,0)
+ . I $G(DTOUT) S Y=$S(FBCURVAL]"":FBCURVAL,1:"N") Q  ; time out - set to "N"on-standard if no current value exists
+"RTN","FBUTL135",148,0)
+ . I Y="" W !!,"This is a required response." Q
+"RTN","FBUTL135",149,0)
+ . I Y="^" S Y="" W !!,"This is a required response. '^' is not allowed." K DUOUT Q
+"RTN","FBUTL135",150,0)
+ . I Y="^^" S Y="" W !!,"This is a required response. '^' is not allowed." K DUOUT Q
+"RTN","FBUTL135",151,0)
+ . I Y]"","PDN"[Y Q
+"RTN","FBUTL135",152,0)
+ . S Y="" W !,"Enter a code from the list."
+"RTN","FBUTL135",153,0)
+ Q Y
+"RTN","FBUTL135",154,0)
+ ;
+"RTN","FBUTL135",155,0)
+UCIDUTL()  ;EP for TEST report to validate UCID information for FB PATCH 135
+"RTN","FBUTL135",156,0)
+ ;
+"RTN","FBUTL135",157,0)
+ N DIR,FBQUIT,Y,FBSTG1,FBSRVC,FBPROG,FBID,DA,DUOUT,DIRUT,DTOUT,FBDONE
+"RTN","FBUTL135",158,0)
+ ;
+"RTN","FBUTL135",159,0)
+ S FBQUIT=0
+"RTN","FBUTL135",160,0)
+ S FBDONE=0
+"RTN","FBUTL135",161,0)
+ ;
+"RTN","FBUTL135",162,0)
+ I $G(DUZ(2))="" D
+"RTN","FBUTL135",163,0)
+ .W !,"DUZ NOT IDENTIFIED - PLEASE LOG IN BEFORE USING FB 135 TESTING UTILTIES"
+"RTN","FBUTL135",164,0)
+ .S FBDONE=1
+"RTN","FBUTL135",165,0)
+ ;
+"RTN","FBUTL135",166,0)
+ D CLEAR()
+"RTN","FBUTL135",167,0)
+ W !,?5,"FEE BASIS PATCH 135 UNIQUE CLAIM IDENTIFIER DISPLAY"
+"RTN","FBUTL135",168,0)
+ F  Q:FBDONE  D
+"RTN","FBUTL135",169,0)
+ .S DIR("A",1)="Select the UCID REPORT or the PROGRAM you are testing"
+"RTN","FBUTL135",170,0)
+ .S DIR("A",2)="ENTER '^' or leave blank to EXIT"
+"RTN","FBUTL135",171,0)
+ .S DIR("A")="SELECT"
+"RTN","FBUTL135",172,0)
+ .S DIR(0)="SO^1:Outpatient and Inpatient UCID Display by Date Range Report"
+"RTN","FBUTL135",173,0)
+ .S DIR(0)=DIR(0)_";3:Outpatient UCID Screen Display"
+"RTN","FBUTL135",174,0)
+ .S DIR(0)=DIR(0)_";9:Inpatient UCID Screen Display"
+"RTN","FBUTL135",175,0)
+ .S DIR("B")=""
+"RTN","FBUTL135",176,0)
+ .D ^DIR
+"RTN","FBUTL135",177,0)
+ .K DIR("A")
+"RTN","FBUTL135",178,0)
+ .I $D(DUOUT) S FBDONE=1 ;DEFINED IF USER ENTERS ONE UP ARROW
+"RTN","FBUTL135",179,0)
+ .I $D(DIRUT) S FBDONE=1 ;DEFINED IF USER ENTERS TWO UP ARROWS
+"RTN","FBUTL135",180,0)
+ .I $D(DTOUT) S FBDONE=1  ;DEFINED IF USER TIMES OUT
+"RTN","FBUTL135",181,0)
+ .I '+Y S FBDONE=1
+"RTN","FBUTL135",182,0)
+ .Q:FBDONE
+"RTN","FBUTL135",183,0)
+ .S FBPROG=+Y
+"RTN","FBUTL135",184,0)
+ .I FBPROG=1 D UCIDRPT()
+"RTN","FBUTL135",185,0)
+ .I FBPROG=9 D   ;INPATIENT
+"RTN","FBUTL135",186,0)
+ ..S FBQUIT=0
+"RTN","FBUTL135",187,0)
+ ..F  Q:FBQUIT  D
+"RTN","FBUTL135",188,0)
+ ...S DIC=162.5  ;162.5 -- FEE BASIS INVOICE FILE
+"RTN","FBUTL135",189,0)
+ ...S DIC(0)="AE"
+"RTN","FBUTL135",190,0)
+ ...;S DIC("S")="I $P(^(0),U,9)="""""
+"RTN","FBUTL135",191,0)
+ ...D ^DIC
+"RTN","FBUTL135",192,0)
+ ...I $D(DUOUT) S FBQUIT=1
+"RTN","FBUTL135",193,0)
+ ...I $D(DIRUT) S FBQUIT=1
+"RTN","FBUTL135",194,0)
+ ...I $D(DTOUT) S FBQUIT=1
+"RTN","FBUTL135",195,0)
+ ...I Y<0 S FBQUIT=1
+"RTN","FBUTL135",196,0)
+ ...Q:FBQUIT
+"RTN","FBUTL135",197,0)
+ ...I (Y>0) D
+"RTN","FBUTL135",198,0)
+ ....;W !,"UCID: "_$P($G(^FBAAI(+Y,5)),U,5)
+"RTN","FBUTL135",199,0)
+ ....S FBIEN=$P(Y,U,2)
+"RTN","FBUTL135",200,0)
+ ....S FBNODE=^FBAAI(FBIEN,0)
+"RTN","FBUTL135",201,0)
+ ....S FBDATE=$P(FBNODE,U,2)
+"RTN","FBUTL135",202,0)
+ ....S FBVET=$P(FBNODE,U,4)   ;POINTER TO 161 - FEE BASIS PATIENT
+"RTN","FBUTL135",203,0)
+ ....S FBPAT=$P(^FBAAA(FBVET,0),U,1)   ;POINTER TO FILE 2 - PATIENT
+"RTN","FBUTL135",204,0)
+ ....S FBVNDR=$P(FBNODE,U,3)  ;POINTER TO FB VENDOR FILE
+"RTN","FBUTL135",205,0)
+ ....S Y=FBDATE
+"RTN","FBUTL135",206,0)
+ ....D DD^%DT
+"RTN","FBUTL135",207,0)
+ ....W !,$P(^DPT(FBPAT,0),U,1)_"    "_$P(^FBAAV(FBVNDR,0),U,1)_"    "_Y
+"RTN","FBUTL135",208,0)
+ ....W !?10,"UCID: "_$P($G(^FBAAI(FBIEN,5)),U,5)
+"RTN","FBUTL135",209,0)
+ ....H:('FBDONE)&('FBQUIT) 3
+"RTN","FBUTL135",210,0)
+ ...W !!
+"RTN","FBUTL135",211,0)
+ .I FBPROG=3 D  ;OUTPATIENT
+"RTN","FBUTL135",212,0)
+ ..S FBQUIT=0
+"RTN","FBUTL135",213,0)
+ ..F  Q:FBQUIT  D
+"RTN","FBUTL135",214,0)
+ ...S DIC="^FBAAC(" ;  162 -- FEE BASIS PAYMENT FILE
+"RTN","FBUTL135",215,0)
+ ...S DIC(0)="AE"   ;
+"RTN","FBUTL135",216,0)
+ ...D ^DIC   ;PATIENT SELECTION
+"RTN","FBUTL135",217,0)
+ ...I $D(DUOUT) S FBQUIT=1
+"RTN","FBUTL135",218,0)
+ ...I $D(DIRUT) S FBQUIT=1
+"RTN","FBUTL135",219,0)
+ ...I $D(DTOUT) S FBQUIT=1
+"RTN","FBUTL135",220,0)
+ ...Q:FBQUIT
+"RTN","FBUTL135",221,0)
+ ...S DA(1)=+Y
+"RTN","FBUTL135",222,0)
+ ...Q:'+$O(^FBAAC(DA(1),1,0))
+"RTN","FBUTL135",223,0)
+ ...S DIC="^FBAAC("_DA(1)_",1,"
+"RTN","FBUTL135",224,0)
+ ...D ^DIC
+"RTN","FBUTL135",225,0)
+ ...I $D(DUOUT) S FBQUIT=1
+"RTN","FBUTL135",226,0)
+ ...I $D(DIRUT) S FBQUIT=1
+"RTN","FBUTL135",227,0)
+ ...I $D(DTOUT) S FBQUIT=1
+"RTN","FBUTL135",228,0)
+ ...Q:FBQUIT
+"RTN","FBUTL135",229,0)
+ ...I +Y<0 W !,"No Fee Basis Invoice Vendors found for this patient!" Q
+"RTN","FBUTL135",230,0)
+ ...S DA(2)=DA(1)
+"RTN","FBUTL135",231,0)
+ ...S DA(1)=+Y
+"RTN","FBUTL135",232,0)
+ ...Q:'+$O(^FBAAC(DA(2),1,DA(1),1,0))
+"RTN","FBUTL135",233,0)
+ ...S DIC="^FBAAC("_DA(2)_",1,"_DA(1)_",1,"     ;INITIAL TREATMENT DATE SELECTION
+"RTN","FBUTL135",234,0)
+ ...D ^DIC
+"RTN","FBUTL135",235,0)
+ ...I $D(DUOUT) S FBQUIT=1
+"RTN","FBUTL135",236,0)
+ ...I $D(DIRUT) S FBQUIT=1
+"RTN","FBUTL135",237,0)
+ ...I $D(DTOUT) S FBQUIT=1
+"RTN","FBUTL135",238,0)
+ ...Q:FBQUIT
+"RTN","FBUTL135",239,0)
+ ...I +Y<0 W !,"No Fee Basis Invoice DATE OF SERVICE found for this Vendor!" Q
+"RTN","FBUTL135",240,0)
+ ...S DA(3)=DA(2)
+"RTN","FBUTL135",241,0)
+ ...S DA(2)=DA(1)
+"RTN","FBUTL135",242,0)
+ ...S DA(1)=+Y
+"RTN","FBUTL135",243,0)
+ ...Q:'+$O(^FBAAC(DA(3),1,DA(2),1,DA(1),1,0))
+"RTN","FBUTL135",244,0)
+ ...S FBSRVC=0
+"RTN","FBUTL135",245,0)
+ ...F  S FBSRVC=$O(^FBAAC(DA(3),1,DA(2),1,DA(1),1,FBSRVC)) Q:'+FBSRVC  D
+"RTN","FBUTL135",246,0)
+ ....S FBPNTR=$P($G(^FBAAC(DA(3),1,DA(2),1,DA(1),1,FBSRVC,0)),U,1)  ;POINTER TO 81 - CPT FILE
+"RTN","FBUTL135",247,0)
+ ....W !,"SERVICE: ",$P($$CPT^ICPTCOD(FBPNTR),U,2),"  ",$P($$CPT^ICPTCOD(FBPNTR),U,3),?50,"UCID: "_$P($G(^FBAAC(DA(3),1,DA(2),1,DA(1),1,FBSRVC,5)),U,5) ;FB*3.5*166 - Update direct global reads of 81 file to API
+"RTN","FBUTL135",248,0)
+ ...H:('FBDONE)&('FBQUIT) 3
+"RTN","FBUTL135",249,0)
+ ...W !!
+"RTN","FBUTL135",250,0)
+ .D CLEAR()
+"RTN","FBUTL135",251,0)
+ Q
+"RTN","FBUTL135",252,0)
+CLEAR()   ;CLEAR SCREEN
+"RTN","FBUTL135",253,0)
+ N FBLINE
+"RTN","FBUTL135",254,0)
+ F FBLINE=1:1:10 W !
+"RTN","FBUTL135",255,0)
+ Q
+"RTN","FBUTL135",256,0)
+UCIDRPT()  ;PROVIDES A REPORT OF ALL UCIDS IN THE SYSTEM FOR A DATE RANGE
+"RTN","FBUTL135",257,0)
+ ;
+"RTN","FBUTL135",258,0)
+ N DIR,FBQUIT,FBSTRT,FBEND,Y,FBSDATE,FBEDATE,FBDATE,FBINTLDT,FBPAT
+"RTN","FBUTL135",259,0)
+ S FBQUIT=0
+"RTN","FBUTL135",260,0)
+ S Y=DT
+"RTN","FBUTL135",261,0)
+ D DD^%DT
+"RTN","FBUTL135",262,0)
+ S FBTODAY=Y
+"RTN","FBUTL135",263,0)
+ S DIR("A")="Enter the START DATE for UCID report"
+"RTN","FBUTL135",264,0)
+ S DIR(0)="D"
+"RTN","FBUTL135",265,0)
+ S DIR("B")=FBTODAY
+"RTN","FBUTL135",266,0)
+ D ^DIR
+"RTN","FBUTL135",267,0)
+ I $D(DUOUT) S FBQUIT=1
+"RTN","FBUTL135",268,0)
+ I $D(DIRUT) S FBQUIT=1
+"RTN","FBUTL135",269,0)
+ I $D(DTOUT) S FBQUIT=1
+"RTN","FBUTL135",270,0)
+ S FBSTRT=Y
+"RTN","FBUTL135",271,0)
+ I 'FBQUIT D
+"RTN","FBUTL135",272,0)
+ .S DIR("A")="Enter the END DATE for UCID report"
+"RTN","FBUTL135",273,0)
+ .S DIR(0)="D"
+"RTN","FBUTL135",274,0)
+ .S DIR("B")=FBTODAY
+"RTN","FBUTL135",275,0)
+ .D ^DIR
+"RTN","FBUTL135",276,0)
+ .I $D(DUOUT) S FBQUIT=1
+"RTN","FBUTL135",277,0)
+ .I $D(DIRUT) S FBQUIT=1
+"RTN","FBUTL135",278,0)
+ .I $D(DTOUT) S FBQUIT=1
+"RTN","FBUTL135",279,0)
+ .S FBEND=Y
+"RTN","FBUTL135",280,0)
+ I 'FBQUIT D
+"RTN","FBUTL135",281,0)
+ .D ^%ZIS
+"RTN","FBUTL135",282,0)
+ .I 'POP D
+"RTN","FBUTL135",283,0)
+ ..U IO
+"RTN","FBUTL135",284,0)
+ ..S Y=FBSTRT
+"RTN","FBUTL135",285,0)
+ ..D DD^%DT
+"RTN","FBUTL135",286,0)
+ ..S FBSDATE=Y
+"RTN","FBUTL135",287,0)
+ ..S Y=FBEND
+"RTN","FBUTL135",288,0)
+ ..D DD^%DT
+"RTN","FBUTL135",289,0)
+ ..S FBEDATE=Y
+"RTN","FBUTL135",290,0)
+ ..W !,"OUTPATIENT INVOICES INITIAL SERVICES FROM: ",FBSDATE," TO: "_FBEDATE
+"RTN","FBUTL135",291,0)
+ ..D OUTDSPLY(FBSTRT,FBEND)
+"RTN","FBUTL135",292,0)
+ ..W !!,"CIVIL HOSPITAL INVOICES DATE RECEIVED FROM: ",FBSDATE," TO: "_FBEDATE
+"RTN","FBUTL135",293,0)
+ ..D INDSPLY(FBSTRT,FBEND)
+"RTN","FBUTL135",294,0)
+ .D ^%ZISC
+"RTN","FBUTL135",295,0)
+ Q
+"RTN","FBUTL135",296,0)
+OUTDSPLY(FBSTRT,FBEND)  ;DISPLAY OUTPATIENT UCID INFORMATION FOR A DATE RANGE
+"RTN","FBUTL135",297,0)
+ ; INPUT : FBSTRT : A FM DATE REPRESENTING THE STARTING DATE FOR REPORT
+"RTN","FBUTL135",298,0)
+ ;         FBEND  : A FM DATE REPRESENTING THE ENDING DATE FOR REPORT
+"RTN","FBUTL135",299,0)
+ ;
+"RTN","FBUTL135",300,0)
+ N FBIEN,FBVNDR,FBINTLDT,FBSRVC,FBSNUM
+"RTN","FBUTL135",301,0)
+ S FBIEN=0
+"RTN","FBUTL135",302,0)
+ F  S FBIEN=$O(^FBAAC(FBIEN)) Q:'+FBIEN  D
+"RTN","FBUTL135",303,0)
+ .S FBVNDR=0
+"RTN","FBUTL135",304,0)
+ .F  S FBVNDR=$O(^FBAAC(FBIEN,1,FBVNDR))  Q:'+FBVNDR  D
+"RTN","FBUTL135",305,0)
+ ..S FBINTLDT=0
+"RTN","FBUTL135",306,0)
+ ..F  S FBINTLDT=$O(^FBAAC(FBIEN,1,FBVNDR,1,FBINTLDT)) Q:'+FBINTLDT  D
+"RTN","FBUTL135",307,0)
+ ...S FBDATE=$P(^FBAAC(FBIEN,1,FBVNDR,1,FBINTLDT,0),U,1)
+"RTN","FBUTL135",308,0)
+ ...I (FBSTRT<=FBDATE)&(FBDATE<=FBEND) D
+"RTN","FBUTL135",309,0)
+ ....W !
+"RTN","FBUTL135",310,0)
+ ....;NOW PRINT OUT PATIENT NAME, VENDOR NAME, TREATMENT DATE, AND EACH SERVICE AND UCID
+"RTN","FBUTL135",311,0)
+ ....S Y=FBDATE
+"RTN","FBUTL135",312,0)
+ ....D DD^%DT
+"RTN","FBUTL135",313,0)
+ ....W !,$P(^DPT(FBIEN,0),U,1)_"    "_$P(^FBAAV(FBVNDR,0),U,1)_"    "_Y
+"RTN","FBUTL135",314,0)
+ ....S FBSNUM=0
+"RTN","FBUTL135",315,0)
+ ....F  S FBSNUM=$O(^FBAAC(FBIEN,1,FBVNDR,1,FBINTLDT,1,FBSNUM)) Q:'+FBSNUM  D
+"RTN","FBUTL135",316,0)
+ .....S FBSRVC=$P(^FBAAC(FBIEN,1,FBVNDR,1,FBINTLDT,1,FBSNUM,0),U,1)
+"RTN","FBUTL135",317,0)
+ .....W !,"SERVICE: ",$P($$CPT^ICPTCOD(FBSRVC),U,2),"  ",$P($$CPT^ICPTCOD(FBSRVC),U,3),?50,"UCID: "_$P($G(^FBAAC(FBIEN,1,FBVNDR,1,FBINTLDT,1,FBSNUM,5)),U,5) ;FB*3.5*166 - Update direct global reads of 81 file to API
+"RTN","FBUTL135",318,0)
+ Q
+"RTN","FBUTL135",319,0)
+ ;
+"RTN","FBUTL135",320,0)
+INDSPLY(FBSTRT,FBEND)  ;DISPLAY CIVIL HOSPITAL UCID INFORMATION FOR A DATE RANGE
+"RTN","FBUTL135",321,0)
+ ; INPUT : FBSTRT : A FM DATE REPRESENTING THE STARTING DATE FOR REPORT
+"RTN","FBUTL135",322,0)
+ ;         FBEND  : A FM DATE REPRESENTING THE ENDING DATE FOR REPORT
+"RTN","FBUTL135",323,0)
+ N FBIEN,DBDATE,FBVET,FBPAT,FBVNDR
+"RTN","FBUTL135",324,0)
+ S FBIEN=0
+"RTN","FBUTL135",325,0)
+ F  S FBIEN=$O(^FBAAI(FBIEN)) Q:'+FBIEN  D
+"RTN","FBUTL135",326,0)
+ .S FBNODE=^FBAAI(FBIEN,0)
+"RTN","FBUTL135",327,0)
+ .S FBDATE=$P(FBNODE,U,2)
+"RTN","FBUTL135",328,0)
+ .I (FBSTRT<=FBDATE)&(FBDATE<=FBEND) D
+"RTN","FBUTL135",329,0)
+ ..W !
+"RTN","FBUTL135",330,0)
+ ..S FBVET=$P(FBNODE,U,4)   ;POINTER TO 161
+"RTN","FBUTL135",331,0)
+ ..S FBPAT=$P(^FBAAA(FBVET,0),U,1)   ;POINTER TO FILE 2
+"RTN","FBUTL135",332,0)
+ ..S FBVNDR=$P(FBNODE,U,3)
+"RTN","FBUTL135",333,0)
+ ..S Y=FBDATE
+"RTN","FBUTL135",334,0)
+ ..D DD^%DT
+"RTN","FBUTL135",335,0)
+ ..W !,$P(FBNODE,U,1)_"   "_$P(^DPT(FBPAT,0),U,1)_"   "_$P(^FBAAV(FBVNDR,0),U,1)_"   "_Y
+"RTN","FBUTL135",336,0)
+ ..W !?10,"UCID: "_$P($G(^FBAAI(FBIEN,5)),U,5)
+"RTN","FBUTL135",337,0)
+ Q
+"UP",162,162.03,-3)
+162^1
+"UP",162,162.03,-2)
+162.01^1
+"UP",162,162.03,-1)
+162.02^1
+"UP",162,162.03,0)
+162.03
+"VER")
+8.0^22.0
+"^DD",162,162.03,43,0)
+ANESTHESIA TIME (MINUTES)^NJ3,0X^^2;11^K:+X'=X!(X>9999)!(X<15)!(X?.E1"."1N.N) X
+"^DD",162,162.03,43,3)
+Type a Number between 15 and 9999, 0 Decimal Digits
+"^DD",162,162.03,43,21,0)
+^^2^2^2990517^
+"^DD",162,162.03,43,21,1,0)
+Enter time billed for an anesthesia service in minutes.  The bill may
+"^DD",162,162.03,43,21,2,0)
+specify anesthesia units which will need to be converted to minutes.
+"^DD",162,162.03,43,"DT")
+3160212
+"BLD",10064,6)
+^140
+**END**
+**END**
+

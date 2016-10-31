@@ -1,0 +1,203 @@
+$TXT Created by                   at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 03/04/15 at 18:04
+=============================================================================
+Run Date: JUL 07, 2015                     Designation: SD*5.3*635
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #524                    Status: Released
+                  Compliance Date: AUG 07, 2015
+=============================================================================
+
+Associated patches: (v)SD*5.3*622  <<= must be installed BEFORE `SD*5.3*635'
+
+Subject: ADDING NEW FIELDS TO FILE #44 IN SUPPORT OF VAR
+
+Category: 
+  - Data Dictionary
+  - Input Template
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch adds three (3) new fields to the HOSPITAL LOCATION File (#44)
+ to address the defects that exist in the current VistA Scheduling package.
+ This effort was requested by the Veterans Health Administration (VHA)
+ Access and Clinic Administrative Program (ACAP) in support of the Veteran
+ Appointment Request (VAR) project.
+   
+   
+ Associated Remedy Tickets:
+ ==========================
+ INC000001219217 - Adding Fields to VistA Scheduling
+     
+   
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Chillicothe VAMC
+ Salisbury, NC
+ Tucson, AZ
+   
+   
+  
+ Remedy Ticket Overview:
+ =======================
+ 1. INC000001219217 - Adding Fields to VistA Scheduling
+  
+ Problem:
+ ========
+ This patch adds three new fields to the HOSPITAL LOCATION file (#44), the 
+ Clinic Profile [SDCLINIC] menu option, and updates the SDB input template 
+ that is tied to the Set up a Clinic [SDBUILD] option.
+  
+ Resolution:
+ ===========
+ The following new fields and descriptions were added to the HOSPITAL 
+ LOCATION File (#44).
+  
+   - PATIENT FRIENDLY NAME field (#60)
+   - DIRECT PATIENT SCHEDULING field (#61)
+   - DISPLAY CLIN APPT TO PATIENTS? field (#62)
+  
+ The SDB input template was also modified to display the fields for menu 
+ option, Set up a Clinic [SDBUILD].
+  
+    44,60    PATIENT FRIENDLY NAME  PA;1 FREE TEXT
+  
+               INPUT TRANSFORM:  K:$L(X)>80!($L(X)<3) X
+               LAST EDITED:      FEB 11, 2015 
+               HELP-PROMPT:      Enter a clinic description (3-80 chars) that's 
+                                 meaningful to patients. 
+               DESCRIPTION:      Populate this field with a description of the
+                                 clinic that will be meaningful to patients;
+                                 please use established naming conventions.  
+  
+  
+      44,61    DIRECT PATIENT SCHEDULING? PA;2 SET (Required)
+  
+                                 'Y' FOR YES; 
+                                 'N' FOR NO; 
+               LAST EDITED:      FEB 11, 2015 
+               HELP-PROMPT:      Enter 'Yes' if patients can self-schedule into 
+                                 this clinic. 
+               DESCRIPTION:      This field will determine if patients can
+                                 self-schedule into this clinic. A "Yes" in this
+                                 field will enable patients to directly schedule 
+                                 appointments into this clinic.  
+  
+  
+      44,62    DISPLAY CLIN APPT TO PATIENTS? PA;3 SET (Required)
+  
+                                 'Y' FOR YES; 
+                                 'N' FOR NO; 
+               LAST EDITED:      FEB 11, 2015 
+               HELP-PROMPT:      Enter 'Yes' if clinic appointment will be 
+                                 displayed to patients. 
+               DESCRIPTION:      This field will determine if the clinic
+                                 appointment information will be displayed to
+                                 patients. A "Yes" in this field will enable
+                                 patients to see their appointments in this
+                                 clinic.
+   
+  
+  
+ Documentation Retrieval Instructions:
+ =====================================
+ Updated documentation describing the functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ The documentation will be in the form of Microsoft Word files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ (VDL) at: http://www4.domain.ext/vdl/
+  
+ File Description                    File Name                   FTP Mode
+ --------------------------------------------------------------------------
+ Scheduling Supervisor Menu          SUPV.PDF                    (binary)
+  
+     
+ Installation Instructions:
+ ==========================
+ Install Time - less than 3 minutes. Suggested time to install: non-peak
+ requirement hours. Users are allowed on the system.
+   
+   
+  1. Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+  2. From the Kernel Installation & Distribution System menu, select 
+     the Installation menu.  
+  
+  3. From this menu, you may select to use the following options: 
+     (when prompted for INSTALL NAME, enter SD*5.3*635)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       SD*5.3*635.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.  
+  
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//", hit ENTER.
+  
+       a) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+  
+          Clinic Profile                   [SDCLINIC]
+          Set up a Clinic                  [SDBUILD]
+  
+       b) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDCP
+    Before: B22827962   After: B26039984  **140,171,187,354,622,635**
+ 
+Routine list of preceding patches: 622
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 13, 2015
+Completed By:                               Date Completed: JUL 01, 2015
+Released By :                               Date Released : JUL 07, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

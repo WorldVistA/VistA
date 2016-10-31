@@ -1,0 +1,1403 @@
+Released MPIF*1*62 SEQ #59
+Extracted from mail message
+**KIDS**:MPIF*1.0*62^
+
+**INSTALL NAME**
+MPIF*1.0*62
+"BLD",3148,0)
+MPIF*1.0*62^MASTER PATIENT INDEX VISTA^0^3160201^y
+"BLD",3148,1,0)
+^^3^3^3160122^^
+"BLD",3148,1,1,0)
+MASTER VETERAN INDEX VISTA ENHANCEMENTS - ITERATION 15
+"BLD",3148,1,2,0)
+Refer to patch MPIF*1.0*62 in the FORUM Patch Module for a complete
+"BLD",3148,1,3,0)
+description.
+"BLD",3148,4,0)
+^9.64PA^^
+"BLD",3148,6.3)
+3
+"BLD",3148,"ABPKG")
+n
+"BLD",3148,"KRN",0)
+^9.67PA^779.2^20
+"BLD",3148,"KRN",.4,0)
+.4
+"BLD",3148,"KRN",.401,0)
+.401
+"BLD",3148,"KRN",.402,0)
+.402
+"BLD",3148,"KRN",.403,0)
+.403
+"BLD",3148,"KRN",.5,0)
+.5
+"BLD",3148,"KRN",.84,0)
+.84
+"BLD",3148,"KRN",3.6,0)
+3.6
+"BLD",3148,"KRN",3.8,0)
+3.8
+"BLD",3148,"KRN",9.2,0)
+9.2
+"BLD",3148,"KRN",9.8,0)
+9.8
+"BLD",3148,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",3148,"KRN",9.8,"NM",1,0)
+MPIFAPI^^0^B64879127
+"BLD",3148,"KRN",9.8,"NM",2,0)
+MPIFRPC^^0^B42212497
+"BLD",3148,"KRN",9.8,"NM",3,0)
+MPIFVER^^0^B53549265
+"BLD",3148,"KRN",9.8,"NM","B","MPIFAPI",1)
+
+"BLD",3148,"KRN",9.8,"NM","B","MPIFRPC",2)
+
+"BLD",3148,"KRN",9.8,"NM","B","MPIFVER",3)
+
+"BLD",3148,"KRN",19,0)
+19
+"BLD",3148,"KRN",19.1,0)
+19.1
+"BLD",3148,"KRN",101,0)
+101
+"BLD",3148,"KRN",409.61,0)
+409.61
+"BLD",3148,"KRN",771,0)
+771
+"BLD",3148,"KRN",779.2,0)
+779.2
+"BLD",3148,"KRN",870,0)
+870
+"BLD",3148,"KRN",8989.51,0)
+8989.51
+"BLD",3148,"KRN",8989.52,0)
+8989.52
+"BLD",3148,"KRN",8994,0)
+8994
+"BLD",3148,"KRN",8994,"NM",0)
+^9.68A^2^2
+"BLD",3148,"KRN",8994,"NM",1,0)
+MPIF GET VHIC/CAC CARD DATA^^0
+"BLD",3148,"KRN",8994,"NM",2,0)
+MPIF PURGE VHIC/CAC CARD DATA^^0
+"BLD",3148,"KRN",8994,"NM","B","MPIF GET VHIC/CAC CARD DATA",1)
+
+"BLD",3148,"KRN",8994,"NM","B","MPIF PURGE VHIC/CAC CARD DATA",2)
+
+"BLD",3148,"KRN","B",.4,.4)
+
+"BLD",3148,"KRN","B",.401,.401)
+
+"BLD",3148,"KRN","B",.402,.402)
+
+"BLD",3148,"KRN","B",.403,.403)
+
+"BLD",3148,"KRN","B",.5,.5)
+
+"BLD",3148,"KRN","B",.84,.84)
+
+"BLD",3148,"KRN","B",3.6,3.6)
+
+"BLD",3148,"KRN","B",3.8,3.8)
+
+"BLD",3148,"KRN","B",9.2,9.2)
+
+"BLD",3148,"KRN","B",9.8,9.8)
+
+"BLD",3148,"KRN","B",19,19)
+
+"BLD",3148,"KRN","B",19.1,19.1)
+
+"BLD",3148,"KRN","B",101,101)
+
+"BLD",3148,"KRN","B",409.61,409.61)
+
+"BLD",3148,"KRN","B",771,771)
+
+"BLD",3148,"KRN","B",779.2,779.2)
+
+"BLD",3148,"KRN","B",870,870)
+
+"BLD",3148,"KRN","B",8989.51,8989.51)
+
+"BLD",3148,"KRN","B",8989.52,8989.52)
+
+"BLD",3148,"KRN","B",8994,8994)
+
+"BLD",3148,"QUES",0)
+^9.62^^
+"BLD",3148,"REQB",0)
+^9.611^2^2
+"BLD",3148,"REQB",1,0)
+MPIF*1.0*20^2
+"BLD",3148,"REQB",2,0)
+MPIF*1.0*61^2
+"BLD",3148,"REQB","B","MPIF*1.0*20",1)
+
+"BLD",3148,"REQB","B","MPIF*1.0*61",2)
+
+"KRN",8994,475,-1)
+0^1
+"KRN",8994,475,0)
+MPIF GET VHIC/CAC CARD DATA^GETCARD^MPIFRPC^4^^^^1
+"KRN",8994,475,1,0)
+^8994.01^2^2^3151002^^^
+"KRN",8994,475,1,1,0)
+RPC to look up all VHIC/CAC swipe/scan activity at the site for all
+"KRN",8994,475,1,2,0)
+days prior to today.
+"KRN",8994,475,3,0)
+^8994.03^2^2^3151002^^^
+"KRN",8994,475,3,1,0)
+Return will be 1 line for each of the activity that occured in the format:
+"KRN",8994,475,3,2,0)
+(n)=FM Date/Time^Card ID (fully qualified)^Type of Event (SWIPE/SCAN)^Option
+"KRN",8994,476,-1)
+0^2
+"KRN",8994,476,0)
+MPIF PURGE VHIC/CAC CARD DATA^PURGCARD^MPIFRPC^1
+"KRN",8994,476,1,0)
+^8994.01^2^2^3151007^^^
+"KRN",8994,476,1,1,0)
+This RPC will purge data used to track VHIC/CAC card usage for all prior
+"KRN",8994,476,1,2,0)
+dates.
+"KRN",8994,476,2,0)
+^8994.02A^^0
+"KRN",8994,476,3,0)
+^8994.03^1^1^3151007^^^
+"KRN",8994,476,3,1,0)
+Will return 1^PURGE SUCCESSFUL
+"MBREQ")
+0
+"ORD",16,8994)
+8994;16;1;;;;;;;RPCDEL^XPDIA1
+"ORD",16,8994,0)
+REMOTE PROCEDURE
+"PKG",282,-1)
+1^1
+"PKG",282,0)
+MASTER PATIENT INDEX VISTA^MPIF^Master Patient Index VistA side
+"PKG",282,22,0)
+^9.49I^1^1
+"PKG",282,22,1,0)
+1.0^2990428
+"PKG",282,22,1,"PAH",1,0)
+62^3160201
+"PKG",282,22,1,"PAH",1,1,0)
+^^3^3^3160201
+"PKG",282,22,1,"PAH",1,1,1,0)
+MASTER VETERAN INDEX VISTA ENHANCEMENTS - ITERATION 15
+"PKG",282,22,1,"PAH",1,1,2,0)
+Refer to patch MPIF*1.0*62 in the FORUM Patch Module for a complete
+"PKG",282,22,1,"PAH",1,1,3,0)
+description.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","MPIFAPI")
+0^1^B64879127^B56281714
+"RTN","MPIFAPI",1,0)
+MPIFAPI ;CMC/BP-APIS FOR MPI ;DEC 21, 1998
+"RTN","MPIFAPI",2,0)
+ ;;1.0;MASTER PATIENT INDEX VISTA;**1,3,14,16,17,21,27,28,33,35,37,43,45,44,46,48,55,56,60,61,62**;30 Apr 99;Build 3
+"RTN","MPIFAPI",3,0)
+ ; Integration Agreements Utilized:
+"RTN","MPIFAPI",4,0)
+ ;   ^DPT( - #2070 and #4079
+"RTN","MPIFAPI",5,0)
+ ;   ^DPT("AICN", ^DPT("AMPIMIS", ^DPT("ASCN2" - #2070
+"RTN","MPIFAPI",6,0)
+ ;   EXC, START, STOP^RGHLLOG - #2796
+"RTN","MPIFAPI",7,0)
+ ;
+"RTN","MPIFAPI",8,0)
+EN2() ;NEW ENTRY POINT FOR LOCALS
+"RTN","MPIFAPI",9,0)
+ N MPIOUT,DIC,MPICHK,MPINCK,MPINNM,MPINUM1,DA,MPINUM
+"RTN","MPIFAPI",10,0)
+ I $O(^MPIF(984.1,0))="" G SETUP
+"RTN","MPIFAPI",11,0)
+AGN2 L +^MPIF(984.1):1 E  H 3 G AGN2
+"RTN","MPIFAPI",12,0)
+ S MPINUM=0,X=$$SITE^VASITE,X=$P(X,"^",3),X=X\1
+"RTN","MPIFAPI",13,0)
+ S DIC="^MPIF(984.1,",DIC(0)="XZ" D ^DIC
+"RTN","MPIFAPI",14,0)
+ S MPINUM1=$P(Y(0),"^",4),MPICHK=$P(Y(0),"^",5),MPINNM=MPINUM1+1
+"RTN","MPIFAPI",15,0)
+ S MPINUM=MPINUM1_"V"_MPICHK,MPINCK=$$CHECKDG^MPIFSPC(MPINNM)
+"RTN","MPIFAPI",16,0)
+ S DA=1,DIE="^MPIF(984.1,",DR="1////^S X=MPINUM1;2////^S X=MPICHK;3////^S X=MPINNM;5////"_MPINCK
+"RTN","MPIFAPI",17,0)
+ D ^DIE
+"RTN","MPIFAPI",18,0)
+ K DIE,DR,X,Y
+"RTN","MPIFAPI",19,0)
+ L -^MPIF(984.1)
+"RTN","MPIFAPI",20,0)
+ Q MPINUM
+"RTN","MPIFAPI",21,0)
+SETUP ;
+"RTN","MPIFAPI",22,0)
+ N CHK,NUM,NXTCHK,NXTNUM,SITE,DA
+"RTN","MPIFAPI",23,0)
+ S SITE=$$SITE^VASITE,SITE=$P(SITE,"^",3),SITE=SITE\1
+"RTN","MPIFAPI",24,0)
+ S DIC="^MPIF(984.1,",DA=1,DIC(0)="",X=SITE
+"RTN","MPIFAPI",25,0)
+ S NUM=SITE_"0000000",CHK=$$CHECKDG^MPIFSPC(NUM),MPINUM=NUM_"V"_CHK
+"RTN","MPIFAPI",26,0)
+ S NXTNUM=NUM+1,NXTCHK=$$CHECKDG^MPIFSPC(NXTNUM)
+"RTN","MPIFAPI",27,0)
+ S DIC("DR")="1////^S X=NUM;2////^S X=CHK;3////^S X=NXTNUM;5////"_NXTCHK
+"RTN","MPIFAPI",28,0)
+ K DD,D0
+"RTN","MPIFAPI",29,0)
+ D FILE^DICN
+"RTN","MPIFAPI",30,0)
+ K DIC,X,Y
+"RTN","MPIFAPI",31,0)
+ Q MPINUM
+"RTN","MPIFAPI",32,0)
+ ;
+"RTN","MPIFAPI",33,0)
+MPILINK() ;returns MPI logical Link
+"RTN","MPIFAPI",34,0)
+ N MPIL,MPILINK
+"RTN","MPIFAPI",35,0)
+ D LINK^HLUTIL3("MPI",.MPIL)
+"RTN","MPIFAPI",36,0)
+ I '$D(MPIL) Q "-1^NOT DEFINED"
+"RTN","MPIFAPI",37,0)
+ S MPILINK=$O(MPIL(0))
+"RTN","MPIFAPI",38,0)
+ I MPILINK="" Q "-1^NOT DEFINED"
+"RTN","MPIFAPI",39,0)
+ S MPILINK=$G(MPIL(MPILINK))
+"RTN","MPIFAPI",40,0)
+ Q MPILINK
+"RTN","MPIFAPI",41,0)
+ ;
+"RTN","MPIFAPI",42,0)
+SUBNUM(DFN) ; returns SCN from MPI node for given DFN
+"RTN","MPIFAPI",43,0)
+ ; DFN - ien of patient file
+"RTN","MPIFAPI",44,0)
+ ; returns:  -1^error message << always returns.
+"RTN","MPIFAPI",45,0)
+ ;*** Subscription control numbers no longer exist
+"RTN","MPIFAPI",46,0)
+ Q "-1^No Subscription Control Number for DFN "_DFN
+"RTN","MPIFAPI",47,0)
+ ;
+"RTN","MPIFAPI",48,0)
+MPINODE(DFN) ; returns MPI node for given DFN
+"RTN","MPIFAPI",49,0)
+ ; DFN - patient file ien
+"RTN","MPIFAPI",50,0)
+ ; returns:  -1^error message or MPI node from patient file
+"RTN","MPIFAPI",51,0)
+ N TMP
+"RTN","MPIFAPI",52,0)
+ I '$D(DFN) Q "-1^DFN not defined"
+"RTN","MPIFAPI",53,0)
+ I '$D(^DPT(DFN)) Q "-1^DFN doesn't exist"
+"RTN","MPIFAPI",54,0)
+ I '$D(^DPT(DFN,"MPI")) Q "-1^No MPI node for DFN "_DFN
+"RTN","MPIFAPI",55,0)
+ L +^DPT("MPI",DFN):10 ;**45 added lock check for getting ICN data back
+"RTN","MPIFAPI",56,0)
+ N NODE S NODE=$G(^DPT(DFN,"MPI"))
+"RTN","MPIFAPI",57,0)
+ I NODE=""!(NODE?."^") S NODE="-1^No MPI data for DFN "_DFN
+"RTN","MPIFAPI",58,0)
+ I +NODE>0 D
+"RTN","MPIFAPI",59,0)
+ .;**45 checking if checksum for ICN is correct, if not update the 991.02 field
+"RTN","MPIFAPI",60,0)
+ .; and include new value in NODE returned.
+"RTN","MPIFAPI",61,0)
+ .N CHK S CHK=$$CHECKDG^MPIFSPC($P(NODE,"^"))
+"RTN","MPIFAPI",62,0)
+ .I CHK'=$P(NODE,"^",2) S TMP=$$SETICN^MPIF001(DFN,$P(NODE,"^"),CHK) S $P(NODE,"^",2)=CHK
+"RTN","MPIFAPI",63,0)
+ L -^DPT("MPI",DFN)
+"RTN","MPIFAPI",64,0)
+ Q NODE
+"RTN","MPIFAPI",65,0)
+ ;
+"RTN","MPIFAPI",66,0)
+GETADFN(ICN) ; return DFN ONLY if ICN is the active ICN
+"RTN","MPIFAPI",67,0)
+ ; ICN - Integration Control Number for patient to be returned
+"RTN","MPIFAPI",68,0)
+ ; returns:  -1^error message
+"RTN","MPIFAPI",69,0)
+ ;           DFN - IEN for the patient entry in the Patient file (#2)
+"RTN","MPIFAPI",70,0)
+ N RETURN,DFN
+"RTN","MPIFAPI",71,0)
+ I $G(ICN)'>0 Q "-1^NO ICN"
+"RTN","MPIFAPI",72,0)
+ I '$D(^DPT("AICN",ICN)) Q "-1^ICN NOT IN DATABASE"
+"RTN","MPIFAPI",73,0)
+ S DFN=$O(^DPT("AICN",ICN,0))
+"RTN","MPIFAPI",74,0)
+ I $G(DFN)'>0 Q "-1^BAD AICN CROSS-REFERENCE"
+"RTN","MPIFAPI",75,0)
+ I $P($G(^DPT(DFN,"MPI")),"^")'=ICN Q "-1^ICN is not Active one"
+"RTN","MPIFAPI",76,0)
+ Q DFN
+"RTN","MPIFAPI",77,0)
+ ;
+"RTN","MPIFAPI",78,0)
+AICN2DFN(ICN) ; return DFN ONLY if Full ICN is the active ICN
+"RTN","MPIFAPI",79,0)
+ ;**60 (elz) MVI_793 create APIs for Full ICN field
+"RTN","MPIFAPI",80,0)
+ ; ICN - Integration Control Number for patient to be returned (FULL)
+"RTN","MPIFAPI",81,0)
+ ; returns:  -1^error message
+"RTN","MPIFAPI",82,0)
+ ;           DFN - IEN for the patient entry in the Patient file (#2)
+"RTN","MPIFAPI",83,0)
+ N RETURN,DFN
+"RTN","MPIFAPI",84,0)
+ I $G(ICN)'>0 Q "-1^NO ICN"
+"RTN","MPIFAPI",85,0)
+ I ICN'["V" Q "-1^Full ICN required"
+"RTN","MPIFAPI",86,0)
+ I '$D(^DPT("AFICN",ICN)) Q "-1^ICN NOT IN DATABASE"
+"RTN","MPIFAPI",87,0)
+ S DFN=$O(^DPT("AFICN",ICN,0))
+"RTN","MPIFAPI",88,0)
+ I $G(DFN)'>0 Q "-1^BAD AFICN CROSS-REFERENCE"
+"RTN","MPIFAPI",89,0)
+ I $P($G(^DPT(DFN,"MPI")),"^",10)'=ICN Q "-1^ICN is not Active one"
+"RTN","MPIFAPI",90,0)
+ Q DFN
+"RTN","MPIFAPI",91,0)
+ ;
+"RTN","MPIFAPI",92,0)
+UPDATE(DFN,ARR,MPISILNT,REMOVE) ;api to edit 'mpi','mpifhis' and 'mpicmor' nodes
+"RTN","MPIFAPI",93,0)
+ ;**37 UPDATE module moved 3/30/05 from MPIFAPI into MPIFAPI1.
+"RTN","MPIFAPI",94,0)
+ ;Linetag must remain due to DBIA #2706.
+"RTN","MPIFAPI",95,0)
+ Q $$UPDATE^MPIFAPI1(DFN,ARR,.MPISILNT,.REMOVE)
+"RTN","MPIFAPI",96,0)
+ ;
+"RTN","MPIFAPI",97,0)
+MPIQ(DFN) ;MPI QUERY
+"RTN","MPIFAPI",98,0)
+ N MPIFARR
+"RTN","MPIFAPI",99,0)
+ L +^DPT(DFN):2 I '$T,'$D(MPIFS) W $C(7),!!,"Patient is being edited. No attempt will be made to connect to the MPI." H 2 Q
+"RTN","MPIFAPI",100,0)
+ I '$D(MPIFS) D  ;Not from SmartCard background job
+"RTN","MPIFAPI",101,0)
+ .;**37 mods to L -^DPT
+"RTN","MPIFAPI",102,0)
+ .I $G(DGNEW)=1 D  ;New patient, fields always blank, ask
+"RTN","MPIFAPI",103,0)
+ ..D WRTLN
+"RTN","MPIFAPI",104,0)
+ ..; **44 Adding Pseudo SSN Reason to the list of prompted fields if SSN is a pseudo and there isn't already a reason stored
+"RTN","MPIFAPI",105,0)
+ ..N MPIFP S MPIFP="" S DA=DFN,DIQ(0)="EI",DIC=2,DR=".09;.0906",DIQ="MPIFARR" D EN^DIQ1 K DA,DR,DIC,DQ,DR
+"RTN","MPIFAPI",106,0)
+ ..I $D(MPIFARR(2,DFN,.0906,"I")) D
+"RTN","MPIFAPI",107,0)
+ ...I MPIFARR(2,DFN,.09,"E")["P",("S"[MPIFARR(2,DFN,.0906,"I")) S MPIFP=".0906;"
+"RTN","MPIFAPI",108,0)
+ ..S DIE="^DPT(",DA=DFN,DIE("NO^")="BACK"
+"RTN","MPIFAPI",109,0)
+ ..S DR=MPIFP_".2403;.092;.093;1",DR(2,2.01)=".01;1" D ^DIE K DA,DIE,DR Q  ;*55 MPIC_1402 ALIAS SSN
+"RTN","MPIFAPI",110,0)
+ .I $G(DGNEW)="" D  ;Existing patient, get current values
+"RTN","MPIFAPI",111,0)
+ ..N MPIDOB,IMPRS,MPIMMN,MPICTY,MPIST
+"RTN","MPIFAPI",112,0)
+ ..S DIC=2,DR=".02;.03;.09;.0906;.092;.093;.2403;994;1",DR(2.01)=".01"
+"RTN","MPIFAPI",113,0)
+ ..;^ **44 include pseudo ssn reason to list
+"RTN","MPIFAPI",114,0)
+ ..S DA=DFN,DA(2.01)=1,DIQ(0)="EI",DIQ="MPIFARR"
+"RTN","MPIFAPI",115,0)
+ ..D EN^DIQ1 K DA,DIC,DIQ,DR
+"RTN","MPIFAPI",116,0)
+ ..;build DR from blank fields / imprecise DOB / pseudo SSN
+"RTN","MPIFAPI",117,0)
+ ..S DR=""
+"RTN","MPIFAPI",118,0)
+ ..S MPIDOB=$G(MPIFARR(2,DFN,.03,"I")) ;DATE OF BIRTH
+"RTN","MPIFAPI",119,0)
+ ..I MPIDOB="" S DR=DR_".03;" ;DOB null
+"RTN","MPIFAPI",120,0)
+ ..;Is DOB imprecise?
+"RTN","MPIFAPI",121,0)
+ ..I MPIDOB'="" S IMPRS=0 D
+"RTN","MPIFAPI",122,0)
+ ...I $E(MPIDOB,4,7)="0000" S IMPRS=1 ;Year only; no month/day
+"RTN","MPIFAPI",123,0)
+ ...I ($E(MPIDOB,6,7)="00")&($E(MPIDOB,4,5)'="00") S IMPRS=1 ;Year/month only; no day
+"RTN","MPIFAPI",124,0)
+ ...I IMPRS=1 S DR=DR_".03;" ;DOB imprecise
+"RTN","MPIFAPI",125,0)
+ ..I $G(MPIFARR(2,DFN,.02,"I"))="" S DR=DR_".02;" ;SEX
+"RTN","MPIFAPI",126,0)
+ ..;if the SSN is null, add to prompted fields
+"RTN","MPIFAPI",127,0)
+ ..N SSNP S SSNP=0
+"RTN","MPIFAPI",128,0)
+ ..I ($G(MPIFARR(2,DFN,.09,"E"))="") S DR=DR_".09;",SSNP=1 ;SSN
+"RTN","MPIFAPI",129,0)
+ ..I DR'="" D
+"RTN","MPIFAPI",130,0)
+ ...D WRTLN
+"RTN","MPIFAPI",131,0)
+ ...S DIE="^DPT(",DA=DFN,DIE("NO^")="BACK"
+"RTN","MPIFAPI",132,0)
+ ...D ^DIE K DA,DIE,DR,DIC,DIQ
+"RTN","MPIFAPI",133,0)
+ ...;if SSN was prompted then reinitialize SSN ARRAY variable
+"RTN","MPIFAPI",134,0)
+ ...I SSNP=1 S MPIFARR(2,DFN,.09,"E")="" S DIC=2,DR=".09" S DA=DFN,DA(2.01)=1,DIQ(0)="E",DIQ="MPIFARR" D EN^DIQ1 K DA,DIC,DIQ,DR
+"RTN","MPIFAPI",135,0)
+ ...;**44 if the PSEUDO SSN REASON field exist
+"RTN","MPIFAPI",136,0)
+ ..S DR="" ;reset DR to null to be able to concatenate the fields together since DR was just killed above
+"RTN","MPIFAPI",137,0)
+ ..I $D(MPIFARR(2,DFN,.0906,"I")) D
+"RTN","MPIFAPI",138,0)
+ ...;check to see if the SSN is a PSEUDO and the PSEUDO SSN REASON is null or "S" (FOLLOW-UP REQUIRED), if so add PSEUDO SSN REASON to the prompted fields
+"RTN","MPIFAPI",139,0)
+ ...I MPIFARR(2,DFN,.09,"E")["P",(MPIFARR(2,DFN,.0906,"I")="") S DR=DR_".0906;" ;**48 correct when SSN is prompted
+"RTN","MPIFAPI",140,0)
+ ...I MPIFARR(2,DFN,.09,"E")["P",(MPIFARR(2,DFN,.0906,"I")="S") S DR=DR_".09;" ;**48 correct when SSN is prompted
+"RTN","MPIFAPI",141,0)
+ ..I $G(MPIFARR(2,DFN,994,"I"))="" S DR=DR_"994;" ;MULTIPLE BIRTH INDICATOR
+"RTN","MPIFAPI",142,0)
+ ..S MPIMMN=$G(MPIFARR(2,DFN,.2403,"E")) ;MOTHER'S MAIDEN NAME
+"RTN","MPIFAPI",143,0)
+ ..I $$VALDT(MPIMMN) S DR=DR_".2403;" ;Validate MMN value
+"RTN","MPIFAPI",144,0)
+ ..S MPICTY=$G(MPIFARR(2,DFN,.092,"E")) ;PLACE OF BIRTH [CITY]
+"RTN","MPIFAPI",145,0)
+ ..S MPIST=$G(MPIFARR(2,DFN,.093,"E")) ;PLACE OF BIRTH [STATE]
+"RTN","MPIFAPI",146,0)
+ ..I $S($$VALDT(MPICTY):1,$$VALDT(MPIST):1,1:0) S DR=DR_".092;.093;" ;Validate POB [CITY] & [STATE] value
+"RTN","MPIFAPI",147,0)
+ ..I $G(MPIFARR(2.01,1,.01,"E"))="" S DR=DR_"1",DR(2,2.01)=".01;1" ;ALIAS **44 ADDING ALIAS SSN TO FIELDS
+"RTN","MPIFAPI",148,0)
+ ..I DR'="" D
+"RTN","MPIFAPI",149,0)
+ ...D WRTLN
+"RTN","MPIFAPI",150,0)
+ ...S DIE="^DPT(",DA=DFN,DIE("NO^")="BACK"
+"RTN","MPIFAPI",151,0)
+ ...D ^DIE K DA,DIE,DR,DIC,DIQ
+"RTN","MPIFAPI",152,0)
+ L -^DPT(DFN)
+"RTN","MPIFAPI",153,0)
+ I $D(ZTQUEUED) S ZTREQ="@"
+"RTN","MPIFAPI",154,0)
+ K MPIFRTN D VTQ^MPIFQ0
+"RTN","MPIFAPI",155,0)
+ ;**43 No longer get list of potential matches to pick from
+"RTN","MPIFAPI",156,0)
+ ;I $G(MPIFRTN)="" D
+"RTN","MPIFAPI",157,0)
+ ;. ^ Quit at LM screen when presented with a list of possible matches
+"RTN","MPIFAPI",158,0)
+ ;. \/ setup Local ICN and proceed
+"RTN","MPIFAPI",159,0)
+ ;.N ICN,ERR
+"RTN","MPIFAPI",160,0)
+ ;.S ICN=$$EN2^MPIFAPI()
+"RTN","MPIFAPI",161,0)
+ ;.Q:ICN=""!(+ICN=-1)
+"RTN","MPIFAPI",162,0)
+ ;.S ERR=$$SETICN^MPIF001(DFN,+ICN,$P(ICN,"V",2))
+"RTN","MPIFAPI",163,0)
+ ;.Q:+ERR=-1
+"RTN","MPIFAPI",164,0)
+ ;. ^ couldn't set ICN don't set other fields
+"RTN","MPIFAPI",165,0)
+ ;.S ERR=$$SETLOC^MPIF001(DFN,1),ERR=$$CHANGE^MPIF001(DFN,$P($$SITE^VASITE,"^"))
+"RTN","MPIFAPI",166,0)
+ K MPIFRTN,ZTREQ
+"RTN","MPIFAPI",167,0)
+ Q
+"RTN","MPIFAPI",168,0)
+ ;
+"RTN","MPIFAPI",169,0)
+MPIQQ(PDFN) ; Entry point for queuing d/c
+"RTN","MPIFAPI",170,0)
+ ; Returned is -1^error message OR Task #
+"RTN","MPIFAPI",171,0)
+ Q:'$D(PDFN) "-1^No DFN passed"
+"RTN","MPIFAPI",172,0)
+ S ZTRTN="MPIQ^MPIFAPI(PDFN)"
+"RTN","MPIFAPI",173,0)
+ I $D(DUZ) S ZTSAVE("DUZ")=DUZ
+"RTN","MPIFAPI",174,0)
+ S ZTSAVE("PDFN")=PDFN,ZTSAVE("MPIFS")=1
+"RTN","MPIFAPI",175,0)
+ ; ^ silent flag
+"RTN","MPIFAPI",176,0)
+ S ZTIO="",ZTDTH=$$FMADD^XLFDT($$NOW^XLFDT,0,0,1,0)
+"RTN","MPIFAPI",177,0)
+ D ^%ZTLOAD
+"RTN","MPIFAPI",178,0)
+ D HOME^%ZIS K IO("Q")
+"RTN","MPIFAPI",179,0)
+ N TSK S TSK=ZTSK
+"RTN","MPIFAPI",180,0)
+ K ZTSAVE,ZTRTN,ZTIO,ZTDTH,ZTSK
+"RTN","MPIFAPI",181,0)
+ Q TSK
+"RTN","MPIFAPI",182,0)
+ ;
+"RTN","MPIFAPI",183,0)
+WRTLN ;**37 Write intro text ONLY if there are fields to ask
+"RTN","MPIFAPI",184,0)
+ W !!,"Please verify or update the following information:",!
+"RTN","MPIFAPI",185,0)
+ Q
+"RTN","MPIFAPI",186,0)
+ ;
+"RTN","MPIFAPI",187,0)
+VALDT(VAL) ;**37 Validate value passed in.
+"RTN","MPIFAPI",188,0)
+ ;Prompt if field contains invalid data (e.g., UNKNOWN, NOT KNOWN, etc.)
+"RTN","MPIFAPI",189,0)
+ ;Returns 0 if not found
+"RTN","MPIFAPI",190,0)
+ ;Returns 1 if found
+"RTN","MPIFAPI",191,0)
+ I VAL="" Q 1
+"RTN","MPIFAPI",192,0)
+ I $E($$UP^XLFSTR(VAL),1,3)="UNK" Q 1
+"RTN","MPIFAPI",193,0)
+ I $E($$UP^XLFSTR(VAL),1,4)="NONE" Q 1
+"RTN","MPIFAPI",194,0)
+ I $E($$UP^XLFSTR(VAL),1,4)="NOT " Q 1
+"RTN","MPIFAPI",195,0)
+ I $$UP^XLFSTR(VAL)["UNAVAILABLE" Q 1
+"RTN","MPIFAPI",196,0)
+ I $$UP^XLFSTR(VAL)["DECEASED" Q 1
+"RTN","MPIFAPI",197,0)
+ I $E($$UP^XLFSTR(VAL),1,2)="DC" Q 1
+"RTN","MPIFAPI",198,0)
+ Q 0
+"RTN","MPIFAPI",199,0)
+ ;
+"RTN","MPIFAPI",200,0)
+VIC40(DFN,ICN) ; -- only allowed for approved package use
+"RTN","MPIFAPI",201,0)
+ ; this will file the FULL icn for a patient and update correlations
+"RTN","MPIFAPI",202,0)
+ ; so the local site is now a subscribing package.  This is used with the
+"RTN","MPIFAPI",203,0)
+ ; VIC 4.0 card registration where PV data was obtained from MVI.  
+"RTN","MPIFAPI",204,0)
+ ;*56 (elz)
+"RTN","MPIFAPI",205,0)
+ N MPIX,TIME,LIST
+"RTN","MPIFAPI",206,0)
+ S TIME=$$NOW^XLFDT
+"RTN","MPIFAPI",207,0)
+ S INDEX=1
+"RTN","MPIFAPI",208,0)
+ D UPDATE^MPIFQ0(DFN,ICN,"")
+"RTN","MPIFAPI",209,0)
+ Q
+"RTN","MPIFAPI",210,0)
+ ;
+"RTN","MPIFAPI",211,0)
+CARDLOG(MPIFID,MPIFTYPE,MPIFEVNT) ; - Function to log cards swiped or scanned
+"RTN","MPIFAPI",212,0)
+ ; input:   MPIFID = ID from card swiped or scanned
+"RTN","MPIFAPI",213,0)
+ ;        MPIFTYPE = type of card, either VHIC or CAC
+"RTN","MPIFAPI",214,0)
+ ;        MPIFEVNT = type of event, either SWIPE or SCAN
+"RTN","MPIFAPI",215,0)
+ N MPIFNEXT
+"RTN","MPIFAPI",216,0)
+ I '$G(MPIFID) Q
+"RTN","MPIFAPI",217,0)
+ I $G(MPIFTYPE)'="VHIC",$G(MPIFTYPE)'="CAC" Q
+"RTN","MPIFAPI",218,0)
+ I $G(MPIFEVNT)'="SWIPE",$G(MPIFEVNT)'="SCAN" Q
+"RTN","MPIFAPI",219,0)
+ L +^XTMP("MPIFCARD",0):5
+"RTN","MPIFAPI",220,0)
+ S MPIFID=MPIFID_$S(MPIFTYPE="VHIC":"~PI~USVHA~742V1",1:"~NI~USDOD~200DOD")
+"RTN","MPIFAPI",221,0)
+ S ^XTMP("MPIFCARD",0)=$$FMADD^XLFDT(DT,90)_"^"_DT_"^"_"VHIC/CAC card swipe/scan log"
+"RTN","MPIFAPI",222,0)
+ S MPIFNEXT=$O(^XTMP("MPIFCARD",DT,":"),-1)+1
+"RTN","MPIFAPI",223,0)
+ S ^XTMP("MPIFCARD",DT,MPIFNEXT)=$$NOW^XLFDT_"^"_MPIFID_"^"_MPIFTYPE_"^"_MPIFEVNT_"^"_$P($G(XQY0),"^",2)
+"RTN","MPIFAPI",224,0)
+ L -^XTMP("MPIFCARD",0)
+"RTN","MPIFAPI",225,0)
+ Q
+"RTN","MPIFRPC")
+0^2^B42212497^B35812148
+"RTN","MPIFRPC",1,0)
+MPIFRPC ;SFCIO/CMC-MPIF RPC APIS ;26 JUN 01
+"RTN","MPIFRPC",2,0)
+ ;;1.0;MASTER PATIENT INDEX VISTA;**20,62**;30 Apr 99;Build 3
+"RTN","MPIFRPC",3,0)
+ ;
+"RTN","MPIFRPC",4,0)
+ ;Integration Agreements Utilized:
+"RTN","MPIFRPC",5,0)
+ ;  ^DPT( - #2070
+"RTN","MPIFRPC",6,0)
+ ;  AVAFC^VAFCDD01 - #3493
+"RTN","MPIFRPC",7,0)
+ ;  GETEX^RGEX03 - #3554
+"RTN","MPIFRPC",8,0)
+ ;  NOTICE^DGSEC4 - #3027
+"RTN","MPIFRPC",9,0)
+ ;  PTSEC^DGSEC4 - #3027
+"RTN","MPIFRPC",10,0)
+ ;
+"RTN","MPIFRPC",11,0)
+ICNSTAT(RETURN,ICN,SSN,RPC) ;
+"RTN","MPIFRPC",12,0)
+ ;RPC to return status of ICN passed or if SSN is passed find ICN and return status including ICN, ICN History, CMOR History, Exceptions pending
+"RTN","MPIFRPC",13,0)
+ ; RETURN - array to return ICN data
+"RTN","MPIFRPC",14,0)
+ ; ICN - ICN for the patient in the Patient (#2) file data is to be returned on
+"RTN","MPIFRPC",15,0)
+ ; SSN - social security number for the patient in the Patient (#2) file data is to be returned on
+"RTN","MPIFRPC",16,0)
+ ; RPC - 0 or 1 to denote if the call is being made from a RPC or called locally. 1=RPC remote call 0=locally called - 1 is default
+"RTN","MPIFRPC",17,0)
+ ;
+"RTN","MPIFRPC",18,0)
+ N PICN,CNTD,DFN,TICN,LOCAL,XX,RETS,TEXT,CMOR,ICNH,CMORH
+"RTN","MPIFRPC",19,0)
+ I $G(RPC)="" S RPC=1
+"RTN","MPIFRPC",20,0)
+ I $G(ICN)=""&($G(SSN)="") S RETURN="-1^NO ICN OR SSN PASSED" Q
+"RTN","MPIFRPC",21,0)
+ I $G(SSN)'="" S ICN=$$GETICNS^MPIF002(SSN),RETURN(1,"SSN USED")="MPI(""SSN USED"")="_""""_SSN_"""" ; possible to have multiple entries with same SSN
+"RTN","MPIFRPC",22,0)
+ S PICN=ICN,CNTD=0,TEXT=""
+"RTN","MPIFRPC",23,0)
+ F XX=1:1 S ICN=$P(PICN,"^",XX) Q:ICN=""  D
+"RTN","MPIFRPC",24,0)
+ .S DFN=$$GETDFN^MPIF001(+ICN),CNTD=CNTD+1
+"RTN","MPIFRPC",25,0)
+ .I +DFN=-1 S RETURN(XX)="-1^NO SUCH ICN "_ICN Q
+"RTN","MPIFRPC",26,0)
+ .I '$D(^DPT(DFN)) S RETURN(DFN)="-1^BAD AICN X-REF, PT FILE ENTRY DOESN'T EXIST DFN= "_DFN_" ICN= "_ICN Q
+"RTN","MPIFRPC",27,0)
+ .; check if this data can be returned and if sensative pt bulletin needed
+"RTN","MPIFRPC",28,0)
+ .N SENS D PTSEC^DGSEC4(.SENS,DFN,1,"Remote Procedure from MPI^RPC from MPI for ICN Information")
+"RTN","MPIFRPC",29,0)
+ .N NOT D NOTICE^DGSEC4(.NOT,DFN,"Remote Procedure from MPI^RPC from MPI for ICN Information")
+"RTN","MPIFRPC",30,0)
+ .I SENS(1)=3!(SENS(1)=4)!(SENS(1)=-1) S RETURN(XX)="-1^SENSATIVE PT ISSUE "_SENS(2)_" DFN= "_DFN_" ICN= "_ICN Q
+"RTN","MPIFRPC",31,0)
+ .I RPC=1 S TEXT="MPI("_DFN_",""DFN"")="
+"RTN","MPIFRPC",32,0)
+ .S RETURN(DFN,"DFN")=TEXT_""""_DFN_""""
+"RTN","MPIFRPC",33,0)
+ .S TICN=$$GETICN^MPIF001(DFN)
+"RTN","MPIFRPC",34,0)
+ .I +TICN<0 D
+"RTN","MPIFRPC",35,0)
+ ..I RPC=1 S RETURN(DFN,1)="MPI("_DFN_",1)="_""""_"No current ICN"
+"RTN","MPIFRPC",36,0)
+ ..I RPC=0 S RETURN(DFN,1)="""No Current ICN"
+"RTN","MPIFRPC",37,0)
+ .I +TICN>0 D
+"RTN","MPIFRPC",38,0)
+ ..I RPC=1 S RETURN(DFN,"ICN")="MPI("_DFN_",""ICN"")="_""""_TICN_""""
+"RTN","MPIFRPC",39,0)
+ ..I RPC=0 S RETURN(DFN,"ICN")=""""_TICN_""""
+"RTN","MPIFRPC",40,0)
+ .S LOCAL=""
+"RTN","MPIFRPC",41,0)
+ .I $E($G(RETURN(DFN,"ICN")),1,3)=$P($$SITE^VASITE(),"^",3) S LOCAL="Y"
+"RTN","MPIFRPC",42,0)
+ .I LOCAL=""&(+TICN>0) D
+"RTN","MPIFRPC",43,0)
+ ..I RPC=1 S RETURN(DFN,1)="MPI("_DFN_",1)="_""""_"NATIONAL ICN"
+"RTN","MPIFRPC",44,0)
+ ..I RPC=0 S RETURN(DFN,1)=""""_"NATIONAL ICN"
+"RTN","MPIFRPC",45,0)
+ .I LOCAL="Y"&(+TICN>0) D
+"RTN","MPIFRPC",46,0)
+ ..I RPC=1 S RETURN(DFN,1)="MPI("_DFN_",1)="_""""_"LOCAL ICN"
+"RTN","MPIFRPC",47,0)
+ ..I RPC=0 S RETURN(DFN,1)=""""_"LOCAL ICN"_""""
+"RTN","MPIFRPC",48,0)
+ .S CMOR=$$GETVCCI^MPIF001(DFN)
+"RTN","MPIFRPC",49,0)
+ .I +CMOR=-1 S CMOR=$P(CMOR,"^",2)
+"RTN","MPIFRPC",50,0)
+ .I RPC=1 S RETURN(DFN,"CMOR")="MPI("_DFN_",""CMOR"")="""_CMOR_""""
+"RTN","MPIFRPC",51,0)
+ .I RPC=0 S RETURN(DFN,"CMOR")=""""_CMOR_""""
+"RTN","MPIFRPC",52,0)
+ .D GETICNH^MPIF002(DFN,.ICNH)
+"RTN","MPIFRPC",53,0)
+ .I +ICNH=-1 D
+"RTN","MPIFRPC",54,0)
+ ..I RPC=1 S RETURN(DFN,"ICN HISTORY")="MPI("_DFN_",""ICN HISTORY"")="""_$P(ICNH,"^",2)_""""
+"RTN","MPIFRPC",55,0)
+ ..I RPC=0 S RETURN(DFN,"ICN HISTORY")=""""_$P(ICNH,"^",2)_""""
+"RTN","MPIFRPC",56,0)
+ .I +ICNH'=-1 D
+"RTN","MPIFRPC",57,0)
+ ..M RETURN(DFN,"ICN HISTORY")=ICNH
+"RTN","MPIFRPC",58,0)
+ ..I RPC=1 D
+"RTN","MPIFRPC",59,0)
+ ...N IEN
+"RTN","MPIFRPC",60,0)
+ ...S IEN="" F  S IEN=$O(RETURN(DFN,"ICN HISTORY",IEN)) Q:IEN=""  S RETURN(DFN,"ICN HISTORY",IEN)="MPI("_DFN_",""ICN HISTORY"","_IEN_")="_$G(RETURN(DFN,"ICN HISTORY",IEN))
+"RTN","MPIFRPC",61,0)
+ ...S RETURN(DFN,"ICN HISTORY")="MPI("_DFN_",""ICN HISTORY"")="_$G(RETURN(DFN,"ICN HISTORY"))
+"RTN","MPIFRPC",62,0)
+ .;
+"RTN","MPIFRPC",63,0)
+ .D GETCMORH^MPIF002(DFN,.CMORH)
+"RTN","MPIFRPC",64,0)
+ .I +CMORH=-1 D
+"RTN","MPIFRPC",65,0)
+ ..I RPC=1 S RETURN(DFN,"CMOR HISTORY")="MPI("_DFN_",""CMOR HISTORY"")="""_$P(CMORH,"^",2)_""""
+"RTN","MPIFRPC",66,0)
+ ..I RPC=0 S RETURN(DFN,"CMOR HISTORY")=""""_$P(CMORH,"^",2)_""""
+"RTN","MPIFRPC",67,0)
+ .I +CMORH'=-1 D
+"RTN","MPIFRPC",68,0)
+ ..M RETURN(DFN,"CMOR HISTORY")=CMORH
+"RTN","MPIFRPC",69,0)
+ ..I RPC=1 D
+"RTN","MPIFRPC",70,0)
+ ...N IEN
+"RTN","MPIFRPC",71,0)
+ ...S IEN="" F  S IEN=$O(RETURN(DFN,"CMOR HISTORY",IEN)) Q:IEN=""  S RETURN(DFN,"CMOR HISTORY",IEN)="MPI("_DFN_",""CMOR HISTORY"","_IEN_")="_$G(RETURN(DFN,"CMOR HISTORY",IEN))
+"RTN","MPIFRPC",72,0)
+ ...S RETURN(DFN,"CMOR HISTORY")="MPI("_DFN_",""CMOR HISTORY"")="_$G(RETURN(DFN,"CMOR HISTORY"))
+"RTN","MPIFRPC",73,0)
+ .;
+"RTN","MPIFRPC",74,0)
+ .D EXC(DFN,.RETS,XX)
+"RTN","MPIFRPC",75,0)
+ .I RETS(XX,"EXCEPTIONS")="No Exceptions" D
+"RTN","MPIFRPC",76,0)
+ ..I RPC=1 S RETURN(DFN,"EXCEPTIONS")="MPI("_DFN_",""EXCEPTIONS"")=""NO EXCEPTIONS""",RETURN(DFN,1)=$G(RETURN(DFN,1))_" with No Exceptions"_""""
+"RTN","MPIFRPC",77,0)
+ ..I RPC=0 S RETURN(DFN,"EXCEPTIONS")="""NO EXCEPTIONS""",RETURN(DFN,1)=$G(RETURN(DFN,1))_" with No Exceptions"_""""
+"RTN","MPIFRPC",78,0)
+ .I RETS(XX,"EXCEPTIONS")'="No Exceptions" D
+"RTN","MPIFRPC",79,0)
+ ..I RPC=1 S RETURN(DFN,1)=$G(RETURN(DFN,1))_" with Exceptions"_"""",RETURN(DFN,"EXCEPTIONS")="MPI("_DFN_",""EXCEPTIONS"")="_""""_$G(RETS(XX,"EXCEPTIONS"))_""""
+"RTN","MPIFRPC",80,0)
+ ..I RPC=0 S RETURN(DFN,1)=$G(RETURN(DFN,1))_" with Exceptions"_"""",RETURN(DFN,"EXCEPTIONS")=$G(RETS(XX,"EXCEPTIONS"))
+"RTN","MPIFRPC",81,0)
+ I CNTD>1 D
+"RTN","MPIFRPC",82,0)
+ .I RPC=1 S RETURN(1,"ICNS PROCESSED")="MPI(""ICNS PROCESSED"")="_""""_CNTD_""""
+"RTN","MPIFRPC",83,0)
+ .I RPC=0 S RETURN(1,"ICNS PROCESSED")="MPI(""ICNS PROCESSED"")="_CNTD
+"RTN","MPIFRPC",84,0)
+ Q
+"RTN","MPIFRPC",85,0)
+EXC(DFN,RET,YY) ;
+"RTN","MPIFRPC",86,0)
+ ; process exceptions into single value
+"RTN","MPIFRPC",87,0)
+ N TVAL,IEN
+"RTN","MPIFRPC",88,0)
+ D GETEX^RGEX03(.VAL,DFN)
+"RTN","MPIFRPC",89,0)
+ I +VAL(0)=0 S RET(YY,"EXCEPTIONS")="No Exceptions"
+"RTN","MPIFRPC",90,0)
+ I +VAL(0)'=0 D
+"RTN","MPIFRPC",91,0)
+ .S IEN=0,TVAL=""
+"RTN","MPIFRPC",92,0)
+ .F IEN=$O(VAL(IEN)) Q:IEN=""  S TVAL=TVAL_$P($G(VAL(IEN)),"^")_"^"
+"RTN","MPIFRPC",93,0)
+ .S RET(YY,"EXCEPTIONS")=""""_TVAL_""""
+"RTN","MPIFRPC",94,0)
+ K VAL
+"RTN","MPIFRPC",95,0)
+ Q
+"RTN","MPIFRPC",96,0)
+ ;
+"RTN","MPIFRPC",97,0)
+INACT(RETURN,ICN) ;
+"RTN","MPIFRPC",98,0)
+ ;RPC to inactivate the ICN passed.
+"RTN","MPIFRPC",99,0)
+ ; RETURN - 1 for successful inactivation or -1^error msg
+"RTN","MPIFRPC",100,0)
+ ; ICN = is the ICN for the patient that is to be inactivated
+"RTN","MPIFRPC",101,0)
+ ;
+"RTN","MPIFRPC",102,0)
+ I $G(ICN)="" S RETURN="-1^No ICN Passed" Q
+"RTN","MPIFRPC",103,0)
+ I +ICN<1 S RETURN="-1^Invalid ICN" Q
+"RTN","MPIFRPC",104,0)
+ N DFN,TICN,ER
+"RTN","MPIFRPC",105,0)
+ S DFN=$$GETDFN^MPIF001(ICN)
+"RTN","MPIFRPC",106,0)
+ I +DFN<0 S RETURN="-1^No such ICN" Q
+"RTN","MPIFRPC",107,0)
+ S TICN=$$GETICN^MPIF001(DFN)
+"RTN","MPIFRPC",108,0)
+ I +TICN'=+ICN S RETURN="-1^ICN is not active" Q
+"RTN","MPIFRPC",109,0)
+ D PAT^MPIFDEL(DFN,.ER)
+"RTN","MPIFRPC",110,0)
+ I ER'="" S RETURN="-1^"_ER Q
+"RTN","MPIFRPC",111,0)
+ S RETURN=1
+"RTN","MPIFRPC",112,0)
+ Q
+"RTN","MPIFRPC",113,0)
+ ;
+"RTN","MPIFRPC",114,0)
+RCCMOR(RETURN,ICN,CMOR,SSN,A08) ;
+"RTN","MPIFRPC",115,0)
+ ;RPC to change the CMOR value to CMOR for patient with ICN value ICN
+"RTN","MPIFRPC",116,0)
+ ; RETURN - array to return 1 for successful update or -1^ERROR MSG
+"RTN","MPIFRPC",117,0)
+ ; ICN = ICN for the patient that the CMOR is to be changed for
+"RTN","MPIFRPC",118,0)
+ ; CMOR = Station Number of the site that should become the CMOR
+"RTN","MPIFRPC",119,0)
+ ; SSN = Social Security Number of the patient involved, to be used if 
+"RTN","MPIFRPC",120,0)
+ ;      ICN is not found due to bad AICN x-ref
+"RTN","MPIFRPC",121,0)
+ ; A08 = 1 means trigger A08 message, 0 means don't send A08 msg
+"RTN","MPIFRPC",122,0)
+ ;
+"RTN","MPIFRPC",123,0)
+ I $G(ICN)=""!($G(CMOR)="") S RETURN="-1^Missing Required fields" Q
+"RTN","MPIFRPC",124,0)
+ N DFN,CIEN,DFNS
+"RTN","MPIFRPC",125,0)
+ S DFN=$$GETDFN^MPIF001(ICN)
+"RTN","MPIFRPC",126,0)
+ I DFN'>0&($G(SSN)="") S RETURN(1)="-1^Unknown ICN" Q
+"RTN","MPIFRPC",127,0)
+ I DFN'>0 D
+"RTN","MPIFRPC",128,0)
+ .Q:'$D(^DPT("SSN",SSN))
+"RTN","MPIFRPC",129,0)
+ .S DFNS=$$GETDFNS^MPIF002(SSN)
+"RTN","MPIFRPC",130,0)
+ .S DFN=$$CHK(DFNS,ICN)
+"RTN","MPIFRPC",131,0)
+ I DFN'>0!(+ICN=-1) S RETURN(1)="-1^Unknown ICN" Q
+"RTN","MPIFRPC",132,0)
+ S CIEN=$$IEN^XUAF4(CMOR)
+"RTN","MPIFRPC",133,0)
+ I CIEN'>0 S RETURN(1)="-1^Unknown Institution" Q
+"RTN","MPIFRPC",134,0)
+ S RETURN(1)=$$CHANGE^MPIF001(DFN,CIEN)
+"RTN","MPIFRPC",135,0)
+ I A08=1 D AVAFC^VAFCDD01(DFN) ; trigger A08 msg
+"RTN","MPIFRPC",136,0)
+ I A08=1 S RETURN(1)=RETURN(1)_"^and A08 triggered"
+"RTN","MPIFRPC",137,0)
+ ;trigger a08
+"RTN","MPIFRPC",138,0)
+ Q
+"RTN","MPIFRPC",139,0)
+ ;
+"RTN","MPIFRPC",140,0)
+CHK(DFNS,ICN) ; see if had broken AICN x-ref, if so, fix it and return 
+"RTN","MPIFRPC",141,0)
+ ; correct DFN for patient that's CMOR is to be changed.
+"RTN","MPIFRPC",142,0)
+ ;
+"RTN","MPIFRPC",143,0)
+ N IEN,NODE,NXT,FOUND,DFN
+"RTN","MPIFRPC",144,0)
+ S FOUND=0
+"RTN","MPIFRPC",145,0)
+ F NXT=1:1 S IEN=$P(DFNS,"^",NXT) Q:IEN=""!(FOUND=1)  D
+"RTN","MPIFRPC",146,0)
+ .S NODE=$$MPINODE^MPIFAPI(NXT)
+"RTN","MPIFRPC",147,0)
+ .I $P(NODE,"^")=ICN S FOUND=1,^DPT("AICN",ICN,IEN)="",DFN=IEN
+"RTN","MPIFRPC",148,0)
+ I FOUND=0 Q "-1^No such ICN"
+"RTN","MPIFRPC",149,0)
+ Q DFN
+"RTN","MPIFRPC",150,0)
+ ;
+"RTN","MPIFRPC",151,0)
+GETCARD(RETURN) ; - RPC to get VHIC/CAC card log data
+"RTN","MPIFRPC",152,0)
+ N MPIFDT,MPIFLINE,MPIFCT
+"RTN","MPIFRPC",153,0)
+ K ^TMP("MPIFCARD",$J)
+"RTN","MPIFRPC",154,0)
+ S MPIFCT=0
+"RTN","MPIFRPC",155,0)
+ S RETURN=$NA(^TMP("MPIFCARD",$J))
+"RTN","MPIFRPC",156,0)
+ S MPIFDT=0 F  S MPIFDT=$O(^XTMP("MPIFCARD",MPIFDT)) Q:'MPIFDT!(MPIFDT'<DT)  D
+"RTN","MPIFRPC",157,0)
+ . S MPIFLINE=0 F  S MPIFLINE=$O(^XTMP("MPIFCARD",MPIFDT,MPIFLINE)) Q:'MPIFLINE  D
+"RTN","MPIFRPC",158,0)
+ .. S MPIFCT=MPIFCT+1
+"RTN","MPIFRPC",159,0)
+ .. S ^TMP("MPIFCARD",$J,MPIFCT)=^XTMP("MPIFCARD",MPIFDT,MPIFLINE)
+"RTN","MPIFRPC",160,0)
+ Q
+"RTN","MPIFRPC",161,0)
+ ;
+"RTN","MPIFRPC",162,0)
+PURGCARD(RETURN) ; - RPC called to purge card data for dates specified
+"RTN","MPIFRPC",163,0)
+ N MPIFDT
+"RTN","MPIFRPC",164,0)
+ S MPIFDT=0 F  S MPIFDT=$O(^XTMP("MPIFCARD",MPIFDT)) Q:'MPIFDT!(MPIFDT'<DT)  K ^XTMP("MPIFCARD",MPIFDT)
+"RTN","MPIFRPC",165,0)
+ S RETURN="1^PURGE SUCCESSFUL"
+"RTN","MPIFRPC",166,0)
+ Q
+"RTN","MPIFVER")
+0^3^B53549265^B52880836
+"RTN","MPIFVER",1,0)
+MPIFVER ;ALB/CKN,VISTA ENTERPRISE REGISTRATION ; 1/22/16 1:45pm
+"RTN","MPIFVER",2,0)
+ ;;1.0;MASTER PATIENT INDEX VISTA;**61,62**;30 Apr 99;Build 3
+"RTN","MPIFVER",3,0)
+ Q
+"RTN","MPIFVER",4,0)
+ENP(RESULTS,ALTRSHLD,TKTRSHLD) ;
+"RTN","MPIFVER",5,0)
+ N XCNT,XCNTR,DFN,TMPRESLT
+"RTN","MPIFVER",6,0)
+ S XCNT="",XCNTR="",DFN=""
+"RTN","MPIFVER",7,0)
+ D DISPLAY
+"RTN","MPIFVER",8,0)
+ I XCNTR'="" D
+"RTN","MPIFVER",9,0)
+ . M TMPRESLT(1)=RESULTS(XCNTR)
+"RTN","MPIFVER",10,0)
+ . K RESULTS M RESULTS=TMPRESLT
+"RTN","MPIFVER",11,0)
+ S DFN=$$BR(XCNTR)
+"RTN","MPIFVER",12,0)
+ Q DFN
+"RTN","MPIFVER",13,0)
+BR(XCNTR) ;Business rules
+"RTN","MPIFVER",14,0)
+ N ICN,SSN,MPIIDS
+"RTN","MPIFVER",15,0)
+ ;If no record is selected by user, return empty RESULTS and no DFN
+"RTN","MPIFVER",16,0)
+ I XCNTR="" K RESULTS  Q ""
+"RTN","MPIFVER",17,0)
+ ;
+"RTN","MPIFVER",18,0)
+ S ICN=$G(RESULTS(1,"ICN")),SSN=$G(RESULTS(1,"SSN"))
+"RTN","MPIFVER",19,0)
+ ;If user select record with NO ICN value, return no DFN and single
+"RTN","MPIFVER",20,0)
+ ;record in RESULTS
+"RTN","MPIFVER",21,0)
+ I ICN="" Q DFN
+"RTN","MPIFVER",22,0)
+ ;If user select record with ICN value, check PATIENT file for
+"RTN","MPIFVER",23,0)
+ ;ICN. If it exist, return DFN. If it does not exist, check for
+"RTN","MPIFVER",24,0)
+ ;SSN. If SSN exist, Notify user and return empty DFN and RESULTS to
+"RTN","MPIFVER",25,0)
+ ;go back to select patient prompt.
+"RTN","MPIFVER",26,0)
+ I $D(^DPT("AICN",+ICN)) D  Q DFN
+"RTN","MPIFVER",27,0)
+ . S DFN=$O(^DPT("AICN",+ICN,""))
+"RTN","MPIFVER",28,0)
+ . K RESULTS
+"RTN","MPIFVER",29,0)
+ I SSN'="",($D(^DPT("SSN",SSN))) D  Q DFN
+"RTN","MPIFVER",30,0)
+ . N IEN,NAME
+"RTN","MPIFVER",31,0)
+ . S IEN=$O(^DPT("SSN",SSN,"")),NAME=$P($G(^DPT(IEN,0)),"^"),DFN=-1
+"RTN","MPIFVER",32,0)
+ . W !,"SSN in selected record already exist in PATIENT file..."
+"RTN","MPIFVER",33,0)
+ . K RESULTS
+"RTN","MPIFVER",34,0)
+ ;If existing patient not found in VistA,
+"RTN","MPIFVER",35,0)
+ ;Call Enterprise Get Corresponding IDs, confirm MVI doesn't know
+"RTN","MPIFVER",36,0)
+ ;this site already (active record) - if the site is already known
+"RTN","MPIFVER",37,0)
+ ;need use that DFN.
+"RTN","MPIFVER",38,0)
+ D GETIDS^MPIFXMLG(.MPIIDS,RESULTS(1,"ICN"))
+"RTN","MPIFVER",39,0)
+ N ID,CN,STNUM,QFLG
+"RTN","MPIFVER",40,0)
+ S STNUM=$P($$SITE^VASITE(),"^",3),QFLG=0
+"RTN","MPIFVER",41,0)
+ S CN=0 F  S CN=$O(MPIIDS(CN)) Q:+CN=0!(QFLG)  D
+"RTN","MPIFVER",42,0)
+ . I $G(MPIIDS(CN,"IDType"))="PI",($G(MPIIDS(CN,"Source"))=STNUM) D  Q
+"RTN","MPIFVER",43,0)
+ .. S DFN=$G(MPIIDS(CN,"ID")),QFLG=1
+"RTN","MPIFVER",44,0)
+ .. K RESULTS
+"RTN","MPIFVER",45,0)
+ .;If 200ESR is one of the site, set a flag to trigger Z11 query.
+"RTN","MPIFVER",46,0)
+ . I $G(MPIIDS(CN,"Source"))="200ESR" S RESULTS(1,"Z11")=1
+"RTN","MPIFVER",47,0)
+ Q DFN
+"RTN","MPIFVER",48,0)
+DISPLAY ;
+"RTN","MPIFVER",49,0)
+ N CNT1,NAME,FNAME,MNAME,SCORE,SSN,DOB,ICN,SEX,LNAME,M,XMPIVER,EFLG,ECNT
+"RTN","MPIFVER",50,0)
+ S CNT1=0,EFLG=0
+"RTN","MPIFVER",51,0)
+ F  S CNT1=$O(RESULTS(CNT1)) Q:+CNT1=0  D
+"RTN","MPIFVER",52,0)
+ . S FNAME=$G(RESULTS(CNT1,"FirstName")),SSN=$G(RESULTS(CNT1,"SSN"))
+"RTN","MPIFVER",53,0)
+ . S DOB=$G(RESULTS(CNT1,"DOB")),ICN=$G(RESULTS(CNT1,"ICN"))
+"RTN","MPIFVER",54,0)
+ . S SEX=$G(RESULTS(CNT1,"Gender")),LNAME=$G(RESULTS(CNT1,"Surname"))
+"RTN","MPIFVER",55,0)
+ . S MNAME=$G(RESULTS(CNT1,"MiddleName"))
+"RTN","MPIFVER",56,0)
+ . S SCORE=+$G(RESULTS(CNT1,"Score")),NAME=LNAME_","_FNAME_" "_MNAME
+"RTN","MPIFVER",57,0)
+ . I ICN="",($D(RESULTS(CNT1,"IDS"))) D
+"RTN","MPIFVER",58,0)
+ .. S EFLG=1,ECNT=0 F  S ECNT=$O(RESULTS(CNT1,"IDS",ECNT)) Q:+ECNT=0  D
+"RTN","MPIFVER",59,0)
+ ... I $G(RESULTS(CNT1,"IDS",ECNT,"SOURCE"))="200DOD" S ICN=$G(RESULTS(CNT1,"IDS",ECNT,"ID"))  ;Get EDIPI instead of ICN if from DoD
+"RTN","MPIFVER",60,0)
+ . S M=$S(SCORE>=ALTRSHLD:"E",1:"P")
+"RTN","MPIFVER",61,0)
+ . ;Rearranging array for sectional view display
+"RTN","MPIFVER",62,0)
+ . S XMPIVER("MPIVER",M,SCORE,CNT1)=NAME_"^"_SSN_"^"_DOB_"^"_SEX_"^"_ICN
+"RTN","MPIFVER",63,0)
+DISP2 ;
+"RTN","MPIFVER",64,0)
+ N DIR,DA,DR,Y,X,DATA,ENOUGH,COUNT,I,SCORE,CNTR
+"RTN","MPIFVER",65,0)
+ S COUNT=0
+"RTN","MPIFVER",66,0)
+ W @IOF
+"RTN","MPIFVER",67,0)
+ F I="E","P" D
+"RTN","MPIFVER",68,0)
+ . I $D(XMPIVER("MPIVER",I)) D HDR($S(I="E":"",I="P":" POTENTIAL",1:""))
+"RTN","MPIFVER",69,0)
+ . S SCORE=9999999 F  S SCORE=$O(XMPIVER("MPIVER",I,SCORE),-1) Q:SCORE=""  D
+"RTN","MPIFVER",70,0)
+ .. S CNTR=0 F  S CNTR=$O(XMPIVER("MPIVER",I,SCORE,CNTR)) Q:CNTR=""  D
+"RTN","MPIFVER",71,0)
+ ... S COUNT=COUNT+1
+"RTN","MPIFVER",72,0)
+ ... S XMPIVER("MPIVER",I,SCORE,CNTR,COUNT)=""
+"RTN","MPIFVER",73,0)
+ ... S DATA=$G(XMPIVER("MPIVER",I,SCORE,CNTR))
+"RTN","MPIFVER",74,0)
+ ... D HDR1
+"RTN","MPIFVER",75,0)
+ ... W !,COUNT_") ",?3,$P(DATA,"^",5),?21,$P(DATA,"^"),?53,$P(DATA,"^",2),?64,$$FMTE^XLFDT($P(DATA,"^",3),2),?76,$P(DATA,"^",4)
+"RTN","MPIFVER",76,0)
+ S XMPIVER("COUNT")=$G(COUNT)
+"RTN","MPIFVER",77,0)
+ S ENOUGH=0
+"RTN","MPIFVER",78,0)
+ W !
+"RTN","MPIFVER",79,0)
+ D ASK I ENOUGH G ASK2
+"RTN","MPIFVER",80,0)
+ I XCNT'="" W !,"Please wait..." D EXDISP(XCNT)
+"RTN","MPIFVER",81,0)
+ W !!
+"RTN","MPIFVER",82,0)
+ K DIR,DA S DIR(0)="Y",DIR("B")="NO",DIR("A")="Would you like to see another record" D ^DIR
+"RTN","MPIFVER",83,0)
+ I $D(DTOUT)!($D(DUOUT))!(Y=0) S ENOUGH=1 G ASK2
+"RTN","MPIFVER",84,0)
+ I Y G DISP2
+"RTN","MPIFVER",85,0)
+EXIT K DA,X,Y,XMPIVER("MPIVER") W !! Q
+"RTN","MPIFVER",86,0)
+HDR(HDL) ;Header
+"RTN","MPIFVER",87,0)
+ W !,"--- Records meet the"_HDL_" MATCH criteria ---"
+"RTN","MPIFVER",88,0)
+ Q
+"RTN","MPIFVER",89,0)
+HDR1 ;Repeating header
+"RTN","MPIFVER",90,0)
+ W !,?3,$S(EFLG=1:"EDIPI",1:"ICN"),?21,"NAME",?53,"SSN",?64,"DOB",?76,"SEX"
+"RTN","MPIFVER",91,0)
+ Q
+"RTN","MPIFVER",92,0)
+ASK ;
+"RTN","MPIFVER",93,0)
+ N COUNT,DIR,DA,DR,ND,SC,CNTR,BC,QFLG
+"RTN","MPIFVER",94,0)
+ S BC=1,COUNT=$G(XMPIVER("COUNT"))
+"RTN","MPIFVER",95,0)
+ K DIR,X,Y S DIR(0)="NA^"_BC_":"_COUNT,DIR("A")="Enter the Number to display the details: ",DIR("?")="Enter the number from range of "_BC_" to "_COUNT D ^DIR
+"RTN","MPIFVER",96,0)
+ I $D(DTOUT)!($D(DUOUT)) S ENOUGH=1 Q
+"RTN","MPIFVER",97,0)
+ I Y S XCNT=$$CNTR(Y)
+"RTN","MPIFVER",98,0)
+ Q
+"RTN","MPIFVER",99,0)
+ ;
+"RTN","MPIFVER",100,0)
+CNTR(Y) ;
+"RTN","MPIFVER",101,0)
+ N SC,ND,CNTR,QFLG
+"RTN","MPIFVER",102,0)
+ S QFLG=0,XCNT=""
+"RTN","MPIFVER",103,0)
+ F I="E","P" D
+"RTN","MPIFVER",104,0)
+ . S SC=0 F  S SC=$O(XMPIVER("MPIVER",I,SC)) Q:+SC=0!(QFLG)  D
+"RTN","MPIFVER",105,0)
+ .. S CNTR=0 F  S CNTR=$O(XMPIVER("MPIVER",I,SC,CNTR)) Q:+CNTR=0!(QFLG)  D
+"RTN","MPIFVER",106,0)
+ ... S ND=$O(XMPIVER("MPIVER",I,SC,CNTR,""))
+"RTN","MPIFVER",107,0)
+ ... I ND=+Y S QFLG=1,XCNT=CNTR
+"RTN","MPIFVER",108,0)
+ Q XCNT
+"RTN","MPIFVER",109,0)
+ASK2 ;
+"RTN","MPIFVER",110,0)
+ N X,Y,DIR,DA,DR,BC,COUNT
+"RTN","MPIFVER",111,0)
+ S BC=1
+"RTN","MPIFVER",112,0)
+ S COUNT=$G(XMPIVER("COUNT"))
+"RTN","MPIFVER",113,0)
+ K DIR,X,Y S DIR(0)="Y",DIR("B")="YES",DIR("A")="Would you like to select a patient from above Enterprise Search" D ^DIR
+"RTN","MPIFVER",114,0)
+ I $D(DTOUT)!($D(DUOUT)) S ENOUGH=1 G EXIT
+"RTN","MPIFVER",115,0)
+ I Y D
+"RTN","MPIFVER",116,0)
+ .K DIR,X,Y S DIR(0)="NA^"_BC_":"_COUNT,DIR("A")="Enter the Number to select the patient: ",DIR("?")="Enter the number from range of "_BC_" to "_COUNT D ^DIR
+"RTN","MPIFVER",117,0)
+ I $D(DTOUT)!($D(DUOUT)) Q
+"RTN","MPIFVER",118,0)
+ I Y S XCNTR=$$CNTR(Y) D
+"RTN","MPIFVER",119,0)
+ .;W !,"Patient: "_XCNTR_" selected"
+"RTN","MPIFVER",120,0)
+ Q
+"RTN","MPIFVER",121,0)
+EXDISP(XCNT) ;Extended display for selected patient
+"RTN","MPIFVER",122,0)
+ ;Get all traits from original results
+"RTN","MPIFVER",123,0)
+ N FNAME,LNAME,MNAME,CITY,COUNTRY,DOB,GENDER,ICN,L1,L2,L3,MMN,PCODE
+"RTN","MPIFVER",124,0)
+ N POBCTY,POBCNTRY,POBST,PREF,SUFFIX,PROVINCE,RESCITY,RESCNTRY
+"RTN","MPIFVER",125,0)
+ N RESADD1,RESADD2,RESADD3,RESPCODE,RESPROV,RESST,RESZIP,RESPHN
+"RTN","MPIFVER",126,0)
+ N SSN,ALFNM,ALLNM,ALSSN,ALSFX,ALCNT,ALMNM
+"RTN","MPIFVER",127,0)
+ S FNAME=$G(RESULTS(XCNT,"FirstName")),LNAME=$G(RESULTS(XCNT,"Surname"))
+"RTN","MPIFVER",128,0)
+ S MNAME=$G(RESULTS(XCNT,"MiddleName")),DOB=$G(RESULTS(XCNT,"DOB"))
+"RTN","MPIFVER",129,0)
+ S GENDER=$G(RESULTS(XCNT,"Gender")),ICN=$G(RESULTS(XCNT,"ICN"))
+"RTN","MPIFVER",130,0)
+ S MMN=$G(RESULTS(XCNT,"MMN")),POBCTY=$G(RESULTS(XCNT,"POBCity"))
+"RTN","MPIFVER",131,0)
+ S POBCNTRY=$G(RESULTS(XCNT,"POBCountry")),POBST=$G(RESULTS(XCNT,"POBState"))
+"RTN","MPIFVER",132,0)
+ S PREF=$G(RESULTS(XCNT,"Prefix")),SUFFIX=$G(RESULTS(XCNT,"Suffix"))
+"RTN","MPIFVER",133,0)
+ S RESCITY=$G(RESULTS(XCNT,"ResAddCity")),RESCNTRY=$G(RESULTS(XCNT,"ResAddCountry"))
+"RTN","MPIFVER",134,0)
+ S RESADD1=$G(RESULTS(XCNT,"ResAddL1")),RESADD2=$G(RESULTS(XCNT,"ResAddL2"))
+"RTN","MPIFVER",135,0)
+ S RESADD3=$G(RESULTS(XCNT,"ResAddL3")),RESPCODE=$G(RESULTS(XCNT,"ResAddPCode"))
+"RTN","MPIFVER",136,0)
+ S RESPROV=$G(RESULTS(XCNT,"ResAddProvince")),SSN=$G(RESULTS(XCNT,"SSN"))
+"RTN","MPIFVER",137,0)
+ S RESST=$G(RESULTS(XCNT,"ResAddState")),RESZIP=$G(RESULTS(XCNT,"ResAddZip4"))
+"RTN","MPIFVER",138,0)
+ S RESPHN=$G(RESULTS(XCNT,"ResPhone"))
+"RTN","MPIFVER",139,0)
+ W !
+"RTN","MPIFVER",140,0)
+ W !,?5,"ICN",?17,": "_ICN
+"RTN","MPIFVER",141,0)
+ W !,?5,"Name",?17,": "_LNAME_","_FNAME_" "_MNAME
+"RTN","MPIFVER",142,0)
+ W !,?5,"SSN",?17,": "_SSN
+"RTN","MPIFVER",143,0)
+ W !,?5,"DOB",?17,": "_$$FMTE^XLFDT(DOB)
+"RTN","MPIFVER",144,0)
+ W !,?5,"Gender",?17,": "_GENDER
+"RTN","MPIFVER",145,0)
+ W !,?5,"MMN",?17,": "_MMN
+"RTN","MPIFVER",146,0)
+ I POBCTY'="" W !,?5,"POB City",?17,": "_POBCTY
+"RTN","MPIFVER",147,0)
+ I POBST'="" W !,?5,"POB State",?17,": "_POBST
+"RTN","MPIFVER",148,0)
+ I POBCNTRY'="" W !,?5,"POB Country",?17,": "_POBCNTRY
+"RTN","MPIFVER",149,0)
+ I RESADD1'=""!(RESADD2'="")!(RESADD3'="")!(RESCNTRY'="")!(RESCITY'="")!(RESST'="")!(RESPCODE'="")!(RESPROV'="")!(RESZIP'="") D
+"RTN","MPIFVER",150,0)
+ . W !!,"Address:"
+"RTN","MPIFVER",151,0)
+ . I RESADD1'="" W !,?5,RESADD1
+"RTN","MPIFVER",152,0)
+ . I RESADD2'="" W !,?5,RESADD2
+"RTN","MPIFVER",153,0)
+ . I RESADD3'="" W !,?5,RESADD3
+"RTN","MPIFVER",154,0)
+ . I RESCNTRY'="",(RESCNTRY="USA") D
+"RTN","MPIFVER",155,0)
+ .. W !,?5,RESCITY_","_RESST_" "_RESZIP
+"RTN","MPIFVER",156,0)
+ . I RESCNTRY'="",(RESCNTRY'="USA") D
+"RTN","MPIFVER",157,0)
+ .. W !,?5,RESCITY_","_RESPROV_" "_RESPCODE
+"RTN","MPIFVER",158,0)
+ I RESCNTRY'="" W !,?5,RESCNTRY
+"RTN","MPIFVER",159,0)
+ I RESPHN'="" W !,?5,"Phone: "_RESPHN
+"RTN","MPIFVER",160,0)
+ I $D(RESULTS(XCNT,"ALIAS")) D
+"RTN","MPIFVER",161,0)
+ . W !!,"ALIAS Information"
+"RTN","MPIFVER",162,0)
+ . W !,?5,"NAME",?45,"SSN"
+"RTN","MPIFVER",163,0)
+ . S ALCNT=0 F  S ALCNT=$O(RESULTS(XCNT,"ALIAS",ALCNT)) Q:+ALCNT=0  D
+"RTN","MPIFVER",164,0)
+ .. S ALFNM=$G(RESULTS(XCNT,"ALIAS",ALCNT,"FirstName"))
+"RTN","MPIFVER",165,0)
+ .. S ALLNM=$G(RESULTS(XCNT,"ALIAS",ALCNT,"Surname"))
+"RTN","MPIFVER",166,0)
+ .. S ALSSN=$G(RESULTS(XCNT,"ALIAS",ALCNT,"SSN"))
+"RTN","MPIFVER",167,0)
+ .. S ALSFX=$G(RESULTS(XCNT,"ALIAS",ALCNT,"Suffix"))
+"RTN","MPIFVER",168,0)
+ .. S ALMNM=$G(RESULTS(XCNT,"ALIAS",ALCNT,"MiddleName"))
+"RTN","MPIFVER",169,0)
+ .. W !,?5,ALLNM_","_ALFNM_" "_ALMNM_" "_ALSFX,?45,ALSSN
+"RTN","MPIFVER",170,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",3148,6)
+^59
+**END**
+**END**
+

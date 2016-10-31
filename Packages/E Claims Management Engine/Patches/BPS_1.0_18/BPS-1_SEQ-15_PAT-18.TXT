@@ -1,0 +1,317 @@
+
+=============================================================================
+Run Date: FEB 09, 2015                     Designation: BPS*1*18
+Package : BPS - E CLAIMS MGMT ENGINE          Priority: Mandatory
+Version : 1        SEQ #15                      Status: Released
+                  Compliance Date: MAR 11, 2015
+=============================================================================
+
+Associated patches: (v)BPS*1*9     <<= must be installed BEFORE `BPS*1*18'
+                    (v)BPS*1*15    <<= must be installed BEFORE `BPS*1*18'
+                    (v)IB*2*519    <<= must be installed BEFORE `BPS*1*18'
+
+Subject: HEALTH PLAN IDENTIFIER (HPID) IMPLEMENTATION BUILD 2
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  
+  The Health Plan Identifier (HPID) project implements a new national
+  standard of having a single identifier to use on electronic transmissions
+  pertaining to health care. All entities that are financially responsible
+  for care are assigned a HPID or Other Entity Identifier (OEID), used for
+  entities that aren't traditional health plans. This new standard 
+  increases interoperability by replacing clearinghouse-specific
+  identifiers for health plans.
+  
+  This patch builds on the Integrated Billing (IB) HPID Build 1 patch 
+  (IB*2.0*519) to enable it to include the HPID/OEID for ePharmacy on 
+  selected screens and reports. The HPID will not replace the use of the 
+  Banking Identification Number (BIN) and/or Processor Control Number (PCN).
+  
+  Below is a list of all the applications involved in this project along 
+  with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2.0*521
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1.0*18
+    ACCOUNTS RECEIVABLE (PRCA) V. 4.5                     PRCA*4.5*302
+   
+  The patches (IB*2.0*521, BPS*1.0*18 and PRCA*4.5*302) are being released 
+  in the Kernel Installation and Distribution System (KIDS) multi-build 
+  distribution as:  BPS IB PRCA HPID BUNDLE 2.0. 
+   
+  
+  Patch Components
+  ================
+    
+   Files & Fields Associated:
+    
+   File Name (Number)            Field Name (Number)       New/Mod/Del
+   ------------------            -------------------       -----------
+   BPS RESPONSES (#9002313.03)   PAYER ID QUALIFIER (#568)     Mod
+     
+   
+   Forms Associated:
+    
+   Form Name             File #       New/Modified/Deleted
+   ---------             ------       --------------------
+   N/A
+      
+   Mail Groups Associated:
+    
+   Mail Group Name          New/Modified/Deleted
+   ---------------          --------------------
+   N/A
+      
+   Options Associated:
+         
+   Option Name                    Type             New/Modified/Deleted
+   -----------                    -----------      ------------------------
+   N/A
+    
+   Protocols Associated:
+    
+   Protocol Name                  New/Modified/Deleted
+   -------------                  -------------------- 
+   N/A
+      
+   Security Keys Associated:
+    
+   Security Key Name
+   -----------------
+   N/A
+    
+    
+   Templates Associated:
+   
+   
+   Template Name                   Type      File Name (Number) New/Mod/Del
+   -------------                   ----      ------------------ -----------
+   N/A
+  
+   Remote Procedure                          New/Mod/Del
+   -------------                             -----------
+   N/A  
+   
+   Additional Information:
+   N/A
+    
+    
+   New Service Requests (NSRs):
+   -----------------------------
+   NSR - Request ID: 20110503 Electronic Data Interchange (EDI) New 
+         Standards and Operating Rules (Veterans Health Administration)
+         VHA Provider-Side TCRs  05/19/2011 
+         http://vista.domain.ext/nsrd/ViewITRequest.asp?RequestID=20110503
+    
+    
+   Patient Safety Issues (PSIs):
+   ------------------------------
+   N/A
+    
+   Remedy Ticket(s) & Overviews:
+   -----------------------------
+   N/A
+    
+   Test Sites:
+   -----------
+   White River Junction, VT
+   Houston, TX
+   Walla Walla, WA
+   Tampa, FL
+  
+  
+   Documentation Retrieval Instructions:
+   -------------------------------------
+   Updated documentation describing the new functionality introduced by 
+   this patch is available using the File Transfer Protocol (FTP).
+  
+   The preferred method is to FTP the files from 
+   ftp://download.vista.domain.ext/. This transmits the files from the
+   first available FTP server. Sites may also elect to retrieve software
+   directly from a specific server as follows:
+  
+    Albany         ftp.domain.ext  
+ <ftp://ftp.domain.ext>
+    Hines          ftp.domain.ext   
+ <ftp://ftp.domain.ext>
+    Salt Lake City ftp.domain.ext     
+ <ftp://ftp.domain.ext>
+    
+    
+   The documentation will be in the form of Adobe Acrobat files.
+  
+   Documentation can also be found on the VA Software Documentation 
+   Library at: http://www4.domain.ext/vdl/
+  
+   File Description                        File Name               FTP Mode
+   -------------------------------------------------------------------------
+   Release Notes/Installation Guide        bps_1_p18_rn.pdf        Binary
+   ECME User Manual                        bps_1_um_r0115.pdf      Binary
+  
+   Patch Installation: 
+  
+   Pre/Post Installation Overview
+   ------------------------------
+   This patch should take less than 5 minutes to install.
+   
+   DO NOT QUEUE the installation of this patch.
+   
+   To avoid disruptions, these patches should be installed during non-peak
+   hours when there is minimal activity on the system. Avoid times when 
+   Electronic Remittance Advices (ERAs) and (Electronic) Explanations of
+   Benefits (EOBs) are being received from the Financial Services Center (FSC).
+  
+  
+   Installation Instructions
+   -------------------------
+  
+ 1.  OBTAIN PATCHES
+     --------------
+     Obtain the host file BPS_IB_PRCA_HPID_BUNDLE_2_0.KID, which contains the
+     following patches:
+  
+         BPS*1.0*18
+         IB*2.0*521
+         PRCA*4.5*302
+  
+      Sites can retrieve VistA software from the following FTP addresses.
+      The preferred method is to FTP the file from:
+  
+                     download.vista.domain.ext
+  
+      This will transmit the file from the first available FTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+  
+        Albany                  ftp.domain.ext
+        Hines                   ftp.domain.ext
+        Salt Lake City          ftp.domain.ext
+  
+      The BPS_IB_PRCA_HPID_BUNDLE_2_0.KID host file is located in the
+       directory. Use the American Standard Code for 
+      Information Interchange (ASCII) Mode when downloading the file.
+  
+  
+   2.  START UP KIDS
+       -------------
+       Start up the Kernel Installation and Distribution System Menu option
+       [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+       Select Kernel Installation & Distribution System Option: Installation
+                                                                ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+       Select Installation Option:
+  
+ 3.  LOAD TRANSPORT GLOBAL FOR MULTI-BUILD
+     -------------------------------------
+     From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file BPS_IB_PRCA_HPID_BUNDLE_2_0.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]BPS_IB_PRCA_HPID_BUNDLE_2_0.KID).
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       Loading Distribution...
+  
+         BPS IB PRCA HPID BUNDLE 2.0
+         BPS*1.0*18
+         IB*2.0*521
+         PRCA*4.5*302
+  
+       Use INSTALL NAME: BPS IB PRCA HPID BUNDLE 2.0 to install this
+       distribution.
+  
+ 4.  RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD
+     -------------------------------------------------
+     From the Installation menu, you may select to use the following
+     options (when prompted for the INSTALL NAME, enter
+     BPS IB PRCA HPID BUNDLE 2.0):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as data dictionaries or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, data dictionaries, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 5.  INSTALL MULTI-BUILD
+     -------------------
+     This is the step to start the installation of this KIDS patch.  This
+     will need to be run for the BPS IB PRCA HPID BUNDLE 2.0.
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted for the "Select INSTALL NAME:", enter BPS IB
+         PRCA HPID BUNDLE 2.0.
+     c.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO//", enter NO.
+     d.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+         NO//", enter NO.
+     e.  When prompted " Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", enter NO.
+     f.  When prompted "Device: HOME//", respond with the correct device 
+         but do * NOT * queue this install.
+     g.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0. 
+  
+   Post-Installation Instructions
+   ------------------------------
+   In order to verify the patch post-installation routine was run 
+   successfully, please examine the Install File for this patch and 
+   report any error messages to Product Support.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;E CLAIMS MGMT ENGINE;**[Patch List]**;01-JUN-04;Build 31
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: BPSRPT9
+    Before: B81558879   After:B106079505  **8,18**
+Routine Name: BPSRPT9A
+    Before: B82830891   After: B95077796  **8,9,18**
+Routine Name: BPSSCRLG
+    Before:B235812243   After:B241284581  **1,5,7,8,10,11,15,18**
+ 
+Routine list of preceding patches: 9, 15
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 01, 2014
+Completed By:                               Date Completed: JAN 16, 2015
+Released By :                               Date Released : FEB 09, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

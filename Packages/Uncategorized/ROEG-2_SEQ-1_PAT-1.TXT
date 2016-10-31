@@ -1,0 +1,212 @@
+
+=============================================================================
+Run Date: JAN 28, 2016                     Designation: ROEG*2*1
+Package : ROEG - MULTIPLE SCLEROSIS SURVEILLA Priority: Mandatory
+Version : 2         SEQ #1                      Status: Released
+                  Compliance Date: FEB 27, 2016
+=============================================================================
+
+
+Subject: HREG MSSR 2.0 Deployment
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Note: This is to announce that Multiple Sclerosis Surveillance Registry 
+ (MSSR) enhancements will be deployed to the production server for national
+ release on 02/01/2016 at 8 p.m. Eastern
+  
+ Technical support staff at Austin Information Technology Center
+ (AITC) will install this patch on the National MSSR server located 
+ there using a pre-approved Request for Change Order and Implementation
+ Plan.
+ No effort is required by local sites.  User Acceptance Test is by the
+ direction of the MSSR Business Owner and no MOU is required.
+  
+ This patch contains the MSSR Work Items completed during the DME contract
+ period for the  production deployment.
+  
+   
+ Patch Components
+ ================
+   
+ The following describes each component of the MSSR Patch 2.0*1
+  
+ 268032: MSSRE: App enhancements 
+ Issue: In response to Congressional legislation, Veteran's Health 
+ Administration established two Multiple Sclerosis Centers of Excellence
+ (MSCoE) in 2003.  These Centers (East and West) were subsequently made
+ permanent by "The Veteran's Benefits, Healthcare and Information
+ Technology Act of 2006."  The MSCoEs were mandated to report on the
+ epidemiology, healthcare use, and costs of the Veteran Multiple Sclerosis
+ (MS) population.  A VHA Handbook entitled Multiple Sclerosis System of
+ Care Procedures 1011.06 was released to the field on December 7, 2009.  
+ This approved Handbook (which includes reference to the Congressional
+ Mandate for the MSCoE) established policy and procedure for healthcare
+ services for patients with MS and requires ongoing surveillance of this
+ patient population.  The Department of Veterans Affairs (VA) established
+ the MSSR (Multiple Sclerosis Surveillance Registry) in 2013 to provide
+ population-specific patient data required to ensure that quality health
+ care services continues to be delivered in a timely manner. 
+  
+ In 2013, VA developed MSSR by collecting clinical utilization, 
+ demographic, and epidemiologic data.  A front end portal was created 
+ within the Computerized Patient Record System (CPRS) for the entry of data
+ by clinicians, as well as a back end data storage capability.  The portal
+ tool is triggered annually for any patient with an MS diagnosis and
+ provides a user interface for data entry into the database. The tool
+ prompts providers to enter standard demographic and clinical variables
+ important for clinical, quality improvement, and research activities
+ mandated by VHA (which can be found in Appendix C of the VHA Handbook,
+ Multiple Sclerosis System of Care Procedures 1011.06). Data is stored
+ centrally at the enterprise level.  The current effort will provide
+ enhancements to MSSR by allowing front end user clinicians to input
+ additional data entry points (e.g. patient death dates and causes on the
+ Multiple Sclerosis Assessment Tool (MSAT)), automate data transmission on
+ a regular schedule for the new patient data sources, creation of data
+ population for the new patient data sources (e.g. utilization and type of
+ prosthetics, pharmaceuticals, labs, radiology, fee based services) and
+ reporting capabilities (e.g. prosthetics, pharmacy average cost per
+ patient) for essential analysis.  The enhancements will enable the
+ Multiple Sclerosis Centers of Excellence (MSCoE) to develop initiatives to
+ improve healthcare for veterans with Multiple Sclerosis and related
+ diseases, improve treatment triaging and outcomes, guide research and
+ inform policy.
+  
+ MSSR Version 2.0 enhances the existing MSSR by completing the 
+ implementation of initial requirements; ensuring report consistency;
+ ensuring comprehensive data ingestion and accuracy from identified data
+ sources; and deploying a fully functional national release of the
+ registry.
+  
+ MSSR v2.0 is a Web-based intranet registry application, residing within
+ the Converged Registries Solution (CRS) architectural framework. The
+ provider documents MS assessment and enters the data into the Computerized
+ Patient Record System/Veterans Health Information Systems and Technology
+ Architecture (CPRS/VistA).
+  
+ 1) The patient data is securely stored in the Corporate Data Warehouse
+ (CDW). This CDW data is also compiled from feeds from corresponding
+ Regional Data Warehouse (RDW) and Veterans Integrated Service Network
+ (VISN) DataWarehouse (VDW) sources.
+  
+ 2) At regular intervals, the MSSR database (residing within CRS) extracts
+ data specific to the Multiple Sclerosis patient cohort from CDW. The MSSR
+ Dashboard provides MSSR users with quality patient data, including patient
+ details and standard and aggregate. Depending on user permissions, data is
+ available at the national, regional and local levels, allowing providers
+ to evaluate effective treatment, quality care, scheduling, and planning
+ for patients.
+  
+ The enhanced MSSR provides users the ability to view detailed information
+ regarding Pharmacy, prosthetics, Lab, radiology and Fee-based services
+ provided to MS patients and help determine areas of improvement for the
+ timely and quality care of Veterans, and to enhance the VHA's capacity to
+ monitor long-term outcomes of MS patients identified by custom algorithm.
+  
+ Additional Information:
+ ---------------------------
+  
+ Training 
+  
+ The MSSR User Guide serves as Training for Users to refer to. The User
+ Guide is located here:
+ http://tspr.vista.domain.ext/warboard/anotebk.asp?proj=1677&Type=Active
+  
+ ADDITIONAL INFORMATION:
+  
+ As a VA intranet Web site, MSSR troubleshooting procedures will usually
+ involve contacting the MSSR network administrators or the NSD. Calls to
+ the NSD should state that the user is working with the Converged
+ Registries Solution and the Multiple Sclerosis Registry. The NSD will then
+ direct the trouble ticket to AITC, who will use established procedures to
+ direct the problem to the CRS sustainment team.
+  
+   
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ There are no Remedy Tickets associated with this patch.
+   
+  
+ Test Sites:
+ ----------
+ n/a
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Title                              File Name              FTP Mode
+ -----------------------------------------------------------------------
+ User Manual                HREG_MSSR_User Guide.PDF        Binary
+  
+  
+  
+ Patch Installation:
+  
+ The Multiple Sclerosis Surveillance Registry (ROEG) application will use 
+ the ROEG namespace.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no pre/post installations instructions associated with this 
+ patch.
+ n/a
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ n/a
+  
+ Installation Instructions:
+ --------------------------
+ This patch is only for information. 
+  
+ Post-Installation Instructions:
+ -------------------------------
+ n/a
+ Note:
+ Technical support staff at Austin Information Technology Center (AITC)
+ will install this patch on the National MSSR server located there using a
+ pre-approved Request for Change Order and Implementation Plan. No effort
+ is required by local sites.  User Acceptance Test is by the direction of
+ the MSSR Business Owner and no MOU is required.
+  
+ This patch contains the MSSR Work Items completed during the DME contract 
+ period for the  production deployment.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 15, 2016
+Completed By:                               Date Completed: JAN 28, 2016
+Released By :                               Date Released : JAN 28, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,169 @@
+$TXT Created by             at DEV.DEV.DOMAIN.EXT  (KIDS) on Tuesday, 02/23/16 at 06:52
+=============================================================================
+Run Date: MAY 26, 2016                     Designation: RA*5*126
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #111                      Status: Released
+                  Compliance Date: JUN 26, 2016
+=============================================================================
+
+Associated patches: (v)RA*5*121    <<= must be installed BEFORE `RA*5*126'
+
+Subject: 2016 UPDATES TO THE RAD CPT BY PROC FILE (73.2) AND DIAG CODE UPDATE
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will correct the following 2 issues:
+      
+ 1. The Radiology Program Office sends out an updated listing of the
+    Radiology CPT by Procedure Type (73.2) on a yearly basis. This update
+    needs to be distributed to the sites.
+  
+ 2. In the RADIOLOGY DIAGNONIS file (#78.3), Diagnosis Code 1217 LUNGRADS
+    5: SIGNIFICANT INCIDENTAL FINDING needs to be changed to LUNGRADS S: 
+    SIGNIFICANT INCIDENTAL FINDING.
+                     
+ Associated CA/SDM tickets:
+ =========================
+  
+ 1. I7169271FY16  Request for the 2016 update of Radiology File 73.2
+            
+ 2. R6133882FY16  User has a problem with RA*5*121. Diagnostic code
+    LUNGRADS 5 needs to change to LUNGRADS S.
+           
+ Associated NSR(s):
+ =================
+ N/A
+       
+ Participating Test Sites:
+ ========================
+ VA Texas Valley Coastal Bend Health Care System
+ VA Pacific Islands Healthcare System
+ VA Heartland - West (Kansas City)
+  
+      
+ CA/SDM Overview:
+ ===============     
+  
+ 1. I7169271FY16 
+  
+ Problem:
+ --------
+  
+ File RADIOLOGY CPT BY PROCEDURE TYPE (#73.2) needs to be updated with the
+ yearly updates provided by the Radiology Program Office.
+        
+ Resolution:
+ ------------     
+ This patch will update the RADIOLOGY CPT BY PROCEDURE TYPE (#73.2)
+ file for distribution to the sites.
+  
+ 2. R6133882FY16   
+      
+ Problem:
+ --------
+  
+ In the RADIOLOGY DIAGNONISI file (#78.3), Diagnosis Code 1217 LUNGRADS 5:
+ SIGNIFICANT INCIDENTAL FINDING Needs to be changed to LUNGRADS S:
+ SIGNIFICANT INCIDENTAL FINDING       
+       
+ Resolution:
+ ----------     
+  
+ Pre-install routine RA126PRE will make the update to Diagnosis Code 1217.
+  
+ Installation Instructions:
+ =========================
+      
+ If installed during the normal workday, it is recommended that the 
+ Radiology users be off the system.  Other VISTA users will not be
+ affected.
+  
+ Install Time - less than 2 minutes
+  
+      
+ 1.  Load Transport Global 
+     ---------------------------
+  
+  Choose the PackMan message containing this patch and invoke the 
+  INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+  Start up the Kernel Installation and Distribution System Menu [XPD MAIN]:
+  
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter RA*5.0*126):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch (routines,
+         DD's, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+  a.  Choose the Install Package(s) option to start the patch install.
+  
+   b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       YES//', answer NO. 
+  
+   c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+      Options, and Protocols? YES//', answer NO.
+  
+ 5.  PRE Install Routine, RA126PRE, may be deleted after the installation. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+VERSION ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RA126PRE
+    Before:       n/a   After:  B1999326  **126**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 13, 2016
+Completed By:                               Date Completed: MAY 25, 2016
+Released By :                               Date Released : MAY 26, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

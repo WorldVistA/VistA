@@ -1,0 +1,2267 @@
+Released DGBT*1*22 SEQ #25
+Extracted from mail message
+**KIDS**:DGBT*1.0*22^
+
+**INSTALL NAME**
+DGBT*1.0*22
+"BLD",9475,0)
+DGBT*1.0*22^BENEFICIARY TRAVEL^0^3140304^y
+"BLD",9475,1,0)
+^^16^16^3130814^
+"BLD",9475,1,1,0)
+This patch addresses five issues:
+"BLD",9475,1,2,0)
+ 
+"BLD",9475,1,3,0)
+1. After the release of patch DGBT*1.0*20, it is possible to 
+"BLD",9475,1,4,0)
+   inadvertently modify the Division of existing claims.
+"BLD",9475,1,5,0)
+ 
+"BLD",9475,1,6,0)
+2. Special Mode claims are being rejected, with a generic  "DATA DID 
+"BLD",9475,1,7,0)
+   NOT FILE DUE TO ERRORS" message.
+"BLD",9475,1,8,0)
+     
+"BLD",9475,1,9,0)
+3. Users are reporting getting an <UNDEFINED>COMPLT+3^DGBTE *% error 
+"BLD",9475,1,10,0)
+   when entering claims.
+"BLD",9475,1,11,0)
+   
+"BLD",9475,1,12,0)
+4. A subscript error occurs when using the View of Claim 
+"BLD",9475,1,13,0)
+   [DGBT BENE TRAVEL VIEW] option.
+"BLD",9475,1,14,0)
+ 
+"BLD",9475,1,15,0)
+5. Users are being returned to the Beneficiary Travel Menu [DGBT BENE 
+"BLD",9475,1,16,0)
+   TRAVEL MENU] after completing a claim.
+"BLD",9475,4,0)
+^9.64PA^^
+"BLD",9475,6.3)
+5
+"BLD",9475,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9475,"KRN",.4,0)
+.4
+"BLD",9475,"KRN",.401,0)
+.401
+"BLD",9475,"KRN",.402,0)
+.402
+"BLD",9475,"KRN",.403,0)
+.403
+"BLD",9475,"KRN",.5,0)
+.5
+"BLD",9475,"KRN",.84,0)
+.84
+"BLD",9475,"KRN",3.6,0)
+3.6
+"BLD",9475,"KRN",3.8,0)
+3.8
+"BLD",9475,"KRN",9.2,0)
+9.2
+"BLD",9475,"KRN",9.8,0)
+9.8
+"BLD",9475,"KRN",9.8,"NM",0)
+^9.68A^6^6
+"BLD",9475,"KRN",9.8,"NM",1,0)
+DGBTCD^^0^B28350736
+"BLD",9475,"KRN",9.8,"NM",2,0)
+DGBTCDSP^^0^B37725892
+"BLD",9475,"KRN",9.8,"NM",3,0)
+DGBTE^^0^B48237300
+"BLD",9475,"KRN",9.8,"NM",4,0)
+DGBTE1^^0^B31350623
+"BLD",9475,"KRN",9.8,"NM",5,0)
+DGBTSP^^0^B184770476
+"BLD",9475,"KRN",9.8,"NM",6,0)
+DGBTSP1^^0^B84121685
+"BLD",9475,"KRN",9.8,"NM","B","DGBTCD",1)
+
+"BLD",9475,"KRN",9.8,"NM","B","DGBTCDSP",2)
+
+"BLD",9475,"KRN",9.8,"NM","B","DGBTE",3)
+
+"BLD",9475,"KRN",9.8,"NM","B","DGBTE1",4)
+
+"BLD",9475,"KRN",9.8,"NM","B","DGBTSP",5)
+
+"BLD",9475,"KRN",9.8,"NM","B","DGBTSP1",6)
+
+"BLD",9475,"KRN",19,0)
+19
+"BLD",9475,"KRN",19.1,0)
+19.1
+"BLD",9475,"KRN",101,0)
+101
+"BLD",9475,"KRN",409.61,0)
+409.61
+"BLD",9475,"KRN",771,0)
+771
+"BLD",9475,"KRN",779.2,0)
+779.2
+"BLD",9475,"KRN",870,0)
+870
+"BLD",9475,"KRN",8989.51,0)
+8989.51
+"BLD",9475,"KRN",8989.52,0)
+8989.52
+"BLD",9475,"KRN",8994,0)
+8994
+"BLD",9475,"KRN","B",.4,.4)
+
+"BLD",9475,"KRN","B",.401,.401)
+
+"BLD",9475,"KRN","B",.402,.402)
+
+"BLD",9475,"KRN","B",.403,.403)
+
+"BLD",9475,"KRN","B",.5,.5)
+
+"BLD",9475,"KRN","B",.84,.84)
+
+"BLD",9475,"KRN","B",3.6,3.6)
+
+"BLD",9475,"KRN","B",3.8,3.8)
+
+"BLD",9475,"KRN","B",9.2,9.2)
+
+"BLD",9475,"KRN","B",9.8,9.8)
+
+"BLD",9475,"KRN","B",19,19)
+
+"BLD",9475,"KRN","B",19.1,19.1)
+
+"BLD",9475,"KRN","B",101,101)
+
+"BLD",9475,"KRN","B",409.61,409.61)
+
+"BLD",9475,"KRN","B",771,771)
+
+"BLD",9475,"KRN","B",779.2,779.2)
+
+"BLD",9475,"KRN","B",870,870)
+
+"BLD",9475,"KRN","B",8989.51,8989.51)
+
+"BLD",9475,"KRN","B",8989.52,8989.52)
+
+"BLD",9475,"KRN","B",8994,8994)
+
+"BLD",9475,"QDEF")
+^^^^^^^^^^YES
+"BLD",9475,"QUES",0)
+^9.62^^
+"BLD",9475,"REQB",0)
+^9.611^1^1
+"BLD",9475,"REQB",1,0)
+DGBT*1.0*21^2
+"BLD",9475,"REQB","B","DGBT*1.0*21",1)
+
+"MBREQ")
+0
+"PKG",154,-1)
+1^1
+"PKG",154,0)
+BENEFICIARY TRAVEL^DGBT^Beneficiary Travel
+"PKG",154,20,0)
+^9.402P^^
+"PKG",154,22,0)
+^9.49I^1^1
+"PKG",154,22,1,0)
+1.0^3030731^3020423^66481
+"PKG",154,22,1,"PAH",1,0)
+22^3140304
+"PKG",154,22,1,"PAH",1,1,0)
+^^16^16^3140304
+"PKG",154,22,1,"PAH",1,1,1,0)
+This patch addresses five issues:
+"PKG",154,22,1,"PAH",1,1,2,0)
+ 
+"PKG",154,22,1,"PAH",1,1,3,0)
+1. After the release of patch DGBT*1.0*20, it is possible to 
+"PKG",154,22,1,"PAH",1,1,4,0)
+   inadvertently modify the Division of existing claims.
+"PKG",154,22,1,"PAH",1,1,5,0)
+ 
+"PKG",154,22,1,"PAH",1,1,6,0)
+2. Special Mode claims are being rejected, with a generic  "DATA DID 
+"PKG",154,22,1,"PAH",1,1,7,0)
+   NOT FILE DUE TO ERRORS" message.
+"PKG",154,22,1,"PAH",1,1,8,0)
+     
+"PKG",154,22,1,"PAH",1,1,9,0)
+3. Users are reporting getting an <UNDEFINED>COMPLT+3^DGBTE *% error 
+"PKG",154,22,1,"PAH",1,1,10,0)
+   when entering claims.
+"PKG",154,22,1,"PAH",1,1,11,0)
+   
+"PKG",154,22,1,"PAH",1,1,12,0)
+4. A subscript error occurs when using the View of Claim 
+"PKG",154,22,1,"PAH",1,1,13,0)
+   [DGBT BENE TRAVEL VIEW] option.
+"PKG",154,22,1,"PAH",1,1,14,0)
+ 
+"PKG",154,22,1,"PAH",1,1,15,0)
+5. Users are being returned to the Beneficiary Travel Menu [DGBT BENE 
+"PKG",154,22,1,"PAH",1,1,16,0)
+   TRAVEL MENU] after completing a claim.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+6
+"RTN","DGBTCD")
+0^1^B28350736^B27058166
+"RTN","DGBTCD",1,0)
+DGBTCD ;ALB/SCK/BLD - BENEFICIARY TRAVEL CLAIM DISPLAY; 12/15/92 4/14/93
+"RTN","DGBTCD",2,0)
+ ;;1.0;Beneficiary Travel;**2,7,9,20,22**;September 25, 2001;Build 5
+"RTN","DGBTCD",3,0)
+ Q
+"RTN","DGBTCD",4,0)
+SCREEN ;this will display the information screen at the end of a claim and 
+"RTN","DGBTCD",5,0)
+ Q:'$D(^DGBT(392,DGBTDT,0))  S U="^" K DGBTVAR F I=0,"A","C","D","M","R","T" S DGBTVAR(I)=$S($D(^DGBT(392,DGBTDT,I)):^(I),1:"")
+"RTN","DGBTCD",6,0)
+ S DGBTACCT=$S($D(^DGBT(392.3,+$P(DGBTVAR(0),U,6),0)):$P($G(^(0)),U,5),1:0)
+"RTN","DGBTCD",7,0)
+ I 'DGBTACCT W !!,*7,">> WARNING! No ACCOUNT TYPE for this claim, Please correct through Claim Enter/Edit!" G QUIT
+"RTN","DGBTCD",8,0)
+ I '$P(DGBTVAR(0),U,11) W !!,*7,">> WARNING! No DIVISION specified for this claim, please correct through Claim Enter/Edit." G QUIT ;dbe patch DGBT*1*22
+"RTN","DGBTCD",9,0)
+ W @IOF
+"RTN","DGBTCD",10,0)
+ W !?18,"Beneficiary Travel Claim Information <Display>"
+"RTN","DGBTCD",11,0)
+ W !!,?2,"Claim Date: ",DGBTDTE W:$P(DGBTVAR(0),U,11)'=""&($D(^DG(40.8,$P(DGBTVAR(0),U,11),0))) ?40,"Division: ",$P(^DG(40.8,$P(DGBTVAR(0),U,11),0),U)
+"RTN","DGBTCD",12,0)
+ D PID^VADPT6 W !!?8,"Name: ",VADM(1),?40,"PT ID: ",VA("PID"),?64,"DOB: ",$P(VADM(3),U,2)
+"RTN","DGBTCD",13,0)
+ S (DGBTFCTY,DGBTTCTY)=""
+"RTN","DGBTCD",14,0)
+ I $P(DGBTVAR("D"),U,4)]"" S DGBTCNA=$P(DGBTVAR("D"),U,4) D CITY^DGBTCR I DGBTCSZ[DGBTCNA D
+"RTN","DGBTCD",15,0)
+ . S DGBTCSZ=DGBTCNA_", "_$S(+$P(DGBTVAR("D"),U,5)>0:$P(^DIC(5,$P(DGBTVAR("D"),U,5),0),U,2),1:"")_"  "
+"RTN","DGBTCD",16,0)
+ . S Y=$P(DGBTVAR("D"),U,6),Y=$E(Y,1,5)_$S($E(Y,6,9)]"":"-"_$E(Y,6,9),1:"") S DGBTCSZ=DGBTCSZ_Y,DGBTFCTY=DGBTCSZ
+"RTN","DGBTCD",17,0)
+ I $P(DGBTVAR("T"),U,4)]"" S DGBTCNA=$P(DGBTVAR("T"),U,4) D CITY^DGBTCR S:DGBTCSZ[DGBTCNA DGBTCSZ=DGBTCNA_", "_$S(+$P(DGBTVAR("T"),U,5)>0:$P(^DIC(5,$P(DGBTVAR("T"),U,5),0),U,2),1:"")_"  "_$P(DGBTVAR("T"),U,6) S DGBTTCTY=DGBTCSZ
+"RTN","DGBTCD",18,0)
+FROM W !!," Depart From: ",$E($P(DGBTVAR("D"),U),1,30)
+"RTN","DGBTCD",19,0)
+ W ?46,"To: ",$E($P(DGBTVAR("T"),U),1,30)
+"RTN","DGBTCD",20,0)
+ W !?14 W:$P(DGBTVAR("D"),U,2)]"" $P(DGBTVAR("D"),U,2) W:$P(DGBTVAR("D"),U,2)="" $P(DGBTVAR("D"),U,3) W:$P($G(DGBTVAR("D")),U,2)=""&($P($G(DGBTVAR("D")),U,3)="") DGBTFCTY
+"RTN","DGBTCD",21,0)
+ W ?50 W:$P(DGBTVAR("T"),U,2)]"" $P(DGBTVAR("T"),U,2) W:$P(DGBTVAR("T"),U,2)="" $P(DGBTVAR("T"),U,3) W:$P(DGBTVAR("T"),U,2)=""&($P(DGBTVAR("T"),U,3)="") DGBTTCTY
+"RTN","DGBTCD",22,0)
+ W !?14 W:$P(DGBTVAR("D"),U,3)]"" $P(DGBTVAR("D"),U,3) W:$P(DGBTVAR("D"),U,2)]""&($P(DGBTVAR("D"),U,3)="") DGBTFCTY
+"RTN","DGBTCD",23,0)
+ W ?50 W:$P(DGBTVAR("T"),U,3)]"" $P(DGBTVAR("T"),U,3) W:$P(DGBTVAR("T"),U,2)]""&($P(DGBTVAR("T"),U,3)="") DGBTTCTY
+"RTN","DGBTCD",24,0)
+ W !?14 W:$P(DGBTVAR("D"),U,2)]""&($P(DGBTVAR("D"),U,3)]"") DGBTFCTY
+"RTN","DGBTCD",25,0)
+ W ?50 W:$P(DGBTVAR("T"),U,2)]""&($P(DGBTVAR("T"),U,3)]"") DGBTTCTY
+"RTN","DGBTCD",26,0)
+ELIG W !!," Eligibility: " W:$P(DGBTVAR(0),U,3) $P(^DIC(8,$P(DGBTVAR(0),U,3),0),U) W:$P(DGBTVAR(0),U,4)]"" ?45,"SC%: ",$P(DGBTVAR(0),U,4)
+"RTN","DGBTCD",27,0)
+ I $P(DGBTVAR(0),U,5) W ?57,"Cert. Date: " S VADAT("W")=9999999-$P($P(DGBTVAR(0),U,5),".") D ^VADATE W $P(VADATE("E"),"@") K VADAT,VADATE
+"RTN","DGBTCD",28,0)
+ACCT W !!?5,"Account: ",$S($P(DGBTVAR(0),U,6):$E($P(^DGBT(392.3,$P(DGBTVAR(0),U,6),0),U),1,15),1:"") W:$P(DGBTVAR("A"),U,3) ?31,"REVIEW VISIT"
+"RTN","DGBTCD",29,0)
+ ;question added for DG*1.0*20 E18
+"RTN","DGBTCD",30,0)
+ W !!,"Common Carrier Req: ",$S($$GET1^DIQ(392,DGBTDT,55.1)="YES":"YES",1:"NO") W ?48,"COMMON CARRIER FEE: " S X=$P(DGBTVAR("C"),U,2),X2="2$" N X3 D COMMA^%DTC W X ;
+"RTN","DGBTCD",31,0)
+ W !,?51,"Most Econ. Cost: " S X=$P(DGBTVAR(0),U,8),X2="2$" N X3 D COMMA^%DTC W X
+"RTN","DGBTCD",32,0)
+ATT I DGBTACCT=4!(DGBTACCT=5) W !,"Attend/Payee: ",$S($D(DGBTVAR("A")):$P(DGBTVAR("A"),U,2),1:"")
+"RTN","DGBTCD",33,0)
+ I $G(PATCHDT)'<$G(DGBTDT) I $G(DGBTACCT)'=4&($G(DGBTACCT)'=5) W !," Mode/Trans.: ",$S($P($G(DGBTVAR("A")),U,4):$P(^DGBT(392.43,$P($G(DGBTVAR("A")),U,4),0),U),1:"")  ;changed file from 392.4 to 392.43
+"RTN","DGBTCD",34,0)
+ I $G(PATCHDT)<$G(DGBTDT) I $G(DGBTACCT)'=4&($G(DGBTACCT)'=5) W !," Mode/Trans.: ",$S($P($G(DGBTVAR("A")),U,4):$P(^DGBT(392.4,$P($G(DGBTVAR("A")),U,4),0),U),1:"")  ;use file 392.4 if claim date is before install date
+"RTN","DGBTCD",35,0)
+ I $D(^DG(43,1,"BT")) I $P(^DG(43,1,"BT"),U,2)=1 W ?51,"Meals & Lodging: " S X=$P($G(DGBTVAR("M")),U,4) N X3 D COMMA^%DTC W X
+"RTN","DGBTCD",36,0)
+ I $G(DGBTACCT)=4!($G(DGBTACCT)=5) W !,"One Way/"
+"RTN","DGBTCD",37,0)
+ I $G(DGBTACCT)'=4&($G(DGBTACCT)'=5) D
+"RTN","DGBTCD",38,0)
+ . S DGX=$S($P($G(DGBTVAR(0)),U,7):"Carrier",$P($G(DGBTVAR(0)),U,14):"CoreFLS",1:"Carrier") W:DGX["FLS" !,"CoreFLS Carrier: " W:DGX["Carrier" !?5,"Carrier: "
+"RTN","DGBTCD",39,0)
+ . W $E($S((DGX["FLS"&$P($G(DGBTVAR(0)),U,14)):$P(^DGBT(392.31,$P($G(DGBTVAR(0)),U,14),0),U),(DGX["Carrier"&$P(DGBTVAR(0),U,7)):$P(^PRC(440,$P(DGBTVAR(0),U,7),0),U),1:""),1,27) K DGX
+"RTN","DGBTCD",40,0)
+ I $D(^DG(43,1,"BT")) I $P(^DG(43,1,"BT"),U,2)=1 W ?46,"Ferry, Bridges, Etc.: " S X=$P(DGBTVAR("M"),U,5) N X3 D COMMA^%DTC W X
+"RTN","DGBTCD",41,0)
+ I $G(DGBTACCT)=4!($G(DGBTACCT)=5) W !?2,"Round Trip: ",$S($P(DGBTVAR("M"),U)=1:"ONE WAY",$P(DGBTVAR("M"),U)=2:"ROUND TRIP",1:"")
+"RTN","DGBTCD",42,0)
+ I $G(DGBTACCT)'=4&($G(DGBTACCT)'=5) W !,"Auth. Person: " I $P(DGBTVAR("A"),U) W $S($D(DGBTVAR("A"))&($D(^VA(200,$P(DGBTVAR("A"),U),0))):$P(^VA(200,$P(DGBTVAR("A"),U),0),U),1:"")
+"RTN","DGBTCD",43,0)
+ I $G(DGBTACCT)=4!($G(DGBTACCT)=5) W ?46,"Total Mileage Amount: " D  N X3 D COMMA^%DTC W X
+"RTN","DGBTCD",44,0)
+ .S X=$P(DGBTVAR("M"),U,3)
+"RTN","DGBTCD",45,0)
+ I $G(DGBTACCT)=4!($G(DGBTACCT)=5) W !,"Mileage/"
+"RTN","DGBTCD",46,0)
+DED W ?48,"Applied Deductible: " D  N X3 D COMMA^%DTC W X
+"RTN","DGBTCD",47,0)
+ .S X=$P($G(DGBTVAR(0)),"^",9)   ;$G(DGBTDCV1)    ;$P(DGBTVAR(0),"^",9)
+"RTN","DGBTCD",48,0)
+ W ! W:$G(DGBTACCT)=4!($G(DGBTACCT)=5) ?5,"One Way: ",$P($G(DGBTVAR("M")),U,2)_" MILES"
+"RTN","DGBTCD",49,0)
+ W ?53,"Amount Payable " S X=$$GET1^DIQ(392,DGBTDT,10) N X3 D COMMA^%DTC W X
+"RTN","DGBTCD",50,0)
+REMARK W !!,"Remarks: ",$S($D(^DGBT(392,DGBTDT,"R")):$P(^DGBT(392,DGBTDT,"R"),U),1:"")
+"RTN","DGBTCD",51,0)
+QUIT K DGBTCNA,DGBTCSZ,DGBTFCTY,DGBTTCTY,DGBTCNA,DGBTDIV,VADAM,X,X2,I
+"RTN","DGBTCD",52,0)
+ Q
+"RTN","DGBTCDSP")
+0^2^B37725892^B35536857
+"RTN","DGBTCDSP",1,0)
+DGBTCDSP ;;ALB/BLD-BENEFICIARY TRAVEL CLAIM DISPLAY - SPECIAL MODE;02/03/2012
+"RTN","DGBTCDSP",2,0)
+ ;;1.0;Beneficiary Travel;**20,21,22**;FEBRUARY 4 2012;Build 5
+"RTN","DGBTCDSP",3,0)
+ Q
+"RTN","DGBTCDSP",4,0)
+SCREEN ;this will display the information screen at the end of a claim and 
+"RTN","DGBTCDSP",5,0)
+ N TOSTATE,DPSTATE,Z,INFOLINE
+"RTN","DGBTCDSP",6,0)
+ S:$G(INFOLINE)="" INFOLINE=1
+"RTN","DGBTCDSP",7,0)
+ S:$G(DGBTDT)="" DGBTDT=$G(DGBTDTI)
+"RTN","DGBTCDSP",8,0)
+ I $D(DGBTSP)'>1 D BLDARRY(.DGBTSP)
+"RTN","DGBTCDSP",9,0)
+ S DGBTVAR(0)=^DGBT(392,DGBTDT,0)
+"RTN","DGBTCDSP",10,0)
+ S DPSTATE=$O(^DIC(5,"B",DGBTSP("STATE OF DEPARTURE"),"")),DPSTATE=$P(^DIC(5,DPSTATE,0),"^",2)
+"RTN","DGBTCDSP",11,0)
+ S TOSTATE=$O(^DIC(5,"B",DGBTINST("STATE"),"")),TOSTATE=$P(^DIC(5,TOSTATE,0),"^",2)
+"RTN","DGBTCDSP",12,0)
+ S DGBTACCT=$S($D(DGBTSP("ACCOUNT")):DGBTSP("ACCOUNT"),1:0)
+"RTN","DGBTCDSP",13,0)
+ I DGBTACCT=0 W !!,*7,">> WARNING! No ACCOUNT TYPE for this claim, Please correct through Claim Enter/Edit!" G QUIT^DGBTEND
+"RTN","DGBTCDSP",14,0)
+ W @IOF
+"RTN","DGBTCDSP",15,0)
+ W !?18,"Beneficiary Travel Claim Information <Display>"
+"RTN","DGBTCDSP",16,0)
+ W !!,?2,"Claim Date: ",$S($G(DGBTDTE)'="":DGBTDTE,1:VADATE("E")) W:$G(DGBTINST("DIVISION"))'="" ?40,"Division: ",$G(DGBTINST("DIVISION"))
+"RTN","DGBTCDSP",17,0)
+ D PID^VADPT6
+"RTN","DGBTCDSP",18,0)
+ W !!,"Name: ",VADM(1),?40,"PT ID: ",VA("PID"),?64,"DOB: ",$P(VADM(3),U,2)
+"RTN","DGBTCDSP",19,0)
+ S (DGBTFCTY,DGBTTCTY)=""
+"RTN","DGBTCDSP",20,0)
+FROM W !!," Depart From: ",$G(DGBTSP("PLACE OF DEPARTURE"))
+"RTN","DGBTCDSP",21,0)
+ W ?46,"To: ",$G(DGBTINST("INST NAME"))
+"RTN","DGBTCDSP",22,0)
+ W !?14,DGBTSP("CITY OF DEPARTURE")_", "_DPSTATE_" "_DGBTSP("ZIP CODE/DEPARTURE")
+"RTN","DGBTCDSP",23,0)
+ I $G(DGBTINST("ADDRESS1"))'="" W ?50,DGBTINST("ADDRESS1")
+"RTN","DGBTCDSP",24,0)
+ W !,?50,$G(DGBTINST("CITY"))_", "_TOSTATE_"  "_$G(DGBTINST("ZIP CODE"))
+"RTN","DGBTCDSP",25,0)
+ ;
+"RTN","DGBTCDSP",26,0)
+ELIG W !!,"Eligibility: " W:$P(DGBTVAR(0),U,3) $P(^DIC(8,$P(DGBTVAR(0),U,3),0),U) W ?45,"SC%: ",$S($P(DGBTVAR(0),U,4)="":0,1:$P(DGBTVAR(0),U,4))
+"RTN","DGBTCDSP",27,0)
+ ;
+"RTN","DGBTCDSP",28,0)
+ACCT W !!,"Account: ",$G(DGBTSP("ACCOUNT"))
+"RTN","DGBTCDSP",29,0)
+ ;question added for DG*1.0*20 E18
+"RTN","DGBTCDSP",30,0)
+ W !!,"Mode/Trans: ",$G(DGBTSP("MODE OF TRANS"))
+"RTN","DGBTCDSP",31,0)
+ ;
+"RTN","DGBTCDSP",32,0)
+ W ?45,"One Way/Round Trip: "
+"RTN","DGBTCDSP",33,0)
+ S X=$S($G(DGBTSP("RT/ONE WAY"))="R":"ROUND TRIP",1:"ONE WAY") W ?67,$J(X,11)
+"RTN","DGBTCDSP",34,0)
+ ;
+"RTN","DGBTCDSP",35,0)
+ W !,"Carrier: ",$$GET1^DIQ(392,DGBTDT_",",71) ;dbe patch DGBT*1*22 - modified to use vendor ien
+"RTN","DGBTCDSP",36,0)
+ ;
+"RTN","DGBTCDSP",37,0)
+ W ?45,"Total Miles Traveled: "
+"RTN","DGBTCDSP",38,0)
+ S X=$G(DGBTSP("TOTAL MILES")),X2="2S" D COMMA^%DTC W ?67,X
+"RTN","DGBTCDSP",39,0)
+ ;
+"RTN","DGBTCDSP",40,0)
+ W !,"Invoice: ",$G(DGBTSP("INVOICE NUMBER"))
+"RTN","DGBTCDSP",41,0)
+ ;
+"RTN","DGBTCDSP",42,0)
+ W ?45,"Base Rate Fee: "
+"RTN","DGBTCDSP",43,0)
+ S X=$G(DGBTSP("BASE RATE FEE")),X2="2$" D COMMA^%DTC W ?67,X
+"RTN","DGBTCDSP",44,0)
+ ;
+"RTN","DGBTCDSP",45,0)
+ W !,"Date Received: ",$G(DGBTSP("DT INVOICE REC"))
+"RTN","DGBTCDSP",46,0)
+ ;
+"RTN","DGBTCDSP",47,0)
+ W ?45,"Mileage Fee: "
+"RTN","DGBTCDSP",48,0)
+ S X=$G(DGBTSP("MILEAGE FEE")),X2="2$" D COMMA^%DTC W ?67,X
+"RTN","DGBTCDSP",49,0)
+ ;
+"RTN","DGBTCDSP",50,0)
+ W !,"Pre-Authorized: ",$G(DGBTSP("PRE-AUTHORIZED"))
+"RTN","DGBTCDSP",51,0)
+ ;
+"RTN","DGBTCDSP",52,0)
+ W ?45,"No-Show/No Load Fee: "
+"RTN","DGBTCDSP",53,0)
+ S X=$G(DGBTSP("NO SHOW")),X2="2$" D COMMA^%DTC W ?67,X
+"RTN","DGBTCDSP",54,0)
+ ;
+"RTN","DGBTCDSP",55,0)
+ S PAYMENT=$$GET1^DIQ(392,DGBTDT,85)
+"RTN","DGBTCDSP",56,0)
+ W !,"Payment: ",$S($G(PAYMENT)="YES":"APPROVED",$G(DGBTSP("AUTHORIZED"))="YES":"APPROVED",1:"DENIED")
+"RTN","DGBTCDSP",57,0)
+ ;
+"RTN","DGBTCDSP",58,0)
+ W ?45,"Wait Time Fee: "
+"RTN","DGBTCDSP",59,0)
+ S X=$G(DGBTSP("WAIT TIME")),X2="2$" D COMMA^%DTC W ?67,X
+"RTN","DGBTCDSP",60,0)
+ ;
+"RTN","DGBTCDSP",61,0)
+ ;;changing auth. person to field 12 of file 392 - dbe patch DGBT*1*21
+"RTN","DGBTCDSP",62,0)
+ W !,"Auth. Person: ",$$GET1^DIQ(392,DGBTDT_",",12)
+"RTN","DGBTCDSP",63,0)
+ ;
+"RTN","DGBTCDSP",64,0)
+ W ?45,"Extra Crew Fee: "
+"RTN","DGBTCDSP",65,0)
+ S X=$G(DGBTSP("EXTRA CREW")),X2="2$" D COMMA^%DTC W ?67,X
+"RTN","DGBTCDSP",66,0)
+ ;
+"RTN","DGBTCDSP",67,0)
+ W !  ;,"Reason for Denial: "   ;part of E11 will be added at that time
+"RTN","DGBTCDSP",68,0)
+ ;
+"RTN","DGBTCDSP",69,0)
+ W ?45,"Equipment Fee: "
+"RTN","DGBTCDSP",70,0)
+ S X=$G(DGBTSP("SP EQUIP")),X2="2$" D COMMA^%DTC W ?67,X
+"RTN","DGBTCDSP",71,0)
+ ;
+"RTN","DGBTCDSP",72,0)
+ W !,?45,"Total Invoice Amount: "
+"RTN","DGBTCDSP",73,0)
+ S X=$G(DGBTSP("TOTAL INVOICE")),X2="2$" D COMMA^%DTC W ?67,X
+"RTN","DGBTCDSP",74,0)
+ ;
+"RTN","DGBTCDSP",75,0)
+ W !!,"Remarks: ",$G(DGBTSP("SP MODE OTHER REMARKS"))
+"RTN","DGBTCDSP",76,0)
+ ;
+"RTN","DGBTCDSP",77,0)
+ I INFOLINE D END Q
+"RTN","DGBTCDSP",78,0)
+ ;R !!,"PRESS RETURN TO CONTINUE: ",X
+"RTN","DGBTCDSP",79,0)
+ I 'INFOLINE K DGBTSP,DGBTCMTY ;D QUIT^DGBTEND,DISPLAY^DGBTR Q
+"RTN","DGBTCDSP",80,0)
+ ;D DISPLAY^DGBTR
+"RTN","DGBTCDSP",81,0)
+ Q
+"RTN","DGBTCDSP",82,0)
+ ;
+"RTN","DGBTCDSP",83,0)
+BLDARRY(DGBTSP) ;
+"RTN","DGBTCDSP",84,0)
+ K DGBTSP
+"RTN","DGBTCDSP",85,0)
+ S DGBTSP("ACCOUNT")=$$GET1^DIQ(392,DGBTDT_",",6)
+"RTN","DGBTCDSP",86,0)
+ ;
+"RTN","DGBTCDSP",87,0)
+ S DGBTSP("CLAIM TYPE")=$$GET1^DIQ(392,DGBTDT_",",56)
+"RTN","DGBTCDSP",88,0)
+ S DGBTSP("MODE OF TRANS")=$$GET1^DIQ(392,DGBTDT_",",57)
+"RTN","DGBTCDSP",89,0)
+ S DGBTSP("INVOICE NUMBER")=$$GET1^DIQ(392,DGBTDT_",",58)
+"RTN","DGBTCDSP",90,0)
+ S DGBTSP("DT INVOICE REC")=$$GET1^DIQ(392,DGBTDT_",",59)
+"RTN","DGBTCDSP",91,0)
+ S DGBTSP("TOTAL INVOICE")=$$GET1^DIQ(392,DGBTDT_",",60)
+"RTN","DGBTCDSP",92,0)
+ S DGBTSP("BASE RATE FEE")=$$GET1^DIQ(392,DGBTDT_",",61)
+"RTN","DGBTCDSP",93,0)
+ S DGBTSP("MILEAGE FEE")=$$GET1^DIQ(392,DGBTDT_",",62)
+"RTN","DGBTCDSP",94,0)
+ S DGBTSP("NO SHOW")=$$GET1^DIQ(392,DGBTDT_",",63)
+"RTN","DGBTCDSP",95,0)
+ S DGBTSP("WAIT TIME")=$$GET1^DIQ(392,DGBTDT_",",64)
+"RTN","DGBTCDSP",96,0)
+ S DGBTSP("EXTRA CREW")=$$GET1^DIQ(392,DGBTDT_",",65)
+"RTN","DGBTCDSP",97,0)
+ S DGBTSP("SP EQUIP")=$$GET1^DIQ(392,DGBTDT_",",66)
+"RTN","DGBTCDSP",98,0)
+ S DGBTSP("RT/ONE WAY")=$$GET1^DIQ(392,DGBTDT_",",67)
+"RTN","DGBTCDSP",99,0)
+ S DGBTSP("TOTAL MILES")=$$GET1^DIQ(392,DGBTDT_",",68)
+"RTN","DGBTCDSP",100,0)
+ S DGBTSP("OTHER TRANS REMARKS")=$$GET1^DIQ(392,DGBTDT_",",69)
+"RTN","DGBTCDSP",101,0)
+ S DGBTSP("PRE-AUTHORIZED")=$$GET1^DIQ(392,DGBTDT_",",70)
+"RTN","DGBTCDSP",102,0)
+ ;S DGBTSP("VENDOR")=$$GET1^DIQ(392,DGBTDT_",",71)
+"RTN","DGBTCDSP",103,0)
+ S DGBTSP("SP MODE OTHER REMARKS")=$$GET1^DIQ(392,DGBTDT_",",72)
+"RTN","DGBTCDSP",104,0)
+ S DGBTSP("PLACE OF DEPARTURE")=$$GET1^DIQ(392,DGBTDT_",",73)
+"RTN","DGBTCDSP",105,0)
+ ;
+"RTN","DGBTCDSP",106,0)
+ S DGBTSP("PLACE OF DEPATURE 2")=$$GET1^DIQ(392,DGBTDT_",",74)
+"RTN","DGBTCDSP",107,0)
+ S DGBTSP("CITY OF DEPARTURE")=$$GET1^DIQ(392,DGBTDT_",",75)
+"RTN","DGBTCDSP",108,0)
+ S DGBTSP("STATE OF DEPARTURE")=$$GET1^DIQ(392,DGBTDT_",",76)
+"RTN","DGBTCDSP",109,0)
+ S DGBTSP("ZIP CODE/DEPARTURE")=$$GET1^DIQ(392,DGBTDT_",",77)
+"RTN","DGBTCDSP",110,0)
+ ;
+"RTN","DGBTCDSP",111,0)
+ S DGBTINST("DIVISION")=$$GET1^DIQ(392,DGBTDT_",",78)
+"RTN","DGBTCDSP",112,0)
+ S DGBTINST("INST NAME")=$$GET1^DIQ(392,DGBTDT_",",79)
+"RTN","DGBTCDSP",113,0)
+ S DGBTINST("ADDRESS1")=$$GET1^DIQ(392,DGBTDT_",",80)
+"RTN","DGBTCDSP",114,0)
+ S DGBTINST("CITY")=$$GET1^DIQ(392,DGBTDT_",",81)
+"RTN","DGBTCDSP",115,0)
+ S DGBTINST("STATE")=$$GET1^DIQ(392,DGBTDT_",",82)
+"RTN","DGBTCDSP",116,0)
+ S DGBTINST("ZIP CODE")=$$GET1^DIQ(392,DGBTDT_",",83)
+"RTN","DGBTCDSP",117,0)
+ ;
+"RTN","DGBTCDSP",118,0)
+ S DGBTSP("SP MODE CLAIM AUTHORIZED")=$$GET1^DIQ(392,DGBTDT_",",85)
+"RTN","DGBTCDSP",119,0)
+ S DGBTSP("DATE/TIME AUTHORIZED")=$$GET1^DIQ(392,DGBTDT_",",86)
+"RTN","DGBTCDSP",120,0)
+ ;
+"RTN","DGBTCDSP",121,0)
+ I $G(DGBTSP("AUTHORIZED"))="Y" D
+"RTN","DGBTCDSP",122,0)
+ .S DGBTSP("AUTHORIZED PERSON")=$$GET1^DIQ(392,DGBTDT_",",84)
+"RTN","DGBTCDSP",123,0)
+ S INFOLINE=0
+"RTN","DGBTCDSP",124,0)
+ Q
+"RTN","DGBTCDSP",125,0)
+ ;
+"RTN","DGBTCDSP",126,0)
+END ;display menu prompt at bottom of screen
+"RTN","DGBTCDSP",127,0)
+ ;dbe patch DGBT*1*22 - added variable DGBTSPFG to replace DGANS as the exit flag when returning to the select patient prompt
+"RTN","DGBTCDSP",128,0)
+ N PROMPT,DGBTSPFG
+"RTN","DGBTCDSP",129,0)
+ K DGANS
+"RTN","DGBTCDSP",130,0)
+ S SPCOMPLETE=0
+"RTN","DGBTCDSP",131,0)
+ F  Q:$G(DGANS)="Q"!($D(DIRUT))  D  Q:$G(DGBTSPFG)!($D(DIRUT))!('$D(DGBTSP))
+"RTN","DGBTCDSP",132,0)
+ .S Z="^INFORMATION^DISPLAY^EDIT",PROMPT="<I>nformation, <D>isplay claim, <E>dit claim,"
+"RTN","DGBTCDSP",133,0)
+ .S DIR("A")=PROMPT_" or <Q>uit ",DIR("B")="Quit",DIR("?")="^D HELP^DGBTEND",DIR(0)="SA^Q:Quit;I:Information;D:Display;E:Edit;P:Print"
+"RTN","DGBTCDSP",134,0)
+ .D ^DIR K DIR S DGANS=Y
+"RTN","DGBTCDSP",135,0)
+ .S DGBTX1=$S(DGANS="I":"SCREEN^DGBTE",DGANS="D":"SCREEN^DGBTCDSP",DGANS="E":"SPMODE^DGBTE",DGANS="Q":"PATIENT^DGBTE",1:"QUIT^DGBTEND")
+"RTN","DGBTCDSP",136,0)
+ .I $G(DGBTX1)]""&($G(DGANS)="Q") K DGANS S DGBTSPFG=1 G @DGBTX1 ;dbe patch DGBT*1*22 - modified to correctly return to select patient prompt
+"RTN","DGBTCDSP",137,0)
+ .I $G(DGBTX1)]""&($G(DGANS)'="Q") D @DGBTX1
+"RTN","DGBTCDSP",138,0)
+ Q
+"RTN","DGBTCDSP",139,0)
+ ;
+"RTN","DGBTE")
+0^3^B48237300^B44311699
+"RTN","DGBTE",1,0)
+DGBTE ;ALB/SCK/BLD-BENEFICIARY TRAVEL SETUP/MAIN ENTRY CALL UP; 11/20/92@1000; 11/25/92
+"RTN","DGBTE",2,0)
+ ;;1.0;Beneficiary Travel;**2,19,20,22**;September 25, 2001;Build 5
+"RTN","DGBTE",3,0)
+START ;
+"RTN","DGBTE",4,0)
+ N TRNSMDE,REMARKS,CLMTYPE,INSTIT,SPMODE,DGBTCMTY,DGBTDIVI,DGBTDIV,DGBTDIVN,DGANS,DGBTINCA,DGBTDTY,DGBTAPPTYP,DGBTDCLM,IOM,PATCHDT,DGBTPDIV
+"RTN","DGBTE",5,0)
+ ;DGBTINCA = Alternate Income
+"RTN","DGBTE",6,0)
+ K DGBTFDA,ERRMSG,DGBTX1,SGCOMPLETE
+"RTN","DGBTE",7,0)
+ ;
+"RTN","DGBTE",8,0)
+ D QUIT^DGBTEND  ; kill all variables
+"RTN","DGBTE",9,0)
+ D PATCH
+"RTN","DGBTE",10,0)
+ S PRCABN=1,IOP="HOME" D ^%ZIS K IOP
+"RTN","DGBTE",11,0)
+ S DGBTIME=300 S:'$D(DTIME) DTIME=DGBTIME S:'$D(U) U="^"
+"RTN","DGBTE",12,0)
+ ;   if date/time is undefined, set DT value
+"RTN","DGBTE",13,0)
+ I '$D(DT)#2 S %DT="",S="T" D ^%DT S DT=Y
+"RTN","DGBTE",14,0)
+DIVISN ; if MED CTR DIV file set up (first record) and record does not exist, write warning, kill variables, and exit
+"RTN","DGBTE",15,0)
+ S X=$G(^DG(40.8,0)) I X="" W !,"WARNING...MEDICAL CENTER DIVISION FILE IS NOT SET UP",!,"USE THE ADT PARAMETER OPTION FILE TO SET UP DIVISION" G EXIT
+"RTN","DGBTE",16,0)
+ ;  check if multi-divisional center (GL node exists and 2nd piece=1). Do lookup, if it exists-set local variables
+"RTN","DGBTE",17,0)
+ I $D(^DG(43,1,"GL")),$P(^("GL"),U,2) D  G:Y'>0 EXIT F  D PATIENT Q:$G(DGANS)="Q"  ;dbe patch DGBT*1*22 - return to select patient prompt
+"RTN","DGBTE",18,0)
+ . S DIC="^DG(40.8,",DIC(0)="AEQMNZ",DIC("A")="Select DIVISION: " W !!
+"RTN","DGBTE",19,0)
+ . D ^DIC K DIC Q:Y'>0
+"RTN","DGBTE",20,0)
+ . S (DGBTPDIV,DGBTDIVI)=+Y,DGBTDIV=$P(Y,U,2) ;dbe patch DGBT*1*22 - Added DGBTPDIV to save selected division if previous claim is edited
+"RTN","DGBTE",21,0)
+ . D INSTIT S DGBTMD=1
+"RTN","DGBTE",22,0)
+ Q:$G(DGANS)="Q"  ;dbe patch DGBT*1*22
+"RTN","DGBTE",23,0)
+ ;  if not a multi-divisional center, default to institution name
+"RTN","DGBTE",24,0)
+ S DGBTDIVI=$O(^DG(40.8,0)),DGBTDIV=$P(^DG(40.8,DGBTDIVI,0),U) D INSTIT
+"RTN","DGBTE",25,0)
+ ;
+"RTN","DGBTE",26,0)
+PATIENT ; patient lookup, quit if patient doesn't exist
+"RTN","DGBTE",27,0)
+ N VAEL
+"RTN","DGBTE",28,0)
+ D QUIT^DGBTEND
+"RTN","DGBTE",29,0)
+ S DGBTOLD=0   ;PAVEL DGBT*1*20
+"RTN","DGBTE",30,0)
+ D QUIT1^DGBTEND ; kill local variables except med division vars
+"RTN","DGBTE",31,0)
+ S DGBTTOUT="",DIC="^DPT(",DIC(0)="AEQMZ",DIC("A")="Select PATIENT: "
+"RTN","DGBTE",32,0)
+ W !! D ^DIC K DIC I +Y'>0 D EXIT S DGANS="Q" Q
+"RTN","DGBTE",33,0)
+ ; get patient information#, call return patient return variables routine and set wether new claim or not
+"RTN","DGBTE",34,0)
+ S:DGBTDIVI'=DGBTPDIV DGBTDIVI=DGBTPDIV ;dbe patch DGBT*1*22 - restore selected division from previous claim editing
+"RTN","DGBTE",35,0)
+ S DFN=+Y D 6^VADPT,KVAR^DGBTEND,PID^VADPT
+"RTN","DGBTE",36,0)
+ S DGBTNEW=$S($D(^DGBT(392,"C",DFN)):0,1:1)
+"RTN","DGBTE",37,0)
+ S SPCOMPLETE=0,DGBTAPPTYP=0
+"RTN","DGBTE",38,0)
+ S DGBTNSC=$$NSC^DGBTUTL
+"RTN","DGBTE",39,0)
+ ;
+"RTN","DGBTE",40,0)
+ ;next 2 lines were added by the BT Dashboard project(DGBT*1.0*19) and Integrated into DGBTE by BLD for DGBT*1.0*20
+"RTN","DGBTE",41,0)
+ S ^XTMP("DGBT BTD",0)=$$DT^XLFDT_"^"_$$DT^XLFDT
+"RTN","DGBTE",42,0)
+ S ^XTMP("DGBT BTD","CLAIMERS",$G(DUZ,-1))=$G(DFN,-1)
+"RTN","DGBTE",43,0)
+ ;
+"RTN","DGBTE",44,0)
+OLDCLAIM ;  find any past claims through DGBTE1 call
+"RTN","DGBTE",45,0)
+ D ^DGBTE1 I '$D(DGBTA) D PATIENT Q  ; set to call test routine, call old claims
+"RTN","DGBTE",46,0)
+ I '$D(^DG(43,1,"BT"))!('$D(^DG(43.1,$O(^DG(43.1,(9999999.9999999-DGBTDT))),"BT"))) D  D EXIT2 Q
+"RTN","DGBTE",47,0)
+ . ;  check for certifying official and that current (or past) FY deductable is set up 
+"RTN","DGBTE",48,0)
+ . W !!,"***WARNING...BENE TRAVEL PARAMETERS HAVE NOT BEEN SET UP",!,"USE THE BENEFICIARY TRAVEL PARAMETER RATES ENTER/EDIT OPTION TO PROPERLY INITIALIZE"
+"RTN","DGBTE",49,0)
+ ;
+"RTN","DGBTE",50,0)
+COREFLS ;  coreFLS vendor interface active/inactive
+"RTN","DGBTE",51,0)
+ S DGBTCORE=$P($G(^DG(43,1,"BT")),U,4)
+"RTN","DGBTE",52,0)
+ ;
+"RTN","DGBTE",53,0)
+SCREEN ;  display B/T claim information through screen1
+"RTN","DGBTE",54,0)
+ N DGBTQUIT
+"RTN","DGBTE",55,0)
+ D SCREEN^DGBT1 I $G(DGBTQUIT) D:'$G(CHZFLG) EXIT2,PATIENT D:$G(CHZFLG) EXIT,PATIENT Q
+"RTN","DGBTE",56,0)
+ Q:$G(ENDMENU)
+"RTN","DGBTE",57,0)
+ S:$D(^DGBT(392,DGBTDT,"SP")) SPCOMPLETE=1
+"RTN","DGBTE",58,0)
+ I '+VAEL(1) W !!,"Eligibility is missing from registration and is required to continue.",*7 D EXIT2 Q
+"RTN","DGBTE",59,0)
+ I $G(DGANS)="I" Q     ;BLD DG*1*20
+"RTN","DGBTE",60,0)
+ S DIR("A")="Continue processing claim",DIR("?")="Sorry, enter 'Y'es or RETURN to continue procesing claim, 'N'o to exit",DIR(0)="Y",DIR("B")="YES"
+"RTN","DGBTE",61,0)
+ D ^DIR S ANS=Y K DIR
+"RTN","DGBTE",62,0)
+ I 'ANS S SPCOMPLETE=0 D EXIT2,CLEANUP^DGBTSP,PATIENT Q  ;S DGANS="Q" Q    ;BLD DG*1*20
+"RTN","DGBTE",63,0)
+ N DGBTELL S DGBTELL=$$ELIG^DGBTUTL1(DFN) ;PAVEL DGBT*1.0*20
+"RTN","DGBTE",64,0)
+ I +$G(DGBTELL)'=14,(+$G(DGBTELL)'=15) W !!," Eligible: ",$P(DGBTELL,U,2),!!
+"RTN","DGBTE",65,0)
+ I +$G(DGBTELL)=15 W !!,"Not Eligible: ",$P(DGBTELL,U,2),!!
+"RTN","DGBTE",66,0)
+ I +DGBTELL=14 S:'$G(CHZFLG) DGBTTOUT=-1,DGBTOLD=0 G DELETE1^DGBTEND ;User exit with ^  so delete the claim   !!??
+"RTN","DGBTE",67,0)
+ D  ;Store Result of E7 in fields 43.1  43.2
+"RTN","DGBTE",68,0)
+ .K FDA,ERRMSG
+"RTN","DGBTE",69,0)
+ .S FDA(392,DGBTDTI_",",43)=$G(DGBTCPAP)
+"RTN","DGBTE",70,0)
+ .S FDA(392,DGBTDTI_",",43.1)=+$G(DGBTELL)
+"RTN","DGBTE",71,0)
+ .S FDA(392,DGBTDTI_",",43.4)=$G(DGBTSCAP)
+"RTN","DGBTE",72,0)
+ .S FDA(392,DGBTDTI_",",43.5)=$G(DGBTQAP)
+"RTN","DGBTE",73,0)
+ .S:$L($P(DGBTELL,": ",2)) FDA(392,DGBTDTI_",",43.2)=$P($G(DGBTELL),": ",2,99)
+"RTN","DGBTE",74,0)
+ .D FILE^DIE("EKTS","FDA","ERRMSG") ;
+"RTN","DGBTE",75,0)
+ .I $D(ERRMSG),ERRMSG("DIERR",1,"TEXT",1)["The record is currently locked" W !!,"The patients record is current locked..."
+"RTN","DGBTE",76,0)
+ I $D(ERRMSG) D EXIT Q
+"RTN","DGBTE",77,0)
+ ;
+"RTN","DGBTE",78,0)
+ ;the following question is for E1 in patch DGBT*1.0*20
+"RTN","DGBTE",79,0)
+ ;
+"RTN","DGBTE",80,0)
+SPMODE ;BLD DGBT*1*20 - SPMODE line tag will display question whether or special mode claim or mileage claim
+"RTN","DGBTE",81,0)
+ ; CLMTYP = type of BT claim, Milage or Special Mode
+"RTN","DGBTE",82,0)
+ ;
+"RTN","DGBTE",83,0)
+ S (SPCOMPLETE,DGBTSP)=0
+"RTN","DGBTE",84,0)
+ D EN^DGBTSP(.DGBTSP) I $D(DTOUT)!($D(DUOUT)) K:$G(DGBTTOUT)=-1&($G(CHZFLG)=0) ^DGBT(392,DGBTDTI,"A") D:'$G(SPCOMPLETE) EXIT2 D:$G(SPCOMPLETE) CLEANUP^DGBTSP D PATIENT,EXIT Q 
+"RTN","DGBTE",85,0)
+ I +DGBTELL=15 D  I $G(DGBTTOUT)=-1  D:$G(DGBTTOUT)=-1&($G(CHZFLG)=0) EXIT2 D:$G(DGBTTOUT)=-1&($G(CHZFLG)) EXIT D PATIENT,EXIT Q
+"RTN","DGBTE",86,0)
+ .W !!,"CLAIM HAS BEEN DENIED AND DENIAL OF BENEFITS LETTER WILL BE ISSUED"
+"RTN","DGBTE",87,0)
+ .D DGBTDR^DGBTDLT Q:$G(DGBTTOUT)=-1
+"RTN","DGBTE",88,0)
+ .W !!,"PLEASE COMPLETE THE INVOICE INFORMATION." H 2
+"RTN","DGBTE",89,0)
+ S DA=DGBTDT,DIE="^DGBT(392,",DR="11///"_DGBTDIVI S:'$G(CHZFLG) DR=DR_";12////"_DUZ_";13///"_DT D ^DIE
+"RTN","DGBTE",90,0)
+ I DGBTCMTY="S" D RESTART^DGBTSP(DGBTCMTY) I $D(DTOUT)!($D(DUOUT))!('$G(SPCOMPLETE)) S:'$G(SPCOMPLTE) DGBTTOUT=-1 D:'$G(SPCOMPLETE) EXIT2 D:$G(SPCOMPLETE) CLEANUP^DGBTSP D PATIENT,EXIT Q 
+"RTN","DGBTE",91,0)
+ ;
+"RTN","DGBTE",92,0)
+SCREEN2 ;
+"RTN","DGBTE",93,0)
+ I $G(DGBTSP)=0&('$D(^DGBT(392,"C",DFN,DGBTDTI))) D CLEANUP^DGBTSP,EXIT2 Q
+"RTN","DGBTE",94,0)
+ I $G(DFN)=""&($G(DGBTSP)=0) D PATIENT Q
+"RTN","DGBTE",95,0)
+ D SCREEN^DGBT2
+"RTN","DGBTE",96,0)
+COMPLT ;  complete claims processing
+"RTN","DGBTE",97,0)
+ ;
+"RTN","DGBTE",98,0)
+ I DGBTCMTY="M" S SPCOMPLETE=0
+"RTN","DGBTE",99,0)
+ I $G(SPCOMPLETE)=1 W !!,"Complete claim for ",DGBTDTE_" " S %=1 D YN^DICN S:%=2 SPCOMPLETE=0 K:%=2&(CHZFLG=0) ^DGBT(392,DGBTDTI,"A") I %'=1 D:%<1 HELP1 G:%<1 COMPLT D:(%=2)&($G(SPCOMPLETE)=0) EXIT2,PATIENT Q  ;dbe patch DGBT*1*22
+"RTN","DGBTE",100,0)
+ ;
+"RTN","DGBTE",101,0)
+ I $G(DGBTCMTY)="M" D  G:(%=2)&($G(DGBTSP)=0) EXIT G:%=2 EXIT3 G:%=-1 EXIT2 D:%<1 HELP1 G:%<1 COMPLT
+"RTN","DGBTE",102,0)
+ .S DA=DGBTDT,DIE="^DGBT(392,",DR="11///"_DGBTDIVI S:'$G(CHZFLG) DR=DR_";12////"_DUZ_";13///"_DT D ^DIE S %=1
+"RTN","DGBTE",103,0)
+ .W !!,"Complete claim for ",DGBTDTE D YN^DICN S:%=2 %=-1 S:%=-1&($G(CHZFLG)=0) DGBTTOUT=-1
+"RTN","DGBTE",104,0)
+ I $D(DGBTSP)>1 D FILE^DGBTSP1(.SPCOMPLETE) S NOLINE=1 D:$G(DGBTSP)=0 PATIENT D:$G(DGBTSP)=1 SCREEN^DGBTCDSP D EXIT D:$G(DGANS) PATIENT Q
+"RTN","DGBTE",105,0)
+ I $G(DGBTCMTY)="M" F I="SP","SPAD" K ^DGBT(392,DGBTDT,I)  ;clean up special mode if during an edit user switches from special mode to mileage
+"RTN","DGBTE",106,0)
+ I $G(SPCOMPLETE)=1&(DGBTCMTY'="M") D EXIT Q
+"RTN","DGBTE",107,0)
+ D SCREEN^DGBTEE
+"RTN","DGBTE",108,0)
+ I $G(DGBTTOUT)=-1,$G(DGBTCMTY)="M" G DELETE1^DGBTEND ;PAVEL DGBT*1*20
+"RTN","DGBTE",109,0)
+ G:$G(DGBTTOUT)=-1 EXIT3
+"RTN","DGBTE",110,0)
+ D ^DGBTEND
+"RTN","DGBTE",111,0)
+ Q
+"RTN","DGBTE",112,0)
+HELP1 ; 
+"RTN","DGBTE",113,0)
+ W !!?10,$S(%=-1:"SORRY, '^' NOT ALLOWED",1:"ENTER 'Y'ES OR 'N'O")
+"RTN","DGBTE",114,0)
+ Q
+"RTN","DGBTE",115,0)
+INSTIT ;  check for pointer to institution file and for address information on institution
+"RTN","DGBTE",116,0)
+ S DGBTDIVN=$P(^DG(40.8,DGBTDIVI,0),"^",7)
+"RTN","DGBTE",117,0)
+ I 'DGBTDIVN W !!,"INSTITUTION HAS NOT BEEN DEFINED FOR ",$P(^(0),"^"),!,"USE THE ADT PARAMETER OPTION TO UPDATE",! Q
+"RTN","DGBTE",118,0)
+ I $D(^DIC(4,DGBTDIVN,0)),$S($D(^(1))#10=0:1,$P(^(1),"^",3)']"":1,1:0) W !!,"INSTITUTION ADDRESS NOT ENTERED.  PLEASE UPDATE USING THE INSTITUTION FILE ENTER/EDIT",! Q
+"RTN","DGBTE",119,0)
+ Q
+"RTN","DGBTE",120,0)
+EXIT ; kills off all variables before quitting
+"RTN","DGBTE",121,0)
+ I $D(DGANS) D QUIT^DGBTEND Q
+"RTN","DGBTE",122,0)
+ I $G(DGBTCMTY)="S" D END^DGBTCDSP Q
+"RTN","DGBTE",123,0)
+ D QUIT^DGBTEND Q
+"RTN","DGBTE",124,0)
+ Q
+"RTN","DGBTE",125,0)
+EXIT2 ; delete claim through DIK call, return to patient label
+"RTN","DGBTE",126,0)
+ D DELETE1^DGBTEND
+"RTN","DGBTE",127,0)
+ Q
+"RTN","DGBTE",128,0)
+EXIT3 ;
+"RTN","DGBTE",129,0)
+ I $G(DGBTCMTY)="S" S:$D(^DGBT(392,DGBTDT,"SP")) DGBTTOUT="" D DELETE1^DGBTEND Q
+"RTN","DGBTE",130,0)
+ I $D(^DGBT(392,DGBTDT,"A")) S DGBTTOUT=""
+"RTN","DGBTE",131,0)
+ D DELETE^DGBTEND
+"RTN","DGBTE",132,0)
+ Q
+"RTN","DGBTE",133,0)
+ ;
+"RTN","DGBTE",134,0)
+PATCH ;this return the date DGBT*1.0*20 was first loaded
+"RTN","DGBTE",135,0)
+ ;
+"RTN","DGBTE",136,0)
+ N PATCHNBR
+"RTN","DGBTE",137,0)
+ S PATCHNBR=$O(^XPD(9.7,"B","DGBT*1.0*20",""))
+"RTN","DGBTE",138,0)
+ S PATCHDT=$P(^XPD(9.7,PATCHNBR,0),"^",3)
+"RTN","DGBTE",139,0)
+ Q
+"RTN","DGBTE1")
+0^4^B31350623^B29858650
+"RTN","DGBTE1",1,0)
+DGBTE1 ;ALB/SCK/GAH - BENEFICIARY TRAVEL FIND OLD CLAIM DATES; 10/10/06@11:17am; 10/10/06
+"RTN","DGBTE1",2,0)
+ ;;1.0;Beneficiary Travel;**8,12,13,20,21,22**;September 25, 2001;Build 5
+"RTN","DGBTE1",3,0)
+DATE ;  get date for claim, either new or past date
+"RTN","DGBTE1",4,0)
+ N DGBTDCLM
+"RTN","DGBTE1",5,0)
+ K ^TMP("DGBT",$J),^TMP("DGBTARA",$J),DIR
+"RTN","DGBTE1",6,0)
+ I 'DGBTNEW S DIR("A",2)="Enter a 'P' to display Past CLAIM dates for editing."
+"RTN","DGBTE1",7,0)
+ S DIR("A",3)="Time is required when adding a new CLAIM.",DIR("A",4)="",DIR("A",1)="",DIR("A")="Select TRAVEL CLAIM DATE/TIME",DIR("?")="^D HELP^DGBTE1A"
+"RTN","DGBTE1",8,0)
+ S DIR(0)="F",DIR("B")="NOW" D ^DIR K DIR G ERR1:$D(DIRUT)
+"RTN","DGBTE1",9,0)
+ S CHZFLG=0,%DT="EXR",DTSUB=$S(Y="N":"NOW",Y="P":"OLD",Y="p":"OLD",1:"OTHR")_"^DGBTE1A" D @DTSUB   ;PAVEL - DGBT*1*20
+"RTN","DGBTE1",10,0)
+ S:$P(DTSUB,U,1)="OLD"&(Y1>0) DGBTOLD=1 K DTSUB        ;PAVEL DGBT*1*20
+"RTN","DGBTE1",11,0)
+ G ERR1:$D(DTOUT),DATE:Y1<0 S DGBTA=Y1 G SET:CHZFLG    ;PAVEL DGBT*1*20
+"RTN","DGBTE1",12,0)
+DATE1 ;  for past claims, set DGBTDT to inverse date of claim date
+"RTN","DGBTE1",13,0)
+ I $D(^DGBT(392,"C",DFN)) D
+"RTN","DGBTE1",14,0)
+ . S DGBTC=0,DGBTDT=9999999-$E(DGBTA,1,7) ; set past claims counter=0
+"RTN","DGBTE1",15,0)
+ . ; for latest date (topmost) search for past claims
+"RTN","DGBTE1",16,0)
+ . F I=DGBTDT:0 S I=$O(^DGBT(392,"AI",DFN,I)) Q:'I!(I>(DGBTDT_.99999))  S DGBTC=DGBTC+1,DGBT(DGBTC)=9999999.99999-I
+"RTN","DGBTE1",17,0)
+ I '$D(DGBT) G LOCK
+"RTN","DGBTE1",18,0)
+ W !!,"There are other claims on this date.",!,"Select by number to edit or <RETURN> to add a new CLAIM.",!
+"RTN","DGBTE1",19,0)
+ ; convert inverse claim date to external format through VADATE conversion routine
+"RTN","DGBTE1",20,0)
+ F I=0:0 S I=$O(DGBT(I)) Q:'I  D
+"RTN","DGBTE1",21,0)
+ .S DGBTDCLM=$$GET1^DIQ(392,DGBT(I),45,"I")
+"RTN","DGBTE1",22,0)
+ .S VADAT("W")=DGBT(I) D ^VADATE W !?5,I,".",?10,VADATE("E")_$S($G(DGBTDCLM)'="":" (D)",1:"")
+"RTN","DGBTE1",23,0)
+ K DIR S DIR("A")="Select 1"_$S(DGBTC=1:"",1:"-"_DGBTC)_", or <RETURN> to add a new claim: ",DIR(0)="NOA^1:"_DGBTC,DIR("?")="Select, by number, one of the displayed claim dates: "
+"RTN","DGBTE1",24,0)
+ D ^DIR K DIR S:$G(Y) CHZFLG=1 G QUIT^DGBTEND:$D(DTOUT)!($D(DUOUT))
+"RTN","DGBTE1",25,0)
+ G LOCK:Y="" G DATE:'$D(DGBT(Y))
+"RTN","DGBTE1",26,0)
+ S DGBTA=DGBT(Y),DGBTOLD=1 G SET
+"RTN","DGBTE1",27,0)
+LOCK ;
+"RTN","DGBTE1",28,0)
+ L +^DGBT(392,DGBTA):$G(DILOCKTM,3)
+"RTN","DGBTE1",29,0)
+ I '$T!$D(^DGBT(392,DGBTA)) L -^DGBT(392,DGBTA) S DGBTA=$$FMADD^XLFDT(DGBTA,,,,1) G LOCK ;dbe patch DGBT*1*21
+"RTN","DGBTE1",30,0)
+ S (DGBTDT,VADAT("W"))=DGBTA D ^VADATE W VADATE("E")      ;for CCR235 by RE
+"RTN","DGBTE1",31,0)
+ASKADD ;
+"RTN","DGBTE1",32,0)
+ W !!,"Are you sure you want to add a new claim"
+"RTN","DGBTE1",33,0)
+ S %=1 D YN^DICN G EXIT2^DGBTE:%<0!(%=2)
+"RTN","DGBTE1",34,0)
+ I '% W !!,"Enter 'YES' to add a new claim, or 'NO' not to add the claim." G ASKADD
+"RTN","DGBTE1",35,0)
+ K DD,DO
+"RTN","DGBTE1",36,0)
+ ; create new file entry, stuff patient DFN into name field(pointer)
+"RTN","DGBTE1",37,0)
+ S (X,DINUM)=DGBTA,DIC="^DGBT(392,",DIC(0)="L",DIC("DR")="2////"_DFN
+"RTN","DGBTE1",38,0)
+ D FILE^DICN K DIC L -^DGBT(392,DGBTA)
+"RTN","DGBTE1",39,0)
+ ; go back to patient if no file entry
+"RTN","DGBTE1",40,0)
+ G:Y'>0 PATIENT^DGBTE
+"RTN","DGBTE1",41,0)
+SET ; call inhouse generic date routine
+"RTN","DGBTE1",42,0)
+ S (DA,DGBTDT,VADAT("W"))=DGBTA D ^VADATE
+"RTN","DGBTE1",43,0)
+ ; get internal and external formats of converted inverse dates
+"RTN","DGBTE1",44,0)
+ S DGBTDTI=$S($G(VADAT("W"))'="":VADAT("W"),1:VADATE("I")),DGBTDTE=VADATE("E") K VADAT,VADATE,DIC,Y
+"RTN","DGBTE1",45,0)
+ I $G(DGBTDIVI)'="" S DGBTDIVN=$P(^DG(40.8,DGBTDIVI,0),"^",7)
+"RTN","DGBTE1",46,0)
+ D GA^DGBTUTL(DFN,"DGBTINCA",DGBTDTI) ;Get Alternate Income PAVEL
+"RTN","DGBTE1",47,0)
+STUFF ;  stuff departure with address data from patient file, dest from institution file
+"RTN","DGBTE1",48,0)
+ S DGBTCMTY=$$GET1^DIQ(392,DGBTDT,56)
+"RTN","DGBTE1",49,0)
+ S:'$L(DGBTCMTY) DGBTCMTY="M"
+"RTN","DGBTE1",50,0)
+ I '$G(CHZFLG),DGBTCMTY="M" S:'$D(^DGBT(392,DGBTDT,"D")) ^DGBT(392,DGBTDT,"D")=VAPA(1)_"^"_VAPA(2)_"^"_VAPA(3)_"^"_VAPA(4)_"^"_$S(VAPA(5)]"":+VAPA(5),1:"")_"^"_$P(VAPA(11),U,1)
+"RTN","DGBTE1",51,0)
+ I '$G(CHZFLG),DGBTCMTY="M" I '$D(^DGBT(392,DGBTDT,"T")) D
+"RTN","DGBTE1",52,0)
+ . S X=$S($D(^DIC(4,DGBTDIVN,1)):^(1),1:"")
+"RTN","DGBTE1",53,0)
+ . S ^DGBT(392,DGBTDT,"T")=($P(^DG(40.8,DGBTDIVI,0),U)_"^"_$P(X,U)_"^"_$P(X,U,2)_"^"_$P(X,U,3)_"^"_$P(^DIC(4,DGBTDIVN,0),U,2)_"^"_$P(X,U,4))
+"RTN","DGBTE1",54,0)
+CHKFILES ; section removed, dependents picked up below in MEANS ; abr 10/94
+"RTN","DGBTE1",55,0)
+MEANS ;  find corres. means test entry, gets MT income, status, no. of dependents
+"RTN","DGBTE1",56,0)
+ ;DGBTMTS= MT Status;  DGBTCSC= claim Service Connected indicator & %;  DGBTELG=Eligibility status
+"RTN","DGBTE1",57,0)
+ N X,X2,X3,Y,DGBTIFL
+"RTN","DGBTE1",58,0)
+ S X=$$LST^DGMTCOU1(DFN,DT,3),DGBTMTS=$P(X,U,4)_U_$P(X,U,3) ; returns corres. MT info,X=IEN of last MT. passing a 3 will check both MT and RX Co-Pays
+"RTN","DGBTE1",59,0)
+ ; get income, # dependents
+"RTN","DGBTE1",60,0)
+ S Y=$$INCOME^VAFMON(DFN,DGBTA,1)
+"RTN","DGBTE1",61,0)
+ S:"I^V"[$P(Y,U,2) Y=U ;If income type is I or V ignore it PAVEL
+"RTN","DGBTE1",62,0)
+ S:DGBTINCA Y=$P(DGBTINCA,U,2)_U_$E($P(DGBTINCA,U,4)) ;Set Alternate Income
+"RTN","DGBTE1",63,0)
+ S X=$P(Y,U),DGBTIFL=$P(Y,U,2) ; returns income & source.
+"RTN","DGBTE1",64,0)
+ I X?1N.E!(X<0) D
+"RTN","DGBTE1",65,0)
+ .I X<0 S X=0
+"RTN","DGBTE1",66,0)
+ .S X2="0$",X3=8 D COMMA^%DTC
+"RTN","DGBTE1",67,0)
+ S DGBTINC=X_U_$G(DGBTIFL) K X,X2
+"RTN","DGBTE1",68,0)
+ S DGBTDEP=$$DEP^VAFMON(DFN,DGBTA) ; finds depedents Vet, Spouse, Children
+"RTN","DGBTE1",69,0)
+ S DGBTDTY=" (Year: "_$$FMTE^XLFDT($E(DGBTDTI,1,3)_"0000")_")" ;Year to be displayed with Income
+"RTN","DGBTE1",70,0)
+ S DGBTMTTH=$$MTTH^DGBTMTTH(DGBTDEP,DGBTDTI) ; Means test threshold
+"RTN","DGBTE1",71,0)
+ S DGBTRXTH=+$$THRES^IBARXEU1(DGBTDTI,1,DGBTDEP) ; RX co-pay threshhold
+"RTN","DGBTE1",72,0)
+ S DGBTDYFL=$$DAYFLAG^DGBTUTL ; valid income test y/n
+"RTN","DGBTE1",73,0)
+ ;
+"RTN","DGBTE1",74,0)
+PREV ; if past claim get SC%, elig.
+"RTN","DGBTE1",75,0)
+ I CHZFLG S X=^DGBT(392,DGBTA,0),DGBTELG=$P(X,U,3),DGBTCSC=$P(X,U,4) D
+"RTN","DGBTE1",76,0)
+ . S:$P(X,U,11) DGBTDIVI=+$P(X,U,11),DGBTDIVN=$P($G(^DG(40.8,DGBTDIVI,0)),U,7) ;dbe patch DGBT*1*22 - save division of existing claims
+"RTN","DGBTE1",77,0)
+ . S:DGBTCSC DGBTCSC=1_U_DGBTCSC S:'DGBTCSC DGBTCSC=0
+"RTN","DGBTE1",78,0)
+ . S:DGBTELG DGBTELG=DGBTELG_U_$P(^DIC(8,DGBTELG,0),U)
+"RTN","DGBTE1",79,0)
+CERT ;  get last BT certification,  get date, then get eligibility
+"RTN","DGBTE1",80,0)
+ I $D(^DGBT(392.2,"C",DFN)) D
+"RTN","DGBTE1",81,0)
+ .;cd=cert date in inverse then external format, ce= eligibility, ca* = amt certified
+"RTN","DGBTE1",82,0)
+ . S DGBTCD=$O(^DGBT(392.2,"C",DFN,0)),DGBTCE=$P(^DGBT(392.2,DGBTCD,0),"^",3)
+"RTN","DGBTE1",83,0)
+ . S DGBTCA=$P(^DGBT(392.2,DGBTCD,0),"^",4),Y=9999999-$P(DGBTCD,".")
+"RTN","DGBTE1",84,0)
+ . X ^DD("DD") ; date conversion, y=cert date (internal)
+"RTN","DGBTE1",85,0)
+ . S DGBTCD=Y,X=DGBTCA,X2="0$",X3=8 K Y D COMMA^%DTC S DGBTCA=X K X,X2,X3
+"RTN","DGBTE1",86,0)
+APPTS ;  search patient file for appointments through claim date (DTI+1),  adddates to array DGBTCL 
+"RTN","DGBTE1",87,0)
+ N ERRCODE,DGARRAY,CLIEN,APTDT S DGARRAY("FLDS")="2;3;10;18"
+"RTN","DGBTE1",88,0)
+ S DGARRAY(4)=DFN,I=$$SDAPI^SDAMA301(.DGARRAY)
+"RTN","DGBTE1",89,0)
+ ; I<0 = Error, I<0 = # of Records retrieved
+"RTN","DGBTE1",90,0)
+ I I<0 S ERRCODE=$O(^TMP($J,"SDAMA301","")),I1=1,DGBTCL("ERROR")=^TMP($J,"SDAMA301",ERRCODE)
+"RTN","DGBTE1",91,0)
+ I I>0 D
+"RTN","DGBTE1",92,0)
+ .S CLIEN=""
+"RTN","DGBTE1",93,0)
+ .F  S CLIEN=$O(^TMP($J,"SDAMA301",DFN,CLIEN)) Q:'CLIEN  D
+"RTN","DGBTE1",94,0)
+ ..S APTDT=DGBTDTI\1
+"RTN","DGBTE1",95,0)
+ ..F  S APTDT=$O(^TMP($J,"SDAMA301",DFN,CLIEN,APTDT)) Q:'APTDT!(APTDT>(DGBTDTI+1))  D
+"RTN","DGBTE1",96,0)
+ ...S SDATA=^TMP($J,"SDAMA301",DFN,CLIEN,APTDT)
+"RTN","DGBTE1",97,0)
+ ...S DGBTCL(APTDT)=$P($P(^TMP($J,"SDAMA301",DFN,CLIEN,APTDT),U,2),";",2)_U_$P($P(SDATA,U,3),";")
+"RTN","DGBTE1",98,0)
+ ...S DGBTCL(APTDT)=DGBTCL(APTDT)_U_$P($P(SDATA,U,18),";")_U_$P($P(SDATA,U,10),";")
+"RTN","DGBTE1",99,0)
+ K ^TMP($J,"SDAMA301"),DGARRAY,CLIEN,APTDT
+"RTN","DGBTE1",100,0)
+EXIT ; exit routine
+"RTN","DGBTE1",101,0)
+ Q
+"RTN","DGBTE1",102,0)
+ERR1 ;  error condition
+"RTN","DGBTE1",103,0)
+ G QUIT^DGBTEND Q
+"RTN","DGBTSP")
+0^5^B184770476^B183996110
+"RTN","DGBTSP",1,0)
+DGBTSP ;ALB/BLD-BENEFICIARY TRAVEL SPECIAL MODE OF TRANSPORTATION; 12/18/2011@1000; 12/23/2012
+"RTN","DGBTSP",2,0)
+ ;;1.0;Beneficiary Travel;**20,22**;December 27, 2011;Build 5
+"RTN","DGBTSP",3,0)
+ ;
+"RTN","DGBTSP",4,0)
+ ;MUST ENTER AT EN^DGBTSP
+"RTN","DGBTSP",5,0)
+ Q
+"RTN","DGBTSP",6,0)
+ ;
+"RTN","DGBTSP",7,0)
+ ;
+"RTN","DGBTSP",8,0)
+EN(DGBTSP) ;main entry point from DGBTE
+"RTN","DGBTSP",9,0)
+ ;
+"RTN","DGBTSP",10,0)
+ ;TRNSMDE = mode of transportation
+"RTN","DGBTSP",11,0)
+ ;REMARKS = will only have data if OTHER is chosed from mode of transportation list
+"RTN","DGBTSP",12,0)
+ ;
+"RTN","DGBTSP",13,0)
+ N TRNSMDE,DGBTINTO,PREAUTH,DGBTACTYPE,MODEOFTRANS,OTHERTRANRMKS,AUTHORIZED,VENDOR,INVOICE,INVDT,OWTRP,TOTALMILES,TOTINVOICE,DGBTFDA
+"RTN","DGBTSP",14,0)
+ N BASERATE,MILEAGEFEE,NOSHOW,WAITTIME,EXTRACREW,SPEQUIP,REMARKS,DGBTINTO,ERRMSG,OTHERTRANSRMKS,ACTTYPE,ERRMSG
+"RTN","DGBTSP",15,0)
+ ;
+"RTN","DGBTSP",16,0)
+ ;
+"RTN","DGBTSP",17,0)
+ S DGBTSP=1,DGBTCMTY="M",SPCOMPLETE=0
+"RTN","DGBTSP",18,0)
+ ;type of claim - Mileage or Special Mode Claim
+"RTN","DGBTSP",19,0)
+ S DGBTACTYPE=$$GET1^DIQ(392,DGBTDT,56,"I")
+"RTN","DGBTSP",20,0)
+ S DIR("A")="Is this a Mileage or Special Mode Claim?",DIR("?")="Enter 'M' for Mileage Claim or RETURN to continue procesing Mileage claim or 'S' for Special Mode Claim"
+"RTN","DGBTSP",21,0)
+ S DIR(0)="S^M:MILEAGE;S:SPECIAL MODE^^W $S(X=""M"":""MILEAGE"",X=""S"":""SPECIAL MODE"",1:"""") K:X="" X"
+"RTN","DGBTSP",22,0)
+ S DIR("B")=$S($G(DGBTSP("CLAIM TYPE"))'="":DGBTSP("CLAIM TYPE"),$G(DGBTACTYPE)'="":DGBTACTYPE,1:"M")
+"RTN","DGBTSP",23,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I ($D(DTOUT))!($D(DUOUT)) K DGBTSP S DGBTSP=$S($D(^DGBT(392,DGBTDTI,"SP")):1,1:0),SPCOMPLETE=$S($G(CHZFLG)=1:1,1:0),DGBTTOUT=-1 Q
+"RTN","DGBTSP",24,0)
+ S DGBTSP("CLAIM TYPE")=$P(Y,",",1),DGBTCMTY=$P(Y,",",1)
+"RTN","DGBTSP",25,0)
+ ;*************
+"RTN","DGBTSP",26,0)
+ ;
+"RTN","DGBTSP",27,0)
+ I +DGBTELL=15 D
+"RTN","DGBTSP",28,0)
+ .S DGBTFDA(392,DGBTDTI_",",56)=$G(DGBTSP("CLAIM TYPE"))
+"RTN","DGBTSP",29,0)
+ .S DGBTFDA(392,DGBTDTI_",",3)=$P(VAEL(1),"^",2)
+"RTN","DGBTSP",30,0)
+ .I +VAEL(3) S DGBTFDA(392,DGBTDTI_",",4)=$P(VAEL(3),"^",2)
+"RTN","DGBTSP",31,0)
+ .S DGBTFDA(392,DGBTDTI_",",41)=$$GET1^DIQ(200,DUZ,.01)
+"RTN","DGBTSP",32,0)
+ .S DGBTFDA(392,DGBTDTI_",",42)=$$GET1^DIQ(2,DFN,.01)
+"RTN","DGBTSP",33,0)
+ .I $E(DGBTDTI,1,7)=DGBTDT D
+"RTN","DGBTSP",34,0)
+ ..S DGBTFDA(392,DGBTDTI_",",6)=$S(DGBTCMTY="S":$$GET1^DIQ(392.3,6,.01),1:$$GET1^DIQ(392.3,8,.01))
+"RTN","DGBTSP",35,0)
+ .D FILE^DIE("EKTS","DGBTFDA","ERRMSG")
+"RTN","DGBTSP",36,0)
+ .;*************************
+"RTN","DGBTSP",37,0)
+ .I '$D(ERRMSG) S SPCOMPLETE=1
+"RTN","DGBTSP",38,0)
+ I DGBTSP("CLAIM TYPE")'="S" D
+"RTN","DGBTSP",39,0)
+ .S DA=DGBTDT,DIE="^DGBT(392,",DR="56///"_DGBTCMTY D ^DIE S %=1
+"RTN","DGBTSP",40,0)
+ .K DGBTSP S DGBTCMTY="M" S DGBTSP=0,SPCOMPLETE=0 D:$D(^DGBT(392,DGBTDT,"SP")) DELSP^DGBTSP1(DGBTDT)
+"RTN","DGBTSP",41,0)
+ Q
+"RTN","DGBTSP",42,0)
+ ;
+"RTN","DGBTSP",43,0)
+RESTART(DGBTCMTY)  ;
+"RTN","DGBTSP",44,0)
+ N SPACCT,SPACTIEN
+"RTN","DGBTSP",45,0)
+ S SPACCT="826 SPECIAL MODE - NON-EMERGEN"
+"RTN","DGBTSP",46,0)
+ S (ACCT,SPACTIEN,DGBTQ)=0
+"RTN","DGBTSP",47,0)
+ F  S ACCT=$O(^DGBT(392.3,"B",ACCT)) D  Q:DGBTQ!('ACCT)
+"RTN","DGBTSP",48,0)
+ .I ACCT'["SPECIAL MODE - NON-EMERGEN" Q
+"RTN","DGBTSP",49,0)
+ .S SPACTIEN=$O(^DGBT(392.3,"B",ACCT,""))
+"RTN","DGBTSP",50,0)
+ .I $$GET1^DIQ(392.3,SPACTIEN,4,"I")'<DT!($$GET1^DIQ(392.3,SPACTIEN,4)=""),$$GET1^DIQ(392.3,SPACTIEN,5,"I")=3 S DGBTQ=1
+"RTN","DGBTSP",51,0)
+ .E  S ACCT=""
+"RTN","DGBTSP",52,0)
+ I 'ACCT D  Q
+"RTN","DGBTSP",53,0)
+ .D ACTFILE^DGBTSP
+"RTN","DGBTSP",54,0)
+ .I 'CHZFLG S DGBTTOUT=-1,DGBTOLD=0,SPCOMPLETE=0
+"RTN","DGBTSP",55,0)
+ .E  S DUOUT=1,SPCOMPLETE=0
+"RTN","DGBTSP",56,0)
+ S $P(^DGBT(392,DGBTDT,0),"^",9)=""
+"RTN","DGBTSP",57,0)
+ S DGBTSP("ACCOUNT")=$$GET1^DIQ(392.3,SPACTIEN,.01)
+"RTN","DGBTSP",58,0)
+ ;
+"RTN","DGBTSP",59,0)
+ ;mode of special transportation used
+"RTN","DGBTSP",60,0)
+ W !
+"RTN","DGBTSP",61,0)
+ S SPCOMPLETE=0
+"RTN","DGBTSP",62,0)
+ S MODEOFTRANS=$$GET1^DIQ(392,DGBTDT,57,"E")
+"RTN","DGBTSP",63,0)
+ S DIR("A")="MODE OF TRANSPORTATION: ",DIR("?")="This field points to the Beneficiary Travel Mode of Transportation file and indicates the mode of transportation used for this Beneficiary Travel Claim."
+"RTN","DGBTSP",64,0)
+ S DIR(0)="PA^392.42:EMZ"
+"RTN","DGBTSP",65,0)
+ S MODEOFTRANS=$S($G(MODEOFTRANS)'="":MODEOFTRANS,1:$G(DGBTSP("MODE OF TRANS")))
+"RTN","DGBTSP",66,0)
+ I MODEOFTRANS'="" S DIR("B")=$S($G(MODEOFTRANS)'="":MODEOFTRANS,1:$G(DGBTSP("MODE OF TRANS")))
+"RTN","DGBTSP",67,0)
+ D ^DIR S TRNSMDE=$P($G(Y(0)),",",1) K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I ($D(DTOUT))!($D(DUOUT)) K DGBTSP S DGBTSP=0 Q
+"RTN","DGBTSP",68,0)
+ S DGBTSP("MODE OF TRANS")=$P($G(Y(0)),",",1)
+"RTN","DGBTSP",69,0)
+ I TRNSMDE="OTHER" D SPRMKS(.DGBTSP)
+"RTN","DGBTSP",70,0)
+ D PREAUTH(.DGBTSP) Q:$D(DUOUT)!$D(DTOUT)!(SPCOMPLETE=0)
+"RTN","DGBTSP",71,0)
+ D VENDOR(.DGBTSP) Q:$D(DUOUT)!$D(DTOUT)
+"RTN","DGBTSP",72,0)
+ D ADDINFO(.DGBTSP) Q:$D(DUOUT)!$D(DTOUT)
+"RTN","DGBTSP",73,0)
+ Q
+"RTN","DGBTSP",74,0)
+ ;
+"RTN","DGBTSP",75,0)
+SPRMKS(DGBTSP) ;will allow user to enter other remarks about special mode transportation
+"RTN","DGBTSP",76,0)
+ W !
+"RTN","DGBTSP",77,0)
+ S OTHERTRANSRMKS=$$GET1^DIQ(392,DGBTDT,69,"I")
+"RTN","DGBTSP",78,0)
+ S DIR("A")="SPECIFY OTHER MODE OF TRANSPORTATION"
+"RTN","DGBTSP",79,0)
+ S DIR("?")="Enter other information about the type of Special Mode of Transportation. 3-25 characters."
+"RTN","DGBTSP",80,0)
+ S DIR(0)="FO^3:25"
+"RTN","DGBTSP",81,0)
+ I OTHERTRANSRMKS'="" S DIR("B")=$S($G(OTHERTRANSRMKS)'="":OTHERTRANSRMKS,1:$G(DGBTSP("OTHER TRANS REMARKS")))
+"RTN","DGBTSP",82,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I ($D(DTOUT))!($D(DUOUT)) K DGBTSP S DGBTSP=0 Q
+"RTN","DGBTSP",83,0)
+ S DGBTSP("OTHER TRANS REMARKS")=Y
+"RTN","DGBTSP",84,0)
+ Q
+"RTN","DGBTSP",85,0)
+ ;
+"RTN","DGBTSP",86,0)
+PREAUTH(DGBTSP) ;this will ask if trip was pre-authorized. If answer is no then ask end user if claim is approved or denied.
+"RTN","DGBTSP",87,0)
+ ;if end userindicates theat authorizstion has been denied, then the System denies the Claim and issues an Appeal Rights
+"RTN","DGBTSP",88,0)
+ ;document and prompts the the end user for the Vendor. The end user is only allowed to select a Vendor from the list
+"RTN","DGBTSP",89,0)
+ ;of vendors already in the FMS system.
+"RTN","DGBTSP",90,0)
+ ;
+"RTN","DGBTSP",91,0)
+ W !
+"RTN","DGBTSP",92,0)
+ Q:$G(DFN)=""!($G(DGBTSP)=0)
+"RTN","DGBTSP",93,0)
+ S PREAUTH=$$GET1^DIQ(392,DGBTDT,70)           ;,"I"),PREAUTH=$S(PREAUTH="Y":"YES",1:"NO")
+"RTN","DGBTSP",94,0)
+ S DIR("A")="WAS TRIP PRE-AUTHORIZED"
+"RTN","DGBTSP",95,0)
+ S DIR(0)="Y"
+"RTN","DGBTSP",96,0)
+ S DIR("?")="Sorry, enter 'N'o if not Pre-Authorized, 'Y'es if Pre-Authorized",DIR(0)="Y"
+"RTN","DGBTSP",97,0)
+ I PREAUTH'="" S DIR("B")=$S($G(PREAUTH)'="":$G(PREAUTH),1:$S($G(DGBTSP("PRE-AUTHORIZED"))=1:"YES",1:"NO"))
+"RTN","DGBTSP",98,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I ($D(DTOUT))!($D(DUOUT)) K DGBTSP S DGBTSP=0,SPCOMPLETE=0 Q
+"RTN","DGBTSP",99,0)
+ S DGBTSP("PRE-AUTHORIZED")=+Y
+"RTN","DGBTSP",100,0)
+ S DGBTSP("PRE-AUTHORIZED")=$G(Y(0))
+"RTN","DGBTSP",101,0)
+ I DGBTSP("PRE-AUTHORIZED")="YES" K DGBTSP("AUTHORIZED") S DGBTSP("AUTHORIZED")="YES" D CLRLTR^DGBTDLT(0)
+"RTN","DGBTSP",102,0)
+ I '+Y D  I ($D(DTOUT))!($D(DUOUT))!(SPCOMPLETE=0) S DGBTSP=0 Q
+"RTN","DGBTSP",103,0)
+ .S AUTHORIZED=$$GET1^DIQ(392,DGBTDT,85)                              ;,"I"),AUTHORIZED=$S(AUTHORIZED="Y":"YES",1:"NO")
+"RTN","DGBTSP",104,0)
+ .S DIR("A")="IS AUTHORIZATION APPROVED"
+"RTN","DGBTSP",105,0)
+ .S DIR("?")="Sorry, enter 'N'o if Claim not Authorized, 'Y'es if Claim is Authorized",DIR(0)="Y"
+"RTN","DGBTSP",106,0)
+ .S DIR(0)="Y"
+"RTN","DGBTSP",107,0)
+ .S DIR("B")=$S($G(AUTHORIZED)'="":$G(AUTHORIZED),1:$S($G(DGBTSP("AUTHORIZED"))=1:"YES",1:"NO"))
+"RTN","DGBTSP",108,0)
+ .D ^DIR K DIR S:+Y SPCOMPLETE=1 I ($D(DTOUT))!($D(DUOUT)) Q
+"RTN","DGBTSP",109,0)
+ .S DGBTSP("AUTHORIZED")=+Y
+"RTN","DGBTSP",110,0)
+ .S DGBTSP("AUTHORIZED")=$G(Y(0))
+"RTN","DGBTSP",111,0)
+ .I Y(0)="NO" D  Q
+"RTN","DGBTSP",112,0)
+ ..I $G(DGBTAPPTYP) W !!,"CLAIM HAS BEEN DENIED AND DENIAL OF BENEFITS LETTER HAS ALREADY BEEN ISSUED"
+"RTN","DGBTSP",113,0)
+ ..I '$G(DGBTAPPTYP) W !!,"CLAIM HAS BEEN DENIED AND DENIAL OF BENEFITS LETTER WILL BE ISSUED"
+"RTN","DGBTSP",114,0)
+ ..I '$G(DGBTAPPTYP) D DGBTDR^DGBTDLT Q:SPCOMPLETE=0
+"RTN","DGBTSP",115,0)
+ ..W !!,"PLEASE COMPLETE THE INVOICE INFORMATION." H 1
+"RTN","DGBTSP",116,0)
+ ..S SPCOMPLETE=1
+"RTN","DGBTSP",117,0)
+ I '$G(DGBTAPPTYP) D CLRLTR^DGBTDLT(0)
+"RTN","DGBTSP",118,0)
+ S SPCOMPLETE=1
+"RTN","DGBTSP",119,0)
+ Q
+"RTN","DGBTSP",120,0)
+ ;
+"RTN","DGBTSP",121,0)
+VENDOR(DGBTSP) ;allows the user to select from a vendor already in the FMS system
+"RTN","DGBTSP",122,0)
+ ;
+"RTN","DGBTSP",123,0)
+ W !
+"RTN","DGBTSP",124,0)
+ Q:$G(DFN)=""!($G(DGBTSP)=0)
+"RTN","DGBTSP",125,0)
+ S VENDOR=$$GET1^DIQ(392,DGBTDT,71,"E")
+"RTN","DGBTSP",126,0)
+ S DIR("A")="SELECT VENDOR: "
+"RTN","DGBTSP",127,0)
+ S DIR("?")="Select a Vendor from the list only"
+"RTN","DGBTSP",128,0)
+ S DIR(0)="PA^440:EMZ"
+"RTN","DGBTSP",129,0)
+ S VENDOR=$S($G(VENDOR)'="":VENDOR,$G(DGBTSP("VENDOR"))'="":$G(DGBTSP("VENDOR")),1:"")
+"RTN","DGBTSP",130,0)
+ I VENDOR'="" S DIR("B")=$S($G(VENDOR)'="":VENDOR,1:$G(DGBTSP("VENDOR")))
+"RTN","DGBTSP",131,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I ($D(DTOUT))!($D(DUOUT)) K DGBTSP S DGBTSP=0,SPCOMPLETE=0 Q
+"RTN","DGBTSP",132,0)
+ S DGBTSP("VENDOR")=$P($G(Y),"^",1) ;dbe patch DGBT*1*22 - modified to use vendor ien
+"RTN","DGBTSP",133,0)
+ ;
+"RTN","DGBTSP",134,0)
+ Q
+"RTN","DGBTSP",135,0)
+ ;
+"RTN","DGBTSP",136,0)
+ADDINFO(DGBTSP) ;this will ask additional quesitons of the end user about the invoice presented by the patient.
+"RTN","DGBTSP",137,0)
+ ;
+"RTN","DGBTSP",138,0)
+ Q:$G(DFN)=""!($G(DGBTSP)=0)
+"RTN","DGBTSP",139,0)
+ N I
+"RTN","DGBTSP",140,0)
+ D INST(.DGBTINST)
+"RTN","DGBTSP",141,0)
+ ;
+"RTN","DGBTSP",142,0)
+ ;address information
+"RTN","DGBTSP",143,0)
+ S DIR("A")="PLACE OF DEPARTURE [LINE 1]"
+"RTN","DGBTSP",144,0)
+ S DIR("?")="ENTER "_"PLACE OF DEPARTURE [LINE 1]. 1 TO 30 CHARACTERS"
+"RTN","DGBTSP",145,0)
+ S DIR(0)="FO^1:30"
+"RTN","DGBTSP",146,0)
+ S DEPL1=$$GET1^DIQ(392,DGBTDTI,73)
+"RTN","DGBTSP",147,0)
+ S DIR("B")=$S($G(DEPL1)'="":$G(DEPL1),1:$G(VAPA(1)))
+"RTN","DGBTSP",148,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I $D(DTOUT)!($D(DUOUT)) S DGBTSP=0,SPCOMPLETE=0 Q
+"RTN","DGBTSP",149,0)
+ S DGBTSP("PLACE OF DEPARTURE")=Y
+"RTN","DGBTSP",150,0)
+ ;
+"RTN","DGBTSP",151,0)
+ S DIR("A")="PLACE OF DEPARTURE [LINE 2]"
+"RTN","DGBTSP",152,0)
+ S DIR("?")="ENTER "_"PLACE OF DEPARTURE [LINE 2]. 1 TO 30 CHARACTERS"
+"RTN","DGBTSP",153,0)
+ S DIR(0)="FO^1:30"
+"RTN","DGBTSP",154,0)
+ S DEPL2=$$GET1^DIQ(392,DGBTDTI,74)
+"RTN","DGBTSP",155,0)
+ S DIR("B")=$S($G(DEPL2)'="":$G(DEPL2),1:$G(VAPA(2)))
+"RTN","DGBTSP",156,0)
+ I $G(DIR("B"))="" K DIR("B")
+"RTN","DGBTSP",157,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I $D(DTOUT)!($D(DUOUT)) S DGBTSP=0,SPCOMPLETE=0 Q
+"RTN","DGBTSP",158,0)
+ S DGBTSP("PLACE OF DEPARTURE 2")=Y
+"RTN","DGBTSP",159,0)
+ ;
+"RTN","DGBTSP",160,0)
+ S DIR("A")="CITY OF DEPARTURE"
+"RTN","DGBTSP",161,0)
+ S DIR("?")="ENTER "_"CITY OF DEPARTURE. 3 TO 30 CHARACTERS"
+"RTN","DGBTSP",162,0)
+ S DIR(0)="FO^3:30"
+"RTN","DGBTSP",163,0)
+ S DEPCITY=$$GET1^DIQ(392,DGBTDTI,75)
+"RTN","DGBTSP",164,0)
+ S DIR("B")=$S($G(DEPCITY)'="":$G(DEPCITY),1:$G(VAPA(4)))
+"RTN","DGBTSP",165,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I $D(DTOUT)!($D(DUOUT)) S DGBTSP=0,SPCOMPLETE=0 Q
+"RTN","DGBTSP",166,0)
+ S DGBTSP("CITY OF DEPARTURE")=Y
+"RTN","DGBTSP",167,0)
+ ;
+"RTN","DGBTSP",168,0)
+ S DIR("A")="STATE OF DEPARTURE"
+"RTN","DGBTSP",169,0)
+ S DIR("?")="ENTER "_"STATE OF DEPARTURE"
+"RTN","DGBTSP",170,0)
+ S DIR(0)="P^5:EMZ"
+"RTN","DGBTSP",171,0)
+ S DEPST=$$GET1^DIQ(392,DGBTDTI,76)
+"RTN","DGBTSP",172,0)
+ S DIR("B")=$S($G(DEPST)'="":$G(DEPST),1:$P($G(VAPA(5)),"^",2))
+"RTN","DGBTSP",173,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I $D(DTOUT)!($D(DUOUT)) S DGBTSP=0,SPCOMPLETE=0 Q
+"RTN","DGBTSP",174,0)
+ S DGBTSP("STATE OF DEPARTURE")=$P(Y,"^",2)
+"RTN","DGBTSP",175,0)
+ ;
+"RTN","DGBTSP",176,0)
+ S DIR("A")="ZIP CODE/DEPARTURE"
+"RTN","DGBTSP",177,0)
+ S DIR("?")="ENTER "_"ZIP CODE/DEPARTURE (5 NUMBERS)"
+"RTN","DGBTSP",178,0)
+ S DIR(0)="FO^5:5"    ;$S(I="STATE OF DEPATURE":"P^5:EMZ",1:"FO^3:30")
+"RTN","DGBTSP",179,0)
+ S DEPZIP=$$GET1^DIQ(392,DGBTDTI,77)
+"RTN","DGBTSP",180,0)
+ S DIR("B")=$S($G(DEPZIP)'="":$G(DEPZIP),1:$P($G(VAPA(11)),"^",2))
+"RTN","DGBTSP",181,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I $D(DTOUT)!($D(DUOUT)) S DGBTSP=0,SPCOMPLETE=0 Q
+"RTN","DGBTSP",182,0)
+ S DGBTSP("ZIP CODE/DEPARTURE")=Y
+"RTN","DGBTSP",183,0)
+ ;
+"RTN","DGBTSP",184,0)
+ Q:$G(DGBTSP)=0
+"RTN","DGBTSP",185,0)
+ ;
+"RTN","DGBTSP",186,0)
+ ;destination information
+"RTN","DGBTSP",187,0)
+ W !
+"RTN","DGBTSP",188,0)
+ ;
+"RTN","DGBTSP",189,0)
+ S DIR("A")="DESTINATION [LINE 1]"
+"RTN","DGBTSP",190,0)
+ S DIR("?")="ENTER "_"DESTINATION [LINE 1]. 1 TO 30 CHARACTERS"
+"RTN","DGBTSP",191,0)
+ S DIR(0)="FO^1:30"
+"RTN","DGBTSP",192,0)
+ S DISTL1=$$GET1^DIQ(392,DGBTDTI,78)
+"RTN","DGBTSP",193,0)
+ S DIR("B")=$S($G(DISTL1)'="":DISTL1,1:DGBTINST("DIVISION"))
+"RTN","DGBTSP",194,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I $D(DTOUT)!($D(DUOUT)) S DGBTSP=0,SPCOMPLETE=0 Q
+"RTN","DGBTSP",195,0)
+ S DGBTINST("DIVISION")=Y
+"RTN","DGBTSP",196,0)
+ ;
+"RTN","DGBTSP",197,0)
+ S DIR("A")="DESTINATION [LINE 2]"
+"RTN","DGBTSP",198,0)
+ S DIR("?")="ENTER "_"DESTINATION [LINE 2]. 1 TO 30 CHARACTERS"
+"RTN","DGBTSP",199,0)
+ S DIR(0)="FO^1:30"
+"RTN","DGBTSP",200,0)
+ S DISTL2=$$GET1^DIQ(392,DGBTDTI,79)
+"RTN","DGBTSP",201,0)
+ S DIR("B")=$S($G(DISTL2)'="":DISTL2,1:DGBTINST("INST NAME"))
+"RTN","DGBTSP",202,0)
+ I $G(DIR("B"))="" K DIR("B")
+"RTN","DGBTSP",203,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I $D(DTOUT)!($D(DUOUT)) S DGBTSP=0,SPCOMPLETE=0 Q
+"RTN","DGBTSP",204,0)
+ S DGBTINST("INST NAME")=Y
+"RTN","DGBTSP",205,0)
+ ;
+"RTN","DGBTSP",206,0)
+ S DIR("A")="DESTINATION [LINE 3]"
+"RTN","DGBTSP",207,0)
+ S DIR("?")="ENTER "_"DESTINATION [LINE 3]. 1 TO 30 CHARACTERS"
+"RTN","DGBTSP",208,0)
+ S DIR(0)="FO^1:30"
+"RTN","DGBTSP",209,0)
+ S DISTL1=$$GET1^DIQ(392,DGBTDTI,80)
+"RTN","DGBTSP",210,0)
+ S DIR("B")=$S($G(DISTL1)'="":DISTL1,1:DGBTINST("ADDRESS1"))
+"RTN","DGBTSP",211,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I $D(DTOUT)!($D(DUOUT)) S DGBTSP=0,SPCOMPLETE=0 Q
+"RTN","DGBTSP",212,0)
+ S DGBTINST("ADDRESS1")=Y
+"RTN","DGBTSP",213,0)
+ ;
+"RTN","DGBTSP",214,0)
+ S DIR("A")="CITY"
+"RTN","DGBTSP",215,0)
+ S DIR("?")="ENTER "_"CITY OF DESTINATION. 3 TO 30 CHARACTERS"
+"RTN","DGBTSP",216,0)
+ S DIR(0)="FO^3:30"
+"RTN","DGBTSP",217,0)
+ S DISTCITY=$$GET1^DIQ(392,DGBTDTI,81)
+"RTN","DGBTSP",218,0)
+ S DIR("B")=$S($G(DISTCITY)'="":DISTCITY,1:DGBTINST("CITY"))
+"RTN","DGBTSP",219,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I $D(DTOUT)!($D(DUOUT)) S DGBTSP=0,SPCOMPLETE=0 Q
+"RTN","DGBTSP",220,0)
+ S DGBTINST("CITY")=Y
+"RTN","DGBTSP",221,0)
+ ;
+"RTN","DGBTSP",222,0)
+ S DIR("A")="STATE OF DESTINATION"
+"RTN","DGBTSP",223,0)
+ S DIR("?")="ENTER "_"STATE OF DESTINATION"
+"RTN","DGBTSP",224,0)
+ S DIR(0)="PO^5:EMZ"
+"RTN","DGBTSP",225,0)
+ S DISTST=$$GET1^DIQ(392,DGBTDTI,82)
+"RTN","DGBTSP",226,0)
+ S DIR("B")=$S($G(DISTST)'="":DISTST,1:DGBTINST("STATE"))
+"RTN","DGBTSP",227,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I $D(DTOUT)!($D(DUOUT)) S DGBTSP=0,SPCOMPLETE=0 Q
+"RTN","DGBTSP",228,0)
+ S DGBTINST("STATE")=$P(Y,"^",2)
+"RTN","DGBTSP",229,0)
+ ;
+"RTN","DGBTSP",230,0)
+ S DIR("A")="ZIP CODE/DESTINATION"
+"RTN","DGBTSP",231,0)
+ S DIR("?")="ENTER "_"ZIP CODE/DESTINATION (5 NUMBERS)"
+"RTN","DGBTSP",232,0)
+ S DIR(0)="FO^5:5"
+"RTN","DGBTSP",233,0)
+ S DISTZIP=$$GET1^DIQ(392,DGBTDTI,83)
+"RTN","DGBTSP",234,0)
+ S DIR("B")=$S($G(DISTZIP)'="":DISTZIP,1:DGBTINST("ZIP CODE"))
+"RTN","DGBTSP",235,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I $D(DTOUT)!($D(DUOUT)) S DGBTSP=0,SPCOMPLETE=0 Q
+"RTN","DGBTSP",236,0)
+ S DGBTINST("ZIP CODE")=Y
+"RTN","DGBTSP",237,0)
+ ;
+"RTN","DGBTSP",238,0)
+ Q:$G(DGBTSP)=0
+"RTN","DGBTSP",239,0)
+ ;
+"RTN","DGBTSP",240,0)
+ ;invoice information
+"RTN","DGBTSP",241,0)
+ W !
+"RTN","DGBTSP",242,0)
+ S INVOICE=$$GET1^DIQ(392,DGBTDT,58,"I")
+"RTN","DGBTSP",243,0)
+ S DIR("A")="INVOICE NUMBER: "
+"RTN","DGBTSP",244,0)
+ S DIR("?")="Enter Special Mode invoice number. Should be min 1 max of 30."
+"RTN","DGBTSP",245,0)
+ S DIR(0)="FA^1:30"
+"RTN","DGBTSP",246,0)
+ S INVOICE=$S($G(INVOICE)'="":INVOICE,$G(DGBTSP("INVOICE NUMBER"))'="":$G(DGBTSP("INVOICE NUMBER")),1:"")
+"RTN","DGBTSP",247,0)
+ I INVOICE'="" S DIR("B")=$S($G(INVOICE)'="":INVOICE,1:$G(DGBTSP("INVOICE NUMBER")))
+"RTN","DGBTSP",248,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I ($D(DTOUT))!($D(DUOUT)) K DGBTSP S DGBTSP=0,SPCOMPLETE=0 Q
+"RTN","DGBTSP",249,0)
+ S DGBTSP("INVOICE NUMBER")=Y
+"RTN","DGBTSP",250,0)
+ ;
+"RTN","DGBTSP",251,0)
+ W !
+"RTN","DGBTSP",252,0)
+ S INVDT=$$GET1^DIQ(392,DGBTDT,59,"E")
+"RTN","DGBTSP",253,0)
+ S DIR("A")="INVOICE DATE: "
+"RTN","DGBTSP",254,0)
+ S DIR("?")="^D HELP1^DGBTE1A"
+"RTN","DGBTSP",255,0)
+ S DIR(0)="DAO^3000101:DT+1:EX"
+"RTN","DGBTSP",256,0)
+ I INVDT'="" S DIR("B")=$S($G(INVDT)'="":$G(INVDT),$G(DGBTSP("DT INVOICE REC")):$G(DGBTSP("INVOICE NUMBER")),1:DGBTDTE)
+"RTN","DGBTSP",257,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I ($D(DTOUT))!($D(DUOUT)) K DGBTSP S DGBTSP=0,SPCOMPLETE=0 Q
+"RTN","DGBTSP",258,0)
+ S DGBTSP("DT INVOICE REC")=$G(Y(0))
+"RTN","DGBTSP",259,0)
+ ;
+"RTN","DGBTSP",260,0)
+ W !
+"RTN","DGBTSP",261,0)
+ S OWRTP=$$GET1^DIQ(392,DGBTDT,67,"E")
+"RTN","DGBTSP",262,0)
+ S DIR("A")="ONE WAY/ROUND TRIP:"
+"RTN","DGBTSP",263,0)
+ S DIR("?")="Enter 'R' for Round Trip or 'O' for One Way Trip ."
+"RTN","DGBTSP",264,0)
+ S DIR(0)="SA^R:ROUND TRIP;O:ONE WAY TRIP"
+"RTN","DGBTSP",265,0)
+ S OWRTP=$S($G(OWRTP)'="":OWRTP,$G(DGBTSP("RT/ONE WAY")):$G(DGBTSP("RT/ONE WAY")),1:"")
+"RTN","DGBTSP",266,0)
+ I OWRTP'="" S DIR("B")=$S($G(OWRTP)'="":OWRTP,1:$G(DGBTSP("RT/ONE WAY")))
+"RTN","DGBTSP",267,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I ($D(DTOUT))!($D(DUOUT)) K DGBTSP S DGBTSP=0,SPCOMPLETE=0 Q
+"RTN","DGBTSP",268,0)
+ S DGBTSP("RT/ONE WAY")=Y
+"RTN","DGBTSP",269,0)
+ ;
+"RTN","DGBTSP",270,0)
+ W !
+"RTN","DGBTSP",271,0)
+ S TOTALMILES=$$GET1^DIQ(392,DGBTDT,68,"E")
+"RTN","DGBTSP",272,0)
+ S DIR("A")="TOTAL MILES: "
+"RTN","DGBTSP",273,0)
+ S DIR("?")="Type a Number between 0 and 10000, 0 Decimal Digits"
+"RTN","DGBTSP",274,0)
+ S DIR(0)="NA^1:99999:1"
+"RTN","DGBTSP",275,0)
+ S TOTALMILES=$S($G(TOTALMILES)'="":TOTALMILES,$G(DGBTSP("TOTAL MILES")):$G(DGBTSP("TOTAL MILES")),1:"")
+"RTN","DGBTSP",276,0)
+ I TOTALMILES'="" S DIR("B")=$S($G(TOTALMILES)'="":TOTALMILES,1:$G(DGBTSP("TOTAL MILES")))
+"RTN","DGBTSP",277,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I ($D(DTOUT))!($D(DUOUT)) K DGBTSP S DGBTSP=0,SPCOMPLETE=0 Q
+"RTN","DGBTSP",278,0)
+ S DGBTSP("TOTAL MILES")=Y
+"RTN","DGBTSP",279,0)
+ ;
+"RTN","DGBTSP",280,0)
+ F I=1:1 Q:I>1&($G(DGBTSP("TOTAL INVOICE"))'="")&($G(DGBTSP("TOTAL INVOICE"))=$G(DGBTINTO))  D INVAMT^DGBTSP1 Q:$G(DGBTSP)=0  I ($G(DGBTSP("TOTAL INVOICE"))'="")&($G(DGBTSP("TOTAL INVOICE"))'=$G(DGBTINTO)) D
+"RTN","DGBTSP",281,0)
+ .W !!,"TOTAL INVOICE DOES NOT EQUAL THE SUM OF THE COMPONENT FEES."
+"RTN","DGBTSP",282,0)
+ .W !,"YOU MUST CORRECT THE CLAIM BEFORE CONTINUING",!
+"RTN","DGBTSP",283,0)
+ ;
+"RTN","DGBTSP",284,0)
+ Q:DGBTSP=0
+"RTN","DGBTSP",285,0)
+ ;
+"RTN","DGBTSP",286,0)
+ W !
+"RTN","DGBTSP",287,0)
+ S REMARKS=$$GET1^DIQ(392,DGBTDT,72,"E")
+"RTN","DGBTSP",288,0)
+ S DIR("A")="REMARKS: "
+"RTN","DGBTSP",289,0)
+ S DIR("?")="Enter other information about the Special Mode of Transportation Invoice. 3-50 characters."
+"RTN","DGBTSP",290,0)
+ S DIR(0)="FOA^3:50"
+"RTN","DGBTSP",291,0)
+ I REMARKS'="" S DIR("B")=$S($G(REMARKS)'="":REMARKS,1:$G(DGBTSP("SP MODE OTHER REMARKS")))
+"RTN","DGBTSP",292,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I ($D(DTOUT))!($D(DUOUT)) K DGBTSP S DGBTSP=0,SPCOMPLETE=0 Q
+"RTN","DGBTSP",293,0)
+ S DGBTSP("SP MODE OTHER REMARKS")=Y
+"RTN","DGBTSP",294,0)
+ ;
+"RTN","DGBTSP",295,0)
+ Q
+"RTN","DGBTSP",296,0)
+ ;
+"RTN","DGBTSP",297,0)
+INST(DGBTINST) ;get destination information
+"RTN","DGBTSP",298,0)
+ ;
+"RTN","DGBTSP",299,0)
+ N FAC,ERROR,FIELDS,TEMP
+"RTN","DGBTSP",300,0)
+ S DGBTINST("DIVISION")=$$GET1^DIQ(40.8,DGBTDIVI,.01)
+"RTN","DGBTSP",301,0)
+ S DGBTINST("INST NAME")=$$GET1^DIQ(4,DGBTDIVN,.01)
+"RTN","DGBTSP",302,0)
+ S DGBTINST("ADDRESS1")=$$GET1^DIQ(4,DGBTDIVN,1.01)
+"RTN","DGBTSP",303,0)
+ S DGBTINST("CITY")=$$GET1^DIQ(4,DGBTDIVN,1.03)
+"RTN","DGBTSP",304,0)
+ S DGBTINST("STATE")=$$GET1^DIQ(4,DGBTDIVN,.02)
+"RTN","DGBTSP",305,0)
+ S DGBTINST("ZIP CODE")=$E($$GET1^DIQ(4,DGBTDIVN,1.04),1,5)
+"RTN","DGBTSP",306,0)
+ ;
+"RTN","DGBTSP",307,0)
+ Q
+"RTN","DGBTSP",308,0)
+ ;
+"RTN","DGBTSP",309,0)
+CLEANUP ;this will clean up the ^DGBT(392,D0) file for nodes "M","D","T" and the 3 and 4 piece of the "A" node
+"RTN","DGBTSP",310,0)
+ ;
+"RTN","DGBTSP",311,0)
+ ;N DGBTDL
+"RTN","DGBTSP",312,0)
+ Q:$G(DGBTDTI)=""
+"RTN","DGBTSP",313,0)
+ F I="M","D","B","C","T" I $D(DGBTDTI) K ^DGBT(392,DGBTDTI,I)
+"RTN","DGBTSP",314,0)
+ ;F I=8,9,10 S $P(^DGBT(392,DGBTDTI,0),"^",I)=""
+"RTN","DGBTSP",315,0)
+ S DGBTDL("ISSUED")=$S($G(DGBTDL("ISSUED"))'="":$G(DGBTDL("ISSUED")),1:"")
+"RTN","DGBTSP",316,0)
+ S DGBTDL("ISSUED DATE")=$S($G(DGBTDL("ISSUED DATE"))'="":$G(DGBTDL("ISSUED DATE")),1:"")
+"RTN","DGBTSP",317,0)
+ S DGBTDL("CLAIM DENIED")=$S($G(DGBTDL("CLAIM DENIED"))'="":$G(DGBTDL("CLAIM DENIED")),1:"NO")
+"RTN","DGBTSP",318,0)
+ S DGBTDL("DT DENIED")=$S($G(DGBTDL("DT DENIED"))'="":$G(DGBTDL("DT DENIED")),1:"")
+"RTN","DGBTSP",319,0)
+ S DGBTDL("DENIED REASON")=$S($G(DGBTDL("DENIED REASON"))'="":$G(DGBTDL("DENIED REASON")),1:"")
+"RTN","DGBTSP",320,0)
+ ;
+"RTN","DGBTSP",321,0)
+ S DGBTFDA(392,DGBTDTI_",",45)=$G(DGBTDL("ISSUED"))
+"RTN","DGBTSP",322,0)
+ S DGBTFDA(392,DGBTDTI_",",45.1)=$G(DGBTDL("ISSUED DATE"))
+"RTN","DGBTSP",323,0)
+ S DGBTFDA(392,DGBTDTI_",",45.2)=$G(DGBTDL("CLAIM DENIED"))
+"RTN","DGBTSP",324,0)
+ S DGBTFDA(392,DGBTDTI_",",45.3)=$G(DGBTDL("DT DENIED"))
+"RTN","DGBTSP",325,0)
+ S DGBTFDA(392,DGBTDTI_",",45.4)=$G(DGBTDL("DENIED REASON"))
+"RTN","DGBTSP",326,0)
+ S DGBTFDA(392,DGBTDTI_",",8)=""
+"RTN","DGBTSP",327,0)
+ S DGBTFDA(392,DGBTDTI_",",9)=""
+"RTN","DGBTSP",328,0)
+ S DGBTFDA(392,DGBTDTI_",",10)=""
+"RTN","DGBTSP",329,0)
+ D FILE^DIE("EKTS","DGBTFDA","ERRMSG") K DGBTFDA
+"RTN","DGBTSP",330,0)
+ Q
+"RTN","DGBTSP",331,0)
+ ;
+"RTN","DGBTSP",332,0)
+ACTFILE ;
+"RTN","DGBTSP",333,0)
+ K DIR
+"RTN","DGBTSP",334,0)
+ I 'ACCT D  Q
+"RTN","DGBTSP",335,0)
+ .W !!
+"RTN","DGBTSP",336,0)
+ .S MYHELP("DIHELP",1)="Beneficiary Travel Account file (#392.3) is not set up correctly."
+"RTN","DGBTSP",337,0)
+ .S MYHELP("DIHELP",2)="Please see User Manual for proper setup."
+"RTN","DGBTSP",338,0)
+ .D MSG^DIALOG("WSH","","","","MYHELP")
+"RTN","DGBTSP",339,0)
+ .W !!
+"RTN","DGBTSP",340,0)
+ .S DIR(0)="E"
+"RTN","DGBTSP",341,0)
+ .D ^DIR
+"RTN","DGBTSP",342,0)
+ .S DGBTTOUT=-1
+"RTN","DGBTSP",343,0)
+ Q
+"RTN","DGBTSP1")
+0^6^B84121685^B78025858
+"RTN","DGBTSP1",1,0)
+DGBTSP1 ;ALB/BLD-BENEFICIARY TRAVEL SPECIAL MODE OF TRANSPORTATION; 12/18/2011@1000; 12/23/2012
+"RTN","DGBTSP1",2,0)
+ ;;1.0;Beneficiary Travel;**20,22**;December 27, 2011;Build 5
+"RTN","DGBTSP1",3,0)
+ ;
+"RTN","DGBTSP1",4,0)
+ACCT ;  allowed to select only valid active accounts
+"RTN","DGBTSP1",5,0)
+ S DGBTOACT=$S('$D(^DGBT(392.3,+$P(DGBTVAR(0),"^",6),0)):0,1:+$P(^DGBT(392.3,$P(DGBTVAR(0),"^",6),0),"^",5))
+"RTN","DGBTSP1",6,0)
+ K X S (DIC("B"),X)=$S(+$P(DGBTVAR(0),"^",6):$P(^DGBT(392.3,$P(DGBTVAR(0),"^",6),0),"^"),1:$$DEFLT1^DGBTEE1) S DIC("A")="Select ACCOUNT: "
+"RTN","DGBTSP1",7,0)
+ S DIC="^DGBT(392.3,",DIC(0)="AEQMZ",DIC("S")="I $P(^(0),U,3)'>DGBTDT&('$P(^(0),U,4)!($P(^(0),U,4)'<DGBTDT))"
+"RTN","DGBTSP1",8,0)
+ D ^DIC K DIC I $D(DTOUT) S DGBTTOUT=-1 K DTOUT Q
+"RTN","DGBTSP1",9,0)
+ I Y'>0 W !,"ACCOUNT IS REQUIRED!!" G ACCT
+"RTN","DGBTSP1",10,0)
+ S DGBTACTN=$P(Y,"^"),DGBTACCT=$P($G(Y(0)),"^",5)
+"RTN","DGBTSP1",11,0)
+ ;  if account is ALL OTHER - stuff in mileage info
+"RTN","DGBTSP1",12,0)
+ I $D(DGBTVAR("M")) S DGBTML=$P(DGBTVAR("M"),"^",2),DGBTOWRT=$P(DGBTVAR("M"),"^"),DGBTMLT=$J((DGBTML*DGBTOWRT*DGBTMR),0,2)
+"RTN","DGBTSP1",13,0)
+ Q
+"RTN","DGBTSP1",14,0)
+ ;
+"RTN","DGBTSP1",15,0)
+DGBTDC(DGBTDT,DFN) ;this will process denie the claim and issue a denial letter
+"RTN","DGBTSP1",16,0)
+ ;
+"RTN","DGBTSP1",17,0)
+ W !!,"CLAIM HAS BEEN DENIED AND DENIAL OF BENEFITS LETTER WILL BE ISSUED"
+"RTN","DGBTSP1",18,0)
+ I '$G(DGBTAPPTYP) D DGBTDR^DGBTDLT
+"RTN","DGBTSP1",19,0)
+ W !!,"PLEASE COMPLETE THE INVOICE INFORMATION." H 1
+"RTN","DGBTSP1",20,0)
+ Q
+"RTN","DGBTSP1",21,0)
+ ;
+"RTN","DGBTSP1",22,0)
+DELSP(DGBTDT) ;this will delete the special mode data when editing a claim and the claim changes from a Special Mode to a Mileage Claim
+"RTN","DGBTSP1",23,0)
+ ;
+"RTN","DGBTSP1",24,0)
+ N ACCT,ACTNBR,NULL,DGBTDL
+"RTN","DGBTSP1",25,0)
+ S (ACTNBR,ACCT,NULL)=""
+"RTN","DGBTSP1",26,0)
+ F  S ACCT=$O(^DGBT(392.3,"D","ALL OTHER",ACCT)) Q:ACCT=""  D  Q:ACTNBR
+"RTN","DGBTSP1",27,0)
+ .I $P(^DGBT(392.3,ACCT,0),"^",4)="" S ACTNBR=ACCT
+"RTN","DGBTSP1",28,0)
+ S ACTNBR=$$GET1^DIQ(392.3,ACCT,.01)
+"RTN","DGBTSP1",29,0)
+ K ^DGBT(392,DGBTDT,"SP"),^DGBT(392,DGBTDT,"SPAD")
+"RTN","DGBTSP1",30,0)
+ ;
+"RTN","DGBTSP1",31,0)
+ S DGBTDL("ISSUED")=""
+"RTN","DGBTSP1",32,0)
+ S DGBTDL("ISSUED DATE")=""
+"RTN","DGBTSP1",33,0)
+ S DGBTDL("CLAIM DENIED")="NO"
+"RTN","DGBTSP1",34,0)
+ S DGBTDL("DT DENIED")=""
+"RTN","DGBTSP1",35,0)
+ S DGBTDL("DENIED REASON")=""
+"RTN","DGBTSP1",36,0)
+ S DGBTDL("ACCT NBR")=ACTNBR
+"RTN","DGBTSP1",37,0)
+ S DGBTDL("CLAIM TYPE")=""
+"RTN","DGBTSP1",38,0)
+ ;
+"RTN","DGBTSP1",39,0)
+ S DGBTFDA(392,DGBTDTI_",",45)=$G(DGBTDL("ISSUED"))
+"RTN","DGBTSP1",40,0)
+ S DGBTFDA(392,DGBTDTI_",",45.1)=$G(DGBTDL("ISSUED DATE"))
+"RTN","DGBTSP1",41,0)
+ S DGBTFDA(392,DGBTDTI_",",45.2)=$G(DGBTDL("CLAIM DENIED"))
+"RTN","DGBTSP1",42,0)
+ S DGBTFDA(392,DGBTDTI_",",45.3)=$G(DGBTDL("DT DENIED"))
+"RTN","DGBTSP1",43,0)
+ S DGBTFDA(392,DGBTDTI_",",45.4)=$G(DGBTDL("DENIED REASON"))
+"RTN","DGBTSP1",44,0)
+ S DGBTFDA(392,DGBTDTI_",",6)=$G(DGBTDL("ACCT NBR"))
+"RTN","DGBTSP1",45,0)
+ S DGBTFDA(392,DGBTDTI_",",56)=$G(DGBTCMTY)
+"RTN","DGBTSP1",46,0)
+ D FILE^DIE("EKTS","DGBTFDA","ERRMSG") K DGBTFDA
+"RTN","DGBTSP1",47,0)
+ Q
+"RTN","DGBTSP1",48,0)
+ ;
+"RTN","DGBTSP1",49,0)
+FILE(DGBTDT) ;this will file the special mode into file 392 (Beneficiary Travel Claim File).
+"RTN","DGBTSP1",50,0)
+ ;
+"RTN","DGBTSP1",51,0)
+ N DGBTDTI,DGBTFDA
+"RTN","DGBTSP1",52,0)
+ W !!,"FILING....."
+"RTN","DGBTSP1",53,0)
+ ;
+"RTN","DGBTSP1",54,0)
+ S DGBTDTI=DGBTA
+"RTN","DGBTSP1",55,0)
+ D CLEANUP^DGBTSP
+"RTN","DGBTSP1",56,0)
+ S DGBTFDA(392,DGBTDTI_",",3)=$P(VAEL(1),"^",2)                     ;primary eligibility
+"RTN","DGBTSP1",57,0)
+ S DGBTFDA(392,DGBTDTI_",",4)=$P(VAEL(3),"^",3)                     ;% of disablility
+"RTN","DGBTSP1",58,0)
+ S DGBTFDA(392,DGBTDTI_",",6)=$G(DGBTSP("ACCOUNT"))
+"RTN","DGBTSP1",59,0)
+ S DGBTFDA(392,DGBTDTI_",",11)=DGBTDIVI                             ;division
+"RTN","DGBTSP1",60,0)
+ ;S DGBTFDA(392,DGBTDTI_",",12)=$P(^VA(200,DUZ,0),"^",1)             ;person who entered claim
+"RTN","DGBTSP1",61,0)
+ S DGBTFDA(392,DGBTDTI_",",13)=DT                                   ;date claim was entered 
+"RTN","DGBTSP1",62,0)
+ S DGBTFDA(392,DGBTDTI_",",56)=$G(DGBTSP("CLAIM TYPE"))
+"RTN","DGBTSP1",63,0)
+ S DGBTFDA(392,DGBTDTI_",",57)=$G(DGBTSP("MODE OF TRANS"))
+"RTN","DGBTSP1",64,0)
+ S DGBTFDA(392,DGBTDTI_",",58)=$G(DGBTSP("INVOICE NUMBER"))
+"RTN","DGBTSP1",65,0)
+ S DGBTFDA(392,DGBTDTI_",",59)=$G(DGBTSP("DT INVOICE REC"))
+"RTN","DGBTSP1",66,0)
+ S DGBTFDA(392,DGBTDTI_",",60)=$G(DGBTSP("TOTAL INVOICE"))
+"RTN","DGBTSP1",67,0)
+ S DGBTFDA(392,DGBTDTI_",",61)=$G(DGBTSP("BASE RATE FEE"))
+"RTN","DGBTSP1",68,0)
+ S DGBTFDA(392,DGBTDTI_",",62)=$G(DGBTSP("MILEAGE FEE"))
+"RTN","DGBTSP1",69,0)
+ S DGBTFDA(392,DGBTDTI_",",63)=$G(DGBTSP("NO SHOW"))
+"RTN","DGBTSP1",70,0)
+ S DGBTFDA(392,DGBTDTI_",",64)=$G(DGBTSP("WAIT TIME"))
+"RTN","DGBTSP1",71,0)
+ S DGBTFDA(392,DGBTDTI_",",65)=$G(DGBTSP("EXTRA CREW"))
+"RTN","DGBTSP1",72,0)
+ S DGBTFDA(392,DGBTDTI_",",66)=$G(DGBTSP("SP EQUIP"))
+"RTN","DGBTSP1",73,0)
+ S DGBTFDA(392,DGBTDTI_",",67)=$G(DGBTSP("RT/ONE WAY"))
+"RTN","DGBTSP1",74,0)
+ S DGBTFDA(392,DGBTDTI_",",68)=$G(DGBTSP("TOTAL MILES"))
+"RTN","DGBTSP1",75,0)
+ S DGBTFDA(392,DGBTDTI_",",69)=$G(DGBTSP("OTHER TRANS REMARKS"))
+"RTN","DGBTSP1",76,0)
+ S DGBTFDA(392,DGBTDTI_",",70)=$G(DGBTSP("PRE-AUTHORIZED"))
+"RTN","DGBTSP1",77,0)
+ ;S DGBTFDA(392,DGBTDTI_",",71)=$G(DGBTSP("VENDOR"))
+"RTN","DGBTSP1",78,0)
+ S DGBTFDA(392,DGBTDTI_",",72)=$G(DGBTSP("SP MODE OTHER REMARKS"))
+"RTN","DGBTSP1",79,0)
+ S DGBTFDA(392,DGBTDTI_",",73)=$G(DGBTSP("PLACE OF DEPARTURE "))
+"RTN","DGBTSP1",80,0)
+ S DGBTFDA(392,DGBTDTI_",",85)=$G(DGBTSP("AUTHORIZED"))
+"RTN","DGBTSP1",81,0)
+ I $G(DGBTSP("AUTHORIZED"))="Y" D
+"RTN","DGBTSP1",82,0)
+ .S DGBTFDA(392,DGBTDTI_",",84)=$$GET1^DIQ(200,$G(DUZ),.01)
+"RTN","DGBTSP1",83,0)
+ .S DGBTFDA(392,DGBTDI_",",86)=$$FMTE^XLFDT(DT)  ;$G(DGBTDT)
+"RTN","DGBTSP1",84,0)
+ ;
+"RTN","DGBTSP1",85,0)
+ S DGBTFDA(392,DGBTDTI_",",73)=$G(DGBTSP("PLACE OF DEPARTURE"))
+"RTN","DGBTSP1",86,0)
+ S DGBTFDA(392,DGBTDTI_",",74)=$G(DGBTSP("PLACE OF DEPARTURE 2"))
+"RTN","DGBTSP1",87,0)
+ S DGBTFDA(392,DGBTDTI_",",75)=$G(DGBTSP("CITY OF DEPARTURE"))
+"RTN","DGBTSP1",88,0)
+ S DGBTFDA(392,DGBTDTI_",",76)=$G(DGBTSP("STATE OF DEPARTURE"))
+"RTN","DGBTSP1",89,0)
+ S DGBTFDA(392,DGBTDTI_",",77)=$G(DGBTSP("ZIP CODE/DEPARTURE"))
+"RTN","DGBTSP1",90,0)
+ ;
+"RTN","DGBTSP1",91,0)
+ S DGBTFDA(392,DGBTDTI_",",78)=$G(DGBTINST("DIVISION"))
+"RTN","DGBTSP1",92,0)
+ S DGBTFDA(392,DGBTDTI_",",79)=$G(DGBTINST("INST NAME"))
+"RTN","DGBTSP1",93,0)
+ S DGBTFDA(392,DGBTDTI_",",80)=$G(DGBTINST("ADDRESS1"))
+"RTN","DGBTSP1",94,0)
+ S DGBTFDA(392,DGBTDTI_",",81)=$G(DGBTINST("CITY"))
+"RTN","DGBTSP1",95,0)
+ S DGBTFDA(392,DGBTDTI_",",82)=$G(DGBTINST("STATE"))
+"RTN","DGBTSP1",96,0)
+ S DGBTFDA(392,DGBTDTI_",",83)=$G(DGBTINST("ZIP CODE"))
+"RTN","DGBTSP1",97,0)
+ S DGBTFDA(392,DGBTDTI_",",42)=VADM(1)
+"RTN","DGBTSP1",98,0)
+ ;
+"RTN","DGBTSP1",99,0)
+ D FILE^DIE("EKTS","DGBTFDA","ERRMSG")
+"RTN","DGBTSP1",100,0)
+ I '$D(ERRMSG) W " COMPLETED..." D
+"RTN","DGBTSP1",101,0)
+ .S DGBTFDA1(392,DGBTDTI_",",71)=$G(DGBTSP("VENDOR")) ;dbe patch DGBT*1*22 - modified to use vendor ien
+"RTN","DGBTSP1",102,0)
+ .S DGBTFDA1(392,DGBTDTI_",",12)=DUZ D FILE^DIE(,"DGBTFDA1","ERRMSG")             ;person who entered claim
+"RTN","DGBTSP1",103,0)
+ .W $$PAUSE^DGBTUTL(0) S (DGBTSP,SPCOMPLETE)=1
+"RTN","DGBTSP1",104,0)
+ I $D(ERRMSG) W !!,"DATA DID NOT FILE DUE TO ERROR(S):" D  Q  ;dbe patch DGBT*1*22 - added code to display error messages
+"RTN","DGBTSP1",105,0)
+ .N DGBTERR,DGBTERR2
+"RTN","DGBTSP1",106,0)
+ .S DGBTERR="" F  S DGBTERR=$O(ERRMSG("DIERR",DGBTERR)) Q:'DGBTERR  D
+"RTN","DGBTSP1",107,0)
+ ..S DGBTERR2="" F  S DGBTERR2=$O(ERRMSG("DIERR",DGBTERR,"TEXT",DGBTERR2)) Q:'DGBTERR2  D
+"RTN","DGBTSP1",108,0)
+ ...W !!?3,DGBTERR,") ",ERRMSG("DIERR",DGBTERR,"TEXT",DGBTERR2)
+"RTN","DGBTSP1",109,0)
+ .M ^TMP("DGBTE",$J,DGBTDTI)=ERRMSG
+"RTN","DGBTSP1",110,0)
+ .W !! S PROMPT="Press the return key or '^' to exit" N DIR S DIR("A")=PROMPT,DIR(0)="E" D ^DIR W !
+"RTN","DGBTSP1",111,0)
+ .;W $$PAUSE^DGBTUTL(PROMPT)
+"RTN","DGBTSP1",112,0)
+ .S DGBTTOUT=-1,DGBTOLD=0,DGBTDT=DGBTDTI
+"RTN","DGBTSP1",113,0)
+ .K ^DGBT(392,DGBTDTI,"A")
+"RTN","DGBTSP1",114,0)
+ .D EXIT2^DGBTE S DGBTSP=0
+"RTN","DGBTSP1",115,0)
+ S DGBTSP=1,CHZFLG=1
+"RTN","DGBTSP1",116,0)
+ Q
+"RTN","DGBTSP1",117,0)
+ ;
+"RTN","DGBTSP1",118,0)
+INVAMT ;this will ask the dollar amount of any extra fees
+"RTN","DGBTSP1",119,0)
+ ;
+"RTN","DGBTSP1",120,0)
+ S DGBTINTO=0
+"RTN","DGBTSP1",121,0)
+ W !
+"RTN","DGBTSP1",122,0)
+ S BASERATE=$$GET1^DIQ(392,DGBTDT,61,"E")
+"RTN","DGBTSP1",123,0)
+ S DIR("A")="BASE RATE FEE: "
+"RTN","DGBTSP1",124,0)
+ S DIR("?")="Enter the Vendor's Base Rate. Type a Dollar Amount between 1 and 100,000, 2 Decimal Digits"
+"RTN","DGBTSP1",125,0)
+ S DIR(0)="NA^0:100000:2"
+"RTN","DGBTSP1",126,0)
+ S BASERATE=$S($G(BASERATE)'="":BASERATE,$G(DGBTSP("BASE RATE FEE"))'="":$G(DGBTSP("BASE RATE FEE")),1:"")
+"RTN","DGBTSP1",127,0)
+ I BASERATE'="" S DIR("B")=$S($G(BASERATE)'="":BASERATE,$G(DGBTSP("BASE RATE FEE"))'="":$G(DGBTSP("BASE RATE FEE")),1:0)
+"RTN","DGBTSP1",128,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I Y=""!($D(DTOUT))!($D(DUOUT)) S DGBTSP=0 Q
+"RTN","DGBTSP1",129,0)
+ S DGBTSP("BASE RATE FEE")=Y
+"RTN","DGBTSP1",130,0)
+ S DGBTINTO=$G(DGBTINTO)+Y
+"RTN","DGBTSP1",131,0)
+ ;
+"RTN","DGBTSP1",132,0)
+ W !
+"RTN","DGBTSP1",133,0)
+ S MILEAGEFEE=$$GET1^DIQ(392,DGBTDT,62,"E")
+"RTN","DGBTSP1",134,0)
+ S DIR("A")="MILEAGE FEE: "
+"RTN","DGBTSP1",135,0)
+ S DIR("?")="Enter the Vendor's Mileage fee. Type a Dollar Amount between 1 and 10,000, 2 Decimal Digits."
+"RTN","DGBTSP1",136,0)
+ S DIR(0)="NA^0:10000:2"
+"RTN","DGBTSP1",137,0)
+ S MILEAGEFEE=$S($G(MILEAGEFEE)'="":MILEAGEFEE,$G(DGBTSP("MILEAGE FEE"))'="":$G(DGBTSP("MILEAGE FEE")),1:"")
+"RTN","DGBTSP1",138,0)
+ I MILEAGEFEE'="" S DIR("B")=$S($G(MILEAGEFEE)'="":MILEAGEFEE,$G(DGBTSP("MILEAGE FEE"))'="":$G(DGBTSP("MILEAGE FEE")),1:0)
+"RTN","DGBTSP1",139,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I ($D(DTOUT))!($D(DUOUT)) K DGBTSP S DGBTSP=0 Q
+"RTN","DGBTSP1",140,0)
+ S DGBTSP("MILEAGE FEE")=Y
+"RTN","DGBTSP1",141,0)
+ S DGBTINTO=$G(DGBTINTO)+Y
+"RTN","DGBTSP1",142,0)
+ ;
+"RTN","DGBTSP1",143,0)
+ W !
+"RTN","DGBTSP1",144,0)
+ S NOSHOW=$$GET1^DIQ(392,DGBTDT,63,"E")
+"RTN","DGBTSP1",145,0)
+ S DIR("A")="NO-SHOW/NO-LOAD FEE: "
+"RTN","DGBTSP1",146,0)
+ S DIR("?")="Type a Dollar Amount between 1 and 1000, 2 Decimal Digits."
+"RTN","DGBTSP1",147,0)
+ S DIR(0)="FOA^0:1000:2"
+"RTN","DGBTSP1",148,0)
+ S NOSHOW=$S($G(NOSHOW)'="":NOSHOW,$G(DGBTSP("NO SHOW"))'="":$G(DGBTSP("NO SHOW")),1:"")
+"RTN","DGBTSP1",149,0)
+ I NOSHOW'="" S DIR("B")=$S($G(NOSHOW)'="":NOSHOW,$G(DGBTSP("NO SHOW"))'="":$G(DGBTSP("NO SHOW")),1:0)
+"RTN","DGBTSP1",150,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I ($D(DTOUT))!($D(DUOUT)) K DGBTSP S DGBTSP=0 Q
+"RTN","DGBTSP1",151,0)
+ S DGBTSP("NO SHOW")=Y
+"RTN","DGBTSP1",152,0)
+ S DGBTINTO=$G(DGBTINTO)+Y
+"RTN","DGBTSP1",153,0)
+ ;
+"RTN","DGBTSP1",154,0)
+ W !
+"RTN","DGBTSP1",155,0)
+ S WAITTIME=$$GET1^DIQ(392,DGBTDT,64,"E")
+"RTN","DGBTSP1",156,0)
+ S DIR("A")="WAIT TIME FEE: "
+"RTN","DGBTSP1",157,0)
+ S DIR("?")="Enter the Vendor's fee for waiting. Type a Dollar Amount between 1 and 1000, 2 Decimal Digits."
+"RTN","DGBTSP1",158,0)
+ S DIR(0)="NOA^0:1000:2"
+"RTN","DGBTSP1",159,0)
+ S WAITTIME=$S($G(WAITTIME)'="":WAITTIME,$G(DGBTSP("WAIT TIME"))'="":$G(DGBTSP("WAIT TIME")),1:"")
+"RTN","DGBTSP1",160,0)
+ I WAITTIME'="" S DIR("B")=$S($G(WAITTIME)'="":WAITTIME,$G(DGBTSP("WAIT TIME"))'="":$G(DGBTSP("WAIT TIME")),1:0)
+"RTN","DGBTSP1",161,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I ($D(DTOUT))!($D(DUOUT)) K DGBTSP S DGBTSP=0 Q
+"RTN","DGBTSP1",162,0)
+ S DGBTSP("WAIT TIME")=Y
+"RTN","DGBTSP1",163,0)
+ S DGBTINTO=$G(DGBTINTO)+Y
+"RTN","DGBTSP1",164,0)
+ ;
+"RTN","DGBTSP1",165,0)
+ W !
+"RTN","DGBTSP1",166,0)
+ S EXTRACREW=$$GET1^DIQ(392,DGBTDT,65,"E")
+"RTN","DGBTSP1",167,0)
+ S DIR("A")="EXTRA CREW FEE: "
+"RTN","DGBTSP1",168,0)
+ S DIR("?")="Enter the Vendor's extra crew fee. Type a Dollar Amount between 1 and 10,000, 2 Decimal Digits."
+"RTN","DGBTSP1",169,0)
+ S DIR(0)="NOA^0:10000:2"
+"RTN","DGBTSP1",170,0)
+ S EXTRACREW=$S($G(EXTRACREW)'="":EXTRACREW,$G(DGBTSP("EXTRA CREW"))'="":$G(DGBTSP("EXTRA CREW")),1:"")
+"RTN","DGBTSP1",171,0)
+ I EXTRACREW'="" S DIR("B")=$S($G(EXTRACREW)'="":EXTRACREW,$G(DGBTSP("EXTRA CREW"))'="":$G(DGBTSP("EXTRA CREW")),1:0)
+"RTN","DGBTSP1",172,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I ($D(DTOUT))!($D(DUOUT)) K DGBTSP S DGBTSP=0 Q
+"RTN","DGBTSP1",173,0)
+ S DGBTSP("EXTRA CREW")=Y
+"RTN","DGBTSP1",174,0)
+ S DGBTINTO=$G(DGBTINTO)+Y
+"RTN","DGBTSP1",175,0)
+ ;
+"RTN","DGBTSP1",176,0)
+ W !
+"RTN","DGBTSP1",177,0)
+ S SPEQUIP=$$GET1^DIQ(392,DGBTDT,66,"E")
+"RTN","DGBTSP1",178,0)
+ S DIR("A")="SPECIAL EQUIPMENT FEE: "
+"RTN","DGBTSP1",179,0)
+ S DIR("?")="Enter the Vendor's fee for additional equipment needed. Type a Dollar Amount between 1 and 5000, 2 Decimal Digits."
+"RTN","DGBTSP1",180,0)
+ S DIR(0)="NOA^0:5000:2"
+"RTN","DGBTSP1",181,0)
+ S SPEQUIP=$S($G(SPEQUIP)'="":SPEQUIP,$G(DGBTSP("SP EQUIP"))'="":$G(DGBTSP("SP EQUIP")),1:"")
+"RTN","DGBTSP1",182,0)
+ I SPEQUIP'="" S DIR("B")=$S($G(SPEQUIP)'="":SPEQUIP,$G(DGBTSP("SP EQUIP"))'="":$G(DGBTSP("SP EQUIP")),1:0)
+"RTN","DGBTSP1",183,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I ($D(DTOUT))!($D(DUOUT)) K DGBTSP S DGBTSP=0 Q
+"RTN","DGBTSP1",184,0)
+ S DGBTSP("SP EQUIP")=Y
+"RTN","DGBTSP1",185,0)
+ S DGBTINTO=$G(DGBTINTO)+Y
+"RTN","DGBTSP1",186,0)
+ ;
+"RTN","DGBTSP1",187,0)
+ W !
+"RTN","DGBTSP1",188,0)
+ S TOTINVOICE=$$GET1^DIQ(392,DGBTDT,60,"I")
+"RTN","DGBTSP1",189,0)
+ S DIR("A")="TOTAL INVOICE: "
+"RTN","DGBTSP1",190,0)
+ S DIR("?")="Type a Dollar Amount between 1 and 127,000, 2 Decimal Digits."
+"RTN","DGBTSP1",191,0)
+ S DIR(0)="NA^0:127000:2"
+"RTN","DGBTSP1",192,0)
+ I TOTINVOICE'="" S DIR("B")=$S($G(TOTINVOICE)'="":TOTINVOICE,1:$G(DGBTSP("TOTAL INVOICE")))
+"RTN","DGBTSP1",193,0)
+ D ^DIR K DIR S:$D(^DGBT(392,DGBTDTI,"SP")) SPCOMPLETE=1 I Y=""!($D(DTOUT))!($D(DUOUT)) S DGBTSP=0 Q
+"RTN","DGBTSP1",194,0)
+ S DGBTSP("TOTAL INVOICE")=Y
+"RTN","DGBTSP1",195,0)
+ ;
+"RTN","DGBTSP1",196,0)
+ Q
+"RTN","DGBTSP1",197,0)
+ ;
+"RTN","DGBTSP1",198,0)
+DENREA(DGBTCMTY) ;denial reasons
+"RTN","DGBTSP1",199,0)
+ ;
+"RTN","DGBTSP1",200,0)
+ ;S DGBTOACT=$S('$D(^DGBT(392.5,+$P(DGBTVAR(0),"^",6),0)):0,1:+$P(^DGBT(392.3,$P(DGBTVAR(0),"^",6),0),"^",5))
+"RTN","DGBTSP1",201,0)
+ K X S (DIC("B"),X)="" S DIC("A")="Select Denial Reason:"
+"RTN","DGBTSP1",202,0)
+ S DIC="^DGBT(392.5,",DIC(0)="AEQMZ" ;,DIC("S")="I $P(^(0),U,3)'>DGBTDT&('$P(^(0),U,4)!($P(^(0),U,4)'<DGBTDT))"
+"RTN","DGBTSP1",203,0)
+ D ^DIC K DIC I $D(DTOUT) S DGBTTOUT=-1 K DTOUT Q
+"RTN","DGBTSP1",204,0)
+ S DGBTACTN=$P(Y,"^"),DGBTACCT=$P($G(Y(0)),"^",5)
+"RTN","DGBTSP1",205,0)
+ ;
+"RTN","DGBTSP1",206,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",9475,6)
+^25
+**END**
+**END**
+

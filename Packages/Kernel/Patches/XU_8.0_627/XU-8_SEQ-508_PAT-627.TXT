@@ -1,0 +1,179 @@
+$TXT Created by               KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Friday, 06/07/13 at 10:37
+=============================================================================
+Run Date: MAY 27, 2014                     Designation: XU*8*627
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #508                      Status: Released
+                  Compliance Date: JUN 27, 2014
+=============================================================================
+
+Associated patches: (v)XU*8*484    <<= must be installed BEFORE `XU*8*627'
+
+Subject: OPTION ASSUMES A* NAMESPACE IS LOCAL
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch fixes a problem found while adding a new option to the OPTION
+ file (#19).  Previously, only local namespaces were assigned to A*.  Now, 
+ several VistA software packages use the A* namespace for valid nationally 
+ released VistA packages.  When entering a new option that starts with the 
+ letter 'A', the system always identifies/displays the option as located 
+ in the local namespace.  The patch corrects this by the following logic: 
+ if the new option name starts with an 'A', check first for a national 
+ package namespace starting with the letters entered and if found, 
+ identify/display that package name rather than 'local namespace'.
+  
+  
+ Blood Bank Team Coordination
+ ============================
+ Blood Bank Clearance: 06/10/2013
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*627
+ contains changes to a package referenced in ProPath standard titled: 
+ BBM Team Review of VistA Patches. This patch does not alter or 
+ modify any VistA Blood Bank software design safeguards or safety 
+ critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8*627 have no effect on 
+ Blood Bank software functionality, therefore RISK is none.
+  
+  
+ Patch Components
+ ================
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  
+ 1. INC000000064398 A* namespaces not computed properly
+  
+ Problem:
+ -------
+ Previously, only local namespaces were assigned to A*.  Now, several 
+ VistA software packages use the A* namespace for valid nationally 
+ released VistA packages.  When entering a new option that starts with the 
+ letter 'A', Fileman always identifies/displays the option as located in 
+ the local namespace, even if the namespace of the option is associated 
+ with a VistA nationally released package. 
+  
+ Resolution:
+ ----------
+ This problem is corrected this by the following logic: if the new option 
+ name starts with an 'A', check first for a national package namespace 
+ starting with the letters entered and if found, identify/display that 
+ package name rather than 'local namespace'.
+  
+  
+ Test Sites: (Patch Tracking Message #61889508)
+ ----------
+ Site                  Date Installed  Size        
+  
+ ALEXANDRIA, LA        SEP 18, 2013    Medium     
+ BLACK HILLS HCS       SEP 04, 2013    Int        
+ MINNEAPOLIS, MN       DEC 02, 2013    large       
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ The most up-to-date VA Kernel end-user documentation is available on the
+ VHA Software Document Library (VDL) at the following Internet Website:
+      http://www.domain.ext/vdl/application.asp?appid=10
+   
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+  
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch can be queued for installation.  TaskMan does not have to be 
+ stopped, HL7 filers do not need to be stopped, and users may be on the
+ system.
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system.  This patch should 
+ take less than 1 minute to install.
+  
+ There are no options that need to be disabled.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XU*8.0*627):
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer "NO".
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO//' answer "NO".
+   
+ 7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' answer "0" to 
+     "60" or "Q" (to queue the output to a printer).
+  
+  
+ Post-Installation Instructions
+ -----------------------------
+ There are no post-installation tasks to complete.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XQ5
+    Before: B32846343   After: B33065397  **44,130,484,627**
+ Description of Changes:
+   
+
+ 
+Routine list of preceding patches: 484
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 12, 2013
+Completed By:                               Date Completed: MAY 22, 2014
+Released By :                               Date Released : MAY 27, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

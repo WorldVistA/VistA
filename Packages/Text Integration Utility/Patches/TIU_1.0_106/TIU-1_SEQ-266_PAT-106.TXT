@@ -1,0 +1,143 @@
+
+=============================================================================
+Run Date: APR 06, 2016                     Designation: TIU*1*106
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #266                      Status: Released
+                  Compliance Date: JUN 10, 2016
+=============================================================================
+
+
+Subject: TIU SUPPORT FOR eHMP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains updates to the Text Integrated Utilities (TIU) to
+ support the Enterprise Health Management Platform (eHMP).
+  
+ This patch ensures that any changes made to notes in the Text Integration
+ Utility in VistA can be shared with eHMP subscribers. 
+  
+ This patch contains 3 routines 1 of which is the post processor routine, 
+ TIUPS106, which creates a new cross reference "AEVT". This cross 
+ reference calls the new TIUDDX routine which will also reference the 
+ other routine TIUVPR. 
+  
+ ****NOTE****
+ This patch is part of a pre-requisite, multi-build host file which 
+ contains all the patches needed prior to installation of the HMP 2.0 
+ package.  This patch name is HMP PREREQUISITE BUNDLE 2.0.  The 
+ multi-build contains the following patches:
+  
+ GMRC*3.0*80
+ MD*1.0*38
+ OR*3.0*390
+ PSB*3.0*79
+ TIU*1.0*106
+ TIU*1.0*298
+ USR*1.0*37
+  
+ This patch will be installed during a PHASE IMPLEMENTATION
+  
+ To see the current status and target dates for Sites/VISN/Regions please 
+ refer to the following site:
+  
+ http://vaww.oed.portal.domain.ext/pm/iehr/vista_evolution/ehmpdeployment/eHMP%
+ 20v12/Forms/All%20Items.aspx?RootFolder=/pm/iehr/vista_evolution/ehmpdeplo
+ yment/eHMP%20v12/Resources/Waves%20and%20Timelines
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ --------------------------
+ There are no new or modified files or fields in this patch. 
+  
+ Forms Associated:
+ -----------------
+ There are no new or modified forms in this patch.
+  
+ Mail Groups Associated:
+ -----------------------
+ There are no new or modified mail groups in this patch.
+  
+ Options Associated:
+ -------------------
+ There are no new or modified options in this patch.
+  
+ Protocols Associated:
+ ---------------------
+ There are no new or modified protocols in this patch.
+  
+ Security Keys Associated:
+ -------------------------
+ There are no new or modified security keys in this patch.
+  
+ Templates Associated:
+ ---------------------
+ There are no new or modified templates in this patch.
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR #20150408 - VistA Evolution Enterprise Health Management Platform 
+ (eHMP)
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ There are no PSIs associated with this patch.
+  
+ Remedy Tickets(s) & Overview:
+ -----------------------------
+ There are no Remedy Tickets associated with this patch.
+  
+ Test Sites:
+ -----------
+ Hampton, VA
+ Portland, OR
+ San Diego, CA
+ Loma Linda, CA
+ San Antonio, TX
+  
+ Patch Installation:
+ -------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ There are no options or protocols that need to be placed out of order 
+ during the installation of the patch.
+  
+ Patch TIU*1.0*106 is part of a multi-build HMP PREREQUISITE BUNDLE 2.0
+ See patch HMP 2.0 Installation guide for the installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 328
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUDDX
+    Before:       n/a   After:   B292958  **106**
+Routine Name: TIUPS106
+    Before:       n/a   After:  B3258435  **106**
+Routine Name: TIUVPR
+    Before:       n/a   After: B11093980  **106**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 02, 2000
+Completed By:                               Date Completed: MAR 29, 2016
+Released By :                               Date Released : APR 06, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

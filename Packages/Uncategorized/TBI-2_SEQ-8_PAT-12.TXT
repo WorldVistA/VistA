@@ -1,0 +1,151 @@
+
+=============================================================================
+Run Date: OCT 06, 2015                     Designation: TBI*2*12
+Package : TBI - TRAUMATIC BRAIN INJURY        Priority: Mandatory
+Version : 2         SEQ #8                      Status: Released
+                  Compliance Date: NOV 06, 2015
+=============================================================================
+
+
+Subject: HREG Sustainment Release 2 Sprints 22/23
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ **********************************************************************
+ This is to announce that Traumatic Brain Injury Patch TBI*2.0*12 will
+ be deployed to the production server for national release on 
+ October 13, 2015 at 9 p.m. Eastern.
+ **********************************************************************
+ Note: Technical support staff at Austin Information Technology Center
+ (AITC) will install this patch on the National TBI server located
+ there using a pre-approved Request for Change Order and Implementation
+ Plan10.
+  No effort is required by local sites.  User Acceptance Test is
+ by the direction of the TBI Business Owner and no MOU is required.
+ **********************************************************************
+   
+ TBI Patch 2.0*12 contains code changes (defect fixes enhancements) to
+ the TBI Registry.  These changes are Work Items that were recorded and
+ tracked in the Registries Project Area of RTC.
+  
+ This patch contains the TBI Work Items completed during Sprints 22 and
+ 23 for the 10/13/2015 production deployment.
+  
+  
+ TBI Patch 2.0*12 includes the TBI Registry Work Items listed below.
+  
+ 1) 193670 TBI - VIA interface: Update URL to secure https://
+ 2) 201117 TBI - TBI Polytrauma: Exception setting MaximumValue property 
+ of 'RangeValidatorTextBoxInjuryDate'
+ 3) 182187 IRCR - TBI/Polytrauma Rehabilitation - note type only allows
+ "Initial" 
+ 4) 182189 TBI System Check - Version and Service Display 
+ 5) 182188 TBI - Exception Logging
+   
+ Patch Components
+ ================
+   
+ The following describes each component of the TBI Patch 2.0*12
+  
+ 1) 193670:  TBI - VIA interface: Update URL to secure https://
+ Issue:  
+ Need to use the secure URLs for VIA rather than the open ones in
+ Development and Pre-Production environments..
+  
+ Solution: 
+ Change "http://" to "https://" in Development and Preproduction
+ environments and change <security mode="None"> to <security
+ mode="Transport">.
+  
+ 2) 201117:  TBI Polytrauma: Exception setting MaximumValue property of 
+ 'RangeValidatorTextBoxInjuryDate'
+ Issue:
+  
+ Solution:  
+  
+ 3) 182187 IRCR - TBI/Polytrauma Rehabilitation - note type only allows
+ "Initial"
+ Issue: 
+ After entering an Initial form type, the user was unable to select one
+ of the other form options. 
+  
+ Solution: 
+ Correct the defect to permit the user to select any form type after
+ the "initial" form is submitted 
+  
+ 4) 182189 TBI System Check - Version and Service Display
+ Issue: 
+ Recommend revising and adding System Check parameters to the software
+ version and service display
+ Solution: 
+ Modify the System Check Display to include the core code version
+ number along with the application build number and to display the
+ service being used (VIA or MDWS).  
+ 5) 182188 TBI - Exception Logging
+ Issue: 
+ There are places where exceptions are only logged to a file requiring
+ a formal request to AITC to retrieve them.  The turnaround time for
+ this process adds administrative overhead to resolving defects. 
+  
+ Solution: 
+ Ensuring that all exceptions are logged to the database will expedite
+ defect resolutions.
+  
+  
+ Additional Information:
+ ---------------------------
+   
+ **********************************************************************
+ ***NOTE: NO DOCUMENT UPDATES WERE REQUIRED FOR THIS PATCH***
+  
+ **********************************************************************
+  
+ TBI Design and User Documentation on TSPR =
+ http://tspr.vista.domain.ext/warboard/anotebk.asp?proj=1313&Type=Active
+  
+ Documentation Retrieval Instructions:
+   
+ The preferred method is to FTP the files from ftp://download.vista.domain.ext/
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+   
+ Documentation can also be retrieved from the VistA Documentation Library 
+ (VDL) on the VA Intranet at the following address: www.domain.ext/vdl
+   
+ The documentation is located under Clinical, Traumatic Brain Injury (TBI).
+ -----------------------------------------------------------------------
+   
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ There are no Remedy Tickets associated with this patch.
+   
+ Test Sites:
+ ----------
+ San Antonio, TX
+ Lebanon, PA
+ Tampa, FL
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 13, 2015
+Completed By:                               Date Completed: SEP 30, 2015
+Released By :                               Date Released : OCT 06, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,272 @@
+
+=============================================================================
+Run Date: DEC 29, 2014                     Designation: DG*5.3*910
+Package : DG - REGISTRATION                   Priority: EMERGENCY
+Version : 5.3       SEQ #787                    Status: Released
+                  Compliance Date: DEC 31, 2014
+=============================================================================
+
+
+Subject: 2015 MEANS TEST THRESHOLDS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ **************************************************************************
+ *  Per VHA FACT SHEET titled MEANS TEST AND GEOGRAPHIC-BASED MEANS TEST  *
+ *  AND MAXIMUM ANNUAL RATES OF PENSION FOR CALENDAR YEAR 2015, this      *
+ *  patch MUST be installed before January 1, 2015. The patch is being    *
+ *  released as an Emergency patch together with EAS*1.0*125 (2015 GMT    *
+ *  Thresholds) and IB*2.0*540 (2015 RX Copay Thresholds) and may be      *
+ *  installed out of sequence with respect to other released Registration *
+ *  (DG) patches.                                                         *
+ **************************************************************************
+  
+ The Means Test thresholds for Calendar Year 2015 are distributed with this
+ patch. The post-installation routine, DG53910P, will create a new subentry
+ (or replace an existing one) for calendar year 2015 in the MEANS TEST DATA
+ (#250) multiple field of the MAS PARAMETERS (#43) file.
+  
+ This patch, DG*5.3*910 is one of three VistA 2015 threshold patches. It 
+ updates the thresholds for the Means Tests and the Maximum Annual Pension 
+ Rate. Patch EAS*1.0*125 will address the annual updates for the GMT 
+ Thresholds and patch IB*2.0*540 will address the annual updates for the 
+ Pharmacy Copay Thresholds.
+  
+  
+ Associated NSR(S):
+ ==================
+ N/A
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ INC000001086739 - MAS - Means Test:
+  
+  
+ Participating Test Sites:
+ =========================
+ Upstate New York HCS
+ Chillicothe VAMC
+  
+  
+ Remedy Overview:
+ ================
+ INC000001086739 - MAS - Means Test:
+  
+  
+ Problem:
+ --------
+ Update the Means Test thresholds for Calendar Year 2015.
+  
+ Resolution:
+ -----------
+ The post-installation routine, DG53910P, will create a new subentry
+ (or replace an existing one) for calendar year 2015 in the MEANS TEST DATA
+ (#250) multiple field of the MAS PARAMETERS (#43) file. Six subfields
+ within the multiple will be updated with the new Means Test threshold data
+ values as follows:
+  
+        MEANS TEST DATA (#.01) - 2015
+        MT COPAY EXEMPT VET INCOME (#2) - $31,978
+        MT COPAY EXEMPT 1ST DEP INCOME (#3) - $6,396
+        MT COPAY EXEMPT INCOME PER DEP (#4) - $2,198
+        THRESHOLD PROPERTY (#8) - $80,000
+        CHILD INCOME EXCLUSION (#17) - $10,300
+  
+ In addition, this patch will update the following fields in the 
+ PARAMETERS file (#8989.5) for Income Year 2014 to:
+  
+        DGMT MAPR GLOBAL RATE         5         
+        DGMT MAPR 0 DEPENDENTS        12868
+        DGMT MAPR 1 DEPENDENTS        16851
+        DGMT MAPR N DEPENDENTS        2198
+  
+  
+ Software Retrieval:
+ ===================
+ The software for this patch is not being distributed through the National 
+ Patch Module. This patch is being distributed as a host file. 
+  
+  
+ File Name            Description
+ ---------            -----------
+ DG_53_P910.KID       Host File containing KIDS software distribution
+  
+  
+ The host file will contain the following three KIDS builds:
+  
+ DG*5.3*910
+ EAS*1.0*125
+ IB*2.0*540
+  
+ Sites may retrieve the software directly using File Transfer Protocol 
+ (FTP) from the ANONYMOUS.SOFTWARE directory at the following OI Field 
+ Offices:
+  
+                     Albany   : ftp.domain.ext
+                     Hines    : ftp.domain.ext
+               Salt Lake City : ftp.domain.ext
+       First Available Server : download.vista.domain.ext
+  
+  
+ Note:  Use ASCII mode when transferring the .KID file.
+  
+  
+ Installation Instructions:
+ ==========================
+ This host file (containing three patches) can be installed with users on
+ the system.  The installation should not be queued to run.  Installation
+ will take approximately 10 minutes. The updates to the GMT THRESHOLDS
+ file (#712.5) in patch EAS*1.0*125, are extensive. Due to the volume of
+ updates, the installation process will appear to stall and/or stop. This
+ is normal, as the file updates may take up to 10 minutes to complete.
+  
+        *****Please be patient and allow the process to complete.*****
+  
+ Also, when comparing the transport global to the current system, entries 
+ will scroll by on the screen.  This is normal as there are approximately
+ 45,551 entries included in the GMT THRESHOLDS file (#712.5) distributed
+ with this patch and a comparison is done on each of these entries. It is
+ possible your session may time out before the install has completed. If
+ so, you may not be able to get a complete screen capture of the compare.
+ This will not, however, mean that there is any problem with the software.
+ To avoid a session time-out, you can designate a printer (non-queued) as
+ the device for the installation.
+  
+  
+   1.   DOWNLOAD HOST KIDS FILE
+        -----------------------
+        Download the KIDS file DG_53_P910.KID from the ANONYMOUS.SOFTWARE
+        directory of any of the following three Office of Information Field
+        Offices (OIFOs):  Albany, Hines, or Salt Lake to the appropriate
+        directory on your system.
+  
+  
+   2.   START UP KIDS
+        -------------
+        Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]:
+  
+             Edits and Distribution ...
+             Utilities ...
+             Installation ...
+  
+   Select Kernel Installation & Distribution System Option: INStallation
+                                                            ---
+             Load a Distribution
+             Print Transport Global
+             Compare Transport Global to Current System
+             Verify Checksums in Transport Global
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution
+             Backup a Transport Global
+  
+   Select Installation Option:
+  
+   3.   Select Installation Option:
+        --------------------------
+  
+        a.  Use the 'Load a Distribution' option and enter the directory
+            into which you downloaded the host file, followed by the host
+            file name:
+  
+            [directory]DG_53_P910.KID
+  
+        NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+               NAME, enter DG*5.3*910):
+  
+        b.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+        c.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed. It compares all components of this patch
+            (routines, DD's, templates, etc.).
+        d.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+  
+   4.   Select Installation Option: Install Package(s)
+                                    ------------------
+        **This is the step to start the installation of this KIDS patch:
+  
+       a.  Choose the Install Package(s) option to start the patch install.
+  
+       b.  The BILLING EXEMPTIONS file (#354.1) will be checked for
+           medication co-payment exemptions based on prior thresholds.
+           If -- and only if -- there are exemptions, you will be prompted
+           to UPDATE AND PRINT the exemptions report.  NOTE:  the report is
+           not new and is intended only as an FYI for billing staff.
+  
+              Select Action:  (P/U): Update & Print//
+  
+           Press <Enter> to accept the default "Update & Print"
+  
+              Select Device:
+  
+           You must enter a print device.  An entry is required and HOME,
+           SPOOLER, or P-MESSAGE are not allowed. You MUST choose a
+           valid printer or the installation will be aborted.
+  
+           NOTE: The exemption report contains full patient names and SSNs.
+           Be sure to select a device in a secure area and retrieve the
+           output immediately.
+  
+           You need not queue the report since the installation process
+           will queue it automatically.
+  
+       c.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+           NO//' answer NO.
+       d.  When prompted 'Want to DISABLE Scheduled Options, Menu
+           Options, and Protocols? YES//' answer YES.
+       e.  When prompted 'Enter options you wish to mark as 'Out Of
+           Order':'  Enter the following options:
+  
+ [DG MEANS TEST EDIT]             Edit an Existing Means Test
+ [DG CO-PAY TEST EDIT]            Edit an Existing Copay Exemption Test
+ [EASEC LTC COPAY TEST EDIT]      Edit an Existing LTC Copayment Test
+ [EASEC LTC EXEMPTION TEST EDIT]  Edit an Existing LTC Copay Exemption Test
+  
+       f.  When prompted 'Enter protocols you wish to mark as 'Out Of
+           Order':' press <Enter>.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ 1.   Routines DG53910P, EAS1125P, IB20E540, and IB20P540 may be deleted
+      after successful installation of the associated patch in the host
+      file.
+  
+ 2.   If the "Exemptions Based on Prior Year Thresholds" report has been
+      printed, it should be given to the MCCF/Billing Department or the
+      Integrated Billing ADPAC.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53910P
+    Before:       n/a   After:  B9564595  **910**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 25, 2014
+Completed By:                               Date Completed: DEC 23, 2014
+Released By :                               Date Released : DEC 29, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

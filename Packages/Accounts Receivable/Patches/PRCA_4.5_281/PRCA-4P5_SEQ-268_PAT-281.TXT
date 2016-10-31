@@ -1,0 +1,313 @@
+$TXT Created by                 DEVESS.DOMAIN.EXT  (KIDS) on Thursday, 05/10/12 at 21:50
+=============================================================================
+Run Date: OCT 22, 2014                     Designation: PRCA*4.5*281
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #268                    Status: Released
+                  Compliance Date: NOV 05, 2014
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*262<<= must be installed BEFORE `PRCA*4.5*281'
+                    (v)LEX*2*80    <<= must be installed BEFORE `PRCA*4.5*281'
+                    (v)ICD*18*57   <<= must be installed BEFORE `PRCA*4.5*281'
+
+Subject: AR ICD-10 CLASS 1 REMEDIATION
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+  
+ IMPORTANT INFORMATION Please read the Overview Guide 
+ (ICD-10_Prod_Overview_Guide_Group_8A.pdf) posted on the Anonymous
+ directory for installation order. This is critical for proper 
+ functionality of the ICD-10 Software.
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10) 
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service, or dates of discharge for inpatients, that occur on or 
+ after the implementation date will use the ICD-10 code set. Clinical 
+ Modification (ICD-10-CM) diagnosis codes increase from about 13,000 ICD-9 
+ codes to more than 68,000. Procedure Coding System (ICD-10-PCS) procedure 
+ codes increase from about 3,800 ICD-9 codes to nearly 87,000. Both 
+ systems also expand the number of characters allotted to seven 
+ alpha-numeric characters. This value does not include the decimal point, 
+ which follows the third character for the ICD-10-CM code set. There is no 
+ decimal point in the ICD-10-PCS code set.
+  
+ These code sets have the potential to reveal more about quality of care, 
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research.
+  
+ The purpose of this patch is to replace direct global reads into the ICD 
+ OPERATION/PROCEDURE file (#80.1) and the ICD DIAGNOSIS file (#80) with a 
+ DRG API $$CODEC^ICDEX instead.
+  
+ This patch updates one routine in the CBO Data Extract process. A DRG 
+ Grouper API is being used to retrieve the ICD-9/ICD-10 procedure code or 
+ ICD-9/ICD-10 diagnosis code for the data extract process to format and 
+ place it in a flat file via a nightly process. The nightly process in the 
+ Accounts Receivable Nightly Process Background Job option will then FTP 
+ the data directly to the Boston Allocation Resource Center (ARC).
+  
+ The patch has been further enhanced to include an ICD procedure and 
+ diagnosis code qualifier. The ICD code qualifier will identify the coding 
+ system of the ICD procedure and diagnosis code, for example, 1 for 
+ ICD-9-CM, 2 for ICD-9 Proc, 30 for ICD-10-CM, and 31 for ICD-10-PCS.
+  
+ ICD CODING SYSTEMS file (#80.4)
+  
+    1            ICD-9-CM
+    2            ICD-9 Proc
+    30           ICD-10-CM
+    31           ICD-10-PCS
+  
+  
+ The VistA AR package provides a Regional Counsel (RC) referral process, 
+ whereby billing data is electronically transmitted for review by legal 
+ counsel (Regional Counsel or Department of Justice).
+  
+ Note 1: The RC/DOJ Action Menu is used for this purpose. The Refer to 
+ RC/DOJ and Review/Refer TP Bills to RC options are used to trigger the 
+ transmissions to the RC database.
+  
+ Note 2: Additional details regarding these transmissions are documented 
+ in the ICD-10 AR SDD.
+  
+ Note 3: The RC referral process currently includes the decimal in the ICD 
+ diagnosis and procedure codes, and supports a maximum length of 10 
+ characters for the codes. The ICD-10 diagnosis and ICD-10 procedure short 
+ descriptions have been expanded in the ICD-10 code set to the maximum 
+ length of 60 characters. The Regional Counsel database is able to 
+ accommodate the 60 character ICD-10 short description without making any 
+ modifications to their database. Due to differences in code set versions 
+ for ICD-9 and ICD-10 the Regional Counsel (RC) referral process is being 
+ tested for ICD-10 impact to insure that the process works with the 
+ addition of code set version ICD-10.
+  
+ The VistA AR Regional Counsel referral process shall support ICD-10 
+ diagnoses and ICD-10 procedures for bills that have ICD-10 data 
+ associated with them.
+  
+   * ICD-10 diagnosis codes (up to 8 characters, including the decimal 
+     after the 3rd character)
+   * ICD-10 diagnosis short descriptions (up to 60 characters)
+   * ICD-10 procedure codes (consisting of 7 characters, with no 
+     decimal)
+   * ICD-10 procedure short descriptions (up to 60 characters)
+  
+ The VistA AR Regional Counsel referral process shall continue to support 
+ ICD-9 diagnoses and ICD-9 procedures for bills that have ICD-9 data 
+ associated with them.
+   
+   * ICD-9 diagnosis codes (up to 5 characters, including the decimal 
+     after the 3rd character)
+   * ICD-9 diagnosis short descriptions (up to 24 characters)
+   * ICD-9 procedure codes (up to 5 characters, including the decimal 
+     after the 3rd character)
+   * ICD-9 procedure short descriptions (up to 24 characters)
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)       New/Modified/Deleted
+ -------------          --------------       --------------------  
+ N/A
+  
+ Forms Associated:
+  
+ Form Name              File (#)              New/Modified/Deleted
+ ---------              --------              --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type             New/Modified/Deleted
+ -----------     ----             --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                    New/Modified/Deleted
+ -------------                    --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name    Type      File Name (#)    New/Modified/Deleted
+ -------------    ----      ------------     --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR 20070902, ICD-10-CM Conversion
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Boise VA Medical Center Boise, ID
+ John D. Dingell VA Medical Center, Detroit, MI
+ Carl Vinson VA Medical Center Dublin, GA
+ Michael E. DeBakey VA Medical Center, Houston, TX
+ Captain James A. Lovell Federal Health Care Center, Chicago, IL
+ Central Western Massachusetts(Northhampton) VA Healthcare Sys, Leeds, MA
+ Orlando VA Medical Center, Orlando, Fla
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/. This transmits the files from the first
+ available FTP server. Sites may also elect to retrieve software directly
+ from a specific server as follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                            File Name                    
+ (FTP Mode)
+ --------------------------------------------------------------------------
+  
+ AR Technical Manual              PRCA_4_5_P281_TM.pdf         
+ /Security Guide
+ (Binary)
+ AR User Manual - Title Page      ICD-10_UM_TP_4_5_281.pdf     
+ (Binary)
+ AR User Manual - Glossary        ICD-10_Glossary_4_5_281.pdf  
+ (Binary)
+ AR Release Notes (PRCA*4.5*281)  ICD-10_RN_PRCA_4_5_281.pdf   
+ (Binary)
+ Production Overview Guide        ICD-10_Prod_Overview_Guide_Group_8A.pdf
+ (Binary) 
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ This patch installs one routine, routine RCXVDC4, according to the 
+ Pre-Installation instructions. There are no Post-Installation 
+ instructions. 
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL, enter the patch #
+     (PRCA*4.5*281):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        back up any other changes such as DDs or templates.
+  
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DDs, templates, etc.).
+  
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter PRCA*4.5*281.
+  
+ 5.  If prompted Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//, respond NO.
+  
+ 6.  If prompted Want KIDS to INHIBIT LOGONs during the install? NO//,
+     respond NO.
+  
+ 7.  If prompted Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//, respond NO.
+  
+ 8.  If prompted Delay Install (Minutes):  (0 - 60): 0//, respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCXVDC4
+    Before: B17742675   After: B31186754  **201,227,228,248,251,256,262,281**
+ 
+Routine list of preceding patches: 262
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 02, 2011
+Completed By:                               Date Completed: OCT 14, 2014
+Released By :                               Date Released : OCT 22, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

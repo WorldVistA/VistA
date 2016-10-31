@@ -1,0 +1,2791 @@
+Released PSJ*5*217 SEQ #272
+Extracted from mail message
+**KIDS**:PSJ*5.0*217^
+
+**INSTALL NAME**
+PSJ*5.0*217
+"BLD",8635,0)
+PSJ*5.0*217^INPATIENT MEDICATIONS^0^3150812^y
+"BLD",8635,1,0)
+^^10^10^3150812^
+"BLD",8635,1,1,0)
+This patch will correct the following issues:
+"BLD",8635,1,2,0)
+ 
+"BLD",8635,1,3,0)
+ 1. The check to determine whether a patient is on an active pick list is 
+"BLD",8635,1,4,0)
+   not taking into consideration the pick list being flagged to be filed
+"BLD",8635,1,5,0)
+   away. This will incorrectly prevent a patient record merge from 
+"BLD",8635,1,6,0)
+   occurring.
+"BLD",8635,1,7,0)
+ 
+"BLD",8635,1,8,0)
+2. Various workflows in Inpatient Order Entry [PSJ OE] can result in an
+"BLD",8635,1,9,0)
+   order having a Nature of Order of -1.  This corrupt data can cause an 
+"BLD",8635,1,10,0)
+   <UNDEFINED> error to occur.
+"BLD",8635,4,0)
+^9.64PA^^0
+"BLD",8635,4,101,2,101,1,15,0)
+EXIT ACTION
+"BLD",8635,4,"APDD",101,101,15)
+
+"BLD",8635,6)
+8^
+"BLD",8635,6.3)
+25
+"BLD",8635,"ABPKG")
+n
+"BLD",8635,"INID")
+^n
+"BLD",8635,"INIT")
+
+"BLD",8635,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8635,"KRN",.4,0)
+.4
+"BLD",8635,"KRN",.401,0)
+.401
+"BLD",8635,"KRN",.402,0)
+.402
+"BLD",8635,"KRN",.403,0)
+.403
+"BLD",8635,"KRN",.5,0)
+.5
+"BLD",8635,"KRN",.84,0)
+.84
+"BLD",8635,"KRN",3.6,0)
+3.6
+"BLD",8635,"KRN",3.8,0)
+3.8
+"BLD",8635,"KRN",9.2,0)
+9.2
+"BLD",8635,"KRN",9.8,0)
+9.8
+"BLD",8635,"KRN",9.8,"NM",0)
+^9.68A^4^2
+"BLD",8635,"KRN",9.8,"NM",3,0)
+PSJPATMR^^0^B65386243
+"BLD",8635,"KRN",9.8,"NM",4,0)
+PSJUTL5^^0^B23315545
+"BLD",8635,"KRN",9.8,"NM","B","PSJPATMR",3)
+
+"BLD",8635,"KRN",9.8,"NM","B","PSJUTL5",4)
+
+"BLD",8635,"KRN",19,0)
+19
+"BLD",8635,"KRN",19.1,0)
+19.1
+"BLD",8635,"KRN",101,0)
+101
+"BLD",8635,"KRN",101,"NM",0)
+^9.68A^^0
+"BLD",8635,"KRN",409.61,0)
+409.61
+"BLD",8635,"KRN",771,0)
+771
+"BLD",8635,"KRN",779.2,0)
+779.2
+"BLD",8635,"KRN",870,0)
+870
+"BLD",8635,"KRN",8989.51,0)
+8989.51
+"BLD",8635,"KRN",8989.52,0)
+8989.52
+"BLD",8635,"KRN",8994,0)
+8994
+"BLD",8635,"KRN","B",.4,.4)
+
+"BLD",8635,"KRN","B",.401,.401)
+
+"BLD",8635,"KRN","B",.402,.402)
+
+"BLD",8635,"KRN","B",.403,.403)
+
+"BLD",8635,"KRN","B",.5,.5)
+
+"BLD",8635,"KRN","B",.84,.84)
+
+"BLD",8635,"KRN","B",3.6,3.6)
+
+"BLD",8635,"KRN","B",3.8,3.8)
+
+"BLD",8635,"KRN","B",9.2,9.2)
+
+"BLD",8635,"KRN","B",9.8,9.8)
+
+"BLD",8635,"KRN","B",19,19)
+
+"BLD",8635,"KRN","B",19.1,19.1)
+
+"BLD",8635,"KRN","B",101,101)
+
+"BLD",8635,"KRN","B",409.61,409.61)
+
+"BLD",8635,"KRN","B",771,771)
+
+"BLD",8635,"KRN","B",779.2,779.2)
+
+"BLD",8635,"KRN","B",870,870)
+
+"BLD",8635,"KRN","B",8989.51,8989.51)
+
+"BLD",8635,"KRN","B",8989.52,8989.52)
+
+"BLD",8635,"KRN","B",8994,8994)
+
+"BLD",8635,"QUES",0)
+^9.62^^
+"BLD",8635,"REQB",0)
+^9.611^2^2
+"BLD",8635,"REQB",1,0)
+PSJ*5.0*36^2
+"BLD",8635,"REQB",2,0)
+PSJ*5.0*260^2
+"BLD",8635,"REQB","B","PSJ*5.0*260",2)
+
+"BLD",8635,"REQB","B","PSJ*5.0*36",1)
+
+"FIA",101)
+PROTOCOL
+"FIA",101,0)
+^ORD(101,
+"FIA",101,0,0)
+101I
+"FIA",101,0,1)
+^^f
+"FIA",101,0,10)
+
+"FIA",101,0,11)
+
+"FIA",101,0,"RLRO")
+
+"FIA",101,0,"VR")
+5.0^PSJ
+"FIA",101,101)
+0
+"FIA",101,101.01)
+0
+"FIA",101,101.02)
+0
+"FIA",101,101.021)
+0
+"FIA",101,101.03)
+0
+"FIA",101,101.0431)
+0
+"FIA",101,101.05)
+0
+"FIA",101,101.06)
+0
+"FIA",101,101.07)
+0
+"FIA",101,101.0775)
+0
+"MBREQ")
+0
+"PKG",471,-1)
+1^1
+"PKG",471,0)
+INPATIENT MEDICATIONS^PSJ^UNIT DOSE AND IVS
+"PKG",471,20,0)
+^9.402P^^
+"PKG",471,22,0)
+^9.49I^1^1
+"PKG",471,22,1,0)
+5.0^2971215^2990325^66481
+"PKG",471,22,1,"PAH",1,0)
+217^3150812^1181
+"PKG",471,22,1,"PAH",1,1,0)
+^^10^10^3150812
+"PKG",471,22,1,"PAH",1,1,1,0)
+This patch will correct the following issues:
+"PKG",471,22,1,"PAH",1,1,2,0)
+ 
+"PKG",471,22,1,"PAH",1,1,3,0)
+ 1. The check to determine whether a patient is on an active pick list is 
+"PKG",471,22,1,"PAH",1,1,4,0)
+   not taking into consideration the pick list being flagged to be filed
+"PKG",471,22,1,"PAH",1,1,5,0)
+   away. This will incorrectly prevent a patient record merge from 
+"PKG",471,22,1,"PAH",1,1,6,0)
+   occurring.
+"PKG",471,22,1,"PAH",1,1,7,0)
+ 
+"PKG",471,22,1,"PAH",1,1,8,0)
+2. Various workflows in Inpatient Order Entry [PSJ OE] can result in an
+"PKG",471,22,1,"PAH",1,1,9,0)
+   order having a Nature of Order of -1.  This corrupt data can cause an 
+"PKG",471,22,1,"PAH",1,1,10,0)
+   <UNDEFINED> error to occur.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PSJPATMR")
+0^3^B65386243^B63535261
+"RTN","PSJPATMR",1,0)
+PSJPATMR        ;BIR/RSB,LDT-UTILITY FOR PATIENT MERGE ;28 Oct 99 / 12:53 PM
+"RTN","PSJPATMR",2,0)
+ ;;5.0;INPATIENT MEDICATIONS;**36,217**;16 DEC 97;Build 25
+"RTN","PSJPATMR",3,0)
+ ;
+"RTN","PSJPATMR",4,0)
+ ; Reference to ^PS(55 supported by DBIA #2191.
+"RTN","PSJPATMR",5,0)
+ ; Reference to ^PS(52.6 is supported by DBIA 1231
+"RTN","PSJPATMR",6,0)
+ ; Reference to ^PS(52.7 is supported by DBIA 2173
+"RTN","PSJPATMR",7,0)
+ ; Reference to ^PSDRUG( is supported by DBIA 2192
+"RTN","PSJPATMR",8,0)
+ ;
+"RTN","PSJPATMR",9,0)
+EN(DFN1,DFN2)   ;
+"RTN","PSJPATMR",10,0)
+ ; check active IV, UD, and Orders on a pick list
+"RTN","PSJPATMR",11,0)
+ I $$CHKIVACT(DFN1)!($$CHKUDACT(DFN1))!($$CHKPL(DFN1)) Q 0
+"RTN","PSJPATMR",12,0)
+ N DUPUD,DUPIV K ^TMP("PSJMERGE_UD",$J),^TMP("PSJMERGE_IV",$J)
+"RTN","PSJPATMR",13,0)
+ S DUPUD=$$CHKUDDUP(DFN1,DFN2),DUPIV=$$CHKIVDUP(DFN1,DFN2)
+"RTN","PSJPATMR",14,0)
+ I +DUPUD=1 D
+"RTN","PSJPATMR",15,0)
+ .S DUPUD=$P(DUPUD,"^",2) D MOVEUD(DFN1,DUPUD)
+"RTN","PSJPATMR",16,0)
+ I +DUPIV=1 D
+"RTN","PSJPATMR",17,0)
+ .S DUPIV=$P(DUPIV,"^",2) D MOVEIV(DFN1,DUPIV)
+"RTN","PSJPATMR",18,0)
+ K ^TMP("PSJMERGE_UD",$J),^TMP("PSJMERGE_IV",$J)
+"RTN","PSJPATMR",19,0)
+ Q 1
+"RTN","PSJPATMR",20,0)
+ ;
+"RTN","PSJPATMR",21,0)
+CHKUDDUP(PSJDFN1,PSJDFN2)       ;
+"RTN","PSJPATMR",22,0)
+ ; check for Unit Dose orders in ^PS(55, with duplicate order numbers for both patients
+"RTN","PSJPATMR",23,0)
+ N ORD1,ORD2,O1,O2,PSJFLAG,DUP1,DUP2,DUP,HIGHEST
+"RTN","PSJPATMR",24,0)
+ S (PSJFLAG,HIGHEST)=0
+"RTN","PSJPATMR",25,0)
+ F ORD1=0:0 S ORD1=$O(^PS(55,PSJDFN1,5,"B",ORD1)) Q:'ORD1  D
+"RTN","PSJPATMR",26,0)
+ . F O1=0:0 S O1=$O(^PS(55,PSJDFN1,5,"B",ORD1,O1)) Q:'O1  D 
+"RTN","PSJPATMR",27,0)
+ . . S DUP1(O1)="" S:O1>HIGHEST HIGHEST=O1
+"RTN","PSJPATMR",28,0)
+ F ORD2=0:0 S ORD2=$O(^PS(55,PSJDFN2,5,"B",ORD2)) Q:'ORD2  D
+"RTN","PSJPATMR",29,0)
+ . F O2=0:0 S O2=$O(^PS(55,PSJDFN2,5,"B",ORD2,O2)) Q:'O2  D
+"RTN","PSJPATMR",30,0)
+ . . S DUP2(O2)="" S:O2>HIGHEST HIGHEST=O2
+"RTN","PSJPATMR",31,0)
+ F DUP=0:0 S DUP=$O(DUP1(DUP)) Q:'DUP!(PSJFLAG=1)  D
+"RTN","PSJPATMR",32,0)
+ . I $D(DUP2(DUP)) S PSJFLAG=1  ; duplicate order numbers found
+"RTN","PSJPATMR",33,0)
+ Q PSJFLAG_$S(PSJFLAG=1:"^"_(HIGHEST+1),1:"")
+"RTN","PSJPATMR",34,0)
+ ;
+"RTN","PSJPATMR",35,0)
+MOVEUD(DFN1,COUNT)      ;  move all Unit Dose orders for FROM patient
+"RTN","PSJPATMR",36,0)
+ N ORDERS,XREF,STOP,X S STOP=COUNT
+"RTN","PSJPATMR",37,0)
+ F ORDERS=0:0 S ORDERS=$O(^PS(55,DFN1,5,ORDERS)) Q:'ORDERS!(ORDERS=STOP)  D
+"RTN","PSJPATMR",38,0)
+ . M ^PS(55,DFN1,5,COUNT)=^PS(55,DFN1,5,ORDERS)  ; Move to new order
+"RTN","PSJPATMR",39,0)
+ . ; set .01 order number if not a number from 53.1
+"RTN","PSJPATMR",40,0)
+ . I ORDERS=+$P($G(^PS(55,DFN1,5,ORDERS,0)),"^") S $P(^PS(55,DFN1,5,COUNT,0),"^")=COUNT
+"RTN","PSJPATMR",41,0)
+ . ; kill xrefs
+"RTN","PSJPATMR",42,0)
+ . K DA S DA=ORDERS,DA(1)=DFN1
+"RTN","PSJPATMR",43,0)
+ . S X=$P($G(^PS(55,DA(1),5,DA,0)),"^",7) I $D(^PS(55,DA(1),5,DA,2)),$P(^(2),"^",4) K ^PS(55,DA(1),5,"AU",X,+$P(^(2),"^",4),DA)
+"RTN","PSJPATMR",44,0)
+ . K ^PS(55,"ANV",DA(1),DA)
+"RTN","PSJPATMR",45,0)
+ . K ^PS(55,"APV",DA(1),DA)
+"RTN","PSJPATMR",46,0)
+ . K ^PS(55,"AUE",DA(1),DA)
+"RTN","PSJPATMR",47,0)
+ . K ^PS(55,DA(1),5,"B",$P($G(^PS(55,DA(1),5,DA,0)),"^"),DA)
+"RTN","PSJPATMR",48,0)
+ . S X=$P($G(^PS(55,DA(1),5,DA,2)),"^",4) K ^PS(55,"AUD",$E(X,1,30),DA(1),DA)
+"RTN","PSJPATMR",49,0)
+ . K ^PS(55,DA(1),5,"AUS",+X,DA) I $P($G(^PS(55,DA(1),5,DA,0)),"^",7)]"" K ^PS(55,DA(1),5,"AU",$P(^(0),"^",7),+X,DA)
+"RTN","PSJPATMR",50,0)
+ . S X=$P($G(^PS(55,DA(1),5,DA,2)),"^",2) K ^PS(55,"AUDDD",$E(X,1,30),DA(1),DA)
+"RTN","PSJPATMR",51,0)
+ . K ^PS(55,"AUDS",$E(X,1,30),DA(1),DA)
+"RTN","PSJPATMR",52,0)
+ . S X=$P($G(^PS(55,DA(1),5,DA,.1)),"^") K:+X ^PS(55,DA(1),5,"C",$E(X,1,30),DA)
+"RTN","PSJPATMR",53,0)
+ . ; set table for previous and following order numbers
+"RTN","PSJPATMR",54,0)
+ . S ^TMP("PSJMERGE_UD",$J,ORDERS)=ORDERS_"^"_$P($G(^PS(55,DFN1,5,ORDERS,0)),"^",25)_"^"_$P($G(^PS(55,DFN1,5,ORDERS,0)),"^",26)_"^"_COUNT
+"RTN","PSJPATMR",55,0)
+ . ; kill entire order 
+"RTN","PSJPATMR",56,0)
+ . K ^PS(55,DFN1,5,ORDERS)
+"RTN","PSJPATMR",57,0)
+ . ; Set new X-refs
+"RTN","PSJPATMR",58,0)
+ . K DIK,DA S DA=COUNT,DA(1)=DFN1,DIK="^PS(55,"_DA(1)_",5,"
+"RTN","PSJPATMR",59,0)
+ . F XREF=7,51,50,34,64,10,".01^AUE^B" S DIK(1)=XREF D EN^DIK
+"RTN","PSJPATMR",60,0)
+ . D CNVUD(DFN1,COUNT)
+"RTN","PSJPATMR",61,0)
+ . D EN1^PSJHL2(DFN1,"SC",COUNT_"U")  ;  Update CPRS pointer to order
+"RTN","PSJPATMR",62,0)
+ . S COUNT=COUNT+1
+"RTN","PSJPATMR",63,0)
+ ; Check Previous and Following order numbers
+"RTN","PSJPATMR",64,0)
+ N PREV,FOLL,NEW,OLD,SUB,PREVIEN,FOLLIEN S SUB="PSJMERGE_UD"
+"RTN","PSJPATMR",65,0)
+ F ORDERS=0:0 S ORDERS=$O(^TMP(SUB,$J,ORDERS)) Q:'ORDERS  D
+"RTN","PSJPATMR",66,0)
+ . S (NEW,OLD,PREV,FOLL,PREVIEN,FOLLIEN)=""
+"RTN","PSJPATMR",67,0)
+ . S:$P(^TMP(SUB,$J,ORDERS),"^",4)]"" NEW=$P(^TMP(SUB,$J,ORDERS),"^",4)
+"RTN","PSJPATMR",68,0)
+ . S:$P(^TMP(SUB,$J,ORDERS),"^")]"" OLD=$P(^TMP(SUB,$J,ORDERS),"^")
+"RTN","PSJPATMR",69,0)
+ . S:$P(^TMP(SUB,$J,ORDERS),"^",2)]"" PREV=$P(^TMP(SUB,$J,ORDERS),"^",2)
+"RTN","PSJPATMR",70,0)
+ . S:$P(^TMP(SUB,$J,ORDERS),"^",3)]"" FOLL=$P(^TMP(SUB,$J,ORDERS),"^",3)
+"RTN","PSJPATMR",71,0)
+ . I PREV]"" S PREVIEN=$S($D(^TMP(SUB,$J,+PREV)):$P(^TMP(SUB,$J,+PREV),"^",4),1:PREV) D
+"RTN","PSJPATMR",72,0)
+ . . I PREV["P",$D(^PS(53.1,+PREVIEN,0)) S $P(^PS(53.1,+PREVIEN,0),"^",26)=NEW_"U"
+"RTN","PSJPATMR",73,0)
+ . . I PREV["U",$D(^PS(55,DFN1,5,+PREVIEN,0)) S $P(^PS(55,DFN1,5,+PREVIEN,0),"^",26)=NEW_"U"
+"RTN","PSJPATMR",74,0)
+ . I FOLL]"" S FOLLIEN=$S($D(^TMP(SUB,$J,+FOLL)):$P(^TMP(SUB,$J,+FOLL),"^",4),1:FOLL) D
+"RTN","PSJPATMR",75,0)
+ . . S:$D(@("^PS(55,"_DFN1_",5,"_+FOLLIEN_",0)")) $P(@("^PS(55,"_DFN1_",5,"_+FOLLIEN_",0)"),"^",25)=NEW_"U"
+"RTN","PSJPATMR",76,0)
+ S $P(^PS(55,DFN1,5,0),"^",3)=COUNT-1  ; reset last used IEN for FROM patient
+"RTN","PSJPATMR",77,0)
+ S $P(^PS(55,DFN2,5,0),"^",3)=COUNT-1  ; reset last used IEN for TO patient
+"RTN","PSJPATMR",78,0)
+ Q
+"RTN","PSJPATMR",79,0)
+ ;
+"RTN","PSJPATMR",80,0)
+CHKIVDUP(PSJDFN1,PSJDFN2)       ;
+"RTN","PSJPATMR",81,0)
+ ; check for IV orders in ^PS(55, with duplicate order numbers for both patients
+"RTN","PSJPATMR",82,0)
+ N ORD1,ORD2,O1,O2,PSJFLAG,DUP1,DUP2,DUP,HIGHEST
+"RTN","PSJPATMR",83,0)
+ S (PSJFLAG,HIGHEST)=0
+"RTN","PSJPATMR",84,0)
+ F ORD1=0:0 S ORD1=$O(^PS(55,PSJDFN1,"IV","B",ORD1)) Q:'ORD1  D
+"RTN","PSJPATMR",85,0)
+ . F O1=0:0 S O1=$O(^PS(55,PSJDFN1,"IV","B",ORD1,O1)) Q:'O1  D 
+"RTN","PSJPATMR",86,0)
+ . . S DUP1(O1)="" S:O1>HIGHEST HIGHEST=O1
+"RTN","PSJPATMR",87,0)
+ F ORD2=0:0 S ORD2=$O(^PS(55,PSJDFN2,"IV","B",ORD2)) Q:'ORD2  D
+"RTN","PSJPATMR",88,0)
+ . F O2=0:0 S O2=$O(^PS(55,PSJDFN2,"IV","B",ORD2,O2)) Q:'O2  D
+"RTN","PSJPATMR",89,0)
+ . . S DUP2(O2)="" S:O2>HIGHEST HIGHEST=O2
+"RTN","PSJPATMR",90,0)
+ F DUP=0:0 S DUP=$O(DUP1(DUP)) Q:'DUP!(PSJFLAG=1)  D
+"RTN","PSJPATMR",91,0)
+ . I $D(DUP2(DUP)) S PSJFLAG=1  ; duplicate order numbers found
+"RTN","PSJPATMR",92,0)
+ Q PSJFLAG_$S(PSJFLAG=1:"^"_(HIGHEST+1),1:"")
+"RTN","PSJPATMR",93,0)
+ ;
+"RTN","PSJPATMR",94,0)
+MOVEIV(DFN1,COUNT)        ;  move all IV orders for FROM patient
+"RTN","PSJPATMR",95,0)
+ N ORDERS,STOP,X S STOP=COUNT
+"RTN","PSJPATMR",96,0)
+ F ORDERS=0:0 S ORDERS=$O(^PS(55,DFN1,"IV",ORDERS)) Q:'ORDERS!(ORDERS=STOP)  D
+"RTN","PSJPATMR",97,0)
+ . M ^PS(55,DFN1,"IV",COUNT)=^PS(55,DFN1,"IV",ORDERS)  ; Move to new order
+"RTN","PSJPATMR",98,0)
+ . ; set .01 order number if not a number from 53.1
+"RTN","PSJPATMR",99,0)
+ . I ORDERS=+$P($G(^PS(55,DFN1,"IV",ORDERS,0)),"^") S $P(^PS(55,DFN1,"IV",COUNT,0),"^")=COUNT
+"RTN","PSJPATMR",100,0)
+ . ; kill xrefs
+"RTN","PSJPATMR",101,0)
+ . K DA S DA=ORDERS,DA(1)=DFN1
+"RTN","PSJPATMR",102,0)
+ . S X=$P($G(^PS(55,DFN1,"IV",ORDERS,0)),"^",17) K:X'="D"&($D(^PS(55,DA(1),"IV",DA,"ADC"))) ^PS(55,"ADC",^PS(55,DA(1),"IV",DA,"ADC"),DA(1),DA)
+"RTN","PSJPATMR",103,0)
+ . K:X'="N" ^PS(55,"ANVO",DA(1),DA)
+"RTN","PSJPATMR",104,0)
+ . S X=$P($G(^PS(55,DFN1,"IV",ORDERS,0)),"^",3) K ^PS(55,DA(1),"IV","AIS",$E(X,1,30),DA)
+"RTN","PSJPATMR",105,0)
+ . I $P($G(^PS(55,DA(1),"IV",DA,0)),U,4)]"" K ^PS(55,DA(1),"IV","AIT",$P(^(0),U,4),+X,DA)
+"RTN","PSJPATMR",106,0)
+ . K ^PS(55,"AIV",+$E(X,1,30),DA(1),DA)
+"RTN","PSJPATMR",107,0)
+ . S X=$P($G(^PS(55,DFN1,"IV",ORDERS,0)),"^",2) K ^PS(55,"AIVS",$E(X,1,30),DA(1),DA)
+"RTN","PSJPATMR",108,0)
+ . S X=$P($G(^PS(55,DFN1,"IV",ORDERS,0)),"^") K ^PS(55,DA(1),"IV","B",$E(X,1,30),DA)
+"RTN","PSJPATMR",109,0)
+ . S ^TMP("PSJMERGE_IV",$J,ORDERS)=ORDERS_"^"_$P($G(^PS(55,DFN1,"IV",ORDERS,2)),"^",5)_"^"_$P($G(^PS(55,DFN1,"IV",ORDERS,2)),"^",6)_"^"_COUNT
+"RTN","PSJPATMR",110,0)
+ . ; Delete old order
+"RTN","PSJPATMR",111,0)
+ . K ^PS(55,DFN1,"IV",ORDERS)
+"RTN","PSJPATMR",112,0)
+ . ; Set new X-refs
+"RTN","PSJPATMR",113,0)
+ . K DIK,DA S DA=COUNT,DA(1)=DFN1,DIK="^PS(55,"_DA(1)_",""IV"","
+"RTN","PSJPATMR",114,0)
+ . F XREF="100^ADC^ANVO",".03^AIS^AIT^AIV",".02^AIVS",".01^B" S DIK(1)=XREF D EN^DIK
+"RTN","PSJPATMR",115,0)
+ . D CNVIV(DFN1,COUNT)
+"RTN","PSJPATMR",116,0)
+ . D EN1^PSJHL2(DFN1,"SC",COUNT_"V")  ;  Update CPRS pointer to order
+"RTN","PSJPATMR",117,0)
+ . S COUNT=COUNT+1
+"RTN","PSJPATMR",118,0)
+ ; Check Previous and Following order numbers
+"RTN","PSJPATMR",119,0)
+ N PREV,FOLL,NEW,OLD,SUB,PREVIEN,FOLLIEN S SUB="PSJMERGE_IV"
+"RTN","PSJPATMR",120,0)
+ F ORDERS=0:0 S ORDERS=$O(^TMP(SUB,$J,ORDERS)) Q:'ORDERS  D
+"RTN","PSJPATMR",121,0)
+ . S (NEW,OLD,PREV,FOLL,PREVIEN,FOLLIEN)=""
+"RTN","PSJPATMR",122,0)
+ . S:$P(^TMP(SUB,$J,ORDERS),"^",4)]"" NEW=$P(^TMP(SUB,$J,ORDERS),"^",4)
+"RTN","PSJPATMR",123,0)
+ . S:$P(^TMP(SUB,$J,ORDERS),"^")]"" OLD=$P(^TMP(SUB,$J,ORDERS),"^")
+"RTN","PSJPATMR",124,0)
+ . S:$P(^TMP(SUB,$J,ORDERS),"^",2)]"" PREV=$P(^TMP(SUB,$J,ORDERS),"^",2)
+"RTN","PSJPATMR",125,0)
+ . S:$P(^TMP(SUB,$J,ORDERS),"^",3)]"" FOLL=$P(^TMP(SUB,$J,ORDERS),"^",3)
+"RTN","PSJPATMR",126,0)
+ . I PREV]"" S PREVIEN=$S($D(^TMP(SUB,$J,+PREV)):$P(^TMP(SUB,$J,+PREV),"^",4),1:PREV) D
+"RTN","PSJPATMR",127,0)
+ . . I PREV["P",$D(^PS(53.1,+PREVIEN,0)) S $P(^PS(53.1,+PREVIEN,0),"^",26)=NEW_"V"
+"RTN","PSJPATMR",128,0)
+ . . I PREV["V",$D(^PS(55,DFN1,"IV",+PREVIEN,0)) S $P(^PS(55,DFN1,"IV",+PREVIEN,2),"^",6)=NEW_"V"
+"RTN","PSJPATMR",129,0)
+ . I FOLL]"" S FOLLIEN=$S($D(^TMP(SUB,$J,+FOLL)):$P(^TMP(SUB,$J,+FOLL),"^",4),1:FOLL) D
+"RTN","PSJPATMR",130,0)
+ . . S:$D(^PS(55,DFN1,"IV",+FOLLIEN,0)) $P(^PS(55,DFN1,"IV",+FOLLIEN,2),"^",5)=NEW_"V"     Q
+"RTN","PSJPATMR",131,0)
+ S $P(^PS(55,DFN1,"IV",0),"^",3)=COUNT-1  ; reset last used IEN for FROM patient
+"RTN","PSJPATMR",132,0)
+ S $P(^PS(55,DFN2,"IV",0),"^",3)=COUNT-1  ; reset last used IEN for TO patient
+"RTN","PSJPATMR",133,0)
+ Q
+"RTN","PSJPATMR",134,0)
+ ;
+"RTN","PSJPATMR",135,0)
+CHKIVACT(PSJDFN1)       ;
+"RTN","PSJPATMR",136,0)
+ ; check for active IV orders in ^PS(55, for FROM patient
+"RTN","PSJPATMR",137,0)
+ N DATE1,PSJFLAG,PSJDT
+"RTN","PSJPATMR",138,0)
+ D NOW^%DTC S PSJDT=%
+"RTN","PSJPATMR",139,0)
+ S PSJFLAG=0
+"RTN","PSJPATMR",140,0)
+ F DATE1=0:0 S DATE1=$O(^PS(55,PSJDFN1,"IV","AIS",DATE1)) Q:'DATE1  D
+"RTN","PSJPATMR",141,0)
+ . I DATE1>PSJDT S PSJFLAG=1 Q
+"RTN","PSJPATMR",142,0)
+ Q PSJFLAG
+"RTN","PSJPATMR",143,0)
+ ;
+"RTN","PSJPATMR",144,0)
+CHKUDACT(PSJDFN1)       ;
+"RTN","PSJPATMR",145,0)
+ ; check for active UD orders in ^PS(55, for FROM patient
+"RTN","PSJPATMR",146,0)
+ N DATE1,PSJFLAG,PSJDT
+"RTN","PSJPATMR",147,0)
+ D NOW^%DTC S PSJDT=%
+"RTN","PSJPATMR",148,0)
+ S PSJFLAG=0
+"RTN","PSJPATMR",149,0)
+ F DATE1=0:0 S DATE1=$O(^PS(55,PSJDFN1,5,"AUS",DATE1)) Q:'DATE1  D
+"RTN","PSJPATMR",150,0)
+ . I DATE1>PSJDT S PSJFLAG=1 Q
+"RTN","PSJPATMR",151,0)
+ Q PSJFLAG
+"RTN","PSJPATMR",152,0)
+ ;
+"RTN","PSJPATMR",153,0)
+CHKPL(PSJDFN1)       ;
+"RTN","PSJPATMR",154,0)
+ ; check to see if FROM patient is contained on any pick lists
+"RTN","PSJPATMR",155,0)
+ N PLNUM,PSJFLAG
+"RTN","PSJPATMR",156,0)
+ S PSJFLAG=0
+"RTN","PSJPATMR",157,0)
+ F PLNUM=0:0 S PLNUM=$O(^PS(53.5,PLNUM)) Q:'PLNUM  D
+"RTN","PSJPATMR",158,0)
+ . ;*217 If pick list is filed away or to be filed away, it should not stop merge.
+"RTN","PSJPATMR",159,0)
+ . I $D(^PS(53.5,PLNUM,1,"B",PSJDFN1,PSJDFN1)),'$P(^PS(53.5,PLNUM,0),"^",5) S PSJFLAG=1 Q
+"RTN","PSJPATMR",160,0)
+ Q PSJFLAG
+"RTN","PSJPATMR",161,0)
+CNVUD(DFN,ON)        ;Convert UD orders.
+"RTN","PSJPATMR",162,0)
+ N PSJOI,ND,DDRG,XX
+"RTN","PSJPATMR",163,0)
+ I '$G(^PS(55,DFN,5,ON,.2)) D
+"RTN","PSJPATMR",164,0)
+ .S PSJOI="",ND=$G(^PS(55,DFN,5,+ON,.1)),DDRG=$O(^PS(55,DFN,5,ON,1,0)),XX=+$G(^PS(55,DFN,5,ON,1,+DDRG,0)) S:XX PSJOI=+$G(^PSDRUG(XX,2))
+"RTN","PSJPATMR",165,0)
+ .I 'PSJOI F DDRG=0:0 S DDRG=$O(^PSDRUG("AP",+ND,DDRG)) Q:'DDRG!PSJOI  S PSJOI=+$G(^PSDRUG(DDRG,2))
+"RTN","PSJPATMR",166,0)
+ .I PSJOI S ^PS(55,DFN,5,ON,.2)=PSJOI_U_$P(ND,U,2)
+"RTN","PSJPATMR",167,0)
+ Q
+"RTN","PSJPATMR",168,0)
+CNVIV(DFN,ON)        ;Convert IV orders.
+"RTN","PSJPATMR",169,0)
+ N PSJOI,ND,ADS,ON1,XX
+"RTN","PSJPATMR",170,0)
+ I '$G(^PS(55,DFN,"IV",ON,.2)) D
+"RTN","PSJPATMR",171,0)
+ .S PSJOI="",ND=$G(^PS(55,DFN,"IV",ON,6)) F ADS="AD","SOL" I 'PSJOI F ON1=0:0 S ON1=$O(^PS(55,DFN,"IV",ON,ADS,ON1))  Q:'ON1!PSJOI  S XX=+$G(^PS(55,DFN,"IV",ON,ADS,ON1,0)) D
+"RTN","PSJPATMR",172,0)
+ ..S:XX PSJOI=$S(ADS="AD":$P($G(^PS(52.6,XX,0)),U,11),1:$P($G(^PS(52.7,XX,0)),U,11)) I PSJOI  S ^PS(55,DFN,"IV",ON,.2)=PSJOI_U_$P(ND,U,2,3)
+"RTN","PSJPATMR",173,0)
+ Q
+"RTN","PSJPATMR",174,0)
+  
+"RTN","PSJUTL5")
+0^4^B23315545^B22923563
+"RTN","PSJUTL5",1,0)
+PSJUTL5 ;BIR/MLM-UTILITY TO HANDLE NATURE OF ORDER FOR OE/RR ; 3/22/10 1:53pm
+"RTN","PSJUTL5",2,0)
+ ;;5.0;INPATIENT MEDICATIONS;**40,218,260,217**;16 DEC 97;Build 25
+"RTN","PSJUTL5",3,0)
+ ;
+"RTN","PSJUTL5",4,0)
+ENNOO(X) ; nature of order (for oe/rr)
+"RTN","PSJUTL5",5,0)
+ ; X - Action taken on order.
+"RTN","PSJUTL5",6,0)
+ N Y S Y="W" I 'PSJSYSU Q Y
+"RTN","PSJUTL5",7,0)
+ K Y N DA,DIR,ACT S ACT=X
+"RTN","PSJUTL5",8,0)
+ K:$G(PSJNOO)=-1 PSJNOO  ;Prevents nature of order -1
+"RTN","PSJUTL5",9,0)
+ D FULL^VALM1
+"RTN","PSJUTL5",10,0)
+ I $G(ACT)]"" D @ACT
+"RTN","PSJUTL5",11,0)
+ E  S Y=-1 Q Y
+"RTN","PSJUTL5",12,0)
+ Q:$D(Y) Y
+"RTN","PSJUTL5",13,0)
+ S DIR("A")="NATURE OF ORDER: ",DIR("B")="WRITTEN"
+"RTN","PSJUTL5",14,0)
+ S DIR("?",1)="This specifies the nature of the order, how it originated, or how any",DIR("?",2)="action performed on the order originated."
+"RTN","PSJUTL5",15,0)
+ S DIR("?",3)="Nature of order controls whether CPRS will ask for a provider's signature",DIR("?",4)="for the order and whether a chart copy will be printed."
+"RTN","PSJUTL5",16,0)
+ S DIR("?")="Nature of order MUST be entered, but if the package sees the user as a ward clerk or pharmacy technician, the nature of order may only be written."
+"RTN","PSJUTL5",17,0)
+ S DIR("??")="^D HELP^PSJUTL5"
+"RTN","PSJUTL5",18,0)
+ D ^DIR I $D(DIRUT) K DIRUT S Y=-1 Q Y
+"RTN","PSJUTL5",19,0)
+ Q Y
+"RTN","PSJUTL5",20,0)
+ ;Sets DIR(0) based on action being taken.
+"RTN","PSJUTL5",21,0)
+N I $T(NA^ORX1)]"" S Y=$$NA^ORX1("W",0,"B","NATURE OF ORDER",0,"WVPSXDIE") S:Y'="^" Y=$P(Y,"^",3) S:Y="^" Y=-1 Q
+"RTN","PSJUTL5",22,0)
+ I $T(NA^ORX1)="" S DIR(0)="SA^W:WRITTEN;V:VERBAL;P:TELEPHONED;S:SERVICE CORRECTION;X:REJECTED;D:DUPLICATE;I:POLICY;E:PHYSICIAN ENTERED;" Q
+"RTN","PSJUTL5",23,0)
+E I $T(NA^ORX1)]"" S Y=$$NA^ORX1("S",0,"B","NATURE OF ORDER",0,"WVPSXDIE") S:Y'="^" Y=$P(Y,"^",3) S:Y="^" Y=-1 Q
+"RTN","PSJUTL5",24,0)
+ I $T(NA^ORX1)="" S DIR(0)="SA^W:WRITTEN;V:VERBAL;P:TELEPHONED;S:SERVICE CORRECTION;X:REJECTED;D:DUPLICATE;I:POLICY;E:PHYSICIAN ENTERED;" Q
+"RTN","PSJUTL5",25,0)
+R I $T(NA^ORX1)]"" S Y=$$NA^ORX1("W",0,"B","NATURE OF ORDER",0,"WVPSXDIE") S:Y'="^" Y=$P(Y,"^",3) S:Y="^" Y=-1 Q
+"RTN","PSJUTL5",26,0)
+ I $T(NA^ORX1)="" S DIR(0)="SA^W:WRITTEN;V:VERBAL;P:TELEPHONED;S:SERVICE CORRECTION;X:REJECTED;D:DUPLICATE;I:POLICY;E:PHYSICIAN ENTERED;" Q
+"RTN","PSJUTL5",27,0)
+ ;*218 Added R to DC
+"RTN","PSJUTL5",28,0)
+D I $T(NA^ORX1)]"" S Y=$$NA^ORX1("W",0,"B","NATURE OF ORDER",0,"WVPSXDIER") S:Y'="^" Y=$P(Y,"^",3) S:Y="^" Y=-1 Q
+"RTN","PSJUTL5",29,0)
+ I $T(NA^ORX1)="" S DIR(0)="SA^W:WRITTEN;V:VERBAL;P:TELEPHONED;S:SERVICE CORRECTION;X:REJECTED;D:DUPLICATE;I:POLICY;E:PHYSICIAN ENTERED;R:SERVICE REJECT;" Q
+"RTN","PSJUTL5",30,0)
+H I $T(NA^ORX1)]"" S Y=$$NA^ORX1("W",0,"B","NATURE OF ORDER",0,"WVPSDIE") S:Y'="^" Y=$P(Y,"^",3) S:Y="^" Y=-1 Q
+"RTN","PSJUTL5",31,0)
+ I $T(NA^ORX1)="" S DIR(0)="SA^W:WRITTEN;V:VERBAL;P:TELEPHONED;S:SERVICE CORRECTION;D:DUPLICATE;I:POLICY;E:PHYSICIAN ENTERED;" Q
+"RTN","PSJUTL5",32,0)
+V I $T(NA^ORX1)]"" S Y=$$NA^ORX1("W",0,"B","NATURE OF ORDER",0,"WVPSXDIER") S:Y'="^" Y=$P(Y,"^",3) S:Y="^" Y=-1 Q
+"RTN","PSJUTL5",33,0)
+ I $T(NA^ORX1)="" S DIR(0)="SA^W:WRITTEN;V:VERBAL;P:TELEPHONED;S:SERVICE CORRECTION;X:REJECTED;D:DUPLICATE;I:POLICY;E:PHYSICIAN ENTERED;R:SERVICE REJECT;" Q
+"RTN","PSJUTL5",34,0)
+ ;
+"RTN","PSJUTL5",35,0)
+HELP ;Extended Help
+"RTN","PSJUTL5",36,0)
+ W !?55,"Prompted for   Chart Copy",!?55,"Signature in   Printed?",!?55,"CPRS?",!
+"RTN","PSJUTL5",37,0)
+ D @$S("N^E^R^D"[ACT:"WH,VH,PH,SH,XH,DH,IH,EH",1:"WH,VH,PH,SH,DH,IH,EH") Q
+"RTN","PSJUTL5",38,0)
+WH W !?2,"Written",?12," - The source of the order is a written",?59,"No",?74,"No",!?15,"doctor's order." Q
+"RTN","PSJUTL5",39,0)
+VH W !?2,"Verbal",?12," - A doctor verbally requested the order.",?59,"Yes",?74,"Yes" Q
+"RTN","PSJUTL5",40,0)
+PH W !?2,"Telephoned",?12," - A doctor phoned the service to request",?59,"Yes",?74,"Yes",!?15,"the order." Q
+"RTN","PSJUTL5",41,0)
+SH W !?2,"Service",?12," - The service is discontinuing or adding",?59,"No",?74,"No",!?2,"Correction",?15,"new orders to carry out the intent of",!?15,"an order already received." Q
+"RTN","PSJUTL5",42,0)
+XH W !?2,"Rejected",?12," - The service discontinued the order",?59,"No",?74,"No",!?15,"because it was unable to perform the",!?15,"task." Q
+"RTN","PSJUTL5",43,0)
+DH W !?2,"Duplicate",?12," - This applies to orders that are",?59,"No",?74,"Yes",!?15,"discontinued because they are a",!?15,"duplicate of another order." Q
+"RTN","PSJUTL5",44,0)
+IH W !?2,"Policy",?12," - These are orders that are created as",?59,"No",?74,"Yes",!?15,"a matter of hospital policy." Q
+"RTN","PSJUTL5",45,0)
+EH W !?2,"Physician",?12," - These are orders that are entered by",?59,"Yes",?74,"Yes",!?2,"Entered",?15,"the ordering provider." Q
+"VER")
+8.0^22.0
+"^DD",101,101,0)
+FIELD^^775^63
+"^DD",101,101,0,"DDA")
+N
+"^DD",101,101,0,"DIK")
+XQORC
+"^DD",101,101,0,"DIKOLD")
+XQORC
+"^DD",101,101,0,"DT")
+2991207
+"^DD",101,101,0,"ID",1)
+W "   ",$P(^(0),U,2)
+"^DD",101,101,0,"ID",44)
+W:$D(^(4)) "   ",$P(^(4),U,4)
+"^DD",101,101,0,"IX","AB",101.0775,.01)
+
+"^DD",101,101,0,"IX","AD",101.01,.01)
+
+"^DD",101,101,0,"IX","AE",101,6)
+
+"^DD",101,101,0,"IX","AHL1",101,770.1)
+
+"^DD",101,101,0,"IX","AHL1A",101,770.3)
+
+"^DD",101,101,0,"IX","AHL1B",101,770.4)
+
+"^DD",101,101,0,"IX","AHL1C",101,770.95)
+
+"^DD",101,101,0,"IX","AHL2",101,770.2)
+
+"^DD",101,101,0,"IX","AHL21",101,770.1)
+
+"^DD",101,101,0,"IX","AHL21A",101,770.3)
+
+"^DD",101,101,0,"IX","AHL21C",101,770.95)
+
+"^DD",101,101,0,"IX","AM",101,99)
+
+"^DD",101,101,0,"IX","AM1",101,1)
+
+"^DD",101,101,0,"IX","AM41",101,41)
+
+"^DD",101,101,0,"IX","AOC",101,3)
+
+"^DD",101,101,0,"IX","B",101,.01)
+
+"^DD",101,101,0,"IX","B",101.02,.01)
+
+"^DD",101,101,0,"IX","C",101,1)
+
+"^DD",101,101,0,"IX","E",101,6)
+
+"^DD",101,101,0,"IX","K",101.03,.01)
+
+"^DD",101,101,0,"IX","K1",101,1)
+
+"^DD",101,101,0,"IX","K2",101.02,.01)
+
+"^DD",101,101,0,"IX","S",101.07,.01)
+
+"^DD",101,101,0,"NM","PROTOCOL")
+
+"^DD",101,101,0,"PT",1.1,4.2)
+
+"^DD",101,101,0,"PT",69.4,.01)
+
+"^DD",101,101,0,"PT",69.9,2)
+
+"^DD",101,101,0,"PT",100,2)
+
+"^DD",101,101,0,"PT",100.1,.01)
+
+"^DD",101,101,0,"PT",100.99,4)
+
+"^DD",101,101,0,"PT",100.99101,.01)
+
+"^DD",101,101,0,"PT",100.99141,.01)
+
+"^DD",101,101,0,"PT",100.9951,.01)
+
+"^DD",101,101,0,"PT",100.99511,.01)
+
+"^DD",101,101,0,"PT",100.9955,.03)
+
+"^DD",101,101,0,"PT",101.01,.01)
+
+"^DD",101,101,0,"PT",101.01,4)
+
+"^DD",101,101,0,"PT",101.0775,.01)
+
+"^DD",101,101,0,"PT",123,4)
+
+"^DD",101,101,0,"PT",123,5)
+
+"^DD",101,101,0,"PT",123,6)
+
+"^DD",101,101,0,"PT",123.5,123.02)
+
+"^DD",101,101,0,"PT",123.5,123.03)
+
+"^DD",101,101,0,"PT",123.5,123.04)
+
+"^DD",101,101,0,"PT",123.5101,.01)
+
+"^DD",101,101,0,"PT",123.99,.01)
+
+"^DD",101,101,0,"PT",577,.07)
+
+"^DD",101,101,0,"PT",704.006,.01)
+
+"^DD",101,101,0,"PT",772,10)
+
+"^DD",101,101,0,"PT",773,8)
+
+"^DD",101,101,0,"PT",798.1,13)
+
+"^DD",101,101,0,"PT",995,1)
+
+"^DD",101,101,0,"PT",8930.8,.04)
+
+"^DD",101,101,0,"PT",18999.999913,.02)
+
+"^DD",101,101,0,"PT",18999.99992,.02)
+
+"^DD",101,101,0,"PT",9000010,.25)
+
+"^DD",101,101,0,"VRPK")
+HL
+"^DD",101,101,.01,0)
+NAME^FX^^0;1^K:X[""""!($A(X)=45) X I $D(X) D CHKNAME^XQORD101 I $D(X) K:$L(X)>63!($L(X)<3) X
+"^DD",101,101,.01,1,0)
+^.1
+"^DD",101,101,.01,1,1,0)
+101^B
+"^DD",101,101,.01,1,1,1)
+S ^ORD(101,"B",$E(X,1,63),DA)=""
+"^DD",101,101,.01,1,1,2)
+K ^ORD(101,"B",$E(X,1,63),DA)
+"^DD",101,101,.01,1,2,0)
+^^TRIGGER^101^5
+"^DD",101,101,.01,1,2,1)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^ORD(101,D0,0)):^(0),1:"") S X=$P(Y(1),U,5),X=X S DIU=X K Y S X=DIV S X=DUZ X ^DD(101,.01,1,2,1.4)
+"^DD",101,101,.01,1,2,1.4)
+S DIH=$S($D(^ORD(101,DIV(0),0)):^(0),1:""),DIV=X S $P(^(0),U,5)=DIV,DIH=101,DIG=5 D ^DICR:$N(^DD(DIH,DIG,1,0))>0
+"^DD",101,101,.01,1,2,2)
+Q
+"^DD",101,101,.01,1,2,"CREATE VALUE")
+S X=DUZ
+"^DD",101,101,.01,1,2,"DELETE VALUE")
+NO EFFECT
+"^DD",101,101,.01,1,2,"FIELD")
+CREATOR
+"^DD",101,101,.01,3)
+Enter a name that is preceded by the package namespace.
+"^DD",101,101,.01,21,0)
+^^1^1^2920731^^^^
+"^DD",101,101,.01,21,1,0)
+A unique name, which is preceded by the package namespace.
+"^DD",101,101,.01,"DT")
+2920617
+"^DD",101,101,.01,"V",0)
+^.12P^1^1
+"^DD",101,101,.01,"V",1,0)
+60^LABORATORY TEST^1^LAB^^n
+"^DD",101,101,1,0)
+ITEM TEXT^FX^^0;2^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>63!($L(X)<3) X
+"^DD",101,101,1,1,0)
+^.1
+"^DD",101,101,1,1,1,0)
+101^C
+"^DD",101,101,1,1,1,1)
+S ORKX=X D UP^XQORDD1 S ^ORD(101,"C",$E(X,1,63),DA)="",X=ORKX K ORKX
+"^DD",101,101,1,1,1,2)
+S ORKX=X D UP^XQORDD1 K ^ORD(101,"C",$E(X,1,63),DA) S X=ORKX K ORKX
+"^DD",101,101,1,1,2,0)
+101^AM1^MUMPS
+"^DD",101,101,1,1,2,1)
+D REDO^XQORD101
+"^DD",101,101,1,1,2,2)
+D REDO^XQORD101
+"^DD",101,101,1,1,3,0)
+101^K1^MUMPS
+"^DD",101,101,1,1,3,1)
+D K11^XQORDD1
+"^DD",101,101,1,1,3,2)
+D K12^XQORDD1
+"^DD",101,101,1,3)
+ANSWER MUST BE 3-63 CHARACTERS IN LENGTH
+"^DD",101,101,1,21,0)
+^^1^1^2920224^^^^
+"^DD",101,101,1,21,1,0)
+The protocol's text as it appears to the user on the menu or subheader.
+"^DD",101,101,1,"DT")
+2890303
+"^DD",101,101,1.1,0)
+SYNONYM^101.02A^^2;0
+"^DD",101,101,1.1,3)
+Enter a synonym for this protocol
+"^DD",101,101,1.1,21,0)
+^^1^1^2920224^^^^
+"^DD",101,101,1.1,21,1,0)
+This is another name for the protocol that may be used on lookup.
+"^DD",101,101,1.11,0)
+PRINT NAME^F^^.1;1^K:$L(X)>7!($L(X)<1) X
+"^DD",101,101,1.11,3)
+Answer must be 1-7 characters in length.
+"^DD",101,101,1.11,21,0)
+^^2^2^2920224^
+"^DD",101,101,1.11,21,1,0)
+This is a shortened version of the item text to be used on print-outs
+"^DD",101,101,1.11,21,2,0)
+where the name must be abbreviated.
+"^DD",101,101,1.11,"DT")
+2910808
+"^DD",101,101,2,0)
+DISABLE^F^^0;3^K:$L(X)>40!($L(X)<1) X
+"^DD",101,101,2,3)
+Enter text to disable this protocol (1-40 characters).
+"^DD",101,101,2,21,0)
+^^3^3^2920224^^
+"^DD",101,101,2,21,1,0)
+This field disables use of the protocol when there is text in it.  The
+"^DD",101,101,2,21,2,0)
+text should be a short message explaining why use of the protocol has
+"^DD",101,101,2,21,3,0)
+been disabled, as it will be displayed if the protocol is selected.
+"^DD",101,101,2,"DT")
+2881207
+"^DD",101,101,3,0)
+LOCK^FX^^0;6^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>30!($L(X)<1) X I $D(X) Q:$D(^DIC(19.1,"B",X))  W !,*7,"Key name must match exactly with a key in SECURITY KEY file." K X
+"^DD",101,101,3,.1)
+The name of the key required of the user to access this option
+"^DD",101,101,3,1,0)
+^.1^^0
+"^DD",101,101,3,3)
+Enter the exact name of the key required to access this option.
+"^DD",101,101,3,4)
+S X="??",DIC=19.1,DIC(0)="E" I $D(^DIC(19.1,0)),$P(^(0),U,3) W "CURRENT LOCKS:" D ^DIC W !
+"^DD",101,101,3,21,0)
+^^3^3^2920224^^^^
+"^DD",101,101,3,21,1,0)
+This field is used to deny access to users who have this option
+"^DD",101,101,3,21,2,0)
+as part of their menu. If an option has a lock, then only users
+"^DD",101,101,3,21,3,0)
+who hold the matching key can access it.
+"^DD",101,101,3,"DT")
+2900327
+"^DD",101,101,3.5,0)
+DESCRIPTION^101.06^^1;0
+"^DD",101,101,3.5,3)
+Enter a description for this protocol
+"^DD",101,101,3.5,21,0)
+^^1^1^2920224^^^
+"^DD",101,101,3.5,21,1,0)
+This field contains a brief explanation of the protocol.
+"^DD",101,101,3.9,0)
+PROHIBITED TIMES^F^^0;9^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>9!($L(X)<9)!'(X?4N1"-"4N) X
+"^DD",101,101,3.9,1,0)
+^.1^^0
+"^DD",101,101,3.9,3)
+Enter the times in military format that this protocol cannot be used.
+"^DD",101,101,3.9,21,0)
+^^3^3^2920423^^^^
+"^DD",101,101,3.9,21,1,0)
+This specifies a time range during which this option cannot be accessed.
+"^DD",101,101,3.9,21,2,0)
+The time should be entered in military format. For example, to
+"^DD",101,101,3.9,21,3,0)
+prohibit an option from running between 9 AM and 2 PM, enter 0900-1400.
+"^DD",101,101,3.9,"DT")
+2900327
+"^DD",101,101,4,0)
+TYPE^RS^A:action;M:menu;O:protocol;Q:protocol menu;L:limited protocol;X:extended action;D:dialog;T:term;E:event driver;S:subscriber;^0;4^Q
+"^DD",101,101,4,1,0)
+^.1^^0
+"^DD",101,101,4,3)
+Specify a type for this protocol.
+"^DD",101,101,4,21,0)
+^^16^16^2920224^^^^
+"^DD",101,101,4,21,1,0)
+This field defines the type of protocol to be executed.  Types Q, O, and
+"^DD",101,101,4,21,2,0)
+L are strictly related to the 'Add orders' function.
+"^DD",101,101,4,21,3,0)
+  Q = Protocol menu - used for displaying and selecting orderable items
+"^DD",101,101,4,21,4,0)
+during the add sequence. When this type of protocol is encountered
+"^DD",101,101,4,21,5,0)
+OE/RR will ask the 'Select PATIENT:,' 'LOCATION:,' 'Provider:'
+"^DD",101,101,4,21,6,0)
+prompts and execute the transaction logic for the new orders
+"^DD",101,101,4,21,7,0)
+screen.  This is also true for type O and L.
+"^DD",101,101,4,21,8,0)
+O = Protocol - same as Q but the protocol is the item selected.
+"^DD",101,101,4,21,9,0)
+Protocols are directly executed when encountered.
+"^DD",101,101,4,21,10,0)
+L = Limited protocol - same as O but any existing sub-items are
+"^DD",101,101,4,21,11,0)
+not executed.
+"^DD",101,101,4,21,12,0)
+M = Menu - used for displaying and selecting items.
+"^DD",101,101,4,21,13,0)
+X = Extended action - protocols of this type execute the entry action
+"^DD",101,101,4,21,14,0)
+plus all sub-items.
+"^DD",101,101,4,21,15,0)
+  A = Action - same as X but any existing sub-items are
+"^DD",101,101,4,21,16,0)
+not executed.
+"^DD",101,101,4,21,17,0)
+  X = Extended action - protocols of this type execute the entry action
+"^DD",101,101,4,21,18,0)
+      plus all sub-items.
+"^DD",101,101,4,21,19,0)
+ 
+"^DD",101,101,4,21,20,0)
+  A = Action - same as X but any existing sub-items are
+"^DD",101,101,4,21,21,0)
+      not executed.
+"^DD",101,101,4,"DT")
+2940722
+"^DD",101,101,5,0)
+CREATOR^RP200'^VA(200,^0;5^Q
+"^DD",101,101,5,3)
+Enter the creator of this protocol.
+"^DD",101,101,5,5,1,0)
+101^.01^2
+"^DD",101,101,5,9)
+^
+"^DD",101,101,5,21,0)
+^^1^1^2920224^^^
+"^DD",101,101,5,21,1,0)
+This field identifies who created the protocol.
+"^DD",101,101,5,"DT")
+2900820
+"^DD",101,101,6,0)
+FILE LINK^V^^5;1^Q
+"^DD",101,101,6,1,0)
+^.1^^-1
+"^DD",101,101,6,1,1,0)
+101^AE
+"^DD",101,101,6,1,1,1)
+S ^ORD(101,"AE",$E(X,1,30),DA)=""
+"^DD",101,101,6,1,1,2)
+K ^ORD(101,"AE",$E(X,1,30),DA)
+"^DD",101,101,6,3)
+Enter the file, if any, that this protocol is linked to.
+"^DD",101,101,6,21,0)
+^^2^2^2920224^^^^
+"^DD",101,101,6,21,1,0)
+This field is a variable pointer which may point to the entry in a file
+"^DD",101,101,6,21,2,0)
+to which a protocol is linked.
+"^DD",101,101,6,21,3,0)
+
+"^DD",101,101,6,"DT")
+2910419
+"^DD",101,101,6,"V",0)
+^.12P^9^9
+"^DD",101,101,6,"V",1,0)
+19^OPTION^1^OPT^^n
+"^DD",101,101,6,"V",2,0)
+60^LAB^2^LAB^^n
+"^DD",101,101,6,"V",3,0)
+62^SAMPLE^3^SAM^^n
+"^DD",101,101,6,"V",4,0)
+61^SPECIMEN^4^SPEC^^n
+"^DD",101,101,6,"V",5,0)
+71^RADIOLOGY PROCEDURE^5^RAD^^n
+"^DD",101,101,6,"V",6,0)
+62.05^URGENCY^6^URG^^n
+"^DD",101,101,6,"V",7,0)
+62.07^EXECUTE CODE^7^EXE^^n
+"^DD",101,101,6,"V",8,0)
+123.5^SERVICE^8^S^n^n
+"^DD",101,101,6,"V",9,0)
+123.1^ACTION TYPES^9^A^^n
+"^DD",101,101,8,0)
+COST^NJ10,2^^5;2^S:X["$" X=$P(X,"$",2) K:X'?.N.1".".2N!(X>9999999)!(X<0) X
+"^DD",101,101,8,3)
+Type a Dollar Amount between 0 and 9999999, 2 Decimal Digits
+"^DD",101,101,8,21,0)
+^^1^1^2920224^^
+"^DD",101,101,8,21,1,0)
+This is the cost of filling the order associated with this protocol.
+"^DD",101,101,8,"DT")
+2890426
+"^DD",101,101,10,0)
+ITEM^101.01PA^^10;0
+"^DD",101,101,10,3)
+Enter items for this protocol.
+"^DD",101,101,10,21,0)
+^^1^1^2920731^^^^
+"^DD",101,101,10,21,1,0)
+This is the item multiple for a protocol
+"^DD",101,101,12,0)
+PACKAGE^P9.4'^DIC(9.4,^0;12^Q
+"^DD",101,101,12,3)
+Enter the package for this protocol.
+"^DD",101,101,12,21,0)
+^^1^1^2920224^^
+"^DD",101,101,12,21,1,0)
+Pointer to Package File (#9.4).
+"^DD",101,101,12,"DT")
+2881128
+"^DD",101,101,15,0)
+EXIT ACTION^K^^15;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101,101,15,3)
+ENTER STANDARD MUMPS CODE
+"^DD",101,101,15,8.5)
+@
+"^DD",101,101,15,9)
+@
+"^DD",101,101,15,21,0)
+^^2^2^2920224^^^
+"^DD",101,101,15,21,1,0)
+This field contains MUMPS code which will be executed on leaving
+"^DD",101,101,15,21,2,0)
+this option.  It is only applicable to Menu types.
+"^DD",101,101,15,"DT")
+2881121
+"^DD",101,101,20,0)
+ENTRY ACTION^K^^20;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101,101,20,3)
+ENTER STANDARD MUMPS CODE
+"^DD",101,101,20,8.5)
+@
+"^DD",101,101,20,9)
+@
+"^DD",101,101,20,21,0)
+^^2^2^2920224^^
+"^DD",101,101,20,21,1,0)
+This field contains MUMPS code which will be executed on entering
+"^DD",101,101,20,21,2,0)
+this option.  It is applicable to Menu and Action types.
+"^DD",101,101,20,"DT")
+2881121
+"^DD",101,101,21,0)
+REQUIRED VARIABLES^101.021A^^21;0
+"^DD",101,101,21,3)
+Enter the required variables for this protocol.
+"^DD",101,101,21,21,0)
+^^4^4^2920224^^
+"^DD",101,101,21,21,1,0)
+This lists the variables that must be defined for the proper execution of
+"^DD",101,101,21,21,2,0)
+this protocol.  This aids in documenting the protocol.  Also, in the case
+"^DD",101,101,21,21,3,0)
+of ';' jumping, the variables defined as required may be newed before
+"^DD",101,101,21,21,4,0)
+jumping, thus preserving the context when returning from the jump.
+"^DD",101,101,24,0)
+SCREEN^K^^24;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101,101,24,3)
+This is standard MUMPS code to screen an item from processing.
+"^DD",101,101,24,8.5)
+@
+"^DD",101,101,24,9)
+@
+"^DD",101,101,24,21,0)
+^^4^4^2920224^^
+"^DD",101,101,24,21,1,0)
+This field contains MUMPS code that screens out menu items or the
+"^DD",101,101,24,21,2,0)
+execution of particular items in a protocol.  Before each item is
+"^DD",101,101,24,21,3,0)
+displayed or executed, the screen is executed and the item is only
+"^DD",101,101,24,21,4,0)
+processed if $T is true.
+"^DD",101,101,24,"DT")
+2890426
+"^DD",101,101,25,0)
+SCREEN^K^^25;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101,101,25,3)
+ENTER STANDARD MUMPS CODE
+"^DD",101,101,25,8.5)
+@
+"^DD",101,101,25,9)
+@
+"^DD",101,101,25,"DT")
+2881121
+"^DD",101,101,26,0)
+HEADER^K^^26;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101,101,26,3)
+Enter standard MUMPS code that will used to replace the header on the menu.
+"^DD",101,101,26,9)
+@
+"^DD",101,101,26,21,0)
+^^2^2^2920224^^
+"^DD",101,101,26,21,1,0)
+In the case of menus (type M or Q), this contains MUMPS code that is 
+"^DD",101,101,26,21,2,0)
+executed to display a header for the menu.
+"^DD",101,101,26,"DT")
+2881205
+"^DD",101,101,27,0)
+MENU HELP^K^^27;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101,101,27,3)
+Enter standard MUMPS code that will be used to supplement the standard help prompt for this entry.
+"^DD",101,101,27,9)
+@
+"^DD",101,101,27,21,0)
+^^2^2^2920224^^
+"^DD",101,101,27,21,1,0)
+This contains MUMPS code that displays additional help to that already
+"^DD",101,101,27,21,2,0)
+given with the menu.
+"^DD",101,101,27,"DT")
+2881207
+"^DD",101,101,28,0)
+MENU PROMPT^F^^28;E1,245^K:$L(X)>245!($L(X)<1) X
+"^DD",101,101,28,3)
+Enter a replacement prompt for selecting items on this menu.
+"^DD",101,101,28,21,0)
+^^2^2^2920224^^
+"^DD",101,101,28,21,1,0)
+This contains text to replace the standard "Select Item: " prompt normally
+"^DD",101,101,28,21,2,0)
+given with a menu.
+"^DD",101,101,28,"DT")
+2881207
+"^DD",101,101,29,0)
+MENU DEFAULT^F^^29;E1,245^K:$L(X)>245!($L(X)<1) X
+"^DD",101,101,29,3)
+Enter a default for the menu prompt.
+"^DD",101,101,29,21,0)
+^^2^2^2920224^^
+"^DD",101,101,29,21,1,0)
+This field contains a default response (i.e., default selection from the
+"^DD",101,101,29,21,2,0)
+menu), if desired.
+"^DD",101,101,29,"DT")
+2920210
+"^DD",101,101,30,0)
+DIC {DIC}^F^^30;E1,64^K:$L(X)>64!($L(X)<1) X
+"^DD",101,101,30,3)
+Answer must be 1-64 characters in length.
+"^DD",101,101,30,21,0)
+^^3^3^2920224^^
+"^DD",101,101,30,21,1,0)
+This field is used as the global reference passed to ^DIC for a file
+"^DD",101,101,30,21,2,0)
+look-up.  The entry should be in the regular format for a call to ^DIC
+"^DD",101,101,30,21,3,0)
+i.e. ^GL(41,
+"^DD",101,101,30,"DT")
+2910312
+"^DD",101,101,41,0)
+COLUMN WIDTH^NJ3,0^^4;1^K:+X'=X!(X>132)!(X<25)!(X?.E1"."1N.N) X
+"^DD",101,101,41,1,0)
+^.1
+"^DD",101,101,41,1,1,0)
+101^AM41^MUMPS
+"^DD",101,101,41,1,1,1)
+D REDO^XQORD101
+"^DD",101,101,41,1,1,2)
+D REDO^XQORD101
+"^DD",101,101,41,3)
+Type a Number between 25 and 132, 0 Decimal Digits
+"^DD",101,101,41,21,0)
+^^2^2^2920224^^
+"^DD",101,101,41,21,1,0)
+This is the width, in characters, for each column on a menu.  For example,
+"^DD",101,101,41,21,2,0)
+to have 3 columns on an 80 character device, enter a column width of 26.
+"^DD",101,101,41,"DT")
+2881207
+"^DD",101,101,42,0)
+MNEMONIC WIDTH^NJ1,0^^4;2^K:+X'=X!(X>9)!(X<1)!(X?.E1"."1N.N) X
+"^DD",101,101,42,1,0)
+^.1^^0
+"^DD",101,101,42,3)
+Type a Number between 1 and 9, 0 Decimal Digits
+"^DD",101,101,42,21,0)
+^^2^2^2920224^^
+"^DD",101,101,42,21,1,0)
+This field allows the width allowed for mnemonics to be varied.  The
+"^DD",101,101,42,21,2,0)
+default width is 5.
+"^DD",101,101,42,"DT")
+2890211
+"^DD",101,101,43,0)
+PATH SWITCH^S^Y:YES;N:NO;^4;3^Q
+"^DD",101,101,43,3)
+Enter Y for YES, N for NO, ?? for detailed description.
+"^DD",101,101,43,21,0)
+^^5^5^2920224^^
+"^DD",101,101,43,21,1,0)
+This allows the user, when traversing back UP the tree of protocols, to
+"^DD",101,101,43,21,2,0)
+select a new path back down the tree.  In other words, the menu is
+"^DD",101,101,43,21,3,0)
+redisplayed when returning to that menu's level in the tree, and processing
+"^DD",101,101,43,21,4,0)
+back down the tree is possible from that point.  If nothing is selected
+"^DD",101,101,43,21,5,0)
+from the menu, the path continues back up the tree.
+"^DD",101,101,43,"DT")
+2881207
+"^DD",101,101,44,0)
+IDENTIFIER^F^^4;4^K:$L(X)>63!($L(X)<1) X
+"^DD",101,101,44,3)
+Answer must be 1-63 characters in length.
+"^DD",101,101,44,21,0)
+3^^3^3^2920224^^^
+"^DD",101,101,44,21,1,0)
+Entries into this file can be given identifiers to show context, function
+"^DD",101,101,44,21,2,0)
+and/or relationships.  For example, Digoxin may exist in the file as three
+"^DD",101,101,44,21,3,0)
+different entries with identifiers of SERUM, PLASMA and Drug.
+"^DD",101,101,44,"DT")
+2891130
+"^DD",101,101,99,0)
+TIMESTAMP^F^^99;1^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>15!($L(X)<1) X
+"^DD",101,101,99,1,0)
+^.1
+"^DD",101,101,99,1,1,0)
+101^AM^MUMPS
+"^DD",101,101,99,1,1,1)
+D SET^XQORD101
+"^DD",101,101,99,1,1,2)
+D KILL^XQORD101
+"^DD",101,101,99,3)
+ANSWER MUST BE 1-15 CHARACTERS IN LENGTH
+"^DD",101,101,99,21,0)
+^^2^2^2920224^^^^
+"^DD",101,101,99,21,1,0)
+This contains the $H time that fields which are necessary to menu display
+"^DD",101,101,99,21,2,0)
+were last changed.
+"^DD",101,101,99,"DT")
+2881122
+"^DD",101,101,100,0)
+*ORDER PRINT ACTION^K^^100;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101,101,100,3)
+ENTER STANDARD MUMPS CODE
+"^DD",101,101,100,9)
+@
+"^DD",101,101,100,21,0)
+^^4^4^2920224^^^^
+"^DD",101,101,100,21,1,0)
+***NOTICE- THIS FIELD WILL BE REMOVED IN A FUTURE VERSION***
+"^DD",101,101,100,21,2,0)
+Package action when a detailed listing of an order is requested.
+"^DD",101,101,100,21,3,0)
+Included in this file for backward compatability with earlier versions
+"^DD",101,101,100,21,4,0)
+of OE/RR.
+"^DD",101,101,100,"DT")
+2881209
+"^DD",101,101,100.1,0)
+*ORDER CANCEL ACTION^K^^100.1;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101,101,100.1,3)
+ENTER STANDARD MUMPS CODE
+"^DD",101,101,100.1,9)
+@
+"^DD",101,101,100.1,21,0)
+^^3^3^2920224^^^^
+"^DD",101,101,100.1,21,1,0)
+***NOTICE- THIS FIELD WILL BE REMOVED IN A FUTURE VERSION***
+"^DD",101,101,100.1,21,2,0)
+Package action when an order is cancelled or discontinued.  Included in
+"^DD",101,101,100.1,21,3,0)
+this file for backward compatability with earlier versions of OE/RR.
+"^DD",101,101,100.1,"DT")
+2881209
+"^DD",101,101,100.2,0)
+*ORDER PURGE ACTION^K^^100.2;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101,101,100.2,3)
+ENTER STANDARD MUMPS CODE
+"^DD",101,101,100.2,9)
+@
+"^DD",101,101,100.2,21,0)
+^^3^3^2920224^^^^
+"^DD",101,101,100.2,21,1,0)
+***NOTICE- THIS FIELD WILL BE REMOVED IN A FUTURE VERSION***
+"^DD",101,101,100.2,21,2,0)
+Package action when an order is to be purged from file 100.  Included in
+"^DD",101,101,100.2,21,3,0)
+this file for backward compatability with earlier versions of OE/RR.
+"^DD",101,101,100.2,"DT")
+2881209
+"^DD",101,101,100.3,0)
+ACCESS^101.03P^^3;0
+"^DD",101,101,100.3,3)
+Enter a security key to limit access to this protocol.
+"^DD",101,101,100.3,21,0)
+^^2^2^2920224^^^
+"^DD",101,101,100.3,21,1,0)
+This multiple contains the list of security keys which allow access to
+"^DD",101,101,100.3,21,2,0)
+the protocol.  If there are no keys, all users have access.
+"^DD",101,101,101.01,0)
+REQUIRES SIGNATURE^S^0:PHYSICIAN SIGNATURE;1:NO SIGNATURE REQUIRED;^101.01;1^Q
+"^DD",101,101,101.01,3)
+Enter a '1' if this protocol does not require a physician signature.
+"^DD",101,101,101.01,21,0)
+^^4^4^2920225^
+"^DD",101,101,101.01,21,1,0)
+This field is used to specify an orderable/protocol that does not
+"^DD",101,101,101.01,21,2,0)
+require a physician signature in OE/RR.  Some of the things entered
+"^DD",101,101,101.01,21,3,0)
+in OE/RR are considered instructions and don't require physician
+"^DD",101,101,101.01,21,4,0)
+signature.  An example of this might be an entry for an Early/Late tray.
+"^DD",101,101,101.01,"DT")
+2910809
+"^DD",101,101,101.041,0)
+DOMAIN (DATA TYPE)^S^D:date/time;F:free text;L:list or range;N:numeric;S:set of codes;Y:yes/no;P:pointer;M:menu;W:word processing;^101.04;1^Q
+"^DD",101,101,101.041,3)
+Enter the appropriate type for this prompt.
+"^DD",101,101,101.041,21,0)
+^^2^2^2920225^
+"^DD",101,101,101.041,21,1,0)
+This is the data type of a term (i.e. protocol of type term) used in a
+"^DD",101,101,101.041,21,2,0)
+dialog.
+"^DD",101,101,101.041,"DT")
+2910819
+"^DD",101,101,101.042,0)
+DEFAULT PROMPT^F^^101.04;2^K:$L(X)>30!($L(X)<1) X
+"^DD",101,101,101.042,3)
+Answer must be 1-30 characters in length.
+"^DD",101,101,101.042,21,0)
+^^3^3^2920225^
+"^DD",101,101,101.042,21,1,0)
+For this term, this is the prompt that is automatically used when the
+"^DD",101,101,101.042,21,2,0)
+term is used as an item in a dialog.  The prompt may be modified at the
+"^DD",101,101,101.042,21,3,0)
+item level.
+"^DD",101,101,101.042,"DT")
+2910819
+"^DD",101,101,101.043,0)
+DEFAULT ANSWER^F^^101.04;3^K:$L(X)>80!($L(X)<1) X
+"^DD",101,101,101.043,3)
+Answer must be 1-80 characters in length.
+"^DD",101,101,101.043,21,0)
+^^3^3^2920225^
+"^DD",101,101,101.043,21,1,0)
+For a term protocol, this is the default answer that is automatically used
+"^DD",101,101,101.043,21,2,0)
+when the term is used as an item in a dialog.  The default may be modified
+"^DD",101,101,101.043,21,3,0)
+at the item level.
+"^DD",101,101,101.043,"DT")
+2910819
+"^DD",101,101,101.0431,0)
+DEFAULT WORD PROCESSING ANSWER^101.0431^^101.0431;0
+"^DD",101,101,101.0431,21,0)
+^^2^2^2920225^
+"^DD",101,101,101.0431,21,1,0)
+This is text used as a template for an item in a dialog that is a word
+"^DD",101,101,101.0431,21,2,0)
+processing type.
+"^DD",101,101,101.044,0)
+DEFAULT HELP^F^^101.04;4^K:$L(X)>80!($L(X)<1) X
+"^DD",101,101,101.044,3)
+Answer must be 1-80 characters in length.
+"^DD",101,101,101.044,21,0)
+^^3^3^2920225^
+"^DD",101,101,101.044,21,1,0)
+For a term protocol, this is the help text that is automatically used when
+"^DD",101,101,101.044,21,2,0)
+the term is used as an item in a dialog.  The help text may be replaced at
+"^DD",101,101,101.044,21,3,0)
+the item level.
+"^DD",101,101,101.044,"DT")
+2910819
+"^DD",101,101,101.045,0)
+DOMAIN PARAMETER^F^^101.04;5^K:$L(X)>56!($L(X)<1) X
+"^DD",101,101,101.045,3)
+Answer must be 1-56 characters in length.
+"^DD",101,101,101.045,21,0)
+^^3^3^2920225^
+"^DD",101,101,101.045,21,1,0)
+This is a parameter that may be used to further specify the data type
+"^DD",101,101,101.045,21,2,0)
+(i.e. input transform) for a term protocol.  The parameter is what would
+"^DD",101,101,101.045,21,3,0)
+be placed in the second up-arrow piece of DIR(0) when calling the reader.
+"^DD",101,101,101.045,"DT")
+2911126
+"^DD",101,101,101.05,0)
+METHOD^101.05I^^101.05;0
+"^DD",101,101,101.05,21,0)
+^^2^2^2920224^^
+"^DD",101,101,101.05,21,1,0)
+This number identifies individual methods (actions) that may be invoked
+"^DD",101,101,101.05,21,2,0)
+for this protocol.
+"^DD",101,101,101.05,23,0)
+^^1^1^2920224^^
+"^DD",101,101,101.05,23,1,0)
+Method numbers correspond to ORACTION numbers.
+"^DD",101,101,101.07,0)
+SET MEMBERSHIP^101.07^^101.07;0
+"^DD",101,101,101.07,21,0)
+^^3^3^2920224^^
+"^DD",101,101,101.07,21,1,0)
+This is a namespaced name of a set.  If this is entered, a cross reference
+"^DD",101,101,101.07,21,2,0)
+of the format "S.set membership" is created.  This allows rapid lookups on
+"^DD",101,101,101.07,21,3,0)
+subsets of the Protocol file.
+"^DD",101,101,770.1,0)
+SENDING APPLICATION^P771^HL(771,^770;1^Q
+"^DD",101,101,770.1,.1)
+
+"^DD",101,101,770.1,1,0)
+^.1
+"^DD",101,101,770.1,1,1,0)
+101^AHL1^MUMPS
+"^DD",101,101,770.1,1,1,1)
+N HL770 S HL770=$G(^ORD(101,DA,770)) S:$P(HL770,"^",3)&($P(HL770,"^",4))&($P(HL770,"^",10)) ^ORD(101,"AHL1",X,$P(HL770,"^",3),$P(HL770,"^",4),$P(HL770,"^",10),DA)=""
+"^DD",101,101,770.1,1,1,2)
+N HL770 S HL770=$G(^ORD(101,DA,770)) K:$P(HL770,"^",3)&($P(HL770,"^",4))&($P(HL770,"^",10)) ^ORD(101,"AHL1",X,$P(HL770,"^",3),$P(HL770,"^",4),$P(HL770,"^",10),DA)
+"^DD",101,101,770.1,1,1,3)
+This cross reference is required to look up the protocol related to an incoming message.
+"^DD",101,101,770.1,1,1,"%D",0)
+^^5^5^2990714^
+"^DD",101,101,770.1,1,1,"%D",1,0)
+This cross reference is used to look up the protocol related to an incoming 
+"^DD",101,101,770.1,1,1,"%D",2,0)
+message at the time the incoming message is received.  This cross reference
+"^DD",101,101,770.1,1,1,"%D",3,0)
+is composed of values from the Server Application, Message Type, Event
+"^DD",101,101,770.1,1,1,"%D",4,0)
+Type and Version ID fields. This cross reference works in conjunction with
+"^DD",101,101,770.1,1,1,"%D",5,0)
+the AHL1A, AHL1B and AHL1C cross references.
+"^DD",101,101,770.1,1,1,"DT")
+2990714
+"^DD",101,101,770.1,1,2,0)
+101^AHL21^MUMPS
+"^DD",101,101,770.1,1,2,1)
+N HL770 S HL770=$G(^ORD(101,DA,770)) S:$P(HL770,"^",3)&($P(HL770,"^",10)) ^ORD(101,"AHL21",X,$P(HL770,"^",3),$P(HL770,"^",10),DA)=""
+"^DD",101,101,770.1,1,2,2)
+N HL770 S HL770=$G(^ORD(101,DA,770)) K:$P(HL770,"^",3)&($P(HL770,"^",10)) ^ORD(101,"AHL21",X,$P(HL770,"^",3),$P(HL770,"^",10),DA)
+"^DD",101,101,770.1,1,2,3)
+This cross reference is required to look up the protocol related to an incoming message without an event type.
+"^DD",101,101,770.1,1,2,"%D",0)
+^^5^5^2990714^
+"^DD",101,101,770.1,1,2,"%D",1,0)
+This cross reference is used to look up the protocol related to an
+"^DD",101,101,770.1,1,2,"%D",2,0)
+incoming message without an event type at the time the incoming message is
+"^DD",101,101,770.1,1,2,"%D",3,0)
+received.  This cross reference is composed of values from the Server
+"^DD",101,101,770.1,1,2,"%D",4,0)
+Application, Message Type, and Version ID fields.  This cross reference
+"^DD",101,101,770.1,1,2,"%D",5,0)
+works in conjunction with the AHL21A and AHL21C cross references.
+"^DD",101,101,770.1,1,2,"DT")
+2990714
+"^DD",101,101,770.1,3)
+Enter the application that initiates the transaction.
+"^DD",101,101,770.1,21,0)
+^^2^2^2990707^^^
+"^DD",101,101,770.1,21,1,0)
+Enter the name of the application that initiates a transaction. It
+"^DD",101,101,770.1,21,2,0)
+is required only when defining an EVENT POINT protocol.
+"^DD",101,101,770.1,"DT")
+2990714
+"^DD",101,101,770.11,0)
+RESPONSE MESSAGE TYPE^P771.2'^HL(771.2,^770;11^Q
+"^DD",101,101,770.11,3)
+Enter the message type of the expected response.
+"^DD",101,101,770.11,21,0)
+^^11^11^2990713^
+"^DD",101,101,770.11,21,1,0)
+Enter the message type of the expected RESPONSE. It should only be defined
+"^DD",101,101,770.11,21,2,0)
+on a SUBSCRIBER PROTOCOL.
+"^DD",101,101,770.11,21,3,0)
+ 
+"^DD",101,101,770.11,21,4,0)
+NOTE:
+"^DD",101,101,770.11,21,5,0)
+In a contract between the initiating system and the responding system, the
+"^DD",101,101,770.11,21,6,0)
+Event Driver protocol defines the characteristics of the INITIATING
+"^DD",101,101,770.11,21,7,0)
+SYSTEM. The Initiating System initiates either queries or unsolicited
+"^DD",101,101,770.11,21,8,0)
+update messages. A Subscriber Protocol defines the characteristics of the
+"^DD",101,101,770.11,21,9,0)
+RESPONDING SYSTEM. The responding system completes a transaction by
+"^DD",101,101,770.11,21,10,0)
+returning either an acknowledgement and/or a response to the specific
+"^DD",101,101,770.11,21,11,0)
+query message.
+"^DD",101,101,770.11,"DT")
+2990617
+"^DD",101,101,770.14,0)
+BATCH/FILE MESSAGE COMMIT ACK^S^1:YES;0:NO;^770;14^Q
+"^DD",101,101,770.14,21,0)
+^^6^6^2980923^^
+"^DD",101,101,770.14,21,1,0)
+In a bi-directional interface, this field will be used 
+"^DD",101,101,770.14,21,2,0)
+to determine whether or not a Batch or File message should
+"^DD",101,101,770.14,21,3,0)
+send or receive a Commit Acknowledgement.  A Batch or File
+"^DD",101,101,770.14,21,4,0)
+message will always send/receive an Application Ack. This
+"^DD",101,101,770.14,21,5,0)
+feature is non-standard according to HL7.  It is needed to
+"^DD",101,101,770.14,21,6,0)
+insure the receipt of a message.
+"^DD",101,101,770.14,"DT")
+2980728
+"^DD",101,101,770.2,0)
+RECEIVING APPLICATION^P771^HL(771,^770;2^Q
+"^DD",101,101,770.2,.1)
+
+"^DD",101,101,770.2,1,0)
+^.1
+"^DD",101,101,770.2,1,1,0)
+101^AHL2
+"^DD",101,101,770.2,1,1,1)
+S ^ORD(101,"AHL2",$E(X,1,30),DA)=""
+"^DD",101,101,770.2,1,1,2)
+K ^ORD(101,"AHL2",$E(X,1,30),DA)
+"^DD",101,101,770.2,1,1,3)
+This cross reference is needed to provide a list of Client (Subscriber) protocols.
+"^DD",101,101,770.2,1,1,"%D",0)
+^^2^2^2950223^
+"^DD",101,101,770.2,1,1,"%D",1,0)
+This cross reference is used to provide a list of Client (Subscriber)
+"^DD",101,101,770.2,1,1,"%D",2,0)
+protocols.
+"^DD",101,101,770.2,1,1,"DT")
+2950223
+"^DD",101,101,770.2,3)
+The application that will receive the message.
+"^DD",101,101,770.2,21,0)
+^^3^3^2990706^
+"^DD",101,101,770.2,21,1,0)
+This is the application that receives a message. It is otherwise known as
+"^DD",101,101,770.2,21,2,0)
+the "responding" application when a transaction takes place. This
+"^DD",101,101,770.2,21,3,0)
+information is required for SUBSCRIBER protocols only.
+"^DD",101,101,770.2,"DT")
+2990713
+"^DD",101,101,770.3,0)
+TRANSACTION MESSAGE TYPE^P771.2'^HL(771.2,^770;3^Q
+"^DD",101,101,770.3,.1)
+
+"^DD",101,101,770.3,1,0)
+^.1
+"^DD",101,101,770.3,1,1,0)
+101^AHL1A^MUMPS
+"^DD",101,101,770.3,1,1,1)
+N HL770 S HL770=$G(^ORD(101,DA,770)) S:$P(HL770,"^")&($P(HL770,"^",4))&($P(HL770,"^",10)) ^ORD(101,"AHL1",$P(HL770,"^"),X,$P(HL770,"^",4),$P(HL770,"^",10),DA)=""
+"^DD",101,101,770.3,1,1,2)
+N HL770 S HL770=$G(^ORD(101,DA,770)) K:$P(HL770,"^")&($P(HL770,"^",4))&($P(HL770,"^",10)) ^ORD(101,"AHL1",$P(HL770,"^"),X,$P(HL770,"^",4),$P(HL770,"^",10),DA)
+"^DD",101,101,770.3,1,1,3)
+This cross reference is required to look up the protocol related to an incoming message.
+"^DD",101,101,770.3,1,1,"%D",0)
+^^5^5^2990714^
+"^DD",101,101,770.3,1,1,"%D",1,0)
+This cross reference is used to look up the protocol related to an incoming 
+"^DD",101,101,770.3,1,1,"%D",2,0)
+message at the time the incoming message is received.  This cross reference
+"^DD",101,101,770.3,1,1,"%D",3,0)
+is composed of values from the Server Application, Message Type, Event
+"^DD",101,101,770.3,1,1,"%D",4,0)
+Type and Version ID fields. This cross reference works in conjunction with
+"^DD",101,101,770.3,1,1,"%D",5,0)
+the AHL1, AHL1B and AHL1C cross references.
+"^DD",101,101,770.3,1,1,"DT")
+2990714
+"^DD",101,101,770.3,1,2,0)
+101^AHL21A^MUMPS
+"^DD",101,101,770.3,1,2,1)
+N HL770 S HL770=$G(^ORD(101,DA,770)) S:$P(HL770,"^")&($P(HL770,"^",10)) ^ORD(101,"AHL21",$P(HL770,"^"),X,$P(HL770,"^",10),DA)=""
+"^DD",101,101,770.3,1,2,2)
+N HL770 S HL770=$G(^ORD(101,DA,770)) K:$P(HL770,"^")&($P(HL770,"^",10)) ^ORD(101,"AHL21",$P(HL770,"^"),X,$P(HL770,"^",10),DA)
+"^DD",101,101,770.3,1,2,3)
+This cross reference is required to look up the protocol related to an incoming message without an event type.
+"^DD",101,101,770.3,1,2,"%D",0)
+^^5^5^2990714^
+"^DD",101,101,770.3,1,2,"%D",1,0)
+This cross reference is used to look up the protocol related to an
+"^DD",101,101,770.3,1,2,"%D",2,0)
+incoming message without an event type at the time the incoming message is
+"^DD",101,101,770.3,1,2,"%D",3,0)
+received.  This cross reference is composed of values from the Server
+"^DD",101,101,770.3,1,2,"%D",4,0)
+Application, Message Type and Version ID fields. This cross reference
+"^DD",101,101,770.3,1,2,"%D",5,0)
+works in conjunction with the AHL21 and AHL21C cross references.
+"^DD",101,101,770.3,1,2,"DT")
+2990714
+"^DD",101,101,770.3,3)
+Enter the HL7 MESSAGE TYPE that is sent by the initiating system.
+"^DD",101,101,770.3,21,0)
+^^12^12^2990713^^
+"^DD",101,101,770.3,21,1,0)
+Enter the name of the message type for the the message that is sent from
+"^DD",101,101,770.3,21,2,0)
+the initiating system. When initiating a new transaction, this field is
+"^DD",101,101,770.3,21,3,0)
+referenced when generating the header for the outbound message.
+"^DD",101,101,770.3,21,4,0)
+ 
+"^DD",101,101,770.3,21,5,0)
+NOTE:
+"^DD",101,101,770.3,21,6,0)
+In a contract between the initiating system and the responding system, the
+"^DD",101,101,770.3,21,7,0)
+Event Driver protocol defines the characteristics of the INITIATING
+"^DD",101,101,770.3,21,8,0)
+SYSTEM. The Initiating System initiates either queries or unsolicited
+"^DD",101,101,770.3,21,9,0)
+update messages. A Subscriber Protocol defines the characteristics of the
+"^DD",101,101,770.3,21,10,0)
+RESPONDING SYSTEM. The responding system completes a transaction by
+"^DD",101,101,770.3,21,11,0)
+returning either an acknowledgement and/or a response to the specific
+"^DD",101,101,770.3,21,12,0)
+query message.
+"^DD",101,101,770.3,"DT")
+2990714
+"^DD",101,101,770.4,0)
+EVENT TYPE^P779.001'^HL(779.001,^770;4^Q
+"^DD",101,101,770.4,1,0)
+^.1^^-1
+"^DD",101,101,770.4,1,1,0)
+101^AHL1B^MUMPS
+"^DD",101,101,770.4,1,1,1)
+N HL770 S HL770=$G(^ORD(101,DA,770)) S:$P(HL770,"^")&($P(HL770,"^",3))&($P(HL770,"^",10)) ^ORD(101,"AHL1",$P(HL770,"^"),$P(HL770,"^",3),X,$P(HL770,"^",10),DA)=""
+"^DD",101,101,770.4,1,1,2)
+N HL770 S HL770=$G(^ORD(101,DA,770)) K:$P(HL770,"^")&($P(HL770,"^",3))&($P(HL770,"^",10)) ^ORD(101,"AHL1",$P(HL770,"^"),$P(HL770,"^",3),X,$P(HL770,"^",10),DA)
+"^DD",101,101,770.4,1,1,3)
+This cross reference is required to look up the protocol related to an incoming message.
+"^DD",101,101,770.4,1,1,"%D",0)
+^^5^5^2990714^
+"^DD",101,101,770.4,1,1,"%D",1,0)
+This cross reference is used to look up the protocol related to an incoming 
+"^DD",101,101,770.4,1,1,"%D",2,0)
+message at the time the incoming message is received.  This cross reference
+"^DD",101,101,770.4,1,1,"%D",3,0)
+is composed of values from the Server Application, Message Type, Event
+"^DD",101,101,770.4,1,1,"%D",4,0)
+Type, and Version ID fields.  This cross reference works in conjunction
+"^DD",101,101,770.4,1,1,"%D",5,0)
+with the AHL1, AHL1A, and AHL1C cross references.
+"^DD",101,101,770.4,1,1,"DT")
+2990714
+"^DD",101,101,770.4,3)
+The event type associated with the message to be generated.
+"^DD",101,101,770.4,21,0)
+^^27^27^2990712^
+"^DD",101,101,770.4,21,1,0)
+This is the HL7 Event Type code for the message represented by this
+"^DD",101,101,770.4,21,2,0)
+protocol. In HL7, the message type and event type of an application
+"^DD",101,101,770.4,21,3,0)
+response message may be different from the original message.
+"^DD",101,101,770.4,21,4,0)
+ 
+"^DD",101,101,770.4,21,5,0)
+If this is an event point protocol, enter the event type
+"^DD",101,101,770.4,21,6,0)
+corresponding to the initial message generated by the SENDING APPLICATION.
+"^DD",101,101,770.4,21,7,0)
+ 
+"^DD",101,101,770.4,21,8,0)
+ 
+"^DD",101,101,770.4,21,9,0)
+If this is a subscriber protocol, then enter the event type corresponding
+"^DD",101,101,770.4,21,10,0)
+to the RECEIVING APPLICATION response. Note that an event type is not
+"^DD",101,101,770.4,21,11,0)
+required when responding with a general acknowledgement (ACK) and the
+"^DD",101,101,770.4,21,12,0)
+receiving application does not always need to generate a response.
+"^DD",101,101,770.4,21,13,0)
+ 
+"^DD",101,101,770.4,21,14,0)
+NOTE:
+"^DD",101,101,770.4,21,15,0)
+ 
+"^DD",101,101,770.4,21,16,0)
+1. In "original acknowledgement mode" the receiving application always
+"^DD",101,101,770.4,21,17,0)
+generates the response.
+"^DD",101,101,770.4,21,18,0)
+2. In "enhanced acknowledgement mode" the HL7 package may be configured to
+"^DD",101,101,770.4,21,19,0)
+produce a "commit ack" before the application receives the message. If the
+"^DD",101,101,770.4,21,20,0)
+receiving application does not need to generate a response in addition to
+"^DD",101,101,770.4,21,21,0)
+the ack, then the event type is the same as the original message (and the
+"^DD",101,101,770.4,21,22,0)
+message type would be ACK)
+"^DD",101,101,770.4,21,23,0)
+3. In "enhanced acknowledgement mode with two-phase commit" the HL7
+"^DD",101,101,770.4,21,24,0)
+package generates a commit ack, and passes the message to the application.
+"^DD",101,101,770.4,21,25,0)
+The second phase of the transaction occurs when the application is ready
+"^DD",101,101,770.4,21,26,0)
+to initiate a response. This is interpreted as the start of a new
+"^DD",101,101,770.4,21,27,0)
+transaction and may require a commit ack itself.
+"^DD",101,101,770.4,"DT")
+2990714
+"^DD",101,101,770.5,0)
+MESSAGE STRUCTURE^P779.005'^HL(779.005,^770;5^Q
+"^DD",101,101,770.5,3)
+Enter the HL7 message structure code.
+"^DD",101,101,770.5,21,0)
+^^1^1^3000119^
+"^DD",101,101,770.5,21,1,0)
+The message structure is associated with the message type and event type defined by HL7 v2.3.1 and beyond.
+"^DD",101,101,770.5,"DT")
+3000119
+"^DD",101,101,770.6,0)
+PROCESSING ID^S^D:debug;^770;6^Q
+"^DD",101,101,770.6,3)
+Set this only for DEBUG MODE. Use HL7 site params for Test or Production
+"^DD",101,101,770.6,21,0)
+^^13^13^3000509^
+"^DD",101,101,770.6,21,1,0)
+This field describes how a message should be processed once it is handed
+"^DD",101,101,770.6,21,2,0)
+off to the receiving application. 
+"^DD",101,101,770.6,21,3,0)
+ 
+"^DD",101,101,770.6,21,4,0)
+PROCESSING ID is a required field in the HL7 message header. However, the
+"^DD",101,101,770.6,21,5,0)
+Event Driver protocol entry is only used whenset to DEBUG. Data for the
+"^DD",101,101,770.6,21,6,0)
+header is normally derived from the HL COMMUNICATION SERVER FILE. If
+"^DD",101,101,770.6,21,7,0)
+testing a transaction in Debug mode, make sure it is changed on both the
+"^DD",101,101,770.6,21,8,0)
+sending and receiving system.
+"^DD",101,101,770.6,21,9,0)
+ 
+"^DD",101,101,770.6,21,10,0)
+ 
+"^DD",101,101,770.6,21,11,0)
+The receiving application developer should consider checking this portion
+"^DD",101,101,770.6,21,12,0)
+of the header before filing data on a production system. Training and
+"^DD",101,101,770.6,21,13,0)
+Debug messages may not be suitable for filing.
+"^DD",101,101,770.6,"DT")
+3000509
+"^DD",101,101,770.7,0)
+LOGICAL LINK^P870'^HLCS(870,^770;7^Q
+"^DD",101,101,770.7,3)
+This field should be left blank for internal DHCP to DHCP communications.  Otherwise, this field associates the event protocol with the communication information needed to transmit a message.
+"^DD",101,101,770.7,21,0)
+^^5^5^2990712^
+"^DD",101,101,770.7,21,1,0)
+This field is used with a SUBSCRIBER PROTOCOL to describe the network path
+"^DD",101,101,770.7,21,2,0)
+to the subscriber. It is most often used with a fixed point-to-point
+"^DD",101,101,770.7,21,3,0)
+interface between Vista and another system, e.g., a local COTS application
+"^DD",101,101,770.7,21,4,0)
+or another Vista facility. See the documentation on use of the ROUTING
+"^DD",101,101,770.7,21,5,0)
+LOGIC field and "dynamic addressing" for more complex routing scenarios.
+"^DD",101,101,770.7,"DT")
+2941017
+"^DD",101,101,770.8,0)
+ACCEPT ACK CODE^P779.003'^HL(779.003,^770;8^Q
+"^DD",101,101,770.8,3)
+This field specifies the method for handling accept acknowledgements to a message.
+"^DD",101,101,770.8,21,0)
+^^4^4^2990712^
+"^DD",101,101,770.8,21,1,0)
+This field defines whether or not a COMMIT ACK will be generated by the
+"^DD",101,101,770.8,21,2,0)
+HL7 package. This only applies to transactions using version 2.2 and
+"^DD",101,101,770.8,21,3,0)
+higher of the HL7 Standard. See Chapter 2 of the HL7 Standard for details
+"^DD",101,101,770.8,21,4,0)
+of Enhanced Mode Acknowledgements.
+"^DD",101,101,770.8,"DT")
+2940928
+"^DD",101,101,770.9,0)
+APPLICATION ACK TYPE^P779.003'^HL(779.003,^770;9^Q
+"^DD",101,101,770.9,3)
+This field specifies the method for handling application acknowledgements to a message.
+"^DD",101,101,770.9,21,0)
+^^27^27^2990712^
+"^DD",101,101,770.9,21,1,0)
+For transactions using versions 2.2 and higher of the HL7 standard, this
+"^DD",101,101,770.9,21,2,0)
+field defines whether or not the receiving application is expected to
+"^DD",101,101,770.9,21,3,0)
+return an acknowledgement. Enhanced Mode Application Acks are always
+"^DD",101,101,770.9,21,4,0)
+initiated as a new transaction. The following is an example of a 2-phased
+"^DD",101,101,770.9,21,5,0)
+acknowledgement over a tcp connection.
+"^DD",101,101,770.9,21,6,0)
+ 
+"^DD",101,101,770.9,21,7,0)
+ 
+"^DD",101,101,770.9,21,8,0)
+(A)INITIATING SYSTEM         (B)RESPONDING SYSTEM
+"^DD",101,101,770.9,21,9,0)
+ 
+"^DD",101,101,770.9,21,10,0)
+PHASE I
+"^DD",101,101,770.9,21,11,0)
+Open connection to B
+"^DD",101,101,770.9,21,12,0)
+send ADT/A04----------------->receive ADT/A04
+"^DD",101,101,770.9,21,13,0)
+                              validate header
+"^DD",101,101,770.9,21,14,0)
+                              commit to safe storage
+"^DD",101,101,770.9,21,15,0)
+receive CA<-------------------send CA to A
+"^DD",101,101,770.9,21,16,0)
+Close connection
+"^DD",101,101,770.9,21,17,0)
+ 
+"^DD",101,101,770.9,21,18,0)
+PHASE II
+"^DD",101,101,770.9,21,19,0)
+                              handoff to receiving Application
+"^DD",101,101,770.9,21,20,0)
+                              parse and validate message content
+"^DD",101,101,770.9,21,21,0)
+                              generate APPLICATION ACCEPT ACK
+"^DD",101,101,770.9,21,22,0)
+                              Open connection to A
+"^DD",101,101,770.9,21,23,0)
+receive AA<-------------------send AA
+"^DD",101,101,770.9,21,24,0)
+validate header
+"^DD",101,101,770.9,21,25,0)
+commit to safe storage
+"^DD",101,101,770.9,21,26,0)
+send CA to B------------------>receive CA
+"^DD",101,101,770.9,21,27,0)
+                               close connection
+"^DD",101,101,770.9,"DT")
+2940928
+"^DD",101,101,770.95,0)
+VERSION ID^P771.5'^HL(771.5,^770;10^Q
+"^DD",101,101,770.95,1,0)
+^.1
+"^DD",101,101,770.95,1,1,0)
+101^AHL1C^MUMPS
+"^DD",101,101,770.95,1,1,1)
+N HL770 S HL770=$G(^ORD(101,DA,770)) S:$P(HL770,"^")&($P(HL770,"^",3))&($P(HL770,"^",4)) ^ORD(101,"AHL1",$P(HL770,"^"),$P(HL770,"^",3),$P(HL770,"^",4),X,DA)=""
+"^DD",101,101,770.95,1,1,2)
+N HL770 S HL770=$G(^ORD(101,DA,770)) K:$P(HL770,"^")&($P(HL770,"^",3))&($P(HL770,"^",4)) ^ORD(101,"AHL1",$P(HL770,"^"),$P(HL770,"^",3),$P(HL770,"^",4),X,DA)
+"^DD",101,101,770.95,1,1,3)
+This cross reference is required to look up the protocol related to an incoming message.
+"^DD",101,101,770.95,1,1,"%D",0)
+^^5^5^2990714^^^^
+"^DD",101,101,770.95,1,1,"%D",1,0)
+This cross reference is used to look up the protocol related to an
+"^DD",101,101,770.95,1,1,"%D",2,0)
+incoming message at the time the incoming message is received.  This cross
+"^DD",101,101,770.95,1,1,"%D",3,0)
+reference is composed of values from the Server Application, Message Type,
+"^DD",101,101,770.95,1,1,"%D",4,0)
+Event Type, and Version ID fields.  This cross reference works in
+"^DD",101,101,770.95,1,1,"%D",5,0)
+conjunction with the AHL1, AHL1A, and AHL1B cross references.
+"^DD",101,101,770.95,1,1,"DT")
+2990714
+"^DD",101,101,770.95,1,2,0)
+101^AHL21C^MUMPS
+"^DD",101,101,770.95,1,2,1)
+N HL770 S HL770=$G(^ORD(101,DA,770)) S:$P(HL770,"^")&($P(HL770,"^",3)) ^ORD(101,"AHL21",$P(HL770,"^"),$P(HL770,"^",3),X,DA)=""
+"^DD",101,101,770.95,1,2,2)
+N HL770 S HL770=$G(^ORD(101,DA,770)) K:$P(HL770,"^")&($P(HL770,"^",3)) ^ORD(101,"AHL21",$P(HL770,"^"),$P(HL770,"^",3),X,DA)
+"^DD",101,101,770.95,1,2,3)
+This cross reference is required to look up the protocol related to an incoming message without an event type.
+"^DD",101,101,770.95,1,2,"%D",0)
+^^5^5^2990714^^^^
+"^DD",101,101,770.95,1,2,"%D",1,0)
+This cross reference is used to look up the protocol related to an
+"^DD",101,101,770.95,1,2,"%D",2,0)
+incoming message without an event type at the time the incoming message is
+"^DD",101,101,770.95,1,2,"%D",3,0)
+received.  This cross reference is composed of values from the Server
+"^DD",101,101,770.95,1,2,"%D",4,0)
+Application, Message Type, and Version ID fields.  This cross reference
+"^DD",101,101,770.95,1,2,"%D",5,0)
+works in conjunction with the AHL21 and AHL21A cross references.
+"^DD",101,101,770.95,1,2,"DT")
+2990714
+"^DD",101,101,770.95,3)
+Enter the version of the HL7 Standard used to implement this transaction
+"^DD",101,101,770.95,12)
+Only version IDs assigned to the Message Type selected are applicable.
+"^DD",101,101,770.95,12.1)
+S DIC("S")="N HLX S HLX=+$P(^ORD(101,DA,770),U,3) I $S('HLX:0,'$O(^HL(771.2,HLX,""V"",0)):0,1:$D(^HL(771.2,HLX,""V"",""B"",+$O(^HL(771.5,""B"",X,0)))))"
+"^DD",101,101,770.95,21,0)
+^^4^4^2990712^
+"^DD",101,101,770.95,21,1,0)
+Enter the version of the HL7 standard used to implement this transaction.
+"^DD",101,101,770.95,21,2,0)
+ 
+"^DD",101,101,770.95,21,3,0)
+Note that a screen has been added to insure that the version selected
+"^DD",101,101,770.95,21,4,0)
+corresponds to the appropriate version of the Message Type defined.
+"^DD",101,101,770.95,"DT")
+2990824
+"^DD",101,101,771,0)
+PROCESSING ROUTINE^K^^771;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101,101,771,3)
+  This is Standard MUMPS code.
+"^DD",101,101,771,9)
+@
+"^DD",101,101,771,21,0)
+^^4^4^2990712^
+"^DD",101,101,771,21,1,0)
+This field is executed on the receiving system. It defines the routine
+"^DD",101,101,771,21,2,0)
+used to process the original inbound message in a transaction and to
+"^DD",101,101,771,21,3,0)
+GENERATE and APPLICATION response/ACK back to the sending system using the
+"^DD",101,101,771,21,4,0)
+entry point, GENACK^HLMA1.
+"^DD",101,101,771,"DT")
+2990712
+"^DD",101,101,772,0)
+RESPONSE PROCESSING ROUTINE^K^^772;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101,101,772,3)
+Code that executes the routine to generate an acknowledgement message (for a subscriber application) or to process an acknowledgement message (for a server application).  This is Standard MUMPS code.
+"^DD",101,101,772,9)
+@
+"^DD",101,101,772,21,0)
+^^7^7^2990712^
+"^DD",101,101,772,21,1,0)
+This field is executed on the sending system when an Acknowledgement or
+"^DD",101,101,772,21,2,0)
+Query response is received. The message ID of the original message is
+"^DD",101,101,772,21,3,0)
+always contained within the response. This is used to identify the
+"^DD",101,101,772,21,4,0)
+location of the original message and the corresponding event point
+"^DD",101,101,772,21,5,0)
+protocol. Note that this pertains to Original and Enhanced Mode
+"^DD",101,101,772,21,6,0)
+Application Acks only. The HL7 package generates and processes
+"^DD",101,101,772,21,7,0)
+Enhanced mode Commit Accepts internally.
+"^DD",101,101,772,"DT")
+2990712
+"^DD",101,101,773.1,0)
+SENDING FACILITY REQUIRED?^S^1:YES;0:NO;^773;1^Q
+"^DD",101,101,773.1,3)
+Enter 'Y' for 'YES' if the sending facility field is required in the message header segment.
+"^DD",101,101,773.1,"DT")
+2940928
+"^DD",101,101,773.2,0)
+RECEIVING FACILITY REQUIRED?^S^1:YES;0:NO;^773;2^Q
+"^DD",101,101,773.2,3)
+Enter 'Y' for 'YES' if the receiving facility field is required in the message header segment.
+"^DD",101,101,773.2,"DT")
+2940928
+"^DD",101,101,773.3,0)
+SECURITY REQUIRED?^S^1:YES;0:NO;^773;3^Q
+"^DD",101,101,773.3,3)
+Enter 'Y' for 'YES' if the security field is required in the message header segment.
+"^DD",101,101,773.3,"DT")
+2940928
+"^DD",101,101,773.4,0)
+DATE/TIME OF MESSAGE REQUIRED?^S^1:YES;0:NO;^773;4^Q
+"^DD",101,101,773.4,3)
+Enter 'Y' for 'YES' if the date/time of message field is required in the message header segment.
+"^DD",101,101,773.4,"DT")
+2990712
+"^DD",101,101,773.5,0)
+ACK MODE SET IN SUBSCRIBER^S^1:YES;0:NO;^773;5^Q
+"^DD",101,101,773.5,3)
+Enter 'Y' for 'YES' for setting the MSH-15 and MSH-16 from subscriber protocol instead of Event driver protocol.
+"^DD",101,101,773.5,21,0)
+^^3^3^3070417^
+"^DD",101,101,773.5,21,1,0)
+A 'YES' of this field will indicate that MSH-15 and MSH-16 will be taken
+"^DD",101,101,773.5,21,2,0)
+from Subscriber protocol instead of the value(s) defined in Event driver 
+"^DD",101,101,773.5,21,3,0)
+protocol.
+"^DD",101,101,773.5,"DT")
+3070417
+"^DD",101,101,774,0)
+ROUTING LOGIC^K^^774;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101,101,774,3)
+This is Standard MUMPS code.
+"^DD",101,101,774,9)
+@
+"^DD",101,101,774,21,0)
+^^11^11^2990712^
+"^DD",101,101,774,21,1,0)
+M code in this field is executed only when a message is in an OUTBOUND
+"^DD",101,101,774,21,2,0)
+state. Normally, Vista HL7 'broadcasts' a message to all subscribers
+"^DD",101,101,774,21,3,0)
+whenever a message is generated. However, in some cases, a client may need
+"^DD",101,101,774,21,4,0)
+to receive the message only if it matches a particular condition. This
+"^DD",101,101,774,21,5,0)
+field allows you to set up screening logic to interpret the message and
+"^DD",101,101,774,21,6,0)
+dynamically address the message to those interested in the data when it
+"^DD",101,101,774,21,7,0)
+meets these conditions. The output of your routing logic routine should be
+"^DD",101,101,774,21,8,0)
+the creation of a list of additional message recipients set into the
+"^DD",101,101,774,21,9,0)
+HLL("LINKS") array.
+"^DD",101,101,774,21,10,0)
+ 
+"^DD",101,101,774,21,11,0)
+For details on dynamic addressing, see the documentation for HL*1.6*14.
+"^DD",101,101,774,"DT")
+2960924
+"^DD",101,101,775,0)
+SUBSCRIBERS^101.0775PA^^775;0
+"^DD",101,101,775,12)
+Type field must be a Subscriber
+"^DD",101,101,775,12.1)
+S DIC("S")="I $P(^(0),U,4)=""S"""
+"^DD",101,101.01,0)
+ITEM SUB-FIELD^^14^10
+"^DD",101,101.01,0,"DIK")
+XQORC
+"^DD",101,101.01,0,"DT")
+2910911
+"^DD",101,101.01,0,"ID",3)
+W "   ",$P(^(0),U,3)
+"^DD",101,101.01,0,"IX","AMM",101.01,.01)
+
+"^DD",101,101.01,0,"IX","AMM2",101.01,2)
+
+"^DD",101,101.01,0,"IX","AMM3",101.01,3)
+
+"^DD",101,101.01,0,"IX","AMM5",101.01,5)
+
+"^DD",101,101.01,0,"IX","AMM6",101.01,6)
+
+"^DD",101,101.01,0,"IX","B",101.01,.01)
+
+"^DD",101,101.01,0,"NM","ITEM")
+
+"^DD",101,101.01,0,"UP")
+101
+"^DD",101,101.01,.01,0)
+ITEM^MP101'X^ORD(101,^0;1^S ORDDF=101 D TREE^XQORD101
+"^DD",101,101.01,.01,1,0)
+^.1
+"^DD",101,101.01,.01,1,1,0)
+101.01^B
+"^DD",101,101.01,.01,1,1,1)
+S ^ORD(101,DA(1),10,"B",$E(X,1,30),DA)=""
+"^DD",101,101.01,.01,1,1,2)
+K ^ORD(101,DA(1),10,"B",$E(X,1,30),DA)
+"^DD",101,101.01,.01,1,2,0)
+101.01^AMM^MUMPS
+"^DD",101,101.01,.01,1,2,1)
+D REDOX^XQORD101
+"^DD",101,101.01,.01,1,2,2)
+D REDOX^XQORD101
+"^DD",101,101.01,.01,1,3,0)
+101^AD
+"^DD",101,101.01,.01,1,3,1)
+S ^ORD(101,"AD",$E(X,1,30),DA(1),DA)=""
+"^DD",101,101.01,.01,1,3,2)
+K ^ORD(101,"AD",$E(X,1,30),DA(1),DA)
+"^DD",101,101.01,.01,1,4,0)
+^^TRIGGER^101.01^11
+"^DD",101,101.01,.01,1,4,1)
+X ^DD(101.01,.01,1,4,1.3) I X S X=DIV S Y(1)=$S($D(^ORD(101,D0,10,D1,1)):^(1),1:"") S X=$P(Y(1),U,1),X=X S DIU=X K Y X ^DD(101.01,.01,1,4,1.1) X ^DD(101.01,.01,1,4,1.4)
+"^DD",101,101.01,.01,1,4,1.1)
+S X=DIV S I(1,0)=$S($D(D1):D1,1:""),I(0,0)=$S($D(D0):D0,1:""),D0=DIV S:'$D(^ORD(101,+D0,0)) D0=-1 S Y(101)=$S($D(^ORD(101,D0,101.04)):^(101.04),1:"") S X=$P(Y(101),U,2) S D0=I(0,0) S D1=I(1,0)
+"^DD",101,101.01,.01,1,4,1.3)
+K DIV S DIV=X,D0=DA(1),DIV(0)=D0,D1=DA,DIV(1)=D1 S Y(0)=X X ^DD(101.01,.01,1,4,69.3) S Y(101)=$S($D(^ORD(101,D0,0)):^(0),1:"") S X=$P(Y(101),U,4),X=X S X=X="T",Y=X,X=Y(5),X=X&Y S D0=I(0,0) S D1=I(1,0)
+"^DD",101,101.01,.01,1,4,1.4)
+S DIH=$S($D(^ORD(101,DIV(0),10,DIV(1),1)):^(1),1:""),DIV=X S $P(^(1),U,1)=DIV,DIH=101.01,DIG=11 D ^DICR:$N(^DD(DIH,DIG,1,0))>0
+"^DD",101,101.01,.01,1,4,2)
+Q
+"^DD",101,101.01,.01,1,4,69.2)
+S I(1,0)=$S($D(D1):D1,1:""),I(0,0)=$S($D(D0):D0,1:""),Y(4)=$S($D(^ORD(101,D0,0)):^(0),1:""),Y(1)=$S($D(^ORD(101,D0,10,D1,1)):^(1),1:"") S X=$P(Y(1),U,1)
+"^DD",101,101.01,.01,1,4,69.3)
+X ^DD(101.01,.01,1,4,69.2) S X=X="",Y(2)=X,Y(3)=X S X=$P(Y(4),U,4),X=X S X=X="D",Y=X,X=Y(2),X=X&Y,Y(5)=X,Y(6)=X,D0=Y(0) S:'$D(^ORD(101,+D0,0)) D0=-1
+"^DD",101,101.01,.01,1,4,"%D",0)
+^^2^2^2910911^
+"^DD",101,101.01,.01,1,4,"%D",1,0)
+On adding an item initially, stuff the prompt field with the default prompt
+"^DD",101,101.01,.01,1,4,"%D",2,0)
+if the item is a term.
+"^DD",101,101.01,.01,1,4,"CREATE CONDITION")
+(PROMPT="")&(INTERNAL(TYPE)="D")&(INTERNAL(ITEM:TYPE)="T")
+"^DD",101,101.01,.01,1,4,"CREATE VALUE")
+ITEM:DEFAULT PROMPT
+"^DD",101,101.01,.01,1,4,"DELETE VALUE")
+NO EFFECT
+"^DD",101,101.01,.01,1,4,"DT")
+2910911
+"^DD",101,101.01,.01,1,4,"FIELD")
+PROMPT
+"^DD",101,101.01,.01,1,5,0)
+^^TRIGGER^101.01^12
+"^DD",101,101.01,.01,1,5,1)
+X ^DD(101.01,.01,1,5,1.3) I X S X=DIV S Y(1)=$S($D(^ORD(101,D0,10,D1,1)):^(1),1:"") S X=$P(Y(1),U,2),X=X S DIU=X K Y X ^DD(101.01,.01,1,5,1.1) X ^DD(101.01,.01,1,5,1.4)
+"^DD",101,101.01,.01,1,5,1.1)
+S X=DIV S I(1,0)=$S($D(D1):D1,1:""),I(0,0)=$S($D(D0):D0,1:""),D0=DIV S:'$D(^ORD(101,+D0,0)) D0=-1 S Y(101)=$S($D(^ORD(101,D0,101.04)):^(101.04),1:"") S X=$P(Y(101),U,3) S D0=I(0,0) S D1=I(1,0)
+"^DD",101,101.01,.01,1,5,1.3)
+K DIV S DIV=X,D0=DA(1),DIV(0)=D0,D1=DA,DIV(1)=D1 S Y(0)=X X ^DD(101.01,.01,1,5,69.3) S Y(101)=$S($D(^ORD(101,D0,0)):^(0),1:"") S X=$P(Y(101),U,4),X=X S X=X="T",Y=X,X=Y(5),X=X&Y S D0=I(0,0) S D1=I(1,0)
+"^DD",101,101.01,.01,1,5,1.4)
+S DIH=$S($D(^ORD(101,DIV(0),10,DIV(1),1)):^(1),1:""),DIV=X S $P(^(1),U,2)=DIV,DIH=101.01,DIG=12 D ^DICR:$N(^DD(DIH,DIG,1,0))>0
+"^DD",101,101.01,.01,1,5,2)
+Q
+"^DD",101,101.01,.01,1,5,69.2)
+S I(1,0)=$S($D(D1):D1,1:""),I(0,0)=$S($D(D0):D0,1:""),Y(4)=$S($D(^ORD(101,D0,0)):^(0),1:""),Y(1)=$S($D(^ORD(101,D0,10,D1,1)):^(1),1:"") S X=$P(Y(1),U,2)
+"^DD",101,101.01,.01,1,5,69.3)
+X ^DD(101.01,.01,1,5,69.2) S X=X="",Y(2)=X,Y(3)=X S X=$P(Y(4),U,4),X=X S X=X="D",Y=X,X=Y(2),X=X&Y,Y(5)=X,Y(6)=X,D0=Y(0) S:'$D(^ORD(101,+D0,0)) D0=-1
+"^DD",101,101.01,.01,1,5,"%D",0)
+^^2^2^2910911^
+"^DD",101,101.01,.01,1,5,"%D",1,0)
+On adding an item initially, stuff the default field with the default
+"^DD",101,101.01,.01,1,5,"%D",2,0)
+answer if the item is a term.
+"^DD",101,101.01,.01,1,5,"CREATE CONDITION")
+(DEFAULT="")&(INTERNAL(TYPE)="D")&(INTERNAL(ITEM:TYPE)="T")
+"^DD",101,101.01,.01,1,5,"CREATE VALUE")
+ITEM:DEFAULT ANSWER
+"^DD",101,101.01,.01,1,5,"DELETE VALUE")
+NO EFFECT
+"^DD",101,101.01,.01,1,5,"DT")
+2910911
+"^DD",101,101.01,.01,1,5,"FIELD")
+DEFAULT
+"^DD",101,101.01,.01,1,6,0)
+^^TRIGGER^101.01^13
+"^DD",101,101.01,.01,1,6,1)
+X ^DD(101.01,.01,1,6,1.3) I X S X=DIV S Y(1)=$S($D(^ORD(101,D0,10,D1,1)):^(1),1:"") S X=$P(Y(1),U,3),X=X S DIU=X K Y X ^DD(101.01,.01,1,6,1.1) X ^DD(101.01,.01,1,6,1.4)
+"^DD",101,101.01,.01,1,6,1.1)
+S X=DIV S I(1,0)=$S($D(D1):D1,1:""),I(0,0)=$S($D(D0):D0,1:""),D0=DIV S:'$D(^ORD(101,+D0,0)) D0=-1 S Y(101)=$S($D(^ORD(101,D0,101.04)):^(101.04),1:"") S X=$P(Y(101),U,4) S D0=I(0,0) S D1=I(1,0)
+"^DD",101,101.01,.01,1,6,1.3)
+K DIV S DIV=X,D0=DA(1),DIV(0)=D0,D1=DA,DIV(1)=D1 S Y(0)=X X ^DD(101.01,.01,1,6,69.3) S Y(101)=$S($D(^ORD(101,D0,0)):^(0),1:"") S X=$P(Y(101),U,4),X=X S X=X="T",Y=X,X=Y(5),X=X&Y S D0=I(0,0) S D1=I(1,0)
+"^DD",101,101.01,.01,1,6,1.4)
+S DIH=$S($D(^ORD(101,DIV(0),10,DIV(1),1)):^(1),1:""),DIV=X S $P(^(1),U,3)=DIV,DIH=101.01,DIG=13 D ^DICR:$N(^DD(DIH,DIG,1,0))>0
+"^DD",101,101.01,.01,1,6,2)
+Q
+"^DD",101,101.01,.01,1,6,69.2)
+S I(1,0)=$S($D(D1):D1,1:""),I(0,0)=$S($D(D0):D0,1:""),Y(4)=$S($D(^ORD(101,D0,0)):^(0),1:""),Y(1)=$S($D(^ORD(101,D0,10,D1,1)):^(1),1:"") S X=$P(Y(1),U,3)
+"^DD",101,101.01,.01,1,6,69.3)
+X ^DD(101.01,.01,1,6,69.2) S X=X="",Y(2)=X,Y(3)=X S X=$P(Y(4),U,4),X=X S X=X="D",Y=X,X=Y(2),X=X&Y,Y(5)=X,Y(6)=X,D0=Y(0) S:'$D(^ORD(101,+D0,0)) D0=-1
+"^DD",101,101.01,.01,1,6,"%D",0)
+^^2^2^2910911^
+"^DD",101,101.01,.01,1,6,"%D",1,0)
+On adding an item initially, stuff the help field with the default help
+"^DD",101,101.01,.01,1,6,"%D",2,0)
+if the item is a term.
+"^DD",101,101.01,.01,1,6,"CREATE CONDITION")
+(HELP="")&(INTERNAL(TYPE)="D")&(INTERNAL(ITEM:TYPE)="T")
+"^DD",101,101.01,.01,1,6,"CREATE VALUE")
+ITEM:DEFAULT HELP
+"^DD",101,101.01,.01,1,6,"DELETE VALUE")
+NO EFFECT
+"^DD",101,101.01,.01,1,6,"DT")
+2910911
+"^DD",101,101.01,.01,1,6,"FIELD")
+HELP
+"^DD",101,101.01,.01,3)
+Enter a protocol.  A protocol that is an ancestor may not also be a sub-item.
+"^DD",101,101.01,.01,21,0)
+^^3^3^2920731^^^^
+"^DD",101,101.01,.01,21,1,0)
+This points to a protocol which is subordinate to this protocol.
+"^DD",101,101.01,.01,21,2,0)
+NOTE:  The parent protocol or one of its ancestors may not be entered
+"^DD",101,101.01,.01,21,3,0)
+as an item.
+"^DD",101,101.01,.01,"DT")
+2910911
+"^DD",101,101.01,2,0)
+MNEMONIC^FX^^0;2^I $D(X) K:$L(X)>4!($L(X)<1) X
+"^DD",101,101.01,2,1,0)
+^.1
+"^DD",101,101.01,2,1,1,0)
+101.01^AMM2^MUMPS
+"^DD",101,101.01,2,1,1,1)
+D REDOX^XQORD101
+"^DD",101,101.01,2,1,1,2)
+D REDOX^XQORD101
+"^DD",101,101.01,2,3)
+Enter a Mnemonic to be used when this protocol is displayed for selection (1-4 characters).
+"^DD",101,101.01,2,21,0)
+^^1^1^2920224^^
+"^DD",101,101.01,2,21,1,0)
+This is a short abbreviation for the item.
+"^DD",101,101.01,2,"DT")
+2890104
+"^DD",101,101.01,3,0)
+SEQUENCE^NJ6,2^^0;3^K:+X'=X!(X>999)!(X<1)!(X?.E1"."3N.N) X
+"^DD",101,101.01,3,1,0)
+^.1
+"^DD",101,101.01,3,1,1,0)
+101.01^AMM3^MUMPS
+"^DD",101,101.01,3,1,1,1)
+D REDOX^XQORD101
+"^DD",101,101.01,3,1,1,2)
+D REDOX^XQORD101
+"^DD",101,101.01,3,3)
+Enter a number for sequencing this item with other items when displayed.
+"^DD",101,101.01,3,21,0)
+^^4^4^2920224^^
+"^DD",101,101.01,3,21,1,0)
+This is the order in which items in the list should be processed.  In the
+"^DD",101,101.01,3,21,2,0)
+case of menus, the items are displayed in the order derived from this
+"^DD",101,101.01,3,21,3,0)
+field.  In the case of protocols and extended actions, the items are
+"^DD",101,101.01,3,21,4,0)
+executed in the order derived from this field.
+"^DD",101,101.01,3,"DT")
+2910911
+"^DD",101,101.01,4,0)
+MODIFYING ACTION^P101X^ORD(101,^0;4^S ORDDF=101 D TREE^XQORD101
+"^DD",101,101.01,4,21,0)
+^^5^5^2920224^^^
+"^DD",101,101.01,4,21,1,0)
+This points to a protocol which is executed before the item for this same
+"^DD",101,101.01,4,21,2,0)
+entry is executed.  This allows the possibility of creating protocols
+"^DD",101,101.01,4,21,3,0)
+which set up special variables, etc., according to the context of the
+"^DD",101,101.01,4,21,4,0)
+protocol.  It also allows screens at the item level if the variables
+"^DD",101,101.01,4,21,5,0)
+ORQUIT or ORABORT are used to prevent execution of the item.
+"^DD",101,101.01,4,"DT")
+2890502
+"^DD",101,101.01,5,0)
+FORMAT CODE^S^O:output only;H:header;^0;5^Q
+"^DD",101,101.01,5,1,0)
+^.1
+"^DD",101,101.01,5,1,1,0)
+101.01^AMM5^MUMPS
+"^DD",101,101.01,5,1,1,1)
+D REDOX^XQORD101
+"^DD",101,101.01,5,1,1,2)
+D REDOX^XQORD101
+"^DD",101,101.01,5,1,1,"%D",0)
+^^1^1^2910911^
+"^DD",101,101.01,5,1,1,"%D",1,0)
+Update protocol timestamp when FORMAT CODE changed.
+"^DD",101,101.01,5,1,1,"DT")
+2910911
+"^DD",101,101.01,5,3)
+Enter OUTPUT ONLY if this item should be displayed only, HEADER if this item should start printing over the mnemonic.
+"^DD",101,101.01,5,21,0)
+^^2^2^2920225^
+"^DD",101,101.01,5,21,1,0)
+This allows items used on menus for formatting purposes to be made
+"^DD",101,101.01,5,21,2,0)
+unselectable (sub-headers, blank lines, etc.).
+"^DD",101,101.01,5,"DT")
+2910911
+"^DD",101,101.01,6,0)
+DISPLAY NAME^F^^0;6^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>40!($L(X)<1) X
+"^DD",101,101.01,6,1,0)
+^.1
+"^DD",101,101.01,6,1,1,0)
+101.01^AMM6^MUMPS
+"^DD",101,101.01,6,1,1,1)
+D REDOX^XQORD101
+"^DD",101,101.01,6,1,1,2)
+D REDOX^XQORD101
+"^DD",101,101.01,6,1,1,"%D",0)
+^^1^1^2910911^
+"^DD",101,101.01,6,1,1,"%D",1,0)
+Update protocol timestamp whenever DISPLAY NAME is changed.
+"^DD",101,101.01,6,1,1,"DT")
+2910911
+"^DD",101,101.01,6,3)
+Answer must be 1-40 characters in length.
+"^DD",101,101.01,6,21,0)
+^^4^4^2920225^
+"^DD",101,101.01,6,21,1,0)
+This allows the item text that normally appears on the menu to be
+"^DD",101,101.01,6,21,2,0)
+displayed.  For example, this field may be used to set up menus so
+"^DD",101,101.01,6,21,3,0)
+that items are displayed in mixed case, even though the item text may
+"^DD",101,101.01,6,21,4,0)
+all be in upper case.
+"^DD",101,101.01,6,"DT")
+2910911
+"^DD",101,101.01,11,0)
+PROMPT^F^^1;1^K:$L(X)>30!($L(X)<1) X
+"^DD",101,101.01,11,3)
+Answer must be 1-30 characters in length.
+"^DD",101,101.01,11,5,1,0)
+101.01^.01^4
+"^DD",101,101.01,11,21,0)
+^^1^1^2920225^
+"^DD",101,101.01,11,21,1,0)
+This is the actual prompt displayed for this item in the dialog.
+"^DD",101,101.01,11,"DT")
+2910819
+"^DD",101,101.01,12,0)
+DEFAULT^F^^1;2^K:$L(X)>80!($L(X)<1) X
+"^DD",101,101.01,12,3)
+Answer must be 1-80 characters in length.
+"^DD",101,101.01,12,5,1,0)
+101.01^.01^5
+"^DD",101,101.01,12,21,0)
+^^1^1^2920225^
+"^DD",101,101.01,12,21,1,0)
+This is the default response for this item in the dialog.
+"^DD",101,101.01,12,"DT")
+2910819
+"^DD",101,101.01,13,0)
+HELP^F^^1;3^K:$L(X)>80!($L(X)<1) X
+"^DD",101,101.01,13,3)
+Answer must be 1-80 characters in length.
+"^DD",101,101.01,13,5,1,0)
+101.01^.01^6
+"^DD",101,101.01,13,21,0)
+^^1^1^2920225^
+"^DD",101,101.01,13,21,1,0)
+This is the help text displayed for this item in the dialog.
+"^DD",101,101.01,13,"DT")
+2910819
+"^DD",101,101.01,14,0)
+MODE^F^^1;4^K:$L(X)>5!($L(X)<1) X
+"^DD",101,101.01,14,3)
+Answer must be 1-5 characters in length.
+"^DD",101,101.01,14,21,0)
+^^6^6^2920225^
+"^DD",101,101.01,14,21,1,0)
+This tells how this item should be treated when processing the dialog.
+"^DD",101,101.01,14,21,2,0)
+  S - suppresses inclusion of the prompt when creating the text generated
+"^DD",101,101.01,14,21,3,0)
+      by the dialog.
+"^DD",101,101.01,14,21,4,0)
+  E - allows the item to only be presented when editing an existing
+"^DD",101,101.01,14,21,5,0)
+      response.
+"^DD",101,101.01,14,21,6,0)
+  R - identifies the field as required.
+"^DD",101,101.01,14,"DT")
+2910906
+"^DD",101,101.02,0)
+SYNONYM SUB-FIELD^^.01^1
+"^DD",101,101.02,0,"DIK")
+XQORC
+"^DD",101,101.02,0,"IX","AM1V1",101.02,.01)
+
+"^DD",101,101.02,0,"IX","B",101.02,.01)
+
+"^DD",101,101.02,0,"NM","SYNONYM")
+
+"^DD",101,101.02,0,"UP")
+101
+"^DD",101,101.02,.01,0)
+SYNONYM^MF^^0;1^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>65!($L(X)<1) X
+"^DD",101,101.02,.01,1,0)
+^.1
+"^DD",101,101.02,.01,1,1,0)
+101.02^B
+"^DD",101,101.02,.01,1,1,1)
+S ^ORD(101,DA(1),2,"B",$E(X,1,30),DA)=""
+"^DD",101,101.02,.01,1,1,2)
+K ^ORD(101,DA(1),2,"B",$E(X,1,30),DA)
+"^DD",101,101.02,.01,1,2,0)
+101^B^MNEMONIC
+"^DD",101,101.02,.01,1,2,1)
+S:'$D(^ORD(101,"B",$E(X,1,30),DA(1),DA)) ^(DA)=1
+"^DD",101,101.02,.01,1,2,2)
+I $D(^ORD(101,"B",$E(X,1,30),DA(1),DA)),^(DA) K ^(DA)
+"^DD",101,101.02,.01,1,3,0)
+101^K2^MUMPS
+"^DD",101,101.02,.01,1,3,1)
+D K21^XQORDD1
+"^DD",101,101.02,.01,1,3,2)
+D K22^XQORDD1
+"^DD",101,101.02,.01,1,4,0)
+101.02^AM1V1^MUMPS
+"^DD",101,101.02,.01,1,4,1)
+D REDOM^XQORD101
+"^DD",101,101.02,.01,1,4,2)
+D REDOM^XQORD101
+"^DD",101,101.02,.01,1,4,"%D",0)
+^^1^1^2911031^
+"^DD",101,101.02,.01,1,4,"%D",1,0)
+Updates timestamps on menus containing this item.
+"^DD",101,101.02,.01,1,4,"DT")
+2911031
+"^DD",101,101.02,.01,3)
+Enter a synonym for this protocol (1-65 characters)
+"^DD",101,101.02,.01,"DT")
+2911031
+"^DD",101,101.021,0)
+REQUIRED VARIABLES SUB-FIELD^^.01^1
+"^DD",101,101.021,0,"DIK")
+XQORC
+"^DD",101,101.021,0,"IX","B",101.021,.01)
+
+"^DD",101,101.021,0,"NM","REQUIRED VARIABLES")
+
+"^DD",101,101.021,0,"UP")
+101
+"^DD",101,101.021,.01,0)
+REQUIRED VARIABLES^MF^^0;1^K:$L(X)>30!($L(X)<1)!'(X?1A.E) X
+"^DD",101,101.021,.01,1,0)
+^.1
+"^DD",101,101.021,.01,1,1,0)
+101.021^B
+"^DD",101,101.021,.01,1,1,1)
+S ^ORD(101,DA(1),21,"B",$E(X,1,30),DA)=""
+"^DD",101,101.021,.01,1,1,2)
+K ^ORD(101,DA(1),21,"B",$E(X,1,30),DA)
+"^DD",101,101.021,.01,3)
+Enter the required variable.
+"^DD",101,101.021,.01,"DT")
+2881209
+"^DD",101,101.03,0)
+ACCESS SUB-FIELD^^.01^1
+"^DD",101,101.03,0,"DIK")
+XQORC
+"^DD",101,101.03,0,"IX","B",101.03,.01)
+
+"^DD",101,101.03,0,"IX","K",101.03,.01)
+
+"^DD",101,101.03,0,"NM","ACCESS")
+
+"^DD",101,101.03,0,"UP")
+101
+"^DD",101,101.03,.01,0)
+ACCESS^MP19.1'^DIC(19.1,^0;1^Q
+"^DD",101,101.03,.01,1,0)
+^.1
+"^DD",101,101.03,.01,1,1,0)
+101.03^B
+"^DD",101,101.03,.01,1,1,1)
+S ^ORD(101,DA(1),3,"B",$E(X,1,30),DA)=""
+"^DD",101,101.03,.01,1,1,2)
+K ^ORD(101,DA(1),3,"B",$E(X,1,30),DA)
+"^DD",101,101.03,.01,1,2,0)
+101.03^K^MUMPS
+"^DD",101,101.03,.01,1,2,1)
+D K31^XQORDD1
+"^DD",101,101.03,.01,1,2,2)
+D K32^XQORDD1
+"^DD",101,101.03,.01,3)
+Enter a security key to limit access to this protocol.
+"^DD",101,101.03,.01,"DT")
+2900327
+"^DD",101,101.0431,0)
+DEFAULT WORD PROCESSING ANSWER SUB-FIELD^^.01^1
+"^DD",101,101.0431,0,"DT")
+2911212
+"^DD",101,101.0431,0,"NM","DEFAULT WORD PROCESSING ANSWER")
+
+"^DD",101,101.0431,0,"UP")
+101
+"^DD",101,101.0431,.01,0)
+DEFAULT WORD PROCESSING ANSWER^WL^^0;1^Q
+"^DD",101,101.0431,.01,3)
+Enter the text that should be the template for this word processing item.
+"^DD",101,101.0431,.01,"DT")
+2911212
+"^DD",101,101.05,0)
+METHOD SUB-FIELD^^.02^2
+"^DD",101,101.05,0,"DIK")
+XQORC
+"^DD",101,101.05,0,"DT")
+2910401
+"^DD",101,101.05,0,"ID",.02)
+W:$D(^(1)) "   ",$E(^(1),1,245)
+"^DD",101,101.05,0,"IX","B",101.05,.01)
+
+"^DD",101,101.05,0,"NM","METHOD")
+
+"^DD",101,101.05,0,"UP")
+101
+"^DD",101,101.05,.01,0)
+METHOD^MNJ2,0X^^0;1^K:+X'=X!(X>20)!(X<1)!(X?.E1"."1N.N) X S:$D(X) DINUM=X
+"^DD",101,101.05,.01,1,0)
+^.1^^0
+"^DD",101,101.05,.01,1,1,0)
+101.05^B
+"^DD",101,101.05,.01,1,1,1)
+S ^ORD(101,DA(1),101.05,"B",$E(X,1,30),DA)=""
+"^DD",101,101.05,.01,1,1,2)
+K ^ORD(101,DA(1),101.05,"B",$E(X,1,30),DA)
+"^DD",101,101.05,.01,3)
+Type a Number between 1 and 20, 0 Decimal Digits
+"^DD",101,101.05,.01,21,0)
+^^2^2^2920225^
+"^DD",101,101.05,.01,21,1,0)
+This is reserved for future use.  The numeric values of this field
+"^DD",101,101.05,.01,21,2,0)
+currently correspond to OE/RR actions.
+"^DD",101,101.05,.01,"DT")
+2910614
+"^DD",101,101.05,.02,0)
+METHOD ACTION^K^^1;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101,101.05,.02,3)
+This is Standard MUMPS code.
+"^DD",101,101.05,.02,21,0)
+^^1^1^2920225^
+"^DD",101,101.05,.02,21,1,0)
+This is the code necessary to implement the method.
+"^DD",101,101.05,.02,"DT")
+2910401
+"^DD",101,101.06,0)
+DESCRIPTION SUB-FIELD^^.01^1
+"^DD",101,101.06,0,"IX","B",101.06,.01)
+
+"^DD",101,101.06,0,"NM","DESCRIPTION")
+
+"^DD",101,101.06,0,"UP")
+101
+"^DD",101,101.06,.01,0)
+DESCRIPTION^W^^0;1^Q
+"^DD",101,101.06,.01,1,0)
+^.1
+"^DD",101,101.06,.01,1,1,0)
+101.06^B
+"^DD",101,101.06,.01,1,1,1)
+S ^ORD(101,DA(1),1,"B",$E(X,1,30),DA)=""
+"^DD",101,101.06,.01,1,1,2)
+K ^ORD(101,DA(1),1,"B",$E(X,1,30),DA)
+"^DD",101,101.06,.01,3)
+Enter a description for this protocol
+"^DD",101,101.06,.01,21,0)
+^^1^1^2920224^
+"^DD",101,101.06,.01,21,1,0)
+This is the protocol description.
+"^DD",101,101.06,.01,"DT")
+2881121
+"^DD",101,101.07,0)
+SET MEMBERSHIP SUB-FIELD^^.01^1
+"^DD",101,101.07,0,"DIK")
+XQORC
+"^DD",101,101.07,0,"DT")
+2910401
+"^DD",101,101.07,0,"IX","B",101.07,.01)
+
+"^DD",101,101.07,0,"NM","SET MEMBERSHIP")
+
+"^DD",101,101.07,0,"UP")
+101
+"^DD",101,101.07,.01,0)
+SET MEMBERSHIP^F^^0;1^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>8!($L(X)<2) X
+"^DD",101,101.07,.01,1,0)
+^.1
+"^DD",101,101.07,.01,1,1,0)
+101.07^B
+"^DD",101,101.07,.01,1,1,1)
+S ^ORD(101,DA(1),101.07,"B",$E(X,1,30),DA)=""
+"^DD",101,101.07,.01,1,1,2)
+K ^ORD(101,DA(1),101.07,"B",$E(X,1,30),DA)
+"^DD",101,101.07,.01,1,2,0)
+101^S^MUMPS
+"^DD",101,101.07,.01,1,2,1)
+I $L($P(^ORD(101,DA(1),0),"^",2)) S ^ORD(101,"S."_X,$P(^ORD(101,DA(1),0),"^",2),DA(1))=""
+"^DD",101,101.07,.01,1,2,2)
+I $L($P(^ORD(101,DA(1),0),"^",2)) K ^ORD(101,"S."_X,$P(^ORD(101,DA(1),0),"^",2),DA(1))
+"^DD",101,101.07,.01,1,2,"DT")
+2910401
+"^DD",101,101.07,.01,3)
+Answer must be 2-8 characters in length.
+"^DD",101,101.07,.01,"DT")
+2910401
+"^DD",101,101.0775,0)
+SUBSCRIBERS SUB-FIELD^^.01^1
+"^DD",101,101.0775,0,"DIK")
+XQORC
+"^DD",101,101.0775,0,"DT")
+2990722
+"^DD",101,101.0775,0,"IX","B",101.0775,.01)
+
+"^DD",101,101.0775,0,"NM","SUBSCRIBERS")
+
+"^DD",101,101.0775,0,"UP")
+101
+"^DD",101,101.0775,.01,0)
+SUBSCRIBERS^M*P101^ORD(101,^0;1^S DIC("S")="I $P(^(0),U,4)=""S""" D ^DIC K DIC S DIC=DIE,X=+Y K:Y<0 X
+"^DD",101,101.0775,.01,1,0)
+^.1
+"^DD",101,101.0775,.01,1,1,0)
+101.0775^B
+"^DD",101,101.0775,.01,1,1,1)
+S ^ORD(101,DA(1),775,"B",$E(X,1,30),DA)=""
+"^DD",101,101.0775,.01,1,1,2)
+K ^ORD(101,DA(1),775,"B",$E(X,1,30),DA)
+"^DD",101,101.0775,.01,1,2,0)
+101^AB
+"^DD",101,101.0775,.01,1,2,1)
+S ^ORD(101,"AB",$E(X,1,30),DA(1),DA)=""
+"^DD",101,101.0775,.01,1,2,2)
+K ^ORD(101,"AB",$E(X,1,30),DA(1),DA)
+"^DD",101,101.0775,.01,1,2,"DT")
+2990722
+"^DD",101,101.0775,.01,12)
+Type must be Subscriber
+"^DD",101,101.0775,.01,12.1)
+S DIC("S")="I $P(^(0),U,4)=""S"""
+"^DD",101,101.0775,.01,21,0)
+^^2^2^2990722^
+"^DD",101,101.0775,.01,21,1,0)
+This contains Protocols of Type, Subscribers, who are subscribing to this Event
+"^DD",101,101.0775,.01,21,2,0)
+Drivers.
+"^DD",101,101.0775,.01,"DT")
+2990722
+"^DIC",101,101,0)
+PROTOCOL^101I
+"^DIC",101,101,0,"GL")
+^ORD(101,
+"^DIC",101,101,"%",0)
+^1.005^^0
+"^DIC",101,101,"%D",0)
+^^2^2^2940929^^^^
+"^DIC",101,101,"%D",1,0)
+This file contains the orderables and methods for accomplishing orders
+"^DIC",101,101,"%D",2,0)
+(protocols) within OE/RR.
+"^DIC",101,"B","PROTOCOL",101)
+
+"BLD",8635,6)
+^272
+**END**
+**END**
+

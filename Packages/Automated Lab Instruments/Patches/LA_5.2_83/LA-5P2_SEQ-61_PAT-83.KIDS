@@ -1,0 +1,499 @@
+Released LA*5.2*83 SEQ #61
+Extracted from mail message
+**KIDS**:LA*5.2*83^
+
+**INSTALL NAME**
+LA*5.2*83
+"BLD",9007,0)
+LA*5.2*83^AUTOMATED LAB INSTRUMENTS^0^3140305^y
+"BLD",9007,1,0)
+^^7^7^3140305^^
+"BLD",9007,1,1,0)
+1) TICKET 965986 LRMIEDZ Subscript Error
+"BLD",9007,1,2,0)
+ 
+"BLD",9007,1,3,0)
+The patch modifies code in VITEK LITERAL routine LAMIVTL4 that uses 
+"BLD",9007,1,4,0)
+improper subscripting in a $O to set a variable.  As a consequence, the 
+"BLD",9007,1,5,0)
+variable is set to null.  This null value later causes a Subscript Errror 
+"BLD",9007,1,6,0)
+when LAMIVTL4 calls UNDO^LRMIEDZ and an attempt is made to access the 
+"BLD",9007,1,7,0)
+ACCESSION FILE (#68) using it.
+"BLD",9007,4,0)
+^9.64PA^^
+"BLD",9007,6.3)
+4
+"BLD",9007,"ABPKG")
+n
+"BLD",9007,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9007,"KRN",.4,0)
+.4
+"BLD",9007,"KRN",.401,0)
+.401
+"BLD",9007,"KRN",.402,0)
+.402
+"BLD",9007,"KRN",.403,0)
+.403
+"BLD",9007,"KRN",.5,0)
+.5
+"BLD",9007,"KRN",.84,0)
+.84
+"BLD",9007,"KRN",3.6,0)
+3.6
+"BLD",9007,"KRN",3.8,0)
+3.8
+"BLD",9007,"KRN",9.2,0)
+9.2
+"BLD",9007,"KRN",9.8,0)
+9.8
+"BLD",9007,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",9007,"KRN",9.8,"NM",1,0)
+LAMIVTL4^^0^B21673826
+"BLD",9007,"KRN",9.8,"NM","B","LAMIVTL4",1)
+
+"BLD",9007,"KRN",19,0)
+19
+"BLD",9007,"KRN",19.1,0)
+19.1
+"BLD",9007,"KRN",101,0)
+101
+"BLD",9007,"KRN",409.61,0)
+409.61
+"BLD",9007,"KRN",771,0)
+771
+"BLD",9007,"KRN",779.2,0)
+779.2
+"BLD",9007,"KRN",870,0)
+870
+"BLD",9007,"KRN",8989.51,0)
+8989.51
+"BLD",9007,"KRN",8989.52,0)
+8989.52
+"BLD",9007,"KRN",8994,0)
+8994
+"BLD",9007,"KRN","B",.4,.4)
+
+"BLD",9007,"KRN","B",.401,.401)
+
+"BLD",9007,"KRN","B",.402,.402)
+
+"BLD",9007,"KRN","B",.403,.403)
+
+"BLD",9007,"KRN","B",.5,.5)
+
+"BLD",9007,"KRN","B",.84,.84)
+
+"BLD",9007,"KRN","B",3.6,3.6)
+
+"BLD",9007,"KRN","B",3.8,3.8)
+
+"BLD",9007,"KRN","B",9.2,9.2)
+
+"BLD",9007,"KRN","B",9.8,9.8)
+
+"BLD",9007,"KRN","B",19,19)
+
+"BLD",9007,"KRN","B",19.1,19.1)
+
+"BLD",9007,"KRN","B",101,101)
+
+"BLD",9007,"KRN","B",409.61,409.61)
+
+"BLD",9007,"KRN","B",771,771)
+
+"BLD",9007,"KRN","B",779.2,779.2)
+
+"BLD",9007,"KRN","B",870,870)
+
+"BLD",9007,"KRN","B",8989.51,8989.51)
+
+"BLD",9007,"KRN","B",8989.52,8989.52)
+
+"BLD",9007,"KRN","B",8994,8994)
+
+"BLD",9007,"QUES",0)
+^9.62^^
+"BLD",9007,"REQB",0)
+^9.611^2^2
+"BLD",9007,"REQB",1,0)
+LA*5.2*40^2
+"BLD",9007,"REQB",2,0)
+LA*5.2*81^2
+"BLD",9007,"REQB","B","LA*5.2*40",1)
+
+"BLD",9007,"REQB","B","LA*5.2*81",2)
+
+"MBREQ")
+0
+"PKG",11,-1)
+1^1
+"PKG",11,0)
+AUTOMATED LAB INSTRUMENTS^LA^Lab Auto-Instrument Package
+"PKG",11,20,0)
+^9.402P^^
+"PKG",11,22,0)
+^9.49I^1^1
+"PKG",11,22,1,0)
+5.2^2940927^2960605
+"PKG",11,22,1,"PAH",1,0)
+83^3140305
+"PKG",11,22,1,"PAH",1,1,0)
+^^7^7^3140305
+"PKG",11,22,1,"PAH",1,1,1,0)
+1) TICKET 965986 LRMIEDZ Subscript Error
+"PKG",11,22,1,"PAH",1,1,2,0)
+ 
+"PKG",11,22,1,"PAH",1,1,3,0)
+The patch modifies code in VITEK LITERAL routine LAMIVTL4 that uses 
+"PKG",11,22,1,"PAH",1,1,4,0)
+improper subscripting in a $O to set a variable.  As a consequence, the 
+"PKG",11,22,1,"PAH",1,1,5,0)
+variable is set to null.  This null value later causes a Subscript Errror 
+"PKG",11,22,1,"PAH",1,1,6,0)
+when LAMIVTL4 calls UNDO^LRMIEDZ and an attempt is made to access the 
+"PKG",11,22,1,"PAH",1,1,7,0)
+ACCESSION FILE (#68) using it.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","LAMIVTL4")
+0^1^B21673826^B21256729
+"RTN","LAMIVTL4",1,0)
+LAMIVTL4 ;DAL/HOAK 4th Vitek literal verify rtn
+"RTN","LAMIVTL4",2,0)
+ ;;5.2;AUTOMATED LAB INSTRUMENTS;**12,31,40,83**;Sep 27,1994;Build 4
+"RTN","LAMIVTL4",3,0)
+INIT ;
+"RTN","LAMIVTL4",4,0)
+ I '$G(LRTS) S LRTS=$O(^LRO(68,LRAA,1,LRAD,1,LRAN,4,0))
+"RTN","LAMIVTL4",5,0)
+ I 'OK D GLEEP^LAMIVTL3 QUIT
+"RTN","LAMIVTL4",6,0)
+ S OK=1
+"RTN","LAMIVTL4",7,0)
+DR ; FROM LAMIAUT1 BY FHS
+"RTN","LAMIVTL4",8,0)
+ ;-----------------------------------------------------------------------
+"RTN","LAMIVTL4",9,0)
+ ; This block runs edit template for comment, final report, bact etc.
+"RTN","LAMIVTL4",10,0)
+ K DR,DIC,DIE,DA
+"RTN","LAMIVTL4",11,0)
+ S DA(1)=LRDFN
+"RTN","LAMIVTL4",12,0)
+ S DA=LRIDT
+"RTN","LAMIVTL4",13,0)
+ S Y(0)=^LR(LRDFN,"MI",LRIDT,0),DIE="^LR("_LRDFN_",""MI"","
+"RTN","LAMIVTL4",14,0)
+ S DR="11.55////^S X=DUZ;11.5;11.6;13"
+"RTN","LAMIVTL4",15,0)
+ D ^DIE
+"RTN","LAMIVTL4",16,0)
+ ;-----------------------------------------------------------------------
+"RTN","LAMIVTL4",17,0)
+ S LREND=0
+"RTN","LAMIVTL4",18,0)
+ D ^LAMIAUT3 Q:LREND
+"RTN","LAMIVTL4",19,0)
+ D VERIFY
+"RTN","LAMIVTL4",20,0)
+ L -(^LR(LRDFN,"MI",LRIDT),^LRO(68,LRAA,1,LRAD,1,LRAN))
+"RTN","LAMIVTL4",21,0)
+ Q
+"RTN","LAMIVTL4",22,0)
+VERIFY ;
+"RTN","LAMIVTL4",23,0)
+ R !!," ('E'dit data, 'C'omments, 'O'rganism 'W'orklist) // ",LREDIT:DTIME
+"RTN","LAMIVTL4",24,0)
+ I '$T D GLEEP^LAMIVTL3 S OK=0 QUIT
+"RTN","LAMIVTL4",25,0)
+ I $E(LREDIT)="?" D HLP^LAMIAUT4,^LAMIAUT3 G VERIFY
+"RTN","LAMIVTL4",26,0)
+ I $E(LREDIT)="^"!($E(LREDIT="@")) D GLEEP^LAMIVTL3 S OK=0 K LRBDUP,LRMOVE Q
+"RTN","LAMIVTL4",27,0)
+ K DIC,DR,DIE,DA
+"RTN","LAMIVTL4",28,0)
+ S DA=LRIDT,DA(1)=LRDFN
+"RTN","LAMIVTL4",29,0)
+ S LRY(0)=^LR(LRDFN,"MI",LRIDT,0)
+"RTN","LAMIVTL4",30,0)
+ S DIE="^LR("_DA(1)_",""MI"",",DIC=DIE
+"RTN","LAMIVTL4",31,0)
+ I $E(LREDIT)="E" S ZX9=X9 D EDIT^LAMIAUT4,^LAMIAUT3 S X9=ZX9 K ZX9 G VERIFY
+"RTN","LAMIVTL4",32,0)
+ I $E(LREDIT)="O" S ZX9=X9 D ^LRMIBUG,^LAMIAUT3 S X9=ZX9 K ZX9 G VERIFY
+"RTN","LAMIVTL4",33,0)
+ I $E(LREDIT)="C" K DR S DR=".99;1;13" D ^DIE D ^LAMIAUT3 G VERIFY
+"RTN","LAMIVTL4",34,0)
+ I $E(LREDIT)="W" D EN^LRCAPV D ^LAMIAUT3 G VERIFY
+"RTN","LAMIVTL4",35,0)
+ R !,"Approve for release by entering your initials: ",X:DTIME
+"RTN","LAMIVTL4",36,0)
+ I '$T!($E(X)="^") D GLEEP^LAMIVTL3 Q
+"RTN","LAMIVTL4",37,0)
+ I X'=LRINI W !!,$C(7)," NOT APPROVED " Q
+"RTN","LAMIVTL4",38,0)
+ I X=LRINI W !!,"Approved for Release" D VER D  QUIT
+"RTN","LAMIVTL4",39,0)
+ .  ;time stamp
+"RTN","LAMIVTL4",40,0)
+ .  D NOW^%DTC
+"RTN","LAMIVTL4",41,0)
+ .  S $P(^LR(LRDFN,LRSUB,LRIDT,0),U,3)=%,$P(^(0),U,4)=$G(DUZ)
+"RTN","LAMIVTL4",42,0)
+ .  S $P(^LR(LRDFN,LRSUB,LRIDT,1),U)=DT
+"RTN","LAMIVTL4",43,0)
+ .  S LRODT=$P(^LR(LRDFN,LRSUB,LRIDT,0),U),LRODT=$P(LRODT,".")
+"RTN","LAMIVTL4",44,0)
+ .  I $G(LRORGCNT) D
+"RTN","LAMIVTL4",45,0)
+ ..  I $D(^LR(LRDFN,LRSUB,LRIDT,3,0)) S LRN12=$G(^(0)) D
+"RTN","LAMIVTL4",46,0)
+ ...  S LRORGCNT=$P($G(LRN12),U,4)+LRORGCNT
+"RTN","LAMIVTL4",47,0)
+ ..  S ^LR(LRDFN,LRSUB,LRIDT,3,0)=U_"63.3PA"_U_LRORGCNT_U_LRORGCNT
+"RTN","LAMIVTL4",48,0)
+ .  S ^LRO(69,LRODT,1,"AL",LRLLOC,PNM,LRDFN)=""
+"RTN","LAMIVTL4",49,0)
+ .  S ^LRO(69,LRODT,1,"AN",LRLLOC,LRDFN,LRIDT)=""
+"RTN","LAMIVTL4",50,0)
+ .  S ^LRO(69,LRODT,1,"AP",LRPHYN,PNM,LRDFN)=""
+"RTN","LAMIVTL4",51,0)
+ .  S ^LRO(69,LRODT,1,"AR",LRLLOC,PNM,LRDFN)=""
+"RTN","LAMIVTL4",52,0)
+ .  S $P(^LRO(69,LRODT,1,LRSN,3),U,2)=%
+"RTN","LAMIVTL4",53,0)
+ ;-----------------------------------------------------------------
+"RTN","LAMIVTL4",54,0)
+VER ;Final report after initials
+"RTN","LAMIVTL4",55,0)
+ S LRSS=LRSUB
+"RTN","LAMIVTL4",56,0)
+ S LRUNDO=1
+"RTN","LAMIVTL4",57,0)
+ ;
+"RTN","LAMIVTL4",58,0)
+ S LRDPF=2,LRSSD=LRAA,LRACC="",LRADDF=LRSUB,LRORCOM=""
+"RTN","LAMIVTL4",59,0)
+ Q:'$G(LRBUX)
+"RTN","LAMIVTL4",60,0)
+ S LRORG(+LRBUX)=LRORGCNT
+"RTN","LAMIVTL4",61,0)
+ S LRORGN=+LRBUX
+"RTN","LAMIVTL4",62,0)
+ S LAMIAUTO=1
+"RTN","LAMIVTL4",63,0)
+ S LAMIAUT0=1
+"RTN","LAMIVTL4",64,0)
+ ;
+"RTN","LAMIVTL4",65,0)
+ S LRFIFO=0
+"RTN","LAMIVTL4",66,0)
+ S T1=1
+"RTN","LAMIVTL4",67,0)
+ D VER1 Q
+"RTN","LAMIVTL4",68,0)
+TIC ;
+"RTN","LAMIVTL4",69,0)
+ ;
+"RTN","LAMIVTL4",70,0)
+ ;I '$D(X9) S X9="F T1=1 "
+"RTN","LAMIVTL4",71,0)
+ N LRBG0
+"RTN","LAMIVTL4",72,0)
+ Q:X9=""  S (LRBG0,Y(0))=^LR(LRDFN,"MI",LRIDT,0),LRCAPOK=1,LRUNDO=0 I '$P(Y(0),U,3) S:$P(Y(0),U,9) LRUNDO=1 G VER1
+"RTN","LAMIVTL4",73,0)
+ I $P(^LR(LRDFN,"MI",LRIDT,0),U,3) W !,"Final report has been verified by micro  supervisor,",$C(7),!,"If you proceed in editing, the report will be reprinted"
+"RTN","LAMIVTL4",74,0)
+ F I=0:0 W !?10,"OK" S %=1 D YN^DICN Q:%  W !," Enter  'Y' or 'N' : "
+"RTN","LAMIVTL4",75,0)
+ I %=2!(%<0) Q
+"RTN","LAMIVTL4",76,0)
+VER1 ;
+"RTN","LAMIVTL4",77,0)
+ S LRCAPOK=1
+"RTN","LAMIVTL4",78,0)
+ S LRT=LRTS
+"RTN","LAMIVTL4",79,0)
+ I '$L(LRT) S LRTS=$O(^LRO(68,LRAA,1,LRAD,1,LRAN,4,0))
+"RTN","LAMIVTL4",80,0)
+ S LRCB7=LRIFN
+"RTN","LAMIVTL4",81,0)
+ D:'$P(^LAB(69.9,1,"NITE"),U) ANN^LRCAPV
+"RTN","LAMIVTL4",82,0)
+ ;N LRADD,GLB,LRBUG,LRBUGY
+"RTN","LAMIVTL4",83,0)
+ S LRSB=1
+"RTN","LAMIVTL4",84,0)
+ W !
+"RTN","LAMIVTL4",85,0)
+ X (X9_"S LRPTP=$O(LRNAME(T1,0))")
+"RTN","LAMIVTL4",86,0)
+ S LRCAPOK=1,Y(0)=^LR(LRDFN,"MI",LRIDT,0) D
+"RTN","LAMIVTL4",87,0)
+ .  K DR
+"RTN","LAMIVTL4",88,0)
+ .  S DR=11,LRSAME=0
+"RTN","LAMIVTL4",89,0)
+ .  D:LRUNDO UNDO^LRMIEDZ
+"RTN","LAMIVTL4",90,0)
+ .  I $G(^LAB(61.38,1,4))'>0 D
+"RTN","LAMIVTL4",91,0)
+ ..  S $P(^LRO(68,LRAA,1,LRAD,1,LRAN,4,LRTS,0),U,5)=""
+"RTN","LAMIVTL4",92,0)
+ .  D ^DIE,TIME^LRMIEDZ3
+"RTN","LAMIVTL4",93,0)
+ .  S LRTS=LRPTP I $G(LRTS) I LRCAPOK&($P(LRPARAM,U,14)) D
+"RTN","LAMIVTL4",94,0)
+ ..  S LRIFN=0
+"RTN","LAMIVTL4",95,0)
+ ..  S LRIFN=$O(LRIFN(LRIFN)) Q:LRIFN=""  D WKLD
+"RTN","LAMIVTL4",96,0)
+ ;
+"RTN","LAMIVTL4",97,0)
+ ;
+"RTN","LAMIVTL4",98,0)
+ ;
+"RTN","LAMIVTL4",99,0)
+ N LRWRDVEW
+"RTN","LAMIVTL4",100,0)
+ S LRWRDVEW=1
+"RTN","LAMIVTL4",101,0)
+ D VT^LRMIUT1 I $L($G(LRVT)) D STF^LRMIUT
+"RTN","LAMIVTL4",102,0)
+ S ^LRO(68,"AVS",LRAA,LRAD,LRAN)=LRDFN_U_LRIDT
+"RTN","LAMIVTL4",103,0)
+ K ^LAH(LRLL,1,"C",LRAN)
+"RTN","LAMIVTL4",104,0)
+ S LRPLA=0
+"RTN","LAMIVTL4",105,0)
+ ;-->make certain we get'em all
+"RTN","LAMIVTL4",106,0)
+ F  S LRPLA=$O(^LAH(LRLL,1,"C",LRAN,LRPLA)) Q:+LRPLA'>0  K ^(LRAN,LRPLA)
+"RTN","LAMIVTL4",107,0)
+ D END^LAMIVTL0
+"RTN","LAMIVTL4",108,0)
+ W @IOF D S1^LAMIVTL0 W !!
+"RTN","LAMIVTL4",109,0)
+ Q
+"RTN","LAMIVTL4",110,0)
+ ;             VITEK WORKLOAD----ETIOLOGY
+"RTN","LAMIVTL4",111,0)
+WKLD ;
+"RTN","LAMIVTL4",112,0)
+ D LOOK^LRCAPV1
+"RTN","LAMIVTL4",113,0)
+ Q
+"RTN","LAMIVTL4",114,0)
+ S LRT=LRTS
+"RTN","LAMIVTL4",115,0)
+ S LRPLUK=0
+"RTN","LAMIVTL4",116,0)
+ F  S LRPLUK=$O(^LAH(LRLL,1,LRPLUK)) Q:+LRPLUK'>0  D
+"RTN","LAMIVTL4",117,0)
+ .  Q:$P(^LAH(LRLL,1,LRPLUK,0),U,5)'=LRAN
+"RTN","LAMIVTL4",118,0)
+ .  S LRORG=0
+"RTN","LAMIVTL4",119,0)
+ .  S LRIFN=LRPLUK
+"RTN","LAMIVTL4",120,0)
+ .  F  S LRORG=$O(^LAH(LRLL,1,LRIFN,3,LRORG)) K LRADD Q:LRORG<1  D
+"RTN","LAMIVTL4",121,0)
+ ..  I $D(^LAH(LRLL,1,LRIFN,3,LRORG,0))#2 S LRGB1=+^(0) D
+"RTN","LAMIVTL4",122,0)
+ ...  S GLB="^LAB(61.2,LRGB1,9,A)",LRADD=""
+"RTN","LAMIVTL4",123,0)
+ ...  D DISP1 Q:'$G(LRIFN)  D ETIOL^LRCAPV1
+"RTN","LAMIVTL4",124,0)
+ K GLB
+"RTN","LAMIVTL4",125,0)
+ F  W !!?10,"(D)isplay (A)dd Work Load " R X:DTIME S X=$E(X) S:'$T!(X=U)!(X="") LREND=1 Q:X="A"!(LREND)  D:X="D" DIS^LRCAPU
+"RTN","LAMIVTL4",126,0)
+ Q
+"RTN","LAMIVTL4",127,0)
+DISP1 ;
+"RTN","LAMIVTL4",128,0)
+ W !,"PROCESSING: ",^LAB(61.2,LRGB1,0),?60,$G(LRCODE)
+"RTN","LAMIVTL4",129,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",9007,6)
+^61
+**END**
+**END**
+

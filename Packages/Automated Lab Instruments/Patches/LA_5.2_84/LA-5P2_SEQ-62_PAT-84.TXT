@@ -1,0 +1,157 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 11/18/14 at 10:10
+=============================================================================
+Run Date: MAR 30, 2015                     Designation: LA*5.2*84
+Package : LA - AUTOMATED LAB INSTRUMENTS      Priority: Mandatory
+Version : 5.2        SEQ #62                    Status: Released
+                  Compliance Date: APR 30, 2015
+=============================================================================
+
+Associated patches: (v)LA*5.2*74   <<= must be installed BEFORE `LA*5.2*84'
+
+Subject: REMARKS WITH PIPE CHARACTER & OBX ESCAPE CHARACTERS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch modifies code in two (2) routines to correct HL7 escape 
+ characters in OBX result segments and properly handle pipe "|" characters 
+ in remarks from lab instruments. 
+  
+ Associated Remedy Ticket(s):
+ ============================
+ 1. INC000000615847 - OBX Escape Character
+ 2. INC000000615848 - Remarks with Pipe Character
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*84 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*84 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LA*5.2*84 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Hudson Valley HCS
+ Bronx VAMC
+ Durham VAMC
+  
+ Remedy Overview:
+ ================
+ 1. INC000000615847 - OBX Escape Characters
+   
+ Problem:
+ --------
+ When incoming Health Level 7 (HL7) messages with a CH result in OBX-5, the
+ code is not un-escaping the HL7 escaped characters.
+  
+ Resolution:
+ -----------
+ The code at PROCESS^LA7VIN5 is modified to un-escape (using 
+ $$UNESC^LA7VHLU3) the result in the HL7 message.
+  
+ Routines: LA7VIN5
+  
+ 2. INC000000615847 - Remarks with Pipe Character
+  
+ Problem:
+ --------
+ When Auto Instrument routines are storing CH result remarks that contain 
+ the pipe ('|') character in the ^LAH global (PROCESSED LOAD/WORK LIST 
+ DATA FILE #68.3), it is possible that the text within the pipes can be 
+ interpreted as FileMan word processing windows or frames and will get 
+ interpreted inappropriately. 
+  
+ Resolution:
+ -----------
+ This defect can be corrected by setting the DIWF flag to "|" rather than 
+ null prior to calling the Kernel utility routine ^DIWP to format the text 
+ in routine ^LASET.  The "|" suppresses FileMan's attempt to process the 
+ pipe character. 
+  
+ Routines: LASET
+  
+    ==================== Installation Instructions ====================
+   This patch may be loaded with users on the system.  You may wish to 
+   install it during non-peak hours. Installation will take less than 1 
+   minute. 
+  
+   NOTE: Kernel patches must be current on the target system to avoid 
+         problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'LA*5.2*84'.
+  
+       When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+       choose 'NO'. 
+  
+       When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;AUTOMATED LAB INSTRUMENTS;**[Patch List]**;Sep 27, 1994;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LA7VIN5
+    Before: B68402424   After: B69080940  **46,64,68,74,84**
+Routine Name: LASET
+    Before: B11597716   After: B11613594  **27,42,46,84**
+ 
+Routine list of preceding patches: 74
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 29, 2014
+Completed By:                               Date Completed: MAR 24, 2015
+Released By :                               Date Released : MAR 30, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

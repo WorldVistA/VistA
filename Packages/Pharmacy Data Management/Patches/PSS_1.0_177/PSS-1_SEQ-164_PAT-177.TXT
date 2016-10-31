@@ -1,0 +1,205 @@
+$TXT Created by                 MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 03/14/13 at 15:18
+=============================================================================
+Run Date: JAN 21, 2015                     Designation: PSS*1*177
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #164                      Status: Released
+                  Compliance Date: FEB 20, 2015
+=============================================================================
+
+Associated patches: (v)PSS*1*158   <<= must be installed BEFORE `PSS*1*177'
+
+Subject: FDA MEDICATION GUIDES - NEW URL FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ ******************************** ATTENTION *******************************
+  
+ FDA Medication Guide On- Demand and Automatic Printing functionality 
+ includes 3 patches which must be installed in the following order:
+  
+ 1.  PSS*1.0*177 - Vista patch that updates the Pharmacy System File (File 
+     #59.7) FDA MED GUIDE SERVER URL field (Field 100) with the new secure
+     CMOP SharePoint URL.
+  
+ 2.  PSO*7.0*428 - Information only patch that contains instructions to 
+     update the FDA Med Guide Automatic Printing Java Application Component
+     installed on servers to work with the new secure CMOP SharePoint URL.
+  
+ 3.  PSN*4.0*364 - Information only patch that contains instructions to 
+     update the FDA Med Guide On-Demand Viewing Java Application Component
+     installed on individual workstations to work with the new secure CMOP
+     SharePoint URL.
+  
+ If your site is currently utilizing the FDA Med Guide Auto Printing  or 
+ On-Demand software,  the updated Java Application Components included in
+ this release,  must be installed immediately following the installation of
+ PSS*1.0*177.  Failure to do so will disable the FDA Med Guide On-Demand
+ and Automatic printing functionality until the updated Java Application
+ Component software is installed.
+  
+ ***If your site does not utilize the FDA Med Guide On-Demand or Auto 
+    Printing software, you only need to install Vista patch PSS*1.0*177 
+    and no further action on PSO*7*428 and PSN*4*364 is necessary.***
+  
+ **************************************************************************
+  
+ On-Demand and Automatic printing of FDA Med Guides were originally stored 
+ on an un-secured CMOP SharePoint.  A new secure CMOP SharePoint has been 
+ created and new and updated FDA Med guides are now added to the new secure
+ SharePoint. 
+  
+ The old CMOP SharePoint address is hard-coded and stored in the Pharmacy
+ System File (File #59.7) FDA MED GUIDE SERVER URL field (Field #100).
+  
+ This patch will update the Pharmacy System File (File #59.7) FDA MED GUIDE
+ SERVER URL field (Field #100) with the new secure CMOP SharePoint URL.
+  
+ Post-init routine PSS177P will change the FDA MED GUIDE SERVER URL field
+ from this:
+  
+ "http://vaww.national.cmop.domain.ext/FDAMedGuides/"
+  
+ to this:
+  
+ "https://vaww.cmopnational.domain.ext/CR/FDAMedGuides/".
+  
+  
+ Patches PSN*4*364 (On-Demand Viewing) and PS0*7*428 (Automatic Printing) 
+ will be released at the same time as this patch, PSS*1.0*177.  These 
+ information only patches contain instructions to retrieve the necessary
+ files and documentation to update the Java Application Component software
+ to make this URL work with the system.
+  
+ This patch (PSS*1*177) only makes the file update and does not alter any
+ VistA functionality.
+  
+  
+ Associated NSR(S):
+ ==================
+ N/A
+  
+  
+ Associated Remedy Ticket(s):
+ ===========================
+ INC000000797069 - Outpatient Pharmacy - FDA Med
+  
+ Duplicates:
+ -----------
+ INC000000799119 - Outpatient Pharmacy - FDA Med 
+ INC000000799778 - Outpatient Pharmacy - FDA Med 
+ INC000000824872 - UPDATE FDA MED GUIDES URL
+  
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ Central TX HCS
+ Cheyenne VAMC
+ Fayetteville VAMC
+ Palo Alto HCS 
+  
+  
+ REMEDY TICKET OVERVEW:
+ =====================
+ INC000000797069 - Outpatient Pharmacy - FDA Med
+  
+   Patient Safety Issue:
+   ---------------------
+   PSPO #2361
+  
+   Problem:
+   --------
+   On-Demand and Automatic printing of FDA Med Guides were originally
+   stored on an un-secured CMOP SharePoint.  A new secure CMOP SharePoint
+   has been created and new and updated FDA Med guides are now added to the
+   new secure SharePoint.
+  
+   Resolution:
+   -----------
+   Post-init routine PSS177P will change the FDA MED GUIDE SERVER URL field
+   from this:
+  
+   "http://vaww.national.cmop.domain.ext/FDAMedGuides/"
+  
+   to this:
+  
+   "https://vaww.cmopnational.domain.ext/CR/FDAMedGuides/".
+  
+   NOTE:
+   ====
+   Patches PSN*4*364 (On-Demand Viewing) and PSO*7*428 (Automatic Printing)
+   will be released at the same time as this patch, PSS*1.0*177.  These  
+   information only patches contain instructions to retrieve the necessary
+   files and documentation to update the Java Application Component
+   software to make this URL work with the system.
+  
+   This patch only makes the file update and does not alter any VistA 
+   functionality.
+  
+   The post install routine PSS177P will be removed after a successful install.
+  
+  
+ ------------------- PATCH INSTALLATION INSTRUCTIONS ----------------------
+  
+ Patch installation will take less than 1 minute. This patch may be 
+ installed at any time with users on the system.
+  
+ **Please note- if your site utilizes the FDA Med Guide On-Demand or 
+   Automatic Printing software, recommend this patch, (PSS*1.0*177) be
+   installed during non-peak hours to accommodate the installation of 
+   the related Java Application Component software being released in
+   informational patches PSN*4.0*364 and PSO*7.0*428.**
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+   2. From the Kernel Installation & Distribution System (KIDS) menu,
+      select the Installation menu.
+  
+   3. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter PSS*1.0*177).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+   
+   4. Use the Install Package(s) option and select the package PSS*1.0*177.
+   
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;09/30/97;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSS177P
+    Before:       n/a   After:   B530054  **177**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 28, 2013
+Completed By:                               Date Completed: JAN 07, 2015
+Released By :                               Date Released : JAN 21, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,309 @@
+
+=============================================================================
+Run Date: SEP 02, 2015                     Designation: IB*2*522
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #499                      Status: Released
+                  Compliance Date: SEP 16, 2015
+=============================================================================
+
+Associated patches: (v)IB*2*461    <<= must be installed BEFORE `IB*2*522'
+                    (v)IB*2*479    <<= must be installed BEFORE `IB*2*522'
+                    (v)IB*2*516    <<= must be installed BEFORE `IB*2*522'
+                    (v)DG*5.3*884  <<= must be installed BEFORE `IB*2*522'
+
+Subject: INPATIENT PTF CODE EXPANSION
+
+Category: 
+  - Routine
+  - Informational
+
+Description:
+============
+
+ **************************************************************************
+ *                                                                        *
+ *  IMPORTANT:                                                            *
+ *                                                                        *
+ *   This patch is being released in support of the ICD-10 Patient        *
+ *   Treatment File Modifications project.  Patch DG*5.3*884              *
+ *   (Registration) is being released along with GMTS*2.7*111 (Health     *
+ *   Summary), IB*2.0*522 (Integrated Billing), LR*5.2*442 (Lab Service), *
+ *   ROR*1.5*25 (Clinical Case Registries), and OR*3.0*406 (Order         *
+ *   Entry/Results Reporting) in a multi-package build (host file).       *
+ *                                                                        *
+ *   Because this is a multi-package build, it can only be distributed    *
+ *   as a host file; no builds are included in the patch messages. The    *
+ *   name of the host file is: ICD_10_PTF_MODIFICATIONS.KID; it can be    *
+ *   obtained from one of the anonymous file transfer protocol (ftp)      *
+ *   directories listed in the 'Software & Documentation Retrieval        *
+ *   Instructions' section of this patch.                                 *
+ *                                                                        *
+ *   Detailed information regarding pre-installation items,               *
+ *   post-installation items, and installation instructions can be found  *
+ *   in the Installation Guide: ICD_10_PTF_Modifications_IG.PDF. This     *
+ *   document may be obtained from one of the anonymous file transfer     *
+ *   protocol (ftp) directories listed in the 'Software & Documentation   *
+ *   Retrieval Instructions' section of this patch.                       *
+ *                                                                        *
+ *   It is imperative that these patches be installed no later than the   *
+ *   compliance date.  Your understanding and support is appreciated.     *
+ *                                                                        *
+ **************************************************************************
+                    
+ For Inpatient care, the number of allowable Diagnosis and Procedure codes 
+ is being expanded in the Patient Treatment File (PTF) with DG*5.3*884.  
+ The following records in PTF are being expanded to allow up to 25 codes:  
+ Movement Diagnosis (501), Discharge Diagnosis (701), Surgical Episode 
+ Procedures (401) and Non-O/R Episode Procedures (601).
+                    
+ This patch IB*2*522 will update the Inpatient Bill/Claim to accommodate 
+ the expanded number of Diagnosis and Procedure codes available in PTF.  
+                    
+                    
+ A. Inpatient Bill/Claims Diagnosis:
+ -----------------------------------
+ Screen 4 option 3 of Enter/Edit Billing Information [IB EDIT BILLING INFO] 
+ has been updated to display and allow selection of all Diagnosis in the 
+ PTF record within the date range of the bill.  This is up to 25 Diagnosis 
+ for each Movement (501) and the Discharge (701). 
+                    
+ The Present on Admission (POA) indicator associated with any selected PTF 
+ Diagnosis will be also added to the bill.  The display of PTF Diagnosis 
+ will include the POA, if present in PTF.
+                    
+ Beginning with ICD-10 bills the Present on Admission (POA) indicator 
+ entered in the DSS Encoder will no longer be added to a bill.  For ICD-10 
+ bills the Diagnosis POA will be available in PTF where it will be accessed 
+ for placement on the bill.
+                    
+ Depending on the number of PTF Movements associated with the bill, the 
+ display and selection of Movement Diagnosis identifiers will now include 
+ both upper and lower case alpha characters (A-Z and a-z), with X/x being 
+ reserved for the Discharge.  Previously only upper case alpha characters 
+ were selectable.
+                    
+ B.  Inpatient Bill/Claims Procedures:
+ -------------------------------------
+ Screen 4 option 4 of Enter/Edit Billing Information [IB EDIT BILLING INFO] 
+ has been updated to display and allow selection of all Procedures in the 
+ PTF record within the date range of the bill.  This is up to 25 ICD 
+ Procedures for each Surgical (401) and Non-O/R (601) Episode.
+                    
+ It is possible that the same procedure may be completed multiple times on 
+ the same date.  These duplicate ICD procedures will be displayed in the 
+ list of PTF ICD procedures as separate line items.  If a duplicate ICD 
+ procedure is selected by the preceding indicator then these duplicates 
+ will be added to the bill.
+                    
+ The display of PTF Surgical (401) and Non-O/R (601) ICD Procedures has 
+ been updated to display a '*' before each PTF ICD procedure that matches 
+ a procedure and date already assigned to the bill.
+                    
+ The display and selection of the PTF Professional Services (801) has also 
+ been expanded to all CPT/HCPCS codes assigned within the bill date range.  
+ Previously a maximum of 5 CPT/HCPCS were displayed for each Professional 
+ Service although more than 5 may have been entered in PTF.  
+                    
+ The display of the PTF Professional Services (801) will now include the 
+ Quantity of the procedure performed if it is more than 1.
+                    
+ Depending on the number of PTF Procedure Episodes associated with the bill, 
+ the display and selection of Procedure Episode identifiers will now 
+ include both upper and lower case alpha characters (A-Z and a-z).  
+ Previously only upper case alpha characters were selectable.
+                    
+ C.  Bill Charge Calculation: 
+ ----------------------------
+ For Inpatient Facility bill charges, the calculation of the DRG has been 
+ modified to use all the PTF Diagnosis and Procedure codes within the 
+ appropriate date range.
+                    
+ D.  Third Party Autobiller:
+ ---------------------------
+ Inpatient bills created by the Third Party Autobiller will add all the PTF 
+ Diagnosis, POA, and Procedure codes within the bill date range.
+                    
+                    
+ Technical Description:
+ ======================
+                    
+ IB*2*522 is dependent on DG*5.3*884 ICD-10 Patient Treatment File 
+ Modifications which adds the new PTF Diagnosis, POA, and Procedure fields.
+                    
+ Integrated Billing has subscribed to the Registration ICR #6130 to access 
+ these new PTF fields.
+                    
+ The following option has been updated with this patch:
+ -  Enter/Edit Billing Information [IB EDIT BILLING INFO]
+                    
+ There is no Pre or Post Installation routine or modifications associated 
+ with this patch.
+                    
+                    
+ Patch Components:
+ -----------------
+                    
+ IB*2*522 contains Routines only.  No Files, Fields, or Templates are 
+ modified.
+                    
+ Files & Fields Associated:  NA
+ Forms Associated: NA
+ Mail Groups Associated:  NA
+ Options Associated:  NA - None Exported
+ Protocols Associated:  NA
+ Security Keys Associated:  NA
+ Templates Associated:  NA
+ Patient Safety Issues (PSIs):  NA
+                    
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR #20070902 - ICD-10-CM Conversion
+                    
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+                    
+ 1.  INC000001243424  Billing Screen 10, section 3 Attending Provider Name 
+                      missing
+                    
+ Problem:  
+ --------
+ Attending provider is not being automatically added to Billing screen 10, 
+ Section 3 when a bill is created by the AutoBiller and the provider has a 
+ valid NPI.  The Third Party AutoBiller had been modified to only add the 
+ Attending provider if that provider had a valid NPI.  However the check 
+ for NPI was using the wrong field for the provider resulting in the NPI 
+ never being found and therefore the AutoBiller never added the Attending 
+ Provider to the bill. 
+                    
+ Resolution:
+ -----------
+ The software was updated to correctly identify the Attending provider's 
+ NPI.  The Third Party AutoBiller will add the Attending Provider to a bill 
+ it creates if that provider has a valid NPI.  The Attending provider is 
+ then viewable on Screen 10, section 3 of Enter/Edit Billing Information 
+ [IB EDIT BILLING INFO] option.
+                    
+ Test Sites:
+ ----------
+ The following sites participated in testing this software.
+  * Detroit, MI
+  * Madison, WI
+  * Richmond, VA 
+  * West Haven, CT
+                    
+ Software & Documentation Retrieval Instructions:
+ ------------------------------------------------ 
+ The software for this set of patches is not being distributed through the 
+ National Patch Module. 
+  
+ Patch DG*5.3*884 (Registration) is being released along with GMTS*2.7*111
+ (Health Summary), IB*2.0*522 (Integrated Billing), LR*5.2*442 (Lab
+ Service), ROR*1.5*25 (Clinical Case Registries), and OR*3.0*406
+ (Order Entry/Results Reporting) in a multi-package build (host
+ file).
+  
+ Because this is a multi-package build, it can only be distributed as a
+ host file; no builds are included in the patch messages. The name of the
+ host file is: ICD_10_PTF_MODIFICATIONS.KID; it can be obtained from one of
+ the anonymous file transfer protocol (ftp) directories listed below. 
+  
+ Updated documentation describing the new functionality introduced by this 
+ patch is also available and can be obtained from one of the anonymous 
+ file transfer protocol (ftp) directories listed below.
+  
+ The preferred method is to FTP the files from: 
+  
+  ftp://download.vista.domain.ext/
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Note: 
+  - Please use the 'Binary' transfer method for retrieval of .pdf files
+  - Please use the 'ASCII' transfer method for retrieval of .KID files
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ The software distribution includes these file(s):
+ -------------------------------------------------------------------------
+ ICD_10_PTF_MODIFICATIONS.KID
+  
+  
+ The documentation includes these titles and file names:
+ -------------------------------------------------------------------------
+     Title: Integrated Billing User Manual
+ File Name: ib_2_0_um.pdf
+    
+     Title: Integrated Billing Technical Manual
+ File Name: ib_2_0_tm.pdf
+    
+     Title: Integrated Billing IB*2.0*522 Release Notes    
+ File Name: IB_2_522_RN.pdf
+  
+     Title: ICD-10 PTF Installation Guide (all patches)
+ File Name: ICD_10_PTF_MODIFICATIONS_IG.PDF
+  
+  
+ Patch Installation:
+ ==================================================
+ Detailed information regarding pre-installation items, post-installation
+ items, and installation instructions can be found in the Installation
+ Guide: ICD_10_PTF_MODIFICATIONS_IG.PDF. This document may be obtained from
+ one of the anonymous file transfer protocol (ftp) directories listed in
+ the 'Software & Documentation Retrieval Instructions' of this patch
+ description.
+                    
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCD3
+    Before: B32514703   After: B34628725  **14,55,52,91,106,125,51,148,
+                                           160,137,210,245,260,405,384,
+                                           516,522**
+Routine Name: IBCD4
+    Before: B18076054   After: B14091278  **14,80,106,160,309,276,347,522**
+Routine Name: IBCRBG
+    Before: B66489178   After: B68718544  **52,80,106,51,142,159,210,245,
+                                           382,389,461,522**
+Routine Name: IBCSC4A
+    Before: B32672806   After: B26406207  **106,228,339,479,522**
+Routine Name: IBCSC4B
+    Before: B36503632   After: B14226360  **210,228,304,479,522**
+Routine Name: IBCSC4D
+    Before: B75384760   After: B76016238  **55,62,91,106,124,51,210,403,
+                                           400,461,516,522**
+Routine Name: IBCSC4E
+    Before: B45259248   After: B48958417  **8,106,121,124,210,266,403,479,522**
+Routine Name: IBCSC4F
+    Before: B26386041   After: B34285009  **106,403,400,522**
+Routine Name: IBCU7
+    Before:B111564056   After:B113207672  **62,52,106,125,51,137,210,245,
+                                           228,260,348,371,432,447,488,
+                                           461,516,522**
+ 
+Routine list of preceding patches: 347, 479, 516
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 12, 2014
+Completed By:                               Date Completed: AUG 28, 2015
+Released By :                               Date Released : SEP 02, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

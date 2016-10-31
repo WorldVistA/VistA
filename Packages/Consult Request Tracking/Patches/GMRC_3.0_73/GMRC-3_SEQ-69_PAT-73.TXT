@@ -1,0 +1,317 @@
+
+=============================================================================
+Run Date: AUG 29, 2014                     Designation: GMRC*3*73
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3        SEQ #69                      Status: Released
+                  Compliance Date: SEP 12, 2014
+=============================================================================
+
+Associated patches: (v)GMRC*3*29   <<= must be installed BEFORE `GMRC*3*73'
+                    (v)GMRC*3*44   <<= must be installed BEFORE `GMRC*3*73'
+                    (v)GMRC*3*46   <<= must be installed BEFORE `GMRC*3*73'
+                    (v)GMRC*3*66   <<= must be installed BEFORE `GMRC*3*73'
+                    (v)LEX*2*80    <<= must be installed BEFORE `GMRC*3*73'
+                    (v)ICD*18*57   <<= must be installed BEFORE `GMRC*3*73'
+                    (v)OR*3*361    <<= must be installed BEFORE `GMRC*3*73'
+
+Subject: ICD-10 - Consult/Request Tracking Updates
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ IMPORTANT INFORMATION Please read the Overview Guide 
+ (ICD-10_PROD_OVERVIEW_GUIDE_GROUPS_5_6_7.pdf)posted on the Anonymous
+ directory for installation order. This is critical for proper
+ functionality of the ICD-10 Software.
+  
+ This patch is part of the Computerized Patient Records System CPRSv30 
+ project. This project will modify the Computerized Patient Record 
+ System, Text Integration Utilities, Consults, Health Summary, Problem 
+ List, Clinical Reminders, and Order Entry/Results Reporting to meet 
+ the requirements proposed by the Dept. of Health and Human Services 
+ to adopt ICD-10 code set standards Clinic Orders.
+  
+ On January 16, 2009, the Centers for Medicare & Medicaid Services (CMS) 
+ released a final rule for replacing the 30-year-old ICD-9-CM code set 
+ with International Classification of Diseases, Tenth Revision, Clinical 
+ Modification (ICD-10-CM) and International Classification of Diseases, 
+ Tenth Revision, Procedure Coding System (ICD-10-PCS) with dates of 
+ service, or date of discharge for inpatients, that occur on or after 
+ the industry activation date. The classification system consists of more
+ than 68,000 codes, compared to approximately 13,000 ICD-9-CM codes.  There
+ are nearly 87,000 ICD-10-PCS codes, while ICD-9-CM has nearly 3,800
+ procedure codes.  Both systems also expand the number of characters
+ allotted from five and four respectively to seven alpha-numeric
+ characters.  This value does not include the decimal point, which follows
+ the third character for the ICD-10-CM code set.  There is no decimal point
+ in the ICD-10-PCS code set.  These code sets have the potential to reveal
+ more about quality of care, so that data can be used in a more meaningful
+ way to better understand complications, better design clinically robust
+ algorithms, and better track the outcomes of care.  ICD-10-CM also
+ incorporates greater specificity and clinical detail to provide
+ information for clinical decision making and outcomes research.
+  
+ NOTE: Functionality specific to activation of the ICD-10 code set shall 
+ not be seen by end users until the code set has been activated.
+   
+  
+ Patch Components
+ ----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)      New/Modified/Deleted
+ ------------------         ------------------       -------------------
+ REQUEST/CONSULTATION       PROVISIONAL                  Modified
+                              DIAGNOSIS (30;1)
+                            PROVISIONAL DIAGNOSIS        New
+                              DATE (30.1;2)
+                            PROVISIONAL DIAGNOSIS        New
+                              SYSTEM (30.1;3)
+  
+     The PROVISIONAL DIAGNOSIS (30) field max length was changed from 180 
+     to 245 characters.  This change facilitates displaying the full 
+     description as required by ICD-10.
+  
+     Two new fields were added to this file: 30.1;2 (PROVISIONAL DIAGNOSIS 
+     DATE) and 30.1;3 (PROVISIONAL DIAGNOSIS SYSTEM).  These fields are 
+     required to perform lookups on ICD data.
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ 903302 - This is a documentation-only solution; no coding or 
+ functionality has been changed for this ticket. The Consult/Request 
+ Tracking Manual has been updated to clarify the recipients of the
+ CONSULT/REQUEST UPDATED notification.
+  
+  
+ Test Sites:
+ ----------
+ Coatesville
+ Denver
+ Madison
+ Northampton
+ Orlando
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  http://www.domain.ext/vdl/
+  
+ File Description               File Name                      FTP Mode
+ ----------------------------------------------------------------------
+ Technical Manual               constm.pdf                     (binary)
+ User Manual                    consum.pdf                     (binary)
+ ICD-10 Production Overview Guide Groups 5, 6 and 7
+                                ICD-10_PROD_OVERVIEW_GUIDE_GROUPS_5_6_7.pdf
+                                                               (binary)
+  
+  
+ Installation Overview
+ ---------------------
+ This patch installs the necessary routine updates to make the GMRC 
+ package compliant with the mandate to use ICD-10 codes.  The installation 
+ also contains one post-install routine that will populate the new 
+ PROVISIONAL DIAGNOSIS DATE (30.2) and PROVISIONAL DIAGNOSIS SYSTEM (30.3)
+ fields for existing entries in the REQUEST/CONSULTATION (#123) file.  The
+ PROVISIONAL DIAGNOSIS DATE will be populated using the value pulled from
+ FILE ENTRY DATE (.01) field.  The PROVISIONAL DIAGNOSIS SYSTEM field will
+ be populated with "ICD" to indicate these diagnoses are from the ICD-9-CM
+ coding system.  These fields are only populated for existing entries where
+ the provisional diagnosis contains an ICD code.  Consult records with a
+ free text diagnosis will not have these fields populated.
+  
+ Pre-installation Instructions
+ -----------------------------
+ There are no pre-install steps for this patch.
+  
+  
+ Installation Instructions
+ ==========================
+  
+   NOTE: This patch should not be queued.  
+  
+    It is not necessary to disable any options. You should install
+    this patch during a period of low usage to avoid potential disruption 
+    to users.  The installation time will vary with the number of entries 
+    in the REQUEST/CONSULTATION file (#123).  Installation times reported 
+    during testing were between approximately 25 and 50 minutes.
+     
+ 1.  Download the GMRC_30_73.KID file from the appropriate
+     FTP Server to a directory on your system.
+  
+ 2.  Use the LOAD A DISTRIBUTION option on the KIDS INSTALLATION menu, and
+     enter: [DIR:]GMRC_30_73.KID, where [DIR:] is the local directory where
+     you have stored the host file.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch:
+     GMRC*3.0*73
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option
+     and choose the patch to install:
+     GMRC*3.0*73 
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'   Answer 'NO'
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//'  Answer 'NO'
+  
+ Post-Installation Instructions
+ ------------------------------
+ There are no post-install instructions for this patch.  The post-install 
+ routine, GMRCY73, is not automatically deleted after installation.  If 
+ desired, this routine may be manually deleted from the system once the 
+ installation has successfully completed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;DEC 27, 1997;Build 22
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRCEDT1
+    Before: B51689293   After: B70113386  **1,5,12,15,22,33,47,66,73**
+Routine Name: GMRCEDT2
+    Before: B18295173   After: B17559466  **1,5,12,15,22,33,66,46,73**
+Routine Name: GMRCEDT3
+    Before: B17640061   After: B21921693  **1,5,15,22,66,73**
+Routine Name: GMRCEDT4
+    Before: B81417633   After: B85583529  **1,5,12,15,22,33,66,73**
+Routine Name: GMRCGUIC
+    Before: B55896800   After: B69004877  **4,12,20,15,22,33,66,73**
+Routine Name: GMRCGUIU
+    Before: B30098345   After: B30591724  **4,12,15,17,22,66,73**
+Routine Name: GMRCHL72
+    Before: B16156048   After: B16984753  **1,5,12,15,29,73**
+Routine Name: GMRCHL7A
+    Before: B29763566   After: B31527698  **1,5,12,15,21,22,33,68,66,73**
+Routine Name: GMRCHL7B
+    Before: B26928400   After: B29886300  **1,5,12,21,17,22,33,66,46,73**
+Routine Name: GMRCIAC1
+    Before: B69544228   After: B78977784  **22,66,73**
+Routine Name: GMRCIACT
+    Before: B61170306   After: B68184742  **22,47,58,66,73**
+Routine Name: GMRCISG1
+    Before: B28005109   After: B31718858  **22,66,73**
+Routine Name: GMRCP5B
+    Before: B37235428   After: B43394633  **4,13,12,15,24,23,22,29,65,66,73**
+Routine Name: GMRCSLM2
+    Before: B77652080   After: B92878039  **1,4,18,15,17,23,22,65,66,73**
+Routine Name: GMRCSLM4
+    Before: B39009534   After: B48679858  **4,12,15,22,50,64,72,73**
+Routine Name: GMRCY73
+    Before:       n/a   After:   B682231  **73**
+ 
+Routine list of preceding patches: 46, 72
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 02, 2011
+Completed By:                               Date Completed: AUG 27, 2014
+Released By :                               Date Released : AUG 29, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,218 @@
+
+=============================================================================
+Run Date: APR 06, 2016                     Designation: OR*3*390
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #364                      Status: Released
+                  Compliance Date: JUN 10, 2016
+=============================================================================
+
+Associated patches: (v)OR*3*97     <<= must be installed BEFORE `OR*3*390'
+                    (v)OR*3*284    <<= must be installed BEFORE `OR*3*390'
+                    (v)OR*3*296    <<= must be installed BEFORE `OR*3*390'
+                    (v)OR*3*306    <<= must be installed BEFORE `OR*3*390'
+
+Subject: NEW OR EVENT
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch contains updates to the Order Entry/Results Reporting (OE/RR)
+ package to support the Enterprise Health Management Platform (eHMP)
+ package.
+  
+ This patch ensures that any changes made to orders or results in the 
+ Orders Entry/Results reporting package in vista can be shared with 
+ eHMP subscribers. This patch contains 4 routines ORACT1, ORCSEND, 
+ ORMBLDOR, and ORWDXA, which are called by the new protocol OR EVSEND VPR. 
+ The OR EVSEND VPR protocol has the HMP XQOR EVENTS protocol attached to 
+ it.
+  
+ ****NOTE****
+ This patch is part of a pre-requisite, multi-build host file which 
+ contains all the patches needed prior to installation of the HMP 2.0 
+ package.  This patch name is HMP PREREQUISITE BUNDLE 2.0.  The 
+ multi-build contains the following patches:
+  
+ GMRC*3.0*80
+ MD*1.0*38
+ OR*3.0*390
+ PSB*3.0*79
+ TIU*1.0*106
+ TIU*1.0*298
+ USR*1.0*37
+  
+ This patch will be installed during a PHASE IMPLEMENTATION
+  
+ To see the current status and target dates for Sites/VISN/Regions please 
+ refer to the following site:
+  
+ http://vaww.oed.portal.domain.ext/pm/iehr/vista_evolution/ehmpdeployment/eHMP%
+ 20v12/Forms/All%20Items.aspx?RootFolder=/pm/iehr/vista_evolution/ehmpdeplo
+ yment/eHMP%20v12/Resources/Waves%20and%20Timelines
+  
+ Patch Components
+ ================
+  
+ Files and Fields Associated:
+ ----------------------------
+ There are no new or modified files or fields in this patch.
+  
+ Forms Associated:
+ -----------------
+ There are no new or modified forms in this patch.
+  
+ Mail Groups Associated:
+ -----------------------
+ There are no new or modified mail groups in this patch.
+  
+ Options Associated:
+ -------------------
+ There are no new or modified options in this patch.
+  
+ Protocols Associated:
+ ---------------------
+  
+ Protocol Name                           New/Modified/Deleted
+ -------------                           --------------------
+  
+ ****NOTE****
+ The following protocol will be modified with the installation of the HMP 
+ 2.0 KIDs build to include the new HMP protocol.
+  
+ OR EVSEND VPR                                      New
+  
+ NAME: OR EVSEND VPR                ITEM TEXT: OE/RR => VPR MESSAGE EVENT
+ TYPE: extended action              CREATOR: xx
+ ITEM: HMP XQOR EVENTS
+  
+ ****NOTE****
+ The following protocols have been modified and change will be implemented 
+ with the installation of the HMP 2.0.
+  
+ NAME: OR EVSEND FH                      ITEM TEXT: OE/RR => DIET MESSAGE 
+ EVENT TYPE: extended action             CREATOR: XXX,XXX
+ ITEM: FH RECEIVE                        SEQUENCE: 1
+ ITEM: OCX ORDER CHECK HL7 RECIEVE       SEQUENCE: 2
+ ITEM: EDP OR MONITOR
+ ITEM: HMP NA EVENTS
+  
+  
+ NAME: OR EVSEND GMRC
+ ITEM TEXT: OE/RR => CONSULTS MESSAGE EVENT
+ TYPE: extended action                   CREATOR: XXX,XXX
+ ITEM: GMRC RECEIVE                      SEQUENCE: 1
+ ITEM: OCX ORDER CHECK HL7 RECIEVE       SEQUENCE: 2
+ ITEM: RMPR RECEIVE
+ ITEM: MD RECEIVE OR
+ ITEM: EDP OR MONITOR
+ ITEM: HMP NA EVENTS
+  
+  
+ NAME: OR EVSEND ORG
+ ITEM TEXT: OE/RR => GENERIC MESSAGE EVENT
+ TYPE: extended action                   CREATOR: XXX,XXX
+ ITEM: OR RECEIVE                        SEQUENCE: 1
+ ITEM: OCX ORDER CHECK HL7 RECIEVE
+ ITEM: EDP MONITOR
+ ITEM: HMP XQOR EVENTS
+  
+  
+ NAME: OR EVSEND PS
+ ITEM TEXT: OE/RR => PHARMACY MESSAGE EVENT
+ TYPE: extended action                   CREATOR: XXX,XXX
+ ITEM: PS RECEIVE OR                     SEQUENCE: 1
+ ITEM: OCX ORDER CHECK HL7 RECIEVE       SEQUENCE: 2
+ ITEM: EDP OR MONITOR
+ ITEM: HMP NA EVENTS
+  
+  
+ NAME: OR EVSEND RA                      ITEM TEXT: OE/RR => RAD/NM 
+ MESSAGE EVENT
+ TYPE: extended action                   CREATOR: XXX,XXX
+ ITEM: RA RECEIVE                        SEQUENCE: 1
+ ITEM: OCX ORDER CHECK HL7 RECIEVE       SEQUENCE: 2
+ ITEM: EDP OR MONITOR
+ ITEM: HMP NA EVENTS
+  
+  
+ Security Keys Associated:
+ -------------------------
+ There are no new or modified security keys in this patch.
+  
+ Templates Associated:
+ ---------------------
+ There are no new or modified templates in this patch.
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR #20150408 - VistA Evolution Enterprise Health Management Platform 
+ (eHMP)
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ There are no PSIs associated with this patch.
+  
+ Remedy Tickets(s) & Overview:
+ -----------------------------
+ There are no Remedy Tickets associated with this patch.
+  
+ Test Sites:
+ -----------
+ Hampton, VA
+ Portland, OR
+ San Diego, CA
+ Loma Linda, CA
+ San Antonio, TX
+  
+ Patch Installation:
+ -------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ There are no options or protocols that need to be placed out of order 
+ during the installation of the patch.
+  
+ Patch OR*3.0*390 is part of a multi-build:  HMP PREREQUISITE BUNDLE 2.0
+ See patch HMP 2.0 Installation Guide for the installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 425
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCACT1
+    Before: B49420108   After: B50018442  **7,27,56,48,86,92,116,149,215,
+                                           284,390**
+Routine Name: ORCSEND
+    Before: B65578810   After: B66459073  **4,27,45,79,92,141,165,195,
+                                           228,243,303,296,390**
+Routine Name: ORMBLDOR
+    Before:  B2239296   After:  B5850168  **97,390**
+Routine Name: ORWDXA
+    Before: B82710229   After: B83747347  **10,85,116,132,148,141,149,
+                                           187,213,195,215,243,280,306,
+                                           390**
+ 
+Routine list of preceding patches: 97, 284, 296, 306
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 24, 2014
+Completed By:                               Date Completed: MAR 29, 2016
+Released By :                               Date Released : APR 06, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

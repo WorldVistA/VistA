@@ -1,0 +1,431 @@
+
+=============================================================================
+Run Date: JUN 18, 2015                     Designation: ONC*2.2*4
+Package : ONC - ONCOLOGY                      Priority: Mandatory
+Version : 2.2         SEQ #2                    Status: Released
+                  Compliance Date: JUL 19, 2015
+=============================================================================
+
+Associated patches: (v)ONC*2.2*1   <<= must be installed BEFORE `ONC*2.2*4'
+
+Subject: COUNTRY CODES AND ONCOTRAX FIXES
+
+Category: 
+  - Routine
+  - Input Template
+  - Print Template
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch contains enhancements that extend and improve the functionality
+ of the VistA OncoTrax package.  The purpose of this release is to update
+ the functionality as described below.
+  
+ All Data Dictionary modifications and additions have been reviewed and
+ approved by the Data Base Administrator. 
+  
+  
+         ******** I M P O R T A N T   N O T E ********
+ =============================================================================
+ DUE TO THE FACT THAT THIS PATCH MUST BE COORDINATED WITH THE UPDATE OF THE
+ EDITS METAFILES ON THE VHAWASONC2 ONC SERVER, THE PATCH SHOULD BE INSTALLED
+ AS CLOSE TO PATCH RELEASE AS POSSIBLE.  THE PATCH WILL HAVE A NORMAL 30-DAY
+ COMPLIANCE DATE, BUT ONCE THE PATCH IS RELEASED THE METAFILES WILL BE UPDATED
+ AND IT IS BEST TO STAY IN SYNC.  ABSTRACTS WILL NOT BE ABLE TO BE COMPLETED
+ UNTIL THE PATCH IS INSTALLED.  THE PACKAGE WILL CONTINUE TO OPERATE BUT
+ REGISTRARS WILL NOT BE ABLE TO COMPLETE CASES UNTIL THE PATCH IS INSTALLED,
+ JEOPARDIZING THE VACCR & COC'S ABSTRACTING COMPLIANCE STANDARDS.
+ =============================================================================
+  
+  
+ Remedy Ticket(s) Addressed 
+ ==========================
+ 1071115 - issue with the "First Course of Treatment"  
+  
+ 1. Add Patient ICN (Integration Control Number) to the Veteran's Affairs
+ Central Cancer Registry (VACCR) extract
+ The Master Veterans Index (MVI) requires additional identifiers
+ to link to a unique patient.  It will be used as part of the Corporate
+ Data Warehouse (CDW) linkage at the Austin Information Technology
+ Center (AITC).  The Integration Control Number (ICN) is based on
+ ASTM-E-1714 format of 16 digits, a delimiter character, plus 6 checksum
+ digits for a total length of 23 characters.  The Patient ICN and Checksum
+ from the PATIENT (#2) file will be added to the VACCR Extract at position
+ 72 thru 94.
+  
+ 2. Create a new EDITS Modifications module
+ A new module will be added as selection #8 under the AI-Complete
+ Abstract [ONCO ABSTRACT-ENTER/EDIT] and EE-Abstract Edit Primary [ONCO
+ ABSTRACT-EDIT] options.  The new module will allow registrars to edit
+ the Address at DX (Diagnosis) and Address Current sets of fields as well
+ as the Date Flag fields.  These should only be edited if the Abstract has
+ an EDIT  which cannot be cleared.
+  
+ 3. Allow entry of future dates to be selected for QA Date in abstract 
+ Entry of future dates in the QA DATE (#165.5, 64) field will now be
+ allowed.  This will allow the field to be utilized as a 'check back'
+ date to look for pending treatments. 
+  
+ 4. Add duplicate Acc/Seq Number check and new option to find duplicates
+ When a new abstract is created there will now be a check on the ACC/SEQ
+ NUMBER (#165.5, .061) field to ensure that there are no duplicate
+ Accession/Sequence numbers already in the system.  There is also a new
+ option called SQ-Find Duplicate Acc/Seq Numbers [ONCO UTIL-FIND DUP
+ ACCSEQ] option on the UTL-Utility Options [ONCO UTIL MENU] menu which
+ will check for any existing duplicates in the system.  
+  
+ 5. Add new computed field for First Course of Treatment Date minus
+ Diagnosis Date
+ A new computed field called FIRST TREATMENT DT-DATE DX (#165.5, 49.1)
+ was created which is derived by calculating the First Course of Treatment
+ Date minus the Diagnosis Date. This can be used in the CPR-Print Custom
+ Reports [ONCO ANNUAL-CUSTOM PRINT] and other reports to show the number
+ of days from DATE DX (#165.5, 3) to FIRST COURSE OF TREATMENT (#165.5, 49).
+  
+ 6. Remove auto-TNM staging of cases
+ Due to significant changes from AJCC (American Joint Commission on Cancer)
+ on the T, N, M staging algorithms, the code to automatically calculate the
+ Clinical Stage and Pathologic Stage Grouping fields will be removed. The
+ staging would become much too unwieldy and difficult to maintain, so the
+ registrars will now be able to enter the staging directly. 
+  
+ 7. Screen APPENDIX (C18.1) cases from Create RQRS Extract report option
+ The Create RQRS Extract [ONCO RQRS EXTRACT] option is for Colon, Rectum
+ and Breast cases only: C18.0, C18.2-C18.9, C20.9 and C50.0 - C50.9. The
+ code for this option was checking by range but was including C18.1
+ (Appendix cases) in the range.  This is fixed by screening out the C18.1
+ cases from the RQRS Extract when selecting by DATE DX.  
+  
+ 8. Add a new selection to the Fecal Occult Blood Test (FOBT) field
+ A new code for selection by the registrar was needed for the FECAL
+ OCCULT BLOOD TEST (#165.5, 181) field.  The new selection is:
+ 5 - FIT Test.
+  
+ 9. Remove Date Of No Treatment check on Scope Of LN Surgery Date
+ The SCOPE OF LN SURGERY DATE (#165.51, 38) sub-field under the SUBSEQUENT
+ COURSE OF TREATMENT (#165.5, 60) multiple had a check on the DATE OF NO
+ TREATMENT (#165.5, 124) field.  If there was a date entered for that field
+ then the user would not be allowed to enter anything for SCOPE OF LN SURG
+ DATE; they would receive a message stating that it was not allowed unless
+ the DATE OF NO TREATMENT is deleted.  This was not correct, so the check
+ has been removed. 
+  
+ 10. Update column header in List Topography Codes by Site Group option
+ The column header for Histology in the List Topography Codes by Site Group
+ [ONCO UTIL-TOPOG BY SITEGRP] option was ICDO-2, but the correct heading
+ should be ICDO-3.  The data is unchanged in this report but the column
+ header has been corrected.
+  
+ 11. Modify Create RQRS Extract option
+ An error in how the Create RQRS Extract [ONCO RQRS EXTRACT] option pulls
+ cases was discovered.  When running the report by DATE CASE LAST CHANGED
+ (#165.5, 198) the report was pulling cases back to reference year.  It
+ should only go back to 1/1/2008.  Another search criterion was added to
+ disregard any primaries with diagnosis prior to 2008.
+  
+ 12. Exclude Class of Case '00' cases from 2 Follow-up reports
+ Under the Follow Up Functions [ONCO FOLLOWUP MENU] menu the Print Due
+ Follow-up List by Month Due [ONCO FOLLOWUP-DUE LIST] and Print Delinquent
+ (LTF) List [ONCO FOLLOWUP-DELINQUENT LIST] report options needed to exclude
+ cases with Class of Case = '00'.  These reports were previously excluding
+ cases with Class of Case of 30 & greater, now they will also exclude cases
+ with '00'. 
+  
+ 13. Fix for EDITS that cannot be cleared for foreign addresses
+ This patch will fix the extracts for patients with foreign addresses.
+ Patients with a foreign address (Canada, Japan, Mexico, Puerto Rico etc)
+ were throwing EDITS for the following extract items: 
+ "Addr Current -- Country", "Addr Current -- State", "Addr at DX -- Country"
+ and "Addr at DX -- Country".  This patch will fix the problems with these
+ foreign address EDITS.  Also, the registrar will now be able to over-ride
+ these fields in case it is ever necessary to clear an EDIT, as described
+ in item #2 above for the new module to over-ride EDIT fields.
+  
+ 14. Remove default stuffing for Surg Dx/Staging Proc @Fac fields
+ The SURG DX/STAGING PROC @FAC (#165.5, 58.4) and SURG DX/STAGING PROC
+ @FAC DATE (#165.5, 58.5) fields were being stuffed but due to too many
+ variables in Class of Case/Biopsy it is better to not stuff the fields
+ and leave to the discretion of the registrar.  This patch removes the
+ stuffing of those fields.
+  
+ 15. Fix SSF defaults for Kidney (C64.9) & Gum, Lower (C03.1 and C06.2) cases
+ a. Kidney primaries (not sarcoma) were defaulting SSF2 (#165.5, 44.2) and
+ SSF3 (#165.5, 44.3) to 998.  This was incorrect; the default stuffing
+ should be for SSF5 (#165.5, 44.5) and SS7 (#165.5, 44.7). 
+ b. Also Gum, Lower (C03.1 and C06.2) cases were incorrectly defaulting
+ SSF11 (#165.5, 44.11) to 988.
+ This patch will correct these SSF values.
+  
+ 16. Fix staging for Appendix (C18.1), carcinoid (8243/3) cases
+ Appendix cases with carcinoid (Histology = 8243/n) were dropping out of
+ the TNM staging with the message "No TNM coding/staging is available for
+ carcinoid tumors of the appendix."  This was incorrect, as TNM staging
+ should be available for these cases.  This patch addresses the issue by
+ not dropping out of the staging code allowing these cases to be staged. 
+  
+ 17. Update of look-up display for Recurrence/Sub TX Follow-up option
+ If a patient selected in the Recurrence/Sub TX Follow-up [ONCO FOLLOWUP-
+ RECURRENCE] option had multiple primaries, the primaries were listed and
+ the PRIMARY SITE (#165.5, 20) and PATIENT NAME (#165.5, .02) were
+ displayed.  This patch will add the TYPE OF FIRST RECURRENCE (#165.5, 71)
+ field so that it is displayed alongside Primary Site and Patient Name.
+  
+ 18. Modify the Recurrence Date Flag
+ If there is any DATE OF FIRST RECURRENCE (#165.5, 70) entered, then the
+ Recurrence Date--1st Flag in the extract should be NULL.  Previously the
+ code was first checking if the TYPE OF FIRST RECURRENCE (#165.5, 71) field
+ was "Never disease free" or "None, disease free", and if so it was setting
+ the flag to "11".  This will be fixed in this patch.  
+  
+ 19. Remove COMORBIDITY codes from NAACCR State Record Layout Utility
+ The Comorbidity codes are only collected by the National Cancer DataBase
+ (NCDB).  This patch will keep the Comorbidity codes in the North American
+ Association of Central Cancer Registries (NAACCR) record layout, but will
+ transmit fields as either blank or 99990.
+  
+ 20. Remove some inter-field edit checks for treatment codes
+ The inter-field edit checks invoked when a case is completed contained
+ checks for 8's or 88/88/8888 in treatment and treatment date fields.  This
+ check would prevent the cases from being completed.  These particular
+ checks are obsolete and will be removed.
+  
+ 21. NAACCR v15 Record Layout Implementation plus Data Conversions
+ The new NAACCR v15 record layout requires changes to be made to the Oncology
+ abstract fields and extract layout to stay in compliance.
+ The changes include new items (Survival Data items), several changed data
+ items and the Prostate Grade and Hematopoietic data conversions.
+ For more details please see the NAACCR v2015 Implementation Guidelines PDF
+ located at:
+ http://www.naaccr.org/StandardsandRegistryOperations/ImplementationGuidelines.aspx
+  
+  
+  
+ Patch Components
+ ================
+ Routines:
+ ---------
+ This release contains 26 routines. 
+  
+ Files & Fields Associated:     
+ File Name (#)              Field Name (#)                   New/Modified/Deleted
+ -------------              ------------------               --------------------
+ ONCOLOGY PATIENT (#160)    DUE FOLLOW-UPM (#27)                 Modified
+                            ANALYTIC REQUIRING FOLLOWUP (#69.1)  New          
+  
+ ONCOLOGY PRIMARY (#165.5)  FIRST COURSE DATE-DATE DX (#49.1)    New
+                            FECAL OCCULT BLOOD TEST (FOBT) (#181)Modified
+                            ADDRESS AT DX--STATE (#999.26)       Modified
+                            ADDRESS AT DX--COUNTRY (#999.27)     Modified
+                            ADDRESS CURRENT--STATE (#999.28)     Modified
+                            ADDRESS CURRENT--COUNTRY (#999.29)   Modified
+  
+ Forms Associated:                                          
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:                             
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+ Option Name                                        Type    New/Modified/Deleted
+ -----------                                        ----    --------------------
+ Find Dup Acc/Seq Num [ONCO UTIL-FIND DUP ACCSEQ]   Run     New
+ Utility Options [ONCO UTIL MENU]                   Menu    Modified
+  
+ Protocols Associated:                                     
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:                         
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+ Template Name              Type      File Name (#)     New/Modified/Deleted
+ -------------              ----      -------------     --------------------
+ ONCO TOPOG BY SITEGRP      Print     #164              Modified
+ ONCO DELINQUENT (LTF) LIST Sort      #160              Modified
+ ONCO DUE FOLLOWUP          Sort      #160              Modified 
+  
+  
+ Test Sites
+ ==========
+ Hines VAMC
+ Upstate New York HCS
+ Washington, DC VAMC 
+ West Haven, Ct
+  
+ Documentation Retrieval:
+ ========================
+ The documentation is available on the ANONYMOUS.SOFTWARE directory at one
+ of the following Office of Information (OI) Field Offices.  
+     Albany
+     Hines
+     Salt Lake City
+   
+ Sites may retrieve documentation in one of the following ways.
+ (1) The preferred method is to FTP the files from     
+     download.vista.domain.ext, which will transmit the files from the
+     first available FTP server.
+ (2) Sites may also elect to retrieve documentation directly from a
+     specific server listed below.
+        Albany              ftp.domain.ext     
+        Hines               ftp.domain.ext
+        Salt Lake City      ftp.domain.ext  
+  
+  The documentation distribution includes:  
+     FILE NAME                             DESCRIPTION                  
+ ONC_2_2_TECH_UM_R0615.PDF   Oncology Technical Manual and Package 
+                             Security Guide
+ ONC_2_2_UM_R0615.PDF        OncoTraX: Cancer Registry User Manual
+  
+ (3) Documentation can also be retrieved from the VistA Documentation 
+ Library (VDL) on the Internet at the following address, 
+ http://www.domain.ext/vdl.
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ==============================
+ There is no pre-installation routine, but there is a post installation
+ routine (ONC2PS04) associated with this patch.  The routine ONC2PS04 may 
+ optionally be deleted by the installer after the installation is complete. 
+  
+  
+ Installation instructions:
+ ==========================
+ This patch should be loaded with Oncology users off the system. 
+ Installation will take approximately 5 minutes.
+  
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  
+ This patch is available via FTP as a Kernel Installation and Distribution
+ System (KIDS) distribution file.  The Host File is named ONC22P4.KID 
+ and is located in the [ANONYMOUS.SOFTWARE] directory of the following OI Field
+ Offices.
+     
+                                PREFERRED ADDRESS
+                                -----------------
+  First available ftp server    download.vista.domain.ext
+  
+  SPECIFIC FIELD OFFICE         FTP ADDRESS
+  ---------------------         -----------
+  Albany                        ftp.domain.ext
+  Hines                         ftp.domain.ext
+  SLC                           ftp.domain.ext
+  
+ 1. Load the KIDS distribution file via the 'Load a Distribution' option 
+ on the KIDS Installation menu. 
+  
+ 2. Prior to installing the patch you may want to make use of the following
+ optional installation options located on the KIDS Installation menu:
+  
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+    b.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+  
+    c.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+  
+ 3. Install the KIDS distribution via the 'Install Package(s)' option on 
+ the KIDS Installation menu.
+  
+    a.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+        Install? NO//' Answer YES.
+  
+    b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//' Answer NO.
+   
+    c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//' Answer NO. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.2;ONCOLOGY;**[Patch List]**;Jul 31, 2013;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ONC2PS04
+    Before:       n/a   After: B17370952  **4**
+Routine Name: ONC2PS4A
+    Before:       n/a   After:B140576382  **4**
+Routine Name: ONCACD0
+    Before:B163524418   After:B172794194  **1,4**
+Routine Name: ONCACD1
+    Before: B64310335   After: B66324874  **1,4**
+Routine Name: ONCACDU1
+    Before: B30581185   After: B36708524  **1,4**
+Routine Name: ONCACDU2
+    Before: B99537064   After:B117837157  **1,4**
+Routine Name: ONCCS
+    Before: B53941422   After: B57102325  **1,4**
+Routine Name: ONCCS2
+    Before:B161397128   After:B161364697  **1,4**
+Routine Name: ONCEDIT
+    Before: B90474447   After: B57186228  **1,4**
+Routine Name: ONCGENED
+    Before: B26470345   After: B26788239  **1,4**
+Routine Name: ONCOAIF
+    Before: B51005422   After: B52230791  **1,4**
+Routine Name: ONCOAIM
+    Before: B22101895   After: B23197385  **1,4**
+Routine Name: ONCOAIP
+    Before:B104009853   After:B104755079  **1,4**
+Routine Name: ONCOAIP2
+    Before:  B3582117   After: B18454221  **1,4**
+Routine Name: ONCOAIT
+    Before:  B1211393   After: B10249482  **1,4**
+Routine Name: ONCOCKI
+    Before:  B4437393   After:  B4877721  **1,4**
+Routine Name: ONCOCOM
+    Before: B52166923   After: B69325538  **1,4**
+Routine Name: ONCOCOML
+    Before:  B1365958   After:  B3220086  **1,4**
+Routine Name: ONCODIS
+    Before:   B773952   After:   B774066  **1,4**
+Routine Name: ONCODSP
+    Before: B53068263   After: B55457846  **1,4**
+Routine Name: ONCOHELP
+    Before:  B6721354   After:  B6745096  **1,4**
+Routine Name: ONCOTN
+    Before:B125200324   After:B125327405  **1,4**
+Routine Name: ONCOUTC
+    Before: B13598286   After: B22462665  **1,4**
+Routine Name: ONCPCS
+    Before: B15624488   After: B15624112  **1,4**
+Routine Name: ONCSG1
+    Before:B154656243   After:B154907043  **1,4**
+Routine Name: ONCSRV01
+    Before:  B6980964   After:  B6554211  **1,4**
+ 
+Routine list of preceding patches: 1
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 15, 2014
+Completed By:                               Date Completed: JUN 17, 2015
+Released By :                               Date Released : JUN 18, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

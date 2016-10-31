@@ -1,0 +1,288 @@
+
+=============================================================================
+Run Date: SEP 02, 2015                     Designation: GMTS*2.7*111
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7       SEQ #104                    Status: Released
+                  Compliance Date: SEP 16, 2015
+=============================================================================
+
+Associated patches: (v)GMTS*2.7*101<<= must be installed BEFORE `GMTS*2.7*111'
+
+Subject: HEALTH SUMMARY UPDATE FOR ICD-10 PTF PROJECT
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Informational
+
+Description:
+============
+
+ **************************************************************************
+ *                                                                        *
+ *  IMPORTANT:                                                            *
+ *                                                                        *
+ *   This patch is being released in support of the ICD-10 Patient        *
+ *   Treatment File Modifications project.  Patch DG*5.3*884              *
+ *   (Registration) is being released along with GMTS*2.7*111 (Health     *
+ *   Summary), IB*2.0*522 (Integrated Billing), LR*5.2*442 (Lab Service), *
+ *   ROR*1.5*25 (Clinical Case Registries), and OR*3.0*406 (Order         *
+ *   Entry/Results Reporting) in a multi-package build (host file).       *
+ *                                                                        *
+ *   Because this is a multi-package build, it can only be distributed    *
+ *   as a host file; no builds are included in the patch messages. The    *
+ *   name of the host file is: ICD_10_PTF_MODIFICATIONS.KID; it can be    *
+ *   obtained from one of the anonymous file transfer protocol (ftp)      *
+ *   directories listed in the 'Software & Documentation Retrieval        *
+ *   Instructions' section of this patch.                                 *
+ *                                                                        *
+ *   Detailed information regarding pre-installation items,               *
+ *   post-installation items, and installation instructions can be found  *
+ *   in the Installation Guide: ICD_10_PTF_Modifications_IG.PDF. This     *
+ *   document may be obtained from one of the anonymous file transfer     *
+ *   protocol (ftp) directories listed in the 'Software & Documentation   *
+ *   Retrieval Instructions' section of this patch.                       *
+ *                                                                        *
+ *   It is imperative that these patches be installed no later than the   *
+ *   compliance date.  Your understanding and support is appreciated.     *
+ *                                                                        *
+ **************************************************************************
+  
+ ICD-10-CM will replace ICD-9-CM as the diagnostic coding system.  
+ ICD-10-PCS will replace the ICD-9-CM procedural coding system.  Veterans 
+ Health Administration (VHA) software remediation for ICD-10 enabled the 
+ transition to support the use of the ICD-10 code sets; this PTF 
+ Modifications project will increase the maximum allowable codes in the 
+ entry, display, lookup, view, print, storage, and transmission of the 
+ ICD-10 code sets in the VistA legacy and HealtheVet systems.
+  
+ The ICD-10 PTF Modifications team proposes new functionality within the 
+ VistA Admission Discharge Transfer (ADT) module to allow up to 25 ICD-10 
+ diagnosis codes in 701 and 501 transactions including 25 corresponding 
+ Present on Admission (POA) indicators and to allow up to 25 ICD-10 
+ procedure codes in 401 and 601 transactions. 
+  
+ Currently, 701 transactions allow one ICD-10 principal diagnosis with a 
+ POA indicator and up to 13 secondary diagnoses with POA indicators for a 
+ total of 14 ICD-10 diagnosis codes and 14 POA indicators. The 501 
+ transactions allow 10 ICD-10 diagnoses codes with POA indicators. The 401 
+ Surgeries and 601 Procedures transactions currently allow up to 5 ICD-10 
+ procedure codes each.
+  
+ This Health Summary patch will update the following Health Summary 
+ Components (#142.1) to include the expanded fields as indicated:
+  
+ MAS ADMISSIONS/DISCHARGES - Updated to display one principal diagnosis 
+                             code and up to 24 secondary diagnosis codes
+                             with each occurrence.
+  
+ MAS ADT HISTORY EXPANDED -  Updated to display one principal diagnosis 
+                             code and up to 24 secondary diagnosis codes
+                             with each occurrence.
+  
+ MAS DISCHARGE DIAGNOSIS -   Updated to display one principal diagnosis 
+                             code and up to 24 secondary diagnosis codes
+                             with each occurrence.
+  
+ MAS PROCEDURES ICD CODES -  Updated to display up to 25 procedure codes 
+                             with each occurrence
+  
+ MAS SURGERIES ICD CODES -   Updated to display up to 25 operation codes 
+                             with each occurrence
+  
+  
+ The following reports utilize one or more of the aforementioned Health 
+ Summary Components and will therefore now display the expanded data 
+ fields as appropriate.
+  
+ HEALTH SUMMARY (#142)
+    REMOTE DEMO/VISITS/PCE (1Y)
+    REMOTE DEMO/VISITS/PCE (3M)
+    REMOTE DUS SUM/SURG/PROD (12Y)
+  
+ OE/RR REPORT (#101.24)
+    ORRPW ADT ADM DC
+    ORRPW ADT DC DIAG
+    ORRPW ADT EXP
+    ORRPW ADT ICD PROC
+    ORRPW ADT ICD SURG
+    ORRPW DOD ADT EXP
+  
+ NOTE: This patch modifies the routine logic for the five Health Summary 
+ Components listed above.  Health Summary Components can be used in 
+ several ways within VistA.  Any of the following *locally created* items 
+ will also be affected by the newly updated display capability included in 
+ this patch IF those items leverage any of the affected components to 
+ generate output.
+  
+   Health Summary Types
+   Health Summary Objects
+   TIU/Health Summary Objects
+   OE/RR Reports
+  
+ Objects may be of particular interest as the newly expanded display would 
+ be more noticeable when an object is embedded in areas such as 
+ boilerplate text, note templates, and reminder dialog templates.
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+ Options Associated:
+ -------------------
+ N/A
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+ Templates Associated:
+ --------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ============================
+ NSR #20070902 - ICD-10-CM Conversion
+  
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ============================
+ N/A
+  
+  
+ Test Sites:
+ ===========
+ The following sites participated in testing this software.
+ * Detroit, MI
+ * Madison, WI
+ * Richmond, VA 
+ * West Haven, CT
+  
+  
+ Software & Documentation Retrieval Instructions:
+ =====================================
+ The software for this set of patches is not being distributed through the 
+ National Patch Module. 
+  
+ Patch DG*5.3*884 (Registration) is being released along with GMTS*2.7*111
+ (Health Summary), IB*2.0*522 (Integrated Billing), LR*5.2*442 (Lab
+ Service), ROR*1.5*25 (Clinical Case Registries), and OR*3.0*406
+ (Order Entry/Results Reporting) in a multi-package build (host
+ file).
+  
+ Because this is a multi-package build, it can only be distributed as a
+ host file; no builds are included in the patch messages. The name of the
+ host file is: ICD_10_PTF_MODIFICATIONS.KID; it can be obtained from one of
+ the anonymous file transfer protocol (ftp) directories listed below. 
+  
+ Updated documentation describing the new functionality introduced by this 
+ patch is also available and can be obtained from one of the anonymous 
+ file transfer protocol (ftp) directories listed below.
+  
+ The preferred method is to FTP the files from: 
+  
+  ftp://download.vista.domain.ext/
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Note: 
+  - Please use the 'Binary' transfer method for retrieval of .pdf files
+  - Please use the 'ASCII' transfer method for retrieval of .KID files
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ The software distribution includes these file(s):
+ -------------------------------------------------------------------------
+ ICD_10_PTF_MODIFICATIONS.KID
+  
+  
+ The documentation includes these titles and file names:
+ -------------------------------------------------------------------------
+     Title: CPRS: Health Summary GMTS*2.7*111 Release Notes
+ File Name: GMTS_2_7_111_RN.pdf
+  
+     Title: Health Summary Technical Manual
+ File Name: hsum_2_7_tm.pdf
+  
+     Title: Health Summary User Manual
+ File Name: hsum_2_7_um.pdf
+  
+     Title: ICD-10 PTF Installation Guide (all patches)
+ File Name: ICD_10_PTF_MODIFICATIONS_IG.PDF 
+  
+  
+ Patch Installation:
+ ==================================================
+ Detailed information regarding pre-installation items, post-installation
+ items, and installation instructions can be found in the Installation
+ Guide: ICD_10_PTF_Modifications_IG.PDF. This document may be obtained from
+ one of the anonymous file transfer protocol (ftp) directories listed in
+ the 'Software & Documentation Retrieval Instructions' of this patch 
+ description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSDGA
+    Before: B11914941   After: B16655517  **28,49,71,101,111**
+Routine Name: GMTSDGC1
+    Before: B15467864   After: B21632270  **5,35,47,71,101,111**
+Routine Name: GMTSDGC2
+    Before:  B7198971   After:  B8062721  **28,49,71,101,111**
+Routine Name: GMTSDGP
+    Before: B12132145   After: B14004206  **28,49,60,71,101,111**
+Routine Name: GMTSPXU1
+    Before: B17119835   After: B24643576  **10,37,71,86,101,111**
+ 
+Routine list of preceding patches: 101
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 05, 2014
+Completed By:                               Date Completed: AUG 31, 2015
+Released By :                               Date Released : SEP 02, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

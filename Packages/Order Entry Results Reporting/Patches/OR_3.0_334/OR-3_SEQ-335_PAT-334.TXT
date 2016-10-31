@@ -1,0 +1,163 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 01/28/14 at 17:00
+=============================================================================
+Run Date: APR 21, 2014                     Designation: OR*3*334
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #335                      Status: Released
+                  Compliance Date: MAY 22, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*329    <<= must be installed BEFORE `OR*3*334'
+
+Subject: INCREASE IN AUTO UNFLAG ACTIVITY
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch corrects one issue within the ORDER ENTRY/RESULTS REPORTING 
+ (OR) package:
+  
+ 1. The Auto-Unflagging of orders with the ORPF AUTO UNFLAG parameter set
+    to YES has resulted in pharmacy queries or recommendations not being
+    read or responded to.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY:
+ ==================                                             
+ 1. INC000000584451 - Increase in Auto Un-Flag activity for Outpatient 
+                      Medication Orders
+                      PSPO #2176
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Upstate NY HCS
+ Shreveport VAMC
+ Hudson Valley HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000584451 - Increase in Auto Un-Flag activity for Outpatient 
+                      Medication Orders
+  
+    Patient Safety Issue: PSPO #2176
+  
+    Problem:
+    ========
+    Through testing at the site, it was determined that the increase in 
+    auto unflagged orders was due to the ORPF AUTO UNFLAG parameter setting
+    of YES. A typical scenario went something like this: 
+  
+    1. Pharmacist flags a medication order to a provider via Veterans 
+       Health Information Systems and Technology Architecture (VistA)
+       Outpatient Pharmacy or Computerized Patient Record System (CPRS)
+       (here, VistA Outpatient Pharmacy). For example, the provider flagged
+       is the ordering provider and the flag is asking a question about a
+       dose or recommending a different medication.
+    2. Provider who was flagged in step 1 receives a CPRS notification for 
+       the flagged order. 
+    3. Provider processes the notification in CPRS. The action of 
+       processing automatically unflags the order for him/her and other 
+       recipients of the order flag. 
+    4. Once the order is unflagged, the pharmacist from step 1 notices the 
+       order is auto unflagged with the system-generated (automatic) 
+       comment of "Auto-Unflagged". 
+  
+    The increase in auto-unflagging of orders with the ORPF AUTO UNFLAG 
+    parameter set to YES is leading to the patient safety issue that 
+    flagged concerns are not being addressed.
+       
+    Resolution:
+    ===========
+    The ORPF AUTO UNFLAG parameter will be set to NO and editing will be
+    disabled.
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low. Installation time will be
+ less than 2 minutes.
+  
+  1.  Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter OR*3.0*334):
+      
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  4.  Use the Install Package(s) option and select the package
+      OR*3.0*334.
+  
+      a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? NO//", answer NO.
+      b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCB
+    Before: B51269339   After: B49591069  **7,36,48,70,108,116,243,334**
+Routine Name: ORWORB
+    Before: B72691529   After: B73567288  **10,85,116,148,173,190,215,
+                                           243,296,329,334**
+Routine Name: ORY334
+    Before:       n/a   After: B21763040  **334**
+ 
+Routine list of preceding patches: 329
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 29, 2010
+Completed By:                               Date Completed: APR 18, 2014
+Released By :                               Date Released : APR 21, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,190 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 02/07/14 at 16:26
+=============================================================================
+Run Date: JUN 24, 2014                     Designation: PRCA*4.5*299
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #264                    Status: Released
+                  Compliance Date: JUL 24, 2014
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*108<<= must be installed BEFORE `PRCA*4.5*299'
+                    (v)PRCA*4.5*201<<= must be installed BEFORE `PRCA*4.5*299'
+
+Subject: VA CARE VS. NON-VA CARE IDENTIFICATION IN VISTA DATA EXTRACT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses two issues:
+  
+ 1. The first issue involves the criteria checks to identify a bill for VA
+    care or Non-VA care in the Chief Business Office (CBO) Data Extract
+    process.
+  
+ 2. The second issue is about the DMC Referred Report Print [PRCA RCDMC
+    REFERRED RPT] option that opens the device twice resulted in the user
+    being prompted twice for a message subject.
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000000527054 - Bug in VA CARE vs. NONCARE (Fee) identification in
+                      VistA Data Extract (VDE)
+   
+ 2. INC000000824016 - Kernel-Devices/Printers Issue
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Heartland East
+ VA Heartland West
+ Little Rock HCS
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. INC000000527054 - Bug in VA CARE vs. NONCARE (Fee) identification in
+                      VistA Data Extract (VDE)
+  
+    Problem:
+    --------
+    The CBO has requested changes based on the criteria to determine
+    whether care provided on the bill is VA or Non-VA in the CBO Data
+    Extract process.
+  
+    Resolution:
+    -----------
+    The procedure for Veterans Affairs (VA) care vs. Non-VA care in routine
+    RCXVUTIL was modified to follow the criteria as detailed below:
+  
+  - Remove the data check in the fields - Lab Clinical Laboratory 
+    Improvment Amendment (CLIA) number (#235), Homebound (#236), Date Last
+    Seen (#237) of the Bill/Claims (#399) file for Non-VA care if the bill
+    has associated with any of them.
+  
+  - Remove the data check in the field - Bill Classification (#.05) of the
+    Bill/Medical Claims (#399) file for Non-VA care if it is Humanitarian
+    Emergency (Inpt./Medicare Part B) on the inpatient bill.
+  
+  - Add the data check in the fields - Discharge Date (#70) and Ward At
+    Discharge (#2.2) of the Patient Treatment File (PTF) file (#45). The
+    inpatient bill is for VA care if the patient has been discharged with a
+    ward assigned from the medical center, otherwise for Non-VA care.
+  
+  - Add the data check in the field - Status (#.12) of the Outpatient
+    Encounter file (#409.68). The outpatient bill is for VA care if the
+    patient has at least one associated outpatient encounter that is not a
+    'Non-Count' encounter, otherwise for Non-VA care.
+  
+  - Default the final indicator as Non-VA care if the bill reaches the data
+    check for outpatient encounters (see above) and there is no criteria  
+    being met.
+  
+    Routine: RCXVUTIL
+  
+ 2. INC000000824016 - Kernel-Devices/Printers Issue
+  
+    Problem:
+    --------
+    When a site user queues the Debt Management Center (DMC) Referred
+    Report Print [PRCA RCDMC REFERRED RPT] option to print on the P-Message
+    device, the site user is prompted for the message subject and recipient
+    information twice. 
+  
+    Resolution:
+    -----------
+    Routine PRCAREPT was modified to remove the extra prompt to the user
+    when the report is queued to print on the P-Message device.
+  
+    Routine: PRCAREPT
+  
+    =================== INSTALLATION INSTRUCTIONS ===================
+  
+    It is recommended this patch be installed outside of normal business
+    hours to avoid any complications resulting from users on the system.
+    Installation will take less than 2 minutes.
+  
+    1. LOAD TRANSPORT GLOBAL: 
+       ----------------------
+       Choose the PackMan message containing this patch and invoke the 
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. START UP KIDS:
+       --------------
+       Start up the Kernel Installation and Distribution System Menu
+   
+       [XPD MAIN]: 
+              Edits and Distribution ...  
+              Utilities ...  
+              Installation ...
+  
+       Select Kernel Installation & Distribution System Option: INStallation
+              Load a Distribution
+              Print Transport Global 
+              Compare Transport Global to Current System 
+              Verify Checksums in Transport Global 
+              Install Package(s)
+              Restart Install of Package(s)
+              Unload a Distribution 
+              Backup a Transport Global 
+  
+    3. Select Installation Option:
+       ---------------------------
+       NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+              NAME, enter PRCA*4.5*299):
+  
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+  
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+  
+      c. Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+    4. Select Installation Option: Install Package(s)
+  
+       **This is the step to start the installation of this KIDS patch:
+  
+       a. Choose the Install Package(s) option to start the patch install.
+  
+       b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+          NO//' answer NO
+  
+       c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? NO//' answer NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCAREPT
+    Before: B23557806   After: B24540582  **68,63,108,299**
+Routine Name: RCXVUTIL
+    Before: B17859013   After: B22527268  **201,299**
+ 
+Routine list of preceding patches: 108, 201
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 24, 2013
+Completed By:                               Date Completed: JUN 19, 2014
+Released By :                               Date Released : JUN 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

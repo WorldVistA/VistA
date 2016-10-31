@@ -1,0 +1,231 @@
+
+=============================================================================
+Run Date: FEB 11, 2016                     Designation: WEBP*1*3
+Package : WEBP - PATIENT CENTERED MANAGEMENT  Priority: Mandatory
+Version : 1         SEQ #3                      Status: Released
+                  Compliance Date: MAR 12, 2016
+=============================================================================
+
+
+Subject: PCMM WEB DEPLOYMENT OPTIMIZATION AND CONFIGURATION CHANGES
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Patient-Centered Management Module (PCMM) Web application version 
+ WEBP*1*3 Configuration Changes Address performance issues and database 
+ memory leaks in the Web application while National Deployment background
+ processes are in progress.
+  
+ Configuration Changes:
+ ======================
+  
+ RTC - 265784 - DB Connection Leak
+ Configurable caching was added for stations by ICN cache, and in addition 
+ to existing Hazelcast caching scheme Java Virtual Machine (JVM) and NONE
+ caching scheme were added to allow switching at deployment time to caching
+ at JVM level or no caching at all. This change affects initial cache build
+ on application start and processing of MFN-M05 messages from MVI.
+  
+ RTC - 265786 - Stabilize Encounter Processing
+ Refactored the portion of PCMM Web Auto Inactivation (AI) job which 
+ processes encounters for a single patient to be sent to a Java Messaging 
+ Service (JMS) queue to provide processing of data and prevent loss of 
+ events from VistA.
+  
+ RTC - 269027: Deployment - Speed/Resource optimization for Secure
+ Messaging
+ / web services
+ Made the following optimizations to minimize database hits during web
+ service call:
+   - created a computed column for short_icn in DB (part before "V")
+   - changed queries to reference this, removing call to getPatientByIcn in
+     PatientSummaryController
+   - determined how to store web service result in patient / VistaPatient 
+     table(s) and proactive update when data change
+  
+  
+ Implementation:
+ ===============
+ The PCMM Web WEBP*1*3 is a centrally managed web-based application and 
+ will be implemented deployed to a central web server.  No installation is 
+ required by sites.
+  
+  
+ Implementation Files:
+ =====================
+ None
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20070415 - Rehost/Reengineer PCMM
+  
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ The following CA Service Desk Tickets are addressed with the 
+ configuration changes in WEBP*1*3:
+  
+ R7253563FY16    I7202345FY16    I7365868FY16
+ R7207419FY16    I7199958FY16    I7379810FY16
+ R7207334FY16    I7193450FY16    I7367706FY16
+ R7146950FY16    I7188801FY16
+  
+ PCMM Web Database response time has caused the following application 
+ behavior:
+    - Pages are not returned properly and only a white page is displayed to
+      the users
+    - The application times out and returns an error message
+    - The application takes excessive time (up to 15 minutes in some cases)
+      to return a page
+    - The patient searches are taking longer to return the patient data
+  
+ Test Sites:
+ ----------
+ N/A
+   
+  
+ Documentation:
+ ==============
+ The following documentation is available with the release of PCMM Web 
+ WEBP-1.3:
+  
+ Title                            File Name                  FTP Mode
+ -----------------------------------------------------------------------
+ No documentation updates for this release. 
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ The files listed above will be obtainable via FTP. The preferred method 
+ will be to FTP the files from:
+  
+    download.vista.domain.ext
+  
+ This transmits the files from the first available FTP server. Sites may 
+ elect to retrieve manuals directly from a specific server as follows:
+  
+    CIO FIELD OFFICE         FTP ADDRESS                 DIRECTORY
+  
+    Albany             ftp.domain.ext   []
+    Hines              ftp.domain.ext    []
+    Salt Lake City     ftp.domain.ext      []
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+  
+ Patch Installation:
+ ===================
+  
+ There is no local VistA installation for PCMM Web. All installations will 
+ be done on the national web server.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ If you have any questions concerning the implementation of this 
+ application, please contact the VA Service Desk at 1-888-596-4357 or 
+ directly log a CA SDM ticket using the category:
+ Applications-HealtheVet-Vista, and type, PCMM Web.
+  
+ Any changes or impacts to this package/installation will be reported on 
+ this message.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 25, 2016
+Completed By:                               Date Completed: FEB 05, 2016
+Released By :                               Date Released : FEB 11, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

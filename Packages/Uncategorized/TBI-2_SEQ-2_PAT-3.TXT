@@ -1,0 +1,341 @@
+
+=============================================================================
+Run Date: MAY 02, 2014                     Designation: TBI*2*3
+Package : TBI - TRAUMATIC BRAIN INJURY        Priority: Mandatory
+Version : 2         SEQ #2                      Status: Released
+                  Compliance Date: MAY 28, 2014
+=============================================================================
+
+
+Subject: Build 2.0.5 Deployment of Sprint 7 Work items
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ ************************************************************************
+ *  Patch 2.0*5.0 of TBI has been deployed to the production server     *
+ *  for national release on April 28, 2014 at 9 p.m. EST.               *
+ *                                                                      *
+ *                                                                      *
+ * NOTE: This patch is loaded on the National TBI server. There is      *
+ * nothing that local sites can or need to do besides communicate       *
+ * changes to users.                                                    *
+ ************************************************************************
+  
+ TBI Patch 2.0*5.0-Deployment of Sprint 7 Work Items includes the 
+ following enhancements and fixes: 
+  
+ TBI-25917 Add VISNFacility to Polytrauma Dropdown
+ TBI-20771 Add TBI Data Elements
+ TBI-20770 TBI Cube v2.0
+ TBI-20770 TBI Reports
+ TBI-25916 Add ProviderID & SiteID to Each Survey
+ TBI-25680 Fix MP Instrument T-Score
+  
+ Included in this patch are eleven (11) new TBI Instruments, which are
+ being added to the system to improve the quality of Veteran health care by
+ adding more injury centric patient information for analysis and 
+ subsequent, targeted treatment.
+  
+ 1)      TBI-34697: - Disabilty Rating Scale Instrument
+ 2)      TBI-34653: - Neurobehavioral Symptom Inventory Instrument
+ 3)      TBI-34626: - Patients Global Impression of Change (PGIC) 
+ Instrument
+ 4)      TBI-34569: - MedRed - Two Minute Walk Instrument
+ 5)      TBI-34513: - MedRed LCI v2 Instrument
+ 6)      TBI-34405: - MedRed L-Test Instrument
+ 7)      TBI-34988: QUEST TBI Instrument
+ 8)      TBI-34995: Satisfaction With Life Scale TBI Instrument
+ 9)      TBI-35030: Functional Mobility Assessment TBI Instrument
+ 10)     TBI-35119: Berg Balance Scale Instrument
+ 11)     TBI-35332: Create VA Low Vision Visual Functioning (VA LV VFQ 20) 
+ Survey .Net code and integrate into CRS
+  
+  
+ Patch Components:
+ -----------------
+ n/a
+  
+ Files & Fields Associated:
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ n/a                        n/a
+  
+ Forms Associated:
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ n/a
+  
+ Mail Groups Associated:
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ n/a
+  
+ Options Associated:
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ n/a
+  
+ Protocols Associated:
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ n/a
+  
+ Security Keys Associated:
+ Security Key Name
+ -----------------
+ n/a
+  
+ Templates Associated:
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ n/a
+  
+ Additional Information:
+ n/a
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ n/a
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ n/a
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ 1. INC800443 - Receiving System.Globalization.GregorianCalendar error 
+ when selecting a point.
+  
+ Problem:
+ -------
+ Albany is getting booted out of TBI Registries every time she tries 
+ selecting a pt. with the following error.
+ The DateTime represented by the string is not supported in calendar 
+ System.Globalization.GregorianCalendar
+  
+ Resolution:
+ ----------
+ DateTime fixed. 
+  
+ Test Sites:
+ ----------
+ Albany OIFO 
+  
+ 2. INC888577 - TBI Template Entry Issue
+ Problem:
+ -------
+ User is getting this error when submitting the note.
+ She is still getting the same error when a consult is selected.
+  
+ Warning: 
+ Either your session timed out or you accessed this page incorrectly. 
+ You will need to return to CPRS and click on TBI Instruments in order to 
+ start again.  
+  
+  
+ Resolution:
+ ----------
+ Fix note submission.
+  
+ Test Sites:
+ ----------
+ Salt Lake OIFO
+ West Haven, CONN
+  
+ 3. INC586624 - Cannot edit National TBI secondary eval note. Booted out.
+ Problem:
+ -------
+ Cannot edit the national TBI secondary evaluation note. The template
+ never transferred to CPRS, and could not sign off the partially
+ completed note.
+  
+ Resolution:
+ ----------
+ Fixed edit of secondary note.
+  
+ Test Sites:
+ ----------
+ Beckley VAMC 
+  
+ 4. INC853777 - Note not showing in CPRS when Save and Prepare Note
+  
+ Problem:
+ -------
+ When hit "save and Prepare Note", then "submit", the note is not showing
+ up in CPRS at all, and unsigned notes don't appear.
+  
+ Resolution:
+ ----------
+ Sign on now requires user name/password to edit TBI Second Level
+ eval
+  
+ Test Sites:
+ ----------
+ Palo Alto
+ Kansas City
+  
+ 5. INC808561 - Getting "timed out" message when entering notes
+ Problem:
+ ----------
+ User reports when submitting TBI surveys she receives the following
+ message -
+ Missing consult IEN.  You will need to return to CPRS and click to TBI 
+ instruments in order to start again.
+  
+ Resolution:
+ ----------
+ Fixed notes entry. 
+  
+ Test Sites:
+ ----------
+ Topeka, KS
+  
+ 6. INC733343 - Error - no text - return to CPRS
+ Problem:
+ -------
+ User completed a TBI database entry and attempted to save the data. One of
+ the boxes was not checked and an alert appeared with instructions to enter
+ the missing data, which we did. We attempted to save the data again when 
+ the following message appeared:
+  
+ "Error: No Text! You will need to return to CPRS and click on TBI 
+ Instruments in order to start again".
+  
+ Resolution:
+ ----------
+ Fixed data save 
+  
+ Test Sites:
+ ----------
+ Saginaw
+  
+ 7. INC784422 - Losing data in TBI registry
+  
+ Problem:
+ -------
+ When put in part of the data, and the provider put in her part, saved it
+ and went to put it into the chart and LOST everything.
+  
+  
+ Resolution:
+ ----------
+ This version will address three main issues:
+                 1) Users 'timing out' (a warning is provided and the 
+ ability to save data prior to the system 'timing out')
+                 2) Accommodating users who require a co-signer
+                 3) Limiting the loss of data when users select the 'Save 
+ Draft' or 'Save and Write Note' features multiple times.
+  
+ Test Sites:
+ ----------
+ Battle Creek, MI
+  
+  
+ 8. INC940762 - System slow - losing notes and freezing
+ Problem:
+ -------
+ Initial TBI screening Evaluation template runs slow, where you hit  
+ the "Save Draft" button. It takes @ 5 minutes to let you know if it saved 
+ or not.  Had to redo template several times today because was not sure if
+ it saved the draft or not.  Then, it would say the save draft failed.
+  
+ Resolution:
+ ----------
+ Upgraded to include Cosigner fx; timeout upgrades and fix data loss issues
+  
+  
+ Test Sites:
+ ----------
+ Palo Alto 
+  
+ 9. INC727530 - Unhandled Exception Server error
+ Problem:
+ -------
+ Object reference not set to an instance of an object. 
+ Description: An unhandled exception occurred during the execution of the 
+ current web request. Please review the stack trace for more information 
+ about the error and where it originated in the code. 
+  
+ Exception Details: System.NullReferenceException: Object reference not 
+ set to an instance of an object.
+  
+ Source Error: 
+ An unhandled exception was generated during the execution of the current 
+ web request.
+  
+ Resolution:
+ ------------
+ Fixed error
+  
+ Test Sites:
+ ----------
+ Gainesville VAMC 
+   
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                              File Name              FTP Mode
+ -----------------------------------------------------------------------
+ User Manual                       TBIUM.PDF               ASCII
+ Technical Manual                  TBITM.PDF               ASCII
+ User Manual                       TBIINSUM.PDF            ASCII
+ User Manual                       TBIPTUM.PDF             ASCII
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ n/a
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ n/a
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch is only for informational purposes only. 
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ n/a
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 14, 2013
+Completed By:                               Date Completed: MAY 01, 2014
+Released By :                               Date Released : MAY 02, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

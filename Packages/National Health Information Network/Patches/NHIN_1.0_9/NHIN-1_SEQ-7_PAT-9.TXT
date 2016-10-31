@@ -1,0 +1,106 @@
+
+=============================================================================
+Run Date: OCT 15, 2015                     Designation: NHIN*1*9
+Package : NHIN - NATIONAL HEALTH INFO NETWORK Priority: Mandatory
+Version : 1         SEQ #7                      Status: Released
+                  Compliance Date: NOV 15, 2015
+=============================================================================
+
+
+Subject: VLER eHX Increment 5 (v6.4.0) Informational Patch
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Note: Technical support staff at Austin Information Technology Center 
+ (AITC) will install this enhancement release on the eHealth Exchange 
+ (formerly VLER and formerly NHIN) servers located there using a 
+ pre-approved Request for 
+ Change Order and Implementation Plan.  This deployment is scheduled to 
+ take place on October 15, 2015 from 8:00 PM EST - 11:00 PM EST.
+  
+ No effort is required by local sites.  User Acceptance Test is by the 
+ direction of the eHealth Exchange Business Owner and no MOUs are required.
+ **************************************************************************
+ eHealth Exchange (formerly VLER and formerly NHIN) Adapter Release 
+ 6.4.0.17 contains code changes (enhancements) to the eHealth Exchange 
+ Adapter module.  These changes are Work Items that were recorded and 
+ tracked in the eHealth Exchange area of Rational Team Concert, the 
+ VA-prescribed tool used for tracking requirements and associated test 
+ plans.  This release contains the Work Items completed during production 
+ deployment.
+  
+ This enhancement release consists of the following enhancements to the 
+ eHealth Exchange system:
+ - Denial of Service: Provide a mechanism to prevent Exchange Partners 
+ from overloading the VA eHealth Exchange system with Patient Discovery 
+ (PD) requests. The system will prevent the receipt of additional PD 
+ requests received from a partner once the partner has exceeded system 
+ thresholds.  The  system will continue to allow Query for Documents (QD) 
+ and Retrieval of Documents (RD) requests and PDs from other partners. 
+ Information provided indicates that the current system allows for up to 
+ 500 simultaneous transactions (system threshold).
+ - Exchange Service Interface Enhancements:  Updates will be made to the 
+ Adapter software to allow an application consuming the Exchange Service 
+ to specify the document format [C32, C62 or various Consolidated Clinical 
+ Document Architecture (C-CDA) types], document sections, and business 
+ rules for data returned.  Future increments will filter or mask data for 
+ security purposes.  
+ - Support for Filtering Test Patients: Identify and make any changes 
+ needed to the audit transactions to support the Veterans Authorization & 
+ Preferences (VAP) application in filtering out test patients from 
+ reports. 
+ - Standards & Terminology Services (STS) Translations:  The Adapter will 
+ provide functionality to translate data provided to the Adapter from the 
+ following sources:
+         * Translate pre-defined elements using translations that are 
+ currently available through     the VA Enterprise Terminology Services 
+ (VETS) translation service
+         * Translate values that are not currently available for 
+ translation through the VETS    translation service using a local data 
+ source
+         * Translate values that are not currently available for 
+ translation through the VETS    translation service or a local data 
+ source by the adapter providing a static translation or by      
+ populating a default value
+         *Ensure that deprecated/outdated Logical Observation Identifiers 
+ Names and Codes         (LOINC) codes from an older specification are not 
+ sent out in the VA Clinical Care        Document (CCD).  Replace outdated 
+ codes with null flavor or unknown.   Use        spreadsheet provided to 
+ determine if LOINC codes are outdated. 
+  
+ Test sites: N/A
+ The upgraded software will be deployed to a centralized system at AITC.
+  
+ Testing Process: Release 6.4 testing was focused on the CCDA readability 
+ enhancements and the retrieval of specific records and notes within a 
+ specific date range for the Encounters, Surgical Procedures, Discharge 
+ Summaries, History and Physicals, Pathology and Consults sections of the 
+ CCDA. There was also a large change in regards to International 
+ Classification of Diseases (ICD)-9 Codes being converted correctly into 
+ the new Systematized Nomenclature of Medicine Clinical Terms (SNOMED-CT) 
+ codes.
+  Increment 5 testing also includes the enhancements
+ of error messages for outbound query of documents.
+  
+ Remedy tickets: None
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:                          Hold Date     : OCT 14, 2015
+Entered By  :                               Date Entered  : SEP 16, 2015
+Completed By:                               Date Completed: OCT 14, 2015
+Released By :                               Date Released : OCT 15, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

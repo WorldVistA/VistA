@@ -1,0 +1,222 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 05/20/15 at 09:01
+=============================================================================
+Run Date: DEC 29, 2015                     Designation: XM*8*47
+Package : XM - MAILMAN                        Priority: Mandatory
+Version : 8        SEQ #42                      Status: Released
+                  Compliance Date: JAN 29, 2016
+=============================================================================
+
+Associated patches: (v)XM*8*34     <<= must be installed BEFORE `XM*8*47'
+                    (v)XM*8*41     <<= must be installed BEFORE `XM*8*47'
+
+Subject: XM API FIXES,BULLETIN FILE UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch XM*8.0*47 addresses five issues:
+  
+ 1. When using the Mailman extrinsic function $$MG^XMBGRP to create a new 
+ mail group, if the organizer's DUZ is only 4 digits, and those 4 digits 
+ match with the last 4 of the SSN of any person in the New Person(#200) 
+ file, the call will fail and the mail group will not be created.
+  
+ 2. When using the Mailman API SENDMSG^XMXAPI, if the subject line is 
+ under 3 characters or over 65 characters the API will fail and the 
+ message will not be sent. When using the Mailman application to send a 
+ message, subject lines are automatically truncated. The code changes will 
+ duplicate this functionality.
+  
+ 3. An entry in the BULLETIN(3.6) file named XM DOMAIN ADDED makes several 
+ references to the NOIS system which is no longer used. In an effort to 
+ correct this issue and avoid future issues, the name NOIS will be 
+ replaced with the more generic term "trouble ticket."
+  
+ 4. Two Mailman API's have been confirmed to be functioning incorrectly. 
+ The COPYAMT^XMXSEC1 API does not properly count the number of lines in a 
+ mail message. The OPTEDIT^XMXSEC2 API does not properly check if a 
+ message text or message subject line can be edited.
+  
+ 5. Mailman API QX^XMXUTIL3 is not properly displaying a list of users 
+ that are either current or not current in reading a message.
+  
+ ASSOCIATED REMEDY: 
+ ==================
+ 1)  INC000000385178 - Mailman - Report Issue:
+ 2)  INC000000760688 - ANC-KPratt API SENDMSG^XMXAPI and XMSUB over 65
+                         characters
+ 3)  INC000000849623 - Remove reference to old ticketing system
+ 4)  INC000000968732 - Two Mailman API errors need repair
+ 5)  INC000000969711 - MailMan - Other: API Problems                 
+   
+ ASSOCIATED NSR:
+ ===============
+ N/A
+   
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+ Central Plains HCS                 
+ Togus VAMC 
+ Washington VAMC
+  
+   
+  
+ Remedy Overview:
+ ================
+ 1)  INC00000385178 - Mailman - Report Issue:
+                                                
+ Problem:
+ --------
+ When using the Mailman extrinsic function $$MG^XMBGRP to create a new mail
+ group, if the organizer's DUZ is only 4 digits, and those 4 digits match
+ with the last 4 of the SSN of any person in the New Person(#200) file, the
+ call will fail and the mail group will not be created.
+      
+ Resolution:
+ -----------
+ The CREATE tag line of XMBGRP contains a FILE^DICN call. The DIC("DR") array
+ will be modified to use a four slash stuff for the ORGANIZER(#5) field data 
+ to bypass the input transform which prevents four digit DUZ'S from being 
+ rejected. This allows the function to successfully create a new mail group.
+  
+ 2)  INC000000760688 - ANC-KPratt API SENDMSG^XMXAPI and XMSUB over 65
+ characters 
+   
+ Problem:
+ --------
+ When using the Mailman API SENDMSG^XMXAPI, if the subject line is under 3
+ characters or over 65 characters the API will fail and the message will not
+ be sent. When using the Mailman application, subject lines are automatically
+ truncated. The code changes here will duplicate this functionality.
+  
+       
+ Resolution:
+ -----------
+ The XMXAPI routine will be modified to truncate message subjects, which
+ prevent the API from failing.
+  
+ 3)  INC000000849623 - Remove reference to old ticketing system
+                                                
+ Problem:
+ --------
+ An entry in the BULLETIN(3.6) file named XM DOMAIN ADDED makes several
+ references to the NOIS system which is no longer used. In an effort to 
+ correct this issue and avoid future issues, the name NOIS will be replaced
+ with the more generic term "trouble ticket."
+      
+ Resolution:
+ -----------
+ Created a post-install routine (XM47PT) to update the BULLETIN(3.6) file
+ entry for XM DOMAIN ADDED, removing all references to NOIS.
+  
+ 4)  INC000000968732 - Two Mailman API errors need repair
+   
+ Problem:
+ --------
+ Two Mailman API's have been confirmed to be functioning incorrectly.
+ COPYAMT^XMXSEC1 is an API that counts message lines, response lines, and the
+ number of responses in a message. This is used to determine if a message can
+ be copied based on site parameters. This API does not properly count lines.
+ OPTEDIT^XMXSEC2 is an API that returns information on a specific mail
+ message. The API does not properly check if a message text or message line
+ can be edited.
+  
+       
+ Resolution:
+ -----------
+ Modified COPYAMT^XMXSEC1 to work when variable XMWHICH contains a comma.
+ Modified OPTEDIT^ XMXSEC2 routine to determine if a message or subject line
+ can be edited.
+  
+ 5)  INC000000969711 - MailMan - Other: API Problems
+                                                
+ Problem:
+ --------
+ Mailman API QX^XMXUTIL3 is not properly displaying a list of users that are
+ either current or not current in reading a message.
+      
+ Resolution:
+ -----------
+ By correcting a flaw in the code logic on routine XMXUTIL3, the call will
+ return the information it is supposed to.
+   
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes.
+ Suggested time to install: non-peak requirement hours.
+   
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter XM*8.0*47).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch is
+            installed.
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package XM*8.0*47
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//",
+         respond NO.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//" respond YES. 
+         
+         When prompted to select the options you would like to place out of
+         order, enter the following: 
+  
+                SEND A MESSAGE            [XMSEND]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;MailMan;**[Patch List]**;Jun 28, 2002;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XM47PT
+    Before:       n/a   After: B10685809  **47**
+Routine Name: XMBGRP
+    Before: B34058917   After: B34217969  **47**
+Routine Name: XMXAPI
+    Before: B50919089   After: B52258962  **15,41,47**
+Routine Name: XMXSEC1
+    Before: B64148927   After: B64246079  **47**
+Routine Name: XMXSEC2
+    Before: B66090183   After: B68956624  **47**
+Routine Name: XMXUTIL3
+    Before: B23130058   After: B23398981  **34,47**
+ 
+Routine list of preceding patches: 34, 41
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 24, 2015
+Completed By:                               Date Completed: DEC 09, 2015
+Released By :                               Date Released : DEC 29, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

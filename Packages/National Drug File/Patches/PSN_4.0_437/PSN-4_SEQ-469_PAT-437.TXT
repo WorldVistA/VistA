@@ -1,0 +1,129 @@
+$TXT Created by               at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 10/14/15 at 16:15
+=============================================================================
+Run Date: JUL 21, 2016                     Designation: PSN*4*437
+Package : PSN - NATIONAL DRUG FILE            Priority: Mandatory
+Version : 4       SEQ #469                      Status: Released
+                  Compliance Date: AUG 21, 2016
+=============================================================================
+
+Associated patches: (v)PSN*4*264   <<= must be installed BEFORE `PSN*4*437'
+
+Subject: NDF INTERNET PROTOCOL V6 PREPARATION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch resolves the following issue:
+  
+ In preparation for the VA's transition from Internet Protocol version 4 
+ (IPv4) to Internet Protocol version 6 (IPv6), the National Drug File 
+ (NDF) package will require modifications to make it IPv6 ready.
+  
+ ASSOCIATED TROUBLE TICKET:
+ ==========================
+ INC000001101939 NDF IPV6 CONVERSION 
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Plains HCS
+ Boston HCS
+  
+ TICKET OVERVIEW:
+ ================
+ INC000001101939 NDF IPV6 CONVERSION 
+  
+ Problem: 
+ --------
+ In preparation for the VA's transition from Internet Protocol version 4 
+ (IPv4) to Internet Protocol version 6 (IPv6), the National Drug File 
+ (NDF) package will require modifications to make it IPv6 ready.
+  
+ IPv6 is the latest version of the Internet Protocol (IP), the 
+ communications protocol that provides an identification and location 
+ system for computers on networks and routes traffic across the Internet. 
+ IPv6 was developed by the Internet Engineering Task Force (IETF) to deal 
+ with the long-anticipated problem of IPv4 address exhaustion. IPv6 is 
+ intended to replace IPv4.
+  
+ VistA is only compatible with IPv4 currently and this effort is to prepare
+ for IPv6 compatibility.
+  
+    
+ Resolution:
+ ----------
+ As part of the transition for the National Drug File (NDF) package,
+ modifications were required to include evaluation of the current system to
+ determine what version of IP is enabled and format each referenced IP and
+ loopback address accordingly.
+  
+  
+ Installation Instructions:
+ ==========================
+ National Drug File (NDF) users should be off the system when this 
+ patch is installed. Installation will take less than 5 minutes. 
+ This patch should be installed during non-peak requirement hours.
+  
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter PSN*4.0*437).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch 
+            is installed
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package 
+         PSN*4.0*437
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//",
+         respond NO.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//", respond YES.
+              
+         When prompted, 'Enter options you wish to mark as 'Out Of 
+         Order':', enter:
+  
+         Display FDA Medication Guide         [PSN MED GUIDE] 
+  
+         When prompted, 'Enter protocols you wish to mark as 'Out Of 
+         Order':', press enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;NATIONAL DRUG FILE;**[Patch List]**; 30 Oct 98;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSNFDAMG
+    Before: B31156358   After: B31921678  **108,263,264,437**
+ 
+Routine list of preceding patches: 264
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 24, 2015
+Completed By:                               Date Completed: JUL 11, 2016
+Released By :                               Date Released : JUL 21, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

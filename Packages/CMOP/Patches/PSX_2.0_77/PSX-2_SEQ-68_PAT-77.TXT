@@ -1,0 +1,252 @@
+$TXT Created by                 SUPVBB.DOMAIN.EXT  (KIDS) on Tuesday, 11/10/15 at 15:47
+=============================================================================
+Run Date: FEB 08, 2016                     Designation: PSX*2*77
+Package : PSX - CMOP                          Priority: Mandatory
+Version : 2        SEQ #68                      Status: Released
+                  Compliance Date: MAR 10, 2016
+=============================================================================
+
+Associated patches: (v)PSX*2*41    <<= must be installed BEFORE `PSX*2*77'
+                    (v)PSX*2*48    <<= must be installed BEFORE `PSX*2*77'
+
+Subject: EPHARMACY NCPDP CONTINUOUS MAINTENANCE STANDARDS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch has enhancements that extend the capabilities of the Veterans
+ Health Information Systems and Technology Architecture (VistA) electronic
+ pharmacy (ePharmacy) billing system.  Below is a list of all the
+ applications involved in this project along with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*427
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2*534
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*19
+    CONSOLIDATED MAIL OUTPATIENT PHARMACY (CMOP) V. 2.0   PSX*2*77
+    PHARMACY DATA MANAGEMENT (PDM) V. 1.0                 PSS*1*188
+    
+ Patches PSX*2*77 and PSS*1*188 are being released as stand-alone patches, 
+ while the other three patches (PSO*7*427, IB*2*534, BPS*1*19) are being
+ released in the Kernel Installation and Distribution System (KIDS)
+ multi-build distribution BPS PSO IB BUNDLE 6.0.  The two stand-alone 
+ patches and multi-build distribution can be installed in any order and 
+ do not need to installed at the same time.
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+  
+ 1. The 'ePharmacy - CMOP Not Transmitted Rx List' Mailman bulletin was
+    modified to ensure the body text accurately reflects the reason the
+    CMOP prescriptions cannot be transmitted.  Each prescription listed
+    in the body text indicates the number of times an Rx was not
+    transmitted to CMOP and the date of the first unsuccessful
+    transmission to CMOP.  In addition, the subject was modified to
+    include the site name.
+    
+ 2. The 'CMOP Not Dispensed Rx List' mailman bulletin was modified to
+    include the standard symbols denoting additional information used
+    by Outpatient pharmacy.  Prescription numbers with a corresponding
+    ePharmacy claim shall be marked with 'e'.  Prescription numbers
+    with a first party copay shall be marked with '$'.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ N/A
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ N/A
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+ Templates:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------  
+ 20130514 - NCPDP Continuous Maintenance Standards (Phase 2, Iteration 2)
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA Heartland West (Integrated)-Station 589
+ Central Arkansas Veterans Healthcare System (Little Rock, AR)-Station 598
+ Birmingham VA Medical Center (Birmingham, AL)-Station 521
+ Hunter Holmes McGuire VA Medical Center (Richmond, VA)-Station 652
+ James H. Quillen VA Medical Center (Mountain Home, TN)-Station 621
+ Lexington VA Medical Center (Lexington, KY)-Station 596
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.  This transmits the files from the first
+ available FTP server.  Sites may also elect to retrieve software directly
+ from a specific server as follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                                 File Name                 FTP Mode
+ -----------------------------------------------------------------------
+ Release Notes/Installation Guide      PSX_2_P77_RN.PDF          Binary
+ User Manual                           PSX_2_UM_R0116.PDF        Binary
+ Technical Manual                      PSX_2_TM_R0116.PDF        Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system.  Installation should
+ take less than 5 minutes.
+   
+ Notes: 1. You may queue this installation for a later time.
+        2. DO NOT install patch PSX*2*77 when prescriptions are being
+           transmitted to CMOP.  Wait for the CMOP transmission to 
+           finish or complete the installation before the transmission
+           starts.
+  
+ No options need to be disabled.
+  
+  
+ Installation Instructions
+ -------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options.  When prompted for the INSTALL NAME, enter
+     PSX*2.0*77.
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option.  
+     When prompted for the INSTALL NAME, enter PSX*2.0*77.
+  
+ 5.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+     NO//" respond NO.
+  
+ 6.  When prompted "Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//" respond NO. 
+  
+ 7.  If prompted "Delay Install (Minutes):  (0 - 60): 0//" respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;CMOP;**[Patch List]**;11 Apr 97;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSXBPSMS
+    Before: B11444984   After: B21102458  **48,77**
+Routine Name: PSXMSGS
+    Before: B24952454   After: B29772543  **1,2,4,24,23,27,30,41,77**
+ 
+Routine list of preceding patches: 41, 48
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 20, 2014
+Completed By:                               Date Completed: FEB 04, 2016
+Released By :                               Date Released : FEB 08, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,510 @@
+$TXT Created by               at DVBCACHE.FO-BIRM.DOMAIN.EXT  (KIDS) on Tuesday, 07/15/14 at 14:52
+=============================================================================
+Run Date: SEP 02, 2014                     Designation: PSO*7*408
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #369                      Status: Released
+                  Compliance Date: OCT 03, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*111    <<= must be installed BEFORE `PSO*7*408'
+                    (v)PSO*7*313   <<= must be installed BEFORE `PSO*7*408'
+                    (v)PSO*7*374   <<= must be installed BEFORE `PSO*7*408'
+                    (v)PSO*7*403   <<= must be installed BEFORE `PSO*7*408'
+
+Subject: STATE PRESCRIPTION MONITORING PROGRAM (SPMP)
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ The Safety Updates for the Medication Prescription Management (SUMPM)
+ project adds a new module to the Outpatient Pharmacy V. 7.0 application,
+ which will be used for enabling the Veterans Health Administration (VHA)
+ pharmacies to comply with Mandatory Reporting to State Controlled
+ Substance Rx Databases required by Consolidated Appropriations Act, 2012,
+ PL 112-74. Also known as State Prescription Monitoring Program (SPMP), the
+ program is a state electronic database which collects designated data on
+ controlled substances dispensed. The states then distribute data from the
+ database to individuals who are authorized under state law to receive the
+ information for purposes of their profession. The information must be
+ reported using the American Society for Automation in Pharmacy (ASAP) data
+ format, which was developed by the Alliance of States with Prescription
+ Monitoring Programs and the National Association of State Controlled
+ Substances Authorities.
+  
+ --------------------------------------------------------------------------
+                            ***IMPORTANT***
+ In order to manage the complex technical nature of implementing 
+ transmissions from VHA to the various State Prescription Monitoring 
+ Programs (SPMPs), patch PSO*7*408 will undergo a controlled activation 
+ schedule. All VA medical centers will receive the patch simultaneously
+ upon its national release, with an expectation that it will be installed
+ within the standard 30-day compliance period. Independently, the actions
+ necessary to set the state-specific parameters and begin actual 
+ transmissions will be governed by a phased implementation schedule. 
+ Communications to each site will be initiated by the OI&T Field Operations
+ Implementation Manager in conjunction with a representative from Pharmacy
+ Benefits Management. 
+ --------------------------------------------------------------------------
+  
+ The new menu called State Prescription Monitoring Program (SPMP) Menu
+ [PSO SPMP MENU] can be found under the Supervisor Functions [PSO
+ SUPERVISOR] menu option. The following options will be available under
+ this new menu:
+  
+ 1. View ASAP Definitions [PSO SPMP VIEW ASAP DEFINITIONS]
+    ------------------------------------------------------
+    This option allows the user to visualize the ASAP data format and the
+    data elements reported to the states. It provides detailed information
+    about each segment and field for the ASAP format versions 1995, 3.0,
+    4.0, 4.1 and 4.2.
+  
+ 2. View/Edit SPMP State Parameters [PSO SPMP STATE PARAMETERS]  
+    -----------------------------------------------------------
+    This option is used for viewing or editing the SPMP parameters for a 
+    specific state. The following fields can be updated via this option:
+  
+       ASAP VERSION
+       TRANSMIT RETURN TO STOCK*
+       INCLUDE NON-VETERAN PATIENTS
+       REPORTING FREQUENCY IN DAYS
+       VMS LOCAL DIRECTORY
+       UNIX/LINUX LOCAL DIRECTORY
+       WINDOWS/NT LOCAL DIRECTORY
+       FILE NAME PREFIX
+       FILE EXTENSION
+       STATE FTP SERVER IP ADDRESS
+       STATE FTP SERVER USERNAME
+       STATE FTP SERVER PORT #
+       STATE FTP SERVER PASSWORD
+       STATE FTP SERVER DIRECTORY
+       SFTP TRANSMISSION MODE
+       SFTP PRIVATE KEY TEXT**
+       SFTP PUBLIC KEY TEXT**
+  
+    *  Visible only if ASAP VERSION is 1995
+    ** Visible only if SFTP TRANSMISSION MODE is set to A - AUTOMATIC 
+   
+ 3. View/Export Single Prescription [PSO SPMP SINGLE RX VIEW/EXPORT]
+    ----------------------------------------------------------------
+    This option is used for visualizing a specific prescription and the data
+    related to a specific fill that is transmitted to the state in the ASAP 
+    format.
+   
+ 4. View Export Batch [PSO SPMP BATCH VIEW/EXPORT]
+    ----------------------------------------------
+    The information reported to the states are first compiled into a batch,
+    which can be for a single prescription or a collection of prescriptions
+    for a determined date range. This option allows the user to visualize 
+    information contained in one batch as well as the list of prescriptions
+    in the batch. This option also allows the user to manually export the
+    batch to the state.
+  
+ 5. Export Batch Processing [PSO SPMP BATCH PROCESSING]
+    ---------------------------------------------------
+    This option is used to monitor all the batches used to transmit data to
+    the states. The user selects a date range and a list of batches is
+    presented where the user can select to perform different actions on a
+    specific batch.
+  
+ 6. Accounting Of Disclosures Report [PSO SPMP DISCLOSURE REPORT]
+    -------------------------------------------------------------
+    This option is used for generating a list of prescriptions transmitted
+    to states. This option allows for a date range selection as well as
+    one, multiple or all states and one, multiple or all patients. The list
+    is sorted by state and then by patient. 
+  
+ 7. Unmark Rx Fill as Administered In Clinic [PSO SPMP UNMARK ADMIN CLINIC]
+    -----------------------------------------------------------------------
+    This option is used to unmark prescriptions as 'Administered In Clinic'.
+    Administered in clinic prescription fills are not transmitted to the 
+    states. This option enables the user to unmark fills that have been
+    mistakenly marked as 'Administered In Clinic' and subsequently transmit
+    them to the state.
+  
+ This patch also runs a post-install routine that automatically schedules
+ the option Scheduled SPMP Data Export [PSO SPMP SCHEDULED EXPORT] to run
+ at 1:00AM. Once the site is activated, data will be transmitted to the
+ state based on the frequency in the scheduled task. This option is listed
+ as a scheduled task under the Queue Background Jobs [PSO AUTOQUEUE JOBS]
+ option under the Maintenance (Outpatient Pharmacy) [PSO MAINTENANCE] menu.
+ This option can also be edited via the Schedule/Unschedule [XUTM SCHEDULE]
+ option.
+  
+   
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)         Field Name (#)                      New/Modified/Deleted
+ ------------------    ----------------------------------- --------------------
+ SPMP ASAP RECORD DEFINITION (#58.4)                       New
+                       NAME (#.01)                         New
+                       VERSION (#1)                        New
+                       -VERSION (#.01)                     New
+                       -SEGMENT  (#1)                      New
+                       --SEGMENT ID (#.01)                 New
+                       --SEGMENT NAME (#.02)               New
+                       --PARENT SEGMENT (#.03)             New
+                       --REQUIREMENT (#.04)                New
+                       --POSITION (#.05)                   New
+                       --DATA ELEMENT (#1)                 New
+                       ---ELEMENT ID (#.01)                New
+                       ---ELEMENT NAME (#.02)              New
+                       ---DATA FORMAT (#.03)               New
+                       ---MAXIMUM LENGTH (#.04)            New
+                       ---POSITION (#.05)                  New
+                       ---REQUIREMENT (#.06)               New
+                       ---DESCRIPTION (#.07)               New
+  
+ SPMP STATE PARAMETERS (#58.41)                            New
+                       STATE (#.01)                        New
+                       ASAP VERSION (#1)                   New
+                       INCLUDE NON-VETERAN PATIENTS (#2)   New
+                       REPORTING FREQUENCY IN DAYS (#3)    New
+                       OPEN VMS LOCAL DIRECTORY (#4)       New
+                       FILE NAME PREFIX (#5)               New
+                       FILE EXTENSION (#6)                 New
+                       STATE FTP SERVER IP ADDRESS (#7)    New
+                       STATE FTP SERVER USERNAME (#8)      New
+                       STATE FTP SERVER PASSWORD (#9)      New
+                       STATE FTP SERVER DIRECTORY (#10)    New
+                       LAST EXPORT DATE/TIME RUN (#11)     New
+                       TRANSMIT RETURN TO STOCK (#12)      New
+                       UNIX/LINUX LOCAL DIRECTORY (#15)    New
+                       WINDOWS/NT LOCAL DIRECTORY (#16)    New
+                       SFTP PRIVATE KEY TEXT (#100)        New
+                       SFTP PUBLIC KEY TEXT (#200)         New
+  
+ SPMP EXPORT BATCH (#58.42)                                New
+                       BATCH NUMBER (#.01)                 New
+                       STATE (#1)                          New
+                       EXPORT TYPE (#2)                    New
+                       BEGIN RELEASE DATE/TIME (#4)        New
+                       END RELEASE DATE/TIME (#5)          New
+                       EXPORT FILE NAME (#6)               New
+                       EXPORTED BY (#7)                    New
+                       DATE/TIME BATCH CREATED (#8)        New
+                       DATE/TIME BATCH EXPORTED (#9)       New
+                       ERRORS (#200)                       New
+                       -ERROR MESSAGE (#.01)               New
+                       PRESCRIPTIONS (#100)                New
+                       -PRESCRIPTION (#.01)                New
+                       -FILL (#1)                          New
+                       -RECORD TYPE (#2)                   New
+  
+ PRESCRIPTION (#52)                                        Modified
+                       ADMINISTERED IN CLINIC (#14)        New
+                       REFILL (#52.1)                      Modified
+                       -ADMINISTERED IN CLINIC (#23)       New
+                       RETURN TO STOCK LOG (#70)           New
+  
+ RETURN TO STOCK LOG (#52.07)                              New
+                       RETURN TO STOCK DATE/TIME (#.01)    New
+                       FILL NUMBER (#1)                    New
+                       FILL DATE (#2)                      New
+                       QUANTITY (#3)                       New
+                       DAYS SUPPLY (#4)                    New
+                       UNIT PRICE OF DRUG (#5)             New
+                       MAIL/WINDOW (#6)                    New
+                       REMARKS (#7)                        New
+                       PHARMACIST (#8)                     New
+                       LOT # (#9)                          New
+                       CLERK (#10)                         New
+                       LOGIN DATE (#11)                    New
+                       DIVISION (#12)                      New
+                       IB NUMBER (#13)                     New
+                       COPAY EXCEEDING CAP (#14)           New
+                       DISPENSED DATE (#15)                New
+                       NDC (#16)                           New
+                       MANUFACTURER (#17)                  New
+                       DRUG EXPIRATION DATE (#18)          New
+                       PROVIDER (#19)                      New
+                       ADMINISTERED IN CLINIC (#20)        New
+                       RELEASED DATE/TIME (#21)            New
+                       GENERIC PROVIDER (#22)              New
+                       BINGO BOARD WAIT TIME (#23)         New
+                       FILLING PERSON (#24)                New
+                       CHECKING PHARMACIST (#25)           New
+                       PFSS ACCOUNT REFERENCE (#26)        New
+                       PFSS CHARGE ID (#27)                New
+                       DAW CODE (#28)                      New
+                       DATE/TIME NDC VALIDATED (#29)       New
+                       NDC VALIDATED BY (#30)              New
+                       BILLING ELIGIBILITY INDICATOR (#31) New
+                       EPHARMACY SUSPENSE HOLD DATE (#32)  New
+  
+  
+ Forms Associated:
+  
+ Form Name             File #                              New/Modified/Deleted
+ ---------             ------                              --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                           New/Modified/Deleted
+ ---------------                                           --------------------
+ PSO SPMP NOTIFICATIONS                                    New
+  
+ Options Associated:
+  
+ Option Name                     Type                      New/Modified/Deleted
+ -----------                     ----                      --------------------
+ PSO SPMP BATCH PROCESSING       Action                    New
+ PSO SPMP BATCH VIEW/EXPORT      Action                    New
+ PSO SPMP DISCLOSURE REPORT      Action                    New
+ PSO SPMP MENU                   Menu                      New
+ PSO SPMP SCHEDULED EXPORT       Action                    New
+ PSO SPMP SINGLE RX VIEW/EXPORT  Action                    New
+ PSO SPMP STATE PARAMETERS       Action                    New
+ PSO SPMP UNMARK ADMIN CLINIC    Action                    New
+ PSO SPMP VIEW ASAP DEFINITIONS  Action                    New
+ PSO SUPERVISOR                  Menu                      Modified
+  
+ Protocols Associated:
+  
+ Protocol Name                                             New/Modified/Deleted
+ -------------                                             --------------------
+ PSO SPMP1 MANUAL BATCH EXPORT                             New
+ PSO SPMP1 MENU                                            New
+ PSO SPMP1 SELECT                                          New
+ PSO SPMP1 STATE PARAMETERS                                New
+ PSO SPMP2 BATCH EXPORT                                    New
+ PSO SPMP2 MENU                                            New
+ PSO SPMP2 SELECT                                          New
+ PSO SPMP2 VIEW RAW DATA                                   New
+ PSO SPMP3 MENU                                            New
+ PSO SPMP3 SHOW DETAILS                                    New
+ PSO SPMP4 EXPORT RX                                       New
+ PSO SPMP4 MEDICATION PROFILE                              New
+ PSO SPMP4 MENU                                            New
+ PSO SPMP4 VIEW ASAP DEFINITION                            New
+ PSO SPMP4 VIEW RX                                         New
+ PSO SPMP5 MENU                                            New
+ PSO SPMP5 SELECT                                          New
+   
+ Security Keys Associated:
+  
+ Security Key Name                                         New/Modified/Deleted
+ -------------                                             --------------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name                  Type    File Name (#)      New/Modified/Deleted
+ -------------                  ----    -------------      --------------------
+ PSO SPMP BATCH PROCESSING      List    N/A                New
+ PSO SPMP DISCLOSURE REPORT     List    N/A                New
+ PSO SPMP VIEW ASAP DEFINITION  List    N/A                New
+ PSO SPMP VIEW/EXPORT BATCH     List    N/A                New
+ PSO SPMP VIEW/EXPORT RX        List    N/A                New
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A   
+  
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A  
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+    
+  
+ TEST Sites:
+ ===========
+ DURHAM, NC
+ FAYETTEVILLE, AR
+ LOUISVILLE, KY
+ MUSKOGEE, OK
+ OKLAHOMA CITY, OK
+ TENNESSEE VALLEY HCS
+     
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ File Description                        File Name                FTP Mode
+ --------------------------------------------------------------------------
+ Outpatient Pharmacy V. 7.0 Manager's    PSO_7_MAN_UM_R0814.PDF   (binary)
+ User Manual
+ Outpatient Pharmacy V. 7.0 Technical    PSO_7_TM_R0814.PDF       (binary)
+ Manual/Security Guide 
+ SPMP Release Notes                      PSO_7_P408_RN.PDF        (binary)
+ SPMP Installation Guide                 PSO_7_P408_IG.PDF        (binary)
+  
+     Documentation can also be retrieved from the VA Software Documentation
+     Library (VDL) on the Internet at the following address:
+     http://www4.domain.ext/vdl.
+  
+ Patch Installation: 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ A post-install routine will automatically schedule the option Scheduled
+ SPMP Data Export [PSO SPMP SCHEDULED EXPORT] to run at 1:00AM. Once the
+ site is activated, data will be transmitted to the state based on the
+ frequency in the scheduled task. This option is listed as a scheduled task
+ under the Queue Background Jobs [PSO AUTOQUEUE JOBS] option under the
+ Maintenance (Outpatient Pharmacy) [PSO MAINTENANCE] menu. This option can
+ also be edited via the Schedule/Unschedule [XUTM SCHEDULE] option.
+    
+ Installation Instructions
+ -------------------------
+ Do not install this patch while Controlled Substance users are on the
+ system. Installation will take no longer than 3 minutes.
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSO*7.0*408).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package PSO*7.0*408.
+  
+   5. When prompted "Enter the Coordinator for Mail Group 'PSO SPMP
+      NOTIFICATIONS'", enter the name of the Outpatient Pharmacy
+      coordinator at your site. 
+   
+   6. When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of 
+      Install? NO//" respond NO. 
+  
+   7. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   8. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+  
+ Post-Installation Instructions
+ ------------------------------
+ See SPMP Installation Guide Document.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 100
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSO408PI
+    Before:       n/a   After:   B501013  **408**
+Routine Name: PSOASAP0
+    Before:       n/a   After:B194204356  **408**
+Routine Name: PSOBPSUT
+    Before: B55980584   After: B90264639  **148,247,260,281,287,289,358,
+                                           385,403,408**
+Routine Name: PSOHELP1
+    Before: B52554989   After: B53295057  **23,36,88,146,227,222,408**
+Routine Name: PSON52
+    Before: B91470672   After: B91872301  **1,16,23,27,32,46,71,111,124,
+                                           117,131,139,157,143,219,148,
+                                           239,201,268,260,225,303,358,
+                                           251,387,379,390,391,313,408**
+Routine Name: PSOORAL1
+    Before: B61027800   After: B71524461  **71,156,148,247,240,287,354,
+                                           367,408**
+Routine Name: PSOORFI1
+    Before: B83482862   After: B84234137  **7,15,23,27,32,44,51,46,71,
+                                           90,108,131,152,186,210,222,258,
+                                           260,225,391,408**
+Routine Name: PSOORFI2
+    Before: B94812114   After: B95796288  **7,15,23,27,46,130,146,177,
+                                           222,225,338,313,408**
+Routine Name: PSOORNEW
+    Before: B93328649   After: B94116441  **11,23,27,32,55,46,71,90,94,
+                                           106,131,133,143,237,222,258,
+                                           206,225,251,386,390,391,372,
+                                           416,431,313,408**
+Routine Name: PSOORRNW
+    Before: B20831236   After: B21253948  **11,27,51,46,71,94,130,131,
+                                           146,206,225,384,386,408**
+Routine Name: PSOR52
+    Before: B34622214   After: B35342982  **10,22,27,181,148,201,260,281,
+                                           358,385,408**
+Routine Name: PSORESK
+    Before: B73437781   After: B75970368  **15,9,27,40,47,55,85,130,185,
+                                           184,196,148,201,259,261,368,
+                                           332,374,408**
+Routine Name: PSORN52A
+    Before: B18853729   After: B19159856  **157,148,268,225,306,408**
+Routine Name: PSORTSUT
+    Before:       n/a   After: B14963446  **408**
+Routine Name: PSORXDL
+    Before: B65087564   After: B66390421  **4,17,9,27,117,131,148,201,
+                                           291,368,408**
+Routine Name: PSORXVW1
+    Before: B71614057   After: B71719312  **35,47,46,71,99,117,156,193,
+                                           210,148,258,260,240,281,359,
+                                           354,367,386,408**
+Routine Name: PSOSPML0
+    Before:       n/a   After: B30087960  **408**
+Routine Name: PSOSPML1
+    Before:       n/a   After: B45648973  **408**
+Routine Name: PSOSPML2
+    Before:       n/a   After: B29821538  **408**
+Routine Name: PSOSPML3
+    Before:       n/a   After: B10148038  **408**
+Routine Name: PSOSPML4
+    Before:       n/a   After: B79601311  **408**
+Routine Name: PSOSPML5
+    Before:       n/a   After: B25195522  **408**
+Routine Name: PSOSPML6
+    Before:       n/a   After:  B4614418  **408**
+Routine Name: PSOSPMSP
+    Before:       n/a   After:B143138804  **408**
+Routine Name: PSOSPMU1
+    Before:       n/a   After:B104921271  **408**
+Routine Name: PSOSPMUT
+    Before:       n/a   After:B178191137  **408**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 29, 2012
+Completed By:                               Date Completed: AUG 28, 2014
+Released By :                               Date Released : SEP 02, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

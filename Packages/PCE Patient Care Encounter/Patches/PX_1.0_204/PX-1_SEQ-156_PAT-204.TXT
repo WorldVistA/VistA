@@ -1,0 +1,175 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 09/17/14 at 09:53
+=============================================================================
+Run Date: DEC 15, 2014                     Designation: PX*1*204
+Package : PX - PCE PATIENT CARE ENCOUNTER     Priority: Mandatory
+Version : 1       SEQ #156                      Status: Released
+                  Compliance Date: JAN 15, 2015
+=============================================================================
+
+Associated patches: (v)VSIT*2*1    <<= must be installed BEFORE `PX*1*204'
+                    (v)PX*1*76     <<= must be installed BEFORE `PX*1*204'
+
+Subject: FIX ROUTINE AUPNVSIT ERRORS & ERROR IF NO PATIENT CHOSEN IN ROUTINE PXCEVSIT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch PX*1*204 addresses the following Patient Care Encounter 
+ (PCE) issues:
+  
+  1. Users are receiving (ADD+3^AUPNVSIT errors), which are preventing
+     the transmission of data.
+  2. An error (<UNDEFINED> EVISITDT+23^PXCEVSIT) occurs in the 
+     Encounter Data Entry process.
+             
+   
+ ASSOCIATED REMEDY TICKETS: 
+ ==========================
+  1. INC000000297492 - ADD+3^AUPNVSIT errors occur causing VASITE errors which
+                       prevent AMBCARE transmission of data
+     Duplicate:
+     INC000000431106 - AUPNVSIT errors    
+  2. INC000000710979 - PCE error:  <UNDEFINED> EVISITDT+23^PXCEVSIT  *VADM(6)
+  
+   
+ ASSOCIATED NSR: 
+ ===============
+ N/A
+   
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+ Dayton VAMC
+ VA Maryland HCS
+ W.G. (Bill) Hefner VAMC
+   
+  
+ Remedy Overview:
+ ================
+ 1. INC000000297492 - ADD+3^AUPNVSIT errors occur causing VASITE errors which
+                      prevent AMBCARE transmission of data
+  
+ Problem:
+ ========
+ While a visit file entry is being set up by one process, another process 
+ can kill the visit. The process that kills the visit checks the 
+ dependency count to make sure that it is zero before it kills the visit
+ but the first process has not yet updated it from zero to one, so the 
+ kill is allowed. Then, the first process errors at line ADD+3 in routine
+ AUPNVSIT because it cannot find the visit.
+    
+ Resolution:
+ ===========
+ A flag is set in routine AUPNVSIT before it checks for the existence of the 
+ visit in preparation to update it. Routine VSITKIL checks for the flag and 
+ if it exists it doesn't allow the visit to be killed. The second line of 
+ routine AUPNVSIT was also modified to change the module of the routine from 
+ VISIT TRACKING to PCE PATIENT CARE ENCOUNTER to reflect the proper
+ ownership of the routine. Please see patch PX*1*76 for more information.
+  
+   Routines: AUPNVSIT & VSITKIL 
+  
+    
+ 2. INC000000710979 - PCE error:  <UNDEFINED> EVISITDT+23^PXCEVSIT  *VADM(6)
+  
+ Problem:
+ ========
+ A hard error occurs in the Encounter Data Entry process if you select by
+ Clinic, use the List by Encounter view and try to use the Actions without first
+ selecting a patient.
+  
+ Resolution:
+ ===========
+ Code was added to the ENTRY ACTION of protocol PXCE NEW ENCOUNTER to prompt 
+ for patient if one has not previously been selected. The code was added
+ by post install routine PX1P204.  
+  
+   Old ENTRY ACTION: S PXCEVIEN="" D EN^PXCEVFIL("SIT")
+   New ENTRY ACTION: S PXCEVIEN="" D SDSALONE^PXCEPAT D:$G(PXCEPAT)>0
+                     EN^PXCEVFIL("SIT")
+   Routine: PX1P204
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes. Suggested time to install:
+ during non-peak requirement hours.            
+   
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+   
+    3. From this menu, you may select to use the following options (when
+       prompted for INSTALL NAME, enter PX*1.0*204).      
+  
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch is
+           installed.
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+        d. Print Transport Global - this option will allow you to view
+           the components of the KIDS build.
+      
+    4. Use the Install Package(s) option and select the package PX*1.0*204
+   
+    5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+       respond No.
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? YES//" respond Yes.
+  
+       When prompted, 'Enter options you wish to mark as 'Out Of 
+       Order':', enter:
+              
+       Appointment Management               [SDAM APPT MGT]
+       PCE Coordinator Menu                 [PX PCE COORDINATOR MENU]
+       PCE Clinician Menu                   [PX PCE CLINICIAN MENU]
+       PCE Encounter Data Entry             [PXCE ENCOUNTER DATA ENTRY]
+       PCE Encounter Data Entry and Delete  [PXCE ENCOUNTER ENTRY & DELETE]
+       PCE Encounter Data Entry without Delete [PXCE ENCOUNTER ENTRY NO
+                                                DELETE]
+       PCE Encounter Data Entry - Supervisor   [PXCE ENCOUNTER ENTRY SUPER]
+  
+       When prompted, 'Enter protocols you wish to mark as 'Out Of 
+       Order':', enter: 
+  
+       Add Standalone Enc.                  [PXCE NEW ENCOUNTER]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**[Patch List]**;Aug 12, 1996;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: AUPNVSIT
+    Before:  B8502901   After: B11262238  **204**
+Routine Name: PX1P204
+    Before:       n/a   After:  B3533755  **204**
+Routine Name: VSITKIL
+    Before: B13325308   After: B13629108  **76,204**
+ 
+Routine list of preceding patches: 76
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 21, 2014
+Completed By:                               Date Completed: DEC 10, 2014
+Released By :                               Date Released : DEC 15, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

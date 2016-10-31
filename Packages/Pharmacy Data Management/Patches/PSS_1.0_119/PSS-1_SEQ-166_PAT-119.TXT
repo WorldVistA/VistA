@@ -1,0 +1,453 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 02/20/15 at 13:34
+=============================================================================
+Run Date: SEP 16, 2015                     Designation: PSS*1*119
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #166                      Status: Released
+                  Compliance Date: OCT 17, 2015
+=============================================================================
+
+Associated patches: (v)PSS*1*94    <<= must be installed BEFORE `PSS*1*119'
+                    (v)PSS*1*143   <<= must be installed BEFORE `PSS*1*119'
+
+Subject: SCHEDULE VALIDATION
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will correct the following issue:
+  
+ Problems placing PRN orders with multiple spaces/words.
+  
+ ***PSS*1*119 can be installed independently of the PSO*7*282/PSJ*5*194 
+ combined patch build, however the functionality will not be effective 
+ until both are installed.
+  
+ Associated Remedy Ticket(s):
+ ============================
+ INC0000000149525 - Problems placing PRN orders with multiple spaces/words.
+ Duplicates:
+ INC000000273512 - MISSING OR INVALID SCHEDULE
+ INC000000429480 - Drug Text/Orderable Item Issue
+ INC000000874883 - PRN button
+  
+ Associated NSR:
+ ==============
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Oklahoma City VAMC
+ Central Plains HCS
+ Erie VAMC
+  
+ Remedy Ticket(s) Overview:
+ ==========================
+ INC0000000149525 - Problems placing PRN orders with multiple spaces/words.
+  
+ Problem:
+ --------
+ When an order is placed by the provider in the Computerized Patient 
+ Record System (CPRS) and the schedule is 'EVERY OTHER DAY' with the PRN
+ box checked, the order cannot be placed.
+  
+ Resolution:
+ -----------
+ The routines PSSGSGUI, PSSGS0, and PSSDDUT were modified to validate the 
+ ADMINISTRATION SCHEDULE name against the TYPE OF SCHEDULE for CPRS. The 
+ CPRS GUI will be modified to allow 'EVERY OTHER DAY' and the TYPE OF 
+ SCHEDULE of PRN.  In The Data Dictionary the ADMINISTRATION SCHEDULE file 
+ (#51.1) NAME field (#.01), the MEDICATION INSTRUCTION file (#51) SCHEDULE 
+ field (#3) and the DRUG file (#50) UNIT DOSE SCHEDULE field (#62.04) will 
+ be updated to allow 3 or more word schedules with the PRN option chosen.
+  
+  
+ DATA DICTIONARY CHANGES:
+ =========================
+  
+ DATA DICTIONARY #51.1 -- ADMINISTRATION SCHEDULE FILE 
+  
+ Before:
+ ---------
+  
+ 51.1,.01      NAME                   0;1 FREE TEXT (Required)
+  
+               INPUT TRANSFORM:  D ENPSJ^PSSJSV Q:'$D(X)  K:X[""""!($A(X)=45) X 
+                                 I $D(X) K:$L(X," ")>3!($L(X)>20)!($L(X)<2) X
+               LAST EDITED:      JAN 08, 2007 
+               HELP-PROMPT:      Answer must be 2-20 characters in length. 
+               DESCRIPTION:        This a common abbreviation for a schedule.  A
+                                 schedule is the frequency for which an action
+                                 is to take place, such as every eight hours
+                                 ('Q8H') or every other day ('QOD').  
+  
+               GROUP:            PSJ
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+               CROSS-REFERENCE:  51.1^B 
+                                 1)= S ^PS(51.1,"B",$E(X,1,30),DA)=""
+                                 2)= K ^PS(51.1,"B",$E(X,1,30),DA)
+  
+               CROSS-REFERENCE:  51.1^AUWD^MUMPS 
+                                 1)= S ^PS(51.1,"AUWD")=$S($D(^PS(59.7,1,20)):$P
+                                 (^(20),"^"),1:"")
+  
+                                 2)= Q
+                                 Used by the Unit Dose inits to determine if a
+                                 conversion process needs to be run on this
+                                 file.  In the form of: ^PS(51.1,"AUWD") 
+  
+  
+               CROSS-REFERENCE:  51.1^ACC^MUMPS 
+                                 1)= I $D(^PS(51.1,DA,0)),$P(^(0),"^",4)]"" S ^P
+                                 S(51.1,"AC",$P(^(0),"^",4),X,DA)=""
+  
+                                 2)= I $D(^PS(51.1,DA,0)),$P(^(0),"^",4)]"" K ^P
+                                 S(51.1,"AC",$P(^(0),"^",4),X,DA)
+                                 3)= USED BY SCHEDULE PROCESSOR
+                                 Used by the Schedule Processor to do package
+                                 specific look-ups.  In the form of:
+                                 ^PS(51.1,"AC",$P(^(0),"^",4),X,DA) 
+  
+  
+               CROSS-REFERENCE:  51.1^APP^MUMPS 
+                                 1)= I $D(^PS(51.1,DA,0)),$P(^(0),"^",4)]"" S ^P
+                                 S(51.1,"AP"_$P(^(0),"^",4),X,DA)=""
+  
+                                 2)= I $D(^PS(51.1,DA,0)),$P(^(0),"^",4)]"" K ^P
+                                 S(51.1,"AP"_$P(^(0),"^",4),X,DA)
+                                 3)= USED BY SCHEDULE PROCESSOR
+                                 Used by the schedule processor to do package
+                                 specific look-ups.  In the form of:
+                                 ^PS(51.1,"AP"_$P(^(0),"^",4),X,DA) 
+  
+  
+               CROSS-REFERENCE:  51.1^ADHL^MUMPS 
+                                 1)= S PSJHLDA(+DA)="MUP"
+                                 2)= S PSJHLDA(+DA)="MDL"
+                                 Use to update Administration Schedule to OE/RR
+                                 Schedule file.  In the form of: PSJHLDA(+DA) 
+  
+  
+               CROSS-REFERENCE:  ^^TRIGGER^51.1^5 
+                                 1)= K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(0)=X S X=
+                                 Y(0)["PRN" I X S X=DIV S Y(1)=$S($D(^PS(51.1,D0
+                                 ,0)):^(0),1:"") S X=$P(Y(1),U,5),X=X S DIU=X K 
+                                 Y S X=DIV S X="P" X ^DD(51.1,.01,1,6,1.4)
+  
+                                 1.4)= S DIH=$G(^PS(51.1,DIV(0),0)),DIV=X S $P(^
+                                 (0),U,5)=DIV,DIH=51.1,DIG=5 D ^DICR
+  
+                                 2)= Q
+  
+                                 CREATE CONDITION)= NAME["PRN"
+                                 CREATE VALUE)= "P"
+                                 DELETE VALUE)= NO EFFECT
+                                 FIELD)= TYPE
+  
+               CROSS-REFERENCE:  ^^TRIGGER^51.1^5 
+                                 1)= K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(0)=X X ^D
+                                 D(51.1,.01,1,7,69.2) S X=X["P",Y=X,X=Y(1),X=X&Y
+                                  I X S X=DIV S Y(1)=$S($D(^PS(51.1,D0,0)):^(0),
+                                 1:"") S X=$P(Y(1),U,5),X=X S DIU=X K Y S X="" X
+                                  ^DD(51.1,.01,1,7,1.4)
+  
+                                 1.4)= S DIH=$G(^PS(51.1,DIV(0),0)),DIV=X S $P(^
+                                 (0),U,5)=DIV,DIH=51.1,DIG=5 D ^DICR
+  
+                                 2)= Q
+  
+                                 69.2)= S Y(3)=$C(59)_$P($G(^DD(51.1,5,0)),U,3),
+                                 Y(2)=$S($D(^PS(51.1,D0,0)):^(0),1:"") S X=Y(0)'
+                                 ["PRN",Y(1)=$G(X) S X=$P($P(Y(3),$C(59)_$P(Y(2)
+                                 ,U,5)_":",2),$C(59))
+  
+                                 CREATE CONDITION)= NAME'["PRN"&(TYPE["P")
+                                 CREATE VALUE)= ""
+                                 DELETE VALUE)= NO EFFECT
+                                 FIELD)= TYPE
+  
+ After:
+ -------
+  
+ 51.1,.01      NAME                   0;1 FREE TEXT (Required)
+  
+               INPUT TRANSFORM:  D ENPSJ^PSSJSV Q:'$D(X)  K:X[""""!($A(X)=45) X 
+                                 I $D(X) K:$L(X," ")>$S(X["PRN":4,1:3)!($L(X)>20
+                                 )!($L(X)<2) X
+               LAST EDITED:      AUG 18, 2014 
+               HELP-PROMPT:      Answer must be 2-20 characters in length. 
+               DESCRIPTION:        This a common abbreviation for a schedule.  A
+                                 schedule is the frequency for which an action
+                                 is to take place, such as every eight hours
+                                 ('Q8H') or every other day ('QOD').  
+  
+               GROUP:            PSJ
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+               CROSS-REFERENCE:  51.1^B 
+                                 1)= S ^PS(51.1,"B",$E(X,1,30),DA)=""
+                                 2)= K ^PS(51.1,"B",$E(X,1,30),DA)
+  
+               CROSS-REFERENCE:  51.1^AUWD^MUMPS 
+                                 1)= S ^PS(51.1,"AUWD")=$S($D(^PS(59.7,1,20)):$P
+                                 (^(20),"^"),1:"")
+  
+                                 2)= Q
+                                 Used by the Unit Dose inits to determine if a
+                                 conversion process needs to be run on this
+                                 file.  In the form of: ^PS(51.1,"AUWD") 
+  
+  
+               CROSS-REFERENCE:  51.1^ACC^MUMPS 
+                                 1)= I $D(^PS(51.1,DA,0)),$P(^(0),"^",4)]"" S ^P
+                                 S(51.1,"AC",$P(^(0),"^",4),X,DA)=""
+  
+                                 2)= I $D(^PS(51.1,DA,0)),$P(^(0),"^",4)]"" K ^P
+                                 S(51.1,"AC",$P(^(0),"^",4),X,DA)
+                                 3)= USED BY SCHEDULE PROCESSOR
+                                 Used by the Schedule Processor to do package
+                                 specific look-ups.  In the form of:
+                                 ^PS(51.1,"AC",$P(^(0),"^",4),X,DA) 
+  
+  
+               CROSS-REFERENCE:  51.1^APP^MUMPS 
+                                 1)= I $D(^PS(51.1,DA,0)),$P(^(0),"^",4)]"" S ^P
+                                 S(51.1,"AP"_$P(^(0),"^",4),X,DA)=""
+  
+                                 2)= I $D(^PS(51.1,DA,0)),$P(^(0),"^",4)]"" K ^P
+                                 S(51.1,"AP"_$P(^(0),"^",4),X,DA)
+                                 3)= USED BY SCHEDULE PROCESSOR
+                                 Used by the schedule processor to do package
+                                 specific look-ups.  In the form of:
+                                 ^PS(51.1,"AP"_$P(^(0),"^",4),X,DA) 
+  
+  
+               CROSS-REFERENCE:  51.1^ADHL^MUMPS 
+                                 1)= S PSJHLDA(+DA)="MUP"
+                                 2)= S PSJHLDA(+DA)="MDL"
+                                 Use to update Administration Schedule to OE/RR
+                                 Schedule file.  In the form of: PSJHLDA(+DA) 
+  
+  
+               CROSS-REFERENCE:  ^^TRIGGER^51.1^5 
+                                 1)= K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(0)=X S X=
+                                 Y(0)["PRN" I X S X=DIV S Y(1)=$S($D(^PS(51.1,D0
+                                 ,0)):^(0),1:"") S X=$P(Y(1),U,5),X=X S DIU=X K 
+                                 Y S X=DIV S X="P" X ^DD(51.1,.01,1,6,1.4)
+  
+                                 1.4)= S DIH=$G(^PS(51.1,DIV(0),0)),DIV=X S $P(^
+                                 (0),U,5)=DIV,DIH=51.1,DIG=5 D ^DICR
+  
+                                 2)= Q
+  
+                                 CREATE CONDITION)= NAME["PRN"
+                                 CREATE VALUE)= "P"
+                                 DELETE VALUE)= NO EFFECT
+                                 FIELD)= TYPE
+  
+               CROSS-REFERENCE:  ^^TRIGGER^51.1^5 
+                                 1)= K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(0)=X X ^D
+                                 D(51.1,.01,1,7,69.2) S X=X["P",Y=X,X=Y(1),X=X&Y
+                                  I X S X=DIV S Y(1)=$S($D(^PS(51.1,D0,0)):^(0),
+                                 1:"") S X=$P(Y(1),U,5),X=X S DIU=X K Y S X="" X
+                                  ^DD(51.1,.01,1,7,1.4)
+  
+                                 1.4)= S DIH=$G(^PS(51.1,DIV(0),0)),DIV=X S $P(^
+                                 (0),U,5)=DIV,DIH=51.1,DIG=5 D ^DICR
+  
+                                 2)= Q
+  
+                                 69.2)= S Y(3)=$C(59)_$P($G(^DD(51.1,5,0)),U,3),
+                                 Y(2)=$S($D(^PS(51.1,D0,0)):^(0),1:"") S X=Y(0)'
+                                 ["PRN",Y(1)=$G(X) S X=$P($P(Y(3),$C(59)_$P(Y(2)
+                                 ,U,5)_":",2),$C(59))
+  
+                                 CREATE CONDITION)= NAME'["PRN"&(TYPE["P")
+                                 CREATE VALUE)= ""
+                                 DELETE VALUE)= NO EFFECT
+                                 FIELD)= TYPE
+ Resolution:
+ -----------
+ The Data Dictionary for the ADMINISTRATION SCHEDULE file (#51.1) NAME 
+ field (#.01) was updated to allow 3 or more word schedules with the PRN
+ option chosen.
+  
+  
+ DATA DICTIONARY #51 -- MEDICATION INSTRUCTION FILE
+  
+ Before:
+ ---------
+  
+ 51,3          SCHEDULE               0;6 FREE TEXT
+  
+               INPUT TRANSFORM:  K:X[""""!($A(X)=45) X I $D(X) K:$L(X," ")>3!($L
+                                 (X)>20)!($L(X)<2) X
+               LAST EDITED:      MAY 01, 2001 
+               HELP-PROMPT:      Enter the appropriate schedule to associate 
+                                 with this Medication Instruction. 
+               DESCRIPTION:      This is the Schedule that is associated with
+                                 the Medication Instruction.  Prior to the
+                                 Pharmacy Ordering Enhancements project, this
+                                 field was used to associate schedules with
+                                 Outpatient prescriptions, by running each word 
+                                 of the Sig through the Medication Instruction
+                                 file to look for an associated Schedule. The
+                                 field is currently not being used by the
+                                 Pharmacy software.  
+  
+               EXECUTABLE HELP:  D ENSH^PSSDDUT
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+ After:
+ ------
+  
+ 51,3          SCHEDULE               0;6 FREE TEXT
+  
+               INPUT TRANSFORM:  K:X[""""!($A(X)=45) X I $D(X) K:$L(X," ")>$S(X[
+                                 "PRN":4,1:3)!($L(X)>20)!($L(X)<2) X
+               LAST EDITED:      AUG 18, 2014 
+               HELP-PROMPT:      Enter the appropriate schedule to associate 
+                                 with this Medication Instruction. 
+               DESCRIPTION:      This is the Schedule that is associated with
+                                 the Medication Instruction.  Prior to the
+                                 Pharmacy Ordering Enhancements project, this
+                                 field was used to associate schedules with
+                                 Outpatient prescriptions, by running each word 
+                                 of the Sig through the Medication Instruction
+                                 file to look for an associated Schedule. The
+                                 field is currently not being used by the
+                                 Pharmacy software.
+  
+               EXECUTABLE HELP:  D ENSH^PSSDDUT
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+ Resolution:
+ -----------
+ The Data Dictionary for the MEDICATION INSTRUCTION file (#51) SCHEDULE 
+ field (#3) was updated to allow 3 or more word schedules with the PRN
+ option chosen.
+  
+  
+ DATA DICTIONARY #50 -- DRUG FILE
+  
+ Before:
+ -----
+ 50,62.04      UNIT DOSE SCHEDULE     8;4 FREE TEXT
+  
+               STANDARD UNIT DOSE SCHEDULE   
+               INPUT TRANSFORM:  K:X[""""!($A(X)=45)!($L(X," ")>2)!($L(X)>70)!($
+                                 L(X)<1) X D:$D(X)#2 SCH^PSSDDUT I $D(X)#2,'PSGS
+                                 0Y,PSGS0XT D EN^DDIOL("  Every "_PSGS0XT_" minu
+                                 tes","","?0")
+               LAST EDITED:      JUN 26, 1997 
+               HELP-PROMPT:      Enter the most common SCHEDULE associated with 
+                                 this medication. 
+               DESCRIPTION:        If a schedule is found here when this
+                                 medication is selected for a UNIT DOSE order,
+                                 that schedule will be used as a default value
+                                 for the SCHEDULE prompt in order entry.  
+  
+               GROUP:            PSJU
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+ After:
+ ------
+  
+ 50,62.04      UNIT DOSE SCHEDULE     8;4 FREE TEXT
+  
+               STANDARD UNIT DOSE SCHEDULE   
+               INPUT TRANSFORM:  K:X[""""!($A(X)=45)!($L(X," ")>$S(X["PRN":4,1:3
+                                 ))!($L(X)>70)!($L(X)<1) X D:$D(X)#2 SCH^PSSDDUT
+                                  I $D(X)#2,'PSGS0Y,PSGS0XT D EN^DDIOL("  Every 
+                                 "_PSGS0XT_" minutes","","?0")
+               LAST EDITED:      AUG 18, 2014 
+               HELP-PROMPT:      Enter the most common SCHEDULE associated with 
+                                 this medication. 
+               DESCRIPTION:        If a schedule is found here when this
+                                 medication is selected for a UNIT DOSE order,
+                                 that schedule will be used as a default value
+                                 for the SCHEDULE prompt in order entry.  
+  
+               GROUP:            PSJU
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+  
+ Resolution:
+ -----------
+ The Data Dictionary for the DRUG file (#50) UNIT DOSE SCHEDULE field 
+ (#62.04) was updated to allow 3 or more word schedules with the PRN option
+ chosen.
+  
+  
+  
+ Installation Instructions:
+ ==========================
+       
+     Installation will take less than 1 minute.
+    
+ This patch can be loaded with users on the system but it is 
+ recommended that it be installed during Non-peak requirement hours.
+ Installation time will be less than 2 minutes.
+  
+    
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+    
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSS*1.0*119):
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this 
+               patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+    
+    4. Use the Install Package(s) option and select the package PSS*1.0*119.
+    
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+       respond NO.
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSDDUT
+    Before: B42335863   After: B42845395  **13,18,19,38,56,119**
+Routine Name: PSSEC119
+    Before:       n/a   After:  B3517488  **119**
+Routine Name: PSSGS0
+    Before: B14901038   After: B15355256  **12,27,38,44,56,69,59,143,119**
+Routine Name: PSSGSGUI
+    Before: B24433132   After: B24878551  **12,27,38,44,56,59,94,119**
+ 
+Routine list of preceding patches: 94, 143
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 12, 2006
+Completed By:                               Date Completed: AUG 27, 2015
+Released By :                               Date Released : SEP 16, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

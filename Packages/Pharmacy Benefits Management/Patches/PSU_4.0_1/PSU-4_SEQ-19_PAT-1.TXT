@@ -1,0 +1,130 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 04/18/16 at 15:18
+=============================================================================
+Run Date: JUN 29, 2016                     Designation: PSU*4*1
+Package : PSU - PHARMACY BENEFITS MANAGEMENT  Priority: Mandatory
+Version : 4        SEQ #19                      Status: Released
+                  Compliance Date: JUL 30, 2016
+=============================================================================
+
+
+Subject: Pharmacy Patient IV Calculations
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ This patch addresses the following problem:
+   
+  
+ The pharmacy patient IV report of the Pharmacy Benefits Management (PBM) 
+ extract does not calculate values for returned, destroyed, or canceled IV 
+ orders. This is because the inpatient option Returns and Destroyed Entry 
+ (IV) (PSJI RETURNS) does not place a value for the DAILY USAGE field (#6)
+ of the PHARMACY PATIENT File (#55.1111) that the PBM software is checking
+ in order to add the total number of returned, destroyed or canceled IVs.
+  
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Edward Hines Jr. VA Hospital
+ Puget Sound HCS
+  
+ ASSOCIATED TROUBLE TICKETS(s):
+ ============================
+ INC000001244256 - PBMAMIS report does not show the amount RETURNED, 
+                   DESTROYED, OR CANCELLED
+  
+ TICKET OVERVIEW:
+ ================
+  
+ INC000001244256 - PBMAMIS report does not show the amount RETURNED, 
+                   DESTROYED, OR CANCELLED
+  
+ Problem:
+ --------
+ The pharmacy patient IV report of the Pharmacy Benefits Management (PBM) 
+ extract does not calculate values for returned, destroyed, or canceled IV 
+ orders. This is because the inpatient option Returns and Destroyed Entry 
+ (IV) (PSJI RETURNS) does not place a value for the DAILY USAGE field (#6)
+ of the PHARMACY PATIENT FILE (#55.1111) that the PBM software is checking
+ in order to add the total number of returned, destroyed or canceled IVs.
+  
+  
+ Resolution:
+ -----------  
+ Since the inpatient software does not construct the DAILY USAGE field (#6)
+ as part of the node for the IV label the PBM software will no longer check
+ for it for returned, destroyed or canceled IVs.
+  
+ Technical:
+ ----------
+ The routine PSUV1 has been modified to count IVs in the pharmacy patient
+ IV report regardless of whether or not the DAILY USAGE field (#6) has a
+ value.
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+  
+     Installation will take less than 1 minute.
+    
+     Suggested time to install: Non-peak requirement hours.
+    
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+    
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSU*4.0*1):
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this 
+               patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+    
+    4. Use the Install Package(s) option and select the package PSU*4.0*1.
+    
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.
+    
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PHARMACY BENEFITS MANAGEMENT;**[Patch List]**;MARCH, 2005;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSUV1
+    Before: B78186878   After: B77562738  **1**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 20, 2005
+Completed By:                               Date Completed: JUN 16, 2016
+Released By :                               Date Released : JUN 29, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,258 @@
+$TXT Created by                at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Thursday, 08/14/14 at 11:18
+=============================================================================
+Run Date: MAY 01, 2015                     Designation: PRC*5.1*189
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #164                    Status: Released
+                  Compliance Date: JUN 01, 2015
+=============================================================================
+
+Associated patches: (v)PRC*5.1*81  <<= must be installed BEFORE `PRC*5.1*189'
+                    (v)PRC*5.1*108 <<= must be installed BEFORE `PRC*5.1*189'
+                    (v)PRC*5.1*180 <<= must be installed BEFORE `PRC*5.1*189'
+
+Subject: AUTHORIZATION/LIQUIDATION ISSUE;MULTIPLE RECEIPT ALLOWED;PROMPT PAY HANDLING
+
+Category: 
+  - Routine
+  - Input Template
+
+Description:
+============
+
+ This patch will address the following 3 issues:
+  
+ 1. 1358 Authorization maximum entry warning
+  
+ 2. Site was able to receive same order multiple times
+  
+ 3. Prompt Pay processing issues 
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+  
+ Associated Remedy Ticket(S):
+ ===========================
+ 1. INC000000997485  Site not able to process fee batches against fee
+                     authorizations or liquidate amounts
+                                
+ 2. INC0000001033606 Site was able to enter receipts twice for items 
+                     on same order
+  
+ 3. INC0000001040268 Prompt Pay Percent incorrect with order/amendment 
+                     processing
+  
+  
+ Participating Test Sites:
+ ========================
+ Bay Pines - VA Healthcare System
+ Central Texas Veterans HCS 
+ St. Cloud - VA Medical Center
+  
+ Remedy Overview:
+ ================ 
+ 1. INC000000997485   Site not able to process fee batches against fee
+                      authorizations or liquidate amounts
+  
+    Problem:
+    --------
+    Site was not able to process fee batches for new authorizations or
+    liquidations.  They had reached the max (9999) entries allowed, but 
+    were not notified.
+  
+  
+    Resolution:
+    -----------                    
+    Modify routine to alert user once total entries used against a 1358
+    are greater than 9900, and for each subsequent entry thereafter. Once
+    the total entries reach 9999 the user is fully warned that there are 
+    no entries left to process new authorizations or liquidate a previous 
+    entry.
+  
+    Once the max entry is met the logic will go back through to ensure no 
+    entries were skipped over and could be used, allowing the user to use 
+    an open entry if found.
+  
+    The greater than 9900 message:
+  
+    ** You have 78 remaining and are dangerously close to
+    ** running out of Authorization entries in file 424.
+    ** Authorizations and Liquidation REQUIRE available entries so you
+    ** should be considering closing this obligation very soon as ONLY
+    ** 9999 entries are allowed. 
+  
+    The reaching the max 9999 message:
+    
+    ** You have ZERO remaining and this is the last Authorization
+    ** you will be able to enter for this 1358 (max 9999 entries). You
+    ** will NO LONGER be able to liquidate any outstanding Authorizations.
+    ** You MUST close this 1358 and open a new 1358 to cover further
+       activity.
+  
+  
+    Routines: PRCSUT3
+  
+  
+ 2. INC0000001033606 Site was able to enter receipts twice for items 
+                     on same order
+  
+    Problem:
+    ---------
+    Site was able to enter a receipt twice against an item on the same 
+    order. Analysis showed that a user had created an amendment prior to
+    the first receipt, and took no action on the amendment to delete item
+    and escaped from the amendment process, but leaving the amendment open.
+  
+    After the receipt was posted against the items, a user then went back 
+    to the amendment and deleted an item that had been cancelled from the 
+    order, completing and approving the amendment.  This latter process 
+    reset each item's receipt amount back to zero and allowed further 
+    receipts to occur, since the initial amendment action copied all the 
+    items when creating the base amendment record in file AMENDMENTS
+    (#443.6) with each item having the to-date receipts field.
+  
+  
+    Resolution:
+    -----------
+    Modify the receiving routine to ensure that the are no open amendments
+    or an open amendment which has item information.  That amendment will 
+    have to be completed/approved or cancelled BEFORE any receipts are 
+    allowed against ordered items.
+  
+  
+    Routines: PRCHREC
+  
+  
+ 3. INC0000001040268 Prompt Pay Percent incorrect with order/amendment 
+                     processing
+  
+    Problem:
+    --------
+    Site found processing issues with Prompt Pay entry with editing 
+    orders and order amendments for multiple field PROMPT PAYMENT TERMS
+    (#9.2) in file PROCUREMENT & ACCOUNTING TRANSACTIONS (#442) and
+    file AMENDMENTS (#443.6).
+  
+    The Prompt Pay Terms field is defined as a multiple, but the Prompt
+    Pay amount is based on the highest percent entry in the defined 
+    multiple entries for the order.  Hence, if you have entered PP% entries
+    10, 15 and 20 the prompt pay discount will be calculated using the 20%.
+    The user MUST know to only use entry one for adding new percent or NET 
+    and when editing the field they MUST select the entry on file, not 
+    simply a new value that will create subsequent multiple entries in 
+    field.
+  
+  
+    Resolution:
+    -----------
+    Modify the Edit order options for Incomplete Order and Delivery Order 
+    to call new multiple control routine that will ONLY allow user to 
+    have a single entry in the PROMPT PAY TERMS field. They will be able to
+    add a new Prompt Pay entry into multiple one OR edit/delete that 
+    single entry.
+  
+    The amendment processing for Prompt Pay Terms has been modified 
+    accordingly to ONLY allow a single entry in the multiple field or the
+    existing single entry to be edited or deleted.
+  
+  
+  
+    Routines: PRCHMA2, PRCHNPO1, PRCHNPOC (new) & Input Template PRCHDISCNT
+  
+  
+  
+ Installation Instructions:
+ =========================
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*189)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*189.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', respond YES. 
+                                      
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":", enter the following options:
+  
+     Receipt of Purchase Order           [PRCHPM PO REC]
+     Liquidate 1358                      [PRCEF LIQUIDATE]
+     Enter Authorization                 [FBAA ENTER AUTHORIZATION]
+     Create/Edit Authorization           [PRCEC AUTHORIZATION]
+     New Purchase Order                  [PRCHPC PO ADD]
+     New Simplified Purchase Card Order  [PRCH ENTER SIMPLIFIED ORDER]
+     New Detailed Purchase Card Order    [PRCH ENTER DETAILED ORDER]
+     Enter Delivery Order                [PRCH ENTER DELIVERY ORDER]
+     Edit Delivery Order                 [PRCH EDIT DELIVERY ORDER]
+     Edit an Incomplete Purchase Order   [PRCHPC PO EDIT]
+     Edit Simplified Purchase Card Order [PRCH EDIT SIMPLIFIED ORDER]
+     Edit Detailed Purchase Card Order   [PRCH EDIT DETAILED ORDER]
+     Amendment to Purchase Order         [PRCHPC AMEND]
+     Amendment to Purchase Card Order    [PRCH AMENDMENT TO P/C ORDER]
+     Amendment to Delivery Order         [PRCH AMEND DELIVERY ORDER]
+  
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":", just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCHMA2
+    Before: B22333129   After: B26609094  **189**
+Routine Name: PRCHNPO1
+    Before: B54494630   After: B57588246  **16,79,100,108,189**
+Routine Name: PRCHNPOC
+    Before:       n/a   After:  B1332156  **189**
+Routine Name: PRCHREC
+    Before: B41539701   After: B47786869  **22,81,189**
+Routine Name: PRCSUT3
+    Before: B17626422   After: B32178363  **115,123,149,150,180,189**
+ 
+Routine list of preceding patches: 81, 108, 180
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 13, 2014
+Completed By:                               Date Completed: APR 24, 2015
+Released By :                               Date Released : MAY 01, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

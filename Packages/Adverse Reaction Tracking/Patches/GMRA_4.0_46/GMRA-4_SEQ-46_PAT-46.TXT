@@ -1,0 +1,258 @@
+
+=============================================================================
+Run Date: MAY 24, 2016                     Designation: GMRA*4*46
+Package : GMRA - ADVERSE REACTION TRACKING    Priority: Mandatory
+Version : 4        SEQ #46                      Status: Released
+                  Compliance Date: JUN 24, 2016
+=============================================================================
+
+Associated patches: (c)OR*3*269        install with patch       `GMRA*4*46'
+                    (c)PSO*7*411       install with patch       `GMRA*4*46'
+                    (c)PSJ*5*281       install with patch       `GMRA*4*46'
+                    (v)GMRA*4*10   <<= must be installed BEFORE `GMRA*4*46'
+                    (v)GMRA*4*44   <<= must be installed BEFORE `GMRA*4*46'
+
+Subject: ALLERGY ORDER CHECK SIGNS/SYMPTOMS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch is part of the Medication Order Check Healthcare Application 
+ (MOCHA) Enhancements 2 group of patches. A host file was created to 
+ simplify installation at Veterans Health Administration (VHA) facilities. 
+ The host file MOCHA_ENH_2_GMRA_OR_PSJ_PSO.KID contains: PSJ*5*281, 
+ PSO*7*411, OR*3*269 and GMRA*4*46. Additionally there is the stand alone 
+ patch PSS*1*175 which must be installed before the combined build.
+  
+ Important: Recently released patch GMRA*4*48 contains an Allergy 
+            Assessment Clean Up utility tool that produces a report that
+            identifies discrepancies between the ADVERSE REACTION
+            ASSESSMENT file (#120.86) and the PATIENT ALLERGIES file
+            (#120.8). It is imperative that GMRA*4*48 be installed prior to
+            the installation of GMRA*4*46 and its associated patches, and
+            that all data discrepancies identified by GMRA*4*48 have been
+            corrected. If not, then installing GMRA*4*46 and its associated
+            patches may result in drug allergy order checks not displaying
+            in Computerized Patient Record System (CPRS) and pharmacy
+            during the medication order entry processes.
+  
+ This patch will enable the Adverse Reaction Tracking package to return
+ sign/symptom data with the medication order check message to the 
+ Computerized Patient Record System (CPRS) and Pharmacy. It will also
+ update the EN1^GMRADPT Application Programming Interface (API) to return
+ adverse reaction data from the Health Data Repository (HDR) along with
+ data stored locally.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ 20080334 CCDSS (CPRS) PSI mandated work 2009
+ A Clinical decision Support System is being requested to further enhance 
+ drug order checking to improve patient care and reduce costs. This request
+ is to address work mandated as determined by Patient Safety Incident (PSI)
+ evaluation.
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ PSPO 457/2072
+ The wrong reactant is displayed in the adverse reaction order check 
+ message. The ordered drug is displayed as the causative agent. See 
+ associated remedy tickets 130757, 173383 and 510151 for resolution.
+  
+ PSPO 2383
+ During the drug-allergy order check process, the ordered drug's VA 
+ CLASSIFICATION value is examined to determine if a patient will have a 
+ reaction to the drug.  This examination looks at the first four 
+ characters for non-analgesics and all five characters for analgesics.  
+ For non-analgesics, if a patient's profile lists multiple drug classes 
+ with the same first four characters as the ordered drug, only the last 
+ drug class listed is returned.  Many times, the returned class is less 
+ clinically important than the other classes on the list.  See associated 
+ Remedy tickets 823464 and 453615 for resolution.
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ 1. HD823464 Adverse Reaction Tracking - Alerts Issue:
+    HD453615 4 Alert not being displayed with third drug added
+  
+ Problem:
+ -------
+ During the drug-allergy order check process for a non-analgesic, when the 
+ VA CLASSIFICATION value is examined, only one drug class is returned.  
+ Many times, the returned class is less clinically important than the 
+ other classes on the list.
+  
+ Resolution:
+ ----------
+ The code is modified to return all drug classes that are matched.
+  
+ 2. HD130757 1 Wrong reactant displayed in allergy check pop-up window
+    HD173383 pt with sulfa allergy received HCTZ
+    HD510151 1 Misleading adverse reaction if order for Furosemide and pt 
+             has allergy to Sulfa Drugs
+  
+ Problem:
+ -------
+ The wrong reactant is displayed in the adverse reaction order check 
+ message. The ordered drug is displayed as the causative agent.
+  
+ Resolution:
+ ----------
+ The adverse reaction order check message is modified to correctly display 
+ the causative agent from the PATIENT ALLERGIES file (#120.8).
+  
+  
+ Test Sites:
+ ----------
+ VA Maryland Health Care System
+ Sioux Falls VA Health Care System
+ Orlando VA Medical Center 
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve the files from the ANONYMOUS.SOFTWARE 
+ directory on download.vista.domain.ext using secure file transfer protocol
+ (SFTP). This transmits the files from the first available SFTP server.
+ Sites may also elect to retrieve the files directly from a specific server
+ as follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Technical Manual              GMRA_4_TM_R0416.pdf             Binary
+ User Manual                   GMRA_4_UM_R0416.pdf             Binary
+ MOCHA Enhancements 2 Release  PSS_1_PSJ_5_PSO_7_RN_R0416.PDF  Binary
+   Notes
+ MOCHA Enhancements 2          PSS_1_PSJ_5_PSO_7_MOCHA_E2_CB_IG.PDF
+   Installation Guide                                          Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The post installation routine will delete the ^XTMP("GMRAOC") global 
+ node. This data cache is no longer used by the order check component. 
+ After the patch is successfully installed, KIDS will automatically delete 
+ the post-install routine GMRAY46.
+  
+  
+ Installation Instructions
+ -------------------------
+ Refer to the MOCHA Enhancements 2 Installation Guide for installation 
+ instructions.
+  
+ Install Order:
+    1. PSS_1_175.KID
+    2. MOCHA_ENH_2_GMRA_OR_PSJ_PSO.KID
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;4.0;Adverse Reaction Tracking;**[Patch List]**;Mar 29, 1996;Build 61
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRADPT
+    Before: B17553287   After: B83164261  **2,10,46**
+Routine Name: GMRADSP0
+    Before:  B2907720   After:  B2615214  **46**
+Routine Name: GMRAHDR
+    Before: B23798281   After: B21589009  **18,24,26,42,46**
+Routine Name: GMRAOR
+    Before: B60802991   After:B151697530  **2,13,26,37,41,42,44,46**
+Routine Name: GMRAOR0
+    Before:   B763825   After: B35767706  **4,46**
+Routine Name: GMRAOR1
+    Before:  B7165118   After:  B6022298  **21,41,46**
+Routine Name: GMRAOR2
+    Before: B11000982   After: B14577566  **21,41,46**
+Routine Name: GMRAPENC
+    Before:  B4933029   After:  B5910833  **41,46**
+Routine Name: GMRAY46
+    Before:       n/a   After:   B247357  **46**
+ 
+Routine list of preceding patches: 4, 10, 44
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 13, 2012
+Completed By:                               Date Completed: MAY 19, 2016
+Released By :                               Date Released : MAY 24, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

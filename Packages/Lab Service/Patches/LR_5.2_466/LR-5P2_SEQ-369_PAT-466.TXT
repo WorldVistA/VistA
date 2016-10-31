@@ -1,0 +1,169 @@
+$TXT Created by                 at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Friday, 02/26/16 at 10:02
+=============================================================================
+Run Date: MAY 09, 2016                     Designation: LR*5.2*466
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #369                    Status: Released
+                  Compliance Date: JUN 09, 2016
+=============================================================================
+
+Associated patches: (v)LR*5.2*444  <<= must be installed BEFORE `LR*5.2*466'
+
+Subject: ACCESSIONING ISSUES IN LRWLST 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following items:
+  
+ 1. Users unable to enter results for accessioned lab tests marked as
+    uncollected.
+  
+ 2. The accessioning process is causing erroneous test nodes to be set
+    into the LAB ORDER ENTRY file (#69).
+  
+  
+ Associated NSR:
+ ==============
+ N/A
+  
+  
+ Associated Remedy Ticket:
+ ========================
+ 1. INC000001074620  -  Accessioned lab tests are marked as uncollected
+   
+ 2. INC000001218249  -  Accessioning creates erroneous nodes in file #69
+    Duplicate:
+    INC000001239113 
+  
+  
+ Participating Testing Sites:
+ ===========================
+ Central Plains HCS
+ Lexington VAMC
+ Tampa VAMC
+  
+  
+ Blood Bank Impact:
+ =================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*466 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*466 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*466 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ Remedy Ticket Overview:
+ ======================
+ 1. INC000001074620 
+   
+    Problem:
+    -------
+    When using option "Multipurpose accessioning" [LRQUICK], all tests on a
+    specimen number in LAB ORDER ENTRY file (#69) that can be accessioned
+    will be accessioned. However, if one or more of the tests on the
+    specimen number cannot be accessioned because there is no Accession
+    Area defined for the test, then the specimen number will show as
+    uncollected and results will not be able to be entered for the tests on
+    the specimen number that were successfully accessioned.
+   
+    Solution:
+    --------
+    Modify routine LRWLST to mark the specimen number as collected once the
+    specimen number has gone through the accessioning process. 
+   
+    Routines: LRWLST
+  
+  
+ 2. INC000001218249
+  
+    Problem:
+    -------
+    If an order is placed for a lab test that is a panel test which has
+    as one of its components another panel test, the accessioning process
+    for this lab order will result in an erroneous test node being set
+    into the LAB ORDER ENTRY file (#69).
+      
+    Solution:
+    --------
+    Modify routine LRWLST to not set the erroneous test node in file #69
+    when the situation described above occurs.
+      
+    Routine: LRWLST 
+  
+  
+ ====================== INSTALLATION INSTRUCTIONS ======================
+ The install time for this patch is less than 2 minutes. 
+ This patch may be installed when Laboratory users are on the system.
+   
+ 1.  Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+     option will load the KIDS patch onto your system.
+  
+ 2.  The patch has now been loaded into a Transport global on your
+     system. You now need to use KIDS to install the transport global.
+  
+ 3.  On the 'Kernel Installation & Distribution System' Menu (KIDS),
+     select the 'Installation' menu.
+  
+ 4.  Use the 'Verify Checksum in Transport Global' option and verify
+     that all routines have the correct checksums.
+  
+ 5.  On the KIDS menu, under the 'Installation' menu, use the following
+     options:
+  
+     Print Transport Global
+     Compare Transport Global to Current System
+     Backup a Transport Global
+  
+     If you wish to preserve a copy of the routines exported in this 
+     patch prior to installation, you should use the 'Backup a Transport
+     Global' option at this time. You may also compare the routines in
+     your production account to the routines in the patch by using the
+     'Compare a Transport Global to Current System' option.
+  
+ 6.  Use the 'Install Package(s)' option under the 'Installation' menu
+     and select the package 'LR*5.2*466.
+  
+     When  prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+     choose 'NO'.
+  
+     When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRWLST
+    Before: B35513968   After: B35147101  **46,65,100,121,153,202,290,
+                                           424,444,466**
+ 
+Routine list of preceding patches: 444
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 26, 2015
+Completed By:                               Date Completed: APR 27, 2016
+Released By :                               Date Released : MAY 09, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

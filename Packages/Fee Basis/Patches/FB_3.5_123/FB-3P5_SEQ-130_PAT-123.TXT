@@ -1,0 +1,408 @@
+$TXT Created by                   DEVVNN.DOMAIN.EXT  (KIDS) on Thursday, 11/20/14 at 17:31
+=============================================================================
+Run Date: DEC 19, 2014                     Designation: FB*3.5*123
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #130                    Status: Released
+                  Compliance Date: JAN 03, 2015
+=============================================================================
+
+Associated patches: (v)FB*3.5*18   <<= must be installed BEFORE `FB*3.5*123'
+                    (v)FB*3.5*91   <<= must be installed BEFORE `FB*3.5*123'
+                    (v)FB*3.5*139  <<= must be installed BEFORE `FB*3.5*123'
+                    (v)FB*3.5*143  <<= must be installed BEFORE `FB*3.5*123'
+                    (v)FB*3.5*144  <<= must be installed BEFORE `FB*3.5*123'
+
+Subject: VA-DoD VISTA FEE IPAC INTERFACE
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Input Template
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The Intra-governmental Payment and Collection System (IPAC) patch
+ (FB*3.5*123) provides a standardized inter-agency funds transfer
+ mechanism for Veterans Health Administration (VHA).  It facilitates
+ the intra-governmental transfer of funds, with descriptive data, from
+ the VHA to another federal agency.  Processing payments through IPAC
+ provides the Financial Management Service (FMS) with the ability to
+ meet its statutory requirements for accounting and reporting.
+    
+ The new system functions will provide a streamlined method to send
+ Department of Defense (DoD) claims to IPAC leveraging current Veterans
+ Integrated Systems Technology Architecture (VistA) Fee Basis
+ application capabilities and data processes, and to provide the
+ Department of Veterans Affairs (VA) with the ability to electronically
+ process transmitted payments to any federal health care provider
+ who is contracted to the VA.
+  
+ Some of the information needed to process a claim through IPAC is easier
+ to collect at local facilities and document in VistA Fee Basis.
+ Other information is more easily obtained nationally by Central Fee.
+ Federal Accounting Service Payment and Collection (FASPAC) (the web-based
+ application used for processing documents to IPAC) does not currently
+ have the ability to receive data electronically from Central Fee.  VistA
+ Fee Basis, Central Fee and FASPAC will all be involved in processing a
+ claim through IPAC.
+  
+ This patch brings the VA into compliance with the Department of Treasury
+ and Veterans Health Administration (VHA) guidelines to use IPAC to make
+ payments between Federal agencies.  As sharing agreements expands between
+ DoD and VHA facilities, the modifications made to VistA Fee Basis will
+ allow for the additions of additional agreements seamlessly.
+  
+ This patch adds two files (Fee Basis IPAC Agreement, #161.95 and IPAC
+ Agreement MRA, #161.96) to the Fee Basis application.  The IPAC Agreement
+ file will maintain the IPAC Agreements made between a VHA facility and a
+ DoD facility.  The IPAC Agreement number and the DoD Invoice number will
+ both be recorded on Fee Basis invoices that are associated with an IPAC
+ Agreement.
+  
+ The input of the Fee Basis outpatient/Ancillary Services invoices,
+ inpatient invoices and pharmacy invoices will be modified to collect the IPAC 
+ Agreement ID and DoD invoice number, if present on the invoice.  The DoD 
+ invoice number will be found in box 3a of the UB04 and block 26 of the
+ CMS1500 forms, depending on which is being input into the VistA Fee Basis
+ application.  Any user with the proper security key (FB IPAC VENDOR) will
+ be able to enter an IPAC agreement, change an IPAC agreement and, if
+ allowable, delete an IPAC agreement.  Editing and deleting an IPAC
+ agreement will only be allowed if there is not invoice activity associated
+ with the IPAC agreement.
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                                   New/Modified/
+   Sub-File Name (#)    Field Name (#)                              Deleted
+ -------------------    -------------------                      -------------
+ FEE BASIS SITE                                                  Modified
+ PARAMETERS  (#161.4)   LAST IPAC NUMBER (#80)                   New
+           
+ IPAC VENDOR AGREEMENT                                           New
+ FILE (#161.95)         ID (#.01)                                New
+                        VENDOR (#1)                              New
+                        FISCAL YEAR (#2)                         New
+                        STATUS (#3)                              New
+                        DESCRIPTION (#4)                         New
+                        SHARING AGREEMENT NO. (#5)               New
+                        CUSTOMER ALS (#6)                        New
+                        RECEIVER TAS (#7)                        New
+                        SENDER TAS (#7.5)                        New
+                        AGENCY FIELD STATION NUMBER (#8)         New
+                        OBLIGATING DOCUMENT NO. (#9)             New
+                        STATION CONTACT NAME (#10)               New
+                        STATION CONTACT PHONE (#11)              New
+                        STATION CONTACT EMAIL (#12)              New
+                        COMPLETE LINE OF ACCOUNTING (#13)        New
+                        DESC. OF GOODS & SERVICES (#14)          New
+                        MISCELLANEOUS INFO (1) (#15)             New
+                        MISCELLANEOUS INFO (2) (#16)             New
+  
+ IPAC VENDOR AGREEMENT                                           New
+ MRA (#161.96)          SEQUENCE NUMBER (#.01)                   New
+                        IPAC VENDOR AGREEMENT (#1)               New
+                        IPAC VENDOR AGREEMENT ID (#2)            New
+                        ACTION (#3)                              New
+                        STATUS (#4)                              New
+                        DATE TRANSMITTED (#5)                    New
+  
+ FEE BASIS PAYMENT      No Data Dictionary Changes               n/a
+ REJECT CODE (#161.99)  New Reject Codes are being exported
+  
+ FEE BASIS PAYMENT (#162)                                        Modified
+   SERVICE PROVIDED     IPAC AGREEMENT (#.05)                    New
+    (#162.03)           DoD INVOICE NUMBER (#.055)               New
+  
+ FEE BASIS PHARMACY                                              Modified
+ INVOICE (#162.1)       IPAC VENDOR AGREEMENT (#14)              New
+   PRESCRIPTION NUMBER  DoD INVOICE NUMBER (#39)                 New
+    (#162.11)
+  
+ FEE BASIS INVOICE (#162.5)                                      Modified
+                        IPAC VENDOR AGREEMENT (#87)              New
+                        DoD INVOICE NUMBER (#86)                 New
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                           Type           New/Modified/Deleted
+ -----------                           ----           -------------------- 
+ FB MRA MAIN MENU                      Menu           Modified
+ FB PHONE MENU                         Menu           Modified
+ FBAA C&P ENTER PAYMENT                Run Routine    Deleted
+ FBAA IPAC AGREEMENT DELETE            Run Routine    New
+ FBAA IPAC AGREEMENT ENTER/EDIT        Run Routine    New
+ FBAA IPAC AGREEMENT MENU              Menu           New
+ FBAA IPAC AGREEMENT MRA MENU          Menu           New
+ FBAA IPAC AGREEMENT VIEW              Run Routine    New
+ FBAA IPAC DoD INVOICE INQUIRY         Run Routine    New
+ FBAA IPAC DoD INVOICE RPT             Run Routine    New
+ FBAA IPAC VENDOR PAYMENT RPT          Run Routine    New
+ FBAA IPAC VENDOR REPORT MENU          Menu           New
+ FBAA MRA IPAC ADD TYPE                Run Routine    New
+ FBAA MRA IPAC CHANGE TYPE             Run Routine    New
+ FBAA MRA IPAC DELETE TYPE             Run Routine    New
+ FBAA OUTPUTS MENU                     Menu           Modified
+ FBAA REQUEUE MRA                      Run Routine    Modified
+ FBAA VENDOR OPTIONS                   Menu           Modified
+ FBCH OUTPUT MENU                      Menu           Modified
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ FB IPAC VENDOR
+  
+  
+ Templates Associated:
+  
+ Template Name        Type   File Name (Number)           New/Modified/Deleted
+ -------------        ----   ------------------           --------------------
+ FB ADD RX            Input  FEE BASIS PHARMACY INVOICE   Modified
+                                (#162.1)
+ FBAA INVOICE EDIT    Input  FEE BASIS PHARMACY INVOICE   Deleted
+                                (#162.1)
+ FBCH EDIT PAYMENT    Input  FEE BASIS INVOICE (#162.5)   Modified
+ FBCH ENTER PAYMENT   Input  FEE BASIS INVOICE (#162.5)   Modified
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A 
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ VA Pacific Island HCS (#459)
+ Augusta (#509)
+ Hampton (#590)
+ Washington DC (#688)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+ Title                           File Name                       FTP Mode
+ -------------------------------------------------------------------------
+ Fee Basis User Manual           FEE3_5_UM_R1114.PDF             Binary
+ Fee Basis Technical Manual/
+           Security Guide        FEE3_5_TM_R1114.PDF             Binary
+ Release Notes FB*3.5*123        FEE3_5_P123_RN.PDF              Binary 
+ Installation Guide FB*3.5*123   FEE3_5_P123_IG.PDF              Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 1 minute 
+ to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     FB*3.5*123):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD.s or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD.s, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', please accept the default of NO.     
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', please accept the default of NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', please accept the default of NO.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 . 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 51
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBAACO
+    Before: B30906889   After: B48482031  **4,61,79,116,122,133,108,135,123**
+Routine Name: FBAACO2
+    Before: B29842500   After: B30248280  **4,55,61,77,116,122,133,108,
+                                           135,139,123**
+Routine Name: FBAACP
+    Before: B55546360   After:    Delete  
+Routine Name: FBAACP1
+    Before:  B6956346   After:    Delete  
+Routine Name: FBAAEPI
+    Before: B20120074   After: B27520800  **38,61,124,132,123**
+Routine Name: FBAAIAD
+    Before:       n/a   After: B14523385  **123**
+Routine Name: FBAAIAE
+    Before:       n/a   After: B52924225  **123**
+Routine Name: FBAAIAQ
+    Before:       n/a   After: B54819266  **123**
+Routine Name: FBAAIAR
+    Before:       n/a   After:B210368193  **123**
+Routine Name: FBAAIAR1
+    Before:       n/a   After:B134256276  **123**
+Routine Name: FBAAIAR2
+    Before:       n/a   After: B60901930  **123**
+Routine Name: FBAAIARA
+    Before:       n/a   After: B89421506  **123**
+Routine Name: FBAAIARB
+    Before:       n/a   After: B65763537  **123**
+Routine Name: FBAAIARC
+    Before:       n/a   After:B156464417  **123**
+Routine Name: FBAAIARD
+    Before:       n/a   After:B110671934  **123**
+Routine Name: FBAAIAU
+    Before:       n/a   After:B136125248  **123**
+Routine Name: FBAAIAV
+    Before:       n/a   After:  B3188216  **123**
+Routine Name: FBAAMP
+    Before: B64651581   After:B145435703  **4,21,38,55,61,67,116,108,143,123**
+Routine Name: FBAAMPG1
+    Before:  B5155968   After:  B6611500  **18,123**
+Routine Name: FBAAMPRG
+    Before:  B5836016   After:  B8621277  **18,123**
+Routine Name: FBAAPET
+    Before: B47597707   After: B48467737  **4,38,55,61,77,116,122,133,
+                                           108,124,132,139,123**
+Routine Name: FBAAPET1
+    Before:  B9459481   After: B56662432  **61,123**
+Routine Name: FBAAPIE
+    Before: B23308857   After: B25905815  **61,124,123**
+Routine Name: FBAAPIN
+    Before: B36889806   After: B39786989  **4,61,122,133,108,135,123**
+Routine Name: FBAAPP
+    Before: B24856042   After: B25732813  **61,80,91,123**
+Routine Name: FBAARMRA
+    Before:  B4173513   After: B11284064  **123**
+Routine Name: FBAAV0
+    Before: B46795465   After: B56393278  **3,4,55,89,98,116,108,132,139,123**
+Routine Name: FBAAV01
+    Before: B12667626   After: B27989531  **89,98,108,123**
+Routine Name: FBAAV2
+    Before: B14009472   After: B17032694  **3,89,98,116,108,123**
+Routine Name: FBAAV5
+    Before: B80128865   After:B101588501  **3,55,89,98,116,108,139,123**
+Routine Name: FBAAV8
+    Before:       n/a   After:B119931377  **123**
+Routine Name: FBCHEP
+    Before: B36009923   After: B37636915  **4,61,77,82,122,108,124,135,
+                                           139,123**
+Routine Name: FBCHEP1
+    Before: B42453076   After: B47429330  **38,61,122,133,108,124,132,139,123**
+Routine Name: FBCHPET
+    Before: B40150841   After: B40858494  **4,38,61,77,116,108,124,132,123**
+Routine Name: FBCHRR
+    Before: B12984210   After: B13548321  **61,108,123**
+Routine Name: FBCHVH
+    Before: B37233286   After: B38454495  **55,61,122,108,135,144,123**
+Routine Name: FBPAID1
+    Before: B17574969   After: B24215121  **19,107,121,132,123**
+ 
+Routine list of preceding patches: 18, 91, 139, 143, 144
+
+=============================================================================
+User Information:                          Hold Date     : DEC 18, 2014
+Entered By  :                               Date Entered  : MAY 05, 2011
+Completed By:                               Date Completed: DEC 09, 2014
+Released By :                               Date Released : DEC 19, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

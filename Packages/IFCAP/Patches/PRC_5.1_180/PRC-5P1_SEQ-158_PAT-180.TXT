@@ -1,0 +1,279 @@
+$TXT Created by                at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Wednesday, 09/25/13 at 11:34
+=============================================================================
+Run Date: MAY 20, 2014                     Designation: PRC*5.1*180
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #158                    Status: Released
+                  Compliance Date: JUN 20, 2014
+=============================================================================
+
+Associated patches: (v)PRC*5.1*23  <<= must be installed BEFORE `PRC*5.1*180'
+                    (v)PRC*5.1*81  <<= must be installed BEFORE `PRC*5.1*180'
+                    (v)PRC*5.1*131 <<= must be installed BEFORE `PRC*5.1*180'
+                    (v)PRC*5.1*150 <<= must be installed BEFORE `PRC*5.1*180'
+                    (v)PRC*5.1*153 <<= must be installed BEFORE `PRC*5.1*180'
+                    (v)PRC*5.1*175 <<= must be installed BEFORE `PRC*5.1*180'
+
+Subject: NEW SUB AUTHORITY;AMENDMENT FOR DELIVERY DATE;1358 DAILY ENTRY ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following 3 issues:
+  
+ 1. Add new sub authority to Authority 3.
+  
+ 2. Amendment for Delivery Date with Document transmission to FMS.
+  
+ 3. Daily 1358 record entry cannot be entered. 
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+ 
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC000000867862 Add new sub authority to Authority 3
+  
+ 2. INC000000853171 Amendment for Delivery Date with Document transmission
+                    to FMS
+  
+ 3. INC000000742999 Daily record entry cannot be entered
+     Dup: INC000000759903 Looping 1358 issue
+     Dup: INC000000781624 Error when creating 1358 authorization
+     Dup: INC000000838217 IFCAP - 1358 Issue
+     Dup: INC000000920753 IFCAP - 1358 Issue 
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VACO
+ St. Cloud, MN
+ Mountain Home, TN
+  
+  
+ REMEDY OVERVIEW:
+ ================ 
+ 1. INC000000867862 Add new sub authority to Authority 3
+  
+    Problem:
+    --------
+    Add an additional sub authority 'R - PC Patient-Centered Community 
+    Care' to original Authority 3 (STANDARDIZED OBLIGATIONS).
+  
+  
+    Resolution:
+    -----------                    
+    Create post install routine PRCS180P that will add a new sub authority
+    'R - PC Patient-Centered Community Care' like so in file Authority of 
+    Request [#410.9]:
+   
+    NUMBER: 140                             AUTHORITY CODE: R
+      AUTHORITY DESCRIPTION: PATIENT-CENTERED COMMUNITY CARE (PC3)  
+                             CENTRALIZED ADMIN FEE
+      PRIMARY AUTHORITY: 3
+      VENDOR MANDATORY: YES               
+      CONTRACT MANDATORY: NO
+      FMS CODE: 3R
+  
+  
+    Routines: PRCS180P (post install)
+  
+  
+  
+ 2. INC000000853171 Amendment for Delivery Date with Document transmission
+                    to FMS
+  
+    Problem:
+    ---------
+    Currently, only selected amendment types allow a further modification 
+    of Delivery Date for an order.  Also, selected amendment types and a 
+    Delivery Date change are not sufficient to allow amendment approval 
+    subsequent order updating via amendment processing if approved.
+  
+    Also, currently, ONLY financial oriented amendments send an updating 
+    document to the Financial Management System (FMS) in Austin. Hence,
+    Delivery Date changes are typically not sent to FMS if done 
+    independent of fiscal changes.
+  
+    Finally, no Delivery Date amendment changes are reflected on any order
+    display/print when other fiscal oriented amendments appear.
+  
+  
+  
+    Resolution:
+    -----------
+    Modify amendment process to be able to update the Delivery Date for all
+    Amendment types selected, or if no amendment type is selected.  Also, 
+    allow amendment approval to proceed whenever Delivery Date is amended.
+    When the amendment is processed back to the original order, insure any
+    Delivery Date change creates or is included with a document 
+    transmission to FMS.
+  
+    Also, insure that whenever the order is displayed within the IFCAP 
+    system the user will now see a line item detailing that the Delivery
+    Date was changed from/to.
+  
+  
+    Routines: PRCHAMU, PRCFFMOM, PRCHDAM1, PRCHDAM3, PRCHPAM2, PRCHPAM4,
+              PRCHDSP4, PRCHDSP6, PRCHDP5, PRCHDP7 
+  
+  
+  
+ 3. INC000000742999 Daily record entry cannot be entered 
+  
+    Problem:
+    --------
+    The assignment if IENs (Internal Entry Numbers) for 1358 authorizations
+    in file 1358 DAILY RECORD [#424] uses file logic with file CONTROL 
+    POINT ACTIVITY [#410] as the basis of determination instead of file
+    #424. Subsequent entries to file 1358 AUTHORIZATION DETAIL [#424.1] 
+    will cause a filing error message for authorizations.  This would only 
+    occur once a site hit the maximum number (9999) of activity entries. 
+    Here is the message sites will see:
+  
+    "The daily record entry cannot be entered. Please see the Application
+     Coordinator."
+  
+    Also, the user does not see redundant entries occur for the authorization
+    under different IENs (Internal Entry Numbers).
+  
+    Resolution:
+    -----------
+    Modify PRCSUT3 to use the correct file 424 when assigning next  
+    available internal number for 1358 and prevent colliding entries when
+    subsequently assigning entries in 424.1 for authorizations and
+    daily activity.
+  
+    Modify 1358 processing routines to set flag to insure the proper lookup
+    occurs on file 424 instead of file 410. 
+  
+  
+    Routines: PRCSUT3, PRCEAU, PRCESOM, PRCELIQ, PRCEDRE0
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+   ***********************************************************************
+   PLEASE NOTE: Post install routine PRCS180P will be deleted once the
+   install is complete.  If you wish to check the checksum of this
+   routine please use the 'Verify Checksums in Transport Global' under
+   the Installation Menu.
+   ***********************************************************************
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*180)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*180.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" hit Enter.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', hit Enter. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+       Amendment To Delivery Order      [PRCH AMEND DELIVERY ORDER]
+       Amendment To Purchase Card Ord   [PRCH AMENDMENT TO P/C ORDER]
+       Amendment to Purchase Order      [PRCHPC AMEND]
+       Display Purchase Order/Req       [PRCH DSPL PO]
+       Create/Edit Authorization        [PRCEC AUTHORIZATION]
+       Daily Activity Enter/Edit        [PRCEC DAILY ACTIVITY]
+       Liquidate 1358                   [PRCEF LIQUIDATE]
+       Adjust (Increase/Decrease)       [PRCEF ADJUST]
+  
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCEAU
+    Before: B19778588   After: B21310781  **23,180**
+Routine Name: PRCEDRE0
+    Before: B15690544   After: B17139039  **180**
+Routine Name: PRCELIQ
+    Before: B30290050   After: B31991788  **180**
+Routine Name: PRCESOM
+    Before: B60435984   After: B63270948  **148,153,180**
+Routine Name: PRCFFMOM
+    Before: B80432218   After: B87570061  **81,180**
+Routine Name: PRCHAMU
+    Before: B54598370   After: B58833091  **21,117,175,180**
+Routine Name: PRCHDAM1
+    Before: B13153064   After: B14059439  **21,180**
+Routine Name: PRCHDAM3
+    Before: B15110052   After: B18726324  **180**
+Routine Name: PRCHDP5
+    Before: B13761465   After: B14699380  **21,131,180**
+Routine Name: PRCHDP7
+    Before: B17739691   After: B21640570  **180**
+Routine Name: PRCHDSP4
+    Before: B14050026   After: B15007147  **21,180**
+Routine Name: PRCHDSP6
+    Before: B16253538   After: B20078350  **180**
+Routine Name: PRCHPAM2
+    Before: B14245890   After: B15193629  **21,180**
+Routine Name: PRCHPAM4
+    Before: B15124183   After: B18748994  **180**
+Routine Name: PRCS180P
+    Before:       n/a   After:  B1476210  **180**
+Routine Name: PRCSUT3
+    Before: B16423778   After: B17626422  **115,123,149,150,180**
+ 
+Routine list of preceding patches: 23, 81, 131, 150, 153, 175
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 01, 2013
+Completed By:                               Date Completed: MAY 13, 2014
+Released By :                               Date Released : MAY 20, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

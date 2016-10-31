@@ -1,0 +1,360 @@
+$TXT Created by                      DEVESS.DOMAIN.EXT  (KIDS) on Tuesday, 10/01/13 at 14:23
+=============================================================================
+Run Date: AUG 05, 2014                     Designation: SD*5.3*593
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #508                    Status: Released
+                  Compliance Date: AUG 26, 2014
+=============================================================================
+
+Associated patches: (v)SD*5.3*171  <<= must be installed BEFORE `SD*5.3*593'
+                    (v)SD*5.3*409  <<= must be installed BEFORE `SD*5.3*593'
+                    (v)SD*5.3*442  <<= must be installed BEFORE `SD*5.3*593'
+                    (v)SD*5.3*466  <<= must be installed BEFORE `SD*5.3*593'
+                    (v)SD*5.3*474  <<= must be installed BEFORE `SD*5.3*593'
+                    (v)SD*5.3*556  <<= must be installed BEFORE `SD*5.3*593'
+                    (v)SD*5.3*576  <<= must be installed BEFORE `SD*5.3*593'
+                    (v)LEX*2*80    <<= must be installed BEFORE `SD*5.3*593'
+                    (v)ICD*18*57   <<= must be installed BEFORE `SD*5.3*593'
+                    (v)DG*5.3*850  <<= must be installed BEFORE `SD*5.3*593'
+
+Subject: AMBULATORY CARE REPORTING ICD-10 CLASS 1 REMEDIATION 
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ IMPORTANT INFORMATION Please read the Overview Guide posted on the 
+ Anonymous directory for installation order. This is critical for proper 
+ functionality of the ICD-10 Software. 
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10) 
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service, or dates of discharge for inpatients, that occur on or 
+ after the implementation date will use the ICD-10 code set. Clinical 
+ Modification (ICD-10-CM) diagnosis codes increase from about 13,000 ICD-9 
+ codes to more than 68,000. Procedure Coding System (ICD-10-PCS) procedure 
+ codes increase from about 3,800 ICD-9 codes to nearly 87,000. Both 
+ systems also expand the number of characters allotted to seven 
+ alpha-numeric characters. This value does not include the decimal point, 
+ which follows the third character for the ICD-10-CM code set. There is no 
+ decimal point in the ICD-10-PCS code set. 
+  
+ These code sets have the potential to reveal more about quality of care, 
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research. 
+  
+ The following functionality within the Ambulatory Care Reporting (ACR)
+ application was updated to address the ICD-10 code set.
+  
+ 1. ACRP Ad Hoc Report [SCRPW AD HOC REPORT] 
+    -  If entering diagnoses for the Report Perspective, users are 
+       required to first select either the ICD-9 or ICD-10 code set. 
+       Selectable diagnoses are then restricted to the selected code 
+       set, the default of which is I9.
+  
+    -  In Report Limitations, the system prohibits date ranges that span
+       the ICD-10 implementation date. Date ranges must occur entirely before 
+       the implementation date, or entirely on/after the implementation date.
+  
+    -  If entering diagnoses for the Report Limitations, selectable diagnoses
+       are restricted to the code set that is valid for the given report 
+       date range.
+  
+    -  Prior to the execution of the report, the system validates that all
+       selected diagnoses within the Report Perspective and Report Limitations 
+       are of the correct code set for the selected report date range. Users
+       are required to correct any discrepancies before the report can be 
+       run. Below is an example of a message the user may see. 
+          The Report Limitation dates must be on or after OCT 1,2014 to match
+            the (ICD-10-CM) diagnoses specified in the Report Perspective.
+          Unable to continue with queuing!
+  
+    -  All visual displays of diagnosis descriptions have the ability to
+       wrap text to account for longer descriptions in the ICD-10 code set.
+  
+  2. Most Frequent 50 IP ICD Diagnosis Codes (IP7) [SCRPW DVM IP DX FREQUENCY] 
+     and 
+     Most Frequent 50 ICD Diagnosis Codes (OP7) [SCRPW DVM DX FREQUENCY]
+            
+     - All instances of 'ICD-9-CM' in displayed text have been changed to 
+       'ICD Diagnosis'.
+  
+     - All visual displays of diagnosis descriptions have the ability to
+       wrap text to account for longer descriptions in the ICD-10 code set.
+  
+ 3. Encounter Activity Report [SCRPW ENCOUNTER ACTIVITY RPT] and
+    Outpatient Diagnosis/Procedure Frequency Report [SCRPW DX/CPT 
+    FREQUENCY REPORT]
+  
+    - The system prohibits date ranges that span the ICD-10 implementation 
+      date. Date ranges must occur entirely before the implementation date, or 
+      entirely on/after the implementation date.
+  
+    - All visual displays of diagnosis descriptions have the ability to
+      wrap text to account for longer descriptions in the ICD-10 code set.
+  
+ 4. Outpatient Diagnosis/Procedure Code Search [SCRPW DX/PROCEDURE CODE 
+    SEARCH]
+  
+    - The system prohibits date ranges that span the ICD-10
+      implementation date. Date ranges must occur entirely before the
+      implementation date, or entirely on/after the implementation date.
+  
+    - Selectable diagnoses are restricted to the code set that is valid 
+      for the given report date range.
+  
+    - All visual displays of diagnosis descriptions have the ability to
+      wrap text to account for longer descriptions in the ICD-10 code set.
+  
+ 5. Encounter 'Action Required' Report [SCRPW ACTION REQUIRED REPORT]
+  
+    - The system supports both ICD-9 and ICD-10 codes and process
+      transmission error codes correctly for both code sets.
+  
+ 6. Ambulatory Care Nightly Transmission to NPCDB [SCDX AMBCAR NIGHTLY XMIT]
+  
+    - The system supports both ICD-9 and ICD-10 codes and transmits
+      code set identifiers of 'I9' and 'I10' respectively within the DG1-2
+      segment-field of outgoing HL7 messages.
+  
+    - The system supports the longer 60 character short descriptions for
+      ICD-10 codes, and transmits all 60 characters in the DG1-4 segment-
+      field of outgoing HL7 messages.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)            Field Name (#)          New/Modified/Deleted
+ -------------            ---------------------   --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ SCRPW DVM DX FREQUENCY         run routine      Modified
+ SCRPW DVM IP CPT FREQUENCY     run routine      Modified
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)                 New/Modified/Deleted
+ -------------      ----      ------------------            --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR 20070902, ICD-10-CM Conversion
+  
+   
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Houston VAMC, Houston, TX 
+ Miami VAMC, Miami, FL
+ Minneapolis VAMC, Minneapolis, MN
+   
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ File Description                       File Name                 FTP Mode
+ ----------------------------------------------------------------------------
+ Ambulatory Care Reporting Menu         acrpuse.pdf               (binary)
+ Ambulatory Care Reporting 
+ Release Notes                          ICD-10_RN_SD_5_3_593.pdf  (binary)
+ Appendix - IEMM Error Table            acrp_um_appx.pdf          (binary)
+ User Manual - Ambulatory 
+ Care Reporting                         acr.pdf                   (binary)
+ Production Overview Guide              Production_Overview_
+                                        Guide_Group_2.pdf         (binary)
+ PIMS Technical Manual                  pimstm.pdf                (binary)
+                                
+  
+ Patch Installation:                                       
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch affects the check-out process and must be installed when the
+ SCDX AMBCAR NIGHTLY XMIT background job is not running. This patch should 
+ take less than 5 minutes to install.
+  
+ The following menu options should be disabled.
+  
+     SCDX AMBCAR NIGHTLY XMIT   Ambulatory Care Nightly Transmission to NPCDB
+     SCDX AMBCAR REPORTING      Ambulatory Care Reporting Menu
+  
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (SD*5.3*593):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter SD*5.3*593.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond YES.
+  
+      SCDX AMBCAR NIGHTLY XMIT  Ambulatory Care Nightly Transmission to NPCDB
+      SCDX AMBCAR REPORTING     Ambulatory Care Reporting Menu
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ 9.  You may delete the routine SC593PST from your production system after the
+     patch has been successfully installed.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SC593PST
+    Before:       n/a   After:   B614440  **593**
+Routine Name: SCMSVDG1
+    Before:  B6097699   After:  B6087884  **44,57,68,77,85,95,66,593**
+Routine Name: SCMSVUT1
+    Before: B68410445   After: B69624796  **66,143,180,239,247,258,296,
+                                           295,321,341,387,459,394,442,
+                                           593**
+Routine Name: SCRPW14
+    Before: B34780614   After: B36855976  **139,144,180,593**
+Routine Name: SCRPW15
+    Before: B67718404   After: B68454595  **139,144,166,180,295,593**
+Routine Name: SCRPW20
+    Before: B64415761   After: B69405288  **144,171,593**
+Routine Name: SCRPW22
+    Before: B52632683   After: B57142560  **144,593**
+Routine Name: SCRPW23
+    Before: B48856672   After: B56596794  **144,474,593**
+Routine Name: SCRPW24
+    Before: B79827174   After: B79566588  **144,163,180,254,243,295,329,
+                                           351,510,530,562,576,593**
+Routine Name: SCRPW27
+    Before: B60723820   After: B63466890  **144,593**
+Routine Name: SCRPW29
+    Before: B54910145   After: B76811710  **144,593**
+Routine Name: SCRPW40
+    Before: B69722600   After: B74686227  **144,180,556,593**
+Routine Name: SCRPW45
+    Before: B55025168   After: B59142095  **144,351,409,593**
+Routine Name: SCRPW46
+    Before: B82053568   After: B82059518  **144,180,199,295,324,351,593**
+Routine Name: SCRPW47
+    Before: B59210931   After: B65269594  **144,180,199,593**
+Routine Name: SCRPW57
+    Before: B28798675   After: B30255024  **144,295,466,593**
+Routine Name: SCRPWICD
+    Before:       n/a   After:   B396688  **593**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 05, 2012
+Completed By:                               Date Completed: AUG 01, 2014
+Released By :                               Date Released : AUG 05, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

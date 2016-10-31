@@ -1,0 +1,182 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 03/06/14 at 09:32
+=============================================================================
+Run Date: OCT 27, 2014                     Designation: SR*3*178
+Package : SR - SURGERY                        Priority: Mandatory
+Version : 3       SEQ #173                      Status: Released
+                  Compliance Date: NOV 27, 2014
+=============================================================================
+
+Associated patches: (v)SR*3*109    <<= must be installed BEFORE `SR*3*178'
+                    (v)SR*3*174    <<= must be installed BEFORE `SR*3*178'
+
+Subject: FIX MULTIPLE SURGERY ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ This patch will correct the following issues currently occurring in the
+ VistA Surgery application:
+  
+ In the Surgery option Exclusion Criteria (Enter/Edit) [SR NO ASSESSMENT
+ REASON] when users try to enter exclusion criteria beginning with
+ 'EXCEEDS' at the 'Reason an Assessment was not Created:' prompt, the
+ response 'EXCEEDS MAX ASSMNTS' is always displaying no matter what the
+ user has entered/selected.
+  
+ Next, the FIELD field (#2) for the ATTENDING CODE entry of the Surgery
+ Interface Parameter file (#133.2) points to the ATTENDING CODE field
+ (#.165) of the SURGERY file (#130) which is no longer used. It should
+ point to ATTENDING CODE field (#.166) of the SURGERY file.
+  
+ Finally, when printing the 'LONG' form version of an operation request for
+ a particular surgical specialty in the Operation Requests for a Day [SROP
+ REQ] option in the Surgery Menu, a site noticed the Case Order number is
+ not displaying correctly.
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1) INC0000000761473 - When user tries to enter exclusion criteria exceeds
+                       max assessments is inserted no matter what
+ 2) INC0000000862428 - Surgery - Other:
+ 3) INC0000000891523 - Surgery - Other:
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Las Vegas HCS
+ VA Heartland East (Marion, IL)
+  
+ REMEDY OVERVIEW:
+ ================
+ 1) HD0000000761473 - When user tries to enter exclusion criteria exceeds
+                      max assessments is inserted no matter what
+  
+ Problem:
+ ========
+ In Surgery option Exclusion Criteria (Enter/Edit) [SR NO ASSESSMENT
+ REASON] when users try to enter exclusion criteria beginning with 'EX' or
+ 'EXCEEDS' at the 'Reason an Assessment was not Created:' prompt, the
+ 'EXCEEDS MAX ASSMNTS' response is always displayed no matter what the user
+ has entered/selected.
+   
+ Solution:
+ =========
+ Updated Surgery routine SRONASS to display the correct exclusion criteria
+ selected by the user.
+  
+ Routine: SRONASS
+  
+ 2) HD0000000862428 - Surgery - Other:
+  
+ Problem:
+ ========
+ The FIELD field (#2) for the ATTENDING CODE entry of the Surgery Interface
+ Parameter file (#133.2) points to the ATTENDING CODE field (#.165) of the
+ SURGERY file (#130) which is no longer used. It should point to ATTENDING
+ CODE field (#.166) of the SURGERY file.
+   
+ Solution:
+ =========
+ Post install routine SR178PST will edit the Surgery Interface Parameter
+ file (#133.2) to point to the correct ATTENDING CODE field (#.166) in the
+ SURGERY file (#130). An update will also be made to the Surgery Anesthesia
+ Interface Specifications document found in the VDL or VA Software Document
+ Library (www.domain.ext/vdl/) website.
+  
+ Routine: SR178PST 
+  
+ 3) HD0000000891523 - Surgery - Other:
+  
+ Problem:
+ ========
+ When printing the 'LONG' form version of an operation request for a
+ particular surgical specialty in the Operation Requests for a Day [SROP
+ REQ] option in the Surgery Menu, a site noticed the Case Order number is
+ not displaying correctly.
+  
+ Solution:
+ =========
+ Updated Surgery routine SROREQ2 to correctly display the Case Order number
+ data when printing the 'LONG' form for a particular surgical specialty in
+ the Operation Requests for a Day option.
+  
+ Routine: SROREQ2
+  
+    ==================== INSTALLATION INSTRUCTIONS: ====================
+    This patch may be run with users on the system. Installation will take
+    less than 5 minutes.
+  
+    1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+        the KIDS distribution included with this message.
+        NOTE: If the required patches are not installed, the transport 
+        global will be removed. If the transport global is removed you will
+        need to repeat this step.
+  
+    2.  From the Kernel Installation and Distribution System Menu, select
+        the Installation menu.
+  
+    3.  From this menu, you may elect to use the following options
+        (when prompted for INSTALL NAME, enter SR*3.0*178):
+        a.  Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch
+            is installed. It compares all components of the patch 
+            (routines, DDs, templates, etc.).
+        b.  Verify Checksums in Transport Global - this option will
+            allow you to ensure the integrity of the routines that are in
+            the transport global.
+        c.  Print Transport Global - this option will allow you to view the
+            components of the KIDS build.
+        d.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+  
+    4.  Use the Install Package(s) option and select the package 
+        SR*3.0*178.
+  
+    5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+        NO//', respond NO.
+  
+    6.  When prompted, 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//', respond NO.
+  
+    7.  (Optional) CLEAN UP POST INIT ROUTINE
+        -------------------------------------
+        Once this patch has been successfully installed you may delete the
+        post init routine:  SR178PST
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;Surgery;**[Patch List]**;24 Jun 93;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SR178PST
+    Before:       n/a   After:   B524049  **178**
+Routine Name: SRONASS
+    Before: B17653883   After: B17680159  **38,47,83,107,121,100,125,174,178**
+Routine Name: SROREQ2
+    Before: B17539162   After: B17559293  **48,77,92,109,178**
+ 
+Routine list of preceding patches: 109, 174
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 08, 2011
+Completed By:                               Date Completed: OCT 23, 2014
+Released By :                               Date Released : OCT 27, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,141 @@
+
+=============================================================================
+Run Date: APR 23, 2015                     Designation: TBI*2*10
+Package : TBI - TRAUMATIC BRAIN INJURY        Priority: Mandatory
+Version : 2         SEQ #6                      Status: Released
+                  Compliance Date: MAY 24, 2015
+=============================================================================
+
+
+Subject: HREG Sustainment Sprint 17c Deployment
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ **********************************************************************
+  
+ This is to announce that Traumatic Brain Injury Patch TBI*2.0*10 will
+ be deployed to the production server for national release on 
+ April 27, 2015 at 9 p.m. Eastern.
+  
+ **********************************************************************
+ Note: Technical support staff at Austin Information Technology Center
+ (AITC) will install this patch on the National TBI server located there 
+ using a pre-approved Request for Change Order and Implementation Plan.
+ No effort is required by local sites.  User Acceptance Test is by the direction of the TBI Business Owner and no MOU is required.
+ **********************************************************************
+   
+ TBI Patch 2.0*10 contains code changes (defect fixes and enhancements) to
+ the TBI Registry.  These changes are Work Items that were recorded and
+ tracked in the Registries Project Area of RTC.
+  
+ This patch contains the TBI Work Items completed during Sprint 17 for
+ the 4/27/2015 production deployment.
+  
+ TBI Patch 2.0*10 includes the TBI Registry Work Items listed below.
+  
+ 160715: TBI - Problem with VIA cprsUserLookup Method
+ 153510: TBI Cube Reporting - "All" checkboxes issue
+ 160475: TBI - PTRP Admission/Discharge Dates
+ 159357: TBI - Polytrauma Excel Export
+ 158673: TBI - Follow-Up Assessment form Validation
+   
+ Patch Components
+ ================
+   
+ The following describes each component of the TBI Patch 2.0*10
+  
+ 160715: TBI - Problem with VIA cprsUserLookup Method
+ Issue: With VIA enabled, user is not able to search for and/or generate
+ an accurate list of provider co-signers using the VIA cprsUserLookup
+ web method.
+ Solution:  Revise the TBI code so that it doesn't override the text 
+ search value and uses the patient name as the primary search 
+ parameter when generating a list of provider co-signers. 
+  
+ 153510: TBI Cube Reporting - "All" checkboxes issue
+ Issue:  TBI Cube Reporting - "All" checkboxes don't work correctly (for 
+ Survey Type, Fiscal Year, Fiscal Quarter). Applies to all cube reports
+ Solution:  Fixed the JavaScript methods for all applicable checkboxes.
+  
+ 160475: TBI - PTRP Admission/Discharge Dates
+ Issue:  A date picker feature is needed to capture the admission and 
+ discharge date from the PTRP program, as this is not currently collected.
+ Solution:  Implemented the following business rules:
+  
+  1. Disable "Submission Type" radio-buttons if (1) Submission type is not 
+ "Follow-Up" AND (2) Discharge Date is empty for both PRC and PTRP.
+   1.1. Enable "Submission Type" radio-buttons for any other scenario.
+  2. If Submission Type is "Follow-Up" and Admission/Discharge Date is not 
+ empty, make Admission or Discharge Date read-only for both PRC/PTRP.
+  3. Hide Follow-Up Date if Submission Type is not "Follow-Up".
+  
+ 159357: TBI - Polytrauma Excel Export
+ Issue:  Export to excel does not contain all of the variables collected in the 
+ PTRP section of the tracker.
+ Solution:  Provided a list of fields currently used in the export and fields 
+ available to be added then added the Business Owner specified fields 
+ specified by the Business Owner to the Polytrauma excel export.
+  
+ 158673: TBI - Follow-Up Assessment form Validation
+ Issue:  Validation for question 4-B of the TBI Follow-Up Assessment needs 
+ to be updated to allow for 2015 and/or current year.
+ Solution:  updated the validation on the Follow-Up form to be more like t
+ that of the CTBIE form.
+ Additional Information:
+ ---------------------------
+   
+ **********************************************************************
+  
+ ***NOTE: NO DOCUMENT UPDATES WERE REQUIRED FOR THIS PATCH***
+  
+ **********************************************************************
+ TBI Design and User Documentation on TSPR =
+ http://tspr.vista.domain.ext/warboard/anotebk.asp?proj=1313&Type=Active
+  
+ Documentation Retrieval Instructions:
+   
+ The preferred method is to FTP the files from ftp://download.vista.domain.ext/
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+   
+ Documentation can also be retrieved from the VistA Documentation Library 
+ (VDL) on the VA Intranet at the following address: www.domain.ext/vdl
+   
+ The documentation is located under Clinical, Traumatic Brain Injury (TBI).
+ -----------------------------------------------------------------------
+   
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ There are no Remedy Tickets associated with this patch.
+   
+ Test Sites:
+ ----------
+ Houston
+ Palo Alto
+ Tampa
+ Lebanon
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 25, 2015
+Completed By:                               Date Completed: APR 23, 2015
+Released By :                               Date Released : APR 23, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

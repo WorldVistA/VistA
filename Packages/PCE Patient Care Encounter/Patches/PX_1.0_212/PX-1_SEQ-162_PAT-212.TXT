@@ -1,0 +1,251 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 11/16/15 at 09:48
+=============================================================================
+Run Date: MAY 26, 2016                     Designation: PX*1*212
+Package : PX - PCE PATIENT CARE ENCOUNTER     Priority: Mandatory
+Version : 1       SEQ #162                      Status: Released
+                  Compliance Date: JUN 25, 2016
+=============================================================================
+
+Associated patches: (v)PX*1*194    <<= must be installed BEFORE `PX*1*212'
+
+Subject: CORRECT DD SPELLING, REMOVE REFS TO DELETED FLDS
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ Patch PX*1.0*212 addresses the following two issues:
+  
+ 1. Data Dictionary technical description misspells classification in
+    the VISIT file (#9000010).
+ 2. References to SHORT NAME field (#2) of the CPT file (#81) need to be 
+    removed in routine PXBGCPT2.
+  
+   
+ Associated Remedy Tickets:
+ ========================== 
+ 1. INC000001293249 - DD tech desc misspell file #9000010
+ 2. INC000001224029 - Fields will be deleted from the CPT and CPT 
+                      modifier file. References need to be removed.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Durham VAMC
+ Manchester VAMC
+ VA Pittsburgh HCS
+  
+  
+ Remedy Overview:
+ ================
+  
+ 1. INC000001293249 - DD tech desc misspell file #9000010
+  
+ Problem:
+ ========
+ The word 'classification' is misspelled in the Data Dictionary technical
+ descriptions of both the AGENT ORANGE EDIT FLAG field (#80012) and the 
+ IONIZING RADIATION EDIT field (#80013) of the VISIT file (#9000010).
+   
+ Resolution:
+ ===========
+ Update the technical descriptions in the Data Dictionary for the AGENT 
+ ORANGE EDIT FLAG field (#80012) and the IONIZING RADIATION EDIT field
+ (#80013) of the VISIT file (#9000010).
+  
+  
+ 2. INC000001224029 - Fields will be deleted from the CPT and CPT modifier
+                      file. References need to be removed.
+  
+ Problem:
+ ========
+ Patient Care Encounter (PCE) routine PXBGCPT2 does a direct read on the
+ SHORT NAME field (#2) of CPT file (#81). The SHORT NAME field (#2) is 
+ unsupported and will be deleted; therefore, any references to the field
+ must be removed and replaced with the appropriate supported Application
+ Programming Interface (API).
+  
+ Resolution:
+ ===========
+ Routine PXBGCPT2 was modified to use API ($$CPT^ICPTCOD) instead of
+ using direct reads to the SHORT NAME field (#2) of CPT file (#81).
+  
+  
+  
+ Data Dictionary:
+ ================
+  
+ ********************BEFORE***********************
+ STANDARD DATA DICTIONARY #9000010 -- VISIT FILE    SEP 21,2015@12:29:11  
+ PAGE 1
+ STORED IN ^AUPNVSIT(  (4465919 ENTRIES)   SITE: TEST.CHEYENNE.DOMAIN.EXT   
+ UCI: CHEY19,ROU                           (VERSION 2.0)
+   
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ ------------------------------------------------------------------------
+  
+ 9000010,80012 AGENT ORANGE EDIT FLAG 800;12 SET
+  
+                                 '0' FOR EDITABLE; 
+                                 '1' FOR NOT EDITABLE; 
+               LAST EDITED:      FEB 05, 2004 
+               HELP-PROMPT:      Enter 1 to prevent user editing of the  
+                                 Agent Orange classification 
+               DESCRIPTION:      This field is used to determine if the
+                                 Agent Orange Classification for the Visit 
+                                 can be edited by the user.  
+  
+               TECHNICAL DESCR:  The Agent Orange classification is not 
+                                 editable if either any of the diagnosis
+                                 Agent Orange classifiactions are "Yes"
+                                 or all of the diagnosis Agent Orange
+                                 classifiactions are "No".
+                                 
+  
+  
+ 9000010,80013 IONIZING RADIATION EDIT FLAG 800;13 SET
+  
+                                 '0' FOR EDITABLE; 
+                                 '1' FOR NOT EDITABLE; 
+               LAST EDITED:      FEB 05, 2004 
+               HELP-PROMPT:      Enter 1 to prevent user editing of the  
+                                 Ionizing Radiation classification 
+               DESCRIPTION:      This field is used to determine if the 
+                                 Ionizing Radiation classification for  
+                                 the Visit can be edited by the user.  
+  
+               TECHNICAL DESCR:  The Ionizing Radiation classification is 
+                                 not editable if either any of the
+                                 diagnosis Ionizing Radiation 
+                                 classifications are "Yes" or all of the 
+                                 diagnosis Ionizing Radiation
+                                 classifiactions are "No".  
+  
+  
+ ********************AFTER***********************
+ STANDARD DATA DICTIONARY #9000010 -- VISIT FILE    SEP 21,2015@12:29:11  
+ PAGE 1
+ STORED IN ^AUPNVSIT(  (4465919 ENTRIES)   SITE: TEST.CHEYENNE.DOMAIN.EXT   
+ UCI: CHEY19,ROU                           (VERSION 2.0)
+                                                
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ ------------------------------------------------------------------------
+  
+ 9000010,80012 AGENT ORANGE EDIT FLAG 800;12 SET
+  
+                                 '0' FOR EDITABLE; 
+                                 '1' FOR NOT EDITABLE; 
+               LAST EDITED:      FEB 05, 2004 
+               HELP-PROMPT:      Enter 1 to prevent user editing of the  
+                                 Agent Orange classification 
+               DESCRIPTION:      This field is used to determine if the 
+                                 Agent Orange Classification for the  
+                                 Visit can be edited by the user.  
+  
+               TECHNICAL DESCR:  The Agent Orange classification is not 
+                                 editable if either any of the diagnosis
+                                 Agent Orange classifications are "Yes" 
+                                 or all of the diagnosis Agent Orange
+                                 classifications are "No".
+                                 
+  
+ 9000010,80013 IONIZING RADIATION EDIT FLAG 800;13 SET
+  
+                                 '0' FOR EDITABLE; 
+                                 '1' FOR NOT EDITABLE; 
+               LAST EDITED:      FEB 05, 2004 
+               HELP-PROMPT:      Enter 1 to prevent user editing of the  
+                                 Ionizing Radiation classification 
+               DESCRIPTION:      This field is used to determine if the 
+                                 Ionizing Radiation classification for  
+                                 the Visit can be edited by the user.  
+  
+               TECHNICAL DESCR:  The Ionizing Radiation classification  
+                                 is not editable if either any of the
+                                 diagnosis Ionizing Radiation
+                                 classifications are "Yes" or all of the
+                                 diagnosis Ionizing Radiation 
+                                 classifications are "No".  
+  
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch may be installed during normal working hours with all users 
+ on the system. However, as it is necessary to disable some menu options
+ when installing this patch it is recommended that the install be done 
+ during non-peak hours.  
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+  
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter PX*1.0*212).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch 
+            is installed.
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package 
+         PX*1.0*212.
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//",
+         respond No.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//", respond Yes.
+  
+         When prompted, 'Enter options you wish to mark as 'Out Of 
+         Order':', enter:
+  
+         Appointment Management  [SDAM APPT MGT]
+          
+         When prompted, 'Enter protocols you wish to mark as 'Out Of
+         Order':', press enter. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**[Patch List]**;Aug 12, 1996;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXBGCPT2
+    Before: B35739040   After: B39061245  **11,19,108,149,194,212**
+ 
+Routine list of preceding patches: 194
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 21, 2015
+Completed By:                               Date Completed: MAY 17, 2016
+Released By :                               Date Released : MAY 26, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

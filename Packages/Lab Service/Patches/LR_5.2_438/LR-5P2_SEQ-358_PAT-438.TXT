@@ -1,0 +1,205 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 10/17/14 at 13:42
+=============================================================================
+Run Date: FEB 23, 2015                     Designation: LR*5.2*438
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #358                    Status: Released
+                  Compliance Date: MAR 26, 2015
+=============================================================================
+
+Associated patches: (v)LR*5.2*221  <<= must be installed BEFORE `LR*5.2*438'
+                    (v)LR*5.2*350  <<= must be installed BEFORE `LR*5.2*438'
+                    (v)LR*5.2*432  <<= must be installed BEFORE `LR*5.2*438'
+
+Subject: MRSA ON DEATH; LRGEN; GROUP VERIFY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  The patch addresses the below 3 issues:
+   
+  1. Users report being unable to perform MRSA testing on deceased patients
+     but they are allowed to proceed through the accessioning process 
+     without an early warning that the test has been cancelled.
+   
+  2. General report for selected tests [LRGEN] option skips rows of results
+     when the SITE/SPECIMEN prompt is answered with the default (ANY) and 
+     it frequently displays/prints unnecessary headers.
+   
+  3. Under certain circumstances, the Group Verify (GA) option allows 
+     the verification of results marked as Not Performed.
+    
+  Blood Bank Review:
+  ==================
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*438 does not 
+  contain any changes to the VISTA BLOOD BANK Software as defined by 
+  ProPath standard titled: BBM Team Review of VistA Patches.
+   
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*438 does not 
+  alter or modify any software design safeguards or safety critical 
+  elements functions.
+   
+  RISK ANALYSIS: Changes made by patch LR*5.2*438 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+   
+  VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+  made, no specific validation requirements exist as a result of 
+  installation of this patch.
+   
+  Associated Remedy Ticket(s):
+  ============================
+  1. INC000000500271 - MRSA testing on death
+  2. INC000000069164 - LRGEN missing results
+     (D) - INC000000069285
+     (D) - INC000000069419
+     (D) - INC000000180798
+     (D) - INC000000069205
+  3. INC000000937699 - Group Verify ignoring NP
+    
+  Associated NSR(s):
+  ==================
+  N/A
+   
+  Participating Test Sites:
+  =========================
+  Central Texas (Temple)
+  Minneapolis VAMC
+  West Los Angeles 
+   
+  Remedy Overview:
+  ================
+   
+  1. INC000000500271 - MRSA Testing on Death
+   
+  Problem:
+  --------
+  When staff want to accession or enter results for MRSA tests on a patient
+  that is either deceased or discharged, they should be added as an Exempt
+  Orderable Item for the Death and/or Discharge event in the Delayed 
+  Orders/Auto-DC Set-up function.
+  
+  Instead, some staff are using Accessioning tests ordered by ward order
+  entry [LROE] and are allowed to progress through the accessioning session
+  without an early warning that an order has been canceled.
+  
+  Resolution:
+  -----------
+  Routine LROE has been modified to provide clear, early feedback to the 
+  user that a test has been cancelled and will not be accessioned.
+  
+  Example:
+  'All tests for this order have been canceled.'
+   
+  Routine: LROE
+   
+  2. INC000000069164 - LRGEN Missing Results
+    
+  Problem:
+  --------
+  The defect occurs when using the General report for selected tests 
+  [LRGEN] option and when there are more than six (6) analytes on the
+  selected tests. When the SITE/SPECIMEN prompt is answered with the
+  default (ANY), the application only displays the first set of headings
+  and results - that is: it only properly displays the first six results
+  and skips the remaining results. This typically occurs on the results for
+  the last date of service. Though no results are displayed, unnecessary
+  headers are displayed or printed.
+   
+  Resolution:
+  -----------
+  Multiple modifications and the addition of a function to routine LRGEN1, 
+  correct the missing results and unnecessary header issues.
+   
+  Routine: LRGEN1
+   
+  3. INC000000937699 - Group Verify Ignoring NP
+    
+  Problem:
+  --------
+  When the Group verify (GA) [LRGV] is used to verify results for a
+  Work Load Area that contains accessions that have tests that have been
+  marked as Not Performed on a prior date, the option can erroneously 
+  verify results that may have been entered for the accession.
+   
+  Resolution:
+  -----------
+  A modification to routine LRGV2 prevents the verification of any results 
+  that may be associated with Not Performed test(s).
+   
+  Routine: LRGV2
+   
+      =================== Installation Instructions ===================
+     The install time for this patch is less than 2 minutes. This patch can
+     be installed when Laboratory users are on the system.
+   
+     NOTE: Kernel patches must be current on the target system to avoid
+           problems loading and/or installing this patch.
+   
+     1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+        option will load the KIDS patch onto your system.
+   
+     2. The patch has now been loaded into a Transport global on your
+        system. You now need to use KIDS to install the transport global.
+   
+     3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+        select the 'Installation' menu.
+   
+     4. Use the 'Verify Checksum in Transport Global' option and verify
+        that all routines have the correct checksums.
+      
+     5. On the KIDS menu, under the 'Installation' menu, use the following
+        options:
+                Print Transport Global
+                Compare Transport Global to Current System
+                Backup a Transport Global
+   
+        If you wish to preserve a copy of the routines exported in this 
+        patch prior to installation, you should use the 'Backup a Transport
+        Global' option at this time. You may also compare the routines in
+        your production account to the routines in the patch by using the
+        'Compare a Transport Global to Current System' option.
+   
+     6. Use the 'Install Package(s)' option under the 'Installation' menu
+        and select the package 'LR*5.2*438'.
+   
+        If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+        choose 'NO'.
+   
+        If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//', choose 'NO'.
+   
+     7. The Post Install Routine will run and automatically delete after
+        install.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRGEN1
+    Before: B16882594   After: B24124923  **201,221,438**
+Routine Name: LRGV2
+    Before:  B9894517   After: B10100135  **121,153,269,350,438**
+Routine Name: LROE
+    Before: B36200686   After: B35554046  **100,121,201,221,263,286,360,
+                                           423,432,438**
+ 
+Routine list of preceding patches: 350, 432
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 08, 2014
+Completed By:                               Date Completed: FEB 11, 2015
+Released By :                               Date Released : FEB 23, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

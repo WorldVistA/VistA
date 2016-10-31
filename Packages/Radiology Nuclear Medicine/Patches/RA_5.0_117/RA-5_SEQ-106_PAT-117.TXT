@@ -1,0 +1,141 @@
+$TXT Created by             at DEV.DEV.DOMAIN.EXT  (KIDS) on Tuesday, 03/11/14 at 13:31
+=============================================================================
+Run Date: JUL 01, 2014                     Designation: RA*5*117
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #106                      Status: Released
+                  Compliance Date: AUG 01, 2014
+=============================================================================
+
+
+Subject: 2014 UPDATES TO THE RADIOLOGY CPT BY PROCEDURE TYPE FILE (#73.2)
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch contains the Radiology Program Office yearly update to the 
+ RADIOLOGY CPT BY PROCEDURE TYPE (#73.2) file.
+  
+  
+ Associated NSR(s):
+ =================
+ N/A  
+  
+                
+ Associated Remedy ticket(s):
+ ===========================
+ INC0000000980151 - 2014 file update of 73.2 CPT BY PROCEDURE TYPE
+  
+     
+ Participating Test Sites:
+ ========================
+ Heartland West HCS
+ W.G. (Bill) Hefner VAMC (Salisbury)
+ Upstate New York HCS
+ Southern Nevada HCS  - Las Vegas
+  
+      
+ Remedy Ticket Overview:
+ ======================     
+ HD0000000980151
+  
+   Problem:
+   --------
+   The RADIOLOGY CPT BY PROCEDURE TYPE (#73.2) file needs to be updated
+   with the 2014 yearly updates provided by the Radiology Program Office.
+        
+   Resolution:
+   ------------     
+    Routine RA117PRE will update the RADIOLOGY CPT BY PROCEDURE TYPE 
+    (#73.2) file.
+    
+  
+ Installation Instructions:
+ =========================
+      
+ If installed during the normal workday, it is recommended that the 
+ Radiology users be off the system.  Other VISTA users will not be
+ affected.
+  
+ Install Time - less than 2 minutes
+      
+ 1.  Load Transport Global 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+     Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter RA*5.0*117):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch (routines,
+         DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         YES//', answer NO.
+  
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and protocols? YES//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+VERSION ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RA117PRE
+    Before:       n/a   After:  B1288772  **117**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 07, 2014
+Completed By:                               Date Completed: JUN 26, 2014
+Released By :                               Date Released : JUL 01, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

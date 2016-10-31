@@ -1,0 +1,300 @@
+
+=============================================================================
+Run Date: JUN 25, 2014                     Designation: MAG*3*141
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3        SEQ #97                      Status: Released
+                  Compliance Date: JUL 26, 2014
+=============================================================================
+
+Associated patches: (v)MAG*3*51    <<= must be installed BEFORE `MAG*3*141'
+                    (v)MAG*3*123   <<= must be installed BEFORE `MAG*3*141'
+
+Subject: HL7 VERSION 2.4 CORRECTIONS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The Radiology HL7 Version 2.4 interface was released in August 2011 as 
+ two patches: RA*5.0*47 and MAG*3.0*49.  The Radiology Patch RA*5.0*47  
+ deals with the generation of the radiology-specific HL7 segments: ORC, 
+ OBR, and OBX.  The Imaging Patch MAG*3.0*49 handles the patient-specific 
+ HL7 segments: PID, PV1.
+  
+ Three problems were found in Imaging Patch MAG*3.0*49:
+  
+ 1) A long PID segment (greater than 255 characters) was not handled
+ properly.  (This was a very rare occurrence.)  An HL7 message's Patient 
+ Identification (PID) segment can exceed 255 characters in certain 
+ situations and must be handled without error. The original MAG*3.0*49 code
+ (released August 2011) could not handle this.
+  
+ 2) The patient's telephone number was not included in the PID segment.  
+ It should have been present in PID-13 Phone Number - Home.  This was to
+ have been included and is an error of omission.
+  
+ 3) The outpatient location was not present.  (Only the inpatient location
+ was included).  This was a design error based on IHE Radiology Technical
+ Framework, Vol 2, 2/18/2011,  paragraph 4.4.4.1.2.3,  which says that only
+ the admitted inpatient  location is to be sent in PV1-3 Assigned Patient
+ Location.  The outpatient location will now be included in PV1-11
+ Temporary Location.
+  
+ This patch provides the following enhancements and changes.
+   HL7 Enhancements
+ 1) Upgraded the code to handle PID segments that exceed 255 characters.
+ 2) Provide the patient's telephone number in the PID-13 Phone Number - 
+ Home field.
+ 3) Provide the outpatient location in the PV1-11 Temporary Location field.
+  
+ Distribution of the Software:
+ =============================
+ MAG*3.0*141 and its patch description can be downloaded from these
+ environments:
+  
+ Albany                          ftp.domain.ext
+ Hines                           ftp.domain.ext
+ SLC                             ftp.domain.ext
+  
+  
+ Software
+ File Description                        File Name                  FTP
+                                                                    Mode
+ --------------------------------------------------------------------------
+ MAG*3.0*141 KIDS                  MAG3_0P141.KID                   ASCII
+  
+  
+ Note: All documentation should be downloaded in the Binary format
+  
+ Documentation                                                      FTP
+ File Description                 File Name                         Mode
+ --------------------------------------------------------------------------
+ MAG*3.0*141 Patch Description    MAG3_0P141_Patch_Description.pdf  Binary
+  
+  
+  
+ Associated Patches:
+ ===================
+ All released VistA Imaging patches are required and must be installed on 
+ the VistA system before MAG*3.0*141 can be installed. The KIDS files of 
+ the following VistA Imaging patches must be installed on the VistA system 
+ in this order:
+  
+   MAG*3.0*51 SEQ #36
+   MAG*3.0*123 SEQ #83
+  
+  
+ Test Sites:
+ ===========
+ San Diego VAMC
+ Tucson VAMC
+ Greater Los Angeles VAMC 
+  
+  
+ Remedy Help Calls:
+ ==================
+ 1. 532350, 839932 - Null PID Segment
+  
+ Problem:
+ ========
+ A PID segment can exceed 255 characters. The original MAG*3.0*49 code 
+ could not handle this.
+  
+ Resolution:
+ ==========
+ Enhanced the code to handle PID segments that exceed 255 characters.
+  
+ 2. 854875 - Missing patient telephone number
+  
+ Problem:
+ ========
+ The PID segment is missing the patient telephone number.
+  
+ Resolution:
+ ===========
+ Provide the patients telephone number in the PID-13 Phone Number - Home 
+ field.
+  
+ 3.  853664 - Absent outpatient location
+  
+ Problem:
+ ========
+ The outpatient location was not sent in the HL7 message.  The inpatient 
+ location is sent in the PV1-3 Assigned Patient Location.
+  
+ Resolution:
+ ===========
+ Provide the outpatient location in the PV1-11 Temporary Location field.
+  
+ New Service Requests:
+ =====================
+ There are no New Service Requests associated with this patch.
+  
+ Patient Safety Issues:
+ ======================
+ There are no Patient Safety Issue (PSI) reports associated with this 
+ patch.
+  
+ Data Dictionaries:
+ ==================
+ There are no new or modified Data Dictionaries.
+  
+ Security Keys:
+ ==============
+ There are no new or modified Security keys. 
+  
+  
+ REMOTE PROCEDURES:
+ ==================
+ There are no new or modified Remote Procedures.
+  
+ Menu Options
+ ============
+ There are no new or modified Menu Options.
+  
+ Templates:
+ ==========
+ There are no new or modified Menu Options. 
+  
+  
+ Installation
+ ============
+ Installing the VistA system (KIDS) involves installing the MAG*3.0*141 
+ KIDS file on the VistA system.
+  
+ Before installing this file, all released patches, including the patches 
+ listed in Associated Patches, must be installed.
+  
+ Installing the KIDS Package
+  
+ To install the KIDS file:
+ 1. Access the Kernel Installation and Distribution System Menu [XPD MAIN]
+  
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+  
+ 3. Load the KIDS file by performing the following steps:
+  
+    a. Run the Load a Distribution [XPD LOAD DISTRIBUTION] option to load
+       the KIDS distribution.
+  
+    b. When prompted, enter the path and file name (MAG3_0P141.KID) of the
+       MAG*3.0*141 KIDS file that you downloaded from the 
+       [] directory.
+  
+    c. When prompted to continue with the load, enter YES. A Distribution
+       OK! message displays when the load is complete.
+  
+ 4. After you load the KIDS file, use the following options to verify the
+    contents of the patch and to back up any affected routines.
+  
+    a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this
+    option if you want to ensure the integrity of the routines in the
+    patch.
+  
+    b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] -
+    Run this option if you want to view all changes that will be made when
+    the patch is installed. All components (routines, options, and so on)
+    in the patch will be compared.
+  
+    c. Backup a Transport Global [XPD BACKUP] - Run this option if you want
+    to create a backup message of any routines exported with the patch. The
+    option does NOT back up any of the other changes.
+  
+ 5. After performing the load and any optional verification steps, install
+ the KIDS file by performing the following steps:
+  
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option 
+    b. When prompted for the install name, enter MAG*3.0*141 
+    c. Answer NO to the following prompts:
+  
+    Want KIDS to INHIBIT LOGONs during the install? NO//
+    Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6. When the installation finishes, an Install Completed message displays.
+  
+ KIDS Installation Example
+  
+ Select Installation Option: INstall Package(s)
+ Select INSTALL NAME:    MAG*3.0*141    9/4/13@08:28:28
+      => VistA Imaging V3.0 Patch 141 - HL7 Version 2.4 Corrections
+  
+ This Distribution was loaded on Sep 04, 2013@08:28:28 with header of 
+    VistA Imaging V3.0 Patch 141 - HL7 Version 2.4 Corrections - 09/03/201
+ 3 01:30PM  ;Created on Sep 03, 2013@13:30:58
+    It consisted of the following Install(s):
+     MAG*3.0*141
+ Checking Install for Package MAG*3.0*141
+  
+ Install Questions for MAG*3.0*141
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+ Complete                                 MAG*3.0*141          
+  
+  Install Started for MAG*3.0*141 : 
+                Sep 04, 2013@08:42:36
+  
+ Build Distribution Date: Sep 03, 2013
+  
+  Installing Routines: 
+                Sep 04, 2013@08:42:36
+  
+  Running Pre-Install Routine: PRE^MAGIP141 
+  
+  Running Post-Install Routine: POS^MAGIP141 
+  
+ Post Install Mail Message: Sep 04, 2013@08:42:36
+  
+  Updating Routine file... 
+  
+  Updating KIDS files... 
+  
+  MAG*3.0*141 Installed. 
+                Sep 04, 2013@08:42:37
+  
+  
+ Install Message sent 
+  
+ Install Completed
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 5378;Sep 03, 2013
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGDFCNV
+    Before:  B8587373   After: B13765242  **11,51,141**
+Routine Name: MAGDHLS
+    Before: B74934022   After: B78648405  **49,123,141**
+Routine Name: MAGDHLSV
+    Before: B49332835   After: B58263891  **49,141**
+Routine Name: MAGIP141
+    Before:       n/a   After:  B4110371  **141**
+ 
+Routine list of preceding patches: 51, 123
+
+=============================================================================
+User Information:                          Hold Date     : JUN 12, 2014
+Entered By  :                               Date Entered  : MAY 06, 2013
+Completed By:                               Date Completed: MAY 13, 2014
+Released By :                               Date Released : JUN 25, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

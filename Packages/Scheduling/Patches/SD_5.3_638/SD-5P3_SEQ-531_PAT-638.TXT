@@ -1,0 +1,210 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 09/30/15 at 07:19
+=============================================================================
+Run Date: MAR 21, 2016                     Designation: SD*5.3*638
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #531                    Status: Released
+                  Compliance Date: APR 21, 2016
+=============================================================================
+
+Associated patches: (v)SD*5.3*446  <<= must be installed BEFORE `SD*5.3*638'
+                    (v)SD*5.3*554  <<= must be installed BEFORE `SD*5.3*638'
+
+Subject: DISABLE EWL TRANS OPT, MODIFY EWL OPTIONS
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ Patch SD*5.3*638 addresses three Remedy ticket issues:
+  
+ 1. A request has been made to discontinue the bi-monthly Electronic Wait 
+    List (EWL) transmissions to the Austin Information Technology (AITC).
+  
+ 2. Users are unable to remove data from the DATE INACTIVATED (#3) field
+    in the SD WL CLINIC LOCATION (#409.32) file if there are open Wait List
+    entries.
+  
+ 3. When adding Wait List entries by Service Specialty, if a specific
+    clinic is added and Auditing is turned on, a subscript error will 
+    occur.
+  
+ ASSOCIATED NSR(s):
+ =================
+ N/A
+        
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+ 1. INC000001277998 - Scheduling - EWL Austin Transmit
+ 2. INC000001296005 - Scheduling - EWL Issue with accessing wait list option
+ 3. INC000001297501 - <SUBSCRIPT>IX+1^DIE1 ^SDWL(409.3,"SCC","")
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ CENTRAL TEXAS HCS (TEMPLE, WACO)           
+ COATESVILLE VA MEDICAL CENTER               
+ PHILADELPHIA VA MEDICAL CENTER
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001277998 - Scheduling - EWL Austin Transmit
+   
+    Problem: 
+    --------
+    A request has been made to stop the bi-monthly Electronic Wait List
+    (EWL) transmissions from the VistA sites to the Austin Information
+    Technology Center (AITC). The VHA Service Support Center (VSSC) has
+    converted to obtain that data now from the Corporate Data Warehouse
+    (CDW), and they are no longer using the data being sent by the sites.
+  
+    Resolution:
+    -----------
+    VistA option SD Wait List Trans to AAC [SD WAIT LIST TRANS TO AAC] will
+    be disabled using post-install routine SDWL638. This routine will also
+    remove any Task Man scheduled tasks to prevent further data
+    transmissions. A QUIT command will also be added to routine SDWLTR to
+    prevent the option from being executed unintentionally.
+  
+ 2. INC000001296005 - Scheduling - EWL Issue with accessing wait list option
+   
+    Problem: 
+    --------
+    If a clinic has been inactivated from Wait List functionality while
+    having open Wait List entries; users are unable to reactivate the
+    clinic.
+  
+    Resolution:
+    -----------
+    A check will be added to routine SDWLPE to determine if a clinic
+    already has a date in the DATE INACTIVATED (#3) field of the SD WL
+    CLINIC LOCATION (#409.32) file before evaluating open Wait List entries
+    and forcing the user to exit the option.
+  
+ 3. INC000001297501 - <SUBSCRIPT>IX+1^DIE1 ^SDWL(409.3,"SCC","")
+   
+    Problem: 
+    --------
+    When creating a service/specialty wait list type, if the user adds a
+    clinic the software is designed to change the entry from
+    service/specialty to specific clinic. This is done by deleting the
+    current record and creating another using FileMan calls. When Auditing
+    is turned on the SD WAIT LIST (#409.3) file, a subscript error occurs.
+  
+    Resolution:
+    -----------
+    Resetting the DA variable in between a FILE^DICN call and a ^DIE call
+    in CLIN^SDWLE2 will prevent the subscript error from occurring when
+    Auditing is enabled.
+  
+ Documentation:
+ --------------
+ The EWL user manual will be updated to remove information on bi-monthly
+ transmissions on pages 82-84. This information will be replaced with a message
+ advising that information is now passed between the VSSC and the CDW.
+  
+  
+ DOCUMENTATION RETRIEVAL:
+ ------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+ Title                         File Name                       SFTP Mode
+ -----------------------------------------------------------------------
+ SD_5.3_P638_EWLUM.pdf         EWL User Manual                 Binary
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch is installed during non-peak hours. It should
+ take less than 2 minutes to complete.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter SD*5.3*638)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        SD*5.3*638.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//", respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? YES//, respond YES.
+  
+         Enter options you wish to mark as 'Out Of Order': 
+  
+ SD WAIT LIST TRANS TO AAC     SD Wait List Trans to AAC
+ SD WAIT LIST PAR ENTER/EDIT   Wait List (Sch/PCMM) Parameter Enter/Edit
+ SD WAIT LIST ENTER/EDIT       Enter/Edit Wait List (Sch/PCMM)
+  
+         When Prompted "Enter protocols you wish to mark as 'Out Of 
+         Order':", Press <ENTER>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDWL638
+    Before:       n/a   After:  B2480458  **638**
+Routine Name: SDWLE2
+    Before: B14498008   After: B16172339  **263,397,424,446,638**
+Routine Name: SDWLPE
+    Before: B33375093   After: B36521496  **263,280,288,397,491,554,638**
+Routine Name: SDWLTR
+    Before: B79675127   After: B80952316  **270,420,446,638**
+ 
+Routine list of preceding patches: 446, 554
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 08, 2015
+Completed By:                               Date Completed: MAR 16, 2016
+Released By :                               Date Released : MAR 21, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

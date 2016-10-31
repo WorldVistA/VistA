@@ -1,0 +1,757 @@
+Released EN*7*96 SEQ #90
+Extracted from mail message
+**KIDS**:EN*7.0*96^
+
+**INSTALL NAME**
+EN*7.0*96
+"BLD",9703,0)
+EN*7.0*96^ENGINEERING^0^3140722^y
+"BLD",9703,1,0)
+^^12^12^3140718^
+"BLD",9703,1,1,0)
+This patch addresses three issues:
+"BLD",9703,1,2,0)
+ 
+"BLD",9703,1,3,0)
+1. The first issue will add 1 new code and deactivate 3 old codes in the
+"BLD",9703,1,4,0)
+   Non-Expendable Equipment Budget Object Codes (NX BOC) file (#6914.4).
+"BLD",9703,1,5,0)
+ 
+"BLD",9703,1,6,0)
+2, The second issue involves a subscript error occurring at 
+"BLD",9703,1,7,0)
+   NEWLOC+1^ENEQNX1 when there is no nonexpendable inventory data uploaded
+"BLD",9703,1,8,0)
+   from the portable bar code reader to the Barcode Program file (#446.4).
+"BLD",9703,1,9,0)
+ 
+"BLD",9703,1,10,0)
+3. The third issue is about an error - <NOTOPEN>^PRT1^ENWOD in the 
+"BLD",9703,1,11,0)
+   Multiple Work Order Entry [ENWOMULTI] option when the device is forced
+"BLD",9703,1,12,0)
+   queuing the job in a task.
+"BLD",9703,4,0)
+^9.64PA^^
+"BLD",9703,6.3)
+5
+"BLD",9703,"ABPKG")
+n
+"BLD",9703,"INIT")
+POST^EN70P96
+"BLD",9703,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9703,"KRN",.4,0)
+.4
+"BLD",9703,"KRN",.401,0)
+.401
+"BLD",9703,"KRN",.402,0)
+.402
+"BLD",9703,"KRN",.403,0)
+.403
+"BLD",9703,"KRN",.5,0)
+.5
+"BLD",9703,"KRN",.84,0)
+.84
+"BLD",9703,"KRN",3.6,0)
+3.6
+"BLD",9703,"KRN",3.8,0)
+3.8
+"BLD",9703,"KRN",9.2,0)
+9.2
+"BLD",9703,"KRN",9.8,0)
+9.8
+"BLD",9703,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",9703,"KRN",9.8,"NM",1,0)
+ENWOD^^0^B24962148
+"BLD",9703,"KRN",9.8,"NM",2,0)
+ENEQNX1^^0^B15868049
+"BLD",9703,"KRN",9.8,"NM","B","ENEQNX1",2)
+
+"BLD",9703,"KRN",9.8,"NM","B","ENWOD",1)
+
+"BLD",9703,"KRN",19,0)
+19
+"BLD",9703,"KRN",19.1,0)
+19.1
+"BLD",9703,"KRN",101,0)
+101
+"BLD",9703,"KRN",409.61,0)
+409.61
+"BLD",9703,"KRN",771,0)
+771
+"BLD",9703,"KRN",779.2,0)
+779.2
+"BLD",9703,"KRN",870,0)
+870
+"BLD",9703,"KRN",8989.51,0)
+8989.51
+"BLD",9703,"KRN",8989.52,0)
+8989.52
+"BLD",9703,"KRN",8994,0)
+8994
+"BLD",9703,"KRN","B",.4,.4)
+
+"BLD",9703,"KRN","B",.401,.401)
+
+"BLD",9703,"KRN","B",.402,.402)
+
+"BLD",9703,"KRN","B",.403,.403)
+
+"BLD",9703,"KRN","B",.5,.5)
+
+"BLD",9703,"KRN","B",.84,.84)
+
+"BLD",9703,"KRN","B",3.6,3.6)
+
+"BLD",9703,"KRN","B",3.8,3.8)
+
+"BLD",9703,"KRN","B",9.2,9.2)
+
+"BLD",9703,"KRN","B",9.8,9.8)
+
+"BLD",9703,"KRN","B",19,19)
+
+"BLD",9703,"KRN","B",19.1,19.1)
+
+"BLD",9703,"KRN","B",101,101)
+
+"BLD",9703,"KRN","B",409.61,409.61)
+
+"BLD",9703,"KRN","B",771,771)
+
+"BLD",9703,"KRN","B",779.2,779.2)
+
+"BLD",9703,"KRN","B",870,870)
+
+"BLD",9703,"KRN","B",8989.51,8989.51)
+
+"BLD",9703,"KRN","B",8989.52,8989.52)
+
+"BLD",9703,"KRN","B",8994,8994)
+
+"BLD",9703,"QDEF")
+^^^^^^^^^^YES
+"BLD",9703,"QUES",0)
+^9.62^^
+"BLD",9703,"REQB",0)
+^9.611^2^2
+"BLD",9703,"REQB",1,0)
+EN*7.0*68^2
+"BLD",9703,"REQB",2,0)
+EN*7.0*65^2
+"BLD",9703,"REQB","B","EN*7.0*65",2)
+
+"BLD",9703,"REQB","B","EN*7.0*68",1)
+
+"INIT")
+POST^EN70P96
+"MBREQ")
+0
+"PKG",33,-1)
+1^1
+"PKG",33,0)
+ENGINEERING^EN^AUTOMATED ENGINEERING MANAGEMENT SYSTEM
+"PKG",33,20,0)
+^9.402P^^
+"PKG",33,22,0)
+^9.49I^1^1
+"PKG",33,22,1,0)
+7.0^2930817^2960130
+"PKG",33,22,1,"PAH",1,0)
+96^3140722
+"PKG",33,22,1,"PAH",1,1,0)
+^^12^12^3140722
+"PKG",33,22,1,"PAH",1,1,1,0)
+This patch addresses three issues:
+"PKG",33,22,1,"PAH",1,1,2,0)
+ 
+"PKG",33,22,1,"PAH",1,1,3,0)
+1. The first issue will add 1 new code and deactivate 3 old codes in the
+"PKG",33,22,1,"PAH",1,1,4,0)
+   Non-Expendable Equipment Budget Object Codes (NX BOC) file (#6914.4).
+"PKG",33,22,1,"PAH",1,1,5,0)
+ 
+"PKG",33,22,1,"PAH",1,1,6,0)
+2, The second issue involves a subscript error occurring at 
+"PKG",33,22,1,"PAH",1,1,7,0)
+   NEWLOC+1^ENEQNX1 when there is no nonexpendable inventory data uploaded
+"PKG",33,22,1,"PAH",1,1,8,0)
+   from the portable bar code reader to the Barcode Program file (#446.4).
+"PKG",33,22,1,"PAH",1,1,9,0)
+ 
+"PKG",33,22,1,"PAH",1,1,10,0)
+3. The third issue is about an error - <NOTOPEN>^PRT1^ENWOD in the 
+"PKG",33,22,1,"PAH",1,1,11,0)
+   Multiple Work Order Entry [ENWOMULTI] option when the device is forced
+"PKG",33,22,1,"PAH",1,1,12,0)
+   queuing the job in a task.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","EN70P96")
+0^^B6543791^n/a
+"RTN","EN70P96",1,0)
+EN70P96 ;ALB/CXW - EN V7.0 POST INIT, NX BOC Update; 05/05/14 1:03 pm
+"RTN","EN70P96",2,0)
+ ;;7.0;ENGINEERING;**96**;Aug 17, 1993;Build 5
+"RTN","EN70P96",3,0)
+ Q
+"RTN","EN70P96",4,0)
+ ;
+"RTN","EN70P96",5,0)
+POST ; entry point for post-init
+"RTN","EN70P96",6,0)
+ ; Updates to the NX BOC file (#6914.4)
+"RTN","EN70P96",7,0)
+ N ENX
+"RTN","EN70P96",8,0)
+ D MSG("    EN*7.0*96 Post-Install .....")
+"RTN","EN70P96",9,0)
+ D UPBOC
+"RTN","EN70P96",10,0)
+ D MSG("    EN*7.0*96 Post-Install Complete")
+"RTN","EN70P96",11,0)
+ Q
+"RTN","EN70P96",12,0)
+ ;
+"RTN","EN70P96",13,0)
+UPBOC ; add 1 new BOC and deactivate 3 BOCs
+"RTN","EN70P96",14,0)
+ N U,ENI,ENBOC,ENBOC1,ENDDT,ENDDT1,ENRC,ENSGL,ENSGL1,ENTL,DIC,DIE,DR,X,Y,DA
+"RTN","EN70P96",15,0)
+ S U="^" D MSG("")
+"RTN","EN70P96",16,0)
+ D MSG(">>> Updating Budget Object Code (BOC) in the NX BOC file (#6914.4)...")
+"RTN","EN70P96",17,0)
+ F ENI=1:1 S ENRC=$P($T(NXBOC+ENI),";;",2) Q:ENRC="QUIT"  D
+"RTN","EN70P96",18,0)
+ . S ENBOC=$P(ENRC,U)
+"RTN","EN70P96",19,0)
+ . S ENBOC1=$O(^ENG(6914.4,"B",ENBOC,0))
+"RTN","EN70P96",20,0)
+ . S ENTL=$P(ENRC,U,2)
+"RTN","EN70P96",21,0)
+ . S ENDDT=$P(ENRC,U,4)
+"RTN","EN70P96",22,0)
+ . S ENSGL=$P(ENRC,U,3)
+"RTN","EN70P96",23,0)
+ . S ENSGL1=$O(^ENG(6914.3,"B",ENSGL,0))
+"RTN","EN70P96",24,0)
+ . ; add a new code
+"RTN","EN70P96",25,0)
+ . I 'ENBOC1 D  Q
+"RTN","EN70P96",26,0)
+ .. I 'ENSGL1 D MSG(" >> SGL "_ENSGL_" for BOC "_ENBOC_" not defined in the NX SGL file (#6914.3), no update") Q
+"RTN","EN70P96",27,0)
+ .. ; the old code should already exist in the file
+"RTN","EN70P96",28,0)
+ .. I ENDDT D MSG(" >> "_ENBOC_" not defined in the NX BOC file (#6914.4). no update") Q
+"RTN","EN70P96",29,0)
+ .. S X=ENBOC,DIC="^ENG(6914.4,",DIC(0)="" D FILE^DICN
+"RTN","EN70P96",30,0)
+ .. I Y<0 D MSG(" >> ERROR when adding "_ENBOC_" to the file, Log a Remedy ticket!") Q
+"RTN","EN70P96",31,0)
+ .. S DA=+Y,DIE=DIC,DR="1///"_$P(ENRC,U,2)_";2///"_ENSGL1 D ^DIE
+"RTN","EN70P96",32,0)
+ .. D MSG(" >> "_ENBOC_" "_ENTL_" added")
+"RTN","EN70P96",33,0)
+ . S ENRC=$G(^ENG(6914.4,ENBOC1,0))
+"RTN","EN70P96",34,0)
+ . S ENDDT1=$P(ENRC,U,5)
+"RTN","EN70P96",35,0)
+ . ; deactivate the code
+"RTN","EN70P96",36,0)
+ . I ENDDT'=ENDDT1 D  Q
+"RTN","EN70P96",37,0)
+ .. S DA=ENBOC1,DIE="^ENG(6914.4,",DR="4///"_ENDDT D ^DIE
+"RTN","EN70P96",38,0)
+ .. D MSG(" >> "_ENBOC_" "_ENTL_" deactivated with date "_$$FMTE^XLFDT(ENDDT))
+"RTN","EN70P96",39,0)
+ . D MSG(" >> "_ENBOC_" "_ENTL_" has already been "_$S(ENDDT:"deactivated in",1:"added to")_" the file")
+"RTN","EN70P96",40,0)
+ D MSG("")
+"RTN","EN70P96",41,0)
+ Q
+"RTN","EN70P96",42,0)
+ ;
+"RTN","EN70P96",43,0)
+MSG(ENX) ;
+"RTN","EN70P96",44,0)
+ D MES^XPDUTL(ENX)
+"RTN","EN70P96",45,0)
+ Q
+"RTN","EN70P96",46,0)
+ ;
+"RTN","EN70P96",47,0)
+NXBOC ; capitalized budget object code^boc title^corresponding sgl^deactivated date
+"RTN","EN70P96",48,0)
+ ;;3105^TRUST EQUIPMENT^1750^3080828
+"RTN","EN70P96",49,0)
+ ;;3122^OFFICE AUTOMATION/WORD PROCESSING, PURCHASED^1750^3140508
+"RTN","EN70P96",50,0)
+ ;;3123^ADP EQUIPMENT^1751^3140508
+"RTN","EN70P96",51,0)
+ ;;3138^IT HARDWARE-CAPITALIZED^1751
+"RTN","EN70P96",52,0)
+ ;;QUIT
+"RTN","EN70P96",53,0)
+ ;
+"RTN","EN70P96",54,0)
+ Q
+"RTN","ENEQNX1")
+0^2^B15868049^B15417507
+"RTN","ENEQNX1",1,0)
+ENEQNX1 ;(WASH ISC)/DH-Process Uploaded Equipment Inventory ;1/9/2001
+"RTN","ENEQNX1",2,0)
+ ;;7.0;ENGINEERING;**10,21,45,68,96**;Aug 17, 1993;Build 5
+"RTN","ENEQNX1",3,0)
+RES ;Restart an aborted process
+"RTN","ENEQNX1",4,0)
+ S X="",ENY=0 W !!,"Enter PROCESS ID: " R X:DTIME G:X="^"!(X="") EXIT^ENEQNX2 S ENCTID=$O(^PRCT(446.4,"C",X,"")) I ENCTID="" W !!,*7,"Wrong application. Aborting..." D HOLD G EXIT^ENEQNX2
+"RTN","ENEQNX1",5,0)
+ S X="" W !!,"Enter TIME STAMP of process to be restarted: " R X:DTIME G:X="^"!(X="") EXIT^ENEQNX2 S ENCTTI=$O(^PRCT(446.4,ENCTID,2,"B",X,"")) I ENCTTI="" W !!,"NO DATA. Aborting..." D HOLD G EXIT^ENEQNX2
+"RTN","ENEQNX1",6,0)
+EN ;Main entry point. Expects ENCTID and ENCTTI.
+"RTN","ENEQNX1",7,0)
+ G:'$D(ENCTID) ERR^ENEQNX3
+"RTN","ENEQNX1",8,0)
+ S ENSTA=$P($G(^DIC(6910,1,0)),U,2),ENSTAL=$L(ENSTA)
+"RTN","ENEQNX1",9,0)
+ I ENSTA="" W !!,"Can't seem to find your STATION NUMBER. Please check File 6910.",!,"Your IRM staff may need to assist you.",*7 G ERR^ENEQNX3
+"RTN","ENEQNX1",10,0)
+ F I=1,2,3,4,5,6,7,8 S ENSTA(I)="",ENSTAL(I)=0
+"RTN","ENEQNX1",11,0)
+ I $G(^DIC(6910,1,3,0))]"" D
+"RTN","ENEQNX1",12,0)
+ . S (I,ENX)=0 F  S ENX=$O(^DIC(6910,1,3,ENX)) Q:'ENX!(I>8)  D
+"RTN","ENEQNX1",13,0)
+ .. S I=I+1,ENSTA(I)=$P(^DIC(6910,1,3,ENX,0),U)
+"RTN","ENEQNX1",14,0)
+ .. S ENSTAL(I)=$L(ENSTA(I))
+"RTN","ENEQNX1",15,0)
+ S X="T",U="^",%DT="" D ^%DT S DT=+Y X ^DD("DD") S ENDATE=Y I '$D(DTIME) S DTIME=600
+"RTN","ENEQNX1",16,0)
+ D MSG^ENEQNX3
+"RTN","ENEQNX1",17,0)
+ S %ZIS="Q",%ZIS("A")="Select Device for Exception Messages: " D ^%ZIS K %ZIS G:POP ERR^ENEQNX3
+"RTN","ENEQNX1",18,0)
+ G:$D(IO("Q")) ZTSK
+"RTN","ENEQNX1",19,0)
+CONT ;Physical processing of uploaded data
+"RTN","ENEQNX1",20,0)
+ U IO S (ENY,ENPG)=0,ENX=$O(^PRCT(446.4,ENCTID,2,ENCTTI,1,0)) I ENX'>0 D HDR W *7,!!,"No data to process." D HOLD G EXIT^ENEQNX2
+"RTN","ENEQNX1",21,0)
+ S ENX=$O(^PRCT(446.4,ENCTID,2,ENCTTI,1,ENX)) ;ignore file ID
+"RTN","ENEQNX1",22,0)
+ ; *96 write a msg if no data
+"RTN","ENEQNX1",23,0)
+ I 'ENX D HDR W *7,!!,"No data to process." G EXIT^ENEQNX2
+"RTN","ENEQNX1",24,0)
+NEWLOC ;Beginning of a specific location
+"RTN","ENEQNX1",25,0)
+ S ENLBL=^PRCT(446.4,ENCTID,2,ENCTTI,1,ENX,0),ENLOC=$E(ENLBL,3,50) I $E(ENLBL,1,2)'="SP" S ENMSG="LOCATION EXPECTED." D XCPTN S ENX=$O(^PRCT(446.4,ENCTID,2,ENCTTI,1,ENX)) G:ENX'>0 EXIT^ENEQNX2 G NEWLOC
+"RTN","ENEQNX1",26,0)
+ I ENLOC["  " S ENLOC=$P(ENLOC,"  ")
+"RTN","ENEQNX1",27,0)
+ S X=$L(ENLOC) I $E(ENLOC,X)=" " S ENLOC=$E(ENLOC,1,(X-1))
+"RTN","ENEQNX1",28,0)
+NEWNX ;Process a piece of equipment
+"RTN","ENEQNX1",29,0)
+ S ENX=$O(^PRCT(446.4,ENCTID,2,ENCTTI,1,ENX)) G:ENX'>0 DONE S (ENEQ,ENLBL)=^(ENX,0) G:$E(ENLBL)="*" NEWNX
+"RTN","ENEQNX1",30,0)
+ I $E(ENEQ,1,2)="SP" K ENEQ G NEWLOC
+"RTN","ENEQNX1",31,0)
+ S ^PRCT(446.4,ENCTID,2,ENCTTI,1,ENX,0)="*"_ENEQ
+"RTN","ENEQNX1",32,0)
+ I $E(ENEQ,1,4)="MOD:" D NOLBL^ENEQNX3 G NEWNX
+"RTN","ENEQNX1",33,0)
+ I $E(ENEQ,1,4)="PM#:" D PMN^ENEQNX3 G NEWNX
+"RTN","ENEQNX1",34,0)
+ I ENEQ[" EE",$P(ENEQ," ")'=ENSTA D  I $D(ENMSG) D XCPTN G NEWNX
+"RTN","ENEQNX1",35,0)
+ . K ENMSG S ENMSG="FOREIGN EQUIPMENT."
+"RTN","ENEQNX1",36,0)
+ . F I=1:1:8 I ENSTAL(I),ENSTA(I)=$E(ENEQ,1,ENSTAL(I)) K ENMSG Q
+"RTN","ENEQNX1",37,0)
+ . I $D(ENMSG) S ENMSG(0,1)="Cannot process a bar code label from another VAMC."
+"RTN","ENEQNX1",38,0)
+ S ENEQ=$S($D(^ENG(6914,"OEE",ENLBL)):$O(^(ENLBL,0)),1:+$P(ENLBL,"EE",2))
+"RTN","ENEQNX1",39,0)
+ I ENEQ>0 D UPDATE^ENEQNX2
+"RTN","ENEQNX1",40,0)
+ G NEWNX
+"RTN","ENEQNX1",41,0)
+ ;
+"RTN","ENEQNX1",42,0)
+XCPTN ;Print Exception Messages
+"RTN","ENEQNX1",43,0)
+ D:ENY=0!(ENY>(IOSL-5)) HDR W !!,ENMSG,! W:$D(ENLBL) "   Label scanned as: ",ENLBL W:$D(ENLOC) "   Location: ",ENLOC S ENY=ENY+3
+"RTN","ENEQNX1",44,0)
+ I $D(ENMSG(0)) F I=0:0 S I=$O(ENMSG(0,I)) Q:I'=+I  W !,ENMSG(0,I) S ENY=ENY+1
+"RTN","ENEQNX1",45,0)
+ K ENMSG
+"RTN","ENEQNX1",46,0)
+ Q
+"RTN","ENEQNX1",47,0)
+ ;
+"RTN","ENEQNX1",48,0)
+HDR ;New page for exception printing
+"RTN","ENEQNX1",49,0)
+ I $E(IOST,1,2)="C-",ENY>0 D HOLD
+"RTN","ENEQNX1",50,0)
+ I ENPG!($E(IOST,1,2)="C-") W @IOF
+"RTN","ENEQNX1",51,0)
+ S ENPG=ENPG+1
+"RTN","ENEQNX1",52,0)
+ W "NON-EXPENDABLE INVENTORY EXCEPTION MESSAGES",?(IOM-15),ENDATE
+"RTN","ENEQNX1",53,0)
+ W !,"   Global Reference: ^PRCT(446.4,"_ENCTID_",2,"_ENCTTI_",1,",?(IOM-15),"Page ",ENPG
+"RTN","ENEQNX1",54,0)
+ K % S $P(%,"-",(IOM-1))="-" W !,%
+"RTN","ENEQNX1",55,0)
+ S ENY=4
+"RTN","ENEQNX1",56,0)
+ Q
+"RTN","ENEQNX1",57,0)
+ZTSK ;Queue processing for later time
+"RTN","ENEQNX1",58,0)
+ K IO("Q") S ZTIO=ION,ZTRTN="CONT^ENEQNX1",ZTDESC="NX Inventory (Bar Code)"
+"RTN","ENEQNX1",59,0)
+ F I="ENSTA","ENSTA(","ENSTAL","ENSTAL(","ENCTTI","ENCTID","DT","ENDATE" S ZTSAVE(I)=""
+"RTN","ENEQNX1",60,0)
+ D ^%ZTLOAD K ZTSK D HOME^%ZIS
+"RTN","ENEQNX1",61,0)
+ G EXIT^ENEQNX2
+"RTN","ENEQNX1",62,0)
+HOLD I $E(IOST,1,2)="C-" W !,"Press <RETURN> to continue..." R X:DTIME
+"RTN","ENEQNX1",63,0)
+ Q
+"RTN","ENEQNX1",64,0)
+DONE ;Delete DATE/TIME OF DATA UPLOAD
+"RTN","ENEQNX1",65,0)
+ K DA,DIK S DIK="^PRCT(446.4,"_ENCTID_",2,",DA(1)=ENCTID,DA=ENCTTI
+"RTN","ENEQNX1",66,0)
+ D ^DIK
+"RTN","ENEQNX1",67,0)
+ K DIK
+"RTN","ENEQNX1",68,0)
+ G EXIT^ENEQNX2
+"RTN","ENEQNX1",69,0)
+ ;ENEQNX1
+"RTN","ENWOD")
+0^1^B24962148^B24829030
+"RTN","ENWOD",1,0)
+ENWOD ;(WIRMFO)/DLM/DH/SAB-Formatted Work Order Display ;5/11/2000
+"RTN","ENWOD",2,0)
+ ;;7.0;ENGINEERING;**35,43,65,96**;Aug 17, 1993;Build 5
+"RTN","ENWOD",3,0)
+EDIT ;  Work order display/edit (screen) option
+"RTN","ENWOD",4,0)
+ D WO^ENWOUTL G:Y'>0 EXIT S DA=+Y
+"RTN","ENWOD",5,0)
+ D EDIT1
+"RTN","ENWOD",6,0)
+ G EDIT
+"RTN","ENWOD",7,0)
+ ;
+"RTN","ENWOD",8,0)
+EDIT1 ; display/edit one work order
+"RTN","ENWOD",9,0)
+ ; input DA (ien of work order), DUZ (user number)
+"RTN","ENWOD",10,0)
+ N ENBARCD,ENDSTAT,ENEDIT,ENINV,ENJ,ENREOPEN,ENWO,ENWOCLOD,ENX
+"RTN","ENWOD",11,0)
+ S ENEDIT=0 ; flag, true if user edited work order
+"RTN","ENWOD",12,0)
+ S ENREOPEN=0 ; flag, true if closed work order reopened for edit
+"RTN","ENWOD",13,0)
+ D D F  D READ Q:ENX=""  D ACTION Q:$P($G(^ENG(6920,DA,5)),U,2)]""&ENEDIT
+"RTN","ENWOD",14,0)
+ I ENEDIT D
+"RTN","ENWOD",15,0)
+ . ; work order edited by user
+"RTN","ENWOD",16,0)
+ . N DIE,DR
+"RTN","ENWOD",17,0)
+ . S DIE="^ENG(6920,"
+"RTN","ENWOD",18,0)
+ . I ENREOPEN,$P($G(^ENG(6920,DA,5)),U,2)']"" S DR="36//^S X=ENWOCLOD" D ^DIE
+"RTN","ENWOD",19,0)
+ . I $P($G(^ENG(6920,DA,5)),U,2)]"" D
+"RTN","ENWOD",20,0)
+ . . ; work order was closed
+"RTN","ENWOD",21,0)
+ . . I "^5^6^"'[(U_$P($G(^ENG(6920,DA,4)),U,3)_U) D
+"RTN","ENWOD",22,0)
+ . . . ; status was not set to Completed or Disapproved
+"RTN","ENWOD",23,0)
+ . . . S DR="32///^S X=""COMPLETED""" D ^DIE
+"RTN","ENWOD",24,0)
+ . . I $E($P($G(^ENG(6920,DA,0)),U),1,3)="PM-" D
+"RTN","ENWOD",25,0)
+ . . . ; post PM hours for PM work order
+"RTN","ENWOD",26,0)
+ . . . N ENPMDT,PMTOT,X
+"RTN","ENWOD",27,0)
+ . . . D PMHRS^ENEQPMR4 Q:'$D(PMTOT)
+"RTN","ENWOD",28,0)
+ . . . S X=$P($P(^ENG(6920,DA,0),U),"-",2)
+"RTN","ENWOD",29,0)
+ . . . F I=1:1:$L(X) S:$E(X,I)?1N ENPMDT=$G(ENPMDT)_$E(X,I)
+"RTN","ENWOD",30,0)
+ . . . S ENPMDT=$E(ENPMDT,1,4)
+"RTN","ENWOD",31,0)
+ . . . D COUNT^ENBCPM8
+"RTN","ENWOD",32,0)
+ . ; unlock
+"RTN","ENWOD",33,0)
+ . L -^ENG(6920,DA)
+"RTN","ENWOD",34,0)
+ Q
+"RTN","ENWOD",35,0)
+ ;
+"RTN","ENWOD",36,0)
+READ ;User interaction
+"RTN","ENWOD",37,0)
+ D HOME^%ZIS W !,"ENTER/EDIT (1-33), D(DISPLAY), AC(ACCOUNT), P(PRINT)): EXIT// " R ENX:DTIME
+"RTN","ENWOD",38,0)
+ I ENX=10 W !,"Uneditable field.",*7 G READ
+"RTN","ENWOD",39,0)
+ I ENX=11 W !,"A transfer option must be used to change SHOP.",*7 G READ
+"RTN","ENWOD",40,0)
+ I $E(ENX)="^"!($E(ENX)="E") S ENX=""
+"RTN","ENWOD",41,0)
+ Q:ENX=""  I ENX?1.2N S ENX=+ENX I ENX<1!(ENX>33) W " ??",*7 G READ
+"RTN","ENWOD",42,0)
+ Q:ENX?1.2N  S ENX=$TR(ENX,"dap","DAP") I "DAP"'[$E(ENX) W " ??",*7 G READ
+"RTN","ENWOD",43,0)
+ Q
+"RTN","ENWOD",44,0)
+ ;
+"RTN","ENWOD",45,0)
+ACTION ;Edit or display
+"RTN","ENWOD",46,0)
+ I ENX'?1.2N N TAG S TAG=$E(ENX) D @TAG Q
+"RTN","ENWOD",47,0)
+ ; try to prepare work order for editing (if not already done)
+"RTN","ENWOD",48,0)
+ I 'ENEDIT D  I 'ENEDIT L -^ENG(6920,DA) Q
+"RTN","ENWOD",49,0)
+ . L +^ENG(6920,DA):5 I '$T W !,"This work order is being edited by another user.  Please try again later." Q
+"RTN","ENWOD",50,0)
+ . I $P($G(^ENG(6920,DA,5)),U,2)]"" D  I 'ENREOPEN  Q
+"RTN","ENWOD",51,0)
+ . . W $C(7),!,"NOTE: This work order has been closed."
+"RTN","ENWOD",52,0)
+ . . I '$D(^XUSEC("ENEDCLWO",DUZ)) W !,"Security key ENEDCLWO is needed to edit closed work orders." Q
+"RTN","ENWOD",53,0)
+ . . S DIR("A")="Are you sure you want to edit this work order",DIR(0)="Y",DIR("B")="NO"
+"RTN","ENWOD",54,0)
+ . . D ^DIR K DIR Q:Y'>0
+"RTN","ENWOD",55,0)
+ . . I $P($G(^ENG(6920,DA,3)),U,8)>0 D KILLHS^ENEQHS Q:$G(R)="^"
+"RTN","ENWOD",56,0)
+ . . S ENWOCLOD=$P(^ENG(6920,DA,5),U,2)
+"RTN","ENWOD",57,0)
+ . . S $P(^ENG(6920,DA,5),U,2)="" D TEST^ENWOCOMP
+"RTN","ENWOD",58,0)
+ . . I $E($P($G(^ENG(6920,DA,0)),U),1,3)="PM-" D
+"RTN","ENWOD",59,0)
+ . . . ; since reopening PM work order we must back out the PM hours
+"RTN","ENWOD",60,0)
+ . . . N ENPMDT,PMTOT,X
+"RTN","ENWOD",61,0)
+ . . . D PMHRS^ENEQPMR4 Q:'$D(PMTOT)
+"RTN","ENWOD",62,0)
+ . . . S X=$P($P(^ENG(6920,DA,0),U),"-",2)
+"RTN","ENWOD",63,0)
+ . . . F I=1:1:$L(X) S:$E(X,I)?1N ENPMDT=$G(ENPMDT)_$E(X,I)
+"RTN","ENWOD",64,0)
+ . . . S ENPMDT=$E(ENPMDT,1,4)
+"RTN","ENWOD",65,0)
+ . . . D UNPOST^ENBCPM8
+"RTN","ENWOD",66,0)
+ . . S ENREOPEN=1 ; reopen of closed work order completed
+"RTN","ENWOD",67,0)
+ . S ENEDIT=1 ; work order ready for editing
+"RTN","ENWOD",68,0)
+ N DIE,DR,ENDA
+"RTN","ENWOD",69,0)
+ S DR=$P("16^1^2^3^4^STAT^6^7^8^^9^10^17^18^19^21^EQ53^21.9^22.3^22.5^23^20^31^35^35.5^37^38^37.5^47^16.5^36^39^40",U,ENX) S:DR="STAT" DR=ENDSTAT
+"RTN","ENWOD",70,0)
+ I $E(DR,1,2)="EQ" S ENDA=DA D  S DA=ENDA Q
+"RTN","ENWOD",71,0)
+ . S DIE="^ENG(6914,",DR=$E(DR,3,99),DA=$P($G(^ENG(6920,DA,3)),U,8)
+"RTN","ENWOD",72,0)
+ . I DA D
+"RTN","ENWOD",73,0)
+ . . L +^ENG(6914,DA):5 I '$T W $C(7),!,"Another user is editing this equipment. Try editing the condition later." Q
+"RTN","ENWOD",74,0)
+ . . D ^DIE
+"RTN","ENWOD",75,0)
+ . . L -^ENG(6914,DA)
+"RTN","ENWOD",76,0)
+ S DIE="^ENG(6920,"
+"RTN","ENWOD",77,0)
+ I DR=36 D
+"RTN","ENWOD",78,0)
+ . W !!,"Entry of a date will close this work order. Do this last."
+"RTN","ENWOD",79,0)
+ . I $D(ENWOCLOD) S DR="36//^S X=ENWOCLOD"
+"RTN","ENWOD",80,0)
+ D ^DIE
+"RTN","ENWOD",81,0)
+ Q
+"RTN","ENWOD",82,0)
+ ;
+"RTN","ENWOD",83,0)
+D ;Display WO to CRT
+"RTN","ENWOD",84,0)
+ W:$E(IOST,1,2)="C-" @IOF D ST^ENWOD1,TOP^ENWOD2
+"RTN","ENWOD",85,0)
+ Q
+"RTN","ENWOD",86,0)
+ ;
+"RTN","ENWOD",87,0)
+A ;Display Accounting Data
+"RTN","ENWOD",88,0)
+ S X="PRCSP13" X ^%ZOSF("TEST") I $T D
+"RTN","ENWOD",89,0)
+ . S ENFLG=0 I $D(^ENG(6920,DA,4)),$P(^(4),U,2)]"" D
+"RTN","ENWOD",90,0)
+ . . S ENWOACN=$P(^ENG(6920,DA,4),U,2),ENFLG=1
+"RTN","ENWOD",91,0)
+ . . I $D(^PRCS(410,ENWOACN,0)) D
+"RTN","ENWOD",92,0)
+ . . . S ENWOOR=DA,DA=ENWOACN
+"RTN","ENWOD",93,0)
+ . . . D ^PRCSP13
+"RTN","ENWOD",94,0)
+ . . . S DA=ENWOOR K ENWOOR
+"RTN","ENWOD",95,0)
+ . . K ENWOACN
+"RTN","ENWOD",96,0)
+ . W:'ENFLG !,"No procurement request on file for this work order."
+"RTN","ENWOD",97,0)
+ . K ENFLG
+"RTN","ENWOD",98,0)
+ Q
+"RTN","ENWOD",99,0)
+ ;
+"RTN","ENWOD",100,0)
+P ;Print work order
+"RTN","ENWOD",101,0)
+ I '$D(ENBARCD) S ENBARCD=0 I $D(^ENG(6910.2,"B","PRINT BAR CODES ON W.O.")) S I=$O(^("PRINT BAR CODES ON W.O.",0)) I I>0,$P(^ENG(6910.2,I,0),U,2)="Y" S ENBARCD=1
+"RTN","ENWOD",102,0)
+ D DEV^ENLIB Q:POP  I $D(IO("Q")) N X S ZTRTN="PRT1^ENWOD",ZTSAVE("EN*")="",ZTSAVE("DA")="",ZTDESC="Print Work Order" D ^%ZTLOAD K ZTSK D HOME^%ZIS Q
+"RTN","ENWOD",103,0)
+PRT1 U IO W:$E(IOST,1,2)="C-" @IOF
+"RTN","ENWOD",104,0)
+ D:$E(IOST,1,2)'="C-" PSET^%ZISP
+"RTN","ENWOD",105,0)
+ D ST^ENWOD1,TOP^ENWOD2
+"RTN","ENWOD",106,0)
+ D:ENBARCD BAR
+"RTN","ENWOD",107,0)
+ I $E(IOST,1,2)'="C-" W @IOF D PKILL^%ZISP
+"RTN","ENWOD",108,0)
+ N DA ; to protect DA when W.O. printed to P-MESSAGE
+"RTN","ENWOD",109,0)
+ ; *96 close if the job is not queued in a task
+"RTN","ENWOD",110,0)
+ I '$D(ZTQUEUED) D ^%ZISC
+"RTN","ENWOD",111,0)
+ Q
+"RTN","ENWOD",112,0)
+ ;
+"RTN","ENWOD",113,0)
+BAR ; print barcode of w.o. #
+"RTN","ENWOD",114,0)
+ I $G(IOBARON)]"",$G(IOBAROFF)]"" W !,@IOBARON W ENWO W @IOBAROFF W !
+"RTN","ENWOD",115,0)
+ Q
+"RTN","ENWOD",116,0)
+EXIT ;
+"RTN","ENWOD",117,0)
+ Q
+"RTN","ENWOD",118,0)
+ ;ENWOD
+"VER")
+8.0^22.0
+"BLD",9703,6)
+^90
+**END**
+**END**
+

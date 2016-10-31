@@ -1,0 +1,157 @@
+
+=============================================================================
+Run Date: JUL 14, 2015                     Designation: EAS*1*132
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #103                      Status: Released
+                  Compliance Date: AUG 14, 2015
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) APPLICATION, VERSION 4.1.2
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this informational patch is to announce the release of the
+ Enrollment System (ES) 4.1.2 application version software. 
+  
+ ES 4.1.2 is a maintenance release of the Enrollment System Core (ESC)
+ application. This version applies 20 updates to correct design, code and
+ security related defects introduced in previous ES releases.  
+  
+ Enhancements:
+ =============
+ 1.     CCR 12941. Updated encryption algorithm for all service user passwords 
+        from Triple DES to WASA recommended AES encryption. Removed encrypted
+        password from displaying in page source.  
+  
+ 2.     CCR 13722. Corrected defect of completion date not being saved on newly
+        entered income tests. 
+  
+ 3.     CCR 13613. Corrected defect of Confidential Address Category Types not
+        being returned from EES.  E&E services will now return the noted fields
+        as specified. 
+  
+ 4.     CCR 13795. Corrected defect of having no default MSA code for unknown
+        GMT locations. 
+  
+ 5.     CCR 13156. Corrected defect of Handbook Print Records to CMS are
+        exceeding max allowed weekly limit. System will now limit total
+        handbook records to 150,000 or less for printing. 
+  
+ 6.     CCR 13917. Corrected defect of Address committed with invalid character
+        markup. System now will properly escape all special characters for XML
+        SOAP transmissions. 
+  
+ 7.     CCR 13643. Corrected misspelled word on ES batch processes screen. 
+  
+ 8.     CCR 13856. Added system parameter to enable/disable transmission of
+        date of death fields to MVI to support ongoing integration of SR 388.  
+  
+ 9.    CCR 13857. Added support for additional VOA form type 21526EZ.  
+  
+ 10.    CCR 13890. Added validation for 'Unknown' or 'Unk' mother's maiden name
+        during Add a Person (AAP) Registration.  
+  
+ 11.    CCR 13725. Corrected defect of handbook error records being hung up in
+        mail status 'Send to CMS'. System will now set Handbook error records
+        to status 'Reject at HEC'
+  
+ 12.    CCR 13926. Corrected defect of deprecated site DFN being treated as
+        valid site. System will now filter out deprecated site DFNs from the
+        active correlations.  
+  
+ 13.    CCR 13946. Updated GMT logic to retrieve the highest GMT thresholds if
+        lookup by income year and county when MSA code is not specified. 
+  
+ 14.    CCR 13723. Corrected defect of outbound Z05 processing which causes
+        null pointer exception on phone number lookup if multiple phone
+        numbers exist with no change effective date.
+                                                                  
+ 15.    CCR 13724. Corrected defect of Country Code being deleted by Z07.
+        System will now default the country code to USA if unavailable, or
+        prevent deletion of country code if already on file.
+  
+ 16.    CCR 13960. When the Z07 from VistA has a null value in the preferred
+        facility field, automatically populate the Preferred Facility with that
+        site's identifier. Currently the facility is left as missing and
+        veteran handbook cannot be generated.  
+  
+ 17.    CCR 13829. Corrected defect of manage registry screen throwing an error
+        when any VPID is used to go to Registry tab for search in the manage
+        registry screen after previous person search conducted. 
+  
+ 18.    CCR 12942. Updated weblogic configuration to set CookieSecure parameter
+        as true to address WASA vulnerability finding of Web Application Does
+        Not Properly Secure Cookies. 
+  
+ 19.    CCR 13036. Corrected defect of Z05 not triggered on registering new Vet
+        via AAP when country not entered on AAP search screen. System will now
+        use default country and transmit Z05 upon registration completion. 
+  
+ 20.    CCR 13999. Corrected defect of orphaned VOA applications remaining on
+        the resubmission screen after veteran has successful application
+        processed.  System will now close all pending orphaned applications
+        once successful registration is processed.  
+  
+  
+ What to Expect:
+ ===============
+ No changes to any VistA packages are required. During deployment of ES 4.1.2
+ HL7 messaging to and from ES will be disabled as well as E&E web services and
+ ES to IVM Bi-Directional services. Implementation is expected to
+ take less than 8 hours. 
+  
+  
+ Implementation:
+ ===============
+ ESR 4.1.2 is a centrally managed web-based application and will be
+ implemented as a one-time rollout by the ES Technical team and the AITC. No
+ software will be installed at the facilities. ES application will be
+ unavailable during the deployment window. 
+  
+  
+ Implementation Date:
+ ====================
+ July 11, 2015
+  
+ Associated Remedy Tickets:
+ ==========================
+ INC000001054051
+ INC000001072487
+ INC000000973641
+ INC000001026716
+ INC000001059951
+ INC000001066880
+ INC000001172554
+ INC000001229983
+ INC000001003363
+ INC000001219868 
+  
+ Reporting Problems:
+ ===================
+ Problems associated with ES application should be reported via Remedy 
+ or contact the National Help Desk (NHD) 1-888-596-4357 for assistance.
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 26, 2015
+Completed By:                               Date Completed: JUL 14, 2015
+Released By :                               Date Released : JUL 14, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

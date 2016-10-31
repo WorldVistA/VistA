@@ -1,0 +1,308 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 06/25/15 at 10:00
+=============================================================================
+Run Date: SEP 14, 2015                     Designation: DGBT*1*25
+Package : DGBT - BENEFICIARY TRAVEL           Priority: Mandatory
+Version : 1        SEQ #27                      Status: Released
+                  Compliance Date: OCT 15, 2015
+=============================================================================
+
+Associated patches: (v)DGBT*1*22   <<= must be installed BEFORE `DGBT*1*25'
+
+Subject: DEDUCTIBLE ISSUE, MISSING CLAIM DATA, AND SPECIAL MODE ACCOUNT SELECTION
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses 6 issues:
+   
+     1. Beneficiary Travel is not correctly calculating the total monthly 
+        deductible.
+   
+     2. The WHO ENTERED INTO FILE (#12) and DATE ENTERED INTO THE FILE (#13)
+        fields of the BENEFICIARY TRAVEL CLAIM (#392) file are blank.
+   
+     3. A correction is needed for the help text when entering a Special Mode 
+        Claim.
+   
+     4. The departure and destination information is missing.
+   
+     5. Special Mode accounts are not being selected correctly.
+  
+     6. The proper Division is not being retained when editing the denial
+        letter.
+  
+                  
+ Associated NSR(s):
+ ==================
+ N/A
+      
+      
+ Associated Remedy ticket(s):
+ ============================
+  1. INC000000848554 - Deductible exceeds $18
+       
+  2. INC000000891084 - Missing Data (WHO ENTERED INTO FILE and DATE ENTERED
+                       INTO THE FILE)
+     Duplicates:
+     INC000000916427
+     INC000000941835
+     INC000001015142
+     INC000001027027
+  
+  3. INC000000927742 - Evaluate for patch to Help Text.
+  
+  4. INC000000965479 - BT claims are changing from complete to incomplete
+     Duplicate:
+     INC000001048473 
+  
+  5. INC000001008407 - File 392.3 is not set up correctly
+  
+  6. INC000001020140 - Division not being retained in denial letter
+  
+      
+ Participating Test Sites:
+ =========================
+ Jesse Brown VAMC
+ Minneapolis VA Medical Center
+ Veterans Health Care System of the Ozarks (Fayetteville)
+  
+       
+ REMEDY OVERVIEW:
+ ================
+  1. INC000000848554 - Deductible exceeds $18
+    
+      Problem:
+      --------
+      If more than one claim is entered on a particular day, the software will 
+      only apply the first claim's deductible for that day towards the
+      total monthly value.
+    
+      Resolution:
+      -----------
+      Corrected routine DGBTRDVW to use the time as well as the date of  
+      the BENEFICIARY TRAVEL CLAIM (#392) file, Claim DATE/TIME (#.01)
+      field when calculating the total deductible for the month. Also
+      modified routine DGBTEE to use the total deductible for the month,
+      rather than the deductible amount as of the claim date.
+  
+  2. INC000000891084 - Missing Data (WHO ENTERED INTO FILE and DATE ENTERED
+                       INTO THE FILE)
+    
+      Problem:
+      --------
+      If a user begins to enter a new claim, but is unable to complete it, a
+      partial claim is created. If the user goes back in to complete the 
+      partial claim later, the WHO ENTERED INTO FILE (#12) and DATE ENTERED
+      INTO THE FILE (#13) fields will not be populated, since that data is not
+      filed for existing claims.
+    
+      Resolution:
+      -----------
+      Modified routine DGBTE to allow the software to file the WHO ENTERED 
+      INTO FILE (#12) and DATE ENTERED INTO THE FILE (#13) fields of 
+      the BENEFICIARY TRAVEL CLAIM (#392) file for existing claims if they
+      are null. Also made minor spelling corrections in routine DGBTE.
+         
+        
+  3. INC000000927742 - Evaluate for patch to Help Text.
+    
+      Problem:
+      --------
+      The "Total Miles" prompt, when entering a special mode claim, 
+      currently displays "Type a Number between 0 and 10000, 0 Decimal 
+      Digits" for the help text. However, you cannot enter '0'.
+   
+      Resolution:
+      -----------
+      Modified the help text in routine DGBTSP to display a '1' instead of
+      a '0' and  modified code to limit the maximum value to 10,000 for
+      the total mileage amount. Also corrected the field definition in the data
+      dictionary for the SPECIAL MODE TOTAL MILES (#68) field of the 
+      BENEFICIARY TRAVEL CLAIM (#392) file. (See the Data Dictionary
+      section below.) 
+         
+  4. INC000000965479 - BT claims are changing from complete to incomplete
+    
+      Problem:
+      --------
+      If a user enters a Special Mode claim, and then attempts to convert it 
+      to a Mileage claim, they will be unable to complete the claim and an 
+      incomplete record will be created. Checks in routine DGBTE1 are 
+      preventing the departure and destination information from getting filed 
+      if editing an existing claim.
+   
+      Resolution:
+      -----------
+      Modified routine DGBTE1 to allow the software to file the departure and
+      destination information for existing claims.
+         
+         
+  5. INC000001008407 - File 392.3 is not set up correctly
+    
+      Problem:
+      --------
+      The system is not properly selecting active Special Mode accounts if 
+      there is more than one Special Mode account on the system.
+    
+      Resolution:
+      -----------     
+      Modified routine DGBTSP to correctly loop through the BENEFICIARY TRAVEL
+      ACCOUNT (#392.3) file. Also modified the code to evaluate appropriately 
+      if the leading characters in an account name are '000'.
+  
+  
+  6. INC000001020140 - Division not being retained in denial letter
+  
+      Problem:
+      --------
+      When creating a claim and then subsequently creating a denied claim,
+      the Division is not properly stored.
+  
+      Resolution:
+      -----------   
+      Modified routine DGBTCD to prevent it from killing the division variable
+      after displaying a claim.
+  
+  
+ Data Dictionary:
+ ----------------
+ Data Dictionary for the BENEFICIARY TRAVEL CLAIM (#392) file, SPECIAL MODE
+ TOTAL MILES (#68) field definition:
+  
+ Before:
+ -------
+ 392,68        SPECIAL MODE TOTAL MILES SP;12 NUMBER (Required)
+  
+               INPUT TRANSFORM:  K:+X'=X!(X>10000)!(X<0)!(X?.E1"."2.N) X
+               LAST EDITED:      AUG 10, 2012 
+               HELP-PROMPT:      Type a number between 0 and 10000,  
+                                 1 decimal digit. 
+               DESCRIPTION:
+                                 This is the total mileage for the special 
+                                 mode transportation trip.  
+  
+ After:
+ ------
+ 392,68        SPECIAL MODE TOTAL MILES SP;12 NUMBER (Required)
+  
+               INPUT TRANSFORM:  K:+X'=X!(X>10000)!(X<1)!(X?.E1"."1N.N) X
+               LAST EDITED:      JUN 24, 2015 
+               HELP-PROMPT:      Type a number between 1 and 10000, 
+                                 0 decimal digits.
+               DESCRIPTION:
+                                 This is the total mileage for the special 
+                                 mode transportation trip.  
+  
+ DOCUMENTATION RETRIEVAL:
+ ========================
+ Sites may retrieve documentation in one of the following ways:
+    
+  (1) The preferred method is to FTP the file from 
+      download.vista.domain.ext, which will transmit the file from 
+      the first available FTP server.
+     
+  (2) Sites may also elect to retrieve documentation directly from a
+      specific server as follows:
+     
+      Albany                ftp.domain.ext
+      Hines                 ftp.domain.ext
+      Salt Lake City        ftp.domain.ext
+     
+      The documentation distribution includes:
+  
+     File Name                 Contents             Retrieval Format
+     ----------------------    ---------------      ----------------
+     DGBT_1_25P_UM.PDF         User Manual          BINARY
+  
+  
+ Following the release of this patch, the updated User Manual will be 
+ available on the VDL.
+  
+  
+ Installation Instructions:
+ ==========================
+    
+ Installation will take less than 2 minutes.
+    
+ Suggested time to install: Non-peak hours when users are not on the 
+ system.
+     
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options: 
+         (when prompted for INSTALL NAME, enter DGBT*1.0*25)
+     
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this patch
+               is installed.  It compares all components of this patch
+               (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package DGBT*1.0*25.
+  
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//", respond YES. 
+  
+          When prompted 'Enter options you wish to mark as 'Out Of
+          Order':', enter the following:
+   
+          [DGBT BENE TRAVEL MENU]      Beneficiary Travel Menu
+          [DGBT BENE TRAVEL ACCOUNT]   Bene Travel Account file Enter/Edit
+          [DGBT BENE TRAVEL SCREEN]    Claim Enter/Edit  
+  
+          When prompted 'Enter protocols you wish to mark as 'Out Of
+          Order':', press <ENTER>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;Beneficiary Travel;**[Patch List]**;September 25, 2001;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGBTCD
+    Before: B28350736   After: B29294198  **2,7,9,20,22,25**
+Routine Name: DGBTE
+    Before: B48237300   After: B51704812  **2,19,20,22,25**
+Routine Name: DGBTE1
+    Before: B31350623   After: B31835437  **8,12,13,20,21,22,25**
+Routine Name: DGBTEE
+    Before: B60503880   After: B64077046  **2,14,20,21,25**
+Routine Name: DGBTRDVW
+    Before:  B8811174   After:  B8950555  **20,25**
+Routine Name: DGBTSP
+    Before:B184770476   After:B188071541  **20,22,25**
+ 
+Routine list of preceding patches: 22
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 09, 2014
+Completed By:                               Date Completed: AUG 25, 2015
+Released By :                               Date Released : SEP 14, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

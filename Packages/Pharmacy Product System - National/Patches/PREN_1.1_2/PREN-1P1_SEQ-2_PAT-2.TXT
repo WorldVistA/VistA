@@ -1,0 +1,202 @@
+
+=============================================================================
+Run Date: OCT 14, 2014                     Designation: PREN*1.1*2
+Package : PREN - PHARMACY PRODUCT SYS-NATL    Priority: Mandatory
+Version : 1.1         SEQ #2                    Status: Released
+                  Compliance Date: NOV 14, 2014
+=============================================================================
+
+
+Subject: PPS-N 1.1.01 INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+ The Pharmacy Product System-National (PPS-N) is a Web-based application
+ that provides the ability to manage pharmacy-specific data across the VA
+ enterprise, ensuring that all facilities are using the same base data
+ for their operations. It allows approved national VA personnel to easily,
+ quickly, and safely manage the VA National Formulary which directs which
+ products (such as medications and supplies) are to be purchased and used
+ by the VA hospital system.
+  
+ The PPS-N application performs the following major business functions:
+  
+ * Add/edit/approve medication and supply information
+ * Synchronize the PPS-N data with the legacy National Drug File (NDF)
+   Management System (NDFMS) data
+ * Output various reports
+ * Process additions and updates from First DataBank (FDB)
+ * Search for and add drug information from First DataBank
+  
+  
+  
+ In addition to synchronizing PPS-N with the NDFMS system, the PPS-N
+ application also interfaces with the VA Enterprise Terminology Services
+ (VETS) system (for Standard Medication Route information) and with the VA
+ Federal Supply Schedule (FSS) system (for pricing data).
+  
+ The purpose of this software product release is to replace the current 
+ version, PPS-N v1.1, with an enhanced version, PPS-N v1.1.01, which 
+ contains fixes for Nine remedy tickets.
+  
+  
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+  
+ Options Associated:
+ --------------------
+ N/A
+  
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ INC000001005164 - System shall not assign the same VUID for products 
+ approved at the same time
+  
+ INC000001005159 - System shall select only from Ingredients with a status 
+ of Active in NDF when setting the Primary Ingredient field for a new Drug 
+ Ingredient Data Element sent to NDF. EX: Magnesium and Zinc
+  
+  
+ INC000000982110 - System shall look for the exact match, when checking if 
+ the VA Product Name and ATC Mnemonic combination already exists, before 
+ adding a new Product. This will eliminate issues when adding Products 
+ with '%' in the Product name like 'Lidocaine 2% cream'
+  
+ INC000000977129 - System shall set the National Formulary Name based on 
+ the Generic name in the Add Product page
+  
+ INC000000977147 - System shall mark the Drug Class on the Add Product 
+ page as Primary when there is only one Drug Class
+  
+ INC000001005145 - System shall display scroll bar for Dosage Form units 
+ dialog window when the list is long. EX: Dosage Form - INJ,SOLN
+ System shall select only from Ingredients with a status of Active in NDF 
+ when setting the Primary Ingredient field for a new Drug Ingredient Data 
+ Element sent to NDF. EX: Magnesium and Zinc
+ INC000001030681 - Users shall be able to set Print Names that have an 
+ apostrophe like DEXTROSE 5%/LACTATED RINGER'S INJ for any products 
+  
+ INC000001009259 - System shall handle the validation of ratio values for 
+ Active Ingredient Strength for any products EX: LIDOCAINE HCL 
+ 1%/EPINEPHRINE 1:200000 INJ
+  
+ INC000000975390 - System shall start the scheduler automatically after a 
+ server restart
+  
+  
+ Associated Change Requests: 
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ N/A
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+  
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.domain.ext.
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+ Albany          ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines           ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City  ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library
+ at:  http://www.domain.ext/vdl/ 
+  
+  
+  
+ FILE NAME                         DESCRIPTION
+ =========                         ===========
+  
+ PREN_1_1P2_V1_1_01_IG.PDF         PPS-N v1.1.01 Installation Guide
+ PREN_1_1P2_V1_1_01_TG.PDF         PPS-N v1.1.01 Troubleshooting Guide
+ PREN_1_1P2_V1_1_01_UM.PDF         PPS-N v1.1.01 User Guide
+                
+  
+ Installation Instructions:
+ --------------------------
+ This is a Web Application JAVA Build. This is a Centralized Server
+ promotion. NO installation is required at Local sites.
+  
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 01, 2014
+Completed By:                               Date Completed: SEP 17, 2014
+Released By :                               Date Released : OCT 14, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

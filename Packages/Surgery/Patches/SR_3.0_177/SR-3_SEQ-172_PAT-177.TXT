@@ -1,0 +1,420 @@
+$TXT Created by             at DEVESS.DOMAIN.EXT  (KIDS) on Wednesday, 08/06/14 at 09:26
+=============================================================================
+Run Date: AUG 15, 2014                     Designation: SR*3*177
+Package : SR - SURGERY                        Priority: Mandatory
+Version : 3       SEQ #172                      Status: Released
+                  Compliance Date: AUG 29, 2014
+=============================================================================
+
+Associated patches: (v)SR*3*154    <<= must be installed BEFORE `SR*3*177'
+                    (v)SR*3*159    <<= must be installed BEFORE `SR*3*177'
+                    (v)SR*3*161    <<= must be installed BEFORE `SR*3*177'
+                    (v)LEX*2*80    <<= must be installed BEFORE `SR*3*177'
+                    (v)SR*3*176    <<= must be installed BEFORE `SR*3*177'
+                    (v)ICD*18*57   <<= must be installed BEFORE `SR*3*177'
+
+Subject: SURGERY ICD-10 CLASS 1 REMEDIATION
+
+Category: 
+  - Routine
+  - Input Template
+  - Enhancement (Mandatory)
+  - Other
+  - Data Dictionary
+
+Description:
+============
+
+ IMPORTANT INFORMATION Please read the Overview Guide 
+ (ICD-10_Production_Overview_Guide_Groups_3_4.pdf) posted on the
+ Anonymous directory for installation order. This is critical for 
+ proper functionality of the ICD-10 Software.
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10) 
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service, or dates of discharge for inpatients, that occur on or 
+ after the ICD-10 Activation Date will use the ICD-10 code set. Clinical
+ Modification (ICD-10-CM) diagnosis codes increase from about 13,000
+ ICD-9 codes to more than 68,000. Procedure Coding System (ICD-10-PCS) 
+ procedure codes increase from about 3,800 ICD-9 codes to nearly 87,000.  
+ Both systems also expand the number of characters allotted to seven 
+ alpha-numeric characters. This value does not include the decimal point, 
+ which follows the third character for the ICD-10-CM code set. There is no 
+ decimal point in the ICD-10-PCS code set. 
+  
+ These code sets have the potential to reveal more about quality of care, 
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research.
+  
+ The only noticeable difference users may see will occur when a specific 
+ ICD diagnosis code descriptor changes based on the date of operation for 
+ the case.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)    Field Name (Number)                    New/Mod/Del
+ ------------------    -------------------                    -----------
+ SURGERY (#130)
+                       PRIN PRE-OP ICD DIAGNOSIS CODE (#32.5) Modified
+                       PLANNED PRIN DIAGNOSIS CODE (#66)      Modified
+                       CODING VERIFIER (#69)                  Modified
+                       OTHER RESPIRATORY OCCURRENCE (#253)    Modified
+                       OTHER URINARY TRACT OCCURRENCE (#286)  Modified
+                       OTHER CNS OCCURRENCE (#343)            Modified
+                       OTHER CARDIAC OCCURRENCE (#344)        Modified
+                       OTHER OCCURRENCES (ICD) (#392)         Modified
+                       OTHER WOUND OCCURRENCE (#489)          Modified
+                       ICD ON NURSE REPORT (#1006)            Modified
+   INTRAOPERATIVE OCCURRENCES (sub-file #130.13)
+                       ICD DIAGNOSIS CODE (#4)                Modified
+   OTHER PREOP DIAGNOSIS (sub-file #130.17)
+                       ICD DIAGNOSIS CODE (#3)                Modified
+   OTHER POSTOP DIAGS (sub-file #130.18)
+                       PLANNED ICD DIAGNOSIS CODE (#3)        Modified
+   POSTOP OCCURRENCE (sub-file #130.22)
+                       ICD DIAGNOSIS CODE (#6)                Modified
+  
+ SURGERY SITE PARAMETERS (#133)
+                       ICD ON NURSE INTRAOP (#39)             Modified
+  
+ SURGERY PROCEDURE/DIAGNOSIS CODES (#136)
+                       PRIN POSTOP DIAGNOSIS CODE (#.03)      Modified
+   PRIN ASSOCIATED DIAGNOSES (sub-file #136.02)               Modified
+   OTHER POSTOP DIAGNOSIS CODES (sub-file #136.04)            Modified
+   OTHER ASSOCIATED DIAGNOSES (sub-file #136.32)              Modified
+  
+ ICD SEARCH API (#130.4)                                      New
+                       NUMBER (#.001)                         New
+                       APPLICATION NAME (#.01)                New
+                       CODING SYSTEM (#.02)                   New
+                       TYPE (#.04)                            New
+                       OWNER PACKAGE (#.05)                   New
+                       MUMPS CODE TO EXECUTE (#1)             New
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted         
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+     
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    -----------      ------------------------ 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name         Type      File Name (Number)     New/Mod/Del
+ -------------         ----      ------------------     -----------
+ SRSRES1               Input     SURGERY (#130)         Modified
+ SRSRES2               Input     SURGERY (#130)         Modified
+ SRSCHED-UNREQUESTED   Input     SURGERY (#130)         Modified
+ SREQUEST              Input     SURGERY (#130)         Modified
+ SRSCHED-UNREQUESTED-ICD10
+                       Input     SURGERY (#130)         New
+ SREQUEST-ICD10        Input     SURGERY (#130)         New
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR - Request id: 20070902 ICD-10-CM Conversion 9/5/2007
+ http://vista.domain.ext/nsrd/ViewITRequest.asp?RequestID=20070902
+  
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+ Test Sites:
+ -----------
+ John D. Dingell VA Medical Center, Detroit, MI
+ Boise VA Medical Center, Boise, ID
+ Captain James A. Lovell Federal Health Care Center, North Chicago, IL
+ VA Eastern Colorado Health Care System, Denver, CO
+ Michael E. DeBakey VA Medical Center, Houston, TX
+                                                  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ File Description                      File Name                FTP Mode
+ --------------------------------------------------------------------------
+ Surgery V. 3.0 User Manual            SR_3_UM_R0614.PDF        (binary)
+ Surgery V. 3.0 User Manual            SR_3_P177_UM_CP.PDF      (binary)
+ Change Pages
+ Surgery V. 3.0 Technical Manual/      SR_3_TM_R0614.PDF        (binary)
+ Security Guide  
+ Surgery V. 3.0 Technical Manual/      SR_3_P177_TM_CP.PDF      (binary)
+ Security Guide Change Pages
+ Surgery V. 3.0 Release Notes          ICD-10_RN_SR_3_177.PDF   (binary)
+ Production Overview Guide             ICD-10_Production_Overview_
+                                       Guide_Groups_3_4.pdf     (binary)
+                                                             
+                                                  
+ Patch Installation: 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A   
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch should be installed during a period of low system activity with
+ Surgery users off the system. It should be installed at a time when the
+ Surgery Nightly Cleanup and Updates [SRTASK-NIGHT] option is not running.
+ No options need to be placed out of service. Installation time is expected
+ to be less than five minutes.
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (SR*3.0*177):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter SR*3.0*177.
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? YES//', respond YES.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0. 
+  
+ Post-Installation Instructions
+ ------------------------------
+ 1. Cleanup - The Pre-Install routine SR3P177 can be deleted using the
+    KERNEL option 'Delete Routines' [XTRDEL] upon completion of the
+    installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;Surgery;**[Patch List]**;24 Jun 93;Build 89
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SR3P177
+    Before:       n/a   After:  B1411381  **177**
+Routine Name: SRCUSS
+    Before: B17905369   After: B21173871  **66,108,177**
+Routine Name: SRCUSS1
+    Before: B20239510   After: B23008051  **14,31,48,66,108,177**
+Routine Name: SRHLDW1
+    Before:  B4690924   After:  B4699482  **41,177**
+Routine Name: SRHLUO
+    Before: B25491414   After: B28555904  **41,127,177**
+Routine Name: SRHLUO3
+    Before: B25089400   After: B31162986  **41,88,127,151,177**
+Routine Name: SRHLVUO
+    Before: B24398625   After: B24970128  **41,127,177**
+Routine Name: SROACMP
+    Before: B34040143   After: B34094394  **47,50,127,143,166,177**
+Routine Name: SROACOD
+    Before: B16578804   After: B16693883  **146,152,177**
+Routine Name: SROACOM1
+    Before: B19771311   After: B19579953  **166,174,177**
+Routine Name: SROADX1
+    Before: B93981084   After: B94091442  **119,150,177**
+Routine Name: SROALNO
+    Before: B15168639   After: B15400695  **104,177**
+Routine Name: SROAOP1
+    Before: B11582758   After: B11530418  **38,47,63,81,88,95,97,125,142,
+                                           153,160,177**
+Routine Name: SROAOSET
+    Before:  B3998437   After:  B4150779  **127,177**
+Routine Name: SROAPCA4
+    Before: B15333948   After: B16258498  **95,125,153,174,176,177**
+Routine Name: SROAPRT6
+    Before:  B5989513   After:  B6019028  **38,47,88,127,156,160,177**
+Routine Name: SROAPRT7
+    Before: B30682535   After: B30831500  **38,47,57,60,125,160,176,177**
+Routine Name: SROATCM
+    Before: B25780812   After: B25541565  **38,55,68,90,93,95,99,125,153,
+                                           174,175,177**
+Routine Name: SROATCM1
+    Before: B57561203   After: B58032375  **38,71,79,90,88,93,95,111,125,
+                                           135,134,142,153,160,174,175,
+                                           176,177**
+Routine Name: SROATCM3
+    Before: B12876503   After: B13088442  **125,135,153,164,166,174,177**
+Routine Name: SROATM1
+    Before: B25818950   After: B26038317  **27,38,47,60,62,81,88,93,95,
+                                           125,153,160,166,174,176,177**
+Routine Name: SROATM2
+    Before: B35035640   After: B35137516  **38,39,45,47,57,60,62,68,81,
+                                           88,97,129,125,142,153,160,174,
+                                           175,176,177**
+Routine Name: SROATMNO
+    Before: B36435737   After: B36769071  **27,38,47,62,68,79,83,81,88,
+                                           93,95,97,129,125,142,153,160,
+                                           166,174,175,176,177**
+Routine Name: SROAUTL0
+    Before: B21141152   After: B21283908  **38,47,57,60,61,63,81,125,153,
+                                           160,174,176,177**
+Routine Name: SROAUTL2
+    Before: B35937353   After: B35918406  **38,47,63,88,125,153,160,176,177**
+Routine Name: SROCD0
+    Before: B61009295   After: B65638166  **142,152,159,177**
+Routine Name: SROCD2
+    Before: B22859343   After: B23989346  **142,177**
+Routine Name: SROCD4
+    Before: B27765963   After: B20829958  **142,177**
+Routine Name: SROCDX
+    Before: B21645937   After: B22343423  **142,177**
+Routine Name: SROCDX1
+    Before: B25247822   After: B25379397  **142,161,177**
+Routine Name: SROCMPED
+    Before: B34021331   After: B36854349  **26,38,47,125,153,170,176,177**
+Routine Name: SROCMPS
+    Before: B17061652   After: B17944214  **14,32,38,95,102,116,125,142,177**
+Routine Name: SROCOMP
+    Before: B18025907   After: B18186198  **37,38,88,129,177**
+Routine Name: SROCVER
+    Before: B31713915   After: B37320749  **116,177**
+Routine Name: SROESAD1
+    Before: B34222417   After: B34060780  **100,127,177**
+Routine Name: SROESNR2
+    Before: B34159372   After: B33988113  **100,127,177**
+Routine Name: SROICD
+    Before:   B818894   After: B55952758  **116,127,177**
+Routine Name: SROICDGT
+    Before:       n/a   After: B42226925  **177**
+Routine Name: SROICDL
+    Before:       n/a   After: B34675259  **177**
+Routine Name: SROMENU
+    Before: B21565979   After: B24367683  **52,67,69,104,107,100,134,175,177**
+Routine Name: SRONEW
+    Before: B35630421   After: B36010808  **3,23,26,30,47,58,48,67,107,
+                                           100,144,175,176,177**
+Routine Name: SRONOP
+    Before: B25370271   After: B25659962  **44,58,64,67,70,100,177**
+Routine Name: SRONOP1
+    Before: B16584848   After: B16803692  **44,56,58,48,67,70,88,100,142,177**
+Routine Name: SRONP2
+    Before: B17607439   After: B17930608  **132,142,177**
+Routine Name: SROP
+    Before: B21464405   After: B21934166  **7,44,58,64,104,176,177**
+Routine Name: SROPCE0A
+    Before: B42322529   After: B59645915  **58,62,69,77,50,86,88,127,142,177**
+Routine Name: SROPCE1
+    Before: B42506082   After: B42495285  **58,105,119,150,152,159,177**
+Routine Name: SROPER
+    Before: B12586025   After: B13069473  **37,107,100,177**
+Routine Name: SROVER
+    Before: B25619011   After: B25778110  **7,34,38,86,88,100,119,177**
+Routine Name: SROVER2
+    Before: B26717453   After: B26606963  **86,88,100,127,119,177**
+Routine Name: SROVER3
+    Before: B37508747   After: B37536905  **86,88,127,119,152,159,177**
+Routine Name: SRSCHC2
+    Before:  B1775654   After:  B1652836  **67,107,177**
+Routine Name: SRSCHUN
+    Before: B30666407   After: B32328292  **3,67,68,88,103,100,144,158,
+                                           175,177**
+Routine Name: SRSCHUN1
+    Before:  B9878171   After: B10221743  **34,47,58,67,107,177**
+Routine Name: SRSRQST
+    Before: B26866519   After: B28426612  **3,58,67,88,103,105,100,144,
+                                           175,177**
+Routine Name: SRSRQST1
+    Before: B10838483   After: B11754122  **12,34,37,47,58,67,107,177**
+Routine Name: SRSUP1
+    Before: B26118535   After: B26965296  **7,16,19,47,58,67,77,50,93,
+                                           107,114,100,131,177**
+Routine Name: SRSUPRQ
+    Before: B28797469   After: B28414875  **7,47,58,67,107,114,100,154,177**
+ 
+Routine list of preceding patches: 108, 131, 151, 154, 159, 161, 176
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 14, 2011
+Completed By:                               Date Completed: AUG 13, 2014
+Released By :                               Date Released : AUG 15, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

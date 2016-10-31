@@ -1,0 +1,194 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 08/18/14 at 14:36
+=============================================================================
+Run Date: DEC 03, 2014                     Designation: DG*5.3*893
+Package : DG - REGISTRATION                   Priority: EMERGENCY
+Version : 5.3       SEQ #786                    Status: Released
+                  Compliance Date: DEC 05, 2014
+=============================================================================
+
+Associated patches: (v)DG*5.3*788  <<= must be installed BEFORE `DG*5.3*893'
+
+Subject: REBUILD AEAR INDEX, BUG FIX IN CALL LIST AND TRACKING RPT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DG*5.3*893 addresses three issues with the New Enrollee Appointment 
+ Request (NEAR) management reports, which tracks the appointment requests 
+ made by new applicants.
+  
+ 1). The AEAR index is missing for some patients that have the APPOINTMENT
+     REQUEST ON 1010EZ set to Yes.
+ 2). There is an issue with the Call List [DGEN NEACL MGT RPT1] when 
+     comparing a patient's preferred facility to the selected facility.
+ 3). The Tracking Report [DGEN NEACL MGT RPT2] has a bug which causes
+     the Application Programming Interface (API) that gathers 
+     appointments to only return one appointment.
+  
+                                 
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+   
+ 1. INC000001006932    How does DGEN NEACL MGT RPT2 pull pts?
+    Duplicates:
+    INC000001014386 MAS - DG reports:
+    INC000001016058 MAS - Registration:
+    INC000001019820 MAS - DG reports:
+  
+  
+ Participating Test Sites:
+ =========================
+ Captain James A. Lovell FHCC (North Chicago, IL)
+ Jack C. Montgomery VA Medical Center (Muskogee, OK)
+ VA Montana Health Care System 
+  
+    
+ Remedy Overview:
+ =================
+  
+ 1. INC0000001006932    How does DGEN NEACL MGT RPT2 pull pts?
+  
+    Problem:
+    --------
+    The expected results are not being obtained when running the Call List
+    [DGEN NEACL MGT RPT1] and the Tracking Report [DGEN NEACL MGT RPT].
+    Several VistA issues were discovered.
+  
+    1). Patients whose first enrollment was before the install date of 
+        patch DG*5.3*779 do not have an AEAR index on the APPOINTMENT
+        REQUEST ON 1010EZ (#1010.159) field in the PATIENT (#2) file.
+        This issue can cause patients not to show on the Call List report.
+  
+    2). The Call List [DGEN NEACL MGT RPT1] lists veterans who requested 
+        an appointment during enrollment and do not have an appointment
+        scheduled yet. There is an issue with the Call List [DGEN NEACL
+        MGT RPT1] when comparing a patient's preferred facility to the 
+        selected facility. It causes them not to match if the preferred 
+        facility code begins with four numerical values instead of three 
+        and this can cause patients not to show on the Call List report.
+  
+    3). The Tracking Report [DGEN NEACL MGT RPT2] lists times between the 
+        enrollment date of a veteran requesting an appointment on the
+        1010EZ form and the date the appointment was actually made. 
+        However, there is an issue with the Tracking Report [DGEN NEACL
+        MGT RPT2], which causes the API that gathers appointments to 
+        only return one appointment. This can cause a blank appointment 
+        date to display if the first appointment is a non-count. 
+  
+  
+ Resolution:
+ -----------
+ This patch rebuilds the AEAR index for patients that are missing it. 
+ It also modifies routine DGENACL2 to compare only the 1st three 
+ digits of the preferred facility to the selected facility when
+ determining whether to include the patient on the Call List. In
+ addition, it also modifies routine DGENACL2 to properly call the API
+ and review all appointments for the Tracking Report.
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes. Suggested time to install:
+ during non-peak requirement hours.            
+   
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+   
+    3. From this menu, you may select to use the following options (when
+       prompted for INSTALL NAME, enter DG*5.3*893).      
+  
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch is
+           installed.
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+        d. Print Transport Global - this option will allow you to view
+           the components of the KIDS build.
+      
+    4. Use the Install Package(s) option and select the package DG*5.3*893
+   
+    5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+       respond No.
+  
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? YES//" respond Yes.
+  
+       When prompted, 'Enter options you wish to mark as 'Out Of 
+       Order':', enter:
+              
+           Call List                           [DGEN NEACL MGT RPT1]
+         
+           Tracking Report                     [DGEN NEACL MGT RPT2]
+  
+       When prompted, 'Enter protocols you wish to mark as 'Out Of
+       Order':', press enter.
+  
+    7. In the last part of the install the following will display and a job
+       will be tasked:
+       This process will find all entries in the PATIENT file (#2) that
+       have field APPOINTMENT REQUEST ON 1010EZ (#1010.159) set to Y
+       and do not have an AEAR index for that field. The process will
+       set the index.
+  
+       The clean up process will perform the following steps in order:
+            1) Search/update the patient data.  (This step looks at 
+               every patient in the PATIENT (#2) file.)  A summary
+               MailMan message will be sent to the user when the
+               search/update is complete.
+            2) The user will need run D EP^DG53P893 from the programmer
+               prompt to view the detailed report within 90 days.
+               NOTE: The system will purge the process log after 90
+               days!
+  
+      Log data will be stored in the ^XTMP("DG53P893") global.
+  
+      TaskMan Task: NNNNNNN
+  
+  
+      ****DO NOT DELETE THE ROUTINE DG53P893 after the install. You will
+          need to keep it around for as long as you would like to be able
+          to view the log data for the clean up process (up to 90 days)
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;REGISTRATION;**[Patch List]**;08/13/93;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53P893
+    Before:       n/a   After: B72587888  **893**
+Routine Name: DGENACL2
+    Before: B18670558   After: B20337882  **788,893**
+ 
+Routine list of preceding patches: 788
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 15, 2014
+Completed By:                               Date Completed: NOV 25, 2014
+Released By :                               Date Released : DEC 03, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

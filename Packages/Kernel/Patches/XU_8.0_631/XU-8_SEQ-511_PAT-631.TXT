@@ -1,0 +1,216 @@
+$TXT Created by                   E at KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Tuesday, 07/08/14 at 13:11
+=============================================================================
+Run Date: SEP 02, 2014                     Designation: XU*8*631
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #511                      Status: Released
+                  Compliance Date: OCT 03, 2014
+=============================================================================
+
+Associated patches: (v)XU*8*338    <<= must be installed BEFORE `XU*8*631'
+
+Subject: POINTER TO FILE 8992.3 FOR CRITICAL ALERT TERMS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The ALERT CRITICAL TEXT file (#8992.3) was added with
+ patch XU*8*513 to make it easier for packages or
+ Medical Centers to specify text that should be used
+ to indicate an alert that is marked as critical.  
+ The Report Menu for Alerts [XQAL REPORTS MENU] has options
+ that generate reports and displays critical alerts for the
+ alerts package. Currently options check for critical Alert
+ text coding the critical text into the code and checking
+ the alert for the text. This patch will change the way
+ the text is checked. The crititcal text has been taken out of
+ the code and now the code checks the new file ALERT CRITICAL TEXT
+ file (#8992.3) for the existence of all critical text.
+  
+  
+  
+ Blood Bank Team Coordination: 7/26/2013
+ =============================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: 
+ Patch XU*8*631 contains changes to a package referenced
+ in ProPath standard titled: BBM Team Review of VistA Patches.
+ This patch does not alter or modify any VistA Blood Bank
+ software design safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8*631 have no
+ effect on Blood Bank software functionality, therefore RISK is none
+  
+  
+  Patch Components
+  ================
+   
+  Files & Fields Associated:
+  
+  File Name (Number)         Field Name (Number)  New/Modified/Deleted
+  ------------------         -------------------  --------------------
+  None
+   
+  Patient Safety Issues:
+  ======================
+   
+  None
+  
+  Options Associated:
+ ================
+  
+  
+ Option Name                    Type                New/Modified/Deleted
+ -----------                    ----                --------------------
+ [XQAL CRITICAL ALERT COUNT]      Critical Alerts Count Report 
+                            Run                Modified
+           
+ [XQAL USER ALERTS COUNT]         User Alerts Count Report 
+                               Run                Modified
+  
+  
+ Parameters Associated:
+  
+ Parameter Name                                     New/Modified/Deleted
+ --------------                                     --------------------
+ N/A
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  
+  
+ 1. INC000000852952 :  Update routine XQARPRT1 to point to 
+  the new file 8992.3 ALERT CRITICAL TEXT file
+  
+ Problem:
+ -------
+ Identifying critical alerts was done by hard coding a check for a specific word 
+ In the routine XQARPRT1.  If the word Critical or Abnormal IMA was in the subject of the alert, it was deemed a critical alert.  This coding did not allow for  any flexibility if a new word was added as a critical text.  The code would have to b
+ e patched every time a word was added as critical. 
+ ----------
+  
+ Resolution:
+ ----------
+ Changing the code to point to the new Alert Critical Text file (8992.3)  added in patch XU*8.0*513,  the user can add a new word or phrase  into the file if they consider it critical text and that will flag the alert as critical. 
+  
+  
+ Test Sites: (Patch Tracking Message #)
+ ----------
+  
+ Washington DC VAMC   - Large 
+ Togus - Small
+ Black Hills - Integrated 
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ The most up-to-date VA Kernel end-user documentation is available on the 
+ VHA Software Document Library (VDL) at the following Internet Website:
+      http://www.domain.ext/vdl/application.asp?appid=10
+  
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+  
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch can be queued for installation.  TaskMan does not have to be 
+ stopped, HL7 filers do not need to be stopped, and users may be on the 
+ system.  The patch should be installed during non-peak hours to minimize
+ potential for disruption to users.  This patch should take less than 1 
+ minute to install, and may be queued for installation.
+  
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XU*8.0*631):
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.  NOTE:  When installed in a TEST environment, 
+         your BEFORE checksums might not match the values shown below if
+         any of the routines were modified to display <TEST ACCOUNT> in
+         the VistA menu prompts.  The checksums should match in a
+         production environment.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer "NO".   
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer "NO".
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? YES//'  Answer "YES"
+  
+    [XQAL CRITICAL ALERT COUNT]      Critical Alerts Count Report           
+    [XQAL USER ALERTS COUNT]         User Alerts Count Report 
+  
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A.
+  
+  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XQARPRT1
+    Before: B84796836   After: B87729690  **316,338,631**
+ Description of Changes:
+   
+
+ 
+Routine list of preceding patches: 338
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 21, 2013
+Completed By:                               Date Completed: AUG 19, 2014
+Released By :                               Date Released : SEP 02, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

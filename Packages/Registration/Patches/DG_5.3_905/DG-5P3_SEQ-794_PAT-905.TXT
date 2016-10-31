@@ -1,0 +1,189 @@
+$TXT Created by                   at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 05/28/15 at 09:52
+=============================================================================
+Run Date: JUN 16, 2015                     Designation: DG*5.3*905
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #794                    Status: Released
+                  Compliance Date: JUL 01, 2015
+=============================================================================
+
+Associated patches: (v)DG*5.3*850  <<= must be installed BEFORE `DG*5.3*905'
+
+Subject: REGISTRATION PTF FIXES
+
+Category: 
+  - PATCH FOR A PATCH
+  - Routine
+  - Input Template
+
+Description:
+============
+
+ After the installation of the DG*5.3*850 patch, sites reported these 
+ three issues that are being fixed with this patch:
+  
+ 1. The Census Status Report [DGPT CENSUS STATUS REPORT] is reporting the
+    admission ward instead of the last movement ward.
+ 2. When entering a movement for a Post-Vietnam P.O.S. and the SW Asia
+    Service flag has been set, a prompt for establishing the SW Asia
+    condition will cause a hard error when answered.
+ 3. When performing an inquiry in option MPCR INQUIRY [DGPT MPCR
+    INQUIRY] a hard error occurs.
+  
+ Associated Remedy Tickets:
+ ==========================
+ 1. INC000001065328 MAS - ADT/SUP:
+    Duplicates: 
+    INC000001030891 MAS - ADT/SUP:
+    INC000001065229 MAS - ADT/SUP:
+    INC000001065234 MAS - PTF:
+    INC000001065577 MAS - G and L:
+    INC000001065688 MAS - Other: census status report not working
+  
+ 2. INC000001055316 MAS - PTF:
+    Duplicates:
+    INC000001062025 MAS - PTF:
+    INC000001103143 MAS - PTF:
+  
+ 3. INC000001067402 MAS - Registration:
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Coatesville VA Medical Center
+ VA Central Alabama Health Care System  
+ VA San Diego Healthcare System
+  
+ Remedy Ticket Overview:
+ =======================
+ 1. INC000001065328  
+   
+    Problem:   
+    --------
+    Census Status Report is listing the patients' admission ward instead of
+    the last ward they were transferred to.
+  
+    Resolution:
+    -----------
+    The WARD^DGPTC1 tag was recoded to terminate the loop after getting 
+    the last valid ward in the PATIENT MOVEMENT (#405) file.
+  
+    Technical:
+    ----------
+    The loop for DG*5.3*850 was missing goto logic with Block Structured 
+    logic and was continuing to loop through the movement file back to the 
+    admission transfer instead of terminating. The goto logic was 
+    replaced with a proper loop terminator.
+  
+ 2. INC000001055316
+  
+    Problem:   
+    --------
+    Fee Basis Non-VA patients with Post-Vietnam service and the SW Asia 
+    conditions flag set get an error with question marks and get hung in a
+    loop when the SW Asia conditions question was asked during a movement
+    update.
+  
+    Resolution:
+    -----------
+    The DG501F template was edited to correct a typographical error.
+  
+    Technical:
+    ----------
+    In template DG501F a jump to after getting prompted for SW Asia 
+    Service is hitting a typographical error that sends the navigation to 
+    an unlisted tag. The value should be 9350 but is 935. This patch
+    changes the tag to 9350.
+  
+ 3. INC000001067402 
+  
+    Problem:   
+    --------
+    When using the MPCR INQUIRY [DGPT MPCR INQUIRY] option, a hard error
+    occurs after entering the patient.
+  
+    Resolution:
+    -----------
+    In routine DGPTIC10, variable DGPTF0 is preserved prior to doing a
+    call.
+  
+    Technical:
+    ----------
+    Historically, CEN^DGPTC1 was entrusted with the deletion for DGPTF0.  
+    Changes in code caused a call to DGPTIC10 which calls CEN^DGPTC1.  
+    CEN^DGPTC1 kills the variable DGPTF0 which is needed by 
+    routine DGPTFM71. This would result in a hard error when the value was
+    undefined. The calls are now prefaced with a save of DGPTF0 to a 
+    local save variable that allows the DGPTF0 to be in existence when 
+    control returns.
+  
+ Installation Instructions:
+ ==========================
+ This patch installs two routines and one input template. Routines,
+ DGPTC1, DGPTIC10 and the input template DG501F.
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 
+ minutes to install.
+   
+  1.  Choose the PackMan message containing this patch.
+   
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following option. When prompted for the INSTALL, enter the patch #
+      (DG*5.3*905):
+   
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         back up any other changes such as DDs or templates.
+   
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+   
+      c. Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+   
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install. Enter DG*5.3*905.
+   
+  5.  When prompted "Want KIDS to INHIBIT LOGONs during the install?  
+      NO//", respond NO.
+   
+  6.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGPTC1
+    Before: B26022907   After: B26112849  **37,413,643,701,850,905**
+Routine Name: DGPTIC10
+    Before: B95648075   After:B100685699  **850,905**
+ 
+Routine list of preceding patches: 850
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 06, 2014
+Completed By:                               Date Completed: JUN 08, 2015
+Released By :                               Date Released : JUN 16, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

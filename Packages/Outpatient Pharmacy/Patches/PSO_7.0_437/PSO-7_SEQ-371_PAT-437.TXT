@@ -1,0 +1,207 @@
+$TXT Created by               at CMNT.FO-BIRM.DOMAIN.EXT  (KIDS) on Wednesday, 10/01/14 at 17:17
+=============================================================================
+Run Date: NOV 12, 2014                     Designation: PSO*7*437
+Package : PSO - OUTPATIENT PHARMACY           Priority: EMERGENCY
+Version : 7       SEQ #371                      Status: Released
+                  Compliance Date: NOV 17, 2014
+=============================================================================
+
+Associated patches: (v)PSO*7*408   <<= must be installed BEFORE `PSO*7*437'
+
+Subject: POST RELEASE EMERGENCY PATCH - 313 & 408
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following:
+  
+ 1. New Jersey had an issue with the setup after the installation of
+    patch PSO*7*408. When they tried to transmit Controlled Substances
+    prescriptions to the State Prescription Monitoring Program (SPMP),
+    there was an issue with the sFTP command execution. The VMS local
+    directory, "USER$:[EXTRACT.SPMP]" should be converted to the format
+    "/USER$/EXTRACT/SPMP", but it was not. This patch fixes this issue.
+  
+ 2. Patch PSO*7*313, had this verbiage:
+    "The Outpatient Pharmacy is being modified to require the entry of a 
+    duration for a dose preceding a THEN conjunction if the schedule for
+    such dose is not a ONE-TIME type schedule. If the dose preceding the
+    THEN conjunction is a ONE-TIME type schedule the software will continue
+    to allow the Duration field to be left blank (optional)".
+  
+    It was supposed to allow a ONE-TIME type schedule to proceed without
+    the duration, but it did not. This patch corrects this issue.
+  
+ ******************************  IMPORTANT  ****************************** 
+ The enhancement made in this patch (to allow a ONE-TIME type schedule 
+ without the duration for a dose preceding a THEN conjunction) will work 
+ only for Outpatient Pharmacy package. Similar changes to CPRS package are 
+ not included in this patch and will be addressed in a future CPRS patch.  
+ **************************************************************************
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)        New/Modified/Deleted
+ ------------------         -------------------        --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+    
+  
+ Options Associated:
+     
+ Option Name                  Type               
+ -----------                  ----               -------------------- 
+ N/A 
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)   New/Modified/Deleted
+ -------------      ----      ------------------   --------------------
+ N/A 
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A 
+  
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ PSPO #2669
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ 1042964
+ 1062499 
+  
+ Test Sites:
+ -----------
+ NEW JERSEY HCS
+ OKLAHOMA CITY, OK
+ TENNESSEE VALLEY HCS
+ VA MAINE HCS - TOGUS 
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ N/A
+  
+  
+ File Description                        File Name             FTP Mode
+ --------------------------------------------------------------------------
+ N/A 
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A 
+                            
+    
+ Installation Instructions
+ -------------------------
+ It is recommended that this patch be installed after normal business hours
+ while no Outpatient Pharmacy users are processing pending orders. For 
+ sites that are already transmitting Controlled Substances prescriptions 
+ to their respective state vendor, it's recommended not to install during 
+ that time frame.
+ Installation will take no longer than 2 minutes.
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSO*7.0*437).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package PSO*7.0*437.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOORED4
+    Before: B56835310   After: B56839136  **46,91,78,99,111,117,133,159,
+                                           148,251,391,372,416,313,437**
+Routine Name: PSOSPMU1
+    Before:B104921271   After:B105028322  **408,437**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 16, 2014
+Completed By:                               Date Completed: NOV 06, 2014
+Released By :                               Date Released : NOV 12, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

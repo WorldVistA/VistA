@@ -1,0 +1,153 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 09/29/15 at 15:59
+=============================================================================
+Run Date: MAR 29, 2016                     Designation: ECX*3*159
+Package : ECX - DSS EXTRACTS                  Priority: Mandatory
+Version : 3       SEQ #143                      Status: Released
+                  Compliance Date: APR 01, 2016
+=============================================================================
+
+Associated patches: (v)ECX*3*157   <<= must be installed BEFORE `ECX*3*159'
+
+Subject: MID-FY16 CHANGES FOR 4 CHAR CDS NATIONAL CLINIC (#728.441) FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch ECX*3.0*159 adds 4 new entries and updates the SHORT DESCRIPTION (#1) 
+ field of 11 existing entries in the NATIONAL CLINIC (#728.441) file.
+  
+ *************************************************************************
+ NOTE: This patch has a shortened compliance date because it must be 
+ installed on 4/1/2016. Sites will need the updates for
+ Mid Fiscal Year (FY) 16.
+ *************************************************************************
+  
+    
+ ASSOCIATED NSR:
+ ===============
+ N/A  
+  
+  
+ ASSOCIATED TICKETS:
+ =================== 
+ 1. I5840930FY15 - Mid-FY16 Changes for 4 Char Cds (National Clinic #728.441 
+                   file)
+  
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ PROVIDENCE VAMC
+ LOUISVILLE VAMC
+ NFSG (GAINESVILLE, LAKE CITY)
+   
+  
+ TICKET OVERVIEW:
+ ================
+ 1. I5840930FY15 - Mid-FY16 Changes for 4 Char Cds (National Clinic #728.441 
+                   file)
+                      
+    Problem:
+    --------
+    A request was made by the Managerial Cost Accounting Office (MCAO) to
+    add 4 new entries and update the SHORT DESCRIPTION (#1) field of 11 
+    existing entries in the NATIONAL CLINIC (#728.441) file.
+  
+    Resolution:
+    -----------
+    Created routine ECX3P159 to update the NATIONAL CLINIC (#728.441)
+    file by adding 4 new entries and modifying the SHORT DESCRIPTION (#1) 
+    field of 11 existing entries effective 4/1/2016.
+  
+    The following entries will be added:
+  
+         Code            Short Description
+    --------------    -------------------------
+         LVL6            Mobile Medical Unit 6
+         LVL7            Mobile Medical Unit 7
+         LVL8            Mobile Medical Unit 8
+         LVL9            Mobile Medical Unit 9
+  
+    The descriptions of the following entries have changed:
+   
+     Existing Code       New Short Description
+    ---------------    -------------------------
+         LVL1            Mobile Medical Unit 1
+         LVL2            Mobile Medical Unit 2
+         LVL3            Mobile Medical Unit 3
+         LVL4            Mobile Medical Unit 4
+         LVL5            Mobile Medical Unit 5
+         PNPC            PACT CVT-H Physician
+         PNQC            PACT CVT-H Physician Assistant
+         PNRC            PACT CVT-H Nurse Practitioner
+         PNSC            PACT CVT-H Nurse 
+         RDNU            Radiology Oncology Clinic
+         SNRC            VA Provider & Pt at NonVAFacility
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes. 
+ Suggested time to install: non-peak requirement hours.
+   
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+   
+    3. From this menu, you may select to use the following options (when
+       prompted for INSTALL NAME, enter ECX*3.0*159).      
+  
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch is
+          installed.
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+       d. Print Transport Global - this option will allow you to view
+          the components of the KIDS build.
+      
+    4. Use the Install Package(s) option and select the package ECX*3.0*159
+   
+    5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+       , respond NO.
+   
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? NO//", respond NO.
+   
+ ** 7. During install, verify that all entries were added successfully.
+       If an error is displayed, please create a ticket.  
+   
+    8. You may delete the routine ECX3P159 from your production system 
+       after the patch has been successfully verified.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECX3P159
+    Before:       n/a   After: B13140285  **159**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 15, 2015
+Completed By:                               Date Completed: FEB 09, 2016
+Released By :                               Date Released : MAR 29, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

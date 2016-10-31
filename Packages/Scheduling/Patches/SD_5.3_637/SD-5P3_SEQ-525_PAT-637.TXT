@@ -1,0 +1,319 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 04/22/15 at 16:11
+=============================================================================
+Run Date: SEP 16, 2015                     Designation: SD*5.3*637
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #525                    Status: Released
+                  Compliance Date: OCT 01, 2015
+=============================================================================
+
+Associated patches: (v)SD*5.3*623  <<= must be installed BEFORE `SD*5.3*637'
+
+Subject: FY2016 TABLE MAINTENANCE FOR CLINIC STOP (#40.7) FILE
+
+Category: 
+  - Other
+
+Description:
+============
+
+ This patch provides Fiscal Year 2016 updates to the CLINIC STOP (#40.7) 
+ file as requested by the Office of Finance, Managerial Cost Accounting 
+ Office (MCAO).
+  
+                         *** IMPORTANT NOTE ***
+ **************************************************************************
+ ** This patch is being released with a compliance date of October 1,    **
+ ** 2015. This patch should be installed as close to Close of Business   **
+ ** (COB) on September 30, 2015 as possible, but not after October 1,    **
+ ** 2015. Early installation of this patch could result in transmission  **
+ ** of incorrect stop codes that will result in errors from Austin.      **
+ ** Coordination with the Medical Administration Service (MAS) Program   **
+ ** Application Specialist (PAS)/Automated Data Processing Application   **
+ ** Coordinator (ADPAC) is imperative as the patch will cause changes    **
+ ** to the CLINIC STOP (#40.7) file. Testing can be done in a site's     **
+ ** mirror account before installation in production to verify changes.  **
+ ** This patch creates and renames stop codes effective October 1, 2015; **
+ ** therefore, installing early may modify certain stop codes that may   **
+ ** currently be in use at your site. It is advised that clinics with    **
+ ** stop codes assigned that will incur restriction date/type changes    **
+ ** should be corrected as soon as possible after installation. Please   **
+ ** keep in mind that new stop code corrections should not be assigned   **
+ ** in MAS/Scheduling until October 1, 2015 as the PCE encounters        **
+ ** bearing FY16 stop codes will not be accepted in Austin until that    **
+ ** date. All other MAS stop code corrections should be made as early    **
+ ** as possible on October 1, 2015.                                      **
+ **************************************************************************
+  
+ Managerial Cost Accounting (MCA) Site Team Instructions for FY16 Stop 
+ Code Patch:
+  
+ This patch makes additions and changes to the Clinic Stop (#40.7) file as 
+ of October 1, 2015.
+  
+ No clinic can be created using any new Stop Codes contained in the patch 
+ until after this patch is implemented.  Any clinic using a Stop Code 
+ inactivated by the patch should have an active Stop Code assigned.  
+ Assigning appropriate active Stop Codes to clinics can be accomplished 
+ prior to patch implementation if desired.
+  
+ MCA Site Teams, Scheduling and Information Resources Management (IRM) 
+ should coordinate to perform the following sequence:
+  
+   1. For FY15:  Run the DSS worksheet option Create DSS Clinic Stop Code
+      File [ECXSCLOAD] option. Then, make any necessary adjustments before 
+      approval so all clinics on the worksheet have setups applicable for
+      the month of September 2015.
+  
+   2. IRM installs the patch late on September 30 or early on October 1,
+      2015.
+  
+   3. Run the Non-Conforming Clinics Stop Code Report [SD CLN STOP CODE
+      REP] option to list those clinics that need changes in the Hospital
+      Location (#44) file for FY16.  DO NOT make changes using Enter/Edit 
+      DSS Stop Codes for Clinics [ECXSCEDIT] option for the CLINICS AND
+      STOP CODES (#728.44) file at this time.  Work with scheduling staff
+      to make changes in Hospital Location (#44) file so that the clinics
+      will have the correct stop codes in place for October 1st clinic
+      appointments.
+  
+   4. Follow normal procedures to run the DSS CLI Extract for September
+      2015. Do not edit clinic changes for October stop code changes with
+      the Enter/Edit DSS Stop Codes for Clinics [ECXSCEDIT] option prior to
+      running the September CLI Extract.  It is the edit, not the "approve"
+      that puts the data into the extract.  Perform normal AUDITS for the
+      CLI Extract.
+  
+   5. After auditing and receiving confirmation of successful deblocking of
+      the transmitted September CLI Extract, proceed with FY16 Stop Code
+      changes to the DSS Clinics and Stop Codes Worksheet clinics.
+    
+   6. For FY16:
+  
+      a. Run the Create DSS Clinic Stop Code File [ECXSCLOAD] option.
+         This option creates local entries in the CLINICS AND STOP CODES 
+         (#728.44) file and compares this file to the HOSPITAL LOCATION
+         (#44) file to see if there are any differences since the last time
+         the file was reviewed.
+  
+      b. Use the option Clinics and DSS Stop Codes Print option
+         [ECXSCLIST] option.
+         This option produces a worksheet of (A) All Clinics, (C) Active,
+         (D) Duplicate, (I) Inactive, (U) Unreviewed Clinics, or only 
+         the (X) Export to Text File for Spreadsheet Use that are awaiting
+         approval.
+  
+      c. Update for FY16 as needed using the Enter/Edit DSS Stop Codes for
+         Clinics [ECXSCEDIT] option.
+  
+      d. Approve changes using the Approve Reviewed DSS Clinic Worksheet
+         [ECXSCAPPROV] option. Finalize all Stop Code changes on the
+         worksheet to be ready to run the October DSS CLI Extract.
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ INC0000001225580 - FY16 changes to Clinic Stop (#40.7) file
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Salisbury, NC
+ N. Florida/S.Georgia
+ St. Cloud 
+  
+ Remedy Ticket Overview:
+ =======================
+ INC0000001225580 - FY16 changes to Clinic Stop (#40.7) file
+  
+ Problem:
+ --------
+ The Office of Finance, Managerial Cost Accounting Office (MCAO), has 
+ requested Fiscal Year 2016 updates to the CLINIC STOP (#40.7) file.
+  
+ Resolution:
+ -----------
+ The requested Fiscal year 2016 updates were submitted by the MCAO to be
+ implemented effective October 1, 2015. Post-init routine SD53FY16 updates
+ the CLINIC STOP (#40.7) file by adding one (1) new stop code and changing
+ the names for ten (10) stop codes.
+  
+ Listed below are the applicable stop code updates:
+  
+ New Stop Codes being added (effective 10/1/2015):
+  
+ Stop Code   Name/Description        Restriction Type     Restriction Date
+  
+    699      CVT SAME STA SERVICES          S                10/1/2015
+  
+ Stop Codes with Name Change (will take effect when the patch is 
+ installed):
+  
+    131  Old Name: URGENT CARE UNIT
+         New Name: URGENT CARE CLINIC
+  
+         Old Restriction Type: E           New Restriction Type: E
+         Old Restriction Date: N/A         New Restriction Date: N/A
+  
+    178  Old Name: HBPC/TELEPHONE
+         New Name: TELEPHONE HBPC
+  
+         Old Restriction Type: P           New Restriction Type: P
+         Old Restriction Date: 10/1/2003   New Restriction Date: 10/1/2003
+  
+    221  Old Name: TELEPHONE VIST PRI ONLY
+         New Name: TELEPHONE VIST
+  
+         Old Restriction Type: P           New Restriction Type: P
+         Old Restriction Date: 10/1/2003   New Restriction Date: 10/1/2003
+  
+    354  Old Name: HOSPITAL AT HOME
+         New Name: HOSPITAL IN HOME
+  
+         Old Restriction Type: E           New Restriction Type: E
+         Old Restriction Date: N/A         New Restriction Date: N/A
+  
+    527  Old Name: MENTAL HEALTH TELEPHONE PRI
+         New Name: TELEPHONE MH
+  
+         Old Restriction Type: P           New Restriction Type: P
+         Old Restriction Date: 10/1/2003   New Restriction Date: 10/1/2003
+  
+    545  Old Name: PHONE SUBSTNCE USE DSORDR
+         New Name: TELEPHONE SUD
+  
+         Old Restriction Type: P           New Restriction Type: P
+         Old Restriction Date: 10/1/2003   New Restriction Date: 10/1/2003
+  
+    584  Old Name: PRRC TELEPHONE
+         New Name: TELEPHONE PRRC
+  
+         Old Restriction Type: P           New Restriction Type: P
+         Old Restriction Date: 10/1/2006   New Restriction Date: 10/1/2006
+  
+    801  Old Name: IN-VISN, OTHER VAMC 2ND TO 103
+         New Name: TELEPHONE TRIAGE IN VISN
+  
+         Old Restriction Type: S           New Restriction Type: S
+         Old Restriction Date: 10/1/2003   New Restriction Date: 10/1/2003
+  
+    802  Old Name: OUT OF VISN, VA 2NDARY TO 103
+         New Name: TELEPHONE TRIAGE OUT OF VISN
+  
+         Old Restriction Type: S           New Restriction Type: S
+         Old Restriction Date: 10/1/2003   New Restriction Date: 10/1/2003
+  
+    803  Old Name: COMMERCIAL 2NDARY TO 103
+         New Name: TELEPHONE TRIAGE COMMERCIAL
+  
+         Old Restriction Type: S           New Restriction Type: S
+         Old Restriction Date: 10/1/2003   New Restriction Date: 10/1/2003
+  
+  
+ Installation Instructions:
+ ==========================
+  
+ ************************** IMPORTANT NOTE ***************************
+ *** This patch should be installed as close to COB on 09/30/2015  ***
+ *** as possible, but not after 10/01/2015.                        ***
+ ********************************************************************* 
+  
+ This patch may be run with users on the system, but it is recommended 
+ that it be queued to run after normal business hours.
+  
+ Install Time - less than 3 minutes
+ Suggested time to install: non-peak requirement hours.
+  
+ *** Routine SD53FY16 can be manually deleted after patch is installed ***
+  
+ 1. Load Transport Global
+    ---------------------
+    Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2. Start Up KIDS
+    -------------
+    Start up the Kernel Installation and Distribution System Menu
+    [XPD MAIN]:
+         Edits and Distribution ...
+         Utilities ...
+         Installation ...
+  
+    Select Kernel Installation & Distribution System Option: INStallation
+                                                             ---
+         Load a Distribution
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify Checksums in Transport Global
+         Install Package(s)
+         Restart Install of Package(s)
+         Unload a Distribution
+         Backup a Transport Global
+   
+ 3. Select Installation Option:
+    ---------------------------
+    NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+          NAME, enter SD*5.3*637):
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch. It will not backup any 
+       other changes such as DD's or templates.
+  
+    b. Compare Transport Global to Current System - This option will allow
+       you to view all changes that will be made when this patch is 
+       installed. It compares all components of this patch (routines, 
+       DD's, templates, etc.)
+  
+    c. Verify Checksums in Transport Global - This option will allow you to
+       ensure the integrity of the routines that are in the transport 
+       global.
+  
+ 4. Select Installation Option: Install Package(s)
+    ----------------------------------------------
+    ** This is the step to start the installation of this KIDS patch:
+  
+    a. Choose the Install Package(s) option to start the patch install.
+  
+    b. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', answer NO.
+  
+    c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', answer NO.
+  
+ NOTE: Details of the changes applied by this patch are provided during the
+       installation and may also be reviewed with the Install File Print
+       option on the Utilities menu on the Kernel Installation and 
+       Distribution System menu.
+  
+       It is important to check the CLINIC STOP (#40.7) file post 
+       installation to make sure that all of the updates are correctly 
+       reflected in the CLINIC STOP (#40.7) file. If any discrepancies
+       are found, you should enter a Remedy ticket.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD53FY16
+    Before:       n/a   After: B76425051  **637**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 09, 2015
+Completed By:                               Date Completed: SEP 10, 2015
+Released By :                               Date Released : SEP 16, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

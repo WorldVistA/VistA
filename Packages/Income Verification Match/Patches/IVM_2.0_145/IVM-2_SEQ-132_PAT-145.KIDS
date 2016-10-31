@@ -1,0 +1,899 @@
+Released IVM*2*145 SEQ #132
+Extracted from mail message
+**KIDS**:IVM*2.0*145^
+
+**INSTALL NAME**
+IVM*2.0*145
+"BLD",9491,0)
+IVM*2.0*145^INCOME VERIFICATION MATCH^0^3131114^y
+"BLD",9491,1,0)
+^^12^12^3131024^
+"BLD",9491,1,1,0)
+This patch corrects a problem where an ORU-Z05 message uploaded from ESR 
+"BLD",9491,1,2,0)
+to VistA is not processed in the IVM Demographic Upload screen because an
+"BLD",9491,1,3,0)
+'Invalid Date of Death' error is generated.  This problem occurs when a 
+"BLD",9491,1,4,0)
+Date of Death message containing a time value, which is sent in the 
+"BLD",9491,1,5,0)
+ORU-Z05, is uploaded on the SAME DAY that the death occurred.  
+"BLD",9491,1,6,0)
+ 
+"BLD",9491,1,7,0)
+This patch also removes an API call to a non-existent routine, DGPFSS2.  
+"BLD",9491,1,8,0)
+This call was inserted for the PFSS Project, but the project was later 
+"BLD",9491,1,9,0)
+cancelled and the routine was removed after the cleanup of old routines 
+"BLD",9491,1,10,0)
+that were inadvertently left behind.  This will NOT cause problems in 
+"BLD",9491,1,11,0)
+production accounts, as there is a check in place to verify that the 
+"BLD",9491,1,12,0)
+account is not a test account.
+"BLD",9491,4,0)
+^9.64PA^^
+"BLD",9491,6.3)
+6
+"BLD",9491,"ABPKG")
+n
+"BLD",9491,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9491,"KRN",.4,0)
+.4
+"BLD",9491,"KRN",.401,0)
+.401
+"BLD",9491,"KRN",.402,0)
+.402
+"BLD",9491,"KRN",.403,0)
+.403
+"BLD",9491,"KRN",.5,0)
+.5
+"BLD",9491,"KRN",.84,0)
+.84
+"BLD",9491,"KRN",3.6,0)
+3.6
+"BLD",9491,"KRN",3.8,0)
+3.8
+"BLD",9491,"KRN",9.2,0)
+9.2
+"BLD",9491,"KRN",9.8,0)
+9.8
+"BLD",9491,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",9491,"KRN",9.8,"NM",1,0)
+IVMPRECA^^0^B87632745
+"BLD",9491,"KRN",9.8,"NM",2,0)
+IVMPREC2^^0^B11017907
+"BLD",9491,"KRN",9.8,"NM","B","IVMPREC2",2)
+
+"BLD",9491,"KRN",9.8,"NM","B","IVMPRECA",1)
+
+"BLD",9491,"KRN",19,0)
+19
+"BLD",9491,"KRN",19.1,0)
+19.1
+"BLD",9491,"KRN",101,0)
+101
+"BLD",9491,"KRN",409.61,0)
+409.61
+"BLD",9491,"KRN",771,0)
+771
+"BLD",9491,"KRN",779.2,0)
+779.2
+"BLD",9491,"KRN",870,0)
+870
+"BLD",9491,"KRN",8989.51,0)
+8989.51
+"BLD",9491,"KRN",8989.52,0)
+8989.52
+"BLD",9491,"KRN",8994,0)
+8994
+"BLD",9491,"KRN","B",.4,.4)
+
+"BLD",9491,"KRN","B",.401,.401)
+
+"BLD",9491,"KRN","B",.402,.402)
+
+"BLD",9491,"KRN","B",.403,.403)
+
+"BLD",9491,"KRN","B",.5,.5)
+
+"BLD",9491,"KRN","B",.84,.84)
+
+"BLD",9491,"KRN","B",3.6,3.6)
+
+"BLD",9491,"KRN","B",3.8,3.8)
+
+"BLD",9491,"KRN","B",9.2,9.2)
+
+"BLD",9491,"KRN","B",9.8,9.8)
+
+"BLD",9491,"KRN","B",19,19)
+
+"BLD",9491,"KRN","B",19.1,19.1)
+
+"BLD",9491,"KRN","B",101,101)
+
+"BLD",9491,"KRN","B",409.61,409.61)
+
+"BLD",9491,"KRN","B",771,771)
+
+"BLD",9491,"KRN","B",779.2,779.2)
+
+"BLD",9491,"KRN","B",870,870)
+
+"BLD",9491,"KRN","B",8989.51,8989.51)
+
+"BLD",9491,"KRN","B",8989.52,8989.52)
+
+"BLD",9491,"KRN","B",8994,8994)
+
+"BLD",9491,"QUES",0)
+^9.62^^
+"BLD",9491,"REQB",0)
+^9.611^2^2
+"BLD",9491,"REQB",1,0)
+IVM*2.0*118^1
+"BLD",9491,"REQB",2,0)
+IVM*2.0*151^1
+"BLD",9491,"REQB","B","IVM*2.0*118",1)
+
+"BLD",9491,"REQB","B","IVM*2.0*151",2)
+
+"MBREQ")
+0
+"PKG",220,-1)
+1^1
+"PKG",220,0)
+INCOME VERIFICATION MATCH^IVM^IVM Software for interface with the IVM Center
+"PKG",220,20,0)
+^9.402P^^
+"PKG",220,22,0)
+^9.49I^1^1
+"PKG",220,22,1,0)
+2.0^2941021
+"PKG",220,22,1,"PAH",1,0)
+145^3131114
+"PKG",220,22,1,"PAH",1,1,0)
+^^12^12^3131114
+"PKG",220,22,1,"PAH",1,1,1,0)
+This patch corrects a problem where an ORU-Z05 message uploaded from ESR 
+"PKG",220,22,1,"PAH",1,1,2,0)
+to VistA is not processed in the IVM Demographic Upload screen because an
+"PKG",220,22,1,"PAH",1,1,3,0)
+'Invalid Date of Death' error is generated.  This problem occurs when a 
+"PKG",220,22,1,"PAH",1,1,4,0)
+Date of Death message containing a time value, which is sent in the 
+"PKG",220,22,1,"PAH",1,1,5,0)
+ORU-Z05, is uploaded on the SAME DAY that the death occurred.  
+"PKG",220,22,1,"PAH",1,1,6,0)
+ 
+"PKG",220,22,1,"PAH",1,1,7,0)
+This patch also removes an API call to a non-existent routine, DGPFSS2.  
+"PKG",220,22,1,"PAH",1,1,8,0)
+This call was inserted for the PFSS Project, but the project was later 
+"PKG",220,22,1,"PAH",1,1,9,0)
+cancelled and the routine was removed after the cleanup of old routines 
+"PKG",220,22,1,"PAH",1,1,10,0)
+that were inadvertently left behind.  This will NOT cause problems in 
+"PKG",220,22,1,"PAH",1,1,11,0)
+production accounts, as there is a check in place to verify that the 
+"PKG",220,22,1,"PAH",1,1,12,0)
+account is not a test account.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","IVMPREC2")
+0^2^B11017907^B11517998
+"RTN","IVMPREC2",1,0)
+IVMPREC2 ;ALB/KCL - ROUTE INCOMING HL7 (ORU) MESSAGES BY EVENT TYPE ;5/17/02 1:43pm
+"RTN","IVMPREC2",2,0)
+ ;;2.0;INCOME VERIFICATION MATCH;**12,34,112,118,145**;21-OCT-94;Build 6
+"RTN","IVMPREC2",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","IVMPREC2",4,0)
+ ;
+"RTN","IVMPREC2",5,0)
+ ; This routine will process (ORU) HL7 messages received from the
+"RTN","IVMPREC2",6,0)
+ ; IVM center. Event type code indicating type of transmission is
+"RTN","IVMPREC2",7,0)
+ ; in the BHS segment. Routines based on type will be called to
+"RTN","IVMPREC2",8,0)
+ ; process these messages.  For each batch an ACK will be sent to
+"RTN","IVMPREC2",9,0)
+ ; the IVM Center indicating errors found.  If any errors are found
+"RTN","IVMPREC2",10,0)
+ ; a batch message with AE(indicating error(s)) is sent.  If no errors
+"RTN","IVMPREC2",11,0)
+ ; only a MSH and MSA with AA(no errors) is sent. The following event
+"RTN","IVMPREC2",12,0)
+ ; type codes are processed in the following routines:
+"RTN","IVMPREC2",13,0)
+ ;
+"RTN","IVMPREC2",14,0)
+ ;    EVENT CODE    TRANSMISSION TYPE             PROCESSING ROUTINE
+"RTN","IVMPREC2",15,0)
+ ;    ==============================================================
+"RTN","IVMPREC2",16,0)
+ ;       Z03        SSN TRANSMISSIONS                  IVMPREC5
+"RTN","IVMPREC2",17,0)
+ ;       Z04        INSURANCE TRANSMISSIONS            IVMPREC3
+"RTN","IVMPREC2",18,0)
+ ;       Z05        DEMOGRAPHIC TRANSMISSIONS          IVMPREC6
+"RTN","IVMPREC2",19,0)
+ ;       Z06        MEANS TEST TRANSMISSIONS           IVMPREC7
+"RTN","IVMPREC2",20,0)
+ ;       Z08        CASE STATUS TRANSMISSIONS          IVMPREC4
+"RTN","IVMPREC2",21,0)
+ ;       Z10        INCOME TEST TRANSMISSIONS          IVMCM
+"RTN","IVMPREC2",22,0)
+ ;       Z11        ENROLLMENT/ELIGIBILTY              ORUZ11^DGENUPL
+"RTN","IVMPREC2",23,0)
+ ;
+"RTN","IVMPREC2",24,0)
+ ;
+"RTN","IVMPREC2",25,0)
+ORU ; - Receive Observational Results Unsolicited Message
+"RTN","IVMPREC2",26,0)
+ ;
+"RTN","IVMPREC2",27,0)
+ N DIC,%,%H,%I D NOW^%DTC S HLDT=%
+"RTN","IVMPREC2",28,0)
+ K HLERR,IVMSEG1,IVMSEG2,IVMSEG3
+"RTN","IVMPREC2",29,0)
+ S (HLEVN,IVMCT,IVMERROR,IVMCNTR)=0
+"RTN","IVMPREC2",30,0)
+ ; Make sure POSTMASTER DUZ instead of DUZ of Person who
+"RTN","IVMPREC2",31,0)
+ ; started Incoming Logical Link
+"RTN","IVMPREC2",32,0)
+ S DUZ=.5
+"RTN","IVMPREC2",33,0)
+ ;
+"RTN","IVMPREC2",34,0)
+ ; - get incoming segment from HL7 (#772) file
+"RTN","IVMPREC2",35,0)
+ N IVMRTN,SEGCNT,CNT,STATION,HLEID,HLEIDS
+"RTN","IVMPREC2",36,0)
+ S IVMRTN="IVMPREC2" K ^TMP($J,IVMRTN),^TMP("HLA",$J),^TMP("HLS",$J)
+"RTN","IVMPREC2",37,0)
+ F SEGCNT=1:1 X HLNEXT Q:HLQUIT'>0  D
+"RTN","IVMPREC2",38,0)
+ . S CNT=0
+"RTN","IVMPREC2",39,0)
+ . S ^TMP($J,IVMRTN,SEGCNT,CNT)=HLNODE
+"RTN","IVMPREC2",40,0)
+ . F  S CNT=$O(HLNODE(CNT)) Q:'CNT  S ^TMP($J,IVMRTN,SEGCNT,CNT)=HLNODE(CNT)
+"RTN","IVMPREC2",41,0)
+ ;
+"RTN","IVMPREC2",42,0)
+ S HLDA=HLMTIEN
+"RTN","IVMPREC2",43,0)
+ S IVMSEG=$G(^TMP($J,IVMRTN,1,0)) I IVMSEG']"" G ORUQ
+"RTN","IVMPREC2",44,0)
+ ;
+"RTN","IVMPREC2",45,0)
+ ; - check for BHS 
+"RTN","IVMPREC2",46,0)
+ I $E(IVMSEG,1,3)'="BHS" G ORUQ
+"RTN","IVMPREC2",47,0)
+ ;
+"RTN","IVMPREC2",48,0)
+ ; - get batch control id
+"RTN","IVMPREC2",49,0)
+ S HLFS=HL("FS")
+"RTN","IVMPREC2",50,0)
+ S HLECH=HL("ECH")
+"RTN","IVMPREC2",51,0)
+ S HLQ=$G(HL("HLQ")) S:HLQ="" HLQ=""""""
+"RTN","IVMPREC2",52,0)
+ S IVMHLMID=$P(IVMSEG,HLFS,11)
+"RTN","IVMPREC2",53,0)
+ S STATION=$P(IVMSEG,HLFS,6)
+"RTN","IVMPREC2",54,0)
+ ;
+"RTN","IVMPREC2",55,0)
+ ; - get event type code
+"RTN","IVMPREC2",56,0)
+ S IVMETC=$P($P(IVMSEG,HLFS,9),$E(HLECH),3)
+"RTN","IVMPREC2",57,0)
+ S IVMETC=$P(IVMETC,$E(HLECH,2),2)
+"RTN","IVMPREC2",58,0)
+ S HLEID="VAMC "_STATION_" ORU-"_IVMETC_" SERVER"
+"RTN","IVMPREC2",59,0)
+ I IVMETC="Z04" S HLEID=HLEID_" H"  ;HEC TO VAMC
+"RTN","IVMPREC2",60,0)
+ S HLEID=$O(^ORD(101,"B",HLEID,0)),HLEIDS=""
+"RTN","IVMPREC2",61,0)
+ I HLEID]"" S HLEIDS=$O(^ORD(101,HLEID,775,"B",0))
+"RTN","IVMPREC2",62,0)
+ ;
+"RTN","IVMPREC2",63,0)
+ ; - process the message according to the event type code
+"RTN","IVMPREC2",64,0)
+ S IVMDO=$S(IVMETC="Z03":"EN^IVMPREC5",IVMETC="Z04":"EN^IVMPREC3",IVMETC="Z05":"EN^IVMPREC6",IVMETC="Z06":"EN^IVMPREC7",IVMETC="Z08":"EN^IVMPREC4",IVMETC="Z10":"ORU^IVMCM",IVMETC="Z11":"ORUZ11^DGENUPL",1:"ORUQ")
+"RTN","IVMPREC2",65,0)
+ I IVMETC="Z11" D
+"RTN","IVMPREC2",66,0)
+ .D ORUZ11^DGENUPL(HLDA,.IVMERROR)
+"RTN","IVMPREC2",67,0)
+ .S IVMCT=2*IVMERROR
+"RTN","IVMPREC2",68,0)
+ .S HLEVN=IVMERROR
+"RTN","IVMPREC2",69,0)
+ I IVMETC'="Z11" D
+"RTN","IVMPREC2",70,0)
+ .D @IVMDO
+"RTN","IVMPREC2",71,0)
+ Q:IVMDO="ORUQ" 
+"RTN","IVMPREC2",72,0)
+ ;
+"RTN","IVMPREC2",73,0)
+ ; - if no error send ACK 'AA' message
+"RTN","IVMPREC2",74,0)
+ S HLMTN="ACK"
+"RTN","IVMPREC2",75,0)
+ K HLARYTYP,HLMTIENA,HLRESLTA,HLP
+"RTN","IVMPREC2",76,0)
+ I 'IVMERROR S HLMID=IVMHLMID D ACK^IVMPREC S HLARYTYP="GM",HLMTIENA=""
+"RTN","IVMPREC2",77,0)
+ I IVMERROR S HLARYTYP="GB",HLMTIENA=HLMTIEN  ;HLMTIEN comes from ACK^IVMPREC
+"RTN","IVMPREC2",78,0)
+ K ^TMP("HLA",$J) M ^TMP("HLA",$J)=^TMP("HLS",$J) K ^TMP("HLS",$J)
+"RTN","IVMPREC2",79,0)
+ D GENACK^HLMA1(HLEID,HLMTIENS,HLEIDS,HLARYTYP,1,.HLRESLTA,HLMTIENA,.HLP)
+"RTN","IVMPREC2",80,0)
+ ;
+"RTN","IVMPREC2",81,0)
+ORUQ ;
+"RTN","IVMPREC2",82,0)
+ K DFN,IVMCNTR,IVMCT,IVMDA,IVMERR,IVMERROR,IVMHLMID,IVMNDE,IVMPTID
+"RTN","IVMPREC2",83,0)
+ K IVMSEG,IVMSEG1,IVMSEG2,IVMSEG3,IVMTEXT,XMSUB
+"RTN","IVMPREC2",84,0)
+ K HLARYTYP,HLMTIENA,HLRESLTA,HLP
+"RTN","IVMPREC2",85,0)
+ K ^TMP($J,IVMRTN),^TMP("HLA",$J),^TMP("HLS",$J)
+"RTN","IVMPREC2",86,0)
+ Q
+"RTN","IVMPRECA")
+0^1^B87632745^B87617069
+"RTN","IVMPRECA",1,0)
+IVMPRECA ;ALB/KCL/BRM/PJR/RGL/CKN,TDM - DEMOGRAPHICS MESSAGE CONSISTENCY CHECK ; 7/19/11 11:16am
+"RTN","IVMPRECA",2,0)
+ ;;2.0;INCOME VERIFICATION MATCH;**5,6,12,34,58,56,115,144,121,151,145**;21-OCT-94;Build 6
+"RTN","IVMPRECA",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","IVMPRECA",4,0)
+ ;
+"RTN","IVMPRECA",5,0)
+ ; This routine will perform data validation checks on uploadable
+"RTN","IVMPRECA",6,0)
+ ; demographic fields received from the IVM Center to ensure they
+"RTN","IVMPRECA",7,0)
+ ; are accurate prior to their upload into DHCP.
+"RTN","IVMPRECA",8,0)
+ ;
+"RTN","IVMPRECA",9,0)
+ ;
+"RTN","IVMPRECA",10,0)
+ ; Called from routine IVMPREC6 before uploadable demographic fields
+"RTN","IVMPRECA",11,0)
+ ; are stored in DHCP.
+"RTN","IVMPRECA",12,0)
+ ;
+"RTN","IVMPRECA",13,0)
+ ;
+"RTN","IVMPRECA",14,0)
+EN ; - Entry point to create temp array and perform msg consistency checks
+"RTN","IVMPRECA",15,0)
+ ;
+"RTN","IVMPRECA",16,0)
+ N DFN,IVMCNTY,IVMCR,IVMEG,IVMFLAG,IVMFLD,IVMNUM,IVMSTR,IVMSTPTR,X
+"RTN","IVMPRECA",17,0)
+ N COMP,CNTR,NOPID,ADDRTYPE,ADDSEQ,TELESEQ,COMMTYPE,TCFLG,TMPARRY,PID3ARRY,CNTR2
+"RTN","IVMPRECA",18,0)
+ N MULTDONE
+"RTN","IVMPRECA",19,0)
+ K IVMRACE
+"RTN","IVMPRECA",20,0)
+ S IVMNUM=IVMDA ; 'current' line in ^HL(772,"IN",...
+"RTN","IVMPRECA",21,0)
+ S DODSEG=0 ;Initialize flag for DOD information
+"RTN","IVMPRECA",22,0)
+ S GUARSEG=0 ;Initialize flag for Guardian information
+"RTN","IVMPRECA",23,0)
+ ;
+"RTN","IVMPRECA",24,0)
+ ; - check the format of the HL7 demographic message
+"RTN","IVMPRECA",25,0)
+ D NEXT I $E(IVMSTR,1,3)'="PID" S HLERR="Missing PID segment" G ENQ
+"RTN","IVMPRECA",26,0)
+ S CNTR=1,NOPID=0,PIDSTR(CNTR)=$P(IVMSTR,HLFS,2,999)
+"RTN","IVMPRECA",27,0)
+ ;Handle wrapped PID segment
+"RTN","IVMPRECA",28,0)
+ F I=1:1 D  Q:NOPID
+"RTN","IVMPRECA",29,0)
+ . D NEXT I $E(IVMSTR,1,4)="ZPD^" S NOPID=1 Q
+"RTN","IVMPRECA",30,0)
+ . S CNTR=CNTR+1,PIDSTR(CNTR)=IVMSTR
+"RTN","IVMPRECA",31,0)
+ D BLDPID^IVMPREC6(.PIDSTR,.IVMPID)  ;Create IVMPID subscript by seq #
+"RTN","IVMPRECA",32,0)
+ ;convert "" to null for PID segment
+"RTN","IVMPRECA",33,0)
+ S CNTR="" F  S CNTR=$O(IVMPID(CNTR)) Q:CNTR=""  D
+"RTN","IVMPRECA",34,0)
+ . I $O(IVMPID(CNTR,"")) D  Q
+"RTN","IVMPRECA",35,0)
+ . . S CNTR2="" F  S CNTR2=$O(IVMPID(CNTR,CNTR2)) Q:CNTR2=""  D
+"RTN","IVMPRECA",36,0)
+ . . . S IVMPID(CNTR,CNTR2)=$$CLEARF(IVMPID(CNTR,CNTR2),$E(HLECH))
+"RTN","IVMPRECA",37,0)
+ . I CNTR=11 S IVMPID(CNTR)=$$CLEARF(IVMPID(CNTR),$E(HLECH)) Q
+"RTN","IVMPRECA",38,0)
+ . I IVMPID(CNTR)=HLQ S IVMPID(CNTR)=""
+"RTN","IVMPRECA",39,0)
+ I $E(IVMSTR,1,3)'="ZPD" S HLERR="Missing ZPD segment" G ENQ
+"RTN","IVMPRECA",40,0)
+ S IVMSTR("ZPD")=$P(IVMSTR,HLFS,2,999)
+"RTN","IVMPRECA",41,0)
+ I $P(IVMSTR("ZPD"),HLFS,8)'="" S GUARSEG=1
+"RTN","IVMPRECA",42,0)
+ I $P(IVMSTR("ZPD"),HLFS,9)'="" S DODSEG=1
+"RTN","IVMPRECA",43,0)
+ D NEXT I $E(IVMSTR,1,3)="ZEL" S HLERR="ZEL segment should not be sent in Z05 message" G ENQ
+"RTN","IVMPRECA",44,0)
+ ;I $E(IVMSTR,1,3)="ZTA" D NEXT  ;Skip ZTA -coming later
+"RTN","IVMPRECA",45,0)
+ I $E(IVMSTR,1,3)'="ZTA" S HLERR="Missing ZTA segment" G ENQ
+"RTN","IVMPRECA",46,0)
+ S IVMSTR("ZTA")=$P(IVMSTR,HLFS,2,999)
+"RTN","IVMPRECA",47,0)
+ D NEXT
+"RTN","IVMPRECA",48,0)
+ I $E(IVMSTR,1,3)'="ZGD" S HLERR="Missing ZGD segment" G ENQ
+"RTN","IVMPRECA",49,0)
+ S IVMSTR("ZGD")=$P(IVMSTR,HLFS,2,999)
+"RTN","IVMPRECA",50,0)
+ ;
+"RTN","IVMPRECA",51,0)
+ ; - perform field validation checks for PID segment
+"RTN","IVMPRECA",52,0)
+ M TMPARRY(3)=IVMPID(3) D PARSPID3^IVMUFNC(.TMPARRY,.PID3ARY)
+"RTN","IVMPRECA",53,0)
+ S DFN=$G(PID3ARY("PI")),ICN=$G(PID3ARY("NI"))
+"RTN","IVMPRECA",54,0)
+ K TMPARRY,PID3ARY
+"RTN","IVMPRECA",55,0)
+ I '$$MATCH^IVMUFNC(DFN,ICN,"","","I",.ERRMSG) S HLERR=ERRMSG G ENQ
+"RTN","IVMPRECA",56,0)
+ S IVMDFN=DFN  ;Store DFN in temp variable to use later
+"RTN","IVMPRECA",57,0)
+ ;I IVMPID(19)'=$P(^DPT(DFN,0),"^",9) S HLERR="Couldn't match IVM SSN with DHCP SSN" G ENQ
+"RTN","IVMPRECA",58,0)
+ ;
+"RTN","IVMPRECA",59,0)
+ S X=IVMPID(7) I X]"",($$FMDATE^HLFNC(X)>DT) S HLERR="Date of Birth greater than current date" G ENQ
+"RTN","IVMPRECA",60,0)
+ ;
+"RTN","IVMPRECA",61,0)
+ S X=IVMPID(8) I X]"",X'="M",X'="F" S HLERR="Invalid code sent for Patient sex" G ENQ
+"RTN","IVMPRECA",62,0)
+ ;
+"RTN","IVMPRECA",63,0)
+ ; Marital Status
+"RTN","IVMPRECA",64,0)
+ S X=$G(IVMPID(16)) I (X'="")&(X'="D")&(X'="M")&(X'="W")&(X'="U")&(X'="A")&(X'="S") D  G ENQ
+"RTN","IVMPRECA",65,0)
+ . S HLERR="Invalid code sent for Patient Marital Status" G ENQ
+"RTN","IVMPRECA",66,0)
+ ; Religion
+"RTN","IVMPRECA",67,0)
+ S X=$G(IVMPID(17)) I X'="" S X=$O(^DIC(13,"C",+X,"")) I X="" D  G ENQ
+"RTN","IVMPRECA",68,0)
+ . S HLERR="Invalid code sent for Patient Religion"
+"RTN","IVMPRECA",69,0)
+ ; Ethnicity
+"RTN","IVMPRECA",70,0)
+ S X=$P($G(IVMPID(22)),$E(HLECH),4) I X]"" S X=$O(^DIC(10.2,"AHL7",X,"")) I X="" D  G ENQ
+"RTN","IVMPRECA",71,0)
+ . S HLERR="Invalid code sent for Patient Ethnicity" G ENQ
+"RTN","IVMPRECA",72,0)
+ ;
+"RTN","IVMPRECA",73,0)
+ ; - if address - perform validation checks on addr fields
+"RTN","IVMPRECA",74,0)
+ ;Get all address from seq. 11 of PID segment
+"RTN","IVMPRECA",75,0)
+ I 'DODSEG,'GUARSEG D
+"RTN","IVMPRECA",76,0)
+ . D PID11 Q:$D(HLERR)
+"RTN","IVMPRECA",77,0)
+ . D PID10 Q:$D(HLERR)
+"RTN","IVMPRECA",78,0)
+ . D PID13
+"RTN","IVMPRECA",79,0)
+ G ENQ:$D(HLERR)
+"RTN","IVMPRECA",80,0)
+ ;
+"RTN","IVMPRECA",81,0)
+ ; - perform field validation check for ZPD and ZGD segment
+"RTN","IVMPRECA",82,0)
+ ; - I X]"" was changed to I X below for IVM*2*56
+"RTN","IVMPRECA",83,0)
+ S X=$P(IVMSTR("ZPD"),HLFS,9) I X,($$FMDATE^HLFNC(X)<$P($G(^DPT(+DFN,0)),"^",3))!($$FMDATE^HLFNC(X)>$$NOW^XLFDT) S HLERR="Invalid date of death" G ENQ
+"RTN","IVMPRECA",84,0)
+ ; IVM*2*121 - Added new check for ZGD
+"RTN","IVMPRECA",85,0)
+ N ZGD3
+"RTN","IVMPRECA",86,0)
+ S ZGD3=$P(IVMSTR("ZGD"),HLFS,3)
+"RTN","IVMPRECA",87,0)
+ S X=$P(IVMSTR("ZGD"),HLFS,2)
+"RTN","IVMPRECA",88,0)
+ I X=HLQ S HLERR="Invalid Guardian Type" G ENQ
+"RTN","IVMPRECA",89,0)
+ I X,X'=1 S HLERR="Invalid Guardian Type" G ENQ
+"RTN","IVMPRECA",90,0)
+ I X=1,((ZGD3=HLQ)!(ZGD3="")) S HLERR="Invalid Guardian Type" G ENQ
+"RTN","IVMPRECA",91,0)
+ ;
+"RTN","IVMPRECA",92,0)
+ ;
+"RTN","IVMPRECA",93,0)
+ENQ ; - send acknowledgement (ACK) 'AE' msg to the IVM Center
+"RTN","IVMPRECA",94,0)
+ I $D(HLERR) D ACK^IVMPREC
+"RTN","IVMPRECA",95,0)
+ Q
+"RTN","IVMPRECA",96,0)
+ ;
+"RTN","IVMPRECA",97,0)
+ ;
+"RTN","IVMPRECA",98,0)
+ADDRCHK ; - validate address fields sent by IVM Center
+"RTN","IVMPRECA",99,0)
+ N HLERRDEF
+"RTN","IVMPRECA",100,0)
+ ;I ADDRTYPE="N" D  Q   ;Birth City & State
+"RTN","IVMPRECA",101,0)
+ ;. I $P(X,$E(HLECH),3)']"" S HLERR="Invalid address - Missing birth city" Q
+"RTN","IVMPRECA",102,0)
+ ;. I $P(X,$E(HLECH),4)']"" S HLERR="Invalid address - Missing birth state abbreviation" Q
+"RTN","IVMPRECA",103,0)
+ ;. S IVMSTPTR=+$O(^DIC(5,"C",$P(X,$E(HLECH),4),0))
+"RTN","IVMPRECA",104,0)
+ ;. I 'IVMSTPTR S HLERR="Invalid birth state abbreviation" Q
+"RTN","IVMPRECA",105,0)
+ ;
+"RTN","IVMPRECA",106,0)
+ S HLERRDEF="Invalid "_$S(ADDRTYPE="CA":"Confidential ",1:"")_"address - "
+"RTN","IVMPRECA",107,0)
+ S CNTRY=$P(X,$E(HLECH),6) I CNTRY']"" S HLERR=HLERRDEF_"Missing Country" Q
+"RTN","IVMPRECA",108,0)
+ I '$$CNTRCONV^IVMPREC8(CNTRY) S HLERR=HLERRDEF_"Invalid Country" Q
+"RTN","IVMPRECA",109,0)
+ S FORFLG=$S(CNTRY="USA":0,1:1)
+"RTN","IVMPRECA",110,0)
+ I $P(X,$E(HLECH),1)']"" S HLERR=HLERRDEF_"Missing street address [line 1]" Q
+"RTN","IVMPRECA",111,0)
+ I $P(X,$E(HLECH),3)']"" S HLERR=HLERRDEF_"Missing city" Q
+"RTN","IVMPRECA",112,0)
+ ;I $P(X,$E(HLECH),4)']"" S HLERR=HLERRDEF_"Missing "_$S('FORFLG:"state abbreviation",1:"province") Q
+"RTN","IVMPRECA",113,0)
+ ;I $P(X,$E(HLECH),5)']"" S HLERR=HLERRDEF_"Missing "_$S('FORFLG:"zip code",1:"postal code") Q
+"RTN","IVMPRECA",114,0)
+ I $P(X,$E(HLECH),4)']"",'FORFLG S HLERR=HLERRDEF_"Missing State abbreviation" Q
+"RTN","IVMPRECA",115,0)
+ I $P(X,$E(HLECH),5)']"",'FORFLG S HLERR=HLERRDEF_"Missing Zip Code" Q
+"RTN","IVMPRECA",116,0)
+ I 'FORFLG D  Q:$D(HLERR)
+"RTN","IVMPRECA",117,0)
+ . S IVMCNTY=$P(X,$E(HLECH),9)
+"RTN","IVMPRECA",118,0)
+ . I IVMCNTY']"" S HLERR=HLERRDEF_"Missing county code" Q
+"RTN","IVMPRECA",119,0)
+ I $L($P(X,$E(HLECH),1))>35!($L($P(X,$E(HLECH),1))<3) S HLERR="Invalid "_$S(ADDRTYPE="CA":"Confidential ",1:"")_"street address [line 1]" Q
+"RTN","IVMPRECA",120,0)
+ I $P(X,$E(HLECH),2)]"",(($L($P(X,$E(HLECH),2))>30)!($L($P(X,$E(HLECH),2))<3)) S HLERR="Invalid "_$S(ADDRTYPE="CA":"Confidential ",1:"")_"street address [line 2]" Q
+"RTN","IVMPRECA",121,0)
+ I ADDRTYPE'="CA" I $L($P(X,$E(HLECH),3))>15!($L($P(X,$E(HLECH),3))<2) S HLERR="Invalid city" Q
+"RTN","IVMPRECA",122,0)
+ ;I ADDRTYPE="CA" I $L($P(X,$E(HLECH),3))>30!($L($P(X,$E(HLECH),3))<2) S HLERR="Invalid Confidential city" Q
+"RTN","IVMPRECA",123,0)
+ ;
+"RTN","IVMPRECA",124,0)
+ ; - save state pointer for county code validation only if not foreign address
+"RTN","IVMPRECA",125,0)
+ I 'FORFLG D  Q:$D(HLERR)
+"RTN","IVMPRECA",126,0)
+ .S IVMSTPTR=+$O(^DIC(5,"C",$P(X,$E(HLECH),4),0))
+"RTN","IVMPRECA",127,0)
+ .I 'IVMSTPTR S HLERR="Invalid "_$S(ADDRTYPE="CA":"Confidential ",1:"")_"state abbreviation" Q
+"RTN","IVMPRECA",128,0)
+ .I '$O(^DIC(5,IVMSTPTR,1,"C",IVMCNTY,0)) D  Q:$G(HLERR)]""
+"RTN","IVMPRECA",129,0)
+ ..N STFIPS
+"RTN","IVMPRECA",130,0)
+ ..S STFIPS=IVMSTPTR
+"RTN","IVMPRECA",131,0)
+ ..S:$L(STFIPS)<2 STFIPS="0"_STFIPS
+"RTN","IVMPRECA",132,0)
+ ..Q:$$FIPSCHK^XIPUTIL(STFIPS_IVMCNTY)  ;county code is valid
+"RTN","IVMPRECA",133,0)
+ ..S HLERR="Invalid "_$S(ADDRTYPE="CA":"Confidential ",1:"")_"county code"
+"RTN","IVMPRECA",134,0)
+ .S X=$P(X,$E(HLECH),5) D ZIPIN^VAFADDR I $D(X)[0 S HLERR="Invalid "_$S(ADDRTYPE="CA":"Confidential ",1:"")_"zip code" Q
+"RTN","IVMPRECA",135,0)
+ Q
+"RTN","IVMPRECA",136,0)
+ ;
+"RTN","IVMPRECA",137,0)
+ ;
+"RTN","IVMPRECA",138,0)
+NEXT ; - get the next HL7 segment in the message from HL7 Transmission (#772) file
+"RTN","IVMPRECA",139,0)
+ S IVMNUM=$O(^TMP($J,IVMRTN,IVMNUM)),IVMSTR=$G(^(+IVMNUM,0))
+"RTN","IVMPRECA",140,0)
+ Q
+"RTN","IVMPRECA",141,0)
+ ;
+"RTN","IVMPRECA",142,0)
+PID10 ; Perform consistency checks for seq. 10
+"RTN","IVMPRECA",143,0)
+ ; Get all Race data from seq. 10 of PID segment
+"RTN","IVMPRECA",144,0)
+ N RACEVAL,RACEDA,RACEFLG,RACESQ
+"RTN","IVMPRECA",145,0)
+ S RACEFLG=1 ;Flag to check if Race data exist.
+"RTN","IVMPRECA",146,0)
+ I $D(IVMPID(10)) D
+"RTN","IVMPRECA",147,0)
+ . I $O(IVMPID(10,"")) D  Q
+"RTN","IVMPRECA",148,0)
+ . . S RACESQ=0 F  S RACESQ=$O(IVMPID(10,RACESQ)) Q:((RACESQ="")!($D(HLERR))!('RACEFLG))  D
+"RTN","IVMPRECA",149,0)
+ . . . I $G(IVMPID(10,RACESQ))="" S RACEFLG=0 Q
+"RTN","IVMPRECA",150,0)
+ . . . S RACEVAL=$P($P(IVMPID(10,RACESQ),$E(HLECH),1),"-",1,2)
+"RTN","IVMPRECA",151,0)
+ . . . I RACEVAL="" S HLERR="Missing Race Value - PID Seq 10" Q
+"RTN","IVMPRECA",152,0)
+ . . . S IVMRACE(1,RACEVAL)=IVMPID(10,RACESQ)
+"RTN","IVMPRECA",153,0)
+ . I $G(IVMPID(10))="" S RACEFLG=0 Q
+"RTN","IVMPRECA",154,0)
+ . I $P($P(IVMPID(10),$E(HLECH),1),"-",1,2)="" S HLERR="Missing Race Value - PID Seq 10" Q
+"RTN","IVMPRECA",155,0)
+ . S RACEVAL=$P($P(IVMPID(10),$E(HLECH),1),"-",1,2)
+"RTN","IVMPRECA",156,0)
+ . I RACEVAL="" S HLERR="Missing Race Value - PID Seq 10" Q
+"RTN","IVMPRECA",157,0)
+ . S IVMRACE(1,RACEVAL)=IVMPID(10)
+"RTN","IVMPRECA",158,0)
+ Q:$D(HLERR)
+"RTN","IVMPRECA",159,0)
+ ;perform consistency checks on Race
+"RTN","IVMPRECA",160,0)
+ I RACEFLG D
+"RTN","IVMPRECA",161,0)
+ . S RACEVAL="" F  S RACEVAL=$O(IVMRACE(1,RACEVAL)) Q:RACEVAL=""!$D(HLERR)  D
+"RTN","IVMPRECA",162,0)
+ . . S RACEDA=$$CODE2PTR^DGUTL4(RACEVAL,1,2)
+"RTN","IVMPRECA",163,0)
+ . . I RACEVAL="UNK-SLF" S RACEDA=$$CODE2PTR^DGUTL4("9999-4",1,2)
+"RTN","IVMPRECA",164,0)
+ . . I RACEDA<1 S HLERR="Invalid Race Value - PID Seq 10" Q
+"RTN","IVMPRECA",165,0)
+ . . S IVMRACE(2,RACEDA)=IVMRACE(1,RACEVAL)
+"RTN","IVMPRECA",166,0)
+ Q
+"RTN","IVMPRECA",167,0)
+ ;
+"RTN","IVMPRECA",168,0)
+PID11 ; Perform consistency check for seq. 11
+"RTN","IVMPRECA",169,0)
+ S CONFADCT=""
+"RTN","IVMPRECA",170,0)
+ I $D(IVMPID(11)) D
+"RTN","IVMPRECA",171,0)
+ . I $O(IVMPID(11,"")) D  Q
+"RTN","IVMPRECA",172,0)
+ . . S ADDSEQ=0 F  S ADDSEQ=$O(IVMPID(11,ADDSEQ)) Q:ADDSEQ=""!($D(HLERR))  D
+"RTN","IVMPRECA",173,0)
+ . . . I $G(IVMPID(11,ADDSEQ))="" S HLERR="Invalid Address - Missing Address information" Q
+"RTN","IVMPRECA",174,0)
+ . . . S ADDRTYPE=$P($G(IVMPID(11,ADDSEQ)),$E(HLECH),7)
+"RTN","IVMPRECA",175,0)
+ . . . I ADDRTYPE="" S HLERR="Invalid Address - Missing Address Type" Q
+"RTN","IVMPRECA",176,0)
+ . . . ; I ADDRTYPE="P"!(ADDRTYPE="VAB1")!(ADDRTYPE="VAB2")!(ADDRTYPE="VAB3")!(ADDRTYPE="VAB4") S ADDRESS(ADDRTYPE)=IVMPID(11,ADDSEQ)
+"RTN","IVMPRECA",177,0)
+ . . . Q:'$D(IVMALADT(ADDRTYPE))
+"RTN","IVMPRECA",178,0)
+ . . . I IVMALADT(ADDRTYPE)="" S ADDRESS(ADDRTYPE)=IVMPID(11,ADDSEQ)
+"RTN","IVMPRECA",179,0)
+ . . . ;I $P(IVMALADT(ADDRTYPE),"^")="CA" D
+"RTN","IVMPRECA",180,0)
+ . . . ;. S ADDRESS("CA")=IVMPID(11,ADDSEQ)
+"RTN","IVMPRECA",181,0)
+ . . . ;. S CONFADCT=$P(IVMALADT(ADDRTYPE),"^",2)
+"RTN","IVMPRECA",182,0)
+ . . . ;. S CONFADCT(CONFADCT)=""
+"RTN","IVMPRECA",183,0)
+ . I $G(IVMPID(11))="" S HLERR="Invalid Address - Missing Address information" Q
+"RTN","IVMPRECA",184,0)
+ . S ADDRTYPE=$P($G(IVMPID(11)),$E(HLECH),7)
+"RTN","IVMPRECA",185,0)
+ . I ADDRTYPE="" S HLERR="Invalid Address - Missing Address Type" Q
+"RTN","IVMPRECA",186,0)
+ . ; I ADDRTYPE="P"!(ADDRTYPE="VAB1")!(ADDRTYPE="VAB2")!(ADDRTYPE="VAB3")!(ADDRTYPE="VAB4") S ADDRESS(ADDRTYPE)=IVMPID(11)
+"RTN","IVMPRECA",187,0)
+ . Q:'$D(IVMALADT(ADDRTYPE))
+"RTN","IVMPRECA",188,0)
+ . I IVMALADT(ADDRTYPE)="" S ADDRESS(ADDRTYPE)=IVMPID(11)
+"RTN","IVMPRECA",189,0)
+ . ;I $P(IVMALADT(ADDRTYPE),"^")="CA" D
+"RTN","IVMPRECA",190,0)
+ . ;. S ADDRESS("CA")=IVMPID(11)
+"RTN","IVMPRECA",191,0)
+ . ;. S CONFADCT=$P(IVMALADT(ADDRTYPE),"^",2)
+"RTN","IVMPRECA",192,0)
+ . ;. S CONFADCT(CONFADCT)=""
+"RTN","IVMPRECA",193,0)
+ Q:$D(HLERR)
+"RTN","IVMPRECA",194,0)
+ ;perform consistency checks on Permanent and all bad address
+"RTN","IVMPRECA",195,0)
+ I '$D(ADDRESS) S HLERR="Invalid Address - Invalid Address Type" Q
+"RTN","IVMPRECA",196,0)
+ S ADDRTYPE="" F  S ADDRTYPE=$O(ADDRESS(ADDRTYPE)) Q:((ADDRTYPE="")!($G(HLERR)'=""))  S X=$G(ADDRESS(ADDRTYPE)) D ADDRCHK
+"RTN","IVMPRECA",197,0)
+ Q
+"RTN","IVMPRECA",198,0)
+ ;
+"RTN","IVMPRECA",199,0)
+PID13 ; Perform consistency checks for seq. 13
+"RTN","IVMPRECA",200,0)
+ ;Get communication data for all types from seq. 13 or PID segment
+"RTN","IVMPRECA",201,0)
+ S TCFLG=1 ;Flag to check if Telecom data exist.
+"RTN","IVMPRECA",202,0)
+ I $D(IVMPID(13)) D
+"RTN","IVMPRECA",203,0)
+ . I $O(IVMPID(13,"")) D  Q
+"RTN","IVMPRECA",204,0)
+ . . S TELESEQ=0 F  S TELESEQ=$O(IVMPID(13,TELESEQ)) Q:((TELESEQ="")!($D(HLERR))!('TCFLG))  D
+"RTN","IVMPRECA",205,0)
+ . . . I $G(IVMPID(13,TELESEQ))="" S TCFLG=0 Q
+"RTN","IVMPRECA",206,0)
+ . . . I $P(IVMPID(13,TELESEQ),$E(HLECH),2)="" S HLERR="Invalid Communication Data - Missing Communication Type - PID Seq 13" Q
+"RTN","IVMPRECA",207,0)
+ . . . S TELECOM($P(IVMPID(13,TELESEQ),$E(HLECH),2))=IVMPID(13,TELESEQ)
+"RTN","IVMPRECA",208,0)
+ . I $G(IVMPID(13))="" S TCFLG=0 Q
+"RTN","IVMPRECA",209,0)
+ . I $P(IVMPID(13),$E(HLECH),2)="" S HLERR="Invalid Communication Data - Missing Communication Type - PID Seq 13" Q
+"RTN","IVMPRECA",210,0)
+ . S TELECOM($P(IVMPID(13),$E(HLECH),2))=IVMPID(13)
+"RTN","IVMPRECA",211,0)
+ Q:$D(HLERR)
+"RTN","IVMPRECA",212,0)
+ ;perform consistency checks on all types of communication data.
+"RTN","IVMPRECA",213,0)
+ I TCFLG D
+"RTN","IVMPRECA",214,0)
+ . S COMMTYPE="" F  S COMMTYPE=$O(TELECOM(COMMTYPE)) Q:COMMTYPE=""!$D(HLERR)  D
+"RTN","IVMPRECA",215,0)
+ . . I COMMTYPE="NET" D  Q
+"RTN","IVMPRECA",216,0)
+ . . . S X=$P(TELECOM(COMMTYPE),$E(HLECH),4)
+"RTN","IVMPRECA",217,0)
+ . . . I X]"",'$$CHKEMAIL^IVMPREC8(X) S HLERR="Invalid Email address"
+"RTN","IVMPRECA",218,0)
+ . . S X=$P(TELECOM(COMMTYPE),$E(HLECH)) I X]"",(($L(X)>20)!($L(X)<4)) S HLERR="Invalid phone number"
+"RTN","IVMPRECA",219,0)
+ Q
+"RTN","IVMPRECA",220,0)
+ ;
+"RTN","IVMPRECA",221,0)
+CLEARF(NODE,DEL,IGNORE) ;
+"RTN","IVMPRECA",222,0)
+ ; Input:       NODE    - SEGMENT/SEQ.
+"RTN","IVMPRECA",223,0)
+ ;               DEL    - Delimiter (optional - default is ^)
+"RTN","IVMPRECA",224,0)
+ ;            IGNORE    - String of seq # to avoid (optional)
+"RTN","IVMPRECA",225,0)
+ N I
+"RTN","IVMPRECA",226,0)
+ I $G(DEL)="" S DEL=HLFS
+"RTN","IVMPRECA",227,0)
+ F I=1:1:$L(NODE,DEL) D
+"RTN","IVMPRECA",228,0)
+ . I $G(IGNORE)[(","_I_",") Q  ;Ignore this seq. to convert
+"RTN","IVMPRECA",229,0)
+ . I $P(NODE,DEL,I)=HLQ S $P(NODE,DEL,I)=""
+"RTN","IVMPRECA",230,0)
+ Q NODE
+"VER")
+8.0^22.0
+"BLD",9491,6)
+^132
+**END**
+**END**
+

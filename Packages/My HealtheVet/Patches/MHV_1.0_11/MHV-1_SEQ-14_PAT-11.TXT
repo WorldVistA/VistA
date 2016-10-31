@@ -1,0 +1,499 @@
+$TXT Created by                KUMAR at HEV.MYHEALTH.DOMAIN.EXT  (KIDS) on Friday, 05/08/15 at 09:43
+=============================================================================
+Run Date: AUG 20, 2015                     Designation: MHV*1*11
+Package : MHV - MYHEALTHEVET                  Priority: Mandatory
+Version : 1        SEQ #14                      Status: Released
+                  Compliance Date: SEP 20, 2015
+=============================================================================
+
+Associated patches: (v)MPIF*1*48   <<= must be installed BEFORE `MHV*1*11'
+                    (v)GMPL*2*42   <<= must be installed BEFORE `MHV*1*11'
+                    (v)MHV*1*10    <<= must be installed BEFORE `MHV*1*11'
+                    (v)EC*2*125    <<= must be installed BEFORE `MHV*1*11'
+
+Subject: MHV 12.14 Secure Messaging (SM) WORKLOAD CREDIT RELEASE
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ MHV*1.0*11 SECURE MESSAGING WORKLOAD CREDIT RELEASE
+  
+ Secure Messaging (SM) allows patients and clinicians to email each other
+ securely and confidentially, and allows clinicians to post those email
+ threads to the medical record as progress notes.
+ Relationships between patients and clinicians are established based on
+ Primary Care Management Module (PCMM) providers, clinic appointments and
+ Order Entry/Results Reporting (OE/RR) teams.  Secure Messaging uses 
+ triage groups based on these relationships to manage which patients are
+ able to email which providers.  More information on secure messaging can
+ be found on the MyHealtheVet (MHV) product web site (intranet)
+ http://vaww1.domain.ext/MyHealtheVet/, and MHV web site www.myhealth.domain.ext.
+  
+ This patch allows the Secure Messaging server to communicate with VistA 
+ to retrieve and validate the Event Capture System (ECS) data elements 
+ that are needed to file a record in the Event Capture System, and then
+ link the ECS record to the SM Text Integration Utility (TIU)
+ Note containing the provider/patient communication message.
+  
+ Summary
+ -------
+ MHV*1*11 installs:
+         1.- New VISTA HL7 protocols and routines to support the new 
+ functionality for My HealtheVet (MHV) Release 12.14-Secure Messaging (SM)
+ Workload Credit Phase II.
+ It leverages the existing SM TIU HL7 Interface already developed and
+ released in previous MHV releases of SECURE MESSAGING, and also installs 
+ new MHV HL7 components, that use other packages APIs through Integration
+ Agreements. 
+  
+         2.- JAZZ Defect#128661: Fix the VistA API defect for SM 
+ getPatientsByClinicAndDate query to return all the patients who have
+ appointments using Clinic IEN and Date range (MHVXPAT routine).
+  
+ The following are the custodial packages and the Integration Agreements 
+ for this patch:
+         1894 -  PATIENT CARE ENCOUNTER
+         1873 -  EVENT CAPTURE
+         1874 -  EVENT CAPTURE
+         1995 -  CPT/HCPCS CODES
+         2741 -  PROBLEM LIST
+         2701 -  MASTER PATIENT INDEX
+         3990 -  DRG GROUPER
+         5266 -  SCHEDULING
+         6009 -  EVENT CAPTURE
+         6010 -  EVENT CAPTURE
+         6011 -  EVENT CAPTURE
+         6012 -  EVENT CAPTURE
+         6013 -  EVENT CAPTURE
+         6016 -  EVENT CAPTURE
+         6155 -  EVENT CAPTURE
+  
+ Detailed description
+ --------------------
+ Secure Messaging (SM) allows patients and clinicians to email each other 
+ securely and confidentially, and allows clinicians to post those email 
+ threads to the medical record as progress notes.
+  
+ This patch allows the Secure Messaging server to communicate with VistA 
+ to retrieve and validate the Event Capture System (ECS) data elements 
+ that are needed to file a record in the Event Capture System, and then
+ link the ECS record to the SM TIU Note containing the provider/patient
+ communication message.  
+  
+ It implements the following new HL7 message interfaces in MHV namespace:
+      1- Query the SM DSS Units that a Provider has access to at a 
+ specific location
+         Uses the following existing MHV HL7 Interface protocols:
+         MHVSM QBP-Q13 Event Driver              -       Existing
+         MHVSM QBP-Q13 Subscriber                -       Existing
+         MHVSM RTB-K13 Event Driver              -       Existing
+         MHVSM RTB-K13 Subscriber                -       Existing
+  
+      2- Query the EC Procedures associated with a specific SM DSS Unit
+         Uses the following existing MHV HL7 Interface protocols:
+         MHVSM QBP-Q13 Event Driver              -       Existing
+         MHVSM QBP-Q13 Subscriber                -       Existing
+         MHVSM RTB-K13 Event Driver              -       Existing
+         MHVSM RTB-K13 Subscriber                -       Existing
+  
+      3- Query the Patient Eligibility Codes and the Patient enabled 
+ Demographic Classification questions
+         Uses the following existing MHV HL7 Interface protocols:
+         MHVSM QBP-Q11 Event Driver              -       Existing
+         MHVSM QBP-Q11 Subscriber                -       Existing
+         MHVSM RSP-K11 Event Driver              -       Existing
+         MHVSM RSP-K11 Subscriber                -       Existing
+  
+      4- Query Patient Problem List
+         Uses the following existing MHV HL7 Interface protocols:
+         MHVSM QBP-Q11 Event Driver              -       Existing
+         MHVSM QBP-Q11 Subscriber                -       Existing
+         MHVSM RSP-K11 Event Driver              -       Existing
+         MHVSM RSP-K11 Subscriber                -       Existing
+  
+      5- Query Diagnosis based on a search string (>2chars)
+         Uses the following existing MHV HL7 Interface protocols:
+         MHVSM QBP-Q11 Event Driver              -       Existing
+         MHVSM QBP-Q11 Subscriber                -       Existing
+         MHVSM RSP-K11 Event Driver              -       Existing
+         MHVSM RSP-K11 Subscriber                -       Existing
+  
+      6- File the SM Workload Credit record in Event Capture Patient 
+ record file
+         Uses the following new MHV HL7 Interface protocols:
+         MHVSM DFT-P03 Event Driver              -       New
+         MHVSM DFT-P03 Subscriber                -       New
+         MHVSM ACK-P03 Event Driver              -       New
+         MHVSM ACK-P03 Subscriber                -       New
+  
+      7.  File the TIU Note associated with the SM Workload Credit 
+ record, and linked to a visit if it was created.- Uses existing SM TIU 
+ HL7 Interface protocols:
+         MHVSM MDM-T02 Event Driver              -       Existing
+         MHVSM MDM-T02 Subscriber                -       Existing
+  
+ Patch Components
+ ================
+  
+ New file entries in the following MHV Files:
+ -------------------------------------------
+ MHV REQUEST TYPE File#2275.3 
+ ----------------------------
+ NUMBER: 36                              NAME: SMDSSUNITS
+   NUMBER: 44                            BLOCKED?: NO
+   REALTIME?: ALLOWED                    EXECUTE ROUTINE: SPDSS~MHVXWLC
+   BUILDER ROUTINE: MHV7B1K
+ MHV DATATYPE: SMDSSUnitsByProviderAndClinic
+  DESCRIPTION:   QBP^Q13 query for DSS Units information.  Specify 
+ Provider DUZ
+  and Associated Clinic.  Developed for Secure Messaging.  
+  
+  
+ NUMBER: 37                              NAME: SMECSPROCS
+   NUMBER: 45                            BLOCKED?: NO
+   REALTIME?: ALLOWED                    EXECUTE ROUTINE: SPECS~MHVXWLC
+   BUILDER ROUTINE: MHV7B1L
+ MHV DATATYPE: SMECSProcedures
+  DESCRIPTION:   QBP^Q13 query for ECS Procedures information.  Specify 
+ DSS Unit
+  IEN and Location IEN.  Developed for Secure Messaging.  
+  
+  
+ NUMBER: 38                              NAME: SMPATIENTECLASS
+   NUMBER: 46                            BLOCKED?: NO
+   REALTIME?: ALLOWED                    EXECUTE ROUTINE: PECLASS~MHVXWLC
+   BUILDER ROUTINE: ZEL~MHV7B1M
+ MHV DATATYPE: SMPatientEClass
+  
+ Enter RETURN to continue or '^' to exit: 
+  DESCRIPTION:   QBP^Q11 query for Patient Eligibility and 
+ Classification.  
+  Specify Patient ICN and DSS Unit IEN.  Developed for Secure Messaging.  
+  
+  
+ NUMBER: 39                              NAME: SMDIAGNOSES
+   NUMBER: 48                            BLOCKED?: NO
+   REALTIME?: ALLOWED                    EXECUTE ROUTINE: SMDIAG~MHVXWLC
+   BUILDER ROUTINE: DG1~MHV7B1O
+ MHV DATATYPE: SMDiagnoses
+  DESCRIPTION:   QBP^Q11 query for Diagnoses information.  Specify Search
+  String.  Developed for Secure Messaging.  
+  
+  
+ NUMBER: 40                              NAME: SMPATIENTPROBLEMS
+   NUMBER: 47                            BLOCKED?: NO
+   REALTIME?: ALLOWED                    EXECUTE ROUTINE: SMPPRB~MHVXWLC
+   BUILDER ROUTINE: DG1~MHV7B1N
+ MHV DATATYPE: SMPatientProblems
+  DESCRIPTION:   QBP^Q11 query for Patient Problems.  Specify Patient ICN 
+ and
+  DSS Unit IEN.  Developed for Secure Messaging.  
+  
+  
+ NUMBER: 41                              NAME: SMFILER
+   NUMBER: 49                            BLOCKED?: NO
+  
+ Enter RETURN to continue or '^' to exit: 
+   REALTIME?: ALLOWED                    EXECUTE ROUTINE: SMFILE~MHVXWLC
+   BUILDER ROUTINE: ERR~MHV7B1P
+ MHV DATATYPE: SMFiler
+  DESCRIPTION:   DFT^P03 query for WLC Filer.  Specify String with all data
+  required for WLC Filer.  Developed for Secure Messaging.  
+  
+ -----------------------------
+ MHV RESPONSE MAP File #2275.4
+ -----------------------------
+ NUMBER: 6                               NAME: MHVSM DFT-P03 Subscriber
+   RESPONSE PROTOCOL: MHVSM ACK-P03 Event Driver
+   BUILDER ROUTINE: ACKP03~MHV7B10       BOUNDARY SEGMENT: ERR
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)                       
+ New/Modified/Deleted
+ -------------          -----------------------------------  
+ --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ MHVSM DFT-P03 Event Driver              -       New
+ MHVSM DFT-P03 Subscriber                -       New
+ MHVSM ACK-P03 Event Driver              -       New
+ MHVSM ACK-P03 Subscriber                -       New
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)                 
+ New/Modified/Deleted
+ -------------      ----      ------------------            
+ --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ Boston     - 523
+ Cincinnati - 539
+ Erie       - 562
+ Portland   - 648
+ Puget Sound- 663
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ The software for this patch is distributed as KIDS build MHV*1.0*11.
+ The My HealtheVet Technical Manual is available through the VistA
+ Documentation Library (VDL) at the following address:
+  
+    http://www.domain.ext/vdl/application.asp?appid=153
+  
+ Also the documentation can be retrieved by downloading one of the
+ following documents from VA FTP sites:
+    mhv_vista_1_3_technicalmanual.doc
+    mhv_vista_1_3_technicalmanual.pdf
+                                                                     
+ The preferred method is to FTP the files from
+    download.vista.domain.ext    
+ which will transmit the files from the first available FTP server.
+  
+ The files may also be downloaded directly from a particular FTP
+ location at the following locations:
+  
+    Albany                  ftp.domain.ext
+    Hines                   ftp.domain.ext
+    Salt Lake City          ftp.domain.ext
+  
+ Patch Installation:
+ ===================
+  
+ Installation Instructions
+ -------------------------
+ It is recommended that this patch be installed by the compliance date to
+ take advantage of Rel 12.14 SM new functionality.
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  The patch is distributed in KIDS format
+ in a PackMan message.  This patch requires MHV*1*10 and installation time 
+ is less than 5 minutes. 
+  
+ Required Pre-Installation Data Validation for Secure Messaging Clinics
+ ======================================================================
+ Before installing the patch MHV*1.0*11 on a VistA account, it is 
+ required that all the SM Clinics in the Hospital Location File #44 
+ have values in both INSTITUTION (field #3) and DIVISION (field #3.5).
+ The INSTITUTION field value has to match the Location of the 
+ DSS Unit/Event Code Screens that are associated with the SM Clinic.
+  
+ The following are the validation steps: 
+  
+    a.   Run a FileMan Search with the following parameters
+    -------------------------------------------------------
+ To print and validate that all Secure Messaging Clinics (CREDIT STOP 
+ CODE=719) have values for both INSTITUTION and DIVISION fields, in
+ FileMan:
+ Select VA FileMan Option: Search File Entries
+ OUTPUT FROM WHAT FILE: INSTALL// Hospital Location    (5900 entries)
+   -A- SEARCH FOR HOSPITAL LOCATION FIELD: Credit Stop Code  
+   -A- CONDITION: =  EQUALS
+   -A- EQUALS CLINIC STOP: 719  MHV SECURE MESSAGING     719     
+   -B- SEARCH FOR HOSPITAL LOCATION FIELD: 
+ IF: A//     CREDIT STOP CODE EQUALS 523 (MHV SECURE MESSAGING)
+ STORE RESULTS OF SEARCH IN TEMPLATE: 
+ SORT BY: NAME// 
+ START WITH NAME: FIRST// 
+ FIRST PRINT FIELD: NUMBER
+ THEN PRINT FIELD: .01  NAME
+ THEN PRINT FIELD: 3  INSTITUTION
+ THEN PRINT FIELD: 3.5  DIVISION
+ THEN PRINT FIELD: 
+ Heading (S/C): HOSPITAL LOCATION SEARCH  Replace 
+ DEVICE: HOME;132;999   SSH VIRTUAL TEMINAL
+ HOSPITAL LOCATION SEARCH                                    
+ 24,2015  08:08    PAGE 1
+ NUMBER        NAME                            INSTITUTION       DIVISION
+ ------------------------------------------------------------------------
+  
+    b.   Verify both fields INSTITUTION and DIVISION have values for each 
+ clinic.
+         
+ ------------------------------------------------------------------------
+  
+    c.   Confirm and update the Clinics with any missing values.
+         ------------------------------------------------------- 
+         Contact the Site's MHV and MCA/DSS Coordinators and then edit 
+         all of the SM Clinics that are missing either field with the 
+ correct values.
+  
+    e.   Run the FileMan Search again at step a. 
+         ---------------------------------------
+         to ensure all the clinics are setup correctly
+  
+    f.   Proceed with the install of the patch MHV*1.0*11.
+         -------------------------------------------------
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+ Select Kernel Installation & Distribution System Option: INStallation
+                                                          ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+ Select Installation Option:
+  
+ 3.  Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL however it is strongly recommended
+ to be used when installing the MHV*1.0*11 patch - (When prompted for the
+ INSTALL NAME, enter MHV*1.0*11):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates. 
+         <<<This option it is strongly recommended to be used when 
+         installing the MHV*1.0*11 patch>>>
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this
+         patch is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s)
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch:
+     a. Choose the Install Package(s) option to start the patch install.
+     b. When prompted 'Want KIDS to INHIBIT LOGONs during the
+        install? NO //' answer NO
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO //' answer NO
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;My HealtheVet;**[Patch List]**;Aug 23, 2005;Build 61
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MHV1P11
+    Before:       n/a   After:B113081022  **11**
+Routine Name: MHV7B10
+    Before:       n/a   After:  B2415319  **11**
+Routine Name: MHV7B1K
+    Before:       n/a   After:  B5337379  **11**
+Routine Name: MHV7B1L
+    Before:       n/a   After:  B4089241  **11**
+Routine Name: MHV7B1M
+    Before:       n/a   After:  B5731809  **11**
+Routine Name: MHV7B1N
+    Before:       n/a   After:  B2734081  **11**
+Routine Name: MHV7B1O
+    Before:       n/a   After:  B2738736  **11**
+Routine Name: MHV7B1P
+    Before:       n/a   After:  B2403781  **11**
+Routine Name: MHV7R5
+    Before: B42337271   After: B59299647  **6,10,11**
+Routine Name: MHV7R6
+    Before: B19547499   After: B26508627  **10,11**
+Routine Name: MHV7R7
+    Before:       n/a   After: B33211332  **11**
+Routine Name: MHVECFLR
+    Before:       n/a   After: B18917133  **11**
+Routine Name: MHVUMRPC
+    Before:       n/a   After: B45400823  **11**
+Routine Name: MHVXPAT
+    Before: B62150323   After: B69409778  **6,9,10,11**
+Routine Name: MHVXWLC
+    Before:       n/a   After: B54155667  **11**
+ 
+Routine list of preceding patches: 10
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 12, 2013
+Completed By:                               Date Completed: AUG 20, 2015
+Released By :                               Date Released : AUG 20, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,130 @@
+$TXT Created by               at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 02/09/15 at 13:19
+=============================================================================
+Run Date: JUN 15, 2015                     Designation: PSN*4*430
+Package : PSN - NATIONAL DRUG FILE            Priority: EMERGENCY
+Version : 4       SEQ #425                      Status: Released
+                  Compliance Date: JUN 17, 2015
+=============================================================================
+
+
+Subject: DRUG INTERACTIONS FILE RANGES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The number range (1 - 15000) for National drug interactions in the DRUG 
+ INTERACTIONS file (#56) has been exhausted and new National drug 
+ interactions entries cannot be saved.
+  
+ In order to increase the number range for National entries to '1 - 
+ 15,000' & '50,000 or more', it is also necessary to make a change to the 
+ number range for Local drug interactions from '15,000 or more' to '15,001 
+ - 50,000'.
+  
+ Patch PSN*4.0*430 will change the range of Local drug interaction entries 
+ in the DRUG INTERACTIONS file (#56) from '15,000 or more' to '15,001 - 
+ 50,000'.
+   
+  
+ ASSOCIATED REMEDY: 
+ ==================
+ INC000001119796 - Unable to enter new drug interactions into DRUG 
+                   INTERACTIONS file (#56).
+  
+ ASSOCIATED NSR: 
+ ===============
+ N/A  
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+ Oklahoma City VAMC
+ Chillicothe VAMC
+ Central Plains HCS
+   
+ REMEDY TICKET OVERVIEW:
+ =======================
+ INC000001119796 - Unable to enter new drug interactions into DRUG 
+                   INTERACTIONS file (#56).
+  
+ Problem:
+ --------
+ In order to increase the number range for National entries to '1 - 
+ 15,000' & '50,000 or more', it is also necessary to make a change to the 
+ number range for Local drug interactions from '15,001 or more' to '15,001 
+ - 50,000'.
+  
+ Patch PSN*4.0*430 will change the range of Local drug interaction entries 
+ in the DRUG INTERACTIONS file (#56) from '15,000 or more' to '15,001 - 
+ 50,000'.
+  
+                                           
+ Solution:
+ ---------
+ Routine PSNDINT is being modified to change to the number range for Local 
+ drug interactions from '15,001 or more' to '15,001 - 50,000'.
+  
+  
+ Patch PSS*1*190 is doing the same update to the Pharmacy Data Management 
+ package.
+  
+  
+ Installation Instructions:
+ ==========================
+ National Drug File (NDF) users should be off the system when this patch 
+ is installed. Installation will take less than 5 minutes. This patch 
+ should be installed during non-peak requirement hours.
+  
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter PSN*4.0*430).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch 
+            is installed
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package 
+         PSN*4.0*430.
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install?
+         NO//", respond NO.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;NATIONAL DRUG FILE;**[Patch List]**; 30 Oct 98;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSNDINT
+    Before:  B4815760   After:  B5241925  **430**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 06, 2015
+Completed By:                               Date Completed: JUN 11, 2015
+Released By :                               Date Released : JUN 15, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

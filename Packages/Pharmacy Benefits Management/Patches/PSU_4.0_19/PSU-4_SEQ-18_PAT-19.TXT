@@ -1,0 +1,256 @@
+$TXT Created by                    DEVESS.DOMAIN.EXT  (KIDS) on Wednesday, 07/16/14 at 11:48
+=============================================================================
+Run Date: AUG 29, 2014                     Designation: PSU*4*19
+Package : PSU - PHARMACY BENEFITS MANAGEMENT  Priority: Mandatory
+Version : 4        SEQ #18                      Status: Released
+                  Compliance Date: SEP 29, 2014
+=============================================================================
+
+Associated patches: (v)PSU*4*15    <<= must be installed BEFORE `PSU*4*19'
+                    (v)LEX*2*80    <<= must be installed BEFORE `PSU*4*19'
+                    (v)ICD*18*57   <<= must be installed BEFORE `PSU*4*19'
+
+Subject: PBM ICD-10 Remediation
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+  
+ IMPORTANT INFORMATION Please read the Overview Guide 
+ (ICD-10_Prod_Overview_Guide_Groups_5_6_7.pdf) posted on the Anonymous
+ directory for installation order. This is critical for proper
+ functionality of the ICD-10 Software.
+  
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10) 
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service, or dates of discharge for inpatients, that occur on or 
+ after the ICD-10 Activation Date will use the ICD-10 code set. Clinical 
+ Modification (ICD-10-CM) diagnosis codes increase from about 13,000 ICD-9 
+ codes to more than 68,000. Procedure Coding System (ICD-10-PCS) procedure 
+ codes increase from about 3,800 ICD-9 codes to nearly 87,000. Both 
+ systems also expand the number of characters allotted to seven 
+ alpha-numeric characters. This value does not include the decimal point, 
+ which follows the third character for the ICD-10-CM code set. There is no 
+ decimal point in the ICD-10-PCS code set. 
+  
+ These code sets have the potential to reveal more about quality of care, 
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research.
+  
+ PSU*4*19 modifies Pharmacy Benefits Management (PBM) routines which
+ extract ICD code data for inpatient and outpatient activity. These routines 
+ have been modified to use new Lexicon utilities replacing old 
+ Lexicon utilities and direct ICD global reads.  A Code Set Indicator 
+ has been added to both inpatient and outpatient extract records as well.
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)           New/Modified/Deleted
+ -------------          --------------           --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                File #                 New/Modified/Deleted
+ ---------                ------                 --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                 New/Modified/Deleted
+ ---------------                                 --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                                   New/Modified/Deleted
+ -------------                                   --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)      New/Modified/Deleted
+ -------------      ----      -------------      --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR 20070902, ICD-10-CM Conversion
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Minneapolis VA Medical Center, Minneapolis, MN
+ Orlando VA Medical Center, Orlando, Fla
+ Coatesville VA Medical Center, Coatesville, PA
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by
+ this patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ File Description            File Name           
+ (FTP Mode)
+ ---------------------------------------------------------------------
+ PBM User Manual             PSU_4_UM_R0714.pdf        
+ (Binary)
+ PBM User Manual             PSU_4_P19_UM_CP.pdf       
+ Change Pages
+ (Binary)
+ PBM Technical Manual/       PSU_4_TM_R0714.pdf        
+ Security Guide                    
+ (Binary)
+ PBM Technical Manual/       PSU_4_P19_TM_CP.pdf       
+ Security Guide Change Pages
+ (Binary)
+ PBM Release Notes           ICD-10_RN_PSU_4_19.pdf    
+ (Binary)
+ Production Overview Guide   ICD-10_Prod_Overview_Guide_
+ (Binary)                    Groups_5_6_7.pdf
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ This patch consists of only three operational routines and no file
+ changes.
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. Periods when PSU background reports are 
+ being called should be avoided. This patch should take less than 5
+ minutes to install.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (PSU*4.0*19):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this 
+        patch is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option 
+     and choose the patch to install. Enter PSU*4.0*19.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ There are no Post-install routines.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PHARMACY BENEFITS MANAGEMENT;**[Patch List]**;MARCH, 2005;Build 28
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSUDEM2
+    Before: B20686228   After: B24836351  **15,19**
+Routine Name: PSUDEM8
+    Before: B17454400   After: B36485136  **19**
+Routine Name: PSUDEM9
+    Before:  B7601492   After: B13080794  **19**
+ 
+Routine list of preceding patches: 15
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 14, 2012
+Completed By:                               Date Completed: AUG 29, 2014
+Released By :                               Date Released : AUG 29, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

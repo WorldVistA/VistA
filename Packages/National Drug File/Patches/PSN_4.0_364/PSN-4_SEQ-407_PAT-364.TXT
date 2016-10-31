@@ -1,0 +1,204 @@
+
+=============================================================================
+Run Date: JAN 21, 2015                     Designation: PSN*4*364
+Package : PSN - NATIONAL DRUG FILE            Priority: Mandatory
+Version : 4       SEQ #407                      Status: Released
+                  Compliance Date: FEB 20, 2015
+=============================================================================
+
+Associated patches: (v)PSS*1*177   <<= must be installed BEFORE `PSN*4*364'
+
+Subject: FDA MEDICATION GUIDES ON-DEMAND JAVA COMPONENT FIX
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+ ******************************** ATTENTION *******************************
+ FDA Medication Guide On- Demand and Automatic Printing functionality 
+ includes 3 patches which must be installed in the following order:
+  
+ 1.  PSS*1.0*177 - Vista patch that updates the Pharmacy System File (File 
+     #59.7) FDA MED GUIDE SERVER URL field (Field #100) with the new secure
+     CMOP SharePoint URL.
+  
+ 2.  PSO*7.0*428 - Information only patch that contains instructions to 
+     update the FDA Med Guide Automatic Printing Java Application Component
+     installed on servers to work with the new secure CMOP SharePoint URL.
+  
+ 3.  PSN*4.0*364 - Information only patch that contains instructions to 
+     update the FDA Med Guide On-Demand Viewing Java Application Component
+     installed on individual workstations to work with the new secure CMOP
+     SharePoint URL.
+  
+ If your site is currently utilizing the FDA Med Guide Auto Printing or 
+ On-Demand software, the updated Java Application Components included in
+ this release, must be installed immediately following the installation of
+ PSS*1.0*177.  Failure to do so will disable the FDA Med Guide On-Demand
+ and Automatic printing functionality until the updated Java Application
+ Component software is installed.
+  
+ ***If your site does not utilize the FDA Med Guide On-Demand or Auto 
+    Printing software, you only need to install Vista patch PSS*1.0*177 
+    and no further action on PSO*7*428 and PSN*4*364 is necessary.***"
+  
+ **************************************************************************
+  
+ On-Demand Viewing of FDA Med Guides were originally stored on an 
+ un-secured CMOP SharePoint.  A new secure CMOP SharePoint has been 
+ created and new and updated FDA Med guides are now added to the new 
+ secure SharePoint.
+  
+ This patch will make updates to the FDA Medication Guides On-Demand 
+ Viewing Java component for use with the new secured CMOP SharePoint.
+  
+ Note:
+ =====
+ PSS*1*177 is being released along with informational patches PSN*4*364 
+ (On-Demand FDA Med Guides) and PSO*7*428 (Automatic FDA Med Guides) and 
+ will update the Pharmacy System File (File #59.7) FDA MED GUIDE SERVER URL
+ field (Field #100) with the new secure CMOP SharePoint URL. Patch
+ PSS*1*177 should be installed BEFORE installing the updated Java
+ Application Component software as directed in informational patches
+ PSN*4*364 & PSO*7*428.
+  
+  
+ Associated NSR(S):
+ ==================
+ N/A
+  
+ Associated Remedy Ticket(s):
+ ============================
+ INC000000797069 - Outpatient Pharmacy - FDA Med
+  
+ Duplicates:
+ -----------
+ INC000000799119 - Outpatient Pharmacy - FDA Med 
+ INC000000799778 - Outpatient Pharmacy - FDA Med 
+ INC000000824872 - UPDATE FDA MED GUIDES URL
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ Central TX HCS
+ Cheyenne VAMC
+ Fayetteville VAMC
+ Palo Alto HCS 
+  
+ REMEDY TICKET OVERVEW:
+ =====================
+ INC000000797069 - Outpatient Pharmacy - FDA Med
+  
+ Patient Safety Issue:
+ ---------------------
+ PSPO #2361
+  
+ Problem:
+ --------
+ On-Demand and Automatic printing of FDA Med Guides were originally stored 
+ on an un-secured CMOP SharePoint.  A new secure CMOP SharePoint has been 
+ created and new and updated FDA Med guides are now added to the new secure
+ SharePoint.
+  
+ Resolution:
+ -----------
+ This patch will make updates to the FDA Medication Guides On-Demand 
+ Viewing Java component for use with the new secured CMOP SharePoint.
+ .URL Pattern and Testing URL in the properties file are being updated to 
+ the new CMOP server URL.
+  
+  
+ Documentation Retrieval:
+ ========================
+ The documentation can be obtained from the ANONYMOUS.SOFTWARE directory 
+ at one of the OI Field Offices. The preferred method is to FTP the files
+ from DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the files from the
+ first available server.  Alternatively, sites may elect to retrieve the
+ files from a specific OI Field Office.
+  
+    OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY
+    Albany              FTP.DOMAIN.EXT       
+    Hines               FTP.DOMAIN.EXT        
+    Salt Lake City      FTP.DOMAIN.EXT          
+   
+    The documentation distribution includes:
+  
+    FILE NAME                                    DESCRIPTION
+    ------------------------------------------------------------------
+    PHAR_FDA_MED_GUIDE_ONDEMAND_1_0_1_0_IG.PDF   FDA Medication Guides 
+                                                 Project Installation Guide
+   
+ Documentation can also be retrieved from the VA Software Documentation 
+ Library (VDL) on the Internet at the following address, 
+ http://www.domain.ext/vdl. 
+  
+   
+ Project Installation Instructions:
+ ==================================
+ The FDA Medication Guide On-Demand Viewing (Increment 2) project also 
+ contains a Java Application component, which is distributed in the
+ PSN_4_P364.ZIP file. This file contains an updated executable file that
+ should be installed on Pharmacy user computers that will be used for
+ retrieving FDA Medication Guides via Outpatient Pharmacy or National Drug
+ File applications. For detailed installation instructions please refer to
+ the "FDA Medication Guides Project Installation Guide" document.
+  
+  
+ FTP Instructions:
+ =================
+ The files listed below may be obtained via FTP.  The preferred method is 
+ to FTP the files from:
+  
+    download.vista.domain.ext
+  
+ This transmits the files from the first available FTP server.  Sites may 
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+    CIO FIELD OFFICE   FTP ADDRESS                 DIRECTORY
+    ----------------   -------------------------   --------------------
+    Albany             ftp.domain.ext    []
+    Hines              ftp.domain.ext     []
+    Salt Lake City     ftp.domain.ext       []
+  
+  
+    File Name          Retrieval Format
+    --------------     ----------------
+    PSN_4_P364.ZIP     BINARY
+  
+  
+  
+ Java Application Component Installation Instructions:
+ =====================================================
+ In order to install the FDA Med Guide On-Demand Java Application component
+ software  contained in the PSN_4_P364.ZIP file, please refer to the 
+ detailed
+ installation instructions in PHAR_FDA_MED_GUIDE_ONDEMAND_1_0_1_0_IG.PDF.
+   
+ **Note: you must have administrator rights on the workstation when you 
+ Install the software**
+  
+ PSS*1*177 will update the Pharmacy System File (File #59.7) FDA MED GUIDE 
+ SERVER URL field (Field #100) with the new secure CMOP SharePoint URL and 
+ should be installed BEFORE installing the updated Java Application 
+ Component software as directed in informational patches PSN*4*364 &
+ PSO*7*428.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 11, 2013
+Completed By:                               Date Completed: JAN 07, 2015
+Released By :                               Date Released : JAN 21, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,196 @@
+$TXT Created by                 at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 10/16/14 at 14:15
+=============================================================================
+Run Date: MAR 19, 2015                     Designation: PSO*7*438
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #373                      Status: Released
+                  Compliance Date: APR 19, 2015
+=============================================================================
+
+Associated patches: (v)PSO*7*348   <<= must be installed BEFORE `PSO*7*438'
+                    (v)PSO*7*416   <<= must be installed BEFORE `PSO*7*438'
+
+Subject: HELP TEXT PROMPT FOR PATIENT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+  
+ 1. Universal member ID# is not included in the description
+ 2. Non VA drug-drug interactions are not displaying in Outpatient Pharmacy
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+  
+ 1.  INC000001049233 - Incomplete Help text when prompting for patient
+ 2.  INC000001000211 - DDI not occurring with Non-VA meds in Outpatient
+                       Pharmacy
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Upstate New York - Western NY HCS
+ Oklahoma City - VA Medical Center
+  
+  
+ Remedy Overview:
+ ================
+  
+ 1.  INC000001049233 -  Incomplete Help text when prompting for patient
+                
+ Patient Safety Issue:
+ ---------------------
+ PSPO #2612
+   
+ Problem: 
+ --------
+ During analysis of PSPO 2612, IPS discovered that the new universal
+ member ID# is not included in the description of acceptable criteria
+ to select a patient at VistA Outpatient selection prompt.
+  
+ Resolution:
+ -----------
+ Modify routine PSOPATLK to include the universal Member ID number 
+ from the patients VHIC Card as an acceptable way of looking up
+ a patient in Outpatient Pharmacy.
+  
+ Technical Resolution:
+ ---------------------
+ Modify PATHLP^PSOPATLK to include Member ID info in the help text. 
+  
+  
+ 2. INC000001000211 - DDI not occurring with NonVA meds in Outpatient
+                      Pharmacy
+  
+ Patient Safety Issue:
+ ---------------------
+ PSPO #2572
+  
+  
+ Problem:
+ --------
+ NonVA drug-drug interactions are not displaying in Outpatient Pharmacy
+ when finishing an order from CPRS or entering an order via backdoor
+ pharmacy.
+  
+ Resolution:
+ -----------
+ Modify routine PSODDPR5 so drug-drug interactions occur for Non-VA meds.
+  
+ Documentation Retrieval:
+ ========================
+ The documentation is available on the ANONYMOUS.SOFTWARE directory at one
+ of the following Office of Information (OI) Field Offices.
+  
+    Albany
+    Hines
+    Salt Lake City
+  
+ Sites may retrieve documentation in one of the following ways.
+  
+ (1) The preferred method is to FTP the files from
+     download.vista.domain.ext, which will transmit the files from the
+     first available FTP server.
+  
+ (2) Sites may also elect to retrieve documentation directly from a
+     specific server listed below.
+  
+     Albany              ftp.domain.ext
+     Hines               ftp.domain.ext
+     Salt Lake City      ftp.domain.ext
+  
+ The documentation distribution includes the following.
+  
+    FILE NAME                             DESCRIPTION
+  
+ pso_7_man_um_r0315.pdf           Outpatient Pharmacy V. 7.0 Manager's
+                                  User Manual
+ pso _7_p438_man_um_cp.pdf         Outpatient Pharmacy V. 7.0 Manager's
+                                  User Manual Change Pages
+  
+ pso_7_phar_um_r0315.pdf           Outpatient Pharmacy V. 7.0 Pharmacist's
+                                  User Manual
+ pso_7_p438_phar_um_cp.pdf         Outpatient Pharmacy V. 7.0 Pharmacist's
+                                  User Manual Change Pages
+  
+ pso_7_tech_um_r0315.pdf           Outpatient Pharmacy V. 7.0 Technician's
+                                  User Manual
+ pso_7_p438_tech_um_cp.pdf         Outpatient Pharmacy V. 7.0 Technician's
+                                  User Manual Change Pages
+  
+  
+ (3) Documentation can also be retrieved from the VA Software Documentation
+     Library (VDL) on the Internet at the following address:
+     http://www.domain.ext/vdl.
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ Patients should not be processing prescriptions while patch is being 
+ installed.  It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*438)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSO*7.0*438.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSODDPR5
+    Before:B160645085   After:B160751448  **251,375,379,390,372,416,438**
+Routine Name: PSOPATLK
+    Before:  B5993258   After:  B6969813  **326,348,438**
+ 
+Routine list of preceding patches: 348, 416
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 26, 2014
+Completed By:                               Date Completed: MAR 19, 2015
+Released By :                               Date Released : MAR 19, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

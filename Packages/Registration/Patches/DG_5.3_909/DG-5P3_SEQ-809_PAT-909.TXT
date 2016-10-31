@@ -1,0 +1,617 @@
+
+=============================================================================
+Run Date: APR 14, 2016                     Designation: DG*5.3*909
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #809                    Status: Released
+                  Compliance Date: MAY 15, 2016
+=============================================================================
+
+Associated patches: (v)DG*5.3*797  <<= must be installed BEFORE `DG*5.3*909'
+                    (v)DG*5.3*804  <<= must be installed BEFORE `DG*5.3*909'
+                    (v)DG*5.3*841  <<= must be installed BEFORE `DG*5.3*909'
+                    (v)DG*5.3*871  <<= must be installed BEFORE `DG*5.3*909'
+                    (v)DG*5.3*891  <<= must be installed BEFORE `DG*5.3*909'
+
+Subject: REGISTRATION CAMP LEJEUNE ELIGIBILITY UPDATE
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ **************************************************************************
+  
+      This patch is being released in support of the Camp Lejeune -
+      Veterans project. DG*5.3*909 (Registration) is being released along
+      with IVM*2*161 (Income Verification Match) in host file:
+      DG_5_3_P909.KID.
+   
+      It is imperative that these patches be installed no later than the
+      compliance date. Your understanding and support is appreciated.
+  
+ **************************************************************************
+  
+ Public Law 112-154, requires Veterans Affairs (VA) to provide hospital
+ care and medical services to Veterans who served on active duty at Camp
+ Lejeune (North Carolina) for one or more of 15 specified illnesses or
+ conditions (Esophageal cancer; Lung cancer; Breast cancer; Bladder cancer;
+ Kidney cancer; Leukemia; Multiple myeloma; Myelodysplastic syndromes;
+ Renal toxicity; Hepatic steatosis; Female infertility; Miscarriage;
+ Scleroderma; Neurobehavioral effects; or Non-Hodgkin's lymphoma). To be 
+ eligible for care under the provisions of this bill, the Veteran must 
+ have served on active duty at Camp Lejeune for not fewer than thirty (30) 
+ consecutive or nonconsecutive days between August 1, 1953 and December 31,
+ 1987.
+  
+ The Camp Lejeune - Veterans (CL-V) project will update VistA to allow for
+ the accurate tracking of veterans who satisfy the CL-V eligibility
+ requirements and are therefore entitled to these additional benefits.
+  
+  
+ This patch modifies the Registration v5.3 application as described below:
+  
+ 1. Adds the following fields to the PATIENT (#2) file for storing the 
+ Camp Lejeune data:
+  
+  -CAMP LEJEUNE (#.321701) field - Updated by VistA users or by processing
+   an ORF-Z11 or ORU-Z11 message from ES containing Camp Lejeune data.
+   Values are Null (Blank), YES or NO. Once the field contains a YES or NO
+   value, it cannot be set back to Null.
+                                   
+  -CAMP LEJEUNE DATE (#.321702)- Updated by the system when the CAMP
+   LEJEUNE (#.321701) field is updated.
+             
+  -CAMP LEJEUNE CHANGE SITE (#.321703) - Updated by the system when the
+   CAMP LEJEUNE (#.321701) field is updated.
+                      
+  -CAMP LEJEUNE SOURCE (#.321704) - Updated by the system when the CAMP
+   LEJEUNE (#.321701) field is updated.
+                            
+  -CAMP LEJEUNE DATA ENTRY LOCKED (#.32171) - Updated by the system when
+   an ORF-Z11 or ORU-Z11 message processes Camp Lejeune data. Values are
+   "1" for LOCKED, "0" for NOT LOCKED.
+  
+  
+ 2. Adds the following fields to the PATIENT ENROLLMENT (#27.11) file for 
+ storing the Camp Lejeune data:
+                                       
+  -CAMP LEJEUNE INDICATED? (#50.24) - Updated by the system when the CAMP
+   LEJEUNE (#.321701) field is updated. Values are Null (Blank),YES or NO. 
+  
+  -CAMP LEJEUNE DATE (#50.25) - Updated by the system when the CAMP 
+   LEJEUNE (#.321701) field is updated. 
+  
+  -CAMP LEJEUNE CHANGE SITE (#50.26) - Updated by the system when the CAMP
+   LEJEUNE (#.321701) field is updated. 
+  
+  -CAMP LEJEUNE SOURCE (#50.27) - Updated by the system when the CAMP 
+   LEJEUNE (#.321701) field is updated. 
+  
+  
+ 3. Allows editing of CL-V data on the MILITARY SERVICE DATA, SCREEN <6>
+    Environmental Factors sub-screen.
+  
+      Related Options: 
+          
+          Register a Patient          [DG REGISTER PATIENT]
+          Load/Edit Patient Data      [DG LOAD PATIENT DATA]
+          Eligibility Verification    [DG ELIGIBILITY VERIFICATION]
+          Admit a Patient             [DG ADMIT PATIENT]
+  
+      The following menu option allows the VistA user access to view CLE in
+      the Environmental Factors screen:
+  
+          View Registration Data      [DG REGISTRATION VIEW]
+  
+      The following menu option allows the VistA user access to view CLE in
+      the Patient Enrollment screen:
+  
+          Patient Enrollment          [DGEN PATIENT ENROLLMENT]
+  
+ The environmental sub screen has been updated to display a new 
+ environmental factor for Camp Lejeune. This new factor will be the 5th 
+ in the list as shown below.
+  
+ LASTNAME,FIRSTNAME; XXX-XX-XXXX
+ -------------------------------------------------------------------------
+                        **** ENVIRONMENTAL FACTORS ****
+   
+ [1]     A/O Exp.:          Reg:                 Exam:             A/O#: 
+ [2]     ION Rad.:          Reg:               Method: 
+ [3] SW Asia Cond:          Reg:                 Exam:             
+ [4]   N/T Radium:
+ [5] Camp Lejeune:      
+  
+ SELECT AN ENVIRONMENTAL FACTOR (1-5) OR (Q)UIT: QUIT//
+  
+  
+ VistA will enable the Camp Lejeune environmental factor for editing if all
+ of the following CLE rules are met:
+  
+    -  Person is a Veteran AND
+    -  Person has one or more Military Service Episode(s) (MSE) that include no
+       less than 30 days of service between August 1, 1953 and December 31,
+       1987 (inclusive) AND
+    -  All of the identified MSE(s) used for the 30-day service duration has a
+       character of discharge other than:
+       -  Dishonorable
+       -  Other Than Honorable 
+       -  Undesirable
+       -  Bad Conduct
+       -  Dishonorable-VA (See Note *)
+  
+ If multiple Military Service Episodes (MSEs) are used to count the 30-day
+ service duration requirement, the MSEs do not have to be consecutive days. 
+  
+    -  If a primary eligibility code exists, it must be a Veteran eligibility
+       code as follows:
+       -  Service Connected 50% to 100%.
+       -  SC Less than 50%
+       -  Prisoner of War
+       -  Purple Heart Recipient
+       -  Aid & Attendance
+       -  Housebound
+       -  NSC, VA Pension
+       -  World War I
+       -  NSC
+  
+    -  The CAMP LEJEUNE DATA ENTRY LOCKED (#.32171) field in the PATIENT
+    (#2) file has not been set by uploading the CL-V data from an ORF-Z11
+    or ORU-Z11 HL7 message received from ES.
+  
+ If the veteran does not satisfy the Camp Lejeune eligibility requirements,
+ option five will be surrounded by pointed brackets <5> and will not be 
+ selectable.
+  
+ Note: The View Registration Data [DG VIEW REGISTRATION] option is read 
+ only. Number five on the ENVIRONMENTAL FACTORS screen will be surrounded 
+ by pointed brackets <5> and will not be selectable.
+  
+ LASTNAME,FIRSTNAME; XXX-XX-XXXX
+ -------------------------------------------------------------------------
+                        **** ENVIRONMENTAL FACTORS ****
+   
+ [1]     A/O Exp.:          Reg:                 Exam:             A/O#: 
+ [2]     ION Rad.:          Reg:               Method: 
+ [3] SW Asia Cond:          Reg:                 Exam:             
+ [4]   N/T Radium:
+ <5> Camp Lejeune:      
+  
+ SELECT AN ENVIRONMENTAL FACTOR (1-5) OR (Q)UIT: QUIT//
+  
+  
+ 4. Displays Camp Lejeune on the MILITARY SERVICE DATA, SCREEN <6> for 
+ Environmental Factors when the Camp Lejeune indicator on the ENVIRONMENTAL
+ FACTORS sub-screen displays YES.
+  
+                        MILITARY SERVICE DATA, SCREEN <6>
+ LASTNAME,FIRSTNAME; XXX-XX-XXXX                                SC VETERAN
+ =========================================================================
+ [1] Service Branch/Component  Service #   Entered    Separated  Discharge
+     ------------------------  ---------   -------    ---------  ---------
+     ARMY/REGULAR              XXXXXXXXX   02/20/1958 03/01/1969 HONORABLE
+  
+ [2]  Conflict Locations: < None Specified >
+ [3] Environment Factors: (5) Camp Lejeune
+ [4]          POW:       From:              To:             War: 
+ [5]       Combat:       From:              To:             Loc: 
+ [6]     Mil Disab Retirement:            Dischrg Due to Disab: 
+ [7]     Dent Inj:                             Teeth Extracted:          
+ [8] Purple Heart:
+  
+ LASTNAME,FIRSTNAME; XXX-XX-XXXX
+ ==========================================================================
+                        **** ENVIRONMENTAL FACTORS ****
+  
+ [1]     A/O Exp.:            Reg:               Exam:              A/O#: 
+ [2]     ION Rad.:            Reg:             Method: 
+ [3] SW Asia Cond:            Reg:               Exam:            
+ [4]   N/T Radium: 
+ [5] Camp Lejeune: YES
+  
+  
+ 5. Flags a Veteran's record for transmission to ES. When a VistA user
+ enters or updates the Camp Lejeune indicator, the record will be flagged
+ for transmission and sent to the Enrollment System the next time the IVM
+ Background Job completes. ES will process the CL-V data and make an
+ enrollment determination, generating an ORU-Z11 to all VistA sites of
+ interest. When VistA processes the ORU-Z11 with the Camp Lejeune data in
+ VistA, the CAMP LEJEUNE DATA ENTRY LOCKED (#.32171) field in the PATIENT
+ (#2) file will be set to "1" for "LOCKED" and the Camp Lejeune indicator
+ will no longer be editable within VistA. From this point forward, the Camp
+ Lejeune option five will appear with the pointed brackets <5> and all
+ future updates to the CL-V data will need to be coordinated through the
+ Health Eligibility Center (HEC) via the HEC Alert process.
+  
+  
+ 6. Adds help text. When the Camp Lejeune environmental factor is selected,
+ the user receives the prompt "CAMP LEJEUNE WATER CONTAMINANT EXPOSURE
+ INDICATED?//". The user may solicit help by entering double question marks
+ "??" at the prompt. The following help text will display:
+  
+ SELECT AN ENVIRONMENTAL FACTOR (1-5) OR (Q)UIT: QUIT// 5  Camp Lejeune
+ CAMP LEJEUNE WATER CONTAMINANT EXPOSURE INDICATED?//??
+  
+ Enter "Y" if veteran claims need for care of conditions related to 
+ exposure of "Water Contamination at Camp Lejeune". Enter "N" if veteran
+ was not assigned to Camp Lejeune between August 1, 1953 and December 31,
+ 1987 or does not claim need for care of conditions related to exposure of
+ "Water Contamination at Camp Lejeune".
+  
+ Choose from:
+ Y YES
+ N NO
+ Null "Blank"
+  
+  
+ 7. Displays CL-V data on the Patient Enrollment Screen.
+    Related Option: Patient Enrollment [DGEN PATIENT ENROLLMENT]
+  
+ The Camp Lejeune data is added to Page 2 of the Patient Enrollment 
+ screen, directly below the SW Asia Cond display. This is a display only 
+ screen and no editing of the Camp Lejeune data is allowed. The SW Asia 
+ Cond display prompt is modified to display a colon rather than a period 
+ and align properly. The following is an example of the updated screen 
+ display:
+  
+ Patient Enrollment         Dec 03, 2014@14:37:55          Page:    2 of 4
+ Patient: PATIENT,TEST (1111)                            NSC VETERAN
+ Preferred Facility: ALBANY                             Current Enrollment
+ Preferred Facility Source: VISTA
+ +                                                                         
+      
+                               Priority Factors
+                   POW: NO
+            Purple Hrt:
+              A/O Exp.: YES                       A/O Exp Loc: KOREAN DMZ
+              ION Rad.: YES
+        Rad Exp Method: OTHER
+          SW Asia Cond: YES
+          Camp Lejeune: 
+  Mil Disab Retirement:                   Dischrg Due to Disab:
+   Combat Vet End Date:
+ Eligible for MEDICAID:
+  
+         Svc Connected: NO                          SC Percent:
+ +         Query: TRANSMITTED         
+ Notify:                                    
+ EP  (Enroll Patient)      QS  Check Query Status   SP  Select Patient
+ PF  Preferred Facility    SQ  (Send Query)         AU  (View Upload Audit)
+ EH  Expand History        CD  Catastrophic Disab.  PZ  Print 1010EZ/EZR
+ Select Action:Next Screen//
+  
+  
+ 8. Modifies the initial enrollment determination algorithm to place CL-V 
+ eligible Veterans in priority group 6 unless a higher priority is 
+ determined based on other eligibility factors. No changes were made to 
+ continuous enrollment rules in VistA. CL-V eligible Veterans are subject 
+ to means testing and/or Rx copay testing, unless other eligibility factors
+ make them income testing exempt.
+  
+  
+ 9. Updates the ORF-Z11 and ORU-Z11 receivers to process the CL-V data 
+ sent from ES in ZEL segment sequences 41 through 44.
+  
+ Segment  HL7 Element Name         VistA Stored Field - File Location
+                                    - Sequence
+ ZEL-41   CAMP LEJEUNE              CAMP LEJEUNE INDICATED? (#50.24) field
+                                    PATIENT ENROLLMENT (#27.11) file
+  
+                                    CAMP LEJEUNE (#.321701) field 
+                                    PATIENT (#2) file             
+  
+ ZEL-42   CAMP LEJEUNE DATE         CAMP LEJEUNE DATE (#50.25) field
+                                    PATIENT ENROLLMENT (#27.11) file
+  
+                                    CAMP LEJEUNE DATE (#.321702)field
+                                    PATIENT (#2) file             
+  
+ ZEL-43   CAMP LEJEUNE CHANGE SITE  CAMP LEJEUNE CHANGE SITE (#50.26) field
+                                    PATIENT ENROLLMENT (#27.11) file
+                                    
+                                    CAMP LEJEUNE CHANGE SITE (#.321703)
+                                    field PATIENT (#2) file
+  
+ ZEL-44    CAMP LEJEUNE SOURCE      CAMP LEJEUNE SOURCE (#50.27) field
+                                    PATIENT ENROLLMENT (#27.11) file
+  
+                                    CAMP LEJEUNE SOURCE (#.321704) field
+                                    PATIENT (#2) file             
+  
+  
+ Patch IVM*2.0*161 will be released in conjunction with this REGISTRATION
+ patch. 
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)        Field Name (#)                            New/Mod/Del
+ -------------        ----------------------------------------  -----------
+ PATIENT (#2)                                                       
+                      CAMP LEJEUNE (#.321701)                       New
+                      CAMP LEJEUNE DATE (#.321702)                  New
+                      CAMP LEJEUNE CHANGE SITE (#.321703)           New
+                      CAMP LEJEUNE SOURCE (#.321704)                New
+                      CAMP LEJEUNE DATA ENTRY LOCKED (#.32171)      New
+  
+ PATIENT ENROLLMENT (#27.11)                                        
+                        CAMP LEJEUNE INDICATED? (#50.24)            New
+                        CAMP LEJEUNE DATE (#50.25)                  New
+                        CAMP LEJEUNE CHANGE SITE (#50.26)           New
+                        CAMP LEJEUNE SOURCE (#50.27)                New
+  
+ Forms Associated:
+  
+ Form Name                File #                                New/Mod/Del
+ ---------                ------                                -----------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                                New/Mod/Del
+ ---------------                                                -----------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type                            New/Mod/Del
+ -----------                    ----                            -----------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                                                  New/Mod/Del
+ -------------                                                  -----------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)                     New/Mod/Del
+ -------------      ----      ------------------                -----------
+ N/A
+  
+ Additional Information:
+ ICR-3812 was updated to include information on the new CL-V data fields
+ that were added to the output array DGENR.
+  
+ DGENR("ELIG","CLE")="Y"
+ DGENR("ELIG","CLEDT")=3150220
+ DGENR("ELIG","CLESOR")="VAMC"
+ DGENR("ELIG","CLEST")=500
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20120809
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA Pittsburgh Health Care System
+ Erie VA Medical Center
+ Altoona - James E. VanZandt VA Medical Center
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ File Description                 File Name                        SFTP
+                                                                   Mode
+ --------------------------------------------------------------------------
+ PIMS User Manual - ADT Module    DG_5_3_P909_ADTBE_UM.PDF         (binary)
+ User Manual - Registration Menu  DG_5_3_P909_REG_UM.PDF           (binary)
+ IVM Technical Manual             IVM_2_P161_TM.PDF                (binary)
+ CL-V VistA REE Release Notes     CL-VVISTA_REERELEASENOTES.PDF    (binary)
+  
+  
+ SFTP Instructions:
+ ------------------
+  
+ CL-V includes the following patches. The host file was created to simplify
+ installation at Veterans Health Administration (VHA) facilities.
+  
+    File Name                         Contents             Retrieval Format
+    --------------------------------  -----------          ----------------
+    DG_5_3_P909.KID                   DG*5.3*909           ASCII
+                                      IVM*2.0*161
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+ Pre-Installation Instructions
+ -----------------------------
+ The following kids build DG_5_3_P909.KID will be installed.
+  
+ This patch should NOT be installed while the IVM BACKGROUND JOB [IVM
+  BACKGROUND JOB] is running.
+  
+ 1.  The HL7 incoming/outgoing filers should be stopped. Stop All
+     Messaging Background Processes by using the [HL STOP ALL] option
+     on the Filer and Link Management Options [HL MENU FILER LINK MGT] menu
+     on the HL7 Main Menu [HL MAIN MENU].
+  
+ 2.  The following options should be disabled during installation:
+  
+          Register a Patient          [DG REGISTER PATIENT]
+          Patient Enrollment          [DGEN PATIENT ENROLLMENT]
+          Load/Edit Patient Data      [DG LOAD PATIENT DATA]
+          Eligibility Verification    [DG ELIGIBILITY VERIFICATION]
+          Admit a Patient             [DG ADMIT PATIENT]
+          View Registration Data      [DG REGISTRATION VIEW]
+          IVM BACKGROUND JOB          [IVM BACKGROUND JOB]
+  
+ 3.  This patch may be installed with users on the system, however because 
+     the Registration options need to be placed out of order, we suggest it
+     be installed after business hours. This patch should take less than 5 
+     minutes to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Download DG_5_3_P909.KID into your local directory. (See Software and 
+     Documentation Retrieval Instructions)
+  
+  
+ 2.  From the Kernel Installation and Distribution System (KIDS) Menu, 
+     select the Installation menu. 
+  
+ 3.  Use Load a Distribution option. You may need to prepend a directory 
+     name. When prompted for "Enter a Host File: ", respond with
+     DG_5_3_P909.KID
+  
+     Example: USER$:[ABC]DG_5_3_P909.KID
+  
+ 4.  If given the option to run any Environment Check Routine(s), answer
+     "YES". (Currently, there is no environment check routine.)
+  
+ 5.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch
+     DG*5.3*909.
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 6.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch install
+         and enter DG*5.3*909 at the INSTALL NAME prompt.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//'  answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//'  answer YES
+  
+          Register a Patient          [DG REGISTER PATIENT]
+          Patient Enrollment          [DGEN PATIENT ENROLLMENT]
+          Load/Edit Patient Data      [DG LOAD PATIENT DATA]
+          Eligibility Verification    [DG ELIGIBILITY VERIFICATION]
+          Admit a Patient             [DG ADMIT PATIENT]
+          View Registration Data      [DG REGISTRATION VIEW]
+          IVM BACKGROUND JOB          [IVM BACKGROUND JOB]
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+   
+ The HL7 incoming/outgoing filers should be restarted. Use the  
+ Restart/Start All Links and Filers [HL TASK RESTART] option on the
+ Filer and Link Management Options [HL MENU FILER LINK MGT] menu on the
+ HL7 Main Menu [HL MAIN MENU].
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 32
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGENA
+    Before: B20613434   After: B24665348  **121,122,147,232,314,564,672,
+                                           659,653,688,841,909**
+Routine Name: DGENA1A
+    Before: B15415989   After: B18101095  **121,147,232,314,564,672,659,
+                                           653,688,841,909**
+Routine Name: DGENCLEA
+    Before:       n/a   After: B22892557  **909**
+Routine Name: DGENELA
+    Before: B27857025   After: B30590661  **121,147,232,314,451,564,631,
+                                           672,659,583,653,688,841,909**
+Routine Name: DGENELA1
+    Before: B78071004   After: B84040190  **147,327,314,367,497,451,564,
+                                           631,672,659,583,746,653,688,
+                                           841,909**
+Routine Name: DGENELA4
+    Before: B69534652   After: B73347795  **232,275,306,327,314,367,417,
+                                           437,456,491,451,564,672,659,
+                                           653,688,803,754,841,909**
+Routine Name: DGENL1
+    Before: B69443276   After: B71896061  **121,147,232,266,343,564,672,
+                                           659,653,688,838,841,909**
+Routine Name: DGENU
+    Before: B44311306   After: B47398135  **121,122,147,232,314,564,624,
+                                           672,659,653,688,536,838,841,
+                                           909**
+Routine Name: DGENUPL
+    Before: B46472506   After: B47824624  **147,222,232,363,472,497,564,
+                                           677,672,688,871,909**
+Routine Name: DGENUPLA
+    Before: B65304654   After: B71424515  **397,379,497,451,564,672,659,
+                                           583,653,688,754,909**
+Routine Name: DGRP61
+    Before: B46948072   After: B47311723  **797,909**
+Routine Name: DGRP6EF
+    Before: B17483122   After: B28412625  **689,659,737,688,909**
+Routine Name: DGRPE1
+    Before:  B9510061   After: B10060954  **114,327,451,631,688,808,804,909**
+Routine Name: VAFHLZE1
+    Before: B25671247   After: B28799443  **342,497,602,672,653,909**
+ 
+Routine list of preceding patches: 797, 804, 841, 871
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 24, 2014
+Completed By:                               Date Completed: APR 14, 2016
+Released By :                               Date Released : APR 14, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

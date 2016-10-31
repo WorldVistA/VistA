@@ -1,0 +1,330 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Friday, 04/03/15 at 14:07
+=============================================================================
+Run Date: SEP 16, 2015                     Designation: RG*1*62
+Package : RG - CLINICAL INFO RESOURCE NETWORK Priority: Mandatory
+Version : 1        SEQ #61                      Status: Released
+                  Compliance Date: OCT 17, 2015
+=============================================================================
+
+Associated patches: (v)RG*1*59     <<= must be installed BEFORE `RG*1*62'
+                    (v)RG*1*61     <<= must be installed BEFORE `RG*1*62'
+                    (v)DG*5.3*902  <<= must be installed BEFORE `RG*1*62'
+                    (v)XU*8*655    <<= must be installed BEFORE `RG*1*62'
+
+Subject: MASTER VETERAN INDEX ISSUES - ITERATION 13
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Other
+
+Description:
+============
+
+ NOTE: To prevent legacy systems ending up as Treating Facilities,
+       RG* and MPIF* patches should NOT be installed on legacy 
+       systems.
+  
+ RG*1.0*59, RG*1.0*61, DG*5.3*902 and XU*8.0*655 are required builds
+ for patch RG*1.0*62.
+  
+ NOTE: Master Patient Index (MPI) enhancements are being distributed
+       in three VistA namespaces: DG, RG and MPIF. DG*5.3*902 is
+       required to be installed prior to installing RG*1.0*62 and
+       MPIF*1.0*60. Once DG*5.3*902 has been installed, patches
+       RG*1.0*62 and MPIF*1.0*60 can be installed in any order.
+    
+  
+ Issue #1
+ Modifications were made to routine RGHLLOG to discontinue the logging of
+ exceptions to the Master Patient Index (MPI) / Patient Demographics 
+ (MPI/PD) exception handler. The last exception type, #234 or Primary View
+ Rejects (PVRs), will now no longer be logged in the CIRN HL7 EXCEPTION 
+ LOG (#991.1) file. Therefore the menu option, MPI/PD Exception Handling 
+ [RG EXEPTION HANDLING], will be removed, as there are no longer any 
+ exceptions for users to process. The exception processing code will 
+ remain as there are exceptions that still must pass through from VistA to
+ the MPI. 
+  
+ The post-init routine RGP62PST will mark any "Active" PVRs, type 234 
+ exceptions, at the site as "Resolved".  
+     
+ Issue #2
+ Modifications were made to the Admissions, Discharges and Transfers
+ (ADT) A08 Health Level Seven (HL7) message builder code in routine 
+ RGADTP to support the new Date of Death requirements to the MPI. 
+ DEATH ENTERED BY (#.352), SOURCE OF NOTIFICATION (#.353), DATE OF
+ DEATH LAST UPDATED (#.354) and LAST EDITED BY (#.355) fields from the
+ PATIENT (#2) file will be added to the OBX message segment of the 
+ ADT-A08 HL7 message. Additional Date of Death supporting code will be 
+ exported in patches DG*5.3*902 and MPIF*1.0*60.
+   
+ Issue #3
+ A new menu option "ToolKit POC User Setup" [RG TK POC USER SETUP] has been
+ appended as an item to the MPI/PD Patient Admin Coordinator Menu [RG ADMIN
+ COORD MENU] to support point of contact (POC) remote view access. If you 
+ are a POC user with Master Veteran Index (MVI) ToolKit access, you will
+ want to use this option to establish your Visitor record on the Master
+ Patient Index (MPI). In addition, your ToolKit access will also be updated
+ to allow you to perform additional actions related to remote data viewing.
+ This new POC option will access the MPI to establish a visitor record in 
+ the NEW PERSON (#200) file on the MPI if one does not already exist, 
+ through a new remote procedure call (RPC) [MPI TK POC USER SETUP]. 
+   - If there are any missing required fields identified to your local VistA
+     user record in the NEW PERSON (#200) file, (ie. Name, Social Security 
+     Number (SSN) or Site), then the user will be instructed to check their
+     information via the menu option "Edit an Existing User" [XUSEREDIT] on
+     the "User Management" [XUSER] menu, and to contact their local 
+     Information Resource Management (IRM) for further assistance if needed. 
+     *Note: Users will need to execute this option again once their 
+            information has been successfully updated in their local VistA
+            NEW PERSON (#200) file.
+   - If all required fields are populated in their local VistA NEW PERSON 
+     (#200) file, then a Visitor record will be created on the Austin MPI
+     and an Extensible Markup Language (XML) document will be automatically
+     transmitted from the Austin MPI to the ToolKit (TK) to update the 
+     user's DUZ entry, allowing access to the MPI TK functionality.
+     *Note: Users MUST already be established in TK prior to using this new
+            option. If you are not already established in TK and execute the
+            option, you will be required to execute it again once you are
+            established.
+   - A new routine RGTKPOC was created and associated with this new menu
+     option to execute the POC remote view access functionality.
+     
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ RG ADMIN COORD         MENU               MODIFIED
+  MENU                                      (USE AS LINK...)
+ RG EXCEPTION           RUN ROUTINE        DELETED
+  HANDLING
+ RG TK POC USER         RUN ROUTINE        NEW
+  SETUP
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+   
+ Remote Procedure Calls (RPC) Associated:
+  
+ RPC Name            New/Modified/Deleted
+ -------------       -------------------- 
+ MPI TK POC USER     NEW
+  SETUP
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ BIRMINGHAM AL VAMC
+ CENTRAL ALABAMA HCS
+ MINNEAPOLIS VA HCS
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from the ANONYMOUS.SOFTWARE
+ directory at: ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/application.asp?appid=16
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Programmer Manual          RG1_0_P62PM.PDF                    (binary)
+ User Manual                RG1_0_P62UM.PDF                    (binary)
+ Technical Manual           RG1_0_P62TM.PDF                    (binary)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The post-init routine RGP62PST will mark any "Active" 234 exceptions (PVRs)
+ in the CIRN HL7 EXCEPTION LOG (#991.1) file as resolved. It will only 
+ update the CIRN HL7 EXCEPTION LOG (#991.1) file in your local VistA. It
+ should take less than 5 minutes to run to completion.
+  
+ The Post-Install routine RGP62PST can be deleted after the patch has been
+ installed.
+    
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes 
+ to install.
+  
+ The following OPTIONS should be disabled during installation:
+        Register a Patient              [DG REGISTER PATIENT]
+        Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+        Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+        Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+        UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+        MPI/PD Patient Admin Coordinator Menu   [RG ADMIN COORD MENU]
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ The HL7 incoming filers should be stopped.  Use the Monitor, Start, Stop
+ Filers [HL FILER MONITOR] option on the Filer and Link Management Options
+ [HL MENU FILER LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. RG*1.0*62):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond as per your facility's policy.  If you
+     choose to answer YES, then at the end of the patch installation,
+     KIDS will rebuild the menus which may take several hours and could
+     disrupt CPRS users.  If your facility has the XQBUILDTREEQUE
+     nightly batch job tasked to run, answer NO to this question.
+     The nightly job will rebuild the menus as scheduled.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// respond YES.  The following OPTIONS should be
+     disabled during the installation.
+        Register a Patient              [DG REGISTER PATIENT]
+        Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+        Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+        Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+        UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+        MPI/PD Patient Admin Coordinator Menu   [RG ADMIN COORD MENU]
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After patch installation has completed, restart the HL7 incoming filers.
+ Use the Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+ and Link Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+ Menu [HL MAIN MENU].
+ The Post-Install routine RGP62PST can be deleted after the patch has been
+ installed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL INFO RESOURCE NETWORK;**[Patch List]**;30 Apr 99;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RGADTP
+    Before: B99151063   After:B100484585  **26,27,20,34,35,40,45,44,47,
+                                           59,60,61,62**
+Routine Name: RGHLLOG
+    Before: B30413623   After: B25968290  **1,3,11,13,18,19,25,45,52,57,59,62**
+Routine Name: RGP62PST
+    Before:       n/a   After:  B3983176  **62**
+Routine Name: RGTKPOC
+    Before:       n/a   After: B13337596  **62**
+ 
+Routine list of preceding patches: 61
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 29, 2014
+Completed By:                               Date Completed: SEP 15, 2015
+Released By :                               Date Released : SEP 16, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

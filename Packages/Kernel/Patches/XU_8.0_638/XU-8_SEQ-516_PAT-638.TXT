@@ -1,0 +1,315 @@
+$TXT Created by                  KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Thursday, 02/05/15 at 12:30
+=============================================================================
+Run Date: FEB 24, 2015                     Designation: XU*8*638
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #516                      Status: Released
+                  Compliance Date: MAR 27, 2015
+=============================================================================
+
+Associated patches: (v)XU*8*275    <<= must be installed BEFORE `XU*8*638'
+                    (v)XU*8*425    <<= must be installed BEFORE `XU*8*638'
+                    (v)XU*8*522    <<= must be installed BEFORE `XU*8*638'
+                    (v)XU*8*584    <<= must be installed BEFORE `XU*8*638'
+                    (v)XU*8*596    <<= must be installed BEFORE `XU*8*638'
+                    (v)XU*8*605    <<= must be installed BEFORE `XU*8*638'
+
+Subject: KERNEL IPv6 UPDATE
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ This patch is one in a series of patches to support the VA's transition 
+ from IPv4 to IPv6.  IPv6 is a protocol designed to handle the growth rate 
+ of the Internet and to cope with the demanding requirements of services,
+ mobility, and end-to-end security.  A Federal Chief Information Office 
+ (CIO) memo "Transition to IPv6" released in September of 2010 requires
+ agencies to continue their IPv6 transition efforts and has established
+ specific milestones associated with enabling an IPv6 operational
+ capability by the end of FY2014.  A waiver request to extend the deadline 
+ has been submitted.
+  
+ This patch updates routines where IPv4 address formats were hard-coded.
+ These have been replaced with calls to IPv4/IPv6 Application Programmer
+ Interfaces (APIs). Minor changes have also been made in algorithms to
+ improve the efficiency of IP address handling.
+  
+ Summary of changes and completed testing: 
+    1.  IPv6 login via Attachmate Telnet successfully completed in a test 
+        environment (not yet available in VHA production).
+    2.  IPv6 login with Attachmate SSL successfully completed in a test 
+        environment (not yet available in VHA production).
+    3.  Fixed API in ^XLFIPV to properly convert between IPv4 null address 
+        '0.0.0.0' and IPv6 null address '::0'.
+    4.  Fixed API in ^XLFIPV to properly convert between IPv4 loopback  
+        address '127.0.0.1' and IPv6 loopback address '::1'.
+    5.  Changed SIGN-ON LOG file (#3.081) data dictionary IP ADDRESS field
+        (#11) name to IPV4 ADDRESS.
+    6.  Changed SIGN-ON LOG file (#3.081) data dictionary to add new field
+        IPV6 ADDRESS.
+    7.  Fixed ^XUS1 routine where Kernel sets the IP Address in the SIGN-ON
+        LOG file (#3.081) to use new APIs.
+    8.  Changed ^XUS1A and ^XUS1B routines to use new IPv6 cross-references
+        for Single Sign-On and Multi-Sign-On Control. Also made changes to
+        nightly clean-up to remove new cross-references for sessions that
+        terminated abnormally.
+    9.  Fixed ^%Z* routines that had hard-coded IPv4 address formats.
+    10. Fixed ^%ZISTCP routine to use IPv4 or IPv6 address when 
+        originating a connection to another server.
+    11. Added the ability to look up DNS IPv6 addresses by specifying 
+        "AAAA" as an input parameter in Kernel API $$ADDRESS^XLFNSLK() (IA
+        #3056).
+    12. Fixed two Remote Procedure Calls (RPCs) that have never had the 
+        AVAILABILITY field (#.05) or DESCRIPTION field (#1) populated
+        properly.
+    13. NOTE: VistA still requires that the DNS server IP address stored in
+        the KERNEL SYSTEM PARAMETERS file (#8989.3) DNS IP field (#51) be
+        stored as an IPv4 address. In other words, VistA will only do 
+        IP address lookups to a DNS server at an IPv4 address, although the
+        returned values may contain IPv6 information. Lookups to a DNS
+        server at an IPv6 address will be addressed in a future patch.
+   
+  
+ Blood Bank Team Coordination
+ ============================
+ Clearance - 07/08/14
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8.0*638 contains 
+ changes to a package referenced in ProPath standard titled BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA
+ Blood Bank software design safeguards or safety critical elements
+ functions.
+   
+ RISK ANALYSIS: Changes made by patch XU*8.0*638 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ SIGN-ON LOG (#3.081)       IPV4 ADDRESS (#11)   Modified
+ (Field name changed from IP ADDRESS)
+  
+ SIGN-ON LOG (#3.081)       IPv6 ADDRESS (#100)  New
+  
+ Remote Procedure Calls Associated:
+  
+ RPC Name               Type               New/Modified/Deleted
+ --------               ----               --------------------
+ XUS GET VISITOR        SINGLE VALUE       MODIFIED
+ (Added description and set availability to 'SUBSCRIPTION' as these fields 
+ were not populated in VistA). This controlled-subscription RPC is used by 
+ the Broker Security Enhancement to check a user's credentials based on a 
+ BSE TOKEN that was passed to identify and authenticate a visiting user. 
+ The remote VistA system calls this RPC on the authenticating VistA system 
+ to validate if the visiting user is permitted to visit, and if so, obtain 
+ the authenticated user's demographics.
+  
+ XUS SET VISITOR        SINGLE VALUE       MODIFIED
+ (Added description and set availability to 'SUBSCRIPTION' as these fields 
+ were not populated in VistA). This controlled-subscription RPC is used by 
+ the Broker Security Enhancement on an authenticating VistA system to 
+ obtain a BSE TOKEN for an authenticated active user. The TOKEN is used to 
+ identify and authenticate a visiting user on a remote VistA system, which 
+ calls back to the authenticating system to obtain the authenticated 
+ user's demographics.
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  INC000000063257 LIT-1201-71650 Select Division Lookup is Peculiar
+  INC000000707869 Several BSE Errors in Error Trap
+  INC000000739035 Kernel Support for IPv6
+  
+ 1. INC000000063257 LIT-1201-71650 Select Division Lookup is Peculiar
+  
+ Problem:
+ -------
+ The "Select DIVISION:" prompt that appears during VistA login for 
+ multi-division users are not always given the appropriate division 
+ choices when a single letter followed by <CR> is entered at the prompt. 
+ Multiple characters need to be typed to display all of the division 
+ choices.
+  
+ Resolution:
+ ----------
+ The FileMan Application Programmer Interface (API) used to lookup entries
+ was assigned an extra parameter. Removal of this parameter provides the
+ correct prompt.
+  
+ 2. INC000000707869 Several BSE Errors in Error Trap
+  
+ Problem:
+ -------
+ A number of sites have reported BSE LOGIN ERROR entries in the error trap 
+ after the installation of patch XU*8.0*595.  These errors were reviewed 
+ by national help desk and by developers and many of the errors were found 
+ to be normal Broker Security Enhancement processes.  They did not impact 
+ the ability of users to log in.
+  
+ Resolution:
+ ----------
+ Additional error screens have been added to routine XUSBSE1 to stop 
+ recording errors which do not add value to the troubleshooting process.
+  
+ 3. INC000000739035 Kernel Support for IPv6
+  
+ Problem:
+ -------
+ Currently, all of VA's internal and external infrastructure and 
+ applications are set to IPv4 as the default transport mode.  The format 
+ is different between IPv4 and IPv6.  Kernel and several other 
+ applications process IP addresses in routines and need to store the IP 
+ addresses in files.  Each of these fields will need to change their field 
+ definition (data dictionary) to handle the longer IPv6 format.
+  
+ Resolution:
+ ----------
+ This patch uses Kernel APIs introduced in XU*8.0*605 to replace 
+ hard-coded IPv4 address handling in several routines.
+  
+  
+ Test Sites: (Patch Tracking Message #68176081)
+ ----------
+ Alexandria VA Medical Center, Pineville, LA (Medium, Station 502)
+ Black Hills HCS (Fort Meade), Fort Meade, SD (Integrated, Station 568)
+ Central Arkansas Veterans HCS, Little Rock, AR (Large, Station 598)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ No changes have been made to Kernel documentation as a result of this 
+ patch. However, the most up-to-date VA Kernel end-user documentation 
+ is available on the VHA Software Document Library (VDL) at the following
+ Internet Website:
+      http://www.domain.ext/vdl/application.asp?appid=10
+   
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+  
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch can be queued for installation. TaskMan does not have to be
+ stopped, HL7 filers do not need to be stopped, and users may be on the
+ system.  There are no menu options or protocols that need to be disabled.
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system.  This patch should 
+ take less than 1 minute to install.  It may be queued for installation.
+  
+ There are no options that need to be disabled.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XU*8.0*638):
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer "NO".   
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer "NO".
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer "NO".
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' answer "0" to 
+     "60" or "Q" (to queue the output to a printer).
+  
+  
+ Post-Installation Instructions
+ -----------------------------
+ A post-installation routine POST^XU8P638 will execute upon patch 
+ installation to update the ^%ZIS4 and ^%ZISTCP routines from the ^ZIS4ONT 
+ and ^ZISTCP routines included in the patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Aug 6, 2012;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XLFIPV
+    Before: B87061641   After: B95448764  **605,638**
+Routine Name: XLFNSLK
+    Before: B29252865   After: B44384655  **142,151,425,638**
+Routine Name: XQ82
+    Before: B12833341   After: B13609484  **59,67,157,258,312,353,542,554,638**
+Routine Name: XU8P638
+    Before:       n/a   After:    B37453  **638**
+Routine Name: XUS1
+    Before: B25184482   After: B28568204  **9,59,111,165,150,252,265,419,
+                                           469,523,543,638**
+Routine Name: XUS1A
+    Before: B12342712   After: B12856817  **153,149,183,258,265,638**
+Routine Name: XUS1B
+    Before:  B8805326   After: B10471388  **59,337,395,469,543,594,638**
+Routine Name: XUSBSE1
+    Before: B88363702   After:B117144392  **404,439,523,595,522,638**
+Routine Name: XUSRB4
+    Before: B18063785   After: B18435992  **150,337,395,419,437,499,523,
+                                           573,596,638**
+Routine Name: ZIS4ONT
+    Before: B34039996   After: B33135528  **34,59,69,191,278,293,440,499,
+                                           524,546,543,584,638**
+Routine Name: ZISTCP
+    Before: B27837637   After: B28352533  **36,34,59,69,118,225,275,638**
+ 
+Routine list of preceding patches: 275, 425, 522, 554, 584, 594, 596, 605
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 29, 2014
+Completed By:                               Date Completed: FEB 13, 2015
+Released By :                               Date Released : FEB 24, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

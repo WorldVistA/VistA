@@ -1,0 +1,186 @@
+$TXT Created by                       MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 11/14/13 at 10:30
+=============================================================================
+Run Date: JUN 19, 2014                     Designation: IVM*2*145
+Package : IVM - INCOME VERIFICATION MATCH     Priority: Mandatory
+Version : 2       SEQ #132                      Status: Released
+                  Compliance Date: JUL 20, 2014
+=============================================================================
+
+Associated patches: (v)IVM*2*118   <<= must be installed BEFORE `IVM*2*145'
+                    (v)IVM*2*151   <<= must be installed BEFORE `IVM*2*145'
+
+Subject: DATE OF DEATH VALIDATION;REMOVE OBSOLETE PFSS CODE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects a problem in the demographic Upload screen where a 
+ Date of Death message containing a time value, which is sent in the 
+ ORU-Z05 (Demographic Data) HL7 transmission message and is uploaded on 
+ the SAME DAY that the death occurred. 
+   
+ This patch also is also cleaning an API call to a non-existent routine 
+ (DGPFSS2).  
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+   
+ Associated Remedy Tickets:
+ =========================
+  
+ 1) INC0000000302145 - Date of Death Entry
+ 2) INC0000000311832 - Enrollment Code making calls to obsolete PFSS calls
+  
+ Participating Test Sites:
+ ========================
+ New York Harbor HCS
+ Hines - Edward Hines Jr. VA Hospital 
+ Wilmington 
+  
+ Remedy Ticket Overview:
+ ======================
+  
+ 1)  INC0000000302145 - Date of Death Entry
+  
+ Problem:
+ --------
+ When an ORU-Z05 (Demographic Data) HL7 transmission message is uploaded 
+ from Enrollment System Redesign (ESR) to VistA, is not processed in the 
+ Income Verification Match (IVM) Demographic Upload screen because an 
+ 'Invalid Date of Death' error is generated.
+ This problem occurs when a Date of Death message containing a time value 
+ is sent in the ORU-Z05 and is uploaded on the SAME DAY that the
+ death occurred.
+  
+  
+ Resolution:
+ -----------
+ The routine, IVMPRECA, checks the transmitted Date of Death field
+ against the current system date/time to ensure the Date of Death is
+ less than the current system date/time.
+  
+  
+ 2)  INC0000000311832 - Enrollment Code making calls to obsolete PFSS calls
+  
+ Problem:
+ --------
+ A Patient Financial Service System (PFSS) Program interface (API) call 
+ was left in routine IVMPREC2 and since the PFSS Project was cancelled,
+ the called routine no longer exist. While the call causes no problems 
+ due to a check to see if the routine exist before the routine is 
+ executed, it does causes Syntax errors in XINDEX. The call will need 
+ to be removed.
+  
+ Resolution:
+ -----------
+ The API call will be removed from routine IVMPREC2.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended this patch be installed during non-work hours.  
+ VISTA users will not be affected
+  
+  
+ Install Time - less than 5 minutes
+       
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter IVM*2.0*145):
+       
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+      
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch
+         install.  When prompted for INSTALL NAME, enter IVM*2.0*145.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? NO//' answer Yes  Select the following 
+         options to disable.
+        
+                    Option Name                Menu Text 
+             -----------------------    ------------------------------
+               IVM UPLOAD DEM               [Demographics Upload]
+               IVM BACKGROUND JOB           [IVM BACKGROUND JOB]
+  
+     d. When the following prompt 'Enter protocols you wish to mark as 'Out
+        Of Order':   select the following:
+  
+               EAS ESR 518 ORU-Z05 SERVER
+               EAS ESR 518 ORU-Z05 CLIENT
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INCOME VERIFICATION MATCH;**[Patch List]**;21-OCT-94;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVMPREC2
+    Before: B11517998   After: B11017907  **12,34,112,118,145**
+Routine Name: IVMPRECA
+    Before: B87617069   After: B87632745  **5,6,12,34,58,56,115,144,121,
+                                           151,145**
+ 
+Routine list of preceding patches: 118, 151
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 23, 2010
+Completed By:                               Date Completed: JUN 17, 2014
+Released By :                               Date Released : JUN 19, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

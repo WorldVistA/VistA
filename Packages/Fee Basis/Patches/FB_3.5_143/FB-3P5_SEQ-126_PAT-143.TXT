@@ -1,0 +1,252 @@
+$TXT Created by               MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 08/12/14 at 15:32
+=============================================================================
+Run Date: SEP 15, 2014                     Designation: FB*3.5*143
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #126                    Status: Released
+                  Compliance Date: SEP 30, 2014
+=============================================================================
+
+Associated patches: (v)FB*3.5*8    <<= must be installed BEFORE `FB*3.5*143'
+                    (v)FB*3.5*70   <<= must be installed BEFORE `FB*3.5*143'
+                    (v)FB*3.5*101  <<= must be installed BEFORE `FB*3.5*143'
+                    (v)FB*3.5*115  <<= must be installed BEFORE `FB*3.5*143'
+                    (v)FB*3.5*124  <<= must be installed BEFORE `FB*3.5*143'
+
+Subject: FIX ISSUES WITH RATES, VETERAN & ANCILLARY PAYMENTS
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses four issues:
+ 1. Modifies logic when applying the "Mill-Bill" claims 70% reduction when
+    local fee schedule (75th percentile) rates are used.
+  
+ 2. Changes the fee program for ancillary payments entered using Multiple
+    Ancillary Payments [FBCH MULTIPLE PAYMENTS] option from "Outpatient" to
+    "Civil Hospital".
+  
+ 3. Modifies the sort and print routines for Veteran Payment History report
+    to display the '#' symbol for voided payments.
+  
+ 4. Modifies the Fee Basis payment system to allow users holding the   
+    "FBAASUPERVISOR" key to exceed the amount of billed charges. 
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000000271207 - Programming logic issue
+  
+ 2. INC000000249588 - Payment information discrepancies
+  
+ 3. INC000000483409 - Modify payments to allow user to exceed claim amount
+  
+ 4. INC000000333711 - Voided payment not indicated in Veterans Payment
+                      History Option
+    Duplicate:
+    INC000000525521
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Muskogee VAMC
+ Jackson VAMC
+ Houston VAMC
+ Detroit VAMC
+  
+ REMEDY OVERVIEW:
+ ================
+  
+ 1. INC000000271207 - Programming logic issue
+  
+    Problem:
+    --------
+    If during payment of a claim that has been marked as "Mill-Bill", the
+    CPT code defaults to the Local Fee (75th Percentile) rate, Fee Basis is 
+    calculating 70% of that amount, which does not follow current regulation.
+   
+    Resolution:
+    -----------
+    This patch checks for the type of Fee Schedule used in calculating an
+    amount, and if the Local Fee (75th Percentile) Schedule was used, then VistA
+    will not apply the 70% reduction. 
+  
+ 2. INC000000249588 - Payment information discrepancies  
+   
+    Problem:
+    --------
+    Using the Multiple Ancillary Payments [FBCH MULTIPLE PAYMENTS] option,
+    payments entered under "Civil Hospital" have their "Fee Program" value
+    set to "Outpatient", so when viewing the veterans "Payment History",
+    they display incorrectly as "Outpatient".
+  
+    Resolution:
+    -----------
+    Modifying routine FBAAMP to pass in the variable FBTYPE into the field
+    "Fee Program" instead of the value "2", results in the correct Fee
+    Program being assigned to the payment.
+  
+ 3. INC000000483409 - Modify payments to allow user to exceed claim amount
+  
+    Problem:
+    --------
+    The VA has adopted the Center for Medicare & Medicaid Services (CMS)
+    reimbursement methodology for payment to non-VA providers. This change
+    requires the VA to adopt Outpatient Prospective Payment System (OPPS)
+    payment methodology, which might require the VA to pay line items above
+    their billed charges.
+  
+    Resolution:
+    -----------
+    Modified routine FBAAMP and the input transform for AMOUNT PAID
+    sub-field (#2) within the SERVICE PROVIDED multiple (#2) in the FEE
+    BASIS PAYMENT (#162) file to allow users holding the "FBAASUPERVISOR"
+    key to enter amounts exceeding charges claimed.
+   
+ 4. INC000000333711 - Voided payment not indicated in Veterans Payment
+                      History Option
+  
+    Problem:
+    --------
+    Voided ancillary civil hospital payments do not display the correct
+    identifier (#), in Payment History Display [FBAA Payment History], 
+    Vendor Payment Output [FB PAY VENDOR], or Veteran Payment Output [FB
+    PAY VETERAN] displays.
+  
+    Resolution:
+    -----------
+    Adding the variable "FBVP" to the ^TMP array that is set in routine
+    FBPAY67, and then looking for that variable in routine FBPAY21 to write
+    the identifier (#).
+  
+ DATA DICTIONARY CHANGES:
+ ========================
+  
+ Before:
+ -------
+ 162.03,2      AMOUNT PAID            0;3 NUMBER (Required)
+  
+               INPUT TRANSFORM:  S:X["$" X=$P(X,"$",2) K:+X'=X&(X'?.N.1".".2N)!(
+                                 X>999999)!(X<0) X I $D(X),$P(^FBAAC(DA(3),1,DA(
+                                 2),1,DA(1),1,DA,0),"^",2)<X W !,*7,"Amount Paid
+                                  cannot be greater than Amount Claimed!",! K X
+               LAST EDITED:      JUL 22, 1994 
+               HELP-PROMPT:      TYPE A NUMBER BETWEEN 0 AND 999999 
+               DESCRIPTION:      The amount that the VA is going to pay for this
+                                 service provided.  
+  
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+ After:
+ ------
+ 162.03,2      AMOUNT PAID            0;3 NUMBER (Required)
+  
+               INPUT TRANSFORM:  S X=$TR(X,"$") K:+X'=X&(X'?.N.1".".2N)!(X>99999
+                                 9)!(X<0) X I $D(X) D OPPS^FBAAUTL2
+               LAST EDITED:      MAR 19, 2013 
+               HELP-PROMPT:      Type a number between 0 and 999999. 
+               DESCRIPTION:      The amount that the VA is going to pay for this
+                                 service provided, not to exceed the amount
+                                 entered in the AMOUNT CLAIMED (#1) field. Users
+                                 holding the "FBAASUPERVISOR" key may override
+                                 this limit.  
+  
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+                                   
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+    As it is necessary to disable some menu options when installing this
+    patch it is recommended that the install be done during non-peak hours.
+    Additionally, installing during peak hours may lead to an unusually
+    long install time.
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter FB*3.5*143)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       FB*3.5*143.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" hit enter.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', hit enter. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+                     
+          Payments for Unauthorized Claims  [FBUC PAYMENTS]
+          Multiple Ancillary Payments       [FBCH MULTIPLE PAYMENTS] 
+          Payment History Display           [FBAA PAYMENT HISTORY DISPLAY]
+          Vendor Payments Output            [FB PAY VENDOR]
+          Veteran Payments Output           [FB PAY VETERAN]
+  
+        2) When prompted "Enter protocols you wish to mark as "Out of
+           Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 20
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBAACO0
+    Before: B32636065   After: B34388675  **4,38,52,57,61,75,70,143**
+Routine Name: FBAACO3
+    Before: B55394363   After: B55803171  **4,38,55,61,116,122,133,108,
+                                           124,143**
+Routine Name: FBAACP
+    Before: B46974663   After: B47546031  **4,38,55,61,77,108,143**
+Routine Name: FBAAFS
+    Before: B28501893   After: B29211943  **4,53,71,92,99,111,115,143**
+Routine Name: FBAAMP
+    Before: B64599378   After: B64651581  **4,21,38,55,61,67,116,108,143**
+Routine Name: FBAAUTL2
+    Before: B18208320   After: B19718250  **8,143**
+Routine Name: FBPAY21
+    Before: B16167791   After: B16369927  **4,32,69,101,143**
+Routine Name: FBPAY67
+    Before: B41443321   After: B41631569  **4,32,55,69,108,143**
+ 
+Routine list of preceding patches: 8, 70, 101, 115, 124
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 24, 2012
+Completed By:                               Date Completed: SEP 09, 2014
+Released By :                               Date Released : SEP 15, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

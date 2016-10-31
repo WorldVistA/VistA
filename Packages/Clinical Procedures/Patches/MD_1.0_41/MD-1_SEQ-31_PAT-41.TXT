@@ -1,0 +1,194 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 10/05/15 at 15:45
+=============================================================================
+Run Date: JUN 03, 2016                     Designation: MD*1*41
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #31                      Status: Released
+                  Compliance Date: JUL 04, 2016
+=============================================================================
+
+Associated patches: (v)MD*1*21     <<= must be installed BEFORE `MD*1*41'
+
+Subject: CLINICAL PROCEDURES IPV6 UPDATE LOOPBACK ADDRESS
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will correct the following issue:
+                  
+ In preparation for the VA's transition from Internet Protocol version 
+ 4 (IPv4) to Internet Protocol version 6 (IPv6), the Clinical Procedures
+ package will require modifications to make it IPv6 ready.
+      
+ Internet Protocol version 6 (IPv6) is the latest version of the Internet 
+ Protocol (IP), the communications protocol that provides an identification
+ and location system for computers on networks and routes traffic across 
+ the Internet. IPv6 was developed by the Internet Engineering Task Force 
+ (IETF) to deal with the long-anticipated problem of IPv4 address 
+ exhaustion. IPv6 is intended to replace IPv4.
+       
+ Vista is only compatible with IPv4 currently and this effort is to prepare
+ for IPv6 compatibility.
+                   
+ Associated Remedy tickets:
+ ==========================
+ 1) INC000001095728 Clinical Procedures - IPv6 Conversion
+      
+ Associated NSR(s):
+ =================
+ N/A
+       
+ Participating Test Sites:
+ =========================
+ Mann-Grandstaff VAMC (Spokane, WA)
+ Overton Brooks VAMC (Shreveport, LA)
+ Upstate New York HCS (Syracuse, NY) 
+      
+ Remedy Overview:
+ ================     
+ 1) INC000001095728 Clinical Procedures - IPv6 Conversion
+            
+   Problem:
+   --------
+  In a Clinical Procedures testing environment, an Internet Protocol (IP) 
+  address is designated to serve as a medical device since we can't test in
+  a testing environment with an actual medical device.  The current
+  structure of the IP address is coded for Internet Protocol Version 4 
+  (IPv4) and needs to be changed to handle the upcoming Internet Protocol
+  Version 6 (IPv6) structure.  A Data Dictionary change is also needed in 
+  CP INSTRUMENT file (#702.09), IP ADDRESS Field (#.14).
+      
+   Resolution:
+   ------------  
+  As part of the transition for Clinical Procedures, modifications were 
+  required to include evaluation of the current system to determine what 
+  version of IP is enabled and format each referenced loopback address 
+  accordingly.  Routines MDHL7B and MDRPCOT1 will be modified to handle
+  both IPv4 and IPv6 data structures by adding a supplied API call to
+  CONVERT^XLFIPV.
+               
+ Data Dictionary Change:
+ ======================
+ Before Patch Installation:
+      
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ -----------------------------------------------------------------------
+      
+ 702.09,.14    IP ADDRESS             .1;4 FREE TEXT
+               IP Address                
+               INPUT           TRANSFORM:  K:$L(X)>15!($L(X)<7)!'(X?1.3N1"."1
+                                           .3N1"."1.3N1"."1.3N) X
+               LAST EDITED:      JUL 02, 2002 
+               HELP-PROMPT:      Answer must be 7-15 characters in length. 
+               DESCRIPTION:      This field contains the IP address 
+                                 of this instrument.  
+                                                                                                                                     
+      
+ After Patch Installation:
+  
+ 702.9,.14  IP ADDRESS          .1;4 FREE TEXT
+            IP Address     
+            INPUT TRANSFORM:  K:'($$VALIDATE^XLFIPV(X)) X
+            LAST EDITED:      AAA NN, 2015 
+            HELP-PROMPT:      Enter a valid IP address in the form: 
+                              nn.nn.nn.nn (IPv4) or 
+                              hhhh:hhhh:hhhh:hhhh:hhhh:hhhh:hhhh:hhhh (IPv6) 
+            DESCRIPTION:      This field contains the IP address 
+                              of this instrument.
+           
+           
+      
+ Installation Instructions:
+ ==========================
+ If installed during the normal workday, it is recommended that the 
+ the Clinical Procedures users be off the system.  Other VISTA users
+ will not be affected.
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+      
+ 1.  Load Transport Global 
+     ---------------------------
+  
+  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter MD*1.0*41):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+  a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+   b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO. 
+  
+   c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Apr 01, 2004;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDHL7B
+    Before:  B9814726   After: B10882680  **41**
+Routine Name: MDRPCOT1
+    Before: B41706537   After: B44379273  **5,11,21,41**
+ 
+Routine list of preceding patches: 21
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 24, 2015
+Completed By:                               Date Completed: MAY 26, 2016
+Released By :                               Date Released : JUN 03, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

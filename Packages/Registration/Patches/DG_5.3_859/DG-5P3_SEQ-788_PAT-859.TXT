@@ -1,0 +1,146 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 04/28/14 at 15:36
+=============================================================================
+Run Date: JAN 07, 2015                     Designation: DG*5.3*859
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #788                    Status: Released
+                  Compliance Date: FEB 07, 2015
+=============================================================================
+
+Associated patches: (v)DG*5.3*644  <<= must be installed BEFORE `DG*5.3*859'
+
+Subject: HOME TELEHEALTH DGHTERR ALERT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DG*5.3*859 addresses an issue with the DG Home Telehealth mail alerts
+ that users receive when an Health Level Seven (HL7) message does not 
+ receive the proper acknowledgement and an error alert is created. Users
+ are finding it difficult to research the alert received without more 
+ information included in the message. 
+  
+   
+ ASSOCIATED REMEDY TICKET: 
+ =========================
+ 1)  INC000000808286          Vista Integration Alert
+     INC000000828292(d)       Home Telehealth Patient Activation-
+                              Other:[DGHTERR alert]     
+   
+  
+ ASSOCIATED NSR: 
+ ===============
+ N/A
+  
+   
+ PARTICIPATING TEST SITES: 
+ =========================
+ New York Harbor HCS
+ Upstate New York HCS
+ W.G. (Bill) Hefner VAMC (Salisbury)
+  
+   
+ Remedy Overview:
+ ================
+ 1)  INC000000808286          Vista Integration Alert
+     INC000000828292(d)       Home Telehealth Patient Activation-
+                              Other:[DGHTERR alert]
+   
+     Problem:
+     --------
+     Vista application (DG Home Telehealth) generates an email alert when
+     it is missing an application acknowledgement.  The alert is not
+     providing enough information for the user to research the original 
+     message to resolve the error message alert. The following information
+     is being displayed in the alert message:
+     
+     Date
+     Patient(Name)
+     Error Code
+  
+     Resolution:
+     -----------
+     Modified routine DGHTRTX to add additional information to display in
+     the alert message. The following information will now display in the 
+     alert message:
+     
+     Date
+     Patient(Name)
+     Error Code
+     
+     Message ID
+     Activation Date
+     Vendor
+   
+   
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes.
+ Suggested time to install: non-peak requirement hours.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options (when
+        prompted for INSTALL NAME, enter DG*5.3*859).      
+  
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch is
+           installed.
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+        d. Print Transport Global - this option will allow you to view
+           the components of the KIDS build.
+      
+     4. Use the Install Package(s) option and select the package DG*5.3*859
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+        respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+        and Protocols? YES//" respond YES.
+   
+        When prompted, 'Enter options you wish to mark as 'Out Of 
+        Order':', enter:
+              
+                   Home Telehealth Menu  [DGHT HOME TELEHEALTH]
+                   
+  
+        When prompted, 'Enter protocols you wish to mark as 'Out Of
+        Order':', press enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGHTRTX
+    Before: B14862223   After: B16565775  **644,859**
+ 
+Routine list of preceding patches: 644
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 26, 2012
+Completed By:                               Date Completed: DEC 18, 2014
+Released By :                               Date Released : JAN 07, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,76 @@
+
+=============================================================================
+Run Date: SEP 30, 2015                     Designation: ICD*18*83
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #76                     Status: Released
+                  Compliance Date: OCT 07, 2015
+=============================================================================
+
+Associated patches: (v)LEX*2*100   <<= must be installed BEFORE `ICD*18*83'
+
+Subject: Code Set FY16 1st Qtr Update
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch is an informational patch and contains no routines, data, or
+ data dictionaries. The data for this patch is exported with the Lexicon
+ data in patch LEX*2.0*101. Patch LEX*2.0*101 requires that patch
+ LEX*2.0*100 be previously installed.
+ 
+ LEX*2.0*101 writes to the following files:
+ 
+       ICD DIAGNOSIS             #80       ^ICD9(       ICR 4485
+       ICD OPERATION/PROCEDURE   #80.1     ^ICD0(       ICR 4486
+ 
+ ENHANCEMENTS
+ ============
+   
+    FY16 1st Quarter Update
+ 
+      ICD-10 Procedure Additions
+      --------------------------
+ 
+        Effective Oct 01, 2015                               (50 Codes)
+          047K041  047K0D1  047K0Z1  047K341  047K3D1  047K3Z1  047K441
+          047K4D1  047K4Z1  047L041  047L0D1  047L0Z1  047L341  047L3D1
+          047L3Z1  047L441  047L4D1  047L4Z1  047M041  047M0D1  047M0Z1
+          047M341  047M3D1  047M3Z1  047M441  047M4D1  047M4Z1  047N041
+          047N0D1  047N0Z1  047N341  047N3D1  047N3Z1  047N441  047N4D1
+          047N4Z1  X2C0361  X2C1361  X2C2361  X2C3361  XR2G021  XR2H021
+          XW03321  XW03331  XW03341  XW03351  XW04321  XW04331  XW04341
+          XW04351
+ 
+ 
+ REMEDY TICKETS:
+ ==============
+ 
+    1301440 - Spelling error file 80, code 305.90, Description
+ 
+ 
+ INSTALLATION INSTRUCTIONS:
+ =========================
+               
+    Please refer to the patch description for LEX*2.0*101 for instructions 
+    for retrieving the data global host file and installing this patch.
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 31, 2015
+Completed By:                               Date Completed: SEP 29, 2015
+Released By :                               Date Released : SEP 30, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

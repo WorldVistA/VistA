@@ -1,0 +1,299 @@
+
+=============================================================================
+Run Date: JAN 22, 2016                     Designation: EAS*1*128
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #108                      Status: Released
+                  Compliance Date: FEB 22, 2016
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 4.2 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Public Law 112-154, requires Veterans Affairs (VA) to provide hospital
+ care and medical services to Veterans who served on active duty at Camp
+ Lejeune (North Carolina) for one or more of 15 specified illnesses or
+ conditions (Esophageal cancer; Lung cancer; Breast cancer; Bladder cancer;
+ Kidney cancer; Leukemia; Multiple myeloma; Myelodysplastic syndromes;
+ Renal toxicity; Hepatic steatosis; Female infertility; Miscarriage;
+ Scleroderma; Neurobehavioral effects; or Non-Hodgkin's lymphoma). To be 
+ eligible for care under the provisions of this bill, the Veteran must 
+ have served on active duty at Camp Lejeune for not fewer than thirty (30) 
+ nonconsecutive days between August 1, 1953 and December 31, 1987.
+  
+ The purpose of this Informational patch is to announce the release of the
+ Enrollment System (ES) 4.2 software which specifically focuses on the
+ Camp Lejeune-Veterans (CL-V) project. These enhancements will provide the 
+ ability to manage, communicate, share, and process Veterans with the Camp 
+ Lejeune indicator through the Enrollment System (ES). New functionality 
+ allows determination of a Veteran's eligibility or lack of eligibility 
+ for the CL-V benefit. If determined eligible, the Veteran is automatically
+ promoted to Priority Group (PG) 6, unless a higher priority group is
+ warranted based on other eligibility factors. Six user screens have been
+ enhanced with CL-V information. An ES user can view, enter, or update the
+ Camp Lejeune Eligibility indicator and associated Camp Lejeune eligibility
+ information through the following screens:
+  
+    -  Edit Current Eligibility - Other Eligibility Factors - edit CL data
+    -  Current Eligibility - Other Eligibility Factors panel - view
+       CL eligibility
+    -  Eligibility Change History - Other Eligibility Factors - view 
+       history of changes to CL Data
+    -  Current Military Service - edit CL data
+    -  Military Service Change History - view history of changes to CL data
+    -  Add a Person - enter Camp Lejeune Eligibility indicator in the 
+       Current Military Service and Edit Current Eligibility screens
+  
+ Software enhancements were added for receiving regular data feeds from 
+ the Camp Lejeune Environmental Action Report (CLEAR) database and updates 
+ to the ES records with the incoming data stream. Additionally,
+ modifications to existing interfaces were made in order to share the Camp 
+ Lejeune eligibility between the ES, VistA REE, other VistA applications, 
+ and repositories, and to satisfy reporting needs.
+  
+ This ES 4.2 application is developed in Java/.Net technology. Upon ES 4.2
+ release, CL will be fully functional in ES and CL data will only be
+ available within ES.  This functionality includes the CLEAR importing of
+ CL eligibility, processing of the CL indicator when submitted from the
+ Veteran's On-Line Application (VOA), and the sharing of CL data via
+ Eligibility & Enrollment (E&E) Web Service. Associated Veterans Health
+ Information Systems and Technology Architecture (VistA) patches will be
+ released following the ES 4.2 deployment. During IOC testing and national
+ release compliance period, ES will only share CL data with the IOC test
+ sites. This will be controlled via a system parameter within ES. Once all
+ sites have installed the host file and the CLV rollout parameter has been
+ set to communicate to all sites, Camp Lejeune eligibility and associated
+ data collected in ES 4.2 will be shared at the site level.  This includes
+ Camp Lejeune data received from VOA and the CLEAR batch import process.
+  
+  
+ Enhancements:
+ =============
+ An ES User can update the Camp Lejeune Eligibility indicator and associated
+ Camp Lejeune information through the following screens:
+         Current Military Service screen
+         Edit Current Eligibility screen
+  
+ The following fields have been added to the screens:
+  
+   Camp Lejeune Eligibility
+   Verified Methods
+   Comments
+   CL Date Registered
+   CL Eligibility Change Site
+   CL Eligibility Source of Change 
+  
+ From both the Current Military Service and Update Eligibility ES screens, the
+ ES User will have access to Online Help Text about the Camp Lejeune information
+ to assist in completing Camp Lejeune information as needed. 
+  
+ The Online Help page for Enrollment help text will also be updated to reflect
+ the automatic Priority Group 6 or higher placement for Camp Lejeune verified
+ enrollments.  
+  
+ The Enrollment System will send the following information to all sites of
+ record (via a Health Level 7 (HL7) Z11 message):
+   Camp Lejeune Eligibility Indicator
+   Camp Lejeune Eligibility Date Time Change
+   Camp Lejeune Eligibility Change Site
+   Camp Lejeune Eligibility Source of Change
+  
+ The Enrollment System will be able to receive the following information from a
+ VistA site (via an HL7 Z07 message):
+   Camp Lejeune Eligibility indicator 
+   Camp Lejeune Eligibility Date Time Change 
+   Camp Lejeune Eligibility Change Site
+   Camp Lejeune Eligibility Source of Change 
+  
+ The following CodeCRs are associated with ES 4.2:
+  
+ Enrollment Systems
+ ------------------ 
+ - Work Item ID 192609 - Implement hibernate mapping and DAO to access
+        database (2.6.1 - 2.6.4)
+ - Work Item ID 192630 - Implement UI changes for Camp Lejeune 
+        Veterans (CL-V) project (2.6.1 - 2.6.4, 2.6.10)
+ - Work Item ID 192631 - Implement Service layer, iLog changes for CL-V
+        project (2.6.1 - 2.6.4)
+ - Work Item ID 192662 - Implement batch job to Load Camp Lejeune 
+        Information from an External Source Listing (2.6.14)
+ - Work Item ID 192666 - Implement changes to the OPP Extract for Camp
+        Lejeune (2.6.12)
+ - Work Item ID 192667 - Implement changes to the "Total Eligibility 
+        Factors Summary Report" to include the Camp Lejeune factor (2.6.13)
+ - Work Item ID 192671 - Incorporate Camp Lejeune Information into the E&E
+        Web Service - Add Camp Lejeune Eligibility Indicator to E&E Web 
+        Service (2.6.11)
+ - Work Item ID 192672 - Receive Camp Lejeune indicator from VOA forms and
+        pass it into ES for process (2.6.9)
+ - Work Item ID 192679 - Implement messaging process to parse and build CL
+        data in ZEL segment (2.6.5 - 2.6.7)
+ - Work Item ID 192680 - Implement Logic to turn on/off sending CL-V data
+        (2.6.15)
+ - Work Item ID 192757 - CL-V Add Implementation to Support Multiple 
+        Selection of Verification Methods (2.6.1, 2.6.8)
+ - Work Item ID 192747 - The Two CLEAR Batch Process Detail csv Files will
+        be Output as ESC Reports (2.6.14)
+ - Work Item ID 192894 - When ES sets or calculates the Veteran indicator
+        to "No", and the ES Camp Lejeune eligibility is "Yes", the system 
+        automatically sets the Camp Lejeune indicator to "No" prior to
+        making an enrollment decision
+ - Work Item ID 192904 - Camp Lejeune Date Registered will not allow a 
+        future date value
+ - Work Item ID 192915 - ES will not change a VOA submitted Camp Lejeune
+        Indicator from YES to NO until after MSDS response has been
+        received
+ - Work Item ID 192944 - Update ES Camp Lejeune date registered when a
+        blank Camp Lejeune date registered is received from CLEAR
+ - Work Item ID 192925 - ES will update Camp Lejeune data registered when 
+        the Indicator is initially set to YES or NO
+ - Work Item ID 192957 - Military History Records will display "CEV" as 
+        source of change when Camp Lejeune Indicator is manually changed in
+        ES
+ - Work Item ID 193147 - ES will change Camp Lejeune Indicator from YES to 
+        NO when MSDS data received does not support Camp Lejeune
+        Eligibility
+ - Work Item ID 192797 - 508 - CL-V - checkbox/id attributes values should
+        be unique (14) issues.
+ - Work Item ID 192800 - 508 - CL-V - Ensure all form fields have implicit
+        or explicit labels (2) issues.
+ - Work Item ID 192801 - 508 - CL-V - Data table missing header (3) issues.
+ - Work Item ID 192809 - 508 - CL-V - Logical events handlers (17) issues.
+ - Work Item ID 192810 - 508 - CL-V - Table caption element (2).
+ - Work Item ID 192811 - 508 - CL-V -multimedia synchronized captions (2).
+ - Work Item ID 192812 - 508 - CL-V - Control value changes  (7).
+ - Work Item ID 192813 - 508 - CL-V - Summary for layout tables should be
+        empty or absent  (1).
+ - Work Item ID 192792 - 508 - 4.2-Re-audit--Make sure all row and column
+        headers are coded that involves UI change.
+ - Work Item ID 192867 - 508 - CL-V--Make sure that changes of context are
+        announced if occur when select control value changes.
+ - Work Item ID 192633 - 508 - Dependent Overview incorrectly coded as
+        layout table.
+ - Work Item ID 192647 - 508 - Screen Reader does not read headers on
+        Historical Addresses page.
+ - Work Item ID 192649 - 508 - ES takes 20 to 30 seconds before the drop
+        down will actually appear when mouse over to Admin menu.
+ - Work Item ID 192653 - 508 - 4.1_Re-audit--Focus indicator is difficult
+        to follow on some fields.
+ - Work Item ID 192654 - 508 - 4.2-Re-audit--Make sure all row and column
+        headers are coded to specifically be associated with related table
+        cells.
+ - Work Item ID 192655 - 508 -- 4.2 Re-audit New requirement - Change the
+        tab order to reflect that of the other pages in this application.
+ - Work Item ID 192656 - 508 - 4.2 Re-audit --Make sure there are
+        instructions on each screen that indicate what designated are
+        required form field.
+ - Work Item ID 192753 - 508 - IAM SSO times out ES session prior to ES
+        Application session timeout warning.
+ - Work Item ID 193120 - CL-V Update CLEAR Batch Process to Default Gender
+        to Male When Incoming Record has NULL for Gender  (2.6.14)
+  
+  
+ What to Expect:
+ ===============
+ During the ES 4.2 implementation, which is expected to take less than 
+ eight hours, HL7 messaging to and from the ES will be disabled by the 
+ Vitria Interface Engine (VIE) team. After the ES implementation, there 
+ will be no immediate change in VistA REE. CL eligibility will be added at 
+ a later time with the VistA host file DG_5_3_P909.KID containing 
+ Registration patch DG*5.3*909 and Income Verification Match patch 
+ IVM*2.0*161.
+  
+ Implementation:
+ ===============
+ The implementation of ES 4.2 requires deployment of Java software to dedicated
+ servers at the Austin Information Technology Center (AITC). The AITC staff
+ will perform the installation with support from the development team.
+ Support from the sites is not required. 
+  
+ The ES application will be unavailable and Veteran enrollment 
+ determinations will be delayed until the deployment is complete. Person
+ Service Identity Management/Master Veteran Index (PSIM/MVI) and messaging
+ to/from the sites will be unavailable during the deployment. An Automated
+ Notification Reporting (ANR) will be created to announce the deployment
+ which will list all impacted systems and to track the outage.
+  
+ Implementation Date:
+ ====================
+ 01/16/2016
+  
+ Implementation Files:
+ =====================
+ N/A
+  
+ Documentation Retrieval:
+ ========================
+ The user documentation is available on the Office of Information Field
+ Office (OIFO) ANONYMOUS.SOFTWARE directories listed below:
+  
+    OIFO                  FTP address                      Directory
+ Albany               ftp.domain.ext        
+ Hines                ftp.domain.ext         
+ Salt Lake City       ftp.domain.ext           
+ VistA download site  download.vista.domain.ext       
+  
+ The user documentation files listed below may be obtained via File 
+ Transfer Protocol (FTP).
+  
+ The preferred method is to download the files from:
+       download.vista.domain.ext
+  
+ This method transmits the files from the first available FTP server.  
+  
+ Sites may also select to retrieve documentation from a specific server 
+ as shown in the above table.
+  
+ The following files should be downloaded in the binary FTP mode. 
+  
+ Filename                                  Description
+ --------                                  -----------
+ ES_42_Developers_Guide.PDF                Developer's Guide 
+ ES_42_Installation_Guide.PDF              Installation Guide 
+ ES_42_Release_Notes.PDF                   Release Notes 
+ ES_42_Production_Operations_Manual.PDF    Production Operations Manual 
+ ES_42_User_Guide.PDF                      User Guide
+  
+  
+ Mandate:
+ ======== 
+ N/A
+  
+ Associated Remedy Tickets:
+ ==========================
+ N/A
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Reporting Problems:
+ ===================
+ N/A
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 17, 2014
+Completed By:                               Date Completed: JAN 20, 2016
+Released By :                               Date Released : JAN 22, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

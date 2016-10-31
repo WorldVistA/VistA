@@ -1,0 +1,537 @@
+
+=============================================================================
+Run Date: FEB 08, 2016                     Designation: PSO*7*427
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #377                      Status: Released
+                  Compliance Date: MAR 10, 2016
+=============================================================================
+
+Associated patches: (v)PSO*7*282   <<= must be installed BEFORE `PSO*7*427'
+                    (v)PSO*7*370   <<= must be installed BEFORE `PSO*7*427'
+                    (v)PSO*7*377   <<= must be installed BEFORE `PSO*7*427'
+                    (v)PSO*7*382   <<= must be installed BEFORE `PSO*7*427'
+                    (v)PSO*7*398   <<= must be installed BEFORE `PSO*7*427'
+                    (v)PSO*7*400   <<= must be installed BEFORE `PSO*7*427'
+                    (v)PSO*7*403   <<= must be installed BEFORE `PSO*7*427'
+                    (v)PSO*7*408   <<= must be installed BEFORE `PSO*7*427'
+                    (v)PSO*7*415   <<= must be installed BEFORE `PSO*7*427'
+                    (v)PSO*7*416   <<= must be installed BEFORE `PSO*7*427'
+
+Subject: EPHARMACY NCPDP CONTINUOUS MAINTENANCE STANDARDS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+  - Data Dictionary
+
+Description:
+============
+
+ This patch has enhancements that extend the capabilities of the Veterans
+ Health Information Systems and Technology Architecture (VistA) electronic
+ pharmacy (ePharmacy) billing system.  Below is a list of all the
+ applications involved in this project along with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*427
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2*534
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*19
+    CONSOLIDATED MAIL OUTPATIENT PHARMACY (CMOP) V. 2.0   PSX*2*77
+    PHARMACY DATA MANAGEMENT (PDM) V. 1.0                 PSS*1*188
+  
+ Patches PSX*2*77 and PSS*1*188 are being released as stand-alone patches,
+ while the other three patches (PSO*7*427, IB*2*534, BPS*1*19) are being
+ released in the Kernel Installation and Distribution System (KIDS)
+ multi-build distribution BPS PSO IB BUNDLE 6.0.  The two stand-alone 
+ patches and multi-build distribution can be installed in any order and 
+ do not need to installed at the same time.
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+ 1.  A new section "OTHER REJECTS PENDING RESOLUTION" was added to the
+     Medication Profile screen.  This section includes prescriptions that
+     have at least one unresolved reject of the following types: Reject
+     Resolution Required rejects, any TRICARE eligibility rejects 
+     (including eT), or any CHAMPVA eligibility rejects (including eC).
+  
+ 2.  Edit Prescription screen will always display the National Drug Code
+     (NDC) field and number.
+  
+ 3.  Edit Prescription screen allows an edit to the NDC number if the
+     prescription has been released or if the prescription has an open
+     reject for a billable claim, regardless of patient eligibility.  Edit
+     to the NDC number is not allowed if the prescription is unreleased or
+     there are no open rejects for the claim.  Pseudo-reject codes of eT
+     and eC will be excluded from edit if the prescription is unreleased.
+  
+ 4.  View Prescription screen will always display the NDC field and number
+     for the original fill.
+  
+ 5.  View Prescription screen will always display the NDC field and number
+     in the Refill Log.
+  
+ 6.  The Reject Information screen of the Third Party Payer Rejects -
+     View/Process [PSO REJECTS VIEW/PROCESS] and Third Party Payer Rejects 
+     - Worklist [PSO REJECTS WORKLIST] options was modified to include the
+     hidden action Discontinue Rx [DC] for veteran prescriptions.
+  
+ 7.  The Reject Information screen of the Third Party Payer Rejects -
+     View/Process [PSO REJECTS VIEW/PROCESS] and Third Party Payer Rejects 
+     - Worklist [PSO REJECTS WORKLIST] options was modified so that any
+     action that causes an ePharmacy claim submission will include a pause
+     at the end of ePharmacy submission messaging.  This will allow the
+     pharmacist to read the message before the screen goes back to the
+     Reject Information screen.  The length of the pause can be configured
+     by the site using the ePharmacy Site Parameters [PSO ePHARM SITE
+     PARAMETERS] option.
+  
+ 8.  The Reject Information screen of the Third Party Payer Rejects - 
+     View/Process [PSO REJECTS VIEW/PROCESS] and Third Party Payer Rejects 
+     - Worklist [PSO REJECTS WORKLIST] options was modified so that the
+     Edit Rx [ED] action will place the prescription on the list of
+     prescriptions that will get the 'LABEL: QUEUE/CHANGE 
+     PRINTER/HOLD/SUSPEND or '^' to bypass//' prompt if the Fill Date is
+     equal to the current date or is in the future even if the Fill Date
+     was not modified by the user.  This will give the pharmacist the
+     opportunity to suspend the prescription.
+  
+ 9.  The Third Party Payer Rejects - View/Process [PSO REJECTS 
+     VIEW/PROCESS] and Third Party Payer Rejects - Worklist [PSO REJECTS
+     WORKLIST] options were modified to include a new action called Print
+     to Excel [PSX].  This action will output the list of rejected
+     prescriptions in a format that can be pasted into an Excel
+     spreadsheet.
+  
+ 10. The INSURANCE COMPANY NAME prompt on the Third Party Payer Rejects
+     - View/Process [PSO REJECTS VIEW/PROCESS] option was modified to 
+     allow a true lookup of insurance companies in the INSURANCE COMPANY
+     (#36) file.  This will allow for better matching of the user input to
+     the data.
+  
+ 11. The Print from Suspense File [PSO PNDLBL] option was modified to 
+     prevent a label from reprinting and to remove the prescription from
+     Suspense if the label log shows the label has printed before, unless
+     the suspense queue indicates that a user has previously requested a
+     reprint of the suspended prescription.  Similarly, the Pull Early
+     from Suspense [PSO PNDRX] option and the Pull Rx (OP) [PP] actions on
+     the Patient Prescription Processing [PSO LM BACKDOOR ORDERS] option
+     will have the same functionality except that these options/actions
+     will prompt the user whether they want to reprint a label or not.
+  
+ 12. The text of the ePharmacy - OPEN/UNRESOLVED REJECTS LIST bulletin was
+     modified to be more accurate.  It was also modified so that 
+     prescriptions listed in the bulletin are separated into prescription
+     categories similar to what is used by the Reject Information screen
+     of the Third Party Payer Rejects - View/Process [PSO REJECTS
+     VIEW/PROCESS] and Third Party Payer Rejects - Worklist [PSO REJECTS
+     WORKLIST] options.  Those users needing access to this information 
+     will need to be added to the PSO REJECTS BACKGROUND MESSAGE Mail 
+     Group.
+  
+ 13. The TRICARE CHAMPVA Bypass/Override Report [PSO TRI CVA OVERRIDE 
+     REPORT] option was modified to change the text of one of the Audit
+     Type categories from 'NON-BILLABLE PRODUCT' to 'NON-BILLABLE'.  This
+     impacted the user lookup and the display of the report itself.
+   
+ 14. Some background processing within Outpatient Pharmacy was modified so
+     that TRICARE/CHAMPVA claims with Environmental Indicators can be 
+     filled but not billed to the third party insurance.
+   
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ PRESCRIPTION (#52)                                        Modified
+   REJECT INFO sub-file (#52.25)                           Modified
+                       INSURANCE COMPANY (#33)             New
+  
+ EPHARMACY SITE PARAMETERS (#52.86)                        Modified
+                       EPHARMACY RESPONSE PAUSE (#6)       New
+  
+ PSO AUDIT LOG (#52.87)                                    Modified
+                       AUDIT TYPE (#12)                    Modified
+                       JUSTIFICATION (#17)                 Modified
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted
+ ---------------                                           -------------
+ N/A
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted
+ -----------                  ----                         -------------
+ N/A
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted
+ -------------                                             -------------
+ PSO REJECT DISPLAY HIDDEN MENU                            Modified
+ PSO REJECT TRICARE HIDDEN MENU                            New
+ PSO REJECTS HIDDEN ACTIONS #1                             Modified
+ PSO REJECTS PRINT TO EXCEL                                New
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted
+ -----------------                                         -------------
+ N/A
+  
+  
+ Templates:
+                                                           New/Modified/
+ Template Name        Type      File Name (Number)           Deleted
+ -------------        ----      ------------------         -------------
+ PSO REJECT TRICARE   List      N/A                        Modified 
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ 20130514 - NCPDP Continuous Maintenance Standards (Phase 2, Iteration 2)
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA Heartland West (Integrated)-Station 589
+ Central Arkansas Veterans Healthcare System (Little Rock, AR)-Station 598
+ Birmingham VA Medical Center (Birmingham, AL)-Station 521
+ Hunter Holmes McGuire VA Medical Center (Richmond, VA)-Station 652
+ James H. Quillen VA Medical Center (Mountain Home, TN)-Station 621
+ Lexington VA Medical Center (Lexington, KY)-Station 596
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to FTP the files from
+ ftp://download.vista.domain.ext/.  This transmits the files from the first
+ available FTP server.  Sites may also elect to retrieve software directly
+ from a specific server as follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+ Title                                 File Name                   FTP Mode
+ --------------------------------------------------------------------------
+ Release Notes/Installation Guide      PSO_7_P427_RN.PDF           Binary
+ Manager User Manual                   PSO_7_MAN_UM_R0116.PDF      Binary
+ Pharmacist User Manual                PSO_7_PHAR_UM_R0116.PDF     Binary
+ Technician User Manual                PSO_7_TECH_UM_R0116.PDF     Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There is a post-install routine associated with this patch named PSO427PS.
+ The purpose of the post install routine is to:
+  
+  a. Removes the cached version of the PSO REJECT DISPLAY HIDDEN MENU
+     and PSO REJECTS HIDDEN ACTIONS #1 option menus.
+  
+  b. Populates the INSURANCE COMPANY (#33) field of the REJECT INFO
+     (#52.25) subfile of the PRESCRIPTION (#52) file. Depending on the 
+     number of records in the file, this process may take some time to run
+     so this part of the post-install will be queued to run as a background
+     task. A mail message will be sent indicating the results of the
+     post-install process.
+  
+ You may delete routine PSO427PS if the installation was successful and 
+ the mailman message indicates that the post-install was successful.
+  
+  
+ Installation Instructions
+ -------------------------
+ To avoid disruptions, these patches should be installed during non-peak
+ hours when there is minimal activity on the system. Avoid times when ECME
+ claims are being transmitted. Of particular concern are the options below.
+  
+     1. BPS NIGHTLY BACKGROUND JOB [BPS NIGHTLY BACKGROUND JOB]
+        Do not install the patch when ECME claims are being generated
+        by the BPS Nightly Background Job option. Wait for this job to
+        finish or complete the installation before this job starts.
+  
+     2. Scheduled CS Transmission [PSXR SCHEDULED CS TRANS] and
+        Scheduled Non-CS Transmission [PSXR SCHEDULED NON-CS TRANS]
+        Do not install the patch when prescriptions are being
+        transmitted to CMOP. Wait for the CMOP transmissions to finish
+        or complete the installation before the transmissions start. Both
+        the CS (Controlled Substances) and the non-CS CMOP transmission
+        options should be checked. Check with Pharmacy Service or your
+        Pharmacy ADPAC to find out when CMOP transmissions occur.
+  
+ This multi-build installation should take less than 5 minutes to install.
+  
+ This multi-build installation can be queued but should not be queued at a 
+ time when the BPS NIGHTY BACKGROUND JOB or CMOP transmission processes
+ are scheduled.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+ 1.  OBTAIN PATCHES
+     --------------
+     Obtain the host file BPS_1_19_PSO_IB.KID, which contains the
+     following patches:
+  
+         BPS*1.0*19
+         PSO*7.0*427
+         IB*2.0*534
+  
+     Sites can retrieve VistA software from the following FTP addresses.
+     The preferred method is to FTP the files from:
+  
+                     download.vista.domain.ext
+  
+     This will transmit the files from the first available FTP server.
+     Sites may also elect to retrieve software directly from a specific
+     server as follows:
+  
+        Albany                  ftp.domain.ext
+        Hines                   ftp.domain.ext
+        Salt Lake City          ftp.domain.ext
+  
+     The BPS_1_19_PSO_IB.KID host file is located in the 
+     directory. Use ASCII Mode when downloading the file.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+     Select Installation Option:
+  
+ 3.  LOAD TRANSPORT GLOBAL FOR MULTI-BUILD
+     -------------------------------------
+     From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file BPS_1_19_PSO_IB.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]BPS_1_19_PSO_IB.KID).
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       Loading Distribution...
+  
+         BPS PSO IB BUNDLE 6.0
+         IB*2.0*534
+         BPS*1.0*19
+         PSO*7.0*427
+  
+       Use INSTALL NAME: BPS PSO IB BUNDLE 6.0 to install this
+       Distribution.
+  
+ 4.  RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD
+     -------------------------------------------------
+     From the Installation menu, you may select to use the following
+     options (when prompted for the INSTALL NAME, enter
+     BPS PSO IB BUNDLE 6.0):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as data dictionaries or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, data dictionaries, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 5.  INSTALL MULTI-BUILD
+     -------------------
+     This is the step to start the installation of this KIDS patch.  This
+     will need to be run for the BPS PSO IB BUNDLE 6.0.
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted for the "Select INSTALL NAME:", enter BPS PSO IB
+         BUNDLE 6.0.
+     c.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? YES//", enter YES unless your system does this in a
+         nightly TaskMan process.
+     d.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+         YES//", enter NO.
+     e.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", enter NO.
+     f.  When prompted "Device: HOME//", respond with the correct device.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ In order to verify the patch post-installation routine was run
+ successfully, please examine the Install File for this patch and check the
+ Mailman message that was created. Report any error messages to Product
+ Support.
+  
+ You may delete the post-install routine PSO427PS if the installation was
+ successful and the mailman message indicates that the post-install was
+ successful.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 21
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSO427PS
+    Before:       n/a   After: B15848133  **427**
+Routine Name: PSOBORP1
+    Before:B123999048   After:B123532809  **358,385,415,427**
+Routine Name: PSOBORP2
+    Before: B22629424   After: B22525034  **358,385,427**
+Routine Name: PSOBORP3
+    Before:B198582062   After:B197783254  **358,359,385,427**
+Routine Name: PSOBPSSL
+    Before: B67314971   After: B90979558  **421,427**
+Routine Name: PSOBPSSP
+    Before:B343314123   After:B308796788  **289,385,421,427**
+Routine Name: PSOBPSU1
+    Before: B72006346   After: B77585767  **148,260,281,287,303,289,290,
+                                           358,359,385,403,427**
+Routine Name: PSODRG
+    Before: B74687625   After: B79401497  **20,23,36,53,54,46,112,139,
+                                           207,148,243,268,324,251,375,
+                                           387,398,390,427**
+Routine Name: PSOORAL2
+    Before: B19047765   After: B19100790  **258,260,386,427**
+Routine Name: PSOORED2
+    Before: B74745433   After: B76930084  **2,51,46,78,102,114,117,133,
+                                           159,148,247,260,281,289,276,
+                                           358,251,385,427**
+Routine Name: PSOOREDT
+    Before: B78897328   After: B80361820  **4,20,27,37,57,46,78,102,104,
+                                           119,143,148,260,281,304,289,
+                                           298,379,377,391,313,427**
+Routine Name: PSOORNE2
+    Before: B68999201   After: B68332016  **11,21,23,27,32,37,46,84,103,
+                                           117,131,146,156,210,148,222,
+                                           238,264,281,289,251,379,391,
+                                           313,282,427**
+Routine Name: PSOORUT1
+    Before: B78925499   After: B83981960  **1,14,30,46,132,148,233,274,
+                                           225,305,289,251,387,385,313,
+                                           427**
+Routine Name: PSOPMP0
+    Before: B82071360   After: B89661374  **260,281,303,289,382,313,427**
+Routine Name: PSOPMPPF
+    Before: B55558822   After: B56602734  **260,427**
+Routine Name: PSOREJP0
+    Before: B79175024   After:B124398750  **148,260,287,289,385,421,427**
+Routine Name: PSOREJP1
+    Before:B182544762   After:B185402834  **148,247,260,281,287,289,290,
+                                           358,359,385,403,421,427**
+Routine Name: PSOREJP2
+    Before:B186631764   After:B181854051  **148,247,260,287,289,358,385,
+                                           403,421,427**
+Routine Name: PSOREJP3
+    Before:B118994508   After:B123136868  **260,287,289,290,358,359,385,
+                                           403,421,427**
+Routine Name: PSOREJP4
+    Before: B58124715   After: B67032056  **289,427**
+Routine Name: PSOREJU2
+    Before: B59633051   After: B60756541  **148,260,287,341,290,358,359,
+                                           385,403,421,427**
+Routine Name: PSOREJU3
+    Before: B87232979   After: B84746710  **287,290,358,359,385,421,427**
+Routine Name: PSOREJUT
+    Before:B104252240   After:B107104625  **148,247,260,287,289,290,358,
+                                           359,385,403,421,427**
+Routine Name: PSORXEDT
+    Before: B45205767   After: B48455949  **21,23,44,71,146,185,148,253,
+                                           390,372,416,313,427**
+Routine Name: PSORXVW
+    Before: B81070397   After: B80713537  **14,35,46,96,103,88,117,131,
+                                           146,156,185,210,148,233,260,
+                                           264,281,359,385,400,391,313,
+                                           427**
+Routine Name: PSORXVW1
+    Before: B71719312   After: B71633557  **35,47,46,71,99,117,156,193,
+                                           210,148,258,260,240,281,359,
+                                           354,367,386,408,427**
+Routine Name: PSOSULBL
+    Before: B77851131   After: B99891854  **139,173,174,148,200,260,264,
+                                           287,289,290,354,421,370,427**
+Routine Name: PSOSUPAT
+    Before: B49491227   After: B87781401  **8,130,185,427**
+Routine Name: PSOSUPOE
+    Before: B75793355   After: B81516585  **8,21,27,34,130,148,281,287,
+                                           289,358,385,403,427**
+Routine Name: PSOSUPRX
+    Before: B47540087   After: B53587133  **8,36,130,185,148,287,358,385,427**
+Routine Name: PSOTRI
+    Before: B17975834   After: B18379619  **358,385,427**
+ 
+Routine list of preceding patches: 282, 370, 408, 415
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 03, 2013
+Completed By:                               Date Completed: FEB 04, 2016
+Released By :                               Date Released : FEB 08, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,240 @@
+$TXT Created by                CHEY04.VACO.DOMAIN.EXT  (KIDS) on Thursday, 08/20/15 at 13:45
+=============================================================================
+Run Date: MAR 02, 2016                     Designation: MD*1*42
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #29                      Status: Released
+                  Compliance Date: APR 02, 2016
+=============================================================================
+
+
+Subject: CP Uni-Directional Configuration Option
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ The NSR20131203 Clinical Procedures Uni-directional Configuration Option 
+ enhancement entails changing the current VistA functionality to add a 
+ flag to the Clinical Procedures (CP) Instrument File so that CP will send 
+ only an "outbound" Health Level 7 (HL7) message containing Computerized 
+ Patient Record System (CPRS) patient information to the medical 
+ instrument. The CP procedure is automatically placed in Completed status 
+ after the HL7 message is sent, thus preventing an "inbound" HL7 message 
+ containing the test results from being sent back to the CPRS Consult 
+ Note.   
+  
+ The physician can then edit the Consult Note by manually pasting in data 
+ from a test result reporting system to complete the Consult.  
+ This modification is beneficial for users of reporting systems-such as 
+ the Clinical Assessment, Reporting, and Tracking System for Cardiac 
+ Catheterization Laboratories (CART-CL) application-who do not want the 
+ test results from the medical instrument to populate the CPRS Consult 
+ Note, but prefer to manually paste the test results from the reporting 
+ system into the Consult Note.  
+  
+ The CONSULT KEEP OPEN field in the CP INSTRUMENT File (#702.09) must be 
+ set to Yes for this functionality to work.  This triggers the routines 
+ that put the CP procedure in Completed status to interrupt the 
+ bi-directional flow.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)       Field Name (Number)       New/Modified/Deleted
+ -----------------------  ------------------------  --------------------
+ CP INSTRUMENT (#702.09)  CONSULT KEEP OPEN (.401)  New
+  
+  
+ Forms Associated:
+  
+ Form Name                File #       New/Modified/Deleted
+ ---------                ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------
+ 20131203   CP UNI-DIRECTIONAL CONFIGURATION OPTION
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+ Problem:
+ --------
+  
+ Resolution:
+ -----------
+  
+  
+ Test Sites:
+ ----------
+ Portland VA Medical Center, Portland, Oregon (VAMC)
+ VA Boston Health Care System, West Roxbury, MA (VAHCS)
+ VA Connecticut Health Care System West Haven Campus, West Haven, CT 
+ (VAHCS)
+ James A. Haley Veterans Hospital, Tampa, Florida (VAHCS)
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+  
+ Software being released as a host file and/or documentation describing the
+ new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Albany: domain.ext
+ Hines:  domain.ext
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found in the VA Software Documentation Library 
+ at http://www4.domain.ext/vdl/.
+  
+ File Name:        Description:                          Protocol:
+ ==========        ============                          =========
+ MD1_P42_IMPG.PDF  Implementation Guide for MD*1.0*42
+                   (CP Flowsheets)                       Binary 
+ Clinproc1_tm.PDF      
+                   Technical Manual for MD*1.0*42
+                   (CP Flowsheets)                       Binary
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre/Post installation routines associated with this patch.
+  
+  
+ Pre-Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ Installation Instructions
+ -----------------------------
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+         the Installation Menu.  From this menu, you may elect to use the 
+         following options. When prompted for the INSTALL NAME enter
+         MD*1.0*42.
+  
+         a.  Verify Checksums in Transport Global - This option will 
+             allow you to ensure the integrity of the routines that are in
+             the transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+         and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO// Press <Enter>
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO// Press <Enter>
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO// Press <Enter>
+  
+ 8.      If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Apr 01, 2004;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDRPCOP
+    Before: B79065771   After: B83622221  **4,6,11,20,42**
+Routine Name: MDWOR
+    Before: B43803580   After: B47515185  **14,11,21,20,37,42**
+ 
+Routine list of preceding patches: 37
+
+=============================================================================
+User Information:                          Hold Date     : FEB 19, 2016
+Entered By  :                               Date Entered  : APR 01, 2015
+Completed By:                               Date Completed: FEB 18, 2016
+Released By :                               Date Released : MAR 02, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

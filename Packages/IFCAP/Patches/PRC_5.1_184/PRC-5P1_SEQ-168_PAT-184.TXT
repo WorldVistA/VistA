@@ -1,0 +1,370 @@
+$TXT Created by                at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Tuesday, 03/11/14 at 07:36
+=============================================================================
+Run Date: JUN 02, 2016                     Designation: PRC*5.1*184
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #168                    Status: Released
+                  Compliance Date: JUL 03, 2016
+=============================================================================
+
+Associated patches: (v)PRC*5.1*123 <<= must be installed BEFORE `PRC*5.1*184'
+                    (v)PRC*5.1*174 <<= must be installed BEFORE `PRC*5.1*184'
+
+Subject: PCARD/DELIVERY ORDER FIX;PCARD ACCRUAL ISSUE WITH CARRY FORWARD;DOC ISSUE
+
+Category: 
+  - Routine
+  - Input Template
+
+Description:
+============
+
+  
+ This patch will address the following 3 issues:
+  
+ 1. Purchase Card and Delivery orders reaching 2237 max on backend filing
+  
+ 2. Purchase Card accrual issue from one quarter to the next with the Carry
+    Forward process.
+  
+ 3. Documentation error in the Control Point Official's Manual and the 
+    Control Point Clerk's Manual.
+  
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC000000872123 Purchase Card order issue with overwriting 2237
+  
+ 2. INC000000905800 Purchase Card accrual issue
+      Duplicate: INC000000911466 Purchase Card Accrual Issue
+                 INC000000911895 Purchase Card Accrual Issue
+  
+ 3. INC000000912829 Documentation error in Control Point Official's Manual
+  
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Plains HCS
+ W.G (Bill) Hefner VA Medical Center - Salisbury
+  
+  
+ REMEDY OVERVIEW:
+ ================ 
+ 1. INC000000872123 Purchase Card order issue with overwriting 2237
+  
+    Problem:
+    --------
+    When a site creates new Purchase Card orders, the filing process
+    creates a 2237 in the CONTROL POINT ACTIVITY file (#410).  If the
+    CONTROL POINT ACTIVITY file has reached the maximum (9999) entries for
+    the Fund Control Point (FCP), the linking process will overwrite the
+    9999 entries for FCP from that point on. This will cause multiple
+    orders to be linked to the same requisition number and the Running
+    Balance report to be out of balance since the previous sequence 9999
+    entries will be overwritten and only last balance amount reflected in
+    the totals.
+  
+  
+    Resolution:
+    -----------                    
+    Purchase Card orders that create a 2237 during the filing process will
+    now check the sequence max condition as soon as the FCP is entered and
+    stop the creation of a Purchase Card order when the FCP sequencing has
+    reached the max entries of 9999.
+  
+  
+ Routines: PRCHNPO, PRCHNPOB (new)
+  
+ Input Templates:  PRCH DELIVERY ORDER                       FILE #442
+                   PRCH DETAILED PURCHASE CARD               FILE #442     
+                   PRCH PC DIRECT DELIVERY                   FILE #442
+                   PRCHSIMP                                  FILE #442 
+  
+  
+ 2. INC000000905800 Purchase Card accrual issue
+  
+    Problem:
+    ---------
+    Sites found that Running Balance 2237 entries were not being moved
+    from one quarter to the next during the Quarterly Carry Forward
+    processing.
+  
+  
+    Resolution:
+    -----------
+    Modify the editing of a charge via option Edit/Remove Reconciliation so
+    a user modifying a charge from 'Final Charge' status ('Yes' to 'No')
+    will reset the requisition in the Running Balance Status field (#449)
+    of the CONTROL POINT ACTIVITY file (#410) from 'O' to 'A'.  The status
+    of 'A' will allow the Requisition to be carried forward to the next
+    quarter.
+  
+  
+  
+ Routines: PRCH1A3
+  
+  
+ 3. INC000000912829 Documentation error in Control Point Official's Manual
+  
+    Problem:
+    ---------
+    Site found documentation error in Control Point Official's manual and,
+    subsequently, support added the same documented option query should be
+    corrected in the Control Point Clerk's Manual. 
+  
+  
+    Resolution:
+    -----------
+    Modify both manuals as follows:
+  
+ Control Point Official User's Guide    9.5.2.3 Classification and Sort 
+ Groups      Page 9-88
+  
+ OLD:
+  
+ At the ADJUSTMENT $ AMOUNT: prompt, enter the amount by which you want to 
+ adjust the obligation. Type a minus symbol in front of the amount to add 
+ money to the obligation. Type the number without any symbols to subtract 
+ money from the obligation.
+  
+ NEW:
+  
+ At the ADJUSTMENT $ AMOUNT: prompt, enter the amount by which you want to 
+ adjust the obligation.  Type the number without any symbols to add money 
+ to the obligation. Type a minus symbol in front of the amount to subtract 
+ money from the obligation.
+  
+  
+ Control Point Clerk User's Guide   5.2.3 Adjustment Information  Page 56
+  
+ OLD:
+  
+ 5.2.3 Adjustment Information 
+ Enter today's date at the Date Obl Adjusted: prompt. Enter the amount 
+ that you want to adjust the obligation at the Adjustment $Amount prompt. 
+ Type a minus symbol in front of the amount to decrease the 1358 and put 
+ money back into your Control Point. Type the number without any symbols 
+ to increase the 1358 and deduct more money from your Control Point. At 
+ the BOC1: prompt, enter the budget object code classification for this 
+ item. Budget object codes are defined in VHA Handbook 4671.2. If you do 
+ not know the BOC for this item, enter three question marks and IFCAP will 
+ list the available budget object codes. At the BOC1 Amount: prompt. Hit 
+ the Enter key. 
+ Enter a Sub-Control Point if you want to assign this receipt to a defined 
+ subcategory of the Control Point. The Purpose: prompt, is now a required 
+ field. Enter the purpose of the 1358 adjustment. Add comments if you 
+ like. You may review the request to make sure that the information on the 
+ request is correct. Confirm that the adjustment is ready for approval. 
+ You may enter another adjustment or return to the 1358 Request Menu.
+  
+ NEW:
+  
+ 5.2.3 Adjustment Information 
+ Enter today's date at the Date Obl Adjusted: prompt. Enter the amount 
+ that you want to adjust the obligation at the Adjustment $Amount prompt.  
+ Type the number without any symbols to add money to the obligation. Type 
+ a minus symbol in front of the amount to subtract money from the 
+ obligation. At the BOC1: prompt, enter the budget object code 
+ classification for this item. Budget object codes are defined in VHA 
+ Handbook 4671.2. If you do not know the BOC for this item, enter three 
+ question marks and IFCAP will list the available budget object codes. At 
+ the BOC1 Amount: prompt. Hit the Enter key. 
+ Enter a Sub-Control Point if you want to assign this receipt to a defined 
+ subcategory of the Control Point. The Purpose: prompt, is now a required 
+ field. Enter the purpose of the 1358 adjustment. Add comments if you 
+ like. You may review the request to make sure that the information on the 
+ request is correct. Confirm that the adjustment is ready for approval. 
+ You may enter another adjustment or return to the 1358 Request Menu.
+  
+  
+ Control Point Clerk User's Guide       7.17.3 Classification and Sort 
+ Group        Page 84
+  
+ OLD:
+  
+ 7.17.3 Classification and Sort Group
+ The Classification of Request: prompt allows you to create reports that 
+ group requests by categories that YOU define. Enter a sort group at the 
+ Sort Group: prompt if this purchase is assigned to a project, office, or 
+ some other category for which a sort group has been created. If this 
+ purchase does not belong to a sort group, just press the Enter key. Sort
+ groups are used to generate expense reports for projects and offices. 
+ Make sure that you include all applicable purchases in the sort group 
+ and exclude all purchases that do not belong to the sort group. 
+  
+ Per the implementation of Segregation of Duties within the 1358 
+ process, you will no longer  be prompted to enter a Name at a 
+ Requestor prompt. Your name is automatically entered as the 
+ Requestor. 
+  
+ The Date of Request field will have a default date that you can change 
+ if appropriate.
+  
+ The Cost Center will have the default value entered onto the original 
+ 1358 as the default value. Cost centers allow Fiscal staff to create 
+ total expense records for a section or service. 
+  
+ Enter the date that the obligation is being adjusted. 
+  
+ Enter the amount that you want to adjust the obligation at the 
+ Adjustment $Amount prompt. Type a minus symbol in front of the amount
+ to decrease the 1358 and put money back into your Control Point. Type 
+ the number without any symbols to increase the 1358 and deduct more 
+ money from your Control Point. 
+  
+  
+ NEW:
+  
+ 7.17.3 Classification and Sort Group
+ The Classification of Request: prompt allows you to create reports that 
+ group requests by categories that YOU define. Enter a sort group at the 
+ Sort Group: prompt if this purchase is assigned to a project, office, or 
+ some other category for which a sort group has been created. If this 
+ purchase does not belong to a sort group, just press the Enter key. Sort
+ groups are used to generate expense reports for projects and offices. 
+ Make sure that you include all applicable purchases in the sort group 
+ and exclude all purchases that do not belong to the sort group. 
+  
+ Per the implementation of Segregation of Duties within the 1358 
+ process, you will no longer  be prompted to enter a Name at a 
+ Requestor prompt. Your name is automatically entered as the 
+ Requestor. 
+  
+ The Date of Request field will have a default date that you can change 
+ if appropriate.
+  
+ The Cost Center will have the default value entered onto the original 
+ 1358 as the default value. Cost centers allow Fiscal staff to create 
+ total expense records for a section or service. 
+  
+ Enter the date that the obligation is being adjusted. 
+  
+ Enter the amount that you want to adjust the obligation at the 
+ Adjustment $Amount prompt. Type the number without any symbols to
+ add money to the obligation. Type a minus symbol in front of the
+ amount to subtract money from the obligation.
+  
+  
+  
+  
+ Routines: none  (IFCAP documentation manuals)
+  
+  
+ Documentation Retrieval Instructions:
+ =====================================
+  
+ Updated documentation that goes with issue 3 above is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+    
+ File Name                  Title                                SFTP Mode
+ =========                  =====                                =========
+ IFCP5_1CP_CLERK.PDF        Control Point Clerk User's Guide     BINARY
+ IFCP5_1CP_OFFICIAL.PDF     Control Point Official User's Guide  BINARY
+  
+   
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*184)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*184.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', respond Yes. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+     Edit/Remove Reconciliation        [PRCH P.C.O. ED/REMO RECONCILE]
+     Reconciliation                    [PRCH P.C.O. RECONCILIATION]
+     New Detailed Purchase Card Order  [PRCH ENTER DETAILED ORDER]
+     New Simplified Purchase Card Orde [PRCH ENTER SIMPLIFIED ORDER]
+     Enter Delivery Order              [PRCH ENTER DELIVERY ORDER]
+     New Direct Delivery Order for Purchase Card [PRCH PC DIRECT DELIVERY1]
+  
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCH1A3
+    Before: B22668884   After: B27339623  **184**
+Routine Name: PRCHNPO
+    Before: B58254846   After: B62074705  **7,11,79,108,123,184**
+Routine Name: PRCHNPOB
+    Before:       n/a   After:  B4314054  **184**
+Routine Name: PRCSEB
+    Before: B19745869   After: B21871782  **81,174,184**
+ 
+Routine list of preceding patches: 123, 174
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 16, 2013
+Completed By:                               Date Completed: JUN 02, 2016
+Released By :                               Date Released : JUN 02, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

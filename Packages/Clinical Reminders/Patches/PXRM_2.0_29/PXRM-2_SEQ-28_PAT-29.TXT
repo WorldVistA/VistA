@@ -1,0 +1,130 @@
+
+=============================================================================
+Run Date: SEP 25, 2014                     Designation: PXRM*2*29
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #28                      Status: Released
+                  Compliance Date: OCT 26, 2014
+=============================================================================
+
+
+Subject: MH NATIONAL EVIDENCE BASED PSYCHOTHERAPY REMINDER DIALOG TEMPLATES
+
+Category: 
+  - Other
+
+Description:
+============
+
+ This patch includes reminder dialog templates to support the Evidence Based
+ Psychotherapy dissemination initiative in the Mental Health Services national
+ program office.  The specific therapy protocols included are Cognitive
+ Processing Therapy (CPT) and Prolonged Exposure (PEI) for PTSD; and Acceptance
+ and Commitment Therapy (ACT) and Cognitive Behavioral Therapy-Depression
+ (CBT-D) for Depression.
+  
+ This patch represents the initial national release of Mental Health
+ Clinical Reminder Dialog Templates for Evidence Based Psychotherapy. 
+ Clinicians will use these templates to document veteran patient treatment 
+ with a specific EBP protocol that has been disseminated by Mental Health
+ Services. 
+  
+ Associated Remedy ticket(s):
+ ============================
+ None
+  
+ Associated NSR(s):
+ =================
+ N/A
+    
+ Test Sites:
+ ===========
+ VAMC ANN ARBOR, MI
+ VAMC CHARLESTON, SC
+ VAMC DURHAM, NC
+ VAMC PALO ALTO, CA
+  
+  
+  
+ Software & Documentation Retrieval Instructions:
+ ================================================
+ This patch is being distributed as a host file.  The name of the host
+ file is PXRM_2_0_29.KID.  This file should be downloaded in ASCII format.
+  
+       
+ The preferred method for obtaining these files is to use File Transfer
+ Protocol (FTP) to download them from:
+  
+ ftp://download.vista.domain.ext/.
+   
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve the files directly from a specific server as
+ follows:
+         
+ Albany             ftp.domain.ext
+ Hines              ftp.domain.ext
+ Salt Lake City     ftp.domain.ext
+    
+ Install guide and User Manual is also available on the above servers.  It 
+ is available as .pdf format.  This file should be downloaded in BINARY 
+ format.  
+     
+ File Name:            Description:               Protocol:
+ ==========            ============               =========
+ PXRM_2_0_29_IG.PDF    PXRM*2.0*29 Installation   BINARY
+                       and Setup Guide
+ PXRM_2_0_29_UM.PDF    PXRM*2.0*29 User Manual    Binary
+  
+ PXRM_2_0_29.KID       PXRM*2.0*29 Host File      ASCII
+            
+ Documentation  can also be found on the VistA Documentation Library (VDL)
+ at:  http://www.domain.ext/vdl/
+  
+ Installation:
+ =============
+ This patch can be loaded with users on the system.  Installation will take
+ five to ten minutes.  Refer to the Install Guide, PXRM_2_0_29_IG.PDF, for
+ complete details.
+    
+ 1.  Use the "Load a Distribution' option on the KIDS installation menu.  
+     When prompted to enter a host file type your local directory name 
+     plus PXRM_2_0_29.KID.  Example VA16$:[SMAVISTA]PXRM_2_0_29.KID
+    
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the following
+     options, as desired:
+         Print Transport Global
+         Compare Transport global to Current System
+         Verify Checksums in Transport Global
+         Backup a Transport Global
+     
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the following
+     option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use PXRM*2.0*29
+      
+ 4.  When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//,"
+     respond 'NO'.
+       
+ 5.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO// respond 'NO'.
+         
+ 6.  After successful installation, the following init routines may be
+     deleted:
+         PXRMP29I
+         PXRMP29E
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 07, 2013
+Completed By:                               Date Completed: SEP 25, 2014
+Released By :                               Date Released : SEP 25, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

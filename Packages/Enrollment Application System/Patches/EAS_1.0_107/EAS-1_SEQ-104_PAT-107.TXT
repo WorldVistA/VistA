@@ -1,0 +1,545 @@
+
+=============================================================================
+Run Date: DEC 17, 2015                     Designation: EAS*1*107
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #104                      Status: Released
+                  Compliance Date: JAN 01, 2016
+=============================================================================
+
+Associated patches: (v)EAS*1*103   <<= must be installed BEFORE `EAS*1*107'
+
+Subject: UPDATE PRINT 1010EZ/1010EZR TO NEW FORMAT
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Informational
+
+Description:
+============
+
+   *****************************************************************************
+   Note:  This patch is being released in support of the Enrollment Customer
+          Enhancements (ECE) and Enrollment System Enhancements (ESE) projects
+          and the Enrollment System (ES) 3.11 release.  EAS*1*107 (Enrollment
+          Application System) is being released with DG*5.3*865 (Registration)
+          and EAS*1.0*111 (Enrollment Application System) in host file
+          DG_53_P865.KID.
+   
+          It is imperative that this patch be installed no later than the
+          compliance date.  Your understanding and support is appreciated.
+   *****************************************************************************
+  
+   The Health Eligibility Center (HEC) requested modifications to the
+   VistA Registration, Enrollment and Eligibility (VistA REE) software to 
+   modify the current versions of the Print 1010EZ and 1010EZR forms to
+   adhere to the Feb 2011 format version of the forms.
+  
+ The following changes were made to the 10-10EZ form:
+ ----------------------------------------------------
+ 
+ Header Page 1 - Remove "Expiration Date 6/30/2007"
+ 
+ SECTION I - GENERAL INFORMATION
+ 
+ Block   2005 Form                              2011 Form    
+ 
+ 5       WHAT IS YOUR RACE?                     Moved to Block 6
+ 
+ 6       ARE YOU SPANISH, HISPANIC, OR LATINO?  Moved to Block 5
+ 
+ 8       CLAIM NUMBER                           Changed to "VA CLAIM NUMBER"
+ 
+ 11H     PAGER NUMBER                           Deleted
+ 
+ 12      TYPE OF BENEFIT(S) APPLIED FOR         Changed to "TYPE OF BENEFIT(S) 
+                                                APPLYING FOR" 
+ 
+ 13      IF APPLYING FOR HEALTH SERVICES OR     Changed to "WHICH VA MEDICAL 
+         ENROLLMENT, WHICH VA MEDICAL CENTER    CENTER OR OUTPATIENT CLINIC
+         OR OUTPATIENT CLINIC DO YOU PREFER?    DO YOU PREFER?"
+ 
+ 14      HAVE YOU BEEN SEEN AT A VA HEALTH      Deleted
+         CARE FACILITY?
+ 
+ 15      DO YOU WANT AN APPOINTMENT WITH A      Moved to Block 14 
+         VA DOCTOR OR PROVIDER AS SOON AS 
+         ONE BECOMES AVAILABLE?             
+ 
+ 16      CURRENT MARITAL STATUS                 Moved to Block 15
+ 
+ 17      NAME, ADDRESS AND RELATIONSHIP OF      Moved to Block 16
+         NEXT OF KIN  
+ 
+ 17A     NEXT OF KIN'S HOME TELEPHONE NUMBER    Moved to Block 16A
+ 
+ 17B     NEXT OF KIN'S WORK TELEPHONE NUMBER    Moved to Block 16B
+ 
+ 18      NAME, ADDRESS AND RELATIONSHIP OF      Moved to Block 17
+         EMERGENCY CONTACT  
+ 
+ 18A     EMERGENCY CONTACT'S HOME TELEPHONE     Moved to Block 17A
+         NUMBER
+ 
+ 18A     EMERGENCY CONTACT'S WORK TELEPHONE     Moved to Block 17B
+         NUMBER
+ 
+ 19      INDIVIDUAL TO RECEIVE POSSESSION OF    Deleted
+         YOUR PERSONAL PROPERTY LEFT ON 
+         PREMISES UNDER VA CONTROL AFTER YOUR 
+         DEPARTURE OR AT THE TIME OF DEATH
+ 
+ SECTION II - INSURANCE INFORMATION
+ 
+ Block   2005 Form                              2011 Form    
+ 
+ 1       ARE YOU COVERED BY HEALTH INSURANCE?   Deleted 
+                                                
+ 2       HEALTH INSURANCE COMPANY NAME,         Moved to Block 1
+         ADDRESS AND TELEPHONE NUMBER
+ 
+ 3       NAME OF POLICY HOLDER                  Moved to Block 2
+ 
+ 4       POLICY NUMBER                          Moved to Block 3
+ 
+ 5       GROUP CODE                             Moved to Block 4
+ 
+ 6       ARE YOU ELIGIBLE FOR MEDICAID?         Moved to Block 5
+ 
+ 5A                                             Added "EFFECTIVE DATE"
+ 
+ 7       ARE YOU ENROLLED IN MEDICARE HOSPITAL  Moved to Block 6
+         INSURANCE PART A?
+ 
+ 7A      EFFECTIVE DATE                         Moved to Block 6A
+ 
+ 8       ARE YOU ENROLLED IN MEDICARE HOSPITAL  Moved to Block 7
+         INSURANCE PART B?
+ 
+ 8A      EFFECTIVE DATE                         Moved to Block 7A
+ 
+ 9       NAME EXACTLY AS IT APPEARS ON YOUR     Moved to Block 8
+         MEDICARE CARD
+ 10      MEDICARE CLAIM NUMBER                  Moved to Block 9
+ 
+ 11      IS NEED FOR CARE DUE TO ON THE JOB     Deleted
+         INJURY?
+ 
+ 12      IS NEED FOR CARE DUE TO ACCIDENT?      Deleted
+ 
+ SECTION IV - MILITARY SERVICE INFORMATION
+ 
+ Block   2005 Form                              2011 Form    
+ 
+ 2C      DO YOU HAVE A VA SERVICE-CONNECTED     Deleted
+         RATING?
+ 
+ 2C1     IF YES, WHAT IS YOUR RATED PERCENTAGE? Deleted
+ 
+ 2D      DID YOU SERVE IN COMBAT AFTER          Moved to 2C
+         11/11/1998?
+ 
+ 2E      WAS YOUR DISCHARGE FROM MILITARY FOR   Moved to 2D
+         A DISABILITY INCURRED OR AGGRAVATED IN 
+         THE LINE OF DUTY?
+ 
+ 2E1     ARE YOU RECEIVING DISABILITY           Moved to 2D1
+         RETIREMENT PAY INSTEAD OF VA 
+         COMPENSATION?
+ 
+ 2F      DO YOU NEED CARE OF CONDITIONS         Moved to 2E and changed to
+         POTENTIALLY RELATED TO SERVICE IN      "DID YOU SERVE IN SW ASIA 
+         SOUTHWEST ASIA?                        DURING THE GULF WAR BETWEEN 
+                                                AUGUST 2,1990 AND 
+                                                NOVEMBER 11, 1998?"
+ 
+ 2G      WERE YOU EXPOSED TO AGENT ORANGE       Moved to 2F and changed to
+         WHILE SERVING IN VIETNAM?              "DID YOU SERVE IN VIETNAM 
+                                                BETWEEN JANUARY 9, 1962 AND
+                                                MAY 7, 1975?"
+  
+ 2H      WERE YOU EXPOSED TO RADIATION WHILE    Moved to 2G
+         IN THE MILITARY?
+ 
+ 2I      DID YOU RECEIVE NOSE & THROAT RADIUM   Moved to 2H
+         TREATMENTS WHILE IN THE MILITARY?
+ 
+ 2J      DO YOU HAVE A SPINAL CORD INJURY?      Moved to 2I
+ 
+ 
+ SECTION V - PAPERWORK REDUCTION ACT AND        Moved to Section X    
+             PRIVACY ACT INFORMATION                              
+ 
+ Second paragraph, fifth sentence changed to:
+ "Providing the requested information is voluntary, but if any or all of the 
+ requested information is not provided, it may delay or result in denial of 
+ your request for health care benefits."
+ 
+  
+ SECTION VI - FINANCIAL DISCLOSURE              Moved to Section V
+ 
+ Wording changed to:
+ Disclosure allows VA to accurately determine whether certain Veterans will be 
+ charged copays for care and medications, their eligibility for other services 
+ and enrollment priority. Veterans are not required to disclose their 
+ financial information; however, VA is not currently enrolling new applicants 
+ who decline to provide their financial information unless they have other 
+ qualifying eligibility factors. Recent Combat Veterans are eligible for 
+ enrollment without disclosing their financial information but like other 
+ Veterans may provide it to establish their eligibility for travel assistance, 
+ cost-free medication and/or medical care for services unrelated to military
+ experience.
+ 
+    ___ NO, I DO NOT WISH TO PROVIDE INFORMATION IN SECTIONS VI THROUGH IX. I
+ understand that VA is not enrolling new applicants who do not provide this 
+ information and who do not have other qualifying eligibility factors [i.e.,a 
+ former Prisoner of War; in receipt of a Purple Heart; a recently discharged 
+ Combat Veteran (e.g.,OEF/OIF/OND who were discharged within the past 5 
+ years); discharged for a disability incurred or aggravated in the line of 
+ duty; receiving VA service-connected disability compensation; receiving VA 
+ pension; or in receipt of Medicaid benefits.] (Sign and date the form in 
+ Section XII.)
+ 
+    ___ YES, I WILL PROVIDE MY HOUSEHOLD FINANCIAL INFORMATION FOR LAST 
+ CALENDAR YEAR. Complete applicable sections VI through IX. (Sign and date the
+  form in Section XII.)
+ 
+ SECTION VII - DEPENDENT INFORMATION             Moved to Section VI
+ 
+ Block   2005 Form                               2011 Form    
+ 
+ 1A      SPOUSE'S MAIDEN NAME                    Changed to "SPOUSE'S MAIDEN 
+                                                 NAME OR OTHER NAMES USED"
+ 
+ 2E      WAS CHILD PREMANENTLY AND TOTALLY       Corrected spelling to 
+         DISABLED BEFORE THE AGE OF 18?          "PERMANENTLY"
+ 
+ 3       IF YOUR SPOUSE OR DEPENDENT CHILD DID   Changed to "IF YOUR SPOUSE OR 
+         NOT LIVE WITH YOU LAST YEAR, ENTER      DEPENDENT CHILD DID NOT LIVE 
+         THE AMOUNT YOU CONTRIBUTED TO THEIR     WITH YOU LAST YEAR, DID YOU 
+         SUPPORT                                 PROVIDE SUPPORT?"
+ 
+ SECTION VIII - PREVIOUS CALENDAR YEAR GROSS     Moved to Section VII
+                ANNUAL INCOME OF VETERAN, 
+                SPOUSE AND DEPENDENT CHILDREN
+ SECTION IX - PREVIOUS CALENDAR YEAR DEDUCTIBLE  Moved to Section VIII
+              EXPENSES
+ 
+ Block   2005 Form                               2011 Form    
+ 
+ 2       (Also enter spouse or child's           Changed to "(Also enter 
+         information in Section VII.)            spouse or child's information
+                                                 in Section VI.)"
+ 
+ SECTION XI - CONSENT TO COPAYMENTS              Changed to "SECTION XI - 
+                                                 CONSENT TO COPAYS"
+ 
+ Wording changed to:
+ "By signing this application you are agreeing to pay the applicable VA 
+ copays for treatment or services of your NSC conditions as required by law."
+ 
+ SECTION XII - ASSIGNMENT OF BENEFITS
+ 
+ Wording changed to:
+ "I understand that pursuant to 38 U.S.C. section 1729 and 42 U.S.C. 2651, the
+ Department of Veterans Affairs (VA) is authorized to recover or collect from 
+ my health plan (HP) or any other legally responsible third party for the 
+ reasonable charges of nonservice-connected VA medical care or services 
+ furnished or provided to me.  I hereby authorize payment directly to VA from 
+ any HP under which I am covered (including coverage provided under my 
+ spouse's HP) that is responsible for payment of the charges for my medical 
+ care, including benefits otherwise payable to me or my spouse. Furthermore, I 
+ hereby assign to the VA any claim I may have against any person or entity who
+ is or may be legally responsible for the payment of the cost of medical 
+ services provided to me by the VA. I understand that this assignment shall 
+ not limit or prejudice my right to recover for my own benefit any amount in 
+ excess of the cost of medical services provided to me by the VA or any other 
+ amount to which I may be entitled. I hereby appoint the Attorney General of 
+ the United States and the Secretary of Veterans' Affairs and their designees 
+ as my Attorneys-in-fact to take all necessary and appropriate actions in 
+ order to recover and receive all or part of the amount herein assigned.  I 
+ hereby authorize the VA to disclose, to my attorney and to any third party or
+ administrative agency who may be responsible for payment of the cost of 
+ medical services provided to me, information from my medical records as 
+ necessary to verify my claim. Further, I hereby authorize any such third 
+ party or administrative agency to disclose to the VA any information 
+ regarding my claim."        
+ 
+ Footer - All pages   VA FORM 10-10EZ FEB 2005   Changed to "VA FORM 10-10EZ 
+                                                 FEB 2011"
+ 
+ 
+ The following changes were made to the 10-10EZR form:
+ -----------------------------------------------------
+ 
+ SECTION I - GENERAL INFORMATION
+ 
+ Block   2005 Form                                  2011 Form
+ 
+ 6       CURRENT MARITAL STATUS                     Moved to Block 7
+ 
+ 7       PERMANENT ADDRESS                          Moved to Block 6
+ 
+ 7A      CITY                                       Moved to Block 6A
+ 
+ 7B      STATE                                      Moved to Block 6B
+ 
+ 7C      ZIP                                        Moved to Block 6C
+ 
+ 7D      COUNTY                                     Moved to Block 6D
+ 
+ 7E      HOME TELEPHONE NUMBER                      Moved to Block 6E
+ 
+ 7F      E-MAIL ADDRESS                             Moved to Block 6F
+ 
+ 7G      CELLULAR TELEPHONE NUMBER                  Moved to Block 6G
+ 
+ 7H      PAGER NUMBER                               Deleted
+ 
+ 10      INDIVIDUAL TO RECEIVE POSSESSION OF YOUR   Deleted
+         PERSONAL PROPERTY LEFT ON PREMISES UNDER 
+         VA CONTROL AFTER YOUR DEPARTURE OR AT THE
+         TIME OF DEATH.       
+ 
+ SECTION IV - PAPERWORK REDUCTION ACT AND PRIVACY   Moved to Section IX
+              ACT INFORMATION           
+ 
+ Second paragraph, fifth sentence changed to:
+ "Providing the requested information is voluntary, but if any or all of the 
+ requested information is not provided, it may delay or result in denial of 
+ your request for health care benefits." 
+ 
+ SECTION V - FINANCIAL DISCLOSURE                  Moved to Section IV
+ 
+ Wording changed to:
+ "Disclosure allows VA to accurately determine whether certain Veterans will 
+ be charged copays for care and medications, their eligibility for other 
+ services and enrollment priority.  Veterans are not required to disclose 
+ their financial information.  Recent Combat Veterans (e.g., OEF/OIF/OND) 
+ like other Veterans may answer YES in Section IV and complete Sections V-VIII
+ to have their priority for enrollment and financial eligibility for travel 
+ assistance, cost-free medications and/or medical care for services unrelated 
+ to military experience.
+    ___ NO, I DO NOT WISH TO PROVIDE FINANCIAL INFORMATION IN SECTIONS V 
+ THROUGH VIII.  If I am enrolled, I agree to pay applicable VA copayments.  
+ Sign and date the form in Section XI.
+    ___ YES, I WILL PROVIDE MY HOUSEHOLD FINANCIAL INFORMATION FOR LAST 
+ CALENDAR YEAR.  Complete applicable Sections V through VIII.  Sign and date 
+ the form in Section XI."
+ 
+ SECTION VI - DEPENDENT INFORMATION                Moved to Section V
+ 
+ Block   2005 Form                                 2011 Form
+ 3       IF YOUR SPOUSE OR DEPENDENT CHILD DID     Changed to "IF YOUR SPOUSE 
+         NOT LIVE WITH YOU LAST YEAR, ENTER THE    OR DEPENDENT CHILD DID NOT 
+         AMOUNT YOU CONTRIBUTED TO THEIR SUPPORT   LIVE WITH YOU LAST YEAR, 
+                                                   DID YOU PROVIDE SUPPORT?"                                                
+ 
+ SECTION VIII - PREVIOUS CALENDAR YEAR             Moved to Section VII
+                DEDUCTIBLE EXPENSES
+ 
+ SECTION IX - PREVIOUS CALENDAR YEAR NET WORTH     Moved to Section VIII
+ 
+ SECTION X - CONSENT TO COPAYMENTS
+ 
+ Wording changed to:
+ "By signing this application you are agreeing to pay the applicable VA copays
+ for treatment or services for your NSC conditions as
+ required by law."
+ 
+ 
+ SECTION XI - ASSIGNMENT OF BENEFITS                                                
+ 
+ Wording changed to:
+ "I understand that pursuant to 38 U.S.C. Section 1729 and 42 U.S.C. 2651, the
+ Department of Veterans Affairs (VA) is authorized to recover or collect from 
+ my health plan (HP) or any other legally responsible third party for the 
+ reasonable charges of nonservice-connected VA medical care or services 
+ furnished or provided to me.  I hereby authorize payment directly to VA from 
+ any HP under which I am covered (including coverage provided under my 
+ spouse's HP) that is responsible for payment of the charges for my medical 
+ care, including benefits otherwise payable to me or my spouse.  Furthermore, 
+ I hereby assign to the VA any claim I may have against
+ any person or entity who is or may be legally responsible for the payment of 
+ the cost of medical services provided to me by the VA.
+ I understand that this assignment shall not limit or prejudice my right to 
+ recover for my own benefit any amount in excess of the cost of medical 
+ services provided to me by the VA or any other amount to which I may be 
+ entitled.  I hereby appoint the Attorney General of the United States and the
+ Secretary of Veterans' Affairs and their designees as my Attorneys-in-fact to
+ take all necessary and appropriate actions in order to recover and receive 
+ all or part of the amount herein assigned.  I hereby authorize the VA to 
+ disclose to my attorney and to any third party or administrative agency who 
+ may be responsible for payment of the cost of medical services provided to 
+ me, information from my medical records as necessary to verify my claim.  
+ Further, I hereby authorize any such third party or administrative agency to 
+ disclose to the VA any information regarding my claim."
+ 
+ Footer - All pages  VA FORM 10-10EZR FEB 2005   Changed to "VA FORM 10-10EZR 
+                                                 FEB 2011"
+ 
+ 
+  
+   Patch Components:
+   =================
+    
+   Files & Fields Associated:
+   --------------------------
+   N/A
+    
+    
+   Forms Associated:
+   -----------------
+   N/A
+    
+    
+   Mail Groups Associated:
+   -----------------------
+   N/A
+    
+    
+   Options Associated:
+   -------------------
+   N/A
+  
+    
+   Protocols Associated:
+   ---------------------
+   N/A
+    
+    
+   Security Keys Associated:
+   -------------------------
+   N/A
+    
+    
+   Templates Associated:
+   ---------------------
+   The following is a list of templates included in this patch:
+    
+   Template Name            Type        File Name (Number)
+   -------------            ----        ------------------
+   N/A
+    
+      
+   New Service Request (NSRs):
+   ---------------------------
+   N/A
+    
+    
+   Patient Safety Issues (PSIs):
+   -----------------------------
+   N/A
+    
+    
+   Remedy Ticket(s) & Overview:
+   ----------------------------
+   N/A
+    
+    
+   Test Sites:
+   -----------
+   West Texas VA Health Care System, Big Spring, TX
+   Fargo VA Health Care System, Fargo, ND
+   Clement J. Zablocki Veterans Affairs Medical Center, Milwaukee, WI
+   VA Pittsburgh Healthcare System, Pittsburgh, PATBD
+ 
+     
+     
+   Documentation Retrieval:
+   ========================
+   Updated documentation describing the new functionality introduced by this
+   patch is available.
+  
+   The preferred method is to FTP the files from
+   ftp://download.vista.domain.ext/.  This transmits the files from the first
+   available FTP server. Sites may  also elect to retrieve software directly
+   from a specific server as follows:
+   
+     Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+     Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+     Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+   
+   The documentation will be in the form of Adobe Acrobat files.
+   
+   The following files should be downloaded in the binary FTP mode.
+     
+     Title                           File Name                    FTP Mode
+   -----------------------------------------------------------------------
+   Enrollment Application System   EAS_1_107_UM.PDF             Binary
+     User Manual
+ 
+  
+   Documentation can also be found on the VA Software Documentation Library at:
+   http://www.domain.ext/vdl/
+    
+   Patch Installation:
+   ===================
+    
+    
+   Installation Instructions:
+   --------------------------
+    
+   Please see the DG*5.3*865 Patch Description for installation 
+   instructions.
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;ENROLLMENT APPLICATION SYSTEM;**[Patch List]**;Mar 15, 2001;Build 32
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EASEZP61
+    Before: B30387154   After: B36064376  **51,60,70,107**
+Routine Name: EASEZP62
+    Before: B63766210   After: B62742191  **51,60,70,107**
+Routine Name: EASEZP63
+    Before: B55264854   After: B17289170  **51,60,57,107**
+Routine Name: EASEZP64
+    Before: B28984285   After: B67534937  **60,57,70,107**
+Routine Name: EASEZP6F
+    Before: B15092600   After: B14707219  **51,60,57,107**
+Routine Name: EASEZP6I
+    Before:  B2792780   After:  B2999167  **51,60,107**
+Routine Name: EASEZP6U
+    Before: B29983306   After: B29982956  **51,60,57,70,107**
+Routine Name: EASEZPDU
+    Before: B41165544   After: B41360578  **57,70,107**
+Routine Name: EASEZPU3
+    Before: B24284626   After: B25454503  **57,107**
+Routine Name: EASEZPVI
+    Before: B20529992   After: B21671020  **57,70,103,107**
+Routine Name: EASEZRP1
+    Before: B38490607   After: B36453210  **57,70,107**
+Routine Name: EASEZRP2
+    Before: B74192279   After: B76633535  **57,107**
+Routine Name: EASEZRP3
+    Before: B28501959   After: B39915034  **57,70,107**
+Routine Name: EASEZRPF
+    Before: B15944209   After: B15520164  **57,107**
+Routine Name: EASEZRPU
+    Before: B46765829   After: B49046361  **57,70,107**
+Routine Name: EASEZU1
+    Before: B15904642   After: B16968808  **107**
+ 
+Routine list of preceding patches: 103
+
+=============================================================================
+User Information:                          Hold Date     : DEC 05, 2015
+Entered By  :                               Date Entered  : SEP 19, 2012
+Completed By:                               Date Completed: NOV 20, 2015
+Released By :                               Date Released : DEC 17, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

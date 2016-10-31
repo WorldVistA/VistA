@@ -1,0 +1,142 @@
+
+=============================================================================
+Run Date: AUG 26, 2014                     Designation: PSN*4*408
+Package : PSN - NATIONAL DRUG FILE            Priority: Mandatory
+Version : 4       SEQ #392                      Status: Released
+                  Compliance Date: SEP 02, 2014
+=============================================================================
+
+Associated patches: (v)PSN*4*407   <<= must be installed BEFORE `PSN*4*408'
+
+Subject: PSN*4.0*408    DATA UPDATES - FY14 #11
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ NOTE: This patch is part of NDF Data Update FY14 #11, which is comprised
+ of two patches, PSN*4*408 and PSN*4*409.
+  
+ This patch provides updates to data in several of the files associated 
+ with the National Drug File (NDF) application.  This patch generates four
+ mail messages.
+  
+ All are sent from NDF MANAGER to members of the NDF DATA mail group, 
+ holders of the PSNMGR security key, and the person installing the patch.  
+ The first message, with the subject DATA UPDATE FOR NDF, lists new
+ products, CMOP ID (if one exists), dispense units, and associated NDCs,
+ products for which the national formulary indicator has changed, products
+ that have been unmatched from CMOP, and products for which the national
+ formulary restriction has changed.  The second, with the subject UPDATED
+ INTERACTIONS, lists interactions that have been added, edited, or
+ inactivated. The third, with the subject DRUGS UNMATCHED FROM NATIONAL
+ DRUG FILE, lists entries in the DRUG file (#50) which have been unmatched
+ from NDF.  The fourth, with the subject INTERACTIONS and ALLERGIES
+ UPDATED, lists interactions and allergies which have been changed because
+ they were created with ingredients that are no longer primary ingredients.
+  
+                      **ATTENTION: CMOP SITES ONLY** 
+  
+ Do not load and install or queue to install this patch while Consolidated 
+ Mail Outpatient Pharmacy (CMOP) prescriptions are being transmitted. If
+ transmissions are in progress, incorrect prescription information may be 
+ sent to the CMOP. To determine if a CMOP transmission is in progress,
+ examine TaskMan for jobs entitled "CMOP Data Transmission".
+  
+ Associated Remedy Tickets: 
+ ==========================
+ N/A 
+  
+ Test Sites: 
+ ===========
+ CENTRAL PLAINS HCS
+ CHILLICOTHE VAMC
+ OKLAHOMA CITY VAMC
+ NEW YORK HCS
+ PUGET SOUND HCS
+  
+  
+ Installation Instructions and Software Retrieval: 
+ =================================================
+  
+ This patch can be obtained from the ANONYMOUS.SOFTWARE directory at one of
+ the OI Field Offices.  The preferred method is to FTP the file from
+ DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first 
+ available server.  Alternatively, sites may elect to retrieve the file 
+ from a specific OI Field Office.
+  
+    OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+    Albany              FTP.DOMAIN.EXT        
+    Hines               FTP.DOMAIN.EXT         
+    Salt Lake City      FTP.DOMAIN.EXT           
+  
+ The software distribution includes: 
+  
+  FILE NAME             DESCRIPTION            BLOCK SIZE 
+  
+ NDF4P408.KID            KIDS Build            3977 blocks 
+  
+  
+ National Drug File (NDF) and Pharmacy Data Management (PDM) users should 
+ be off the system when this patch is installed.  Installation takes less
+ than ten minutes.  This patch should be installed during non-peak
+ requirement hours.
+  
+ The environment check routine for this patch checks that the installing 
+ person is a valid user, and that the patch has not been installed.
+  
+ 1.  Retrieve the file NDF4P408.KID using one of the methods described 
+     above.  
+  
+ 2.  From the Kernel Installation & Distribution System menu, select 
+     the Installation menu.  
+  
+ 3.  From this menu, select the option Load a Distribution and select 
+     NDF4P408.KID.  
+  
+ 4.  From this menu, you may choose to use the option Verify Checksums in 
+     Transport Global. When prompted, select PSN*4.0*408. All components of
+     this patch are new, so the option Backup a Transport Global and the 
+     option Compare Transport Global to Current System do not have to be 
+     invoked.
+  
+ 5.  Use the Install Package(s) option and select PSN*4.0*408.  
+  
+ 6.  When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//" 
+     respond NO.  
+  
+ 7.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO//" respond NO.                      
+  
+ 8.  Note: The environment check routine PSN408E and the post-install 
+     routine PSN408D will be automatically deleted from your system upon 
+     completion of the installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;4.0;NATIONAL DRUG FILE;**[Patch List]**; 30 Oct 98;Build 91
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSN408D
+    Before:       n/a   After: B75477012  **408**
+Routine Name: PSN408E
+    Before:       n/a   After:   B582679  **408**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 09, 2014
+Completed By:                               Date Completed: AUG 21, 2014
+Released By :                               Date Released : AUG 26, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

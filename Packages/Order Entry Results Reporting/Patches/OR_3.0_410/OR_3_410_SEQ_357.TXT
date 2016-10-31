@@ -1,0 +1,185 @@
+$TXT Created by  at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 04/22/15 at 15:55
+=============================================================================
+Run Date: NOV 06, 2015                     Designation: OR*3*410
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #357                      Status: Released
+                  Compliance Date: DEC 07, 2015
+=============================================================================
+
+Associated patches: (v)OR*3*334    <<= must be installed BEFORE `OR*3*410'
+
+Subject: ALERTS DELETED/TYPO IN CPRS MANUAL
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch corrects the following issues within the ORDER ENTRY/RESULTS
+ REPORTING package:
+  
+ 1. Non-OR alerts are being deleted without the rights to do so.
+  
+ 2. Typo in the Computerized Patient Record System (CPRS) User Guide: GUI
+    Version.
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKET(s):
+ ============================
+ 1. INC000000246535 - Unsigned TIU note not displayed in CPRS notifications
+    Duplicate:
+    INC000000818314 
+  
+ 2. INC000000757637 - Typo in CPRS User Manual
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Miami VAMC
+ Mountain Home VAMC
+ Iowa City VAMC
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000246535 - Unsigned TIU note not displayed in CPRS notifications
+  
+    Problem:
+    --------
+    The REMOVE NON-OR ALERTS WITHOUT PROCESSING [ORB REMOVE NON-OR] 
+    parameter defines what non-or alerts are deletable by the "remove"
+    button in the notifications list. 
+  
+    Non-OR alerts that have not been set up for removal are being 
+    deleted. This happens when the non-OR alert follows an alert
+    which is set up to be removed.
+  
+    Resolution:
+    -----------
+    The removal flag variable from previous alerts is being carried over. 
+    ORWORB has been modified to create a new flag variable for each alert.
+  
+ 2. INC000000757637 - Typo in CPRS User Manual
+  
+    Problem:
+    --------
+    In the Consults section of the CPRS User Guide: GUI Version there is
+    the following paragraph:
+  
+       The originating clinician receives a CONSULT/REQUEST UPDATED alert
+       that the consult is complete. The results can now be examined and 
+       further action taken on behalf of the patient.
+  
+    That alert should be CONSULT/REQUEST RESOLUTION per the Consult/Request
+    Tracking manuals.
+      
+    Resolution:
+    -----------
+    The CPRS User Guide: GUI Version will be modified to say
+    CONSULT/REQUEST RESOLUTION.
+  
+ DOCUMENTATION RETRIEVAL INSTRUCTIONS:
+ ===================================== 
+ Updated documentation described in this patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.domain.ext  <ftp://ftp.fo-albany.domain.ext>
+  Hines          ftp.fo-hines.domain.ext   <ftp://ftp.fo-hines.domain.ext>
+  Salt Lake City ftp.fo-slc.domain.ext     <ftp://ftp.fo-slc.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain/vdl/
+  
+ Title                               File Name                  FTP Mode
+ -----------------------------------------------------------------------
+ CPRS User Guide: GUI Version         CPRSGUIUM.DOC             Binary
+                                      CPRSGUIUM.PDF             Binary
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low. Installation time will be
+ less than 2 minutes.
+  
+  1.  Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter OR*3.0*410):
+      
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  4.  Use the Install Package(s) option and select the package
+      OR*3.0*410.
+  
+      a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? NO//", answer NO.
+      b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORWORB
+    Before: B73567288   After: B74023568  **10,85,116,148,173,190,215,
+                                           243,296,329,334,410**
+ 
+Routine list of preceding patches: 334
+
+=============================================================================
+User Information:
+Entered By  :                Date Entered  : MAR 19, 2015
+Completed By:                Date Completed: OCT 27, 2015
+Released By :            Date Released : NOV 06, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

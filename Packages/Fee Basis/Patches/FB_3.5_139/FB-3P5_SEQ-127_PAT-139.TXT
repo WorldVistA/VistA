@@ -1,0 +1,373 @@
+$TXT Created by             at DEVESS.DOMAIN.EXT  (KIDS) on Wednesday, 09/17/14 at 10:51
+=============================================================================
+Run Date: OCT 01, 2014                     Designation: FB*3.5*139
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #127                    Status: Released
+                  Compliance Date: OCT 11, 2014
+=============================================================================
+
+Associated patches: (v)FB*3.5*94   <<= must be installed BEFORE `FB*3.5*139'
+                    (v)LEX*2*80    <<= must be installed BEFORE `FB*3.5*139'
+                    (v)ICD*18*57   <<= must be installed BEFORE `FB*3.5*139'
+                    (v)FB*3.5*132  <<= must be installed BEFORE `FB*3.5*139'
+                    (v)FB*3.5*135  <<= must be installed BEFORE `FB*3.5*139'
+                    (v)FB*3.5*143  <<= must be installed BEFORE `FB*3.5*139'
+                    (v)FB*3.5*146  <<= must be installed BEFORE `FB*3.5*139'
+
+Subject: FB ICD-10 CLASS 1 REMEDIATION
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Input Template
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ **IMPORTANT INFORMATION** Please read the Overview Guide 
+ (ICD-10_Prod_Overview_Guide_Group_8B.pdf) posted on the Anonymous
+ directory for installation order. This is critical for proper 
+ functionality of the ICD-10 Software. NOTE: FB*3.5*143 must be
+ installed before FB*3.5*139 as stated in the Overview Guide.
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10) 
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service, or dates of discharge for inpatients, that occur on or 
+ after the implementation date will use the ICD-10 code set. Clinical 
+ Modification (ICD-10-CM) diagnosis codes increase from about 13,000 ICD-9 
+ codes to more than 68,000. Procedure Coding System (ICD-10-PCS) procedure 
+ codes increase from about 3,800 ICD-9 codes to nearly 87,000. Both 
+ systems also expand the number of characters allotted to seven 
+ alpha-numeric characters. This value does not include the decimal point, 
+ which follows the third character for the ICD-10-CM code set. There is no 
+ decimal point in the ICD-10-PCS code set.
+  
+ These code sets have the potential to reveal more about quality of care, 
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research.
+  
+  
+ The intent of this patch is to:
+  
+ Add new routines to handle ICD-10 Advanced Search Functionality (ASF): 
+ FBASF to call the ICD-10 Lexicon diagnosis search utility (API) to prompt 
+ user for ICD-10 diagnosis code entry on or after the ICD-10 implementation
+ date. FBASFL to provide listing of ICD-10 diagnosis codes for user
+ selection, based on user search entry.  FBASFU to provide utilities used
+ within the ICD-10 Advanced Search Functionality (ASF).
+  
+ Add functionality to utilize the Lexicon diagnosis search utility when a 
+ user is entering an ICD-10 diagnosis code into input templates (FBAA 
+ AUTHORIZATION, FBCH ENTER PAYMENT, FBCH EDIT PAYMENT, FB UNAUTHORIZED 
+ ENTER, FB UNAUTHORIZED EDIT) and routines (FBAACO2, FBAACO3, FBAAPET,
+ FBAACP, FBAAMP1).
+  
+ Update code set versioning utility routine, FBCSV1, to be compatible with 
+ ICD-10.
+  
+ Add the ICD DIAGNOSIS field (#.087), a pointer field to the ICD DIAGNOSIS
+ file (#80), to the AUTHORIZATION multiple field (#161.1) of the FEE BASIS
+ PATIENT file (#161) for ICD-10. The free text fields (DX LINE 1 field
+ (#.08), DX LINE 2 field (#.085), DX LINE3 field (#.086)) will continue to
+ be used for ICD-9.
+  
+ Add the ICD DIAGNOSIS field (#5.1), a pointer field to the ICD DIAGNOSIS
+ file (#80), to the FEE BASIS UNAUTHORIZED CLAIMS file (#162.7)
+ for ICD-10. The free text field DIAGNOSIS field (#5) will continue to be
+ used for ICD-9.
+  
+ The code was modified to handle fields ICD1-ICD5 (#30-#34), fields 
+ PROC1-PROC5 (#40-#44) of the FEE BASIS INVOICE file (#162.5).
+  
+ The code was modified to handle new fields added by patch FB*3.5*108, 
+ fields ICD6-ICD25 (#35-#36.9), fields POA1-POA25 
+ (#30.02-#36.92), fields PROC6-PROC25 (#40.06-#44.25),field
+ ADMITTING DIAGNOSIS (#39) of the FEE BASIS INVOICE file (#162.5).
+  
+ Modify the payment user input process to provide the user with the ICD-10 
+ Advanced Search Functionality (ASF) for payments with ICD-10 diagnosis. 
+ As well as adjustments to the basic ICD-9 diagnosis search to handle the 
+ new file structure for the ICD DIAGNOSIS file (#80). Also modified the 
+ payment user input process for basic ICD-9 and ICD-10 procedure code 
+ searches to support the new file structure for the ICD 
+ OPERATION/PROCEDURE file (#80.1). (Enter Invoice/Payment [FBCH
+ ENTER PAYMENT], Invoice Edit [FBCH EDIT PAYMENT])
+  
+ Modify code for Pricer Interface Transmissions to handle the new ICD-10
+ format.
+  
+ Modify code for Central Fee Transmissions to Austin to handle the new
+ ICD-10 format.
+  
+ Correction for Remedy Ticket # INC000000313244
+ ICD CODES displaying CODE IS INACTIVE: 
+ Site is reporting an issue with the ICD Diagnosis codes coming up as 
+ being INACTIVE when they were ACTIVE at the DATE OF SERVICE. 
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)         New/Modified/Deleted
+ -------------          ---------------------  --------------------
+ FEE BASIS PATIENT (#161)
+   AUTHORIZATION  (sub-file)(#161.01)
+                        DX LINE 1 (#.08)       Modified
+                        DX LINE 2 (#.085)      Modified
+                        DX LINE 3 (#.086)      Modified
+                        ICD DIAGNOSIS (#.087)  New
+ FEE BASIS UNAUTHORIZED CLAIMS (#162.7)
+                        ICD DIAGNOSIS (#5.1)   New
+  
+ Forms Associated:
+  
+ Form Name            File #                 New/Modified/Deleted
+ ---------            ------                 --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type             New/Modified/Deleted
+ -----------            ----             --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type   File Name (#)              New/Modified/Deleted
+ -------------      ----   -------------              --------------------
+ FBAA AUTHORIZATION 
+                    Input  FEE BASIS PATIENT (#161)               Modified
+ FB UNAUTHORIZED UPDATE
+                    Input  FEE BASIS PATIENT (#161)               Modified
+ FB UNAUTHORIZED UPDATE1
+                    Input  FEE BASIS PATIENT (#161)               Modified
+ FBCH ENTER PAYMENT Input  FEE BASIS INVOICE (#162.5)             Modified
+ FBCH EDIT PAYMENT  Input  FEE BASIS INVOICE (#162.5)             Modified
+ FB UNAUTHORIZED ENTER
+                    Input  FEE BASIS UNAUTHORIZED CLAIMS (#162.7) Modified
+ FB UNAUTHORIZED EDIT    
+                    Input  FEE BASIS UNAUTHORIZED CLAIMS (#162.7) Modified
+ FB UNAUTHORIZED PREVIOUS
+                    Input  FEE BASIS UNAUTHORIZED CLAIMS (#162.7) Modified
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR 20070902, ICD-10-CM Conversion
+  
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ Remedy Ticket # INC000000313244
+ ICD CODES displaying CODE IS INACTIVE: 
+ Site is reporting an issue with the ICD Diagnosis codes coming up as 
+ being INACTIVE when they were ACTIVE at the DATE OF SERVICE. 
+  
+  
+ Test Sites:
+ -----------
+ John D. Dingell VA Medical Center, Detroit, MI
+ Michael E. DeBakey VAMC, Houston, TX
+ G.V. Montgomery VAMC, Jackson, MS
+  
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                        File Name                      FTP Mode
+ ---------------------------------------------------------------------
+ FEE BASIS Release Notes       ICD-10_RN_FB_3_5_139.PDF       Binary
+ FEE BASIS Technical Manual    FB_3_5_TM_R0914.PDF            Binary
+ FEE BASIS User Manual         FB_3_5_UM_R0914.PDF            Binary
+ Production Overview Guide     ICD-10_Prod_Overview_
+                               Guide_Group_8B.pdf             Binary
+                                                              
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL, enter the patch #
+     (FB*3.5*139):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        back up any other changes such as DDs or templates.
+  
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch
+        (routines, DDs, templates, etc.).
+  
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter FB*3.5*139.
+  
+ 5.  If prompted Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//, respond NO.
+       
+ 6.  When prompted Want KIDS to INHIBIT LOGONs during the install? NO//,
+     respond NO.
+  
+ 7.  When prompted Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//, respond NO.
+  
+ 8.  If prompted Delay Install (Minutes):  (0 - 60): 0//, respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 127
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBAA79
+    Before: B22692839   After: B25821677  **12,23,101,103,108,139**
+Routine Name: FBAACO2
+    Before: B14623021   After: B29842500  **4,55,61,77,116,122,133,108,
+                                           135,139**
+Routine Name: FBAACO3
+    Before: B55803171   After: B60345007  **4,38,55,61,116,122,133,108,
+                                           124,143,139**
+Routine Name: FBAACP
+    Before: B47546031   After: B55546360  **4,38,55,61,77,108,143,139**
+Routine Name: FBAADEM1
+    Before: B14338880   After: B16400891  **13,51,103,108,139**
+Routine Name: FBAAEAR
+    Before:   B423775   After:  B1712071  **139**
+Routine Name: FBAAMP1
+    Before:  B7353018   After: B12344888  **4,55,61,77,139**
+Routine Name: FBAAPET
+    Before: B42847501   After: B47597707  **4,38,55,61,77,116,122,133,
+                                           108,124,132,139**
+Routine Name: FBAAV0
+    Before: B44344317   After: B46795465  **3,4,55,89,98,116,108,132,139**
+Routine Name: FBAAV5
+    Before: B71438715   After: B80128865  **3,55,89,98,116,108,139**
+Routine Name: FBASF
+    Before:       n/a   After:B105506974  **139**
+Routine Name: FBASFL
+    Before:       n/a   After: B38523474  **139**
+Routine Name: FBASFU
+    Before:       n/a   After: B14602797  **139**
+Routine Name: FBCH78
+    Before: B50044150   After: B51567098  **43,103,108,146,139**
+Routine Name: FBCHEP
+    Before: B34203582   After: B36009923  **4,61,77,82,122,108,124,135,139**
+Routine Name: FBCHEP1
+    Before: B39885067   After: B42453076  **38,61,122,133,108,124,132,139**
+Routine Name: FBCHRJP
+    Before: B10589786   After: B10678988  **58,69,139**
+Routine Name: FBCSV1
+    Before: B19921855   After: B26775186  **55,77,94,139**
+Routine Name: FBICD9
+    Before:       n/a   After:  B8835442  **139**
+Routine Name: FBICDP
+    Before:       n/a   After:  B9560886  **139**
+Routine Name: FBNHEAUT
+    Before: B25443874   After: B27561875  **43,103,139**
+Routine Name: FBNHEDAT
+    Before: B13901461   After: B15561616  **103,108,139**
+Routine Name: FBPAY67
+    Before: B41631569   After: B45350790  **4,32,55,69,108,143,139**
+Routine Name: FBPRICE1
+    Before: B12291028   After: B22045052  **56,55,77,108,139**
+ 
+Routine list of preceding patches: 94, 132, 135, 143, 146
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 08, 2011
+Completed By:                               Date Completed: SEP 29, 2014
+Released By :                               Date Released : OCT 01, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

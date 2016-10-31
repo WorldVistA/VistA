@@ -1,0 +1,127 @@
+$TXT Created by               at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 02/22/16 at 15:03
+=============================================================================
+Run Date: JUN 14, 2016                     Designation: PSN*4*471
+Package : PSN - NATIONAL DRUG FILE            Priority: EMERGENCY
+Version : 4       SEQ #464                      Status: Released
+                  Compliance Date: JUN 16, 2016
+=============================================================================
+
+Associated patches: (v)PSN*4*469   <<= must be installed BEFORE `PSN*4*471'
+
+Subject: ALFUZOSIN TRADE NAME ALLERGY CLASS UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch PSN*4.0*471 addresses the following issue:
+  
+ Alfuzosin patient allergies with a Trade Name in the REACTANT field (#.02)
+ need to be updated to remove VA Drug Class
+ HORMONES/SYNTHETICS/MODIFIERS,OTHER (HS900)
+  
+ Associated NSR(s): 
+ ==================
+ N/A   
+  
+ Associated Trouble Ticket(s): 
+ =============================
+ I7357301FY16 - Old VA Drug class needs to be removed from ALFUZOSIN 
+ patient allergies where the Reactant is a Trade Name
+  
+  
+ Participating Test Sites:
+ =========================
+ Oklahoma City VAMC
+ Chillicothe VAMC
+ Central Plains HCS
+  
+ Ticket Overview:
+ ================
+ I7357301FY16 - Old VA Drug class needs to be removed from ALFUZOSIN
+ patient allergies where the Reactant is a Trade Name
+  
+ Problem:
+ --------
+ Old VA Drug Class HORMONES/SYNTHETICS/MODIFIERS,OTHER (HS900) in Trade
+ Name based ALFUZOSIN patient allergies is causing invalid allergy order 
+ checks.
+    
+ Solution:
+ ---------
+ This patch updates records in the PATIENT ALLERGIES file (#120.8) where 
+ the GMR ALLERGY field (#1) contains Alfuzosin VA Generic and where the 
+ REACTANT field (#.02) contains a Trade Name for one of the corresponding 
+ VA Products. Class HS900 is removed from these patient allergies (from 
+ the VA DRUG CLASS field (#.01) in sub file (#120.803)). Allergies entered 
+ in error and allergies for deceased patients will not be updated. Note 
+ some sites might not have any Trade Name patient allergies that need to 
+ be updated.
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. The installation may take some time and 
+ will vary from site to site, depending on how many allergy records there 
+ are. Therefore we advise sites to queue the post-init routine to run 
+ after hours.
+  
+    
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (PSN*4.0*471):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter PSN*4.0*471.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+ 7.  After the installation completes successfully delete routine PSN471P.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;NATIONAL DRUG FILE;**[Patch List]**; 30 Oct 98;Build 17
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSN471P
+    Before:       n/a   After:  B9656141  **471**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 28, 2016
+Completed By:                               Date Completed: JUN 08, 2016
+Released By :                               Date Released : JUN 14, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

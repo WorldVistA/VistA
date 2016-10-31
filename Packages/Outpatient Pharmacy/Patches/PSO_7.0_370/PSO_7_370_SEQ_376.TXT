@@ -1,0 +1,276 @@
+$TXT Created by at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Friday, 12/05/14 at 10:28
+=============================================================================
+Run Date: NOV 19, 2015                     Designation: PSO*7*370
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #376                      Status: Released
+                  Compliance Date: DEC 20, 2015
+=============================================================================
+
+Associated patches: (v)PSO*7*383   <<= must be installed BEFORE `PSO*7*370'
+                    (v)PSO*7*386   <<= must be installed BEFORE `PSO*7*370'
+                    (v)PSO*7*416   <<= must be installed BEFORE `PSO*7*370'
+                    (v)PSO*7*421   <<= must be installed BEFORE `PSO*7*370'
+
+Subject: BAD ADDR SUS/DATA DICT/ACT LOG/HOLD ISSUE
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will resolve the following issues.
+  
+ 1. A foreign address is triggered for the Philippines when printing
+    suspense labels with a Routing of Mail.
+  
+ 2. The Help Prompt for the Label Date/Time in the Prescription file is 
+    incorrect.
+  
+ 3. When editing the Refill Date on a prescription, the internal Fileman
+    date is stored in the Activity Log entry.
+  
+ 4. User without PSORPH key can put prescription on hold using pharmacist's
+    reasons
+  
+ 5. The finishing pharmacist's name appears in the released pharmacist's
+    entry Update the description for the Pharmacist field (#23) of the
+    Prescription file (#52).
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+  
+ 1. INC000000398402 -  Bad Address Suspense not printed
+ 2. INC000000528670 -  Data Dictionary for Prescription file #52 Field 32
+                        Correct Information Needed
+ 3. INC000000985113 -  Fileman internal date stored in Activity Log entry 
+ 4. INC000000989343 -  PSO TECH ADV key
+ 5. INC000000623469 -  Finishing pharmacist name appears in the released
+                        pharmacist's entry
+    INC000000624635(d) 
+  
+                
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Manila Outpatient Clinic
+ Upstate NY HCS
+ Heartland East HCS
+  
+ Remedy Overview:
+ ================
+  
+ 1.  INC000000398402 - Bad Address Suspense not printed
+   
+ Problem: 
+ --------
+ When Manila prints labels for their patients with a Routing of Mail, the 
+ labels are printed as if the patient has a foreign address.
+  
+ This problem only occurs for Manila when printing a prescription mailing 
+ label for a patient who lives in the Philippines.
+  
+ Resolution:
+ -----------
+ Everywhere a label can be printed, a check needs to be added so if the 
+ patient's country is Philippines and the site is Manila-RO, the label does
+ not cause a foreign address to be triggered.
+  
+ Technical Resolution:
+ ---------------------
+ Need to modify routines PSOLLL1 and PSOSULBL to add the check for patient's 
+ country as Philippines and the site as MANILA-RO and if so, do not mark the 
+ label as a foreign address.
+  
+  
+ 2. INC000000528670 - Data Dictionary for Prescription file #52 Field 32
+                      Correct Information Needed
+ Problem:
+ --------
+ The LABEL DATE/TIME field (#32) of the PRESCRIPTION  file(#52) should not 
+ have Help Text.  The fields defined within this multiple will have Help 
+ Text defined which is displayed to the users.
+  
+ Resolution:
+ -----------
+ Modify the Data Dictionary of the PRESCRIPTION file to remove the Help 
+ Text since the LABEL DATE/TIME is a multiple field.
+  
+ 3. INC000000985113 -  Fileman internal date stored in Activity Log entry 
+  
+ Problem:
+ --------
+ When editing a Refill Date on a prescription, the Activity Log entry
+ is saved with the Fileman internal date format.
+  
+ Resolution:
+ -----------
+ Need to modify processing so an external (user friendly) date format
+ is stored in the Activity Log entry.  Routine PSORXED1 at tag PSORXED1+6
+ will be modified.
+  
+ 4. INC000000989343 -  PSO TECH ADV key
+  
+ Problem:
+ --------
+ A user that does not have the PSORPH key is able to put a prescription
+ on hold using the pharmacist's full list of reasons.
+  
+ Resolution:
+ -----------
+ Modify ^PSORXL so if the user does not have the PSORPH key or the PSO 
+ TECH ADV key, they cannot put a prescription on hold.  Also, modify 
+ FLD^PSOHLD so if the user does not have the PSORPH key, a limited
+ subset of reason are available.
+  
+  
+  
+ 5. INC000000623469 -  Finishing pharmacist name appears in the released
+                          pharmacist's entry
+ Problem:
+ --------
+ During Pharmacist verification of a Drug Interaction when Enhanced Order
+ Checks are performed, the Pharmacist finishing the order is stored as 
+ the Releasing Pharmacist.  This is field Pharmacist (#23) in the 
+ Prescription file (#52). 
+  
+ Resolution:
+ -----------
+ Routine BLD^PSODGDGP will be modified to store the Releasing Pharmacist 
+ in this field.
+  
+  
+ DATA DICTIONARY
+ ===============
+ BEFORE:
+ -------
+ STANDARD DATA DICTIONARY #52 -- PRESCRIPTION FILE   
+                                                    APR 15,2014@09:24:29  
+ PAGE 1
+ STORED IN ^PSRX(  (1273751 ENTRIES)   SITE: TEST.CHEYENNE.DOMAIN.EXT   
+ UCI: CHEY 204,ROU 
+ (VERSION 7.0)
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+ -----
+  
+ 52,32         LABEL DATE/TIME        L;0 DATE Multiple #52.032
+                                  (Add New Entry without Asking)
+  
+               LAST EDITED:      MAR 05, 1992 
+               HELP-PROMPT:      Enter date/time when and if medication
+                                 was returned to inventory due not being
+                                 icked up or mailed to the patient.
+               DESCRIPTION:      This sub-file is used to indicate when
+                                 labels are printed for this prescription.
+  
+ AFTER:
+ ------
+ STANDARD DATA DICTIONARY #52 -- PRESCRIPTION FILE   
+                                                    MAY 22,2014@08:48:28  
+ PAGE 1
+ STORED IN ^PSRX(  (1273865 ENTRIES)   SITE: TEST.CHEYENNE.DOMAIN.EXT
+ UCI: CHEY 204,ROU                                                        
+ (VERSION 7.0)
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+ -----
+  
+ 52,32         LABEL DATE/TIME        L;0 DATE Multiple #52.032
+                                  (Add New Entry without Asking)
+  
+               LAST EDITED:      MAR 05, 1992 
+               DESCRIPTION:      This sub-file is used to indicate when
+                                 labels are printed for this prescription.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ Pharmacy users should not be processing prescriptions while patch is being
+ installed.  
+ It should take less than 2 minutes to install this patch.
+ Post-Install routine PSO7P370 will be deleted after successful
+ installation of this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*370)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*370.
+  
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSO7P370
+    Before:       n/a   After:  B1411945  **370**
+Routine Name: PSODGDGP
+    Before: B67660976   After: B67529993  **251,387,379,391,372,416,370**
+Routine Name: PSOHLD
+    Before: B80803768   After: B87531422  **1,16,21,24,27,32,55,82,114,
+                                           130,166,148,268,281,298,358,
+                                           353,385,386,370**
+Routine Name: PSOLLL1
+    Before: B72285264   After: B74505234  **120,141,135,162,161,233,200,
+                                           264,326,338,367,383,370**
+Routine Name: PSORXED1
+    Before: B21189403   After: B22048628  **2,16,21,289,370**
+Routine Name: PSORXL
+    Before:B123167297   After:B124759619  **8,21,24,32,47,135,148,287,
+                                           334,251,354,367,370**
+Routine Name: PSOSULBL
+    Before: B75522533   After: B77851131  **139,173,174,148,200,260,264,
+                                           287,289,290,354,421,370**
+ 
+Routine list of preceding patches: 383, 386, 416, 421
+
+=============================================================================
+User Information:
+Entered By  :               Date Entered  : SEP 29, 2010
+Completed By:                Date Completed: NOV 10, 2015
+Released By :                      Date Released : NOV 19, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

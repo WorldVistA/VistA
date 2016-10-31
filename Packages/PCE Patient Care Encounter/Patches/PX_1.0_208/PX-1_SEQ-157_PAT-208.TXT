@@ -1,0 +1,229 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 02/18/15 at 16:13
+=============================================================================
+Run Date: APR 27, 2015                     Designation: PX*1*208
+Package : PX - PCE PATIENT CARE ENCOUNTER     Priority: EMERGENCY
+Version : 1       SEQ #157                      Status: Released
+                  Compliance Date: APR 29, 2015
+=============================================================================
+
+Associated patches: (v)PX*1*201    <<= must be installed BEFORE `PX*1*208'
+
+Subject: IMMUNIZATION SERIES, REACTION, & CONTRA DISAPPEARING
+
+Category: 
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ Patch PX*1.0*208 addresses the following issue:
+  
+ Series, reaction, and contraindicated values may not get filed into a
+ patient's immunization record.
+   
+ Associated Remedy tickets:
+ ==========================
+ INC000001106742 - Patient Care Encounter - General:  PX 201 Issue
+  
+ Duplicates:
+ -----------
+ INC000001111812 - Patient Care Encounter - General:
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Maryland HCS (Baltimore)
+ Lebanon, PA
+ Fayetteville, AR
+  
+ Remedy Overview:
+ ================
+ 1. INC0000001106742 - Patient Care Encounter - General: PX 201 Issue
+  
+  
+ Patient Safety Issue:
+ ---------------------
+ PSPO00002786
+  
+   
+ Problem:
+ --------
+ The data entered into fields SERIES (#.04), REACTION (#.06) 
+ and CONTRAINDICATED (#.07) in the V IMMUNIZATION file (#9000010.11) 
+ does not get filed when the immunization does not have a value in the
+ MAX # IN SERIES field (#.05) of the IMMUNIZATION file (#9999999.14). 
+  
+ Resolution:
+ -----------
+ Modified the Data Dictionary of the V IMMUNIZATION file (#9000010.11) 
+ SCREEN on the SERIES field (#.04) to be able to handle instances where the 
+ MAX # IN SERIES (#.05) field has no value in the IMMUNIZATION file 
+ (#9999999.14). 
+ The SCREEN now invokes routine PXVUTL0 to do the processing.
+  
+ Technical Description of the Resolution:
+ ----------------------------------------
+ The SCREEN on the SERIES field (#.04) was modified to call function SERIES 
+ in routine PXVUTL0. Function SERIES attempts to get the MAX # IN SERIES 
+ value 1st from the IMMUNIZATION file (#9999999.14) using 
+ IEN=IMMUNIZATION (#.01) field value found in the V IMMUNIZATION file 
+ (#9000010.11) for the patient. If not found (this is a new entry, 
+ not an edit) then the function uses the IEN (Internal Entry Number) 
+ of the immunization selected on the screen as a pointer to the 
+ IMMUNIZATION file to find the MAX # IN SERIES. If neither are found the 
+ function returns 8. The SCREEN takes that returned MAX # IN SERIES value 
+ and compares the SERIES value that was entered for the patient's immunization.
+ If the value entered for SERIES is not greater than the MAX # IN SERIES it 
+ passes the SCREEN and is allowed.
+  
+ Data Dictionary:
+ ================
+  
+ ********************BEFORE***********************
+ STANDARD DATA DICTIONARY #9000010.11 -- V IMMUNIZATION FILE   
+                                                     FEB 5,2015@12:48:23  PAGE 1
+ STORED IN ^AUPNVIMM(  (4 ENTRIES)   SITE: TECHNICAL INTEGRATION SERVICE   UCI: 
+ PATVEE,PATVEE                                                   (VERSION 1.0)   
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ -------------------------------------------------------------------------------
+  
+ 9000010.11,.04SERIES                 0;4 SET (audited)
+  
+               Series                    
+                                 'P' FOR PARTIALLY COMPLETE; 
+                                 'C' FOR COMPLETE; 
+                                 'B' FOR BOOSTER; 
+                                 '1' FOR SERIES 1; 
+                                 '2' FOR SERIES 2; 
+                                 '3' FOR SERIES 3; 
+                                 '4' FOR SERIES 4; 
+                                 '5' FOR SERIES 5; 
+                                 '6' FOR SERIES 6; 
+                                 '7' FOR SERIES 7; 
+                                 '8' FOR SERIES 8; 
+               LAST EDITED:      JUL 09, 2014 
+               HELP-PROMPT:      Enter the series number, booster, partial or 
+                                 complete. 
+               DESCRIPTION:      This field allows the provider to specify which
+                                 series of immunization type was given to the
+                                 patient.  
+  
+               SCREEN:           S DIC("S")="I Y'>$S($G(DA):$P($G(^AUTTIMM($P(^A
+                                 UPNVIMM(DA,0),""^""),0)),""^"",5),1:8)"
+               EXPLANATION:      Screen prevents selection of inappropriate seri
+                                 es of immunization type.
+               AUDIT:            EDITED OR DELETED
+  
+ ********************AFTER***********************
+ STANDARD DATA DICTIONARY #9000010.11 -- V IMMUNIZATION FILE   
+                                                     FEB 5,2015@12:52:02  PAGE 1
+ STORED IN ^AUPNVIMM(  (119164 ENTRIES)   SITE: TEST.CHEYENNE.DOMAIN.EXT   UCI: 
+ CHEY19,ROU                                                      (VERSION 1.0)   
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ -------------------------------------------------------------------------------
+  
+ 9000010.11,.04SERIES                 0;4 SET (audited)
+  
+               Series                    
+                                 'P' FOR PARTIALLY COMPLETE; 
+                                 'C' FOR COMPLETE; 
+                                 'B' FOR BOOSTER; 
+                                 '1' FOR SERIES 1; 
+                                 '2' FOR SERIES 2; 
+                                 '3' FOR SERIES 3; 
+                                 '4' FOR SERIES 4; 
+                                 '5' FOR SERIES 5; 
+                                 '6' FOR SERIES 6; 
+                                 '7' FOR SERIES 7; 
+                                 '8' FOR SERIES 8; 
+               LAST EDITED:      FEB 02, 2015 
+               HELP-PROMPT:      Enter the series number, booster, partial or 
+                                 complete. 
+               DESCRIPTION:      This field allows the provider to specify which
+                                 series of immunization type was given to the
+                                 patient.  
+  
+               SCREEN:           S DIC("S")="I Y'>$$SERIES^PXVUTL0"
+               EXPLANATION:      Screen prevents selection of inappropriate seri
+                                 es of immunization type.
+               AUDIT:            EDITED OR DELETED
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch may be installed during normal working hours with all users on
+ the system. However, as it is necessary to disable some menu options
+ when installing this patch it is recommended that the install be done 
+ during non-peak hours.  
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+  
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter PX*1.0*208).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch is
+            installed.
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package PX*1.0*208.
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//",
+         respond No.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//", respond Yes.
+  
+         When prompted, 'Enter options you wish to mark as 'Out Of 
+         Order':', enter:
+  
+          PXCE ENCOUNTER ENTRY & DELETE      [PCE Encounter Entry and Delete]
+         
+         When prompted, 'Enter protocols you wish to mark as 'Out Of
+         Order':', enter:
+  
+          Immunization      [PXCE IMMUNIZATION ADD]
+  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**[Patch List]**;Aug 12, 1996;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXVUTL0
+    Before:       n/a   After:   B490109  **208**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 04, 2015
+Completed By:                               Date Completed: APR 22, 2015
+Released By :                               Date Released : APR 27, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,128 @@
+DHCP Patch Display                                     Page 1 of 
+=============================================================================
+Run Date: MAR 24, 2016                     Designation: TBI*2*14
+Package : TBI - TRAUMATIC BRAIN INJURY        Priority: Mandatory
+Version : 2        SEQ #13                      Status: Released
+                  Compliance Date: APR 24, 2016
+=============================================================================
+
+
+Subject: HREG Sustainment Release Patch 14
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ ***********************************************************************
+ This patch announces the National Release of Traumatic Brain Injury Patch 
+ TBI*2.0*14. TBI*2.0*14 will be deployed to the production server for 
+ national release on 3/28/2016 at 9 p.m. Eastern time. No additional 
+ action is required from sites.
+ **********************************************************************
+  
+ RELEASE INFORMATION:
+ ===================
+ TBI Patch 2.0*14 contains code changes (defect fixes enhancements) to the 
+ TBI Registry. These changes are Work Items that were recorded and tracked 
+ in the Registries Project Area of RTC.
+  
+ This patch contains the TBI Work Items completed for Release 6 for the   
+ production deployment.
+  
+ TBI Patch 2.0*14 includes the TBI Registry Work Items listed below:
+  
+ 1)      229383: Run Fortify Scan on TBI and correct any issues
+ 2)      271059: TBI Error
+ 3)      238216: Mayo Portland Adaptability Inventory
+  
+ The following describes each component of the TBI Patch 2.0*14
+  
+ 1) 229383: 
+ Issue: Run Fortify Scan on TBI and correct any issues
+  
+ Solution: The TBI code was scanned and the three high items identified 
+ were corrected. 
+  
+ 2) 271059:  
+ Issue: TBI: Error: Invalid vista timestamp. 
+  
+ Solution: The VistA timestamp being returned through VIA is expected to 
+ be in a different format than the incoming VistA timestamp from VIA.  The 
+ outgoing timestamp was corrected.   
+  
+ 3) 238216: Mayo Portland Adaptability Inventory
+ Issue: Refactor delete-then-save pattern and refactor page load event to 
+ be consistent with other instruments.
+  
+ Solution: The Mayo Portland Adaptability Inventory - 4 instrument was 
+ refactored to remove the delete-then-save pattern that was causing data 
+ loss and data integrity issues.
+  
+ SOFTWARE:
+ =========
+ TBI is a web-based application. Changes will be applied to the national 
+ production servers and will be immediately available to the users. No 
+ changes at the local site are required for this patch.
+ ================
+ DOCUMENTATION:
+ ================
+ NOTE: NO DOCUMENT UPDATES WERE REQUIRED FOR THIS PATCH
+  
+ Additional Information:
+ ===================
+ TBI Design and User Documentation is located on TSPR:
+  
+ http://tspr.vista.domain.ext/warboard/anotebk.asp?proj=1313&Type=Active  
+  
+ Documentation Retrieval Instructions:
+ The preferred method is to SFTP the files from 
+ sftp://download.vista.domain.ext/.
+   
+ This transmits the files from the first available SFTP server.
+ Sites may also elect to retrieve software directly from a specific server 
+ as follows:
+   
+ Albany              sftp.domain.ext  
+ Hines               sftp.domain.ext
+ Salt Lake City      sftp.domain.ext
+  
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+   
+ Title                              File Name              FTP Mode
+ -----------------------------------------------------------------------
+ TBI Instruments User Manual       TBIINSUM.PDF           BINARY
+  
+ REMEDY TICKETS AND OVERVIEW:
+ =============================
+ There are no Remedy Tickets associated with this patch.
+  
+ TEST SITES:
+ ===========
+ Houston, TX
+ Lebanon, PA
+ Dallas, TX
+  
+  
+ Routine Information:
+ ====================
+ No routines included.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 14, 2016
+Completed By:                               Date Completed: MAR 24, 2016
+Released By :                               Date Released : MAR 24, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+

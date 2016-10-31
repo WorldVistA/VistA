@@ -1,0 +1,533 @@
+Released SR*3*185 SEQ #176
+Extracted from mail message
+**KIDS**:SR*3.0*185^
+
+**INSTALL NAME**
+SR*3.0*185
+"BLD",9944,0)
+SR*3.0*185^SURGERY^0^3160105^y
+"BLD",9944,1,0)
+^^11^11^3150317^
+"BLD",9944,1,1,0)
+The patch addresses two (2) issues:
+"BLD",9944,1,2,0)
+ 
+"BLD",9944,1,3,0)
+1.   During transmission of Surgery Risk Assessments, an UNDEF error 
+"BLD",9944,1,4,0)
+     occurs when routine SROATMNO calls routine ADM1^SROAPIMS without
+"BLD",9944,1,5,0)
+     initializing the needed local variable SRSOUT.
+"BLD",9944,1,6,0)
+ 
+"BLD",9944,1,7,0)
+2.   Routines that generate the Report of Non-O.R. Procedures [SRONOR]
+"BLD",9944,1,8,0)
+     need to be modified to recognize recent modifications to the 
+"BLD",9944,1,9,0)
+     IN/OUT-PATIENT field (#.011) in the SURGERY FILE (#130): three (3)
+"BLD",9944,1,10,0)
+     values have been added to the SET of allowable choices ("1" FOR 
+"BLD",9944,1,11,0)
+     SAME DAY, "2" FOR ADMISSION, "3" FOR HOSPITALIZED).
+"BLD",9944,4,0)
+^9.64PA^^
+"BLD",9944,6.3)
+2
+"BLD",9944,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9944,"KRN",.4,0)
+.4
+"BLD",9944,"KRN",.401,0)
+.401
+"BLD",9944,"KRN",.402,0)
+.402
+"BLD",9944,"KRN",.403,0)
+.403
+"BLD",9944,"KRN",.5,0)
+.5
+"BLD",9944,"KRN",.84,0)
+.84
+"BLD",9944,"KRN",3.6,0)
+3.6
+"BLD",9944,"KRN",3.8,0)
+3.8
+"BLD",9944,"KRN",9.2,0)
+9.2
+"BLD",9944,"KRN",9.8,0)
+9.8
+"BLD",9944,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",9944,"KRN",9.8,"NM",1,0)
+SROAPIMS^^0^B27826704
+"BLD",9944,"KRN",9.8,"NM",2,0)
+SRONOR7^^0^B18187654
+"BLD",9944,"KRN",9.8,"NM","B","SROAPIMS",1)
+
+"BLD",9944,"KRN",9.8,"NM","B","SRONOR7",2)
+
+"BLD",9944,"KRN",19,0)
+19
+"BLD",9944,"KRN",19.1,0)
+19.1
+"BLD",9944,"KRN",101,0)
+101
+"BLD",9944,"KRN",409.61,0)
+409.61
+"BLD",9944,"KRN",771,0)
+771
+"BLD",9944,"KRN",779.2,0)
+779.2
+"BLD",9944,"KRN",870,0)
+870
+"BLD",9944,"KRN",8989.51,0)
+8989.51
+"BLD",9944,"KRN",8989.52,0)
+8989.52
+"BLD",9944,"KRN",8994,0)
+8994
+"BLD",9944,"KRN","B",.4,.4)
+
+"BLD",9944,"KRN","B",.401,.401)
+
+"BLD",9944,"KRN","B",.402,.402)
+
+"BLD",9944,"KRN","B",.403,.403)
+
+"BLD",9944,"KRN","B",.5,.5)
+
+"BLD",9944,"KRN","B",.84,.84)
+
+"BLD",9944,"KRN","B",3.6,3.6)
+
+"BLD",9944,"KRN","B",3.8,3.8)
+
+"BLD",9944,"KRN","B",9.2,9.2)
+
+"BLD",9944,"KRN","B",9.8,9.8)
+
+"BLD",9944,"KRN","B",19,19)
+
+"BLD",9944,"KRN","B",19.1,19.1)
+
+"BLD",9944,"KRN","B",101,101)
+
+"BLD",9944,"KRN","B",409.61,409.61)
+
+"BLD",9944,"KRN","B",771,771)
+
+"BLD",9944,"KRN","B",779.2,779.2)
+
+"BLD",9944,"KRN","B",870,870)
+
+"BLD",9944,"KRN","B",8989.51,8989.51)
+
+"BLD",9944,"KRN","B",8989.52,8989.52)
+
+"BLD",9944,"KRN","B",8994,8994)
+
+"BLD",9944,"QUES",0)
+^9.62^^
+"BLD",9944,"REQB",0)
+^9.611^1^1
+"BLD",9944,"REQB",1,0)
+SR*3.0*184^2
+"BLD",9944,"REQB","B","SR*3.0*184",1)
+
+"MBREQ")
+0
+"PKG",308,-1)
+1^1
+"PKG",308,0)
+SURGERY^SR^SURGICAL DATA COLLECTION AND OPERATIONS SCHEDULING
+"PKG",308,20,0)
+^9.402P^^
+"PKG",308,22,0)
+^9.49I^1^1
+"PKG",308,22,1,0)
+3.0^2930624^2940818
+"PKG",308,22,1,"PAH",1,0)
+185^3160105
+"PKG",308,22,1,"PAH",1,1,0)
+^^11^11^3160105
+"PKG",308,22,1,"PAH",1,1,1,0)
+The patch addresses two (2) issues:
+"PKG",308,22,1,"PAH",1,1,2,0)
+ 
+"PKG",308,22,1,"PAH",1,1,3,0)
+1.   During transmission of Surgery Risk Assessments, an UNDEF error 
+"PKG",308,22,1,"PAH",1,1,4,0)
+     occurs when routine SROATMNO calls routine ADM1^SROAPIMS without
+"PKG",308,22,1,"PAH",1,1,5,0)
+     initializing the needed local variable SRSOUT.
+"PKG",308,22,1,"PAH",1,1,6,0)
+ 
+"PKG",308,22,1,"PAH",1,1,7,0)
+2.   Routines that generate the Report of Non-O.R. Procedures [SRONOR]
+"PKG",308,22,1,"PAH",1,1,8,0)
+     need to be modified to recognize recent modifications to the 
+"PKG",308,22,1,"PAH",1,1,9,0)
+     IN/OUT-PATIENT field (#.011) in the SURGERY FILE (#130): three (3)
+"PKG",308,22,1,"PAH",1,1,10,0)
+     values have been added to the SET of allowable choices ("1" FOR 
+"PKG",308,22,1,"PAH",1,1,11,0)
+     SAME DAY, "2" FOR ADMISSION, "3" FOR HOSPITALIZED).
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","SROAPIMS")
+0^1^B27826704^B27799692
+"RTN","SROAPIMS",1,0)
+SROAPIMS ;BIR/ADM - PIMS Information Retrieval ;01/24/07
+"RTN","SROAPIMS",2,0)
+ ;;3.0;Surgery;**38,46,47,57,71,81,86,100,125,134,160,175,182,184,185**;24 Jun 93;Build 2
+"RTN","SROAPIMS",3,0)
+ ;
+"RTN","SROAPIMS",4,0)
+ ; Reference to ^MCAR(690,"AC" supported by DBIA #80
+"RTN","SROAPIMS",5,0)
+ ; Reference to ^DGPM("APTT1" supported by DBIA #565
+"RTN","SROAPIMS",6,0)
+ ;
+"RTN","SROAPIMS",7,0)
+ ; SRTN must be defined before calling this routine.
+"RTN","SROAPIMS",8,0)
+ ; This routine will return the following array
+"RTN","SROAPIMS",9,0)
+ ; SRVADPT(1)  = Name of the patient (e.g., SMITH,JOHN R.)
+"RTN","SROAPIMS",10,0)
+ ; SRVADPT(2)  = Patient ID (e.g., 123-45-6789)
+"RTN","SROAPIMS",11,0)
+ ; SRVADPT(3)  = Age of patient on date of operation (e.g., 36)
+"RTN","SROAPIMS",12,0)
+ ; SRVADPT(4)  = Sex of patient (e.g., M^MALE)
+"RTN","SROAPIMS",13,0)
+ ; SRVADPT(5)  = Race of patient (e.g., 6^WHITE, NOT OF HISPANIC ORIGIN)
+"RTN","SROAPIMS",14,0)
+ ; SRVADPT(6)  = Date of death
+"RTN","SROAPIMS",15,0)
+ ; SRVADPT(7)  = Hospital admission date
+"RTN","SROAPIMS",16,0)
+ ; SRVADPT(8)  = Hospital discharge date
+"RTN","SROAPIMS",17,0)
+ ; SRVADPT(9)  = Admission/transfer to surgical specialty
+"RTN","SROAPIMS",18,0)
+ ; SRVADPT(10) = Discharge/tranfer to chronic care
+"RTN","SROAPIMS",19,0)
+ ; SRVADPT(11) = Length of Post-Operative Hospital Stay (number of days)
+"RTN","SROAPIMS",20,0)
+ ; SRVADPT(12) = Admission to Observation
+"RTN","SROAPIMS",21,0)
+ ; SRVADPT(13) = Discharge from Observation
+"RTN","SROAPIMS",22,0)
+ ; SRVADPT(14) = Observation Specialty (PTF #)
+"RTN","SROAPIMS",23,0)
+ ; SRVADPT(15) = Bad Address Indicator
+"RTN","SROAPIMS",24,0)
+ ;
+"RTN","SROAPIMS",25,0)
+ N SR,SRCC,SRDT,SRNON,SRSRV S SR(0)=^SRF(SRTN,0),DFN=$P(SR(0),"^") F I=1:1:15 S SRVADPT(I)=""
+"RTN","SROAPIMS",26,0)
+ D DEM^VADPT S SRVADPT(1)=VADM(1),SRVADPT(2)=VA("PID"),SRVADPT(4)=VADM(5),SRVADPT(6)=VADM(6) S Y=$E($P(SR(0),"^",9),1,7),Z=$P(VADM(3),"^") S SRVADPT(3)=$E(Y,1,3)-$E(Z,1,3)-($E(Y,4,7)<$E(Z,4,7))
+"RTN","SROAPIMS",27,0)
+ S SRX=$P(VADM(8),"^") I SRX K DA,DIC,DIQ,DR,SRY S DIC=10,DR=2,DA=SRX,DIQ="SRY",DIQ(0)="I" D EN^DIQ1 S SRVADPT(5)=SRY(10,SRX,2,"I")_"^"_$P(VADM(8),"^",2)
+"RTN","SROAPIMS",28,0)
+ S SRVADPT(15)=$$BADADR^DGUTL3(DFN),$P(^SRF(SRTN,209),"^")=$S(SRVADPT(15):"Y",1:"N")
+"RTN","SROAPIMS",29,0)
+ADM ; find date(s) of admission and discharge
+"RTN","SROAPIMS",30,0)
+ N SRSOUT S SRSOUT=0,(VAIP("D"),SRSDATE)=$P(SR(0),"^",9) D IN5^VADPT
+"RTN","SROAPIMS",31,0)
+ ; if not admitted before surgery, look for admission within 24 hours of leaving OR
+"RTN","SROAPIMS",32,0)
+ I 'VAIP(13) S X1=$P($G(^SRF(SRTN,.2)),"^",12),X2=1 D C^%DTC S SR24=X,SRDT=$O(^DGPM("APTT1",DFN,SRSDATE)) G:'SRDT!(SRDT>SR24) END S VAIP("D")=SRDT D IN5^VADPT I 'VAIP(13) G END
+"RTN","SROAPIMS",33,0)
+ I VAIP(13) D ADM1 G:SRSOUT END
+"RTN","SROAPIMS",34,0)
+ADSS ; find date of admission/transfer to surgical service
+"RTN","SROAPIMS",35,0)
+ S SRSERV="" I VAIP(1) S SRX=$P(VAIP(8),"^") D SERV G:'SRSRV DISSS S:$P(VAIP(2),"^")=1 SRVADPT(9)=$E($P(VAIP(3),"^"),1,12) I $P(VAIP(2),"^")'=1 S SRSERV=$P(VAIP(3),"^")
+"RTN","SROAPIMS",36,0)
+ I VAIP(15) D PRIOR
+"RTN","SROAPIMS",37,0)
+DISSS ; find date of discharge/transfer to chronic care
+"RTN","SROAPIMS",38,0)
+ S SRNON=0,SRCC="",VAIP("D")=SRSAVE D IN5^VADPT
+"RTN","SROAPIMS",39,0)
+FOLLOW I VAIP(16) D  I 'SRNON S SRCC=VAIP(16,1),VAIP("D")=$P(SRCC,"^") D IN5^VADPT G FOLLOW
+"RTN","SROAPIMS",40,0)
+ .I $P(VAIP(16,2),"^")=3 S SRNON=1 Q
+"RTN","SROAPIMS",41,0)
+ .I "26"[$P(VAIP(16,2),"^") S SRX=$P(VAIP(16,6),"^") D NACUTE
+"RTN","SROAPIMS",42,0)
+ S SRVADPT(10)=SRVADPT(8) I SRNON S SRVADPT(10)=$E($P(VAIP(16,1),"^"),1,12)
+"RTN","SROAPIMS",43,0)
+STAY ; find length of post-operative hospital stay
+"RTN","SROAPIMS",44,0)
+ S X=$P($G(^SRF(SRTN,.2)),"^",3),X1=$P(SRVADPT(10),"^") I 'X!('X1)!(X>X1) G END
+"RTN","SROAPIMS",45,0)
+ S Y=$E(X1_"000",9,10)-$E(X_"000",9,10)*60+$E(X1_"00000",11,12)-$E(X_"00000",11,12),X2=X,X=$P(X,".",1)'=$P(X1,".",1) D ^%DTC:X S X=X*1440+Y,SRVADPT(11)=X\1440
+"RTN","SROAPIMS",46,0)
+END S $P(^SRF(SRTN,208),"^",10)=$P(SRVADPT(5),"^"),SRINOUT=$P(^SRF(SRTN,0),"^",12) I SRVADPT(7)'="",SRVADPT(9)="" S SRVADPT(9)=$P($G(^SRF(SRTN,.2)),"^",10)
+"RTN","SROAPIMS",47,0)
+ F I=7:1:10,12,13 S X=$P(SRVADPT(I),"^") I $L(X)>7 S $P(SRVADPT(I),"^")=+X
+"RTN","SROAPIMS",48,0)
+ I SRVADPT(7)'="" S $P(^SRF(SRTN,205),"^")=SRVADPT(11),L=6 F J=14:1:17 S L=L+1,$P(^SRF(SRTN,208),"^",J)=$P(SRVADPT(L),"^")
+"RTN","SROAPIMS",49,0)
+ I SRVADPT(7)="" S $P(^SRF(SRTN,205),"^")=$S(SRINOUT="O"!(SRINOUT=1):"NA",1:SRVADPT(11)) S L=6 F J=14:1:17 S L=L+1 S $P(^SRF(SRTN,208),"^",J)=$S(SRINOUT="O"!(SRINOUT=1):"NA",1:$P(SRVADPT(L),"^"))
+"RTN","SROAPIMS",50,0)
+ I SRVADPT(12)="" F J=1:1:3 S $P(^SRF(SRTN,208.1),"^",J)="NA"
+"RTN","SROAPIMS",51,0)
+ S $P(^SRF(SRTN,205),"^",3)=$S($P(SRVADPT(6),"^")'="":$E($P(SRVADPT(6),"^"),1,12),1:"NA")
+"RTN","SROAPIMS",52,0)
+ S $P(^SRF(SRTN,205),"^",41)=$S($P(SRVADPT(6),"^")="":"N",$$FMDIFF^XLFDT($P(SRVADPT(6),"^"),$P(^SRF(SRTN,.2),"^",3))>30:"N",1:"Y")
+"RTN","SROAPIMS",53,0)
+ S $P(^SRF(SRTN,210),"^",14)=1
+"RTN","SROAPIMS",54,0)
+ D MCAR,EMPLOY
+"RTN","SROAPIMS",55,0)
+ D KVA^VADPT K DIE,DR,I,SR,SR24,SR48,SRCC,SRD,SRDD,SRDO,SRDT,SRF,SRINOUT,SRNON,SRSP,SRSRV,SRQ,SRX,SRY,X,X1,Y
+"RTN","SROAPIMS",56,0)
+ Q
+"RTN","SROAPIMS",57,0)
+PRIOR ; loop through previous movements
+"RTN","SROAPIMS",58,0)
+ S SRX=$P(VAIP(15,6),"^") D SERV D  I SRSRV,VAIP(15) G PRIOR
+"RTN","SROAPIMS",59,0)
+ .I SRSRV S SRSERV=VAIP(15,1),VAIP("D")=$P(SRSERV,"^") D IN5^VADPT Q
+"RTN","SROAPIMS",60,0)
+ S SRVADPT(9)=$E($P(SRSERV,"^"),1,12)
+"RTN","SROAPIMS",61,0)
+ Q
+"RTN","SROAPIMS",62,0)
+SERV ; find service associated with movement
+"RTN","SROAPIMS",63,0)
+ S SRSRV="" D SPEC S Y="50,51,52,53,54,55,56,57,58,59,60,61,62,63" S:Y[SRSP SRSRV=1
+"RTN","SROAPIMS",64,0)
+ Q
+"RTN","SROAPIMS",65,0)
+SPEC ; find specialty associated with movement
+"RTN","SROAPIMS",66,0)
+ K DA,DIC,DIQ,DR,SRY S DIC=45.7,DR=1,DA=SRX,DIQ="SRY",DIQ(0)="I" D EN^DIQ1 S SRSP=SRY(45.7,SRX,1,"I") I SRSP,$L(SRSP)=1 S SRSP="0"_SRSP
+"RTN","SROAPIMS",67,0)
+ Q
+"RTN","SROAPIMS",68,0)
+NACUTE ; determine if non-acute care transfer
+"RTN","SROAPIMS",69,0)
+ D SPEC S Y="05,20,21,22,25,26,27,28,29,32,33,34,35,40,70,71,72,73,74,75,76,77,79,80,81,83,84,85,86,87,88,89,90,91,92,93,98,99" S:Y[SRSP SRNON=1
+"RTN","SROAPIMS",70,0)
+ Q
+"RTN","SROAPIMS",71,0)
+MCAR S (SRD,SRF,SRQ)=0,DFN=$P(^SRF(SRTN,0),"^"),SRDO=$P(^SRF(SRTN,0),"^",9)
+"RTN","SROAPIMS",72,0)
+ F  S SRD=$O(^MCAR(690,"AC",DFN,SRD)) Q:SRD=""!(SRQ=9)  S SRF=0 F  S SRF=$O(^MCAR(690,"AC",DFN,SRD,SRF)) Q:SRF=""!(SRQ=9)  I SRF="MCAR(691.1" D
+"RTN","SROAPIMS",73,0)
+ .S SRDD=9999999.9999-SRD
+"RTN","SROAPIMS",74,0)
+ .I SRDD<SRDO S $P(^SRF(SRTN,207),"^",21)=SRDD,SRQ=9
+"RTN","SROAPIMS",75,0)
+ Q
+"RTN","SROAPIMS",76,0)
+EMPLOY ; employment status preoperatively
+"RTN","SROAPIMS",77,0)
+ S DFN=$P(^SRF(SRTN,0),"^") D OPD^VADPT S $P(^SRF(SRTN,208),"^",18)=$P(VAPD(7),"^")
+"RTN","SROAPIMS",78,0)
+ Q
+"RTN","SROAPIMS",79,0)
+ADM1 ; get information related to admission
+"RTN","SROAPIMS",80,0)
+ ; determine if admission was for observation
+"RTN","SROAPIMS",81,0)
+ ; quit if no specialty defined for admission
+"RTN","SROAPIMS",82,0)
+ S SRX=$P($G(VAIP(13,6)),"^") I SRX="" S SRSOUT=1 Q
+"RTN","SROAPIMS",83,0)
+ D SPEC S Y="18,23,24,36,41,65,94" I Y[SRSP D  Q:$G(SRSOUT)
+"RTN","SROAPIMS",84,0)
+ .S SRVADPT(14)=SRSP,SRVADPT(12)=$E($P(VAIP(13,1),"^"),1,12),SRVADPT(13)=$E($P(VAIP(17,1),"^"),1,12)
+"RTN","SROAPIMS",85,0)
+ .S I=1 F J=12:1:14 S $P(^SRF(SRTN,208.1),"^",I)=SRVADPT(J),I=I+1
+"RTN","SROAPIMS",86,0)
+ .; look for admission following discharge from observation
+"RTN","SROAPIMS",87,0)
+ .S X1=$P($G(^SRF(SRTN,.2)),"^",12),X2=2 D C^%DTC S SR48=X,SRDT=$O(^DGPM("APTT1",DFN,$P(VAIP(13,1),"^"))) I 'SRDT!(SRDT>SR48) S SRSOUT=1 Q
+"RTN","SROAPIMS",88,0)
+ .S VAIP("D")=SRDT D IN5^VADPT I 'VAIP(13) S SRSOUT=1
+"RTN","SROAPIMS",89,0)
+ S SRVADPT(7)=$E($P(VAIP(13,1),"^"),1,12),SRVADPT(8)=$E($P(VAIP(17,1),"^"),1,12),SRSAVE=$S(SRVADPT(7)<SRSDATE:SRSDATE,1:$P(VAIP(13,1),"^"))
+"RTN","SRONOR7")
+0^2^B18187654^B17816972
+"RTN","SRONOR7",1,0)
+SRONOR7 ;B'HAM ISC/MAM - REPORT OF NON-O.R. PROCEDURES ; [ 07/27/98   2:33 PM ]
+"RTN","SRONOR7",2,0)
+ ;;3.0;Surgery;**50,175,185**;24 Jun 93;Build 2
+"RTN","SRONOR7",3,0)
+ ;
+"RTN","SRONOR7",4,0)
+ ; Reference to ^ECC(723 supported by DBIA #205
+"RTN","SRONOR7",5,0)
+ ;
+"RTN","SRONOR7",6,0)
+ S SRSOUT=0 K ^TMP("SR",$J) F  S SRSD=$O(^SRF("AC",SRSD)) Q:'SRSD!(SRSD>SRED)  S SROP=0 F  S SROP=$O(^SRF("AC",SRSD,SROP)) Q:'SROP  I $P($G(^SRF(SROP,"NON")),"^")="Y",$D(^SRF(SROP,0)),$$DIV^SROUTL0(SROP) D UTIL
+"RTN","SRONOR7",7,0)
+ S (SRHDR,SRLN)=0 F  S SRLN=$O(^TMP("SR",$J,SRLN)) Q:SRLN=""!(SRSOUT)  D HDR S SRSD=0 F  S SRSD=$O(^TMP("SR",$J,SRLN,SRSD)) Q:'SRSD!(SRSOUT)  D SROP
+"RTN","SRONOR7",8,0)
+ I '$D(^TMP("SR",$J)) D HDR W !!,"No procedures for the selected date range.",!
+"RTN","SRONOR7",9,0)
+ Q
+"RTN","SRONOR7",10,0)
+SROP N SRANEST,SRANESUP
+"RTN","SRONOR7",11,0)
+ S SROP=0 F  S SROP=$O(^TMP("SR",$J,SRLN,SRSD,SROP)) Q:'SROP!(SRSOUT)  D SET
+"RTN","SRONOR7",12,0)
+ Q
+"RTN","SRONOR7",13,0)
+SET ; set and print info
+"RTN","SRONOR7",14,0)
+ I $Y+5>IOSL D HDR I SRSOUT Q
+"RTN","SRONOR7",15,0)
+ S SR=^SRF(SROP,0),DFN=$P(SR,"^") D DEM^VADPT S SRNM=VADM(1),SRSSN=VA("PID")
+"RTN","SRONOR7",16,0)
+ S X=$P(SR,"^",12),SRINOUT=$S(X="I":"INPATIENT",X="O":"OUTPATIENT",X=1:"OUTPATIENT",X=2:"INPATIENT",X=3:"INPATIENT",1:"???")
+"RTN","SRONOR7",17,0)
+ S Y=SRSD D DD^%DT S SRSDATE=$E(SRSD,4,5)_"/"_$E(SRSD,6,7)_"/"_$E(SRSD,2,3)_" "_$P(Y,"@",2)
+"RTN","SRONOR7",18,0)
+ S SRSUR=$P($G(^SRF(SROP,"NON")),"^",6) I SRSUR S SRSUR=$P(^VA(200,SRSUR,0),"^") S:$L(SRSUR)>30 SRSUR=$P(SRSUR,",")_", "_$E($P(SRSUR,",",2))_"."
+"RTN","SRONOR7",19,0)
+ S SRANEST=$P($G(^SRF(SROP,.3)),"^") I SRANEST S SRANEST=$P(^VA(200,SRANEST,0),"^") S:$L(SRANEST)>30 SRANEST=$P(SRANEST,",")_", "_$E($P(SRANEST,",",2))_"."
+"RTN","SRONOR7",20,0)
+ S SRANESUP=$P($G(^SRF(SROP,.3)),"^",4) I SRANESUP S SRANESUP=$P(^VA(200,SRANESUP,0),"^") S:$L(SRANESUP)>30 SRANESUP=$P(SRANESUP,",")_", "_$E($P(SRANESUP,",",2))_"."
+"RTN","SRONOR7",21,0)
+ S Y=$P(^SRF(SROP,"NON"),"^",8),SRSS=$S(Y:$E($P(^ECC(723,Y,0),"^"),1,30),1:"SPECIALTY NOT ENTERED")
+"RTN","SRONOR7",22,0)
+ S SRST=$P($G(^SRF(SROP,"NON")),"^",4) I SRST S Y=SRST D DD^%DT S SRST=$E(SRST,4,5)_"/"_$E(SRST,6,7)_"/"_$E(SRST,2,3)_" "_$P(Y,"@",2)
+"RTN","SRONOR7",23,0)
+ S SRET=$P($G(^SRF(SROP,"NON")),"^",5) I SRET S Y=SRET D DD^%DT S SRET=$E(SRET,4,5)_"/"_$E(SRET,6,7)_"/"_$E(SRET,2,3)_" "_$P(Y,"@",2)
+"RTN","SRONOR7",24,0)
+ S SROPER=$P(^SRF(SROP,"OP"),"^"),OPER=0 F  S OPER=$O(^SRF(SROP,13,OPER)) Q:'OPER  D OTHER
+"RTN","SRONOR7",25,0)
+ K SROPS,MM,MMM S:$L(SROPER)<50 SROPS(1)=SROPER I $L(SROPER)>49 S SROPER=SROPER_"  " F M=1:1 D LOOP Q:MMM=""
+"RTN","SRONOR7",26,0)
+ S SRABORT=$S($P($G(^SRF(SROP,30)),"^"):"*ABORTED*",1:"")
+"RTN","SRONOR7",27,0)
+ W !!,SRSDATE,?15,SRNM_" ("_VA("PID")_")",?64,SRSUR,?116,SRST,!,SROP,?15,SRSS_" ("_SRINOUT_")",?64,SRANEST,?116,SRET
+"RTN","SRONOR7",28,0)
+ W !,?62,SRANESUP,!,?62,SROPS(1)
+"RTN","SRONOR7",29,0)
+ W:SRABORT'="" !,SRABORT I $D(SROPS(2)) W:SRABORT="" ! W ?62,SROPS(2) I $D(SROPS(3)) W !,?62,SROPS(3) I $D(SROPS(4)) W !,?62,SROPS(4)
+"RTN","SRONOR7",30,0)
+ Q
+"RTN","SRONOR7",31,0)
+UTIL ; set ^TMP
+"RTN","SRONOR7",32,0)
+ S Y=$P(^SRF(SROP,"NON"),"^",2) S SRLN=$S(Y:$P(^SC(Y,0),"^"),1:"LOCATION NOT ENTERED")
+"RTN","SRONOR7",33,0)
+ S ^TMP("SR",$J,SRLN,SRSD,SROP)=""
+"RTN","SRONOR7",34,0)
+ Q
+"RTN","SRONOR7",35,0)
+HDR I $D(ZTQUEUED) D ^SROSTOP I SRHALT S SRSOUT=1 Q
+"RTN","SRONOR7",36,0)
+ I SRHDR,$E(IOST)'="P" W !!,"Press RETURN to continue, or '^' to quit:  " R X:DTIME I '$T!(X["^") S SRSOUT=1 Q
+"RTN","SRONOR7",37,0)
+ W:$Y @IOF W !,?(132-$L(SRINST)\2),SRINST,!,?57,"SURGICAL SERVICE",?100,"REVIEWED BY:",!,?51,"REPORT OF NON-O.R. PROCEDURES",?100,"DATE REVIEWED:",!,?(132-$L(SRFRTO)\2),SRFRTO
+"RTN","SRONOR7",38,0)
+ W !!,"DATE",?15,"PATIENT (ID#)",?64,"PROVIDER",?116,"START TIME",!,"CASE #",?15,"SPECIALTY (IN/OUT-PAT STATUS)",?64,"PRINCIPAL ANESTHETIST",?116,"FINISH TIME"
+"RTN","SRONOR7",39,0)
+ W !,?62,"ANESTHESIOLOGIST SUPERVISOR",!,?62,"PROCEDURE(S)",! F LINE=1:1:132 W "="
+"RTN","SRONOR7",40,0)
+ W:SRLN'="" !,?(124-$L("LOCATION: "_SRLN)\2),"*** LOCATION: "_SRLN_" ***" S SRHDR=1
+"RTN","SRONOR7",41,0)
+ Q
+"RTN","SRONOR7",42,0)
+OTHER ; other operations
+"RTN","SRONOR7",43,0)
+ S SRLONG=1 I $L(SROPER)+$L($P(^SRF(SROP,13,OPER,0),"^"))>240 S SRLONG=0,OPER=999,SROPERS=" ..."
+"RTN","SRONOR7",44,0)
+ I SRLONG S SROPERS=$P(^SRF(SROP,13,OPER,0),"^")
+"RTN","SRONOR7",45,0)
+ S SROPER=SROPER_$S(SROPERS=" ...":SROPERS,1:", "_SROPERS)
+"RTN","SRONOR7",46,0)
+ Q
+"RTN","SRONOR7",47,0)
+LOOP ; break procedure if greater than 50 characters
+"RTN","SRONOR7",48,0)
+ S SROPS(M)="" F LOOP=1:1 S MM=$P(SROPER," "),MMM=$P(SROPER," ",2,200) Q:MMM=""  Q:$L(SROPS(M))+$L(MM)'<50  S SROPS(M)=SROPS(M)_MM_" ",SROPER=MMM
+"RTN","SRONOR7",49,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",9944,6)
+^176
+**END**
+**END**
+

@@ -1,0 +1,288 @@
+
+=============================================================================
+Run Date: JUN 23, 2016                     Designation: MAG*3*146
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #121                      Status: Released
+                  Compliance Date: JUL 25, 2016
+=============================================================================
+
+Associated patches: (v)MAG*3*135   <<= must be installed BEFORE `MAG*3*146'
+                    (v)MAG*3*158   <<= must be installed BEFORE `MAG*3*146'
+
+Subject: FULLY QUALIFIED DOMAIN NAME
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Associated Patches:
+ ==================
+ The ability to use Fully Qualified Domain Names (FQDNs) was released in 
+ the MAG*3.0*135 Background Processor Maintenance patch and must be 
+ installed in order to use FQDN.  Also, MAG*3.0*146 must be implemented 
+ after MAG*3.0*158, due to an abstract creation issue.
+  
+ This patch is informational only and provides additional information that 
+ sites may use to implement the use of FQDNs.
+  
+ Subject:
+ =======
+ Fully Qualified Domain Name (FQDN)
+  
+ Category:  
+ ========
+ OTHER
+  
+ Description:
+ ===========
+ As part of the Windows Internet Name Service (WINS) Server Elimination
+ Project, WINS functionality will be disabled by removing the Network Basic
+ Input/Output System (NetBIOS) protocol from all VA systems.  To prepare
+ for this, all sites will be required to switch their network location
+ entries over to Fully Qualified Domain Names (FQDNs).  This informational
+ patch provides an explanation of an FQDN, describes how it works, and
+ provides instructions for sites to update their network location entries
+ to FQDNs and verifies proper functionality of VistA Imaging components
+ when using FQDNs.  Additionally, as part of this patch, VistA Imaging was
+ tested to insure that it operates normally with NetBIOS removed.
+  
+ What is an FQDN?
+ ================
+ An FQDN is the complete domain name for a specific computer (host) on the 
+ Internet. It consists of both host name and domain name. Combined, they 
+ provide enough information for the Domain Name System (DNS) to identify a 
+ computer's Internet Protocol (IP) address. 
+  
+ To further explain, the host name references a specific computer, whereas 
+ the domain name references the network from a particular organization.  
+ For example, an FQDN for a hypothetical mail server might be 
+ mymail.vhaiswmail.gov.  The host name is mymail located within the domain 
+ name vhaiswmail.gov. The FQDN acts as an alias for the IP address (such as
+ 192.168.1.1), a complex string of numbers that computers, 
+ servers and devices, use to identify one another online.
+  
+ Why use an FQDN?
+ ================
+ Since IP addresses are so complex, it is easier for users to remember 
+ host names and domain names.  The best way for a user to connect to a 
+ host is to specify the FQDN (the host name plus domain name).  The DNS 
+ takes that information and searches the DNS table for the specific IP 
+ address and returns it. 
+  
+ If the user attempts to connect to a server with only the host name (no 
+ domain), then the DNS might fail to locate the IP address if the host is 
+ outside the user's searchable domain.  Supplying the host's FQDN will 
+ enable the DNS to locate the server without delay.
+  
+ The legacy method of locating machines across Veterans Integrated 
+ Service Networks (VISNs) and Regions without the FQDN involved the use of
+ WINS.  By pointing all clients to a collection of national WINS servers in
+ the VA, machines could resolve each other's IP addresses regardless of
+ which domain they reside in.  This has allowed Imaging to reach machines
+ with only the machine name in the path, so Imaging has not needed a full
+ path to the machine name.  The VA however is phasing out WINS in favor or
+ DNS.  To facilitate this transition, it is necessary to ensure that all
+ paths in the Imaging Network Location file use FQDNs, to allow name
+ resolution via DNS.
+  
+ Note:  Some applications use the Import API to pass through the 
+ Background Processor (BP) - images Import Queue.  These applications are 
+ still using Universal Naming Convention (UNC) rather than FQDN and are 
+ configured/setup outside of the VistA Imaging environment, for example: 
+ -Clinical Procedures package 
+ -Patient Image Capture System (PICS) Medical Intensive Care Unit 
+ (MICU) Flowsheet (Sto Interface-) VA application that creates flowsheets).
+ -Commercial application, Document Storage Systems (DSS) DocManager
+ -Commercial application, iMedConsent
+ -Veterans ID Card PICS
+  
+ The site might have to perform the walk-around before they perform the 
+ FQDN option from their own API.
+  
+ See Appendix A - DSS Server Instructions Across Different VISNs/Regions.
+  
+ Distribution of Software
+ ========================
+ Patch Components
+ ==============
+ This patch only includes this document, MAG3_0P146_Patch_Description.pdf, 
+ which provides information constituting this patch.  
+ MAG3_0P146_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software
+ ========
+ N/A
+  
+ Documentation 
+ =============
+ This document, MAG3_0P146_Patch_Description.pdf, provides information 
+ making up this informational patch.
+  
+ Supporting Documentation:
+ ========================
+ VistA Imaging Installation Guide, August 2013, Rev. 26:
+  
+   Section 2.2 Imaging File Server Setup 
+   Subsection 2.2.1 Configuration and Naming Conventions 
+   Section 2.4.5.1 Edit the NETWORK LOCATION File (#2005.2) 
+  
+ Forms Associated:
+ ================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ ======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ==================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ ====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ ========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ ====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ ======================
+ New Service Requests (NSRs):
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ There are no patient safety issues associated with this patch. 
+  
+ Ticket(s) & Overview:
+ ====================
+ The following help desk calls and defect numbers are addressed in this
+ patch:
+   INC 000588369 - FQDN - cannot view image from remote site 
+  
+ Problem 1:
+ =========
+ This patch provides instruction to allow sites to convert the network 
+ paths of their Network Location entries from hostname only references to 
+ the FQDN reference.
+  
+ The legacy method of resolving machine names in network paths has been 
+ accomplished via a combination of DNS and WINS.  When the hostname in the 
+ path is beyond the DNS scope of the caller, the caller would fall to WINS 
+ to resolve the name.  The VA is phasing out WINS, so sites need to use 
+ FQDNs in their network paths in the Imaging NETWORK LOCATION file 
+ (#2005.2) PHYSICAL REFERENCE field (#1) to ensure the hostname will be 
+ resolvable by any device.
+  
+ Resolution 1:
+ ============
+ How can I convert to FQDN? 
+ To convert to FQDN, first, all online physical references in the Imaging 
+ NETWORK LOCATION file (#2005.2) should be updated from simple machine 
+ names to FQDNs.  This includes Tier 1 locations, Tier 2 locations, 
+ Diagrams (if used), Routing locations, and EKG locations.
+  
+ The FQDN at the medical centers normally includes the VISN, aka 
+ Vxx.domain.ext. For example: Huntington's cluster is
+ VHAHUNCLU2A.V09.DOMAIN.EXT 
+  
+ Hostname.Vyy.DOMAIN.EXT - (should be standard where "yy" is the VISN 
+ number) 
+  
+ For the Imaging Network Location entry, be sure to use both host name and 
+ domain name, as shown below:
+  
+ Host Name       + Domain Name   = FQDN
+ VHAxxxCLU4      Vyy.domain.ext  VHAxxxCLU4.Vyy.domain.ext
+ VHAxxxIMMJB1    Vyy.domain.ext  VHAxxxIMMJB1.Vyy.domain.ext
+  
+ xxx = 3 character site code, and yy=VISN number
+  
+ Please consult your local VHA network team for the correct FQDNs. 
+  
+ To edit the NETWORK LOCATION file (#2005.2), follow instructions in the 
+ VistA Imaging Installation Guide, Section 2.4.5.1 (see the Supporting 
+ Documentation section above).  In Step 4, be sure to enter the FQDN (full 
+ path) in the Network Share field.
+  
+ Verifying that the Change to FQDN Works
+ When the path is entered, press "Apply", then click "Properties" to 
+ verify the information, as shown below.  If the value is correct and the 
+ path is visible to the Background Processor, the pie chart display should 
+ indicate used and free space.  If it does not, re-check the value before 
+ continuing to the next entry.
+  
+  
+  
+ Problem 2:  
+ =========
+ Sites will be instructed to disable NetBIOS on all workstations and 
+ servers.  VistA Imaging must be tested to operate with the NetBIOS 
+ removed.
+  
+ Resolution 2:
+ ============
+ VistA Imaging was tested to insure that it operates normally with NetBIOS 
+ removed.
+  
+ Test Sites:
+ The following sites are test sites for this patch:
+   Martinsburg, WV VA Medical Center
+   Southern Arizona Health Care System, Tucson, AZ
+   Fayetteville, NC VA Medical Center
+   VISN 15, Eastern Orbit VA Heartland Network - St. Louis, Marion and 
+ Poplar Bluff
+  
+ Documentation Retrieval Instructions:
+ ====================================
+ Title   File Name       FTP Mode
+ None
+  
+ Patch Installation:
+ ==================
+ Installation Planning
+ =====================
+ MAG*3.0*146 is an information patch only.  There is nothing to install.
+ Installation Prerequisites
+ ==========================
+ There are no patch dependencies since this patch is informational only.
+  
+ VistA System (KIDS) Installation 
+ ================================
+ Installation Steps
+ ==================
+ MAG*3.0*146 is an information patch only.  There is no KIDS package to 
+ install.
+  
+ Appendix A  - DSS Server Instructions Across VISNs/Regions
+ ==========================================================
+ To add the DNS suffixes into the BP server networking property, access 
+ the following page and option.
+  
+ Control Panel -> Network and Internet -> Network 
+ Connection/Public/Properties/Internet Protocol Version.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 06, 2014
+Completed By:                               Date Completed: JUN 08, 2016
+Released By :                               Date Released : JUN 23, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

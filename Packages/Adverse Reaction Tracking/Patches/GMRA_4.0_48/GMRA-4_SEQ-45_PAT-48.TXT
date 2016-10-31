@@ -1,0 +1,290 @@
+$TXT Created by                CPRS28.DOMAIN.EXT  (KIDS) on Friday, 04/22/16 at 15:55
+=============================================================================
+Run Date: MAY 24, 2016                     Designation: GMRA*4*48
+Package : GMRA - ADVERSE REACTION TRACKING    Priority: EMERGENCY
+Version : 4        SEQ #45                      Status: Released
+                  Compliance Date: MAY 26, 2016
+=============================================================================
+
+Associated patches: (v)GMRA*4*36   <<= must be installed BEFORE `GMRA*4*48'
+
+Subject: ASSESSMENT CLEAN UP UTILITY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ During review of the three defect tickets submitted regarding a hard 
+ error in allergy order checking, it was discovered there was a data 
+ integrity issue with some entries in the ADVERSE REACTION TRACKING (GMRA) 
+ system.
+  
+ This patch will install the Assessment Clean Up Utility, allowing sites to
+ identify and correct any discrepancies between the ADVERSE REACTION 
+ ASSESSMENT file (#120.86) and the PATIENT ALLERGIES file (#120.8).
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name              Type               New/Modified/Deleted
+ -----------              ----               -------------------- 
+ GMRA ASSESSMENT UTILITY  run routine        New
+  
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               -------------------- 
+ GMRA ASSESS DET ALL EIE     New
+ GMRA ASSESS DET ASSESSMENT  New
+ GMRA ASSESS DET MENU        New
+ GMRA ASSESS DET REVIEW      New
+ GMRA ASSESS MENU            New
+ GMRA ASSESS SELECT PATIENT  New
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ PSPO 3111
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ 1. 827602 Adverse Reaction Tracking - Receiving Error (Undefined, 
+           NullSubscript, etc):
+    831129 Adverse Reaction Tracking - Allergy Order Checks:
+    833419 Outpatient Pharmacy - Other:
+  
+ Problem:
+ -------
+ When a pharmacist processes a prescription, a <UNDEFINED>DSPLY+4^PSODGAL1 
+ *GMRAL error is generated, preventing the pharmacist from finishing the 
+ prescription.  This error is generated when the ADVERSE REACTION 
+ ASSESSMENT file (#120.86) data is out of sync with the PATIENT ALLERGIES 
+ file (#120.8) data, specifically, the patient had a value of NO for the 
+ assessment yet had active reactions.  Outpatient Pharmacy patch PSO*7*390 
+ enabled the pharmacy order checks to display sign and symptom data in the 
+ text of a drug-allergy order check message.  To accomplish this, two 
+ allergy APIs were called: one that performed the order check (which 
+ ignored the assessment data) and another that retrieved the sign and 
+ symptom data (which did not ignore the assessment data).  
+  
+ Resolution:
+ ----------
+ This data issue was caused by version 2 of the Adverse Reaction Tracking 
+ software package (the current version is 4).  The current version of the 
+ software prevents this data problem from occurring.  Therefore, the 
+ Assessment Clean Up Utility tool was created to enable sites to identify 
+ patients in this situation and manually correct the appropriate data so 
+ that both files are in agreement.
+ **NOTE: Installation of this patch does not by itself prevent the 
+ undefined error from occurring.  Sites must use the tool to correct any 
+ problems that it identifies in order to prevent the error from occurring.
+  
+  
+ Test Sites:
+ ----------
+ Syracuse VA Medical Center (Syracuse, NY)
+ James J. Peters VA Medical Center (Bronx, NY)
+ VA Maryland Health Care System
+ Louis Stokes Cleveland VA Medical Center (Cleveland, OH)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------
+ Documentation describing the new functionality introduced by this patch is
+ available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Adverse Reaction Tracking     gmra_4_um.doc                   Binary
+  User Manual                  gmra_4_um.pdf
+  
+ Adverse Reaction Tracking     gmra_4_tm.doc                   Binary
+  Technical Manual             gmra_4_tm.pdf
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ During the post installation, the B cross-reference in the ADVERSE 
+ REACTION ASSESSMENT file (#120.86) is re-indexed. After the install has
+ completed, KIDS will automatically delete the post install routine once
+ the install successfully completes.
+  
+ After installing this patch, sites must run the utility and correct all
+ problems identified. Sites should not run the utility while patient 
+ merges are in progress. Refer to the Track Status of Merge Process 
+ section in the Duplicate Record Merge: Patient Merge User Manual to 
+ determine if there are any patient merges in progress. If the utility's
+ patient list contains patients without names, sites should submit a CA SDM
+ ticket for support in deleting the list of patients and re-running the
+ utility.
+  
+ This patch may be installed with users on the system. Sites are 
+ strongly encouraged to queue this patch to install outside of normal 
+ business hours as the post installation may impact users entering 
+ adverse reaction assessments. This patch should take less than 5 minutes
+ to install. There are no options to disable for this installation.
+  
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch #
+     : GMRA*4*48
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', answer NO.
+  
+ Post-Installation Instructions
+ ------------------------------
+ *****Important Note*****
+ It is imperative that sites run the GMRA ASSESSMENT UTILITY to identify 
+ any potential data issues and correct them as soon as possible in order to
+ mitigate any potential patient safety issues from improper allergy order
+ checks. Sites should ensure there are no patient merges in progress while
+ the background task builds the list of patients with data issues. In order
+ to coordinate, you will have to determine who performs patient merges for
+ your facility. Sites have different departments involved in patient 
+ merges. Some sites use a team of the MPI coordinator and OIT 
+ representatives. Others use HIMs or potentially the business office.
+  
+ *****Important Note*****
+ These discrepancies must be corrected before the installation of the 
+ Medication Order Check Healthcare Application (MOCHA) Enhancements 2 
+ (ME2) patches.
+  
+ The first time GMRA ASSESSMENT UTILITY is accessed, a search will process 
+ through the ADVERSE REACTION ASSESSMENT file (#120.86) and the PATIENT 
+ ALLERGIES file (#120.8) looking for any possible discrepancies.
+  
+ When the search is complete, a MailMan message with the subject GMRA 
+ ASSESSMENT FIX LIST BUILD STATUS, will be sent to the person who started 
+ the task as well as any additional recipients specified. 
+  
+ At this time, the patients and discrepancies need to be reviewed and
+ corrected to mitigate any potential patient safety issues. Use the GMRA
+ ASSESSMENT UTILITY to see the list of patients, if any, and the
+ discrepancies found. For further instructions, as well as examples, please
+ refer to the Adverse Reaction Tracking User Manual (GMRA_4_UM_R0416).
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;Adverse Reaction Tracking;**[Patch List]**;Mar 29, 1996;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRAFA
+    Before:       n/a   After: B82868608  **48**
+Routine Name: GMRAFA1
+    Before:       n/a   After: B22448935  **48**
+Routine Name: GMRANKA
+    Before: B12980471   After: B14671193  **2,21,36,48**
+Routine Name: GMRAY48
+    Before:       n/a   After:   B544104  **48**
+ 
+Routine list of preceding patches: 36
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 28, 2013
+Completed By:                               Date Completed: MAY 20, 2016
+Released By :                               Date Released : MAY 24, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

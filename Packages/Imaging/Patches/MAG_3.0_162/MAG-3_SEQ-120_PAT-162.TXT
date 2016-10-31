@@ -1,0 +1,770 @@
+
+=============================================================================
+Run Date: JUN 15, 2016                     Designation: MAG*3*162
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #120                      Status: Released
+                  Compliance Date: NOV 30, 2016
+=============================================================================
+
+
+Subject: Query retrieve
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ Associated Patches:  This patch must be installed after MAG*3.0*157.  
+ ==================
+  
+ Note: VIX and HDIG will not install on 32-bit machines with a Windows 
+ operating system such as 2003 Server.There is also a known issue if there 
+ are multiple Java versions on the system for VIX and HDIG:
+ -For a fresh installation, remove all installed Java applications 
+ before the installation of MAG*3.0*162
+ -If updating, remove installed Java if it's not version 1.6.0_45
+  
+  
+ Subject: 
+ =======
+ Hybrid Digital Imaging and Communications in Medicine 
+ (DICOM) Gateway (HDIG), Legacy DICOM Gateway (LDGW) and VistA Imaging 
+ Exchange (VIX) Update
+  
+ Category:  OTHER
+ ========
+  
+ Routine Information:
+ ===================
+ VistA KIDS Checksums:
+ This section lists modified routines for the VistA Kernel 
+ Installation and Distribution System (KIDS) build.  For each routine, 
+ the second line will contain the following information: 
+  
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 20
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine         Checksum        Checksum    Patch List
+                 Before          After      
+ MAGDQR03        216286453       217560028   **51,54,66,123,118,138,162**
+ MAGDQR72        6230687         8819008     **118,162**
+ MAGDRPCA        79625346        80785193    **53,123,118,142,138,162**
+ MAGIP162        N/A             4110396     **162**
+ MAGVAG03        76869387        76869387    **118,142,162**
+ MAGVCWIA        103244779       117974804   **138,162**
+ MAGVGUID        34710129        34583705    **118,138,162**
+ MAGVRS61        94036467        95250185    **118,162**
+  
+ Routine MAGIP162 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+  
+ Description:
+ ===========
+ This document describes MAG*3.0*162, a patch that provides updates to the 
+ Legacy Digital Imaging and Communications in Medicine (DICOM) Gateway 
+ (LDGW) and the Hybrid DICOM Image Gateway (HDIG).  This patch addresses a 
+ number of defects identified in Query/Retrieve and the HDIG including:  
+ Storage Commit "MAG WORK ITEM" entries not purging, a MAG_DCMAbstract 
+ timing issue, the DICOM Connectivity Framework (DCF) Listen configuration 
+ file missing a few Service-Object Pair (SOP) Classes and a site-specific 
+ accession number issue in Query/Retrieve.  Additionally, a new VistA 
+ Imaging Exchange (VIX) install is being provided for inclusion in the 
+ updates to the configuration file server.xml to improve Tomcat 
+ performance for the mobile imaging application team.
+  
+ Software and Documentation Retrieval Instructions:
+ =================================================
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from 
+ download.vista.domain.ext.  This transmits the files from the first 
+ available server.  Sites may also elect to retrieve files directly from a 
+ specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Installation instructions are included in this document.
+ Note:   Information about last-minute changes to this patch will be 
+ provided in a readme file. 
+  
+ Patch Components:
+ ================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P 162_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch.  
+ MAG3_0P162_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software:
+ ========
+ File Name                                       Description
+ MAG3_0P162.KID                                  KIDS build for Patch 162
+ MAG3_0P162_DICOM_setup.exe                      Legacy DICOM Gateway 
+                                                 Installation File
+ MAG3_0P162_HDIG_Setup.msi                       Hybrid DICOM Gateway 
+                                                 Installation File
+ MAG3_0P162_VIX_Setup.msi                        VIX Installation File
+ MAG_DICOM_Importer_User_Manual-revision.pdf     Update to the Importer 
+                                                 III User Manual
+ Documentation:
+ =============
+ This document, MAG3_0162_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch. 
+  
+ Forms Associated:
+ ================
+ Form Name       File #  New/Modified/Deleted
+ None
+  
+ Mail Groups Associated:
+ ======================
+ Mail Group Name New/Modified/Deleted
+ None
+  
+ Options Associated:
+ ==================
+ Option Name     Type    New/Modified/Deleted
+ None
+  
+ Protocols Associated:
+ ====================
+ Protocol Name   New/Modified/Deleted
+ None
+  
+ Security Keys Associated:
+ ========================
+ Security Key Name
+ None
+  
+ Templates Associated:
+ ====================
+ Template Name   Type    File Name       Number  New/Modified/Deleted
+ None
+  
+ Additional Information:
+ ======================
+ New Service Requests (NSRs):
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ There are no patient safety issues associated with this patch. 
+  
+ Ticket(s) & Overview:
+ ====================
+ The following trouble tickets and defect/work item numbers are addressed 
+ in this patch:
+ Item    Ticket #/Defect #                       Description
+ 1.      Ticket (Remedy): 967877                 VistA file Storage Commit 
+         Defect: 194645                          "MAG WORK ITEM" entries
+                                                 are not purging as they
+                                                 should.
+ 2.      Defect:  194651                         Error with Imaging 
+                                                 service account.
+ 3.      Ticket (Remedy): 1010888                MAG_DCMAbstract timing 
+         Defect: 194696                          issue.
+ 4.      Ticket (Remedy): 1264438                An undefined error occurs 
+         Defect: 194716                          in Query/Retrieve.
+ 5.      Defect:  194718, 194708                 HDIG does not properly 
+                                                 handle C-Store SCU
+                                                 (Service Class User)
+                                                 operations when the
+                                                 C-Store SCP (Service Class
+                                                 Provider) aborts/breaks
+                                                the association/connection.
+ 6.      Ticket (Remedy): 1253619                The DICOM Connectivity 
+         Defect: 194727                          Framework (DCF)  Listen
+                                                 configuration file is
+                                                 missing a few
+                                                 Service-Object
+                                                 Pair (SOP) Classes.
+ 7.      Ticket (Remedy): 1230282                There is improper 
+         Defect: 194728                          matching when cPACS
+                                                 (Commercial Picture
+                                                 Archiving and
+                                                 Communications System)
+                                                 sends images with only a
+                                                 case number.
+ 8.      Ticket (Remedy): 1230282                Importer becomes 
+         Defect: 194729                          inoperable when there is
+                                                 an extensive number of
+                                                 corrections to be
+                                                 addressed.
+ 9.      Ticket (Remedy): 1243459                New Tomcat Service 
+         Defect 194730                           parameter to improve
+                                                 performance.
+ 10.     Ticket (Remedy): 1240716                VistA Imaging saving
+         Defect: 199641                          duplicate images with same
+                                                 Accession number.
+ 11.     Defect:  220225                         Add modified 
+                                                 JCIFS.properties
+                                                 (Java Common Internet File
+                                                 System) to build manifest.
+ 12.     Ticket (CA): I6051289FY16               Storing SOP Instance UID
+         Defect: 231343                          (Unique Identifier) when
+                                                 SOP Class is disabled.
+ 13.     Ticket (Remedy): 1289474                Site-specific accession 
+         Defect: 265022                          number issue in
+                                                 Query/Retrieve.
+ 14.     Ticket (CA SDM): R6998208FY16           The Cache' version 5.0/5.1
+         Defect: 269386                          checking causes problems
+                                                 on post 5.1 versions'
+                                                 installs.
+         
+  
+ Problem 1:  VistA File "MAG WORK ITEM" Entries are not Purging as They
+ ======================================================================
+ Should
+ ======
+ The VistA file "MAG WORK ITEM" entries are not purging as they should, 
+ specifically the "Storage Commit" entries in Patch 137.
+  
+ Resolution 1:  
+ ============
+ How the MAGVC WI LIST RPC (Remote Procedure Call) works was modified.  It 
+ now supports two additional parameters (last IEN - Internal Entry Number 
+ - number or records to return).  The RPC will no longer create a data 
+ array of indefinite size if the number of records to return is 
+ specified.  Modifications were made to the RPC, M-code, and HDIG.
+  
+ Problem 2:  Error with Imaging Service Account
+ ==============================================
+ The following errors were occurring in the VistA error trap.
+  
+ ZSTORE errors (running out of partition space):
+   <STORE>^XWBTCPC
+  
+ The error is caused by the Patch 79 Storage Commitment.  The error 
+ indicates that there was too much data stored locally in the partition 
+ (i.e., not in ^TMP).  ACTLIST+38^MAGVCWIA is trying to build the RETURN 
+ array and there are too many entries.
+  
+ Resolution 2:
+ ============
+ Both the M-Code and Java code were modified to implement  new RPC 
+ parameters (WILIMIT and LASTIEN) to limit the number of Storage Commit 
+ Work Item entries returned in the RPC Response.
+  
+ Problem 3:  MAG_DCMAbstract Timing Issue
+ ========================================
+ An error occurred where the MAG_DCMabstract occasionally could not create 
+ an abstract for an image within a particular study.  It successfully uses 
+ a canned.jpg instead.
+  
+ Resolution 3:
+ ============
+ The MAGDIR7C routine was updated on the Legacy DICOM Gateway (LDGW) to 
+ include a one second hang after the deletion of the previous temporary 
+ abstract and the creation of the new abstract.  
+  
+ Problem 4:  An Undefined Error Occurs in Query/Retrieve
+ =======================================================
+ Query/Retrieve is sometimes failing and an undefined error occurs.
+   
+ Resolution 4:
+ ============
+ In MAGDQR03, the V local array variable was being was being created 
+ before the Study UID (Unique Identifier) element was set with the Study 
+ UID, so after the embedded code segment was executed, the Study UID was 
+ being lost.  Later, MAGDQR13 assumes that there is a Study UID defined 
+ and attempts to access the element, even though it no longer exists and 
+ an undefined error occurs.  The MAGDQR03 routine was modified to preserve 
+ the V array.
+  
+ Problem 5:  HDIG Does not Properly Handle C-Store SCU Operations
+ ================================================================
+ During a Query/Retrieve operation, the HDIG plays the role of the C-Store 
+ SCU (Service Class User).  The HDIG opens an Association with the C-Store 
+ SCP (Service Class Provider)/third party provider and the HDIG then sends 
+ 1-to-many images to the C-Store SCP.  The HDIG was designed to be 
+ resilient so if any one image fails, the HDIG will continue to send the 
+ other images within the study.  However, one use case was not taken into 
+ account.
+  
+ While sending an image, there was a network problem that generated 
+ network IO errors/exceptions.  This exception did not necessarily come 
+ from the C-Store SCP.  It is also possible that during this, the C-Store 
+ SCP triggered an A-Abort to abort the Association.  The C-Store SCP 
+ believes the Association no longer exists.  However, the HDIG still sees 
+ an association and continues attempting to send images.  Eventually, the 
+ HDIG times out because it does not receive any image sent responses from 
+ the C-Store SCP.
+  
+ Resolution 5:
+ ============
+ Code was updated in the ImagingDicomRouter and ImagingDicomDCFSCU Java 
+ projects.  The DICOM Storage SCU code was not properly notifying the 
+ Command Router and the DICOM association was aborted.  This was corrected 
+ with proper Exception handling. 
+  
+ Problem 6:  SOP Classes Missing in DCF Listen Configuration File 
+ ================================================================
+ Some newly supported SOP Classes were missing from the DCF Listen 
+ configuration file:
+ 1.2.840.10008.5.1.4.1.1.67         Real World Value Mapping Storage
+ 1.2.840.10008.5.1.4.1.1.77.1.6     VL Whole Slide Microscopic Image 
+                                    Storage
+ 1.2.840.10008.5.1.4.1.1.9.1        Waveform Storage - Trial (Retired)
+ 1.2.840.10008.5.1.4.1.1.13.1.1     X-Ray 3D Angiographic Image Storage
+ 1.2.840.10008.5.1.4.1.1.104.2      Encapsulated CDA Storage
+ 1.2.840.10008.5.1.4.1.1.481.9      RT Ion Beams Treatment Record Storage
+ 1.2.840.10008.5.1.4.1.1.130        Enhanced PET Image Storage
+ 1.2.840.10008.5.1.4.1.1.131        Basic Structured Display Storage
+ 1.2.840.10008.5.1.4.1.1.9.5.1      Arterial Pulse Waveform Storage
+ 1.2.840.10008.5.1.4.1.1.9.6.1      Respiratory Waveform Storage
+ 1.2.840.10008.5.1.4.1.1.6.2        Enhanced US Volume Storage
+ 1.2.840.10008.5.1.4.1.1.13.1.2     X-Ray 3D Craniofacial Image Storage
+ 1.2.840.10008.5.1.4.1.1.9.4.2      General Audio Waveform Storage
+ 1.2.840.10008.5.1.4.1.1.4.3        Enhanced MR Color Image Storage
+ 1.2.840.10008.5.1.4.1.1.12.3       X-Ray Angiographic Bi-Plane Image 
+                                    Storage (Retired)
+ 1.2.840.10008.5.1.4.1.1.13.1.3     Breast Tomosynthesis Image Storage
+ 1.2.840.10008.5.1.4.1.1.77.1.5.4   Ophthalmic Tomography Image Storage
+ 1.2.840.10008.5.1.4.1.1.11.5       XA/XRF Grayscale Softcopy Presentation 
+                                    State Storage
+ 1.2.840.10008.5.1.4.1.1.66.3       Deformable Spatial Registration Storage
+ 1.2.840.10008.5.1.4.1.1.66.4       Segmentation Storage
+ 1.2.840.10008.5.1.4.1.1.88.1       Text SR Storage - Trial (Retired)
+ 1.2.840.10008.5.1.4.1.1.88.2       Audio SR Storage - Trial (Retired)
+ 1.2.840.10008.5.1.4.1.1.88.3       Detail SR Storage - Trial (Retired)
+ 1.2.840.10008.5.1.4.1.1.88.4       Comprehensive SR Storage - Trial 
+                                    (Retired)
+ 1.2.840.10008.5.1.4.1.1.78.1       Lensometry Measurements Storage
+ 1.2.840.10008.5.1.4.1.1.78.2       Autorefraction Measurements Storage
+ 1.2.840.10008.5.1.4.1.1.78.3       Keratometry Measurements Storage
+ 1.2.840.10008.5.1.4.1.1.78.4       Subjective Refraction Measurements 
+                                    Storage
+ 1.2.840.10008.5.1.4.1.1.78.5       Visual Acuity Measurements
+ 1.2.840.10008.5.1.4.1.1.78.6       Spectacle Prescription Reports Storage
+ 1.2.840.10008.5.1.4.1.1.79.1       Macular Grid Thickness and Volume 
+                                    Report Storage
+ 1.2.840.10008.5.1.4.1.1.66.5       Surface Segmentation Storage
+ 1.2.840.10008.5.1.4.1.1.3          Ultrasound Multi-frame Image Storage 
+                                    (Retired)
+ 1.2.840.10008.5.1.4.1.1.5          Nuclear Medicine Image Storage 
+                                    (Retired)
+ 1.2.840.10008.5.1.4.1.1.6          Ultrasound Image Storage (Retired)
+ 1.2.840.10008.5.1.4.1.1.77.1       VL Image Storage - Trial (Retired)
+ 1.2.840.10008.5.1.4.1.1.77.2       VL Multi-frame Image Storage - Trial 
+                                    (Retired)
+  
+ Resolution 6:
+ ============
+ The missing SOP Classes were added to the DCF Listen configuration file. 
+  
+ Problem 7:  Improper Matching When cPACS Sends Images with Only Case 
+ ====================================================================
+ Number
+ ======
+ Some cPACS are only using the Case# in the Accession# field. The HDIG 
+ does not have the ability to match a Case number located in the Accession 
+ number field.  The Legacy DICOM Gateway (LDGW) did this by creating a 
+ custom configuration to prepend the Study Date to the Case number.  This 
+ ability does not exist in the HDIG.  Images received under this condition 
+ end up in the Importer DICOM Corret for later reconciliation.  
+ This is causing a significant problem when using the Importer and having 
+ the images available promptly.
+                            
+ Resolution 7:
+ ============
+ A DCF toolkit custom filter was added.  The class is VACustomFilter.  It 
+ will use configuration information that is added to the DCF Listen file.  
+ This only affects incoming images to the C-Store SCP on the HDIG.  The 
+ configuration allows an override of the Accession#, Patient Name, and 
+ Patient ID fields in the DICOM dataset.  Specifically, the Accession# can 
+ be modified to match either of the two possible Accession# formats 
+ (<date>-<case> or <site>-<date>-<case>).  The Patient Name can be 
+ modified to replace Comma (",") delimiter with the proper DICOM Caret 
+ ("^").  The Patient ID can be modified to either contain or remove dashes 
+ ("-") between numbers.
+  
+ Problem 8:  Importer Inoperable When Extensive Number of Corrections 
+ ====================================================================
+ Needed
+ ======
+ Importer crashes (stops functioning) when there are over 15,000 entries 
+ to be corrected.  This happens when there are too many records being 
+ returned when the Importer makes an RPC Broker request.  
+  
+ Resolution 8:
+ ============
+ There is a MaximumNumberOfItemsToReturn parameter in the 
+ ImagingShell.exe.config file that was not being used to manage the number 
+ of entries returned.  Instructions were added to the Importer III User 
+ Manual to set this configuration parameter, MaximumNumberOfItemsToReturn.
+  
+ Problem 9:  New Tomcat Service Parameters to Improve Performance
+ ================================================================
+ The mobile imaging application (Image Viewing Solution or IVS) team has 
+ noticed some unusual network behavior when images are delivered from the 
+ local VIX server to their application using the Patch 138 IMAGE 
+ webservice.  Images are being delivered to their application in 9KB 
+ bursts with delays between each packet, resulting in poor overall 
+ performance when loading images from the VIX.  They have isolated this to 
+ the VIX Apache Tomcat connector default setup.  In their test 
+ environment, the IVS team modified the port 443 connector used by this 
+ webservice in the hopes of optimizing Apache Tomcat to send large files.  
+ Their initial results show a 4X improvement in image load times.
+  
+ Resolution 9:
+ ============
+ A section of the server.xml was modified for the VIX component.
+  
+ <Connector port="443" 
+ protocol="org.apache.coyote.http11.Http11NioProtocol" 
+ socket.rxBufSize="256000" socket.txBufSize="256000" 
+ socket.directBuffer="true" connectionTimeout="20000" maxThreads="150" 
+ clientAuth="false" enableLookups="true" disableUploadTimeout="true" 
+ acceptCount="100" debug="11" secure="true" sslProtocol="TLS" 
+ SSLEnabled="true" password/certificate_stuff_goes_here>
+ .
+ Problem 10:  VistA Imaging Saving Duplicate Images with Same Accession 
+ ======================================================================
+ Number
+ ======
+ A site is sending same study to multiple destinations (multiple HDIGs, 
+ compass router) if the first send doesn't process in what the technician 
+ deems a timely fashion.  Legacy listeners did not register this since 
+ they only looked at the Instance UID (Unique Identifier) and would reject 
+ the duplicates.  HDIGs had also been working fine for almost two years 
+ with this worklflow (even though they look at 6 fields for 
+ duplications).  The only thing that appears to have changed is that the 
+ site went to site specific accession numbers (534-042015-1234) and HL7 
+ 2.4.  
+  
+ Resolution 10:
+ =============
+ Sites were sending duplicate studies.  Accession numbers were different, 
+ but the studies and patients were the same.  The studies registered as a 
+ duplicate instead of a resend when checking the legacy (2005) structure.  
+ The MAGVGUID duplicate UID check was modified to mark these as resends 
+ instead of duplicate UIDs.
+  
+ Problem 11:  Add Modified JCIFS.properties to Build Manifest
+ ============================================================
+ There is a modified version of JCIFS.properties (Java Common Internet 
+ File System) available to the field.  It improves network 
+ communications.  Clin 3 wants the modified version to replace the 
+ original version in the build manifest.  
+  
+ Resolution 11:
+ =============
+ The new JCIFS.properties file from Clin 3 is included in the install.
+  
+ Problem 12:  Storing SOP Instance UID when SOP Class is Disabled
+ ================================================================
+ A site reported receiving multiple DICOM Storage SCP Processing error 
+ messages on the HDIG:
+ gov.va.med.imaging.core.interfaces.exceptions.MethodException: 
+ gov.va.med.imaging.channels.CompositeIOException: 
+ jcifs.smb.SmbException-The handle is invalid
+ The 1.2.840.10008.5.1.4.1.1.77.1.5.4 (Ophthalmic Tomography Image 
+ Storage) SOP Class was not initially enabled.  Images were sent and an 
+ entry for the SOP Instance UID of the rejected image was created in 
+ 2005.64.
+ The SOP Class was then enabled.  Images were resent and rejected because 
+ the above entry already existed for the original SOP Instance UID in 
+ 2005.64.
+ The UID Checker mechanism checked the Instance UID against ALL Instance 
+ UIDs in the new data structure.  It even checked against those Instance 
+ UIDs that were never stored, and that check is causing a problem.  It 
+ should not be checking against those entries where "ARTIFACT ON FILE" is 
+ NOT checked.
+  
+ Resolution 12:
+ =============
+ Artifact on File checking happens after other checks are performed.  
+ These other checks may quit before the Artifact on File check is 
+ performed.  A code change was made to move the Artifact on File check to 
+ be performed earlier.
+  
+ Problem 13:  Site-specific Accession Number Issue in Query/Retrieve
+ ===================================================================
+ Query/Retrieve of a study by a site specific accession number (ex. 
+ 600-072015-389) via RPC "MAG CFIND QUERY" does not work properly due to a 
+ failure to include the "ADC1" cross reference for lookups.  Cross 
+ reference "ADC" in file #70 'RAD/NUC MED PATIENT' stores traditional 
+ accession numbers, "ADC1" site specific accession numbers.
+  
+ Resolution 13:
+ =============
+ An additional code block was added to MAGDQR72 to perform lookups against 
+ the ADC1 x-ref.
+  
+ Problem 14:  The Cache' Version 5.0/5.1 Checking Causes Problems on Post 
+ ==========================================================================
+ 5.1 Versions Installs
+ =====================
+ While installing Cache' 2010.2 with Patch 138, several issues were found. 
+ In MAGOSDIR, the DRIVES() function would not return the list of the drive 
+ letters.  The DRIVE function that hardcodes Cache' 5.0 and 5.1 is only 
+ used by the $$GETSHARE^MAGBRTA4 to select a share drive.  If the Cache' 
+ version is neither 5.0 nor 5.1, the drive selection logic is ignored and 
+ the "Q:" drive is always returned as the share drive.  There may be sites 
+ in the field that are using a non-"Q:" share drive.
+ The code to automatically close a "left over" open file would not work.  
+ The code to automatically close a "left over" TCP connection also would 
+ not work.
+  
+ Resolution 14:
+ =============
+ Version checking was removed from the DRIVE function.  The list of 
+ returned drives is translated into upper case characters to ensure that 
+ the function will work with the GETSHARE function in MAGBRTA4.
+ The documented $ZU utility used in DEL^MAGOSDIR was replaced with a class 
+ call.
+  
+ Upon testing, it was discovered that the $ZU utilities do work in Cache' 
+ 2010.2.  It was further determined that the $ZU utilities also work in 
+ Cache' 2015.  The documentation for these functions has been deprecated, 
+ but not the functions.
+  
+ Test Sites:
+ ==========
+ The following sites are test sites for this patch:
+   Fayetteville VA Medical Center
+   VA Heartland East
+  
+ Documentation Retrieval Instructions:
+ ====================================
+ Title   File Name       FTP Mode
+ None
+  
+ Patch Installation:
+ ==================
+ Installation Planning
+ MAG*3.0*162 must be installed on the VistA System and on 64-bit servers 
+ on which the VistA Imaging Applications will be used. This patch must be 
+ installed by the compliance date to conform to VHA Directive 2001-023.
+  
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch.  Installing the MAG*3.0*162 KIDS takes 2-5 minutes.
+  
+ Note:  VIX and HDIG will not install on 32-bit machines with a Windows 
+ operating system such as 2003 Server.  There is also a known issue if 
+ there are multiple Java versions on the system for VIX and HDIG:
+   For a fresh installation, remove all installed Java applications before 
+ the installation of MAG*3.0*162
+   If updating, remove installed Java if it's not version 1.6.0_45
+  
+ When installing the VIX on a stand-alone server, it is recommended that a 
+ separate drive be specified for the image store location when prompted 
+ during installation.
+  
+ VistA System (KIDS) Installation 
+ ================================
+ Installation Steps
+ 1.Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+ 2.Run the Installation option [XPD INSTALLATION MENU].
+ 3.Load the KIDS file by performing the following steps:
+   a.Run the Load a Distribution [XPD LOAD DISTRIBUTION] option to load 
+ the KIDS distribution.
+   b.When prompted, enter the path and file name (MAG3_0P162 .KID) of the 
+ MAG*3.0*162 KIDS file that was downloaded from the Download Server.
+   c.When prompted to continue with the load, enter "YES".  A Distribution 
+ OK! Message will be displayed when the load is complete.
+ 4.After loading the KIDS file, use the following options to verify the 
+ contents of the patch.  
+   a.Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this 
+ option if you want to ensure the integrity of the routines in the patch.
+   b.Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] - 
+ Run this option if you want to view all changes that will be made when 
+ the patch is installed.  All components (routines, options, and so on) in 
+ the patch will be compared.
+   c.Back up a Transport Global [XPD BACKUP] - Run this option if you want 
+ to create a backup message of any routines exported with the patch.  The 
+ option will NOT back up any of the other changes.
+ 5.After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+   a.Run the Install Package(s) [XPD INSTALL BUILD] option.
+   b.When prompted for the install name, enter MAG*3.0*162.
+   c.Answer NO to the following prompts, if they appear:
+  
+ Want KIDS to INHIBIT LOGONs during the install? No//NO
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? No/NO
+ Want KIDS to Rebuild Menu Trees Upon completion of Install? No//NO
+  
+ 6.When the installation has finished, an Install Completed message will 
+ be displayed.
+  
+ KIDS Installation Example
+ =========================
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If the user has already installed the patch and is 
+ installing the KIDS file in a namespace on which it has previously been 
+ installed, the output will be different.
+ Select Installation Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*162      1/27/16@07:06:11
+      => VistA Imaging V3.0 - Patch 162 T2 - Query retrieve  ;Created on 
+ Jan 27
+  
+ This Distribution was loaded on Jan 27, 2016@07:06:11 with header of 
+    VistA Imaging V3.0 - Patch 162 T2 - Query retrieve  ;Created on Jan 
+ 27, 2016@
+ 07:59:29
+    It consisted of the following Install(s):
+     MAG*3.0*162
+ Checking Install for Package MAG*3.0*162
+  
+ Install Questions for MAG*3.0*162
+  
+ Incoming Files:
+  
+  
+    2006.931  IMAGING EVENT AUDITABLE ACTION  (including data)
+ Note:  You already have the 'IMAGING EVENT AUDITABLE ACTION' File.
+ I will OVERWRITE your data with mine.
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  
+  Install Started for MAG*3.0*162 : 
+                Jan 27, 2016@07:07:07
+  
+ Build Distribution Date: Jan 27, 2016
+  
+  Installing Routines:.........
+                Jan 27, 2016@07:07:07
+  
+  Installing Data Dictionaries: ..
+                Jan 27, 2016@07:07:07
+  
+  Installing Data: 
+                Jan 27, 2016@07:07:07
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing REMOTE PROCEDURE..
+                Jan 27, 2016@07:07:07
+  
+  Running Post-Install Routine: POS^MAGIP162.
+  
+ Post Install Mail Message: Jan 27, 2016@07:07:07
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*162 Installed. 
+                Jan 27, 2016@07:07:07
+  
+  Not a production UCI
+  
+  NO Install Message sent
+  
+ Legacy DICOM Gateway Installation
+ =================================
+ For installing, updating, or uninstalling the Legacy DICOM, refer to the 
+ VistA Imaging DICOM Gateway Installation Guide.
+  
+ Installing and Updating the HDIG
+ ================================
+ For installing, updating, or uninstalling the HDIG, refer to the HDIG 
+ Installation Guide.  
+  
+ Installing and Updating the VIX
+ ===============================
+ For installing, updating, or uninstalling the VIX, refer to the VIX 
+ Service Installation Guide.  
+  
+ Uninstalling MAG*3.0*162
+ ========================
+ MAG*3.0*162 has a KIDS, Legacy DICOM Gateway, HDIG and VIX install.  
+ NOTE:  To uninstall MAG*3.0*162 VistA KIDS, you had to have selected the 
+ "Kernel Installation & Distribution System" menu option, "Backup a 
+ Transport Global" (see installation section above, step 4c), before you 
+ installed the patch.
+  
+ If it is necessary to uninstall MAG*3.0*162, administrators will need to 
+ use the PackMan function INSTALL/CHECK MESSAGE.  Check your MailMan 
+ messages for the backup message sent by the "Backup a Transport Global" 
+ function.
+  
+ 1. Select the message shown below:
+  
+ Backup of MAG*3.0*162 install on <mmm dd, yyyy>    <user name>
+  
+ 2. Select the Xtract PackMan option.
+ 3. Select the Install/Check Message option.
+ 4. Enter "Yes" at the prompt.
+ 5. Enter "No" at the backup prompt.  There is no need to back up the 
+ backup.
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+  
+ Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// YES
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+  
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+  
+ Select PackMan function:<return>
+  
+ Enter message action (in IN basket): Ignore//
+ *Bold type above indicates what the user should enter.
+  
+ The VistA KIDs Uninstall is now complete.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 29, 2015
+Completed By:                               Date Completed: JUN 03, 2016
+Released By :                               Date Released : JUN 15, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

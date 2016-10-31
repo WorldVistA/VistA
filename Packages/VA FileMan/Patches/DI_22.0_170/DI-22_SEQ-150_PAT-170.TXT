@@ -1,0 +1,202 @@
+$TXT Created by                 FM22-PATCH.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Monday, 01/13/14 at 13:21
+=============================================================================
+Run Date: JUN 02, 2014                     Designation: DI*22*170
+Package : DI - VA FILEMAN                     Priority: Mandatory
+Version : 22       SEQ #150                     Status: Released
+                  Compliance Date: JUL 03, 2014
+=============================================================================
+
+Associated patches: (v)DI*22*135   <<= must be installed BEFORE `DI*22*170'
+                    (v)DI*22*163   <<= must be installed BEFORE `DI*22*170'
+                    (v)DI*22*164   <<= must be installed BEFORE `DI*22*170'
+
+Subject: LOOKUP FIXES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+                           ** Notice: **
+ ** See "Installation Instructions" section for Installation Warning **
+  
+ Issue #1
+ --------
+ Remedy Ticket 865632: Undefined error at SEARCH+5^DIC3
+ (Routine: DIC)
+  
+   Given the following scenario:
+     - A regular index (e.g., "C") exists on a field in a file.
+     - A ^DIC lookup is performed on that file, with DIC(0)="QEM".
+     - The lookup value in X partially matches no entries in the "B" index,
+       but partially matches at least 6 entries in an index that collates 
+       after "B".
+     - At the CHOOSE 1-n: prompt, the user enters a ?.
+  
+   Result: <UNDEFINED>SEARCH+5^DIC3 *DINDEX(1,"LENGTH")
+  
+ Issue #2
+ --------
+ FIND^DIC and $$FIND1^DIC do not find entries when (1) the length of the
+ lookup value is greater than the maximum length of the subscript that
+ stores the indexed value, and (2) the lookup value contains only numbers
+ and punctuation.
+ (Routine: DICF1)
+  
+ Issue #3
+ --------
+ If a DD-type ^DIR call is made on a pointer field, or pointer-type ^DIR 
+ read is made, and the user enters a value that partially matches several 
+ entries in the pointed-to file, the user is presented with a list and a 
+ "CHOOSE 1-n:" prompt. If the user enters an up-arrow (^) at the "CHOOSE 
+ 1-n:" prompt, and the pointed-to file contains more than 10 entries, ^DIR 
+ displays help and the "Do you want the entire file_name List?" This help 
+ and extra prompt are unnecessary.
+  (Routine: DIR)
+       
+ Documentation
+ =============
+ No documentation changes were necessary for this patch.
+ The most up-to-date VA FileMan end-user documentation is available on the
+ VHA Software Document Library (VDL) at the following Internet Website:
+     http://www.domain.ext/vdl/application.asp?appid=5
+  
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+ The VA FileMan documentation is also available in HTML format at the 
+ following Intranet Websites:
+  
+   * Getting Started Manual:
+     http://vaww.vista.domain.ext/fileman/docs/u1/index.shtml
+  
+   * Advanced User Manual:
+     http://vaww.vista.domain.ext/fileman/docs/u2/index.shtml
+  
+   * APIs/Programmer Manual:
+     http://vaww.vista.domain.ext/fileman/docs/pm/index.shtml
+  
+   * ScreenMan Tutorial:
+     http://vaww.vista.domain.ext/fileman/docs/scrnman/index.shtml
+  
+ Blood Bank Clearance
+ ====================
+ Clearance - June 14, 2013
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch DI*22*170 contains 
+ changes to a package referenced in ProPath standard titled: BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA 
+ Blood Bank software design safeguards or safety critical elements 
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch DI*22*170 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ Remedy Tickets
+ ==============
+ 865632
+  
+ Thanks to Test Sites 
+ ====================
+ Boise VAMC
+ Eastern Colorado HCS
+ Phoenix VAMC
+   
+ Installation Instructions:
+ =========================
+ ** Although queuing of this patch is allowed, it is HIGHLY RECOMMENDED
+ that ALL Users be off the system and VISTA Background jobs be STOPPED
+ before this patch is installed. TaskMan should be stopped or placed in
+ a wait state. Failure to do so may result in 'source routine edited'
+ errors during a database update. Edits may be lost and records may be
+ left in an inconsistent state. An error that occurs before a cross-
+ reference is executed, for example, may lead to corrupted data or hard
+ errors in the future. **
+  
+ Also, please make sure that no other patches are installed until
+ installation for this patch has completed.
+  
+ The following installation instructions are based upon the premise 
+ that the installer has heeded the above warning.
+  
+ Installation should take less than a minute.
+  
+   1. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. 
+      This option will load the KIDS package onto your system.
+      Answer 'Yes' to run the Environment Check routine.
+ 
+      Build DI*22.0*170 has an Environmental Check Routine
+      Want to RUN the Environment Check Routine? YES//
+ 
+   2. The patch has now been loaded into a transport global on your 
+      system. You now need to use KIDS to install the transport global.
+  
+   3. On the KIDS menu, under the 'Installation' menu, use the 
+      following options:
+  
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify Checksums in Transport Global
+         Backup a Transport Global
+  
+   4. In accordance with the warning at the beginning of the 
+      installation instructions, make sure ALL interactive processes, and 
+      ALL non-interactive background jobs are stopped following your site 
+      specific procedures. TaskMan should be stopped or placed in a wait state.
+      All users should be off the system. NOT performing this step could result
+      in 'source routine edited' error during database updates, and records may
+      be left in an inconsistent state.
+  
+   5. On the KIDS menu, in the 'Installation' menu, use the following option:
+  
+           Select Installation Option: Install Package(s)
+           Select INSTALL NAME: DI*22.0*170
+                                ===========
+ 
+ 
+      Want KIDS to INHIBIT LOGONs during the install? YES//
+ 
+      Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+ 
+ 
+   6. Re-enable all processes stopped in step 4 above.
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;22.0;VA FileMan;**[Patch List]**;Mar 30, 1999;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DI170ENV
+    Before:       n/a   After:  B4935382  **170**
+ Description of Changes:
+  H
+  HALT
+
+Routine Name: DIC
+    Before: B24056590   After: B24503257  **4,17,20,78,164,170**
+Routine Name: DICF1
+    Before: B22351550   After: B22563783  **15,51,70,135,170**
+Routine Name: DIR
+    Before: B22459740   After: B22624291  **30,163,170**
+ 
+Routine list of preceding patches: 135, 163, 164
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 06, 2013
+Completed By:                               Date Completed: MAY 30, 2014
+Released By :                               Date Released : JUN 02, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,245 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Monday, 02/01/16 at 11:54
+=============================================================================
+Run Date: JUN 06, 2016                     Designation: RG*1*64
+Package : RG - CLINICAL INFO RESOURCE NETWORK Priority: Mandatory
+Version : 1        SEQ #63                      Status: Released
+                  Compliance Date: JUL 07, 2016
+=============================================================================
+
+Associated patches: (v)RG*1*59     <<= must be installed BEFORE `RG*1*64'
+                    (v)RG*1*61     <<= must be installed BEFORE `RG*1*64'
+
+Subject: MASTER VETERAN INDEX VISTA ENHANCEMENTS - ITERATION 15
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ NOTE: To prevent legacy systems ending up as Treating Facilities,
+       RG* and MPIF* patches should NOT be installed on legacy 
+       systems.
+  
+ RG*1.0*59 and RG*1.0*61 are required builds for patch RG*1.0*64.
+  
+ NOTE: Master Patient Index (MPI) enhancements are being distributed
+       in three VistA namespaces: DG, RG and MPIF. RG*1.0*64 has no
+       dependencies on the other 2 patches (DG*5.3*919, MPIF*1.0*62)
+       and can be installed any time. 
+  
+ Issue #1  
+ Modifications were made to routine RGADTP2 to prevent A31 Health Level
+ Seven (HL7) patient update messages from the Master Veteran Index (MVI)
+ from being processed when the patient is currently admitted as an
+ inpatient at the site. This ensures that any data discrepancies that 
+ might have been present in these messages do NOT impact direct patient
+ care for admitted patients at the site. However, it does NOT prevent the 
+ site from updating their own patient record even if the patient is
+ currently admitted as an inpatient.
+   (Ex. Patient data changes could cause a conflict with a patient's
+        wristband.)
+ Note: An Application Accept (AA) response to the A31 HL7 update message
+       will be returned to MVI indicating the patient's 'inpatient' 
+       admission status and no further processing of the message will
+       occur at the site.
+  
+ Issue #2
+ Modifications were also made to routine RGADTP1 to prevent A31 HL7 
+ patient update messages from the Veterans Benefits Administration (VBA)
+ [200CORP, 200BRLS sites] from incorrectly populating the PREFIX (#4)
+ and SUFFIX (#5) fields in the NAME COMPONENTS (#20) file by reversing
+ the contents. This incorrect population caused filing and displaying
+ issues of the NAME (#.01) field in the PATIENT (#2) file and could have
+ also caused issues with the NAME (#.01) field of the ALIAS (#1) sub-file. 
+ Note: With name standardization, the prefix should never be filed into
+       the NAME (#.01) field of the PATIENT (#2) file.  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+   
+ Remote Procedure Calls (RPC) Associated:
+  
+ RPC Name            New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ C.W. Bill Young (Bay Pines) VAMC
+ Robley Rex (Louisville) VAMC
+ VA Connecticut HCS
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre/Post installation routine processes.   
+   
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 1 minute 
+ to install.
+  
+ The following OPTIONs should be disabled during installation:
+        Register a Patient              [DG REGISTER PATIENT]
+        Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+        Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+        Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+        UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+        MPI/PD Patient Admin Coordinator Menu   [RG ADMIN COORD MENU]
+  
+ The HL7 incoming filers should be stopped.  Use the Monitor, Start, Stop
+ Filers [HL FILER MONITOR] option on the Filer and Link Management Options
+ [HL MENU FILER LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+  
+  
+ Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. RG*1.0*64):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// respond YES.  The following OPTIONS should be
+     disabled during the installation.
+        Register a Patient              [DG REGISTER PATIENT]
+        Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+        Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+        Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+        UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+        MPI/PD Patient Admin Coordinator Menu   [RG ADMIN COORD MENU]
+  
+ 7.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After patch installation has completed, restart the HL7 incoming filers.
+ Use the Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+ and Link Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+ Menu [HL MAIN MENU].
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL INFO RESOURCE NETWORK;**[Patch List]**;30 Apr 99;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RGADTP1
+    Before: B53884458   After: B53883174  **26,27,42,45,44,47,48,59,61,64**
+Routine Name: RGADTP2
+    Before: B57266100   After: B60705453  **27,20,45,44,47,48,49,52,54,
+                                           58,59,64**
+ 
+Routine list of preceding patches: 61
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 07, 2015
+Completed By:                               Date Completed: JUN 06, 2016
+Released By :                               Date Released : JUN 06, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

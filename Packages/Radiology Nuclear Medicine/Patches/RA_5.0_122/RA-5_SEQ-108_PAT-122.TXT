@@ -1,0 +1,140 @@
+$TXT Created by             at DEV.DEV.DOMAIN.EXT  (KIDS) on Thursday, 05/07/15 at 13:09
+=============================================================================
+Run Date: JUN 12, 2015                     Designation: RA*5*122
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #108                      Status: Released
+                  Compliance Date: JUL 13, 2015
+=============================================================================
+
+Associated patches: (v)RA*5*56     <<= must be installed BEFORE `RA*5*122'
+
+Subject: CORRECT ABNORMAL NOTATION IN CPRS REPORT LIST
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ On the reports tab in CPRS, Imaging (Local Only) displays a list of
+ radiology reports for a patient. Included in that list is an 'abnormal' 
+ notation if the report has a primary Radiology diagnosis code that has
+ been designated to 'Generate Abnormal Alert' in file DIAGNOSTIC codes
+ (#78.3). Currently, the system only looks at the Primary Diagnosis code
+ and does not examine the Secondary Diagnosis codes to determine if the
+ 'abnormal' notation needs to display.
+               
+ Associated Remedy Ticket(s):
+ ============================
+ INC0000001113213 - Reports: Report Status display on CPRS tab
+      
+ Associated NSR(s):
+ ==================
+ N/A
+       
+ Participating Test Sites:
+ =========================
+ VA Heartland - West (Kansas City)
+ VA Connecticut HCS (West Haven)
+ VA North Texas HCS (Dallas)
+      
+ Remedy Overview:
+ ================     
+ INC0000001113213 - Reports: Report Status display on CPRS tab
+  
+  Patient Safety Issue:
+  ---------------------
+  PSPO #2780
+       
+  Problem:
+  --------
+  In CPRS (reports tab), when a list of Radiology Reports are displayed for
+  Imaging(Local Only), the code in routine RAO7PC1A only looks at the
+  Primary Diagnosis code in the report to determine if an 'abnormal'
+  notation needs to be made on that list.
+        
+  Resolution:
+  -----------     
+  A modification will be made in routine RAO7PC1A to examine the Secondary
+  diagnosis codes  in a Radiology Report as well as the Primary to
+  determine if the 'abnormal' notation is needed for a specific report.
+  
+  Routine: RAO7PC1A
+     
+    ==================== Installation Instructions ====================
+   It is recommended that the install take place during non-peak hours.
+   Install Time - less than 2 minutes.
+  
+  1. Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+    
+  2. Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+  3. From this menu, you may elect to use the following options
+     (When prompted for the INSTALL NAME, enter RA*5.0*122):
+    
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DD's or templates.
+  
+     b.  Compare Transport Global to Current System - This option
+         will allow you to view all changes that will be made when
+         this patch is installed.  It compares all components of this
+         patch (routines, DD's, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will
+         allow you to ensure the integrity of the routines that are
+         in the transport global.
+    
+  4. Use the Install Package(s) option and select the package RA*5.0*122.
+    
+     a.  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//,
+         answer NO
+  
+     b.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+         NO//", answer NO.
+  
+     c.  When prompted "Want to DISABLE Scheduled Options and Menu Options
+         and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RAO7PC1A
+    Before: B43220557   After: B50553247  **1,10,26,31,36,45,56,122**
+ 
+Routine list of preceding patches: 56
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 24, 2015
+Completed By:                               Date Completed: JUN 10, 2015
+Released By :                               Date Released : JUN 12, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

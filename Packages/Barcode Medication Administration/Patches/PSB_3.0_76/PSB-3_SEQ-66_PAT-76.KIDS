@@ -1,0 +1,2675 @@
+EMERGENCY Released PSB*3*76 SEQ #66
+Extracted from mail message
+**KIDS**:PSB*3.0*76^
+
+**INSTALL NAME**
+PSB*3.0*76
+"BLD",9607,0)
+PSB*3.0*76^BAR CODE MED ADMIN^0^3141007^y
+"BLD",9607,1,0)
+^^16^16^3140507^
+"BLD",9607,1,1,0)
+This Patch Addresses 6 issues:
+"BLD",9607,1,2,0)
+ 
+"BLD",9607,1,3,0)
+1. The Bar Code Medication Administration (BCMA) Missed Medications
+"BLD",9607,1,4,0)
+report does not include orders with a status of "Renewed" 
+"BLD",9607,1,5,0)
+2. BCMA incorrectly rounds a patient's height down on the BCMA Virtual
+"BLD",9607,1,6,0)
+Due List (VDL) and on report headers, and incorrectly calculates a 
+"BLD",9607,1,7,0)
+patient's weight on report headers.
+"BLD",9607,1,8,0)
+3. Orders with a start time exactly the same as the last administration
+"BLD",9607,1,9,0)
+time will display as not due in the BCMA Medication Administration 
+"BLD",9607,1,10,0)
+History (MAH) report.
+"BLD",9607,1,11,0)
+4. The undefined error <UNDEFINED>FILEIT+10^PSBML *PSBHDR occurs
+"BLD",9607,1,12,0)
+when logging into BCMA.
+"BLD",9607,1,13,0)
+5. Immunizations given as Clinic orders in BCMA are not recorded in the 
+"BLD",9607,1,14,0)
+V IMMUNIZATIONS (#9000010.11) file.
+"BLD",9607,1,15,0)
+6. BCMA accepts a partial scan of a patient's SSN when scanning a 
+"BLD",9607,1,16,0)
+patient's wristband.
+"BLD",9607,4,0)
+^9.64PA^^0
+"BLD",9607,6.3)
+10
+"BLD",9607,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9607,"KRN",.4,0)
+.4
+"BLD",9607,"KRN",.401,0)
+.401
+"BLD",9607,"KRN",.402,0)
+.402
+"BLD",9607,"KRN",.403,0)
+.403
+"BLD",9607,"KRN",.5,0)
+.5
+"BLD",9607,"KRN",.84,0)
+.84
+"BLD",9607,"KRN",3.6,0)
+3.6
+"BLD",9607,"KRN",3.8,0)
+3.8
+"BLD",9607,"KRN",9.2,0)
+9.2
+"BLD",9607,"KRN",9.8,0)
+9.8
+"BLD",9607,"KRN",9.8,"NM",0)
+^9.68A^6^6
+"BLD",9607,"KRN",9.8,"NM",1,0)
+PSBOMM^^0^B145771681
+"BLD",9607,"KRN",9.8,"NM",2,0)
+PSBOMH^^0^B93146324
+"BLD",9607,"KRN",9.8,"NM",3,0)
+PSBOHDR^^0^B72570130
+"BLD",9607,"KRN",9.8,"NM",4,0)
+PSBPXLP^^0^B5753737
+"BLD",9607,"KRN",9.8,"NM",5,0)
+PSBPXFL^^0^B6217206
+"BLD",9607,"KRN",9.8,"NM",6,0)
+PSBRPC^^0^B227617470
+"BLD",9607,"KRN",9.8,"NM","B","PSBOHDR",3)
+
+"BLD",9607,"KRN",9.8,"NM","B","PSBOMH",2)
+
+"BLD",9607,"KRN",9.8,"NM","B","PSBOMM",1)
+
+"BLD",9607,"KRN",9.8,"NM","B","PSBPXFL",5)
+
+"BLD",9607,"KRN",9.8,"NM","B","PSBPXLP",4)
+
+"BLD",9607,"KRN",9.8,"NM","B","PSBRPC",6)
+
+"BLD",9607,"KRN",19,0)
+19
+"BLD",9607,"KRN",19.1,0)
+19.1
+"BLD",9607,"KRN",101,0)
+101
+"BLD",9607,"KRN",409.61,0)
+409.61
+"BLD",9607,"KRN",771,0)
+771
+"BLD",9607,"KRN",779.2,0)
+779.2
+"BLD",9607,"KRN",870,0)
+870
+"BLD",9607,"KRN",8989.51,0)
+8989.51
+"BLD",9607,"KRN",8989.52,0)
+8989.52
+"BLD",9607,"KRN",8994,0)
+8994
+"BLD",9607,"KRN","B",.4,.4)
+
+"BLD",9607,"KRN","B",.401,.401)
+
+"BLD",9607,"KRN","B",.402,.402)
+
+"BLD",9607,"KRN","B",.403,.403)
+
+"BLD",9607,"KRN","B",.5,.5)
+
+"BLD",9607,"KRN","B",.84,.84)
+
+"BLD",9607,"KRN","B",3.6,3.6)
+
+"BLD",9607,"KRN","B",3.8,3.8)
+
+"BLD",9607,"KRN","B",9.2,9.2)
+
+"BLD",9607,"KRN","B",9.8,9.8)
+
+"BLD",9607,"KRN","B",19,19)
+
+"BLD",9607,"KRN","B",19.1,19.1)
+
+"BLD",9607,"KRN","B",101,101)
+
+"BLD",9607,"KRN","B",409.61,409.61)
+
+"BLD",9607,"KRN","B",771,771)
+
+"BLD",9607,"KRN","B",779.2,779.2)
+
+"BLD",9607,"KRN","B",870,870)
+
+"BLD",9607,"KRN","B",8989.51,8989.51)
+
+"BLD",9607,"KRN","B",8989.52,8989.52)
+
+"BLD",9607,"KRN","B",8994,8994)
+
+"BLD",9607,"QDEF")
+^^^^^^^^^^YES
+"BLD",9607,"QUES",0)
+^9.62^^
+"BLD",9607,"REQB",0)
+^9.611^2^2
+"BLD",9607,"REQB",1,0)
+PSB*3.0*70^2
+"BLD",9607,"REQB",2,0)
+PSB*3.0*47^2
+"BLD",9607,"REQB","B","PSB*3.0*47",2)
+
+"BLD",9607,"REQB","B","PSB*3.0*70",1)
+
+"MBREQ")
+0
+"PKG",550,-1)
+1^1
+"PKG",550,0)
+BAR CODE MED ADMIN^PSB^BAR CODE MEDICATION ADMINISTRATION
+"PKG",550,20,0)
+^9.402P^^
+"PKG",550,22,0)
+^9.49I^1^1
+"PKG",550,22,1,0)
+3.0^3040224^3040311^66481
+"PKG",550,22,1,"PAH",1,0)
+76^3141007
+"PKG",550,22,1,"PAH",1,1,0)
+^^16^16^3141007
+"PKG",550,22,1,"PAH",1,1,1,0)
+This Patch Addresses 6 issues:
+"PKG",550,22,1,"PAH",1,1,2,0)
+ 
+"PKG",550,22,1,"PAH",1,1,3,0)
+1. The Bar Code Medication Administration (BCMA) Missed Medications
+"PKG",550,22,1,"PAH",1,1,4,0)
+report does not include orders with a status of "Renewed" 
+"PKG",550,22,1,"PAH",1,1,5,0)
+2. BCMA incorrectly rounds a patient's height down on the BCMA Virtual
+"PKG",550,22,1,"PAH",1,1,6,0)
+Due List (VDL) and on report headers, and incorrectly calculates a 
+"PKG",550,22,1,"PAH",1,1,7,0)
+patient's weight on report headers.
+"PKG",550,22,1,"PAH",1,1,8,0)
+3. Orders with a start time exactly the same as the last administration
+"PKG",550,22,1,"PAH",1,1,9,0)
+time will display as not due in the BCMA Medication Administration 
+"PKG",550,22,1,"PAH",1,1,10,0)
+History (MAH) report.
+"PKG",550,22,1,"PAH",1,1,11,0)
+4. The undefined error <UNDEFINED>FILEIT+10^PSBML *PSBHDR occurs
+"PKG",550,22,1,"PAH",1,1,12,0)
+when logging into BCMA.
+"PKG",550,22,1,"PAH",1,1,13,0)
+5. Immunizations given as Clinic orders in BCMA are not recorded in the 
+"PKG",550,22,1,"PAH",1,1,14,0)
+V IMMUNIZATIONS (#9000010.11) file.
+"PKG",550,22,1,"PAH",1,1,15,0)
+6. BCMA accepts a partial scan of a patient's SSN when scanning a 
+"PKG",550,22,1,"PAH",1,1,16,0)
+patient's wristband.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+6
+"RTN","PSBOHDR")
+0^3^B72570130^B71757590
+"RTN","PSBOHDR",1,0)
+PSBOHDR ;BIRMINGHAM/EFC - REPORT HEADERS ;12/12/12 12:12pm
+"RTN","PSBOHDR",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**5,13,42,74,70,76**;Mar 2004;Build 10
+"RTN","PSBOHDR",3,0)
+ ;
+"RTN","PSBOHDR",4,0)
+ ; Reference/IA
+"RTN","PSBOHDR",5,0)
+ ; EN6^GMRVUTL/1120
+"RTN","PSBOHDR",6,0)
+ ; WARD^NURSUT5/3052
+"RTN","PSBOHDR",7,0)
+ ; IN5^VADPT/10061
+"RTN","PSBOHDR",8,0)
+ ; DEM^VADPT/10061
+"RTN","PSBOHDR",9,0)
+ ;
+"RTN","PSBOHDR",10,0)
+ ;*70 - add to heading CLINIC ORDERS ONLY when in clinic exclusive
+"RTN","PSBOHDR",11,0)
+ ;      mode
+"RTN","PSBOHDR",12,0)
+ ;    - 1489: Blended PSB*3*74 with PSB*3*70
+"RTN","PSBOHDR",13,0)
+ ;
+"RTN","PSBOHDR",14,0)
+PT(DFN,PSBHDR,PSBCONT,PSBDT,SRCHTXT,SUBHD) ;
+"RTN","PSBOHDR",15,0)
+ ; DFN:     Patient File IEN
+"RTN","PSBOHDR",16,0)
+ ; PSBCONT: True if this is a continuation page
+"RTN","PSBOHDR",17,0)
+ ; PSBDT:   Date of Pt Information (Default to DT)
+"RTN","PSBOHDR",18,0)
+ ; SRCHTXT: User selection list
+"RTN","PSBOHDR",19,0)
+ ; SUBHD:   Sub heading if present - prints before body === line
+"RTN","PSBOHDR",20,0)
+ S SRCHTXT=$G(SRCHTXT),SUBHD=$G(SUBHD)    ;*70
+"RTN","PSBOHDR",21,0)
+ W:$Y>1 @IOF
+"RTN","PSBOHDR",22,0)
+ W:$X>1 !
+"RTN","PSBOHDR",23,0)
+ S:'$G(PSBDT) PSBDT=DT
+"RTN","PSBOHDR",24,0)
+ ; BUILD PSBHDR WITH ALL HEADER STUFF
+"RTN","PSBOHDR",25,0)
+ D:'$D(PSBHDR("NAME"))
+"RTN","PSBOHDR",26,0)
+ .S VAIP("D")="LAST"
+"RTN","PSBOHDR",27,0)
+ .D DEM^VADPT,IN5^VADPT
+"RTN","PSBOHDR",28,0)
+ .S PSBHDR("NAME")=VADM(1)
+"RTN","PSBOHDR",29,0)
+ .S PSBHDR("SSN")=VA("PID")
+"RTN","PSBOHDR",30,0)
+ .S PSBHDR("DOB")=$P(VADM(3),U,2)
+"RTN","PSBOHDR",31,0)
+ .S PSBHDR("AGE")=VADM(4)
+"RTN","PSBOHDR",32,0)
+ .S PSBHDR("SEX")=$P(VADM(5),U,2)
+"RTN","PSBOHDR",33,0)
+ .S PSBHDR("MVMTTYPE")=$P(VAIP(2),U,2)
+"RTN","PSBOHDR",34,0)
+ .S PSBHDR("MVMTLAST")=$P(VAIP(3),U,2)
+"RTN","PSBOHDR",35,0)
+ .S PSBHDR("WARD")=$P(VAIP(5),U,2)
+"RTN","PSBOHDR",36,0)
+ .S PSBHDR("ROOM")=$P(VAIP(6),U,2)
+"RTN","PSBOHDR",37,0)
+ .S PSBHDR("DX")=VAIP(9)
+"RTN","PSBOHDR",38,0)
+ .K VAIP,VADM,VA
+"RTN","PSBOHDR",39,0)
+ .;
+"RTN","PSBOHDR",40,0)
+ .;IHS/MSC/PLS - Call Vitals lookup based on agency code
+"RTN","PSBOHDR",41,0)
+ .;  and PCC Vitals package usage flag "BEHOVM USE VMSR"=1
+"RTN","PSBOHDR",42,0)
+ .I $G(DUZ("AG"))="I",$$GET^XPAR("ALL","BEHOVM USE VMSR") D
+"RTN","PSBOHDR",43,0)
+ ..S X=+$P($$VITAL^APSPFUNC(DFN,"HT"),U,2)
+"RTN","PSBOHDR",44,0)
+ ..S X=$$VITCHT^APSPFUNC(X)\1,PSBHDR("HEIGHT")=$S(X:X_"cm",1:"*")
+"RTN","PSBOHDR",45,0)
+ ..S X=+$P($$VITAL^APSPFUNC(DFN,"WT"),U,2)
+"RTN","PSBOHDR",46,0)
+ ..S X=$$VITCWT^APSPFUNC(X)\1,PSBHDR("WEIGHT")=$S(X:X_"kg",1:"*")
+"RTN","PSBOHDR",47,0)
+ .E  D
+"RTN","PSBOHDR",48,0)
+ ..S GMRVSTR="HT" D EN6^GMRVUTL
+"RTN","PSBOHDR",49,0)
+ ..S X=+$P(X,U,8) S:X X=$J((X*2.54),3,0) S PSBHDR("HEIGHT")=$S(X:X_"cm",1:"*") ;Rounding correction, PSB*3*76
+"RTN","PSBOHDR",50,0)
+ ..S GMRVSTR="WT" D EN6^GMRVUTL
+"RTN","PSBOHDR",51,0)
+ ..S X=+$P(X,U,8) S:X X=$J(X/2.2,0,2) S PSBHDR("WEIGHT")=$S(X:X_"kg",1:"*") ;Rounding correction, PSB*3*76
+"RTN","PSBOHDR",52,0)
+ .;
+"RTN","PSBOHDR",53,0)
+ .N PSBADRX D ALLR^PSBALL(.PSBADRX,DFN) S X=0,Y=""
+"RTN","PSBOHDR",54,0)
+ .F  S X=$O(PSBADRX(X)) Q:'X  D
+"RTN","PSBOHDR",55,0)
+ ..Q:$P(PSBADRX(X),U,1)'="ADR"  S Z=$P(PSBADRX(X),U,2) Q:Z=""
+"RTN","PSBOHDR",56,0)
+ ..I $L(Y_Z)>(IOM-22) S PSBHDR("REAC",$O(PSBHDR("REAC",""),-1)+1)=Y,Y=""
+"RTN","PSBOHDR",57,0)
+ ..S Y=Y_$S(Y]"":", ",1:"")_$P(PSBADRX(X),U,2)
+"RTN","PSBOHDR",58,0)
+ .S:Y]"" PSBHDR("REAC",$O(PSBHDR("REAC",""),-1)+1)=Y
+"RTN","PSBOHDR",59,0)
+ .I '$D(PSBHDR("REAC")) S PSBHDR("REAC",1)="No ADRs on file."
+"RTN","PSBOHDR",60,0)
+ .D PSBALG
+"RTN","PSBOHDR",61,0)
+ .K GMRAL,GMRVSTR,GMRA,PSBARX
+"RTN","PSBOHDR",62,0)
+ .D NOW^%DTC S Y=+$E(%,1,12) D D^DIQ S PSBHDR("DATE")="Run Date: "_Y
+"RTN","PSBOHDR",63,0)
+ .S PSBHDR("PAGE")=0
+"RTN","PSBOHDR",64,0)
+ ;
+"RTN","PSBOHDR",65,0)
+ W $C(13),$TR($J("",IOM)," ","=")
+"RTN","PSBOHDR",66,0)
+ ;*70 insert across the board, a heading line base on the order mode
+"RTN","PSBOHDR",67,0)
+ ;    write line after the report name.  Some reports use PSBHDR(0)
+"RTN","PSBOHDR",68,0)
+ ;    for report name others use PSBHDR(1).
+"RTN","PSBOHDR",69,0)
+ W !,$G(PSBHDR(0))
+"RTN","PSBOHDR",70,0)
+ ; the DO report should not try to print a mode heading *70
+"RTN","PSBOHDR",71,0)
+ N DORPT S DORPT=$S($P(PSBRPT(0),"-")="DO":1,1:0)
+"RTN","PSBOHDR",72,0)
+ ;
+"RTN","PSBOHDR",73,0)
+ S PSBMODE=$S(PSBCLINORD=1:"Include Clinic Orders Only",PSBCLINORD=0:"Include Inpatient Orders Only",1:"Include Inpatient and Clinic Orders")   ;*70
+"RTN","PSBOHDR",74,0)
+ I 'DORPT,$G(PSBHDR(1))]"",$G(PSBHDR(0))]"" W !,PSBMODE           ;*70
+"RTN","PSBOHDR",75,0)
+ W !,$G(PSBHDR(1)),?(IOM-$L(PSBHDR("DATE"))),PSBHDR("DATE")
+"RTN","PSBOHDR",76,0)
+ S PSBHDR("PAGE")=PSBHDR("PAGE")+1
+"RTN","PSBOHDR",77,0)
+ I 'DORPT,$G(PSBHDR(1))]"",$G(PSBHDR(0))="" W !,PSBMODE           ;*70
+"RTN","PSBOHDR",78,0)
+ W !,$G(PSBHDR(2)),?(IOM-10),$J("Page: "_PSBHDR("PAGE"),10)
+"RTN","PSBOHDR",79,0)
+ F X=3:1 Q:'$D(PSBHDR(X))  D      ; More Lines If Needed          ;*70
+"RTN","PSBOHDR",80,0)
+ . W !,PSBHDR(X)
+"RTN","PSBOHDR",81,0)
+ . I PSBHDR(X)["Clinic Search" W $$WRAP^PSBO(21,111,SRCHTXT)
+"RTN","PSBOHDR",82,0)
+ . I PSBHDR(X)["Ward Location" W SRCHTXT
+"RTN","PSBOHDR",83,0)
+ I $G(PSBCONT) W !?(IOM-35\2),"*** CONTINUED FROM PREVIOUS PAGE ***"
+"RTN","PSBOHDR",84,0)
+ W !!,"Patient:",?10,PSBHDR("NAME")
+"RTN","PSBOHDR",85,0)
+ W ?42,$$GET^XPAR("ALL","PSB PATIENT ID LABEL")_":",?53,PSBHDR("SSN")
+"RTN","PSBOHDR",86,0)
+ W ?76,"DOB:",?83,PSBHDR("DOB")," (",PSBHDR("AGE"),")"
+"RTN","PSBOHDR",87,0)
+ D:'$G(PSBCONT)
+"RTN","PSBOHDR",88,0)
+ .W !,"Sex: ",?10,PSBHDR("SEX"),?42,"Ht/Wt:",?53,PSBHDR("HEIGHT"),"/",PSBHDR("WEIGHT"),?76,"Ward: ",?83,PSBHDR("WARD")," Rm: ",PSBHDR("ROOM")           ;added colon to Rm, PSB*3*74   [1489]
+"RTN","PSBOHDR",89,0)
+ .W !,"Dx:",?10,PSBHDR("DX"),?42,"Last Mvmt:",?53,PSBHDR("MVMTLAST"),?76,"Type:",?83,PSBHDR("MVMTTYPE")
+"RTN","PSBOHDR",90,0)
+ .; Reactions/Allergies
+"RTN","PSBOHDR",91,0)
+ .W !!,"ADRs:"
+"RTN","PSBOHDR",92,0)
+ .F X=0:0 S X=$O(PSBHDR("REAC",X)) Q:'X  W:$X>12 ! W ?12,PSBHDR("REAC",X)
+"RTN","PSBOHDR",93,0)
+ .W !!,"Allergies:"
+"RTN","PSBOHDR",94,0)
+ .F X=0:0 S X=$O(PSBHDR("ALERGY",X)) Q:'X  W:$X>12 ! W ?12,PSBHDR("ALERGY",X)
+"RTN","PSBOHDR",95,0)
+ .; Local Mods Allowed Here and showup only on First Page
+"RTN","PSBOHDR",96,0)
+ .; Immunizations
+"RTN","PSBOHDR",97,0)
+ .;D SHOT80^ASFSHOTF
+"RTN","PSBOHDR",98,0)
+ W:SUBHD]"" !!,SUBHD
+"RTN","PSBOHDR",99,0)
+ W !,$TR($J("",IOM)," ","=")
+"RTN","PSBOHDR",100,0)
+ Q
+"RTN","PSBOHDR",101,0)
+ ;
+"RTN","PSBOHDR",102,0)
+WARD(PSBWP,PSBHDR,PSBCONT,PSBDT,SRCHTXT) ; 
+"RTN","PSBOHDR",103,0)
+ ; PSBWP:   Nurse Location File IEN
+"RTN","PSBOHDR",104,0)
+ ; PSBCONT: True if this is a continuation page
+"RTN","PSBOHDR",105,0)
+ ; PSBDT:   Date of Pt Information (Default to DT)
+"RTN","PSBOHDR",106,0)
+ N PSBWRDA
+"RTN","PSBOHDR",107,0)
+ S:'$G(PSBDT) PSBDT=DT
+"RTN","PSBOHDR",108,0)
+ I '$D(PSBHDR("DATE")) D NOW^%DTC S Y=+$E(%,1,12) D D^DIQ S PSBHDR("DATE")="Run Date: "_Y
+"RTN","PSBOHDR",109,0)
+ S:'$D(PSBHDR("PAGE")) PSBHDR("PAGE")=0
+"RTN","PSBOHDR",110,0)
+ W:$Y>1 @IOF
+"RTN","PSBOHDR",111,0)
+ W:$X>0 !
+"RTN","PSBOHDR",112,0)
+ W $TR($J("",IOM)," ","=")
+"RTN","PSBOHDR",113,0)
+ ;*70 Insert all reports, a heading line based on the order mode.
+"RTN","PSBOHDR",114,0)
+ ;    Write line after the report name.  Some reports use PSBHDR(0)
+"RTN","PSBOHDR",115,0)
+ ;    for report name, others use PSBHDR(1).
+"RTN","PSBOHDR",116,0)
+ W !,$G(PSBHDR(0))
+"RTN","PSBOHDR",117,0)
+ S PSBMODE=$S(PSBCLINORD=1:"Include Clinic Orders Only",PSBCLINORD=0:"Include Inpatient Orders Only",1:"Include Inpatient and Clinic Orders")        ;*70
+"RTN","PSBOHDR",118,0)
+ I $G(PSBHDR(0))]"" W !,PSBMODE                                 ;*70
+"RTN","PSBOHDR",119,0)
+ W !,$G(PSBHDR(1)),?(IOM-$L(PSBHDR("DATE"))),PSBHDR("DATE")
+"RTN","PSBOHDR",120,0)
+ I $G(PSBHDR(0))="" W !,PSBMODE                                   ;*70
+"RTN","PSBOHDR",121,0)
+ S PSBHDR("PAGE")=PSBHDR("PAGE")+1
+"RTN","PSBOHDR",122,0)
+ W !,$G(PSBHDR(2)),?(IOM-10),$J("Page: "_PSBHDR("PAGE"),10)
+"RTN","PSBOHDR",123,0)
+ F X=3:1 Q:'$D(PSBHDR(X))  D      ; More Lines If Needed
+"RTN","PSBOHDR",124,0)
+ . W !,PSBHDR(X)
+"RTN","PSBOHDR",125,0)
+ . I PSBHDR(X)["Clinic Search" W $$WRAP^PSBO(21,111,SRCHTXT)      ;*70
+"RTN","PSBOHDR",126,0)
+ . I PSBHDR(X)["Ward Location" W SRCHTXT                          ;*70
+"RTN","PSBOHDR",127,0)
+ I $G(PSBCONT) W !?(IOM-35\2),"*** CONTINUED FROM PREVIOUS PAGE ***"
+"RTN","PSBOHDR",128,0)
+ D WARD^NURSUT5("L^"_PSBWP,.PSBWRDA)
+"RTN","PSBOHDR",129,0)
+ S X="Division: "_$P(PSBWRDA(PSBWP,.02),U,2)
+"RTN","PSBOHDR",130,0)
+ W ?(IOM-$L(X)),X,!,$TR($J("",IOM)," ","=")
+"RTN","PSBOHDR",131,0)
+ Q
+"RTN","PSBOHDR",132,0)
+ ;
+"RTN","PSBOHDR",133,0)
+CLINIC(PSBRPT,PSBHDR,PSBCONT,PSBDT,SRCHTXT) ;
+"RTN","PSBOHDR",134,0)
+ ; PSBCONT: True if this is a continuation page
+"RTN","PSBOHDR",135,0)
+ ; PSBDT:   Date of Pt Information (Default to DT)
+"RTN","PSBOHDR",136,0)
+ S:'$G(PSBDT) PSBDT=DT
+"RTN","PSBOHDR",137,0)
+ I '$D(PSBHDR("DATE")) D NOW^%DTC S Y=+$E(%,1,12) D D^DIQ S PSBHDR("DATE")="Run Date: "_Y
+"RTN","PSBOHDR",138,0)
+ S:'$D(PSBHDR("PAGE")) PSBHDR("PAGE")=0
+"RTN","PSBOHDR",139,0)
+ W:$Y>1 @IOF
+"RTN","PSBOHDR",140,0)
+ W:$X>0 !
+"RTN","PSBOHDR",141,0)
+ W $TR($J("",IOM)," ","=")
+"RTN","PSBOHDR",142,0)
+ ;*70 insert across the board, a heading line base on the order mode
+"RTN","PSBOHDR",143,0)
+ ;    write line after the report name.  Some reports use PSBHDR(0)
+"RTN","PSBOHDR",144,0)
+ ;    for report name others use PSBHDR(1).
+"RTN","PSBOHDR",145,0)
+ W !,$G(PSBHDR(0))
+"RTN","PSBOHDR",146,0)
+ S PSBMODE=$S(PSBCLINORD=1:"Include Clinic Orders Only",PSBCLINORD=0:"Include Inpatient Orders Only",1:"Include Inpatient and Clinic Orders")               ;*70
+"RTN","PSBOHDR",147,0)
+ I $G(PSBHDR(0))]"" W !,PSBMODE        ;*70
+"RTN","PSBOHDR",148,0)
+ W !,$G(PSBHDR(1)),?(IOM-$L(PSBHDR("DATE"))),PSBHDR("DATE")
+"RTN","PSBOHDR",149,0)
+ I $G(PSBHDR(0))="" W !,PSBMODE        ;*70
+"RTN","PSBOHDR",150,0)
+ S PSBHDR("PAGE")=PSBHDR("PAGE")+1
+"RTN","PSBOHDR",151,0)
+ W !,$G(PSBHDR(2)),?(IOM-10),$J("Page: "_PSBHDR("PAGE"),10)
+"RTN","PSBOHDR",152,0)
+ F X=3:1 Q:'$D(PSBHDR(X))  D      ; More Lines If Needed        ;*70
+"RTN","PSBOHDR",153,0)
+ . W !,PSBHDR(X)
+"RTN","PSBOHDR",154,0)
+ . I PSBHDR(X)["Clinic Search" W $$WRAP^PSBO(21,111,SRCHTXT)
+"RTN","PSBOHDR",155,0)
+ . I PSBHDR(X)["Ward Location" W SRCHTXT
+"RTN","PSBOHDR",156,0)
+ I $G(PSBCONT) W !?(IOM-35\2),"*** CONTINUED FROM PREVIOUS PAGE ***"
+"RTN","PSBOHDR",157,0)
+ N DFN D CLIN^PSBO(.PSBRPT) M ^TMP("PSBO",$J)=^TMP("PSJCL",$J)
+"RTN","PSBOHDR",158,0)
+ W !,$TR($J("",IOM)," ","=")
+"RTN","PSBOHDR",159,0)
+ Q
+"RTN","PSBOHDR",160,0)
+ ;
+"RTN","PSBOHDR",161,0)
+PSBALG ;
+"RTN","PSBOHDR",162,0)
+ S YA=""
+"RTN","PSBOHDR",163,0)
+ K PSBAL,GMRALA
+"RTN","PSBOHDR",164,0)
+ S PSBLIST=""
+"RTN","PSBOHDR",165,0)
+ D ALLR^PSBALL(.GMRALA,DFN)
+"RTN","PSBOHDR",166,0)
+ S X="" F  S X=$O(GMRALA(X)) Q:X=""  D
+"RTN","PSBOHDR",167,0)
+ .I $P(GMRALA(X),U,1)["ALL" D
+"RTN","PSBOHDR",168,0)
+ ..S PSBAL($P(GMRALA(X),U,2))=""
+"RTN","PSBOHDR",169,0)
+ S XAB="" F  S XAB=$O(PSBAL(XAB)) Q:XAB=""  D
+"RTN","PSBOHDR",170,0)
+ .S Z=XAB
+"RTN","PSBOHDR",171,0)
+ .I $L(YA_Z)>(IOM-22) S PSBHDR("ALERGY",$O(PSBHDR("ALERGY",""),-1)+1)=YA,YA=""
+"RTN","PSBOHDR",172,0)
+ .S YA=YA_$S(YA]"":", ",1:"")_XAB
+"RTN","PSBOHDR",173,0)
+ S:YA]"" PSBHDR("ALERGY",$O(PSBHDR("ALERGY",""),-1)+1)=YA
+"RTN","PSBOHDR",174,0)
+ I '$D(PSBHDR("ALERGY")) S PSBHDR("ALERGY",1)="No Allergies on file."
+"RTN","PSBOHDR",175,0)
+ Q
+"RTN","PSBOHDR",176,0)
+ ;
+"RTN","PSBOHDR",177,0)
+PTFTR() ; [Extrinsic] Patient Page footer
+"RTN","PSBOHDR",178,0)
+ ;
+"RTN","PSBOHDR",179,0)
+ I (IOSL<100) F  Q:$Y>(IOSL-6)  W !
+"RTN","PSBOHDR",180,0)
+ W !,$TR($J("",IOM)," ","=")
+"RTN","PSBOHDR",181,0)
+ S X="Ward: "_PSBHDR("WARD")_"  Room-Bed: "_PSBHDR("ROOM")
+"RTN","PSBOHDR",182,0)
+ W !,PSBHDR("NAME"),?(IOM-11\2),PSBHDR("SSN"),?(IOM-$L(X)),X
+"RTN","PSBOHDR",183,0)
+ I $G(PSBUNK) S X="Note:  ??  Indicates an administration with an *UNKNOWN* Action Status" W !!,X
+"RTN","PSBOHDR",184,0)
+ Q ""
+"RTN","PSBOHDR",185,0)
+ ;
+"RTN","PSBOHDR",186,0)
+SRCHLIST() ;Build appropriate Clinic or Ward/Nurse Unit Search list heading
+"RTN","PSBOHDR",187,0)
+ N LIST,RPT,LBL,QQ,PSBWP,PSBWRDA
+"RTN","PSBOHDR",188,0)
+ S LIST=""
+"RTN","PSBOHDR",189,0)
+ ; Clinic locations lookup
+"RTN","PSBOHDR",190,0)
+ D:$P($G(PSBRPT(4)),U,2)="C"
+"RTN","PSBOHDR",191,0)
+ . S:'$D(PSBRPT(2)) LIST="All Clinics"
+"RTN","PSBOHDR",192,0)
+ . D:$D(PSBRPT(2))
+"RTN","PSBOHDR",193,0)
+ .. F QQ=$O(PSBRPT(2,0)):1:$O(PSBRPT(2,"B"),-1) S RPT(PSBRPT(2,QQ,0))=""
+"RTN","PSBOHDR",194,0)
+ .. S LIST=""
+"RTN","PSBOHDR",195,0)
+ .. S LBL="" F  S LBL=$O(RPT(LBL)) Q:LBL=""  D
+"RTN","PSBOHDR",196,0)
+ ... I LIST="" S LIST=LBL Q
+"RTN","PSBOHDR",197,0)
+ ... I LIST]"" S LIST=LIST_", "_LBL
+"RTN","PSBOHDR",198,0)
+ ; Ward location lookup
+"RTN","PSBOHDR",199,0)
+WRD I $P(PSBRPT(.1),U)="W" D
+"RTN","PSBOHDR",200,0)
+ . S PSBWP=$P(PSBRPT(.1),U,3) D WARD^NURSUT5("L^"_PSBWP,.PSBWRDA)
+"RTN","PSBOHDR",201,0)
+ . S WLOC=PSBWRDA(PSBWP,.01)
+"RTN","PSBOHDR",202,0)
+ . ;  name if a nurs unit
+"RTN","PSBOHDR",203,0)
+ . S LIST=$P(WLOC,U,2)
+"RTN","PSBOHDR",204,0)
+ . ;  hosp/ward loc name if not nurs unit
+"RTN","PSBOHDR",205,0)
+ . S:LIST="" LIST=$$GET1^DIQ(44,+WLOC,.01)
+"RTN","PSBOHDR",206,0)
+ Q LIST
+"RTN","PSBOHDR",207,0)
+ ;
+"RTN","PSBOHDR",208,0)
+EMPTYHDR(SRCHTXT) ; Write headings & search cirtieria - for no data scenario
+"RTN","PSBOHDR",209,0)
+ D NOW^%DTC S Y=+$E(%,1,12) D D^DIQ S PSBHDR("DATE")="Run Date: "_Y
+"RTN","PSBOHDR",210,0)
+ S PSBHDR("PAGE")=1
+"RTN","PSBOHDR",211,0)
+ ;
+"RTN","PSBOHDR",212,0)
+ W !,$TR($J("",IOM)," ","=")
+"RTN","PSBOHDR",213,0)
+ W !,$G(PSBHDR(0))
+"RTN","PSBOHDR",214,0)
+ S PSBMODE=$S(PSBCLINORD=1:"Include Clinic Orders Only",PSBCLINORD=0:"Include Inpatient Orders Only",1:"Include Inpatient and Clinic Orders")   ;*70
+"RTN","PSBOHDR",215,0)
+ I $G(PSBHDR(1))]"",$G(PSBHDR(0))]"" W !,PSBMODE
+"RTN","PSBOHDR",216,0)
+ W !,$G(PSBHDR(1)),?(IOM-$L(PSBHDR("DATE"))),PSBHDR("DATE")
+"RTN","PSBOHDR",217,0)
+ I $G(PSBHDR(1))]"",$G(PSBHDR(0))="" W !,PSBMODE
+"RTN","PSBOHDR",218,0)
+ W !,$G(PSBHDR(2)),?(IOM-10),$J("Page: "_PSBHDR("PAGE"),10)
+"RTN","PSBOHDR",219,0)
+ F X=3:1 Q:'$D(PSBHDR(X))  D      ; More Lines If Needed
+"RTN","PSBOHDR",220,0)
+ . W !,PSBHDR(X)
+"RTN","PSBOHDR",221,0)
+ . I PSBHDR(X)["Clinic Search" W $$WRAP^PSBO(21,111,SRCHTXT)
+"RTN","PSBOHDR",222,0)
+ . I PSBHDR(X)["Ward Location" W SRCHTXT
+"RTN","PSBOHDR",223,0)
+ W !,$TR($J("",IOM)," ","=")
+"RTN","PSBOHDR",224,0)
+ Q ""
+"RTN","PSBOMH")
+0^2^B93146324^B92472533
+"RTN","PSBOMH",1,0)
+PSBOMH ;BIRMINGHAM/EFC-MAH ;9/11/12 12:16am
+"RTN","PSBOMH",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**5,9,38,57,67,68,70,76**;Mar 2004;Build 10
+"RTN","PSBOMH",3,0)
+ ;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","PSBOMH",4,0)
+ ;
+"RTN","PSBOMH",5,0)
+ ; Reference/IA
+"RTN","PSBOMH",6,0)
+ ; EN^PSJBCMA/2828
+"RTN","PSBOMH",7,0)
+ ; EN^PSJBCMA2/2830
+"RTN","PSBOMH",8,0)
+ ; File 200/10060
+"RTN","PSBOMH",9,0)
+ ; ^DIWP/10011
+"RTN","PSBOMH",10,0)
+ ;
+"RTN","PSBOMH",11,0)
+ ;*68 - remove old special instruction text encoding, defer to PSBOMH2
+"RTN","PSBOMH",12,0)
+ ;*70 - add Clinic name to PSBO array for printing on grid via PSBOMH2
+"RTN","PSBOMH",13,0)
+ ;       in ^TMP(""PSB",$J,"ORDERS",PSBX,"INST") global
+"RTN","PSBOMH",14,0)
+ ;
+"RTN","PSBOMH",15,0)
+EN ; Called from DQ^PSBO
+"RTN","PSBOMH",16,0)
+ N PSBGBL,DFN
+"RTN","PSBOMH",17,0)
+ S PSBGBL=$NAME(^TMP("PSBO",$J,"B"))
+"RTN","PSBOMH",18,0)
+ F  S PSBGBL=$Q(@PSBGBL) Q:PSBGBL=""  Q:$QS(PSBGBL,2)'=$J  Q:$QS(PSBGBL,1)'["PSBO"  D
+"RTN","PSBOMH",19,0)
+ .S DFN=$QS(PSBGBL,5)
+"RTN","PSBOMH",20,0)
+ .S (PSBSTRT,X)=$P(PSBRPT(.1),U,6) D H^%DTC S PSBSTH=%H
+"RTN","PSBOMH",21,0)
+ .S (PSBSTOP,X)=$P(PSBRPT(.1),U,8)+.235959 D H^%DTC S PSBSPH=%H
+"RTN","PSBOMH",22,0)
+ .S PSBCNT=0 F I=PSBSTH:1:PSBSPH S PSBAR(I)=PSBSTH+((PSBCNT\7)*7),PSBCNT=PSBCNT+1
+"RTN","PSBOMH",23,0)
+ .D EN1
+"RTN","PSBOMH",24,0)
+ K PSBCNT,PSBAR Q
+"RTN","PSBOMH",25,0)
+EN1 ; Expects DFN,STRT,STOP
+"RTN","PSBOMH",26,0)
+ N PSBGBL,PSBHDR,PSBX,PSBFLAG,PSBHLDFL,PSBADST1,PSBOST1,PSBCLINIC ;*70
+"RTN","PSBOMH",27,0)
+ K ^TMP("PSJ",$J),^TMP("PSB",$J)
+"RTN","PSBOMH",28,0)
+ S PSBEVDT=PSBSTRT
+"RTN","PSBOMH",29,0)
+ D EN^PSJBCMA(DFN,PSBSTRT)
+"RTN","PSBOMH",30,0)
+ N PSBCLINORD S PSBCLINORD=2                 ;*70 Combind mode headers
+"RTN","PSBOMH",31,0)
+ I $G(^TMP("PSJ",$J,1,0))=-1 D  Q  ; No Ord
+"RTN","PSBOMH",32,0)
+ .D PT^PSBOHDR(DFN,.PSBHDR) W !!,"****NO MEDICATIONS FOUND****"
+"RTN","PSBOMH",33,0)
+ S PSBX=""
+"RTN","PSBOMH",34,0)
+ F  S PSBX=$O(^TMP("PSJ",$J,PSBX)) Q:PSBX=""  D
+"RTN","PSBOMH",35,0)
+ .Q:$P(^TMP("PSJ",$J,PSBX,0),U,3)?.N1"P"  ; No Pnd
+"RTN","PSBOMH",36,0)
+ .Q:$P(^TMP("PSJ",$J,PSBX,1),U,5)<PSBSTRT!($P(^TMP("PSJ",$J,PSBX,1),U,4)>PSBSTOP)  ;display orders active in date range of report
+"RTN","PSBOMH",37,0)
+ .S X=$P(^TMP("PSJ",$J,PSBX,1),U,2)
+"RTN","PSBOMH",38,0)
+ .S ^TMP("PSB",$J,"ORDERS",$P(^TMP("PSJ",$J,PSBX,0),U,3))=X
+"RTN","PSBOMH",39,0)
+ I '$D(^TMP("PSB",$J,"ORDERS")) D  Q        ;No Orders
+"RTN","PSBOMH",40,0)
+ .D PT^PSBOHDR(DFN,.PSBHDR) W !!,"****NO MEDICATIONS FOUND****"
+"RTN","PSBOMH",41,0)
+ S PSBMHND="PSBOMH"
+"RTN","PSBOMH",42,0)
+ ; Act on Orders
+"RTN","PSBOMH",43,0)
+ S PSBX="" F  S PSBX=$O(^TMP("PSB",$J,"ORDERS",PSBX)) Q:PSBX=""  S PSBTYPE=^(PSBX) D
+"RTN","PSBOMH",44,0)
+ .S:PSBTYPE'="C" PSBTYPE="P"
+"RTN","PSBOMH",45,0)
+ .D CLEAN^PSBVT
+"RTN","PSBOMH",46,0)
+ .D PSJ1^PSBVT(DFN,PSBX)
+"RTN","PSBOMH",47,0)
+ .S PSBCLINIC=PSBCLORD
+"RTN","PSBOMH",48,0)
+ .S X1=((PSBEVDT)\1)  S X2=-1  D C^%DTC  S PSBCNTST=X
+"RTN","PSBOMH",49,0)
+ .S X1=((PSBSTOP)\1)  S X2=1  D C^%DTC  S PSBXSTOP=X
+"RTN","PSBOMH",50,0)
+ .S PSBVALB=""
+"RTN","PSBOMH",51,0)
+ .S PSBVALB=$$IVPTAB^PSBVDLU3(PSBOTYP,PSBIVT,PSBISYR,PSBCHEMT,PSBIVPSH)
+"RTN","PSBOMH",52,0)
+ .S PSBZ=""
+"RTN","PSBOMH",53,0)
+ .S X1=PSBXSTOP,X2=PSBCNTST D ^%DTC S PSBNCT=X
+"RTN","PSBOMH",54,0)
+ .F PSBZ=1:1:PSBNCT S X1=PSBCNTST  S X2=1  D C^%DTC  S PSBCNTST=X  D
+"RTN","PSBOMH",55,0)
+ ..I (PSBX["V")!(PSBX'["V")  D
+"RTN","PSBOMH",56,0)
+ ...I PSBCNTST'>(PSBOST\1) S ^TMP("PSB",$J,"ORDERS",PSBONX,"NTDUE",PSBCNTST)=""
+"RTN","PSBOMH",57,0)
+ ...;add check for admin time before start time in PSB*3*57
+"RTN","PSBOMH",58,0)
+ ...S PSBADST1=$E($P($G(PSBADST),"-",$L($G(PSBADST),"-"))_"00",1,4),PSBOST1=$E($P(PSBOST,".",2)_"0000",1,4) ;PSB*3*67
+"RTN","PSBOMH",59,0)
+ ...I PSBCNTST=(PSBOST\1)&(PSBADST1>=PSBOST1) K ^TMP("PSB",$J,"ORDERS",PSBONX,"NTDUE",PSBCNTST) ;PSB*3*67 - PSB*3*76 adds "=" for stop date/time check
+"RTN","PSBOMH",60,0)
+ ...I PSBCNTST=(PSBOST\1),'$P($G(PSBADST),"-") K ^TMP("PSB",$J,"ORDERS",PSBONX,"NTDUE",PSBCNTST) ;PSB*3*67
+"RTN","PSBOMH",61,0)
+ ...I PSBCNTST>(PSBOSP\1) S ^TMP("PSB",$J,"ORDERS",PSBONX,"NTDUE",PSBCNTST)=""
+"RTN","PSBOMH",62,0)
+ ...I PSBCNTST=(PSBOSP\1)&($G(^TMP("PSB",$J,"ORDERS",PSBONX,"NTDUE",PSBCNTST))) K ^TMP("PSB",$J,"ORDERS",PSBONX,"NTDUE",PSBCNTST) S ^TMP("PSB",$J,"ORDERS",PSBONX,"NTDUE",PSBCNTST)=""
+"RTN","PSBOMH",63,0)
+ ..S PSBDODD=""
+"RTN","PSBOMH",64,0)
+ ..I (PSBFREQ#1440'=0),(1440#PSBFREQ'=0) S PSBDODD=1
+"RTN","PSBOMH",65,0)
+ ..I ((PSBX'["V")!(PSBVALB="1")),((PSBDODD="1")&(PSBADST'="")) S ^TMP("PSB",$J,"ORDERS",PSBONX,"NTDUE",PSBCNTST)=""
+"RTN","PSBOMH",66,0)
+ ..I ((PSBX'["V")!(PSBVALB="1")),('$$OKAY^PSBVDLU1(PSBOST,PSBCNTST,PSBSCH,PSBON,PSBOITX,PSBFREQ,PSBOSTS)) S ^TMP("PSB",$J,"ORDERS",PSBONX,"NTDUE",PSBCNTST)=""  ;W t TMP
+"RTN","PSBOMH",67,0)
+ .S (PSBYES,PSBODD,PSBFLAG,PSBYTFN,PSBDAYN)=0
+"RTN","PSBOMH",68,0)
+ .S:$$PSBDCHK1^PSBVT1(PSBSCH) PSBYES=1,PSBDAYN=1
+"RTN","PSBOMH",69,0)
+ .I PSBYES,PSBADST="",PSBSCHT'="O",PSBSCHT'="OC",PSBSCHT'="P" Q 
+"RTN","PSBOMH",70,0)
+ .F I=1:1 Q:$P(PSBSCH,"-",I)=""  I $P(PSBSCH,"-",I)?2N!($P(PSBSCH,"-",I)?4N) S PSBYES=1,PSBYTFN=1
+"RTN","PSBOMH",71,0)
+ .I (PSBFREQ="O")!(PSBTYPE="P") S PSBYES=1
+"RTN","PSBOMH",72,0)
+ .I (PSBFREQ#1440'=0),(1440#PSBFREQ'=0) S PSBODD=1
+"RTN","PSBOMH",73,0)
+ .;flg / admn t
+"RTN","PSBOMH",74,0)
+ .S:PSBONX["U" PSBFLAG=1
+"RTN","PSBOMH",75,0)
+ .I PSBIVT="A" S PSBADST="0000"
+"RTN","PSBOMH",76,0)
+ .I PSBIVT="H" S PSBADST="0000"
+"RTN","PSBOMH",77,0)
+ .I PSBIVT="C",PSBCHEMT="P" S:PSBADST="" PSBFLAG=1
+"RTN","PSBOMH",78,0)
+ .I PSBIVT="C",PSBISYR=1 S:PSBADST="" PSBFLAG=1
+"RTN","PSBOMH",79,0)
+ .I PSBIVT="C",PSBCHEMT="A" S PSBADST="0000"
+"RTN","PSBOMH",80,0)
+ .I PSBIVT="C",PSBISYR=0 S PSBADST="0000"
+"RTN","PSBOMH",81,0)
+ .I PSBIVT="P",($G(PSBADST)=0) S:PSBADST="" PSBFLAG=1
+"RTN","PSBOMH",82,0)
+ .I PSBIVT="P" S:PSBADST="" PSBFLAG=1
+"RTN","PSBOMH",83,0)
+ .I PSBIVT="S",PSBISYR=0 S PSBADST="0000"
+"RTN","PSBOMH",84,0)
+ .I PSBIVT="S",PSBISYR=1 S:PSBADST="" PSBFLAG=1
+"RTN","PSBOMH",85,0)
+ .I PSBFREQ="D" S PSBFREQ=""
+"RTN","PSBOMH",86,0)
+ .I 'PSBYES,PSBADST="",PSBFREQ<1 Q
+"RTN","PSBOMH",87,0)
+ .S (PSBEE,PSBZZ)=0
+"RTN","PSBOMH",88,0)
+ .I (PSBVALB="1")!(PSBX'["V") D  Q:(PSBEE!PSBZZ)=1
+"RTN","PSBOMH",89,0)
+ ..I PSBSCHT="C",PSBYTFN="1",PSBADST=""  S PSBEE=1
+"RTN","PSBOMH",90,0)
+ ..I PSBSCHT="C",PSBDAYN'="1",PSBYTFN'="1",PSBADST'="",PSBFREQ<1  S PSBZZ=1
+"RTN","PSBOMH",91,0)
+ .I 'PSBODD,PSBFLAG,PSBTYPE="C",PSBADST="" S PSBADST=$$GETADMIN^PSBVDLU1(DFN,PSBONX,PSBOST,PSBFREQ,PSBSTOP)
+"RTN","PSBOMH",92,0)
+ .E  I PSBADST'="" K ^TMP("PSB",$J,"GETADMIN") S ^TMP("PSB",$J,"GETADMIN",0)=PSBADST
+"RTN","PSBOMH",93,0)
+ .;Calc adm/frq
+"RTN","PSBOMH",94,0)
+ .S PSBDT=PSBSTRT
+"RTN","PSBOMH",95,0)
+ .K PSBO,^UTILITY($J)
+"RTN","PSBOMH",96,0)
+ .F X=1:1:8 S PSBO(X)=""
+"RTN","PSBOMH",97,0)
+ .S DIWL=0,DIWR=32,DIWF="C32"
+"RTN","PSBOMH",98,0)
+ .S X=$P(PSBOSTX," ")_"          "_$P(PSBOSPX," ") D ^DIWP
+"RTN","PSBOMH",99,0)
+ .S X="@"_$P(PSBOSTX," ",3)_"              @"_$P(PSBOSPX," ",3)_"   " D ^DIWP
+"RTN","PSBOMH",100,0)
+ .S X="" D ^DIWP
+"RTN","PSBOMH",101,0)
+ .S X=PSBOITX D ^DIWP
+"RTN","PSBOMH",102,0)
+ .; DD,SOL,ADD
+"RTN","PSBOMH",103,0)
+ .S X=""
+"RTN","PSBOMH",104,0)
+ .F Y=0:0 S Y=$O(PSBDDA(Y)) Q:'Y  S X=X_$S(X]"":", ",1:"")_$P(PSBDDA(Y),U,3)
+"RTN","PSBOMH",105,0)
+ .F Y=0:0 S Y=$O(PSBADA(Y)) Q:'Y  S X=X_$S(X]"":", ",1:"")_$P(PSBADA(Y),U,3)_" "_$P(PSBADA(Y),U,4)_$P(PSBADA(Y),U,5)
+"RTN","PSBOMH",106,0)
+ .F Y=0:0 S Y=$O(PSBSOLA(Y)) Q:'Y  S X=X_$S(X]"":", ",1:"")_$P(PSBSOLA(Y),U,3)_" "_$P(PSBSOLA(Y),U,4)
+"RTN","PSBOMH",107,0)
+ .S X=" "_X,DIWF="I2C32" D ^DIWP S DIWF="C32"
+"RTN","PSBOMH",108,0)
+ .S PSBTXT=" Give: "_PSBDOSE_" "_PSBMRAB_" "_PSBSCH_" "_PSBIFR
+"RTN","PSBOMH",109,0)
+ .F  S PSBWORD=$P(PSBTXT," ",1),PSBTXT=$P(PSBTXT," ",2,250) D  Q:PSBTXT=""
+"RTN","PSBOMH",110,0)
+ ..F  Q:'$L(PSBWORD)  S X=$E(PSBWORD,1,30),PSBWORD=$E(PSBWORD,30,250) D ^DIWP
+"RTN","PSBOMH",111,0)
+ .K ^TMP("PSJ",$J) D EN^PSJBCMA2(DFN,PSBX) I ^TMP("PSJ",$J,0)'=-1 D   ;get activity log
+"RTN","PSBOMH",112,0)
+ ..S (PSBDISX,PSBHLDX)=0 F I=1:1:$P(^TMP("PSJ",$J,0),U,4) S X=$G(^TMP("PSJ",$J,I,1)) D  ;loop activities
+"RTN","PSBOMH",113,0)
+ ...Q:X["EDITED"!(X["VERIF")  ;
+"RTN","PSBOMH",114,0)
+ ...S:$P(X,U,4)["PLACED ON HOLD" PSBHLDFL=1 ;Set Hold Flag
+"RTN","PSBOMH",115,0)
+ ...S:$P(X,U,4)["TAKEN OFF HOLD" PSBHLDFL=0 ;Remove Hold Flag
+"RTN","PSBOMH",116,0)
+ ...S Z=0
+"RTN","PSBOMH",117,0)
+ ...I X'["OFF HOLD",X'["UNHOLD",X'["REINSTATE" S Z=1 ; inc iv's
+"RTN","PSBOMH",118,0)
+ ...S PSBHLDX=PSBHLDX+$S(Z>0:1,1:0)
+"RTN","PSBOMH",119,0)
+ ...S $P(PSBHLD(PSBHLDX),U,$S(Z>0:1,1:11))=^TMP("PSJ",$J,I,1)  ;set up for multiple on hold entries save start & stop as pair if exists 
+"RTN","PSBOMH",120,0)
+ ..F PSBHLDX=1:1 S X=$G(PSBHLD(PSBHLDX)) Q:'X  D  ;if a hold index - process 
+"RTN","PSBOMH",121,0)
+ ...S PSBHLDN=$P(PSBHLD(PSBHLDX),U,1),PSBHLDF=$P(PSBHLD(PSBHLDX),U,11)  ;get on/off hold, dates, IEN number(for UD orders) of person. 
+"RTN","PSBOMH",122,0)
+ ...Q:PSBHLDN>PSBSTOP  Q:(PSBHLDF<PSBSTRT)&(PSBHLDF'="") 
+"RTN","PSBOMH",123,0)
+ ...F PSBHLDT=PSBSTRT\1:1:PSBSTOP\1 I (PSBHLDT'<(PSBHLDN\1)),(PSBHLDT'>PSBSTOP) D
+"RTN","PSBOMH",124,0)
+ ....I X["DISCONTINUED" K ^TMP("PSB",$J,"ORDERS",PSBONX,"HOLD",PSBHLDT) S ^TMP("PSB",$J,"ORDERS",PSBONX,"DISC",PSBHLDT)=""
+"RTN","PSBOMH",125,0)
+ ....I (X["HOLD")&($G(PSBHLDFL))&((PSBHLDN\1)'>PSBHLDT)&((PSBHLDF'<PSBHLDT)!(PSBHLDF="")) S ^TMP("PSB",$J,"ORDERS",PSBONX,"HOLD",PSBHLDT)="" ;Check additional flag for PSB*3*57
+"RTN","PSBOMH",126,0)
+ ....I X["REINSTATE" K ^TMP("PSB",$J,"ORDERS",PSBONX,"DISC",PSBHLDT) I PSBOSTS="H" S ^TMP("PSB",$J,"ORDERS",PSBONX,"HOLD",PSBHLDT)=""
+"RTN","PSBOMH",127,0)
+ ...F PSBHLDXP=1:10:$P(PSBHLD(PSBHLDX),U,11)]""+10 D
+"RTN","PSBOMH",128,0)
+ ....S PSBDESC=$P(PSBHLD(PSBHLDX),U,PSBHLDXP+3),X=$S(PSBDESC["DISCONTINUE":"***",1:"")
+"RTN","PSBOMH",129,0)
+ ....S X=" "_X_PSBDESC D ^DIWP  ;output activity text 
+"RTN","PSBOMH",130,0)
+ ....S X="",PSBHLDI=$P(PSBHLD(PSBHLDX),U,PSBHLDXP+4) I PSBHLDI'="" S X=$$GET1^DIQ(200,PSBHLDI,"INITIAL")
+"RTN","PSBOMH",131,0)
+ ....S:X="" X="99" ;no init present
+"RTN","PSBOMH",132,0)
+ ....I X'="99" S X=" "_X D ^DIWP   ;get init & store
+"RTN","PSBOMH",133,0)
+ ....S Y=$P(PSBHLD(PSBHLDX),U,PSBHLDXP) D DD^%DT S X=Y D ^DIWP  ;format hold date / write 
+"RTN","PSBOMH",134,0)
+ ..K PSBHLD,PSBHLDF,PSBHLDN,PSBHLDT,PSBHLDX,PSBHLDXP,PSBHLDI,PSBDISX,PSBDISC,PSBDISXP,PSBDISI,PSBDIST,PSBDISN,PSBDESC
+"RTN","PSBOMH",135,0)
+ .F X=0:0 S X=$O(^UTILITY($J,"W",0,X)) Q:'X  S PSBO(X)=$G(^(X,0)) D
+"RTN","PSBOMH",136,0)
+ .S X=$O(PSBO(""),-1) S X=$S(X<8:8,1:X+1)
+"RTN","PSBOMH",137,0)
+ .S PSBO(X)=" RPH: "_PSBVPHI_"  RN: "_PSBVNI
+"RTN","PSBOMH",138,0)
+ .S PSBVAL=$$IVPTAB^PSBVDLU3(PSBOTYP,PSBIVT,PSBISYR,PSBCHEMT,PSBIVPSH)
+"RTN","PSBOMH",139,0)
+ .I PSBODD="1",PSBADST'="" D
+"RTN","PSBOMH",140,0)
+ ..I (PSBVAL="1")!(PSBX'["V") D   ;checks iv/pb and u dose
+"RTN","PSBOMH",141,0)
+ ...S PSBO(X+1)=""
+"RTN","PSBOMH",142,0)
+ ...S PSBO(X+2)="NOTE - ODD SCHEDULE NO LONGER",PSBO(X+3)="       ALLOWS ADMIN TIMES."
+"RTN","PSBOMH",143,0)
+ .K ^UTILITY($J)
+"RTN","PSBOMH",144,0)
+ . ;*70 If no location, and not inpatient, and Manual Med Entry, relay this information
+"RTN","PSBOMH",145,0)
+ .S PSBO(0)=$S(PSBCLINIC]"":PSBCLINIC,1:"INPATIENT")   ;clinic nam *70
+"RTN","PSBOMH",146,0)
+ .S XORDERS=$S(PSBO(0)="INPATIENT":1,1:2)              ;IM or CO   *70
+"RTN","PSBOMH",147,0)
+ .M ^TMP("PSB",$J,"ORDERS",PSBX,"INST")=PSBO
+"RTN","PSBOMH",148,0)
+ .D:PSBTYPE="C"
+"RTN","PSBOMH",149,0)
+ ..F  D  Q:PSBDT>PSBSTOP
+"RTN","PSBOMH",150,0)
+ ...S X=PSBDT D H^%DTC S PSBWEEK=%H
+"RTN","PSBOMH",151,0)
+ ...S ^TMP("PSB",$J,PSBWEEK,PSBONX)=""
+"RTN","PSBOMH",152,0)
+ ...; Odd schd - msg
+"RTN","PSBOMH",153,0)
+ ...S PSBIDOW=0 I PSBONX["U"!("PCS"[PSBIVT) S PSBIDOW=1
+"RTN","PSBOMH",154,0)
+ ...I PSBADST="",PSBIDOW,(PSBODD) D
+"RTN","PSBOMH",155,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",0)=7
+"RTN","PSBOMH",156,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",1)="odd"
+"RTN","PSBOMH",157,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",2)="sched"
+"RTN","PSBOMH",158,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",3)=$E(PSBSCH,1,5)
+"RTN","PSBOMH",159,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",4)="no"
+"RTN","PSBOMH",160,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",5)="fixed"
+"RTN","PSBOMH",161,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",6)="admin"
+"RTN","PSBOMH",162,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",7)="times"
+"RTN","PSBOMH",163,0)
+ ...I PSBADST'="",PSBADST'="0000",+$G(PSBFREQ)>0,+$G(PSBFREQ)<45 D
+"RTN","PSBOMH",164,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",0)=5
+"RTN","PSBOMH",165,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",1)="Due"
+"RTN","PSBOMH",166,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",2)="every"
+"RTN","PSBOMH",167,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",3)=$E(PSBFREQ,1,5)
+"RTN","PSBOMH",168,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",4)="mins."
+"RTN","PSBOMH",169,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",5)=" "
+"RTN","PSBOMH",170,0)
+ ...S PSBATCNT=0    ; # times to print...
+"RTN","PSBOMH",171,0)
+ ...I PSBADST'="",((+$G(PSBFREQ)>44)!(PSBFREQ="")!(PSBADST="0000")) F PSBXX=0:1  Q:$G(^TMP("PSB",$J,"GETADMIN",PSBXX))=""  D
+"RTN","PSBOMH",172,0)
+ ....S PSBADST2=$G(^TMP("PSB",$J,"GETADMIN",PSBXX))
+"RTN","PSBOMH",173,0)
+ ....F Y=1:1:$L(PSBADST2,"-") D
+"RTN","PSBOMH",174,0)
+ .....Q:($P(PSBADST2,"-",Y)'?2N)&($P(PSBADST2,"-",Y)'?4N)  S PSBATCNT=PSBATCNT+1,^TMP("PSB",$J,"ORDERS",PSBONX,"AT",PSBATCNT)=$P(PSBADST2,"-",Y)
+"RTN","PSBOMH",175,0)
+ ...;*70   Insert Xorders IM or CO flag (1 or 2) into Sort control
+"RTN","PSBOMH",176,0)
+ ...I PSBADST'="",PSBFREQ>44 S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",0)=PSBATCNT
+"RTN","PSBOMH",177,0)
+ ...S ^TMP("PSB",$J,PSBWEEK,"SORT",XORDERS,PSBTYPE,PSBOITX,PSBX)=""
+"RTN","PSBOMH",178,0)
+ ...F PSBDOW=0:1:6 D  Q:X>(PSBSTOP-1)
+"RTN","PSBOMH",179,0)
+ ....S %H=PSBWEEK+PSBDOW D YMD^%DTC
+"RTN","PSBOMH",180,0)
+ ....S ^TMP("PSB",$J,PSBWEEK,PSBONX,X,0)=0
+"RTN","PSBOMH",181,0)
+ ....I '$D(^TMP("PSB",$J,PSBWEEK,"HDR",X)) S ^TMP("PSB",$J,PSBWEEK,"HDR",X)=$E(X,4,5)_"/"_$E(X,6,7)_"/"_(1700+$E(X,1,3))
+"RTN","PSBOMH",182,0)
+ ...S %H=PSBWEEK+7 D YMD^%DTC S PSBDT=X
+"RTN","PSBOMH",183,0)
+ .D:PSBTYPE'="C"
+"RTN","PSBOMH",184,0)
+ ..S X=PSBDT D H^%DTC S PSBWEEK=%H
+"RTN","PSBOMH",185,0)
+ ..S (^TMP("PSB",$J,PSBWEEK,PSBONX),^TMP("PSB",$J,PSBWEEK,PSBONX,"AT",0))=""
+"RTN","PSBOMH",186,0)
+ ..;*70   Insert Xorders IM or CO flag (1 or 2) into Sort control
+"RTN","PSBOMH",187,0)
+ ..S ^TMP("PSB",$J,PSBWEEK,"SORT",XORDERS,PSBTYPE,PSBOITX,PSBX)=""
+"RTN","PSBOMH",188,0)
+ D EN^PSBOMH1,EN^PSBOMH2
+"RTN","PSBOMH",189,0)
+ Q
+"RTN","PSBOMH",190,0)
+INSTR S PSBINIT=PSBINIT_"*"
+"RTN","PSBOMH",191,0)
+ S PSBNAME=PSBNAME_"/"_$P(^PSB(53.79,PSBIEN,.9,$P(PSBDT,"."),0),U,3)_"  "_$$GET1^DIQ(53.79,PSBIEN_",",.06)
+"RTN","PSBOMH",192,0)
+ Q
+"RTN","PSBOMM")
+0^1^B145771681^B142931678
+"RTN","PSBOMM",1,0)
+PSBOMM ;BIRMINGHAM/EFC-MISSED MEDS ;9/20/12 2:08pm
+"RTN","PSBOMM",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**26,32,56,52,58,70,76**;Mar 2004;Build 10
+"RTN","PSBOMM",3,0)
+ ;Per VHA Directive 2004-038 (or future revisions regarding same), this routine should not be modified.
+"RTN","PSBOMM",4,0)
+ ;
+"RTN","PSBOMM",5,0)
+ ; Reference/IA
+"RTN","PSBOMM",6,0)
+ ; ^DPT/10035
+"RTN","PSBOMM",7,0)
+ ; EN^PSJBCMA/2828
+"RTN","PSBOMM",8,0)
+ ; EN^PSJBCMA2/2830
+"RTN","PSBOMM",9,0)
+ ;
+"RTN","PSBOMM",10,0)
+ ;*58 - insert Verified by Column with nurse initials else "***"
+"RTN","PSBOMM",11,0)
+ ;*70 - add test for PSBCLINORD flag and filter accordingly
+"RTN","PSBOMM",12,0)
+ ;
+"RTN","PSBOMM",13,0)
+EN ;
+"RTN","PSBOMM",14,0)
+ N PSBSTRT,PSBSTOP,DFN,PSBODATE,PSBFLAG,PSBCNT,PSBEDIT,PSBFUTR
+"RTN","PSBOMM",15,0)
+ S PSBSTART=$P(PSBRPT(.1),U,6)+$P(PSBRPT(.1),U,7),PSBSTOP=$P(PSBRPT(.1),U,8)+$P(PSBRPT(.1),U,9)
+"RTN","PSBOMM",16,0)
+ D DEFLT^PSBOMM2
+"RTN","PSBOMM",17,0)
+ K PSBOCRIT,PSBACRIT,PSBS
+"RTN","PSBOMM",18,0)
+ S PSBOCRIT="^A^H^O^R" ;PSB*3*56 Adds the On Call Status to the Missed Meds Report, PSB*3*76 adds Renewed Status
+"RTN","PSBOMM",19,0)
+ S:$P(PSBFUTR,U,8) PSBOCRIT=PSBOCRIT_"^D^DE" S:$P(PSBFUTR,U,7) PSBOCRIT=PSBOCRIT_"^E"
+"RTN","PSBOMM",20,0)
+ S PSBACRIT="MG"
+"RTN","PSBOMM",21,0)
+ S:$P(PSBFUTR,U,17) PSBACRIT=PSBACRIT_"H" S:$P(PSBFUTR,U,18) PSBACRIT=PSBACRIT_"R"
+"RTN","PSBOMM",22,0)
+ S PSBINCC=0 S:$P(PSBRPT(.2),U,8) PSBINCC=1
+"RTN","PSBOMM",23,0)
+ K ^TMP("PSJ",$J),^TMP("PSB",$J),^TMP("PSB1",$J)
+"RTN","PSBOMM",24,0)
+ S PSBSTRT=$P(PSBRPT(.1),U,6)+$P(PSBRPT(.1),U,7)-.0000001
+"RTN","PSBOMM",25,0)
+ F DFN=0:0 S DFN=$O(^TMP("PSBO",$J,DFN)) Q:'DFN  D EN1
+"RTN","PSBOMM",26,0)
+ D PRINT
+"RTN","PSBOMM",27,0)
+ K ^TMP("PSJ",$J),^TMP("PSB",$J),^TMP("PSBO",$J),PSBS
+"RTN","PSBOMM",28,0)
+ Q
+"RTN","PSBOMM",29,0)
+EN1 ;
+"RTN","PSBOMM",30,0)
+ N PSBGBL,PSBHDR,PSBX,PSBDFN,PSBDT,PSBEVDT,PSBH
+"RTN","PSBOMM",31,0)
+ K ^TMP("PSJ",$J) S PSBEVDT=PSBSTRT
+"RTN","PSBOMM",32,0)
+ D EN^PSJBCMA(DFN,PSBSTRT)
+"RTN","PSBOMM",33,0)
+ ;Filter in/out Clinic Orders               *70
+"RTN","PSBOMM",34,0)
+ D:PSBCLINORD
+"RTN","PSBOMM",35,0)
+ . I $D(PSBRPT(2)) D FILTERCO^PSBO Q
+"RTN","PSBOMM",36,0)
+ . D INCLUDCO^PSBVDLU1
+"RTN","PSBOMM",37,0)
+ D:'PSBCLINORD REMOVECO^PSBVDLU1
+"RTN","PSBOMM",38,0)
+ ;
+"RTN","PSBOMM",39,0)
+ Q:^TMP("PSJ",$J,1,0)=-1
+"RTN","PSBOMM",40,0)
+ S PSBX=""
+"RTN","PSBOMM",41,0)
+ F  S PSBX=$O(^TMP("PSJ",$J,PSBX)) Q:PSBX=""  D
+"RTN","PSBOMM",42,0)
+ .Q:^TMP("PSJ",$J,PSBX,0)=-1
+"RTN","PSBOMM",43,0)
+ .D NOW^%DTC
+"RTN","PSBOMM",44,0)
+ .D CLEAN^PSBVT
+"RTN","PSBOMM",45,0)
+ .D PSJ^PSBVT(PSBX)
+"RTN","PSBOMM",46,0)
+ .Q:PSBIVT="A"
+"RTN","PSBOMM",47,0)
+ .Q:PSBIVT="H"
+"RTN","PSBOMM",48,0)
+ .I PSBIVT["S",PSBISYR'=1 Q
+"RTN","PSBOMM",49,0)
+ .I PSBIVT["C",PSBCHEMT'="P",PSBISYR'=1 Q
+"RTN","PSBOMM",50,0)
+ .I PSBIVT["C",PSBCHEMT="A" Q
+"RTN","PSBOMM",51,0)
+ .Q:PSBONX["P"
+"RTN","PSBOMM",52,0)
+ .Q:PSBOSP<PSBSTART
+"RTN","PSBOMM",53,0)
+ .I %>PSBOSP,PSBOSTS'="D",PSBOSTS'="DE",PSBOSTS'="H" S PSBOSTS="E"
+"RTN","PSBOMM",54,0)
+ .I PSBSCHT="C" D  Q
+"RTN","PSBOMM",55,0)
+ ..S (PSBYES,PSBODD)=0
+"RTN","PSBOMM",56,0)
+ ..S PSBDOW="SU^MO^TU^WE^TH^FR^SA" F I=1:1:7 I $P(PSBDOW,"^",I)=$E(PSBSCH,1,2) S PSBYES=1
+"RTN","PSBOMM",57,0)
+ ..I PSBYES,PSBADST="" Q
+"RTN","PSBOMM",58,0)
+ ..F I=1:1 Q:$P(PSBSCH,"-",I)=""  I $P(PSBSCH,"-",I)?2N!($P(PSBSCH,"-",I)?4N) S PSBYES=1
+"RTN","PSBOMM",59,0)
+ ..S PSBFREQ=$$GETFREQ^PSBVDLU1(DFN,PSBONX)
+"RTN","PSBOMM",60,0)
+ ..I PSBFREQ="O" S PSBYES=1,PSBFREQ=1440
+"RTN","PSBOMM",61,0)
+ ..I 'PSBYES,PSBADST="",PSBFREQ<1 Q
+"RTN","PSBOMM",62,0)
+ ..I (PSBFREQ#1440'=0),(1440#PSBFREQ'=0) S PSBODD=1
+"RTN","PSBOMM",63,0)
+ ..I PSBODD,PSBADST'="" Q
+"RTN","PSBOMM",64,0)
+ ..Q:PSBOCRIT'[PSBOSTS
+"RTN","PSBOMM",65,0)
+ ..Q:PSBNGF
+"RTN","PSBOMM",66,0)
+ ..Q:PSBOSTS="N"
+"RTN","PSBOMM",67,0)
+ ..Q:PSBSM
+"RTN","PSBOMM",68,0)
+ ..S PSBS(DFN,PSBONX,$S(PSBOSTS="A":"Active",PSBOSTS="H":"On Hold",PSBOSTS="D":"DC'd",PSBOSTS="DE":"DC'd (Edit)",PSBOSTS="E":"Expired",PSBOSTS="O":"On Call",PSBOSTS="R":"Renewed",1:"*Unknown*"))="" ;PSB*3*76 adds Renewed as status
+"RTN","PSBOMM",69,0)
+ ..S PSBSTXP(PSBONX,DFN,$$DTFMT^PSBOMM2(PSBOSP))="" ;DFN added to PSBSTXP array in PSB*3*52
+"RTN","PSBOMM",70,0)
+ ..S PSBCADM=0
+"RTN","PSBOMM",71,0)
+ ..I PSBADST="" D  Q:$G(PSBADST)=""  S PSBCADM=1
+"RTN","PSBOMM",72,0)
+ ...S X=PSBOST D H^%DTC S X1=((%H*24)*60)+(%T/60)
+"RTN","PSBOMM",73,0)
+ ...S X=PSBSTRT,X3=0 D H^%DTC S X2=((%H*24)*60)+(%T/60)
+"RTN","PSBOMM",74,0)
+ ...I X2'<X1 S X3=X2-X1 S PSBOST=$$FMADD^XLFDT(PSBSTRT,,,(-1*(X3#PSBFREQ)))
+"RTN","PSBOMM",75,0)
+ ...K PSBADST S PSBOST2=PSBOST,PSBDT2=PSBSTRT
+"RTN","PSBOMM",76,0)
+ ...F XZ=0:1 S PSBADST(XZ,PSBDT2)=$$GETADMIN^PSBVDLU1(DFN,PSBONX,PSBOST2,PSBFREQ,PSBDT2) D  Q:PSBDT2>PSBSTOP
+"RTN","PSBOMM",77,0)
+ ....I ($L(PSBADST(XZ,PSBDT2),"-")>$L($G(PSBADST),"-"))!($G(PSBADST)="") S PSBADST=PSBADST(XZ,PSBDT2)
+"RTN","PSBOMM",78,0)
+ ....S Z=PSBDT2\1,J=$P(PSBADST(XZ,PSBDT2),"-",($L(PSBADST(XZ,PSBDT2),"-"))) S:J]"" PSBOST2=Z_"."_J
+"RTN","PSBOMM",79,0)
+ ....S PSBDT2=($$FMADD^XLFDT(Z,1))+.2400
+"RTN","PSBOMM",80,0)
+ ....S PSBDT2=$S($G(FLG):(PSBSTOP\1)+.2401,PSBDT2>PSBOSP:PSBOSP,1:PSBDT2) K FLG I PSBDT2=PSBOSP S FLG=1
+"RTN","PSBOMM",81,0)
+ ..S Z=PSBADST I Z]"" K ^TMP("PSB",$J,"GETADMIN") S ^TMP("PSB",$J,"GETADMIN",0)=Z
+"RTN","PSBOMM",82,0)
+ ..F Y=1:1:$L(Z,"-") D
+"RTN","PSBOMM",83,0)
+ ...Q:($P(Z,"-",Y)'?2N)&($P(Z,"-",Y)'?4N)
+"RTN","PSBOMM",84,0)
+ ..K PSBOACTL,^TMP("PSB1",$J) D EN^PSJBCMA2(DFN,PSBONX,1) I ^TMP("PSJ2",$J,0)'=1 M PSBOACTL=^TMP("PSJ2",$J) K ^TMP("PSJ2",$J)
+"RTN","PSBOMM",85,0)
+ ..I 'PSBODD F XX=0:1 Q:'$D(^TMP("PSB",$J,"GETADMIN",XX))  S (PSBADST,Z)=$G(^TMP("PSB",$J,"GETADMIN",XX)) D
+"RTN","PSBOMM",86,0)
+ ...D MISSED^PSBOMM2(Z,.PSBEDIT,PSBSTRT)
+"RTN","PSBOMM",87,0)
+ ..I PSBODD F XX=0:1 Q:'$D(PSBADST(XX))  S XXX=$O(PSBADST(XX,"")) S (PSBADST,Z)=PSBADST(XX,XXX) D
+"RTN","PSBOMM",88,0)
+ ...I Z]"" D MISSED^PSBOMM2(Z,.PSBEDIT,XXX)
+"RTN","PSBOMM",89,0)
+ .K PSBHDDT,PSBUNHD,^TMP("PSB1",$J)
+"RTN","PSBOMM",90,0)
+ .I PSBSCHT="O" D  Q
+"RTN","PSBOMM",91,0)
+ ..Q:PSBOSTS="N"
+"RTN","PSBOMM",92,0)
+ ..Q:PSBNGF
+"RTN","PSBOMM",93,0)
+ ..Q:PSBSM
+"RTN","PSBOMM",94,0)
+ ..Q:(PSBOSP=PSBOST)&(PSBOCRIT'["E")
+"RTN","PSBOMM",95,0)
+ ..Q:PSBOST'<PSBSTOP
+"RTN","PSBOMM",96,0)
+ ..S PSBDT="*** ONE-TIME ***"
+"RTN","PSBOMM",97,0)
+ ..S (PSBSTXP(PSBONX,DFN,$$DTFMT^PSBOMM2(PSBOSP)),PSBSTXT(PSBONX,DFN,$$DTFMT^PSBOMM2(PSBOST)))="" ;DFN added to PSBSTXP array in PSB*3*52
+"RTN","PSBOMM",98,0)
+ ..S (PSBG,X,Y,PSBXSTS)="" K PSBEXST
+"RTN","PSBOMM",99,0)
+ ..F  S X=$O(^PSB(53.79,"AOIP",DFN,PSBOIT,X),-1) Q:'X  D
+"RTN","PSBOMM",100,0)
+ ...F  S Y=$O(^PSB(53.79,"AOIP",DFN,PSBOIT,X,Y),-1) Q:'Y  D
+"RTN","PSBOMM",101,0)
+ ....S PSBXSTS=$P(^PSB(53.79,Y,0),U,9)
+"RTN","PSBOMM",102,0)
+ ....I $P(^PSB(53.79,Y,.1),U)=PSBONX,PSBXSTS'="N",PSBXSTS'="M" S PSBG=1,PSBG(PSBONX,DFN,Y)="",(X,Y)=0 ;DFN added to PSBG array in PSB*3*52
+"RTN","PSBOMM",103,0)
+ ..I PSBG D PARTG1^PSBOMM2($O(PSBG(PSBONX,DFN,""))) ;DFN added to PSBG array in PSB*3*52
+"RTN","PSBOMM",104,0)
+ ..D NOW^%DTC
+"RTN","PSBOMM",105,0)
+ ..Q:(PSBOCRIT'[PSBOSTS)
+"RTN","PSBOMM",106,0)
+ ..S PSBS(DFN,PSBONX,$S(PSBOSTS="A":"Active",PSBOSTS="H":"On Hold",PSBOSTS="D":"DC'd",PSBOSTS="DE":"DC'd (Edit)",PSBOSTS="E":"Expired",PSBOSTS="O":"On Call",PSBOSTS="R":"Renewed",1:" * ERROR * "))="" ;PSB*3*76 adds Renewed as status
+"RTN","PSBOMM",107,0)
+ ..D:'PSBG!(PSBACRIT[$G(PSBXSTS,1))
+"RTN","PSBOMM",108,0)
+ ...S VAR=""
+"RTN","PSBOMM",109,0)
+ ...K ^TMP("PSJ2",$J),^TMP("PSB1",$J),PSBOACTL D EN^PSJBCMA2(DFN,PSBONX,1) I ^TMP("PSJ2",$J,0)'=1 D
+"RTN","PSBOMM",110,0)
+ ....M PSBOACTL=^TMP("PSJ2",$J)
+"RTN","PSBOMM",111,0)
+ ....D UDONE^PSBOMM2
+"RTN","PSBOMM",112,0)
+ ....I PSBFLAG=1 S VAR="(On Hold) "_$$DTFMT^PSBOMM2(PSBHDDT)
+"RTN","PSBOMM",113,0)
+ ....I PSBFLAG=2 S VAR="(On Hold) "_$$DTFMT^PSBOMM2(PSBHDDT)_"  (Off Hold) "_$$DTFMT^PSBOMM2(PSBUNHD)
+"RTN","PSBOMM",114,0)
+ ...I '$G(PSBEXST,0)!(PSBXSTS="M") S $P(^TMP("PSB",$J,DFN,"*** ONE-TIME ***",PSBOITX,PSBONX),U,1,4)=VAR
+"RTN","PSBOMM",115,0)
+ ...I $G(PSBEXST,0) D
+"RTN","PSBOMM",116,0)
+ ....S VAR1=$G(^TMP("PSB",$J,DFN,"*** ONE-TIME ***","* "_PSBOITX,PSBONX)) I VAR1]"" S $P(VAR1,U,1,4)=VAR_VAR1
+"RTN","PSBOMM",117,0)
+ ...K PSBHDDT,PSBUNHD,^TMP("PSB1",$J),PSBCNT
+"RTN","PSBOMM",118,0)
+ K PSBOACTL
+"RTN","PSBOMM",119,0)
+ Q
+"RTN","PSBOMM",120,0)
+PRINT ;
+"RTN","PSBOMM",121,0)
+ N PSBHDR,PSBDT,PSBOITX,PSBONX,DFN,PSBVNI,PSBSORT,PSBSRCHL,PSBSRT
+"RTN","PSBOMM",122,0)
+ K PSBNPG
+"RTN","PSBOMM",123,0)
+ S PSBSRT=$P(PSBRPT(.1),U,1)                   ;init PSBSRT  ;*70
+"RTN","PSBOMM",124,0)
+ S Y=$S($P(PSBRPT(.1),U,8)]"":$P(PSBRPT(.1),U,8),1:$P(PSBRPT(.1),U,6))
+"RTN","PSBOMM",125,0)
+ S PSBHDR(1)="MISSED MEDICATIONS REPORT for "_$$FMTE^XLFDT($P(PSBRPT(.1),U,6)+$P(PSBRPT(.1),U,7))_" to "_$$FMTE^XLFDT(Y+$P(PSBRPT(.1),U,9))
+"RTN","PSBOMM",126,0)
+ S PSBHDR(2)="Order Status(es): --"
+"RTN","PSBOMM",127,0)
+ F Y=5,8,7 I $P(PSBFUTR,U,Y) S $P(PSBHDR(2),": ",2)=$P(PSBHDR(2),": ",2)_$S(PSBHDR(2)["--":"",1:"/ ")_$P("^^^^Active^^Expired^DC'd^^^^^^^^^^",U,Y)_" " S PSBHDR(2)=$TR(PSBHDR(2),"-","")
+"RTN","PSBOMM",128,0)
+ S PSBHDR(3)="Admin Status(es): --"
+"RTN","PSBOMM",129,0)
+ F Y=16,17,18 I $P(PSBFUTR,U,Y) S $P(PSBHDR(3),": ",2)=$P(PSBHDR(3),": ",2)_$S(PSBHDR(3)["--":"",1:"/ ")_$P("^^^^^^^^^^^^^^^Missing Dose^Held^Refused",U,Y)_" " S PSBHDR(3)=$TR(PSBHDR(3),"-","")
+"RTN","PSBOMM",130,0)
+ I PSBINCC S PSBHDR(4)="Include Comments/Reasons"
+"RTN","PSBOMM",131,0)
+ ;check Clinic or Nurs Unit search list                *70
+"RTN","PSBOMM",132,0)
+ S PSBSRCHL=$$SRCHLIST^PSBOHDR()
+"RTN","PSBOMM",133,0)
+ D:PSBSRCHL]""
+"RTN","PSBOMM",134,0)
+ .S PSBHDR(5)=""
+"RTN","PSBOMM",135,0)
+ .S:$P(PSBRPT(4),U,2)="C" PSBHDR(6)="Clinic Search List: "
+"RTN","PSBOMM",136,0)
+ .S:$P(PSBRPT(4),U,2)="I" PSBHDR(6)="Ward Location: "
+"RTN","PSBOMM",137,0)
+ ;
+"RTN","PSBOMM",138,0)
+ ;* * *  Print by Patient  * * *
+"RTN","PSBOMM",139,0)
+ D:PSBSRT="P"
+"RTN","PSBOMM",140,0)
+ .S DFN=$P(PSBRPT(.1),U,2)
+"RTN","PSBOMM",141,0)
+ .;
+"RTN","PSBOMM",142,0)
+ .W $$PTHDR()
+"RTN","PSBOMM",143,0)
+ .I $G(PSBEDIT) W !?7,"*Administration Times have been edited*"
+"RTN","PSBOMM",144,0)
+ .I $O(^TMP("PSB",$J,DFN,""))="" W !,"No Missed Medications Found",$$PTFTR^PSBOHDR() Q
+"RTN","PSBOMM",145,0)
+ .S PSBDT=""
+"RTN","PSBOMM",146,0)
+ .F  S PSBDT=$O(^TMP("PSB",$J,DFN,PSBDT)) Q:PSBDT=""  D
+"RTN","PSBOMM",147,0)
+ ..W !
+"RTN","PSBOMM",148,0)
+ ..S PSBOITX=""
+"RTN","PSBOMM",149,0)
+ ..F  S PSBOITX=$O(^TMP("PSB",$J,DFN,PSBDT,PSBOITX)) Q:PSBOITX=""  D
+"RTN","PSBOMM",150,0)
+ ...S PSBONX=""
+"RTN","PSBOMM",151,0)
+ ...F  S PSBONX=$O(^TMP("PSB",$J,DFN,PSBDT,PSBOITX,PSBONX)) Q:PSBONX=""  D
+"RTN","PSBOMM",152,0)
+ ....;if previously held/refused lines printed, need line feed *58
+"RTN","PSBOMM",153,0)
+ ....I ($G(VAR1)]"")!($G(VAR2)]"")!($G(VAR3)]"") W !
+"RTN","PSBOMM",154,0)
+ ....K VAR1,VAR2,VAR3,SP I $Y>(IOSL-9) W $$PTFTR^PSBOHDR(),$$PTHDR()
+"RTN","PSBOMM",155,0)
+ ....S VAR1=$G(^TMP("PSB",$J,DFN,PSBDT,PSBOITX,PSBONX))
+"RTN","PSBOMM",156,0)
+ ....S VAR2=$G(^TMP("PSB",$J,DFN,PSBDT,PSBOITX,PSBONX,"X"))
+"RTN","PSBOMM",157,0)
+ ....S VAR3=$G(^TMP("PSB",$J,DFN,PSBDT,PSBOITX,PSBONX,.3))
+"RTN","PSBOMM",158,0)
+ ....D PSJ1^PSBVT(DFN,PSBONX) S PSBVNI=$S(PSBVNI]"":PSBVNI,1:"***")
+"RTN","PSBOMM",159,0)
+ ....I PSBDT["ONE-TIME" D  Q
+"RTN","PSBOMM",160,0)
+ .....W !
+"RTN","PSBOMM",161,0)
+ .....W !,$O(PSBS(DFN,PSBONX,"")),?15,PSBVNI,?21,PSBDT,?38,PSBOITX,?103,PSBCLORD,!                       ;*70
+"RTN","PSBOMM",162,0)
+ .....I VAR1]"" W ?41,VAR1 S SP=1
+"RTN","PSBOMM",163,0)
+ .....I VAR2]"" W:$G(SP) ! W ?41,VAR2
+"RTN","PSBOMM",164,0)
+ .....I VAR3]"" W !,$$WRAP^PSBO(41,79,VAR3)
+"RTN","PSBOMM",165,0)
+ .....W !?3,"Start Date/Time:  ",?22,$O(PSBSTXT(PSBONX,DFN,"")) ;DFN added to PSBSTXT array in PSB*3*52
+"RTN","PSBOMM",166,0)
+ .....W !?3,"Stop Date/Time:  ",?22,$O(PSBSTXP(PSBONX,DFN,"")) ;DFN added to PSBSTXP array in PSB*3*52
+"RTN","PSBOMM",167,0)
+ ....W !,$O(PSBS(DFN,PSBONX,"")),?15,PSBVNI,?21,$S(+PSBDT>0:$$DTFMT^PSBOMM2(PSBDT),1:PSBDT),?38,PSBOITX,?85,$O(PSBSTXP(PSBONX,DFN,"")) ;DFN added to PSBSTXP array in PSB*3*52
+"RTN","PSBOMM",168,0)
+ ....W ?103,PSBCLORD,!                     ;*70 clinic name
+"RTN","PSBOMM",169,0)
+ ....I VAR1]"" W ?41,VAR1 S SP=1
+"RTN","PSBOMM",170,0)
+ ....I VAR2]"" W:$G(SP) ! W ?41,VAR2
+"RTN","PSBOMM",171,0)
+ ....I VAR3]"" W !,$$WRAP^PSBO(41,79,VAR3)
+"RTN","PSBOMM",172,0)
+ .W $$PTFTR^PSBOHDR()
+"RTN","PSBOMM",173,0)
+ .Q
+"RTN","PSBOMM",174,0)
+ ;
+"RTN","PSBOMM",175,0)
+ ;* * *  Print by Ward  * * *
+"RTN","PSBOMM",176,0)
+ D:PSBSRT="W"
+"RTN","PSBOMM",177,0)
+ .S PSBWARD=$P(PSBRPT(.1),U,3)
+"RTN","PSBOMM",178,0)
+ .W $$WRDHDR()
+"RTN","PSBOMM",179,0)
+ .I '$O(^TMP("PSB",$J,0)) W !,"No Missed Medications Found" Q
+"RTN","PSBOMM",180,0)
+ .S PSBSORT=$P(PSBRPT(.1),U,5)
+"RTN","PSBOMM",181,0)
+ .F DFN=0:0 S DFN=$O(^TMP("PSB",$J,DFN)) Q:'DFN  D
+"RTN","PSBOMM",182,0)
+ ..S PSBDX=$S(PSBSORT="P":$P(^DPT(DFN,0),U),1:$G(^DPT(DFN,.1))_" "_$G(^(.101)))
+"RTN","PSBOMM",183,0)
+ ..S:PSBDX="" PSBDX=$P(^DPT(DFN,0),U)
+"RTN","PSBOMM",184,0)
+ ..S ^TMP("PSB",$J,"B",PSBDX,DFN)=""
+"RTN","PSBOMM",185,0)
+ .S PSBDX=""
+"RTN","PSBOMM",186,0)
+ .F  S PSBDX=$O(^TMP("PSB",$J,"B",PSBDX)) Q:PSBDX=""  D
+"RTN","PSBOMM",187,0)
+ ..F DFN=0:0 S DFN=$O(^TMP("PSB",$J,"B",PSBDX,DFN)) Q:'DFN  D
+"RTN","PSBOMM",188,0)
+ ...W !
+"RTN","PSBOMM",189,0)
+ ...S PSBDT=""
+"RTN","PSBOMM",190,0)
+ ...F  S PSBDT=$O(^TMP("PSB",$J,DFN,PSBDT)) Q:PSBDT=""  D
+"RTN","PSBOMM",191,0)
+ ....W !
+"RTN","PSBOMM",192,0)
+ ....K VAR1,VAR2,VAR3    ;reset held/refused to prevent line feed
+"RTN","PSBOMM",193,0)
+ ....W:PSBDT["ONE-TIME" !
+"RTN","PSBOMM",194,0)
+ ....S PSBOITX=""
+"RTN","PSBOMM",195,0)
+ ....F  S PSBOITX=$O(^TMP("PSB",$J,DFN,PSBDT,PSBOITX)) Q:PSBOITX=""  D
+"RTN","PSBOMM",196,0)
+ .....S PSBONX=""
+"RTN","PSBOMM",197,0)
+ .....F  S PSBONX=$O(^TMP("PSB",$J,DFN,PSBDT,PSBOITX,PSBONX)) Q:PSBONX=""  D
+"RTN","PSBOMM",198,0)
+ ......;if previously held/refused lines printed, need line feed *58
+"RTN","PSBOMM",199,0)
+ ......I ($G(VAR1)]"")!($G(VAR2)]"")!($G(VAR3)]"") W !
+"RTN","PSBOMM",200,0)
+ ......K VAR1,VAR2,VAR3,SP I $Y>(IOSL-9) W $$WRDHDR()
+"RTN","PSBOMM",201,0)
+ ......D PSJ1^PSBVT(DFN,PSBONX)
+"RTN","PSBOMM",202,0)
+ ......S PSBVNI=$S(PSBVNI]"":PSBVNI,1:"***")
+"RTN","PSBOMM",203,0)
+ ......W !,$O(PSBS(DFN,PSBONX,"")),?15,PSBVNI,?22,$G(^DPT(DFN,.101),"**"),?42,$P(^DPT(DFN,0),U)," (",$E($P(^(0),U,9),6,9),")"
+"RTN","PSBOMM",204,0)
+ ......S VAR1=$G(^TMP("PSB",$J,DFN,PSBDT,PSBOITX,PSBONX))
+"RTN","PSBOMM",205,0)
+ ......S VAR2=$G(^TMP("PSB",$J,DFN,PSBDT,PSBOITX,PSBONX,"X"))
+"RTN","PSBOMM",206,0)
+ ......S VAR3=$G(^TMP("PSB",$J,DFN,PSBDT,PSBOITX,PSBONX,.3))
+"RTN","PSBOMM",207,0)
+ ......I PSBDT["ONE-TIME" D  Q
+"RTN","PSBOMM",208,0)
+ .......W !,PSBDT,?37,PSBOITX S SP=1
+"RTN","PSBOMM",209,0)
+ .......I VAR1]"" W !,?37,$P(VAR1,U,1) S SP=1
+"RTN","PSBOMM",210,0)
+ .......I VAR2]"" W:$G(SP) ! W ?37,VAR2
+"RTN","PSBOMM",211,0)
+ .......I VAR3]"" W !,$$WRAP^PSBO(37,102,VAR3)
+"RTN","PSBOMM",212,0)
+ .......W !?3,"Start Date/Time:  ",?21,$O(PSBSTXT(PSBONX,DFN,"")) ;DFN added to PSBSTXT array in PSB*3*52
+"RTN","PSBOMM",213,0)
+ .......W !?3,"Stop Date/Time:  ",?21,$O(PSBSTXP(PSBONX,DFN,"")) ;DFN added to PSBSTXP array in PSB*3*52
+"RTN","PSBOMM",214,0)
+ .......W !
+"RTN","PSBOMM",215,0)
+ ......W ?74,$S(+PSBDT>0:$$DTFMT^PSBOMM2(PSBDT),1:PSBDT),?92,PSBOITX S SP=1
+"RTN","PSBOMM",216,0)
+ ......I VAR1]"" W !,?57,VAR1 S SP=1
+"RTN","PSBOMM",217,0)
+ ......I VAR2]"" W:$G(SP) ! W ?57,VAR2
+"RTN","PSBOMM",218,0)
+ ......I VAR3]"" W !,$$WRAP^PSBO(57,82,VAR3)
+"RTN","PSBOMM",219,0)
+ ;
+"RTN","PSBOMM",220,0)
+ ;* * *  Print by Clinic  * * *
+"RTN","PSBOMM",221,0)
+ D:PSBSRT="C"
+"RTN","PSBOMM",222,0)
+ .W $$CLNHDR()
+"RTN","PSBOMM",223,0)
+ .I '$O(^TMP("PSB",$J,0)) W !,"No Missed Medications Found" Q
+"RTN","PSBOMM",224,0)
+ .S PSBSORT=$P(PSBRPT(.1),U,5)
+"RTN","PSBOMM",225,0)
+ .F DFN=0:0 S DFN=$O(^TMP("PSB",$J,DFN)) Q:'DFN  D
+"RTN","PSBOMM",226,0)
+ ..S PSBDX=$S(PSBSORT="P":$P(^DPT(DFN,0),U),1:$G(^DPT(DFN,.1))_" "_$G(^(.101)))
+"RTN","PSBOMM",227,0)
+ ..S:PSBDX="" PSBDX=$P(^DPT(DFN,0),U)
+"RTN","PSBOMM",228,0)
+ ..S ^TMP("PSB",$J,"B",PSBDX,DFN)=""
+"RTN","PSBOMM",229,0)
+ .S PSBDX=""
+"RTN","PSBOMM",230,0)
+ .F  S PSBDX=$O(^TMP("PSB",$J,"B",PSBDX)) Q:PSBDX=""  D
+"RTN","PSBOMM",231,0)
+ ..F DFN=0:0 S DFN=$O(^TMP("PSB",$J,"B",PSBDX,DFN)) Q:'DFN  D
+"RTN","PSBOMM",232,0)
+ ...W !
+"RTN","PSBOMM",233,0)
+ ...S PSBDT=""
+"RTN","PSBOMM",234,0)
+ ...F  S PSBDT=$O(^TMP("PSB",$J,DFN,PSBDT)) Q:PSBDT=""  D
+"RTN","PSBOMM",235,0)
+ ....W !
+"RTN","PSBOMM",236,0)
+ ....K VAR1,VAR2,VAR3    ;reset held/refused to prevent line feed
+"RTN","PSBOMM",237,0)
+ ....W:PSBDT["ONE-TIME" !
+"RTN","PSBOMM",238,0)
+ ....S PSBOITX=""
+"RTN","PSBOMM",239,0)
+ ....F  S PSBOITX=$O(^TMP("PSB",$J,DFN,PSBDT,PSBOITX)) Q:PSBOITX=""  D
+"RTN","PSBOMM",240,0)
+ .....S PSBONX=""
+"RTN","PSBOMM",241,0)
+ .....F  S PSBONX=$O(^TMP("PSB",$J,DFN,PSBDT,PSBOITX,PSBONX)) Q:PSBONX=""  D
+"RTN","PSBOMM",242,0)
+ ......;if previously held/refused lines printed, need line feed *58
+"RTN","PSBOMM",243,0)
+ ......I ($G(VAR1)]"")!($G(VAR2)]"")!($G(VAR3)]"") W !
+"RTN","PSBOMM",244,0)
+ ......K VAR1,VAR2,VAR3,SP I $Y>(IOSL-9) W $$CLNHDR()
+"RTN","PSBOMM",245,0)
+ ......D PSJ1^PSBVT(DFN,PSBONX)
+"RTN","PSBOMM",246,0)
+ ......S PSBVNI=$S(PSBVNI]"":PSBVNI,1:"***")
+"RTN","PSBOMM",247,0)
+ ......W !,$O(PSBS(DFN,PSBONX,"")),?11,PSBVNI,?17,$P(^DPT(DFN,0),U)
+"RTN","PSBOMM",248,0)
+ ......S VAR1=$G(^TMP("PSB",$J,DFN,PSBDT,PSBOITX,PSBONX))
+"RTN","PSBOMM",249,0)
+ ......S VAR2=$G(^TMP("PSB",$J,DFN,PSBDT,PSBOITX,PSBONX,"X"))
+"RTN","PSBOMM",250,0)
+ ......S VAR3=$G(^TMP("PSB",$J,DFN,PSBDT,PSBOITX,PSBONX,.3))
+"RTN","PSBOMM",251,0)
+ ......I PSBDT["ONE-TIME" D  Q
+"RTN","PSBOMM",252,0)
+ .......W !,PSBDT,?37,PSBOITX S SP=1
+"RTN","PSBOMM",253,0)
+ .......I VAR1]"" W !,?37,$P(VAR1,U,1) S SP=1
+"RTN","PSBOMM",254,0)
+ .......I VAR2]"" W:$G(SP) ! W ?37,VAR2
+"RTN","PSBOMM",255,0)
+ .......I VAR3]"" W !,$$WRAP^PSBO(37,102,VAR3)
+"RTN","PSBOMM",256,0)
+ .......W !?3,"Start Date/Time:  ",?21,$O(PSBSTXT(PSBONX,DFN,"")) ;DFN added to PSBSTXT array in PSB*3*52
+"RTN","PSBOMM",257,0)
+ .......W !?3,"Stop Date/Time:  ",?21,$O(PSBSTXP(PSBONX,DFN,"")) ;DFN added to PSBSTXP array in PSB*3*52
+"RTN","PSBOMM",258,0)
+ .......W !
+"RTN","PSBOMM",259,0)
+ ......;detail line
+"RTN","PSBOMM",260,0)
+ ......W ?49,$S(+PSBDT>0:$$DTFMT^PSBOMM2(PSBDT),1:PSBDT),?66,PSBOITX
+"RTN","PSBOMM",261,0)
+ ......W:PSBCLINORD ?103,PSBCLORD
+"RTN","PSBOMM",262,0)
+ ......S SP=1
+"RTN","PSBOMM",263,0)
+ ......I VAR1]"" W !,?57,VAR1 S SP=1
+"RTN","PSBOMM",264,0)
+ ......I VAR2]"" W:$G(SP) ! W ?57,VAR2
+"RTN","PSBOMM",265,0)
+ ......I VAR3]"" W !,$$WRAP^PSBO(57,82,VAR3)
+"RTN","PSBOMM",266,0)
+ Q
+"RTN","PSBOMM",267,0)
+WRDHDR() ;
+"RTN","PSBOMM",268,0)
+ D WARD^PSBOHDR(PSBWRD,.PSBHDR,,,PSBSRCHL)
+"RTN","PSBOMM",269,0)
+ W !,"Order Status",?15,"Ver",?22,"Room-Bed",?42,"Patient",?74,"Admin Date/Time",?92,"Medication"
+"RTN","PSBOMM",270,0)
+ D LN1^PSBOMM2
+"RTN","PSBOMM",271,0)
+ Q ""
+"RTN","PSBOMM",272,0)
+CLNHDR() ;
+"RTN","PSBOMM",273,0)
+ D CLINIC^PSBOHDR(.PSBRPT,.PSBHDR,,,PSBSRCHL)
+"RTN","PSBOMM",274,0)
+ W !,"Order Sts",?11,"Ver",?17,"Patient",?49,"Admin Date/Time",?66,"Medication",?103,"Location"
+"RTN","PSBOMM",275,0)
+ D LN1^PSBOMM2
+"RTN","PSBOMM",276,0)
+ Q ""
+"RTN","PSBOMM",277,0)
+PTHDR() ;
+"RTN","PSBOMM",278,0)
+ D PT^PSBOHDR(DFN,.PSBHDR,,,PSBSRCHL)
+"RTN","PSBOMM",279,0)
+ W !,"Order Status",?15,"Ver",?21,"Admin Date/Time",?38,"Medication",?85,"Order Stop Date"
+"RTN","PSBOMM",280,0)
+ W:PSBCLINORD ?103,"Location"
+"RTN","PSBOMM",281,0)
+ D LN1^PSBOMM2
+"RTN","PSBOMM",282,0)
+ Q ""
+"RTN","PSBPXFL")
+0^5^B6217206^B3537740
+"RTN","PSBPXFL",1,0)
+PSBPXFL ;BIR/RMS - BCMA TO PCE LINK FOR IMMUNIZATIONS ; 4/11/14 2:30pm
+"RTN","PSBPXFL",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**47,76**;Mar 2004;Build 10
+"RTN","PSBPXFL",3,0)
+ ;Per VHA Directive 2004-038 (or future revisions regarding same), this routine should not be modified.
+"RTN","PSBPXFL",4,0)
+ ;
+"RTN","PSBPXFL",5,0)
+ ; Reference/IA
+"RTN","PSBPXFL",6,0)
+ ; $$DATA2PCE^PXAPI/1889
+"RTN","PSBPXFL",7,0)
+ ; $$PKG2IEN^VSIT/1904
+"RTN","PSBPXFL",8,0)
+ ; ^DIC(42/10039
+"RTN","PSBPXFL",9,0)
+ ; ^SC(/10040
+"RTN","PSBPXFL",10,0)
+ ;
+"RTN","PSBPXFL",11,0)
+BCMA2PCE(PSBDFN,PSBIMM,PSBDX,PSBDT,PSBWHO,PSBLOC) ;
+"RTN","PSBPXFL",12,0)
+ D CLEAN
+"RTN","PSBPXFL",13,0)
+ D SETUP
+"RTN","PSBPXFL",14,0)
+ Q:$G(PSBSTOP)
+"RTN","PSBPXFL",15,0)
+ S PSBRSLT=$$DATA2PCE^PXAPI(PSBROOT,PSBPKG,PSBSRC)
+"RTN","PSBPXFL",16,0)
+ W:$E(IOST)="C" !,"Result code: ",PSBRSLT
+"RTN","PSBPXFL",17,0)
+ D CLEAN
+"RTN","PSBPXFL",18,0)
+ Q
+"RTN","PSBPXFL",19,0)
+SETUP S PSBROOT="^TMP(""PSBXAPI"",$J)"
+"RTN","PSBPXFL",20,0)
+ S PSBPKG=$$PKG2IEN^VSIT("PSB")
+"RTN","PSBPXFL",21,0)
+ S PSBSRC="EXTERNAL API"
+"RTN","PSBPXFL",22,0)
+ENC S @PSBROOT@("ENCOUNTER",1,"ENC D/T")=$G(PSBDT,DT)
+"RTN","PSBPXFL",23,0)
+ S @PSBROOT@("ENCOUNTER",1,"PATIENT")=PSBDFN
+"RTN","PSBPXFL",24,0)
+ S @PSBROOT@("ENCOUNTER",1,"HOS LOC")=$$LOC Q:$G(PSBSTOP)
+"RTN","PSBPXFL",25,0)
+ S @PSBROOT@("ENCOUNTER",1,"SERVICE CATEGORY")="E"
+"RTN","PSBPXFL",26,0)
+ S @PSBROOT@("ENCOUNTER",1,"INSTITUTION")=+$$SITE^VASITE
+"RTN","PSBPXFL",27,0)
+ S @PSBROOT@("ENCOUNTER",1,"ENCOUNTER TYPE")="P"
+"RTN","PSBPXFL",28,0)
+ S @PSBROOT@("ENCOUNTER",1,"SC")=$$SC
+"RTN","PSBPXFL",29,0)
+PROV S @PSBROOT@("PROVIDER",1,"NAME")=PSBWHO
+"RTN","PSBPXFL",30,0)
+IMMUN S @PSBROOT@("IMMUNIZATION",1,"COMMENT")="@"
+"RTN","PSBPXFL",31,0)
+ S @PSBROOT@("IMMUNIZATION",1,"CONTRAINDICATED")=0
+"RTN","PSBPXFL",32,0)
+ S @PSBROOT@("IMMUNIZATION",1,"IMMUN")=PSBIMM
+"RTN","PSBPXFL",33,0)
+ S @PSBROOT@("IMMUNIZATION",1,"REACTION")="@"
+"RTN","PSBPXFL",34,0)
+ S @PSBROOT@("IMMUNIZATION",1,"SERIES")="@"
+"RTN","PSBPXFL",35,0)
+SC() ;SERVICE CONNECTED
+"RTN","PSBPXFL",36,0)
+ N VAEL
+"RTN","PSBPXFL",37,0)
+ S DFN=PSBDFN
+"RTN","PSBPXFL",38,0)
+ D ELIG^VADPT
+"RTN","PSBPXFL",39,0)
+ Q $S(+VAEL(3)=1:0,1:"")
+"RTN","PSBPXFL",40,0)
+LOC() ;HOSPITAL LOCATION, modified in PSB*3*76 to include clinic locations
+"RTN","PSBPXFL",41,0)
+ S PSBLIEN="" F  S PSBLIEN=$O(^SC("B",PSBLOC,PSBLIEN)) Q:'PSBLIEN  Q:$P(^SC(PSBLIEN,0),U,3)="C"
+"RTN","PSBPXFL",42,0)
+ I PSBLIEN>0 Q PSBLIEN  ;-> Found a clinic location as exact match
+"RTN","PSBPXFL",43,0)
+ N DFN,VAIP
+"RTN","PSBPXFL",44,0)
+ S DFN=PSBDFN
+"RTN","PSBPXFL",45,0)
+ S VAIP("D")=$G(PSBDT,DT)
+"RTN","PSBPXFL",46,0)
+ D IN5^VADPT
+"RTN","PSBPXFL",47,0)
+ I +VAIP(5) S PSBLIEN=$G(^DIC(42,+VAIP(5),44))
+"RTN","PSBPXFL",48,0)
+ I PSBLIEN>0 Q PSBLIEN  ;-> Found a ward location at BCMA MedLog D/T
+"RTN","PSBPXFL",49,0)
+ S VAIP("D")="L"
+"RTN","PSBPXFL",50,0)
+ D IN5^VADPT
+"RTN","PSBPXFL",51,0)
+ I +VAIP(5) S PSBLIEN=$G(^DIC(42,+VAIP(5),44))
+"RTN","PSBPXFL",52,0)
+ I PSBLIEN>0 Q PSBLIEN  ;-> Use last inpatient location
+"RTN","PSBPXFL",53,0)
+ S PSBSTOP=1
+"RTN","PSBPXFL",54,0)
+ Q ""  ;-> No location found, stop flag set, do not file entry
+"RTN","PSBPXFL",55,0)
+CLEAN K ^TMP("PSBPXAPI",$J)
+"RTN","PSBPXFL",56,0)
+ K PSBSTOP,PSBROOT,PSBPKG,PSBSRC,PSBRSLT
+"RTN","PSBPXFL",57,0)
+ Q
+"RTN","PSBPXLP")
+0^4^B5753737^B5503745
+"RTN","PSBPXLP",1,0)
+PSBPXLP ;BIR/RMS - BCMA2PCE FOR IMMUNIZATIONS, TASKED ; 6/23/09 4:16pm
+"RTN","PSBPXLP",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**47,76**;Mar 2004;Build 10
+"RTN","PSBPXLP",3,0)
+ ;Per VHA Directive 2004-038 (or future revisions regarding same), this routine should not be modified.
+"RTN","PSBPXLP",4,0)
+ ;
+"RTN","PSBPXLP",5,0)
+ ; Reference/IA
+"RTN","PSBPXLP",6,0)
+ ; File 50.7/2180
+"RTN","PSBPXLP",7,0)
+ ; File 9999999.14/1990
+"RTN","PSBPXLP",8,0)
+ ; ^AUPNVIMM("AA"/2313
+"RTN","PSBPXLP",9,0)
+ ;
+"RTN","PSBPXLP",10,0)
+ ;Class III to Class I Conversion Project
+"RTN","PSBPXLP",11,0)
+ ;Contributions of George Holcomb (West Palm Beach) and
+"RTN","PSBPXLP",12,0)
+ ;Geri Wittenberg (Hines, now at North Chicago) are acknowledged.
+"RTN","PSBPXLP",13,0)
+ ;--------------------------------------------------------------
+"RTN","PSBPXLP",14,0)
+ ;
+"RTN","PSBPXLP",15,0)
+TASK I $D(ZTQUEUED) G TASK2
+"RTN","PSBPXLP",16,0)
+ N %DT,DTOUT,X,X1,X2,Y,PSBDTB,PSBUDT
+"RTN","PSBPXLP",17,0)
+ S X1=DT,X2=-1 D C^%DTC S PSBDTB=X\1
+"RTN","PSBPXLP",18,0)
+ W !,"Immunizations Documentation by BCMA",!
+"RTN","PSBPXLP",19,0)
+ S %DT="AEP",%DT("A")="Select START DATE: "
+"RTN","PSBPXLP",20,0)
+ S %DT("B")=$$FMTE^XLFDT(X),%DT(0)=-PSBDTB
+"RTN","PSBPXLP",21,0)
+ D ^%DT
+"RTN","PSBPXLP",22,0)
+ Q:Y'>0
+"RTN","PSBPXLP",23,0)
+ S PSBUDT=$$FMADD^XLFDT(Y,1)\1
+"RTN","PSBPXLP",24,0)
+ D TASK2
+"RTN","PSBPXLP",25,0)
+ Q
+"RTN","PSBPXLP",26,0)
+ ;
+"RTN","PSBPXLP",27,0)
+TASK2 N PAT,REC,STARTDT,X,X1,X2
+"RTN","PSBPXLP",28,0)
+ N PSB507,PSBDFN,PSBIMM,PSBDX,PSBDT,PSBDATE,PSBWHO,PSBLOC
+"RTN","PSBPXLP",29,0)
+ S X1=$G(PSBUDT,DT),X2=-1 D C^%DTC S STARTDT=X-.000001
+"RTN","PSBPXLP",30,0)
+ S PAT=0 F  S PAT=$O(^PSB(53.79,"AADT",PAT)) Q:'PAT  D
+"RTN","PSBPXLP",31,0)
+ .S PSBDATE=STARTDT F  S PSBDATE=$O(^PSB(53.79,"AADT",PAT,PSBDATE)) Q:'PSBDATE!(PSBDATE'<DT)  D
+"RTN","PSBPXLP",32,0)
+ ..S REC=0 F  S REC=$O(^PSB(53.79,"AADT",PAT,PSBDATE,REC)) Q:'REC  D
+"RTN","PSBPXLP",33,0)
+ ...Q:$P($G(^PSB(53.79,REC,0)),"^",9)'="G"
+"RTN","PSBPXLP",34,0)
+ ...S PSB507=$P(^PSB(53.79,REC,0),"^",8) Q:'+PSB507
+"RTN","PSBPXLP",35,0)
+ ...S PSBIMM=+$G(^PS(50.7,PSB507,"IMM")) Q:'+PSBIMM
+"RTN","PSBPXLP",36,0)
+ ...S PSBDFN=$P(^PSB(53.79,REC,0),"^")
+"RTN","PSBPXLP",37,0)
+ ...S PSBDT=$P(^PSB(53.79,REC,0),"^",6)\1
+"RTN","PSBPXLP",38,0)
+ ...S PSBWHO=$P(^PSB(53.79,REC,0),"^",7)
+"RTN","PSBPXLP",39,0)
+ ...S PSBLOC=$P(^PSB(53.79,REC,0),"^",2)
+"RTN","PSBPXLP",40,0)
+ ...W:$E(IOST)="C" !,$E($$GET1^DIQ(2,PSBDFN,.01),1,20),?25,$E($$GET1^DIQ(9999999.14,PSBIMM,.01),1,12)," (",$$FMTE^XLFDT(PSBDT,2),")",?50,$$GET1^DIQ(200,PSBWHO,.01) ; FOR TROUBLESHOOTING ASSISTANCE
+"RTN","PSBPXLP",41,0)
+ ...I $D(^AUPNVIMM("AA",PSBDFN,PSBIMM,9999999-PSBDT)) D  Q  ;->
+"RTN","PSBPXLP",42,0)
+ ....I $E(IOST)="C" W !,"Result: Immunization already on file."
+"RTN","PSBPXLP",43,0)
+ ...D BCMA2PCE^PSBPXFL(PSBDFN,PSBIMM,"",PSBDT,PSBWHO,PSBLOC)
+"RTN","PSBPXLP",44,0)
+ Q
+"RTN","PSBRPC")
+0^6^B227617470^B225560301
+"RTN","PSBRPC",1,0)
+PSBRPC ;BIRMINGHAM/EFC - BCMA RPC BROKER CALLS ; 19 Jul 2013  12:34 PM
+"RTN","PSBRPC",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**6,3,4,13,32,28,42,58,66,70,76**;Mar 2004;Build 10
+"RTN","PSBRPC",3,0)
+ ;Per VHA Directive 2004-038 (or future revisions regarding same), this routine should not be modified.
+"RTN","PSBRPC",4,0)
+ ;
+"RTN","PSBRPC",5,0)
+ ; Reference/IA
+"RTN","PSBRPC",6,0)
+ ; File 211.4/1409
+"RTN","PSBRPC",7,0)
+ ; CHECKAV^XUSRB/2882
+"RTN","PSBRPC",8,0)
+ ; GUIMTD^DPTLK6/3023
+"RTN","PSBRPC",9,0)
+ ; ^ORD(101.24/3429
+"RTN","PSBRPC",10,0)
+ ; EN1^GMRVUT0/1446
+"RTN","PSBRPC",11,0)
+ ; $$GETACT^DGPFAPI/3860
+"RTN","PSBRPC",12,0)
+ ; File #40.8/2817
+"RTN","PSBRPC",13,0)
+ ; $$GET^XPAR/2263
+"RTN","PSBRPC",14,0)
+ ; $$GET1^DIQ/2056
+"RTN","PSBRPC",15,0)
+ ; XMD/10070
+"RTN","PSBRPC",16,0)
+ ; RPCVIC^DPTLK/5888
+"RTN","PSBRPC",17,0)
+ ; File #42/1377
+"RTN","PSBRPC",18,0)
+ ;
+"RTN","PSBRPC",19,0)
+ ;*70 - remove restriction of allowing BCMA to view Discharged
+"RTN","PSBRPC",20,0)
+ ;      patients
+"RTN","PSBRPC",21,0)
+ ;    - add Tag GETLIST, RPC:PSB CLINICLIST (returns requested
+"RTN","PSBRPC",22,0)
+ ;                                           clinic names)
+"RTN","PSBRPC",23,0)
+ ;    - add to User load & User save 2 new varaibles, 1 for Last
+"RTN","PSBRPC",24,0)
+ ;      Order mode and other for Last Clinic name search text
+"RTN","PSBRPC",25,0)
+ ;    - 1489: Blended PSB*3*66 with PSB*3*70
+"RTN","PSBRPC",26,0)
+ ;    - Add Registration API call to support VIC 4.0 cards
+"RTN","PSBRPC",27,0)
+ ;
+"RTN","PSBRPC",28,0)
+FMDATE(RESULTS,X) ;
+"RTN","PSBRPC",29,0)
+ ; RPC: PSB FMDATE
+"RTN","PSBRPC",30,0)
+ ; Descr: Returns FM Date/Time from Clnt DateToStr()
+"RTN","PSBRPC",31,0)
+ ;
+"RTN","PSBRPC",32,0)
+ I $P(X,"@",2)="0000" S $P(X,"@",2)="0001"
+"RTN","PSBRPC",33,0)
+ ;if no time for dates like T-1, append the current time
+"RTN","PSBRPC",34,0)
+ I $P(X,"@",2)="",X'?1"N" D  S $P(X,"@",2)=$P(Y,"@",2)
+"RTN","PSBRPC",35,0)
+ . N X
+"RTN","PSBRPC",36,0)
+ . S X="N",%DT="T" D ^%DT,DD^%DT
+"RTN","PSBRPC",37,0)
+ S %DT="T" D ^%DT
+"RTN","PSBRPC",38,0)
+ I +Y<1 S RESULTS(0)="-1^Invalid Date/Time" Q
+"RTN","PSBRPC",39,0)
+ S RESULTS(0)=Y D D^DIQ
+"RTN","PSBRPC",40,0)
+ S RESULTS(0)=RESULTS(0)_U_Y
+"RTN","PSBRPC",41,0)
+ Q
+"RTN","PSBRPC",42,0)
+ ;
+"RTN","PSBRPC",43,0)
+USRLOAD(RESULTS,DUMMY) ;
+"RTN","PSBRPC",44,0)
+ ;
+"RTN","PSBRPC",45,0)
+ ; RPC: PSB USERLOAD
+"RTN","PSBRPC",46,0)
+ ; Descr: Load wkst user
+"RTN","PSBRPC",47,0)
+ ; 
+"RTN","PSBRPC",48,0)
+ S RESULTS(0)=DUZ ;UsrIEN
+"RTN","PSBRPC",49,0)
+ S RESULTS(1)=$$GET1^DIQ(200,DUZ_",",.01) ; Usr Nm
+"RTN","PSBRPC",50,0)
+ S RESULTS(2)=$S($D(^XUSEC("PSB STUDENT",DUZ)):1,1:0) ; Studnt?
+"RTN","PSBRPC",51,0)
+ S RESULTS(3)=$S($D(^XUSEC("PSB MANAGER",DUZ)):1,1:0) ; Mgr?
+"RTN","PSBRPC",52,0)
+ S RESULTS(4)=$S($D(^XUSEC("PSB CPRS MED BUTTON",DUZ)):1,1:0)
+"RTN","PSBRPC",53,0)
+ S RESULTS(5)=$$GET^XPAR("USR","PSB WINDOW")
+"RTN","PSBRPC",54,0)
+ ;VDL Strng
+"RTN","PSBRPC",55,0)
+ S X=$S(+$$GET^XPAR("ALL","PSB VDL INCL CONT"):"T",1:"F")
+"RTN","PSBRPC",56,0)
+ S X=X_"/"_$S(+$$GET^XPAR("ALL","PSB VDL INCL PRN"):"T",1:"F")
+"RTN","PSBRPC",57,0)
+ S X=X_"/"_$S(+$$GET^XPAR("ALL","PSB VDL INCL ONE-TIME"):"T",1:"F")
+"RTN","PSBRPC",58,0)
+ S X=X_"/"_$S(+$$GET^XPAR("ALL","PSB VDL INCL ON-CALL"):"T",1:"F")
+"RTN","PSBRPC",59,0)
+ S X=X_"/"_+$$GET^XPAR("ALL","PSB VDL SORT COLUMN")
+"RTN","PSBRPC",60,0)
+ S X=X_"/"_+$$GET^XPAR("ALL","PSB VDL PB SORT COLUMN")
+"RTN","PSBRPC",61,0)
+ S X=X_"/"_+$$GET^XPAR("ALL","PSB VDL IV SORT COLUMN")
+"RTN","PSBRPC",62,0)
+ ;
+"RTN","PSBRPC",63,0)
+ S RESULTS(6)=X ;VDL Setp
+"RTN","PSBRPC",64,0)
+ S RESULTS(7)=+$G(DUZ(2))
+"RTN","PSBRPC",65,0)
+ I RESULTS(7) S RESULTS(8)=$$GET1^DIQ(4,RESULTS(7)_",",.01)
+"RTN","PSBRPC",66,0)
+ E  S RESULTS(8)="Undefined Division"
+"RTN","PSBRPC",67,0)
+ N DVIEN S DVIEN=$O(^DG(40.8,"AD",RESULTS(7),""))
+"RTN","PSBRPC",68,0)
+ S RESULTS(7)=RESULTS(7)_U_$P($$SITE^VASITE(DT,DVIEN),U,3)
+"RTN","PSBRPC",69,0)
+ I $T(PROD^XUPROD)]"" S RESULTS(7)=RESULTS(7)_U_$$PROD^XUPROD(1)
+"RTN","PSBRPC",70,0)
+ S RESULTS(9)=+$$GET^XPAR("DIV","PSB ADMIN ESIG")
+"RTN","PSBRPC",71,0)
+ S RESULTS(10)=+$$GET^XPAR("DIV","PSB ONLINE")
+"RTN","PSBRPC",72,0)
+ S RESULTS(11)=$G(DTIME,300)
+"RTN","PSBRPC",73,0)
+ S RESULTS(12)=$$GET^XPAR("USR","PSB UNIT DOSE COLUMN WIDTHS")
+"RTN","PSBRPC",74,0)
+ S RESULTS(13)=$J_"^"_$$BASE^XLFUTL($J,10,16)
+"RTN","PSBRPC",75,0)
+ S RESULTS(14)=$$GET^XPAR("USR","PSB IVPB COLUMN WIDTHS")
+"RTN","PSBRPC",76,0)
+ S RESULTS(15)=$$GET^XPAR("USR","PSB IV COLUMN WIDTHS")
+"RTN","PSBRPC",77,0)
+ S RESULTS(16)=$$GET^XPAR("USR","PSB PRINTER USER DEFAULT")
+"RTN","PSBRPC",78,0)
+ S RESULTS(17)=$$GET^XPAR("USR","PSB GUI DEFAULT PRINTER")
+"RTN","PSBRPC",79,0)
+ S RESULTS(18)=$S($D(^XUSEC("PSB READ ONLY",DUZ)):1,1:0)
+"RTN","PSBRPC",80,0)
+ S RESULTS(19)=$$GET^XPAR("USR","PSB COVERSHEET VIEWS COL SORT")
+"RTN","PSBRPC",81,0)
+ S RESULTS(20)=$$GET^XPAR("USR","PSB COVERSHEET V1 COL WIDTHS")
+"RTN","PSBRPC",82,0)
+ S RESULTS(21)=$$GET^XPAR("USR","PSB COVERSHEET V2 COL WIDTHS")
+"RTN","PSBRPC",83,0)
+ S RESULTS(22)=$$GET^XPAR("USR","PSB COVERSHEET V3 COL WIDTHS")
+"RTN","PSBRPC",84,0)
+ S RESULTS(23)=$$GET^XPAR("USR","PSB COVERSHEET V4 COL WIDTHS")
+"RTN","PSBRPC",85,0)
+ S RESULTS(24)=$S($D(^XUSEC("PSB UNABLE TO SCAN",DUZ)):1,1:0)
+"RTN","PSBRPC",86,0)
+ S RESULTS(25)=$$GET^XPAR("DIV","PSB 5 RIGHTS UNITDOSE")
+"RTN","PSBRPC",87,0)
+ S RESULTS(26)=$$GET^XPAR("DIV","PSB 5 RIGHTS IV")
+"RTN","PSBRPC",88,0)
+ S RESULTS(27)=$G(DUZ("AG"))  ;IHS/MSC/PLS
+"RTN","PSBRPC",89,0)
+ S RESULTS(28)=$$GET^XPAR("USR","PSB ORDER MODE")           ;*70
+"RTN","PSBRPC",90,0)
+ S RESULTS(29)=$$GET^XPAR("USR","PSB CLINIC SEARCH")        ;*70
+"RTN","PSBRPC",91,0)
+ Q
+"RTN","PSBRPC",92,0)
+ ;
+"RTN","PSBRPC",93,0)
+USRSAVE(RESULTS,PSBWIN,PSBVDL,PSBUDCW,PSBPBCW,PSBIVCW,PSBDEV,PSBCSRT,PSBCV1,PSBCV2,PSBCV3,PSBCV4,PSBORMODE,PSBCLSRCH) ;
+"RTN","PSBRPC",94,0)
+ ;
+"RTN","PSBRPC",95,0)
+ ; RPC: PSB USERSAVE
+"RTN","PSBRPC",96,0)
+ ; Descr: Saves user settings.
+"RTN","PSBRPC",97,0)
+ ;
+"RTN","PSBRPC",98,0)
+ S RESULTS(0)="-1^FAILED - Parameters Save"
+"RTN","PSBRPC",99,0)
+ S PSBWIN=$G(PSBWIN),PSBVDL=$G(PSBVDL),PSBUDCW=$G(PSBUDCW)
+"RTN","PSBRPC",100,0)
+ S PSBPBCW=$G(PSBPBCW),PSBIVCW=$G(PSBIVCW),PSBDEV=$G(PSBDEV)
+"RTN","PSBRPC",101,0)
+ S PSBCSRT=$G(PSBCSRT),PSBCV1=$G(PSBCV1),PSBCV2=$G(PSBCV2),PSBCV3=$G(PSBCV3),PSBCV4=$G(PSBCV4)
+"RTN","PSBRPC",102,0)
+ ;
+"RTN","PSBRPC",103,0)
+ D EN^XPAR("USR","PSB WINDOW",1,PSBWIN)
+"RTN","PSBRPC",104,0)
+ D EN^XPAR("USR","PSB VDL INCL CONT",1,$P(PSBVDL,"/",1)["T")
+"RTN","PSBRPC",105,0)
+ D EN^XPAR("USR","PSB VDL INCL PRN",1,$P(PSBVDL,"/",2)["T")
+"RTN","PSBRPC",106,0)
+ D EN^XPAR("USR","PSB VDL INCL ONE-TIME",1,$P(PSBVDL,"/",3)["T")
+"RTN","PSBRPC",107,0)
+ D EN^XPAR("USR","PSB VDL INCL ON-CALL",1,$P(PSBVDL,"/",4)["T")
+"RTN","PSBRPC",108,0)
+ D EN^XPAR("USR","PSB VDL SORT COLUMN",1,+$P(PSBVDL,"/",5))
+"RTN","PSBRPC",109,0)
+ D EN^XPAR("USR","PSB VDL PB SORT COLUMN",1,+$P(PSBVDL,"/",6))
+"RTN","PSBRPC",110,0)
+ D EN^XPAR("USR","PSB VDL IV SORT COLUMN",1,+$P(PSBVDL,"/",7))
+"RTN","PSBRPC",111,0)
+ D EN^XPAR("USR","PSB UNIT DOSE COLUMN WIDTHS",1,PSBUDCW)
+"RTN","PSBRPC",112,0)
+ D EN^XPAR("USR","PSB IVPB COLUMN WIDTHS",1,PSBPBCW)
+"RTN","PSBRPC",113,0)
+ D EN^XPAR("USR","PSB IV COLUMN WIDTHS",1,PSBIVCW)
+"RTN","PSBRPC",114,0)
+ D EN^XPAR("USR","PSB GUI DEFAULT PRINTER",1,PSBDEV)
+"RTN","PSBRPC",115,0)
+ D EN^XPAR("USR","PSB COVERSHEET VIEWS COL SORT",1,PSBCSRT)
+"RTN","PSBRPC",116,0)
+ D EN^XPAR("USR","PSB COVERSHEET V1 COL WIDTHS",1,PSBCV1)
+"RTN","PSBRPC",117,0)
+ D EN^XPAR("USR","PSB COVERSHEET V2 COL WIDTHS",1,PSBCV2)
+"RTN","PSBRPC",118,0)
+ D EN^XPAR("USR","PSB COVERSHEET V3 COL WIDTHS",1,PSBCV3)
+"RTN","PSBRPC",119,0)
+ D EN^XPAR("USR","PSB COVERSHEET V4 COL WIDTHS",1,PSBCV4)
+"RTN","PSBRPC",120,0)
+ D EN^XPAR("USR","PSB ORDER MODE",1,PSBORMODE)            ;*70
+"RTN","PSBRPC",121,0)
+ D EN^XPAR("USR","PSB CLINIC SEARCH",1,PSBCLSRCH)         ;*70
+"RTN","PSBRPC",122,0)
+ S RESULTS(0)="1^Parameters Saved"
+"RTN","PSBRPC",123,0)
+ Q
+"RTN","PSBRPC",124,0)
+ ;
+"RTN","PSBRPC",125,0)
+INST(RESULTS,PSBACC,PSBVER) ;
+"RTN","PSBRPC",126,0)
+ ;
+"RTN","PSBRPC",127,0)
+ ; RPC: PSB INSTRUCTOR
+"RTN","PSBRPC",128,0)
+ ; Descr:
+"RTN","PSBRPC",129,0)
+ ; Used by frmInstructor to validate an instructor(s) at
+"RTN","PSBRPC",130,0)
+ ; the client via encrypted A/V Code.
+"RTN","PSBRPC",131,0)
+ ;
+"RTN","PSBRPC",132,0)
+ S PSBACC=$$DECRYP^XUSRB1(PSBACC)
+"RTN","PSBRPC",133,0)
+ S PSBVER=$$DECRYP^XUSRB1(PSBVER)
+"RTN","PSBRPC",134,0)
+ S PSBINST=$$CHECKAV^XUSRB(PSBACC_";"_PSBVER)
+"RTN","PSBRPC",135,0)
+ I PSBINST<1 S RESULTS(0)="-1^Invalid Instructor Sign-On" K PSBINST Q
+"RTN","PSBRPC",136,0)
+ I '$D(^XUSEC("PSB INSTRUCTOR",PSBINST)) S RESULTS(0)="-1^Instructor doesn't have authority" K PSBINST Q
+"RTN","PSBRPC",137,0)
+ S PSBINST(0)=$$GET1^DIQ(200,PSBINST_",",.01)
+"RTN","PSBRPC",138,0)
+ S RESULTS(0)=PSBINST_U_PSBINST(0)
+"RTN","PSBRPC",139,0)
+ Q
+"RTN","PSBRPC",140,0)
+ ;
+"RTN","PSBRPC",141,0)
+ESIG(RESULTS,PSBESIG) ;
+"RTN","PSBRPC",142,0)
+ ;
+"RTN","PSBRPC",143,0)
+ ; RPC: PSB VALIDATE ESIG
+"RTN","PSBRPC",144,0)
+ ; Descr: Validate the data in PSBESIG against user (DUZ)
+"RTN","PSBRPC",145,0)
+ ;
+"RTN","PSBRPC",146,0)
+ S PSBDSIG=$P($G(PSBESIG),U,2) I PSBDSIG'="" S PSBDSIG=$$DECRYP^XUSRB1(PSBDSIG),PSBESIG=PSBDSIG
+"RTN","PSBRPC",147,0)
+ I $G(PSBESIG)="" S RESULTS(0)="-1^Must Supply ESig" Q
+"RTN","PSBRPC",148,0)
+ S X=PSBESIG D HASH^XUSHSHP
+"RTN","PSBRPC",149,0)
+ I X'=$$GET1^DIQ(200,DUZ_",",20.4,"I") S RESULTS(0)="-1^Invalid ESig"
+"RTN","PSBRPC",150,0)
+ E  S RESULTS(0)="1^ESig Verified"
+"RTN","PSBRPC",151,0)
+ Q
+"RTN","PSBRPC",152,0)
+ ;
+"RTN","PSBRPC",153,0)
+SCANPT(RESULTS,PSBDATA) ; Lookup Pt by Full SSN
+"RTN","PSBRPC",154,0)
+ ;
+"RTN","PSBRPC",155,0)
+ ; RPC: PSB SCANPT
+"RTN","PSBRPC",156,0)
+ ; Descr:
+"RTN","PSBRPC",157,0)
+ ; File #2 lookup either by full SSN
+"RTN","PSBRPC",158,0)
+ ; returns -1 on error or patient data
+"RTN","PSBRPC",159,0)
+ ; Check for Interleave 2 of 5 Check Digit on SSN and remove
+"RTN","PSBRPC",160,0)
+ ; 
+"RTN","PSBRPC",161,0)
+ N DFN,PSBWARD,PSBHDR   ;[*70-1489]
+"RTN","PSBRPC",162,0)
+ I "SS"[$P($G(PSBDATA),"^",3)  D  Q:RESULTS(1)<0
+"RTN","PSBRPC",163,0)
+ .S:$P(PSBDATA,"^")?1"0"9N.U PSBDATA=$E(PSBDATA,2,99) N PSBCNT
+"RTN","PSBRPC",164,0)
+ .;  IHS vs VA Agency check for Patient ID info
+"RTN","PSBRPC",165,0)
+ .I $G(DUZ("AG"))'="I",$G(DUZ("AG"))'="V" S RESULTS(0)=1,RESULTS(1)="-1^Invalid Agency Code - Not IHS or VA" Q
+"RTN","PSBRPC",166,0)
+ .I $G(DUZ("AG"))="I" D
+"RTN","PSBRPC",167,0)
+ ..S X=-1
+"RTN","PSBRPC",168,0)
+ ..I $P(PSBDATA,U)?12N S X=$$HRCNF^APSPFUNC($P(PSBDATA,U))
+"RTN","PSBRPC",169,0)
+ ..S:X'>0 RESULTS(0)=1,RESULTS(1)="-1^Patient not found or # not 12 digit"
+"RTN","PSBRPC",170,0)
+ .E  D
+"RTN","PSBRPC",171,0)
+ ..;*70 Implement VIC 4.0 cards. Old Bar code with SSN still accepted
+"RTN","PSBRPC",172,0)
+ ..S DPTDATA=$P(PSBDATA,U) ;,DPTDATA=$TR(DPTDATA,"|","^") ; ST - $TR not needed
+"RTN","PSBRPC",173,0)
+ ..D RPCVIC^DPTLK(.DFN,DPTDATA)
+"RTN","PSBRPC",174,0)
+ ..I DFN=""!(DFN<0) S:$P(PSBDATA,U)?9N.1U DFN=$$FIND1^DIC(2,"","",DPTDATA,"SSN") S:'DFN DFN=-1 ;old SSN lookup, added full SSN check, PSB*3*76
+"RTN","PSBRPC",175,0)
+ .I DFN=-1 S RESULTS(0)=1,RESULTS(1)="-1^Invalid Patient Lookup"
+"RTN","PSBRPC",176,0)
+ .;*End *70 Implement VIC 4.0 cards.
+"RTN","PSBRPC",177,0)
+ .Q:$G(RESULTS(1))<0
+"RTN","PSBRPC",178,0)
+ .S (RESULTS(1),PSBDFN)=DFN
+"RTN","PSBRPC",179,0)
+ .S PSBICN=$$GETICN^MPIF001(PSBDFN) I +PSBICN=-1 S PSBICN=""
+"RTN","PSBRPC",180,0)
+ I $G(DFN)']"" D  Q:+PSBDFN'>0
+"RTN","PSBRPC",181,0)
+ .; CCOW !
+"RTN","PSBRPC",182,0)
+ .I "DF"[$P($G(PSBDATA),"^",3) S PSBDFN=$P($G(PSBDATA),"^"),PSBICN=$$GETICN^MPIF001(PSBDFN) I +PSBICN=-1 S PSBICN="",RESULTS(0)=1,RESULTS(1)="-1^Cannot find ICN via DFN"
+"RTN","PSBRPC",183,0)
+ .I "IC"[$P($G(PSBDATA),"^",3) S PSBICN=$P($G(PSBDATA),"^"),PSBDFN=$$GETDFN^MPIF001(PSBICN) I +PSBDFN=-1 S PSBDFN="",RESULTS(0)=1,RESULTS(1)="-1^Cannot find DFN via ICN" Q
+"RTN","PSBRPC",184,0)
+ .S (DFN,RESULTS(1))=PSBDFN
+"RTN","PSBRPC",185,0)
+ .;
+"RTN","PSBRPC",186,0)
+ ;*70 get registration owned data for admit date or deceased date
+"RTN","PSBRPC",187,0)
+ N VADM,VA,VAIN,VAIP,VA D DEM^VADPT,IN5^VADPT
+"RTN","PSBRPC",188,0)
+ N QUIT                                                        ;*70
+"RTN","PSBRPC",189,0)
+ ; remove discharge test                                       ;*70
+"RTN","PSBRPC",190,0)
+ ; if patient is deceased                                      ;*70
+"RTN","PSBRPC",191,0)
+ S QUIT=0
+"RTN","PSBRPC",192,0)
+ I VADM(6)'="" D  Q:QUIT
+"RTN","PSBRPC",193,0)
+ .S RESULTS(0)=1
+"RTN","PSBRPC",194,0)
+ .S RESULTS(1)="-1^"_"This patient died "_$TR($P(VADM(6),U,2),"@"," ")
+"RTN","PSBRPC",195,0)
+ .D:'$P(PSBDATA,U,2)      ;not read only/limited mode
+"RTN","PSBRPC",196,0)
+ ..I ($P($G(PSBDATA),U,3)'["IC")&($P($G(PSBDATA),U,3)'["DF") S QUIT=1
+"RTN","PSBRPC",197,0)
+ ;
+"RTN","PSBRPC",198,0)
+ ; continue to load patient data
+"RTN","PSBRPC",199,0)
+ S RESULTS(1)=PSBDFN
+"RTN","PSBRPC",200,0)
+ F X=1,3,4,5 S RESULTS(X+1)=$G(VADM(X))
+"RTN","PSBRPC",201,0)
+ ;  IHS/VA - use VA("PID") instead of VADM(2) for Pat ID
+"RTN","PSBRPC",202,0)
+ S RESULTS(3)=$TR(VA("PID"),"-")_U_VA("PID")
+"RTN","PSBRPC",203,0)
+ F X=3,4,5,6,7,8,9,10,11 S RESULTS(X+4)=$G(VAIP(X))
+"RTN","PSBRPC",204,0)
+ ;
+"RTN","PSBRPC",205,0)
+ ; IHS/MSC/PLS - 03/27/06 - Changed to call PCC Vitals based on
+"RTN","PSBRPC",206,0)
+ ;  parameter flag DUZ("AG")="I" and PCC Vitals package usage
+"RTN","PSBRPC",207,0)
+ ;  flag "BEHOVM USE VMSR"=1
+"RTN","PSBRPC",208,0)
+ ;
+"RTN","PSBRPC",209,0)
+ I $G(DUZ("AG"))="I",$$GET^XPAR("ALL","BEHOVM USE VMSR") D
+"RTN","PSBRPC",210,0)
+ .S X=+$P($$VITAL^APSPFUNC(DFN,"HT"),U,2),X=$$VITCHT^APSPFUNC(X)\1,PSBHDR("HEIGHT")=$S(X:X_"cm",1:"*")
+"RTN","PSBRPC",211,0)
+ .S X=+$P($$VITAL^APSPFUNC(DFN,"WT"),U,2),X=$$VITCWT^APSPFUNC(X)\1,PSBHDR("WEIGHT")=$S(X:X_"kg",1:"*")
+"RTN","PSBRPC",212,0)
+ E  D
+"RTN","PSBRPC",213,0)
+ .S GMRVSTR="HT" D EN6^GMRVUTL
+"RTN","PSBRPC",214,0)
+ .S X=+$P(X,U,8) S:X X=$J((X*2.54),3,0) S PSBHDR("HEIGHT")=$S(X:X_"cm",1:"*") ;Rounding correction, PSB*3*76
+"RTN","PSBRPC",215,0)
+ .S GMRVSTR="WT" D EN6^GMRVUTL
+"RTN","PSBRPC",216,0)
+ .S X=+$P(X,U,8) S X=$J(X/2.2,0,2) S PSBHDR("WEIGHT")=$S(X:X_"kg",1:"*")
+"RTN","PSBRPC",217,0)
+ ;
+"RTN","PSBRPC",218,0)
+ S $P(RESULTS(9),U,3)=$$GET1^DIQ(42,$P(RESULTS(9),U)_",",44,"I")_"^"_$$GET1^DIQ(42,$P(RESULTS(9),U)_",",44)
+"RTN","PSBRPC",219,0)
+ S PSBWARD=$P($G(RESULTS(9)),U,2) D IVBAGPAR(PSBWARD)   ;[*70-1489]
+"RTN","PSBRPC",220,0)
+ S RESULTS(16)=PSBHDR("HEIGHT")
+"RTN","PSBRPC",221,0)
+ S RESULTS(17)=PSBHDR("WEIGHT")
+"RTN","PSBRPC",222,0)
+ S GMRA="0^0^111" D EN1^GMRADPT
+"RTN","PSBRPC",223,0)
+ I $O(GMRAL(0)) S RESULTS(18)=1
+"RTN","PSBRPC",224,0)
+ E  S RESULTS(18)=0
+"RTN","PSBRPC",225,0)
+ ; Means Tst
+"RTN","PSBRPC",226,0)
+ D GUIMTD^DPTLK6(.PSBDATA,PSBDFN)
+"RTN","PSBRPC",227,0)
+ S RESULTS(19)=+$G(PSBDATA(1))_U_$G(PSBDATA(2))_U_$G(PSBDATA(3))
+"RTN","PSBRPC",228,0)
+ S PSBICN=$$GETICN^MPIF001(PSBDFN) I +PSBICN=-1 S PSBICN=""
+"RTN","PSBRPC",229,0)
+ S RESULTS(20)=PSBICN
+"RTN","PSBRPC",230,0)
+ S RESULTS(21)="",RESULTS(0)=21
+"RTN","PSBRPC",231,0)
+ S:VADM(6)'="" RESULTS(21)="This patient died "_$TR($P(VADM(6),U,2),"@"," ")
+"RTN","PSBRPC",232,0)
+ S:('VAIP(13))&('VADM(6)) RESULTS(21)="Patient not Admitted"  ;*70
+"RTN","PSBRPC",233,0)
+ S (RESULTS(0),PSBCNT)=22
+"RTN","PSBRPC",234,0)
+ S RESULTS(PSBCNT)=""
+"RTN","PSBRPC",235,0)
+ F PSBINDX=1:1:($$GETACT^DGPFAPI(PSBDFN,.PSBPTFLG)) D
+"RTN","PSBRPC",236,0)
+ .Q:'$D(PSBPTFLG)  Q:'$D(@(PSBPTFLG_"(PSBINDX,""FLAG"")"))  S PSBPFLAG="PATFLG",$P(PSBPFLAG,U,2)=$P(@(PSBPTFLG_"(PSBINDX,""FLAG"")"),"^",2)
+"RTN","PSBRPC",237,0)
+ .S $P(PSBPFLAG,U,3)=PSBINDX,PSBCNT=21+PSBINDX,RESULTS(PSBCNT)=PSBPFLAG
+"RTN","PSBRPC",238,0)
+ S RESULTS(0)=PSBCNT
+"RTN","PSBRPC",239,0)
+ I $D(PSBPTFLG) K @PSBPTFLG
+"RTN","PSBRPC",240,0)
+ Q
+"RTN","PSBRPC",241,0)
+ ;
+"RTN","PSBRPC",242,0)
+MAX(RESULTS,PSBDAYS) ;
+"RTN","PSBRPC",243,0)
+ ;
+"RTN","PSBRPC",244,0)
+ ; RPC: PSB MAXDAYS  ; Max days user view/print MAH
+"RTN","PSBRPC",245,0)
+ ;
+"RTN","PSBRPC",246,0)
+ S X=$O(^ORD(101.24,"B","ORRP BCMA MAH",""))
+"RTN","PSBRPC",247,0)
+ S RESULTS(0)=$$GET1^DIQ(101.24,X_",",.42)
+"RTN","PSBRPC",248,0)
+ Q
+"RTN","PSBRPC",249,0)
+ ;
+"RTN","PSBRPC",250,0)
+NWLIST(RESULTS,DUMMY) ; ward list - NURS LOCATION, file 211.4
+"RTN","PSBRPC",251,0)
+ ;
+"RTN","PSBRPC",252,0)
+ ; RPC: PSB NURS WARDLIST
+"RTN","PSBRPC",253,0)
+ ; 
+"RTN","PSBRPC",254,0)
+ K ^TMP("PSB",$J)
+"RTN","PSBRPC",255,0)
+ S PSBIEN=0 F  S PSBIEN=$O(^NURSF(211.4,PSBIEN)) Q:PSBIEN'?.N  D
+"RTN","PSBRPC",256,0)
+ .S ^TMP("PSB",$J,$$GET1^DIQ(211.4,PSBIEN_",",.01)_" [NURS UNIT]")=PSBIEN
+"RTN","PSBRPC",257,0)
+ .S PSBX=0 F  S PSBX=$O(^NURSF(211.4,PSBIEN,3,PSBX)) Q:PSBX=""  D
+"RTN","PSBRPC",258,0)
+ ..S PSBWIEN=$P(^NURSF(211.4,PSBIEN,3,PSBX,0),"^")
+"RTN","PSBRPC",259,0)
+ ..I $$GET1^DIQ(42,PSBWIEN_",",.01)]"" S ^TMP("PSB",$J,$$GET1^DIQ(42,PSBWIEN_",",.01)_" [MAS WARD]")=PSBIEN
+"RTN","PSBRPC",260,0)
+ S RESULTS(0)=0
+"RTN","PSBRPC",261,0)
+ S X="" F  S X=$O(^TMP("PSB",$J,X)) Q:X=""  D
+"RTN","PSBRPC",262,0)
+ .S RESULTS(0)=RESULTS(0)+1
+"RTN","PSBRPC",263,0)
+ .S RESULTS(RESULTS(0))=^TMP("PSB",$J,X)_U_X_U_$S(($$GET1^DIQ(211.4,^TMP("PSB",$J,X)_",",1)="ACTIVE")&($$GET1^DIQ(211.4,^TMP("PSB",$J,X)_",",1.5)'="**INACTIVE**"):"1",1:"0")
+"RTN","PSBRPC",264,0)
+ K ^TMP("PSB",$J)
+"RTN","PSBRPC",265,0)
+ Q
+"RTN","PSBRPC",266,0)
+ ;
+"RTN","PSBRPC",267,0)
+VITALS(RESULTS,DFN) ;Vitals API
+"RTN","PSBRPC",268,0)
+ ;
+"RTN","PSBRPC",269,0)
+ ; RPC PSB VITALS
+"RTN","PSBRPC",270,0)
+ ; 
+"RTN","PSBRPC",271,0)
+ ;Retrieve vitals from either the PCC V Measurment file or VA Vitals
+"RTN","PSBRPC",272,0)
+ ; file.  Based on agency code = "I" & Vitals package flag=1 for the 
+"RTN","PSBRPC",273,0)
+ ; PCC V Measurement file or "V" for the VA Vitals file.
+"RTN","PSBRPC",274,0)
+ ;
+"RTN","PSBRPC",275,0)
+ I $G(DUZ("AG"))="I",$$GET^XPAR("ALL","BEHOVM USE VMSR") D  Q
+"RTN","PSBRPC",276,0)
+ .K RESULTS
+"RTN","PSBRPC",277,0)
+ .N PSBNOW,PSBSTRT,VITS,CNT,VTYP,LP,DATA,NODE,XREF
+"RTN","PSBRPC",278,0)
+ .S XREF("TMP")="T",XREF("PU")="P",XREF("BP")="BP",XREF("RS")="R",XREF("PA")="PN"
+"RTN","PSBRPC",279,0)
+ .S PSBNOW=$$NOW^XLFDT(),PSBSTRT=$$FMADD^XLFDT(PSBNOW,-168)
+"RTN","PSBRPC",280,0)
+ .S CNT=0 F LP="TMP","PU","RS","BP","PA" D
+"RTN","PSBRPC",281,0)
+ ..S VTYP=$$FIND1^DIC(9999999.07,"","BX",LP)
+"RTN","PSBRPC",282,0)
+ ..I VTYP S VITS(CNT+1)=VTYP,CNT=CNT+1
+"RTN","PSBRPC",283,0)
+ .D GRID^BEHOVM(.DATA,DFN,PSBNOW,$$FMADD^XLFDT(PSBNOW,"",-168),0,.VITS)
+"RTN","PSBRPC",284,0)
+ .;BUILD RESULTS ARRAY
+"RTN","PSBRPC",285,0)
+ .I '$P(@DATA@(0),U,3) D  Q  ; No Results
+"RTN","PSBRPC",286,0)
+ ..S RESULTS(0)=1,RESULTS(1)="No Vitals to report"
+"RTN","PSBRPC",287,0)
+ .S (CNT,LP)=0 F  S LP=$O(@DATA@("R",LP)) Q:'LP  D
+"RTN","PSBRPC",288,0)
+ ..S NODE=@DATA@("R",LP)
+"RTN","PSBRPC",289,0)
+ ..S RESULTS(CNT+1)=XREF($P(@DATA@(0,$P(NODE,U,2)),U,4))_U_$E($$GET1^DIQ(9000010.01,$P(NODE,U,5),1201,"I"),1,12)_U_DFN_U_$P(NODE,U,3)
+"RTN","PSBRPC",290,0)
+ ..S CNT=CNT+1
+"RTN","PSBRPC",291,0)
+ .S RESULTS(0)=CNT
+"RTN","PSBRPC",292,0)
+ ;
+"RTN","PSBRPC",293,0)
+ K RESULTS
+"RTN","PSBRPC",294,0)
+ N PSBSTRT,PSBSTOP,PSBNOW
+"RTN","PSBRPC",295,0)
+ S PSBDFN=DFN,GMRVSTR="T;P;R;BP;PN"
+"RTN","PSBRPC",296,0)
+ D NOW^%DTC S PSBNOW=%,PSBSTRT=$$FMADD^XLFDT(PSBNOW,"",-168),PSBSTOP=PSBNOW,GMRVSTR(0)=PSBSTRT_U_PSBSTOP_U_4_U
+"RTN","PSBRPC",297,0)
+ K ^UTILITY($J,"GMRVD")
+"RTN","PSBRPC",298,0)
+ D EN1^GMRVUT0
+"RTN","PSBRPC",299,0)
+ S PSBCNT=1
+"RTN","PSBRPC",300,0)
+ I '$D(^UTILITY($J,"GMRVD")) S RESULTS(0)=PSBCNT,RESULTS(PSBCNT)="No Vitals to report" Q
+"RTN","PSBRPC",301,0)
+ S PSBTYP=""
+"RTN","PSBRPC",302,0)
+ F  S PSBTYP=$O(^UTILITY($J,"GMRVD",PSBTYP)) Q:PSBTYP=""  D
+"RTN","PSBRPC",303,0)
+ .S PSBRDT=""
+"RTN","PSBRPC",304,0)
+ .F  S PSBRDT=$O(^UTILITY($J,"GMRVD",PSBTYP,PSBRDT)) Q:PSBRDT=""  D
+"RTN","PSBRPC",305,0)
+ ..S PSBIEN=""
+"RTN","PSBRPC",306,0)
+ ..F  S PSBIEN=$O(^UTILITY($J,"GMRVD",PSBTYP,PSBRDT,PSBIEN)) Q:PSBIEN=""  D
+"RTN","PSBRPC",307,0)
+ ...S PSBDATA=($G(^UTILITY($J,"GMRVD",PSBTYP,PSBRDT,PSBIEN)))
+"RTN","PSBRPC",308,0)
+ ...S RESULTS(PSBCNT)=PSBTYP_U_$P(PSBDATA,U,1,2)_U_$P(PSBDATA,U,8)
+"RTN","PSBRPC",309,0)
+ ...S PSBCNT=PSBCNT+1
+"RTN","PSBRPC",310,0)
+ S RESULTS(0)=PSBCNT-1
+"RTN","PSBRPC",311,0)
+ K ^UTILITY($J,"GMRVD"),GMRBSTR,PSBDFN,PSBTYPE,PSBDATA,PSBCNT
+"RTN","PSBRPC",312,0)
+ Q
+"RTN","PSBRPC",313,0)
+ ;   ;[*70-1489]...start
+"RTN","PSBRPC",314,0)
+IVBAGPAR(PSBWARD) ; Send Mailman Message to owners of PSB Manager Key if IV Bag Parameters are not set for this Ward
+"RTN","PSBRPC",315,0)
+ Q:PSBWARD=""
+"RTN","PSBRPC",316,0)
+ N PSBCSTR,PSBWDIV,PSB,PSBIVT,PSBFLAG,PSBSTNMB,PSBINST,PSBIVPAR
+"RTN","PSBRPC",317,0)
+ S PSBCSTR="^ADDITIVE^STRENGTH^BOTTLE^SOLUTION^VOLUME^INFUSION RATE^MED ROUTE^SCHEDULE^ADMIN TIME^REMARKS^OTHER PRINT INFO^PROVIDER^START DATE/TIME^STOP DATE/TIME^PROVIDER COMMENTS"
+"RTN","PSBRPC",318,0)
+ S PSBWARD=$O(^DIC(42,"B",PSBWARD,""))
+"RTN","PSBRPC",319,0)
+ S PSBWDIV=$$GET1^DIQ(42,PSBWARD_",",.015,"I")
+"RTN","PSBRPC",320,0)
+ I $G(PSBWDIV)']"" S PSBWDIV="DIV"
+"RTN","PSBRPC",321,0)
+ E  S PSBWDIV=$P($$SITE^VASITE(DT,PSBWDIV),U,1),PSBWDIV="DIV.`"_PSBWDIV
+"RTN","PSBRPC",322,0)
+ F PSBIVT="A","P","H","S","C" S PSBIVPAR=PSBIVT D
+"RTN","PSBRPC",323,0)
+ .F PSBX=2:1 Q:$P(PSBCSTR,U,PSBX)=""  S PSBIVPAR=PSBIVPAR_U_$P($P($$GET^XPAR(PSBWDIV,"PSBIV "_$P(PSBCSTR,U,PSBX),PSBIVT,"B"),U,2),"-",1),^TMP("PSBWARD",PSBX,PSBIVT)=PSBIVPAR I $P(PSBIVPAR,U,PSBX)="" S PSBFLAG=""
+"RTN","PSBRPC",324,0)
+ S PSBSTNMB=$$GET1^DIQ(4,($P(PSBWDIV,"`",2)),99)
+"RTN","PSBRPC",325,0)
+ S:PSBSTNMB="" PSBINST=$$GET1^DIQ(4,($P(PSBWDIV,"`",2)),.01)
+"RTN","PSBRPC",326,0)
+ I $D(PSBFLAG) D
+"RTN","PSBRPC",327,0)
+ .N XMDUZ,XMSUB,XMTEXT,XMY,PSBERR,PSBMG1,PSBCNT
+"RTN","PSBRPC",328,0)
+ .S PSBCNT=1
+"RTN","PSBRPC",329,0)
+ .I PSBSTNMB'="" S XMSUB="ACTION NEEDED! DIV "_PSBSTNMB_" IV PARAMS NOT DEFINED"
+"RTN","PSBRPC",330,0)
+ .E  S XMSUB=" ACTION NEEDED! INSTITUTION IV PARAMS NOT DEFINED"
+"RTN","PSBRPC",331,0)
+ .S XMDUZ="BCMA PARAMETERS"
+"RTN","PSBRPC",332,0)
+ .S XMTEXT="PSBERR("
+"RTN","PSBRPC",333,0)
+ .S PSBMG1="" F  S PSBMG1=$O(^XUSEC("PSB MANAGER",PSBMG1)) Q:PSBMG1=""  S XMY(PSBMG1)=""
+"RTN","PSBRPC",334,0)
+ .S PSBERR(PSBCNT)="The IV Bag Parameters are not defined",PSBCNT=PSBCNT+1
+"RTN","PSBRPC",335,0)
+ .S PSBERR(PSBCNT)="for Ward '"_$$GET1^DIQ(42,PSBWARD,.01)_"', which is associated ",PSBCNT=PSBCNT+1
+"RTN","PSBRPC",336,0)
+ .I PSBSTNMB'="" S PSBERR(PSBCNT)="with Facility Division #"_PSBSTNMB_" and needs to",PSBCNT=PSBCNT+1
+"RTN","PSBRPC",337,0)
+ .E  S PSBERR(PSBCNT)="with Institution '"_PSBINST_"' and needs to",PSBCNT=PSBCNT+1
+"RTN","PSBRPC",338,0)
+ .S PSBERR(PSBCNT)="be set immediately!",PSBCNT=PSBCNT+1
+"RTN","PSBRPC",339,0)
+ .S PSBERR(PSBCNT)="",PSBCNT=PSBCNT+1
+"RTN","PSBRPC",340,0)
+ .I PSBSTNMB="" S PSBERR(PSBCNT)="A Station Number is not defined for",PSBCNT=PSBCNT+1 D
+"RTN","PSBRPC",341,0)
+ ..S PSBERR(PSBCNT)="Institution '"_PSBINST_"'.",PSBCNT=PSBCNT+1
+"RTN","PSBRPC",342,0)
+ ..S PSBERR(PSBCNT)="Please log a ticket with the VA Service Desk!!",PSBCNT=PSBCNT+1
+"RTN","PSBRPC",343,0)
+ ..S PSBERR(PSBCNT)="Once a Station Number has been assigned,",PSBCNT=PSBCNT+1
+"RTN","PSBRPC",344,0)
+ ..S PSBERR(PSBCNT)="please complete the following steps:",PSBCNT=PSBCNT+1
+"RTN","PSBRPC",345,0)
+ .S:PSBSTNMB'="" PSBERR(PSBCNT)="To do so:  ",PSBCNT=PSBCNT+1
+"RTN","PSBRPC",346,0)
+ .S PSBERR(PSBCNT)="",PSBCNT=PSBCNT+1
+"RTN","PSBRPC",347,0)
+ .S PSBERR(PSBCNT)="1. Log into the BCMA Parameters GUI.",PSBCNT=PSBCNT+1
+"RTN","PSBRPC",348,0)
+ .S PSBERR(PSBCNT)="2. Select Facility Division Number "_PSBSTNMB_".",PSBCNT=PSBCNT+1
+"RTN","PSBRPC",349,0)
+ .S PSBERR(PSBCNT)="3. Set IV Parameters desired for this Division.",PSBCNT=PSBCNT+1
+"RTN","PSBRPC",350,0)
+ .S PSBERR(PSBCNT)="4. Select OK.",PSBCNT=PSBCNT+1
+"RTN","PSBRPC",351,0)
+ .S PSBERR(PSBCNT)="",PSBCNT=PSBCNT+1
+"RTN","PSBRPC",352,0)
+ .S PSBERR(PSBCNT)="Please log a ticket with the ",PSBCNT=PSBCNT+1
+"RTN","PSBRPC",353,0)
+ .S PSBERR(PSBCNT)="VA Service Desk if you need assistance.",PSBCNT=PSBCNT+1
+"RTN","PSBRPC",354,0)
+ .D ^XMD
+"RTN","PSBRPC",355,0)
+ Q
+"RTN","PSBRPC",356,0)
+ ;   ;[*70-1489]...end
+"RTN","PSBRPC",357,0)
+GETLIST(RESULTS,PRE,CONTAIN) ; Get Clinics by name                     ;*70
+"RTN","PSBRPC",358,0)
+ N LIN
+"RTN","PSBRPC",359,0)
+ K ^TMP("PSBCLIN",$J)
+"RTN","PSBRPC",360,0)
+ S RESULTS=$NAME(^TMP("PSBCLIN",$J))
+"RTN","PSBRPC",361,0)
+ S LIN=0 D CLNLIST(PRE,CONTAIN,.LIN)
+"RTN","PSBRPC",362,0)
+ ;set total rec counter
+"RTN","PSBRPC",363,0)
+ I $D(^TMP("PSBCLIN",$J)) D
+"RTN","PSBRPC",364,0)
+ . S ^TMP("PSBCLIN",$J,0)=LIN
+"RTN","PSBRPC",365,0)
+ E  D
+"RTN","PSBRPC",366,0)
+ . S ^TMP("PSBCLIN",$J,0)=1
+"RTN","PSBRPC",367,0)
+ . S ^TMP("PSBCLIN",$J,1)="-1^Invalid Clinic Lookup"
+"RTN","PSBRPC",368,0)
+ Q
+"RTN","PSBRPC",369,0)
+ ;
+"RTN","PSBRPC",370,0)
+CLNLIST(PR,CON,LN) ;return Clinic list in TMP by name                                *70
+"RTN","PSBRPC",371,0)
+ N QQ,NODE0,INACTDT,NAME,REACTDT
+"RTN","PSBRPC",372,0)
+ F QQ=0:0 S QQ=$O(^SC(QQ)) Q:'QQ  D
+"RTN","PSBRPC",373,0)
+ . S NODE0=$G(^SC(QQ,0)) Q:NODE0=""
+"RTN","PSBRPC",374,0)
+ . Q:$P(NODE0,U,3)'="C"                     ;type Clinic
+"RTN","PSBRPC",375,0)
+ . S INACTDT=+$P($G(^SC(QQ,"I")),U)             ;inactive date
+"RTN","PSBRPC",376,0)
+ . S REACTDT=+$P($G(^SC(QQ,"I")),U,2)
+"RTN","PSBRPC",377,0)
+ . I INACTDT,INACTDT<DT I 'REACTDT!(REACTDT&((REACTDT<INACTDT)!(REACTDT>DT))) Q
+"RTN","PSBRPC",378,0)
+ . S NAME=$P(NODE0,U)
+"RTN","PSBRPC",379,0)
+ . I PR]"" D
+"RTN","PSBRPC",380,0)
+ .. I $E(NAME,1,$L(PR))=PR,NAME[CON D
+"RTN","PSBRPC",381,0)
+ ... S LN=LN+1,^TMP("PSBCLIN",$J,LN)=NAME
+"RTN","PSBRPC",382,0)
+ . E  D
+"RTN","PSBRPC",383,0)
+ .. I NAME[CON D
+"RTN","PSBRPC",384,0)
+ ... S LN=LN+1,^TMP("PSBCLIN",$J,LN)=NAME
+"RTN","PSBRPC",385,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",9607,6)
+^66
+**END**
+**END**
+

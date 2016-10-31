@@ -1,0 +1,114 @@
+KIDS Distribution saved on Jun 30, 2015@14:43:29
+INPUT TEMPLATE
+**KIDS**:PRCHDISCNT TEMPLATE^
+
+**INSTALL NAME**
+PRCHDISCNT TEMPLATE
+"BLD",9867,0)
+PRCHDISCNT TEMPLATE^^0^3150630^n
+"BLD",9867,4,0)
+^9.64PA^^
+"BLD",9867,6.3)
+1
+"BLD",9867,"KRN",0)
+^9.67PA^.402^1
+"BLD",9867,"KRN",.402,0)
+.402
+"BLD",9867,"KRN",.402,"NM",0)
+^9.68A^1^1
+"BLD",9867,"KRN",.402,"NM",1,0)
+PRCHDISCNT    FILE #442^442^0
+"BLD",9867,"KRN",.402,"NM","B","PRCHDISCNT    FILE #442",1)
+
+"BLD",9867,"KRN","B",.402,.402)
+
+"KRN",.402,594,-1)
+0^1
+"KRN",.402,594,0)
+PRCHDISCNT^2940729.1332^^442^^^^
+"KRN",.402,594,"DR",1,442)
+14;9.2//NET;
+"KRN",.402,594,"DR",2,442.03)
+.01;S:X="Q" Y=1;S:'$D(PRCHD("CN")) Y=1;3///^S X=PRCHD("AC");S:PRCHD("CN")=".OM" Y=1;4///^S X=PRCHD("CN");1;
+"KRN",.402,594,"DR",2,442.06)
+.01;1//30;S:'$D(PRCHD("*")) Y="";3///^S X=PRCHD("*");
+"MBREQ")
+0
+"ORD",7,.402)
+.402;7;;;EDEOUT^DIFROMSO(.402,DA,"",XPDA);FPRE^DIFROMSI(.402,"",XPDA);EPRE^DIFROMSI(.402,DA,$E("N",$G(XPDNEW)),XPDA,"",OLDA);;EPOST^DIFROMSI(.402,DA,"",XPDA);DEL^DIFROMSK(.402,"",%)
+"ORD",7,.402,0)
+INPUT TEMPLATE
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"VER")
+8.0^22.0
+**END**
+**END**

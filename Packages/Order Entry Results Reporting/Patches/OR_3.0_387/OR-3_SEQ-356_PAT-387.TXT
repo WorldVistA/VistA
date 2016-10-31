@@ -1,0 +1,213 @@
+
+=============================================================================
+Run Date: NOV 05, 2015                     Designation: OR*3*387
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #356                      Status: Released
+                  Compliance Date: NOV 30, 2016
+=============================================================================
+
+Associated patches: (v)OR*3*306    <<= must be installed BEFORE `OR*3*387'
+                    (v)SD*5.3*603  <<= must be installed BEFORE `OR*3*387'
+
+Subject: PCMM WEB TEAM DISPLAY ENHANCEMENTS TO CPRS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch addresses changes to the code behind two CPRS RPCs required to 
+ support the release and use of Patient-Centered Management Module (PCMM)
+ Web. It is released in conjunction with SD*5.3*603.
+  
+ This patch is a part of a phased, coordinated process for deploying PCMM 
+ Web. The VistA software for this patch and the companion SD*5.3*603 
+ patch is released as two KIDS host files. They may be downloaded from a 
+ secured ftp site as directed by the PCMM Web Implementation Team.
+  
+ ***********************************************************************
+ DO NOT INSTALL THIS PATCH ON A PRODUCTION SYSTEM UNTIL NOTIFIED BY 
+ THE PCMM WEB IMPLEMENTATION MANAGER.
+ CPRS WILL NOT FUNCTION PROPERLY IF THIS PATCH IS INSTALLED PREMATURELY.
+ ***********************************************************************
+  
+ If the ORWPT1 PRCARE RPC is called by CPRS, the content of the first
+ line of the PCMM Header Button is determined and formatted by PCMM Web,
+ and stored in the Outpatient Profile File (404.41). The RPC code has
+ been modified to retrieve the data from there. If the RPC is not 
+ called by CPRS, the data format remains as it was. The Mental Health line
+ in the header was modified to include the MH Team name.  
+ Associated routine: ORWPT1
+ Associated ICRs
+    6042 - SCMC PCMM/R GET PRIMARY CARE SUMMARY
+    5972 - ORWPT1 PRCARE
+  
+ If the ORWPT1 PCDETAIL RPC is called by CPRS, the contents of the Primary
+ Care Detail Window is retrieved from PCMM Web by a web service, formatted,
+ returned to CPRS, and displayed in the window. If the RPC is not called
+ by CPRS, the data format remains as it was.
+ Associated routine: ORWPT1
+ Associated ICRs
+    6027 - SCMC PCMM/R GET PRIMARY CARE DETAILS
+    5971 - ORWPT1 PCDETAIL 
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Remote Procedure Calls Associated:
+  
+ RPC Name                     New/Modified/Deleted
+ --------                     --------------------
+ ORWPT1 PRCARE                Internal documentation updated.
+ ORWPT1 PCDETAIL              Internal documentation updated.
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ None.
+  
+  
+ Test Sites:
+ ----------
+ Memphis VAMC - Memphis, TN
+ Iron Mountain VAMC - Iron Mountain MI
+ VA West Los Angeles HCS - Los Angeles, CA
+ Portland VAMC - Portland, OR
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www.domain.ext/vdl/
+  
+ File Description                   File Name                    FTP Mode
+ --------------------------------------------------------------------------
+ Installation Guide                 SD_53_603_IG.PDF             binary
+ Release Notes                      OR_30_387_RN.PDF             binary 
+ (This patch is released with SD*5.3*603. Installation notes for both
+ patches are in the same document.)
+  
+ NOTE: Updates to the Primary Care Header and Window Changes will be 
+ documented in the CPRS User guide with the release of CPRS 30.b
+ (OR*3.0*350).
+ References in the CPRS Help files to PCMM will also be updated in that 
+ version.
+  
+ Software Retrieval Instructions:
+ ================================
+ The VistA software for this patch is released as a KIDS host file. It may 
+ be downloaded from a secured ftp site as directed by the PCMM Web 
+ Implementation Team.
+ The software distribution includes:
+   
+ File Name               Contents          Retrieval Format
+ ---------               --------          ----------------
+ OR_30_387.KID           KIDS Build        ascii
+  
+  
+ Patch Installation:
+ ===================
+  
+ This patch is a part of a phased, coordinated process for deploying PCMM
+ Web.
+  
+ *******************************************************************
+ DO NOT INSTALL THIS PATCH ON A PRODUCTION SYSTEM UNTIL NOTIFIED BY 
+ THE PCMM WEB IMPLEMENTATION MANAGER.
+ *******************************************************************
+  
+ Please refer to the PCMM Web-VistA Installation Guide for complete
+ details.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 21
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORWPT1
+    Before: B25961923   After: B33003577  **10,109,280,340,306,387**
+ 
+Routine list of preceding patches: 306
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 16, 2013
+Completed By:                               Date Completed: NOV 05, 2015
+Released By :                               Date Released : NOV 05, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

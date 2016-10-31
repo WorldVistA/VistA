@@ -1,0 +1,154 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 03/14/16 at 14:43
+=============================================================================
+Run Date: JUL 13, 2016                     Designation: IB*2*561
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #518                      Status: Released
+                  Compliance Date: AUG 13, 2016
+=============================================================================
+
+
+Subject: DEFAULT REVENUE CODE 124 FOR FIVE MENTAL HEALTH DIAGNOSIS RELATED GROUPS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the request to default the revenue code to 124 
+ (PSYCHIATRIC) for five Mental Health Diagnosis Related Groups (DRGs) in
+ the CHARGE ITEM file (#363.2).
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1. R7729361FY16 124 Revenue Code
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ Bay Pines HCS
+ Central Plains HCS
+ Maryland HCS
+  
+   
+ REMEDY OVERVIEW:
+ ================
+ 1. R7729361FY16 124 Revenue Code
+  
+ Problem:
+ --------
+ The Chief Business Office (CBO) has requested the default Revenue Code 
+ 124 (PSYCHIATRIC) for the following Mental Health Diagnosis Related Groups
+ (DRGs) of Inpatient Charge Items with an effective date of October 1st,
+ 2015 or January 1st, 2016: 881, 882, 883, 885 and 886.
+  
+ Resolution:
+ -----------
+ A post-init routine IB20P561 was created to assign the Revenue Code 124
+ to the Inpatient Charge Items based on the effective dates and the
+ MH DRGs in the CHARGE ITEM file (#363.2).
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes. 
+   
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+    
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+     
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*561):
+     
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+     
+ 4.   Select Installation Option: Install Package(s)
+      
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//', answer NO
+     
+ 5.   CLEAN UP POST-INIT ROUTINE
+     --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P561.
+      
+ 6.   Example of successful installation. The number of charges updated
+      will vary from site to site.
+   
+     Revenue Code 124 for Mental Health Diagnosis Post-Install .....
+  
+  >> Adding 124 for MH DRGs on 1-OCT-15 or 1-JAN-16: 881, 882, 883, 885 & 886...
+     Done.  75 existing inpatient charge items updated (#363.2)
+  
+     Revenue Code 124 for Mental Health Diagnosis Post-Install Complete
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 36
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P561
+    Before:       n/a   After:  B7245228  **561**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 02, 2016
+Completed By:                               Date Completed: JUL 05, 2016
+Released By :                               Date Released : JUL 13, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

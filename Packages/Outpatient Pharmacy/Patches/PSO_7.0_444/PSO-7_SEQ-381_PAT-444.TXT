@@ -1,0 +1,440 @@
+$TXT Created by               CMNT.FO-BIRM.DOMAIN.EXT  (KIDS) on Wednesday, 04/06/16 at 13:09
+=============================================================================
+Run Date: JUL 07, 2016                     Designation: PSO*7*444
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #381                      Status: Released
+                  Compliance Date: AUG 07, 2016
+=============================================================================
+
+Associated patches: (v)PSO*7*221   <<= must be installed BEFORE `PSO*7*444'
+                    (v)PSO*7*411   <<= must be installed BEFORE `PSO*7*444'
+                    (v)PSO*7*427   <<= must be installed BEFORE `PSO*7*444'
+                    (v)PSS*1*189   <<= must be installed BEFORE `PSO*7*444'
+                    (v)PSO*7*456   <<= must be installed BEFORE `PSO*7*444'
+
+Subject: GREATER THAN 90 DAYS SUPPLY ENHANCEMENT 
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch is part of the Pharmacy Safety Updates project which was 
+ established to address specific New Service Requests (NSRs) as well as
+ Remedy Ticket(s) and a Patient Safety Issue (PSI) related to the VistA
+ Pharmacy applications as approved by the Health Systems Enterprise Systems
+ Manager(ESM).
+  
+ This project is comprised of patches from five different applications, as
+ shown below:
+   
+    APPLICATION/VERSION                                  PATCH
+    -----------------------------------------------------------------
+    PHARMACY DATA MANAGEMENT (PDM) V. 1.0                PSS*1*189
+    OUTPATIENT PHARMACY (OP) V. 7.0                      PSO*7*444
+    INPATIENT MEDICATIONS (IM) V.5.0                     PSJ*5*313
+    NATIONAL DRUG FILE (NDF) V. 4.0                      PSN*4*429
+    INTEGRATED BILLING (IB) V. 2.0                       IB*2*545
+   
+  
+ The following New service Requests (NSRs), Remedy Ticket(s) and Patient
+ Safety Issue (PSI) are being addressed by this patch:
+  
+  NSRs 20060601/20111206 Allow Dispensing of Greater Than 90 Day Supply
+  PSI PSPO00002098 Need to be able to enter greater than 90-days supply on 
+                   medications that only come in units designed to last 
+                   greater than 90 days
+  ---------------------------------------------------------------------------
+  The Outpatient Pharmacy and supporting VistA applications are being modified
+  to allow dispensing of more than 90 day supply fill for outpatient 
+  prescriptions. The new limit will be 365 days and will be set for each drug
+  individually. See below for more information on specific menu 
+  options related to this enhancement.
+   
+  =========================================================================
+  PSI PSPO00002793 Patient Prescription Processing error, truncating the 
+                   second character of the Days Supply
+  Remedy 387051 Patient Medication Profile Bad Address Indicator display
+  ----------------------------------------------------------------------------
+  The Outpatient Pharmacy Medication Profile has a display problem for a
+  prescription with the following characteristics: 2-letter status (e.g., DC), 
+  drug marked for Consolidated Mail Outpatient Pharmacy (CMOP) and Bad
+  Address Indicator. When a prescription with all three features is displayed
+  the DAY SUP column value is being truncated as illustrated below where the
+  Day Supply value is actually 90 and it displays as 9.
+  
+                                                           ISSUE  LAST REF DAY
+  #  RX #         DRUG                              QTY ST  DATE  FILL REM SUP
+  --------------------------------DISCONTINUED--------------------------------
+  1 100005604$    TOBRAMYCIN 80MG/2ML INJ           100 DC>B01-21 01-21   0  9
+  
+   
+  =========================================================================
+  Remedy 1049220 Outpatient Pharmacy - Electronic Prescribing of CS (ePCS)
+  ------------------------------------------------------------------------
+  Control substance (TRAMADOL) defaulting to 90 supply instead of 30. 
+  =========================================================================
+  
+  
+ This patch modifies the Outpatient Pharmacy application regarding the
+ enhancements and issues listed above:
+  
+ 1. Patient Prescription Processing [PSO LM BACKDOOR ORDERS] option 
+    a) The backdoor pharmacy was modified to accept the new maximum value for
+       the DAYS SUPPLY field based on the limit set by the MAXIMUM DAYS SUPPLY
+       field (#66) introduced in patch PSS*1*189 in the DRUG file (#50) or
+       the MAXIMUM DAYS SUPPLY field (#32) introduced in patch PSN*4*429 in
+       the VA PRODUCT (#50.68) file. If alternate maximum values do not 
+       exist, the current limits will remain the same.
+  
+       Note: The MAXIMUM DAYS SUPPLY field (#32) added to the VA PRODUCT file
+             (#50.68) is being introduced by patch PSN*4*429, however it will
+             not be populated initially by the Pharmacy Product System -
+             National (PPS-N) as changes will be required to that application to
+             edit and export this new field. 
+   
+    b) The medication profile was modified to display the Bad Address Indicator
+       in a different line in order to address the Remedy Ticket 387051 and 
+       Patient Safety Issue PSPO00002793 mentioned above. The indicator will be
+       placed in the next line, as seen below.
+  
+     ----------------------------------ACTIVE---------------------------------
+     1 100005598   ALSEROXYLON 2MG TAB              400 A> 12-11 03-01   2  90
+                                                       **Bad Address**   
+     2 100005596   DESIPRAMINE 25MG TAB              90 DC 11-01 11-01  11  30
+                                                       **Bad Address**   
+     3 100005601A  NAPROXEN 250MG S.T.              170 HP>12-17 12-17   5  30
+                                                       **Bad Address**   
+     4 100005595   TIMOLOL 0.25% OPTH SOL 10ML       90 S> 11-01 11-21  10  30
+   
+  
+   c) The calculation of the number of refills for a prescription was modified 
+      to take into account the new maximum value allowed for the DAYS SUPPLY
+      field. The current calculation (up to 90 days supply) will remain the
+      same and a new formula will be introduced to calculate the number of
+      refills for days supply values of 91 up to 365. The table below shows
+      the number of refills allowed based on the days supply value:
+  
+      ---------------------------------+------------------------------------
+         NON-CONTROLLED SUBSTANCES     | CONTROLLED SUBSTANCES (NO CHANGE)
+      ---------------+-----------------+------------------+-----------------
+       DAYS SUPPLY   |   # OF REFILLS  |   DAYS SUPPLY    |   # OF REFILLS    
+      ---------------+-----------------+------------------+-----------------
+          1 - 59     |        11       |       1 - 59     |        5
+         60 - 89     |         5       |      60 - 89     |        2
+         90 - 91     |         3       |        90        |        1
+         92 - 121    |         2       |                  |        
+        122 - 182    |         1       |                  | 
+        183 - 365    |         0       |                  |
+      ---------------+-----------------+------------------+----------------
+  
+ 2. Complete Orders From OERR [PSO LMOE FINISH] option
+    This option was modified to accept the new maximum value for the DAYS
+    SUPPLY field based on the limit set by the MAXIMUM DAYS SUPPLY field (#66)
+    in the DRUG file (#50) or the MAXIMUM DAYS SUPPLY field (#32) in the VA
+    PRODUCT (#50.68) file. If alternate maximum values exist, the current
+    limits will remain the same.
+  
+ 3. Edit Prescriptions [PSO RXEDIT] option
+    This option was also modified to accept the new maximum value for the DAYS
+    SUPPLY field based on the limit set by the MAXIMUM DAYS SUPPLY field (#66)
+    in the DRUG file (#50) or the MAXIMUM DAYS SUPPLY field (#32) in the VA
+    PRODUCT (#50.68) file. If alternate maximum values exist, the current 
+    limits will remain the same.
+  
+ 4. Barcode Batch Prescription Entry [PSO BATCH BARCODE] option
+    The renewal functionality within this option was also modified to accept
+    the new maximum value for the DAYS SUPPLY field based on the limit set by
+    the MAXIMUM DAYS SUPPLY field (#66) in the DRUG file (#50) or the MAXIMUM
+    DAYS SUPPLY field (#32) in the VA PRODUCT (#50.68) file. If alternate
+    maximum values exist, the current limits will remain the same.
+   
+ 5. Prescription Management Data Compilation   
+    The algorithm used to compile prescription management data was modified to
+    account for prescriptions with greater than 90 days supply. The OVER 90
+    DAYS (#8) field in the OUTPATIENT PHARMACY MANAGEMENT DATA file (#59.12), 
+    which is used as a counter for the number of prescription fills with DAYS
+    SUPPLY value greater than 90, will now be populated.
+   
+ 6. Count of Prescriptions [PSO MGMT REPORT RX COUNTS] option &
+    Count of Prescriptions [PSO MGMT MONTHLY RX COUNTS] option
+    These daily and monthly reports have been modified to include a new column
+    called ">90 DAY", as seen below. This column will display the total number
+    of prescription fills with a DAYS SUPPLY value greater than 90, as shown
+    below.
+  
+           30      60      90     >90      EQ             TOT     TOT
+          DAY     DAY     DAY     DAY     FLS    METH      RX   EQ FL
+       ...===========================================================...
+            1       3       0       1      11       0       5      11
+            0       0       1       2      14       0       3      14
+            0       0       0       0       0       0       0       0
+            0       0       0       0       0       0       0       0
+       ...=== ======= ======= ======= ======= ======= ======= =======...
+            1       3       1       3      25       3       8      25
+  
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)         Field Name (#)                      New/Modified/Deleted
+ ------------------    ----------------------------------- --------------------
+ PRESCRIPTION (#52)    DAYS SUPPLY (#8)                    Modified
+  
+ RETURN TO STOCK LOG (#52.07)                              
+                       DAYS SUPPLY (#4)                    Modified
+  
+ REFILL (#52.1)        DAYS SUPPLY (#1.1)                  Modified
+  
+ PENDING OUTPATIENT ORDERS (#52.41)
+                       DAYS SUPPLY (#101)                  Modified
+  
+ Forms Associated:
+  
+ Form Name             File #                              New/Modified/Deleted
+ ---------             ------                              --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                           New/Modified/Deleted
+ ---------------                                           --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                     Type                      New/Modified/Deleted
+ -----------                     ----                      --------------------
+ N/A
+   
+ Protocols Associated:
+  
+ Protocol Name                                             New/Modified/Deleted
+ -------------                                             --------------------
+ N/A
+    
+ Security Keys Associated:
+  
+ Security Key Name                                         New/Modified/Deleted
+ -------------                                             --------------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name                  Type    File Name (#)      New/Modified/Deleted
+ -------------                  ----    -------------      --------------------
+ N/A
+   
+ New Service Requests (NSRs):
+ ----------------------------
+ 20060601
+ 20111206
+  
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO00002793
+ PSPO00002098 
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+  387051-Patient Medication Profile Bad Address Indicator display
+ 1049220-Outpatient Pharmacy - Electronic Prescribing of CS (ePCS) 
+             
+  
+ TEST Sites:
+ ===========
+ LOUISVILLE, KY
+ NEW YORK HARBOR HCS
+ HEARTLAND EAST
+      
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+   Documentation can also be retrieved from the VA Software Documentation
+   Library (VDL) on the Internet at the following address:
+   http://www4.domain.ext/vdl.
+  
+ File Description                        File Name                FTP Mode
+ --------------------------------------------------------------------------
+ OUTPATIENT PHARMACY PHARMACIST'S USER   PSO_7_PHAR_UM_R0616.DOC    ASCII
+ MANUAL
+   
+  
+ Patch Installation: 
+  
+ Pre Installation Overview
+ --------------------------
+ This project is comprised of patches from five different applications as 
+ listed here.  The patches will get released together and the suggested 
+ installation order is as shown.  
+  
+ An installation guide released with patch PSS*1*189, discusses the 
+ installation process as PSS*1*189 is the patch that must be installed 
+ first.
+  
+  APPLICATION/VERSION                                  PATCH
+  -----------------------------------------------------------------
+  PHARMACY DATA MANAGEMENT (PDM) V. 1.0                PSS*1*189
+  OUTPATIENT PHARMACY (OP) V. 7.0                      PSO*7*444
+  INPATIENT MEDICATIONS (IM) V.5.0                     PSJ*5*313
+  NATIONAL DRUG FILE (NDF) V. 4.0                      PSN*4*429
+  INTEGRATED BILLING (IB) V. 2.0                       IB*2*545
+  -----------------------------------------------------------------
+  
+ Post Installation Overview
+ --------------------------
+ N/A 
+  
+     
+ Installation Instructions
+ -------------------------
+ Although this installation will not take much time, it is recommended 
+ that it be installed overnight to prevent any disruption of service to 
+ other users.
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSO*7.0*444).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package PSO*7.0*444.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 34
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSODIR1
+    Before: B94639325   After: B95631218  **23,46,78,102,121,131,146,166,
+                                           184,222,268,206,266,340,391,
+                                           444**
+Routine Name: PSODIR3
+    Before: B29211268   After: B18185000  **3,46,184,222,206,318,444**
+Routine Name: PSOHELP
+    Before: B53907821   After: B49812789  **3,23,29,48,46,117,131,222,
+                                           268,206,276,282,444**
+Routine Name: PSOHELP1
+    Before: B53295057   After: B49158758  **23,36,88,146,227,222,408,444**
+Routine Name: PSOMGCM1
+    Before: B39573969   After: B39462059  **20,28,175,185,198,444**
+Routine Name: PSOMGCOM
+    Before: B20999263   After: B21894614  **20,28,174,221,444**
+Routine Name: PSOMGMN1
+    Before: B12723391   After: B12434382  **14,444**
+Routine Name: PSOMGRP1
+    Before: B13479977   After: B13150824  **14,444**
+Routine Name: PSOORCPY
+    Before: B34153930   After: B35592105  **10,21,27,32,46,100,117,148,
+                                           313,411,444**
+Routine Name: PSOORED1
+    Before: B73633714   After: B64951982  **5,23,46,78,114,117,131,146,
+                                           223,148,244,249,268,206,313,
+                                           444**
+Routine Name: PSOORED3
+    Before: B65846558   After: B66176959  **46,78,99,117,133,148,249,251,
+                                           379,378,372,416,313,444**
+Routine Name: PSOORFI1
+    Before: B84234137   After: B79665537  **7,15,23,27,32,44,51,46,71,
+                                           90,108,131,152,186,210,222,258,
+                                           260,225,391,408,444**
+Routine Name: PSOORFI4
+    Before: B81023299   After: B73807105  **46,74,78,99,117,131,207,258,
+                                           274,300,308,251,384,391,444**
+Routine Name: PSOORNE3
+    Before: B68981522   After: B69565652  **11,9,39,59,46,103,124,139,
+                                           152,194,391,313,444**
+Routine Name: PSOORNE5
+    Before: B68801944   After: B54881611  **11,27,32,46,78,99,117,131,
+                                           146,171,180,210,222,268,206,
+                                           225,391,444**
+Routine Name: PSOORNEW
+    Before: B94643833   After: B97649814  **11,23,27,32,55,46,71,90,94,
+                                           106,131,133,143,237,222,258,
+                                           206,225,251,386,390,391,372,
+                                           416,431,313,408,436,411,444**
+Routine Name: PSOORNW1
+    Before: B45684581   After: B34218715  **23,46,78,117,131,133,172,148,
+                                           222,268,206,251,379,391,313,
+                                           444**
+Routine Name: PSOORUT1
+    Before: B83981960   After: B83321658  **1,14,30,46,132,148,233,274,
+                                           225,305,289,251,387,385,313,
+                                           427,444**
+Routine Name: PSORENW1
+    Before: B60533620   After: B63022534  **20,37,51,46,71,117,157,143,
+                                           219,239,225,444**
+Routine Name: PSORENW3
+    Before: B40461998   After: B40697440  **11,20,46,100,117,444**
+Routine Name: PSORENW4
+    Before: B66539714   After: B65687099  **11,23,27,32,37,64,46,75,71,
+                                           100,130,117,152,148,264,225,
+                                           301,390,313,411,444**
+Routine Name: PSOSIGDS
+    Before: B46304418   After: B46733813  **46,222,391,282,444**
+Routine Name: PSOSIGMX
+    Before: B14811697   After:  B9129541  **46,78,108,131,222,206,444**
+Routine Name: PSOUTIL
+    Before: B67041213   After: B95292700  **64,456,444**
+Routine Name: PSOUTLA
+    Before: B43668686   After: B37861740  **1,15,23,56,126,222,354,444**
+Routine Name: PSOUTLA1
+    Before: B59550372   After: B66629257  **35,186,218,259,206,388,444**
+ 
+Routine list of preceding patches: 198, 221, 282, 318, 354, 388, 411, 427
+                           456
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 26, 2015
+Completed By:                               Date Completed: JUL 07, 2016
+Released By :                               Date Released : JUL 07, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,197 @@
+
+=============================================================================
+Run Date: NOV 02, 2015                     Designation: DG*5.3*897
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #798                    Status: Released
+                  Compliance Date: DEC 02, 2015
+=============================================================================
+
+Associated patches: (v)DG*5.3*797  <<= must be installed BEFORE `DG*5.3*897'
+
+Subject: RACE/ETHNICITY DINUM IN PATIENT FILE UPDATE UTILITY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DG*5.3*897 addresses one issue:
+  
+ 1.  Patient File Update Utility is not dinuming patients' 
+     ethnicities and multiple races correctly.
+  
+  
+  
+ ASSOCIATED NSR(S): 
+ ==================
+ N/A              
+  
+  
+ ASSOCIATED REMEDY TICKET: 
+ =========================
+ 1.  INC000000207246  Patient File Update Utility
+  
+   
+ PARTICIPATING TEST SITES: 
+ =========================
+ Battle Creek VAMC
+ Upstate New York HCS
+ W.G. (Bill) Hefner VAMC (Salisbury)
+   
+  
+ Remedy Overview:
+ ================
+ 1.  INC000000207246    Patient File Update Utility
+  
+     Problem:
+     --------
+     Patient File Update Utility is not correctly dinuming patients with
+     multiple races or their ethnicity after the information is received
+     from the Master Veteran Index (MVI),the last treatment facility, 
+     and/or the Enrollment System (ES).
+     "Dinum" refers to how the RACE INFORMATION (#2.02) and ETHNICITY
+     INFORMATION (#2.06) fields are stored and referenced in the PATIENT  
+     (#2) file. This is not immediately noticeable when displaying a 
+     patient's race/ethnicity, but downstream issues can occur when this
+     information is accessed elsewhere in the VistA system and when the
+     data is transported to third parties.
+     
+  
+     Resolution:
+     -----------
+     Modify routine ^DGROHLR1 (Register Once Messaging (ROM) HL7 Receive
+     Driver).  Change the FileMan call for race/ethnicity filing (FILE
+     paragraph) from UPDATE^DIE to FILE^DICN. This will store the RACE
+     INFORMATION (#2.02) and ETHNICITY INFORMATION (#2.06) fields 
+     correctly in the PATIENT (#2) file.
+  
+  
+ Software Retrieval:
+ ===================
+ Patches for this installation are combined in host file DG_53_P897.KID.
+  
+ Installation of this host file should be coordinated among the packages 
+ affected since only one installation is necessary.
+  
+ The patches are:
+  
+  DG*5.3*897
+  IVM*2.0*159
+  
+ Sites may retrieve the KIDS build in one of the following ways:
+  
+  (1) The preferred method is to FTP the files from 
+  download.vista.domain.ext which will transmit the files from the first 
+  available FTP server.
+  
+  (2) Sites may also elect to retrieve the patch directly from a specific
+  server as follows:
+  
+   OIFO               FTP ADDRESS                  DIRECTORY
+   --------------     ------------------------     ------------------
+   Albany             ftp.domain.ext     
+   Hines              ftp.domain.ext      
+   Salt Lake City     ftp.domain.ext        
+  
+   
+ Installation Instructions:
+ ==========================
+ This patch will be released in conjunction with an Income Verification 
+ Match (IVM) patch, IVM*2.0*159, as part of a combined build.
+  
+  
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes.
+ Suggested time to install: non-peak requirement hours.
+   
+      1. Obtain the file DG_53_P897.KID
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+  
+      3. Use Load a Distribution using DG_53_P897.KID when
+         prompted to Enter a Host File name.  You may need to append a
+         directory name.
+   
+      4. From this menu, you may select to use the following options
+         (when prompted for INSTALL NAME, enter DG*5.3*897):
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when 
+              this patch is installed.  It compares all components of 
+              this patch (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+    
+      5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+         respond NO.
+    
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//" respond YES.
+  
+         When prompted, 'Enter options you wish to mark as 'Out Of
+         Order':'enter:
+              
+           Load/Edit Patient Data [DG LOAD PATIENT DATA]
+           Register a Patient [DG REGISTER PATIENT]
+  
+         When prompted, 'Enter protocols you wish to mark as 'Out Of
+         Order':', press enter. 
+  
+  
+ POST-INSTALLATION INSTRUCTIONS:
+ ==============================
+  a.  Installing the patch will NOT do the file cleanup. First, run 
+      REPORT^DG53P897 (you must queue the report) to obtain a list
+      by DFN of what the cleanup will do. We expect few, if any,
+      duplicates, but all the records that the Register Once Messaging 
+      (ROM) application has processed will need cleanup.
+  
+  b.  When you are ready to do the actual cleanup (assuming there are 
+      records in the report), run CLEANUP^DG53P897. The job should be
+      queued to run during non-peak hours because of the heavy
+      processing involved.  When the cleanup has completed, run
+      REPORT^DG53P897 again but in a different session. It should 
+      display "no records to report". You can then delete routine
+      DG53P897.
+  
+  c.  Sites may encounter the following error: 
+      <UNDEFINED>PIVNW+61^VAFHPIVT during the running of the File
+      Cleanup, CLEANUP^DG53P897.  This error does not stop processing
+      and is not a concern, as this is a timing issue within the file.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;Registration;**[Patch List]**;Aug 13,1993;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53P897
+    Before:       n/a   After: B28669570  **897**
+Routine Name: DGROHLR1
+    Before: B54801555   After: B58139675  **572,622,647,809,754,797,897**
+ 
+Routine list of preceding patches: 797
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 13, 2014
+Completed By:                               Date Completed: OCT 20, 2015
+Released By :                               Date Released : NOV 02, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

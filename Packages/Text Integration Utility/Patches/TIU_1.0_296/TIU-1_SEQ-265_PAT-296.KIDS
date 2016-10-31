@@ -1,0 +1,1491 @@
+Released TIU*1*296 SEQ #265
+Extracted from mail message
+**KIDS**:TIU*1.0*296^
+
+**INSTALL NAME**
+TIU*1.0*296
+"BLD",9395,0)
+TIU*1.0*296^TEXT INTEGRATION UTILITIES^0^3160315^y
+"BLD",9395,1,0)
+^^39^39^3151116^
+"BLD",9395,1,1,0)
+The TIU*1.0*296 patch entails modifying the Computerized Patient Record
+"BLD",9395,1,2,0)
+System (CPRS) Consult/Request Tracking package to send a Text Integration
+"BLD",9395,1,3,0)
+Utilities (TIU) alert to the appropriate service provider immediately
+"BLD",9395,1,4,0)
+after a non-clinical staff member screens a patient and signs the
+"BLD",9395,1,5,0)
+associated CPRS note
+"BLD",9395,1,6,0)
+ 
+"BLD",9395,1,7,0)
+This functionality is needed so that after non-clinical staff members have
+"BLD",9395,1,8,0)
+screened patients for potential risks (weight loss or gain, homelessness,
+"BLD",9395,1,9,0)
+substance abuse, etc.), the service provider will be alerted prior to the
+"BLD",9395,1,10,0)
+note being co-signed by the licensed clinician responsible for reviewing
+"BLD",9395,1,11,0)
+and approving the note. 
+"BLD",9395,1,12,0)
+ 
+"BLD",9395,1,13,0)
+Prior to this modification, no TIU alerts were sent to the service 
+"BLD",9395,1,14,0)
+providers. This resulted in missed opportunities to provide needed 
+"BLD",9395,1,15,0)
+services for patients while the patients are on site, and forced staff to 
+"BLD",9395,1,16,0)
+take time to contact patients and reschedule needed services
+"BLD",9395,1,17,0)
+ 
+"BLD",9395,1,18,0)
+This patch utilizes one new file (TIU TEXT EVENTS (#8925.71)) used to
+"BLD",9395,1,19,0)
+define the words or phrase that will be searched for in a TIU document 
+"BLD",9395,1,20,0)
+(progress note, consult, etc.). If the words or phrase are found in the 
+"BLD",9395,1,21,0)
+TIU document, then an alert is sent to the individual or team specified in
+"BLD",9395,1,22,0)
+the TIU TEXT EVENTS file. 
+"BLD",9395,1,23,0)
+ 
+"BLD",9395,1,24,0)
+One new menu option-Text Event Edit [TIU TEXT EVENT EDIT]-will be added 
+"BLD",9395,1,25,0)
+to the TIU Maintenance Menu [TIU IRM MAINTENANCE MENU]. This option is 
+"BLD",9395,1,26,0)
+used only to set up a text event in the TIU TEXT EVENTS file.
+"BLD",9395,1,27,0)
+ 
+"BLD",9395,1,28,0)
+***IMPORTANT***: Any TIU document that is to be used for these alerts MUST
+"BLD",9395,1,29,0)
+have the MUMPS code 'D TASK^TIUTIUS(DA)' entered in the POST-SIGNATURE
+"BLD",9395,1,30,0)
+CODE (#4.9) field in the TIU DOCUMENT DEFINITION (#8925.1) file.
+"BLD",9395,1,31,0)
+ 
+"BLD",9395,1,32,0)
+This patch will work in both CPRS GUI and the VistA system.
+"BLD",9395,1,33,0)
+ 
+"BLD",9395,1,34,0)
+The NSR for this intake addresses the following requirements:
+"BLD",9395,1,35,0)
+ 
+"BLD",9395,1,36,0)
+    VHBAO: NEED2949: Provide the ability for users to send TIU text alerts
+"BLD",9395,1,37,0)
+                     created by non-clinical staff in CPRS to service
+"BLD",9395,1,38,0)
+                     providers before being co-signed by a licensed
+"BLD",9395,1,39,0)
+                     clinician.
+"BLD",9395,4,0)
+^9.64PA^8925.71^1
+"BLD",9395,4,8925.71,0)
+8925.71
+"BLD",9395,4,8925.71,222)
+y^y^f^^^^n
+"BLD",9395,4,"B",8925.71,8925.71)
+
+"BLD",9395,6)
+9^
+"BLD",9395,6.3)
+25
+"BLD",9395,"ABPKG")
+n
+"BLD",9395,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9395,"KRN",.4,0)
+.4
+"BLD",9395,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",9395,"KRN",.401,0)
+.401
+"BLD",9395,"KRN",.402,0)
+.402
+"BLD",9395,"KRN",.402,"NM",0)
+^9.68A^1^1
+"BLD",9395,"KRN",.402,"NM",1,0)
+TIU TEXT EVENT EDIT    FILE #8925.71^8925.71^0
+"BLD",9395,"KRN",.402,"NM","B","TIU TEXT EVENT EDIT    FILE #8925.71",1)
+
+"BLD",9395,"KRN",.403,0)
+.403
+"BLD",9395,"KRN",.5,0)
+.5
+"BLD",9395,"KRN",.84,0)
+.84
+"BLD",9395,"KRN",3.6,0)
+3.6
+"BLD",9395,"KRN",3.8,0)
+3.8
+"BLD",9395,"KRN",9.2,0)
+9.2
+"BLD",9395,"KRN",9.8,0)
+9.8
+"BLD",9395,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",9395,"KRN",9.8,"NM",1,0)
+TIUTIUS^^0^B33045323
+"BLD",9395,"KRN",9.8,"NM",2,0)
+TIURS^^0^B66323141
+"BLD",9395,"KRN",9.8,"NM","B","TIURS",2)
+
+"BLD",9395,"KRN",9.8,"NM","B","TIUTIUS",1)
+
+"BLD",9395,"KRN",19,0)
+19
+"BLD",9395,"KRN",19,"NM",0)
+^9.68A^3^2
+"BLD",9395,"KRN",19,"NM",2,0)
+TIU TEXT EVENT EDIT^^0^
+"BLD",9395,"KRN",19,"NM",3,0)
+TIU IRM MAINTENANCE MENU^^2
+"BLD",9395,"KRN",19,"NM","B","TIU IRM MAINTENANCE MENU",3)
+
+"BLD",9395,"KRN",19,"NM","B","TIU TEXT EVENT EDIT",2)
+
+"BLD",9395,"KRN",19.1,0)
+19.1
+"BLD",9395,"KRN",19.1,"NM",0)
+^9.68A^^
+"BLD",9395,"KRN",101,0)
+101
+"BLD",9395,"KRN",101,"NM",0)
+^9.68A^^
+"BLD",9395,"KRN",409.61,0)
+409.61
+"BLD",9395,"KRN",409.61,"NM",0)
+^9.68A^^
+"BLD",9395,"KRN",771,0)
+771
+"BLD",9395,"KRN",771,"NM",0)
+^9.68A^^
+"BLD",9395,"KRN",779.2,0)
+779.2
+"BLD",9395,"KRN",779.2,"NM",0)
+^9.68A^^
+"BLD",9395,"KRN",870,0)
+870
+"BLD",9395,"KRN",870,"NM",0)
+^9.68A^^
+"BLD",9395,"KRN",8989.51,0)
+8989.51
+"BLD",9395,"KRN",8989.52,0)
+8989.52
+"BLD",9395,"KRN",8994,0)
+8994
+"BLD",9395,"KRN","B",.4,.4)
+
+"BLD",9395,"KRN","B",.401,.401)
+
+"BLD",9395,"KRN","B",.402,.402)
+
+"BLD",9395,"KRN","B",.403,.403)
+
+"BLD",9395,"KRN","B",.5,.5)
+
+"BLD",9395,"KRN","B",.84,.84)
+
+"BLD",9395,"KRN","B",3.6,3.6)
+
+"BLD",9395,"KRN","B",3.8,3.8)
+
+"BLD",9395,"KRN","B",9.2,9.2)
+
+"BLD",9395,"KRN","B",9.8,9.8)
+
+"BLD",9395,"KRN","B",19,19)
+
+"BLD",9395,"KRN","B",19.1,19.1)
+
+"BLD",9395,"KRN","B",101,101)
+
+"BLD",9395,"KRN","B",409.61,409.61)
+
+"BLD",9395,"KRN","B",771,771)
+
+"BLD",9395,"KRN","B",779.2,779.2)
+
+"BLD",9395,"KRN","B",870,870)
+
+"BLD",9395,"KRN","B",8989.51,8989.51)
+
+"BLD",9395,"KRN","B",8989.52,8989.52)
+
+"BLD",9395,"KRN","B",8994,8994)
+
+"BLD",9395,"QDEF")
+^^^^NO^^^^YES^^YES
+"BLD",9395,"QUES",0)
+^9.62^^
+"BLD",9395,"REQB",0)
+^9.611^^
+"FIA",8925.71)
+TIU TEXT EVENTS
+"FIA",8925.71,0)
+^TIU(8925.71,
+"FIA",8925.71,0,0)
+8925.71
+"FIA",8925.71,0,1)
+y^y^f^^^^n
+"FIA",8925.71,0,10)
+
+"FIA",8925.71,0,11)
+
+"FIA",8925.71,0,"RLRO")
+
+"FIA",8925.71,0,"VR")
+1.0^TIU
+"FIA",8925.71,8925.71)
+0
+"FIA",8925.71,8925.714)
+0
+"FIA",8925.71,8925.715)
+0
+"IX",8925.71,8925.71,"AC",0)
+8925.71^AC^Trigger search string text based on criteria^MU^^F^IR^I^8925.71^^^^^A
+"IX",8925.71,8925.71,"AC",.1,0)
+^^1^1^3150612^^^
+"IX",8925.71,8925.71,"AC",.1,1,0)
+Trigger search string text based on criteria
+"IX",8925.71,8925.71,"AC",1)
+N AUMTX,FDA S AUMTX=X S:'X2(2) AUMTX=$$LOW^XLFSTR(AUMTX) S:'X2(3) AUMTX=$TR(AUMTX," ","") S FDA(1,8925.71,DA_",",3)=AUMTX D FILE^DIE("","FDA(1)","AUMTERR(1)")
+"IX",8925.71,8925.71,"AC",2)
+Q
+"IX",8925.71,8925.71,"AC",2.5)
+Q
+"IX",8925.71,8925.71,"AC",11.1,0)
+^.114IA^^
+"KRN",.402,2782,-1)
+0^1
+"KRN",.402,2782,0)
+TIU TEXT EVENT EDIT^3151202.1742^@^8925.71^^@^3151202
+"KRN",.402,2782,"DIAB",1,1,8925.714,0)
+ALL
+"KRN",.402,2782,"DIAB",1,1,8925.715,0)
+ALL
+"KRN",.402,2782,"DIAB",10,0,8925.71,0)
+SEARCH STRING///S X=TIUX
+"KRN",.402,2782,"DR",1,8925.71)
+.01;.02;1;S TIUX=X;.03;.04;2;2.1;Q;3///^S X=TIUX;4;5;5.1;
+"KRN",.402,2782,"DR",2,8925.714)
+.01
+"KRN",.402,2782,"DR",2,8925.715)
+.01
+"KRN",19,2917151,-1)
+2^3
+"KRN",19,2917151,0)
+TIU IRM MAINTENANCE MENU^TIU Maintenance Menu^^M^568^^^^^^^588^y^1^1
+"KRN",19,2917151,10,0)
+^19.01IP^15^15
+"KRN",19,2917151,10,15,0)
+2921675
+"KRN",19,2917151,10,15,"^")
+TIU TEXT EVENT EDIT
+"KRN",19,2917151,"U")
+TIU MAINTENANCE MENU
+"KRN",19,2921675,-1)
+0^2
+"KRN",19,2921675,0)
+TIU TEXT EVENT EDIT^Text Event Edit^^E^^^^^^^^
+"KRN",19,2921675,1,0)
+^^1^1^3160311^
+"KRN",19,2921675,1,1,0)
+This option edits the TIU TEXT EVENT file for the text event alert.
+"KRN",19,2921675,30)
+TIU(8925.71,
+"KRN",19,2921675,31)
+AELMQ
+"KRN",19,2921675,50)
+TIU(8925.71,
+"KRN",19,2921675,51)
+[TIU TEXT EVENT EDIT]
+"KRN",19,2921675,"U")
+TEXT EVENT EDIT
+"MBREQ")
+0
+"ORD",7,.402)
+.402;7;;;EDEOUT^DIFROMSO(.402,DA,"",XPDA);FPRE^DIFROMSI(.402,"",XPDA);EPRE^DIFROMSI(.402,DA,$E("N",$G(XPDNEW)),XPDA,"",OLDA);;EPOST^DIFROMSI(.402,DA,"",XPDA);DEL^DIFROMSK(.402,"",%)
+"ORD",7,.402,0)
+INPUT TEMPLATE
+"ORD",18,19)
+19;18;;;OPT^XPDTA;OPTF1^XPDIA;OPTE1^XPDIA;OPTF2^XPDIA;;OPTDEL^XPDIA
+"ORD",18,19,0)
+OPTION
+"PKG",588,-1)
+1^1
+"PKG",588,0)
+TEXT INTEGRATION UTILITIES^TIU^Text Integration Utilities 
+"PKG",588,20,0)
+^9.402P^^
+"PKG",588,22,0)
+^9.49I^1^1
+"PKG",588,22,1,0)
+1.0^2970620^2971202^1
+"PKG",588,22,1,"PAH",1,0)
+296^3160315^520736435
+"PKG",588,22,1,"PAH",1,1,0)
+^^39^39^3160315
+"PKG",588,22,1,"PAH",1,1,1,0)
+The TIU*1.0*296 patch entails modifying the Computerized Patient Record
+"PKG",588,22,1,"PAH",1,1,2,0)
+System (CPRS) Consult/Request Tracking package to send a Text Integration
+"PKG",588,22,1,"PAH",1,1,3,0)
+Utilities (TIU) alert to the appropriate service provider immediately
+"PKG",588,22,1,"PAH",1,1,4,0)
+after a non-clinical staff member screens a patient and signs the
+"PKG",588,22,1,"PAH",1,1,5,0)
+associated CPRS note
+"PKG",588,22,1,"PAH",1,1,6,0)
+ 
+"PKG",588,22,1,"PAH",1,1,7,0)
+This functionality is needed so that after non-clinical staff members have
+"PKG",588,22,1,"PAH",1,1,8,0)
+screened patients for potential risks (weight loss or gain, homelessness,
+"PKG",588,22,1,"PAH",1,1,9,0)
+substance abuse, etc.), the service provider will be alerted prior to the
+"PKG",588,22,1,"PAH",1,1,10,0)
+note being co-signed by the licensed clinician responsible for reviewing
+"PKG",588,22,1,"PAH",1,1,11,0)
+and approving the note. 
+"PKG",588,22,1,"PAH",1,1,12,0)
+ 
+"PKG",588,22,1,"PAH",1,1,13,0)
+Prior to this modification, no TIU alerts were sent to the service 
+"PKG",588,22,1,"PAH",1,1,14,0)
+providers. This resulted in missed opportunities to provide needed 
+"PKG",588,22,1,"PAH",1,1,15,0)
+services for patients while the patients are on site, and forced staff to 
+"PKG",588,22,1,"PAH",1,1,16,0)
+take time to contact patients and reschedule needed services
+"PKG",588,22,1,"PAH",1,1,17,0)
+ 
+"PKG",588,22,1,"PAH",1,1,18,0)
+This patch utilizes one new file (TIU TEXT EVENTS (#8925.71)) used to
+"PKG",588,22,1,"PAH",1,1,19,0)
+define the words or phrase that will be searched for in a TIU document 
+"PKG",588,22,1,"PAH",1,1,20,0)
+(progress note, consult, etc.). If the words or phrase are found in the 
+"PKG",588,22,1,"PAH",1,1,21,0)
+TIU document, then an alert is sent to the individual or team specified in
+"PKG",588,22,1,"PAH",1,1,22,0)
+the TIU TEXT EVENTS file. 
+"PKG",588,22,1,"PAH",1,1,23,0)
+ 
+"PKG",588,22,1,"PAH",1,1,24,0)
+One new menu option-Text Event Edit [TIU TEXT EVENT EDIT]-will be added 
+"PKG",588,22,1,"PAH",1,1,25,0)
+to the TIU Maintenance Menu [TIU IRM MAINTENANCE MENU]. This option is 
+"PKG",588,22,1,"PAH",1,1,26,0)
+used only to set up a text event in the TIU TEXT EVENTS file.
+"PKG",588,22,1,"PAH",1,1,27,0)
+ 
+"PKG",588,22,1,"PAH",1,1,28,0)
+***IMPORTANT***: Any TIU document that is to be used for these alerts MUST
+"PKG",588,22,1,"PAH",1,1,29,0)
+have the MUMPS code 'D TASK^TIUTIUS(DA)' entered in the POST-SIGNATURE
+"PKG",588,22,1,"PAH",1,1,30,0)
+CODE (#4.9) field in the TIU DOCUMENT DEFINITION (#8925.1) file.
+"PKG",588,22,1,"PAH",1,1,31,0)
+ 
+"PKG",588,22,1,"PAH",1,1,32,0)
+This patch will work in both CPRS GUI and the VistA system.
+"PKG",588,22,1,"PAH",1,1,33,0)
+ 
+"PKG",588,22,1,"PAH",1,1,34,0)
+The NSR for this intake addresses the following requirements:
+"PKG",588,22,1,"PAH",1,1,35,0)
+ 
+"PKG",588,22,1,"PAH",1,1,36,0)
+    VHBAO: NEED2949: Provide the ability for users to send TIU text alerts
+"PKG",588,22,1,"PAH",1,1,37,0)
+                     created by non-clinical staff in CPRS to service
+"PKG",588,22,1,"PAH",1,1,38,0)
+                     providers before being co-signed by a licensed
+"PKG",588,22,1,"PAH",1,1,39,0)
+                     clinician.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+YES
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","TIURS")
+0^2^B66323141^B64898838
+"RTN","TIURS",1,0)
+TIURS ; SLC/JER - Electronic signature actions ; 25 Jun 2015  12:14 PM
+"RTN","TIURS",2,0)
+ ;;1.0;TEXT INTEGRATION UTILITIES;**3,4,20,67,79,98,107,58,100,109,179,157,227,274,296**;Jun 20, 1997;Build 25
+"RTN","TIURS",3,0)
+ ;MILW/JMC 4/26/05-Inserted line "ES+68" execute post for text events.
+"RTN","TIURS",4,0)
+ACCEPT(TIUSLST,TIUI) ; Accept for signing
+"RTN","TIURS",5,0)
+ N TIUSGN,TIUMSG,TIUPR,TIUFLAG
+"RTN","TIURS",6,0)
+ I +$G(TIUDA),($G(TIUEVNT)]"") D  Q:'+$G(TIUSGN)
+"RTN","TIURS",7,0)
+ . S TIUSGN=$$CANDO^TIULP(TIUDA,TIUEVNT)
+"RTN","TIURS",8,0)
+ . I '+TIUSGN D
+"RTN","TIURS",9,0)
+ . . D FULL^VALM1
+"RTN","TIURS",10,0)
+ . . W !!,"Document has changed...",!,$P(TIUSGN,U,2)
+"RTN","TIURS",11,0)
+ . . W !!,"Item #",TIUI,": Removed from signature list.",!
+"RTN","TIURS",12,0)
+ . . W:$$READ^TIUU("EA","Press RETURN to continue...") ""
+"RTN","TIURS",13,0)
+ S TIUSLST(TIUI)=""
+"RTN","TIURS",14,0)
+ W !,"Item #",TIUI,": Added to signature list." ;H 2
+"RTN","TIURS",15,0)
+ I +$P($G(TIUDPRM(0)),U,8) D
+"RTN","TIURS",16,0)
+ . S TIUMSG="Print this note"
+"RTN","TIURS",17,0)
+ . S TIUPR=$$READ^TIUU("Y",TIUMSG,"No")
+"RTN","TIURS",18,0)
+ . I +TIUPR S TIUSLST(TIUI)=1
+"RTN","TIURS",19,0)
+ I +$G(TIUPR),+$P($G(TIUDPRM(0)),U,9) D
+"RTN","TIURS",20,0)
+ . S TIUFLAG=$$FLAG^TIUPRPN3
+"RTN","TIURS",21,0)
+ . I +TIUFLAG S $P(TIUSLST(TIUI),U,2)=1
+"RTN","TIURS",22,0)
+ I +$G(XTRASGNR) S $P(TIUSLST(TIUI),U,3)=$G(XTRASGNR)
+"RTN","TIURS",23,0)
+ Q
+"RTN","TIURS",24,0)
+EDSIG(TIUDA,TIUADD,TIUPASK) ; interactive sign
+"RTN","TIURS",25,0)
+ N TIU,TIU0,TIU12,ASK,X,X1,TIUTYPE,SIGNER,COSIGNER,TIUTYPE,TIUMSG,TIUSTAT
+"RTN","TIURS",26,0)
+ N TIUES,TIUACT,TIUDPRM,XTRASGNR,TIUCOM,TIU15,TIUCPFLD
+"RTN","TIURS",27,0)
+ I +$D(TIUSIGN),(TIUSIGN=0) Q
+"RTN","TIURS",28,0)
+ I '$D(TIUPRM0) D SETPARM^TIULE
+"RTN","TIURS",29,0)
+ I '+$P(TIUPRM0,U,2) S VALMBCK="R" Q
+"RTN","TIURS",30,0)
+ S TIUADD=1
+"RTN","TIURS",31,0)
+ S TIU0=$G(^TIU(8925,+TIUDA,0)),TIU12=$G(^(12)),TIU15=$G(^(15))
+"RTN","TIURS",32,0)
+ S SIGNER=$S(+$P(TIU12,U,4):$P(TIU12,U,4),1:$P(TIU12,U,2))
+"RTN","TIURS",33,0)
+ S COSIGNER=$P(TIU12,U,8)
+"RTN","TIURS",34,0)
+ I (DUZ'=SIGNER),(DUZ'=COSIGNER) S XTRASGNR=+$O(^TIU(8925.7,"AE",+TIUDA,+DUZ,0))
+"RTN","TIURS",35,0)
+ I '$G(XTRASGNR) S XTRASGNR=$$ASURG^TIUADSIG(TIUDA)
+"RTN","TIURS",36,0)
+ S TIUSTAT=+$P(TIU0,U,5)
+"RTN","TIURS",37,0)
+ S TIUACT=$S(TIUSTAT'>5:"SIGNATURE",+$G(XTRASGNR):"SIGNATURE",1:"COSIGNATURE")
+"RTN","TIURS",38,0)
+ S ASK=$$CANDO^TIULP(TIUDA,TIUACT)
+"RTN","TIURS",39,0)
+ S TIUTYPE=$$PNAME^TIULC1(+TIU0)
+"RTN","TIURS",40,0)
+ I +ASK'>0 D  Q
+"RTN","TIURS",41,0)
+ . S VALMBCK="R"
+"RTN","TIURS",42,0)
+ . I +$$ISA^USRLM(+$G(DUZ),"MEDICAL INFORMATION SECTION"),(+$$ISPN^TIULX(+TIU0)'>0) Q
+"RTN","TIURS",43,0)
+ . I +$$ISA^USRLM(+$G(DUZ),"MAS TRANSCRIPTIONIST") Q
+"RTN","TIURS",44,0)
+ . I +$$ISA^USRLM(+$G(DUZ),"TRANSCRIPTIONIST") Q
+"RTN","TIURS",45,0)
+ . W !,$P(ASK,U,2)
+"RTN","TIURS",46,0)
+ . I $$READ^TIUU("EA","Press RETURN to continue...") ; pause
+"RTN","TIURS",47,0)
+ W:$G(VALMAR)'="^TMP(""TIUVIEW"",$J)" !
+"RTN","TIURS",48,0)
+ ;If document is a clinical procedures (CP) title, and
+"RTN","TIURS",49,0)
+ ;(P179 for P182) this is not an additional signature,
+"RTN","TIURS",50,0)
+ ;check if CP fields are required. If required, prompt for them
+"RTN","TIURS",51,0)
+ ;and don't let user sign unless fields are defined. (P109)
+"RTN","TIURS",52,0)
+ I '$G(XTRASGNR),+$$ISA^TIULX(+TIU0,+$$CLASS^TIUCP),$$REQCPF^TIULP(+$P($G(^TIU(8925,+TIUDA,14)),U,5)) D  Q:+TIUCPFLD'>0
+"RTN","TIURS",53,0)
+ . I $G(^TIU(8925,+TIUDA,702)),$P(^(702),U)]"",$P(^(702),U,2)]"" S TIUCPFLD=1 Q
+"RTN","TIURS",54,0)
+ . S TIUCPFLD=$$ASKCPF(TIUDA)
+"RTN","TIURS",55,0)
+ . I +TIUCPFLD'>0 D
+"RTN","TIURS",56,0)
+ . . W !!,"The Procedure Summary Code and Date/Time Performed MUST be entered before",!,"you may sign.",!
+"RTN","TIURS",57,0)
+ . . I $$READ^TIUU("EA","Press RETURN to continue...") ;pause
+"RTN","TIURS",58,0)
+ I $S(+$$REQCOSIG^TIULP(+TIU0,+TIUDA,+SIGNER):1,+$P(TIU15,U,6):1,1:0),(+COSIGNER'>0) D  Q:+COSIGNER'>0
+"RTN","TIURS",59,0)
+ . S COSIGNER=$$ASKCSNR(TIUDA,SIGNER)
+"RTN","TIURS",60,0)
+ . I +COSIGNER'>0 D
+"RTN","TIURS",61,0)
+ . . W !!,"This ",TIUTYPE," MUST have a cosigner before you may sign.",!
+"RTN","TIURS",62,0)
+ . . I $$READ^TIUU("EA","Press RETURN to continue...") ; pause
+"RTN","TIURS",63,0)
+ I TIUSTAT=5,$G(DUZ)'=SIGNER D
+"RTN","TIURS",64,0)
+ . S TIUMSG="Author hasn't signed, are you SURE you want to sign "_TIUTYPE
+"RTN","TIURS",65,0)
+ W ! I $G(TIUMSG)]"",$$READ^TIUU("YO",TIUMSG,"NO","^D SIG^TIUDIRH")'>0 S VALMBCK="R" Q
+"RTN","TIURS",66,0)
+ L +^TIU(8925,+TIUDA):1
+"RTN","TIURS",67,0)
+ E  W !?5,$C(7),"Another user is editing this entry.",! W:$$READ^TIUU("EA","Press RETURN to continue...") "" S TIUQUIT=2 Q
+"RTN","TIURS",68,0)
+ ; TIU*1.0*274 DJH Do not allow notes without any text to be signed
+"RTN","TIURS",69,0)
+ I $$EMPTYDOC^TIULF(+TIUDA) W !?5,$C(7),"This note contains no text and cannot be signed.",! W:$$READ^TIUU("EA","Press RETURN to continue...") "" Q
+"RTN","TIURS",70,0)
+ S TIUES=$$ASKSIG^TIULA1 L -^TIU(8925,+TIUDA) I '+TIUES Q
+"RTN","TIURS",71,0)
+ I $D(VALMAR) D FULL^VALM1
+"RTN","TIURS",72,0)
+ I +$G(XTRASGNR) D ADDSIG^TIURS1(TIUDA,XTRASGNR)
+"RTN","TIURS",73,0)
+ I '+$G(XTRASGNR) D ES(TIUDA,TIUES)
+"RTN","TIURS",74,0)
+ I $G(TIUACT)="COSIGNATURE",(+$$ISADDNDM^TIULC1(TIUDA)'>0) D  Q:+TIUCOM
+"RTN","TIURS",75,0)
+ . N TIUADDND S TIUCOM=0
+"RTN","TIURS",76,0)
+ . S TIUADDND=$$READ^TIUU("YO","Do you wish to add your comments in an addendum","NO")
+"RTN","TIURS",77,0)
+ . I +TIUADDND D ADD^TIUADD(TIUDA,.TIUCHNG) S TIUCOM=1
+"RTN","TIURS",78,0)
+ I '+$G(TIUPASK) Q
+"RTN","TIURS",79,0)
+ D DOCPRM^TIULC1(+TIU0,.TIUDPRM,TIUDA)
+"RTN","TIURS",80,0)
+ I +$P($G(TIUDPRM(0)),U,8) D PRINT^TIUEPRNT(TIUDA)
+"RTN","TIURS",81,0)
+ Q
+"RTN","TIURS",82,0)
+ ;
+"RTN","TIURS",83,0)
+ASKCPF(DA) ;Ask required clinical procedure fields
+"RTN","TIURS",84,0)
+ N DR,DIE,TIUY
+"RTN","TIURS",85,0)
+ D FULL^VALM1
+"RTN","TIURS",86,0)
+AGNCP W !!,$C(7),"You must designate the Procedure Summary Code and Date/Time Performed...",!
+"RTN","TIURS",87,0)
+ L +^TIU(8925,+DA):1
+"RTN","TIURS",88,0)
+ E  W !?5,$C(7),"Another user is editing this entry.",! W:$$READ^TIUU("EA","Press RETURN to continue...") "" G ASKCPFQ
+"RTN","TIURS",89,0)
+ S DR="70201R;70202R"
+"RTN","TIURS",90,0)
+ S DIE="^TIU(8925," D ^DIE
+"RTN","TIURS",91,0)
+ASKCPFQ L -^TIU(8925,+DA)
+"RTN","TIURS",92,0)
+ I $G(^TIU(8925,+DA,702)),$P(^(702),U)]"",$P(^(702),U,2)]"" S TIUY=1
+"RTN","TIURS",93,0)
+ Q +$G(TIUY)
+"RTN","TIURS",94,0)
+ ;
+"RTN","TIURS",95,0)
+ASKCSNR(DA,SIGNER) ; Ask cosigner
+"RTN","TIURS",96,0)
+ N DR,DIE,TIUY,TIUDCSNR,TIUPREF,TIUFLD
+"RTN","TIURS",97,0)
+ S TIUPREF=$$PERSPRF^TIULE(SIGNER)
+"RTN","TIURS",98,0)
+ S TIUDCSNR=$$PERSNAME^TIULC1($P(TIUPREF,U,9))
+"RTN","TIURS",99,0)
+ I TIUDCSNR="UNKNOWN" S TIUDCSNR=""
+"RTN","TIURS",100,0)
+ S TIUFLD=$S(+$$ISDS^TIULX(+$G(^TIU(8925,+DA,0))):"ATTENDING PHYSICIAN",1:"EXPECTED COSIGNER")
+"RTN","TIURS",101,0)
+ D FULL^VALM1
+"RTN","TIURS",102,0)
+AGN W !!,$C(7),"You must designate an ",TIUFLD,"...",!
+"RTN","TIURS",103,0)
+ L +^TIU(8925,+DA):1
+"RTN","TIURS",104,0)
+ E  W !?5,$C(7),"Another user is editing this entry.",! W:$$READ^TIUU("EA","Press RETURN to continue...") "" G ASKCOUT
+"RTN","TIURS",105,0)
+ I $E(TIUFLD)="A" S DR="1209R//^S X=TIUDCSNR;1208////^S X=$P(^TIU(8925,DA,12),U,9);1506////1"
+"RTN","TIURS",106,0)
+ E  S DR="1208R//^S X=TIUDCSNR;1506////1"
+"RTN","TIURS",107,0)
+ S DIE="^TIU(8925," D ^DIE
+"RTN","TIURS",108,0)
+ASKCOUT L -^TIU(8925,+DA)
+"RTN","TIURS",109,0)
+ S TIUY=+$P($G(^TIU(8925,+DA,12)),U,8)
+"RTN","TIURS",110,0)
+ Q TIUY
+"RTN","TIURS",111,0)
+ES(DA,TIUES,TIUI) ; ^DIE call for /es/
+"RTN","TIURS",112,0)
+ N SIGNER,DR,DIE,ESDT,TIUSTAT,TIUSTNOW,COSIGNER,SVCHIEF,CSREQ,TIUPRINT
+"RTN","TIURS",113,0)
+ N CSNEED,TIUTTL,TIUPSIG,TIUDPRM,DAO,TIUSTWAS,TIUSTIS,DAORIG,TIUCSPRM,TIUCSPM2
+"RTN","TIURS",114,0)
+ S TIUSTWAS=$P($G(^TIU(8925,DA,0)),U,5),TIUCSPRM=1,TIUCSPM2=0
+"RTN","TIURS",115,0)
+ D DOCPRM^TIULC1(+$G(^TIU(8925,+DA,0)),.TIUDPRM,DA)
+"RTN","TIURS",116,0)
+ S TIUSTAT=$P($G(^TIU(8925,+DA,0)),U,5),ESDT=$$NOW^TIULC
+"RTN","TIURS",117,0)
+ S SVCHIEF=+$$ISA^USRLM(DUZ,"CLINICAL SERVICE CHIEF")
+"RTN","TIURS",118,0)
+ S SIGNER=$P(^TIU(8925,+DA,12),U,4),COSIGNER=$P(^(12),U,8),CSREQ=0
+"RTN","TIURS",119,0)
+ S CSNEED=+$P($G(^TIU(8925,+DA,15)),U,6)
+"RTN","TIURS",120,0)
+ ; VMP/RJT - PATCH 227  ALLOW THIRD PARTY ONE-TIME SIGNING FOR SIGNATURE AND COSIGNATURE
+"RTN","TIURS",121,0)
+ I +CSNEED,(DUZ=SIGNER),'+$G(SVCHIEF),(TIUSTAT'=6) S CSREQ=1
+"RTN","TIURS",122,0)
+ I +CSNEED,(DUZ'=SIGNER),(DUZ'=COSIGNER) D
+"RTN","TIURS",123,0)
+ . D THIRD I '+$G(SVCHIEF),(('+$G(TIUCSPRM))!(+$G(TIUCSPM2))),(TIUSTAT'=6) S CSREQ=1 Q
+"RTN","TIURS",124,0)
+ I TIUSTAT=5 D
+"RTN","TIURS",125,0)
+ . S DR=".05////"_$S(+CSREQ:6,1:7)_";1501////"_ESDT_";1502////"_+DUZ
+"RTN","TIURS",126,0)
+ . I '+$G(CSREQ),+CSNEED D
+"RTN","TIURS",127,0)
+ . . S DR=DR_";1506////0;1507////"_ESDT_";1508////"_+DUZ_";1509///^S X=$P(TIUES,U,2);1510///^S X=$P(TIUES,U,3);1511////E"
+"RTN","TIURS",128,0)
+ I TIUSTAT=6 S DR=".05////7;1506////0;1507////"_ESDT_";1508////"_+DUZ
+"RTN","TIURS",129,0)
+ Q:'$D(DR)
+"RTN","TIURS",130,0)
+ S DIE=8925 D ^DIE W:'$D(XWBOS) "."
+"RTN","TIURS",131,0)
+ I TIUSTAT=5 S DR="1503///^S X=$P(TIUES,U,2);1504///^S X=$P(TIUES,U,3);1505////E"
+"RTN","TIURS",132,0)
+ I TIUSTAT=6 D
+"RTN","TIURS",133,0)
+ . N TIUSBY S DR="",TIUSBY=$P($G(^TIU(8925,+DA,15)),U,2)
+"RTN","TIURS",134,0)
+ . I +TIUSBY>0 S DR="1503///^S X=$$SIGNAME^TIULS("_TIUSBY_");1504///^S X=$$SIGTITL^TIULS("_TIUSBY_");"
+"RTN","TIURS",135,0)
+ . S DR=$G(DR)_"1509///^S X=$P(TIUES,U,2);1510///^S X=$P(TIUES,U,3);1511////E"
+"RTN","TIURS",136,0)
+ S DIE=8925 D ^DIE W:'$D(XWBOS) "." S:'+$G(TIUCHNG) TIUCHNG=1
+"RTN","TIURS",137,0)
+ D SEND^TIUALRT(DA),SIGNIRT^TIUDIRT(+DA)
+"RTN","TIURS",138,0)
+ S DAORIG=DA
+"RTN","TIURS",139,0)
+ I +$$ISADDNDM^TIULC1(DA) S DA=+$P($G(^TIU(8925,+DA,0)),U,6)
+"RTN","TIURS",140,0)
+ I +$G(CSREQ)'>0 D MAIN^TIUPD(DA,"S") I 1
+"RTN","TIURS",141,0)
+ ;If 'Credit Stop Code on Completion' is Yes
+"RTN","TIURS",142,0)
+ I +$P(^TIU(8925,+DA,0),U,11) D
+"RTN","TIURS",143,0)
+ . ;If workload does not exist, process using TIU's interview otherwise
+"RTN","TIURS",144,0)
+ . ;process as an edit using PCE's interview
+"RTN","TIURS",145,0)
+ . I '$$CHKVST^TIUPXAP2(+DA) D  I 1
+"RTN","TIURS",146,0)
+ . . N TIUCONT,TIUPRMT
+"RTN","TIURS",147,0)
+ . . Q:$D(XWBOS)
+"RTN","TIURS",148,0)
+ . . I $P(+$P(^TIU(8925,+DA,0),U,7),".")>DT D  Q
+"RTN","TIURS",149,0)
+ . . . W !!
+"RTN","TIURS",150,0)
+ . . . D QUE^TIUPXAP1
+"RTN","TIURS",151,0)
+ . . . W:$$READ^TIUU("EA","Press RETURN to continue...") ""
+"RTN","TIURS",152,0)
+ . . W !!
+"RTN","TIURS",153,0)
+ . . ;Check if workload should be entered
+"RTN","TIURS",154,0)
+ . . I $$CHKWKL^TIUPXAP2(+DA,.TIUDPRM) D CREDIT^TIUVSIT(DA)
+"RTN","TIURS",155,0)
+ . E  D
+"RTN","TIURS",156,0)
+ . . ;Check if workload should be entered
+"RTN","TIURS",157,0)
+ . . I $$CHKWKL^TIUPXAP2(+DA,.TIUDPRM) D EDTENC^TIUPXAP2(DA)
+"RTN","TIURS",158,0)
+ . D REMFLAG^TIUVSIT(+DA)
+"RTN","TIURS",159,0)
+ ;If document does not have a visit and docmt is associated with
+"RTN","TIURS",160,0)
+ ;an event type visit or call is invoked by broker, check if
+"RTN","TIURS",161,0)
+ ;docmt can be linked to an existing visit or try and create a new
+"RTN","TIURS",162,0)
+ ;visit. (P179)
+"RTN","TIURS",163,0)
+ I $D(^TIU(8925,+DA,0)),$P(^(0),U,3)'>0,($P(^(0),U,13)="E"!($$BROKER^XWBLIB)) D
+"RTN","TIURS",164,0)
+ . N D0,DFN,TIU,TIUVSIT
+"RTN","TIURS",165,0)
+ . ;Try to link docmt to an existing visit, quit if successful
+"RTN","TIURS",166,0)
+ . I $$LNKVST^TIUPXAP3(DA,.TIUVSIT) Q
+"RTN","TIURS",167,0)
+ . ;Otherwise set TIU array and DFN to use TIU API which calls PCE
+"RTN","TIURS",168,0)
+ . ;to resolve multiple visits or creates a new visit
+"RTN","TIURS",169,0)
+ . D GETTIU^TIULD(.TIU,DA)
+"RTN","TIURS",170,0)
+ . S DFN=$P($G(^TIU(8925,+DA,0)),U,2)
+"RTN","TIURS",171,0)
+ . D QUE^TIUPXAP1
+"RTN","TIURS",172,0)
+ ; post-signature action
+"RTN","TIURS",173,0)
+ N TIUCONS S TIUCONS=-1
+"RTN","TIURS",174,0)
+ D ISCNSLT^TIUCNSLT(.TIUCONS,+$G(^TIU(8925,DA,0)))
+"RTN","TIURS",175,0)
+ I TIUCONS S DA=DAORIG
+"RTN","TIURS",176,0)
+ S TIUSTIS=$P($G(^TIU(8925,DA,0)),U,5)
+"RTN","TIURS",177,0)
+ S TIUTTL=+$G(^TIU(8925,+DA,0)),TIUPSIG=$$POSTSIGN^TIULC1(TIUTTL)
+"RTN","TIURS",178,0)
+ I +$L(TIUPSIG),'+$G(CSREQ) X TIUPSIG
+"RTN","TIURS",179,0)
+ I TIUPSIG["TASK^TIUTIUS",+$G(CSREQ) X TIUPSIG ;PATCH TIU*1*296
+"RTN","TIURS",180,0)
+ I TIUCONS,TIUSTIS=7,TIUSTWAS<7,$$HASKIDS^TIUSRVLI(DA) D
+"RTN","TIURS",181,0)
+ . N SEQUENCE,TIUKIDS,TIUINT,TIUK
+"RTN","TIURS",182,0)
+ . S SEQUENCE="D",TIUKIDS="TIUKIDS",TIUINT=0,TIUK=0
+"RTN","TIURS",183,0)
+ . D SETKIDS^TIUSRVLI(TIUKIDS,DA,TIUINT)
+"RTN","TIURS",184,0)
+ . F  S TIUK=$O(TIUKIDS(TIUK)) Q:'TIUK  D
+"RTN","TIURS",185,0)
+ . . I $P(TIUKIDS(TIUK),U,7)="completed" X TIUPSIG
+"RTN","TIURS",186,0)
+ Q
+"RTN","TIURS",187,0)
+THIRD ;
+"RTN","TIURS",188,0)
+ N TYPE
+"RTN","TIURS",189,0)
+ S TIUCSPRM=+$$CANDO^TIULP(DA,"COSIGNATURE")
+"RTN","TIURS",190,0)
+ S TYPE=$G(^TIU(8925,+TIUDA,0))
+"RTN","TIURS",191,0)
+ S TIUCSPM2=$$REQCOSIG^TIULP(+TYPE,+DA,DUZ)
+"RTN","TIURS",192,0)
+ Q
+"RTN","TIUTIUS")
+0^1^B33045323^n/a
+"RTN","TIUTIUS",1,0)
+TIUTIUS ; MILW/JMC - Functions to search TIU documents; May 24, 2006 ; 2/16/16 1:49pm
+"RTN","TIUTIUS",2,0)
+ ;;1.0;TEXT INTEGRATION UTILITIES;**296**;JUN 20, 1997;Build 25;Build 13
+"RTN","TIUTIUS",3,0)
+ ;
+"RTN","TIUTIUS",4,0)
+ ;
+"RTN","TIUTIUS",5,0)
+TASK(AUMTDA) ; Task searching of document for specified text
+"RTN","TIUTIUS",6,0)
+ N AUMTADD,I,ZTDESC,ZTDTH,ZTRTN,ZTIO,ZTSAVE,X
+"RTN","TIUTIUS",7,0)
+ I $G(AUMTDA)<1 Q
+"RTN","TIUTIUS",8,0)
+ ;
+"RTN","TIUTIUS",9,0)
+ ; Check if document is an addendum
+"RTN","TIUTIUS",10,0)
+ S AUMTADD=+$$ISADDNDM^TIULC1(AUMTDA)
+"RTN","TIUTIUS",11,0)
+ ;
+"RTN","TIUTIUS",12,0)
+ ; If original don't check if cosigned and signer different than cosigner - was checked when signed.
+"RTN","TIUTIUS",13,0)
+ F I=0,15 S X(I)=$G(^TIU(8925,AUMTDA,I))
+"RTN","TIUTIUS",14,0)
+ I 'AUMTADD,$P(X(15),"^",8),$P(X(15),"^",2),$P(X(15),"^",8)'=$P(X(15),"^",2) Q
+"RTN","TIUTIUS",15,0)
+ ; If addendum and not complete then don't check.
+"RTN","TIUTIUS",16,0)
+ I AUMTADD,$P(X(0),"^",5)'=7 Q
+"RTN","TIUTIUS",17,0)
+ ;
+"RTN","TIUTIUS",18,0)
+ S ZTDTH=$H,ZTIO="",ZTSAVE("AUMTDA")=""
+"RTN","TIUTIUS",19,0)
+ S ZTRTN="DQ^TIUTIUS",ZTDESC="Search TIU document for specified text"
+"RTN","TIUTIUS",20,0)
+ D ^%ZTLOAD
+"RTN","TIUTIUS",21,0)
+ Q
+"RTN","TIUTIUS",22,0)
+ ;
+"RTN","TIUTIUS",23,0)
+ ;
+"RTN","TIUTIUS",24,0)
+DQ ; Tasked entry point to search TIU document for specified text 
+"RTN","TIUTIUS",25,0)
+ ; that should generate an alert to appropriate CPRS team.
+"RTN","TIUTIUS",26,0)
+ ;
+"RTN","TIUTIUS",27,0)
+ N AUMTI,AUMTJ,AUMTK,AUMTMSPT,AUMTXT,AUMTVL,AUMTVLS,AUMTXQA,X,X0,X1,Y
+"RTN","TIUTIUS",28,0)
+ ;
+"RTN","TIUTIUS",29,0)
+ I '$D(^TIU(8925,AUMTDA,0)) Q
+"RTN","TIUTIUS",30,0)
+ ;
+"RTN","TIUTIUS",31,0)
+ ; Get visit location
+"RTN","TIUTIUS",32,0)
+ S AUMTVL=+$P($G(^TIU(8925,AUMTDA,12)),"^",11)
+"RTN","TIUTIUS",33,0)
+ S AUMTVL(0)=$$GET1^DIQ(44,AUMTVL_",",.01)
+"RTN","TIUTIUS",34,0)
+ ;
+"RTN","TIUTIUS",35,0)
+ ; Setup array of text events to search in the document.
+"RTN","TIUTIUS",36,0)
+ S AUMTI=0
+"RTN","TIUTIUS",37,0)
+ F  S AUMTI=$O(^TIU(8925.71,AUMTI)) Q:'AUMTI  D
+"RTN","TIUTIUS",38,0)
+ . I '$P(^TIU(8925.71,AUMTI,0),"^",2) Q
+"RTN","TIUTIUS",39,0)
+ . S X=$G(^TIU(8925.71,AUMTI,3))
+"RTN","TIUTIUS",40,0)
+ . I X="" Q
+"RTN","TIUTIUS",41,0)
+ . S AUMTXT(AUMTI)=$P(^TIU(8925.71,AUMTI,0),"^",3,4)
+"RTN","TIUTIUS",42,0)
+ . S AUMTVLS=$P(^TIU(8925.71,AUMTI,0),"^",5)
+"RTN","TIUTIUS",43,0)
+ . S X=$$LOW^XLFSTR(X) S AUMTXT(AUMTI,"T")=X
+"RTN","TIUTIUS",44,0)
+ . I $O(^TIU(8925.71,AUMTI,5,0))!(AUMTVLS'="") D
+"RTN","TIUTIUS",45,0)
+ . . I $D(^TIU(8925.71,AUMTI,5,"B",AUMTVL)) S AUMTXT(AUMTI,"VL")="" Q
+"RTN","TIUTIUS",46,0)
+ . . I AUMTVLS'="",AUMTVL(0)[AUMTVLS S AUMTXT(AUMTI,"VL")="" Q
+"RTN","TIUTIUS",47,0)
+ . . K AUMTXT(AUMTI)
+"RTN","TIUTIUS",48,0)
+ ;
+"RTN","TIUTIUS",49,0)
+ ; Check if same alert text is for two or more events and one of the
+"RTN","TIUTIUS",50,0)
+ ; events is for this document's visit location then check for specific
+"RTN","TIUTIUS",51,0)
+ ; location event text and suppress the general event.
+"RTN","TIUTIUS",52,0)
+ S AUMTI=0
+"RTN","TIUTIUS",53,0)
+ F  S AUMTI=$O(AUMTXT(AUMTI)) Q:'AUMTI  D
+"RTN","TIUTIUS",54,0)
+ . I '$D(AUMTXT(AUMTI,"VL")) Q
+"RTN","TIUTIUS",55,0)
+ . S AUMTK=0
+"RTN","TIUTIUS",56,0)
+ . F  S AUMTK=$O(AUMTXT(AUMTK)) Q:'AUMTK  D
+"RTN","TIUTIUS",57,0)
+ . . I AUMTK=AUMTI!($D(AUMTXT(AUMTK,"VL"))) Q
+"RTN","TIUTIUS",58,0)
+ . . I AUMTXT(AUMTK,"T")=AUMTXT(AUMTI,"T") K AUMTXT(AUMTK)
+"RTN","TIUTIUS",59,0)
+ ;
+"RTN","TIUTIUS",60,0)
+ ; If no active text events then quit
+"RTN","TIUTIUS",61,0)
+ I '$D(AUMTXT) Q
+"RTN","TIUTIUS",62,0)
+ ;
+"RTN","TIUTIUS",63,0)
+ ; Search the current and preceeding line for matching text, deal with
+"RTN","TIUTIUS",64,0)
+ ; text that spans two lines.
+"RTN","TIUTIUS",65,0)
+ ; Skip the event if we've already found a match on a given text event.
+"RTN","TIUTIUS",66,0)
+ S AUMTI=0,X1=""
+"RTN","TIUTIUS",67,0)
+ F  S AUMTI=$O(^TIU(8925,AUMTDA,"TEXT",AUMTI)) Q:'AUMTI  D
+"RTN","TIUTIUS",68,0)
+ . S X0=X1,X1=^TIU(8925,AUMTDA,"TEXT",AUMTI,0)
+"RTN","TIUTIUS",69,0)
+ . S X=X0_X1
+"RTN","TIUTIUS",70,0)
+ . S AUMTJ=0
+"RTN","TIUTIUS",71,0)
+ . F  S AUMTJ=$O(AUMTXT(AUMTJ)) Q:AUMTJ=""  I '$D(AUMTXQA(AUMTJ)) D
+"RTN","TIUTIUS",72,0)
+ . . S Y=X
+"RTN","TIUTIUS",73,0)
+ . . S Y=$$LOW^XLFSTR(Y)
+"RTN","TIUTIUS",74,0)
+ . . I '$P(AUMTXT(AUMTJ),"^",2) S Y=$TR(Y," ","")
+"RTN","TIUTIUS",75,0)
+ . . S AUMTZ=0 F  S AUMTZ=$O(AUMTXT(AUMTZ)) Q:AUMTZ=""  S AUMTJ=AUMTZ D
+"RTN","TIUTIUS",76,0)
+ ...I $G(Y)'="" S:Y[AUMTXT(AUMTJ,"T") AUMTXQA(AUMTJ)=AUMTJ
+"RTN","TIUTIUS",77,0)
+ ;
+"RTN","TIUTIUS",78,0)
+ ; Send any alerts
+"RTN","TIUTIUS",79,0)
+ S AUMTZ=0 S AUMTZ=$O(AUMTXQA(AUMTZ)) D:AUMTZ'="" SENDXQA
+"RTN","TIUTIUS",80,0)
+ ;
+"RTN","TIUTIUS",81,0)
+ K AUMTDA
+"RTN","TIUTIUS",82,0)
+ Q
+"RTN","TIUTIUS",83,0)
+ ;
+"RTN","TIUTIUS",84,0)
+ ;
+"RTN","TIUTIUS",85,0)
+SENDXQA ; Send Kernel alert to appropriate team or team device 
+"RTN","TIUTIUS",86,0)
+ ;
+"RTN","TIUTIUS",87,0)
+ N AUMTHL,AUMTSKIP,AUMTEAM,AUMTI,AUMTJ,AUMTK,AUMTSA
+"RTN","TIUTIUS",88,0)
+ N DFN,TIU0,TIUPNM,TIUSSN,VA,XQA,XQADATA,XQAID,XQAMSG,XQAROU,XQATEXT
+"RTN","TIUTIUS",89,0)
+ ;
+"RTN","TIUTIUS",90,0)
+ S TIU0=$G(^TIU(8925,AUMTDA,0)),DFN=+$P(TIU0,U,2)
+"RTN","TIUTIUS",91,0)
+ S TIUPNM=$E($$PTNAME^TIULC1(DFN),1,9)
+"RTN","TIUTIUS",92,0)
+ D PID^VADPT6
+"RTN","TIUTIUS",93,0)
+ S TIUSSN=$E(TIUPNM,1)_VA("BID")
+"RTN","TIUTIUS",94,0)
+ ;
+"RTN","TIUTIUS",95,0)
+ ; Get hospital location for alert message text
+"RTN","TIUTIUS",96,0)
+ S AUMTHL=+$P($G(^TIU(8925,AUMTDA,12)),"^",5)
+"RTN","TIUTIUS",97,0)
+ S AUMTHL(0)=$$GET1^DIQ(44,AUMTHL_",",1)
+"RTN","TIUTIUS",98,0)
+ ;
+"RTN","TIUTIUS",99,0)
+ ; Send alert to each team's members and other additional recipients.
+"RTN","TIUTIUS",100,0)
+ S AUMTI=0
+"RTN","TIUTIUS",101,0)
+ F  S AUMTI=$O(AUMTXQA(AUMTI)) Q:AUMTI=""  D
+"RTN","TIUTIUS",102,0)
+ . K XQA,XQADATA,XQADFN,XQAID,XQAMSG,XQAROU,XQATEXT
+"RTN","TIUTIUS",103,0)
+ . S XQAID="TIUADD"_AUMTDA,XQADATA=AUMTDA_"^",XQAROU="ACTADD^TIUALRT"
+"RTN","TIUTIUS",104,0)
+ . S XQAMSG=TIUPNM_" ("_TIUSSN_"): ("_AUMTHL(0)_") "_$P($G(^TIU(8925.71,AUMTI,2)),"^")
+"RTN","TIUTIUS",105,0)
+ . S AUMTK=0
+"RTN","TIUTIUS",106,0)
+ . F  S AUMTK=$O(^TIU(8925.71,AUMTI,4,AUMTK)) Q:'AUMTK  D
+"RTN","TIUTIUS",107,0)
+ . . K AUMTEAM
+"RTN","TIUTIUS",108,0)
+ . . S AUMTEAM=+^TIU(8925.71,AUMTI,4,AUMTK,0)
+"RTN","TIUTIUS",109,0)
+ . . I AUMTEAM>0 D ADDTEAM(AUMTEAM)
+"RTN","TIUTIUS",110,0)
+ . D ADDRECP
+"RTN","TIUTIUS",111,0)
+ . I $D(XQA) D SETUP^XQALERT
+"RTN","TIUTIUS",112,0)
+ ;
+"RTN","TIUTIUS",113,0)
+ ; Send alert to signer that teams have been notified.
+"RTN","TIUTIUS",114,0)
+ I $D(AUMTSA) D SENDSA
+"RTN","TIUTIUS",115,0)
+ Q
+"RTN","TIUTIUS",116,0)
+ ;
+"RTN","TIUTIUS",117,0)
+ ;
+"RTN","TIUTIUS",118,0)
+SENDSA ; Build and sent alerts to signer
+"RTN","TIUTIUS",119,0)
+ ;
+"RTN","TIUTIUS",120,0)
+ N AUMTCNT,AUMTDUZ,AUMTI,AUMTMSG
+"RTN","TIUTIUS",121,0)
+ N XQA,XQADATA,XQADFN,XQAID,XQAMSG,XQAROU,XQATEXT
+"RTN","TIUTIUS",122,0)
+ ;
+"RTN","TIUTIUS",123,0)
+ S AUMTDUZ=+$P($G(^TIU(8925,AUMTDA,15)),"^",2)
+"RTN","TIUTIUS",124,0)
+ I 'AUMTDUZ Q
+"RTN","TIUTIUS",125,0)
+ S AUMTI=0,AUMTMSG="Alert(s) Sent: "
+"RTN","TIUTIUS",126,0)
+ F  S AUMTI=$O(AUMTSA(AUMTI)) Q:'AUMTI  S AUMTMSG=AUMTMSG_$P($G(^TIU(8925.71,AUMTI,2)),"^",2)_"," D
+"RTN","TIUTIUS",127,0)
+ . S XQAID="AUMTIU,"_AUMTDA
+"RTN","TIUTIUS",128,0)
+ . S XQAMSG=TIUPNM_" ("_TIUSSN_"): "_AUMTMSG
+"RTN","TIUTIUS",129,0)
+ . S XQA(AUMTDUZ)=""
+"RTN","TIUTIUS",130,0)
+ . D SETUP^XQALERT
+"RTN","TIUTIUS",131,0)
+ Q
+"RTN","TIUTIUS",132,0)
+ ;
+"RTN","TIUTIUS",133,0)
+ ;
+"RTN","TIUTIUS",134,0)
+SKIP() ; Check if we should skip alerting this team if they already have been sent an alert.
+"RTN","TIUTIUS",135,0)
+ ;
+"RTN","TIUTIUS",136,0)
+ N AUMTJ,AUMTSKIP
+"RTN","TIUTIUS",137,0)
+ S (AUMTJ,AUMTSKIP)=0
+"RTN","TIUTIUS",138,0)
+ F  S AUMTJ=$O(AUMTSA(AUMTJ)) Q:'AUMTJ!(AUMTJ>AUMTI)  D
+"RTN","TIUTIUS",139,0)
+ . I AUMTI'=AUMTJ,$D(AUMTSA(AUMTJ,AUMTEAM)) S AUMTSKIP=1 Q
+"RTN","TIUTIUS",140,0)
+ Q AUMTSKIP
+"RTN","TIUTIUS",141,0)
+ ;
+"RTN","TIUTIUS",142,0)
+ ;
+"RTN","TIUTIUS",143,0)
+ADDRECP ; Send to additional notification recipients.
+"RTN","TIUTIUS",144,0)
+ ; If no associate PC provider(3) then check and send to PC provider (1).
+"RTN","TIUTIUS",145,0)
+ ; If team (6) then check if patient is member of team.
+"RTN","TIUTIUS",146,0)
+ ; If PCP (7-19) checks for associated PCP in PATIENT file (#2) , fields 695021-695033
+"RTN","TIUTIUS",147,0)
+ ;
+"RTN","TIUTIUS",148,0)
+ N AUMTJ,AUMTK,AUMTL,AUMTX
+"RTN","TIUTIUS",149,0)
+ S (AUMTJ,AUMTK,AUMTL)=0
+"RTN","TIUTIUS",150,0)
+ F  S AUMTL=$O(^TIU(8925.71,AUMTI,4.5,AUMTL)) Q:'AUMTL  D
+"RTN","TIUTIUS",151,0)
+ . S AUMTL(0)=^TIU(8925.71,AUMTI,4.5,AUMTL,0)
+"RTN","TIUTIUS",152,0)
+ . S AUMTK=$P(AUMTL(0),"^")
+"RTN","TIUTIUS",153,0)
+ . I AUMTK<4 D  Q
+"RTN","TIUTIUS",154,0)
+ . . S AUMTJ=$$NMPCPR^SCAPMCU2(DFN,DT,AUMTK)
+"RTN","TIUTIUS",155,0)
+ . . I AUMTK=3,AUMTJ<1 S AUMTJ=$$NMPCPR^SCAPMCU2(DFN,DT,1)
+"RTN","TIUTIUS",156,0)
+ . . S:AUMTJ>0 XQA($P(AUMTJ,"^"))=""
+"RTN","TIUTIUS",157,0)
+ . I AUMTK>3,AUMTK<6 D  Q
+"RTN","TIUTIUS",158,0)
+ . . D ATTPRIM^ORQPTQ3(.AUMTX,DFN)
+"RTN","TIUTIUS",159,0)
+ . . I $P(AUMTX,";",AUMTK-3) S XQA($P($P(AUMTX,";",AUMTK-3),"^"))=""
+"RTN","TIUTIUS",160,0)
+ . I AUMTK=6 D CHKTEAM($P(AUMTL(0),"^",2)) Q
+"RTN","TIUTIUS",161,0)
+ . I AUMTK>6,AUMTK<20 D  Q
+"RTN","TIUTIUS",162,0)
+ . . S AUMTX=$G(^DPT(DFN,695002))
+"RTN","TIUTIUS",163,0)
+ . . I $P(AUMTX,"^",AUMTK-6) S XQA($P(AUMTX,"^",AUMTK-6))=""
+"RTN","TIUTIUS",164,0)
+ Q
+"RTN","TIUTIUS",165,0)
+ ;
+"RTN","TIUTIUS",166,0)
+ ;
+"RTN","TIUTIUS",167,0)
+CHKTEAM(AUMTEAM) ; Check if this patient is linked to this team
+"RTN","TIUTIUS",168,0)
+ ;
+"RTN","TIUTIUS",169,0)
+ ; Call with AUMTEAM = ien of team in file 100.21
+"RTN","TIUTIUS",170,0)
+ ;
+"RTN","TIUTIUS",171,0)
+ N I
+"RTN","TIUTIUS",172,0)
+ I '$D(AUMTMSPT) D TMSPT^ORQPTQ1(.AUMTMSPT,DFN)
+"RTN","TIUTIUS",173,0)
+ S I=0
+"RTN","TIUTIUS",174,0)
+ F  S I=$O(AUMTMSPT(I)) Q:'I  I $P(AUMTMSPT(I),"^")=AUMTEAM D ADDTEAM(AUMTEAM)
+"RTN","TIUTIUS",175,0)
+ Q
+"RTN","TIUTIUS",176,0)
+ ;
+"RTN","TIUTIUS",177,0)
+ ;
+"RTN","TIUTIUS",178,0)
+ADDTEAM(AUMTEAM) ; Add members of team to list of recipients
+"RTN","TIUTIUS",179,0)
+ ;
+"RTN","TIUTIUS",180,0)
+ ; Call with AUMTEAM = ien of team in file 100.21
+"RTN","TIUTIUS",181,0)
+ ;
+"RTN","TIUTIUS",182,0)
+ N AUMTD,AUMTDEV,AUMTJ
+"RTN","TIUTIUS",183,0)
+ ;I $$SKIP Q
+"RTN","TIUTIUS",184,0)
+ S AUMTD=$P($$TMDEV^ORB31(AUMTEAM),"^",2)
+"RTN","TIUTIUS",185,0)
+ I AUMTD'="" S AUMTDEV(AUMTD)="" D REGDEV^ORB31(.AUMTDEV)
+"RTN","TIUTIUS",186,0)
+ D TEAMPROV^ORQPTQ1(.AUMTEAM,AUMTEAM)
+"RTN","TIUTIUS",187,0)
+ I '$G(AUMTEAM(1)) Q
+"RTN","TIUTIUS",188,0)
+ S AUMTSA(AUMTI,AUMTEAM)=""
+"RTN","TIUTIUS",189,0)
+ S AUMTJ=0
+"RTN","TIUTIUS",190,0)
+ F  S AUMTJ=$O(AUMTEAM(AUMTJ)) Q:'AUMTJ  S XQA(+AUMTEAM(AUMTJ))=""
+"RTN","TIUTIUS",191,0)
+ Q
+"SEC","^DIC",8925.71,8925.71,0,"AUDIT")
+@
+"SEC","^DIC",8925.71,8925.71,0,"DD")
+@
+"SEC","^DIC",8925.71,8925.71,0,"DEL")
+@
+"SEC","^DIC",8925.71,8925.71,0,"LAYGO")
+@
+"SEC","^DIC",8925.71,8925.71,0,"RD")
+@
+"SEC","^DIC",8925.71,8925.71,0,"WR")
+@
+"VER")
+8.0^22.0
+"^DD",8925.71,8925.71,0)
+FIELD^^5.1^11
+"^DD",8925.71,8925.71,0,"DDA")
+N
+"^DD",8925.71,8925.71,0,"DT")
+3150625
+"^DD",8925.71,8925.71,0,"IX","B",8925.71,.01)
+
+"^DD",8925.71,8925.71,0,"NM","TIU TEXT EVENTS")
+
+"^DD",8925.71,8925.71,0,"VRPK")
+TIU
+"^DD",8925.71,8925.71,.01,0)
+NAME^RF^^0;1^K:$L(X)>60!($L(X)<3)!'(X'?1P.E) X
+"^DD",8925.71,8925.71,.01,1,0)
+^.1
+"^DD",8925.71,8925.71,.01,1,1,0)
+8925.71^B
+"^DD",8925.71,8925.71,.01,1,1,1)
+S ^TIU(8925.71,"B",$E(X,1,30),DA)=""
+"^DD",8925.71,8925.71,.01,1,1,2)
+K ^TIU(8925.71,"B",$E(X,1,30),DA)
+"^DD",8925.71,8925.71,.01,3)
+Answer must be 3-60 characters in length.
+"^DD",8925.71,8925.71,.01,21,0)
+^^1^1^3150612^
+"^DD",8925.71,8925.71,.01,21,1,0)
+The name to identify this text search string.
+"^DD",8925.71,8925.71,.01,"DT")
+3150612
+"^DD",8925.71,8925.71,.02,0)
+STATUS^RS^0:INACTIVE;1:ACTIVE;^0;2^Q
+"^DD",8925.71,8925.71,.02,3)
+Enter a 1 to activate this search, or 0 to deactivate.
+"^DD",8925.71,8925.71,.02,21,0)
+^^1^1^3150612^
+"^DD",8925.71,8925.71,.02,21,1,0)
+Flag to determine if this entry should be searched in TIU documents.
+"^DD",8925.71,8925.71,.02,"DT")
+3160226
+"^DD",8925.71,8925.71,.03,0)
+CASE SENSITIVE^RS^0:NO;1:YES;^0;3^Q
+"^DD",8925.71,8925.71,.03,3)
+Enter a 1 to make this search case sensitive.
+"^DD",8925.71,8925.71,.03,21,0)
+^^1^1^3150612^
+"^DD",8925.71,8925.71,.03,21,1,0)
+Indicates if searching for this text is case sensitive.
+"^DD",8925.71,8925.71,.03,"DT")
+3160226
+"^DD",8925.71,8925.71,.04,0)
+INCLUDE SPACES^RS^0:NO;1:YES;^0;4^Q
+"^DD",8925.71,8925.71,.04,3)
+Enter a 1 to strip the spaces from the text being searched.
+"^DD",8925.71,8925.71,.04,21,0)
+^^2^2^3150612^
+"^DD",8925.71,8925.71,.04,21,1,0)
+Indicates if spaces should be stripped from text before searching
+"^DD",8925.71,8925.71,.04,21,2,0)
+for text string.
+"^DD",8925.71,8925.71,.04,"DT")
+3160226
+"^DD",8925.71,8925.71,1,0)
+TEXT TO SEARCH^F^^1;1^K:$L(X)>200!($L(X)<3) X
+"^DD",8925.71,8925.71,1,3)
+Answer must be 3-200 characters in length.
+"^DD",8925.71,8925.71,1,21,0)
+^^1^1^3150612^
+"^DD",8925.71,8925.71,1,21,1,0)
+Enter the text string to search for in the document.
+"^DD",8925.71,8925.71,1,"DT")
+3150612
+"^DD",8925.71,8925.71,2,0)
+ALERT MESSAGE^F^^2;1^K:$L(X)>60!($L(X)<1) X
+"^DD",8925.71,8925.71,2,3)
+Answer must be 1-60 characters in length.
+"^DD",8925.71,8925.71,2,21,0)
+^^1^1^3150612^
+"^DD",8925.71,8925.71,2,21,1,0)
+Enter the text to be used for the CPRS alert message.
+"^DD",8925.71,8925.71,2,"DT")
+3150612
+"^DD",8925.71,8925.71,2.1,0)
+SIGNER ALERT MESSAGE^F^^2;2^K:$L(X)>6!($L(X)<1) X
+"^DD",8925.71,8925.71,2.1,3)
+Answer must be 1-6 characters in length.
+"^DD",8925.71,8925.71,2.1,21,0)
+^^2^2^3150612^
+"^DD",8925.71,8925.71,2.1,21,1,0)
+Enter the text to be used for the CPRS alert to be sent to the signer
+"^DD",8925.71,8925.71,2.1,21,2,0)
+of the document that informs them of the notifications that have been sent.
+"^DD",8925.71,8925.71,2.1,"DT")
+3150612
+"^DD",8925.71,8925.71,3,0)
+SEARCH STRING^F^^3;1^K:$L(X)>200!($L(X)<3) X
+"^DD",8925.71,8925.71,3,3)
+Answer must be 3-200 characters in length.
+"^DD",8925.71,8925.71,3,21,0)
+^^2^2^3150702^
+"^DD",8925.71,8925.71,3,21,1,0)
+This is the text string to search for.  It must match the entry in the
+"^DD",8925.71,8925.71,3,21,2,0)
+TEXT TO SEARCH field (#1).
+"^DD",8925.71,8925.71,3,"DT")
+3150612
+"^DD",8925.71,8925.71,4,0)
+CPRS TEAM^8925.714PA^^4;0
+"^DD",8925.71,8925.71,4,21,0)
+^^3^3^3160226^
+"^DD",8925.71,8925.71,4,21,1,0)
+This multiple will contain pointers to the OE/RR LIST (#100.21) file to 
+"^DD",8925.71,8925.71,4,21,2,0)
+indicate which Provider Teams to be alerted upon matching the search
+"^DD",8925.71,8925.71,4,21,3,0)
+string to a piece of text in the Progress Note.
+"^DD",8925.71,8925.71,5,0)
+VISIT LOCATION^8925.715P^^5;0
+"^DD",8925.71,8925.71,5,21,0)
+^^5^5^3160226^
+"^DD",8925.71,8925.71,5,21,1,0)
+This multiple stores pointers from the HOSPITAL LOCATION (#44) file to 
+"^DD",8925.71,8925.71,5,21,2,0)
+limit which locations are to be included in the Progress Note search.  
+"^DD",8925.71,8925.71,5,21,3,0)
+If a location is entered into this multiple, the search will be limited 
+"^DD",8925.71,8925.71,5,21,4,0)
+to those notes that match this location.  If this multiple is left empty, 
+"^DD",8925.71,8925.71,5,21,5,0)
+then all locations will be searched.
+"^DD",8925.71,8925.71,5.1,0)
+VISIT LOCATION STRING^F^^0;5^K:$L(X)>30!($L(X)<1) X
+"^DD",8925.71,8925.71,5.1,3)
+Answer must be 1-30 characters in length.
+"^DD",8925.71,8925.71,5.1,21,0)
+^^2^2^3150612^
+"^DD",8925.71,8925.71,5.1,21,1,0)
+If the document's visit location is contained in this string then this
+"^DD",8925.71,8925.71,5.1,21,2,0)
+event will trigger an alert.
+"^DD",8925.71,8925.71,5.1,"DT")
+3150612
+"^DD",8925.71,8925.714,0)
+CPRS TEAM SUB-FIELD^^.01^1
+"^DD",8925.71,8925.714,0,"DT")
+3150612
+"^DD",8925.71,8925.714,0,"IX","B",8925.714,.01)
+
+"^DD",8925.71,8925.714,0,"NM","CPRS TEAM")
+
+"^DD",8925.71,8925.714,0,"UP")
+8925.71
+"^DD",8925.71,8925.714,.01,0)
+CPRS TEAM^MP100.21'^OR(100.21,^0;1^Q
+"^DD",8925.71,8925.714,.01,1,0)
+^.1
+"^DD",8925.71,8925.714,.01,1,1,0)
+8925.714^B
+"^DD",8925.71,8925.714,.01,1,1,1)
+S ^TIU(8925.71,DA(1),4,"B",$E(X,1,30),DA)=""
+"^DD",8925.71,8925.714,.01,1,1,2)
+K ^TIU(8925.71,DA(1),4,"B",$E(X,1,30),DA)
+"^DD",8925.71,8925.714,.01,3)
+Enter the team which should be alerted when matching text is found.
+"^DD",8925.71,8925.714,.01,21,0)
+^.001^2^2^3150612^^
+"^DD",8925.71,8925.714,.01,21,1,0)
+CPRS team to be alerted and sent alert for TIU document that contains
+"^DD",8925.71,8925.714,.01,21,2,0)
+the search text.
+"^DD",8925.71,8925.714,.01,"DT")
+3150612
+"^DD",8925.71,8925.715,0)
+VISIT LOCATION SUB-FIELD^^.01^1
+"^DD",8925.71,8925.715,0,"DT")
+3150612
+"^DD",8925.71,8925.715,0,"IX","B",8925.715,.01)
+
+"^DD",8925.71,8925.715,0,"NM","VISIT LOCATION")
+
+"^DD",8925.71,8925.715,0,"UP")
+8925.71
+"^DD",8925.71,8925.715,.01,0)
+VISIT LOCATION^MP44'^SC(^0;1^Q
+"^DD",8925.71,8925.715,.01,1,0)
+^.1
+"^DD",8925.71,8925.715,.01,1,1,0)
+8925.715^B
+"^DD",8925.71,8925.715,.01,1,1,1)
+S ^TIU(8925.71,DA(1),5,"B",$E(X,1,30),DA)=""
+"^DD",8925.71,8925.715,.01,1,1,2)
+K ^TIU(8925.71,DA(1),5,"B",$E(X,1,30),DA)
+"^DD",8925.71,8925.715,.01,3)
+Enter the related visit location to check for this event.
+"^DD",8925.71,8925.715,.01,"DT")
+3150612
+"^DIC",8925.71,8925.71,0)
+TIU TEXT EVENTS^8925.71
+"^DIC",8925.71,8925.71,0,"GL")
+^TIU(8925.71,
+"^DIC",8925.71,8925.71,"%",0)
+^1.005^^
+"^DIC",8925.71,8925.71,"%D",0)
+^^5^5^3160226^
+"^DIC",8925.71,8925.71,"%D",1,0)
+The TIU TEXT EVENTS file is used to store data to be used in searching 
+"^DIC",8925.71,8925.71,"%D",2,0)
+for certain text within Progress Notes in order to alert treating 
+"^DIC",8925.71,8925.71,"%D",3,0)
+specialty areas of monitored concerns when a patient is seen.  Setting up 
+"^DIC",8925.71,8925.71,"%D",4,0)
+entries in this file will cause alerts to be sent to providers and 
+"^DIC",8925.71,8925.71,"%D",5,0)
+services to indicate a possible care opportunity.
+"^DIC",8925.71,"B","TIU TEXT EVENTS",8925.71)
+
+"BLD",9395,6)
+^265
+**END**
+**END**
+

@@ -1,0 +1,259 @@
+$TXT Created by                     CPRS30.DOMAIN.EXT  (KIDS) on Thursday, 08/13/15 at 12:48
+=============================================================================
+Run Date: SEP 10, 2015                     Designation: VPR*1*5
+Package : VPR - VIRTUAL PATIENT RECORD        Priority: EMERGENCY
+Version : 1         SEQ #4                      Status: Released
+                  Compliance Date: SEP 16, 2015
+=============================================================================
+
+Associated patches: (v)VPR*1*4     <<= must be installed BEFORE `VPR*1*5'
+
+Subject: XML UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch to the Virtual Patient Record (VPR) package updates the VPR GET 
+ PATIENT DATA remote procedure call (RPC) that extracts patient health data 
+ from a Veterans Health Information Systems and Technology Architecture 
+ (VistA) database in Extensible Markup Language (XML) format, requested by 
+ the Joint Legacy Viewer (JLV) and Virtual Lifetime Electronic Record (VLER) 
+ projects. Data domains updated are:
+   * Appointments
+   * Clinical Procedures
+   * Consults
+   * Demographics
+   * Documents
+   * Functional Independence Measurements (new)
+   * Immunizations
+   * Insurance (Integrated Billing)
+   * Lab (Results, Orders, Accessions)
+   * Medications, Med Orders
+   * Orders
+   * Problems
+   * Radiology
+   * Surgery
+   * Visits
+   * Wellness Reminders (new)
+  
+ Additional data elements have been added to Demographics, Immunizations, 
+ Labs, Meds, Orders, Radiology, and Visits. The coding system was added
+ to Problems and Visits to support the ICD-10 effort, and the TIU 
+ National Title VUID is now included throughout as well, when mapped.
+  
+ This patch also corrects bugs reported by the VLER and JLV clients. In 
+ Demographics, the specialty attributes in the pcProvider element were 
+ returned with the wrong label if not all were defined. The MAX number 
+ parameter for Documents was not working properly if other search 
+ parameters were also defined, causing incomplete results to be returned. 
+ And incomplete documents were being included with the results for the 
+ Accession, Clinical Procedure, Consult, Surgery, and Visit domains.
+  
+ One hard error was reported in Documents, with embedded note objects; 
+ that is described below with its associated Remedy ticket, and is fixed.
+  
+ The routines supporting the VPR TEST XML option have also been updated to
+ reflect changes made in this patch, and to make the test option more 
+ intuitive and easier to use.
+  
+  
+ Database Integration Agreements:
+ DBIA#    Custodial Package 
+ -----    -----------------------
+ 4811     CLINICAL REMINDERS
+ 5747     DRG GROUPER
+ 4745     FUNCTIONAL INDEPENDENCE
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated: N/A
+  
+ Forms Associated:          N/A
+  
+ Mail Groups Associated:    N/A
+  
+ Options Associated:
+ Option Name                Type                    New/Modified/Deleted
+ -----------                ----                    -------------------- 
+ VPR TEST XML               routine                 Modified
+  
+ Protocols Associated:      N/A
+  
+ Security Keys Associated:  N/A
+  
+ Templates Associated:      N/A
+  
+ New Service Requests:      N/A
+  
+ Patient Safety Issues:     N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ 1. INC000001241357 <UNDEFINED>TEXT+3^VPRDTIU *IFN
+  
+ Problem:
+ -------
+ Many note templates contain objects, which can execute code from anywhere 
+ in VistA to insert the desired data into the note text; in the reported 
+ ticket, an object that returns the active medications list used and killed 
+ a number of local variables also being used by the calling routine VPRDTIU.
+  
+ Resolution:
+ ----------
+ Additional local variables have been added to the NEW command at the top 
+ of the $$TEXT^VPRDTIU function, to protect them from any code that may be 
+ called to resolve objects inside of the current note.
+  
+ Test Sites:
+ ----------
+ Cleveland, OH
+ San Diego, CA
+ South Texas HCS
+   
+   
+ Documentation Retrieval:
+ -----------------------
+ Updated documentation reflecting changes made by this patch is available.
+  
+ The preferred method is to FTP the files from:
+  ftp://download.vista.domain.ext/
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server:
+   
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library:
+  http://www4.domain.ext/vdl/
+   
+ Title                         File Name                    FTP Mode
+ -----------------------------------------------------------------------
+ VPR Technical Manual          VPR_TM.PDF                   binary
+   
+   
+ Patch Installation:
+ ------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 1 minute 
+ to install.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME, enter VPR*1.0*5.
+   
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted Want KIDS to INHIBIT LOGONs during the install?
+     NO// enter NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// enter NO.
+  
+ 7.  If prompted Delay Install (Minutes):  (0  60): 0// respond 0.
+  
+ Post-Installation:
+ -----------------
+ The post-init routine will simply update the value of the VPR VERSION 
+ parameter to 1.05.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VIRTUAL PATIENT RECORD;**[Patch List]**;Sep 01, 2011;Build 21
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VPRD
+    Before: B35636643   After: B43397804  **1,2,4,5**
+Routine Name: VPRDGMPL
+    Before: B28051660   After: B30131363  **1,2,4,5**
+Routine Name: VPRDGMRC
+    Before: B12856313   After: B10985584  **1,4,5**
+Routine Name: VPRDIB
+    Before: B12692505   After: B13733802  **1,5**
+Routine Name: VPRDJ0
+    Before: B87481337   After: B83117538  **2,5**
+Routine Name: VPRDJ02
+    Before: B43626306   After: B44230094  **2,5**
+Routine Name: VPRDJ04
+    Before: B47678729   After: B48088220  **2,5**
+Routine Name: VPRDJ04A
+    Before: B36420588   After: B35067136  **2,5**
+Routine Name: VPRDJ09
+    Before: B37647658   After: B36288746  **2,5**
+Routine Name: VPRDLR
+    Before: B24009801   After: B29963842  **2,5**
+Routine Name: VPRDLRA
+    Before: B76865545   After: B97052919  **1,2,5**
+Routine Name: VPRDLRO
+    Before: B27947758   After: B34279293  **2,5**
+Routine Name: VPRDMC
+    Before: B58353015   After: B61607238  **1,2,5**
+Routine Name: VPRDOR
+    Before: B17346787   After: B27908661  **1,4,5**
+Routine Name: VPRDPROC
+    Before: B10570617   After: B10655010  **1,5**
+Routine Name: VPRDPS
+    Before: B20707464   After: B21702415  **1,4,5**
+Routine Name: VPRDPT
+    Before: B81010751   After: B99429749  **1,4,5**
+Routine Name: VPRDPXIM
+    Before: B16291131   After: B29791486  **2,4,5**
+Routine Name: VPRDPXRM
+    Before:       n/a   After:  B9085519  **5**
+Routine Name: VPRDRA
+    Before: B41770325   After: B49387414  **1,5**
+Routine Name: VPRDRMIM
+    Before:       n/a   After: B24311841  **5**
+Routine Name: VPRDSDAM
+    Before: B20114385   After: B21167478  **1,5**
+Routine Name: VPRDSR
+    Before: B30371946   After: B30721686  **1,5**
+Routine Name: VPRDTIU
+    Before: B83582740   After: B90403730  **1,2,4,5**
+Routine Name: VPRDTST
+    Before: B11854461   After: B32685783  **4,5**
+Routine Name: VPRDVSIT
+    Before:B100077212   After:B106014987  **1,2,4,5**
+Routine Name: VPRP5I
+    Before:       n/a   After:    B91053  **5**
+ 
+Routine list of preceding patches: 4
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 13, 2015
+Completed By:                               Date Completed: SEP 10, 2015
+Released By :                               Date Released : SEP 10, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

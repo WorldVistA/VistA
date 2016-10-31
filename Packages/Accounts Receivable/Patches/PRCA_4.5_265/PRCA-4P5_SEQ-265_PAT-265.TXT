@@ -1,0 +1,170 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 04/24/12 at 11:11
+=============================================================================
+Run Date: SEP 16, 2014                     Designation: PRCA*4.5*265
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #265                    Status: Released
+                  Compliance Date: OCT 17, 2014
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*192<<= must be installed BEFORE `PRCA*4.5*265'
+                    (v)PRCA*4.5*219<<= must be installed BEFORE `PRCA*4.5*265'
+                    (v)PRCA*4.5*269<<= must be installed BEFORE `PRCA*4.5*265'
+
+Subject: STATEMENT PRINTING FIXES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following 3 issues.
+ 1. Patient statements not successfully transmitting in Austin for 
+    printing. 
+ 2. Erroneous admission and ending dates appearing on the patient 
+    statements. 
+ 3. Undefined error when running the EEOB Transfer Reports [RCDPE EOB 
+    TRANSFER REPORTS] option.
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000127613 Statement Address Can't Print
+    Duplicate HD0000000158781 Questions regarding CCPC Error Report
+ 2. HD0000000174653 Patient Statement Issue
+ 3. HD0000000359236 <UNDEFINED>RUN+4^%ZTMS3
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ John D. Dingell VA Medical Center - Allen Park/Detroit
+ VA Blk Hills HCS
+ White River Junction VA Medical Center 
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000127613 Statement Address Can't Print
+  
+   Problem:
+   --------
+   A site user reported that the CCPC Statement didn't get printed for those
+   patients with this type of address 'ARMED FORCES AMER (EXC CANADA)'.
+  
+   Resolution:
+   -----------
+   Modified routine RCCPCPS to store the State code and the Zip code in the
+   AR CCPC STATEMENTS (#349.2) file for transmission when the patient lives
+   on an American military base in a foreign country.
+  
+ 2. HD0000000174653 Patient Statement Issue
+  
+   Problem
+   --------
+   The patient statements show erroneous dates for the admission date and
+   the ending date of the billing cycling in the Reprint Patient Statements
+   [PRCAE PR STATEMENT] option when the copay charges in Pharmacy were
+   cancelled and the dispensed quantity for the prescription is a zero.
+  
+   Resolution:
+   -----------
+   Modified routine RCCPCPS1 to check for a valid date format to insure
+   valid dates are displayed by the option.
+  
+ 3. HD0000000359236 <UNDEFINED>RUN+4^%ZTMS3
+  
+   Problem:
+   --------
+   A site user received the undefined error <UNDEFINED>RUN+4^%ZTMS3 during
+   the process of the EEOB Transfer Reports [RCDPE EEOB TRANSFER REPORTS]
+   option.
+  
+   Resolution:
+   -----------
+   Modified routine RCDPETR to correct those undefined variables for the
+   option, thus avoiding the problem.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu 
+      [XPD MAIN]:
+  
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+                                                               ---
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s) 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter PRCA*4.5*265):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s)
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO.
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20,1995;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCCPCPS
+    Before: B71238973   After: B71404162  **34,70,80,48,104,116,149,170,
+                                           181,190,223,237,219,265**
+Routine Name: RCCPCPS1
+    Before: B36852341   After: B37370113  **34,48,104,170,176,192,265**
+Routine Name: RCDPETR
+    Before: B58479252   After: B58559248  **173,269,265**
+ 
+Routine list of preceding patches: 192, 219, 269
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 05, 2010
+Completed By:                               Date Completed: SEP 10, 2014
+Released By :                               Date Released : SEP 16, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

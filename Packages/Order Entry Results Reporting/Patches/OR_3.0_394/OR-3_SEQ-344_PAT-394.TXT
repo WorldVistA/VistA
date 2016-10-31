@@ -1,0 +1,202 @@
+$TXT Created by                    MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 05/01/14 at 15:22
+=============================================================================
+Run Date: AUG 26, 2014                     Designation: OR*3*394
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #344                      Status: Released
+                  Compliance Date: SEP 26, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*280    <<= must be installed BEFORE `OR*3*394'
+                    (v)OR*3*323    <<= must be installed BEFORE `OR*3*394'
+
+Subject: QO PREGNANCY PROMPT,UNSIGN PARENT LAB ORDER,PROVIDER DIVISION DISPLAY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the ORDER ENTRY/RESULTS 
+ REPORTING (OR) package:
+      
+ 1. There is no capability for a user to enter the pregnancy status for a 
+    female patient within child-bearing age when executing an imaging quick
+    order with its auto-accept functionality enabled. 
+  
+ 2. The unsigned parent order of a lab test with multiple suborders that 
+    is released as a verbal order does not display in the Unsigned Orders 
+    view of Computerized Patient Record System (CPRS).
+  
+ 3. Users are selecting the wrong provider from provider lists from 
+    multi-divisional sites when there is more than one provider with the
+    same first and last name. 
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKET(S): 
+ ============================
+ 1. INC000000955454 - Missing pregnancy status prompt for imaging quick
+                      order
+                      PSPO #2515
+ 2. INC000000974760 - Unsigned parent verbal order missing from unsigned 
+                      orders view
+ 3. INC000000978835 - Provider's division missing from title 
+                      PSPO #2539
+  
+  
+ TEST SITES:
+ ===========
+ Central Texas HCS
+ Pittsburgh HCS
+ Washington, D.C. VAMC
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000955454 - Missing pregnancy status prompt for imaging quick 
+                      order
+  
+    Patient Safety Issue: PSPO #2515
+  
+    Problem:
+    ========
+    There is no capability for a user to enter the pregnancy status for a 
+    female patient within child-bearing age when executing an imaging quick
+    order with its auto-accept functionality enabled. 
+  
+    Resolution:
+    ===========
+    Modified API SETUPS^ORWDXM4 to clear variable ORWPSWRG (which is
+    used to indicate whether the auto-accept functionality is enabled) for
+    the placement of an imaging quick order for a female patient within
+    child-bearing age. This will provide the user the capability to enter
+    the patient's pregnancy status as yes, no, or unknown.
+  
+  
+ 2. INC000000974760 - Unsigned parent verbal order missing from unsigned 
+                      orders view 
+  
+    Problem:
+    ========
+    The unsigned parent order of a lab test with multiple suborders that is
+    released as a verbal order does not display in the Unsigned Orders view
+    of CPRS.
+  
+    Resolution:
+    ===========
+    Modified API LR1^ORCSEND1 to allow the display in the orders view
+    of the parent order of a multiple lab test that is released as a verbal
+    order. This is accomplished by bypassing the setting of the data field 
+    Veiled [$P(^OR(100,ORPARENT,3),"^",8)=1] if the NATURE variable is
+    equal to "V".
+  
+    ***NOTE*** The installation of this patch will only resolve this issue 
+    going forward.
+  
+ 3. INC000000978835 - Provider's division missing from title 
+  
+    Patient Safety Issue: PSPO #2539
+  
+    Problem:
+    ========
+    Users are selecting the wrong provider from provider lists from 
+    multi-divisional sites when there is more than one provider with the
+    same first and last name. When providers share identical first and
+    last names, their names should include their title, service/section and
+    division to make their entries on lists unique.
+  
+    Resolution:
+    ===========
+    Identified and replaced existing code in API NP2^ORWU1 that assigns
+    the division that is appended to providers with identical first and
+    last names. The code that assigned the division variable was changed to
+    the following:  S ORDIV=$P(ORZ("DILIST",ORDD,0),U,2)
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+    
+    1.  Choose the PackMan message containing this patch and invoke the 
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+    2.  Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]: 
+    
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+           Patch Monitor Main Menu ...
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+    3.  From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter OR*3.0*394):
+    
+    
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will
+            not backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option
+            will allow you to view all changes that will be made when
+            this patch is installed.  It compares all components of this
+            patch (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+  
+    
+    4.  Use the Install Package(s) option and select the package
+        OR*3.0*394.
+    
+        a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+            install? NO//", answer NO.
+        b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+            Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCSEND1
+    Before: B65475435   After: B66241171  **4,29,45,61,79,94,116,138,158,
+                                           149,187,215,243,282,323,394**
+Routine Name: ORWDXM4
+    Before: B37881489   After: B41799270  **10,85,215,296,280,394**
+Routine Name: ORWU1
+    Before: B51824398   After: B51918555  **149,187,195,215,394**
+ 
+Routine list of preceding patches: 280, 323
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 19, 2014
+Completed By:                               Date Completed: AUG 15, 2014
+Released By :                               Date Released : AUG 26, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

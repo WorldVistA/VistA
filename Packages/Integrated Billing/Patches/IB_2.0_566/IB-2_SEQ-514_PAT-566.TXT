@@ -1,0 +1,225 @@
+$TXT Created by                  at DEVVNN.DOMAIN.EXT  (KIDS) on Wednesday, 05/11/16 at 11:31
+=============================================================================
+Run Date: JUN 14, 2016                     Designation: IB*2*566
+Package : IB - INTEGRATED BILLING             Priority: EMERGENCY
+Version : 2       SEQ #514                      Status: Released
+                  Compliance Date: JUN 17, 2016
+=============================================================================
+
+Associated patches: (v)IB*2*528    <<= must be installed BEFORE `IB*2*566'
+
+Subject: MCCF FY14 EIV IB*2.0*528 PATCH FIX
+
+Category: 
+  - PATCH FOR A PATCH
+  - Routine
+
+Description:
+============
+
+ *** Note:  This patch has a mandatory 3 day installation compliance.
+  
+ This patch contains a fix for the installed patch IB*2.0*528. The 
+ IB*2.0*528 patch renamed the existing security key IBCNE IIV AUTO MATCH to
+ the new security key IBCNE EIV MAINTENANCE at the sites. All users that
+ held the IBCNE IIV AUTO MATCH key now hold the new security key IBCNE EIV
+ MAINTENANCE.
+  
+ The installed patch IB*2.0*528 is dependent upon this emergency patch 
+ IB*2.0*566. This IB*2.0*566 patch will rename the old security key "IBCNE 
+ IIV AUTO MATCH" to "IBCNE EIV MAINTENANCE" that currently exist at the 
+ sites within two existing IB routines (IBCNEAMC and IBCNEUT6). Without 
+ the installation of this IB*2.0*566 patch users are not able to enter, 
+ edit, and manage entries found in the Insurance Company Auto Match file.
+  
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ============================
+ 1. R8786378FY16
+  
+ Problem:
+ --------
+ Sites have reported an issue with receiving the following  error message 
+ when using the Integrated Billing Menu Option AB ("Add Auto Match Entries 
+ Using Insurance Buffer Data") to conduct the actions SE (Select Entry) or 
+ AU (Auto Match Enter/Edit).
+  
+  "You don't hold the proper security key to access this function.
+   The necessary key is IBCNE IIV AUTO MATCH.  Please see your manager."
+  
+ Resolution:
+ -----------
+ Modify the two IB Routines (IBCNEAMC and IBCNEUT6) that contains the 
+ hard-coded references the IB Insurance Security key "IBCNE IIV AUTO MATCH"
+ and change it to "IBCNE EIV MAINTENANCE".
+  
+  
+ Test Sites:
+ ----------
+ Dayton VAMC - Station 552
+ Lebanon VA Medical Center - Station 595
+ Martinsburg VA Medical Center - Station 613
+ Central Alabama HCS - Station 619
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+   
+     a.  Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch 
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - this option will allow
+         you to ensure the integrity of the routines that are in
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. (ex. IB*2.0*566)
+   
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//',  enter NO
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO//,  respond YES
+  
+     1) When prompted "Enter options you wish to mark as "Out of Order":"
+        enter the following option:
+  
+        Add Auto Match Entries Using Insurance Buffer Data [IBCNE AUTO
+        MATCH BUFFER]
+  
+     2) When prompted "Enter protocols you wish to mark as "Out of
+        Order":", enter the following protocol:
+  
+        IBCNE AUTO MATCH BUFFER MENU
+  
+ 7.  When prompted "DEVICE: HOME//",  enter HOME
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCNEAMC
+    Before: B32146789   After: B32179785  **184,252,566**
+Routine Name: IBCNEUT6
+    Before: B28657707   After: B28635048  **184,252,271,566**
+ 
+Routine list of preceding patches: 271
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 11, 2016
+Completed By:                               Date Completed: JUN 07, 2016
+Released By :                               Date Released : JUN 14, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

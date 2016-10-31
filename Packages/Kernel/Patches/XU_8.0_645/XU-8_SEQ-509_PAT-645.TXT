@@ -1,0 +1,135 @@
+$TXT Created by              at KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Friday, 06/13/14 at 09:29
+=============================================================================
+Run Date: JUN 30, 2014                     Designation: XU*8*645
+Package : XU - KERNEL                         Priority: EMERGENCY
+Version : 8       SEQ #509                      Status: Released
+                  Compliance Date: JUL 02, 2014
+=============================================================================
+
+
+Subject: Disable Purge of Terminated User Information
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch creates a new Parameter, XU645, which will 
+  determine if a terminated User information should be
+  purged.  This is used to prevent deleting of a User's
+  Menus, Keys, Mail Messages, and other information when
+  a User is terminated.  When the Parameter XU645 is blank
+  or set to NO, no data is deleted.  When XU645 is set to
+  YES, then data is deleted and the background AUTODEACTIVE
+  job will purge those users who were previously terminated.
+  
+  The default value for XU645 is blank, which is equivalent
+  to NO.  To change this value, run the routine XPAREDIT
+  
+  >D ^XPAREDIT
+  
+                           --- Edit Parameter Values ---
+  
+  Select PARAMETER DEFINITION NAME: XU645     Patch 645 Switch
+  
+  ------------ Setting XU645  for System: KRN.FO-OAKLAND.DOMAIN.EXT ------------
+  Purge terminated user information:  ??
+  
+  This parameter determines if a terminated user information should be deleted.
+   A 'No' value means you do not want to purge the terminated user information.
+   This was requested by the OIG when they want all user information preserved.
+   A 'Yes' value means to purge the information, which is normal operating
+  procedure.
+  
+  
+  Purge terminated user information:  
+  ------------------------------------------------------------------------------
+ -
+  
+  Select PARAMETER DEFINITION NAME: 
+ 
+ 
+ Blood Bank Clearance
+ ====================
+ Clearance - 6/13/2014
+   EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*645 contains 
+   changes to a package referenced in ProPath standard titled: BBM Team
+   Review of VistA Patches.  This patch does not alter or modify any VistA
+   Blood Bank software design safeguards or safety critical elements functions
+     
+   RISK ANALYSIS: Changes made by patch XU*8*645 have no effect on Blood
+   Bank software functionality, therefore RISK is none.
+ 
+ 
+ Thanks to Test Sites 
+ ====================
+ Central Arkansas MC
+ Central Texas HCS
+ Houston MC 
+ 
+ Installation Instructions:
+ =========================
+ This patch should be installed during nonpeak times
+ 
+ TaskMan doesn't need to be stopped or paused
+ User can be on the system
+  
+ Installation should take less than a minute.
+  
+   1. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. 
+      This option will load the KIDS package onto your system.
+      Answer 'Yes' to run the Environment Check routine.
+ 
+   2. The patch has now been loaded into a transport global on your 
+      system. You now need to use KIDS to install the transport global.
+  
+   3. On the KIDS menu, under the 'Installation' menu, use the 
+      following options:
+  
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify Checksums in Transport Global
+         Backup a Transport Global
+  
+   4. On the KIDS menu, in the 'Installation' menu, use the following option:
+  
+           Select Installation Option: Install Package(s)
+           Select INSTALL NAME: XU*8.0*645
+                                ===========
+ 
+ 
+      Want KIDS to INHIBIT LOGONs during the install? NO//
+ 
+      Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUSTERM
+    Before: B20794964   After: B21697739  **36,73,135,148,169,222,313,
+                                           384,489,527,588,645**
+ 
+Routine list of preceding patches: 588
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 12, 2014
+Completed By:                               Date Completed: JUN 25, 2014
+Released By :                               Date Released : JUN 30, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,1315 @@
+$TXT Created by                   CHEY20.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Wednesday, 01/06/16 at 10:07
+=============================================================================
+Run Date: FEB 18, 2016                     Designation: ICD*18*82
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #77                     Status: Released
+                  Compliance Date: FEB 23, 2016
+=============================================================================
+
+Associated patches: (v)ICD*18*64   <<= must be installed BEFORE `ICD*18*82'
+                    (v)ICD*18*67   <<= must be installed BEFORE `ICD*18*82'
+                    (v)LEX*2*101   <<= must be installed BEFORE `ICD*18*82'
+
+Subject: FY2016 ICD-10 ANNUAL DRG UPDATES
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  This patch provides the annual update to the Medicare Severity Diagnosis
+  Related Group (MS-DRG) Grouper v33.0.
+       
+  All changes are handled programmatically by the post-init routines
+  ICD1882*.
+   
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   
+   PLEASE NOTE: 
+     Be aware of the shortened compliance date. The changes included in this
+     patch were effective as of 10/1/2015 per the Federal Register Vol. 80,
+     No. 158, dated August 17, 2015.
+   
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  
+  ASSOCIATED NSRs:
+  ================
+  N/A
+      
+  PARTICIPATING TEST SITES:
+  =========================
+  Hunter Holmes McGuire VAMC (Richmond)
+  Upstate New York HCS
+  West Palm Beach VAMC
+  
+  ASSOCIATED REMEDY TICKET:
+  =========================
+  1) INC000001305406 - FY2016 ANNUAL DRG GROUPER UPDATE
+         
+  
+  REMEDY OVERVIEW:
+  ================
+  1) INC000001305406 - FY2016 ANNUAL DRG GROUPER UPDATE
+   
+      The following changes are published in the Federal Register, Vol. 80,
+      No. 158, dated August 17, 2015 with an effective date of October 1,
+      2015. All page references below are for this annual update and
+      resource documents can be found at https://www.cms.gov/.
+     
+       
+   Changes include:
+       
+      I.   Revised DRGs.
+       
+     II.   Revised DRG relative weights & average length of stay (ALOS)
+           values for all DRGs.
+   
+    III.   Additional DRG-related data for the new ICD codes introduced by
+           LEX*2.0*101.
+  
+     IV.   DRG Reclassification changes to the Grouper.
+  
+       
+   This is a summary of the additions/changes made:
+       
+      I.   Routine ICD1882X was written to update the DRG file (#80.2).
+  
+           NEW DRGs for FY 2016
+           --------------------
+           MS-DRG 268 AORTIC AND HEART ASSIST PROCEDURES EXCEPT PULSATION
+                      BALLOON W MCC
+           MS-DRG 269 AORTIC AND HEART ASSIST PROCEDURES EXCEPT PULSATION
+                      BALLOON W/O MCC
+           MS-DRG 270 OTHER MAJOR CARDIOVASCULAR PROCEDURES W MCC
+           MS-DRG 271 OTHER MAJOR CARDIOVASCULAR PROCEDURES W CC
+           MS-DRG 272 OTHER MAJOR CARDIOVASCULAR PROCEDURES W/o cc/MCC
+           MS-DRG 273 PERCUTANEOUS INTRACARDIAC PROCEDURES W MCC
+           MS-DRG 274 PERCUTANEOUS INTRACARDIAC PROCEDURES W/O MCC
+                      
+  
+           INACTIVATED DRGs for FY 2016
+           ----------------------------
+           MS-DRG 237 MAJOR CARDIOVASCULAR PROCEDURES WITH MCC
+           MS-DRG 238 MAJOR CARDIOVASCULAR PROCEDURES WITHOUT MCC
+  
+  
+     II.   Routine ICD1882X is used to update the finalized values for DRG
+           relative weights and average length of stay (ALOS).
+    
+    
+    III.   Additional DRG-related values were taken from these Tables:
+      
+                Tables 6B-6M
+                Tables 6P.1a-6P.2a (ICD-10-PCS Code Translations)
+  
+           For a complete description of all tables please visit the Centers
+           for Medicare & Medicaid Services (WWW.CMS.GOV) or use the url
+           below:
+  
+           https://www.cms.gov/Medicare/Medicare-Fee-for-Service-Payment/
+                   AcuteInpatientPPS/FY2016-IPPS-Final-Rule-Home-Page-Items/
+                   FY2016-IPPS-Final-Rule-Tables.html?DLPage=1&DLEntries=
+                   10&DLSort=0&DLSortDir=ascending
+  
+  
+     IV.   DRG RECLASSIFICATION.
+           
+      Changes to other DRGs:
+      ----------------------
+       1. MDC 5 (p.49371)
+       a. Effective 10/1/2015 ICD-10 procedure code 02UG3JZ (Supplement
+          mitral valve with synthetic substitute, percutaneous approach) is
+          assigned to new ICD-10 MS-DRGs 273 and 274 and will continue to
+          be assigned to MS-DRGs 231 and 232 (Coronary Bypass with PTC with
+          MCC and without MCC, respectively).
+  
+       
+       2. MDC 5 (p.49389)
+       a. Effective 10/1/2015 cases that were previously assigned to MS-DRGs
+          237 or 238 will be reassigned to newly created MS-DRGs 268, 269,
+          270, 271 or 272.
+   
+  
+       3. MDC 8 (p.49406)
+       a. Effective 10/1/2015 the titles for ICD-10 MS-DRGs 456 through 458
+          will be:
+  
+          MS-DRG 456 (Spinal Fusion Except Cervical with Spinal
+          Curvature/Malignancy/Infection or Extensive Fusion with MCC)
+  
+          MS-DRG 457 (Spinal Fusion Except Cervical with Spinal
+          Curvature/Malignancy/Infection or Extensive Fusion with CC)
+  
+          MS-DRG 458 (Spinal Fusion Except Cervical with Spinal
+          Curvature/Malignancy/Infection or Extensive Fusion without CC/MCC)
+   
+  
+       4. Surgical Hierarchies (P.49412)
+       a. Ranking of surgical DRGs has changed as follows:
+          MDC 5 - remove MS-DRGs 237 and 238
+                - MS-DRGs 268 & 269 above MS-DRG 270, 271 & 272
+                - MS-DRGs 270, 271 & 272 above MS-DRG 239
+                - MS-DRGs 273 & 274 above MS-DRG 246
+  
+  ASSOCIATED CA SERVICE DESK TICKETS:
+  ===================================
+  1) I5933949FY16   VIP (Nuance/EPS/DSS Product) error - 897 
+                    Ungroupable 
+     Duplicates:
+     I5939118FY16   For Coding getting DRG :"Ungroupable" when using an 
+                    ICD10 code.
+     I5976339FY16   NCH DRG issue
+     R5993379FY16   Another DRG issue
+     I6203894FY16   No DRG code assigned to ICD F10.20 
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 897.  
+  
+     Solution:
+     =========
+     Updated the DRG Grouper software with the new data
+     provided by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+  2) I5945062FY16   CPRS issue with ICD10
+  
+     Problem:
+     ========
+     DRG miscalculation 793, correct DRG is 897.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+  3) R5993038FY16   ICD10 DRG 894 VS 999
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 894.
+    
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+  4) R5993262FY16   DRG 895 S 999
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 895.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+  5) R5993433FY16   DRG 945
+  
+     Problem:
+     ========
+     DRG miscalculation 945, correct DRG is 312.
+    
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+  6) R5993551FY16   DRG 573 document
+  
+     Duplicate: 
+     I6287865FY16   DRG MISCALCULATION -OF 573 IN VISTA AND SHOULD BE 603 
+  
+     Problem:
+     ========
+     DRG miscalculation 573, correct DRG is 603.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+  7) R5995073FY16   DRG 735 vs 743
+  
+     Problem:
+     ========
+     DRG miscalculation 735, correct DRG is 743.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+  8) R5996399FY16   DRG 897 VS 999
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 897.  
+  
+     Solution: 
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+  9) R6002595FY16   DRG 057
+  
+     Problem:
+     ========
+     DRG miscalculation 945, correct DRG is 57.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 10) I6011617FY16   Mahsem, Lynne is reporting some issue with
+                    PTS and DRG  code....
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 897.  
+  
+     Solution: 
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 11) I6015823FY16   PTF Codes Issues
+  
+     Problem:
+     ========
+     DRG miscalculation 793, correct DRG is 897.  
+  
+     Solution:
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 12) R6017915FY16   VistA is showing DRG calculating at 945.
+                    Correct calculation is 069
+  
+     Problem:
+     ========
+     DRG miscalculation 945, correct DRG is 69.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+   
+ 13) R6018066FY16   VistA DRG calculating to 946 - correct DRG is
+                    195
+   
+     Problem:
+     ========
+     DRG miscalculation 946, correct DRG is 195.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 14) R6018375FY16   VistA calculating to 946 - correct 
+                    calculation is 373
+  
+     Problem:
+     ========
+     DRG miscalculation 946, correct DRG is 373.  
+  
+     Solution: 
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 15) I6021309FY16   FRE-Staff reporting DRG 999 ungroupable error
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 897.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 16) R6051966FY16   DRG 557 vs 945
+  
+     Problem:
+     ========
+     DRG miscalculation 945, correct DRG is 557.  
+  
+     Solution: 
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 17) I6056014FY16   DRG Calculations
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 519.  
+  
+     Solution: 
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 18) R6063536FY16   Request New AccessPermissions - ID-4324
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 895.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 19) R6063561FY16   Request New AccessPermissions - ID-4323
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 894.  
+  
+     Solution:
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+   
+  
+ 20) I6082554FY16   vista ungrouper errors
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 894.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 21) I6082559FY16   grouping errors in vista
+  
+     Problem:
+     ========
+     DRG miscalculation 793, correct DRG is 897.  
+   
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 22) I6082578FY16   ungroupable errors in vista.
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 982.  
+  
+     Solution: 
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 23) I6090418FY16   Incorrect DRG CalculatioN
+  
+     Problem:
+     ========
+     DRG miscalculation 793, correct DRG is 897.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 24) R6093349FY16   Incorrect DRG Calculation. VistA calculating
+                    at 945.
+  
+     Problem:
+     ========
+     DRG miscalculation 945, correct DRG is 052.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 25) R6093540FY16   Incorrect DRG calculation - VistA calculating
+                    945
+  
+     Problem:
+     ========
+     DRG miscalculation 945, correct DRG is 638.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 26) I6095199FY16   DRG 999 ungroupable error  Diagnosis:
+                    F10.32, F14.10
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 897.  
+  
+     Solution: 
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 27) I6103025FY16   AEu is reporting an error 894, 895 and 897
+                    is not being 
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 895.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 28) I6115363FY16   DRG calculating in Vista as 486, shd be 549
+  
+     Problem:
+     ========
+     DRG miscalculation 486, correct DRG is 549.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 29) R6130120FY16   Incorrect DRG Calculation - VistA showing
+                    945; Nuance 887
+  
+     Problem:
+     ========
+     DRG miscalculation 945, correct DRG is 887.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 30) R6133186FY16   DRG 945 REHAB WITH CC/MCC SHOULD BE 315
+                    OTHER CIR
+  
+     Problem:
+     ========
+     DRG miscalculation 945, correct DRG is 315.  
+  
+     Solution: 
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 31) R6133899FY16   DRG 999 should be 897 alcohol/drug abuse or
+                    dependence witho...
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 897.  
+  
+     Solution: 
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 32) R6149985FY16   x85490 DRG calculating incorrectly in VistA.
+                    VistA showing 945
+  
+     Problem:
+     ========
+     DRG miscalculation 945, correct DRG is 690.  
+  
+     Solution: 
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 33) R6175086FY16   x85490 VistA DRG calculating incorrectly.
+                    VistA DRG 945  Nuance 56...
+  
+     Problem:
+     ========
+     DRG miscalculation 945, correct DRG is 560.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 34) R6175180FY16   VISTA DRG calculating incorrectly.  VistA
+                    DRG 999 - Nuance D...
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 896.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 35) I6205985FY16   DRG Calculates to 617 - Should be 240.
+  
+     Problem:
+     ========
+     DRG miscalculation 617, correct DRG is 240.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 36) I6206621FY16   DRG Calculates to 286 - should be 193
+  
+     Problem:
+     ========
+     DRG miscalculation 286, correct DRG is 193.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 37) I6206734FY16   DRG Calculates to 945 - should be 949
+  
+     Problem:
+     ========
+     DRG miscalculation 945, correct DRG is 949.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 38) I6207241FY16   DRG Calculates to 999 - should be 641
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 641.  
+  
+     Solution: 
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 39) I6207375FY16   DRG Calculates to 999 - should be 520
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 520.  
+  
+     Solution: 
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 40) I6207539FY16   DRG Calculates to 999 - should be 471
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 471.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 41) I6207577FY16   DRG Calculates to 999 - should be 473
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 473.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 42) I6207617FY16   DRG Calculates to 999 - should be 897
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 897.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 43) I6207658FY16   DRG Calculates to 999 - should be 473
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 473.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 44) I6208304FY16   DRG Calculates to 999 - should be 483
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 483.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 45) I6208482FY16   DRG Calculates to 999 - should be 897
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 897.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 46) I6208602FY16   DRG Calculates to 999 - should be 897
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 897.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 47) I6208686FY16   DRG Calculates to 999 - should be 897
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 897.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 48) I6208742FY16   DRG Calculates to 999 - should be 473
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 473.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 49) I6208775FY16   DRG Calculates to 999 - should be 520
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 520.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 50) I6208824FY16   DRG Calculates to 999 - should be 897
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 897.  
+  
+     Solution: 
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 51) I6208892FY16   DRG Calculates to 999 - should be 982
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 982.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 52) I6208948FY16   DRG Calculates to 999 - should be 473
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 473.  
+  
+     Solution: 
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 53) I6208992FY16   DRG Calculates to 999 - should be 897
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 897.  
+  
+     Solution: 
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 54) R6230542FY16   224-610-5490 DRG is calculating incorrectly
+                    in VISTA. 
+  
+     Problem:
+     ========
+     DRG miscalculation 945, correct DRG is 371.  
+  
+     Solution: 
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 55) R6238129FY16   DRG ungroupable
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 473.  
+  
+     Solution: 
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 56) I6261363FY16   DRG VISTA MAINTENANCE- Incorrect DRG giving
+                    ungroupable 999
+  
+     Problem:
+     ========
+     DRG miscalculation 999, correct DRG is 897.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 57) I6261995FY16   DRG ERROR- VISTA HAS 945 REHAB AND NUANCE
+                    IS SHOWING 255
+  
+     Problem:
+     ========
+     DRG miscalculation 945, correct DRG is 255.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 58) I6262745FY16 DRG ERROR IN VISTA WITH REHAB VISTA HAS 945
+     AND IT SHOULD BE
+  
+     Problem:
+     ========
+     DRG miscalculation 945, correct DRG is 559.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 59) R6265363FY16   DRG Miscalculation:  High Impact:  Please
+                    sent to National! ...
+  
+     Problem:
+     ========
+     DRG miscalculation 982, correct DRG is 439.  
+  
+     Solution: 
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 60) I6287865FY16   DRG MISCALCULATION -OF 573 IN VISTA AND
+                    SHOULD BE 603
+  
+     Problem:
+     ========
+     DRG miscalculation 573, correct DRG is 603.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 61) R6320331FY16   DRG calculating incorrectly. Nuance 561
+                    VistA = 946
+  
+     Problem:
+     ========
+     DRG miscalculation 946, correct DRG is 561.  
+  
+     Solution:
+     ========= 
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services). 
+  
+  
+ 62) I6325684FY16   ICD 10 DRG MISCALCULATION 988 instead of
+                    167 **
+  
+     Problem:
+     ========
+     DRG miscalculation 988, correct DRG is 167.  
+  
+     Solution: 
+     =========
+     Updated the DRG Grouper software with the new data provided
+     by CMS (Centers for Medicare & Medicaid Services).
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software being released as a host file and/or documentation 
+ describing the new functionality introduced by this patch are
+ available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Albany:                                domain.ext
+ Hines:                                 domain.ext    
+ Salt Lake City:                        domain.ext
+  
+ Host File                File Name                  SFTP Protocol
+ -------------------      ----------------           ------------
+ Data Host File           ICD_18_82.GBL              ASCII
+  
+  
+ Patch Installation Overview:
+ ============================
+  This patch requires the import global ^ICDLD82 to be installed prior
+  to installation of the patch. The ^ICDLD82 global is delivered in the
+  data file ICD_18_82.GBL.
+  
+  User will be asked questions prior to installing the patch.
+  
+  The installation process of the patch runs the routine ICD1882A, which
+  begins the DRG data update.
+  
+  PLEASE NOTE: During the installation it is possible that there are various
+  ICD Codes required to be in the DRG load file that were removed from the
+  Lexicon globals. These codes will cause the following messages to appear:
+  
+  Starting File #80 AUG 31, 2015@12:15:39
+  
+  ICD Code: H40.141 not in file #80
+  
+  ....
+  
+  These are not error messages, but rather audit messages showing that
+  expired codes are not in the Lexicon and can be ignored.
+  
+  
+  Pre-Installation Instructions:
+  ------------------------------
+  
+  1a) This patch requires installation of the following data file:
+  ICD_18_82.GBL which contains the ^ICDLD82 global.
+  
+  1b) The following globals must be backed up during initial installation
+  of this patch and as well as every time it has to be re-installed after
+  the following patch: LEX*2.0*101.
+           ICD DIAGNOSIS File (#80)               ^ICD9
+           ICD OPERATION/PROCEDURE File (#80.1)   ^ICD0
+           DRG File (#80.2)                       ^ICD
+  NOTE:
+  Please refer to Sections 2-6 for instructions on retrieving the file,
+  backing up the existing files and installing the new file.
+  
+  1c) It is recommended that this patch be installed during non-peak
+  hours to minimize potential disruption to users as extensive changes
+  are made to existing files ICD DIAGNOSIS File (#80),
+  ICD OPERATION/PROCEDURE File (#80.1) and DRG File (#80.2).
+  
+  1d) All steps leading up to the KIDS Installation may be done with
+  the users on the system. Administrative Users Only must be off of
+  the system during the KIDS installation. Applications, particularly
+  Admission Discharge Transfer (ADT), Integrated Billing (IB) and
+  Diagnosis Related Grouper (DRG), could encounter significant errors
+  if exercised during the install.
+  
+  1e) Installation of ICD*18*82 should NOT be performed at the time frame
+  when IB MT NIGHT COMP is running. Since installation of ICD*18*82 can
+  take from 1 to 5 hours it is recommended to run it before the IB MT NIGHT
+  COMP job:
+  - Make all preparations ahead - perform steps 3, 5 and 6 of the
+    Pre-Installation Instructions. This might take 2 hours and can be done
+    during normal working hours,
+  - Determine the time when IB nightly job is scheduled to run in the
+    system,
+  - Count 5 hours back from this time to determine the time when
+    ICD*18*82 installation can be started. 
+  
+  1f) Do not Interrupt the Installation - If the pre-install runs and
+  deletes the ICD files and the post-install does not run, the site may
+  be left with either missing or incomplete ICD files.
+  
+  1g) Do not Queue this Installation. If it is queued, it may hang and 
+      not install.
+  
+  1h) Do not install if Windows Updates are Scheduled/Pending - Check
+  with local network support that no Windows updates are scheduled for
+  the period of the ICD-10 install. Also, check the toolbar and see if
+  there is a Windows Update icon for a pending Windows update from a
+  previous push. A Windows update will disrupt the session and the 
+  KIDS installation.
+  
+  1i) The average install time for this patch is approximately 1-5 
+  hours based on each site's mirror and production environment
+  configuration, number of users on the system and background processes
+  running at the time of the installation.
+  
+  2) Global backup and installation timing:
+  
+          Backup
+          --------------
+          ICD DIAGNOSIS     ^ICD9    258 MB    10 to    25 minutes
+          ICD PROCEDURE     ^ICD0    209 MB     6 to    15 minutes
+          DRG               ^ICD       4 MB     1 to     5 minutes
+          Total Backup               471 MB    17 to    45 minutes
+             
+          Data Host File
+          --------------
+          SFTP            ICD_18_82.GBL       66 MB   24 to  60 minutes
+          Global Restore ^%GI ^ICDLD82        20 MB    4 to  10 minutes
+          Total Data                          86 MB   28 to  70 minutes
+             
+  3) Create a backup of the following global files before continuing:
+          ICD DIAGNOSIS File (#80)               ^ICD9
+          ICD OPERATION/PROCEDURE File (#80.1)   ^ICD0
+          DRG File (#80.2)                       ^ICD
+             
+  Make sure space is available before proceeding. It should take from 17 to
+  45 minutes to create the backup files.
+           
+  When you are creating a backup of non-subscripted globals, you are
+  saving the entire global. You should use the utility ^%GO for
+  non-subscripted globals, and when prompted for a global, enter the global
+  root (global name only, no open parenthesis, no file number and no
+  commas, as shown below). If you are working in an environment where %GO
+  will not run (usually due to sharing of globals between environments)
+  please use %GOGEN.
+   
+     Example with %GO:
+   
+          >D ^%GO
+   
+          Global output
+          Device: xxxxxx:[yyyyyy]ICD9.GBL  
+              where xxxxxx and yyyyyy specify your home folder
+              for example: USER$:[USERNAME]
+          Parameters? "WNS" => (Skip)
+          Description (^ for self-loading): 
+   
+          All Globals? No => No
+          Global ^ICD9
+          Global ^ (Skip)
+          1 global selected from 638 available globals.
+                          ICD9
+          1 global written
+   
+     Example with %GOGEN:
+          >D ^%GOGEN
+           Device: xxxxxx:[yyyyyy]ICD9.GEN
+              where xxxxxx and yyyyyy specify your home folder
+              for example: USER2$:[USERNAME]
+           Parameters? "WNS" => (Skip) 
+           Warning:  Use a "V" format to avoid problems with control
+           characters.
+           Global ^ICD9 -- NOTE: translation in effect
+           Global ^ (Skip)
+    
+                  Enter          To create a Backup copy of:
+                  ------         ---------------------------
+                  ICD9           ICD DIAGNOSIS File
+                  ICD0           ICD OPERATION/PROCEDURE File
+                  ICD            DRG File
+   
+  4) Set up user and IO variables (D ^XUP) for programmer access.
+  
+  5) Transfer the ICD_18_82.GBL file from the SFTP server to your
+     folder in the environment in which you are installing.
+  
+  6) Install the data from the global host file ICD_18_82.GBL.
+     This file contains the import global ^ICDLD82.
+   
+     This global is approximately 66 megabytes in size. Make sure
+     there is sufficient space available to load this global. The
+     loading of the global should take from 24 to 60 minutes.
+   
+     From the Programmer prompt, execute the following routine:
+       >D ^%GI
+  
+       Global input
+  
+       Device: USER$:[USERNAME]ICD_18_82.GBL
+       Parameters? "RS" => 
+       Globals were saved on 21 JUL 2015   3:55 PM   Cache
+       with description: Data file for ICD*18.0*82 installation
+  
+       Input option: a
+       ^ICDLD82
+  
+  7) Also, verify the system is currently running the current version
+     of Cache in order to ensure the patch installs properly.  At the
+     programmer prompt, enter the following and confirm the current 
+     version is 2014.1.3:
+  
+     W $$VERSION^%ZOSV 
+  
+ Installation Instructions:
+ --------------------------
+  1.  Choose the PackMan message containing this patch.
+   
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu. From this menu, you may elect to use the
+      following option. When prompted for the INSTALL enter the patch #
+      (ICD*18.0*82):
+   
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, DD's, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+   
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install. Enter ICD*18.0*82.
+  
+  5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      respond NO.
+   
+  6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? YES//', respond YES and enter the following menu options
+      to disable:
+      Enter options you wish to mark as 'Out Of Order': ICD DRG GROUPER
+      Enter options you wish to mark as 'Out Of Order': DG DRG CALCULATION
+      Enter options you wish to mark as 'Out Of Order': LOAD/EDIT PTF DATA
+      Enter options you wish to mark as 'Out Of Order': IBT EDIT TRACKING
+                                                        ENTRY
+      Enter options you wish to mark as 'Out Of Order': IB EDIT BILLING
+                                                        INFO
+      Enter options you wish to mark as 'Out Of Order': DG PTF DRG
+                                                        INFORMATION OUTPUT
+      Enter options you wish to mark as 'Out Of Order':   (Enter)
+      Enter protocols you wish to mark as 'Out Of Order': (Enter)
+  
+  7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+  The KIDS install should take from 1 to 5 hours.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+  
+ 1. Following installation of this patch, it is necessary to run the
+    Update Transfer DRGs for Current FY [DG PTF UPDATE TRANSFER DRGs]
+    option in order to make the transfer DRGs correspond to the appropriate
+    grouper.  This option updates/recalculates the transfer DRGs for PTF
+    records opened during the current fiscal year. The option is locked
+    with the DG PTFSUP security key.  The Menu path is PTF Menu/Update DRG
+    Information Menu/Update Transfer DRGs for current FY.
+  
+ 2. The Post-Install routines ICD1882A and ICD1882B should be deleted using
+    the KERNEL option 'Delete Routines' [XTRDEL] upon completion of the
+    installation.
+  
+ 3. Post-Install routine ICD1882P will be deleted automatically by the build.
+  
+ 4. Also, please verify the following globals to ensure patch ICD*18.0*82
+    installed properly:
+  
+  IRM should perform an ^%G lookup on several files. The following
+  instructions will show the zero node of the files, and the third piece
+  of the node contains the total number of entries in that file.  The count
+  should match the entries listed below. 
+  
+  From the programmer prompt enter the following:
+  
+  D ^%G <return>
+  
+  Device: <return>
+  Right margin: 80 => <return>
+  Screen size for paging (0=nopaging)? 24 => <return>
+  For help on global specifications DO HELP^%G
+  
+  Global ^ICDRS(0) -- NOTE: translation in effect
+  ^ICDRS(0)="DRG SURGICAL HIERARCHY^80.5D^1^1"
+  
+  Global ^ICDHAC(0) -- NOTE: translation in effect
+  ^ICDHAC(0)="DRG HAC^80.6^12^12"
+  
+  Global ^ICDID(0) -- NOTE: translation in effect
+  ^ICDID(0)="DRG DIAGNOSIS IDENTIFIER CODES^82^273^273"
+  
+  Global ^ICDIP(0) -- NOTE: translation in effect
+  ^ICDIP(0)="DRG PROCEDURE IDENTIFIER CODES^82.1^223^223"
+  
+  Global ^ICDIDD(0) -- NOTE: translation in effect
+  ^ICDIDD(0)="DRG DIAGNOSIS CODE COMBINATIONS^82.12P^2^2"
+  
+  Global ^ICDIDP(0) -- NOTE: translation in effect
+  ^ICDIDP(0)="DRG PROCEDURE CODE COMBINATIONS^82.11P^34^34"
+  
+  Global ^ICDCCEX(0) -- NOTE: translation in effect
+  ^ICDCCEX(0)="DRG CC EXCLUSIONS^82.13^1490^1490"
+  
+  ***Verify the information listed above matches the information found in
+     the sites TEST and PRODUCTION accounts.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;18.0;DRG Grouper;**[Patch List]**;Oct 20, 2000;Build 21
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ICD10TB2
+    Before: B18222140   After: B18058052  **64,82**
+Routine Name: ICD10TB4
+    Before:  B9167308   After:  B8872895  **64,82**
+Routine Name: ICD10TB8
+    Before:  B7326303   After:  B8641752  **64,82**
+Routine Name: ICD1882A
+    Before:       n/a   After:B164569535  **82**
+Routine Name: ICD1882B
+    Before:       n/a   After: B85768283  **82**
+Routine Name: ICD1882F
+    Before:       n/a   After: B57686037  **82**
+Routine Name: ICD1882G
+    Before:       n/a   After: B63064849  **82**
+Routine Name: ICD1882H
+    Before:       n/a   After: B59090507  **82**
+Routine Name: ICD1882I
+    Before:       n/a   After: B57502638  **82**
+Routine Name: ICD1882J
+    Before:       n/a   After: B59944026  **82**
+Routine Name: ICD1882K
+    Before:       n/a   After: B62951725  **82**
+Routine Name: ICD1882O
+    Before:       n/a   After:  B2720636  **82**
+Routine Name: ICD1882P
+    Before:       n/a   After:   B236433  **82**
+Routine Name: ICD1882X
+    Before:       n/a   After: B74155132  **82**
+Routine Name: ICDDG010
+    Before: B87527545   After: B87506701  **64,82**
+Routine Name: ICDDRGX
+    Before: B28133843   After: B28133255  **1,2,5,7,10,14,20,24,27,31,64,82**
+Routine Name: ICDDRGX2
+    Before:B156836573   After:B103632057  **64,82**
+Routine Name: ICDDRGX3
+    Before: B25217688   After: B57991156  **64,82**
+Routine Name: ICDEXD2
+    Before: B52729540   After: B50967420  **57,67,82**
+Routine Name: ICDEXLK2
+    Before:B167936583   After:B168140554  **57,67,82**
+Routine Name: ICDEXLK3
+    Before: B98059988   After:B102652955  **57,67,82**
+Routine Name: ICDEXLK4
+    Before: B25474563   After: B27639305  **57,67,82**
+Routine Name: ICDEXLK5
+    Before: B69728185   After: B70506378  **57,67,82**
+ 
+Routine list of preceding patches: 64, 67
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 13, 2015
+Completed By:                               Date Completed: FEB 17, 2016
+Released By :                               Date Released : FEB 18, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

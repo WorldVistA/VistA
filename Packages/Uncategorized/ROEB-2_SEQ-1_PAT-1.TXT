@@ -1,0 +1,196 @@
+
+=============================================================================
+Run Date: JUL 13, 2015                     Designation: ROEB*2*1
+Package : ROEB - BREAST CANCER REGISTRY       Priority: Mandatory
+Version : 2         SEQ #1                      Status: Released
+                  Compliance Date: AUG 13, 2015
+=============================================================================
+
+
+Subject: HREG BCR 2.0 Deployment
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ **********************************************************************
+  
+ This is to announce that Breast Care Registry Patch BCR*2.0*1 will
+ be deployed to the production server for national release on 
+ July 13, 2015 at 12 p.m. Eastern
+  
+ **********************************************************************
+ Note: Technical support staff at Austin Information Technology Center
+ (AITC) will install this patch on the National BCR server located there 
+ using a pre-approved Request for Change Order and Implementation Plan.
+ No effort is required by local sites.  User Acceptance Test is by the
+ direction of the BCR Business Owner and no MOU is required.
+ **********************************************************************
+   
+ BCR Patch 2.0*1 contains code changes (enhancements) to
+ the BCR Registry.  These changes are Work Items that were recorded and
+ tracked in the Registries Project Area of RTC.
+  
+ This patch contains the BCR Work Items completed during the DME contract 
+ period for the  production deployment.
+  
+   
+ Patch Components
+ ================
+   
+ The following describes each component of the BCR Patch 2.0*1
+  
+ 180506: Deploy Breast Care Registry (BCR) to Production  
+ Issue: BCR, formerly known as Breast Cancer Clinical Case Registry 
+ (BCCCR), was established to provide a registry of information about
+ breast cancer screening, test results, treatment, and follow-up for
+ clinical care and population surveillance of breast care. The registry
+ provides a user interface for clinicians and coordinators to analyze
+ and report registry data.
+  
+ The Department of Veterans Affairs (VA) Breast Care Registry (BCR),
+ formerly known as Breast Cancer Clinical Case Registry (BCCCR), was
+ established to provide a registry of information about breast cancer
+ screening, test results, treatment, and follow-up for clinical care
+ and population surveillance of breast care. The registry provides a
+ user interface for clinicians and coordinators to analyze and report
+ BCR patient health metrics and data. 
+  
+ BCR Version 2.0 enhances the existing BCR by completing the implementation
+ of initial requirements; repairing legacy defects; ensuring report
+ consistency; ensuring comprehensive data ingestion and accuracy from
+ identified data sources; and deploying a fully functional national release
+ of the registry.
+  
+ BCR v2.0 is a Web-based intranet registry application, residing within
+ the Converged Registries Solution (CRS) architectural framework.
+  
+ The provider documents patient care encounters and enters the data into 
+ the Computerized Patient Record System/Veterans Health Information Systems
+ and Technology Architecture (CPRS/VistA).
+  
+ 1) The patient data is securely stored in the Corporate Data Warehouse 
+ (CDW). This CDW data is also compiled from feeds from corresponding
+ Regional Data Warehouse (RDW) and Veterans Integrated Service Network
+ (VISN) DataWarehouse (VDW) sources.
+  
+ 2) At regular intervals, the BCR database (residing within CRS) extracts
+ data specific to the breast care patient cohort from CDW. The BCR
+ Dashboard provides BCR users with quality patient data, including patient
+ details and standard, aggregate and ad hoc reports. Depending on user
+ permissions, data is available at the national, regional and local levels,
+ allowing providers to evaluate effective treatment, quality care,
+ scheduling, and planning for their specific cohort.
+  
+ The enhanced BCR provides the Women's Health Services of the Veterans
+ Health Administration (VHA) with the ability to determine areas of
+ improvement for the timely and quality care of Veterans, and to
+ enhance the VHA's capacity to monitor long-term outcomes of BCR
+ patients within Women's Health Services.    
+  
+ Additional Information:
+ ---------------------------
+  
+ Training 
+  
+ Separate training sessions for IRM and users will be offered to each 
+ facility in a series of Live Meeting conference calls on the VANTS 
+ Bridge.
+  
+ Listed below are the points of contact for BCR administration, 
+ troubleshooting and information:
+  
+ Sally Haskell, MD, BCR Business Owner and Deputy Chief Consultant for 
+       Women's Health Services: Sally.Haskell@domain.ext
+ Yvette Williams, MD, Consultant, Women's Health Services:
+       Christine.Williams@domain.ext
+ Caitlin Cusack, MD, OIA Health Informatics: Caitlin.Cusack@domain.ext
+ Christine Jasien, HR&D Database Manager, Atlanta: Christine.Jasien@domain.ext
+ Drew Prescott, Registries Program Manager: Drew.Prescott@domain.ext
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ As a VA intranet Web site, BCR troubleshooting procedures will usually
+ involve contacting the BCR network administrators or the NSD. Calls to
+ the NSD should state that the user is working with the Converged
+ Registries Solution and the Breast Care Registry. The NSD will then
+ direct the trouble ticket to AITC, who will use established procedures
+ to direct the problem to the CRS sustainment team.
+  
+   
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ There are no Remedy Tickets associated with this patch.
+   
+ Test Sites:
+ ----------
+ n/a
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Title                              File Name              FTP Mode
+ -----------------------------------------------------------------------
+ User Manual                       BCRUM.PDF               Binary
+  
+  
+   Patch Installation:
+  
+ This is a new application so there are no changes to existing software.  
+ The Breast Care Registry (ROEB) application will use the ROEB namespace.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no pre/post installations instructions associated with this patch.
+  
+  
+ n/a
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ n/a
+  
+ Installation Instructions:
+ --------------------------
+ This patch is only for information. 
+  
+ Post-Installation Instructions:
+ -------------------------------
+ n/a
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 05, 2015
+Completed By:                               Date Completed: JUL 08, 2015
+Released By :                               Date Released : JUL 13, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

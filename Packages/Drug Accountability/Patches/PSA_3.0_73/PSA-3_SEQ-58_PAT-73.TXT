@@ -1,0 +1,208 @@
+$TXT Created by                 MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 12/20/11 at 10:16
+=============================================================================
+Run Date: JUL 31, 2014                     Designation: PSA*3*73
+Package : PSA - DRUG ACCOUNTABILITY           Priority: Mandatory
+Version : 3        SEQ #58                      Status: Released
+                  Compliance Date: AUG 31, 2014
+=============================================================================
+
+Associated patches: (v)PSA*3*15    <<= must be installed BEFORE `PSA*3*73'
+                    (v)PSA*3*66    <<= must be installed BEFORE `PSA*3*73'
+                    (v)PSA*3*71    <<= must be installed BEFORE `PSA*3*73'
+
+Subject: TRANSACTION HISTORY REPORT AND INVOICE PROCESSING ERROR FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following problems:
+     
+ 1.  An oversized subscript is causing an error when processing an 
+     uploaded invoice.
+  
+ 2.  The Drug Accountability Drug Transaction History report is not 
+     displaying the Inpatient transactions created during the Drug
+     Accountability All Location Dispense/Purge nightly process.
+  
+ 3.  The Drug Transaction History report does not cleanup variables if the 
+     user exits (^) at the DEVICE prompt, causing an error the next time
+     the report is run.
+  
+  
+ ASSOCIATED NSR(s): 
+ ================== 
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000321245 - SUBSCRIPT>LINE+45^PSAPROC7
+  
+ 2. HD0000000371516 - Only Outpatient Figures on Reports
+  
+ 3. HD0000000378864 - Drug Transaction History does not cleanup variables
+                      if up caret at the device prompt.
+  
+  
+ PARTICIPATING TEST SITES:
+ ========================= 
+ Coatesville VAMC
+ New York Harbor HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================ 
+ 1. HD0000000321245 - SUBSCRIPT>LINE+45^PSAPROC7
+  
+    Problem:
+    --------
+    There are 2 problems that exist in this ticket:
+    1) When processing an uploaded invoice in the Drug Accountability
+       system, a hard Mumps error is occurring, caused by an over-sized
+       subscript while setting the ^XTMP("PSAVSN",VSN Number) global and
+       processing stops.
+  
+    2) When users select one of these invoices that did not finish
+       processing, the application displays a message that the invoice is
+       Already Marked as PROCESSED along with the Order Date, Invoice Date
+       and Line Items. The Line Item's information shows the number of line
+       items on the invoice and the number of line items processed. It then
+       prompts the user "Do you want to compare item? NO//". After the user
+       answers the compare prompt, the user receives a prompt "Do you want
+       to delete the incoming invoice ? NO//", If the user answers YES,
+       the unprocessed data is deleted.
+   
+    Resolution:
+    -----------
+    1) PSAPROC7 routine will be modified to extract only a valid VSN and
+       use that value when setting the ^XTMP("PSAVSN",VSN number) global.
+  
+    2) PSAPTCH routine will be modified to reset the ^XTMP("PSAPV" global
+       for the invoice that was left in a processing status after the error
+       from processed to OK status which will allow the remainder of the
+       invoice to be processed.
+  
+  
+ 2. HD0000000371516 - Only Outpatient Figures on Reports
+  
+    Problem:
+    --------
+    The Drug Accountability Drug Transaction History report is not
+    displaying the Inpatient transactions created during the Drug
+    Accountability All Location Dispense/Purge nightly process.  This is
+    caused when an Inpatient location has been set to Inactive, the
+    inactivation date is stored in the ^PSD(58.8,location#,"I") global.
+    When the location is reactivated, the inactivation date is set to null,
+    leaving the ^PSD(58.8,location#,"I") global behind with no data. When
+    the Drug Transaction History report is run, it checks for the existence
+    of the ^PSD(58.8,location#,"I") global, but does not verify whether
+    there is data stored in it.
+  
+    Resolution:
+    -----------
+    PSAUDP routine will be modified to check for the existence of data in
+    the ^PSD(58.8,location#,"I") global by using a $GET function in
+    addition to the $DATA function.
+  
+  
+ 3. HD0000000378864 - Drug Transaction History does not cleanup variables
+                      if up caret at the device prompt.
+  
+    Problem:
+    --------
+    When running the Drug Transaction History report and the users enters
+    the "^" at the DEVICE prompt to quit, the program quits before cleaning
+    up the variables. Then when the user immediately runs the report again
+    and selects a different pharmacy location, the user is prompted for the
+    previous pharmacy location as well as the new selection. This is caused
+    by a QUIT at the DEV section of the routine.
+  
+    Resolution:
+    -----------
+    PSAHIS will be modified to go to the EXIT portion of the routine. The
+    EXIT section  cleans up the symbol table before exiting the routine.
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ Suggested time to install: non-peak requirement hours. The patch should be
+ installed when NO Drug Accountability users are on the system.
+  
+ Install Time - less than 5 minutes
+ The patch can also be queued for install.
+  
+  
+  1.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  2.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter PSA*3.0*73):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  3.  Use the Install Package(s) option and select the package
+      PSA*3.0*73.
+  
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the
+          install? NO//', answer NO.
+      b.  When prompted 'Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DRUG ACCOUNTABILITY/INVENTORY INTERFACE;**[Patch List]**; 10/24/97;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSAHIS
+    Before: B23525089   After: B23635859  **3,15,73**
+Routine Name: PSAPROC7
+    Before: B59246490   After: B59467507  **3,12,27,21,42,61,64,67,68,71,73**
+Routine Name: PSAPTCH
+    Before: B15281511   After: B16300377  **21,73**
+Routine Name: PSAUDP
+    Before: B17006589   After: B17663962  **6,3,12,14,25,64,66,73**
+ 
+Routine list of preceding patches: 15, 66, 71
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 05, 2010
+Completed By:                               Date Completed: JUL 22, 2014
+Released By :                               Date Released : JUL 31, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

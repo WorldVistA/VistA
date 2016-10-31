@@ -1,0 +1,533 @@
+$TXT Created by                  CPRS30.DOMAIN.EXT  (KIDS) on Tuesday, 01/12/16 at 10:45
+=============================================================================
+Run Date: MAR 08, 2016                     Designation: OR*3*389
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #361                      Status: Released
+                  Compliance Date: APR 08, 2016
+=============================================================================
+
+Associated patches: (v)OR*3*296    <<= must be installed BEFORE `OR*3*389'
+                    (v)OR*3*306    <<= must be installed BEFORE `OR*3*389'
+                    (v)OR*3*313    <<= must be installed BEFORE `OR*3*389'
+
+Subject: QUICK ORDER UTILITY FOR CLINIC ORDERS
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch contains several enhancements to the OE/RR package.  Some of 
+ the included items are meant to be used as reference and/or preparation 
+ for the forthcoming release of CPRS GUI v30.B (OR*3.0*350).
+  
+ NEW DISPLAY GROUPS AND ORDER DIALOGS
+ OE/RR SUPPLY ORDERABLE ITEM REPORT
+ OUTPATIENT PHARMACY QUICK ORDER SEARCH
+ DELETE QUICK ORDERS via ORCM QUICK ORDERS and ORCM QUICK ORDER BY USER
+ EARLIEST APPROPRIATE DATE VALUES FOR CONSULT QUICK ORDERS
+ CREATING CLINIC QUICK ORDERS FROM INPATIENT QUICK ORDERS
+  
+  
+ ========================================================================
+ ==============NEW DISPLAY GROUPS AND ORDER DIALOGS======================
+ ========================================================================
+ The following new DISPLAY GROUPS and ORDER DIALOGS are being distributed
+ with this patch.
+  
+ DISPLAY GROUPS
+   CLINIC MEDICATIONS
+   CLINIC INFUSIONS
+   SUPPLIES/DEVICES
+  
+ ORDER DIALOGS
+   CLINIC OR PAT FLUID OE
+   PSJ OR CLINIC OE
+   PSO SUPPLY
+  
+ ========================================================================
+ ===============OE/RR SUPPLY ORDERABLE ITEM REPORT=======================
+ ========================================================================
+  
+ In preparation for the release of CPRS v30.b, with the updates to the 
+ Supply Order dialog, the definition of a supply item is changing. 
+ Therefore, a report is included in this patch to allow you to review 
+ items on your system that will be identified as supplies and, therefore, 
+ will be available to that dialog.
+  
+ This report lists all orderable items that resolve to a pharmacy supply 
+ item. It will list all quick order dialogs that reference the supply
+ orderable item, as well as all clinical reminders that reference either
+ the supply orderable item or the supply quick order dialog. If the
+ installation is not queued, the installer will be prompted for the
+ recipients of this report. Otherwise, the person queueing the installation
+ will be the only recipient.
+  
+  
+ ========================================================================
+ ==============OUTPATIENT PHARMACY QUICK ORDER SEARCH====================
+ ========================================================================
+ CPRS v30.b will remove the option of DONE as a priority on Outpatient 
+ Medication orders. Some sites are using this priority in Quick Orders. In 
+ preparation for the release of 30.b, a report is being provided to allow 
+ sites time to develop new Quick Orders.
+  
+ This report lists all outpatient pharmacy quick orders that have a 
+ priority of DONE.  The report output shows the quick order name, any 
+ "disable" text and if the quick order is part of an order set/menu or 
+ referenced by any Clinical Reminder Elements or Groups.
+  
+  
+ ========================================================================
+ =DELETE QUICK ORDERS via ORCM QUICK ORDERS and ORCM QUICK ORDER BY USER=
+ ========================================================================
+ Patch OR*3*245 removed the ability to delete quick orders (QO) and
+ personal quick orders from the ORDER DIALOG file (#101.41).  This was done
+ to prevent dangling pointers in files that point to ORDER DIALOG.
+ Reference Remedy ticket #130403 and/or the OR*3*245 patch description for
+ additional background information.
+  
+ This patch, OR*3*389, restores the ability to delete quick orders.  When 
+ a quick order is selected for deletion, files that point to ORDER DIALOG 
+ are checked for possible pointers.  As of this patch release, the files 
+ and fields checked for pointers are:
+  
+  ORDER (#100) via the DIALOG (#2) and ITEM ORDERED (#7) fields
+  
+  DISPLAY GROUP (#100.98) via the DEFAULT DIALOG (#4) field
+  
+  REMINDER DIALOG (#801.41) via the FINDING ITEM (#15) and the ADDITIONAL 
+    FINDINGS (#.01) field of the ADDITIONAL FINDINGS subfile (#801.4118)
+  
+ If no items are found pointing to the selected QO, then deletion may 
+ proceed.  If any pointers are found, the user will not be able to delete
+ the quick order but may choose to disable it.  Any pointers found will be
+ displayed to the user. The output will be the file number, IEN, and NAME
+ (.01) of the item that is pointing to the quick order selected for
+ deletion.  Any items displayed from ORDER (#100) will display "N/A" for
+ NAME as those file entries do not have a NAME field.  Reference the
+ following two examples of a successful delete and a disable when pointers
+ are detected.
+  
+ Example 1: No pointers to the selected QO
+ -----------------------------------------
+ ORCM QUICK ORDERS     Enter/edit quick orders
+ Select QUICK ORDER NAME: SAMPLE QO ORDER NO POINTERS
+ NAME: SAMPLE QO ORDER NO POINTERS// @
+ Are you sure you want to delete this quick order? YES  ...deleted.
+  
+ Example 2: Items pointing to selected QO
+ ----------------------------------------
+ Select QUICK ORDER NAME: SAMPLE QO WITH POINTERS  
+ NAME: SAMPLE QO WITH POINTERS  Replace @
+ Cannot delete - other file entries point to this order dialog!
+  
+ SAMPLE QO WITH POINTERS is pointed to by:
+ FILE #    IEN       NAME
+ ------------------------
+ 100       14522646
+                     N/A
+ 100       14522647
+                     N/A
+ 100.98    68
+                     ZZTEST DISPLAY GROUP
+ 801.41    1754
+                     ZZTEST DLG ELEMENT
+ Would you like to disable this quick order? YES// 
+ Enter disable message:
+ DISABLE: Do not use this QO. Call x12345
+  
+ (This quick order has been disabled)
+ NAME: SAMPLE QO WITH POINTERS  Replace^ 
+  
+ To facilitate the location of items pointing to a given quick order,
+ the ORDER (#100) file data dictionary is being modified by this patch.
+ The DIALOG (#2) and ITEM ORDERED (#7) fields are each being modified
+ by adding a new cross reference.
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ -------------------------------------------------------------------------
+ 100,2         DIALOG                 0;5          VARIABLE POINTER (Req'd)
+  
+               FILE  ORDER  PREFIX    LAYGO  MESSAGE
+                  19   1    OPT          n   OPTION 
+                  101  2    PRO          n   PROTOCOL 
+             101.41    3    DLG          n   DIALOG 
+                                          
+               LAST EDITED:      FEB 26, 2014 
+               HELP-PROMPT:      Enter the dialog that was used to create 
+                                 this order.
+               DESCRIPTION:
+                                 This is the dialog that created this 
+                                 order.  
+  
+ NEW----->     CROSS-REFERENCE:  100^C 
+                                 1)= S ^OR(100,"C",$E(X,1,30),DA)=""
+                                 2)= K ^OR(100,"C",$E(X,1,30),DA)
+                                 Allows retrieval of the orders placed for 
+                                 a given ORDER DIALOG.
+  
+  
+  
+ 100,7         ITEM ORDERED           3;4          VARIABLE POINTER
+  
+               FILE  ORDER  PREFIX    LAYGO  MESSAGE
+                  19   1    MISC         n   PROTOCOL 
+                  60   2    LAB          n   LAB TEST 
+             101.41    3    DIALOG       n   ORDER DIALOG 
+                                          
+               LAST EDITED:      FEB 28, 2014 
+               HELP-PROMPT:      Enter the item ordered. 
+               DESCRIPTION:      This is the variable pointer to the file 
+                                 and item ordered.
+  
+ NEW----->     CROSS-REFERENCE:  100^D 
+                                 1)= S ^OR(100,"D",$E(X,1,30),DA)=""
+                                 2)= K ^OR(100,"D",$E(X,1,30),DA)
+                                 Allows retrieval of the orders placed for 
+                                 a given ORDER DIALOG.
+  
+ These new cross-references are created during the post-install process.  
+ A tasked job is created that will immediately begin running in the 
+ background to create the new cross-references.  An email is sent to the 
+ installer indicating whether the background job successfully completed or 
+ was stopped and needs to be re-started.  The message subject will be:
+ PATCH OR*3.0*389 ORDER RE-INDEX STATUS.
+  
+  
+ ========================================================================
+ =======EARLIEST APPROPRIATE DATE VALUES FOR CONSULT QUICK ORDERS========
+ ========================================================================
+ If the installation is not queued, the installer will be prompted for the 
+ recipients of this report. Otherwise, the person queueing the installation
+ will be the only recipient. That person should forward the message to the
+ person(s) responsible for managing consult quick orders at the facility.
+  
+ The report contains Consult and Procedure quick orders with a default 
+ value stored in the Earliest Appropriate Date (EAD) field. The output for
+ each order found will consist of three values:
+  
+  Internal entry number of the quick order in from ORDER DIALOG (#101.41) 
+  
+  The NAME (.01 field) of the quick order
+  
+  The value found for the Earliest Appropriate Date
+  
+ This list of quick orders should be reviewed in preparation for the 
+ installation of OR*3*350 and GMRC*3.0*81.  These patches are renaming the 
+ EAD field to CLINICALLY INDICATED DATE (CID) and also replacing the
+ ORCDGMRC EARLIEST DATE DEFAULT parameter (which can only be set at the
+ PACKAGE level) with a new parameter, ORCDGMRC CLIN IND DATE DEFAULT, which
+ may be set at the DIVISION, SYSTEM, and PACKAGE levels.
+  
+ The new PACKAGE setting for the ORCDGMRC CLIN IND DATE DEFAULT parameter
+ will be null, which will force a provider to actively choose a value for
+ the EAD field when placing consult orders.  Local settings may be chosen
+ for the DIVISION and SYSTEM levels in order to have the CID field
+ pre-populated.
+  
+ The list of consult quick orders can be useful if a local decision is made
+ to change the value of the parameter.  When your facility installs 
+ OR*3*350, part of that installation will capture any PACKAGE level value 
+ found for ORCDGMRC EARLIEST DATE DEFAULT and use that value to set the 
+ SYSTEM level for the new CID-related parameter ORCDGMRC CLIN IND DATE 
+ DEFAULT.  For example, if your facility has ORCDGMRC EARLIEST DATE DEFAULT
+ set to "TODAY" at the PACKAGE level, the OR*3*350 installation will set
+ ORCDGMRC CLIN IND DATE DEFAULT to "TODAY" at the SYSTEM level.
+  
+ If your facility opts to change the value for the CID parameter, that 
+ value is not automatically detected by any saved quick orders.  Any saved 
+ quick orders must be edited in order for them to reflect the new parameter
+ value.
+  
+ Example:
+ Change the CID parameter from TODAY to T+7D
+  
+ Clinically Indicated Date Default may be set for the following:
+  
+      1   Division      DIV    [choose from INSTITUTION]
+      2   System        SYS    [TEST.DOMAIN.EXT]
+      3   Package       PKG    [ORDER ENTRY/RESULTS REPORTING]
+  
+ Enter selection: 2  System   TEST.DOMAIN.EXT
+  
+  Setting Clinically Indicated Date Default  for System: TEST.DOMAIN.EXT
+  
+ Value: TODAY// T+7D 
+  
+  
+ **Now, examine a saved quick order and see that the QO still retains the 
+ previously saved value.**
+  
+  
+ Select Order Menu Management <TEST ACCOUNT> Option: QO  Enter/edit quick 
+ orders
+ Select QUICK ORDER NAME: TEST CID PROMPT  
+ NAME: TEST CID  PROMPT  Replace 
+ DISPLAY TEXT: TEST CID PROMPT// 
+ VERIFY ORDER: YES// 
+ DESCRIPTION:
+   No existing text
+   Edit? NO// 
+ ENTRY ACTION: 
+  
+ Procedure: ERCP// 
+ Service: GASTROENTEROLOGY// 
+ Reason for Request: 
+   No existing text
+   Edit? No//   (No)
+ Category: OUTPATIENT// 
+ Urgency: ROUTINE// 
+ Clinically indicated date:TODAY// <-- NOTE PREVIOUS VALUE.  DELETE THIS
+                                       VALUE TO HAVE QO REFLECT CURRENT.
+  
+ Clinically indicated date:TODAY// @
+   Are you sure you want to delete this value? NO// y  YES
+  
+ **Re-examine the QO and see that the CID value is now current.**
+  
+ Select Order Menu Management <TEST ACCOUNT> Option: QO  Enter/edit quick 
+ orders
+ Select QUICK ORDER NAME: TEST CID PROMPT  
+ NAME: TEST CID  PROMPT  Replace 
+ DISPLAY TEXT: TEST CID PROMPT// 
+ VERIFY ORDER: YES// 
+ DESCRIPTION:
+   No existing text
+   Edit? NO// 
+ ENTRY ACTION: 
+  
+ Procedure: ERCP// 
+ Service: GASTROENTEROLOGY// 
+ Reason for Request: 
+   No existing text
+   Edit? No//   (No)
+ Category: OUTPATIENT// 
+ Urgency: ROUTINE// 
+ Clinically indicated date:7 DAYS FROM TODAY// <-- UPDATED VALUE
+  
+ NOTE: The report logic can determine if OR*3.0*350/CPRS GUI v30.B has been
+ installed.  If not, the report will build data based on the EARLIEST DATE
+ field.  If 30.B has already been installed, the report can build data off
+ the CLINICALLY INDICATED DATE field.  If the post-install routine ORY389 
+ is left on the system, the report can be re-run any time by executing the
+ following line from the programmer prompt: D CONSULT^ORY389
+  
+ ========================================================================
+ ========CREATING CLINIC QUICK ORDERS FROM INPATIENT QUICK ORDERS========
+ ========================================================================
+  
+ A new quick order conversion utility has been added to the ORDER MENU 
+ MANAGEMENT menu [ORCM MGMT]. Create Clinic Order QOs from Inpatient QOs
+ [OR CONV INPT QO TO CLIN ORD QO] is a utility that can convert certain 
+ inpatient medication quick orders into clinic quick orders.  Specifically,
+ Unit Dose quick orders can be converted to Clinic Medication quick orders
+ and IV Medication quick orders can be converted to Clinic Infusion quick
+ orders.
+  
+ The utility offers two actions to choose from when converting a quick 
+ order:
+ Copy or Move.
+  
+ Copy will create a copy of the quick order and then, if OR*3.0*350 
+ (CPRS GUI v30.B) has been installed, will prompt you to delete the 
+ originally selected quick order.  During the copy process, the user is
+ prompted to enter a new name for the copied order and the Display Group is
+ set to Clinic Medications. The Copy action can only work with one quick
+ order at a time and therefore is limited to a single selection item from
+ the list of available quick orders.
+  
+ If you choose to delete the original quick order, the utility will check 
+ for any pointers referencing the selected quick order.  If any other items
+ (menus, order sets, display group(s), reminder dialog items) are
+ referencing the selected quick order, the delete action will not be
+ permitted. If any pointers are found, the utility will display those items
+ on the screen.  If, at some point in the future, the pointers are removed
+ (i.e. you find that the selected QO is part of an order menu and then you
+ remove that QO from the menu) you should then be able to manually delete
+ the QO via the QO editor [ORCM QUICK ORDERS].
+  
+ Move will modify the selected quick order by changing the Display Group 
+ to Clinic Medications or Clinic Infusions.  The Move action allows for
+ selecting either a single item or a range of items (e.g. 1,3,4-9) to be
+ converted in succession.
+  
+  
+ Patch Components:
+ ================================================================= 
+  
+ Files & Fields Associated:
+ =================================================================
+ File                   Field                  New/Modified/Deleted
+ ------------------------------------------------------------------
+ ORDER (#100)           DIALOG (#2)                Modified
+ ORDER (#100)           ITEM ORDERED (#7)          Modified
+  
+ Forms Associated:
+ =================
+ N/A
+  
+ Mail Groups Associated:
+ =======================
+ N/A
+  
+ Options Associated:
+ ===================
+ ORCM MGMT                                          Modified
+ OR CONV INPT QO TO CLIN ORD QO                       New
+ OR CONVERT UD TO CM                                 Delete
+  
+ Protocols Associated:
+ =====================
+ N/A
+  
+ Security Keys Associated:
+ =========================
+ N/A
+  
+ Templates Associated:
+ =====================
+ N/A
+  
+ Additional Information:
+ =======================
+ N/A
+  
+ New Service Requests (NSRs):
+ ============================
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ============================
+ N/A
+  
+ Test Sites:
+ ===========
+ Cleveland, OH
+ Heartland - East
+ Heartland - West
+ Loma Linda, CA
+ Palo Alto, CA
+ San Diego, CA 
+  
+  
+ Pre/Post Installation Overview:
+ ===============================
+ The patch does not contain any pre-install activity.
+  
+ Post-install creates two tasked jobs. The first will create the new 
+ cross-references in the ORDER file (#100).  The second will compile a list
+ of all consult quick orders and the stored value for the Earliest
+ Appropriate Date field.  When complete, each job sends a mail message to
+ the installer and/or selected recipients.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ STRONGLY recommended that it be installed during non-peak hours to
+ minimize system load and any potential disruption to users.  This patch
+ should take less than 5 minutes to install.  The search for consult quick
+ orders is a tasked job and could take 30 minutes or more to complete.
+ The tasked job to create new cross-references in the ORDER file could 
+ take 60 minutes or longer to complete, depending on system load.
+  
+ Installation Instructions:
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu.  From this menu, you may elect to use the 
+    following options. When prompted for the INSTALL NAME enter OR*3.0*389
+    a. Backup a Transport Global - This option will create a backup 
+       message of any routines exported with this patch. It will not backup
+       any other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - This option will 
+       allow you to view all changes that will be made when this patch is 
+       installed. It compares all components of this patch (routines, DDs,
+       templates, etc.).
+    c. Verify Checksums in Transport Global - This option will allow you
+       to ensure the integrity of the routines that are in the transport
+       global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option 
+    and choose the patch to install.
+  
+ 5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+    install? NO//'    Answer 'NO'
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+    NO//'    Answer 'NO'
+       This patch does not require logons to be inhibited.
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO//'   Answer 'NO' 
+       This patch does not require any items to be disabled.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ If the patch installer receives the mail message with the subject of
+ CONSULT/PROCEDURE QOs EARLIEST APPROPRIATE DATE DEFAULT VALUE, please 
+ forward that message to the person(s) managing consult QOs at your 
+ facility.
+  
+ If the mail message PATCH OR*3.0*389 ORDER RE-INDEX STATUS indicates that 
+ the tasked job was interrupted, please follow the instructions in the 
+ message to restart the task (run RESTART^ORY389 from a programmer prompt)
+  
+ The routine ORY389E is automatically deleted from the system.
+  
+ The routine ORY389 is not automatically deleted from the system. 
+ However, it may be manually deleted from the system but only after both
+ tasked jobs have been confirmed as being complete and the site does not 
+ wish to retain the ability to regenerate the consult quick order report 
+ via CONSULT^ORY389.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 17
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCMEDT0
+    Before: B17670670   After: B20168167  **46,60,190,215,243,296,389**
+Routine Name: ORCMEDT4
+    Before: B65485434   After: B93356095  **8,46,95,245,313,389**
+Routine Name: ORCMEDT9
+    Before:       n/a   After: B48472878  **389**
+Routine Name: ORQQPXRM
+    Before: B16643774   After: B30470800  **10,85,116,173,187,190,215,
+                                           243,306,389**
+Routine Name: ORY389
+    Before:       n/a   After:B181884503  **389**
+Routine Name: ORY389A
+    Before:       n/a   After:  B9015623  **389**
+Routine Name: ORY389E
+    Before:       n/a   After: B15752385  **389**
+ 
+Routine list of preceding patches: 296, 306, 313
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 06, 2014
+Completed By:                               Date Completed: MAR 07, 2016
+Released By :                               Date Released : MAR 08, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

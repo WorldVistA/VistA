@@ -1,0 +1,183 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 10/22/15 at 15:25
+=============================================================================
+Run Date: APR 05, 2016                     Designation: IB*2*555
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #511                      Status: Released
+                  Compliance Date: MAY 05, 2016
+=============================================================================
+
+Associated patches: (v)IB*2*347    <<= must be installed BEFORE `IB*2*555'
+
+Subject: INCORRECT INELIGIBLE DENTAL FOR COST-BASED AND INTER-AGENCY UNIT RATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses two issues:
+ 1. The first issue contains two new Ineligible Dental for Cost-Based and 
+ Inter-agency billing rates for FY 2015. 
+  
+ 2. The second issue involves the [IB OUTPUT DAYS ON HOLD] Days On Hold 
+ Report which continues in process mode but never completes.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000001306422 Integrated Billing - Other: Incorrect unit rate
+ 2. INC000000875035 Integrated Billing - Reports Issue:
+    Duplicates:
+    INC000000874220 Integrated Billing - Reports Issue:
+    INC000000875082 Integrated Billing - Reports Issue:
+    INC000000889682 IB OUTPUT DAYS ON HOLD - error
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+   
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Black Hills HCS
+ Central Plains HCS
+ Maryland HCS   
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001306422 Integrated Billing - Other: Incorrect unit rate
+  
+ Problem:
+ --------
+ Site user receives the old dental rates since they are no longer separate
+ rates and included in the outpatient visit rates for FY 2015.
+  
+ The Chief Business Office (CBO) has instructed to add two new Ineligible
+ Dental for Cost-Based and Inter-Agency rates with an effective date of
+ 11/04/2014.  These will distinguish between the outpatient dental rates
+ and the outpatient visit rates.
+  
+ Resolution:
+ -----------
+ A post-init routine IB20P555 was created to add two new Ineligible Dental
+ rates for Cost-Based and Inter-Agency billing charge items with an
+ effective date of 11/04/14 to the CHARGE ITEM file (#363.2). It will also
+ update the charge sets with the Ineligible Dental in the RATE SCHEDULE
+ file (#363) if they don't exist.
+  
+ 2. INC000000875035 Integrated Billing - Reports Issue:
+  
+ Problem:
+ --------
+ Site user reports that she is unable to print the [IB OUTPUT DAYS ON HOLD]
+ Days On Hold Report. The report doesn't generate an error and just sits in
+ processing mode but never completes it.
+  
+ Resolution:
+ -----------
+ Routine IBOHDT was modified to correct an infinitive looping problem caused
+ by the value of the 'DFN' variable for the patient when it was reset for a
+ different patient within the scope of the 'FOR' command for the report.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+      
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+    
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+     
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*555):
+     
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+   
+ 4.   Select Installation Option: Install Package(s)
+    
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO.
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//', answer NO.
+     
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P555.
+    
+ 6.   Use the 'Install File Print' option to review the updates and ensure
+      that the install has been completed. For an example:
+  
+     IB*2.0*555 Post-Install .....
+  
+       >> 2 Dental for Cost Based/Interagency Charge Items added (#363.2)
+  
+ ** Rate Schedule DNTL-OPT DENTAL with TL-OPT DENTAL already exists, not re-added
+       >> 1 Rate Schedules updated (#363)
+  
+      IB*2*555 Post-Install Complete
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 22
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P555
+    Before:       n/a   After: B23535570  **555**
+Routine Name: IBOHDT
+    Before: B23197059   After: B23595363  **70,95,142,347,555**
+ 
+Routine list of preceding patches: 347
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 09, 2015
+Completed By:                               Date Completed: MAR 30, 2016
+Released By :                               Date Released : APR 05, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

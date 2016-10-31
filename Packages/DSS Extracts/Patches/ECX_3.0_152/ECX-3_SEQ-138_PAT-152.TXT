@@ -1,0 +1,329 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 10/16/14 at 15:59
+=============================================================================
+Run Date: MAR 31, 2015                     Designation: ECX*3*152
+Package : ECX - DSS EXTRACTS                  Priority: EMERGENCY
+Version : 3       SEQ #138                      Status: Released
+                  Compliance Date: APR 02, 2015
+=============================================================================
+
+Associated patches: (v)ECX*3*150   <<= must be installed BEFORE `ECX*3*152'
+
+Subject: MID FY15 UPDATE TO THE NATIONAL CLINIC (#728.441) FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch ECX*3.0*152 updates the SHORT DESCRIPTION field (#1) of 198
+ existing CODE fields (#.01) of the NATIONAL CLINIC (#728.441) file.
+  
+ *************************************************************************
+ NOTE: This patch has a shortened compliance date because it must be
+ installed on or before 4/2/2015. 
+ ************************************************************************* 
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A  
+  
+  
+ ASSOCIATED REMEDY TICKET: 
+ ========================= 
+ 1. INC000001059328 - Mid FY15 Changes for 4 Char Cds 
+                      (National Clinic #728.441 file)
+  
+   
+ PARTICIPATING TEST SITES: 
+ =========================
+ Providence
+ Upstate NY
+ Muskogee
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001059328 - Mid FY15 Changes for 4 Char Cds
+                      (National Clinic #728.441 file)
+                      
+    Problem:
+    --------
+    A request was made by the Managerial Cost Accounting Office (MCAO) to
+    update the SHORT DESCRIPTION field (#1) of 198 existing CODE fields 
+    (#.01) of the NATIONAL CLINIC (#728.441) file.
+  
+    Resolution:
+    -----------
+    Created routine ECX3P152 to update the NATIONAL CLINIC (#728.441)
+    file by modifying the SHORT DESCRIPTION field (#1) of 198 existing
+    CODE fields (#.01) effective 4/1/2015.
+  
+    The descriptions of the following CODE fields (#.01) have changed:
+   
+    Existing Code       New Short Description
+   ---------------    -------------------------
+        NASL            ALS Regional Facility
+        RHTC            Rehab PT (non Home Telehealth)
+        VITL            VITAL Initiative Program
+        WCNC            CHAR4 COUNCIL
+        WCQC            Women's Telehealth Program
+        CDBC            CHAR4 COUNCIL
+        CDDC            CHAR4 COUNCIL
+        CDEC            CHAR4 COUNCIL
+        CDFC            CHAR4 COUNCIL
+        CDGC            CHAR4 COUNCIL
+        CDHC            CHAR4 COUNCIL
+        CDJC            CHAR4 COUNCIL
+        CDKC            CHAR4 COUNCIL
+        CDLC            CHAR4 COUNCIL
+        CDMC            CHAR4 COUNCIL
+        CDPC            CHAR4 COUNCIL
+        CDQC            CHAR4 COUNCIL
+        CDRC            CHAR4 COUNCIL
+        CDSC            CHAR4 COUNCIL
+        CDTC            CHAR4 COUNCIL
+        CDUC            CHAR4 COUNCIL
+        CDVC            CHAR4 COUNCIL
+        CDWC            CHAR4 COUNCIL
+        CGAC            CHAR4 COUNCIL
+        CGDC            CHAR4 COUNCIL
+        CGEC            CHAR4 COUNCIL
+        CGFC            CHAR4 COUNCIL
+        CGHC            CHAR4 COUNCIL
+        CGJC            CHAR4 COUNCIL
+        CGKC            CHAR4 COUNCIL
+        CGLC            CHAR4 COUNCIL
+        CGNC            CHAR4 COUNCIL
+        CGPC            CHAR4 COUNCIL
+        CGQC            CHAR4 COUNCIL
+        CGSC            CHAR4 COUNCIL
+        CGTC            CHAR4 COUNCIL
+        CGUC            CHAR4 COUNCIL
+        CGVC            CHAR4 COUNCIL
+        CGWC            CHAR4 COUNCIL
+        CNSF            CHAR4 COUNCIL
+        CNSG            CHAR4 COUNCIL
+        CNSI            CHAR4 COUNCIL
+        CNSP            CHAR4 COUNCIL
+        CNSQ            CHAR4 COUNCIL
+        CNSU            CHAR4 COUNCIL
+        CNSW            CHAR4 COUNCIL
+        CNSX            CHAR4 COUNCIL
+        CNSY            CHAR4 COUNCIL
+        COLL            CHAR4 COUNCIL
+        DEAC            CHAR4 COUNCIL
+        DEBC            CHAR4 COUNCIL
+        DEDC            CHAR4 COUNCIL
+        DEEC            CHAR4 COUNCIL
+        DEFC            CHAR4 COUNCIL
+        DEGC            CHAR4 COUNCIL
+        DEHC            CHAR4 COUNCIL
+        DELC            CHAR4 COUNCIL
+        DEMC            CHAR4 COUNCIL
+        DEMT            CHAR4 COUNCIL
+        DENC            CHAR4 COUNCIL
+        DEPC            CHAR4 COUNCIL
+        DEPS            CHAR4 COUNCIL
+        DEQC            CHAR4 COUNCIL
+        DERC            CHAR4 COUNCIL
+        DESC            CHAR4 COUNCIL
+        DETC            CHAR4 COUNCIL
+        DEUC            CHAR4 COUNCIL
+        DEVC            CHAR4 COUNCIL
+        DEWC            CHAR4 COUNCIL
+        DMAC            CHAR4 COUNCIL
+        DMBC            CHAR4 COUNCIL
+        DMDC            CHAR4 COUNCIL
+        DMEC            CHAR4 COUNCIL
+        DMFC            CHAR4 COUNCIL
+        DMGC            CHAR4 COUNCIL
+        DMHC            CHAR4 COUNCIL
+        DMJC            CHAR4 COUNCIL
+        DMKC            CHAR4 COUNCIL
+        DMLC            CHAR4 COUNCIL
+        DMPC            CHAR4 COUNCIL
+        DMQC            CHAR4 COUNCIL
+        DMRC            CHAR4 COUNCIL
+        DMSC            CHAR4 COUNCIL
+        DMTC            CHAR4 COUNCIL
+        DMUC            CHAR4 COUNCIL
+        DMVC            CHAR4 COUNCIL
+        DMWC            CHAR4 COUNCIL
+        FEEQ            CHAR4 COUNCIL
+        FEEX            CHAR4 COUNCIL
+        HDEC            CHAR4 COUNCIL
+        HDHC            CHAR4 COUNCIL
+        HDJC            CHAR4 COUNCIL
+        HDKC            CHAR4 COUNCIL
+        HDLC            CHAR4 COUNCIL
+        HDMC            CHAR4 COUNCIL
+        HDNC            CHAR4 COUNCIL
+        HDPC            CHAR4 COUNCIL
+        HDQC            CHAR4 COUNCIL
+        HDRC            CHAR4 COUNCIL
+        HTAC            CHAR4 COUNCIL
+        HTBC            CHAR4 COUNCIL
+        HTFC            CHAR4 COUNCIL
+        HTSC            CHAR4 COUNCIL
+        HTTC            CHAR4 COUNCIL
+        HTUC            CHAR4 COUNCIL
+        HTVC            CHAR4 COUNCIL
+        HTWC            CHAR4 COUNCIL
+        IACT            CHAR4 COUNCIL
+        IDEC            CHAR4 COUNCIL
+        IDFC            CHAR4 COUNCIL
+        IDGC            CHAR4 COUNCIL
+        IDHC            CHAR4 COUNCIL
+        IDJC            CHAR4 COUNCIL
+        IDKC            CHAR4 COUNCIL
+        IDLC            CHAR4 COUNCIL
+        IDMC            CHAR4 COUNCIL
+        IDPC            CHAR4 COUNCIL
+        IDQC            CHAR4 COUNCIL
+        IDRC            CHAR4 COUNCIL
+        IDUC            CHAR4 COUNCIL
+        IDVC            CHAR4 COUNCIL
+        IDWC            CHAR4 COUNCIL
+        JCBC            CHAR4 COUNCIL
+        LPNU            CHAR4 COUNCIL
+        LVL1            CHAR4 COUNCIL
+        LVL2            CHAR4 COUNCIL
+        LVL3            CHAR4 COUNCIL
+        LVL4            CHAR4 COUNCIL
+        LVL5            CHAR4 COUNCIL
+        MMMT            CHAR4 COUNCIL
+        MMPS            CHAR4 COUNCIL
+        MPAK            CHAR4 COUNCIL
+        MPAL            CHAR4 COUNCIL
+        MPAT            CHAR4 COUNCIL
+        MPAX            CHAR4 COUNCIL
+        MPAZ            CHAR4 COUNCIL
+        NASG            CHAR4 COUNCIL
+        NASK            CHAR4 COUNCIL
+        NASM            CHAR4 COUNCIL
+        NASN            CHAR4 COUNCIL
+        NASO            CHAR4 COUNCIL
+        NASP            CHAR4 COUNCIL
+        NASQ            CHAR4 COUNCIL
+        NASR            CHAR4 COUNCIL
+        NAST            CHAR4 COUNCIL
+        NASU            CHAR4 COUNCIL
+        NASV            CHAR4 COUNCIL
+        NASW            CHAR4 COUNCIL
+        NASX            CHAR4 COUNCIL
+        NASY            CHAR4 COUNCIL
+        NASZ            CHAR4 COUNCIL
+        NCBC            CHAR4 COUNCIL
+        NDTR            CHAR4 COUNCIL
+        NUDT            CHAR4 COUNCIL
+        PDRC            CHAR4 COUNCIL
+        PDSC            CHAR4 COUNCIL
+        PDTC            CHAR4 COUNCIL
+        PDVC            CHAR4 COUNCIL
+        PLCH            CHAR4 COUNCIL
+        PLMT            CHAR4 COUNCIL
+        PLPS            CHAR4 COUNCIL
+        PNFC            CHAR4 COUNCIL
+        PNJC            CHAR4 COUNCIL
+        PNPC            CHAR4 COUNCIL
+        PNQC            CHAR4 COUNCIL
+        PNRC            CHAR4 COUNCIL
+        PNSC            CHAR4 COUNCIL
+        PNTC            CHAR4 COUNCIL
+        PNUC            CHAR4 COUNCIL
+        PNWC            CHAR4 COUNCIL
+        RDNU            CHAR4 COUNCIL
+        RHAC            CHAR4 COUNCIL
+        RHQC            CHAR4 COUNCIL
+        RHUC            CHAR4 COUNCIL
+        RHVC            CHAR4 COUNCIL
+        RV20            CHAR4 COUNCIL
+        RV45            CHAR4 COUNCIL
+        RV60            CHAR4 COUNCIL
+        SCHC            CHAR4 COUNCIL
+        SCQC            CHAR4 COUNCIL
+        SCTC            CHAR4 COUNCIL
+        SCUC            CHAR4 COUNCIL
+        SCVT            CHAR4 COUNCIL
+        SNRC            CHAR4 COUNCIL
+        SNVC            CHAR4 COUNCIL
+        WCDC            CHAR4 COUNCIL
+        WCEC            CHAR4 COUNCIL
+        WCFC            CHAR4 COUNCIL
+        WCGC            CHAR4 COUNCIL
+        WCHC            CHAR4 COUNCIL
+        WCJC            CHAR4 COUNCIL
+        WCLC            CHAR4 COUNCIL
+        WCMC            CHAR4 COUNCIL
+        WCRC            CHAR4 COUNCIL
+        WCSC            CHAR4 COUNCIL
+        WCTC            CHAR4 COUNCIL
+        WCUC            CHAR4 COUNCIL
+        XYEL            CHAR4 COUNCIL
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes. 
+ Suggested time to install: non-peak requirement hours.
+   
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+   
+    3. From this menu, you may select to use the following options (when
+       prompted for INSTALL NAME, enter ECX*3.0*152).      
+  
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch is
+          installed.
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+       d. Print Transport Global - this option will allow you to view
+          the components of the KIDS build.
+      
+    4. Use the Install Package(s) option and select the package ECX*3.0*152
+   
+    5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+       respond NO.
+   
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? NO//" respond NO.
+   
+ ** 7. During install, verify that all entries were added successfully.
+       If an error is displayed, please file a Remedy Ticket.  
+   
+    8. You may delete the routine ECX3P152 from your production system 
+       after the patch has been successfully tested.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECX3P152
+    Before:       n/a   After: B43895139  **152**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 18, 2014
+Completed By:                               Date Completed: MAR 11, 2015
+Released By :                               Date Released : MAR 31, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

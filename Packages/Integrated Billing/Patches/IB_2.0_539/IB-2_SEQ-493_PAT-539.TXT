@@ -1,0 +1,139 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 11/24/14 at 17:11
+=============================================================================
+Run Date: MAR 16, 2015                     Designation: IB*2*539
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #493                      Status: Released
+                  Compliance Date: APR 15, 2015
+=============================================================================
+
+
+Subject: COST BASED AND INTER-AGENCY RATE UPDATE FOR FY2015
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will install the Cost-Based and Inter-Agency billing rates into
+ the CHARGE ITEM file (#363.2), with an effective date of 11/04/2014.
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1. INC000001081950 FY2015 Cost Based and Inter-agency billing rate updates
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Texas HCS
+ Maryland HCS
+ Tuscaloosa VAMC
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001081950 FY2015 Cost Based and Inter-agency billing rate updates
+  
+ Problem:
+ --------
+ The Chief Business Office (CBO) has requested a patch to update the
+ Cost-Based and Inter-Agency billing rates with an effective date of
+ 11/04/2014.
+  
+ Resolution:
+ -----------
+ A post-init routine IB20P539 was created to add 66 Cost-Based and Inter-
+ Agency billing rates with an effective date of 11/04/2014 to the CHARGE 
+ ITEM file (#363.2).
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+   1.   LOAD TRANSPORT GLOBAL 
+        ---------------------
+        Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.
+    
+   2.   START UP KIDS
+        -------------
+        Start up the Kernel Installation and Distribution System Menu
+   
+        [XPD MAIN]: 
+     
+               Edits and Distribution ...  
+               Utilities ...  
+               Installation ...
+      
+        Select Kernel Installation & Distribution System Option: INStallation
+               Load a Distribution 
+               Print Transport Global 
+               Compare Transport Global to Current System 
+               Verify Checksums in Transport Global 
+               Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution 
+               Backup a Transport Global 
+     
+   
+  3.   Select Installation Option:
+        ---------------------------
+        NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+               NAME, enter IB*2.0*539):
+     
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed.  It compares all components of this patch
+            (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+     
+   4.   Select Installation Option: Install Package(s)
+      
+        **This is the step to start the installation of this KIDS patch:
+        a. Choose the Install Package(s) option to start the patch install.
+        b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+           NO//' answer NO
+        c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+           and Protocols? NO//' answer NO
+      
+   5.   CLEAN UP POST-INIT ROUTINE
+        --------------------------
+        Optional - Once this patch has been successfully installed you may 
+        delete the post-init routine: IB20P539.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 17
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P539
+    Before:       n/a   After: B37049724  **539**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 18, 2014
+Completed By:                               Date Completed: MAR 09, 2015
+Released By :                               Date Released : MAR 16, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

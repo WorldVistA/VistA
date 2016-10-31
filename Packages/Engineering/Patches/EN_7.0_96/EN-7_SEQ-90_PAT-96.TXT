@@ -1,0 +1,213 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 07/22/14 at 14:54
+=============================================================================
+Run Date: FEB 03, 2015                     Designation: EN*7*96
+Package : EN - ENGINEERING                    Priority: Mandatory
+Version : 7        SEQ #90                      Status: Released
+                  Compliance Date: MAR 06, 2015
+=============================================================================
+
+Associated patches: (v)EN*7*65     <<= must be installed BEFORE `EN*7*96'
+                    (v)EN*7*68     <<= must be installed BEFORE `EN*7*96'
+
+Subject: NON-EXPENDABLE BUDGET OBJECT CODE UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses three issues:
+  
+ 1. Add 1 new NX BOC CAPITALIZED BUDGET OBJECT CODE and deactivate 3 old NX
+    BOC CAPITALIZED BUDGET OBJECT CODEs in the NX BOC file (#6914.4).
+  
+ 2. Correct a subscript error occurring at NEWLOC+1^ENEQNX1 when there is 
+    no nonexpendable inventory data uploaded from the portable bar code 
+    reader to the BARCODE PROGRAM file (#446.4).
+  
+ 3. Correct an error - <NOTOPEN>^PRT1^ENWOD in the Multiple Work Order 
+    Entry [ENWOMULTI] option when the device is set to 'forced', queuing
+    the job in a task.
+  
+  
+ ASSOCIATED NSRs:
+ ================
+ N/A
+  
+  
+ ASSOCIATED REMEDY: 
+ ==================
+ 1. INC000000824854 Engineering - Other: New IT BOCs
+ 2. INC000000997105 Engineering - Other
+ 3. INC000001011647 Engineering - Work Order Issue
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Salisbury VAMC
+ Boston HCS
+ Beckley VAMC
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000824854 Engineering - Other: New IT BOCs
+  
+  Problem:
+  --------
+  The VHA CFO Office of Financial Oversight-Austin has requested a patch
+  to add 1 new NX BOC CAPITALIZED BUDGET OBJECT CODE and deactivate 3 old 
+  NX BOC CAPITALIZED BUDGET OBJECT CODEs in the NX BOC file (#6914.4). 
+  
+  Resolution:
+  -----------
+  A post init routine EN70P96 was created to update these following codes
+  in the NX BOC file (#6914.4).
+  
+  BOC   BOC Title                                     SGL   Deactivate Date
+  ----  --------------------------------------------  ----  ----------------
+  3105  TRUST EQUIPMENT                               1750  08/28/2008
+  3122  OFFICE AUTOMATION/WORD PROCESSING, PURCHASED  1750  05/08/2014
+  3123  ADP EQUIPMENT                                 1751  05/08/2014
+  3138  IT HARDWARE-CAPITALIZED                       1751  (NEW)
+  
+ 2. INC000000997105 Engineering - Other
+  
+  Problem:
+  --------
+  The subscript error is usually caused when site users try to do a barcode 
+  upload and there is no nonexpendable inventory data except the barcode
+  program id in the particular upload process.
+   
+  Resolution:
+  -----------
+  The software was modified to display the message 'No data to process.' if
+  there is no nonexpendable inventory data uploaded from the portable bar
+  code reader to the BARCODE PROGRAM FILE (#446.4).
+  
+  Routine: ENEQNX1
+  
+ 3. INC000001011647 Engineering - Work Order Issue
+  
+  Problem:
+  --------
+  Site user received this error: <NOTOPEN>^PRT1^ENWOD in the Multiple Work
+  Order Entry [ENWOMULTI] option when he tried to print multiple work
+  orders on a device being queued in a task.
+   
+  Resolution:
+  -----------
+  The software was modified to not close the device by the close logic for
+  devices (%ZISC) when the job for printing multiple work orders is queued
+  in a task and the device is eventually closed in Taskman.
+  
+  Routine: ENWOD
+  
+ ====================== INSTALLATION INSTRUCTIONS ======================
+   
+ This patch may be installed during normal working hours. Users can be on
+ the system during the installation. Install time is less than 2 minutes.
+        
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 2.  START UP KIDS  
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]:
+   
+            Edits and Distribution ...  
+            Utilities ...  
+            Installation ...  
+   
+     Select Kernel Installation & Distribution System Option: Installation 
+                                                              --- 
+            Load a Distribution  
+            Print Transport Global 
+            Compare Transport Global to Current System 
+            Verify Checksums in Transport Global 
+            Install Package(s) 
+            Restart Install of Package(s) 
+            Unload a Distribution 
+            Backup a Transport Global 
+   
+ 3.  Select Installation Option:  
+     ---------------------------
+     NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+           NAME, enter EN*7.0*96):
+        
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+   
+ 4.  Select Installation Option: Install Package(s)
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO.
+  
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//', answer YES.
+  
+     d.  When prompted 'Enter options you wish to mark as 'Out of Order':',
+         enter the following options:
+  
+              
+              Nonexpendable Equipment Module (A&MM) [ENMM MGR]
+              Upload Data From Portable Bar Code Reader [ENBCUPLD]
+              Multiple Work Order Entry [ENWOMULTI]
+  
+     e.   When prompted 'Enter protocols you wish to mark as 'Out of
+          Order':', press <ENTER>.
+  
+  
+ 5.  During install, verify that all entries were added and/or updated
+     successfully, if an error is displayed, please file a Remedy Ticket.
+   
+ 6.  The routine EN70P96 can be removed from your production and 
+     test system after the patch has been successfully installed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;ENGINEERING;**[Patch List]**;Aug 17, 1993;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EN70P96
+    Before:       n/a   After:  B6543791  **96**
+Routine Name: ENEQNX1
+    Before: B15417507   After: B15868049  **10,21,45,68,96**
+Routine Name: ENWOD
+    Before: B24829030   After: B24962148  **35,43,65,96**
+ 
+Routine list of preceding patches: 65, 68
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 02, 2014
+Completed By:                               Date Completed: JAN 29, 2015
+Released By :                               Date Released : FEB 03, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

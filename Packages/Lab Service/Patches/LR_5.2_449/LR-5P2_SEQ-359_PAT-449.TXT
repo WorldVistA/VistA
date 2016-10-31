@@ -1,0 +1,196 @@
+$TXT Created by                 at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 11/04/14 at 15:29
+=============================================================================
+Run Date: FEB 27, 2015                     Designation: LR*5.2*449
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #359                    Status: Released
+                  Compliance Date: MAR 30, 2015
+=============================================================================
+
+Associated patches: (v)LR*5.2*344  <<= must be installed BEFORE `LR*5.2*449'
+                    (v)LR*5.2*350  <<= must be installed BEFORE `LR*5.2*449'
+                    (v)LR*5.2*369  <<= must be installed BEFORE `LR*5.2*449'
+                    (v)LR*5.2*377  <<= must be installed BEFORE `LR*5.2*449'
+                    (v)LR*5.2*384  <<= must be installed BEFORE `LR*5.2*449'
+
+Subject: SEARCH OPTIONS ISSUES AND EGFR SEX PROBLEM
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following 3 issues:
+  
+ 1. Time ignored in searching date/time period.
+ 2. Units can be wrong in Search options.
+ 3. EGRF issue related to patient sex.
+  
+ Blood Bank Review:
+ ================== 
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*449 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*449 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*449 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Associated  Remedy Ticket(s):
+ =============================
+ 1. INC000001046770  -  Lab - Other - Search option criteria
+ 2. INC000001042520  -  Lab - CH - General: Search options units
+ 3. INC000001033783  -  EGFR issue related to patient sex
+  
+ Associated NSR(s):
+ ==================
+ N/A
+   
+ Participating Testing Sites:
+ ============================
+ Central Texas HCS (Temple)
+ South Texas HCS (San Antonio)
+ Maine HCS (Togus)
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. INC000001046770 -  Lab - Other - Search option criteria
+  
+ Problem:
+ --------
+ Option "Search for high/low values of a test" [LRSORA] allows for a
+ date/time interval to be entered for the search but the time part is
+ ignored when doing the search. Also search is done based on order date in
+ file #69 (LAB ORDER ENTRY) thus sometimes displaying unexpected data.
+  
+ Solution:
+ ---------
+ Modify routines LRSORA and LRSORA3 to incorporate the time aspect of the
+ input parameters for the search and force the search to go through file
+ #63 (LAB DATA) to yield more consistent results.
+  
+ Routines: LRSORA, LRSORA3   
+  
+ 2. INC000001042520 -  Lab - CH - General: Search options units
+  
+ Problem:
+ --------
+ In search options "Search for high/low values of a test" [LRSORA], "Search
+ for critical value flagged tests" [LRSORC], and "Search for abnormal and
+ critical flagged tests" [LRSORD], the units displayed are pulled from the 
+ LABORATORY TEST file (#60) rather than from the LAB DATA file (#63)
+ where the test results are stored. If the units have been changed in the
+ LABORATORY TEST file (#60), then the wrong units will show with the
+ results for these searches.
+  
+ Solution:
+ ---------
+ Modify these searches to get the units and reference ranges from the LAB 
+ DATA file (#63) where they are stored with the test results.
+     
+ Routines: LRSORA2, LRSORA3, LRSORC1, LRSORC1A, LRSORD1, LRSORD1A
+  
+ 3. INC000001033783 -  EGFR issue related to patient sex
+  
+ Problem:
+ --------
+ Delta checks for the test EGFR do not pull the sex for patients in the 
+ RESEARCH file (#67.1). This often leads to the test being cancelled.
+  
+ Solution:
+ ---------
+ Modify delta check routines LREGFR and LREGFR2 to obtain the sex of the
+ patient from the RESEARCH file (#67.1) when the patient is a research
+ patient.
+  
+ Routines: LREGFR, LREGFR2 
+  
+   ==================== INSTALLATION INSTRUCTIONS ====================
+  
+   The install time for this patch is less than 2 minutes. This patch
+   can be installed when Laboratory users are on the system.
+  
+   NOTE: Kernel patches must be current on the target system to avoid
+         problems loading and/or installing this patch.
+  
+   1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+      option will load the KIDS patch onto your system.
+  
+   2. The patch has now been loaded into a Transport global on your
+      system. You now need to use KIDS to install the transport global.
+  
+   3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+      select the 'Installation' menu.
+  
+   4. Use the 'Verify Checksum in Transport Global' option and verify
+      that all routines have the correct checksums.
+  
+   5. On the KIDS menu, under the 'Installation' menu, use the following
+      options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+      If you wish to preserve a copy of the routines exported in this 
+      patch prior to installation, you should use the 'Backup a Transport
+      Global' option at this time. You may also compare the routines in
+      your production account to the routines in the patch by using the
+      'Compare a Transport Global to Current System' option.
+  
+   6. Use the 'Install Package(s)' option under the 'Installation' menu
+      and select the package 'LR*5.2*449.
+  
+      If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+      choose 'NO'.
+  
+      If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LREGFR
+    Before: B30928139   After: B31356775  **289,313,350,449**
+Routine Name: LREGFR2
+    Before: B12034100   After: B12331758  **377,449**
+Routine Name: LRSORA
+    Before: B28201937   After: B25652990  **344,357,369,449**
+Routine Name: LRSORA2
+    Before: B18844521   After: B20037881  **2,62,201,272,369,449**
+Routine Name: LRSORA3
+    Before: B16971117   After: B17572914  **1,344,449**
+Routine Name: LRSORC1
+    Before:  B8026768   After:  B8156168  **153,344,449**
+Routine Name: LRSORC1A
+    Before: B22607963   After: B22868003  **201,344,351,384,449**
+Routine Name: LRSORD1
+    Before:  B7833211   After:  B7961695  **344,449**
+Routine Name: LRSORD1A
+    Before: B21795919   After: B22054180  **201,344,449**
+ 
+Routine list of preceding patches: 350, 369, 377, 384
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 17, 2014
+Completed By:                               Date Completed: FEB 19, 2015
+Released By :                               Date Released : FEB 27, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

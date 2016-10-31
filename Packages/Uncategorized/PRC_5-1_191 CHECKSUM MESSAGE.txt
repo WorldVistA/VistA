@@ -1,0 +1,62 @@
+Subj: HEADS-UP -- PRC*5.1*191 Checksums
+22 Jul 2016 16:18:02 -0400 (EDT)
+HEADS-UP: Documented pre-patch Checksums
+ 
+ 
+ACTION:  Sites may proceed with installation of the patch.  
+ 
+The checksums documented in the patch will not affect the functionality 
+or the installation of this patch.
+ 
+ 
+ 
+PURPOSE: Checksum information pre/post install of PRC*5.1*191. 
+ 
+The values you should see are as follows when you run the VERIFY CHECKSUMS
+
+The values you should see are as follows when you run the VERIFY CHECKSUMS
+IN TRANSPORT option:
+ 
+If patch 189 was backed out:
+ 
+  PRCHMA2   Before Checksum Calculated 22333129 expected value 26609094
+            PRCHMA2   Calculated   26609094
+  PRCHNPO1  Before Checksum Calculated 54494630 expected value 57588246
+           PRCHNPO1  Calculated   57587173
+  <<PRCHNPOC  New routine>>
+            PRCHNPOC  Calculated    1332156
+  PRCHREC   Before Checksum Calculated 41539701 expected value 47786869
+            PRCHREC   Calculated   47783835
+  PRCSUT3   Before Checksum Calculated 17626422 expected value 32178363
+            PRCSUT3   Calculated   32271730 
+    5 Routines checked, 0 failed.
+ 
+If patch 189 was NOT backed out;
+ 
+  PRCHMA2   Calculated   26609094
+  PRCHNPO1  Calculated   57587173
+  PRCHNPOC  Calculated    1332156
+  PRCHREC   Calculated   47783835
+  PRCSUT3   Calculated   32271730
+    5 Routines checked, 0 failed.
+ 
+ 
+BACKGROUND:
+ 
+Patch PRC*5.1*191  replaced patch  PRC*5.1*89  which has  been  marked as
+entered in error  patch PRC*5.1*189 on 6/29/15.   Forum message #73546428
+instructed  sites to back out patch PRC*5.1*189 and restore their systems
+to the pre-patch routines.
+ 
+Routine Name: PRCHMA2  -- B22333129 (Post 189 Value: B26609094)
+Routine Name: PRCHNPO1 -- B54494630 (Post 189 Value: B57588246)
+Routine Name: PRCHNPOC -- n/a; new  (Post 189 Value: B1332156)
+Routine Name: PRCHREC  -- B41539701 (Post 189 Value: B47786869)
+Routine Name: PRCSUT3  -- B17626422 (Post 189 Value: B32178363)
+
+Patch PRC*5.1*191 is the replacement patch for PRC*5.1*189.
+ 
+The pre-checksums for patch 191  unfortunately reflect those post install 
+of patch PRC*5.1*189 as  the Patch Module  in Forum still contained those
+values rather than the restored values when sites were instructed to back
+out patch PRC*5.1*189.

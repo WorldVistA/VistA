@@ -1,0 +1,213 @@
+$TXT Created by                     MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 01/08/15 at 10:24
+=============================================================================
+Run Date: JUN 01, 2015                     Designation: PSJ*5*259
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #268                      Status: Released
+                  Compliance Date: JUL 02, 2015
+=============================================================================
+
+Associated patches: (v)PSJ*5*181   <<= must be installed BEFORE `PSJ*5*259'
+                    (v)PSJ*5*279   <<= must be installed BEFORE `PSJ*5*259'
+
+Subject: IV ORDER SHOWS WRONG DOSAGE/NON-VERIFIED ORDER BECOMES ACTIVE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+  
+ 1)  When placing an IV order, the "Instructions" field should not display 
+     as it can be in conflict with the correct dosage amount. The same IV 
+     order finished as a Unit Dose order will show  the "Instructions"
+     field.  
+  
+ 2)  A Pharmacist non-verified order was verified in CPRS by a Nurse
+     which caused the order to become active.
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+  
+ Associated Remedy tickets:
+ =========================
+ 1) INC000000390624:  Physician orders drug of one strength and the
+                      instructions field indicates another strength in 
+                      unit dose order.                    
+  
+    Duplicate(s):
+    -------------
+    INC000000280468
+    INC000000394503
+    INC000000472880
+  
+ 2) INC000000910632:     A Pharmacist non-verified order was verified in 
+                         CPRS by a Nurse which caused the order to become 
+                         active.
+  
+  
+  
+ Participating Test Sites:
+ ========================
+ Puget Sound HCS
+ San Francisco VAMC
+ Sierra Nevada HCS
+  
+  
+ Remedy Overview:
+ ===============
+ 1)  INC000000390624: 
+  
+    Problem:
+    --------
+    The problem occurs if a physician places an IV order in CPRS with an 
+    additive whose Orderable Item is attached to exactly one drug which is 
+    marked as Unit Dose. The non-verified order will then be associated with 
+    that Dispense Drug, and the strength for that Dispense Drug will then be
+    imported into the Instructions field.
+  
+    Resolution:
+    ------------
+    Modified routine PSIVORFA so that the Dispense Drug and Instructions
+    are only added to the order for Unit Dose orders.
+  
+  
+ 2)  INC000000910632:   
+  
+    Problem:
+    --------
+    A pharmacist processing pending orders had accepted, but not verified an
+    order with intent of contacting the provider about the order.  While the
+    order was in a non-verified status, a nurse verified the order in CPRS.
+    The order subsequently became active and the nurse was able to administer 
+    the medication in BCMA.
+  
+    Resolution:
+    -----------
+    Modified routine PSJHL5 to comment out a line of code that was causing
+    the nurse verified medication to become active.
+  
+  
+ DOCUMENTATION RETRIEVAL:
+ ========================
+ The revised INPATIENT MEDICATIONS NURSE'S USER MANUAL and INPATIENT 
+ MEDICATIONS TECHNICAL MANUAL / SECURITY GUIDE are available on the
+ ANONYMOUS.SOFTWARE directory at one of the following Office of Information
+ (OI) Field Offices.  These files should be retrieved in binary format.
+     
+  Sites may retrieve documentation in one of the following ways:
+    
+  (1) The preferred method is to FTP the files from 
+      download.vista.domain.ext, which will transmit the files from 
+      the first available FTP server.
+     
+  (2) Sites may also elect to retrieve documentation directly from a
+      specific server as follows:
+     
+      Albany                ftp.domain.ext
+      Hines                 ftp.domain.ext
+      Salt Lake City        ftp.domain.ext
+     
+  The documentation distribution includes:
+  
+  File Name                  Description                          Protocol
+  ---------                  -----------                          --------
+  psj_5_nurse_um_r0515       Nurse's User Manual                  Binary
+  psj_5_tm_r0515             Technical Manual / Security Guide    Binary
+  
+  
+ Installation Instructions:
+ =========================
+ This patch can be loaded with users in the system but it is recommended
+ that it be installed when user activity is low.
+  
+ Install Time - less than 2 minutes 
+  
+  
+ 1.  Load Transport Global 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+     Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSJ*5.0*259):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO. 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 21
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSIVORFA
+    Before: B30883518   After: B31628558  **4,7,18,28,50,71,58,91,80,110,
+                                           111,134,225,267,275,279,259**
+Routine Name: PSJHL5
+    Before: B32301721   After: B31854476  **1,28,39,40,42,84,85,95,80,
+                                           173,134,181,259**
+ 
+Routine list of preceding patches: 181, 279
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 24, 2011
+Completed By:                               Date Completed: MAY 18, 2015
+Released By :                               Date Released : JUN 01, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

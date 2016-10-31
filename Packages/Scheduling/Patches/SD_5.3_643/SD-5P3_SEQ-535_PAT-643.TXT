@@ -1,0 +1,299 @@
+$TXT Created by                A at DEVVVV.DOMAIN.EXT  (KIDS) on Thursday, 02/04/16 at 19:59
+=============================================================================
+Run Date: MAY 03, 2016                     Designation: SD*5.3*643
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #535                    Status: Released
+                  Compliance Date: AUG 03, 2016
+=============================================================================
+
+Associated patches: (v)SD*5.3*579  <<= must be installed BEFORE `SD*5.3*643'
+                    (v)SD*5.3*582  <<= must be installed BEFORE `SD*5.3*643'
+                    (v)SD*5.3*627  <<= must be installed BEFORE `SD*5.3*643'
+
+Subject: VistA Scheduling Enhancement Release 3
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Data Dictionary
+  - Input Template
+
+Description:
+============
+
+ ***************************** PLEASE NOTE ********************************
+ *                                                                        *
+ *The VHA Release Board has NOT provided approval for this patch to be    *
+ * installed in ANY production environment.                               *
+ *                                                                        *
+ * NOTE: This patch is ONLY to be loaded into a TEST environment until    *
+ * approval from the VHA Release Board is obtained to load into facility  *
+ * production environments.                                               *
+ *                                                                        *
+ **************************************************************************
+  
+ The Veterans Health Administration (VHA) Access and Clinic Administrative
+ Program (ACAP) has requested an enterprise enhancement for the VistA
+ Scheduling Package. The enhancement will reduce operating cost for VHA and
+ improve operational efficiencies resulting in patient centered access to care,
+ coordinated care, increased customer satisfaction, and the reduction of
+ excessive cycle/wait time used for scheduling patients.
+  
+ This patch contains phase 3 of the server API support for the VistA Scheduling
+ Client as follows:
+  
+ ** Change Recall Reminder Parameter Setting from 365 days to 45 days
+    or less. This has been approved by the VA DBA.
+  
+ ** Recall Dates need to be protected and a Recall should not be added
+    if there is not a Recall Letter defined for the Clinic in the
+    RECALL REMINDERS LETTERS file (#403.52).
+  
+ ** Add the new option Clinic Letter Report [SDRR CLINIC LETTER REPORT] to
+    display a report of RECALL REMINDER entries in which the associated
+    clinic does not have a RECALL REMINDERS LETTERS defined.
+  
+ ** Continue printing Recall Letters which did not complete printing after
+    an abrupt system shut down. The SDRR TASK JOB option has been updated
+    to allow letters prior to the calculated date to be printed if the
+    DATE REMINDER SENT field in the RECALL REMINDERS entry has not been
+    populated.
+  
+ ** Add stop code/credit stop combination search criteria of the Recall Clinic.
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)                Field Name (#)             NEW/MODIFIED/DELETED
+ -------------                --------------             --------------------
+ RECALL REMINDERS             RECALL DATE                Modified
+  (#403.5)                      (#5)
+ RECALL REMINDERS             RECALL DATE (PER PATIENT)  Modified
+  (#403.5)                      (#5.5)
+ RECALL REMINDERS             DATE/TIME RECALL ADDED     Modified
+  (#403.5)                      (#7.5)
+ RECALL REMINDERS PARAMETER   CLEAN UP DAY SETTING       Modified
+  (#403.53)                     (#4)
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (#)           New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ SDRR RECALL CARD ADD  INPUT   RECALL REMINDERS (403.5)  Modified
+  
+ Additional Information: N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Asheville
+ Chillicothe
+ Hudson Valley
+ Salt Lake City
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Albany:                 domain.ext
+ Hines:                  domain.ext
+ Salt Lake City:         domain.ext>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+ File Description             File Name                           FTP Mode
+ --------------------------------------------------------------------------
+ RECALL REMINDER User Guide   SD_53_536_UG.PDF                    (binary)
+ RECAL REMINDER T&S GUIDE     SD_53_574_TSG.PDF                   (binary)
+  
+  
+ Patch Installation in TEST ONLY ***DO NOT INSTALL INTO PRODUCTION***:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  The Post-Installation routine does the following functions:
+   1. Registers the new RPCs to the SDECRPC option
+   2. Updates the CLEAN UP DAY SETTING field for all entries of the
+      RECALL REMINDERS PARAMETERS file (#403.53) with the responses from
+      the previous question(s).
+  
+  
+ Pre-Installation Instructions
+ ------------------------------
+  1. For all entries in the RECALL REMINDERS PARAMETERS file (#403.53),
+     the CLEAN UP DAY SETTING field 4 should be defined to be 45 days
+     or less.
+  
+  
+ Installation Instructions in TEST ONLY ***DO NOT INSTALL INTO PRODUCTION***
+ -------------------------
+ This patch may not be installed with Scheduling Package users on the test system
+ and it is recommended that it be installed during non-peak hours. The
+ installation time will vary from site to site depending on the size of their
+ database.
+  
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. If prompted 'ENTER the number of days for the CLEAN UP DAY SETTING
+    field for DIVISION xxxxx', respond with a number between 0-45.
+  
+ 4. From the Kernel Installation and Distribution System Menu, select
+  the Installation Menu. From this menu, you may elect to use the
+  following option. When prompted for the INSTALL enter the patch #
+  (SD*5.3*643):
+  
+  a. Backup a Transport Global - This option will create a backup
+  message of any routines exported with this patch. It will not
+  backup any other changes such as DD's or templates.
+  b. Compare Transport Global to Current System - This option will
+  allow you to view all changes that will be made when this patch
+  is installed. It compares all components of this patch
+  (routines, DD's, templates, etc.).
+  c. Verify Checksums in Transport Global - This option will allow
+  you to ensure the integrity of the routines that are in the
+  transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and
+  choose the patch to install. Enter SD*5.3*643.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+  Install? NO//', respond NO.
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+  respond NO.
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+  Protocols? NO//', respond NO.
+   
+ 10. If prompted 'Delay Install (Minutes): (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ The scheduled options SDRR TASK JOB and SDRR TASK JOB CARD should be defined
+ as Persistent so that they will be started when TaskMan restarts.
+  
+ **************************************************************************
+ *             PLEASE TAKE NOTE OF THE FOLLOWING KNOWN ISSUE              *
+ *                                                                        *
+ * After the install of SD*5.3*643, the following error may be produced   *
+ * when running ^%INDEX for Routine checks:                               *
+ *                                                                        *
+ * SDEC     * *  275 Lines,  18609 Bytes, Checksum: B119470269            *
+ *   CAP+1        F - Reference to routine '^SDEC58'. That isn't in this  *
+ *                    UCI.                                                *
+ *                                                                        *
+ * This is due to a change in the load sequence of SD*5.3*643 and         *
+ * SD*5.3*642 where a routine reference to SDEC58 was left in SD*5.3*643. *
+ * Since the RPC that uses this code is introduced in SD*5.3*642, it will *
+ * not cause a functional error. After SD*5.3*643 has been installed,     *
+ * please proceed with the install of SD*5.3*642. After SD*5.3*642 has    *
+ * been loaded/installed, this error will no longer show in ^%XINDEX.     *
+ **************************************************************************
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDEC
+    Before:B119334331   After:B119470269  **627,643**
+Routine Name: SDEC32
+    Before: B69352136   After: B71447316  **627,643**
+Routine Name: SDEC46
+    Before: B11804599   After: B13193597  **627,643**
+Routine Name: SDEC57A
+    Before:B103325420   After:B107425052  **627,643**
+Routine Name: SDECI3E
+    Before:       n/a   After:  B7698330  **643**
+Routine Name: SDRRREP
+    Before:       n/a   After:  B9249872  **643**
+Routine Name: SDRRTSK
+    Before: B16436609   After: B16926080  **536,579,643**
+Routine Name: SDRRTSK1
+    Before:  B9538954   After:  B9951175  **536,579,643**
+Routine Name: SDRRUTL
+    Before: B59389500   After: B62204339  **536,571,582,643**
+ 
+Routine list of preceding patches: 579, 582, 627
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 23, 2015
+Completed By:                               Date Completed: MAY 03, 2016
+Released By :                               Date Released : MAY 03, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

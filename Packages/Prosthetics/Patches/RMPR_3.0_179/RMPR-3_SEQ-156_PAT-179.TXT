@@ -1,0 +1,241 @@
+$TXT Created by                at DEV.DEV.DOMAIN.EXT  (KIDS) on Monday, 07/13/15 at 09:39
+=============================================================================
+Run Date: FEB 24, 2016                     Designation: RMPR*3*179
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #156                      Status: Released
+                  Compliance Date: MAR 26, 2016
+=============================================================================
+
+Associated patches: (v)RMPR*3*77   <<= must be installed BEFORE `RMPR*3*179'
+                    (v)RMPR*3*147  <<= must be installed BEFORE `RMPR*3*179'
+                    (v)RMPR*3*159  <<= must be installed BEFORE `RMPR*3*179'
+
+Subject: HO LETTER GENERATION;HO PATIENT DECEASED FLAG AND BILLING;OPEN STOCK ISSUES
+
+Category: 
+  - Routine
+  - Print Template
+
+Description:
+============
+
+ This patch addresses the following three issues:
+  
+ 1) Home Oxygen Generate Letters [RMPO LIST/PRINT MANAGER] option has site
+    and prescription expiration date issues.
+                                                                  
+ 2) Home Oxygen Billing and Home Oxygen Reporting has no check/flag for  
+    deceased patients. 
+  
+ 3) Ensure work file is killed when running List Open Stock Issues [RMPR 
+    PRINT OPEN STK ISS] option.
+                       
+  
+ Associated Remedy Tickets:
+ =========================
+ 1) INC000001236630 - Problem with Home Oxygen Generate Letters
+  
+ 2) INC000001246405 - Home Oxygen deceased patient issue
+  
+ 3) INC000001276370 - List Open Stock Issues report error
+   
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Black Hills HCS
+ New York Harbor HCS
+ John D. Dingell VAMC (Detroit)
+  
+  
+  
+ Remedy Overview:
+ ================ 
+ 1) INC000001236630 - Problem with Home Oxygen Generate Letters 
+  
+ Problem:
+ --------
+ Analysis found two issues with the Home Oxygen Generate Letters process. 
+ For integrated sites the compiling uses an incorrect station check and 
+ will pull all patients from all stations.  Also, the New list generation
+ differs from the Original list generation allowing the displayed/checked
+ prescription to use the first or last script on file.
+  
+  
+ Resolution:
+ -----------
+ Modifications made to the Generate Letters processing to ensure the 
+ station check is functional for integrated sites.  Also, ensure both the
+ New list generation and the Original list use the last Home Oxygen
+ prescription on patient's record.
+  
+  Routines: RMPOLZ
+  
+  
+  
+ 2) INC000001246405 - Home Oxygen deceased patient issue 
+  
+ Problem:
+ --------
+ Home Oxygen Billing report compilation will ignore patient billing if
+ the inactivation date is set (if patient deceased), but a deceased 
+ patient (prior to billing month) would still be billed for last script if
+ inactivation was not set for patient.
+  
+ Also, it was determined it would be very helpful to keep the billing 
+ compilation more accurate by including patient deceased flag in the 
+ various Home Oxygen reports.
+  
+    Alphabetical List Home Oxygen Patients (by site)
+    Active Home Oxygen Patients (Alpha by Zip Code)
+    Prescription Expiration Dates
+    Inactive Home Oxygen Patients (by Inactive date)
+    Monthly Home Oxygen Billing
+    Prescription Report
+    Pre-Billing Discrepancy Report 
+  
+  
+ Resolution:
+ -----------
+ Modifications made to the Home Oxygen billing compilation to skip 
+ deceased patients as flagged in the Patient master file.  Also, modify 
+ the various Home Oxygen supporting reports to assist staff in insuring
+ the Home Oxygen patients are up-to-date by flagging deceased patients 
+ in the following reports.
+  
+    Alphabetical List Home Oxygen Patients (by site)
+    Active Home Oxygen Patients (Alpha by Zip Code)
+    Prescription Expiration Dates
+    Inactive Home Oxygen Patients (by Inactive date)
+    Monthly Home Oxygen Billing
+    Prescription Report
+    Pre-Billing Discrepancy Report
+  
+  
+  Routines: RMPOBIL0, RMPORLP, RMPORAP, RMPORIP, RMPORMB, RMPORPR, 
+            RMPOPRD
+  
+  Print Template:  RPO-RPT-HOACTZIPLIST  (new)
+  
+  
+ 3) INC000001276370 - List Open Stock Issues report error
+  
+ Problem:
+ --------
+ Analysis found that the temporary work file used by the report compiling 
+ was not cleared prior to the compile.  Therefore, any previous option 
+ that used the same work file and did not clear it would have that data 
+ mixed in with the newly compiled data for the Open Stock Issue reporting.
+  
+  
+ Resolution:
+ -----------
+ Modifications made to List Open Stock Issues reporting to insure that the 
+ temporary work file used to compile the reporting data is killed prior 
+ to the report compile.
+  
+  
+ Routine: RMPROPN1
+  
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ You may install this patch at any time without interruption to users. It
+ should take less than two minutes to install this patch.
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter RMPR*3.0*179)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       RMPR*3.0*179.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//", hit ENTER.
+  
+       a) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+  
+ Generate Letters                        [RMPO LIST/PRINT MANAGER]
+ Billing Transactions                    [RMPO BILLING TRANSACTIONS] 
+ Alphabetical List Home Oxygen Patients (by site) [RMPO-RPT-HOPATIENTLIST]
+ Active Home Oxygen Patients (Alpha by Zip Code)  [RMPO-RPT-HOACTZIPLIST]
+ Prescription Expiration Dates           [RMPO-RPT-HORXEXP]
+ Inactive Home Oxygen Patients (by Inactive date) [RMPO-RPT-HOINACTIVE]
+ Monthly Home Oxygen Billing             [RMPO-RPT-HOMONBIL]
+ Prescription Report                     [RMPO-RPT-HOPRESCRIPTIONLIST]
+ Pre-Billing Discrepancy Report          [RMPO-BILLING-PRESORT]
+ List Open Stock Issues                  [RMPR PRINT OPEN STK ISS]
+  
+       b) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPOBIL0
+    Before: B41799915   After: B45113783  **29,46,50,147,179**
+Routine Name: RMPOLZ
+    Before: B59718997   After: B62508122  **29,44,46,55,179**
+Routine Name: RMPORAP
+    Before:  B3404308   After:  B6490888  **29,179**
+Routine Name: RMPORIP
+    Before:  B8628219   After: B14014372  **29,49,179**
+Routine Name: RMPORLP
+    Before: B10577728   After: B13970436  **29,179**
+Routine Name: RMPORMB
+    Before: B34348495   After: B39988003  **29,43,44,49,55,159,179**
+Routine Name: RMPORPD
+    Before:  B9266734   After: B12309579  **29,46,49,179**
+Routine Name: RMPORPR
+    Before: B20584580   After: B24121642  **29,55,179**
+Routine Name: RMPROPN1
+    Before: B10218467   After: B10807707  **13,77,179**
+ 
+Routine list of preceding patches: 77, 147, 159
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 11, 2015
+Completed By:                               Date Completed: FEB 18, 2016
+Released By :                               Date Released : FEB 24, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

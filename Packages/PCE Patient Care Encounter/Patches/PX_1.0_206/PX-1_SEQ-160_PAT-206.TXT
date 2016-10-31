@@ -1,0 +1,560 @@
+
+=============================================================================
+Run Date: SEP 03, 2015                     Designation: PX*1*206
+Package : PX - PCE PATIENT CARE ENCOUNTER     Priority: Mandatory
+Version : 1       SEQ #160                      Status: Released
+                  Compliance Date: OCT 04, 2015
+=============================================================================
+
+Associated patches: (v)XU*8*654    <<= must be installed BEFORE `PX*1*206'
+                    (v)HDI*1*14    <<= must be installed BEFORE `PX*1*206'
+                    (v)PX*1*208    <<= must be installed BEFORE `PX*1*206'
+
+Subject: VISTA IMMUNIZATION ENHANCEMENTS 2.0
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ WARNING! This patch cannot be re-installed without assistance from 
+ Product Support.
+  
+ The Veterans Health Information Systems and Technology Architecture
+ (VistA) Immunizations Enhancements (VIMM) 2.0 project modifies existing
+ Skin Test files and adds additional files to enable VA to quickly and
+ reliably document and exchange standardized skin test and immunization
+ information on beneficiaries across services and departments.
+ Additionally, modifications support VistA Evolution requirements. This
+ provides a Veteran patient-centric vaccine record exchangeable with the
+ external community. Clinicians will have access to a more complete medical
+ history in the VistA electronic medical record resulting in improved
+ health status as well as public health monitoring.
+  
+ The goals for the VIMM 2.0 project are to deliver an Initial Operating
+ Capability comprised of standard, interoperable skin test and immunization
+ data for exchange with external trading partners based on the
+ modernization of the VistA Patient Care Encounter (PCE) package.
+  
+ This patch provides the following new features:
+  
+ 1) The Skin Test records in the SKIN TEST (#9999999.28) file are 
+ standardized to use consistent nomenclature for all VA facilities.
+  
+    During the post installation, records in the SKIN TEST file are
+    modified and new Skin Test records are added to mirror entries from 
+    a nationally standardized table.   
+  
+    A new field (CLASS) has been added to identify each record as NATIONAL
+    or LOCAL. Only records with a CLASS of NATIONAL are selectable.   
+    If a record is not the standard, the CLASS will be set to LOCAL and 
+    the INACTIVE FLAG will be set to INACTIVE.
+  
+ 2) The options, PXTT EDIT SKIN TEST and PXTT IN/ACTIVATE SKIN TEST, 
+ have been placed out of order. Future updates to the SKIN TEST file
+ will be maintained by the Master File Server.
+  
+ 3) Bar codes from the Vaccine Information Statement Lookup table     
+ (http://www.cdc.gov/vaccines/programs/iis/code-sets/vis-barcode-lookup-tab
+ le.html) at the Centers for Disease Control and Prevention (CDC) have been
+ added to the VACCINE INFORMATION STATEMENT file (#920) to support use of
+ scanning technology when recording which Vaccine Information Statement has
+ been provided to a patient. The patch will also populate the Veterans 
+ Health Administration Unique Identifiers (VUIDs) for this file.
+  
+ 4) A spelling error in the short name for the IMMUNIZATION record,
+ VARICELLA, is corrected from VARCELLA to VARICELLA.
+  
+ 5) This patch populates VUID data fields for the following files:
+    #920        VACCINE INFORMATION STATEMENT
+    #920.1      IMMUNIZATION INFO SOURCE
+    #920.2      IMM ADMINISTRATION ROUTE
+    #920.3      IMM ADMINISTRATION SITE (BODY)
+    #920.4      IMM CONTRAINDICATION REASONS
+    #920.5      IMM REFUSAL REASONS
+    #9999999.04 IMM MANUFACTURER
+    #9999999.14 IMMUNIZATION
+    #9999999.28 SKIN TEST
+  
+ 6) The SKIN TEST file (#9999999.28) includes two new fields that are 
+ Indian Health Service (IHS) fields and are added for backward 
+ compatibility. These two fields are CODE (#.02) and CPT CODE (#.11).
+  
+ 7)  Values in the MAX # IN SERIES field (#.05) in the IMMUNIZATION file 
+ (#9999999.14) are standardized to be uniform across all VA facilities.   
+ MAX # IN SERIES defines the permissible values for the SERIES property 
+ when documenting an immunization in the V IMMUNIZATION file 
+ (#9000010.11). Existing values at VA facilities will be replaced by the 
+ standardized values, including removal of data where the standard does 
+ not have a MAX # IN SERIES value.
+  
+ 8) The Health Summary component for Skin Test has been modified to 
+ display PRINT NAME as the name of the Skin Test in place of NAME if the 
+ record is a National standard. 
+  
+ Patch Components: 
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)           New/Modified/Deleted
+ ------------------     -------------------           --------------------
+ VACCINE INFORMATION
+    STATEMENT (#920)    NAME (#.01)                        Modified
+                        EDITION DATE (#.02)                Modified
+                        EDITION STATUS (#.03)              Modified
+                        LANGUAGE (#.04)                    Modified
+                        REPLACED BY VHA STANDARD TERM 
+                           (#99.97)                        Modified
+                        MASTER ENTRY FOR VUID (#99.98)     Modified
+                        VUID (#99.99)                      Modified
+                        EFFECTIVE DATE/TIME (#.01) of
+                           the EFFECTIVE DATE/TIME 
+                           sub-file (#920.99)              Modified
+                        STATUS (#.02) of the EFFECTIVE
+                           DATE/TIME sub-file (#920.99)    Modified
+                        2D BAR CODE (#100)                   New
+                        VIS URL (#101)                     Modified
+  
+ IMMUNIZATION INFO 
+    SOURCE (#920.1)     SOURCE (#.01)                      Modified
+                        HL7 CODE (#.02)                    Modified
+                        STATUS (#.03)                      Modified
+                        REPLACED BY VHA STANDARD TERM 
+                           (#99.97)                          New
+                        MASTER ENTRY FOR VUID (#99.98)       New
+                        VUID (#99.99)                        New
+                        EFFECTIVE DATE/TIME (multiple field
+                           #99.991, sub-file #920.199)       New
+                          EFFECTIVE DATE/TIME (#.01) of
+                            the EFFECTIVE DATE/TIME 
+                            sub-file (#920.199)              New
+                          STATUS (#.02) of the EFFECTIVE
+                            DATE/TIME sub-file (#920.199)    New
+  
+ IMM ADMINISTRATION 
+    ROUTE (#920.2)      ROUTE (#.01)                       Modified
+                        HL7 CODE (#.02)                    Modified
+                        FDA NCIT (#.03)                    Modified
+                        REPLACED BY VHA STANDARD TERM 
+                           (#99.97)                        Modified
+                        MASTER ENTRY FOR VUID (#99.98)     Modified
+                        VUID (#99.99)                      Modified
+                        EFFECTIVE DATE/TIME (multiple field
+                           #99.991, sub-file #920.299)     Modified
+                          EFFECTIVE DATE/TIME (#.01) of
+                            the EFFECTIVE DATE/TIME 
+                            sub-file (#920.299)            Modified
+                          STATUS (#.02) of the EFFECTIVE
+                            DATE/TIME sub-file (#920.299)  Modified
+  
+ IMM ADMINISTRATION SITE 
+    (BODY) (#920.3)     SITE (#.01)                        Modified
+                        HL7 CODE (#.02)                    Modified
+                        REPLACED BY VHA STANDARD TERM 
+                           (#99.97)                        Modified
+                        MASTER ENTRY FOR VUID (#99.98)     Modified
+                        VUID (#99.99)                      Modified
+                        EFFECTIVE DATE/TIME (multiple field
+                           #99.991, sub-file #920.399)     Modified
+                          EFFECTIVE DATE/TIME (#.01) of
+                            the EFFECTIVE DATE/TIME 
+                            sub-file (#920.399)            Modified
+                          STATUS (#.02) of the EFFECTIVE
+                            DATE/TIME sub-file (#920.399)  Modified
+  
+ IMM CONTRAINDICATION
+    REASONS (#920.4)    NAME (#.01)                          New
+                        CONCEPT CODE (#,02)                  New
+                        INACTIVE (#.03)                      New
+                        NIP004 (#.04)                        New
+                        HL7 CODE (#.05)                      New
+                        CONTRAINDICATION/PRECAUTION (#.06)   New        
+                        CONCEPT NAME (#1)                    New
+                        CONCEPT DEFINITION (#2)              New
+                        IMMUNIZATIONS LIMITED (multiple field
+                           #3, sub-file #920.4)              New
+                          IMMUNIZATIONS LIMITED (#.01) of
+                            the IMMUNIZATIONS LIMITED
+                            sub-file (#920.43)               New
+                        REPLACED BY VHA STANDARD TERM 
+                           (#99.97)                          New
+                        MASTER ENTRY FOR VUID (#99.98)       New
+                        VUID (#99.99)                        New
+                        EFFECTIVE DATE/TIME (multiple field
+                           #99.991, sub-file #920.499)       New
+                          EFFECTIVE DATE/TIME (#.01) of
+                            the EFFECTIVE DATE/TIME 
+                            sub-file (#920.499)              New
+                          STATUS (#.02) of the EFFECTIVE
+                            DATE/TIME sub-file (#920.499)    New
+  
+ IMM REFUSAL REASONS 
+    (#920.5)            REASON (#.01)                        New
+                        HL7 CODE (#.02)                      New
+                        REPLACED BY VHA STANDARD TERM 
+                           (#99.97)                          New
+                        MASTER ENTRY FOR VUID (#99.98)       New
+                        VUID (#99.99)                        New
+                        EFFECTIVE DATE/TIME (multiple field
+                           #99.991, sub-file #920.599)       New
+                          EFFECTIVE DATE/TIME (#.01) of
+                            the EFFECTIVE DATE/TIME 
+                            sub-file (#920.599)              New
+                          STATUS (#.02) of the EFFECTIVE
+                            DATE/TIME sub-file (#920.599)    New
+  
+ IMM MANUFACTURER  
+    (#9999999.04)       NAME (#.01)                        Modified
+                        MVX CODE (#.02)                    Modified
+                        STATUS (#.03)                      Modified
+                        FULL NAME (#.04)                   Modified
+                        SYNONYM #1 (#.05)                  Modified
+                        REPLACED BY VHA STANDARD TERM    
+                           (#99.97)                        Modified
+                        MASTER ENTRY FOR VUID (#99.98)     Modified
+                        VUID (#99.99)                      Modified
+                        EFFECTIVE DATE/TIME (#.01) of
+                           the EFFECTIVE DATE/TIME 
+                           sub-file (#9999999.0499)        Modified
+                        STATUS (#.02) of the EFFECTIVE
+                           DATE/TIME sub-file 
+                           (#9999999.0499)                 Modified
+                        CDC NOTES (#201)                   Modified
+                        VACCINE (multiple field #1101,
+                           sub-file #9999999.0411)         Modified
+                          VACCINE (#.01) of the VACCINE
+                            sub-file (#9999999.0411)       Modified
+                        MNEMONIC (#8801)                   Modified
+  
+ IMMUNIZATION             
+    (#9999999.14)       NAME (#.01)                        Modified
+                        SHORT NAME (.02)                   Modified
+                        CVX CODE (#.03)                    Modified
+                        DEFAULT LOT # (.04)                Modified
+                        MAX # IN SERIES (#.05)             Modified
+                        CHILDHOOD IMMUNIZATION (#.06)      Modified
+                        INACTIVE FLAG (#.07)               Modified
+                        SKIN TEST (#.08)                   Modified
+                        VACCINE GROUP (SERIES TYPE) (#.09) Modified
+                        ALTERNATE SHORT NAME (#.1)         Modified
+                        CPT CODE (#.11)                    Modified
+                        RELATED CONTRAIND HL7 CODES (#.12) Modified
+                        VIS DEFAULT DATE (#.13)            Modified
+                        ICD DIAGNOSIS CODE (#.14)          Modified
+                        ICD PROCEDURE CODE (#.15)          Modified
+                        INCLUDE IN FORECAST (#.16)         Modified
+                        INCLUDE IN VAC ACCOUNT REPORT 
+                           (#.17)                          Modified
+                        DEFAULT VOLUME (#.18)              Modified
+                        COMBINATION IMMUNIZATION (Y/N)  
+                           (#.2)                           Modified
+                        COMPONENT #1 (#.21)                Modified
+                        COMPONENT #2 (#.22)                Modified
+                        COMPONENT #3 (#.23)                Modified
+                        COMPONENT #4 (#.24)                Modified
+                        COMPONENT #5 (#.25)                Modified
+                        COMPONENT #6 (#.26)                Modified
+                        READING REQUIRED (#.51)              New
+                        BRAND #1 (#1.01)                   Modified
+                        BRAND #2 (#1.03)                   Modified
+                        BRAND #3 (#1.05)                   Modified
+                        BRAND #4 (#1.07)                   Modified
+                        BRAND #5 (#1.09)                   Modified
+                        FULL NAME (#1.14)                  Modified
+                        CPT CODE 2ND (#1.15)               Modified
+                        CDC FULL VACCINE NAME (#.01) 
+                           of the CDC FULL VACCINE 
+                           NAME sub-file (#9999999.142)    Modified
+                        CODING SYSTEM (multiple field
+                           #3, sub-file #9999999.143)      Modified
+                        CODING SYSTEM (#.01) of the
+                           CODING SYSTEM sub-file 
+                           (#9999999.143)                  Modified
+                        CODE (multiple field #.02,
+                           sub-file #9999999.1431
+                           of the CODING SYSTEM 
+                           sub-file (#9999999.143)         Modified
+                        CODE (#.01) of the CODE sub-file
+                           (#9999999.1431)                 Modified
+                        VACCINE GROUP NAME (multiple field
+                           #7, sub-file #9999999.147)        New
+                        VACCINE GROUP NAME (#.01) of the
+                           VACCINE GROUP NAME sub-file
+                           (#9999999.147)                    New
+                        SYNONYM (multiple field #10, 
+                           sub-file #9999999.141)          Modified
+                        SYNONYM (#.01) of the SYNONYM
+                           sub-file (#9999999.141)         Modified
+                        REPLACED BY VHA STANDARD TERM 
+                           (#99.97)                        Modified
+                        MASTER ENTRY FOR VUID (#99.98)     Modified
+                        VUID (#99.99)                      Modified
+                        EFFECTIVE DATE/TIME (#.01) of
+                           the EFFECTIVE DATE/TIME 
+                           sub-file (#9999999.1499)        Modified
+                        STATUS (#.02) of the EFFECTIVE
+                           DATE/TIME sub-file 
+                            (#9999999.1499)                Modified
+                        CLASS (#100)                       Modified
+                        MNEMONIC (#8801)                   Modified
+                        ACRONYM (#8802)                    Modified
+                        SELECTABLE FOR HISTORIC (#8803)    Modified
+  
+ SKIN TEST     
+    (#9999999.28)       NAME(#.01)                         Modified
+                        CODE (#.02)                          New
+                        INACTIVE FLAG (#.03)               Modified
+                        CPT CODE (#.11)                      New
+                        CODING SYSTEM (multiple field
+                           #3, sub-file #9999999.283)        New
+                        CODING SYSTEM (#.01) of the
+                           CODING SYSTEM sub-file 
+                           (#9999999.283)                    New
+                        CODE (multiple field #.02,
+                           sub-file #9999999.2831
+                           of the CODING SYSTEM 
+                           sub-file (#9999999.283)           New
+                        CODE (#.01) of the CODE sub-file
+                           (#9999999.2831)                   New
+                        REPLACED BY VHA STANDARD TERM 
+                           (#99.97)                          New
+                        MASTER ENTRY FOR VUID (#99.98)       New
+                        VUID (#99.99)                        New
+                        EFFECTIVE DATE/TIME (multiple field
+                           #99.991, sub-file #9999999.2899)  New
+                          EFFECTIVE DATE/TIME (#.01) of
+                            the EFFECTIVE DATE/TIME 
+                            sub-file (#9999999.2899)         New
+                          STATUS (#.02) of the EFFECTIVE
+                            DATE/TIME sub-file 
+                            (#9999999.2899)                  New
+                        CLASS(#100)                          New
+                        PRINT NAME (#1201)                   New
+                        MNEMONIC (#8801)                   Modified
+  
+                        
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A 
+  
+ Options Associated:
+  
+ Option Name                     Type             New/Modified/Deleted
+ -----------                     ----             -------------------- 
+ PXTT EDIT SKIN TESTS            Edit                  Modified
+ PXTT IN/ACTIVATE SKIN TEST      Edit                  Modified
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A 
+  
+ Additional Information:
+ N/A 
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ Blood Bank Clearance:
+ ---------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A 
+  
+ Test Sites:
+ ----------
+ Cleveland, OH
+ Hampton, VA
+ Heartland-East HCS, MO
+ San Antonio, TX
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+ Title                          File Name           FTP Mode
+ -------------------------------------------------------------
+ Patient Care Encounter (PCE)   PX_1_UM_R0315.PDF   (binary)
+    V. 1.0 User Manual
+ Patient Care Encounter (PCE)   PX_1_TM_R0315.PDF   (binary)
+    V.1.0 Technical Manual
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ WARNING! This patch cannot be re-installed without assistance from
+ Product Support.
+  
+ This patch will run a brief pre-installation process that will check for 
+ duplicate entries in the SKIN TEST file (#9999999.28). If any duplicates 
+ are detected, the installation will abort. Use the option, PXTT EDIT 
+ SKIN TESTS, to rename duplicates and restart the installation of
+ the patch.
+  
+ A post-installation process will standardize data in the SKIN TEST file
+ (#9999999.28). Any errors that occur are displayed and an email with more
+ detail is sent to the installer.
+  
+ If no errors occur during the conversion of the SKIN TEST file, a HEALTH 
+ DATA INFORMATICS (HDI) routine is called to populate VUID data from the
+ FORUM Master File Server.
+  
+ The post installation routine calls an HDI routine to request the      
+ VUID data for the following files:
+    #920.1      IMMUNIZATION INFO SOURCE
+    #920.2      IMM ADMINISTRATION ROUTE
+    #920.3      IMM ADMINISTRATION SITE (BODY)
+    #920.4      IMM CONTRAINDICATIONS
+    #920.5      IMM REFUSALS
+    #9999999.04 IMM MANUFACTURER
+    #9999999.14 IMMUNIZATION
+    #9999999.28 SKIN TEST
+  
+ The routine, PXVP206, may be deleted after the patch is successfully
+ installed.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ The following patches must be installed prior to installing this patch:
+  1. XU*8*654    MFS PARAMETERS
+  2. HDI*1*14    VIMM 2.0 Standardization
+  3. PX*1*208    IMMUNIZATION SERIES, REACTION, & CONTRA DISAPPEARING
+  
+ Installation Instructions:
+ --------------------------
+ This patch should be installed during a period of minimal system 
+ activity, preferably with users off the system. Installation time is 
+ expected to be approximately 10 minutes.
+  
+ This patch is available via FTP as a KIDS distribution file. The Host
+ File is named PX_1_206.KID and should be downloaded in ASCII format. 
+ The file is located in the [ANONYMOUS.SOFTWARE] directory of the following
+ OI Field Offices.
+     
+                                PREFERRED ADDRESS
+                                -----------------
+  First available ftp server    download.vista.domain.ext
+  
+  SPECIFIC FIELD OFFICE         FTP ADDRESS
+  ---------------------         -----------
+  Albany                        ftp.domain.ext
+  Hines                         ftp.domain.ext
+  SLC                           ftp.domain.ext
+  
+ 1. Load the KIDS distribution file via the 'Load a Distribution' option 
+    on the KIDS Installation menu.
+  
+ 2. Prior to installing the patch use the following installation options 
+    located on the KIDS Installation menu:
+  
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+    b.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch
+        (routines, DD's, templates, etc.).
+  
+    c.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+  
+ 3. Install the KIDS distribution via the 'Install Package(s)' option on 
+    the KIDS Installation menu. For the Install Name enter PX*1.0*206.
+  
+    a.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+        Install? NO//'
+        Answer NO.
+  
+    b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//
+        Answer NO.
+  
+    c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//'
+        Answer NO. 
+  
+ 4.  Verify the status of the installation.  An email message is sent to 
+     the installer at the end of the installation indicating whether the
+     installation was successful. Please enter a Remedy ticket if the 
+     installation failed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**[Patch List]**;Aug 12, 1996;Build 50
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRHS04
+    Before:  B6212578   After:  B8043318  **13,206**
+Routine Name: PXVE206
+    Before:       n/a   After:  B1087848  **206**
+Routine Name: PXVP206
+    Before:       n/a   After: B79621981  **206**
+Routine Name: PXVZRT
+    Before:       n/a   After: B71159926  **206**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 07, 2015
+Completed By:                               Date Completed: SEP 02, 2015
+Released By :                               Date Released : SEP 03, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

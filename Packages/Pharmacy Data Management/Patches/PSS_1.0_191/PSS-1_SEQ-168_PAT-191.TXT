@@ -1,0 +1,408 @@
+$TXT Created by                    R at CMAI.FO-BIRM.DOMAIN.EXT  (KIDS) on Wednesday, 01/13/16 at 10:06
+=============================================================================
+Run Date: MAR 28, 2016                     Designation: PSS*1*191
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #168                      Status: Released
+                  Compliance Date: APR 28, 2016
+=============================================================================
+
+Associated patches: (v)PSS*1*127   <<= must be installed BEFORE `PSS*1*191'
+                    (v)PSS*1*172   <<= must be installed BEFORE `PSS*1*191'
+
+Subject: TRANSDERMAL MEDICATION ENHANCEMENT 
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Patch PSS*1.0*191 provides enhancements to Pharmacy Data Management to
+ support changes to the BCMA and Inpatient Medications applications for
+ Transdermal Administrations.
+  
+        PSS*1.0*191 does not have any dependencies for installation.  
+        The full functionality introduced in this patch will not be
+        available until patches PSJ*5.0*315, PSB*3.0*83 are installed 
+        and possibly PSB*3.0*87 if using BCMA Contingency Back Up (BCBU).
+        Pre-existing orders will remain unaffected with installation.  
+  
+ ******************************* ATTENTION ********************************
+  
+  Clinical Ancillary Services (CAS) Development-Delivery of Pharmacy 
+  Enhancements (DDPE) VA Inpatient Medication Administration - Transdermal
+  enhancement includes 5 patches.
+  
+  This patch adds a new crucial field to the PHARMACY ORDERABLE ITEM file
+  (#50.7), which is at the center of the Transdermal functionality.
+  
+  Therefore, it is recommended that this patch be installed a week or more
+  in advance of the 4 associated patches, to provide sufficient time to
+  review and update the Orderable Item file for all Medications Requiring
+  Removal (MRR).
+  
+ The remaining Clinical Ancillary Services (CAS) Development-Delivery of 
+ Pharmacy Enhancements (DDPE) VA Inpatient Medication Administration -
+ Transdermal patches must be installed in the following order when
+ released:
+  
+   1.      PSJ*5*315
+   2.      PSB*3*83
+   3.      PSB*3*87
+   4.      OR*3*417
+  
+  ATTENTION: This enhancement also includes a new Graphical User Interface
+  (GUI) executable, BCMA GUI PSB3_P083.EXE. Installation of this GUI is
+  required immediately after the KIDS install for the Patch to function.
+  
+  For retrieval and installation instructions, please see the Client 
+  Installation Instructions section.
+  
+ **************************************************************************
+  
+ These enhancements are made to address NSR 20141012. 
+      They include: 
+  
+      1. Currently sites have to create fake removal orders to allow for 
+ appropriate removal of medications in BCMA.  This enhancement will 
+ alleviate this issue by adding a field to the ORDERABLE ITEM (#50.7) file
+ titled PROMPT FOR REMOVAL IN BCMA (#12).  Addition of this field allows
+ for changes that will support enhancements to the BCMA and Inpatient
+ Medication applications to display the removal times in Inpatient
+ Medication orders using rules determined by the value of this field. The
+ PROMPT FOR REMOVAL IN BCMA (#12) field can be set for Orderable Items that
+ require removal to the following values:
+  
+      NULL/0=No Removal Required 
+      1 = Removal at Next Administration 
+      2 = Removal Period Optional Prior to Next Administration  
+      3 = Removal Period Required Prior to Next Administration
+  
+      2. A post installation routine, PSS1P191, will update the new PROMPT
+ FOR REMOVAL IN BCMA (#12) field to a value of 1 for all Orderable Items
+ with a Dosage Form that contains the word "PATCH".  A message will be sent
+ to the installer as well as all users holding the PSJU and PSJI MGR keys
+ providing a list of Orderable items that were updated during this process.
+ The PROMPT FOR REMOVAL IN BCMA (#12) field is only updated if it is
+ currently set to a value of NULL so subsequent installations will not 
+ update the PROMPT FOR REMOVAL IN BCMA (#12) field again.
+  
+      3. Routines edited for this patch will add the prompt "PROMPT FOR 
+ REMOVAL IN BCMA:" to the following three options:
+  
+      - Edit Orderable Items [PSS EDIT ORDERABLE ITEMS]
+      - Drug Enter/Edit [PSS DRUG ENTER/EDIT]
+      - Dispense Drug/Orderable Item Maintenance [PSS MAINTAIN ORDERABLE  
+        ITEMS]
+  
+      4. Patch PSS*1.0*172 inadvertently missed adding the prompt, HIGH 
+ RISK/HIGH ALERT, to the following options, which is being added in 
+ this patch:
+  
+       - Drug Enter/Edit [PSS DRUG ENTER/EDIT]
+       - Dispense Drug/Orderable Item Maintenance [PSS MAINTAIN ORDERABLE
+         ITEMS]
+  
+       5. A second post install routine PSSP191A will create another email
+ report.  This report will display active orders for Medications Requiring
+ Removal that do not contain the necessary file structures to allow for the
+ new removal functionality to execute.  The primary purpose for this
+ information is to allow the site to determine the approximate amount of 
+ resources needed to discontinue these orders and re-create them after 
+ patch PSJ*5*315 is installed.  Until the PSJ*5*315 patch is installed the 
+ capability for processing these orders will not be available.  More 
+ detailed procedures and recommendations for this process are in the 
+ installation section of this Patch Description. A new option that 
+ duplicates this report will be added to the Pharmacy Data Management [PSS 
+ MGR] menu as the Orders for MRRs With Removal Properties [PSS MRR ORDERS
+ DIAGNOSTIC RPT] option.
+  
+        6. Two more reports will be added to the Orderable Item Management 
+ [PSS ORDERABLE ITEM MANAGEMENT] sub menu as options. The new report
+ options, Orderable Items that Require Removal Report [PSS MRR ORDERABLE
+ ITEMS RPT] option and Orderable Items Report for High Risk\High Alert [PSS
+ HR/HA ORDERABLE ITEMS RPT] option, will allow review of the settings in
+ the Orderable Items file (#50.7) for the values of the respective fields
+ indicated in the report titles.
+  
+  
+ Patch Components:
+ -----------------
+ New Field for ORDERABLE ITEM (#50.7) file, two Post install routines,
+ three updated routines to provide prompting and help text for new field
+ and three new routines to provide new reports for updated menu options.
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)   New/Modified/Deleted
+ ------------------          -------------------   --------------------
+ ORDERABLE ITEM (#50.7)      PROMPT FOR REMOVAL IN BCMA (#12)       New
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A 
+  
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ Orderable Item Management
+                        Menu               Modified
+  
+ Orderable Items that Require Removal Report
+                        Rout               New
+  
+ Orderable Items Report for High Risk\High Alert 
+                        Rout               New
+  
+ PSS MGR                Menu               Modified
+  
+ Orders for MRRs With Removal Properties
+                        Rout               New
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+  
+ NSR 20141012: Pharmacy Safety Enhancements: 
+  http://vista.domain.ext/nsrd/Tab_GeneralInfoView.asp?RequestID=20141012
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+  
+ Test Sites:
+ ----------
+ VISN2/UPSTATE NY
+ ST. CLOUD, MN -VAMC 
+ MINNEAPOLIS, MN -VAMC 
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available as described below.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Albany: domain.ext
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ PHARMACY DATA MANAGEMENT RELEASE NOTES
+ pss_1_p191_rn.pdf                                             Binary
+  
+ PHARMACY DATA MANAGEMENT TECHNICAL MANUAL/SECURITY GUIDE
+ pss_1_tm_r0316.pdf          Binary
+  
+ PHARMACY DATA MANAGEMENT USER MANUAL 
+ pss_1_um_r0316.pdf         Binary
+  
+  
+  
+ Patch Installation:
+  
+ Pre/Post-Installation Overview:
+ -------------------------------
+ A Post-installation routine PSS1P191 will run with this install and will
+ be automatically deleted after installation. A second Post-installation 
+ routine PSSP191A should be deleted after install, as it will not delete 
+ automatically.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch. 
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     PSS*1.0*191:
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose patch PSS*1.0*191 to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' Respond Yes 
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' Respond No
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' Respond No
+  
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ This patch runs two post-install routines and sends two reports described 
+ below. As preparation for PSJ*5*315, there are also new reports that may 
+ be run periodically by pharmacy service.
+  
+ The first post-install routine automatically updates Orderable Items with 
+ a Dosage Form that contains the word "PATCH" so that the field PROMPT FOR 
+ REMOVAL IN BCMA is set to 1.  This update is necessary to preserve legacy 
+ behavior.  The list of orderable items that were updated is emailed to 
+ users holding the PSJI MGR and PSJU MGR keys and also the installer of 
+ this patch. Section 1.9.1 of the Pharmacy Data Management User Manual 
+ contains information about the possible settings and instructions for 
+ changing this field if needed.
+  
+ **NOTE:  This report only identifies patches. There may be other 
+ Orderable Items (e.g., nitroglycerin ointment) that should have the PROMPT
+ FOR REMOVAL IN BCMA field set.  Sites will need to determine if other 
+ items in their PHARMACY ORDERABLE ITEMS file fall into this category.
+  
+ The second post-install routine generates a preliminary patient order 
+ report listing the approximate number of active patient orders that may
+ need to be discontinued and re-created when the PSJ*5.0*315 patch is
+ finally installed.  This report is emailed to holders of the PSJI MGR,
+ PSJU MGR, PSJU RPH, and PSJ RPHARM keys, and also the installer of this
+ patch.  
+  
+ In preparation for PSJ*5*315, sites may periodically run "Pharmacy 
+ Data Management" [PSS MRR ORDERS DIAGNOSTIC RPT] under "Pharmacy Data
+ Management" [PSS MGR] to update the preliminary estimates of active
+ patient orders that may need to be discontinued and recreated.  Sites may
+ also run the Orderable Items that Require Removal Report [PSS MRR
+ ORDERABLE ITEMS RPT] under "Orderable Item Management" [PSS ORDERABLE 
+ ITEM MANAGEMENT] to verify which Orderable Items have been marked for
+ PROMPT FOR REMOVAL IN BCMA. These are the on-demand version of the reports
+ generated by the post-install routines.
+  
+ **NOTE: No action should be taken on active patient orders listed in the 
+ patient order report until after patch PSJ*5.0*315 is installed.
+  
+ After both PSJ*5*315 has been installed and PROMPT FOR REMOVAL IN BCMA 
+ (#12) field have been updated for relevant orderable items, sites should 
+ generate a new "Orders for MRRs With Removal Properties" [PSS MRR ORDERS 
+ DIAGNOSTIC RPT] report for the most current and accurate list of orders 
+ that need to be addressed.  
+  
+ The post install routine, PSSP191, is deleted automatically after 
+ installation.  The second post install routine, PSSP191A, should be
+ manually deleted by sites after installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 40
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSS1P191
+    Before:       n/a   After: B13324610  **191**
+Routine Name: PSSHRHAI
+    Before:       n/a   After: B20428006  **191**
+Routine Name: PSSMRRDG
+    Before:       n/a   After: B30196189  **191**
+Routine Name: PSSMRRI
+    Before:       n/a   After: B22465430  **191**
+Routine Name: PSSNCPDP
+    Before: B27408503   After: B38616221  **127,191**
+Routine Name: PSSP191A
+    Before:       n/a   After: B32545924  **191**
+Routine Name: PSSPOIM1
+    Before: B61796505   After: B61410040  **29,38,47,141,153,159,166,191**
+Routine Name: PSSPOIMO
+    Before:B139337107   After:B139454544  **29,32,38,47,68,102,125,141,
+                                           153,159,166,172,191**
+ 
+Routine list of preceding patches: 127, 172
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 06, 2015
+Completed By:                               Date Completed: MAR 24, 2016
+Released By :                               Date Released : MAR 28, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,458 @@
+
+=============================================================================
+Run Date: JUL 01, 2016                     Designation: PRCA*4.5*303
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #272                    Status: Released
+                  Compliance Date: JUL 31, 2016
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*298<<= must be installed BEFORE `PRCA*4.5*303'
+                    (v)IB*2*511    <<= must be installed BEFORE `PRCA*4.5*303'
+                    (v)BPS*1*17    <<= must be installed BEFORE `PRCA*4.5*303'
+                    (v)IB*2*516    <<= must be installed BEFORE `PRCA*4.5*303'
+
+Subject: MCCF ENHANCEMENTS PROJECT - CARC/RARC
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ ********************************************************************************
+   
+ NOTICE:
+   
+    The patch bundle PRCA IB MCCF EDI 1.0 (IB*2.0*530/PRCA*4.5*303) must
+    be installed first, then install two standalone patches, IB*2.0*529
+    and PRCA*4.5*304. Patch IB*2.0*529 must be installed before installing
+    PRCA*4.5*304. Install all patches close together so that your site has
+    all of the features released as part of this enhancement.
+   
+ *****************************************************************************
+   
+ MCCF (Medical Care Collection Fund) Enhancement for uniform use of
+ CARC/RARC (Claims Adjustment Reason Codes/Remittance Advice
+ Remark Codes) Codes.
+   
+ This patch implements changes to the Veterans Health Information Systems 
+ and Technology Architecture (VistA) Accounts Receivable (AR) software
+ requested by the Veterans Health Administration (VHA) Chief Business
+ Office (CBO) Business Solutions to comply with legislative changes
+ mandated by the Health Insurance Portability and Accountability Act of
+ 1996 (HIPAA) as amended by Public Law (P.L.) 111-148, the Patient
+ Protection and Affordable Care Act (PPACA), Section 1104.
+   
+ VHA uses the following standard, unique identifiers and Electronic Data
+ Interchange (EDI) transactions in support of its third-party revenue and
+ collections operation:
+ - National Provider Identifier (NPI)
+ - 270/271 Health Care Eligibility Benefit Inquiry and Response
+ - 837 Health Care Claims - Institutional and Professional
+ - National Council Pharmacy Drug Program (NCPDP) Pharmacy Transactions
+ - 835 Health Care Claim Payment/Advice
+ - Claim Adjustment Reason Codes (CARC)
+ - Remittance Advice Remark Codes (RARC)
+ - Electronic Funds Transfer (EFT)
+ - Electronic Explanation of Benefits (EEOB)
+ - Electronic Remittance Advice (ERA)
+ - Provider Level Balancing (PLB)
+     
+ This patch adds the following:
+   - CARC/RARC Payer Report
+   - PLB Adjustment Report
+   - Transaction Audit Report
+   - CARC/RARC Table Report
+   - CARC/RARC Quick Search
+   - Menu Items for above reports to the EDI LOCKBOX REPORT MENU
+   - Efficiency enhancement by adding additional menu items to the AR
+     ListManager screens to allow for streamlined research and problem
+     resolution
+   - New Reject indicator to show users at a glance if an EEOB was rejected.
+   
+ The following report was modified:
+   - Active Bills with EEOB Report
+   
+ The following Menu Text items are changed:
+   - EDI Lockbox is changed to EDI Lockbox (ePayments)
+   - EDI Lockbox Reports Menu is changed to EDI Lockbox (ePayments) Reports
+     Menu
+   
+ The server process RCDPE EDI CARC_RARC SERVER was created to process updates
+ on CARC (File #345) and RARC (File #346) data. The Austin Financial Service
+ Center will send mail messages to the mail group G.CARC_RARC_DATA
+ approximately 3 times during a calendar year. The FSC has a subscription for
+ the codes from the Washington Publishing Company (http://www.wpc-edi.com).
+    
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+   
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ EDI THIRD PARTY EFT DETAIL (#344.31)                      Modified
+                       MATCH STATUS (#.08)                 Modified
+   MATCH STATUS HISTORY sub-file (#344.314)                New
+ ELECTRONIC REMITTANCE ADVICE (#344.4)                     Modified
+                       INSURANCE CO ID (#.03)              Modified
+ AR EDI CARC DATA (#345)                                   New
+ AR PLB ADJUST CODE (#345.1)                               New
+ AR EDI RARC DATA (#346)                                   New
+   
+   
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+   
+   
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ CARC_RARC_DATA                                            New 
+   
+   
+ Options Associated:
+                                                           New/Modified/
+ Option Name                                  Type            Deleted    
+ -----------                                  ----         -------------
+ 835 CARC Data Report [RCDPE CARC CODE        run routine      New 
+ PAYER REPORT]                                                 
+ CARC/RARC Quick Search [RCDPE CARC/RARC      run routine      New 
+ QUICK SEARCH]                                                 
+ CARC/RARC Table Data Report [RCDPE           run routine      New 
+ CARC/RARC TABLE REPORT]                                       
+ EDI Lockbox CARC-RARC Processing Server      server           New 
+ [RCDPE EDI CARC-RARC SERVER]                                  
+ EDI Lockbox (ePayments) Reports Menu         menu             New 
+ [RCDPE EDI LOCKBOX REPORTS MENU]                              
+ EFT Transaction Audit Report [RCDPE EFT      run routine      New 
+ TRANSACTION AUD REP]                                          
+ Provider Level Adjustments (PLB) Report      run routine      New 
+ [RCDPE PROVIDER LVL ADJ REPORT]                               
+ RCDPE UNAPPLIED EFT DEP REPORT                                Delete 
+ RCDPETT TOOL                                                  Delete 
+    
+   
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ RCDPE ECME INFORMATION                   SEND TO SITE     New
+ RCDPE EFT ERA MANUAL MATCH               SEND TO SITE     New
+ RCDPE EOB WL RECEIPT VIEW                ATTACH TO MENU   Modified
+ RCDPE EOB WL RESEARCH EXIT               ATTACH TO MENU   Modified
+ RCDPE EOB WL REVIEW                      ATTACH TO MENU   Modified
+ RCDPE EOB WORKLIST ADMIN COST ADJ        ATTACH TO MENU   Modified
+ RCDPE EOB WORKLIST BILL COMMENT          ATTACH TO MENU   Modified
+ RCDPE EOB WORKLIST CHANGE VIEW           ATTACH TO MENU   Modified
+ RCDPE EOB WORKLIST DIST ADJ              ATTACH TO MENU   Modified
+ RCDPE EOB WORKLIST FULL ACCT PROF        ATTACH TO MENU   Modified
+ RCDPE EOB WORKLIST MENU                  SEND TO SITE     Modified
+ RCDPE EOB WORKLIST RECEIPT PROCESSING    SEND TO SITE     New 
+ RCDPE EOB WORKLIST REESTABLISH           ATTACH TO MENU   Modified
+ RCDPE EOB WORKLIST REFRESH               ATTACH TO MENU   Modified
+ RCDPE EOB WORKLIST RESEARCH              ATTACH TO MENU   Modified
+ RCDPE EOB WORKLIST RESEARCH MENU         SEND TO SITE     Modified
+ RCDPE EOB WORKLIST SPLIT LINE            ATTACH TO MENU   Modified
+ RCDPE EOB WORKLIST TPJI                  ATTACH TO MENU   Modified
+ RCDPE EOB WORKLIST VERIFY                ATTACH TO MENU   Modified
+ RCDPE ERA LIST VIEW ERA                  ATTACH TO MENU   Modified 
+ RCDPE ERA WORKLIST CHANGE VIEW           ATTACH TO MENU   Modified
+ RCDPE VIEW/PRINT WORKLIST EOB            ATTACH TO MENU   Modified
+ RCDPE VIEW/PRINT WORKLIST ERA            ATTACH TO MENU   Modified
+ RCDPE WORKLIST ERA LIST MENU             SEND TO SITE     Modified
+ RCDPE WORKLIST ERA SELECT                ATTACH TO MENU   Modified 
+ RCDPE WORKLIST ERA SORT                  ATTACH TO MENU   Modified 
+ RCDPEX EOB_SUM EXCEPTION MENU            SEND TO SITE     Modified
+ RCDPEX EOB_SUM REMOVE EXCEPT             ATTACH TO MENU   Modified
+ RCDPEX RX_COMMENT                        ATTACH TO MENU   Modified
+ RCDPEX SUM_EDIT CLAIM                    ATTACH TO MENU   Modified
+ RCDPEX SUM_FILE EXCEPTION                ATTACH TO MENU   Modified
+ RCDPEX SUM_VIEW/PRINT MESSAGE            ATTACH TO MENU   Modified
+ VALM QUIT                                ATTACH TO MENU   Modified
+   
+    
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+   
+   
+ Templates Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ PRCA BILL LIST     Print     ACCOUNTS RECEIVABLE (#430)   Modified 
+ PRCA TRANS         Print     AR TRANSACTION (#433)        Modified 
+ PROFILE
+   
+   
+ Additional Information:
+ N/A   
+    
+ New Service Requests (NSRs)
+ ----------------------------  
+ NSR# 20130515 - Uniform Use of CARC and RARC (835) Rule
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+   
+   
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+    
+ Problem:
+ -------
+ N/A
+   
+ Resolution:
+ ----------
+ N/A
+   
+   
+ Test Sites:
+ ----------
+ Alexandria VA Health Care System (Alexandria, LA) - Station 502
+ Huntington VA Medical Center (Huntington, WV) - Station 581
+ South Texas Veterans Health Care System (San Antonio, TX) - Station 671
+   
+   
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch is available.
+   
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+   
+ Sites may retrieve the software and/or documentation directly using Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+   
+   
+ Title                                  File Name              FTP Mode
+ -----------------------------------------------------------------------
+ Accounts Receivables Technical Manual/ PRCA_4_5_TM_R0516.PDF  (binary)
+     Security Guide  
+ Accounts Receivables Release Notes/     PRCA_4_5_P303_RN.PDF  (binary)  
+     Installation Guide
+ ePayments User Manual        EPAYMENTS_USER_MANUAL_R0516.PDF  (binary)
+     (EDI LOCKBOX)
+   
+   
+ Patch Installation:
+   
+ Pre/Post Installation Overview
+ ------------------------------
+    
+ Note: 
+    The patch bundle PRCA IB MCCF EDI 1.0 (IB*2.0*530/PRCA*4.5*303) must
+    be installed first, then install two standalone patches, IB*2.0*529
+    and PRCA*4.5*304. Patch IB*2.0*529 must be installed before installing
+    PRCA*4.5*304. Install all patches close together so that your site has
+    all of the features released as part of this enhancement. 
+    
+ You will be prompted to enter a coordinator for the new CARC_RARC_DATA
+ mail group.  Prior to installation, please contact your Medical Care Cost
+ Recovery (MCCR) business department (Facility Revenue Manager) to
+ determine who will be the coordinator for this new mail group.  This mail
+ group is used to receive data from the FSC on a periodic basis, currently
+ three time a year around February, July and November.
+   
+ There are no special instructions to be performed before installing the patch.
+   
+ Post Install routine will re-index the modified files for the new indices. 
+   
+ After the post-install is complete you can safely remove the routine RC45P303. 
+   
+   
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system.  Installation should
+ take less than 10 minutes.
+   
+ Notes: You may queue this installation for a later time.
+   
+ No options need to be disabled.
+   
+   
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 10 minutes 
+ to install.
+   
+ This patch can be obtained from the ANONYMOUS.SOFTWARE directory at one of
+ the OI Field Offices.  The preferred method is to retrieve the files from
+ DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first 
+ available server.  Sites may elect to retrieve the files from a specific
+ server.
+     
+     OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+     ---------------------------------------------------------------------
+     Albany              DOMAIN.EXT        
+     Hines               DOMAIN.EXT         
+     Salt Lake City      DOMAIN.EXT           
+   
+ The software distribution includes: 
+   
+   FILE NAME                   DESCRIPTION
+  -------------------------------------------------------
+  PRCA_IB_MCCF_EDI_1_0.KID      KIDS Build
+   
+  1.  Retrieve the file PRCA_IB_MCCF_EDI_1_0.KID using one of the methods
+      described above. This file contains the patches PRCA*4.5*303 and
+      IB*2.0*530 
+   
+  2.  From the Kernel Installation & Distribution System menu, select 
+      the Installation menu.  
+   
+  3.  From this menu, select the option Load a Distribution and when
+      prompted for "Enter a Host File:" enter the full directory 
+      path where you saved the file PRCA_IB_MCCF_EDI_1_0.KID 
+      
+      When prompted for OK to continue with Load? NO//", enter "YES."
+   
+  4.  When prompted to; 
+      "Enter the Coordinator for Mail Group 'CARC_RARC_DATA':", please
+      respond with the appropriate person.
+   
+  5.  From the "Installation ..." menu, run the following three KIDS 
+      options. When prompted for INSTALL NAME, enter PRCA IB MCCF EDI 1.0 
+  
+      5  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+      4  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+      2  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+   
+  6.  Use the Install Package(s) option and when prompted for "INSTALL NAME"
+      enter PRCA IB MCCF EDI 1.0.  
+   
+  7.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//' respond YES.   
+   
+      By answering YES to rebuild the menu trees warn them that it could affect
+      users on the system and installation times may increase.
+   
+  8.  When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//" 
+      respond NO.  
+   
+  9.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+      Protocols? NO//" respond NO.                      
+     
+ 10.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+   
+ 11.  You may delete the post install routines after installation:
+      PR45P303
+      IB20P530
+   
+ Post-Installation Instructions
+ ------------------------------
+   
+ There are no special post-installation instructions for this patch.
+  
+ If the installation was successful routine RC45P303 can be safely removed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 84
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCAAPR1
+    Before: B41639363   After: B43791904  **34,45,108,143,141,206,192,
+                                           218,276,275,284,303**
+Routine Name: PRCAATR
+    Before: B18030407   After: B19181234  **36,104,172,138,233,276,303**
+Routine Name: RC45P303
+    Before:       n/a   After: B22742515  **303**
+Routine Name: RCDPAPLI
+    Before: B42722904   After: B43587980  **114,141,241,303**
+Routine Name: RCDPARC
+    Before:       n/a   After:B213177751  **303**
+Routine Name: RCDPBPLM
+    Before: B56287524   After: B57667335  **114,153,159,241,276,303**
+Routine Name: RCDPCRR
+    Before:       n/a   After:B179060706  **303**
+Routine Name: RCDPEAC
+    Before:B163795465   After:B190534875  **208,269,276,298,303**
+Routine Name: RCDPEM2
+    Before:B206109836   After:B218873122  **173,208,276,284,293,298,303**
+Routine Name: RCDPEM7
+    Before: B44920512   After: B82538875  **276,298,303**
+Routine Name: RCDPEMSG
+    Before:       n/a   After: B52639080  **303**
+Routine Name: RCDPETT
+    Before: B81520347   After:    Delete  
+Routine Name: RCDPETTE
+    Before:B258211138   After:    Delete  
+Routine Name: RCDPETTF
+    Before: B80402649   After:    Delete  
+Routine Name: RCDPETTM
+    Before:B189296632   After:    Delete  
+Routine Name: RCDPETTP
+    Before:  B4906426   After:    Delete  
+Routine Name: RCDPETTQ
+    Before: B30669370   After:    Delete  
+Routine Name: RCDPETTU
+    Before:B117602125   After:    Delete  
+Routine Name: RCDPEWL2
+    Before: B85809764   After:B108949020  **173,208,269,298,303**
+Routine Name: RCDPEWL4
+    Before: B46490209   After: B57740502  **173,208,269,298,303**
+Routine Name: RCDPEWL6
+    Before: B80720367   After: B81815547  **173,208,222,276,298,303**
+Routine Name: RCDPEWLP
+    Before:B164916639   After:B166745287  **298,303**
+Routine Name: RCDPPLB
+    Before:       n/a   After:B190736513  **303**
+Routine Name: RCDPRTP2
+    Before: B14571790   After: B15639829  **151,276,303**
+Routine Name: RCDPRU
+    Before:       n/a   After:B219265660  **303**
+Routine Name: RCDPTAR
+    Before:       n/a   After:B177809356  **303**
+Routine Name: RCDPTAR1
+    Before:       n/a   After: B43222900  **303**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 21, 2014
+Completed By:                               Date Completed: JUN 15, 2016
+Released By :                               Date Released : JUL 01, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

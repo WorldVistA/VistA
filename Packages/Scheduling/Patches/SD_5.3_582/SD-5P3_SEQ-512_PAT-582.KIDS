@@ -1,0 +1,1383 @@
+Released SD*5.3*582 SEQ #512
+Extracted from mail message
+**KIDS**:SD*5.3*582^
+
+**INSTALL NAME**
+SD*5.3*582
+"BLD",9636,0)
+SD*5.3*582^SCHEDULING^0^3140404^y
+"BLD",9636,1,0)
+^^10^10^3140307^
+"BLD",9636,1,1,0)
+This patch will fix the following issues:
+"BLD",9636,1,2,0)
+ 
+"BLD",9636,1,3,0)
+1. an issue that allows users to select clinics for recall reminders that
+"BLD",9636,1,4,0)
+   are inactive or scheduled to be inactive on the selected recall date.  
+"BLD",9636,1,5,0)
+ 
+"BLD",9636,1,6,0)
+2. an issue with menu option Convert Retired Providers/Clinic Recalls
+"BLD",9636,1,7,0)
+   [SDRR CONVERT ENTRIES].
+"BLD",9636,1,8,0)
+ 
+"BLD",9636,1,9,0)
+3. a display issue with the Date Second Reminder Sent field when doing a
+"BLD",9636,1,10,0)
+   Recall Patient Inquiry [SDRR PATIENT INQUIRY].
+"BLD",9636,4,0)
+^9.64PA^^
+"BLD",9636,6.3)
+3
+"BLD",9636,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9636,"KRN",.4,0)
+.4
+"BLD",9636,"KRN",.401,0)
+.401
+"BLD",9636,"KRN",.402,0)
+.402
+"BLD",9636,"KRN",.402,"NM",0)
+^9.68A^1^1
+"BLD",9636,"KRN",.402,"NM",1,0)
+SDRR RECALL CARD ADD    FILE #403.5^403.5^0
+"BLD",9636,"KRN",.402,"NM","B","SDRR RECALL CARD ADD    FILE #403.5",1)
+
+"BLD",9636,"KRN",.403,0)
+.403
+"BLD",9636,"KRN",.5,0)
+.5
+"BLD",9636,"KRN",.84,0)
+.84
+"BLD",9636,"KRN",3.6,0)
+3.6
+"BLD",9636,"KRN",3.8,0)
+3.8
+"BLD",9636,"KRN",9.2,0)
+9.2
+"BLD",9636,"KRN",9.8,0)
+9.8
+"BLD",9636,"KRN",9.8,"NM",0)
+^9.68A^4^4
+"BLD",9636,"KRN",9.8,"NM",1,0)
+SDRR5^^0^B9036168
+"BLD",9636,"KRN",9.8,"NM",2,0)
+SDRRINQ^^0^B78118992
+"BLD",9636,"KRN",9.8,"NM",3,0)
+SDRRINQ1^^0^B59730952
+"BLD",9636,"KRN",9.8,"NM",4,0)
+SDRRUTL^^0^B59389500
+"BLD",9636,"KRN",9.8,"NM","B","SDRR5",1)
+
+"BLD",9636,"KRN",9.8,"NM","B","SDRRINQ",2)
+
+"BLD",9636,"KRN",9.8,"NM","B","SDRRINQ1",3)
+
+"BLD",9636,"KRN",9.8,"NM","B","SDRRUTL",4)
+
+"BLD",9636,"KRN",19,0)
+19
+"BLD",9636,"KRN",19.1,0)
+19.1
+"BLD",9636,"KRN",101,0)
+101
+"BLD",9636,"KRN",409.61,0)
+409.61
+"BLD",9636,"KRN",771,0)
+771
+"BLD",9636,"KRN",779.2,0)
+779.2
+"BLD",9636,"KRN",870,0)
+870
+"BLD",9636,"KRN",8989.51,0)
+8989.51
+"BLD",9636,"KRN",8989.52,0)
+8989.52
+"BLD",9636,"KRN",8994,0)
+8994
+"BLD",9636,"KRN","B",.4,.4)
+
+"BLD",9636,"KRN","B",.401,.401)
+
+"BLD",9636,"KRN","B",.402,.402)
+
+"BLD",9636,"KRN","B",.403,.403)
+
+"BLD",9636,"KRN","B",.5,.5)
+
+"BLD",9636,"KRN","B",.84,.84)
+
+"BLD",9636,"KRN","B",3.6,3.6)
+
+"BLD",9636,"KRN","B",3.8,3.8)
+
+"BLD",9636,"KRN","B",9.2,9.2)
+
+"BLD",9636,"KRN","B",9.8,9.8)
+
+"BLD",9636,"KRN","B",19,19)
+
+"BLD",9636,"KRN","B",19.1,19.1)
+
+"BLD",9636,"KRN","B",101,101)
+
+"BLD",9636,"KRN","B",409.61,409.61)
+
+"BLD",9636,"KRN","B",771,771)
+
+"BLD",9636,"KRN","B",779.2,779.2)
+
+"BLD",9636,"KRN","B",870,870)
+
+"BLD",9636,"KRN","B",8989.51,8989.51)
+
+"BLD",9636,"KRN","B",8989.52,8989.52)
+
+"BLD",9636,"KRN","B",8994,8994)
+
+"BLD",9636,"QDEF")
+^^^^NO^^^^^^YES
+"BLD",9636,"QUES",0)
+^9.62^^
+"BLD",9636,"REQB",0)
+^9.611^2^2
+"BLD",9636,"REQB",1,0)
+SD*5.3*566^2
+"BLD",9636,"REQB",2,0)
+SD*5.3*571^2
+"BLD",9636,"REQB","B","SD*5.3*566",1)
+
+"BLD",9636,"REQB","B","SD*5.3*571",2)
+
+"KRN",.402,2814,-1)
+0^1
+"KRN",.402,2814,0)
+SDRR RECALL CARD ADD^3140305.1725^^403.5^^^3140401
+"KRN",.402,2814,"DR",1,403.5)
+.01;@05;5;5.5;@01;4;S SDFLAG=$$SCREEN^SDRRUTL;S:SDFLAG="" Y="@01";S:$G(SDFLAG)<1 Y="@99";4.5;S:'$$SCREEN1^SDRRUTL Y="@05";4.7;3;2.6;2.5;7////^S X=DUZ;@99;I $D(SDFLAG),SDFLAG="" S SDDIK="";I $D(SDFLAG),SDFLAG=0 S SDDIK=DA;
+"MBREQ")
+0
+"ORD",7,.402)
+.402;7;;;EDEOUT^DIFROMSO(.402,DA,"",XPDA);FPRE^DIFROMSI(.402,"",XPDA);EPRE^DIFROMSI(.402,DA,$E("N",$G(XPDNEW)),XPDA,"",OLDA);;EPOST^DIFROMSI(.402,DA,"",XPDA);DEL^DIFROMSK(.402,"",%)
+"ORD",7,.402,0)
+INPUT TEMPLATE
+"PKG",16,-1)
+1^1
+"PKG",16,0)
+SCHEDULING^SD^APPOINTMENTS,PROFILES,LETTERS,AMIS REPORTS
+"PKG",16,20,0)
+^9.402P^^
+"PKG",16,22,0)
+^9.49I^1^1
+"PKG",16,22,1,0)
+5.3^2930813
+"PKG",16,22,1,"PAH",1,0)
+582^3140404
+"PKG",16,22,1,"PAH",1,1,0)
+^^10^10^3140404
+"PKG",16,22,1,"PAH",1,1,1,0)
+This patch will fix the following issues:
+"PKG",16,22,1,"PAH",1,1,2,0)
+ 
+"PKG",16,22,1,"PAH",1,1,3,0)
+1. an issue that allows users to select clinics for recall reminders that
+"PKG",16,22,1,"PAH",1,1,4,0)
+   are inactive or scheduled to be inactive on the selected recall date.  
+"PKG",16,22,1,"PAH",1,1,5,0)
+ 
+"PKG",16,22,1,"PAH",1,1,6,0)
+2. an issue with menu option Convert Retired Providers/Clinic Recalls
+"PKG",16,22,1,"PAH",1,1,7,0)
+   [SDRR CONVERT ENTRIES].
+"PKG",16,22,1,"PAH",1,1,8,0)
+ 
+"PKG",16,22,1,"PAH",1,1,9,0)
+3. a display issue with the Date Second Reminder Sent field when doing a
+"PKG",16,22,1,"PAH",1,1,10,0)
+   Recall Patient Inquiry [SDRR PATIENT INQUIRY].
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","SDRR5")
+0^1^B9036168^B9146765
+"RTN","SDRR5",1,0)
+SDRR5 ;10N20/MAH; RECALL REMINDER Remove and Replace Providers and Clinics; 01/22/2008
+"RTN","SDRR5",2,0)
+ ;;5.3;Scheduling;**536,582**;Aug 13, 1993;Build 3
+"RTN","SDRR5",3,0)
+ ;This routine was written per requests from VISN20 sites
+"RTN","SDRR5",4,0)
+ ;^SD(403.5 -- RECALL REMINDERS FILE
+"RTN","SDRR5",5,0)
+ ;403.54 -- RECALL REMINDERS PROVIDERS FILE
+"RTN","SDRR5",6,0)
+ ;44 -- HOSPITAL LOCATION FILE
+"RTN","SDRR5",7,0)
+ ;Used in option [SDRR CONVERT ENTRIES]
+"RTN","SDRR5",8,0)
+STRT S (NIEN,OIEN,SDT,EDT,OHIEN,NHIEN,FLAG,OLDC,NEWC)=""
+"RTN","SDRR5",9,0)
+ S DIC="^SD(403.54,",DIC(0)="AEQMZ",DIC("A")="Select Retiring Provider: " D ^DIC G:Y<0 QUIT S OIEN=+Y,OPROV=$P(^SD(403.54,OIEN,0),"^",1),SDRROLD=$$NAME^XUSER(OPROV,"F")
+"RTN","SDRR5",10,0)
+ S DIC="^SD(403.54,",DIC(0)="AEQMZ",DIC("A")="Select New Provider: " D ^DIC G:Y<0 QUIT S NIEN=+Y,OPROV=$P(^SD(403.54,NIEN,0),"^",1),SDRRNEW=$$NAME^XUSER(OPROV,"F")
+"RTN","SDRR5",11,0)
+ W !,?1,"Do you want to change Clinic names that the recall is pointed to: " S %=2 D YN^DICN I %=2 G SELDT
+"RTN","SDRR5",12,0)
+ K %
+"RTN","SDRR5",13,0)
+CLINC S DIC="^SC(",DIC(0)="AEQMZ",DIC("A")="Select Retiring Clinic: " D ^DIC G:Y<0 CLEAN S OHIEN=+Y,OLDC=$$GET1^DIQ(44,OHIEN_",",.01)
+"RTN","SDRR5",14,0)
+ S DIC="^SC(",DIC(0)="AEQMZ",DIC("A")="Select New Clinic: " D ^DIC G:Y<0 CLEAN S NHIEN=+Y,FLAG="C",NEWC=$$GET1^DIQ(44,NHIEN_",",.01)
+"RTN","SDRR5",15,0)
+CLEAN ;CLINIC NOT SELECTED BUT CHECK
+"RTN","SDRR5",16,0)
+ I FLAG'["C" W !,?1,"You have selected not to move clinic recall applications to a different clinic is this correct: " S %=2 D YN^DICN I %=2 G CLINC
+"RTN","SDRR5",17,0)
+SELDT S %DT="AEX",%DT("A")="Start with RECALL DATE: " D ^%DT Q:Y<0  S SDT=Y,%DT("A")="End with RECALL DATE: " D ^%DT I Y<SDT W $C(7),"  ??" G SELDT
+"RTN","SDRR5",18,0)
+ S EDT=Y S EDT=EDT_".9999"
+"RTN","SDRR5",19,0)
+ W !!,?5,"****You will be converting all Clinic Recalls for****"
+"RTN","SDRR5",20,0)
+ W !!,?3,SDRROLD_" -They will be converted to- "_SDRRNEW
+"RTN","SDRR5",21,0)
+ I NEWC'="" W !,?3,OLDC_" Clinic will be converted to "_NEWC_" Clinic"
+"RTN","SDRR5",22,0)
+ ;SD*582 following changed to check for selected old clinic
+"RTN","SDRR5",23,0)
+ I FLAG["C" S D0=0 F  S D0=$O(^SD(403.5,"C",OIEN,D0)) Q:D0'>0  D
+"RTN","SDRR5",24,0)
+ .S RD=$P($G(^SD(403.5,D0,0)),U,6) Q:RD<SDT!(RD>EDT)  I $P($G(^(0)),U,2)=OHIEN D
+"RTN","SDRR5",25,0)
+ ..S DIE="^SD(403.5," S DA=D0,DR="4///^S X=""`""_NIEN;4.5///^S X=""`""_NHIEN" D ^DIE K DIE,DR,DA
+"RTN","SDRR5",26,0)
+ I FLAG="" S D0=0 F  S D0=$O(^SD(403.5,"C",OIEN,D0)) Q:D0'>0  D
+"RTN","SDRR5",27,0)
+ .S RD=$P($G(^SD(403.5,D0,0)),"^",6) Q:RD<SDT!(RD>EDT)  S DIE="^SD(403.5," S DA=D0,DR="4///^S X=""`""_NIEN" D ^DIE K DIE,DR,DA
+"RTN","SDRR5",28,0)
+QUIT K Y,OIEN,NIEN,FLAG,OPROV,SDT,RD,EDT,SDRRNEW,SDRROLD,D0,NEWC,NHIEN,OHIEN,OLDC,X,DIC,FLAG,%DT
+"RTN","SDRRINQ")
+0^2^B78118992^B77175038
+"RTN","SDRRINQ",1,0)
+SDRRINQ ;10N20/MAH;-Recall Reminder PATIENT INQUIRY ;01/28/2008  11:32
+"RTN","SDRRINQ",2,0)
+ ;;5.3;Scheduling;**536,566,582**;Aug 13, 1993;Build 3
+"RTN","SDRRINQ",3,0)
+ ; Option: SDRR PATIENT INQUIRY
+"RTN","SDRRINQ",4,0)
+EN ;Looping through both active recalls and archive entries
+"RTN","SDRRINQ",5,0)
+ N DFN
+"RTN","SDRRINQ",6,0)
+ K ^TMP("SDRRINQ",$J)
+"RTN","SDRRINQ",7,0)
+ S (SHOW,SHOW1)=1
+"RTN","SDRRINQ",8,0)
+ S DIC="^DPT(",DIC(0)="AEMQZ" D ^DIC  ;SD*566
+"RTN","SDRRINQ",9,0)
+ Q:$D(DTOUT)!$D(DUOUT)
+"RTN","SDRRINQ",10,0)
+ Q:Y<1
+"RTN","SDRRINQ",11,0)
+ S DFN=+Y K Y,DIC
+"RTN","SDRRINQ",12,0)
+ I '$D(^SD(403.5,"B",DFN)) W !!,"**No Active Clinic Recall on file",! S SHOW=0
+"RTN","SDRRINQ",13,0)
+ I '$D(^SD(403.56,"B",DFN)) W !,"**No Archive Clinic Recalls on file",! S SHOW1=0
+"RTN","SDRRINQ",14,0)
+ G:(SHOW<1)&(SHOW1<1) QUIT
+"RTN","SDRRINQ",15,0)
+ D DATE
+"RTN","SDRRINQ",16,0)
+ I $D(ERR) K ERR Q
+"RTN","SDRRINQ",17,0)
+SELDT I RANGE=1 S %DT="AEX",%DT("A")="Beginning Date: " D ^%DT Q:Y<0  S SDT=Y,%DT("A")="Ending DATE: " D ^%DT I Y<SDT W $C(7),"  ??" G SELDT
+"RTN","SDRRINQ",18,0)
+ S EDT=Y
+"RTN","SDRRINQ",19,0)
+ I RANGE=0 S (SDT,EDT)=0
+"RTN","SDRRINQ",20,0)
+ I RANGE=0 D PRT
+"RTN","SDRRINQ",21,0)
+ I $D(ERROR)  K ERROR Q
+"RTN","SDRRINQ",22,0)
+ I Y=1 G QUE^SDRRINQ1
+"RTN","SDRRINQ",23,0)
+ I RANGE=0 D ACT,ARC,REPORT,REPORT1 G QUIT
+"RTN","SDRRINQ",24,0)
+ I RANGE=1 D SEL,SEL1,REPORT,REPORT1 G QUIT
+"RTN","SDRRINQ",25,0)
+ Q
+"RTN","SDRRINQ",26,0)
+SEL I $D(^SD(403.5,"B",DFN)) S (RSENT,SSENT,PRDT,TYPE)="" S IEN=0 F  S IEN=$O(^SD(403.5,"B",DFN,IEN)) Q:'IEN  S NODE=$G(^SD(403.5,IEN,0)) D
+"RTN","SDRRINQ",27,0)
+ .S CLINIC=$P($G(NODE),"^",2),CLINIC=$$GET1^DIQ(44,CLINIC_",",.01),ACCINFOR=$P($G(NODE),"^",3)
+"RTN","SDRRINQ",28,0)
+ .S TYPE=$P($G(NODE),"^",4) I TYPE'="" S TYPE=$P(^SD(403.51,TYPE,0),"^",1)
+"RTN","SDRRINQ",29,0)
+ .S PROVIDER=$P(NODE,"^",5) I PROVIDER'="" S PROVIDER=$P($G(^SD(403.54,PROVIDER,0)),"^",1) S PROVIDER=$$NAME^XUSER(PROVIDER,"F")
+"RTN","SDRRINQ",30,0)
+ .I PROVIDER="" S PROVIDER="Unknown"
+"RTN","SDRRINQ",31,0)
+ .S RDT=""
+"RTN","SDRRINQ",32,0)
+ .S Y=$P(NODE,"^",6) Q:Y<SDT!(Y>EDT)
+"RTN","SDRRINQ",33,0)
+ .I Y>SDT,(Y<EDT) D DD^%DT S RDT=Y K Y,X
+"RTN","SDRRINQ",34,0)
+ .S COMMENT=$P($G(NODE),"^",7)
+"RTN","SDRRINQ",35,0)
+ .S FAST=$S($P(NODE,"^",8)["n":"NO",$P(NODE,"^",8)["f":"YES",1:"")
+"RTN","SDRRINQ",36,0)
+ .S LOA=$P(NODE,"^",9)
+"RTN","SDRRINQ",37,0)
+ .S RSENT=""   ;SD*566
+"RTN","SDRRINQ",38,0)
+ .S Y=$P($G(NODE),"^",10) I Y'="" D DD^%DT S RSENT=Y K Y,X
+"RTN","SDRRINQ",39,0)
+ .I RSENT="" S RSENT="NOTSENT"
+"RTN","SDRRINQ",40,0)
+ .S USER=$P($G(NODE),"^",11),USER=$$NAME^XUSER(USER,"F")
+"RTN","SDRRINQ",41,0)
+ .S Y=$P(NODE,"^",12) I Y'="" D DD^%DT S PRDT=Y K Y,X
+"RTN","SDRRINQ",42,0)
+ .S Y=$P(NODE,"^",13) I Y'="" D DD^%DT S SSENT="*"_Y K Y,X
+"RTN","SDRRINQ",43,0)
+ .S ^TMP("SDRRINQ",$J,"ACT",IEN)=CLINIC_"^"_ACCINFOR_"^"_TYPE_"^"_PROVIDER_"^"_RDT_"^"_COMMENT_"^"_FAST_"^"_LOA_"^"_RSENT_"^"_USER_"^"_PRDT_"^"_SSENT
+"RTN","SDRRINQ",44,0)
+ .S SSENT=""    ;SD*582
+"RTN","SDRRINQ",45,0)
+ Q
+"RTN","SDRRINQ",46,0)
+SEL1 I $D(^SD(403.56,"B",DFN))  S (USER,RSENT,PRDTA,TYPE)="" S IENA=0 F  S IENA=$O(^SD(403.56,"B",DFN,IENA)) Q:'IENA  S NODEA=$G(^SD(403.56,IENA,0)) D
+"RTN","SDRRINQ",47,0)
+ .S CLINIC=$P($G(NODEA),"^",2),CLINIC=$$GET1^DIQ(44,CLINIC_",",.01),ACCINFOR=$P($G(NODEA),"^",3)
+"RTN","SDRRINQ",48,0)
+ .S TYPE=$P($G(NODEA),"^",4) I TYPE'="" S TYPE=$P(^SD(403.51,TYPE,0),"^",1)
+"RTN","SDRRINQ",49,0)
+ .S PROVIDER=$P(NODEA,"^",5) I PROVIDER'="" S PROVIDER=$P($G(^SD(403.54,PROVIDER,0)),"^",1) S PROVIDER=$$NAME^XUSER(PROVIDER,"F")
+"RTN","SDRRINQ",50,0)
+ .I PROVIDER="" S PROVIDER="Unknown"
+"RTN","SDRRINQ",51,0)
+ .S RDT=""
+"RTN","SDRRINQ",52,0)
+ .S Y=$P(NODEA,"^",6) Q:Y<SDT!(Y>EDT)
+"RTN","SDRRINQ",53,0)
+ .I Y>SDT&(Y<EDT) D DD^%DT S RDT=Y K Y,X
+"RTN","SDRRINQ",54,0)
+ .S COMMENT=$P($G(NODEA),"^",7)
+"RTN","SDRRINQ",55,0)
+ .S FAST=$S($P(NODEA,"^",8)["n":"NO",$P(NODEA,"^",8)["f":"YES",1:"")
+"RTN","SDRRINQ",56,0)
+ .S LOA=$P(NODEA,"^",9)
+"RTN","SDRRINQ",57,0)
+ .S RSENT=""   ;SD*566
+"RTN","SDRRINQ",58,0)
+ .S Y=$P($G(NODEA),"^",10) I Y'="" D DD^%DT S RSENT=Y K Y,X
+"RTN","SDRRINQ",59,0)
+ .I RSENT="" S RSENT="NOTSENT"
+"RTN","SDRRINQ",60,0)
+ .S USER=$P($G(NODEA),"^",11),USER=$$NAME^XUSER(USER,"F")
+"RTN","SDRRINQ",61,0)
+ .I $D(^SD(403.56,IENA,2)) S NODEA2=$G(^SD(403.56,IENA,2)) D
+"RTN","SDRRINQ",62,0)
+ ..S Y=$P(NODEA2,"^",1) D DD^%DT S PRDTA=Y K Y,X
+"RTN","SDRRINQ",63,0)
+ ..S USER2=$P($G(NODEA2),"^",2),USER2=$$NAME^XUSER(USER2,"F")
+"RTN","SDRRINQ",64,0)
+ ..S SDRREASN=$S($P(NODEA2,"^",3)=1:"FTR",$P(NODEA2,"^",3)=2:"MOVED",$P(NODEA2,"^",3)=3:"DECEASED",$P(NODEA2,"^",3)=4:"DNWC",$P(NODEA2,"^",3)=5:"RCOVA",$P(NODEA2,"^",3)=6:"OTHER",$P(NODEA2,"^",3)=7:"Scheduled",1:"")
+"RTN","SDRRINQ",65,0)
+ ..S ^TMP("SDRRINQ",$J,"ARC",IENA)=CLINIC_"^"_ACCINFOR_"^"_TYPE_"^"_PROVIDER_"^"_RDT_"^"_COMMENT_"^"_FAST_"^"_LOA_"^"_RSENT_"^"_USER2_"^"_USER_"^"_SDRREASN_"^"_PRDTA
+"RTN","SDRRINQ",66,0)
+ Q
+"RTN","SDRRINQ",67,0)
+HDR ;Review all Recall Reminder on screen for all
+"RTN","SDRRINQ",68,0)
+ D DEM^VADPT S NAME=VADM(1),LAST4=VA("BID"),DOB=$P(VADM(3),"^",2) S HDR="Patient Name: "_NAME_"  Date of Birth: "_DOB_" Last4: "_LAST4
+"RTN","SDRRINQ",69,0)
+ W @IOF,HDR
+"RTN","SDRRINQ",70,0)
+ Q
+"RTN","SDRRINQ",71,0)
+ACT I $D(^SD(403.5,"B",DFN)) S (RSENT,SSENT,IEN,PRDT,TYPE)="" F  S IEN=$O(^SD(403.5,"B",DFN,IEN)) Q:'IEN  S NODE=$G(^SD(403.5,IEN,0)) D
+"RTN","SDRRINQ",72,0)
+ .S CLINIC=$P($G(NODE),"^",2),CLINIC=$$GET1^DIQ(44,CLINIC_",",.01),ACCINFOR=$P($G(NODE),"^",3)
+"RTN","SDRRINQ",73,0)
+ .S TYPE=$P($G(NODE),"^",4) I TYPE'="" S TYPE=$P(^SD(403.51,TYPE,0),"^",1)
+"RTN","SDRRINQ",74,0)
+ .S PROVIDER=$P(NODE,"^",5) I PROVIDER'="" S PROVIDER=$P($G(^SD(403.54,PROVIDER,0)),"^",1) S PROVIDER=$$NAME^XUSER(PROVIDER,"F")
+"RTN","SDRRINQ",75,0)
+ .I PROVIDER="" S PROVIDER="Unknown"
+"RTN","SDRRINQ",76,0)
+ .S RDT=""
+"RTN","SDRRINQ",77,0)
+ .S Y=$P(NODE,"^",6) D DD^%DT S RDT=Y K Y,X
+"RTN","SDRRINQ",78,0)
+ .S COMMENT=$P($G(NODE),"^",7)
+"RTN","SDRRINQ",79,0)
+ .S FAST=$S($P(NODE,"^",8)["n":"NO",$P(NODE,"^",8)["f":"YES",1:"")
+"RTN","SDRRINQ",80,0)
+ .S LOA=$P(NODE,"^",9)
+"RTN","SDRRINQ",81,0)
+ .S RSENT=""   ;SD*566
+"RTN","SDRRINQ",82,0)
+ .S Y=$P($G(NODE),"^",10) I Y'="" D DD^%DT S RSENT=Y K Y,X
+"RTN","SDRRINQ",83,0)
+ .I RSENT="" S RSENT="NOTSENT"
+"RTN","SDRRINQ",84,0)
+ .S USER=$P($G(NODE),"^",11),USER=$$NAME^XUSER(USER,"F")
+"RTN","SDRRINQ",85,0)
+ .S Y=$P(NODE,"^",12) I Y'="" D DD^%DT S PRDT=Y K Y,X
+"RTN","SDRRINQ",86,0)
+ .S Y=$P(NODE,"^",13) I Y'="" D DD^%DT S SSENT="*"_Y K Y,X
+"RTN","SDRRINQ",87,0)
+ .S ^TMP("SDRRINQ",$J,"ACT",IEN)=CLINIC_"^"_ACCINFOR_"^"_TYPE_"^"_PROVIDER_"^"_RDT_"^"_COMMENT_"^"_FAST_"^"_LOA_"^"_RSENT_"^"_USER_"^"_PRDT_"^"_SSENT
+"RTN","SDRRINQ",88,0)
+ .S SSENT=""    ;SD*582
+"RTN","SDRRINQ",89,0)
+ Q
+"RTN","SDRRINQ",90,0)
+ARC I $D(^SD(403.56,"B",DFN))  S (USER,RSENT,PRDTA,TYPE)="" S IENA=0 F  S IENA=$O(^SD(403.56,"B",DFN,IENA)) Q:'IENA  S NODEA=$G(^SD(403.56,IENA,0)) D
+"RTN","SDRRINQ",91,0)
+ .S CLINIC=$P($G(NODEA),"^",2),CLINIC=$$GET1^DIQ(44,CLINIC_",",.01),ACCINFOR=$P($G(NODEA),"^",3)
+"RTN","SDRRINQ",92,0)
+ .S TYPE=$P($G(NODEA),"^",4) I TYPE'="" S TYPE=$P(^SD(403.51,TYPE,0),"^",1)
+"RTN","SDRRINQ",93,0)
+ .S PROVIDER=$P(NODEA,"^",5) I PROVIDER'="" S PROVIDER=$P($G(^SD(403.54,PROVIDER,0)),"^",1) S PROVIDER=$$NAME^XUSER(PROVIDER,"F")
+"RTN","SDRRINQ",94,0)
+ .I PROVIDER="" S PROVIDER="Unknown"
+"RTN","SDRRINQ",95,0)
+ .S RDT=""
+"RTN","SDRRINQ",96,0)
+ .S Y=$P(NODEA,"^",6) D DD^%DT S RDT=Y K Y,X
+"RTN","SDRRINQ",97,0)
+ .S COMMENT=$P($G(NODEA),"^",7)
+"RTN","SDRRINQ",98,0)
+ .S FAST=$S($P(NODEA,"^",8)["n":"NO",$P(NODEA,"^",8)["f":"YES",1:"")
+"RTN","SDRRINQ",99,0)
+ .S LOA=$P(NODEA,"^",9)
+"RTN","SDRRINQ",100,0)
+ .S RSENT=""   ;SD*566
+"RTN","SDRRINQ",101,0)
+ .S Y=$P($G(NODEA),"^",10) I Y'="" D DD^%DT S RSENT=Y K Y,X
+"RTN","SDRRINQ",102,0)
+ .I RSENT="" S RSENT="NOTSENT"
+"RTN","SDRRINQ",103,0)
+ .S USER=$P($G(NODEA),"^",11),USER=$$NAME^XUSER(USER,"F")
+"RTN","SDRRINQ",104,0)
+ .I $D(^SD(403.56,IENA,2)) S NODEA2=$G(^SD(403.56,IENA,2)) D
+"RTN","SDRRINQ",105,0)
+ ..S Y=$P(NODEA2,"^",1) D DD^%DT S PRDTA=Y K Y,X
+"RTN","SDRRINQ",106,0)
+ ..S USER2=$P($G(NODEA2),"^",2),USER2=$$NAME^XUSER(USER2,"F")
+"RTN","SDRRINQ",107,0)
+ ..S SDRREASN=$S($P(NODEA2,"^",3)=1:"FTR",$P(NODEA2,"^",3)=2:"MOVED",$P(NODEA2,"^",3)=3:"DECEASED",$P(NODEA2,"^",3)=4:"DNWC",$P(NODEA2,"^",3)=5:"RCOVA",$P(NODEA2,"^",3)=6:"OTHER",$P(NODEA2,"^",3)=7:"Scheduled",1:"")
+"RTN","SDRRINQ",108,0)
+ ..S ^TMP("SDRRINQ",$J,"ARC",IENA)=CLINIC_"^"_ACCINFOR_"^"_TYPE_"^"_PROVIDER_"^"_RDT_"^"_COMMENT_"^"_FAST_"^"_LOA_"^"_RSENT_"^"_USER2_"^"_USER_"^"_SDRREASN_"^"_PRDTA
+"RTN","SDRRINQ",109,0)
+ Q
+"RTN","SDRRINQ",110,0)
+DATE ; DIR call
+"RTN","SDRRINQ",111,0)
+ S (YES,RANGE)=0,DIR("B")="All" K SDHDR
+"RTN","SDRRINQ",112,0)
+ S DIR(0)="S^R:Range;A:All",DIR("A")="Do you want a (R)ange or (A)ll" I $D(DIRUT) S ERR=1 G QUIT
+"RTN","SDRRINQ",113,0)
+ S DIR("?",1)="",DIR("?",2)="     (A)ll gives the user all dates.",DIR("?")="     (R)ange allows the user to select a range of dates."
+"RTN","SDRRINQ",114,0)
+ D ^DIR K DIR I $D(DIRUT) S ERR=1 G QUIT
+"RTN","SDRRINQ",115,0)
+ I "RA"'[Y W !!,"Enter 'R' for a date range or 'A' for all dates." G DATE
+"RTN","SDRRINQ",116,0)
+ I "R"[Y S RANGE=1
+"RTN","SDRRINQ",117,0)
+ Q
+"RTN","SDRRINQ",118,0)
+PRT ;
+"RTN","SDRRINQ",119,0)
+ S YES=0
+"RTN","SDRRINQ",120,0)
+ S DIR(0)="Y",DIR("B")="NO",DIR("A")="Do you want to print the profile"
+"RTN","SDRRINQ",121,0)
+ S DIR("?",1)="     Enter 'YES' to print the profile.",DIR("?")="     If you enter 'NO', it will take you to the Recall Reminder report."
+"RTN","SDRRINQ",122,0)
+ D ^DIR K DIR I $D(DIRUT) S ERROR=1 G QUIT
+"RTN","SDRRINQ",123,0)
+ Q
+"RTN","SDRRINQ",124,0)
+REPORT D HDR
+"RTN","SDRRINQ",125,0)
+ I '$D(^TMP("SDRRINQ",$J,"ACT")) W !!,?25,"No ACTIVE Recalls Reminders on file" Q
+"RTN","SDRRINQ",126,0)
+ I $D(^TMP("SDRRINQ",$J,"ACT")) W !!,?25,"ACTIVE RECALL REMINDERS"
+"RTN","SDRRINQ",127,0)
+ S ITEM=0 F  S ITEM=$O(^TMP("SDRRINQ",$J,"ACT",ITEM)) Q:'ITEM  D
+"RTN","SDRRINQ",128,0)
+ .S INFOR=$G(^TMP("SDRRINQ",$J,"ACT",ITEM))
+"RTN","SDRRINQ",129,0)
+ .W !!,?5,"Clinic: "_$P($G(INFOR),"^",1),?45,"Recall Date: "_$P($G(INFOR),"^",5)
+"RTN","SDRRINQ",130,0)
+ .W !,?5,"Provider: "_$P($G(INFOR),"^",4),?45,"Appt/Type: "_$P($G(INFOR),"^",3)
+"RTN","SDRRINQ",131,0)
+ .W !,?5,"Fasting/NonFasting: "_$P($G(INFOR),"^",7)
+"RTN","SDRRINQ",132,0)
+ .W !,?5,"Appt Requested Length: "_$P($G(INFOR),"^",8),?45,"Date Reminder Sent: "_$P($G(INFOR),"^",9)
+"RTN","SDRRINQ",133,0)
+ .W !,?5,"User who Entered: "_$P($G(INFOR),"^",10),?45,"Patient Requested Dt: "_$P($G(INFOR),"^",11)
+"RTN","SDRRINQ",134,0)
+ .W !,?5,"Date Second Reminder Sent: "_$P($G(INFOR),"^",12)
+"RTN","SDRRINQ",135,0)
+ .W !,?5,"Comments: "_$P($G(INFOR),"^",6)
+"RTN","SDRRINQ",136,0)
+ .I $Y>(IOSL-6) K DIR S DIR(0)="E",DIR("A")="Press Return for more Information.." D ^DIR Q:$D(DUOUT)!($D(DTOUT))  D HDR
+"RTN","SDRRINQ",137,0)
+ K DIR S DIR(0)="E",DIR("A")="Press Return to continue.." D ^DIR Q:$D(DUOUT)!($D(DTOUT))
+"RTN","SDRRINQ",138,0)
+ Q
+"RTN","SDRRINQ",139,0)
+REPORT1 D HDR
+"RTN","SDRRINQ",140,0)
+ I '$D(^TMP("SDRRINQ",$J,"ARC")) W !!,?25,"No INACTIVE Recalls Reminders on file" Q
+"RTN","SDRRINQ",141,0)
+ I $D(^TMP("SDRRINQ",$J,"ARC")) W !!,?25,"INACTIVE RECALL REMINDERS"
+"RTN","SDRRINQ",142,0)
+ S ITEM=0 F  S ITEM=$O(^TMP("SDRRINQ",$J,"ARC",ITEM)) Q:'ITEM  D
+"RTN","SDRRINQ",143,0)
+ .S INFOR=$G(^TMP("SDRRINQ",$J,"ARC",ITEM))
+"RTN","SDRRINQ",144,0)
+ .W !!,?5,"Clinic: "_$P($G(INFOR),"^",1),?45,"Recall Date: "_$P($G(INFOR),"^",5)
+"RTN","SDRRINQ",145,0)
+ .W !,?5,"Provider: "_$P($G(INFOR),"^",4),?45,"Appt/Type: "_$P($G(INFOR),"^",3)
+"RTN","SDRRINQ",146,0)
+ .W !,?5,"Fasting/NonFasting: "_$P($G(INFOR),"^",7)
+"RTN","SDRRINQ",147,0)
+ .W !,?5,"Appt Requested Length: "_$P($G(INFOR),"^",8),?45,"Date Reminder Sent: "_$P($G(INFOR),"^",9)
+"RTN","SDRRINQ",148,0)
+ .W !,?5,"User who Entered: "_$P($G(INFOR),"^",11)   ;SD*566 fix so correct user prints, also removed Patient Requested Date for inactive recalls
+"RTN","SDRRINQ",149,0)
+ .W !,?5,"Date Removed from Active File: "_$P($G(INFOR),"^",13)
+"RTN","SDRRINQ",150,0)
+ .W !,?5,"Reason for Removal: "_$P($G(INFOR),"^",12)
+"RTN","SDRRINQ",151,0)
+ .W !,?5,"User who Deleted Entry: "_$P($G(INFOR),"^",10)
+"RTN","SDRRINQ",152,0)
+ .W !,?5,"Comments: "_$P($G(INFOR),"^",6)
+"RTN","SDRRINQ",153,0)
+ .I $Y>(IOSL-6) K DIR S DIR(0)="E",DIR("A")="Press Return for more Information.." D ^DIR Q:$D(DUOUT)!($D(DTOUT))  D HDR
+"RTN","SDRRINQ",154,0)
+ K DIR S DIR(0)="E",DIR("A")="Press Return to continue.." D ^DIR Q:$D(DUOUT)!($D(DTOUT))
+"RTN","SDRRINQ",155,0)
+ Q
+"RTN","SDRRINQ",156,0)
+QUIT K DFN,Y,SHOW,SHOW1,ACCINFOR,CLINIC,COMMENT,DOB,DIRUT,DTOUT,DUOUT,EDT,FAST,HDR,IEN,IENA,INFOR,ITEM,LAST4,LOA,NAME
+"RTN","SDRRINQ",157,0)
+ K NODE,NODEA,PRDT,PRDTA,PROVIDER,RANGE,RDT,RSENT,SDRREASN,SDT,SSENT,TYPE,USER,USER2,NODEA2,DIR,YES
+"RTN","SDRRINQ",158,0)
+ K ^TMP("SDRRINQ",$J),%DT,VA,VADM,YES
+"RTN","SDRRINQ",159,0)
+ Q
+"RTN","SDRRINQ1")
+0^3^B59730952^B58933113
+"RTN","SDRRINQ1",1,0)
+SDRRINQ1 ;10N20/MAH;-Recall Reminder PATIENT INQUIRY ;01/28/2008  11:32
+"RTN","SDRRINQ1",2,0)
+ ;;5.3;Scheduling;**536,566,582**;Aug 13, 1993;Build 3
+"RTN","SDRRINQ1",3,0)
+ ; Option: SDRR PATIENT INQUIRY - PRINT
+"RTN","SDRRINQ1",4,0)
+QUE S %ZIS="MQ" D ^%ZIS Q:POP
+"RTN","SDRRINQ1",5,0)
+ G ALL
+"RTN","SDRRINQ1",6,0)
+ I $D(IO("Q")) S ZTRTN="ALL^SDRRINQ1",ZTDTH=$H,ZTDESC="RECALL REMINDER INQUIRY",ZTSAVE("DFN")="",ZTSAVE("SDT")="",ZTSAVE("EDT")="",ZTSAVE("RANGE")="" D ^%ZTLOAD W:$D(ZTSK) !,"Your Task has been Queued" G QUIT
+"RTN","SDRRINQ1",7,0)
+ALL ;SHOW ON SCREEN
+"RTN","SDRRINQ1",8,0)
+ U IO
+"RTN","SDRRINQ1",9,0)
+ D:RANGE=0 ACT,ARC,REPORT,REPORT1 G QUIT
+"RTN","SDRRINQ1",10,0)
+ D:RANGE=1 SEL,SEL1,REPORT,REPORT1 G QUIT
+"RTN","SDRRINQ1",11,0)
+ Q
+"RTN","SDRRINQ1",12,0)
+SEL I $D(^SD(403.5,"B",DFN)) S (RSENT,SSENT,PRDT,TYPE)="" S IEN=0 F  S IEN=$O(^SD(403.5,"B",DFN,IEN)) Q:'IEN  S NODE=$G(^SD(403.5,IEN,0)) D
+"RTN","SDRRINQ1",13,0)
+ .S CLINIC=$P($G(NODE),"^",2),CLINIC=$$GET1^DIQ(44,CLINIC_",",.01),ACCINFOR=$P($G(NODE),"^",3)
+"RTN","SDRRINQ1",14,0)
+ .S TYPE=$P($G(NODE),"^",4) I TYPE'="" S TYPE=$P(^SD(403.51,TYPE,0),"^",1)
+"RTN","SDRRINQ1",15,0)
+ .S PROVIDER=$P(NODE,"^",5) I PROVIDER'="" S PROVIDER=$P($G(^SD(403.54,PROVIDER,0)),"^",1) S PROVIDER=$$NAME^XUSER(PROVIDER,"F")
+"RTN","SDRRINQ1",16,0)
+ .I PROVIDER="" S PROVIDER="Unknown"
+"RTN","SDRRINQ1",17,0)
+ .S RDT=""
+"RTN","SDRRINQ1",18,0)
+ .S Y=$P(NODE,"^",6) Q:Y<SDT!(Y>EDT)
+"RTN","SDRRINQ1",19,0)
+ .I Y>SDT,(Y<EDT) D DD^%DT S RDT=Y K Y,X
+"RTN","SDRRINQ1",20,0)
+ .S COMMENT=$P($G(NODE),"^",7)
+"RTN","SDRRINQ1",21,0)
+ .S FAST=$S($P(NODE,"^",8)["n":"NO",$P(NODE,"^",8)["y":"YES",1:"")
+"RTN","SDRRINQ1",22,0)
+ .S LOA=$P(NODE,"^",9)
+"RTN","SDRRINQ1",23,0)
+ .S RSENT=""   ;SD*566
+"RTN","SDRRINQ1",24,0)
+ .S Y=$P($G(NODE),"^",10) I Y'="" D DD^%DT S RSENT=Y K Y,X
+"RTN","SDRRINQ1",25,0)
+ .I RSENT="" S RSENT="NOTSENT"
+"RTN","SDRRINQ1",26,0)
+ .S USER=$P($G(NODE),"^",11),USER=$$NAME^XUSER(USER,"F")
+"RTN","SDRRINQ1",27,0)
+ .S Y=$P(NODE,"^",12) I Y'="" D DD^%DT S PRDT=Y K Y,X
+"RTN","SDRRINQ1",28,0)
+ .S Y=$P(NODE,"^",13) I Y'="" D DD^%DT S SSENT="*"_Y K Y,X
+"RTN","SDRRINQ1",29,0)
+ .S ^TMP("SDRRINQ",$J,"ACT",IEN)=CLINIC_"^"_ACCINFOR_"^"_TYPE_"^"_PROVIDER_"^"_RDT_"^"_COMMENT_"^"_FAST_"^"_LOA_"^"_RSENT_"^"_USER_"^"_PRDT_"^"_SSENT
+"RTN","SDRRINQ1",30,0)
+ .S SSENT=""    ;SD*582
+"RTN","SDRRINQ1",31,0)
+ Q
+"RTN","SDRRINQ1",32,0)
+SEL1 I $D(^SD(403.56,"B",DFN))  S (USER,RSENT,PRDTA,TYPE)="" S IENA=0 F  S IENA=$O(^SD(403.56,"B",DFN,IENA)) Q:'IENA  S NODEA=$G(^SD(403.56,IENA,0)) D
+"RTN","SDRRINQ1",33,0)
+ .S CLINIC=$P($G(NODEA),"^",2),CLINIC=$$GET1^DIQ(44,CLINIC_",",.01),ACCINFOR=$P($G(NODEA),"^",3)
+"RTN","SDRRINQ1",34,0)
+ .S TYPE=$P($G(NODEA),"^",4) I TYPE'="" S TYPE=$P(^SD(403.51,TYPE,0),"^",1)
+"RTN","SDRRINQ1",35,0)
+ .S PROVIDER=$P(NODEA,"^",5) I PROVIDER'="" S PROVIDER=$P($G(^SD(403.54,PROVIDER,0)),"^",1) S PROVIDER=$$NAME^XUSER(PROVIDER,"F")
+"RTN","SDRRINQ1",36,0)
+ .I PROVIDER="" S PROVIDER="Unknown"
+"RTN","SDRRINQ1",37,0)
+ .S RDT=""
+"RTN","SDRRINQ1",38,0)
+ .S Y=$P(NODEA,"^",6) Q:Y<SDT!(Y>EDT)
+"RTN","SDRRINQ1",39,0)
+ .I Y>SDT&(Y<EDT) D DD^%DT S RDT=Y K Y,X
+"RTN","SDRRINQ1",40,0)
+ .S COMMENT=$P($G(NODEA),"^",7)
+"RTN","SDRRINQ1",41,0)
+ .S FAST=$S($P(NODEA,"^",8)["n":"NO",$P(NODEA,"^",8)["y":"YES",1:"")
+"RTN","SDRRINQ1",42,0)
+ .S LOA=$P(NODEA,"^",9)
+"RTN","SDRRINQ1",43,0)
+ .S RSENT=""   ;SD*566
+"RTN","SDRRINQ1",44,0)
+ .S Y=$P($G(NODEA),"^",10) I Y'="" D DD^%DT S RSENT=Y K Y,X
+"RTN","SDRRINQ1",45,0)
+ .I RSENT="" S RSENT="NOTSENT"
+"RTN","SDRRINQ1",46,0)
+ .S USER=$P($G(NODEA),"^",11),USER=$$NAME^XUSER(USER,"F")
+"RTN","SDRRINQ1",47,0)
+ .I $D(^SD(403.56,IENA,2)) S NODEA2=$G(^SD(403.56,IENA,2)) D
+"RTN","SDRRINQ1",48,0)
+ ..S Y=$P(NODEA2,"^",1) D DD^%DT S PRDTA=Y K Y,X
+"RTN","SDRRINQ1",49,0)
+ ..S USER2=$P($G(NODEA2),"^",2),USER2=$$NAME^XUSER(USER2,"F")
+"RTN","SDRRINQ1",50,0)
+ ..S SDRREASN=$S($P(NODEA2,"^",3)=1:"FTR",$P(NODEA2,"^",3)=2:"MOVED",$P(NODEA2,"^",3)=3:"DECEASED",$P(NODEA2,"^",3)=4:"DNWC",$P(NODEA2,"^",3)=5:"RCOVA",$P(NODEA2,"^",3)=6:"OTHER",$P(NODEA2,"^",3)=7:"Scheduled",1:"")
+"RTN","SDRRINQ1",51,0)
+ ..S ^TMP("SDRRINQ",$J,"ARC",IENA)=CLINIC_"^"_ACCINFOR_"^"_TYPE_"^"_PROVIDER_"^"_RDT_"^"_COMMENT_"^"_FAST_"^"_LOA_"^"_RSENT_"^"_USER2_"^"_USER_"^"_SDRREASN_"^"_PRDTA
+"RTN","SDRRINQ1",52,0)
+ Q
+"RTN","SDRRINQ1",53,0)
+HDR ;Review all Recall Reminder on screen for all
+"RTN","SDRRINQ1",54,0)
+ D DEM^VADPT S NAME=VADM(1),LAST4=VA("BID"),DOB=$P(VADM(3),"^",2) S HDR="Patient Name: "_NAME_"  Date of Birth: "_DOB_" Last4: "_LAST4
+"RTN","SDRRINQ1",55,0)
+ W @IOF,HDR
+"RTN","SDRRINQ1",56,0)
+ Q
+"RTN","SDRRINQ1",57,0)
+ACT I $D(^SD(403.5,"B",DFN)) S (RSENT,SSENT,IEN,PRDT,TYPE)="" F  S IEN=$O(^SD(403.5,"B",DFN,IEN)) Q:'IEN  S NODE=$G(^SD(403.5,IEN,0)) D
+"RTN","SDRRINQ1",58,0)
+ .S CLINIC=$P($G(NODE),"^",2),CLINIC=$$GET1^DIQ(44,CLINIC_",",.01),ACCINFOR=$P($G(NODE),"^",3)
+"RTN","SDRRINQ1",59,0)
+ .S TYPE=$P($G(NODE),"^",4) I TYPE'="" S TYPE=$P(^SD(403.51,TYPE,0),"^",1)
+"RTN","SDRRINQ1",60,0)
+ .S PROVIDER=$P(NODE,"^",5) I PROVIDER'="" S PROVIDER=$P($G(^SD(403.54,PROVIDER,0)),"^",1) S PROVIDER=$$NAME^XUSER(PROVIDER,"F")
+"RTN","SDRRINQ1",61,0)
+ .I PROVIDER="" S PROVIDER="Unknown"
+"RTN","SDRRINQ1",62,0)
+ .S RDT=""
+"RTN","SDRRINQ1",63,0)
+ .S Y=$P(NODE,"^",6) D DD^%DT S RDT=Y K Y,X
+"RTN","SDRRINQ1",64,0)
+ .S COMMENT=$P($G(NODE),"^",7)
+"RTN","SDRRINQ1",65,0)
+ .S FAST=$S($P(NODE,"^",8)["n":"NO",$P(NODE,"^",8)["f":"YES",1:"")
+"RTN","SDRRINQ1",66,0)
+ .S LOA=$P(NODE,"^",9)
+"RTN","SDRRINQ1",67,0)
+ .S RSENT=""   ;SD*566
+"RTN","SDRRINQ1",68,0)
+ .S Y=$P($G(NODE),"^",10) I Y'="" D DD^%DT S RSENT=Y K Y,X
+"RTN","SDRRINQ1",69,0)
+ .I RSENT="" S RSENT="NOTSENT"
+"RTN","SDRRINQ1",70,0)
+ .S USER=$P($G(NODE),"^",11),USER=$$NAME^XUSER(USER,"F")
+"RTN","SDRRINQ1",71,0)
+ .S Y=$P(NODE,"^",12) I Y'="" D DD^%DT S PRDT=Y K Y,X
+"RTN","SDRRINQ1",72,0)
+ .S Y=$P(NODE,"^",13) I Y'="" D DD^%DT S SSENT="*"_Y K Y,X
+"RTN","SDRRINQ1",73,0)
+ .S ^TMP("SDRRINQ",$J,"ACT",IEN)=CLINIC_"^"_ACCINFOR_"^"_TYPE_"^"_PROVIDER_"^"_RDT_"^"_COMMENT_"^"_FAST_"^"_LOA_"^"_RSENT_"^"_USER_"^"_PRDT_"^"_SSENT
+"RTN","SDRRINQ1",74,0)
+ .S SSENT=""    ;SD*582
+"RTN","SDRRINQ1",75,0)
+ Q
+"RTN","SDRRINQ1",76,0)
+ARC I $D(^SD(403.56,"B",DFN))  S (USER,RSENT,PRDTA,TYPE)="" S IENA=0 F  S IENA=$O(^SD(403.56,"B",DFN,IENA)) Q:'IENA  S NODEA=$G(^SD(403.56,IENA,0)) D
+"RTN","SDRRINQ1",77,0)
+ .S CLINIC=$P($G(NODEA),"^",2),CLINIC=$$GET1^DIQ(44,CLINIC_",",.01),ACCINFOR=$P($G(NODEA),"^",3)
+"RTN","SDRRINQ1",78,0)
+ .S TYPE=$P($G(NODEA),"^",4) I TYPE'="" S TYPE=$P(^SD(403.51,TYPE,0),"^",1)
+"RTN","SDRRINQ1",79,0)
+ .S PROVIDER=$P(NODEA,"^",5) I PROVIDER'="" S PROVIDER=$P($G(^SD(403.54,PROVIDER,0)),"^",1) S PROVIDER=$$NAME^XUSER(PROVIDER,"F")
+"RTN","SDRRINQ1",80,0)
+ .I PROVIDER="" S PROVIDER="Unknown"
+"RTN","SDRRINQ1",81,0)
+ .S RDT=""
+"RTN","SDRRINQ1",82,0)
+ .S Y=$P(NODEA,"^",6) D DD^%DT S RDT=Y K Y,X
+"RTN","SDRRINQ1",83,0)
+ .S COMMENT=$P($G(NODEA),"^",7)
+"RTN","SDRRINQ1",84,0)
+ .S FAST=$S($P(NODEA,"^",8)["n":"NO",$P(NODEA,"^",8)["f":"YES",1:"")
+"RTN","SDRRINQ1",85,0)
+ .S LOA=$P(NODEA,"^",9)
+"RTN","SDRRINQ1",86,0)
+ .S RSENT=""   ;SD*566
+"RTN","SDRRINQ1",87,0)
+ .S Y=$P($G(NODEA),"^",10) I Y'="" D DD^%DT S RSENT=Y K Y,X
+"RTN","SDRRINQ1",88,0)
+ .I RSENT="" S RSENT="NOTSENT"
+"RTN","SDRRINQ1",89,0)
+ .S USER=$P($G(NODEA),"^",11),USER=$$NAME^XUSER(USER,"F")
+"RTN","SDRRINQ1",90,0)
+ .I $D(^SD(403.56,IENA,2)) S NODEA2=$G(^SD(403.56,IENA,2)) D
+"RTN","SDRRINQ1",91,0)
+ ..S Y=$P(NODEA2,"^",1) D DD^%DT S PRDTA=Y K Y,X
+"RTN","SDRRINQ1",92,0)
+ ..S USER2=$P($G(NODEA2),"^",2),USER2=$$NAME^XUSER(USER2,"F")
+"RTN","SDRRINQ1",93,0)
+ ..S SDRREASN=$S($P(NODEA2,"^",3)=1:"FTR",$P(NODEA2,"^",3)=2:"MOVED",$P(NODEA2,"^",3)=3:"DECEASED",$P(NODEA2,"^",3)=4:"DNWC",$P(NODEA2,"^",3)=5:"RCOVA",$P(NODEA2,"^",3)=6:"OTHER",$P(NODEA2,"^",3)=7:"Scheduled",1:"")
+"RTN","SDRRINQ1",94,0)
+ ..S ^TMP("SDRRINQ",$J,"ARC",IENA)=CLINIC_"^"_ACCINFOR_"^"_TYPE_"^"_PROVIDER_"^"_RDT_"^"_COMMENT_"^"_FAST_"^"_LOA_"^"_RSENT_"^"_USER2_"^"_USER_"^"_SDRREASN_"^"_PRDTA
+"RTN","SDRRINQ1",95,0)
+ Q
+"RTN","SDRRINQ1",96,0)
+REPORT D HDR
+"RTN","SDRRINQ1",97,0)
+ I '$D(^TMP("SDRRINQ",$J,"ACT")) W !!,?25,"No ACTIVE Recalls Reminders on file"
+"RTN","SDRRINQ1",98,0)
+ I $D(^TMP("SDRRINQ",$J,"ACT")) S ITEM=0 F  S ITEM=$O(^TMP("SDRRINQ",$J,"ACT",ITEM)) Q:'ITEM  D
+"RTN","SDRRINQ1",99,0)
+ .S INFOR=$G(^TMP("SDRRINQ",$J,"ACT",ITEM))
+"RTN","SDRRINQ1",100,0)
+ .W !!,?5,"Clinic: "_$P($G(INFOR),"^",1),?45,"Recall Date: "_$P($G(INFOR),"^",5)
+"RTN","SDRRINQ1",101,0)
+ .W !,?5,"Provider: "_$P($G(INFOR),"^",4),?45,"Appt/Type: "_$P($G(INFOR),"^",3)
+"RTN","SDRRINQ1",102,0)
+ .W !,?5,"Fasting/NonFasting: "_$P($G(INFOR),"^",7)
+"RTN","SDRRINQ1",103,0)
+ .W !,?5,"Appt Requested Length: "_$P($G(INFOR),"^",8),?45,"Date Reminder Sent: "_$P($G(INFOR),"^",9)
+"RTN","SDRRINQ1",104,0)
+ .W !,?5,"User who Entered: "_$P($G(INFOR),"^",10),?45,"Patient Requested Dt: "_$P($G(INFOR),"^",11)
+"RTN","SDRRINQ1",105,0)
+ .W !,?5,"Date Second Reminder Sent: "_$P($G(INFOR),"^",12)
+"RTN","SDRRINQ1",106,0)
+ .W !,?5,"Comments: "_$P($G(INFOR),"^",6)
+"RTN","SDRRINQ1",107,0)
+ .I IOST["C-",($Y>(IOSL-6)) K DIR S DIR(0)="E",DIR("A")="Press Return for more Information.." D ^DIR Q:$D(DUOUT)!($D(DTOUT))  D HDR K DIR
+"RTN","SDRRINQ1",108,0)
+ Q
+"RTN","SDRRINQ1",109,0)
+REPORT1 D HDR
+"RTN","SDRRINQ1",110,0)
+ I '$D(^TMP("SDRRINQ",$J,"ARC")) W !!,?25,"No INACTIVE Recalls Reminders on file" Q
+"RTN","SDRRINQ1",111,0)
+ I $D(^TMP("SDRRINQ",$J,"ARC")) W !!,?25,"INACTIVE RECALL REMINDERS"
+"RTN","SDRRINQ1",112,0)
+ S ITEM=0 F  S ITEM=$O(^TMP("SDRRINQ",$J,"ARC",ITEM)) Q:'ITEM  D
+"RTN","SDRRINQ1",113,0)
+ .S INFOR=$G(^TMP("SDRRINQ",$J,"ARC",ITEM))
+"RTN","SDRRINQ1",114,0)
+ .W !!,?5,"Clinic: "_$P($G(INFOR),"^",1),?45,"Recall Date: "_$P($G(INFOR),"^",5)
+"RTN","SDRRINQ1",115,0)
+ .W !,?5,"Provider: "_$P($G(INFOR),"^",4),?45,"Appt/Type: "_$P($G(INFOR),"^",3)
+"RTN","SDRRINQ1",116,0)
+ .W !,?5,"Fasting/NonFasting: "_$P($G(INFOR),"^",7)
+"RTN","SDRRINQ1",117,0)
+ .W !,?5,"Appt Requested Length: "_$P($G(INFOR),"^",8),?45,"Date Reminder Sent: "_$P($G(INFOR),"^",9)
+"RTN","SDRRINQ1",118,0)
+ .W !,?5,"User who Entered: "_$P($G(INFOR),"^",11)   ;SD*566 fix to print correct user, also removed Patient Requested Date for inactive recalls
+"RTN","SDRRINQ1",119,0)
+ .W !,?5,"Date Removed from Active File: "_$P($G(INFOR),"^",13)
+"RTN","SDRRINQ1",120,0)
+ .W !,?5,"Reason for Removal: "_$P($G(INFOR),"^",12)
+"RTN","SDRRINQ1",121,0)
+ .W !,?5,"User who Deleted Entry: "_$P($G(INFOR),"^",10)
+"RTN","SDRRINQ1",122,0)
+ .W !,?5,"Comments: "_$P($G(INFOR),"^",6)
+"RTN","SDRRINQ1",123,0)
+ .I IOST["C-",($Y>(IOSL-6)) K DIR S DIR(0)="E",DIR("A")="Press Return for more Information.." D ^DIR Q:$D(DUOUT)!($D(DTOUT))  D HDR K DIR
+"RTN","SDRRINQ1",124,0)
+ Q
+"RTN","SDRRINQ1",125,0)
+QUIT D ^%ZISC K POP,%ZIS,IOP,ZTDESC,ZTDTH,ZTRTN,ZTSAVE,ZTSK
+"RTN","SDRRINQ1",126,0)
+ K DFN,Y,SHOW,SHOW1,ACCINFOR,CLINIC,COMMENT,DOB,DIRUT,DTOUT,DUOUT,EDT,ERR,FAST,HDR,IEN,IENA,INFOR,ITEM,LAST4,LOA,NAME
+"RTN","SDRRINQ1",127,0)
+ K NODE,NODEA,PRDT,PRDTA,PROVIDER,RANGE,RDT,RSENT,SDRREASN,SDT,SSENT,TYPE,USER,USER2,NODEA2,YES,DIR
+"RTN","SDRRINQ1",128,0)
+ K ^TMP("SDRRINQ",$J),VA,VA,VADM
+"RTN","SDRRINQ1",129,0)
+ Q
+"RTN","SDRRUTL")
+0^4^B59389500^B50446681
+"RTN","SDRRUTL",1,0)
+SDRRUTL ;10N20/MAH;Recall Reminder-Clinic Utilities;01/18/2008  11:32
+"RTN","SDRRUTL",2,0)
+ ;;5.3;Scheduling;**536,571,582**;Aug 13, 1993;Build 3
+"RTN","SDRRUTL",3,0)
+ASKDIV(SDRRDIV) ;
+"RTN","SDRRUTL",4,0)
+ N DIC,X,Y,I,DUOUT,DTOUT
+"RTN","SDRRUTL",5,0)
+ K SDRRDIV
+"RTN","SDRRUTL",6,0)
+ S SDRRDIV=0
+"RTN","SDRRUTL",7,0)
+ W !
+"RTN","SDRRUTL",8,0)
+ S DIC("A")="Select Medical Center Division: All// "
+"RTN","SDRRUTL",9,0)
+ S DIC="^DG(40.8,"
+"RTN","SDRRUTL",10,0)
+ S DIC(0)="AEQMN"
+"RTN","SDRRUTL",11,0)
+ F  D  Q:Y=-1
+"RTN","SDRRUTL",12,0)
+ . D ^DIC Q:Y=-1
+"RTN","SDRRUTL",13,0)
+ . S SDRRDIV(+Y)=$P(Y,U,2)
+"RTN","SDRRUTL",14,0)
+ . S DIC("A")="Another Medical Center Division: "
+"RTN","SDRRUTL",15,0)
+ Q:$D(DTOUT)!$D(DUOUT)
+"RTN","SDRRUTL",16,0)
+ S I=0
+"RTN","SDRRUTL",17,0)
+ I $O(SDRRDIV(0)) D  Q
+"RTN","SDRRUTL",18,0)
+ . F  S I=$O(SDRRDIV(I)) Q:'I  S SDRRDIV=SDRRDIV+1
+"RTN","SDRRUTL",19,0)
+ F  S I=$O(^DG(40.8,I)) Q:'I  S SDRRDIV(I)=$P(^(I,0),U),SDRRDIV=SDRRDIV+1
+"RTN","SDRRUTL",20,0)
+ Q
+"RTN","SDRRUTL",21,0)
+ASKSTOP(SDRRSC,SDRRST,SDRRND) ;
+"RTN","SDRRUTL",22,0)
+ N DIC,X,Y,I,DUOUT,DTOUT,SDRRREC
+"RTN","SDRRUTL",23,0)
+ K SDRRSC
+"RTN","SDRRUTL",24,0)
+ S SDRRSC=0
+"RTN","SDRRUTL",25,0)
+ W !
+"RTN","SDRRUTL",26,0)
+ S DIC("A")="Select Clinic Stop Code: All// "
+"RTN","SDRRUTL",27,0)
+ S DIC="^DIC(40.7,"
+"RTN","SDRRUTL",28,0)
+ S:$G(SDRRST) DIC("S")="N SDRRXD S SDRRXD=$P(^(0),U,3) I 'SDRRXD!(SDRRXD'<SDRRST)"
+"RTN","SDRRUTL",29,0)
+ S DIC(0)="AEQMZ"
+"RTN","SDRRUTL",30,0)
+ F  D  Q:Y=-1
+"RTN","SDRRUTL",31,0)
+ . D ^DIC Q:Y=-1
+"RTN","SDRRUTL",32,0)
+ . S SDRRSC(+Y)=$P(Y(0),U,2)
+"RTN","SDRRUTL",33,0)
+ . S DIC("A")="Another Clinic Stop Code: "
+"RTN","SDRRUTL",34,0)
+ Q:$D(DTOUT)!$D(DUOUT)
+"RTN","SDRRUTL",35,0)
+ S I=0
+"RTN","SDRRUTL",36,0)
+ I $O(SDRRSC(0)) D  Q
+"RTN","SDRRUTL",37,0)
+ . F  S I=$O(SDRRSC(I)) Q:'I  S SDRRSC=SDRRSC+1
+"RTN","SDRRUTL",38,0)
+ F  S I=$O(^DIC(40.7,I)) Q:'I  S SDRRREC=^(I,0) D
+"RTN","SDRRUTL",39,0)
+ . Q:$P(SDRRREC,U,3)<SDRRST
+"RTN","SDRRUTL",40,0)
+ . S SDRRSC(I)=$P(SDRRREC,U),SDRRSC=SDRRSC+1
+"RTN","SDRRUTL",41,0)
+ Q
+"RTN","SDRRUTL",42,0)
+ASKCLIN(SDRRCLIN,SDRRDIV,SDRRST,SDRRND) ;
+"RTN","SDRRUTL",43,0)
+ N DIR,X,Y,DIRUT
+"RTN","SDRRUTL",44,0)
+ K SDRRCLIN
+"RTN","SDRRUTL",45,0)
+ S SDRRCLIN=0
+"RTN","SDRRUTL",46,0)
+ W !
+"RTN","SDRRUTL",47,0)
+ S DIR(0)="Y"
+"RTN","SDRRUTL",48,0)
+ S DIR("A")="All Clinics"
+"RTN","SDRRUTL",49,0)
+ S DIR("B")="No"
+"RTN","SDRRUTL",50,0)
+ D ^DIR Q:$D(DIRUT)
+"RTN","SDRRUTL",51,0)
+ I Y S SDRRCLIN="ALL" Q
+"RTN","SDRRUTL",52,0)
+ D ASKRANGE^SDRRUTL1(.SDRRCLIN,.SDRRDIV,.SDRRST,.SDRRND)
+"RTN","SDRRUTL",53,0)
+ Q
+"RTN","SDRRUTL",54,0)
+DELIM() ;
+"RTN","SDRRUTL",55,0)
+ N DIR,X,Y,DIRUT
+"RTN","SDRRUTL",56,0)
+ S DIR(0)="Y"
+"RTN","SDRRUTL",57,0)
+ S DIR("A")="Delimited Output"
+"RTN","SDRRUTL",58,0)
+ S DIR("B")="No"
+"RTN","SDRRUTL",59,0)
+ D ^DIR Q:$D(DIRUT) -1
+"RTN","SDRRUTL",60,0)
+ Q Y
+"RTN","SDRRUTL",61,0)
+REVERSE(SDRRST,SDRRND) ; Given starting and ending dates return reverse starting and ending dates
+"RTN","SDRRUTL",62,0)
+ N SDRRRST,SDRRRND
+"RTN","SDRRUTL",63,0)
+ S SDRRRST=9999999-SDRRST+.9999
+"RTN","SDRRUTL",64,0)
+ S SDRRRND=9999999-SDRRND
+"RTN","SDRRUTL",65,0)
+ S SDRRST=SDRRRND
+"RTN","SDRRUTL",66,0)
+ S SDRRND=SDRRRST
+"RTN","SDRRUTL",67,0)
+ Q
+"RTN","SDRRUTL",68,0)
+DRANGE(SDRRST,SDRRND,SDRRSTX,SDRRNDX,SDRRABORT,SDRRMIN,SDRRMAX,SDRRFUTR) ;
+"RTN","SDRRUTL",69,0)
+ ; Set SDRRFUTR=1 if dates in the future are OK.
+"RTN","SDRRUTL",70,0)
+ N DIR,DIRUT,X,Y
+"RTN","SDRRUTL",71,0)
+ I $G(SDRRFUTR) S DIR(0)="D^"_$G(SDRRMIN)_":"_$G(SDRRMAX)_":AEFX"
+"RTN","SDRRUTL",72,0)
+ E  S DIR(0)="D^"_$G(SDRRMIN)_":"_$G(SDRRMAX,DT)_":AEPX"
+"RTN","SDRRUTL",73,0)
+ S DIR("A")="Enter start date"
+"RTN","SDRRUTL",74,0)
+ I $D(SDRRST) D
+"RTN","SDRRUTL",75,0)
+ . S SDRRSTX=$$FMTE^XLFDT(SDRRST,5)
+"RTN","SDRRUTL",76,0)
+ . S DIR("B")=SDRRSTX
+"RTN","SDRRUTL",77,0)
+ D ^DIR I $D(DIRUT) S SDRRABORT=1 Q
+"RTN","SDRRUTL",78,0)
+ S SDRRST=Y
+"RTN","SDRRUTL",79,0)
+ K DIR
+"RTN","SDRRUTL",80,0)
+ I $G(SDRRFUTR) S DIR(0)="D^"_SDRRST_":"_$G(SDRRMAX)_":AEFX"
+"RTN","SDRRUTL",81,0)
+ E  S DIR(0)="D^"_SDRRST_":"_$G(SDRRMAX,DT)_":AEPX"
+"RTN","SDRRUTL",82,0)
+ S DIR("A")="Enter end date"
+"RTN","SDRRUTL",83,0)
+ I $D(SDRRND) D
+"RTN","SDRRUTL",84,0)
+ . S SDRRNDX=$$FMTE^XLFDT(SDRRND,5)
+"RTN","SDRRUTL",85,0)
+ . S DIR("B")=SDRRNDX
+"RTN","SDRRUTL",86,0)
+ D ^DIR I $D(DIRUT) S SDRRABORT=1 Q
+"RTN","SDRRUTL",87,0)
+ S SDRRND=Y
+"RTN","SDRRUTL",88,0)
+ S SDRRNDX=$$FMTE^XLFDT(SDRRND,2)
+"RTN","SDRRUTL",89,0)
+ S SDRRSTX=$$FMTE^XLFDT(SDRRST,2)
+"RTN","SDRRUTL",90,0)
+ Q
+"RTN","SDRRUTL",91,0)
+ASKDATE(SDRRST,SDRRSTX,SDRRABORT,SDRRMIN,SDRRMAX,SDRRFUTR) ;
+"RTN","SDRRUTL",92,0)
+ N DIR,DIRUT,X,Y
+"RTN","SDRRUTL",93,0)
+ I $G(SDRRFUTR) S DIR(0)="D^"_$G(SDRRMIN)_":"_$G(SDRRMAX)_":AEFX"
+"RTN","SDRRUTL",94,0)
+ E  S DIR(0)="D^"_$G(SDRRMIN)_":"_$G(SDRRMAX,DT)_":AEPX"
+"RTN","SDRRUTL",95,0)
+ S DIR("A")="Enter start date"
+"RTN","SDRRUTL",96,0)
+ I $D(SDRRST) D
+"RTN","SDRRUTL",97,0)
+ . S SDRRSTX=$$FMTE^XLFDT(SDRRST,2)
+"RTN","SDRRUTL",98,0)
+ . S DIR("B")=SDRRSTX
+"RTN","SDRRUTL",99,0)
+ D ^DIR I $D(DIRUT) S SDRRABORT=1 Q
+"RTN","SDRRUTL",100,0)
+ S SDRRST=Y
+"RTN","SDRRUTL",101,0)
+ S SDRRSTX=$$FMTE^XLFDT(SDRRST,2)
+"RTN","SDRRUTL",102,0)
+ Q
+"RTN","SDRRUTL",103,0)
+FYRANGE(SDRRST,SDRRND,SDRRSTX,SDRRNDX,SDRRABORT,SDRRMIN,SDRRMAX) ;
+"RTN","SDRRUTL",104,0)
+ N SDRRMAXFY,SDRRFRFY,SDRRTOFY
+"RTN","SDRRUTL",105,0)
+ S (SDRRMAXFY,SDRRTOFY)=$$FY($$FMADD^XLFDT($E(DT,1,5)_"01",-1)) ; FY of last month
+"RTN","SDRRUTL",106,0)
+ S SDRRFRFY=$$ASKFY($G(SDRRMIN),$G(SDRRMAX),,"From")
+"RTN","SDRRUTL",107,0)
+ I SDRRFRFY=0 S SDRRABORT=1 Q
+"RTN","SDRRUTL",108,0)
+ I SDRRFRFY'=SDRRMAXFY D  Q:SDRRABORT
+"RTN","SDRRUTL",109,0)
+ . S SDRRTOFY=$$ASKFY($P(SDRRFRFY,U,3),$G(SDRRMAX),+$P(SDRRMAXFY," ",2),"Through")
+"RTN","SDRRUTL",110,0)
+ . I SDRRTOFY=0 S SDRRABORT=1
+"RTN","SDRRUTL",111,0)
+ S SDRRST=$P(SDRRFRFY,U,2)
+"RTN","SDRRUTL",112,0)
+ S SDRRND=$P(SDRRTOFY,U,3)
+"RTN","SDRRUTL",113,0)
+ S SDRRSTX=$$FMTE^XLFDT($E(SDRRST,1,5)_"01",2)
+"RTN","SDRRUTL",114,0)
+ S SDRRNDX=$$FMTE^XLFDT($$FMADD^XLFDT($E(SDRRND,1,5)_"01",-1),2)
+"RTN","SDRRUTL",115,0)
+ S SDRRSTX("FY")=$P(SDRRFRFY,U)
+"RTN","SDRRUTL",116,0)
+ S SDRRNDX("FY")=$P(SDRRTOFY,U)
+"RTN","SDRRUTL",117,0)
+ Q
+"RTN","SDRRUTL",118,0)
+ASKFY(SDRRMIN,SDRRMAX,SDRRDEF,SDRRPRMPT) ; Function asks user which FY.
+"RTN","SDRRUTL",119,0)
+ N DIR,X,Y,DIRUT,SDRRFY
+"RTN","SDRRUTL",120,0)
+ S DIR("A")=$G(SDRRPRMPT,"Select")_" FY ("
+"RTN","SDRRUTL",121,0)
+ I '$G(SDRRMAX) D
+"RTN","SDRRUTL",122,0)
+ . S SDRRMAX=$$FMADD^XLFDT($E(DT,1,5)_"01",-1) ; last month
+"RTN","SDRRUTL",123,0)
+ . S SDRRMAX=$E($P($$FY(SDRRMAX),U,3),1,3)_"0000"
+"RTN","SDRRUTL",124,0)
+ I $G(SDRRMIN) S DIR("A")=DIR("A")_($E(SDRRMIN,1,3)+1700)_" "
+"RTN","SDRRUTL",125,0)
+ S DIR("A")=DIR("A")_"through "_($E(SDRRMAX,1,3)+1700)_"): "
+"RTN","SDRRUTL",126,0)
+ S DIR(0)="DA^"_$G(SDRRMIN)_":"_SDRRMAX_":AEM"
+"RTN","SDRRUTL",127,0)
+ S DIR("B")=$$FMTE^XLFDT($G(SDRRDEF,SDRRMAX))
+"RTN","SDRRUTL",128,0)
+ D ^DIR I $D(DIRUT) Q 0
+"RTN","SDRRUTL",129,0)
+ S SDRRFY=$$FY(Y)
+"RTN","SDRRUTL",130,0)
+ W "     ",$P(SDRRFY,U)
+"RTN","SDRRUTL",131,0)
+ Q SDRRFY
+"RTN","SDRRUTL",132,0)
+FY(SDRRDT) ; Pass in a date (default = today's date),
+"RTN","SDRRUTL",133,0)
+ ; and this function returns what FY we are in,
+"RTN","SDRRUTL",134,0)
+ ; followed by the FY start date and FY end date.
+"RTN","SDRRUTL",135,0)
+ ; ie. S X=$$FY^SDRRUTL(3050208) results in X="FY 2005^3041000^3051000"
+"RTN","SDRRUTL",136,0)
+ N SDRRST,SDRRND
+"RTN","SDRRUTL",137,0)
+ S:'$D(SDRRDT) SDRRDT=DT
+"RTN","SDRRUTL",138,0)
+ S SDRRST=$E(SDRRDT,1,3)-($E(SDRRDT,4,5)<10)_"1000"
+"RTN","SDRRUTL",139,0)
+ S SDRRND=$E(SDRRST,1,3)+1_"1000"
+"RTN","SDRRUTL",140,0)
+ Q "FY "_(1701+$E(SDRRST,1,3))_U_SDRRST_U_SDRRND
+"RTN","SDRRUTL",141,0)
+ASKMON(SDRRMON) ; Function asks user which month.
+"RTN","SDRRUTL",142,0)
+ ; SDRRMON - (optional) default month
+"RTN","SDRRUTL",143,0)
+ N DIR,X,Y,DIRUT,SDRRDT
+"RTN","SDRRUTL",144,0)
+ S DIR("A")="Select Month"
+"RTN","SDRRUTL",145,0)
+ I $D(SDRRMON) S SDRRDT=SDRRMON
+"RTN","SDRRUTL",146,0)
+ E  D
+"RTN","SDRRUTL",147,0)
+ . S SDRRDT=$$FMADD^XLFDT($E(DT,1,5)_"01",-1) ; last month
+"RTN","SDRRUTL",148,0)
+ . S SDRRDT=$E(SDRRDT,1,5)_"00"
+"RTN","SDRRUTL",149,0)
+ S DIR(0)="D^:"_SDRRDT_":AEM"
+"RTN","SDRRUTL",150,0)
+ S DIR("B")=$$FMTE^XLFDT(SDRRDT)
+"RTN","SDRRUTL",151,0)
+ D ^DIR I $D(DIRUT) Q 0
+"RTN","SDRRUTL",152,0)
+ Q Y
+"RTN","SDRRUTL",153,0)
+MON(SDRRDT) ; Pass in a date (default = today's date),
+"RTN","SDRRUTL",154,0)
+ ; and this function returns the first and last dates of the month.
+"RTN","SDRRUTL",155,0)
+ N SDRRMST,SDRRMND
+"RTN","SDRRUTL",156,0)
+ S:'$D(SDRRDT) SDRRDT=DT
+"RTN","SDRRUTL",157,0)
+ S SDRRMST=$E(SDRRDT,1,5)_"01"
+"RTN","SDRRUTL",158,0)
+ S SDRRMND=$$SCH^XLFDT("1M(1)",SDRRMST)\1
+"RTN","SDRRUTL",159,0)
+ Q SDRRMST_U_SDRRMND
+"RTN","SDRRUTL",160,0)
+BDAY ;
+"RTN","SDRRUTL",161,0)
+ N GDAYS,JDAYS,YR1DAYS
+"RTN","SDRRUTL",162,0)
+ S GDAYS=$$FMDIFF^XLFDT(3050830,3050628) W !,"GDAYS=",GDAYS
+"RTN","SDRRUTL",163,0)
+ S JDAYS=$$FMDIFF^XLFDT(3050830,3050811) W !,"JDAYS=",JDAYS
+"RTN","SDRRUTL",164,0)
+ S YR1DAYS=365-GDAYS-JDAYS W !,"YR1DAYS=",YR1DAYS
+"RTN","SDRRUTL",165,0)
+ W !,"99th Birthday= ",$$FMADD^XLFDT(3050830,YR1DAYS\4)
+"RTN","SDRRUTL",166,0)
+ W !,"100th Birthday=",$$FMADD^XLFDT(3050830,(YR1DAYS+365)\4)
+"RTN","SDRRUTL",167,0)
+ W !,"101st Birthday=",$$FMADD^XLFDT(3050830,YR1DAYS+730\4)
+"RTN","SDRRUTL",168,0)
+ Q
+"RTN","SDRRUTL",169,0)
+ ;
+"RTN","SDRRUTL",170,0)
+SCREEN() ;SD*571 for new RRs, screen provider for key and status
+"RTN","SDRRUTL",171,0)
+ N KEY,VALUE
+"RTN","SDRRUTL",172,0)
+ S SDIEN="",SDIEN=DA
+"RTN","SDRRUTL",173,0)
+ S SDFLAG=0
+"RTN","SDRRUTL",174,0)
+ I '$P($G(^SD(403.54,+X,0)),U,7),$P($G(^(0)),U,6)="A" S SDFLAG=1 Q SDFLAG   ;allow selection, provider has no key and is active
+"RTN","SDRRUTL",175,0)
+ I $P($G(^SD(403.54,+X,0)),U,6)="I" D MSG1 Q SDFLAG   ;do not allow, provider is inactive
+"RTN","SDRRUTL",176,0)
+ I $P($G(^SD(403.54,+X,0)),U,7) S KEY=$P(^(0),U,7) D
+"RTN","SDRRUTL",177,0)
+ .S VALUE=$$LKUP^XPDKEY(KEY) K KY D OWNSKEY^XUSRB(.KY,VALUE,DUZ)
+"RTN","SDRRUTL",178,0)
+ .I $G(KY(0))=1 S SDFLAG=1 K KY
+"RTN","SDRRUTL",179,0)
+ I SDFLAG Q SDFLAG   ;allow, provider and user both have security key
+"RTN","SDRRUTL",180,0)
+ I 'SDFLAG D MSG2   ;do not allow, provider has key user does not
+"RTN","SDRRUTL",181,0)
+ Q SDFLAG
+"RTN","SDRRUTL",182,0)
+ ;
+"RTN","SDRRUTL",183,0)
+MSG1 ;SD*571 print Inactive provider warning message to user
+"RTN","SDRRUTL",184,0)
+ W " ??"
+"RTN","SDRRUTL",185,0)
+ W !?10,"Provider selected is Inactive."
+"RTN","SDRRUTL",186,0)
+ W !?10,"Please contact your Recall Coordinator.",!
+"RTN","SDRRUTL",187,0)
+ D:$D(PROV1) FDA Q
+"RTN","SDRRUTL",188,0)
+ Q
+"RTN","SDRRUTL",189,0)
+ ;
+"RTN","SDRRUTL",190,0)
+MSG2 ;SD*571 print Security Key warning message to user
+"RTN","SDRRUTL",191,0)
+ W " ??"
+"RTN","SDRRUTL",192,0)
+ W !?10,"Provider selected is assigned Security Key"
+"RTN","SDRRUTL",193,0)
+ W !?10,"which you do not hold."
+"RTN","SDRRUTL",194,0)
+ W !?10,"Please contact your Recall Coordinator.",!
+"RTN","SDRRUTL",195,0)
+ D:$D(PROV1) FDA Q
+"RTN","SDRRUTL",196,0)
+ Q
+"RTN","SDRRUTL",197,0)
+ ;
+"RTN","SDRRUTL",198,0)
+FDA ;SD*571 insure original provider pointer is back in 403.5 record
+"RTN","SDRRUTL",199,0)
+ Q:'$D(PROV1)
+"RTN","SDRRUTL",200,0)
+ S (FDA,SDFLD)=""
+"RTN","SDRRUTL",201,0)
+ S SDFLD=4,FDA(403.5,SDIEN_",",SDFLD)=PROV1
+"RTN","SDRRUTL",202,0)
+ D FILE^DIE("","FDA")
+"RTN","SDRRUTL",203,0)
+ D CLEAN^DILF
+"RTN","SDRRUTL",204,0)
+ K FDA,SDFLD,SDIEN
+"RTN","SDRRUTL",205,0)
+ S SDFLAG=""   ;null indicates edit so ^DIK will not be called at exit
+"RTN","SDRRUTL",206,0)
+ Q
+"RTN","SDRRUTL",207,0)
+ ;
+"RTN","SDRRUTL",208,0)
+SCREEN1() ; SD*582 screen clinic for add/edits - don't allow if clinic
+"RTN","SDRRUTL",209,0)
+ ; already inactive OR
+"RTN","SDRRUTL",210,0)
+ ; scheduled to be inactivated on OR
+"RTN","SDRRUTL",211,0)
+ ; before recall date OR not being reactivated until after selected recall date.
+"RTN","SDRRUTL",212,0)
+ ;
+"RTN","SDRRUTL",213,0)
+ N SDNODE,SDRDT,SDIDT
+"RTN","SDRRUTL",214,0)
+ ; Active if clinic is not inactive
+"RTN","SDRRUTL",215,0)
+ I '$G(^SC(+X,"I")) Q 1
+"RTN","SDRRUTL",216,0)
+ ; Get selected recall date
+"RTN","SDRRUTL",217,0)
+ S SDRDT=$P(^SD(403.5,DA,0),U,6)
+"RTN","SDRRUTL",218,0)
+ ; Check if clinic is inactive
+"RTN","SDRRUTL",219,0)
+ S:$G(^SC(+X,"I")) SDNODE=$G(^("I"))
+"RTN","SDRRUTL",220,0)
+ ; Active if inactivate date after recall date
+"RTN","SDRRUTL",221,0)
+ I $P(SDNODE,U,2)="" I $P(SDNODE,U,1)>SDRDT Q 1
+"RTN","SDRRUTL",222,0)
+ ; Inactive if inactivate date equal or prior to recall date
+"RTN","SDRRUTL",223,0)
+ I $P(SDNODE,U,2)="" I $P(SDNODE,U,1)=SDRDT!($P(SDNODE,U,1)<SDRDT) D  Q 0
+"RTN","SDRRUTL",224,0)
+ . S SDIDT=$P(SDNODE,U,1),SDIDT=$$FMTE^XLFDT(SDIDT)
+"RTN","SDRRUTL",225,0)
+ . W *7,!!,?5,"Clinic Inactive effective "_SDIDT_".",!
+"RTN","SDRRUTL",226,0)
+ ; Active if reactivate date equal or prior to recall date
+"RTN","SDRRUTL",227,0)
+ I $P(SDNODE,U,2)'="" I $P(SDNODE,U,2)=SDRDT!($P(SDNODE,U,2)<SDRDT) Q 1
+"RTN","SDRRUTL",228,0)
+ ; Inactive if reactivate date after recall date
+"RTN","SDRRUTL",229,0)
+ I $P(SDNODE,U,2)'="" I $P(SDNODE,U,2)>SDRDT D  Q 0
+"RTN","SDRRUTL",230,0)
+ . S SDIDT=$P(SDNODE,U,2),SDIDT=$$FMTE^XLFDT(SDIDT)
+"RTN","SDRRUTL",231,0)
+ . W *7,!!,?5,"Clinic Inactive until "_SDIDT_".",!
+"RTN","SDRRUTL",232,0)
+ Q 1
+"VER")
+8.0^22.0
+"BLD",9636,6)
+^512
+**END**
+**END**
+

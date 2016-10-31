@@ -1,0 +1,262 @@
+$TXT Created by                 BBMGR-DOMAIN.EXT  (KIDS) on Friday, 02/06/15 at 11:43
+=============================================================================
+Run Date: JUN 05, 2015                     Designation: VBEC*1*54
+Package : VBEC - VBECS                        Priority: Mandatory
+Version : 1        SEQ #82                      Status: Released
+                  Compliance Date: DEC 06, 2015
+=============================================================================
+
+Associated patches: (v)LR*5.2*382  <<= must be installed BEFORE `VBEC*1*54'
+                    (v)VBEC*1*27   <<= must be installed BEFORE `VBEC*1*54'
+                    (v)LR*5.2*412  <<= must be installed BEFORE `VBEC*1*54'
+
+Subject: RELEASE OF VBECS 2.0.0 SERVER PATCH
+
+Category: 
+  - Informational
+  - Routine
+  - Other
+
+Description:
+============
+
+ VBEC*1*54 is exported as part of the VistA Blood Establishment Computer 
+ System (VBECS) Version 2.0.0 release.
+  
+ VBECS 2.0.0 is a controlled release, and a guided installation on remote 
+ hosted Windows 2008 virtual machines. Your site will be contacted by the 
+ VBECS team to schedule a date for that installation and to verify that 
+ the required site personnel will be available. All required installation 
+ files will be supplied by the VBECS team during the installation and the 
+ VBECS team will be online with the site during the entire installation. 
+  
+ You may install VBEC*1*54 at any time, or you may wait and install it 
+ during the formal VBECS 2.0.0 installation. 
+  
+ To meet Food & Drug Administration (FDA) requirements, VBECS related 
+ VistA (Veterans Health Information Systems Technology Architecture) 
+ patches require customer validation in local Test accounts prior to 
+ installation in Production. The user validates the Blood Bank software 
+ for its intended use prior to its acceptance and use for patient care.
+  
+ Therefore, to allow adequate time for impact analysis and testing the 
+ changes prior to installation in Production, it is imperative that Office 
+ of Information Technology (OIT) Field Operations coordinate the 
+ installation of Blood Bank software patches with Pathology & Laboratory 
+ Medicine Service staff.
+  
+ The VBEC*1*54 patch addresses several issues. Refer to the sample 
+ validation scenarios listed with the correction to verify changes: 
+  
+  1. 109 VistA MR 103013 - The CPRS Blood Bank Report, Diagnostic Tests
+       Section has displayed Transfusion Reaction Workup test results
+       with patient Type and Screen test results. This was not done by
+       the legacy blood bank system. The change made to the VBECA1B1
+       routine will eliminate Transfusion Reaction Workup test results
+       from the Blood Bank Report, Diagnostic Tests Section. Note - the
+       Transfusion Reactions Section of the CPRS Blood Bank Report does
+       not change and will still display Transfusion Reaction
+       Interpretations.
+       Associated Remedy Tickets: INC000000923654 and INC000000925197.
+  
+       Verification: Locate a patient with a Transfusion Reaction in VBECS.
+       Using this patient run the CPRS Blood Bank Report and note that
+       transfusion reaction testing is visible in the Diagnostic Tests
+       Section and the Transfusion Reactions Section has an interpretation.
+       Install VBEC*1*54. Repeat the lookup of the CPRS Blood Bank Report
+       and verify that the transfusion reaction testing is absent in the
+       CPRS Blood Bank Report, Diagnostic Tests Section. Verify that the
+       Transfusion Reactions Section of the CPRS Blood Bank Report does
+       not change and still displays the Transfusion Reaction
+       Interpretations after VBEC*1*54 is installed.
+  
+  2. 110 VistA MR 121713 - VBECS was able to accept a specimen when the
+       CPRS order was assigned a Lab accession number as the order was
+       added to a collection list and the specimen was not collected (no
+       collection date/time). This change requires that the specimen
+       accession number must also have a collection date and time in VistA
+       before it can be used in VBECS for processing.
+  
+       Remedy Ticket: INC000000948143
+  
+       Verification: Attempt to accept a VBECS order with a blood bank
+       specimen that does not have a collection date and time assigned in
+       VistA but has been assigned an accession number per a Lab collection
+       list.  VBECS will allow processing of the specimen UID for an order
+       only when the specimen has a date and time collected assigned after
+       VBEC*1*54 is installed.
+  
+  3. 111 VistA MR 061214 - The release of ICD*18.0*57 started a 
+       retirement countdown for ICR 3990 used to lookup ICD codes. This 
+       lookup is used by the LRBLPCH (Patient transfusions & hematology 
+       results) option in VistA Blood Bank. No new transfusion 
+       data has been entered since LR*5.2*408 (compliance date August 18, 
+       2011) was installed to turn off VistA Blood Bank. The end 
+       result is that the LRBLPCH option is obsolete and the change to 
+       ICD codes is not relevant. The LRBLPCH option will be placed out 
+       of order with the installation of this patch.
+  
+       Verification: Any attempt to execute the option will return a
+       message that it is out of order.
+  
+  4. 112 VistA MR 111914 - Workload configuration and details are not
+       maintained in the development accounts which results in errors when
+       the workload process is triggered. Minor changes to the VistA 
+       workload code prevents the workload process from proceeding when 
+       there is no workload to process. Changes to the VBECRPCC routine
+       will prevent the error caused when there is no workload to process.
+  
+       Verification: None
+  
+  
+ There is also a VistA Blood Establishment Computer Software (VBECS) 
+ 2.0.0 server update that is also being released. Please refer 
+ to the VistA Blood Establishment Computer Software (VBECS) 2.0.0 
+ Release Notes for detailed information about corrections in that release.
+  
+  
+ BLOOD BANK CLEARANCE: 
+ =====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch VBEC*1*54 contains 
+ changes to a package referenced in BBM TEAM REVIEW OF VISTA PATCHES. 
+ This patch does not alter or modify any VistA Blood Bank software design 
+ safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch VBEC*1*54 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ ROUTINE:
+ ========
+ VBECA1B1
+ VBECRPCB
+ VBECRPCC
+  
+ DATA DICTIONARY:
+ ================
+  N/A
+  
+ REMEDY TICKETS:
+ ===============
+ INC000000923654
+ INC000000925197
+ INC000000948143
+  
+ TEST SITES:
+ ===========
+ Durham, NC 
+ Heartland-East HCS 
+    >Marion, IL 
+    >Poplar Bluff, MO 
+    >St. Louis, MO 
+ Milwaukee, WI 
+ San Diego, CA
+ San Francisco, CA
+  
+ Documentation:  
+ ============== 
+ Documentation is available for the VBECS package on the 
+ ANONYMOUS.SOFTWARE directory at one of the following Office of 
+ Information (OI) Field Offices. Sites will be able to utilize
+ Documentation in either the ".PDF" or "DOCX" format after they extract 
+ the ZIP file.
+  
+ The preferred method is to FTP the files from:
+ Download.vista.domain.ext
+  
+ This transmits files from the first available FTP server. Sites may also 
+ elect to retrieve documentation directly from a specific server as 
+ follows:
+        Albany                  ftp.domain.ext
+        Hines                   ftp.domain.ext
+        Salt Lake City          ftp.domain.ext
+  
+ NOTE:  The ZIP file listed below will be listed in each of the 
+ VBECS and LR patches that are part of the VBECS package and associated 
+ patches. It only needs to be downloaded once.
+  
+ File Name                                   Retrieval format:  
+ ===========                                 ================= 
+ VBECS_2_0_0_DOCS_BUNDLE.ZIP                 BINARY 
+  
+  
+ The following files are contained in the VBECS_2_0_0_DOCS_BUNDLE.ZIP file 
+ and will not be individually located on the OI Field Office Anonymous 
+ Directories.
+  
+ The VBECS_2_0_0_DOCS_BUNDLE.ZIP file needs to be extracted on your 
+ system for use.
+  
+ =======================================================================
+ Veterans Health Administration (VHA) Customer Documents:
+ VistA Blood Establishment Computer Software (VBECS) 2.0.0 Release 
+ Notes.docx
+ VistA Blood Establishment Computer Software (VBECS) 2.0.0 Release 
+ Notes.pdf
+ VistA Blood Establishment Computer Software (VBECS) 2.0.0 Technical 
+ Manual-Security Guide.docx
+ VistA Blood Establishment Computer Software (VBECS) 2.0.0 Technical 
+ Manual-Security Guide.pdf
+ VistA Blood Establishment Computer Software (VBECS) 2.0.0 User Guide.docx
+ VistA Blood Establishment Computer Software (VBECS) 2.0.0 User Guide.pdf
+ VBECS Known Defects and Anomalies.docx
+ VBECS Known Defects and Anomalies.pdf
+  
+ Installation Instructions:
+ ==========================
+ This patch may be loaded with users on the system.
+ Installation will take less than 5 minutes.
+  
+     1) Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+        the KIDS distribution included with this message.
+     2) From the Kernel Installation and Distribution System Menu,
+        select the Installation menu.
+     3) From this menu, you may elect to use the following options
+        (when prompted for the INSTALL NAME, enter VBEC*1.0*54).
+        a) Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+        b) Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch
+           (routines, DDs, templates, etc.).
+        c) Verify Checksums in Transport Global - this option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+        d) Print Transport Global - this option will allow you to view 
+           the components of the KIDS build.
+     4) Use the Install Package(s) option and select the package 
+        VBEC*1.0*54.
+     5) When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion 
+        of Install? YES//' respond YES
+     6) When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//'  respond NO
+     7) When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//'  respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VBECS;**[Patch List]**;Apr 14, 2005;Build 19
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VBECA1B1
+    Before: B35331122   After: B35762863  **54**
+Routine Name: VBECRPCB
+    Before: B37262884   After: B38154509  **54**
+Routine Name: VBECRPCC
+    Before: B23397469   After: B22664928  **54**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 28, 2013
+Completed By:                               Date Completed: JUN 05, 2015
+Released By :                               Date Released : JUN 05, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

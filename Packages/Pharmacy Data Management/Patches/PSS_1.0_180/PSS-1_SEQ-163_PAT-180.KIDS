@@ -1,0 +1,1591 @@
+Released PSS*1*180 SEQ #163
+Extracted from mail message
+**KIDS**:PSS*1.0*180^
+
+**INSTALL NAME**
+PSS*1.0*180
+"BLD",9405,0)
+PSS*1.0*180^PHARMACY DATA MANAGEMENT^0^3140529^y
+"BLD",9405,1,0)
+^^22^22^3140428^^^
+"BLD",9405,1,1,0)
+This patch will correct the following reported issues:
+"BLD",9405,1,2,0)
+ 
+"BLD",9405,1,3,0)
+1) INC000000324382 - Drug Enter/Edit option
+"BLD",9405,1,4,0)
+The Drug Enter/Edit [PSS DRUG ENTER/EDIT] VistA option deletes a drugs
+"BLD",9405,1,5,0)
+Possible Dosage of an inactive drug if the user answers YES to the "Do you
+"BLD",9405,1,6,0)
+wish to match/rematch to NATIONAL DRUG file?" prompt.
+"BLD",9405,1,7,0)
+ 
+"BLD",9405,1,8,0)
+2) INC000000861438 - PSSIV ADD Input Template 
+"BLD",9405,1,9,0)
+When editing an IV Additive, using both the Additives File and the 
+"BLD",9405,1,10,0)
+Drug Enter/Edit options, the prompt for Additive Frequency is missing.
+"BLD",9405,1,11,0)
+Currently the only way to edit the ADDITIVE FREQUENCY field (#18) is
+"BLD",9405,1,12,0)
+through FileMan.
+"BLD",9405,1,13,0)
+ 
+"BLD",9405,1,14,0)
+3) INC000000942809 - Message Sent field (#3) in the Vendor Interface
+"BLD",9405,1,15,0)
+                     Data file (#59.74) not populating.
+"BLD",9405,1,16,0)
+A defect was discovered with the population of the Message Sent field 
+"BLD",9405,1,17,0)
+(#3) in the Vendor Interface Data file (#59.74).  When the Interface
+"BLD",9405,1,18,0)
+Scheduler [PSS INTERFACE SCHEDULER] job receives an error indicating
+"BLD",9405,1,19,0)
+that the Vendor Database is down, it makes an entry in the Vendor
+"BLD",9405,1,20,0)
+Interface Data  file (#59.74) and sends a VistA MailMan message to the
+"BLD",9405,1,21,0)
+mail group PSS ORDER CHECKS. When the message is sent, the message
+"BLD",9405,1,22,0)
+sent field(#3) is not being updated with the message sent flag.
+"BLD",9405,4,0)
+^9.64PA^^
+"BLD",9405,6.3)
+2
+"BLD",9405,"ABPKG")
+n
+"BLD",9405,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9405,"KRN",.4,0)
+.4
+"BLD",9405,"KRN",.401,0)
+.401
+"BLD",9405,"KRN",.402,0)
+.402
+"BLD",9405,"KRN",.402,"NM",0)
+^9.68A^1^1
+"BLD",9405,"KRN",.402,"NM",1,0)
+PSSIV ADD    FILE #52.6^52.6^0
+"BLD",9405,"KRN",.402,"NM","B","PSSIV ADD    FILE #52.6",1)
+
+"BLD",9405,"KRN",.403,0)
+.403
+"BLD",9405,"KRN",.5,0)
+.5
+"BLD",9405,"KRN",.84,0)
+.84
+"BLD",9405,"KRN",3.6,0)
+3.6
+"BLD",9405,"KRN",3.8,0)
+3.8
+"BLD",9405,"KRN",9.2,0)
+9.2
+"BLD",9405,"KRN",9.8,0)
+9.8
+"BLD",9405,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",9405,"KRN",9.8,"NM",1,0)
+PSSDEE^^0^B98607664
+"BLD",9405,"KRN",9.8,"NM",2,0)
+PSSHRIT^^0^B220174770
+"BLD",9405,"KRN",9.8,"NM","B","PSSDEE",1)
+
+"BLD",9405,"KRN",9.8,"NM","B","PSSHRIT",2)
+
+"BLD",9405,"KRN",19,0)
+19
+"BLD",9405,"KRN",19.1,0)
+19.1
+"BLD",9405,"KRN",101,0)
+101
+"BLD",9405,"KRN",409.61,0)
+409.61
+"BLD",9405,"KRN",771,0)
+771
+"BLD",9405,"KRN",779.2,0)
+779.2
+"BLD",9405,"KRN",870,0)
+870
+"BLD",9405,"KRN",8989.51,0)
+8989.51
+"BLD",9405,"KRN",8989.52,0)
+8989.52
+"BLD",9405,"KRN",8994,0)
+8994
+"BLD",9405,"KRN","B",.4,.4)
+
+"BLD",9405,"KRN","B",.401,.401)
+
+"BLD",9405,"KRN","B",.402,.402)
+
+"BLD",9405,"KRN","B",.403,.403)
+
+"BLD",9405,"KRN","B",.5,.5)
+
+"BLD",9405,"KRN","B",.84,.84)
+
+"BLD",9405,"KRN","B",3.6,3.6)
+
+"BLD",9405,"KRN","B",3.8,3.8)
+
+"BLD",9405,"KRN","B",9.2,9.2)
+
+"BLD",9405,"KRN","B",9.8,9.8)
+
+"BLD",9405,"KRN","B",19,19)
+
+"BLD",9405,"KRN","B",19.1,19.1)
+
+"BLD",9405,"KRN","B",101,101)
+
+"BLD",9405,"KRN","B",409.61,409.61)
+
+"BLD",9405,"KRN","B",771,771)
+
+"BLD",9405,"KRN","B",779.2,779.2)
+
+"BLD",9405,"KRN","B",870,870)
+
+"BLD",9405,"KRN","B",8989.51,8989.51)
+
+"BLD",9405,"KRN","B",8989.52,8989.52)
+
+"BLD",9405,"KRN","B",8994,8994)
+
+"BLD",9405,"QDEF")
+^^^^NO^^^^^^NO
+"BLD",9405,"QUES",0)
+^9.62^^
+"BLD",9405,"REQB",0)
+^9.611^2^2
+"BLD",9405,"REQB",1,0)
+PSS*1.0*156^1
+"BLD",9405,"REQB",2,0)
+PSS*1.0*173^1
+"BLD",9405,"REQB","B","PSS*1.0*156",1)
+
+"BLD",9405,"REQB","B","PSS*1.0*173",2)
+
+"KRN",.402,2198,-1)
+0^1
+"KRN",.402,2198,0)
+PSSIV ADD^3140411.1456^@^52.6^^@^3130828
+"KRN",.402,2198,"DIAB",1,1,52.62,0)
+ALL
+"KRN",.402,2198,"DIAB",1,1,52.63,0)
+ALL
+"KRN",.402,2198,"DR",1,52.6)
+D PRNMHD^PSSVIDRG;.01;.01///^S X=$$PRNM^PSSVIDRG();1///^S X=$$GEND^PSSVIDRG($S($G(DISPDRG):DISPDRG,$G(PSSDRG):PSSDRG,1:""));D GETD^PSSVIDRG;17;2;19;3;4;S X=$S($D(PSIVSC):PSIVSC,1:"") K PSIVSC;5;6;7;8;9;10;12;13;14;18;
+"KRN",.402,2198,"DR",2,52.61)
+.01;1;2;3;4;S X=$S($D(PSIVSC):PSIVSC,1:"") K PSIVSC;5;6;7;
+"KRN",.402,2198,"DR",2,52.62)
+.01:1
+"KRN",.402,2198,"DR",2,52.63)
+.01
+"MBREQ")
+0
+"ORD",7,.402)
+.402;7;;;EDEOUT^DIFROMSO(.402,DA,"",XPDA);FPRE^DIFROMSI(.402,"",XPDA);EPRE^DIFROMSI(.402,DA,$E("N",$G(XPDNEW)),XPDA,"",OLDA);;EPOST^DIFROMSI(.402,DA,"",XPDA);DEL^DIFROMSK(.402,"",%)
+"ORD",7,.402,0)
+INPUT TEMPLATE
+"PKG",488,-1)
+1^1
+"PKG",488,0)
+PHARMACY DATA MANAGEMENT^PSS^Maintenance of Pharmacy files.
+"PKG",488,20,0)
+^9.402P^^
+"PKG",488,22,0)
+^9.49I^1^1
+"PKG",488,22,1,0)
+1.0^2970930^3000316^66481
+"PKG",488,22,1,"PAH",1,0)
+180^3140529^100104
+"PKG",488,22,1,"PAH",1,1,0)
+^^22^22^3140529
+"PKG",488,22,1,"PAH",1,1,1,0)
+This patch will correct the following reported issues:
+"PKG",488,22,1,"PAH",1,1,2,0)
+ 
+"PKG",488,22,1,"PAH",1,1,3,0)
+1) INC000000324382 - Drug Enter/Edit option
+"PKG",488,22,1,"PAH",1,1,4,0)
+The Drug Enter/Edit [PSS DRUG ENTER/EDIT] VistA option deletes a drugs
+"PKG",488,22,1,"PAH",1,1,5,0)
+Possible Dosage of an inactive drug if the user answers YES to the "Do you
+"PKG",488,22,1,"PAH",1,1,6,0)
+wish to match/rematch to NATIONAL DRUG file?" prompt.
+"PKG",488,22,1,"PAH",1,1,7,0)
+ 
+"PKG",488,22,1,"PAH",1,1,8,0)
+2) INC000000861438 - PSSIV ADD Input Template 
+"PKG",488,22,1,"PAH",1,1,9,0)
+When editing an IV Additive, using both the Additives File and the 
+"PKG",488,22,1,"PAH",1,1,10,0)
+Drug Enter/Edit options, the prompt for Additive Frequency is missing.
+"PKG",488,22,1,"PAH",1,1,11,0)
+Currently the only way to edit the ADDITIVE FREQUENCY field (#18) is
+"PKG",488,22,1,"PAH",1,1,12,0)
+through FileMan.
+"PKG",488,22,1,"PAH",1,1,13,0)
+ 
+"PKG",488,22,1,"PAH",1,1,14,0)
+3) INC000000942809 - Message Sent field (#3) in the Vendor Interface
+"PKG",488,22,1,"PAH",1,1,15,0)
+                     Data file (#59.74) not populating.
+"PKG",488,22,1,"PAH",1,1,16,0)
+A defect was discovered with the population of the Message Sent field 
+"PKG",488,22,1,"PAH",1,1,17,0)
+(#3) in the Vendor Interface Data file (#59.74).  When the Interface
+"PKG",488,22,1,"PAH",1,1,18,0)
+Scheduler [PSS INTERFACE SCHEDULER] job receives an error indicating
+"PKG",488,22,1,"PAH",1,1,19,0)
+that the Vendor Database is down, it makes an entry in the Vendor
+"PKG",488,22,1,"PAH",1,1,20,0)
+Interface Data  file (#59.74) and sends a VistA MailMan message to the
+"PKG",488,22,1,"PAH",1,1,21,0)
+mail group PSS ORDER CHECKS. When the message is sent, the message
+"PKG",488,22,1,"PAH",1,1,22,0)
+sent field(#3) is not being updated with the message sent flag.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PSSDEE")
+0^1^B98607664^B96127789
+"RTN","PSSDEE",1,0)
+PSSDEE ;BIR/WRT-MASTER DRUG ENTER/EDIT ROUTINE ;01/21/00
+"RTN","PSSDEE",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**3,5,15,16,20,22,28,32,34,33,38,57,47,68,61,82,90,110,155,156,180**;9/30/97;Build 2
+"RTN","PSSDEE",3,0)
+ ;
+"RTN","PSSDEE",4,0)
+ ;Reference to ^PS(59 supported by DBIA #1976
+"RTN","PSSDEE",5,0)
+ ;Reference to REACT1^PSNOUT supported by DBIA #2080
+"RTN","PSSDEE",6,0)
+ ;Reference to $$UP^XLFSTR(X) supported by DBIA #10104
+"RTN","PSSDEE",7,0)
+ ;Reference to $$PSJDF^PSNAPIS(P1,P3) supported by DBIA #2531
+"RTN","PSSDEE",8,0)
+ ;
+"RTN","PSSDEE",9,0)
+BEGIN N PSSUPRAF
+"RTN","PSSDEE",10,0)
+ S PSSFLAG=0 D ^PSSDEE2 S PSSZ=1 F PSSXX=1:1 K DA D ASK Q:PSSFLAG
+"RTN","PSSDEE",11,0)
+DONE D ^PSSDEE2 K PSSFLAG Q
+"RTN","PSSDEE",12,0)
+ASK W ! S DIC="^PSDRUG(",DIC(0)="QEALMNTV",DLAYGO=50,DIC("T")="" D ^DIC K DIC I Y<0 S PSSFLAG=1 Q
+"RTN","PSSDEE",13,0)
+ N PSINACT S (FLG1,FLG2,FLG3,FLG4,FLG5,FLG6,FLG7,FLAG,FLGKY,FLGOI,PSINACT)=0 K ^TMP($J,"ADD"),^TMP($J,"SOL")
+"RTN","PSSDEE",14,0)
+ S DA=+Y,DISPDRG=DA L +^PSDRUG(DISPDRG):0 I '$T W !,$C(7),"Another person is editing this one." Q
+"RTN","PSSDEE",15,0)
+ I $G(^PSDRUG(DA,"I")) S PSINACT=$G(^PSDRUG(DA,"I")) I PSINACT,PSINACT<DT S PSINACT=1  ;;<<*180 - RJS
+"RTN","PSSDEE",16,0)
+ S PSSHUIDG=1,PSSNEW=$P(Y,"^",3) D USE,NOPE,COMMON,DEA,MF K PSSHUIDG,PSSUPRAF
+"RTN","PSSDEE",17,0)
+ ; if any outpatient site has a dispense machine running HL7 V.2.4, then
+"RTN","PSSDEE",18,0)
+ ; run the new routine and create message
+"RTN","PSSDEE",19,0)
+ N XX,DNSNAM,DNSPORT,DVER,DMFU,PSSUPRA S XX=""
+"RTN","PSSDEE",20,0)
+ F XX=0:0 S XX=$O(^PS(59,XX)) Q:'XX  D
+"RTN","PSSDEE",21,0)
+ .S DVER=$$GET1^DIQ(59,XX_",",105,"I"),DMFU=$$GET1^DIQ(59,XX_",",105.2)
+"RTN","PSSDEE",22,0)
+ .S DNSNAM=$$GET1^DIQ(59,XX_",",2006),DNSPORT=$$GET1^DIQ(59,XX_",",2007)
+"RTN","PSSDEE",23,0)
+ .D:DVER="2.4"&(DNSNAM'="")&(DMFU="YES") DRG^PSSDGUPD(DISPDRG,PSSNEW,DNSNAM,DNSPORT)
+"RTN","PSSDEE",24,0)
+ D DRG^PSSHUIDG(DISPDRG,PSSNEW) L -^PSDRUG(DISPDRG) K FLG3,PSSNEW
+"RTN","PSSDEE",25,0)
+ Q
+"RTN","PSSDEE",26,0)
+COMMON S DIE="^PSDRUG(",DR="[PSSCOMMON]" D ^DIE Q:$D(Y)!($D(DTOUT))  W:'$D(Y) !,"PRICE PER DISPENSE UNIT: " S:'$D(^PSDRUG(DA,660)) $P(^PSDRUG(DA,660),"^",6)="" W:'$D(Y) $P(^PSDRUG(DA,660),"^",6)
+"RTN","PSSDEE",27,0)
+ D DEA,CK,ASKND,OIKILL^PSSDEE1,COMMON1
+"RTN","PSSDEE",28,0)
+ Q
+"RTN","PSSDEE",29,0)
+COMMON1 W !,"Just a reminder...you are editing ",$P(^PSDRUG(DISPDRG,0),"^"),"."
+"RTN","PSSDEE",30,0)
+ S (PSSVVDA,DA)=DISPDRG D DOSN^PSSDOS S DA=PSSVVDA K PSSVVDA D USE,APP,ORDITM^PSSDEE1
+"RTN","PSSDEE",31,0)
+ Q
+"RTN","PSSDEE",32,0)
+CK D DSPY^PSSDEE1 S FLGNDF=0
+"RTN","PSSDEE",33,0)
+ Q
+"RTN","PSSDEE",34,0)
+ASKND S %=-1 I $D(^XUSEC("PSNMGR",DUZ)) D MESSAGE^PSSDEE1 W !!,"Do you wish to match/rematch to NATIONAL DRUG file" S %=1 S:FLGMTH=1 %=2 D YN^DICN
+"RTN","PSSDEE",35,0)
+ I %=0 W !,"If you answer ""yes"", you will attempt to match to NDF." G ASKND
+"RTN","PSSDEE",36,0)
+ S PSSUPRAF=%
+"RTN","PSSDEE",37,0)
+ I %=2 K X,Y Q
+"RTN","PSSDEE",38,0)
+ I %<0 K X,Y Q
+"RTN","PSSDEE",39,0)
+ I %=1 D  ;;<<*180 - RJS
+"RTN","PSSDEE",40,0)
+ .D RSET^PSSDEE1
+"RTN","PSSDEE",41,0)
+ .I 'PSINACT D EN1^PSSUTIL(DISPDRG,1)
+"RTN","PSSDEE",42,0)
+ .S X="PSNOUT" X ^%ZOSF("TEST") I  D REACT1^PSNOUT S DA=DISPDRG I $D(^PSDRUG(DA,"ND")),$P(^PSDRUG(DA,"ND"),"^",2)]"" D ONE
+"RTN","PSSDEE",43,0)
+ Q  ;;<< *180 - RJS
+"RTN","PSSDEE",44,0)
+ONE S PSNP=$G(^PSDRUG(DA,"I")) I PSNP,PSNP<DT Q
+"RTN","PSSDEE",45,0)
+ W !,"You have just VERIFIED this match and MERGED the entry." D CKDF D EN2^PSSUTIL(DISPDRG,1) S:'$D(OLDDF) OLDDF="" I OLDDF'=NEWDF S FLGNDF=1 D WR
+"RTN","PSSDEE",46,0)
+ Q
+"RTN","PSSDEE",47,0)
+CKDF S NWND=^PSDRUG(DA,"ND"),NWPC1=$P(NWND,"^",1),NWPC3=$P(NWND,"^",3),DA=NWPC1,K=NWPC3 S X=$$PSJDF^PSNAPIS(DA,K) S NEWDF=$P(X,"^",2),DA=DISPDRG
+"RTN","PSSDEE",48,0)
+ N PSSK D PKIND^PSSDDUT2
+"RTN","PSSDEE",49,0)
+ Q
+"RTN","PSSDEE",50,0)
+NOPE S ZAPFLG=0 I '$D(^PSDRUG(DA,"ND")),$D(^PSDRUG(DA,2)),$P(^PSDRUG(DA,2),"^",1)']"" D DFNULL
+"RTN","PSSDEE",51,0)
+ I '$D(^PSDRUG(DA,"ND")),'$D(^PSDRUG(DA,2)) D DFNULL
+"RTN","PSSDEE",52,0)
+ I $D(^PSDRUG(DA,"ND")),$P(^PSDRUG(DA,"ND"),"^",2)']"",$D(^PSDRUG(DA,2)),$P(^PSDRUG(DA,2),"^",1)']"" D DFNULL
+"RTN","PSSDEE",53,0)
+ Q
+"RTN","PSSDEE",54,0)
+DFNULL S OLDDF="",ZAPFLG=1
+"RTN","PSSDEE",55,0)
+ Q
+"RTN","PSSDEE",56,0)
+ZAPIT I $D(ZAPFLG),ZAPFLG=1,FLGNDF=1,OLDDF'=NEWDF D CKIV^PSSDEE1
+"RTN","PSSDEE",57,0)
+ Q
+"RTN","PSSDEE",58,0)
+APP W !!,"MARK THIS DRUG AND EDIT IT FOR: " D CHOOSE
+"RTN","PSSDEE",59,0)
+ Q
+"RTN","PSSDEE",60,0)
+CHOOSE I $D(^XUSEC("PSORPH",DUZ))!($D(^XUSEC("PSXCMOPMGR",DUZ))) W !,"O  - Outpatient" S FLG1=1
+"RTN","PSSDEE",61,0)
+ I $D(^XUSEC("PSJU MGR",DUZ)) W !,"U  - Unit Dose" S FLG2=1
+"RTN","PSSDEE",62,0)
+ I $D(^XUSEC("PSJI MGR",DUZ)) W !,"I  - IV" S FLG3=1
+"RTN","PSSDEE",63,0)
+ I $D(^XUSEC("PSGWMGR",DUZ)) W !,"W  - Ward Stock" S FLG4=1
+"RTN","PSSDEE",64,0)
+ I $D(^XUSEC("PSAMGR",DUZ))!($D(^XUSEC("PSA ORDERS",DUZ))) W !,"D  - Drug Accountability" S FLG5=1
+"RTN","PSSDEE",65,0)
+ I $D(^XUSEC("PSDMGR",DUZ)) W !,"C  - Controlled Substances" S FLG6=1
+"RTN","PSSDEE",66,0)
+ I $D(^XUSEC("PSORPH",DUZ)) W !,"X  - Non-VA Med" S FLG7=1
+"RTN","PSSDEE",67,0)
+ I FLG1,FLG2,FLG3,FLG4,FLG5,FLG6 S FLAG=1
+"RTN","PSSDEE",68,0)
+ I FLAG W !,"A  - ALL"
+"RTN","PSSDEE",69,0)
+ W !
+"RTN","PSSDEE",70,0)
+ I 'FLG1,'FLG2,'FLG3,'FLG4,'FLG5,'FLG6,'FLG7 W !,"You do not have the proper keys to continue. Sorry, this concludes your editing session.",! S FLGKY=1 K DIRUT,X Q
+"RTN","PSSDEE",71,0)
+ I FLGKY'=1 D
+"RTN","PSSDEE",72,0)
+ . K DIR S DIR(0)="FO^1:30"
+"RTN","PSSDEE",73,0)
+ . S DIR("A")="Enter your choice(s) separated by commas "
+"RTN","PSSDEE",74,0)
+ . F  D ^DIR Q:$$CHECK($$UP^XLFSTR(X))
+"RTN","PSSDEE",75,0)
+ . S PSSANS=X,PSSANS=$$UP^XLFSTR(PSSANS) D BRANCH,BRANCH1
+"RTN","PSSDEE",76,0)
+ Q
+"RTN","PSSDEE",77,0)
+ ;
+"RTN","PSSDEE",78,0)
+CHECK(X) ; Validates Application Use response
+"RTN","PSSDEE",79,0)
+ N CHECK,I,C
+"RTN","PSSDEE",80,0)
+ S CHECK=1 I X=""!(Y["^")!($D(DIRUT)) Q CHECK
+"RTN","PSSDEE",81,0)
+ F I=1:1:$L(X,",") D
+"RTN","PSSDEE",82,0)
+ . S C=$P(X,",",I) W !?43,C," - "
+"RTN","PSSDEE",83,0)
+ . I C="O",FLG1 W "Outpatient" Q
+"RTN","PSSDEE",84,0)
+ . I C="U",FLG2 W "Unit Dose" Q
+"RTN","PSSDEE",85,0)
+ . I C="I",FLG3 W "IV" Q
+"RTN","PSSDEE",86,0)
+ . I C="W",FLG4 W "Ward Stock" Q
+"RTN","PSSDEE",87,0)
+ . I C="D",FLG5 W "Drug Accountability" Q
+"RTN","PSSDEE",88,0)
+ . I C="C",FLG6 W "Controlled Substances" Q
+"RTN","PSSDEE",89,0)
+ . I C="X",FLG7 W "Non-VA Med" Q
+"RTN","PSSDEE",90,0)
+ . W "Invalid Entry",$C(7) S CHECK=0
+"RTN","PSSDEE",91,0)
+ Q CHECK
+"RTN","PSSDEE",92,0)
+BRANCH D:PSSANS["O" OP D:PSSANS["U" UD D:PSSANS["I" IV D:PSSANS["W" WS
+"RTN","PSSDEE",93,0)
+ D:PSSANS["D" DACCT D:PSSANS["C" CS D:PSSANS["X" NVM
+"RTN","PSSDEE",94,0)
+ Q
+"RTN","PSSDEE",95,0)
+BRANCH1 I FLAG,PSSANS["A" D OP,UD,IV,WS,DACCT,CS,NVM
+"RTN","PSSDEE",96,0)
+ Q
+"RTN","PSSDEE",97,0)
+OP I FLG1 D
+"RTN","PSSDEE",98,0)
+ . W !,"** You are NOW editing OUTPATIENT fields. **"
+"RTN","PSSDEE",99,0)
+ . S PSIUDA=DA,PSIUX="O^Outpatient Pharmacy" D ^PSSGIU
+"RTN","PSSDEE",100,0)
+ . I %=1 D
+"RTN","PSSDEE",101,0)
+ . . S DIE="^PSDRUG(",DR="[PSSOP]" D ^DIE K DIR D OPEI,ASKCMOP
+"RTN","PSSDEE",102,0)
+ . . S X="PSOCLO1" X ^%ZOSF("TEST") I  D ASKCLOZ S FLGOI=1
+"RTN","PSSDEE",103,0)
+ I FLG1 D CKCMOP
+"RTN","PSSDEE",104,0)
+ Q
+"RTN","PSSDEE",105,0)
+CKCMOP I $P($G(^PSDRUG(DISPDRG,2)),"^",3)'["O" S:$D(^PSDRUG(DISPDRG,3)) $P(^PSDRUG(DISPDRG,3),"^",1)=0 K:$D(^PSDRUG("AQ",DISPDRG)) ^PSDRUG("AQ",DISPDRG) S DA=DISPDRG D ^PSSREF
+"RTN","PSSDEE",106,0)
+ Q
+"RTN","PSSDEE",107,0)
+UD I FLG2 W !,"** You are NOW editing UNIT DOSE fields. **" S PSIUDA=DA,PSIUX="U^Unit Dose" D ^PSSGIU I %=1 S DIE="^PSDRUG(",DR="62.05;212.2" D ^DIE S DIE="^PSDRUG(",DR="212",DR(2,50.0212)=".01;1" D ^DIE S FLGOI=1
+"RTN","PSSDEE",108,0)
+ Q
+"RTN","PSSDEE",109,0)
+IV I FLG3 W !,"** You are NOW editing IV fields. **" S (PSIUDA,PSSDA)=DA,PSIUX="I^IV" D ^PSSGIU I %=1 D IV1 S FLGOI=1
+"RTN","PSSDEE",110,0)
+ Q
+"RTN","PSSDEE",111,0)
+IV1 K PSSIVOUT ;This variable controls the selection process loop.
+"RTN","PSSDEE",112,0)
+ W !,"Edit Additives or Solutions: " K DIR S DIR(0)="SO^A:ADDITIVES;S:SOLUTIONS;" D ^DIR Q:$D(DIRUT)  S PSSASK=Y(0) D:PSSASK="ADDITIVES" ENA^PSSVIDRG D:PSSASK="SOLUTIONS" ENS^PSSVIDRG I '$D(PSSIVOUT) G IV1
+"RTN","PSSDEE",113,0)
+ K PSSIVOUT
+"RTN","PSSDEE",114,0)
+ Q
+"RTN","PSSDEE",115,0)
+WS I FLG4 W !,"** You are NOW editing WARD STOCK fields. **" S DIE="^PSDRUG(",DR="300;301;302" D ^DIE
+"RTN","PSSDEE",116,0)
+ Q
+"RTN","PSSDEE",117,0)
+DACCT I FLG5 W !,"** You are NOW editing DRUG ACCOUNTABILITY fields. **" S DIE="^PSDRUG(",DR="441" D ^DIE S DIE="^PSDRUG(",DR="9",DR(2,50.1)="1;2;400;401;402;403;404;405" D ^DIE
+"RTN","PSSDEE",118,0)
+ Q
+"RTN","PSSDEE",119,0)
+CS I FLG6 W !,"** You are NOW Marking/Unmarking for CONTROLLED SUBS. **" S PSIUDA=DA,PSIUX="N^Controlled Substances" D ^PSSGIU
+"RTN","PSSDEE",120,0)
+ Q
+"RTN","PSSDEE",121,0)
+NVM I FLG7 W !,"** You are NOW Marking/Unmarking for NON-VA MEDS. **" S PSIUDA=DA,PSIUX="X^Non-VA Med" D ^PSSGIU
+"RTN","PSSDEE",122,0)
+ Q
+"RTN","PSSDEE",123,0)
+ASKCMOP I $D(^XUSEC("PSXCMOPMGR",DUZ)) W !!,"Do you wish to mark to transmit to CMOP? " K DIR S DIR(0)="Y",DIR("?")="If you answer ""yes"", you will attempt to mark this drug to transmit to CMOP."
+"RTN","PSSDEE",124,0)
+ D ^DIR I "Nn"[X K X,Y,DIRUT Q
+"RTN","PSSDEE",125,0)
+ I "Yy"[X S PSXFL=0 D TEXT^PSSMARK H 7 N PSXUDA S (PSXUM,PSXUDA)=DA,PSXLOC=$P(^PSDRUG(DA,0),"^"),PSXGOOD=0,PSXF=0,PSXBT=0 D BLD^PSSMARK,PICK2^PSSMARK S DA=PSXUDA
+"RTN","PSSDEE",126,0)
+ Q
+"RTN","PSSDEE",127,0)
+ASKCLOZ W !!,"Do you wish to mark/unmark as a LAB MONITOR or CLOZAPINE DRUG? " K DIR S DIR(0)="Y",DIR("?")="If you answer ""yes"", you will have the opportunity to edit LAB MONITOR or CLOZAPINE fields."
+"RTN","PSSDEE",128,0)
+ D ^DIR I "Nn"[X K X,Y,DIRUT Q
+"RTN","PSSDEE",129,0)
+ I "Yy"[X S NFLAG=0 D MONCLOZ
+"RTN","PSSDEE",130,0)
+ Q
+"RTN","PSSDEE",131,0)
+MONCLOZ K PSSAST D FLASH W !,"Mark/Unmark for Lab Monitor or Clozapine: " K DIR S DIR(0)="S^L:LAB MONITOR;C:CLOZAPINE;" D ^DIR Q:$D(DIRUT)  S PSSAST=Y(0) D:PSSAST="LAB MONITOR" ^PSSLAB D:PSSAST="CLOZAPINE" CLOZ
+"RTN","PSSDEE",132,0)
+ Q
+"RTN","PSSDEE",133,0)
+FLASH K LMFLAG,CLFALG,WHICH S WHICH=$P($G(^PSDRUG(DISPDRG,"CLOZ1")),"^"),LMFLAG=0,CLFLAG=0
+"RTN","PSSDEE",134,0)
+ I WHICH="PSOCLO1" S CLFLAG=1
+"RTN","PSSDEE",135,0)
+ I WHICH'="PSOCLO1" S:WHICH'="" LMFLAG=1
+"RTN","PSSDEE",136,0)
+ Q
+"RTN","PSSDEE",137,0)
+CLOZ Q:NFLAG  Q:$D(DTOUT)  Q:$D(DIRUT)  Q:$D(DUOUT)  W !,"** You are NOW editing CLOZAPINE fields. **" D ^PSSCLDRG
+"RTN","PSSDEE",138,0)
+ Q
+"RTN","PSSDEE",139,0)
+USE K PACK S PACK="" S:$P($G(^PSDRUG(DISPDRG,"PSG")),"^",2)]"" PACK="W" I $D(^PSDRUG(DISPDRG,2)) S PACK=PACK_$P(^PSDRUG(DISPDRG,2),"^",3)
+"RTN","PSSDEE",140,0)
+ I PACK'="" D
+"RTN","PSSDEE",141,0)
+ .W $C(7) N XX W !! F XX=1:1:79 W "*"
+"RTN","PSSDEE",142,0)
+ .W !,"This entry is marked for the following PHARMACY packages: "
+"RTN","PSSDEE",143,0)
+ .D USE1
+"RTN","PSSDEE",144,0)
+ Q
+"RTN","PSSDEE",145,0)
+USE1 W:PACK["O" !," Outpatient" W:PACK["U" !," Unit Dose" W:PACK["I" !," IV"
+"RTN","PSSDEE",146,0)
+ W:PACK["W" !," Ward Stock" W:PACK["D" !," Drug Accountability"
+"RTN","PSSDEE",147,0)
+ W:PACK["N" !," Controlled Substances" W:PACK["X" !," Non-VA Med"
+"RTN","PSSDEE",148,0)
+ W:'$D(PACK) !," NONE"
+"RTN","PSSDEE",149,0)
+ I PACK'["O",PACK'["U",PACK'["I",PACK'["W",PACK'["D",PACK'["N",PACK'["X" W !," NONE"
+"RTN","PSSDEE",150,0)
+ Q
+"RTN","PSSDEE",151,0)
+WR I ^XMB("NETNAME")'["CMOP-" W:OLDDF'="" !,"The dosage form has changed from "_OLDDF_" to "_NEWDF_" due to",!,"matching/rematching to NDF.",!,"You will need to rematch to Orderable Item.",!
+"RTN","PSSDEE",152,0)
+ Q
+"RTN","PSSDEE",153,0)
+PRIMDRG I $D(^PS(59.7,1,20)),$P(^PS(59.7,1,20),"^",1)=4!($P(^PS(59.7,1,20),"^",1)=4.5) I $D(^PSDRUG(DISPDRG,2)) S VAR=$P(^PSDRUG(DISPDRG,2),"^",3) I VAR["U"!(VAR["I") D PRIM1
+"RTN","PSSDEE",154,0)
+ Q
+"RTN","PSSDEE",155,0)
+PRIM1 W !!,"You need to match this drug to ""PRIMARY DRUG"" file as well.",! S DIE="^PSDRUG(",DR="64",DA=DISPDRG D ^DIE K VAR
+"RTN","PSSDEE",156,0)
+ Q
+"RTN","PSSDEE",157,0)
+MF I $P($G(^PS(59.7,1,80)),"^",2)>1 I $D(^PSDRUG(DISPDRG,2)) S PSSOR=$P(^PSDRUG(DISPDRG,2),"^",1) I PSSOR]"" D EN^PSSPOIDT(PSSOR),EN2^PSSHL1(PSSOR,"MUP")
+"RTN","PSSDEE",158,0)
+ Q
+"RTN","PSSDEE",159,0)
+MFA I $P($G(^PS(59.7,1,80)),"^",2)>1 S PSSOR=$P(^PS(52.6,ENTRY,0),"^",11),PSSDD=$P(^PS(52.6,ENTRY,0),"^",2) I PSSOR]"" D EN^PSSPOIDT(PSSOR),EN2^PSSHL1(PSSOR,"MUP") D MFDD
+"RTN","PSSDEE",160,0)
+ Q
+"RTN","PSSDEE",161,0)
+MFS I $P($G(^PS(59.7,1,80)),"^",2)>1 S PSSOR=$P(^PS(52.7,ENTRY,0),"^",11),PSSDD=$P(^PS(52.7,ENTRY,0),"^",2) I PSSOR]"" D EN^PSSPOIDT(PSSOR),EN2^PSSHL1(PSSOR,"MUP") D MFDD
+"RTN","PSSDEE",162,0)
+ Q
+"RTN","PSSDEE",163,0)
+MFDD I $D(^PSDRUG(PSSDD,2)) S PSSOR=$P(^PSDRUG(PSSDD,2),"^",1) I PSSOR]"" D EN^PSSPOIDT(PSSOR),EN2^PSSHL1(PSSOR,"MUP")
+"RTN","PSSDEE",164,0)
+ Q
+"RTN","PSSDEE",165,0)
+OPEI ;
+"RTN","PSSDEE",166,0)
+ S DIE="^PSDRUG(",DR="28",DA=DISPDRG
+"RTN","PSSDEE",167,0)
+ D ^DIE
+"RTN","PSSDEE",168,0)
+ Q:'+$P($G(^PSDRUG(DA,6)),"^")
+"RTN","PSSDEE",169,0)
+OPEI2 ; get external dispensing devices associated with the drug
+"RTN","PSSDEE",170,0)
+ W !!,"Defining a dispensing device at the drug level for a division will override"
+"RTN","PSSDEE",171,0)
+ W !,"the dispensing device settings in the OUTPATIENT SITE File (#59). If populated,",!,"the drug will be sent to the dispensing device for that division.",!
+"RTN","PSSDEE",172,0)
+ S DR="906"
+"RTN","PSSDEE",173,0)
+ D ^DIE
+"RTN","PSSDEE",174,0)
+ Q
+"RTN","PSSDEE",175,0)
+DEA ;
+"RTN","PSSDEE",176,0)
+ I $P($G(^PSDRUG(DISPDRG,3)),"^")=1,($P(^PSDRUG(DISPDRG,0),"^",3)[1!($P(^(0),"^",3)[2)) D DSH
+"RTN","PSSDEE",177,0)
+ Q
+"RTN","PSSDEE",178,0)
+DSH W !!,"****************************************************************************"
+"RTN","PSSDEE",179,0)
+ W !,"This entry contains a ""1"" or a ""2"" in the ""DEA, SPECIAL HDLG""",!,"field, therefore this item has been UNMARKED for CMOP transmission."
+"RTN","PSSDEE",180,0)
+ W !,"****************************************************************************",! S $P(^PSDRUG(DISPDRG,3),"^")=0 K ^PSDRUG("AQ",DISPDRG) S DA=DISPDRG N % D ^PSSREF
+"RTN","PSSDEE",181,0)
+ Q
+"RTN","PSSHRIT")
+0^2^B220174770^B219197445
+"RTN","PSSHRIT",1,0)
+PSSHRIT ;WOIFO/SG,PO - Transmits a "ping" to determine if FDB server is down and record the down time ;7/30/2008
+"RTN","PSSHRIT",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**136,168,164,173,180**;9/30/97;Build 2
+"RTN","PSSHRIT",3,0)
+ ;
+"RTN","PSSHRIT",4,0)
+ ;External reference to IN^PSSHRQ2 supported by DBIA 5369
+"RTN","PSSHRIT",5,0)
+ ;External reference to File 18.12 supported by DBIA 5891
+"RTN","PSSHRIT",6,0)
+ ;
+"RTN","PSSHRIT",7,0)
+ Q
+"RTN","PSSHRIT",8,0)
+PINGCHK ; do ping test, if not passed record it and send a message.
+"RTN","PSSHRIT",9,0)
+ ; Called from PSS INTERFACE SCHEDULER option
+"RTN","PSSHRIT",10,0)
+ N STATUS
+"RTN","PSSHRIT",11,0)
+ F  L +^PS(59.74,"PINGCHK^PSSHRIT"):1 Q:$T
+"RTN","PSSHRIT",12,0)
+ S STATUS=$$PINGTST()
+"RTN","PSSHRIT",13,0)
+ S STATUS=$$PINGFILE(STATUS)
+"RTN","PSSHRIT",14,0)
+ I STATUS=-1 D SMSGDWN   ; if failed for the first time (a new entry created) send a message that interface is down.
+"RTN","PSSHRIT",15,0)
+ L -^PS(59.74,"PINGCHK^PSSHRIT")
+"RTN","PSSHRIT",16,0)
+ Q
+"RTN","PSSHRIT",17,0)
+ ;
+"RTN","PSSHRIT",18,0)
+PINGTST() ; test the ping by sending a ping request.
+"RTN","PSSHRIT",19,0)
+ ;return 0 - ping successful,  -1^reason  ping failed
+"RTN","PSSHRIT",20,0)
+ N BASE,STATUS
+"RTN","PSSHRIT",21,0)
+ S BASE="PINGTST^"_$T(+0)
+"RTN","PSSHRIT",22,0)
+ K ^TMP($J,BASE)
+"RTN","PSSHRIT",23,0)
+ S ^TMP($J,BASE,"IN","PING")=""
+"RTN","PSSHRIT",24,0)
+ D IN^PSSHRQ2(BASE)
+"RTN","PSSHRIT",25,0)
+ S STATUS=$G(^TMP($J,BASE,"OUT",0))
+"RTN","PSSHRIT",26,0)
+ K ^TMP($J,BASE)
+"RTN","PSSHRIT",27,0)
+ Q STATUS
+"RTN","PSSHRIT",28,0)
+ ;
+"RTN","PSSHRIT",29,0)
+PINGFILE(STATUS) ;  file the ping results
+"RTN","PSSHRIT",30,0)
+ ; Input
+"RTN","PSSHRIT",31,0)
+ ;   Status - Ping results
+"RTN","PSSHRIT",32,0)
+ ; Return 
+"RTN","PSSHRIT",33,0)
+ ;     -1 - if creates an entry - means the first it noticed PEPS is unavailable
+"RTN","PSSHRIT",34,0)
+ ;      0 - if does not create/update a record, 
+"RTN","PSSHRIT",35,0)
+ ;      1 - if updates the last entry
+"RTN","PSSHRIT",36,0)
+ N LIEN,LASTAVL
+"RTN","PSSHRIT",37,0)
+ S STATUS=+$G(STATUS)
+"RTN","PSSHRIT",38,0)
+ S LIEN=+$O(^PS(59.74,":"),-1)           ; get last entry
+"RTN","PSSHRIT",39,0)
+ S LASTAVL=$P($G(^PS(59.74,LIEN,0)),U,2) ; get last available date/time
+"RTN","PSSHRIT",40,0)
+ I STATUS=0,'LIEN Q 0                          ; do nothing
+"RTN","PSSHRIT",41,0)
+ I STATUS=0,LIEN,LASTAVL Q 0                   ; do nothing
+"RTN","PSSHRIT",42,0)
+ I STATUS=0,LIEN,'LASTAVL D UPDATENT(LIEN) Q 1 ; update file
+"RTN","PSSHRIT",43,0)
+ I STATUS=-1,LIEN,LASTAVL D NEWENT Q -1        ; create new entry
+"RTN","PSSHRIT",44,0)
+ I STATUS=-1,'LIEN D NEWENT Q -1               ; create new entry
+"RTN","PSSHRIT",45,0)
+ Q 0
+"RTN","PSSHRIT",46,0)
+NEWENT ; create a new entry in FDB INTERFACE DATA (#59.74) file.
+"RTN","PSSHRIT",47,0)
+ N DIC,DO
+"RTN","PSSHRIT",48,0)
+ S X=$$NOW^XLFDT(),DIC="^PS(59.74,",DIC(0)="Z" D FILE^DICN
+"RTN","PSSHRIT",49,0)
+ K X,Y
+"RTN","PSSHRIT",50,0)
+ Q
+"RTN","PSSHRIT",51,0)
+ ;
+"RTN","PSSHRIT",52,0)
+UPDATENT(LAST) ; update the last entry in FDB INTERFACE DATA (#59.74) file.
+"RTN","PSSHRIT",53,0)
+ ;edit flag once it is created.
+"RTN","PSSHRIT",54,0)
+ N DIE,NEWVAL,DWNTIME,DA,DR,DIFF
+"RTN","PSSHRIT",55,0)
+ S DA=LAST
+"RTN","PSSHRIT",56,0)
+ S NEWVAL=$$NOW^XLFDT()   ;$$NOW()
+"RTN","PSSHRIT",57,0)
+ S DWNTIME=+$G(^PS(59.74,DA,0))
+"RTN","PSSHRIT",58,0)
+ Q:'DWNTIME
+"RTN","PSSHRIT",59,0)
+ S DIFF=$$FMDIFF^XLFDT(NEWVAL,DWNTIME,2)
+"RTN","PSSHRIT",60,0)
+ S DIFF=DIFF\60  ;IN MINUTES
+"RTN","PSSHRIT",61,0)
+ S DIE="^PS(59.74,",DR="1///^S X=NEWVAL;2///^S X=DIFF"
+"RTN","PSSHRIT",62,0)
+ D ^DIE
+"RTN","PSSHRIT",63,0)
+ D SMSGRST  ; send a message that interface connection is restored
+"RTN","PSSHRIT",64,0)
+ Q
+"RTN","PSSHRIT",65,0)
+ ;
+"RTN","PSSHRIT",66,0)
+SMSGDWN ; send a bulletin that Interface connection is down.
+"RTN","PSSHRIT",67,0)
+ N XMB,XMTEXT,XMY,PSFDB,XMV,XMDUN,XMDUZ
+"RTN","PSSHRIT",68,0)
+ S XMDUZ="PSS INTERFACE SCHEDULER"
+"RTN","PSSHRIT",69,0)
+ S XMB="PSS FDB INTERFACE"
+"RTN","PSSHRIT",70,0)
+ S XMTEXT="PSFDB"
+"RTN","PSSHRIT",71,0)
+ ; check to if dosing check is on.
+"RTN","PSSHRIT",72,0)
+ I $T(DS^PSSDSAPI)]"",$$DS^PSSDSAPI() D
+"RTN","PSSHRIT",73,0)
+ .S PSFDB(1)="Connection to Vendor Database is down!  No Drug-Drug Interaction, Duplicate"
+"RTN","PSSHRIT",74,0)
+ .S PSFDB(2)="Therapy or Dosing Order Checks will be performed until the connection is"
+"RTN","PSSHRIT",75,0)
+ .S PSFDB(3)="reestablished!!!"
+"RTN","PSSHRIT",76,0)
+ E  D
+"RTN","PSSHRIT",77,0)
+ .S PSFDB(1)="Connection to Vendor Database is down!  No Drug-Drug Interaction or Duplicate"
+"RTN","PSSHRIT",78,0)
+ .S PSFDB(2)="Therapy Order Checks will be performed until the connection is reestablished!!!"
+"RTN","PSSHRIT",79,0)
+ S XMY("G.PSS ORDER CHECKS")=""
+"RTN","PSSHRIT",80,0)
+ D ^XMB
+"RTN","PSSHRIT",81,0)
+ S DIE="^PS(59.74,",DR="3///1" D ^DIE K DIE,DR,DA
+"RTN","PSSHRIT",82,0)
+ Q
+"RTN","PSSHRIT",83,0)
+ ;
+"RTN","PSSHRIT",84,0)
+SMSGRST ; send a bulletin that Interface connection is restored
+"RTN","PSSHRIT",85,0)
+ N XMB,XMTEXT,XMY,PSFDB,XMV,XMDUN,XMDUZ
+"RTN","PSSHRIT",86,0)
+ S XMDUZ="PSS INTERFACE SCHEDULER"
+"RTN","PSSHRIT",87,0)
+ S XMB="PSS FDB INTERFACE RESTORED"
+"RTN","PSSHRIT",88,0)
+ S XMTEXT="PSFDB"
+"RTN","PSSHRIT",89,0)
+ ; check to if dosing check is on.
+"RTN","PSSHRIT",90,0)
+ I $T(DS^PSSDSAPI)]"",$$DS^PSSDSAPI() D
+"RTN","PSSHRIT",91,0)
+ .S PSFDB(1)="Connection to Vendor Database has been restored! Drug-Drug Interactions,"
+"RTN","PSSHRIT",92,0)
+ .S PSFDB(2)="Duplicate Therapy and Dosing Order Checks can now be performed."
+"RTN","PSSHRIT",93,0)
+ E  D
+"RTN","PSSHRIT",94,0)
+ .S PSFDB(1)="Connection to Vendor Database has been restored! Drug-Drug Interactions or"
+"RTN","PSSHRIT",95,0)
+ .S PSFDB(2)="Duplicate Therapy Order Checks can now be performed."
+"RTN","PSSHRIT",96,0)
+ S XMY("G.PSS ORDER CHECKS")=""
+"RTN","PSSHRIT",97,0)
+ D ^XMB
+"RTN","PSSHRIT",98,0)
+ Q
+"RTN","PSSHRIT",99,0)
+ ;
+"RTN","PSSHRIT",100,0)
+TASKIT(FREQ,START) ; create/update scheduling option start time and frequency
+"RTN","PSSHRIT",101,0)
+ ; Input:
+"RTN","PSSHRIT",102,0)
+ ;   FREQ  - Optional - rescheduling frequency in minutes (default 15 minutes)
+"RTN","PSSHRIT",103,0)
+ ;  START  - Optional - start time (default is current time + 4 minutes)
+"RTN","PSSHRIT",104,0)
+ ; Note: if START is less than 4 minutes in future,  it will be defaulted to 
+"RTN","PSSHRIT",105,0)
+ ;       current time + 4 minutes.
+"RTN","PSSHRIT",106,0)
+ ;
+"RTN","PSSHRIT",107,0)
+ K PSERROR
+"RTN","PSSHRIT",108,0)
+ S FREQ=$G(FREQ,15)
+"RTN","PSSHRIT",109,0)
+ S FREQ=FREQ*60_"S"
+"RTN","PSSHRIT",110,0)
+ S START=$G(START,$$NOW^XLFDT())
+"RTN","PSSHRIT",111,0)
+ ;
+"RTN","PSSHRIT",112,0)
+ ; if start date/time is less than 4 minutes in future make it 4 minutes from now
+"RTN","PSSHRIT",113,0)
+ S:$$FMDIFF^XLFDT(START,$$NOW^XLFDT(),2)<240 START=$$FMADD^XLFDT($$NOW^XLFDT(),0,0,4)
+"RTN","PSSHRIT",114,0)
+ ;
+"RTN","PSSHRIT",115,0)
+ ; create the option schedule if it does not exist. return PSERROR=-1 if fails.
+"RTN","PSSHRIT",116,0)
+ ; in some situation when it fails, does not create the PSERROR variable
+"RTN","PSSHRIT",117,0)
+ D RESCH^XUTMOPT("PSS INTERFACE SCHEDULER",START,"",FREQ,"L",.PSERROR)
+"RTN","PSSHRIT",118,0)
+ Q
+"RTN","PSSHRIT",119,0)
+ ;
+"RTN","PSSHRIT",120,0)
+SCHDOPT ; edit option scheduling
+"RTN","PSSHRIT",121,0)
+ ; Called from "PSS SCHEDULE PEPS INTERFACE CK" option to create and/or edit the scheduling
+"RTN","PSSHRIT",122,0)
+ ; parameters for "PSS INTERFACE SCHEDULER" option in OPTION SCHEDULING file. 
+"RTN","PSSHRIT",123,0)
+ ; The "PSS SCHEDULE PEPS INTERFACE CK" option is installed by PAS*1.0*117 package.
+"RTN","PSSHRIT",124,0)
+ N PSSROOT
+"RTN","PSSHRIT",125,0)
+ ; check to see if the option is defined in option scheduler file and it is tasked.
+"RTN","PSSHRIT",126,0)
+ ; if not create and task the option.
+"RTN","PSSHRIT",127,0)
+ D OPTSTAT^XUTMOPT("PSS INTERFACE SCHEDULER",.PSSROOT)
+"RTN","PSSHRIT",128,0)
+ I '+$G(PSSROOT(1)) D TASKIT(15)
+"RTN","PSSHRIT",129,0)
+ ;
+"RTN","PSSHRIT",130,0)
+ D EDIT^XUTMOPT("PSS INTERFACE SCHEDULER")
+"RTN","PSSHRIT",131,0)
+ Q
+"RTN","PSSHRIT",132,0)
+ ;
+"RTN","PSSHRIT",133,0)
+SLASTRUN(LASTRUN) ; set last run time
+"RTN","PSSHRIT",134,0)
+ N SUB,PURGE,NOW,DESC
+"RTN","PSSHRIT",135,0)
+ S DESC="This stores the latest data on FDB interface"
+"RTN","PSSHRIT",136,0)
+ S NOW=$$NOW^XLFDT()\1
+"RTN","PSSHRIT",137,0)
+ S PURGE=$$FMADD^XLFDT(NOW,30)
+"RTN","PSSHRIT",138,0)
+ S ^XTMP("PSSRUN",0)=PURGE_U_NOW_U_DESC
+"RTN","PSSHRIT",139,0)
+ S ^XTMP("PSSRUN","LASTRUN")=LASTRUN
+"RTN","PSSHRIT",140,0)
+ Q
+"RTN","PSSHRIT",141,0)
+ ;
+"RTN","PSSHRIT",142,0)
+GLASTRUN() ; get last run time
+"RTN","PSSHRIT",143,0)
+ Q $G(^XTMP("PSSRUN","LASTRUN"))
+"RTN","PSSHRIT",144,0)
+ ;
+"RTN","PSSHRIT",145,0)
+RUNTEST ; run interaction test to PEPS server
+"RTN","PSSHRIT",146,0)
+ ; called from PSS CHECK PEPS SERVICES SETUP option
+"RTN","PSSHRIT",147,0)
+ D KILL^XUSCLEAN
+"RTN","PSSHRIT",148,0)
+ N STATUS,X,PSSFLAG,%ZIS,POP,ZTDESC,ZTQUEUED,ZTREQ,ZTRTN
+"RTN","PSSHRIT",149,0)
+ S PSSFLAG=ION
+"RTN","PSSHRIT",150,0)
+ ;
+"RTN","PSSHRIT",151,0)
+ W !!,"This option performs several checks. You may queue this report if you wish."
+"RTN","PSSHRIT",152,0)
+ W !!,"Among these checks are:"
+"RTN","PSSHRIT",153,0)
+ W !,"-----------------------"
+"RTN","PSSHRIT",154,0)
+ W !,"A connection check to the Vendor Database"
+"RTN","PSSHRIT",155,0)
+ W !,"Drug-Drug Interaction Check"
+"RTN","PSSHRIT",156,0)
+ W !,"Duplicate Therapy Order Check"
+"RTN","PSSHRIT",157,0)
+ W !,"Dosing Order Check"
+"RTN","PSSHRIT",158,0)
+ W !,"Custom Drug-Drug Interaction Check"
+"RTN","PSSHRIT",159,0)
+ ;
+"RTN","PSSHRIT",160,0)
+ W ! S %ZIS="MQ",%ZIS("A")="Select Device: " D ^%ZIS G EXIT:POP
+"RTN","PSSHRIT",161,0)
+ ;
+"RTN","PSSHRIT",162,0)
+ IF '$D(IO("Q"))&(PSSFLAG=ION) D TESTS^PSSHRIT  Q
+"RTN","PSSHRIT",163,0)
+ ELSE  IF $D(IO("Q"))!(PSSFLAG'=ION)  D  Q
+"RTN","PSSHRIT",164,0)
+ .S ZTRTN="QTESTS^PSSHRIT",ZTDESC="Interaction test to PEPS server"
+"RTN","PSSHRIT",165,0)
+ .D ^%ZTLOAD D HOME^%ZIS,^%ZISC K IO("Q") Q
+"RTN","PSSHRIT",166,0)
+ ;
+"RTN","PSSHRIT",167,0)
+EXIT S:$D(ZTQUEUED) ZTREQ="@" Q
+"RTN","PSSHRIT",168,0)
+ ;
+"RTN","PSSHRIT",169,0)
+TESTS ; interaction tests to PEPS server
+"RTN","PSSHRIT",170,0)
+ ;
+"RTN","PSSHRIT",171,0)
+ S STATUS=$$CONCHK()
+"RTN","PSSHRIT",172,0)
+ D PRSRTN Q:(STATUS=0)!(X="^") 
+"RTN","PSSHRIT",173,0)
+ ;
+"RTN","PSSHRIT",174,0)
+ S STATUS=$$INTERACT()
+"RTN","PSSHRIT",175,0)
+ D PRSRTN Q:X="^" 
+"RTN","PSSHRIT",176,0)
+ ;
+"RTN","PSSHRIT",177,0)
+ S STATUS=$$DUPTHRPY()
+"RTN","PSSHRIT",178,0)
+ D PRSRTN Q:X="^" 
+"RTN","PSSHRIT",179,0)
+ ;
+"RTN","PSSHRIT",180,0)
+ S STATUS=$$DOSECHK() ;
+"RTN","PSSHRIT",181,0)
+ D PRSRTN Q:X="^" 
+"RTN","PSSHRIT",182,0)
+ ;
+"RTN","PSSHRIT",183,0)
+ S STATUS=$$CUSTOM()
+"RTN","PSSHRIT",184,0)
+ D PRSRTN Q:X="^"
+"RTN","PSSHRIT",185,0)
+ ;
+"RTN","PSSHRIT",186,0)
+ Q
+"RTN","PSSHRIT",187,0)
+ ;
+"RTN","PSSHRIT",188,0)
+QTESTS ; queued interaction tests to PEPS server
+"RTN","PSSHRIT",189,0)
+ ;
+"RTN","PSSHRIT",190,0)
+ N %,PSSTIME,PSSCOUNT S PSSTIME="",PSSCOUNT=0
+"RTN","PSSHRIT",191,0)
+ D NOW^%DTC S PSSTIME=$$FMTE^XLFDT(%,"1P")
+"RTN","PSSHRIT",192,0)
+ W ! F PSSCOUNT=1:1:79 W "-"
+"RTN","PSSHRIT",193,0)
+ W !!,?15,"Check PEPS Services Setup",?55,PSSTIME,!!
+"RTN","PSSHRIT",194,0)
+ F PSSCOUNT=1:1:79 W "-"
+"RTN","PSSHRIT",195,0)
+ W !!
+"RTN","PSSHRIT",196,0)
+ ;
+"RTN","PSSHRIT",197,0)
+ S STATUS=$$CONCHK()
+"RTN","PSSHRIT",198,0)
+ S STATUS=$$INTERACT()
+"RTN","PSSHRIT",199,0)
+ S STATUS=$$DUPTHRPY()
+"RTN","PSSHRIT",200,0)
+ S STATUS=$$DOSECHK()
+"RTN","PSSHRIT",201,0)
+ S STATUS=$$CUSTOM()
+"RTN","PSSHRIT",202,0)
+ ;
+"RTN","PSSHRIT",203,0)
+ Q
+"RTN","PSSHRIT",204,0)
+ ;
+"RTN","PSSHRIT",205,0)
+CONCHK() ; check connection
+"RTN","PSSHRIT",206,0)
+ ; Return 1 if OK, 0 if not OK.
+"RTN","PSSHRIT",207,0)
+ ; 
+"RTN","PSSHRIT",208,0)
+ N MESSAGE,Y,STATUS,RESULT
+"RTN","PSSHRIT",209,0)
+ W !,"Checking Vendor Database Connection"
+"RTN","PSSHRIT",210,0)
+ S RESULT=$$PINGTST()
+"RTN","PSSHRIT",211,0)
+ I RESULT=0 D
+"RTN","PSSHRIT",212,0)
+ .W "...OK"
+"RTN","PSSHRIT",213,0)
+ E  D
+"RTN","PSSHRIT",214,0)
+ .W "...",!!,"    Connection could not be made to Vendor database."
+"RTN","PSSHRIT",215,0)
+ .S Y=$$GLASTRUN()
+"RTN","PSSHRIT",216,0)
+ .I Y D
+"RTN","PSSHRIT",217,0)
+ ..D DD^%DT                      ; convert last reached time in Y to external format
+"RTN","PSSHRIT",218,0)
+ ..W !,"       Last reached @"_$E(Y,1,18)
+"RTN","PSSHRIT",219,0)
+ W !
+"RTN","PSSHRIT",220,0)
+ Q $S(RESULT=0:1,1:0)
+"RTN","PSSHRIT",221,0)
+ ; 
+"RTN","PSSHRIT",222,0)
+INTERACT() ; check drug-drug interaction.
+"RTN","PSSHRIT",223,0)
+ ; Return 1 if OK, 0 if not OK.
+"RTN","PSSHRIT",224,0)
+ ;
+"RTN","PSSHRIT",225,0)
+ N PSORDER,PSDRUG1,PSDRUG2,BASE,INFO,INTRO,PSSPEC
+"RTN","PSSHRIT",226,0)
+ N PSSLEFT S PSSLEFT=4     ; left margin for results
+"RTN","PSSHRIT",227,0)
+ S BASE=$T(+0)_" INTERACT"
+"RTN","PSSHRIT",228,0)
+ K ^TMP($J,BASE)
+"RTN","PSSHRIT",229,0)
+ S ^TMP($J,BASE,"IN","DRUGDRUG")=""
+"RTN","PSSHRIT",230,0)
+ S PSORDER="I;1464P;PROSPECTIVE;2",PSDRUG1="WARFARIN 10MG TAB",PSDRUG2="ASPIRIN 325MG TAB"
+"RTN","PSSHRIT",231,0)
+ SET ^TMP($JOB,BASE,"IN","PROSPECTIVE","I;1464P;PROSPECTIVE;2")="6559^4005201^^WARFARIN 10MG TAB"
+"RTN","PSSHRIT",232,0)
+ SET ^TMP($JOB,BASE,"IN","PROSPECTIVE","I;91464P;PROSPECTIVE;2")="4376^4005735^^ASPIRIN 325MG TAB"
+"RTN","PSSHRIT",233,0)
+ D IN^PSSHRQ2(BASE)
+"RTN","PSSHRIT",234,0)
+ ;
+"RTN","PSSHRIT",235,0)
+ S INTRO="Performing Drug-Drug Interaction Order Check for "_PSDRUG2_" and "_PSDRUG1
+"RTN","PSSHRIT",236,0)
+ S INFO=$G(^TMP($J,BASE,"OUT","DRUGDRUG","S",PSDRUG1,PSORDER,1,"PMON",9,0))
+"RTN","PSSHRIT",237,0)
+ S INTRO=INTRO_$S($L(INFO):"...OK",1:"...Not OK")
+"RTN","PSSHRIT",238,0)
+ W !
+"RTN","PSSHRIT",239,0)
+ I '$L(INFO) D
+"RTN","PSSHRIT",240,0)
+ .D OUTPUT(INTRO)
+"RTN","PSSHRIT",241,0)
+ .W ! D OUTPUT("Drug-Drug Interaction Order Check could not be performed.",PSSLEFT)
+"RTN","PSSHRIT",242,0)
+ E  D
+"RTN","PSSHRIT",243,0)
+ . D OUTPUT(INTRO)
+"RTN","PSSHRIT",244,0)
+ . W !
+"RTN","PSSHRIT",245,0)
+ . S PSSPEC("CLINICAL EFFECTS:  ")=""
+"RTN","PSSHRIT",246,0)
+ . S INFO=$$REPLACE^XLFSTR(INFO,.PSSPEC)
+"RTN","PSSHRIT",247,0)
+ . S INFO="Significant Drug Interaction: "_INFO
+"RTN","PSSHRIT",248,0)
+ . D OUTPUT(INFO,PSSLEFT)
+"RTN","PSSHRIT",249,0)
+ ;
+"RTN","PSSHRIT",250,0)
+ K ^TMP($J,BASE)
+"RTN","PSSHRIT",251,0)
+ Q $S($L(INFO)=0:0,1:1)
+"RTN","PSSHRIT",252,0)
+ ;
+"RTN","PSSHRIT",253,0)
+DUPTHRPY() ; check duplicate therapy
+"RTN","PSSHRIT",254,0)
+ ; Return 1 if OK, 0 if not OK.
+"RTN","PSSHRIT",255,0)
+ ; 
+"RTN","PSSHRIT",256,0)
+ N PSORDER,PSDRUG1,PSDRUG2,BASE,CLAS1,CLAS2,LINE1,LINE2,INTRO
+"RTN","PSSHRIT",257,0)
+ N PSSLEFT S PSSLEFT=4     ; left margin for results
+"RTN","PSSHRIT",258,0)
+ S BASE=$T(+0)_" DUPTHRPY"
+"RTN","PSSHRIT",259,0)
+ K ^TMP($J,BASE)
+"RTN","PSSHRIT",260,0)
+ S ^TMP($J,BASE,"IN","THERAPY")=""
+"RTN","PSSHRIT",261,0)
+ S PSORDER="O;403931;PROFILE;3"
+"RTN","PSSHRIT",262,0)
+ S PSDRUG1="CIMETIDINE 300MG TAB"
+"RTN","PSSHRIT",263,0)
+ S PSDRUG2="RANITIDINE 150MG TAB"
+"RTN","PSSHRIT",264,0)
+ S ^TMP($J,BASE,"IN","PROFILE","O;403931;PROFILE;3")="11666^4006826^^CIMETIDINE 300MG TAB^O"
+"RTN","PSSHRIT",265,0)
+ S ^TMP($J,BASE,"IN","PROSPECTIVE","Z;1;PROSPECTIVE;1")="11673^4007038^^RANITIDINE 150MG TAB"
+"RTN","PSSHRIT",266,0)
+ D IN^PSSHRQ2(BASE)
+"RTN","PSSHRIT",267,0)
+ ; 
+"RTN","PSSHRIT",268,0)
+ S CLAS1=$G(^TMP($J,BASE,"OUT","THERAPY",1,1,"CLASS"))
+"RTN","PSSHRIT",269,0)
+ S CLAS2=$G(^TMP($J,BASE,"OUT","THERAPY",1,2,"CLASS"))
+"RTN","PSSHRIT",270,0)
+ S INTRO="Performing Duplicate Therapy Order Check for "_PSDRUG1_" and "_PSDRUG2
+"RTN","PSSHRIT",271,0)
+ S INTRO=INTRO_$S($L(CLAS1):"...OK",1:"...Not OK")
+"RTN","PSSHRIT",272,0)
+ W !
+"RTN","PSSHRIT",273,0)
+ D OUTPUT(INTRO)
+"RTN","PSSHRIT",274,0)
+ I '$L(CLAS1) D
+"RTN","PSSHRIT",275,0)
+ .W !
+"RTN","PSSHRIT",276,0)
+ .D OUTPUT("Duplicate Therapy Order Check could not be performed.",PSSLEFT)
+"RTN","PSSHRIT",277,0)
+ E  D
+"RTN","PSSHRIT",278,0)
+ .S LINE1="Therapeutic Duplication with "_PSDRUG1_" and "_PSDRUG2
+"RTN","PSSHRIT",279,0)
+ .S LINE2="Duplicate Therapy Class(es): "_CLAS1_","_CLAS2
+"RTN","PSSHRIT",280,0)
+ .W !
+"RTN","PSSHRIT",281,0)
+ .D OUTPUT(LINE1,PSSLEFT)
+"RTN","PSSHRIT",282,0)
+ .D OUTPUT(LINE2,PSSLEFT)
+"RTN","PSSHRIT",283,0)
+ ;
+"RTN","PSSHRIT",284,0)
+ Q $S($L(CLAS1)=0:0,1:1)
+"RTN","PSSHRIT",285,0)
+ ;
+"RTN","PSSHRIT",286,0)
+DOSECHK() ; check dosing
+"RTN","PSSHRIT",287,0)
+ ; Return 1 if OK, 0 if not OK.
+"RTN","PSSHRIT",288,0)
+ N TOTAL,SINGLE,INTRO,ORDER,PSDRUG1,PSDRUG2,BASE
+"RTN","PSSHRIT",289,0)
+ N PSSLEFT S PSSLEFT=4     ; left margin for results
+"RTN","PSSHRIT",290,0)
+ S BASE=$T(+0)_" DOSECHK"
+"RTN","PSSHRIT",291,0)
+ S ORDER="O;1464P;PROSPECTIVE;2"
+"RTN","PSSHRIT",292,0)
+ S PSDRUG1="ACETAMINOPHEN 500MG TAB"
+"RTN","PSSHRIT",293,0)
+ K ^TMP($J,BASE)
+"RTN","PSSHRIT",294,0)
+ S ^TMP($J,BASE,"IN","DOSE")=""
+"RTN","PSSHRIT",295,0)
+ SET ^TMP($J,BASE,"IN","DOSE","AGE")=5000
+"RTN","PSSHRIT",296,0)
+ SET ^TMP($J,BASE,"IN","DOSE","WT")=83.01
+"RTN","PSSHRIT",297,0)
+ SET ^TMP($J,BASE,"IN","DOSE","BSA")=1.532
+"RTN","PSSHRIT",298,0)
+ ;VALUES: GCN^VUID^IEN^NAME^DOSE AMOUNT^DOSE UNIT^DOSE RATE^FREQ^DURATION^DURATION RATE^ROUTE^DOSE TYPE^SPECIFIC
+"RTN","PSSHRIT",299,0)
+ S ^TMP($J,BASE,"IN","DOSE","O;1464P;PROSPECTIVE;2")="4490^4007154^^ACETAMINOPHEN 500MG TAB^3000^MILLIGRAMS^DAY^Q4H^10^DAY^ORAL^MAINTENANCE^1"
+"RTN","PSSHRIT",300,0)
+ S ^TMP($J,BASE,"IN","PROSPECTIVE","O;1464P;PROSPECTIVE;2")="4490^4007154^^ACETAMINOPHEN 500MG TAB^O"
+"RTN","PSSHRIT",301,0)
+ D IN^PSSHRQ2(BASE)
+"RTN","PSSHRIT",302,0)
+ ;
+"RTN","PSSHRIT",303,0)
+ S TOTAL=$G(^TMP($J,BASE,"OUT","DOSE",ORDER,PSDRUG1,"RANGE","MESSAGE",0))
+"RTN","PSSHRIT",304,0)
+ S SINGLE=$G(^TMP($J,BASE,"OUT","DOSE",ORDER,PSDRUG1,"SINGLE","MESSAGE",0))
+"RTN","PSSHRIT",305,0)
+ S INTRO="Performing Dosing Order Check for "_PSDRUG1_" - 3000MG Q4H"_$S($L(TOTAL):"...OK",1:"...Not OK")
+"RTN","PSSHRIT",306,0)
+ I '$L(TOTAL) D
+"RTN","PSSHRIT",307,0)
+ .D OUTPUT(INTRO)
+"RTN","PSSHRIT",308,0)
+ .W !
+"RTN","PSSHRIT",309,0)
+ .D OUTPUT("Dosing Order Check could not be performed.",PSSLEFT)
+"RTN","PSSHRIT",310,0)
+ E  D
+"RTN","PSSHRIT",311,0)
+ .W !
+"RTN","PSSHRIT",312,0)
+ .D OUTPUT(INTRO)
+"RTN","PSSHRIT",313,0)
+ .W !
+"RTN","PSSHRIT",314,0)
+ .D OUTPUT(SINGLE,PSSLEFT)
+"RTN","PSSHRIT",315,0)
+ .W !
+"RTN","PSSHRIT",316,0)
+ .D OUTPUT(TOTAL,PSSLEFT)
+"RTN","PSSHRIT",317,0)
+ Q $S($L(TOTAL)=0:0,1:1)
+"RTN","PSSHRIT",318,0)
+ ;
+"RTN","PSSHRIT",319,0)
+CUSTOM() ; check custom drug-drug interaction
+"RTN","PSSHRIT",320,0)
+ ; Return 1 if OK, 0 if not OK.
+"RTN","PSSHRIT",321,0)
+ ;
+"RTN","PSSHRIT",322,0)
+ N INFO,INTRO,ORDER,DRUG1,DRUG2,BASE,STATUS,PSSPEC
+"RTN","PSSHRIT",323,0)
+ N PSSLEFT S PSSLEFT=4     ; left margin for results
+"RTN","PSSHRIT",324,0)
+ S BASE=$T(+0)_" CUSTOM"
+"RTN","PSSHRIT",325,0)
+ S ORDER="Z;1;PROSPECTIVE;1"
+"RTN","PSSHRIT",326,0)
+ S DRUG1="CLARITHROMYCIN 250MG TAB",DRUG2="DIAZEPAM 5MG TAB"
+"RTN","PSSHRIT",327,0)
+ K ^TMP($J,BASE)
+"RTN","PSSHRIT",328,0)
+ S ^TMP($J,BASE,"IN","DRUGDRUG")=""
+"RTN","PSSHRIT",329,0)
+ S ^TMP($J,BASE,"IN","PROSPECTIVE","Z;1;PROSPECTIVE;1")="16373^4010075F^^CLARITHROMYCIN 250MG TAB"
+"RTN","PSSHRIT",330,0)
+ S ^TMP($J,BASE,"IN","PROFILE","I;10U;PROFILE;10")="3768^40002216^^DIAZEPAM 5MG TAB"
+"RTN","PSSHRIT",331,0)
+ D IN^PSSHRQ2(BASE)
+"RTN","PSSHRIT",332,0)
+ ;
+"RTN","PSSHRIT",333,0)
+ S STATUS=$G(^TMP($J,BASE,"OUT",0))
+"RTN","PSSHRIT",334,0)
+ S INTRO="Performing Custom Drug-Drug Interaction Order Check for "_DRUG1_" and "_DRUG2
+"RTN","PSSHRIT",335,0)
+ D SCUST
+"RTN","PSSHRIT",336,0)
+ S INTRO=INTRO_$S($L(INFO):"...OK",STATUS=0:"...OK",1:"...Not OK")
+"RTN","PSSHRIT",337,0)
+ I '$L(INFO) D
+"RTN","PSSHRIT",338,0)
+ .D OUTPUT(INTRO)
+"RTN","PSSHRIT",339,0)
+ .I STATUS'=0 W ! D OUTPUT("Custom Drug-Drug Interaction Order Check could not be performed.",PSSLEFT)
+"RTN","PSSHRIT",340,0)
+ E   D
+"RTN","PSSHRIT",341,0)
+ . W !
+"RTN","PSSHRIT",342,0)
+ . D OUTPUT(INTRO)
+"RTN","PSSHRIT",343,0)
+ . W !
+"RTN","PSSHRIT",344,0)
+ . S PSSPEC("CLINICAL EFFECTS:  ")=""
+"RTN","PSSHRIT",345,0)
+ . S INFO=$$REPLACE^XLFSTR(INFO,.PSSPEC)
+"RTN","PSSHRIT",346,0)
+ .S INFO="Significant Drug Interaction: "_INFO
+"RTN","PSSHRIT",347,0)
+ .D OUTPUT(INFO,PSSLEFT)
+"RTN","PSSHRIT",348,0)
+ W !
+"RTN","PSSHRIT",349,0)
+ Q $S(STATUS=0:1,$L(INFO)=0:0,1:1)
+"RTN","PSSHRIT",350,0)
+ ;
+"RTN","PSSHRIT",351,0)
+ ;
+"RTN","PSSHRIT",352,0)
+INTACT ; check vendor data base link
+"RTN","PSSHRIT",353,0)
+ ; Called from CHECK VENDOR DATABASE LINK  option
+"RTN","PSSHRIT",354,0)
+ N STATUS,PSFIN,BASE,Y,PSSCKWER,PSSCKW1,PSSCKW2,PSSCKW3
+"RTN","PSSHRIT",355,0)
+ S BASE="PSPRE"
+"RTN","PSSHRIT",356,0)
+ S PSSCKW1=$$FIND1^DIC(18.12,"","X","PEPS","B",,"PSSCKWER") K PSSCKWER
+"RTN","PSSHRIT",357,0)
+ I PSSCKW1 S PSSCKW2=$$GET1^DIQ(18.12,PSSCKW1_",",.04,"I",,"PSSCKWER") K PSSCKWER
+"RTN","PSSHRIT",358,0)
+ S:$G(PSSCKW2)="" PSSCKW2="Unknown Database" S PSSCKW3=$L(PSSCKW2)
+"RTN","PSSHRIT",359,0)
+ K ^TMP($J,BASE)
+"RTN","PSSHRIT",360,0)
+ S ^TMP($J,BASE,"IN","PING")=""
+"RTN","PSSHRIT",361,0)
+ D IN^PSSHRQ2(BASE)
+"RTN","PSSHRIT",362,0)
+ S STATUS=+$G(^TMP($J,BASE,"OUT",0))
+"RTN","PSSHRIT",363,0)
+ I STATUS=0 D
+"RTN","PSSHRIT",364,0)
+ .W !
+"RTN","PSSHRIT",365,0)
+ .W !,"  Database Version: ",$G(^TMP($J,BASE,"OUT","difBuildVersion"))
+"RTN","PSSHRIT",366,0)
+ .W !,"     Build Version: ",$G(^TMP($J,BASE,"OUT","difDbVersion"))
+"RTN","PSSHRIT",367,0)
+ .S Y=$G(^TMP($J,BASE,"OUT","difIssueDate"))
+"RTN","PSSHRIT",368,0)
+ .S:Y?8N Y=$E(Y,5,6)_"/"_$E(Y,7,8)_"/"_$E(Y,1,4)
+"RTN","PSSHRIT",369,0)
+ .W !,"        Issue Date: ",Y,!
+"RTN","PSSHRIT",370,0)
+ .;
+"RTN","PSSHRIT",371,0)
+ .W !,"  Custom Database Version: ",$G(^TMP($J,BASE,"OUT","customBuildVersion"))
+"RTN","PSSHRIT",372,0)
+ .W !,"     Custom Build Version: ",$G(^TMP($J,BASE,"OUT","customDbVersion"))
+"RTN","PSSHRIT",373,0)
+ .S Y=$G(^TMP($J,BASE,"OUT","customIssueDate"))
+"RTN","PSSHRIT",374,0)
+ .S:Y?8N Y=$E(Y,5,6)_"/"_$E(Y,7,8)_"/"_$E(Y,1,4)
+"RTN","PSSHRIT",375,0)
+ .W !,"        Custom Issue Date: ",Y,!
+"RTN","PSSHRIT",376,0)
+ .;
+"RTN","PSSHRIT",377,0)
+ .S Y=$$NOW^XLFDT()
+"RTN","PSSHRIT",378,0)
+ .D DD^%DT                       ; convert current time in Y to external format.
+"RTN","PSSHRIT",379,0)
+ .W !,"Connected to "_$G(PSSCKW2),!,"successfully @",$E(Y,1,18)
+"RTN","PSSHRIT",380,0)
+ E  D
+"RTN","PSSHRIT",381,0)
+ .W !,"Connection could not be made to " W:PSSCKW3>46 ! W PSSCKW2_"."
+"RTN","PSSHRIT",382,0)
+ .S Y=$$GLASTRUN()
+"RTN","PSSHRIT",383,0)
+ .IF Y D
+"RTN","PSSHRIT",384,0)
+ ..D DD^%DT                      ; convert last reached time in Y to external format.
+"RTN","PSSHRIT",385,0)
+ ..W !,"  Last reached @"_$E(Y,1,18)
+"RTN","PSSHRIT",386,0)
+ ;
+"RTN","PSSHRIT",387,0)
+ D PRSRTN
+"RTN","PSSHRIT",388,0)
+ Q
+"RTN","PSSHRIT",389,0)
+ ;
+"RTN","PSSHRIT",390,0)
+ ;----------------------------------------------------
+"RTN","PSSHRIT",391,0)
+ ;
+"RTN","PSSHRIT",392,0)
+PRSRTN ;
+"RTN","PSSHRIT",393,0)
+ ;calls std routine to ask user to hit return 
+"RTN","PSSHRIT",394,0)
+ N DIR S DIR(0)="E" D ^DIR
+"RTN","PSSHRIT",395,0)
+ Q
+"RTN","PSSHRIT",396,0)
+ ;
+"RTN","PSSHRIT",397,0)
+PING(BASE) ;
+"RTN","PSSHRIT",398,0)
+ K ^TMP($J,BASE)
+"RTN","PSSHRIT",399,0)
+ S ^TMP($J,BASE,"IN","PING")=""
+"RTN","PSSHRIT",400,0)
+ D IN^PSSHRQ2(BASE)
+"RTN","PSSHRIT",401,0)
+ Q
+"RTN","PSSHRIT",402,0)
+ ;
+"RTN","PSSHRIT",403,0)
+HRSMIN(MIN) ;
+"RTN","PSSHRIT",404,0)
+ ; Called from output transform of VENDOR INTERFACE DATA FILE (#59.54) field TOTAL TIME NOT AVAILABLE (field# 2)
+"RTN","PSSHRIT",405,0)
+ ;INPUTS: MIN-TIME IN MINUTES
+"RTN","PSSHRIT",406,0)
+ ;RETURNS HRS AND MINUTES
+"RTN","PSSHRIT",407,0)
+ N HRS,MINHR,HRSMIN
+"RTN","PSSHRIT",408,0)
+ S HRSMIN=""
+"RTN","PSSHRIT",409,0)
+ S MINHR=60     ;TOTAL # OF MIN IN AN HR
+"RTN","PSSHRIT",410,0)
+ S HRS=MIN\MINHR,MIN=MIN#MINHR
+"RTN","PSSHRIT",411,0)
+ I HRS S HRSMIN=HRS_" HR"_$S(HRS>1:"S",1:"")
+"RTN","PSSHRIT",412,0)
+ I MIN S HRSMIN=HRSMIN_$S(HRSMIN:", ",1:"")_MIN_" MINUTE"_$S(MIN>1:"S",1:"")
+"RTN","PSSHRIT",413,0)
+ Q HRSMIN
+"RTN","PSSHRIT",414,0)
+ ;
+"RTN","PSSHRIT",415,0)
+OUTPUT(INFO,DIWL) ;
+"RTN","PSSHRIT",416,0)
+ K ^UTILITY($J,"W")
+"RTN","PSSHRIT",417,0)
+ N DIWR,DIWF,DIW,DIWT,X
+"RTN","PSSHRIT",418,0)
+ S DIWL=$G(DIWL,1)
+"RTN","PSSHRIT",419,0)
+ S X=INFO,DIWR=$S($G(IOM):IOM,1:60),DIWF="W" D ^DIWP
+"RTN","PSSHRIT",420,0)
+ D ^DIWW
+"RTN","PSSHRIT",421,0)
+ Q
+"RTN","PSSHRIT",422,0)
+ ;
+"RTN","PSSHRIT",423,0)
+ ;
+"RTN","PSSHRIT",424,0)
+SCUST ;Set Custom info
+"RTN","PSSHRIT",425,0)
+ I $D(^TMP($J,BASE,"OUT","DRUGDRUG","S",DRUG1,ORDER,1)) S INFO=$G(^TMP($J,BASE,"OUT","DRUGDRUG","S",DRUG1,ORDER,1,"PMON",9,0)) Q
+"RTN","PSSHRIT",426,0)
+ I $D(^TMP($J,BASE,"OUT","DRUGDRUG","S",DRUG2,"I;10U;PROFILE;10",1)) S INFO=$G(^TMP($J,BASE,"OUT","DRUGDRUG","S",DRUG2,"I;10U;PROFILE;10",1,"PMON",9,0)) Q
+"RTN","PSSHRIT",427,0)
+ S INFO=""
+"RTN","PSSHRIT",428,0)
+ Q
+"RTN","PSSHRIT",429,0)
+ ;
+"RTN","PSSHRIT",430,0)
+VENDRPT ;**Prints out the VENDOR INTERFACE DATA FILE (#59.74) sorted by most recent downtime first**
+"RTN","PSSHRIT",431,0)
+ ;
+"RTN","PSSHRIT",432,0)
+ ;The report retrieves the output using the Fileman EN1^DIP data retrieval call
+"RTN","PSSHRIT",433,0)
+ ;
+"RTN","PSSHRIT",434,0)
+ W !!,"This report will print out all information related to when and for how long the"
+"RTN","PSSHRIT",435,0)
+ W !,"vendor interface is unavailable (sorted by most recent down time first)."
+"RTN","PSSHRIT",436,0)
+ W !,"This information comes from the VENDOR INTERFACE DATA FILE."
+"RTN","PSSHRIT",437,0)
+ W !!,?15,"*** This has the potential to be a long report ***"
+"RTN","PSSHRIT",438,0)
+ W !!,"You may queue the report to print if you wish. You may also ""^"" to halt the"
+"RTN","PSSHRIT",439,0)
+ W !,"report at any time.",!!
+"RTN","PSSHRIT",440,0)
+ ;
+"RTN","PSSHRIT",441,0)
+ N DIC,BY,L,DIPCRIT,FR,TO,DHD,DIOBEG,DIOEND,FLDS
+"RTN","PSSHRIT",442,0)
+ S DIC="^PS(59.74,",BY="-.01",L=0,DIPCRIT=1
+"RTN","PSSHRIT",443,0)
+ S FR="?,",TO="?,",DHD="VENDOR INTERFACE DATA LIST"
+"RTN","PSSHRIT",444,0)
+ S DIOBEG="W @IOF"
+"RTN","PSSHRIT",445,0)
+ S FLDS=".01;""DATE/TIME UNAVAILABLE"",1;""DATE/TIME AVAILABLE"""";C26"",2;""TOTAL DOWNTIME"""
+"RTN","PSSHRIT",446,0)
+ D EN1^DIP
+"RTN","PSSHRIT",447,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",9405,6)
+^163
+**END**
+**END**
+

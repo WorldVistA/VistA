@@ -1,0 +1,254 @@
+
+=============================================================================
+Run Date: JAN 30, 2015                     Designation: PXRM*2*55
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #36                      Status: Released
+                  Compliance Date: MAR 02, 2015
+=============================================================================
+
+Associated patches: (v)PXRM*2*26   <<= must be installed BEFORE `PXRM*2*55'
+                    (v)PX*1*201    <<= must be installed BEFORE `PXRM*2*55'
+
+Subject: PNEUMOCOCCAL IMMUNIZATION UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ In August 2014, the Advisory Committee on Immunization Practices (ACIP)
+ updated recommendations for use of PCV13 to include patients age 65 and
+ over.  This patch updated the existing reminders to include that new
+ recommendation.  The spacing between a dose of PCV13 and PPSV23 is now
+ recommended to be 6 months (8 weeks minimum but preferably 6 months).
+  
+ PNEUMOCOCCAL VACCINE-NAIVE PERSONS
+ ==================================
+  
+ ACIP recommends that adults aged >=19 years with immunocompromising 
+ conditions, functional or anatomic asplenia, CSF leaks, or cochlear 
+ implants, and who have not previously received PCV13 or PPSV23, should 
+ receive a dose of PCV13 first, followed by a dose of PPSV23 at least 8 
+ weeks later.  Subsequent doses of PPSV23 should follow current PPSV23 
+ recommendations for adults at high risk.  Specifically, a second PPSV23 
+ dose is recommended 5 years after the first PPSV23 dose for persons aged 
+ 19-64 years with functional or anatomic asplenia and for persons with 
+ immunocompromising conditions.  Additionally, those who received PPSV23 
+ before age 65 years for any indication should receive another dose of the 
+ vaccine at age 65 years, or later if at least 5 years have elapsed since 
+ their previous PPSV23 dose.
+  
+ PREVIOUS VACCINATION WITH PPSV23
+ ================================
+  
+ Adults aged >=19 with immunocompromising conditions, functional or 
+ anatomic asplenia, CSF leaks, or cochlear implants, who previously have 
+ received >=1 doses of PPSV23 should be given a PCV13 dose >=1 year after 
+ the last PPSV23 dose was received.  For those who require additional 
+ doses of PPSV23, the first such dose should be given no sooner than 8 
+ weeks after PCV13 and at least 5 years after the most recent dose of 
+ PPSV23.
+  
+ This patch does the following during installation:
+  
+         1.  Updates the existing reminder definitions:
+             VA-PNEUMOCOCCAL IMMUNIZATION PPSV23
+             VA-PNEUMOCOCCAL IMMUNIZATION PCV13
+             VA-OB PNEUMOCOCCAL PPSV23 INDICATIONS
+             VA-OB PNEUMOCOCCAL PCV13 INDICATIONS
+  
+         2.  Updates the existing Reminder Dialogs:
+             VA-PNEUMOCOCCAL IMMUNIZATION PPSV23 PNEUMOVAX
+             VA-PNEUMOCOCCAL IMMUNIZATION PCV13 PREVNAR
+  
+         3.  Updates the existing Taxonomies if not already done 
+             by PXRM*2.0*50:
+             VA-PNEUMOC DZ RISK - HIGHEST/NOT IMMUNO COMP
+             VA-PNEUMOC DZ RISK - IMMUNOCOMPROMISED
+             VA-PNEUMOC DZ RISK - HIGH
+             VA-PNEUMOC DZ RISK - CHEMOTHERAPY (includes drug classes 
+                classes and drugs)             
+  
+         4.  Immunization:
+             PNEUMOCOCCAL CONJUGATE PCV13 - No mnemonic is being sent out
+  
+ Updates made in this patch:
+         PCV13 due for over 65; PPSV23 not applicable over age 65 until
+         PCV13 is given and 6 months has passed unless the patient
+         has a contraindication/other reason to not get  PCV13.  Text
+         information for PCV13 over 65 added shown below:
+  
+         PCV13 'incorrect diagnosis' option now suppressed for           
+         over 65 just like that option is for PPSV23.
+  
+         Finding 10 in PPSV23 now turns off the reminder in all cases  
+         for 6 months.  Wait 6 months after PCV13 to give any dose of
+         PPSV23.
+  
+         Drug statuses have been added to chemotherapy to include        
+         any administration of drug in the past 6 months in order to make 
+         MHV and PCV13/PPSV23 the same.
+  
+         Removed 1 M due in advance
+  
+         Pneumococcal indications - fixed a bug where the time periods 
+         in the object were different than in the reminder - use same
+         time period on object as in the reminder.
+  
+                 PCV13 Object    from     changed to
+                 ------------    ----     ----------
+                 IC               4y          2y
+                 Highest          4y         10y
+                 Chemo drugs     90D          6M
+  
+                 PPCV23 Object   from     changed to
+                 -------------   ----     ----------
+                 Chemo drugs     90D          6M
+  
+         Added text related to requiring documentation of prior vaccines 
+         before recording them.
+  
+  
+ RECOMMENDATIONS:
+ ----------------
+ In August 2014, the ACIP updated recommendations for use of PCV13 to 
+ include patients age 65 and over.  This patch updates the existing 
+ reminders to include this new recommendation.
+  
+ Associated Remedy Tickets:
+ ===========================
+ 1.  INC000001077495 - Pneumococcal Content Updates 
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Site(s):
+ ===========================
+ Erie VAMC, PA
+ James J. Peters VAMC, Bronx, NY
+ Jerry L. Pettis Memorial VAMC, Loma Linda, CA
+ Louisville VAMC, KY
+ VA Maryland HCS
+  
+ REMEDY OVERVIEW:
+ =================
+ 1.  INC000001077495 - Pneumococcal Content Updates 
+  
+  
+ Problem:
+ ---------
+ In August 2014, the ACIP updated recommendations for use of PCV13 to 
+ include patients age 65 and over.  This patch updates the existing 
+ reminders to include this new recommendation.
+  
+ Resolution:
+ -----------
+ This patch, PXRM*2*55, contains two routines, PXRMP55E and PXRMP55I.  
+  
+ They are init tasks that add new entries to the REMINDER EXCHANGE 
+ (#811.8) file and the contents of these entries are installed during the 
+ post-init.  These routines can be deleted after the install.  
+  
+ Build Components:
+ =================
+ N/A
+  
+ Data Dictionary:
+ ================
+ N/A
+  
+ Software & Documentation Retrieval Instructions:
+ ================================================
+ This patch is being distributed as a host file.  The name of the host 
+ file is PXRM_2_0_55.KID.  This file should be downloaded in ASCII format.
+  
+ The preferred method for obtaining these files is to use File Transfer 
+ Protocol (FTP) to download them from:
+  
+     ftp://download.vista.domain.ext/.
+  
+  
+ This transmits the files from the first available FTP server.  Sites may 
+ also elect to retrieve the files directly from a specific server as 
+ follows:
+  
+     Albany              ftp.domain.ext
+     Hines               ftp.domain.ext
+     Salt Lake City      ftp.domain.ext
+  
+ The Install and Setup Guide is also available on the above servers.  It 
+ is available as .pdf format.  This file should be downloaded in BINARY 
+ format.  
+  
+     File Name:            Description:             Protocol:
+     ==========            ============             =========
+     PXRM_2_0_55_IG.PDF    PXRM*2.0*55 Install      BINARY
+                           and Setup Guide
+     PXRM_2_0_55.KID       PXRM*2.0*55 Host File    ASCII
+  
+  
+ Documentation can also be found on the VistA Documentation Library (VDL) 
+ at:  http://www.domain.ext/vdl/
+  
+ Installation:
+ =============
+ This patch can be loaded with users on the system.  Installation will 
+ take five minutes.  Refer to the Install and Setup Guide, 
+ PXRM_2_0_55_IG.PDF, for complete details.
+  
+ 1.  Use the "Load a Distribution" option on the KIDS installation menu. 
+  
+     When prompted to enter a host file type in PXRM_2_0_55.KID
+  
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     options, as desired:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify checksums in Transport Global
+         Backup a Transport Global
+  
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use PXRM*2.0*55
+  
+ 4.  When prompted "Want KIDS to INHIBIT LOGONs during the install?  
+     NO//," respond 'NO'.
+  
+ 5.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO// respond 'NO'.
+  
+ 6.  After successful installation, the following init routines may be 
+     deleted
+  
+     PXRMP55E
+     PXRMP55I
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 215
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMP55E
+    Before:       n/a   After:   B744071  **55**
+Routine Name: PXRMP55I
+    Before:       n/a   After:  B2486423  **55**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 30, 2014
+Completed By:                               Date Completed: JAN 29, 2015
+Released By :                               Date Released : JAN 30, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,845 @@
+Released DG*5.3*886 SEQ #792
+Extracted from mail message
+**KIDS**:DG*5.3*886^
+
+**INSTALL NAME**
+DG*5.3*886
+"BLD",9642,0)
+DG*5.3*886^REGISTRATION^0^3140707^y
+"BLD",9642,1,0)
+^^13^13^3140408^
+"BLD",9642,1,1,0)
+This patch addresses 4 issues:
+"BLD",9642,1,2,0)
+ 
+"BLD",9642,1,3,0)
+1. Bad Address Indicator is not working as the Help prompt suggests.  
+"BLD",9642,1,4,0)
+User needs to manually remove the indicator when entering changes. 
+"BLD",9642,1,5,0)
+ 
+"BLD",9642,1,6,0)
+2. SAC violation in Patch DG*5.3*864, a non-incremental lock was 
+"BLD",9642,1,7,0)
+introduced.
+"BLD",9642,1,8,0)
+ 
+"BLD",9642,1,9,0)
+3. User manual needs updated to reflect functionality changes from prior 
+"BLD",9642,1,10,0)
+patch, DG*5.3*93
+"BLD",9642,1,11,0)
+ 
+"BLD",9642,1,12,0)
+4. DRG Frequency Report is not showing all patients in the Service 
+"BLD",9642,1,13,0)
+category.
+"BLD",9642,4,0)
+^9.64PA^2^1
+"BLD",9642,4,2,0)
+2
+"BLD",9642,4,2,2,0)
+^9.641^2^1
+"BLD",9642,4,2,2,2,0)
+PATIENT  (File-top level)
+"BLD",9642,4,2,2,2,1,0)
+^9.6411^.121^1
+"BLD",9642,4,2,2,2,1,.121,0)
+BAD ADDRESS INDICATOR
+"BLD",9642,4,2,222)
+y^y^p^^^^n^^n
+"BLD",9642,4,2,224)
+
+"BLD",9642,4,"APDD",2,2)
+
+"BLD",9642,4,"APDD",2,2,.121)
+
+"BLD",9642,4,"B",2,2)
+
+"BLD",9642,6.3)
+5
+"BLD",9642,"ABPKG")
+n
+"BLD",9642,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9642,"KRN",.4,0)
+.4
+"BLD",9642,"KRN",.401,0)
+.401
+"BLD",9642,"KRN",.402,0)
+.402
+"BLD",9642,"KRN",.403,0)
+.403
+"BLD",9642,"KRN",.5,0)
+.5
+"BLD",9642,"KRN",.84,0)
+.84
+"BLD",9642,"KRN",3.6,0)
+3.6
+"BLD",9642,"KRN",3.8,0)
+3.8
+"BLD",9642,"KRN",9.2,0)
+9.2
+"BLD",9642,"KRN",9.8,0)
+9.8
+"BLD",9642,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",9642,"KRN",9.8,"NM",1,0)
+DGREG^^0^B48715273
+"BLD",9642,"KRN",9.8,"NM",2,0)
+DGPTODF1^^0^B19628919
+"BLD",9642,"KRN",9.8,"NM","B","DGPTODF1",2)
+
+"BLD",9642,"KRN",9.8,"NM","B","DGREG",1)
+
+"BLD",9642,"KRN",19,0)
+19
+"BLD",9642,"KRN",19.1,0)
+19.1
+"BLD",9642,"KRN",101,0)
+101
+"BLD",9642,"KRN",409.61,0)
+409.61
+"BLD",9642,"KRN",771,0)
+771
+"BLD",9642,"KRN",779.2,0)
+779.2
+"BLD",9642,"KRN",870,0)
+870
+"BLD",9642,"KRN",8989.51,0)
+8989.51
+"BLD",9642,"KRN",8989.52,0)
+8989.52
+"BLD",9642,"KRN",8994,0)
+8994
+"BLD",9642,"KRN","B",.4,.4)
+
+"BLD",9642,"KRN","B",.401,.401)
+
+"BLD",9642,"KRN","B",.402,.402)
+
+"BLD",9642,"KRN","B",.403,.403)
+
+"BLD",9642,"KRN","B",.5,.5)
+
+"BLD",9642,"KRN","B",.84,.84)
+
+"BLD",9642,"KRN","B",3.6,3.6)
+
+"BLD",9642,"KRN","B",3.8,3.8)
+
+"BLD",9642,"KRN","B",9.2,9.2)
+
+"BLD",9642,"KRN","B",9.8,9.8)
+
+"BLD",9642,"KRN","B",19,19)
+
+"BLD",9642,"KRN","B",19.1,19.1)
+
+"BLD",9642,"KRN","B",101,101)
+
+"BLD",9642,"KRN","B",409.61,409.61)
+
+"BLD",9642,"KRN","B",771,771)
+
+"BLD",9642,"KRN","B",779.2,779.2)
+
+"BLD",9642,"KRN","B",870,870)
+
+"BLD",9642,"KRN","B",8989.51,8989.51)
+
+"BLD",9642,"KRN","B",8989.52,8989.52)
+
+"BLD",9642,"KRN","B",8994,8994)
+
+"BLD",9642,"QDEF")
+^^^^^^^^^^YES
+"BLD",9642,"QUES",0)
+^9.62^^
+"BLD",9642,"REQB",0)
+^9.611^2^2
+"BLD",9642,"REQB",1,0)
+DG*5.3*864^2
+"BLD",9642,"REQB",2,0)
+DG*5.3*375^2
+"BLD",9642,"REQB","B","DG*5.3*375",2)
+
+"BLD",9642,"REQB","B","DG*5.3*864",1)
+
+"FIA",2)
+PATIENT
+"FIA",2,0)
+^DPT(
+"FIA",2,0,0)
+2I
+"FIA",2,0,1)
+y^y^p^^^^n^^n
+"FIA",2,0,10)
+
+"FIA",2,0,11)
+
+"FIA",2,0,"RLRO")
+
+"FIA",2,0,"VR")
+5.3^DG
+"FIA",2,2)
+1
+"FIA",2,2,.121)
+
+"IX",2,2,"AVAFC121",0)
+2^AVAFC121^This x-ref calls the DG FIELD MONITOR event point.^MU^^F^I^I^2^^^^^A
+"IX",2,2,"AVAFC121",.1,0)
+^^5^5^3090724
+"IX",2,2,"AVAFC121",.1,1,0)
+This cross-reference activates the DG FIELD MONITOR event point.
+"IX",2,2,"AVAFC121",.1,2,0)
+Applications that wish to monitor edit activity related to this field may
+"IX",2,2,"AVAFC121",.1,3,0)
+subscribe to that event point and take action as indicated by the changes
+"IX",2,2,"AVAFC121",.1,4,0)
+that occur.  Refer to the DG FIELD MONITOR protocol for a description of
+"IX",2,2,"AVAFC121",.1,5,0)
+the information available at the time of the event.
+"IX",2,2,"AVAFC121",1)
+D FC^DGFCPROT(.DA,2,.121,"SET",$H,$G(DUZ),.X,.X1,.X2,$G(XQY0)) Q
+"IX",2,2,"AVAFC121",2)
+D FC^DGFCPROT(.DA,2,.121,"KILL",$H,$G(DUZ),.X,.X1,.X2,$G(XQY0)) Q
+"IX",2,2,"AVAFC121",11.1,0)
+^.114IA^1^1
+"IX",2,2,"AVAFC121",11.1,1,0)
+1^F^2^.121^^^F
+"MBREQ")
+0
+"PKG",5,-1)
+1^1
+"PKG",5,0)
+REGISTRATION^DG^PATIENT REGISTRATION, ADMISSION, DISCHARGE, EMBOSSER 
+"PKG",5,20,0)
+^9.402P^^
+"PKG",5,22,0)
+^9.49I^1^1
+"PKG",5,22,1,0)
+5.3^2930813
+"PKG",5,22,1,"PAH",1,0)
+886^3140707
+"PKG",5,22,1,"PAH",1,1,0)
+^^13^13^3140707
+"PKG",5,22,1,"PAH",1,1,1,0)
+This patch addresses 4 issues:
+"PKG",5,22,1,"PAH",1,1,2,0)
+ 
+"PKG",5,22,1,"PAH",1,1,3,0)
+1. Bad Address Indicator is not working as the Help prompt suggests.  
+"PKG",5,22,1,"PAH",1,1,4,0)
+User needs to manually remove the indicator when entering changes. 
+"PKG",5,22,1,"PAH",1,1,5,0)
+ 
+"PKG",5,22,1,"PAH",1,1,6,0)
+2. SAC violation in Patch DG*5.3*864, a non-incremental lock was 
+"PKG",5,22,1,"PAH",1,1,7,0)
+introduced.
+"PKG",5,22,1,"PAH",1,1,8,0)
+ 
+"PKG",5,22,1,"PAH",1,1,9,0)
+3. User manual needs updated to reflect functionality changes from prior 
+"PKG",5,22,1,"PAH",1,1,10,0)
+patch, DG*5.3*93
+"PKG",5,22,1,"PAH",1,1,11,0)
+ 
+"PKG",5,22,1,"PAH",1,1,12,0)
+4. DRG Frequency Report is not showing all patients in the Service 
+"PKG",5,22,1,"PAH",1,1,13,0)
+category.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","DGPTODF1")
+0^2^B19628919^B18845032
+"RTN","DGPTODF1",1,0)
+DGPTODF1 ;ALB/MTC - PTF DRG FREQUENCY REPORT ; 4/8/14 9:32am
+"RTN","DGPTODF1",2,0)
+ ;;5.3;Registration;**375,886**;Aug 13, 1993;Build 5
+"RTN","DGPTODF1",3,0)
+ I "DB"[DGS,$D(^UTILITY($J,"DGPTFR","D")) D FD^DGPTODF2
+"RTN","DGPTODF1",4,0)
+ E  I $D(^UTILITY($J,"DGPTFR","SB")) D FD^DGPTODF2  ;added line DG*5.3*375
+"RTN","DGPTODF1",5,0)
+ ;patch 886 changing drg codes 600 to 999 for the 2008 msdrg update
+"RTN","DGPTODF1",6,0)
+ I DGS'="D" S I=0 F I1=0:0 S I=$O(^UTILITY($J,"DGPTFR","FS",I)) Q:I']""  S S=^(I) F D=0:0 S D=$O(^UTILITY($J,"DGPTFR","FS",I,D)) Q:D'>0!(D>999)  S D1=^(D),^UTILITY($J,"DGPTFR","FS",I,(999999-$P(D1,U,2)),D)=D1 K ^UTILITY($J,"DGPTFR","FS",I,D)
+"RTN","DGPTODF1",7,0)
+START D QUIT,MCT:$D(^UTILITY($J,"DGPTFR","FD")),ST:$D(^UTILITY($J,"DGPTFR","FS")) W @IOF
+"RTN","DGPTODF1",8,0)
+QUIT K %,B,C,C1,C2,C3,C4,C5,D,D1,D2,D3,DGCPG,DGFLAG,DGTCH,E,F1,F2,F3,F4,F5,G,G1,G2,G3,I,I1,J,M1,M2,M3,M4,M5,P,P1,P3,S,S1,T,T1,T2,T3,X,X2,Y,Z,^UTILITY($J,"DGTC"),^UTILITY($J,"BOK") Q
+"RTN","DGPTODF1",9,0)
+MCT S P=0,DGFLAG="Medical Center",P3="DRG" D INIT,TINIT,COV^DGPTODF2,HEAD^DGPTODF2 F D=0:0 S D=$O(^UTILITY($J,"DGPTFR","FD",D)) Q:D'>0  S D1=999999-D F D2=0:0 S D2=$O(^UTILITY($J,"DGPTFR","FD",D,D2)) Q:D2'>0  S D3=^(D2),P1=D2 D TDOL,PRINT
+"RTN","DGPTODF1",10,0)
+ D TOT,PP,TP^DGUTL
+"RTN","DGPTODF1",11,0)
+ Q
+"RTN","DGPTODF1",12,0)
+ST S P=0,(DGFLAG,P3)="Service" D TINIT,INIT,COV^DGPTODF2
+"RTN","DGPTODF1",13,0)
+ S G=0 F G1=0:0 S G=$O(^UTILITY($J,"DGPTFR","FS",G)) Q:G']""  S (G2,P1)=^(G) D TOT:C1,STOT:C1,INIT,HEAD^DGPTODF2 F D=0:0 S D=$O(^UTILITY($J,"DGPTFR","FS",G,D)) Q:D'>0  S D1=999999-D,G3=G2 D ST1
+"RTN","DGPTODF1",14,0)
+ S G3=G2 D STOT,TOT S DGFLAG="Medical Center" D HEAD^DGPTODF2,LAST S C1=F1,C2=F2,C3=F3,C4=F4,C5=F5,DGFLAG="Medical Center",^UTILITY($J,"DGTC","MEDICAL CENTER",P)="" D TOT,PP,TP^DGUTL
+"RTN","DGPTODF1",15,0)
+BS S P=0,(DGFLAG,P3)="Specialty" D MI,INIT,TINIT,COV^DGPTODF2 S G=0 F G1=0:0 S G=$O(^UTILITY($J,"DGPTFR","FB",G)) Q:G']""  S G2=^(G) D CON:F1,MT:F1,INIT,TINIT,HEAD^DGPTODF2,BT
+"RTN","DGPTODF1",16,0)
+ D CON,MT,MCON,PP,TP^DGUTL
+"RTN","DGPTODF1",17,0)
+ Q
+"RTN","DGPTODF1",18,0)
+BT F Z=0:0 S Z=$O(^UTILITY($J,"DGPTFR","FB",G,Z)) Q:Z'>0  S (B,P1)=^(Z) D TOT:C1,STOT:C1,INIT W !!!?15,B,!! F D=0:0 S D=$O(^UTILITY($J,"DGPTFR","FB",G,Z,D)) Q:D'>0  S D1=999999-D D BT1
+"RTN","DGPTODF1",19,0)
+ D STOT,TOT Q
+"RTN","DGPTODF1",20,0)
+BT1 F D2=0:0 S D2=$O(^UTILITY($J,"DGPTFR","FB",G,Z,D,D2)) Q:D2'>0  S D3=^(D2) D TDOL,PRINT
+"RTN","DGPTODF1",21,0)
+ Q
+"RTN","DGPTODF1",22,0)
+ST1 F D2=0:0 S D2=$O(^UTILITY($J,"DGPTFR","FS",G,D,D2)) Q:D2'>0  S D3=^(D2) D TDOL,PRINT
+"RTN","DGPTODF1",23,0)
+ Q
+"RTN","DGPTODF1",24,0)
+INIT S (C1,C2,C3,C4,C5,T,T1)=0 Q
+"RTN","DGPTODF1",25,0)
+TINIT S (F1,F2,F3,F4,F5)=0 Q
+"RTN","DGPTODF1",26,0)
+MI S (M1,M2,M3,M4,M5)=0 Q
+"RTN","DGPTODF1",27,0)
+CON S C1=F1,C2=F2,C3=F3,C4=F4,C5=F5,DGFLAG="Service" D TOT S DGFLAG="Specialty" Q
+"RTN","DGPTODF1",28,0)
+MCON S C1=M1,C2=M2,C3=M3,C4=M4,C5=M5,DGFLAG="Medical Center" D TOT Q
+"RTN","DGPTODF1",29,0)
+TDOL S T=D1+$J($S($P(D3,U,3):$P(D3,U,11)/$P(D3,U,3),1:0),0,4)*$P(D3,U,6)+($P(D3,U,10)*DG1DAWW)+($P(D3,U,9)*DGHIWW),T=$S(T=0:$P(D3,U,6),1:T),T1=T*DGWWCST S:'$D(^UTILITY($J,"DGTC",P1)) ^(P1,P)="" Q
+"RTN","DGPTODF1",30,0)
+PRINT D HEAD^DGPTODF2:$Y>(IOSL-11)
+"RTN","DGPTODF1",31,0)
+ W !?10,$J(D2,3),$J($P(D3,U,3),5),$J($P(D3,U,4),6),$J($P(D3,U,5),6),$J($P(D3,U,6),9),$J($P(D3,U,7),7),$J($P(D3,U,10),9),$J(D1,16),$J(+D3,11),$J(+D3/D1,12,2) S X=T,X2=2 D COMMA^%DTC W $J(X,18)   ;S X=T1,X2=2 D COMMA^%DTC W $J(X,18)
+"RTN","DGPTODF1",32,0)
+ S C1=C1+D1,C3=+D3+C3,C4=C4+T,C5=C5+T1,C2=C2+$P(D3,U,10)
+"RTN","DGPTODF1",33,0)
+ Q
+"RTN","DGPTODF1",34,0)
+TOT W ! F E=1:1:132 W $S(DGFLAG["Serv":"-",1:"=")
+"RTN","DGPTODF1",35,0)
+ ;adding code to protect from divide error if c1=0
+"RTN","DGPTODF1",36,0)
+TOT1 N DGTMPC1 S DGTMPC1=C1 S:C1=0 C1=1 W !?10,"Total for ",DGFLAG,?46,$J(C2,9),$J(C1,16),$J(C3,11),$J(C3/C1,12,2) S X=C4,X2=2 D COMMA^%DTC W $J(X,18) W $J(C4/C1,18,2)   ;S X=C5,X2="2$" D COMMA^%DTC W $J(X,18)
+"RTN","DGPTODF1",37,0)
+ I DGTMPC1=0 S C1=DGTMPC1
+"RTN","DGPTODF1",38,0)
+ Q
+"RTN","DGPTODF1",39,0)
+STOT S F1=F1+C1,F2=F2+C2,F3=F3+C3,F4=F4+C4,F5=F5+C5,^UTILITY($J,"BOK",G3)=C1_U_C2_U_C3_U_C4_U_C5 Q
+"RTN","DGPTODF1",40,0)
+MT S M1=M1+F1,M2=M2+F2,M3=M3+F3,M4=M4+F4,M5=M5+F5 Q
+"RTN","DGPTODF1",41,0)
+LAST S D=0 F D1=0:0 S D=$O(^UTILITY($J,"BOK",D)) Q:D']""  F E=1:1:5 S @("C"_E)=$P(^UTILITY($J,"BOK",D),U,E) S DGFLAG=D D TOT1:E=5
+"RTN","DGPTODF1",42,0)
+ Q
+"RTN","DGPTODF1",43,0)
+ Q
+"RTN","DGPTODF1",44,0)
+PP S %=$S($Y>(IOSL-11):($Y+2),1:IOSL-11) F E=$Y:1:% W ! I E=(%-1) D DIS^DGPTOD1 W !!?62,"-",P,"-"
+"RTN","DGPTODF1",45,0)
+ Q
+"RTN","DGREG")
+0^1^B48715273^B47583853
+"RTN","DGREG",1,0)
+DGREG ;ALB/JDS,MRL/PJR/PHH-REGISTER PATIENT ; 3/28/14 12:38pm
+"RTN","DGREG",2,0)
+ ;;5.3;Registration;**1,32,108,147,149,182,245,250,513,425,533,574,563,624,658,864,886**;Aug 13, 1993;Build 5
+"RTN","DGREG",3,0)
+START ;
+"RTN","DGREG",4,0)
+EN D LO^DGUTL S DGCLPR=""
+"RTN","DGREG",5,0)
+ N DGDIV
+"RTN","DGREG",6,0)
+ S DGDIV=$$PRIM^VASITE
+"RTN","DGREG",7,0)
+ S:DGDIV %ZIS("B")=$P($G(^DG(40.8,+DGDIV,"DEV")),U,1)
+"RTN","DGREG",8,0)
+ I $P(^DG(43,1,0),U,39) S %ZIS="NQ",%ZIS("A")="Select 1010 printer: " D ^%ZIS Q:POP  S (DGIO(10),DGIO("PRF"),DGIO("RT"),DGIO("HS"))=ION,DGASKDEV="" I $E(IOST,1,2)'["P-" W !,$C(7),"Not a printer" G DGREG
+"RTN","DGREG",9,0)
+ K %ZIS("B")
+"RTN","DGREG",10,0)
+ I '$D(DGIO),$P(^DG(43,1,0),U,30) S %ZIS="N",IOP="HOME" D ^%ZIS I $D(IOS),IOS,$D(^%ZIS(1,+IOS,99)),$D(^%ZIS(1,+^(99),0)) S Y=$P(^(0),U,1) W !,"Using closest printer ",Y,! F I=10,"PRF","RT","HS" S DGIO(I)=Y
+"RTN","DGREG",11,0)
+A D ENDREG($G(DFN))
+"RTN","DGREG",12,0)
+ W !! S DIC=2,DIC(0)="ALEQM",DLAYGO=2 K DIC("S"),DIC("B") D ^DIC K DLAYGO G Q1:Y<0 S (DFN,DA)=+Y,DGNEW=$P(Y,"^",3) N Y D PAUSE^DG10 D BEGINREG(DFN) I DGNEW D NEW^DGRP
+"RTN","DGREG",13,0)
+ ;
+"RTN","DGREG",14,0)
+ ;; ask to continue if patient died - DG*5.3*563 - pjr 10/12/04
+"RTN","DGREG",15,0)
+ S DOD="" I $G(DFN) S DOD=$P($G(^DPT(DFN,.35)),"^",1)
+"RTN","DGREG",16,0)
+ I DOD S Y=DOD,DGPME=0 D DIED^DGPMV I DGPME K DFN,DGRPOUT G A
+"RTN","DGREG",17,0)
+ ;
+"RTN","DGREG",18,0)
+ D CIRN
+"RTN","DGREG",19,0)
+ ;
+"RTN","DGREG",20,0)
+ I +$G(DGNEW) D
+"RTN","DGREG",21,0)
+ . ; query CMOR for Patient Record Flag Assignments if NEW patient and
+"RTN","DGREG",22,0)
+ . ; display results.
+"RTN","DGREG",23,0)
+ . I $$PRFQRY^DGPFAPI(DFN) D DISPPRF^DGPFAPI(DFN)
+"RTN","DGREG",24,0)
+ . I $$EN^DGPFMPI(DFN)
+"RTN","DGREG",25,0)
+ ;
+"RTN","DGREG",26,0)
+ D ROMQRY
+"RTN","DGREG",27,0)
+ ;
+"RTN","DGREG",28,0)
+ S (DGFC,CURR)=0
+"RTN","DGREG",29,0)
+ D:'$G(DGNEW) WARN S DA=DFN,DGFC="^1",VET=$S($D(^DPT(DFN,"VET")):^("VET")'="Y",1:0)
+"RTN","DGREG",30,0)
+ S %ZIS="N",IOP="HOME" D ^%ZIS S DGELVER=0 D EN^DGRPD I $D(DGRPOUT) D ENDREG($G(DFN)) D HL7A08^VAFCDD01 K DFN,DGRPOUT G A
+"RTN","DGREG",31,0)
+ D HINQ^DG10
+"RTN","DGREG",32,0)
+ I $D(^DIC(195.4,1,"UP")) I ^("UP") D ADM^RTQ3
+"RTN","DGREG",33,0)
+ D REG^IVMCQ($G(DFN))  ; send financial query  
+"RTN","DGREG",34,0)
+ G A1
+"RTN","DGREG",35,0)
+ ;
+"RTN","DGREG",36,0)
+RT I $D(^DIC(195.4,1,"UP")) I ^("UP") S $P(DGFC,U,1)=DIV D ADM^RTQ3
+"RTN","DGREG",37,0)
+ Q
+"RTN","DGREG",38,0)
+ ;
+"RTN","DGREG",39,0)
+A1 W !,"Do you want to ",$S(DGNEW:"enter",1:"edit")," Patient Data" S %=1 D YN^DICN D  G H:'%,CK:%'=1 S DGRPV=0 D EN1^DGRP G Q:'$D(DA)
+"RTN","DGREG",40,0)
+ .I +$G(DGNEW) Q
+"RTN","DGREG",41,0)
+ .I $$ADD^DGADDUTL($G(DFN)) ;
+"RTN","DGREG",42,0)
+ G CH
+"RTN","DGREG",43,0)
+PR W !!,"Is the patient currently being followed in a clinic for the same condition" S %=0 D YN^DICN G Q:%=-1
+"RTN","DGREG",44,0)
+ I '% W !?4,$C(7),"Enter 'Y' if the patient is being followed in clinic for condition for which",!?6,"registered, 'N' if not." G PR
+"RTN","DGREG",45,0)
+ S CURR=% G SEEN
+"RTN","DGREG",46,0)
+ ;
+"RTN","DGREG",47,0)
+CK S DGEDCN=1 D ^DGRPC
+"RTN","DGREG",48,0)
+CH S X=$S('$D(^DPT(DFN,.36)):1,$P(^(.36),"^",1)']"":1,1:0),X1=$S('$D(^DPT(DFN,.32)):1,$P(^(.32),"^",3)']"":1,1:0) I 'X,'X1 G CH1
+"RTN","DGREG",49,0)
+CH1 S DA=DFN G PR:'$D(^DPT("ADA",1,DA)) W !!,"There is still an open disposition--register aborted.",$C(7),$C(7) G Q
+"RTN","DGREG",50,0)
+SEEN W !!,"Is the patient to be examined in the medical center today" S %=1 D YN^DICN S SEEN=% G:%<0 Q I %'>0 W !!,"Enter 'Y' if the patient is to be examined today, 'N' if not.",$C(7) G SEEN
+"RTN","DGREG",51,0)
+ABIL D ^DGREGG
+"RTN","DGREG",52,0)
+ENR ; next line appears to be dead code.  left commented just to test.  mli 4/28/94
+"RTN","DGREG",53,0)
+ ;S DE=0 F I=0:0 S I=$O(^DPT(DA,"DE",I)) Q:'I  I $P(^(I,0),"^",3)'?7N Q  D PR:'DE S L=+$P($S($D(^SC(L,0)):^(0),1:""),"^",1)
+"RTN","DGREG",54,0)
+REG S (DIE,DIC)="^DPT("_DFN_",""DIS"",",%DT="PTEX",%DT("A")="Registration login date/time: NOW// "
+"RTN","DGREG",55,0)
+ W !,%DT("A") R ANS:DTIME S:'$T ANS="^" S:ANS="" ANS="N" S X=ANS G Q:ANS="^" S DA(1)=DFN D CHK^DIE(2.101,.01,"E",X,.RESULT) G REG:RESULT="^"!('$D(RESULT)),PR3:'(RESULT#1) S Y=RESULT
+"RTN","DGREG",56,0)
+ I (RESULT'="^") W "  ("_RESULT(0)_")"
+"RTN","DGREG",57,0)
+ S DINUM=9999999-RESULT
+"RTN","DGREG",58,0)
+ S (DFN1,Y1)=DINUM,APD=Y I $D(^DPT(DFN,"DIS",Y1)) W !!,"You must enter a date that does not exist.",$C(7),$C(7) G REG
+"RTN","DGREG",59,0)
+ ;patch 886 changed to incremental lock and dilocktm
+"RTN","DGREG",60,0)
+ G:$D(^DPT("ADA",1,DA)) CH1 L +@(DIE_DINUM_")"):$G(DILOCKTM,3) G:'$T MSG S:'($D(^DPT(DA(1),"DIS",0))#2) ^(0)="^2.101D^^" S DIC(0)="L",X=+Y D ^DIC
+"RTN","DGREG",61,0)
+ ;
+"RTN","DGREG",62,0)
+ ;SAVE OFF DATE/TIME OF REGISTRATION FOR HL7 V2.3 MESSAGING, IN VAFCDDT
+"RTN","DGREG",63,0)
+ S VAFCDDT=X
+"RTN","DGREG",64,0)
+ ;
+"RTN","DGREG",65,0)
+ S DA=DFN1,DIE("NO^")="",DA(1)=DFN,DP=2.101,DR="1///"_$S(SEEN=2:2,CURR=1:1,1:0)_";Q;2"_$S(CURR=1:"///3",1:"")_";2.1;3//"_$S($P(^DG(43,1,"GL"),"^",2):"",1:"/")_$S($D(^DG(40.8,+$P(^DG(43,1,"GL"),"^",3),0)):$P(^(0),"^",1),1:"")_";4////"_DUZ
+"RTN","DGREG",66,0)
+ ;patch 886 changed lock to use dilocktm
+"RTN","DGREG",67,0)
+ D EL K DIC("A") N DGNDLOCK S DGNDLOCK=DIE_DFN1_")" L +@DGNDLOCK:$G(DILOCKTM,3) G:'$T MSG D ^DIE L -@DGNDLOCK
+"RTN","DGREG",68,0)
+ I $D(DTOUT) D  G Q
+"RTN","DGREG",69,0)
+ .K DTOUT
+"RTN","DGREG",70,0)
+ .N DA,DIK
+"RTN","DGREG",71,0)
+ .S DA(1)=DFN,DA=DFN1,DIK="^DPT("_DFN_",""DIS"","
+"RTN","DGREG",72,0)
+ .D ^DIK
+"RTN","DGREG",73,0)
+ .W !!?5,"User Time-out.  Required registration data could be missing."
+"RTN","DGREG",74,0)
+ .W !,?5,"This registration has been deleted."
+"RTN","DGREG",75,0)
+ ; check whether facility applying to (division) is inactive
+"RTN","DGREG",76,0)
+ I '$$DIVCHK^DGREGFAC(DFN,DFN1) G CONT
+"RTN","DGREG",77,0)
+ASKDIV W !!?5,"The facility chosen either has no pointer to an Institution"
+"RTN","DGREG",78,0)
+ W !?5,"file record or the Institution file record is inactive."
+"RTN","DGREG",79,0)
+ W !?5,"Please choose another division."
+"RTN","DGREG",80,0)
+ S DA=DFN1,DIE("NO^")="",DA(1)=DFN,DP=2.101,DR="3" D ^DIE
+"RTN","DGREG",81,0)
+ I $$DIVCHK^DGREGFAC(DFN,DFN1) G ASKDIV
+"RTN","DGREG",82,0)
+CONT ; continue
+"RTN","DGREG",83,0)
+ S DGXXXD=1 D EL^DGREGE I $P(^DPT(DFN,"DIS",DFN1,0),"^",3)=4 S DA=DFN,DIE="^DPT(",DR=".368;.369" D ^DIE S DIE="^DPT("_DFN_",""DIS"",",DA(1)=DFN,DA=DFN1
+"RTN","DGREG",84,0)
+ S DA=DFN,DR="[DGREG]",DIE="^DPT(" D ^DIE K DIE("NO^")
+"RTN","DGREG",85,0)
+ I $D(^DPT(DFN,"DIS",DFN1,2)),$P(^(2),"^",1)="Y" S DIE="^DPT(",DR="[DG EMPLOYER]",DA=DFN D ^DIE
+"RTN","DGREG",86,0)
+ G ^DGREG0
+"RTN","DGREG",87,0)
+PR2 W !!,"You can only enter new registrations through this option.",$C(7),$C(7) G REG
+"RTN","DGREG",88,0)
+PR3 W !!,"Time is required to register the patient.",!!,$C(7),$C(7) G REG
+"RTN","DGREG",89,0)
+H W !?5,"Enter 'YES' to enter/edit registration data or 'NO' to continue." G A1
+"RTN","DGREG",90,0)
+Q K DG,DQ G Q1^DGREG0
+"RTN","DGREG",91,0)
+Q1 K DGIO,DGASKDEV,DGFC,DGCLRP,CURR,DGELVER,DGNEW Q
+"RTN","DGREG",92,0)
+EL S DR=DR_";13//" I $D(^DPT(DFN,.36)),$D(^DIC(8,+^(.36),0)) S DR=DR_$P(^(0),"^",1) Q
+"RTN","DGREG",93,0)
+ S DR=DR_"HUMANITARIAN EMERGENCY" Q
+"RTN","DGREG",94,0)
+FEE S DGRPFEE=1 D DGREG K DGRPFEE G Q1
+"RTN","DGREG",95,0)
+ ;
+"RTN","DGREG",96,0)
+WARN I $S('$D(^DPT(DFN,.1)):0,$P(^(.1),"^",1)']"":0,1:1) W !,$C(7),"***PATIENT IS CURRENTLY AN INPATIENT***",! H 2
+"RTN","DGREG",97,0)
+ I $S('$D(^DPT(DFN,.107)):0,$P(^(.107),"^",1)']"":0,1:1) W !,$C(7),"***PATIENT IS CURRENTLY A LODGER***",! H 2
+"RTN","DGREG",98,0)
+ Q
+"RTN","DGREG",99,0)
+MSG W !,"Another user is editing, try later ..." G Q
+"RTN","DGREG",100,0)
+ ;
+"RTN","DGREG",101,0)
+BEGINREG(DFN) ;
+"RTN","DGREG",102,0)
+ ;Description: This is called at the beginning of the registration process.
+"RTN","DGREG",103,0)
+ ;Concurrent processes can check the lock to determine if the patient is
+"RTN","DGREG",104,0)
+ ;currently being registered.
+"RTN","DGREG",105,0)
+ ;
+"RTN","DGREG",106,0)
+ Q:'$G(DFN) 0
+"RTN","DGREG",107,0)
+ I $$QRY^DGENQRY(DFN) W !!,"Enrollment/Eligibility Query sent ...",!!
+"RTN","DGREG",108,0)
+ ;patch 886 changed lock to use dilocktm
+"RTN","DGREG",109,0)
+ L +^TMP(DFN,"REGISTRATION IN PROGRESS"):$G(DILOCKTM,3)
+"RTN","DGREG",110,0)
+ I $$LOCK^DGENPTA1(DFN) ;try to lock the patient record
+"RTN","DGREG",111,0)
+ Q
+"RTN","DGREG",112,0)
+ ;
+"RTN","DGREG",113,0)
+ENDREG(DFN) ;
+"RTN","DGREG",114,0)
+ ;Description: releases the lock obtained by calling BEGINREG.
+"RTN","DGREG",115,0)
+ ;
+"RTN","DGREG",116,0)
+ Q:'$G(DFN)
+"RTN","DGREG",117,0)
+ L -^TMP(DFN,"REGISTRATION IN PROGRESS")
+"RTN","DGREG",118,0)
+ D UNLOCK^DGENPTA1(DFN)
+"RTN","DGREG",119,0)
+ Q
+"RTN","DGREG",120,0)
+ ;
+"RTN","DGREG",121,0)
+IFREG(DFN) ;
+"RTN","DGREG",122,0)
+ ;Description: tests whether the lock set by BEGINREG is set
+"RTN","DGREG",123,0)
+ ;
+"RTN","DGREG",124,0)
+ ;Input:  DFN
+"RTN","DGREG",125,0)
+ ;Output:
+"RTN","DGREG",126,0)
+ ;      Function Value = 1 if lock is set, 0 otherwise
+"RTN","DGREG",127,0)
+ ;
+"RTN","DGREG",128,0)
+ N RETURN
+"RTN","DGREG",129,0)
+ Q:'$G(DFN) 0
+"RTN","DGREG",130,0)
+ ;patch 886 changed lock to use dilocktm
+"RTN","DGREG",131,0)
+ L +^TMP(DFN,"REGISTRATION IN PROGRESS"):$G(DILOCKTM,3)
+"RTN","DGREG",132,0)
+ S RETURN='$T
+"RTN","DGREG",133,0)
+ L -^TMP(DFN,"REGISTRATION IN PROGRESS")
+"RTN","DGREG",134,0)
+ Q RETURN
+"RTN","DGREG",135,0)
+ Q
+"RTN","DGREG",136,0)
+CIRN ;MPI QUERY
+"RTN","DGREG",137,0)
+ ;check to see if CIRN PD/MPI is installed
+"RTN","DGREG",138,0)
+ N X S X="MPIFAPI" X ^%ZOSF("TEST") Q:'$T
+"RTN","DGREG",139,0)
+ K MPIFRTN
+"RTN","DGREG",140,0)
+ D MPIQ^MPIFAPI(DFN)
+"RTN","DGREG",141,0)
+ K MPIFRTN
+"RTN","DGREG",142,0)
+ Q
+"RTN","DGREG",143,0)
+ROMQRY ;
+"RTN","DGREG",144,0)
+ I +$G(DGNEW) D
+"RTN","DGREG",145,0)
+ . ; query LST for Patient Demographic Information if NEW patient and
+"RTN","DGREG",146,0)
+ . ; file into patient's record.
+"RTN","DGREG",147,0)
+ . N A
+"RTN","DGREG",148,0)
+ . I $$ROMQRY^DGROAPI(DFN) D
+"RTN","DGREG",149,0)
+ . . ;display busy message to interactive users
+"RTN","DGREG",150,0)
+ . .S DGMSG(1)="Data retrieval from LST site has been completed successfully"
+"RTN","DGREG",151,0)
+ . .S DGMSG(2)="Thank you for your patience."
+"RTN","DGREG",152,0)
+ . .D EN^DDIOL(.DGMSG) R A:5
+"RTN","DGREG",153,0)
+ . E  D
+"RTN","DGREG",154,0)
+ . . ;display busy message to interactive users
+"RTN","DGREG",155,0)
+ . .S DGMSG(1)="Data retrieval from LST site has not been successful."
+"RTN","DGREG",156,0)
+ . .S DGMSG(2)="Please continue the Registration Process."
+"RTN","DGREG",157,0)
+ . .D EN^DDIOL(.DGMSG) R A:5
+"RTN","DGREG",158,0)
+ . ;
+"RTN","DGREG",159,0)
+ Q
+"VER")
+8.0^22.0
+"^DD",2,2,.121,0)
+BAD ADDRESS INDICATOR^*S^1:UNDELIVERABLE;2:HOMELESS;3:OTHER;4:ADDRESS NOT FOUND;^.11;16^Q
+"^DD",2,2,.121,1,0)
+^.1
+"^DD",2,2,.121,1,1,0)
+2^AENR121^MUMPS
+"^DD",2,2,.121,1,1,1)
+D EVENT^IVMPLOG(DA)
+"^DD",2,2,.121,1,1,2)
+D EVENT^IVMPLOG(DA)
+"^DD",2,2,.121,1,1,3)
+DO NOT DELETE
+"^DD",2,2,.121,1,1,"%D",0)
+^^2^2^3060911^
+"^DD",2,2,.121,1,1,"%D",1,0)
+This cross-reference is used to notify HEC of changes that may affect
+"^DD",2,2,.121,1,1,"%D",2,0)
+enrollment.
+"^DD",2,2,.121,1,1,"DT")
+3060911
+"^DD",2,2,.121,1,2,0)
+^^TRIGGER^2^.118
+"^DD",2,2,.121,1,2,1)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^DPT(D0,.11)):^(.11),1:"") S X=$P(Y(1),U,13),X=X S DIU=X K Y S X=DIV S X=$$NOW^XLFDT() S DIH=$G(^DPT(DIV(0),.11)),DIV=X S $P(^(.11),U,13)=DIV,DIH=2,DIG=.118 D ^DICR
+"^DD",2,2,.121,1,2,2)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^DPT(D0,.11)):^(.11),1:"") S X=$P(Y(1),U,13),X=X S DIU=X K Y S X=DIV S X=$$NOW^XLFDT() S DIH=$G(^DPT(DIV(0),.11)),DIV=X S $P(^(.11),U,13)=DIV,DIH=2,DIG=.118 D ^DICR
+"^DD",2,2,.121,1,2,"%D",0)
+^.101^2^2^3061030^^
+"^DD",2,2,.121,1,2,"%D",1,0)
+This cross-reference will be used to update the Date/Time stamp for an  
+"^DD",2,2,.121,1,2,"%D",2,0)
+Address Change.
+"^DD",2,2,.121,1,2,"CREATE VALUE")
+S X=$$NOW^XLFDT()
+"^DD",2,2,.121,1,2,"DELETE VALUE")
+S X=$$NOW^XLFDT()
+"^DD",2,2,.121,1,2,"DT")
+3061010
+"^DD",2,2,.121,1,2,"FIELD")
+#.118
+"^DD",2,2,.121,3)
+Please enter 1 if the address is 'UNDELIVERABLE', 2 if the patient is 'HOMELESS', or 3 for 'OTHER' bad address reasons. Enter "@" to remove the indicator.
+"^DD",2,2,.121,12)
+Only 1-3 may be selected.
+"^DD",2,2,.121,12.1)
+S DIC("S")="I Y'=4"
+"^DD",2,2,.121,21,0)
+^^15^15^3140707^
+"^DD",2,2,.121,21,1,0)
+The Bad Address Indicator field applies to the address at which the patient
+"^DD",2,2,.121,21,2,0)
+resides.  This field should be set as follows (if applicable):
+"^DD",2,2,.121,21,3,0)
+ 
+"^DD",2,2,.121,21,4,0)
+    "UNDELIVERABLE" - Bad Address based on returned mail.
+"^DD",2,2,.121,21,5,0)
+    "HOMELESS" - Patient is known to be homeless.
+"^DD",2,2,.121,21,6,0)
+    "OTHER" - Other Bad Address Reason
+"^DD",2,2,.121,21,7,0)
+ 
+"^DD",2,2,.121,21,8,0)
+Setting this field will prevent a Bad Address from being shared with HEC
+"^DD",2,2,.121,21,9,0)
+and other VAMC facilities.
+"^DD",2,2,.121,21,10,0)
+ 
+"^DD",2,2,.121,21,11,0)
+ 
+"^DD",2,2,.121,21,12,0)
+Once the Bad Address Indicator is set, incoming "newer" addresses will
+"^DD",2,2,.121,21,13,0)
+automatically remove the Bad Address Indicator, and allow the "updated"
+"^DD",2,2,.121,21,14,0)
+address to be transmitted to HEC and other VAMC facilities. To manually
+"^DD",2,2,.121,21,15,0)
+remove the Bad Address Indicator enter the "@" symbol.
+"^DD",2,2,.121,23,0)
+^.001^9^9^3140707^^^^
+"^DD",2,2,.121,23,1,0)
+This field is being used in conjunction with Patient Address fields
+"^DD",2,2,.121,23,2,0)
+.111, .1112, .112, .113, .114, .115, .116, and .117, which are located
+"^DD",2,2,.121,23,3,0)
+in the Patient (#2) file.
+"^DD",2,2,.121,23,4,0)
+
+"^DD",2,2,.121,23,5,0)
+A programmer API, $$BADADR^DGUTL3(DFN) will allow the return of the Bad
+"^DD",2,2,.121,23,6,0)
+Address Indicator.  The following parameters are used:
+"^DD",2,2,.121,23,7,0)
+
+"^DD",2,2,.121,23,8,0)
+Input Parameter: DFN - internal entry number for the Patient file (#2)
+"^DD",2,2,.121,23,9,0)
+   Return value: internal value of the Bad Address Indicator or <null>
+"^DD",2,2,.121,"AUDIT")
+
+"^DD",2,2,.121,"DT")
+3140707
+"BLD",9642,6)
+^792
+**END**
+**END**
+

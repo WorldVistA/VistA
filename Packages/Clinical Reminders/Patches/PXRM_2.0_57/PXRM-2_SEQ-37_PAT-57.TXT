@@ -1,0 +1,166 @@
+
+=============================================================================
+Run Date: MAR 12, 2015                     Designation: PXRM*2*57
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #37                      Status: Released
+                  Compliance Date: APR 12, 2015
+=============================================================================
+
+Associated patches: (v)PXRM*2*26   <<= must be installed BEFORE `PXRM*2*57'
+
+Subject: ADVANCE DIRECTIVE CLINICAL REMINDER DIALOG
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ This reminder dialog template is mandated for installation, but optional
+ for use. While use of the reminder dialog template is optional, all sites
+ are required to use two of the health factors exported by this 
+ template/patch.
+ All sites will have to include the health factors, "Advance Directive Yes"
+ and "Advance Directive No", in their advance directive notification and
+ screening processes as required by the Veterans Health Administration 
+ (VHA) Handbook 1004.02, "Advance Care Planning and Management of Advance
+ Directives."  
+ <http://vaww.domain.ext/vhapublications/ViewPublication.asp?pub_ID=2967> 
+ The use of this template and the associated health factors will help sites
+ comply with the advance directive notification and screening requirements
+ set forth in this Handbook.
+  
+ Associated Remedy Tickets:
+ ===========================
+ 1.  INC000001088583 - Advance Directive Reminder Dialog
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Birmingham VAMC, AL
+ Edward Hines Jr. VA Hospital, IL
+ VA Boston HCS, MA
+ VA San Diego HCS, CA
+ VA Texas Valley Coastal Bend HCS, TX
+  
+  
+ REMEDY OVERVIEW:
+ =================
+ 1.   INC000001088583 - Advance Directive Reminder Dialog
+  
+ Problem:
+ --------
+ The Advance Directive Reminder Dialog was created to assist sites to 
+ comply with the advance directive notification and screening requirements
+ set forth in the VHA Handbook.
+  
+ Resolution:
+ -----------
+ This patch, PXRM*2*57, contains two routines, PXRMP57E and PXRMP57I.  
+ They are init tasks that add new entries to the REMINDER EXCHANGE 
+ (#811.8) file and the contents of these entries are installed during the 
+ post-init.  
+ These routines can be deleted after the install.  
+  
+ Build Components:
+ =================
+ N/A
+  
+ Data Dictionary:
+ ================
+ N/A
+  
+ Software & Documentation Retrieval Instructions:
+ ================================================
+ This patch is being distributed as a host file.  The name of the host 
+ file is PXRM_2_0_57.KID.  This file should be downloaded in ASCII format.
+  
+ The preferred method for obtaining these files is to use File Transfer 
+ Protocol (FTP) to download them from:
+  
+     ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server.  Sites may 
+ also elect to retrieve the files directly from a specific server as 
+ follows:
+  
+     Albany              ftp.domain.ext
+     Hines               ftp.domain.ext
+     Salt Lake City      ftp.domain.ext
+  
+ The Install and Setup Guide is also available on the above servers.  It 
+ is available as .pdf format.  This file should be downloaded in BINARY 
+ format.  
+  
+     File Name:                  Description:            Protocol
+     ==========                  ============            =========
+     PXRM_2_0_57_IG.PDF          PXRM*2.0*57 Install     BINARY
+                                 and Setup Guide
+     PXRM_2_0_57.KID             PXRM*2.0*57 Host File   ASCII
+     
+ Documentation can also be found on the VistA Documentation Library (VDL) 
+ at:  http://www.domain.ext/vdl/
+  
+ Installation:
+ =============
+ This patch can be loaded with users on the system.  Installation will 
+ take five minutes.  Refer to the Install and Setup Guide, 
+ PXRM_2_0_57_IG.PDF, for complete details.
+  
+ 1.  Use the "Load a Distribution" option on the KIDS installation menu. 
+  
+     When prompted to enter a host file type in PXRM_2_0_57.KID
+  
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     options, as desired:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify checksums in Transport Global
+         Backup a Transport Global
+  
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use PXRM*2.0*57
+  
+ 4.  When prompted "Want KIDS to INHIBIT LOGONs during the install?  
+     NO//," respond 'NO'.
+  
+ 5.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO// respond 'NO'.
+  
+ 6.  After successful installation, the following init routines may be   
+     deleted:
+  
+     PXRMP57E
+     PXRMP57I
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 216
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMP57E
+    Before:       n/a   After:   B886614  **57**
+Routine Name: PXRMP57I
+    Before:       n/a   After:  B2487269  **57**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 01, 2014
+Completed By:                               Date Completed: MAR 10, 2015
+Released By :                               Date Released : MAR 12, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

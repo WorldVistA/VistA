@@ -1,0 +1,679 @@
+
+=============================================================================
+Run Date: AUG 26, 2015                     Designation: DG*5.3*894
+Package : DG - REGISTRATION                   Priority: EMERGENCY
+Version : 5.3       SEQ #795                    Status: Released
+                  Compliance Date: AUG 31, 2015
+=============================================================================
+
+Associated patches: (v)DG*5.3*610  <<= must be installed BEFORE `DG*5.3*894'
+                    (v)DG*5.3*842  <<= must be installed BEFORE `DG*5.3*894'
+                    (v)DG*5.3*850  <<= must be installed BEFORE `DG*5.3*894'
+
+Subject: CATASTROPHIC DISABILITY CHANGES
+
+Category: 
+  - Enhancement ()
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ **************************************************************************
+   Note:  This patch is being released in support of the Enrollment
+          Customer Enhancements (ECE) and Enrollment System Enhancements
+          (ESE) projects.
+  
+          DG*5.3*894 (Registration) is being released along with IVM*2*158
+          (Income Verification Match) in host file DG_53_P894.KID.
+   
+          It is imperative that this patch be installed no later than the
+          compliance date.  Your understanding and support is appreciated.
+   
+ **************************************************************************
+  
+ The Department of Veterans Affairs (VA) is amending its regulation 
+ concerning the manner in which VA determines that a Veteran is 
+ Catastrophically Disabled (CD) for purposes of enrollment Priority Group 
+ 4.  The current regulation relies on specific codes from the 
+ International Classification of Diseases (ICD), ICD-9-CM and Current 
+ Procedural Terminology (CPT).  It has been requested to eliminate the use
+ of ICD-9-CM and CPT codes when adding or updating the Veterans' CD data.  
+ The Health Eligibility Center (HEC) requested modifications to the
+ Enrollment System (ES) and VistA Registration, Enrollment and Eligibility
+ (VistA REE) software to support the requirements for the Catastrophic
+ Disability Initiative.
+  
+ This patch modifies the Registration v5.3 application as described below: 
+  
+ 1. The addition or modification to Veterans' Catastrophic Disability data
+    will use the new CD DESCRIPTORS (#.01) sub-field within the CD 
+    DESCRIPTORS (#.401) multiple in the PATIENT (#2) file in lieu of CD 
+    STATUS DIAGNOSES, CD STATUS PROCEDURES and CD STATUS CONDITIONS and their 
+    associated fields.
+  
+ 2. The CD STATUS DIAGNOSES, CD STATUS PROCEDURES and CD STATUS 
+    CONDITIONS prompts presented during data entry are replaced with a CD 
+    DESCRIPTORS prompt.
+  
+ 3. Six new CD DESCRIPTORS are added to the CATASTROPHIC DISABILITY 
+    REASONS file (#27.17). They are:
+  
+          QUADRIPLEGIA
+          PARAPLEGIA    
+          PERSISTENT VEGETATIVE STATE
+          LEGAL BLINDNESS
+          AMPUTATION, DISARTICULATION OR DETACHMENT   
+          DEFICIENCIES OF PHYSICAL OR MENTAL FUNCTION
+  
+ 4. The Z11 HL7 Processor is enhanced to receive and file CD STATUS 
+    DESCRIPTORS from ES.
+  
+ 5. Updates to the HELP-PROMPT, DESCRIPTION, and/or UNEDITABLE 
+    classification were made for the following fields in the Patient (#2) 
+    file:
+  
+  .39         VETERAN CATASTROPHICALLY DISABLED?
+  
+    HELP-PROMPT:    Enter a Yes or No for whether the patient is
+                    Catastrophically Disabled. 
+  
+  .395        METHOD OF DETERMINATION   
+  
+    HELP-PROMPT:    Enter Method of Determination that patient is
+                    Catastrophically Disabled.
+  
+    
+  .3951       DATE VETERAN REQUESTED CD EVAL
+  
+    HELP-PROMPT:    Enter date veteran requested Catastrophically
+                    Disabled evaluation. 
+  
+  
+  .3952       DATE FACILITY INITIATED REVIEW
+  
+    HELP-PROMPT:    Enter the date the VA facility initiated the
+                    Catastrophically Disabled review. 
+    DESCRIPTION:    Documents the date the VA facility initiated
+                    the Catastrophically Disabled review.  
+  
+  
+  .3953       DATE VETERAN WAS NOTIFIED     
+  
+    HELP-PROMPT:    Enter the date the veteran was notified of the
+                    Catastrophically Disabled decision. 
+    DESCRIPTION:    Documents the date the veteran was notified of
+                    the Catastrophically Disabled decision by the
+                    VA facility. 
+  
+  
+  .396        CD STATUS DIAGNOSES
+  
+    DESCRIPTION:    This file contains one or more Diagnoses, which
+                    provide the Catastrophic Disability Reasons the
+                    patient has been found to be catastrophically
+                    disabled. 
+  
+  
+  .396,.01    CD STATUS DIAGNOSES  
+  
+                    UNEDITABLE
+  
+  
+  .397,.01    CD STATUS PROCEDURES
+  
+    HELP-PROMPT:    Enter the status procedure code from the CD
+                    Reasons File (#27.17). 
+  
+                    UNEDITABLE
+  
+  
+  .397,1      AFFECTED EXTREMITY
+  
+                    UNEDITABLE
+  
+  
+  .398        CD STATUS CONDITIONS
+  
+  
+    DESCRIPTION:    This field contains one or more Conditions,
+                    which provide the Catastrophic Disability
+                    Reasons the patient has been found to be
+                    catastrophically disabled. 
+  
+  
+  .398,.01    CD STATUS CONDITIONS
+   
+    HELP-PROMPT:    Enter the status conditions code from the CD
+                    Reasons File (#27.17). 
+  
+                    UNEDITABLE
+  
+  .398,1      SCORE                
+                    UNEDITABLE
+  
+  
+  .398,2      PERMANENT INDICATOR  
+  
+    HELP-PROMPT:    Enter the Permanent Indicator associated with
+                    the Catastrophic Disability Condition. 
+    DESCRIPTION:    This field contains the Permanent Indicator,
+                    which documents the Catastrophic Disability
+                    Conditions.  
+  
+                    UNEDITABLE
+  
+  
+  .399        CD HISTORY DATE
+  
+    DESCRIPTION:    Documents the Catastrophically Disabled History
+                    dates for the patient. 
+  
+  .399,.39    VETERAN CATASTROPHICALLY DISABLED? 
+  
+    HELP-PROMPT:    Enter the Catastrophically Disabled status of
+                    the patient. 
+    DESCRIPTION:    Documents the Catastrophically Disabled
+                    status in the CD History.  
+  
+  
+  .399,.392   DATE OF DECISION     
+  
+    HELP-PROMPT:    Enter the date the decision was made. 
+  
+  
+  .399,.393   FACILITY MAKING DETERMINATION 
+                                   
+    HELP-PROMPT:    Enter the Facility Making the Determination
+                    of the patient's Catastrophically Disabled
+                    status. 
+  
+  .399,.394   REVIEW DATE      
+  
+    HELP-PROMPT:    Enter the Review Date of the Catastrophically
+                    Disabled status of the patient. 
+  
+  
+  
+  .399,.395   METHOD OF DETERMINATION 
+  
+    HELP-PROMPT:    Enter the Method of Determination of the
+                    Catastrophically Disabled status of the
+                    patient. 
+  
+  
+  
+  .399,.3951  DATE VETERAN REQUESTED CD EVAL 
+  
+    HELP-PROMPT:    Enter the Date the Veteran Requested CD
+                    Evaluation for CD History. 
+    DESCRIPTION:    Documents the Date the Veteran Requested CD
+                    Evaluation for CD History.  
+  
+  
+  .399,.3952  DATE FACILITY INITIATED REVIEW 
+  
+    HELP-PROMPT:    Enter the Date the Facility initiated the
+                    Catastrophically Disabled review for CD
+                    History. 
+    DESCRIPTION:    Documents the date the facility initiated the
+                    Catastrophically Disabled review for CD
+                    History.  
+  
+  
+  .399,.3953  DATE VETERAN WAS NOTIFIED 
+  
+    HELP-PROMPT:    Enter the date the Veteran was notified of the
+                    Catastrophically Disabled status for CD History
+    DESCRIPTION:    Documents the date the Veteran was notified
+                    of the Catastrophically Disabled status for
+                    CD History.  
+  
+  
+  .399,.396   CD REASON             
+  
+    DESCRIPTION:    Documents the Catastrophically Disabled
+                    Reason for CD History.  
+  
+  
+  .409,.01    CD REASON              
+  
+    HELP-PROMPT:    Enter the CD Reason for the CD History.
+  
+  
+  .409,3      PERMANENT INDICATOR 
+  
+    HELP-PROMPT:    Enter the Permanent Indicator for CD History.
+  
+  
+ 6.  The following new fields were added to the PATIENT (#2) file:
+  
+  .401        CD DESCRIPTORS        
+  
+    LAST EDITED:    JUL 30, 2014 
+    DESCRIPTION:    This field contains one or more Descriptors,
+                    which provide the Catastrophic Disability
+                    Reasons the patient has been found to be
+                    catastrophically disabled.  
+  
+  
+  .401,.01    CD DESCRIPTORS    0;1 POINTER TO CATASTROPHIC DISABILITY R
+                                EASONS FILE (#27.17) (Multiply asked)
+  
+    INPUT TRANSFORM:S DIC("S")="I $$TYPE^DGENA5(Y)=""DE""" D ^DIC K
+                    DIC S DIC=$G(DIE),X=+Y K:Y<0 X
+    LAST EDITED:    MAR 17, 2015 
+    HELP-PROMPT:    Enter a descriptor justifying a 
+                    catastrophically disabled ruling.  
+    DESCRIPTION:    Veterans having one of the following
+                    descriptors shall be determined 
+                    Catastrophically Disabled.  If medical
+                    examination shows the Veteran has Amputation,
+                    Disarticulation, or Detachment, it must involve
+                    more than one limb.  
+  
+    SCREEN:         S DIC("S")="I $$TYPE^DGENA5(Y)=""DE"""
+    EXPLANATION:    Only a valid descriptor may be selected.
+    CROSS-REFERENCE:2.401^B
+                     1)= S ^DPT(DA(1),.401,"B",$E(X,1,30),DA)=""
+                     2)= K ^DPT(DA(1),.401,"B",$E(X,1,30),DA)
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name               Number Field Name           Number    New/Mod/Del
+ ----------------------- ------ -------------------- ------    -----------
+ CATASTROPHIC DISABILITY 27.17  CATASTROPHIC         1         Modified
+ REASONS                        DISABILITY TYPE
+  
+ PATIENT                 2      VETERAN              .39       Modified 
+                                CATASTROPHICALLY 
+                                DISABLED?
+  
+                                METHOD OF            .395      Modified
+                                DETERMINATION 
+  
+                                DATE VETERAN         .3951     Modified
+                                REQUESTED CD EVAL
+  
+                                DATE FACILITY        .3952     Modified
+                                INITIATED REVIEW 
+  
+                                DATE VETERAN WAS     .3953     Modified
+                                NOTIFIED 
+  
+                                CD STATUS DIAGNOSES  .396      Modified
+                                Sub-file
+  
+                                CD STATUS PROCEDURES .397      Modified
+                                Sub-file
+  
+                                CD STATUS CONDITIONS .398      Modified
+                                Sub-file
+  
+                                CD HISTORY DATE      .399      Modified
+                                Sub-file
+  
+                                CD DESCRIPTORS       .401      New
+                                Sub-file
+  
+                                CD DESCRIPTORS       .401,.01  New
+  
+                                CD REASON            .409      Modified
+  
+  
+ Inconsistent Data       38.6   CD Descriptor Not    727       New
+ Elements    (38.6)             Valid 
+  
+                                No CD Descriptors    728       New
+                                Selected 
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name        Type      File Name (Number)    New/Modified/Deleted
+ -------------        ----      ------------------    --------------------
+ DGENCD CATASTROPHIC  Protocol  List Template         Modified
+ DISABILITY                     (#409.61)
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ VA NY Harbor Healthcare System
+ VA Central Iowa Health Care System
+ 
+  
+ DOCUMENTATION RETRIEVAL INSTRUCTIONS
+ ------------------------------------
+     
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+   
+  The preferred method is to FTP the files from ftp://download.vista.med.va
+  .gov/.  This transmits the files from the first available FTP server.
+  
+  Sites may also elect to retrieve software directly from a specific
+  server as follows: 
+  
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.domain.ext   []
+         Hines              ftp.domain.ext    []
+         Salt Lake City     ftp.domain.ext      []
+  
+         The following file will be available usually within 1 - 3 days at 
+         http://www.domain.ext/vdl/application.asp?appid=55:
+  
+         File Name             Contents                   Retrieval format
+         ---------             --------                   ----------------
+          N/A                   N/A                        N/A 
+         
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/.
+  
+  
+ =================== PRE-INSTALLATION INSTRUCTIONS ===================
+  
+ 1.   Sites should clean up any Catastrophic Disability inconsistencies found
+      prior to installation of the host file.  The FileMan below requires 132
+      columns and may be sent to a printer if desired.  If the report is
+      expected to be small, the user may send the report to the screen
+      providing the VistA session screen is set to display  132 characters
+      as needed. 
+ 
+ FileMan example.
+ 
+ Select VA FileMan <TEST ACCOUNT> Option: search File Entries
+ 
+ OUTPUT FROM WHAT FILE: MESSAGE// INCONSISTENT DATA          (35203 entries)
+ 
+   -A- SEARCH FOR INCONSISTENT DATA FIELD: 10  INCONSISTENCY   (multiple)
+ 
+     -A- SEARCH FOR INCONSISTENT DATA INCONSISTENCY SUB-FIELD: .01 
+ INCONSISTENCY
+     -A- CONDITION: CONTAINS  
+     -A- CONTAINS: CD
+ 
+     -B- SEARCH FOR INCONSISTENT DATA INCONSISTENCY SUB-FIELD: 
+ 
+   -B- SEARCH FOR INCONSISTENT DATA FIELD: 
+ 
+ IF: A//     INCONSISTENT DATA INCONSISTENCY CONTAINS (case-insensitive) "CD"
+ 
+ DO YOU WANT THIS SEARCH SPECIFICATION TO BE CONSIDERED TRUE FOR CONDITION -A-
+         1) WHEN AT LEAST ONE OF THE 'INCONSISTENCY' MULTIPLES SATISFIES IT
+         2) WHEN ALL OF THE 'INCONSISTENCY' MULTIPLES SATISFY IT
+     CHOOSE 1-2: 1// 1
+ 
+ 
+ STORE RESULTS OF SEARCH IN TEMPLATE: 
+ 
+ SORT BY: NUMBER// .01  NAME
+ START WITH NAME: FIRST// 
+   WITHIN NAME, SORT BY: 
+ FIRST PRINT FIELD: .01  NAME
+ THEN PRINT FIELD: .01:
+   THEN PRINT PATIENT FIELD: PHONE NUMBER [RESIDENCE]
+   THEN PRINT PATIENT FIELD: .09  SOCIAL SECURITY NUMBER
+   THEN PRINT PATIENT FIELD: 
+ THEN PRINT FIELD: 4  LAST UPDATED
+ THEN PRINT FIELD: 5  LAST UPDATED BY
+ THEN PRINT FIELD: 10  INCONSISTENCY  (multiple)
+   THEN PRINT INCONSISTENCY SUB-FIELD: .01  INCONSISTENCY
+   THEN PRINT INCONSISTENCY SUB-FIELD: 
+ THEN PRINT FIELD: 
+ Heading (S/C): INCONSISTENT DATA SEARCH  Replace 
+ STORE PRINT LOGIC IN TEMPLATE: 
+ DEVICE: ;132;999  SSH VIRTUAL TEMINAL
+ 
+ ...EXCUSE ME, LET ME THINK ABOUT THAT A MOMENT...
+ 
+ INCONSISTENT DATA SEARCH                                                                                                                                                                                                     
+ JUL 31,2015  13:06    PAGE 1
+                                                       SOCIAL
+                                 PHONE NUMBER          SECURITY    LAST
+ NAME                            [RESIDENCE]           NUMBER      UPDATED     
+ LAST UPDATED BY                 INCONSISTENCY
+ 
+ 
+ 2.  The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be unscheduled.
+     Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the 
+     Taskman Management [XUTM MGR] menu.
+  
+ 3.  The HL7 incoming filers should be stopped.  Use the Monitor, Start,
+     Stop Filers [HL FILER MONITOR] option on the Filer and Link Management
+     Options [HL MENU FILER LINK MGT] menu on the HL7 Main Menu [HL MAIN
+     MENU].
+  
+ 4.  The following options should be disabled during installation:
+     Add/Edit/Delete Catastrophic Disability  [DGENCD EDIT CATASTROP DISAB]
+     Patient Enrollment  [DGEN PATIENT ENROLLMENT]
+  
+ 5.  This patch may be run with users on the system, however because 
+     the Registration options need to be placed out of order, we suggest it
+     be installed after business hours.
+   
+ 6.  This patch takes less than 5 minutes to install.
+  
+ 7.  Required Builds
+  
+     a. The following is a list of REQUIRED builds for this KIDS
+     distribution (DG_53_P894.KID) Installation of this host file will
+     not be allowed without their prior installation.
+  
+          Required Builds:
+          ----------------
+          DG*5.3*610
+          DG*5.3*842
+          DG*5.3*850
+          IVM*2.0*132
+  
+  
+ Patch Installation:
+ ===================
+  
+  Installation Instructions:
+  --------------------------
+  
+     1.  OBTAIN PATCHES
+      ==============
+   
+      Obtain the host file DG_53_P894.KID, which contains the following
+      two patch installs:
+   
+         DG*5.3*894
+         IVM*2.0*158
+   
+      Sites can retrieve VistA software from the following FTP addresses.
+      The preferred method is to FTP the files from:
+   
+         download.vista.domain.ext
+   
+      This will transmit the files from the first available FTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+   
+         Albany                  ftp.domain.ext
+         Hines                   ftp.domain.ext
+         Salt Lake City          ftp.domain.ext
+   
+       The DG_53_P894.KID host file is located in the 
+       directory.  Use ASCII Mode when downloading the file.
+  
+    2. From the 'Kernel Installation & Distribution System' menu, select
+       the Installation menu.
+  
+    3. From the Installation menu, select the LOAD A DISTRIBUTION option.
+   
+       When prompted for "Enter a Host File:", enter the full directory path
+       where you saved the host file DG_53_P894.KID (e.g., 
+       SYS$SYSDEVICE:[ANONYMOUS]DG_53_P894.KID).
+   
+       When prompted for "OK to continue with Load? NO//", enter "YES."
+   
+       The following will display:
+   
+         Loading Distribution...
+   
+         DG*5.3*894
+         IVM*2.0*158
+   
+       Use INSTALL NAME: DG*5.3*894 to install this distribution. 
+  
+    4. From the Installation menu, you may now elect to use the following 
+       options (when prompted for INSTALL NAME, enter DG*5.3*894).
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any changes such as DDs or templates.
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when the patch
+          is installed.  It compares all components of the patch (routines,
+          DDs, templates, etc.).
+       c. Verify Checksums in Transport Global - This option will allow you
+          to ensure the integrity of the routines that are in the transport
+          global.
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+    5. Use the Install Package(s) option and select package DG*5.3*894.
+  
+    6. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+       Install? NO//', respond NO.
+  
+    7. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+       it is recommended you answer NO.
+  
+    8. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', respond YES and disable the following options. 
+       Add/Edit/Delete Catastrophic Disability  [DGENCD EDIT CATASTROP DISAB]
+       Patient Enrollment  [DGEN PATIENT ENROLLMENT]
+  
+    9. When Installation states: 
+       Note:  You already have the 'CATASTROPHIC DISABILITY REASONS' File.
+       Want my data merged with yours? YES//
+ 
+       Respond YES, when doing the initial installation.  Should a site need
+       to perform a second or subsequent install of the DG*5.3*894 patch,
+       answer NO to 'Want my data merged with yours? YES//' to
+       prevent duplication of new data.
+     
+ =================== POST-INSTALLATION INSTRUCTIONS ===================
+ 
+ 1.  The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be rescheduled.
+     Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the 
+     Taskman Management [XUTM MGR] menu.
+  
+ 2.  The HL7 incoming filers should be restarted.  Use the Monitor, Start,
+     Stop Filers [HL FILER MONITOR] option on the Filer and Link Management
+     Options [HL MENU FILER LINK MGT] menu on the HL7 Main Menu [HL MAIN
+     MENU].
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 48
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGENA5
+    Before: B40195760   After: B46261857  **232,688,850,894**
+Routine Name: DGENCD
+    Before: B21215216   After: B32491521  **121,122,232,237,302,387,451,894**
+Routine Name: DGENCD1
+    Before: B20644700   After: B23998759  **121,232,387,451,610,894**
+Routine Name: DGENCDA
+    Before:  B8468771   After:  B9760076  **121,147,232,387,451,653,894**
+Routine Name: DGENCDA1
+    Before: B47052771   After: B44873485  **121,147,232,302,356,387,475,
+                                           451,653,894**
+Routine Name: DGENCDA2
+    Before: B16663284   After: B12005626  **232,387,653,850,894**
+Routine Name: DGENCDU
+    Before:  B2969156   After:  B2645954  **121,232,894**
+Routine Name: DGENLCD1
+    Before: B18153404   After: B11542351  **121,232,387,850,894**
+Routine Name: DGENUPL1
+    Before: B41786889   After: B43841237  **147,222,232,314,397,379,407,
+                                           363,673,653,688,797,842,894**
+Routine Name: DGENUPL2
+    Before: B78421208   After: B82241171  **147,222,232,310,314,367,397,
+                                           677,631,675,672,673,716,653,
+                                           688,838,842,894**
+Routine Name: VAFHLZCD
+    Before: B33018689   After: B35023485  **122,232,387,653,894**
+ 
+Routine list of preceding patches: 610, 842, 850
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 23, 2014
+Completed By:                               Date Completed: AUG 10, 2015
+Released By :                               Date Released : AUG 26, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

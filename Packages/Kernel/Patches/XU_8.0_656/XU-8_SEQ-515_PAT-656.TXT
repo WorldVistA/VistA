@@ -1,0 +1,96 @@
+
+=============================================================================
+Run Date: JAN 14, 2015                     Designation: XU*8*656
+Package : XU - KERNEL                         Priority: EMERGENCY
+Version : 8       SEQ #515                      Status: Released
+                  Compliance Date: JAN 16, 2015
+=============================================================================
+
+
+Subject: INACTIVATE A NEW PERSON CLASS ENTRY
+
+Category: 
+  - Informational
+
+Description:
+============
+
+                 XU*8*656
+  
+ Sites, please be aware that the Person Class entry #1200 (V182916) was 
+ inactivated. If users have the entry assigned, it needs to be reassigned
+ to the Person Class entry #1177 (V182914).
+  
+  
+ 1) Please use the 'List Inactive Person Class Users '[XU-INACTIVE 
+    PERSON CLASS USERS] option to list all users who currently have
+    inactive Person Classes assigned.
+  
+ Select User Management <TEST ACCOUNT> Option:  List Inactive Person Class 
+ Users
+ Do you want to list active users only? NO//YES
+ DEVICE: HOME//   Network
+                                         Report on Jan 08, 2015    Page 1
+  
+ User name:          Currently has the inactive Person Class IEN^NAME:
+ ----------          -------------------------------------------------
+ LAST,FIRST            1200^Allopathic & Osteopathic Physicians
+  
+ Number of users: 1
+  
+  
+ If users are listed with "1200^Allopathic & Osteopathic Physicians", they 
+ need to be assigned to the new Person Class entry #1177.
+  
+ 2) DO NOT use FM Enter/Edit to assign Person Classes to users.
+    Please use the Person Class Edit [XU-PERSON CLASS EDIT] option
+    to assign a Person Class to a user:
+  
+ Select User Management Option: PERSON Class Edit
+ Select NEW PERSON NAME: LASTNAME, FIRSTNAME
+                              Edit of Person Class
+ NAME: LASTNAME, FIRSTNAME                  
+ --------------------------------------------------------------------------
+  
+ Person Class                            Effective    Expired
+  Allopathic & Osteopathic Physicians    JAN 8,2015                 
+  
+  
+  
+ --------------------------------------------------------------------------
+  
+  
+ NUMBER: 1177
+ PROVIDER TYPE: Allopathic & Osteopathic Physicians
+   CLASSIFICATION: Psychiatry & Neurology
+   AREA OF SPECIALIZATION: Behavioral Neurology & Neuropsychiatry
+   STATUS: Active                        VA CODE: V182914
+   X12 CODE: 2084B0040X                  SPECIALTY CODE: 26
+ DEFINITION:   Behavioral Neurology & Neuropsychiatry is a medical 
+ subspecialty 
+  involving the diagnosis and treatment of neurologically based behavioral 
+ issues.  
+   
+  Source: National Uniform Claim Committee.  
+   
+  Additional Resources: American Academy of Neurology, www.aan.com. 
+   INDIVIDUAL/NON: INDIVIDUAL
+   PROVIDER TYPE CODE (c): 20            CLASSIFICATION CODE (c): 84
+   AREA OF SPECIALIZATION CODE (c): B0040
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 08, 2015
+Completed By:                               Date Completed: JAN 09, 2015
+Released By :                               Date Released : JAN 14, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

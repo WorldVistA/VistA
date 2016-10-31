@@ -1,0 +1,1179 @@
+
+=============================================================================
+Run Date: APR 06, 2016                     Designation: HMP 2
+Package : HMP - HEALTH MANAGEMENT PLATFORM    Priority: Mandatory
+Version : 2                                     Status: Released
+                  Compliance Date: JUN 10, 2016
+=============================================================================
+
+Associated patches: (v)TIU*1*106   <<= must be installed BEFORE `HMP*2*0'
+                    (v)MD*1*38     <<= must be installed BEFORE `HMP*2*0'
+                    (v)PSB*3*79    <<= must be installed BEFORE `HMP*2*0'
+                    (v)OR*3*390    <<= must be installed BEFORE `HMP*2*0'
+                    (v)GMRC*3*80   <<= must be installed BEFORE `HMP*2*0'
+                    (v)TIU*1*298   <<= must be installed BEFORE `HMP*2*0'
+                    (v)USR*1*37    <<= must be installed BEFORE `HMP*2*0'
+
+Subject: ENTERPRISE HEALTH MANAGEMENT PLATFORM
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ ENTERPRISE HEALTH MANAGEMENT PLATFORM (eHMP)
+  
+ The eHMP project within the Veterans Health Information Systems and
+ Technology (VistA) Evolution program will introduce expanded capabilities
+ and modernize existing features of the VA VistA Electronic Health Record
+ (EHR) system. The eHMP project is a multi-year effort to evolve a modern,
+ service-oriented Enterprise Health Application Platform. This platform
+ includes VistA Exchange, the eHMP graphical user interface (GUI), as well
+ as clinical knowledge enrichment and decision support services. VistA
+ Exchange is the clinical data services engine, federating clinical data
+ from a variety of VA and DoD sources into an Enterprise Health Management
+ Platform Patient Record. The eHMP framework will incorporate capabilities
+ currently provided by Joint Legacy Viewer (JLV) and Health Informatics
+ Initiative (hi2) HMP. The eHMP will eventually replace the Computerized
+ Patient Record System (CPRS) as VA's primary point of care application.
+ The eHMP Viewer Edition version 1.2 is the initial product providing a
+ user interface. This project is being deployed in phases with each
+ iteration adding new features.
+  
+ ***Note***
+ eHMP will be a phased implementation 
+ To see the current status and target dates for Sites/VISN/Regions please 
+ refer to the following site:
+  
+ http://vaww.oed.portal.domain.ext/pm/iehr/vista_evolution/ehmpdeployment/eHMP%
+ 20v12/Forms/All%20Items.aspx?RootFolder=/pm/iehr/vista_evolution/ehmpdeplo
+ yment/eHMP%20v12/Resources/Waves%20and%20Timelines
+  
+ Patch Components
+ ================
+ This release contains an HMP Prerequisite Bundle and Hmp 2.0 KIDs build.  
+ The order of installation will be the prerequisite bundle KID file 
+ followed by the HMP 2.0 KID file.
+  
+ ***Note***  
+ The pre-requisite, multi-build patch that contains all the patches needed 
+ prior to installation of the HMP 2.0 patch. The multi-build contains the
+ following:
+  
+ GMRC*3.0*80
+ MD*1.0*38
+ OR*3.0*390
+ PSB*3.0*79
+ TIU*1.0*106
+ TIU*1.0*298
+ USR*1.0*37
+  
+  
+ HMP 2.0
+  
+ The following sections are specific to the HMP 2.0 patch, which is
+ the primary patch for eHMP. The patches in the prerequisite bundle
+ contain methods for extracting domain specific data to the eHMP User
+ Interface (UI) and the JavaScript Object Notation (JSON) Data Store.
+  
+ Files & Fields Associated:
+ --------------------------
+ The following new files are exported with this patch:
+  
+ File Name (#)           Field Name (#)          New/Modified/Deleted
+ -------------           --------------          -------------------- 
+ HMP SUBSCRIPTION (#800000)                                New
+                         SERVER (#.01)
+                         LASTUPDATE (#.02)
+                         OPERATION DATA (#.03)
+                         REPEAT POLLS (#.04)
+                         DISK USAGE STATUS (#.05)
+                         DISK USAGE STATUS TIME (#.06)
+                         URL (#.1)
+                         PATIENT (#1)  MULTIPLE
+                           PATIENT NAME (#.01)
+                           STATUS (#2)
+                           STATUS DATE-TIME (#3)
+                           ORDERS (#4)  MULTIPLE
+                             ORDER NUMBER (#.01)
+                             CREATE DATE/TIME (#.02)
+                             SIGNED BY (#.03)
+                             SIGNED DATE/TIME (#.04)
+                             VERIFYING NURSE (#.05)
+                             NURSE VERIFY DATE/TIME (#.06)
+                             VERIFYING CLERK (#.07)
+                             CLERK VERIFY DATE/TIME (#.08)
+                             REVIEWED BY (#.09)
+                             REVIEWED DATE/TIME (#.1)
+                             RELEASED BY (#.11)
+                             RELEASED DATE/TIME (#.12)
+                             PURGE DATE/TIME (#.13)
+                             ORDER ACTION (#.14)
+                             ACTION DATE/TIME (#.15)
+                             TRACKING START (#1.01)
+                             ORDER FLAG/UNFLAG DATE/TIME (#2)  MULTIPLE
+                               ORDER FLAG/UNFLAG DATE/TIME (#.01)
+                               FLAG ACTION (#.02)
+                               FLAG/UNFLAG USER (#.03)
+                               FLAG/UNFLAG REASON (#.04)
+                         ROSTER (#2)  MULTIPLE
+                           NAME (#.01)
+                           ON (#2)
+                         CONCURRENT UPDATE CALLS (#91)
+  
+ HMP PATIENT OBJECT (#800000.1)                            New
+                         UID (#.01)
+                         PATIENT (#.02)
+                         COLLECTION (#.03)
+                         DATA (#1)  MULTIPLE
+                           DATA (#.01)
+  
+ HMP OBJECT (#800000.11)                                   New
+                         UID (#.01)
+                         COLLECTION (#.03)
+                         DATA (#1)  MULTIPLE
+                           DATA (#.01)
+ HMP LIST (#800000.2)                                      New
+                         NAME (#.01)
+                         TYPE (#.02)
+                         DD NUMBER (#.03)
+                         DOMAIN (#.04)
+                         ATTRIBUTE (#.05)
+                         REFRESH THRESHOLD (#.08)
+                         NEXT REFRESH DATE (#.09)
+                         GENERATION CODE (#11)
+                         COLUMNS (#.2)   MULTIPLE
+                           COLUMN NAME (#.01)
+                           ORDER (#.02)
+                         DESCRIPTION (#.3)       MULTIPLE
+                           DESCRIPTION (#.01)
+                         DATA (#.9)              MULTIPLE
+                           DATA (#.01)
+  
+ HMP LIST DOMAIN (#800000.21)                              New
+                         NAME (#.01)
+                         ABBREVIATION (#.02)
+                         DISPLAY NAME (#.03)
+  
+ HMP LIST ATTRIBUTE (#800000.22)                           New
+                         NAME (#.01)
+                         ABBREVIATION (#.02)
+                         DISPLAY NAME (#.03)
+  
+ HMP PANEL (#800001)                                       New
+                         NAME (#.01)
+                         DISPLAY NAME (#.02)
+                         PATIENT LIST NAME (#.03)
+                         ORDER DIALOGS (#5)  MULTIPLE
+                           ORDER DIALOGS (#.01)
+  
+ HMP ROSTER (#800001.2)                                    New
+                         NAME (#.01) 
+                         DISPLAY NAME (#.02)
+                         DISABLE (#.03)
+                         OWNER (#.04)
+                         TYPE (#.05)
+                         PATIENT LIST NAME (#.06)
+                         SOURCES (#1)   MULTIPLE
+                           SEQUENCE (#.01)
+                           SOURCE (#.02)
+                           OPERATION (#.03)
+                           FILTER (#.04)
+                           REFRESH FREQUENCY (#.05)
+                         SPECIAL HANDLING (#2)
+                         PATIENT (#3)  MULTIPLE
+                           PATIENT (#.01)
+                           SRCSEQ (#.02)
+                         TIMESTAMP (#99)
+  
+ HMP ACTIVITY (#800001.5)                                  New
+                         PATIENT NAME (#.01)
+                         APPOINTMENT DATE (#2)
+                         APPOINTMENT STATUS (#3)
+                         DATE RECORD CREATED (#4)
+                         DATE RECORD RETREIVED (#5)
+                         HMP PROCESS FLAG (#6)
+                         JSON MESSAGE (#7)
+  
+ Checksums:
+ ----------
+  
+ The checksums were calculated using CHECK1^XTSUMBLD.
+  
+ HMP*2.0*0   ENTERPRISE HEALTH MANAGEMENT PLATFORM
+  
+ HMP0311P  value = 14101699
+ HMP0311Q  value = 3902876
+ HMPACT    value = 34386179
+ HMPAT     value = 3595282
+ HMPCAC    value = 97070146
+ HMPCORD4  value = 141593321
+ HMPCORD5  value = 89350961
+ HMPCPRS   value = 5087431
+ HMPCRPC   value = 13274810
+ HMPCRPC1  value = 103567295
+ HMPD      value = 29605922
+ HMPDCRC   value = 46986534
+ HMPDERRH  value = 2044240
+ HMPDGMPL  value = 28172327
+ HMPDGMRA  value = 22211624
+ HMPDGMV   value = 43285050
+ HMPDJ     value = 36572187
+ HMPDJ0    value = 118417079
+ HMPDJ00   value = 150294972
+ HMPDJ01   value = 49806712
+ HMPDJ02   value = 178043401
+ HMPDJ03   value = 97739485
+ HMPDJ04   value = 86219849
+ HMPDJ04A  value = 59768993
+ HMPDJ04E  value = 18074806
+ HMPDJ05   value = 85682186
+ HMPDJ05V  value = 69065747
+ HMPDJ06   value = 64037338
+ HMPDJ07   value = 26955013
+ HMPDJ08   value = 73570854
+ HMPDJ08A  value = 50353978
+ HMPDJ09   value = 47251770
+ HMPDJ09M  value = 14316939
+ HMPDJ1    value = 18644090
+ HMPDJ2    value = 21439862
+ HMPDJFS   value = 74871558
+ HMPDJFS1  value = 1887278
+ HMPDJFSD  value = 6635230
+ HMPDJFSG  value = 216382035
+ HMPDJFSM  value = 91943836
+ HMPDJFSP  value = 228347665
+ HMPDJX    value = 36089287
+ HMPDLR    value = 24262347
+ HMPDLRA   value = 79686061
+ HMPDMC    value = 58181283
+ HMPDMDC   value = 45041787
+ HMPDOR    value = 13574723
+ HMPDPSOR  value = 2311665
+ HMPDRA    value = 42792632
+ HMPDSDAM  value = 21275067
+ HMPDSR    value = 30022036
+ HMPDTIU   value = 83859727
+ HMPDVSIT  value = 93496568
+ HMPEASU   value = 29036042
+ HMPEF     value = 86254671
+ HMPEF1    value = 36268404
+ HMPEFX    value = 8398930
+ HMPEHL7   value = 3570530
+ HMPELAB   value = 7483676
+ HMPEQ     value = 27101202
+ HMPEQLM   value = 113676837
+ HMPEQLM1  value = 7071509
+ HMPEQLM2  value = 3277771
+ HMPEVNT   value = 129413290
+ HMPFPTC   value = 15382684
+ HMPHTTP   value = 14631122
+ HMPIDX    value = 2980358
+ HMPJSON   value = 11632331
+ HMPJSOND  value = 71688388
+ HMPJSONE  value = 27506711
+ HMPLIST   value = 62846538
+ HMPMDUTL  value = 53381465
+ HMPMETA   value = 122279349
+ HMPP3I    value = 129333471
+ HMPPARAM  value = 16541840
+ HMPPATS   value = 3116859
+ HMPPDL    value = 23790480
+ HMPPRXY2  value = 16933808
+ HMPPTDEM  value = 12665908
+ HMPPXRM   value = 14531240
+ HMPROS8   value = 82143309
+ HMPSTMP   value = 70461106
+ HMPTFU2   value = 40086168
+ HMPTOOLS  value = 11387818
+ HMPUPD    value = 25123694
+ HMPUTIL1  value = 42764058
+ HMPUTILS  value = 39059234
+ HMPXGDPT  value = 2019789
+ HMPXGLAB  value = 1064430
+ HMPXGNP   value = 1299808
+ HMPXGORD  value = 2568884
+ HMPXGSD   value = 2602100
+ HMPYCSO   value = 22000106
+ HMPZ0218  value = 5632129 
+  
+ MD*1.0*38     CLINICAL PROCEDURES
+ Routine       Before        After         2nd Line
+ MDCPROTD      New           6754694       **38**
+ MDPOST38      New           2283064       **38**
+  
+ OR*3.0*390    ORDER ENTRY/RESULTS REPORTING
+ Routine       Before        After         2nd Line
+ ORCACT1       49420108      50018442      **7,27,56,48,86,92,116,149,215,
+                                            284,390**
+ ORCSEND       65578810      66459073      **4,27,45,79,92,141,165,195,
+                                            228,243,303,296,390**
+ ORMBLDOR      2239296       5850168       **97,390**
+ ORWDXA        82710229      83747347      **10,85,116,132,148,141,149,
+                                            187,213,195,215,243,280,306,
+                                            390**
+  
+ PSB*3.0*79    BAR CODE MED ADMIN
+ Routine       Before        After         2nd Line
+ PSBML         127507803     134214064     **6,3,4,9,11,13,25,45,33,52,
+                                            70,72,79**
+ PSBVPR        New           2149221       **79**
+  
+ TIU*1.0*106   TEXT INTEGRATION UTILITIES
+ Routine       Before        After         2nd Line
+ TIUDDX        New           292958        **106**
+ TIUPS106      New           3258435       **106**
+ TIUVPR        New           11093980      **106**
+  
+ GMRC*3.0*80   CONSULT/REQUEST TRACKING
+ Routine       Before        After         2nd Line
+ GMRCAPI       New           8359535       **80**
+  
+ USR*1.0*37    AUTHORIZED SUBSCRIPTION UTILITY
+ Routine       Before        After         2nd Line 
+ USRCLASS      11828621      14942098      **7,11,33,37**
+ USRRULA       24614630      28762260      **3,28,29,37**
+  
+ TIU*1.0*298   TEXT INTEGRATION UTILITIES
+ There are no routines in this patch.
+  
+ Forms Associated:
+ -----------------
+ There are no new or modified forms.
+  
+ Mail Groups Associated:
+ -----------------------
+ HMP IRM GROUP - This mail group will receive alerts from the 
+ eHMP subscription process if the usage of global ^XTMP reaches the limit
+ allowed and begins to pause subscriptions until disk space is available.
+ The mail group also receives notifications when disk space is freed up
+ and subscriptions are again proceeding. The eHMP software 
+ automatically clears the ^XTMP data after it is processed.
+  
+ Options Associated:
+ -------------------
+ The following new options are associated with this release:
+  
+  - HMP Application Proxy [HMP APPLICATION PROXY] - This option allows the
+    HMP connector proxy access to the VistA system.
+  
+  - Return List of Tomorrow's Patients [HMP APPOINTMENTS] - This option 
+    should be scheduled to run nightly, to notify the Enterprise
+    Health Management Platform (eHMP) of patients that are to be
+    seen tomorrow.
+  
+  - XTMP Global Monitor [HMP MONITOR FOR XTMP GLOBAL] - This option will
+    monitor amount of space in the ^XTMP global used by the eHMP.  The 
+    amount used is very dynamic
+  
+  - Patient Appointments [HMP PATIENT ACTIVITY] - Return appointments for a
+    subscribed patient. 
+  
+  - HMP Patient Data Monitor [HMP PATIENT DATA MONITOR] - This option
+    manages the HMP Patient Data Monitor background job.  It first checks
+    to see if the job is running, and will prompt the user to start it if
+    it's stopped. It may also be used to stop the job, but the eHMP client
+    may not display up-to-date data until it is started up again.
+  
+  - Synchronize the HMP [HMP SYNCHRONIZATION CONTEXT]- This option manages
+    access to RPCs responsible for synchronization of eHMP data with VistA.
+  
+  - HMP UI Context Version 0.7-S62 [HMP UI CONTEXT] - This option allows
+    the HMP UI access to the VistA system.
+  
+  - Writeback Of Domain Data To VistA [HMP WB DOMAINS] - Writes domain 
+    data to VistA
+  
+  - HMP Writeback Patient Demographics [HMP WB PTDEM] - This option allows 
+    eHMP to change patient phone numbers in VistA.
+  
+  - New Person events for HMP [HMP XU EVENTS] - This protocol will track
+    New Person updates for HMP.
+  
+  - Manually Add Patient to HMP [HMPM ADD HMP PATIENT] - Use this option to
+    manually add a patient for synchronization with the Enterprise Health
+    Management Platform (eHMP).
+  
+  - Add Health Management Platform User [HMPM ADD HMP USER] - This option
+    allows a user to be given access to use the Health Management Platform.
+    The selected user will be given the HMP UI CONTEXT option.  
+    Additionally, their default patient list may be set up for automatic
+    synchronization with the Health Management Platform (HMP).
+  
+  - Emergency Stop HMP Freshness Updates [HMPM EMERGENCY STOP] - This
+    option should be used with caution.  It will stop the freshness events
+    for the ENTERPRISE HEALTH MANAGEMENT PLATFORM (HMP) from being called.
+    Once the freshness events are stopped, patient data must be
+    re-synchronized with the HMP to ensure completeness.  Only stop
+    freshness updates if there is a problem with system operation.
+  
+  - Monitor HMP Server Synchronization [HMPM EXTRACT MONITOR] - This option
+    is used to monitor the polls from an HMP server and any currently 
+    executing HMP extracts.
+  
+  - Resume Freshness Updates That Have Been Stopped [HMPM RESTART
+    FRESHNESS] - This option will remove the flags that cause freshness
+    updates to be stopped.  It will likely be necessary to re-synchronized
+    patients after freshness has been stopped, since updates will be
+    missing from the time that freshness updates were not being received.
+  
+  - HMP Technical Management [HMPMGR] - This menu contains various options
+    to help with the management of HMP
+  
+ Parameter Definitions:
+ ----------------------
+ The following new Parameter Definitions were added to the PARAMETER 
+ DEFINITION file (#8989.51).  These parameters should not be modified.
+  
+ HMP CPRS PATH
+ HMP DOMAIN SIZES
+ HMP EXTRACT DISK SIZE LIMIT
+ HMP EXTRACT TASK REQUEUE SECS
+ HMP JSON SCHEMA
+ HMP LOCATIONS
+ HMP PARAMETERS
+ HMP SYSTEM NAME
+ HMP TASK WAIT TIME
+ HMP VERSION
+  
+ Protocols Associated:
+ ---------------------
+ The following new or modified Protocols are included in this KID build.
+  
+ Protocol Name                               New/Modified/Deleted
+ -------------                               --------------------
+  
+ HMP ADT-A04 CLIENT                          New
+ HMP ADT-A08 CLIENT                          New
+ HMP APPT EVENTS                             New
+ HMP DG UPDATES                              New
+ HMP DGPF ASSIGN FLAG                        New
+ HMP GMPL EVENT                              New
+ HMP GMRA EVENTS                             New
+ HMP INPT EVENTS                             New
+ HMP MDC EVENT                               New
+ HMP NA EVENTS                               New
+ HMP PCE EVENTS                              New
+ HMP PCMM TEAM                               New
+ HMP PCMM TEAM POSITION                      New
+ HMP PSB EVENTS                              New
+ HMP XQOR EVENTS                             New
+ HMPM EVT QUE CHANGE DOMAIN                  New
+ HMPM EVT QUE CHANGE MAX LISTED              New
+ HMPM EVT QUE CHANGE SERVER                  New
+ HMPM EVT QUE DISPLAY DETAILS                New
+ HMPM EVT QUE FILTER                         New
+ HMPM EVT QUE FRESHNESS REPORT               New
+ HMPM EVT QUE MGR MENU                       New
+ HMPM EVT QUE REFRESH                        New
+ HMPM EVT QUE SELECT PATIENT                 New
+ HMPM EVT QUE SHOW TEMP GLOBALS              New
+ DG FIELD MONITOR                            Modified
+ DGPM MOVEMENT EVENTS                        Modified
+ FH EVSEND OR                                Modified
+ GMPL EVENT                                  Modified
+ GMRA ENTERED IN ERROR                       Modified
+ GMRA SIGN-OFF ON DATA                       Modified
+ GMRC EVSEND OR                              Modified
+ LR7O CH EVSEND OR                           Modified
+ MDC OBSERVATION UPDATE                      Modified
+ OR EVSEND FH                                Modified
+ OR EVSEND GMRC                              Modified
+ OR EVSEND LRCH                              Modified
+ OR EVSEND ORG                               Modified
+ OR EVSEND PS                                Modified
+ OR EVSEND RA                                Modified
+ OR EVSEND VPR                               Modified
+ PS EVSEND OR                                Modified
+ PSB EVSEND VPR                              Modified
+ PXK VISIT DATA EVENT                        Modified
+ RA EVSEND OR                                Modified
+ SCMC PATIENT TEAM CHANGES                   Modified
+ SCMC PATIENT TEAM POSITION CHANGES          Modified
+ SDAM APPOINTMENT EVENTS                     Modified
+  
+ Remote Procedure Calls (RPCs)
+ -----------------------------
+ The following new RPCs are included with this installation
+  
+ HMP APPOINTMENTS
+ HMP CHKXTMP
+ HMP DATA VERSION
+ HMP DEFAULT PATIENT LIST
+ HMP DELETE OBJECT
+ HMP DELETE ROSTER
+ HMP GET CHECKSUM
+ HMP GET OBJECT
+ HMP GET OPERATIONAL DATA
+ HMP GET PATIENT DATA
+ HMP GET PATIENT DATA JSON
+ HMP GET REFERENCE DATA
+ HMP GET ROSTER LIST
+ HMP GET SOURCE
+ HMP GLOBAL SIZE
+ HMP INPATIENTS
+ HMP LOCAL CORRESPONDINGIDS
+ HMP LOCAL GETCORRESPONDINGIDS
+ HMP PATIENT ACTIVITY
+ HMP PATIENT ADMIT SYNC
+ HMP PATIENT SCHED SYNC
+ HMP PREVIEW ROSTER
+ HMP PUT DEMOGRAPHICS
+ HMP PUT OBJECT
+ HMP PUT OPERATIONAL DATA
+ HMP PUT PATIENT DATA
+ HMP ROSTER PATIENTS
+ HMP ROSTERS
+ HMP SUBSCRIBE
+ HMP SUBSCRIBE ROSTERS
+ HMP UPDATE ROSTER
+ HMP WRITEBACK PT DEM
+ HMPCORD RPC
+ HMPCPAT RPC
+ HMPCPRS RPC
+ HMPCRPC RPC
+ HMPCRPC RPCCHAIN
+ HMPDJFS API
+ HMPDJFS DELSUB
+ HMPFPTC CHKS
+ HMPFPTC LOG
+  
+ Security Keys Associated:
+ -------------------------
+ HMP ADMIN - This key is used to determine which HMP users should be 
+ allowed to manage subscriptions and the subscription queue.
+  
+ HMP EXPERIMENTAL - This key is used to isolate new features for site 
+ testing.
+                                                     
+ Templates Associated:
+ ---------------------
+ HMPM EVT QUE MGR - List Template
+  
+ HL7 Application Parameter:
+ ==========================
+ HMP HL7
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR #20150408 - VistA Evolution Enterprise Health Management Platform 
+ (eHMP)
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ There are no PSIs addressed in this patch
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ There are no Remedy Tickets addressed in this patch
+  
+ Test Sites:
+ -----------
+ Hampton, VA
+ Portland, OR
+ San Diego, CA
+ Loma Linda, CA
+ San Antonio, TX
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ This is PHASED IMPLEMENTATION. The host files and instructions will be 
+ provided by ASMR/eHMP Implementation Team based on the implementation 
+ schedule. Installation instructions will also be distributed when your 
+ site is scheduled to begin the implementation process.
+  
+ Sites may retrieve the documentation from the ANONYMOUS.SOFTWARE 
+ directory at one of the OI Field Offices. The preferred method is to
+ retrieve the file using Secure File Transfer Protocol (SFTP) from
+ DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first
+ available server. Alternatively, sites may elect to retrieve the file from
+ a specific OI Field Office.
+  
+    OI FIELD OFFICE     FTP ADDRESS                DIRECTORY 
+    Albany              DOMAIN.EXT        
+    Hines               DOMAIN.EXT         
+    Salt Lake City      DOMAIN.EXT           
+  
+ The documentation will be distributed as PDF files.
+ Documentation will also be posted on the VA Software Documentation Library
+ at:  http://www4.domain.ext/vdl/
+  
+ File Name                 Description               Retrieval Format
+ ---------                 -----------               ----------------
+ eHMP_EA Site              Installation Guide        Binary
+ Installation Guide
+ for Release 1.2.pdf
+  
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ HMP PREREQUISITE BUNDLE 2.0 must be installed prior to installing 
+ HMP*2.0.  The installation instructions are provided for the HMP
+ PREREQUISITE BUNDLE 2.0 first followed by the installation instructions
+ for HMP*2.0.
+  
+ Installation Instructions
+ -------------------------
+  
+ HMP PREREQUISITE BUNDLE 2.0 Installation
+ ----------------------------------------
+  
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.  There are no Options or Protocols that need to be placed
+ out-of-order.
+  
+ 1. From the Kernel Installation & Distribution System [XPD MAIN] menu, 
+ select the Installation Menu [XPD INSTALLATION MENU]. From this menu, you 
+ may elect to use the following options:
+  
+    a. Backup a Transport Global [XPD BACKUP] - 
+    This option will create a backup message of any routines exported with 
+    this patch. It will not backup any other changes such as data 
+    dictionaries or templates.
+  
+    b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM]- 
+    This option will allow you to view all changes that will be made when 
+    this patch is installed. It compares all components of this patch 
+    (routines, data dictionaries, templates, etc.).
+  
+    c. Verify Checksums in Transport Global [XPD PRINT CHECKSUM]- This
+    option will verify checksums for the components of a Transport Global
+    and will report any checksums that are incorrect.
+  
+ 2. From the Installation Menu [XPD INSTALLATION MENU] select Load a 
+ Distribution [XPD LOAD DISTRIBUTION]. Enter the Host file location, then 
+ HMP_PREREQ_BUNDLE_2-0.KID
+  
+ 3. When prompted 'Want to Rebuild Menu Trees Upon Completion of Install? 
+ NO//' respond NO.
+  
+ 4. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+ respond NO.
+  
+ 5. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+ Protocols? NO//', respond NO.
+  
+ Sample Installation
+ -------------------
+  
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME: HMP PREREQUISITE BUNDLE 2.0      1/15/16@10:07:52
+      => HMP PREREQUISITE BUNDLE 2.0 v2.9  ;Created on Jan 14, 
+ 2016@17:59:57
+  
+ This Distribution was loaded on Jan 15, 2016@10:07:52 with header of 
+    HMP PREREQUISITE BUNDLE 2.0 v2.9  ;Created on Jan 14, 2016@17:59:57
+    It consisted of the following Install(s):
+ HMP PREREQUISITE BUNDLE 2.0      MD*1.0*38     OR*3.0*390     PSB*3.0*79
+     TIU*1.0*106    GMRC*3.0*80     USR*1.0*37    TIU*1.0*298
+ Checking Install for Package HMP PREREQUISITE BUNDLE 2.0
+  
+ Install Questions for HMP PREREQUISITE BUNDLE 2.0
+  
+  
+ Checking Install for Package MD*1.0*38
+  
+ Install Questions for MD*1.0*38
+  
+  
+ Checking Install for Package OR*3.0*390
+  
+ Install Questions for OR*3.0*390
+  
+  
+ Checking Install for Package PSB*3.0*79
+  
+ Install Questions for PSB*3.0*79
+  
+  
+ Checking Install for Package TIU*1.0*106
+  
+ Install Questions for TIU*1.0*106
+  
+  
+ Checking Install for Package GMRC*3.0*80
+  
+ Install Questions for GMRC*3.0*80
+  
+  
+ Checking Install for Package USR*1.0*37
+  
+ Install Questions for USR*1.0*37
+  
+  
+ Checking Install for Package TIU*1.0*298
+  
+ Install Questions for TIU*1.0*298
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+  
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   TELNET PORT
+ --------------------------------------------------------------------------
+  
+  Install Started for HMP PREREQUISITE BUNDLE 2.0 : 
+                Jan 15, 2016@10:10:46
+  
+ Build Distribution Date: Jan 14, 2016
+  
+  Installing Routines:
+                Jan 15, 2016@10:10:46
+  
+  Install Started for MD*1.0*38 : 
+                Jan 15, 2016@10:10:46
+  
+ Build Distribution Date: Jan 14, 2016
+  
+  Installing Routines:
+                Jan 15, 2016@10:10:47
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing PROTOCOL
+   Located in the MD (CLINICAL PROCEDURES) namespace.
+                Jan 15, 2016@10:10:47
+  
+  Running Post-Install Routine: EN^MDPOST38
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MD*1.0*38 Installed. 
+                Jan 15, 2016@10:10:47
+  
+  Install Message sent 
+  
+  Install Started for OR*3.0*390 : 
+                Jan 15, 2016@10:10:47
+  
+ Build Distribution Date: Jan 14, 2016
+  
+  Installing Routines:
+                Jan 15, 2016@10:10:47
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing PROTOCOL
+   Located in the OR (ORDER ENTRY/RESULTS REPORTING) namespace.
+                Jan 15, 2016@10:10:47
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  OR*3.0*390 Installed. 
+                Jan 15, 2016@10:10:47
+  
+  Install Message sent 
+  
+  Install Started for PSB*3.0*79 : 
+                Jan 15, 2016@10:10:47
+  
+ Build Distribution Date: Jan 14, 2016
+  
+  Installing Routines:
+                Jan 15, 2016@10:10:47
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing PROTOCOL
+   Located in the PSB (BAR CODE MED ADMIN) namespace.
+                Jan 15, 2016@10:10:47
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  PSB*3.0*79 Installed. 
+                Jan 15, 2016@10:10:47
+  
+  Install Message sent 
+  
+  Install Started for TIU*1.0*106 : 
+                Jan 15, 2016@10:10:47
+  
+ Build Distribution Date: Jan 14, 2016
+  
+  Installing Routines:
+                Jan 15, 2016@10:10:47
+  
+  Running Post-Install Routine: MAIN^TIUPS106
+ Creating index definition ...
+  
+  
+ Compiling TIU ENTER/EDIT DS Input Template of File 8925........
+ 'TIUEDS1' ROUTINE FILED...
+ 'TIUEDS2' ROUTINE FILED..
+ 'TIUEDS3' ROUTINE FILED.
+ 'TIUEDS4' ROUTINE FILED.
+ 'TIUEDS' ROUTINE FILED..............
+ 'TIUEDS5' ROUTINE FILED.
+ 'TIUEDS6' ROUTINE FILED.
+  
+ Compiling TIU ENTER/EDIT PROGRESS NOTE Input Template of File 8925........
+ 'TIUEPN1' ROUTINE FILED.
+ 'TIUEPN2' ROUTINE FILED..
+ 'TIUEPN3' ROUTINE FILED..
+ 'TIUEPN4' ROUTINE FILED.
+ 'TIUEPN5' ROUTINE FILED..
+ 'TIUEPN6' ROUTINE FILED.
+ 'TIUEPN7' ROUTINE FILED..
+ 'TIUEPN8' ROUTINE FILED.
+ 'TIUEPN9' ROUTINE FILED.
+ 'TIUEPN' ROUTINE FILED............
+ 'TIUEPN11' ROUTINE FILED.
+ 'TIUEPN12' ROUTINE FILED..
+ 'TIUEPN10' ROUTINE FILED.
+ 'TIUEPN13' ROUTINE FILED.
+  
+ Compiling Cross-Reference(s) 8925 of File 8925.
+  
+ ...HMMM, JUST A MOMENT PLEASE...
+  
+ 'TIUXRC1' ROUTINE FILED.
+ 'TIUXRC2' ROUTINE FILED.
+ 'TIUXRC3' ROUTINE FILED.
+ 'TIUXRC4' ROUTINE FILED.
+ 'TIUXRC' ROUTINE FILED.
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  TIU*1.0*106 Installed. 
+                Jan 15, 2016@10:10:47
+  
+  
+  Install Started for GMRC*3.0*80 : 
+                Jan 15, 2016@10:10:47
+  
+ Build Distribution Date: Jan 14, 2016
+  
+  Installing Routines:
+                Jan 15, 2016@10:10:47
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  GMRC*3.0*80 Installed. 
+                Jan 15, 2016@10:10:47
+  
+  
+  Install Started for USR*1.0*37 : 
+                Jan 15, 2016@10:10:47
+  
+ Build Distribution Date: Jan 14, 2016
+  
+  Installing Routines:
+                Jan 15, 2016@10:10:47
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  USR*1.0*37 Installed. 
+                Jan 15, 2016@10:10:47
+  
+  Install Started for TIU*1.0*298 : 
+                Jan 15, 2016@10:10:47
+  
+ Build Distribution Date: Jan 14, 2016
+  
+  Installing Routines:
+                Jan 15, 2016@10:10:47
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing OPTION
+                Jan 15, 2016@10:10:47
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  TIU*1.0*298 Installed. 
+                Jan 15, 2016@10:10:47
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  HMP PREREQUISITE BUNDLE 2.0 Installed. 
+                Jan 15, 2016@10:10:47
+  
+  No link to PACKAGE file
+  
+ Install Completed
+  
+  
+ HMP 2.0 Installation
+ --------------------
+  
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take approximately
+ 5 minutes to install. There are no Options or Protocols that need to be
+ placed temporarily out of order.
+  
+ **Note**
+ Do Not Queue this install. During the installation the installer will be 
+ prompted to enter in the name of the coordinator for the Mail Group 'HMP
+ IRM GROUP'.
+  
+ **Note**
+ During the install the routine HMPZ0218 will be looking for INDEX:
+ 702^AVPR^Trigger updates to VPR^.  The sample installation shows NNN in 
+ place of the site internal entry number.
+  
+ 1. From the Kernel Installation & Distribution System [XPD MAIN] menu, 
+ select the Installation Menu [XPD INSTALLATION MENU]. From this menu, you 
+ may elect to use the following options:
+  
+    a. Backup a Transport Global [XPD BACKUP] - 
+    This option will create a backup message of any routines exported with 
+    this patch. It will not backup any other changes such as data 
+    dictionaries or templates.
+  
+    b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM]- 
+    This option will allow you to view all changes that will be made when 
+    this patch is installed. It compares all components of this patch 
+    (routines, data dictionaries, templates, etc.).
+  
+    c. Verify Checksums in Transport Global [XPD PRINT CHECKSUM]- This
+    option will verify checksums for the components of a Transport Global
+    and will report any checksums that are incorrect. 
+  
+ 2. From the Installation Menu [XPD INSTALLATION MENU] select Load a 
+ Distribution [XPD LOAD DISTRIBUTION]. Enter the Host file location, then 
+ HMP_2-0.KID
+  
+ 3. When prompted 'Want to Rebuild Menu Trees Upon Completion of Install? 
+ YES//' respond YES.
+  
+ 4. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+ respond NO.
+  
+ 5. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+ Protocols? NO//', respond NO.
+  
+ 6.  During the installation the installer will be prompted to enter in 
+ the name of the coordinator for the Mail Group 'HMP IRM GROUP'.  The name 
+ shown below is only an example.
+  
+ Sample Installation
+ -------------------
+  
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME: HMP 2.0      3/4/16@10:03:21
+      => Enterprise Health Management Platform Release  ;Created on Mar 
+ 04, 2016
+  
+ This Distribution was loaded on Mar 04, 2016@10:03:21 with header of 
+    Enterprise Health Management Platform Release  ;Created on Mar 04, 
+ 2016@09:56:20
+    It consisted of the following Install(s):
+         HMP 2.0
+ Checking Install for Package HMP 2.0
+  
+ Incoming Files:
+  
+    800000    HMP SUBSCRIPTION
+  
+    800000.1  HMP PATIENT OBJECT
+  
+    800000.11 HMP OBJECT  (including data)
+  
+    800000.2  HMP LIST  (including data)
+  
+    800000.21 HMP LIST DOMAIN  (including data)
+  
+    800000.22 HMP LIST ATTRIBUTE  (including data)
+  
+    800001    HMP PANEL
+  
+    800001.2  HMP ROSTER
+  
+    800001.5  HMP ACTIVITY
+  
+ Incoming Mail Groups:
+  
+ Enter the Coordinator for Mail Group 'HMP IRM GROUP': PROGRAMMER,ONE
+   EC     113     COMPUTER SPECIALIST
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? YES// 
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+  
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   TELNET PORT
+ --------------------------------------------------------------------------
+  
+  Install Started for HMP 2.0 : 
+                Mar 04, 2016@10:04:06
+  
+ Build Distribution Date: Feb 23, 2016
+  
+  Installing Routines:
+                Mar 04, 2016@10:04:06
+  
+  Running Pre-Install Routine: PRE^HMPP3I
+  
+  Installing Data Dictionaries: 
+                Mar 04, 2016@10:04:06
+  
+  Installing Data: 
+                Mar 04, 2016@10:04:06
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing SECURITY KEY
+  
+  Installing MAIL GROUP
+  
+  Installing HL7 APPLICATION PARAMETER
+  
+ Installing PROTOCOL
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   Located in the HMP (HEALTH MANAGEMENT PLATFORM) namespace.
+   
+  Installing REMOTE PROCEDURE
+  
+  Installing LIST TEMPLATE
+  
+  Installing OPTION
+  
+  Installing PARAMETER DEFINITION
+                Mar 04, 2016@10:04:06
+  
+  Running Post-Install Routine: POST^HMPP3I
+  
+   Starting post-install
+  
+ User HMP,APPLICATION PROXY added
+ The following HMP,APPLICATION PROXY fields were updated: 
+ INITIALS, ACCESS CODE, SIGNATURE BLOCK, RESTRICT PATIENT SELECTION, 
+ PRIMARY MENU OPTION
+ The following sub-files for user HMP,APPLICATION PROXY were updated: 
+   KEYS, CPRS TAB, SECONDARY MENU OPTIONS
+ The following sub-files for user HMP,APPLICATION PROXY were updated: 
+   User Class - APPLICATION PROXY
+  
+ Disabling INDEX entries for Clinical Procedures Mar 04, 2016@09:33:40
+ routine: HMPZ0218
+ looking for INDEX: 702^AVPR^Trigger updates to VPR^
+  
+ examining ^DD("IX",NNN,0)
+    "702^AVPR^Trigger updates to VPR^MU^^R^^I^702^^^^^A"
+ value found in ^DD("IX",NNN,1) was: 
+    "I $T(UPD^VPRPROC)]"" D UPD^VPRPROC(X2(1),DA_";MDD(702,")"
+ updated to "Q  ;I $T(UPD^VPRPROC)]"" D UPD^VPRPROC(X2(1),DA_";MDD(702,")"
+ value found in ^DD("IX",NNN,2) was: 
+    "I $T(DEL^VPRPROC)]"" D DEL^VPRPROC(X1(1),DA_";MDD(702,")"
+ updated to "Q  ;I $T(DEL^VPRPROC)]"" D DEL^VPRPROC(X1(1),DA_";MDD(702,")"
+  
+ INDEX entry completed Mar 04, 2016@09:33:40
+ HMP0311P post-init routine started Mar 04, 2016@09:33:40
+  
+ Old data saved in ^XTMP("HMP INSTALL LOG",3160304.09334)
+ HMP DGPF ASSIGN FLAG protocol update finished Mar 04, 2016@09:33:40
+ HMP0311Q post-init routine started Mar 04, 2016@09:33:40
+ PROTOCOL HMP ADT-A04 CLIENT IS NOW SUBSCRIBED TO VAFC ADT-A04 SERVER.
+ PROTOCOL HMP ADT-A08 CLIENT IS NOW SUBSCRIBED TO VAFC ADT-A08 SERVER.
+ HMP ADT-A0# CLIENT protocols subscribed Mar 04, 2016@09:33:40
+  
+  Adding domain object average sizes to HMP DOMAIN SIZES parameter...
+    o  patient domain sizes added
+    o  operational domain sizes added
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  HMP 2.0 Installed. 
+                Mar 04, 2016@10:04:06
+  
+  Install Message sent 
+  
+  Call MENU rebuild
+  
+ Starting Menu Rebuild:  Mar 04, 2016@10:04:08
+  
+ Collecting primary menus in the New Person file...
+  
+                     Primary menus found in the New Person file
+                     ------------------------------------------
+ OPTION NAME         MENU TEXT                    # OF         LAST     
+ LAST                                                  USERS        USED    
+ BUILT  DIUSER              VA FileMan                   111        04/28/02  
+ 01/15/16 XMUSER              MailMan Menu                 30         05/19/15  
+ 01/15/16 EVE                 Systems Manager Menu         181        02/02/16  
+ 01/15/16 XMNET               Network Management           1          08/12/15  
+ 01/15/16  
+  
+ Building secondary menu trees....
+  
+ Merging.... done.
+  
+ Install Completed
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 03, 2015
+Completed By:                               Date Completed: APR 06, 2016
+Released By :                               Date Released : APR 06, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,183 @@
+$TXT Created by                 MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 05/29/14 at 10:54
+=============================================================================
+Run Date: NOV 04, 2014                     Designation: PSS*1*180
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #163                      Status: Released
+                  Compliance Date: DEC 05, 2014
+=============================================================================
+
+Associated patches: (v)PSS*1*156   <<= must be installed BEFORE `PSS*1*180'
+                    (v)PSS*1*173   <<= must be installed BEFORE `PSS*1*180'
+
+Subject: DRUG ENTER/EDIT, PSSIV AND VENDOR INTERFACE DATA NOT POPULATING
+
+Category: 
+  - Input Template
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following reported issues:
+  
+ 1) Pharmacy Data Management "Drug Enter/Edit" [PSS DRUG ENTER/EDIT] 
+    VistA option deletes the Possible Dosages for Inactive Drugs if the
+    user answers YES to the "Do you wish to match/rematch to NATIONAL DRUG
+    file?" prompt.
+  
+ 2) PSSIV ADD Input Template does not prompt for "ADDITIVE FREQUENCY"
+  
+ 3) MESSAGE SENT field (#3) in the VENDOR INTERFACE DATA file (#59.74) not
+    populating
+  
+ Associated Remedy Ticket(s)
+ ===========================
+ 1) INC000000324382 - Drug Enter/Edit option
+  
+ 2) INC000000861438 - PSSIV ADD Input Template
+  
+ 3) INC000000942809 - Message Sent field (#3) in the Vendor Interface Data
+    file (#59.74) not populating.
+  
+ Test Sites
+ ==========
+ UPSTATE NEW YORK 
+ RICHMOND
+ ANN ARBOR
+  
+ Overview of Remedy Ticket(s)
+ ============================
+ 1) INC000000324382 - Drug Enter/Edit option
+   
+ Problem:
+ --------
+ The Drug Enter/Edit [PSS DRUG ENTER/EDIT] option deletes Possible Dosage 
+ of an inactive drug if the user answers YES to the "Do you wish to 
+ match/rematch to NATIONAL DRUG file?" prompt.
+  
+ Resolution:
+ -----------
+ The Drug Enter/Edit [PSS DRUG ENTER/EDIT] VistA option will be modified 
+ to prevent drugs with INACTIVE dates to be deleted and continue with the 
+ normal prompts.
+  
+ Technical
+ ==========
+ ASK+3^PSSDEE routine will be modified to verify the drug is active
+ and set PSINACT variable to 1 (inactive) if it is inactive.
+ ASKND+5^PSSDEE will be modified to check to see if the PSINACT variable
+ equals 1, the D EN1^PSSUTIL(DISPDRG,1) command is NOT executed.
+  
+ 2) INC000000861438 - PSSIV ADD Input Template 
+  
+ Problem:
+ --------
+ When editing an IV Additive, using both the Additives File and the 
+ Drug Enter/Edit [PSS DRUG ENTER/EDIT] options, the prompt for Additive 
+ Frequency is missing.
+ Currently the only way to edit the ADDITIVE FREQUENCY field (#18) within 
+ the IV ADDITIVES file (#52.6) is through FileMan.
+  
+ Resolution:
+ -----------
+ The PSSIV ADD Input Template will be modified to include the ADDITIVE 
+ FREQUENCY field (#18) within the IV ADDITIVES file (#52.6).
+  
+ 3) INC000000942809 - Message Sent field (#3) in the Vendor Interface
+                      Data file (#59.74) not populating.
+ Problem:
+ --------
+ A defect was discovered with the population of the MESSAGE SENT field
+ (#3) of the VENDOR INTERFACE DATA #59.74).  When the Interface
+ Scheduler [PSS INTERFACE SCHEDULER] option job receives an error
+ indicating that the Vendor Database is down, it makes an entry in the
+ VENDOR INTERFACE DATA file (#59.74) and sends a VistA MailMan message to
+ the mail group PSS ORDER CHECKS. When the message is sent, the 
+ MESSAGE SENT field(#3) is not being updated with the message sent
+ flag.
+  
+ Resolution:
+ -----------
+ ^PSSHRIT routine will be modified to set the MESSAGE SENT field (#3)
+ in the VENDOR INTERFACE DATA file (#59.74) after the Mailman message
+ is sent.
+  
+ Components:
+ ===========
+ Input Template: PSSIV ADD    FILE #52.6
+  
+ Installation Instructions
+ =========================
+ Suggested time to install: non-peak requirement hours.
+  
+ Install Time - less than 5 minutes.
+  
+  1.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  2.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter PSS*1.0*180):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  3.  Use the Install Package(s) option and select the package
+      PSS*1.0*180.
+  
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the
+          install? NO//', answer NO.
+      b.  When prompted 'Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSDEE
+    Before: B96127789   After: B98607664  **3,5,15,16,20,22,28,32,34,33,
+                                           38,57,47,68,61,82,90,110,155,
+                                           156,180**
+Routine Name: PSSHRIT
+    Before:B219197445   After:B220174770  **136,168,164,173,180**
+ 
+Routine list of preceding patches: 156, 173
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 30, 2013
+Completed By:                               Date Completed: NOV 03, 2014
+Released By :                               Date Released : NOV 04, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

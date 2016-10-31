@@ -1,0 +1,397 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 12/30/15 at 11:27
+=============================================================================
+Run Date: MAY 16, 2016                     Designation: FB*3.5*165
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #139                    Status: Released
+                  Compliance Date: JUN 16, 2016
+=============================================================================
+
+Associated patches: (v)FB*3.5*132  <<= must be installed BEFORE `FB*3.5*165'
+
+Subject: FIX STATUS OF OLD PAYMENTS AND ENHANCE REJECT REPORT
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ This patch deletes inappropriate reject flags from old payments.  This 
+ patch removes old payments with payment confirmation or cancellation data
+ from in-process batches. This patch enhances the Print Rejected Payment 
+ Items report.
+  
+ Background:
+  
+ Currently, old payment entries which are flagged as rejected even though
+ they have instead been paid or had their payments cancelled, cause
+ problems keeping track of actual rejected payments. Users are unable to
+ clean-up these old records through Fee Basis options and in some cases the
+ obligations are no longer available for posting. This causes the Print
+ Rejected Payment Items report to be useless at many sites because it
+ lists all rejected payments and there are many pages of very old rejected
+ payments.  In addition, sites may have re-initiated some of the actually
+ paid payment lines into new batches for resubmission to Central Fee for
+ payment.
+  
+ Discrepancies with old rejects make it harder for sites to keep track of 
+ payments that need to be reprocessed.  This could result in providers not 
+ being paid in a timely manner and thus in providers refusing to treat
+ veterans where the VA is the payer.
+  
+ Detailed descriptions of the enhancements follow: 
+  
+ 1. Delete Inappropriate Reject Flags
+  
+    When this patch is installed, a post install routine will delete the
+    inappropriate reject flag from old payments with payment confirmation 
+    or cancellation data.
+  
+    Payment line items in the following files or sub-files are examined:
+  
+      SERVICE PROVIDED sub-file of the FEE BASIS PAYMENT (#162) file.
+        These are outpatient and inpatient ancillary payments. 
+  
+      TRAVEL PAYMENT DATE sub-file of the FEE BASIS PAYMENT (#162) file.
+        These are veteran reimbursements for travel. 
+  
+      PRESCRIPTION NUMBER sub-file of the FEE BASIS PHARMACY INVOICE
+        (#162.1) file.
+        These are prescription payments.
+  
+      FEE BASIS INVOICE (#162.5) file.
+        These are inpatient payments for civil hospital and community 
+        nursing home invoices.
+  
+    The reject flag is deleted from payments that have payment confirmation
+    or payment cancellation data if the current batch status is vouchered
+    and at least one of the following three dates is prior to the
+    compliance date of patch FB*3.5*132 which is March 7, 2013.
+      o DATE FINALIZED for the batch
+      o DATE PAID for the payment line
+      o CANCELLATION DATE for the payment line
+  
+    Since these are older payments the post install does not attempt 
+    to update the IFCAP 1358 obligation when a reject flag is deleted from
+    a payment line.
+  
+    Sites that have purged batches may find that many of the inappropriate 
+    reject flags are not deleted because the batch status is not
+    vouchered.  No further action needs to be taken in this case because
+    the payments are not listed on the Print Rejected Payment Items report
+    and they cannot be re-initiated into a new batch.
+  
+  
+ 2. Remove Confirmed/Cancelled Payments from batches that have not yet
+    been transmitted
+  
+    When this patch is installed, a post install routine will remove old
+    payments with payment confirmation or cancellation data from payment
+    batches that have not yet been transmitted.
+  
+    The payment data is retained and still available on reports.  However 
+    the payment is no longer associated with a batch in a similar manner as
+    payments whose batch has been purged.
+  
+    All four payment batch types are processed.  Batches with a current
+    status of TRANSMITTED, CENTRAL FEE ACCEPTED, or VOUCHERED are 
+    skipped.  Only payments that have a DATE PAID or CANCELLATION DATE that
+    is prior to March 7, 2013 are removed from a batch.  For the 
+    outpatient and ancillary payment batches, payment lines with DATE PAID
+    prior to January 7, 2011 are only removed if a check number is also
+    stored as additional confirmation of the payment.
+  
+  
+ 3. Enhance the Print Rejected Payment Items report
+  
+    This patch enhances the Print Rejected Payment Items report to exclude
+    payments transmitted prior to a user-specified date. The report line
+    which prints the batch number, the voucher date and the voucherer is
+    also modified to accommodate a 7-digit batch number.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+  CENTRAL PLAINS HCS
+  SAGINAW, MI
+  WILKES BARRE, PA             
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File
+ Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at
+ the following OI Field Offices:
+  
+  Albany:                domain.ext  
+  Hines:                 domain.ext   
+  Salt Lake City:        domain.ext     
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                         File Name                      SFTP Mode
+ -----------------------------------------------------------------------
+ Fee Basis User Manual        FEE3_5_UM_R0516.PDF             (binary)
+ Fee Basis Technical Manual   FEE3_5_TM_R0516.PDF             (binary)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch contains post install routines that delete inappropriate 
+ reject flags from payments and removes confirmed payments from in-process 
+ batches. The post install routines can be manually deleted after the patch
+ is installed.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 15 
+ minutes to install.
+  
+ The following menu option should be disabled during the install:
+   Print Rejected Payment Items [FBAA REJECT PRINT]
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(ex. FB*3.5*165):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer YES.
+    
+     When prompted 'Enter options you wish to mark as 'Out Of
+     Order':'  Enter the following options:
+        Print Rejected Payment Items [FBAA REJECT PRINT]
+  
+     When prompted 'Enter protocols you wish to mark as 'Out Of
+     Order':' press <return>.
+  
+  
+ 7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+  
+ 8.  (Optional) After the installation, to verify that the conversion
+     executed correctly, one can invoke a report which will display
+     traits of payment lines that were removed from in-process batches.
+     The batch's ID and status are also displayed.  As the report only
+     has temporary interest, it is not attached to an option of a menu,
+     but rather would be invoked directly at the MUMPS command line 
+     prompt>.
+  
+ Select Systems Manager Menu <TEST ACCOUNT> Option: ^PG   Programmer mode
+  
+ namespace>DO ^FBXI165C
+  
+ DEVICE: HOME//   VIRTUAL TELNET
+  
+  
+                     REPORT OF PAYMENTS REMOVED FROM BATCHES      Page: 1
+  
+ BATCH TYPE: B3           STATUS: OPEN
+  DATE PAID: JUN 01, 2001                CHECK NUMBER: 77777
+  CANCELLATION DATE: 
+  CURRENT BATCH:                         FORMER BATCH: 928
+  DATE FINALIZED: JUN 01, 2001           FORMER DATE FINAL: 
+ BATCH TYPE: B3           STATUS: CLERK CLOSED
+  DATE PAID: MAY 20, 1994                CHECK NUMBER: 12345
+  CANCELLATION DATE: 
+  CURRENT BATCH:                         FORMER BATCH: 1083
+  DATE FINALIZED: MAY 20, 1994           FORMER DATE FINAL: 
+ BATCH TYPE: B3           STATUS: CLERK CLOSED
+  DATE PAID: MAY 19, 1994                CHECK NUMBER: 12346
+  CANCELLATION DATE: 
+  CURRENT BATCH:                         FORMER BATCH: 1083
+  DATE FINALIZED: MAY 19, 1994           FORMER DATE FINAL: 
+ Hit <RETURN> to continue, '^' to Exit
+  
+     One can then look at each batch post-conversion using existing Fee
+     Basis options List Items in Batch [FBAA LIST BATCH] and Status of
+     Batch [FBAA BATCH STATUS] in order to see what payment lines remain
+     in the batch and to confirm that the Payment Line Count, Invoice 
+     Count, and Total Dollars have been recalculated correctly during the
+     conversion.
+  
+     If no payment lines were removed from batches during conversion, the
+     following message will be displayed:
+     "There are no payment entries removed from batches."
+  
+     The value of this report will decrease over time as additional
+     activity occurs for a given batch.  As the report runs off of a
+     temporary ^XTMP global built during conversion, the report will not
+     produce any output once the global reaches its deletion date 180 days
+     after patch installation.  At that time the following message will be
+     displayed:
+     "There are no entries in the compile file for the FB*3.5*165 
+     conversion.  The file must have been purged."
+  
+  
+ 9. DELETE INSTALL ROUTINES FROM SYSTEM
+    -----------------------------------
+     (Optional) Delete the FBXIP165, FBXI165A, and FBXI165C install
+     routines.
+  
+     Routines FBXIP165 and FBXI165A contain the post install code for the
+     patch. Routine FBXIP165 contains the code to delete an inappropriate 
+     reject flag from old payments. Routine FBXI165A contains the code to
+     remove confirmed payments from an in-process batch.
+  
+     Routine FBXI165C can be deleted once the REPORT OF PAYMENTS REMOVED
+     FROM BATCHES (described in #8) is no longer needed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBAARJP
+    Before: B44159952   After: B54962385  **132,165**
+ Description of Changes:
+  This is the main routine for the Print Rejected Payment Items report. It 
+  has been edited to exclude from the report payments transmitted prior to a
+  user-specified date.  In addition, the report line which prints the batch 
+  number, the voucher date and the voucherer has been modified to 
+  accommodate a 7-digit batch number.
+
+Routine Name: FBXI165A
+    Before:       n/a   After: B27402130  **165**
+ Description of Changes:
+  This routine during the patch installation performs a one-time (Remove
+  Payment from Batch) task that removes old payments with payment
+  confirmation/cancellation data from in-process batches.
+
+Routine Name: FBXI165C
+    Before:       n/a   After: B17487691  **165**
+ Description of Changes:
+  Based on the ^XTMP file entry created during the post-install conversion, 
+  this routine reports characteristics of payment lines removed from 
+  pre-transmitted batches and batch number, batch status and batch type of 
+  the batches from which they were removed.  This routine would be executed 
+  from the programmer prompt to help validate the conversion.
+
+Routine Name: FBXIP165
+    Before:       n/a   After: B77466514  **165**
+ Description of Changes:
+  This is the main post-init routine. During patch installation it performs 
+  a one-time (Delete Reject Flag) task that deletes the inappropriate reject
+  flag from old payment line items which have payment confirmation or
+  payment cancellation data.
+
+ 
+Routine list of preceding patches: 132
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 21, 2015
+Completed By:                               Date Completed: APR 28, 2016
+Released By :                               Date Released : MAY 16, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

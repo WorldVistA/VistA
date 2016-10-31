@@ -1,0 +1,172 @@
+$TXT Created by                     MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 02/20/14 at 09:22
+=============================================================================
+Run Date: MAY 12, 2014                     Designation: PSJ*5*199
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #258                      Status: Released
+                  Compliance Date: JUN 12, 2014
+=============================================================================
+
+Associated patches: (v)PSJ*5*130   <<= must be installed BEFORE `PSJ*5*199'
+                    (v)PSJ*5*288   <<= must be installed BEFORE `PSJ*5*199'
+
+Subject: Unusual Volume Rpt/Frequency Issue
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following 2 issues in the Inpatient 
+ Medications package:
+   
+ 1. When multiple IV orders are cancelled, returned or destroyed in Inpatient
+    Medications, this information is not getting transmitted to the Decision
+    Support System (DSS). DSS runs The Unusual Volume Report and without this
+    information from Inpatient Medications, their report would be incorrect.
+  
+ 2. When the Pharmacist is finishing two or more PRN unit dose orders back to
+    back for a patient, the frequency of the first order is copied to the
+    subsequent order's frequency for any subsequent orders marked as PRN "as
+    needed".
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy ticket(s):
+ ============================ 
+ 1. INC000000130922 - Pharmacy Unusual Volume Report
+  
+ 2. INC000000278356 - INCORRECT UNITS NEEDED ON PICK LIST
+    
+    Duplicates
+    INC000000279643 
+    INC000000279274 
+    INC000000325759
+    INC000000346373
+    INC000000423749
+    INC000000618084 
+ 
+  
+ Participating Test Sites:
+ =========================
+ Edward Hines Jr. VA Hospital - Hines, IL
+ VA Caribbean Healthcare System - San Juan 
+  
+  
+ REMEDY OVERVIEW:
+ ================
+  
+ 1. INC000000130922
+  
+    Problem:
+    --------
+    When multiple IV orders are cancelled, returned or destroyed in Inpatient
+    Medications, this information is not getting transmitted to the Decision
+    Support System (DSS). DSS runs The Unusual Volume Report and without this
+    information from Inpatient Medications, their report would be incorrect.
+  
+    Resolution:
+    -----------
+    This patch corrected Routine PSIVSTAT to send information to the DSS
+    application every time a label is generated, returned, or destroyed.
+  
+  
+ 2. INC000000278356
+  
+    Problem:
+    --------
+    When the Pharmacist is finishing two or more PRN unit dose orders back to
+    back for a patient, the frequency of the first order is copied to the
+    subsequent order's frequency for any subsequent orders marked as PRN "as
+    needed".   
+  
+    Resolution:
+    -----------
+    This patch modified Routine PSGOEF to ensure that the frequency information
+    is cleared out prior to working on the next order. 
+ 
+  
+ 
+ INSTALLATION INSTRUCTIONS:
+ =========================
+    Installation will take less than 1 minute.
+  
+    Suggested time to install: non-peak requirement hours.  The patch should
+    be installed when NO Inpatient Pharmacy users are on the system.
+  
+  
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+ 2. From the Kernel Installation & Distribution System menu, select
+    the Installation menu.
+  
+ 3. From this menu, you may select to use the following options (when 
+    prompted for INSTALL NAME, enter PSJ*5.0*199):
+  
+    a.  Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global.
+    b.  Print Transport Global - This option will allow you to view the
+        components of the KIDS build.
+    c.  Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when this patch is
+        installed.  It compares all components of this patch (routines,
+        DD's, templates, etc.).
+    d.  Backup a Transport Global - This option will create a backup 
+        message of any routines exported with this patch. It will not 
+        backup any other changes such as DD's or templates.
+  
+ 4.  Use the Install Package(s) option and select the package PSJ*5.0*199.
+  
+ 5.  When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+     respond NO.
+  
+ 6.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO//" respond NO.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOEF
+    Before: B99775279   After: B99911141  **7,30,29,35,39,47,50,56,80,
+                                           116,110,111,133,153,134,222,
+                                           113,181,260,199**
+Routine Name: PSGOEV
+    Before: B81363759   After: B81429110  **5,7,15,28,33,50,64,58,77,78,
+                                           80,110,111,133,171,207,241,267,
+                                           268,260,288,199**
+Routine Name: PSIVSTAT
+    Before: B21167755   After: B21471707  **3,18,84,81,104,111,130,199**
+ 
+Routine list of preceding patches: 130, 288
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 12, 2007
+Completed By:                               Date Completed: APR 22, 2014
+Released By :                               Date Released : MAY 12, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

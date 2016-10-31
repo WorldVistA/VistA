@@ -1,0 +1,182 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 02/24/14 at 11:01
+=============================================================================
+Run Date: MAY 20, 2014                     Designation: IB*2*489
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #476                      Status: Released
+                  Compliance Date: JUN 19, 2014
+=============================================================================
+
+Associated patches: (v)IB*2*312    <<= must be installed BEFORE `IB*2*489'
+                    (v)IB*2*349    <<= must be installed BEFORE `IB*2*489'
+
+Subject: DUPLICATE CLAIMS TRACKING ENTRIES, TPJI DISPLAY FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch fixes two issues. The Veterans w/Insurance and Opt. Visits [IB 
+ OUTPATIENT VET REPORT] option has been updated to prevent the possibility
+ of having duplicate Claims Tracking (#356) file entries. The Third Party
+ Joint Inquiry [IBJ THIRD PARTY JOINT INQUIRY] option has been updated to
+ keep display data under the appropriate header in the LINE LEVEL
+ ADJUSTMENTS section when the SERVICE DATE FROM (#.16) sub-field is
+ blank.
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000000599165 Duplicate encounters
+      Duplicates:
+           INC000000601455 Claims Tracking issue
+           INC000000711173 Duplicate claims in VistA Claims Tracking
+ 2. INC000000765203 EOB Display Issue in TPJI for Cigna
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Plains HCS      
+ Lebanon VA Medical Center - Lebanon
+ VA Pittsburgh HCS
+ VA Tennessee Valley HCS 
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000599165 Duplicate encounters
+  
+  Problem:
+  --------
+  When the 'Reports can Add CT' parameter is set to 'YES' in the Claims
+  Tracking Parameter Edit [IBT EDIT TRACKING PARAMETERS] option, it allows
+  a queued task to add the outpatient encounters to Claims Tracking (#356) 
+  file entries in the Veterans w/Insurance and Opt. Visits [IB OUTPATIENT
+  VET REPORT] option. Duplicate Claims Tracking (#356) file entries were
+  created when that option was scheduled to run at the same time as the
+  Manually Add Opt. Encounters to Claims Tracking [IBT SUP MANUALLY QUE
+  ENCTRS] option or the Queue Means Test Compilation of Charges [IB MT
+  NIGHT COMP] option (other options that add those entries).
+  
+  Resolution:
+  -----------
+  Routine IBTRKR4 was updated to lock/unlock the Claims Tracking procedure
+  for the outpatient care which will now allow only one task at one time  
+  to add the outpatient encounter to the Claims Tracking (#356) file.
+  
+  When the [[IBT SUP MANUALLY QUE ENCTRS] option is queued in multiple tasks
+  by different users to run at the same time, or it's running with the [IB
+  OUTPATIENT VET REPORT] option at the same time, a mail message - "The
+  process to automatically add Opt Encounters is currently locked by
+  another user. Try again later." will send to the requesting user if any
+  task fails to lock in the process for the CT update.
+  
+ 2. INC000000765203 EOB Display Issue in TPJI for Cigna
+  
+  Problem:
+  --------
+  It has been reported that the line level adjustments didn't list the 
+  items under the appropriate heading in the Bill Charges (BC) action of
+  the Third Party Joint Inquiry [IBJ THIRD PARTY JOINT INQUIRY] option.
+  
+  Resolution:
+  -----------
+  Routine IBCECSA5 was updated to correct the display if the data doesn't
+  exist in the 835 LINE LEVEL ADJUSTMENTS (#15 multiple) SERVICE DATE
+  FROM (#.16) sub-field of the Explanation of Benefits (EOB) (#361.1) file.
+  
+  INSTALLATION INSTRUCTIONS
+  =========================
+  This patch may be installed during normal working hours with all users on
+  the system. However, as it is necessary to disable some menu options when
+  installing this patch it is recommended that the install be done during
+  non-peak hours, but not when the nightly job Queue Means Test Compilation
+  of Charges [IB MT NIGHT COMP] is running.
+  
+  The install time is less than 2 minutes.  
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+  
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*489):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s)
+  
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//' answer YES
+      d. When prompted 'Enter options you wish to mark as 'Out Of 
+         Order':'  Enter the following options:
+  
+     Third Party Joint Inquiry [IBJ THIRD PARTY JOINT INQUIRY]
+     Veterans w/Insurance and Opt. Visits [IB OUTPATIENT VET REPORT]
+     Queue Means Test Compilation of Charges [IB MT NIGHT COMP]
+     Manually Add Opt. Encounters to Claims Tracking [IBT SUP MANUALLY QUE
+     ENCTRS]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-1994;Build 31
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCECSA5
+    Before: B62746487   After: B62841003  **137,135,263,280,155,349,489**
+Routine Name: IBTRKR4
+    Before: B13921705   After: B17535096  **91,142,292,312,489**
+ 
+Routine list of preceding patches: 312, 349
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 01, 2012
+Completed By:                               Date Completed: MAY 13, 2014
+Released By :                               Date Released : MAY 20, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

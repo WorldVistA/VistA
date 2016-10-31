@@ -1,0 +1,271 @@
+
+=============================================================================
+Run Date: DEC 11, 2014                     Designation: MAG*3*145
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #108                      Status: Released
+                  Compliance Date: JAN 11, 2015
+=============================================================================
+
+Associated patches: (v)MAG*3*118   <<= must be installed BEFORE `MAG*3*145'
+
+Subject: AE TITLE UPDATE
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch:
+  
+           prevents users from entering new Institution (#4) file entries in the AE Title User Interface. 
+           will fix an issue with the AE Title lookup when there are multiple entries with the same Remote AE Title.
+  
+ NOTE          All sites running VistA Imaging 3.0 that have implemented DICOM Gateways must install the KIDS portion of this patch on the VistA system and the updated DICOM Gateway software on all DICOM Gateway systems.
+   
+ Distribution of Software:
+ =========================
+  
+ The release build of this patch can be downloaded from:
+  
+         OI Field Office                  FTP Address                     Directory
+         ---------------                  -----------------               ------------
+         Albany                           ftp.domain.ext        
+         Hines                            ftp.domain.ext         
+         Salt Lake City                   ftp.domain.ext           
+  
+ Installation instructions are included in this document.
+  
+ NOTE          Information about last-minute changes to this patch will be provided in a readme file. If present, this file will also be located in the MAG3_0P145 directory.
+  
+ Patch Contents:
+ ===============
+  
+ This section provides information about the files this patch includes.
+  
+ Software
+  
+  L
+ M
+ MAG3_0P145.KID 
+  - KIDS (Kernel Installation & Distribution System) package to be installed on the VistA system.
+  
+ Documentation 
+  
+ MAG3_0P145_Patch_Description.doc - This document.
+  
+ Associated Patches:
+ ===================
+ Patches to be Installed on the VistA System
+  
+ All released VistA Imaging patches are required and must be installed on the VistA system before MAG*3.0*145 can be installed.
+  
+ Test Sites:
+ ===========
+  
+ The following sites are test sites for this patch:
+  
+           Albuquerque, AZ VA Medical Center
+           Philadelphia, PA VA Medical Center
+           Tucson, AZ VA Medical Center
+  
+ Remedy Calls:
+ =============
+  
+ The following Remedy help desk calls are addressed in this patch:
+  
+ INC000000929813          The AE Title Interface allows users to enter new institutions into the Institution (# 4) file regardless of the user privileges. Sites that inadvertently entered new institution entries while creating remote AE Title ent
+ ries were unable to use the new Hybrid DICOM Image Gateway (HDIG) for operations that interacted with VistA.
+  
+ INC000000925964          The AE Title RPC selects the first entry in the AE Title file that contains a matching Remote AE Title name. Many sites contain multiple entries with the same Remote AE Title name.
+  
+ NSRs:
+ =====
+  
+ There are no National Service Requests (NSRs) addressed in this patch. 
+  
+ Patch 145 Changes
+  
+ MAG*3.0*145 is required as an initial step towards making VistA Imaging the Level 2 archive for all images. This patch provides the enhancements described in this section.
+ Specific Changes
+           The ability to add a new institution has been removed at the site prompt in the AE Title User Interface. The user may now only select existing entries in the INSTITUTION (#4) file. A data dictionary field entry was modified to implemen
+ t the fix. No routines were modified. The only change the user will encounter is that the user can no longer enter new INSTITUTION (#4) file entries from the AE Title User Interface.
+           The MAGV GET REMOTE AE Title RPC was modified to select the first entry with a matching Remote AE Title and a station number. The addition of station number matching will allow sites to have multiple entries with the same AE Title. The
+  end user reported the problem, but did not suggest a solution. A single routine was modified to implement the fix. There were no data changes. The change is transparent to the user.
+  
+ KIDS File Summary
+  
+ Security Keys:
+ ==============
+  
+ There are no new or modified security keys included in this patch.
+  
+ Remote Procedure Calls:
+ =======================
+  
+ The MAGV GET REMOTE AE Title was modified.
+  
+ Menu Options:
+ =============
+  
+ There are no new or modified menu options in this patch.
+  
+ Data Dictionaries:
+ ==================
+  
+ The Site (#2) field in the DICOM AE Security Matrix file (#2006.9192) was modified.
+  
+ Routines:
+ ========= 
+  
+ VistA Routines 
+  
+ This section lists new and modified Imaging routines for the VistA system. For each routine, the second line will contain the following information.
+  
+ ;;3.0;IMAGING;**118,145**;Mar 19, 2002;Build 7;Aug 21, 2014
+  
+ Please note that the before checksum may differ if any test software has been installed.
+  
+ Checksum values are calculated using the kernel utility program CHECK1^XTSUMBLD.
+  
+ Routine Name      Checksum Before             Checksum After          Patch List
+  
+ MAGIP145          N/A                         110407                  **145**
+ MAGVRS52          24276946                    24809096                **118,145**
+  
+ Routine MAGIPS145 is an installation routine that is automatically deleted after the KIDS installation.
+  
+ Installation
+ ============
+  
+ Installation Planning
+ =====================
+  
+ When planning the installation of MAG*3.0*145, consider the following factors.
+           This patch is to be installed on the VistA system. Installing the KIDS on the VistA system will take less than one minute. 
+           Before installing the KIDS portion of MAG*3.0*145 on the VistA system, all processing on all DICOM Gateways must be stopped. Users can remain on the system during the KIDS installation.
+  
+ Review all installation instructions in this document before beginning the installation process.
+  
+ NOTE:          Do not use Remote Desktop to install the DICOM Gateway software. Attempts to perform the installation using Remote Desktop will not succeed. You can use other applications, such as PC Anywhere and DameWare for remote installations
+ .
+  
+ Installation Prerequisites
+ ==========================
+  
+ NOTE:          All released VistA Imaging patches must be installed on the VistA system before installing MAG*3.0*145. 
+ The patch installation files can be downloaded from one of the OI Field Office anonymous directories. All instructions in this section assume that the distribution files for this patch have been copied to a local storage location. For the list o
+ f distribution files for this patch, see page 1.
+  
+ VistA System (KIDS) Installation
+ ================================
+  
+ KIDS Installation Steps
+  
+ KIDS installation will take less than one minute.
+  
+ 1          Important: Before installing the KIDS, perform the following steps for each DICOM Gateway:
+           a          Stop each process (use CTRL+C if needed) in each active process/telnet window. (Note that clicking   only closes the window; it does not stop the process).
+           b          Navigate to the main DICOM Gateway menu and enter 5 (Quit).
+           c          Ensure that CachC) is running. (When CachC) is running, CachC) cube   in the Windows taskbar is blue, not grey).
+ 2          On the VistA system, access the Kernel Installation and Distribution System Menu [XPD MAIN].
+ 3          Run the Installation option [XPD INSTALLATION MENU].
+ 4          Load the KIDS file by performing the following step:
+           a          Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load the KIDS distribution.
+           b          When prompted, enter the path and file name (MAG3_0P145.KID) of the Patch 145 KIDS file.
+           c          When prompted to continue with the load, enter YES. A Distribution OK! message will be displayed when the load is complete.
+ 5          After loading the KIDS file, use the following options to verify the contents of the patch and to back up any affected routines.
+  
+           a          Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this option if you want to ensure the integrity of the routines in the patch. 
+           b          Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] - Run this option if you want to view all changes that will be made when the patch is installed. All components (routines, options, and so on) in the patch w
+           b          Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] - Run this option if you want to view all changes that will be made when the patch is installed. All components (routines, options, and so on) in the patch w
+ ill be compared.
+  
+ 6          After performing the load and any optional verification steps, install the KIDS file by performing the following steps:
+           a          Run the Install Package(s) [XPD INSTALL BUILD] option.
+           b          When prompted for the install name, enter MAG*3.0*145.
+           c          Answer NO to the following prompts:
+  
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+  
+ 7          When installation is finished, an Install Complete message will be displayed.
+ 8          Restart the DICOM Gateways and associated processes.
+  
+ KIDS Installation Example
+  
+ Select Installation Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*145      4/19/11@12:31:20
+      => VistA Imaging V3.0 - Patch 145 - 04/19/2011 09:59AM  ;Created o
+  
+ This Distribution was loaded on Dec 29, 2013@12:31:20 with header of 
+    VistA Imaging V3.0 - Patch 145 - 04/19/2011 09:59AM  ;Created on Apr 1
+ 9, 2011@09:59:01
+    It consisted of the following Install(s):
+      MAG*3.0*145
+ Checking Install for Package MAG*3.0*145
+  
+ Install Questions for MAG*3.0*145
+  
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  
+  Install Started for MAG*3.0*145 : 
+                Dec 29, 2013@12:32:05
+  
+ Build Distribution Date: Dec 29, 2013
+  
+  Installing Routines:........
+                Dec 29, 2013@12:32:05
+  
+  Installing Data Dictionaries: ....
+                Dec 29, 2013@12:32:06
+  
+  Running Post-Install Routine: POST^MAGIPS145.
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*145 Installed. 
+                Dec 29, 2013@12:32:06 
+
+Routine Information:
+====================
+Routine Name: MAGIP145
+    Checksum:
+  110407
+ Description of Changes:
+  Post-install routine
+
+Routine Name: MAGVRS52
+    Checksum:
+  24809096
+ Description of Changes:
+  Added station number to AE Title selection criteria.
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 06, 2014
+Completed By:                               Date Completed: DEC 11, 2014
+Released By :                               Date Released : DEC 11, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

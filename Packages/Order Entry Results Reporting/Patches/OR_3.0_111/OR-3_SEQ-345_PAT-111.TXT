@@ -1,0 +1,108 @@
+$TXT Created by                  CPRS29.DOMAIN.EXT  (KIDS) on Wednesday, 12/19/12 at 21:28
+=============================================================================
+Run Date: SEP 02, 2014                     Designation: OR*3*111
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #345                      Status: Released
+                  Compliance Date: OCT 03, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*280    <<= must be installed BEFORE `OR*3*111'
+
+Subject: NATURE OF ORDER API
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Pharmacy has requested an Application Programming Interface (API) to 
+ return the nature of order for a Computerized Patient Record system 
+ (CPRS) order number.
+  
+ Associated Remedy:
+ ==================
+ N/A 
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Test Sites:
+ ===========
+  
+  
+ Installation Instructions
+ =========================
+ This patch can be loaded with users in the system. Installation time is 
+ less than five minutes.
+  
+ Suggested time to install: non-peak requirement hours.
+  
+  1.  Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter OR*3.0*111
+      
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  4.  Use the Install Package(s) option and select the package
+      OR*3.0*111
+  
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+          NO//', answer NO. 
+      b.  When prompted 'Want to DISABLE Scheduled Options and Menu Options
+          and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORUTL3
+    Before:       n/a   After:  B1549938  **111**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 20, 2001
+Completed By:                               Date Completed: AUG 28, 2014
+Released By :                               Date Released : SEP 02, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

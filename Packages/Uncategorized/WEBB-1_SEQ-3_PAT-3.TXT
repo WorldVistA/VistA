@@ -1,0 +1,167 @@
+
+=============================================================================
+Run Date: NOV 18, 2014                     Designation: WEBB*1*3
+Package : WEBB - BED MANAGEMENT SOLUTION      Priority: Mandatory
+Version : 1         SEQ #3                      Status: Released
+                  Compliance Date: NOV 18, 2014
+=============================================================================
+
+
+Subject: BED MANAGEMENT SOLUTION VERSION 1.3.1
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch announces the National Release of Bed Management Solutions 
+ (BMS) version 1.3.1. No additional action is necessary for sites except to
+ communicate the below modifications of BMS v1.3.1 to users.  This new BMS
+ 1.3.1 version addresses defects and there are no new enhancements.
+  
+ This build corrects three issues within the BMS application and replaces 
+ Bed Management Solution (BMS) Version 1.3 patch entered in error.
+ One defect fix to implement a thread safe data type, ConcurrentDictionary,
+ was removed from the patch due to issues it introduced when installed.
+ The three issues corrected by this build, BMS v1.3.1 are:
+ 
+ 1) Resolution of a time zone issue - the system currently does not work 
+    properly during the time change to Daylight Savings Time. When patient 
+    movements are entered during the hour of the time change, background 
+    processes fail, causing issues with migrating VistA data into the BMS 
+    database. When this happens BMS goes down until the records are 
+    adjusted.
+ 
+ 
+ 2) Implementation of code that handles a user's Active Directory (AD) name 
+    change, so they can continue to use the system when their AD name changes.
+ 
+ 2) Implementation of a maintenance page, so users cannot login during 
+    system maintenance.
+ 
+  
+ ASSOCIATED REMEDY TICKET(s):
+ 
+ 1) INC000000982332 - Bed Management Solutions - Background Process Issue - 
+    BMS's background processor has failed and has been down since 03/09/14.
+ 
+ 2) INC000001022625 - Bed Management Solutions - Other - Application 
+    doesn't drop the old name of a user.  After a name change or domain 
+    change, users cannot access BMS without manual intervention by DBA to 
+    update the database by dropping the old name and the permissions.
+ 
+ 3) INC000001031512 - Bed Management Solutions - Login - When BMS is down
+    for maintenance, users are not notified of an outage on the BMS login page.
+  
+ ASSOCIATED NSR(s):
+ ==================
+    N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+    North Texas HCS
+    Upstate NY
+    Indianapolis
+    NY Harbor
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 
+ 1) INC000000982332 - Bed Management Solutions - Background Process Issue
+    - BMS's background processor has failed and has been down since 03/09/14.
+ 
+    Problem:
+    ========
+    The system currently does not work properly when the time change to 
+    Daylight Savings Time occurs. When patient movements are entered during 
+    the hour of the time change, background processes fail, causing issues 
+    with migrating VistA data into the BMS database. When this happens BMS 
+    goes down until the records are adjusted
+    
+    Solution:
+    =========
+    Apply code fix to allow the system to continue working following the 
+    change to Daylight Savings Time.
+ 
+ 
+ 2) INC000001022625 - Bed Management Solutions - Other - Application 
+    doesn't drop the old name of a user.  After a name change or domain 
+    change, users cannot access BMS without manual intervention by DBA to 
+    update the database by dropping the old name and the permissions.
+  
+    Problem:
+    ========
+    When a user's Active Directory (AD) name changes, they cannot log into BMS 
+    until their old name is removed from the BMS database.
+    
+    Solution:
+    =========
+    Implement a code change that allows the user to continue to use BMS 
+    after an AD name change.
+ 
+ 3) INC000001031512 - Bed Management Solutions - Login - When BMS is down
+    for maintenance, users are not notified of an outage on the BMS login 
+    page.
+ 
+  
+    Problem:
+    ========
+    When the BMS system is taken down for maintenance, users still see 
+    the login screen, which makes it seem like they should be able to 
+    access and use BMS.
+    
+    Solution:
+    =========
+    Implement a maintenance page that informs users that BMS is down and 
+    doesn't provide the option to log in during planned maintenance. 
+    Administrators control when the maintenance page is displayed and 
+    the Business Team provides input for the message to users during 
+    maintenance. While this change is self-explanatory, it will require 
+    changes to the user guide.
+  
+ 
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+    N/A
+  
+ IMPLEMENTATION:
+ ===============
+   The BMS application is a centrally managed web-based application hosted 
+   at AITC. BMS version 1.3.1 will be loaded into BMS Production account by 
+   AITC staff.  No software will be installed at the facilities.
+  
+ Reporting Problems:
+ ===================
+   If there are problems associated with the BMS application they should be
+   reported via Remedy by contacting the National Service Desk (NSD) 
+   1-888-596-4357 for assistance.
+  
+ DOCUMENTATION INFORMATION:
+ ==========================
+    N/A
+ 
+ 
+ 
+                                
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 01, 2014
+Completed By:                               Date Completed: OCT 29, 2014
+Released By :                               Date Released : NOV 18, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

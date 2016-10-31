@@ -1,0 +1,215 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 12/10/14 at 12:07
+=============================================================================
+Run Date: SEP 29, 2015                     Designation: LR*5.2*450
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #363                    Status: Released
+                  Compliance Date: OCT 30, 2015
+=============================================================================
+
+Associated patches: (v)LR*5.2*433  <<= must be installed BEFORE `LR*5.2*450'
+                    (v)LR*5.2*438  <<= must be installed BEFORE `LR*5.2*450'
+                    (v)LR*5.2*444  <<= must be installed BEFORE `LR*5.2*450'
+
+Subject: AP DELETE ACCESSION, ORDERED TESTS BY PHYSICIAN & CANCELED VBECS ACCESSIONED
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch addresses three (3) issues:
+ 1. The Anatomic Pathology option, DELETE ACCESSION #, ANAT PATH
+    [LRAPKILL], gives the user ambiguous feedback about whether the delete
+    of the accession was successful.
+ 2. The ORDERED TEST COST BY PROVIDER [LR ORDERED TESTS BY PHY] option 
+    misses AP and Howdy tests when an Accessioning Division is specified.
+ 3. Orders generated in CPRS and rejected in VBECS can be accessioned
+    in VistA Lab.
+  
+ BLOOD BANK REVIEW:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*450 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*450 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*450 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Associated Remedy ticket(s):
+ ==========================
+ 1. INC000000927637 - AP Delete Accession
+ 2. INC000000963117 - Ordered Tests by Physician
+ 3. INC000001037305 - Canceled VBECS Accessioned
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Central Plains HCS - VA Nebraska Western Iowa Health Care System 
+ St. Cloud VA Health Care System 
+ Wilkes-Barre VAMC       
+  
+  
+ Remedy Overview:
+ ================
+ 1. INC000000927637 - AP Delete Accession
+  
+ Problem:
+ --------
+ Under certain conditions, when using the Anatomic Pathology option 
+ DELETE ACCESSION #, ANAT PATH [LRAPKILL], after the user responds "Y"
+ to an "OK to DELETE" prompt, the application displays "??" even 
+ though the delete is successful.  When that occurs, the CANCELED BY 
+ FIELD (#10) in the LAB ORDER ENTRY FILE (#69) is not populated (or 
+ is set to zero). The defect occurs because the program is attempting
+ to update the CANCELED BY FIELD (#10) with the user's DUZ (an internal 
+ format) using an option of a FileMan API (^DIE) that expects an 
+ external format.
+  
+ Resolution:
+ -----------
+ The patch modifies the way the routine ^LRUDEL uses the FileMan API 
+ ^DIE.  The modification uses the Stuff a Field Value (Un-validated) 
+ option of ^DIE which expects the Internal Entry Number (IEN) for the
+ user that performed the cancel.
+  
+ Routines: LRUDEL
+  
+ 2. INC000000963117 - Ordered Tests by Physician
+   
+ Problem:
+ --------
+ The ORDERED TESTS COST BY PROVIDER [LR ORDERED TESTS BY PHY] option
+ generates a report that misses tests ordered via AP or HOWDY when an
+ Accessioning Division is specified (rather than selecting all
+ divisions).  This occurs because those options do not populate the
+ INSTITUTION FIELD (#25) in the LAB ORDER ENTRY FILE (#69).  Running the
+ report for all divisions generates an accurate report because the
+ INSTITUTION FIELD (#25) is not examined when no Accessioning Division is
+ specified.
+  
+ Resolution:
+ -----------
+ A modification to routine LRHYPH2, corrects the issue for HOWDY for 
+ future orders. A modification to routine LR7OFAO, corrects the issue
+ for AP for future orders. Further, the patch Post Install Routine 
+ (LR450PIR) uses the ORDERING LOCATION FIELD (#23) when it is defined
+ to look up the INSTITUTION and correctly populate the field in the 
+ LAB ORDER ENTRY FILE (#69).
+  
+ Routines: LR7OFAO, LRHYPH2
+  
+ 3. INC000001037305 - Canceled VBECS Accessioned
+   
+ Problem:
+ --------
+ Orders that are rejected by VBECS can be accessioned and show as 
+ 'Pending' in Order/test status. It has been discovered that VBECS does
+ not include the DUZ of the person rejecting the order in the order 
+ reject message to CPRS.
+  
+ Resolution:
+ -----------
+ The patch modifies code in routines ^LROE and ^LROS to check the 
+ STATUS FIELD (#8) along with the CANCELED BY FIELD (#10) of the TEST
+ multiple (#6) of the SPECIMEN # multiple (#1) in the LAB ORDER ENTRY
+ FILE (#69) during Accessioning (LROE) and displaying Order/test 
+ status (LROS).
+  
+ Routines: LROE, LROS
+  
+ Components:
+ ===========
+ N/A
+  
+ Installation Instructions:
+ ==========================
+ The install time for this patch is less than 10 minutes. This patch 
+ can be installed when Laboratory users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system to avoid
+       problems loading and/or installing this patch.
+  
+ 1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+    option will load the KIDS patch onto your system.
+  
+ 2. The patch has now been loaded into a Transport global on your
+    system. You now need to use KIDS to install the transport global.
+  
+ 3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+    select the 'Installation' menu.
+  
+ 4. Use the 'Verify Checksum in Transport Global' option and verify
+    that all routines have the correct checksums.
+     
+ 5. On the KIDS menu, under the 'Installation' menu, use the 
+    following options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+    To preserve a copy of the routines exported in this patch prior
+    to installation, you should use the 'Backup a Transport Global' 
+    option at this time. You may also compare the routines in your 
+    production account to the routines in the patch by using the 
+    'Compare a Transport Global to Current System' option.
+  
+ 6. Use the 'Install Package(s)' option under the 'Installation' 
+    menu and select the package 'LR*5.2*450'.
+  
+    When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+    YES//, choose 'NO'.
+  
+    When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? YES//', choose 'NO'.
+  
+ 7. The Post Install Routine will run and display progress during 
+    the install.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR450PIR
+    Before:       n/a   After: B14908272  **450**
+Routine Name: LR7OFAO
+    Before: B37607643   After: B37973467  **121,350,450**
+Routine Name: LRHYPH2
+    Before: B12043127   After: B12456317  **405,444,450**
+Routine Name: LROE
+    Before: B35554046   After: B35804933  **100,121,201,221,263,286,360,
+                                           423,432,438,450**
+Routine Name: LROS
+    Before: B32542393   After: B33110400  **121,153,202,210,221,263,450**
+Routine Name: LRUDEL
+    Before: B25303229   After: B25312700  **1,72,121,201,350,427,433,450**
+ 
+Routine list of preceding patches: 433, 438, 444
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 28, 2014
+Completed By:                               Date Completed: SEP 18, 2015
+Released By :                               Date Released : SEP 29, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

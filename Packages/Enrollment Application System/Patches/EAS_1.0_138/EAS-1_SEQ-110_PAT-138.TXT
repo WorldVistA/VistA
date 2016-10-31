@@ -1,0 +1,170 @@
+
+=============================================================================
+Run Date: APR 26, 2016                     Designation: EAS*1*138
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #110                      Status: Released
+                  Compliance Date: MAY 27, 2016
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 4.3 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Department of Veterans Affairs (VA) is obligated to support the Patient
+ Protection and Affordable Care Act (PPACA). Effective January 1, 2014, the
+ Affordable Care Act (ACA) requires every individual taxpayer in the United
+ States to maintain minimum essential healthcare coverage or face a tax penalty.
+ Enrollment in Veterans health care meets the Minimum Essential Coverage (MEC)
+ threshold under 26 Code of Federal Regulations (CFR) 1.36B-2 (c)(2)(ii) of
+ the Treasury Notice of Proposed Rulemaking (NPRM).
+                                                                            
+ The VA is required to provide the IRS with a list or file containing
+ information on every Veteran and beneficiary that obtained MEC through the VA
+ for a tax year. The information provided to the IRS includes: name, address,
+ DOB, insurer information (VA information, Part III of the 1095B), and either a
+ full year or number of months the VA provided MEC. Section 6055(a) requires
+ every entity that provides MEC, to file annual returns reporting information
+ for each individual for whom coverage is provided. The Veterans Letter, 1095B
+ form, or equivalent communication, must be prepared annually for the prior tax
+ year and filed with the IRS.
+                                                                      
+ The purpose of this Informational patch is to announce the release of the
+ Enrollment System (ES) 4.3 software which specifically focuses on
+ accomplishing the requirements of the ACA project. ES 4.3 permits the
+ following functionality:  
+ -      Identification of Veterans for whom to issue an annual Minimum
+        Essential Coverage (MEC) letter and IRS Form 1095B. (Claims
+        Processing and Eligibility (CPE) identifies the beneficiaries.)
+ -      Determination of the MEC during the previous calendar year for an
+        individual and populate the IRS Form 1095B.
+ -      Establishes a secure interface between the Veterans Administration (VA)
+        and Internal Revenue Service (IRS) to share MEC information, e.g. IRS
+        Form 1095B.
+ -      Allows for ES to receive and store an acknowledgement from the IRS for
+        receipt of IRS Form 1095B.
+ -      Allows designated ES users to view, correct, and retransmit MEC
+        information to the IRS on behalf of the Veterans.
+ -      Allows designated ES users to complete a corrected IRS Form 1095B for
+        Veterans and/or beneficiaries, to issue an annual MEC Letter, IRS Form
+        1095B, and MEC Report, to share with IRS. (Currently Claims Processing
+        and Eligibility (CPE) must correct IRS Form 1095B for the
+        beneficiaries.)
+  
+ Enhancements:
+ =============
+  
+ ACA Increment 4 adds the following capabilities:
+ -      Deliver the required ACA correspondence and IRS reporting capabilities
+        through an extension of VA enterprise capabilities for Veterans and
+        beneficiaries 
+ -      Provide the capability to generate and send a file or list of Veterans
+        and beneficiaries and their months of VA health benefits MEC coverage
+        for a tax year to the IRS
+ -      Provide the capability to correct an IRS 1095B form for Veterans and
+        beneficiaries and re-submit to the IRS
+ 
+  
+ What to Expect:
+ ===============
+ During the ES 4.3 implementation, which is expected to take less than 
+ eight hours, HL7 messaging to and from the ES will be disabled by the 
+ Vitria Interface Engine (VIE) team. After the ES implementation, there 
+ will be no change in VistA. 
+  
+ Implementation:
+ ===============
+ The implementation of ES 4.3 requires deployment of Java software to dedicated
+ servers at the Austin Information Technology Center (AITC). The AITC staff will
+ perform the installation with support from the development team. Support from
+ the sites is not required. 
+  
+ The ES application will be unavailable and Veteran enrollment 
+ determinations will be delayed until the deployment is complete. Person
+ Service Identity Management/Master Veteran Index (PSIM/MVI) and messaging
+ to/from the sites will be unavailable during the deployment. An Automated
+ Notification Reporting (ANR) will be created to announce the deployment
+ which will list all impacted systems and to track the outage.
+  
+ Implementation Date:
+ ====================
+ 04/23/2016
+  
+ Implementation Files:
+ =====================
+ N/A
+  
+ Documentation Retrieval:
+ ========================
+ The user documentation is available on the Office of Information Field
+ Office (OIFO) ANONYMOUS.SOFTWARE directories listed below:
+  
+    OIFO                  Address                      Directory
+ Albany               domain.ext        
+ Hines                domain.ext         
+ Salt Lake City       domain.ext           
+  
+  
+ The user documentation files listed below may be obtained via Secure Shell 
+ File Transfer Protocol (SFTP). 
+  
+ Sites may also select to retrieve documentation from a specific server 
+ as shown in the above table.
+  
+ The following files should be downloaded in the binary file transfer method. 
+  
+ Filename                                  Description
+ --------                                  -----------
+ ES_4_3_Developers_Guide                    Developer's Guide 
+ ES_4_3_Installation_Guide                  Installation Guide 
+ ES_4_3_Release_Notes                       Release Notes 
+ ES_4_3_Production_Operations_Manual        Production Operations Manual 
+ ES_4_3_User_Guide                          User Guide
+  
+  
+ Mandate:
+ ======== 
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ==========================
+ N/A
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Reporting Problems:
+ ===================
+ N/A
+  
+  
+ Routine Information:
+ ====================
+ 
+ 
+ No routines included.
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:                          Hold Date     : APR 10, 2016
+Entered By  :                               Date Entered  : MAR 03, 2016
+Completed By:                               Date Completed: APR 08, 2016
+Released By :                               Date Released : APR 26, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

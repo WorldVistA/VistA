@@ -1,0 +1,827 @@
+$TXT Created by               at CINP.FO-BIRM.DOMAIN.EXT  (KIDS) on Friday, 09/18/15 at 13:53
+=============================================================================
+Run Date: DEC 28, 2015                     Designation: SR*3*184
+Package : SR - SURGERY                        Priority: Mandatory
+Version : 3       SEQ #175                      Status: Released
+                  Compliance Date: JAN 28, 2016
+=============================================================================
+
+Associated patches: (v)SR*3*182    <<= must be installed BEFORE `SR*3*184'
+
+Subject: ANNUAL SURGERY UPDATES - 2015
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Input Template
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ In support of the VA Surgery Quality Improvement Program (VASQIP), this 
+ patch provides update to the Veterans Health Information Systems and
+ Technology Architecture (VistA) Surgery package.
+ The updates include the addition of new data fields, changes to existing
+ fields, changes to data entry screens, changes to reports, changes to the
+ Surgery Risk Assessment transmissions, and changes to transplant
+ components of the VistA Surgery application.
+  
+  
+ Note: All updated or new fields are part of the SURGERY file (#130) unless
+       otherwise mentioned. 
+  
+ 1. Request Operation Screen
+  a. The PALLIATION field (#661) has been added as new field.
+  
+  b. This patch adds the SPECIAL EQUIPMENT, PLANNED IMPLANT, PHARMACY 
+     ITEMS, SPECIAL INSTRUMENTS, and the SPECIAL SUPPLIES as new multiples 
+     under the Request Operation options and under the Schedule Operation
+     options.
+  
+  c. This patch adds the SPINAL LEVEL field (#136) under the Request 
+     Operation options, the Operation Scheduling options, and the Schedule
+     of Operations report option. This field will be available for edit
+     only if the PLANNED PRIN PROCEDURE CODE field (#27) of the case
+     matches one of the entries in the CPT-SPINAL LEVEL file (#131.4) which
+     is introduced by this patch.
+  
+  d. The PLANNED ADMISSION STATUS field (#.013) has been added as new 
+     field and it has been made required for case creation using the 
+     Request Operation options and replaced the HOSPITAL ADMISSION STATUS
+     field (#.011) in the Request Operation screen. The HOSPITAL ADMISSION
+     STATUS  field (#.011)  will be initially auto populated from the new 
+     field.
+  
+ 2. Time-Out Verified checklist Screen
+     This patch adds many organ related fields to this option. The complete
+     list of the fields will be listed under the Release Notes manual.
+  
+ 3. Cardiac/Non-Cardiac Risk Assessment
+  a. This patch adds the following fields under the Clinical
+     Information (Enter/Edit) [SROA CLINICAL INFORMATION] options:
+     - IMPAIRED COGNITIVE FUNCTION (#662)
+     - SLEEP APNEA-COMPLIANCE (#667)
+     - The CONGESTIVE HEART FAILURE PREOP field (#423) is used instead of
+       the CONGESTIVE HEART FAILURE field (#207) which has been marked as 
+       obsolete.
+  
+  b. This patch adds the following fields under the under the Preoperative
+     Information (Enter/Edit) [SROA PREOP DATA] option.
+     - IMPAIRED COGNITIVE FUNCTION (#662)
+     - SLEEP APNEA-COMPLIANCE (#667) 
+     - CHEMO FOR MALIG LAST 90 DAYS (#338.3)
+     - RESIDENCE 30 DAYS PREOP (#670)
+     - AMBULATION DEVICE PREOP (#671)
+     - HISTORY OF CANCER DIAGNOSIS (#673) 
+     - HX RAD RX PLANNED SURG FIELD (#674) 
+     - PRIOR SURG SAME OP FIELD (#677) 
+  
+  c. The following fields were removed from the data entry screen, missing
+     items, and from Cardiac transmission data:
+     - PULMONARY RALES (#348)
+     - CURRENT DIGOXIN USE (#354)
+     - RESTING ST DEPRESSION (#350)
+   
+     o The data definition of the "PREOP FUNCT. HEALTH STATUS" field (#492)
+       has been updated and will be used under this option instead of the 
+       "FUNCTIONAL HEALTH STATUS" field (#240).
+  
+  d. This patch adds the following fields under the Cardiac Procedures 
+     Operative Data (Enter/Edit) [SROA CARDIAC PROCEDURES] option:
+     - BRIDGE TO TRANSPLANT/DEVICE field (#481)
+  
+  e. This patch updates the Resource Data [SROA CARDIAC RESOURCE] 
+     screen as follows:
+     o Adding the following field:
+       - TRANSFER STATUS (#413)
+       - DATE OF DEATH (#342) and the "30 DAY DEATH" (#342.1)
+       - HISTORY OF CANCER DIAGNOSIS (#673) 
+       - HX RAD RX PLANNED SURG FIELD (#674) 
+       - PRIOR SURG SAME OP FIELD (#677) 
+       - RESIDENCE 30 DAYS PREOP (#670)
+       - AMBULATION DEVICE PREOP (#671)
+       - DC/REL DESTINATION (#685)
+  
+     o Removal of the CARDIAC RESOURCE DATA COMMENTS field (#431)
+  
+     o The HOSPITAL DISCHARGE DATE field (#419) has been removed against 
+       checking of missing items for Cardiac assessment.
+  
+  f. This patch removes the following fields:
+     - ESTIMATE OF MORTALITY (#364)
+     - CARDIAC RISK PREOP COMMENTS (#430)
+  
+  g. The Outcome Information (Enter/Edit) [SROA CARDIAC-OUTCOMES] option 
+     has been set out of order.
+  
+  h. This patch add the DC/REL DESTINATION field (#685) to the Patient
+     Demographics (Enter/Edit) [SROA DEMOGRAPHICS] screen.
+  
+ 4. Operation Screen
+  a. LASER PERFORMED field (#135)
+     This has been added as new multiple is the SURGERY file (#130) and it
+     will replace the existing "LASER UNIT" multiple (#130.0129) 
+     in Operation Screen, Nurse Intraoperative Report data entry screens.
+     The complete list of fields of this multiple can are listed in the   
+     patch release notes manual.
+  
+  b. The POSSIBLE ITEM RETENTION field (#630)
+     This field has been modified to default to "YES" when accessing 
+     the Operation screen if the field has no data.
+  
+ 5. Case Aborted
+    The Abort/Cancel Operation [SROABRT] option has been added as new 
+    option under the Operation Menu [SROPER] menu. This menu option should
+    only be used if the patient has been taken to the operating room and no
+    incision has been made. If an incision is made, the case should be 
+    completed and the discontinued procedure indicated in the record.  
+    Cancellation of future surgical cases should not use this option.
+    When using this option, the user will be prompted for CASE ABORTED 
+    field (#18.5) with "NO" default.
+    The cancellation information fields (CANCEL DATE, CANCELLATION
+    TIMEFRAME, and PRIMARY CANCEL REASON) have been removed from
+    all data entry screen under the operation menu except from the new 
+    option.
+    When this option is used to abort surgical case, the CANCELLATION
+    TIMEFRAME field (#17.5) will be set to "1".
+  
+    **There are known defects in SR*3*184 with this new option.  These will
+    be addressed in a future patch. 
+    Defect 1) PRIMARY CANCEL REASON is not properly saved to the Surgery
+    package. 
+    Defect 2) User is prompted for "Cancellation Avoidable" instead of
+    "Cancellation Timeframe".
+     
+ 6. Height and Weight Fields
+     The HEIGHT (#236) and the WEIGHT (#237) fields have been added to the 
+     first page of the Operation Startup [SROMEN-START] screen and will be
+     auto populated using available data from the Vitals Package.
+  
+ 7. This patch updates various fields in the SURGERY file (#130) and 
+    various occurrence category descriptions in the PERIOPERATIVE
+    OCCURRENCE CATEGORY file (#136.5).
+    This patch also replaces various fields with new fields in order to
+    enhance and refine certain data elements that are in common with
+    cardiac and non-cardiac risk assessments. All the associated data input
+    options, assessment printouts and transmissions are updated
+    accordingly.
+     
+    The complete list of updated fields, new fields and replaced fields is
+    in the patch release notes.
+  
+ 8. This patch changes the PLANNED PRIN PROCEDURE CODE field (#27) to 
+    be a mandated field when creating Surgery cases and limits selection of
+    CPT codes to range of (10000-69999; 00100-01999; 70000-79999;
+    D0000-D9999;  nnnnT.)
+  
+    **There is a known defect in SR*3*184 where, in certain instances, 
+    active CPT codes D0000-D9999 and xxxxT will not be selectable. A 
+    correction for this will be addressed in a future patch.
+    
+ 9. This patch updates the CPT EXCLUSIONS file (#137) with data for 
+    fiscal year 2015.
+  
+ 10. The Transplant Assessment Menu [SR TRANSPLANT ASSESSMENT] menu 
+     has been placed out of order.
+  
+ 11. This patch removes missing data screening for major/minor field
+     (removed by Patch 182) - this impacts  Lists 7 and 8 of the List of
+     Surgery Risk Assessments [SROA ASSESSMENT LIST] option.
+  
+ 12. The WOUND CLASSIFICATION field (#1.09) prevents the selection of 
+     "CLEAN" if the planned principle procedure code (CPT) matches one of 
+     the CPTs that cannot be classified as clean. However, if data has 
+     already been populated for this field and the user tries to update it 
+     again, then the "CLEAN" option will be displayed.
+  
+ 13. The exclusion criteria list of the Monthly Surgical Case Workload 
+     Report [SROA MONTHLY WORKLOAD REPORT] option has been updated as
+     follows:
+     - The "SCNR WAS ON A/L" criteria has been changed to "10% RULE"
+     - The "STUDY CRITERIA" criteria has been changed to "INCLUSION CRTA 
+       NOT MET"
+     - A new "ABORTED" criteria has been added to the exclusion list
+  
+ 14. Options #4 and #5 of the List of Surgery Risk Assessments [SROA 
+     ASSESMENT LIST] option are placed out of order (Deactivated) after
+     this enhancement.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)   Field Name (#)                           New/Mod/Del
+ -------------   -------------------------------------    -----------
+ SURGERY (#130)
+                 HOSPITAL ADMISSION STATUS (#.011)        Modified
+                 PLANNED ADMISSION STATUS (#.013)         New
+                 PREOPERATIVE INFECTION (#.05)            New
+                 WOUND CLASSIFICATION (#1.09)             Modified
+                 CASE ABORTED (#18.5)                     New
+                 PLANNED PRIN PROCEDURE CODE  (#27)       Modified
+                 REASON FOR NO ASSESSMENT (#102)          Modified
+                 SPINAL LEVEL (#136)                      New
+                 HISTORY OF COPD (#203)                   Modified
+                 PRIOR MI (#205)                          Modified
+                 *CONGESTIVE HEART FAILURE (#207)         Obsolete
+                 ESOPHAGEAL VARICES (#213)                Modified
+                 *FUNCTIONAL HEALTH STATUS (#240)         Obsolete
+                 DEEP INCISIONAL SSI (#249)               Modified
+                 GRAFT/PROSTHESIS/FLAP FAILURE (#261)     Modified
+                 PERIPHERAL ARTERIAL DISEASE (#265)       Modified
+                 ON VENTILATOR >48 HOURS (#285)           Modified
+                 IMPAIRED SENSORIUM (#332)                Modified
+                 *CHEMOTHERAPY IN LAST 30 DAYS (#338.1)   Obsolete
+                 CHEMO FOR MALIG LAST 90 DAYS (#338.3)    New
+                 STEROID USE FOR CHRONIC COND. (#339)     Modified
+                 FEV1 (#347)                              Modified
+                 *PULMONARY RALES (#348)                  Obsolete
+                 *RESTING ST DEPRESSION (#350)            Obsolete
+                 *CURRENT DIGOXIN USE (#354)              Obsolete
+                 REOPERATION FOR BLEEDING (#389)          Modified
+                 REPEAT CARDIAC SURG PROCEDURE (#391)     Modified
+                 UNPLANNED INTUB W/IN 30 DAYS (#422)      Modified
+                 CONGESTIVE HEART FAILURE PREOP (#423)    Modified
+                 OBSERVATION ADMISSION DATE (#452)        Modified
+                 BRIDGE TO TRANSPLANT/DEVICE (#481)       Modified
+                 ORGAN/SPACE SSI (#488)                   Modified
+                 PREOP FUNCT. HEALTH STATUS (#492)        Modified
+                 DIABETES MELLITUS CHRONIC (#519)         Modified
+                 DIABETES MELLITUS PREOP MGMT (#520)      Modified
+                 BLOOD AVAILABILITY (#610)                Modified
+                 POSITIVE DRUG SCREENING (#618)           Modified
+                 POSSIBLE ITEM RETENTION (#630)           Modified
+                 WOUND SWEEP (#633)                       Modified
+                 BLEEDING RISK DUE TO MED (#642)          Modified
+                 SYMPTOMATIC UTI (#644)                   Modified
+                 *MECHANICAL VENT W/N 30 DAYS (#645)      Obsolete
+                 UNOS NUMBER (#648)                       New
+                 DONOR SEROLOGY HCV (#649)                New
+                 DONOR SEROLOGY HBV (#650)                New
+                 DONOR SEROLOGY CMV (#651)                New
+                 DONOR SEROLOGY HIV (#652)                New
+                 DONOR ABO TYPE (#653)                    New
+                 RECIPIENT ABO TYPE (#654)                New
+                 BLOOD BANK ABO VERIFICATION (#655)       New
+                 OR ABO VERIFICATION (Y/N) (#656)         New
+                 SURGEON VERIFYING UNET (#657)            New
+                 ORGAN VER PRE-ANESTHESIA (#658)          New
+                 SURGEON VER DONOR ORG PRE-ANES (#659)    New
+                 ORGAN VER PRE-TRANSPLANT (#660)          New
+                 PALLIATION (#661)                        New
+                 IMPAIRED COGNITIVE FUNCTION (#662)       New
+                 DONOR VESSEL USAGE (#663)                New
+                 DONOR VESSEL DISPOSITION (#665)          New
+                 LIVER DISEASE/CIRRHOSIS (#666)           New
+                 SLEEP APNEA-COMPLIANCE (#667)            New
+                 IMMUNOCOMPROMISED STATE PREOP (#668)     New
+                 PULMONARY HTN (#669)                     New
+                 RESIDENCE 30 DAYS PREOP (#670)           New
+                 AMBULATION DEVICE PREOP (#671)           New
+                 NUTRITIONAL SUPPLEMENT PREOP (#672)      New
+                 HISTORY OF CANCER DIAGNOSIS (#673)       New
+                 HX RAD RX PLANNED SURG FIELD (#674)      New
+                 PRIOR INFEC/INFLAM SURG FIELD (#675)     New
+                 HX DEEP VEIN THROMBOSIS (#676)           New
+                 PRIOR SURG SAME OP FIELD (#677)          New
+                 DC/REL DESTINATION (#685)                New
+                 AORTIC REGURGITATION (#686)              New
+                 INJURY TO ADJACENT ORGAN (#687)          New
+                 STOMA COMPLICATIONS (#688)               New
+                 NON-UNION (#689)                         New
+                 IMPLANT INFECTIONS (#690)                New
+                 CHYLE/LYMPH LEAK (#691)                  New
+                 ANASTOMOTIC LEAK (#692)                  New
+                 FISTULA (#693)                           New
+                 NECROTIZING SOFT TISS INFECT (#694)      New
+                 OTHER BLOOD PRODUCT UNITS (#695)         New
+                 PRESSORS USED INTRAOP (#696)             New
+                 MITRAL STENOSIS (#697)                   New
+                 PCI INTERVENTION (#698)                  New
+                 ATRIAL ARRHYTHMIAS (#699)                New
+                 HEAD OR NECK CANCER (#700)               New
+                 MACULAR DEGENERATION (#701)              New
+                 GLAUCOMA (#702)                          New
+                 HX RETINAL DETACHMENT (#704)             New
+                 AXIAL LEN/ANTERIOR CHAM DEP (#705)       New
+                 CORNEAL GUTTAE/FUCHS ENDO (#706)         New
+                 DIABETIC RETINOPATHY (#707)              New
+                 COMPLEX CATARACT (#708)                  New
+                 STATIN 30 DAYS PREOP (#709)              New
+                 IPSILAT CORTICAL EVENT PREOP (#710)      New
+                 PREOP MODIFIED RANKIN SCORE (#711)       New
+                 CAROTID SUR ANATOMIC HIGH RISK (#712)    New
+                 BYPASS CRITICAL LIMB ISCHEMIA (#713)     New
+                 ENDOLEAK AT COMPLETION (#715)            New
+                 HIGH HEART RATE 6HRS PREOP (#716)        New
+                 HIGH HEART RATE INTRAOP (#717)           New
+                 LOW ARTERIAL PRESS 6HRS PREOP (#718)     New
+                 HIGH LACTIC ACID 6HRS PREOP (#719)       New
+                 HIGH LACTIC ACID INTRAOP (#720)          New
+                 LOWEST PH 6HRS PREOP (#721)              New
+                 LOWEST PH INTRAOP (#722)                 New
+                 LOW ARTERIAL PRESS INTRAOP (#723)        New
+                 OLIGURIA <60CC/2HRS 6HRS PREOP (#724)    New
+                 OLIGURIA URINE OUTPUT INTRAOP (#725)     New
+                 LOWEST BICARBONATE 6HRS PREOP (#726)     New
+                 LOWEST BICARBONATE INTRAOP (#727)        New
+                 UNITS TRANSFUSED 6HRS PREOP (#728)       New
+                 VASOPRESSOR USAGE AT OR ENTRY (#729)     New
+                 CARDIAC ARREST 24 HRS PREOP (#730)       New
+                 DIC 6HRS PREOP (#731)                    New
+                 HYPOXEMIA W/IN 6HRS PREOP (#732)         New
+                 ENDOLEAK AT FOLLOW-UP (#733)             New
+                 CARDIAC ARREST INTRAOP (#734)            New
+                 FLOPPY IRIS INTRAOP (#735)               New
+                 PREOP VISUAL ACUITY (#736)               New
+                 POSTOP VISUAL ACUITY (#737)              New
+                 ENDOPHTHALMITIS TYPE (#738)              New
+                 CYSTOID MACULAR EDEMA (#739)             New
+                 DISLOCATION OF OPERATIVE JOINT (#740)    New
+                 PERIPROSTHETIC FRACTURES (#741)          New
+                 D/T PAT ARRIVES HOSP DAY SURG (#742)     New
+                 D/T PAT LEAVES HOSP DAY SURG  (#743)     New
+                 KIDNEY DONOR PROFILE INDEX (#744)        New
+                 EXPECTED POST TRANSPLANT INDEX (#745)    New
+                 BLOOD BANK ABO VER COMMENTS (#746)       New
+                 D/T BLOOD BANK ABO VERIF (#747)          New
+                 OR ABO VER COMMENTS (#748)               New
+                 D/T OR ABO VERIF (#749)                  New
+                 UNET VERIF BY SURGEON (Y/N) (#750)       New
+                 SURGEON VER ORGAN PRE-ANES (#751)        New
+                 DONOR ORG VER PRE-ANES (#752)            New
+                 SURGEON VER ORG PRE-TRANSPLANT (#753)    New
+   ORGAN TO BE TRANSPLANTED  (sub-file)(#130.0647)        New
+                 ORGAN TO BE TRANSPLANTED (#.01)
+   DONOR VESSEL UNOS ID  (sub-file)(#130.0664)            New
+                 DONOR VESSEL UNOS ID (#.01)
+   PLANNED IMPLANT  (sub-file)(#130.0681)                 New
+                 PLANNED IMPLANT (#.01)
+   SPECIAL SUPPLIES  (sub-file)(#130.0682)                New
+                 SPECIAL SUPPLIES (#.01)
+   SPECIAL INSTRUMENTS  (sub-file)(#130.0683)             New
+                 SPECIAL INSTRUMENTS (#.01)
+   PHARMACY ITEMS  (sub-file)(#130.0684)                  New
+                 PHARMACY ITEMS (#.01)
+   LASER PERFORMED  (sub-file)(#130.11)                   New
+                 LASER NAME (#.01)
+                 LASER TYPE (#1)
+                 LASER START TIME (#2)
+                 LASER END TIME (#3)
+                 LASER TEST FIRE (#4)
+                 LASER DELIVERY SYSTEM (#5)
+                 PULSE MODE (#6)
+                 POWER/AVERAGE POWER (#7)
+                 INTERVAL/REPETITION RATE (#8)
+                 TOTAL JOULES DELIVERED (#9)
+                 WATTS DELIVERED (#10)
+                 WAVE FORM (#11)
+                 PULSE WIDTH (#12)
+                 ENERGY JOULES (#13)
+                 LASER DURATION (#14)
+                 PATIENT PRECAUTIONS (#15)
+                 LASER ON STANDBY (#16)
+                 LASER OFF AND KEY SECURED (#17)
+                 PERSONNEL PRECAUTIONS (#18)
+                 LASER COMMENTS (#19)
+   INTRAOPERATIVE OCCURRENCES  (sub-file)(#130.13)         Modified
+                 INTRAOP DEVICE TYPE (#5)                  
+   POSTOP OCCURRENCE  (sub-file)(#130.22)
+                 INDWELLING URETHRAL CATHETER (#10)        Modified
+                 POSTOP DEVICE TYPE (#15)
+   SPECIAL EQUIPMENT  (sub-file)(#130.25)                  New
+                 SPECIAL EQUIPMENT (#.01)
+  
+ SPECIAL EQUIPMENT (#131.3)                                New
+                 NAME (#.01)
+                 NUMBER (#2)
+                 INACTIVE? (#3)
+                 SURGICAL SPECIALTIES (#4), Multiple (#131.34)
+  
+ SPECIAL INSTRUMENTS (#131.02)                             New
+                 NAME (#.01)
+                 NUMBER (#1)
+                 INACTIVE? (#2)
+                 SURGICAL SPECIALTIES (#3), Multiple (#131.23)
+  
+ PLANNED IMPLANT (#131.5)                                  New
+                 NAME (#.01)
+                 SIZE (#1)
+                 INACTIVE? (#2)
+                 MODEL (#3)
+                 VENDOR (#4)
+                 SURGICAL SPECIALTIES (#6), Multiple (#131.56)
+  
+ PHARMACY ITEMS (#131.06)                                  New
+                 DRUG NAME (#.01)
+                 DOSE (#1)
+                 INACTIVE? (#2)
+                 DRUG COMMENTS (#3)
+                 SURGICAL SPECIALTIES (#4), Multiple (#131.64)
+  
+ SPECIAL SUPPLIES (#131.04)                                New
+                 NAME (#.01)
+                 SIZE (#1)
+                 INACTIVE? (#2)
+                 MODEL (#3)
+                 VENDOR (#4)
+                 SURGICAL SPECIALTIES (#5), Multiple (#131.45)
+  
+ CPT-SPINAL LEVEL (#131.4)                                 New
+                 CPT CODE (#.01)
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Mod/Del
+ ---------                ------                  -----------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Mod/Del
+ ---------------                  -----------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Mod/Del
+ -----------                    ----             -----------
+ SROA CARDIAC ENTER/EDIT        menu             Modified
+ SROA CARDIAC-OUTCOMES          run routine      Out of Order
+ SROABRT                        run routine      New
+ SR TRANSPLANT ASSESSMENT       run routine      Out of Order
+ SROMENU                        menu             Modified
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Mod/Del
+ -------------                     -----------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name       Type      File Name (#)                 New/Mod/Del
+ -------------       ----      ------------------            -----------
+ SROMEN-START       Input     SURGERY (#130)                 Modified
+ SROMEN-OUT         Input     SURGERY (#130)                 Modified
+ SROMEN-OPER        Input     SURGERY (#130)                 Modified
+ SRONRPT            Input     SURGERY (#130)                 Modified
+ SRONRPT1           Input     SURGERY (#130)                 New
+ SRONRPT2           Input     SURGERY (#130)                 New
+ SROMEN-VERF1       Input     SURGERY (#130)                 New
+ SROMEN-VERF2       Input     SURGERY (#130)                 New
+ SRSRES-ENTRY       Input     SURGERY (#130)                 Modified
+ SREQUEST           Input     SURGERY (#130)                 Modified
+ SREQUEST-ICD10     Input     SURGERY (#130)                 Modified
+ SRSRES-SCHED       Input     SURGERY (#130)                 Modified
+ SRSRES-SCHED1      Input     SURGERY (#130)                 New
+ SRSRES-ENTRY1      Input     SURGERY (#130)                 New
+ SRSREQV            Input     SURGERY (#130)                 Modified
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ CLEVELAND, OH
+ MINNEAPOLIS, MN -VAMC
+ UPSTATE NEW YORK HCS
+ WHITE RIVER JUNCTION, VT
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ File Description                            File Name             FTP Mode
+ --------------------------------------------------------------------------
+ Surgery V. 3.0 User Manual              SR_3_UM_R1115.PDF     (binary)
+ Surgery V. 3.0 User Manual              SR_3_P184_UM_CP.PDF   (binary)
+ Change Pages
+ Surgery V. 3.0 Technical Manual/        SR_3_TM_R1115.PDF     (binary)
+ Security Guide  
+ Surgery V. 3.0 Release Notes            SR_3_P184_RN.PDF      (binary)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ - The pre-installation process performs the following actions:
+      o Deletes the existing data from the PERIOPERATIVE OCCURRENCE
+        CATEGORY file (#136.5)
+  
+ - The routines SR184UTL, SR184UT0, SR184UT1, SR184UT2, and SR184UT3 are
+   deleted at the end of patch installation.
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch should be installed during a period of low system activity with
+ Surgery users off the system. It should be installed at a time when the
+ Surgery Nightly Cleanup and Updates [SRTASK-NIGHT] option is not running.
+ No options need to be placed out of service. Installation time is expected
+ to be less than 5 minutes.
+  
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch #
+     (SR*3.0*184):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter SR*3.0*184.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;Surgery;**[Patch List]**;24 Jun 93;Build 35
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SR184UT0
+    Before:       n/a   After: B90074856  **184**
+Routine Name: SR184UT1
+    Before:       n/a   After: B89550416  **184**
+Routine Name: SR184UT2
+    Before:       n/a   After: B91819989  **184**
+Routine Name: SR184UT3
+    Before:       n/a   After: B27224946  **184**
+Routine Name: SR184UTL
+    Before:       n/a   After: B13988563  **184**
+Routine Name: SROACL1
+    Before: B37257930   After: B37063890  **38,71,95,125,153,160,174,176,
+                                           182,184**
+Routine Name: SROACL2
+    Before:  B3657478   After:  B5515946  **125,160,176,182,184**
+Routine Name: SROACLN
+    Before: B12972978   After: B14320665  **38,47,71,95,100,125,142,174,
+                                           175,176,182,184**
+Routine Name: SROACOD
+    Before: B16693883   After: B16744459  **146,152,177,184**
+Routine Name: SROACOP
+    Before: B23252358   After: B15956766  **38,47,71,88,95,107,100,125,
+                                           142,153,160,166,174,175,182,
+                                           184**
+Routine Name: SROACPM
+    Before: B52631911   After: B51394670  **71,93,95,99,100,125,142,160,
+                                           164,166,174,182,184**
+Routine Name: SROACPM0
+    Before:       n/a   After: B12761142  **184**
+Routine Name: SROACR2
+    Before: B14624720   After: B14842120  **125,153,160,166,182,184**
+Routine Name: SROACTH
+    Before:  B7802049   After:  B7788055  **38,95,125,184**
+Routine Name: SROALMN
+    Before: B24842259   After: B24801741  **153,160,176,184**
+Routine Name: SROALOG
+    Before: B26759607   After: B27914506  **38,55,62,77,50,153,160,166,184**
+Routine Name: SROAPAS
+    Before: B28675186   After: B29875416  **38,47,81,88,111,112,100,125,
+                                           153,166,174,175,182,184**
+Routine Name: SROAPCA
+    Before: B32334880   After: B37414199  **38,47,71,95,125,134,153,160,
+                                           174,175,176,182,184**
+Routine Name: SROAPCA1
+    Before: B30466791   After: B25409891  **38,63,71,88,95,125,142,153,
+                                           166,174,175,184**
+Routine Name: SROAPCA2
+    Before:  B2234169   After:  B3181612  **38,71,95,125,153,174,175,182,184**
+Routine Name: SROAPCA3
+    Before: B24717605   After: B33243647  **38,71,95,101,125,160,164,166,
+                                           174,175,176,182,184**
+Routine Name: SROAPIMS
+    Before: B27575340   After: B27799692  **38,46,47,57,71,81,86,100,125,
+                                           134,160,175,182,184**
+Routine Name: SROAPM
+    Before: B45069143   After: B45146890  **47,81,111,107,100,125,142,
+                                           160,166,174,175,182,184**
+Routine Name: SROAPR1A
+    Before:  B7825783   After:  B7815328  **38,125,182,184**
+Routine Name: SROAPRE
+    Before: B16875105   After: B19317061  **38,47,55,88,100,125,142,166,
+                                           174,182,184**
+Routine Name: SROAPRE1
+    Before: B13656190   After: B15637851  **38,47,125,135,141,166,174,
+                                           176,182,184**
+Routine Name: SROAPRE2
+    Before:  B9447593   After: B10254316  **38,47,125,153,166,176,182,184**
+Routine Name: SROAPRT1
+    Before: B22844323   After: B27072163  **38,47,125,153,166,174,176,182,184**
+Routine Name: SROAPRT2
+    Before: B12414779   After: B15912992  **38,125,137,153,160,166,176,
+                                           182,184**
+Routine Name: SROAPRT7
+    Before: B30812579   After: B30505648  **38,47,57,60,125,160,176,177,
+                                           182,184**
+Routine Name: SROAPS1
+    Before: B33013237   After: B39695051  **38,47,125,153,166,174,176,182,184**
+Routine Name: SROAPS2
+    Before: B18823799   After: B23697705  **38,47,125,153,160,166,176,182,184**
+Routine Name: SROATCM
+    Before: B27083969   After: B27435590  **38,55,68,90,93,95,99,125,153,
+                                           174,175,177,182,184**
+Routine Name: SROATCM1
+    Before: B63097180   After: B65754224  **38,71,79,90,88,93,95,111,125,
+                                           135,134,142,153,160,174,175,
+                                           176,177,182,184**
+Routine Name: SROATCM3
+    Before: B13215032   After: B27157188  **125,135,153,164,166,174,177,
+                                           182,184**
+Routine Name: SROATM1
+    Before: B28438380   After: B30626315  **27,38,47,60,62,81,88,93,95,
+                                           125,153,160,166,174,176,177,
+                                           182,184**
+Routine Name: SROATM2
+    Before: B37344320   After: B38389993  **38,39,45,47,57,60,62,68,81,
+                                           88,97,129,125,142,153,160,174,
+                                           175,176,177,182,184**
+Routine Name: SROATM3
+    Before: B24191349   After: B40586510  **27,38,62,88,97,111,142,153,
+                                           174,175,184**
+Routine Name: SROATMN1
+    Before:       n/a   After:  B4581323  ****184**
+Routine Name: SROATMNO
+    Before: B39488872   After: B41060989  **27,38,47,62,68,79,83,81,88,
+                                           93,95,97,129,125,142,153,160,
+                                           166,174,175,176,177,182,184**
+Routine Name: SROAUTL
+    Before: B45777532   After: B46263358  **38,46,47,63,81,88,95,112,100,
+                                           125,134,142,153,160,166,174,
+                                           176,182,184**
+Routine Name: SROAUTL0
+    Before: B23046095   After: B23178887  **38,47,57,60,61,63,81,125,153,
+                                           160,174,176,177,182,184**
+Routine Name: SROAUTL1
+    Before: B19181745   After: B23914539  **38,47,81,125,153,160,166,174,
+                                           176,182,184**
+Routine Name: SROAUTL3
+    Before: B13680381   After: B13665858  **38,47,63,77,142,163,166,176,184**
+Routine Name: SROAUTL4
+    Before: B39340588   After: B45150205  **38,71,95,125,153,160,164,166,
+                                           174,175,176,182,184**
+Routine Name: SROAUTLC
+    Before: B26739810   After: B26858216  **38,71,90,88,95,97,102,96,125,
+                                           153,163,164,166,174,175,176,
+                                           182,184**
+Routine Name: SROAWL1
+    Before: B33694001   After: B34595712  **38,47,60,62,68,50,86,88,92,
+                                           153,160,184**
+Routine Name: SROCCAT
+    Before: B16850257   After: B16854647  **38,47,95,138,153,160,174,176,
+                                           182,184**
+Routine Name: SROCMPED
+    Before: B55528552   After: B55581013  **26,38,47,125,153,170,176,177,
+                                           182,184**
+Routine Name: SROCPT
+    Before: B12587576   After: B19370849  **3,31,88,127,184**
+Routine Name: SROESNR
+    Before: B31682934   After: B31824842  **100,184**
+Routine Name: SROESNR0
+    Before: B41856155   After: B59023550  **100,129,147,153,175,176,182,184**
+Routine Name: SROESNR1
+    Before: B42035755   After: B55559388  **100,143,157,176,182,184**
+Routine Name: SROFILE
+    Before: B15335951   After: B17557010  **48,41,88,100,175,176,182,184**
+Routine Name: SROMED
+    Before: B20688417   After: B21047528  **21,44,79,100,151,166,184**
+Routine Name: SROMENU
+    Before: B25521719   After: B32209409  **52,67,69,104,107,100,134,175,
+                                           177,182,184**
+Routine Name: SRONEW
+    Before: B36104631   After: B41082533  **3,23,26,30,47,58,48,67,107,
+                                           100,144,175,176,177,182,184**
+Routine Name: SRONIN
+    Before: B95799961   After:B118663107  **68,50,100,129,134,153,157,
+                                           175,176,182,184**
+Routine Name: SRONITE
+    Before:  B3746041   After:  B3238122  **47,58,62,41,86,142,167,175,
+                                           176,184**
+Routine Name: SRONRPT0
+    Before: B69675932   After: B69983698  **100,129,147,153,157,175,176,
+                                           182,184**
+Routine Name: SRONRPT3
+    Before: B27091661   After: B19372732  **100,176,182,184**
+Routine Name: SRONRPT4
+    Before:       n/a   After: B58080598  **184**
+Routine Name: SROP1
+    Before:  B4409373   After:  B4644240  **184**
+Routine Name: SROPER
+    Before: B13069473   After: B13717033  **37,107,100,177,184**
+Routine Name: SROSCH1
+    Before: B16435656   After: B18334786  **63,77,50,182,184**
+Routine Name: SROSCH2
+    Before:  B4727693   After: B12006303  **34,48,50,108,184**
+Routine Name: SROUTC
+    Before: B22577677   After: B23991984  **125,135,153,174,175,176,182,184**
+Routine Name: SROUTL1
+    Before:  B3817248   After: B11083990  **134,175,184**
+Routine Name: SRSCAN0
+    Before: B16717618   After: B28185776  **34,42,67,103,107,114,100,144,
+                                           175,176,182,184**
+Routine Name: SRSCHUN
+    Before: B32397035   After: B36843779  **3,67,68,88,103,100,144,158,
+                                           175,177,182,184**
+Routine Name: SRSCHUN1
+    Before: B10221743   After: B10679849  **34,47,58,67,107,177,184**
+Routine Name: SRSRQST
+    Before: B33623825   After: B38397734  **3,58,67,88,103,105,100,144,
+                                           175,177,182,184**
+Routine Name: SRSRQST1
+    Before: B11754122   After: B11879750  **12,34,37,47,58,67,107,177,184**
+Routine Name: SRSUP1
+    Before: B26965296   After: B27897479  **7,16,19,47,58,67,77,50,93,
+                                           107,114,100,131,177,184**
+Routine Name: SRSUPRQ
+    Before: B28414875   After: B28802484  **7,47,58,67,107,114,100,154,
+                                           177,184**
+Routine Name: SRTOVRF
+    Before: B14137837   After: B18432995  **175,182,184**
+ 
+Routine list of preceding patches: 108, 127, 182
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 13, 2015
+Completed By:                               Date Completed: DEC 15, 2015
+Released By :                               Date Released : DEC 28, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

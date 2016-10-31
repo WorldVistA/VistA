@@ -1,0 +1,283 @@
+$TXT Created by             at DEV.DEV.DOMAIN.EXT  (KIDS) on Tuesday, 06/30/15 at 11:55
+=============================================================================
+Run Date: SEP 21, 2015                     Designation: MD*1*36
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #28                      Status: Released
+                  Compliance Date: OCT 22, 2015
+=============================================================================
+
+Associated patches: (v)MD*1*35     <<= must be installed BEFORE `MD*1*36'
+
+Subject: CLINICAL PROCEDURES TERMINOLOGY FILE UPDATES
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will correct the following 3 issues:
+  
+ 1) The Clinical Procedures (CP) Terminology TERM file (#704.101) contains
+    terms used during data entry/display in CP Flowsheet.  The Office of
+    Informatics and Analytics - Applied Informatics Services (AIS) 
+    Terminology Review Group submitted a spreadsheet requesting additions
+    or updates of 26 Terms.
+      
+ 2) Add new default units to some existing Terms 
+  
+ 3) Modify some Term abbreviations for consistency
+       
+       
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1) INC0000000896849 Clinical Procedures - Flowsheets: Terminology
+    INC0000000903323 Clinical Procedures - Flowsheets: Terminology
+    INC0000000903331 Clinical Procedures - Flowsheets: Terminology
+      
+ 2) INC0000000826578 Clinical Procedures - Flowsheets Add default units
+      
+ 3) INC0000001006946 Clinical Procedures - Flowsheets: Abbreviations
+                     Consistency
+      
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+       
+       
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Texas Veterans HCS 
+ Huntington VAMC, WV 
+ VA Heartland - East
+       
+       
+ REMEDY OVERVIEW:
+ ================
+ 1) INC0000000896849 Clinical Procedures - Flowsheets: Terminology
+    INC0000000903323 Clinical Procedures - Flowsheets: Terminology
+    INC0000000903331 Clinical Procedures - Flowsheets: Terminology
+  
+ Problem: 1
+ ----------
+ The Clinical Procedures (CP) Terminology TERM file (#704.101) contains
+ terms used during data entry/display in CP Flowsheet.  The Office of 
+ Informatics and Analytics - Applied Informatics Services (AIS) 
+ Terminology Review Group submitted a spreadsheet requesting additions
+ or updates of 26 Terms.
+       
+ The following list documents the approved changes for  INC0000000896849
+ Group #1
+      
+ (Mod) - ARM BANDS PRESENT
+ (Mod) - INTAKE - IRRIGATION
+ (Mod) - IV DOSE RATE - UNITS/HOUR
+ (Mod) - ADL - ACTIVITIES OF DAILY LIVING
+ (Add) - Meal Type
+ (Add) - NIHSS - Best Gaze
+ (Add) - NIHSS - Best Language
+ (Add) - NIHSS - Dysarthria
+ (Add) - NIHSS - Extinction and Inattention
+ (Add) - NIHSS - Facial palsy
+      
+ The following list documents the approved changes for INC0000000903323
+ Group #2
+           
+ (Add) - NIHSS - Level of Consciousness
+ (Add) - NIHSS - Limb Ataxia
+ (Add) - NIHSS - LOC Commands
+ (Add) - NIHSS - LOC Questions
+ (Add) - NIHSS - Motor Arm
+ (Add) - NIHSS - Motor Leg
+ (Add) - NIHSS - Sensory
+ (Add) - NIHSS - Total Score
+ (Add) - NIHSS - Visual field
+ (Add) - PCA - Total Dose Wasted
+     
+ The following list documents the approved changes for INC0000000903331
+ Group #3
+      
+ (Add) - Preprocedure: Blood Transfusion Preference?
+ (Add) - RESPIRATION: End-Tidal CO2
+ (Mod) - Level of Consciousness
+ (Mod) - Pain Level
+ (Mod) - Pressure Ulcer Stage/Site
+ (Mod) - Pressure Ulcer Treatment
+           
+ Resolution: 1
+ -------------
+ The above Additions/Updates will be made to the CP Terminology TERM File
+ (#704.101). The details of each of these terms is in the Clinical
+ Observation (CliO) Terminology Dictionary And Clinical Data Model 
+ Documentation that is listed below.
+      
+      
+ 2) INC0000000826578 Clinical Procedures - Flowsheets: Default Units Mods
+  
+ Problem: 2
+ ----------
+ For the following Terms:
+  
+ INTAKE - TRANSFUSION
+      Add Default Unit MILLILITER
+      Change Default Unit CUBIC CENTIMETER Absolute Low Value from -1 to 0
+      
+ INTAKE - PCA VOLUME
+      Add Default Unit CUBIC CENTIMETER 
+      Change Default Unit MILLILITER's  Absolute Low Value from -1 to 0
+      
+ OUTPUT - DO NOT CHECK TOTAL OR SUBTOTALS
+      Add Default Unit CUBIC CENTIMETER  
+      Change Default Unit MILLILITER's  Absolute Low Value from -1 to 0
+      Change Default Unit OUNCE  Absolute Low Value from -1 to 0
+      
+ BLADDER SCAN - DO NOT CHECK TOTAL OR SUBTOTALS   
+      Add Default Unit CUBIC CENTIMETER 
+      Change Default Unit MILLILITER's  Absolute Low Value from -1 to 0
+     
+ This will create consistency of term default units between all Intake and 
+ Output terms.   
+        
+ Resolution: 2
+ -------------
+ The above Updates will be made to the CP Terminology TERM_UNIT_PAIR File
+ (#704.105).
+  
+  
+ 3) INC0000001006946 Clinical Procedures - Flowsheets: Abbreviations
+                     Consistency 
+ Problem: 3
+ ----------
+ In order to display more consistency with Terminology abbreviations, the CP 
+ Flowsheets Terminology Review Team would like to modify the following 
+ Terms/abbreviation field.
+      
+ Term                           Old  Abbr         New Abbr
+      
+ L SUBCLAVIAN                   LSCL              L SUBCLAV
+ R SUBCLAVIAN                   R SUBCLAVI        R SUBCLAV
+ L INTERNAL JUGULAR             LIJ               L INT JUG
+ R INTERNAL JUGULAR             R INT JUGU        R INT JUG
+ L FEMORAL                      LFEM              L FEM
+ R FEMORAL                      R FEMORAL         R FEM
+ L BRACHIAL                     LBRA              L BRACH
+ R BRACHIAL                     RBRA              R BRACH   
+      
+ Resolution: 3
+ -------------
+ The above Updates will be made to the CP Terminology TERM File (#704.101).
+  
+ DOCUMENTATION: 
+ ============== 
+ Documentation is available for the Clinical Observation (CliO) Terminology
+ Dictionary And Clinical Data Model Documentation on the ANONYMOUS.SOFTWARE
+ directory at one of the following Office of Information (OI) Field
+ Offices.
+ Sites will be able to download the documentation in the ".PDF" format.
+       
+ The preferred method is to FTP the files from: Download.vista.domain.ext
+       
+ This transmits files from the first available FTP server. Sites may also
+ elect to retrieve documentation directly from a specific server as 
+ follows:
+       
+       Albany                  ftp.domain.ext
+       Hines                   ftp.domain.ext
+       Salt Lake City          ftp.domain.ext
+       
+ File Name:            Description:                     Protocol:
+ ==========            ============                     =========
+ MD1_0P36TERM.PDF      CliO Terminology Dictionary      Binary
+                       And Clinical Data Model
+       
+ Documentation may be found on the System Design and Development Web page
+ at:  http://www.domain.ext/vdl
+       
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ If installed during the normal workday, it is recommended that the 
+ Clinical Procedures users be off the system.  Other VISTA users will not
+ be affected.
+       
+ Install Time - less than 5 minutes.
+     
+ 1.  Load Transport Global 
+     ---------------------
+       
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ 3.  Select Installation Option: 
+     ---------------------------    
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter MD*1.0*36):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch install.
+       
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO. 
+       
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//', answer NO. 
+       
+ NOTE: Post-Init routine MDTERMX will be automatically deleted after 
+       it has made the file modifications.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Aug 2, 2012;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDTERMX
+    Before:  B4314808   After:  B4314808  **36**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 05, 2013
+Completed By:                               Date Completed: SEP 16, 2015
+Released By :                               Date Released : SEP 21, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

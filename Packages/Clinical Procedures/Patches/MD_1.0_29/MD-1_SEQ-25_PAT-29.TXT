@@ -1,0 +1,368 @@
+$TXT Created by           at DEVESS.DOMAIN.EXT  (KIDS) on Wednesday, 04/02/14 at 10:42
+=============================================================================
+Run Date: AUG 15, 2014                     Designation: MD*1*29
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #25                      Status: Released
+                  Compliance Date: AUG 29, 2014
+=============================================================================
+
+Associated patches: (v)MD*1*20     <<= must be installed BEFORE `MD*1*29'
+                    (v)LEX*2*80    <<= must be installed BEFORE `MD*1*29'
+                    (v)PX*1*199    <<= must be installed BEFORE `MD*1*29'
+                    (v)IBD*3*63    <<= must be installed BEFORE `MD*1*29'
+                    (v)ICD*18*57   <<= must be installed BEFORE `MD*1*29'
+
+Subject: CLINICAL PROCDURES ICD-10 CLASS 1 REMEDIATION
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Other
+
+Description:
+============
+
+ IMPORTANT INFORMATION Please read the Overview Guide 
+ (ICD-10_Production_Overview_Guide_Groups_3_4.pdf) posted on the Anonymous 
+ directory for installation order. This is critical for proper 
+ functionality of the ICD-10 Software.
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10) 
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service, or dates of discharge for inpatients, that occur on or 
+ after the implementation date will use the ICD-10 code set. Clinical 
+ Modification (ICD-10-CM) diagnosis codes increase from about 13,000 ICD-9 
+ codes to more than 68,000. Procedure Coding System (ICD-10-PCS) procedure 
+ codes increase from about 3,800 ICD-9 codes to nearly 87,000. Both 
+ systems also expand the number of characters allotted to seven 
+ alpha-numeric characters. This value does not include the decimal point, 
+ which follows the third character for the ICD-10-CM code set. There is no 
+ decimal point in the ICD-10-PCS code set. 
+  
+ These code sets have the potential to reveal more about quality of care, 
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research. 
+  
+ The following functionalities within the Clinical Procedures (CP)
+ application were updated to address the ICD-10 code set.
+  
+ If the Patient visit date is prior to the ICD-10 implementation date, 
+ the VistA Clinical Procedures Hemodialysis application will retain 
+ all current functionality.
+  
+ If the Patient visit date is after the ICD-10 implementation date, 
+ the VistA Clinical Procedures Hemodialysis application will provide the 
+ following updates to the CP User window, Hemodialysis Patient Data Screen
+ Summary, Diagnosis tab:
+  
+  1. Search on ICD-10-CM diagnosis codes 
+  
+  2. Add/edit/store ICD-10 diagnosis codes (up to 8 alphanumeric characters
+     including the decimal point that follows the 3rd character).
+  
+  3. Display ICD-10 diagnosis codes and descriptions.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)                 New/Modified/Deleted
+ -------------          ----------------------------   --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                File #                       New/Modified/Deleted
+ ---------                ------                       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                       New/Modified/Deleted
+ ---------------                                       --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type                   New/Modified/Deleted
+ -----------                    ----                   --------------------
+ N/A
+  
+ Parameter Definition                                  New/Modified/Deleted
+ --------------------                                  --------------------
+ MDK GUI VERSION                                       Modified
+  
+ Protocols Associated:
+  
+ Protocol Name                                         New/Modified/Deleted
+ -------------                                         --------------------
+ N/A
+  
+ Remote Procedure Call (RPC):
+  
+ RPC Name                                              New/Modified/Deleted
+ --------                                              --------------------
+ MD TMDLEX                                             Modified
+ MD TMDWIDGET                                          Modified
+ MD TMDENCOUNTER                                       Modified
+ MD TMDCIDC                                            Modified
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)            New/Modified/Deleted
+ -------------      ----      ---------------          --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR 20070902, ICD-10-CM Conversion
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Houston VAMC, Houston, TX
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/application.asp?appid=139
+  
+ Title
+   File Name                                       (FTP Mode)
+ --------------------------------------------------------------------------
+ Clinical Procedures User Manual
+   MD_1_P29_UM.PDF                                 (binary)
+  
+ Clinical Procedure User Manual Change Pages
+   MD_1_P29_UM_CP.PDF                              (binary)
+  
+ Clinical Procedures Technical Manual/Security Guide
+   MD_1_P29_TM.PDF                                 (binary)
+  
+ Clinical Procedures Technical Manual/Security Guide Change Pages
+   MD_1_P29_TM_CP.PDF                              (binary)
+  
+ Clinical Procedures Release Notes
+   ICD-10_RN_MD_1_29.PDF                           (binary)
+  
+ Clinical Procedures Self-extracting Install Shield executable 
+   MD1_0P29GUI.ZIP                                 (binary)
+  
+ Production Overview Guide          
+   ICD-10_Production_Overview_Guide_Groups_3_4.pdf (binary)
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ This patch includes an M patch and a revised Graphical User Interface(GUI)
+ executable.
+  
+ Installation of the patch will not take more than 5 minutes. This patch
+ can be installed with VistA users online, but users should be logged out 
+ of Clinical Procedures as the new Hemodialysis GUI, version 1.0.29.22, is
+ installed.
+  
+ Prior Hemodialysis GUI versions will not be compatible with the VistA
+ server software for this patch. Therefore, it is crucial that the Clinical
+ Procedures client GUI distributed with this patch be installed immediately
+ following the VistA server software install to minimize service disruption
+ to the Clinical Procedures Hemodialysis users.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 
+ minutes to install.
+  
+ If installed during the normal workday, it is recommended that the 
+ following selection(s) in the OPTION (#19) file, and all of their 
+ descendants be disabled to prevent possible conflicts while running the 
+ KIDS Install. Other VISTA users will not be affected.
+  
+ HEMODIALYSIS USER         [MD HEMODIALYSIS USER]
+  
+ Installation Instructions
+ -------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch
+     MD*1.0*29.
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter MD*1.0*29.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer YES unless your system does this in a nightly
+     TaskMan process.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     answer NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', answer YES.
+  
+ 8.  When prompted 'Enter options you wish to mark as 'Out Of Order':'  
+     Enter the following options:
+  
+     HEMODIALYSIS USER         [MD HEMODIALYSIS USER]
+  
+ 9.  When prompted "Enter protocols you wish to mark as 'Out Of 
+     Order':' press <enter>
+  
+ 10.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ There is no post-installation routine associated with this patch.
+  
+  
+ GUI INSTALLATION INSTRUCTIONS
+ -----------------------------
+ The Clinical Procedures GUI client software is being distributed as a 
+ self-extracting Install Shield executable (file Hemodialysis.exe)
+ packed version - MD1_0P29GUI.ZIP). The installed executable for this patch
+ is client Hemodialysis.exe version 1.0.29.22 with a size of 4.15 MB.
+  
+ Install the Clinical Procedures GUI client software following the
+ Instructions in the Clinical Procedures GUI Installation Guide.
+  
+  
+ File Name                  Contents            Transfer Mode
+ ---------                  --------            -------------
+ MD1_0P29GUI.ZIP            Hemodialysis.exe    BINARY
+  
+ 1. Unzip the MD1_0P29GUI.ZIP into a temporary folder.
+   
+ 2. Open the temporary folder and double click the file Hemodialysis.exe to
+    begin the install.
+       
+ 3. Wait until the setup Wizard prepares the installation procedure. A
+    welcome message displays.
+   
+ 4. Click Next to continue the installation.
+       
+ 5. Select the directory in which to install the CP GUI. 
+    We recommend that you accept the default directory: 
+    C:\Program Files\Vista\Hemodialysis for Windows XP,
+    C:\Program Files(x86)\Vista\Hemodialysis for Windows 7.
+    Recommend using default location if you have desktop shortcuts with
+    parameters. Click Next to proceed with installation.
+  
+ 6. Review the installation settings and click Install to proceed. The
+    setup Wizard finishes the installation and a confirmation screen
+    displays.
+      
+ 7. Click Finish.
+   
+ 8. Installs or Updates the following files...
+                Hemodialysis.exe          size 4.15MB
+                Hemodialysis.hlp          size 937KB
+                Hemodialysis.cnt          size 4KB
+                RoboEX32.dll              size 1,020KB
+                Shortcut To Hemodialysis  size 1KB
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Apr 01, 2004;Build 22
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDHL7U3
+    Before: B65415989   After: B64609594  **6,21,29**
+Routine Name: MDPCE2
+    Before: B24598640   After: B24838118  **6,21,29**
+Routine Name: MDPOST29
+    Before:       n/a   After:   B829545  **29**
+Routine Name: MDRPCOW
+    Before: B27925312   After: B28672683  **6,29**
+Routine Name: MDRPCW
+    Before: B70357475   After: B73223005  **6,21,20,29**
+Routine Name: MDRPCW1
+    Before: B57093327   After: B60220184  **6,21,20,29**
+Routine Name: MDRPCWU
+    Before:  B2706250   After:  B3093767  **21,29**
+ 
+Routine list of preceding patches: 20
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 13, 2012
+Completed By:                               Date Completed: AUG 15, 2014
+Released By :                               Date Released : AUG 15, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

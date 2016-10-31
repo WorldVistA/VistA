@@ -1,0 +1,188 @@
+$TXT Created by                . at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 10/23/14 at 08:09
+=============================================================================
+Run Date: JAN 26, 2015                     Designation: DG*5.3*895
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #790                    Status: Released
+                  Compliance Date: FEB 26, 2015
+=============================================================================
+
+Associated patches: (v)DG*5.3*517  <<= must be installed BEFORE `DG*5.3*895'
+                    (v)DG*5.3*715  <<= must be installed BEFORE `DG*5.3*895'
+                    (v)DG*5.3*858  <<= must be installed BEFORE `DG*5.3*895'
+
+Subject: ADMISSION DELETION, INCONSISTENCY 55
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  Patch DG*5.3*895 addresses 2 issues:
+       
+  1.)  Deletion of admission can cause orphaned nodes
+  2.)  Inconsistency 55 issue with service connected veterans who agree to 
+       copay, but decline to provide income data
+  
+            
+             
+  ASSOCIATED REMEDY: 
+  ==================
+  1.)  INC000001025184 - Deletion of admission can cause orphaned nodes
+  2.)  INC000001032298 - Inconsistency 55 issue with service connected veterans
+                         who agree to copay, but decline to provide income 
+                         data
+  
+   
+  ASSOCIATED NSR: 
+  ===============
+  N/A
+   
+  PARTICIPATING TEST SITES: 
+  =========================
+  N. Florida/S. Georgia VA Medical Center
+  Salisbury VA Medical Center
+  Tuscaloosa VA Medical Center
+  Upstate NY VA Medical Center 
+  
+  Remedy Overview:
+  ================ 
+  1.)  Deletion of admission can cause orphaned nodes   
+  
+  
+  
+  Patient Safety Issue:
+  ---------------------
+  PSPO #2607
+  
+  
+  Problem:
+  --------
+  Deleting an admission can cause orphaned nodes in the PATIENT MOVEMENT 
+  (#405) and PTF (#45) files when 801screen data is linked to the 
+  admission. This screen is for the Professional services and will include
+  a Current Procedural  Terminology (CPT)code for the procedure used.
+  
+  
+  If an attempt is made to delete an admission via "@" at the ADMISSION 
+  DATE prompt in the Admit a Patient [DG ADMIT PATIENT] option, the
+  admission record is deleted and then the code checks the Patient
+  treatment file(PTF) record. If an 801 screen is present a message  
+  "CANNOT DELETE THE PTF RECORD WHEN THERE ARE ACTIVE ORDERS OR CPT
+  ENTRIES" is displayed and processing of any other record tied to that
+  admission is stopped.
+   
+  This leaves "hanging" patient movements if the patient had been
+  transferred or discharged and the PTF record that were originally
+  tied to the admission. The PTF record will then be changed to a Fee 
+  Basis Record since there is no admission that can be found and users
+  will not be able to delete the 801 or the PTF record for this patient.
+  
+  
+  Resolution:
+  -----------
+  Resolution is to add code to patient movement routine (CPTCK^DGPMV3) to 
+  disallow deletion of admission if 801 screen data is present.  A message 
+  will be displayed, "CANNOT DELETE THE ADMISSION. THE PTF HAS ACTIVE ORDERS
+  OR CPT ENTRIES.", and control will return to the ADMISSION DATE prompt.
+    
+  Routine ^DGPMVDL will also be modified, in the 1^DGPMVDL paragraph, to 
+  correct an issue with improper checking of deleted orders and CPT codes. 
+  
+  
+  2.)  Inconsistency 55 issue with Service Connected veterans who agree to 
+       copay, but decline to provide income data
+  
+  Problem:
+  --------
+  Means Test "Inconsistency 55" (INCOME DATA MISSING) error is being displayed 
+  for service connected veterans (with percentages greater than 0% , but 
+  less than 50% ) who decline to provide income data, but agree to pay a copay.  
+  
+     
+  Resolution:
+  -----------
+  Resolution is to add code to consistency check routine (^DGRPC2, CHECK55 
+  paragraph).  New code will allow service connected veterans with percentages
+  between 0% and 50% to register without income data if they agree to pay copay
+  and the copay test status is "NON-EXEMPT". 
+    
+  
+  
+  Installation Instructions:
+  ==========================
+  This patch may be run with users on the system, but it is recommended
+  that it be queued to run after normal business hours.
+   
+  Installation will take less than 5 minutes.
+  Suggested time to install: non-peak requirement hours.
+   
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter DG*5.3*895).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch is
+            installed.
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package DG*5.3*895
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+         respond No.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//" respond Yes.
+  
+         When prompted, 'Enter options you wish to mark as 'Out Of 
+         Order':', enter:
+              
+           Load/Edit Patient Data [DG LOAD PATIENT DATA]
+           Register a Patient     [DG REGISTER PATIENT]
+           Admit a patient        [DG ADMIT PATIENT]
+         
+                   
+  
+         When prompted, 'Enter protocols you wish to mark as 'Out Of
+         Order':', press enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGPMV3
+    Before: B23327624   After: B26767743  **34,54,62,95,692,715,895**
+Routine Name: DGPMVDL
+    Before: B16911207   After: B17431597  **161,517,895**
+Routine Name: DGRPC2
+    Before: B71389194   After: B73474535  **45,69,108,121,205,218,342,
+                                           387,470,467,489,505,507,528,
+                                           451,564,570,657,688,780,797,
+                                           858,895**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 24, 2014
+Completed By:                               Date Completed: JAN 12, 2015
+Released By :                               Date Released : JAN 26, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

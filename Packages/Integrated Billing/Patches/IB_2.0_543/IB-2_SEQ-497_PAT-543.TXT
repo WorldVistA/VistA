@@ -1,0 +1,229 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 02/09/15 at 14:10
+=============================================================================
+Run Date: JUN 25, 2015                     Designation: IB*2*543
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #497                      Status: Released
+                  Compliance Date: JUL 25, 2015
+=============================================================================
+
+
+Subject: 2015 ANNUAL UPDATE OF REVENUE/VALUE/OCCURRENCE/POS/CONDITION CODES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 2 issues:
+  
+ 1. The first issue involves updates to the MCCR UTILITY (#399.1) file, 
+    the REVENUE CODE (#399.2) file and the PLACE OF SERVICE (#353.1) file
+    for 2015.
+  
+ 2. The second issue concerns ICD-10 procedure codes being truncated on 
+    the bill form (page 2) of the printed bill when they contain 7
+    characters in length.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000001109868 2015 Annual Update of Rev., Value, Occur., POS and Condition 
+                    Codes
+ 2. INC000001113794 Integrated Billing-Functionality Issue:
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Caribbean HCS (San Juan)
+ Upstate NY HCS (Albany)
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001109868 2015 Annual Update of Rev., Value, Occur., POS and 
+    Condition Codes
+  
+ Problem:
+ --------
+ The Chief Business Office (CBO) has requested the following updates to the
+ MCCR UTILITY (#399.1) file, the REVENUE CODE (#399.2) file and the PLACE 
+ OF SERVICE (#353.1) file for 2015.
+  
+ Resolution:
+ -----------
+ A post-init routine IB20P543 was created to update codes in the following
+ three files:
+  
+ The MCCR UTILITY (#399.1) file will update 11 Condition Codes, 11
+ Occurrence Span Codes and 9 Value Codes.
+  
+   Condition Codes: 
+      55   RESERVED FOR ASSIGNMENT BY THE NUBC (update)
+      A0   TRICARE EXTERNAL PARTNERSHIP PROGRAM (update)
+      R1   REG FOR REOPN RSN CODE-MATH OR COMPUTE MISTAKES (add)
+      R2   REG FOR REOPN RSN CODE-INACCURATE DATA ENTRY (add)
+      R3   REG FOR REOPN RSN CODE-MISAPPLICATION OF A FREE SCHEDULE (add)
+      R4   REG FOR REOPN RSN CODE-COMPUTER ERRORS (add)
+      R5   REG FOR REOPN RSN CODE-INCORRECT IDENTIFY DUPLICATE CLAIM (add)
+      R6   REG FPR REOPN RSN CODE-OTH CLER ERR OMIT NOT SPEC IN R1-R5 (add)
+      R7   REG FOR REOPN CODE-CORRECT OTHER THAN CLERICAL ERRORS (add)
+      R8   REG FOR REOPN CODE-NEW AND MATERIAL EVIDENCE (add)
+      R9   REG FOR REOPN CODE-FAULTY EVIDENCE (add)
+  
+   Occurrence Span Codes:
+      70   RESERVED FOR OCCURRENCE SPAN CODES (update)
+      71   RESERVED FOR OCCURRENCE SPAN CODES (update)
+      72   RESERVED FOR OCCURRENCE SPAN CODES (update)
+      73   RESERVED FOR OCCURRENCE SPAN CODES (update)
+      74   RESERVED FOR OCCURRENCE SPAN CODES (update)
+      75   RESERVED FOR OCCURRENCE SPAN CODES (update)
+      76   RESERVED FOR OCCURRENCE SPAN CODES (update)
+      77   RESERVED FOR OCCURRENCE SPAN CODES (update)
+      78   RESERVED FOR OCCURRENCE SPAN CODES (update)
+      79   RESERVED FOR OCCURRENCE SPAN CODES (update)
+      80   RESERVED FOR OCCURRENCE SPAN CODES (update)
+  
+   Value Codes:
+      E1   RESERVED FOR ASSIGNMENT BY THE NUBC (update)
+      E2   RESERVED FOR ASSIGNMENT BY THE NUBC (update)
+      E3   RESERVED FOR ASSIGNMENT BY THE NUBC (update)
+      F1   RESERVED FOR ASSIGNMENT BY THE NUBC (update)
+      F2   RESERVED FOR ASSIGNMENT BY THE NUBC (update)
+      F3   RESERVED FOR ASSIGNMENT BY THE NUBC (update)
+      G1   RESERVED FOR ASSIGNMENT BY THE NUBC (update)
+      G2   RESERVED FOR ASSIGNMENT BY THE NUBC (update)
+      G3   RESERVED FOR ASSIGNMENT BY THE NUBC (update)
+  
+ The REVENUE CODE (#399.2) file will inactivate the following 8 codes (if
+ active):789, 815, 816, 817, 891, 892, 893, 899 and also update the following 
+ 7 codes with '*RESERVED': 175, 599, 630, 680, 779, 890, 970.
+  
+ This file will also be updated with the following changes:
+  
+    Revenue Codes:
+      139   OTHER (update)
+      690   GENERAL CLASSIFICATION-PRE-HOSPICE/PALLIATIVE CARE SERVICES (add)
+      691   VISIT CHARGE (add)
+      692   HOURLY CHARGE (add)
+      693   EVALUATION (add)
+      694   CONSULTATION AND EDUCATION (add)
+      695   INPATIENT CARE (add)
+      696   PHYSICIAN SERVICES (add)
+      699   OTHER (add)
+  
+ The PLACE OF SERVICE (#353.1) file will have 2 codes removed and 1 code
+ added:
+  
+    Place of Service Codes:
+      18   PLACE OF EMPLOYMENT-WORKSITE (add)
+      GR   NATURE OF INJURY (NCCI) (remove)
+      NI   NATURE OF INJURY (remove)
+  
+ 2. INC000001113794 Integrated Billing-Functionality Issue:
+  
+ Problem:
+ --------
+ ICD-10 procedure codes on the bill form page 2 of the printed bill are
+ truncated. It happens when the bill contains over 6 procedures codes and
+ the procedure codes on page 2 have 7 characters in length.  The current 
+ date definition is resulting in the procedure codes output of only 6 
+ characters on the second page.
+  
+ Resolution:
+ ----------
+ A post-init routine IB20P543 was created to increase the length from 6 to 7
+ in the data element: OTHER PROC DATE 5 (FL-74E/2) of the IB FORM SKELETON 
+ DEFINITION file (#364.6). 
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+    
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+   
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*543):
+   
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s)
+    
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO.
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//', answer NO.
+    
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P543.
+  
+ 6.   Use the 'Install File Print' option to review the updates and ensure
+      that the install has been completed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 20
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P543
+    Before:       n/a   After: B57518382  **543**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 22, 2015
+Completed By:                               Date Completed: JUN 19, 2015
+Released By :                               Date Released : JUN 25, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

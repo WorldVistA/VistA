@@ -1,0 +1,159 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 11/18/15 at 15:33
+=============================================================================
+Run Date: JUN 15, 2016                     Designation: QAO*3*10
+Package : QAO - OCCURRENCE SCREEN             Priority: Mandatory
+Version : 3         SEQ #9                      Status: Released
+                  Compliance Date: JUL 16, 2016
+=============================================================================
+
+Associated patches: (v)SR*3*182    <<= must be installed BEFORE `QAO*3*10'
+
+Subject: UPDATE TO THE 107 SCREEN
+
+Category: 
+  - Routine
+  - Informational
+
+Description:
+============
+
+ Patch QAO*3.0*10 updates the Occurrence Screen 'Return to OR in same 
+ admission' (Screen 107) to work with recent Surgery enhancements.
+  
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A  
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ ========================= 
+ 1. INC000001255484 - QA-Occurrence Screen - 107 no longer working
+    Duplicate:
+    INC000001298483 - QA  screen 107 not triggering occurrences and have 
+    stopped printing.
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Pittsburgh Health Care System (Pittsburgh University Dr.)
+ White River Junction VA Medical Center 
+  
+   
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001255484 - QA-Occurrence Screen - 107 no longer working
+                      
+    Problem:
+    --------
+    After the release of patch SR*3.0*182, the Return to OR in same 
+    admission (Screen 107) screen no longer works. The 107 screen requires
+    a surgery to be classified as MAJOR, however users are no longer prompted
+    to enter a value for the SURGERY (#130) file's MAJOR/MINOR (#.03) field 
+    when using the Operation Startup [SROMEN-START] option. Additionally, in 
+    SR*3.0*182 the SURGERY (#130) file's IN/OUT-PATIENT STATUS (#.011) field 
+    has been renamed to the HOSPITAL ADMISSION STATUS (#.011) field. The 107 
+    screen requires this field to have a value of I:INPATIENT, however the 
+    new acceptable values for this field are 1:SAME DAY, 2:ADMISSION, or 
+    3:HOSPITALIZED.
+  
+    Resolution:
+    -----------
+    Modified routine QAOC107 to remove the conditional check for the 
+    SURGERY (#130) file's MAJOR/MINOR (#.03) field. Also, modified 
+    the conditional check on the SURGERY (#130) file's HOSPITAL ADMISSION 
+    STATUS (#.011) field to accept any value other than NULL or O:OUTPATIENT.
+    The Occurrence Screen User Manual has also been updated to reflect these
+    changes.
+  
+  
+ DOCUMENTATION RETRIEVAL:
+ ------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following 
+ OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+ Title                            File Name                    SFTP Mode
+ -----------------------------------------------------------------------
+ Occurrence Screen - User Manual  QAO_3_10P_UM.PDF             Binary 
+  
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes. 
+ Suggested time to install: non-peak requirement hours.
+   
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+   
+    3. From this menu, you may select to use the following options (when
+       prompted for INSTALL NAME, enter QAO*3.0*10).      
+  
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch is
+          installed.
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+       d. Print Transport Global - this option will allow you to view
+          the components of the KIDS build.
+      
+    4. Use the Install Package(s) option and select the package QAO*3.0*10.
+   
+    5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//",
+       respond NO.
+   
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? YES//", respond YES.  
+  
+             Manually Run Auto Enroll   [QAM MANUAL AUTO ENROLL RUN]
+  
+       When prompted, "Enter protocols you wish to mark as 'Out Of
+       Order':', press <ENTER>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;Occurrence Screen;**[Patch List]**;09/14/1993;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: QAOC107
+    Before:  B8395600   After:  B9270743  **10**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 27, 2015
+Completed By:                               Date Completed: MAY 26, 2016
+Released By :                               Date Released : JUN 15, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

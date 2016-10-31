@@ -1,0 +1,192 @@
+
+=============================================================================
+Run Date: JUL 24, 2014                     Designation: GMPL*2*44
+Package : GMPL - PROBLEM LIST                 Priority: Mandatory
+Version : 2        SEQ #38                      Status: Released
+                  Compliance Date: AUG 24, 2014
+=============================================================================
+
+Associated patches: (v)LEX*2*80    <<= must be installed BEFORE `GMPL*2*44'
+                    (v)GMPL*2*43   <<= must be installed BEFORE `GMPL*2*44'
+
+Subject: PROBLEM LIST ICD-10 CHANGES FOR CLINICAL REMINDERS
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ 
+ General Overview:
+ =================
+ This patch is part of the Computerized Patient Record System CPRSv30
+ project. This project will modify the Computerized Patient Record 
+ System, Text Integration Utilities, Consults, Health Summary, Problem 
+ List, Clinical Reminders, and Order Entry/Results Reporting domains to
+ meet the requirements proposed by the Dept. of Health and Human Services 
+ to replace the ICD-9 code set with the ICD-10 code set.
+ 
+ The Clinical Reminders changes are implemented in a multi-package build that
+ contains DG*5.3*862, GMPL*2.0*44, and PXRM*2.0*26. Detailed information about
+ each of these builds and installation instructions can be found in the
+ Installation Guide: PXRM_2_0_26_IG.PDF. This document can be obtained from one
+ of the anonymous ftp directories or from the VistA Documentation Library:
+ www.domain.ext/vdl.
+ 
+ Because this is a multi-package build, it can only be distributed as a host
+ file; no builds are included in the patch messages. The name of the host file
+ is: CR_ICD-10_UPDATE.KID; it can be obtained from one of the anonymous ftp
+ directories.
+  
+ On January 16, 2009, the Centers for Medicare & Medicaid Services (CMS)
+ released a final rule for replacing the 30-year-old ICD-9-CM code set with
+ International Classification of Diseases, Tenth Revision, Clinical Modification
+ (ICD-10-CM) and International Classification of Diseases, Tenth Revision,
+ Procedure Coding System (ICD-10-PCS) with dates of service, or date of
+ discharge for inpatients, that occur on or after the industry activation date.
+ The classification system consists of more than 68,000 codes, compared to
+ approximately 13,000 ICD-9-CM codes. There are nearly 87,000 ICD-10-PCS codes,
+ while ICD-9-CM has nearly 3,800 procedure codes. Both systems also expand the
+ number of characters allotted from five and four respectively to seven
+ alpha-numeric characters. This value does not include the decimal point, which
+ follows the third character for the ICD-10-CM code set. There is no decimal
+ point in the ICD-10-PCS code set. These code sets have the potential to reveal
+ more about quality of care, so that data can be used in a more meaningful way
+ to better understand complications, better design clinically robust algorithms,
+ and better track the outcomes of care. ICD-10-CM also incorporates greater
+ specificity and clinical detail to provide information for clinical decision
+ making and outcomes research.
+ 
+ Remedy Tickets:
+  ==============
+  None
+ 
+ Test Sites:
+ ===========
+ Miami VA Healthcare System
+ VA Northern California Health Care System
+ Orlando VA Medical Center
+ 
+  
+ Software & Documentation Retrieval Instructions:
+ ================================================
+ The software for this set of patches is not being distributed through the 
+ National Patch Module. There is a multi-package build named CLINICAL REMINDERS
+ ICD-10 UPDATE 1.0 which contains the following KIDS builds: DG*5.3*862,
+ GMPL*2.0*44, and PXRM*2.0*26. The associated host file is named
+ CR_ICD-10_UPDATE.KID.
+  
+ The preferred method for obtaining these files is to use File
+ Transfer  Protocol (FTP) to download them from: 
+ ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. 
+ Sites may also elect to retrieve the files directly from a specific 
+ server as follows:
+  
+ Albany          ftp.domain.ext 
+ <ftp://ftp.domain.ext>
+ Hines           ftp.domain.ext  
+ <ftp://ftp.domain.ext>
+ Salt Lake City  ftp.domain.ext    
+ <ftp://ftp.domain.ext>
+  
+ CR_ICD-10-UPDATE.ZIP contains the following files:
+  
+  PXRM_2_0_26_IG.PDF
+  PXRM_2_0_26_RN.PDF
+  PXRM_2_0_26_UM.PDF
+  PXRM_2_0_MM.PDF
+  PXRM_2_0_TM.PDF
+  PXRM_INDEX_TM.PDF
+ 
+ Documentation can also be found on the VistA Documentation Library
+ (VDL) at: http://www.domain.ext/vdl/
+  
+ Title                         File Name                      FTP
+ Mode
+ ----------------------------------------------------------------------- 
+ CLINICAL REMINDERS ICD-10 UPDATE 1.0
+                               CR_ICD-10-UPDATE.KID           ASCII
+ Clinical Reminders Patch 26 Installation Guide
+                               PXRM_2_0_26_IG.PDF             Binary
+ Clinical Reminders Patch 26 Release Notes
+                               PXRM_2_0_26_RN.PDF             Binary
+ Clinical Reminders User Manual
+                               PXRM_2_0_26_UM.PDF             Binary
+ Clinical Reminders Manager's Manual
+                               PXRM_2_0_MM.PDF                Binary
+ Clinical Reminders Technical Manual
+                               PXRM_2_0_TM.PDF                Binary
+ Clinical Reminders Index Technical Manual
+                               PXRM_INDEX_TM.PDF              Binary
+ 
+ 
+ Installation:
+ =============
+ This patch can be loaded with users on the system, but it should be done during
+ off-hours. The installation time can vary greatly depending on a number of
+ factors, it will take anywhere from ten minutes to three hours. Before carrying
+ out the installation please read the Clinical Reminders Patch 26 Installation
+ Guide. There are a number of steps that must be performed before doing the
+ install.
+ 
+ 1. Use the 'Load a Distribution' option on the KIDS installation menu.
+    When prompted to enter a host file type in CR_ICD-10-UPDATE.KID
+ 
+ 2. On the KIDS menu under the 'INSTALLATION' menu, use the following
+    options, as desired:
+        Print Transport Global
+        Compare Transport Global to Current System
+        Verify Checksums in Transport Global
+        Backup a Transport Global
+ 
+ 3. On the KIDS menu under the 'INSTALLATION' menu, use the following
+    option to install the patch:
+        Install Package(s) (CLINICAL REMINDERS ICD-10 UPDATE 1.0)
+ 
+ 4. When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of Install?
+    NO// respond 'NO'.
+ 
+ 5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//,"
+    respond 'NO'.
+ 
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO// respond 'NO'.
+ 
+ 7. The init routine GMPLP44Imay be deleted once the installation has
+    successfully completed.
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;Problem List;**[Patch List]**;Aug 25, 1994;Build 92
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMPLP44I
+    Before:       n/a   After: B86662145  **44**
+Routine Name: GMPLPXRM
+    Before: B11040861   After: B41114026  **27,43,44**
+ 
+Routine list of preceding patches: 43
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 16, 2012
+Completed By:                               Date Completed: JUL 24, 2014
+Released By :                               Date Released : JUL 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

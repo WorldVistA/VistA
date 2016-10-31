@@ -1,0 +1,1971 @@
+EMERGENCY Released PSJ*5*305 SEQ #261
+Extracted from mail message
+**KIDS**:PSJ*5.0*305^
+
+**INSTALL NAME**
+PSJ*5.0*305
+"BLD",8978,0)
+PSJ*5.0*305^INPATIENT MEDICATIONS^0^3140812^y
+"BLD",8978,1,0)
+^^22^22^3140808^
+"BLD",8978,1,1,0)
+Patch PSJ*5*279 inadvertently introduced the following issues and this 
+"BLD",8978,1,2,0)
+patch, PSJ*5*305 will address these issues.
+"BLD",8978,1,3,0)
+ 
+"BLD",8978,1,4,0)
+1)  The "Infusion Rate" and "Number of Labels per Day" fields for the
+"BLD",8978,1,5,0)
+    IV Type CHEMOTHERAPY; ADMIXTURE and CHEMOTHERAPY; SYRINGE (Continuous)
+"BLD",8978,1,6,0)
+    are not allowing the use of the "@" functionality nor prompting the
+"BLD",8978,1,7,0)
+    user for the "Number of Labels per Day". This patch fixes this 
+"BLD",8978,1,8,0)
+    problem.
+"BLD",8978,1,9,0)
+ 
+"BLD",8978,1,10,0)
+2)  The Infusion instruction names with defined expansions will duplicate
+"BLD",8978,1,11,0)
+    the expansion if the name is the leading text in the expansion
+"BLD",8978,1,12,0)
+    itself. For example, if the abbreviation or term is "SEE" and the
+"BLD",8978,1,13,0)
+    expanded form is "SEE PROVIDER COMMENTS" it would erroneously expand
+"BLD",8978,1,14,0)
+    to "SEE PROVIDER COMMENTS PROVIDER COMMENTS". The potential for harm
+"BLD",8978,1,15,0)
+    exists if confusion results from the odd rate instructions on an
+"BLD",8978,1,16,0)
+    order/label. This patch corrects this issue.
+"BLD",8978,1,17,0)
+ 
+"BLD",8978,1,18,0)
+3)  When the Infusion Rate field is populated with "text@0" (or defined
+"BLD",8978,1,19,0)
+    label limit of 0), the software is defaulting to (P)RINT at the label
+"BLD",8978,1,20,0)
+    print option. The software previously defaulted to (B)YPASS when the
+"BLD",8978,1,21,0)
+    user entered "@0" (for zero (0) scheduled labels) in the Infusion Rate
+"BLD",8978,1,22,0)
+    field. This patch fixes this problem.
+"BLD",8978,4,0)
+^9.64PA^^
+"BLD",8978,6)
+^250
+"BLD",8978,6.3)
+3
+"BLD",8978,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8978,"KRN",.4,0)
+.4
+"BLD",8978,"KRN",.401,0)
+.401
+"BLD",8978,"KRN",.402,0)
+.402
+"BLD",8978,"KRN",.403,0)
+.403
+"BLD",8978,"KRN",.5,0)
+.5
+"BLD",8978,"KRN",.84,0)
+.84
+"BLD",8978,"KRN",3.6,0)
+3.6
+"BLD",8978,"KRN",3.8,0)
+3.8
+"BLD",8978,"KRN",9.2,0)
+9.2
+"BLD",8978,"KRN",9.8,0)
+9.8
+"BLD",8978,"KRN",9.8,"NM",0)
+^9.68A^6^6
+"BLD",8978,"KRN",9.8,"NM",1,0)
+PSIVEDT1^^0^B112839091
+"BLD",8978,"KRN",9.8,"NM",2,0)
+PSIVORE^^0^B43571745
+"BLD",8978,"KRN",9.8,"NM",3,0)
+PSIVSP^^0^B42459538
+"BLD",8978,"KRN",9.8,"NM",4,0)
+PSIVWL^^0^B33431217
+"BLD",8978,"KRN",9.8,"NM",5,0)
+PSJLIVFD^^0^B63240013
+"BLD",8978,"KRN",9.8,"NM",6,0)
+PSIVORE1^^0^B25869208
+"BLD",8978,"KRN",9.8,"NM","B","PSIVEDT1",1)
+
+"BLD",8978,"KRN",9.8,"NM","B","PSIVORE",2)
+
+"BLD",8978,"KRN",9.8,"NM","B","PSIVORE1",6)
+
+"BLD",8978,"KRN",9.8,"NM","B","PSIVSP",3)
+
+"BLD",8978,"KRN",9.8,"NM","B","PSIVWL",4)
+
+"BLD",8978,"KRN",9.8,"NM","B","PSJLIVFD",5)
+
+"BLD",8978,"KRN",19,0)
+19
+"BLD",8978,"KRN",19.1,0)
+19.1
+"BLD",8978,"KRN",101,0)
+101
+"BLD",8978,"KRN",409.61,0)
+409.61
+"BLD",8978,"KRN",771,0)
+771
+"BLD",8978,"KRN",779.2,0)
+779.2
+"BLD",8978,"KRN",870,0)
+870
+"BLD",8978,"KRN",8989.51,0)
+8989.51
+"BLD",8978,"KRN",8989.52,0)
+8989.52
+"BLD",8978,"KRN",8994,0)
+8994
+"BLD",8978,"KRN","B",.4,.4)
+
+"BLD",8978,"KRN","B",.401,.401)
+
+"BLD",8978,"KRN","B",.402,.402)
+
+"BLD",8978,"KRN","B",.403,.403)
+
+"BLD",8978,"KRN","B",.5,.5)
+
+"BLD",8978,"KRN","B",.84,.84)
+
+"BLD",8978,"KRN","B",3.6,3.6)
+
+"BLD",8978,"KRN","B",3.8,3.8)
+
+"BLD",8978,"KRN","B",9.2,9.2)
+
+"BLD",8978,"KRN","B",9.8,9.8)
+
+"BLD",8978,"KRN","B",19,19)
+
+"BLD",8978,"KRN","B",19.1,19.1)
+
+"BLD",8978,"KRN","B",101,101)
+
+"BLD",8978,"KRN","B",409.61,409.61)
+
+"BLD",8978,"KRN","B",771,771)
+
+"BLD",8978,"KRN","B",779.2,779.2)
+
+"BLD",8978,"KRN","B",870,870)
+
+"BLD",8978,"KRN","B",8989.51,8989.51)
+
+"BLD",8978,"KRN","B",8989.52,8989.52)
+
+"BLD",8978,"KRN","B",8994,8994)
+
+"BLD",8978,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",8978,"QUES",0)
+^9.62^^
+"BLD",8978,"REQB",0)
+^9.611^4^3
+"BLD",8978,"REQB",2,0)
+PSJ*5.0*279^2
+"BLD",8978,"REQB",3,0)
+PSJ*5.0*141^2
+"BLD",8978,"REQB",4,0)
+PSJ*5.0*252^2
+"BLD",8978,"REQB","B","PSJ*5.0*141",3)
+
+"BLD",8978,"REQB","B","PSJ*5.0*252",4)
+
+"BLD",8978,"REQB","B","PSJ*5.0*279",2)
+
+"MBREQ")
+0
+"PKG",197,-1)
+1^1
+"PKG",197,0)
+INPATIENT MEDICATIONS^PSJ^UNIT DOSE AND IVS
+"PKG",197,20,0)
+^9.402P^^
+"PKG",197,22,0)
+^9.49I^1^1
+"PKG",197,22,1,0)
+5.0^2971215^2980917^11712
+"PKG",197,22,1,"PAH",1,0)
+305^3140812
+"PKG",197,22,1,"PAH",1,1,0)
+^^22^22^3140812
+"PKG",197,22,1,"PAH",1,1,1,0)
+Patch PSJ*5*279 inadvertently introduced the following issues and this 
+"PKG",197,22,1,"PAH",1,1,2,0)
+patch, PSJ*5*305 will address these issues.
+"PKG",197,22,1,"PAH",1,1,3,0)
+ 
+"PKG",197,22,1,"PAH",1,1,4,0)
+1)  The "Infusion Rate" and "Number of Labels per Day" fields for the
+"PKG",197,22,1,"PAH",1,1,5,0)
+    IV Type CHEMOTHERAPY; ADMIXTURE and CHEMOTHERAPY; SYRINGE (Continuous)
+"PKG",197,22,1,"PAH",1,1,6,0)
+    are not allowing the use of the "@" functionality nor prompting the
+"PKG",197,22,1,"PAH",1,1,7,0)
+    user for the "Number of Labels per Day". This patch fixes this 
+"PKG",197,22,1,"PAH",1,1,8,0)
+    problem.
+"PKG",197,22,1,"PAH",1,1,9,0)
+ 
+"PKG",197,22,1,"PAH",1,1,10,0)
+2)  The Infusion instruction names with defined expansions will duplicate
+"PKG",197,22,1,"PAH",1,1,11,0)
+    the expansion if the name is the leading text in the expansion
+"PKG",197,22,1,"PAH",1,1,12,0)
+    itself. For example, if the abbreviation or term is "SEE" and the
+"PKG",197,22,1,"PAH",1,1,13,0)
+    expanded form is "SEE PROVIDER COMMENTS" it would erroneously expand
+"PKG",197,22,1,"PAH",1,1,14,0)
+    to "SEE PROVIDER COMMENTS PROVIDER COMMENTS". The potential for harm
+"PKG",197,22,1,"PAH",1,1,15,0)
+    exists if confusion results from the odd rate instructions on an
+"PKG",197,22,1,"PAH",1,1,16,0)
+    order/label. This patch corrects this issue.
+"PKG",197,22,1,"PAH",1,1,17,0)
+ 
+"PKG",197,22,1,"PAH",1,1,18,0)
+3)  When the Infusion Rate field is populated with "text@0" (or defined
+"PKG",197,22,1,"PAH",1,1,19,0)
+    label limit of 0), the software is defaulting to (P)RINT at the label
+"PKG",197,22,1,"PAH",1,1,20,0)
+    print option. The software previously defaulted to (B)YPASS when the
+"PKG",197,22,1,"PAH",1,1,21,0)
+    user entered "@0" (for zero (0) scheduled labels) in the Infusion Rate
+"PKG",197,22,1,"PAH",1,1,22,0)
+    field. This patch fixes this problem.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+6
+"RTN","PSIVEDT1")
+0^1^B112839091^B111693180
+"RTN","PSIVEDT1",1,0)
+PSIVEDT1 ;BIR/MLM-EDIT IV ORDER (CONT) ;2/14/12 7:20am
+"RTN","PSIVEDT1",2,0)
+ ;;5.0;INPATIENT MEDICATIONS;**3,7,41,47,50,64,58,116,110,111,113,267,279,305**;16 DEC 97;Build 3
+"RTN","PSIVEDT1",3,0)
+ ;
+"RTN","PSIVEDT1",4,0)
+ ; Reference to ^PS(55 is supported by DBIA# 2191.
+"RTN","PSIVEDT1",5,0)
+ ; Reference to ^PS(51.1 is supported by DBIA# 2177.
+"RTN","PSIVEDT1",6,0)
+ ;
+"RTN","PSIVEDT1",7,0)
+10 ; Start Date
+"RTN","PSIVEDT1",8,0)
+ D:'P(2)&P("IVRM")!($G(PSJREN)) ENT^PSIVCAL
+"RTN","PSIVEDT1",9,0)
+A10 I $G(P("RES"))="R" I $G(ON)["P",$P($G(^PS(53.1,+ON,0)),"^",24)="R" D  Q
+"RTN","PSIVEDT1",10,0)
+ . Q:'$G(PSIVRENW)  W !!?5,"This is a Renewal Order. Start Date may not be edited at this point." D PAUSE^VALM1
+"RTN","PSIVEDT1",11,0)
+ I $G(ON)["V"!($G(ON)["U") I $$COMPLEX^PSJOE(DFN,ON) D  Q
+"RTN","PSIVEDT1",12,0)
+ .Q:$G(PSJBKDR)  W !!?5,"This is a Complex Order. Start Date may not be edited at this point." D PAUSE^VALM1
+"RTN","PSIVEDT1",13,0)
+ S Y=P(2) X ^DD("DD") W !,"START DATE/TIME: "_$S(Y]"":Y_"// ",1:"") R X:DTIME S:'$T X=U S:X=U DONE=1 I $E(X)=U!(P(2)&X="") Q
+"RTN","PSIVEDT1",14,0)
+ I X["???",($E(P("OT"))="I"),(PSIVAC["C") D ORFLDS G 10
+"RTN","PSIVEDT1",15,0)
+ I X="@"!(X?1."?") W:X="@" $C(7),"  (Required)" S F1=53.1,F2=10 S:X="@" X="?" D ENHLP^PSIVORC1 G A10
+"RTN","PSIVEDT1",16,0)
+ K %DT S:X="" X=P(2) S %DT="ERTX" D ^%DT K %DT G:Y'>0 A10
+"RTN","PSIVEDT1",17,0)
+ I $G(P("RES"))="R",(+Y<+$P($G(^PS(55,DFN,"IV",+$G(P("OLDON")),0)),U,2)) D  G 10
+"RTN","PSIVEDT1",18,0)
+ .; naked ref below refers to line above
+"RTN","PSIVEDT1",19,0)
+ .S Y=$P(^(0),U,2) X ^DD("DD") W $C(7),!!,"Start date of order being renewed is ",Y,".",!,"Start date of renewal order must be AFTER start date of order being renewed.",!
+"RTN","PSIVEDT1",20,0)
+ S X1=$G(P("LOG")),X2=-7 D C^%DTC I +Y<X W !!,"Start date/time may not be entered prior to 7 days from the order's LOGIN DATE.",! D A10
+"RTN","PSIVEDT1",21,0)
+ S P(2)=+Y,PSGSDX=1
+"RTN","PSIVEDT1",22,0)
+ Q
+"RTN","PSIVEDT1",23,0)
+ ;
+"RTN","PSIVEDT1",24,0)
+25 ; Stop Date
+"RTN","PSIVEDT1",25,0)
+ G:$D(PSGFDX) A25
+"RTN","PSIVEDT1",26,0)
+ I P("IVRM")]"",$S(P(3)<P(2):1,$G(PSIVAC)["E":0,1:1) S PSIVSITE=$G(^PS(59.5,+P("IVRM"),1)),$P(PSIVSITE,"^",20,21)=$G(^PS(59.5,+P("IVRM"),5)) D ENSTOP^PSIVCAL
+"RTN","PSIVEDT1",27,0)
+A25 I $G(ON)["V"!($G(ON)["U") I $$COMPLEX^PSJOE(DFN,ON) D  Q
+"RTN","PSIVEDT1",28,0)
+ .Q:$G(PSJBKDR)  W !!?5,"This is a Complex Order. Stop Date may not be edited at this point." D PAUSE^VALM1
+"RTN","PSIVEDT1",29,0)
+ S Y=P(3) X ^DD("DD") W !,"STOP DATE/TIME: "_$S(Y]"":Y_"// ",1:"") R X:DTIME S:'$T X=U S:X=U DONE=1 Q:X=""&P(2)  I $E(X)=U!(X=""&P(2)) Q
+"RTN","PSIVEDT1",30,0)
+ I X["???",($E(P("OT"))="I"),(PSIVAC["C") D ORFLDS G 25
+"RTN","PSIVEDT1",31,0)
+ I X="@"!(X["?") W $C(7),"  (Required)" S F1=53.1,F2=25,X="?" D ENHLP^PSIVORC1 G A25
+"RTN","PSIVEDT1",32,0)
+ K %DT S:X="" X=$G(Y) S:X="" X=P(3) S %DT="ERTX" D:X'=+X ^%DT
+"RTN","PSIVEDT1",33,0)
+ I X=+X,X>0,X'>2000000 G A25:'$$ENDL^PSGDL(P(9),X) D ENDL^PSIVSP
+"RTN","PSIVEDT1",34,0)
+ D DOSE
+"RTN","PSIVEDT1",35,0)
+ I $G(X)="" S X=Y
+"RTN","PSIVEDT1",36,0)
+ I $G(X)="" S X=P(3)
+"RTN","PSIVEDT1",37,0)
+ I $G(Z)]"",Z>X D  G A25
+"RTN","PSIVEDT1",38,0)
+ . W !,"There is no administration time that falls between the Start Date/Time"
+"RTN","PSIVEDT1",39,0)
+ . W !,"and Stop Date/Time.",!
+"RTN","PSIVEDT1",40,0)
+ S X=Y S:Y<1!Y'["." X="" G:Y'>0 A25 S P(3)=+Y,PSGFDX=1
+"RTN","PSIVEDT1",41,0)
+ Q
+"RTN","PSIVEDT1",42,0)
+ ;
+"RTN","PSIVEDT1",43,0)
+26 ; Schedule
+"RTN","PSIVEDT1",44,0)
+ I $G(P("RES"))="R" I $G(ON)["P",$P($G(^PS(53.1,+ON,0)),"^",24)="R" D  Q
+"RTN","PSIVEDT1",45,0)
+ . Q:'$G(PSIVRENW)  W !!?5,"This is a Renewal Order. Schedule may not be edited at this point." D PAUSE^VALM1
+"RTN","PSIVEDT1",46,0)
+ I $G(ON)["V"!($G(ON)["U") I $$COMPLEX^PSJOE(DFN,ON) D  Q
+"RTN","PSIVEDT1",47,0)
+ .Q:$G(PSJBKDR)  W !!?5,"This is a Complex Order. Schedule may not be edited at this point." D PAUSE^VALM1
+"RTN","PSIVEDT1",48,0)
+ W !,"SCHEDULE: ",$S(P(9)]"":P(9)_"// ",1:"") R X:DTIME S:'$T X=U S:X=U DONE=1 I $E(X)=U!(X="") Q
+"RTN","PSIVEDT1",49,0)
+ I X="@" D DEL^PSIVEDRG S:%=1 P(9)="" G 26
+"RTN","PSIVEDT1",50,0)
+ I '$$SCHREQ^PSJLIVFD(.P) S P(7)="" I $P(X,"@",2)=0 D  G 26
+"RTN","PSIVEDT1",51,0)
+ .W $C(7),!!?2,"'@0' is not permitted for Continuous IV's",!
+"RTN","PSIVEDT1",52,0)
+ I X["???",($E(P("OT"))="I"),(PSIVAC["C") D ORFLDS G 26
+"RTN","PSIVEDT1",53,0)
+ I X?1."?"!($L(X)>22)!($L(X," ")>3) S F1=55.01,F2=.09 D ENHLP^PSIVORC1 G 26
+"RTN","PSIVEDT1",54,0)
+ S CHG=0 I P(9)]"",X'=P(9) S CHG=1
+"RTN","PSIVEDT1",55,0)
+ S P(7)="" K PSGOES D EN^PSIVSP S:XT<0 X="" I $G(X)="" W $C(7),"??" G 26
+"RTN","PSIVEDT1",56,0)
+ I CHG D
+"RTN","PSIVEDT1",57,0)
+ . S P(9)=X,P(11)=Y,P(15)=XT
+"RTN","PSIVEDT1",58,0)
+ . I $$ODD^PSGS0(P(15)) S P(11)=""
+"RTN","PSIVEDT1",59,0)
+ . W !!?5,"This change in schedule also changes the Administration Times and Schedule Type of this order."
+"RTN","PSIVEDT1",60,0)
+ . S DIR("A")="Enter RETURN to continue or '^' to exit:"
+"RTN","PSIVEDT1",61,0)
+ . D PAUSE^VALM1
+"RTN","PSIVEDT1",62,0)
+ K CHG
+"RTN","PSIVEDT1",63,0)
+ Q
+"RTN","PSIVEDT1",64,0)
+ ;
+"RTN","PSIVEDT1",65,0)
+39 ; Admin Times
+"RTN","PSIVEDT1",66,0)
+ S ORIG=$G(P(11))
+"RTN","PSIVEDT1",67,0)
+A39 I $G(P("RES"))="R" I $G(ON)["P",($P($G(^PS(53.1,+ON,0)),"^",24)="R") D  Q
+"RTN","PSIVEDT1",68,0)
+ . Q:'$G(PSIVRENW)  W !!?5,"This is a Renewal Order. Administration times may not be edited at this point." D PAUSE^VALM1
+"RTN","PSIVEDT1",69,0)
+ I $G(ON)["V"!($G(ON)["U") I $$COMPLEX^PSJOE(DFN,ON) D  Q
+"RTN","PSIVEDT1",70,0)
+ .Q:$G(PSJBKDR)  W !!?5,"This is a Complex Order. Admin Times may not be edited at this point." D PAUSE^VALM1
+"RTN","PSIVEDT1",71,0)
+ I $G(P(9))=""!($G(P(9))[" PRN")!($G(P(9))="PRN") Q  ;No schedule or PRN schedule
+"RTN","PSIVEDT1",72,0)
+ I $$ODD^PSGS0(P(15)) S P(11)="" Q
+"RTN","PSIVEDT1",73,0)
+ W !,"ADMINISTRATION TIMES: ",$S(P(11)]"":P(11)_"//",1:"") R X:DTIME S:'$T X=U S:X=U DONE=1 I '($G(P(15))="D"&'DONE) I $E(X)=U S (X,P(11))=ORIG Q
+"RTN","PSIVEDT1",74,0)
+ I X="",P(11)]"" S X=P(11)
+"RTN","PSIVEDT1",75,0)
+ I ($G(P(15))="D"!($G(P(9))["@"))&('$G(X)!(X["@")) W $C(7),"  ??" S X="?" W:(P(15)="D"!(X["@")) !,"This is a 'DAY OF THE WEEK' schedule and MUST have admin times." G A39
+"RTN","PSIVEDT1",76,0)
+ I X="@" D DEL^PSIVEDRG S:%=1 P(11)="" G A39
+"RTN","PSIVEDT1",77,0)
+ I X?1."?" D ENHLP^PSGOEM(53.1,39) G A39
+"RTN","PSIVEDT1",78,0)
+ I X["???",($E(P("OT"))="I"),(PSIVAC["C") D ORFLDS G A39
+"RTN","PSIVEDT1",79,0)
+ I $G(P(15))'="D",$G(P(15))'="P",'$$ONCALL(P(9)) D TIMES I '$D(X) G A39
+"RTN","PSIVEDT1",80,0)
+ K:X[""""!($A(X)=45) X W:$G(X)="^"!('$D(X)) $C(7),"  ??" G:$G(X)="^"!('$D(X)) A39 S P(11)=X D:$G(PSIVCAL) ENT^PSIVCAL,ENSTOP^PSIVCAL K PSIVCAL
+"RTN","PSIVEDT1",81,0)
+ Q
+"RTN","PSIVEDT1",82,0)
+ ;
+"RTN","PSIVEDT1",83,0)
+59 ; Infusion Rate
+"RTN","PSIVEDT1",84,0)
+ ;*305
+"RTN","PSIVEDT1",85,0)
+ N P8BADDEF S P8BADDEF=0 K PSJEXMSG
+"RTN","PSIVEDT1",86,0)
+ I $G(P("RES"))="R" I $G(ON)["P",$P($G(^PS(53.1,+ON,0)),"^",24)="R" D  Q
+"RTN","PSIVEDT1",87,0)
+ . Q:'$G(PSIVRENW)  W !!?5,"This is a Renewal Order. Infusion Rate may not be edited at this point." D PAUSE^VALM1
+"RTN","PSIVEDT1",88,0)
+ W !,"INFUSION RATE: ",$S(P(8)]"":$P(P(8),"@")_"//",1:"") R X:DTIME S:'$T X=U S:X=U DONE=1 I $S($E(X)=U:1,X]"":0,1:P(8)]"") D:'$G(DONE) EXPINF(.X) D:'$G(DONE) NUMLAB(.P) G:$G(P8BADDEF) 59 Q
+"RTN","PSIVEDT1",89,0)
+ S X=$TR(X,$C(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,127)) ; Strip out control characters
+"RTN","PSIVEDT1",90,0)
+ I ((P(4)="P")!((P(4)="C")&(P(23)="P"))!(("C^S"[P(4))&(P(5)=1)))&(X["@") D  G 59
+"RTN","PSIVEDT1",91,0)
+ .W $C(7),!!?2,"'@' is not permitted for Intermittent IV's",!
+"RTN","PSIVEDT1",92,0)
+ I (X["^") D  G 59
+"RTN","PSIVEDT1",93,0)
+ .W $C(7),!!?2,"'^' is not permitted",!
+"RTN","PSIVEDT1",94,0)
+ I X=""&((P(4)="P")!((P(4)="C")&(P(23)="P"))!(("C^S"[P(4))&(P(5)=1))) Q
+"RTN","PSIVEDT1",95,0)
+ I X="@" D DEL^PSIVEDRG S:%=1 P(8)="" G 59
+"RTN","PSIVEDT1",96,0)
+ I X["???",($E(P("OT"))="I"),(PSIVAC["C") D ORFLDS G 59
+"RTN","PSIVEDT1",97,0)
+ I X["?" S F1=53.1,F2=59 D ENHLP^PSIVORC1 G 59
+"RTN","PSIVEDT1",98,0)
+ D EXPINF(.X)
+"RTN","PSIVEDT1",99,0)
+ I ($L(X)>30!($L(X)=1)),(X'?1N) D  G 59
+"RTN","PSIVEDT1",100,0)
+ .W $C(7),!!?3,"Free text entries must contain a minimum of 2 characters",!?3,"and a maximum of 30 characters",!
+"RTN","PSIVEDT1",101,0)
+ I X]"" D ENI^PSIVSP W:'$D(X) $C(7)," ??" G:'$D(X) 59 S P(8)=X
+"RTN","PSIVEDT1",102,0)
+ I P(8)="" W $C(7),!!,"An infusion rate must be entered!" G 59
+"RTN","PSIVEDT1",103,0)
+ D NUMLAB(.P)
+"RTN","PSIVEDT1",104,0)
+ Q
+"RTN","PSIVEDT1",105,0)
+ ;
+"RTN","PSIVEDT1",106,0)
+NUMLAB(P) ; Prompt for Number of Labels
+"RTN","PSIVEDT1",107,0)
+ N PSJILBS
+"RTN","PSIVEDT1",108,0)
+NUMLAB2 ; Loop ;*305
+"RTN","PSIVEDT1",109,0)
+ ; Quit if no Infusion Rate
+"RTN","PSIVEDT1",110,0)
+ Q:($G(P(8))="")
+"RTN","PSIVEDT1",111,0)
+ I ((P(4)="P")!((P(4)="C")&(P(23)="P"))!(("C^S"[P(4))&(P(5)=1))) D  Q
+"RTN","PSIVEDT1",112,0)
+ .I $G(X)="",$G(P(8))["@" S P(8)=$P(P(8),"@")
+"RTN","PSIVEDT1",113,0)
+ K DIR S PSJILBS=$P($G(P(8)),"@",2) S:'(PSJILBS?1.N) PSJILBS=$G(P("NUMLBL")) I $G(PSJILBS)?1.N S DIR("B")=PSJILBS
+"RTN","PSIVEDT1",114,0)
+ D NLBHLP(1)
+"RTN","PSIVEDT1",115,0)
+ S DIR(0)="FAO",DIR("A")="NUMBER OF LABELS PER DAY: " D ^DIR Q:X="^"
+"RTN","PSIVEDT1",116,0)
+ I X="@" D DEL^PSIVEDRG S:%=1 P("NUMLBL")="",P(8)=$P(P(8),"@") G NUMLAB2
+"RTN","PSIVEDT1",117,0)
+ I X?1."?" D NLBHLP G NUMLAB2
+"RTN","PSIVEDT1",118,0)
+ I X?1.2N S P("NUMLBL")=+X,P(8)=$P(P(8),"@")_"@"_P("NUMLBL") Q
+"RTN","PSIVEDT1",119,0)
+ I X="",(P(8)'?1N.N.1".".1N1" ml/hr") D  G NUMLAB2
+"RTN","PSIVEDT1",120,0)
+ .W $C(7),!!,"Number of Labels is required for continuous IV's with free text Infusion Rate.",!
+"RTN","PSIVEDT1",121,0)
+ Q:X=""
+"RTN","PSIVEDT1",122,0)
+ I X'?1.2N D  G NUMLAB2
+"RTN","PSIVEDT1",123,0)
+ .W $C(7),!!,"Type a number between 0 and 99, 0 decimal digits",!
+"RTN","PSIVEDT1",124,0)
+ Q
+"RTN","PSIVEDT1",125,0)
+ ;
+"RTN","PSIVEDT1",126,0)
+63 ; Remarks
+"RTN","PSIVEDT1",127,0)
+ N DIR S X="",DIR(0)="53.1,63" S:P("REM")]"" DIR("B")=P("REM") D ^DIR I X="^"!$D(DTOUT) S DONE=1 Q
+"RTN","PSIVEDT1",128,0)
+ I X="@" D DEL^PSIVEDRG S:%=1 P("REM")="" G 63
+"RTN","PSIVEDT1",129,0)
+ I X]"",$E(X)'="^" S P("REM")=X
+"RTN","PSIVEDT1",130,0)
+ Q
+"RTN","PSIVEDT1",131,0)
+ ;
+"RTN","PSIVEDT1",132,0)
+64 ; Other Print Info
+"RTN","PSIVEDT1",133,0)
+ N OPIMSG,PSJOPILN,PSJOPIT,PSJTMPTX,TMPLIN,PSJOVRMX
+"RTN","PSIVEDT1",134,0)
+ S PSJOPILN=$$EDITOPI^PSJBCMA5(DFN) S OPIMSG="Instructions too long. See Order View or BCMA for full text."
+"RTN","PSIVEDT1",135,0)
+ S PSJTMPTX="",PSJOVRMX=0
+"RTN","PSIVEDT1",136,0)
+ S TMPLIN=0 F  S TMPLIN=$O(^PS(53.45,$G(PSJSYSP),6,TMPLIN)) Q:'TMPLIN!PSJOVRMX  D
+"RTN","PSIVEDT1",137,0)
+ .S:($L(PSJTMPTX)+$L($G(^PS(53.45,$G(DUZ),6,TMPLIN,0))))>60 PSJOVRMX=1 Q:$G(PSJOVRMX)  D
+"RTN","PSIVEDT1",138,0)
+ ..S PSJTMPTX=$G(PSJTMPTX)_$S($L($G(PSJTMPTX)):" ",1:"")_$G(^PS(53.45,$G(DUZ),6,TMPLIN,0))
+"RTN","PSIVEDT1",139,0)
+ S PSJTMPTX=$S($G(PSJOVRMX):OPIMSG,1:$G(PSJTMPTX))
+"RTN","PSIVEDT1",140,0)
+ S P("OPI")=PSJTMPTX I (PSJOPILN>0) S P("OPI")=$$ENBCMA^PSJUTL("V")
+"RTN","PSIVEDT1",141,0)
+ Q
+"RTN","PSIVEDT1",142,0)
+ ;
+"RTN","PSIVEDT1",143,0)
+ORFLDS ; Display OE/RR fields during edit.
+"RTN","PSIVEDT1",144,0)
+ D FULL^VALM1
+"RTN","PSIVEDT1",145,0)
+ W !!,"Orderable Item: ",$P(P("PD"),U,2),!,"Give: ",$P(P("MR"),U,2)," ",P(9),!!
+"RTN","PSIVEDT1",146,0)
+ Q
+"RTN","PSIVEDT1",147,0)
+ ;
+"RTN","PSIVEDT1",148,0)
+TIMES ;At least one admin time, not more than interval allows.
+"RTN","PSIVEDT1",149,0)
+ I $G(P(15)) Q:$$ODD^PSGS0(P(15))
+"RTN","PSIVEDT1",150,0)
+ I $G(P(15))="C"!$$CONTIN($G(P(9))) I '$$ONCALL($G(P(9))),X="" W !,"This order requires at least one administration time." K X Q  ;No times
+"RTN","PSIVEDT1",151,0)
+ N H,I,MAX
+"RTN","PSIVEDT1",152,0)
+ I $G(P(15))="O"!$$ONETIME($G(P(9))) I $L(X,"-")>1 W !," This is a One Time Order - only one administration time is permitted." K X Q
+"RTN","PSIVEDT1",153,0)
+ I $G(P(15))="O"!$$ONETIME($G(P(9))) Q  ;Done validating One Time
+"RTN","PSIVEDT1",154,0)
+ I $G(P(9))]"" S H=+$O(^PS(51.1,"B",P(9),0)) S I=$P($G(^PS(51.1,H,0)),"^",3)
+"RTN","PSIVEDT1",155,0)
+ I +I=0 Q  ;No frequency - can not check frequency related items
+"RTN","PSIVEDT1",156,0)
+ S MAX=1440/I
+"RTN","PSIVEDT1",157,0)
+ I MAX<1,$L(X,"-")>1 W !,"This order requires one administration time." K X Q
+"RTN","PSIVEDT1",158,0)
+ I MAX'<1,$L(X,"-")>MAX W !,"The number of admin times entered is greater than indicated by the schedule." K X Q  ;Too many times
+"RTN","PSIVEDT1",159,0)
+ I MAX'<1,$L(X,"-")<MAX D  ;Too few times
+"RTN","PSIVEDT1",160,0)
+ . W !,"The number of admin times entered is fewer than indicated by the schedule."
+"RTN","PSIVEDT1",161,0)
+ . N X,DIR
+"RTN","PSIVEDT1",162,0)
+ . D PAUSE^VALM1
+"RTN","PSIVEDT1",163,0)
+ Q
+"RTN","PSIVEDT1",164,0)
+ ;
+"RTN","PSIVEDT1",165,0)
+DOSE ;Make certain at least one dose is given.
+"RTN","PSIVEDT1",166,0)
+ N INFO,Y,PNINE
+"RTN","PSIVEDT1",167,0)
+ S PNINE=P(9)
+"RTN","PSIVEDT1",168,0)
+ S INFO=$G(P(2))_U_$G(P(3))_U_$G(P(9))_U_$P($G(PSGZZND),"^",5)_U_$P($G(P("PD")),"^")_U_$G(P(11))
+"RTN","PSIVEDT1",169,0)
+ I '$L($G(PSGP)) N PSGP S PSGP=""
+"RTN","PSIVEDT1",170,0)
+ S Z=$$ENQ^PSJORP2(PSGP,INFO)  ;Expected first dose.
+"RTN","PSIVEDT1",171,0)
+ S P(9)=PNINE
+"RTN","PSIVEDT1",172,0)
+ Q
+"RTN","PSIVEDT1",173,0)
+ ;
+"RTN","PSIVEDT1",174,0)
+ONCALL(SCHD) ; Check if a schedule is type On Call (all schedules with a given name must have the same schedule type)
+"RTN","PSIVEDT1",175,0)
+ N NXT,SCHARR
+"RTN","PSIVEDT1",176,0)
+ S OCCHK=0
+"RTN","PSIVEDT1",177,0)
+ Q:$G(SCHD)="" OCCHK
+"RTN","PSIVEDT1",178,0)
+ Q:'$D(^PS(51.1,"APPSJ",SCHD)) OCCHK
+"RTN","PSIVEDT1",179,0)
+ S NXT=0 F  S NXT=$O(^PS(51.1,"APPSJ",SCHD,NXT)) Q:'NXT  S TYP=$P($G(^PS(51.1,+NXT,0)),"^",5) S:TYP]"" SCHARR(TYP)=""
+"RTN","PSIVEDT1",180,0)
+ I '$D(SCHARR("OC")) S OCCHK=0 Q OCCHK
+"RTN","PSIVEDT1",181,0)
+ I $O(SCHARR("OC"))]""!($O(SCHARR("OC"),-1)]"") S OCCHK=0 Q OCCHK
+"RTN","PSIVEDT1",182,0)
+ I $D(SCHARR("OC")) S OCCHK=1
+"RTN","PSIVEDT1",183,0)
+ Q OCCHK
+"RTN","PSIVEDT1",184,0)
+ ;
+"RTN","PSIVEDT1",185,0)
+ONETIME(SCHD) ; Check if a schedule is type On Call (all schedules with a given name must have the same schedule type)
+"RTN","PSIVEDT1",186,0)
+ N NXT,SCHARR
+"RTN","PSIVEDT1",187,0)
+ S OCCHK=0
+"RTN","PSIVEDT1",188,0)
+ Q:$G(SCHD)="" OCCHK
+"RTN","PSIVEDT1",189,0)
+ Q:'$D(^PS(51.1,"APPSJ",SCHD)) OCCHK
+"RTN","PSIVEDT1",190,0)
+ S NXT=0 F  S NXT=$O(^PS(51.1,"APPSJ",SCHD,NXT)) Q:'NXT  S TYP=$P($G(^PS(51.1,+NXT,0)),"^",5) S:TYP]"" SCHARR(TYP)=""
+"RTN","PSIVEDT1",191,0)
+ I '$D(SCHARR("O")) S OCCHK=0 Q OCCHK
+"RTN","PSIVEDT1",192,0)
+ I $O(SCHARR("O"))]""!($O(SCHARR("O"),-1)]"") S OCCHK=0 Q OCCHK
+"RTN","PSIVEDT1",193,0)
+ I $D(SCHARR("O")) S OCCHK=1
+"RTN","PSIVEDT1",194,0)
+ Q OCCHK
+"RTN","PSIVEDT1",195,0)
+ ;
+"RTN","PSIVEDT1",196,0)
+CONTIN(SCHD) ; Check if a schedule is type On Call (all schedules with a given name must have the same schedule type)
+"RTN","PSIVEDT1",197,0)
+ N NXT,SCHARR
+"RTN","PSIVEDT1",198,0)
+ S OCCHK=0
+"RTN","PSIVEDT1",199,0)
+ Q:$G(SCHD)="" OCCHK
+"RTN","PSIVEDT1",200,0)
+ Q:'$D(^PS(51.1,"APPSJ",SCHD)) OCCHK
+"RTN","PSIVEDT1",201,0)
+ S NXT=0 F  S NXT=$O(^PS(51.1,"APPSJ",SCHD,NXT)) Q:'NXT  S TYP=$P($G(^PS(51.1,+NXT,0)),"^",5) S:TYP]"" SCHARR(TYP)=""
+"RTN","PSIVEDT1",202,0)
+ I '$D(SCHARR("C")) S OCCHK=0 Q OCCHK
+"RTN","PSIVEDT1",203,0)
+ I $O(SCHARR("C"))]""!($O(SCHARR("C"),-1)]"") S OCCHK=0 Q OCCHK
+"RTN","PSIVEDT1",204,0)
+ I $D(SCHARR("C")) S OCCHK=1
+"RTN","PSIVEDT1",205,0)
+ Q OCCHK
+"RTN","PSIVEDT1",206,0)
+ ;
+"RTN","PSIVEDT1",207,0)
+NLBHLP(OUT) ; Help text for Number of Labels per day
+"RTN","PSIVEDT1",208,0)
+ I OUT=1 D  Q
+"RTN","PSIVEDT1",209,0)
+ .S DIR("?",1)="Enter the # of labels per day that will be needed."
+"RTN","PSIVEDT1",210,0)
+ .S DIR("?",2)=""
+"RTN","PSIVEDT1",211,0)
+ .S DIR("?",3)="Example:   0 = 0 labels per day."
+"RTN","PSIVEDT1",212,0)
+ .S DIR("?",4)="           2 = 2 labels per day."
+"RTN","PSIVEDT1",213,0)
+ .S DIR("?",5)="Note:  Number of Labels per day is required for continuous IV orders"
+"RTN","PSIVEDT1",214,0)
+ .S DIR("?",6)="       with free text Infusion Rate. Number of labels per day is not"
+"RTN","PSIVEDT1",215,0)
+ .S DIR("?",7)="       permitted for Intermittent (IVPB) type orders; for Intermittent"
+"RTN","PSIVEDT1",216,0)
+ .S DIR("?",8)="       orders, the schedule and administration time(s) will be used to"
+"RTN","PSIVEDT1",217,0)
+ .S DIR("?")="       determine the number of labels needed."
+"RTN","PSIVEDT1",218,0)
+ ;
+"RTN","PSIVEDT1",219,0)
+ W !,"Enter the # of labels per day that will be needed."
+"RTN","PSIVEDT1",220,0)
+ W !,"Example:   0 = 0 labels per day."
+"RTN","PSIVEDT1",221,0)
+ W !,"           2 = 2 labels per day."
+"RTN","PSIVEDT1",222,0)
+ W !!,"Note: Number of Labels per day is required for continuous IV orders"
+"RTN","PSIVEDT1",223,0)
+ W !,"       with free text Infusion Rate. Number of labels per day is not"
+"RTN","PSIVEDT1",224,0)
+ W !,"       permitted for Intermittent (IVPB) type orders; for Intermittent"
+"RTN","PSIVEDT1",225,0)
+ W !,"       orders, the schedule and administration time(s) will be used to"
+"RTN","PSIVEDT1",226,0)
+ W !,"       determine the number of labels needed."
+"RTN","PSIVEDT1",227,0)
+ Q
+"RTN","PSIVEDT1",228,0)
+ ;
+"RTN","PSIVEDT1",229,0)
+EXPINF(P8,SILENT) ; Expand Infusion Rate
+"RTN","PSIVEDT1",230,0)
+ ;*305
+"RTN","PSIVEDT1",231,0)
+ Q:$G(P8)!($G(PSJEXMSG))  N P8TMP S P8TMP=$$UP^XLFSTR($P(P8,"@"))
+"RTN","PSIVEDT1",232,0)
+ N EXPANDED S EXPANDED="" D INFCHK^PSJLIVFD(P8TMP,.EXPANDED)
+"RTN","PSIVEDT1",233,0)
+ I (EXPANDED=$P(P8,"@"))!(EXPANDED=P8TMP) Q
+"RTN","PSIVEDT1",234,0)
+ S PSJEXMSG=1 I '$G(SILENT) W "     Now expanding text"
+"RTN","PSIVEDT1",235,0)
+ I P8["@" S $P(P8,"@")=EXPANDED
+"RTN","PSIVEDT1",236,0)
+ I P8'["@" S P8=EXPANDED
+"RTN","PSIVEDT1",237,0)
+ I '$G(SILENT) W:$G(PSJEXMSG) !," Input expanded to ",EXPANDED
+"RTN","PSIVEDT1",238,0)
+ Q
+"RTN","PSIVORE")
+0^2^B43571745^B43371041
+"RTN","PSIVORE",1,0)
+PSIVORE ;BIR/PR,MLM-ORDER ENTRY ;1 APR 08 / 2:37 PM
+"RTN","PSIVORE",2,0)
+ ;;5.0;INPATIENT MEDICATIONS;**18,29,50,56,58,81,110,127,133,157,203,213,181,252,305**;16 DEC 97;Build 3
+"RTN","PSIVORE",3,0)
+ ;
+"RTN","PSIVORE",4,0)
+ ; Reference to ^PS(55 is supported by DBIA 2191
+"RTN","PSIVORE",5,0)
+ ; Reference to ^ORX2 is supported by DBIA #867
+"RTN","PSIVORE",6,0)
+ ; Reference to ^PSSLOCK is supported by DBIA #2789
+"RTN","PSIVORE",7,0)
+ ; Reference to ^DICN is supported by DBIA 10009.
+"RTN","PSIVORE",8,0)
+ ; Reference to ^DIR is supported by DBIA 10026.
+"RTN","PSIVORE",9,0)
+ ; Reference to EN^VALM is supported by DBIA 10118.
+"RTN","PSIVORE",10,0)
+ ; Reference to ^VADPT is supported by DBIA 10061.
+"RTN","PSIVORE",11,0)
+ ;
+"RTN","PSIVORE",12,0)
+ N PSJNEW,PSJOUT,PSGPTMP,PPAGE,FLAG S PSJNEW=1
+"RTN","PSIVORE",13,0)
+ ;
+"RTN","PSIVORE",14,0)
+ D SITE Q:'$G(PSIVQ)  K PSIVQ S PSGOP=""
+"RTN","PSIVORE",15,0)
+ ;
+"RTN","PSIVORE",16,0)
+BEG ;Get patient and make sure he is living.
+"RTN","PSIVORE",17,0)
+ L +^PS(53.45,DUZ):1 E  D LOCKERR^PSJOE G Q
+"RTN","PSIVORE",18,0)
+ ;* F  K WSCHADM S PSGPTMP=0,PPAGE=1 D ENGETP^PSIV Q:DFN<0  D ASK
+"RTN","PSIVORE",19,0)
+ ;* F  K WSCHADM S PSGPTMP=0,PPAGE=1 D ENGETP^PSIV Q:DFN<0  S X=DFN_";DPT(" D LK^ORX2 Q:'Y  D ASK S X=DFN_";DPT(" D ULK^ORX2
+"RTN","PSIVORE",20,0)
+ NEW PSJLK
+"RTN","PSIVORE",21,0)
+ F  K WSCHADM S PSGPTMP=0,PPAGE=1 D ENGETP^PSIV Q:DFN<0  S PSJLK='$$L^PSSLOCK(DFN,1) Q:PSJLK  D ASK,UL^PSSLOCK(DFN)
+"RTN","PSIVORE",22,0)
+ I PSGOP,$P(PSJSYSL,"^",2)]"" D ENQL^PSGLW
+"RTN","PSIVORE",23,0)
+ G Q
+"RTN","PSIVORE",24,0)
+ ;
+"RTN","PSIVORE",25,0)
+ASK ;See if patient has been admitted.
+"RTN","PSIVORE",26,0)
+ I VADM(6) W !?5,"Patient has died." Q
+"RTN","PSIVORE",27,0)
+ I 'VAIN(4) K DIK S DIR(0)="Y",DIR("A")="Do you wish to continue",DIR("B")="NO",DIR("??")="^S HELP=""ADMYN"" D ^PSIVHLP1" W !,"This patient has not been admitted." D ^DIR K DIR Q:'Y
+"RTN","PSIVORE",28,0)
+ S:VAIN(4) WSCHADM=+VAIN(4)
+"RTN","PSIVORE",29,0)
+ ;
+"RTN","PSIVORE",30,0)
+SETN ;Set up patient 0 node if needed.
+"RTN","PSIVORE",31,0)
+ I '$D(^PS(55,DFN,0)) K DO,DA,DD,DIC,PSIVFN S:$D(^(5.1)) PSIVFN=^(5.1) K:$D(PSIVFN) ^(5.1) S (DINUM,X)=DFN,DIC(0)="L",DIC="^PS(55," D FILE^DICN S:$D(PSIVFN) ^PS(55,DFN,5.1)=PSIVFN D  K DIC,PSIVFN,DO,DA,DD,DINUM
+"RTN","PSIVORE",32,0)
+ .; Mark PSJ and PSO as converted
+"RTN","PSIVORE",33,0)
+ .S $P(^PS(55,DFN,5.1),"^",11)=2
+"RTN","PSIVORE",34,0)
+ S PSJNARC=1
+"RTN","PSIVORE",35,0)
+ S PSGP=DFN,PSJPWD=+VAIN(4),PSIVAC="P",PSIVBR="D ^PSIVOPT" D HK,ENCHS1^PSIV Q:'$D(DFN)
+"RTN","PSIVORE",36,0)
+ Q
+"RTN","PSIVORE",37,0)
+ ;
+"RTN","PSIVORE",38,0)
+NEW ;Ask to enter new order.
+"RTN","PSIVORE",39,0)
+ D:'$D(VADM(1)) DEM^VADPT
+"RTN","PSIVORE",40,0)
+ K P,PSIVCHG,PSIVTYPE,PSJOE,DIR S DIR(0)="Y",DIR("A")="New order for "_VADM(1),DIR("B")="YES",DIR("??")="^S HELP=""NEWORD"" D ^PSIVHLP" D ^DIR K DIR Q:'Y
+"RTN","PSIVORE",41,0)
+ NEW X S X=DFN_";DPT(" D LK^ORX2 Q:'Y  S PSJLSORX=1
+"RTN","PSIVORE",42,0)
+INMED K ON55,PSJOUT S (P(4),P("OT"),P("FRES"))="" D NEW55^PSIVORFB I '$D(ON55) D ULK G:'$D(PSJOE)&('$D(PSJOUT)) NEW G Q
+"RTN","PSIVORE",43,0)
+ NEW PSJOCFG
+"RTN","PSIVORE",44,0)
+ S PSJOCFG="NEW OE IV"
+"RTN","PSIVORE",45,0)
+ S P("RES")="N",PSIVAC="PN",P("PON")=ON55,PSIVUP=+$$GTPCI^PSIVUTL D NEW^PSIVORE2 I $G(P(2))="" D DEL55^PSIVORE2 D ULK G:'$D(PSJOE) NEW Q
+"RTN","PSIVORE",46,0)
+ D OK L -^PS(55,DFN,"IV",+ON55) D ULK K PSJOCFG G:'$D(PSJOE) NEW
+"RTN","PSIVORE",47,0)
+ ;
+"RTN","PSIVORE",48,0)
+Q ; Kill and exit.
+"RTN","PSIVORE",49,0)
+ L:'$D(PSJOE) -^PS(53.45,DUZ) S PSJNKF=1 D Q^PSIV
+"RTN","PSIVORE",50,0)
+ K FIL,I1,ND,PC,PDM,PSGDT,PSGID,PSGLMT,PSGSI,PSJNARC,PSIVAC,PSIVCHG,PSIVUP,PSIVX,PSJOPC
+"RTN","PSIVORE",51,0)
+ Q
+"RTN","PSIVORE",52,0)
+ ;
+"RTN","PSIVORE",53,0)
+ULK ;
+"RTN","PSIVORE",54,0)
+ Q:'$G(PSJLSORX)  ;If NEW^PSIVORE did not lock, don't kill it here.
+"RTN","PSIVORE",55,0)
+ NEW X S X=DFN_";DPT(" D ULK^ORX2 K PSJLSORX
+"RTN","PSIVORE",56,0)
+ Q
+"RTN","PSIVORE",57,0)
+HK ;Queue job to print MAR labels generated for this patient.
+"RTN","PSIVORE",58,0)
+ I PSGOP,PSGOP'=DFN D
+"RTN","PSIVORE",59,0)
+ .N PSJACPF,PSJACNWP,PSJPWD,PSJSYSL,PSJSYSW,PSJSYSW0,DFN,VAIN,VAERR S DFN=PSGOP
+"RTN","PSIVORE",60,0)
+ .D INP^VADPT S PSJPWD=+VAIN(4) I PSJPWD S PSJACPF=10 S PSJACPF=10 D WP^PSJAC D:$P(PSJSYSL,U,2)]"" ENQL^PSGLW
+"RTN","PSIVORE",61,0)
+ S PSGOP=DFN
+"RTN","PSIVORE",62,0)
+ Q
+"RTN","PSIVORE",63,0)
+ ;
+"RTN","PSIVORE",64,0)
+SITE ;See if site parameters are ok.
+"RTN","PSIVORE",65,0)
+ K PSIVQ D ^PSIVXU Q:$D(XQUIT)
+"RTN","PSIVORE",66,0)
+ I '$D(PSIVSN)!('$D(PSIVSITE)) W $C(7),$C(7),!!,"You have no IV ROOM parameters ... PLEASE ... PLEASE ...",!,"Exit this package and reenter properly !!",!! Q
+"RTN","PSIVORE",67,0)
+ D ORPARM^PSIVOREN S PSIVQ=1
+"RTN","PSIVORE",68,0)
+ Q
+"RTN","PSIVORE",69,0)
+ ;
+"RTN","PSIVORE",70,0)
+OK ;Print example label, run order through checker, ask if it is ok.
+"RTN","PSIVORE",71,0)
+ S P16=0,PSIVEXAM=1,(PSIVNOL,PSIVCT)=1 D GTOT^PSIVUTL(P(4)) I $G(P("PD"))="" D GTPD^PSIVORE2
+"RTN","PSIVORE",72,0)
+ D ^PSIVCHK I $D(DUOUT) S X="^" G DOA
+"RTN","PSIVORE",73,0)
+ I ERR=1 S X="N" G BAD
+"RTN","PSIVORE",74,0)
+ W ! D ^PSIVORLB K PSIVEXAM S Y=P(2) W !,"Start date: " X ^DD("DD") W $P(Y,"@")," ",$P(Y,"@",2),?30," Stop date: " S Y=P(3) X ^DD("DD") W $P(Y,"@")," ",$P(Y,"@",2),!
+"RTN","PSIVORE",75,0)
+ ;PSJ*5*157 EFD for IVs
+"RTN","PSIVORE",76,0)
+ D EFDIV^PSJUTL($G(ZZND))
+"RTN","PSIVORE",77,0)
+ D:'$G(PSGORQF) IN^PSJOCDS($G(ON55),"IV","") I $G(PSGORQF) D DEL55 Q
+"RTN","PSIVORE",78,0)
+ W:$G(PSIVCHG) !,"*** This change will cause a new order to be created. ***"
+"RTN","PSIVORE",79,0)
+ I '$G(PSIVCOPY) G:PSIVAC["R" OK1 S X="Is this O.K.: ^"_$S(ERR:"NO",1:"YES")_"^^NO"_$S(ERR'=1:",YES",1:"") D ENQ^PSIV
+"RTN","PSIVORE",80,0)
+ S PSJIVBD=1 ;var use to indicate order enter from back door
+"RTN","PSIVORE",81,0)
+BAD ;; I X["N" D GSTRING^PSIVORE1,^PSIVORV2,GTFLDS^PSIVORFE G OK
+"RTN","PSIVORE",82,0)
+ I ON55["V",($G(P(21))="") S P(17)="N"
+"RTN","PSIVORE",83,0)
+ I X["N" NEW PSGEBN,PSGLI S (P("INS"),PSGEBN,PSGLI)="",(PSJORD,ON)=ON55 D EN^VALM("PSJ LM IV AC/EDIT") S VALMBCK="Q" Q
+"RTN","PSIVORE",84,0)
+ I X["?" S HELP="OK" D ^PSIVHLP G OK
+"RTN","PSIVORE",85,0)
+DOA I X["^" D DEL55^PSIVORE2 Q
+"RTN","PSIVORE",86,0)
+ Q:$$NONVF("SN")
+"RTN","PSIVORE",87,0)
+OK1 S PSJORL=$$ENORL^PSJUTL($G(VAIN(4))),P(17)="A",ORSTS=6,ON=ON55,PSJORNP=+P(6)
+"RTN","PSIVORE",88,0)
+ D:'$D(PSJIVORF) ORPARM^PSIVOREN
+"RTN","PSIVORE",89,0)
+ I PSJIVORF D NATURE^PSIVOREN I '$D(P("NAT")) D DEL55^PSIVORE2 Q
+"RTN","PSIVORE",90,0)
+ D SET55^PSIVORFB
+"RTN","PSIVORE",91,0)
+ I PSJIVORF,($G(P(22))=.5) D CLINIC^PSIVOREN
+"RTN","PSIVORE",92,0)
+ I PSJIVORF D SET^PSIVORFE S ORNATR=P("NAT"),ON=+ON55,OD=P(2) D EN1^PSJHL2(DFN,"SN",+ON55_"V","SEND ORDER NUMBER") ;,EN1^PSJHL2(DFN,"SC",+ON55_"V","NEW ORDER CREATED")
+"RTN","PSIVORE",93,0)
+ D VF1^PSJLIACT("V","ORDER ENTERED AS ACTIVE BY ",1)
+"RTN","PSIVORE",94,0)
+ D ENLBL^PSIVOPT(2,DUZ,DFN,3,+ON55,"N")
+"RTN","PSIVORE",95,0)
+ ;
+"RTN","PSIVORE",96,0)
+CAL ;Calculate doses.
+"RTN","PSIVORE",97,0)
+ ;S OD=P(2) D EN,^PSIVORE1,^PSIVOPT
+"RTN","PSIVORE",98,0)
+ S OD=P(2) D EN,^PSIVOPT
+"RTN","PSIVORE",99,0)
+ Q
+"RTN","PSIVORE",100,0)
+ ;
+"RTN","PSIVORE",101,0)
+EN ;Update schedule interval P(15) only on continuous orders.
+"RTN","PSIVORE",102,0)
+ ;This includes Hyp/Adm/Continuous Syringes/Chemos =>P(5)=0
+"RTN","PSIVORE",103,0)
+ Q:'$D(DFN)!('$D(ON55))  Q:$P(^PS(55,DFN,"IV",+ON55,0),U,4)="P"!($P(^(0),U,5))!($P(^(0),U,23)="P")
+"RTN","PSIVORE",104,0)
+ D SPSOL S XXX=$P(^PS(55,DFN,"IV",+ON55,0),U,8) G:'SPSOL ENQ I XXX?1N.N.1".".N1" ml/hr"!(XXX?1"0."1N1" ml/hr") S P(15)=$S('XXX:0,1:SPSOL\XXX*60+(SPSOL#XXX/XXX*60+.5)\1),$P(^PS(55,DFN,"IV",+ON55,0),U,15)=P(15) G ENQ
+"RTN","PSIVORE",105,0)
+ S P(15)=$S('$P(XXX,"@",2):0,1:1440/$P(XXX,"@",2)\1),$P(^PS(55,DFN,"IV",+ON55,0),U,15)=P(15)
+"RTN","PSIVORE",106,0)
+ENQ K SPSOL,XXX Q
+"RTN","PSIVORE",107,0)
+SPSOL S SPSOL=0 F XXX=0:0 S XXX=$O(^PS(55,DFN,"IV",+ON55,"SOL",XXX)) Q:'XXX  S SPSOL=SPSOL+$P(^(XXX,0),U,2)
+"RTN","PSIVORE",108,0)
+ K XXX Q
+"RTN","PSIVORE",109,0)
+ENIN ;Entry for Combined IV/UD order entry. Called by PSJOE0.
+"RTN","PSIVORE",110,0)
+ D HOLDHDR^PSJOE
+"RTN","PSIVORE",111,0)
+ W !
+"RTN","PSIVORE",112,0)
+ N PSJOUT S (DONE,FLAG)=0,PSIVAC="PN"
+"RTN","PSIVORE",113,0)
+ENIN1 ;
+"RTN","PSIVORE",114,0)
+ ;*305
+"RTN","PSIVORE",115,0)
+ N DA,DIR,PSJOE,PSJPCAF,PSJSYSL,WSCHADM,PSJALLGY,PSJEXMSG S:$G(VAIN(4)) WSCHADM=VAIN(4)
+"RTN","PSIVORE",116,0)
+ K P,PSIVCHG,PSJCOM
+"RTN","PSIVORE",117,0)
+ S PSJOE=1,DIR(0)="55.01,.04O",DIR("A")="Select IV TYPE" D ^DIR
+"RTN","PSIVORE",118,0)
+ I X]"",X'="^",$P("^PROFILE",X)="" S PSJOEPF=X Q
+"RTN","PSIVORE",119,0)
+ S:$D(DTOUT) X="^" I "^"[X S PSJORQF=PSJORQF+$S(X="^":2,$G(FLAG):0,1:1),X="." Q
+"RTN","PSIVORE",120,0)
+ S FLAG=1,PSIVTYPE=Y,(P(5),P(23))="" I "SC"[Y D @(Y_"^PSIVORC1") S $P(PSIVTYPE,U,2)=P(23)
+"RTN","PSIVORE",121,0)
+ D INMED G:'$D(PSJOUT) ENIN S:$D(PSJOUT) PSJORQF=2
+"RTN","PSIVORE",122,0)
+ Q
+"RTN","PSIVORE",123,0)
+NONVF(PSJOC)  ;If file at NonVF then quit with 1
+"RTN","PSIVORE",124,0)
+ NEW PSGOEAV S PSGOEAV=+$P(PSJSYSP0,U,9)
+"RTN","PSIVORE",125,0)
+ I +PSJSYSU=3,PSGOEAV Q 0
+"RTN","PSIVORE",126,0)
+ I +PSJSYSU=1,PSGOEAV Q 0
+"RTN","PSIVORE",127,0)
+ K DA D ENGNN^PSGOETO S ON=DA_"P",P(17)="N",P("REN")=0
+"RTN","PSIVORE",128,0)
+ D GTPD^PSIVORE2
+"RTN","PSIVORE",129,0)
+ D NATURE^PSIVOREN I '$D(P("NAT")) D:ON55["V" DEL55 Q 1
+"RTN","PSIVORE",130,0)
+ D:$G(VAIN(4))="" CLINIC^PSIVOREN
+"RTN","PSIVORE",131,0)
+ W !,"...transcribing this non-verified order...."
+"RTN","PSIVORE",132,0)
+ D PUT531^PSIVORFA
+"RTN","PSIVORE",133,0)
+ D:$G(PSJOC)]"" EN1^PSJHL2(DFN,PSJOC,ON,"SEND ORDER NUMBER")
+"RTN","PSIVORE",134,0)
+ D:ON55["V" DEL55
+"RTN","PSIVORE",135,0)
+ NEW PSJORD S (ON55,PSJORD)=ON
+"RTN","PSIVORE",136,0)
+ D VF^PSIVORC2
+"RTN","PSIVORE",137,0)
+ Q 1
+"RTN","PSIVORE",138,0)
+DEL55 ;
+"RTN","PSIVORE",139,0)
+ Q:ON55["P"
+"RTN","PSIVORE",140,0)
+ S X=$G(^PS(55,DFN,"IV",+ON55,0))
+"RTN","PSIVORE",141,0)
+ I $P(X,U,21)]"",($G(^PS(55,DFN,"IV",+ON55,2))]"") S $P(^(2),U,6)=ON,$P(^PS(53.1,+ON,0),U,25)=ON55 Q
+"RTN","PSIVORE",142,0)
+ NEW PSIVORFA S PSIVORFA=1
+"RTN","PSIVORE",143,0)
+ D DEL55^PSIVORE2
+"RTN","PSIVORE",144,0)
+ Q 
+"RTN","PSIVORE1")
+0^6^B25869208^B25786480
+"RTN","PSIVORE1",1,0)
+PSIVORE1 ;BIR/RGY,PR,MLM-ACT,NEW ORDER ;07 AUG 97 / 2:45 PM
+"RTN","PSIVORE1",2,0)
+ ;;5.0;INPATIENT MEDICATIONS;**58,110,127,133,279,305**;16 DEC 97;Build 3
+"RTN","PSIVORE1",3,0)
+ ;
+"RTN","PSIVORE1",4,0)
+ ; Reference to ^PS(55 is supported by DBIA 2191.
+"RTN","PSIVORE1",5,0)
+ ;
+"RTN","PSIVORE1",6,0)
+S ;
+"RTN","PSIVORE1",7,0)
+ Q:+PSJSYSU'=3
+"RTN","PSIVORE1",8,0)
+ D PSBPOIV^PSIVORC1
+"RTN","PSIVORE1",9,0)
+ I $G(PSJCOM) D SETNML55^PSIVORC1
+"RTN","PSIVORE1",10,0)
+ I $G(ON),$G(DFN) N RNDT,OP2 S RNDT=+$$LASTREN^PSJLMPRI(DFN,ON) I RNDT D
+"RTN","PSIVORE1",11,0)
+ .N PSGSA,CD S OD=P(2),CD=P(3) D ENP3^PSIVWL
+"RTN","PSIVORE1",12,0)
+ .N NEXTX,DL,NXTLBL,DAY,LBLPC,BEG,OLDX S NXTLBL=0 S DAY=0,BEG=$P(+PSGSA,".") F LBLPC=1:1:$L(PSGSA," ") S OLDX=$G(NEXTX) S NEXTX=$P(PSGSA," ",LBLPC) D
+"RTN","PSIVORE1",13,0)
+ ..S:LBLPC=1 OLDX=NEXTX S:$E($P(NEXTX,".",2),1,2)<$E($P($G(OLDX),".",2),1,2) DAY=DAY+1 S DAY($$FMADD^XLFDT(BEG,DAY)_"."_$P(NEXTX,".",2))=LBLPC
+"RTN","PSIVORE1",14,0)
+ .S D=0 F  S D=$O(DAY(D)) Q:'D!$G(NXTLBL)  D
+"RTN","PSIVORE1",15,0)
+ ..I D>RNDT S NXTLBL=D
+"RTN","PSIVORE1",16,0)
+ .I $G(NXTLBL) S OP2=P(2) S (OD,P(2))=NXTLBL Q
+"RTN","PSIVORE1",17,0)
+ .S (OD,P(2))=RNDT
+"RTN","PSIVORE1",18,0)
+ ;
+"RTN","PSIVORE1",19,0)
+ D NOW^%DTC S Y=% Q:P(4)=""!(P(2)="")  S:'$D(OD) OD=$S(P(2)>Y:P(2),1:Y) S PSGCNT=0,PNOW=DT K PSGSA
+"RTN","PSIVORE1",20,0)
+STR ;
+"RTN","PSIVORE1",21,0)
+ ;
+"RTN","PSIVORE1",22,0)
+ K PSI F I=0:0 S I=$O(^PS(59.5,PSIVSN,2,"AC",P(4),I)) Q:'I  S PSI("E",+(PNOW_"."_$P(^PS(59.5,+PSIVSN,2,I,0),U,4)))=+(PNOW_"."_$P(^(0),U))_U_I,PSI("S",+(PNOW_"."_$P(^(0),U)))=I
+"RTN","PSIVORE1",23,0)
+ ;
+"RTN","PSIVORE1",24,0)
+EC ;
+"RTN","PSIVORE1",25,0)
+ S PSIVEC=$O(PSI("E",Y)) I PSIVEC="" S X1=PNOW,X2=1 D C^%DTC S PNOW=X G STR
+"RTN","PSIVORE1",26,0)
+ I $O(PSI("S",PSIVEC))="" S X1=$O(PSI("S",0)),X2=1 D C^%DTC S X=$P(X,".") S PSI("S",+(X_"."_$P($O(PSI("S",0)),".",2)))=PSI("S",$O(PSI("S",0)))
+"RTN","PSIVORE1",27,0)
+ I $P(^PS(59.5,+PSIVSN,2,PSI("S",$O(PSI("S",PSIVEC))),0),U,6)=$O(PSI("S",PSIVEC)) S Y=PSIVEC G EC
+"RTN","PSIVORE1",28,0)
+ I PSIVEC'<P(2) S CD=$S(P(3)>PSIVEC:PSIVEC,1:P(3)) S:OD=CD CD=CD+.0001 D ENP3^PSIVWL
+"RTN","PSIVORE1",29,0)
+P ;*305
+"RTN","PSIVORE1",30,0)
+ S:'$D(PSGSA) PSGSA=""
+"RTN","PSIVORE1",31,0)
+ D FULL^VALM1
+"RTN","PSIVORE1",32,0)
+ W:PSGCNT !!,PSGCNT," Label",$E("s",PSGCNT>1)," needed for dose",$E("s",PSGCNT>1)," due at ...",!!
+"RTN","PSIVORE1",33,0)
+ F Y=1:1 S X=$P(PSGSA," ",Y) S:$E(X)="." X=$$CONVER^PSIVORE2(X,Y) Q:X=""  W:PSGCNT $E(X,4,5)_"/"_$E(X,6,7)_"/"_$E(X,2,3)_" "_$E(X#1_"000",2,5)_" : "
+"RTN","PSIVORE1",34,0)
+ W ! D:$P(PSIVSITE,U,8) TL^PSIVORE2 D NOW^%DTC S Y=% S PNOW=Y I $D(^PS(59.5,PSIVSN,3,"AT")) W !!,"Next delivery time is " S X=$O(^PS(59.5,PSIVSN,3,"AT",PNOW#1)) S:X="" X=$O(^(X)) S X=$P(X,".",2)_$E("000",1,5-$L(X)) W X," ***" G B1
+"RTN","PSIVORE1",35,0)
+ACT ; Prompt and process label action.
+"RTN","PSIVORE1",36,0)
+B I PSGCNT<1 S:($G(RNDT)&$G(OP2)) P(2)=OP2 G K^PSIVORE2
+"RTN","PSIVORE1",37,0)
+B1 ;
+"RTN","PSIVORE1",38,0)
+ W ! S X="Action (PB"_$S($P(PSIVSITE,U,2):"S",1:"")_")^"_$S(PSGCNT<1:"B",$G(PSJPRI)="D":"B",$P(PSIVSITE,U,2)&$D(X):"S",1:"P")_"^^PRINT LABELS,BYPASS"_$S($P(PSIVSITE,U,2):",SUSPEND LABELS",1:"")
+"RTN","PSIVORE1",39,0)
+ D ENQ^PSIV S X=$E(X) S:X["?" HELP="ANSWER" D:X["?" ^PSIVHLP G:X["?" B1 I "B^"[X G K^PSIVORE2
+"RTN","PSIVORE1",40,0)
+ I "S"[X,$D(^PS(55,"PSIVSUS",PSIVSN,DFN,ON)) D C^PSIVORE2 W !!,"There ",$S(SNM>1:"are",1:"is")," already ",SNM," LABEL",$E("S",SNM>1)," suspended for this order." K SNM,DAT
+"RTN","PSIVORE1",41,0)
+SS ;
+"RTN","PSIVORE1",42,0)
+ S PSIVA=X,X="# of labels^"_PSGCNT_"^^^QUX=+QUX&(QUX?1N.N)" D ENQ^PSIV W !!
+"RTN","PSIVORE1",43,0)
+ S PSIVLABN=X I X["?"!(X>99) S X=PSIVA W !,"Enter # labels, less than 100, to act on." G SS
+"RTN","PSIVORE1",44,0)
+ I 'X W " No action taken ***" G B1
+"RTN","PSIVORE1",45,0)
+ I PSIVA="S",$D(^PS(55,"PSIVSUS",PSIVSN,DFN,+ON,PNOW)) W $C(7),"NO Labels suspended, Wait 8 seconds and try again." D NOW^%DTC S Y=% S PNOW=Y G B1
+"RTN","PSIVORE1",46,0)
+ S $P(^(0),U,16)=$P(^PS(55,DFN,"IV",+ON,0),U,16)+X,PSIVNOL=+X,PSGCNT=PSGCNT-X,PSIVDOSE=$P(PSGSA," ",1,X),PLAST=$P(PSGSA," "),PLAST="."_$P(PLAST,".",2),PSGSA=$P(PSGSA," ",X+1,999) I PLAST>$P(PSGSA," ") S UP1=1
+"RTN","PSIVORE1",47,0)
+ S P(16)=$P(^PS(55,DFN,"IV",+ON,0),U,16)
+"RTN","PSIVORE1",48,0)
+ I $D(UP1) S:$D(X1)#2 XX1=X1 S:$D(X2)#2 XX2=X2 S X1=$E(PSIVDOSE,1,7),X2=1 D C^%DTC S PSGSA=X_PSGSA S:$D(XX1) X1=XX1 S:$D(XX2) X2=XX2 K XX2,XX1
+"RTN","PSIVORE1",49,0)
+ I '$D(UP1) S PSGSA=$E(PSIVDOSE,1,7)_PSGSA
+"RTN","PSIVORE1",50,0)
+ K UP1 I PSIVA="S" S ^PS(55,"PSIVSUS",PSIVSN,DFN,+ON,PNOW)=PSIVLABN_U_PSIVDOSE_U_P(16),Y=0,P(16)=P(16)+X W " ... ",PSIVLABN," Label",$E("s",PSIVLABN>1)," suspended !" S ACTION=5,PSIVNOL=PSIVLABN,TRACK=4 D ^PSIVLTR,NOW^%DTC S Y=% S PNOW=Y K X G B
+"RTN","PSIVORE1",51,0)
+ S IONOFF="" I PSIVPL=ION S P16=P(16),ACTION=1,TRACK=4 D ^PSIVLTR D ^PSIVHYPL:P(4)="H",^PSIVLABL:"APSC"[P(4) S P(16)=$P(^PS(55,DFN,"IV",+ON,0),U,16) G B
+"RTN","PSIVORE1",52,0)
+ W ! S P16=P(16),P(16)=P(16)+X,ZTDTH=$H,ZTIO=PSIVPL F Y="IONOFF","P16","PSIVDOSE","PSIVSITE","PSIVSN","PSIVNOL","DFN","ON","PSJSYSL","PSJSYSW0","PSJSYSW","PSJSYSP","PSJSYSP0","PSJSYSU" S ZTSAVE(Y)=""
+"RTN","PSIVORE1",53,0)
+ S ZTDESC="PRINT IV LABELS",ZTRTN="DEQ^PSIVORE2" D ^%ZTLOAD G B
+"RTN","PSIVORE1",54,0)
+GSTRING ; Setup edit "^" string.
+"RTN","PSIVORE1",55,0)
+ S PSIVOK="57^58^59^10^3^25^26^39^1^64^63"_$S($E(P("OT"))="I":"^101",1:"")
+"RTN","PSIVORE1",56,0)
+ S EDIT="57^58^59^10^3^25^26^39^1^"_$S(P("OT")="I":"101^",1:"")_"64^63"
+"RTN","PSIVORE1",57,0)
+ ;* S EDIT="57^58^59^10^3^25^26^39^1^"_$S(P("DTYP")=1:"101^",1:"")_"64^63"
+"RTN","PSIVORE1",58,0)
+ Q
+"RTN","PSIVSP")
+0^3^B42459538^B42203793
+"RTN","PSIVSP",1,0)
+PSIVSP ;BIR/RGY,PR,CML3-DOSE PROCESSOR ;1/3/12 3:36pm
+"RTN","PSIVSP",2,0)
+ ;;5.0;INPATIENT MEDICATIONS;**30,37,41,50,56,74,83,111,133,138,134,213,229,279,305**;16 DEC 97;Build 3
+"RTN","PSIVSP",3,0)
+ ;
+"RTN","PSIVSP",4,0)
+ ; Reference to ^PS(51.1 is supported by DBIA #2177
+"RTN","PSIVSP",5,0)
+ ;
+"RTN","PSIVSP",6,0)
+EN ;
+"RTN","PSIVSP",7,0)
+ Q:'$D(X)
+"RTN","PSIVSP",8,0)
+ S ATZERO=0 I X["@",$P(X,"@",2)=0 S ATZERO=1,X=$P(X,"@")
+"RTN","PSIVSP",9,0)
+ D EN^PSGS0 S (P(9),PSIVSC1)=$S($G(X)]"":X,1:$G(P(9))),P(11)=$S($G(PSGS0Y):PSGS0Y,1:$G(P(11))),(XT,P(15))=$S(($G(PSGS0XT)!($G(PSGS0XT)="O")!($G(PSGS0XT)="D")):$G(PSGS0XT),1:$G(P(15)))
+"RTN","PSIVSP",10,0)
+ I $G(ATZERO) S P(7)=1
+"RTN","PSIVSP",11,0)
+ K ATZERO Q
+"RTN","PSIVSP",12,0)
+EN1 ;
+"RTN","PSIVSP",13,0)
+ S (PSIVAT,PSIVWAT,Y)="",XT=-1,X0=X,X=$S(X="ON CALL":X,X="ONCALL":X,X="ON-CALL":X,X="ONETIME":X,X="ONE-TIME":X,X="ONE TIME":X,X="1TIME":X,X="1 TIME":X,X="1-TIME":X,$L(X," ")<3:$P(X," "),1:$P(X," ",1,2))
+"RTN","PSIVSP",14,0)
+ S:$E(X)="^" X=$E(X,2,999) G:X="" Q S:(X["@0")&($$SCHREQ^PSJLIVFD(.P)) ATZERO=1 S X=$S(X["@0":$P(X,"@"),1:X),P(7)=$S($G(ATZERO):1,1:"") K ATZERO
+"RTN","PSIVSP",15,0)
+ I $S($D(^PS(51.1,"AC","PSJ",X)):1,1:$E($O(^(X)),1,$L(X))=X) D DIC I Y'<0 G SH
+"RTN","PSIVSP",16,0)
+NS0 S Y=""
+"RTN","PSIVSP",17,0)
+ I $E(X,1,2)="AD" S XT=-1 Q
+"RTN","PSIVSP",18,0)
+ I $E(X,1,3)="BID"!($E(X,1,3)="TID")!($E(X,1,3)="QID") S XT=1440\$F("BTQ",$E(X))
+"RTN","PSIVSP",19,0)
+ E  S:$E(X)="Q" X=$E(X,2,99) S:'X X=$E(X)["O"+1_X S I=+X,X=$P(X,I,2),XT=I*$S(X["'":1,(X["D"&(X'["AD"))!(X["AM")!(X["PM")!(X["HS"&(X'["THS")):1440,X["H"&(X'["TH"):60,X["AC"!(X["PC"):480,X["W":10080,X["M":40320,1:0),X=X0 D 
+"RTN","PSIVSP",20,0)
+ . I 'XT,X'="NOW",X'="STAT",X'="ONCE",X'="ONE-TIME",X'="ONE TIME",X'="ONETIME",X'="1-TIME",X'="1 TIME",X'="1TIME",Y="" S XT=-1
+"RTN","PSIVSP",21,0)
+SH ;
+"RTN","PSIVSP",22,0)
+ I +Y<1,$E(X0)'="^" W:$G(ON)'["P" "  ",$S(XT=0&($S("^NOW^STAT^ONCE^ONE-TIME^ONETIME^1TIME^1-TIME^"[(U_$P(X," ")_U):1,X["1 TIME":1,1:X["ONE TIME")):"(ONCE ONLY)",XT>0:"Nonstandard schedule",XT<0:"",1:"(??)") W:XT>0 " (",XT," MINUTES)"
+"RTN","PSIVSP",23,0)
+Q Q:X="ONE TIME"
+"RTN","PSIVSP",24,0)
+ N I S X0=$P(X," ")_$S($L(X0," ")-1:" ",1:"")_$P(X0," ",2,99) K:XT<0!($L(X0)>22) X S:$D(X) X=X0 K X0 S:$G(P(7)) XT="" Q
+"RTN","PSIVSP",25,0)
+NEWQ ;N I S X0=$P(X," ")_$S($L(X0," ")-1:" ",1:"")_$P(X0," ",2,99) K:XT<0!($L(X0)>22) X S:$D(X) X=X0 S:P(7) X=X0 K X0 K:XT>0&('P(7)) X Q
+"RTN","PSIVSP",26,0)
+ Q
+"RTN","PSIVSP",27,0)
+ ;
+"RTN","PSIVSP",28,0)
+ ;*229 Add Temp val for dose limit in IOE
+"RTN","PSIVSP",29,0)
+ENDL N PSIVLIMT W "   Dose limit ....  " S PSIVLIMT="a"_X,PSIVMIN=P(15)*X,PSIVSD=+P(2)
+"RTN","PSIVSP",30,0)
+ I PSIVMIN<0 W !!," --- There is something wrong with this order !!",!,"     Call inpatient supervisor ....." S Y=-1 K PSIVMIN Q
+"RTN","PSIVSP",31,0)
+ I P(15)'["D",P(4)="P"!(P(5))!(P(23)="P"),PSIVMIN=0,"^NOW^STAT^ONCE^ONE-TIME^ONE TIME^ON CALL^ONETIME^1TIME^1 TIME^1-TIME^"'[(U_P(9)_U) D DLP G QDL
+"RTN","PSIVSP",32,0)
+ ;*229 DOW Calc and dose lim should match CPRS, if it's vol limit, we leave old functionality
+"RTN","PSIVSP",33,0)
+ I $G(P(9))]"",$G(P(11))]"" D ENSTOP^PSIVCAL S Y=X I 1 ;*229 ENSTOP^PSIVCAL returns X, we wanted Y.
+"RTN","PSIVSP",34,0)
+ E  D ENT^PSIVWL
+"RTN","PSIVSP",35,0)
+QDL I $D(X) S X=Y X ^DD("DD") W $P(Y,"@")," ",$P(Y,"@",2) S Y=X
+"RTN","PSIVSP",36,0)
+ Q
+"RTN","PSIVSP",37,0)
+DLP ;
+"RTN","PSIVSP",38,0)
+ S X=X+1,$P(PSIVSD,".",2)=$P(PSIVSD,".",2)_$E("0000",1,4-$L($P(PSIVSD,".",2))) D CHK S X2=0,Y=1 I X<2 S Y=+PSIVSD G QDLP
+"RTN","PSIVSP",39,0)
+ I $P(PSIVSD,".",2)>$P(P(11),"-",$L(P(11),"-")) S X2=1 G OV
+"RTN","PSIVSP",40,0)
+ G:$P(P(11),"-")>$P(PSIVSD,".",2) OV
+"RTN","PSIVSP",41,0)
+ F Y=1:1 S X1=$P(P(11),"-",Y) I X1=$P(PSIVSD,".",2)!($P(PSIVSD,".",2)<X1) Q
+"RTN","PSIVSP",42,0)
+OV I P(11)="" W $C(7)," ???",!?15,"*** You have not defined any administration times !!" K X Q
+"RTN","PSIVSP",43,0)
+ F Y=Y:1 S:$P(P(11),"-",Y)="" X2=X2+1,Y=0,X=X+1 S X=X-1 Q:X<1
+"RTN","PSIVSP",44,0)
+ S X=PSIVSD\1 I X2>0 S X1=PSIVSD D C^%DTC S X=$P(X,".") ; install with version 17.3 of fileman
+"RTN","PSIVSP",45,0)
+ S Y=+(X_"."_$P(P(11),"-",Y))
+"RTN","PSIVSP",46,0)
+QDLP K X1,X2 Q
+"RTN","PSIVSP",47,0)
+ ;
+"RTN","PSIVSP",48,0)
+ENI ;
+"RTN","PSIVSP",49,0)
+ K:$L(X)<1!($L(X)>30)!(X["""")!($A(X)=45) X I '$D(X)!'$D(P(4)) Q
+"RTN","PSIVSP",50,0)
+ ;*229 Reset ATZERO flag.
+"RTN","PSIVSP",51,0)
+ I $P(X,"@",2)'=0!'$$SCHREQ^PSJLIVFD(.P) S P(7)=""
+"RTN","PSIVSP",52,0)
+ I P(4)="P"!(P(5))!(P(23)="P") Q:'X  S X="INFUSE OVER "_X_" MINUTE"_$S(X>1:"S",1:"") W "   ",X Q
+"RTN","PSIVSP",53,0)
+ I $E(X)="." K X Q  ;Enforce leading zero.
+"RTN","PSIVSP",54,0)
+ I X'=+X!(X'=0_+X),X["@",($P(X,"@",2,999)'=+$P(X,"@",2,999)!(+$P(X,"@",2,999)<0)) K X Q
+"RTN","PSIVSP",55,0)
+ S SPSOL=$O(DRG("SOL",0)) I 'SPSOL K SPSOL,X W "  You must define at least one solution !!" Q
+"RTN","PSIVSP",56,0)
+ I X=+X!(X=0_+X),X'["@" S X=X_" ml/hr" W " ml/hr" D SPSOL S P(15)=$S('X:0,1:SPSOL\X*60+(SPSOL#X/X*60+.5)\1) K SPSOL Q
+"RTN","PSIVSP",57,0)
+ S SPSOL=$S(($P(X,"@",2)?1.N):$P(X,"@",2),1:$G(P("NUMLBL"))) I SPSOL S P("NUMLBL")=+SPSOL
+"RTN","PSIVSP",58,0)
+ S:$P(X,"@")=+X!($P(X,"@")=0_+X) $P(X,"@")=$P(X,"@")_" ml/hr" W "   ",+SPSOL," Label",$S(SPSOL'=1:"s",1:"")," per day",!?15,"at an infusion rate of: ",$P(X,"@") S P(15)=$S('SPSOL:0,1:1440/SPSOL\1) K SPSOL
+"RTN","PSIVSP",59,0)
+ I X["@",$P(X,"@",2)=0,$$SCHREQ^PSJLIVFD(.P) S P(7)=1  ; Set ATZERO flag
+"RTN","PSIVSP",60,0)
+ ;*305
+"RTN","PSIVSP",61,0)
+ I '$G(PSJEXMSG) D EXPINF^PSIVEDT1(.X)
+"RTN","PSIVSP",62,0)
+ Q
+"RTN","PSIVSP",63,0)
+SPSOL S SPSOL=0 F XXX=0:0 S XXX=$O(DRG("SOL",XXX)) Q:'XXX  S SPSOL=SPSOL+$P(DRG("SOL",XXX),U,3)
+"RTN","PSIVSP",64,0)
+ K XXX Q
+"RTN","PSIVSP",65,0)
+CHK F Y=1:1 Q:$L(P(11))>240!($P(P(11),"-",Y)="")  S $P(P(11),"-",Y)=$P(P(11),"-",Y)_$E("0000",1,4-$L($P(P(11),"-",Y)))
+"RTN","PSIVSP",66,0)
+ Q
+"RTN","PSIVSP",67,0)
+ ;
+"RTN","PSIVSP",68,0)
+DIC ; 51.1 look-up
+"RTN","PSIVSP",69,0)
+ N PSJSCH S PSJSCH=X I '$D(WSCHADM) N VAIP D IN5^VADPT S WSCHADM=VAIP(5),X=PSJSCH
+"RTN","PSIVSP",70,0)
+ K DIC S DIC="^PS(51.1,",DIC(0)=$E("E",'$D(NOECH))_"ISZ"
+"RTN","PSIVSP",71,0)
+ S DIC("W")="W ""  "","_$S('$D(WSCHADM):"$P(^(0),""^"",2)",'+WSCHADM:"$P(^(0),""^"",2)",1:"$S($D(^PS(51.1,+Y,1,+WSCHADM,0)):$P(^(0),""^"",2),1:$P(^PS(51.1,+Y,0),""^"",2))"),D="APPSJ" S:$D(PSIVSPQF) DIC(0)=DIC(0)_"O"
+"RTN","PSIVSP",72,0)
+ D IX^DIC K DIC
+"RTN","PSIVSP",73,0)
+ S:$D(DIE)#2 DIC=DIE Q:Y<0
+"RTN","PSIVSP",74,0)
+ S X=Y(0,0),ZZY=Y,(XT,Y)="" I $D(WSCHADM),$D(^PS(51.1,+ZZY,1,+WSCHADM,0)),$P(^(0),"^",2)]"" S (PSIVWAT,Y)=$P(^(0),"^",2)
+"RTN","PSIVSP",75,0)
+ K ZZY,WSCHADM S:Y="" (X,PSIVSC1)=$P(Y(0),U),(PSIVAT,Y)=$P(Y(0),"^",2) S XT=$P(Y(0),"^",3) Q
+"RTN","PSIVSP",76,0)
+ ;
+"RTN","PSIVSP",77,0)
+ORINF ;  OERR input transform for Infusion Rate
+"RTN","PSIVSP",78,0)
+ ;  X=data
+"RTN","PSIVSP",79,0)
+ N INFUSE
+"RTN","PSIVSP",80,0)
+ K:$L(X)<1!($L(X)>30)!(X["""")!($A(X)=45) X I '$D(X) Q
+"RTN","PSIVSP",81,0)
+ I X?.E1L.E S INFUSE=$$ENLU^PSGMI(X) Q:(INFUSE="TITRATE")!(INFUSE="BOLUS")!($P(INFUSE," ")="INFUSE")!($P(INFUSE," ")="Infuse")
+"RTN","PSIVSP",82,0)
+ Q:(X="TITRATE")!(X="BOLUS")!($P(X," ")="INFUSE")!($P(X," ")="Infuse")
+"RTN","PSIVSP",83,0)
+ I X["=" D  Q   ; NOIS LOU-0501-42191
+"RTN","PSIVSP",84,0)
+ .N X2,X1 S X1=$P(X,"="),X2=$P(X,"=",2)
+"RTN","PSIVSP",85,0)
+ .I X1["ML/HR",(+X1=$P(X1,"ML/HR"))!(+X1=$P(X1," ML/HR")) D
+"RTN","PSIVSP",86,0)
+ ..S X1=$TR(X1,"ML/HR","ml/hr")
+"RTN","PSIVSP",87,0)
+ .I X2["ML/HR",(+X2=$P(X2,"ML/HR"))!(+X2=$P(X2," ML/HR")) D
+"RTN","PSIVSP",88,0)
+ ..S X2=$TR(X2,"ML/HR","ml/hr")
+"RTN","PSIVSP",89,0)
+ .I X1[" ml/hr",(+X1=$P(X1," ml/hr")) D
+"RTN","PSIVSP",90,0)
+ ..S X1=$P(X1," ml/hr")_$P(X1," ml/hr",2,9999)
+"RTN","PSIVSP",91,0)
+ .I X2[" ml/hr",(+X2=$P(X2," ml/hr")) D
+"RTN","PSIVSP",92,0)
+ ..S X2=$P(X2," ml/hr")_$P(X2," ml/hr",2,9999)
+"RTN","PSIVSP",93,0)
+ .I X1["ml/hr",(+X1=$P(X1,"ml/hr")) D
+"RTN","PSIVSP",94,0)
+ ..S X1=$P(X1,"ml/hr")_$P(X1,"ml/hr",2,9999)
+"RTN","PSIVSP",95,0)
+ .I X2["ml/hr",(+X2=$P(X2,"ml/hr")) D
+"RTN","PSIVSP",96,0)
+ ..S X2=$P(X2,"ml/hr")_$P(X2,"ml/hr",2,9999)
+"RTN","PSIVSP",97,0)
+ .I X2'=+X2 D
+"RTN","PSIVSP",98,0)
+ ..I X2>0&(X2<1) Q
+"RTN","PSIVSP",99,0)
+ ..I ($P(X2,"@",2,999)'=+$P(X2,"@",2,999)!(+$P(X2,"@",2,999)<0)) K X Q
+"RTN","PSIVSP",100,0)
+ .I X1>0&(X1<1) I +X1="."_$P(X1,".",2) S X1=X1_" ml/hr"
+"RTN","PSIVSP",101,0)
+ .I X2>0&(X2<1) I +X2="."_$P(X2,".",2) S X2=X2_" ml/hr"
+"RTN","PSIVSP",102,0)
+ .I X1=+X1 S X1=X1_" ml/hr"
+"RTN","PSIVSP",103,0)
+ .I X2=+X2 S X2=X2_" ml/hr"
+"RTN","PSIVSP",104,0)
+ .S:$P(X2,"@")=+X2 $P(X2,"@")=$P(X2,"@")_" ml/hr"
+"RTN","PSIVSP",105,0)
+ .S X=X1_"="_X2
+"RTN","PSIVSP",106,0)
+ I X["ML/HR",(+X=$P(X,"ML/HR"))!(+X=$P(X," ML/HR")) S X=$TR(X,"ML/HR","ml/hr")
+"RTN","PSIVSP",107,0)
+ I X[" ml/hr",+X=$P(X," ml/hr") S X=$P(X," ml/hr")_$P(X," ml/hr",2,9999)
+"RTN","PSIVSP",108,0)
+ I X["ml/hr",+X=$P(X,"ml/hr") S X=$P(X,"ml/hr")_$P(X,"ml/hr",2,9999)
+"RTN","PSIVSP",109,0)
+ I X>0,X<1 D  Q
+"RTN","PSIVSP",110,0)
+ .I X["ML/HR",(+X=$P($P(X,"ML/HR"),".",2))!(+X=$P($P(X," ML/HR"),".",2)) S X=$TR(X,"ML/HR","ml/hr")
+"RTN","PSIVSP",111,0)
+ .I X[" ml/hr",(+X=$P($P(X," ml/hr"),".",2)) S X=$P(X," ml/hr")_$P(X," ml/hr",2,9999)
+"RTN","PSIVSP",112,0)
+ .I X["ml/hr",+X=$P(X,"ml/hr") S X=$P(X,"ml/hr")_$P(X,"ml/hr",2,9999)
+"RTN","PSIVSP",113,0)
+ .I +X=X S X=X_" ml/hr"
+"RTN","PSIVSP",114,0)
+ .I $P(X,0,2)=+X S X=X_" ml/hr"
+"RTN","PSIVSP",115,0)
+ .S X=0_+X_$P(X,+X,2)
+"RTN","PSIVSP",116,0)
+ I '(X>0&X<1) I X'=+X,($P(X,"@",2,999)'=+$P(X,"@",2,999)!(+$P(X,"@",2,999)<0)) K X Q
+"RTN","PSIVSP",117,0)
+ I X=+X S X=X_" ml/hr" Q
+"RTN","PSIVSP",118,0)
+ S:$P(X,"@")=+X $P(X,"@")=$P(X,"@")_" ml/hr"
+"RTN","PSIVSP",119,0)
+ Q
+"RTN","PSIVWL")
+0^4^B33431217^B33207502
+"RTN","PSIVWL",1,0)
+PSIVWL ;BIR/RGY,PR-COMPILE AND PRT WARD LIST ;13 MAR 97 / 10:18 AM
+"RTN","PSIVWL",2,0)
+ ;;5.0;INPATIENT MEDICATIONS;**41,54,74,84,93,110,111,141,305**;16 DEC 97;Build 3
+"RTN","PSIVWL",3,0)
+ ;
+"RTN","PSIVWL",4,0)
+ ; Reference to ^PS(51.1 is supported by DBIA 2177
+"RTN","PSIVWL",5,0)
+ ; Reference to ^PS(55 is supported by DBIA 2191
+"RTN","PSIVWL",6,0)
+ ;
+"RTN","PSIVWL",7,0)
+ K WRD W !!,"Run ward list for DATE: TODAY//" R X:DTIME S:'$T X="^" S:X="" X="T" G Q:X["^" K %DT S %DT="XE" D ^%DT G:Y<0 PSIVWL
+"RTN","PSIVWL",8,0)
+ S PSIVDT=Y\1 I Y<DT D ENRSET^PSIVWL1 G PSIVWL
+"RTN","PSIVWL",9,0)
+ D ^PSIVWL1 I '$D(PSIVOD)!('$D(PSIVCD)) G Q
+"RTN","PSIVWL",10,0)
+ I PSIVPR'=ION D QUE G Q
+"RTN","PSIVWL",11,0)
+DEQ ;
+"RTN","PSIVWL",12,0)
+ N PSJOK
+"RTN","PSIVWL",13,0)
+ D NOW^%DTC S Y=% L +^PS(55,"PSIVWL",PSIVSN):1 E  W:$Y @IOF W !!,"**** WARNING --- WARD LIST NOT RUN, LABEL RUN IN PROGRESS ****" G Q
+"RTN","PSIVWL",14,0)
+ D:$D(XRTL) T0^%ZOSV S NOFLG=0
+"RTN","PSIVWL",15,0)
+ S PSIVT="" D ENINIT^PSIVWL1 F PSIV1=0:0 S PSIVT=$O(PSIVOD(PSIVT)) Q:PSIVT=""  S PSIVDT1=PSIVOD(PSIVT)-.0001 F PSIV1=0:0 S PSIVDT1=$O(^PS(55,"AIV",PSIVDT1)) Q:'PSIVDT1  D MAN1
+"RTN","PSIVWL",16,0)
+ I $D(XRTL) S XRTN="PSIVWL" D T1^%ZOSV
+"RTN","PSIVWL",17,0)
+ D ENT^PSIVWL1
+"RTN","PSIVWL",18,0)
+Q L -^PS(55,"PSIVWL",PSIVSN) W:'$D(PSIVPR)&($Y) @IOF K MI,ON,NOFLG,PSCT,PSGCNT,PSGSA,PSIVMT,DIC,PSIVRUN,%DT,PSIVDT1,PSIVDT,PSIV,PSIVOD
+"RTN","PSIVWL",19,0)
+ K PSIVCD,PSM,%T,D,DFN,I,P,PSIV1,VAERR,X,Y,Z,Z1,Z2,ZTSK S:$D(ZTQUEUED) ZTREQ="@"
+"RTN","PSIVWL",20,0)
+ Q
+"RTN","PSIVWL",21,0)
+SETP S Y=^PS(55,DFN,"IV",ON,0) F X=1:1:23 S P(X)=$P(Y,"^",X)
+"RTN","PSIVWL",22,0)
+ N A,PSJST
+"RTN","PSIVWL",23,0)
+ S PSJST=$$ONE^PSJBCMA(DFN,ON,P(9))
+"RTN","PSIVWL",24,0)
+ S PSJOK=1 I PSJST="O" S A=0 F  S A=$O(^PS(55,DFN,"IV",+ON,"LAB",A)) Q:A=""  I $P($G(^(A,0)),"^",3)=1 S PSJOK=0 Q
+"RTN","PSIVWL",25,0)
+ Q
+"RTN","PSIVWL",26,0)
+MAN1 F DFN=0:0 S DFN=$O(^PS(55,"AIV",PSIVDT1,DFN)) Q:'DFN  S PSIV("NME")=$P($G(^DPT(DFN,0)),U) D INP^VADPT F ON=0:0 S ON=$O(^PS(55,"AIV",PSIVDT1,DFN,ON)) Q:'ON  Q:NOFLG=1  D SETP I PSJOK D MAN3
+"RTN","PSIVWL",27,0)
+ Q
+"RTN","PSIVWL",28,0)
+MAN2 S ^PS(55,"PSIVWL",PSIVSN,$S($P(VAIN(4),U,2)]"":$P(VAIN(4),U,2),1:"Outpatient IV"),P(4)_PSIVOD(P(4)),DFN,ON)=$S($P(P(8),"@",2)'=0:PSGCNT,1:0)_"^"_PSGSA_"^"_$P(^PS(55,DFN,"IV",ON,0),"^",16)
+"RTN","PSIVWL",29,0)
+ ;naked reference on line below refers to full global reference to right of = sign
+"RTN","PSIVWL",30,0)
+ S $P(^(0),"^",16)=$P(^PS(55,DFN,"IV",ON,0),"^",16)+PSGCNT Q
+"RTN","PSIVWL",31,0)
+ Q
+"RTN","PSIVWL",32,0)
+MAN3 ;I P(4)=""!(P(4)'=PSIVT) S NOFLG=1 D NOW^%DTC S PSIVRUN=$E(%,1,12) K %,%I,%H D HDR^PSIVWL1 W !!,"****NO DATA FOUND FOR THIS REPORT!***" Q
+"RTN","PSIVWL",33,0)
+ Q:P(4)=""!(P(4)'=PSIVT)
+"RTN","PSIVWL",34,0)
+ Q:'$D(PSIVOD(P(4)))!("DPN"[P(17))!($S($D(^PS(55,DFN,"IV",ON,2)):PSIVSN'=$P(^(2),"^",2),1:0))
+"RTN","PSIVWL",35,0)
+ I "OH"[P(17) S PSGSA="",PSGCNT=0 D MAN2 Q
+"RTN","PSIVWL",36,0)
+ S CD=$S(PSIVCD(PSIVT)<P(3):PSIVCD(PSIVT),1:P(3)),OD=$S(P(2)>PSIVOD(PSIVT):P(2),1:PSIVOD(PSIVT)) D ENP3,MAN2 Q
+"RTN","PSIVWL",37,0)
+QUE S ZTIO=PSIVPR,ZTDESC="IV WARD LIST",ZTRTN="DEQ^PSIVWL",PSIVT="" F I=0:0 S PSIVT=$O(PSIVMT(PSIVT)) Q:PSIVT=""  S (ZTSAVE("PSIVCD("""_PSIVT_""")"),ZTSAVE("PSIVMT("""_PSIVT_""")"),ZTSAVE("PSIVOD("""_PSIVT_""")"))=""
+"RTN","PSIVWL",38,0)
+ F X="PSIVSN","PSIVDT","PSIVSITE","PSJSYSW0","PSJSYSP0","PSJSYSU" S ZTSAVE(X)=""
+"RTN","PSIVWL",39,0)
+ D ^%ZTLOAD W:$D(ZTSK) !,"Queued." Q
+"RTN","PSIVWL",40,0)
+ENP3 ;
+"RTN","PSIVWL",41,0)
+ ;Needs DFN,ON P-array, OD and CD
+"RTN","PSIVWL",42,0)
+ Q:'P(2)!'P(3)  S PSIVMI=P(15),PSIVSD=P(2),PSGSA="",PSGCNT=0 S:PSIVMI>1440 P(11)=""
+"RTN","PSIVWL",43,0)
+ I P(11) G:"AH"[P(4) QSP F X="STAT","ONCE","NOW","ONE-TIME","ONE TIME","ONETIME","1-TIME","1 TIME","1-TIME" I $S(X=P(9):1,1:(P(9)[X)),PSIVSD'<OD,PSIVSD'>CD S PSGSA=PSIVSD_" " G QSP
+"RTN","PSIVWL",44,0)
+ I P(4)="P"!(P(5))!(P(23)="P"),P(11) D CHK,ENP4 G QSP
+"RTN","PSIVWL",45,0)
+ G:P(11) QSP I PSIVMI,OD\1>(PSIVSD\1) S X1=OD,X2=PSIVSD D ^%DTC I X>1 S X=X-1,PSIVMIN=X*1440\PSIVMI*PSIVMI D ENT S PSIVSD=Y
+"RTN","PSIVWL",46,0)
+ I PSIVSD'<OD,PSIVSD<CD S Y=PSIVSD,PSGSA=Y_" "
+"RTN","PSIVWL",47,0)
+ I PSIVMI F X=0:0 S PSIVMIN=PSIVMI D ENT Q:Y>CD!(Y=CD&(CD=P(3)))  S PSIVSD=Y I Y'<OD,Y'>CD S:$L(PSGSA)+$L(Y)'>240 PSGSA=PSGSA_$S(PSGSA'="":"."_$P(Y,".",2),1:Y)_" "
+"RTN","PSIVWL",48,0)
+QSP S PSGCNT=$L(PSGSA," ")-1 K PSIVMI,OD,CD,PSIVSD S:P(7)=1!($G(P("NUMLBL"))=0) PSGCNT=0 Q  ;PSJ*5*141 Add P(7) check, *305
+"RTN","PSIVWL",49,0)
+CHK F Y=1:1 Q:$L(P(11))>240!($P(P(11),"-",Y)="")  S $P(P(11),"-",Y)=$P(P(11),"-",Y)_$E("0000",1,4-$L($P(P(11),"-",Y)))
+"RTN","PSIVWL",50,0)
+ Q
+"RTN","PSIVWL",51,0)
+ENP4 Q:PSIVSD>CD  S PSIVSD=OD\1 I $G(P(2)),PSIVSD<P(2) S PSIVSD=P(2)\1
+"RTN","PSIVWL",52,0)
+ NEW ODCDWD,ADM,ADMSD,ADMTM,PSIVX,P9
+"RTN","PSIVWL",53,0)
+ F X=OD,CD D DW^%DTC S ODCDWD=$G(ODCDWD)_$E(X,1,3)_U
+"RTN","PSIVWL",54,0)
+ I +$O(^PS(51.1,"APPSJ",P(9),0)) S PSIVX=1 S P9=$P(P(9),"@") F X=1:1:$L(P9,"-") D  Q:'$G(PSIVX)
+"RTN","PSIVWL",55,0)
+ . I '("MON,TUE,WED,THU,FRI,SAT,SUN,"[$P(P9,"-",X)) S PSIVX=0 Q
+"RTN","PSIVWL",56,0)
+ . I ODCDWD[$E($P(P9,"-",X),1,2) D
+"RTN","PSIVWL",57,0)
+ .. S ADMSD=$S($P(ODCDWD,"^")[$P(P9,"-",X):OD,1:CD)\1
+"RTN","PSIVWL",58,0)
+ .. F ADM=1:1:$L(P(11),"-") S ADMTM=$P(P(11),"-",ADM) I OD'>(ADMSD_"."_ADMTM),(CD'<(ADMSD_"."_ADMTM)) S PSGSA=PSGSA_$S(PSGSA'="":"",1:ADMSD)_"."_ADMTM_" "
+"RTN","PSIVWL",59,0)
+ .. ;F ADM=1:1:$L(P(11),"-") S ADMTM=$P(P(11),"-",ADM) I OD'>(ADMSD_"."_ADMTM),(CD'<(ADMSD_"."_ADMTM)) S PSGSA=PSGSA_$S(PSGSA'="":"",1:PSIVSD)_"."_ADMTM_" "
+"RTN","PSIVWL",60,0)
+ Q:+$G(PSIVX)
+"RTN","PSIVWL",61,0)
+ I '$D(^PS(51.1,"APPSJ",P(9))) S PSIVX=1,P9=$P(P(9),"@") F X=1:1:$L(P9,"-") D  Q:'$G(PSIVX)
+"RTN","PSIVWL",62,0)
+ . I '(",MO,TU,WE,TH,FR,SA,SU,"[(","_$P(P9,"-",X)_",")) S PSIVX=0 Q
+"RTN","PSIVWL",63,0)
+ . I ODCDWD[$E($P(P9,"-",X),1,2) D
+"RTN","PSIVWL",64,0)
+ .. S ADMSD=$S($P(ODCDWD,"^")[$P(P9,"-",X):OD,1:CD)\1
+"RTN","PSIVWL",65,0)
+ .. F ADM=1:1:$L(P(11),"-") S ADMTM=$P(P(11),"-",ADM) I OD'>(ADMSD_"."_ADMTM),(CD'<(ADMSD_"."_ADMTM)) S PSGSA=PSGSA_$S(PSGSA'="":"",1:ADMSD)_"."_ADMTM_" "
+"RTN","PSIVWL",66,0)
+ .. ;F ADM=1:1:$L(P(11),"-") S ADMTM=$P(P(11),"-",ADM) I OD'>(ADMSD_"."_ADMTM),(CD'<(ADMSD_"."_ADMTM)) S PSGSA=PSGSA_$S(PSGSA'="":"",1:PSIVSD)_"."_ADMTM_" "
+"RTN","PSIVWL",67,0)
+ Q:+$G(PSIVX)
+"RTN","PSIVWL",68,0)
+ F Y=1:1 S (PSIVMI,MI)=$P(P(11),"-",Y),PSIVSD=+(PSIVSD\1_"."_MI) Q:PSIVSD>CD  X:MI="" "S X1=PSIVSD,X2=1 D C^%DTC S PSIVSD=X,Y=0" I MI,PSIVSD'<OD,PSIVSD'>CD,PSIVSD'=P(3),'P(7) S PSGSA=PSGSA_$S(PSGSA'="":"."_$P(PSIVSD,".",2),1:PSIVSD)_" "
+"RTN","PSIVWL",69,0)
+ ; INSTALL PRECEEDING LINE WITH VERSION 17.3 OF FILEMAN
+"RTN","PSIVWL",70,0)
+ Q
+"RTN","PSIVWL",71,0)
+ENT ;PSIVMIN=# of min. to add or sub, PSIVSD=date to add or sub from in FM format -- Answer ret. in 'Y'
+"RTN","PSIVWL",72,0)
+ S X2=PSIVMIN\1440,HOUR=(PSIVMIN-(1440*X2))\60,MIN=(PSIVMIN-(1440*X2)-(60*HOUR))#$S(PSIVMIN<0:-60,1:60),X1=PSIVSD\1,HR=$E(PSIVSD,9,10),MI=$E(PSIVSD,11,12)
+"RTN","PSIVWL",73,0)
+ S:$L(HR)=1 HR=HR_0 S:$L(MI)=1 MI=MI_0 S MI=MI+MIN S:MI>59 MI=MI-60,HR=HR+1
+"RTN","PSIVWL",74,0)
+ S:MI<0 MI=MI+60,HR=HR-1 S HR=HR+HOUR S:HR>23 HR=HR-24,X2=X2+1 S:HR<0 HR=HR+24,X2=X2-1 S:HR+MI=0 X2=X2-1,HR=24,MI=0 S:HR<10 HR=0_HR S:MI<10 MI=0_MI S X=X1 D:X2 C^%DTC S X=$P(X,".") S Y=+(X_"."_HR_MI)
+"RTN","PSIVWL",75,0)
+ ; install with version 17.3 of fm
+"RTN","PSIVWL",76,0)
+ K HR,MI,X1,X2,HOUR,MIN,PSIVMIN,O,MI Q
+"RTN","PSJLIVFD")
+0^5^B63240013^B63427206
+"RTN","PSJLIVFD",1,0)
+PSJLIVFD ;BIR/MV-SETUP LM TEMPLATE FOR IV FLUID ;4 Aug 00 / 2:37 PM
+"RTN","PSJLIVFD",2,0)
+ ;;5.0;INPATIENT MEDICATIONS;**7,50,63,64,58,81,91,80,116,110,111,180,134,181,254,267,228,279,305**;16 DEC 97;Build 3
+"RTN","PSJLIVFD",3,0)
+ ;
+"RTN","PSJLIVFD",4,0)
+ ; Reference to ^VALM0 is supported by DBIA # 2615.
+"RTN","PSJLIVFD",5,0)
+ ; Referece to ^PS(53.47 is supported by DBIA # 5884
+"RTN","PSJLIVFD",6,0)
+ ;
+"RTN","PSJLIVFD",7,0)
+ ;NFI changes for FR# 3@AD+4
+"RTN","PSJLIVFD",8,0)
+ ;
+"RTN","PSJLIVFD",9,0)
+EN ; Build LM template to display IV order.
+"RTN","PSJLIVFD",10,0)
+ K ^TMP("PSJI",$J) N SCHMSG
+"RTN","PSJLIVFD",11,0)
+ S UL80="",$P(UL80,"=",80)=""
+"RTN","PSJLIVFD",12,0)
+ S PSJLN=1
+"RTN","PSJLIVFD",13,0)
+AD ;
+"RTN","PSJLIVFD",14,0)
+ NEW VALMEVL S VALMEVL=1
+"RTN","PSJLIVFD",15,0)
+ S PSJL="" D FLDNO^PSJLIUTL("(1)",1)
+"RTN","PSJLIVFD",16,0)
+ S PSJL=PSJL_"Additives:"
+"RTN","PSJLIVFD",17,0)
+ S:$G(P("PON"))["V"&(P(17)'="N") PSJL=$$SETSTR^VALM1("Order number:",PSJL,30,14)_+P("PON")
+"RTN","PSJLIVFD",18,0)
+ S PSJL=$$SETSTR^VALM1("Type:",PSJL,54,6)_$$TYPE^PSJLIUTL
+"RTN","PSJLIVFD",19,0)
+ NEW PSJVD S PSJVD=$$DINFLIV^PSJDIN(.DRG) S PSJVD=$TR(PSJVD," ")
+"RTN","PSJLIVFD",20,0)
+ I $D(^TMP("PSJINTER",$J))!$$OVRCHK^PSGSICH1(PSGP,$G(PSJORD)) S PSJVD=$S($G(PSJVD)["DIN":"<OCI><DIN>",1:"<OCI>")
+"RTN","PSJLIVFD",21,0)
+ S PSJL=$$SETSTR^VALM1(PSJVD,PSJL,(80-$L(PSJVD)),$L(PSJVD))
+"RTN","PSJLIVFD",22,0)
+ I $D(IORVON),($G(PSJVD)]"") D CNTRL^VALM10(1,(80-$L(PSJVD)),$L(PSJVD),IORVON,IORVOFF,0) K PSJVD
+"RTN","PSJLIVFD",23,0)
+ I '$D(IORVON),$D(IOST(0)) D ENS^%ZISS,TERM^VALM0
+"RTN","PSJLIVFD",24,0)
+ D SETTMP^PSJLMPRU("PSJI",PSJL)
+"RTN","PSJLIVFD",25,0)
+ D:+$G(PSJLMX) CLRDSPL^PSJLIVMD
+"RTN","PSJLIVFD",26,0)
+ ;PSJLMX count number of lines needed to display the add/sol
+"RTN","PSJLIVFD",27,0)
+ S PSJLMX=0 D WRTDRG^PSJLIUTL("AD")
+"RTN","PSJLIVFD",28,0)
+SOL ;
+"RTN","PSJLIVFD",29,0)
+ S PSJL="" D FLDNO^PSJLIUTL("(2)",1)
+"RTN","PSJLIVFD",30,0)
+ S PSJL=PSJL_"Solutions:"
+"RTN","PSJLIVFD",31,0)
+ I P("SYRS")]"" D
+"RTN","PSJLIVFD",32,0)
+ . S PSJL=$$SETSTR^VALM1("Syr. Size:",PSJL,52,10)_$E(P("SYRS"),1,13)
+"RTN","PSJLIVFD",33,0)
+ . S:$L(P("SYRS"))>13 PSJL=PSJL_"..."
+"RTN","PSJLIVFD",34,0)
+ D SETTMP^PSJLMPRU("PSJI",PSJL)
+"RTN","PSJLIVFD",35,0)
+ D WRTDRG^PSJLIUTL("SOL")
+"RTN","PSJLIVFD",36,0)
+DUR ;
+"RTN","PSJLIVFD",37,0)
+ S PSJL=""
+"RTN","PSJLIVFD",38,0)
+ N DUROUT,IVLIMIT S DUROUT=$$GETDUR^PSJLIVMD(PSGP,+PSJORD,$S(PSJORD["P":"P",1:"IV"))
+"RTN","PSJLIVFD",39,0)
+ I $G(PSJORD)["P" N ND25 S ND25=$G(^PS(53.1,+PSJORD,2.5)),IVLIMIT=$P(ND25,"^",4) D
+"RTN","PSJLIVFD",40,0)
+ .S IVLIMIT=$S(IVLIMIT]"":$$FMTDUR^PSJLIVMD(IVLIMIT),1:"") S:IVLIMIT]"" DUROUT=IVLIMIT
+"RTN","PSJLIVFD",41,0)
+ S LABEL=$S($G(IVLIMIT):"IV Limit: ",1:"Duration: ") K IVLIMIT
+"RTN","PSJLIVFD",42,0)
+ S PSJL=$$SETSTR^VALM1(LABEL,PSJL,12,10)
+"RTN","PSJLIVFD",43,0)
+ S PSJL=PSJL_DUROUT
+"RTN","PSJLIVFD",44,0)
+START ;
+"RTN","PSJLIVFD",45,0)
+ D FLDNO^PSJLIUTL("(4)",47)
+"RTN","PSJLIVFD",46,0)
+ S PSJL=$$SETSTR^VALM1("Start:",PSJL,56,7)_$$STARTDT^PSJLIUTL
+"RTN","PSJLIVFD",47,0)
+ D SETTMP^PSJLMPRU("PSJI",PSJL)
+"RTN","PSJLIVFD",48,0)
+ NEW PSGRSD,PSGRSDN,PSGRFD,PSGRFDN
+"RTN","PSJLIVFD",49,0)
+ S PSJL="" I $G(PSJORD)["P",$G(PSGRDTX) D
+"RTN","PSJLIVFD",50,0)
+ . N RSDLABL,PSJRQB,PSJRQL,PSGRSD,PSGSRSDN
+"RTN","PSJLIVFD",51,0)
+ . S RSDLABL="     REQUESTED START: ",PSJRQB=41,PSJRQL=39,PSGRSD="",PSGRSDN=""
+"RTN","PSJLIVFD",52,0)
+ . I $G(PSGRDTX(+$G(PSJORD),"PSGRSD")),$G(P(2)) S PSJRQB=51,PSJRQL=29 D
+"RTN","PSJLIVFD",53,0)
+ .. S PSGRSD=PSGRDTX(+$G(PSJORD),"PSGRSD"),PSGRSDN=$$ENDTC^PSGMI(+PSGRSD),RSDLABL="Calc Start: "
+"RTN","PSJLIVFD",54,0)
+ . I '$G(P(2)),'$P(PSGRDTX,U,3) S PSGRSD=+PSGRDTX,PSGRSDN=$$ENDTC^PSGMI(PSGRSD)
+"RTN","PSJLIVFD",55,0)
+ . I $G(PSGRSD),($G(PSGRSDN)]"") D DSPLYDT^PSJLIVMD(PSJLMX+5,.PSGRSD,.PSGRSDN,RSDLABL,1,PSJRQB,PSJRQL),SETTMP^PSJLMPRU("PSJI",PSJL)
+"RTN","PSJLIVFD",56,0)
+INFRATE ;
+"RTN","PSJLIVFD",57,0)
+ N INFLBL,INFLBL1,INFLBL2 S INFLBL="",INFLBL1="",$P(INFLBL2," ",20)=""
+"RTN","PSJLIVFD",58,0)
+ S PSJL="" D FLDNO^PSJLIUTL("(3)",1)
+"RTN","PSJLIVFD",59,0)
+ S PSJL=$$SETSTR^VALM1("Infusion Rate:",PSJL,7,15)
+"RTN","PSJLIVFD",60,0)
+ I ($G(P("NUMLBL"))?1.N) S INFLBL1=" ("_P("NUMLBL")_" label"_$S(P("NUMLBL")=1:"",1:"s")_" per day)" I $L(P(8))>13 S INFLBL1=$E(INFLBL2,1,(24-$L(P(8))))_INFLBL1
+"RTN","PSJLIVFD",61,0)
+ S INFLBL=$S('($G(P("NUMLBL"))?1.N):$P(P(8),"@"),1:$P(P(8),"@")_INFLBL1)
+"RTN","PSJLIVFD",62,0)
+ D LONG^PSJLIUTL(INFLBL,22,24)
+"RTN","PSJLIVFD",63,0)
+LASTREN ;
+"RTN","PSJLIVFD",64,0)
+ N PSGRNDT S PSGRNDT=$$LASTREN^PSJLMPRI(DFN,$S($G(PSJORD):PSJORD,1:$G(ON))) I PSGRNDT D
+"RTN","PSJLIVFD",65,0)
+ . S PSGRNDT=$$ENDTC^PSGMI(+PSGRNDT),PSJL=$$SETSTR^VALM1("Renewed: "_PSGRNDT,PSJL,54,32)
+"RTN","PSJLIVFD",66,0)
+ D SETTMP^PSJLMPRU("PSJI",PSJL)
+"RTN","PSJLIVFD",67,0)
+MR ;
+"RTN","PSJLIVFD",68,0)
+ S PSJL="" D FLDNO^PSJLIUTL("(5)",1)
+"RTN","PSJLIVFD",69,0)
+ S PSJL=$$SETSTR^VALM1("Med Route:",PSJL,11,11)
+"RTN","PSJLIVFD",70,0)
+ S PSJL=PSJL_$P(P("MR"),U,2)
+"RTN","PSJLIVFD",71,0)
+STOP ;
+"RTN","PSJLIVFD",72,0)
+ D FLDNO^PSJLIUTL("(6)",47)
+"RTN","PSJLIVFD",73,0)
+ ;PSJ*5*180 - If Invalid Duration/Limit - Cannot Calculate Stop Date
+"RTN","PSJLIVFD",74,0)
+ S PSJL=$$SETSTR^VALM1("Stop:",PSJL,57,6)_$S($G(PSJBADD)=1:"CANNOT CALCULATE",1:$$STOPDT^PSJLIUTL)
+"RTN","PSJLIVFD",75,0)
+ D SETTMP^PSJLMPRU("PSJI",PSJL)
+"RTN","PSJLIVFD",76,0)
+ S PSJL=""
+"RTN","PSJLIVFD",77,0)
+ N PSJBCMA S PSJBCMA=$$BCMALG^PSJUTL2(DFN,PSJORD)
+"RTN","PSJLIVFD",78,0)
+ I $G(PSJBCMA)]"" S PSJL=$$SETSTR^VALM1(PSJBCMA,PSJL,1,52)
+"RTN","PSJLIVFD",79,0)
+ I $G(PSGRDTX(+PSJORD,"PSGRFD")) S PSGRFD=PSGRDTX(+PSJORD,"PSGRFD"),PSGRFDN=$$ENDTC^PSGMI(PSGRFD) D
+"RTN","PSJLIVFD",80,0)
+ . D DSPLYDT^PSJLIVMD(PSJLMX+7,.PSGRFD,.PSGRFDN," Calc Stop: ",0,51,29)
+"RTN","PSJLIVFD",81,0)
+ D:($G(PSJBCMA)]"")!($G(PSGRFD)]"") SETTMP^PSJLMPRU("PSJI",PSJL)
+"RTN","PSJLIVFD",82,0)
+SCH ;
+"RTN","PSJLIVFD",83,0)
+ S PSJL="" D FLDNO^PSJLIUTL("(7)",1)
+"RTN","PSJLIVFD",84,0)
+ S PSJL=$$SETSTR^VALM1("Schedule:",PSJL,12,11)
+"RTN","PSJLIVFD",85,0)
+ D LONG^PSJLIUTL(P(9)_$S(P(7):"@0 labels a day",1:"")_$G(SCHMSG),22,35)
+"RTN","PSJLIVFD",86,0)
+LASTFL ;
+"RTN","PSJLIVFD",87,0)
+ S PSJL=$$SETSTR^VALM1("Last Fill:",PSJL,52,11)
+"RTN","PSJLIVFD",88,0)
+ S PSJL=PSJL_$$ENDTC^PSGMI(P("LF"))
+"RTN","PSJLIVFD",89,0)
+ D SETTMP^PSJLMPRU("PSJI",PSJL)
+"RTN","PSJLIVFD",90,0)
+ADM ;
+"RTN","PSJLIVFD",91,0)
+ S PSJL="" D FLDNO^PSJLIUTL("(8)",1)
+"RTN","PSJLIVFD",92,0)
+ S PSJL=$$SETSTR^VALM1("Admin Times:",PSJL,9,14)
+"RTN","PSJLIVFD",93,0)
+ D LONG^PSJLIUTL(P(11),22,30)
+"RTN","PSJLIVFD",94,0)
+QTY ;
+"RTN","PSJLIVFD",95,0)
+ S PSJL=$$SETSTR^VALM1("Quantity:",PSJL,53,10)_+P("LFA")
+"RTN","PSJLIVFD",96,0)
+ D SETTMP^PSJLMPRU("PSJI",PSJL)
+"RTN","PSJLIVFD",97,0)
+PROVIDER ;
+"RTN","PSJLIVFD",98,0)
+ S PSJL="" D FLDNO^PSJLIUTL("(9)",1)
+"RTN","PSJLIVFD",99,0)
+ S PSJL=$$SETSTR^VALM1("Provider:",PSJL,12,10)_$$PROVIDER^PSJLIUTL
+"RTN","PSJLIVFD",100,0)
+CUMDOSES ;
+"RTN","PSJLIVFD",101,0)
+ S PSJL=$$SETSTR^VALM1("Cum. Doses:",PSJL,51,12)_P("CUM")
+"RTN","PSJLIVFD",102,0)
+ D SETTMP^PSJLMPRU("PSJI",PSJL)
+"RTN","PSJLIVFD",103,0)
+OPI ;
+"RTN","PSJLIVFD",104,0)
+ N PSJOPILN,PSJOPCNT
+"RTN","PSJLIVFD",105,0)
+ S PSJL="" D FLDNO^PSJLIUTL("(10)",1)
+"RTN","PSJLIVFD",106,0)
+ I $G(PSIVBR)["PSIVVW" D
+"RTN","PSJLIVFD",107,0)
+ .S PSJOPILN=$$GETSIOPI^PSJBCMA5(DFN,PSJORD,1)
+"RTN","PSJLIVFD",108,0)
+ .I PSJOPILN=1,($TR($G(^TMP("PSJBCMA5",$J,DFN,PSJORD,1))," ")="") K ^TMP("PSJBCMA5",$J,DFN,PSJORD) S PSJOPILN=""
+"RTN","PSJLIVFD",109,0)
+ .S PSJL=$$SETSTR^VALM1("Other Print"_$S($P(P("OPI"),"^",2)=1:"!: ",1:": "),PSJL,9,13)
+"RTN","PSJLIVFD",110,0)
+ .S PSJL=PSJL_" "_$S(($G(PSJOPILN)>0):"(see below)",1:"")
+"RTN","PSJLIVFD",111,0)
+ .D SETTMP^PSJLMPRU("PSJI",PSJL)
+"RTN","PSJLIVFD",112,0)
+ .I (PSJOPILN>0) N PSJOPCNT S PSJOPCNT=0 F PSJOPCNT=1:1:PSJOPILN S PSJL="     "_$G(^TMP("PSJBCMA5",$J,DFN,PSJORD,PSJOPCNT)) D SETTMP^PSJLMPRU("PSJI",PSJL)
+"RTN","PSJLIVFD",113,0)
+ I $G(PSIVBR)'["PSIVVW" D
+"RTN","PSJLIVFD",114,0)
+ .I $G(ON55)["P",$G(PSJORD)["V",$P($G(^PS(53.1,+ON55,0)),"^",25)=PSJORD S PSJOPILN=$$GETSIOPI^PSJBCMA5(DFN,ON55)
+"RTN","PSJLIVFD",115,0)
+ .S PSJOPILN=$P($G(^PS(53.45,PSJSYSP,6,0)),"^",3) I 'PSJOPILN S PSJOPILN=$$GETSIOPI^PSJBCMA5(DFN,PSJORD)
+"RTN","PSJLIVFD",116,0)
+ .I PSJOPILN=1,($TR($G(^PS(53.45,PSJSYSP,6,1,0))," ")="") I '($G(^PS(53.45,PSJSYSP,6,0))<0) K ^PS(53.45,PSJSYSP,6) S PSJOPILN=""
+"RTN","PSJLIVFD",117,0)
+ .S PSJL=$$SETSTR^VALM1("Other Print"_$S($P(P("OPI"),"^",2)=1:"!: ",1:": "),PSJL,9,13)
+"RTN","PSJLIVFD",118,0)
+ .S PSJL=PSJL_$S((PSJOPILN>0)&'($G(^PS(53.45,PSJSYSP,6,0))<0):"(see below)",1:"")
+"RTN","PSJLIVFD",119,0)
+ .D SETTMP^PSJLMPRU("PSJI",PSJL)
+"RTN","PSJLIVFD",120,0)
+ .I PSJOPILN>0 N PSJOPCNT S PSJOPCNT=0 F PSJOPCNT=1:1:PSJOPILN S PSJL="     "_$G(^PS(53.45,PSJSYSP,6,PSJOPCNT,0)) D SETTMP^PSJLMPRU("PSJI",PSJL)
+"RTN","PSJLIVFD",121,0)
+ K PSJOPILN,PSJOPCNT K PSJOPILN,PSJOPCNT
+"RTN","PSJLIVFD",122,0)
+PC ;
+"RTN","PSJLIVFD",123,0)
+ S PSJL=""
+"RTN","PSJLIVFD",124,0)
+ S PSJL=$$SETSTR^VALM1("Provider Comments:",PSJL,3,18) D WTPC^PSJLIUTL
+"RTN","PSJLIVFD",125,0)
+REMARK ;
+"RTN","PSJLIVFD",126,0)
+ D SETTMP^PSJLMPRU("PSJI","")
+"RTN","PSJLIVFD",127,0)
+ S PSJL="" D FLDNO^PSJLIUTL("(11)",1)
+"RTN","PSJLIVFD",128,0)
+ S PSJL=$$SETSTR^VALM1("Remarks :",PSJL,8,10)
+"RTN","PSJLIVFD",129,0)
+ D LONG^PSJLIUTL(P("REM"),18,62)
+"RTN","PSJLIVFD",130,0)
+ D SETTMP^PSJLMPRU("PSJI",PSJL)
+"RTN","PSJLIVFD",131,0)
+IVROOM ;
+"RTN","PSJLIVFD",132,0)
+ S PSJL=""
+"RTN","PSJLIVFD",133,0)
+ S PSJL=$$SETSTR^VALM1("IV Room:",PSJL,9,9)_$P(P("IVRM"),U,2)
+"RTN","PSJLIVFD",134,0)
+ D SETTMP^PSJLMPRU("PSJI",PSJL)
+"RTN","PSJLIVFD",135,0)
+ENTRY ;
+"RTN","PSJLIVFD",136,0)
+ S PSJL="",PSJL=$$SETSTR^VALM1("Entry By:",PSJL,8,10)
+"RTN","PSJLIVFD",137,0)
+ S PSJL=PSJL_$S($P(P("CLRK"),U,2)]"":$E($P(P("CLRK"),U,2),1,18),1:"*** Undefined")
+"RTN","PSJLIVFD",138,0)
+ S PSJL=$$SETSTR^VALM1("Entry Date:",PSJL,51,12)_$$ENDTC^PSGMI(P("LOG"))
+"RTN","PSJLIVFD",139,0)
+ D SETTMP^PSJLMPRU("PSJI",PSJL)
+"RTN","PSJLIVFD",140,0)
+ S PSJL="" S PSGLRN=$$LASTRNBY^PSJLMPRI(DFN,$S($G(PSJORD):PSJORD,1:$G(ON))) I PSGLRN D
+"RTN","PSJLIVFD",141,0)
+ . S PSJL=$$SETSTR^VALM1("Renewed By: ",PSJL,6,12)_$$ENNPN^PSGMI(PSGLRN) D SETTMP^PSJLMPRU("PSJI",PSJL) K PSGLRN
+"RTN","PSJLIVFD",142,0)
+ S VALM("TITLE")=$$CODES^PSIVUTL(P(17),$S($G(ON)["P":53.1,1:55.01),$S(ON["P":28,1:100))_" IV "
+"RTN","PSJLIVFD",143,0)
+ I $G(P("PRY"))="D"!($G(P("PON"))["P") S VALM("TITLE")=VALM("TITLE")_$S($G(P("PRY"))="":"",1:"("_$$CODES^PSIVUTL(P("PRY"),53.1,.24)_")")
+"RTN","PSJLIVFD",144,0)
+ I $G(P("PON"))["P" D ORDCHK
+"RTN","PSJLIVFD",145,0)
+ S VALMCNT=PSJLN-1,^TMP("PSJI",$J,0)=VALMCNT
+"RTN","PSJLIVFD",146,0)
+ Q
+"RTN","PSJLIVFD",147,0)
+ ;
+"RTN","PSJLIVFD",148,0)
+ORDCHK ;Display order check for pending order
+"RTN","PSJLIVFD",149,0)
+ Q:'$O(^PS(53.1,+ON,10,0))
+"RTN","PSJLIVFD",150,0)
+ NEW PSJIVX,PSJIVXX
+"RTN","PSJLIVFD",151,0)
+ F PSJIVX=0:0 S PSJIVX=$O(^PS(53.1,+ON,10,PSJIVX)) Q:'PSJIVX  D
+"RTN","PSJLIVFD",152,0)
+ . D SETTMP^PSJLMPRU("PSJI","")
+"RTN","PSJLIVFD",153,0)
+ . S PSJL="CPRS Order Checks  :" D LONG^PSJLIUTL($G(^PS(53.1,+ON,10,PSJIVX,0)),22,60)
+"RTN","PSJLIVFD",154,0)
+ . D SETTMP^PSJLMPRU("PSJI",PSJL)
+"RTN","PSJLIVFD",155,0)
+ . S PSJL="Overriding Provider: "_$P($G(^PS(53.1,+ON,10,PSJIVX,1)),U)
+"RTN","PSJLIVFD",156,0)
+ . D SETTMP^PSJLMPRU("PSJI",PSJL)
+"RTN","PSJLIVFD",157,0)
+ . S PSJL="Overriding Reason  : "
+"RTN","PSJLIVFD",158,0)
+ . F PSJIVXX=0:0 S PSJIVXX=$O(^PS(53.1,+ON,10,PSJIVX,2,PSJIVXX)) Q:'PSJIVXX  D
+"RTN","PSJLIVFD",159,0)
+ .. D LONG^PSJLIUTL($G(^PS(53.1,+ON,10,PSJIVX,2,PSJIVXX,0)),22,60)
+"RTN","PSJLIVFD",160,0)
+ .. D SETTMP^PSJLMPRU("PSJI",PSJL) S PSJL=""
+"RTN","PSJLIVFD",161,0)
+ Q
+"RTN","PSJLIVFD",162,0)
+ ;
+"RTN","PSJLIVFD",163,0)
+SCHREQ(IVAR) ; Intermittent IV's require a schedule
+"RTN","PSJLIVFD",164,0)
+ I $G(IVAR(4))="P"!($G(IVAR(23))="P")!($G(IVAR(5))) Q 1
+"RTN","PSJLIVFD",165,0)
+ Q 0
+"RTN","PSJLIVFD",166,0)
+ ;
+"RTN","PSJLIVFD",167,0)
+INFCHK(INFFULL,INFEXP) ; Parse and expand infusion rate
+"RTN","PSJLIVFD",168,0)
+ ;*305
+"RTN","PSJLIVFD",169,0)
+ Q:INFFULL=""
+"RTN","PSJLIVFD",170,0)
+ S INFEXP=INFFULL
+"RTN","PSJLIVFD",171,0)
+ N I S I=$O(^PS(53.47,"B",INFFULL,0)) Q:'I  S:$P($G(^PS(53.47,I,0)),"^",2)]"" INFEXP=$P(^(0),"^",2)
+"RTN","PSJLIVFD",172,0)
+ Q
+"RTN","PSJLIVFD",173,0)
+INFEXP(INF) ; Expand Infusion Rate 
+"RTN","PSJLIVFD",174,0)
+ I $L(INF)<1!($L(INF)>30) Q INF
+"RTN","PSJLIVFD",175,0)
+ N INFIEN,ARRAY
+"RTN","PSJLIVFD",176,0)
+ S (INFIEN,ARRAY)=""
+"RTN","PSJLIVFD",177,0)
+ N X,Y,DIC,DR,DA,DIQ
+"RTN","PSJLIVFD",178,0)
+ S X=INF,DIC(0)="XO",DIC="^PS(53.47," D ^DIC I '($G(Y)>0) Q INF
+"RTN","PSJLIVFD",179,0)
+ S INFIEN=+$G(Y)
+"RTN","PSJLIVFD",180,0)
+ D GETS^DIQ(53.47,INFIEN_",",".01;1","E","ARRAY")
+"RTN","PSJLIVFD",181,0)
+ I $G(ARRAY("53.47",INFIEN_",","1","E"))]"" Q ARRAY("53.47",INFIEN_",","1","E")
+"RTN","PSJLIVFD",182,0)
+ Q INF
+"VER")
+8.0^22.0
+"BLD",8978,6)
+^261
+**END**
+**END**
+

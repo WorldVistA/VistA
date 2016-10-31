@@ -1,0 +1,384 @@
+$TXT Created by              at DEVESS.DOMAIN.EXT  (KIDS) on Thursday, 07/24/14 at 12:10
+=============================================================================
+Run Date: AUG 05, 2014                     Designation: SD*5.3*586
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #509                    Status: Released
+                  Compliance Date: AUG 26, 2014
+=============================================================================
+
+Associated patches: (v)SD*5.3*441  <<= must be installed BEFORE `SD*5.3*586'
+                    (v)SD*5.3*495  <<= must be installed BEFORE `SD*5.3*586'
+                    (v)SD*5.3*529  <<= must be installed BEFORE `SD*5.3*586'
+                    (v)SD*5.3*556  <<= must be installed BEFORE `SD*5.3*586'
+                    (v)SD*5.3*568  <<= must be installed BEFORE `SD*5.3*586'
+                    (v)LEX*2*80    <<= must be installed BEFORE `SD*5.3*586'
+                    (v)PX*1*199    <<= must be installed BEFORE `SD*5.3*586'
+                    (v)ICD*18*57   <<= must be installed BEFORE `SD*5.3*586'
+
+Subject: SCHEDULING ICD-10 CLASS 1 REMEDIATION
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ IMPORTANT INFORMATION Please read the Overview Guide posted on the 
+ Anonymous directory for installation order. This is critical for proper 
+ functionality of the ICD-10 Software.
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10) 
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service, or dates of discharge for inpatients, that occur on or 
+ after the implementation date will use the ICD-10 code set. Clinical 
+ Modification (ICD-10-CM)diagnosis codes increase from about 13,000 ICD-9 
+ codes to more than 68,000. Procedure Coding System (ICD-10-PCS) procedure 
+ codes increase from about 3,800 ICD-9 codes to nearly 87,000. Both 
+ systems also expand the number of characters allotted to seven 
+ alpha-numeric characters. This value does not include the decimal point, 
+ which follows the third character for the ICD-10-CM code set. There is no 
+ decimal point in the ICD-10-PCS code set. 
+  
+ These code sets have the potential to reveal more about quality of care, 
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research.
+  
+ This patch implements the following changes to VistA Scheduling required
+ to accommodate ICD-10-CM codes.
+  
+ 1. For Scheduling related prompts, changed the labels to "ICD10" if 
+ the Diagnosis date is after the implementation date and "ICD9" if the 
+ diagnosis date is prior to the implementation date. For the Scheduling 
+ prompts, where the diagnosis date is unavailable/not yet determined,
+ the labels were changed to "ICD".
+  
+ 2. For the 'Set Up A Clinic' option within VistA Scheduling, user is 
+ allowed to add ICD-10 diagnosis codes prior to the implementation date. 
+ The 'Set Up A Clinic' option also provides the ability to identify one
+ primary default diagnosis from each of the code sets (ICD-9 or ICD-10).
+  
+ 3. VistA Scheduling package provides an implementation checklist to 
+ print from the Supervisor Menu that will help to ensure that ICD-10
+ equivalent (if there are any) Default Diagnoses are set up for each clinic
+ that had ICD-9 Default Diagnoses set up.
+  
+ 4. After ICD-10 implementation date, user can add, edit and 
+ store ICD-10 diagnosis codes (up to 8 characters including the decimal 
+ point that follows the third character),ICD-10 diagnosis codes whereas 
+ prior to implementation of ICD-10, they retain the ability to add, edit, 
+ store ICD-9 diagnosis codes.
+  
+ 5. The VistA Scheduling package provides the ability to sort and print
+ the ICD-9 codes if the appointment dates are prior to ICD-10 implementation 
+ date, and ICD-10 diagnosis codes if appointment dates are after the ICD-10 
+ implementation date.
+  
+ 6. The VistA Scheduling package provides the ability to select and 
+ sort Provider/Diagnosis Report by ICD-9 diagnosis code when the beginning
+ (appointment) date is prior to ICD-10 implementation date, and by ICD-10
+ codes after the implementation of ICD-10. The labels for this report are
+ also changed to "ICD9" or "ICD10" based on the ICD-10 implementation date.
+  
+ 7. If beginning date is prior to implementation of ICD-10 and ending date 
+ is after the implementation of ICD-10, the user is prompted to enter
+ an ending date that is prior to implementation date of ICD-10 for ICD-9
+ diagnosis codes.
+  
+ 8. If appointment date is prior to ICD-10 implementation, "ICD9" label 
+ is added to the Routing Slip Report. If the appointment date is
+ after the ICD-10 implementation, "ICD10" label is added to the Routing
+ Slip Report.
+  
+  
+ Data Dictionary
+ ---------------
+ Hospital Location (#44): Diagnosis (#44.11) Sub-Filing
+ - Screens and input transforms to allow multiple versions of ICD codes, 
+   and a default ICD code for each version.
+  
+ Disability Condition (#31): Related ICD Codes (31.01) Sub-File
+ - Field names and descriptions are ICD version non-specific.
+  
+ SDSC Service Connected Changes (#409.48)
+ - The file description is ICD version non-specific.
+  
+ Appointment Management
+ ----------------------
+ All Appointment Management check-out functionality is controlled by API 
+ calls to PCE.
+ Menu Options:
+ Appointment Menu [SDAPP]
+ Add/Edit Stop Codes [SDADDEDIT]
+ Appointment Check-in/Check-out [SDAM APPT CHECK IN/OUT]
+ Appointment Management [SDAM APPT MGT]
+ Check-in/Unsched. Visit [SDI]
+  
+ Reports
+ -------
+ Provider/Diagnosis Report [SDAM PROVIDER/DIAGNOSIS REPORT]
+ Routing Slips [SDROUT]
+ Set up a Clinic Installation List (see above)
+  
+ Remote Procedure Calls
+ ----------------------
+ SDOE GET PRIMARY DIAGNOSIS - Description text changed to be non-specific 
+                              regarding ICD version.
+ SDOE FIND DIAGNOSIS -        Description text changed to be non-specific 
+                              regarding ICD version.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)              New/Modified/Deleted
+ -------------          --------------------------  --------------------
+ DISABILITY CONDITION   (#31)                        
+  RELATED ICD CODES     (sub-file)(#31.01)           Mod
+  RELATED ICD CODES     (#.01)                       Mod
+  ICD MATCH             (#.02)                       Mod
+ HOSPITAL LOCATION      (#44)                        
+  DIAGNOSIS             (sub-file)(#44.11)           Mod
+  DIAGNOSIS             (#.01)                       Mod
+  DEFAULT DIAGNOSIS     (#.02)                       Mod
+ SDSC SERVICE CONNECTED 
+  CHANGES               (#409.48)                    Mod
+                        
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ SD CLN INST CHKLST (Print      run routine      New
+  Clinic Installation 
+  Checklist)
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Remote Procedures Associated:
+  
+ RPC Name                          New/Modified/Deleted
+ -------------                     --------------------
+ SDOE GET PRIMARY DIAGNOSIS           Modified
+ SDOE FIND DIAGNOSIS                  Modified                        
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)          New/Modified/Deleted
+ -------------      ----      ------------------     --------------------
+ SDB                INPUT     HOSPITAL LOCATION (#44)  No change - 
+ included to force generated routines.
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR 20070902, ICD-10-CM Conversion
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Boise VAMC, Boise, ID
+ Coatesville VAMC, Coatesville, PA
+ Dublin VAMC, Dublin, GA
+ Miami VAMC, Miami, FL
+ Battle Creek VAMC, Battle Creek, MI
+ Detroit VAMC, Detroit, MI
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ (VDL) at: http://www4.domain.ext/vdl/
+  
+ File Description                  File Name                     FTP Mode
+ --------------------------------------------------------------------------
+ User Manual - Supervisor Menu     supv.pdf                      (binary)
+ PIMS Technical Manual             pimstm.pdf                    (binary)
+ Production Overview Guide Group 2 Production_Overview_Guide_    (binary)
+                                   Group_2.pdf
+ Scheduling Release Notes          icd-10_rn_sd_5_3_586.pdf      (binary)
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than five minutes
+ to install.  
+  
+ If installed during the normal workday, it is recommended that the
+ following entry in the OPTION file (#19) be disabled to prevent possible
+ conflicts while running the KIDS Install. Other VistA users will not be
+ affected.
+  
+       Option Name                      Menu Text
+       -----------------------          ------------------------------
+       SDMGR                            Scheduling Manager's Menu
+       SDSUP                            Supervisor Menu
+       SDUSER                           Scheduling Menu
+       SDBUILD                          Set up a Clinic
+       SDAM PROVIDER/DIAGNOSIS REPORT   Provider/Diagnosis Report
+       SDROUT                           Routing Slips
+       SDSC MENU                        Automated Service Connected
+                                          Designation Menu
+  
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (SD*5.3*586):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter SD*5.3*586.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? YES//', respond YES.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond YES
+  
+       Option Name                      Menu Text
+       -----------------------          ------------------------------
+       SDMGR                            Scheduling Manager's Menu
+       SDSUP                            Supervisor Menu
+       SDUSER                           Scheduling Menu
+       SDBUILD                          Set up a Clinic
+       SDAM PROVIDER/DIAGNOSIS REPORT   Provider/Diagnosis Report
+       SDROUT                           Routing Slips
+       SDSC MENU                        Automated Service Connected
+                                          Designation Menu
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 28
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDAMCCKL
+    Before:       n/a   After:  B8848352  **586**
+Routine Name: SDAMICD
+    Before:       n/a   After:  B4248677  **586**
+Routine Name: SDAMODO
+    Before: B15736035   After: B19948751  **25,132,159,586**
+Routine Name: SDAMODO2
+    Before: B22975014   After: B24143695  **11,25,49,132,159,556,586**
+Routine Name: SDAMODO3
+    Before: B22411583   After: B23059449  **11,25,46,49,159,529,586**
+Routine Name: SDAPIER
+    Before: B38661879   After: B38640268  **27,586**
+Routine Name: SDB
+    Before: B17476813   After: B18180788  **20,63,167,455,568,586**
+Routine Name: SDCO0
+    Before: B28062547   After: B32897572  **20,44,132,180,351,441,586**
+Routine Name: SDCO41
+    Before:  B2735484   After:  B3773227  **15,351,586**
+Routine Name: SDOEDX
+    Before:  B9649480   After: B10758686  **131,556,586**
+Routine Name: SDROUT2
+    Before: B16488063   After: B18104323  **28,377,441,586**
+Routine Name: SDSCEDT
+    Before: B76725826   After: B78341932  **495,586**
+Routine Name: SDSCRPT2
+    Before: B34356180   After: B35454497  **495,586**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 08, 2011
+Completed By:                               Date Completed: JUL 31, 2014
+Released By :                               Date Released : AUG 05, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

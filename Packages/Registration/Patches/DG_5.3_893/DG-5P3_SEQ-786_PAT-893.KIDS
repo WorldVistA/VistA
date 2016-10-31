@@ -1,0 +1,941 @@
+EMERGENCY Released DG*5.3*893 SEQ #786
+Extracted from mail message
+**KIDS**:DG*5.3*893^
+
+**INSTALL NAME**
+DG*5.3*893
+"BLD",9735,0)
+DG*5.3*893^REGISTRATION^0^3140818^y
+"BLD",9735,1,0)
+^^15^15^3140728^
+"BLD",9735,1,1,0)
+Patch DG*5.3*893 addresses the following 3 issues:
+"BLD",9735,1,2,0)
+ 
+"BLD",9735,1,3,0)
+- Patients whose first enrollment was before the install date of patch
+"BLD",9735,1,4,0)
+  DG*5.3*779 do not have an AEAR index on the APPOINTMENT REQUEST ON 
+"BLD",9735,1,5,0)
+  1010EZ (#1010.159) field in the PATIENT (#2) file
+"BLD",9735,1,6,0)
+ 
+"BLD",9735,1,7,0)
+- The Tracking Report [DGEN NEACL MGT RPT2] has a bug which causes the API
+"BLD",9735,1,8,0)
+  that gathers appointments to only return one appointment. This can cause
+"BLD",9735,1,9,0)
+  a blank appointment date to display if the first appointment is a 
+"BLD",9735,1,10,0)
+  non-count
+"BLD",9735,1,11,0)
+ 
+"BLD",9735,1,12,0)
+- The Call List [DGEN NEACL MGT RPT1] has a bug when comparing the 
+"BLD",9735,1,13,0)
+  patient's preferred facility to the selected facility. 
+"BLD",9735,1,14,0)
+  It cause them not to match if the preferred facility code begins 
+"BLD",9735,1,15,0)
+  with 4 numerics instead of 3.
+"BLD",9735,4,0)
+^9.64PA^^
+"BLD",9735,6.3)
+8
+"BLD",9735,"ABPKG")
+n
+"BLD",9735,"INI")
+
+"BLD",9735,"INID")
+^n^
+"BLD",9735,"INIT")
+EP2^DG53P893
+"BLD",9735,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9735,"KRN",.4,0)
+.4
+"BLD",9735,"KRN",.401,0)
+.401
+"BLD",9735,"KRN",.402,0)
+.402
+"BLD",9735,"KRN",.403,0)
+.403
+"BLD",9735,"KRN",.5,0)
+.5
+"BLD",9735,"KRN",.84,0)
+.84
+"BLD",9735,"KRN",3.6,0)
+3.6
+"BLD",9735,"KRN",3.8,0)
+3.8
+"BLD",9735,"KRN",9.2,0)
+9.2
+"BLD",9735,"KRN",9.8,0)
+9.8
+"BLD",9735,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",9735,"KRN",9.8,"NM",1,0)
+DGENACL2^^0^B20337882
+"BLD",9735,"KRN",9.8,"NM",2,0)
+DG53P893^^0^B72587888
+"BLD",9735,"KRN",9.8,"NM","B","DG53P893",2)
+
+"BLD",9735,"KRN",9.8,"NM","B","DGENACL2",1)
+
+"BLD",9735,"KRN",19,0)
+19
+"BLD",9735,"KRN",19.1,0)
+19.1
+"BLD",9735,"KRN",101,0)
+101
+"BLD",9735,"KRN",409.61,0)
+409.61
+"BLD",9735,"KRN",771,0)
+771
+"BLD",9735,"KRN",779.2,0)
+779.2
+"BLD",9735,"KRN",870,0)
+870
+"BLD",9735,"KRN",8989.51,0)
+8989.51
+"BLD",9735,"KRN",8989.52,0)
+8989.52
+"BLD",9735,"KRN",8994,0)
+8994
+"BLD",9735,"KRN","B",.4,.4)
+
+"BLD",9735,"KRN","B",.401,.401)
+
+"BLD",9735,"KRN","B",.402,.402)
+
+"BLD",9735,"KRN","B",.403,.403)
+
+"BLD",9735,"KRN","B",.5,.5)
+
+"BLD",9735,"KRN","B",.84,.84)
+
+"BLD",9735,"KRN","B",3.6,3.6)
+
+"BLD",9735,"KRN","B",3.8,3.8)
+
+"BLD",9735,"KRN","B",9.2,9.2)
+
+"BLD",9735,"KRN","B",9.8,9.8)
+
+"BLD",9735,"KRN","B",19,19)
+
+"BLD",9735,"KRN","B",19.1,19.1)
+
+"BLD",9735,"KRN","B",101,101)
+
+"BLD",9735,"KRN","B",409.61,409.61)
+
+"BLD",9735,"KRN","B",771,771)
+
+"BLD",9735,"KRN","B",779.2,779.2)
+
+"BLD",9735,"KRN","B",870,870)
+
+"BLD",9735,"KRN","B",8989.51,8989.51)
+
+"BLD",9735,"KRN","B",8989.52,8989.52)
+
+"BLD",9735,"KRN","B",8994,8994)
+
+"BLD",9735,"QDEF")
+^^^^NO^^^^NO^^YES
+"BLD",9735,"QUES",0)
+^9.62^^
+"BLD",9735,"REQB",0)
+^9.611^1^1
+"BLD",9735,"REQB",1,0)
+DG*5.3*788^1
+"BLD",9735,"REQB","B","DG*5.3*788",1)
+
+"INIT")
+EP2^DG53P893
+"MBREQ")
+0
+"PKG",5,-1)
+1^1
+"PKG",5,0)
+REGISTRATION^DG^PATIENT REGISTRATION, ADMISSION, DISCHARGE, EMBOSSER 
+"PKG",5,20,0)
+^9.402P^^
+"PKG",5,22,0)
+^9.49I^1^1
+"PKG",5,22,1,0)
+5.3^2930813
+"PKG",5,22,1,"PAH",1,0)
+893^3140818
+"PKG",5,22,1,"PAH",1,1,0)
+^^15^15^3140818
+"PKG",5,22,1,"PAH",1,1,1,0)
+Patch DG*5.3*893 addresses the following 3 issues:
+"PKG",5,22,1,"PAH",1,1,2,0)
+ 
+"PKG",5,22,1,"PAH",1,1,3,0)
+- Patients whose first enrollment was before the install date of patch
+"PKG",5,22,1,"PAH",1,1,4,0)
+  DG*5.3*779 do not have an AEAR index on the APPOINTMENT REQUEST ON 
+"PKG",5,22,1,"PAH",1,1,5,0)
+  1010EZ (#1010.159) field in the PATIENT (#2) file
+"PKG",5,22,1,"PAH",1,1,6,0)
+ 
+"PKG",5,22,1,"PAH",1,1,7,0)
+- The Tracking Report [DGEN NEACL MGT RPT2] has a bug which causes the API
+"PKG",5,22,1,"PAH",1,1,8,0)
+  that gathers appointments to only return one appointment. This can cause
+"PKG",5,22,1,"PAH",1,1,9,0)
+  a blank appointment date to display if the first appointment is a 
+"PKG",5,22,1,"PAH",1,1,10,0)
+  non-count
+"PKG",5,22,1,"PAH",1,1,11,0)
+ 
+"PKG",5,22,1,"PAH",1,1,12,0)
+- The Call List [DGEN NEACL MGT RPT1] has a bug when comparing the 
+"PKG",5,22,1,"PAH",1,1,13,0)
+  patient's preferred facility to the selected facility. 
+"PKG",5,22,1,"PAH",1,1,14,0)
+  It cause them not to match if the preferred facility code begins 
+"PKG",5,22,1,"PAH",1,1,15,0)
+  with 4 numerics instead of 3.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","DG53P893")
+0^2^B72587888^n/a
+"RTN","DG53P893",1,0)
+DG53P893 ;ALB/LLS - Rebuild AEAR index ; 7/18/14 8:24am
+"RTN","DG53P893",2,0)
+ ;;5.3;REGISTRATION;**893**;08/13/93;Build 8
+"RTN","DG53P893",3,0)
+ ;
+"RTN","DG53P893",4,0)
+ ;
+"RTN","DG53P893",5,0)
+ Q 
+"RTN","DG53P893",6,0)
+ ; This process will find all entries in the PATIENT file (#2) that
+"RTN","DG53P893",7,0)
+ ; have field APPOINTMENT REQUEST ON 1010EZ (#1010.159) set to Y
+"RTN","DG53P893",8,0)
+ ; and do not have an AEAR index for that field. The process will
+"RTN","DG53P893",9,0)
+ ; set the index.
+"RTN","DG53P893",10,0)
+ ;
+"RTN","DG53P893",11,0)
+ ; This clean up process will be completed in the steps listed below.
+"RTN","DG53P893",12,0)
+ ;    1) Searching and updating the PATIENT file (#2)
+"RTN","DG53P893",13,0)
+ ;    2) Printing the log
+"RTN","DG53P893",14,0)
+ ;
+"RTN","DG53P893",15,0)
+ ; A MailMan message will be sent to the user after the job completes.
+"RTN","DG53P893",16,0)
+ ; The purge date for the log in the ^XTMP global is set for 90 days 
+"RTN","DG53P893",17,0)
+ ; after the report is processed.
+"RTN","DG53P893",18,0)
+ ;
+"RTN","DG53P893",19,0)
+GBLDOC ;-----------------------------------------------------------------
+"RTN","DG53P893",20,0)
+ ; The report uses the ^XTMP("DG53P893") global to store the results.
+"RTN","DG53P893",21,0)
+ ; The format of the ^XTMP global is described below.
+"RTN","DG53P893",22,0)
+ ;
+"RTN","DG53P893",23,0)
+ ;    DGIEN  = IEN from the PATIENT file (#2)
+"RTN","DG53P893",24,0)
+ ;
+"RTN","DG53P893",25,0)
+ ;    ^XTMP("DG53P893",0)=P1^P2^...
+"RTN","DG53P893",26,0)
+ ;        P1  = Rebuild Date
+"RTN","DG53P893",27,0)
+ ;        P2  = Date Processed
+"RTN","DG53P893",28,0)
+ ;        P3  = Description
+"RTN","DG53P893",29,0)
+ ;
+"RTN","DG53P893",30,0)
+ ;    ^XTMP("DG53P893",0,0)=P1^P2^...
+"RTN","DG53P893",31,0)
+ ;        P1  = Status (0=Unprocessed,1=Compiling,2=Process Complete)
+"RTN","DG53P893",32,0)
+ ;        P2  = TaskMan Task #
+"RTN","DG53P893",33,0)
+ ;        P3  = Process Start Date/Time (FM format)
+"RTN","DG53P893",34,0)
+ ;        P4  = Process Finish Date/Time (FM format)
+"RTN","DG53P893",35,0)
+ ;        P5  = Number of patients examined
+"RTN","DG53P893",36,0)
+ ;        P6  = Number of AEAR indices rebuilt
+"RTN","DG53P893",37,0)
+ ;
+"RTN","DG53P893",38,0)
+ ;    ^XTMP("DG53P893",DGIEN)="" <-- DFNs OF PATIENTS WHO HAD 
+"RTN","DG53P893",39,0)
+ ;                                   AEAR INDEX REBUILT
+"RTN","DG53P893",40,0)
+ ;-----------------------------------------------------------------
+"RTN","DG53P893",41,0)
+EP N DIFROM,DGSTAT,DGNODE,DGDESC,ZTREQ ;This section can be called to run the index 
+"RTN","DG53P893",42,0)
+ ;                                      rebuild process independently of the patch or to
+"RTN","DG53P893",43,0)
+ ;                                      view the report of a previously run rebuild procesS
+"RTN","DG53P893",44,0)
+ S DGDESC="AEAR INDEX REBUILD"
+"RTN","DG53P893",45,0)
+ S DGNODE=$G(^XTMP("DG53P893",0,0))
+"RTN","DG53P893",46,0)
+ S DGSTAT=+$P(DGNODE,U)
+"RTN","DG53P893",47,0)
+ ;
+"RTN","DG53P893",48,0)
+ W @IOF ; clear the screen
+"RTN","DG53P893",49,0)
+ W !!,"         ",DGDESC
+"RTN","DG53P893",50,0)
+ W !,$$REPEAT^XLFSTR("*",65)
+"RTN","DG53P893",51,0)
+ ;
+"RTN","DG53P893",52,0)
+ I 'DGSTAT D USERDESC D TASK           ;Task the job if it has not been started
+"RTN","DG53P893",53,0)
+ ;
+"RTN","DG53P893",54,0)
+ I DGSTAT D ASKPRINT Q                 ;Job has completed
+"RTN","DG53P893",55,0)
+ Q
+"RTN","DG53P893",56,0)
+ ;
+"RTN","DG53P893",57,0)
+EP2 N DIFROM,DGSTAT,DGNODE,DGDESC,ZTREQ ;This section is run as  post install
+"RTN","DG53P893",58,0)
+ ;                                       routine by patch DG*5.3*893
+"RTN","DG53P893",59,0)
+ S DGDESC="AEAR INDEX REBUILD"
+"RTN","DG53P893",60,0)
+ S DGNODE=$G(^XTMP("DG53P893",0,0))
+"RTN","DG53P893",61,0)
+ S DGSTAT=+$P(DGNODE,U)
+"RTN","DG53P893",62,0)
+ ;
+"RTN","DG53P893",63,0)
+ W @IOF ; clear the screen
+"RTN","DG53P893",64,0)
+ W !!,"         ",DGDESC
+"RTN","DG53P893",65,0)
+ W !,$$REPEAT^XLFSTR("*",65)
+"RTN","DG53P893",66,0)
+ ;
+"RTN","DG53P893",67,0)
+ I 'DGSTAT D USERDESC D TASK           ;Task the job if it has not been started
+"RTN","DG53P893",68,0)
+ ;
+"RTN","DG53P893",69,0)
+ I DGSTAT D  D SNDMSG Q              ;Process was run previously
+"RTN","DG53P893",70,0)
+ . W !,"AEAR index was previously rebuilt on ",$$FMTE^XLFDT($P(DGNODE,U,3))
+"RTN","DG53P893",71,0)
+ . W !,"You can run D EP^DG53P893 from a programmer prompt to see the report.",!!
+"RTN","DG53P893",72,0)
+ Q
+"RTN","DG53P893",73,0)
+ ;
+"RTN","DG53P893",74,0)
+PROCESS ; Look at all entries in the PATIENT file (#2).
+"RTN","DG53P893",75,0)
+ N DGCTR,DGCTR2,DGIEN,DGPFAC
+"RTN","DG53P893",76,0)
+ ;
+"RTN","DG53P893",77,0)
+ K ^XTMP("DG53P893")                  ;Clean up old process
+"RTN","DG53P893",78,0)
+ S $P(DGNODE,U)=1                      ;Status=compiling
+"RTN","DG53P893",79,0)
+ S $P(DGNODE,U,2)=$G(ZTSK)             ;TaskMan Task #
+"RTN","DG53P893",80,0)
+ S $P(DGNODE,U,3)=$$NOW^XLFDT()          ;Process Start Date/Time
+"RTN","DG53P893",81,0)
+ S $P(DGNODE,U,4)=+$H
+"RTN","DG53P893",82,0)
+ S ^XTMP("DG53P893",0,0)=DGNODE
+"RTN","DG53P893",83,0)
+ ;
+"RTN","DG53P893",84,0)
+ ; set up 0 node of ^XTMP to allow the system to purge after 90 days
+"RTN","DG53P893",85,0)
+ S ^XTMP("DG53P893",0)=$$FMADD^XLFDT(DT,90)_U_DT_U_ZTDESC
+"RTN","DG53P893",86,0)
+ ;
+"RTN","DG53P893",87,0)
+ S (DGIEN,DGCTR,DGCTR2)=0
+"RTN","DG53P893",88,0)
+ F  S DGIEN=$O(^DPT(DGIEN)) Q:DGIEN<1  D
+"RTN","DG53P893",89,0)
+ . S DGCTR=DGCTR+1
+"RTN","DG53P893",90,0)
+ . Q:$P($G(^DPT(DGIEN,1010.15)),U,9)'=1  ;APPOINTMENT REQUEST ON 1010EZ is not Y
+"RTN","DG53P893",91,0)
+ . Q:$D(^DPT("AEAR",1,DGIEN))  ;index already exists
+"RTN","DG53P893",92,0)
+ . D REIND(DGIEN) S DGCTR2=DGCTR2+1
+"RTN","DG53P893",93,0)
+ . S ^XTMP("DG53P893",DGIEN)=""
+"RTN","DG53P893",94,0)
+ ;
+"RTN","DG53P893",95,0)
+ S $P(^XTMP("DG53P893",0,0),U,5,6)=DGCTR_U_DGCTR2
+"RTN","DG53P893",96,0)
+ S $P(^XTMP("DG53P893",0,0),U,4)=$$NOW^XLFDT() ;Process Stop Date/Time
+"RTN","DG53P893",97,0)
+ S $P(^XTMP("DG53P893",0,0),U)=2     ;Set status = processed
+"RTN","DG53P893",98,0)
+ ;
+"RTN","DG53P893",99,0)
+ D SNDMSG
+"RTN","DG53P893",100,0)
+ ;
+"RTN","DG53P893",101,0)
+ Q
+"RTN","DG53P893",102,0)
+ ;
+"RTN","DG53P893",103,0)
+REIND(DG) ;re-index "AEAR" cross-reference.
+"RTN","DG53P893",104,0)
+ N DIK,DA
+"RTN","DG53P893",105,0)
+ S DIK="^DPT(",DIK(1)="1010.159^AEAR",DA=DG
+"RTN","DG53P893",106,0)
+ D EN1^DIK ;Re-create "AEAR" cross-reference
+"RTN","DG53P893",107,0)
+ Q
+"RTN","DG53P893",108,0)
+ ;
+"RTN","DG53P893",109,0)
+ASKPRINT ; Prompt user to print detail report.
+"RTN","DG53P893",110,0)
+ N DIR,DTOUT,DUOUT,DIRUT,DIROUT,DGH,DGTSK,ZTSK,DGII,POP,Y
+"RTN","DG53P893",111,0)
+ W !!,"Process Start Date/Time: ",$$FMTE^XLFDT($P(DGNODE,U,3))
+"RTN","DG53P893",112,0)
+ I DGSTAT=1 D  Q
+"RTN","DG53P893",113,0)
+ . S DGH=$P(DGNODE,U,4)
+"RTN","DG53P893",114,0)
+ . S DGTSK=$P(DGNODE,U,2)
+"RTN","DG53P893",115,0)
+ . S DGII="" F  S DGII=$O(^%ZTER(1,DGH,1,DGII)) Q:DGII=""  I $G(^%ZTER(1,DGH,1,DGII,"J"))[("Task "_DGTSK) D  S DGH=1 Q
+"RTN","DG53P893",116,0)
+ . . W !!,"Task ",DGTSK," has stopped and logged error #",DGII
+"RTN","DG53P893",117,0)
+ . . W " on ",$$FMTE^XLFDT($$HTFM^XLFDT(DGH))
+"RTN","DG53P893",118,0)
+ . Q:DGH=1
+"RTN","DG53P893",119,0)
+ . W !!,"The process [task #",DGTSK,"] is currently running!"
+"RTN","DG53P893",120,0)
+ . W !,"A MailMan message will be sent when the process is complete."
+"RTN","DG53P893",121,0)
+ . W !
+"RTN","DG53P893",122,0)
+ W !," Process Stop Date/Time: ",$$FMTE^XLFDT($P(DGNODE,U,4))
+"RTN","DG53P893",123,0)
+ W !
+"RTN","DG53P893",124,0)
+ W !,"Number of patient records processed: ",$P(DGNODE,U,5)
+"RTN","DG53P893",125,0)
+ W !,"Number of AEAR indexes rebuilt: "
+"RTN","DG53P893",126,0)
+ W $S($P(DGNODE,U,6)'="":$P(DGNODE,U,6),1:"None")
+"RTN","DG53P893",127,0)
+ W !
+"RTN","DG53P893",128,0)
+ ;
+"RTN","DG53P893",129,0)
+ W !,"Please choose a device for the printing of"
+"RTN","DG53P893",130,0)
+ W !,"the detailed report or enter '^' to quit:"
+"RTN","DG53P893",131,0)
+ ;
+"RTN","DG53P893",132,0)
+ ; Prompt user for device and to task job to TaskMan if 'Q' is chosen.
+"RTN","DG53P893",133,0)
+ K IOP,%ZIS
+"RTN","DG53P893",134,0)
+ S %ZIS="Q" D ^%ZIS G:POP EXIT
+"RTN","DG53P893",135,0)
+ I $D(IO("Q")) D  Q
+"RTN","DG53P893",136,0)
+ . N ZTRTN,ZTDESC,ZTDTH
+"RTN","DG53P893",137,0)
+ . S ZTDESC="AEAR INDEX REBULD REPORT",ZTRTN="PRINT^DG53P893(ZTDESC)",ZTDTH=$H
+"RTN","DG53P893",138,0)
+ . D ^%ZTLOAD
+"RTN","DG53P893",139,0)
+ . D ^%ZISC,HOME^%ZIS
+"RTN","DG53P893",140,0)
+ . W !,$S($D(ZTSK):"REQUEST QUEUED TASK: "_$G(ZTSK),1:"REQUEST CANCELLED!")
+"RTN","DG53P893",141,0)
+ U IO D PRINT("AEAR INDEX REBULD REPORT") G EXIT
+"RTN","DG53P893",142,0)
+ Q
+"RTN","DG53P893",143,0)
+ ;
+"RTN","DG53P893",144,0)
+EXIT ;
+"RTN","DG53P893",145,0)
+ D ^%ZISC,HOME^%ZIS
+"RTN","DG53P893",146,0)
+ Q
+"RTN","DG53P893",147,0)
+ ;
+"RTN","DG53P893",148,0)
+PRINT(DGDESC) ; Print detail report.
+"RTN","DG53P893",149,0)
+ N DGPFAC,DGIEN,DGNODE,DGLNCNT,DGPGNUM
+"RTN","DG53P893",150,0)
+ S DGPGNUM=0
+"RTN","DG53P893",151,0)
+ D PRNHEAD
+"RTN","DG53P893",152,0)
+ ;
+"RTN","DG53P893",153,0)
+ S DGIEN=0 F  S DGIEN=$O(^XTMP("DG53P893",DGIEN)) Q:DGIEN=""  D
+"RTN","DG53P893",154,0)
+ . S DGNODE=$G(^DPT(DGIEN,0))
+"RTN","DG53P893",155,0)
+ . W !,DGIEN
+"RTN","DG53P893",156,0)
+ . W ?15,$E($P(DGNODE,U),1,30)
+"RTN","DG53P893",157,0)
+ . S DGLNCNT=DGLNCNT+1 D:DGLNCNT=62 PRNHEAD
+"RTN","DG53P893",158,0)
+ D:DGLNCNT>55 PRNHEAD
+"RTN","DG53P893",159,0)
+ S DGNODE=$G(^XTMP("DG53P893",0,0))
+"RTN","DG53P893",160,0)
+ I DGNODE]"" D
+"RTN","DG53P893",161,0)
+ . W !!,"Process was run from ",$$FMTE^XLFDT($P(DGNODE,U,3))," to ",$$FMTE^XLFDT($P(DGNODE,U,4))
+"RTN","DG53P893",162,0)
+ . W !,"Number of patient records processed: ",$P(DGNODE,U,5)
+"RTN","DG53P893",163,0)
+ . W !,"Number of AEAR indexes rebuilt: "
+"RTN","DG53P893",164,0)
+ . W $S($P(DGNODE,U,6)'="":$P(DGNODE,U,6),1:"None")
+"RTN","DG53P893",165,0)
+ W !!,"*** END OF REPORT ***"
+"RTN","DG53P893",166,0)
+ Q
+"RTN","DG53P893",167,0)
+ ;
+"RTN","DG53P893",168,0)
+SNDMSG ; send MailMan message
+"RTN","DG53P893",169,0)
+ N DGLN,XMDUZ,XMSUB,XMTEXT,XMY,DGTXT
+"RTN","DG53P893",170,0)
+ ;
+"RTN","DG53P893",171,0)
+ S XMTEXT="^TMP(""DG53P893"",$J,"
+"RTN","DG53P893",172,0)
+ S XMSUB="Patch DG*5.3*893 (AEAR INDEX REBULD)"
+"RTN","DG53P893",173,0)
+ S XMDUZ=.5     ;indicate PostMaster is the sender
+"RTN","DG53P893",174,0)
+ S XMY(DUZ)=""  ;Send message to user starting job
+"RTN","DG53P893",175,0)
+ ;
+"RTN","DG53P893",176,0)
+ K ^TMP("DG53P893",$J)
+"RTN","DG53P893",177,0)
+ D MSGADD(XMSUB)
+"RTN","DG53P893",178,0)
+ D MSGADD("")
+"RTN","DG53P893",179,0)
+ D MSGADD("Started @ "_$$FMTE^XLFDT($P($G(^XTMP("DG53P893",0,0)),U,3)))
+"RTN","DG53P893",180,0)
+ D MSGADD("Finished @ "_$$FMTE^XLFDT($P($G(^XTMP("DG53P893",0,0)),U,4)))
+"RTN","DG53P893",181,0)
+ D MSGADD("")
+"RTN","DG53P893",182,0)
+ D MSGADD("The search/update process has completed.  The detailed ")
+"RTN","DG53P893",183,0)
+ D MSGADD("report can be viewed by running D EP^DG53P893 from the ")
+"RTN","DG53P893",184,0)
+ D MSGADD("programmer prompt. On "_$$FMTE^XLFDT(+$G(^XTMP("DG53P893",0)))_" the data will be purged. ")
+"RTN","DG53P893",185,0)
+ D MSGADD("")
+"RTN","DG53P893",186,0)
+ D MSGADD("Number of patient records processed: ")
+"RTN","DG53P893",187,0)
+ D MSGADD("")
+"RTN","DG53P893",188,0)
+ D MSGADD("     "_$P($G(^XTMP("DG53P893",0,0)),U,5))
+"RTN","DG53P893",189,0)
+ D MSGADD("Number of AEAR indexes rebuilt:")
+"RTN","DG53P893",190,0)
+ D MSGADD("")
+"RTN","DG53P893",191,0)
+ I $P($G(^XTMP("DG53P893",0,0)),U,6)="" D MSGADD("     None") Q
+"RTN","DG53P893",192,0)
+ D MSGADD("     "_$P(^XTMP("DG53P893",0,0),U,6))
+"RTN","DG53P893",193,0)
+ D MSGADD("")
+"RTN","DG53P893",194,0)
+ D MSGADD("*** End ***")
+"RTN","DG53P893",195,0)
+ D ^XMD      ;send Mailman message
+"RTN","DG53P893",196,0)
+ K ^TMP("DG53P893",$J)
+"RTN","DG53P893",197,0)
+ Q
+"RTN","DG53P893",198,0)
+ ;
+"RTN","DG53P893",199,0)
+MSGADD(DGLINE) N MSGLINE
+"RTN","DG53P893",200,0)
+ S MSGLINE=$O(^TMP("DG53P893",$J,""),-1)+1
+"RTN","DG53P893",201,0)
+ S ^TMP("DG53P893",$J,MSGLINE)=$G(DGLINE)
+"RTN","DG53P893",202,0)
+ Q
+"RTN","DG53P893",203,0)
+ ;
+"RTN","DG53P893",204,0)
+TASK ;Task the job using TaskMan
+"RTN","DG53P893",205,0)
+ N ZTDESC,ZTIO,ZTRTN
+"RTN","DG53P893",206,0)
+ S ZTIO="",ZTRTN="PROCESS^DG53P893",ZTDESC=DGDESC
+"RTN","DG53P893",207,0)
+ S ZTDTH=$$NOW^XLFDT()
+"RTN","DG53P893",208,0)
+ W ! D ^%ZTLOAD
+"RTN","DG53P893",209,0)
+ W:$G(ZTSK) "TaskMan Task: ",$G(ZTSK)
+"RTN","DG53P893",210,0)
+ Q
+"RTN","DG53P893",211,0)
+ ;
+"RTN","DG53P893",212,0)
+PRNHEAD ; Print report heading
+"RTN","DG53P893",213,0)
+ S DGLNCNT=8,DGPGNUM=DGPGNUM+1
+"RTN","DG53P893",214,0)
+ W @IOF,!!!,?(80-$L(DGDESC)/2),DGDESC
+"RTN","DG53P893",215,0)
+ W !!,"Run Date: ",$$HTE^XLFDT($H),?68,"Page: ",DGPGNUM
+"RTN","DG53P893",216,0)
+ W !!,"Patient IEN",?15,"Patient Name"
+"RTN","DG53P893",217,0)
+ W !,"===========",?15,"============"
+"RTN","DG53P893",218,0)
+ Q
+"RTN","DG53P893",219,0)
+ ;
+"RTN","DG53P893",220,0)
+USERDESC ;Write description to the screen for the user
+"RTN","DG53P893",221,0)
+ W !!,"This process will find all entries in the PATIENT file (#2) that"
+"RTN","DG53P893",222,0)
+ W !,"have field APPOINTMENT REQUEST ON 1010EZ (#1010.159) set to Y"
+"RTN","DG53P893",223,0)
+ W !,"and do not have an AEAR index for that field. The process will"
+"RTN","DG53P893",224,0)
+ W !,"set the index."
+"RTN","DG53P893",225,0)
+ W !!,"The clean up process will perform the following steps in order:"
+"RTN","DG53P893",226,0)
+ W !,"     1) Search/update the patient data.  (This step looks at "
+"RTN","DG53P893",227,0)
+ W !,"        every patient in the PATIENT (#2) file.)  A summary"
+"RTN","DG53P893",228,0)
+ W !,"        MailMan message will be sent to the user when the"
+"RTN","DG53P893",229,0)
+ W !,"        search/update is complete."
+"RTN","DG53P893",230,0)
+ W !,"     2) The user will need run D EP^DG53P893 from the programmer"
+"RTN","DG53P893",231,0)
+ W !,"        prompt to view the detailed report within 90 days."
+"RTN","DG53P893",232,0)
+ W !,"        NOTE: The system will purge the process log after 90"
+"RTN","DG53P893",233,0)
+ W !,"        days!"
+"RTN","DG53P893",234,0)
+ W !!,"Log data will be stored in the ^XTMP(""DG53P893"") global.",!
+"RTN","DG53P893",235,0)
+ ;
+"RTN","DG53P893",236,0)
+ Q
+"RTN","DGENACL2")
+0^1^B20337882^B18670558
+"RTN","DGENACL2",1,0)
+DGENACL2 ;ALB/MRY - NEW ENROLLEE APPOINTMENT CALL LIST - UPDATE ;08/14/2008
+"RTN","DGENACL2",2,0)
+ ;;5.3;Registration;**788,893**;08/13/93;Build 8
+"RTN","DGENACL2",3,0)
+ ;
+"RTN","DGENACL2",4,0)
+EXTRACT ;
+"RTN","DGENACL2",5,0)
+ N DGNAM,DGSSN,DGENRIEN,DGENR,DGENCAT,DGENSTA,DGSTA1,DGENPRI,DGENCV,DGENCVDT,DGENCVEL,DGCOM,DGPFSITE
+"RTN","DGENACL2",6,0)
+ N SDCNT,SDADT,SDARRY,SDCL,Y,FDATA,SDEXIT,DGRDTI,DGSTA
+"RTN","DGENACL2",7,0)
+ ;get preferred facility
+"RTN","DGENACL2",8,0)
+ S DGPFSITE=$$GET1^DIQ(4,+$$GET1^DIQ(2,DFNIEN,27.02,"I"),99)
+"RTN","DGENACL2",9,0)
+ S DGPFTF=$S(+$$GET1^DIQ(2,DFNIEN,27.02,"I"):$$GET1^DIQ(2,DFNIEN,27.02,"I"),1:"NULL")
+"RTN","DGENACL2",10,0)
+ I $E(DGSITE,1,3)'=$E(DGPFSITE,1,3) Q  ;DG*5.3*893 LLS replaced: I +DGSITE'=+DGPFSITE Q  ;if not same division skip
+"RTN","DGENACL2",11,0)
+ I DGPFTFLG=1,'$D(DGPFTF(DGPFTF)) Q  ;selection of preferred facilities
+"RTN","DGENACL2",12,0)
+ ;get enrollment information
+"RTN","DGENACL2",13,0)
+ S DGENRIEN=$$FINDCUR^DGENA(DFNIEN)
+"RTN","DGENACL2",14,0)
+ I DGENRIEN,$$GET^DGENA(DGENRIEN,.DGENR) ;set-up enrollment arry
+"RTN","DGENACL2",15,0)
+ I $G(DGENR("APP"))<3050801 Q
+"RTN","DGENACL2",16,0)
+ S DGENCAT=$$CATEGORY^DGENA4(,$G(DGENR("STATUS"))) ;enrollment category
+"RTN","DGENACL2",17,0)
+ I DGENCAT'="E" Q
+"RTN","DGENACL2",18,0)
+ S DGENCAT=$$EXTERNAL^DILFD(27.15,.02,"",DGENCAT)
+"RTN","DGENACL2",19,0)
+ S DGENSTA=$S($G(DGENR("STATUS")):$$EXT^DGENU("STATUS",DGENR("STATUS")),1:"")
+"RTN","DGENACL2",20,0)
+ S DGENPRI=$S($G(DGENR("PRIORITY")):DGENR("PRIORITY"),1:"")_$S($G(DGENR("SUBGRP")):$$EXT^DGENU("SUBGRP",DGENR("SUBGRP")),1:"")
+"RTN","DGENACL2",21,0)
+ D APPTCK ;check appts.
+"RTN","DGENACL2",22,0)
+ I +DGERROR Q  ;RSA API error
+"RTN","DGENACL2",23,0)
+ I SDEXIT Q  ;quit if appointment < 'date notified of request date'.
+"RTN","DGENACL2",24,0)
+ ;if call list, quit if request status 'filled' or 'completed'.
+"RTN","DGENACL2",25,0)
+ I DGRPT=1 Q:(SDCNT>0)!(DGSTA="C")!(DGSTA="F")
+"RTN","DGENACL2",26,0)
+ S SDADT=$G(SDADT)
+"RTN","DGENACL2",27,0)
+ S DGNAM=$$GET1^DIQ(2,DFNIEN,.01),DGSSN=$E($$GET1^DIQ(2,DFNIEN,.09),6,9)
+"RTN","DGENACL2",28,0)
+ S DGENCV=$$CVEDT^DGCV(DFNIEN),DGENCVDT=$P($G(DGENCV),"^",2),DGENCVEL=$P($G(DGENCV),"^",3)
+"RTN","DGENACL2",29,0)
+ ;build temp file
+"RTN","DGENACL2",30,0)
+ S DGPFTF=$S(+DGPFTF:$$GET1^DIQ(4,DGPFTF,.01)_"("_DGPFSITE_")",1:"ZZZZZ")
+"RTN","DGENACL2",31,0)
+ S DGSTA1=$S(DGSTA="":1,DGSTA="I":2,DGSTA="E":3,DGSTA="F":4,1:DGSTA)
+"RTN","DGENACL2",32,0)
+ S ^TMP($J,"DGEN NEACL",DGPFTF,DGSTA1,DGRDTI,DGNAM,DFNIEN)=SDADT
+"RTN","DGENACL2",33,0)
+ I $G(DGENCAT)'=""!($G(DGENSTA)'="")!($G(DGENPRI)'="")!($G(DGENCVEL)'="") D
+"RTN","DGENACL2",34,0)
+ . S ^TMP($J,"DGEN NEACL",DGPFTF,DGSTA1,DGRDTI,DGNAM,DFNIEN,"PRIORITY")=DGENCAT_"^"_DGENSTA_"^"_DGENPRI_"^"_DGENCVEL
+"RTN","DGENACL2",35,0)
+ Q
+"RTN","DGENACL2",36,0)
+ ;
+"RTN","DGENACL2",37,0)
+APPTCK ;
+"RTN","DGENACL2",38,0)
+ ;quit, if no appointment questioned asked?
+"RTN","DGENACL2",39,0)
+ S DGRDTI=$$GET1^DIQ(2,DFNIEN,1010.1511,"I") I 'DGRDTI S SDEXIT=1 Q
+"RTN","DGENACL2",40,0)
+ ;get request status
+"RTN","DGENACL2",41,0)
+ S DGSTA=$$GET1^DIQ(2,DFNIEN,1010.161,"I")
+"RTN","DGENACL2",42,0)
+ ;look for any appointments made (quit if none, or appt. date < 'notify of request date'
+"RTN","DGENACL2",43,0)
+ K ^TMP($J,"SDAMA301")
+"RTN","DGENACL2",44,0)
+ S SDARRY(4)=DFNIEN
+"RTN","DGENACL2",45,0)
+ S SDARRY("FLDS")=1
+"RTN","DGENACL2",46,0)
+ S SDARRY("MAX")=1
+"RTN","DGENACL2",47,0)
+ S SDEXIT=0
+"RTN","DGENACL2",48,0)
+ S SDCNT=$$SDAPI^SDAMA301(.SDARRY) I SDCNT<0 S DGERROR=$$ERR() Q
+"RTN","DGENACL2",49,0)
+ Q:(SDCNT'>0)  ;no appointment
+"RTN","DGENACL2",50,0)
+ ;quit if appointment < 'notify of request date'
+"RTN","DGENACL2",51,0)
+ S SDCL=0 F  S SDCL=$O(^TMP($J,"SDAMA301",DFNIEN,SDCL)) Q:'SDCL  D  I SDEXIT=1 Q
+"RTN","DGENACL2",52,0)
+ . I $O(^TMP($J,"SDAMA301",DFNIEN,SDCL,0))<DGRDTI S SDEXIT=1
+"RTN","DGENACL2",53,0)
+ ;
+"RTN","DGENACL2",54,0)
+ K ^TMP($J,"SDAMA301")
+"RTN","DGENACL2",55,0)
+ ;Check appointments (scheduled/kept, inpatient, no action)
+"RTN","DGENACL2",56,0)
+ S SDARRY(1)=DGRDTI_";" ;look out from 'notify of request date' to future.
+"RTN","DGENACL2",57,0)
+ S SDARRY(3)="R;I;NT"
+"RTN","DGENACL2",58,0)
+ S SDARRY(4)=DFNIEN,SDARRY("FLDS")=1
+"RTN","DGENACL2",59,0)
+ K SDARRY("MAX") ;DG*5.3*893 LLS - added
+"RTN","DGENACL2",60,0)
+ S SDCNT=$$SDAPI^SDAMA301(.SDARRY) Q:(SDCNT'>0)
+"RTN","DGENACL2",61,0)
+ ;
+"RTN","DGENACL2",62,0)
+ ;DG*5.3*893 - LLS - This is the begin of the modified section.
+"RTN","DGENACL2",63,0)
+ K ^TMP("DGEN",$J,"BY_APPT_DT")
+"RTN","DGENACL2",64,0)
+ S SDCL=0 F  S SDCL=$O(^TMP($J,"SDAMA301",DFNIEN,SDCL)) Q:'SDCL  D  ;re-sort by appt dt/tm
+"RTN","DGENACL2",65,0)
+ . I $$GET1^DIQ(44,SDCL,2502,"I")="Y" Q  ;don't include no-count clinic appointment
+"RTN","DGENACL2",66,0)
+ . S SDADT="" F  S SDADT=$O(^TMP($J,"SDAMA301",DFNIEN,SDCL,SDADT)) Q:'SDADT  D
+"RTN","DGENACL2",67,0)
+ . . S ^TMP("DGEN",$J,"BY_APPT_DT",SDADT)=^TMP($J,"SDAMA301",DFNIEN,SDCL,SDADT)
+"RTN","DGENACL2",68,0)
+ S SDADT=$O(^TMP("DGEN",$J,"BY_APPT_DT",""))
+"RTN","DGENACL2",69,0)
+ I SDADT="" Q  ;no appointments found for 'count' clinics, so keep on call list
+"RTN","DGENACL2",70,0)
+ ;DG*5.3*893 - LLS - This is the end of the modified section.
+"RTN","DGENACL2",71,0)
+ ;
+"RTN","DGENACL2",72,0)
+ ;if appointment found and status '="filled", set status to 'filled'
+"RTN","DGENACL2",73,0)
+ I DGSTA'="F" D
+"RTN","DGENACL2",74,0)
+ . S DGCOM=$$GET1^DIQ(2,DFNIEN,1010.163)
+"RTN","DGENACL2",75,0)
+ . S DGCOM=DGCOM_$S(DGCOM'="":"<>",1:"")_"AutoComm:"_$S(DGSTA="":"null",1:$S($$GET1^DIQ(2,DFNIEN,1010.161,"I")="I":"IN PROGRESS",1:$$GET1^DIQ(2,DFNIEN,1010.161)))_"|FILLED"
+"RTN","DGENACL2",76,0)
+ . S FDATA(2,DFNIEN_",",1010.161)="F"
+"RTN","DGENACL2",77,0)
+ . S FDATA(2,DFNIEN_",",1010.163)=DGCOM
+"RTN","DGENACL2",78,0)
+ . D FILE^DIE("","FDATA","DPTERR")
+"RTN","DGENACL2",79,0)
+ . S DGSTA=$$GET1^DIQ(2,DFNIEN,1010.161,"I")
+"RTN","DGENACL2",80,0)
+ Q
+"RTN","DGENACL2",81,0)
+ERR() ; Process error message.
+"RTN","DGENACL2",82,0)
+ N DGERR
+"RTN","DGENACL2",83,0)
+ S DGERR=0
+"RTN","DGENACL2",84,0)
+ I $D(^TMP($J,"SDAMA301",101)) D
+"RTN","DGENACL2",85,0)
+ . S DGERR=101_"^"_"  *** RSA: Process DATABASE IS UNAVAILABLE ***"
+"RTN","DGENACL2",86,0)
+ I $D(^TMP($J,"SDAMA301",115)) D
+"RTN","DGENACL2",87,0)
+ . S DGERR=115_"^"_"  *** RSA: Appointment request filter contains invalid values ***"
+"RTN","DGENACL2",88,0)
+ I $D(^TMP($J,"SDAMA301",116)) D
+"RTN","DGENACL2",89,0)
+ . S DGERR=116_"^"_"  *** RSA: Data doesn't exist error has occurred ***"
+"RTN","DGENACL2",90,0)
+ I $D(^TMP($J,"SDAMA301",117)) D
+"RTN","DGENACL2",91,0)
+ . S DGERR=117_"^"_"  *** RSA: Other undefined error has occurred ***"
+"RTN","DGENACL2",92,0)
+ Q DGERR
+"VER")
+8.0^22.0
+"BLD",9735,6)
+^786
+**END**
+**END**
+

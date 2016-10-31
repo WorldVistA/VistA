@@ -1,0 +1,259 @@
+$TXT Created by                 at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 09/25/14 at 12:50
+=============================================================================
+Run Date: JAN 08, 2015                     Designation: LR*5.2*444
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #356                    Status: Released
+                  Compliance Date: FEB 09, 2015
+=============================================================================
+
+Associated patches: (v)LR*5.2*405  <<= must be installed BEFORE `LR*5.2*444'
+                    (v)LR*5.2*424  <<= must be installed BEFORE `LR*5.2*444'
+
+Subject: ADDRESS ISSUES RELATED TO TESTS NOT ACCESSIONING
+
+Category: 
+  - Routine
+  - PATCH FOR A PATCH
+
+Description:
+============
+
+ This patch addresses 5 issues in the LAB SERVICE package:
+  
+ 1.  Properly defined tests on an order not accessioning when one test is
+     not properly defined.
+  
+ 2.  Improperly defined test causes subsequent tests/orders to not be
+     accessioned.
+  
+ 3.  No warnings when panel test can't be accessioned.
+  
+ 4.  Howdy accessioning sometimes generates an <UNDEFINED> error.
+  
+ 5.  Accession labels sometimes don't print in Howdy.
+  
+  
+ BLOOD BANK IMPACT:
+ =================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*444 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*444 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*444 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ ASSOCIATED NSR:
+ ==============
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ ========================
+ 1.  INC000000994803 - Lab Howdy: Accessioning problem
+  
+     Duplicate:
+     ---------
+     INC000000745758
+  
+ 2.  INC000000994604 - Lab Collection Build issue
+    
+     Duplicates:
+     ----------
+     INC000000992215
+     INC000000999500
+     INC000001005024
+     INC000001012425
+     INC000001020239
+  
+ 3.  INC000000985017 - Accessioning failure with cosmic tests
+  
+ 4.  INC000001003111 - Accessioning <UNDEFINED> error
+  
+ 5.  INC000001043103 - Howdy: Some accession labels do not print
+  
+  
+    
+ PARTICIPATING TEST SITES:
+ ========================
+ Heartland East HCS
+ Salisbury VAMC
+ Sioux Falls VAMC
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1.  INC000000994803 - Lab Howdy: Accessioning problem
+  
+     Patient Safety Issue:
+     --------------------
+     PSPO #2576
+  
+     Problem:
+     --------
+     Following the release of LR*5.2*424, when an order has multiple tests
+     and one of the tests has no defined ACCESSION AREA\INSTITUTION or one 
+     of the tests has an ACCESSION AREA\INSTITUTION that does not match the
+     DIVISION assigned to the Howdy User, none of the tests on the order
+     are accessioned.
+  
+     Solution:
+     ---------
+     Modify routines LROE2 and LRWLST to allow all properly defined
+     tests on an order to be accessioned.
+  
+     Routine:  LROE2, LRWLST
+  
+  
+ 2.  INC000000994604 - Lab Collection Build issue
+  
+     Problem:
+     --------
+     A collection list is built by hospital location.  Following the   
+     release of LR*5.2*424, when a test cannot be accessioned
+     during a collection list build, tests/orders for all locations
+     that follow will also not be accessioned.
+  
+     Solution:
+     ---------
+     Modify routines LROE2 and LRWLST to allow subsequent test to be 
+     accessioned when a collection list contains a test that cannot be 
+     accessioned because it does not have a defined accession area.
+  
+     Routine:  LROE2, LRWLST
+  
+  
+ 3.  INC000000985017 - Accessioning failure with cosmic tests
+  
+     Problem:
+     --------
+     When a panel test is defined without an accession area and some of
+     the associated atomic tests can't be accessioned because they are 
+     not defined with an appropriate division/accession area, there is
+     no alert message/warning for the panel test similar to the message
+     that is displayed for atomic tests. 
+  
+     Solution:
+     ---------
+     Modify routine LRWLST to display an alert/warning for the panel
+     when a panel test has no division/accession area and 1 or more
+     of the associated atomic tests also has no division/accession area
+     and thus can't be accessioned.
+  
+     Routine:  LRWLST
+  
+  
+ 4.  INC000001003111 - Accessioning <UNDEFINED> error
+  
+     Problem:
+     --------
+     When an ordered test has an Accessioning Division (Institution)
+     other than the user's division, the accessioning process in Howdy
+     can fail with an <UNDEFINED> error in the background task.
+  
+     Solution:
+     ---------
+     Modify routine LRHYPH2 to correct this problem.
+  
+     Routine:   LRHYPH2
+  
+  
+ 5.  INC000001043103 - Howdy: Some accession labels do not print
+  
+     Problem:
+     --------
+     When a lab order has tests that split into multiple specimen
+     numbers in file 69 (Laboratory Orders), and the test with the
+     lower specimen number is properly defined with an appropriate
+     division/accession area, while a test on a higher specimen
+     is not properly defined, the first test (lower specimen number)
+     will accession but no label will print.
+  
+     Solution:
+     ---------
+     Modify routine LRHYPH2 to print the labels when tests have
+     been accessioned.
+  
+     Routine:   LRHYPH2
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ =========================
+ The install time for this patch is less than 2 minutes. This patch can be
+ installed when Laboratory users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system
+       to avoid problems loading and/or installing this patch.
+  
+ 1.  Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu.  This
+     option will load the KIDS patch onto your system.
+  
+ 2.  The patch has now been loaded into a Transport global on your
+     system.  You now need to use KIDS to install the transport global.
+  
+ 3.  On the 'Kernel Installation & Distribution System' Menu (KIDS),
+     select the 'Installation' menu.
+  
+ 4.  Use the 'Verify Checksum in Transport Global' option and verify
+     that all routines have the correct checksums.
+  
+ 5.  On the KIDS menu, under the 'Installation' menu, use the following
+     options:
+  
+     Print Transport Global
+     Compare Transport Global to Current System
+     Backup a Transport Global
+  
+     If you wish to preserve a copy of the routines exported in this 
+     patch prior to installation, you should use the 'Backup a Transport
+     Global' option at this time.  You may also compare the routines in
+     your production account to the routines in the patch by using the
+     'Compare a Transport Global to Current System' option.
+  
+ 6.  Use the 'Install Package(s)' option under the 'Installation' menu
+     and select the package 'LR*5.2*444'.
+  
+     When prompted, 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', choose 'NO'.
+  
+     When prompted, 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRHYPH2
+    Before: B12074115   After: B12043127  **405,444**
+Routine Name: LROE2
+    Before: B11045939   After: B10836155  **121,424,444**
+Routine Name: LRWLST
+    Before: B33834407   After: B35513968  **46,65,100,121,153,202,290,424,444**
+ 
+Routine list of preceding patches: 405, 424
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 10, 2014
+Completed By:                               Date Completed: JAN 05, 2015
+Released By :                               Date Released : JAN 08, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

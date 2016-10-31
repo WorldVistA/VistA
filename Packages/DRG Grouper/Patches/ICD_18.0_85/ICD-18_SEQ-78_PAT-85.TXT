@@ -1,0 +1,81 @@
+
+=============================================================================
+Run Date: MAR 30, 2016                     Designation: ICD*18*85
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #78                     Status: Released
+                  Compliance Date: APR 06, 2016
+=============================================================================
+
+
+Subject: Code Set FY16 3rd Qtr Update
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  This patch is an informational patch and contains no routines, data, data 
+  dictionaries or software components.  The data for this patch is exported 
+  with the Lexicon data in patch LEX*2.0*105.  Patch LEX*2.0*105 requires that
+  patch LEX*2.0*104 be previously installed.
+     
+  LEX*2.0*105 writes to the following file:
+ 
+      ICD OPERATION/PROCEDURE   #80.1     ^ICD0(       ICR 4486
+ 
+    
+  ENHANCEMENTS
+  ============
+ 
+    This patch removes Major Diagnostic Categories and DRGs Groups from 107
+    ICD-10-PCS codes that are only used in clusters.  These codes will inherit
+    the Major Diagnostic Category and DRG groups from the cluster.
+    
+       02H40JZ   02H40MZ   02H44JZ   02H44MZ   02H60JZ   02H60MZ   02H64JZ   
+       02H64MZ   02H70JZ   02H70MZ   02H74JZ   02H74MZ   02HK0JZ   02HK0MZ
+       02HK3MZ   02HK4JZ   02HK4MZ   02HL0JZ   02HL0MZ   02HL3MZ   02HL4JZ
+       02HL4MZ   05H533Z   05H633Z   05HM33Z   05HN33Z   05HP33Z   05HQ33Z
+       06HM33Z   06HN33Z   0DQF0ZZ   0DQG0ZZ   0DQL0ZZ   0DQM0ZZ   0F757DZ
+       0F758DZ   0F767DZ   0F768DZ   0F787DZ   0F788DZ   0F797DZ   0F798DZ
+       0F7D8DZ   0FHB8DZ   0FPBXDZ   0FPDXDZ   0JH604Z   0JH605Z   0JH606Z
+       0JH634Z   0JH635Z   0JH636Z   0JH804Z   0JH805Z   0JH806Z   0JH834Z
+       0JH835Z   0JH836Z   0PS33ZZ   0PS43ZZ   0QS03ZZ   0QS13ZZ   0SP908Z
+       0SP948Z   0SPB08Z   0SPB48Z   0TTD0ZZ   4A02X4A   B5130ZA   B5131ZA
+       B513YZA   B513ZZA   B5140ZA   B5141ZA   B514YZA   B514ZZA   B5150ZA
+       B5151ZA   B515YZA   B515ZZA   B5160ZA   B5161ZA   B516YZA   B516ZZA
+       B5170ZA   B5171ZA   B517YZA   B517ZZA   B51B0ZA   B51B1ZA   B51BYZA
+       B51BZZA   B51C0ZA   B51C1ZA   B51CYZA   B51CZZA   B51D0ZA   B51D1ZA
+       B51DYZA   B51DZZA   B543ZZA   B544ZZA   B546ZZA   B547ZZA   B54BZZA
+       B54CZZA   B54DZZA 
+ 
+ 
+  REQUEST/INCIDENTS:
+  =================
+  
+    None
+  
+  
+  INSTALLATION INSTRUCTIONS
+  =========================
+                
+    Please refer to the patch description for LEX*2.0*105 for instructions
+    for retrieving the data global host file and installing this patch.
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 25, 2016
+Completed By:                               Date Completed: MAR 29, 2016
+Released By :                               Date Released : MAR 30, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

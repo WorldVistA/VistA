@@ -1,0 +1,1767 @@
+Released SD*5.3*564 SEQ #507
+Extracted from mail message
+**KIDS**:SD*5.3*564^
+
+**INSTALL NAME**
+SD*5.3*564
+"BLD",8909,0)
+SD*5.3*564^SCHEDULING^0^3130211^y
+"BLD",8909,1,0)
+^^7^7^3130211^^^^
+"BLD",8909,1,1,0)
+This patch will address several inconsistencies in a list of patients
+"BLD",8909,1,2,0)
+selected and displayed as available ones for multi assignment by 
+"BLD",8909,1,3,0)
+appointment in a clinic. That list of patients is available in PCMM GUI.
+"BLD",8909,1,4,0)
+Additionally this patch will address a problem with incorrect indication 
+"BLD",8909,1,5,0)
+of the patient Primary Care assignment if a hanging cross-reference in 
+"BLD",8909,1,6,0)
+the Patient Team Position Assignment file (# 404.43) is evaluated as a 
+"BLD",8909,1,7,0)
+valid one.
+"BLD",8909,4,0)
+^9.64PA^^
+"BLD",8909,6)
+2^
+"BLD",8909,6.3)
+8
+"BLD",8909,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8909,"KRN",.4,0)
+.4
+"BLD",8909,"KRN",.401,0)
+.401
+"BLD",8909,"KRN",.402,0)
+.402
+"BLD",8909,"KRN",.403,0)
+.403
+"BLD",8909,"KRN",.5,0)
+.5
+"BLD",8909,"KRN",.84,0)
+.84
+"BLD",8909,"KRN",3.6,0)
+3.6
+"BLD",8909,"KRN",3.8,0)
+3.8
+"BLD",8909,"KRN",9.2,0)
+9.2
+"BLD",8909,"KRN",9.8,0)
+9.8
+"BLD",8909,"KRN",9.8,"NM",0)
+^9.68A^4^4
+"BLD",8909,"KRN",9.8,"NM",1,0)
+SCAPMC28^^0^B31673868
+"BLD",8909,"KRN",9.8,"NM",2,0)
+SCAPMCU2^^0^B47183046
+"BLD",8909,"KRN",9.8,"NM",3,0)
+SCMCBK^^0^B67929176
+"BLD",8909,"KRN",9.8,"NM",4,0)
+SCMCTPU2^^0^B8888936
+"BLD",8909,"KRN",9.8,"NM","B","SCAPMC28",1)
+
+"BLD",8909,"KRN",9.8,"NM","B","SCAPMCU2",2)
+
+"BLD",8909,"KRN",9.8,"NM","B","SCMCBK",3)
+
+"BLD",8909,"KRN",9.8,"NM","B","SCMCTPU2",4)
+
+"BLD",8909,"KRN",19,0)
+19
+"BLD",8909,"KRN",19.1,0)
+19.1
+"BLD",8909,"KRN",101,0)
+101
+"BLD",8909,"KRN",409.61,0)
+409.61
+"BLD",8909,"KRN",771,0)
+771
+"BLD",8909,"KRN",779.2,0)
+779.2
+"BLD",8909,"KRN",870,0)
+870
+"BLD",8909,"KRN",8989.51,0)
+8989.51
+"BLD",8909,"KRN",8989.52,0)
+8989.52
+"BLD",8909,"KRN",8994,0)
+8994
+"BLD",8909,"KRN","B",.4,.4)
+
+"BLD",8909,"KRN","B",.401,.401)
+
+"BLD",8909,"KRN","B",.402,.402)
+
+"BLD",8909,"KRN","B",.403,.403)
+
+"BLD",8909,"KRN","B",.5,.5)
+
+"BLD",8909,"KRN","B",.84,.84)
+
+"BLD",8909,"KRN","B",3.6,3.6)
+
+"BLD",8909,"KRN","B",3.8,3.8)
+
+"BLD",8909,"KRN","B",9.2,9.2)
+
+"BLD",8909,"KRN","B",9.8,9.8)
+
+"BLD",8909,"KRN","B",19,19)
+
+"BLD",8909,"KRN","B",19.1,19.1)
+
+"BLD",8909,"KRN","B",101,101)
+
+"BLD",8909,"KRN","B",409.61,409.61)
+
+"BLD",8909,"KRN","B",771,771)
+
+"BLD",8909,"KRN","B",779.2,779.2)
+
+"BLD",8909,"KRN","B",870,870)
+
+"BLD",8909,"KRN","B",8989.51,8989.51)
+
+"BLD",8909,"KRN","B",8989.52,8989.52)
+
+"BLD",8909,"KRN","B",8994,8994)
+
+"BLD",8909,"QDEF")
+^^^^NO^^^^NO^^YES
+"BLD",8909,"QUES",0)
+^9.62^^
+"BLD",8909,"REQB",0)
+^9.611^3^3
+"BLD",8909,"REQB",1,0)
+SD*5.3*346^2
+"BLD",8909,"REQB",2,0)
+SD*5.3*458^2
+"BLD",8909,"REQB",3,0)
+SD*5.3*204^2
+"BLD",8909,"REQB","B","SD*5.3*204",3)
+
+"BLD",8909,"REQB","B","SD*5.3*346",1)
+
+"BLD",8909,"REQB","B","SD*5.3*458",2)
+
+"MBREQ")
+0
+"PKG",16,-1)
+1^1
+"PKG",16,0)
+SCHEDULING^SD^APPOINTMENTS,PROFILES,LETTERS,AMIS REPORTS
+"PKG",16,20,0)
+^9.402P^^
+"PKG",16,22,0)
+^9.49I^1^1
+"PKG",16,22,1,0)
+5.3^2930813
+"PKG",16,22,1,"PAH",1,0)
+564^3130211^100892
+"PKG",16,22,1,"PAH",1,1,0)
+^^7^7^3130211
+"PKG",16,22,1,"PAH",1,1,1,0)
+This patch will address several inconsistencies in a list of patients
+"PKG",16,22,1,"PAH",1,1,2,0)
+selected and displayed as available ones for multi assignment by 
+"PKG",16,22,1,"PAH",1,1,3,0)
+appointment in a clinic. That list of patients is available in PCMM GUI.
+"PKG",16,22,1,"PAH",1,1,4,0)
+Additionally this patch will address a problem with incorrect indication 
+"PKG",16,22,1,"PAH",1,1,5,0)
+of the patient Primary Care assignment if a hanging cross-reference in 
+"PKG",16,22,1,"PAH",1,1,6,0)
+the Patient Team Position Assignment file (# 404.43) is evaluated as a 
+"PKG",16,22,1,"PAH",1,1,7,0)
+valid one.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","SCAPMC28")
+0^1^B31673868^B26899437
+"RTN","SCAPMC28",1,0)
+SCAPMC28 ;ALB/REW - Patients with an Appointment ; 1/10/05 2:49pm
+"RTN","SCAPMC28",2,0)
+ ;;5.3;Scheduling;**41,140,346,564**;AUG 13, 1993;Build 8
+"RTN","SCAPMC28",3,0)
+ ;;1.0
+"RTN","SCAPMC28",4,0)
+PTAP(SCCL,SCDATES,SCMAXCNT,SCLIST,SCERR,MORE) ; -- list of patients with an appointment in a given clinic
+"RTN","SCAPMC28",5,0)
+ ; 
+"RTN","SCAPMC28",6,0)
+ ; input:
+"RTN","SCAPMC28",7,0)
+ ;  SCCL = Pointer to File #44
+"RTN","SCAPMC28",8,0)
+ ;  SCDATES("BEGIN") = begin date to search (inclusive)
+"RTN","SCAPMC28",9,0)
+ ;                      [default: TODAY]
+"RTN","SCAPMC28",10,0)
+ ;        ("END")   = end date to search (inclusive)
+"RTN","SCAPMC28",11,0)
+ ;                      [default: TODAY]
+"RTN","SCAPMC28",12,0)
+ ;        ("INCL")  = 1: only use patients who were assigned to
+"RTN","SCAPMC28",13,0)
+ ;                       team for entire date range
+"RTN","SCAPMC28",14,0)
+ ;                    0: anytime in date range
+"RTN","SCAPMC28",15,0)
+ ;                      [default: 1] 
+"RTN","SCAPMC28",16,0)
+ ;  SCMAXCNT        - Maximum # of patients to return, default=99
+"RTN","SCAPMC28",17,0)
+ ;  SCLIST -array name to store list
+"RTN","SCAPMC28",18,0)
+ ;          [ex. ^TMP("SCPT",$J)]
+"RTN","SCAPMC28",19,0)
+ ;        
+"RTN","SCAPMC28",20,0)
+ ;  SCERR = array NAME to store error messages.
+"RTN","SCAPMC28",21,0)
+ ;          [ex. ^TMP("ORXX",$J)]
+"RTN","SCAPMC28",22,0)
+ ;  MORE - This is a flag that says that this list exists and has been
+"RTN","SCAPMC28",23,0)
+ ;         aborted because it reached the maxcount.  If this =1 it means
+"RTN","SCAPMC28",24,0)
+ ;         'kill the old list & start where you finished'
+"RTN","SCAPMC28",25,0)
+ ;  Note: Don't Return DFNs where $D(^TMP("SCMC",$J,"EXCLUDE PT","SCPTA",+DFN)) is true
+"RTN","SCAPMC28",26,0)
+ ; Output:
+"RTN","SCAPMC28",27,0)
+ ;  SCLIST() = array of patients
+"RTN","SCAPMC28",28,0)
+ ;             Format:
+"RTN","SCAPMC28",29,0)
+ ;               Subscript: Sequential # from 1 to n
+"RTN","SCAPMC28",30,0)
+ ;               Piece     Description
+"RTN","SCAPMC28",31,0)
+ ;                 1       IEN of PATIENT file entry
+"RTN","SCAPMC28",32,0)
+ ;                 2       Name of patient
+"RTN","SCAPMC28",33,0)
+ ;                 3       ien to 40.7 - Not Stop Code!! stp=$$intstp
+"RTN","SCAPMC28",34,0)
+ ;                 4       AMIS reporting stop code
+"RTN","SCAPMC28",35,0)
+ ;                 5       Patient's Long ID (SSN)
+"RTN","SCAPMC28",36,0)
+ ;
+"RTN","SCAPMC28",37,0)
+ ; SCEFFDT - negative of effective date
+"RTN","SCAPMC28",38,0)
+ ; SCN     - current subscript (counter) 1->n
+"RTN","SCAPMC28",39,0)
+ ; SCPTA0   is 0 node of Patient Team Assignment file 1st piece is DFN
+"RTN","SCAPMC28",40,0)
+ ;  SCERR() = Array of DIALOG file messages(errors) .
+"RTN","SCAPMC28",41,0)
+ ;  @SCERR@(0)=number of errors, undefined if none
+"RTN","SCAPMC28",42,0)
+ ;             Foramt:
+"RTN","SCAPMC28",43,0)
+ ;               Subscript: Sequential # from 1 to n
+"RTN","SCAPMC28",44,0)
+ ;               Piece     Description
+"RTN","SCAPMC28",45,0)
+ ;                 1       IEN of DIALOG file
+"RTN","SCAPMC28",46,0)
+ ;
+"RTN","SCAPMC28",47,0)
+ ;   Returned: 1 if ok, 0 if error^More?
+"RTN","SCAPMC28",48,0)
+ ;
+"RTN","SCAPMC28",49,0)
+ ;
+"RTN","SCAPMC28",50,0)
+ST N SCEND,SCVSDT,SCSTART
+"RTN","SCAPMC28",51,0)
+ N SCLSEQ,SCN,SCESEQ,SCPARM,SCP,SCBEGIN,SCEND,SCINCL,SCDTS
+"RTN","SCAPMC28",52,0)
+ G:'$$OKDATA APQ ;check/setup variables
+"RTN","SCAPMC28",53,0)
+ ; -- loop through visit file
+"RTN","SCAPMC28",54,0)
+LP S SCDT=SCBEGIN
+"RTN","SCAPMC28",55,0)
+ S:'$P(SCEND,".",2) SCEND=$$FMADD^XLFDT(SCEND,1) ;ending is end of day
+"RTN","SCAPMC28",56,0)
+ IF $G(MORE) D
+"RTN","SCAPMC28",57,0)
+ .S SCSTART=$P($G(@SCLIST@(0)),U,2)
+"RTN","SCAPMC28",58,0)
+ .S SCBEGIN=$P($G(@SCLIST@(0)),U,3)
+"RTN","SCAPMC28",59,0)
+ .K @SCLIST
+"RTN","SCAPMC28",60,0)
+APQ Q $$PTAPX(.SCCL,.SCBEGIN,.SCEND,.SCMAXCNT,.SCLIST,.SCERR,.SCSTART)
+"RTN","SCAPMC28",61,0)
+ ;
+"RTN","SCAPMC28",62,0)
+PTAPX(SCCL,SCBEGIN,SCEND,MAXCNT,SCLIST,SCERR,SCSTART) ;return appointments in dt range
+"RTN","SCAPMC28",63,0)
+ ; Input: (As above plus:)
+"RTN","SCAPMC28",64,0)
+ ;    SCSTART - Continue with list at this point
+"RTN","SCAPMC28",65,0)
+ ; output: SCN - COUNT OF PTS
+"RTN","SCAPMC28",66,0)
+ ; returns:      dfn^ptname^clinic^apptdt^long id
+"RTN","SCAPMC28",67,0)
+ ; 
+"RTN","SCAPMC28",68,0)
+ ;initialize variables
+"RTN","SCAPMC28",69,0)
+ N SCDT,SCARRAY,DFN,SDAPTCNT,SDARRAY,SDERR,SDX,SDY
+"RTN","SCAPMC28",70,0)
+ K ^TMP($J,"SDAMA301")
+"RTN","SCAPMC28",71,0)
+ ;setup call to SDAPI
+"RTN","SCAPMC28",72,0)
+ ;filter for OUTPATIENT ENCOUNTER (OE) pointer for only "KEPT" appointment- sd/564
+"RTN","SCAPMC28",73,0)
+ ;include field 12 - pointer to OE file
+"RTN","SCAPMC28",74,0)
+ S SDARRAY(1)=$G(SCBEGIN)_";"_$G(SCEND),SDARRAY(2)=$G(SCCL),SDARRAY("FLDS")="4;12"
+"RTN","SCAPMC28",75,0)
+ S SDARRAY("SORT")="P"
+"RTN","SCAPMC28",76,0)
+ ;call SDAPI to retrieve appointments
+"RTN","SCAPMC28",77,0)
+ S SDAPTCNT=$$SDAPI^SDAMA301(.SDARRAY)
+"RTN","SCAPMC28",78,0)
+ ;handle errors if any returned from SDAPI and QUIT
+"RTN","SCAPMC28",79,0)
+ I SDAPTCNT<0 D  Q ($G(@SCERR@(0))<1)_U_(SCN'<SCMAXCNT)
+"RTN","SCAPMC28",80,0)
+ .;call existing error handler
+"RTN","SCAPMC28",81,0)
+ .D ERR^SCAPMCU1(.SCESEQ,,,"",.SCERR)
+"RTN","SCAPMC28",82,0)
+ .K ^TMP($J,"SDAMA301")
+"RTN","SCAPMC28",83,0)
+ ;if appointments returned 
+"RTN","SCAPMC28",84,0)
+ I SDAPTCNT>0 D
+"RTN","SCAPMC28",85,0)
+ .;retrieve patient ID to start at if continuing list (was appt ifn)
+"RTN","SCAPMC28",86,0)
+ .; * no code could be found to utilize continuation of a list
+"RTN","SCAPMC28",87,0)
+ .; * if this changes this code should be revisited to ensure only 1
+"RTN","SCAPMC28",88,0)
+ .;   call to SDAPI is made.
+"RTN","SCAPMC28",89,0)
+ .S DFN=+$G(SCSTART)
+"RTN","SCAPMC28",90,0)
+ .S SCSTART=0
+"RTN","SCAPMC28",91,0)
+ .S SCDT=0
+"RTN","SCAPMC28",92,0)
+ .;resort appts to ensure same data is returned to user
+"RTN","SCAPMC28",93,0)
+ .;only 1st appt date/time is needed for each patient
+"RTN","SCAPMC28",94,0)
+ .;as patient can only be added to the list once.
+"RTN","SCAPMC28",95,0)
+ .K ^TMP($J,"RE-SORT","SDAMA301")
+"RTN","SCAPMC28",96,0)
+ .;
+"RTN","SCAPMC28",97,0)
+ .;identify appointment entries without pointers to OE to exclude them - SD/564
+"RTN","SCAPMC28",98,0)
+ .S (SDY,SDX)=0
+"RTN","SCAPMC28",99,0)
+ .F  S SDX=$O(^TMP($J,"SDAMA301",SDX)) Q:'SDX  D
+"RTN","SCAPMC28",100,0)
+ ..S SDY="" F  S SDY=$O(^TMP($J,"SDAMA301",SDX,SDY)) Q:SDY=""  D
+"RTN","SCAPMC28",101,0)
+ ...;eliminate not kept appointments; no entry in OUTPATIENT ENCOUNTER
+"RTN","SCAPMC28",102,0)
+ ...I $P(^TMP($J,"SDAMA301",SDX,SDY),U,12)="" K ^TMP($J,"SDAMA301",SDX,SDY)
+"RTN","SCAPMC28",103,0)
+ .;
+"RTN","SCAPMC28",104,0)
+ .S (SDY,SDX)=0
+"RTN","SCAPMC28",105,0)
+ .F  S SDX=$O(^TMP($J,"SDAMA301",SDX)) Q:'SDX  D
+"RTN","SCAPMC28",106,0)
+ ..S SDY=$O(^TMP($J,"SDAMA301",SDX,""))
+"RTN","SCAPMC28",107,0)
+ ..S ^TMP($J,"RE-SORT","SDAMA301",SDY,SDX)=""
+"RTN","SCAPMC28",108,0)
+ .K ^TMP($J,"SDAMA301")
+"RTN","SCAPMC28",109,0)
+ .;loop through re-sorted appts returned from SDAPI until
+"RTN","SCAPMC28",110,0)
+ .; 1. no more patients with appointments exist
+"RTN","SCAPMC28",111,0)
+ .; 2. number of patients found that match criteria is not less than max
+"RTN","SCAPMC28",112,0)
+ .F  S SCDT=$O(^TMP($J,"RE-SORT","SDAMA301",SCDT)) Q:'SCDT!(SCN'<SCMAXCNT)  D
+"RTN","SCAPMC28",113,0)
+ ..;get patient for the kept appointment in the re-sorted list
+"RTN","SCAPMC28",114,0)
+ ..F  S DFN=$O(^TMP($J,"RE-SORT","SDAMA301",SCDT,DFN)) Q:'DFN!(SCN'<SCMAXCNT)  D
+"RTN","SCAPMC28",115,0)
+ ...;quit if patient is found in either of the following lists
+"RTN","SCAPMC28",116,0)
+ ...;this list may be used elsewhere, left in for compatibility
+"RTN","SCAPMC28",117,0)
+ ...Q:$D(@SCLIST@("SCPTAP",+DFN))
+"RTN","SCAPMC28",118,0)
+ ...Q:$D(^TMP("SCMC",$J,"EXCLUDE PT","SCPTA",+DFN))
+"RTN","SCAPMC28",119,0)
+ ...;increment the patient counter and store in SCLIST
+"RTN","SCAPMC28",120,0)
+ ...S SCN=$G(@SCLIST@(0))+1
+"RTN","SCAPMC28",121,0)
+ ...S @SCLIST@(0)=SCN
+"RTN","SCAPMC28",122,0)
+ ...;get the patient's long ID (SSN) and Name
+"RTN","SCAPMC28",123,0)
+ ...D GETS^DIQ(2,+DFN,".01;.363","","SCARRAY")
+"RTN","SCAPMC28",124,0)
+ ...;add the following appt info to SCLIST at the current Patient Counter
+"RTN","SCAPMC28",125,0)
+ ...;1. Patient DFN 2. Patient Name 3. Clinic IEN 4. Appt DTM 5. Patients Long ID
+"RTN","SCAPMC28",126,0)
+ ...S @SCLIST@(SCN)=DFN_U_$G(SCARRAY(2,+DFN_",",.01))_U_SCCL_U_SCDT_U_$G(SCARRAY(2,+DFN_",",.363))
+"RTN","SCAPMC28",127,0)
+ ...;add the patient's DFN to the exclusion list
+"RTN","SCAPMC28",128,0)
+ ...S @SCLIST@("SCPTAP",+DFN,+SCN)=""
+"RTN","SCAPMC28",129,0)
+ ;kill the re-sorted appt global reference generated
+"RTN","SCAPMC28",130,0)
+ K ^TMP($J,"RE-SORT","SDAMA301")
+"RTN","SCAPMC28",131,0)
+ ;if # of patients found that match criteria is NOT LESS than the requested Max then
+"RTN","SCAPMC28",132,0)
+ ;set SCLIST at the 0 Node to:
+"RTN","SCAPMC28",133,0)
+ ;1.Current Patient Count 2. Current Patient Processing 3. Appt DTM 4. Clinic IEN
+"RTN","SCAPMC28",134,0)
+ S:(SCN'<SCMAXCNT) @SCLIST@(0)=SCN_U_+$G(DFN)_U_+$G(SCDT)_U_+$G(SCCL)
+"RTN","SCAPMC28",135,0)
+ Q ($G(@SCERR@(0))<1)_U_(SCN'<SCMAXCNT)
+"RTN","SCAPMC28",136,0)
+ ;
+"RTN","SCAPMC28",137,0)
+OKDATA() ;check/setup variables
+"RTN","SCAPMC28",138,0)
+ N SCOK
+"RTN","SCAPMC28",139,0)
+ S SCOK=1
+"RTN","SCAPMC28",140,0)
+ S SCMAXCNT=$G(SCMAXCNT,99)
+"RTN","SCAPMC28",141,0)
+ D INIT^SCAPMCU1(.SCOK) ; set default dates & error array (if undefined)
+"RTN","SCAPMC28",142,0)
+ IF '$D(^SC(+$G(SCCL),0)) D  S SCOK=0
+"RTN","SCAPMC28",143,0)
+ . S SCPARM("CLINIC")=$G(SCCL,"Undefined")
+"RTN","SCAPMC28",144,0)
+ . D ERR^SCAPMCU1(.SCESEQ,4045101,.SCPARM,"",.SCERR)
+"RTN","SCAPMC28",145,0)
+ ; -- is it a valid TEAM ien passed (Error # 4045101 in DIALOG file)
+"RTN","SCAPMC28",146,0)
+ Q SCOK
+"RTN","SCAPMCU2")
+0^2^B47183046^B44993468
+"RTN","SCAPMCU2",1,0)
+SCAPMCU2 ;ALB/REW - TEAM API UTILITIES ;6/29/99  19:40  ; Compiled May 29, 2007 15:16:13
+"RTN","SCAPMCU2",2,0)
+ ;;5.3;Scheduling;**41,177,205,458,564**;AUG 13, 1993;Build 8
+"RTN","SCAPMCU2",3,0)
+ ;;1.0
+"RTN","SCAPMCU2",4,0)
+DTAFTER(FILE,IEN,STATUS,DATE) ;return next date after given one
+"RTN","SCAPMCU2",5,0)
+ N SCX
+"RTN","SCAPMCU2",6,0)
+ S SCX=-1
+"RTN","SCAPMCU2",7,0)
+ G:('$G(FILE))!("^404.52^404.58^404.59^"'[$G(FILE))!('$G(IEN)) QTDTAF
+"RTN","SCAPMCU2",8,0)
+ S ROOT="^SCTM("_FILE_",""AIDT"",IEN,STATUS)"
+"RTN","SCAPMCU2",9,0)
+ S EFFDT=-DATE
+"RTN","SCAPMCU2",10,0)
+ S SCX=$P($O(@ROOT@(EFFDT),-1),"-",2)
+"RTN","SCAPMCU2",11,0)
+QTDTAF Q SCX
+"RTN","SCAPMCU2",12,0)
+ ;
+"RTN","SCAPMCU2",13,0)
+DTBEFORE(FILE,IEN,STATUS,DATE) ;return next date before given one
+"RTN","SCAPMCU2",14,0)
+ N SCX
+"RTN","SCAPMCU2",15,0)
+ S SCX=-1
+"RTN","SCAPMCU2",16,0)
+ G:('$G(FILE))!("^404.52^404.58^404.59^"'[$G(FILE))!('$G(IEN)) QTDTBF
+"RTN","SCAPMCU2",17,0)
+ S ROOT="^SCTM("_FILE_",""AIDT"",IEN,STATUS)"
+"RTN","SCAPMCU2",18,0)
+ S EFFDT=-DATE
+"RTN","SCAPMCU2",19,0)
+ S SCX=$P($O(@ROOT@(EFFDT)),"-",2)
+"RTN","SCAPMCU2",20,0)
+QTDTBF Q SCX
+"RTN","SCAPMCU2",21,0)
+ ;
+"RTN","SCAPMCU2",22,0)
+ACTHISTB(FILE,IEN) ;boolean active function
+"RTN","SCAPMCU2",23,0)
+ ;abbreviated form of call below - no error handling
+"RTN","SCAPMCU2",24,0)
+ N X,SCACTB
+"RTN","SCAPMCU2",25,0)
+ S X=+$$ACTHIST(.FILE,.IEN,"SCACTB")
+"RTN","SCAPMCU2",26,0)
+ Q $S(X=1:1,1:0)
+"RTN","SCAPMCU2",27,0)
+ ;
+"RTN","SCAPMCU2",28,0)
+ACTHIST(FILE,IEN,SCDATES,SCERR,SCLIST) ;is entry active for a time period?
+"RTN","SCAPMCU2",29,0)
+ ; Input Parameters:
+"RTN","SCAPMCU2",30,0)
+ ;    File = either 404.52 or 404.58 or 404.59
+"RTN","SCAPMCU2",31,0)
+ ;    IEN  = pointer to team(404.51) or team position(404.57)
+"RTN","SCAPMCU2",32,0)
+ ;    SCDATES = (SEE PRIOR DEFINITION)
+"RTN","SCAPMCU2",33,0)
+ ;    SCLIST  = Output array
+"RTN","SCAPMCU2",34,0)
+ ;  Returned:
+"RTN","SCAPMCU2",35,0)
+ ;  status (-1:error|0:inactive|1:active)^ien for file^actdt^inacdt
+"RTN","SCAPMCU2",36,0)
+ ;          which ien depends on status
+"RTN","SCAPMCU2",37,0)
+ ;
+"RTN","SCAPMCU2",38,0)
+ N OK,X,ROOT,SCBEGIN,SCEND,SCINCL,SCDATE,SCA,SCDTS,SCE
+"RTN","SCAPMCU2",39,0)
+ S OK=-1,X=""
+"RTN","SCAPMCU2",40,0)
+ G:('$G(FILE))!("^404.52^404.53^404.58^404.59^"'[$G(FILE))!('$G(IEN)) QTACTH
+"RTN","SCAPMCU2",41,0)
+ S ROOT="^SCTM("_FILE_",""AIDT"",IEN,SCSTAT"
+"RTN","SCAPMCU2",42,0)
+ D INIT^SCAPMCU1(.OK) ; set default dates,output & error array (if undefined)
+"RTN","SCAPMCU2",43,0)
+ IF 'OK S OK=-1 G QTACTH
+"RTN","SCAPMCU2",44,0)
+ S SCDATE=SCEND
+"RTN","SCAPMCU2",45,0)
+ S OK=0
+"RTN","SCAPMCU2",46,0)
+ ;if incl=0 ->a partial hit should be returned
+"RTN","SCAPMCU2",47,0)
+LOOP IF 'SCINCL D
+"RTN","SCAPMCU2",48,0)
+ .F  S X=$$DATES^SCAPMCU1(.FILE,.IEN,.SCDATE) S SCA=$P(X,U,2),SCE=$P(X,U,3) D  Q:$P(X,U,5)!(SCE<SCBEGIN)!(OK=-1)
+"RTN","SCAPMCU2",49,0)
+ ..IF 'X S SCDATE=SCA Q
+"RTN","SCAPMCU2",50,0)
+ ..IF +X=1 D
+"RTN","SCAPMCU2",51,0)
+ ...S OK=1
+"RTN","SCAPMCU2",52,0)
+ ...S SCDATE=SCA-.000001
+"RTN","SCAPMCU2",53,0)
+ ...Q:$D(@SCLIST@(FILE,"SCLST",IEN,SCA))
+"RTN","SCAPMCU2",54,0)
+ ...S SCN=$G(@SCLIST@(FILE,0),0)+1
+"RTN","SCAPMCU2",55,0)
+ ...S @SCLIST@(FILE,0)=SCN
+"RTN","SCAPMCU2",56,0)
+ ...S @SCLIST@(FILE,SCN)=IEN_U_$$EXT(FILE,IEN)_U_SCA_U_$P(X,U,3)
+"RTN","SCAPMCU2",57,0)
+ ...S @SCLIST@(FILE,"SCLST",IEN,SCA,SCN)=""
+"RTN","SCAPMCU2",58,0)
+ ..ELSE  D
+"RTN","SCAPMCU2",59,0)
+ ...S OK=-1
+"RTN","SCAPMCU2",60,0)
+ ...S SCPARM("EFFECTIVE DATE")=$G(SCDATE,"Undefined")
+"RTN","SCAPMCU2",61,0)
+ ...D ERR^SCAPMCU1(.SCESEQ,4045101,.SCPARM,"",.SCERR)
+"RTN","SCAPMCU2",62,0)
+ ELSE  D
+"RTN","SCAPMCU2",63,0)
+ .S X=$$DATES^SCAPMCU1(.FILE,.IEN,.SCDATE)
+"RTN","SCAPMCU2",64,0)
+ .IF X&($P(X,U,2)'>SCBEGIN) D
+"RTN","SCAPMCU2",65,0)
+ ..S OK=1
+"RTN","SCAPMCU2",66,0)
+ ..Q:$D(@SCLIST@(FILE,"SCLST",IEN,$P(X,U,2)))
+"RTN","SCAPMCU2",67,0)
+ ..S SCN=$G(@SCLIST@(FILE,0),0)+1
+"RTN","SCAPMCU2",68,0)
+ ..S @SCLIST@(FILE,0)=SCN
+"RTN","SCAPMCU2",69,0)
+ ..S @SCLIST@(FILE,SCN)=IEN_U_$$EXT(FILE,IEN)_U_$P(X,U,2)_U_$P(X,U,3)
+"RTN","SCAPMCU2",70,0)
+ ..S @SCLIST@(FILE,"SCLST",IEN,$P(X,U,2),SCN)=""
+"RTN","SCAPMCU2",71,0)
+QTACTH Q OK_U_$P(X,U,4)_U_$P(X,U,2)_U_$P(X,U,3)
+"RTN","SCAPMCU2",72,0)
+ ;
+"RTN","SCAPMCU2",73,0)
+EXT(FILE,IEN) ;return external value of team or team position file
+"RTN","SCAPMCU2",74,0)
+ N SCEXT
+"RTN","SCAPMCU2",75,0)
+ S SCEXT=-1
+"RTN","SCAPMCU2",76,0)
+ IF FILE=404.58 D
+"RTN","SCAPMCU2",77,0)
+ .S SCEXT=$P($G(^SCTM(404.51,+$G(IEN),0)),U,1)
+"RTN","SCAPMCU2",78,0)
+ .S:'$L(SCEXT) SCEXT=-1
+"RTN","SCAPMCU2",79,0)
+ IF "^404.52^404.53^404.59^"[(U_FILE_U) D
+"RTN","SCAPMCU2",80,0)
+ .S SCEXT=$P($G(^SCTM(404.57,+$G(IEN),0)),U,1)
+"RTN","SCAPMCU2",81,0)
+ .S:'$L(SCEXT) SCEXT=-1
+"RTN","SCAPMCU2",82,0)
+QTEXT Q SCEXT
+"RTN","SCAPMCU2",83,0)
+ ;
+"RTN","SCAPMCU2",84,0)
+GETPC(DFN,DATE,PCROLE,ASSTYPE) ;return pc position & team for a date
+"RTN","SCAPMCU2",85,0)
+ ; DFN - pointer to patient file
+"RTN","SCAPMCU2",86,0)
+ ; DATE - date of interest (Default=DT)
+"RTN","SCAPMCU2",87,0)
+ ; PCROLE - Default=1 (PC Practitioner Position) note 2= pc attending
+"RTN","SCAPMCU2",88,0)
+ ; ASSTYPE - Default=1 (PC Team)
+"RTN","SCAPMCU2",89,0)
+ ; returns sctp^sctm^assigned to pc?
+"RTN","SCAPMCU2",90,0)
+ ;
+"RTN","SCAPMCU2",91,0)
+ N ACTDT,SCTP,SCTM,SCPTA,INACTDT
+"RTN","SCAPMCU2",92,0)
+ Q $$GETPCTP(.DFN,.DATE,.PCROLE)_U_$$GETPCTM(.DFN,.DATE,.ASSTYPE)_U_($D(^SCPT(404.41,"APC",+DFN))>0)
+"RTN","SCAPMCU2",93,0)
+ ;
+"RTN","SCAPMCU2",94,0)
+HISTPTTP(DFN,SCTP,DATE) ;404.43 entry for pt,position - if active on date
+"RTN","SCAPMCU2",95,0)
+ ;return -1 if error, 0 if no active entry or 404.43 ien if one
+"RTN","SCAPMCU2",96,0)
+ Q:'$G(DFN)!('$G(SCTP))!('$G(DATE)) -1
+"RTN","SCAPMCU2",97,0)
+ N SCACT,HISTIEN,SCINACT,SCDT
+"RTN","SCAPMCU2",98,0)
+ S SCDT=DATE+.00000001
+"RTN","SCAPMCU2",99,0)
+ S SCACT=+$O(^SCPT(404.43,"ADFN",DFN,SCTP,SCDT),-1)
+"RTN","SCAPMCU2",100,0)
+ S HISTIEN=+$O(^SCPT(404.43,"ADFN",DFN,SCTP,SCACT,0))
+"RTN","SCAPMCU2",101,0)
+ S SCINACT=$P($G(^SCPT(404.43,HISTIEN,0)),U,4)
+"RTN","SCAPMCU2",102,0)
+ Q $S('SCACT:0,('HISTIEN):0,('SCINACT):HISTIEN,(DATE>SCINACT):0,1:HISTIEN)
+"RTN","SCAPMCU2",103,0)
+ ;
+"RTN","SCAPMCU2",104,0)
+HISTPTTM(DFN,SCTM,DATE) ;404.42 entry for tm,position - if active on date
+"RTN","SCAPMCU2",105,0)
+ ; return -1 if error, 0 if no active entry or 404.42 entyr if one
+"RTN","SCAPMCU2",106,0)
+ Q:'$G(DFN)!('$G(SCTM))!('$G(DATE)) -1
+"RTN","SCAPMCU2",107,0)
+ N SCACT,HISTIEN,SCINACT,SCDT
+"RTN","SCAPMCU2",108,0)
+ S SCDT=DATE+.00000001
+"RTN","SCAPMCU2",109,0)
+ S SCACT=-$O(^SCPT(404.42,"AIDT",DFN,SCTM,-SCDT))
+"RTN","SCAPMCU2",110,0)
+ S HISTIEN=+$O(^SCPT(404.42,"AIDT",DFN,SCTM,-SCACT,0))
+"RTN","SCAPMCU2",111,0)
+ S SCINACT=$P($G(^SCPT(404.42,HISTIEN,0)),U,9)
+"RTN","SCAPMCU2",112,0)
+ Q $S('SCACT:0,('HISTIEN):0,('SCINACT):HISTIEN,(DATE>SCINACT):0,1:HISTIEN)
+"RTN","SCAPMCU2",113,0)
+ ;
+"RTN","SCAPMCU2",114,0)
+GETPCTM(DFN,DATE,ASSTYPE) ;return pc team for a date
+"RTN","SCAPMCU2",115,0)
+ ; DFN - pointer to patient file
+"RTN","SCAPMCU2",116,0)
+ ; DATE - date of interest
+"RTN","SCAPMCU2",117,0)
+ ; ASSTYPE - Default=1 (PC Team)
+"RTN","SCAPMCU2",118,0)
+ ; returns sctm
+"RTN","SCAPMCU2",119,0)
+ ;
+"RTN","SCAPMCU2",120,0)
+ N ACTDT,SCTP,SCPTTMA,SCINDT,SCTM,SCGOOD
+"RTN","SCAPMCU2",121,0)
+ S ASSTYPE=$G(ASSTYPE,1)
+"RTN","SCAPMCU2",122,0)
+ S DATE=$G(DATE,DT)
+"RTN","SCAPMCU2",123,0)
+ ; returns pointer to 404.51, if exists, 0 if not
+"RTN","SCAPMCU2",124,0)
+ S ACTDT=+$O(^SCPT(404.42,"APCTM",+DFN,+ASSTYPE,(DATE+.000001)),-1)
+"RTN","SCAPMCU2",125,0)
+ I 'ACTDT Q 0
+"RTN","SCAPMCU2",126,0)
+ S SCTM=0,SCGOOD=0
+"RTN","SCAPMCU2",127,0)
+ F  S SCTM=$O(^SCPT(404.42,"APCTM",+DFN,+ASSTYPE,+ACTDT,SCTM)) Q:SCTM=""  D  Q:SCGOOD 
+"RTN","SCAPMCU2",128,0)
+ .S SCPTTMA=$O(^SCPT(404.42,"APCTM",+DFN,+ASSTYPE,+ACTDT,+SCTM,""),-1)
+"RTN","SCAPMCU2",129,0)
+ .S SCINDT=$P($G(^SCPT(404.42,+SCPTTMA,0)),U,9)
+"RTN","SCAPMCU2",130,0)
+ .I SCINDT="" S SCGOOD=1 Q 
+"RTN","SCAPMCU2",131,0)
+ Q $S('SCINDT:+SCTM,(SCINDT'<DATE):+SCTM,1:0)
+"RTN","SCAPMCU2",132,0)
+ ;
+"RTN","SCAPMCU2",133,0)
+GETPCTP(DFN,DATE,PCROLE) ;return pc position for a date
+"RTN","SCAPMCU2",134,0)
+ ; DFN - pointer to patient file
+"RTN","SCAPMCU2",135,0)
+ ; DATE - date of interest
+"RTN","SCAPMCU2",136,0)
+ ; PCROLE - Default=1 (PC Practitioner Position) note 2= pc attending
+"RTN","SCAPMCU2",137,0)
+ ; returns sctp,or 0 if none or -1 if error
+"RTN","SCAPMCU2",138,0)
+ ;
+"RTN","SCAPMCU2",139,0)
+ N ACTDT,SCTP,SCTM,SCPTA,INACTDT,SCPTTPA,SCOK,TPLP,TPDALP
+"RTN","SCAPMCU2",140,0)
+ S SCOK=1,SCTP=0
+"RTN","SCAPMCU2",141,0)
+ S DATE=$G(DATE,DT)
+"RTN","SCAPMCU2",142,0)
+ S PCROLE=$G(PCROLE,1)
+"RTN","SCAPMCU2",143,0)
+ ; returns pointer to 404.57, if exists, 0 if not
+"RTN","SCAPMCU2",144,0)
+ S ACTDT=+$O(^SCPT(404.43,"APCPOS",+DFN,+PCROLE,(DATE+.000001)),-1)
+"RTN","SCAPMCU2",145,0)
+ F TPLP=0:0 S TPLP=$O(^SCPT(404.43,"APCPOS",+DFN,+PCROLE,+ACTDT,TPLP)) Q:TPLP=""!(SCTP=-1)  F TPDALP=0:0 S TPDALP=$O(^SCPT(404.43,"APCPOS",+DFN,+PCROLE,+ACTDT,TPLP,TPDALP)) Q:TPDALP=""  DO  Q:SCTP=-1
+"RTN","SCAPMCU2",146,0)
+ .;if "APCPOS" is hanging cross-reference eliminate it- SD/564
+"RTN","SCAPMCU2",147,0)
+ .I '$D(^SCPT(404.43,TPDALP,0)) K ^SCPT(404.43,"APCPOS",+DFN,+PCROLE,+ACTDT,TPLP,TPDALP) Q
+"RTN","SCAPMCU2",148,0)
+ .S INACTDT=$P($G(^SCPT(404.43,+TPDALP,0)),U,4)
+"RTN","SCAPMCU2",149,0)
+ .;if already an active date then an error
+"RTN","SCAPMCU2",150,0)
+ .I 'INACTDT S SCTP=$S(SCTP>0:-1,1:TPLP) Q
+"RTN","SCAPMCU2",151,0)
+ .I INACTDT'<DATE S SCTP=$S(SCTP>0:-1,1:TPLP)
+"RTN","SCAPMCU2",152,0)
+ .Q
+"RTN","SCAPMCU2",153,0)
+ Q +SCTP
+"RTN","SCAPMCU2",154,0)
+ ;
+"RTN","SCAPMCU2",155,0)
+GETPRTP(SCTP,DATE) ;returns ien & name of practitioner filling position
+"RTN","SCAPMCU2",156,0)
+ ;   Returned [Error:-1,Else: sc200^practname]
+"RTN","SCAPMCU2",157,0)
+ N X,SCPRDTS,SCPR
+"RTN","SCAPMCU2",158,0)
+ S DATE=$G(DATE,DT)
+"RTN","SCAPMCU2",159,0)
+ S SCPRDTS("BEGIN")=DATE
+"RTN","SCAPMCU2",160,0)
+ S SCPRDTS("END")=DATE
+"RTN","SCAPMCU2",161,0)
+ S X=$$PRTP^SCAPMC(SCTP,"SCPRDTS","SCPR")
+"RTN","SCAPMCU2",162,0)
+ Q $S(X<1:-1,1:$P($G(SCPR(1)),U,1)_U_$P($G(SCPR(1)),U,2))
+"RTN","SCAPMCU2",163,0)
+ ;
+"RTN","SCAPMCU2",164,0)
+EXTMPRTP(SCTP,DATE) ;returns external of team and practitioner for position
+"RTN","SCAPMCU2",165,0)
+ ;
+"RTN","SCAPMCU2",166,0)
+ N SCX
+"RTN","SCAPMCU2",167,0)
+ S SCX=$$GETPRTP(.SCTP,.DATE)
+"RTN","SCAPMCU2",168,0)
+ Q $P($G(^SCTM(404.51,+$P($G(^SCTM(404.57,+SCTP,0)),U,2),0)),U,1)_"   "_$P(SCX,U,2)
+"RTN","SCAPMCU2",169,0)
+ ;
+"RTN","SCAPMCU2",170,0)
+NMPCTP(DFN,DATE,PCROLE) ;returns ien & name of pc position
+"RTN","SCAPMCU2",171,0)
+ ; (See GETPCTP for variables)
+"RTN","SCAPMCU2",172,0)
+ N X
+"RTN","SCAPMCU2",173,0)
+ S X=$$GETPCTP(DFN,.DATE,.PCROLE)
+"RTN","SCAPMCU2",174,0)
+ Q $S('$G(X):"",X=-1:"",1:X_U_$P($G(^SCTM(404.57,+X,0)),U,1))
+"RTN","SCAPMCU2",175,0)
+ ;
+"RTN","SCAPMCU2",176,0)
+NMPCPR(DFN,DATE,PCROLE) ;returns ien & name of pract filling pc position
+"RTN","SCAPMCU2",177,0)
+ ; DFN - pointer to patient file 
+"RTN","SCAPMCU2",178,0)
+ ; DATE - date of interest 
+"RTN","SCAPMCU2",179,0)
+ ; PCROLE - Practitioner Position where '1' = PC provider
+"RTN","SCAPMCU2",180,0)
+ ;                                      '2' = PC attending 
+"RTN","SCAPMCU2",181,0)
+ ;                                      '3' = PC associate provider
+"RTN","SCAPMCU2",182,0)
+ ;
+"RTN","SCAPMCU2",183,0)
+ ; returns sctp (ien^name), or "" if none or -1 if error 
+"RTN","SCAPMCU2",184,0)
+ ; 
+"RTN","SCAPMCU2",185,0)
+ N SCTP,PCAP
+"RTN","SCAPMCU2",186,0)
+ ;bp/cmf 205 original code next line
+"RTN","SCAPMCU2",187,0)
+ ;S PCAP=PCROLE S:PCROLE=3 PCROLE=1
+"RTN","SCAPMCU2",188,0)
+ ;bp/cmf 205 change code begin
+"RTN","SCAPMCU2",189,0)
+ ;;S PCROLE=+$G(PCROLE,1),(PCAP,PCROLE)=$S(PCROLE=0:1,PCROLE>2:1,1:PCROLE)
+"RTN","SCAPMCU2",190,0)
+ S (PCROLE,PCAP)=+$G(PCROLE,1)
+"RTN","SCAPMCU2",191,0)
+ S PCAP=$S(PCAP=0:1,PCAP>3:1,1:PCAP)
+"RTN","SCAPMCU2",192,0)
+ S PCROLE=$S(PCROLE=0:1,PCROLE>2:1,1:PCROLE)
+"RTN","SCAPMCU2",193,0)
+ ;bp/cmf 205 change code end
+"RTN","SCAPMCU2",194,0)
+ S SCTP=+$$NMPCTP(.DFN,.DATE,.PCROLE)
+"RTN","SCAPMCU2",195,0)
+ Q $S('SCTP:"",1:$$PCPROV^SCAPMCU3(SCTP,.DATE,PCAP))
+"RTN","SCAPMCU2",196,0)
+ ;
+"RTN","SCAPMCU2",197,0)
+NMPCTM(DFN,DATE,PCROLE) ;returns ien & name of pc team
+"RTN","SCAPMCU2",198,0)
+ ; (See GETPCTM for variables)
+"RTN","SCAPMCU2",199,0)
+ N X
+"RTN","SCAPMCU2",200,0)
+ S X=$$GETPCTM(DFN,.DATE,.PCROLE)
+"RTN","SCAPMCU2",201,0)
+ Q $S('$G(X):"",1:X_U_$P($G(^SCTM(404.51,+X,0)),U,1))
+"RTN","SCAPMCU2",202,0)
+ ;
+"RTN","SCAPMCU2",203,0)
+ALPHA(INARRAY,OUTARRAY) ;not supported - for PCMM only
+"RTN","SCAPMCU2",204,0)
+ ; returns array sorted by 2nd piece's value
+"RTN","SCAPMCU2",205,0)
+ ; it keeps the 0 node -it does not return any x-ref values
+"RTN","SCAPMCU2",206,0)
+ ; it only converts arrays of type 1-n to another 1-n array
+"RTN","SCAPMCU2",207,0)
+ N SCNDX,SCX,SCNODE,SCY
+"RTN","SCAPMCU2",208,0)
+ S (SCX,SCY)=0
+"RTN","SCAPMCU2",209,0)
+ S:$D(@INARRAY@(0)) @OUTARRAY@(0)=@INARRAY@(0)
+"RTN","SCAPMCU2",210,0)
+ F  S SCX=$O(@INARRAY@(SCX)) Q:'SCX  S SCNODE=@INARRAY@(SCX) Q:'$L(SCNODE)  D
+"RTN","SCAPMCU2",211,0)
+ .S ^TMP($J,"SCTMPSORT","B",$P(SCNODE,U,2),SCX)=""
+"RTN","SCAPMCU2",212,0)
+ S SCNDX=""
+"RTN","SCAPMCU2",213,0)
+ F  S SCNDX=$O(^TMP($J,"SCTMPSORT","B",SCNDX)) Q:SCNDX=""  D
+"RTN","SCAPMCU2",214,0)
+ .S SCX=0
+"RTN","SCAPMCU2",215,0)
+ .F  S SCX=$O(^TMP($J,"SCTMPSORT","B",SCNDX,SCX)) Q:'SCX  D
+"RTN","SCAPMCU2",216,0)
+ ..S SCY=SCY+1
+"RTN","SCAPMCU2",217,0)
+ ..S @OUTARRAY@(SCY)=$G(@INARRAY@(SCX))
+"RTN","SCAPMCU2",218,0)
+ K ^TMP($J,"SCTMPSORT","B")
+"RTN","SCAPMCU2",219,0)
+ Q
+"RTN","SCMCBK")
+0^3^B67929176^B49541298
+"RTN","SCMCBK",1,0)
+SCMCBK ;ALB/SCK - Broker Utilities for multiple patient assignments; 4/8/96 ; 11/30/11 4:23pm
+"RTN","SCMCBK",2,0)
+ ;;5.3;Scheduling;**41,51,148,157,177,205,564**;AUG 13, 1993;Build 8
+"RTN","SCMCBK",3,0)
+ ;
+"RTN","SCMCBK",4,0)
+ Q
+"RTN","SCMCBK",5,0)
+ ;
+"RTN","SCMCBK",6,0)
+PTCLBLD(SCOK,SC) ; Build patient list for a selected clinic
+"RTN","SCMCBK",7,0)
+ ;  'SC BLD PAT CLN LIST'
+"RTN","SCMCBK",8,0)
+ ;
+"RTN","SCMCBK",9,0)
+ D NEWVAR^SCMCBK1
+"RTN","SCMCBK",10,0)
+ D CHK^SCUTBK
+"RTN","SCMCBK",11,0)
+ D TMP^SCUTBK
+"RTN","SCMCBK",12,0)
+ ;
+"RTN","SCMCBK",13,0)
+ D PARSE^SCMCBK1(.SC)
+"RTN","SCMCBK",14,0)
+ ;
+"RTN","SCMCBK",15,0)
+ I SCPOS'="" S SCOK=$$PTCLBRTP^SCAPMC26(.SCCLN,.SCPOS,"SCDTRNG")
+"RTN","SCMCBK",16,0)
+ E  S SCOK=$$PTCLBR^SCAPMC26(.SCCLN,.SCTEAM,"SCDTRNG")
+"RTN","SCMCBK",17,0)
+ K ^TMP("SCMC",$J,"EXCLUDE PT")
+"RTN","SCMCBK",18,0)
+ G:SCOK=0 PTCLNQ
+"RTN","SCMCBK",19,0)
+ ;
+"RTN","SCMCBK",20,0)
+ M ^TMP($J,"SC PCMM IN")=^TMP(SCOK,"SCCLPT")
+"RTN","SCMCBK",21,0)
+ K ^TMP(SCOK,"SCCLPT")
+"RTN","SCMCBK",22,0)
+ ;
+"RTN","SCMCBK",23,0)
+ D ALPHA^SCAPMCU2("^TMP($J,""SC PCMM IN"")","^TMP($J,""SCCLPT"")")
+"RTN","SCMCBK",24,0)
+ ;
+"RTN","SCMCBK",25,0)
+ S SCOK=$J_U_^TMP($J,"SC PCMM IN",0)
+"RTN","SCMCBK",26,0)
+ ;
+"RTN","SCMCBK",27,0)
+PTCLNQ D CLRVAR^SCMCBK1
+"RTN","SCMCBK",28,0)
+ Q
+"RTN","SCMCBK",29,0)
+ ;
+"RTN","SCMCBK",30,0)
+PTSCBLD(SCOK,SC) ; Build patient list for selected stop code
+"RTN","SCMCBK",31,0)
+ ;  'SC BLD PAT SCDE LIST'
+"RTN","SCMCBK",32,0)
+ ;
+"RTN","SCMCBK",33,0)
+ D NEWVAR^SCMCBK1
+"RTN","SCMCBK",34,0)
+ ;
+"RTN","SCMCBK",35,0)
+ D CHK^SCUTBK
+"RTN","SCMCBK",36,0)
+ D TMP^SCUTBK
+"RTN","SCMCBK",37,0)
+ ;
+"RTN","SCMCBK",38,0)
+ D PARSE^SCMCBK1(.SC)
+"RTN","SCMCBK",39,0)
+ ;
+"RTN","SCMCBK",40,0)
+ K ^TMP($J,"SCSCDE")
+"RTN","SCMCBK",41,0)
+ ;
+"RTN","SCMCBK",42,0)
+ ;  Build exclude list
+"RTN","SCMCBK",43,0)
+ S BLOCK=$S(SCPOS'="":"BLKPOS",1:"BLKTM")
+"RTN","SCMCBK",44,0)
+ S SCBLOCK=$S(SCPOS'="":SCPOS,1:SCTEAM)
+"RTN","SCMCBK",45,0)
+ D @BLOCK
+"RTN","SCMCBK",46,0)
+ ;
+"RTN","SCMCBK",47,0)
+ IF 'SCOK1 S SCOK="0^0^0^0" G PTSCQ
+"RTN","SCMCBK",48,0)
+ ;
+"RTN","SCMCBK",49,0)
+ S SCOK=0
+"RTN","SCMCBK",50,0)
+ S SCOK=$$PTST^SCAPMC27(SCSCDE,"SCDTRNG",SCNUM,.SCLOC,"SCERMSG",SCMORE)
+"RTN","SCMCBK",51,0)
+ K ^TMP("SCMC",$J,"EXCLUDE PT")
+"RTN","SCMCBK",52,0)
+ ;
+"RTN","SCMCBK",53,0)
+ M ^TMP($J,"SC PCMM IN")=@SCLOC
+"RTN","SCMCBK",54,0)
+ S I1=$G(^TMP($J,"SC PCMM IN",0))
+"RTN","SCMCBK",55,0)
+ F I=1:1:I1 S ^TMP($J,"PCMM TMP",I)=$G(^TMP($J,"SC PCMM IN",I))
+"RTN","SCMCBK",56,0)
+ ;
+"RTN","SCMCBK",57,0)
+ D ALPHA^SCAPMCU2("^TMP($J,""PCMM TMP"")","^TMP($J,""SCSCDE"")")
+"RTN","SCMCBK",58,0)
+ S SCOK=$J_U_+I1_U_SCOK
+"RTN","SCMCBK",59,0)
+ ;
+"RTN","SCMCBK",60,0)
+PTSCQ D CLRVAR^SCMCBK1
+"RTN","SCMCBK",61,0)
+ Q
+"RTN","SCMCBK",62,0)
+ ;
+"RTN","SCMCBK",63,0)
+PTTMBLD(SCOK,SC) ; Build a list of patients for a selected team and return the $J of the TMP globall
+"RTN","SCMCBK",64,0)
+ ;  where the list is stored.
+"RTN","SCMCBK",65,0)
+ ;  ' SC BLD PAT TM LIST ' 
+"RTN","SCMCBK",66,0)
+ ;
+"RTN","SCMCBK",67,0)
+ D NEWVAR^SCMCBK1
+"RTN","SCMCBK",68,0)
+ D CHK^SCUTBK
+"RTN","SCMCBK",69,0)
+ D TMP^SCUTBK
+"RTN","SCMCBK",70,0)
+ ;
+"RTN","SCMCBK",71,0)
+ D PARSE^SCMCBK1(.SC)
+"RTN","SCMCBK",72,0)
+ K ^TMP($J,"SCTEAM")
+"RTN","SCMCBK",73,0)
+ ;
+"RTN","SCMCBK",74,0)
+ ;   Build exclude list
+"RTN","SCMCBK",75,0)
+ S SCOK=0
+"RTN","SCMCBK",76,0)
+ S BLOCK=$S(SCPOS'="":"BLKPOS",1:"BLKTM")
+"RTN","SCMCBK",77,0)
+ S SCBLOCK=$S(SCPOS'="":SCPOS,1:SCTEAM)
+"RTN","SCMCBK",78,0)
+ D @BLOCK
+"RTN","SCMCBK",79,0)
+ ;
+"RTN","SCMCBK",80,0)
+ S SCOK=$$PTTM^SCAPMC2(SCFRMTM,"SCDTRNG",.SCLOC,"SCERMSG")
+"RTN","SCMCBK",81,0)
+ K ^TMP("SCMC",$J,"EXCLUDE PT")
+"RTN","SCMCBK",82,0)
+ M ^TMP($J,"SC PCMM IN")=@SCLOC
+"RTN","SCMCBK",83,0)
+ ;
+"RTN","SCMCBK",84,0)
+ S I="" F  S I=$O(^TMP($J,"SC PCMM IN",I)) Q:'I  D
+"RTN","SCMCBK",85,0)
+ . S ^TMP($J,"PCMM TMP",I)=^TMP($J,"SC PCMM IN",I)
+"RTN","SCMCBK",86,0)
+ ;
+"RTN","SCMCBK",87,0)
+ D ALPHA^SCAPMCU2("^TMP($J,""PCMM TMP"")","^TMP($J,""SCTEAM"")")
+"RTN","SCMCBK",88,0)
+ S I1="" F  S I1=$O(^TMP($J,"SCTEAM",I1)) Q:'I1  S I=I1
+"RTN","SCMCBK",89,0)
+ ;
+"RTN","SCMCBK",90,0)
+ S SCOK=$J_U_+I_U_SCOK
+"RTN","SCMCBK",91,0)
+ ;
+"RTN","SCMCBK",92,0)
+ D CLRVAR^SCMCBK1
+"RTN","SCMCBK",93,0)
+ Q
+"RTN","SCMCBK",94,0)
+ ;
+"RTN","SCMCBK",95,0)
+PTPSBLD(SCOK,SC) ;
+"RTN","SCMCBK",96,0)
+ ;  ' SC BLD PAT POS LIST '
+"RTN","SCMCBK",97,0)
+ ;
+"RTN","SCMCBK",98,0)
+ D NEWVAR^SCMCBK1
+"RTN","SCMCBK",99,0)
+ D CHK^SCUTBK
+"RTN","SCMCBK",100,0)
+ D TMP^SCUTBK
+"RTN","SCMCBK",101,0)
+ ;
+"RTN","SCMCBK",102,0)
+ D PARSE^SCMCBK1(.SC)
+"RTN","SCMCBK",103,0)
+ ;
+"RTN","SCMCBK",104,0)
+ K ^TMP($J,"SCPOS")
+"RTN","SCMCBK",105,0)
+ ;
+"RTN","SCMCBK",106,0)
+ ;   Build exclude list
+"RTN","SCMCBK",107,0)
+ S BLOCK=$S(SCPOS'="":"BLKPOS",1:"BLKTM")
+"RTN","SCMCBK",108,0)
+ S SCBLOCK=$S(SCPOS'="":SCPOS,1:SCTEAM)
+"RTN","SCMCBK",109,0)
+ D @BLOCK
+"RTN","SCMCBK",110,0)
+ ;
+"RTN","SCMCBK",111,0)
+ S SCOK=0
+"RTN","SCMCBK",112,0)
+ ;
+"RTN","SCMCBK",113,0)
+ S SCOK=$$PTTP^SCAPMC11(SCFRMPOS,"SCDTRNG",.SCLOC,.SCERMSG)
+"RTN","SCMCBK",114,0)
+ K ^TMP("SCMC",$J,"EXCLUDE PT")
+"RTN","SCMCBK",115,0)
+ M ^TMP($J,"SC PCMM IN")=@SCLOC
+"RTN","SCMCBK",116,0)
+ ;
+"RTN","SCMCBK",117,0)
+ S I1=$G(^TMP($J,"SC PCMM IN",0))
+"RTN","SCMCBK",118,0)
+ F I=1:1:I1 S ^TMP($J,"PCMM TMP",I)=$G(^TMP($J,"SC PCMM IN",I))
+"RTN","SCMCBK",119,0)
+ D ALPHA^SCAPMCU2("^TMP($J,""PCMM TMP"")","^TMP($J,""SCPOS"")")
+"RTN","SCMCBK",120,0)
+ S SCOK=$J_U_+I1_U_SCOK
+"RTN","SCMCBK",121,0)
+ ;
+"RTN","SCMCBK",122,0)
+ ;IF '+$G(^TMP($J,"SCPOS",0)) D  S SCOK=$J_U_SCOK
+"RTN","SCMCBK",123,0)
+ ;. S I="" F  S I=$O(^TMP($J,"SCPOS",I)) Q:'I  S SCOK=I
+"RTN","SCMCBK",124,0)
+ ;
+"RTN","SCMCBK",125,0)
+ D CLRVAR^SCMCBK1
+"RTN","SCMCBK",126,0)
+ Q
+"RTN","SCMCBK",127,0)
+ ;
+"RTN","SCMCBK",128,0)
+PTAPBLD(SCOK,SC) ;  Build patient list for selected appointment range.
+"RTN","SCMCBK",129,0)
+ ;     '  SC BLD PAT APT LIST '
+"RTN","SCMCBK",130,0)
+ ;
+"RTN","SCMCBK",131,0)
+ ;SD/564-this build includes modification as follows:
+"RTN","SCMCBK",132,0)
+ ;- patients already assigned to another PC team then evaluated team SCTEAM are excluded
+"RTN","SCMCBK",133,0)
+ ;- patients previously assigned and unassigned to evaluated position are included
+"RTN","SCMCBK",134,0)
+ ;
+"RTN","SCMCBK",135,0)
+ ;N SCCLN,SCTEAM,SCDTRNG,SCLOC,SCERMSG,SCNUM,SCCOUNT,SCMORE,SCOK1,SCER2,SCOUT,SCBLOCK
+"RTN","SCMCBK",136,0)
+ ;
+"RTN","SCMCBK",137,0)
+ D NEWVAR^SCMCBK1
+"RTN","SCMCBK",138,0)
+ D CHK^SCUTBK
+"RTN","SCMCBK",139,0)
+ D TMP^SCUTBK
+"RTN","SCMCBK",140,0)
+ ;
+"RTN","SCMCBK",141,0)
+ D PARSE^SCMCBK1(.SC)
+"RTN","SCMCBK",142,0)
+ ;
+"RTN","SCMCBK",143,0)
+ K ^TMP($J,"SCCLN")
+"RTN","SCMCBK",144,0)
+ ;
+"RTN","SCMCBK",145,0)
+ ;   Build exclude list
+"RTN","SCMCBK",146,0)
+ S BLOCK=$S(SCPOS'="":"BLKPOS",1:"BLKTM")
+"RTN","SCMCBK",147,0)
+ S SCBLOCK=$S(SCPOS'="":SCPOS,1:SCTEAM)
+"RTN","SCMCBK",148,0)
+ D @BLOCK
+"RTN","SCMCBK",149,0)
+ ;
+"RTN","SCMCBK",150,0)
+ IF 'SCOK1 S SCOK="0^0^0^0" G PTAPQ
+"RTN","SCMCBK",151,0)
+ S SCOK=0
+"RTN","SCMCBK",152,0)
+ S SCOK=$$PTAP^SCAPMC28(SCCLN,"SCDTRNG",SCNUM,.SCLOC,"SCERMSG",SCMORE)
+"RTN","SCMCBK",153,0)
+ ;
+"RTN","SCMCBK",154,0)
+ ;identify excluded to be included if unassigned from evaluated position-sd/564
+"RTN","SCMCBK",155,0)
+ N SCTMP S SCTMP=$G(^TMP("SC TMP LIST",$J,0))
+"RTN","SCMCBK",156,0)
+ N SS S SS=$G(^TMP("SCMC",$J,"EXCLUDE PT",0))
+"RTN","SCMCBK",157,0)
+ N SDFN,XX F XX=1:1:SS S SDFN=+$G(^TMP("SCMC",$J,"EXCLUDE PT",XX)) D
+"RTN","SCMCBK",158,0)
+ .N SCI S SCI=^TMP("SCMC",$J,"EXCLUDE PT",XX) D
+"RTN","SCMCBK",159,0)
+ ..N SCII S SCII=$P(SCI,U,5) I SCII>0&(SCII<(DT+1)) D
+"RTN","SCMCBK",160,0)
+ ...;PROCEED ONLY WITH THE CURRENT MONTH ASSIGNMENT
+"RTN","SCMCBK",161,0)
+ ...N SCAS S SCAS=$P(SCI,U,4) I SCAS>0 I $E(DT,1,5)'=$E(SCAS,1,5) Q
+"RTN","SCMCBK",162,0)
+ ...N SCPOS S SCPOS=$P(SCI,U,3) I SCPOS>0 I $P(^SCPT(404.43,SCPOS,0),U,2)'=$G(SC("POSITION")) Q
+"RTN","SCMCBK",163,0)
+ ...N SCN,SCS S SCN=$P(SCI,U,2),SCS=$P(SCI,U,6)
+"RTN","SCMCBK",164,0)
+ ...S SCTMP=SCTMP+1
+"RTN","SCMCBK",165,0)
+ ...S ^TMP("SC TMP LIST",$J,SCTMP)=SDFN_U_SCN_U_SC("CLINIC")_U_U_SCS
+"RTN","SCMCBK",166,0)
+ ...S ^TMP("SC TMP LIST",$J,"SCPTAP",SDFN,SCTMP)=""
+"RTN","SCMCBK",167,0)
+ S ^TMP("SC TMP LIST",$J,0)=SCTMP
+"RTN","SCMCBK",168,0)
+ ;
+"RTN","SCMCBK",169,0)
+ K ^TMP("SCMC",$J,"EXCLUDE PT")
+"RTN","SCMCBK",170,0)
+ ;
+"RTN","SCMCBK",171,0)
+ ;eliminate patients if assigned to another PC team-SD/564
+"RTN","SCMCBK",172,0)
+ N DFN S DFN="" F  S DFN=$O(^TMP("SC TMP LIST",$J,"SCPTAP",DFN)) Q:DFN=""  D
+"RTN","SCMCBK",173,0)
+ .N SCEX S SCEX=$$GETPC^SCAPMCU2(DFN) ;call to get patient's PC assignment
+"RTN","SCMCBK",174,0)
+ .N NSAS S NSAS=$P(SCEX,U,2) I +SCEX>0!(NSAS>0&(NSAS'=SCTEAM)) D
+"RTN","SCMCBK",175,0)
+ ..N SCN S SCN=$O(^TMP("SC TMP LIST",$J,"SCPTAP",DFN,""))
+"RTN","SCMCBK",176,0)
+ ..K ^TMP("SC TMP LIST",$J,"SCPTAP",DFN)
+"RTN","SCMCBK",177,0)
+ ..K ^TMP("SC TMP LIST",$J,SCN)
+"RTN","SCMCBK",178,0)
+ ..S ^TMP("SC TMP LIST",$J,0)=^TMP("SC TMP LIST",$J,0)-1
+"RTN","SCMCBK",179,0)
+ ;
+"RTN","SCMCBK",180,0)
+ M ^TMP($J,"SC PCMM IN")=@SCLOC
+"RTN","SCMCBK",181,0)
+ S I1=$G(^TMP($J,"SC PCMM IN",0))
+"RTN","SCMCBK",182,0)
+ ;reindex entries in ^TMP global list - SD/564
+"RTN","SCMCBK",183,0)
+ N SCC S SCC=0 F I=1:1:I1 S SCC=$O(^TMP($J,"SC PCMM IN",SCC)) D
+"RTN","SCMCBK",184,0)
+ .S ^TMP($J,"PCMM TMP",I)=^TMP($J,"SC PCMM IN",SCC)
+"RTN","SCMCBK",185,0)
+ ;
+"RTN","SCMCBK",186,0)
+ D ALPHA^SCAPMCU2("^TMP($J,""PCMM TMP"")","^TMP($J,""SCAPP"")")
+"RTN","SCMCBK",187,0)
+ S SCOK=$J_U_I1_U_SCOK
+"RTN","SCMCBK",188,0)
+ ;
+"RTN","SCMCBK",189,0)
+ D CLRVAR^SCMCBK1
+"RTN","SCMCBK",190,0)
+PTAPQ Q
+"RTN","SCMCBK",191,0)
+ ;
+"RTN","SCMCBK",192,0)
+PTGET(SCDATA,SC) ;  Return a block of patients to the client
+"RTN","SCMCBK",193,0)
+ ;     'SC GET PAT BLOCK'
+"RTN","SCMCBK",194,0)
+ ;
+"RTN","SCMCBK",195,0)
+ ;     SCJOB   = $J for the ^TMP global
+"RTN","SCMCBK",196,0)
+ ;     SCJOBID = The second subscript id for the ^TMP global
+"RTN","SCMCBK",197,0)
+ ;     SCSTART = Beginning entry number for the block retrieval in the ^TMP global
+"RTN","SCMCBK",198,0)
+ ;     SCEND   = The ending entry number for the block retrieval
+"RTN","SCMCBK",199,0)
+ ;     SCLAST  = The last entry number in the ^TMP global
+"RTN","SCMCBK",200,0)
+ ;
+"RTN","SCMCBK",201,0)
+ N SCJOB,SCSTART,SCEND,I,SCLAST,SCJOBID
+"RTN","SCMCBK",202,0)
+ ;
+"RTN","SCMCBK",203,0)
+ D CHK^SCUTBK
+"RTN","SCMCBK",204,0)
+ D TMP^SCUTBK
+"RTN","SCMCBK",205,0)
+ ;
+"RTN","SCMCBK",206,0)
+ D PARSE^SCMCBK1(.SC)
+"RTN","SCMCBK",207,0)
+ ;
+"RTN","SCMCBK",208,0)
+ F I=SCSTART:1:SCEND Q:'$G(^TMP(SCJOB,SCJOBID,I),0)  D
+"RTN","SCMCBK",209,0)
+ . S SCDATA(I)=^TMP(SCJOB,SCJOBID,I)
+"RTN","SCMCBK",210,0)
+ I SCEND>SCLAST K ^TMP(SCJOB,SCJOBID)
+"RTN","SCMCBK",211,0)
+ ;
+"RTN","SCMCBK",212,0)
+ D CLRVAR^SCMCBK1
+"RTN","SCMCBK",213,0)
+ Q
+"RTN","SCMCBK",214,0)
+ ;
+"RTN","SCMCBK",215,0)
+PTLSTBLD(SCOK,SCVAL) ;  Build the list of patients to be assigned in the ^TMP($J,"SC PATIENT LIST",DFN) global
+"RTN","SCMCBK",216,0)
+ ;  'SC BLD PAT LIST'
+"RTN","SCMCBK",217,0)
+ ;
+"RTN","SCMCBK",218,0)
+ N SCJOB,SCDFN
+"RTN","SCMCBK",219,0)
+ ;
+"RTN","SCMCBK",220,0)
+ D CHK^SCUTBK
+"RTN","SCMCBK",221,0)
+ D TMP^SCUTBK
+"RTN","SCMCBK",222,0)
+ ;
+"RTN","SCMCBK",223,0)
+ S SCOK=0
+"RTN","SCMCBK",224,0)
+ I SCVAL["Start" D  G PTBLDQ
+"RTN","SCMCBK",225,0)
+ .S SCOK=$J
+"RTN","SCMCBK",226,0)
+ .K ^TMP(SCOK,"SC PATIENT LIST")
+"RTN","SCMCBK",227,0)
+ ;
+"RTN","SCMCBK",228,0)
+ S SCJOB=$P(SCVAL,U,1)
+"RTN","SCMCBK",229,0)
+ S SCDFN=$P(SCVAL,U,2)
+"RTN","SCMCBK",230,0)
+ S ^TMP(SCJOB,"SC PATIENT LIST",SCDFN)=""
+"RTN","SCMCBK",231,0)
+ S SCOK=1
+"RTN","SCMCBK",232,0)
+PTBLDQ Q
+"RTN","SCMCBK",233,0)
+ ;
+"RTN","SCMCBK",234,0)
+PTFILE(SCOK,SC) ;  File the patient assignments in the ^TMP($J,"SC TEAM ASSIGN",SCDFN) global
+"RTN","SCMCBK",235,0)
+ ;    'SC FILE PAT TM ASGN'
+"RTN","SCMCBK",236,0)
+ ;
+"RTN","SCMCBK",237,0)
+ ;205 remove;I XWBAPVER=177 D QUEUED^SCMCBK4(1) Q
+"RTN","SCMCBK",238,0)
+ ;205 remove;I $$VPROGMR^SCUTBK3()'=1 Q
+"RTN","SCMCBK",239,0)
+ ; pre 177 code follows....
+"RTN","SCMCBK",240,0)
+ I XWBAPVER=1 D QUEUED^SCMCBK4(1) Q
+"RTN","SCMCBK",241,0)
+ ;
+"RTN","SCMCBK",242,0)
+ N SCADDFLD,SCTEAM,SCFILE,SCJOB,SCNEW,SCOLD,SCBAD,SCERMSG,SCX,SCDTVAR
+"RTN","SCMCBK",243,0)
+ ;
+"RTN","SCMCBK",244,0)
+ D CHK^SCUTBK
+"RTN","SCMCBK",245,0)
+ D TMP^SCUTBK
+"RTN","SCMCBK",246,0)
+ ;
+"RTN","SCMCBK",247,0)
+ D PARSE^SCMCBK1(.SC)
+"RTN","SCMCBK",248,0)
+ G:+$G(SCJOB)=0 FILEQ
+"RTN","SCMCBK",249,0)
+ ;
+"RTN","SCMCBK",250,0)
+ ;
+"RTN","SCMCBK",251,0)
+ S SCADDFLD(.08)=$G(SC("TYPE"),99)
+"RTN","SCMCBK",252,0)
+ S SCADDFLD(.1)=$G(SC("RESTRICT"),0)
+"RTN","SCMCBK",253,0)
+ S SCADDFLD(.11)=DUZ
+"RTN","SCMCBK",254,0)
+ S SCADDFLD(.12)=DT
+"RTN","SCMCBK",255,0)
+ ;
+"RTN","SCMCBK",256,0)
+ S SCX=$$ACPTATM^SCAPMC6("^TMP(SCJOB,""SC PATIENT LIST"")",SCTEAM,"SCADDFLD",SCDTVAR,"SCERMSG","SCNEW","SCOLD","SCBAD")
+"RTN","SCMCBK",257,0)
+ D BAD^SCMCBK1(.SCBAD,.SCOLD,.SCOK)
+"RTN","SCMCBK",258,0)
+ S SCOK(.1)=SCX
+"RTN","SCMCBK",259,0)
+ ;
+"RTN","SCMCBK",260,0)
+ K ^TMP(SCJOB,"SC PATIENT LIST")
+"RTN","SCMCBK",261,0)
+ ;
+"RTN","SCMCBK",262,0)
+ D CLRVAR^SCMCBK1
+"RTN","SCMCBK",263,0)
+FILEQ Q
+"RTN","SCMCBK",264,0)
+ ;
+"RTN","SCMCBK",265,0)
+POSFILE(SCOK,SC) ;  File the patient assignments in the ^TMP($J,"SC PATIENT LIST") global 
+"RTN","SCMCBK",266,0)
+ ;   ' SC FILE PAT POS ASGN '
+"RTN","SCMCBK",267,0)
+ ;
+"RTN","SCMCBK",268,0)
+ ;205 remove;I XWBAPVER=177 D QUEUED^SCMCBK4(2) Q
+"RTN","SCMCBK",269,0)
+ ;205 remove;I $$VPROGMR^SCUTBK3()'=1 Q
+"RTN","SCMCBK",270,0)
+ ; pre 177 code follows...
+"RTN","SCMCBK",271,0)
+ I XWBAPVER=1 D QUEUED^SCMCBK4(2) Q
+"RTN","SCMCBK",272,0)
+ ;
+"RTN","SCMCBK",273,0)
+ N SCADDFLD,SCTEAM,SCFILE,SCJOB,SCNEW,SCOLD,SCBAD,SCERMSG,SCX,SCPOS,SCDTVAR,SCMAFLD,SCADTM,SCNEW1
+"RTN","SCMCBK",274,0)
+ ;
+"RTN","SCMCBK",275,0)
+ D CHK^SCUTBK
+"RTN","SCMCBK",276,0)
+ D TMP^SCUTBK
+"RTN","SCMCBK",277,0)
+ ;
+"RTN","SCMCBK",278,0)
+ D PARSE^SCMCBK1(.SC)
+"RTN","SCMCBK",279,0)
+ G:+$G(SCJOB)=0 FILEQ
+"RTN","SCMCBK",280,0)
+ S SCADTM=1
+"RTN","SCMCBK",281,0)
+ ;
+"RTN","SCMCBK",282,0)
+ S SCADDFLD(.05)=$G(SC("TYPE"),0)
+"RTN","SCMCBK",283,0)
+ S SCADDFLD(.06)=DUZ
+"RTN","SCMCBK",284,0)
+ S SCADDFLD(.07)=DT
+"RTN","SCMCBK",285,0)
+ ;
+"RTN","SCMCBK",286,0)
+ S SCX=$$ACPTATP^SCAPMC21("^TMP(SCJOB,""SC PATIENT LIST"")",SCPOS,"SCADDFLD",SCDTVAR,"SCERMSG",SCADTM,"","SCNEW","SCNEW1","SCOLD","SCBAD")
+"RTN","SCMCBK",287,0)
+ ;
+"RTN","SCMCBK",288,0)
+ D BAD2^SCMCBK1(.SCBAD,.SCOLD,.SCOK)
+"RTN","SCMCBK",289,0)
+ S SCOK(.1)=SCX
+"RTN","SCMCBK",290,0)
+ K ^TMP(SCJOB,"SC PATIENT LIST")
+"RTN","SCMCBK",291,0)
+ ;
+"RTN","SCMCBK",292,0)
+ D CLRVAR^SCMCBK1
+"RTN","SCMCBK",293,0)
+ Q
+"RTN","SCMCBK",294,0)
+ ;
+"RTN","SCMCBK",295,0)
+BLKPOS ;
+"RTN","SCMCBK",296,0)
+ N SCX
+"RTN","SCMCBK",297,0)
+ S SCX=$G(SCDTRNG("END"))
+"RTN","SCMCBK",298,0)
+ S SCDTRNG("END")=3990101 ;check forever
+"RTN","SCMCBK",299,0)
+ S SCOK1=$$PTTP^SCAPMC(SCBLOCK,"SCDTRNG","^TMP(""SCMC"",$J,""EXCLUDE PT"")","SCER2")
+"RTN","SCMCBK",300,0)
+ S SCDTRNG("END")=SCX
+"RTN","SCMCBK",301,0)
+ Q
+"RTN","SCMCBK",302,0)
+ ;
+"RTN","SCMCBK",303,0)
+BLKTM ;
+"RTN","SCMCBK",304,0)
+ N SCX
+"RTN","SCMCBK",305,0)
+ S SCX=$G(SCDTRNG("END"))
+"RTN","SCMCBK",306,0)
+ S SCDTRNG("END")=3990101 ;check forever
+"RTN","SCMCBK",307,0)
+ S SCOK1=$$PTTM^SCAPMC(SCBLOCK,"SCDTRNG","^TMP(""SCMC"",$J,""EXCLUDE PT"")","SCER2")
+"RTN","SCMCBK",308,0)
+ S SCDTRNG("END")=SCX
+"RTN","SCMCBK",309,0)
+ Q
+"RTN","SCMCBK",310,0)
+ ;
+"RTN","SCMCTPU2")
+0^4^B8888936^B8191584
+"RTN","SCMCTPU2",1,0)
+SCMCTPU2 ;ALB/REW - Team Position Utilities ; 9 Jun 1995
+"RTN","SCMCTPU2",2,0)
+ ;;5.3;Scheduling;**41,148,204,564**;AUG 13, 1993;Build 8
+"RTN","SCMCTPU2",3,0)
+ ;1
+"RTN","SCMCTPU2",4,0)
+YSPTTPPC(DFN,SCACT,SCROLE) ;is it ok to give patient a new pc position
+"RTN","SCMCTPU2",5,0)
+ ;  
+"RTN","SCMCTPU2",6,0)
+ ;  Return [OK:1,Not OK: 0^Message]
+"RTN","SCMCTPU2",7,0)
+ Q:"2^1"'[$G(SCROLE) "0^Bad PC Role"
+"RTN","SCMCTPU2",8,0)
+ N SCOK,SCX,SCTP,SCROLETX
+"RTN","SCMCTPU2",9,0)
+ S SCROLETX=$S(SCROLE=1:"Practitioner",(SCROLE=2):"Attending",1:"Error")
+"RTN","SCMCTPU2",10,0)
+ ;does pt have a current pc position?
+"RTN","SCMCTPU2",11,0)
+ S SCTP=$$GETPCTP^SCAPMCU2(DFN,DT,SCROLE)
+"RTN","SCMCTPU2",12,0)
+ IF SCTP>0 S SCOK="0^Pt has current PC "_SCROLETX_" Position Assignment"_U_SCTP G QTOKPC
+"RTN","SCMCTPU2",13,0)
+ ;does pt have a future pc position?
+"RTN","SCMCTPU2",14,0)
+ S SCX=$O(^SCPT(404.43,"APCPOS",DFN,SCROLE,SCACT))
+"RTN","SCMCTPU2",15,0)
+ IF SCX D  G QTOKPC
+"RTN","SCMCTPU2",16,0)
+ .S SCTP=$O(^SCPT(404.43,"APCPOS",DFN,SCROLE,+SCX,0))
+"RTN","SCMCTPU2",17,0)
+ .S SCOK="0^Patient has future PC Assignment to the "_$P($G(^SCTM(404.57,+SCTP,0)),U,1)_" position."_U_SCTP
+"RTN","SCMCTPU2",18,0)
+ S SCOK=1
+"RTN","SCMCTPU2",19,0)
+QTOKPC Q SCOK
+"RTN","SCMCTPU2",20,0)
+ ;
+"RTN","SCMCTPU2",21,0)
+OKACPTTP(DFN,SCTP,DATE,ACTIVE) ;is it ok to activate pt pos assignment?
+"RTN","SCMCTPU2",22,0)
+ N SCOK,SCDT,SCNODE,SCINACT
+"RTN","SCMCTPU2",23,0)
+ S SCOK=1
+"RTN","SCMCTPU2",24,0)
+ G:'$D(^SCPT(404.43,"ADFN",DFN)) ENDOK  ;quick check
+"RTN","SCMCTPU2",25,0)
+ ;is position active now(if checking)?
+"RTN","SCMCTPU2",26,0)
+ IF $G(ACTIVE) D  G:'SCOK ENDOK
+"RTN","SCMCTPU2",27,0)
+ . S SCOK=+$$ACTTP^SCMCTPU(SCTP,DATE)
+"RTN","SCMCTPU2",28,0)
+ ;is the patient assigned to this position either now or in future?
+"RTN","SCMCTPU2",29,0)
+ S SCDT=$O(^SCPT(404.43,"ADFN",DFN,SCTP,3990101),-1)
+"RTN","SCMCTPU2",30,0)
+ S SCPTTP=$O(^SCPT(404.43,"ADFN",DFN,SCTP,+SCDT,0))
+"RTN","SCMCTPU2",31,0)
+ IF SCPTTP D
+"RTN","SCMCTPU2",32,0)
+ .S SCNODE=$G(^SCPT(404.43,SCPTTP,0))
+"RTN","SCMCTPU2",33,0)
+ .S SCINACT=$P(SCNODE,U,4)
+"RTN","SCMCTPU2",34,0)
+ .IF ('SCINACT)!(SCINACT>DATE) D
+"RTN","SCMCTPU2",35,0)
+ ..S SCOK=0   ;no inactive date or inact after date
+"RTN","SCMCTPU2",36,0)
+ENDOK Q SCOK
+"RTN","SCMCTPU2",37,0)
+ ;
+"RTN","SCMCTPU2",38,0)
+PCRLPTTP(DFN,SCTP,DATE) ; can position be pc practitioner or pc attending
+"RTN","SCMCTPU2",39,0)
+ ; return yes pract^yes attend
+"RTN","SCMCTPU2",40,0)
+ Q $$CHKROLE(DFN,SCTP,DATE,1)_U_$$CHKROLE(DFN,SCTP,DATE,2)
+"RTN","SCMCTPU2",41,0)
+ ;
+"RTN","SCMCTPU2",42,0)
+CHKROLE(DFN,SCTP,DATE,ROLE) ;can position file role for patient?
+"RTN","SCMCTPU2",43,0)
+ ;this is not a stand-alone function
+"RTN","SCMCTPU2",44,0)
+ N SCCUR,SCDT,SCTPRL,SCPTTP,SCOK,SCNODE,SCINACT,SCACT
+"RTN","SCMCTPU2",45,0)
+ S SCOK=1
+"RTN","SCMCTPU2",46,0)
+ ;bp/cmf 204 change code begin
+"RTN","SCMCTPU2",47,0)
+ ;original code next line
+"RTN","SCMCTPU2",48,0)
+ ;IF $G(ROLE)&('$P($G(^SCTM(404.57,+$G(SCTP),0)),U,4)) S SCOK=0 G QTCHKRL
+"RTN","SCMCTPU2",49,0)
+ ;bp/cmf 204 new code begin
+"RTN","SCMCTPU2",50,0)
+ ;bp/cmf 204 new code end
+"RTN","SCMCTPU2",51,0)
+ I $G(ROLE) D  G:SCOK=0 QTCHKRL
+"RTN","SCMCTPU2",52,0)
+ . I '$P($G(^SCTM(404.57,+$G(SCTP),0)),U,4) S SCOK=0 Q
+"RTN","SCMCTPU2",53,0)
+ . N SCTM
+"RTN","SCMCTPU2",54,0)
+ . S SCTM=$P($G(^SCTM(404.57,SCTP,0)),U,2)
+"RTN","SCMCTPU2",55,0)
+ . I $P($G(^SCTM(404.51,SCTM,0)),U,5)'=1 S SCOK=0
+"RTN","SCMCTPU2",56,0)
+ . Q
+"RTN","SCMCTPU2",57,0)
+ ;bp/cmf 204 change code end
+"RTN","SCMCTPU2",58,0)
+ S SCDT=$O(^SCPT(404.43,"APCPOS",DFN,ROLE,3990101),-1)
+"RTN","SCMCTPU2",59,0)
+ S SCTPRL=$O(^SCPT(404.43,"APCPOS",DFN,ROLE,+SCDT,0))
+"RTN","SCMCTPU2",60,0)
+ S SCPTTP=$O(^SCPT(404.43,"APCPOS",DFN,ROLE,+SCDT,+SCTPRL,0))
+"RTN","SCMCTPU2",61,0)
+ ;check if hanging cross-reference - SD/564
+"RTN","SCMCTPU2",62,0)
+ I SCPTTP>0,'$D(^SCPT(404.43,SCPTTP,0)) D  Q SCOK
+"RTN","SCMCTPU2",63,0)
+ .K ^SCPT(404.43,"APCPOS",DFN,ROLE,+SCDT,+SCTPRL,SCPTTP)
+"RTN","SCMCTPU2",64,0)
+ ;
+"RTN","SCMCTPU2",65,0)
+ ;check if active
+"RTN","SCMCTPU2",66,0)
+ IF SCPTTP D
+"RTN","SCMCTPU2",67,0)
+ .S SCNODE=$G(^SCPT(404.43,SCPTTP,0))
+"RTN","SCMCTPU2",68,0)
+ .S SCACT=$P(SCNODE,U,3)
+"RTN","SCMCTPU2",69,0)
+ .Q:(DATE=SCACT)&(SCTP=SCTPRL)  ;if this date & position (editing current
+"RTN","SCMCTPU2",70,0)
+ .S SCINACT=$P(SCNODE,U,4)
+"RTN","SCMCTPU2",71,0)
+ .IF SCINACT D
+"RTN","SCMCTPU2",72,0)
+ ..IF SCINACT>DATE D
+"RTN","SCMCTPU2",73,0)
+ ...S SCOK=0  ;no making pc role before currently defined
+"RTN","SCMCTPU2",74,0)
+ .ELSE  D
+"RTN","SCMCTPU2",75,0)
+ ..S SCOK=0   ;no making pc role without inactivating current
+"RTN","SCMCTPU2",76,0)
+QTCHKRL Q SCOK
+"VER")
+8.0^22.0
+"BLD",8909,6)
+^507
+**END**
+**END**
+

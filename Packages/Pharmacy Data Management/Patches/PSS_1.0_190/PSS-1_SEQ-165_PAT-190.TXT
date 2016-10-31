@@ -1,0 +1,144 @@
+$TXT Created by               at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 02/12/15 at 10:23
+=============================================================================
+Run Date: JUN 15, 2015                     Designation: PSS*1*190
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: EMERGENCY
+Version : 1       SEQ #165                      Status: Released
+                  Compliance Date: JUN 17, 2015
+=============================================================================
+
+Associated patches: (v)PSS*1*43    <<= must be installed BEFORE `PSS*1*190'
+
+Subject: DRUG INTERACTIONS FILE RANGES - PDM
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The number range (1 - 15000) for National drug interactions in the DRUG 
+ INTERACTIONS file (#56) has been exhausted and new National drug 
+ interactions entries cannot be saved.
+  
+ In order to increase the number range for National entries to '1 - 
+ 15,000' & '50,000 or more', it is also necessary to make a change to the 
+ number range for Local drug interactions from '15,000 or more' to '15,001 
+ - 50,000'.
+  
+ Patch PSS*1.0*190 will change the range of Local drug interaction entries 
+ in the DRUG INTERACTIONS file (#56) from '15,000 or more' to '15,001 - 
+ 50,000'.
+  
+  
+ ASSOCIATED REMEDY: 
+ ==================
+ INC000001122363 - Unable to enter new drug interactions into DRUG 
+                   INTERACTIONS file (#56).
+  
+ ASSOCIATED NSR: 
+ ===============
+ N/A  
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+ Oklahoma City VAMC
+ Chillicothe VAMC
+ Central Plains HCS
+   
+ REMEDY TICKET OVERVIEW:
+ =======================
+ INC000001122363 - Unable to enter new drug interactions into DRUG 
+                   INTERACTIONS file (#56).
+  
+ Problem:
+ --------
+ In order to increase the number range for National entries to '1 - 
+ 15,000' & '50,000 or more', it is also necessary to make a change to the 
+ number range for Local drug interactions from '15,001 or more' to '15,001 
+ - 50,000'.
+  
+ Patch PSS*1.0*190 will change the range of Local drug interaction entries 
+ in the DRUG INTERACTIONS file (#56) from '15,000 or more' to '15,001 - 
+ 50,000'.
+  
+                                           
+ Solution:
+ ---------
+ Routine PSNDINT is being modified to change to the number range for Local 
+ drug interactions from '15,001 or more' to '15,001 - 50,000'.
+  
+  
+ Patch PSN*4*430 is doing the same update to the National Drug File 
+ package.
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch should be installed with users off the system. Installation 
+ takes less than two minutes. This patch should be installed after hours.
+  
+  1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+  2. From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+  
+  3. From this menu, you may elect to use the following options (when
+     prompted for the INSTALL NAME, enter PSS*1.0*190):
+  
+     (a) Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT 
+         backup any other changes such as DDs or templates.
+  
+     (b) Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch is
+         installed. It compares all components of the patch (routines, DDs,
+         templates, etc.).
+  
+     (c) Verify Checksums in Transport Global - this option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+     (d) Print Transport Global - this option will allow you to view
+         the components of the KIDS build.
+  
+  4. Use the Install Package(s) option and select the package
+     PSS*1.0*190.
+  
+  5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+     NO//", respond NO.
+   
+  6. When prompted "Want to DISABLE Scheduled options, Menu options,
+     and Protocols? NO//" if your site has the Enter/Edit Local Drug 
+     Interaction [PSS INTERACTION LOCAL ADD] option active (and most sites
+     should not), respond YES and select this option to disable. Otherwise 
+     respond NO.  
+  
+          Option Name                   Menu Text 
+          -----------------------       ------------------------------
+          PSS INTERACTION LOCAL ADD     Enter/Edit Local Drug Interaction
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSDINT
+    Before:  B9949101   After: B10778601  **17,20,43,190**
+ 
+Routine list of preceding patches: 43
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 10, 2015
+Completed By:                               Date Completed: JUN 11, 2015
+Released By :                               Date Released : JUN 15, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

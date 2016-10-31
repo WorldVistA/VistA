@@ -1,0 +1,156 @@
+$TXT Created by                 K at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 04/15/16 at 11:44
+=============================================================================
+Run Date: JUN 16, 2016                     Designation: DG*5.3*917
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #811                    Status: Released
+                  Compliance Date: JUL 17, 2016
+=============================================================================
+
+
+Subject: PTF SUFFIX EFF DATE EDIT MENU OPTION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DG*5.3*917 addresses one issue:
+ 1)  Menu option Add/Edit Suffix Effective Date [DG PTF SUFFIX EFF
+     DATE EDIT] was marked Out of Order by patch DG*5.3*729. The
+     Business Owner has requested that this option be re-activated.
+  
+  
+ ASSOCIATED NSRs: 
+ ================
+ N/A                        
+  
+  
+ ASSOCIATED REMEDY TICKET: 
+ =========================
+ 1)  INC000001241197-MAS-PTF
+  
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+ Chillicothe VAMC
+ Wilmington VAMC
+ VA Maryland HCS 
+   
+  
+ REMEDY OVERVIEW:
+ ================
+ 1)  INC000001241197-MAS-PTF
+  
+  
+ Problem:
+ --------
+ Menu option Add/Edit Suffix Effective Date [DG PTF SUFFIX EFF DATE EDIT] 
+ was marked "Out of Order" by patch DG*5.3*729. The Business Owner has
+ requested that the option be re-activated.
+    
+ Resolution:
+ -----------
+ Menu option Add/Edit Suffix Effective Date [DG PTF SUFFIX EFF DATE EDIT] 
+ is being re-activated as requested and added back to the Utility Menu 
+ [DGPT TOOLS MENU].
+  
+  
+ DOCUMENTATION RETRIEVAL INSTRUCTIONS:
+ =====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+ Title                         File Name                 SFTP Mode
+ -----------------------------------------------------------------
+ User Manual-PTF Menu          ptf.pdf                   Binary     
+                                                 
+  
+ INSTALLATION INSTRUCTIONS:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes.
+ Suggested time to install: non-peak requirement hours.
+   
+      1. Routine DG53P917 will be automatically deleted after installation 
+         of the patch. If you wish to verify the checksums, be sure to use
+         installation option 2 'Verify Checksums in Transport Global'
+         before installing.
+  
+      2. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      3. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      4. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter DG*5.3*917).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch 
+            is installed.
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      5. Use the Install Package(s) option and select the package 
+         DG*5.3*917.
+   
+      6. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//",
+         respond No.
+   
+      7. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//", respond Yes.
+  
+         When prompted, 'Enter options you wish to mark as 'Out Of 
+         Order':', enter:
+          
+              Utility Menu     [DGPT TOOLS MENU]
+  
+         When prompted, 'Enter protocols you wish to mark as 'Out Of
+         Order':', press enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13,1993;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53P917
+    Before:       n/a   After:  B1646197  **917**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 27, 2015
+Completed By:                               Date Completed: JUN 06, 2016
+Released By :                               Date Released : JUN 16, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

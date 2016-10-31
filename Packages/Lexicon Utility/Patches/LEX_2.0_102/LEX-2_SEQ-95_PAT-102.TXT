@@ -1,0 +1,138 @@
+$TXT Created by                      CPRS30.DOMAIN.EXT  (KIDS) on Tuesday, 09/08/15 at 11:04
+=============================================================================
+Run Date: MAR 09, 2016                     Designation: LEX*2*102
+Package : LEX - LEXICON UTILITY               Priority: Mandatory
+Version : 2        SEQ #95                      Status: Released
+                  Compliance Date: APR 08, 2016
+=============================================================================
+
+
+Subject: UCUM File/Data
+
+Category: 
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ Description:
+ ===========
+ This patch creates a new global named UCUM CODES, file #757.5. The UCUM
+ CODES file contains the Table of Examples of UCUM codes for Electronic
+ Messaging - Version 1.3 found at https://loinc.org/usage/units. From the
+ preface:
+ 
+ This table of examples does not include all possible UCUM codes. It does
+ include those needed for routine laboratory and clinical measures. See
+ http://unitsofmeasure.org for the full UCUM specification.  This table
+ was compiled by the National Library of Medicine, National Institutes of
+ Health, U.S. Department of Health and Human Services with content
+ contributions from Intermountain Healthcare and the Regenstrief
+ Institute. 
+ 
+ SFTP Documentation Retrieval:
+ ============================
+        
+  LEX_2_102_TM.PDF                   Technical Manual
+        
+ The preferred method is to retrieve the file from:
+ 
+  download.vista.domain.ext.
+        
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+        
+ Sites may retrieve the software and documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at
+ the following OI Field Offices:
+        
+        Albany            domain.ext
+        Hines             domain.ext
+        Salt Lake City    domain.ext
+        
+ Documentation can also be found on the VA Software Documentation 
+ Library at:
+  
+  http://www4.domain.ext/vdl/
+ 
+ Title                          File Name                SFTP Mode
+ ------------------------------------------------------------------
+ Technical Manual Developer's   LEXTM2_0.PDF             (binary)
+ Guide
+ 
+ 
+  REMEDY TICKETS:
+  ==============
+  None
+ 
+ Build Components:
+ =================
+ 
+  Data Dictionary:
+  ================
+ 
+ FILE #       NAME
+ -------------------------------------------------------------------------------
+ 757.5        UCUM CODES
+ 
+ 
+  INSTALLATION INSTRUCTIONS
+  =========================
+ This patch can be loaded with users on the system. Installation will
+ take less than 1 minute.
+ 
+ 1. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu.
+ 
+ 2. On the KIDS menu under the 'INSTALLATION' menu, use the following
+    options, as desired:
+        Print Transport Global
+        Compare Transport Global to Current System
+        Verify Checksums in Transport Global
+        Backup a Transport Global
+ 
+ 3. On the KIDS menu under the 'INSTALLATION' menu, use the following
+    option to install the patch: Install Package(s) (LEX*2.0*102)
+ 
+ 4. When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+    Install? NO// respond 'NO'.
+ 
+ 5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//,"
+    respond 'NO'.
+ 
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO// respond 'NO'.
+ 
+ 7. The init routine LEX2102P may be deleted once the installation has
+    successfully completed. 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;LEXICON UTILITY;**[Patch List]**;Sep 23, 1996;Build 20
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LEX2102P
+    Before:       n/a   After:   B261007  **102**
+Routine Name: LEXMUCUM
+    Before:       n/a   After:  B4658591  **102**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 03, 2015
+Completed By:                               Date Completed: FEB 17, 2016
+Released By :                               Date Released : MAR 09, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

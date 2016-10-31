@@ -1,0 +1,364 @@
+
+=============================================================================
+Run Date: DEC 17, 2015                     Designation: DG*5.3*865
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #800                    Status: Released
+                  Compliance Date: JAN 01, 2016
+=============================================================================
+
+Associated patches: (v)DG*5.3*842  <<= must be installed BEFORE `DG*5.3*865'
+
+Subject: EMAIL ADDRESS INDICATOR
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ *****************************************************************************
+  Note:  This patch is being released in support of the Enrollment Customer
+         Enhancements (ECE) and Enrollment System Enhancements (ESE)
+         projects and the Enrollment System (ES) 3.11 release.  DG*5.3*865
+         (Registration) is being released with EAS*1*107 (Enrollment
+         Application System) and EAS*1.0*111 (Enrollment Application System)
+         in host file DG_53_P865.KID.
+   
+ 
+         It is imperative that this patch be installed no later than the
+         compliance date.  Your understanding and support is appreciated.
+ *****************************************************************************
+   
+  The Health Eligibility Center (HEC) requested modifications to the
+  Enrollment System (ES) and VistA Registration, Enrollment and Eligibility
+  (VistA REE) software to support the requirements of the Email Address
+  Indicator initiative.
+   
+  This patch modifies the Registration v5.3 application as described below:
+   
+  1.  Add an Email Address Indicator field.
+  -----------------------------------------
+   
+  - A new field, EMAIL ADDRESS INDICATOR (#.1316) has been added to the
+    PATIENT file (#2).  Valid values for the Email Address Indicator field
+    shall be "YES" or "NO", and shall be a required field.  An existing
+    Email Address shall be deleted if the user answers NO to the Email
+    Address Indicator prompt DOES THE PATIENT HAVE AN EMAIL ADDRESS? Y/N?
+    The Email Address Indicator will not be displayed in VISTA.
+   
+  2.  Add an Email Address Indicator field date/time stamp.
+  ---------------------------------------------------------
+   
+  - A new field, EMAIL ADDRESS INDICATOR DT/TM (#.1317) has been
+    added.  This field will contain the date and time of the last EMAIL
+    ADDRESS INDICATOR update.  The Email Address Indicator date/time stamp
+    will not be displayed in VISTA.
+   
+   
+  Patch Components:
+  ------------------
+   
+  Files & Fields Associated:
+  
+  File Name      Number  Field Name     Number  New/Modified/Deleted
+  -------------  ------  ------------   ------  --------------------
+  PATIENT        2       EMAIL ADDRESS  .1316   New
+                         INDICATOR 
+                         EMAIL ADDRESS  .1317   New
+                         INDICATOR DT/TM 
+   
+    
+  Forms Associated:
+  
+  Form Name                    File #               New/Modified/Deleted
+  ---------                    ------               --------------------
+  N/A
+   
+   
+  Mail Groups Associated:
+  
+  Mail Group Name          New/Modified/Deleted
+  ---------------          --------------------
+  N/A
+   
+   
+  Options Associated:
+  
+  Option Name            Type               New/Modified/Deleted
+  -----------            ----               --------------------
+  N/A
+   
+   
+  Protocols Associated:
+  
+  Protocol Name                             New/Modified/Deleted
+  -------------                             --------------------
+  
+   
+  Security Keys Associated:
+  
+  Security Key Name
+  -----------------
+  N/A
+   
+   
+  Templates Associated:
+  
+  Template Name     Type        File Name (Number)    New/Modified/Deleted
+  -----------       ----        ------------------    --------------------
+  N/A
+   
+     
+ Additional Information: 
+  
+  New Service Request (NSRs):
+  ---------------------------
+  N/A
+   
+   
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+   
+   
+  Remedy Ticket(s) & Overview:
+  ----------------------------
+  N/A
+ 
+ 
+  Test Sites:
+  -----------
+  West Texas VA Health Care System, Big Spring, TX
+  Fargo VA Health Care System, Fargo, ND
+  Clement J. Zablocki Veterans Affairs Medical Center, Milwaukee, WI
+  VA Pittsburgh Healthcare System, Pittsburgh, PA
+ 
+ 
+ KNOWN ISSUES: 
+ -------------
+ Three issues have been found during IOC testing related to using the
+ contributed to spouse or child indicators in lieu of the amount contributed to
+ spouse or child values.  All three issues will be fixed in subsequent patches
+ to be deployed approximately 2 months after release of this host file.
+ 
+ Issue 1: When a Veteran's income test Married Last Year value is "Yes" and the
+ Contributed to Spousal Support field has a stored value; updating the Married
+ Last Year value to "No" does not remove the value in the Contributed to Spousal
+ Support field.  The Contributed to Spouse value continues to display on the
+ income test screens.  The user must remove the spouse from the means test prior
+ to changing the Married Last Year value to "No".  This ensures the spouse is
+ appropriately not counted as a dependent and their income is not included in
+ the calculation of the means test status, copay test status, or enrollment
+ determination.  The issue appears to be isolated to the display on the income
+ test and should not cause any negative impact to processing.
+ 
+ Solution 1: Work Item 235262 was entered to address the issue.  Requirements
+ on how to handle the display will be forthcoming and the solution will be
+ released in patch DG*5.3*923.
+ 
+ Issue 2:  The 10-10EZ and 10-10EZR forms were updated to ask the Veteran if
+ their spouse or child did not live with them did they provide support in lieu
+ of asking for the amount contributed to spouse or child.  The amount
+ contributed to spouse and child fields were replaced by contributed to spouse
+ or child yes/no indicators for determining whether the spouse should be counted
+ as a dependent on the income test.  The 10-10EZ form does not print the
+ indicator of yes or no in Block 3 of the Dependent Information and the 10-10EZR
+ form always prints "No" regardless of the indicator stored values.  The issue
+ appears to be isolated to the printing of the 10-10EZ and 10-10EZR forms in
+ VistA.  The income test is shared with the Enrollment System (ES).  The ES
+ 10-10EZ and 10-10EZR forms print the yes or no indicator on the form correctly.
+ 
+ Solution 2: Work Item 219329 was entered to address the issue.  Printing of
+ the forms may be done through the Enrollment System (ES) until patch EAS*1*135
+ is released to correct the issue.  
+ 
+ Issue 3:  When a Veteran does not live with their spouse and contributes to
+ their support, the spouse's income information is not printed on the 10-10EZ
+ form or 10-10EZR form in VistA.  The issue appears to be isolated to the
+ printing of the 10-10EZ and 10-10EZR forms in VistA.  The income test is shared
+ with the Enrollment System (ES).  The ES 10-10EZ and 10-10EZR forms print the
+ spouse's income on the form correctly.  
+ 
+ Solution 3: Work Item 235260 was entered to address the issue.  Printing of
+ the forms may be done through the Enrollment System (ES) until patch EAS*1*135
+ is released to correct the issue.
+ 
+    
+    
+  Documentation Retrieval Instructions:
+  =====================================
+  Updated documentation describing the new functionality introduced by 
+  this patch is available.
+   
+  The preferred method is to FTP the files from
+  ftp://download.vista.domain.ext/.  This transmits the files from the 
+  first available FTP server. Sites may also elect to retrieve software
+  directly from a specific server as follows:
+   
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.domain.ext   []
+         Hines              ftp.domain.ext    []
+         Salt Lake City     ftp.domain.ext      []
+  
+   
+ Documentation can also be found on the VA Software Documentation Library 
+ at:http://www4.domain.ext/vdl/:
+ 
+ Note:  There are two separate host files (DG_53_P865.KID and DG_53_P891.KID),
+ containing multiple Registration (DG) patches, that require updates to the
+ User Manual-Registration Menu document.  These host files are being released
+ together to support the ECE and ESE projects.  All changes to the User
+ Manual-Registration Menu documentation for these DG patches can be found in
+ the DG_5_3_P891_REG_UM.PDF file.  
+ 
+  
+ Title                         File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ User Manual-Registration Menu DG_5_3_P891_REG_UM.PDF         Binary
+ 
+  
+   
+ FTP Instructions:
+ -----------------
+  
+ ES 4.1 includes the following patches.  The host file was created to
+ simplify installation at Veterans Health Administration (VHA) facilities.
+  
+    File Name                         Contents           Retrieval Format
+    --------------------------------  --------           ----------------
+    DG_53_P865.KID                    DG*5.3*865          ASCII
+                                      EAS*1*107
+                                      EAS*1*111
+  
+  
+   
+  Pre-Installation Instructions:
+  ------------------------------
+  The following kids build DG_53_P865.KID will be installed.
+   
+  This patch may be installed with users on the system although it is 
+  recommended that it be installed during non-peak hours to minimize 
+  potential disruption to users.  This patch should take less than 15 
+  minutes to install.
+  
+ 1.  The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be unscheduled.
+     Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the
+     Taskman Management [XUTM MGR] menu.
+  
+ 2.  The HL7 incoming/outgoing filers should be stopped.  Use the Monitor
+     Start, Stop Filers [HL FILER MONITOR] option on the Filer and Link
+     Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+     Menu [HL MAIN MENU].
+  
+ 3.  The following options should be disabled during installation:
+  
+          Register a Patient                    [DG REGISTER PATIENT]
+          Load/Edit Patient Data                [DG LOAD PATIENT DATA]
+          Preregister a Patient                 [DGPRE PRE-REGISTER OPTION]
+  
+ 4.  This patch may be installed with users on the system, however because 
+     the Registration options need to be placed out of order, we suggest it
+     be installed after business hours.
+  
+   
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Download DG_53_P865.KID into your local directory.
+  
+ 2.  From the Kernel Installation and Distribution System (KIDS) Menu, 
+     select the Installation menu. 
+  
+ 3.  Use Load a Distribution option. You may need to prepend a directory 
+     name. When prompted for "Enter a Host File: ", respond with
+     DG_53_P865.KID
+  
+     Example: USER$:[ABC]DG_53_P865.KID
+  
+ 4.  If given the option to run any Environment Check Routine(s), answer
+     "YES." 
+  
+ 5.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch
+     DG*5.3*865.
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 6.  Select Installation Option: 
+  
+ Install Package(s) 
+ ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch install
+         and enter DG*5.3*865 at the INSTALL NAME prompt.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//'  answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//'  answer YES
+  
+  
+          Register a Patient                    [DG REGISTER PATIENT]
+          Load/Edit Patient Data                [DG LOAD PATIENT DATA]
+          Preregister a Patient                 [DGPRE PRE-REGISTER OPTION]
+  
+ Post-Installation Instructions:
+ -------------------------------
+ 1.  The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be scheduled.
+     Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the
+     Taskman Management [XUTM MGR] menu.
+  
+ 2.  The HL7 incoming/outgoing filers should be started.  Use the Monitor
+     Start, Stop Filers [HL FILER MONITOR] option on the Filer and Link
+     Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+     Menu [HL MAIN MENU].
+ 
+ 3.  The EAS1111P routine may be deleted after installation.
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 35
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGRPE
+    Before: B53481298   After: B61220054  **32,114,139,169,175,247,190,
+                                           343,397,342,454,415,489,506,
+                                           244,547,522,528,555,508,451,
+                                           626,638,624,677,672,702,689,
+                                           735,688,797,842,865**
+ 
+Routine list of preceding patches: 842
+
+=============================================================================
+User Information:                          Hold Date     : DEC 06, 2015
+Entered By  :                               Date Entered  : NOV 18, 2012
+Completed By:                               Date Completed: NOV 23, 2015
+Released By :                               Date Released : DEC 17, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

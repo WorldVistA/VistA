@@ -1,0 +1,475 @@
+$TXT Created by                  CPRS28.DOMAIN.EXT  (KIDS) on Tuesday, 12/22/15 at 07:46
+=============================================================================
+Run Date: DEC 28, 2015                     Designation: GMRC*3*85
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: EMERGENCY
+Version : 3        SEQ #72                      Status: Released
+                  Compliance Date: DEC 30, 2015
+=============================================================================
+
+Associated patches: (v)GMRC*3*73   <<= must be installed BEFORE `GMRC*3*85'
+                    (v)GMRC*3*75   <<= must be installed BEFORE `GMRC*3*85'
+
+Subject: CONSULT ORDER REJECTION
+
+Category: 
+  - Enhancement ()
+  - Routine
+
+Description:
+============
+
+ This patch addresses two urgent issues in the Consult/Request Tracking 
+ package.
+ 1. Order rejection upon signature
+ 2. Diagnosis codes missing from consult transmissions to the Healthcare 
+    Claims Processing System (HCPS).
+  
+ Issue #1
+ --------
+ In GMRC*3.0*33, the Consult/Request Tracking package implemented Code Set
+ Versioning (CSV).  Part of that change was to validate the diagnosis code 
+ contained in any consult or procedure requests.  With the activation of 
+ ICD-10, this diagnosis validation logic is the root cause of numerous 
+ orders being rejected by Consults with the message: "Provisional DX code 
+ rejected: code not valid for the Coding System unable to file request".
+  
+ This patch, GMRC*3.0*85, removes the CSV logic from the new order and 
+ edit/resubmit processes in VistA.  When an order is signed and released 
+ to the Consult/Request Tracking package, Consults will no longer validate 
+ the ICD code being placed with that order.  Therefore, Consult/Request 
+ Tracking will now accept an order that contains an ICD-9 diagnosis code 
+ while ICD-10 is the active coding system.
+  
+ This patch does nothing to alter the ICD code validation that is done in 
+ CPRS GUI.  That logic will still be in effect if a user selects a consult 
+ quick order (QO) where an ICD-9 code has been saved for the Provisional 
+ Diagnosis prompt.  **The consult order can still be saved and signed.  It 
+ will not be rejected by Consults.**
+  
+ In this scenario, the user may see a popup dialog entitled "Inactive ICD 
+ Code" that states:
+    "The provisional diagnosis is not active as of today's date.
+    Another code must be selected before the order can be saved."
+ Upon clicking OK in the popup dialog, the user is taken to the consult 
+ (or procedure) order dialog so that the provisional diagnosis value can 
+ be changed (if a diagnosis is required) or omitted entirely.
+  
+ To avoid this quick order scenario, sites may use the Review Quick Orders 
+ for Inactive ICD9 Codes [ORCM GMRC CSV CHECK] option found on the Order 
+ Menu Management [ORCM MGMT] menu.  This option produces a list of all 
+ consult quick orders that contain inactive diagnosis codes.  These quick 
+ orders may be reviewed for continued use and subsequently edited to 
+ update them with active diagnosis codes.
+  
+ The following are the known scenarios in which a consult can be ordered 
+ with an ICD-9 diagnosis code despite ICD-10 being active.  These 
+ scenarios apply to outpatient orders.
+  
+ 1. When a user interacts with a patient chart and the date/time set 
+ for current activities predates ICD-10 activation and the user then 
+ proceeds to enter a consult for today where a provisional dx is 
+ required/entered, the Lexicon search will return ICD-9 codes.
+  
+ 2. If a user selects a consult quick order that is configured for 
+ AUTO-ACCEPT QUICK ORDER=YES and that quick order has an ICD-9 code saved 
+ for the provisional diagnosis prompt.
+  
+ Previously, in all scenarios above, upon signing the consult order, the 
+ user would receive the rejection message.  With the installation of 
+ GMRC*3.0*85, these orders will no longer be rejected and consults will 
+ continue to be processed as usual.
+  
+  
+ Issue #2
+ After the transition to ICD-10, the HCPS began receiving consult requests 
+ that did not contain a diagnosis code. This creates a delay in processing 
+ these requests as the consult must be manually edited in the Referral and 
+ Authorization System (RAS) to re-enter the diagnosis code.
+  
+ The root cause for this was found to be a bug in the consults code with
+ how the diagnosis code was being extracted from an array of data before
+ transmission to the HCPS. Previously, the code was trying to extract the
+ diagnosis code from the provisional diagnosis text, and it was 
+ discovered that the extracted code was often a SNOMED code instead of the 
+ actual ICD code.
+  
+ E.g. If the diagnosis was:
+ Amyotrophy due to type 1 diabetes mellitus (SNOMED CT 427571000) (250.61)
+ The routine was extracting the diagnosis code as "SNOMED CT 427571000"
+ And the diagnosis text was extracted as:
+ "Amyotrophy due to type 1 diabetes mellitus"
+  
+ After the installation of GMRC*3.0*85, the actual ICD diagnosis
+ code will now be extracted, such as "250.61" in the above example.  The 
+ diagnosis text will remain unaffected.
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy/CA SDM Ticket(s) & Overview:
+ ----------------------------
+ CPRS-related Tickets
+ Remedy #1304169, 1305953: Code not valid for Coding System
+  
+  
+ Problem:
+ -------
+ After the ICD-10 implementation, a consult order has been created that 
+ uses an ICD-9 code in the provisional diagnosis.  Consults attempts to 
+ validate that the submitted ICD code is active and subsequently rejects 
+ the order because it cannot find an ICD-9 code in the active coding 
+ system (ICD-10).
+  
+ Resolution:
+ ----------
+ When an order is signed and released to the Consult/Request Tracking 
+ package, Consults will no longer validate the ICD code being placed with 
+ that order.  Therefore, orders placed in these scenarios will no longer 
+ be rejected by Consults.
+  
+  
+  
+ VistA Imaging-related Tickets
+ I5944836FY16 Text Gateway Keeps Crashing from Bad HL 7 Message
+ I5937620FY16 HL7 Data Error is stopping Worklist
+ I5904476FY16 Text Gateway receiving HL7 error.  Worklist stopping.
+ I5903426FY16 HL7 error on Dicom gateway
+ I5903370FY16 User is Reporting the Error *** DICOM TEXT GATEWAY...
+ I5902854FY16 DICOM TEXT GATEWAY -- HL7 DATA ERROR
+ I5900787FY16 Imaging Issue
+ I5900130FY16 Text Gateway Issue
+ I5897962FY16 Text Gateway Issue
+  
+ Problem:
+ -------
+ After the ICD-10 implementation, a consult order has been created that 
+ uses an ICD-9 code in the provisional diagnosis.  Consults attempts to 
+ validate that the submitted ICD code is active and subsequently rejects 
+ the order because it cannot find an ICD-9 code in the active coding 
+ system (ICD-10).  Provider may submit several consult orders not 
+ realizing that each rejected order is creating downstream issues for 
+ VistA Imaging.  VistA Imaging is unable to handle the rejected order.
+  
+ Resolution:
+ ----------
+ When an order is signed and released to the Consult/Request Tracking 
+ package, Consults will no longer validate the ICD code being placed with 
+ that order.  This change removes the condition that caused downstream
+ issues where other packages cannot handle the rejected order. 
+  
+ Prosthetics-related Tickets
+ I5916375FY16 Duplicate prosthetics consults with nothing to display;
+              manual suspense
+  
+ Problem:
+ -------
+ After the ICD-10 implementation, a consult order has been created that 
+ uses an ICD-9 code in the provisional diagnosis.  Consults attempts to 
+ validate that the submitted ICD code is active and subsequently rejects 
+ the order because it cannot find an ICD-9 code in the active coding 
+ system (ICD-10).  Provider may submit several consult orders not 
+ realizing that each rejected order is creating downstream issues for 
+ Prosthetics.  Prosthetics is unable to handle the rejected order.
+  
+ Resolution:
+ ----------
+ When an order is signed and released to the Consult/Request Tracking 
+ package, Consults will no longer validate the ICD code being placed with 
+ that order.  This change removes the condition that caused downstream
+ issues where other packages cannot handle the rejected order.
+  
+ HCPC/RAS-related Ticket
+ R6063960FY16 - Consult diagnosis code no longer transmitting to Healthcare
+ Claims Processing System(HCPS)
+  
+ Problem:
+ --------
+ After the implementation of ICD-10, consult orders transmitted to the 
+ HCPS were arriving without a diagnosis code.  This created a need to 
+ manually edit these requests to add the diagnosis code back in.
+  
+ Resolution:
+ -----------
+ The GMRC routine that processes these transmissions was obtaining the 
+ diagnosis code from an incorrect location in a data array. That code has 
+ been updated to reference the correct location in the array.
+  
+  
+  
+ Test Sites:
+ ----------
+ Coatesville
+ Dayton
+ Detroit
+ Houston
+ Wilmington
+  
+  
+ Software & Documentation Retrieval Instructions:
+ ------------------------------------- 
+ There is no updated documentation provided with this patch.
+ This patch is a PackMan build.  Therefore the software may be obtained by 
+ forwarding the released patch message to the target system.
+  
+  
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch contains a simple pre-install routine that will prompt the 
+ installer for names of recipients for a post-install generated MailMan 
+ message.
+ The post-install routine will create a tasked job to search the ORDER 
+ file (#100) for a particular subset of orders and then send a MailMan
+ report containing the findings to the recipients specified during the 
+ pre-install.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ The post-install will create a tasked job to search the ORDER file 
+ (#100) and generate a MailMan message containing the search results.  
+ IT installers MUST contact and coordinate with site staff to learn the
+ names of recipients BEFORE installing the patch. Do NOT install the patch 
+ until you have names to specify as recipients.
+  
+ These recipients should be site staff who will be tasked with reviewing 
+ Consult orders that were rejected upon signature with the message: 
+ "Provisional DX code rejected: code not valid for the Coding System unable
+ to file request".  These recipients may be local Clinical Applications
+ Coordinators (CACs) or other staff identified by the site.  The installer 
+ must work with the site to identify recipients before installing the 
+ patch.  When discussing this issue with sites, referencing the rejection
+ message above and the associated trouble tickets should help provide 
+ context for the issue and assist with identifying recipients.
+  
+ Installers are also strongly encouraged to add themselves as recipients 
+ for the post-install report as well.  Doing so will allow the installer 
+ to notice when the tasked job has completed and the MailMan message has 
+ been sent.
+  
+ No options need to be disabled for the pre-install
+  
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install. The tasked job started by the post-install will likely
+ take more time to complete.  It could be up to 30 minutes or more before
+ the job completes and the recipients receive the specified MailMan
+ message.
+  
+  
+ Installation Instructions:
+ --------------------------
+ The installation will update the routines associated with the diagnosis 
+ code validation checks.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the
+     patch GMRC*3.0*85:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this
+         patch is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' A menu rebuild is not necessary.
+     
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' Inhibiting logons is not necessary.
+     
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' Disabling any options or protocols is not 
+     necessary
+     
+  
+ Post-Installation Instructions:
+ -------------------------------
+ No special post-installation steps are necessary.  If installers add
+ themselves as recipients for the post-install message, they should verify 
+ that the message was generated and received.
+  
+ As no options were disabled during the pre-install, there is no need to
+ re-enable any options.
+  
+ If the tasked job exits before completion, the installer will receive a 
+ MailMan message stating such along with directions on how to restart the
+ task.  The task may be restarted by running RESTART^GMRCP85 from the 
+ programmer prompt.
+  
+ Post-Install Tasked Job Details:
+ --------------------------------
+ The recipients gathered during the pre-install are stored in the 
+ following ^XTMP array: ^XTMP("GMRCP85RECIPS")
+  
+ Any orders found during the tasked job search are stored in the following 
+ ^XTMP array: ^XTMP("GMRCP85_ORDERS")
+  
+ If the tasked job exits before completion, the following ^XTMP array 
+ contains the reference point used when the task is requeued: 
+ ^XTMP("GMRCP85")
+  
+ The tasked job searches the ORDER file (#100).  The start date for the 
+ search is 9/01/2015 and moves forward chronologically from that date. The 
+ orders of interest are limited to Consults and Procedure orders where the 
+ NATURE OF DC (100,61) is REJECTED and the DC REASON TEXT (100,66) 
+ contains the phrase "Code not valid for Coding System".
+ The output of the report is the patient's name + last four; the 
+ intended consult service; the date the order was placed; and the order 
+ number (IEN from file 100).  The last line of the report will be the 
+ total number of orders found.
+  
+  
+ Two abbreviated examples of the post-install generated message follow.  
+ The first where orders of interest were found, and the second where no
+ orders were found.
+  
+  
+ Subj: PATCH GMRC*3.0*85 ORDER SEARCH STATUS  [#157238] 11/04/15@09:32 
+ From: GMRC*3.0*85 INSTALL@CPRS28.DOMAIN.EXT  In 'IN' basket.   
+ Page 1
+ --------------------------------------------------------------------------
+ The file #100 search process from GMRC*3.0*85 was successfully completed.
+  
+ PATIENT
+   SERVICE                                           ORDER DATE    ORDER #
+ --------------------------------------------------------------------------
+ CPRS,EIGHT III (0008)
+   CONTACT LENS REQUEST                               10/14/15     22326
+   CARDIOLOGY                                         10/15/15     22344
+   PHYSICAL THERAPY                                   10/15/15     22350
+  
+ CPRS,TWO-PATIENT (0001)
+   DIABETES NUTRITION                                 10/07/15     21722
+   DIABETES NUTRITION                                 10/07/15     21728
+  
+ TOTAL ORDERS FOUND:     5
+  
+ Enter message action (in IN basket): Ignore//
+  
+  
+ Subj: PATCH GMRC*3.0*85 ORDER SEARCH STATUS  [#157239] 11/04/15@09:35
+ From: GMRC*3.0*85 INSTALL@CPRS.TEST.DOMAIN.EXT  In 'IN' basket. Page 1
+ -----------------------------------------------------------------------
+ The file #100 search process from GMRC*3.0*85 was successfully completed.
+  
+ No CONSULT or PROCEDURE orders found with the 
+ 'Code not valid for Coding System' rejection message.
+  
+ Enter message action (in IN basket): Ignore// 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;DEC 27, 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRCEDT1
+    Before: B70113386   After: B69360979  **1,5,12,15,22,33,47,66,73,85**
+Routine Name: GMRCEDT2
+    Before: B17559466   After: B16802448  **1,5,12,15,22,33,66,46,73,85**
+Routine Name: GMRCEDT4
+    Before: B85583529   After: B85518879  **1,5,12,15,22,33,66,73,85**
+Routine Name: GMRCGUIC
+    Before: B69004877   After: B68517845  **4,12,20,15,22,33,66,73,85**
+Routine Name: GMRCHL7B
+    Before: B29886300   After: B26855576  **1,5,12,21,17,22,33,66,46,73,85**
+Routine Name: GMRCHL7H
+    Before:B129894392   After:B130038973  **75,85**
+Routine Name: GMRCP85
+    Before:       n/a   After: B77500247  **85**
+ 
+Routine list of preceding patches: 73, 75
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 09, 2015
+Completed By:                               Date Completed: DEC 23, 2015
+Released By :                               Date Released : DEC 28, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,146 @@
+$TXT Created by            at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 10/09/14 at 10:19
+=============================================================================
+Run Date: AUG 18, 2015                     Designation: FB*3.5*155
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #133                    Status: Released
+                  Compliance Date: SEP 17, 2015
+=============================================================================
+
+Associated patches: (v)FB*3.5*147  <<= must be installed BEFORE `FB*3.5*155'
+
+Subject: PURPOSE OF VISIT CODE UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch adds four new Purpose of Visit (POV) codes to the FEE BASIS
+ PURPOSE OF VISIT (#161.82) file.
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC0000001066772 - POV code update
+  
+ ASSOCIATED NSR (S):
+ ===================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Miami VA Healthcare System
+ Providence VA Medical Center
+ VA North Florida / South Georgia VA Health Care System
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC0000001066772 - POV code update
+  
+    Problem:
+    --------
+    The Veterans Health Administration (VHA) requires four new Fee Basis
+    Purpose of Visit (POV) codes added to the VistA database.
+  
+    Resolution:
+    -----------
+    Routine FBXIP155 adds the four POV codes in the FEE BASIS PURPOSE OF
+    VISIT (#161.82) file, as indicated.
+  
+    New Purpose of Visit Codes being added:
+  
+ POV Code     Name/ Description                               Fee Program 
+                                                              Associated with
+ -------------------------------------------------------------------------------
+   25    NON-VA MEDICAL CARE, CAREGIVER OVERSIGHT VISITS.        Outpatient
+   26    PROGRAM OF ALL-INCLUSIVE CARE OF THE ELDERLY (PACE)     Outpatient
+   27    VETERAN-DIRECTED HOME AND COMMUNITY BASED SERVICES 
+         (VD-HCBS)                                               Outpatient
+   28    AMBULANCE/TRAVEL - FOR INPATIENT OR OUTPATIENT 
+         SERVICES                                               Outpatient
+  
+   
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be installed during normal working hours with all users on
+ the system.   
+  
+ Install Time - less than 2 minutes. 
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter FB*3.5*155)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       FB*3.5*155.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" hit enter.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', hit enter. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+                     
+          Edit Ancillary Payment        [FBCH EDIT ANCILLARY PAYMENT]
+          Edit CNH Authorization        [FBCNH EDIT AUTHORIZATION]
+          Edit CNH Payment              [FBCNH EDIT PAYMENT]
+          Enter Authorization           [FBAA ENTER AUTHORIZATION]
+          Edit Payment                  [FBAA EDIT PAYMENT]
+          Legal Entitlement             [FBCH LEGAL ENTITLEMENT]
+          Medical Entitlement           [FBCH MEDICAL ENTITLEMENT]
+          Complete 7078/Authorization   [FBCH COMPLETE 7078]
+          Edit Completed 7078           [FBCH EDIT 7078]
+          Set-up a 7078                 [FBCH 7078 SETUP]
+  
+        2) When prompted "Enter protocols you wish to mark as "Out of
+           Order":" just press <Return>.
+  
+    7. If an error is received during install, please contact your IRM for
+       additional support.
+  
+    8. The routine FBXIP155 can be removed from your production and 
+       test system after the patch has been successfully installed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBXIP155
+    Before:       n/a   After:  B5136953  **155**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 06, 2014
+Completed By:                               Date Completed: JUL 28, 2015
+Released By :                               Date Released : AUG 18, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

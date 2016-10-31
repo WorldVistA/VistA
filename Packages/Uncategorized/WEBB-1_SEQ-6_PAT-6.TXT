@@ -1,0 +1,210 @@
+
+=============================================================================
+Run Date: APR 15, 2016                     Designation: WEBB*1*6
+Package : WEBB - BED MANAGEMENT SOLUTION      Priority: Mandatory
+Version : 1         SEQ #6                      Status: Released
+                  Compliance Date: MAY 16, 2016
+=============================================================================
+
+
+Subject: BED MANAGEMENT SOLUTION 1.6
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch announces the National Release of Bed Management Solutions 
+ (BMS) version 1.6. No additional action is necessary for sites except to
+ communicate the below modifications of BMS v1.6 to users.  This new BMS
+ 1.6 version addresses defects and there are no new enhancements.
+  
+ This build corrects four issues within the BMS application:
+  
+ 1) Resolve defect on the National and VISN level Patient Pending Bed
+    Placement List (PPBPL), where wait times are not calculating 
+    correctly and remove time from the CH/CL Admission Date field.
+  
+ 2) Resolve a defect on the VISN level PPBBL and associated reports, so
+    it doesn't display patient full SSN.
+  
+ 3) Make a minor fix to the login page, to simplify making  
+    updates to the page before/during an outage.  
+    
+ 4) Resolve a defect which removes all colors on the whiteboard when
+    selecting to turn off the Blue/Pink option on the whiteboard.
+  
+ 
+  
+  
+  
+ ASSOCIATED CA SERVICE DESK TICKET(s):
+  
+ 1) CA Service Desk Incident # I6543658FY16: Users report 2 issues 
+    with National and VISN Level PPBPL: Inaccurate Wait Times and 
+    CH/CL Admission show at midnight for every entry, which is not 
+    accurate 
+ 
+  
+ 2) CA Service Desk Incident #I7122940FY16: Remove patient SSN from 
+    VISN level PPBPL and VISN PPBPL reports  
+  
+  
+ 3) CA Service Desk Incident # I7123200FY16: Login page modifications 
+    to simplify notifications when BMS is down for maintenance.  
+ 
+  
+ 4) CA Service Desk Incident #I7043794FY16: When turning off the 
+    Blue/Pink for gender color, ALL of the colors disappear off the 
+    Ward Whiteboard, including green for "Bed Available", red for 
+    "Bed out of Service" and Orange for "Bed Assigned". 
+  
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+    N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+    North Texas HCS
+    NY Harbor HCS
+    Michael E. DeBakey Medical Center - Houston TX    
+  
+  
+ CA SERVICE DESK TICKET OVERVIEW:
+ =======================
+  
+ 1) Incident # I6543658FY16:  Users report 2 issues with National 
+    and VISN Level PPBPL: Inaccurate Wait Times and CH/CL Admission 
+    show at midnight for every entry, which is not accurate. 
+    
+    Problem:
+    ========
+    Currently, wait times on the National Level PPBPL are showing 
+    negative numbers when patients are dispositioned. If a patient 
+    does not have a disposition date, the wait time calculation is 
+    equal to the Current Date Time minus the Creation Date Time. If 
+    the patient has a disposition date, the wait time calculation is 
+    equal to the Disposition Date Time minus the Creation Date Time.
+    Additionally, the CH/CL Admission Date field shows a time stamp. 
+    This is a user entered field in which time is not being captured, 
+    so the time always appears as midnight, which is not accurate.  
+    
+    Solution:
+    =========
+    This release will apply code fix to properly calculate Wait Time.
+    In the new calculation, if a patient does not have a disposition 
+    date, then the wait time will calculate as the Current Date minus 
+    the Transfer Request Creation Date Time. If the patient does have 
+    a disposition, then wait time will be calculated as Event Creation 
+    Date Time minus Transfer Request Creation Date Time. Dispositioned 
+    patients will show positive wait times instead of negative times.   
+    Additionally, the date format for CH/CL Admission Date will be 
+    Updated to remove reference to time.   
+  
+ 2) Incident #I7122940FY16: Remove patient SSN from VISN level PPBPL 
+    and VISN PPBPL reports 
+  
+    Problem:
+    ========
+    Privacy dictates the use of full SSN should be limited. 
+    
+    Solution:
+    =========
+    This release will implement a change to show only the last 4 
+    digits of the patient's SSN on the display and reports. 
+    Corresponding screen shot changes will be updated in the user
+    guide.
+  
+ 3) Incident # I7123200FY16:  Login page modifications to simplify 
+    notifications when BMS is down for maintenance. 
+  
+    Problem:
+    ========
+    During BMS outages, it's currently time consuming and difficult to 
+    update the maintenance page regarding the outage. This can delay the
+    notification to users.
+    
+   
+    Solution:
+    =========
+    This release implements an update to the maintenance page to quickly 
+    and easily update the page when BMS is down or planned to be down. 
+    When BMS is down, it does not allow the users to log in. Instead it 
+    displays a message notifying users of the outage. Administrators
+    control when the maintenance page is displayed.
+    
+  
+  
+ 4) Incident # I7043794FY16: When turning off the Blue/Pink for gender 
+    color. All of the colors disappear off the Ward Whiteboard, including green 
+    for "Bed Available", red for "Bed out of Service" and Orange for 
+    "Bed Assigned".
+  
+    Problem:
+    ========
+    Currently on the ward whiteboard page, when selecting the option
+    "None" instead of "Blue/Pink" to identify male (blue) and female
+    (pink) patients occupying beds on the whiteboard, other color bands 
+    to identify bed availability, assignment, or beds out service are 
+    also removed from the display.
+    
+   
+    Solution:
+    =========
+    This release implements a change to show both male and female 
+    patients occupying beds in a neutral color on the display, while not
+    changing or clearing the color from available, assigned (reserved) or
+    out of service beds.
+  
+ 
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+    N/A
+  
+  
+ IMPLEMENTATION:
+ ===============
+   The BMS application is a centrally managed web-based application hosted 
+   at AITC. BMS version 1.6 will be loaded into BMS Production account by 
+   AITC staff.  No software will be installed at the facilities.
+  
+  
+ Reporting Problems:
+ ===================
+   If there are problems associated with the BMS application they should be
+   reported via CA Service Desk by contacting the National Service Desk (NSD) 
+   1-855-673-4357 for assistance. 
+  
+ DOCUMENTATION INFORMATION:
+ ==========================
+   The BMS User Guide and BMS Technical Manual are being updated in 
+   conjunction with this release.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 26, 2016
+Completed By:                               Date Completed: APR 15, 2016
+Released By :                               Date Released : APR 15, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

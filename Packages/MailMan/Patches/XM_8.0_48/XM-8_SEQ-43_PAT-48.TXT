@@ -1,0 +1,365 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 09/18/15 at 11:15
+=============================================================================
+Run Date: JAN 11, 2016                     Designation: XM*8*48
+Package : XM - MAILMAN                        Priority: Mandatory
+Version : 8        SEQ #43                      Status: Released
+                  Compliance Date: FEB 11, 2016
+=============================================================================
+
+Associated patches: (v)XM*8*3     <<= must be installed BEFORE `XM*8*48'
+                    (v)XM*8*22     <<= must be installed BEFORE `XM*8*48'
+
+Subject: MAILMAN IPv6 PREPARATION
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ In preparation for the VA's transition from Internet Protocol version 
+ 4 (IPv4) to Internet Protocol version 6 (IPv6), the MailMan package will 
+ require modifications to make it IPv6 ready.
+  
+  Associated NSR(s):
+  ==================
+  N/A
+      
+      
+  Associated Remedy ticket(s):
+  ============================
+  1. INC000001105132 - MailMan - IPv6 Conversion
+  
+      
+  Participating Test Sites:
+  =========================
+  Washington DC  - VA Medical Center
+  Togus VA Medical Center 
+  Central Plains HCS - VA Nebraska Western Iowa Health Care System (Omaha, 
+  NE, Lncoln, NE, Grand Island, NE; Des Moines, IA,  Knoxville, IA, Iowa 
+  City, IA)
+  
+      
+       
+  REMEDY OVERVIEW:
+  ================
+  1. INC000001105132 - MailMan - IPv6 Conversion
+    
+      Problem:
+      ----------
+      In preparation for the VA's transition from Internet Protocol version 
+      4 (IPv4) to Internet Protocol version 6 (IPv6), the MailMan package
+      will require modifications to make it IPv6 ready.
+  
+      Internet Protocol version 6 (IPv6) is the latest version of the Internet 
+      Protocol (IP), the communications protocol that provides an 
+      identification and location system for computers on networks and routes
+      traffic across the Internet. IPv6 was developed by the Internet 
+      Engineering Task Force (IETF) to deal with the long-anticipated problem 
+      of IPv4 address exhaustion. IPv6 is intended to replace IPv4.
+  
+      Vista is only compatible with IPv4 currently and this effort is to 
+      prepare for IPv6 compatibility.
+    
+      Resolution:
+      --------------
+      As part of the IPv6 transition for MailMan (XM), modifications were 
+      required to include evaluation of the current system to determine what
+      version of IP is enabled and format each address accordingly.  
+  
+  
+ Routines: XMCDNT, XMSFTP, XMSFTPUX, XMTDR 
+   
+  
+  DOMAIN (#4.2) file 
+  ------------------
+  Before:
+  ------
+  4.2,6.5   MAILMAN HOST           0;12 FREE TEXT
+  
+            INPUT TRANSFORM:  K:$L(X)>20!($L(X)<2) X
+            LAST EDITED:      JUN 02, 1994 
+            HELP-PROMPT:      Answer must be 2-20 characters in length. 
+            DESCRIPTION:      This field contains a logical or physical
+                              address of a remote domain so that a connection
+                              can occur.  
+  
+  
+  4.2,6.6   FTP BLOB IP ADDRESS    IP;1 FREE TEXT
+  
+            INPUT TRANSFORM:  K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>15!($L(X)
+                              <7)!'(X?1.N1"."1.N1"."1.N1"."1.N) X
+            LAST EDITED:      FEB 19, 1993 
+            HELP-PROMPT:      Enter a valid IP address in the form:  
+                              nn.nn.nn.nn 
+            DESCRIPTION:      This field contains the IP address of this host
+                              so that it can be used as the to address for
+                              files that will be sent to this domain. 
+  
+  
+  After:
+  -----
+  4.2,6.5   MAILMAN HOST           0;12 FREE TEXT
+  
+            INPUT TRANSFORM:  K:$L(X)>39!($L(X)<2) X
+            LAST EDITED:      AUG 11, 2015 
+            HELP-PROMPT:      Answer must be 2-39 characters in length. 
+            DESCRIPTION:      This field contains a logical or physical
+                              address of a remote domain so that a connection
+                              can occur.  
+  
+  
+  4.2,6.6   FTP BLOB IP ADDRESS    IP;1 FREE TEXT
+  
+            INPUT TRANSFORM:  K:'($$VALIDATE^XLFIPV(X)) X
+            LAST EDITED:      AUG 11, 2015 
+            HELP-PROMPT:      Enter a valid IP address in the form: 
+                              nn.nn.nn.nn (IPv4) or 
+                              hhhh:hhhh:hhhh:hhhh:hhhh:hhhh:hhhh:hhhh (IPv6) 
+            DESCRIPTION:      This field contains the IP address of this host
+                              so that it can be used as the to address for
+                              files that will be sent to this domain.  
+  
+            NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+  
+  MAILMAN OUTSTANDING FTP TRANSACTIONS (#4.2995) File 
+  ---------------------------------------------------
+  Before:
+  ------
+  4.2995,9  IP ADDRESS             1;6 FREE TEXT (Required)
+  
+            INPUT TRANSFORM:  K:$L(X)>20!($L(X)<3) X
+            LAST EDITED:      FEB 22, 1994 
+            HELP-PROMPT:      Answer must be 3-20 characters in length. 
+            DESCRIPTION:      Enter an IP address in the format of 4 numerals 
+                              separated by periods, e.g., 128.149.32.1 
+  
+  After:
+  -----
+  4.2995,9  IP ADDRESS             1;6 FREE TEXT (Required)
+  
+            INPUT TRANSFORM:  K:$L(X)>39!($L(X)<3) X
+            LAST EDITED:      AUG 12, 2015 
+            HELP-PROMPT:      Answer must be 3-39 characters in length. 
+            DESCRIPTION:      Enter a valid IP address in the form:
+                              nn.nn.nn.nn (IPv4) or
+                              hhhh:hhhh:hhhh:hhhh:hhhh:hhhh:hhhh:hhhh (IPv6) 
+  
+  
+  MESSAGE STATISTICS (#4.2999) File
+  ---------------------------------
+  Before:
+  ------
+  4.2999,48 XMIT IP ADDRESSES TRIED 4;8 FREE TEXT
+  
+            INPUT TRANSFORM:  K:$L(X)>100!($L(X)<3) X
+            LAST EDITED:      MAR 21, 2002 
+            HELP-PROMPT:      Answer must be 3-100 characters in length. 
+            DESCRIPTION:      This is a list of IP addresses, separated by
+                              commas, which have already been used in
+                              attempting to connect with the site.  
+                              
+                              We use this list in conjunction with the DNS
+                              server, which returns a list of valid addresses
+                              to try.  Using both lists, we can come up with
+                              the next IP address to try.  
+  
+  After:
+  -----
+  4.2999,48 XMIT IP ADDRESSES TRIED 4;8 FREE TEXT
+  
+            INPUT TRANSFORM:  K:$L(X)>160!($L(X)<3) X
+            LAST EDITED:      AUG 12, 2015 
+            HELP-PROMPT:      Answer must be 3-160 characters in length. 
+            DESCRIPTION:      This is a list of IP addresses, separated by
+                              commas, which have already been used in
+                              attempting to connect with the site.  
+                                  
+                              We use this list in conjunction with the DNS
+                              server, which returns a list of valid addresses
+                              to try.  Using both lists, we can come up with
+                              the next IP address to try.  
+  
+  
+  XMIT AUDIT (#4.29992) File
+  --------------------------
+  Before:
+  ------
+  4.29992,2 XMIT AUDIT ERROR       0;3 FREE TEXT
+  
+            INPUT TRANSFORM:  K:$L(X)>200!($L(X)<1) X
+            LAST EDITED:      MAR 21, 2002 
+            HELP-PROMPT:      Answer must be 1-200 characters in length. 
+            DESCRIPTION:      If the transmission fails or is interrupted for
+                              some reason, the reason will be placed here.  
+  
+  
+  4.29992,3 XMIT AUDIT IP ADDRESS  0;4 FREE TEXT
+  
+            INPUT TRANSFORM:  K:$L(X)>20!($L(X)<1) X
+            LAST EDITED:      MAR 21, 2002 
+            HELP-PROMPT:      Answer must be 1-20 characters in length. 
+            DESCRIPTION:
+                              This is the IP address used for this attempt.  
+   
+  After:
+  -----
+  4.29992,2 XMIT AUDIT ERROR       0;3 FREE TEXT
+  
+            INPUT TRANSFORM:  K:$L(X)>180!($L(X)<1) X
+            LAST EDITED:      AUG 13, 2015 
+            HELP-PROMPT:      Answer must be 1-180 characters in length. 
+            DESCRIPTION:      If the transmission fails or is interrupted for
+                              some reason, the reason will be placed here. 
+  
+  
+  4.29992,3 XMIT AUDIT IP ADDRESS  0;4 FREE TEXT
+  
+            INPUT TRANSFORM:  K:$L(X)>39!($L(X)<1) X
+            LAST EDITED:      AUG 13, 2015 
+            HELP-PROMPT:      Answer must be 1-39 characters in length. 
+            DESCRIPTION:
+                              This is the IP address used for this attempt.  
+  
+  
+  MAILMAN SITE PARAMETERS (#4.3) File
+  -----------------------------------
+  Before:
+  ------
+  4.3,7.6   FTP ADDRESS FOR BLOB <GET> FTP-GET;1 FREE TEXT
+  
+            INPUT TRANSFORM:  K:$L(X)>15!($L(X)<7)!'(X?1.N1"."1.N1"."1.N1"."1
+                              .N) X
+            LAST EDITED:      MAR 31, 1992 
+            HELP-PROMPT:      Answer must be 7-15 characters in length. 
+            DESCRIPTION:      If your images are on a network that is
+                              available via FTP from your main node and you
+                              have no other way of accessing those message to
+                              get them onto you main node so that you can FTP
+                              them to other sites, put the IP address of the
+                              machine that you will GET your images from into
+                              this field.  
+  
+  
+  4.3,7.72  FTP ADDRESS FOR BLOB RECEIVE FTP-RCV;1 FREE TEXT
+  
+            INPUT TRANSFORM:  K:$L(X)>30!($L(X)<7)!'(X?1.N1"."1.N1"."1.N1"."1
+                              .N) X
+            LAST EDITED:      MAR 08, 1993 
+            HELP-PROMPT:      Answer must be 7-30 characters in length. 
+            DESCRIPTION:      This is the IP address that you will advertise
+                              to other sites that wish to send you images
+                              that attach to multimedia messages.  
+  
+  After:
+  -----
+  4.3,7.6   FTP ADDRESS FOR BLOB <GET> FTP-GET;1 FREE TEXT
+  
+            INPUT TRANSFORM:  K:'($$VALIDATE^XLFIPV(X)) X
+            LAST EDITED:      AUG 13, 2015 
+            HELP-PROMPT:      Enter a valid IP address in the form: 
+                              nn.nn.nn.nn (IPv4) or 
+                              hhhh:hhhh:hhhh:hhhh:hhhh:hhhh:hhhh:hhhh (IPv6)   
+            DESCRIPTION:      If your images are on a network that is
+                              available via FTP from your main node and you
+                              have no other way of accessing those message to
+                              get them onto you main node so that you can FTP
+                              them to other sites, put the IP address of the
+                              machine that you will GET your images from into
+                              this field.  
+  
+            NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER 
+  
+  
+  4.3,7.72  FTP ADDRESS FOR BLOB RECEIVE FTP-RCV;1 FREE TEXT
+  
+            INPUT TRANSFORM:  K:'($$VALIDATE^XLFIPV(X)) X
+            LAST EDITED:      AUG 13, 2015 
+            HELP-PROMPT:      Enter a valid IP address in the form: 
+                              nn.nn.nn.nn (IPv4) or 
+                              hhhh:hhhh:hhhh:hhhh:hhhh:hhhh:hhhh:hhhh (IPv6) 
+            DESCRIPTION:      This is the IP address that you will advertise
+                              to other sites that wish to send you images
+                              that attach to multimedia messages.  
+  
+            NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+  
+  Installation Instructions:
+  ==========================
+  Installation time will be less than 2 minutes.
+    
+  Suggested time to install: Non-peak hours when users are not on the 
+  system.
+     
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options:
+         (when prompted for INSTALL NAME, enter XM*8.0*48)
+     
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this patch
+               is installed.  It compares all components of this patch
+               (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package XM*8.0*48.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO.
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+         Protocols? YES//", respond YES.
+   
+         When prompted "Enter options you wish to mark as 'Out Of Order':",
+         enter the following:
+       
+                 MailMan Menu            [XMUSER]
+  
+         When prompted "Enter protocols you wish to mark as 'Out Of 
+         Order':", press <ENTER>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;MailMan;**[Patch List]**;Jun 28, 2002;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XMCDNT
+    Before:  B1018315   After:  B1191053  **3,48**
+Routine Name: XMSFTP
+    Before:  B8502703   After:  B8898335  **48**
+Routine Name: XMSFTPUX
+    Before:  B9247891   After:  B9659441  **48**
+Routine Name: XMTDR
+    Before: B41286924   After: B42031605  **22,48**
+ 
+Routine list of preceding patches: 3, 22
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 30, 2015
+Completed By:                               Date Completed: JAN 05, 2016
+Released By :                               Date Released : JAN 11, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

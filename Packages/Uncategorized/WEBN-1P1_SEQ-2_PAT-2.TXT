@@ -1,0 +1,177 @@
+
+=============================================================================
+Run Date: JUL 08, 2015                     Designation: WEBN*1.1*2
+Package : WEBN - NAT'L UTILIZATION MGMT INTEG Priority: Mandatory
+Version : 1.1         SEQ #2                    Status: Released
+                  Compliance Date: AUG 08, 2015
+=============================================================================
+
+
+Subject: NATIONAL UTILIZATION MANAGEMENT INTEGRATION (NUMI) Version 1.1.14.2
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+  
+ Patch WEBN*1.1*2 addresses the following four Remedy tickets:
+  
+  
+ 1.   INC0000001013422  - The Copy Review functionality retains the
+ original reviewer's name.
+  
+ 2.   INC0000001067065  - On the NUMI Reports menu, the link for - 
+ 'Enhanced Reports' is broken.
+  
+ 3.   INC0000001030549 - The General Medical VA custom subset review 
+ display is too wide for the screen.
+  
+ 4.   INC0000001078557 - Attempting to review a stay without Ward/Treating 
+ Specialty causes an error.
+  
+  
+    ASSOCIATED NSR: 
+    ===============
+    N/A
+  
+    PARTICIPATING TEST SITES: 
+    =========================
+    Bay Pines VAMC
+    Gainesville (NFSG)
+    Omaha VAMC
+    Orlando VAMC
+  
+  
+    Remedy Overview:
+    ================
+  
+    1.   INC000001013422
+         Duplicates:  INC000000913837, INC00000913919,INC00001023077,
+         INC00001022867
+  
+  
+    Problem:
+  
+    When performing reviews, the reviewer copies a review originally
+    entered in the system by another reviewer. The reviewer then makes
+    necessary updates to the copied review and hits Final Save/Lock to
+    Database to save the review in NUMI. Once NUMI saves the review, 
+    the review table displayed towards the bottom of the Primary Review
+    Summary screen does not reflect the correct reviewer name. But it
+    is observed that the worklist and reports both reflect the reviewer
+    name correctly.
+  
+    Resolution:
+  
+    Modify the [dbo].[usp_GetPatientReviewsByStay] stored procedure.  A
+    review should be associated with the reviewer who created or last
+    modified its content.
+  
+  
+    2.   INC000001067065
+  
+    Problem:
+  
+    Within the NUMI Reports menu, the menu link for the Enhanced
+    reports option is broken.  The link should point to:
+    "https://vaww.rtp.portal.domain.ext/OQSV/10A4B/NUMI/enhanced/SitePages
+    /Home.aspx."
+  
+    Resolution:
+  
+    The hyperlink has been repointed to the correct URL.
+  
+  
+    3.   INC000001030549
+         Duplicates:   INC000001013599, INC000001030384
+  
+    Problem:
+  
+    Reviews with General Medical VA custom subset do not fit in the
+    standard viewing area of the Review Summary Screen and user has to
+    scroll to view.  Review summary display is too wide. The user must
+    scroll horizontally to read all the information whereas the text is
+    usually wrapped to be readable on one window. This is a VA-specific
+    criteria screen no-wrap display problem.
+  
+    Resolution:
+  
+    CERMe: Property file (css file) is corrected.
+  
+  
+    4.   INC0000001078557
+         Duplicates:  INC000001012651, INC000001013268, 
+         INC000001023997, INC000001091341
+  
+    Problem:
+  
+    During review entry on a stay without ward/treating specialty,
+    navigating from the CERMe screen to Continue Primary Review causes
+    an error: A critical error has occurred.
+  
+    Resolution:
+  
+    If a movement does not include the ward and/or treating specialty
+    and/or provider, NUMI should look back to the most recent previous
+    movement(s) to fill in the missing field(s). It should find the
+    last known ward, treating specialty, or provider, and assume the
+    last known value is still valid and display it on the worklist and
+    history screen and use it during review processing.  This will
+    match the logic used in VistA to display current ward,treating
+    specialty and provider and should prevent the NUMI errors.
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentations are available.
+  
+ The preferred method is to FTP the files from
+ "download.vista.domain.ext".  This transmits the files from the first
+ available FTP server. Sites may also elect to retrieve directly from a
+ specific server as follows:
+  
+ Albany          <ftp://ftp.domain.ext>
+ Hines           <ftp://ftp.domain.ext>
+ Salt Lake City  <ftp://ftp.domain.ext>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library
+ at: http://www.domain.ext/vdl/application.asp?appid=184
+  
+   
+ FILE NAME                           DESCRIPTION
+ =========                           ===========
+ numi_14_2_ug.pdf                    NUMI User Guide v14.2
+ numi_14_2_ug.docx                   NUMI User Guide v14.2
+  
+  
+ Installation Instructions:
+ --------------------------
+ This is a .NET based web application build. This is a centralized
+ server promotion. No installation is required at local sites.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 05, 2014
+Completed By:                               Date Completed: JUL 08, 2015
+Released By :                               Date Released : JUL 08, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

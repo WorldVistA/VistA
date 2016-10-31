@@ -1,0 +1,202 @@
+
+=============================================================================
+Run Date: MAR 13, 2015                     Designation: TBI*2*8
+Package : TBI - TRAUMATIC BRAIN INJURY        Priority: Mandatory
+Version : 2         SEQ #5                      Status: Released
+                  Compliance Date: APR 12, 2015
+=============================================================================
+
+
+Subject: TBI Build 2.0.8 - TBI Sprint 14-17 Deployment
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ **********************************************************************
+  
+ This is to announce that Traumatic Brain Injury Patch TBI*2.0*8 was
+ deployed to the production server for national release on March 9, 2015
+ at 9 p.m. EST. 
+  
+ Note: Technical support staff at Austin Information Technology Center
+ (AITC) will install this patch on the National TBI server located there 
+ using a pre-approved Request for Change Order and Implementation Plan.
+ No effort is required by local sites.  User Acceptance Test is by the direction of the TBI Business Owner and no MOU is required.
+ **********************************************************************
+   
+ This release will be seamless to the end user, but only if you have the
+ VIAB WEB SERVICES OPTION.  Please confirm with your local IT support to
+ ensure you do not have a gap in access to TBI Instruments. The VIA patch
+ (VIAB*1*1) containing the secondary menu option has been installed in all
+ Vista Production sites.
+ TBI Patch 2.0*8 contains code changes (defect fixes and enhancements) to the TBI Registry.  These changes are Work Items that were recorded and tracked in the Registries Project Area of RTC.
+ This patch contains the TBI Work Items completed during Sprints 14 and 17 
+ for the 3/9/2015 production deployment.
+ TBI Patch 2.0*8 includes the TBI Registry Work Items listed below.
+  
+ TBI 117419
+ TBI 128107
+ TBI 132095
+ TBI 133421
+ TBI 130230
+ TBI 128109 
+ TBI 128113 
+ TBI 128112
+ TBI 128114 
+ TBI 128217
+ TBI 138569
+ TBI 137576
+ TBI 137581
+ TBI 141173
+ TBI 137638
+ TBI 137718
+   
+ Patch Components
+ ================
+   
+ The following describes each component of the TBI Patch 2.0*8
+  
+ 1 - TBI  117419
+ Issue: DEF - TBI - UAT - The Satisfaction with Life Scale has the response options as radio buttons which are single numbers.
+  
+ Resolution:  Create a visual correlation between the numbered radio buttons and the description of each numerical selection for the provider completing the form.
+  
+ 2 -|TAB|TBI 128107
+ Issue:  Build.171- An "errorMessage" object has it's value set to "SUCCESS" when the MDWS/VIA operation is successful but later in code logic when a check was done on this "errorMessage", ifnot Null it hides the web page content and displays the
+  "errorMessage" value. 
+  
+ Resolution:  Necessary NULL and "SUCCESS" checks were added to the code.
+  
+ 3 - TBI 132095
+ Issue:   TBI - VIA Error in deserializing body of reply message for getConsultsForPatient
+  
+ Resolution: The TBI web.config maxStringContentLength value was doubled from 8192 to 16384
+  
+ 4 - TBI 133421
+ Issue:  When selecting  'NO' to questions  6, 7, and 8 and then allowing  the auto-save to occur, the TBI Follow Up Assessment template defaults to a 'YES' answer for #19 and allows the note to be written to CPRS.  Changing  the response to 19 t
+ o 'NO' and back to 'YES' throws a warning message regarding the responses to 6/7/8 and the 'YES' response is cleared.
+  
+ Resolution: Correct the workflow logic for each response to question 19.
+  
+ 5 - TBI 130230
+ Issue: Review Job steps and ETL packages for job SSIS_TBIPolytrauma_GetVistaSites_Monthly_Job in pre-prod and production
+  
+ Resolution:  The polytrauma patients will be entered by the end users so there is no need for TBI Polytrauma ETL's to be running. Request to have AITC disable the job submitted.
+  
+ 6 - TBI 128109
+ Issue:  Builds .171 and .153 - There are no Save or Continue buttons to escape the window.  This error appears in both .153 and .171 Builds
+  
+ Resolution:  Updated Javascript code in build 174 to display Save/Cancel buttons regardless of answer to Fee Basis question.
+  
+ 7 - TBI 128113
+ Issue:   Builds .171 - Get Error Object window, when Link to Encounter Type = Select Scheduled Clinic Appt.  This error appears only in Build .171
+  
+ Resolution: Modified date format of getVisits() VIA service parameter to yyyymmdd.
+  
+ 8 - TBI 128112
+ Issue:  Builds .171 - Save draft without patient information eliminates all data entered.  This error appears only in Build .171
+  
+ Resolution:  Refactored NET code to use SESSION object on the initial page load and VIEWSTATE for any post backs.
+  
+ 9 - TBI 128114
+ Issue:  Builds .171 and .153 - Lose all data when loses focus and autosaves.  This error appears in both .171 and .153. Builds
+  
+ Resolution: Refactored NET code to use SESSION object on the initial page load and VIEWSTATE for any post backs.
+  
+ 10 - TBI 128217
+ Issue:  TBI - CTBIE and/or Rehab/Reintegration Care Plan Instruments are not saving (CTBIE IRCR Templates are not functioning properly) 
+  
+ Resolution: Refactored .NET code to use SESSION object on the initial page load and VIEWSTATE for any post backs
+   
+ 11 - TBI 138569
+ Issue: Code updates to handle new VIA Site Code lookup method
+  
+ Resolution: VIA code in the TBI InstrumentsManager.cs file has been updated to include the new VIA getSiteId web method call.
+ This call will be made before each cprsLaunch call to ensure the correct Site Code/ID
+ is being used and the user will be working from/with the appropriate VistA.
+  
+ 12 - TBI 137576
+ Issue: Discharge date has been cleared from many patients 
+  
+ Resolution: Created SQL script for consolidating inactive codes. 
+  
+ 13 - TBI 137581
+ Issue: TBI referral logic for the new CRS patient import process
+  
+ Resolution: Added Drop/Create SQL scripts to database patch list to address the production reports that are missing several stored procedures that support the reports.
+  
+ 14 - TBI 141173
+ Issue: TBI - Error writing note to CPRS 
+  
+ Resolution: Added logic to display the VistA error message when a writeNote fails.
+  
+ 15 - TBI 137638
+ Issue: Polytrauma fixes
+  
+ Resolution: Corrected Admin, export/filtering by PRC/PTRP, and Edit Patient 
+ info functionality, and added. Date Picker for Admission/Discharge dates.
+  
+ 16 - TBI 137718
+ Issue: TBI Polytrauma - Search and Save Functionality is not working
+  
+ Resolution: Updated the PolyTrauma Entry form so that when the page initially 
+ loads if the PTRP entry type was selected, the PTRP entry form will be 
+ visible, (instead of the PRC form). Saved database values that were 
+ previously not being retrieved/displayed so the system will now populate 
+ entry fields and display to the user.
+ Additional Information:
+ ---------------------------
+   
+ **********************************************************************
+  
+ ***NOTE: NO DOCUMENT UPDATES WERE REQUIRED FOR THIS PATCH***
+  
+ **********************************************************************
+ TBI Design and User Documentation on TSPR =
+ http://tspr.vista.domain.ext/warboard/anotebk.asp?proj=1313&Type=Active
+  
+ Documentation Retrieval Instructions:
+   
+ The preferred method is to FTP the files from ftp://download.vista.domain.ext/
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+   
+ Documentation can also be retrieved from the VistA Documentation Library 
+ (VDL) on the VA Intranet at the following address: www.domain.ext/vdl
+   
+ The documentation is located under Clinical, Traumatic Brain Injury (TBI).
+ -----------------------------------------------------------------------
+   
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ There are no Remedy Tickets associated with this patch.
+   
+ Test Sites:
+ ----------
+ Tampa VA Medical Center
+ Palo Alto VA Medical Center
+ Lebanon VA Medical Center
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 19, 2014
+Completed By:                               Date Completed: MAR 13, 2015
+Released By :                               Date Released : MAR 13, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

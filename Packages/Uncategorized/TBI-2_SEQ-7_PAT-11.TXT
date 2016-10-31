@@ -1,0 +1,132 @@
+
+=============================================================================
+Run Date: JUL 23, 2015                     Designation: TBI*2*11
+Package : TBI - TRAUMATIC BRAIN INJURY        Priority: Mandatory
+Version : 2         SEQ #7                      Status: Released
+                  Compliance Date: AUG 23, 2015
+=============================================================================
+
+
+Subject: HREG Sustainment Sprint 19 Deployment
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ **********************************************************************
+  
+ This is to announce that Traumatic Brain Injury Patch TBI*2.0*11 will be 
+ deployed to the production server for national release on July 27, 2015 
+ at 9 p.m. Eastern.
+ **********************************************************************
+ Note: Technical support staff at Austin Information Technology Center
+ (AITC) will install this patch on the National TBI server located there 
+ using a pre-approved Request for Change Order and Implementation Plan. No
+ effort is required by local sites.  User Acceptance Test is by the 
+ direction of the TBI Business Owner and no MOU is required.
+ **********************************************************************
+   
+ TBI Patch 2.0*11 contains code changes (defect fixes enhancements) to the 
+ TBI Registry.  Changes are Work Items recorded and tracked in the 
+ Registries Project Area of RTC.
+  
+ This patch contains the TBI Work Items completed during Sprint 19 for the 
+ 7/27/2015.
+  
+ TBI Patch 2.0*11 includes the TBI Registry Work Items listed below.
+  
+ 159358: TBI - Polytrauma Filter does not account for records that are 
+ both PRC and PTRP.
+ 153504: TBI - TBI Cube Reporting - CSV export issue
+ 161278: TBI - Fix TBI cube report data and scroll bar issues.
+ 184812: TBI- Crash on Continue Without Selecting Patient
+   
+ Patch Components
+ ================
+   
+ The following describes each component of the TBI Patch 2.0*11
+  
+ 159358: TBI - Polytrauma Filter does not account for records that are 
+ both PRC and PTRP Issue:  If entry has PRC and PTRP but type is set to
+ PRC, sort on view/edit page only shows patient if 'PRC' is selected.
+  
+ Solution: Added a third option/ UI selection of "Both PRC and PTRP" entry type.
+  
+ 153504: TBI - TBI Cube Reporting - CSV export issue
+ Issue: Excel and CSV export return different results in old and new 
+ OEFOIFOND Patient Counts reports when Cumulative Report checkbox is 
+ checked (CSV export always return same report format regardless of 
+ Cumulative checkbox selection.
+  
+ Solution:  rename as follows: 
+   'Distinct Patients' = Facility Distinct_Patients
+   'Distince_Patients1' = Response Distinct_Patients
+   'Distinct_Patients2' = VISN Response Distinct_Patients
+  
+ 161278: TBI - Fix TBI cube report data and scroll bar issues
+ Issue: OEFOIFOND Patient Counts Report results has a typo (Roster is 
+ spelled Roaster) and the Counts by Injury Etiology Report results 
+ displays EVAL and FOLLOW-UP even though only COMPREHENSIVE TBI EVALUATION 
+ is checked.
+  
+ Solution: Fix the typo and correct the logic in the report results.
+ 184812: TBI- Crash on Continue Without Selecting Patient Issue: On the TBI
+ home screen, PolyTraumaEntry.aspx, if the button Continue Without 
+ Selecting Patient is selected the user gets an error.
+  
+ Solution: Revised code, user no longer receives error when selecting 
+ continue without selecting a patient.
+ Additional Information:
+ ---------------------------
+ **********************************************************************
+  
+ ***NOTE: NO DOCUMENT UPDATES WERE REQUIRED FOR THIS PATCH***
+  
+ **********************************************************************
+ TBI Design and User Documentation on TSPR =
+ http://tspr.vista.domain.ext/warboard/anotebk.asp?proj=1313&Type=Active
+  
+ Documentation Retrieval Instructions:
+   
+ The preferred method is to FTP the files from ftp://download.vista.domain.ext/
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+   
+ Documentation can also be retrieved from the VistA Documentation Library 
+ (VDL) on the VA Intranet at the following address: www.domain.ext/vdl
+   
+ The documentation is located under Clinical, Traumatic Brain Injury (TBI).
+ -----------------------------------------------------------------------
+   
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ There are no Remedy Tickets associated with this patch.
+   
+ Test Sites:
+ ----------
+ San Antonio, TX
+ Lebanon, PA
+ Tampa, FL
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 14, 2015
+Completed By:                               Date Completed: JUL 22, 2015
+Released By :                               Date Released : JUL 23, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

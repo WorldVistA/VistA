@@ -1,0 +1,418 @@
+$TXT Created by                DEVVJJ.DOMAIN.EXT  (KIDS) on Thursday, 04/09/15 at 17:13
+=============================================================================
+Run Date: JUL 14, 2015                     Designation: EC*2*126
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #120                      Status: Released
+                  Compliance Date: AUG 14, 2015
+=============================================================================
+
+Associated patches: (v)EC*2*114    <<= must be installed BEFORE `EC*2*126'
+                    (v)EC*2*122    <<= must be installed BEFORE `EC*2*126'
+
+Subject: ECS FY 2015 ANNUAL SUSTAINMENT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The Managerial Cost Accounting Office (MCAO) requests modifications to
+ the Event Capture System that would provide the field with improved data
+ entry capabilities so that accurate costing information can be gathered
+ nationally.  This patch contains the modifications for Fiscal Year 2015.
+  
+ Functional Overview
+ ===================
+  
+ 1)  Enhance backspace key functionality in the procedure reasons drop down
+     box for the data entry by patient, data entry by procedure and 
+     multiple dates/procs options. The backspace key will now remove one
+     character per key press from the selected reason.
+  
+ 2)  Modify the DSS Unit Activity Report, all versions, to allow for the 
+     full procedure name as well as the synonym to appear on the report.
+  
+ 3)  Modify the Ordering Section Summary report to allow for the full
+     procedure name as well as the synonym to appear on the report.
+  
+ 4)  Modify the Provider (1-7) Summary Report to allow for DSS Unit and 
+     location selection.  Add the DSS Unit and location, as well as the 
+     CPT modifier volume used to the export version of the report.
+  
+ 5)  Modify the procedure codes drop down box in the data entry by patient,
+     data entry by procedure, and the multiple dates/procs options so that 
+     procedures appear in correct alphanumeric order.
+  
+ 6)  Modify the Event Capture Encounters Report so that the report doesn't
+     produce a <store> error when all units for all locations are run for a
+     long date range. A warning has been added to the report selection 
+     screen advising against the use of all units and all locations across
+     a long date range as a system time out my be encountered if the report
+     processing takes too long.
+  
+ 7)  Modify Procedure Reasons List.  Update reason CHAP PRRP to CHAP
+     PRRP/PRTP INP/OUT.  Also, add new reasons CHAP MIL SEXUAL TRAUMA and 
+     CHAP DOM/TREATMENT CENTERS.
+  
+ 8)  Modify Event Capture Encounters Report so that it is no longer 
+     restricted to holders of the ECMGR key.
+  
+ 9)  Reorganize the Event Capture User Manual.  The User Manual is being 
+     updated to clarify the security keys available and what their function
+     is.  In addition, the reports section will be updated to show which 
+     reports may be seen by all users and those that may only be seen by
+     those who hold the ECMGR key.
+  
+ 10) Modify DSS User Access Report so that only holders of the ECMGR key 
+     may access it.
+  
+ 11) Modify the Inactive Person Class Report so that only holders of the 
+     ECMGR key may access it.
+  
+ 12) Modify PCE Data Summary Report so that it is accessible without the   
+     ECMGR key.
+  
+ 13) Modify PCE Data Summary Report to replace "DSS ID" in the header of 
+     the report with "Stop Code".
+  
+ 14) Modify volume field in the Data Entry by Patient, Data Entry by 
+     Procedure, and Multiple Dates/Procedures options so that it now
+     displays a hover hint.  In addition, basic help information for the
+     screen (available from the help button) was modified to include
+     updated volume information. Finally, field specific help (available by
+     pressing the F1 key when cursor is in the volume field) has also been
+     updated.
+  
+ 15) Migrate Event Capture GUI to Delphi XE.  The Event Capture 
+     application has been updated to run on the Delphi XE platform, 
+     putting it in line with other Vista GUI applications.
+  
+ 16) Modify the description of the Event Code Screen option on the 
+     Management Menu to include "or copy".  It now says "add, update, or 
+     copy event code screens".
+  
+ 17) Modify the Event Code Screen setup screen so that only active clinics
+     from the selected location are available in the default associated 
+     clinic drop down box.
+  
+ 18) Modify Data Entry by Patient option so that only recent visits 
+     associated with the same location as the EC screen can be selected.
+  
+ 19) Modify the EC setup creen so that the primary stop code, credit stop 
+     code, and CHAR4 code appear to the right of the clinic name in the 
+     default associated clinic drop down box.
+  
+ 20) Enable single sign on from within the event capture GUI.  Event
+     capture now identifies users that are already logged into another 
+     Vista package and automatically signs them into the event capture GUI.
+  
+ 21) Modify the DSS unit setup screen so that a DSS unit that is 
+     identified as a "no records" unit will allow for user selection of a 
+     credit stop code as well as a CHAR4 code.
+  
+ 22) Do not store 0 (zero) for associated clinic when there is no  
+     associated clinic for the workload entered.  Modified storage of data
+     into the EVENT CAPTURE PATIENT file (#721) so that when there isn't an
+     associated clinic, a value of null is stored.
+  
+ 23) Modify the Procedure Reasons Report so that it displays the procedure
+     name on both the print and export versions as well as displaying the
+     DSS unit IEN on the export version.
+  
+ 24) Modify the Print Category and Procedure Summary Report to include the
+     DSS unit, DSS department, and DSS unit send status (all records, 
+     outpatient only, or no records) in the header.  In addition, add the 
+     procedure synonym and the clinic IEN to the report.
+  
+ 25) Update user documentation to include screen shots of the exported 
+     reports for the Print Category and Procedure Summary Report and the
+     Event Capture Encounters Report.
+  
+ 26) Update all Event Capture manuals and documentation replacing DSS ID
+     or DSS Identifier with Stop Code.
+  
+ 27) Modify report listing so that manager and non-manager reports are 
+     grouped together.  In addition, within each category reports are now
+     listed in alphabetical order.
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A 
+  
+ Components Sent With Patch
+ ==========================
+  
+ Files & Fields Associated:
+ --------------------------
+  
+ File Name (Number)           Field Name (Number)      New/Modified/Deleted
+ --------------------------------------------------------------------------
+ EVENT CAPTURE PATIEN (#721)  VOLUME (#9)               Modified
+ DSS UNIT (#724)              CREDIT STOP (#14)         New
+ DSS UNIT (#724)              CHAR4 (#15)               New
+  
+  
+ Forms Associated:
+ -----------------
+  
+ Form Name                       File #            New/Modified/Deleted
+ ----------------------------------------------------------------------
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+  
+ Mail Group Name                    New/Modified/Deleted
+ -------------------------------------------------------
+ N/A
+  
+ Options Associated:
+ -------------------
+  
+ Options
+ -------
+ EC GUI CONTEXT
+  
+ Protocols Associated:
+ ---------------------
+  
+ Protocol Name                      New/Modified/Deleted
+ -------------------------------------------------------
+ N/A
+  
+ Security Keys Associated:
+ -------------------------
+  
+ Security Key
+ ------------
+ N/A
+  
+ Help Frames
+ -----------
+ ECBATCH PROC
+ ECMULT PROC
+ ECPAT
+ ECPAT0
+ ECSECT
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+ The following sites participated in the testing of the EC*2.0*126
+ software.
+  
+ Test Sites
+ ================
+ Albuquerque
+ Battle Creek
+  
+ Software and Documentation Retrieval
+ ====================================
+  
+ The VistA server software for this patch is being distributed through 
+ the National Patch Module (NPM).
+  
+ The Event Capture GUI client software is being distributed as a self-
+ extracting Install Shield executable.  The installed executable for
+ this patch is client version 2.2.0.0.
+  
+ The GUI client software and documentation for this patch
+ may be retrieved directly using FTP from the ANONYMOUS.SOFTWARE  directory
+ at the following Office of Information (OI) Field Offices:
+  
+   OIFO               FTP ADDRESS                  DIRECTORY
+   ------------       ------------------------     ------------------
+   First available    download.vista.domain.ext    
+   Albany             ftp.domain.ext     
+   Hines              ftp.domain.ext      
+   Salt Lake City     ftp.domain.ext        
+  
+ The following files will be available:
+  
+     File Name           Format        Description
+     ---------           ------        -----------
+     EC_2_P126.ZIP       BINARY        EC GUI client installer zip file
+  
+ The Technical and User Manuals as well as the Installation Guide and 
+ Release Notes can be obtained via FTP from the following
+ ANONYMOUS.SOFTWARE directories:
+  
+        OI Field Office                  FTP Address
+        ---------------                  ------------------------
+        Albany                           ftp.domain.ext
+        Hines                            ftp.domain.ext
+        Salt Lake City                   ftp.domain.ext
+   
+        File Name           Description
+        ----------------    ----------------------------------------
+        EC_2_P126_IG.DOC    Installation Guide for ECS FY15 Enhancements
+        EC_2_P126_UM.DOC    Updated Event Capture User Manual 
+        EC_2_P126_TM.DOC    Technical Manual for ECS FY15 Enhancements
+        EC_2_P126_RN.DOC    Release Notes for ECS FY15 Enhancements
+  
+ The VistA Documentation Library [VDL] web site will contain the
+ updated 'Event Capture User Manual', 'Event Capture Release Notes', 
+ and 'Event Capture Technical Manual'.
+  
+ This web site is usually updated within 1-3 days of the patch release
+ date.
+  
+ The VDL address is http://www.domain.ext/vdl/application.asp?appid=39.
+  
+ Installation Instructions
+ ========================= 
+  
+ Pre-Installation Items:
+ =======================
+  
+ * Environment Check:
+      
+   Programmer access is required for installing this patch.
+  
+   ** NOTE ** -- Prior to installation, the installer must ensure the  
+                 DUZ(0) node of the DUZ array is set to the "@" symbol.
+   
+ * Users On the System:
+    
+   This patch modifies routines used by the Event Capture application and
+   may affect many users.
+  
+   This patch may be installed with users on the system, but should be
+   loaded during non-peak hours to minimize disruption to users and to
+   reduce the possibility of errors when the routines are updated.
+  
+   If installed during the normal workday, it is recommended that the
+   following selection(s) in the OPTION (#19) file, and all of their
+   descendants be disabled to prevent possible conflicts while running
+   the KIDS Install. Other VISTA users will not be affected.
+  
+         EC GUI Context version 2.1.3.9   ... EC GUI CONTEXT
+    
+ * Software Installation Time:
+  
+   The estimated installation time is less than 5 minutes during off peak
+   hours.
+  
+ * Required Builds:
+    
+   The following is a list of REQUIRED builds for this KIDS
+   distribution.  KIDS will not allow the installation of this patch
+   without their prior installation.
+  
+   Required Build(s):
+   ------------------
+   EC*2.0*114
+   EC*2.0*122
+  
+ Installation Steps:
+ ===================
+   
+   1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+  
+   2.  From the Kernel Installation and Distribution System Menu, select
+       the Installation menu.
+  
+   3.  From this menu, you may elect to use the following options
+       (when prompted for INSTALL NAME, enter EC*2.0*126):
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+       c. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+   4.  Use the Install Package(s) option and select the package EC*2.0*126.
+  
+   5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? NO//'  Answer YES unless your system does this in a
+       nightly TaskMan process.
+  
+   6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//' answer NO.
+  
+   7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//' answer YES.
+     
+   8.  When prompted 'Enter options you wish to mark as 'Out Of Order':'  
+       Enter the following options:
+      
+       EC GUI Context version 2.1.3.9   ... EC GUI CONTEXT
+  
+   9.  When prompted 'Enter protocols you wish to mark as 'Out Of
+       Order':' press <enter>.
+  
+  10.  If desired, the post-install routine EC2P126, can be deleted after
+       successful installation of the patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EC2P126
+    Before:       n/a   After:  B4636432  **126**
+Routine Name: ECEFPAT
+    Before: B75867358   After: B76799411  **25,32,39,42,47,49,54,65,72,
+                                           95,76,112,119,114,126**
+Routine Name: ECHECK1
+    Before:  B9903536   After: B10754345  **4,33,47,55,63,126**
+Routine Name: ECMFDSSU
+    Before: B30002870   After: B36202160  **25,30,33,126**
+Routine Name: ECOSSUM
+    Before: B96916049   After:B100421948  **5,8,18,47,72,95,119,126**
+Routine Name: ECPCER
+    Before: B35305594   After: B35285752  **4,18,23,47,72,95,119,114,126**
+Routine Name: ECPRSUM1
+    Before: B45928925   After: B70115901  **5,18,33,47,62,63,61,72,88,
+                                           95,112,119,126**
+Routine Name: ECRDSSA
+    Before:B116122411   After:B123826239  **95,104,112,119,126**
+Routine Name: ECRECER
+    Before: B34592121   After: B34819903  **112,122,126**
+Routine Name: ECRPRSN2
+    Before: B23756227   After: B26258090  **112,126**
+Routine Name: ECRRPT
+    Before: B57156527   After: B61480819  **25,32,41,56,61,82,94,95,108,
+                                           112,119,122,126**
+Routine Name: ECSUM
+    Before: B15633396   After: B16478678  **4,19,33,47,95,119,122,126**
+Routine Name: ECSUM1
+    Before: B23374855   After: B25603267  **4,19,23,33,47,95,100,119,122,126**
+Routine Name: ECUERPC
+    Before: B57028774   After: B57953932  **25,32,33,46,47,59,72,95,114,126**
+Routine Name: ECUMRPC1
+    Before: B80221872   After:B100564674  **25,30,33,72,94,95,105,100,
+                                           107,110,112,126**
+Routine Name: ECUTL1
+    Before: B59402875   After: B66986146  **10,13,17,42,54,76,107,122,126**
+ 
+Routine list of preceding patches: 114, 122
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 20, 2014
+Completed By:                               Date Completed: JUL 09, 2015
+Released By :                               Date Released : JUL 14, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

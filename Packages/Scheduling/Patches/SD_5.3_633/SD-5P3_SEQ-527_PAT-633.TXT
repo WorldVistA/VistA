@@ -1,0 +1,155 @@
+$TXT Created by                DEVVCC.DOMAIN.EXT  (KIDS) on Tuesday, 09/08/15 at 13:33
+=============================================================================
+Run Date: NOV 03, 2015                     Designation: SD*5.3*633
+Package : SD - SCHEDULING                     Priority: EMERGENCY
+Version : 5.3       SEQ #527                    Status: Released
+                  Compliance Date: NOV 06, 2015
+=============================================================================
+
+Associated patches: (v)SD*5.3*568  <<= must be installed BEFORE `SD*5.3*633'
+
+Subject: Remove option SD EDIT LOCAL STOP CODE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ As part of the Fiscal Year (FY) 16 Decision Support System (DSS) 
+ updates, the Edit Clinic Stop Code Name - Local Entries Only option [SD
+ EDIT LOCAL STOP CODE NAME] will be removed from the Supervisor Menu
+ [SDSUP].
+  
+ The locally defined stop codes were recently inactivated making this 
+ option obsolete.
+  
+ In support of this change the description for the CLINIC STOP file 
+ (#40.7) has been modified to remove the reference to the ability to edit 
+ these local entries.  The description was also updated to change the 
+ name of the coordinating office from DSO (Decision Support Office) to MCAO
+ (Managerial Cost Accounting Office).
+  
+ This patch is being released in conjunction with the DSS annual 
+ sustainment patch, ECX*3*154, and should be installed at the same time as 
+ patch ECX*3*154.  Order of installation doesn't matter.
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch.
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy tickets associated with this patch.
+  
+ Components Sent With Patch 
+ --------------------------
+  
+ The following is a list of options included in this patch:
+  
+ Option Name                     Type               New/Modified
+ ------------------              ----               ------------
+ SD EDIT LOCAL STOP CODE NAME    DELETE AT SITE       Deleted
+  
+ The following is a list of files included in this patch:
+  
+                                      UP    SEND  DATA               
+                                      DATE  SEC.  COMES 
+ FILE #      NAME                     DD    CODE  W/FILE
+ -------------------------------------------------------
+ 40.7        CLINIC STOP              NO    YES   NO
+  
+  
+ Documentation Retrieval:
+ ------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.domain.ext.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation, including User and Technical manuals will be in the 
+ form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library at:
+ http://www4.domain.ext/vdl/application.asp?appid=100
+  
+ Below is a list of the files related to this patch that will be needed and
+ available via the FTP sites listed above.
+  
+ File Description                     File Name                FTP Mode
+ ----------------------------------------------------------------------- 
+ Scheduling Module User Manual        SD_5_3_633_PIMS_SUPV.pdf Binary
+ Supervisor Menu (SUPV)
+  
+ TEST SITES
+ ----------
+ Boston
+ North Texas
+ Alexandria
+ Little Rock
+ Coatesville
+  
+ INSTALLATION
+ ============
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 1 minute
+ to install.
+  
+ 1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+ 2.  From the Kernel Installation and Distribution System Menu, select
+     the Installation menu.
+  
+ 3.  From this menu, you may elect to use the following options
+     (when prompted for INSTALL NAME, enter SD*5.3*633):
+         a.  Backup a Transport Global
+         b.  Compare Transport Global to Current System
+         c.  Verify Checksums in Transport Global
+  
+ 4.  Use the Install Package(s) option and select the package SD*5.3*633.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', you may respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     you may respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0-60): 0//; respond '0'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDUTL3
+    Before: B12703154   After:  B6616869  **30,39,41,148,177,568,633**
+ 
+Routine list of preceding patches: 568
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 10, 2015
+Completed By:                               Date Completed: NOV 03, 2015
+Released By :                               Date Released : NOV 03, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

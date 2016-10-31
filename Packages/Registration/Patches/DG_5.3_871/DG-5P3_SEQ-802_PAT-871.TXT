@@ -1,0 +1,350 @@
+
+=============================================================================
+Run Date: DEC 17, 2015                     Designation: DG*5.3*871
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #802                    Status: Released
+                  Compliance Date: JAN 01, 2016
+=============================================================================
+
+Associated patches: (v)DG*5.3*709  <<= must be installed BEFORE `DG*5.3*871'
+                    (v)DG*5.3*865  <<= must be installed BEFORE `DG*5.3*871'
+                    (v)DG*5.3*894  <<= must be installed BEFORE `DG*5.3*871'
+
+Subject: HEALTH BENEFIT PLAN
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  *************************************************************************
+  Note:  This patch is being released in support of the Enrollment Customer
+         Enhancements (ECE) and Enrollment System Enhancements (ESE)
+         projects and the Enrollment System (ES) 4.1 release.  DG*5.3*871
+         (Registration) is released with DG*5.3*891 (Registration),
+         DG*5.3*890 (Registration), DG*5.3*901 (Registration), DG*5.3*904
+         (Registration), DG*5.3*906 (Registration), EAS*1*113 (Enrollment
+         Application System) and IVM*2*160 (Income Verification Match) in
+         host file DG_53_P891.KID. 
+   
+         It is imperative that this patch be installed no later than the
+         compliance date.  Your understanding and support is appreciated.
+  
+  *************************************************************************
+   
+  The Health Eligibility Center (HEC) requested modifications to the 
+  Enrollment System (ES) and VistA Registration, Enrollment and
+  Eligibility (VistA REE) software to support the requirements of the
+  Health Benefit Plan initiative.
+   
+  This patch modifies the Registration v5.3 application as described below:
+   
+    --   Creates a new HEALTH BENEFIT PLAN (#25.11) file containing the
+         Health Benefit Plans (HBPs) and their
+         expanded descriptions.
+                                       
+    --   Allow VistA to receive the Health Benefit Plans from ES via HL7
+         Z11 messages in a new ZHP segment.  The HPBs will not be
+         shared on the new segment until this patch is nationally
+         released and installed at all VistA sites, and ES turns on the 
+         functionality.  The new ZHP segment mapped to the new storage 
+         location is defined below:
+     
+                                                   File# 2- PATIENT
+                                                   Sub-file #2511
+ ZHP Segment                                       CURRENT HEALTH
+ Sequence     Sequence Element Name                BENEFIT PLAN
+ ----------------------------------------------------------------------------
+ 1            SET ID                               Sequential Number
+ 2            HBP CODE                             CURRENT HBP CODE (.01)
+ 3            ASSIGNED DATE/TIME                   ASSIGNED DATE AND TIME (#1)
+ 4            HBP LAST UPDATED BY                  ADDIGNED ENTERED BY (#2)
+ 5            HBP LAST UPDATED BY STATION          ASSIGNED ENTERED SITE (#3)
+              NUMBER
+   
+    --   Modifies the Z11 receiver to store the HBPs assigned to a Veteran
+         in a new CURRENT HEALTH BENEFIT PLAN (#2511) sub-file in the 
+         PATIENT (#2) file. A comparison between the HPBs received on the
+         Z11 and the HBPs currently on file in VistA allows VistA to
+         appropriately store assigned or un-assigned HBPs by date to a new
+         HISTORY HEALTH BENEFIT PLAN (#2512) sub-file in the PATIENT (#2)
+         file.
+  
+    --   Modify Register a Patient [DG REGISTER PATIENT], Load/Edit Patient
+         Data [DG LOAD PATIENT DATA] and View Registration Data [DG
+         REGISTRATION VIEW] options to allow users to view HBP profiles for a
+         Veteran on a new HEALTH BENEFIT PLAN <11.1> sub-screen accessed via
+         the number [5] data group from the ELIGIBILITY VERIFICATION DATA,
+         SCREEN <11> screen.
+    
+    --   Allow users to view the HBP history for a Veteran on a new HEALTH
+         BENEFIT PLAN <11.3> sub-screen accessed via the VH View History
+         protocol on the HEALTH BENEFIT PLAN <11.1> sub-screen.
+ 
+    --   Allow users to view all available HBPs and their expanded
+         descriptions via the VD View All HBP Detail protocol on the
+         HEALTH BENEFIT PLAN <11.1> sub-screen.
+ 
+    --   Create an API that will provide HBP information to VistA 
+         downstream applications to include the HBP Name and HBP 
+         Description.
+   
+ 
+ The following ICR was added for the API:
+ 
+ INTEGRATION REFERENCE INQUIRY #6138            NOV 16,2015  15:04    PAGE 1
+ --------------------------------------------------------------------------------
+ 
+ 
+       6138     NAME: HEALTH BENEFIT PLAN INFORMATION
+   CUSTODIAL PACKAGE: REGISTRATION                               
+ SUBSCRIBING PACKAGE: 
+               USAGE: Controlled Subscri  ENTERED: DEC  2,2014
+              STATUS: Deferred (re)appro  EXPIRES: 
+            DURATION: Till Otherwise Agr  VERSION: 
+         DESCRIPTION:                        TYPE: Routine
+    ICR for Health Benefit Plans (HBP) to be shared by other VistA 
+    applications.  
+     
+    8/21/15:  Routine DGHBPUTL will be distributed by patch DG*5.3*871. The 
+    status of the ICR has been set to Deferred until patch is released and 
+    Subscribing Packages are identified.  
+ 
+      ROUTINE: DGHBPUTL
+    COMPONENT:  GETHBP(DFN)
+                Provides an array, HBP. that contains all of the patient's
+                assigned Health Benefit Plans and Historical data.  
+    VARIABLES:  Input     DFN
+                            Patient's Data File Number 
+    VARIABLES:  Output    HBP
+                            HBP("CUR",HBP Plan Name) = 
+                                          Plan IEN^Date/Time Set^Entered
+                            By^Entered Site HBP("HIS",Date/Time Set,Plan IEN)
+                            = 
+                                          Plan Name^Entered by^Entered Site 
+    COMPONENT:  GETDETL(HBPNUM)
+                Provides an array, HBP("DETAIL"). that contains the Health
+                Benefit Plans detailed information.  
+    VARIABLES:  Output    HBP
+                            HBP("DETAIL".0)= 
+                                          ^^Number of Lines^Last Line
+                            Number^Date Entered HBP("DETAIL",HBP Plan IEN,Line
+                            Number) = 
+                                          Description Line 
+            KEYWORDS: HBP
+                      HEALTH BENEFIT PLAN
+  
+ 
+ 
+ 
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+ --------------------------
+  
+ Forms Associated:
+  
+ File Name (Number)   Field Name (Number)              New/Modified/Deleted
+ -----------------    -------------------              --------------------
+ PATIENT (#2)         CURRENT HEALTH BENEFIT PLAN (2,#25.01)       New
+                      CURRENT HBP CODE            (2.2511,#.01)    New
+                      ASSIGNED DATE/TIME          (2.2511,#1)      New
+                      ASSIGNED ENTERED BY         (2.2511,#2)      New
+                      ASSIGNED ENTERED SITE       (2.2511,#3)      New
+                      CURRENT SOURCE              (2.2511,#4)      New
+                      HISTORY HEALTHBENEFIT PLAN  (2,#25.02)       New
+                      HISTORY HBP DATE/TIME       (2.2512,#.01)    New
+                      HISTORY HBP CODE            (2.2512,#1)      New
+                      HISTORY ENTERED BY          (2.2512,#2)      New
+                      HISTORY ENTERED SITE        (2.2512,#3)      New
+                      HISTORY ASSIGNMENT          (2.2512,#4)      New
+                      HISTORY SOURCE              (2.2512,#5)      New
+  
+ HEALTH BENEFIT 
+ PLAN (25.11)         NAME                        (25.11,#.01)     New
+                      PLAN CODE                   (25.11,#.02)     New
+                      SHORT DESCRIPTION           (25.11,#.03)     New
+                      LONG DESCRIPTION            (25.11,#.04)     New
+                                             
+ Note: The SHORT DESCRIPTION and LONG DESCRIPTION are word processing 
+ files and stored as sub-files, 25.13 and 25.14
+  
+ Mail Groups Associated:
+  
+ Mail Group Name           New/Modified/Deleted
+ ---------------           --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol                      New/Modified/Deleted
+ ---------                     --------------------
+ DGEN HBP 11.1 MENU                New
+ DGEN HBP 11.1A MENU               New
+ DGEN HBP DETAIL                   New
+ DGEN HBP VIEW                     New
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name         Type      New/Modified/Deleted
+ -------------         ----      --------------------
+ DGEN HBP Patient      List           New
+ DGEN HBP VIEW         List           New
+ DGEN HBP DETAIL       List           New
+ DGEN HBP PAT NO AD    List           New
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ West Texas VA Health Care System, Big Spring, TX
+ Fargo VA Health Care System, Fargo, ND
+ Clement J. Zablocki Veterans Affairs Medical Center, Milwaukee, WI
+ VA Pittsburgh Healthcare System, Pittsburgh, PA
+ 
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/. This transmits the files from the first 
+ available FTP server. Sites may also elect to retrieve software directly 
+ from a specific server as follows:
+  
+ Albany          ftp.domain.ext <ftp://ftp.domain.ext>
+ Hines           ftp.domain.ext  <ftp://ftp.domain.ext>
+ Salt Lake City  ftp.domain.ext    <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                           File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ User Manual- Registration Menu  DG_5_3_P891_REG_UM.PDF         Binary   
+ IVM Technical Manual            IVM_2_P160_TM.PDF              Binary  
+  
+  
+ FTP Instructions:
+ -----------------
+  
+ ES 4.1 includes the following patches.  The host file was created to
+ simplify installation at Veterans Health Administration (VHA) facilities.
+  
+    File Name                         Contents           Retrieval Format
+    --------------------------------  --------           ----------------
+    DG_53_P891.KID                    DG*5.3*891          ASCII
+                                      DG*5.3*871
+                                      DG*5.3*890
+                                      DG*5.3*904
+                                      EAS*1*113
+                                      IVM*2*160
+                                      DG*5.3.*901
+                                      DG*5.3*906
+  
+  
+ Installation Instructions:
+ -------------------------- 
+  
+ Please see the DG*5.3*891 Patch Description for installation 
+ instructions.
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;REGISTRATION;**[Patch List]**;Aug 13,1993;Build 84
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGENUPL
+    Before: B44426570   After: B46472506  **147,222,232,363,472,497,564,
+                                           677,672,688,871**
+Routine Name: DGENUPL1
+    Before: B43841237   After: B49545010  **147,222,232,314,397,379,407,
+                                           363,673,653,688,797,842,894,
+                                           871**
+Routine Name: DGENUPL7
+    Before: B33592868   After: B34918538  **232,367,397,417,379,431,513,
+                                           628,673,653,742,688,797,871**
+Routine Name: DGENUPLB
+    Before:  B9493909   After: B15063968  **625,763,842,871**
+Routine Name: DGHBPUTL
+    Before:       n/a   After: B37209374  **871**
+Routine Name: DGR111
+    Before:       n/a   After:  B7250700  **871**
+Routine Name: DGR113
+    Before:       n/a   After:  B3780049  **871**
+Routine Name: DGR114
+    Before:       n/a   After:  B5179815  **871**
+Routine Name: DGRP11
+    Before: B11509829   After: B13083153  **327,631,709,871**
+Routine Name: DGRPE
+    Before: B61220054   After: B61970869  **32,114,139,169,175,247,190,
+                                           343,397,342,454,415,489,506,
+                                           244,547,522,528,555,508,451,
+                                           626,638,624,677,672,702,689,
+                                           735,688,797,842,865,871**
+Routine Name: DGRPP
+    Before: B19131336   After: B19338452  **92,147,343,404,397,489,689,
+                                           688,828,797,871**
+Routine Name: DGRPV
+    Before: B18383656   After: B19556232  **109,114,247,190,327,365,343,
+                                           397,415,489,546,545,451,624,
+                                           677,672,689,716,688,797,842,
+                                           871**
+
+=============================================================================
+User Information:                          Hold Date     : DEC 05, 2015
+Entered By  :                               Date Entered  : FEB 27, 2013
+Completed By:                               Date Completed: NOV 20, 2015
+Released By :                               Date Released : DEC 17, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

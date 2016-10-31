@@ -1,0 +1,342 @@
+$TXT Created by                    CINP.FO-BIRM.DOMAIN.EXT  (KIDS) on Tuesday, 09/08/15 at 16:27
+=============================================================================
+Run Date: MAR 09, 2016                     Designation: GMTS*2.7*114
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7       SEQ #106                    Status: Released
+                  Compliance Date: APR 08, 2016
+=============================================================================
+
+Associated patches: (v)GMTS*2.7*89 <<= must be installed BEFORE `GMTS*2.7*114'
+                    (v)PX*1*210    <<= must be installed BEFORE `GMTS*2.7*114'
+
+Subject: Immunization Health Summary Enhancements
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ =======================================================================
+ This patch must be installed after PX*1.0*210
+ =======================================================================
+   
+ The Veterans Health Information Systems and Technology Architecture
+ (VistA) Immunizations Enhancements (VIMM) 2.0 project modifies existing
+ files and adds additional files to enable VA to quickly and reliably
+ document and exchange standardized skin test and immunization information
+ on beneficiaries across services and departments. Additionally,
+ modifications support VistA Evolution requirements. This provides a
+ Veteran patient-centric vaccine record exchangeable with the external
+ community. Clinicians will have access to a more complete medical history
+ in the VistA electronic medical record resulting in improved health status
+ as well as public health monitoring.
+  
+ The goals for the VIMM 2.0 project are to deliver an Initial Operating
+ Capability comprised of standard, interoperable skin test and immunization
+ data for exchange with external trading partners based on the
+ modernization of the VistA Patient Care Encounter (PCE) package.
+  
+ The existing PCE Immunizations Health Summary is modified and four new 
+ Immunization components are added in this patch. The new Health Summary
+ features include:
+  
+ 1. IM - PCE IMMUNIZATIONS (Existing)
+ The format of the existing Immunizations Health Summary report has been
+ modified to display the standard Name implemented in PX*1.0*201 in place
+ of the short name. Information about reactions and contraindications
+ has been re-formatted as well. If an immunization is associated with a
+ reaction and/or contraindication, a '<**>' is displayed at the end of the
+ line under 'Reaction'. Complete details about the reaction and/or
+ contraindication appear in a footnote at the bottom of the report. If the
+ record has a comment, a '<C> is displayed under 'Info'. Comments no longer
+ appear on this report but can be viewed in the Detailed Immunizations
+ Health Summary component.
+  
+ 2. SIM - PCE IMMUNIZATIONS SELECTED  (New)
+ The new SIM Health Summary report allows a user to select immunizations as
+ well as time and occurrence limits. The user can select an unlimited
+ number of the immunizations defined in the Immunization (#9999999.14)
+ file. The user may select a time limit up to 99 years and 999 maximum
+ occurrences. Individual records are displayed in alphabetical order by
+ immunization name and then by administration date in reverse chronological
+ order.
+  
+ The format of the display is the same format used in the PCE IMMUNIZATIONS
+ Health Summary (IM). The report displays immunization name, series,
+ administration date and facility. If there is a reaction and/or
+ contraindication, the record is marked with a '<**>'. The name of the
+ immunization, date of administration and reaction/contraindications are
+ displayed at the end of the display. If the record has a comment it is
+ marked with a <C>. Comments can be viewed in the Detailed Immunizations
+ Health Summary component.
+  
+ 3. DIM - PCE IMMUNIZATIONS DETAILED (New) 
+ DIM is a new Health Summary report that presents twenty-five immunization 
+ data elements in a Fileman captioned style.
+  
+ The data elements include: 
+    immunization name,
+    full name, 
+    series, 
+    administration date,
+    facility,
+    reaction, 
+    contraindications,
+    manufacturer,
+    lot number,
+    expiration date,
+    dosage,
+    administration route,
+    administration site,
+    vaccine information statements offered to the patient,
+    administered by,
+    ordered by,
+    documented by,
+    comments, 
+    results,
+    reading,
+    date read,
+    reader,
+    reading recorded,
+    hours read post-inoculation,
+    and reading comment.
+  
+ Individual immunization records are sorted in alphabetical order by
+ immunization name and then by administration date in reverse chronological
+ order. 
+  
+ 4. SIMR - PCE IMMUN SELECT REVERSE CHRON (New)
+ SIMR is a new Health Summary report that also allows the user to select
+ immunizations and time and occurrence limits. Individual
+ immunization records are sorted in reverse chronological order and then
+ alphabetically by immunization name. The user is allowed to select any of
+ the immunizations defined in the Immunization (#9999999.14) file. The user
+ may select a time limit up to 99 years and 999 maximum occurrences.
+  
+ The format of the SIMR display is the same format used in the PCE
+ IMMUNIZATIONS Health Summary (IM). 
+  
+ 5. SIMC - PCE IMMUNIZATIONS SELECT CHRON (New)
+ SIMC is a new Health Summary report that allows the user to select
+ immunizations as well as time and occurrence limits. Individual
+ immunization records are sorted in chronological order and then
+ alphabetically by immunization name. 
+  
+ The format of the display is the same format used in the PCE IMMUNIZATIONS
+ Health Summary (IM). 
+  
+   
+ Patch Components:
+ -----------------
+  
+  
+ APIs Associated:
+  
+ API                        New/Modified/Deleted
+ --------------             --------------------
+ N/A
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ HEALTH SUMMARY TYPE (#142) STRUCTURE (multiple     Modified
+                            field #1, sub-file 
+                            142.01)
+                              SELECTION ITEM (#4)
+                              of the STRUCTURE
+                              sub-file (#142.01)
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ RPCs Associated:
+  
+ RPC                 New/Modified/Deleted
+ -------------       --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------  
+ N/A 
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Cleveland, OH
+ Hampton, VA
+ Heartland-East HCS, MO
+ San Antonio, TX
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                             File Name           FTP Mode
+ ----------------------------------------------------------------
+ Health Summary V. 2.7 User        HSUM_2_7_UM.PDF     (binary)
+    Manual
+ Health Summary V. 2.7 Technical   HSUM_2_7_TM.PDF     (binary)
+    Manual
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ A post install routine, GMTSP114 creates the four new Health Summary 
+ components and adds them to the Ad Hoc Health Summary.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     # GMTS*2.7*114:
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+     Answer NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+     Answer NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+     Answer NO.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSP114
+    Before:       n/a   After:  B7582736  **114**
+Routine Name: GMTSPXIM
+    Before:  B7139454   After: B52844418  **8,10,28,56,89,114**
+ 
+Routine list of preceding patches: 89
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 27, 2015
+Completed By:                               Date Completed: FEB 18, 2016
+Released By :                               Date Released : MAR 09, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

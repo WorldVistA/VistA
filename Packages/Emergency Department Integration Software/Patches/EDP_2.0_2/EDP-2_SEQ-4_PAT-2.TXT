@@ -1,0 +1,332 @@
+$TXT Created by                at CHEY231.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 05/20/14 at 21:58
+=============================================================================
+Run Date: NOV 13, 2014                     Designation: EDP*2*2
+Package : EDP - EMERGENCY DEPARTMENT          Priority: Mandatory
+Version : 2         SEQ #4                      Status: Released
+                  Compliance Date: DEC 04, 2014
+=============================================================================
+
+Associated patches: (v)LEX*2*80    <<= must be installed BEFORE `EDP*2*2'
+                    (v)PX*1*199    <<= must be installed BEFORE `EDP*2*2'
+                    (v)ICD*18*57   <<= must be installed BEFORE `EDP*2*2'
+                    (v)EDP*2*6     <<= must be installed BEFORE `EDP*2*2'
+
+Subject: EDP ICD-10 CLASS 1 REMEDIATION
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ IMPLEMENTS ICD 10 REMEDIATION FOR EDIS 2.1.2 ENHANCEMENT WITH MINOR FIXES
+  
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10) 
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service, or dates of discharge for inpatients, that occur on or 
+ after the implementation date (currently October 1, 2015) will use the 
+ ICD-10 code set. Clinical Modification (ICD-10-CM) diagnosis codes
+ increase from about 13,000 ICD-9 codes to more than 68,000. Procedure
+ Coding System (ICD-10-PCS) procedure codes increase from about 3,800 ICD-9
+ codes to nearly 87,000. Both systems also expand the number of characters
+ allotted to seven alpha-numeric characters. This value does not include
+ the decimal point, which follows the third character for the ICD-10-CM
+ code set. There is no decimal point in the ICD-10-PCS code set.
+  
+ These code sets have the potential to reveal more about quality of care, 
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research.
+  
+ The intent of this patch is to:
+  
+ 1. Provide the ability to search on ICD-10-CM diagnosis codes. The search
+ function is performed on the Emergency Department Integration System using
+ Advanced Search Functionality. Diagnosis codes entered for a "Time in"
+ date prior to the ICD-10 implementation date will be ICD 9 codes. 
+ Diagnosis codes entered on or after the ICD-10 implementation date will be
+ ICD-10 codes.  
+  
+ 2. Provide the ability to edit closed view to update the "Time In" and
+ change ICD-9 codes to ICD-10 codes or to change ICD-10 codes to ICD-9 
+ codes.
+  
+ 3. Add the ICD column header and ICD Type column header to reports. In
+ reports that already have the ICD-9 column header, the header will be 
+ changed to just ICD. Reports affected by this change are the Activity 
+ report, The Delay report, The Exposure Report, The Mental Health Report 
+ (formerly known as the Behavioral Health or BVAC report), Admissions 
+ Report, Custom Worksheets and Ad Hoc reports.
+  
+ 4. Correct 5 minor defects.
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ 1. CQ EDIS00001187 (Remedy INC000000897239)
+    EDIS will now allow a user to remove a patient without selecting a 
+    Provider for the following special classes of Disposition:
+    - Left without being treated
+    - Patient name entered in error
+    - Sent to primary care
+  
+ 2. CQ EDIS00001188 (Remedy INC000000897799)
+    Nurses and Resident roles now correctly open the Edit Closed worksheet.
+  
+ 3. CQ EDIS00001189 (Remedy INC000000898138)
+    Selecting the first bed in the list of the Visit worksheet no longer 
+    brings up a 'Missing Bed' popup when clicking on the "Save" button.
+  
+ 4. CQ EDIS00001190
+    The Provider report has been removed from EDIS.
+  
+ 5. CQ EDIS00001192
+    After a user switches from viewing an Edit Closed worksheet to editing 
+    and saving a Visit worksheet, the Visit worksheet no longer blanks out.
+  
+  
+ Patch Components
+ ================
+ EDIS API's modified to return ICD-10 codes
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)               New/Modified/Deleted
+ ------------------------------------------------------------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name         Type         New/Modified/Deleted
+ -----------         ----         --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                    New/Modified/Deleted
+ -------------                    --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)           New/Modified/Deleted
+ -------------      ----      ------------------      --------------------
+ N/A
+  
+ Additional Information:
+  
+ Parameter(s):
+ Coding System Parameter added to internal API calls
+  
+ Remote Procedure Call(s)
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR 20070902, ICD-10-CM Conversion
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Test Sites:
+ -----------
+ Captain James A. Lovell Federal Health Care Center North Chicago, IL
+ John D. Dingell VA Medical Center Detroit, MI
+ Minneapolis VA Medical Center Minneapolis, MN
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------
+ This section contains the following software and documentation files that 
+ support the new functionality and minor fixes introduced by this patch:
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library 
+ at: http://www.domain.ext/vdl/application.asp?appid=179 
+  
+ File Description                File Name                       FTP Mode
+ -------------------------------------------------------------------------
+  
+ EDIS Release Notes              EDIS_2_1_2_RN.PDF                 BINARY
+  
+ EDIS Technical Manual           EDIS_2_1_2_TM.PDF                 BINARY
+  
+ EDIS User Manual                EDIS_2_1_2_UM.PDF                 BINARY
+  
+ EDIS Big Board Inst. Guide      EDIS_2_1_2_BigBrd_IG.PDF          BINARY
+  
+ EDIS Server&Client Inst. Guide  EDIS_2_1_2_ IG.PDF                BINARY
+  
+ EDIS Glossary                   EDIS_2_1_Glossary.PDF             BINARY 
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no pre or post installation routines.  Patch consists of 16 
+ routines with no file or template updates. The EAR file is installed at a 
+ National Level at the AITC/PITC servers and will be handled by the DCO 
+ Server Administrators.
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ Installation Sequence and Coordination
+ --------------------------------------
+ There are four parts to the EDIS 2.1.2 (EDP*2.0*2) installation. 
+ 1. Installation of edis-tracking-application-2.1.2.ear file on Oracle 
+ Weblogic Application Server by Enterprise Operations. This step has been 
+ completed. 
+  
+ 2. Installation of EDP*2.0*2 on the site's VistA server. 
+  
+ 3. Update the URL on all the site's client/user workstations. 
+  
+ 4. Update the URL for the site's EDIS Big Board. Refer to the EDIS v2.1.2
+ Big Board Installation Guide (see Section 2 below for location of 
+ Referenced Documents). 
+  
+ NOTE: Step 1 above has been completed by Enterprise Operations. Step 2 
+ should immediately be followed by Steps 3 and 4 at the site.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL, enter the patch #
+     (EDP*2.0*2):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        back up any other changes such as DDs or templates.
+  
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DDs, templates, etc.).
+  
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter EDP*2.0*2.
+  
+ 5.  If prompted Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//, respond NO.
+  
+ 6.  When prompted Want KIDS to INHIBIT LOGONs during the install? NO//,
+     respond NO.
+  
+ 7.  When prompted Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//, respond NO.
+  
+ 8.  If prompted Delay Install (Minutes):  (0 - 60): 0//, respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ EDPCONV may need to be run if this is an upgrade from prior to EDIS 1.0.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EMERGENCY DEPARTMENT;**[Patch List]**;Feb 24, 2012;Build 23
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EDP22PST
+    Before:       n/a   After:   B737172  **2**
+Routine Name: EDPCONV
+    Before: B69787121   After: B70928886  **2**
+Routine Name: EDPFAA
+    Before: B36904209   After: B37763699  **6,2**
+Routine Name: EDPFLEX
+    Before:  B1745474   After: B10693270  **2**
+Routine Name: EDPLEX
+    Before:       n/a   After: B11049187  **2**
+Routine Name: EDPLOG
+    Before: B58048189   After: B64279489  **6,2**
+Routine Name: EDPLPCE
+    Before: B32808524   After: B39952113  **2**
+Routine Name: EDPQLE
+    Before: B43232281   After: B55054483  **6,2**
+Routine Name: EDPQPCE
+    Before:  B3317665   After:  B6816999  **6,2**
+Routine Name: EDPRPT1
+    Before: B50357723   After: B51586751  **6,2**
+Routine Name: EDPRPT10
+    Before: B30220543   After: B32122849  **6,2**
+Routine Name: EDPRPT2
+    Before: B24332800   After: B26475007  **6,2**
+Routine Name: EDPRPT7
+    Before: B20666458   After: B23000869  **2**
+Routine Name: EDPRPT7C
+    Before: B22153636   After: B24197469  **6,2**
+Routine Name: EDPRPTBV
+    Before: B28273730   After: B30889629  **6,2**
+Routine Name: EDPX
+    Before: B12709600   After: B16354064  **6,2**
+ 
+Routine list of preceding patches: 6
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 04, 2012
+Completed By:                               Date Completed: NOV 12, 2014
+Released By :                               Date Released : NOV 13, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,339 @@
+$TXT Created by                      DEVESS.DOMAIN.EXT  (KIDS) on Monday, 03/25/13 at 17:43
+=============================================================================
+Run Date: AUG 15, 2014                     Designation: MC*2.3*43
+Package : MC - MEDICINE                       Priority: Mandatory
+Version : 2.3        SEQ #42                    Status: Released
+                  Compliance Date: AUG 29, 2014
+=============================================================================
+
+Associated patches: (v)LEX*2*80    <<= must be installed BEFORE `MC*2.3*43'
+                    (v)ICD*18*57   <<= must be installed BEFORE `MC*2.3*43'
+                    (v)MC*2.3*44   <<= must be installed BEFORE `MC*2.3*43'
+
+Subject: VISTA MEDICINE ICD-10 CLASS 1 REMEDIATION
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Print Template
+  - Routine
+  - Other
+
+Description:
+============
+
+ IMPORTANT INFORMATION Please read the Overview Guide 
+ (ICD-10_Production_Overview_Guide_Groups_3_4.pdf) posted on the Anonymous 
+ directory for installation order. This is critical for proper 
+ functionality of the ICD-10 Software.
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10) 
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service, or dates of discharge for inpatients, that occur on or 
+ after the implementation date will use the ICD-10 code set. Clinical 
+ Modification (ICD-10-CM) diagnosis codes increase from about 13,000 ICD-9 
+ codes to more than 68,000. Procedure Coding System (ICD-10-PCS) procedure 
+ codes increase from about 3,800 ICD-9 codes to nearly 87,000. Both 
+ systems also expand the number of characters allotted to seven 
+ alpha-numeric characters. This value does not include the decimal point, 
+ which follows the third character for the ICD-10-CM code set. There is no 
+ decimal point in the ICD-10-PCS code set. 
+  
+ These code sets have the potential to reveal more about quality of care, 
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research. 
+  
+ The following functionality within the VistA Medicine (MC) application was 
+ updated to address the ICD-10 code set. Only the Rheumatology Menu [MCRHUSER]
+ option is addressed.
+  
+ 1. The Diagnosis Edit [MCRHDIAGF] option was modified such that when a user 
+    selects a medical diagnosis, the ICD code that is populated in the
+    RHEUMATOLOGY File (#701) is relevant to the ICD code set for the procedure
+    date.
+  
+    -  If the procedure date is prior to the implementation date of the ICD-10
+       code set, then the ICD-9 code mapped to the medical diagnosis will be 
+       populated.
+    -  If the procedure date is on or after the implementation date of the 
+       ICD-10 code set, then the ICD-10 code mapped to the medical diagnosis 
+       will be populated. 
+  
+ 2. The Diagnosis Print [MCRHDIAGP] and Print All Report [MCRHALLP] options
+    under the Print Menu [MCRHMENUPRT] were modified such that the column
+    header displays "ICD" instead of "ICD9". 
+  
+ 3. Several field descriptions were updated to replace the word "ICD9" with ICD".
+    NOTE: Many of the fields were flagged for future use.
+  
+ 4. The parent package of Medicine, Clinical Procedures (CP), was added as a
+    subscriber to several of the APIs as noted in ICR #5747.
+   
+ 5. The following menu option and its sub-menu options on the Rheumatology Menu
+    were placed out of order. These options are no longer used within the 
+    Medicine package.
+          Line Enter/Edit Menu ... [MCRHMENULIN]
+            Diagnosis Line Edit [MCRHDIAGL]
+            History Narrative Line Edit [MCRHNARRL]
+            Health Assessment (HAQ) Line Edit [MCRHHAQL]
+            Health/Physical History Line Edit [MCRHPATHISTL]
+            Physical Examination Line Edit [MCRHPHYSL]
+            Death Admin Line Edit [MCRHDEATHL]
+            Brief Diagnosis Line Edit [MCRHBRIEF]
+  
+    
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)                    New/Modified/Deleted
+ -------------          --------------------------------  --------------------
+ ECHO (#691)
+   ICD DIAGNOSIS  (sub-file)(#691.19)                     Modified
+                        ICD DIAGNOSIS (#.01)              Modified
+ CARDIAC CATHETERIZATION (#691.1)
+   ICD DIAGNOSIS  (sub-file)(#691.46)                     Modified
+                        ICD DIAGNOSIS (#.01)              Modified
+ ELECTROCARDIOGRAM (EKG) (#691.5)
+   ICD DIAGNOSIS  (sub-file)(#691.58)                     Modified
+                        ICD DIAGNOSIS (#.01)              Modified
+ HOLTER (#691.6)
+   ICD DIAGNOSIS  (sub-file)(#691.69)                     Modified
+                        ICD DIAGNOSIS (#.01)              Modified
+ EXERCISE TOLERANCE TEST (#691.7)
+   ICD DIAGNOSIS  (sub-file)(#691.704)                    Modified
+                        ICD DIAGNOSIS (#.01)              Modified
+ ELECTROPHYSIOLOGY (EP) (#691.8)
+   ICD DIAGNOSIS  (sub-file)(#691.806)                    Modified
+                        ICD DIAGNOSIS (#.01)              Modified
+ ATRIAL STUDY (#691.9)
+   ICD DIAGNOSIS  (sub-file)(#691.9001)                   Modified
+                        ICD DIAGNOSIS (#.01)              Modified
+ VENTRICULAR STUDY (#692)
+   ICD DIAGNOSIS  (sub-file)(#692.03)                     Modified
+                        ICD DIAGNOSIS (#.01)              Modified
+ HEMATOLOGY (#694)
+   ICD DIAGNOSIS  (sub-file)(#694.02)                     Modified
+                        ICD DIAGNOSIS (#.01)              Modified
+ GENERATOR IMPLANT (#698)
+   ICD DIAGNOSIS  (sub-file)(#698.02)                     Modified
+                        ICD DIAGNOSIS (#.01)              Modified
+ V LEAD IMPLANT (#698.1)
+   ICD DIAGNOSIS  (sub-file)(#698.12)                     Modified
+                        ICD DIAGNOSIS (#.01)              Modified
+ A LEAD IMPLANT (#698.2)
+   ICD DIAGNOSIS  (sub-file)(#698.22)                     Modified
+                        ICD DIAGNOSIS (#.01)              Modified
+ PACEMAKER SURVEILLANCE (#698.3)
+   ICD DIAGNOSIS  (sub-file)(#698.32)                     Modified
+                        ICD DIAGNOSIS (#.01)              Modified
+ ENDOSCOPY/CONSULT(#699)
+   ICD DIAGNOSIS  (sub-file)(#699.03)                     Modified
+                        ICD DIAGNOSIS (#.01)              Modified
+ GENERALIZED PROCEDURE/CONSULT (#699.5)
+   ICD DIAGNOSIS  (sub-file)(#699.54)                     Modified
+                        ICD DIAGNOSIS (#.01)              Modified
+ PULMONARY FUNCTION TESTS (#700)
+   ICD DIAGNOSIS  (sub-file)(#700.05)                     Modified
+                        ICD DIAGNOSIS (#.01)              Modified
+ RHEUMATOLOGY (#701)
+   ICD DIAGNOSIS  (sub-file)(#701.01)                     Modified
+                        ICD DIAGNOSIS (#.01)              Modified
+  
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ MCRHMENULIN                    Menu             Modified
+ MCRHDIAGL                      Run routine      Modified
+ MCRHNARRL                      Run routine      Modified
+ MCRHHAQL                       Run routine      Modified
+ MCRHPATHISTL                   Run routine      Modified
+ MCRHPHYSL                      Run routine      Modified
+ MCRHDEATHL                     Run routine      Modified
+ MCRHBRIEF                      Run routine      Modified
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)                 New/Modified/Deleted
+ -------------      ----      ------------------            --------------------
+ MCRHPROG           Print     RHEUMATOLOGY (#701)            Modified
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR 20070902, ICD-10-CM Conversion
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Battle Creek VAMC, Battle Creek, MI
+ Detroit VAMC, Detroit, MI
+ Houston VAMC, Houston, TX
+ North Chicago VAMC, Chicago, IL
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ File Description          
+   File Name                                       FTP Mode
+ --------------------------------------------------------------------------
+ Medicine Technical Manual 
+   MC_2_3TM.pdf                                    (binary)
+ Medicine Release Notes                            
+   ICD-10_RN_MC_2_3_43_44.pdf                      (binary)
+ Medicine User Manual
+   MC_2_3UM.pdf                                    (binary)
+ Production Overview Guide
+   ICD-10_Production_Overview_Guide_Groups_3_4.pdf (binary)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+ The following menu options should be disabled. 
+     MCRHUSER       Rheumatology Menu
+   
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (MC*2.3*43):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter MC*2.3*43.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond YES. 
+             MCRHUSER       Rheumatology Menu
+  
+     Enter options you wish to mark as 'Out Of Order': 
+  
+     Enter protocols you wish to mark as 'Out Of Order': 
+  
+  
+ 7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ 1. Cleanup - The Pre-Install routine MC43PST should be deleted using the
+    KERNEL option 'Delete Routines' [XTRDEL] upon completion of the
+    installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.3;Medicine;**[Patch List]**;09/13/1996;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MC43PST
+    Before:       n/a   After:  B1694913  **43**
+Routine Name: MCRH2
+    Before:  B5718448   After:  B7228385  **43**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 13, 2012
+Completed By:                               Date Completed: AUG 08, 2014
+Released By :                               Date Released : AUG 15, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

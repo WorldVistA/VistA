@@ -1,0 +1,211 @@
+
+=============================================================================
+Run Date: NOV 10, 2014                     Designation: OR*3*404
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #349                      Status: Released
+                  Compliance Date: DEC 15, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*385    <<= must be installed BEFORE `OR*3*404'
+
+Subject: CPRS V30A VERSION 16
+
+Category: 
+  - Informational
+  - Other
+  - Routine
+
+Description:
+============
+
+ 1. Shortly after the release of several ICD-10 patches (LEX*2*80,
+ ICD*18*57, IBD*3*63, etc.), several sites reported that the encounter form
+ dialog in CPRS was taking an average of 1-2 mins to load. This was
+ unacceptable and impacting patient care.
+  
+ ***Important Note*** 
+ Certain encounter forms will take a little longer to load than others due
+ to the varying data intensity levels of the forms. This is particularly
+ true for the National Primary Care FY14-Q4 form, which consists of some
+ 1331 diagnoses and over 120 procedures.
+  
+ There are two changes being made to improve the encounter form load 
+ times. The first will be released in this patch (OR*3*404) and will be 
+ the Computerized Patient Record System (CPRS) GUI change. The second will 
+ be VistA server side changes and will be released in OR*3*398. We 
+ anticipate OR*3*398 will be released in December, 2014.
+  
+ 2. It was discovered, with CPRS v30A, that there was a problem in Clinic 
+ Reminder dialogs with prompts not appearing correctly. This could result 
+ in missing information associated with that encounter. A CPRS GUI change 
+ is required to correct this.
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ OR CPRS GUI CHART      Broker             Modified
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ 1. INC000001042172  After the installation of Lex 80 and ICD 57 we have
+                     experienced a 30 to 45 second delay before the
+                     encounter box pops up.
+  
+ Problem:
+ --------
+ After the installation of Lex 80 and ICD 57 we have experienced a 30 to 
+ 45 second delay before the encounter box pops up.
+  
+ Resolution:
+ -----------
+ The resolution is in three parts. The first set of changes will be made 
+ in the Computerized Patient Record System (CPRS) Graphical User Interface 
+ (GUI). Two other patches are being prepared: GMPL*2*47 and IBD*3*66.
+  
+ 2. INC000001064706  GUIv30a (OR*3*385) appears to have BROKEN the display 
+                     of PXRM LEVEL OF UNDERSTANDING in the reminder dialog
+                     template form. PXRM LEVEL OF UNDERSTANDING was
+                     properly configured on an element (with resolution
+                     type set to 'done at encounter', and the education
+                     topic linked to the element). 
+  
+ Problem:
+ --------
+ CPRS GUI v30A made some modifications in the Clinical Reminder dialogs 
+ that have caused isse with the display of prompts. This could also affect 
+ updates getting sent to ancillary packages such as Women's Health.
+  
+ Solution:
+ ---------
+ Modifications have to made to CPRS to properly display the prompts which 
+ also corrects the issue of updates being sent to ancillary packages.
+  
+ Test Sites: 
+ ----------
+  
+  
+ Documentation and Software Retrieval Instructions:
+ -------------------------------------------------- 
+ The following documents can be downloaded from the FTP address as 
+ directed by the CPRS Implementation team.
+  
+ The updated documentation associated with this patch is:
+  
+ File Name               Contents               
+ ---------               --------               
+ OR_30_404_IG.DOC        CPRS GUI v30.A Installation Guide
+                         (Word Version)       
+ OR_30_404_IG.PDF        CPRS GUI v30.A Installation Guide
+  
+  
+ CPRS documentation can also be found in the VA Software Document Library:
+  
+ http://www.domain.ext/vdl.
+  
+ Sites will retrieve VistA software from an FTP address as directed by the
+ CPRS Implementation team. Installation instructions will be distributed
+ when your site begins the implementation process.
+  
+ The software distribution includes:
+  
+ File Name              Contents          Retrieval Format
+ ---------              --------          ----------------
+ OR_30_404.ZIP          CPRSCHART.EXE     Binary
+ OR_30_404_SRC.ZIP      CPRS v30.A Source Binary
+ OR_30_404.KID          KIDS Build        Ascii
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no pre installation instructions. The only post installation 
+ consideration is that after installing the KIDS build, the CPRS GUI 
+ executable must be made available to the users. 
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ There are no pre-install steps for this patch. 
+  
+ Installation Instructions:
+ --------------------------
+ OR*3*404 and its' associated GUI executable will be a part of the CPRS 
+ v30A phased deployment rollout. You will be notified when it is the 
+ appropriate time to install. Installation instructions will be found in 
+ the OR*3*404 Install Guide referenced above.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 02, 2014
+Completed By:                               Date Completed: NOV 10, 2014
+Released By :                               Date Released : NOV 10, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

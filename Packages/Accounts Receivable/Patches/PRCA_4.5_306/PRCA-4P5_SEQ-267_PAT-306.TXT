@@ -1,0 +1,175 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 09/11/14 at 11:22
+=============================================================================
+Run Date: SEP 30, 2014                     Designation: PRCA*4.5*306
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: EMERGENCY
+Version : 4.5       SEQ #267                    Status: Released
+                  Compliance Date: OCT 01, 2014
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*177<<= must be installed BEFORE `PRCA*4.5*306'
+
+Subject: REVERSE DMC DEPOSIT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ **************************************************************************
+ Note:  This patch is an emergency release with a 24-hour compliance.
+  
+        It is imperative that this patch be installed no later than the
+        compliance date which is 24 hours from release of this patch. Your
+        understanding and support is appreciated.
+ **************************************************************************
+  
+ This patch will reverse payments received and processed by DMC for 
+ incorrect payments deducted from Veterans pension checks that were later 
+ restored to Veterans.  This patch will mark the payments as incomplete 
+ transactions.  The deposit tickets being marked start with the station 
+ 16822 followed by the 3 digit station number.
+  
+ ***************************************************************************
+ * PLEASE DO NOT ATTEMPT TO CORRECT PATIENT ACCOUNTS THAT WERE AFFECTED BY *
+ * THE POSTING OF THE RECEIPT. ANY TRANSACTIONS THAT WERE MADE BY USERS TO *
+ * ADJUST THE RESULTS OF THE RECEIPT POSTING WILL NEED TO BE BACKED OUT IN *
+ * ORDER FOR THE PATCH TO FUNCTION PROPERLY.                               *
+ ***************************************************************************
+  
+ This patch will execute a post-install that will update the patient 
+ accounts affected by the posting of the erroneous receipt.  It will mark 
+ the payments as incomplete to prevent them from showing on the patient 
+ statement.
+  
+ A mail message report will be generated and sent to the RCDP PAYMENTS 
+ mail group at the end of the patch installation for each deposit found.  
+ If a deposit is corrected, the report will list all the bills and the 
+ transactions that was associated.  The transactions listed on this 
+ report are the transactions that were set as incomplete in order to 
+ remove the posting of the payments.  The bills balance for these 
+ transactions and any repayment plans have also been adjusted.  It is 
+ recommended that the bills listed on this report be audited to verify 
+ their accuracy.
+  
+ Users will also have a related CR number corresponding to the deposit 
+ indicated in a message "Error in Agent Cashier Receipts" as not being 
+ processed in a Timely manner.  They will need to use the CR Entered 
+ Online option under Receipt Processing to clear this CR from the list.
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+ INC000001051896 Accounts Receivable - e-Payments
+   
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ Beckley, WV
+ Oklahoma City VAMC   
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ INC000001051896 Accounts Receivable - e-Payments
+  
+ Problem: 
+ ========
+ See description above
+  
+ Resolution:
+ ===========
+ See description above
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+   
+ This patch may be run with users on the system, there are no 
+ options that need to be placed out of order.
+   
+ The installation should take less than 5 minutes.
+   
+   
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+  
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter PRCA*4.5*306):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s)
+  
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+  
+ 5.   Clean Up Post-Init Routine:
+      ---------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: RC45P306.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RC45P306
+    Before:       n/a   After:  B5407158  **306**
+Routine Name: RCDPXFIM
+    Before: B25370977   After: B27621316  **177,306**
+Routine Name: RCDPXFIX
+    Before: B78572229   After: B88290331  **177,306**
+ 
+Routine list of preceding patches: 177
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 09, 2014
+Completed By:                               Date Completed: SEP 30, 2014
+Released By :                               Date Released : SEP 30, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

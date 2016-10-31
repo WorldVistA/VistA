@@ -1,0 +1,271 @@
+$TXT Created by                  at CMNT.FO-BIRM.DOMAIN.EXT  (KIDS) on Thursday, 06/11/15 at 17:17
+=============================================================================
+Run Date: AUG 13, 2015                     Designation: HBH*1*28
+Package : HBH - HOSPITAL BASED HOME CARE      Priority: Mandatory
+Version : 1        SEQ #25                      Status: Released
+                  Compliance Date: SEP 13, 2015
+=============================================================================
+
+Associated patches: (v)HBH*1*11    <<= must be installed BEFORE `HBH*1*28'
+                    (v)HBH*1*13    <<= must be installed BEFORE `HBH*1*28'
+                    (v)HBH*1*15    <<= must be installed BEFORE `HBH*1*28'
+                    (v)HBH*1*16    <<= must be installed BEFORE `HBH*1*28'
+                    (v)HBH*1*19    <<= must be installed BEFORE `HBH*1*28'
+
+Subject: TOTAL VISITS BY DATE RANGE REPORT (80) [HBHCRP21] CPT CODE OMISSION UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Add 8 additional CPT Codes (98966, 98967, 98968, 99367, 99368, 99441, 
+ 99442, and 99443) for automatic omission from Total Visits by Date Range 
+ Report (80) [HBHCRP21] option and update report format with Active and 
+ Inactive/Historical columns as illustrated below:
+ ...
+     Active                               Inactive/Historical
+   98966  HC PRO PHONE CALL 5-10 MIN    99361  PHYSICIAN/TEAM CONFERENCE
+   98967  HC PRO PHONE CALL 11-20 MIN   99362  PHYSICIAN/TEAM CONFERENCE
+   98968  HC PRO PHONE CALL 21-30 MIN   99371  PHYSICIAN PHONE CONSULTATION
+   99358  PROLONGED SERV, W/O CONTACT   99372  PHYSICIAN PHONE CONSULTATION
+   99359  PROLONGED SERV, W/O CONTACT   99373  PHYSICIAN PHONE CONSULTATION
+   99367  TEAM CONF W/O PAT BY PHYS     99376  CARE PLAN OVERSIGHT/OVER 60
+   99368  TEAM CONF W/O PAT BY HC PRO
+   99374  HOME HEALTH CARE SUPERVISION
+   99375  HOME HEALTH CARE SUPERVISION
+   99441  PHONE E/M PHYS/QHP 5-10 MIN
+   99442  PHONE E/M PHYS/QHP 11-20 MIN
+   99443  PHONE E/M PHYS/QHP 21-30 MIN
+ ...
+  
+ Update HBHCRP21 routine and HBHCRP21 option description with illustrated 
+ report format
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ HBHCRP21               Run routine        Modified
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ 20141013
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+  
+ Problem:
+ -------
+ Add 8 additional CPT Codes (98966, 98967, 98968, 99367, 99368, 99441, 
+ 99442, and 99443) for automatic omission from Total Visits by Date Range 
+ Report (80) [HBHCRP21] option and update report format with Active and 
+ Inactive/Historical columns as illustrated below:
+ ...
+     Active                               Inactive/Historical
+   98966  HC PRO PHONE CALL 5-10 MIN    99361  PHYSICIAN/TEAM CONFERENCE
+   98967  HC PRO PHONE CALL 11-20 MIN   99362  PHYSICIAN/TEAM CONFERENCE
+   98968  HC PRO PHONE CALL 21-30 MIN   99371  PHYSICIAN PHONE CONSULTATION
+   99358  PROLONGED SERV, W/O CONTACT   99372  PHYSICIAN PHONE CONSULTATION
+   99359  PROLONGED SERV, W/O CONTACT   99373  PHYSICIAN PHONE CONSULTATION
+   99367  TEAM CONF W/O PAT BY PHYS     99376  CARE PLAN OVERSIGHT/OVER 60
+   99368  TEAM CONF W/O PAT BY HC PRO
+   99374  HOME HEALTH CARE SUPERVISION
+   99375  HOME HEALTH CARE SUPERVISION
+   99441  PHONE E/M PHYS/QHP 5-10 MIN
+   99442  PHONE E/M PHYS/QHP 11-20 MIN
+   99443  PHONE E/M PHYS/QHP 21-30 MIN
+ ... 
+  
+  
+ Resolution:
+ ----------
+ Update HBHCRP21 routine and HBHCRP21 option description with illustrated 
+ report format
+  
+  
+ Test Sites:
+ ----------
+ Bay Pines (#516)
+ Heartland - West (#589)
+ South Texas (#671)
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Home Based Primary Care (HBPC) User Manual       hbh1_um.pdf    binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(ex. XXX*X.X*XX):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' respond YES 
+     This could affect users on the system and installation time will
+     increase.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' respond NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' respond NO
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Routine Information:
+ --------------------
+ The checksums below are new checksums, and
+  can be checked with CHECK1^XTSUMBLD.
+  
+ Routine Name: HBHCRP21
+     Before: B50792838   After: B53500346  **11,13,15,16,19,28**
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;HOSPITAL BASED HOME CARE;**[Patch List]**;NOV 01, 1993;Build 208
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HBHCRP21
+    Before: B50792838   After: B53500346  **11,13,15,16,19,28**
+ 
+Routine list of preceding patches: 19
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 07, 2015
+Completed By:                               Date Completed: AUG 13, 2015
+Released By :                               Date Released : AUG 13, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

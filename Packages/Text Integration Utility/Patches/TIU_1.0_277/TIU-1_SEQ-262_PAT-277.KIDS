@@ -1,0 +1,789 @@
+Released TIU*1*277 SEQ #262
+Extracted from mail message
+**KIDS**:TIU*1.0*277^
+
+**INSTALL NAME**
+TIU*1.0*277
+"BLD",9224,0)
+TIU*1.0*277^TEXT INTEGRATION UTILITIES^0^3130215^y
+"BLD",9224,1,0)
+^^79^79^3130214^
+"BLD",9224,1,1,0)
+This patch will resolve the following issues in the Text Integration
+"BLD",9224,1,2,0)
+Utilities package:
+"BLD",9224,1,3,0)
+ 
+"BLD",9224,1,4,0)
+Allow the TIU DOCUMENT fields Author/Dictator and Attending Physician 
+"BLD",9224,1,5,0)
+(fields 1202 & 
+"BLD",9224,1,6,0)
+1209) to be populated into addendums to OPERATION REPORT documents.
+"BLD",9224,1,7,0)
+ 
+"BLD",9224,1,8,0)
+ASSOCIATED REMEDY TICKETS:
+"BLD",9224,1,9,0)
+=========================
+"BLD",9224,1,10,0)
+        1. INC000000454162 - Uploaded documents create addendum without 
+"BLD",9224,1,11,0)
+an author
+"BLD",9224,1,12,0)
+ 
+"BLD",9224,1,13,0)
+ 
+"BLD",9224,1,14,0)
+REMEDY TICKET OVERVIEW:
+"BLD",9224,1,15,0)
+======================
+"BLD",9224,1,16,0)
+1. INC000000454162
+"BLD",9224,1,17,0)
+ 
+"BLD",9224,1,18,0)
+ 
+"BLD",9224,1,19,0)
+  Problem:
+"BLD",9224,1,20,0)
+  -------
+"BLD",9224,1,21,0)
+  If the system doesn't find a match for the patient and surgery case a 
+"BLD",9224,1,22,0)
+filing error is generated and you are able to 
+"BLD",9224,1,23,0)
+ 
+"BLD",9224,1,24,0)
+edit the document which will then populate the attending & dictated by 
+"BLD",9224,1,25,0)
+fields. If the document is uploaded and filed 
+"BLD",9224,1,26,0)
+ 
+"BLD",9224,1,27,0)
+successfully the attending and dictated by fields are blank.   
+"BLD",9224,1,28,0)
+TIU*1.0*173 prevented these fields from being populated 
+"BLD",9224,1,29,0)
+ 
+"BLD",9224,1,30,0)
+during the upload process, which is correct, but didn't allow these 
+"BLD",9224,1,31,0)
+fields need to be populated when an addendum is created.
+"BLD",9224,1,32,0)
+ 
+"BLD",9224,1,33,0)
+ 
+"BLD",9224,1,34,0)
+ 
+"BLD",9224,1,35,0)
+  Resolution:
+"BLD",9224,1,36,0)
+  ----------
+"BLD",9224,1,37,0)
+  Check if the uploaded OPERATIVE REPORT is an addendum to an existing 
+"BLD",9224,1,38,0)
+document, allow the Dictator/Author and Attending fields to be populated.
+"BLD",9224,1,39,0)
+ 
+"BLD",9224,1,40,0)
+ 
+"BLD",9224,1,41,0)
+ 
+"BLD",9224,1,42,0)
+ 
+"BLD",9224,1,43,0)
+ 
+"BLD",9224,1,44,0)
+       ================INSTALLATION INSTRUCTIONS =================
+"BLD",9224,1,45,0)
+ 
+"BLD",9224,1,46,0)
+It is not necessary to disable any options. It is recommended to install 
+"BLD",9224,1,47,0)
+this patch when users are off the system.  It should take less than 2
+"BLD",9224,1,48,0)
+minutes to install this patch.
+"BLD",9224,1,49,0)
+ 
+"BLD",9224,1,50,0)
+   1. Choose the PackMan message containing this patch and invoke the
+"BLD",9224,1,51,0)
+      INSTALL/CHECK MESSAGE PackMan option.  
+"BLD",9224,1,52,0)
+  
+"BLD",9224,1,53,0)
+   2. From the Kernel Installation & Distribution System menu, select 
+"BLD",9224,1,54,0)
+      the Installation menu.  
+"BLD",9224,1,55,0)
+  
+"BLD",9224,1,56,0)
+   3. From this menu, you may select to use the following options: 
+"BLD",9224,1,57,0)
+      (when prompted for INSTALL NAME, enter TIU*1.0*277)
+"BLD",9224,1,58,0)
+  
+"BLD",9224,1,59,0)
+        a.  Verify Checksums in Transport Global - This option will allow
+"BLD",9224,1,60,0)
+            you to ensure the integrity of the routines that are in the
+"BLD",9224,1,61,0)
+            transport global.
+"BLD",9224,1,62,0)
+        b.  Print Transport Global - This option will allow you to view
+"BLD",9224,1,63,0)
+            the components of the KIDS build.
+"BLD",9224,1,64,0)
+        c.  Compare Transport Global to Current System - This option will
+"BLD",9224,1,65,0)
+            allow you to view all changes that will be made when this 
+"BLD",9224,1,66,0)
+            patch is installed.  It compares all components of this patch
+"BLD",9224,1,67,0)
+            (routines, DD's, templates, etc.).
+"BLD",9224,1,68,0)
+        d.  Backup a Transport Global - This option will create a backup
+"BLD",9224,1,69,0)
+            message of any routines exported with this patch. It will not
+"BLD",9224,1,70,0)
+            backup any other changes such as DD's or templates.
+"BLD",9224,1,71,0)
+  
+"BLD",9224,1,72,0)
+   4. Use the Install Package(s) option and select the package 
+"BLD",9224,1,73,0)
+      TIU*1.0*277.
+"BLD",9224,1,74,0)
+ 
+"BLD",9224,1,75,0)
+   5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+"BLD",9224,1,76,0)
+      NO//" respond NO.  
+"BLD",9224,1,77,0)
+  
+"BLD",9224,1,78,0)
+   6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+"BLD",9224,1,79,0)
+      Protocols? NO//" respond NO.
+"BLD",9224,4,0)
+^9.64PA^^
+"BLD",9224,6.3)
+6
+"BLD",9224,"ABPKG")
+n
+"BLD",9224,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9224,"KRN",.4,0)
+.4
+"BLD",9224,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",9224,"KRN",.401,0)
+.401
+"BLD",9224,"KRN",.402,0)
+.402
+"BLD",9224,"KRN",.403,0)
+.403
+"BLD",9224,"KRN",.5,0)
+.5
+"BLD",9224,"KRN",.84,0)
+.84
+"BLD",9224,"KRN",3.6,0)
+3.6
+"BLD",9224,"KRN",3.8,0)
+3.8
+"BLD",9224,"KRN",9.2,0)
+9.2
+"BLD",9224,"KRN",9.8,0)
+9.8
+"BLD",9224,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",9224,"KRN",9.8,"NM",1,0)
+TIUPUTC^^0^B31718862
+"BLD",9224,"KRN",9.8,"NM","B","TIUPUTC",1)
+
+"BLD",9224,"KRN",19,0)
+19
+"BLD",9224,"KRN",19.1,0)
+19.1
+"BLD",9224,"KRN",101,0)
+101
+"BLD",9224,"KRN",409.61,0)
+409.61
+"BLD",9224,"KRN",771,0)
+771
+"BLD",9224,"KRN",779.2,0)
+779.2
+"BLD",9224,"KRN",870,0)
+870
+"BLD",9224,"KRN",8989.51,0)
+8989.51
+"BLD",9224,"KRN",8989.52,0)
+8989.52
+"BLD",9224,"KRN",8994,0)
+8994
+"BLD",9224,"KRN","B",.4,.4)
+
+"BLD",9224,"KRN","B",.401,.401)
+
+"BLD",9224,"KRN","B",.402,.402)
+
+"BLD",9224,"KRN","B",.403,.403)
+
+"BLD",9224,"KRN","B",.5,.5)
+
+"BLD",9224,"KRN","B",.84,.84)
+
+"BLD",9224,"KRN","B",3.6,3.6)
+
+"BLD",9224,"KRN","B",3.8,3.8)
+
+"BLD",9224,"KRN","B",9.2,9.2)
+
+"BLD",9224,"KRN","B",9.8,9.8)
+
+"BLD",9224,"KRN","B",19,19)
+
+"BLD",9224,"KRN","B",19.1,19.1)
+
+"BLD",9224,"KRN","B",101,101)
+
+"BLD",9224,"KRN","B",409.61,409.61)
+
+"BLD",9224,"KRN","B",771,771)
+
+"BLD",9224,"KRN","B",779.2,779.2)
+
+"BLD",9224,"KRN","B",870,870)
+
+"BLD",9224,"KRN","B",8989.51,8989.51)
+
+"BLD",9224,"KRN","B",8989.52,8989.52)
+
+"BLD",9224,"KRN","B",8994,8994)
+
+"BLD",9224,"QDEF")
+^^^^NO
+"BLD",9224,"QUES",0)
+^9.62^^
+"BLD",9224,"REQB",0)
+^9.611^1^1
+"BLD",9224,"REQB",1,0)
+TIU*1.0*184^2
+"BLD",9224,"REQB","B","TIU*1.0*184",1)
+
+"MBREQ")
+0
+"PKG",470,-1)
+1^1
+"PKG",470,0)
+TEXT INTEGRATION UTILITIES^TIU^Text Integration Utilities 
+"PKG",470,20,0)
+^9.402P^^
+"PKG",470,22,0)
+^9.49I^1^1
+"PKG",470,22,1,0)
+1.0^3010801^3010806^66481
+"PKG",470,22,1,"PAH",1,0)
+277^3130215
+"PKG",470,22,1,"PAH",1,1,0)
+^^79^79^3130215
+"PKG",470,22,1,"PAH",1,1,1,0)
+This patch will resolve the following issues in the Text Integration
+"PKG",470,22,1,"PAH",1,1,2,0)
+Utilities package:
+"PKG",470,22,1,"PAH",1,1,3,0)
+ 
+"PKG",470,22,1,"PAH",1,1,4,0)
+Allow the TIU DOCUMENT fields Author/Dictator and Attending Physician 
+"PKG",470,22,1,"PAH",1,1,5,0)
+(fields 1202 & 
+"PKG",470,22,1,"PAH",1,1,6,0)
+1209) to be populated into addendums to OPERATION REPORT documents.
+"PKG",470,22,1,"PAH",1,1,7,0)
+ 
+"PKG",470,22,1,"PAH",1,1,8,0)
+ASSOCIATED REMEDY TICKETS:
+"PKG",470,22,1,"PAH",1,1,9,0)
+=========================
+"PKG",470,22,1,"PAH",1,1,10,0)
+        1. INC000000454162 - Uploaded documents create addendum without 
+"PKG",470,22,1,"PAH",1,1,11,0)
+an author
+"PKG",470,22,1,"PAH",1,1,12,0)
+ 
+"PKG",470,22,1,"PAH",1,1,13,0)
+ 
+"PKG",470,22,1,"PAH",1,1,14,0)
+REMEDY TICKET OVERVIEW:
+"PKG",470,22,1,"PAH",1,1,15,0)
+======================
+"PKG",470,22,1,"PAH",1,1,16,0)
+1. INC000000454162
+"PKG",470,22,1,"PAH",1,1,17,0)
+ 
+"PKG",470,22,1,"PAH",1,1,18,0)
+ 
+"PKG",470,22,1,"PAH",1,1,19,0)
+  Problem:
+"PKG",470,22,1,"PAH",1,1,20,0)
+  -------
+"PKG",470,22,1,"PAH",1,1,21,0)
+  If the system doesn't find a match for the patient and surgery case a 
+"PKG",470,22,1,"PAH",1,1,22,0)
+filing error is generated and you are able to 
+"PKG",470,22,1,"PAH",1,1,23,0)
+ 
+"PKG",470,22,1,"PAH",1,1,24,0)
+edit the document which will then populate the attending & dictated by 
+"PKG",470,22,1,"PAH",1,1,25,0)
+fields. If the document is uploaded and filed 
+"PKG",470,22,1,"PAH",1,1,26,0)
+ 
+"PKG",470,22,1,"PAH",1,1,27,0)
+successfully the attending and dictated by fields are blank.   
+"PKG",470,22,1,"PAH",1,1,28,0)
+TIU*1.0*173 prevented these fields from being populated 
+"PKG",470,22,1,"PAH",1,1,29,0)
+ 
+"PKG",470,22,1,"PAH",1,1,30,0)
+during the upload process, which is correct, but didn't allow these 
+"PKG",470,22,1,"PAH",1,1,31,0)
+fields need to be populated when an addendum is created.
+"PKG",470,22,1,"PAH",1,1,32,0)
+ 
+"PKG",470,22,1,"PAH",1,1,33,0)
+ 
+"PKG",470,22,1,"PAH",1,1,34,0)
+ 
+"PKG",470,22,1,"PAH",1,1,35,0)
+  Resolution:
+"PKG",470,22,1,"PAH",1,1,36,0)
+  ----------
+"PKG",470,22,1,"PAH",1,1,37,0)
+  Check if the uploaded OPERATIVE REPORT is an addendum to an existing 
+"PKG",470,22,1,"PAH",1,1,38,0)
+document, allow the Dictator/Author and Attending fields to be populated.
+"PKG",470,22,1,"PAH",1,1,39,0)
+ 
+"PKG",470,22,1,"PAH",1,1,40,0)
+ 
+"PKG",470,22,1,"PAH",1,1,41,0)
+ 
+"PKG",470,22,1,"PAH",1,1,42,0)
+ 
+"PKG",470,22,1,"PAH",1,1,43,0)
+ 
+"PKG",470,22,1,"PAH",1,1,44,0)
+       ================INSTALLATION INSTRUCTIONS =================
+"PKG",470,22,1,"PAH",1,1,45,0)
+ 
+"PKG",470,22,1,"PAH",1,1,46,0)
+It is not necessary to disable any options. It is recommended to install 
+"PKG",470,22,1,"PAH",1,1,47,0)
+this patch when users are off the system.  It should take less than 2
+"PKG",470,22,1,"PAH",1,1,48,0)
+minutes to install this patch.
+"PKG",470,22,1,"PAH",1,1,49,0)
+ 
+"PKG",470,22,1,"PAH",1,1,50,0)
+   1. Choose the PackMan message containing this patch and invoke the
+"PKG",470,22,1,"PAH",1,1,51,0)
+      INSTALL/CHECK MESSAGE PackMan option.  
+"PKG",470,22,1,"PAH",1,1,52,0)
+  
+"PKG",470,22,1,"PAH",1,1,53,0)
+   2. From the Kernel Installation & Distribution System menu, select 
+"PKG",470,22,1,"PAH",1,1,54,0)
+      the Installation menu.  
+"PKG",470,22,1,"PAH",1,1,55,0)
+  
+"PKG",470,22,1,"PAH",1,1,56,0)
+   3. From this menu, you may select to use the following options: 
+"PKG",470,22,1,"PAH",1,1,57,0)
+      (when prompted for INSTALL NAME, enter TIU*1.0*277)
+"PKG",470,22,1,"PAH",1,1,58,0)
+  
+"PKG",470,22,1,"PAH",1,1,59,0)
+        a.  Verify Checksums in Transport Global - This option will allow
+"PKG",470,22,1,"PAH",1,1,60,0)
+            you to ensure the integrity of the routines that are in the
+"PKG",470,22,1,"PAH",1,1,61,0)
+            transport global.
+"PKG",470,22,1,"PAH",1,1,62,0)
+        b.  Print Transport Global - This option will allow you to view
+"PKG",470,22,1,"PAH",1,1,63,0)
+            the components of the KIDS build.
+"PKG",470,22,1,"PAH",1,1,64,0)
+        c.  Compare Transport Global to Current System - This option will
+"PKG",470,22,1,"PAH",1,1,65,0)
+            allow you to view all changes that will be made when this 
+"PKG",470,22,1,"PAH",1,1,66,0)
+            patch is installed.  It compares all components of this patch
+"PKG",470,22,1,"PAH",1,1,67,0)
+            (routines, DD's, templates, etc.).
+"PKG",470,22,1,"PAH",1,1,68,0)
+        d.  Backup a Transport Global - This option will create a backup
+"PKG",470,22,1,"PAH",1,1,69,0)
+            message of any routines exported with this patch. It will not
+"PKG",470,22,1,"PAH",1,1,70,0)
+            backup any other changes such as DD's or templates.
+"PKG",470,22,1,"PAH",1,1,71,0)
+  
+"PKG",470,22,1,"PAH",1,1,72,0)
+   4. Use the Install Package(s) option and select the package 
+"PKG",470,22,1,"PAH",1,1,73,0)
+      TIU*1.0*277.
+"PKG",470,22,1,"PAH",1,1,74,0)
+ 
+"PKG",470,22,1,"PAH",1,1,75,0)
+   5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+"PKG",470,22,1,"PAH",1,1,76,0)
+      NO//" respond NO.  
+"PKG",470,22,1,"PAH",1,1,77,0)
+  
+"PKG",470,22,1,"PAH",1,1,78,0)
+   6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+"PKG",470,22,1,"PAH",1,1,79,0)
+      Protocols? NO//" respond NO.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","TIUPUTC")
+0^1^B31718862^B30729125
+"RTN","TIUPUTC",1,0)
+TIUPUTC ; SLC/JER - Document filer - captioned header ; 2/15/13 9:05am
+"RTN","TIUPUTC",2,0)
+ ;;1.0;TEXT INTEGRATION UTILITIES;**3,21,81,100,113,112,173,184,277**;Jun 20, 1997;Build 6
+"RTN","TIUPUTC",3,0)
+ ;
+"RTN","TIUPUTC",4,0)
+MAIN ; ---- Controls branching.
+"RTN","TIUPUTC",5,0)
+ ;      Attempts to file upload documents in the target file.
+"RTN","TIUPUTC",6,0)
+ ;      Requires DA = IEN of 8925.2 upload buffer entry.
+"RTN","TIUPUTC",7,0)
+ N TIUDA,TIUBGN,TIUI,TIUHSIG,TIULIM,TIULCNT,TIULINE,TIUREC,TIUPOST
+"RTN","TIUPUTC",8,0)
+ N TIUTYPE,TIUINST K ^TMP("TIUPUTC",$J)
+"RTN","TIUPUTC",9,0)
+ I '$D(TIUPRM0)!'$D(TIUPRM1) D SETPARM^TIULE
+"RTN","TIUPUTC",10,0)
+ S TIUHSIG=$P(TIUPRM0,U,10),TIUBGN=$P(TIUPRM0,U,12)
+"RTN","TIUPUTC",11,0)
+ I TIUHSIG']"" D MAIN^TIUPEVNT(DA,1,1) Q
+"RTN","TIUPUTC",12,0)
+ I TIUBGN']"" D MAIN^TIUPEVNT(DA,1,7) Q
+"RTN","TIUPUTC",13,0)
+ ; ---- Strip controls when kermit:
+"RTN","TIUPUTC",14,0)
+ I $P(TIUPRM0,U,17)="k" D PREPROC(DA)
+"RTN","TIUPUTC",15,0)
+ S TIUI=0 F  S TIUI=$O(^TIU(8925.2,+DA,"TEXT",TIUI)) Q:+TIUI'>0  D
+"RTN","TIUPUTC",16,0)
+ . S TIULINE=$G(^TIU(8925.2,+DA,"TEXT",TIUI,0))
+"RTN","TIUPUTC",17,0)
+ . I TIULINE[TIUHSIG D  Q
+"RTN","TIUPUTC",18,0)
+ . . ; ---- Hdr signal line.  GETREC^TIUPUTC1 resets TIUI to $TXT line:
+"RTN","TIUPUTC",19,0)
+ . . N TIUHDR,TIUFRST,TIUJ S TIUFRST=TIUI
+"RTN","TIUPUTC",20,0)
+ . . ; ---- If after first hdr signal, finish previous docmt
+"RTN","TIUPUTC",21,0)
+ . . ;      before going on w/ current docmt:
+"RTN","TIUPUTC",22,0)
+ . . I +$G(TIULCNT),$D(TIUREC("TROOT")),$D(@(TIUREC("TROOT")_"0)")) D FINISH
+"RTN","TIUPUTC",23,0)
+ . . K TIUREC D GETREC^TIUPUTC1(TIULINE,.TIUREC,.TIUHDR)
+"RTN","TIUPUTC",24,0)
+ . . I +$G(TIUREC("#"))'>0!($G(TIUREC("ROOT"))']"") Q
+"RTN","TIUPUTC",25,0)
+ . . D STUFREC(.TIUHDR,.TIUREC)
+"RTN","TIUPUTC",26,0)
+ . . S TIUREC("TROOT")=TIUREC("ROOT")_TIUREC("#")_","_TIUREC("TEXT")_","
+"RTN","TIUPUTC",27,0)
+ . . S:'$D(@(TIUREC("TROOT")_"0)")) @(TIUREC("TROOT")_"0)")="^^^^^"
+"RTN","TIUPUTC",28,0)
+ . . S TIULCNT=+$P(@(TIUREC("TROOT")_"0)"),U,4)
+"RTN","TIUPUTC",29,0)
+ . . F TIUJ=TIUFRST:1:TIUI D
+"RTN","TIUPUTC",30,0)
+ . . . ; ---- Delete header lines from buffer once filed;
+"RTN","TIUPUTC",31,0)
+ . . . ;      (TIUI was reset in GETREC^TIUPUTC1 to $TXT line):
+"RTN","TIUPUTC",32,0)
+ . . . K ^TIU(8925.2,+DA,"TEXT",TIUJ,0)
+"RTN","TIUPUTC",33,0)
+ . . I TIUREC("FILE")=8925,+$G(TIUREC("#")),+$G(TIUREC("BOILON")) D BOILRPLT(.TIUREC)
+"RTN","TIUPUTC",34,0)
+ . I TIULINE'[TIUHSIG,(TIULINE'[TIUBGN),(+$G(TIUREC("FILE"))=8925),+$G(TIUREC("BOILON")) D
+"RTN","TIUPUTC",35,0)
+ . . I TIULINE]"",$D(^TIU(8925.1,"B",$P(TIULINE,":"))) D  I 1
+"RTN","TIUPUTC",36,0)
+ . . . S TIULCNT=$$LOCATE(TIULINE,TIUREC("#"))
+"RTN","TIUPUTC",37,0)
+ . . E  S TIULCNT=+$G(TIULCNT)+.01
+"RTN","TIUPUTC",38,0)
+ . . S ^TIU(8925,+TIUREC("#"),"TEMP",TIULCNT,0)=TIULINE
+"RTN","TIUPUTC",39,0)
+ . . ; ---- Delete text line from buffer once xferred:
+"RTN","TIUPUTC",40,0)
+ . . K ^TIU(8925.2,+DA,"TEXT",TIUI,0)
+"RTN","TIUPUTC",41,0)
+ . I TIULINE'[TIUHSIG,(TIULINE'[TIUBGN),$D(TIUREC("TROOT")),$D(@(TIUREC("TROOT")_"0)")),(+$G(TIUREC("BOILON"))'>0) D
+"RTN","TIUPUTC",42,0)
+ . . S TIULCNT=+$G(TIULCNT)+1,@(TIUREC("TROOT")_TIULCNT_",0)")=TIULINE
+"RTN","TIUPUTC",43,0)
+ . . ; ---- Delete text line once xferred:
+"RTN","TIUPUTC",44,0)
+ . . K ^TIU(8925.2,+DA,"TEXT",TIUI,0)
+"RTN","TIUPUTC",45,0)
+ . . ; ---- Remove leading buffer garbage
+"RTN","TIUPUTC",46,0)
+ . I TIULINE'[TIUHSIG,(TIULINE'[TIUBGN),'$D(TIUREC("TROOT")),($G(TIUREC("#"))'=-1) K ^TIU(8925.2,+DA,"TEXT",TIUI,0)
+"RTN","TIUPUTC",47,0)
+ . I TIULINE[TIUBGN K ^TIU(8925.2,+DA,"TEXT",TIUI,0)
+"RTN","TIUPUTC",48,0)
+ ; ---- Finish last docmt in buffer file:
+"RTN","TIUPUTC",49,0)
+ I +$G(TIULCNT),$D(TIUREC("TROOT")),$D(@(TIUREC("TROOT")_"0)")) D FINISH
+"RTN","TIUPUTC",50,0)
+ I '+$O(^TIU(8925.2,+DA,"TEXT",0)) D BUFPURGE(DA)
+"RTN","TIUPUTC",51,0)
+ ; ---- Write upload results:
+"RTN","TIUPUTC",52,0)
+ I '$D(ZTQUEUED),$D(^TMP("TIUPUTC",$J)) D
+"RTN","TIUPUTC",53,0)
+ . W !!,"TOTALS FOR CURRENT BATCH:",!
+"RTN","TIUPUTC",54,0)
+ . W !?14,"TOTAL Document(s) RECEIVED: ",$J((+$G(^TMP("TIUPUTC",$J,"SUCC"))+$G(^("MISS"))+$G(^("FAIL"))),5),!
+"RTN","TIUPUTC",55,0)
+ . W !?18," Document(s) NOT FILED: ",$J(+$G(^TMP("TIUPUTC",$J,"FAIL")),5)
+"RTN","TIUPUTC",56,0)
+ . W !?3,"Document(s) FILED with MISSING FIELDS: ",$J(+$G(^TMP("TIUPUTC",$J,"MISS")),5),!
+"RTN","TIUPUTC",57,0)
+ K ^TMP("TIUPUTC",$J)
+"RTN","TIUPUTC",58,0)
+ Q
+"RTN","TIUPUTC",59,0)
+LOCATE(LINE,REC) ; ---- Locate line in boilerplate text
+"RTN","TIUPUTC",60,0)
+ N TIUJ,HIT,BTXT S (TIUJ,HIT)=0
+"RTN","TIUPUTC",61,0)
+ F  Q:+HIT  S TIUJ=$O(^TIU(8925,+REC,"TEMP",TIUJ)) Q:+TIUJ'>0!HIT  D
+"RTN","TIUPUTC",62,0)
+ . S BTXT=$G(^TIU(8925,+REC,"TEMP",TIUJ,0))
+"RTN","TIUPUTC",63,0)
+ . I BTXT[$P(LINE,":")_":" S HIT=1
+"RTN","TIUPUTC",64,0)
+ Q +$G(TIUJ)
+"RTN","TIUPUTC",65,0)
+ ;
+"RTN","TIUPUTC",66,0)
+STUFREC(HEADER,RECORD) ; ---- Stuffs record with known fixed fields;
+"RTN","TIUPUTC",67,0)
+ ;                      Checks for missing fields.
+"RTN","TIUPUTC",68,0)
+ N FDA,FDARR,IENS,FLAGS,TIUI,TIUMSG,TIUPC
+"RTN","TIUPUTC",69,0)
+ S IENS=""""_+RECORD("#")_","""
+"RTN","TIUPUTC",70,0)
+ S FDARR="FDA("_+RECORD("FILE")_","_IENS_")",FLAGS="KE"
+"RTN","TIUPUTC",71,0)
+ ; ---- Set up FDA Array:
+"RTN","TIUPUTC",72,0)
+ S TIUI=0
+"RTN","TIUPUTC",73,0)
+ F  S TIUI=$O(HEADER(TIUI)) Q:+TIUI'>0  D
+"RTN","TIUPUTC",74,0)
+ . ; if field is Author/Dictator and title is OPERATION REPORT, ignore uploaded data *173
+"RTN","TIUPUTC",75,0)
+ . ; *277 VMP/DJH Allow 1202/1209 to file if addendum
+"RTN","TIUPUTC",76,0)
+ . I '+$$ISADDNDM^TIULC1(+RECORD("#")),(TIUI=1202!(TIUI=1209)),TIUREC("TYPE")=$$CHKFILE^TIUADCL(8925.1,"OPERATION REPORT","I $P(^(0),U,4)=""DOC""") S @FDARR@(1303)="U" Q
+"RTN","TIUPUTC",77,0)
+ . S:TIUI'=.001 @FDARR@(TIUI)=$$TRNSFRM^TIULX(.RECORD,TIUI,HEADER(TIUI))
+"RTN","TIUPUTC",78,0)
+ I $D(FDA) D FILE^DIE(FLAGS,"FDA","TIUMSG")
+"RTN","TIUPUTC",79,0)
+ I $D(TIUMSG) D
+"RTN","TIUPUTC",80,0)
+ . ; ---- If FILE^DIC fails, log 8925.4 error w/ hdr info.  Create new
+"RTN","TIUPUTC",81,0)
+ . ;      8925.2 buffer entry with hdr, text, & 8925.4 log #.
+"RTN","TIUPUTC",82,0)
+ . ;      Kill most of old buffer. Send missing field alerts:
+"RTN","TIUPUTC",83,0)
+ . D MAIN^TIUPEVNT(DA,2,"",$P($G(^TIU(8925.1,+RECORD("TYPE"),0)),U),.FDA,.TIUMSG)
+"RTN","TIUPUTC",84,0)
+ . S ^TMP("TIUPUTC",$J,"MISS")=+$G(^TMP("TIUPUTC",$J,"MISS"))+1
+"RTN","TIUPUTC",85,0)
+ I '$D(TIUMSG) D
+"RTN","TIUPUTC",86,0)
+ . S ^TMP("TIUPUTC",$J,"SUCC")=+$G(^TMP("TIUPUTC",$J,"SUCC"))+1
+"RTN","TIUPUTC",87,0)
+ Q
+"RTN","TIUPUTC",88,0)
+BOILRPLT(TIUREC) ; ---- Execute/Interleave Boilerplates w/uploaded text
+"RTN","TIUPUTC",89,0)
+ N TIU
+"RTN","TIUPUTC",90,0)
+ D GETTIU^TIULD(.TIU,TIUREC("#"))
+"RTN","TIUPUTC",91,0)
+ D LOADDFLT^TIUEDI4(TIUREC("#"),TIUREC("TYPE")) ;100
+"RTN","TIUPUTC",92,0)
+ Q
+"RTN","TIUPUTC",93,0)
+SETROOT(LINECNT,RECORD) ; ---- Sets root of WP field
+"RTN","TIUPUTC",94,0)
+ S @(RECORD("TROOT")_"0)")="^^"_LINECNT_"^"_LINECNT_"^"_DT_"^^"
+"RTN","TIUPUTC",95,0)
+ Q
+"RTN","TIUPUTC",96,0)
+BUFPURGE(DA) ; ---- Call ^DIK to purge buffer record when all's well
+"RTN","TIUPUTC",97,0)
+ N DIK S DIK="^TIU(8925.2," D ^DIK
+"RTN","TIUPUTC",98,0)
+ Q
+"RTN","TIUPUTC",99,0)
+PREPROC(DA) ; ---- Strip controls & white space from headers
+"RTN","TIUPUTC",100,0)
+ N TIUI,TIUHLIN,X S (TIUI,TIUHLIN)=0
+"RTN","TIUPUTC",101,0)
+ F  S TIUI=$O(^TIU(8925.2,+DA,"TEXT",TIUI)) Q:+TIUI'>0  D
+"RTN","TIUPUTC",102,0)
+ . S X=$G(^TIU(8925.2,+DA,"TEXT",TIUI,0))
+"RTN","TIUPUTC",103,0)
+ . S:X[TIUHSIG TIUHLIN=1 S:X[TIUBGN TIUHLIN=0
+"RTN","TIUPUTC",104,0)
+ . S:TIUHLIN ^TIU(8925.2,+DA,"TEXT",TIUI,0)=$$STRIP^TIUUPLD(X)
+"RTN","TIUPUTC",105,0)
+ Q
+"RTN","TIUPUTC",106,0)
+DADTYPE(DA) ; ---- Get type of original document for addenda
+"RTN","TIUPUTC",107,0)
+ N TIUDAD,Y
+"RTN","TIUPUTC",108,0)
+ S TIUDAD=$P($G(^TIU(8925,DA,0)),U,6)
+"RTN","TIUPUTC",109,0)
+ S Y=+$G(^TIU(8925,+TIUDAD,0))
+"RTN","TIUPUTC",110,0)
+ Q Y
+"RTN","TIUPUTC",111,0)
+ ;
+"RTN","TIUPUTC",112,0)
+FINISH ; ---- Finish document: feedback, postfile code, merge boil,
+"RTN","TIUPUTC",113,0)
+ ;      log file event
+"RTN","TIUPUTC",114,0)
+ N ISADDNDM S ISADDNDM=0
+"RTN","TIUPUTC",115,0)
+ D SETROOT(TIULCNT,.TIUREC)
+"RTN","TIUPUTC",116,0)
+ S ISADDNDM=+$$ISADDNDM^TIULC1(TIUREC("#"))
+"RTN","TIUPUTC",117,0)
+ S TIUTYPE=$S(ISADDNDM:+$$DADTYPE(TIUREC("#")),1:TIUREC("TYPE"))
+"RTN","TIUPUTC",118,0)
+ I '$D(ZTQUEUED) W !,">>> ",$S(ISADDNDM:"Addendum",1:"Document")," Filed Successfully.",! ;TIU*1*81
+"RTN","TIUPUTC",119,0)
+ ; ---- TIU*1*81 Tell error handler that retrying filer was successful:
+"RTN","TIUPUTC",120,0)
+ S TIUDONE=1
+"RTN","TIUPUTC",121,0)
+ S TIUTYPE=$S(+$$ISADDNDM^TIULC1(TIUREC("#")):+$$DADTYPE(TIUREC("#")),1:TIUREC("TYPE"))
+"RTN","TIUPUTC",122,0)
+ S TIUPOST=$$POSTFILE^TIULC1(TIUTYPE)
+"RTN","TIUPUTC",123,0)
+ I TIUPOST]"" X TIUPOST K ^TMP("TIUPRFUP",$J)
+"RTN","TIUPUTC",124,0)
+ I TIUREC("FILE")=8925,+$G(TIUREC("BOILON")) D
+"RTN","TIUPUTC",125,0)
+ . N TIU D GETTIU^TIULD(.TIU,TIUREC("#"))
+"RTN","TIUPUTC",126,0)
+ . D MERGTEXT^TIUEDI1(TIUREC("#"),.TIU)
+"RTN","TIUPUTC",127,0)
+ . K ^TIU(8925,+TIUREC("#"),"TEMP")
+"RTN","TIUPUTC",128,0)
+ D MAIN^TIUPEVNT(DA,0,"",$P($G(^TIU(8925.1,+TIUREC("TYPE"),0)),U))
+"RTN","TIUPUTC",129,0)
+ Q
+"RTN","TIUPUTC",130,0)
+ ;
+"VER")
+8.0^22.0
+"BLD",9224,6)
+^262
+**END**
+**END**
+

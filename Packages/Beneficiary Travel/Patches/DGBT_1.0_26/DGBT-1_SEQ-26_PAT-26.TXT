@@ -1,0 +1,115 @@
+
+=============================================================================
+Run Date: JUL 13, 2015                     Designation: DGBT*1*26
+Package : DGBT - BENEFICIARY TRAVEL           Priority: Mandatory
+Version : 1        SEQ #26                      Status: Released
+                  Compliance Date: JUL 20, 2015
+=============================================================================
+
+
+Subject: Bene Travel Dashboard Time Optimization
+
+Category: 
+  - Other
+  - Informational
+
+Description:
+============
+
+    This patch addresses 1 issue:
+  
+    1. This is a high priority patch requested by the Beneficiary Travel 
+       business offfice to switch Beneficiary Travel (BT) Dashboard from 
+       distance optimazation to time optimization when calculating milage.
+       This change is due to a Veterans Choice regulation that went into
+       effect 4/24/2015.
+  
+    Associated NSR(s):
+    ------------------
+    N/A
+     
+    Associated Remedy ticket(s):
+    ----------------------------
+    1. INC000001242733 - Bene Travel - Dashboard Other: Time Optimization
+  
+    Participating Test Sites:
+    -------------------------
+    Ann Arbor
+    Togus
+      
+    REMEDY OVERVIEW:
+    ----------------
+    1. INC000001242733 - Bene Travel - Dashboard Other: Time Optimization
+   
+     Problem:
+     --------
+     The BT Dashboard application is currently defaulting to distance
+     optimization displaying mileage for the shortest route.
+  
+     Resolution:
+     -----------
+     Modified dgbtDashboard.csp to default to 'Time' optimization displaying
+     mileage for the quickest route.
+  
+ SOFTWARE DISTRIBUTION:
+ ====================== 
+  The following user manual and XML have been updated to reflect the updates
+  made with this patch.
+  
+  Sites may retrieve the new files directly via FTP. The preferred method is to 
+  FTP the files from:
+   
+         download.vista.domain.ext
+   
+  This transmits the files from the first available FTP server.  
+   
+  Sites may also elect to retrieve the files directly from the
+  ANONYMOUS.SOFTWARE directory from a specific server as follows:
+   
+  Albany:             ftp.domain.ext
+  Hines:              ftp.domain.ext
+  Salt Lake City:     ftp.domain.ext
+   
+  Filename                    Description              Size
+  ========                    ===========              ====   
+  DGBT_1_26.XML               Dashboard XML            40.7 KB
+  dgbt1_0_dash_um.pdf         Dashboard User Manual    1.17 MB
+   
+  NOTE: These files must be transferred using the binary (BIN) file 
+  transfer mode.
+     
+ Installation Instructions:
+ ==========================  
+  Use Cache Studio to import the source code XML. 
+    Note: Cache Studio should be connected to your VistA server in your
+          station's namespace.
+  
+  1.    Click the Tools menu and select Import Local.
+  
+  2.    Browse to the XML source code file retrieved from 
+        download.vista.domain.ext.
+  
+  3.    Click the Open button.
+  
+  4.    Ensure the Add Imported Items to Project checkbox is not selected and
+        that Compile Imported Items is selected.
+  
+  5.    Click the OK button to import the Beneficiary Travel Dashboard .csp
+        project file. 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 15, 2015
+Completed By:                               Date Completed: JUL 10, 2015
+Released By :                               Date Released : JUL 13, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

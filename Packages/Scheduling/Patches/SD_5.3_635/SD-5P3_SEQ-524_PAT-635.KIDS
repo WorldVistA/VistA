@@ -1,0 +1,605 @@
+Released SD*5.3*635 SEQ #524
+Extracted from mail message
+**KIDS**:SD*5.3*635^
+
+**INSTALL NAME**
+SD*5.3*635
+"BLD",9939,0)
+SD*5.3*635^SCHEDULING^0^3150304^y
+"BLD",9939,1,0)
+^^23^23^3150304^^
+"BLD",9939,1,1,0)
+This patch addresses adding three (3) new fields to the HOSPITAL LOCATION 
+"BLD",9939,1,2,0)
+File (#44) to compensate for defects that exist in the current VistA 
+"BLD",9939,1,3,0)
+Scheduling package. This effort was requested by the Veterans Health
+"BLD",9939,1,4,0)
+Administration (VHA) Access and Clinic Administrative Program (ACAP) 
+"BLD",9939,1,5,0)
+in support of the VistA Scheduling Enhancements (VSE) project.
+"BLD",9939,1,6,0)
+ 
+"BLD",9939,1,7,0)
+The purpose of this work is to add VistA Scheduling fields to 
+"BLD",9939,1,8,0)
+ 1) control the clinics that are exposed to Veterans for direct patient 
+"BLD",9939,1,9,0)
+    scheduling of appointments, 
+"BLD",9939,1,10,0)
+ 2) control the clinics that display appointment information to Veterans 
+"BLD",9939,1,11,0)
+    and 
+"BLD",9939,1,12,0)
+ 3) improve the clinic information that is exposed to patients so that it 
+"BLD",9939,1,13,0)
+    is meaningful and relevant to clinical care.
+"BLD",9939,1,14,0)
+ 
+"BLD",9939,1,15,0)
+This patch adds three (3) new fields and modifies two (2) Scheduling 
+"BLD",9939,1,16,0)
+options. 
+"BLD",9939,1,17,0)
+1. Three (3) new fields were added to the HOSPITAL LOCATION File (#44).
+"BLD",9939,1,18,0)
+   - PATIENT FRIENDLY NAME
+"BLD",9939,1,19,0)
+   - DIRECT PATIENT SCHEDULING?
+"BLD",9939,1,20,0)
+   - DISPLAY CLIN APPT TO PATIENTS?
+"BLD",9939,1,21,0)
+ 
+"BLD",9939,1,22,0)
+2. The Set up a Clinic [SDBUILD] and Clinic Profile [SDCLINIC] options 
+"BLD",9939,1,23,0)
+   were modified to display the three new fields.
+"BLD",9939,4,0)
+^9.64PA^44^1
+"BLD",9939,4,44,0)
+44
+"BLD",9939,4,44,2,0)
+^9.641^44^1
+"BLD",9939,4,44,2,44,0)
+HOSPITAL LOCATION  (File-top level)
+"BLD",9939,4,44,2,44,1,0)
+^9.6411^62^3
+"BLD",9939,4,44,2,44,1,60,0)
+PATIENT FRIENDLY NAME
+"BLD",9939,4,44,2,44,1,61,0)
+DIRECT PATIENT SCHEDULING?
+"BLD",9939,4,44,2,44,1,62,0)
+DISPLAY CLIN APPT TO PATIENTS?
+"BLD",9939,4,44,222)
+y^n^p^^^^n^^n
+"BLD",9939,4,44,224)
+
+"BLD",9939,4,"APDD",44,44)
+
+"BLD",9939,4,"APDD",44,44,60)
+
+"BLD",9939,4,"APDD",44,44,61)
+
+"BLD",9939,4,"APDD",44,44,62)
+
+"BLD",9939,4,"B",44,44)
+
+"BLD",9939,6.3)
+3
+"BLD",9939,"ABPKG")
+n
+"BLD",9939,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9939,"KRN",.4,0)
+.4
+"BLD",9939,"KRN",.401,0)
+.401
+"BLD",9939,"KRN",.402,0)
+.402
+"BLD",9939,"KRN",.402,"NM",0)
+^9.68A^1^1
+"BLD",9939,"KRN",.402,"NM",1,0)
+SDB    FILE #44^44^0
+"BLD",9939,"KRN",.402,"NM","B","SDB    FILE #44",1)
+
+"BLD",9939,"KRN",.403,0)
+.403
+"BLD",9939,"KRN",.5,0)
+.5
+"BLD",9939,"KRN",.84,0)
+.84
+"BLD",9939,"KRN",3.6,0)
+3.6
+"BLD",9939,"KRN",3.8,0)
+3.8
+"BLD",9939,"KRN",9.2,0)
+9.2
+"BLD",9939,"KRN",9.8,0)
+9.8
+"BLD",9939,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",9939,"KRN",9.8,"NM",1,0)
+SDCP^^0^B26039984
+"BLD",9939,"KRN",9.8,"NM","B","SDCP",1)
+
+"BLD",9939,"KRN",19,0)
+19
+"BLD",9939,"KRN",19.1,0)
+19.1
+"BLD",9939,"KRN",101,0)
+101
+"BLD",9939,"KRN",409.61,0)
+409.61
+"BLD",9939,"KRN",771,0)
+771
+"BLD",9939,"KRN",779.2,0)
+779.2
+"BLD",9939,"KRN",870,0)
+870
+"BLD",9939,"KRN",8989.51,0)
+8989.51
+"BLD",9939,"KRN",8989.52,0)
+8989.52
+"BLD",9939,"KRN",8994,0)
+8994
+"BLD",9939,"KRN","B",.4,.4)
+
+"BLD",9939,"KRN","B",.401,.401)
+
+"BLD",9939,"KRN","B",.402,.402)
+
+"BLD",9939,"KRN","B",.403,.403)
+
+"BLD",9939,"KRN","B",.5,.5)
+
+"BLD",9939,"KRN","B",.84,.84)
+
+"BLD",9939,"KRN","B",3.6,3.6)
+
+"BLD",9939,"KRN","B",3.8,3.8)
+
+"BLD",9939,"KRN","B",9.2,9.2)
+
+"BLD",9939,"KRN","B",9.8,9.8)
+
+"BLD",9939,"KRN","B",19,19)
+
+"BLD",9939,"KRN","B",19.1,19.1)
+
+"BLD",9939,"KRN","B",101,101)
+
+"BLD",9939,"KRN","B",409.61,409.61)
+
+"BLD",9939,"KRN","B",771,771)
+
+"BLD",9939,"KRN","B",779.2,779.2)
+
+"BLD",9939,"KRN","B",870,870)
+
+"BLD",9939,"KRN","B",8989.51,8989.51)
+
+"BLD",9939,"KRN","B",8989.52,8989.52)
+
+"BLD",9939,"KRN","B",8994,8994)
+
+"BLD",9939,"QDEF")
+^^^^NO^^^^NO^^YES
+"BLD",9939,"QUES",0)
+^9.62^^
+"BLD",9939,"REQB",0)
+^9.611^1^1
+"BLD",9939,"REQB",1,0)
+SD*5.3*622^1
+"BLD",9939,"REQB","B","SD*5.3*622",1)
+
+"FIA",44)
+HOSPITAL LOCATION
+"FIA",44,0)
+^SC(
+"FIA",44,0,0)
+44I
+"FIA",44,0,1)
+y^n^p^^^^n^^n
+"FIA",44,0,10)
+
+"FIA",44,0,11)
+
+"FIA",44,0,"RLRO")
+
+"FIA",44,0,"VR")
+5.3^SD
+"FIA",44,44)
+1
+"FIA",44,44,60)
+
+"FIA",44,44,61)
+
+"FIA",44,44,62)
+
+"KRN",.402,67,-1)
+0^1
+"KRN",.402,67,0)
+SDB^3150220.1326^^44^^^3150220
+"KRN",.402,67,"%D",0)
+^^1^1^2970819^
+"KRN",.402,67,"%D",1,0)
+ 
+"KRN",.402,67,"DIAB",1,1,44.03,0)
+ALL
+"KRN",.402,67,"DIAB",1,1,44.04,0)
+ALL
+"KRN",.402,67,"DIAB",5,0,44,0)
+61;"ALLOW DIRECT PATIENT SCHEDULING?"
+"KRN",.402,67,"DR",1,44)
+.01;1;60;2504//Y;61ALLOW DIRECT PATIENT SCHEDULING?~;62;9;2502;S:X'["Y" Y="@05";2502.5;@05;S:$S('$D(^DG(43,1,"GL")):1,$D(^DG(43,1,"GL"))&('$P(^DG(43,1,"GL"),"^",2)):1,1:0) Y="@10";
+"KRN",.402,67,"DR",1,44,1)
+3.5//^S X=+$O(^DG(40.8,0)),X=$S($D(^(X,0)):$P(^(0),"^"),1:"");@10;8;2507//REGULAR;2802;99;S:X="" $P(^SC(DA,99.1),"^",1)="",Y="@15";99.1;@15;2000;2000.5//YES;2508;2509;2510;2511;24;2600;2801;2700;30;2001;2002;
+"KRN",.402,67,"DR",1,44,2)
+S:+$O(^SC(DA,"ST",0))>0 Y="@25";1914;@25;2003;2005;1918.5;2503;2500;S:X'="Y" Y="@30";2501;@30;10;1916;1918;1910;1912;I '$D(SDLA) S SDLA=X;1913;S:+$O(^SC(DA,"ST",0))>0 Y="@99";1917//4;@99;
+"KRN",.402,67,"DR",2,44.03)
+.01
+"KRN",.402,67,"DR",2,44.04)
+.01
+"KRN",.402,67,"DR",2,44.1)
+.01;.02;
+"KRN",.402,67,"DR",2,44.11)
+.01;.02;
+"KRN",.402,67,"ROU")
+^SDBT
+"KRN",.402,67,"ROUOLD")
+SDBT
+"MBREQ")
+0
+"ORD",7,.402)
+.402;7;;;EDEOUT^DIFROMSO(.402,DA,"",XPDA);FPRE^DIFROMSI(.402,"",XPDA);EPRE^DIFROMSI(.402,DA,$E("N",$G(XPDNEW)),XPDA,"",OLDA);;EPOST^DIFROMSI(.402,DA,"",XPDA);DEL^DIFROMSK(.402,"",%)
+"ORD",7,.402,0)
+INPUT TEMPLATE
+"PKG",16,-1)
+1^1
+"PKG",16,0)
+SCHEDULING^SD^APPOINTMENTS,PROFILES,LETTERS,AMIS REPORTS
+"PKG",16,20,0)
+^9.402P^^
+"PKG",16,22,0)
+^9.49I^1^1
+"PKG",16,22,1,0)
+5.3^2930813
+"PKG",16,22,1,"PAH",1,0)
+635^3150304
+"PKG",16,22,1,"PAH",1,1,0)
+^^23^23^3150304
+"PKG",16,22,1,"PAH",1,1,1,0)
+This patch addresses adding three (3) new fields to the HOSPITAL LOCATION 
+"PKG",16,22,1,"PAH",1,1,2,0)
+File (#44) to compensate for defects that exist in the current VistA 
+"PKG",16,22,1,"PAH",1,1,3,0)
+Scheduling package. This effort was requested by the Veterans Health
+"PKG",16,22,1,"PAH",1,1,4,0)
+Administration (VHA) Access and Clinic Administrative Program (ACAP) 
+"PKG",16,22,1,"PAH",1,1,5,0)
+in support of the VistA Scheduling Enhancements (VSE) project.
+"PKG",16,22,1,"PAH",1,1,6,0)
+ 
+"PKG",16,22,1,"PAH",1,1,7,0)
+The purpose of this work is to add VistA Scheduling fields to 
+"PKG",16,22,1,"PAH",1,1,8,0)
+ 1) control the clinics that are exposed to Veterans for direct patient 
+"PKG",16,22,1,"PAH",1,1,9,0)
+    scheduling of appointments, 
+"PKG",16,22,1,"PAH",1,1,10,0)
+ 2) control the clinics that display appointment information to Veterans 
+"PKG",16,22,1,"PAH",1,1,11,0)
+    and 
+"PKG",16,22,1,"PAH",1,1,12,0)
+ 3) improve the clinic information that is exposed to patients so that it 
+"PKG",16,22,1,"PAH",1,1,13,0)
+    is meaningful and relevant to clinical care.
+"PKG",16,22,1,"PAH",1,1,14,0)
+ 
+"PKG",16,22,1,"PAH",1,1,15,0)
+This patch adds three (3) new fields and modifies two (2) Scheduling 
+"PKG",16,22,1,"PAH",1,1,16,0)
+options. 
+"PKG",16,22,1,"PAH",1,1,17,0)
+1. Three (3) new fields were added to the HOSPITAL LOCATION File (#44).
+"PKG",16,22,1,"PAH",1,1,18,0)
+   - PATIENT FRIENDLY NAME
+"PKG",16,22,1,"PAH",1,1,19,0)
+   - DIRECT PATIENT SCHEDULING?
+"PKG",16,22,1,"PAH",1,1,20,0)
+   - DISPLAY CLIN APPT TO PATIENTS?
+"PKG",16,22,1,"PAH",1,1,21,0)
+ 
+"PKG",16,22,1,"PAH",1,1,22,0)
+2. The Set up a Clinic [SDBUILD] and Clinic Profile [SDCLINIC] options 
+"PKG",16,22,1,"PAH",1,1,23,0)
+   were modified to display the three new fields.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","SDCP")
+0^1^B26039984^B22827962
+"RTN","SDCP",1,0)
+SDCP ;BSN/GRR - CLINIC LIST ;15 MAR 1999  4:10 PM
+"RTN","SDCP",2,0)
+ ;;5.3;Scheduling;**140,171,187,354,622,635**;Aug 13, 1993;Build 3
+"RTN","SDCP",3,0)
+ D ASK2^SDDIV G:Y<0 END S VAUTNI=1 D CLINIC^VAUTOMA G:Y<0 END
+"RTN","SDCP",4,0)
+QUE N ZTSAVE F Y="VAUTD","VAUTD(","VAUTC","VAUTC(" S ZTSAVE(Y)=""
+"RTN","SDCP",5,0)
+ D EN^XUTMDEVQ("START^SDCP","Clinic Profile",.ZTSAVE) Q
+"RTN","SDCP",6,0)
+ ;
+"RTN","SDCP",7,0)
+START ;Print report
+"RTN","SDCP",8,0)
+ ; SD*5.3*622 - SDPRTTOF helps prevent double printing of Header
+"RTN","SDCP",9,0)
+ N SDPRTTOF S SDPRTTOF=1
+"RTN","SDCP",10,0)
+ S END=0 D:'$D(DT) DT^SDUTL
+"RTN","SDCP",11,0)
+ S Y=DT D DTS^SDUTL S PDATE=Y,SCN=0 D TOF G:'VAUTC SOME
+"RTN","SDCP",12,0)
+ F  S SCN=$O(^SC("B",SCN)) Q:SCN=""!(END)  S SC=$O(^SC("B",SCN,0)) D:$$CHECK() SET0,SETSL,PRT
+"RTN","SDCP",13,0)
+ G END
+"RTN","SDCP",14,0)
+ ;
+"RTN","SDCP",15,0)
+SOME F  S SCN=$O(VAUTC(SCN)) Q:SCN=""!(END)  S SC=+VAUTC(SCN) D:$$CHECK() SET0,SETSL,PRT
+"RTN","SDCP",16,0)
+ G END
+"RTN","SDCP",17,0)
+ ;
+"RTN","SDCP",18,0)
+END W ! I $E(IOST)="C",'$G(END,1) N DIR S DIR(0)="E" D ^DIR
+"RTN","SDCP",19,0)
+ K ABBR,ALV,C,DAYS,DIC,DIPH,DOW,END,HCDB,I,J,L,LOC,LOP,M,NAME,ODM,PC,PDATE,POP,SC,SCSC,SDSC,SDMX,SDNO,SDNO,SDC,SDCR,SCSC,SCN,SDIN,SDPR,SDRE,STCD,STDAT,X,Y,SD,SDCNT,VAUTC,VAUTD,VAUTNI,STRING,SDPTI Q
+"RTN","SDCP",20,0)
+ ;
+"RTN","SDCP",21,0)
+SET0 S STRING=^SC(SC,0)
+"RTN","SDCP",22,0)
+ S NAME=$P(STRING,U,1),ABBR=$P(STRING,U,2),LOC=$P(STRING,U,11),(STCD,SDSC)=$P(STRING,U,7),SDCR=$P(STRING,U,18),SDCNT=$P(STRING,U,17)
+"RTN","SDCP",23,0)
+ S:$D(^SC(SC,"SDP")) SDMX=$P(^SC(SC,"SDP"),U,2) S SDPTI=$G(^SC(SC,"PA")) Q
+"RTN","SDCP",24,0)
+ ;
+"RTN","SDCP",25,0)
+SETSL S (LOP,HCDB,ALV,PC,ODM,DIPH,STDAT,STRING)="",STCD=$S(STCD="":" ",1:STCD),STCD=$S('$D(^DIC(40.7,+STCD,0)):"",1:$P(^(0),U,2)),SDSC=$S($D(^DIC(40.7,+SDSC,0)):'$P(^(0),U,3)!($P(^(0),U,3)>DT),1:0)
+"RTN","SDCP",26,0)
+ S SDPR=$S('$D(^SC(SC,"SDPROT")):"NO",'$L($P(^("SDPROT"),U)):"NO",1:"YES")
+"RTN","SDCP",27,0)
+ S SDCR=$S(SDCR="":" ",1:SDCR),SDCR=$S('$D(^DIC(40.7,+SDCR,0)):"",1:$P(^(0),U,2))
+"RTN","SDCP",28,0)
+ I $D(^SC(SC,"SL")) S STRING=^("SL"),LOP=$P(STRING,U,1),HCDB=$P(STRING,U,3),ALV=$S($P(STRING,U,2)["V":"YES",1:"NO")
+"RTN","SDCP",29,0)
+ I  S PC=$S($P(STRING,U,5)]"":$P(^SC($P(STRING,U,5),0),U,1),1:""),ODM=$P(STRING,U,7),DIPH=$S($P(STRING,U,6)=4:15,$P(STRING,U,6)=3:20,$P(STRING,U,6)=1:60,$P(STRING,U,6)=2:30,1:10)
+"RTN","SDCP",30,0)
+ S STDAT=$O(^SC(SC,"T",0)) S:STDAT<1 STDAT="UNKNOWN"
+"RTN","SDCP",31,0)
+ K DOW F L=0:1:6 F M=DT-.1:0 S M=$O(^SC(SC,"T"_L,M)) Q:M=""  I $D(^(M,1)) S:^(1)]"" DOW(L+1)="" Q:^(1)]""  K DOW(L+1)
+"RTN","SDCP",32,0)
+ F L=DT-.1:0 S L=$O(^SC(SC,"T",L)) Q:L=""  S X=L D DW^%DTC I '$D(DOW(Y+1)),$D(^SC(SC,"OST",L,1)),^(1)["[" S DOW(Y+1)=""
+"RTN","SDCP",33,0)
+ S DAYS="" F M=1:1:7 I $D(DOW(M)) S DAYS=DAYS_$S(DAYS'="":",",1:"")_$P("SU^MO^TU^WE^TH^FR^SA",U,M)
+"RTN","SDCP",34,0)
+ Q
+"RTN","SDCP",35,0)
+ ;
+"RTN","SDCP",36,0)
+L(SDT,SDCOL,SDVAL) ;Print field label
+"RTN","SDCP",37,0)
+ ;Input: SDT=field label
+"RTN","SDCP",38,0)
+ ;Input: SDCOL=column to line up to
+"RTN","SDCP",39,0)
+ ;Input: SDVAL=field value
+"RTN","SDCP",40,0)
+ W ?(SDCOL-$L(SDT)-2),SDT,": ",SDVAL Q
+"RTN","SDCP",41,0)
+ ;
+"RTN","SDCP",42,0)
+PRT I $Y+13>IOSL D:IOSL<25 SEEND:$E(IOST,1,2)="C-" Q:END  D TOF
+"RTN","SDCP",43,0)
+ S SDNO="" W ! D L("Clinic",19,NAME),L("Abbr.",62,ABBR)
+"RTN","SDCP",44,0)
+ S SDPRTTOF=1   ; SD*5.3*622 - SDPRTTOF helps prevent double Headers
+"RTN","SDCP",45,0)
+ W ! D L("Location",19,$E(LOC,1,30)),L("Telephone",62,$S($D(^SC(SC,99)):^SC(SC,99),1:""))
+"RTN","SDCP",46,0)
+ ; SD*5.3*622 - add new field telephone extension
+"RTN","SDCP",47,0)
+ W ! D L("Telephone Ext.",19,$S($D(^SC(SC,99.1)):^SC(SC,99.1),1:""))
+"RTN","SDCP",48,0)
+ ; SD*5.3*635 - add new fields #60-62
+"RTN","SDCP",49,0)
+ N DIWL,DIWF K ^UTILITY($J,"W") S DIWL=1,DIWF="C55" S X=$P(SDPTI,U) D ^DIWP
+"RTN","SDCP",50,0)
+ W ! D L("Pat Friendly Name",19,$G(^UTILITY($J,"W",1,1,0)))
+"RTN","SDCP",51,0)
+ I $G(^UTILITY($J,"W",1,2,0))'="" W ! D L(" ",19,$G(^UTILITY($J,"W",1,2,0)))
+"RTN","SDCP",52,0)
+ K ^UTILITY($J,"W") W ! D L("Direct Pat Schlng",19,$S($P(SDPTI,U,2)="N":"NO",$P(SDPTI,U,2)="Y":"YES",1:""))
+"RTN","SDCP",53,0)
+ D L("Display Clin Appt To Patients",62,$S($P(SDPTI,U,3)="N":"NO",$P(SDPTI,U,3)="Y":"YES",1:""))
+"RTN","SDCP",54,0)
+ W ! D L("Days clinic meets",19,DAYS) I 'SDNO S Y=STDAT D:STDAT'="UNKNOWN" DTS^SDUTL
+"RTN","SDCP",55,0)
+ D L("Start date",62,$S(STDAT="UNKNOWN":"UNKNOWN",1:Y))
+"RTN","SDCP",56,0)
+ W ! D L("Increments",19,DIPH_" Minutes"),L("Hour display begins",62,$S(HCDB="":"8 AM",HCDB<13:HCDB_" AM",1:HCDB-12_" PM"))
+"RTN","SDCP",57,0)
+ W ! D L("Appt. length",19,LOP_" Minutes"),L("Variable length appts.",62,ALV)
+"RTN","SDCP",58,0)
+ W ! D L("Stop Code",19,STCD),L("Maximum overbooks per day",62,ODM)
+"RTN","SDCP",59,0)
+ W ! D L("Credit Stop Code",19,SDCR),L("Non-count clinic",62,$S(SDCNT="Y":"YES",1:"NO"))
+"RTN","SDCP",60,0)
+ W ! D L("Prohibit access",19,SDPR),L("Maximum days for future booking",62,$G(SDMX))
+"RTN","SDCP",61,0)
+ I PC]"" W ! D L("Principal clinic",19,PC)
+"RTN","SDCP",62,0)
+ I $D(^SC(SC,"I")) S SDRE=+$P(^("I"),U,2),SDIN=+^("I") I SDRE'=SDIN D:SDIN'>DT&(SDRE=0!(SDRE>DT)) INACT
+"RTN","SDCP",63,0)
+ I 'SDNO,$D(SDIN),SDIN>DT,SDRE'=SDIN W !!,?4,"**** Clinic will be inactive ",$S(SDRE:"from ",1:"as of ") S Y=SDIN D DTS^SDUTL W Y S Y=SDRE D:Y DTS^SDUTL W $S(SDRE:" to "_Y,1:"")," ****" K SDIN,SDRE
+"RTN","SDCP",64,0)
+ I 'SDSC W !!,?4,"*** INVALID OR INACTIVE STOP CODE ASSIGNED TO THIS CLINIC ***"
+"RTN","SDCP",65,0)
+ Q
+"RTN","SDCP",66,0)
+ ;
+"RTN","SDCP",67,0)
+INACT S Y=SDIN D DTS^SDUTL W !!,?4,"**** Clinic is inactive ",$S(SDRE:"from ",1:"as of "),Y S Y=SDRE D:Y DTS^SDUTL W $S(SDRE:" to "_Y,1:"")," ****" K SDIN,SDRE S SDNO=1
+"RTN","SDCP",68,0)
+ Q
+"RTN","SDCP",69,0)
+ ;
+"RTN","SDCP",70,0)
+SEEND W ! N DIR S DIR(0)="E" D ^DIR S END=Y'=1 Q:END
+"RTN","SDCP",71,0)
+ ; SD*5.3*622 - SDPRTTOF helps prevent double printing of Header
+"RTN","SDCP",72,0)
+TOF I SDPRTTOF W @IOF,?22,"CLINIC PROFILES AS OF: ",PDATE,! S SDPRTTOF=0 Q
+"RTN","SDCP",73,0)
+ ;
+"RTN","SDCP",74,0)
+CHECK() ;Check location for inclusion
+"RTN","SDCP",75,0)
+ I $D(^SC(SC,0)),($P(^(0),U,3)="C"),$S(VAUTD:1,$D(VAUTD(+$P(^(0),U,15))):1,'$P(^(0),U,15)&($D(VAUTD($O(^DG(40.8,0))))):1,1:0) Q 1
+"RTN","SDCP",76,0)
+ Q 0
+"RTN","SDCP",77,0)
+ ;
+"RTN","SDCP",78,0)
+ ;
+"RTN","SDCP",79,0)
+PAUSE(LINE) ;
+"RTN","SDCP",80,0)
+ N Y S Y=1
+"RTN","SDCP",81,0)
+ I $E(IOST,1,2)="C-",(LINE+5)>IOSL D PAUSE^VALM1 S LINE=0
+"RTN","SDCP",82,0)
+ S LINE=LINE+1
+"RTN","SDCP",83,0)
+ Q Y
+"VER")
+8.0^22.0
+"^DD",44,44,60,0)
+PATIENT FRIENDLY NAME^F^^PA;1^K:$L(X)>80!($L(X)<3) X
+"^DD",44,44,60,3)
+Enter a clinic description (3-80 chars) that's meaningful to patients.
+"^DD",44,44,60,21,0)
+^^3^3^3150217^
+"^DD",44,44,60,21,1,0)
+Populate this field with a description of the clinic that will be
+"^DD",44,44,60,21,2,0)
+meaningful to patients. Do not enter any sensitive patient information 
+"^DD",44,44,60,21,3,0)
+in this field such as HIV CLINIC as an example.
+"^DD",44,44,60,"DT")
+3150211
+"^DD",44,44,61,0)
+DIRECT PATIENT SCHEDULING?^RS^Y:YES;N:NO;^PA;2^Q
+"^DD",44,44,61,3)
+Enter 'Yes' if patients can self-schedule into this clinic.
+"^DD",44,44,61,21,0)
+^.001^3^3^3150211^^^^
+"^DD",44,44,61,21,1,0)
+This field will determine if patients can self-schedule into this 
+"^DD",44,44,61,21,2,0)
+clinic. A "Yes" in this field will enable patients to directly schedule 
+"^DD",44,44,61,21,3,0)
+appointments into this clinic.
+"^DD",44,44,61,"DT")
+3150211
+"^DD",44,44,62,0)
+DISPLAY CLIN APPT TO PATIENTS?^RS^Y:YES;N:NO;^PA;3^Q
+"^DD",44,44,62,3)
+Enter 'Yes' if clinic appointment will be displayed to patients.
+"^DD",44,44,62,21,0)
+^.001^3^3^3150211^^
+"^DD",44,44,62,21,1,0)
+This field will determine if the clinic appointment information will be 
+"^DD",44,44,62,21,2,0)
+displayed to patients. A "Yes" in this field will enable patients to 
+"^DD",44,44,62,21,3,0)
+see their appointments in this clinic.
+"^DD",44,44,62,"DT")
+3150211
+"BLD",9939,6)
+^524
+**END**
+**END**
+

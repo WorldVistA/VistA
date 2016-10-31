@@ -1,0 +1,171 @@
+
+=============================================================================
+Run Date: APR 06, 2016                     Designation: MD*1*38
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #30                      Status: Released
+                  Compliance Date: JUN 10, 2016
+=============================================================================
+
+
+Subject: NEW PROTOCOL FOR eHMP PROJECT
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch contains updates to CLINICAL PROCEDURES to support 
+ the Health Management Platform (eHMP).  
+  
+ This patch ensures that any changes made to Clinical Procedures 
+ in VistA can be shared with eHMP subscribers. The routine MDCPROTD is
+ added to call the eHMP package and the post processor routine MDPOST38
+ puts in place the "ASTATUS" cross references in the OBS file (#704.117)
+ which has a call to the MDCPROTD routine.
+  
+ ****NOTE****
+ This patch is part of a pre-requisite, multi-build host file which 
+ contains all the patches needed prior to installation of the HMP 2.0 
+ package.  This patch name is HMP PREREQUISITE BUNDLE 2.0.  The 
+ multi-build contains the following patches:
+  
+ GMRC*3.0*80
+ MD*1.0*38
+ OR*3.0*390
+ PSB*3.0*79
+ TIU*1.0*106
+ TIU*1.0*298
+ USR*1.0*37
+  
+ ***NOTE***
+ This patch will be installed during a PHASE IMPLEMENTATION.
+  
+ To see the current status and target dates for Sites/VISN/Regions please 
+ refer to the following site:
+  
+ http://vaww.oed.portal.domain.ext/pm/iehr/vista_evolution/ehmpdeployment/eHMP%
+ 20v12/Forms/All%20Items.aspx?RootFolder=/pm/iehr/vista_evolution/ehmpdeplo
+ yment/eHMP%20v12/Resources/Waves%20and%20Timelines
+  
+ Patch Components:
+ -----------------
+ Patch MD*1.0*38 is part of a multi-build:  HMP PREREQUISITE BUNDLE 2.0
+ See patch HMP 2.0 Installation Guide for the installation instructions.
+  
+ Files and Fields Associated:
+ ----------------------------
+ There are no new or modified files or fields in this patch.
+  
+ Forms Associated:
+ -----------------
+ There are no new or modified forms in this patch.
+  
+ Mail Groups Associated:
+ -----------------------
+ There are no new or modified mail groups in this patch.
+  
+ Options Associated:
+ -------------------
+ There are no new or modified options in this patch.
+  
+ Protocols Associated:
+ ---------------------
+  
+ ****NOTE****
+ The following protocol will be modified with the installation of the HMP 
+ 2.0 KIDs build to include the new HMP protocol.
+  
+ Protocol Name                           New/Modified/Deleted
+ -------------                           -------------------- 
+ MDC OBSERVATION UPDATE                      New
+  
+   NAME: MDC OBSERVATION UPDATE
+   ITEM TEXT: Observation update notification
+   TYPE: extended action                 CREATOR: XX,XXX
+   PACKAGE: CLINICAL PROCEDURES
+   DESCRIPTION: This protocol will be triggered when an observation in the
+                OBS file enters or leaves VERIFIED status.
+   
+   The local array "MDCOBS" will be populated as follows: 
+   
+   MDCOBS("OBS_ID","E")="{35627230-5C66-49E3-AD93-97C269CB257D}" 
+   MDCOBS("OBS_ID","I")="{35627230-5C66-49E3-AD93-97C269CB257D}" 
+   MDCOBS("OLD_STATUS","E")="Verified" MDCOBS("OLD_STATUS","I")=1 
+   MDCOBS("PATIENT_ID","E")="SIMPSON,BARTHOLOMUE" 
+   MDCOBS("PATIENT_ID","I")=2 
+   MDCOBS("STATUS","E")="Unverified" MDCOBS("STATUS","I")=0 
+   
+   In case of an error, MDCOBS("ERROR") will be populated with the error 
+   number and error text from FileMan.
+   ITEM: HMP MDC EVENT
+   ENTRY ACTION: D EN^MDCPROTD       
+  
+ Security Keys Associated:
+ -------------------------
+ There are no new or modified security keys in this patch.
+  
+ Templates Associated:
+ ---------------------
+ There are no new or modified templates in this patch.
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR #20150408 - VistA Evolution Enterprise Health Management Platform 
+ (eHMP)
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ There are no PSIs associated with this patch.
+  
+ Remedy Tickets(s) & Overview:
+ -----------------------------
+ There are no Remedy Tickets associated with this patch.
+  
+ Test Sites:
+ -----------
+ Hampton, VA
+ Portland, OR
+ San Diego, CA
+ Loma Linda, CA
+ San Antonio, TX
+  
+ Patch Installation:
+ -------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ There are no options or protocols that need to be placed out of order 
+ during the installation of the patch.
+  
+ Patch MD*1.0*38 is part of a multi-build:  HMP PREREQUISITE BUNDLE 2.0
+ See patch HMP 2.0 Installation Guide for the installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Sep 25, 2015;Build 290
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDCPROTD
+    Before:       n/a   After:  B6754694  **38**
+Routine Name: MDPOST38
+    Before:       n/a   After:  B2283064  **38**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 19, 2013
+Completed By:                               Date Completed: MAR 30, 2016
+Released By :                               Date Released : APR 06, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

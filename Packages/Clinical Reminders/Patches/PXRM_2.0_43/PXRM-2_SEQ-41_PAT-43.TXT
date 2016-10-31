@@ -1,0 +1,199 @@
+
+=============================================================================
+Run Date: JUL 09, 2015                     Designation: PXRM*2*43
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #41                      Status: Released
+                  Compliance Date: AUG 09, 2015
+=============================================================================
+
+
+Subject: VA-MST (Military Sexual Trauma)
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch releases one updated National VHA reminder to the field, 
+ without any changes to routines, data dictionaries, or other package 
+ functions - "content" only.
+  
+ REVISIONS
+ ----------
+ The revised MST Clinical Reminder aims to
+   (a)  Standardize the MST screening and referral process nationwide
+   (b)  Facilitate Veteran comfort and disclosure at the time of 
+        screening, or at a later date when services are desired
+   (c)  Provide multiple opportunities for Veteran and provider education 
+        regarding the definition of MST and the availability of free
+        MST-related care
+   (d)  Identify Veterans who request MST-related care
+   (e)  Rescreen Veterans who are re-deployed or otherwise returned to 
+        military service and did not previously have an MST experience
+  
+ DIALOGUE
+ --------
+ The following dialogue and functionality changes are made to the existing 
+ national MST Clinical Reminder (MST CR) (VA-MST SCREENING):
+  
+   1.  Addition of an introduction: The introduction informs Veterans 
+       that screening is conducted in order to offer free care for all 
+       MST-related services.  The introduction also indicates that Veterans
+       may decline the MST screen or simply respond with 'yes' or 'no'.  
+       Veterans who decline the initial screen are re-screened in one year.
+   2.  Revisions to MST screening questions: Minor changes to the 
+       screening language of both questions to increase behavioral
+       specificity and to provide examples of experiences such as coercion
+       or inability to consent.  Addition of the adjectives 'repeated' and
+       'threatening' to the first screening question to better reflect the
+       language in Public Law 106-117, Section 115.  Revision of the
+       abbreviation 'i.e.' in the first screening question to the more
+       accurate abbreviation 'e.g.'
+   3.  Addition of a mental health care referral question following a 
+       positive response to the screening questions to assess a Veteran's
+       desire for mental health services.
+  
+ FUNCTIONALITY:
+ --------------
+   1.  Addition of a link to a printable MST Factsheet for Veterans.
+   2.  Addition of text that will auto-populate the progress note 
+       associated with the MST CR.  Auto-populated text provides further 
+       information for the provider about MST and free MST-related care.
+   3.  Revision of the reminder definition to rescreen upon entry of a 
+       new DD214 among Veterans who do not already have a positive screen,
+       in recognition that Veterans who are re-deployed or otherwise
+       returned to military service are at risk for new MST experiences.
+  
+ Associated Remedy Tickets:
+ ==========================
+  1.  INC000000778340 - VA-MST Screening Dialog
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Site(s):
+ ===========================
+  Northport VAMC
+  Palo Alto HCS
+  Puget Sound HCS
+  
+  
+ REMEDY OVERVIEW:
+ =================
+ 1.  INC000000778340 - VA-MST Screening Dialog
+  
+  
+ Problem:
+ ------------
+ The VA -MST Screening Reminder Dialog should be initiated and used for 
+ screening Veterans for MST related care.
+  
+ Resolution:
+ ---------------
+ This patch, PXRM*2*43, contains two routines, PXRMP43E and PXRMP43I.  
+ They are init tasks that add new entries to the REMINDER EXCHANGE 
+ (#811.8) file and the contents of these entries are installed during the 
+ post-init.  These routines can be deleted after the install.  
+  
+ Build Components:
+ =================
+ N/A
+  
+ Data Dictionary:
+ ================
+ N/A
+  
+ Software & Documentation Retrieval Instructions:
+ ================================================
+ This patch is being distributed as a host file.  The name of the host 
+ file is PXRM_2_0_43.KID.  This file should be downloaded in ASCII format.
+  
+ The preferred method for obtaining these files is to use File Transfer 
+ Protocol (FTP) to download them from:
+  
+     ftp://download.vista.domain.ext/.
+  
+  
+ This transmits the files from the first available FTP server.  Sites may 
+ also elect to retrieve the files directly from a specific server as 
+ follows:
+  
+     Albany              ftp.domain.ext
+     Hines               ftp.domain.ext
+     Salt Lake City      ftp.domain.ext
+  
+ The Install and Setup Guide is also available on the above servers.  It 
+ is available as .pdf format.  This file should be downloaded in BINARY 
+ format.  
+  
+     File Name:            Description:             Protocol:
+     ==========            ============             =========
+     PXRM_2_0_43_IG.PDF    PXRM*2.0*43 Install      BINARY
+                           and Setup Guide
+     PXRM_2_0_43.KID       PXRM*2.0*43 Host File    ASCII
+  
+  
+ Documentation can also be found on the VistA Documentation Library (VDL) 
+ at:  http://www.domain.ext/vdl/
+  
+ Installation:
+ =============
+ This patch can be loaded with users on the system.  Installation will 
+ take ten to fifteen minutes.  Refer to the Install and Setup Guide, 
+ PXRM_2_0_43_IG.PDF, for complete details.
+  
+  
+ 1.  Use the "Load a Distribution" option on the KIDS installation menu.  
+     When prompted to enter a host file type in PXRM_2_0_43.KID
+  
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     options, as desired:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify checksums in Transport Global
+         Backup a Transport Global
+  
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use PXRM*2.0*43
+  
+ 4.  When prompted "Want KIDS to INHIBIT LOGONs during the install?  
+     NO//," respond 'NO'.
+  
+ 5.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO// respond 'NO'.
+  
+ 6.  After successful installation, the following init routines may be 
+     deleted
+  
+     PXRMP43E
+     PXRMP43I
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 211
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMP43E
+    Before:       n/a   After:   B706290  **43**
+Routine Name: PXRMP43I
+    Before:       n/a   After:  B2485163  **43**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 14, 2014
+Completed By:                               Date Completed: JUL 09, 2015
+Released By :                               Date Released : JUL 09, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,195 @@
+$TXT Created by                     MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 03/05/15 at 10:18
+=============================================================================
+Run Date: JUL 23, 2015                     Designation: PSJ*5*255
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #269                      Status: Released
+                  Compliance Date: AUG 23, 2015
+=============================================================================
+
+Associated patches: (v)PSJ*5*257   <<= must be installed BEFORE `PSJ*5*255'
+                    (v)PSJ*5*275   <<= must be installed BEFORE `PSJ*5*255'
+
+Subject: ALPHA SORT IN CPRS AND RENEWAL ORDER ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch makes 3 corrections to the Inpatient Medications package:
+  
+ 1. In the Computerized Patient Record System (CPRS) Meds tab, 
+    the alphabetical sorting is not working correctly.
+  
+ 2. After renewing and editing a complex order, the original order still 
+    shows as active.
+  
+ 3. A complex order renewed in CPRS will record the provider as the
+    provider who originally placed the order, rather than the provider who
+    renewed it.
+  
+ Associated Remedy tickets:
+ ==========================
+  
+ 1. INC000000295440 - Drug (Alphabetic) Sort Needs Refinement
+   
+ 2. INC000000363537 - Duplicates active orders display in IOE view
+    INC000000307460(d) - Duplicate active orders in IOE
+    INC000000613183(d) - Duplicate meds showing on profile
+    INC000001082225(d) - Edit Schedule creates duplicate order
+  
+ 3. INC000000457954 - Renewed order reverts to original provider
+                                       
+ Associated PSPO(s):
+ ===================
+ N/A
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ West Haven VAMC
+ Milwaukee VAMC
+ VA Maryland HCS (Baltimore)
+  
+ Remedy Overview:
+ ================
+ 1. INC000000295440 - Drug (Alphabetic) Sort Needs Refinement
+  
+ Problem:
+ --------
+ This patch corrects two errors on the CPRS Meds tab when using the View 
+ option "Sort by Drug (alphabetically), status active, status recent 
+ expired" and the View option "Sort Status Group/Status/Location/Drug 
+ Name".
+  
+ 1.1 
+ IV orders with no additive are not displaying in proper alphabetical 
+ order on the Meds tab.  
+ 1.2
+ Orders whose orderable items begin with a lower-case letter appear at the
+ bottom of the list rather than displaying in alphabetical order.
+  
+ Solution:
+ ---------
+ Changed the routines PSJORRN and PSJORRN1 so that the Meds tab now
+ performs the alphabetical sort correctly for these cases.
+   
+ 2. INC000000363537 - Duplicates active orders display in IOE view
+  
+ Problem:
+ -------- 
+ Using the Inpatient Order Entry [PSJ OE] option, a complex order is 
+ renewed, the Schedule Type edited, finished and accepted.  The previous
+ order erroneously remains active and is displayed on the Order
+ Entry screen.
+  
+ Solution:
+ ---------
+ Routine PSGOTR has been modified to kill the old "AU" cross reference 
+ from the previous order that was causing the display issue on the 
+ inpatient order entry screen.
+  
+ 3. INC000000457954 - Renewed order reverts to original provider
+  
+ Problem:
+ --------
+ A complex order which is renewed in CPRS will record the provider as the
+ provider who originally placed the order, rather than the provider who
+ renewed it.
+  
+ Solution:
+ ---------
+ Changed PSGOTR so that renewing a complex order will now cause the name 
+ of the renewing provider to appear as the provider for that order.
+  
+ Installation Instructions:
+ ==========================
+ This patch can be installed with users on the system however, 
+ it is recommended that the install take place during non-peak hours.
+  
+ Install Time - less than 2 minutes. 
+  
+ 1.  Choose the PackMan message containing this patch and invoke the 
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+    2.  Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+    3.  From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter PSJ*5.0*255):
+    
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will
+            not backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option
+            will allow you to view all changes that will be made when
+            this patch is installed.  It compares all components of this
+            patch (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+    
+    4.  Use the Install Package(s) option and select the package
+        PSJ*5.0*255.
+    
+        a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+            install? NO//", answer NO.
+        b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+            Options and Protocols? YES//", answer YES.
+  
+            1) When prompted "Enter options you wish to mark as "Out of 
+               Order":", enter the following option:
+  
+               Inpatient Order Entry [PSJ OE]
+  
+            2) When prompted "Enter protocols you wish to mark as "Out of
+               Order":", just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOTR
+    Before: B19636030   After: B21776310  **110,127,133,129,267,257,255**
+Routine Name: PSJORRN
+    Before: B66656039   After: B66760055  **134,213,225,275,255**
+Routine Name: PSJORRN1
+    Before: B61358484   After: B63215435  **134,213,225,275,255**
+ 
+Routine list of preceding patches: 257, 275
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 27, 2011
+Completed By:                               Date Completed: JUL 17, 2015
+Released By :                               Date Released : JUL 23, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

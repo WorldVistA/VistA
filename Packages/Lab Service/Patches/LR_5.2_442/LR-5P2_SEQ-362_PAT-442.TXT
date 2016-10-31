@@ -1,0 +1,309 @@
+
+=============================================================================
+Run Date: SEP 02, 2015                     Designation: LR*5.2*442
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #362                    Status: Released
+                  Compliance Date: SEP 16, 2015
+=============================================================================
+
+Associated patches: (v)LR*5.2*421  <<= must be installed BEFORE `LR*5.2*442'
+                    (v)LR*5.2*422  <<= must be installed BEFORE `LR*5.2*442'
+                    (v)DG*5.3*884  <<= must be installed BEFORE `LR*5.2*442'
+
+Subject: ICD-10 PTF CHANGES-EMERGING PATHOGENS & ANATOMIC PATHOLOGY
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Informational
+
+Description:
+============
+
+ **************************************************************************
+ *                                                                        *
+ *  IMPORTANT:                                                            *
+ *                                                                        *
+ *   This patch is being released in support of the ICD-10 Patient        *
+ *   Treatment File Modifications project.  Patch DG*5.3*884              *
+ *   (Registration) is being released along with GMTS*2.7*111 (Health     *
+ *   Summary), IB*2.0*522 (Integrated Billing), LR*5.2*442 (Lab Service), *
+ *   ROR*1.5*25 (Clinical Case Registries), and OR*3.0*406 (Order         *
+ *   Entry/Results Reporting) in a multi-package build (host file).       *
+ *                                                                        *
+ *   Because this is a multi-package build, it can only be distributed    *
+ *   as a host file; no builds are included in the patch messages. The    *
+ *   name of the host file is: ICD_10_PTF_MODIFICATIONS.KID; it can be    *
+ *   obtained from one of the anonymous file transfer protocol (ftp)      *
+ *   directories listed in the 'Software & Documentation Retrieval        *
+ *   Instructions' section of this patch.                                 *
+ *                                                                        *
+ *   Detailed information regarding pre-installation items,               *
+ *   post-installation items, and installation instructions can be found  *
+ *   in the Installation Guide: ICD_10_PTF_Modifications_IG.PDF. This     *
+ *   document may be obtained from one of the anonymous file transfer     *
+ *   protocol (ftp) directories listed in the 'Software & Documentation   *
+ *   Retrieval Instructions' section of this patch.                       *
+ *                                                                        *
+ *   It is imperative that these patches be installed no later than the   *
+ *   compliance date.  Your understanding and support is appreciated.     *
+ *                                                                        *
+ **************************************************************************
+  
+ Overview:
+  
+ This patch introduces additional International Classification of Diseases,
+ Tenth Revision (ICD-10) implementation-related modifications into the
+ Veterans Health Information Systems and Technology Architecture (VistA)
+ Laboratory V5.2 package.  The enhancements being made support the existing
+ business processes in the Emerging Pathogens Initiative (EPI) and Anatomic
+ Pathology modules. 
+  
+ Scope:
+  
+ The scope of this effort supports implementation of ICD-10 within the
+ Veterans Health Administration (VHA).  The conversion from ICD-9 to ICD-10
+ requires that all VistA connected applications, back-end processes,
+ databases and the Patient Treatment File (PTF) support twenty-five (25)
+ ICD diagnosis and procedure codes.
+  
+ The Laboratory Emerging Pathogens Initiative (EPI) application allows the 
+ Department of Veterans Affairs (VA) to track certain emerging pathogens 
+ on the national level without the necessity for additional local data 
+ entry.  It is designed to automatically provide data on emerging 
+ pathogens to Veterans Affairs Headquarters (VAHQ) without additional 
+ individual data entry at the site level. Functionality in this 
+ application includes using look up capabilities to add, delete, edit, or 
+ view ICD codes for pathogen set-up parameters. Once parameters have been 
+ decided, an extract automatically searches for specific ICD codes related 
+ to certain emerging pathogens (e.g., Hepatitis, Legionella). The data is 
+ sent to the Austin Information Technology Center (AITC) for initial 
+ processing and coupling with denominator data related to workload. 
+ Veterans Affairs Headquarters (VAHQ) data retrieval and analysis can then 
+ be accomplished.  Plans can be formulated on the national level for 
+ intervention strategies and resource needs. Results of aggregate data can 
+ also be shared with appropriate public health authorities for planning on 
+ the national level for the non-VA and private health care sectors.
+  
+ Functional Overview:
+  
+ With the release of Registration patch DG*5.3*884, the Patient Treatment
+ File (PTF #45) now supports up to 25 ICD diagnosis Codes.  This patch
+ enhances the Laboratory package to utilize a new Application Programmer
+ Interface (API) to obtain PTF related diagnosis codes for reporting.
+  
+ * Patch LR*5.2*442 makes the following changes to the Emerging Pathogens 
+   Initiative (EPI) module:
+   
+   - Data related to specific emerging pathogens is collected and sent to 
+     the Austin Information Technology Center (AITC).  The messages will
+     now have to accommodate up to 25 ICD-10 diagnosis codes associated
+     with a single EPI data record.
+  
+ * Patch LR*5.2*442 makes the following changes to the Anatomic Pathology 
+   (AP) module:
+  
+   - For the tissue review case report modifications will be made to the 
+     retrieving and displaying the up to twenty-five (25) ICD diagnosis, 
+     Present on Admission (POA) indicators, and Procedure and Surgical
+     Codes that can now be stored in the PTF (#45).
+  
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)         Field Name                 New/Modified/Deleted
+ -------------         -------------------        --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name File # New/Modified/Deleted
+ --------- ------ --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name           Type               New/Modified/Deleted
+ -----------           -----------        --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name New/Modified/Deleted
+ ------------- --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name Type File Name (#)      New/Modified/Deleted
+ ------------- ---- ------------------ --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR #20070902 - ICD-10-CM Conversion
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ The following sites participated in testing this software.
+  * Detroit, MI
+  * Madison, WI
+  * Richmond, VA 
+  * West Haven, CT
+  
+  
+ Blood Bank Clearance Statement:
+ -------------------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*442 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*442 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*442 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ Software & Documentation Retrieval Instructions:
+ ------------------------------------------------ 
+ The software for this set of patches is not being distributed through the 
+ National Patch Module. 
+  
+ Patch DG*5.3*884 (Registration) is being released along with GMTS*2.7*111
+ (Health Summary), IB*2.0*522 (Integrated Billing), LR*5.2*442 (Lab
+ Service), ROR*1.5*25 (Clinical Case Registries), and OR*3.0*406
+ (Order Entry/Results Reporting) in a multi-package build (host
+ file).
+  
+ Because this is a multi-package build, it can only be distributed as a
+ host file; no builds are included in the patch messages. The name of the
+ host file is: ICD_10_PTF_MODIFICATIONS.KID; it can be obtained from one of
+ the anonymous file transfer protocol (ftp) directories listed below. 
+  
+ Updated documentation describing the new functionality introduced by this 
+ patch is also available and can be obtained from one of the anonymous ftp
+ directories listed below. 
+  
+ The preferred method is to FTP the files from: 
+  
+  ftp://download.vista.domain.ext/
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Note: 
+  - Please use the 'Binary' transfer method for retrieval of .pdf files
+  - Please use the 'ASCII' transfer method for retrieval of .KID files
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ The software distribution includes these file(s):
+ -------------------------------------------------------------------------
+ ICD_10_PTF_MODIFICATIONS.KID
+  
+  
+ The documentation includes these titles and file names:
+ -------------------------------------------------------------------------
+     Title: ICD-10 PTF Installation Guide (all patches)
+ File Name: ICD_10_PTF_MODIFICATIONS_IG.PDF
+  
+     Title: Laboratory: Anatomic Pathology and Laboratory: Emerging 
+            Pathogens Initiative LR*5.2*442 Release Notes
+ File Name: LR_5_2_442_RN.pdf
+  
+     Title: Laboratory EPI Roll Up Modifications Technical and User Manual 
+ File Name: lab_epi_rollup_mod_tech_user_manual.pdf
+  
+     Title: Laboratory EPI Technical and User Guide 
+ File Name: lab_epi_tech_user_guide.pdf
+  
+     Title: Laboratory Hepatitis C and EPI Technical and User Guide
+ File Name: lab_epi_hepc_tech_user_guide.pdf
+  
+     Title: Laboratory Search/Extract Technical and User Guide
+ File Name: lab_epi_searchextract_tm_ug.pdf
+  
+     Title: Laboratory Anatomic Pathology (AP) Version 5.2 User Guide
+ File Name: Lab_AP_LR_5_2_UG.pdf
+  
+  
+ Patch Installation:
+ ================================================== 
+ Detailed information regarding pre-installation items, post-installation
+ items, and installation instructions can be found in the Installation
+ Guide: ICD_10_PTF_Modifications_IG.PDF. This document may be obtained from
+ one of the anonymous file transfer protocol (ftp) directories listed in
+ the 'Software & Documentation Retrieval Instructions' of this patch
+ description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRAPQAT1
+    Before:  B5116733   After:  B5639030  **201,315,422,442**
+Routine Name: LREPI3
+    Before: B50368609   After: B50657708  **132,175,260,281,320,315,421,442**
+Routine Name: LREPI5
+    Before:  B7519412   After:  B9871956  **281,315,421,442**
+ 
+Routine list of preceding patches: 421, 422
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 30, 2014
+Completed By:                               Date Completed: AUG 28, 2015
+Released By :                               Date Released : SEP 02, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

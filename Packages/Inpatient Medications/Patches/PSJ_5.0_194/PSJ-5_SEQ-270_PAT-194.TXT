@@ -1,0 +1,318 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 10/16/14 at 13:37
+=============================================================================
+Run Date: SEP 16, 2015                     Designation: PSJ*5*194
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #270                      Status: Released
+                  Compliance Date: OCT 17, 2015
+=============================================================================
+
+Associated patches: (v)PSJ*5*305   <<= must be installed BEFORE `PSJ*5*194'
+
+Subject: SCHEDULE WORD LIMIT
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+  
+ This patch is part of a multi-package build. Currently, the Inpatient 
+ Pharmacy and Outpatient Pharmacy software allows a maximum of three words 
+ when creating a schedule. This can prevent a medication from being ordered
+ with the intended schedule. If the administration schedule in the
+ ADMINISTRATION SCHEDULE file (#51.1) has a name such as EVERY OTHER DAY
+ and the provider subsequently checks the PRN box in CPRS, the schedule's
+ full name now becomes EVERY OTHER DAY PRN.  The Inpatient Order Entry
+ option [PSJ OE] will not allow this schedule to process because it now
+ contains four words.  The patch will modify the space limit for the
+ schedule to allow PRN, but will keep the validation as it was before.
+  
+  
+ Patch PSJ*5.0*194 Addresses two issues:
+  
+ 1) Pharmacy schedules containing more than 3 words are not allowed in
+ order processing.  This has caused some schedules such as EVERY OTHER DAY
+ PRN to be rejected when processed in Outpatient Pharmacy Patient
+ Prescription Processing option [PSO LM BACKDOOR ORDERS].
+  
+ 2) When the schedule "EVERY OTHER DAY" was ordered for the laboratory 
+ package, the software calculated the test to be performed every day.
+  
+ ***PSS*1*119 can be installed independently of the PSO*7*282/PSJ*5*194 
+ combined patch build, however the functionality will not be effective 
+ until both are installed.
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1) INC000000175199 - Error missing or invalid schedule
+    Duplicates:
+    INC00000283713 
+    INC00000368152 
+    INC00000484403 
+    INC00000597657 
+    INC00000708474 
+ 2) INC000000070913  -  QOD schedule not working correctly.
+    Duplicate:
+    INC00000195517 
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+   
+ Participating Test Sites:
+ =========================
+ Oklahoma City VAMC
+ Central Plains HCS
+ Erie VAMC
+  
+  
+ Remedy Ticket(s) Overview:
+ ==========================  
+ 1)      INC000000175199 - Error missing or invalid schedule
+  
+ Problem:
+ --------
+ Currently, the Inpatient Pharmacy software allows a schedule name to have 
+ a maximum of three words.  If a three-word schedule name is used in CPRS 
+ and the PRN box is checked, it becomes a four-word schedule name.  
+ Inpatient Order Entry rejects the schedule and the order cannot be 
+ processed with the intended schedule.
+  
+ Resolution:
+ -----------
+ The Routines PSGORS0, PSIVEDT1, PSJDDUT and PSJHL9 have had a condition 
+ added where a schedule can have more than three words if it contains 
+ "PRN".  If not it still performs the normal validation. The Data 
+ Dictionary for file 55.01, field .09 was updated to allow 3 or more word 
+ schedules with the PRN option chosen.
+  
+  
+ 2)      INC000000070913 - QOD schedule not working correctly.
+  
+ Problem:
+ --------
+ When the schedule "EVERY OTHER DAY" was ordered for the laboratory 
+ package, the software calculated the test to be performed every day.
+  
+ Resolution:
+ -----------
+ The SCHEDULE VALIDATION routine PSJSV was modified for the LAB SERVICE
+ (LR) package to look at the Frequency in Minutes value of the schedule
+ before it sets the orders.  The Frequency in Minutes value of the schedule
+ was previously not being used correctly for Lab orders to calculate the
+ test frequency.
+  
+ It should be noted that although this is a modification to Inpatient 
+ Pharmacy software, LAB SERVICES uses the order schedule frequency
+ processor portion of this SCHEDULE VALIDATION program to evaluate and
+ calculate order schedules.  Therefore this fix will go out under the
+ Inpatient Pharmacy namespace.  No Inpatient Pharmacy functions are
+ impacted by the fix.
+  
+  
+ DATA DICTIONARY CHANGES:
+ =========================
+  
+ DATA DICTIONARY #55 - PHARMACY PATIENT
+  
+ Before: 
+ -------
+  
+ 55.01,.09     SCHEDULE               0;9 FREE TEXT
+  
+               INPUT TRANSFORM:  K:X[""""!($A(X)=45)!(X["  ") X I $D(X) D EN^PSI
+                                 VSP K:XT<0 X I $D(X) S PSIVSC=Y,$P(^PS(55,DA(1)
+                                 ,"IV",DA,0),U,15)=+XT
+               OUTPUT TRANSFORM: S Y=$S($P(^PS(55,D0,"IV",D1,0),U,7):Y_"@0 label
+                                 s a day.",1:Y)
+               LAST EDITED:      MAY 23, 2007 
+               HELP-PROMPT:      Answer must be 1-70 characters in length. 
+               DESCRIPTION:        You may enter a standard schedule here or
+                                 non-standard schedule.  If a standard schedule
+                                 is entered, the doses will be given at the
+                                 administration time(s). If a non-standard
+                                 schedule is entered, and no administration 
+                                 times are entered, the doses will be given at
+                                 time intervals past the start date/time of the
+                                 IV order.  
+                                     TID = (09-17-21) doses will be given at
+                                 admin. times.  
+                                     Q5H = (300 minutes) doses will be given
+                                 every 300 minutes.  The format of this field is
+                                 [SCHEDULEspaceFREETEXTspaceFREETEXT] and 1-70 
+                                 characters.  
+  
+               GROUP:            PSJI
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+               CROSS-REFERENCE:  55.01^AJ^MUMPS 
+                                 1)= Q:$D(PSIVACT)  I '$D(DIU(0)) S PSIVF1=55.01
+                                 ,PSIVF2=.09 D ENTO^PSIVAL
+  
+                                 2)= Q:$D(PSIVACT)  I '$D(DIU(0)) S PSIVF1=55.01
+                                 ,PSIVF2=.09 D ENFR^PSIVAL
+                                 Used by IV Package.  
+  
+ After:
+ ------
+  
+ 55.01,.09     SCHEDULE               0;9 FREE TEXT
+  
+               INPUT TRANSFORM:  K:X[""""!($A(X)=45)!($L(X," ")>$S(X["PRN":4,1:3
+                                 )) X I $D(X) D EN^PSIVSP K:XT<0 X I $D(X) S PSI
+                                 VSC=Y,$P(^PS(55,DA(1),"IV",DA,0),U,15)=+XT
+               OUTPUT TRANSFORM: S Y=$S($P(^PS(55,D0,"IV",D1,0),U,7):Y_"@0 label
+                                 s a day.",1:Y)
+                                 9.2 = S SIG="" F Z0=1:1 Q:$P(X," ",Z0,99)=""  S
+                                  Z1=$P(X," ",Z0) X:Z1]"" ^DD(55.01,.09,9.3) S S
+                                 IG=SIG_$E(" ",Z0>1)_Z1
+                                 9.3 = S Y=$N(^DIC(51,"B",Z1,0)) Q:Y<0  S Z1=$P(
+                                 ^DIC(51,Y,0),U,2) Q:'$D(^(9))  S Y=$P(X," ",Z0-
+                                 1),Y=$E(Y,$L(Y)) S:Y>1 Z1=^(9)
+               LAST EDITED:      AUG 18, 2014 
+               HELP-PROMPT:      Answer must be 1-70 characters in length. 
+               DESCRIPTION:        You may enter a standard schedule here or
+                                 non-standard schedule.  If a standard schedule
+                                 is entered, the doses will be given at the
+                                 administration time(s). If a non-standard
+                                 schedule is entered, and no administration 
+                                 times are entered, the doses will be given at
+                                 time intervals past the start date/time of the
+                                 IV order.  
+                                     TID = (09-17-21) doses will be given at
+                                 admin. times.  
+                                     Q5H = (300 minutes) doses will be given
+                                 every 300 minutes.  The format of this field is
+                                 [SCHEDULEspaceFREETEXTspaceFREETEXT] and 1-70 
+                                 characters.  
+  
+               GROUP:            PSJI
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+               CROSS-REFERENCE:  55.01^AJ^MUMPS 
+                                 1)= Q:$D(PSIVACT)  I '$D(DIU(0)) S PSIVF1=55.01
+                                 ,PSIVF2=.09 D ENTO^PSIVAL
+  
+                                 2)= Q:$D(PSIVACT)  I '$D(DIU(0)) S PSIVF1=55.01
+                                 ,PSIVF2=.09 D ENFR^PSIVAL
+                                 Used by IV Package.  
+ Resolution:
+ -----------
+ The Data Dictionary for file 55.01, field .09 was updated to allow 3 or 
+ more word schedules with the PRN option chosen.
+  
+  
+ Software Retrieval:
+ ===================
+ Patches for this installation are combined in host file 
+ PSJ_194_PSO_282.KID.
+  
+ Installation of this host file should be coordinated among the packages 
+ affected since only one installation is necessary.
+  
+ The patches are:
+  
+      PSJ*5.0*194
+      PSO*7.0*282
+  
+ Sites may retrieve the KIDS build in one of the following ways:
+  
+ (1) The preferred method is to FTP the files from 
+ download.vista.domain.ext
+ which will transmit the files from the first available FTP server.
+  
+ (2) Sites may also elect to retrieve the patch directly from a specific
+ server as follows:
+  
+   OIFO               FTP ADDRESS                  DIRECTORY
+   --------------     ------------------------     ------------------
+   Albany             ftp.domain.ext     
+   Hines              ftp.domain.ext      
+   Salt Lake City     ftp.domain.ext        
+  
+  
+ Installation Instructions:
+ ==========================
+ The patch will be released in conjunction with an Outpatient Pharmacy
+ patch, PSO*7*282.
+  
+   ************************ NOTE ************************
+   IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS 
+   AN EDITED ERROR WILL OCCUR.  
+   The patch should be installed when NO Inpatient Pharmacy 
+   or Outpatient Pharmacy users are on the system.
+   ******************************************************
+  
+  Installation will take less than 1 minute.
+  
+  Suggested time to install: non-peak requirement hours.
+  
+  
+   1. Obtain the file PSJ_194_PSO_282.KID.
+     
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+   
+   3. Use Load a Distribution using PSJ_194_PSO_282.KID when
+      prompted to Enter a Host File name.  You may need to append a
+      directory name.
+   
+   4. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter PSJ*5.0*194):
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when 
+              this patch is installed.  It compares all components of 
+              this patch (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+    
+   7. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+      respond NO.
+    
+   8. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//", respond NO. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 33
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGORS0
+    Before: B14142586   After: B14383051  **25,50,83,116,111,194**
+Routine Name: PSIVEDT1
+    Before:B112839091   After:B113503135  **3,7,41,47,50,64,58,116,110,
+                                           111,113,267,279,305,194**
+Routine Name: PSJDDUT
+    Before: B78117468   After: B78714673  **40,44,50,83,116,111,113,194**
+Routine Name: PSJHL9
+    Before: B61985581   After: B62691896  **1,18,31,42,47,50,63,72,75,
+                                           58,80,110,111,134,267,279,194**
+Routine Name: PSJSV
+    Before: B25307334   After: B26193221  **3,50,73,83,194**
+ 
+Routine list of preceding patches: 305
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 24, 2007
+Completed By:                               Date Completed: AUG 27, 2015
+Released By :                               Date Released : SEP 16, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

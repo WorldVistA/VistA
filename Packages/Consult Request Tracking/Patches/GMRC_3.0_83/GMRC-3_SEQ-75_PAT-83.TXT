@@ -1,0 +1,235 @@
+$TXT Created by                at DEVVFF.DOMAIN.EXT  (KIDS) on Friday, 01/15/16 at 12:41
+=============================================================================
+Run Date: MAY 03, 2016                     Designation: GMRC*3*83
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3        SEQ #75                      Status: Released
+                  Compliance Date: AUG 01, 2016
+=============================================================================
+
+
+Subject: SUPPORT FOR VISTA SCHEDULING ENHANCEMENTS E1-E2
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ ***************************** PLEASE NOTE ********************************
+ *                                                                        *
+ *The VHA Release Board has NOT provided approval for this patch to be    *
+ * installed in ANY production environment.                               *
+ *                                                                        *
+ * NOTE: This patch is ONLY to be loaded into a TEST environment until    *
+ * approval from the VHA Release Board is obtained to load into facility  *
+ * production environments.                                               *
+ *                                                                        *
+ **************************************************************************
+  
+ This patch will support the VistA Scheduling Enhancements E1-E2 project with 
+ data dictionary changes in the REQUEST/CONSULTATION file #123. A brand new 
+ MUMPS cross reference ("AG") is created in the file for the exclusive use of a 
+ report from patch SD*5.3*627. 
+  
+ PLEASE TAKE NOTICE: GMRC*3.0*83 MUST BE INSTALLED BEFORE SD*5.3*627.
+ Any VistA application that would normally make changes to file #123 must
+ not do so until after this patch has completed installation. The time to
+ complete installation depends on the number of entries recorded in the
+ file.  
+  
+  
+ Patch Components 
+ ================
+  
+  
+ Files & Fields Associated: 
+  
+ File Name (#)            Field Name (#)             NEW/MODIFIED/DELETED
+ -------------            --------------             --------------------
+ REQUEST/CONSULTATION     REQUEST PROCESSING         MODIFIED 
+  (123)                   ACTIVITY (40) 
+  
+  
+ Forms Associated: N/A 
+  
+ Mail Groups Associated: N/A 
+  
+ Options Associated: N/A 
+  
+ Protocols Associated: N/A 
+  
+ Security Keys Associated: N/A 
+  
+ Templates Associated: N/A 
+  
+ Additional Information: N/A 
+  
+ New Service Requests (NSRs): 
+ -----------------------------
+ N/A 
+  
+ Patient Safety Issues (PSIs): 
+ ------------------------------
+ N/A 
+  
+ Remedy Ticket(s) & Overviews: 
+ -----------------------------
+ N/A 
+  
+  
+ Test Sites: 
+ -----------
+ Asheville
+ Chillicothe
+ Hudson Valley
+ Salt Lake City 
+  
+  
+ Software and Documentation Retrieval Instructions: 
+ --------------------------------------------------
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Albany:                 domain.ext
+ Hines:                  domain.ext
+ Salt Lake City:         domain.ext>
+  
+ The documentation will be in the form of Adobe Acrobat files.  
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/ 
+  
+ File Description                             File Name           FTP Mode
+ --------------------------------------------------------------------------
+ Consult/Request Tracking Technical Manual    CONSTM.PDF          binary
+  
+  
+  
+ Patch Installation in TEST ONLY ***DO NOT INSTALL INTO PRODUCTION***:
+  
+  
+ Pre/Post Installation Overview 
+ ------------------------------
+ There is not a Pre-Installation routine.
+ The Post-Installation routine does the following functions: 
+   1. Initializes a new Mumps cross-reference: 
+       - "AG" in the REQUEST/CONSULTATION file 123 
+  
+  
+ Pre-Installation Instructions 
+ ------------------------------
+ Given that this patch takes some time to install, the following instructions
+ are provided to assist OI&T personnel with its installation and output capture
+ without having to tie up a computer screen. Just before selecting the device
+ for the installation output, perform the following steps to queue the
+ installation: 
+  
+ Enter the Device you want to print the Install messages.  You can queue the
+ install by entering a 'Q' at the device prompt.  Enter a '^' to abort the
+ install.  
+  
+ DEVICE: HOME// QUEUE TO PRINT ON DEVICE: HOME// P-MESSAGE 
+  
+  1 P-MESSAGE-ABC   HFS FILE => MESSAGE 
+  2 P-MESSAGE-HFS   HFS FILE => MESSAGE 
+  
+ Choose 1-2> 2  P-MESSAGE-HFS  HFS FILE => MESSAGE 
+  
+ Subject: PATCH GMRC*3.0*83 QUEUED INSTALL <<== enter this Subject title 
+  
+      Select one of the following: 
+  
+           M         Me 
+           P         Postmaster 
+  
+ From whom: Me// Send mail to: DOEIRM,JOHN//  <<== Your name will echo here  
+ Select basket to send to: IN//   And Send to: 
+  
+ Request Start Time: Jun 24, 2015@14:37:20// T@14:40  (JUN 24, 2015@14:40:00) 
+ Install Queued! 
+  
+  
+ Note: once the installation has completed, you should have a Mailman message in
+ your 'IN' box.  
+  
+  
+  
+ Installation Instructions in TEST ONLY ***DO NOT INSTALL INTO PRODUCTION***
+ -------------------------
+ This patch should not be installed with users on the test system and it is
+ recommended that it be installed during non-peak hours. The installation time
+ will vary from site to site depending on the size of file #123.  
+  
+  
+ 1. Choose the PackMan message containing this patch.  
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+  the Installation Menu. From this menu, you may elect to use the 
+  following option. When prompted for the INSTALL enter the patch # 
+  (GMRC*3.0*83): 
+  
+  a. Backup a Transport Global - This option will create a backup 
+  message of any routines exported with this patch. It will not 
+  backup any other changes such as DD's or templates.  
+  b. Compare Transport Global to Current System - This option will 
+  allow you to view all changes that will be made when this patch 
+  is installed. It compares all components of this patch 
+  (routines, DD's, templates, etc.).  
+  c. Verify Checksums in Transport Global - This option will allow 
+  you to ensure the integrity of the routines that are in the 
+  transport global.  
+  
+ 4. From the Installation Menu, select the Install Package(s) option and 
+  choose the patch to install. Enter GMRC*3.0*83.  
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+  Install? NO//', respond NO.  
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//', 
+  respond NO.  
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+  Protocols? NO//', respond NO 
+  
+ 8. If prompted 'Delay Install (Minutes): (0 - 60): 0//', respond 0.  
+  
+  
+ Post-Installation Instructions 
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;Dec 27, 1997;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRCXR
+    Before:       n/a   After: B34169214  **83**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 04, 2015
+Completed By:                               Date Completed: APR 29, 2016
+Released By :                               Date Released : MAY 03, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,163 @@
+$TXT Created by            at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 11/20/15 at 09:46
+=============================================================================
+Run Date: DEC 22, 2015                     Designation: FB*3.5*167
+Package : FB - FEE BASIS                      Priority: EMERGENCY
+Version : 3.5       SEQ #136                    Status: Released
+                  Compliance Date: DEC 29, 2015
+=============================================================================
+
+Associated patches: (v)FB*3.5*139  <<= must be installed BEFORE `FB*3.5*167'
+
+Subject: FB UNAUTHORIZED CLAIM ISSUE
+
+Category: 
+  - Input Template
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following 2 issues:
+  
+ 1. The Enter Unauthorized Claim [FBUC ENTER] option is failing when 
+    attempting to store data in the ICD DIAGNOSIS (#.087) field in the
+    AUTHORIZATION (#161.01) sub-file of the FEE BASIS PATIENT (#161) file.
+  
+ 2. The Modify Unauthorized Claim [FBUC MODIFY UNAUTHORIZED CLAIM] option
+    is failing when attempting to store data in the ICD DIAGNOSIS (#.087)
+    field in the AUTHORIZATION (#161.01) sub-file of the FEE BASIS PATIENT
+    (#161) file.
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. I6381862FY16 - ICD-10 issues in Vista VISN 2
+    Duplicate:
+    ------------
+    R6477515FY16
+  
+ 2. I6482506FY16 - Modify Unauthorized Claim option not storing ICD Diagnosis
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Upstate NY HCS
+ Fargo VAMC
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. I6381862FY16 - ICD-10 issues in Vista VISN 2
+   
+    Problem:
+    --------
+    The Enter Unauthorized Claim [FBUC ENTER] option is failing when 
+    trying to store data in the ICD DIAGNOSIS (#.087) field in the
+    AUTHORIZATION (#161.01) sub-file of the FEE BASIS PATIENT (#161) file.
+    The user sees a "??" when that data is trying to file, and they are not
+    prompted for the "Accident Related" or "Potential Cost Recovery"
+    questions.  
+  
+    Resolution:
+    -----------
+    Input Template FB UNAUTHORIZED UPDATE was modified to //// stuff the
+    value of the pointer to the ICD DIAGNOSIS (#80) file in the ICD
+    DIAGNOSIS (#.087) field. A post-install routine will also provide
+    a list of entries where data is missing from the FEE BASIS PATIENT
+    (#161) file.
+  
+ 2. I6482506FY16 - Modify Unauthorized Claim option not storing ICD Diagnosis
+   
+    Problem:
+    --------
+    The Modify Unauthorized Claim [FBUC MODIFY UNAUTHORIZED CLAIM] option
+    is failing when attempting to store data in the ICD DIAGNOSIS (#.087)
+    field in the AUTHORIZATION (#161.01) sub-file of the FEE BASIS PATIENT
+    (#161) file. The user sees a "??" when that data is trying to file,
+    and they are not prompted for the "Accident Related" or "Potential
+    Cost Recovery" questions.  
+  
+    Resolution:
+    -----------
+    Input Template FB UNAUTHORIZED UPDATE1 was modified to //// stuff the
+    value of the pointer to the ICD DIAGNOSIS (#80) file in the ICD
+    DIAGNOSIS (#.087) field. A post-install routine will also provide a
+    list of entries where data is missing from the FEE BASIS PATIENT (#161)
+    file.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. You may queue the install if you wish.
+ It should take less than two minutes to install this patch.
+  
+ A post-install routine will send a MailMan message to the installer
+ with a list of FEE BASIS UNAUTHORIZED CLAIMS (#162.7) file entries
+ whose corresponding FEE BASIS PATIENT(#161) file entries are missing
+ data. The list can also be printed to screen after install by running
+ routine PRINT^FB35167P from the command prompt. Routine FB35167P can
+ be deleted after data cleanup is complete.
+  
+ Send this report to FEE BASIS personnel. Instructions have been or will
+ be sent by the Business Owners of what action needs to be taken. 
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter FB*3.5*167)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+   
+    4. Use the Install Package(s) option and select the package
+       FB*3.5*167.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//", respond YES.
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following options:
+                                                        
+          Enter Unauthorized Claim     [FBUC ENTER] 
+          Modify Unauthorized Claim    [FBUC MODIFY UNAUTHORIZED CLAIM]
+          Re-open Unauthorized Claim   [FBUC REOPEN]
+  
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":", just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FB35167P
+    Before:       n/a   After:  B6847553  **167**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 16, 2015
+Completed By:                               Date Completed: DEC 17, 2015
+Released By :                               Date Released : DEC 22, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

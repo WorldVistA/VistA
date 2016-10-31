@@ -1,0 +1,194 @@
+$TXT Created by               at CPRS30.DOMAIN.EXT  (KIDS) on Tuesday, 12/15/15 at 12:35
+=============================================================================
+Run Date: MAR 08, 2016                     Designation: PSO*7*456
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #379                      Status: Released
+                  Compliance Date: APR 07, 2016
+=============================================================================
+
+Associated patches: (v)PSO*7*64    <<= must be installed BEFORE `PSO*7*456'
+
+Subject: SUPPLY ORDER MODIFICATION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The Computerized Patient Record System (CPRS) v30B allows nurses with the 
+ ORSUPPLY key to place orders for supply items using a new supply order 
+ dialog (PSO SUPPLY). The new dialog does not require the AUTHORIZED TO 
+ WRITE MEDS (#53.1) field in the NEW PERSON (#200) file be set to YES.
+  
+ In some instances, the supply nurse may be the provider for the order. 
+ However, Pharmacy has a restriction that the provider must have 
+ AUTHORIZED TO WRITE MEDS set to yes. The purpose of this patch is to 
+ remove that restriction for supply items only.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A 
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A 
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ INC000000069312
+ INC000000423142
+  
+ 1.  INC000000069312 ORDER DIALOG 'PSO SUPPLY'
+     INC000000423142
+  
+ Problem:
+ -------
+ The PSO SUPPLY dialog has never worked correctly. It still required a 
+ user to be authorized to write medication orders.
+  
+ Solution:
+ --------
+ Changes have been made to the supply order dialog to allow a user with 
+ the ORSUPPLY key to write supply orders without being authorized to 
+ write medication orders. 
+  
+ Test Sites:
+ ----------
+ Cleveland, OH
+ Heartland - East
+ Heartland - West
+ Loma Linda, CA
+ Palo Alto, CA
+ San Diego, CA 
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ There are no special pre-installation instructions or requirements for
+ this patch. This patch may be installed with users on the system although
+ it is recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     PSO*7.0*456:
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ There are no additional post-installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOUTIL
+    Before: B63469673   After: B67041213  **64,456**
+ 
+Routine list of preceding patches: 64
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 04, 2015
+Completed By:                               Date Completed: MAR 07, 2016
+Released By :                               Date Released : MAR 08, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

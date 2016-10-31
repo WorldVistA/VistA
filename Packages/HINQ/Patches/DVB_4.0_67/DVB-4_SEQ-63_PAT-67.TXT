@@ -1,0 +1,144 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 05/13/14 at 13:50
+=============================================================================
+Run Date: SEP 11, 2014                     Designation: DVB*4*67
+Package : DVB - HINQ                          Priority: Mandatory
+Version : 4        SEQ #63                      Status: Released
+                  Compliance Date: OCT 12, 2014
+=============================================================================
+
+Associated patches: (v)DVB*4*64    <<= must be installed BEFORE `DVB*4*67'
+
+Subject: UPDATE TO THE DISABILITY CONDITION (#31) FILE 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DVB*4.0*67 adds disability code 7717 AL AMYLOIDOSIS (PRIMARY AMYLOIDOSIS) 
+ to the DISABILITY CONDITION (#31) file.
+  
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ===========================
+ 1) INC000000816152 - HINQ - Other:
+            
+ ASSOCIATED NSR:
+ ==============
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Battle Creek - VA Medical Center
+ Durham - VA Medical Center
+ Upstate New York - HCS
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1) INC000000816152 - HINQ - Other:
+  
+ Problem:
+ --------
+ A request was made by the Chief Business Office (CBO) to add disability code
+ 7717 AL AMYLOIDOSIS (PRIMARY AMYLOIDOSIS) to the DISABILITY
+ CONDITION (#31) file.                                
+  
+  
+ Resolution:
+ -----------           
+ This patch updates the DISABILITY CONDITION (#31) file adding disability code
+ 7717 AL AMYLOIDOSIS (PRIMARY AMYLOIDOSIS.)  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be installed with users in the system, but it is recommended
+ that it be installed when user activity is very low.
+  
+ Installation time will be less than five minutes.
+  
+   1. Load Transport Global 
+      ----------------------
+      Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+              
+   2. Start Up KIDS 
+      -------------
+      Start up the Kernel Installation and Distribution System Menu [XPD
+      MAIN]: 
+      
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: INStallation
+                                                               ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+   3. Select Installation Option: 
+      ---------------------------
+      NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+      NAME, enter DVB*4.0*67):
+       
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+   4. Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+      **This is the step to start the installation of this KIDS patch: 
+  
+      a. Choose the Install Package(s) option to start the patch install.
+  
+      b. When prompted, "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO. 
+  
+      c. When prompted, "Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? NO//", respond NO.
+  
+   ** d. During install, verify that the entry was added successfully. If an
+         error is displayed, please file a Remedy Ticket.
+      
+      e. You may delete the routine DVB67PT from your production system after
+         the patch has been successfully tested. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;HINQ;**[Patch List]**;03/25/92;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVB67PT
+    Before:       n/a   After:  B2475366  **67**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 08, 2014
+Completed By:                               Date Completed: SEP 02, 2014
+Released By :                               Date Released : SEP 11, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

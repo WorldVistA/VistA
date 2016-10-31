@@ -1,0 +1,481 @@
+
+=============================================================================
+Run Date: MAY 19, 2015                     Designation: OR*3*391
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #352                      Status: Released
+                  Compliance Date: JUN 19, 2015
+=============================================================================
+
+Associated patches: (v)OR*3*361    <<= must be installed BEFORE `OR*3*391'
+
+Subject: ICD-10-CM REMEDIATION FOR ANTICOAG MGT
+
+Category: 
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ This patch extends the existing list of ICD-9-CM indications for care in
+ support of Anticoagulation Management, to include a number of common
+ diagnoses that were excluded from the original list. It also introduces
+ a new set of indications for care, using the ICD-10-CM classification
+ system, which will be presented to the user after ICD-10-CM implementation
+ (currently scheduled for 10/01/2015) in lieu of the ICD-9-CM indications.
+ In addition to the Automatic Primary Indication for Care configurable by
+ Clinic for the original version of AMT, facilities will also be able to
+ specify an Automatic Secondary Indication, using ICD-9-CM, along with
+ Automatic Primary and Secondary ICD-10-CM Indications, which will be used
+ for visits which occur after ICD-10-CM implementation.
+  
+ The following tables present the list of additional indications for care 
+ from which the user can select when the corresponding coding systems are
+ active.
+  
+ Current (extended): ICD-9-CM
+  
+ Display Text                  Code    ICD-9-CM Description
+ ==========================================================================
+ A Fib                         427.31  Atrial Fibrillation
+ A Flutter                     427.32  Atrial Flutter
+ Antiphospholipid Antibodies   286.9   Other and unspecified coagulation
+                                       defects
+ Antithrombin III Deficiency   286.9   Other and unspecified coagulation
+                                       defects
+ Apical Thrombus               429.79  Certain sequelae of myocardial in-
+                                       farction, not elsewhere classified,
+                                       other
+ Arterial Thrombosis           444.9   Embolism and thrombosis of unspec-
+                                       ified artery
+ CAD (Coronary Art Dis)        414.00  Coronary atherosclerosis of un-
+                                       specified type of vessel, native
+                                       or graft
+ CHF (Cong Heart Fail)         428.0   Congestive heart failure, unspec-
+                                       ified
+ CVA                           437.9   Unspecified cerebrovascular disease
+ Cardiomyopathy                425.4   Other primary cardiomyopathies
+ Carotid Stenosis - Plaque     433.10  Occlusion and stenosis of carotid
+                                       artery without mention of cerebral
+                                       infarction
+ Cerebrovascular Disease       436.    Acute but ill-defined cerebrovasc 
+                                       disease
+ Clotted Graft                 996.74  Other complications due to other
+                                       vascular device, implant, and graft
+ DVT                           453.89  Acute ven emb and thromb oth spec 
+                                       veins
+ Enctr for Tx Drug Monitoring  V58.83  Encounter for therapeutic drug 
+                                       monitoring
+ Hypercoag State               289.81  Primary hypercoagulable state
+ L/T (Current) Anticoag Use    V58.61  Long-term (Current) use of 
+                                       anticoagulant
+ LV Thrombus                   429.79  Certain sequelae of myocardial in-
+                                       farction, not elsewhere classified,
+                                       other
+ Mesenteric Thrombosis         557.0   Acute vascular insufficiency of
+                                       intestine
+ PAD (Peripheral Art Dis)      443.9   Peripheral vascular disease,
+                                       unspecified
+ PE                            415.19  Other pulmonary embolism and 
+                                       infarction
+ Prophylaxis S/P Ortho Surgery V54.89  Other orthopedic aftercare
+ Recurrent DVT                 453.79  Chronic venous embolism and throm-
+                                       bosis of other specified veins
+ Recurrent PE                  416.2   Chronic pulmonary embolism
+ TIA                           435.9   Unspecified transient cerebral
+                                       ischemia
+ Valve-Mech                    V43.3   Heart valve replaced by other means
+ Valve-Tissue                  V42.2   Heart valve replaced by transplant
+  
+  
+  
+ Future: ICD-10-CM
+  
+ Display Text                   Code    ICD-10-CM Description
+ ==========================================================================
+ A Fib                          I48.91  Unspecified atrial fibrillation
+ A Flutter                      I48.92  Unspecified atrial flutter
+ Act Prot C Res                 D68.51  Activated protein C resistance
+ Acute MI (within 4 weeks)      I21.3   ST elevation (STEMI) myocardial
+                                        infarction of unspecified site
+ Antiphospholipid Synd          D68.61  Antiphospholipid syndrome
+ CVA (unspecified sequela)      I69.30  Unspecified sequelae of cerebral
+                                        infarction
+ Cerebrovascular Disease        I67.89  Other cerebrovascular disease
+ DVT Bilat LE Unspec Veins      I82.403 Acute embolism and thrombosis of
+                                        unspecified deep veins of lower
+                                        extremity, bilateral
+ DVT LLE Unspecified Veins      I82.402 Acute embolism and thrombosis of
+                                        unspecified deep veins of left
+                                        lower extremity
+ DVT RLE Unspecified Veins      I82.401 Acute embolism and thrombosis of
+                                        unspecified deep veins of right
+                                        lower extremity
+ DVT Uspec veins, unspec LE     I82.409 Acute embolism and thrombosis of
+                                        unspecified deep veins of
+                                        unspecified lower extremity
+ DVT oth spec veins not in LE   I82.890 Acute embolism and thrombosis of
+                                        other specified veins
+ Enctr for Tx Drug Monitoring   Z51.81  Encounter for therapeutic drug 
+                                        level monitoring
+ Hypercoag State                D68.59  Other primary thrombophilia
+ L/T (Current) Anticoag Tx      Z79.01  Long term (current) use of 
+                                        anticoagulant
+ Lupus Anticoag Synd            D68.62  Lupus anticoagulant syndrome
+ Old MI (> 4 wks, no curr symp) I25.2   Old myocardial infarction
+ Oth Prim Thrombophilia         D68.59  Other primary thrombophilia
+ PE                             I26.99  Other pulm embol w/o acute cor 
+                                        pulmonale
+ Prothrombin Gene Mut           D68.52  Prothrombin gene mutation
+ TIA                            G45.9   Transient cerebral ischemic 
+                                        attack, unspecified
+ Valve-Mech                     Z95.2   Presence of prosthetic heart valve
+ Valve-Tissue                   Z95.3   Presence of xenogenic heart valve
+  
+  
+  
+ The ICD-10-CM codes corresponding to the ICD-9-CM indications used since 
+ 2008 were identified using the General Equivalence Mappings, which are
+ developed and maintained by The Centers for Medicare & Medicaid Services
+ (CMS) and the Centers for Disease Control and Prevention (CDC). Note that
+ the indication "Hypercoag State" (ICD-9-CM 289.81) may map to any of five
+ ICD-10-CM indications (Activated protein C resistance, Antiphospholipid
+ syndrome, Lupus anticoagulant syndrome, Other primary thrombophilia, or
+ Prothrombin gene mutation), and so the list is slightly more specific.
+ The remaining indications mapped more easily into ICD-10-CM in one-to-one
+ fashion.
+  
+ This patch includes both client- and server-side components, as detailed 
+ below. The client-side changes involve making the application "ICD 
+ version-aware." That is, based on the date of service, the user 
+ will only be able to select diagnoses from the active ICD version
+ (ICD-9-CM or ICD-10-CM) when they specify the indications for care. The
+ client was also enhanced to use the same Lexicon Search dialog provided in
+ the CPRS Encounter Form, should the user choose 'Other' when selecting the
+ indications for care. Here again, only the appropriate ICD version will be
+ presented, based on the date of service.
+  
+  
+ ROUTINE:
+ ========
+    ORAM
+    - Modified the PATIENT subroutine to correct a problem with the visit 
+      matching algorithm that was observed for new Anticoagulation
+      patients. If a patient who was not yet enrolled in the
+      Anticoagulation flowsheet database had a visit scheduled for one of
+      the Anticoagulation Clinic locations within the look-up interval,
+      that visit was not being identified.
+  
+    ORAM1
+    - Modified the ACDATA subroutine to handle selection of SNOMED CT 
+      concepts with multiple mapped ICD-9-CM diagnoses (e.g., Transient 
+      cerebral ischemia due to atrial fibrillation (SNOMED CT 426814001) =
+      427.31/435.9).
+  
+    ORAM2
+    - Modified the RPT subroutine to assure that the Anticoagulation 
+      Report on the CPRS Reports tab displays indications in a manner 
+      consistent with the rest of AMT.
+  
+    ORAMSET
+    - Modified the GET & INDICS subroutines to accept Visit Date as an 
+      argument, and return the appropriate Parameter values, given the
+      ICD-10-CM Implementation date.
+    - Introduced a new function $$GETCMPDT(CODESYS) that returns a compare 
+      date for the Coding System of interest, to be used in screening
+      active codes during parameter set-up.
+  
+    ORAMX
+    - Modified the PCESET subroutine to handle the case where a SNOMED CT 
+      concept is selected for the indication which has multiple mapped
+      ICD-9-CM targets, and to allow an automatic secondary indication.
+    - Split routine, moving the WRAP function to ORAMX1, to comply with
+      the SACC routine size limit.
+  
+    ORAMX1
+    - Moved the WRAP function from ORAMX, and the RPT subroutine from
+      ORAM2 in order to keep those routines within the SACC size limit.
+    - Introduced a new function GETVSIT, which will assure that the
+      CPRS Report for AMT uses includes all information stored in PCE
+      for the Encounter generated for most recent flowsheet entry,
+      including any diagnoses that were added via the CPRS Encounter
+      form or any other data source.
+  
+    ORY391
+    - Post-install routine, which creates the package-level default values
+      for the ORAM I10 INDICATIONS FOR CARE parameter.
+  
+   
+ PARAMETER DEFINITION:
+ =====================
+    ORAM AUTO PRIMARY INDICATION
+    This parameter has been used by the Anticoagulation Management Tool 
+    (AMT) v1 to allow the facility to specify an Automatic Primary
+    Indication for Care (as ICD-9- CM) for each clinic using the software.
+    The current patch modifies the VALUE SCREEN CODE to assure the
+    selection of an active ICD-9-CM code prior to ICD-10-CM implementation.
+    
+    
+    ORAM AUTO SECONDARY INDICATION
+    This is an Indication for care which will automatically be filed as the
+    first Secondary Indication for each visit to the applicable Clinic.
+    (e.g., if all visits to a non-licensed provider should be filed with 
+    V58.83 ENCTR THERAP DRUG MONITOR as the first secondary indication, you
+    can specify that with this parameter, and the user will still be able
+    to select additional secondary indication(s) from the list).
+    
+    
+    ORAM I10 AUTO PRIM INDICATION
+    This parameter will be used by AMT going forward to allow the facility 
+    to specify an Automatic Primary Indication for Care (as ICD-9-CM) for
+    each clinic using the software. The current patch includes VALUE SCREEN
+    CODE to assure the selection of an active ICD-10-CM code following
+    ICD-10-CM implementation.
+    
+    
+    ORAM I10 AUTO SEC INDICATION
+    This is an Indication for care which will automatically be filed as the
+    first Secondary Indication for each visit to the applicable Clinic.
+    (e.g., if all visits to a non-licensed provider should be filed with 
+    Z51.81 Encounter for therapeutic drug level monitoring as the first
+    secondary indication, you can specify that with this parameter, and the
+    user will still be able to select additional secondary indication(s) 
+    from the list).
+    
+    
+    ORAM INDICATIONS FOR CARE
+    This parameter has been used by AMT v1 to provide a server-side 
+    mechanism to specify a list of Additional Indications for Care (as
+    ICD-9-CM). The current patch modifies the VALUE SCREEN CODE to assure
+    the selection of active ICD-9-CM codes prior to ICD-10-CM
+    implementation.
+    
+    
+    ORAM I10 INDICATIONS FOR CARE
+    This parameter will be used by AMT going forward to provide a 
+    server-side mechanism to specify a list of Additional Indications for
+    Care (as ICD-10-CM). The current patch includes VALUE SCREEN CODE to
+    assure the selection of active ICD-10-CM codes following ICD-10-CM
+    implementation.
+  
+  
+  
+ PARAMETER TEMPLATE:
+ ===================
+    ORAM CLINIC PARAMETERS
+    This parameter template is modified to allow the user to specify the 
+    value of the new ORAM I10 AUTO PRIM INDICATION for each clinic
+    configured to use AMT.
+  
+    ORAM SITE PARAMETERS
+    This parameter template is modified to remove the DSS UNIT and DSS ID
+    parameters, which have never been used by AMT and have caused
+    significant confusion.
+  
+  
+  
+ REMOTE PROCEDURE:
+ =================
+    ORAM1 ACDATA
+    Modified the RPC to accept Date of Service as a parameter.
+  
+    ORAMSET GET
+    Introduced a new parameter to allow the client to pass Visit Date/time 
+    in internal VA FileMan format and return a Boolean flag indicating
+    whether ICD-10-CM is active as the 11th piece of the 2-node of the
+    result array.
+  
+  
+  
+ Patient Safety Issues (PSIs):
+ =============================
+  None
+  
+  
+  
+ RELATED CQ'S:
+ ============
+  18489 - AC:Start note not displaying secondary indications for new
+          patient
+  21939 - OR*3*391 v1 Error "ORAM INDICATORS FOR CARE parameter is corrupt.
+          Contact IRM"
+  21949 - OR*3*391 v2 CPRS Flowsheet on the Reports tab has incorrect label
+          for displayed diagnosis
+  21996 - Exception error on Reports tab in CPRS for Anticoagulation
+          Flowsheet
+  21998 - D/C note allows user to sign without entering clinical relevant
+          reason for discharge
+  21999 - Error is not a valid floating point integer when entering too
+          specific INR Goal value in AMT
+  22000 - Access violation occurs when outside lab data is copied or longer
+          than expected 
+  22001 - General validation needs to done for several data entry points
+  22002 - When invalid ICD code is entered no diagnosis code is filed with
+          the encounter and user is unaware
+  22126 - AMT Clinic Parameter to enter Automatic Indication for Care for
+          ICD-9 allows entry of ICD-10 code
+  22206 - M ERROR generating flow sheet for existing pt. ICD-10 remedia-
+          tion AMT pkg. v5
+  22216 - ICD-10 remediation Invalid ICD-9 indication saves in Note
+          before AMT gives user incomplete error 
+  22223 - M ERROR when attempting to print AntiCoagulation Flowsheet on
+          CPRS report tab
+  
+  
+  
+ RELATED Remedy Tickets:
+ ======================
+  None
+  
+  
+  
+ TEST SITES:
+ ===========
+  Cleveland
+  Minneapolis
+  Denver
+  
+  
+  
+ SOFTWARE & DOCUMENTATION RETRIEVAL:
+ ===================================
+ To obtain the current client- and server-side software and documentation,
+ use FTP to retrieve OR_30_391.zip and OR_30_391.KID from one of the
+ following OI Field Offices' ANONYMOUS.SOFTWARE directories:
+  
+  OI Field Office    FTP Address                 Directory
+  ---------------    -----------                 ---------
+  Albany             ftp.domain.ext    
+  Hines              ftp.domain.ext     
+  Salt Lake City     ftp.domain.ext       
+  
+ The software distribution includes these files:
+  
+  FILE NAME          RETRIEVAL FORMAT    SIZE
+  ---------          ----------------    ----
+  OR_30_391.ZIP      BINARY              11923
+  OR_30_391.KID      ASCII               316
+  
+  Source code is also available, and may be optionally downloaded as:
+  
+  OR_30_391_SRC.ZIP  BINARY              7735
+  
+  
+  ZIP FILE CONTENTS          DESCRIPTION           FILE VERSION    
+  -----------------          -----------           ------------
+  AMT_1_0_391_7.msi          Windows Installer     1.0.391.7
+  Anticoag_help_file.chm     Compiled HTML Help
+  AntiCoagulate.exe          Client                1.0.391.7
+  oramig.doc                 Install Guide         MS Word R/W
+  oramig.pdf                 Install Guide         PDF Read Only
+  oramtm.doc                 Technical Manual      MS Word R/W
+  oramtm.pdf                 Technical Manual      PDF Read Only 
+  oramum.doc                 Users Manual          MS Word R/W
+  oramum.pdf                 Users Manual          PDF Read Only
+  
+ GUI Client installation instructions are in the Anticoagulation Management
+ Installation/Implementation Guide, which is included in the .ZIP file, and
+ may also be found in the VistA Documentation Library:
+ http://www.domain.ext/vdl.
+                                                       
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+   
+        1. From the Kernel Installation & Distribution System menu, select 
+           the Installation menu.  
+     
+        2. From this menu, choose to Load a Distribution and enter the 
+           location of the Host File OR_3_391.KID
+  
+        3. From the same menu, you may select to use the following options:
+           (when prompted for INSTALL NAME, enter OR*3.0*391)
+    
+            a. Verify Checksums in Transport Global - This option will 
+                allow you to ensure the integrity of the routines that are 
+                in the transport global.
+     
+            b. Print Transport Global - This option will allow you to view
+                the components of the KIDS build.
+     
+            c. Compare Transport Global to Current System - This option 
+                will allow you to view all changes that will be made when 
+                this patch is installed. It compares all components of
+                this patch (routines, DD's, templates, etc.).
+     
+            d. Backup a Transport Global - This option will create a backup
+                message of any routines exported with this patch. It will 
+                not backup any other changes such as DD's or templates.
+     
+        4. Use the Install Package(s) option and select the package 
+           OR*3.0*391.
+     
+        5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+           NO//" respond NO.  
+     
+        6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+           and Protocols? NO//" respond NO.
+  
+  
+ POST-INSTALLATION INSTRUCTIONS:
+ ===============================
+ After successful installation of the OR*3.0*391, IT staff should confer 
+ with local CACs and AMT users to:
+  
+ 1. Set the appropriate values for the Automatic Primary and Secondary
+    Indications for Care to be used in each Anticoagulation Clinic. To
+    receive proper workload credit, these should be set as follows:
+    
+    Auto Primary Indic for Care (ICD-9-CM)            V58.83
+    Auto Secondary Indic for Care (ICD-9-CM)          V58.61
+    Auto Primary Indic for Care (ICD-10-CM)           Z51.81
+    Auto Secondary Ind for Care (ICD-10-CM)           Z79.01
+  
+    This can be done using the ORAM ANTICOAGULATION CLINIC PARAMETERS
+    VistA option, under the ORAM ANTICOAGULATION SETUP menu.
+  
+ 2. Deploy the new executable AntiCoagulate.exe and the corresponding
+    help file, replacing the prior version, either on a network drive,
+    or to each of the workstations accessed by the AMT users at your
+    facility, as performance and ease of maintenance may require.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORAM
+    Before: B75504293   After: B83839096  **307,330,391**
+Routine Name: ORAM1
+    Before:B166176086   After:B175474289  **307,339,351,361,391**
+Routine Name: ORAM2
+    Before:B144805795   After: B58023259  **307,339,354,361,391**
+Routine Name: ORAMSET
+    Before: B43363006   After: B59301848  **307,361,391**
+Routine Name: ORAMX
+    Before:B164083781   After:B169673089  **307,339,361,391**
+Routine Name: ORAMX1
+    Before:       n/a   After: B81414252  **391**
+Routine Name: ORY391
+    Before:       n/a   After: B58110854  **391**
+ 
+Routine list of preceding patches: 330, 361
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 25, 2014
+Completed By:                               Date Completed: MAY 18, 2015
+Released By :                               Date Released : MAY 19, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

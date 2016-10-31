@@ -1,0 +1,208 @@
+$TXT Created by                  CPRS30.DOMAIN.EXT  (KIDS) on Tuesday, 11/24/15 at 07:35
+=============================================================================
+Run Date: MAR 16, 2016                     Designation: PXRM*2*66
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #46                      Status: Released
+                  Compliance Date: APR 16, 2016
+=============================================================================
+
+Associated patches: (v)PXRM*2*26   <<= must be installed BEFORE `PXRM*2*66'
+                    (v)PX*1*206    <<= must be installed BEFORE `PXRM*2*66'
+
+Subject: SELECTABLE IMMUNIZATIONS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Description:
+ ------------
+ This patch addresses a problem with Reminder Dialogs not allowing the user to
+ add an inactive immunization marked for historical use to the 
+ finding item\additional findings fields.
+  
+  
+ Patch Components:
+ -----------------
+ Bulletins:
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #     New/Modified/Deleted
+ ---------             ------     --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------     
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                   Type               New/Modified/Deleted
+ -----------                   ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                            New/Modified/Deleted
+ -------------                            -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name     Type        File Name (Number)  New/Modified/Deleted
+ -------------     ----        ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ I6584320FY16
+  
+ Problem:
+ --------
+ It has been reported that sites are not able to add some immunization entries
+ to a reminder dialog. It has been determined the Finding Item\Additional Finding
+ items file screen prevent these entries from being added to a dialog. These
+ entries are marked inactive but they are marked to be used as historical for
+ documenting immunizations done elsewhere.
+  
+ Resolution:
+ -----------
+ Reminder Dialogs have been changed to allow immunization entries to be added 
+ to a dialogs for the following conditions:
+ 
+   1. The entry is marked as active.
+   2. The entry is marked inactive and set to be used for historical 
+      documentation.
+  
+ Test Sites:
+ ----------
+ Cleveland
+ Hampton
+ San Antonio
+ St. Louis
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------ 
+ N/A 
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes 
+ to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(ex. PXRM*2.0*66):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' NO     
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' NO
+  
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 226
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMDLG6
+    Before: B20894000   After: B21880610  **12,26,66**
+ 
+Routine list of preceding patches: 26
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 24, 2015
+Completed By:                               Date Completed: FEB 08, 2016
+Released By :                               Date Released : MAR 16, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

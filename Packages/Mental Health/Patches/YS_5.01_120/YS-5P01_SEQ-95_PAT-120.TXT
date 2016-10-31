@@ -1,0 +1,114 @@
+
+=============================================================================
+Run Date: MAR 02, 2016                     Designation: YS*5.01*120
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01        SEQ #95                   Status: Released
+                  Compliance Date: APR 02, 2016
+=============================================================================
+
+
+Subject: MINOR UPDATE TO USER MANUAL FOR WINDOWS 7
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch updates the MHA3 User Manual to include instructions for 
+ setting up MHA3 (Mental Health Assistant 3) on the CPRS GUI Tools Menu on 
+ a workstation running the Windows 7 Operating System (OS).
+  
+ ASSICIATED NSR(S):
+ ==================
+ N/A
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ INC000000918178 - Problems and questions about YS*5.01*105 Please advise
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ N/A
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ INC000000918178
+  
+  
+    Problem
+    -------
+    In Appendix E of the MHA3 (Mental Health Assistant 3) User Manual are 
+    instructions for setting up MHA3 on the CPRS GUI Tools Menu. These 
+    instructions are written for the Windows XP OS. They may not work on a 
+    workstation running the Windows 7 OS. In the "Name=Command:" field the 
+    user enters a set of five parameters to run MHA3 from the CPRS GUI
+    Tools Menu.
+  
+    One of these parameters is called "Entry". The Entry parameter must 
+    contain the exact directory path to the MHA3 executable, YS_MHA.exe.
+    The directory path will be different between Windows XP OS and Windows
+    7 OS. 
+  
+    In Windows XP the Entry parameter and its directory path are:
+    Entry=C:\Prog~1\Vista\YS\MHA3\YS_MHA.exe
+  
+    In Windows 7 the Entry parameter and its directory path are:
+    Entry="C:\Program Files (x86)\Vista\YS\MHA3\YS_MHA.exe"
+    The directory path must be enclosed in quotes due to the embedded
+    spaces in the directory path.
+  
+    Appendix E of the MHA3 User Manual is being updated to include the
+    exact directory path required for both the Windows XP OS and the
+    Windows 7 OS. Refer to the Documentation Retrieval Instructions below
+    to get the updated MHA3 User Manual.
+  
+    Resolution
+    ----------
+    Modification of the MHA3 User Manual, Appendix E, to use the 
+    directory path needed by the Windows 7 OS.
+  
+  
+  
+ Documentation Retrieval Instructions:
+ =====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+ Title                         File Name                       SFTP Mode
+ -----------------------------------------------------------------------
+ MHA3 User Manual              YS_501_120_UM.DOC               Binary
+                               YS_501_120_UM.PDF               Binary
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 20, 2015
+Completed By:                               Date Completed: MAR 02, 2016
+Released By :                               Date Released : MAR 02, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

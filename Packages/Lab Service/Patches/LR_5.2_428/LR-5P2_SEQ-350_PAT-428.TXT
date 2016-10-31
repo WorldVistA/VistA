@@ -1,0 +1,174 @@
+$TXT Created by                at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Wednesday, 03/05/14 at 17:21
+=============================================================================
+Run Date: AUG 06, 2014                     Designation: LR*5.2*428
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #350                    Status: Released
+                  Compliance Date: SEP 06, 2014
+=============================================================================
+
+Associated patches: (v)LR*5.2*433  <<= must be installed BEFORE `LR*5.2*428'
+
+Subject: ASSOCIATE DIVISION FIELD;EDIT AP LOG-IN
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will address the following 2 issues
+  
+ 1. Cannot add 4 digit NHCU station number to the ASSOCIATED DIVISION 
+    field (#.01) of the ACCESSION file (#68).
+  
+ 2. AP Edit Log-In option handles patient location edit incorrectly.
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*428 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*428 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*428 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC000000069340 - Erroneous field in file #68 [Accession]
+  
+ 2. INC000000071254 - AP Edit Log-In option for location and patient type
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Heartland-East HCS
+ Salisbury VAMC
+ Upstate New York HCS
+  
+ REMEDY OVERVIEW:
+ ================ 
+ 1. INC000000069340 - Erroneous field in file #68 [Accession]
+  
+    Problem:
+    --------
+    The ASSOCIATED DIVISION field (#.01) of the ACCESSION file (#68) should
+    allow the entry of a four digit station number.
+  
+    Resolution:
+    ----------- 
+    The Data Dictionary of the ACCESSION file has been modified to allow a
+    leading 4 digit ASSOCIATED DIVISION (like 5289AK) as long as first 3
+    digits match parent division.
+  
+    Routines: none
+  
+ 2. INC000000071254 - AP Edit Log-In option for location and patient type
+  
+    Problem:
+    --------
+    The Edit log-in & clinical hx, anat path [LRAPED] option allows a 
+    free Text location entry and does not correct the log book or CPT
+    transfer to PCE (outpatients only) when changing patient type via
+    location edit from inpatient to outpatient or vice versa
+  
+    Resolution:
+    -----------                    
+    Modification has been made to ensure a defined site hospital location 
+    must be entered when editing the patient location field when using
+    option Edit log-in & clinical hx, anat path [LRAPED]. This will make
+    sure the correct location and patient type are propagated to the
+    corresponding fields in the ACCESSION file (#68) [ACCESSION NUMBER
+    subfile: REPORT ROUTING LOCATION field (#6) and LOCATION TYPE field
+    (#92)] and LAB ORDER ENTRY file (#69) [SPECIMEN # subfile: REPORT
+    ROUTING LOCATION field (#8)]. This will ensure the log book reflects
+    the correct patient location and CPT data transfer to PCE will be based
+    on an accurate patient type.
+  
+    Note: The patch does not correct past location editing issues between 
+          in and out patients or inform sites of anomalies. It will not
+          address and inpatient to outpatient edits where the CPT data may
+          not have been sent to PCE. This is only a reporting issue.
+  
+    Routines: LRAPED
+  
+    ==================== INSTALLATION INSTRUCTIONS ====================
+  
+   You may install this patch at any time without interruption to users. 
+   It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter LR*5.2*428)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       LR*5.2*428.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', respond YES.
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following options:
+  
+       Edit log-in & clinical hx, anat path            [LRAPED]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRAPED
+    Before: B33912945   After: B63450005  **1,31,72,115,259,350,427,433,428**
+ 
+Routine list of preceding patches: 433
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 07, 2013
+Completed By:                               Date Completed: AUG 04, 2014
+Released By :                               Date Released : AUG 06, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,373 @@
+$TXT Created by              at LEXDEV1.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Saturday, 06/14/14 at 19:49
+=============================================================================
+Run Date: AUG 07, 2014                     Designation: LEX*2*87
+Package : LEX - LEXICON UTILITY               Priority: Mandatory
+Version : 2        SEQ #87                      Status: Released
+                  Compliance Date: AUG 28, 2014
+=============================================================================
+
+Associated patches: (v)LEX*2*80    <<= must be installed BEFORE `LEX*2*87'
+                    (v)ICD*18*57   <<= must be installed BEFORE `LEX*2*87'
+                    (v)ICD*18*64   <<= must be installed BEFORE `LEX*2*87'
+                    (v)LEX*2*95    <<= must be installed BEFORE `LEX*2*87'
+
+Subject: ICD-10 Data Update/Date Change
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch contains changes to the FY14 ICD-10 Categories and changes
+  the ICD-10 Implementation date from Oct 1, 2014 to Oct 1, 2015.
+  This patch installs the data for the following Informational patch:
+    
+    ICD*18.0*68
+ 
+  This patch writes to the following files:
+    
+    ICD DIAGNOSIS             #80       ^ICD9(       ICR 4485
+    ICD OPERATION/PROCEDURE   #80.1     ^ICD0(       ICR 4486
+    DRG                       #80.2     ^ICD(        ICR 4487
+    ICD CODING SYSTEMS        #80.4     ^ICDS(       ICR 5755
+    DRG SURGICAL HIERARCHY    #80.5     ^ICDRS(      ICR 6066
+    Lexicon Files          #757-757.41  ^LEX(        N/A
+ 
+    
+  ENHANCEMENTS
+  ============
+    
+   ICD-10 Diagnosis Categories
+   ---------------------------
+  
+     The Character Positions File #757.033 has been updated to include
+     additional ICD-10 categories for FY14.
+ 
+  
+   ICD-10 Implementation Date Change to Oct 1, 2015
+   ------------------------------------------------
+ 
+     ICD DIAGNOSIS file #80
+ 
+         Change ICD-9 Diagnosis status dates
+         Change ICD-10 Diagnosis status dates
+         Change ICD-10 Diagnosis versioned dates
+ 
+         Affected fields:
+ 
+             SEX EFFECTIVE DATE field #.01 (sub-file #80.04)
+             AGE LOW EFFECTIVE DATE field #.01 (sub-file #80.011)
+             AGE HIGH EFFECTIVE DATE field #.01 (sub-file #80.012)
+             STATUS EFFECTIVE DATE field #.01 (sub-file #80.066)
+             DIAGNOSIS EFFECTIVE DATE field #.01 (sub-file #80.067)
+             DESCRIPTION EFFECTIVE DATE field #.01 (sub-file #80.068)
+             DRG GROUPER EFFECTIVE DATE field #.01 (sub-file #80.071)
+             MAJOR DIAGNOSTIC CATEGORY field #(sub-file #80.072)
+             CC EFFECTIVE DATE field #.01 (sub-file #80.0103)
+ 
+     ICD OPERATION/PROCEDURE file #80.1
+ 
+         Change ICD-9 Procedure status dates
+         Change ICD-10 Procedure status dates
+         Change ICD-10 Procedure versioned dates
+ 
+         Affected fields:
+ 
+             SEX EFFECTIVE DATE field #.01 (sub-file #80.11)
+             STATUS EFFECTIVE DATE (sub-file #80.166)
+             OPER/PROCEDURE EFFECTIVE DATE (sub-file #80.167)
+             DESCRIPTION EFFECTIVE DATE (sub-file #80.168)
+             DRG GROUPER EFFECTIVE DATE (sub-file #80.171)
+ 
+     ICD OPERATIONS/PROCEDURE file #80.1
+ 
+         Change DRG status dates
+         Change DRG versioned dates
+ 
+         Affected fields:
+ 
+             SEX EFFECTIVE DATE field #.01 (sub-file #80.11)
+             STATUS EFFECTIVE DATE (sub-file #80.166)
+             OPER/PROCEDURE EFFECTIVE DATE (sub-file #80.167)
+             DESCRIPTION EFFECTIVE DATE (sub-file #80.168)
+             DRG GROUPER EFFECTIVE DATE (sub-file #80.171)
+ 
+     ICD CODING SYSTEM file #80.4
+ 
+         Change ICD 10 implementation date
+   
+         Affected fields:
+ 
+             IMPLEMENTATION DATE field #.04
+ 
+     CODES file #757.02
+ 
+         Change ICD-9 Diagnosis and Procedure status dates
+         Change ICD-10 Diagnosis and Procedure status dates
+ 
+         Affected fields:
+ 
+             ACTIVATION EFFECTIVE DATE .01 (sub-file #757.28)
+  
+     CODING SYSTEM file #757.03
+ 
+         Change ICD-10 Implementation date
+   
+         Affected fields:
+ 
+             IMPLEMENTATION DATE field #11
+ 
+     CHARACTER POSITIONS file #757.033
+ 
+         Change ICD-10 Diagnosis category status date
+         Change ICD-10 Procedure code fragment status date
+         Change ICD-10 code fragment versioned dates
+ 
+         Affected fields:
+ 
+             STATUS EFFECTIVE DATE field #.01 (sub-file #757.331)
+             NAME/TITLE EFFECTIVE DATE field #.01 (sub-file #757.332)
+             DESCRIPTION EFFECTIVE DATE field #.01 (sub-file #757.043)
+             EXPLANATION EFFECTIVE DATE field #.01 (sub-file #757.334)
+             INCLUDES EFFECTIVE DATE field #.01 (sub-file #757.335)
+ 
+  
+  REMEDY TICKETS:
+  ==============
+  
+    None
+ 
+ 
+  TEST SITES:
+  ==========
+ 
+    Orlando, FL
+    Battle Creek, MI 
+  
+ 
+  FTP SOFTWARE RETRIEVAL:
+  =======================
+  
+    Global Host File:                  LEX_2_87.GBL  (ASCII)
+  
+    The preferred method is to FTP the files from download.vista.domain.ext,
+    which will transmit the files from the first available FTP server.
+  
+    The files may also be downloaded directly from a particular FTP
+    location at the following locations:
+  
+         Hines           ftp.domain.ext
+         Albany          ftp.domain.ext
+         Salt Lake       ftp.domain.ext
+ 
+         Files are available in the ANONYMOUS.SOFTWARE directory. 
+  
+    It may take up to from 30 to 50 minutes to download from the FTP site.
+ 
+ 
+  DISK SPACE REQUIREMENTS
+  =======================
+ 
+    Temporary disk space required:
+ 
+         Global Hostfile LEX_2_87.GBL      851 MB
+         ^LEXM Import Global               640 MB  
+ 
+       The ^LEXM global is deleted by the Post-install and the global
+       hostfile can be deleted from the system when no longer needed.
+ 
+    Permanent disk space required:
+                                         Additional
+                     Before    After   Permanent Space
+            ^ICD0    65 MB     65 MB        --
+            ^ICD9   100 MB    100 MB        --
+            ^ICD      2 MB      2 MB        --
+            ^ICDRS   11 KB     11 KB        --
+            ^LEX    736 MB    741 MB       5 MB
+            TOTAL   901 MB    906 MB       5 MB
+ 
+    The distribution is large but the total growth is relatively small.
+    The advantage is that users may stay on the system during the install.
+ 
+  
+  INSTALLATION INSTRUCTIONS
+  =========================
+  
+    1)  Users may be on the system during the install of LEX*2.0*87.
+        It is recommended that this patch be installed during non-peak
+        hours.  This patch should take from 113 to 145 minutes to 
+        install depending on the system.
+ 
+            Create a backup    60 -  90 minutes
+            Load the Global    13 -  20 minutes
+            Kids Install       45 -  75 minutes
+            Total             118 - 185 minutes 
+ 
+            All estimated times are based on a VMS system, Linux systems
+            will be faster.
+  
+    2)  Create a backup of the following global files before continuing:
+  
+            ICD DIAGNOSIS               #80         ^ICD9(
+            ICD OPERATION/PROCEDURE     #80.1       ^ICD0(
+            DRG                         #80.2       ^ICD(
+            ICD CODING SYSTEMS          #80.4       ^ICDS(
+            DRG SURGICAL HIERARCHY      #80.5       ^ICDRS(
+            Lexicon Files            #757-757.41    ^LEX(
+  
+         These backup files may get as large as 2.2 gigabytes.  Make sure
+         space is available before proceeding.  It should take from 60 to
+         90 minutes to create the backup files.
+  
+         When you are creating a backup of non-subscripted globals, you are
+         saving the entire global.  You should use the utility ^%GO for
+         non-subscripted globals, and when prompted for a global, enter 
+         the global root (global name only, no open parenthesis, no file
+         number and no commas, as shown below).  Examples:
+ 
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^ICD9            ICD DIAGNOSIS
+             ^ICD0            ICD OPERATION/PROCEDURES
+             ^ICDS            ICD CODING SYSTEMS
+             ^ICD             DRG
+             ^ICDRS           DRG SURGICAL HIERARCHY
+             ^LEX             Lexicon Files
+ 
+     3)  Install the data from the global host file LEX_2_87.GBL.  This
+         file contains the Lexicon Utility's import global ^LEXM.
+  
+         This global is approximately 620 megabytes in size.  Make sure
+         there is sufficient space available to load this global with
+         journaling on.  The loading of the global should take from 
+         13 to 20 minutes.
+ 
+         From the Programmer prompt, execute the following routine:
+              
+           >D ^%GI
+           
+           Global input
+           
+           Device: VA5$:[ANONYMOUS.SOFTWARE]LEX_2_87.GBL
+           Parameters? "RS" => 
+           Globals were saved on 13 Jun 2014   9:50 AM   Cache
+           with description: LEX*2.0*87/ICD*18.0*68 Data
+           
+           Input option: A
+           ^LEXM
+ 
+     4)  Set up user and IO variables (D ^XUP) for programmer access.
+  
+     5)  Distribution Load:
+  
+         Load the KIDS Distribution from the Packman Message using the
+         Packman function "Install/Check Message."
+  
+     6)  KIDS Installation:
+  
+         Install the patch using the KIDS Installation Menu action
+         "Install Package(s)" and the install name LEX*2.0*87.
+ 
+           Respond "NO" at the "Want KIDS to INHIBIT LOGONs during
+           the install?" prompt.
+  
+           Respond "NO" at the "Want to DISABLE Scheduled Options,
+           Menu Options, and Protocols?" prompt.
+  
+         The KIDs install should take from 45 to 75 minutes.
+  
+     7)  Cleanup
+         
+         The Environment Check routine LEX2087 and the Post-Install routines 
+         LEX2087A and LEX2087P should be deleted using the KERNEL option 
+         'Delete Routines' [XTRDEL] upon completion of the installation.
+ 
+         NOTE:  The installation of this patch should trigger an update 
+                protocol and may spawn background tasks for the Clinical 
+                Reminders or Consult packages.  You do not need to wait for
+                these background jobs to complete to delete the Environment 
+                Check and Post-Install routines.
+  
+     8)  Post-Install Messages (informational)
+ 
+         a)  You should receive an install message that includes the account,
+             the start time, the completion time and elapsed time for the 
+             install.  Example:
+ 
+ 
+                Subj: LEX*2.0*87 Installation  [#450847] 06/14/14@19:38
+                From: POSTMASTER  In 'IN' basket.   Page 1  *New*
+                -------------------------------------------------------
+                 
+                 Lexicon/ICD/CPT Installation
+                 ============================
+                 
+                 As of:       Jun 14, 2014  19:38:29
+                 In Account:  VHA,ROU   (Production)
+                 Maint By:    User, Anonymous
+                 Build:       LEX*2.0*87
+                 Host File:   LEX_2_87.GBL
+                 
+                 Protocols invoked:
+                    LEXICAL SERVICES UPDATE    Jun 14, 2014  19:38:27
+                    ICD CODE UPDATE EVENT      Jun 14, 2014  19:38:25
+                 
+                 Started:     Jun 14, 2014  18:51:26
+                 Finished:    Jun 14, 2014  19:38:29
+                 Elapsed:     00:47:03
+                 
+                 Data:        Installation of data completed successfully
+ 
+         b)  You should receive a post-install environment check that 
+             includes the success/failure of date change.
+ 
+                Subj: ICD-10 Date Change - Oct 1, 2015  [#450849] 06/14/14
+                From: POSTMASTER  In 'IN' basket.   Page 1  *New*
+                ----------------------------------------------------------
+  
+                Environment is ok.  All Effective dates of 10/01/2014 have
+                been changed to 10/01/2015
+                   
+                                                     ICD Effective Dates
+                File Name/Number                   10/01/2014   10/01/2015
+                ---------------------------------  ----------   ----------
+                CODE file #757.02                           0      786,514
+                CODING SYSTEMS file #757.03                 0            2
+                CHARACTER POSITIONS file #757.033           0    1,764,852
+                ICD DIAGNOSIS file #80                      0    2,559,858
+                ICD OPERATION/PROCEDURE file #80.1          0    2,244,756
+                DRG file #80.2                              0        1,502
+                ICD CODING SYSTEMS file #80.4               0            2
+                DRG SURGICAL HIERARCHY file #80.5           0            2
+                Totals                                      0    7,357,488
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;LEXICON UTILITY;**[Patch List]**;Sep 23, 1996;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LEX2087
+    Before:       n/a   After:B164345418  **87**
+Routine Name: LEX2087A
+    Before:       n/a   After:B124616164  **87**
+Routine Name: LEX2087P
+    Before:       n/a   After: B28656391  **87**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 06, 2012
+Completed By:                               Date Completed: AUG 07, 2014
+Released By :                               Date Released : AUG 07, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

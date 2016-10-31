@@ -1,0 +1,291 @@
+$TXT Created by                  CPRS32.DOMAIN.EXT  (KIDS) on Tuesday, 11/03/15 at 12:22
+=============================================================================
+Run Date: APR 21, 2016                     Designation: TIU*1*291
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #269                      Status: Released
+                  Compliance Date: MAY 22, 2016
+=============================================================================
+
+
+Subject: CWAD AUTO-DEMOTION
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch introduces the new CWAD (Crisis, Warnings, Adverse Reactions,
+ and Directives) notes auto-demotion functionality.
+  
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+  
+  
+ Forms Associated:
+  
+  
+ Mail Groups Associated:
+  
+  
+ Options Associated: 
+  
+    Option Name                           Type          New/Modified/Deleted
+    -----------                           ----          --------------------
+    CWAD/Postings Auto-Demotion Setup     run routine           New
+       [TIU CWAD AUTO-DEMOTION]
+    Text Integration Utilities            menu                Modified
+       (MIS Manager) [TIU MAIN MENU MGR]
+  
+    The CWAD/Postings Auto-Demotion Setup [TIU CWAD AUTO-DEMOTION] option is
+    added as a new menu item of the Text Integration Utilities (MIS Manager)
+    [TIU MAIN MENU MGR] menu option.
+  
+  
+ Protocols Associated:
+  
+  
+ Security Keys Associated:
+  
+  
+ Templates Associated:
+  
+  
+ Additional Information:
+  
+  
+ Parameters Associated:
+  
+    The following Parameter Definition will be added in support of the
+    CWAD auto-demotion functionality:
+  
+    Name                      Description
+    ----------------------------------------------------------------------
+    TIU CWAD EXCLUDED TITLES  THIS PARAMETER IS USED TO EXCLUDE CWAD NOTE
+                              TITLES, WHICH ARE MAPPED TO THE SELECTED VHA
+                              ENTERPRISE STANDARD TITLES, FROM THE AUTO-
+                              DEMOTION FUNCTIONALITY.
+  
+  
+    The following TIU CWAD EXCLUDED TITLES parameter instances will be
+    installed:
+    
+    Parameter                       Instance   Value
+    -----------------------------------------------------------------------
+    PKG: TEXT INTEGRATION UTILITIES    1       ADVANCE DIRECTIVE
+    PKG: TEXT INTEGRATION UTILITIES    2       ADVANCE DIRECTIVE DISCUSSION
+    PKG: TEXT INTEGRATION UTILITIES    3       RESCINDED ADVANCE DIRECTIVE
+  
+  
+ NEW SERVICE REQUESTS (NSR):
+ ===========================
+ NSR #20080307     CWAD Post Auto-Demotion Rules Request
+  
+  
+ PATIENT SAFETY ISSUES (PSIs):
+ =============================
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+  
+  
+ NEW SERVICE REQUEST OVERVIEW:
+ =============================
+ NSR #20080307     CWAD Post Auto-Demotion Rules Request
+  
+ CWAD is a section of CPRS used for posting progress notes, which are more
+ important than standard level notes. These progress notes are made more
+ easily available throughout CPRS. The postings dialog box can become
+ cluttered with CWAD notes, resulting in the inability to easily distinguish
+ important notes from less important notes. The requested enhancement is to
+ demote previously designated notes from the CWAD postings to a regular
+ note status when a newer CWAD note, of the same title, is written which
+ supersedes the existing CWAD note(s). This is accomplished by converting
+ an existing Class III application to Class I. A new parameter definition
+ (TIU CWAD EXCLUDED TITLES) and three default parameter entries are
+ included in this release as well as one new option (CWAD/Postings Auto-
+ Demotion Setup [TIU CWAD AUTO-DEMOTION]). Two new routines will drive
+ this new functionality.
+  
+ The TIU CWAD EXCLUDED TITLES parameter is used to prevent specific CWAD
+ titles from being selected for auto-demotion. What is entered is the VHA
+ Enterprise Standard Title from TIU VHA ENTERPRISE STANDARD TITLE (#8926.1)
+ file. Any CWAD related title in the TIU DOCUMENT DEFINITION (#8925.1)
+ file which is mapped to an excluded VHA Enterprise Standard Title will
+ not be selectable as an auto-demotion CWAD title. At the guidance of the
+ National Center for Ethics in Health Care, we are defaulting three VHA
+ Enterprise Standard Titles to be excluded from the CWAD Auto-Demotion
+ functionality. These are ADVANCE DIRECTIVE, ADVANCE DIRECTIVE
+ DISCUSSION, and RESCINDED ADVANCE DIRECTIVE. These default parameter title
+ entries should not be removed, modified, or overridden without prior 
+ guidance.  
+  
+  
+ Documentation Retrieval Instructions:
+ =====================================
+ Updated documentation describing the new functionality introduced by this
+ patch is available. The preferred method is to retrieve files from 
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve files directly from a
+ specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Albany:              domain.ext
+ Hines:               domain.ext  
+ Salt Lake City:      domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+ Title                                      File Name          FTP Mode
+ -----                                      ---------          --------
+ Clinical Coordinator and User Manual       tiuum.pdf          binary
+ Technical Manual                           tiutm.pdf          binary
+  
+  
+ Patch Installation:
+ ===================
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no Pre/Post install routines included with this patch. Site
+ Clinical Application Coordinators and/or site designated personnel may
+ configure CWAD notes for Auto-Demotion.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize potential
+ disruption to users. This patch should take less than 5 minutes to install.
+ There are no options to disable during this installation.
+  
+ Installation Instructions:
+ --------------------------
+    1. Choose the PackMan message containing this patch.
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option 
+    3. From the Kernel Installation and Distribution System Menu, select the
+       Installation Menu. From this menu, you may elect to use the following
+       options. When prompted for the INSTALL NAME enter the patch
+       TIU*1.0*291.
+       a. Backup a Transport Global - May be skipped on initial installation
+          as all routines are new. This option will create a backup message
+          of any routines exported with this patch. It will not backup any
+          other changes such as DDs or templates.
+       b. Compare Transport Global to Current System - This option will allow
+          you to view all changes that will be made when this patch is
+          installed. It compares all components of this patch (routines,
+          DDs, templates, etc.).
+       c. Verify Checksums in Transport Global - This option will allow you
+          to ensure the integrity of the routines that are in the transport
+          global.
+    4. From the Installation Menu, select the Install Package(s) option and
+       choose the patch to install.
+    5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? YES//' answer Yes. You may answer No if your system rebuilds
+       menu trees nightly using TaskMan. If you rebuild the menu trees during
+       the installation, it could affect users on the system and the
+       installation times will increase.
+    6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+       answer No.
+    7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//' answer No.
+    8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ After a successful installation, site Clinical Application Coordinators
+ and/or site designated personnel may configure CWAD notes for Auto-Demotion
+ utilizing the CWAD/Postings Auto-Demotion Setup [TIU CWAD AUTO-DEMOTION]
+ option located on the Text Integration Utilities (MIS Manager) [TIU MAIN
+ MENU MGR] menu option. 
+ 
+ Prior to the actual CWAD/Postings Auto-Demotion Setup the site will need to
+ determine the progress note title(s) to utilize as the "demoted" progress
+ note title(s).  
+ 
+ If the site does not wish to CREATE a new progress note title(s) for
+ demoting a CWAD/Postings title(s), then select any existing non-CWAD
+ title(s) (the title is not linked to a CWAD document class).
+ 
+ If the site does wish to CREATE a new progress note title(s), the site will
+ follow local policy for progress note creation. The Demoted Progress Note 
+ Title must be under a non-CWAD document class but may be linked to the VHA 
+ Enterprise Standard Title which matches the CWAD title being demoted.
+ IE: DEMOTED CRISIS NOTE is mapped to the VHA Enterprise Standard Title of
+ CRISIS NOTE.
+ 
+ Below is an example of the CWAD/Postings Auto-Demotion Setup: 
+  
+                           --- MIS Managers Menu ---
+  
+  
+    1      Individual Patient Document
+    2      Multiple Patient Documents
+    3      Print Document Menu ...
+    4      Search for Selected Documents
+    5      Statistical Reports ...
+    6      Unsigned/Uncosigned Report
+    7      Missing Text Report
+    9      Signed/unsigned PN report and update
+    10     UNKNOWN Addenda Cleanup
+    11     Missing Expected Cosigner Report
+    12     Mark Document as 'Signed by Surrogate'
+    13     Mismatched ID Notes
+    14     TIU 215 ANALYSIS ...
+    15     Transcription Billing Verification Report
+    16     CWAD/Postings Auto-Demotion Setup
+  
+ Select Text Integration Utilities (MIS Manager) <TEST ACCOUNT> Option: 16
+   CWAD/Postings Auto-Demotion Setup
+  
+  
+  
+  
+  
+ Select a CWAD/Postings TITLE for auto-demotion: CRISIS NOTE
+       Std Title: CRISIS NOTE
+  
+ Select a NON-Posting TITLE as the demotion target: DEMOTED CRISIS NOTE
+  
+ Done.  Post-Signature code has been set (or reset) as follows...
+ TITLE: CRISIS NOTE
+ POST-SIGNATURE ACTION: D SILENT^TIUCWD(1632,11)
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUCWD
+    Before:       n/a   After:  B2873731  **291**
+Routine Name: TIUCWDUT
+    Before:       n/a   After: B10012924  **291**
+
+=============================================================================
+User Information:                          Hold Date     : MAR 30, 2016
+Entered By  :                               Date Entered  : JAN 14, 2015
+Completed By:                               Date Completed: MAR 25, 2016
+Released By :                               Date Released : APR 21, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

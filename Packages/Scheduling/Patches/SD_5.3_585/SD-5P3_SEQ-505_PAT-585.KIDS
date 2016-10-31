@@ -1,0 +1,1137 @@
+Released SD*5.3*585 SEQ #505
+Extracted from mail message
+**KIDS**:SD*5.3*585^
+
+**INSTALL NAME**
+SD*5.3*585
+"BLD",8778,0)
+SD*5.3*585^SCHEDULING^0^3130319^y
+"BLD",8778,1,0)
+^^7^7^3130319^
+"BLD",8778,1,1,0)
+This patch will fix the following issues with locally created codes in 
+"BLD",8778,1,2,0)
+the ELIGIBILITY CODE file (#8):
+"BLD",8778,1,3,0)
+1) OUT OF SYNC problem when making an appointment.
+"BLD",8778,1,4,0)
+2) OUT OF SYNC problem when adding a patient to the electronic wait list.
+"BLD",8778,1,5,0)
+3) Ambulatory Care Nightly Transmission generating reject errors due to 
+"BLD",8778,1,6,0)
+software not recognizing local eligibility codes having an Internal Entry 
+"BLD",8778,1,7,0)
+Number (IEN) greater than 99.
+"BLD",8778,4,0)
+^9.64PA^^
+"BLD",8778,6)
+6^
+"BLD",8778,6.3)
+19
+"BLD",8778,"ABPKG")
+n
+"BLD",8778,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8778,"KRN",.4,0)
+.4
+"BLD",8778,"KRN",.401,0)
+.401
+"BLD",8778,"KRN",.402,0)
+.402
+"BLD",8778,"KRN",.403,0)
+.403
+"BLD",8778,"KRN",.5,0)
+.5
+"BLD",8778,"KRN",.84,0)
+.84
+"BLD",8778,"KRN",3.6,0)
+3.6
+"BLD",8778,"KRN",3.8,0)
+3.8
+"BLD",8778,"KRN",9.2,0)
+9.2
+"BLD",8778,"KRN",9.8,0)
+9.8
+"BLD",8778,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",8778,"KRN",9.8,"NM",1,0)
+SDM4^^0^B43568059
+"BLD",8778,"KRN",9.8,"NM",2,0)
+SDWLSC^^0^B14766682
+"BLD",8778,"KRN",9.8,"NM",3,0)
+SCDXUTL0^^0^B37535896
+"BLD",8778,"KRN",9.8,"NM","B","SCDXUTL0",3)
+
+"BLD",8778,"KRN",9.8,"NM","B","SDM4",1)
+
+"BLD",8778,"KRN",9.8,"NM","B","SDWLSC",2)
+
+"BLD",8778,"KRN",19,0)
+19
+"BLD",8778,"KRN",19.1,0)
+19.1
+"BLD",8778,"KRN",101,0)
+101
+"BLD",8778,"KRN",409.61,0)
+409.61
+"BLD",8778,"KRN",771,0)
+771
+"BLD",8778,"KRN",779.2,0)
+779.2
+"BLD",8778,"KRN",870,0)
+870
+"BLD",8778,"KRN",8989.51,0)
+8989.51
+"BLD",8778,"KRN",8989.52,0)
+8989.52
+"BLD",8778,"KRN",8994,0)
+8994
+"BLD",8778,"KRN","B",.4,.4)
+
+"BLD",8778,"KRN","B",.401,.401)
+
+"BLD",8778,"KRN","B",.402,.402)
+
+"BLD",8778,"KRN","B",.403,.403)
+
+"BLD",8778,"KRN","B",.5,.5)
+
+"BLD",8778,"KRN","B",.84,.84)
+
+"BLD",8778,"KRN","B",3.6,3.6)
+
+"BLD",8778,"KRN","B",3.8,3.8)
+
+"BLD",8778,"KRN","B",9.2,9.2)
+
+"BLD",8778,"KRN","B",9.8,9.8)
+
+"BLD",8778,"KRN","B",19,19)
+
+"BLD",8778,"KRN","B",19.1,19.1)
+
+"BLD",8778,"KRN","B",101,101)
+
+"BLD",8778,"KRN","B",409.61,409.61)
+
+"BLD",8778,"KRN","B",771,771)
+
+"BLD",8778,"KRN","B",779.2,779.2)
+
+"BLD",8778,"KRN","B",870,870)
+
+"BLD",8778,"KRN","B",8989.51,8989.51)
+
+"BLD",8778,"KRN","B",8989.52,8989.52)
+
+"BLD",8778,"KRN","B",8994,8994)
+
+"BLD",8778,"QDEF")
+^^^^NO^^^^NO^^YES
+"BLD",8778,"QUES",0)
+^9.62^^
+"BLD",8778,"REQB",0)
+^9.611^3^2
+"BLD",8778,"REQB",2,0)
+SD*5.3*496^2
+"BLD",8778,"REQB",3,0)
+SD*5.3*562^2
+"BLD",8778,"REQB","B","SD*5.3*496",2)
+
+"BLD",8778,"REQB","B","SD*5.3*562",3)
+
+"MBREQ")
+0
+"PKG",16,-1)
+1^1
+"PKG",16,0)
+SCHEDULING^SD^APPOINTMENTS,PROFILES,LETTERS,AMIS REPORTS
+"PKG",16,20,0)
+^9.402P^^
+"PKG",16,22,0)
+^9.49I^1^1
+"PKG",16,22,1,0)
+5.3^2930813
+"PKG",16,22,1,"PAH",1,0)
+585^3130319^100892
+"PKG",16,22,1,"PAH",1,1,0)
+^^7^7^3130319
+"PKG",16,22,1,"PAH",1,1,1,0)
+This patch will fix the following issues with locally created codes in 
+"PKG",16,22,1,"PAH",1,1,2,0)
+the ELIGIBILITY CODE file (#8):
+"PKG",16,22,1,"PAH",1,1,3,0)
+1) OUT OF SYNC problem when making an appointment.
+"PKG",16,22,1,"PAH",1,1,4,0)
+2) OUT OF SYNC problem when adding a patient to the electronic wait list.
+"PKG",16,22,1,"PAH",1,1,5,0)
+3) Ambulatory Care Nightly Transmission generating reject errors due to 
+"PKG",16,22,1,"PAH",1,1,6,0)
+software not recognizing local eligibility codes having an Internal Entry 
+"PKG",16,22,1,"PAH",1,1,7,0)
+Number (IEN) greater than 99.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","SCDXUTL0")
+0^3^B37535896^B36068306
+"RTN","SCDXUTL0",1,0)
+SCDXUTL0 ;ALB/ESD - Generic functions for Amb Care HL7 Interface ; 5/31/05 11:23am
+"RTN","SCDXUTL0",2,0)
+ ;;5.3;Scheduling;**44,55,69,77,85,110,122,94,66,132,180,235,256,258,325,451,441,562,585**;Aug 13, 1993;Build 19
+"RTN","SCDXUTL0",3,0)
+ ;
+"RTN","SCDXUTL0",4,0)
+ ; This routine contains functions used with the Ambulatory Care
+"RTN","SCDXUTL0",5,0)
+ ; Reporting Project (ACRP).
+"RTN","SCDXUTL0",6,0)
+ ;
+"RTN","SCDXUTL0",7,0)
+ ;ICR Agreements:
+"RTN","SCDXUTL0",8,0)
+ ;
+"RTN","SCDXUTL0",9,0)
+ ;ICR - 3481 for reference to $$SC^DGMTR
+"RTN","SCDXUTL0",10,0)
+ ;ICR - 2463 for reference to $$LST^DGMTU
+"RTN","SCDXUTL0",11,0)
+ ;ICR - 3637 for reference to $$PA^DGMTUTL
+"RTN","SCDXUTL0",12,0)
+ ;
+"RTN","SCDXUTL0",13,0)
+ ;
+"RTN","SCDXUTL0",14,0)
+MTI(DFN,DATE,EC,AT,SDOE) ;Calculate Means Test Indicator
+"RTN","SCDXUTL0",15,0)
+ ;
+"RTN","SCDXUTL0",16,0)
+ ;    Input:     DFN   =  Patient IEN
+"RTN","SCDXUTL0",17,0)
+ ;               Date  =  Encounter Date/Time
+"RTN","SCDXUTL0",18,0)
+ ;               EC    =  Eligibility (Code) of Encounter
+"RTN","SCDXUTL0",19,0)
+ ;               AT    =  Appointment Type of Encounter
+"RTN","SCDXUTL0",20,0)
+ ;               SDOE  =  Outpatient Encounter IEN
+"RTN","SCDXUTL0",21,0)
+ ;
+"RTN","SCDXUTL0",22,0)
+ ;   Output:     MTI   =  Means Test Indicator
+"RTN","SCDXUTL0",23,0)
+ ;
+"RTN","SCDXUTL0",24,0)
+ N MT,MTI,SDVD1,SDINPT,SDANS,SDANS1,SDINPT,SDMT,VET,X
+"RTN","SCDXUTL0",25,0)
+ S MTI=""
+"RTN","SCDXUTL0",26,0)
+ S DFN=$G(DFN),DATE=$G(DATE),EC=$G(EC),AT=$G(AT),SDOE=$G(SDOE)
+"RTN","SCDXUTL0",27,0)
+ I (DFN="")!(DATE="")!(EC="")!(EC=0)!(AT="")!(SDOE="") G MTQ
+"RTN","SCDXUTL0",28,0)
+ I '$D(^DIC(8,+EC,0)) Q MTI   ;SD*585
+"RTN","SCDXUTL0",29,0)
+ ;
+"RTN","SCDXUTL0",30,0)
+ ;- VA Code (get from MAS Eligibility Code IEN)
+"RTN","SCDXUTL0",31,0)
+ S X=$G(^DIC(8.1,$P($G(^DIC(8,+EC,0)),"^",9),0))
+"RTN","SCDXUTL0",32,0)
+ S EC=$P(X,"^",4),VET=$P(X,"^",5)
+"RTN","SCDXUTL0",33,0)
+ ;- Non-Veteran
+"RTN","SCDXUTL0",34,0)
+ I $P($G(^DPT(DFN,"VET")),"^")="N"!(VET="N") S MTI="N" G MTQ
+"RTN","SCDXUTL0",35,0)
+ ;- Dom patient
+"RTN","SCDXUTL0",36,0)
+ I EC=6 S MTI="X" G MTQ
+"RTN","SCDXUTL0",37,0)
+ ;- Inpatient status
+"RTN","SCDXUTL0",38,0)
+ S SDVD1=DATE D INPT^SDOPC1 I SDMT="X0" S MTI="X" G MTQ
+"RTN","SCDXUTL0",39,0)
+ ;- Service Connected > 50 %
+"RTN","SCDXUTL0",40,0)
+ I EC=1 S MTI="AS" G MTQ
+"RTN","SCDXUTL0",41,0)
+ ;-- Service Connected < 50 %
+"RTN","SCDXUTL0",42,0)
+ I EC=3,$$SC^DGMTR(DFN) D  I MTI'="" G MTQ
+"RTN","SCDXUTL0",43,0)
+ .; 'AS' if seen for SC condition
+"RTN","SCDXUTL0",44,0)
+ .I $P($G(^SDD(409.42,+$O(^SDD(409.42,"AO",+SDOE,3,0)),0)),U,3) S MTI="AS"
+"RTN","SCDXUTL0",45,0)
+ ;-Military Disability Retiree
+"RTN","SCDXUTL0",46,0)
+ ;S X=$P($G(^DPT(DFN,.36)),"^",2) I X,(X<3) S MTI="AS" G MTQ
+"RTN","SCDXUTL0",47,0)
+ ;-Military Disability Retirement OR Discharge Due To Disability
+"RTN","SCDXUTL0",48,0)
+ I $P($G(^DPT(DFN,.36)),"^",12)!($P($G(^DPT(DFN,.36)),"^",13)) S MTI="AS" G MTQ
+"RTN","SCDXUTL0",49,0)
+ ;
+"RTN","SCDXUTL0",50,0)
+ I EC=2 D  I MTI'="" G MTQ
+"RTN","SCDXUTL0",51,0)
+ .;- Mexican Border Period or World War I
+"RTN","SCDXUTL0",52,0)
+ .I $P($G(^DIC(21,+$P($G(^DPT(DFN,.32)),"^",3),0)),"^",3)=1!($P($G(^DIC(21,+$P($G(^DPT(DFN,.32)),"^",3),0)),"^",3)=3) S MTI="AS" Q
+"RTN","SCDXUTL0",53,0)
+ .;- Prisoner of War (POW)
+"RTN","SCDXUTL0",54,0)
+ .I $P($G(^DPT(DFN,.52)),"^",5)="Y" S MTI="AS" Q
+"RTN","SCDXUTL0",55,0)
+ .;- Purple Heart Recipient
+"RTN","SCDXUTL0",56,0)
+ .I $P($G(^DPT(DFN,.53)),"^")="Y" S MTI="AS" Q
+"RTN","SCDXUTL0",57,0)
+ .;- Aid and Attendance
+"RTN","SCDXUTL0",58,0)
+ .I $P($G(^DPT(DFN,.362)),"^",12)="Y" S MTI="AN" Q
+"RTN","SCDXUTL0",59,0)
+ .;- Housebound
+"RTN","SCDXUTL0",60,0)
+ .I $P($G(^DPT(DFN,.362)),"^",13)="Y" S MTI="AN" Q
+"RTN","SCDXUTL0",61,0)
+ ;- Receiving VA Pension
+"RTN","SCDXUTL0",62,0)
+ I EC=4,$P($G(^DPT(DFN,.362)),"^",14)="Y" S MTI="AN" G MTQ
+"RTN","SCDXUTL0",63,0)
+ ;
+"RTN","SCDXUTL0",64,0)
+ I EC=5!(EC=3) D  I MTI'="" G MTQ
+"RTN","SCDXUTL0",65,0)
+ .;- Eligible for Medicaid
+"RTN","SCDXUTL0",66,0)
+ .I $P($G(^DPT(DFN,.38)),"^")=1 S MTI="AN" Q
+"RTN","SCDXUTL0",67,0)
+ .;- Appt types with ignore billing set to 1 (except comp gen)
+"RTN","SCDXUTL0",68,0)
+ .I AT'=10,$P($G(^SD(409.1,+AT,0)),"^",2) S MTI="X" Q
+"RTN","SCDXUTL0",69,0)
+ .;- Treatment for AO, IR, EC, MST, HNC
+"RTN","SCDXUTL0",70,0)
+ .F SDANS1=1,2,4,5,6 S SDANS=$S('$D(^SDD(409.42,"AO",+SDOE,SDANS1)):"",$P($G(^SDD(409.42,$O(^(SDANS1,0)),0)),"^",3):1,1:0) I SDANS=1 S MTI="AS" Q
+"RTN","SCDXUTL0",71,0)
+ .I MTI]"" Q
+"RTN","SCDXUTL0",72,0)
+ .;- Means Test Code A, C, or G  (also Pending Adj = Code C or Code G)
+"RTN","SCDXUTL0",73,0)
+ .S MT=$$LST^DGMTU(DFN,DATE)
+"RTN","SCDXUTL0",74,0)
+ .I $P(MT,"^",4)="A" S MTI="AN" Q
+"RTN","SCDXUTL0",75,0)
+ .I $P(MT,"^",4)="C" S MTI="C" Q
+"RTN","SCDXUTL0",76,0)
+ .I $P(MT,"^",4)="G" S MTI="G" Q
+"RTN","SCDXUTL0",77,0)
+ .I $P(MT,"^",4)="P" D  Q
+"RTN","SCDXUTL0",78,0)
+ . .S MTI=$$PA^DGMTUTL($P(MT,"^")),MTI=$S('$D(MTI):"U",MTI="MT":"C",MTI="GMT":"G",1:"U")
+"RTN","SCDXUTL0",79,0)
+ .;- no means test status or no longer required...check current eligibility data
+"RTN","SCDXUTL0",80,0)
+ .S X=+$G(^DPT(DFN,.36)),X=+$P($G(^DIC(8,X,0)),U,9) ; get MAS eligibility
+"RTN","SCDXUTL0",81,0)
+ .;- Service connected > 50 %
+"RTN","SCDXUTL0",82,0)
+ .I X=1 S MTI="AS" Q
+"RTN","SCDXUTL0",83,0)
+ .;- Service connected < 50 %
+"RTN","SCDXUTL0",84,0)
+ .I EC=3,'$$SC^DGMTR(DFN) S MTI="AS" Q
+"RTN","SCDXUTL0",85,0)
+ .;- mex border or WWI or POW
+"RTN","SCDXUTL0",86,0)
+ .I X=16!(X=17)!(X=18)!(X=22) S MTI="AS" Q
+"RTN","SCDXUTL0",87,0)
+ .;- A&A or Pension or HB
+"RTN","SCDXUTL0",88,0)
+ .I X=2!(X=4)!(X=15) S MTI="AN" Q
+"RTN","SCDXUTL0",89,0)
+ ;- Means Test required and not done/completed
+"RTN","SCDXUTL0",90,0)
+ S MTI="U"
+"RTN","SCDXUTL0",91,0)
+MTQ Q MTI
+"RTN","SCDXUTL0",92,0)
+ ;
+"RTN","SCDXUTL0",93,0)
+ ;
+"RTN","SCDXUTL0",94,0)
+PATCLASS(DFN,SDOE) ; - Return classification questions from PATIENT (#2) file
+"RTN","SCDXUTL0",95,0)
+ ;           (Agent Orange, Radiation Exposure, Service Connected,
+"RTN","SCDXUTL0",96,0)
+ ;            Environmental Contaminants, Military Sexual Trauma and
+"RTN","SCDXUTL0",97,0)
+ ;            Head/Neck Cancer questions)
+"RTN","SCDXUTL0",98,0)
+ ;
+"RTN","SCDXUTL0",99,0)
+ ;   Input:  DFN  = Patient IEN (from file #2)
+"RTN","SCDXUTL0",100,0)
+ ;           SDOE = Outpatient Encounter File IEN [Optional]
+"RTN","SCDXUTL0",101,0)
+ ;
+"RTN","SCDXUTL0",102,0)
+ ;  Output:  String containing Y if classification question = YES, N if 
+"RTN","SCDXUTL0",103,0)
+ ;           = NO, null otherwise (classifications separated by "^")
+"RTN","SCDXUTL0",104,0)
+ ;
+"RTN","SCDXUTL0",105,0)
+ N NODE,PATCLASS,SDTEMP,X
+"RTN","SCDXUTL0",106,0)
+ S SDTEMP(1)=$$AO^SDCO22(DFN,$G(SDOE))
+"RTN","SCDXUTL0",107,0)
+ S SDTEMP(2)=$$IR^SDCO22(DFN,$G(SDOE))
+"RTN","SCDXUTL0",108,0)
+ S SDTEMP(3)=$$SC^SDCO22(DFN,$G(SDOE))
+"RTN","SCDXUTL0",109,0)
+ S SDTEMP(4)=$$EC^SDCO22(DFN,$G(SDOE))
+"RTN","SCDXUTL0",110,0)
+ S SDTEMP(5)=$$MST^SDCO22(DFN,$G(SDOE))
+"RTN","SCDXUTL0",111,0)
+ S SDTEMP(6)=$$HNC^SDCO22(DFN,$G(SDOE))
+"RTN","SCDXUTL0",112,0)
+ S SDTEMP(7)=$$CV^SDCO22(DFN,$G(SDOE))
+"RTN","SCDXUTL0",113,0)
+ S SDTEMP(8)=$$SHAD^SDCO22(DFN)
+"RTN","SCDXUTL0",114,0)
+ F X=1:1:8 S $P(PATCLASS,U,X)=$S(SDTEMP(X)=1:"Y",1:"N")
+"RTN","SCDXUTL0",115,0)
+ Q PATCLASS
+"RTN","SCDXUTL0",116,0)
+ ;
+"RTN","SCDXUTL0",117,0)
+ ;
+"RTN","SCDXUTL0",118,0)
+CLASS(SDOE,SCDXARRY) ; - Return array of classification types for encounter
+"RTN","SCDXUTL0",119,0)
+ ;
+"RTN","SCDXUTL0",120,0)
+ ;   Input:  SDOE = Outpatient Encounter IEN (from file #409.68)
+"RTN","SCDXUTL0",121,0)
+ ;
+"RTN","SCDXUTL0",122,0)
+ ;  Output:  Array (pass desired name as parameter) containing
+"RTN","SCDXUTL0",123,0)
+ ;           Classification Type^Value
+"RTN","SCDXUTL0",124,0)
+ ;
+"RTN","SCDXUTL0",125,0)
+ N CLASS,I,X
+"RTN","SCDXUTL0",126,0)
+ S CLASS="",(I,X)=0
+"RTN","SCDXUTL0",127,0)
+ S SDOE=+$G(SDOE)
+"RTN","SCDXUTL0",128,0)
+ F  S CLASS=+$O(^SDD(409.42,"OE",SDOE,CLASS)) Q:'CLASS  D
+"RTN","SCDXUTL0",129,0)
+ . S I=$P($G(^SDD(409.42,CLASS,0)),"^"),X=X+1
+"RTN","SCDXUTL0",130,0)
+ . S @SCDXARRY@(I)=$P($G(^SDD(409.42,CLASS,0)),"^")_"^"_$P($G(^SDD(409.42,CLASS,0)),"^",3)
+"RTN","SCDXUTL0",131,0)
+CLASSQ S @SCDXARRY@(0)=X
+"RTN","SCDXUTL0",132,0)
+ Q
+"RTN","SCDXUTL0",133,0)
+ ;
+"RTN","SCDXUTL0",134,0)
+ ;
+"RTN","SCDXUTL0",135,0)
+CHKCLASS(DFN,SDOE) ; - Get classification data for HL7 VAFHLZCL segment
+"RTN","SCDXUTL0",136,0)
+ ;
+"RTN","SCDXUTL0",137,0)
+ ;   Input:  DFN = Patient IEN (from file #2)
+"RTN","SCDXUTL0",138,0)
+ ;          SDOE = Outpatient Encounter IEN (from file #409.68)
+"RTN","SCDXUTL0",139,0)
+ ;
+"RTN","SCDXUTL0",140,0)
+ ;  Output:  String separated by "^" containing: 
+"RTN","SCDXUTL0",141,0)
+ ;           1 (patient class = YES and encounter class = YES)
+"RTN","SCDXUTL0",142,0)
+ ;           0 (patient class = YES and encounter class = NO)
+"RTN","SCDXUTL0",143,0)
+ ;           HLQ ("""""") otherwise
+"RTN","SCDXUTL0",144,0)
+ ;
+"RTN","SCDXUTL0",145,0)
+EN N OECLASS,OUT,PATCLASS,TYPE,ENCVAL,CLCNT,PATVAL
+"RTN","SCDXUTL0",146,0)
+ S PATCLASS=$$PATCLASS(DFN,SDOE)
+"RTN","SCDXUTL0",147,0)
+ D CLASS(SDOE,"OECLASS")
+"RTN","SCDXUTL0",148,0)
+ S CLCNT=$L(PATCLASS,"^")
+"RTN","SCDXUTL0",149,0)
+ F TYPE=1:1:CLCNT D
+"RTN","SCDXUTL0",150,0)
+ .S ENCVAL=$P($G(OECLASS(TYPE)),"^",2)
+"RTN","SCDXUTL0",151,0)
+ .S PATVAL=$P(PATCLASS,"^",TYPE)
+"RTN","SCDXUTL0",152,0)
+ .S $P(OUT,"^",TYPE)=""""""
+"RTN","SCDXUTL0",153,0)
+ .I PATVAL="Y" S $P(OUT,"^",TYPE)=ENCVAL
+"RTN","SCDXUTL0",154,0)
+ENQ Q OUT
+"RTN","SCDXUTL0",155,0)
+ ;
+"RTN","SCDXUTL0",156,0)
+ ;
+"RTN","SCDXUTL0",157,0)
+POV(DFN,DATE,CLINIC,APTYP) ; - Determine Purpose of Visit for encounter
+"RTN","SCDXUTL0",158,0)
+ ;
+"RTN","SCDXUTL0",159,0)
+ ;   Input:  DFN = Patient IEN
+"RTN","SCDXUTL0",160,0)
+ ;          DATE = Appointment Date/Time
+"RTN","SCDXUTL0",161,0)
+ ;        CLINIC = Clinic
+"RTN","SCDXUTL0",162,0)
+ ;         APTYP = Appointment Type
+"RTN","SCDXUTL0",163,0)
+ ;
+"RTN","SCDXUTL0",164,0)
+ ;  Output:  Purpose of Visit value (combination of Purpose of Visit
+"RTN","SCDXUTL0",165,0)
+ ;           and Appointment Type)
+"RTN","SCDXUTL0",166,0)
+ ;
+"RTN","SCDXUTL0",167,0)
+ N POV,SCDXPOV
+"RTN","SCDXUTL0",168,0)
+ I (DFN=""!(DATE="")!(CLINIC="")!(APTYP="")) G POVQ
+"RTN","SCDXUTL0",169,0)
+ I $P($G(^DPT(DFN,"S",+DATE,0)),"^")'=CLINIC G POVQ
+"RTN","SCDXUTL0",170,0)
+ S POV=$P($G(^DPT(DFN,"S",+DATE,0)),"^",7),POV=$S($L(POV)=1:"0"_POV,1:POV)
+"RTN","SCDXUTL0",171,0)
+ S APTYP=$S($L(APTYP)=1:"0"_APTYP,1:APTYP)
+"RTN","SCDXUTL0",172,0)
+ S SCDXPOV=POV_APTYP
+"RTN","SCDXUTL0",173,0)
+POVQ Q $G(SCDXPOV)
+"RTN","SCDXUTL0",174,0)
+ ;
+"RTN","SCDXUTL0",175,0)
+ ;
+"RTN","SCDXUTL0",176,0)
+SCODE(SDOE,SCDXARRY) ; Return array of stop codes for encounter
+"RTN","SCDXUTL0",177,0)
+ ;
+"RTN","SCDXUTL0",178,0)
+ ;   Input:  SDOE = Outpatient Encounter IEN (from file #409.68)
+"RTN","SCDXUTL0",179,0)
+ ;
+"RTN","SCDXUTL0",180,0)
+ ;  Output:  Array (pass desired name as parameter) containing
+"RTN","SCDXUTL0",181,0)
+ ;           stop codes
+"RTN","SCDXUTL0",182,0)
+ ;
+"RTN","SCDXUTL0",183,0)
+ ;
+"RTN","SCDXUTL0",184,0)
+ N CNT,I,SDOE0,SDOEC,SDOEC0
+"RTN","SCDXUTL0",185,0)
+ S CNT=1,(I,SDOEC)=0
+"RTN","SCDXUTL0",186,0)
+ S SDOE=+$G(SDOE)
+"RTN","SCDXUTL0",187,0)
+ I '$D(^SCE(SDOE,0)) G SCODEQ
+"RTN","SCDXUTL0",188,0)
+ I '$P($G(^SCE(SDOE,0)),"^",3) G SCODEQ
+"RTN","SCDXUTL0",189,0)
+ S SDOE0=$G(^SCE(SDOE,0))
+"RTN","SCDXUTL0",190,0)
+ ;
+"RTN","SCDXUTL0",191,0)
+ ;- Get stop code from parent encounter
+"RTN","SCDXUTL0",192,0)
+ I $P(SDOE0,"^",3) S @SCDXARRY@(CNT)=$P(SDOE0,"^",3),I=CNT
+"RTN","SCDXUTL0",193,0)
+ ;
+"RTN","SCDXUTL0",194,0)
+ ;- Get stop code from child encounter (credit stop)
+"RTN","SCDXUTL0",195,0)
+ F  S SDOEC=+$O(^SCE("APAR",SDOE,SDOEC)) Q:('SDOEC)!(CNT=2)  D
+"RTN","SCDXUTL0",196,0)
+ . S SDOEC0=$G(^SCE(SDOEC,0))
+"RTN","SCDXUTL0",197,0)
+ . I $P(SDOEC0,"^",3),($P(SDOEC0,"^",8)=4) D
+"RTN","SCDXUTL0",198,0)
+ .. S CNT=CNT+1,I=CNT
+"RTN","SCDXUTL0",199,0)
+ .. S @SCDXARRY@(CNT)=$P(SDOEC0,"^",3)
+"RTN","SCDXUTL0",200,0)
+SCODEQ S @SCDXARRY@(0)=I
+"RTN","SCDXUTL0",201,0)
+ Q
+"RTN","SCDXUTL0",202,0)
+ ;
+"RTN","SCDXUTL0",203,0)
+ ;
+"RTN","SCDXUTL0",204,0)
+PROC(SDOE,SCDXARRY) ; Return array of procedures for encounter
+"RTN","SCDXUTL0",205,0)
+ ;
+"RTN","SCDXUTL0",206,0)
+ ;
+"RTN","SCDXUTL0",207,0)
+ ;   Input:  SDOE = Outpatient Encounter IEN (from file #409.68)
+"RTN","SCDXUTL0",208,0)
+ ;
+"RTN","SCDXUTL0",209,0)
+ ;  Output:  Array (pass desired name as parameter) containing
+"RTN","SCDXUTL0",210,0)
+ ;           procedures
+"RTN","SCDXUTL0",211,0)
+ ;
+"RTN","SCDXUTL0",212,0)
+ N CNT
+"RTN","SCDXUTL0",213,0)
+ S CNT=0,SDOE=+$G(SDOE)
+"RTN","SCDXUTL0",214,0)
+ I '$D(^SCE(SDOE,0)) G PROCQ
+"RTN","SCDXUTL0",215,0)
+ ;
+"RTN","SCDXUTL0",216,0)
+ D GETPROC(.CNT,SDOE,SCDXARRY) G PROCQ
+"RTN","SCDXUTL0",217,0)
+ ;
+"RTN","SCDXUTL0",218,0)
+ ;- Array of procedures
+"RTN","SCDXUTL0",219,0)
+PROCQ S @SCDXARRY@(0)=CNT
+"RTN","SCDXUTL0",220,0)
+ Q
+"RTN","SCDXUTL0",221,0)
+ ;
+"RTN","SCDXUTL0",222,0)
+ ;
+"RTN","SCDXUTL0",223,0)
+GETPROC(CNT,ENC,SCDXARRY) ;Get procedures from Scheduling Visits file
+"RTN","SCDXUTL0",224,0)
+ ;
+"RTN","SCDXUTL0",225,0)
+ N CPTS,VCPT
+"RTN","SCDXUTL0",226,0)
+ D GETCPT^SDOE(ENC,"CPTS")
+"RTN","SCDXUTL0",227,0)
+ N CPT,QTY,I
+"RTN","SCDXUTL0",228,0)
+ S VCPT=0
+"RTN","SCDXUTL0",229,0)
+ F  S VCPT=$O(CPTS(VCPT)) Q:'VCPT  D
+"RTN","SCDXUTL0",230,0)
+ . S CPT=$G(CPTS(VCPT))
+"RTN","SCDXUTL0",231,0)
+ . S QTY=+$P(CPT,U,16)
+"RTN","SCDXUTL0",232,0)
+ . F I=1:1:QTY S CNT=CNT+1,@SCDXARRY@(CNT)=+CPT
+"RTN","SCDXUTL0",233,0)
+ Q
+"RTN","SDM4")
+0^1^B43568059^B35143578
+"RTN","SDM4",1,0)
+SDM4 ;ALB/BOK - MAKE APPOINTMENT ; 12 APR 1988 1100  ; Compiled April 9, 2007 14:26:51
+"RTN","SDM4",2,0)
+ ;;5.3;Scheduling;**263,273,327,394,417,496,585**;Aug 13, 1993;Build 19
+"RTN","SDM4",3,0)
+ ;
+"RTN","SDM4",4,0)
+ ;09/15/2002 $N FUNCTION REMOVED AND REPLACED WITH $O - IOFO - BAY PINES - TEH
+"RTN","SDM4",5,0)
+ ;
+"RTN","SDM4",6,0)
+ ;ICR Agreements:
+"RTN","SDM4",7,0)
+ ;
+"RTN","SDM4",8,0)
+ ;ICR - 1476 For reference to PRIMARY ELIG. ^DPT(IEN,.372).
+"RTN","SDM4",9,0)
+ ;ICR - 427  For reference to ^DIC(8)
+"RTN","SDM4",10,0)
+ ;ICR - 10061 For reference to 2^VADPT
+"RTN","SDM4",11,0)
+ ;ICR - 2056 For reference to $$GET1^DIQ
+"RTN","SDM4",12,0)
+ ;ICR - 10116 for reference to $$UPPER^VALM1
+"RTN","SDM4",13,0)
+ ;ICR - 2516 For reference to ^DIC(8.1 - SD*585
+"RTN","SDM4",14,0)
+ ;
+"RTN","SDM4",15,0)
+ ;09/23/2005 Patch SD*5.3*417 Upper/Lower case useage.
+"RTN","SDM4",16,0)
+ ;04/09/2007 Patch SD*5.3*496 Accept entry in file 44 without STOP CODE
+"RTN","SDM4",17,0)
+ ;
+"RTN","SDM4",18,0)
+ ;
+"RTN","SDM4",19,0)
+TYPE ;
+"RTN","SDM4",20,0)
+ D SC
+"RTN","SDM4",21,0)
+RAT ;Display rated service connected disabilities patch SD*5.3*394
+"RTN","SDM4",22,0)
+ D 2^VADPT
+"RTN","SDM4",23,0)
+ W !!,"PATIENT'S SERVICE CONNECTION AND RATED DISABILITIES:"
+"RTN","SDM4",24,0)
+ IF $$GET1^DIQ(2,DFN_",",.301,"E")="YES"&($P(VAEL(3),"^",2)'="") D
+"RTN","SDM4",25,0)
+ .W !,"SC Percent: "_$P(VAEL(3),"^",2)_"%"
+"RTN","SDM4",26,0)
+ IF $$GET1^DIQ(2,DFN_",",.301,"E")="NO"&($P(VAEL(3),"^",2)="") D
+"RTN","SDM4",27,0)
+ .W !,"Service Connected: No"
+"RTN","SDM4",28,0)
+ ;Rated Disabilities
+"RTN","SDM4",29,0)
+ N SDSER,SDRAT,SDPER,SDREC,NN,NUM,ANS,SDELIG,SDATD,SDSCFLG,SDVAEL S (ANS,NN,NUM)=0
+"RTN","SDM4",30,0)
+ F  S NN=$O(^DPT(DFN,.372,NN)) Q:'NN  D
+"RTN","SDM4",31,0)
+ .S SDREC=$G(^DPT(DFN,.372,NN,0)) IF SDREC'="" D
+"RTN","SDM4",32,0)
+ ..S SDRAT="" S NUM=$P($G(SDREC),"^",1) IF NUM>0 S SDRAT=$$GET1^DIQ(31,NUM_",",.01)
+"RTN","SDM4",33,0)
+ ..S SDSER="" S SDSER=$S($P(SDREC,"^",3)="1":"SC",1:"NSC")
+"RTN","SDM4",34,0)
+ ..W !,"    "_SDRAT_"  ("_SDSER_" - "_$P(SDREC,"^",2)_"%)"
+"RTN","SDM4",35,0)
+ ..Q
+"RTN","SDM4",36,0)
+ W !,"Primary Eligibility Code: "_$P(VAEL(1),"^",2)
+"RTN","SDM4",37,0)
+ IF $P($G(^DPT(DFN,.372,0)),"^",4)<1 W !,"No Service Connected Disabilities Listed"
+"RTN","SDM4",38,0)
+ W !
+"RTN","SDM4",39,0)
+ S SDELIG=$$GET1^DIQ(2,DFN_",",.301,"E"),SDSCFLG=0
+"RTN","SDM4",40,0)
+ IF SDELIG="" W !,"'SERVICE CONNECTED?' field is blank please update patient record." S SDSCFLG=1
+"RTN","SDM4",41,0)
+ IF $P(VAEL(1),U,2)="" W !,"'PRIMARY ELIGIBILITY CODE' field is blank please update patient record." S SDSCFLG=1
+"RTN","SDM4",42,0)
+ D GETMAS  ;SD*585 get MAS Eligibility Code (file #8.1) for each of patient's eligibilities returns array SDVAEL
+"RTN","SDM4",43,0)
+ ;SD*585 modified each out of sync check to use correct code from MAS Eligibility Code file (#8.1) - in array SDVAEL
+"RTN","SDM4",44,0)
+ IF SDELIG="NO",($P(VAEL(3),U,2)>0)!($P(SDVAEL(1),U,2)="SC LESS THAN 50%")!($P(SDVAEL(1),U,2)="SERVICE CONNECTED 50% to 100%")!($P(SDVAEL(1),U,2)="") D    ;SD*585
+"RTN","SDM4",45,0)
+ .W !,"The 'SC Percent','Service Connected' and 'Primary Eligibility Codes' are OUT OF SYNC, Please CORRECT the problem." S SDSCFLG=1
+"RTN","SDM4",46,0)
+ IF SDELIG="YES",($P(VAEL(3),"^",2)<50),($P(SDVAEL(1),U,2)'="SC LESS THAN 50%") D    ;SD*585
+"RTN","SDM4",47,0)
+ .W !,"The 'SC Percent','Service Connected' and 'Primary Eligibility Codes' are OUT OF SYNC, Please CORRECT the problem." S SDSCFLG=1
+"RTN","SDM4",48,0)
+ IF SDELIG="YES",($P(VAEL(3),"^",2)>49),($P(SDVAEL(1),U,2)'="SERVICE CONNECTED 50% to 100%") D    ;SD*585
+"RTN","SDM4",49,0)
+ .W !,"The 'SC Percent','Service Connected' and 'Primary Eligibility Codes' are OUT OF SYNC, Please CORRECT the problem." S SDSCFLG=1
+"RTN","SDM4",50,0)
+ W !
+"RTN","SDM4",51,0)
+ ;Ask about service connected appointment
+"RTN","SDM4",52,0)
+ N STOP,STOPN,SIEN S (ACT,IENACT)="" S STOP=$$GET1^DIQ(44,+SC_",",8,"I")
+"RTN","SDM4",53,0)
+ I +STOP>0 S STOPN=$$GET1^DIQ(40.7,+STOP_",",1),IENACT=$O(^SD(409.45,"B",STOPN,IENACT))
+"RTN","SDM4",54,0)
+ E  W "***NO STOP CODE ASSIGNED***" S SDATD="REGULAR" D APT Q
+"RTN","SDM4",55,0)
+ IF IENACT'="" S SDATD=99999999999,SDATD=$O(^SD(409.45,IENACT,"E",SDATD),-1) D
+"RTN","SDM4",56,0)
+ .IF SDATD>0 S ACT=$P(^SD(409.45,IENACT,"E",SDATD,0),"^",2)
+"RTN","SDM4",57,0)
+ IF ACT=1 S SDATD=$$GET1^DIQ(44,+SC_",",2507) GOTO APT
+"RTN","SDM4",58,0)
+ S SDATD="",SDATD=$$GET1^DIQ(44,+SC_",",2502) IF SDATD="YES" S SDATD=$$GET1^DIQ(44,+SC_",",2507) W "          ***NON-COUNT CLINIC***" GOTO APT
+"RTN","SDM4",59,0)
+ S SDATD="",SDATD=$$INP^SDAM2(DFN,DT) IF SDATD="I" S SDATD=$$GET1^DIQ(44,+SC_",",2507) W "          ***PATIENT IS CURRENTLY AN INPATIENT***" GOTO APT
+"RTN","SDM4",60,0)
+ ;STOP EXCEPTION CODES
+"RTN","SDM4",61,0)
+ S SDATD="",SDATD=$P(SDVAEL(1),U,2)   ;SD*585
+"RTN","SDM4",62,0)
+ IF SDATD'="SC LESS THAN 50%"&(SDATD'="SERVICE CONNECTED 50% to 100%") S SDATD="" S SDATD=$S($D(SDAPTYP):SDAPTYP,$D(^SC(+SC,"AT")):$S($D(^SD(409.1,+^("AT"),0)):$P(^(0),U),1:"REGULAR"),1:"REGULAR") D
+"RTN","SDM4",63,0)
+ .IF SDSCFLG&(SDATD="SERVICE CONNECTED") S SDATD="REGULAR"
+"RTN","SDM4",64,0)
+ IF SDATD="SC LESS THAN 50%"!(SDATD="SERVICE CONNECTED 50% to 100%") D
+"RTN","SDM4",65,0)
+ .D SBR K SDANS
+"RTN","SDM4",66,0)
+ .IF ANS="N" S SDATD=$S($D(SDAPTYP):SDAPTYP,$D(^SC(+SC,"AT")):$S($D(^SD(409.1,+^("AT"),0)):$P(^(0),U),1:"REGULAR"),1:"REGULAR")
+"RTN","SDM4",67,0)
+ .IF ANS="Y" D
+"RTN","SDM4",68,0)
+ ..S ANS="" S ANS=$$GET1^DIQ(44,+SC_",",2507) IF ANS="REGULAR"!(ANS="") D
+"RTN","SDM4",69,0)
+ ...S NN=$O(^SD(409.1,"B","SERVICE CONNECTED",NN)),SDATD=$$GET1^DIQ(409.1,NN_",",.01)
+"RTN","SDM4",70,0)
+ ..IF ANS'="REGULAR"&(ANS'="") S SDATD=ANS
+"RTN","SDM4",71,0)
+APT W !,"APPOINTMENT TYPE: "_SDATD_"//" R X:DTIME I X']"" S X=SDATD
+"RTN","SDM4",72,0)
+ I X["^" W !,"APPOINTMENT TYPE IS REQUIRED" G APT
+"RTN","SDM4",73,0)
+ I X="S" W !,"PLEASE ENTER MORE THAN ONE CHARACTER" G APT
+"RTN","SDM4",74,0)
+ I SDSCFLG D
+"RTN","SDM4",75,0)
+ .S DIC("S")="I $D(X),$E(X,1,2)'[""SE"""
+"RTN","SDM4",76,0)
+ .S DIC(0)="QEMNZ",DIC=409.1 D ^DIC I Y<0 Q
+"RTN","SDM4",77,0)
+ .S SDSCFLG=0
+"RTN","SDM4",78,0)
+ G APT:SDSCFLG
+"RTN","SDM4",79,0)
+ S SDEC=$S($D(^DIC(8,+VAEL(1),0)):$P(^(0),U,5),1:"")
+"RTN","SDM4",80,0)
+ S DIC("S")="I '$P(^(0),U,3),$S(SDEC[""Y"":1,1:$P(^(0),U,5)),$S('$P(^(0),U,6):1,$D(VAEL(1,+$P(^(0),U,6))):1,+VAEL(1)=$P(^(0),U,6):1,1:0)",DIC="^SD(409.1,",DIC(0)="EQMZ" D ^DIC K DIC
+"RTN","SDM4",81,0)
+ I X["^"!(Y'>0) W !,"Appointment type is required",!,"Patient must have the eligibility code EMPLOYEE, COLLATERAL or SHARING AGREEMENT",!,"to choose those types of appointments." G TYPE
+"RTN","SDM4",82,0)
+ S COLLAT=$S(+Y=1:1,+Y=7:7,1:0),SDAPTYP=+Y,SDDECOD=$P(^SD(409.1,+Y,0),U,6) I COLLAT W !!,"** Note - You are making a ",$P(^SD(409.1,+COLLAT,0),U)," appt.",!
+"RTN","SDM4",83,0)
+ Q:$D(SDAMBAE)
+"RTN","SDM4",84,0)
+ I COLLAT=7 S SDCOL=$P(^SD(409.1,SDAPTYP,0),U,6) I '$D(SDMLT)&'$D(SDD) D ^SDM0,END^SDM
+"RTN","SDM4",85,0)
+ Q
+"RTN","SDM4",86,0)
+ELIG S SDALLE="",SDEMP=$P(VAEL(1),U,2) W !,"THIS PATIENT HAS OTHER ENTITLED ELIGIBILITIES:" F SDOEL=0:0 S SDOEL=$O(VAEL(1,SDOEL)) Q:SDOEL=""  W !?5,$P(VAEL(1,SDOEL),U,2) S SDALLE=SDALLE_"^"_$P(VAEL(1,SDOEL),U,2)
+"RTN","SDM4",87,0)
+1 W !,"ENTER THE ELIGIBILITY FOR THIS APPOINTMENT: "_SDEMP_"// " R X:DTIME Q:"^"[X  S X=$$UPPER^VALM1(X) G ELIG:X["?",1:SDALLE'[("^"_X)
+"RTN","SDM4",88,0)
+ S SDEMP=X_$P($P(SDALLE,"^"_X,2),"^") W $P($P(SDALLE,"^"_X,2),"^")
+"RTN","SDM4",89,0)
+ F SDOEL=0:0 S SDOEL=$O(VAEL(1,SDOEL)) Q:SDOEL=""  I $P(VAEL(1,SDOEL),U,2)=SDEMP S SDEMP=SDOEL_"^"_SDEMP Q
+"RTN","SDM4",90,0)
+ Q
+"RTN","SDM4",91,0)
+SC ;SERVICE CONNECTED MESSAGE/IOFO - BAY PINES/TEH
+"RTN","SDM4",92,0)
+ I $D(^DPT(DFN,.3)) S SDAMSCN=+$P(^(.3),U,2) I SDAMSCN>49 D
+"RTN","SDM4",93,0)
+ .W !,?7,"********** THIS PATIENT IS 50% OR GREATER SERVICE-CONNECTED **********",!
+"RTN","SDM4",94,0)
+ ;I $D(SDWLLIST),SDWLLIST D ^SDWLR       ;Patch SD*5.3*327
+"RTN","SDM4",95,0)
+ Q
+"RTN","SDM4",96,0)
+ ;
+"RTN","SDM4",97,0)
+GETMAS ;SD*585 get MAS Eligibility Code (file #8.1) for each of patient's
+"RTN","SDM4",98,0)
+ ;eligibilities passed back from Registration API VADPT in array VAEL.
+"RTN","SDM4",99,0)
+ ;Returns array SDVAEL.
+"RTN","SDM4",100,0)
+ S SDVAEL(1)=""
+"RTN","SDM4",101,0)
+ Q:'+$G(VAEL(1))
+"RTN","SDM4",102,0)
+ Q:'$D(^DIC(8,+VAEL(1),0))
+"RTN","SDM4",103,0)
+ S MASIEN=0,MASIEN=$P(^DIC(8,+VAEL(1),0),U,9)  ;pointer to file #8.1
+"RTN","SDM4",104,0)
+ Q:'MASIEN
+"RTN","SDM4",105,0)
+ Q:'$D(^DIC(8.1,MASIEN,0))
+"RTN","SDM4",106,0)
+ S SDVAEL(1)=MASIEN_"^"_$P(^DIC(8.1,MASIEN,0),U,1)  ;primary eligibility
+"RTN","SDM4",107,0)
+ ;check for additional eligibilities
+"RTN","SDM4",108,0)
+ S CT=0
+"RTN","SDM4",109,0)
+ F  S CT=$O(VAEL(1,CT)) Q:'CT  D
+"RTN","SDM4",110,0)
+ .Q:'$D(^DIC(8,+VAEL(1,CT),0))
+"RTN","SDM4",111,0)
+ .S MASIEN=0,MASIEN=$P(^DIC(8,+VAEL(1,CT),0),U,9)  ;pointer to file #8.1
+"RTN","SDM4",112,0)
+ .Q:'MASIEN
+"RTN","SDM4",113,0)
+ .Q:'$D(^DIC(8.1,MASIEN,0))
+"RTN","SDM4",114,0)
+ .S SDVAEL(1,MASIEN)=MASIEN_"^"_$P(^DIC(8.1,MASIEN,0),U,1)
+"RTN","SDM4",115,0)
+ K CT,MASIEN
+"RTN","SDM4",116,0)
+ Q
+"RTN","SDM4",117,0)
+ ;
+"RTN","SDM4",118,0)
+SBR S (ANS,SDANS)=""
+"RTN","SDM4",119,0)
+ IF SDSCFLG S ANS="N" Q
+"RTN","SDM4",120,0)
+ IF $D(^DPT(DFN,.3)) S SDANS=$$GET1^DIQ(2,DFN_",",.302) IF SDANS>49 S ANS="Y" Q
+"RTN","SDM4",121,0)
+ S DIR("A")="IS THIS APPOINTMENT FOR A SERVICE CONNECTED CONDITION",DIR(0)="Y^A0" D ^DIR S ANS=$S(Y=1:"Y",1:"N")
+"RTN","SDM4",122,0)
+ I ANS'="Y"&(ANS'="N") W !,*7,"ENTER (Y or N) PLEASE!" G SBR
+"RTN","SDM4",123,0)
+ K DIR Q
+"RTN","SDWLSC")
+0^2^B14766682^B9739922
+"RTN","SDWLSC",1,0)
+SDWLSC ;IOFO BAY PINES/DMR - WAITING LIST-RATED DISABILITY ;09/02/2004 2:10 PM
+"RTN","SDWLSC",2,0)
+ ;;5.3;Scheduling;**394,417,585**;AUG 13, 1993;Build 19
+"RTN","SDWLSC",3,0)
+ ;
+"RTN","SDWLSC",4,0)
+ ;
+"RTN","SDWLSC",5,0)
+ ;***********************************************************************************************************
+"RTN","SDWLSC",6,0)
+ ;                                       CHANGE LOG
+"RTN","SDWLSC",7,0)
+ ;                                                                                               
+"RTN","SDWLSC",8,0)
+ ;       DATE           PATCH           DESCRIPTION
+"RTN","SDWLSC",9,0)
+ ;       ----           -----           -----------
+"RTN","SDWLSC",10,0)
+ ;       12/09/2005     SD*5.3*394      New Routine for SC disabilities prompt                                                                                          
+"RTN","SDWLSC",11,0)
+ ;
+"RTN","SDWLSC",12,0)
+ ;ICR Agreements:
+"RTN","SDWLSC",13,0)
+ ;
+"RTN","SDWLSC",14,0)
+ ;ICR - 1476 For reference to ^DPT(IEN,.372)
+"RTN","SDWLSC",15,0)
+ ;ICR - 10061 For reference to 2^VADPT
+"RTN","SDWLSC",16,0)
+ ;ICR - 2056 For reference to $$GET1^DIQ
+"RTN","SDWLSC",17,0)
+ ;ICR - 427  For reference to ^DIC(8)
+"RTN","SDWLSC",18,0)
+ ;ICR - 2516 For reference to ^DIC(8.1 - SD*585
+"RTN","SDWLSC",19,0)
+ ;
+"RTN","SDWLSC",20,0)
+ ;Variable: SDWLNSC killed in routine SDWLE113 - Routine SDWLSC called from SDWLE111.
+"RTN","SDWLSC",21,0)
+ ;          SDWLDFN NOT killed - referenced only.
+"RTN","SDWLSC",22,0)
+ ;
+"RTN","SDWLSC",23,0)
+ ;09/23/2006 Patch SD*5.3*417 Upper/Lower case usage.
+"RTN","SDWLSC",24,0)
+ ;
+"RTN","SDWLSC",25,0)
+ D 2^VADPT S SDWLNSC=0
+"RTN","SDWLSC",26,0)
+ Q:'$D(SDWLDFN)
+"RTN","SDWLSC",27,0)
+ Q:$$GET1^DIQ(2,SDWLDFN_",",.301,"E")'="YES"
+"RTN","SDWLSC",28,0)
+ Q:$P(VAEL(1),"^",2)'["50%"
+"RTN","SDWLSC",29,0)
+ S SDWLNSC=$P($G(^SDWL(409.3,SDWLDA,"SC")),U,2)
+"RTN","SDWLSC",30,0)
+ W !!,"PATIENT'S SERVICE CONNECTION AND RATED DISABILITIES:"
+"RTN","SDWLSC",31,0)
+ IF $D(^DPT(SDWLDFN,.3)) D
+"RTN","SDWLSC",32,0)
+ .W !,$S($P($G(^DPT(SDWLDFN,.3)),"^",1)="Y":"SC Percent: "_$P(^(.3),"^",2)_"%",1:"Service Connected: No")
+"RTN","SDWLSC",33,0)
+ .W !,"Primary Eligibility Code: "_$P(VAEL(1),"^",2)
+"RTN","SDWLSC",34,0)
+ ;Rated Disabilities
+"RTN","SDWLSC",35,0)
+ N SDSER,SDRAT,SDPER,SDREC,NN,NUM,ANS S (NN,NUM)=0
+"RTN","SDWLSC",36,0)
+ F  S NN=$O(^DPT(SDWLDFN,.372,NN)) Q:'NN  D
+"RTN","SDWLSC",37,0)
+ .S SDREC=$G(^DPT(SDWLDFN,.372,NN,0)) IF SDREC'="" D
+"RTN","SDWLSC",38,0)
+ ..S SDRAT="" S NUM=$P($G(SDREC),"^",1) IF NUM>0 S SDRAT=$$GET1^DIQ(31,NUM_",",.01)
+"RTN","SDWLSC",39,0)
+ ..S SDSER="" S SDSER=$S($P(SDREC,"^",3)="1":"SC",1:"NSC")
+"RTN","SDWLSC",40,0)
+ ..W !,"    "_SDRAT_"  ("_SDSER_" - "_$P(SDREC,"^",2)_"%)"
+"RTN","SDWLSC",41,0)
+ ..Q
+"RTN","SDWLSC",42,0)
+ W !
+"RTN","SDWLSC",43,0)
+ N SDSCFLD,SDELIG S SDSCFLD=0
+"RTN","SDWLSC",44,0)
+ S SDELIG=$$GET1^DIQ(2,SDWLDFN_",",.301,"E")
+"RTN","SDWLSC",45,0)
+ IF $P(VAEL(1),U,2)="" W !,"'PRIMARY ELIGIBILITY CODE' field is blank please update patient record." S SDSCFLD=1
+"RTN","SDWLSC",46,0)
+ D GETMAS  ;SD*585 get MAS Eligibility Code (file #8.1) for each of patient's eligibilities - returns array SDVAEL
+"RTN","SDWLSC",47,0)
+ ;SD*585 modified each out of sync check to use correct code from file 8.1 from array SDVAEL
+"RTN","SDWLSC",48,0)
+ I SDELIG="YES",($P(VAEL(3),U,2)<50),($P(SDVAEL(1),U,2))'="SC LESS THAN 50%" D
+"RTN","SDWLSC",49,0)
+ .W !,"The 'SC Percent','Service Connected' and 'Primary Eligibility Codes' are OUT OF SYNC, Please CORRECT the problem." S SDSCFLD=1
+"RTN","SDWLSC",50,0)
+ I SDELIG="YES",($P(VAEL(3),U,2)>49),($P(SDVAEL(1),U,2))'="SERVICE CONNECTED 50% to 100%" D
+"RTN","SDWLSC",51,0)
+ .W !,"The 'SC Percent','Service Connected' and 'Primary Eligibility Codes' are OUT OF SYNC, Please CORRECT the problem." S SDSCFLD=1
+"RTN","SDWLSC",52,0)
+ IF $P($G(^DPT(SDWLDFN,.372,0)),"^",4)<1 W !,"NO SERVICE CONNECTED DISABILITIES LISTED" W !
+"RTN","SDWLSC",53,0)
+ D SBR
+"RTN","SDWLSC",54,0)
+ K SDSCFLD,SDVAEL Q
+"RTN","SDWLSC",55,0)
+SBR IF $D(SDWLEDIT) Q
+"RTN","SDWLSC",56,0)
+ S ANS="" N X
+"RTN","SDWLSC",57,0)
+ S X=$$GET1^DIQ(2,SDWLDFN_",",.302) IF X>49 S SDWLNSC=1 Q
+"RTN","SDWLSC",58,0)
+ I SDSCFLD=1 Q
+"RTN","SDWLSC",59,0)
+SBR0 S DIR("B")="NO",DIR("A")="IS THIS APPOINTMENT FOR A SERVICE CONNECTED CONDITION? (Y OR N):",DIR(0)="Y^AO" D ^DIR S ANS=$S(Y=1:"Y",1:"N")
+"RTN","SDWLSC",60,0)
+ I ANS'="Y"&(ANS'="N") W !,*7,"ENTER (Y or N) PLEASE!" G SBR
+"RTN","SDWLSC",61,0)
+ I ANS["Y" S SDWLNSC=1
+"RTN","SDWLSC",62,0)
+ Q
+"RTN","SDWLSC",63,0)
+ ;
+"RTN","SDWLSC",64,0)
+GETMAS ;SD*585 get MAS Eligibility Code (file #8.1) for each of patient's
+"RTN","SDWLSC",65,0)
+ ;eligibilities that is passed back from Registration API VADPT in
+"RTN","SDWLSC",66,0)
+ ;local array VAEL.
+"RTN","SDWLSC",67,0)
+ ;Pass back new array SDVAEL
+"RTN","SDWLSC",68,0)
+ S SDVAEL(1)=""
+"RTN","SDWLSC",69,0)
+ Q:'+$G(VAEL(1))
+"RTN","SDWLSC",70,0)
+ Q:'$D(^DIC(8,+VAEL(1),0))
+"RTN","SDWLSC",71,0)
+ S MASIEN=0,MASIEN=$P(^DIC(8,+VAEL(1),0),U,9)  ;pointer to file #8.1
+"RTN","SDWLSC",72,0)
+ Q:'MASIEN
+"RTN","SDWLSC",73,0)
+ Q:'$D(^DIC(8.1,MASIEN,0))
+"RTN","SDWLSC",74,0)
+ S SDVAEL(1)=MASIEN_"^"_$P(^DIC(8.1,MASIEN,0),U,1)  ;primary eligibility
+"RTN","SDWLSC",75,0)
+ ;check for additional eligibilities in VAEL
+"RTN","SDWLSC",76,0)
+ S CT=0
+"RTN","SDWLSC",77,0)
+ F  S CT=$O(VAEL(1,CT)) Q:'CT  D
+"RTN","SDWLSC",78,0)
+ .Q:'$D(^DIC(8,+VAEL(1,CT),0))
+"RTN","SDWLSC",79,0)
+ .S MASIEN=0,MASIEN=$P(^DIC(8,+VAEL(1,CT),0),U,9)  ;pointer to file #8.1
+"RTN","SDWLSC",80,0)
+ .Q:'MASIEN
+"RTN","SDWLSC",81,0)
+ .Q:'$D(^DIC(8.1,MASIEN,0))
+"RTN","SDWLSC",82,0)
+ .S SDVAEL(1,MASIEN)=MASIEN_"^"_$P(^DIC(8.1,MASIEN,0),U,1)  ;additional eligibilities
+"RTN","SDWLSC",83,0)
+ K MASIEN,CT
+"RTN","SDWLSC",84,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",8778,6)
+^505
+**END**
+**END**
+

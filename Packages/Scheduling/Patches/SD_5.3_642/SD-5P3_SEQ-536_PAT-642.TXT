@@ -1,0 +1,382 @@
+$TXT Created by                A at DEVVVV.DOMAIN.EXT  (KIDS) on Friday, 04/08/16 at 12:06
+=============================================================================
+Run Date: MAY 03, 2016                     Designation: SD*5.3*642
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #536                    Status: Released
+                  Compliance Date: AUG 03, 2016
+=============================================================================
+
+Associated patches: (v)SD*5.3*536  <<= must be installed BEFORE `SD*5.3*642'
+                    (v)SD*5.3*643  <<= must be installed BEFORE `SD*5.3*642'
+
+Subject: VistA Scheduling Enhancement Release 2
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ ***************************** PLEASE NOTE ********************************
+ *                                                                        *
+ *The VHA Release Board has NOT provided approval for this patch to be    *
+ * installed in ANY production environment.                               *
+ *                                                                        *
+ * NOTE: This patch is ONLY to be loaded into a TEST environment until    *
+ * approval from the VHA Release Board is obtained to load into facility  *
+ * production environments.                                               *
+ *                                                                        *
+ **************************************************************************
+  
+ The Veterans Health Administration (VHA) Access and Clinic Administrative
+ Program (ACAP) has requested an enterprise enhancement for the VistA Scheduling
+ Package. The enhancement will reduce operating cost for VHA and improve
+ operational efficiencies resulting in patient centered access to care,
+ coordinated care, increased customer satisfaction, and the reduction of
+ excessive cycle/wait time used for scheduling patients.
+  
+ This patch contains phase 2 of the server API support for the VistA Scheduling
+ Client as follows:
+  
+ ** For inpatients, the VS GUI shall display ward location in patient
+    demographic area for each patient. To support this change, ward
+    location has been included in the Remote Procedure Call (RPC)
+    'SDEC GETREGA'.
+  
+ ** The VS GUI shall display special clinic instructions on the screen.
+    The data from the SPECIAL INSTRUCTIONS multiple field (#1910) in the
+    HOSPITAL LOCATION file (#44) is now returned in the RPC 'SDEC CLINSET' to
+    support this change.
+  
+ ** Add Cancel to the SDEC ACCESS TYPE file (#409.823) and use that access type
+    in the return for the RPC 'SDEC CSLOTSCH' when the availability has been
+    cancelled.
+  
+ ** Do not return clinics in RPCs when the OCCASION OF SERVICE CLINIC? field in
+    the HOSPITAL LOCATION file (#44) is defined as 'YES'.
+  
+ ** Add new RPC called 'SDEC APPSLOTS' to return availability string from
+    VistA.
+  
+ ** Add W2VA - WELCOME TO VA to the Set of codes in the REQUEST TYPE
+    field (#4) of the SDEC APPT REQUEST file (#409.85).
+  
+ ** Add the RPC 'SDEC NOAVAIL' to determine if availability has ever
+    been defined for a given clinic.
+  
+ ** Add the multiple field VS AUDIT to the SD WAIT LIST file (#409.3)
+    and SDEC APPT REQUEST file (#409.85). The RPCs 'SDEC WLSET' and
+    'SDEC ARSET' have been enhanced to support adds and updates to these
+    new multiples. The RPCs 'SDECAR AUDITGET' and 'SDECWL AUDITGET' have
+    been added to retrieve the data from these new multiples.
+  
+ ** OT4 Release 2 - Comp & Pension Appointments. Support for AMIE
+    scheduling event driver.
+  
+ ** Updates to the RPCs 'SDEC APPADD', 'SDEC ARMRTSET', 'SDEC ARSET', and
+    'SDEC ARGET' have been implemented to support the PARENT/CHILD
+    relationships between entries in the SDEC APPT REQUEST file (#409.85).
+  
+ ** Add the RPC 'SDECAPP GETYPE' to get the APPOINTMENT TYPE for the given
+    SDEC APPOINTMENT id.
+  
+ ** Change the COMMENT field of the SDEC APPT REQUEST file (#409.85) to accept
+    80 characters instead of 60.
+  
+ ** Single Sign-on support for CALL CENTER.
+  
+ ** Updates to SSN formatted inputs in the RPC 'SDEC PTLOOKRS'.
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)                Field Name (#)             NEW/MODIFIED/DELETED
+ -------------                --------------             --------------------
+ SD WAIT LIST                 VS AUDIT                   New
+  (#409.3)                     (#45)
+ VS AUDIT sub-file            DATE EDITED                New
+  (409.345)                    (#.01)
+ VS AUDIT sub-file            EDITED BY                  New
+  (409.345)                    (#1)
+ VS AUDIT sub-file            WL SPECIFIC CLINIC         New
+  (409.345)                    (#2)
+ VS AUDIT sub-file            WL SPECIFIC HOSPITAL LOCATION   New
+  (409.345                     (#3)
+ VS AUDIT sub-file            WL SERVICE/SPECIALTY       New
+  (409.345)                    (#4)
+ SDEC APPT REQUEST            REQUEST TYPE               Modified
+  (#409.85)                    (#4)
+ MULT APPTS MADE sub-file     PARENT REQUEST             New
+  (409.852)                    (#.02)
+ SDEC APPT REQUEST            VS AUDIT                   New
+  (409.85)                     (#45)
+ VS AUDIT sub-file            DATE EDITED                New
+  (409.8545)                   (#.01)
+ VS AUDIT sub-file            EDITED BY                  New
+  (409.8545)                   (#1)
+ VS AUDIT sub-file            REQ SPECIFIC CLINIC        New
+  (409.8545)                   (#2)
+ VS AUDIT sub-file            REQ SERVICE/SPECIALTY      New
+  (409.8545)                   (#3)
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (#)           New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+ Additional Information: N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Asheville
+ Chillicothe
+ Hudson Valley
+ Salt Lake City
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Albany:                 domain.ext
+ Hines:                  domain.ext
+ Salt Lake City:         domain.ext>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+ File Description             File Name                          FTP Mode
+ --------------------------------------------------------------------------
+ SCHEDULING Technical Manual  VSE_TM.PDF                         (binary)
+  
+  
+ Patch Installation in TEST ONLY ***DO NOT INSTALL INTO PRODUCTION***:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  The Post-Installation routine does the following functions:
+   1. Registers the new RPCs to the SDECRPC option
+   2. Adds CANCELLED entry to the new SDEC ACCESS TYPE
+   3. Initializes new Mumps cross-references:
+       - "AC" in the SDEC RESOURCE file (#409.831)
+       - "AC" in the SDEC APPOINTMENT file (#409.84)
+   4. Add/update entry in the REMOTE APPLICATION file (#8994.5) for VS
+      SCHEDULING CALL CENTER
+  
+ Pre-Installation Instructions
+ ------------------------------
+ N/A
+  
+  
+  
+ Installation Instructions in TEST ONLY ***DO NOT INSTALL INTO PRODUCTION***
+ -------------------------
+ This patch may not be installed with Scheduling Package users on the test
+ system and it is recommended that it be installed during non-peak hours.
+ The installation time will vary from site to site depending on the size of
+ their database.
+  
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System Menu, select
+  the Installation Menu. From this menu, you may elect to use the
+  following option. When prompted for the INSTALL enter the patch #
+  (SD*5.3*642):
+  
+  a. Backup a Transport Global - This option will create a backup
+  message of any routines exported with this patch. It will not
+  backup any other changes such as DD's or templates.
+  b. Compare Transport Global to Current System - This option will
+  allow you to view all changes that will be made when this patch
+  is installed. It compares all components of this patch
+  (routines, DD's, templates, etc.).
+  c. Verify Checksums in Transport Global - This option will allow
+  you to ensure the integrity of the routines that are in the
+  transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and
+  choose the patch to install. Enter SD*5.3*642.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+  Install? NO//', respond NO.
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+  respond NO.
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+  Protocols? NO//', respond NO.
+   
+ 10. If prompted 'Delay Install (Minutes): (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 23
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDEC
+    Before:B119470269   After:B123628700  **627,643,642**
+Routine Name: SDEC01
+    Before: B31785408   After: B31336971  **627,642**
+Routine Name: SDEC01A
+    Before: B81925987   After: B82347339  **627,642**
+Routine Name: SDEC01B
+    Before: B44978361   After: B45005907  **627,642**
+Routine Name: SDEC02
+    Before: B32953550   After: B53092916  **627,642**
+Routine Name: SDEC03
+    Before: B10323049   After: B12348833  **627,642**
+Routine Name: SDEC04
+    Before: B18857087   After: B23906139  **627,642**
+Routine Name: SDEC07
+    Before:B222963350   After:B225769196  **627,642**
+Routine Name: SDEC07A
+    Before: B68824292   After: B75289640  **627,642**
+Routine Name: SDEC09
+    Before: B40258209   After: B41566743  **627,642**
+Routine Name: SDEC20
+    Before:  B5301458   After:  B5301458  **627,642**
+Routine Name: SDEC28
+    Before: B71646964   After: B70851375  **627,642**
+Routine Name: SDEC32
+    Before: B71447316   After: B72731252  **627,643,642**
+Routine Name: SDEC45
+    Before:B118776780   After:B118776780  **627,642**
+Routine Name: SDEC51
+    Before:B124307281   After:B122637073  **627,642**
+Routine Name: SDEC52
+    Before:B134090636   After:B135366085  **627,642**
+Routine Name: SDEC54
+    Before:B197526561   After:B183258536  **627,642**
+Routine Name: SDEC54A
+    Before: B18379020   After: B75446000  **627,642**
+Routine Name: SDEC56
+    Before: B35889062   After: B36315965  **627,642**
+Routine Name: SDEC57
+    Before: B39358442   After: B37410501  **627,642**
+Routine Name: SDEC57A
+    Before:B107425052   After:B104060307  **627,643,642**
+Routine Name: SDEC58
+    Before:       n/a   After: B37465349  **627,642**
+Routine Name: SDEC59
+    Before:       n/a   After:  B3551986  **642**
+Routine Name: SDECAPP
+    Before:       n/a   After:   B953058  **642**
+Routine Name: SDECAR
+    Before: B56209815   After: B92353393  **627,642**
+Routine Name: SDECAR1
+    Before:B118549716   After:B139681352  **627,642**
+Routine Name: SDECAR2
+    Before:B118404786   After:B157125320  **627,642**
+Routine Name: SDECCAP
+    Before:       n/a   After:B108308383  **642**
+Routine Name: SDECI2
+    Before:       n/a   After: B69090314  **642**
+Routine Name: SDECIDX
+    Before: B43106825   After: B43106825  **627,642**
+Routine Name: SDECRMG1
+    Before:B130816452   After:B133141523  **627,642**
+Routine Name: SDECRMG2
+    Before: B65998765   After: B65998765  **627,642**
+Routine Name: SDECUTL1
+    Before:B111920247   After:B116466416  **627,642**
+Routine Name: SDECUTL2
+    Before:B135475615   After:B137868576  **627,642**
+Routine Name: SDECWL
+    Before: B53903000   After: B69248242  **627,642**
+Routine Name: SDECWL1
+    Before:B116385737   After:B117400497  **627,642**
+Routine Name: SDECWL2
+    Before:B102907164   After:B124990360  **627,642**
+Routine Name: SDRRCLR
+    Before:  B6432300   After: B15280543  **536,642**
+ 
+Routine list of preceding patches: 536, 643
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 23, 2015
+Completed By:                               Date Completed: MAY 03, 2016
+Released By :                               Date Released : MAY 03, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

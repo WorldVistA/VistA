@@ -1,0 +1,557 @@
+$TXT Created by               at DVACACHE.FO-BIRM.DOMAIN.EXT  (KIDS) on Thursday, 07/31/14 at 15:00
+=============================================================================
+Run Date: SEP 02, 2014                     Designation: PSO*7*313
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #368                      Status: Released
+                  Compliance Date: OCT 03, 2014
+=============================================================================
+
+Associated patches: (v)PSO*7*337   <<= must be installed BEFORE `PSO*7*313'
+                    (v)PSO*7*362   <<= must be installed BEFORE `PSO*7*313'
+                    (v)PSO*7*417   <<= must be installed BEFORE `PSO*7*313'
+                    (v)PSO*7*431   <<= must be installed BEFORE `PSO*7*313'
+
+Subject: TITRATION/MAINTENANCE RX
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ This patch PSO*7*313 includes the following enhancements:
+   1. Complex Orders Duration Field 
+   2. Titration/Maintenance Rx 
+     
+ 1. Complex Orders Duration Field 
+ ================================
+ This Enhancement is related to Patient Safety Issue PSI-07-167 and Remedy 
+ Ticket # 203088. 
+  
+ The Outpatient Pharmacy application currently allows the entry of a complex
+ order, which contains a "THEN" conjunction. This type of order is 
+ allowed to leave the Duration field preceding the "THEN" conjunction 
+ as null. This null duration field is causing issues when the Outpatient
+ Pharmacy order was being transferred to an Inpatient Medication Order(s).
+ The default stop dates were for thirty (30) days for the two (2) new
+ inpatient orders created and the Start/Stop dates in the sequence were
+ incorrect. The pharmacist did not notice the incorrect dates and finished
+ off the orders. Upon transfer of a complex order from Outpatient Pharmacy
+ to Inpatient Medication order(s), the resulting order will start at the
+ first step rather than continue at the step the patient was at as an
+ Outpatient. It looks like a new complex order to the finishing pharmacist,
+ since the Start date is populated with the date of finishing so that the
+ patient would be started on the first step, which may not be correct.
+ This would pertain to complex orders that taper or titrate doses up or
+ down and potentially impacts patients by receiving too much or too little
+ medication.  
+  
+ The Outpatient Pharmacy is being modified to require the entry of a duration
+ for a dose preceding a THEN conjunction if the schedule for such dose is not
+ a ONE-TIME type schedule. If the dose preceding the THEN conjunction is a
+ ONE-TIME type schedule the software will continue to allow the Duration field
+ to be left blank (optional). The corresponding change to CPRS will be 
+ done in a future CPRS patch.
+  
+ Example of an acceptable SIG ('NOW' is ONE-TIME type schedule): 
+ --------------------------------------------------------------
+ TAKE ONE TABLET BY MOUTH NOW THEN TAKE TWO TABLETS EVERY 8 HOURS 
+  
+ No longer acceptable SIG ('Q4H' is not ONE-TIME type schedule): 
+ --------------------------------------------------------------
+ TAKE ONE TABLET BY MOUTH EVERY 4 HOURS THEN TAKE TWO TABLETS EVERY 8 HOURS 
+  
+ Note: The SIG above is not acceptable because it does not have a 
+       Duration for the first dose. In order to be acceptable the 
+       SIG above would have to have a duration like the one below: 
+        
+       TAKE ONE TABLET BY MOUTH EVERY 4 HOURS FOR 3 DAYS THEN TAKE TWO 
+       TABLETS EVERY 8 HOURS 
+    
+ The Duration field is not required for the dose following the last "THEN"
+ conjunction.  
+   
+ Below is an example of a complex order being entered via Patient Prescription
+ Processing [PSO LM BACKDOOR ORDERS] 
+   
+     :       :
+   VERB: APPLY 
+   ROUTE: PO// PO   ORAL 
+   Schedule: QD (EVERY DAY) 
+      
+   LIMITED DURATION (IN DAYS, HOURS OR MINUTES): 
+   CONJUNCTION: THEN 
+    
+  Duration field required for the dosage entered prior to this THEN conjunction. 
+  
+   
+   LIMITED DURATION (IN DAYS, HOURS OR MINUTES): 
+     :       :
+  
+ 2. Titration/Maintenance Rx 
+ ===========================
+ This Enhancement is related to PSI-06-176 and Remedy Ticket #168928.  
+  
+ The Outpatient Pharmacy (OP) application was modified to accommodate 
+ Titration/Maintenance prescription functionality. The existing software 
+ presented patient safety risks when prescriptions dispensed with a titrating
+ dose followed by a maintenance dose were being copied, renewed or refilled. The
+ issue was that refills as well as the new prescriptions (derived from copy,
+ renewals or edits) automatically carried over the initial titrating dose into
+ the new fill/prescription, which was not always the user's intention.  
+  
+ The new functionality provides two steps for processing Titration/ Maintenance
+ prescriptions.  
+  
+ a. First, the user will have the ability to mark prescriptions as 
+    'Titration to Maintenance' when finishing prescriptions from CPRS as 
+    well as via the Patient Prescription Processing [PSO LM BACKDOOR 
+    ORDERS] option by invoking the new hidden action 'TM' - Mark Rx 
+    as Titration. This action will result in preventing the following 
+    actions to be taken on the prescription: Refill, Renewal (including 
+    via CPRS), Copy and editing of any field that requires a new Rx to be 
+    created. This action will also set the new field TITRATION RX FLAG 
+    (#45.3) in the PRESCRIPTION File (#52) as well as the new field 
+    TITRATION DOSE RX (#45.1) in the PRESCRIPTION File (#52).  
+    Prescriptions that are marked as Titration/Maintenance will 
+    have the letter 't' postfix to the RX # as seen below (entry #1): 
+  
+            :                   :                            :
+                                                    ISSUE  LAST REF DAY 
+    #  RX #       DRUG                       QTY ST  DATE  FILL REM SUP 
+   -------------------------------ACTIVE------------------------------- 
+    1 100005024t  AMOXAPINE 50MG TAB          30 S  09-26 09-26   2  30 
+    2 100005022   AMOXICILLIN 250MG CAP       30 A  08-18 08-18  11  30 
+    3 100005035   KALETRA                      3 A  09-29 09-29   0   3 
+            :                   :                            :
+  
+    Note: A prescription can be unmarked as Titration/Maintenance by 
+          invoking the same TM action on an already marked prescription.  
+  
+   
+ b. A new hidden action is being introduced in the Patient Prescription 
+    Processing [LM BACKDOOR ORDERS] option called TR (Convert 
+    Titration Rx). This action will populate the new field MAINTENANCE 
+    DOSE RX (#45.2) in the PRESCRIPTION File (#52).  
+    When a titration to maintenance prescription needs to be 
+    refilled so the patient can continue on the Maintenance Dose 
+    this option will allow the users to create a new prescription with 
+    the maintenance dose only. The process works similar to copying an 
+    existing prescription, however it can only be used on prescriptions 
+    with the following characteristics: 
+    
+      - Rx is a complex order with a THEN conjunction
+      - Rx was not digitally signed
+      - Rx is released 
+      - Rx status is ACTIVE 
+      - Rx does not have refills previously ordered 
+      - Rx # Of Refills is greater than 0 (zero) 
+    
+    Before the new Maintenance Rx can be accepted the Pharmacist is 
+    prompted to validate the QTY field for the new Rx, which may or may not
+    be automatically re-calculated. Only the last dose from the original
+    prescription is carried over to the new Maintenance Rx and the # of 
+    Refills field is decreased by 1 because the new Maintenance Rx counts 
+    as a fill. The Fill Date for the new Maintenance prescription is 
+    automatically set with the next possible fill date from the existing
+    prescription, which can be changed by the pharmacist.
+    Once the pharmacist verifies the information for the Maintenance Rx is 
+    accurate they can accept the Maintenance Rx. This action will trigger 
+    a Duplicate Drug check against the original complex order, which must 
+    be discontinued before the new Maintenance Rx can be accepted. 
+    After the new Maintenance Rx is accepted it will have the new indicator 
+    'm' on the right side of the Rx # in the patient's Medication Profile 
+    as seen below (entry #1): 
+  
+            :                   :                            :
+                                                    ISSUE  LAST REF DAY 
+    #  RX #       DRUG                       QTY ST  DATE  FILL REM SUP 
+   -------------------------------ACTIVE------------------------------- 
+    1 100005436m  AMOXAPINE 50MG TAB          30 S  09-26 09-26   1  30 
+    2 100005022   AMOXICILLIN 250MG CAP       30 A  08-18 08-18  11  30 
+    3 100005035   KALETRA                      3 A  09-29 09-29   0   3 
+            :                   :                            :
+  
+ c. The new Titration/Maintenance indicator (t/m) will be included in the 
+    following menu options where the prescription number is displayed: 
+  
+    View Prescriptions                       [PSO VIEW] 
+    Patient Prescription Processing          [PSO LM BACKDOOR ORDERS]    
+    Complete Orders from OERR                [PSO LMOE FINISH] 
+    ePharmacy Medication Profile (View Only) [PSO PMP] 
+    Medication Profile                       [PSO P] 
+   
+ d. External refill requests such as from AudioFax and Internet will not 
+    be processed for Titration/Maintenance marked prescriptions. 
+  
+    Subj: ALBANY External Application Refills: Not processed List  [#101509] 
+    01/28/09@13:52  11 lines 
+    From: POSTMASTER  In 'IN' basket.   Page 1 
+    -------------------------------------------------------------------------
+    Refills Not Processed Report for the ALBANY Division.  
+  
+    The following refill requests were not processed:  
+  
+    Patient: OPPATIENT,TWO (9999) 
+  
+      Rx #: 100005122  (REF #1)  Qty: 55 
+      Drug: ZINC SULFATE 66MG TAB 
+      Reason: 'Titration/Maintenance Rx' cannot be refilled.  
+  
+ e. CPRS refill requests will not be automatically processed for
+    Titration/Maintenance marked prescriptions. The refill request will
+    remain in the patient's Medication Profile as PENDING and the mailman
+    message above (item d) will also be sent to PSOAUTRF security key
+    holders.  
+   
+ f. The activity logs for both Titration and Maintenance Rx's will record 
+    the corresponding Titration and Maintenance Rx # if they exist as seen 
+    below: 
+   
+ Titration Rx: 
+ ------------
+ #   Date        Reason         Rx Ref         Initiator of Activity  
+ ====================================================================== 
+ 1   09/29/08    EDIT           ORIGINAL       OPUSER,ONE Comments: Maintenance
+ Dose Rx: 100005130 
+  
+  
+ Maintenance Rx: 
+ --------------
+ #   Date        Reason         Rx Ref         Initiator of Activity  
+ ====================================================================== 
+ 1   09/29/08    EDIT           ORIGINAL       OPUSER,TWO Comments: Titration
+ Dose Rx: 100005392 
+     
+  
+ g. The VistA Integration Control Registration (ICR) #2398 provided to 
+    Computerized Patient Record System V. 1.0 (CPRS) was modified to 
+    prevent the renewal of a Titration dose order with the following 
+    message: 
+  
+   "Prescription was marked as Titration to Maintenance Dose  by Pharmacy 
+   and cannot be renewed. To repeat the titration, enter a new prescription 
+   or copy the prior titration order. To continue the maintenance dose, refill 
+   this prescription if refills are available or enter a new prescription for 
+   the maintenance dose." 
+  
+  
+ h. When using the Barcode Batch Prescription Entry option 
+    [PSO BATCH BARCODE], if the prescription has been marked 
+    as a Titration/Maintenance Rx, and the user attempts to 
+    renew or refill the prescription, the following message 
+    will display: 
+  
+    For a renewal: 
+    "Rx# XXXXXX is marked as Titration Rx and cannot be renewed." 
+  
+    For a refill: 
+    "Rx# XXXXXX is marked as Titration Rx and cannot be refilled." 
+  
+  
+ i. The PSO HIDDEN ACTIONS Protocol in the PROTOCOL File (#101) 
+    will be modified to include the two new Hidden Actions 
+    introduced by this enhancement.  PSO LM BACKDOOR MARK AS 
+    TITRATION and PSO LM BACKDOOR TITRATION RX REFILL are both 
+    new protocols added to the PROTOCOL File (#101). 
+  
+  
+  
+  ******************************  IMPORTANT  ****************************** 
+  The enhancements related to Titration/Maintenance dose Rx are made only 
+  for Outpatient Pharmacy package. The corresponding changes to CPRS package 
+  are not included at this time. Therefore, the CPRS Order Copy and Order 
+  Change functionalities will continue to function as is. Furthermore, there 
+  will be no indication of a Titration/Maintenance order in the CPRS 
+  application.  
+  *************************************************************************
+  
+ 3. Remedy Ticket #1022059 
+    This patch fixes an issue that could create duplicate prescriptions on 
+    a patient profile. When a complex order is copied and the duration 
+    field is edited, upon accepting the order, the message to discontinue
+    the original order is not triggered. This causes duplicate 
+    prescriptions to appear on the patient profile. This patch corrects
+    this problem by prompting the user to discontinue the original order.
+  
+  
+ Patch Components 
+ ================
+  
+ Files & Fields Associated: 
+  
+ File Name (#)                      Field Name (#)             New/Mod/Del 
+ -------------                      --------------             -----------
+ PRESCRIPTION (#52)                 TITRATION DOSE RX (#45.1)     New 
+ PRESCRIPTION (#52)                 MAINTENANCE DOSE RX (#45.2)   New 
+ PRESCRIPTION (#52)                 TITRATION RX FLAG (#45.3)     New 
+  
+ Forms Associated: 
+  
+ Form Name             File #                New/Mod/Del 
+ ---------             ------                -----------
+ N/A 
+  
+ Mail Groups Associated: 
+  
+ Mail Group Name                   New/Mod/Del 
+ ---------------                   -----------
+ N/A 
+  
+ Options Associated: 
+  
+ Option Name                    Type             New/Mod/Del 
+ -----------                    ----             -----------
+ N/A 
+  
+ Protocols Associated: 
+  
+  Protocol Name                     New/Mod/Del   Action 
+  -------------                     -----------   ------
+  PSO HIDDEN ACTIONS                   Modified   USE AS A LINK FOR MENU/ITEM 
+  PSO LM BACKDOOR MARK AS TITRATION         New   SEND TO SITE 
+  PSO LM BACKDOOR TITRATION RX REFILL       New   SEND TO SITE 
+  
+  
+ Security Keys Associated: 
+  
+ Security Key Name 
+ -----------------
+  
+ N/A 
+  
+ Templates Associated: 
+  
+ Template Name          Type      File Name (#)                 New/Mod/Del 
+ -------------          ----      ------------------            -----------
+ N/A 
+  
+ Additional Information: 
+ -----------------------
+ ICR #2398 - Modified as outlined above.  
+  
+  
+ New Service Requests (NSRs): 
+ -----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs): 
+ ------------------------------
+ PSI-07-167, PSI-06-176 
+  
+ Remedy Ticket(s) & Overviews: 
+ -----------------------------
+ 203088   Outpt complex order (using then) was transferred 
+          to Inpt and start/stop dates are one month apart 
+  
+ 168928   Means of allowing 2 active RXs for same dispense 
+          drug needed to accommodate titration regimens; 
+  
+ 1022059  Duplicate prescriptions created. 
+  
+ TEST SITES: 
+ ===========
+ DURHAM, NC
+ LOUISVILLE, KY
+ MUSKOGEE, OK
+ OKLAHOMA CITY, OK
+ TENNESSEE VALLEY HCS
+  
+  
+ Documentation Retrieval: 
+ ========================
+  
+ The documentation is available on the ANONYMOUS.SOFTWARE directory at one of
+ the following Office of Information (OI) Field Offices: 
+  
+    Albany 
+    Hines 
+    Salt Lake City 
+  
+ Sites may retrieve documentation in one of the following ways: 
+  
+ (1) The preferred method is to FTP the files from 
+     download.vista.domain.ext, which will transmit the files from the 
+     first available FTP server.  
+  
+ (2) Sites may also elect to retrieve documentation directly from a 
+     specific server as follows: 
+  
+     Albany              ftp.domain.ext 
+     Hines               ftp.domain.ext 
+     Salt Lake City      ftp.domain.ext 
+  
+ The documentation distribution includes: 
+  
+ File Name                 File Description                        FTP Mode
+ --------------------------------------------------------------------------
+ PSO_7_MAN_UM_R0814.PDF    Outpatient Pharmacy V. 7.0 Manager's    (binary)
+                           User Manual
+ PSO_7_PHAR_UM_R0814.PDF   Outpatient Pharmacy V. 7.0 Pharmacist's (binary)
+                           User Manual
+ PSO_7_TECH_UM_R0814.PDF   Outpatient Pharmacy V.7.0 Technician's  (binary)
+                           User Manual
+ PSO_7_TM_R0814.PDF        Outpatient Pharmacy V. 7.0 Technical    (binary)
+                           Manual/Security Guide 
+ PSO_7_P313_RN.PDF         Release Notes                           (binary)
+  
+  
+ (3) Documentation can also be retrieved from the VistA Documentation 
+     Library (VDL) on the Internet at the following address: 
+     http://www.domain.ext/vdl. 
+  
+  
+ Installation Instructions: 
+ ==========================
+ Do not install this patch while Outpatient Pharmacy users are on the system or
+ when Outpatient orders are being entered and signed through Computerized
+ Patient Record System. Installation will take no longer than 5 minutes.  
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.  
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu, 
+       select the Installation menu.  
+  
+    3. From this menu, you may select to use the following options 
+       (when prompted for INSTALL NAME, enter PSO*7.0*313): 
+      a. Backup a Transport Global - this option will create a backup 
+         message of any routines exported with the patch. It will NOT 
+         backup any other changes such as DDs or templates.  
+      b. Compare Transport Global to Current System - this option will 
+         allow you to view all changes that will be made when the patch 
+         is installed. It compares all components of the patch (routines, 
+         DDs, templates, etc.).  
+      c. Verify Checksums in Transport Global - this option will ensure 
+         the integrity of the routines that are in the transport global.  
+      d. Print Transport Global - this option will allow you to view the 
+         components of the KIDS build.  
+  
+   4. Use the Install Package(s) option and select the package PSO*7.0*313.  
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//" 
+      respond NO.  
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+      Protocols? NO//" respond NO.  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 76
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOATRF
+    Before: B79340036   After: B82128020  **264,322,388,313**
+Routine Name: PSOATRFC
+    Before: B45655839   After: B47253705  **305,388,313**
+Routine Name: PSOBBC
+    Before: B91849962   After:B104120785  **11,22,27,34,46,130,146,185,
+                                           242,264,300,337,313**
+Routine Name: PSOCPDUP
+    Before: B32857063   After: B33663947  **11,27,32,130,132,192,207,222,
+                                           243,305,313**
+Routine Name: PSOLMPO2
+    Before:   B590140   After:   B829209  **46,71,225,313**
+Routine Name: PSON52
+    Before: B86376192   After: B91470672  **1,16,23,27,32,46,71,111,124,
+                                           117,131,139,157,143,219,148,
+                                           239,201,268,260,225,303,358,
+                                           251,387,379,390,391,313**
+Routine Name: PSONEW
+    Before: B42013827   After: B43522881  **11,27,32,46,94,130,268,225,
+                                           251,379,390,417,313**
+Routine Name: PSOORCPY
+    Before: B21376105   After: B32700347  **10,21,27,32,46,100,117,148,313**
+Routine Name: PSOORED1
+    Before: B68466079   After: B73633714  **5,23,46,78,114,117,131,146,
+                                           223,148,244,249,268,206,313**
+Routine Name: PSOORED3
+    Before: B61293813   After: B65846558  **46,78,99,117,133,148,249,251,
+                                           379,378,372,416,313**
+Routine Name: PSOORED4
+    Before: B54845404   After: B56835310  **46,91,78,99,111,117,133,159,
+                                           148,251,391,372,416,313**
+Routine Name: PSOORED5
+    Before: B58804005   After: B60490141  **46,75,78,100,99,117,133,251,
+                                           378,372,416,313**
+Routine Name: PSOOREDT
+    Before: B72615864   After: B78897328  **4,20,27,37,57,46,78,102,104,
+                                           119,143,148,260,281,304,289,
+                                           298,379,377,391,313**
+Routine Name: PSOOREDX
+    Before: B19671149   After: B19747673  **133,362,313**
+Routine Name: PSOORFI2
+    Before: B92022247   After: B94812114  **7,15,23,27,46,130,146,177,
+                                           222,225,338,313**
+Routine Name: PSOORNE1
+    Before: B72891193   After: B77126364  **11,21,27,32,37,46,71,94,104,
+                                           117,133,148,279,251,372,313**
+Routine Name: PSOORNE2
+    Before: B69776712   After: B68757551  **11,21,23,27,32,37,46,84,103,
+                                           117,131,146,156,210,148,222,
+                                           238,264,281,289,251,379,391,
+                                           313**
+Routine Name: PSOORNE3
+    Before: B68130643   After: B68981522  **11,9,39,59,46,103,124,139,
+                                           152,194,391,313**
+Routine Name: PSOORNE4
+    Before: B94257859   After: B98202057  **11,27,32,36,46,75,96,103,99,
+                                           117,131,225,386,390,391,313**
+Routine Name: PSOORNEW
+    Before: B92549598   After: B93328649  **11,23,27,32,55,46,71,90,94,
+                                           106,131,133,143,237,222,258,
+                                           206,225,251,386,390,391,372,
+                                           416,431,313**
+Routine Name: PSOORNW1
+    Before: B44718806   After: B45684581  **23,46,78,117,131,133,172,148,
+                                           222,268,206,251,379,391,313**
+Routine Name: PSOORUT1
+    Before: B77790582   After: B78925499  **1,14,30,46,132,148,233,274,
+                                           225,305,289,251,387,385,313**
+Routine Name: PSOOTMRX
+    Before:       n/a   After: B20486782  **313**
+Routine Name: PSOP
+    Before: B45335172   After: B45480400  **2,15,98,132,148,326,313**
+Routine Name: PSOP1
+    Before: B26371231   After: B26639080  **15,46,103,132,148,233,326,251,313**
+Routine Name: PSOPMP0
+    Before: B81752801   After: B82071360  **260,281,303,289,382,313**
+Routine Name: PSOREF
+    Before: B66253301   After: B71972514  **1,23,27,36,46,78,130,131,148,
+                                           206,313**
+Routine Name: PSORENW
+    Before: B38307227   After: B44953613  **11,27,30,46,71,96,100,130,
+                                           148,206,388,390,417,313**
+Routine Name: PSORENW4
+    Before: B60124334   After: B62985403  **11,23,27,32,37,64,46,75,71,
+                                           100,130,117,152,148,264,225,
+                                           301,390,313**
+Routine Name: PSORXEDT
+    Before: B45078409   After: B45205767  **21,23,44,71,146,185,148,253,
+                                           390,372,416,313**
+Routine Name: PSORXVW
+    Before: B77494288   After: B81070397  **14,35,46,96,103,88,117,131,
+                                           146,156,185,210,148,233,260,
+                                           264,281,359,385,400,391,313**
+Routine Name: PSOSIG
+    Before: B70011572   After: B70480726  **46,99,114,391,313**
+Routine Name: PSOUTL
+    Before:B125518087   After:B132826044  **1,21,126,174,218,259,324,390,313**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 06, 2008
+Completed By:                               Date Completed: AUG 28, 2014
+Released By :                               Date Released : SEP 02, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

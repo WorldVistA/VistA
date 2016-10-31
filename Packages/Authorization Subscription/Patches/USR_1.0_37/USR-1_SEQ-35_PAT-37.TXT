@@ -1,0 +1,141 @@
+
+=============================================================================
+Run Date: APR 06, 2016                     Designation: USR*1*37
+Package : USR - AUTHORIZATION/SUBSCRIPTION    Priority: Mandatory
+Version : 1        SEQ #35                      Status: Released
+                  Compliance Date: JUN 10, 2016
+=============================================================================
+
+
+Subject: HMP USR TRIGGER FOR ASU RULES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains an update to the Authorized Subscription Utilities
+ (ASU) package to support the Enterprise Health Management Platform (eHMP).
+  
+ This patch modifies two existing routines, USRCLASS and USRRULA. These 
+ routines are invoked when ASU rules are changed and ensures that when 
+ invoked an update is sent to eHMP. MUMPS error occur unless installation
+ of the pre-requisite bundle is followed immediately by the installation
+ of HMP 2.0.
+  
+ ****NOTE****
+ This patch is part of a pre-requisite, multi-build host file which 
+ contains all the patches needed prior to installation of the HMP 2.0 
+ package.  This patch name is HMP PREREQUISITE BUNDLE 2.0.  The 
+ multi-build contains the following patches:
+  
+ GMRC*3.0*80
+ MD*1.0*38
+ OR*3.0*390
+ PSB*3.0*79
+ TIU*1.0*106
+ TIU*1.0*298
+ USR*1.0*37
+  
+ This patch will be installed during a PHASE IMPLEMENTATION
+  
+ To see the current status and target dates for Sites/VISN/Regions please 
+ refer to the following site:
+  
+ http://vaww.oed.portal.domain.ext/pm/iehr/vista_evolution/ehmpdeployment/eHMP%
+ 20v12/Forms/All%20Items.aspx?RootFolder=/pm/iehr/vista_evolution/ehmpdeplo
+ yment/eHMP%20v12/Resources/Waves%20and%20Timelines
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ --------------------------
+ There are no new or modified files or fields in this patch. 
+  
+ Forms Associated:
+ -----------------
+ There are no new or modified forms in this patch.
+  
+ Mail Groups Associated:
+ -----------------------
+ There are no new or modified mail groups in this patch.
+  
+ Options Associated:
+ -------------------
+ There are no new or modified options in this patch.
+  
+ Protocols Associated:
+ ---------------------
+ There are no new or modified protocols in this patch.
+  
+ Security Keys Associated:
+ -------------------------
+ There are no new or modified security keys in this patch.
+  
+ Templates Associated:
+ ---------------------
+ There are no new or modified templates in this patch.
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR #20150408 - VistA Evolution Enterprise Health Management Platform 
+ (eHMP)
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ There are no PSIs associated with this patch.
+  
+ Remedy Tickets(s) & Overview:
+ -----------------------------
+ There are no Remedy Tickets associated with this patch.
+  
+ Test Sites:
+ -----------
+ Hampton, VA
+ Portland, OR
+ San Diego, CA
+ Loma Linda, CA
+ San Antonio, TX
+  
+ Patch Installation:
+ -------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ There are no options or protocols that need to be placed out of order 
+ during the installation of the patch.
+  
+ Patch USR*1.0*37 is part of a multi-build HMP PREREQUISITE BUNDLE 2.0
+ See patch HMP 2.0 Installation Guide for the installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;AUTHORIZATION/SUBSCRIPTION;**[Patch List]**;Sep 25, 2015;Build 31
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: USRCLASS
+    Before: B11828621   After: B14942098  **7,11,33,37**
+Routine Name: USRRULA
+    Before: B24614630   After: B28762260  **3,28,29,37**
+ 
+Routine list of preceding patches: 29, 33
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 08, 2015
+Completed By:                               Date Completed: MAR 29, 2016
+Released By :                               Date Released : APR 06, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

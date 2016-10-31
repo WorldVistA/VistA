@@ -1,0 +1,209 @@
+$TXT Created by                  MNTVUU.DOMAIN.EXT  (KIDS) on Monday, 02/24/14 at 14:24
+=============================================================================
+Run Date: MAR 16, 2015                     Designation: PSN*4*365
+Package : PSN - NATIONAL DRUG FILE            Priority: Mandatory
+Version : 4       SEQ #414                      Status: Released
+                  Compliance Date: APR 16, 2015
+=============================================================================
+
+Associated patches: (v)PSN*4*3     <<= must be installed BEFORE `PSN*4*365'
+                    (v)PSN*4*51    <<= must be installed BEFORE `PSN*4*365'
+
+Subject: SUBSCRIPT ERROR INVALID ENTRIES AND DRUG IDENTIFIER FIX
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses the following four issues:
+  
+ 1. Users are receiving an error while attempting to print the VA Products 
+    Marked for CMOP report when selecting the sort by name option.
+  
+ 2. The Technical Description of the Drug Identifier field of the Drug 
+    Ingredients file (#50.416) needs to be updated.
+  
+ 3. The Merge Error report contains invalid entries for Additives and 
+    Solutions.
+  
+ 4. There is an incorrect drug identifier for Varenicline loaded in the 
+    system.
+  
+   
+ ASSOCIATED REMEDY: 
+ ==================
+ 1. INC000000864913 - Subscript error when sorting by name printing 
+                      products marked for CMOP
+    
+ 2. INC000000744810 - Drug Identifier Data Dictionary description
+  
+ 3. INC000000812050 - Invalid entries on Merge Error report for Additives 
+                      and Solutions needing to be re-matched to 
+                      Orderable Items
+ 4. INC000000610447 - Incorrect drug identifier included under 
+                      Varenicline 
+    
+   
+ ASSOCIATED NSR: 
+ ===============
+ N/A
+   
+ PARTICIPATING TEST SITES: 
+ =========================
+ Puget Sound HCS
+ San Francisco VAMC
+ Oklahoma City VAMC
+   
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1.  INC000000864913 - Subscript error when sorting by name printing 
+                       products marked for CMOP
+  
+ Problem:
+ --------
+ <SUBSCRIPT>N+1^PSNCMOP error when printing VA Products Marked for CMOP 
+ Transmission (PSNCMOP option), when selecting sort by name option.  
+    
+ Solution:
+ ---------
+ Modified "Sort by Name" logic for evaluating the "Transmit to CMOP" field 
+ in PSNCMOP routine to match the logic in "Sort by ID." 
+  
+  
+ 2.  INC000000744810 - Drug Identifier Data Dictionary description
+  
+ Problem:
+ --------
+ The current Technical Description for the Drug Identifier field (#1) of
+ the Drug Ingredients file (#50.416) needs to be updated to more 
+ accurately reflect what the field contains.
+  
+ Currently:
+ The first number is the entry number to the National Drug file separated 
+ with an ""A"". The second number is the particular product which contains 
+ this ingredient in the National Drug file.  
+    
+ Solution:
+ ---------
+ The Technical Description of the Drug Identifier field of the Drug 
+ Ingredients file (#50.416) will be updated as follows:
+ The first number is the Internal Entry Number (IEN) from the VA Generic
+ file (#50.6) followed by an "A". The second number is the Internal Entry
+ Number (IEN) of the particular product from the VA Product file (#50.68)
+ which contains this ingredient.
+  
+  
+ 3.  INC000000812050 - Invalid entries on Merge Error report for Additives
+ and Solutions needing to be re-matched to Orderable Items
+  
+ Problem:
+ --------
+ In routine PSNPSS the IEN of the Dose Form for the Drug gets compared to 
+ the Dose Form Name of the Orderable Item that the Additive or Solution is 
+ matched to. Since the two values will never be equal, this is an invalid 
+ comparison and gives false information on the Merge report.
+    
+ Solution:
+ ---------
+ Modified the comparisons for Additives and Solutions in routine PSNPSS to 
+ compare the Dose Form IENs rather than IEN to the actual Dose Form Name. 
+  
+  
+ 4.  INC000000610447 - Incorrect drug identifier included under Varenicline
+  
+ Problem:
+ --------
+ Incorrect Drug Identifier 184A20598 (where 184 is the IEN for DIPHTHERIA 
+ TOXOID/PERTUSSIS VACCINE/TETANUS TOXOID in the VA Generic file (#50.6) 
+ and 20598 is the IEN for DIPHTH,PERTUSS(ACELL),TET (Tdap) VACCINE 
+ (ADACEL) 0.5ML INJ in the VA Product file (#50.68)) under Varenicline in 
+ the Drug Ingredients file (#50.416) is causing an invalid warning message 
+ during Order check for patients with related allergy (e.g., when ordering 
+ Tdap for a patient with recorded allergy to Varenicline). 
+  
+ Solution:
+ ---------
+ The incorrect Drug Identifier (184A20598) is being removed from the 
+ Varenicline record in the Drug Ingredients file (#50.416) along with the 
+ appropriate cross-references.
+  
+  
+  
+ Installation Instructions:
+ --------------------------
+ National Drug File (NDF) users should be off the system when this 
+ patch is installed. Installation will take less than 5 minutes. 
+ This patch should be installed during non-peak requirement hours.
+  
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter PSN*4.0*365).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch 
+            is installed
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package 
+         PSN*4.0*365
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//",
+         respond NO.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//", respond YES.
+         
+         When prompted " Enter options you wish to mark as 'Out Of 
+         Order':", enter the following options:
+  
+         VA Products Marked for CMOP Transmission         [PSNCMOP]
+         Merge National Drug File Data Into Local File    [PSNMRG]
+  
+         When prompted " Enter protocols you wish to mark as 'Out Of 
+         Order':", press <ENTER>.
+  
+      7. After the installation completes successfully, you may delete
+         routine PSN4P365.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;NATIONAL DRUG FILE;**[Patch List]**;30 Oct 98;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSN4P365
+    Before:       n/a   After:  B1857268  **365**
+Routine Name: PSNCMOP
+    Before: B11593293   After: B11554630  **3,365**
+Routine Name: PSNPSS
+    Before:  B7590641   After:  B7692903  **33,51,365**
+ 
+Routine list of preceding patches: 3, 51
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 20, 2013
+Completed By:                               Date Completed: MAR 11, 2015
+Released By :                               Date Released : MAR 16, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

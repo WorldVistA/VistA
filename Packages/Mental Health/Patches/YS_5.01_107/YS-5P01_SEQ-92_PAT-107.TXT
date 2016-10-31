@@ -1,0 +1,289 @@
+$TXT Created by              at DEVESS.DOMAIN.EXT  (KIDS) on Thursday, 02/27/14 at 01:34
+=============================================================================
+Run Date: AUG 29, 2014                     Designation: YS*5.01*107
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01        SEQ #92                   Status: Released
+                  Compliance Date: SEP 12, 2014
+=============================================================================
+
+Associated patches: (v)YS*5.01*60  <<= must be installed BEFORE `YS*5.01*107'
+                    (v)LEX*2*80    <<= must be installed BEFORE `YS*5.01*107'
+                    (v)ICD*18*57   <<= must be installed BEFORE `YS*5.01*107'
+
+Subject: ICD-10 REMEDIATION MENTAL HEALTH
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+  - Other
+
+Description:
+============
+
+ IMPORTANT INFORMATION Please read the Overview Guide 
+ (ICD-10_Prod_Overview_Guide_Groups_5_6_7.pdf) posted on the Anonymous
+ directory for installation order. This is critical for proper
+ functionality of the ICD-10 Software.
+  
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10) 
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service, or dates of discharge for inpatients, that occur on or 
+ after the ICD10 Activation Date use the ICD-10 code set. Clinical 
+ Modification (ICD-10-CM) diagnosis codes increase from about 13,000 ICD-9 
+ codes to more than 68,000. Procedure Coding System (ICD-10-PCS) procedure 
+ codes increase from about 3,800 ICD-9 codes to nearly 87,000. Both 
+ systems also expand the number of characters allotted to seven 
+ alpha-numeric characters. This value does not include the decimal point, 
+ which follows the third character for the ICD-10-CM code set. There is no 
+ decimal point in the ICD-10-PCS code set. 
+  
+ These code sets have the potential to reveal more about quality of care, 
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research.
+  
+ The Mental Health module provides computer support for both clinical and 
+ administrative patient care activities associated with mental health 
+ care. ICD codes are supported within this clinical database package.  
+ This patch remediates the presentation and storage of Mental Health data 
+ after the ICD-10 Activation Date.
+  
+ To allow for entry of both ICD-9 and ICD-10 code sets, the Mental Health 
+ M code logic has been modified to ask for the DATE/TIME OF DIAGNOSIS 
+ before the DSM DIAGNOSIS prompt.  When the DATE/TIME OF DIAGNOSIS is 
+ before the ICD-10 Activation Date, the user is presented with an Enter 
+ ICD-9 Diagnosis prompt. Otherwise if this date is on or after the ICD-10 
+ Activation Date, the user is presented with an Enter ICD-10 Diagnosis 
+ prompt.  If the user is presented with a prompt to enter an ICD-10 
+ Diagnosis, the new ICD-10 Diagnosis Search Functionality is available. 
+  
+ The Print Diagnoses Sort by Diagnosis and Print DXLS History reports have 
+ both been modified to also display ICD10 codes.
+  
+ Integration Control Registration (ICR #5924) was created to update the 
+ DESCRIPTION for the DIAGNOSTIC RESULTS - MENTAL HEALTH File (#627.8) to 
+ change the occurrences of 'ICD9' to 'ICD DESCRIPTION.' ICR #5924 is a 
+ private agreement with FileMan as the custodial package and Mental  
+ Health as the subscribing  package. 
+  
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)                              Field Name (#)   New/Modified/Deleted
+ -------------                              --------------   --------------------
+ DIAGNOSTIC RESULTS - MENTAL HEALTH File    DIAGNOSIS (#1)   Modified
+  (#627.8)                                  DXLS (#10)       Modified
+                                           
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ YSDIAGE                        Run routine      Modified 
+ YSDIAGP-DX                     Run routine      Modified 
+ YSDIAGP-DXLS                   Run routine      Modified 
+ YSSR ENTRY                     Run routine      Modified 
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ YSD
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)             New/Modified/Deleted
+ -------------      ----      ------------------        --------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR 20070902, ICD-10-CM Conversion
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA Central Western Massachusetts Healthcare System, Northampton, MA
+ Minneapolis VA Healthcare System, Minneapolis, MN
+ John D. Dingell VA Medical Center, Detroit, MI
+ Michael E. DeBakey VA Medical Center, Houston, TX
+ Battle Creek VA Medical Center, Battle Creek, MI
+ Orlando VAMC, Orlando, FL 
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ (VDL) at: http://www4.domain.ext/vdl/
+  
+ Title                              File Name                      FTP Mode
+ --------------------------------------------------------------------------
+ ICD-10 Release Notes (YS*5.01*107) ICD-10_RN_YS_5_01_107.PDF      Binary
+ Production Overview Guide Groups   ICD-10_Prod_Overview_Guide_    Binary
+  5, 6 & 7                           Groups_5_6_7.pdf
+ Technical Manual/Security Guide    MH_TM.PDF                      Binary 
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ Pre-Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than five
+ minutes to install.
+  
+  
+ Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (YS*5.01*107):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as Data Dictionaries (DD's)
+        or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter YS*5.01*107.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ 1. Cleanup - The Post-Install routine YS107P should be deleted using the
+    KERNEL option 'Delete Routines' [XTRDEL] upon completion of the
+    installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.01;MENTAL HEALTH;**[Patch List]**;Dec 30, 1994;Build 23
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: YS107P
+    Before:       n/a   After:  B1703549  **107**
+Routine Name: YSDX3
+    Before: B10581455   After: B14443851  **33,60,107**
+Routine Name: YSDX3A
+    Before:  B7663653   After: B10489909  **33,107**
+Routine Name: YSDX3R
+    Before:  B8161908   After:  B8147998  **107**
+Routine Name: YSDX3R1
+    Before: B12384514   After: B14732518  **107**
+Routine Name: YSDX3RU
+    Before: B16343231   After: B18652946  **107**
+Routine Name: YSDX3RUA
+    Before:  B9895863   After: B11544706  **16,107**
+Routine Name: YSDX3U
+    Before: B19122037   After: B21590008  **107**
+Routine Name: YSDX3UA
+    Before: B17115146   After: B20591995  **96,60,107**
+Routine Name: YSDX3UA0
+    Before:  B4109653   After:  B4575743  **107**
+Routine Name: YSDXUTL
+    Before:       n/a   After:  B9274857  **107**
+Routine Name: YSLXDG
+    Before:       n/a   After:B145277069  **107**
+Routine Name: YSLXDG2
+    Before:       n/a   After: B39703907  **107**
+Routine Name: YSSR
+    Before: B31889856   After: B34732043  **82,60,107**
+ 
+Routine list of preceding patches: 16, 60
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 23, 2012
+Completed By:                               Date Completed: AUG 29, 2014
+Released By :                               Date Released : AUG 29, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

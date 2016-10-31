@@ -1,0 +1,152 @@
+$TXT Created by                 at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 06/03/14 at 09:42
+=============================================================================
+Run Date: MAR 20, 2015                     Designation: WV*1*25
+Package : WV - WOMEN'S HEALTH                 Priority: Mandatory
+Version : 1        SEQ #22                      Status: Released
+                  Compliance Date: APR 20, 2015
+=============================================================================
+
+Associated patches: (v)WV*1*16     <<= must be installed BEFORE `WV*1*25'
+                    (v)WV*1*23     <<= must be installed BEFORE `WV*1*25'
+
+Subject: ALERTS TO CASE MANAGERS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is a VM patch that addresses 2 issues in the Women's Health
+ package.
+  
+ 1. No alert to case manager for PAP supplementary reports
+  
+ 2. Errors when reports are sent to  Women's Health package
+  
+  
+ ASSOCIATED NSR(S):
+ =================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ ========================
+ 1. INC000000513358  -  No alert for PAP supplementary report
+  
+ 2. INC000000361770  -  Multiple error episodes in Women's Health
+                        package
+     
+ Participating Test Sites:
+ ========================
+ Upstate New York - Western NY HCS
+ Erie - VA Medical Center
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+  
+ 1:  INC000000513358 -  No alert for PAP supplementary report
+  
+     Problem
+     -------
+     When a previously verified report for a PAP smear is modified or a
+     supplemental report is added, the case manager for Women's Health 
+     does not get an alert. 
+  
+     Solution
+     --------
+     Modify routines WVLRLINK and WVSNOMED to send all appropriate alerts
+     when a previously verified report is modified/addended.
+     
+  
+     Routine:    WVLRLINK   WVSNOMED  
+  
+  
+ 2:  INC000000361770 -   Multiple error episodes in Women's Health
+                         package
+  
+     Problem
+     -------
+     Radiology reports cannot be uploaded to Women's Health package
+     because of <SUBSCRIPT> errors.
+  
+     Solution
+     --------
+     Modify routine WVRALINK to prevent <SUBSCRIPT> error on Radiology
+     report upload.
+     
+     Routine:  WVRALINK
+  
+ INSTALLATION INSTRUCTIONS:
+ =========================
+ The install time for this patch is less than 2 minutes. This patch
+ can be installed when Laboratory users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system
+       to avoid problems loading and/or installing this patch.
+  
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu.  This
+       option will load the KIDS patch onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system.  You now need to use KIDS to install the transport global.
+  
+   3.  On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+   4.  Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+  
+   5.  On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time.  You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+  
+   6.  Use the 'Install Package(s)' option under the 'Installation' menu
+       and select the package 'WV*1.0*25'.
+  
+       when prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+       choose 'NO'.
+  
+       when prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;WOMEN'S HEALTH;**[Patch List]**;Sep 30, 1998;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: WVLRLINK
+    Before: B51320384   After: B51640405  **6,10,16,25**
+Routine Name: WVRALINK
+    Before: B50520938   After: B50516773  **3,5,7,9,10,16,18,23,25**
+Routine Name: WVSNOMED
+    Before: B25930871   After: B27535535  **16,23,25**
+ 
+Routine list of preceding patches: 23
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 06, 2013
+Completed By:                               Date Completed: MAR 17, 2015
+Released By :                               Date Released : MAR 20, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

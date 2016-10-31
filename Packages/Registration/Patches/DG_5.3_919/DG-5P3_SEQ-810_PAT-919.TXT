@@ -1,0 +1,279 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Tuesday, 02/09/16 at 09:57
+=============================================================================
+Run Date: JUN 06, 2016                     Designation: DG*5.3*919
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #810                    Status: Released
+                  Compliance Date: JUL 07, 2016
+=============================================================================
+
+Associated patches: (v)DG*5.3*915  <<= must be installed BEFORE `DG*5.3*919'
+
+Subject: MASTER VETERAN INDEX VISTA ENHANCEMENTS - ITERATION 15
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ *************************************************************************
+ * This patch may be installed with users on the system, however because *
+ * the patient lookup routines are being exported with this patch, we    *
+ * strongly advise that it be installed after business hours.            *
+ *************************************************************************
+  
+ DG*5.3*915 is the only required build for patch DG*5.3*919.
+  
+ NOTE: Master Patient Index (MPI) enhancements are being distributed in
+       three VistA namespaces: DG, RG and MPIF.
+       The enhancements related to this patch are only being distributed in
+       the DG and MPIF VistA namespaces. MPIF*1.0*62 should be installed
+       before DG*5.3*919 for non-legacy sites (do NOT install MPIF*1.0*62
+       on legacy sites), as the new Swipe/Scan process being exported in 
+       this patch will not work without MPIF*1.0*62. 
+       Therefore it is recommended that these patches be installed in the
+       following order on non-legacy sites: 
+              MPIF*1.0*62 and then DG*5.3*919.
+  
+       DG*5.3*919 should be installed immediately after installing
+       MPIF*1.0*62. 
+  
+ NOTE: Legacy sites can install just the DG*5.3*919 patch, as legacy sites
+       won't use the data capture process. 
+       MPIF*1.0*62 should NOT be installed on legacy sites.
+  
+ Enhancement
+ The enhancement exported in this patch updates the routine DPTLK so that
+ anytime a Veteran Health Information Card (VHIC) or the Department of
+ Defense's (DoD) Common Access Card (CAC) is presented and swiped or 
+ scanned at the facility, the activity is captured and stored locally at
+ the site in the ^XTMP("MPIFCARD") global location. This stored activity
+ data which consists of the card's ID, type of Card (VHIC or CAC) and the
+ event type (swipe or scan) will be downloaded nightly by the Master
+ Patient Index (MPI) for use by the Healthcare Identity Management (HC IdM)
+ team for reporting purposes. 
+   
+ Issue #1
+ Routines DPTLK4 and DPTLK7 were updated so that the WHO ENTERED
+ PATIENT field (#.096) in the PATIENT file (#2) is populated for new
+ patients registered with the REGISTER A PATIENT [DG REGISTER PATIENT]
+ menu option.
+   
+ Issue #2
+ Finally, routines DPTLK4 and DPTLK7 were also updated to ensure that the 
+ 'NEW PATIENT ADDED TO SYSTEM' MailMan messages are generated when a new
+ patient is registered at the Veterans Affairs Medical Center (VAMC)
+ through the REGISTER A PATIENT [DG REGISTER PATIENT] menu option.
+  
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+   
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A  
+   
+ Forms Associated:
+   
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+   
+ Options Associated:
+   
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+   
+   
+ Protocols Associated:
+   
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+   
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+   
+   
+ Additional Information:
+   
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+   
+   
+ CA Ticket(s) & Overview
+ ---------------------------
+ 1. I7264886FY16 - WHO ENTERED PATIENT field (#.096) in the PATIENT
+                   file (#2) no longer populated
+  
+ Problem:
+ --------
+ After the release of patch DG*5.3*915 it was determined that the
+ WHO ENTERED PATIENT field (#.096) of the PATIENT file (#2) was not
+ being populated after a new patient was registered with the REGISTER
+ A PATIENT [DG REGISTER PATIENT] menu option. After further 
+ investigation, this issue was found to be a long standing problem,
+ but only when a patient was registered with either a legacy Veterans
+ Identification Card (VIC) or the newer VHIC cards. This issue went
+ unnoticed until now due to the limited use of these cards.
+  
+ Resolution:
+ -----------
+ Updates were made to the patient registration software, specifically
+ routines DPTLK4 and DPTLK7, to populate the WHO ENTERED PATIENT field
+ (#.096) in the PATIENT file (#2) when a patient registration is 
+ performed with a legacy VIC or newer VHIC cards or through the 
+ REGISTER A PATIENT [DG REGISTER PATIENT] menu option. 
+ Note: This field is historically populated directly by the 
+       REGISTATION (DG) software and not a FileMan (FM) trigger.
+   
+  
+ Test Sites:
+ ----------
+ C.W. Bill Young (Bay Pines) VAMC
+ Robley Rex (Louisville) VAMC
+ VA Connecticut HCS
+    
+   
+ Patch Installation:
+   
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre/Post installation routine processes.   
+   
+  
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than 2 minutes to install.  This patch may be 
+ installed with users on the system. However, because the patient lookup
+ routines are impacted, we strongly advise that it be installed after
+ business hours.  
+  
+ The following OPTIONs should be disabled during installation:
+      Load/Edit Patient Data                      [DG LOAD PATIENT DATA]
+      Register a Patient                          [DG REGISTER PATIENT]
+      Preregister a Patient                       [DGPRE PRE-REGISTER OPTION]
+      Electronic 10-10EZ Processing               [EAS EZ 1010EZ PROCESSING] 
+      Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN RES]
+  
+ The HL7 incoming filers should be stopped.  Use the Monitor, Start, Stop
+ Filers [HL FILER MONITOR] option on the Filer and Link Management Options
+ [HL MENU FILER LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+   
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. DG*5.3*919):
+   
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+       
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond as per your facility's policy.  If you
+     choose to answer YES, then at the end of the patch installation,
+     KIDS will rebuild the menus which may take several hours and could
+     disrupt CPRS users.  If your facility has the XQBUILDTREEQUE
+     nightly batch job tasked to run, answer NO to this question.
+     The nightly job will rebuild the menus as scheduled.
+   
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// respond YES.  The following OPTIONS should be
+     disabled during the installation.
+       
+      Load/Edit Patient Data                      [DG LOAD PATIENT DATA]
+      Register a Patient                          [DG REGISTER PATIENT]
+      Preregister a Patient                       [DGPRE PRE-REGISTER OPTION]
+      Electronic 10-10EZ Processing               [EAS EZ 1010EZ PROCESSING] 
+      Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN RES]
+   
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After patch installation has completed, restart the HL7 incoming filers.
+ Use the Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+ and Link Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+ Menu [HL MAIN MENU].
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DPTLK
+    Before:B121219825   After:B126157640  **32,72,93,73,136,157,197,232,
+                                           265,277,223,327,244,513,528,
+                                           541,576,600,485,633,629,647,
+                                           769,857,876,915,919**
+Routine Name: DPTLK4
+    Before:  B3783232   After:  B4091702  **73,857,915,919**
+Routine Name: DPTLK7
+    Before:B174142560   After:B185524079  **915,919**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 16, 2015
+Completed By:                               Date Completed: JUN 06, 2016
+Released By :                               Date Released : JUN 06, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,196 @@
+
+=============================================================================
+Run Date: MAY 21, 2015                     Designation: PXRM*2*52
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #40                      Status: Released
+                  Compliance Date: JUN 21, 2015
+=============================================================================
+
+Associated patches: (v)PXRM*2*26   <<= must be installed BEFORE `PXRM*2*52'
+
+Subject: HEPATITIS C UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Hepatitis C Virus (HCV) is the most common chronic blood-borne pathogen in
+ the U.S.  An estimated 3.2 million Americans are living with chronic HCV
+ infection.
+ In the U.S., there are approximately 17,000 new cases of HCV annually. HCV
+ is acquired primarily by percutaneous exposures to blood. Approximately
+ 15,000 deaths from chronic liver disease per year are associated with
+ HCV.  HCV diagnosis and treatment may mitigate some of the negative health
+ outcomes of HCV infection.  In the VHA, the prevalence of HCV infection
+ has been found to be 6.2% overall and 10.1% in Veterans born during
+ 1945-1965.
+  
+ The United States Preventive Services Task Force (USPSTF) recommends
+ screening for HCV infection in persons at high risk for infection.  The
+ USPSTF also recommends offering one-time screening for HCV infection to
+ adults born between 1945 and 1965.
+  
+ RECOMMENDATIONS:
+ ----------------
+ It is recommended that the VA National Hepatitis C Reminder Dialog be 
+ initiated and used for newly-diagnosed hepatitis C cases and that 
+ information is updated periodically throughout the course of care.
+  
+ This patch also installs the following edits to the Veterans Choice 
+ Reminder dialog:
+  
+ The groups and elements modified were minimal as they are used in both
+ the Pre and Post Visit section.  The Groups and Elements are:
+  
+ Group:  VA-DG VETERANS CHOICE CLINICAL INFO
+  
+ Element:  VA-DG VETERANS CHOICE CLINICAL INFO TEXT
+  
+ Group:  VA-DG VETERANS CHOICE ADDITIONAL COMMENTS
+  
+ Element:  VA-DG VETERANS CHOICE ADDITIONAL COMMENTS
+  
+ The modifications are:
+  
+      - Remove the suppression of the check boxes on the Groups.
+      - Remove Show on the Groups (hide the elements in the Groups).
+      - Moved the display only Clinical Information instruction from the
+        Group to the Element.
+      - Added "\\" to the Clinical Info element to modify indent.
+  
+ Associated Remedy Tickets:
+ ===========================
+ 1.  INC000001079621 - National Hepatitis C Dialog
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Site(s):
+ ===========================
+ Aleda E. Lutz VAMC (Saginaw, MI) 
+ VA Northern California HCS
+ VA Greater Los Angeles HCS, CA
+ VA Long Beach HCS, CA 
+  
+  
+ REMEDY OVERVIEW:
+ =================
+ 1.  INC000001079621 - National Hepatitis C Dialog
+  
+  
+ Problem:
+ --------
+ The VA National Hepatitis C Reminder Dialog should be initiated and used 
+ for newly-diagnosed lung cancer cases.
+  
+ Resolution:
+ -----------
+ This patch, PXRM*2*52, contains two routines, PXRMP52E and PXRMP52I.  
+ They are init tasks that add new entries to the REMINDER EXCHANGE (#811.8)
+ file and the contents of these entries are installed during the 
+ post-init.  These routines can be deleted after the install. 
+  
+  
+ Build Components:
+ =================
+ N/A
+  
+ Data Dictionary:
+ ================
+ N/A
+  
+ Software & Documentation Retrieval Instructions:
+ ================================================
+ This patch is being distributed as a host file.  The name of the host 
+ file is PXRM_2_0_52.KID.  This file should be downloaded in ASCII mode.
+  
+ The preferred method for obtaining these files is to use File Transfer 
+ Protocol (FTP) to download them from:
+  
+     ftp://download.vista.domain.ext/
+  
+  
+ This transmits the files from the first available FTP server.  Sites may 
+ also elect to retrieve the files directly from a specific server as 
+ follows:
+  
+     Albany              ftp.domain.ext
+     Hines               ftp.domain.ext
+     Salt Lake City      ftp.domain.ext
+  
+ The Install and Setup Guide is also available on the above servers.  It 
+ is available as .pdf format and should be downloaded in BINARY mode.
+  
+     File Name:            Description:             Protocol:
+     ==========            ============             =========
+     PXRM_2_0_52_IG.PDF    PXRM*2.0*52 Install      BINARY
+                           and Setup Guide
+     PXRM_2_0_52.KID       PXRM*2.0*52 Host File    ASCII
+  
+  
+ Documentation can also be found on the VistA Documentation Library (VDL) 
+ at:  http://www.domain.ext/vdl/
+  
+ Installation:
+ =============
+ This patch can be installed with users on the system, but it should 
+ be done during non-peak hours.  Installation will take ten to fifteen
+ minutes.  Refer to the Install and Setup Guide, PXRM_2_0_52_IG.PDF, for
+ complete details.
+  
+ 1.  Use the "Load a Distribution" option on the KIDS installation menu.  
+     When prompted to enter a host file type in
+     <your directory name>:PXRM_2_0_52.KID
+  
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     options, as desired:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify checksums in Transport Global
+         Backup a Transport Global
+  
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use PXRM*2.0*52
+  
+ 4.  When prompted "Want KIDS to INHIBIT LOGONs during the install?  
+     NO//," respond 'NO'.
+  
+ 5.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO//, respond 'NO'.
+  
+ 6.  After successful installation, the following init routines may be 
+     deleted:
+  
+     PXRMP52E
+     PXRMP52I
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 214
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMP52E
+    Before:       n/a   After:   B752101  **52**
+Routine Name: PXRMP52I
+    Before:       n/a   After:  B2485154  **52**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 01, 2014
+Completed By:                               Date Completed: MAY 21, 2015
+Released By :                               Date Released : MAY 21, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

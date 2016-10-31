@@ -1,0 +1,255 @@
+$TXT Created by               at CPRS28.DOMAIN.EXT  (KIDS) on Thursday, 08/27/15 at 09:00
+=============================================================================
+Run Date: SEP 15, 2015                     Designation: OR*3*418
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #354                      Status: Released
+                  Compliance Date: SEP 28, 2015
+=============================================================================
+
+Associated patches: (v)OR*3*404    <<= must be installed BEFORE `OR*3*418'
+
+Subject: CPRS GUI v30.A EMERGENCY PATCH
+
+Category: 
+  - Other
+
+Description:
+============
+
+ Two issues have been reported in the Computerized Patient Record 
+ System (CPRS) v30.16 system that are related to the switchover to ICD-10
+ codes. As a result, this patch is being released as an emergency patch.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ OR CPRS GUI CHART      Broker             Modified
+  
+ Parameters Associated:
+  
+ Parameter Name                New/Modified/Deleted
+ --------------                --------------------
+ N/A
+  
+ Protocols Associated:         
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Remote Procedure Calls Associated:
+  
+ Remote Procedure Call Name           New/Modified/Deleted
+ --------------------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  
+  
+ 1. Remedy ticket #1297944 - ICD 10 Issue
+  
+  
+ Problem:
+ -------
+ The provider uses the "Other Diagnosis" to add diagnoses from the 
+ encounter form. After several diagnoses are entered the provider then
+ selects the "Add to Problem List" box for the Multiple diagnoses. Next
+ comes a series of dialog boxes directing the provider to select the SNOMED
+ code for each of the ICD-10 diagnoses. When each dialog box comes up there
+ is no indication of which ICD-10 diagnosis they are trying to match to 
+ which SNOMED code. The provider may assume that the dialog boxes display 
+ in the order that the diagnoses were added. In some cases, there may be a
+ diagnosis that is skipped because it is already on the problem list. This
+ could lead to confusion over which ICD-10 code is being matched.
+  
+ The dialog box that displays when matching ICD-10 to SNOMED should 
+ always indicate which diagnosis is being match in the actual dialog box.
+ Currently it does not.
+  
+ Resolution:
+ ----------
+ The dialog box has been modified to display the ICD-10 information. 
+  
+ 2.   Remedy ticket #1257371 - Incorrect ICD code blocks are retrieved when
+      editing encounters that cross ICD10 implementation date
+  
+ Problem:
+ =======
+ The problem affects ICD-10 codes with the commonly used pick list display
+ selection. The scenario is: when you create an encounter with a visit date
+ that requires ICD-9 codes, the commonly used ICD-9 content is displayed.
+ If you immediately create a new encounter without changing the patient or
+ clinic and immediately select a new visit for a date requiring ICD-10
+ codes, the blocks that should contain ICD-10 codes do not display. The
+ problem is that the GUI does not refresh the dialogue box that is required
+ when the visit date has changed.
+  
+ Resolution:
+ ==========
+ CPRS will be modified to refresh when the visit date is changed.
+  
+ Test Sites:
+ ===========
+  
+  
+ Documentation and Software Retrieval:
+ =====================================
+ To obtain the current client and server-side software and 
+ documentation, the OR*3*418 VistA side patch will be distributed via 
+ this PackMan message.
+  
+ Use FTP to retrieve OR_30_418.ZIP from one of the following OI Field 
+ Offices' ANONYMOUS.SOFTWARE directories:
+  
+   OI Field Office    FTP Address                 Directory
+   ---------------    -----------                 ---------
+   Albany             ftp.domain.ext    
+   Hines              ftp.domain.ext     
+   Salt Lake City     ftp.domain.ext       
+  
+ The software distribution includes these files:
+  
+ File Name              Contents            Retrieval Format
+ ---------              --------            ----------------
+ OR_30_418.ZIP          CPRSCHART.EXE       Binary
+ OR_30_418_SRC.ZIP      Source files        Binary
+  
+ The updated documentation associated with this patch is:
+  
+ File Name                       Contents               
+ ---------                       --------               
+ OR_30_418_IG.PDF                CPRS GUI v.30.A Installation Guide
+ OR_30_418_IG.DOC                CPRS GUI v.30.A Installation Guide 
+  
+ CPRS documentation can also be found in the VA Software Document Library:
+  
+ http://www.domain.ext/vdl. 
+  
+  
+ Patch Installation:
+ =================== 
+ *****Important Note*****
+ This patch includes a revised CPRS Graphical User Interface (GUI) which 
+ must be distributed to the appropriate workstations, servers and/or Citrix
+ Access Gateways. After the patch is installed and the GUI is updated, the 
+ version of the GUI will be 1.0.30.69.
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no special pre or post installation steps required. 
+  
+ Pre-Installation Instructions
+ -----------------------------
+ N/A 
+  
+ Installation Instructions
+ -------------------------
+ This patch should be installed while no users are using CPRS. The patch 
+ itself will require less than five minutes for installation. However, the 
+ placement of the executable may require considerable more time, depending 
+ on the site configuration.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     # OR*3*418:
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'
+     Respond: NO     
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+     Respond: NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+     Respond: NO
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' 
+     Respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 25, 2015
+Completed By:                               Date Completed: SEP 14, 2015
+Released By :                               Date Released : SEP 15, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

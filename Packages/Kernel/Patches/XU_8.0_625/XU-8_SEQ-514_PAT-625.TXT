@@ -1,0 +1,146 @@
+$TXT Created by             KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Tuesday, 01/14/14 at 05:24
+=============================================================================
+Run Date: DEC 15, 2014                     Designation: XU*8*625
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #514                      Status: Released
+                  Compliance Date: JAN 15, 2015
+=============================================================================
+
+Associated patches: (v)XU*8*449    <<= must be installed BEFORE `XU*8*625'
+
+Subject: REACTIVATE POSTAL CODES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy ticket#: INC000000825144; INC000000813896
+ FORUM Tracking Message#: 60628984 
+ Blood Bank Clearance: 3/13/2013 
+ Test sites:
+ - BLACK HILLS HCS
+ - HEALTH ADMIN CENTER, CO
+ - UPSTATE NEW YORK HCS
+  
+  
+                         XU*8.0*625
+ This patch reactivates two entries #52000 and #52003 in the Postal Code 
+ file (#5.12).
+  
+  
+ Use VA FileMan INQUIRE TO FILE ENTRIES to check two entries #52000 and 
+ #52003 in the Postal Code file (#5.12)
+  
+ Select OPTION: INQUIRE TO FILE ENTRIES  
+  
+ OUTPUT FROM WHAT FILE: POSTAL CODE// 
+ Select POSTAL CODE MAIL CODE: `52000
+ 7.5  34607     34607003527  SPRING HILL  003527  003527
+ ANOTHER ONE: `52003
+ 7.5  34610     34610003527  SPRING HILL  003527  003527
+ ANOTHER ONE: 
+ STANDARD CAPTIONED OUTPUT? Yes//   (Yes)
+ Include COMPUTED fields:  (N/Y/R/B): NO// b  BOTH Computed Fields and 
+ Record Num
+ ber (IEN)
+  
+  
+ Before patch:
+  
+ NUMBER: 52000                           MAIL CODE: 34607
+   CITY: SPRING HILL                     COUNTY: 12053
+   STATE: FLORIDA                        INACTIVE DATE: AUG 01, 2012
+   CITY KEY: 003527                      PREFERRED CITY KEY: 003527
+   UNIQUE KEY (VA): 34607003527
+  
+ NUMBER: 52003                           MAIL CODE: 34610
+   CITY: SPRING HILL                     COUNTY: 12101
+   STATE: FLORIDA                        INACTIVE DATE: AUG 01, 2012
+   CITY KEY: 003527                      PREFERRED CITY KEY: 003527
+   UNIQUE KEY (VA): 34610003527
+  
+  
+ After patch:
+  
+ NUMBER: 52000                           MAIL CODE: 34607
+   CITY: SPRING HILL                     COUNTY: 12053
+   STATE: FLORIDA                        CITY KEY: 003527
+   PREFERRED CITY KEY: 003527            UNIQUE KEY (VA): 34607003527
+  
+ DNUMBER: 52003                           MAIL CODE: 34610
+   CITY: SPRING HILL                     COUNTY: 12101
+   STATE: FLORIDA                        CITY KEY: 003527
+   PREFERRED CITY KEY: 003527            UNIQUE KEY (VA): 34610003527
+  
+ Blood Bank Team Coordination
+ ============================
+ Blood Bank Clearance: 3/13/2013
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*625 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*625 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+   
+  Installation Instructions
+  =========================
+  
+  1. Users ARE allowed to be on the system during the installation. 
+     However, it is recommended that the patch be installed during
+     non-peak time. It will take about two minutes to install the
+     patch, but you may queue the installation if you wish.
+   
+  2. You DO NOT need to stop TaskMan or the background filers.
+   
+  3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This      
+     option will load the KIDS package onto your system.
+   
+  4. The patch has now been loaded into a Transport global on your system. 
+     You now need to use KIDS to install the Transport global. On the KIDS
+     menu, under the 'Installation' menu, use the following options:
+   
+                  Verify Checksums in Transport Global
+                  Print Transport Global
+                  Compare Transport Global to Current System
+                  Backup a Transport Global
+   
+     On the KIDS menu, under the 'Installation' menu, use the following
+     option:
+                  Install Package(s)  
+                  Select INSTALL NAME:XU*8.0*625
+                                      ==========
+  
+   Accept the defaults for the following install questions:  
+   Want KIDS to INHIBIT LOGONs during the install?  NO//
+   Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XIPSRVR
+    Before: B23779750   After: B29981467  **449,625**
+ 
+Routine list of preceding patches: 449
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 07, 2013
+Completed By:                               Date Completed: DEC 10, 2014
+Released By :                               Date Released : DEC 15, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

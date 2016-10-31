@@ -1,0 +1,188 @@
+
+=============================================================================
+Run Date: FEB 09, 2016                     Designation: TBI*2*13
+Package : TBI - TRAUMATIC BRAIN INJURY        Priority: Mandatory
+Version : 2        SEQ #10                      Status: Released
+                  Compliance Date: MAR 10, 2016
+=============================================================================
+
+
+Subject: HREG SUSTAINMENT RELEASE 5A
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ DHCP Patch Display                                       
+ ==========================================================================
+ ===
+ Run Date: January 11, 2016                      Designation: TBI*2.0*13
+ Package: Traumatic Brain Injury                 Priority: Mandatory
+ Version: 2.0 SEQ # 
+ 2                                                                       
+ Status:   Deployment
+ ==========================================================================
+ ===
+ Subject:  Build 2.0.13 Informational Patch
+ Category:  INFORMATIONAL
+ SUBJ: Release of Traumatic Brain Injury System 2.0*13 
+ Description:
+ ===========
+ This patch announces the National Release of Traumatic Brain Injury Patch 
+ TBI*2.0*13. TBI*2.0*13 will be deployed to the production server for 
+ national release on 2/10/16. No additional action is required from sites.
+ **********************************************************************
+  
+ RELEASE INFORMATION:
+ ===================
+ TBI Patch 2.0*13 contains code changes (defect fixes enhancements) to
+ the TBI Registry. These changes are Work Items that were recorded and
+ tracked in the Registries Project Area of RTC.
+  
+ This patch contains the TBI Work Items completed for Release 5A for the   
+ production deployment.
+  
+ TBI Patch 2.0*13 includes the TBI Registry Work Items listed below:
+  
+ 1) 227782: Move VIA URI configuration to DB
+ 2) 260255: Comment Logging
+ 3) 238214: TBI: Refactor Mayo Portland - Participation Index
+ 4) 236129: TBI - IRCR Survey Data Loss
+ 5) 230894: TBI - Merge V2 DME code with Sustainment Release 4/5
+ 6) 217606: TBI - Investigate displaying VIA system information
+ 7) 201932 - Identify/Correct end user issues with saving CTBIE form
+ 8) 190537 - TBI Instruments - Item 19A data validation/visibility issue
+ 9) 233835: TBI - Additional Logging to Help Isolate Encounter ID Issues
+ The following describes each component of the TBI Patch 2.0*13 
+  
+ 1) 227782: 
+ Issue: Move VIA URI configuration to DB
+  
+ Solution: The VIA configuration settings were added to the CRS_SETTINGS 
+ table. 
+  
+ 2) 260255:  
+ Issue: Include client IP address and session information into the 
+ comments when writing log information to the database.  Also include the 
+ real user ID instead of "TBI LOGGER".
+  
+ Solution: The client IP, session information and real user ID are now 
+ written to the log file to aid in debugging errors.   
+  
+ 3) 238214: 
+ Issue: Refactor delete-then-save pattern and refactor page load event to 
+ be consistent with other instruments.
+  
+ Solution: The Mayo-Portland Participation Index instrument was refactored 
+ to remove the delete-then-save pattern that was causing data loss and 
+ data integrity issues.
+  
+ 4) 236129: 
+ Issue: TBI - IRCR Survey Data Loss User lost data when saving the IRCR 
+ survey.
+  
+ Solution: The Rehabilitation and Reintegration Plan instrument was 
+ refactored to remove the delete-then-save pattern that was causing data 
+ loss and data integrity issues. The Auto-Save functionality was changed 
+ to be consistent with the other instruments. 
+  
+ 5) 230894: 
+ Issue: TBI - Merge V2 DME code with Sustainment Release 4//5
+  
+ Solution: The TBI DME V2 code was merged with the TBI Sustainment Release 
+ 5B code base.
+  
+ 6) 217606: 
+ Issue: TBI - Investigate displaying VIA system information.
+  
+ Solution: The service being used (VIA/MDWS) is displayed on the System 
+ Check page. The System Check page is a new page to display this 
+ information and is available in TBI Instruments.
+  
+ 7) 201932: 
+ Issue: Identify / Correct end user issues with saving CTBIE form (prev 
+ 197036) 
+  
+ Solution: The CTBIE instrument was refactored to remove the 
+ delete-then-save pattern that was causing data loss and data integrity 
+ issues. 
+  
+ 8) 190537: 
+ Issue: TBI Instruments - Item 19A data validation/visibility issue
+ Solution: Question 19A was fixed to function properly when text was 
+ entered into the Other text box.
+  
+ 9)233835: 
+ Issue: TBI - Additional Logging to Help Isolate Encounter ID Issues 
+  
+ Solution: Need to increase logging around the code that generates the 
+ Encounter ID strings.  These strings are responsible for several defects 
+ including Null Reference Exception and DateTime format exceptions
+ SOFTWARE:
+ =========
+ TBI is a web-based application. Changes will be applied to the 
+ national production servers and will be immediately available to the
+ users. No changes at the local site are required for this patch.
+  
+ SYSTEM REQUIREMENTS:
+ ====================
+ n/a
+ SOFTWARE RETRIEVAL:
+ ==================
+ n/a 
+ DOCUMENTATION:
+ ================
+ NOTE: NO DOCUMENT UPDATES WERE REQUIRED FOR THIS PATCH
+  
+ Additional Information:
+ ===================
+ TBI Design and User Documentation is located on TSPR;.
+ http://tspr.vista.domain.ext/warboard/anotebk.asp?proj=1313&Type=Active
+   
+   
+ Documentation Retrieval Instructions:
+ The preferred method is to SFTP the files from 
+ sftp://download.vista.domain.ext/.
+   
+ This transmits the files from the first available SFTP server.
+ Sites may also elect to retrieve software directly from a specific server 
+ as follows:
+   
+ Albany         sftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          sftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City sftp.domain.ext     <ftp://ftp.domain.ext>
+   
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+   
+ Title                              File Name              FTP Mode
+ -----------------------------------------------------------------------
+ TBI Instruments User Manual       TBIINSUM.PDF           BINARY
+ REMEDY TICKETS AND OVERVIEW:
+ =============================
+ There are no Remedy Tickets associated with this patch.
+  
+ TEST SITES:
+ ===========
+ Houston, TX 
+ Lebanon, PA 
+ Dallas, TX 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:                          Hold Date     : JAN 15, 2016
+Entered By  :                               Date Entered  : JAN 08, 2016
+Completed By:                               Date Completed: FEB 09, 2016
+Released By :                               Date Released : FEB 09, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

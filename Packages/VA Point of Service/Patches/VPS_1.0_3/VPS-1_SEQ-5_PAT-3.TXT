@@ -1,0 +1,347 @@
+
+=============================================================================
+Run Date: AUG 05, 2015                     Designation: VPS*1*3
+Package : VPS - VA POINT OF SERVICE (KIOSKS)  Priority: Mandatory
+Version : 1         SEQ #5                      Status: Released
+                  Compliance Date: SEP 05, 2015
+=============================================================================
+
+Associated patches: (v)VPS*1*4         install with patch       `VPS*1*3'
+                    (v)VPS*1*5         install with patch       `VPS*1*3'
+
+Subject: VPS MRAR
+
+Category: 
+  - Data Dictionary
+  - Other
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ VPS*1.0*3 is being released as part of a combined build which includes 
+ VPS*1.0*4, VPS*1.0*5, and VPS*1.0*3.
+  
+ VHA has recently identified interactive kiosks as an innovation that will
+ enable VA Medical Centers (VAMCs) to enhance services to veterans and 
+ improve the efficiency of operations. Many Veterans Integrated Service
+ Networks (VISNs), and VAMCs have already implemented kiosks in the past,
+ and are currently using them to provide streamlined approaches for
+ veterans to perform various tasks.
+  
+ The VA's vision for VA Point of Service (VPS) kiosk devices is to 
+ streamline and improve patient clinical and administrative processes
+ across the VA healthcare network, and to provide standard, easy-to-use
+ capabilities for patients and employees to access and update information
+ and perform business transactions through incremental releases. The VA's
+ vision includes a modular and configurable solution that may be tailored
+ to fit each facility's individual needs.
+  
+ The VPS Kiosk Application Server utilizes RPC Broker to make calls to the
+ Remote Procedures (RPCs) residing on the VistA host. This patch delivers
+ functionality that will support components delivered in VPS*1*1 and 
+ VPS*1*2; and will deliver additional functionality to support the 
+ Vetlink client.
+  
+  
+ Following are the new RPCs included in VPS*1.0*3.
+  
+      VPS WRITE MRAR PDO
+      VPS GET MRAR PDO
+      VPS WRITE KIOSK PARAMETERS
+      VPS GET LAST MRAR
+      VPS UPDATE LAST MRAR TIU IEN 
+  
+  
+ Options Associated
+ ========================
+  
+ VPS KIOSK INTERFACE [VPS KIOSK INTERFACE]  BROKER (CLIENT/SERVER) MODIFIED
+  
+  
+ Test Sites
+ ========================
+  
+ 1.  Oklahoma City VA Medical Center
+ 2.  VA Pittsburgh Healthcare System
+ 3.  Dayton Medical Center
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                 File Name                               FTP Mode
+ -----------------------------------------------------------------------
+                       vps_combined_4_5_3_201505281_docs.zip    BINARY
+  
+   Containing the following files:
+   
+   Installation Guide   VPS Combined 4_5_3 1.0 Installation Guide_v0.01.pdf
+   Technical Guide      VPS Technical Guide_v0.02.pdf
+   Release Notes        VPS Combined 4_5_3 1.0 Release Notes.pdf
+  
+ Required Builds:
+  
+ VPS*1.0*4, VPS*1.0*5
+  
+  
+ Pre-Installation:
+ =======================
+  
+ VPS*1.0*3 includes a pre-installation routine VPSDDCU to remove obsolete
+ fields in files 853.54 and 853.52. This routine is automatically executed
+ during the install of VPS*1.0*3 and is automatically deleted when the
+ install is completed.
+  
+  
+  
+ Installation Instructions:
+ ========================
+  
+ Installation will take less than 5 minutes. Suggested time to install:
+ during non-peak requirement hours.       
+  
+  
+ 1.  OBTAIN PATCHES
+     --------------
+     Obtain the host file VPS_1_0_4-5-3_20150528.KID, which contains the
+     following patches:
+  
+         VPS*1.0*4
+         VPS*1.0*5
+         VPS*1.0*3
+  
+      Sites can retrieve VistA software from the following FTP addresses.
+      The preferred method is to FTP the files from:
+  
+                     download.vista.domain.ext
+  
+      This will transmit the files from the first available FTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+  
+        Albany                  ftp.domain.ext
+        Hines                   ftp.domain.ext
+        Salt Lake City          ftp.domain.ext
+  
+      The VPS_1_0_4-5-3_20150528.KID host file is located in the 
+       directory. Use ASCII Mode when downloading the
+      file.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+     Select Installation Option:
+  
+ 3.  From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file VPS_1_0_4-5-3_20150528.KID (e.g.,
+     /home/cheyl118/VPS_1_0_4-5-3_20150528.KID).
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       KIDS Distribution saved on May 28, 2015@11:17:34
+       Comment: Combined build contains VPS*1.0*4, VPS*1.0*5, and 
+       VPS*1.0*3 in that order.
+  
+       This Distribution contains Transport Globals for the following 
+       Package(s): VPS COMBINED 4,5,3 BUILD 1.0
+  
+       OK to continue with Load? NO// YES
+  
+       OK to continue with Load? NO// YES
+  
+       OK to continue with Load? NO// YES
+  
+       Distribution OK!
+  
+       Want to Continue with Load? YES// 
+       Loading Distribution...
+  
+       VPS COMBINED 4,5,3 BUILD 1.0
+       VPS*1.0*4
+       VPS*1.0*5
+       VPS*1.0*3
+  
+      Use INSTALL NAME: VPS COMBINED 4,5,3 BUILD 1.0 to install this 
+ Distribution.
+  
+ 4.  Select Installation Option: INSTALL PACKAGE(S)
+     Select INSTALL NAME: VPS COMBINED 4,5,3 BUILD 1.0      
+     5/29/15@13:01:56
+     => Combined build contains VPS*1.0*4, VPS*1.0*5, and VPS*1.0*3 in 
+     that order
+  
+     The following will display:
+  
+  This Distribution was loaded on May 29, 2015@13:01:56 with header of
+  Combined build contains VPS*1.0*4, VPS*1.0*5, and VPS*1.0*3 in that
+  order.  ;
+  
+  Created on May 28, 2015@11:17:34
+  It consisted of the following Install(s):
+  VPS COMBINED 4,5,3 BUILD 1.0    VPS*1.0*4    VPS*1.0*5    VPS*1.0*3
+       Checking Install for Package VPS COMBINED 4,5,3 BUILD 1.0
+  
+       Install Questions for VPS COMBINED 4,5,3 BUILD 1.0
+  
+       Checking Install for Package VPS*1.0*4
+  
+       Install Questions for VPS*1.0*4
+  
+       Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// NO
+  
+       Checking Install for Package VPS*1.0*5
+  
+       Install Questions for VPS*1.0*5
+  
+       Incoming Files:
+  
+         853.1     VPS HL7 SITE PARAMETERS
+  
+         853.8     VPS CLINICAL SURVEY
+  
+         853.85    VPS QUESTIONNAIRE IDENTIFIERS
+  
+         853.875   VPS QUESTIONNAIRE NAME
+  
+         853.9     VPS APPOINTMENTS QUEUE
+  
+       Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+  
+       Checking Install for Package VPS*1.0*3
+  
+       Install Questions for VPS*1.0*3
+  
+       Incoming Files:
+  
+         853       VPS CONFIG HISTORY
+  
+         853.3     VPS ALLERGY DISCREPANCY INDICATORS
+  
+         853.5     VPS MRAR PDO
+  
+         853.7     VPS MED DISCREPANCY INDICATORS  
+  
+     Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+  
+     Want KIDS to INHIBIT LOGONs during the install? NO// 
+     Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+     Enter the Device you want to print the Install messages.
+     You can queue the install by enter a 'Q' at the device prompt.
+     Enter a '^' to abort the install.
+  
+ 5.   Post-Installation Instructions:
+           
+      Please refer to the VPS Combined 4_5_3 1.0 Installation Guide for
+      post-install configuration activities.
+  
+  
+ Routine Information:
+ ====================
+  
+ The second line of each of these routines now looks like:
+          ;;1.0;VA POINT OF SERVICE (KIOSKS);**3**;Oct 21, 2011;Build 64
+  
+  
+    The checksums below are new checksums, and can be checked with 
+    CHECK1^XTSUMBLD.         
+  
+ VPSALL01  
+        Before: n/a         After:16140535     **3**
+ VPSDDCU
+        Before: n/a         After:710413       **3**
+ VPSMR51   
+        Before: n/a         After:3914403      **3**
+ VPSMR52   
+        Before: n/a         After:15651992     **3**
+ VPSMR54   
+        Before: n/a         After:9123814      **3**
+ VPSMRAR0  
+        Before: n/a         After:103791352    **3**
+ VPSMRAR1  
+        Before: n/a         After:100795984    **3**
+ VPSMRAR2  
+        Before: n/a         After:23139399     **3**
+ VPSMRAR3  
+        Before: n/a         After:9329908      **3**
+ VPSMRAR4  
+        Before: n/a         After:20027135     **3**
+ VPSMRAR5  
+        Before: n/a         After:10353660     **3**
+ VPSMRAR7  
+        Before: n/a         After:10840964     **3**
+ VPSMRAR9  
+        Before: n/a         After:4594710      **3**
+ VPSMRARU  
+        Before: n/a         After:5034887      **3**
+ VPSOBJ                                        
+        Before: n/a         After:74545346     **3**
+ VPSPARAM  
+        Before: n/a         After:105808145    **3**
+ VPSPDO1   
+        Before: n/a         After:236656167    **3**
+ VPSPDO1M  
+        Before: n/a         After:136955019    **3**
+ VPSPDO2   
+        Before: n/a         After:60112459     **3**
+ VPSPDO2M  
+        Before: n/a         After:33280551     **3**
+ VPSPDO3M  
+        Before: n/a         After:60441285     **3**
+ VPSPUTL1  
+        Before: n/a         After:42815834     **3**
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:                          Hold Date     : JUL 15, 2015
+Entered By  :                               Date Entered  : DEC 13, 2012
+Completed By:                               Date Completed: JUN 12, 2015
+Released By :                               Date Released : AUG 05, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

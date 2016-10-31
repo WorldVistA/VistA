@@ -1,0 +1,198 @@
+$TXT Created by               MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 01/30/14 at 16:01
+=============================================================================
+Run Date: APR 16, 2014                     Designation: FB*3.5*127
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #125                    Status: Released
+                  Compliance Date: MAY 16, 2014
+=============================================================================
+
+Associated patches: (v)FB*3.5*72   <<= must be installed BEFORE `FB*3.5*127'
+                    (v)FB*3.5*124  <<= must be installed BEFORE `FB*3.5*127'
+                    (v)FB*3.5*146  <<= must be installed BEFORE `FB*3.5*127'
+
+Subject: CORRECT BLANK MRA AND BATCH WARNING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following:
+  
+ 1) When a site hits 100 batches remaining they receive a warning message. This 
+    warning message occurs too late for sites.
+  
+ 2) The warning message displayed when a site hits 99,900 batches is not
+    providing the correct amount of batches left.
+  
+ 3) Sites are transmitting Veteran Master Record Adjustment's (MRAs) that 
+    contain no information to Central Fee.
+  
+ Associated Remedy Tickets:
+ ==========================
+  
+ 1) INC000000461268 - FEE BASIS BATCH LIMITATION
+ 2) INC000000586418 - 71,000 batches left
+ 3) INC000000516396 - Blank Veteran MRA records
+    Duplicate:
+    ---------
+    INC000000582726
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ North Texas HCS - (Dallas, Bonham)
+ Providence - VA Medical Center
+  
+ Remedy Overview:
+ ================
+  
+ 1) INC000000461268 - FEE BASIS BATCH LIMITATION
+  
+ Problem:
+ --------
+ When a site hits 99,900 batches they receive a warning message that there are
+ batches left before a purge must be run. This warning message occurs too
+ late for sites.
+  
+  
+ Resolution:
+ -----------
+ The warning will now trigger when there are 500 batches remaining.
+  
+ Routine: FBAAUTL
+  
+ 2) INC000000586418 - 71,000 batches left
+  
+ Problem:
+ --------
+ When the warning message for low batches remaining displays, it is calculating
+ the incorrect amount of batches remaining.
+  
+ Resolution:
+ -----------
+ By correcting the values being calculated, the system will display an
+ accurate number of batches remaining.
+  
+ Routine: FBAAUTL
+  
+ 3) INC000000516396 - Blank Veteran MRA records
+  
+ Problem:
+ --------
+ Central Fee is receiving "blank" Veteran MRA records from multiple sites.
+  
+ Resolution:
+ -----------
+ By correcting how Veteran MRAs are sent, we can prevent "blank" records
+ from being transmitted.  Also, post install routine FBXIP127 will delete
+ MRA entries that point to non-existent authorizations.
+  
+ Routine(s): FBAAV4, FBUCDD1, FBXIP127
+  
+ Installation Instructions:
+ ==========================
+ This patch may be installed during normal working hours with all users on
+ the system.   
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+  
+ 1.  Load Transport Global 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                         
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter FB*3.5*127):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//' answer Yes
+     d.  When prompted 'Enter options you wish to mark as 'Out of Order':'
+         Enter:
+         Open a Batch                        [FBCH OPEN BATCH]
+         Open CNH Batch                      [FBCNH OPEN BATCH]
+         Open a Batch                        [FBAA OPEN BATCH]
+         Queue Data for Transmission         [FBAA QUEUE DATA FOR TRANS.]
+  
+ 5.  If an error is received during install, please contact your IRM for
+     additional support.
+  
+ 6.  The routine FBXIP127 can be removed from your production and test system
+     after the patch has been successfully installed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBAAUTL
+    Before: B25814851   After: B26368074  **101,114,108,124,127**
+Routine Name: FBAAV4
+    Before: B34466301   After: B35214888  **13,34,37,70,146,127**
+Routine Name: FBUCDD1
+    Before: B12506085   After: B14731515  **60,72,127**
+Routine Name: FBXIP127
+    Before:       n/a   After:  B1557361  **127**
+ 
+Routine list of preceding patches: 72, 124, 146
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 07, 2011
+Completed By:                               Date Completed: APR 08, 2014
+Released By :                               Date Released : APR 16, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

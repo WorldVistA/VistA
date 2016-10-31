@@ -1,0 +1,153 @@
+
+=============================================================================
+Run Date: DEC 29, 2014                     Designation: EAS*1*125
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: EMERGENCY
+Version : 1        SEQ #99                      Status: Released
+                  Compliance Date: DEC 31, 2014
+=============================================================================
+
+
+Subject: 2015 GMT THRESHOLDS
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ **************************************************************************
+ *  Per VHA FACT SHEET titled MEANS TEST AND GEOGRAPHIC-BASED MEANS TEST  *
+ *  AND MAXIMUM ANNUAL RATES OF PENSION FOR CALENDAR YEAR 2015, this      *
+ *  patch MUST be installed before January 1, 2015. The patch is being    *
+ *  released as an Emergency patch together with DG*5.3*910 (2015 Means   *
+ *  Test Thresholds) and IB*2.0*540 (2015 RX Copay Thresholds) and may    *
+ *  be installed out of sequence with respect to other released EAS       *
+ *  patches.                                                              *
+ **************************************************************************
+   
+ The Geographic-Based Means Test thresholds for Calendar Year 2015 are
+ distributed with this patch. The updated values for the GMT THRESHOLDS
+ file (#712.5) are used in the determination of a veteran's GMT Threshold
+ for a given income year, based on locality and number of dependents.
+   
+ Geographical income level thresholds are set yearly by the U.S. Department
+ of Housing and Urban Development (HUD). This large set of income
+ thresholds is usually referred to as the HUD index. The geographic based
+ income limits for Income Year (IY) 2014 can be found January 1, 2015 at:
+ http://www.domain.ext/healthbenefits/cost/income_thresholds.asp
+  
+ This patch, EAS*1.0*125 is one of three VistA 2015 threshold patches.  It
+ addresses the annual updates for the GMT Thresholds. Patch DG*5.3*910 will
+ update the thresholds for the Means Tests and the Maximum Annual Pension
+ Rate. Patch IB*2.0*540 will address the annual updates for the Pharmacy
+ Copay Thresholds.
+  
+  
+ Associated NSR(S):
+ =================
+ N/A
+  
+  
+ Associated Remedy Ticket(s):
+ ===========================
+ INC000001052103 - GMT Thresholds 2015 Update
+  
+  
+ Participating Test Sites:
+ ========================
+ Chillicothe, OH VAMC
+ Upstate New York HCS
+  
+  
+ Remedy Overview:
+ ================
+ INC000001052103 - GMT Thresholds 2015 Update
+  
+ Problem:
+ ========
+ The GMT THRESHOLDS (#712.5) file needs to be updated for the 2015 calendar
+ year.  
+  
+ Resolution:
+ ===========
+ Post install routine EAS1125P will update the GMT THRESHOLDS (#712.5) 
+ file. 
+  
+  
+ Data Dictionary:
+ ================
+                                        UP    SEND  DATA               USER
+                                        DATE  SEC.  COMES  SITE  RSLV  OVER
+ FILE #      NAME                       DD    CODE  W/FILE DATA  PTS   RIDE
+ --------------------------------------------------------------------------
+ 712.5       GMT THRESHOLDS (#712.5)    NO    NO    YES    OVER  YES   NO
+   
+  
+   
+ SOFTWARE RETRIEVAL:
+ ===================
+ The software for this patch is not being distributed through the National 
+ Patch Module. This patch is being distributed as a host file. The host 
+ file will contain the following three KIDS builds:
+   
+              Host file name: DG_53_P910.KID
+   
+                      Builds: DG*5.3*910
+                              EAS*1.0*125
+                              IB*2.0*540
+   
+ Sites may retrieve the software directly using File Transfer Protocol 
+ (FTP) from the ANONYMOUS.SOFTWARE directory at the following OI Field 
+ Offices:
+   
+                      Albany   : ftp.domain.ext
+                      Hines    : ftp.domain.ext
+                Salt Lake City : ftp.domain.ext
+        First Available Server : download.vista.domain.ext
+   
+ The following file will be available:
+  
+      File Name            Description
+      ---------            -----------
+      DG_53_P910.KID       Host File containing KIDS software distribution
+   
+  Note:  Use ASCII mode when transferring the .KID file.
+   
+  
+ Installation Instructions:
+ ==========================
+ The components sent with this patch EAS*1.0*125 have been included in the 
+ HOST File DG_53_P910.KID. Please follow the instructions listed in the 
+ INSTALLATION INSTRUCTIONS section of the patch description for patch 
+ DG*5.3*910.
+  
+  
+ Post- Installation Overview:
+ ============================
+ The EAS1125P pre-install routine will display an informational message and
+ may be deleted after install.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;ENROLLMENT APPLICATION SYSTEM;**[Patch List]**;MAR 15,2001;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EAS1125P
+    Before:       n/a   After:  B1092370  **125**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 24, 2014
+Completed By:                               Date Completed: DEC 23, 2014
+Released By :                               Date Released : DEC 29, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

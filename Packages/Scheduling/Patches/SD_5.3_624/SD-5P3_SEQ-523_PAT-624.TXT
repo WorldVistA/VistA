@@ -1,0 +1,220 @@
+$TXT Created by                 at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 01/16/15 at 08:47
+=============================================================================
+Run Date: JUN 24, 2015                     Designation: SD*5.3*624
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #523                    Status: Released
+                  Compliance Date: JUL 09, 2015
+=============================================================================
+
+
+Subject: PCMM HL7 SHUTDOWN
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses one Primary Care Management Module (PCMM) issue:
+  
+ National Patient Care Database (NPCD) Shut Down and deactivation 
+ of HL7 messages for PCMM.
+  
+ **********************************************************************
+ The compliance date for this patch has been shortened from 30 days to 
+ 15 days in anticipation of the release of the PCMM web application. 
+ Sites should ensure this patch is installed by the 15 day compliance
+ date.
+ **********************************************************************
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ INC000000908057 - NPCD Shut Down and deactivation of HL7 messages 
+                   for PCMM.
+           
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ North Florida/South Georgia VHCS (Lake City)
+ Hines VAMC
+ Erie VAMC
+  
+  
+ REMEDY TICKET OVERVIEW:
+ ======================= 
+  
+ 1)  INC000000908057 - NPCD Shut Down and deactivation of HL7 messages 
+                       for PCMM.
+  
+ Problem:
+ --------
+ In 2009, it became no longer necessary to transmit PCMM data to Austin
+ via HL7 messages because the Corporate Data Warehouse (CDW) was being
+ used to populate the VHA Support Service Center (VSSC). Approval was
+ recently granted to shut down the PCMM HL7 functionality because 
+ Austin started rejecting the entries.
+  
+ Resolution:
+ -----------
+ Documentation updates/deletions are as follows:
+    Updates
+    -------
+    PIMS Technical Manual
+    PCMM User Manual
+  
+    Deletions
+    ---------
+    HL7 Interface Spec: Primary Care Acknowledgment Processing
+    HL7 Interface Spec: Transmission of PCMM Primary Care Data
+    PCMM Transmission Provider Workload to AAC User Manual
+  
+ Routine SCMCHL7K will be added as a pre-install routine with the 
+ following functions:
+  
+  - Disable the PCMM logical link to HL7   
+            ^^^ NOTE: The PCMM WORK logical link has nothing to do with 
+                the functionality being disabled. 
+                ONLY the PCMM logical link will be disabled.
+  - Unschedule the PCMM HL7 Transmission [SCMC PCMM HL7 TRANSMIT] 
+    scheduled job
+  - Delete the HL7 data in the following three files:
+    1) PCMM HL7 TRANSMISSION LOG FILE (#404.471)
+    2) PCMM HL7 EVENT FILE (#404.48)
+    3) PCMM HL7 ID FILE (#404.49)
+  
+ This routine will also set the following options out-of-order:
+  
+    1) PCMM HL7 AND MAINTENANCE MENU                        [SCMC HL7 MENU]
+    2) PCMM Transmission Error Code Report      [SCMC PCMM ERR CODE REPORT]
+    3) PCMM HL7 Transmission                       [SCMC PCMM HL7 TRANSMIT]
+    4) PCMM Reject Transmission Menu          [SCMC PCMM REJECT TRANS MENU]
+    5) PCMM Transmission Error Processing      [SCMC PCMM TRANS ERROR PROC]
+    6) PCMM Transmission Error Report        [SCMC PCMM TRANS ERROR REPORT]
+  
+ The remaining options on the PCMM HL7 AND MAINTENANCE MENU that are not 
+ being placed out order must be assigned as stand-alone options, if 
+ needed. A list of these options is available in the PCMM User Manual.
+  
+  
+ DOCUMENTATION RETRIEVAL:
+ ========================
+ Sites may retrieve documentation in one of the following ways:
+    
+  (1) The preferred method is to FTP the file from 
+      download.vista.domain.ext, which will transmit the file from 
+      the first available FTP server.
+     
+  (2) Sites may also elect to retrieve documentation directly from a
+      specific server as follows:
+     
+      Albany                ftp.domain.ext
+      Hines                 ftp.domain.ext
+      Salt Lake City        ftp.domain.ext
+     
+      The documentation distribution includes:
+  
+      File Name                 Contents                 Retrieval Format
+      ----------------------    ---------------          ----------------
+      pimstm.pdf                PIMS Technical Manual    BINARY
+      pcmmug.pdf                PCMM User Manual         BINARY
+  
+ Following the release of this patch, the updated Manuals will be 
+ available on the VDL.
+  
+  
+ The following documentation is obsolete with the release of this patch 
+ and will be deleted from the VDL upon release of SD*5.3*624.
+  
+      File Name                Contents
+      ----------------------   ---------------
+      ackpro.pdf               HL7 Interface Spec: Primary Care 
+                               Acknowledgment Processing
+      trans_pcmm.pdf           HL7 Interface Spec: Transmission of PCMM
+                               Primary Care Data
+      sd_53_272_um.pdf         PCMM Transmission Provider Workload
+                               to AAC User Manual
+  
+  
+ Installation Instructions:
+ ==========================
+ Primary Care Management Module (PCMM) users should be off the system when
+ this patch is installed. 
+  
+ Installation could take 30 minutes or more depending on file size.  
+  
+ ***************************************************************************
+ ***                                                                     ***
+ **   It is highly recommended sites do a backup prior to installation.   **
+ **                                                                       **
+ **   Create a backup of the following global files before continuing.    **
+ **   You should use the utility ^%GOGEN, and when prompted for a global, **
+ **    enter the open global reference, i.e. ^SCPT(404.471,               **
+ **                                                                       **
+ **     PCMM HL7 TRANSMISSION LOG FILE    (#404.471)   ^SCPT(404.471,     **
+ **     PCMM HL7 EVENT FILE               (#404.48)    ^SCPT(404.48,      **
+ **     PCMM HL7 ID FILE                  (#404.49)    ^SCPT(404.49,      **
+ ***                                                                     ***
+ ***************************************************************************
+  
+  
+ This patch should be installed during non-peak requirement hours.
+  
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter SD*5.3*624).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch 
+            is installed
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package 
+         SD*5.3*624.
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+         respond NO.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//" respond NO.
+  
+ *** After installation, routine SCMCHL7K will be automatically deleted. ***
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 19
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCMCHL7K
+    Before:       n/a   After:  B7677628  **624**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 04, 2014
+Completed By:                               Date Completed: JUN 18, 2015
+Released By :                               Date Released : JUN 24, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

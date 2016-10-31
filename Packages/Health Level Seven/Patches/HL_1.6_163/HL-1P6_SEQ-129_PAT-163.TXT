@@ -1,0 +1,183 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 03/02/15 at 14:52
+=============================================================================
+Run Date: OCT 27, 2015                     Designation: HL*1.6*163
+Package : HL - HEALTH LEVEL SEVEN             Priority: Mandatory
+Version : 1.6       SEQ #129                    Status: Released
+                  Compliance Date: NOV 27, 2015
+=============================================================================
+
+Associated patches: (v)HL*1.6*142  <<= must be installed BEFORE `HL*1.6*163'
+                    (v)HL*1.6*145  <<= must be installed BEFORE `HL*1.6*163'
+                    (v)HL*1.6*148  <<= must be installed BEFORE `HL*1.6*163'
+                    (v)HL*1.6*158  <<= must be installed BEFORE `HL*1.6*163'
+
+Subject: HL7 IPV6 PREPARATION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ In preparation for the VA's transition from IPv4 to IPv6 the HL7 package 
+ will require modifications to make it IPv6 ready.
+  
+ Associated Remedy ticket:
+ ========================
+ 1) INC000001024726 HL7 IPV6 CONVERSION 
+  
+ Associated NSR:
+ ==============
+ N/A
+  
+  
+ Participating Test Sites:
+ ========================
+ HUDSON VALLEY
+ MUSKOGE
+ HOUSTON
+  
+  
+ REMEDY OVERVIEW:
+ ===============
+ 1) INC000001024726 HL7 IPV6 CONVERSION 
+  
+  
+ Problem: 
+ --------
+ In preparation for the VA's transition from Internet Protocol version 
+ 4 (IPv4) to Internet Protocol version 6 (IPv6), the HL7 package
+ will require modifications to make it IPv6 ready.
+  
+ Internet Protocol version 6 (IPv6) is the latest version of the Internet 
+ Protocol (IP), the communications protocol that provides an identification
+ and location system for computers on networks and routes traffic across 
+ the Internet. IPv6 was developed by the Internet Engineering Task Force 
+ (IETF) to deal with the long-anticipated problem of IPv4 address 
+ exhaustion. IPv6 is intended to replace IPv4.
+  
+ Vista is only compatible with IPv4 currently and this effort is to prepare
+ for IPv6 compatibility.
+  
+    
+ Resolution:
+ ----------
+ As part of the transition for HL7, modifications were required to include
+ evaluation of the current system to determine what version of IP is 
+ enabled and format each referenced null or loopback address accordingly.
+ Additionally, modifications were made to take into consideration
+ differences in formats in regards to the "MSH" segment of HL7 messages
+ when parsing messages for certain components.  
+  
+  
+ Routines: HLTP31, HLTP4, HLTPCK2B, HLOUSR
+  
+    
+ Data Dictionary:
+ ----------
+  
+ Before:
+  
+ 870,400.01    TCP/IP ADDRESS         400;1 FREE TEXT
+  
+               INPUT TRANSFORM:   )>40!($L(X)<7) X
+               LAST EDITED:      OCT 12, 2004 
+               HELP-PROMPT:      Answer must be 7-40 characters in length. 
+               DESCRIPTION:      Enter the numeric address of the remote site
+                                 using the syntax, nn.nn.nn.nn
+  
+ After:
+  
+ 870,400.01    TCP/IP ADDRESS         400;1 FREE TEXT
+  
+               INPUT TRANSFORM:  K:$L(X)>40!($L(X)<7) X
+               LAST EDITED:      JAN 06, 2015 
+               HELP-PROMPT:      Answer must be 7-40 characters in length. 
+               DESCRIPTION:      Enter the IP address of the remote site
+                                 using the syntax, nn.nn.nn.nn (IPV4) or
+                                 hhhh:hhhh:hhhh:hhhh:hhhh:hhhh:hhhh:hhhh (IPV6) 
+  
+ ******************************************************************************
+ * Running XINDEX on HLOUSR will produce errors, however SACC exemptions have *
+ * been granted for use of the "Close" command and "Star Read".  See link     *
+ * below for full list of exemptions:                                         *
+ *                                                                            *
+ *  http://vaww.oed.portal.domain.ext/communities/app_dev/sac/default.aspx        *
+ ****************************************************************************** 
+  
+        ================INSTALLATION INSTRUCTIONS =================
+ This patch can be loaded with users on the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+   
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter HL*1.6*163)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package HL*1.6*163.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond YES.
+  
+    7.  When prompted 'Enter options you wish to mark as 'Out Of 
+        Order':'  Enter the following options:
+  
+         Link Edit           [HL EDIT LOGICAL LINKS]
+  
+    8.  When prompted 'Enter protocols you wish to mark as 'Out Of 
+        Order':', press Enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.6;HEALTH LEVEL SEVEN;**[Patch List]**;Oct 13, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HLOUSR
+    Before:B121713479   After:B123556589  **126,130,134,137,138,139,146,
+                                           147,153,158,163**
+Routine Name: HLTP31
+    Before: B18539013   After: B20366575  **57,58,66,109,120,145,163**
+Routine Name: HLTP4
+    Before: B46055553   After: B50343376  **19,57,59,91,109,116,117,125,
+                                           120,142,163**
+Routine Name: HLTPCK2B
+    Before: B70829946   After: B82231520  **120,133,122,148,163**
+ 
+Routine list of preceding patches: 142, 145, 148, 158
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 24, 2014
+Completed By:                               Date Completed: OCT 23, 2015
+Released By :                               Date Released : OCT 27, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

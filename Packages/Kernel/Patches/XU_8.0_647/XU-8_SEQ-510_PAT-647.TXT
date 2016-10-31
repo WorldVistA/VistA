@@ -1,0 +1,181 @@
+
+=============================================================================
+Run Date: JUL 23, 2014                     Designation: XU*8*647
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #510                      Status: Released
+                  Compliance Date: AUG 23, 2014
+=============================================================================
+
+
+Subject: UPDATE TO PERSON CLASS 10/01/2014
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The master system (Forum) pushed out new updates <on July 15th, 2014 and
+ July 21st, 2014> for the Person Class (#8932.1) file with new entries
+ #1218, 1219, 1220, 1221, and 1222.
+  
+ ****WARNING****
+ If you do not see these new entries in the file, please file a Remedy 
+ ticket, or contact with the email group 'VHAISF Infrastructure Dev. &
+ Doc.' <InfrastructureDevDoc@domain.ext>
+  
+ Use FileMan to check the new entries #1218, 1219, 1220, 1221, and 1222:
+  
+ VA FileMan 22.0
+  
+ Select OPTION: INQUIRE TO FILE ENTRIES
+ OUTPUT FROM WHAT FILE: PERSON CLASS    (1222 entries)
+ Select PERSON CLASS PROVIDER TYPE: 1218  Allopathic & Osteopathic 
+ Physicians    
+  202C00000X  
+                     Independent Medical Examiner
+          ...OK? Yes//   (Yes)
+  
+ ANOTHER ONE: 
+ STANDARD CAPTIONED OUTPUT? Yes//   (Yes)
+ Include COMPUTED fields:  (N/Y/R/B): NO// BOTH Computed Fields and Record 
+ Number
+  (IEN)
+  
+ NUMBER: 1218
+ PROVIDER TYPE: Allopathic & Osteopathic Physicians
+  CLASSIFICATION: Independent Medical Examiner
+  STATUS: Active                        VA CODE: V180905
+  X12 CODE: 202C00000X
+  DEFINITION:   Independent Medical Examiner A special evaluator not 
+  involved with the medical care of the individual examinee that
+  impartially evaluates the care being provided by other practitioners to
+  clarify clinical, disability, liability or other case issues.
+   
+  Source: American Board of Independent Medical Examiners [1/1/2007: new] 
+  INDIVIDUAL/NON: INDIVIDUAL
+  PROVIDER TYPE CODE (c): 20            CLASSIFICATION CODE (c): 2C
+  AREA OF SPECIALIZATION CODE (c): 00000
+  
+ ----------
+ NUMBER: 1219                   
+ PROVIDER TYPE: Other Service Providers
+  CLASSIFICATION: Peer Specialist       STATUS: Active
+  VA CODE: V081501                      X12 CODE: 175T00000X
+  DEFINITION:   Individuals certified to perform peer support services 
+  through a training process defined by a government agency, such as the
+  Department of Veterans Affairs or a state mental health
+  department/certification/licensing authority.
+   
+  Source: National Uniform Claim Committee 
+  INDIVIDUAL/NON: INDIVIDUAL
+  PROVIDER TYPE CODE (c): 17            CLASSIFICATION CODE (c): 5T
+  AREA OF SPECIALIZATION CODE (c): 00000
+  
+ ----------
+ NUMBER: 1220
+ PROVIDER TYPE: Technologists, Technicians & Other Technical Service 
+  Providers
+  CLASSIFICATION: Specialist/Technologist, Other
+  AREA OF SPECIALIZATION: Orthopedic Assistant
+  STATUS: Active                        VA CODE: V150222
+  X12 CODE: 246ZX2200X
+  DEFINITION:   An Orthopaedic Assistant is a person who has been trained 
+  to work as a physician extender in both clinical and surgical
+  environments. An Orthopaedic Assistant assists with aspects of patient
+  care as determined by the supervising surgeon including, but not limited
+  to, obtaining patient history, assisting with examinations, injections,
+  recording of office notes,
+  and application/adjustment/removal of splints, casts, and other 
+  immobilization devices. Acting as a surgical first assistant for
+  orthopaedic surgery cases includes providing aid in exposure, hemostasis,
+  positioning of the patient, suturing and closure of body planes and skin,
+  application of wound dressings or immobilization devices, and other
+  technical functions that will help the surgeon carry out a safe operation
+  with optimal results for the patient. An Orthopaedic Assistant may be
+  licensed, registered, or certified depending on the state in which the
+  individual practices.  
+   
+  Source: American Society of Ortho paedic Assistants (ASOA), 2014 
+  [7/1/2014: new]
+   
+  Additional Resources: National Board for Certification of Orthopaedic
+  Assistants 
+  INDIVIDUAL/NON: INDIVIDUAL
+  PROVIDER TYPE CODE (c): 24            CLASSIFICATION CODE (c): 6Z
+  AREA OF SPECIALIZATION CODE (c): X2200
+  
+ ----------
+ NUMBER: 1221
+ PROVIDER TYPE: Technologists, Technicians & Other Technical Service 
+ Providers
+  CLASSIFICATION: Specialist/Technologist, Other
+  AREA OF SPECIALIZATION: Surgical Assistant
+  STATUS: Active                        VA CODE: V150223
+  
+  X12 CODE: 246ZC0007X
+  DEFINITION:   A surgical assistant is a skilled practitioner who has 
+  undergone formalized education and training as a surgical assistant. The
+  surgical assistant performs surgical functions that include, but are not
+  limited to: retracting, manipulating, suturing, clamping, cauterizing,
+  litigating, and tying tissue; suctioning, irrigating and sponging;
+  positioning the patient; closure of body planes and skin; and
+  participating in hemostasis and volume replacement. Surgical assistants
+  are certified and registered or licensed by the state, or, in states
+  without licensure, certified as surgical assistants by completing
+  appropriate education and training.  
+   
+  Source: Association of Surgical Assistants, 2014. [7/1/2014: title 
+  modified, definition modified]
+  http://www.surgicalassistant.org/index.php/surgical-assisting 
+   
+  Additional Resources: National Surgical Assistant Association, 
+  www.nsaa.net. 
+  INDIVIDUAL/NON: INDIVIDUAL
+  PROVIDER TYPE CODE (c): 24            CLASSIFICATION CODE (c): 6Z
+  AREA OF SPECIALIZATION CODE (c): C0007
+  
+ ---------
+ NUMBER: 1222
+ PROVIDER TYPE: Technologists, Technicians & Other Technical Service 
+ Providers
+  CLASSIFICATION: Specialist/Technologist, Other
+  AREA OF SPECIALIZATION: Surgical Technologist
+  STATUS: Active                        VA CODE: V150218
+  X12 CODE: 246ZS0410X
+  DEFINITION:   Surgical technologists are allied health professionals, 
+  who are an integral part of the team of medical practitioners providing
+  surgical care to patients.  Surgical technologists work under the
+  supervision of a surgeon to facilitate the safe and effective conduct of
+  invasive surgical procedures, ensuring that the operating room
+  environment is safe, that equipment functions properly, and that the
+  operative procedure is conducted under conditions that maximize patient
+  safety. Surgical technologists possess expertise in the theory and
+  application of sterile and aseptic technique and combine the knowledge of
+  human anatomy, surgical procedures, and implementation tools and
+  technologies to facilitate a physician's performance of invasive 
+  therapeutic and diagnostic procedures.
+   
+  Source: Association of Surgical Technologists, "Job Description: 
+  Surgical Technologist," 2014. [7/1/2014: code modified, title modified,
+  definition added]
+  INDIVIDUAL/NON: INDIVIDUAL
+  PROVIDER TYPE CODE (c): 24            CLASSIFICATION CODE (c): 6Z
+  AREA OF SPECIALIZATION CODE (c): S0410
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 09, 2014
+Completed By:                               Date Completed: JUL 23, 2014
+Released By :                               Date Released : JUL 23, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,361 @@
+
+=============================================================================
+Run Date: SEP 16, 2015                     Designation: PSO*7*282
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #375                      Status: Released
+                  Compliance Date: OCT 17, 2015
+=============================================================================
+
+Associated patches: (v)PSO*7*60    <<= must be installed BEFORE `PSO*7*282'
+                    (v)PSO*7*225   <<= must be installed BEFORE `PSO*7*282'
+                    (v)PSO*7*265   <<= must be installed BEFORE `PSO*7*282'
+                    (v)PSO*7*276   <<= must be installed BEFORE `PSO*7*282'
+                    (v)PSO*7*294   <<= must be installed BEFORE `PSO*7*282'
+                    (v)PSO*7*313   <<= must be installed BEFORE `PSO*7*282'
+                    (v)PSO*7*318   <<= must be installed BEFORE `PSO*7*282'
+                    (v)PSO*7*333   <<= must be installed BEFORE `PSO*7*282'
+                    (v)PSO*7*383   <<= must be installed BEFORE `PSO*7*282'
+                    (v)PSO*7*434   <<= must be installed BEFORE `PSO*7*282'
+                    (v)PSO*7*437   <<= must be installed BEFORE `PSO*7*282'
+
+Subject: LM BACKDOOR FIXES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ This patch will correct the following issues.
+  
+ 1. Pharmacy schedules containing more than 3 words are not allowed in
+ order processing.  This has caused some schedules such as EVERY OTHER DAY
+ PRN to be rejected when processed in Outpatient Pharmacy Patient
+ Prescription Processing option [PSO LM BACKDOOR ORDERS].
+  
+ 2. After a prescription has been returned to stock, any subsequent refill 
+ being released will not update the release date in the prescription 
+ profile.  This could result in an inaccurate audit of the prescription 
+ release information.  
+  
+ 3. A pre-installation utility routine from the installation of the
+ Pharmacy version 7.0 software was left behind at sites and caused file
+ damage when it was accidentally run.
+  
+ 4. In CPRS, certain schedules are calculating the Quantity and/or Days
+ Supply based on the frequency set by other packages instead of the
+ Pharmacy Schedule of the same name.  (PSPO #812)
+  
+ 5. Several places that evaluate data from the MEDICATION INSTRUCTION file 
+ (#51) are not checking the INTENDED USE field.
+  
+ 6. When viewing prescriptions in the option "LM BACKDOOR ORDERS", viewing
+ two orders consecutively and editing the dosage on one will cause the
+ Patient Instructions for the first prescription to display on the second.
+ (PSPO #1479)
+  
+ 7. In CPRS, when Provide Comments include a schedule such as "QOD", the 
+ schedule should expand. If the schedule is input as lowercase (qod) it 
+ will not expand at all. 
+  
+ 8. When expanding the schedule, multi word schedules were not expanding 
+ correctly when a schedule exists with a name that is part of the multi 
+ word schedule.
+  
+ ***PSS*1*119 can be installed independently of the PSO*7*282/PSJ*5*194 
+ combined patch build, however the functionality will not be effective 
+ until both are installed.
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1. INC000000190651 - Error - missing or invalid schedule.
+    Duplicate:
+    INC0000000399974 
+ 2. INC000000100805 - Return to Stock Overwrite 
+ 3. INC000000209505 - Users getting kicked out of vista
+ 4. INC000000207510 - Certain Schedules do not calculate quantity 
+    correctly.
+    Duplicates:
+    INC0000000196699
+    INC0000000215730
+    INC0000000240338
+ 5. INC000000225624 - Entries in File 51 marked as INPATIENT ONLY being 
+    used by OUTPATIENT.
+ 6. INC000000338673 - Patient instructions on prescription problem
+    Duplicates:
+    INC0000000289078 
+    INC0000000411684 
+    INC0000000419407 
+    INC0000000519301 
+    INC0000000530368 
+    INC0000000621627 
+    INC0000000811382 
+ 7. INC000000796512 - Translation of Provider Comments not recognizing 
+    lowercase letters.
+ 8. INC000000147667 - problem with QD schedule expanding.
+    Duplicates:
+    INC0000000205200 
+    INC0000000220057 
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Oklahoma City VAMC
+ Central Plains HCS
+ Erie VAMC
+  
+ Remedy ticket(s): Overview:
+ ===========================
+ 1. INC0000000190651   Error - missing or invalid schedule.
+  
+ Problem:
+ --------
+ Schedules being entered that contained more than three words were 
+ previously not allowed. For example, when using the schedule "EVERY OTHER 
+ DAY PRN" would be rejected when processed in Outpatient Pharmacy Patient 
+ Prescription Processing option [PSO LM BACKDOOR ORDERS]. This ticket does 
+ not include the correction for the CPRS entry of outpatient orders. The 
+ CPRS entry correction will be contained in PSS*1*119.
+  
+  
+ Resolution:
+ ----------- 
+ Routines PSOBKDED, PSOHELP2, PSOORED4, and PSOSIG were modified to accept 
+ schedule values that contain three word schedules containing "PRN" and 
+ still adhere to the validation that was there previously if they did not.
+  
+  
+ 2. INC0000000100805   Return to Stock Overwrite
+  
+ Problem:
+ --------
+ After a prescription has been returned to stock, any subsequent refill 
+ that is released will not update the display for the release date in the 
+ prescription profile. 
+  
+ Resolution:
+ -----------
+ Routine PSOORNE2 was modified to search the refills for a release date to 
+ be displayed before displaying a returned to stock date in the 
+ prescription profile.
+  
+  
+ 3. INC0000000209505 - Users getting kicked out of vista
+  
+ Problem:  
+ --------
+ A pre-installation utility routine from the installation of the Pharmacy 
+ version 7.0 software was left behind at sites that installed the 
+ software. This routine caused system damage after being accidentally run 
+ such as deleting Data Dictionary entries from multiple pharmacy files.
+  
+  
+ Resolution:
+ -----------
+ The routine PSOSTART will be removed from sites so that it cannot be run. 
+  
+  
+ 4. INC0000000207510 - Certain Schedules do not calculate quantity 
+ correctly
+  
+ Patient Safety Issue:
+ --------------------
+ PSPO #812
+  
+ Problem:
+ --------
+ When outpatient pharmacy looks up the data of a schedule from the 
+ ADMINISTRATION SCHEDULE file (#51.1) it did not check the PACKAGE PREFIX 
+ field (#4) to make sure it was a pharmacy schedule.
+  
+ Resolution:
+ -----------
+ Modified the routine PSOSIG to check the PACKAGE PREFIX field (#4) in the
+ ADMINISTRATION SCHEDULE file (#51.1) to make sure that outpatient pharmacy
+ only looks at pharmacy schedules when looking up the data of a schedule.
+  
+ 5. INC0000000225624 - Entries in File 51 marked as INPATIENT ONLY being 
+ used by OUTPATIENT.
+  
+ Problem:
+ --------
+ The INTENDED USE field (#30) in the MEDICATION INSTRUCTION file (#51) is 
+ not getting checked. This is allowing entries marked as INPATIENT ONLY to 
+ be used in outpatient pharmacy.
+  
+ Resolution:
+ ----------- 
+ Routines PSOFSIG, PSOHELP, PSOHLDS2, PSOHLPIS, PSOHLSG2, PSOHLSIG, 
+ PSOLBL2, PSONVNEW, PSOQUTIL, PSOSIG, PSOSIGCX, PSOSIGDS, PSOSIGNO, 
+ PSOSIGTX, PSOSPSIG, and PSOTALK1 have been modified to check the INTENDED 
+ USE field (#30) whenever looking at entries in the MEDICAITON INSTRUCTION 
+ file (#51).
+  
+ 6. INC000000338673 - Patient instructions on prescription problem.
+  
+ Patient Safety Issue:
+ --------------------
+ PSPO #1479
+  
+ Problem:
+ -------
+ When using option "PSO LM BACKDOOR" if multiple prescriptions are viewed 
+ consecutively and the proceeding prescription has its dosage edited, then 
+ the patient instructions for the first order will be copied into the 
+ patient instructions for the second order. 
+  
+ Resolution:
+ -----------
+ The routine PSOORNE2 was modified to kill off any remaining assets from 
+ the first prescription so that they are not used when the proceeding 
+ prescription is generated.  
+  
+ 7. INC000000796512 - Translation of Provider Comments not recognizing 
+ lowercase letters.
+  
+ Problem:
+ ---------
+ The user enters a lowercase abbreviation into the Provider Comments of an 
+ order in CPRS.  In Outpatient Pharmacy, when the user finishes the 
+ prescription and answers Yes to 'Copy Provider Comments into the Patient 
+ Instructions', the abbreviation is concatenated to the Sig but does not 
+ expand out.  If an uppercase abbreviation is entered, it does get 
+ expanded out. Outpatient Pharmacy uses the MEDICATION INSTRUCTION file 
+ (#51) to expand the abbreviation.  It is not possible to enter an 
+ abbreviation in lowercase letters since they are automatically translated 
+ into all uppercase and stored as uppercase.
+  
+ Resolution:
+ ----------
+ Modified routine PSOHELP to process any lowercase abbreviations and 
+ translate to them to uppercase prior to checking for a translation in the 
+ Medication Instruction File (#51).
+  
+ 8. INC000000147667 - problem with QD schedule expanding.
+  
+ Problem:
+ --------
+ If part of a defined schedule is contained in another defined schedule,
+ only part of the schedule will expand. For example, if schedules QD and QD
+ (DAILY) are two defined schedules, entering QD (DAILY) in a prescription
+ expands to DAILY (DAILY) because only QD expanded when QD (DAILY) should
+ have expanded as a single schedule.
+  
+ Resolution:
+ ----------- 
+ Logic has been added to routine PSOSIG to first attempt to expand two 
+ or  three word schedules before moving on to single word schedules.
+  
+  
+ Software Retrieval:
+ ===================
+ The patches for this installation are combined in host file
+ PSJ_194_PSO_282.KID.  Installation of this host file should be 
+ coordinated among the packages of Inpatient and Outpatient Pharmacy since 
+ only one installation is necessary.
+  
+ The patches are:
+  
+      PSJ*5.0*194
+      PSO*7.0*282
+  
+ Sites may retrieve the KIDS build in one of the following ways:
+  
+ (1) The preferred method is to FTP the files from 
+ download.vista.domain.ext
+ which will transmit the files from the first available FTP server.
+  
+ (2) Sites may also elect to retrieve the patch directly from a specific
+ server as follows:
+  
+   OIFO               FTP ADDRESS                  DIRECTORY
+   --------------     ------------------------     ------------------
+   Albany             ftp.domain.ext     
+   Hines              ftp.domain.ext      
+   Salt Lake City     ftp.domain.ext         
+  
+  
+  
+ Installation Instructions:
+ ==========================
+  
+ PLEASE SEE PATCH PSJ*5.0*194 FOR INSTALLATION INSTRUCTIONS.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOBKDED
+    Before: B81693378   After: B82028505  **11,46,91,78,99,117,133,143,
+                                           268,378,416,282**
+Routine Name: PSOFSIG
+    Before: B60206072   After: B52820017  **46,282**
+Routine Name: PSOHELP
+    Before: B52605600   After: B53907821  **3,23,29,48,46,117,131,222,
+                                           268,206,276,282**
+Routine Name: PSOHELP2
+    Before:  B8060282   After:  B8274673  **282**
+Routine Name: PSOHLDS2
+    Before: B93310223   After: B94193549  **156,198,255,200,268,305,336,
+                                           434,282**
+Routine Name: PSOHLPIS
+    Before: B64280169   After: B56723490  **46,225,282**
+Routine Name: PSOHLSIG
+    Before: B29969358   After: B24372866  **1,18,41,60,282**
+Routine Name: PSOLBL2
+    Before: B36311103   After: B36920595  **16,19,30,71,92,117,135,326,
+                                           367,383,282**
+Routine Name: PSONVNEW
+    Before: B27192017   After: B22533044  **132,118,203,265,282**
+Routine Name: PSOORED4
+    Before: B56839136   After: B57161028  **46,91,78,99,111,117,133,159,
+                                           148,251,391,372,416,313,437,
+                                           282**
+Routine Name: PSOORNE2
+    Before: B68757551   After: B68999201  **11,21,23,27,32,37,46,84,103,
+                                           117,131,146,156,210,148,222,
+                                           238,264,281,289,251,379,391,
+                                           313,282**
+Routine Name: PSOQUTIL
+    Before:  B1880511   After:  B2614810  **294,282**
+Routine Name: PSOSIG
+    Before: B70480726   After: B65537760  **46,99,114,391,313,282**
+Routine Name: PSOSIGCX
+    Before: B52845094   After: B33594823  **46,282**
+Routine Name: PSOSIGDS
+    Before: B68186224   After: B46304418  **46,222,391,282**
+Routine Name: PSOSIGNO
+    Before: B17889907   After: B19149557  **282**
+Routine Name: PSOSIGTX
+    Before: B76687121   After: B53937250  **46,282**
+Routine Name: PSOSPSIG
+    Before: B64067993   After: B53180136  **117,333,282**
+Routine Name: PSOSTART
+    Before:  B5471202   After:    Delete  
+Routine Name: PSOTALK1
+    Before:  B4302149   After:  B5110576  **135,318,282**
+ 
+Routine list of preceding patches: 60, 225, 265, 276, 294, 318, 333, 383
+                           434, 437
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 02, 2007
+Completed By:                               Date Completed: AUG 27, 2015
+Released By :                               Date Released : SEP 16, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

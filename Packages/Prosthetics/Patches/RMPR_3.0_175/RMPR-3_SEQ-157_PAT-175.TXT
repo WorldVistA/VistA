@@ -1,0 +1,284 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 02/08/16 at 08:49
+=============================================================================
+Run Date: JUN 27, 2016                     Designation: RMPR*3*175
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #157                      Status: Released
+                  Compliance Date: JUL 28, 2016
+=============================================================================
+
+Associated patches: (v)RMPR*3*75   <<= must be installed BEFORE `RMPR*3*175'
+
+Subject: RMPR GUI FIXES
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch fixes multiple issues with the Prosthetics GUI (graphical user
+ interface) Suite:
+ 1) Incorrect display of "Station Number" on the OWL form.
+  
+ 2) Serial Number should allow 20 characters and not
+    be restricted to 15.
+  
+ 3) The NUMBER OF BIDS is not being populated.
+  
+ 4) The main menu form for Prosthetics does not set to 
+    allow resizing or minimization.
+  
+ 5) Ability for two purchasing agents to access the same
+    consult at the same time and order against it.
+ 6) Fix the help menu on the main menu
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1)INC000000387983   SITE NUMBER incorrect in OWL Screen
+ 2)INC000001010845   Prosthetics - GUI Suite:Serial number field
+ 3)INC000000436417   Prosthetics GUI - Number of Bids field  
+ 4)INC000001081023   Prosthetics - GUI Suite: 
+ 5)INC000000302837   Two purchasing agents are able to order the 
+                     same prosthetics simultaneously for the same
+                     consult.
+ 6)I6772473FY16  Prosthetic Suite Help File not working
+       
+   
+ Test Sites:
+ ===========
+ Huntington VAMC
+ North Texas HCS
+ Texas Valley Coastal Bend
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1)INC000000387983   SITE NUMBER incorrect in OWL Screen
+  
+ Problem: 
+ --------
+ Currently, the code to populate the NPPD Station Site Number 
+ pulls the STATION field (#1) from the RMPR SITE PARAMETER 
+ file (#669.9) which is a pointer to the INSTITUTION file (#4) 
+ and not the actual station number.
+    
+ Resolution:
+ -----------
+ After retrieving the pointer to the INSTITUION file (#4), code will
+ resolve the internal value to the actual Station Number.
+  
+  
+ 2)INC000001010845   Prosthetics - GUI Suite:Serial number field
+  
+ Problem: 
+ --------
+ The SERIAL NBR (#9) field in the RECORD OF PROS APPLIANCE/REPAIR (#660) 
+ file, which allow up to 20 characters, populates the Serial Number box, 
+ which is restricted to 15 characters, so that records populated through 
+ the Prosthetics GUI with Serial Numbers exceeding 15 characters are being 
+ truncated.
+  
+ Resolution:
+ -----------
+ Expand the Serial Number box and the field definition in the Prosthetics 
+ GUI to allow up to 20 characters for the Serial Number.
+  
+  
+ 3)INC000000436417   Prosthetics GUI - Number of Bids field
+   
+ Problem: 
+ --------
+ While creating a purchase order, when a value is entered into the 
+ "Number of Bids" field, it fails to save.
+  
+ Resolution:
+ -----------
+ The current save logic is incorrect, in that it attempts to save when it
+ is less than or equal to zero.  The save logic will be modified so that 
+ it saves when the value is greater than zero.
+  
+  
+ 4)INC000001081023   Prosthetics - GUI Suite:
+   
+ Problem: 
+ --------
+ The main menu form for Prosthetics does not set to allow resizing or
+ minimization.
+  
+ Resolution:
+ -----------
+ Change the Border Style property of the Prosthetics Menu to allow for
+ resizing and minimization.
+  
+   
+ 5)INC000000302837 - Two purchasing agents are able to order the same
+  prosthetics simultaneously for the same consult.
+  
+ Problem:
+ --------
+ While on the Purchase Order form, multiple purchasing agents are able
+ to access and order against the same consult.
+  
+ Resolution:
+ -----------
+ As soon as the consult has been accessed, it will be locked to prevent
+ multiple orders from being linked to the same consult.
+  
+ ROUTINE: RMPRGULK
+  
+ 6)I6772473FY16  Prosthetic Suite Help File not working 
+  
+ Problem:
+ --------
+ Users are unable to access the help menu from the main form because the
+ filename distributed with the application does not match the help
+ file referenced in the code.
+  
+ Resolution:
+ -----------
+ Redistribute the relevant helpfile with the name corrected.
+   
+ OTHER COMPONENTS:
+ ================= 
+ The following two REMOTE PROCEDURES were created and will 
+ be exported with the patch to assist with the locking and unlocking
+ of the PROSTHETIC SUSPENSE file (#668) records.
+  
+  
+ NAME: RMPR SUSPENSE LOCK                TAG: SUSL
+   ROUTINE: RMPRGULK                     RETURN VALUE TYPE: ARRAY
+   AVAILABILITY: SUBSCRIPTION            INACTIVE: ACTIVE
+   WORD WRAP ON: FALSE
+ INPUT PARAMETER: IEN                    PARAMETER TYPE: LITERAL
+   MAXIMUM DATA LENGTH: 50               REQUIRED: YES
+   SEQUENCE NUMBER: 1
+  
+  
+ NAME: RMPR SUSPENSE UNLOCK              TAG: SUSU
+   ROUTINE: RMPRGULK                     RETURN VALUE TYPE: ARRAY
+   AVAILABILITY: SUBSCRIPTION            INACTIVE: ACTIVE
+   WORD WRAP ON: FALSE
+ INPUT PARAMETER: IEN                    PARAMETER TYPE: LITERAL
+   MAXIMUM DATA LENGTH: 50               REQUIRED: YES
+   SEQUENCE NUMBER: 1 
+  
+ **Additionally, the above Remote Procedure Calls have been added to
+ the PROSTHETICS PURCHASE ORDER GUI [RMPR PURCHASE ORDER GUI]  
+ option which will be exported with this patch in order to allow
+ users to access the Purchase Order GUI front-end Remote Procedure
+ Calls.
+  
+  
+ SOFTWARE AND DOCUMENTATION DISTRIBUTION:
+ ======================================== 
+ Sites may retrieve the new GUI and documentation directly via Secure File 
+ Transfer Protocol (SFTP). The preferred method is to SFTP the files from:
+  
+        download.vista.domain.ext
+  
+ This transmits the files from the first available SFTP server.  
+  
+ Sites may also elect to retrieve the file directly from the
+ ANONYMOUS.SOFTWARE directory from a specific server as follows:
+  
+   OI FIELD OFFICE          FTP ADDRESS                  DIRECTORY
+   ===============          ===========                  =========
+   ALBANY                   domain.ext     
+   HINES                    domain.ext      
+   SALT LAKE                domain.ext        
+   FIRST AVAILABLE SERVER   download.vista.domain.ext    
+  
+  
+ Filename                    Description
+ ========                    ===========
+ RMPR3_0P175GUI_1.zip        Software Executable
+  
+  
+ NOTE: These files must be transferred using the binary (BIN) file 
+ transfer mode.  
+  
+  
+ GUI Installation Instructions
+ =============================
+  
+ 1) Once the executable has been retrieved right click on the zip file 
+    and select "Extract All.".
+  
+ 2) Select the location to unzip the file to and click "Extract".
+  
+ 3) Once the file has been unzipped, navigate to the directory where the
+    file was placed and run the "Prosthetics_Suite_3_175.exe" executable.
+  
+ 4) If a prior version of the GUI exists on your system, the first time
+    through it will remove the old GUI and all related files.  Once the
+    old files are removed you will have to run the 
+    "Prosthetics_Suite_3_175.exe" executable again to install the new files.
+  
+ *If no prior versions of the GUI exist it will only be necessary to run
+ the "Prosthetics_Suite_3_175.exe" once.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  You may install these
+ routines at any time without interruption to users.  It should take less
+ than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter RMPR*3.0*175)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package RMPR*3.0*175.
+  
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPRGULK
+    Before:   B554567   After:  B1319399  **75,175**
+ 
+Routine list of preceding patches: 75
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 20, 2014
+Completed By:                               Date Completed: JUN 13, 2016
+Released By :                               Date Released : JUN 27, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

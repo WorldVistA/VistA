@@ -1,0 +1,314 @@
+
+=============================================================================
+Run Date: JUL 31, 2014                     Designation: MAG*3*147
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3        SEQ #99                      Status: Released
+                  Compliance Date: AUG 31, 2014
+=============================================================================
+
+
+Subject: PIXEL REPRESENTATION FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will avoid <UNDEFINED> errors caused by some encapsulated PDFs
+ that do not follow the DICOM standard. This problem interrupts the importing
+ workflow of some non-DICOM standard PDFs. Since some encapsulated PDFs do not
+ contain all of the required pixel element data values, these DICOM objects
+ currently cannot be imported by the DICOM Gateway. The patch allows for the
+ importation of these objects.
+  
+  
+ Distribution of the Software:
+ =============================
+ The patch can be downloaded from:
+  
+       OI Field Office    FTP Address                Directory
+       ---------------    -----------                ---------
+       Albany             ftp.domain.ext   
+       Hines              ftp.domain.ext    
+       Salt Lake City     ftp.domain.ext      
+  
+ Patch Contents:
+ ===============
+ This patch includes the following files:
+  
+ Software
+ File Description                            File Name              FTP
+                                                                    Mode
+ --------------------------------------------------------------------------
+ MAG*3.0*147 KIDS                            MAG3_0P147.KID         ASCII
+ MAG*3.0*147 DICOM Gateway routine file      MAG3_0P147.RTN         ASCII
+  
+  
+ Documentation
+  
+ Filename                           Description    
+ -------------------------------------------------------------------------- 
+  
+ MAG3_0P147_Patch_Description.pdf  The release build of this patch can be 
+                                   downloaded from the FTP folder. 
+                                   Installation instructions are included 
+                                   in this document.
+  
+  
+ Associated Patches:
+ ===================
+  
+ Before MAG*3.0*147 can be installed, the following considerations need to 
+ be made:
+  
+  This patch must be installed on a MAG*3.0*53 or later legacy DICOM Gateway.
+  This patch MAY NOT BE INSTALLED ON A MAG*3.0*138 test DICOM Gateway.
+  
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+  
+ Hines, IL Medical Center
+ Southern Arizona HCS, Tucson, AZ
+  
+ Remedy Help Calls:
+ ==================
+ 962507 - Site unable to import non-DICOM standard encapsulated PDF; 2-3 window errors out with encapsulated PDF.
+ 968973 - DICOM Gateway is getting an error when importing non-DICOM standard encapsulated PDF.
+  
+ Problem:
+ ========
+ Site reports that they were unable to import an encapsulated PDF. The
+ site encountered an <UNDEFINED> error during importation of the DICOM
+ object.
+  
+ Resolution:
+ ==========
+ The DICOM gateway was modified to be able to handle the importation
+ of the non-DICOM standard encapsulated PDF objects without error.
+  
+ Data Dictionaries:
+ ==================
+ There are no new or modified files or fields.
+  
+ Security Keys:
+ ==============
+ There are no new or modified security keys.
+  
+ REMOTE PROCEDURES:
+ ==================
+ There are no new or modified remote procedures.
+  
+ Menu Options
+ ============
+ There are no new or modified menu options.
+  
+ Templates:
+ ==========
+ There no new or modified templates.
+  
+ Routine Information:
+ ====================
+  
+ The second line of each of these routines now looks like:
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 3
+  
+ The checksums below are new checksums and can be checked with
+ CHECK1^XTSUMBLD.
+  
+ Routine      Before        After          Patch List
+              Checksums     Checksums
+  
+ MAGIP147     N/A           4110425        **147**
+  
+  
+ DICOM Gateway Routines
+ ======================
+ This section lists new and modified routines for the DICOM Gateway. For
+ each routine, the second line will contain the following information.
+  
+ ;;3.0; IMAGING;**[Patch List]**;MAR 19, 2002;Build 147.1;Mar 03, 2014
+  
+ Please note that the "before" checksum may differ if any test software has
+ been installed.
+  
+ Routine      Before        After          Patch List
+              Checksums     Checksums
+  
+ MAGDDW2     52530205      52939671       **10,30,51,54,53,147**
+ MAGDDR2     32387608      32693504       **10,11,30,54,147**
+ MAGDRVSN    21494340      21494340       **1,7,9,26,21,10,36,3,11,30,5,
+                                            51,50,52,69,75,102,103,
+                                            54,53,66,49,99,123,118,147**
+   
+ This is "IMAGING 3.0" created on March 03, 2014.
+ Active patch(es): **1,7,9,26,21,10,36,3,11,30,5,51,50,52,69,75,102,103,54,53,66,
+ 49,99,123,118,147**
+  
+ Installed patches:
+ Patch 10: NOV 20, 2003
+ Patch 11: APR 14, 2004
+ Patch 30: NOV 5, 2004
+ Patch 49: Jun 29, 2011
+ Patch 50: JUL 13, 2006
+ Patch 51: JUN 16, 2006
+ Patch 53: Apr 22, 2010
+ Patch 54: OCT 28, 2009
+ Patch 69: NOV 7, 2007
+ Patch 99: Jun 28, 2011
+ Patch 102: SEP 08, 2008
+ Patch 103: MAR 03, 2009
+ Patch 118: May 01, 2013
+ Patch 123: Jul 16, 2012
+ Patch 147: March 03, 2014
+  
+ Installation
+ ============
+  
+ Installation Prerequisites
+ ==========================
+ You can download the patch installation files from the OI Field Office 
+ Anonymous FTP site. All instructions in this section assume that the 
+ distribution files for this patch have been copied to a local storage 
+ location.
+  
+  
+ KIDS Installation
+ ==================
+  
+ KIDS Installation Steps
+  
+ 1  Important: Before installing the KIDS, perform the following steps for each DICOM Gateway:
+     a. Stop each process (use CTRL+C if needed) in each active process/telnet window. (Note that clicking only closes the window; it does not stop the process).
+     b. Navigate to the main DICOM Gateway menu and enter 5 (Quit).
+     c. Ensure that CachC) is running. (When CachC) is running, CachC) cube in the Windows taskbar is blue, not grey) 
+ 2  Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+ 3  Run the Installation option [XPD INSTALLATION MENU].
+ 4  Load the KIDS file by performing the following steps.
+     a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to
+        load the KIDS distribution.
+     b. When prompted, enter the path and file name (MAG3_0P147.KID) of
+        the Patch 147 KIDS file that you downloaded from the FTP
+        server.
+     c. When prompted to continue with the load, enter YES.  A
+        Distribution OK! message will be displayed when the load is
+        complete.
+ 5  After loading the KIDS file, use the following options to verify the contents of the patch and to back up any affected routines.
+     a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] = Run this option to ensure the integrity of the routines in the patch.
+     b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] - Run this option to view all changes that will be made when the patch is installed. All components (routines, options, and so on) in the patch will be compared.
+     c. Backup a Transport Global [XPD BACKUP] - Run this option to create a backup message of any routines exported with the patch. It will NOT back up any of the other changes.
+ 6  After performing the load and any optional verification steps, perform the following steps to install the KIDS file:
+     a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+     b. When prompted for the install name, enter MAG*3.0*147.
+     c. Answer NO to the following prompts:
+  
+  Want KIDS to INHIBIT LOGONs during the install? No//NO
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? No//NO
+  
+ 7  When installation is finished, an Install Complete message will
+ be displayed.
+  
+ The sample installation below illustrates the installation of the
+ MAG*3.0*147 KIDS.
+  
+ Select Installation Option: 6  Install Package(s) 
+  
+ Select INSTALL NAME: MAG*3.0*147      5/1/14@20:03:24 
+  
+      => MAG3_0P147  ;Created on Feb 11, 2014@05:43:11 
+  
+ This Distribution was loaded on May 01, 2014@20:03:24 with header of 
+    VistA Imaging V3.0 - Patch 147 - ;Created on Feb 11, 2014@05:43:11 
+    It consisted of the following Install(s): 
+  
+     MAG*3.0*147 
+  
+ Checking Install for Package MAG*3.0*147 
+  
+ Install Questions for MAG*3.0*147 
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages. 
+ You can queue the install by enter a 'Q' at the device prompt. 
+ Enter a '^' to abort the install. 
+  
+ DEVICE: HOME//   HERE 
+  
+  Install Started for MAG*3.0*147 : 
+                May 01, 2014@20:03:47 
+  
+ Build Distribution Date: Feb 11, 2014 
+  
+  Installing Routines:.. 
+  
+                May 01, 2014@20:03:47 
+  
+  Running Post-Install Routine: POS^MAGIP147. 
+  
+ Post Install Mail Message: May 01, 2014@20:03:47 
+  
+  Updating Routine file...... 
+  
+  Updating KIDS files....... 
+  
+  MAG*3.0*147 Installed. 
+  
+                May 01, 2014@20:03:47  
+  
+ DICOM Gateway Installation
+ ==========================
+  
+ Users should not use the DICOM Gateways during installation. Installation
+ will take less than 5 minutes on each DICOM Gateway.
+  
+ Refer to the P147 patch description PDF for DICOM Gateway installation instructions.
+  
+ Restoring the DICOM Gateway
+ ===========================
+  
+ Refer to the P147 patch description PDF for DICOM Gateway restoration instructions.
+
+Routine Information:
+====================
+Routine Name: MAGDDR2
+    Checksum:
+  32693504
+ Description of Changes:
+  Pixel representation variable initialized with null value.
+
+Routine Name: MAGDDW2
+    Checksum:
+  52939671
+ Description of Changes:
+  Pixel represtentation variable initialized with null value.
+
+Routine Name: MAGDVRSN
+    Checksum:
+  21494340
+ Description of Changes:
+  Updated patch sequence in MAGDVRSN.
+
+Routine Name: MAGIP147
+    Checksum:
+  4110425
+  KIDS Installation Steps
+ Description of Changes:
+  Post-install routine.
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 24, 2014
+Completed By:                               Date Completed: JUL 31, 2014
+Released By :                               Date Released : JUL 31, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

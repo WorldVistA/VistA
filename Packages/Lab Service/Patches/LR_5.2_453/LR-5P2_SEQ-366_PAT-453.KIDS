@@ -1,0 +1,1385 @@
+Released LR*5.2*453 SEQ #366
+Extracted from mail message
+**KIDS**:LR*5.2*453^
+
+**INSTALL NAME**
+LR*5.2*453
+"BLD",9887,0)
+LR*5.2*453^LAB SERVICE^0^3151028^y
+"BLD",9887,1,0)
+^^18^18^3150506^
+"BLD",9887,1,1,0)
+This patch addresses four (4) issues:
+"BLD",9887,1,2,0)
+ 
+"BLD",9887,1,3,0)
+1. The shipping manifest identifier is not shown on the Incomplete Status 
+"BLD",9887,1,4,0)
+   List (LRWRKINC) when printing the extended display.
+"BLD",9887,1,5,0)
+ 
+"BLD",9887,1,6,0)
+2. The test status may not be correctly reflected on the Incomplete 
+"BLD",9887,1,7,0)
+   Status List (LRWRKINC).
+"BLD",9887,1,8,0)
+ 
+"BLD",9887,1,9,0)
+3. Information such as report release date and time, performing 
+"BLD",9887,1,10,0)
+   laboratory, and ordering provider are displaying in CPRS Laboratory
+"BLD",9887,1,11,0)
+   progress notes for a patient's ordered test even though results are not
+"BLD",9887,1,12,0)
+   verified for that test.
+"BLD",9887,1,13,0)
+ 
+"BLD",9887,1,14,0)
+4. Multiple updates to Microbiology preliminary comments sent by the 
+"BLD",9887,1,15,0)
+   Laboratory Electronic Data Interchange (LEDI) host site are not stored
+"BLD",9887,1,16,0)
+   by the LEDI collecting site in the patient's record if the STORE
+"BLD",9887,1,17,0)
+   DUPLICATE COMMENTS (#2.2) sub-field of the PROFILE (#50) field in the
+"BLD",9887,1,18,0)
+   LOAD/WORKLIST (#68.2) file is set to "YES".
+"BLD",9887,4,0)
+^9.64PA^^
+"BLD",9887,6.3)
+4
+"BLD",9887,"ABPKG")
+n
+"BLD",9887,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9887,"KRN",.4,0)
+.4
+"BLD",9887,"KRN",.401,0)
+.401
+"BLD",9887,"KRN",.402,0)
+.402
+"BLD",9887,"KRN",.403,0)
+.403
+"BLD",9887,"KRN",.5,0)
+.5
+"BLD",9887,"KRN",.84,0)
+.84
+"BLD",9887,"KRN",3.6,0)
+3.6
+"BLD",9887,"KRN",3.8,0)
+3.8
+"BLD",9887,"KRN",9.2,0)
+9.2
+"BLD",9887,"KRN",9.8,0)
+9.8
+"BLD",9887,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",9887,"KRN",9.8,"NM",1,0)
+LRWRKINC^^0^B75427718
+"BLD",9887,"KRN",9.8,"NM",2,0)
+LR7OR2^^0^B40671777
+"BLD",9887,"KRN",9.8,"NM",3,0)
+LRVRMI3^^0^B26582667
+"BLD",9887,"KRN",9.8,"NM","B","LR7OR2",2)
+
+"BLD",9887,"KRN",9.8,"NM","B","LRVRMI3",3)
+
+"BLD",9887,"KRN",9.8,"NM","B","LRWRKINC",1)
+
+"BLD",9887,"KRN",19,0)
+19
+"BLD",9887,"KRN",19.1,0)
+19.1
+"BLD",9887,"KRN",101,0)
+101
+"BLD",9887,"KRN",409.61,0)
+409.61
+"BLD",9887,"KRN",771,0)
+771
+"BLD",9887,"KRN",779.2,0)
+779.2
+"BLD",9887,"KRN",870,0)
+870
+"BLD",9887,"KRN",8989.51,0)
+8989.51
+"BLD",9887,"KRN",8989.52,0)
+8989.52
+"BLD",9887,"KRN",8994,0)
+8994
+"BLD",9887,"KRN","B",.4,.4)
+
+"BLD",9887,"KRN","B",.401,.401)
+
+"BLD",9887,"KRN","B",.402,.402)
+
+"BLD",9887,"KRN","B",.403,.403)
+
+"BLD",9887,"KRN","B",.5,.5)
+
+"BLD",9887,"KRN","B",.84,.84)
+
+"BLD",9887,"KRN","B",3.6,3.6)
+
+"BLD",9887,"KRN","B",3.8,3.8)
+
+"BLD",9887,"KRN","B",9.2,9.2)
+
+"BLD",9887,"KRN","B",9.8,9.8)
+
+"BLD",9887,"KRN","B",19,19)
+
+"BLD",9887,"KRN","B",19.1,19.1)
+
+"BLD",9887,"KRN","B",101,101)
+
+"BLD",9887,"KRN","B",409.61,409.61)
+
+"BLD",9887,"KRN","B",771,771)
+
+"BLD",9887,"KRN","B",779.2,779.2)
+
+"BLD",9887,"KRN","B",870,870)
+
+"BLD",9887,"KRN","B",8989.51,8989.51)
+
+"BLD",9887,"KRN","B",8989.52,8989.52)
+
+"BLD",9887,"KRN","B",8994,8994)
+
+"BLD",9887,"QUES",0)
+^9.62^^
+"BLD",9887,"REQB",0)
+^9.611^2^2
+"BLD",9887,"REQB",1,0)
+LR*5.2*221^2
+"BLD",9887,"REQB",2,0)
+LR*5.2*427^2
+"BLD",9887,"REQB","B","LR*5.2*221",1)
+
+"BLD",9887,"REQB","B","LR*5.2*427",2)
+
+"MBREQ")
+0
+"PKG",26,-1)
+1^1
+"PKG",26,0)
+LAB SERVICE^LR^CORE LAB SYSTEM
+"PKG",26,20,0)
+^9.402P^1^1
+"PKG",26,20,1,0)
+2^^LRXDRPT
+"PKG",26,20,1,1)
+
+"PKG",26,20,"B",2,1)
+
+"PKG",26,22,0)
+^9.49I^1^1
+"PKG",26,22,1,0)
+5.2^2940927^2981028^66481
+"PKG",26,22,1,"PAH",1,0)
+453^3151028
+"PKG",26,22,1,"PAH",1,1,0)
+^^18^18^3151028
+"PKG",26,22,1,"PAH",1,1,1,0)
+This patch addresses four (4) issues:
+"PKG",26,22,1,"PAH",1,1,2,0)
+ 
+"PKG",26,22,1,"PAH",1,1,3,0)
+1. The shipping manifest identifier is not shown on the Incomplete Status 
+"PKG",26,22,1,"PAH",1,1,4,0)
+   List (LRWRKINC) when printing the extended display.
+"PKG",26,22,1,"PAH",1,1,5,0)
+ 
+"PKG",26,22,1,"PAH",1,1,6,0)
+2. The test status may not be correctly reflected on the Incomplete 
+"PKG",26,22,1,"PAH",1,1,7,0)
+   Status List (LRWRKINC).
+"PKG",26,22,1,"PAH",1,1,8,0)
+ 
+"PKG",26,22,1,"PAH",1,1,9,0)
+3. Information such as report release date and time, performing 
+"PKG",26,22,1,"PAH",1,1,10,0)
+   laboratory, and ordering provider are displaying in CPRS Laboratory
+"PKG",26,22,1,"PAH",1,1,11,0)
+   progress notes for a patient's ordered test even though results are not
+"PKG",26,22,1,"PAH",1,1,12,0)
+   verified for that test.
+"PKG",26,22,1,"PAH",1,1,13,0)
+ 
+"PKG",26,22,1,"PAH",1,1,14,0)
+4. Multiple updates to Microbiology preliminary comments sent by the 
+"PKG",26,22,1,"PAH",1,1,15,0)
+   Laboratory Electronic Data Interchange (LEDI) host site are not stored
+"PKG",26,22,1,"PAH",1,1,16,0)
+   by the LEDI collecting site in the patient's record if the STORE
+"PKG",26,22,1,"PAH",1,1,17,0)
+   DUPLICATE COMMENTS (#2.2) sub-field of the PROFILE (#50) field in the
+"PKG",26,22,1,"PAH",1,1,18,0)
+   LOAD/WORKLIST (#68.2) file is set to "YES".
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","LR7OR2")
+0^2^B40671777^B40394119
+"RTN","LR7OR2",1,0)
+LR7OR2 ;DALOI/dcm - Get Lab results (cont.) ;02/11/11  14:39
+"RTN","LR7OR2",2,0)
+ ;;5.2;LAB SERVICE;**121,187,219,285,286,372,350,453**;Sep 27, 1994;Build 4
+"RTN","LR7OR2",3,0)
+ ;
+"RTN","LR7OR2",4,0)
+ ;
+"RTN","LR7OR2",5,0)
+CH(SDATE,EDATE,TEST,COUNT,SPEC,UNVER) ;Get CH subscript data
+"RTN","LR7OR2",6,0)
+ ;
+"RTN","LR7OR2",7,0)
+ Q:'$D(SDATE)  Q:'$D(EDATE)  Q:'$D(COUNT)  Q:'$D(CT1)
+"RTN","LR7OR2",8,0)
+ N GOTIT,I,IVDT,ITST,IST,TSTY,X,X0,ORD,Y6,Y12,Y16,Y19
+"RTN","LR7OR2",9,0)
+ F I="LRPLS","LRPLS-ADDR" K ^TMP(I,$J)
+"RTN","LR7OR2",10,0)
+ ;
+"RTN","LR7OR2",11,0)
+ I $G(TEST) Q:'$D(^LAB(60,TEST,0))  S X=^(0) Q:$P(X,"^",4)'="CH"  D
+"RTN","LR7OR2",12,0)
+ . I $P(X,"^",5)'="" S TSTY($P($P(X,"^",5),";",2))=TEST
+"RTN","LR7OR2",13,0)
+ . I $P(X,"^",5)="" D EN^LR7OU1(TEST)
+"RTN","LR7OR2",14,0)
+ ;
+"RTN","LR7OR2",15,0)
+ S IVDT=SDATE
+"RTN","LR7OR2",16,0)
+ F  S IVDT=$O(^LR(LRDFN,"CH",IVDT)) Q:IVDT<1!(IVDT>EDATE)!(CT1>COUNT)  D
+"RTN","LR7OR2",17,0)
+ . S X0=^LR(LRDFN,"CH",IVDT,0),Y6=$S($P(X0,"^",3):"F",1:"P"),Y12=$P(X0,"^",4),Y19=$P(X0,"^",5),Y16=$P(X0,"^",6),ORD=$$ORD(LRDFN,IVDT)
+"RTN","LR7OR2",18,0)
+ . S GOTIT=0
+"RTN","LR7OR2",19,0)
+ . I '$G(UNVER),Y6="P" Q  ;Unverified data not requested
+"RTN","LR7OR2",20,0)
+ . I $G(SPEC),Y19'=SPEC Q  ;Specimen specified
+"RTN","LR7OR2",21,0)
+ . I '$D(TSTY) S ITST=1 F  S ITST=$O(^LR(LRDFN,"CH",IVDT,ITST)) Q:ITST<1  S X=^(ITST) D SETTST(ITST,X)
+"RTN","LR7OR2",22,0)
+ . S IST=0 F  S IST=$O(TSTY(IST)) Q:IST<1  I $D(^LR(LRDFN,"CH",IVDT,IST)) S X=^(IST) D SETTST(IST,X)
+"RTN","LR7OR2",23,0)
+ . I $O(^TMP("LRRR",$J,DFN,"CH",IVDT,0)) D NOTE(LRDFN,IVDT)
+"RTN","LR7OR2",24,0)
+ . Q:'GOTIT
+"RTN","LR7OR2",25,0)
+ . S CT1=CT1+1
+"RTN","LR7OR2",26,0)
+ . ; Display ordering provider
+"RTN","LR7OR2",27,0)
+ . D ORDP($P($G(^LR(LRDFN,"CH",IVDT,0)),"^",10))
+"RTN","LR7OR2",28,0)
+ . ; Display report released date/time
+"RTN","LR7OR2",29,0)
+ . D RRDT($P(X0,"^",3))
+"RTN","LR7OR2",30,0)
+ . ; List performing laboratories
+"RTN","LR7OR2",31,0)
+ . D PLS
+"RTN","LR7OR2",32,0)
+ ;
+"RTN","LR7OR2",33,0)
+ F I="LRPLS","LRPLS-ADDR" K ^TMP(I,$J)
+"RTN","LR7OR2",34,0)
+ Q
+"RTN","LR7OR2",35,0)
+ ;
+"RTN","LR7OR2",36,0)
+ ;
+"RTN","LR7OR2",37,0)
+SETTST(ISUB,ZERO) ;Set test data in ^TMP
+"RTN","LR7OR2",38,0)
+ ; ISUB= test subscript
+"RTN","LR7OR2",39,0)
+ ; ZERO= 0th node at ^LR(LRDFN,"CH",IVDT,TST)
+"RTN","LR7OR2",40,0)
+ N LRX,PORDER,X,Y,Y1,Y2,Y3,Y4,Y5,Y9,Y10,Y11,Y14
+"RTN","LR7OR2",41,0)
+ S X=ZERO,Y1=ISUB,Y1=$O(^LAB(60,"C","CH;"_Y1_";1",0)),Y2=$P(X,"^"),Y3=$P(X,"^",2)
+"RTN","LR7OR2",42,0)
+ Q:'Y1  Q:"IN"[$P(^LAB(60,Y1,0),"^",3)  S Y15=$P($G(^LAB(60,Y1,.1)),"^")
+"RTN","LR7OR2",43,0)
+ S (Y9,Y10,Y11,Y14)=""
+"RTN","LR7OR2",44,0)
+ I $P($G(^LAB(60,Y1,64)),"^") S Y9=$P(^(64),"^"),Y9=$P(^LAM(Y9,0),"^",2),Y10=$P(^(0),"^"),Y11="99NLT"
+"RTN","LR7OR2",45,0)
+ ;
+"RTN","LR7OR2",46,0)
+ S LRX=$$TSTRES^LRRPU(LRDFN,"CH",IVDT,ISUB,Y1)
+"RTN","LR7OR2",47,0)
+ S Y2=$P(LRX,"^"),Y3=$P(LRX,"^",2),Y4=$P(LRX,"^",5),Y5=$$EN^LRLRRVF($P(LRX,"^",3),$P(LRX,"^",4))
+"RTN","LR7OR2",48,0)
+ I $P(LRX,"^",7) S Y14="T"
+"RTN","LR7OR2",49,0)
+ S Y2=$$TRIM^XLFSTR($$RESULT^LR7OB63(Y1,Y2),"RL"," ")
+"RTN","LR7OR2",50,0)
+ ;
+"RTN","LR7OR2",51,0)
+ ; Determine print order and adjust if duplicate
+"RTN","LR7OR2",52,0)
+ S PORDER=$P($G(^LAB(60,Y1,.1)),"^",6),PORDER=$S(PORDER:PORDER,1:998+(ISUB/10000000))
+"RTN","LR7OR2",53,0)
+ I $D(^TMP("LRRR",$J,DFN,"CH",IVDT,PORDER)) F PORDER=PORDER:.00000001 I '$D(^TMP("LRRR",$J,DFN,"CH",IVDT,PORDER)) Q
+"RTN","LR7OR2",54,0)
+ ;
+"RTN","LR7OR2",55,0)
+ S ^TMP("LRRR",$J,DFN,"CH",IVDT,PORDER)=Y1_"^"_Y2_"^"_Y3_"^"_Y4_"^"_Y5_"^"_Y6_"^^^"_Y9_"^"_Y10_"^"_Y11_"^"_Y12_"^^"_Y14_"^"_Y15_"^"_Y16_"^"_$G(ORD)_"^^"_Y19
+"RTN","LR7OR2",56,0)
+ I $P(LRX,"^",6) S ^TMP("LRPLS",$J,$P(LRX,"^",6),$P(^LAB(60,Y1,0),"^"))=""
+"RTN","LR7OR2",57,0)
+ S GOTIT=1
+"RTN","LR7OR2",58,0)
+ Q
+"RTN","LR7OR2",59,0)
+ ;
+"RTN","LR7OR2",60,0)
+ ;
+"RTN","LR7OR2",61,0)
+NOTE(LRDFN,IVDT) ;Get comments
+"RTN","LR7OR2",62,0)
+ N IFN
+"RTN","LR7OR2",63,0)
+ S IFN=0
+"RTN","LR7OR2",64,0)
+ F  S IFN=$O(^LR(LRDFN,"CH",IVDT,1,IFN)) Q:IFN<1  S X=^(IFN,0),^TMP("LRRR",$J,DFN,"CH",IVDT,"N",IFN)=X
+"RTN","LR7OR2",65,0)
+ Q
+"RTN","LR7OR2",66,0)
+ ;
+"RTN","LR7OR2",67,0)
+ ;
+"RTN","LR7OR2",68,0)
+TEST(Y,DFN,ORD,SDATE,EDATE,SUB,TEST,FLAG,COUNT) ;Test network calls
+"RTN","LR7OR2",69,0)
+ ; Called from TIU
+"RTN","LR7OR2",70,0)
+ ; COUNT = count of results to send, results with the same date/time count as 1
+"RTN","LR7OR2",71,0)
+ N IVDT,SSUB,SEQ,CTR
+"RTN","LR7OR2",72,0)
+ Q:'$G(DFN)
+"RTN","LR7OR2",73,0)
+ D RR^LR7OR1(DFN,$G(ORD),$G(SDATE),$G(EDATE),$G(SUB),$G(TEST),$G(FLAG),$G(COUNT))
+"RTN","LR7OR2",74,0)
+ I '$D(^TMP("LRRR",$J)) S Y(1)="No Lab Data" Q
+"RTN","LR7OR2",75,0)
+ S CTR=0,SSUB="",COUNT=$S($G(COUNT):COUNT,1:9999999)
+"RTN","LR7OR2",76,0)
+ F  S SSUB=$O(^TMP("LRRR",$J,DFN,SSUB)) Q:SSUB=""  S IVDT=0 F  S IVDT=$O(^TMP("LRRR",$J,DFN,SSUB,IVDT)) Q:IVDT<1  S SEQ=0 F  S SEQ=$O(^TMP("LRRR",$J,DFN,SSUB,IVDT,SEQ)) Q:SEQ<1  D
+"RTN","LR7OR2",77,0)
+ . S CTR=CTR+1,^TMP("LRAPI",$J,CTR)=9999999-IVDT_"^"_SSUB_"^"_^TMP("LRRR",$J,DFN,SSUB,IVDT,SEQ)
+"RTN","LR7OR2",78,0)
+ S Y=$NA(^TMP("LRAPI",$J))
+"RTN","LR7OR2",79,0)
+ Q
+"RTN","LR7OR2",80,0)
+ ;
+"RTN","LR7OR2",81,0)
+ ;
+"RTN","LR7OR2",82,0)
+T60(Y,IFN) ;Get tests from file 60
+"RTN","LR7OR2",83,0)
+ ; If IFN is not passed then the whole file is sent.
+"RTN","LR7OR2",84,0)
+ N CTR S CTR=0
+"RTN","LR7OR2",85,0)
+ I $D(IFN) Q:'$D(^LAB(60,IFN,0))  S Y(1)=IFN_"^"_$P(^LAB(60,IFN,0),"^") Q
+"RTN","LR7OR2",86,0)
+ S NAME="" F  S NAME=$O(^LAB(60,"B",NAME)) Q:NAME=""  S IFN=0 F  S IFN=$O(^LAB(60,"B",NAME,IFN)) Q:IFN<1  I $D(^LAB(60,IFN,0)) S CTR=CTR+1,Y(CTR)=IFN_"^"_NAME
+"RTN","LR7OR2",87,0)
+ Q
+"RTN","LR7OR2",88,0)
+ ;
+"RTN","LR7OR2",89,0)
+ ;
+"RTN","LR7OR2",90,0)
+T64(Y,IFN) ;Get tests from file 64
+"RTN","LR7OR2",91,0)
+ ; If IFN is not passed then the whole file is sent, if entry has a link to file 60
+"RTN","LR7OR2",92,0)
+ N CTR S CTR=0
+"RTN","LR7OR2",93,0)
+ I $D(IFN) Q:'$D(^LAM(IFN,0))  Q:'$D(^LAB(60,"AC",IFN))  S Y(1)=IFN_"^"_$P(^LAM(IFN,0),"^") Q
+"RTN","LR7OR2",94,0)
+ S NAME="" F  S NAME=$O(^LAM("B",NAME)) Q:NAME=""  S IFN=0 F  S IFN=$O(^LAM("B",NAME,IFN)) Q:IFN<1  I $D(^LAM(IFN,0)),$D(^LAB(60,"AC",IFN)) S CTR=CTR+1,Y(CTR)=IFN_"^"_NAME
+"RTN","LR7OR2",95,0)
+ Q
+"RTN","LR7OR2",96,0)
+ ;
+"RTN","LR7OR2",97,0)
+ ;
+"RTN","LR7OR2",98,0)
+ORD(LRDFN,IVDT) ;Get order # for entry in file 63
+"RTN","LR7OR2",99,0)
+ ; LRDFN=Lab Patient #
+"RTN","LR7OR2",100,0)
+ ; IVDT=Inverse Date/time in 63 (^LR(LRDFN,"CH",IVDT))
+"RTN","LR7OR2",101,0)
+ Q:'$G(LRDFN)  Q:'$G(IVDT)
+"RTN","LR7OR2",102,0)
+ N X0,X6,X,AC,ACD,ACN
+"RTN","LR7OR2",103,0)
+ S X0=$G(^LR(LRDFN,"CH",IVDT,0)),X6=$P(X0,"^",6) I X6="" Q ""
+"RTN","LR7OR2",104,0)
+ S X=$P(X6," "),X=$O(^LRO(68,"B",X,0)) I 'X Q ""
+"RTN","LR7OR2",105,0)
+ S AC=X,ACD=+$P(X0,"."),ACN=$P(X6," ",3) I '$D(^LRO(68,AC,1,ACD,1,ACN,0)) Q ""
+"RTN","LR7OR2",106,0)
+ S X=$P($G(^LRO(68,AC,1,ACD,1,ACN,.1)),"^")
+"RTN","LR7OR2",107,0)
+ Q X
+"RTN","LR7OR2",108,0)
+ ;
+"RTN","LR7OR2",109,0)
+ ;
+"RTN","LR7OR2",110,0)
+ORDP(LRPROV) ; Display ordering provider in comment
+"RTN","LR7OR2",111,0)
+ N LRY,CNT
+"RTN","LR7OR2",112,0)
+ S LRY=$$NAME^XUSER(LRPROV,"G")
+"RTN","LR7OR2",113,0)
+ S CNT=$O(^TMP("LRRR",$J,DFN,"CH",IVDT,"N",""),-1)+1
+"RTN","LR7OR2",114,0)
+ S ^TMP("LRRR",$J,DFN,"CH",IVDT,"N",CNT)="Ordering Provider: "_LRY
+"RTN","LR7OR2",115,0)
+ Q
+"RTN","LR7OR2",116,0)
+ ;
+"RTN","LR7OR2",117,0)
+ ;
+"RTN","LR7OR2",118,0)
+RRDT(LRDT) ; Display report released date/time
+"RTN","LR7OR2",119,0)
+ N LRY,CNT
+"RTN","LR7OR2",120,0)
+ I LRDT S LRY=$$FMTE^XLFDT(LRDT,"M")
+"RTN","LR7OR2",121,0)
+ E  S LRY=""
+"RTN","LR7OR2",122,0)
+ S CNT=$O(^TMP("LRRR",$J,DFN,"CH",IVDT,"N",""),-1)+1
+"RTN","LR7OR2",123,0)
+ S ^TMP("LRRR",$J,DFN,"CH",IVDT,"N",CNT)="Report Released Date/Time: "_LRY,CNT=CNT+1
+"RTN","LR7OR2",124,0)
+ Q
+"RTN","LR7OR2",125,0)
+ ;
+"RTN","LR7OR2",126,0)
+ ;
+"RTN","LR7OR2",127,0)
+PLS ; List reporting and performing laboratories
+"RTN","LR7OR2",128,0)
+ ; If multiple performing labs then list tests associated with each lab.
+"RTN","LR7OR2",129,0)
+ ;
+"RTN","LR7OR2",130,0)
+ N CNT,LINE,LLEN,LRPLS,LRX,MPLS,PLS,TESTNAME,X
+"RTN","LR7OR2",131,0)
+ ;
+"RTN","LR7OR2",132,0)
+ S CNT=$O(^TMP("LRRR",$J,DFN,"CH",IVDT,"N",""),-1)+1
+"RTN","LR7OR2",133,0)
+ ;
+"RTN","LR7OR2",134,0)
+ ; Reporting Laboratory
+"RTN","LR7OR2",135,0)
+ I $$GET^XPAR("DIV^PKG","LR REPORTS FACILITY PRINT",1,"Q")#2 D
+"RTN","LR7OR2",136,0)
+ . S LRX=+$G(^LR(LRDFN,"CH",IVDT,"RF"))
+"RTN","LR7OR2",137,0)
+ . I LRX<1 Q
+"RTN","LR7OR2",138,0)
+ . S LINE=$$PLSADDR^LR7OSUM2(LRX)
+"RTN","LR7OR2",139,0)
+ . S ^TMP("LRRR",$J,DFN,"CH",IVDT,"N",CNT)=" ",CNT=CNT+1
+"RTN","LR7OR2",140,0)
+ . S ^TMP("LRRR",$J,DFN,"CH",IVDT,"N",CNT)="Reporting Lab: "_$P(LINE,"^"),CNT=CNT+1
+"RTN","LR7OR2",141,0)
+ . S ^TMP("LRRR",$J,DFN,"CH",IVDT,"N",CNT)="               "_$P(LINE,"^",2),CNT=CNT+1
+"RTN","LR7OR2",142,0)
+ ;
+"RTN","LR7OR2",143,0)
+ S PLS=$O(^TMP("LRPLS",$J,0)),MPLS=0
+"RTN","LR7OR2",144,0)
+ I $O(^TMP("LRPLS",$J,PLS)) S MPLS=1 ; multiple performing labs
+"RTN","LR7OR2",145,0)
+ S LRPLS=0
+"RTN","LR7OR2",146,0)
+ F  S LRPLS=$O(^TMP("LRPLS",$J,LRPLS)) Q:LRPLS<1  D
+"RTN","LR7OR2",147,0)
+ . S ^TMP("LRRR",$J,DFN,"CH",IVDT,"N",CNT)=" ",CNT=CNT+1
+"RTN","LR7OR2",148,0)
+ . I MPLS D
+"RTN","LR7OR2",149,0)
+ . . S TESTNAME="",LINE="For test(s): ",LLEN=13
+"RTN","LR7OR2",150,0)
+ . . F  S TESTNAME=$O(^TMP("LRPLS",$J,LRPLS,TESTNAME)) Q:TESTNAME=""  D
+"RTN","LR7OR2",151,0)
+ . . . S X=$L(TESTNAME)
+"RTN","LR7OR2",152,0)
+ . . . I (LLEN+X)>240 S ^TMP("LRRR",$J,DFN,"CH",IVDT,"N",CNT)=LINE,CNT=CNT+1,LINE="",LLEN=0
+"RTN","LR7OR2",153,0)
+ . . . S LINE=LINE_$S(LLEN>13:", ",1:"")_TESTNAME,LLEN=LLEN+X+$S(LLEN>13:2,1:0)
+"RTN","LR7OR2",154,0)
+ . . I LINE'="" S ^TMP("LRRR",$J,DFN,"CH",IVDT,"N",CNT)=LINE,CNT=CNT+1
+"RTN","LR7OR2",155,0)
+ . S LINE=$$PLSADDR^LR7OSUM2(LRPLS)
+"RTN","LR7OR2",156,0)
+ . S ^TMP("LRRR",$J,DFN,"CH",IVDT,"N",CNT)="Performing Lab: "_$P(LINE,"^"),CNT=CNT+1
+"RTN","LR7OR2",157,0)
+ . S ^TMP("LRRR",$J,DFN,"CH",IVDT,"N",CNT)="                "_$P(LINE,"^",2),CNT=CNT+1
+"RTN","LR7OR2",158,0)
+ ;
+"RTN","LR7OR2",159,0)
+ S ^TMP("LRRR",$J,DFN,"CH",IVDT,"N",CNT)=" "
+"RTN","LR7OR2",160,0)
+ ;
+"RTN","LR7OR2",161,0)
+ K ^TMP("LRPLS",$J)
+"RTN","LR7OR2",162,0)
+ Q
+"RTN","LRVRMI3")
+0^3^B26582667^B26579796
+"RTN","LRVRMI3",1,0)
+LRVRMI3 ;DALOI/STAFF - LAB MICRO LEDI INTERFACE ;08/15/13  16:08
+"RTN","LRVRMI3",2,0)
+ ;;5.2;LAB SERVICE;**350,427,453**;Sep 27, 1994;Build 4
+"RTN","LRVRMI3",3,0)
+ ;
+"RTN","LRVRMI3",4,0)
+ ; Part of Micro LEDI interface.  It is a continuation of ^LRVRMI4 and ^LRVRMI2. Processes data in the temp global ^TMP("LRMI")
+"RTN","LRVRMI3",5,0)
+ ; and stores it into the appropriate sections of the Lab Data Microbiology file (#63.05).
+"RTN","LRVRMI3",6,0)
+ ;
+"RTN","LRVRMI3",7,0)
+ ;
+"RTN","LRVRMI3",8,0)
+NODE(LRNODE) ;  Process similar multiples - nodes 15,19-31
+"RTN","LRVRMI3",9,0)
+ ; Call with LRNODE = node in MI subscript to process
+"RTN","LRVRMI3",10,0)
+ ;
+"RTN","LRVRMI3",11,0)
+ N DIERR,IEN,LRCMT,LRFDA,LRFDAIEN,LRFILE,LRERR,LRIEN,LRMSG,LRPL,LRX,X
+"RTN","LRVRMI3",12,0)
+ ; Mycology smear/prep^^^^Preliminary bacteriology comment^Preliminary virology comment^Preliminary parasite comment^Preliminary mycology comment^Preliminary TB comment^
+"RTN","LRVRMI3",13,0)
+ ; Parasitology smear/prep^Bacteriology smear/prep^Bacteriology test^Parasite test^Mycology test^TB test^Virology test^Sterility test
+"RTN","LRVRMI3",14,0)
+ ;
+"RTN","LRVRMI3",15,0)
+ S LRFILE=$P("63.371^^^^63.06^63.431^63.1^63.11^63.18^63.341^63.291^63.061^63.361^63.111^63.181^63.432^63.292^","^",LRNODE-14)
+"RTN","LRVRMI3",16,0)
+ M LRCMT=^LR(LRDFN,"MI",LRIDT,LRNODE)
+"RTN","LRVRMI3",17,0)
+ ;
+"RTN","LRVRMI3",18,0)
+ S IEN=0
+"RTN","LRVRMI3",19,0)
+ F  S IEN=$O(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,LRNODE,IEN)) Q:IEN<1  D
+"RTN","LRVRMI3",20,0)
+ . S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,LRNODE,IEN,0)),LRX=$S(LRX'="":LRX,1:" ")
+"RTN","LRVRMI3",21,0)
+ . I LRX'=" ",$$DUPCHK^LRVRMI3(LRLL,LRPROF,.LRCMT,LRX) Q
+"RTN","LRVRMI3",22,0)
+ . S LRFDA(1,LRFILE,"+"_IEN_","_LRIDT_","_LRDFN_",",.01)=LRX
+"RTN","LRVRMI3",23,0)
+ . ;S LRFDAIEN(IEN)=IEN
+"RTN","LRVRMI3",24,0)
+ . ;
+"RTN","LRVRMI3",25,0)
+ . ; if result came across in NTE, PL and status info will be under ^(0) node
+"RTN","LRVRMI3",26,0)
+ . I $D(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,LRNODE,0)) D  ;
+"RTN","LRVRMI3",27,0)
+ . . S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,LRNODE,0))
+"RTN","LRVRMI3",28,0)
+ . . S X=$P(LRX,"^",4)
+"RTN","LRVRMI3",29,0)
+ . . D STAT4CMT(LRFILE,X,.LRSTATUS)
+"RTN","LRVRMI3",30,0)
+ . . I $P(LRX,"^") S LRPL(IEN)=$P(LRX,"^")
+"RTN","LRVRMI3",31,0)
+ . ;
+"RTN","LRVRMI3",32,0)
+ . ; if result came across in OBX, PL and status info will be under ^(IEN,0,0) node
+"RTN","LRVRMI3",33,0)
+ . I $D(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,LRNODE,IEN,0,0)) D  ;
+"RTN","LRVRMI3",34,0)
+ . . S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,LRNODE,IEN,0,0))
+"RTN","LRVRMI3",35,0)
+ . . S X=$P(LRX,"^",4)
+"RTN","LRVRMI3",36,0)
+ . . D STAT4CMT(LRFILE,X,.LRSTATUS)
+"RTN","LRVRMI3",37,0)
+ . . I $P(LRX,"^") S LRPL(IEN)=$P(LRX,"^")
+"RTN","LRVRMI3",38,0)
+ . ;
+"RTN","LRVRMI3",39,0)
+ ;
+"RTN","LRVRMI3",40,0)
+ I '$D(LRFDA) Q
+"RTN","LRVRMI3",41,0)
+ ;
+"RTN","LRVRMI3",42,0)
+ D UPDATE^DIE("","LRFDA(1)","LRFDAIEN","LRERR")
+"RTN","LRVRMI3",43,0)
+ S IEN=0
+"RTN","LRVRMI3",44,0)
+ F  S IEN=$O(LRPL(IEN)) Q:'IEN  D
+"RTN","LRVRMI3",45,0)
+ . I $G(LRFDAIEN(IEN)) D SETPL^LRRPLUA(LRDFN_",MI,"_LRIDT_","_LRNODE_","_LRFDAIEN(IEN),LRPL(IEN))
+"RTN","LRVRMI3",46,0)
+ ;
+"RTN","LRVRMI3",47,0)
+ ;
+"RTN","LRVRMI3",48,0)
+ ; Update d/t approved and user approving
+"RTN","LRVRMI3",49,0)
+ S LRX=$$RPTDT(LRDFN,LRIDT,LRNODE,LRNOW,$S($G(LRDUZ):LRDUZ,1:$G(DUZ)))
+"RTN","LRVRMI3",50,0)
+ ;
+"RTN","LRVRMI3",51,0)
+ Q
+"RTN","LRVRMI3",52,0)
+ ;
+"RTN","LRVRMI3",53,0)
+ ;
+"RTN","LRVRMI3",54,0)
+SETPL(NODE) ; Setup LRPL array
+"RTN","LRVRMI3",55,0)
+ ; Call with NODE = node in MI subscript to retrieve the performing lab
+"RTN","LRVRMI3",56,0)
+ ;
+"RTN","LRVRMI3",57,0)
+ N LRX
+"RTN","LRVRMI3",58,0)
+ S LRX=^TMP("LRMI",$J,LRDFN,"MI",LRIDT,NODE,IEN,0,0)
+"RTN","LRVRMI3",59,0)
+ I $P(LRX,"^") S LRPL(IEN)=$P(LRX,"^")
+"RTN","LRVRMI3",60,0)
+ Q
+"RTN","LRVRMI3",61,0)
+ ;
+"RTN","LRVRMI3",62,0)
+ ;
+"RTN","LRVRMI3",63,0)
+STOREPL(NODE) ; Set performing lab
+"RTN","LRVRMI3",64,0)
+ ; Call with NODE = node in MI subscript to retrieve the performing lab
+"RTN","LRVRMI3",65,0)
+ N IEN
+"RTN","LRVRMI3",66,0)
+ S IEN=0
+"RTN","LRVRMI3",67,0)
+ F  S IEN=$O(LRPL(IEN)) Q:'IEN  I $G(LRFDAIEN(IEN)) D SETPL^LRRPLUA(LRDFN_",MI,"_LRIDT_","_NODE_","_LRFDAIEN(IEN),LRPL(IEN))
+"RTN","LRVRMI3",68,0)
+ Q
+"RTN","LRVRMI3",69,0)
+ ;
+"RTN","LRVRMI3",70,0)
+ ;
+"RTN","LRVRMI3",71,0)
+DUPCHK(LRLL,LRPROF,LRCMT,LRCOM) ; Check for duplicates - comment stripped if spaces, force to upper case unless
+"RTN","LRVRMI3",72,0)
+ ; flag set to store duplicates (Field #2.2 of PROFILE multiple in file #68.2)
+"RTN","LRVRMI3",73,0)
+ ;
+"RTN","LRVRMI3",74,0)
+ ; Call with  LRLL = load/work list ien
+"RTN","LRVRMI3",75,0)
+ ;          LRPROF = profile ien in load/worklist
+"RTN","LRVRMI3",76,0)
+ ;           LRCMT = array containing current comments on file
+"RTN","LRVRMI3",77,0)
+ ;           LRCOM = new comment to check
+"RTN","LRVRMI3",78,0)
+ ;
+"RTN","LRVRMI3",79,0)
+ ; Returns LRDUP = 0 (no duplicate), 1 (duplicate)
+"RTN","LRVRMI3",80,0)
+ ;
+"RTN","LRVRMI3",81,0)
+ N LRDUP,LRI,LRX,LRY
+"RTN","LRVRMI3",82,0)
+ S LRDUP=0
+"RTN","LRVRMI3",83,0)
+ I '$P($G(^LRO(68.2,LRLL,10,+$G(LRPROF),0)),U,4) D
+"RTN","LRVRMI3",84,0)
+ . S LRI=0,LRY=$TR(LRCOM," ",""),LRY=$$UP^XLFSTR(LRY)
+"RTN","LRVRMI3",85,0)
+ . F  S LRI=$O(LRCMT(LRI)) Q:'LRI  D  Q:LRDUP
+"RTN","LRVRMI3",86,0)
+ . . S LRX=$P(LRCMT(LRI,0),U),LRX=$TR(LRX," ",""),LRX=$$UP^XLFSTR(LRX)
+"RTN","LRVRMI3",87,0)
+ . . I LRX=LRY S LRDUP=1
+"RTN","LRVRMI3",88,0)
+ Q LRDUP
+"RTN","LRVRMI3",89,0)
+ ;
+"RTN","LRVRMI3",90,0)
+ ;
+"RTN","LRVRMI3",91,0)
+STAT4CMT(FILE,STAT,LRSTATUS) ; Calculate status for comment nodes (eg BACT SMEAR)
+"RTN","LRVRMI3",92,0)
+ ; Inputs
+"RTN","LRVRMI3",93,0)
+ ;       FILE: The file # of the comment field in #63.
+"RTN","LRVRMI3",94,0)
+ ;       STAT: The status (eg F)
+"RTN","LRVRMI3",95,0)
+ ;   LRSTATUS:<byref>  Input and Output
+"RTN","LRVRMI3",96,0)
+ ; Outputs
+"RTN","LRVRMI3",97,0)
+ ;   LRSTATUS:
+"RTN","LRVRMI3",98,0)
+ N SUBF,FLD
+"RTN","LRVRMI3",99,0)
+ S (FLD,SUBF)=""
+"RTN","LRVRMI3",100,0)
+ ;
+"RTN","LRVRMI3",101,0)
+ I FILE=63.291 S SUBF=63.05,FLD=11.5 ; Bact Smear
+"RTN","LRVRMI3",102,0)
+ I FILE=63.341 S SUBF=63.05,FLD=15 ; Para Smear
+"RTN","LRVRMI3",103,0)
+ I FILE=63.371 S SUBF=63.05,FLD=19 ; Myco Smear
+"RTN","LRVRMI3",104,0)
+ I FILE=63.06 S SUBF=63.05,FLD=11.5 ; preliminary bacteria comment
+"RTN","LRVRMI3",105,0)
+ I FILE=63.431 S SUBF=63.05,FLD=34 ; preliminary virus comment
+"RTN","LRVRMI3",106,0)
+ I FILE=63.1 S SUBF=63.05,FLD=15 ; preliminary parasite comment
+"RTN","LRVRMI3",107,0)
+ I FILE=63.11 S SUBF=63.05,FLD=19 ; preliminary mycology comment
+"RTN","LRVRMI3",108,0)
+ I FILE=63.18 S SUBF=63.05,FLD=23 ; preliminary TB comment
+"RTN","LRVRMI3",109,0)
+ I FILE=63.061 S SUBF=63.05,FLD=11.5 ; bacteria tests
+"RTN","LRVRMI3",110,0)
+ I FILE=63.361 S SUBF=63.05,FLD=15 ; parasitology tests
+"RTN","LRVRMI3",111,0)
+ I FILE=63.111 S SUBF=63.05,FLD=19 ; mycology tests
+"RTN","LRVRMI3",112,0)
+ I FILE=63.181 S SUBF=63.05,FLD=23 ; TB tests
+"RTN","LRVRMI3",113,0)
+ I FILE=63.432 S SUBF=63.05,FLD=34 ; virology tests
+"RTN","LRVRMI3",114,0)
+ I FILE=63.292 S SUBF=63.05,FLD=11.5 ; sterility tests
+"RTN","LRVRMI3",115,0)
+ ;
+"RTN","LRVRMI3",116,0)
+ I FLD,SUBF D BLDSTAT^LRVRMI4A(SUBF,FLD,STAT,.LRSTATUS)
+"RTN","LRVRMI3",117,0)
+ ;
+"RTN","LRVRMI3",118,0)
+ Q
+"RTN","LRVRMI3",119,0)
+ ;
+"RTN","LRVRMI3",120,0)
+ ;
+"RTN","LRVRMI3",121,0)
+RPTDT(LRDFN,LRIDT,SUBSCR,RPTDT,USER) ; File Report Approved Date and Person Reporting
+"RTN","LRVRMI3",122,0)
+ ; Inputs
+"RTN","LRVRMI3",123,0)
+ ;  LRDFN: LRDFN
+"RTN","LRVRMI3",124,0)
+ ;  LRIDT: LRIDT
+"RTN","LRVRMI3",125,0)
+ ; SUBSCR: MI Result Subscript (eg 19,21,23,24,25,26)
+"RTN","LRVRMI3",126,0)
+ ;  RPTDT: Report Approved Date/Time
+"RTN","LRVRMI3",127,0)
+ ;   USER: Person Reporting (#200)
+"RTN","LRVRMI3",128,0)
+ ; Outputs
+"RTN","LRVRMI3",129,0)
+ ;  Returns 0^ErrNum^ErrMsg on error, 1 on success
+"RTN","LRVRMI3",130,0)
+ N DIERR,FLDS,IEN,LRFDA,LRMSG,LRX
+"RTN","LRVRMI3",131,0)
+ ;
+"RTN","LRVRMI3",132,0)
+ S LRDFN=$G(LRDFN),LRIDT=$G(LRIDT),SUBSCR=$G(SUBSCR),(FLDS,LRX)=""
+"RTN","LRVRMI3",133,0)
+ ;
+"RTN","LRVRMI3",134,0)
+ I $G(RPTDT)'>0 S RPTDT=$$NOW^XLFDT()
+"RTN","LRVRMI3",135,0)
+ I $G(USER)="" S USER=$S($G(LRDUZ):LRDUZ,1:$G(DUZ))
+"RTN","LRVRMI3",136,0)
+ I LRDFN,LRIDT,SUBSCR S FLDS=$$NODE2FLD(SUBSCR)
+"RTN","LRVRMI3",137,0)
+ ;
+"RTN","LRVRMI3",138,0)
+ I FLDS'="" D
+"RTN","LRVRMI3",139,0)
+ . S IEN=LRIDT_","_LRDFN_","
+"RTN","LRVRMI3",140,0)
+ . S LRFDA(1,63.05,IEN,$P(FLDS,"^",1))=RPTDT
+"RTN","LRVRMI3",141,0)
+ . S LRFDA(1,63.05,IEN,$P(FLDS,"^",2))=USER
+"RTN","LRVRMI3",142,0)
+ . D FILE^DIE("","LRFDA(1)","LRMSG")
+"RTN","LRVRMI3",143,0)
+ . I '$D(LRMSG) S LRX=1,LRRPTAPP=1 Q
+"RTN","LRVRMI3",144,0)
+ . S LRX="0^2^FileMan error"
+"RTN","LRVRMI3",145,0)
+ E  S LRX="0^1^No Field #s found"
+"RTN","LRVRMI3",146,0)
+ ;
+"RTN","LRVRMI3",147,0)
+ Q LRX
+"RTN","LRVRMI3",148,0)
+ ;
+"RTN","LRVRMI3",149,0)
+ ;
+"RTN","LRVRMI3",150,0)
+NODE2FLD(NODE) ; Resolve the fields to update based on the node
+"RTN","LRVRMI3",151,0)
+ ; Call with NODE = node in MI subscript to process
+"RTN","LRVRMI3",152,0)
+ ;
+"RTN","LRVRMI3",153,0)
+ ; Returns FIELDS = Report Date Approved^Person Reporting field #s
+"RTN","LRVRMI3",154,0)
+ ;
+"RTN","LRVRMI3",155,0)
+ N FIELDS
+"RTN","LRVRMI3",156,0)
+ S NODE=$G(NODE),FIELDS=""
+"RTN","LRVRMI3",157,0)
+ ;
+"RTN","LRVRMI3",158,0)
+ I NODE'="" D
+"RTN","LRVRMI3",159,0)
+ . I NODE?1(1"19",1"25",1"26",1"31") S FIELDS="11^11.55" Q
+"RTN","LRVRMI3",160,0)
+ . I NODE?1(1"23",1"29") S FIELDS="22^25.5" Q
+"RTN","LRVRMI3",161,0)
+ . I NODE?1(1"21",1"24",1"27") S FIELDS="14^15.5" Q
+"RTN","LRVRMI3",162,0)
+ . I NODE?1(1"15",1"22",1"28") S FIELDS="18^19.5" Q
+"RTN","LRVRMI3",163,0)
+ . I NODE?1(1"20",1"30") S FIELDS="33^35" Q
+"RTN","LRVRMI3",164,0)
+ ;
+"RTN","LRVRMI3",165,0)
+ Q FIELDS
+"RTN","LRWRKINC")
+0^1^B75427718^B75328970
+"RTN","LRWRKINC",1,0)
+LRWRKINC ;SLC/DCM/CJS-INCOMPLETE STATUS REPORT ;2/19/91  11:47
+"RTN","LRWRKINC",2,0)
+ ;;5.2;LAB SERVICE;**153,201,221,453**;Sep 27, 1994;Build 4
+"RTN","LRWRKINC",3,0)
+EN ;
+"RTN","LRWRKINC",4,0)
+ K ^TMP($J),^TMP("LR",$J),^TMP("LRWRKINC",$J)
+"RTN","LRWRKINC",5,0)
+ K %ZIS,DIC
+"RTN","LRWRKINC",6,0)
+ S Y=$$NOW^XLFDT D DD^LRX S LRDT=Y
+"RTN","LRWRKINC",7,0)
+ S (LRCNT,LRCUTOFF,LREND,LREXD,LREXTST,LRNOCNTL,LREXNREQ)=0,LRSORTBY=1
+"RTN","LRWRKINC",8,0)
+ S DIC="^LRO(68,",DIC(0)="AEMOQZ"
+"RTN","LRWRKINC",9,0)
+ F  D  Q:$G(LRAA)<1!(LREND)
+"RTN","LRWRKINC",10,0)
+ . N LAST,LRAD,LRAN,LRFAN,LRLAN,LRWDTL,LRSTAR,LRUSEAA,X,Y
+"RTN","LRWRKINC",11,0)
+ . D ^DIC
+"RTN","LRWRKINC",12,0)
+ . I $D(DUOUT) S LREND=1 Q
+"RTN","LRWRKINC",13,0)
+ . S LRAA=+Y,LRAA(0)=$G(Y(0))
+"RTN","LRWRKINC",14,0)
+ . I LRAA<1 Q
+"RTN","LRWRKINC",15,0)
+ . D CHKAA^LRWRKIN1
+"RTN","LRWRKINC",16,0)
+ . I LREND Q
+"RTN","LRWRKINC",17,0)
+ . I '$L(LRUSEAA) D PHD Q:LREND
+"RTN","LRWRKINC",18,0)
+ . S LRCNT=LRCNT+1,^TMP("LRWRKINC",$J,$P(LRAA(0),"^")_"^"_LRAA,LRCNT,0)=LRAA(0)
+"RTN","LRWRKINC",19,0)
+ . I $L(LRUSEAA) D
+"RTN","LRWRKINC",20,0)
+ . . N X
+"RTN","LRWRKINC",21,0)
+ . . S X=$P($G(^LRO(68,LRUSEAA,0)),"^")_"^"_LRUSEAA
+"RTN","LRWRKINC",22,0)
+ . . S ^TMP("LRWRKINC",$J,$P(LRAA(0),"^")_"^"_LRAA,LRCNT,1)=^TMP("LRWRKINC",$J,$P(LRUSEAA,"^",1,2),$P(LRUSEAA,"^",3),1)
+"RTN","LRWRKINC",23,0)
+ . E  S ^TMP("LRWRKINC",$J,$P(LRAA(0),"^")_"^"_LRAA,LRCNT,1)=$G(LRAD)_"^"_$G(LRFAN)_"^"_$G(LRLAN)_"^"_$G(LRSTAR)_"^"_$G(LAST)_"^"_$G(LRWDTL)
+"RTN","LRWRKINC",24,0)
+ . W !
+"RTN","LRWRKINC",25,0)
+ I LREND!('$D(^TMP("LRWRKINC",$J))) D LREND^LRWRKIN1 Q
+"RTN","LRWRKINC",26,0)
+ K DIC
+"RTN","LRWRKINC",27,0)
+ N DIR,DIRUT,DTOUT,DUOUT
+"RTN","LRWRKINC",28,0)
+ I LRCNT>1 D
+"RTN","LRWRKINC",29,0)
+ . S DIR(0)="SO^1:ACCESSION AREA;2:TEST NAME",DIR("A")="Sort Report By",DIR("B")=1
+"RTN","LRWRKINC",30,0)
+ . S DIR("?",1)="ACCESSION AREA will separate tests by accession area, then by test name."
+"RTN","LRWRKINC",31,0)
+ . S DIR("?")="TEST NAME will list tests alphabetically without regard to accession area."
+"RTN","LRWRKINC",32,0)
+ . D ^DIR
+"RTN","LRWRKINC",33,0)
+ . I $D(DIRUT) S LREND=1 Q
+"RTN","LRWRKINC",34,0)
+ . S LRSORTBY=+Y
+"RTN","LRWRKINC",35,0)
+ I LREND D LREND^LRWRKIN1 Q
+"RTN","LRWRKINC",36,0)
+ S DIR(0)="YO",DIR("A")="Specify detailed sort criteria",DIR("B")="NO"
+"RTN","LRWRKINC",37,0)
+ S DIR("?",1)="Answer 'YES' if you WANT to specify detailed criteria."
+"RTN","LRWRKINC",38,0)
+ S DIR("?",2)="Examples are excluding controls, specifying a lab arrival cut-off time,"
+"RTN","LRWRKINC",39,0)
+ S DIR("?",3)="selecting or excluding specific tests, or excluding non-required tests."
+"RTN","LRWRKINC",40,0)
+ S DIR("?")="Answer 'NO' if you DO NOT want to specify detailed criteria."
+"RTN","LRWRKINC",41,0)
+ D ^DIR
+"RTN","LRWRKINC",42,0)
+ I $D(DIRUT) D LREND^LRWRKIN1 Q
+"RTN","LRWRKINC",43,0)
+ I Y=1 D
+"RTN","LRWRKINC",44,0)
+ . K DIR
+"RTN","LRWRKINC",45,0)
+ . S DIR(0)="DO^::EXT",DIR("A")="Lab Arrival Cut-off"
+"RTN","LRWRKINC",46,0)
+ . S DIR("?",1)="Entering a date/time will exclude uncollected specimens and"
+"RTN","LRWRKINC",47,0)
+ . S DIR("?")="specimens with a lab arrival time after the time specified."
+"RTN","LRWRKINC",48,0)
+ . D ^DIR
+"RTN","LRWRKINC",49,0)
+ . I $D(DUOUT)!($D(DTOUT)) Q
+"RTN","LRWRKINC",50,0)
+ . I Y>0 S LRCUTOFF=+Y
+"RTN","LRWRKINC",51,0)
+ . K DIR
+"RTN","LRWRKINC",52,0)
+ . S DIR(0)="YO",DIR("A")="Do you want to exclude controls",DIR("B")="YES"
+"RTN","LRWRKINC",53,0)
+ . S DIR("?",1)="Answer 'NO' if you WANT accessions for LAB CONTROLS included on"
+"RTN","LRWRKINC",54,0)
+ . S DIR("?")="the report. 'YES' if you DO NOT want accessions for LAB CONTROLS."
+"RTN","LRWRKINC",55,0)
+ . D ^DIR
+"RTN","LRWRKINC",56,0)
+ . I $D(DIRUT) Q
+"RTN","LRWRKINC",57,0)
+ . S LRNOCNTL=+Y
+"RTN","LRWRKINC",58,0)
+ . K DIR
+"RTN","LRWRKINC",59,0)
+ . S DIR(0)="YO",DIR("A")="Do you want a specific test",DIR("B")="NO"
+"RTN","LRWRKINC",60,0)
+ . D ^DIR
+"RTN","LRWRKINC",61,0)
+ . I $D(DIRUT) Q
+"RTN","LRWRKINC",62,0)
+ . I Y=1 D
+"RTN","LRWRKINC",63,0)
+ . . N I,LRY
+"RTN","LRWRKINC",64,0)
+ . . K DIR
+"RTN","LRWRKINC",65,0)
+ . . S DIR(0)="YO",DIR("A")="Check tests on panels also",DIR("B")="YES"
+"RTN","LRWRKINC",66,0)
+ . . S DIR("?",1)="If you select a panel test do you want to also check"
+"RTN","LRWRKINC",67,0)
+ . . S DIR("?")="the tests that make up the panel for an incomplete status."
+"RTN","LRWRKINC",68,0)
+ . . D ^DIR
+"RTN","LRWRKINC",69,0)
+ . . I $D(DIRUT) Q
+"RTN","LRWRKINC",70,0)
+ . . S LRY=+Y
+"RTN","LRWRKINC",71,0)
+ . . N DIC
+"RTN","LRWRKINC",72,0)
+ . . S DIC="^LAB(60,",DIC(0)="AEFOQZ"
+"RTN","LRWRKINC",73,0)
+ . . F  D  Q:+Y<1
+"RTN","LRWRKINC",74,0)
+ . . . N LRTEST,LRTSTS
+"RTN","LRWRKINC",75,0)
+ . . . D ^DIC Q:+Y<1
+"RTN","LRWRKINC",76,0)
+ . . . S ^TMP("LR",$J,"T",+Y)=Y(0)
+"RTN","LRWRKINC",77,0)
+ . . . I LRY S LRTEST=+Y,LREXPD="D LREXPD^LRWRKINC" D ^LREXPD
+"RTN","LRWRKINC",78,0)
+ . I $D(DIRUT) Q
+"RTN","LRWRKINC",79,0)
+ . K DIR
+"RTN","LRWRKINC",80,0)
+ . S DIR(0)="YO"
+"RTN","LRWRKINC",81,0)
+ . S DIR("A")="Do you want to exclude a specific test",DIR("B")="NO"
+"RTN","LRWRKINC",82,0)
+ . D ^DIR
+"RTN","LRWRKINC",83,0)
+ . I $D(DIRUT) Q
+"RTN","LRWRKINC",84,0)
+ . I Y=1 D
+"RTN","LRWRKINC",85,0)
+ . . N DIC
+"RTN","LRWRKINC",86,0)
+ . . S DIC="^LAB(60,",DIC(0)="AEFOQ",DIC("S")="I '$D(^TMP(""LR"",$J,""T"",Y))"
+"RTN","LRWRKINC",87,0)
+ . . F  D ^DIC Q:+Y<1  S LREXTST(+Y)="",LREXTST=1
+"RTN","LRWRKINC",88,0)
+ . K DIR
+"RTN","LRWRKINC",89,0)
+ . S DIR(0)="YO",DIR("A")="Exclude non-required tests",DIR("B")="YES"
+"RTN","LRWRKINC",90,0)
+ . S DIR("?",1)="Answer 'NO' if you WANT incomplete non-required test included on"
+"RTN","LRWRKINC",91,0)
+ . S DIR("?")="the report. 'YES' if you DO NOT want non-required tests."
+"RTN","LRWRKINC",92,0)
+ . D ^DIR
+"RTN","LRWRKINC",93,0)
+ . I $D(DIRUT) Q
+"RTN","LRWRKINC",94,0)
+ . S LREXNREQ=+Y
+"RTN","LRWRKINC",95,0)
+ I $D(DIRUT) D LREND^LRWRKIN1 Q
+"RTN","LRWRKINC",96,0)
+ S DIR(0)="YO",DIR("A")="Do you want an extended display",DIR("B")="NO"
+"RTN","LRWRKINC",97,0)
+ S DIR("?")="Extended display will show UID and other referral information"
+"RTN","LRWRKINC",98,0)
+ D ^DIR
+"RTN","LRWRKINC",99,0)
+ I $D(DIRUT) D LREND^LRWRKIN1 Q
+"RTN","LRWRKINC",100,0)
+ S LREXD=+Y
+"RTN","LRWRKINC",101,0)
+ S %ZIS="Q" D ^%ZIS
+"RTN","LRWRKINC",102,0)
+ I POP D LREND^LRWRKIN1 Q
+"RTN","LRWRKINC",103,0)
+ I $D(IO("Q")) D  Q
+"RTN","LRWRKINC",104,0)
+ . S ZTRTN="DQ^LRWRKINC",ZTDESC="Lab incomplete test list",ZTSAVE("LR*")=""
+"RTN","LRWRKINC",105,0)
+ . S ZTSAVE("^TMP(""LRWRKINC"",$J,")=""
+"RTN","LRWRKINC",106,0)
+ . I $D(^TMP("LR",$J,"T")) S ZTSAVE("^TMP(""LR"",$J,""T"",")=""
+"RTN","LRWRKINC",107,0)
+ . D ^%ZTLOAD,^%ZISC
+"RTN","LRWRKINC",108,0)
+ . W !,"Request ",$S($G(ZTSK):"Queued - Task #"_ZTSK,1:"NOT Queued")
+"RTN","LRWRKINC",109,0)
+ . D LREND^LRWRKIN1
+"RTN","LRWRKINC",110,0)
+ ;
+"RTN","LRWRKINC",111,0)
+DQ ;
+"RTN","LRWRKINC",112,0)
+ U IO
+"RTN","LRWRKINC",113,0)
+ S (LRAA,LRINDEX,LRPAGE)=0,(LRX,LRY)=""
+"RTN","LRWRKINC",114,0)
+ F  S LRX=$O(^TMP("LRWRKINC",$J,LRX)) Q:LRX=""  D
+"RTN","LRWRKINC",115,0)
+ . N LRZ
+"RTN","LRWRKINC",116,0)
+ . S LRZ=0
+"RTN","LRWRKINC",117,0)
+ . F  S LRZ=$O(^TMP("LRWRKINC",$J,LRX,LRZ)) Q:'LRZ  D
+"RTN","LRWRKINC",118,0)
+ . . N LRFAN,LRLAN,LRSTAR,LRLAST,LRY
+"RTN","LRWRKINC",119,0)
+ . . F I=0,1 S LRZ(I)=$G(^TMP("LRWRKINC",$J,LRX,LRZ,I))
+"RTN","LRWRKINC",120,0)
+ . . S LRFAN=$P(LRZ(1),"^",2),LRLAN=$P(LRZ(1),"^",3),LRSTAR=$P(LRZ(1),"^",4),LRLAST=$P(LRZ(1),"^",5)
+"RTN","LRWRKINC",121,0)
+ . . I LRSTAR,LRLAST S LRY="From Date: "_$$FMTE^XLFDT(LRSTAR,"5DZ")_"    To: "_$$FMTE^XLFDT(LRLAST,"5DZ")
+"RTN","LRWRKINC",122,0)
+ . . E  S LRY=" For Date: "_$$FMTE^XLFDT(LRLAST,"5DZ")_"  From: "_LRFAN_"  To: "_LRLAN
+"RTN","LRWRKINC",123,0)
+ . . S LRINDEX=LRINDEX+1,LRNAME(LRINDEX)=$$LJ^XLFSTR($E($P(LRZ(0),"^"),1,20),22)_LRY
+"RTN","LRWRKINC",124,0)
+ S LRINDEX=LRINDEX+1,LRNAME(LRINDEX)=$S(LRINDEX>1:"Sorted by "_$S(LRSORTBY=1:"Accession Area",1:"Test Name")_"; ",1:"")_"Controls Excluded: "_$S(LRNOCNTL:"YES",1:"NO")_"; Specific Tests: "_$S($D(^TMP("LR",$J,"T")):"YES",1:"NO")
+"RTN","LRWRKINC",125,0)
+ S LRINDEX=LRINDEX+1,LRNAME(LRINDEX)="Exclude Specific Tests: "_$S(LREXTST:"YES",1:"NO")_"; Required Tests Only: "_$S(LREXNREQ:"YES",1:"NO")
+"RTN","LRWRKINC",126,0)
+ I LRCUTOFF S LRINDEX=LRINDEX+1,LRNAME(LRINDEX)="For Tests Received Before: "_$$FMTE^XLFDT(LRCUTOFF,"5MZ")
+"RTN","LRWRKINC",127,0)
+ D HED^LRWRKIN1 D URG^LRX
+"RTN","LRWRKINC",128,0)
+ S LRX=""
+"RTN","LRWRKINC",129,0)
+ F  S LRX=$O(^TMP("LRWRKINC",$J,LRX)) Q:LRX=""  D
+"RTN","LRWRKINC",130,0)
+ . S LRZ=0
+"RTN","LRWRKINC",131,0)
+ . F  S LRZ=$O(^TMP("LRWRKINC",$J,LRX,LRZ)) Q:'LRZ  D
+"RTN","LRWRKINC",132,0)
+ . . I LRSORTBY=1 S LRAA("NAME")=$P(LRX,"^")
+"RTN","LRWRKINC",133,0)
+ . . S X=^TMP("LRWRKINC",$J,LRX,LRZ,1)
+"RTN","LRWRKINC",134,0)
+ . . S LRAA=$P(LRX,"^",2),LRAD=$P(X,"^"),LRFAN=$P(X,"^",2),LRLAN=$P(X,"^",3),LRSTAR=$P(X,"^",4),LAST=$P(X,"^",5),LRWDTL=$P(X,"^",6)
+"RTN","LRWRKINC",135,0)
+ . . N LRX,LRZ
+"RTN","LRWRKINC",136,0)
+ . . F  S LRAD=$O(^LRO(68,LRAA,1,LRAD)) Q:LRAD<1!(LRAD>LAST)  D
+"RTN","LRWRKINC",137,0)
+ . . . I $G(LRSTAR) D AC Q
+"RTN","LRWRKINC",138,0)
+ . . . S LRAN=LRFAN-1
+"RTN","LRWRKINC",139,0)
+ . . . F  S LRAN=$O(^LRO(68,LRAA,1,LRAD,1,LRAN)) Q:'LRAN!(LRAN>LRLAN)  D
+"RTN","LRWRKINC",140,0)
+ . . . . S LREND=0
+"RTN","LRWRKINC",141,0)
+ . . . . D TD Q:LREND
+"RTN","LRWRKINC",142,0)
+ . . . . I 'LRVERVER D LST1^LRWRKIN1,TESTS
+"RTN","LRWRKINC",143,0)
+ D X^LRWRKIN1
+"RTN","LRWRKINC",144,0)
+ I LREND D LREND^LRWRKIN1 Q
+"RTN","LRWRKINC",145,0)
+ D EQUALS^LRX D WAIT^LRWRKIN1:$E(IOST,1,2)="C-"
+"RTN","LRWRKINC",146,0)
+ D LREND^LRWRKIN1
+"RTN","LRWRKINC",147,0)
+ Q
+"RTN","LRWRKINC",148,0)
+ ;
+"RTN","LRWRKINC",149,0)
+TD ;
+"RTN","LRWRKINC",150,0)
+ I '$D(^LRO(68,LRAA,1,LRAD,1,LRAN,0)) S LREND=1 Q
+"RTN","LRWRKINC",151,0)
+ I LRNOCNTL,$P($G(^LRO(68,LRAA,1,LRAD,1,LRAN,0)),"^",2)=62.3 S LREND=1 Q
+"RTN","LRWRKINC",152,0)
+ S LRVERVER=1,I=0
+"RTN","LRWRKINC",153,0)
+ F  S I=$O(^LRO(68,LRAA,1,LRAD,1,LRAN,4,I)) Q:I<.5  I $D(^(I,0)) S LRVERVER=(LRVERVER&$P(^(0),U,5))
+"RTN","LRWRKINC",154,0)
+ I '$D(^LRO(68,LRAA,1,LRAD,1,LRAN,4,0)) S LREND=1
+"RTN","LRWRKINC",155,0)
+ Q
+"RTN","LRWRKINC",156,0)
+ ;
+"RTN","LRWRKINC",157,0)
+TESTS Q:'$D(^LRO(68,LRAA,1,LRAD,1,LRAN,4,0))
+"RTN","LRWRKINC",158,0)
+ N LRI
+"RTN","LRWRKINC",159,0)
+ S LRI=0
+"RTN","LRWRKINC",160,0)
+ F  S LRI=$O(^LRO(68,LRAA,1,LRAD,1,LRAN,4,LRI)) Q:LRI<.5  D
+"RTN","LRWRKINC",161,0)
+ . N LR60,LRURG,LRTSTN
+"RTN","LRWRKINC",162,0)
+ . S LRI(0)=$G(^LRO(68,LRAA,1,LRAD,1,LRAN,4,LRI,0)),LRURG=+$P(LRI(0),U,2)
+"RTN","LRWRKINC",163,0)
+ . S LR60=+LRI(0)
+"RTN","LRWRKINC",164,0)
+ . I $D(^TMP("LR",$J,"T")),'$D(^TMP("LR",$J,"T",LR60)) Q  ; Not specific test
+"RTN","LRWRKINC",165,0)
+ . I LREXTST,$D(LREXTST(LR60)) Q  ; Exclude specific test
+"RTN","LRWRKINC",166,0)
+ . I $P(LRI(0),U,5) Q  ; Complete date
+"RTN","LRWRKINC",167,0)
+ . I LRCUTOFF,'LRDLA Q  ; Uncollected
+"RTN","LRWRKINC",168,0)
+ . I LRCUTOFF,LRCUTOFF<LRDLA Q  ; After cut-off date/time
+"RTN","LRWRKINC",169,0)
+ . S LR60(0)=$G(^LAB(60,LR60,0)) ; Get zeroth node from file #60
+"RTN","LRWRKINC",170,0)
+ . I LREXNREQ,'$P(LR60(0),"^",17) Q  ; Exclude non-required tests
+"RTN","LRWRKINC",171,0)
+ . S LRTSTN=$P(LR60(0),U) ; Test name
+"RTN","LRWRKINC",172,0)
+ . I $P(LR60(0),"^")="" S LRTSTN="MISSING FILE 60 - "_LR60
+"RTN","LRWRKINC",173,0)
+ . I LRSORTBY=1 S LRTSTN=LRAA("NAME")_"^"_LRTSTN
+"RTN","LRWRKINC",174,0)
+ . S Y=$G(^LRO(68,LRAA,1,LRAD,1,LRAN,3))
+"RTN","LRWRKINC",175,0)
+ . S LRST=$S($L($P(LRI(0),U,3)):"Load/work list",$L($P(Y,U,3)):"In lab",1:"Not in lab")
+"RTN","LRWRKINC",176,0)
+ . D REF
+"RTN","LRWRKINC",177,0)
+ . S ^TMP($J,LRTSTN,LRURG,$P(LRACC," ",1)_"^"_+$P(LRDX,"^",3),LRAN)=LRST_U_SSN_U_PNM_U_$P(LRDX,U,7)_U_$P(LRDLA,"^",2)_U_LRMAN_U_LRACC
+"RTN","LRWRKINC",178,0)
+ . I $G(LREXD) S ^TMP($J,LRTSTN,LRURG,$P(LRACC," ",1)_"^"_+$P(LRDX,"^",3),LRAN,.3)=$G(^LRO(68,LRAA,1,LRAD,1,LRAN,.3))
+"RTN","LRWRKINC",179,0)
+ Q
+"RTN","LRWRKINC",180,0)
+ ;
+"RTN","LRWRKINC",181,0)
+REF ; if referred test, get referral status
+"RTN","LRWRKINC",182,0)
+ N LREVNT,LRUID
+"RTN","LRWRKINC",183,0)
+ S LRUID=$P($G(^LRO(68,LRAA,1,LRAD,1,LRAN,.3)),"^"),LRMAN=$P(LRI(0),"^",10)
+"RTN","LRWRKINC",184,0)
+ I LRMAN S LRMAN=$P($G(^LAHM(62.8,LRMAN,0)),"^")
+"RTN","LRWRKINC",185,0)
+ S LREVNT=$$STATUS^LREVENT(LRUID,LR60,LRMAN)
+"RTN","LRWRKINC",186,0)
+ I LREVNT'="" S LRST=$P(LREVNT,"^")
+"RTN","LRWRKINC",187,0)
+ Q
+"RTN","LRWRKINC",188,0)
+ ;
+"RTN","LRWRKINC",189,0)
+PHD ;
+"RTN","LRWRKINC",190,0)
+ S LREND=0
+"RTN","LRWRKINC",191,0)
+ I $P(LRAA(0),"^",3)="Y" D STAR^LRWU3
+"RTN","LRWRKINC",192,0)
+ I $G(LRSTAR) Q
+"RTN","LRWRKINC",193,0)
+ D ADATE^LRWU Q:LREND
+"RTN","LRWRKINC",194,0)
+ S LAST=LRAD,LRAD=LRAD-1
+"RTN","LRWRKINC",195,0)
+ D LRAN^LRWU3
+"RTN","LRWRKINC",196,0)
+ Q
+"RTN","LRWRKINC",197,0)
+ ;
+"RTN","LRWRKINC",198,0)
+AC S LRTK=LRSTAR-.00001
+"RTN","LRWRKINC",199,0)
+ F  S LRTK=$O(^LRO(68,LRAA,1,LRAD,1,"E",LRTK)) Q:LRTK<1!(LAST>1&(LRTK\1>LAST))  D
+"RTN","LRWRKINC",200,0)
+ . S LRAN=0
+"RTN","LRWRKINC",201,0)
+ . F  S LRAN=$O(^LRO(68,LRAA,1,LRAD,1,"E",LRTK,LRAN)) Q:'LRAN  D
+"RTN","LRWRKINC",202,0)
+ . . S LREND=0
+"RTN","LRWRKINC",203,0)
+ . . I '$D(^LRO(68,LRAA,1,LRAD,1,LRAN,0)) S LREND=1 Q
+"RTN","LRWRKINC",204,0)
+ . . D TD Q:LREND
+"RTN","LRWRKINC",205,0)
+ . . ;I LRUNC!('LRVERVER) D LST,TESTS
+"RTN","LRWRKINC",206,0)
+ . . I 'LRVERVER D LST1^LRWRKIN1,TESTS
+"RTN","LRWRKINC",207,0)
+ Q
+"RTN","LRWRKINC",208,0)
+ ;
+"RTN","LRWRKINC",209,0)
+% R %:DTIME Q:%=""!(%["N")!(%["Y")  W !,"Answer 'Y' or 'N': " G %
+"RTN","LRWRKINC",210,0)
+ Q
+"RTN","LRWRKINC",211,0)
+ ;
+"RTN","LRWRKINC",212,0)
+LREXPD ;Include panel test in list when selecting specific tests
+"RTN","LRWRKINC",213,0)
+ I $G(S1(+$G(S1))) S ^TMP("LR",$J,"T",S1(S1))=^LAB(60,S1(S1),0)
+"RTN","LRWRKINC",214,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",9887,6)
+^366
+**END**
+**END**
+

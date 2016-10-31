@@ -1,0 +1,128 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 01/23/14 at 14:58
+=============================================================================
+Run Date: JUL 17, 2014                     Designation: MMRS*1*3
+Package : MMRS - MRSA INITIATIVE REPORTS      Priority: Mandatory
+Version : 1         SEQ #3                      Status: Released
+                  Compliance Date: AUG 17, 2014
+=============================================================================
+
+Associated patches: (v)MMRS*1*1    <<= must be installed BEFORE `MMRS*1*3'
+
+Subject: ISOLATION REPORT CAN ONLY PULL ONE SUSCEPTIBILITY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The MRSA Program Tools (MRSA-PT) Isolation Report (MMRS REPORTS MENU) 
+ only lists patients for one (1) mapped etiology/sensitivity.
+  
+ Associated Remedy tickets:
+ ==========================
+ 1) INC000000604438 MMRS Isolation Report Not Listing Multiple Indications
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Pittsburgh HCS 
+ Lebanon VA Medical Center
+ Sioux Falls - VAMROC
+  
+ Remedy Overview:
+ ================
+ 1) INC000000604438 MMRS Isolation Report Not Listing Multiple Indications
+   
+ Problem:
+ --------
+ The MRSA Program Tools (MRSA-PT) application permits the entry (mapping) 
+ of multiple antibiotic sensitivity values for multiple etiologies 
+ (organisms) for the purpose of identifying patients with indicated 
+ results to be selected from the database and listed on the Isolation 
+ Report (MMRS REPORTS MENU).  However, even though multiple organisms and 
+ sensitivity parameters can be mapped, only patients with one of the 
+ sensitivity indications (per antibiotic) are extracted to appear on the 
+ report.  Infection Control staffs would like the Isolation Report to list 
+ any patient with any of the etiologies/sensitivities mapped.
+   
+ Resolution:
+ -----------
+ Modify routine MMRSIPC to retrieve runtime parameters for multiple
+ mapped ANTIMICROBIAL SUSCEPTIBILITY file (#62.06) indications for an 
+ ETIOLOGY FIELD file (#61.2) where previously it had only loaded one.
+ And, modify routine MMRSIPC3 to use the additional indications to extract 
+ additional patient cases for the Isolation Report.
+  
+  
+ Installation Instructions:
+ ==========================
+    The install time for this patch is less than 2 minutes. This patch can
+    be installed when Laboratory users are on the system.
+  
+    NOTE: Kernel patches must be current on the target system to avoid
+          problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu
+       and select the package 'MMRS*1.0*3.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+       choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;MRSA PROGRAM TOOLS;**[Patch List]**;Mar 22, 2009;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MMRSIPC
+    Before: B96473573   After: B96291150  **3**
+Routine Name: MMRSIPC3
+    Before:B106251374   After:B107510366  **1,3**
+ 
+Routine list of preceding patches: 1
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 08, 2014
+Completed By:                               Date Completed: JUN 25, 2014
+Released By :                               Date Released : JUL 17, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

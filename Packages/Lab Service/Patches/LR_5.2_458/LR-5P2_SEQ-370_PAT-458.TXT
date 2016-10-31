@@ -1,0 +1,194 @@
+
+=============================================================================
+Run Date: AUG 01, 2016                     Designation: LR*5.2*458
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #370                    Status: Released
+                  Compliance Date: SEP 30, 2016
+=============================================================================
+
+Associated patches: (v)LR*5.2*446  <<= must be installed BEFORE `LR*5.2*458'
+
+Subject: AUTOVERIFY
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ The build for this patch is distributed as part of a multi-package build 
+ that contains LR*5.2*458 and LA*5.2*88.  Initially developed at the 
+ Kansas City VAMC, it contains functionality to enable Auto Verification
+ and Auto Release of normal lab results. This new process involves
+ automatic review and release of test results based on a lab-established
+ set of boundaries, also referred as rules, rule sets, and algorithms.  Lab
+ results that are in a "normal" range, as pre-determined by the laboratory,
+ will transmit directly from the middleware to VistA lab files and on to
+ Computerized Patient Record System (CPRS) without the intermediate step of
+ requiring a lab technologist to manually review and sign off on these
+ normal lab results.  This process will eliminate the need for a qualified
+ technologist to manually approve all "normal" results before those results
+ are filed in VistA Lab files and available for clinicians to view in CPRS.
+  
+ Each VAMC site will determine which instruments will use this
+ functionality as it can be set up on an instrument by instrument basis.
+ Essentially VistA Lab instruments are set up as either being available for
+ auto verification or not available for auto verification.  If an
+ instrument is set up for auto verification, then a lab result passing the
+ rule set will be filed by the middleware in VistA lab files and available
+ in CPRS and a lab result that cannot pass the rule set will be held in the
+ middleware system for review by a lab technologist.
+  
+  
+ Patch Components 
+ ================
+  
+ Files & Fields Associated: 
+  
+ File Name (Number)     Field Name (Number)           New/Modified/Deleted 
+ ------------------     -------------------           --------------------
+ LOAD/WORK LIST (#68.2) PROFILE (#68.23), AUTO RELEASE (#2.4)  New 
+  
+ Parameter Definitions Associated:
+  
+ Parameter Definition Name             New/Modified/Deleted
+ -------------------------             --------------------
+ LR WORKLIST DATA CLEANUP              New
+  
+ Parameter Template                    New/Modified/Deleted
+ -------------------------             --------------------
+ LR PKG                                Modified
+  
+ Input Templates Associated: 
+  
+ Input Template                          New/Modified/Deleted 
+ ----------------------------------      --------------------
+ LRLLDFT                                 New 
+  
+ Options Associated: 
+  
+ Option Name                             Type      New/Modified/Deleted 
+ -----------                             ----      --------------------
+ Summary List (Patient) [LRLISTPS]       Routine   New 
+  
+  
+ New Service Requests (NSRs): 
+ ==============================
+ NSR# 20131009: Employ laboratory autoverification in the Veterans Health 
+ Administration. 
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*458 does not contain
+ any changes to the VISTA BLOOD BANK Software as defined by ProPath standard
+ titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*458 does not alter
+ or modify any software design safeguards or safety critical elements
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*458 have no effect on Blood Bank
+ software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes made,
+ no specific validation requirements exist as a result of installation of this
+ patch.
+  
+  
+ Test Sites: 
+ ===========
+ Kansas City VAMC (Alpha) 
+ Tucson (Beta) 
+ Tampa (Beta) 
+ Iowa City (Beta) 
+ Fresno (Beta)
+  
+  
+ Software and Documentation Retrieval Information 
+ ==============================
+  VistA Laboratory patch LR*5.2*458 software is distributed by Host File, 
+ along with LA*5.2*88.  Software is available on the SOFTWARE.DIR directory
+ at one of the following Office of Information (OI) Field Offices.  The
+ preferred method is to retrieve the file using Secure File Transfer
+ Protocol (SFTP) from download.vista.domain.ext, which transmits files from
+ the first available SFTP server.
+         Albany                     ftp.domain.ext 
+         Hines                      ftp.domain.ext 
+         Salt Lake City             ftp.domain.ext 
+  
+ File Name                   Contents               Retrieval Format 
+ ------------------          --------------------   ----------------
+ LAB_AUTORELEASE_1_0.KID     Host File containing       ASCII 
+                             KIDS software distribution 
+  
+ LAB_AUTORELEASE_1_0_DOCS.ZIP, which contains both .pdf and .doc formatted 
+ file of the following documents:
+  
+ Lab AutoRelease 1.0 User Guide
+ Lab AutoRelease 1.0 Technical Manual     
+ Lab AutoRelease 1.0 Installation, Back Out, Rollback Guide           
+ Lab UI HL V1.6 Upgrade Interface Specifications Document
+  
+ The VistA Documentation Library (VDL ) web site will also contain the 
+ above referenced documents. This website is usually updated within 1-3
+ days of the patch release date. The VDL web address for Laboratory
+ Universal Interface user documentation is:
+ http://www.domain.ext/vdl/application.asp?appid=120
+  
+  
+ Installation Instructions 
+ =========================
+ This patch, LR*5.2*458, is part of a combined build for Laboratory
+ Autoverification Enhancement patch.
+  
+ This patch may be loaded with users on the system.  You may want to
+ install it during non-peak hours.  Installation will take less than
+ 10 minutes.
+  
+ Please refer to the Lab AutoRelease 1.0 Installation, Back Out, Rollback 
+ Guide for comprehensive installation instructions and post installation 
+ configuration.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.2;AUTOMATED LAB INSTRUMENTS;**[Patch List]**;Sep 27, 1994;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR458
+    Before:       n/a   After:  B3643881  **458**
+Routine Name: LRDIQ
+    Before:  B5636912   After:  B6385366  **86,153,263,290,458**
+Routine Name: LRGP2
+    Before: B20236690   After: B21346835  **153,221,263,290,350,446,458**
+Routine Name: LRLISTPS
+    Before:       n/a   After: B17691343  **458**
+Routine Name: LRNIGHT
+    Before:  B6404812   After:  B7575682  **291,350,458**
+Routine Name: LRVER5
+    Before:B147369024   After:B148324560  **42,153,283,286,350,458**
+Routine Name: LRVR3
+    Before: B71492279   After:B108418700  **42,121,153,286,291,350,458**
+Routine Name: LRVRAR
+    Before:       n/a   After: B69815158  **458**
+Routine Name: LRVRARU
+    Before:       n/a   After: B32878283  **458**
+ 
+Routine list of preceding patches: 446
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 29, 2015
+Completed By:                               Date Completed: JUL 28, 2016
+Released By :                               Date Released : AUG 01, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

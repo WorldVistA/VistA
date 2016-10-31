@@ -1,0 +1,247 @@
+$TXT Created by                at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Tuesday, 01/21/14 at 10:06
+=============================================================================
+Run Date: JUL 29, 2014                     Designation: PRC*5.1*185
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #159                    Status: Released
+                  Compliance Date: AUG 29, 2014
+=============================================================================
+
+Associated patches: (v)PRC*5.1*118 <<= must be installed BEFORE `PRC*5.1*185'
+
+Subject: P.O. ALLOWS INVALID SUPPLY PERSONNEL;INV LOOKUP BY ABBREV;PCARD NOS. DISPLAY
+
+Category: 
+  - Routine
+  - Input Template
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will resolve the following issues in the IFCAP package:
+  
+ 1) Non Supply Personnel able to enter/sign off on P.O.
+  
+ 2) Cannot access Inventory Point using Abbreviated Name
+  
+ 3) Full Purchase Card number appears under two display options
+  
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1) INC000000904716 - Non Supply Personnel able to enter/sign off on P.O.
+  
+ 2) INC000000924299 - Cannot access Inventory Point using Abbreviated Name
+  
+ 3) INC000000940447 - Full Purchase Card number appears under two options
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Upstate New York Health Care System 
+ Detroit/Allen Park - John D. Dingell VA Medical Center
+ Pineville - Alexandria VA Medical Center
+  
+ REMEDY OVERVIEW:
+ ================ 
+ 1) INC000000904716 - Non Supply Personnel able to enter/sign off on P.O.
+  
+    Problem:
+    --------
+    It was discover that Warehouse and Personal propert Management (PPM)
+    Accountable officer were allowed to enter and sign purchase orders.
+    They were able to enter any level employee into the PA/PPM/AUTHORIZED
+    BUYER field (#16) in the PROCUREMENT & ACCOUNTING TRANSACTIONS file
+    (#442) and be accepted, and, in addition, sign off for their own name
+    or a different name.
+    
+    Analysis found that the order processing defaulted PA/PPM/AUTHORIZED
+    BUYER field (#16) to the user entering the order and did not check for 
+    valid Supply level or see that the user was other than the Authorized
+    buyer, therefore allowing user to sign off on order.
+  
+    Resolution:
+    -----------     
+    Modified Input Template PRCH2138 to clear the user set into field
+    PA/PPM/AUTHORIZED BUYER eliminating the incorrect checks and forcing 
+    the user to enter a valid buyer and ensuring the user ordering was the
+    same as the buyer and, if not, do not allow the user to sign off on
+    order.
+  
+  
+    Routines: [none]                  Input Template:  PRCH2138
+  
+  
+ 2) INC000000924299- Cannot access Inventory Point using Abbreviated Name
+  
+    Problem:
+    --------
+    When entering a site's abbreviated name at the 'Select Primary 
+    Inventory Point:' prompt in the Primary Inventory Point Main Menu
+    [PRCP MAIN MENU], the associated inventory point was not found.
+  
+    Resolution:
+    -----------
+    Modify PRCPUSEL to allow multiple like entries to be selected during 
+    Inventory Point lookup AND add a new cross reference to the 
+    ABBREIVIATED NAME field (#.8) in the GENERIC INVENTORY file (#445) by 
+    using mnemonic 'CAB'.
+  
+    Also, a post install routine will set the new 'CAB' cross reference 
+    ABBREVIATED NAME field.
+  
+  
+    Routines: PRCPUSEL, PRCP185P (Post install)
+   
+    New cross reference added to ABBREVIATED NAME field:
+  
+       CROSS-REFERENCE:  445^CAB 
+              1)= S ^PRCP(445,"CAB",$E(X,1,30),DA)=""
+              2)= K ^PRCP(445,"CAB",$E(X,1,30),DA)
+              This index is to allow the Inventory Point
+              lookup to search index 'CAB' for abbreviated 
+              name only (no attached site). 
+  
+  
+  
+  
+ 3) INC000000940447 - Full Purchase Card number appears under two options
+  
+    Problem:
+    --------
+    When using options Procurement and Accounting Transactions Inquiry 
+    [PRCF INQ 442] and Control Point Activity File Inquiry [PRCF INQ
+    410],  the secure Purchase Card number will display for non-authorized
+    staff to view.
+  
+    Resolution:
+    -----------
+    Modify PRCFINQ (inquiry called by options) to set flag to control the
+    output of PURCHASE CARD RECORD field (#451) in the 
+    CONTROL POINT ACTIVITY file (#410) and
+    PURCHASE CARD NUMBER field (#46) and PURCHASE CARD EXT. NO. field (#55)
+    in the PROCUREMENT & ACCOUNTING TRANSACTIONS file (#442)
+  
+    Routines: PRCFINQ
+  
+ New OUTPUT TRANSFORMS:
+  
+ STANDARD DATA DICTIONARY #410 -- CONTROL POINT ACTIVITY FILE
+  
+ 410,451  PURCHASE CARD RECORD   1;2 POINTER TO PURCHASE CARD 
+                                     INFORMATION FILE (#440.5)
+        
+ OUTPUT TRANSFORM: I Y S:$G(PRCPRTTF)=1 Y="XXXXXXXXXXXX"_$E($P($G(
+                   ^PRC(440.5,Y,0)),U),13,16) S:$G(PRCPRTTF)'=1 Y=
+                   $P($G(^PRC(440.5,Y,0)),U)
+  
+  
+ STANDARD DATA DICTIONARY #442 -- PROCUREMENT & ACCOUNTING TRANSACTIONS 
+                                  FILE
+  
+ 442,46   PURCHASE CARD NUMBER   23;8 POINTER TO PURCHASE CARD INFORMATION 
+                                 FILE (#440.5) (Required)
+  
+ OUTPUT TRANSFORM: I Y S:$G(PRCPRTTF)=1 Y="XXXXXXXXXXXX"_$E($P($G(
+                   ^PRC(440.5,Y,0)),U),13,16) S:$G(PRCPRTTF)'=1 Y= 
+                   $P($G(^PRC(440.5,Y,0)),U)
+  
+  
+ 442,55   PURCHASE CARD EXT. NO. 23;16 FREE TEXT
+  
+ OUTPUT TRANSFORM: S:$G(PRCPRTTF)=1 Y="XXXXXXXXXXXX"_$E(Y,13,16)
+  
+  
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+   ***********************************************************************
+   PLEASE NOTE: Post install routine PRCP185P will be deleted once the
+   install is complete.  If you wish to check the checksum of this
+   routine please use the 'Verify Checksums in Transport Global' under
+   the Installation Menu.
+   ***********************************************************************
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*185)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*185.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" hit Enter.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', hit Enter. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+       New Purchase Order                               [PRCHPC PO ADD] 
+       Primary Inventory Point Main Menu                [PRCP MAIN MENU]
+       Procurement and Accounting Transactions Inquiry  [PRCF INQ 442]
+       Control Point Activity File Inquiry              [PRCF INQ 410] 
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCFINQ
+    Before:  B3496954   After:  B4473282  **185**
+Routine Name: PRCP185P
+    Before:       n/a   After:  B1690448  **185**
+Routine Name: PRCPUSEL
+    Before: B26262666   After: B27623658  **1,83,110,118,185**
+ 
+Routine list of preceding patches: 118
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 17, 2013
+Completed By:                               Date Completed: JUL 21, 2014
+Released By :                               Date Released : JUL 29, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

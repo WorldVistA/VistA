@@ -1,0 +1,572 @@
+$TXT Created by               DEVVLD.DOMAIN.EXT  (KIDS) on Wednesday, 12/03/14 at 16:51
+=============================================================================
+Run Date: FEB 03, 2015                     Designation: ROR*1.5*24
+Package : ROR - CLINICAL CASE REGISTRIES      Priority: Mandatory
+Version : 1.5        SEQ #24                    Status: Released
+                  Compliance Date: MAR 06, 2015
+=============================================================================
+
+Associated patches: (v)ROR*1.5*21  <<= must be installed BEFORE `ROR*1.5*24'
+                    (v)ROR*1.5*22  <<= must be installed BEFORE `ROR*1.5*24'
+
+Subject: NEW CCR REGISTRIES AND MINOR ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ This patch includes several enhancements to the Clinical Case Registries 
+ (CCR) package.  These changes include:
+  
+    1. Eight new local registries were added including the following
+       functionality:
+        a. The set up and initial build of the new registries.
+        b. Adding the new registries to the nightly job that searches for
+           and adds patients to them, based on registry-specific
+           International Classification of Disease, 9th edition (ICD-9) 
+           and  International Classification of Disease, 10th edition
+           (ICD-10) codes.
+        c. The addition of the number of reports run for each new registry
+           in the nightly HL7 message.
+        d. The standard local reports currently available in CCR will be
+           available for the new registries.
+  
+    2. Removal of the requirement that a Hepatitis C GT lab test must be
+       specified in the site parameters before the Potential DAA Candidates
+       report can be run.
+  
+    3. Addition of new HIV antibody and antigen codes to the VA HIV 
+       registry.
+  
+    4. Addition of new LOINC codes to the Hepatitis C registry antibody 
+       search.
+  
+    5. Addition of a new report SUSTAINED VIROLOGIC RESPONSE for the 
+       Hepatitis C registry.
+  
+    6. Modifications have been made to copy CCR application help files to 
+       the local workstation when CCR is accessed on a server or network.
+  
+    7. Additional modifications have been made to bring the CCR GUI into
+       compliance with Section 508 standards.
+  
+    8. The version of the CCR software was updated to 1.5.24. 
+  
+  
+  
+ Patch Components:
+ -----------------
+  
+ Dialogs Associated:
+  
+ Dialog Number  Dialog Name                         New/Modified/Deleted
+ -------------  ------------------------------      --------------------
+ 7981023.001    Sustained Virologic Response (HTML) New
+ 7981023.002    Sustained Virologic Response (CSV)  New
+  
+  
+ File Data Included:
+  
+ File Name (Number)         Entry Name              New/Modified/Deleted
+ ------------------         ------------------      --------------------
+ ROR REGISTRY PARAMETERS    VA OSTEOPOROSIS         New
+  (#798.1)                  VA PROSTATE CANCER      New
+                            VA LUNG CANCER          New
+                            VA MELANOMA             New
+                            VA COLORECTAL CANCER    New
+                            VA PANCREATIC CANCER    New
+                            VA HCC                  New
+                            VA ALS                  New
+                            VA HEPC                 Modified
+   
+  
+ ROR SELECTION RULE         VA OSTEOPOROSIS PROBLEM New
+  (#798.2)                  VA OSTEOPOROSIS PTF     New
+                            VA OSTEOPOROSIS VPOV    New   
+                            VA OSTEOPOROSIS PROBLEM New
+                             (ICD10)
+                            VA OSTEOPOROSIS PTF     New
+                             (ICD10)
+                            VA OSTEOPOROSIS VPOV    New
+                             (ICD10)
+                            VA PROSTATE CANCER      New
+                             PROBLEM
+                            VA PROSTATE CANCER PTF  New
+                            VA PROSTATE CANCER      New
+                             VPOV
+                            VA PROSTATE CANCER      New
+                             PROBLEM (ICD10)
+                            VA PROSTATE CANCER      New
+                             PTF (ICD10)
+                            VA PROSTATE CANCER      New
+                             VPOV (ICD10)
+                            VA LUNG CANCER PROBLEM  New
+                            VA LUNG CANCER PTF      New
+                            VA LUNG CANCER VPOV     New
+                            VA LUNG CANCER PROBLEM  New
+                             (ICD10)
+                            VA LUNG CANCER PTF      New
+                             (ICD10)
+                            VA LUNG CANCER VPOV     New
+                             (ICD10)
+                            VA MELANOMA PROBLEM     New
+                            VA MELANOMA PTF         New
+                            VA MELANOMA VPOV        New
+                            VA MELANOMA PROBLEM     New
+                             (ICD10)
+                            VA MELANOMA PTF         New
+                             (ICD10)
+                            VA MELANOMA VPOV        New
+                             (ICD10)
+                            VA COLORECTAL CANCER    New
+                             PROBLEM
+                            VA COLORECTAL CANCER    New
+                             PTF
+                            VA COLORECTAL CANCER    New
+                             VPOV
+                            VA COLORECTAL CANCER    New
+                             PROBLEM (ICD10)
+                            VA COLORECTAL CANCER    New
+                             PTF (ICD10)
+                            VA COLORECTAL CANCER    New
+                             VPOV (ICD10)
+                            VA PANCREATIC CANCER    New
+                             PROBLEM
+                            VA PANCREATIC CANCER    New
+                             PTF
+                            VA PANCREATIC CANCER    New
+                             VPOV
+                            VA PANCREATIC CANCER    New
+                             PROBLEM (ICD10)
+                            VA PANCREATIC CANCER    New
+                             PTF (ICD10)
+                            VA PANCREATIC CANCER    New
+                             VPOV (ICD10)
+                            VA HCC PROBLEM          New
+                            VA HCC PTF              New
+                            VA HCC VPOV             New
+                            VA HCC PROBLEM (ICD10)  New
+                            VA HCC PTF (ICD10)      New
+                            VA HCC VPOV (ICD10)     New
+                            VA ALS PROBLEM          New
+                            VA ALS PTF              New
+                            VA ALS VPOV             New
+                            VA ALS PROBLEM (ICD10)  New
+                            VA ALS PTF (ICD10)      New
+                            VA ALS VPOV (ICD10)     New
+  
+ ROR ICD SEARCH (#798.5)    VA OSTEOPOROSIS         New   
+                            VA PROSTATE CANCER      New
+                            VA LUNG CANCER          New
+                            VA MELANOMA             New
+                            VA COLORECTAL CANCER    New
+                            VA PANCREATIC CANCER    New
+                            VA HCC                  New
+                            VA ALS                  New
+  
+  
+ ROR XML ITEM (#799.31)     LAST_TAKEN              New 
+  
+  
+ ROR REPORT PARAMETERS      Sustained Virologic     New
+  (#799.34)                  Response
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ 20070523
+ 20080612 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ San Antonio, Tx
+ Palo Alto HCS
+ Coatesville, Pa
+  
+  
+ Installation Files
+ ==================
+  
+ GUI Update
+ ----------
+ IMPORTANT NOTE:  This patch includes a revised Graphical User 
+ Interface (GUI) application which must be distributed to the 
+ appropriate workstations.  After the patch is installed correctly,
+ and the GUI is updated, the version of the GUI will be 1.5.24.
+  
+ File Name         Contents      Transfer Mode  
+ ---------         -----------   -------------
+ ROR1_5P24GUI.ZIP  Zipped GUI    BINARY
+  
+ The file listed above may be obtained via File Transfer Protocol
+ (FTP).  The preferred method is to FTP the file from:
+ Download.vista.domain.ext.
+  
+ This transmits the file from the first available FTP server.  Sites 
+ may also elect to retrieve software directly from a specific server
+ as follows:
+  
+ OIFO              FTP Address                Directory
+ ----------------  -------------------------  --------------------
+ Albany            ftp.domain.ext   []
+ Hines             ftp.domain.ext    []
+ Salt Lake City    ftp.domain.ext      []
+  
+  
+ M Code
+ ------
+ Included as a standard PackMan message.
+  
+  
+ Documentation Files
+ ===================
+  
+ The documentation has been updated and is distributed in the following
+ two zipped files. Each zip file contains both the .DOC and .PDF formats. 
+  
+ File Name             Description                        Protocol
+ ----------------------------------------------------------------- 
+ ROR1_5P24DOC1.ZIP     ROR User Manual                    BINARY
+  
+ ROR1_5P24DOC2.ZIP     Release Notes,                     BINARY
+                       Technical Manual/Security Guide,
+                       Installation/Implementation 
+                       Guide
+  
+  
+ The revised CCR documentation is available on the
+ ANONYMOUS.SOFTWARE directory at one of the following
+  
+ OIFO             FTP Address                Directory
+ --------------   ------------------------   ------------------
+ Albany           ftp.domain.ext   
+ Hines            ftp.domain.ext    
+ Salt Lake City   ftp.domain.ext      
+  
+ Sites may retrieve documentation in one of the following ways:
+  
+ 1. The preferred method is to FTP the files from 
+    download.vista.domain.ext, which will transmit the files from the first
+    available FTP server.
+  
+ 2. Sites may also elect to retrieve documentation directly from a specific
+    server listed above.
+  
+ Documentation may also be retrieved from the VistA Documentation 
+ Library (VDL) on the Intranet at the following address:
+ http://www.domain.ext/vdl
+  
+  
+ Patch Installation Overview:
+ ============================ 
+  
+ This patch includes an M patch and a revised Graphical User Interface
+ (GUI) executable.
+  
+ Below is a summary of the installation steps required for this patch.
+  
+ 1.  Install M components.
+ 2.  Update GUI.
+   
+   
+ Patch Installation:
+ ------------------
+  
+ M INSTALLATION INSTRUCTIONS:
+ ----------------------------
+ Installation of the patch will not take more than 5 minutes. This patch
+ can be installed with VistA users online, but Registry users should be
+ logged out of the CCR Registry Application, as a new GUI is to be
+ installed. There are no options that need to be disabled prior to patch
+ install.
+  
+ NOTE: The nightly task (Registry Update & Data Extraction [ROR TASK] 
+ option) must not be running during the installation.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The pre-installation routine for this patch checks to be sure the task 
+ Initialize new registries (one time) [ROR INITIALIZE] is not running.  If 
+ it is, the user is informed of the task number found and that the job 
+ must finish or be terminated before the patch can be installed.  The 
+ patch installation then exits, incomplete.  Routine name is PRE^RORP024.
+  
+ The post-installation routine for this patch is POST^RORP024 and performs 
+ the following functions:
+  
+   - Adds the new report Sustained Virologic Response to the VA HEPC entry 
+     the ROR REGISTRY PARAMETERS file (#798.1)
+   - Adds new LOINC codes to the VA HEPC entry in the ROR REGISTRY 
+     PARAMETERS file (#798.1)
+   - Adds new registries to the ROR ICD SEARCH file (#798.5) along with 
+     their corresponding diagnosis codes
+   - Schedules the Initialize new registries (one time) [ROR INITIALIZE]
+     option to run. 
+  
+  
+ Installation Instructions:
+ --------------------------
+ The post-initialization routine for this patch schedules the Initialize 
+ new registries (one time) [ROR INITIALIZE] task to run.  During the 
+ installation, there are a series of questions that must be answered that 
+ will be used to schedule this task.
+  
+ The parameters that are acquired from the install questions are as 
+ follows:
+  
+ Maximum number of registry update subtasks:
+   [valid response is a number 0-10]
+  
+ Suspend the post-install during the peak hours:
+   [valid response is Yes/No]
+    If the answer to this question is Yes, then the following 2 questions 
+    must be answered:
+  
+       Suspension start time:
+         [valid response is any valid time input]
+  
+       Suspension end time:
+         [valid response is any valid time input occurring after the start 
+          time]
+  
+  Date/Time to run the new registry initialize task:
+   [valid response is a date/time that is at least 15 minutes in the 
+    future.]
+   
+  
+ Installation steps:
+ ------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     designation 'ROR*1.5*24':
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+     
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+  
+ 7.  The post-initialization routine for this patch schedules the
+     Initialize new registries (one time) [ROR INITIALIZE] task to run
+     as well as updating some of the CCR files as described above.   
+  
+ INSTALLATION EXAMPLE:
+ ====================
+  
+ Select INSTALL NAME:    ROR*1.5*24    8/7/14@15:11:47
+      => ROR*1.5*24 TEST V1
+  
+ This Distribution was loaded on Aug 07, 2014@15:11:47 with header of 
+    ROR*1.5*24 TEST V1
+    It consisted of the following Install(s):
+      ROR*1.5*24
+ Checking Install for Package ROR*1.5*24
+  
+ Install Questions for ROR*1.5*24
+  
+ Incoming Files:
+  
+  
+    798.1     ROR REGISTRY PARAMETERS  (including data)
+ Note:  You already have the 'ROR REGISTRY PARAMETERS' File.
+ I will OVERWRITE your data with mine.
+  
+  
+    798.2     ROR SELECTION RULE  (including data)
+ Note:  You already have the 'ROR SELECTION RULE' File.
+ I will OVERWRITE your data with mine.
+  
+  
+    799.31    ROR XML ITEM  (including data)
+ Note:  You already have the 'ROR XML ITEM' File.
+ I will OVERWRITE your data with mine.
+  
+  
+    799.34    ROR REPORT PARAMETERS  (including data)
+ Note:  You already have the 'ROR REPORT PARAMETERS' File.
+ I will OVERWRITE your data with mine.
+  
+ Maximum number of registry update subtasks :  (0-10): 5// 
+  
+ Suspend the post-install during the peak hours? NO// 
+  
+  
+ Date/Time to run the new registry initialize task:  8/7/14@15:27// 
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   TELNET PORT
+  
+  
+  
+  Install Started for ROR*1.5*24 : 
+                Aug 07, 2014@15:12:14
+  
+ Build Distribution Date: Aug 07, 2014
+  
+  Installing Routines:
+                Aug 07, 2014@15:12:15
+  
+  Running Pre-Install Routine: PRE^RORP024
+  
+    *** Checking to be sure ROR INITIALIZE task is not already running
+  
+    *** Verifying VA HEPC registry exists on your system
+  
+  Installing Data Dictionaries: 
+                Aug 07, 2014@15:12:15
+  
+  Installing Data: .
+                Aug 07, 2014@15:12:16
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing DIALOG
+                Aug 07, 2014@15:12:16
+  
+  Running Post-Install Routine: POST^RORP024
+  
+ >> Adding new report to the VA HEPC registry parameters
+  
+    >> Step complete
+  
+ >> Adding new LOINC codes to the VA HEPC registry parameters
+  
+    >> Step complete
+  
+ >> Adding new registry ROR ICD SEARCH entries with diagnosis codes
+  
+    >> Step complete
+  
+ >> Initiating background job to set up registries added with this patch
+  
+    *** Checking for registry(s) to be initialized
+  
+  
+  
+  
+  
+      The following registry(s) will be populated with new patients: 
+           VA ALS
+           VA COLORECTAL CANCER
+           VA HCC
+           VA LUNG CANCER
+           VA MELANOMA
+           VA OSTEOPOROSIS
+           VA PANCREATIC CANCER
+           VA PROSTATE CANCER
+  
+  
+    *** Storing registry setup parameters
+  
+  
+  
+   =============================================
+  
+   Number of registry update (sub)tasks... 5
+  
+   Suspend the tasks during peak hours.... No
+  
+   =============================================
+  
+                                    
+ ROR*1.5*24                                   
+ --------------------------------------------------------------------------
+ ------
+  
+  
+ The scheduled task number is 7006614
+  
+    >> Step complete
+  
+ POST INSTALL COMPLETE
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  ROR*1.5*24 Installed. 
+                Aug 07, 2014@15:12:18
+  
+  Not a production UCI
+  
+  NO Install Message sent 
+ --------------------------------------------------------------------------
+ ------
+           +------------------------------------------------------------+
+   100%    |             25             50             75               |
+ Complete  +------------------------------------------------------------+
+  
+  
+ Install Completed
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.5;CLINICAL CASE REGISTRIES;**[Patch List]**;Feb 17, 2006;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RORP024
+    Before:       n/a   After: B69495986  **24**
+Routine Name: RORUPR1
+    Before: B78546166   After: B80467906  **12,19,24**
+Routine Name: RORUTL11
+    Before:  B4026047   After:  B4026277  **13,14,15,17,18,20,19,21,22,24**
+Routine Name: RORX023
+    Before:       n/a   After:  B8007140  **24**
+Routine Name: RORX023A
+    Before:       n/a   After:B107139551  **24**
+ 
+Routine list of preceding patches: 22
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 29, 2014
+Completed By:                               Date Completed: JAN 13, 2015
+Released By :                               Date Released : FEB 03, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

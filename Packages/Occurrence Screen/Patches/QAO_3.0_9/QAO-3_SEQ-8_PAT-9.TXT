@@ -1,0 +1,199 @@
+$TXT Created by                . at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 08/06/14 at 10:26
+=============================================================================
+Run Date: MAR 16, 2015                     Designation: QAO*3*9
+Package : QAO - OCCURRENCE SCREEN             Priority: Mandatory
+Version : 3         SEQ #8                      Status: Released
+                  Compliance Date: APR 16, 2015
+=============================================================================
+
+Associated patches: (v)QAO*3*8     <<= must be installed BEFORE `QAO*3*9'
+
+Subject: Issues with 101.1, 107 and 109 Screens
+
+Category: 
+  - Routine
+  - Informational
+
+Description:
+============
+
+  
+  
+  Patch QAO*3*9 addresses 3 issues:
+       
+        1.  QAOS 107 screen requires VDL documentation change (MAJOR 
+            surgery)
+        2.  QAOS 101.1 screen not reporting unscheduled 10 day re-
+            admissions when scheduled admission occurs on same day
+        3.  QAOS 109 screen reporting duplicate death entries, due to
+            time of death change
+             
+             
+   
+   ASSOCIATED REMEDY TICKETS: 
+   ==========================
+   1)  INC000000336615 QAOS 107 Screen - Return to OR in same admission
+   2)  INC000000495505 QAOS 101.1 Screen - Readmission within 10 days
+   3)  INC000000966125 QAOS 109 Screen - Death
+  
+   
+   ASSOCIATED NSR: 
+   ===============
+   N/A
+   
+   PARTICIPATING TEST SITES: 
+   =========================
+   White River Junction  - VA Medical Center
+   Michael E. DeBakey VA Medical Center - Houston
+  
+   Remedy Overview:
+   ================
+   1)   INC000000336615   QAOS 107 Screen - Return to OR in same admission
+  
+    Problem:
+    --------
+    Code only includes MAJOR surgery procedures, but documentation does 
+    not state that the type must be MAJOR in the QA Occurrence Screen User 
+    Manual. 
+  
+    Resolution:
+    -----------
+    The Occurrence Screen V.3.0 User Manual will be updated to clarify
+    that surgery must be MAJOR.  
+   
+  
+   2)  INC000000495505    QAOS 101.1 Screen - Readmission within 10 days
+  
+    Problem:
+    --------
+    QAOS 101.1 screen is not reporting the correct patients.  Software was
+    designed to report on only unscheduled (re)admissions.  A scheduled
+    admission would not be picked up. The issue is that only the date is
+    checked for these admissions -- not the date/time.  A scheduled
+    admission on the same day as an unscheduled (re)admission will prevent
+    the unscheduled (re)admission from being reported.
+     
+    Resolution:
+    -----------
+    New subroutine SCHED2^QAOC0 was developed (and called by MAIN+1^QAOC1011),
+    since the original SCHED subroutine is called by code for another QAO 
+    screen. The new subroutine will check both date and time.
+  
+  
+   3)  INC000000966125   QAOS 109 Screen - Death 
+   
+    Problem:
+    --------
+    There has been a reported issue that deals with duplicate entries being
+    displayed with regards to death count.  Further research confirmed that when
+    time of death was changed, a patient could be picked up on the 109 screen a
+    second time.  
+    
+    Resolution:
+    -----------
+    Routine ^QAOC109 was modified to make sure a patient does not exist on
+    the 109 screen, prior to the current run.   New subroutine LOOP2 was
+    written to accomplish this task.
+        
+  
+  Documentation Retrieval Instructions:
+  -------------------------------------
+  Updated documentation addressed by this patch is available using the File 
+  Transfer Protocol (FTP).
+   
+  The preferred method is to FTP the files from 
+  ftp://download.vista.domain.ext/.
+  
+  This transmits the files from the first available FTP server. Sites may 
+  also elect to retrieve software directly from a specific server as 
+  follows:
+   
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  The documentation will be in the form of Adobe Acrobat files.
+   
+  Documentation can also be found on the VA Software Documentation Library 
+  at: http://www4.domain.ext/vdl/
+   
+  File Description                        File Name                FTP Mode
+  -------------------------------------------------------------------------
+  Occurrence Screen V.3.0 User Manual     QAO_3_9P_UM.pdf          Binary
+  
+  
+  Installation Instructions:
+  --------------------------
+  This patch may be run with users on the system, but it is recommended
+  that it be queued to run after normal business hours.
+   
+  Installation will take less than 5 minutes.
+  Suggested time to install: non-peak requirement hours.
+   
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter QAO*3.0*9).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch is
+            installed.
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package QAO*3.0*9
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+         respond No.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//" respond Yes.
+  
+         When prompted, 'Enter options you wish to mark as 'Out Of 
+         Order':', enter:
+              
+                   Manually Run Auto Enroll  [QAM MANUAL AUTO ENROLL RUN]
+                   Tasked Run of Auto Enroll  [QAM TASKED AUTO ENROLL RUN]
+                   Run Auto Enrollment Manually  [QAOS MANUAL AUTO ENROLL]
+                   
+  
+         When prompted, 'Enter protocols you wish to mark as 'Out Of
+         Order':', press enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;Occurrence Screen;**[Patch List]**;09/14/1993;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: QAOC0
+    Before:  B3072340   After:  B6465447  **9**
+Routine Name: QAOC1011
+    Before:  B5950767   After:  B6114916  **9**
+Routine Name: QAOC109
+    Before:  B3427444   After:  B4106951  **8,9**
+ 
+Routine list of preceding patches: 8
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 26, 2014
+Completed By:                               Date Completed: MAR 09, 2015
+Released By :                               Date Released : MAR 16, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

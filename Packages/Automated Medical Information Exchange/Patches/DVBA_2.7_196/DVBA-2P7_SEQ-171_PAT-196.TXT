@@ -1,0 +1,126 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 12/16/15 at 08:11
+=============================================================================
+Run Date: JUL 21, 2016                     Designation: DVBA*2.7*196
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #171                    Status: Released
+                  Compliance Date: AUG 21, 2016
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*192<<= must be installed BEFORE `DVBA*2.7*196'
+
+Subject: CAPRI REPRINT EXAM REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch fixes an issue on the VistA side that leads to a <SUBSCRIPT>
+ error which results in a "RPC DVBAB REPORTS could not be accessed!" error
+ in CAPRI when the "Re-Print C&P Final Report(s)" report is run by date.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. I6184115FY16    CAPRI: Patch 192 error - RPC DVBAB REPORTS Could not
+                    be accessed 
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Martinsburg VAMC
+ Maryland HCS
+ Tennessee Valley HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. I6184115FY16    CAPRI: Patch 192 error - RPC DVBAB REPORTS Could not
+                    be accessed 
+   
+    Problem: 
+    --------
+    While running the "Re-Print C&P Final Report(s)" report, the processing
+    code uses a variable as a subscript that is not set thereby leading
+    to a <SUBSCRIPT> error in VistA that prevents the report from 
+    compiling.
+   
+    Resolution:
+    -----------
+    Modify the processing code in Vista to ensure the report is compiled
+    correctly and without error.
+  
+    Routine(s):DVBAB82,DVBCRPRT
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is not necessary to disable any options.  You may install this patch at
+ any time without interruption to users.  It should take less than 2
+ minutes to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter DVBA*2.7*196)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        DVBA*2.7*196.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//", respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//, respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBAB82
+    Before:B137858381   After:B146075808  **42,90,100,119,156,149,179,
+                                           181,184,185,192,196**
+Routine Name: DVBCRPRT
+    Before: B19769692   After: B20397962  **31,42,119,192,196**
+ 
+Routine list of preceding patches: 192
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 01, 2015
+Completed By:                               Date Completed: JUL 19, 2016
+Released By :                               Date Released : JUL 21, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

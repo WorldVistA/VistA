@@ -1,0 +1,200 @@
+
+=============================================================================
+Run Date: MAY 24, 2016                     Designation: PSS*1*175
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #169                      Status: Released
+                  Compliance Date: JUN 24, 2016
+=============================================================================
+
+Associated patches: (v)PSS*1*169   <<= must be installed BEFORE `PSS*1*175'
+
+Subject: MOCHA UFT ENHANCEMENTS 2 PSS
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ This patch is part of the Medication Order Check Healthcare Application
+ (MOCHA) Enhancements 2 group of patches. A host file was created to
+ simplify installation at Veterans Health Administration (VHA) facilities.
+ The host file MOCHA_ENH_2_GMRA_OR_PSJ_PSO.KID contains: PSO*7*411, 
+ PSJ*5*281, OR*3*269 and GMRA*4*46. In addition there is this stand alone
+ patch PSS*1*175 which must be installed before the combined build.
+  
+ Important:  Recently released patch GMRA*4*48 contains an Allergy 
+ Assessment Clean Up utility tool that produces a report that identifies 
+ discrepancies between the ADVERSE REACTION ASSESSMENT file (#120.86) and
+ the PATIENT ALLERGIES file (#120.8). It is imperative that GMRA*4*48 be 
+ installed prior to the installation of PSS*1*175 and its associated
+ patches, and that all data discrepancies identified by GMRA*4*48 have been
+ corrected. If not, then installing PSS*1*175 and its associated patches
+ may result in drug allergy order checks not displaying in Computerized
+ Patient Record System (CPRS) and pharmacy during the medication order
+ entry processes.
+  
+ 1.  This patch supports an enhancement to the hidden CK action associated 
+ with backdoor Outpatient Pharmacy and backdoor Inpatient Medications.
+  
+ 2.  This patch also supports a change made to comply with new MOCHA 
+ servers and sites should not see any functionality changes.
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ --------------------------
+  N/A
+  
+  
+ Forms Associated:
+ ----------------- 
+  N/A
+  
+  
+ Mail Groups Associated:
+ ----------------------- 
+  N/A
+  
+  
+ Options Associated:
+ -------------------
+  N/A
+  
+  
+ Protocols Associated:
+ --------------------- 
+  N/A  
+  
+  
+ Security Keys Associated:
+ ------------------------- 
+  N/A
+  
+  
+ Templates Associated:
+ --------------------- 
+  N/A
+  
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ 20080334 - A Clinical decision Support System is being requested to 
+ further enhance drug order checking to improve patient care and reduce 
+ costs. This request is to address work mandated as determined by Patient
+ Safety Incident (PSI) evaluation.
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ 457/2072 - Remedy ticket # 130757/173383/510151 - The wrong reactant is
+ being displayed in the allergy check. The drug being ordered is being
+ displayed as the causative agent, but now the actual causative agent will
+ be displayed correctly, from the PATIENT ALLERGIES (#120.8) File.
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Maryland HCS
+ Sioux Falls, SD
+ Orlando, FL
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by
+ this patch is available.
+  
+ The preferred method is to use Secure File Transfer Protocol (SFTP) to 
+ retrieve the files from download.vista.domain.ext. This transmits the
+ files from the first available server. Sites may also elect to retrieve
+ documentation directly from a specific server as follows:
+  
+ Albany:         domain.ext
+ Hines:          domain.ext
+ Salt Lake City: domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library at:
+ http://www.domain.ext/vdl/
+  
+    FILE NAME                         DESCRIPTION
+    =========                         ===========
+ PSS_1_TM_R0416.PDF                   Pharmacy Data Management Technical
+                                      Manual/Security Guide  
+  
+ PSS_1_PSJ_5_PSO_7_RN_R0416.PDF       MOCHA Enhancements 2 Release Notes
+  
+ PSS_1_PSJ_5_PSO_7_MOCHA_E2_CB_IG.PDF MOCHA Enhancements 2 Installation
+                                       Guide
+  
+ FTP Instructions:
+ -----------------
+ MOCHA Enhancements 2 includes the following patches.  The host files were 
+ created to simplify installation at Veterans Health Administration (VHA) 
+ facilities for these pharmacy patches.
+  
+  
+  
+    File Name                         Contents           Retrieval Format
+    --------------------------------  --------           ----------------
+    PSS_1_175.KID                     PSS*1*175          ASCII
+  
+    MOCHA_ENH_2_GMRA_OR_PSJ_PSO.KID   GMRA*4*46          ASCII
+                                      OR*3*269
+                                      PSJ*5*281
+                                      PSO*7*411
+                                       
+  
+ Installation Instructions
+ -------------------------
+ Refer to the MOCHA Enhancements 2 Installation Guide for installation
+ instructions.
+  
+   Install Order:
+  
+     1. PSS_1_175.KID
+     2. MOCHA_ENH_2_GMRA_OR_PSJ_PSO.KID
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSCKOS
+    Before:       n/a   After: B13066686  **175**
+Routine Name: PSSDIUTL
+    Before:B194726392   After:B168823037  **169,175**
+Routine Name: PSSDIUTX
+    Before:       n/a   After:  B3013700  **175**
+Routine Name: PSSFDBDI
+    Before:B129510787   After:B130530909  **160,175**
+ 
+Routine list of preceding patches: 160, 169
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 19, 2012
+Completed By:                               Date Completed: MAY 19, 2016
+Released By :                               Date Released : MAY 24, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,378 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 02/14/14 at 14:31
+=============================================================================
+Run Date: JUN 26, 2014                     Designation: EC*2*123
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #117                      Status: Released
+                  Compliance Date: JUL 27, 2014
+=============================================================================
+
+Associated patches: (v)EC*2*118    <<= must be installed BEFORE `EC*2*123'
+
+Subject: MID FY14 UPDATE TO EC NATIONAL PROCEDURE (#725) FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch addresses 1 issue:
+   
+  1. This patch will update the EC NATIONAL PROCEDURE (#725) file by 
+     inactivating 104 existing procedures, reactivating 1 procedure, 
+     adding 15 new procedures, changing 43 CPT codes, and changing 26 
+     procedure names in the file.
+   
+       
+  ASSOCIATED NSR(S):
+  ==================
+  N/A
+      
+      
+  ASSOCIATED REMEDY TICKET(S):
+  ============================
+  1. INC000000950988 - MID FY14 UPDATE TO EC NATIONAL PROCEDURE (#725) FILE
+       
+      
+  PARTICIPATING TEST SITES:
+  =========================
+  Battle Creek VAMC
+  Louisville VAMC
+  Tuscaloosa VAMC
+      
+       
+  REMEDY OVERVIEW:
+  ================
+   
+  1. INC000000950988 - MID FY14 UPDATE TO EC NATIONAL PROCEDURE (#725) FILE
+   
+     Problem:
+     --------
+     The Managerial Cost Accounting Office (MCAO) requested an update to
+     the EC NATIONAL PROCEDURE (#725) file. The request is to inactivate
+     104 existing procedures, reactivate 1 procedure, add 15 new
+     procedures, change 43 CPT codes, and change 26 procedure names in the
+     file.
+    
+     Resolution:
+     -----------
+     The routines included in this patch will update the EC NATIONAL 
+     PROCEDURE file (#725) by inactivating 104 existing procedures, 
+     reactivating 1 procedure, adding 15 new procedures, changing 43 CPT 
+     codes, and changing 26 procedure names in the file.
+    
+     The entries that will be inactivated in the NATIONAL PROCEDURE (#725) file
+     on 5/01/14 are:
+    
+        Natl #         Description               
+        ------         ---------------------           
+        BB001           PACKED CELLS, AUTOLOGOUS W/CRY
+        BB002           AUTOLOGOUS UNIT
+        BB003           AUTOLOGOUS, DEGLYCEROLIZED
+        BB004           AUTOLOGOUS, FROZEN
+        BB005           AUTOLOGOUS/HOMOLOGOUS
+        BB006           DIRECTED UNIT
+        BB007           DIRECTED UNIT, IRRADIATED
+        BB008           DIRECTED UNIT, FROZEN
+        BB009           IRRADIATION FEE, PACKED CELLS
+        BB010           PLATELETS, RANDOM, IRRADIATED
+        BB011           RED BLOOD CELLS, DEGLYCEROLIZE
+        BB012           TYPING CHARGE
+        BB013           CPDA-1 WHOLE BLOOD
+        BB014           RED BLOOD CELLS, CPDA-1
+        BB015           CPDA-1 RED BLOOD CELLS, DIVIDE
+        BB016           AS-1 RED BLOOD CELLS
+        BB017           AS-3 RED BLOOD CELLS
+        BB018           AS-5 RED BLOOD CELLS
+        BB019           CPDA-1 RED BLOOD CELLS, LEUK, R
+        BB020           RED BLOOD CELLS, WASHED
+        BB021           RED BLOOD CELLS, WASHED, IRRADIATED
+        BB022           RED BLOOD CELLS, FROZEN
+        BB023           AUTOLOGOUS RBC/CRYO
+        BB024           CRYOPRECIPITATE, CPDA-1
+        BB025           PLATELETS, 20-24 C, 5 DAY
+        BB026           PLATELETS PHERESIS
+        BB027           PLATELETS PHERESIS, IRRADIATED
+        BB028           POOLED PLATELETS
+        BB029           GRANULOCYTES-PHERESIS
+        BB030           FRESH FROZEN PLASMA, CPDA-1
+        BB031           RED BLOOD CELLS
+        BB032           RED BLOOD CELLS LEUKOCYTES REDUCED
+        BB033           RED BLOOD CELLS DEGLYCEROLIZED
+        BB034           PLATELETS
+        BB035           PLATELETS LEUKOCYTES REDUCED
+        BB036           PLATELETS PHRESIS LEUKOCYTES REDUCED
+        BB037           GRANULOCYTES PHERESIS IRRDIATD
+        BB038           FRESH FROZEN PLASMA
+        BB039           PLASMA FROZEN WITHIN 24 HOURS
+        BB040           PLASMA CRYOPRECIPITATE REDUCED
+        BB041           POOLED PLASMA SOLVNT/DETRGNT TRTED
+        BB042           CRYOPRECIPITATED AHF
+        BB043           HLA TYPED BLOOD PRODUCT
+        BB044           PLA-1 NEGATIVE BLOOD PRODUCT
+        BB989           CRYOPRECIPITATE, THAWING
+        BB990           FRESH FROZEN PLASMA, THAWI
+        NU203           SECURE MSG CORRESPOND
+        SP006           REHAB STATUS/OUTCOME EXAM
+        SP013           FOCUSED ARTIC/PHONOLOGY EVAL
+        SP015           FOCUSED DYSARTH/MOTOR SP EVAL
+        SP018           FOCUSED RECEPT/EXPRESS LANG EVAL
+        SP021           FOCUSED FLUENCY EVAL
+        SP022           FOCUSED VOICE EVAL
+        SP023           AUDITORY PROCESSING ASSESSMENT
+        SP024           OTHER NONINVASIVE INSTRUM EXAM
+        SP228           SPEECH/LANG EVAL
+        SP245           FOCUSED NASALITY EVAL
+        SP246           FOCUSED ALARYNGEAL SPEECH EVAL
+        SP247           FOCUSED PROSODY EVAL
+        SW002           CONSULT IP V15M
+        SW011           CNH FOLLOWUP OP V15M
+        SW012           PHONDCNONMHFU11-20M
+        SW013           OFFICE VISIT 5M
+        SW014           PSYCHSOC ASSES V15M
+        SW025           GP 6-8 COUNSEL V30M
+        SW026           GP 9+ COUNSEL V30M
+        SW027           GPPSYTHERAPY6-8 V30M
+        SW028           GPPSYTHERAPY 9+ V30M
+        SW031           INELIGIBLE-VET V15M
+        SW032           INELIGIBLE-VET V30M
+        SW054           PHONDCNONMHFU21-30M
+        SW056           OFFICE VISIT 10M
+        SW057           OFFICE VISIT 15M
+        SW058           OFFICE VISIT 25M
+        SW059           OFFICE VISIT 40M
+        SW081           PSYCHTHER INDIV V20M
+        SW083           PREVCNSEL ED REF G1-5 60M
+        SW084           PREVCNSEL ED REF G6-8 60M
+        SW085           PREVCNSEL ED REF GP9+ 60M
+        SW089           PHONED/CMHF/U 11-20M
+        SW090           PSYCH INTER V15M
+        SW096           GUARDIANSHIP V15M
+        SW097           HOME HEALTH V15M
+        SW098           HOMEMAKER HHA V15M
+        SW099           HOSPICE IN-HOME V15M
+        SW100           HOSPICE IP V15M
+        SW101           HBPC V15M
+        SW102           LODGING V15M
+        SW103           FISHER HOUSE V15M
+        SW105           TRANSPORTATION V15M
+        SW106           VA BENEFITS V15M
+        SW109           REFERRALS/OTHER V15M
+        SW110           MEDICAID NH V15M
+        SW111           MEDICARE NH V15M
+        SW112           VA CONTRACT NH V15M
+        SW113           PRIVATE PAY NH V15M
+        SW114           STATE VETS HOME V15M
+        SW115           COM LIVING CTR V15M
+        SW116           HOSPICE RES V15M
+        SW117           ASSIS LIV FAC V15M
+        SW118           CRC V15M
+        SW119           TRANSPLANT V15M
+        SW125           FINANCIAL V15M
+        SW126           COPING WITH ILL V15M
+  
+  
+     The entry that will be reactivated in the NATIONAL PROCEDURE (#725) file
+     on 5/01/14 is:
+    
+        Natl #         Description               
+        ------         ---------------------
+        SW062           IND PSYCHOTHERAPY, 38-52M
+  
+   
+     The entries that will be added in the NATIONAL PROCEDURE (#725) file are:
+  
+        Natl #         Description                     CPT CODE
+        ------         ---------------------           ----------  
+        NU207           PHONE GP 2-5 PT, 1ST 30M        98968
+        NU208           PHONE GP 6-10 PT, 1ST 30M       98968
+        NU209           PHONE GP 11-20PT, 1ST 30M       98968
+        NU210           PHONE GP >20PT, 1ST 30M         98968
+        NU211           PHONEGP 2-5PT EA AD'L15M                
+        NU212           PHONEGP6-10PT EA AD'L15M                
+        NU213           PHONEGP11-20PT EA AD'L15M               
+        NU214           PHONEGP>20PT EA AD'L15M         
+        SP567           FLUENCY EVALUATION              92521
+        SP568           SPEECH SOUND PROD EVAL          92522
+        SP569           SPEECH SOUND W/LANG EVAL        92523
+        SP570           VOICE/RESONANCE EVAL            92524
+        SW136           COUNSULT F2F ONLY, 15M          T1016
+        SW137           PSYCHOSOC ASSESS NONLIP SW      H0031
+        SW138           PSYCHOSOC ASSESS LIP SW         90791
+          
+          
+     The entries whose CPT Codes will be changed in the NATIONAL PROCEDURE 
+     (#725) file are:
+  
+        Natl #         Description                     CPT CODE
+        ------         ---------------------           ----------  
+        CH100           RITE-SACRMNT-ORDNCE <15M        NONE
+        CH101           RITE-SACRMNT-ORDNCE <30M        NONE
+        CH102           RITE-SACRMNT-ORDNCE <45M        NONE
+        CH103           WSHP DEVOTIONAL <12-30M         NONE
+        CH104           WSHP INFORMAL >12-30M           NONE
+        CH105           WSHP FORMAL <12-60M             NONE
+        CH106           WSHP FULL >12-60M               NONE
+        CH107           FUNERAL-MEM GRAVESIDE           NONE
+        CH108           FUNERAL-MEM SERVICE ONLY        NONE
+        CH109           FUNERAL-MEM SERVICE&GRAVE       NONE
+        CH110           IND CARE-COUNSEL <15M           NONE
+        CH111           IND CARE-COUNSEL <30M           NONE
+        CH112           IND CARE-COUNSEL <45M           NONE
+        CH113           IND CARE-COUNSEL <60M           NONE
+        CH114           FAM CARE-COUNSEL <15M           NONE
+        CH115           FAM CARE-COUNSEL <30M           NONE
+        CH116           FAM CARE-COUNSEL <45M           NONE
+        CH117           FAM CARE-COUNSEL <60M           NONE
+        CH118           GROUP SMALL <12-30M             NONE
+        CH119           GROUP INFORMAL >12-30M          NONE
+        CH120           GROUP FORMAL <12-60M            NONE
+        CH121           GROUP FULL >12-60M              NONE
+        CH122           SPIRITUAL ASSESSMENT <15M       NONE
+        CH123           SPIRITUAL ASSESSMENT <30M       NONE
+        CH124           SPIRITUAL ASSESSMENT <60M       NONE
+        SW046           CNH FOLLOW UP 30 MIN            99600
+        SW001           CONSULT F2F IN HOME             99600
+        SW003           DISCHARGE PLANNING, 15M         T1016
+        SW004           FAM PSYCHOTHERAPY W/O PT        90846
+        SW006           PREVENTATIVE COUNSEL, IND       96152
+        SW009           TEAM F2F PT/FAM 30M             99366
+        SW019           PREVENTATIVE COUNSEL, GRP       96153
+        SW035           FAM PSYCHOTHERAPY W/PT          90847
+        SW047           HOME VISIT                      G0155
+        SW048           CRC FOLLOWUP, 15M               T1016
+        SW061           IND PSYCHOTHERAPY, 16-37M       90832
+        SW062           IND PSYCHOTHERAPY, 38-52M       90834
+        SW063           IND PSYCHOTHERAPY, 53-89M       90837
+        SW077           PSYCHOSOCIAL ASSESS 60M         90791
+        SW120           SUICIDE RISK ASSESSMENT         3085F
+        SW124           DISCHARGE CONF,FAM OR S/O       T1016
+        SW130           FAMILY COUNSELING W/PT          90847
+        SW131           FAMILY COUNSELING W/O PT        90846
+  
+             
+     The entries whose procedure names will be changed the NATIONAL PROCEDURE 
+     (#725) file are:
+    
+        Natl #         Description                
+        ------         ---------------------            
+        NU151           NUTR CNSLG IND EA A'L 25M
+        SW010           CLINICAL PHONE CALL 5-10M
+        SW020           GROUP COUNSELING
+        SW044           CLINICAL PHONE CALL 11-20M
+        SW045           CLINICAL PHONE CALL 21-30M
+        SW075           HEALTH RISK ASSESSMENT
+        SW093           TEAM CONF W/O PT/FAM, 30M
+        SW122           ADVANCED DIRECTIVES 15M
+        SW127           PT/FAM END OF LIFE COUNSEL
+        SW001           CONSULT F2F IN HOME
+        SW003           DISCHARGE PLANNING, 15M
+        SW004           FAM PSYCHOTHERAPY W/O PT
+        SW006           PREVENTATIVE COUNSEL, IND
+        SW009           TEAM F2F PT/FAM 30M
+        SW019           PREVENTATIVE COUNSEL, GRP
+        SW035           FAM PSYCHOTHERAPY W/PT
+        SW047           HOME VISIT
+        SW048           CRC FOLLOWUP, 15M
+        SW061           IND PSYCHOTHERAPY, 16-37M
+        SW062           IND PSYCHOTHERAPY, 38-52M   
+        SW063           IND PSYCHOTHERAPY, 53-89M
+        SW077           PSYCHOSOCIAL ASSESS 60M
+        SW120           SUICIDE RISK ASSESSMENT
+        SW124           DISCHARGE CONF,FAM OR S/O
+        SW130           FAMILY COUNSELING W/PT
+        SW131           FAMILY COUNSELING W/O PT
+            
+    ===========================================================================
+     Note: The new EC NATIONAL PROCEDURE Numbers could exist in some site's
+     environment. If the EC NATIONAL PROCEDURE Numbers exist, then the system
+     will add the new numbers and it will keep what the sites have on file. In
+     addition, a message similar to the one below will be printed during
+     installation: 
+     
+     ***EXAMPLE***
+     "Entry #3457 for 99999 SAMPLE [CPT: 99999] (XXXXX)  ...
+     successfully added. Your site has a local procedure (entry #90999) in
+     File #725 which uses XXXXX as its National Number. Please inactivate
+     this local procedure."
+     
+     Please review the installed message.
+    ==========================================================================
+    
+    
+  INSTALLATION INSTRUCTIONS:
+  ==========================
+    
+      ***************************NOTE****************************  
+      * It is not necessary to disable any options.  You may    *
+      * install these routines at any time without interruption *
+      * to users.                                               *
+      ***********************************************************
+    
+     Installation will take less than 2 minutes.
+    
+     Suggested time to install: Non-peak requirement hours.
+     
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options: 
+         (when prompted for INSTALL NAME, enter EC*2.0*123)
+     
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this patch
+               is installed.  It compares all components of this patch
+               (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package EC*2.0*123.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//" respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+         Protocols? NO//" respond NO.
+  
+      7. Review the installation message for errors. *Note*: Installation 
+         messages require 132 columns to print.    
+   
+      8. You may delete the routines EC2P123A, EC2P123B, and EC2P123C from your
+         production system after the patch has been successfully tested.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EC2P123A
+    Before:       n/a   After: B32947759  **123**
+Routine Name: EC2P123B
+    Before:       n/a   After: B23867870  **123**
+Routine Name: EC2P123C
+    Before:       n/a   After: B44238608  **123**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 19, 2013
+Completed By:                               Date Completed: JUN 23, 2014
+Released By :                               Date Released : JUN 26, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

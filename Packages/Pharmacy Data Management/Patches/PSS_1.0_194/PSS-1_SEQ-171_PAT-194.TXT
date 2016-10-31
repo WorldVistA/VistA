@@ -1,0 +1,270 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 01/20/16 at 19:19
+=============================================================================
+Run Date: JUL 08, 2016                     Designation: PSS*1*194
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #171                      Status: Released
+                  Compliance Date: AUG 08, 2016
+=============================================================================
+
+Associated patches: (v)PSS*1*55    <<= must be installed BEFORE `PSS*1*194'
+                    (v)PSS*1*155   <<= must be installed BEFORE `PSS*1*194'
+
+Subject: ISSUES CONCERNING: STRENGTH CHANGE, DRUG SYNONYM, AND DRUG TEXT 
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses three (3) issues:
+  
+ 1. Users may not be aware that changing a drug's Strength does not change
+    the Concentration.
+  
+ 2. The FileMan Description on the SYNONYM (#.01) field of the SYNONYM 
+    SUB-FIELD (#50.1) file for the DRUG (#50) file does not match the
+    Input Transform.
+  
+ 3. Incorrect cross references may remain and errors may occur during
+    execution of the Drug Text Enter/Edit [PSS EDIT TEXT] option.
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+  
+ Associated Remedy ticket(s):
+ ===========================
+ 1. INC000000985782 - Strength Change Issue
+  
+ 2. INC000000977971 - FileMan Description on SYNONYM (#.01) sub-field
+  
+ 3. INC000001286920 - PSS EDIT TEXT Option Issues
+  
+  
+ Participating Test Sites:
+ ========================
+ Bedford VAMC
+ Central Plains HCS
+ Oklahoma City VAMC
+  
+  
+ Remedy Overview:
+ ===============
+ 1. INC000000985782 - Strength Change Issue
+    
+    Problem:
+    -------
+    While performing option Enter/Edit Dosages [PSS EDIT DOSAGES], users
+    might not notice that editing the Strength does not change the
+    Concentration.
+  
+    This situation was discussed during a SUMPM (Safety Updates for
+    Medication Prescription Management) User Group meeting on 06/25/2015,
+    and it was agreed that there is not a valid solution available to the
+    National Drug File Manager to handle this for the IV drugs.  It was 
+    suggested to display a warning when editing the strength stating that 
+    "Editing the strength will not change the concentration".
+  
+    Resolution:
+    ----------
+    Routine PSSDOSER has been modified to display a warning when editing
+    the strength stating that "Editing the strength will not change the
+    concentration".
+    
+    Routine: PSSDOSER
+  
+ 2. INC000000977971 - Drug Synonym Issue
+  
+    Problem:
+    -------
+    The Input Transform logic on the SYNONYM (#.01) sub-field in the DRUG 
+    (#50) file does not match the description.  The current logic checks to
+    make sure the length of the synonym is between one and 40 characters.  
+    The description indicates that the length should not be less than six
+    characters if the synonym is all numeric and between one and forty
+    characters if not all numeric.
+  
+    This ticket was discussed during the SUMPM (Safety Updates for
+    Medication Prescription Management) User Group meeting on 09/17/2015.  
+    It was agreed that the Input Transform logic is correct and the
+    description should be changed to match the logic.
+  
+    Resolution:
+    ----------
+    The Description on the SYNONYM (#.01) sub-field of the SYNONYM 
+    SUB-FIELD (#50.1) file for the DRUG (#50) file Data Dictionary has been
+    changed to accurately reflect the Input Transform.
+  
+    Routine: None
+    
+    Data Dictionary Change: SYNONYM SUB-FILE (#50.1) SYNONYM (#.01) field
+                            Description text change
+  
+ 3. INC000001286920 - PSS EDIT TEXT Option Issues
+  
+    Problem:
+    -------
+  
+    Two issues related to the Drug Text Enter/Edit [PSS EDIT TEXT] option:
+  
+    1)  A previous cross reference, which is now incorrect, might remain
+        in the DRUG TEXT (#51.7) file after editing the NAME (#.01) field.
+  
+    2)  A <SUBSCRIPT> error occurs if the user:
+  
+        a.  Deletes the TEXT (#3) field entry of the DRUG TEXT (#51.7)
+            file.
+        b.  Without leaving the option, adds a Synonym and Inactivation
+            Date.
+        c.  Re-enters option and enters the Synonym at the DRUG TEXT NAME 
+            prompt, and attempts to enter a new Name.
+  
+        The root cause of the error is that the entire entry in the DRUG
+        TEXT (#51.7) file is deleted if the TEXT (#3) field entry is
+        deleted.  But then a file fragment is set if the Synonym and
+        Inactivation Date are added.
+  
+    Resolutions:
+    -----------
+    1)  Modify routine PSSTXT to follow the same logic as the Data
+        Dictionary settings for the NAME (#.01) field of the DRUG TEXT
+        ENTRY (#51.7) file when editing the NAME.  The NAME entry is
+        truncated to 30 characters before being set or deleted as a cross
+        reference.
+  
+    2)  Modify routine PSSTXT to warn the user that deleting the text will
+        delete the entire entry from DRUG TEXT (#51.7) file.  If the user
+        proceeds and deletes all text lines (or does not define any text
+        lines for a new entry), an additional message displays that the
+        entry has been deleted from the DRUG TEXT (#51.7) file and the
+        Synonym and Inactivation Date will not be asked.  Therefore, a 
+        file fragment will not be set in the DRUG TEXT (#51.7) file 
+        containing only the Synonym and Inactivation Date.
+  
+    3)  The post install routine PSSP194 will:
+  
+        a) Clean up incorrect cross references.
+  
+        b) Send a MailMan message to the patch installer containing
+           detailed information regarding which items were cleaned up.
+  
+           **This MailMan message should be forwarded to the Pharmacy 
+             ADPAC for review.
+  
+        c) Set a trace file (global ^XTMP subscripted by "PSSP194") which
+           will automatically purge after 90 days containing the same
+           information as the MailMan message in case there are questions
+           later and the MailMan message was deleted.
+  
+    Routines: PSSTXT and PSSP194
+  
+  
+ Components:
+ ==========
+ Data Dictionary for DRUG (#50) file, SYNONYM SUB-FIELD (#50.1) file, 
+ SYNONYM (#.01) field, Description has been updated from this:
+  
+ DESCRIPTION:                This field is used as a quick code for look
+                             ups or to locate NDCs so the drug's inventory
+                             can be incremented when orders are received.
+                                
+                             Entries in this field will be restricted.
+                             These restrictions will: 
+                             - Prohibit any entry that is all numeric
+                               and less than 6 characters.  
+                             - Convert any entry which matches the
+                               NDC-Expiration Date provided by
+                               the Robot Rx software. The input
+                               transform will strip the leading "3" 
+                               and the expiration date from the
+                               barcoded NDC.  
+  
+ To this:
+  
+ DESCRIPTION:                This field is used as a quick code for look
+                             ups or to locate NDCs so the drug's inventory
+                             can be incremented when orders are received.
+  
+  
+  
+   ===================== Installation Instructions =====================
+   This patch may be loaded with users on the system.  You may wish to 
+   install it during non-peak hours. Installation will take less than 1 
+   minute. 
+  
+   NOTE: Kernel patches must be current on the target system to avoid 
+         problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'PSS*1.0*194'.
+  
+       When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+       choose 'NO'. 
+  
+       When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', choose 'NO'.
+  
+    7. The installer of the patch should check for the following MailMan 
+       message and forward it to the Pharmacy ADPAC for review:
+  
+       Subject....................................From....................
+       POST-INSTALL PSS*1.0*194 INFORMATION       POST-INSTALL,PSS*1.0*194
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSDOSER
+    Before: B77903107   After: B81302930  **34,38,50,57,47,68,82,125,129,
+                                           144,155,194**
+Routine Name: PSSP194
+    Before:       n/a   After: B63709524  **194**
+Routine Name: PSSTXT
+    Before: B14808188   After: B18969862  **29,55,194**
+ 
+Routine list of preceding patches: 55, 155
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 01, 2015
+Completed By:                               Date Completed: JUN 29, 2016
+Released By :                               Date Released : JUL 08, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

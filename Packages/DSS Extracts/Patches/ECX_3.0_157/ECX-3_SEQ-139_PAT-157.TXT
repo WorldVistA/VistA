@@ -1,0 +1,142 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 04/07/15 at 13:43
+=============================================================================
+Run Date: SEP 24, 2015                     Designation: ECX*3*157
+Package : ECX - DSS EXTRACTS                  Priority: Mandatory
+Version : 3       SEQ #139                      Status: Released
+                  Compliance Date: OCT 01, 2015
+=============================================================================
+
+Associated patches: (v)ECX*3*152   <<= must be installed BEFORE `ECX*3*157'
+
+Subject: FY16 CHANGES FOR 4 CHAR CDS NATIONAL CLINIC (#728.441) FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch ECX*3.0*157 updates the SHORT DESCRIPTION field (#1) of 7 
+ existing codes located in the CODE field (#.01) of the NATIONAL CLINIC
+ (#728.441) file.
+  
+ *************************************************************************
+ NOTE: This patch has a shortened compliance date because it must be 
+ installed on or before 10/1/2015. Sites will need the updates for
+ Fiscal Year (FY) 16.
+ *************************************************************************
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A  
+  
+  
+ ASSOCIATED REMEDY TICKET: 
+ ========================= 
+ 1. INC000001230728 - FY16 Changes for 4 Char Cds NATIONAL 
+                      CLINIC (#728.441) FILE
+                                       
+   
+ PARTICIPATING TEST SITES: 
+ =========================
+ Carl Vinson VA MC
+ Louisville VA MC
+ Central Texas VH CS
+  
+   
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001230728 - FY16 Changes for 4 Char Cds (National 
+                      Clinic #728.441 file)
+                      
+    Problem:
+    --------
+    A request was made by the Managerial Cost Accounting Office (MCAO) to
+    update the SHORT DESCRIPTION field (#1) of 7 existing CODE fields 
+    (#.01) of the NATIONAL CLINIC (#728.441) file.
+  
+    Resolution:
+    -----------
+    Created routine ECX3P157 to update the NATIONAL CLINIC (#728.441)
+    file by modifying the SHORT DESCRIPTION field (#1) of 7 existing codes 
+    located in the CODE field (#.01) effective 10/1/2015.
+  
+    The descriptions of the following CODE fields (#.01) have changed:
+   
+    Existing Code       New Short Description
+   ---------------    -------------------------
+        HTTC            Home Sleep Study Pat Educ
+        MICM            MHICM Program
+        NDTR            CBT for Non-epileptic Seizures
+        RNNX            Range Program
+        RNNY            E-Range Program
+        SCTC            CWT Supported Education
+        SCUC            CWT Self-Employment
+  
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes. 
+ Suggested time to install: non-peak requirement hours.
+   
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+   
+    3. From this menu, you may select to use the following options (when
+       prompted for INSTALL NAME, enter ECX*3.0*157).      
+  
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch is
+          installed.
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+       d. Print Transport Global - this option will allow you to view
+          the components of the KIDS build.
+      
+    4. Use the Install Package(s) option and select the package ECX*3.0*157
+   
+    5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+       respond NO.
+   
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? NO//" respond NO.
+   
+ ** 7. During install, verify that all entries were added successfully.
+       If an error is displayed, please open a new CA Ticket.  
+   
+    8. You may delete the routine ECX3P157 from your production system 
+       after the patch has been successfully tested.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECX3P157
+    Before:       n/a   After:  B4276677  **157**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 19, 2015
+Completed By:                               Date Completed: SEP 17, 2015
+Released By :                               Date Released : SEP 24, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

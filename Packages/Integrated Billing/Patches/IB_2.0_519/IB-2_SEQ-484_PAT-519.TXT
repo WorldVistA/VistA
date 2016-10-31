@@ -1,0 +1,435 @@
+$TXT Created by                 DEVVCC.DOMAIN.EXT  (KIDS) on Wednesday, 10/08/14 at 15:30
+=============================================================================
+Run Date: DEC 16, 2014                     Designation: IB*2*519
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #484                      Status: Released
+                  Compliance Date: JAN 15, 2015
+=============================================================================
+
+Associated patches: (v)IB*2*211    <<= must be installed BEFORE `IB*2*519'
+                    (v)IB*2*400    <<= must be installed BEFORE `IB*2*519'
+                    (v)IB*2*457    <<= must be installed BEFORE `IB*2*519'
+                    (v)IB*2*488    <<= must be installed BEFORE `IB*2*519'
+                    (v)IB*2*494    <<= must be installed BEFORE `IB*2*519'
+                    (v)IB*2*497    <<= must be installed BEFORE `IB*2*519'
+                    (v)IB*2*506    <<= must be installed BEFORE `IB*2*519'
+
+Subject: IB/NATIONAL INSURANCE FILE (NIF) INTERFACE, eIV AND eBILLING FIXES
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+  *******************************************************************************
+  Please install this patch at your earliest convenience. When you install this
+  patch into your production account, an extract of insurance company data will
+  be transmitted to the eBusiness Solutions group of the Chief Business Office
+  (CBO). Once received, this extract will be combined with extracts from other
+  VAMC sites -- a time-consuming process. In order to allow the eBusiness team
+  adequate time to consolidate this data, it would be appreciated if this patch
+  could be installed closer to the beginning of the compliance window rather than
+  toward the end of it.  Please note that the post-install extract does NOT run
+  when installed into a test/mirror account.
+  
+  After installing this patch in your production account, you must enable the
+  logical link for the HL7 interface to the NIF. Instructions for doing this
+  are included in the post-install instructions below.  Please do NOT enable the
+  link in your test/mirror account.
+  *******************************************************************************
+  
+  The Health Plan Identifier (HPID) project implements a new national
+  standard of having a single identifier to use on electronic transmissions
+  pertaining to health care. All entities that are financially responsible
+  for care are assigned a HPID or Other Entity Identifier (OEID), used for
+  entities that aren't traditional health plans. This new standard 
+  increases interoperability by replacing clearinghouse-specific
+  identifiers for health plans.
+  
+  This patch updates the Integrated Billing (IB) package to enable it to
+  store these new HPIDs and OEIDs, and to associate the entries in the 
+  local INSURANCE COMPANY file (#36) with a new National Insurance File
+  (NIF). The NIF is housed at the Financial Services Center (FSC), which will
+  centrally manage distribution of HPID/OEID data.
+  
+  This patch introduces a new Health Level Seven (HL7) interface for
+  exchanging insurance information with the NIF. Included with this 
+  new interface is a logging function which generates transaction records,
+  facilitating troubleshooting. These records are periodically purged by the
+  software itself.
+  
+  When installed into a production account, this patch will transmit a flat-file
+  extract to the FSC in order to assist in the setup of the NIF.
+  
+  Additional patch items:
+  
+  1) If a user selects the option PROCESS INSURANCE BUFFER
+     [IBCN INSURANCE BUFFER PROCESS] and they have neither of the
+     security keys (IB INSURANCE COMPANY EDIT and IB GROUP PLAN EDIT),
+     then the only insurance buffer records that are displayed to them
+     would be entries for Electronic Insurance Verification (eIV) confirmed
+     active policies ("+" entries) when the patient in that record has an active
+     policy on file in VistA.  This patch increases the number of potential
+     active policies that users may process.
+  
+  2) Corrected a problem that occurs on some insurance buffer entries. With
+     the menu option PROCESS INSURANCE BUFFER [IBCN INSURANCE BUFFER
+     PROCESS], a user can select to Expand Entry (action 'EE').  Some
+     records, when expanded, are showing that the eIV response is based
+     on an unknown Service Date and unknown Service Type.  This is being
+     corrected to report the correct service date and type.  This data
+     is only available to those buffer entries that were processed by
+     eIV.
+  
+  3) Corrected a problem that occurs with the option PROCESS INSURANCE
+     BUFFER [IBCN INSURANCE BUFFER PROCESS].  If a user selects the
+     Expand Entry action ('EE') followed by the Response Report action
+     ('RR'), when the user exits the eIV Response Report the display
+     does not show the detail of the record and page 0 of 0 is displayed.
+     The software has been updated so that the display is correct
+     when a user exits the eIV Response Report.
+  
+  4) Corrected a problem where the Total Charges dollar amount (BOX24F) and
+     the Days/Unit (BOX24G) were printing one character too far over to the
+     right on the CMS-1500 form and causing BOX24G's data to run into BOX24H.
+     To support this, the IB FORM SKELETON DEFINITION (#364.3) entry for
+     BOX24F (record 1487) had its Length field (#.09) changed from 9 to 8.
+  
+  5) Corrected a problem where the Total Charges dollar amount was dropping
+     the last number in the cents field on the TPJI->BC (Bill Charges) display
+     screen.
+  
+  
+  Patch Components
+  ================
+    
+   Files & Fields Associated:
+    
+   File Name (Number)    Field Name (Number)                    New/Mod/Del
+   ------------------    -------------------                    -----------
+   INSURANCE COMPANY (#36) 
+                         HPID/OEID (#8.01)                       NEW
+                         CHP/SHP (#8.02)                         NEW
+                         PARENT CHP (HPID) (#8.03)               NEW
+                         NIF ID (#8.04)                          NEW
+                              
+   IB FORM SKELETON DEFINITION (#364.6)                          MOD ENTRY
+      Screen: I Y=1487
+  
+   HPID/OEID RESPONSE (#367)
+                         MESSAGE CONTROL ID (#.01)               NEW
+                         TRANSMISSION QUEUE (#.02)               NEW
+                         RESPONSE TYPE (#.03)                    NEW
+                         INSURANCE COMPANY (#.04)                NEW
+                         PROCESSING STATUS (#.05)                NEW
+                         STATUS DATE/TIME (#.06)                 NEW
+                         VISTA UNIQUE ID (#.07)                  NEW
+                         PARENT CHP (HPID) (#.08)                NEW
+                         CHP/SHP (#.09)                          NEW
+                         DATE OF FUTURE PURGE (#.1)              NEW
+  
+   HPID/OEID RESPONSE (#367) Subfile IDENTIFIERS (#1)
+                         INSURANCE COMPANY ID TYPE (#.01)        NEW
+                         ID (#.02)                               NEW
+                         SECONDARY ID QUALIFIER (#.03)           NEW
+  
+   HPID/OEID TRANSMISSION QUEUE (#367.1)
+                         TRANSACTION NUMBER (#.01)               NEW
+                         INSURANCE COMPANY (#.02)                NEW
+                         DATE/TIME CREATED (#.03)                NEW
+                         TRANSMISSION STATUS (#.04)              NEW
+                         STATUS DATE/TIME (#.05)                 NEW
+                         RESPONSE (#.07)                         NEW
+                         STREET ADDRESS [LINE 1] (#2.01)         NEW
+                         STREET ADDRESS [LINE 2] (#2.02)         NEW
+                         CITY (#2.03)                            NEW
+                         STATE (#2.04)                           NEW
+                         ZIP CODE (#2.05)                        NEW
+                         BILLING COMPANY NAME (#2.06)            NEW
+                         TYPE OF COVERAGE (#2.07)                NEW
+                         PHONE NUMBER (#2.08)                    NEW
+  
+   HPID/OEID TRANSMISSION QUEUE (#367.1) Subfile IDENTIFIERS (#1)
+                         INSURANCE COMPANY ID TYPE (#.01)        NEW
+                         ID (#.02)                               NEW
+                         SECONDARY ID QUALIFIER (#.03)           NEW
+  
+   INSURANCE COMPANY ID TYPE (#367.11)
+                         NAME (#.01)                             NEW
+                         DESCRIPTION (#1)                        NEW
+    
+   Forms Associated:
+    
+   Form Name             File #       New/Modified/Deleted
+   ---------             ------       --------------------
+   N/A
+      
+   Mail Groups Associated:
+    
+   Mail Group Name          New/Modified/Deleted
+   ---------------          --------------------
+   NIFQRY                   NEW
+      
+   Options Associated:
+         
+   Option Name                    Type             New/Modified/Deleted
+   -----------                    -----------      ------------------------
+   IBCNH HPID NIF BATCH QUERY     SERVER           NEW
+    
+   Protocols Associated:
+    
+   Protocol Name                  New/Modified/Deleted
+   -------------                  -------------------- 
+   IB NIF QUERY DRIVER            NEW
+   IB NIF QUERY SUBSCRIPTION      NEW
+   IB NIF RESPONSE DRIVER         NEW
+   IB NIF RESPONSE SUBSCRIPTION   NEW
+      
+   Security Keys Associated:
+    
+   Security Key Name
+   -----------------
+   N/A
+    
+    
+   Templates Associated:
+   
+   
+   Template Name                   Type      File Name (Number) New/Mod/Del
+   -------------                   ----      ------------------ -----------
+   N/A
+  
+   Remote Procedure                          New/Mod/Del
+   -------------                             -----------
+   N/A  
+   
+   HL7 Logical Link Name                     New/Mod/Del
+   ---------------------                     -------------------- 
+   IB NIF TCP                                NEW
+  
+   HL7 Application Parameter Name            New/Mod/Del
+   ------------------------------            -------------------- 
+   NIF FSC                                   NEW
+   NIF VISTA                                 NEW
+  
+   Additional Information:
+   N/A
+    
+    
+   New Service Requests (NSRs):
+   -----------------------------
+   NSR - Request ID: 20110503 Electronic Data Interchange (EDI) New 
+         Standards and Operating Rules (Veterans Health Administration)
+         VHA Provider-Side TCRs  05/19/2011 
+         http://vista.domain.ext/nsrd/ViewITRequest.asp?RequestID=20110503
+    
+    
+   Patient Safety Issues (PSIs):
+   ------------------------------
+   N/A
+    
+   Remedy Ticket(s) & Overviews:
+   -----------------------------
+   INC000001066171-Total Charges (Box24F) amount truncated on CMS1500 & TPJI
+    
+   INC000001066662 - Alignment issue with CMS 1500 Boxes 24F, 24G and 24H
+   shifted one position.
+   
+   Test Sites:
+   -----------
+   White River Junction, VT
+   Houston, TX
+   Walla Walla, WA
+   Tampa, FL
+  
+  
+   Documentation Retrieval Instructions:
+   -------------------------------------
+   Updated documentation describing the new functionality introduced by 
+   this patch is available using the File Transfer Protocol (FTP).
+  
+   The preferred method is to FTP the files from 
+   ftp://download.vista.domain.ext/. This transmits the files from the
+   first available FTP server. Sites may also elect to retrieve software
+   directly from a specific server as follows:
+  
+    Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+    Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+    Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+    
+    
+   The documentation will be in the form of Adobe Acrobat files.
+  
+   Documentation can also be found on the VA Software Documentation 
+   Library at: http://www4.domain.ext/vdl/
+  
+   File Description                        File Name               FTP Mode
+   -------------------------------------------------------------------------
+   Release Notes/Installation Guide        ib_2_519_rn_ig.pdf      Binary
+   IB User Manual                          ib_2_0_um_r1114.pdf     Binary
+   IB Technical Manual                     ib_2_0_tm_r1114.pdf     Binary
+  
+   Patch Installation: 
+  
+   Pre/Post Installation Overview
+   ------------------------------
+   This patch should be installed during a period of low system activity 
+   with IB users off the system. After this patch is installed in your
+   production account, a task will be scheduled to send an extract of the
+   INSURANCE COMPANY file (#36) to the FSC to aid in setting up the NIF.
+   By default, the task will begin immediately after the installation is
+   complete, but this can be delayed until a later time if necessary. Since
+   this patch should be installed during a period of low system activity,
+   the chance of this extract impacting users' sessions is low. This should be
+   taken into account when deciding on the timing of this extract. The extract
+   will not be scheduled when installed into your test account.
+  
+   Don't forget to enable the logical link (in your production account only) 
+   for the HL7 interface (step 3 of the post install instructions) immediately
+   after installing the patch.
+  
+   Installation Instructions
+   -------------------------
+   This patch should be installed during a period of low system activity 
+   with IB users off the system. No options need to be placed out of
+   service. Installation time is expected to be less than 5 minutes.
+  
+   Pre-Installation Instructions
+  
+   1.  Choose the PackMan message containing this patch.
+    
+   2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+   3.  From the Kernel Installation and Distribution System (KIDS) Menu, 
+       select the Installation Menu.  From this menu, you may elect to use 
+       the following option. When prompted for the INSTALL enter the 
+       patch # (IB*2.0*519):
+  
+       a.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+       b.  Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+           (routines, data dictionaries, templates, etc.). Note: Because
+           of a typo in the previous patch, you may see the message
+           " *** WARNING, you are missing one or more Patches ***" when comparing
+           IBCNEHL4. You may safely ignore this warning, and the typo that
+           caused KIDS to display this message has been fixed.
+       c.  Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+  
+   4.  From the Installation Menu, select the Install Package(s) option and
+       choose the patch to install. Enter IB*2.0*519.
+  
+   5.  When prompted for 'Enter the Coordinator for Mail Group 'NIFQRY':",
+       respond with the name of the Mail Group Coordinator for the 
+       Integrated Billing package or a facility Mail Group Coordinator.
+  
+   6.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? NO//', respond NO.
+  
+   7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//', respond NO.
+  
+   8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', respond NO.
+  
+   9.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0. 
+  
+   Post-Installation Instructions
+   ------------------------------
+   1.  You will be prompted 'Requested Start Time: NOW//
+  
+       At this prompt, you may enter a time to run the data extract after
+       installation, with a default of immediately. If you wish to delay
+       the extract until a later time, enter that time at this prompt.
+       This prompt will be skipped if the install is queued. In that case,
+       the extract will be executed at the time the install is performed.
+       This prompt will only appear when installing into a production account.
+  
+   2.  If you are installing into a production account and you chose to delay
+       the extract, you will see 'Task #' followed by the number of your
+       scheduled task. You will need this number if you want to confirm that 
+       your task has been scheduled to run. To confirm this, from the Taskman
+       Management menu, select List Tasks, then Your future tasks. Check the
+       output from that option for an entry matching your task number, and
+       verify that it is scheduled for the appropriate time.
+  
+   3.  If installing into a production account, enable the logical link for
+       the HL7 interface to the NIF.
+       a.  From the HL7 Main Menu [HL MAIN MENU], select Filer and Link
+           Management Options [HL MENU FILER LINK MGT].
+       b.  Select Start/Stop Links [HL START].
+       c.  When prompted to "Select HL LOGICAL LINK NODE:" enter "IB NIF TCP"
+           and press ENTER.
+       d.  The system will display "This LLP has been enabled!" to confirm that
+           the IB NIF TCP link has successfully started.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 56
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBAMTC
+    Before: B26047773   After: B26484499  **34,52,70,93,100,118,115,132,
+                                           150,153,137,176,215,275,321,
+                                           312,457,519**
+Routine Name: IBCEU3
+    Before:B105297417   After:B106673839  **51,137,155,323,348,371,400,
+                                           432,488,519**
+Routine Name: IBCNBLE
+    Before:B105786784   After:B108261556  **82,231,184,251,371,416,435,
+                                           452,497,519**
+Routine Name: IBCNBLL
+    Before:B138729075   After:B139954762  **82,149,153,183,184,271,345,
+                                           416,438,435,506,519**
+Routine Name: IBCNBMN
+    Before:  B7906645   After:  B8591639  **82,211,519**
+Routine Name: IBCNEHL4
+    Before:B174792299   After:B176214857  **300,416,438,497,506,519**
+Routine Name: IBCNERPE
+    Before: B65900140   After: B70614398  **271,300,416,438,497,506,519**
+Routine Name: IBCNHHLI
+    Before:       n/a   After: B10645426  **519**
+Routine Name: IBCNHHLO
+    Before:       n/a   After: B10205311  **519**
+Routine Name: IBCNHSRV
+    Before:       n/a   After:  B2517223  **519**
+Routine Name: IBCNHUT1
+    Before:       n/a   After: B19672959  **519**
+Routine Name: IBCNHUT2
+    Before:       n/a   After: B47011114  **519**
+Routine Name: IBCNSC01
+    Before: B57572758   After: B59075221  **52,137,191,184,232,320,349,
+                                           371,399,416,432,494,519**
+Routine Name: IBCNSC1
+    Before: B88597979   After: B90495985  **62,137,232,291,320,348,349,
+                                           371,400,519**
+Routine Name: IBCNSJ3
+    Before: B19317542   After: B20256950  **28,497,506,519**
+Routine Name: IBY519PO
+    Before:       n/a   After: B40291795  **519**
+ 
+Routine list of preceding patches: 211, 457, 488, 494, 506
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 11, 2013
+Completed By:                               Date Completed: DEC 02, 2014
+Released By :                               Date Released : DEC 16, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

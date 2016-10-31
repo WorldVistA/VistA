@@ -1,0 +1,192 @@
+
+=============================================================================
+Run Date: AUG 29, 2014                     Designation: GMTS*2.7*101
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7       SEQ #103                    Status: Released
+                  Compliance Date: SEP 12, 2014
+=============================================================================
+
+Associated patches: (v)GMTS*2.7*76 <<= must be installed BEFORE `GMTS*2.7*101'
+                    (v)GMTS*2.7*86 <<= must be installed BEFORE `GMTS*2.7*101'
+                    (v)LEX*2*80    <<= must be installed BEFORE `GMTS*2.7*101'
+                    (v)PX*1*199    <<= must be installed BEFORE `GMTS*2.7*101'
+                    (v)ICD*18*57   <<= must be installed BEFORE `GMTS*2.7*101'
+                    (v)GMPL*2*42   <<= must be installed BEFORE `GMTS*2.7*101'
+                    (v)SR*3*177    <<= must be installed BEFORE `GMTS*2.7*101'
+                    (v)DG*5.3*850  <<= must be installed BEFORE `GMTS*2.7*101'
+
+Subject: ICD-10 - Health Summary Updates
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ IMPORTANT INFORMATION Please read the Overview Guide 
+ (ICD-10_Prod_Overview_Guide_Groups_5_6_7.pdf)posted on the 
+ Anonymous directory for installation order. This is critical for 
+ proper functionality of the ICD-10 Software.
+  
+ This patch is part of the Computerized Patient Records System CPRSv30 
+ project. This project will modify the Computerized Patient Record 
+ System, Text Integration Utilities, Consults, Health Summary, Problem 
+ List, Clinical Reminders, and Order Entry/Results Reporting to meet 
+ the requirements proposed by the Dept. of Health and Human Services 
+ to adopt ICD-10 code set standards Clinic Orders.
+  
+ On January 16, 2009, the Centers for Medicare & Medicaid Services (CMS) 
+ released a final rule for replacing the 30-year-old ICD-9-CM code set 
+ with International Classification of Diseases, Tenth Revision, Clinical 
+ Modification (ICD-10-CM) and International Classification of Diseases, 
+ Tenth Revision, Procedure Coding System (ICD-10-PCS) with dates of 
+ service, or date of discharge for inpatients, that occur on or after the
+ industry activation date. The classification system consists of more than 
+ 68,000 codes, compared to approximately 13,000 ICD-9-CM codes. There are 
+ nearly 87,000 ICD-10-PCS codes, while ICD-9-CM has nearly 3,800 procedure
+ codes. Both systems also expand the number of characters allotted from
+ five and four respectively to seven alpha-numeric characters.  This value 
+ does not include the decimal point, which follows the third character for 
+ the ICD-10-CM code set.  There is no decimal point in the ICD-10-PCS code 
+ set.  These code sets have the potential to reveal more about quality of 
+ care, so that data can be used in a more meaningful way to better 
+ understand complications, better design clinically robust algorithms, and 
+ better track the outcomes of care.  ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research.  
+   
+ NOTE: Functionality specific to activation of the ICD-10 code set shall 
+ not be seen by end users until the code set has been activated.
+   
+   Components Sent With Patch
+   --------------------------
+     
+   Routine Summary:
+   ================
+   The following is a list of the routine(s) included in this patch.
+     
+   Total number of routines modified: 7
+   Total number of new routines: 0
+   Total number of routines: 7
+    
+   The following is a list of files included in this patch:
+   ========================================================
+   N/A
+  
+   Test Sites:
+   -----------
+   N/A
+   
+   Remedy Tickets Resolved
+   -----------------------
+   N/A
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  http://www.domain.ext/vdl/
+  
+ File Description               File Name                      FTP Mode
+ ----------------------------------------------------------------------
+ Technical Manual         hsum_2_7_tm.pdf                       (binary)
+ User Manual              hsum_2_7_101_um.pdf                   (binary)
+ ICD-10 Production Overview Guide Groups 5, 6 and 7
+                          ICD-10_PROD_OVERVIEW_GUIDE_GROUPS_5_6_7.pdf
+                                                                (binary)
+  
+  
+    INSTALLATION INSTRUCTIONS:
+    ==========================
+    It is not necessary to disable any options. You may install 
+    these routines at any time without interruption to users. It should
+    take less than 10 minutes to install this patch.
+        1. Download the GMTS_27_101.KID file from the appropriate
+           FTP Server to a directory on your system.
+  
+        2. Use the LOAD A DISTRIBUTION option on the KIDS INSTALLATION 
+        menu, and enter: [DIR:]GMTS_27_101.KID, where [DIR:] is the local 
+        directory where you have stored the host file.
+     
+        3. From the same menu, you may select to use the following options:
+           (when prompted for INSTALL NAME, enter GMTS*2.7*101)
+    
+            a. Verify Checksums in Transport Global - This option will 
+                allow you to ensure the integrity of the routines that are 
+                in the transport global.
+     
+            b. Print Transport Global - This option will allow you to view
+                the components of the KIDS build.
+     
+            c. Compare Transport Global to Current System - This option 
+                will allow you to view all changes that will be made when 
+                this patch is installed. It compares all components of
+                this patch (routines, DD's, templates, etc.).
+     
+            d. Backup a Transport Global - This option will create a backup
+                message of any routines exported with this patch. It will 
+                not backup any other changes such as DD's or templates.
+     
+        4. Use the Install Package(s) option and select the package 
+           GMTS*2.7*101
+     
+        5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+           YES//" respond NO.  
+     
+        6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+           and Protocols? YES//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSDGA
+    Before:  B9637322   After: B11914941  **28,49,71,101**
+Routine Name: GMTSDGC1
+    Before: B13343413   After: B15467864  **5,35,47,71,101**
+Routine Name: GMTSDGC2
+    Before:  B5767179   After:  B7198971  **28,49,71,101**
+Routine Name: GMTSDGP
+    Before: B11105682   After: B12132145  **28,49,60,71,101**
+Routine Name: GMTSPLST
+    Before: B46234208   After: B49938082  **28,35,52,86,101**
+Routine Name: GMTSPXOP
+    Before: B49221347   After: B51940559  **8,10,28,37,47,49,76,101**
+Routine Name: GMTSPXU1
+    Before: B13856268   After: B17119835  **10,37,71,86,101**
+ 
+Routine list of preceding patches: 76, 86
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 30, 2011
+Completed By:                               Date Completed: AUG 27, 2014
+Released By :                               Date Released : AUG 29, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,320 @@
+$TXT Created by                 at DEVVVV.DOMAIN.EXT  (KIDS) on Wednesday, 02/03/16 at 10:29
+=============================================================================
+Run Date: MAY 03, 2016                     Designation: SD*5.3*645
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #537                    Status: Released
+                  Compliance Date: AUG 03, 2016
+=============================================================================
+
+Associated patches: (v)SD*5.3*241  <<= must be installed BEFORE `SD*5.3*645'
+                    (v)SD*5.3*263  <<= must be installed BEFORE `SD*5.3*645'
+                    (v)SD*5.3*291  <<= must be installed BEFORE `SD*5.3*645'
+                    (v)SD*5.3*394  <<= must be installed BEFORE `SD*5.3*645'
+                    (v)SD*5.3*412  <<= must be installed BEFORE `SD*5.3*645'
+                    (v)SD*5.3*414  <<= must be installed BEFORE `SD*5.3*645'
+                    (v)SD*5.3*419  <<= must be installed BEFORE `SD*5.3*645'
+                    (v)SD*5.3*446  <<= must be installed BEFORE `SD*5.3*645'
+                    (v)SD*5.3*448  <<= must be installed BEFORE `SD*5.3*645'
+                    (v)SD*5.3*491  <<= must be installed BEFORE `SD*5.3*645'
+                    (v)SD*5.3*554  <<= must be installed BEFORE `SD*5.3*645'
+                    (v)SD*5.3*611  <<= must be installed BEFORE `SD*5.3*645'
+                    (v)SD*5.3*622  <<= must be installed BEFORE `SD*5.3*645'
+
+Subject: CID/PREFERRED DATE IN SCHEDULING
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Print Template
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  
+ ***************************** PLEASE NOTE ********************************
+ *                                                                        *
+ * The VHA Release Board has NOT provided approval for this patch to be   *
+ * installed in ANY production environment.                               *
+ *                                                                        *
+ * NOTE: This patch is ONLY to be loaded into a TEST environment until    *
+ * approval from the VHA Release Board is obtained to load into facility  *
+ * production environments.                                               *
+ *                                                                        *
+ **************************************************************************
+  
+ The Veterans Health Administration (VHA) Access and Clinic Administrative
+ Program (ACAP) has requested an enterprise enhancement for the
+ VistA Scheduling Package. The enhancement will reduce operating cost for
+ VHA and improve operational efficiencies resulting in patient centered
+ access to care, coordinated care, increased customer satisfaction, and
+ the reduction of excessive cycle/wait time used for scheduling patients.
+  
+ This patch adds the title 'CID/PREFERRED DATE' to the fields named 
+ 'DESIRED DATE OF APPOINTMENT' in the PATIENT file (#2), the SD WAIT 
+ LIST file (#409.3), and the SD TRANSFER ACCEPT file (#409.36). The new
+ title and each field name will be considered equivalent from this patch
+ forward. The abbreviation 'CID' stands for Clinically Indicated Date. This
+ new title will be used in Scheduling where 'DESIRED DATE' is presented to
+ the user while making a new appointment or displaying appointment 
+ information. Additionally, users will be able to use the new title when
+ creating reports via FileMan or executing print options where 'DESIRED
+ DATE' had been used. In some reports where there is a space limitation, 
+ the abbreviation 'CID/PD' will be used to indicate the new title.
+  
+ This patch also corrects the population of the FOLLOW-UP VISIT in 
+ Expand Display (EP) under the option Appointment Management [SDAM APPT 
+ MGT], and the CLINIC WAIT TIME2 when displaying any of the appointments 
+ in a series (multiple appointments).
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ PATIENT (2)                DESIRED DATE OF         Modified
+                            APPOINTMENT (27)
+ SD WAIT LIST (409.3)       DESIRED DATE OF         Modified
+                            APPOINTMENT (22)
+ SDWL TRANSFER ACCEPT       DESIRED DATE OF         Modified 
+ (409.36)                   APPOINTMENT (22)        
+  
+ Forms Associated:
+  
+ Form Name                  File #                  New/Modified/Deleted
+ ---------                  ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                    New/Modified/Deleted
+ ---------------                                    --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                Type                    New/Modified/Deleted
+ -----------                ----                    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                                      New/Modified/Deleted
+ -------------                                      -------------------- 
+ N/A
+  
+ Remote Procedure Calls Associated:
+  
+ Remote Procedure Call Name                         New/Modified/Deleted
+ --------------------------                         --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)      New/Modified/Deleted 
+ -------------     ----     ------------------      --------------------
+ SDWL30DAY         PRINT    SD WAIT LIST (409.3)    Modified
+ SDWLRO            PRINT    SD WAIT LIST (409.3)    Modified
+ SDWLWTR           PRINT    SD WAIT LIST (409.3)    Modified
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ Asheville
+ Chillicothe
+ Hudson Valley
+ Salt Lake City
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Albany:                 domain.ext
+ Hines:                  domain.ext
+ Salt Lake City:         domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ SCHEDULING Appt Menu          VSE_APPT.PDF                    (binary)
+ SCHEDULING Technical Manual   VSE_TM.PDF                      (binary)
+  
+  
+  
+ Patch Installation in TEST ONLY ***DO NOT INSTALL INTO PRODUCTION***:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the test system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 
+ minutes to install.
+  
+ If installed during the normal workday, it is recommended that the
+ following entries in the OPTION file (#19) be disabled to prevent possible
+ conflicts while running the KIDS Install. Other VistA users will not be
+ affected.
+  
+       Scheduling Menu                  [SDUSER]
+       Wait List (Sch/PCMM) Menu        [SD WAIT LIST MENU]
+       Wait List (Sch/PCMM) Reports     [SD WAIT LIST REPORTS MENU]
+  
+  
+  
+ Installation Instructions in TEST ONLY ***DO NOT INSTALL INTO 
+ PRODUCTION***:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(SD*5.3*645):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter SD*5.3*645
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' press 'Enter'    
+     
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' press 'Enter'
+     
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' respond YES
+  
+     a) When prompted 'Enter options you wish to mark as "Out of Order":', 
+        enter the following:
+  
+       Scheduling Menu                  [SDUSER]
+       Wait List (Sch/PCMM) Menu        [SD WAIT LIST MENU]
+       Wait List (Sch/PCMM) Reports     [SD WAIT LIST REPORTS MENU]
+  
+     b) When prompted 'Enter protocols you wish to mark as "Out of
+        Order":', just press ENTER.
+     
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCRPW62
+    Before: B35851518   After: B38498572  **267,269,358,491,645**
+Routine Name: SCRPW77
+    Before:B100471899   After:B111268055  **223,241,291,645**
+Routine Name: SCRPW78
+    Before: B18943883   After: B20645395  **291,645**
+Routine Name: SDAMEP3
+    Before: B19773146   After: B21041626  **20,241,645**
+Routine Name: SDM0
+    Before: B92285197   After: B93886442  **140,167,206,186,223,237,241,
+                                           384,334,547,621,622,645**
+Routine Name: SDM2A
+    Before: B21288152   After: B21850662  **446,528,567,594,611,645**
+Routine Name: SDMM1
+    Before: B15878644   After: B16255799  **28,206,168,327,622,645**
+Routine Name: SDWL120
+    Before:  B7543417   After:  B7897103  **446,645**
+Routine Name: SDWLE110
+    Before: B24136390   After: B23562010  **263,273,424,454,554,645**
+Routine Name: SDWLE7
+    Before: B15146200   After: B14943839  **446,645**
+Routine Name: SDWLI
+    Before: B76987504   After: B79675388  **263,327,394,446,524,505,611,645**
+Routine Name: SDWLIFT3
+    Before: B62360655   After: B62511843  **415,446,645**
+Routine Name: SDWLIFT6
+    Before: B60221443   After: B60758561  **415,446,645**
+Routine Name: SDWLRAD
+    Before: B20939529   After: B20910333  **263,645**
+Routine Name: SDWLROF
+    Before: B30475987   After: B31584484  **263,414,645**
+Routine Name: SDWLROS
+    Before: B33019881   After: B32624484  **263,414,645**
+Routine Name: SDWLRPS1
+    Before: B42004976   After: B41748823  **263,412,645**
+Routine Name: SDWLRPT1
+    Before: B43599634   After: B45492477  **263,399,394,645**
+Routine Name: SDWLRQ1
+    Before: B39567538   After: B40571252  **263,399,412,425,448,645**
+Routine Name: SDWLWTR
+    Before:  B2642955   After:  B2690330  **419,645**
+ 
+Routine list of preceding patches: 291, 414, 419, 448, 491, 554, 611, 622
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 10, 2015
+Completed By:                               Date Completed: MAY 03, 2016
+Released By :                               Date Released : MAY 03, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

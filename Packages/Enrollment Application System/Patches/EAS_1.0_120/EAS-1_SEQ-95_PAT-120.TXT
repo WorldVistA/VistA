@@ -1,0 +1,105 @@
+
+=============================================================================
+Run Date: SEP 08, 2014                     Designation: EAS*1*120
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1        SEQ #95                      Status: Released
+                  Compliance Date: OCT 09, 2014
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) APPLICATION, VERSION 4.0.1
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this informational patch is to announce the release of the
+ Enrollment System (ES) 4.0.1 application version software. 
+ 
+ On July 26, 2014, emergency patch ES 3.12.5 was deployed to the production ES
+ environment.  Please see informational patch EAS*1.0*117.  ES 4.0 development
+ was complete and undergoing release approval prior to the development ES
+ 3.12.5.  Please see informational patch EAS*1.0*116. 
+ 
+ ES 4.0.1 is being released to apply the 3.12.5 functionality to the baseline
+ ES 4.0 application. ES 4.0 and ES 4.0.1 will be released simultaneously,
+ however, ES 4.0.1 will be deployed in the place of ES 4.0 on the national
+ release date.
+  
+ Enhancements:
+ =============
+ Applying following previously released enhancement, ES 3.12.5, to the ES 4.0
+ software baseline:
+ Send empty values as Null on ZIO segment if they currently are Null and
+ Veteran is in Verified enrollment status Allow update from ZIO segment on Z07
+ if either appointment request indicator or appointment request date is
+ currently Null.
+  
+ What to Expect:
+ ===============
+ No changes to any VistA packages are required. ES will halt sending delete
+ indicator on ZIO segment in all cases where Veteran is not in Cancel/Decline
+ or Rejected status. This behavior is introduced as of ESR 3.12.5 on 7/26/2014
+ and will not change with this release. 
+  
+  
+ Implementation:
+ ===============
+ ESR 4.0.1 is a centrally managed web-based application and will be
+ implemented as a one-time rollout by the ES Technical team. No software will
+ be installed at the facilities.
+  
+  
+ Implementation Date:
+ ====================
+ September 6, 2014
+  
+ Associated Remedy Tickets:
+ ==========================
+ #1006932
+ 
+ Problem:
+ ========
+ The APPOINTMENT REQUEST DATE field (#1010.1511) is missing for some patients
+ that have APPOINTMENT REQUEST ON 1010EZ field (#1010.159) indicator set to a
+ value of YES.  Auditing has indicated the EAS ESR xxx ORU-Z11 CLIENT protocol
+ appears to be deleting the appointment request date from certain records. 
+ The ORU-Z11 protocol is an IVM package HL7 protocol that provides the means
+ by which the VistA facilities process an Unsolicited Enrollment / Eligibility
+ transmission from the Health Eligibility Center's Enrollment System. These
+ deletions have the potential of a negative downstream impact to the New
+ Enrollee Appointment Request (NEAR) management and reporting options.
+  
+ Solution:
+ =========
+ These issues were discussed on the bi-weekly EHBD Remedy Ticket Discussion on
+ Thursday. July 10, 2014.  These calls allow high priority items and that need
+ attention to be brought to the larger EHBD IPT, which is held on Mondays on a
+ Bi-Weekly basis.  Enrollment System development staff has indicated analysis
+ and correction is completed on both issues; with sending the delete quotes
+ and the failure to populate subsequent updates. The EHBD IPT voted to release
+ a fast-track patch in order to correct the problems. 
+  
+ Reporting Problems:
+ ===================
+ Problems associated with ES application should be reported via Remedy 
+ or contact the National Help Desk (NHD) 1-888-596-4357 for assistance.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 31, 2014
+Completed By:                               Date Completed: SEP 05, 2014
+Released By :                               Date Released : SEP 08, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

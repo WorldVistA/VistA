@@ -1,0 +1,212 @@
+$TXT Created by            at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 03/24/16 at 10:45
+=============================================================================
+Run Date: JUL 14, 2016                     Designation: FB*3.5*166
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #140                    Status: Released
+                  Compliance Date: AUG 14, 2016
+=============================================================================
+
+Associated patches: (v)FB*3.5*98   <<= must be installed BEFORE `FB*3.5*166'
+                    (v)FB*3.5*135  <<= must be installed BEFORE `FB*3.5*166'
+
+Subject: PCR REPORT, UNIQUE CLAIM ID AND ANESTHESIA MIN
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses the following 3 issues:
+  
+ 1. Items are missing from the Potential Cost Recovery (PCR) report when a
+    patient has multiple authorizations on the same day.
+  
+ 2. The direct global read of the SHORT NAME (#2) field in the CPT (#81) 
+    file must be updated to the current Application Programming Interface
+    (API) for the short name to continue to display on the Fee Basis Patch
+    135 Unique Claim Identifier Display report after the release of
+    IPCT*4.0*46.
+  
+ 3. The ANESTHESIA MINUTES (#43) field in the FEE BASIS PAYMENT (#162) 
+    file needs to be expanded from 3 to 4 digits to properly process 
+    anesthesia for labor and delivery.
+  
+   
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000001226511 - Bug in Fee Basis Potential Cost Recovery (PCR) report
+  
+ 2. INC000001105362 - CPT direct global read - Fee Basis (FB)
+  
+ 3. INC000001111269 - Fee Basis - Other
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Battle Creek VAMC
+ Edward Hines Jr. VA Hospital (Hines)
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001226511 - Bug in Fee Basis Potential Cost Recovery (PCR) report
+  
+    Problem:
+    --------
+    Items are missing from the Potential Cost Recovery (PCR) report when a
+    patient has multiple authorizations on the same day.  In cases where
+    there are multiple authorizations in the AUTHORIZATION (#161.01) 
+    sub-file of the FEE BASIS PATIENT (#161) file for the same patient and
+    date, the system currently only examines the first Authorization found
+    for the patient and date.
+  
+  
+    Resolution:
+    -----------
+    Routine FBPCR3 was modified to loop through all authorizations in the 
+    AUTHORIZATION (#161.01) sub-file of the FEE BASIS PATIENT (#161) file
+    for the same patient and date.
+  
+ 2. INC000001105362 - CPT direct global read - Fee Basis (FB)
+  
+    Problem:
+    --------
+    After the installation of patch ICPT*6.0*46, the SHORT NAME (#2) field 
+    will be deleted and will not show on the Fee Basis Patch 135 Unique Claim
+    Identifier Display report in option Unique Claim Identifier Display [FB
+    UCID DISPLAY].
+  
+    Resolution:
+    -----------
+    Routine FBUTL135 was modified to replace two direct global reads to API
+    calls in routine ICPTCOD.
+  
+ 3. INC000001111269 - Fee Basis - Other
+  
+    Problem:
+    --------
+    The Business has identified an inability to appropriately capture & 
+    price anesthesia minutes of service for Labor and Delivery (L&D) cases
+    (in VistA Fee/FBCS) due to a maximum data field length restriction of 3
+    characters 0 - 999.  L&D services often exceed that restricted field
+    length.
+  
+    Resolution:
+    -----------
+    The ANESTHESIA MINUTES (#43) field of the FEE BASIS PAYMENT (#162) 
+    file was modified to expand from 3 digits to 4 digits to properly
+    process anesthesia for labor and delivery.
+  
+ ********************BEFORE*********************** 
+   
+ DATA          NAME                  GLOBAL        DATA 
+ ELEMENT       TITLE                 LOCATION      TYPE 
+ --------------------------------------------------------------------------
+   
+ 162.03,43     ANESTHESIA TIME (MINUTES) 2;11 NUMBER 
+   
+               INPUT TRANSFORM: K:+X'=X!(X>999)!(X<15)!(X?.E1"."1N.N) X 
+               LAST EDITED:          MAY 05, 1999 
+               HELP-PROMPT:          Type a Number between 15 and 999, 0 
+                                     Decimal Digits
+               DESCRIPTION:          Enter time billed for an anesthesia 
+                                     service in minutes.  The bill may
+                                     specify anesthesia units which will
+                                     need to be converted to minutes.
+   
+  
+ ********************AFTER*********************** 
+   
+ DATA          NAME                  GLOBAL        DATA 
+ ELEMENT       TITLE                 LOCATION      TYPE 
+ --------------------------------------------------------------------------
+   
+ 162.03,43     ANESTHESIA TIME (MINUTES) 2;11 NUMBER 
+   
+               INPUT TRANSFORM: K:+X'=X!(X>9999)!(X<15)!(X?.E1"."1N.N) X 
+               LAST EDITED:          AUG 04, 2015 
+               HELP-PROMPT:          Type a Number between 15 and 9999, 0 
+                                     Decimal Digits
+               DESCRIPTION:          Enter time billed for an anesthesia 
+                                     service in minutes.  The bill may
+                                     specify anesthesia units which will
+                                     need to be converted to minutes.  
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. You may queue the install if you wish. It
+ should take less than two minutes to install this patch. 
+  
+  1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+  2. From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+    
+  3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter FB*3.5*166):
+           a.  Verify Checksums in Transport Global - This option will 
+               allow you to ensure the integrity of the routines that are  
+               in the transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option 
+               will allow you to view all changes that will be made when
+               this patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will 
+               not backup any other changes such as DD's or templates.
+    
+  4. Use the Install Package(s) option and select the package FB*3.5*166:
+  
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+          NO//', answer NO.
+  
+      b.  When prompted 'Want to DISABLE Scheduled Options and Menu
+          Options and Protocols? YES//', answer YES.
+  
+      When prompted, 'Enter options you wish to mark as 'Out Of Order':',
+      enter:
+  
+       Potential Cost Recovery Report       [FB PCR]
+       Unique Claim Identifier Display      [FB UCID DISPLAY]
+       Ancillary Contract Hosp/CNH Payment  [FBCH ANCILLARY PAYMENT]
+  
+      When prompted, 'Enter protocols you wish to mark as 'Out of Order':',
+      enter: <ENTER>
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBPCR3
+    Before: B24986170   After: B26362342  **48,69,98,166**
+Routine Name: FBUTL135
+    Before:B139327633   After:B143925629  **135,166**
+ 
+Routine list of preceding patches: 98, 135
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 23, 2015
+Completed By:                               Date Completed: JUL 07, 2016
+Released By :                               Date Released : JUL 14, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

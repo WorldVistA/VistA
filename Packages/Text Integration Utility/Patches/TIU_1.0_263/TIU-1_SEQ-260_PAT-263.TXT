@@ -1,0 +1,345 @@
+
+=============================================================================
+Run Date: AUG 29, 2014                     Designation: TIU*1*263
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #260                      Status: Released
+                  Compliance Date: SEP 12, 2014
+=============================================================================
+
+Associated patches: (v)TIU*1*250   <<= must be installed BEFORE `TIU*1*263'
+                    (v)LEX*2*80    <<= must be installed BEFORE `TIU*1*263'
+                    (v)ICD*18*57   <<= must be installed BEFORE `TIU*1*263'
+                    (v)TIU*1*267   <<= must be installed BEFORE `TIU*1*263'
+
+Subject: CHANGES FOR ICD-10
+
+Category: 
+  - Routine
+  - Other
+  - Informational
+
+Description:
+============
+
+ IMPORTANT INFORMATION Please read the Overview Guide
+ (ICD-10_PROD_OVERVIEW_GUIDE_GROUPS_5_6_7.pdf) posted on the Anonymous
+ directory for installation order. This is critical for proper 
+ functionality of the ICD-10 Software. 
+  
+ This patch is part of the Computerized Patient Records System CPRSv30 
+ project. This project will modify the Computerized Patient Record 
+ System, Text Integration Utilities, Consults, Health Summary, Problem 
+ List, Clinical Reminders, and Order Entry/Results Reporting to meet 
+ the requirements proposed by the Dept. of Health and Human Services 
+ to adopt ICD-10 code set standards for Clinic Orders.
+  
+ On January 16, 2009, the Centers for Medicare & Medicaid Services (CMS) 
+ released a final rule for replacing the 30-year-old ICD-9-CM code set 
+ with International Classification of Diseases, Tenth Revision, Clinical 
+ Modification (ICD-10-CM) and International Classification of Diseases, 
+ Tenth Revision, Procedure Coding System (ICD-10-PCS) with dates of 
+ service, or date of discharge for inpatients, that occur on or after the
+ industry activation date. The classification system consists of more than
+ 68,000 codes, compared to approximately 13,000 ICD-9-CM codes.  There are
+ nearly 87,000 ICD-10-PCS codes, while ICD-9-CM has nearly 3,800 procedure
+ codes.  Both systems also expand the number of characters allotted from 
+ five and four respectively to seven alpha-numeric characters.  This value 
+ does not include the decimal point, which follows the third character for
+ the ICD-10-CM code set.  There is no decimal point in the ICD-10-PCS code 
+ set.  These code sets have the potential to reveal more about quality of 
+ care, so that data can be used in a more meaningful way to better 
+ understand complications, better design clinically robust algorithms, and 
+ better track the outcomes of care.  ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research.  
+  
+ NOTE: Functionality specific to activation of the ICD-10 code set shall 
+ not be seen by end users until the code set has been activated.
+  
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+ N/A
+  
+  
+ Forms Associated:
+ N/A
+  
+  
+ Mail Groups Associated:
+ N/A
+  
+  
+ Options Associated:
+ N/A
+  
+  
+ Protocols Associated:
+ N/A 
+  
+  
+ Security Keys Associated:
+ N/A
+  
+  
+ Templates Associated:
+ N/A
+  
+  
+ Additional Information:
+  
+  
+ Changes Made to Accommodate ICD-10:
+ -----------------------------------
+  
+ Problem 1:
+ ----------
+ In the past, a TIU Progress Note could be linked to particular problems 
+ from the patient's Problem List using TIU VISTA.  These problems are 
+ displayed in the "Associated Problems" section of the Detailed Display of
+ the note.  This has generated the following needs for changes from TIU.
+  
+ Need: The List Manager actions that permit users to link problems 
+ directly to a TIU Progress Note must be either updated to allow the 
+ selection of ICD-9 or ICD-10 problems or the link action must be 
+ discontinued.
+  
+ Resolution: TIU VISTA protocols permitting users to link problems 
+ directly to a TIU Progress Note have been disabled.
+ Disabled Protocols:
+   TIU ACTION LINK TO PROBLEMS
+   TIU ACTION MENU LINK TO PROBLEM
+   TIU ACTION SELECT PROBLEM
+   TIU BROWSE ACTION LINK TO PROBLEM
+ Note: This means that all problems linked directly to Progress Notes will
+ predate this patch and will therefore be ICD-9 problems.
+  
+  
+ Need: The "Associated Problems" section of the Detailed Display of the
+ note must indicate the coding system of the linked problems since there
+ are now 2 possible coding systems.
+  
+ Resolution: The Detailed Display of the note has been altered to indicate 
+ the code version of the linked problems.  The Detailed Display has been 
+ changed for TIU VISTA and for the CPRS GUI.
+  
+ Need: PRINTING from the CPRS GUI of the Detailed Display of notes
+ must indicate the coding system of the linked problems.
+  
+ Resolution: Such prints now indicate the coding system of the linked
+ problems. 
+  
+ Need: Health Summaries from the CPRS GUI whose type includes the detailed
+ display of a note must indicate the coding system of the linked
+ problems.
+  
+ Resolution: Such Health Summaries now indicate the coding system of the 
+ linked problems.
+  
+  
+ Problem 2:
+ ----------
+ Need:  TIU List Manager (LM) Action Reassign is a manager action that is
+ still in use. It creates a new TIU document, prompts the user for a visit,
+ and then prompts the user for diagnoses for the visit.  In some 
+ circumstances TIU code is invoked to prompt for diagnoses.  This TIU 
+ code must be updated to use the appropriate coding version, ICD-9 or
+ ICD-10.
+  
+ Resolution: The TIU process of prompting the user for diagnoses and
+ storing them has been updated to use the correct code version.
+  
+  
+  
+ Problem 3:
+ ---------- 
+ Need:  TIU Object VA-WRIISC ACTIVE PROBLEMS must be updated to fetch and 
+ display problems in their own coding system, ICD-9 or ICD-10.
+  
+ Resolution: 
+ The object now displays problems in their own code version.
+  
+ NOTE:
+ TIU Object VA-WRIISC ACTIVE PROBLEMS is the only nationally
+ distributed TIU Object which includes Diagnoses/Problems. 
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ N/A
+  
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ ClearQuest Ticket:
+ 1. HDS000021548 TIU Associated Problems on a PN contains lower case 
+ icd-9-cm instead of caps
+  
+ Problem:
+ -------
+ This ClearQuest ticket is related to Problem 1 above, but concerns the 
+ text of the Provider Narrative which in some cases may contain coding 
+ system information as part of the Narrative itself. This information was
+ indicated in lower case.
+  
+ Resolution:
+ ----------
+ The coding system shown as part of the Provider Narrative is now 
+ indicated in upper case. 
+  
+  
+ 2. HDS000021870 ICD10 IOC TIU reassign notes, no ICD-10 encounter form in 
+ VistA
+  
+ Problem:
+ -------
+ In the ICD-10 Code System, when users reassigned a note and edited the
+ encounter data for the destination visit, they were not presented with a
+ list of diagnoses from the encounter form to choose from as they should
+ have been.
+  
+ Resolution:
+ ----------
+ The encounter form initially used to test with was faulty.  When using a
+ correct form, testers were presented with the list of diagnoses.
+  
+  
+ Test Sites:
+ ----------
+ Denver
+ Madison
+ Northampton
+ Coatesville
+ Orlando
+  
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www.domain.ext/vdl/
+  
+ Title         File Name                                          FTP Mode
+ -------------------------------------------------------------------------
+ Clinical Coordinator and User Manual    
+               tiuum.pdf                                         (binary)
+               tiuum.doc                                          (ascii)
+ Technical Manual                        
+               tiutm.pdf                                         (binary)
+               tiutm.doc                                          (ascii)
+ ICD-10 Production Overview Guide Groups 5, 6, and 7
+               ICD-10_PROD_OVERVIEW_GUIDE_GROUPS_5_6_7.pdf        (binary)
+  
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ This patch has a post-install routine, TIUPS263, which disables the 4 
+ protocols listed above.  This routine can be deleted once the patch is 
+ installed successfully.
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed at any time with no disruption to users.
+ This patch should take less than 5 minutes to install. There are no
+ options to disable during the installation.
+  
+ 1.  Download the TIU_10_263.KID file from the appropriate FTP Server to a
+     directory on your system.
+  
+ 2.  Use the LOAD A DISTRIBUTION option on the KIDS INSTALLATION menu, and
+     enter: [DIR:]TIU_10_263.KID, where [DIR:] is the local directory where
+     you have stored the host file.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch:
+     TIU*1.0*263 
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option
+     and choose the patch to install:
+     TIU*1.0*263
+  
+ 5.  When Prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+     answer 'NO'  
+     
+ 6. When Prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//' answer 'NO'
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ Post-install routine TIUPS263 may be deleted after the patch installs 
+ successfully.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIULQ
+    Before: B15422187   After: B16402401  **19,100,157,211,263**
+Routine Name: TIUPS263
+    Before:       n/a   After:  B2355409  **263**
+Routine Name: TIUPXAPI
+    Before: B76270559   After: B85709375  **15,24,29,82,107,126,161,267,263**
+Routine Name: TIUSRV
+    Before: B53540919   After: B56568642  **1,19,28,87,61,100,109,113,
+                                           112,184,211,250,263**
+ 
+Routine list of preceding patches: 250, 267
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 22, 2011
+Completed By:                               Date Completed: AUG 27, 2014
+Released By :                               Date Released : AUG 29, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

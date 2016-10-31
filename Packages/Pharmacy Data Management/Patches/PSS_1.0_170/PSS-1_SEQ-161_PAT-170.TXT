@@ -1,0 +1,306 @@
+$TXT Created by                 MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 09/30/13 at 12:09
+=============================================================================
+Run Date: JUN 10, 2014                     Designation: PSS*1*170
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #161                      Status: Released
+                  Compliance Date: JUL 11, 2014
+=============================================================================
+
+Associated patches: (v)PSS*1*89    <<= must be installed BEFORE `PSS*1*170'
+                    (v)PSS*1*124   <<= must be installed BEFORE `PSS*1*170'
+                    (v)PSS*1*155   <<= must be installed BEFORE `PSS*1*170'
+
+Subject: CMOP,MED INSTRUCTION PROMPT & CLINICAL REMINDERS INDEX BUILD ISSUES
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will resolve the following five issues reported in Pharmacy Data
+ Management Package.
+  
+ 1) Problem with PSS LOOK option
+  
+ 2) Using Drug Enter/Edit Option in PDM, local possible dosage merge
+    performed automatically.
+  
+ 3) Errors in reminder index for non-VA meds
+  
+ 4) Medication Reconciliation national component displaying on scalp
+    instead of subcutaneous
+  
+ 5) User unable to mark/unmark drugs for (Consolidated Mail Outpatient
+    Pharmacy) CMOP
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1) INC0000000174282 - Problem with PSS LOOK option
+  
+ 2) INC0000000230104 - Using Drug Enter/Edit Option in PDM, local possible
+                      dosage merge performed automatically.
+  
+ 3) INC0000000347730 - Errors in reminder index for non-VA meds
+    INC0000000413731(d) - Error with Non-Va Medication Finding
+  
+ 4) INC0000000500625 - Medication Reconciliation national component displaying
+                      on scalp instead of subcutaneous
+  
+ 5) INC0000000507504 - User unable to mark/unmark drugs for (Consolidated Mail
+                      Outpatient Pharmacy) CMOP
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ TEST SITES:
+ ===========
+ Cincinnati VAMC
+ VA Caribbean HCS 
+ Portland VAMC
+  
+ REMEDY OVERVIEW:
+ ================
+ 1) INC0000000174282 - Problem with PSS LOOK option
+  
+    Problem:
+    --------
+    The VistA option 'Lookup into Dispense Drug File' [PSS LOOK] does not work
+    the same as the 'Drug File Inquiry' [PSB DRUG INQUIRY] option.
+  
+    Resolution:
+    ----------- 
+    The routine ^PSSLOOK will be modified so the VistA option 'Lookup into
+    Dispense Drug File' [PSS LOOK] option to include the SYNONYM field
+    (#.01) of the SYNONYM sub-file (#9) of the DRG file (#50) during the
+    lookup the same way the 'Drug File Inquiry' [PSB DRUG INQUIRY] option
+    does the lookup.
+   
+    The ^PSSLOOK routine will also be modified to include the DRUG IEN
+    (Internal Entry Number) on the 1st line of the output following the name
+    of the drug.
+  
+ 2) INC0000000230104 - Using Drug Enter/Edit Option in PDM, local possible
+                      dosage merge performed automatically.
+  
+    Problem:
+    --------
+    When Using Drug Enter/Edit Option in PDM (Pharmacy Data Management), local 
+    possible dosage merge performed automatically. This happens before the
+    user gets asked the question 'Do you want to merge new Local Possible
+    Dosages?'
+  
+    Resolution:
+    -----------
+    ^PSSUTIL routine will be modified to prevent the creation of a record
+    with null values in the DOSE UNIT field (#4) and the NUMERIC DOSE field
+    (#5) of the LOCAL POSSIBLE DOSEAGE field (#.01) of the LOCAL POSSIBLE 
+    DOSAGE sub-file (#50.0904) of the DRUG file (#50).
+  
+ 3) INC0000000347730 - Errors in reminder index for non-VA meds
+  
+    Problem:
+    --------
+    The VistA 'Clinical Reminders Index Build' [PXRM INDEX BUILD] option is
+    used to create and rebuild the Clinical Reminders Index. The Clinical
+    Reminders Index Build creates the discontinued date in a different format
+    for Non VA Meds, than for Outpatient Pharmacy system. This format
+    difference in the discontinued date causes the Clinical Reminders to be
+    inaccurate.
+  
+    Resolution:
+    -----------
+    The VistA 'Clinical Reminders Index Build' [PXRM INDEX BUILD] option will
+    be modified to set the discontinued date for the Non VA Meds index in the
+    correct format.
+  
+    A post-install routine ^PSSP170 will be created to clean up the incorrect
+    discontinued date subscript stored in the cross-reference global.
+  
+ 4) INC0000000500625 - Medication Reconciliation national component displaying
+                      on scalp instead of subcutaneous
+  
+    Problem:
+    --------
+    When users change the name of a Medication Instruction using the VistA
+    Medication Instruction File Add/Edit [PSSJU MI] option, the system does
+    not perform the duplicate entry check.  This allows users to create
+    duplicate entries which in turn causes the Medication Reconciliation to 
+    display the incorrect data.
+  
+    Resolution:
+    -----------
+    The input transform for the NAME field (.01) of the MEDICATION INSTRUCTION
+    file(#51) will be modified to check the "B" index for the existence of
+    the new entry. If the entry exists, the user will not be allowed to make
+    the change. The SYNONYM field (.5) will be modified to force uppercase
+    values to ensure consistence with the NAME field (.01).
+  
+    The help text for the NAME field (.01) and the SYNONYM field (.5) will
+    also be modified to inform the user that the NAME and SYNONYM fields must
+    be unique.
+  
+    A post-install routine ^PSSP170 will examine the MEDICATION INSTRUCTION
+    file(#51) and identify any SYNONYM's that are duplicates or contain
+    mixed/lowercase letters. This list will be sent via Mailman to the holders
+    of the "PSJU MGR" security key.
+  
+ 5) INC0000000507504 - User unable to mark/unmark drugs for (Consolidated Mail
+                      Outpatient Pharmacy) CMOP
+  
+    Problem:
+    --------
+    When using the VistA 'CMOP Mark/Unmark (Single drug)' [PSSXX MARK] option
+    and the users tries to mark or unmark drugs for CMOP the system displays
+    "Do you wish to mark this drug to transmit to CMOP?"
+    "Enter Yes or No: "
+    If the user enters a "Yes" or "No" response, the system repeats the
+    prompt.
+    If the user enters a "Y", "y", "N" or "n" the system accepts the entry.
+  
+    Resolution:
+    -----------
+    The ^PSSMARK routine called by the VistA option "CMOP Mark/Unmark (Single
+    drug)" [PSSXX MARK] will be modified to accept all variances of a Yes/No
+    answer.
+  
+ DATA DICTIONARY CHANGES:
+ ========================
+  
+ BEFORE:
+ -------
+ STANDARD DATA DICTIONARY #51 -- MEDICATION INSTRUCTION FILE 
+  
+ DATA       NAME                  GLOBAL        DATA
+ ELEMENT    TITLE                 LOCATION      TYPE
+ ----------------------------------------------------------------------------
+ 51,.01     NAME                   0;1 FREE TEXT (Required)
+  
+            INPUT TRANSFORM:  S X=$$UP^XLFSTR(X) K:$L(X)>9!($L(X)<1)!'(X?.ANP
+                              ) X
+            LAST EDITED:      APR 03, 2006 
+            HELP-PROMPT:      Answer must be 1-9 characters in length. 
+            DESCRIPTION:        For inpatient pharmacy use, you may enter one
+                              of the following standard times or you may use
+                              a non-standard schedule when appropriate.  For 
+                              example,  Q36H  or Q17H.
+  
+ 51,.5      SYNONYM                0;3 FREE TEXT
+  
+            INPUT TRANSFORM:  K:$L(X)>9!($L(X)<1)!($D(^PS(51,"B",X))) X
+            LAST EDITED:      APR 10, 1995 
+            HELP-PROMPT:      ANSWER MUST BE 1-9 CHARACTERS IN LENGTH 
+            DESCRIPTION:      This field is used to indicate the synonym if
+                              applicable.
+  
+ AFTER:
+ ------
+ STANDARD DATA DICTIONARY #51 -- MEDICATION INSTRUCTION FILE 
+  
+ DATA       NAME                  GLOBAL        DATA
+ ELEMENT    TITLE                 LOCATION      TYPE
+ ----------------------------------------------------------------------------
+  
+ 51,.01     NAME                   0;1 FREE TEXT (Required)
+  
+            INPUT TRANSFORM:  S X=$$UP^XLFSTR(X) K:$L(X)>9!($L(X)<1)!'(X?.ANP
+                              )!($D(^PS(51,"B",X))) X
+            LAST EDITED:      AUG 16, 2011 
+            HELP-PROMPT:      Answer must be 1 to 9 characters in length, and
+                              must be unique among all NAMEs and SYNONYMs. 
+            DESCRIPTION:        For inpatient pharmacy use, you may enter one
+                              of the following standard times or you may use
+                              a non-standard schedule when appropriate.  For 
+                              example,  Q36H  or Q17H.
+  
+ 51,.5      SYNONYM                0;3 FREE TEXT
+  
+            INPUT TRANSFORM:  S X=$$UP^XLFSTR(X) K:$L(X)>9!($L(X)<1)!($D(^PS(
+                              51,"B",X))) X
+            LAST EDITED:      AUG 16, 2011 
+            HELP-PROMPT:      Answer must be 1 to 9 characters in length, and
+                              must be unique among all NAMEs and SYNONYMs. 
+            DESCRIPTION:      This field is used to indicate the synonym if
+                              applicable.
+  
+ INSTALLATION INSTRUCTIONS:
+ ========================== 
+ It is not necessary to disable any options.  Users should not be
+ on the system when this patch is installed.  It should take less 
+ than 5 minutes to install this patch.
+  
+ The Post-install routine PSSP170 can be removed using the VistA
+ option "Delete Routines" [XTRDEL] after successful installation
+ of the PSS*1*170 patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSS*1.0*170)
+         a.  Verify Checksums in Transport Global - This option will 
+             allow you to ensure the integrity of the routines that are
+             in the transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSS*1.0*170 .
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSLOOK
+    Before: B85630505   After: B85846814  **3,7,15,16,20,24,29,38,68,61,
+                                           87,90,127,147,170**
+Routine Name: PSSMARK
+    Before: B43854225   After: B44377743  **15,17,20,28,57,82,124,170**
+Routine Name: PSSP170
+    Before:       n/a   After: B35755089  **170**
+Routine Name: PSSSXRD
+    Before: B25771770   After: B25851115  **62,89,170**
+Routine Name: PSSUTIL
+    Before: B98434598   After: B99593608  **34,38,147,155,170**
+ 
+Routine list of preceding patches: 89, 124, 155
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 21, 2011
+Completed By:                               Date Completed: JUN 10, 2014
+Released By :                               Date Released : JUN 10, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

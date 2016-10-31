@@ -1,0 +1,476 @@
+$TXT Created by                   HEV.MYHEALTH.DOMAIN.EXT  (KIDS) on Tuesday, 11/17/15 at 15:59
+=============================================================================
+Run Date: DEC 07, 2015                     Designation: MHV*1*22
+Package : MHV - MYHEALTHEVET                  Priority: EMERGENCY
+Version : 1        SEQ #16                      Status: Released
+                  Compliance Date: DEC 10, 2015
+=============================================================================
+
+
+Subject: EMERGENCY MHV*1.0*22 Workload Credit-ICD-10
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ EMERGENCY MHV*1.0*22 Workload Credit-ICD-10
+  
+ Secure Messaging (SM) allows patients and clinicians to email each other
+ securely and confidentially, and allows clinicians to post those email
+ threads to the medical record as progress notes.
+ Relationships between patients and clinicians are established based on
+ Primary Care Management Module (PCMM) providers, clinic appointments and
+ Order Entry/Results Reporting (OE/RR) teams.  Secure Messaging uses 
+ triage groups based on these relationships to manage which patients are
+ able to email which providers.  More information on secure messaging can
+ be found on the MyHealtheVet (MHV) product web site (intranet)
+ http://vaww1.domain.ext/MyHealtheVet/, and MHV web site www.myhealth.domain.ext.
+  
+ Summary
+ -------
+ This patch addresses issues related to ICD-10 lookup in VistA 
+ that impact the providers using SM Workload Credit functionality.
+  
+ My HealtheVet (MHV) Emergency VistA Patch (MHV*1.0*22) will address 
+ the following two issues related to VistA ICD-10 lookup used in the 
+ SM Workload Credit functionality, and a defect identified with the
+ prior released patch MHV*1.0*11:
+  
+ 1.      JAZZ Story 226244: SM WLC - ICD10 - Workload Credit Issue -
+ Corrects the lookup of the ICD-10 Diagnosis as nationally mandated after 
+ October 1st, 2015.
+  
+ 2.      JAZZ Story 223914: SM WLC - ICD10 - SNOMED CT Problem List and
+ Workload Credit Encounter Completion.
+ The patch is correcting the lookup of the Patient Problem List, enabling 
+ retrieval of only the Problem items from a patient record that have been 
+ mapped to a SNOMED-CT and  ICD-10,consistent with CPRS functionality 
+ after October 1st,2015.This fix will prevent inadequate encounter 
+ entries from being created (action required encounters), that show up on
+ the VistA Admin reports.
+  
+ 3.      JAZZ Defect 218690: Patch MHV*1.0*11 Fix Patch Install History
+          - Help Desk Remedy Ticket:INC000001307008.
+ The previous MHV patch MHV*1.0*11 released from FORUM had a patch
+ configuration parameter missing (the Package Link parameter was blank).
+ This has caused the patch to be installed at the sites without being
+ linked to the MHV package. This resulted in the MHV Patch, MHV*1.0*11, not
+ being filed properly with the package install history under the MHV
+ Package, and therefore, any MHV subsequent patches that required this
+ patch would not be able to be installed.
+ This patch will apply the fix to the MHV package install history during
+ the patch pre-install while running the pre-install routine MHV1P22.
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)                       
+ New/Modified/Deleted
+ -------------          -----------------------------------  
+ --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)                 
+ New/Modified/Deleted
+ -------------      ----      ------------------            
+ --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ Boston     - 523
+ Cincinnati - 539
+ Erie       - 562
+ Portland   - 648
+ Puget Sound- 663
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ The software for this patch is distributed as KIDS build MHV*1.0*22
+ an id distributed via PackMan message.
+ The My HealtheVet Technical Manual is available through the VistA
+ Documentation Library (VDL) at the following address:
+  
+    http://www.domain.ext/vdl/application.asp?appid=153
+  
+ Also the documentation can be retrieved by downloading one of the
+ following documents from VA FTP sites:
+    mhv_vista_1_6_technicalmanual.doc
+    mhv_vista_1_6_technicalmanual.pdf
+                                                                     
+ The preferred method is to FTP the files from
+    download.vista.domain.ext    
+ which will transmit the files from the first available FTP server.
+  
+ The files may also be downloaded directly from a particular FTP
+ location at the following locations:
+  
+    Albany                  ftp.domain.ext
+    Hines                   ftp.domain.ext
+    Salt Lake City          ftp.domain.ext
+  
+ Patch Installation:
+ ===================
+  
+ Installation Instructions Overview
+ ---------------------------------- 
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  The patch is distributed in KIDS format
+ in a PackMan message.  This patch requires MHV*1*11 SEQ 14 and
+ installation time is less than 15 minutes.
+  
+ Pre-installation Instructions
+ ------------------------------
+ 1. Manually Verify that Patch MHV*1.0*11 SEQ 14 has been installed:
+    ---------------------------------------------------------------
+    a. Display the MHV Package PATCH APPLICATION HISTORY Multiple and look
+ for the last patch installed.
+  
+ EXAMPLES HOW TO VERIFY IF THE PATCH IS IN PATCH APPLICATION HISTORY
+ EXAMPLE #1. Run Verify Patch Installation API:
+ At the Programmer Prompt run the command to Verify Patch Installation:
+   >W $$PATCH^XPDUTL("MHV*1.0*11")
+ If the result is 0, continue with the next step b. 
+ If the result is 1, it means that the patch is installed and the Patch
+ application History is up to date, then Skip to Installation Instructions
+ for Patch MHV*1.0*22 (below).
+   
+ EXAMPLE #2. How to look in the PACKAGE file in FileMan:
+     Select OPTION: INQUIRE TO FILE ENTRIES  
+     OUTPUT FROM WHAT FILE: Package//PACKAGE 
+     Select PACKAGE NAME: MHV  My HealtheVet     MHV
+     STANDARD CAPTIONED OUTPUT? Yes// N  (No)
+     FIRST PRINT FIELD: 22  VERSION  (multiple)
+     FIRST PRINT VERSION SUB-FIELD: 1105  PATCH APPLICATION HISTORY  
+ (multiple)
+     FIRST PRINT PATCH APPLICATION HISTORY SUB-FIELD: .01  PATCH 
+ APPLICATION HIST ORY
+     THEN PRINT PATCH APPLICATION HISTORY SUB-FIELD: .02  DATE APPLIED
+     THEN PRINT PATCH APPLICATION HISTORY SUB-FIELD: 
+   THEN PRINT VERSION SUB-FIELD: 
+ THEN PRINT FIELD: 
+ Heading (S/C): PACKAGE LIST// 
+ STORE PRINT LOGIC IN TEMPLATE: 
+ DEVICE:    SSH VIRTUAL TEMINAL    Right Margin: 80// 
+ PACKAGE LIST                                   NOV 30,2015  02:28    PAGE 
+ 1
+ PATCH
+ APPLICATION
+ HISTORY          DATE APPLIED
+ ------------------------------------------------------------------------
+ ...
+ 10 SEQ #6        JAN 29,2014  12:04
+ 11 SEQ#14        OCT 26,2015  20:01
+  
+ If the Patch 11 SEQ#14 shows as LAST installed, skip to the Installation
+ Instructions for Patch MHV*1.0*22 (below).
+ If Patch MHV*1.0*11 SEQ 14 does not show in the PATCH APPLICATION HISTORY
+ continue with the next step b.
+  
+    b. Perform a FileMan Search in the INSTALL file to see if there is 
+ any entry for MHV*1.0*11 SEQ #14.
+ If not, abort the install of patch MHV*1.0*22. Install Patch MHV*1.0*11 
+ SEQ #14 first.
+ Then, after successful installation of patch 11, install Patch MHV*1.0*22.
+ EXAMPLE OF FileMan SEARCH:
+     Select OPTION: INQUIRE TO FILE ENTRIES  
+     OUTPUT FROM WHAT FILE: INSTALL// 
+     Select INSTALL NAME: MHV*1.0*11
+     1   MHV*1.0*11      8/13/13@15:55:28
+      => Released MHV*1*11 SEQ #14
+  
+  
+ Installation Instructions
+ -------------------------
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+ Choose the PackMan message containing this patch and invoke the
+ INSTALL/CHECK MESSAGE PackMan option as shown below:
+  
+ EXAMPLE:
+ Select Systems Manager Menu <TEST ACCOUNT> Option: mailMan Menu
+  
+ VA MailMan 8.0 service for USER.USER@xxx.xxx.DOMAIN.EXT
+ You last used MailMan: 12/04/15@14:07
+ You have 183 new messages.
+  
+  
+    AML    Become a Surrogate (SHARED,MAIL or Other)
+    BNI    Bedford News Items ...
+    HML    Help (User/Group Info., etc.) ...
+    NML    New Messages and Responses
+    OML    Other MailMan Functions ...
+    RML    Read/Manage Messages
+    SML    Send a Message
+           Create IRM Workload from a mail message
+           Personal Preferences ...
+           Query/Search for Messages
+  
+  
+ Select MailMan Menu <TEST ACCOUNT> Option: read/Manage Messages
+  
+ Select message reader: Classic// 
+ Read mail in basket: IN//        (xxx messages)
+ Last message number: 188   Messages in basket: 188
+ Enter ??? for help.
+  
+ IN Basket Message: 1// 188
+  
+ Subj: EMERGENCY RELEASED patch MHV*1*22  [#63475]
+ 3 Dec 2015 13:52:02 -0500 (EST)  1422 lines
+ From: <"NPM   [#76286653]"@FORUM.DOMAIN.EXT>  In 'IN' basket.   Page 1  *New*
+ -----------------------------------------------------------------------
+ $TXT Created by                   HEV.MYHEALTH.DOMAIN.EXT  (KIDS) on Tuesday, 
+ 11/17/15 at 15:59
+ ==========================================================================
+  
+ Run Date: DEC 03, 2015                     Designation: MHV*1*22
+ Package : MHV - MYHEALTHEVET                  Priority: EMERGENCY
+ Version : 1                                     Status: Released
+ ==========================================================================
+  
+  
+  
+ Subject: EMERGENCY MHV*1.0*22 Workload Credit-ICD-10
+  
+ Category: 
+   - Routine
+  
+ Description:
+ ============
+  
+ EMERGENCY MHV*1.0*22 Workload Credit-ICD-10
+  
+ Enter RETURN to continue or '^' to exit: ^
+  
+ Enter message action (in IN basket): Ignore// Xtract KIDS
+ Select PackMan function: INSTALL/CHECK MESSAGE
+  
+ Line 339  Message #63475     Unloading KIDS Distribution   MHV*1.0*22
+    MHV*1.0*22
+  
+ Want to Continue with Load? YES// 
+ Loading Distribution...
+  
+    MHV*1.0*22
+  
+ Go into PROGRAMMER MODE and verify the current checksums before patch is 
+ installed:
+  
+ Verify Checksums of routines listed in ROUTINE INFORMATION
+  
+    >D CHECK1^XTSUMBLD
+       Build from: Package
+ All Routines? No => No
+ Routine: (list all routines shown below under ROUTINE INFORMATION. Ensure 
+ the BEFORE matches sum before patch is installed.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+ Select Kernel Installation & Distribution System Option: INStallation
+                                                          ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+ Select Installation Option:
+  
+ 3.  Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL however it is strongly recommended
+ to be used when installing the MHV*1.0*22 patch - (When prompted for the
+ INSTALL NAME, enter MHV*1.0*22):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates. 
+         <<<This option it is strongly recommended to be used when 
+         installing the MHV*1.0*22 patch>>>
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this
+         patch is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s)
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch:
+     a. Choose the Install Package(s) option to start the patch install.
+     b. When prompted 'Want KIDS to INHIBIT LOGONs during the
+        install? NO //' answer NO
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO //' answer NO
+  
+ EXAMPLE:
+ Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: 
+ installation
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ Select Installation <TEST ACCOUNT> Option: install Package(s)
+ Select INSTALL NAME: mhv*1.0*22      12/4/15@14:14:19
+      => EMERGENCY Released MHV*1*22
+  
+ This Distribution was loaded on Dec 04, 2015@14:14:19 with header of 
+    EMERGENCY Released MHV*1*22
+    It consisted of the following Install(s):
+      MHV*1.0*22
+ Checking Install for Package MHV*1.0*22
+  
+ Install Questions for MHV*1.0*22
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   VIRTUAL TELNET
+  
+                                 MHV*1.0*22
+ __________________________________________________________________________
+      Turning on MHV Application Logging
+  
+      Patch MHV*1.0*11 SEQ#14 Install History Successfully Updated
+  
+  Running Post-Install Routine: POST^MHV1P22
+  
+      Turning off MHV Application Logging
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MHV*1.0*22 Installed. 
+                Dec 04, 2015@14:36:12
+ __________________________________________________________________________
+           ____________________________________________________________
+   100%   |             25             50             75               |
+ Complete  ____________________________________________________________
+  
+ Install Completed
+  
+ Post-Installation Instructions
+ ------------------------------
+ Repeat the steps in the Pre-Installation Instructions
+ If the patch 22 was successfully installed without errors, then Patch
+ MHV*1.0*11 SEQ 14 should show now it has been installed as well.
+ EXAMPLE:
+ At Programmer Prompt run the command:
+ W $$PATCH^XPDUTL("MHV*1.0*11")
+ 1
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;My HealtheVet;**[Patch List]**;Oct 16, 2015;Build 19
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MHV1P22
+    Before:       n/a   After: B29485793  **22**
+Routine Name: MHV7B1N
+    Before:  B2734081   After:  B4347651  **11,22**
+Routine Name: MHV7B1O
+    Before:  B2738736   After:  B4352341  **11,22**
+Routine Name: MHVUMRPC
+    Before: B45400823   After: B47575713  **11,22**
+ 
+Routine list of preceding patches: 11
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 26, 2015
+Completed By:                               Date Completed: DEC 04, 2015
+Released By :                               Date Released : DEC 07, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

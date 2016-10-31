@@ -1,0 +1,241 @@
+$TXT Created by              at VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Monday, 12/14/15 at 09:47
+=============================================================================
+Run Date: JUN 14, 2016                     Designation: LA*5.2*91
+Package : LA - AUTOMATED LAB INSTRUMENTS      Priority: Mandatory
+Version : 5.2        SEQ #65                    Status: Released
+                  Compliance Date: JUL 15, 2016
+=============================================================================
+
+Associated patches: (v)LA*5.2*42   <<= must be installed BEFORE `LA*5.2*91'
+
+Subject: INCREASE SELECTION FROM AUTO INSTRUMENT FILE TO 999
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ BLOOD BANK Clearance:
+ =====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*91 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*91 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LA*5.2*91 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ Description:
+ ============
+ Patch LA*5.2*91 removes the limitation on the number of instruments from 
+ the Auto Instrument File (#62.4) that can be viewed and selected when 
+ using option Verify Micro Auto Data (LA MI VERIFY AUTO). The current 
+ VistA code displays a list of no more than 99 instruments from the Auto 
+ Instrument file when using this option, even though the Auto Instrument 
+ File can contain as many as 999 instruments. Users will now be able to 
+ view and select any instrument from the Auto Instrument File when using 
+ this option. 
+  
+ This intake has been implemented locally at the Syracuse, New York 
+ VAMC.
+  
+ This patch addresses the following requirement:
+  
+         VHBAO: NEED502510 Manage Laboratory Specimens: As an 
+                authorized user, I need to manage lab specimens 
+                submitted for testing, so that the most accurate 
+                results are available for the patient record.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)       Field Name (Number)       New/Modified/Deleted
+ -----------------------  ------------------------  --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                File #       New/Modified/Deleted
+ ---------                ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------
+ 20140713   INCREASE SELECTION FROM AUTO INSTRUMENT FILE TO 999
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+ Problem:
+ --------
+  
+ Resolution:
+ -----------
+  
+  
+ Test Sites:
+ ----------
+ VA Hudson Valley Health Care System, (Montrose, Castle Point), NY
+ Erie VA Medical Center, Erie, PA (VAMC)
+ VA East Colorado Health Care System, (Denver, Ft. Lyon), CO
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing the
+ new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre/Post installation routines associated with this patch.
+  
+  
+ Pre-Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ Installation Instructions
+ -----------------------------
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+         the Installation Menu.  From this menu, you may elect to use the 
+         following options. When prompted for the INSTALL NAME enter
+         LA*5.2*91.
+  
+         a.  Verify Checksums in Transport Global - This option will 
+             allow you to ensure the integrity of the routines that are in
+             the transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+         and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO// Press <Enter>
+  
+ 6.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO// Press <Enter>
+  
+ 7.      If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;AUTOMATED LAB INSTRUMENTS;**[Patch List]**;Sep 27, 1994;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LAMIAUT0
+    Before: B23786786   After: B23814571  **42,91**
+ 
+Routine list of preceding patches: 42
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 13, 2015
+Completed By:                               Date Completed: JUN 13, 2016
+Released By :                               Date Released : JUN 14, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

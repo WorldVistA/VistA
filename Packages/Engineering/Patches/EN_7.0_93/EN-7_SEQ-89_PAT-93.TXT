@@ -1,0 +1,127 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 03/11/14 at 09:33
+=============================================================================
+Run Date: JUL 01, 2014                     Designation: EN*7*93
+Package : EN - ENGINEERING                    Priority: Mandatory
+Version : 7        SEQ #89                      Status: Released
+                  Compliance Date: AUG 01, 2014
+=============================================================================
+
+
+Subject: CORRECT UNDEFINED ERROR WITH ENTER/EDIT ROOM PLANNING DATA MENU OPTION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ The user is receiving an <Undefined> error when deleting an entry using
+ the Enter/Edit Room Planning Data [ENSP-PLAN1] menu option.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1. INC000000784455 - <UNDEFINED> FMUT1^ENSP6 *DA
+  
+  
+ Participating Test Sites:
+ =========================
+ Lebanon VAMC
+ Salisbury VAMC
+ San Francisco VAMC
+  
+  
+ Remedy Overview:
+ ================
+  
+ 1. INC000000784455    
+  
+   Problem:
+   --------
+   The user is receiving an <UNDEFINED> error when deleting an entry using
+   the Enter/Edit Room Planning Data [ENSP-PLAN1] menu option.  This is 
+   happening because the DA variable is "killed" in the DIE call.
+  
+   Resolution:
+   -----------
+   Modified routine ENSP6 (FMUT1^ENSP6), setting variable ENDA before the
+   DIE call.  This allows for the protection of the DA variable which was 
+   "killed" in the DIE call.
+  
+  
+ Installation Instructions:
+ ==========================
+ If installed during the normal workday, it is recommended that the
+ Engineering users be off the system. Other VISTA users will not be
+ affected.
+  
+ Install Time - less than 2 minutes.
+  
+ 1.   Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.   From the Kernel Installation & Distribution System menu, select 
+      the Installation menu.  
+  
+ 3.   From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter EN*7.0*93):
+  
+      a.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+      b.  Print Transport Global - This option will allow you to view
+          the components of the KIDS build.
+      c.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      d.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+  
+ 4.   Use the Install Package(s) option and select the package EN*7.0*93.
+  
+ 5.   When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+      NO//", respond NO.  
+  
+ 6.   When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+      Protocols? NO//", respond YES.
+                
+      a.  When prompted "Enter options you wish to mark as 'Out of 
+          Order':", enter the following option:
+  
+          ENTER/EDIT ROOM PLANNING DATA   [ENSP-PLAN1]
+  
+      b.  When prompted "Enter protocols you wish to mark as 'Out of
+          Order':", just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;7.0;ENGINEERING;**[Patch List]**;Aug 17, 1993;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ENSP6
+    Before:  B4773264   After:  B4913374  **93**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 07, 2013
+Completed By:                               Date Completed: JUN 25, 2014
+Released By :                               Date Released : JUL 01, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

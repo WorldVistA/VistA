@@ -1,0 +1,188 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 05/08/15 at 10:10
+=============================================================================
+Run Date: OCT 21, 2015                     Designation: ECX*3*158
+Package : ECX - DSS EXTRACTS                  Priority: Mandatory
+Version : 3       SEQ #141                      Status: Released
+                  Compliance Date: NOV 01, 2015
+=============================================================================
+
+Associated patches: (v)ECX*3*151   <<= must be installed BEFORE `ECX*3*158'
+
+Subject: FY16 DSS LOINC CODE UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ *********************NOTE:********************************* 
+ * THIS PATCH NEEDS TO BE IMPLEMENTED AFTER THE SEPTEMBER  *
+ * Lab Results (LAR) EXTRACT IS RUN AND BEFORE THE OCTOBER *
+ * LAR EXTRACT IS RUN.                                     *
+ ***********************************************************
+  
+ Patch ECX*3.0*158 will update the  DSS LOINC FILE (#727.29) file by adding
+ 10 new LOINC codes.
+      
+    Associated NSR(s):
+    ------------------
+    N/A
+     
+     
+    Associated Remedy ticket(s):
+    ----------------------------
+    1. INC000001244609 - FY16 LOINC Code Updates for File #727.29
+      
+     
+    Participating Test Sites:
+    -------------------------
+    Carl Vinson VA MC
+    Louisville VA MC
+    Memphis VA MC
+     
+      
+    REMEDY OVERVIEW:
+    ---------------- 
+    1. INC000001244609 - FY16 LOINC Code Updates for File #727.29
+   
+    Problem:
+    --------
+    The Managerial Cost Accounting Office (MCAO) has requested an update 
+    to the DSS LOINC FILE (#727.29) file. This patch will add 10 codes to the 
+    file.
+  
+    Resolution:
+    -----------
+    This patch updates the DSS LOINC FILE (#727.29) file by adding 10 new 
+    LOINC codes. 
+   
+    The new entries that will be added to the DSS LOINC FILE (#727.29) file 
+    are:
+  
+    For LAR Test #92 with DSS Test Name "BRCA1" and Reporting 
+    Unit of "text":     
+  
+        LOINC Code      LOINC Short Name
+        ----------      ----------------        
+        21639-0         BRCA1 Gene Mut Tested Bld/T
+        21636-6         BRCA1 Gene Mut Anal Bld/T
+        21637-4         BRCA1 c 185 Del Ag Bld/T Ql
+        21638-2         BRCA1 c 5382 Ins C Bld/T Ql
+                                        
+    For LAR Test #93 with DSS Test Name "BRCA2" and Reporting 
+    Unit of "text":
+  
+        LOINC Code      LOINC Short Name
+        ----------      ----------------
+        38530-2         BCRA2 Gene Mut Anal Bld/T
+        38531-0         BCRA2 Gene Mut Tested Bld/T
+        21640-8         BRCA2 c 6174 Del T Bld/T Ql
+                                        
+    For LAR Test #94 with DSS Test Name "BRCA1+BRCA2" and Reporting Unit 
+    of "text":  
+        
+        LOINC Code      LOINC Short Name
+        ----------              ----------------
+        50995-0         BRCA1+BRCA2 gene Mut Anal Bld/T
+        59041-4         BRCA1+BRCA2 gene Mut Tested Bld/T
+        
+    For LAR Test #95 with DSS Test Name "CA 125" and Reporting Unit 
+    of "U/mL":  
+  
+        LOINC Code      LOINC Short Name
+        ----------      ----------------
+        10334-1         Cancer Ag125 SerPl-aCnc
+                                        
+   
+  Installation Instructions:
+  ==========================
+  
+  **DO NOT INSTALL UNTIL ALL PRE-INSTALL INSTRUCTIONS HAVE BEEN COMPLETED**
+   
+  PRE-INSTALL
+  -----------
+  Contact the site DSS POC and review the following steps with them:
+      1. Has the September LAR EXTRACT been run to completion? If NO, get
+         a time frame for when it will be completed, audited, and reviewed
+         for issues?
+      2. Has the audit report - Laboratory Results (LAR) Extract Audit [ECX
+         LAR SOURCE AUDIT] - been completed and reviewed against the 
+         extract with no issues found?  If NO, please have them complete 
+         it and review it against the extract for issues.
+      3. Has the Lab Results DSS LOINC Code Report [ECX LAR LOINC RPT] 
+         been run and reviewed for inconsistencies or errors?
+      4. Does the DSS POC approve that the site has fully completed the 
+         September LAR EXTRACT and has not started anything with the 
+         October LAR EXTRACT?  If YES, proceed with installation of the 
+         patch into the site.
+    
+  INSTALL
+  -------    
+   
+     ***************************NOTE****************************  
+     * It is not necessary to disable any options.  You may    *
+     * install these routines at any time without interruption *
+     * to users.                                               *
+     ***********************************************************
+     
+    Installation will take less than 2 minutes.
+   
+    Suggested time to install: Non-peak requirement hours.
+    
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter ECX*3.0*158)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this patch
+              is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+    
+     4. Use the Install Package(s) option and select the package ECX*3.0*158.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+        Protocols? NO//" respond NO.
+     
+  ** 7. During install, verify that all entries were added successfully.
+        If an error is displayed, please open a new CA ticket.  
+  
+     8. You may delete the routine ECX3P158 from your production system after 
+        the patch has been successfully installed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22,1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECX3P158
+    Before:       n/a   After:  B5964326  **158**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 20, 2015
+Completed By:                               Date Completed: SEP 16, 2015
+Released By :                               Date Released : OCT 21, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,558 @@
+$TXT Created by                    CINP.FO-BIRM.DOMAIN.EXT  (KIDS) on Monday, 11/09/15 at 15:20
+=============================================================================
+Run Date: MAR 09, 2016                     Designation: PX*1*210
+Package : PX - PCE PATIENT CARE ENCOUNTER     Priority: Mandatory
+Version : 1       SEQ #161                      Status: Released
+                  Compliance Date: APR 08, 2016
+=============================================================================
+
+Associated patches: (v)PX*1*13     <<= must be installed BEFORE `PX*1*210'
+                    (v)PX*1*162    <<= must be installed BEFORE `PX*1*210'
+                    (v)PX*1*164    <<= must be installed BEFORE `PX*1*210'
+                    (v)PX*1*169    <<= must be installed BEFORE `PX*1*210'
+                    (v)PX*1*178    <<= must be installed BEFORE `PX*1*210'
+                    (v)PX*1*183    <<= must be installed BEFORE `PX*1*210'
+                    (v)PX*1*185    <<= must be installed BEFORE `PX*1*210'
+                    (v)PX*1*194    <<= must be installed BEFORE `PX*1*210'
+                    (v)PX*1*206    <<= must be installed BEFORE `PX*1*210'
+                    (v)PX*1*209    <<= must be installed BEFORE `PX*1*210'
+                    (v)LEX*2*102   <<= must be installed BEFORE `PX*1*210'
+
+Subject: PCE IMMUNIZATION ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ The Veterans Health Information Systems and Technology Architecture
+ (VistA) Immunizations Enhancements (VIMM) 2.0 project, Increment 2, 
+ builds upon the file structures and standardized data introduced by 
+ Increment 1 by adding functional enhancements to the existing VistA 
+ Patient Care Encounter (PCE) package.
+  
+ This patch provides the following new features:
+  
+ 1) A new Clinical Reminders index will be created on the V IMMUNIZATION 
+    file (#9000010.11). This additional index uses the immunization's CVX 
+    code. The indexes are stored in the Clinical Reminders index global as:
+      ^PXRMINDX(9000010.11,"CVX","IP",CVX CODE,DFN,DATE,DAS)
+      ^PXRMINDX(9000010.11,"CVX","PI",DFN,CVX CODE,DATE,DAS)
+    Also, the Clinical Reminders indexes on the V IMMUNIZATION file will be
+    changed to use the EVENT DATE AND TIME field (#1201) (if populated) as
+    the DATE instead of the Visit Date and Time. The Visit Date and Time 
+    will be used as DATE only if the EVENT DATE AND TIME field is not
+    populated.
+  
+ 2) The following Application Programming Interfaces (APIs) have been added
+    or modified:
+    a) DATA2PCE^PXAPI (Modified) - Support for the following immunization 
+       fields have been added to the INPUTROOT array parameter: VIS 
+       Offered/Given To Patient, Remarks, and Ordering Provider
+    b) ENCEVENT^PXKENC and GETENC^PXAPI (Modified) - The following V 
+       IMMUNIZATION fields have been added to the returned ^TMP global 
+       array: VIS Offered/Given To Patient, Remarks, and Other Diagnosis
+    c) VIS^PXAPI (New) - Returns a Vaccine Information Statement entry
+    d) IMMUN^PXRHS03 (Modified) - Two new optional parameters were added to
+       control: 1) how the return global is sorted, and 2) to allow
+       filtering based off Vaccine Group Name, IEN, or CVX. Also,
+       additional data is returned in the return global.
+  
+ 3) The PX SAVE DATA remote procedure call (RPC) has been modified to 
+    provide support for CVX Code, Event Info Source IEN, Route IEN and HL7 
+    Code, Admin Site IEN and HL7 code, Lot # IEN, Event Date/Time, 
+    Ordering Provider, VIS, and Remarks.
+  
+ 4) The security codes on the IMMUNIZATION file (#9999999.14) and SKIN TEST
+    file (#9999999.28) will be updated as follows: AUDIT="@", DD="@",
+    DEL="@", LAYGO="@", RD="", and WR="@".
+  
+ 5) The PCE skin test documentation process is updated to include the 
+    following:
+    a) Test placement, reading and interpretation
+    b) Code set mapping
+    c) Diagnosis information entry and updates are restricted to users 
+       with supervisor access.
+    
+ 6) The PCE immunization documentation process is updated to include the 
+    following:
+    a) Lot number, ordering provider, dosage, route of administration, site
+       of administration
+    b) Post-administration reading and interpretation for immunizations 
+       that require reading, such as smallpox.
+    c) Diagnosis information entry and updates are restricted to users 
+       with supervisor access.
+    
+ 7) Immunization inventory management functionality is added by this patch.
+    This functionality includes allowing authorized users to enter and 
+    update information in the IMMUNIZATION LOT file (#9999999.41). This 
+    functionality provides for displaying available immunization 
+    inventory. Cross reference functionality decrements the number of doses
+    unused when an immunization lot is assigned to a patient's immunization
+    record.
+  
+ 8) Values for the following fields in the V SKIN TEST file (#9000010.12) 
+    are moved from existing fields to new fields by a post-install process.
+    The old fields and their data are removed from the file after moving
+    the data.
+  
+       From Field             To Field
+     --------------         -------------
+     DIAGNOSIS (#.08)   --> PRIMARY DIAGNOSIS (#801)
+     DIAGNOSIS 2 (#.09) --> DIAGNOSIS 2 (#802)
+     DIAGNOSIS 3 (#.1)  --> DIAGNOSIS 3 (#803)
+     DIAGNOSIS 4 (#.11) --> DIAGNOSIS 4 (#804)
+     DIAGNOSIS 5 (#.12) --> DIAGNOSIS 5 (#805)
+     DIAGNOSIS 6 (#.13) --> DIAGNOSIS 6 (#806)
+     DIAGNOSIS 7 (#.14) --> DIAGNOSIS 7 (#807)
+     DIAGNOSIS 8 (#.15) --> DIAGNOSIS 8 (#808)
+  
+ 9) When documenting an historical immunization, the user will now be able 
+    to select inactive immunizations that are marked as Selectable For 
+    Historic.
+  
+  
+ Patch Components: 
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)           New/Modified/Deleted
+ ------------------     -------------------           --------------------
+ V IMMUNIZATION  
+    (#9000010.11)       IMMUNIZATION (#.01)                Modified
+                        PATIENT NAME (#.02)                Modified
+                        VISIT (#.03)                       Modified
+                        SERIES (#.04)                      Modified
+                        LOT (#.05) )                       Modified
+                        REACTION (#.06)                    Modified
+                        CONTRAINDICATED (#.07)             Modified
+                        DOSE OVERRIDE (#.08)               Modified
+                        INJECTION SITE (#.09)              Modified
+                        VOLUME (#.11)                      Modified
+                        DATE OF VAC INFO STATEMENT (#.12)  Modified
+                        CREATED BY V CPT ENTRY (#.13)      Modified
+                        VAC ELIGIBILITY (#.14)             Modified
+                        IMPORT FROM OUTSIDE REGISTRY       Modified
+                           (#.15)
+                        NDC (#.16)                         Modified
+                        ADMINISTRATIVE NOTES (#1)          Modified
+                        VIS OFFERED/GIVEN TO PATIENT
+                           (multiple field #2, sub-file 
+                           #9000010.112)                   Modified
+                          VIS OFFERED/GIVEN TO PATIENT 
+                            (#.01) of the VIS OFFERED/GIVEN 
+                            TO PATIENT sub-file 
+                            (#9000010.112)                 Modified
+                          DATE VIS OFFERED/GIVEN (#.02) of 
+                            the VIS OFFERED/GIVEN TO PATIENT
+                            sub-file (#9000010.112)        Modified
+                        EVENT DATE AND TIME (#1201)        Modified
+                        ORDERING PROVIDER (#1202)          Modified
+                        CLINIC (#1203)                     Modified
+                        ENCOUNTER PROVIDER (#1204)         Modified
+                        DATE/TIME RECORDED (#1205)         Modified
+                        IMMUNIZATION DOCUMENTER (#1206)    Modified
+                        LOT NUMBER (#1207)                 Modified
+                        PARENT (#1208)                     Modified
+                        EXTERNAL KEY (#1209)               Modified
+                        OUTSIDE PROVIDER NAME (#1210)      Modified
+                        ANCILLARY POV (#1213)              Modified
+                        USER LAST UPDATE (#1214)           Modified
+                        ORDERING LOCATION (#1215)          Modified
+                        DATE/TIME ENTERED (#1216)          Modified
+                        ENTERED BY (#1217)                 Modified
+                        DATE/TIME LAST MODIFIED (#1218)    Modified
+                        LAST MODIFIED BY (#1219)           Modified
+                        EVENT INFORMATION SOURCE (#1301)   Modified
+                        ROUTE OF ADMINISTRATION (#1302)    Modified
+                        SITE OF ADMINISTRATION (BODY) 
+                           (#1303)                         Modified
+                        PRIMARY DIAGNOSIS (#1304)          Modified
+                        DOSE (#1312)                       Modified
+                        DOSAGE (#1312.5)                     New
+                        DOSE UNITS (#1313)                   New
+                        RESULTS (#1401)                      New
+                        READING (#1402)                      New
+                        DATE/TIME READ (#1403)               New
+                        READER (#1404)                       New
+                        READING RECORDED (#1405)             New
+                        HOURS READ POST-INOCULATION
+                           (#1406)                           New
+                        EDITED FLAG (#80101)               Modified
+                        AUDIT TRAIL (#80102)               Modified
+                        COMMENTS (#81101)                  Modified
+                        VERIFIED (#81201)                  Modified
+                        PACKAGE (#81202)                   Modified
+                        DATA SOURCE (#81203)               Modified
+  
+ V SKIN TEST 
+    (#9000010.12)       SKIN TEST (#.01)                   Modified
+                        PATIENT NAME (#.02)                Modified
+                        VISIT (#.03)                       Modified
+                        RESULTS (#.04)                     Modified
+                        READING (#.05)                     Modified
+                        DATE READ (#.06)                   Modified
+                        READER (#.07)                        New
+                        DIAGNOSIS (#.08)                   Deleted
+                        DIAGNOSIS 2 (#.09)                 Deleted
+                        DIAGNOSIS 3 (#.1)                  Deleted
+                        DIAGNOSIS 4 (#.11)                 Deleted
+                        DIAGNOSIS 5 (#.12)                 Deleted
+                        DIAGNOSIS 6 (#.13)                 Deleted
+                        DIAGNOSIS 7 (#.14)                 Deleted
+                        DIAGNOSIS 8 (#.15)                 Deleted
+                        CODING SYSTEM (multiple field
+                           #3, sub-file #9000010.123)        New
+                        CODING SYSTEM (#.01) of the
+                           CODING SYSTEM sub-file 
+                           (#9000010.123)                    New
+                        CODE (multiple field #.02,
+                           sub-file #9000010.1231
+                           of the CODING SYSTEM 
+                           sub-file (#9000010.123)           New
+                        CODE (#.01) of the CODE sub-file
+                           (#9000010.1231)                   New
+                        EVENT DATE AND TIME (#1201)        Modified
+                        ORDERING PROVIDER (#1202)          Modified
+                        ENCOUNTER PROVIDER (#1204)         Modified
+                        SKIN TEST PLACEMENT RECORDED 
+                           (#1211)                           New
+                        ANATOMIC LOCATION OF PLACEMENT
+                           (#1212)                           New
+                        HOURS READ POST-PLACEMENT (#1214)    New
+                        SKIN TEST READING RECORDED (#1220)   New
+                        READING COMMENTS (#1301)             New
+                        PRIMARY DIAGNOSIS (#801)             New
+                        DIAGNOSIS 2 (#802)                   New
+                        DIAGNOSIS 3 (#803)                   New
+                        DIAGNOSIS 4 (#804)                   New
+                        DIAGNOSIS 5 (#805)                   New
+                        DIAGNOSIS 6 (#806)                   New
+                        DIAGNOSIS 7 (#807)                   New
+                        DIAGNOSIS 8 (#808)                   New
+                        EDITED FLAG (#80101)               Modified
+                        AUDIT TRAIL (#80102)               Modified
+                        PLACEMENT COMMENTS (#81101)        Modified
+                        VERIFIED (#81201)                  Modified
+                        PACKAGE (#81202)                   Modified
+                        DATA SOURCE (#81203)               Modified
+  
+ IMMUNIZATION LOT 
+    (#9999999.41)       LOT NUMBER (#.01)                  Modified
+                        MANUFACTURER (#.02)                Modified
+                        STATUS (#.03)                      Modified
+                        VACCINE (#.04)                     Modified
+                        VACCINE #2 (#.05)                  Modified
+                        VACCINE #3 (#.06)                  Modified
+                        VACCINE #4 (#.07)                  Modified
+                        VACCINE #5 (#.08)                  Modified
+                        EXPIRATION DATE (#.09)             Modified
+                        STARTING COUNT (#.11)              Modified
+                        DOSES UNUSED (#.12)                Modified
+                        VACCINE SOURCE (#.13)              Modified
+                        HEALTH CARE FACILITY (#.14)        Modified
+                        LOW SUPPLY ALERT (#.15)            Modified
+                        LOT NUMBER FOR EXPORT (#.16)       Modified
+                        NDC CODE (#.17)                    Modified
+                        NDC CODE (VA) (#.18)               Modified
+  
+                        
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A 
+  
+ Options Associated:
+  
+ Option Name                     Type             New/Modified/Deleted
+ -----------                     ----             -------------------- 
+ PXTT EDIT IMMUNIZATION LOT   Run Routine              Modified
+ PXVTASK-NIGHT                Run Routine              Modified
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A 
+  
+ RPCs Associated:
+  
+ RPC                 New/Modified/Deleted
+ -------------       --------------------
+ PX SAVE DATA             Modified
+  
+ Security Keys Associated:
+  
+ Security Key Name      New/Modified/Deleted
+ -----------------      --------------------
+ PXV IMM INVENTORY MGR         New
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A 
+  
+ Additional Information:
+ -----------------------
+ N/A 
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ Blood Bank Clearance:
+ ---------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A 
+  
+ Test Sites:
+ ----------
+ Cleveland, OH
+ Hampton, VA
+ Heartland-East HCS, MO
+ San Antonio, TX
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                          File Name                FTP Mode
+ ------------------------------------------------------------------
+ Patient Care Encounter (PCE)   PX_1_UM_R20160121.PDF    (binary)
+    V. 1.0 User Manual
+ Patient Care Encounter (PCE)   PX_1_TM_R20160129.PDF    (binary)
+    V.1.0 Technical Manual
+ Clinical Reminders (PXRM)      PXRM_INDEX_TM.PDF        (binary)
+    Index Technical Manual
+ VIMM Patch PX*1*210            PX_1_P210_IG.PDF         (binary)
+    Installation Guide 
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The pre-installation process removes seven MUMPS cross-references that 
+ existed only in early versions of this patch.
+  
+ The post-installation process does the following:
+ a) Tasks a job to rebuild the Clinical Reminder's V Immunization index.
+    When installing the patch, the user will be prompted when this task
+    should be queued (see installation instructions below). This should be
+    queued to run during non-peak hours. It is very important that it is
+    done during non-peak hours, as while the rebuild is taking place all
+    evaluation, dialogs, reminder order checks, and anything using reminder
+    evaluation will be suspended. When the index is completed building, an
+    email gets sent to the user who installed the patch and to the mail
+    group specified in the REMINDER MANAGEMENT MAILGROUP field (#3) of the
+    CLINICAL REMINDER PARAMETERS file (#800).
+  
+ b) Moves diagnosis values from the existing diagnosis fields in the V SKIN
+    TEST file (#9000010.12) to the new diagnosis fields, deletes the values
+    in the existing fields and finally deletes the existing fields from the
+    data dictionary as described above in the new features section.
+  
+ c) Tasks a process to split the V IMMUNIZATION dosage values stored in the
+    existing DOSAGE field (#1312) into DOSE (#1312) and DOSE UNITS (#1313).
+    If the existing value does not match the DD, it will be appended to the
+    COMMENTS field (#81101).
+  
+ The routine PXVP210 may be deleted after the email is received that the
+ index was rebuilt.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ This patch should be installed during a period of minimal system 
+ activity, preferably with users off the system. Installation time is 
+ expected to be approximately 10 minutes.
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the
+    Installation Menu. From this menu, you may elect to use the following
+    options. When prompted for the INSTALL enter the patch # (PX*1.0*210):
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch. It will not backup any
+       other changes such as DD's or templates. 
+    b. Compare Transport Global to Current System - This option will allow
+       you to view all changes that will be made when this patch is
+       installed. It compares all components of this patch (routines,
+       DD's, templates, etc.). 
+    c. Verify Checksums in Transport Global - This option will allow you to
+       ensure the integrity of the routines that are in the transport
+       global.
+    d. Print Transport Global - This option will allow you to view the
+       components of the KIDS build.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install. Enter PX*1.0*210.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+    Install? YES//', respond YES.
+  
+ 6. When prompted 'Queue time to rebuild V Immunization Clinical Reminder
+    index: ' Enter a queue date/time for rebuilding the Clinical Reminders
+    index on the V IMMUNIZATION file. It should be queued to run during 
+    non-peak hours. The date/time entered must fall within 7 days of the 
+    patch installation date. If a value is not entered, the patch will be 
+    queued to run at the end of patch installation. (See pre/post
+    installation overview above).
+  
+ 7. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+    respond NO.
+  
+ 8. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//', respond NO.
+  
+ Post-Installation Instructions
+ ------------------------------
+ 1. When the Clinical Reminders index on the V IMMUNIZATION file is
+    completed building, an email is sent to the user who installed the
+    patch and to the mail group specified in the REMINDER MANAGEMENT
+    MAILGROUP field (#3) of the CLINICAL REMINDER PARAMETERS file (#800).
+    The routine PXVP210 may be deleted after the email is received that the
+    index was rebuilt.
+  
+    a. If any entries couldn't be indexed, another MailMan message will be
+       sent out with the list of entries and the reason they could not be
+       indexed. Entries that were not indexed will never be found by any
+       application that uses the index to find data. Each site should make
+       a decision concerning what they want to do about non-indexed
+       entries.
+  
+ 2. Users authorized to manage immunization inventory should be assigned
+    the PXV IMM INVENTORY MGR security key.
+  
+ 3. The option PXVTASK-NIGHT should be tasked to run daily at 12:01 AM.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**[Patch List]**;Aug 12, 1996;Build 21
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXAIIMM
+    Before:  B9319960   After: B14255138  **45,124,209,210**
+Routine Name: PXAIIMMV
+    Before: B13493156   After: B23881788  **199,209,210**
+Routine Name: PXAISK
+    Before:  B6962384   After: B12746383  **45,124,210**
+Routine Name: PXAPI
+    Before: B37240429   After: B38904536  **15,14,27,28,124,164,210**
+Routine Name: PXAPIIM
+    Before:       n/a   After:  B2741056  **210**
+Routine Name: PXCASK
+    Before: B15678860   After: B16288608  **27,124,199,210**
+Routine Name: PXCAVIMM
+    Before: B20851145   After: B21317143  **27,124,199,210**
+Routine Name: PXCEAE1
+    Before: B23079983   After: B29168014  **22,73,199,201,210**
+Routine Name: PXCESK
+    Before: B17217954   After: B28700351  **27,124,162,210**
+Routine Name: PXCEVFI1
+    Before: B20919668   After: B23924796  **23,73,112,136,143,124,184,185,210**
+Routine Name: PXCEVFIL
+    Before: B42527375   After: B43615497  **9,30,22,73,88,89,104,147,124,
+                                           169,210**
+Routine Name: PXCEVIMM
+    Before: B56314311   After: B83423957  **27,124,199,201,210**
+Routine Name: PXCEVIS
+    Before:       n/a   After:  B1773266  **210**
+Routine Name: PXKENC
+    Before: B23516097   After: B29230371  **15,22,73,108,143,183,210**
+Routine Name: PXKFIMM
+    Before:  B4311499   After:  B4427968  **22,124,201,209,210**
+Routine Name: PXKFSK
+    Before:  B2490158   After:  B3471699  **22,124,210**
+Routine Name: PXKIMM
+    Before:       n/a   After: B39277541  **210**
+Routine Name: PXKMAIN
+    Before: B43120971   After: B55417967  **22,59,73,88,69,117,130,124,
+                                           174,164,210**
+Routine Name: PXKMAIN1
+    Before: B37490228   After: B41644781  **22,73,124,178,210**
+Routine Name: PXKMASC
+    Before: B46966195   After: B56481802  **22,41,73,164,210**
+Routine Name: PXPXRM
+    Before: B24754616   After: B88904295  **119,199,210**
+Routine Name: PXPXRMI1
+    Before: B51661630   After: B55159505  **119,194,210**
+Routine Name: PXRHS03
+    Before: B10262862   After: B56157465  **13,210**
+Routine Name: PXRPC
+    Before: B64293018   After:B109684381  **200,209,210**
+Routine Name: PXVEDIT
+    Before:       n/a   After:  B3872063  **210**
+Routine Name: PXVINV
+    Before:       n/a   After: B25607408  **210**
+Routine Name: PXVNITLY
+    Before:       n/a   After:   B518720  **210**
+Routine Name: PXVP210
+    Before:       n/a   After: B88679371  **210**
+Routine Name: PXVUTIL
+    Before:  B3032993   After: B10006565  **201,210**
+Routine Name: PXVUTL
+    Before:       n/a   After:  B4415955  **210**
+Routine Name: PXVXR
+    Before:       n/a   After: B13167191  **210**
+ 
+Routine list of preceding patches: 13, 162, 164, 169, 178, 183, 185, 194
+                           209
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 15, 2015
+Completed By:                               Date Completed: MAR 08, 2016
+Released By :                               Date Released : MAR 09, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

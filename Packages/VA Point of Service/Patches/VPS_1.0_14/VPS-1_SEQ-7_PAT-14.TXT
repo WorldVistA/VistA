@@ -1,0 +1,348 @@
+
+=============================================================================
+Run Date: APR 25, 2016                     Designation: VPS*1*14
+Package : VPS - VA POINT OF SERVICE (KIOSKS)  Priority: Mandatory
+Version : 1         SEQ #7                      Status: Released
+                  Compliance Date: MAY 26, 2016
+=============================================================================
+
+Associated patches: (v)VPS*1*2     <<= must be installed BEFORE `VPS*1*14'
+                    (v)VPS*1*4     <<= must be installed BEFORE `VPS*1*14'
+                    (v)VPS*1*5     <<= must be installed BEFORE `VPS*1*14'
+
+Subject: VPS  PATIENT DEMO AND CSQ ENH
+
+Category: 
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ VPS*1*14 is being released as part of a combined build which includes 
+ VPS*1*10.
+  
+ The VPS*1*14 patch modified remote procedures (RPCs) in the VPS 
+ namespace to provide the capability to enter, store and view patient 
+ Clinical Screening Questionnaires through the consuming application 
+ interface.  The routines implementing the VPS*1*14 RPCs integrate VA 
+ POINT OF SERVICE (KIOSKS) with the VistA CPRS, Health Summary and TIU 
+ packages.  The RPCs provide for the capture of meta data to extend CSQ 
+ analytical capabilities.
+  
+ Additionally, VPS*1*14 patch provides modified patient demographic 
+ RPCs to retrieve patient health factors and inpatient status.
+  
+ Patch Components:
+ ====================
+  
+                                      RUN
+         RPC NAME                   ROUTINE        TAG
+ __________________________________________________________________________
+ VPS ENHANCED GET PATIENT 
+   DEMO                             VPSRPC1      GETDATA3        MODIFIED
+ VPS GET PATIENT  DEMOGRAPHIC       VPSRPC1      GETDATA         MODIFIED
+ VPS GET2 PATIENT DEMOGRAPHIC       VPSRPC1      GETDATA2        MODIFIED
+ VPS SAVE CLINICAL SURVEY           VPSSRVY1     SAVE            MODIFIED
+ VPS GET SURVEY DATA                VPSSRVY2     GETRPC          MODIFIED
+  
+  
+ Files & Fields Associated:
+ ==========================
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ 853.8                      VPS CLINICAL SURVEY      MODIFIED
+  
+ 853.85                     VPS QUESTIONNAIRE        MODIFIED
+                            IDENTIFIERS
+  
+ Forms Associated:
+ ====================
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+ =======================
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+ ====================
+  
+ Option Name            Type                    New/Modified/Deleted
+ -----------            ----                    -------------------- 
+ VPS KIOSK INTERFACE    BROKER (CLIENT/SERVER   MODIFIED
+  
+  
+ Protocols Associated:
+ ====================
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+ ========================
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+ ====================
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ =======================
+ N/A
+  
+ New Service Requests (NSRs):
+ ===========================
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ===========================
+ N/A
+  
+ Test Sites:
+ ====================
+ 1.  Oklahoma City VA Medical Center
+ 2.  VA Pittsburgh Healthcare System
+ 3.  Portland VA Medical Center
+ 4.  Dayton Medical Center
+  
+  
+ Documentation Retrieval Instructions:
+ =====================================
+  
+ Updated documentation describing the new functionality introduced by this 
+ patch is available. 
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Albany          domain.ext
+ Hines           domain.ext
+ Salt Lake City  domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       SFTP Mode
+ -----------------------------------------------------------------------
+                             VPS_Combined_10_14_docs.zip       Binary
+  
+ Containing the following files:
+  
+ Installation Guide         VPS_Combined_10_14_IG.pdf
+ VPS Technical Guide        VPS_Technical Guide.pdf
+ Release Notes              VPS_Combined_10_14_RN.pdf 
+  
+  
+ Patch Installation:
+ ==================== 
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no Pre or Post Installation activities for VPS FY15 1.0 patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ There are no Pre-Installation instructions for VPS FY15 1.0 patch.
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ to install.
+  
+ There are no Menu Options to disable for VPS FY15 1.0 patch.
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended 
+ that it be run during non-peak requirement hours.
+  
+ Inatall Time - less than 3 minutes.
+  
+ NOTE: The routine VPSCSQ1 will be automatically deleted when installation
+ is completed.
+  
+  
+ 1.  Obtain the host file VPS_FY15_1-0.KID, which contains the 
+ following patches:
+      VPS*1.0*10
+      VPS*1.0*14
+  
+     Sites can retrieve VistA software from download.vista.domain.ext.
+     This will transmit the files from the first available server.
+     
+     Sites may retrieve the software and/or documentation directly using 
+     Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+     directory at the following OI Field Offices:
+  
+     Albany          domain.ext
+     Hines           domain.ext
+     Salt Lake City  domain.ext
+  
+      The VPS_FY15_1-0.KID host file is located in the  
+      directory. Use ASCII Mode when downloading the file.
+  
+ 2.  Start up KIDS
+  
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+     Select Installation Option:  
+  
+ 3.  From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file VPS_FY15_1-0.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]/VPS_FY15_1-0.KID).
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       This Distribution contains Transport Globals for the following 
+       Package(s): 
+  
+         VPS FY15 1.0
+         VPS*1.0*10
+         VPS*1.0*14
+  
+       OK to continue with Load? NO// YES
+  
+       Distribution OK!
+  
+       Want to Continue with Load? YES// 
+       Loading Distribution...
+  
+       VPS*1*14
+  
+      Use INSTALL NAME: VPS FY15 1.0 to install this Distribution.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//NO     
+     Note: Menu Trees do not need to be rebuilt for VPS FY15 1.0 install.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//NO
+  
+     Note:  Logons do not need to be inhibited for VPS FY15 1.0 install.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//NO
+  
+     Note:  Scheduled options, Menu Options, and Protocols are not 
+            required to be disabled for VPS FY15 1.0 install.
+  
+ 8.  Enter the Device you want to print the Install messages.
+     You can queue the install by enter a 'Q' at the device prompt.
+     Enter a '^' to abort the install.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Routine Information:
+ ====================
+ The second line of each of these routines now looks like:
+  ;;1.0;VA POINT OF SERVICE (KIOSKS);**[Patch List]**;Aug 14, 2014;Build 26
+  
+ Routine Name: VPSCSQ1 
+     Checksum:
+           Before        n/a        After: 55063195  **14**
+ Routine Name: VPSRPC1
+     Checksum:
+           Before:       24609733   After: 29854527  **1,2,4,14**
+ Routine Name: VPSRPC13
+     Checksum:
+           Before:       13168456   After: 13640535  **4,14**
+ Routine Name: VPSRPC15
+     Checksum:
+           Before:       7747789    After: 13343975  **4,14**
+ Routine Name: VPSRPC16
+     Checksum:
+           Before:       169070534  After: 180097049 **4,14**
+ Routine Name: VPSRPC26
+     Checksum:
+           Before:       117511203  After: 119461952 **4,14**
+ Routine Name: VPSSRVY1
+     Checksum:
+           Before:       63674041   After: 179593704 **5,14**
+ Routine Name: VPSSRVY2
+     Checksum:
+           Before:       15360627   After: 56708984  **5,14**
+ Routine Name: VPSSRVY3
+     Checksum:
+           Before:       43073593   After: 87941101  **5,14**
+ Routine Name: VPSSRVY4
+     Checksum:
+           Before:       n/a        After: 29387621  **14**
+
+Routine Information:
+====================
+Routine Name: VPSCSQ1
+Routine Name: VPSPRC15
+Routine Name: VPSRPC1
+Routine Name: VPSRPC13
+Routine Name: VPSRPC16
+Routine Name: VPSRPC26
+Routine Name: VPSSRVY1
+Routine Name: VPSSRVY2
+Routine Name: VPSSRVY3
+Routine Name: VPSSRVY4
+
+=============================================================================
+User Information:                          Hold Date     : APR 14, 2016
+Entered By  :                               Date Entered  : MAY 22, 2015
+Completed By:                               Date Completed: MAR 30, 2016
+Released By :                               Date Released : APR 25, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

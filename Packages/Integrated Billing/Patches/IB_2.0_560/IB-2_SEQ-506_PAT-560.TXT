@@ -1,0 +1,113 @@
+
+=============================================================================
+Run Date: JAN 27, 2016                     Designation: IB*2*560
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #506                      Status: Released
+                  Compliance Date: FEB 26, 2016
+=============================================================================
+
+
+Subject: FILE DESCRIPTION UPDATE IN INTEGRATED BILLING TECHNICAL MANUAL
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Patch DG*5.3*915, released 12/15/2015, removed Register Once from the 
+ Register A Patient [DG REGISTER PATIENT] option.
+  
+ This INFORMATIONAL patch will update the Integrated Billing (IB) V. 2.0 
+ Technical Manual, Global File Description for the DG REGISTER ONCE FIELD 
+ DEFINITION file (#391.23) to add a note that Register Once was removed 
+ from the Register A Patient option by patch DG*5.3*915.
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1. R6747982FY16 Requesting to change to IB Technical Manual per email
+    with Maintenance team.
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ N/A
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. R6747982FY16 Requesting to change to IB Technical Manual per email
+    with Maintenance team.
+  
+ Problem:
+ --------
+ This patch will update the Integrated Billing (IB) V. 2.0 Technical 
+ Manual, Global File Description for the DG REGISTER ONCE FIELD DEFINITION 
+ file (#391.23) to add a note that Register Once was removed from the 
+ Register A Patient option by patch DG*5.3*915.
+  
+ Resolution:
+ -----------
+ The Integrated Billing (IB) V. 2.0 Technical Manual will be updated as 
+ noted below:
+  
+ Global File Description (BEFORE):
+  
+ ^DGRO(391.23,
+ This file is used to define the fields that are collected at a Last Site
+ Treated and loaded into a Querying Site via Register Once Messaging.
+  
+ Global File Description (AFTER):
+  
+ ^DGRO(391.23,
+ This file is used to define the fields that are collected at a Last Site
+ Treated and loaded into a Querying Site via Register Once Messaging.
+ NOTE: Register Once is being removed from the Register A Patient option
+ by patch DG*5.3*915.
+  
+  
+ SOFTWARE AND DOCUMENTATION DISTRIBUTION:
+ ======================================== 
+ Sites may retrieve the new documentation directly via FTP. The preferred 
+ method is to FTP the files from:
+  
+        download.vista.domain.ext
+   
+ This transmits the files from the first available FTP server.  
+     
+ Sites may also elect to retrieve the documentation directly from the
+ ANONYMOUS.SOFTWARE directory from a specific server as follows:
+    
+ Albany:             ftp.domain.ext
+ Hines:              ftp.domain.ext
+ Salt Lake City:     ftp.domain.ext
+    
+ Filename            Description                               Format
+ ========            ===========                               ======
+ ib_2_0_tm.pdf       Integrated Billing (IB) V. 2.0 Technical  Binary
+                     Manual
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This is an informational patch and there is nothing to install.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 14, 2015
+Completed By:                               Date Completed: JAN 26, 2016
+Released By :                               Date Released : JAN 27, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,144 @@
+
+=============================================================================
+Run Date: MAR 17, 2016                     Designation: WEBP*1*4
+Package : WEBP - PATIENT CENTERED MANAGEMENT  Priority: Mandatory
+Version : 1         SEQ #4                      Status: Released
+                  Compliance Date: APR 16, 2016
+=============================================================================
+
+
+Subject: PCMM WEB CONFIGURATION CHANGES TO OPTIMIZE SYNCHRONIZATION
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Patient-Centered Management Module (PCMM) Web application version 
+ WEBP*1*4 will assign a priority order to the queue for processing files
+ synchronized to VistA so that new sites have a higher priority and the new
+ sites are pushed to the top of the queue and synchronized first to 
+ alleviate current long delays for the synchronization process to complete.
+  
+ Configuration Changes:
+ ======================
+  
+ RTC Ticket: 280433 - VistA-sync takes a long time to finish for sites 
+ that are being on-boarded during deployment.  The system places the new 
+ sites at the very end of queue and they are processed in the same way as 
+ all the rest of the sites. While that is Ok for the rest of the sites, 
+ because they usually have handful of teams to sync, on boarded sites 
+ usually have 100+ teams to sync and they have limited window to process 
+ them all, we need to push the new sites to the front of the queue.
+  
+ Solution - The fix is to give the new sites more threads for processing 
+ and to move their teams to the front of the queue.
+  
+ Implementation:
+ ===============
+ The PCMM Web WEBP*1*4 is a centrally managed web-based application and 
+ will be implemented and deployed to a central web server.  No installation
+ is required by sites.
+  
+  
+ Implementation Files:
+ =====================
+ None
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated: N/A
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A
+  
+ Options Associated: N/A
+  
+ Protocols Associated: N/A
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20070415 - Rehost/Reengineer PCMM
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ N/A
+   
+  
+ Documentation:
+ ==============
+  
+ Title                            File Name                 SFTP Mode
+ -----------------------------------------------------------------------
+ No documentation updates for this release. 
+  
+  
+ Patch Installation:
+ ===================
+  
+ There is no local VistA installation for PCMM Web. All installations will 
+ be done on the national web server.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ If you have any questions concerning the implementation of this 
+ application, please contact the VA Service Desk at 1-888-596-4357 or 
+ directly log a CA SDM ticket using the category:
+ Applications-HealtheVet-Vista, and type, PCMM Web.
+  
+ Any changes or impacts to this package/installation will be reported on 
+ this message.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 07, 2016
+Completed By:                               Date Completed: MAR 17, 2016
+Released By :                               Date Released : MAR 17, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

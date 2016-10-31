@@ -1,0 +1,229 @@
+
+=============================================================================
+Run Date: APR 14, 2016                     Designation: IVM*2*161
+Package : IVM - INCOME VERIFICATION MATCH     Priority: Mandatory
+Version : 2       SEQ #137                      Status: Released
+                  Compliance Date: MAY 15, 2016
+=============================================================================
+
+Associated patches: (v)DG*5.3*891  <<= must be installed BEFORE `IVM*2*161'
+                    (v)DG*5.3*909  <<= must be installed BEFORE `IVM*2*161'
+                    (v)IVM*2*160   <<= must be installed BEFORE `IVM*2*161'
+
+Subject: REGISTRATION CAMP LEJEUNE ELIGIBILITY UPDATE
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ **************************************************************************
+  
+      This patch is being released in support of the Camp Lejeune -
+      Veterans project. DG*5.3*909 (Registration) is being released
+      along with IVM*2*161 (Income Verification Match) in host file:
+      DG_5_3_P909.KID.
+   
+      It is imperative that these patches be installed no later than the
+      compliance date. Your understanding and support is appreciated.
+ **************************************************************************
+  
+ Public Law 112-154, requires Veterans Affairs (VA) to provide hospital
+ care and medical services to Veterans who served on active duty at Camp
+ Lejeune (North Carolina) for one or more of 15 specified illnesses or
+ conditions (Esophageal cancer; Lung cancer; Breast cancer; Bladder cancer;
+ Kidney cancer; Leukemia; Multiple myeloma; Myelodysplastic syndromes;
+ Renal toxicity; Hepatic steatosis; Female infertility; Miscarriage;
+ Scleroderma; Neurobehavioral effects; or Non-Hodgkin's lymphoma). To be 
+ eligible for care under the provisions of this bill, the Veteran must 
+ have served on active duty at Camp Lejeune for not fewer than thirty (30) 
+ consecutive or nonconsecutive days between August 1, 1953 and December 31,
+ 1987.
+  
+ The Camp Lejeune - Veterans (CL-V) project will update VistA to allow for
+ the accurate tracking of veterans who satisfy the CL-V eligibility
+ requirements and are therefore entitled to these additional benefits.
+  
+ This patch modifies the Income Verification Match 2.0 application as 
+ described below:
+  
+ Update the HL7 ORF-Z07 and ORU-Z07 builder to include the following 
+ CL-V data in the messages.
+  
+ Segment-
+ Sequence  HL7 Element Name      VistA Stored Field - File Location
+ --------------------------------------------------------------------------
+ ZEL-41    CAMP LEJEUNE          CAMP LEJEUNE (#.321701) field
+                                 PATIENT (#2) file
+  
+ ZEL-42    CAMP LEJEUNE DATE     CAMP LEJEUNE DATE (#.321702) field
+                                 PATIENT (#2) file
+  
+ ZEL-43    CAMP LEJEUNE CHANGE   CAMP LEJEUNE CHANGE SITE(#.321703) field
+           SITE                  PATIENT (#2) file
+  
+ ZEL-44    CAMP LEJEUNE SOURCE   CAMP LEJEUNE SOURCE (#.321704)
+                                 PATIENT (#2) file
+  
+ Patch DG*5.3*909 will be released in conjunction with this IVM patch.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)                         New/Mod/Del
+ -------------          -----------------------------------    -----------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                File #                               New/Mod/Del
+ ---------                ------                               -----------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                               New/Mod/Del
+ ---------------                                               -----------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type                           New/Mod/Del
+ -----------                    ----                           -----------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                                                 New/Mod/Del
+ -------------                                                 -----------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)                    New/Mod/Del
+ -------------      ----      ------------------               -----------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20120809
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA Pittsburgh Health Care System
+ Erie VA Medical Center
+ Altoona - James E. VanZandt VA Medical Center
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ File Description                 File Name                        SFTP
+                                                                   Mode
+ --------------------------------------------------------------------------
+ IVM Technical Manual             IVM_2_P161_TM.PDF                (binary)
+ CL-V VistA REE Release Notes     CL-VVISTA_REERELEASENOTES.PDF    (binary)
+  
+  
+ SFTP Instructions:
+ ------------------
+  
+ CL-V includes the following patches. The host file was created to 
+ simplify installation at Veterans Health Administration (VHA) facilities.
+  
+    File Name                         Contents           Retrieval Format
+    --------------------------------  --------           ----------------
+    DG_5_3_P909.KID                   DG*5.3*909         ASCII
+                                      IVM*2.0*161
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+ Pre-Installation Instructions
+ -----------------------------
+ N/A
+  
+ Installation Instructions
+ -------------------------
+ Please see the Patch Description for patch DG*5.3*909 for installation 
+ instructions.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INCOME VERIFICATION MATCH;**[Patch List]**; 21-OCT-94;Build 24
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVMPTRN8
+    Before: B77554356   After: B78004542  **9,11,19,12,21,17,24,36,37,
+                                           47,48,42,34,77,76,75,79,85,89,
+                                           98,56,97,104,113,109,114,105,
+                                           115,121,151,141,150,160,161**
+ 
+Routine list of preceding patches: 160
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 26, 2015
+Completed By:                               Date Completed: APR 14, 2016
+Released By :                               Date Released : APR 14, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

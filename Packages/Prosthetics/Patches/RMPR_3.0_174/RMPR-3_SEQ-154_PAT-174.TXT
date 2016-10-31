@@ -1,0 +1,123 @@
+
+=============================================================================
+Run Date: OCT 29, 2014                     Designation: RMPR*3*174
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #154                      Status: Released
+                  Compliance Date: NOV 29, 2014
+=============================================================================
+
+Associated patches: (v)RMPR*3*168  <<= must be installed BEFORE `RMPR*3*174'
+
+Subject: PROSTHETICS ICD-10 CLASS 1 REMEDIATION GUI UPDATES
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This Informational patch is intended to notify the sites that there is a 
+ new version of the Prosthetics GUI (3.0.174.2).  This updated GUI will 
+ address Remedy Ticket INC000001060009 as noted below.
+  
+ Associated Remedy Tickets:
+ ==========================
+ INC000001060009
+  
+ Remedy Overview
+ =====================
+ POC is reporting that when they use the main menu NPPD to run a report and
+ after he runs the reports is doesn't look right.
+  
+ Problem:
+ -------------
+ When using the NPPD Detail Display option in the GUI the ICD description 
+ is wrapping which it didn't do prior to the installation of the updated 
+ ICD-10 GUI.
+  
+ Resolution:
+ ---------------
+ The NPPD Detail Display option in the GUI will be updated to not wrap the 
+ ICD Description field.
+  
+  
+ Test Sites
+ ==========
+ Coatesville VAMC, Coatesville, PA
+ Houston VAMC, Houston, TX 
+  
+  
+ Documentation and Software Retrieval Instructions
+ ------------------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ OIFO               FTP ADDRESS                  DIRECTORY
+ ------------       ------------------------     ------------------
+ Albany             ftp.domain.ext     
+ Hines              ftp.domain.ext      
+ Salt Lake City     ftp.domain.ext        
+  
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ (VDL) at: http://www4.domain.ext/vdl/
+  
+  
+ File Description
+   File Name                                                     (FTP Mode)
+ --------------------------------------------------------------------------
+ Prosthetics GUI client installation wizard (packed)
+   RMPR3_0p174GUI_2.zip                                          (Binary) 
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ This is an Informational only patch so there will be no installation for 
+ RMPR*3.0*174.
+  
+ Pre-Installation Instructions
+ -----------------------------
+ NA
+  
+ Post-Installation Instructions
+ ------------------------------
+ There is no post-installation routine associated with this patch.
+  
+  
+ GUI INSTALLATION INSTRUCTIONS
+ -----------------------------
+ The Prosthetics GUI client software is being distributed as a self-
+ extracting Install Shield executable (file Prosthetics_Suite_3_174.exe
+ packed version - RMPR3_0p174GUI_2.zip). The file installs applications
+ included in the VistA Prosthetics Suite v. 3.0.174 (executable files 
+ ProsMenu.exe version 3.0.174.2 with a size of 2.64 MB and  
+ ProsBillingMenu.exe version 3.0.174.2 with a size of 1.06MB)
+  
+ Install the Prosthetics GUI client software following the instructions
+ in the Prosthetics GUI Installation Guide.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 25, 2014
+Completed By:                               Date Completed: OCT 28, 2014
+Released By :                               Date Released : OCT 29, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

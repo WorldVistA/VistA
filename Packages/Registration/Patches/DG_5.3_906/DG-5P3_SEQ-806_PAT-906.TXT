@@ -1,0 +1,235 @@
+
+=============================================================================
+Run Date: DEC 17, 2015                     Designation: DG*5.3*906
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #806                    Status: Released
+                  Compliance Date: JAN 01, 2016
+=============================================================================
+
+
+Subject: ENROLLMENT ENHANCEMENTS - ACA - AFFORDABLE CARE ACT
+
+Category: 
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ **************************************************************************
+ Note:  This patch is being released in support of the Enrollment Customer
+        Enhancements (ECE) and Enrollment System Enhancements (ESE)
+        projects and the Enrollment System (ES) 4.1 release.  DG*5.3*906
+        (Registration) is released with DG*5.3*891 (Registration),
+        DG*5.3*871 (Registration), DG*5.3*890 (Registration), DG*5.3*901
+        (Registration), DG*5.3*904 (Registration), EAS*1*113 (Enrollment
+        Application System) and IVM*2*160 (Income Verification Match) in
+        host file DG_53_P891.KID.
+ 
+        It is imperative that these patches be installed no later than
+        the compliance date.  Your understanding and support is appreciated.
+ **************************************************************************
+ 
+ The Health Eligibility Center (HEC) requested modifications to the VistA
+ Registration, Enrollment and Eligibility (VistA REE) software to support
+ changes for the Affordable Care Act (ACA).
+ 
+ The Enrollment System (ES) and Standard Data Service (SDS) tables were
+ modified to allow ES users to select ACA Preference as a reason when
+ canceling or declining the Veterans enrollment.  Currently ES shares
+ existing Reason Canceled/Declined codes with VistA via HL7 messaging
+ on the Z11 messages in the ZEN-5 segment-sequence.
+ 
+ This patch modifies the Registration v5.3 application as described below:
+ 
+   1.  Allow VistA users to view the REASON CANCELED/DECLINED of
+       'ACA Preference' for Veterans while using the Patient Enrollment
+       [DGEN PATIENT ENROLLMENT] option.  This code will be received during
+       standard transmissions.  No changes were made to HL7 messaging, the
+       Z11 receiver or the Patient Enrollment [DGEN PATIENT ENROLLMENT]
+       option screens where the Reason Canceled/Declined is currently
+       displayed.
+ 
+   2.  Add the 'ACA Preference' reason to the set of codes for the
+       CANCELLED/DECLINED REASON (#.05) field of the PATIENT ENROLLMENT
+       (#27.11) file. This will allow the 'ACA Preference' reason to upload
+       to the REASON CANCELED/DECLINED (#.05) field in the PATIENT ENROLLMENT
+       (#27.11) file when received by ES. 
+ 
+ 
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+  
+ 27.11,.05  REASON CANCELED/DECLINED 0;5 SET
+  
+                              '1' FOR DISSATISFIED WITH CARE; 
+                              '2' FOR GEOGRAPHIC ACCESS; 
+                              '3' FOR OTHER INSURANCE; 
+                              '4' FOR OTHER; 
+                              '5' FOR ACA PREFERENCE; 
+            LAST EDITED:      SEP 19, 2014 
+            HELP-PROMPT:      Enter the reason the veteran is declining or
+                              cancelling enrollment. 
+            DESCRIPTION:      When a patient self dis-enrolls or requests
+                              that his enrollment be ceased, s/he is asked
+                              to give a reason.
+ 
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)        New/Modified/Deleted
+ ------------------         -------------------        --------------------
+ Patient Enrollment File    Reason Canceled/Declined   Modified
+ (27.11)                    (.05)
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ NA
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ NA
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ NA
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ NA
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ NA
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ NA
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NA
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ NA
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ NA
+  
+ Problem:
+ -------
+ NA
+  
+ Resolution:
+ ----------
+ NA
+  
+ Test Sites:
+ ----------
+ West Texas VA Health Care System, Big Spring, TX
+ Fargo VA Health Care System, Fargo, ND
+ Clement J. Zablocki Veterans Affairs Medical Center, Milwaukee, WI
+ VA Pittsburgh Healthcare System, Pittsburgh, PA
+ 
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.domain.ext   []
+         Hines              ftp.domain.ext    []
+         Salt Lake City     ftp.domain.ext      []
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:http://www4.domain.ext/vdl/
+               
+  
+ Title                           File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ User Manual- Registration Menu  DG_5_3_P891_REG_UM.PDF         Binary 
+ IVM Technical Manual            IVM_2_P160_TM.PDF              Binary    
+ 
+  
+ FTP Instructions:
+ -----------------
+  
+ ES 4.1 includes the following patches.  The host file was created to
+ simplify installation at Veterans Health Administration (VHA) facilities.
+  
+    File Name                         Contents           Retrieval Format
+    --------------------------------  --------           ----------------
+    DG_53_P891.KID                    DG*5.3*891          ASCII
+                                      DG*5.3*871
+                                      DG*5.3*890
+                                      DG*5.3*904
+                                      EAS*1*113
+                                      IVM*2*160
+                                      DG*5.3*901
+                                      DG*5.3*906
+  
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ Please see the DG*5.3*891 Patch Description for installation 
+ instructions.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:                          Hold Date     : DEC 05, 2015
+Entered By  :                               Date Entered  : OCT 22, 2014
+Completed By:                               Date Completed: NOV 20, 2015
+Released By :                               Date Released : DEC 17, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

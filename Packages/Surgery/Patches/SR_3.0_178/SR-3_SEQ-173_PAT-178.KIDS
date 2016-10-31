@@ -1,0 +1,525 @@
+Released SR*3*178 SEQ #173
+Extracted from mail message
+**KIDS**:SR*3.0*178^
+
+**INSTALL NAME**
+SR*3.0*178
+"BLD",9632,0)
+SR*3.0*178^SURGERY^0^3140306^y
+"BLD",9632,1,0)
+^^19^19^3140306^
+"BLD",9632,1,1,0)
+  This patch will correct the following issues currently occurring in
+"BLD",9632,1,2,0)
+  the VistA Surgery application:
+"BLD",9632,1,3,0)
+ 
+"BLD",9632,1,4,0)
+  In the Surgery option Exclusion Criteria (Enter/Edit) [SR NO
+"BLD",9632,1,5,0)
+  ASSESSMENT REASON] when users try to enter exclusion criteria
+"BLD",9632,1,6,0)
+  beginning with 'EXCEEDS' at the 'Reason an Assessment was not
+"BLD",9632,1,7,0)
+  Created:' prompt, the response 'EXCEEDS MAX ASSMNTS' is always
+"BLD",9632,1,8,0)
+  always displaying no matter what the user has entered/selected.
+"BLD",9632,1,9,0)
+ 
+"BLD",9632,1,10,0)
+  Next, the FIELD field (#2) for the ATTENDING CODE entry of the Surgery
+"BLD",9632,1,11,0)
+  Interface Parameter file (#133.2) points to the ATTENDING CODE field
+"BLD",9632,1,12,0)
+  (#.165) of the SURGERY file (#130) which is no longer used.  It should
+"BLD",9632,1,13,0)
+  point to ATTENDING CODE field (#.166) of the SURGERY file.
+"BLD",9632,1,14,0)
+ 
+"BLD",9632,1,15,0)
+ 
+"BLD",9632,1,16,0)
+  Finally, when printing the 'LONG' form version of an operation request
+"BLD",9632,1,17,0)
+  for a particular surgical specialty in the Operation Requests for a
+"BLD",9632,1,18,0)
+  Day [SROP REQ] option in the Surgery Menu, a site noticed the Case
+"BLD",9632,1,19,0)
+  Order number is not displaying correctly.
+"BLD",9632,4,0)
+^9.64PA^^
+"BLD",9632,6.3)
+6
+"BLD",9632,"ABPKG")
+n
+"BLD",9632,"INID")
+^n
+"BLD",9632,"INIT")
+SET^SR178PST
+"BLD",9632,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9632,"KRN",.4,0)
+.4
+"BLD",9632,"KRN",.401,0)
+.401
+"BLD",9632,"KRN",.402,0)
+.402
+"BLD",9632,"KRN",.403,0)
+.403
+"BLD",9632,"KRN",.5,0)
+.5
+"BLD",9632,"KRN",.84,0)
+.84
+"BLD",9632,"KRN",3.6,0)
+3.6
+"BLD",9632,"KRN",3.8,0)
+3.8
+"BLD",9632,"KRN",9.2,0)
+9.2
+"BLD",9632,"KRN",9.8,0)
+9.8
+"BLD",9632,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",9632,"KRN",9.8,"NM",1,0)
+SRONASS^^0^B17680159
+"BLD",9632,"KRN",9.8,"NM",2,0)
+SROREQ2^^0^B17559293
+"BLD",9632,"KRN",9.8,"NM",3,0)
+SR178PST^^0^B524049
+"BLD",9632,"KRN",9.8,"NM","B","SR178PST",3)
+
+"BLD",9632,"KRN",9.8,"NM","B","SRONASS",1)
+
+"BLD",9632,"KRN",9.8,"NM","B","SROREQ2",2)
+
+"BLD",9632,"KRN",19,0)
+19
+"BLD",9632,"KRN",19.1,0)
+19.1
+"BLD",9632,"KRN",101,0)
+101
+"BLD",9632,"KRN",409.61,0)
+409.61
+"BLD",9632,"KRN",771,0)
+771
+"BLD",9632,"KRN",779.2,0)
+779.2
+"BLD",9632,"KRN",870,0)
+870
+"BLD",9632,"KRN",8989.51,0)
+8989.51
+"BLD",9632,"KRN",8989.52,0)
+8989.52
+"BLD",9632,"KRN",8994,0)
+8994
+"BLD",9632,"KRN","B",.4,.4)
+
+"BLD",9632,"KRN","B",.401,.401)
+
+"BLD",9632,"KRN","B",.402,.402)
+
+"BLD",9632,"KRN","B",.403,.403)
+
+"BLD",9632,"KRN","B",.5,.5)
+
+"BLD",9632,"KRN","B",.84,.84)
+
+"BLD",9632,"KRN","B",3.6,3.6)
+
+"BLD",9632,"KRN","B",3.8,3.8)
+
+"BLD",9632,"KRN","B",9.2,9.2)
+
+"BLD",9632,"KRN","B",9.8,9.8)
+
+"BLD",9632,"KRN","B",19,19)
+
+"BLD",9632,"KRN","B",19.1,19.1)
+
+"BLD",9632,"KRN","B",101,101)
+
+"BLD",9632,"KRN","B",409.61,409.61)
+
+"BLD",9632,"KRN","B",771,771)
+
+"BLD",9632,"KRN","B",779.2,779.2)
+
+"BLD",9632,"KRN","B",870,870)
+
+"BLD",9632,"KRN","B",8989.51,8989.51)
+
+"BLD",9632,"KRN","B",8989.52,8989.52)
+
+"BLD",9632,"KRN","B",8994,8994)
+
+"BLD",9632,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",9632,"QUES",0)
+^9.62^^
+"BLD",9632,"REQB",0)
+^9.611^2^2
+"BLD",9632,"REQB",1,0)
+SR*3.0*174^1
+"BLD",9632,"REQB",2,0)
+SR*3.0*109^1
+"BLD",9632,"REQB","B","SR*3.0*109",2)
+
+"BLD",9632,"REQB","B","SR*3.0*174",1)
+
+"INIT")
+SET^SR178PST
+"MBREQ")
+0
+"PKG",308,-1)
+1^1
+"PKG",308,0)
+SURGERY^SR^SURGICAL DATA COLLECTION AND OPERATIONS SCHEDULING
+"PKG",308,20,0)
+^9.402P^^
+"PKG",308,22,0)
+^9.49I^1^1
+"PKG",308,22,1,0)
+3.0^2930624^2940818
+"PKG",308,22,1,"PAH",1,0)
+178^3140306
+"PKG",308,22,1,"PAH",1,1,0)
+^^19^19^3140306
+"PKG",308,22,1,"PAH",1,1,1,0)
+  This patch will correct the following issues currently occurring in
+"PKG",308,22,1,"PAH",1,1,2,0)
+  the VistA Surgery application:
+"PKG",308,22,1,"PAH",1,1,3,0)
+ 
+"PKG",308,22,1,"PAH",1,1,4,0)
+  In the Surgery option Exclusion Criteria (Enter/Edit) [SR NO
+"PKG",308,22,1,"PAH",1,1,5,0)
+  ASSESSMENT REASON] when users try to enter exclusion criteria
+"PKG",308,22,1,"PAH",1,1,6,0)
+  beginning with 'EXCEEDS' at the 'Reason an Assessment was not
+"PKG",308,22,1,"PAH",1,1,7,0)
+  Created:' prompt, the response 'EXCEEDS MAX ASSMNTS' is always
+"PKG",308,22,1,"PAH",1,1,8,0)
+  always displaying no matter what the user has entered/selected.
+"PKG",308,22,1,"PAH",1,1,9,0)
+ 
+"PKG",308,22,1,"PAH",1,1,10,0)
+  Next, the FIELD field (#2) for the ATTENDING CODE entry of the Surgery
+"PKG",308,22,1,"PAH",1,1,11,0)
+  Interface Parameter file (#133.2) points to the ATTENDING CODE field
+"PKG",308,22,1,"PAH",1,1,12,0)
+  (#.165) of the SURGERY file (#130) which is no longer used.  It should
+"PKG",308,22,1,"PAH",1,1,13,0)
+  point to ATTENDING CODE field (#.166) of the SURGERY file.
+"PKG",308,22,1,"PAH",1,1,14,0)
+ 
+"PKG",308,22,1,"PAH",1,1,15,0)
+ 
+"PKG",308,22,1,"PAH",1,1,16,0)
+  Finally, when printing the 'LONG' form version of an operation request
+"PKG",308,22,1,"PAH",1,1,17,0)
+  for a particular surgical specialty in the Operation Requests for a
+"PKG",308,22,1,"PAH",1,1,18,0)
+  Day [SROP REQ] option in the Surgery Menu, a site noticed the Case
+"PKG",308,22,1,"PAH",1,1,19,0)
+  Order number is not displaying correctly.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","SR178PST")
+0^3^B524049^n/a
+"RTN","SR178PST",1,0)
+SR178PST ;ALB/JDG - CORRECT ATTEND CODE IN FILE 133.2 ;2/20/14
+"RTN","SR178PST",2,0)
+ ;;3.0;Surgery;**178**;24 Jun 93;Build 6
+"RTN","SR178PST",3,0)
+ ;
+"RTN","SR178PST",4,0)
+ Q
+"RTN","SR178PST",5,0)
+ ;
+"RTN","SR178PST",6,0)
+SET ; Update the SURGERY INTERFACE PARAMETER (#133.2) file
+"RTN","SR178PST",7,0)
+ D BMES^XPDUTL(">>> Updating the SURGERY INTERFACE PARAMETER (#133.2) file...")
+"RTN","SR178PST",8,0)
+ N DA,DIE,DR,SRFIELD
+"RTN","SR178PST",9,0)
+ S SRFIELD=$O(^SRO(133.2,"AC","ATTENDING CODE",0)) Q:'SRFIELD
+"RTN","SR178PST",10,0)
+ S DIE="^SRO(133.2,",DA=SRFIELD,DR="2///.166"
+"RTN","SR178PST",11,0)
+ D ^DIE
+"RTN","SR178PST",12,0)
+ Q
+"RTN","SRONASS")
+0^1^B17680159^B17653883
+"RTN","SRONASS",1,0)
+SRONASS ;BIR/MAM - NO ASSESSMENT REASON ;05/05/10
+"RTN","SRONASS",2,0)
+ ;;3.0;Surgery;**38,47,83,107,121,100,125,174,178**;24 Jun 93;Build 6
+"RTN","SRONASS",3,0)
+ K SRTN S SRSOUT=0 N SRSEL D ^SROPSEL I '$D(DFN) S SRSOUT=1 G END
+"RTN","SRONASS",4,0)
+ D @$S(SRSEL=2:"^SROPSN",1:"STL^SROPS") I '$D(SRTN) S SRSOUT=1 G END
+"RTN","SRONASS",5,0)
+ S X=$P($G(^SRF(SRTN,"RA")),"^",6) I X="Y" D ASS I 'OK G END
+"RTN","SRONASS",6,0)
+ N SRLCK S SRLCK=$$LOCK^SROUTL(SRTN) I 'SRLCK G END
+"RTN","SRONASS",7,0)
+ D SRA^SROES
+"RTN","SRONASS",8,0)
+ W ! K DIR S X=$P($G(^SRF(SRTN,"RA")),"^",7) I X'="" D SET S DIR("B")=X
+"RTN","SRONASS",9,0)
+ S DIR(0)="130,102",DIR("A")="Reason an Assessment was not Created" D ^DIR K DIR I $D(DTOUT)!$D(DUOUT)!(Y=""&(X'="@")) S SRSOUT=1 G END
+"RTN","SRONASS",10,0)
+ I X="@" D DELETE G END1
+"RTN","SRONASS",11,0)
+ I $G(Y)'="" K DR,DA,DIE S DIE=130,DR="102///"_Y_";323////N;284////N;Q;235////C",DA=SRTN D ^DIE K DR,DIE,DA
+"RTN","SRONASS",12,0)
+ D ^SROAEX S SROERR=SRTN D ^SROERR0
+"RTN","SRONASS",13,0)
+END1 K DA,DIK S DIK="^SRF(",DIK(1)=".232^AQ",DA=SRTN D EN1^DIK
+"RTN","SRONASS",14,0)
+ D EXIT^SROES
+"RTN","SRONASS",15,0)
+END I $G(SRLCK) D UNLOCK^SROUTL(SRTN)
+"RTN","SRONASS",16,0)
+ K SRTN D ^SRSKILL W @IOF
+"RTN","SRONASS",17,0)
+ Q
+"RTN","SRONASS",18,0)
+LOOP ; break procedure
+"RTN","SRONASS",19,0)
+ S SROPS(M)="" F LOOP=1:1 S MM=$P(SROPER," "),MMM=$P(SROPER," ",2,200) Q:MMM=""  Q:$L(SROPS(M))+$L(MM)'<60  S SROPS(M)=SROPS(M)_MM_" ",SROPER=MMM
+"RTN","SRONASS",20,0)
+ Q
+"RTN","SRONASS",21,0)
+OTHER ; other operations
+"RTN","SRONASS",22,0)
+ S SRLONG=1 I $L(SROPER)+$L($P(^SRF(SRTN,13,SROTHER,0),"^"))>235 S SRLONG=0,SROTHER=999,SROPERS=" ..."
+"RTN","SRONASS",23,0)
+ I SRLONG S SROPERS=$P(^SRF(SRTN,13,SROTHER,0),"^")
+"RTN","SRONASS",24,0)
+ S SROPER=SROPER_$S(SROPERS=" ...":SROPERS,1:", "_SROPERS)
+"RTN","SRONASS",25,0)
+ Q
+"RTN","SRONASS",26,0)
+SET ; expand reason for no assessment code
+"RTN","SRONASS",27,0)
+ S Y=X,C=$P(^DD(130,102,0),"^",2) D Y^DIQ S X=Y
+"RTN","SRONASS",28,0)
+ Q
+"RTN","SRONASS",29,0)
+ASS ; assessment already exists
+"RTN","SRONASS",30,0)
+ S OK=0 W !!,"According to your records, an assessment should be created for this surgical",!,"case."
+"RTN","SRONASS",31,0)
+ASK W !!,"Do you want to update this information and not create a surgery risk ",!,"assessment for this case ?  NO// " R SRYN:DTIME I '$T!(SRYN["^") S OK="" Q
+"RTN","SRONASS",32,0)
+ S SRYN=$E(SRYN) S:SRYN="" SRYN="N" I "YyNn"'[SRYN S SRYN="?"
+"RTN","SRONASS",33,0)
+ I SRYN="?" W !!,"If this case will not be used for the risk assessment study, Enter 'YES' to ",!,"change the status.  You will then be prompted for the reason that no assessment",!,"was done.  Enter 'NO' to leave this case unchanged."
+"RTN","SRONASS",34,0)
+ I SRYN="?" G ASK
+"RTN","SRONASS",35,0)
+ I "Yy"[SRYN S OK=1
+"RTN","SRONASS",36,0)
+ I "Nn"[SRYN W !!,"No action taken.",!!,"Press RETURN to continue  " R X:DTIME
+"RTN","SRONASS",37,0)
+ Q
+"RTN","SRONASS",38,0)
+DELETE ; delete no assessment reason
+"RTN","SRONASS",39,0)
+ W !!,"If you delete the reason why no assessment was created for this case, the",!,"computer will automatically update your records to make this a non-assessed",!,"case."
+"RTN","SRONASS",40,0)
+ W !!,"Are you sure that you want to delete the reason ?  NO// " R SRYN:DTIME I '$T!(SRYN["^") S SRSOUT=1 Q
+"RTN","SRONASS",41,0)
+ S SRYN=$E(SRYN) S:SRYN="" SRYN="N" I "YyNn"'[SRYN S SRYN="?"
+"RTN","SRONASS",42,0)
+ I SRYN="?" W !!,"By entering an '@', you have told the computer that you want to remove the ",!,"reason why no assessment was created for this case.  If this reason should be",!,"deleted, enter 'YES'." G DELETE
+"RTN","SRONASS",43,0)
+ I "Nn"[SRYN S SRSOUT=1 W !!,"No action taken.",!!,"Press RETURN to continue  " R X:DTIME Q
+"RTN","SRONASS",44,0)
+ W !!,"Updating to non-assessed status..." D DRDEL W !!,"Press RETURN to continue  " R X:DTIME
+"RTN","SRONASS",45,0)
+ Q
+"RTN","SRONASS",46,0)
+DRDEL K DR,DIE,DA S DIE=130,DA=SRTN,DR="235///@;284///@;393///@;260///@;272///@;272.1///@;323///@;102///@;260.1///@" D ^DIE K DR,DIE,DA
+"RTN","SRONASS",47,0)
+ Q
+"RTN","SROREQ2")
+0^2^B17559293^B17539162
+"RTN","SROREQ2",1,0)
+SROREQ2 ;BIR/MAM - REQUEST FOR A DAY (CONT) ;12/09/99
+"RTN","SROREQ2",2,0)
+ ;;3.0;Surgery;**48,77,92,109,178**;24 Jun 93;Build 6
+"RTN","SROREQ2",3,0)
+ ;
+"RTN","SROREQ2",4,0)
+ ; Reference to ^LAB(66 supported by DBIA #210
+"RTN","SROREQ2",5,0)
+ ;
+"RTN","SROREQ2",6,0)
+BEG ; entry when queued
+"RTN","SROREQ2",7,0)
+ K ^TMP("SR",$J) U IO S Y=SRSDATE D D^DIQ S SRSDT=Y
+"RTN","SROREQ2",8,0)
+ S (SRHDR,SRSOUT)=0 D PAGE Q:SRSOUT
+"RTN","SROREQ2",9,0)
+ S DFN=0 F  S DFN=$O(^SRF("AR",SRSDATE,DFN)) Q:'DFN  S SRTN=0 F  S SRTN=$O(^SRF("AR",SRSDATE,DFN,SRTN)) Q:'SRTN  I $D(^SRF(SRTN,0)),$$DIV^SROUTL0(SRTN),$P(^SRF(SRTN,0),"^",4)=SRSS D SET
+"RTN","SROREQ2",10,0)
+ S SREQDT=0 F  S SREQDT=$O(^TMP("SR",$J,SREQDT)) Q:SREQDT=""!(SRSOUT)  S SRTN=0 F  S SRTN=$O(^TMP("SR",$J,SREQDT,SRTN)) Q:'SRTN!(SRSOUT)  D PRINT
+"RTN","SROREQ2",11,0)
+END W:$E(IOST)="P" @IOF I $D(ZTQUEUED) K ^TMP("SR",$J) Q:$G(ZTSTOP)  S ZTREQ="@" Q
+"RTN","SROREQ2",12,0)
+ I 'SRSOUT,$E(IOST)'="P" W !!,"Press RETURN to continue  " R X:DTIME
+"RTN","SROREQ2",13,0)
+ D ^%ZISC W @IOF K SRTN D ^SRSKILL
+"RTN","SROREQ2",14,0)
+ Q
+"RTN","SROREQ2",15,0)
+PAGE I SRHDR,$E(IOST)'="P" W !!,"Press <RET to continue, or '^' to quit:  " R X:DTIME I '$T!(X["^") S SRSOUT=1 Q
+"RTN","SROREQ2",16,0)
+ D HDR^SROREQ
+"RTN","SROREQ2",17,0)
+ Q
+"RTN","SROREQ2",18,0)
+SET ; set ^TMP(
+"RTN","SROREQ2",19,0)
+ S SREQDT=$P($G(^SRF(SRTN,"1.0")),"^",11) S:'SREQDT SREQDT="ZZ" S ^TMP("SR",$J,SREQDT,SRTN)=DFN
+"RTN","SROREQ2",20,0)
+ Q
+"RTN","SROREQ2",21,0)
+PRINT ; print requests
+"RTN","SROREQ2",22,0)
+ I $Y+20>IOSL D PAGE I SRSOUT Q
+"RTN","SROREQ2",23,0)
+ S DFN=^TMP("SR",$J,SREQDT,SRTN) D DEM^VADPT S SRNAME=VADM(1),SRSSN=VA("PID"),SRWARD=$S($D(^DPT(DFN,.1)):^(.1),1:"NOT ENTERED"),AGE=VADM(4)
+"RTN","SROREQ2",24,0)
+ S SR(.1)=$S($D(^SRF(SRTN,.1)):^(.1),1:"")
+"RTN","SROREQ2",25,0)
+ S SROSUR=$P(SR(.1),"^",4),SROATT=$P(SR(.1),"^",13),SROPER=$P(^SRF(SRTN,"OP"),"^") K SROP S (X,CNT)=0 F  S X=$O(^SRF(SRTN,13,X)) Q:'X  S CNT=CNT+1,SROP(CNT)=$P(^SRF(SRTN,13,X,0),"^")
+"RTN","SROREQ2",26,0)
+ K SROPS,MM,MMM S:$L(SROPER)<56 SROPS(1)=SROPER I $L(SROPER)>55 S SROPER=SROPER_"  " F M=1:1 D LOOP Q:MMM=""
+"RTN","SROREQ2",27,0)
+ S:SROSUR SROSUR=$P(^VA(200,SROSUR,0),"^") I SROATT S SROATT=$P(^VA(200,SROATT,0),"^")
+"RTN","SROREQ2",28,0)
+ S SRDIAG=$S($D(^SRF(SRTN,33)):$P(^(33),"^"),1:"") I SRDIAG="" S SRDIAG="NOT ENTERED"
+"RTN","SROREQ2",29,0)
+ S Y=SREQDT D D^DIQ S SREQDAY=$S('$E(Y):$E(Y,1,12)_" "_$E(Y,14,18),1:"") S SR("1.0")=$S($D(^SRF(SRTN,"1.0")):^("1.0"),1:"")
+"RTN","SROREQ2",30,0)
+ S SRSPER=$P(SR("1.0"),"^",10) S:SRSPER SRSPER=$P(^VA(200,SRSPER,0),"^")
+"RTN","SROREQ2",31,0)
+ S Y=$P(SR("1.0"),"^"),C=$P(^DD(130,1.01,0),"^",2) D:Y'="" Y^DIQ S SRANES=$S(Y'="":Y,1:"NOT ENTERED")
+"RTN","SROREQ2",32,0)
+ K BLOOD S (CNT,X)=0 F  S X=$O(^SRF(SRTN,11,X)) Q:'X  S CNT=CNT+1,Y=$P(^SRF(SRTN,11,X,0),"^"),MM=$P(^(0),"^",2) S BLOOD(CNT)=Y_"  "_MM_" UNITS" ;RLM
+"RTN","SROREQ2",33,0)
+ S SRPOS=$S($D(^SRF(SRTN,.5)):$P(^(.5),"^",3),1:"") I SRPOS S SRPOS=$P(^SRO(132,SRPOS,0),"^")
+"RTN","SROREQ2",34,0)
+ S SRLENGTH=$S($D(^SRF(SRTN,.4)):$P(^(.4),"^"),1:"NOT ENTERED")
+"RTN","SROREQ2",35,0)
+ S SRORDER=$P(^SRF(SRTN,0),"^",11)
+"RTN","SROREQ2",36,0)
+ W ! F LINE=1:1:80 W "-"
+"RTN","SROREQ2",37,0)
+ W !!,"Patient: "_SRNAME,?40,"ID #: "_VA("PID"),!,"Age: "_AGE,?40,"Ward: "_SRWARD,!!,"Surgeon: "_SROSUR,?40,"Attending: "_SROATT,!,"Preoperative Diagnosis: "_SRDIAG
+"RTN","SROREQ2",38,0)
+ W !!,"Principal Procedure:",?22,SROPS(1) I $D(SROPS(2)) W !,?22,SROPS(2) I $D(SROPS(3)) W !,?22,SROPS(3) I $D(SROPS(4)) W !,?22,SROPS(4) I $D(SROPS(5)) W !,?22,SROPS(5)
+"RTN","SROREQ2",39,0)
+ I $O(SROP(0)) W !,"Other Procedures:",?22,SROP(1) S CNT=1 F I=0:0 S CNT=$O(SROP(CNT)) Q:'CNT  W !,?22,SROP(CNT)
+"RTN","SROREQ2",40,0)
+ W !,"Estimated Case Length: "_SRLENGTH I SRPOS'="" W ?40,"Position: "_SRPOS
+"RTN","SROREQ2",41,0)
+ I SRORDER'="" W !,"Case Schedule Order: "_SRORDER
+"RTN","SROREQ2",42,0)
+ W !!,"Req. Anesthesia Technique: "_SRANES
+"RTN","SROREQ2",43,0)
+ I $O(BLOOD(0)) W !,"Blood Requested: ",?22,BLOOD(1) I $D(BLOOD(2)) W !,?22,BLOOD(2) I $D(BLOOD(3)) W !,?22,BLOOD(3)
+"RTN","SROREQ2",44,0)
+ I SRSPER'="" W !,"Requested by: "_SRSPER W:SREQDAY'="" " on "_SREQDAY
+"RTN","SROREQ2",45,0)
+ I $O(^SRF(SRTN,5,0)) W !!,"Comments: " S X=0 F  S X=$O(^SRF(SRTN,5,X)) Q:'X  W !,^SRF(SRTN,5,X,0)
+"RTN","SROREQ2",46,0)
+ W ! Q
+"RTN","SROREQ2",47,0)
+LOOP ; break procedure if greater than 55 characters
+"RTN","SROREQ2",48,0)
+ S SROPS(M)="" F LOOP=1:1 S MM=$P(SROPER," "),MMM=$P(SROPER," ",2,200) Q:MMM=""  Q:$L(SROPS(M))+$L(MM)'<55  S SROPS(M)=SROPS(M)_MM_" ",SROPER=MMM
+"RTN","SROREQ2",49,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",9632,6)
+^173
+**END**
+**END**
+

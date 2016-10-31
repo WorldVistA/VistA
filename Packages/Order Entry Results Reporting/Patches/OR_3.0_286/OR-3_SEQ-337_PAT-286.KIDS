@@ -1,0 +1,1311 @@
+Released OR*3*286 SEQ #337
+Extracted from mail message
+**KIDS**:OR*3.0*286^
+
+**INSTALL NAME**
+OR*3.0*286
+"BLD",8925,0)
+OR*3.0*286^ORDER ENTRY/RESULTS REPORTING^0^3130812^y
+"BLD",8925,1,0)
+^^10^10^3130711^
+"BLD",8925,1,1,0)
+This patch corrects 3 issues within the ORDER ENTRY/RESULTS REPORTING 
+"BLD",8925,1,2,0)
+package:
+"BLD",8925,1,3,0)
+ 
+"BLD",8925,1,4,0)
+1. Changing an unsigned order does not update the entering provider.
+"BLD",8925,1,5,0)
+ 
+"BLD",8925,1,6,0)
+2. Chart Copies are enabled for printing even when no format has 
+"BLD",8925,1,7,0)
+   been set up.
+"BLD",8925,1,8,0)
+ 
+"BLD",8925,1,9,0)
+3. There is a discrepancy in metric measure conversions for weight between
+"BLD",8925,1,10,0)
+   the Cover Sheet and the Vitals entry form.
+"BLD",8925,4,0)
+^9.64PA^^
+"BLD",8925,6.3)
+9
+"BLD",8925,"INID")
+^n
+"BLD",8925,"INIT")
+
+"BLD",8925,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8925,"KRN",.4,0)
+.4
+"BLD",8925,"KRN",.401,0)
+.401
+"BLD",8925,"KRN",.402,0)
+.402
+"BLD",8925,"KRN",.403,0)
+.403
+"BLD",8925,"KRN",.5,0)
+.5
+"BLD",8925,"KRN",.84,0)
+.84
+"BLD",8925,"KRN",3.6,0)
+3.6
+"BLD",8925,"KRN",3.8,0)
+3.8
+"BLD",8925,"KRN",9.2,0)
+9.2
+"BLD",8925,"KRN",9.8,0)
+9.8
+"BLD",8925,"KRN",9.8,"NM",0)
+^9.68A^4^3
+"BLD",8925,"KRN",9.8,"NM",1,0)
+ORCSAVE^^0^B98247986
+"BLD",8925,"KRN",9.8,"NM",2,0)
+ORWD2^^0^B33111344
+"BLD",8925,"KRN",9.8,"NM",4,0)
+ORQQVI^^0^B35437287
+"BLD",8925,"KRN",9.8,"NM","B","ORCSAVE",1)
+
+"BLD",8925,"KRN",9.8,"NM","B","ORQQVI",4)
+
+"BLD",8925,"KRN",9.8,"NM","B","ORWD2",2)
+
+"BLD",8925,"KRN",19,0)
+19
+"BLD",8925,"KRN",19.1,0)
+19.1
+"BLD",8925,"KRN",101,0)
+101
+"BLD",8925,"KRN",409.61,0)
+409.61
+"BLD",8925,"KRN",771,0)
+771
+"BLD",8925,"KRN",779.2,0)
+779.2
+"BLD",8925,"KRN",870,0)
+870
+"BLD",8925,"KRN",8989.51,0)
+8989.51
+"BLD",8925,"KRN",8989.52,0)
+8989.52
+"BLD",8925,"KRN",8994,0)
+8994
+"BLD",8925,"KRN","B",.4,.4)
+
+"BLD",8925,"KRN","B",.401,.401)
+
+"BLD",8925,"KRN","B",.402,.402)
+
+"BLD",8925,"KRN","B",.403,.403)
+
+"BLD",8925,"KRN","B",.5,.5)
+
+"BLD",8925,"KRN","B",.84,.84)
+
+"BLD",8925,"KRN","B",3.6,3.6)
+
+"BLD",8925,"KRN","B",3.8,3.8)
+
+"BLD",8925,"KRN","B",9.2,9.2)
+
+"BLD",8925,"KRN","B",9.8,9.8)
+
+"BLD",8925,"KRN","B",19,19)
+
+"BLD",8925,"KRN","B",19.1,19.1)
+
+"BLD",8925,"KRN","B",101,101)
+
+"BLD",8925,"KRN","B",409.61,409.61)
+
+"BLD",8925,"KRN","B",771,771)
+
+"BLD",8925,"KRN","B",779.2,779.2)
+
+"BLD",8925,"KRN","B",870,870)
+
+"BLD",8925,"KRN","B",8989.51,8989.51)
+
+"BLD",8925,"KRN","B",8989.52,8989.52)
+
+"BLD",8925,"KRN","B",8994,8994)
+
+"BLD",8925,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",8925,"QUES",0)
+^9.62^^0
+"BLD",8925,"REQB",0)
+^9.611^2^2
+"BLD",8925,"REQB",1,0)
+OR*3.0*285^1
+"BLD",8925,"REQB",2,0)
+OR*3.0*306^1
+"BLD",8925,"REQB","B","OR*3.0*285",1)
+
+"BLD",8925,"REQB","B","OR*3.0*306",2)
+
+"MBREQ")
+0
+"PKG",174,-1)
+1^1
+"PKG",174,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",174,20,0)
+^9.402P^^
+"PKG",174,22,0)
+^9.49I^1^1
+"PKG",174,22,1,0)
+3.0^2971217^2990325^66481
+"PKG",174,22,1,"PAH",1,0)
+286^3130812
+"PKG",174,22,1,"PAH",1,1,0)
+^^10^10^3130812
+"PKG",174,22,1,"PAH",1,1,1,0)
+This patch corrects 3 issues within the ORDER ENTRY/RESULTS REPORTING 
+"PKG",174,22,1,"PAH",1,1,2,0)
+package:
+"PKG",174,22,1,"PAH",1,1,3,0)
+ 
+"PKG",174,22,1,"PAH",1,1,4,0)
+1. Changing an unsigned order does not update the entering provider.
+"PKG",174,22,1,"PAH",1,1,5,0)
+ 
+"PKG",174,22,1,"PAH",1,1,6,0)
+2. Chart Copies are enabled for printing even when no format has 
+"PKG",174,22,1,"PAH",1,1,7,0)
+   been set up.
+"PKG",174,22,1,"PAH",1,1,8,0)
+ 
+"PKG",174,22,1,"PAH",1,1,9,0)
+3. There is a discrepancy in metric measure conversions for weight between
+"PKG",174,22,1,"PAH",1,1,10,0)
+   the Cover Sheet and the Vitals entry form.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","ORCSAVE")
+0^1^B98247986^B93570621
+"RTN","ORCSAVE",1,0)
+ORCSAVE ;SLC/MKB/JDL-Save ;07/08/10  11:46
+"RTN","ORCSAVE",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**7,56,70,73,92,94,116,141,163,187,190,195,243,303,293,280,306,286**;Dec 17, 1997;Build 9
+"RTN","ORCSAVE",3,0)
+ ;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ORCSAVE",4,0)
+ ;
+"RTN","ORCSAVE",5,0)
+ ; DBIA 10103   ^XLFDT
+"RTN","ORCSAVE",6,0)
+ ;
+"RTN","ORCSAVE",7,0)
+ ;
+"RTN","ORCSAVE",8,0)
+NEW(ORDIALOG,ORDG,ORPKG,ORCAT,OREVENT,ORDUZ,ORLOG) ; -- New order
+"RTN","ORCSAVE",9,0)
+ ; Returns ORIFN = [new] order number, if created/saved
+"RTN","ORCSAVE",10,0)
+ D EN
+"RTN","ORCSAVE",11,0)
+ Q
+"RTN","ORCSAVE",12,0)
+ ;
+"RTN","ORCSAVE",13,0)
+XX ; -- save new/unreleased edited order into Orders file
+"RTN","ORCSAVE",14,0)
+ ;    Requires: ORDIALOG() = array of dialog values
+"RTN","ORCSAVE",15,0)
+ ;              ORIFN      = IFN of original order that was edited
+"RTN","ORCSAVE",16,0)
+ ;
+"RTN","ORCSAVE",17,0)
+ N OLDIFN S ORIFN=+ORIFN,OLDIFN=0
+"RTN","ORCSAVE",18,0)
+ I $S($P(^OR(100,ORIFN,3),U,3)=11:0,$P(^(3),U,3)'=10:1,$P(^(8,1,0),U,4)=2:0,1:1) S OLDIFN=ORIFN K ORIFN ; create new order if released or delayed&signed
+"RTN","ORCSAVE",19,0)
+ D EN Q:'ORIFN  S:'$G(ORDA) ORDA=1
+"RTN","ORCSAVE",20,0)
+ I $G(OLDIFN) D  ;save links between orders
+"RTN","ORCSAVE",21,0)
+ . S $P(^OR(100,ORIFN,3),U,5)=OLDIFN,$P(^(3),U,11)=1
+"RTN","ORCSAVE",22,0)
+ . S $P(^OR(100,OLDIFN,3),U,6)=ORIFN S:$D(^(5)) ^OR(100,ORIFN,5)=^OR(100,OLDIFN,5)
+"RTN","ORCSAVE",23,0)
+ I $D(^OR(100,+OLDIFN,0)) D
+"RTN","ORCSAVE",24,0)
+ . Q:'$G(OREVTDF)
+"RTN","ORCSAVE",25,0)
+ . N OLDEVT,OLDSTS,LSTACT,PATID,NOW,WHEN
+"RTN","ORCSAVE",26,0)
+ . S (OLDEVT,OLDSTS,LSTACT)=0
+"RTN","ORCSAVE",27,0)
+ . S NOW=$$NOW^XLFDT
+"RTN","ORCSAVE",28,0)
+ . S OLDEVT=$P(^OR(100,+OLDIFN,0),U,17),OLDSTS=$P(^OR(100,+OLDIFN,3),U,3)
+"RTN","ORCSAVE",29,0)
+ . ; Active status = 6 from #100.01
+"RTN","ORCSAVE",30,0)
+ . I (OLDEVT>0),OLDSTS=6 D
+"RTN","ORCSAVE",31,0)
+ . . S $P(^OR(100,+ORIFN,0),U,17)=OLDEVT
+"RTN","ORCSAVE",32,0)
+ . . S $P(^OR(100,+ORIFN,3),U,3)=11
+"RTN","ORCSAVE",33,0)
+ . . S LSTACT=$P($G(^OR(100,+ORIFN,3)),U,7)
+"RTN","ORCSAVE",34,0)
+ . . I $D(^OR(100,+ORIFN,8,LSTACT,0)) D
+"RTN","ORCSAVE",35,0)
+ . . . S $P(^OR(100,+ORIFN,8,LSTACT,0),U,15)=11
+"RTN","ORCSAVE",36,0)
+ . . . S PATID=$P(^OR(100,+ORIFN,0),U,2)
+"RTN","ORCSAVE",37,0)
+ . . . S WHEN=$P(^OR(100,+ORIFN,8,LSTACT,0),U)
+"RTN","ORCSAVE",38,0)
+ . . . S ^OR(100,"AC",PATID,9999999-WHEN,+ORIFN,LSTACT)=""
+"RTN","ORCSAVE",39,0)
+ Q
+"RTN","ORCSAVE",40,0)
+ ;
+"RTN","ORCSAVE",41,0)
+RN ; -- save new/unreleased renewal order into Orders file
+"RTN","ORCSAVE",42,0)
+ ;    Requires: ORDIALOG() = array of new dialog values
+"RTN","ORCSAVE",43,0)
+ ;              ORIFN      = IFN of original order that was renewed
+"RTN","ORCSAVE",44,0)
+ ;
+"RTN","ORCSAVE",45,0)
+ N OLDIFN S OLDIFN=+ORIFN K ORIFN
+"RTN","ORCSAVE",46,0)
+ D EN Q:'ORIFN  S:'$G(ORDA) ORDA=1
+"RTN","ORCSAVE",47,0)
+ S $P(^OR(100,ORIFN,3),U,5)=OLDIFN,$P(^(3),U,11)=2
+"RTN","ORCSAVE",48,0)
+ S $P(^OR(100,OLDIFN,3),U,6)=ORIFN S:$D(^(5)) ^OR(100,ORIFN,5)=^OR(100,OLDIFN,5)
+"RTN","ORCSAVE",49,0)
+ Q
+"RTN","ORCSAVE",50,0)
+ ;
+"RTN","ORCSAVE",51,0)
+EN ; -- save new/unreleased order in ORDIALOG() into Orders file
+"RTN","ORCSAVE",52,0)
+ ;    Requires: ORVP, ORNP [and ORL, ORTS, ORAPPT if available]
+"RTN","ORCSAVE",53,0)
+ ;    If defined: ORCAT,ORPKG,ORDG,ORLOG,ORDUZ,OREVENT,ORDCNTRL,ORSRC
+"RTN","ORCSAVE",54,0)
+ ;     (else use values from ORDIALOG and current state)
+"RTN","ORCSAVE",55,0)
+ ;
+"RTN","ORCSAVE",56,0)
+ N PKG,NOW,NODE,CNT,CDL,I,X,STS,SIGNREQD,LOC,TRSPEC,NATR,CATG,DG,LOG,USR,TYPE,ORK
+"RTN","ORCSAVE",57,0)
+ Q:'$G(ORVP)  Q:'$G(ORDIALOG)  Q:'$D(^ORD(101.41,+ORDIALOG,0))
+"RTN","ORCSAVE",58,0)
+ S NOW=$$NOW^XLFDT,SIGNREQD=+$P(^ORD(101.41,+ORDIALOG,0),U,6)
+"RTN","ORCSAVE",59,0)
+ S CATG=$S($L($G(ORCAT)):ORCAT,1:$S($$INPT^ORCD:"I",1:"O"))
+"RTN","ORCSAVE",60,0)
+ S PKG=$S($G(ORPKG):ORPKG,1:$P(^ORD(101.41,+ORDIALOG,0),U,7))
+"RTN","ORCSAVE",61,0)
+ S LOG=$S($G(ORLOG):ORLOG,1:+$E(NOW,1,12)),USR=$S($G(ORDUZ):ORDUZ,1:DUZ)
+"RTN","ORCSAVE",62,0)
+ I $G(ORIFN),$D(^OR(100,ORIFN,0)) S STS=$P(^(3),U,3) G EN2 ; unrel order
+"RTN","ORCSAVE",63,0)
+ S DG=$S($G(ORDG):+ORDG,1:$P(^ORD(101.41,+ORDIALOG,0),U,5))
+"RTN","ORCSAVE",64,0)
+ I $G(OREVENT),"^PSO^RA^"'["^"_$$GET1^DIQ(9.4,+PKG_",",1)_"^",'$G(DGPMT) S LOC="",TRSPEC="" ; p286 added radiology package
+"RTN","ORCSAVE",65,0)
+ E  S LOC=$G(ORL),TRSPEC=$G(ORTS)
+"RTN","ORCSAVE",66,0)
+ S TYPE=$S("^B^C^X^P^0^"[(U_$G(ORSRC)_U):ORSRC,$G(ORDCNTRL)="SN":"P",1:0)
+"RTN","ORCSAVE",67,0)
+ ;S LOG=$S($G(ORLOG):ORLOG,1:+$E(NOW,1,12)),USR=$S($G(ORDUZ):ORDUZ,1:DUZ) moved up before EN2 call
+"RTN","ORCSAVE",68,0)
+ S NATR=+$O(^ORD(100.02,"C","E",0)) ;assume Elec Entered until changed
+"RTN","ORCSAVE",69,0)
+ S STS=$S($G(OREVENT):10,1:11),ORIFN=$$NEXTIFN Q:'ORIFN
+"RTN","ORCSAVE",70,0)
+EN1 S ^OR(100,ORIFN,0)=ORIFN_U_ORVP_U_U_$G(ORNP)_U_+ORDIALOG_";ORD(101.41,^"_USR_U_LOG_U_U_U_LOC_U_DG_U_CATG_U_TRSPEC_U_PKG_U_U_SIGNREQD_U_$G(OREVENT)_U_$G(ORAPPT)
+"RTN","ORCSAVE",71,0)
+ S ^OR(100,ORIFN,3)=LOG_"^90^"_STS_U_$S($G(ORIT):ORIT_";ORD(101.41,",1:"")_U_$G(ORDIALOG("PREV"))_"^^1^^^^"_TYPE
+"RTN","ORCSAVE",72,0)
+ S ^OR(100,ORIFN,8,0)="^100.008DA^1^1",^OR(100,ORIFN,8,1,0)=LOG_"^NW^"_$G(ORNP)_U_$S(SIGNREQD:2,1:3)_"^^^^^^^^"_NATR_U_USR_"^1^"_STS,^OR(100,ORIFN,8,"C","NW",1)=""
+"RTN","ORCSAVE",73,0)
+ S ^OR(100,"AF",LOG,ORIFN,1)=""
+"RTN","ORCSAVE",74,0)
+ S ^OR(100,"ACT",ORVP,9999999-LOG,+DG,ORIFN,1)=""
+"RTN","ORCSAVE",75,0)
+ S:STS'=10 ^OR(100,"AC",ORVP,9999999-LOG,ORIFN,1)=""
+"RTN","ORCSAVE",76,0)
+ S:SIGNREQD ^OR(100,"AS",ORVP,9999999-LOG,ORIFN,1)=""
+"RTN","ORCSAVE",77,0)
+ S:$G(OREVENT) ^OR(100,"AEVNT",ORVP,OREVENT,ORIFN)=""
+"RTN","ORCSAVE",78,0)
+ ;check if OR GTX STUDY REASON is in ORDIALOG and strip out control characters
+"RTN","ORCSAVE",79,0)
+ N ORRFSID
+"RTN","ORCSAVE",80,0)
+ S ORRFSID=$O(^ORD(101.41,"B","OR GTX STUDY REASON",""))
+"RTN","ORCSAVE",81,0)
+ I ORRFSID,$D(ORDIALOG(ORRFSID,1)) D
+"RTN","ORCSAVE",82,0)
+ .N X,I
+"RTN","ORCSAVE",83,0)
+ .S X=ORDIALOG(ORRFSID,1)
+"RTN","ORCSAVE",84,0)
+ .F I=1:1:31 S X=$TR(X,$C(I))
+"RTN","ORCSAVE",85,0)
+ .S ORDIALOG(ORRFSID,1)=X
+"RTN","ORCSAVE",86,0)
+EN2 S ORIFN=+ORIFN D RESPONSE ; save responses
+"RTN","ORCSAVE",87,0)
+ I $P(^OR(100,ORIFN,0),"^",5) D  ;Copy orders PKI fix
+"RTN","ORCSAVE",88,0)
+ . N OI,ORPKIU
+"RTN","ORCSAVE",89,0)
+ . S OI=+$O(^OR(100,ORIFN,4.5,"ID","ORDERABLE",0)),OI=+$G(^OR(100,ORIFN,4.5,OI,1)) Q:'OI
+"RTN","ORCSAVE",90,0)
+ . I PKG'=$O(^DIC(9.4,"B","OUTPATIENT PHARMACY",0)) Q
+"RTN","ORCSAVE",91,0)
+ . S ORPKIU=0 I $D(^ORD(100.7,"C",DUZ)) S ORPKIU=1
+"RTN","ORCSAVE",92,0)
+ . D PKI^ORWDPS1(.ORY,OI,CATG,+ORVP,ORPKIU)
+"RTN","ORCSAVE",93,0)
+ . I $E($G(ORY))=2 S ORDEA=ORY
+"RTN","ORCSAVE",94,0)
+ K ^OR(100,ORIFN,8,1,.1) D ORDTEXT^ORCSAVE1(ORIFN_";1") ; order text
+"RTN","ORCSAVE",95,0)
+ S NODE=^OR(100,ORIFN,8,1,0) D  S ^OR(100,ORIFN,8,1,0)=NODE
+"RTN","ORCSAVE",96,0)
+ . S $P(NODE,U,3)=$G(ORNP)
+"RTN","ORCSAVE",97,0)
+ . S $P(NODE,U,13)=USR
+"RTN","ORCSAVE",98,0)
+ S NODE=$G(^OR(100,ORIFN,0)) D  S ^OR(100,ORIFN,0)=NODE
+"RTN","ORCSAVE",99,0)
+ . S $P(NODE,U,4)=$G(ORNP) ; COST?
+"RTN","ORCSAVE",100,0)
+ . S I=$O(^OR(100,ORIFN,4.5,"ID","LOCATION",0))
+"RTN","ORCSAVE",101,0)
+ . I I,$P(NODE,U,10) S X=+$G(^OR(100,ORIFN,4.5,+I,1)) S:X $P(NODE,U,10)=X_";SC(" ;reset Loc if prev value
+"RTN","ORCSAVE",102,0)
+ . S I=$O(^OR(100,ORIFN,4.5,"ID","CLASS",0))
+"RTN","ORCSAVE",103,0)
+ . I I S X=$G(^OR(100,ORIFN,4.5,+I,1)) S:"^I^O^"[(U_X_U) $P(NODE,U,12)=X
+"RTN","ORCSAVE",104,0)
+ S $P(^OR(100,ORIFN,3),U)=NOW
+"RTN","ORCSAVE",105,0)
+ D DELOCC^OROCAPI1(ORIFN,"ACCEPTANCE_CPRS")
+"RTN","ORCSAVE",106,0)
+ I $G(ORCHECK) D  ; save order checks
+"RTN","ORCSAVE",107,0)
+ . S (CNT,CDL)=0 F  S CDL=$O(ORCHECK("NEW",CDL)) Q:CDL'>0  S I=0 D
+"RTN","ORCSAVE",108,0)
+ . . F  S I=$O(ORCHECK("NEW",CDL,I)) Q:I'>0  D
+"RTN","ORCSAVE",109,0)
+ . . . I $D(ORCHECK("NEW",CDL,I,0)) D
+"RTN","ORCSAVE",110,0)
+ . . . . N J S J=0,ORCHECK("NEW",CDL,I)=ORCHECK("NEW",CDL,I,J) F  S J=$O(ORCHECK("NEW",CDL,I,J)) Q:'J  S ORCHECK("NEW",CDL,I)=ORCHECK("NEW",CDL,I)_ORCHECK("NEW",CDL,I,J)
+"RTN","ORCSAVE",111,0)
+ . . . S X=ORCHECK("NEW",CDL,I)
+"RTN","ORCSAVE",112,0)
+ . . . S ORK(I,1)=+ORIFN_U_"ACCEPTANCE_CPRS"_U_DUZ_U_$$NOW^XLFDT_U_$P(X,U)_U_CDL
+"RTN","ORCSAVE",113,0)
+ . . .; S ORK(I,2)=$E($P(X,U,3),1,500)
+"RTN","ORCSAVE",114,0)
+ . . . S ORK(I,2)=$P(X,U,3)
+"RTN","ORCSAVE",115,0)
+ . . . I $E(ORK(I,2),0,2)="||" D
+"RTN","ORCSAVE",116,0)
+ . . . . N ORGLOB,ORRULE,ORI
+"RTN","ORCSAVE",117,0)
+ . . . . S ORGLOB=$P($P(ORK(I,2),"||",2),"&"),ORRULE=$P($P(ORK(I,2),"||",2),"&",2)
+"RTN","ORCSAVE",118,0)
+ . . . . S ORK(I,2)=ORRULE
+"RTN","ORCSAVE",119,0)
+ . . . . S ORI=0 F  S ORI=$O(^TMP($J,"ORK XTRA TXT",ORGLOB,ORRULE,ORI)) Q:'ORI  S ORK(I,2,ORI)=^TMP($J,"ORK XTRA TXT",ORGLOB,ORRULE,ORI)
+"RTN","ORCSAVE",120,0)
+ . I $D(ORK) D
+"RTN","ORCSAVE",121,0)
+ . . N OCRET,ORKI
+"RTN","ORCSAVE",122,0)
+ . . D SAVEOC^OROCAPI1(.ORK,.OCRET)
+"RTN","ORCSAVE",123,0)
+ . . S ORKI=0 F  S ORKI=$O(ORK(ORKI)) Q:'ORKI  D
+"RTN","ORCSAVE",124,0)
+ . . . N OCINST,OCTXT S OCTXT=$G(ORK(ORKI,2))
+"RTN","ORCSAVE",125,0)
+ . . . S OCINST=$O(OCRET(ORKI,0))
+"RTN","ORCSAVE",126,0)
+ . . . N ORMONOI,ORMONOQ S ORMONOI=0,ORMONOQ=0 F  Q:ORMONOQ=1  S ORMONOI=$O(^TMP($J,"ORMONOGRAPH",ORMONOI)) Q:'ORMONOI  D
+"RTN","ORCSAVE",127,0)
+ . . . . I OCTXT[$G(^TMP($J,"ORMONOGRAPH",ORMONOI,"OC")) D
+"RTN","ORCSAVE",128,0)
+ . . . . . S ORMONOQ=1
+"RTN","ORCSAVE",129,0)
+ . . . . . S ^ORD(100.05,OCINST,17)=^TMP($J,"ORMONOGRAPH",ORMONOI,"INT")
+"RTN","ORCSAVE",130,0)
+ . . . . . M ^ORD(100.05,OCINST,16)=^TMP($J,"ORMONOGRAPH",ORMONOI,"DATA")
+"RTN","ORCSAVE",131,0)
+ . . . . . S ^ORD(100.05,OCINST,16,0)="^^"_$O(^ORD(100.05,OCINST,16,""),-1)_U_$O(^ORD(100.05,OCINST,16,""),-1)_U_+$$NOW^XLFDT_U
+"RTN","ORCSAVE",132,0)
+ . . K ^TMP($J,"ORMONOGRAPH")
+"RTN","ORCSAVE",133,0)
+ . . K ^TMP($J,"ORK XTRA TXT")
+"RTN","ORCSAVE",134,0)
+ K ORDEA
+"RTN","ORCSAVE",135,0)
+ENQ Q
+"RTN","ORCSAVE",136,0)
+ ;
+"RTN","ORCSAVE",137,0)
+NEXTIFN() ; -- Returns next available ORIFN
+"RTN","ORCSAVE",138,0)
+ N I,HDR,LAST,TOTAL,DA
+"RTN","ORCSAVE",139,0)
+ L +^OR(100,0):$S($G(DILOCKTM)>0:DILOCKTM,1:5)
+"RTN","ORCSAVE",140,0)
+ I '$T Q "^"
+"RTN","ORCSAVE",141,0)
+ S HDR=$G(^OR(100,0)),TOTAL=+$P(HDR,U,4),LAST=$O(^OR(100,"?"),-1)
+"RTN","ORCSAVE",142,0)
+ S I=LAST\1 F I=(I+1):1 Q:'$D(^OR(100,I,0))
+"RTN","ORCSAVE",143,0)
+ S DA=I,^OR(100,DA,0)=DA,$P(HDR,U,3,4)=DA_U_(TOTAL+1)
+"RTN","ORCSAVE",144,0)
+ S ^OR(100,0)=HDR L -^OR(100,0)
+"RTN","ORCSAVE",145,0)
+ Q DA
+"RTN","ORCSAVE",146,0)
+ ;
+"RTN","ORCSAVE",147,0)
+RESPONSE ; -- Save responses in ORDIALOG() into ^OR(100,ORIFN,4.5)
+"RTN","ORCSAVE",148,0)
+ N PROMPT,CNT,ITM,TYPE,INST,VALUE,I,START,PAT,X
+"RTN","ORCSAVE",149,0)
+ S PAT=$P(^OR(100,ORIFN,0),U,2),START=$P(^(0),U,8) K ^(4.5)
+"RTN","ORCSAVE",150,0)
+ S (PROMPT,CNT)=0 F  S PROMPT=$O(ORDIALOG(PROMPT)) Q:PROMPT'>0  D
+"RTN","ORCSAVE",151,0)
+ . S ITM=$G(ORDIALOG(PROMPT)) Q:'ITM
+"RTN","ORCSAVE",152,0)
+ . S TYPE=$E($G(ORDIALOG(PROMPT,0))) Q:'$L(TYPE)
+"RTN","ORCSAVE",153,0)
+ . S INST=0 F  S INST=$O(ORDIALOG(PROMPT,INST)) Q:INST'>0  D
+"RTN","ORCSAVE",154,0)
+ . . S VALUE=$G(ORDIALOG(PROMPT,INST)) Q:VALUE=""  S CNT=CNT+1
+"RTN","ORCSAVE",155,0)
+ . . S ^OR(100,ORIFN,4.5,CNT,0)=+ITM_U_PROMPT_U_INST_U_$P(ITM,U,2)
+"RTN","ORCSAVE",156,0)
+ . . S:$L($P(ITM,U,2)) ^OR(100,ORIFN,4.5,"ID",$P(ITM,U,2),CNT)=""
+"RTN","ORCSAVE",157,0)
+ . . I VALUE<1,TYPE="N" S VALUE=0_+VALUE I VALUE="00" S VALUE=0
+"RTN","ORCSAVE",158,0)
+ . . S:TYPE'="W" ^OR(100,ORIFN,4.5,CNT,1)=VALUE
+"RTN","ORCSAVE",159,0)
+ . . M:TYPE="W" ^OR(100,ORIFN,4.5,CNT,2)=@VALUE ; array root
+"RTN","ORCSAVE",160,0)
+ S ^OR(100,ORIFN,4.5,0)="^100.045A^"_CNT_U_CNT
+"RTN","ORCSAVE",161,0)
+R1 ; [Reset] Orderables
+"RTN","ORCSAVE",162,0)
+ I $D(^OR(100,ORIFN,.1)) S I=0 F  S I=$O(^OR(100,ORIFN,.1,I)) Q:I'>0  S X=$G(^(I,0)) I X,PAT,START K ^OR(100,"AOI",X,PAT,9999999-START,ORIFN) ; kill xref
+"RTN","ORCSAVE",163,0)
+ K ^OR(100,ORIFN,.1) I $D(^OR(100,ORIFN,4.5,"ID","ORDERABLE")) D
+"RTN","ORCSAVE",164,0)
+ . S (I,CNT)=0
+"RTN","ORCSAVE",165,0)
+ . F  S I=$O(^OR(100,ORIFN,4.5,"ID","ORDERABLE",I)) Q:I'>0  D
+"RTN","ORCSAVE",166,0)
+ . . S X=$G(^OR(100,ORIFN,4.5,I,1)) Q:'X
+"RTN","ORCSAVE",167,0)
+ . . S CNT=CNT+1,^OR(100,ORIFN,.1,CNT,0)=X,^OR(100,ORIFN,.1,"B",X,CNT)=""
+"RTN","ORCSAVE",168,0)
+ . . I PAT,START S ^OR(100,"AOI",X,PAT,9999999-START,ORIFN)=""
+"RTN","ORCSAVE",169,0)
+ . S ^OR(100,ORIFN,.1,0)="^100.001PA^"_CNT_U_CNT
+"RTN","ORCSAVE",170,0)
+ Q
+"RTN","ORCSAVE",171,0)
+ ;
+"RTN","ORCSAVE",172,0)
+RESUME(IFN) ; -- add Response nodes for RESUME tray service
+"RTN","ORCSAVE",173,0)
+ ; S ^OR(100,+IFN,4.5,<next>,0)=DT_"^^^RESUME",^(1)=1
+"RTN","ORCSAVE",174,0)
+ ;
+"RTN","ORCSAVE",175,0)
+ N X,Y,DA,DIC,DLAYGO
+"RTN","ORCSAVE",176,0)
+ S DIC="^OR(100,"_+IFN_",4.5,",DIC(0)="LX",DA(1)=+IFN,X=DT
+"RTN","ORCSAVE",177,0)
+ S DIC("DR")=".04///RESUME",DIC("P")=$P(^DD(100,4.5,0),U,2),DLAYGO=100
+"RTN","ORCSAVE",178,0)
+ D ^DIC S:Y ^OR(100,+IFN,4.5,+Y,1)=1
+"RTN","ORCSAVE",179,0)
+ Q
+"RTN","ORCSAVE",180,0)
+ ;
+"RTN","ORCSAVE",181,0)
+PROVIDER(ORDER,PROV) ; -- Change PROVider assigned to ORDER
+"RTN","ORCSAVE",182,0)
+ Q:'$G(ORDER)  Q:'$G(PROV)
+"RTN","ORCSAVE",183,0)
+ N ORACT S ORACT=+$P(ORDER,";",2) S:'ORACT ORACT=1
+"RTN","ORCSAVE",184,0)
+ S $P(^OR(100,+ORDER,8,ORACT,0),U,3)=PROV
+"RTN","ORCSAVE",185,0)
+ S:ORACT=1 $P(^OR(100,+ORDER,0),U,4)=PROV
+"RTN","ORCSAVE",186,0)
+ Q
+"RTN","ORCSAVE",187,0)
+ ;
+"RTN","ORCSAVE",188,0)
+ACTION(CODE,DA,PROV,REASON,WHEN,WHO) ; -- save new action
+"RTN","ORCSAVE",189,0)
+ N NEXT,TOTAL,HDR,LAST,X,PAT,DGRP,SIG,NATR,TXT S DA=+DA
+"RTN","ORCSAVE",190,0)
+ Q:'$D(^OR(100,DA,0)) 0 Q:$G(CODE)'?2U 0
+"RTN","ORCSAVE",191,0)
+ S:'$G(WHEN) WHEN=+$E($$NOW^XLFDT,1,12) S:'$G(WHO) WHO=DUZ
+"RTN","ORCSAVE",192,0)
+ S NATR=+$O(^ORD(100.02,"C","E",0)) ;assume Elec Entered until changed
+"RTN","ORCSAVE",193,0)
+ S PAT=$P(^OR(100,DA,0),U,2),DGRP=$P(^(0),U,11),SIG=$P(^(0),U,16),X=+$P($G(^(3)),U,7),HDR=$G(^(8,0))
+"RTN","ORCSAVE",194,0)
+ S:X'>0 X=1 S TXT=$P($G(^OR(100,DA,8,X,0)),U,14) ;current actn's txt ptr
+"RTN","ORCSAVE",195,0)
+ S:HDR="" HDR="^100.008DA^^" S TOTAL=+$P(HDR,U,4)
+"RTN","ORCSAVE",196,0)
+ S LAST=$O(^OR(100,DA,8,"C",CODE,"?"),-1) I LAST D
+"RTN","ORCSAVE",197,0)
+ . S X=$G(^OR(100,DA,8,LAST,0)) Q:$P(X,U,15)'=11  Q:$P(X,U,4)'=2
+"RTN","ORCSAVE",198,0)
+ . S NEXT=LAST I PAT,$P(X,U) D  ; kill old xref entries
+"RTN","ORCSAVE",199,0)
+ . . K:DGRP ^OR(100,"ACT",PAT,(9999999-$P(X,U)),DGRP,DA,NEXT)
+"RTN","ORCSAVE",200,0)
+ . . K ^OR(100,"AC",PAT,(9999999-$P(X,U)),DA,NEXT),^OR(100,"AS",PAT,(9999999-$P(X,U)),DA,NEXT),^OR(100,"AF",$P(X,U),DA,NEXT)
+"RTN","ORCSAVE",201,0)
+ S:'$G(NEXT) NEXT=$O(^OR(100,DA,8,"?"),-1)+1,TOTAL=TOTAL+1
+"RTN","ORCSAVE",202,0)
+ S ^OR(100,DA,8,NEXT,0)=WHEN_U_CODE_U_$G(PROV)_U_$S(SIG:2,1:3)_"^^^^^^^^"_NATR_U_WHO_U_TXT_"^11",^OR(100,DA,8,"C",CODE,NEXT)=""
+"RTN","ORCSAVE",203,0)
+ S ^OR(100,"AF",WHEN,DA,NEXT)=""
+"RTN","ORCSAVE",204,0)
+ I PAT,DGRP S ^OR(100,"ACT",PAT,9999999-WHEN,DGRP,DA,NEXT)=""
+"RTN","ORCSAVE",205,0)
+ I PAT S ^OR(100,"AC",PAT,9999999-WHEN,DA,NEXT)=""
+"RTN","ORCSAVE",206,0)
+ I SIG S ^OR(100,"AS",PAT,9999999-WHEN,DA,NEXT)=""
+"RTN","ORCSAVE",207,0)
+ S:$L($G(REASON)) ^OR(100,DA,8,NEXT,1)=REASON
+"RTN","ORCSAVE",208,0)
+ S $P(HDR,U,3,4)=NEXT_U_TOTAL,^OR(100,DA,8,0)=HDR
+"RTN","ORCSAVE",209,0)
+ Q NEXT
+"RTN","ORCSAVE",210,0)
+ ;
+"RTN","ORCSAVE",211,0)
+SET(DLG) ; -- Create new parent for order set ORDIALOG
+"RTN","ORCSAVE",212,0)
+ ; Returns ORPIFN = ifn of new parent order for set
+"RTN","ORCSAVE",213,0)
+ ;
+"RTN","ORCSAVE",214,0)
+ Q:'$G(ORVP)  Q:'$G(DLG)  N OR0,PKG,NOW,CATG,STS,ORLOC,TRSPEC,X
+"RTN","ORCSAVE",215,0)
+ S OR0=$G(^ORD(101.41,DLG,0)) Q:OR0=""  S ORPIFN=$$NEXTIFN Q:'ORPIFN
+"RTN","ORCSAVE",216,0)
+ S PKG=$O(^DIC(9.4,"C","OR",0)),CATG=$S($$INPT^ORCD:"I",1:"O"),STS=$S($G(OREVENT):10,1:11),NOW=$S($G(ORSLOG):ORSLOG,1:+$E($$NOW^XLFDT,1,12))
+"RTN","ORCSAVE",217,0)
+ I $G(OREVENT) S ORLOC="",TRSPEC=""
+"RTN","ORCSAVE",218,0)
+ S ^OR(100,ORPIFN,0)=ORPIFN_U_ORVP_U_U_$G(ORNP)_U_DLG_";ORD(101.41,^"_DUZ_U_NOW_U_U_U_ORLOC_U_U_CATG_U_TRSPEC_U_PKG_"^^^"_$G(OREVENT),^(3)=NOW_"^90^"_STS_U_$S($G(ORIT):ORIT_"ORD(101.41,",1:"")_"^^^1^^^^0^^"_+$P(OR0,U,6)
+"RTN","ORCSAVE",219,0)
+ S ^OR(100,ORPIFN,8,0)="^100.008DA^1^1",^(1,0)=NOW_"^NW^"_$G(ORNP)_"^^^^^^^^^^"_DUZ_"^^"_STS,^OR(100,ORPIFN,8,"C","NW",1)="",^OR(100,"AF",NOW,ORPIFN,1)=""
+"RTN","ORCSAVE",220,0)
+ S ^OR(100,"ACT",ORVP,9999999-NOW,ORPIFN,1)=""
+"RTN","ORCSAVE",221,0)
+ S:STS=11 ^OR(100,"AC",ORVP,9999999-NOW,ORPIFN,1)=""
+"RTN","ORCSAVE",222,0)
+ ; AEVNT ??
+"RTN","ORCSAVE",223,0)
+ S ^OR(100,ORPIFN,1,0)="^100.011^1^1",^(1,0)=$P(OR0,U,2) ; Order text
+"RTN","ORCSAVE",224,0)
+ Q
+"RTN","ORQQVI")
+0^4^B35437287^B34255984
+"RTN","ORQQVI",1,0)
+ORQQVI ; slc/STAFF - Functions which return patient vital and I/O data ;10/26/06  11:44
+"RTN","ORQQVI",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**10,198,215,250,260,285,286**;Dec 17, 1997;Build 9
+"RTN","ORQQVI",3,0)
+ ;
+"RTN","ORQQVI",4,0)
+ ; DBIA 1446   ^GMRVUT0
+"RTN","ORQQVI",5,0)
+ ; DBIA 3647   ^GMVPXRM
+"RTN","ORQQVI",6,0)
+ ;
+"RTN","ORQQVI",7,0)
+VITALS(ORY,DFN,ORSDT,OREDT) ; return patient's vital measurements taken between start date/time and end date/time
+"RTN","ORQQVI",8,0)
+ ;ORY: return variable, results are returned in the format:
+"RTN","ORQQVI",9,0)
+ ;     vital measurement ien^vital type^date/time taken^rate
+"RTN","ORQQVI",10,0)
+ ;DFN: patient identifier from Patient File [#2]
+"RTN","ORQQVI",11,0)
+ ;ORSDT: start date/time in Fileman format
+"RTN","ORQQVI",12,0)
+ ;OREDT: end date/time in Fileman format
+"RTN","ORQQVI",13,0)
+ ;DBIA for PXRMINDX(120.5 is 4290
+"RTN","ORQQVI",14,0)
+ ;DBIA for ^GMVPXRM is 3647
+"RTN","ORQQVI",15,0)
+ ;DBIA for ^GMRVUT0 is 1446
+"RTN","ORQQVI",16,0)
+ K ^UTILITY($J,"GMRVD")
+"RTN","ORQQVI",17,0)
+ S GMRVSTR="BP;HT;WT;T;R;P;PN" ;dee 2/12/99 added PN
+"RTN","ORQQVI",18,0)
+ S GMRVSTR(0)=ORSDT_"^"_OREDT_"^"_"^"
+"RTN","ORQQVI",19,0)
+ D EN1^GMRVUT0
+"RTN","ORQQVI",20,0)
+ N ORT,ORD,ORI,I
+"RTN","ORQQVI",21,0)
+ S ORT="",ORD=0,ORI=0,I=0
+"RTN","ORQQVI",22,0)
+ F  S ORT=$O(^UTILITY($J,"GMRVD",ORT)) Q:ORT=""  D
+"RTN","ORQQVI",23,0)
+ .F  S ORD=$O(^UTILITY($J,"GMRVD",ORT,ORD)) Q:ORD<1  D
+"RTN","ORQQVI",24,0)
+ ..F  S ORI=$O(^UTILITY($J,"GMRVD",ORT,ORD,ORI)) Q:ORI<1  D
+"RTN","ORQQVI",25,0)
+ ...S I=I+1
+"RTN","ORQQVI",26,0)
+ ...S ORY(I)=ORI_"^"_ORT_"^"_$P(^UTILITY($J,"GMRVD",ORT,ORD,ORI),"^",8)_"^"_$P(^(ORI),"^")
+"RTN","ORQQVI",27,0)
+ I I=0 S ORY(1)="^No vitals found."
+"RTN","ORQQVI",28,0)
+ K GMRVSTR
+"RTN","ORQQVI",29,0)
+ Q
+"RTN","ORQQVI",30,0)
+ ;
+"RTN","ORQQVI",31,0)
+XFASTVIT(ORY,DFN,F1,F2) ; return patient's most recent vital measurements
+"RTN","ORQQVI",32,0)
+ ;ORY: return variable, results are returned in the format:
+"RTN","ORQQVI",33,0)
+ ;     vital measurement ien^vital type^rate^date/time taken
+"RTN","ORQQVI",34,0)
+ ;DFN: patient identifier from Patient File [#2]
+"RTN","ORQQVI",35,0)
+ ; F1 & F2 are ignored
+"RTN","ORQQVI",36,0)
+ ;
+"RTN","ORQQVI",37,0)
+ N CNT
+"RTN","ORQQVI",38,0)
+ S CNT=0
+"RTN","ORQQVI",39,0)
+ D VITAL("TEMPERATURE","T",DFN,.ORY,.CNT)
+"RTN","ORQQVI",40,0)
+ D VITAL("PULSE","P",DFN,.ORY,.CNT)
+"RTN","ORQQVI",41,0)
+ D VITAL("RESPIRATION","R",DFN,.ORY,.CNT)
+"RTN","ORQQVI",42,0)
+ D VITAL("BLOOD PRESSURE","BP",DFN,.ORY,.CNT)
+"RTN","ORQQVI",43,0)
+ D VITAL("HEIGHT","HT",DFN,.ORY,.CNT)
+"RTN","ORQQVI",44,0)
+ D VITAL("WEIGHT","WT",DFN,.ORY,.CNT)
+"RTN","ORQQVI",45,0)
+ D VITAL("PAIN","PN",DFN,ORY,.CNT) ;dee 2/11/99
+"RTN","ORQQVI",46,0)
+ Q
+"RTN","ORQQVI",47,0)
+ ;
+"RTN","ORQQVI",48,0)
+XVITAL(VITAL,ABBREV,DFN,ORY,CNT) ; get vital measurement
+"RTN","ORQQVI",49,0)
+ N DATA,IDT,IEN,OK,VTYPE
+"RTN","ORQQVI",50,0)
+ S VTYPE=$$FIND1^DIC(120.51,"","BX",VITAL,"","","ERR")
+"RTN","ORQQVI",51,0)
+ I 'VTYPE Q
+"RTN","ORQQVI",52,0)
+ S OK=0,IDT=0 F  S IDT=$O(^PXRMINDX(120.5,"PI",DFN,VTYPE,IDT),-1) Q:IDT<1  D  Q:OK
+"RTN","ORQQVI",53,0)
+ .S IEN="" F  S IEN=$O(^PXRMINDX(120.5,"PI",DFN,VTYPE,IDT,IEN)) Q:$L(IEN)<1  D  Q:OK
+"RTN","ORQQVI",54,0)
+ ..D EN^GMVPXRM(.DATA,IEN,"I")
+"RTN","ORQQVI",55,0)
+ ..I $P(DATA(1),U)=-1 Q
+"RTN","ORQQVI",56,0)
+ ..S CNT=CNT+1,OK=1
+"RTN","ORQQVI",57,0)
+ ..S ORY(CNT)=IEN_U_ABBREV_U_$P(DATA(7),U)_U_$P(DATA(1),U)
+"RTN","ORQQVI",58,0)
+ Q
+"RTN","ORQQVI",59,0)
+ ;
+"RTN","ORQQVI",60,0)
+NOTEVIT(ORY,DFN,NOTEIEN) ;
+"RTN","ORQQVI",61,0)
+ N VSTR,NOTEDATE
+"RTN","ORQQVI",62,0)
+ D NOTEVSTR^ORWPCE(.VSTR,NOTEIEN)
+"RTN","ORQQVI",63,0)
+ Q:$P(VSTR,";",2)=""
+"RTN","ORQQVI",64,0)
+ D FASTVIT(.ORY,DFN,$P(VSTR,";",2))
+"RTN","ORQQVI",65,0)
+ Q
+"RTN","ORQQVI",66,0)
+ ;
+"RTN","ORQQVI",67,0)
+FASTVIT(ORY,DFN,F1,F2) ; return patient's most recent vital measurements
+"RTN","ORQQVI",68,0)
+ ; in date range
+"RTN","ORQQVI",69,0)
+ ;ORY: return variable, results are returned in the format:
+"RTN","ORQQVI",70,0)
+ ;     vital measurement ien^vital type^rate^date/time taken
+"RTN","ORQQVI",71,0)
+ ;DFN: patient identifier from Patient File [#2]
+"RTN","ORQQVI",72,0)
+ ; F1: starting date/time range
+"RTN","ORQQVI",73,0)
+ ; F2: ending date/time range
+"RTN","ORQQVI",74,0)
+ ;
+"RTN","ORQQVI",75,0)
+ N CNT,DT1,DT2
+"RTN","ORQQVI",76,0)
+ S CNT=0
+"RTN","ORQQVI",77,0)
+ I $G(F1)>0 D
+"RTN","ORQQVI",78,0)
+ . I $G(F2)="",F1["." S DT1=$P(F1,".",1)_"."_$E($P(F1,".",2),1,4)
+"RTN","ORQQVI",79,0)
+ . E  S DT1=F1
+"RTN","ORQQVI",80,0)
+ E  S DT1=1
+"RTN","ORQQVI",81,0)
+ S DT2=$S($G(F2)>0:F2,DT1>1:DT1,1:9999998)
+"RTN","ORQQVI",82,0)
+ ;
+"RTN","ORQQVI",83,0)
+ D VITAL("TEMPERATURE","T",DFN,.ORY,.CNT,DT1,DT2)
+"RTN","ORQQVI",84,0)
+ D VITAL("PULSE","P",DFN,.ORY,.CNT,DT1,DT2)
+"RTN","ORQQVI",85,0)
+ D VITAL("RESPIRATION","R",DFN,.ORY,.CNT,DT1,DT2)
+"RTN","ORQQVI",86,0)
+ D VITAL("BLOOD PRESSURE","BP",DFN,.ORY,.CNT,DT1,DT2)
+"RTN","ORQQVI",87,0)
+ D VITAL("HEIGHT","HT",DFN,.ORY,.CNT,DT1,DT2)
+"RTN","ORQQVI",88,0)
+ D VITAL("WEIGHT","WT",DFN,.ORY,.CNT,DT1,DT2)
+"RTN","ORQQVI",89,0)
+ D VITAL("PAIN","PN",DFN,.ORY,.CNT,DT1,DT2) ;dee 2/11/99
+"RTN","ORQQVI",90,0)
+ D VITAL("PULSE OXIMETRY","PO2",DFN,.ORY,.CNT,DT1,DT2)
+"RTN","ORQQVI",91,0)
+ D VITAL("CENTRAL VENOUS PRESSURE","CVP",DFN,.ORY,.CNT,DT1,DT2)
+"RTN","ORQQVI",92,0)
+ D VITAL("CIRCUMFERENCE/GIRTH","CG",DFN,.ORY,.CNT,DT1,DT2)
+"RTN","ORQQVI",93,0)
+ D VITAL("BODY MASS INDEX","BMI",DFN,.ORY,.CNT,DT1,DT2)
+"RTN","ORQQVI",94,0)
+ Q
+"RTN","ORQQVI",95,0)
+ ;
+"RTN","ORQQVI",96,0)
+VITAL(VITAL,ABBREV,DFN,ORY,CNT,F1,F2) ;
+"RTN","ORQQVI",97,0)
+ ;get most recent vital measurement in date range
+"RTN","ORQQVI",98,0)
+ I ABBREV="BMI" D BMILAST^ORWGAPIX(DFN,.ORY,.CNT) Q
+"RTN","ORQQVI",99,0)
+ N DATA,IDT,ENDIDT,IEN,LOOP,OK,QUALS,VTYPE,MVAL,VALUE
+"RTN","ORQQVI",100,0)
+ S VTYPE=$$FIND1^DIC(120.51,"","BX",VITAL,"","","ERR")
+"RTN","ORQQVI",101,0)
+ I 'VTYPE Q
+"RTN","ORQQVI",102,0)
+ S OK=0
+"RTN","ORQQVI",103,0)
+ S IDT=F2+$S(F2#1:.0000001,1:.7)
+"RTN","ORQQVI",104,0)
+ S ENDIDT=F1-.0000001
+"RTN","ORQQVI",105,0)
+ F  S IDT=$O(^PXRMINDX(120.5,"PI",DFN,VTYPE,IDT),-1) Q:IDT<ENDIDT!'IDT  D  Q:OK
+"RTN","ORQQVI",106,0)
+ .S IEN="" F  S IEN=$O(^PXRMINDX(120.5,"PI",DFN,VTYPE,IDT,IEN)) Q:$L(IEN)<1  D  Q:OK
+"RTN","ORQQVI",107,0)
+ ..D EN^GMVPXRM(.DATA,IEN,"B")
+"RTN","ORQQVI",108,0)
+ ..I $P(DATA(1),U)=-1 Q
+"RTN","ORQQVI",109,0)
+ ..S CNT=CNT+1,OK=1,VALUE=$P(DATA(7),U)
+"RTN","ORQQVI",110,0)
+ ..S QUALS(CNT)=""
+"RTN","ORQQVI",111,0)
+ ..F LOOP=1:1 Q:'$D(DATA(12,LOOP))  D
+"RTN","ORQQVI",112,0)
+ ...S QUALS(CNT)=QUALS(CNT)_$S(QUALS(CNT)="":"",1:",")_$P(DATA(12,LOOP),U,2)
+"RTN","ORQQVI",113,0)
+ ..; changed to display 'POX' rather than 'PO2' per CQ 10592
+"RTN","ORQQVI",114,0)
+ ..S ORY(CNT)=IEN_U_$S(ABBREV="PO2":"POX",1:ABBREV)_U_VALUE_U_$P(DATA(1),U)
+"RTN","ORQQVI",115,0)
+ ..I $P(ORY(CNT),"^",2)="T" D  ; Temperature.
+"RTN","ORQQVI",116,0)
+ ...S ORY(CNT)=ORY(CNT)_"^"_VALUE_$S($E(VALUE):" F",1:"")
+"RTN","ORQQVI",117,0)
+ ...S MVAL=+VALUE
+"RTN","ORQQVI",118,0)
+ ...Q:'MVAL
+"RTN","ORQQVI",119,0)
+ ...S MVAL=MVAL-32
+"RTN","ORQQVI",120,0)
+ ...S MVAL=$J((MVAL*(5/9)),3,1)
+"RTN","ORQQVI",121,0)
+ ...S ORY(CNT)=ORY(CNT)_"^("_MVAL_" C)"
+"RTN","ORQQVI",122,0)
+ ..I $P(ORY(CNT),"^",2)="P" D  ; Pulse.
+"RTN","ORQQVI",123,0)
+ ...S ORY(CNT)=ORY(CNT)_"^"_VALUE
+"RTN","ORQQVI",124,0)
+ ..I $P(ORY(CNT),"^",2)="R" D  ; Respiration.
+"RTN","ORQQVI",125,0)
+ ...S ORY(CNT)=ORY(CNT)_"^"_VALUE
+"RTN","ORQQVI",126,0)
+ ..I $P(ORY(CNT),"^",2)="BP" D  ; Blood Pressure.
+"RTN","ORQQVI",127,0)
+ ...S ORY(CNT)=ORY(CNT)_"^"_VALUE
+"RTN","ORQQVI",128,0)
+ ..I $P(ORY(CNT),"^",2)="HT" D  ; Height.
+"RTN","ORQQVI",129,0)
+ ...S ORY(CNT)=ORY(CNT)_"^"_VALUE_$S($E(VALUE):" in",1:"")
+"RTN","ORQQVI",130,0)
+ ...S MVAL=+VALUE
+"RTN","ORQQVI",131,0)
+ ...Q:'MVAL
+"RTN","ORQQVI",132,0)
+ ...S MVAL=$J((MVAL*2.54),3,2)
+"RTN","ORQQVI",133,0)
+ ...S ORY(CNT)=ORY(CNT)_"^("_MVAL_" cm)"
+"RTN","ORQQVI",134,0)
+ ..I $P(ORY(CNT),"^",2)="WT" D  ; Weight.
+"RTN","ORQQVI",135,0)
+ ...S ORY(CNT)=ORY(CNT)_"^"_VALUE_$S($E(VALUE):" lb",1:"")
+"RTN","ORQQVI",136,0)
+ ...S MVAL=+VALUE
+"RTN","ORQQVI",137,0)
+ ...Q:'MVAL
+"RTN","ORQQVI",138,0)
+ ...; changed 2.2 to 2.20462262 per CQ 10637
+"RTN","ORQQVI",139,0)
+ ...S MVAL=$J((MVAL/2.20462262),3,2)
+"RTN","ORQQVI",140,0)
+ ...S ORY(CNT)=ORY(CNT)_"^("_MVAL_" kg)"
+"RTN","ORQQVI",141,0)
+ ..I $P(ORY(CNT),"^",2)="PN" D   ; Pain
+"RTN","ORQQVI",142,0)
+ ...S ORY(CNT)=ORY(CNT)_"^"_VALUE
+"RTN","ORQQVI",143,0)
+ ..; looks for 'POX' rather than 'PO2' due to change for CQ 10592 above
+"RTN","ORQQVI",144,0)
+ ..I $P(ORY(CNT),"^",2)="POX" D  ; Pulse Oximetry.
+"RTN","ORQQVI",145,0)
+ ...S ORY(CNT)=ORY(CNT)_"^"_$P(ORY(CNT),"^",3)
+"RTN","ORQQVI",146,0)
+ ...S $P(ORY(CNT),U,8)=$P(DATA(8),U)
+"RTN","ORQQVI",147,0)
+ ..I $P(ORY(CNT),"^",2)="CVP" D  ; Central Venous Pressure.
+"RTN","ORQQVI",148,0)
+ ...S ORY(CNT)=ORY(CNT)_"^"_$P(ORY(CNT),"^",3)
+"RTN","ORQQVI",149,0)
+ ...S MVAL=$P(ORY(CNT),"^",3)
+"RTN","ORQQVI",150,0)
+ ...I MVAL'=+MVAL,+MVAL=0 S ORY(CNT)=ORY(CNT)_"^",$P(ORY(CNT),U,7)="" Q
+"RTN","ORQQVI",151,0)
+ ...S MVAL=$J((MVAL/1.36),3,1)
+"RTN","ORQQVI",152,0)
+ ...S ORY(CNT)=ORY(CNT)_" cmH20^("_MVAL_" mmHg)"
+"RTN","ORQQVI",153,0)
+ ..I $P(ORY(CNT),"^",2)="CG" D  ; Circumference Girth.
+"RTN","ORQQVI",154,0)
+ ...S ORY(CNT)=ORY(CNT)_"^"_$P(ORY(CNT),"^",3)
+"RTN","ORQQVI",155,0)
+ ...S MVAL=$P(ORY(CNT),"^",3)
+"RTN","ORQQVI",156,0)
+ ...I MVAL'=+MVAL,+MVAL=0 S ORY(CNT)=ORY(CNT)_"^",$P(ORY(CNT),U,7)="" Q
+"RTN","ORQQVI",157,0)
+ ...S MVAL=$J((MVAL*2.54),3,1)
+"RTN","ORQQVI",158,0)
+ ...S ORY(CNT)=ORY(CNT)_" in^("_MVAL_" cm)"
+"RTN","ORQQVI",159,0)
+ ..S $P(ORY(CNT),U,7)=QUALS(CNT)
+"RTN","ORQQVI",160,0)
+ Q
+"RTN","ORWD2")
+0^2^B33111344^B30457086
+"RTN","ORWD2",1,0)
+ORWD2 ; SLC/KCM/REV - GUI Prints; 28-JAN-1999 12:51 ;1/9/06  00:35
+"RTN","ORWD2",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**10,215,286**;Dec 17, 1997;Build 9
+"RTN","ORWD2",3,0)
+ ;
+"RTN","ORWD2",4,0)
+ ; PUBLIC CALLS
+"RTN","ORWD2",5,0)
+ ;
+"RTN","ORWD2",6,0)
+DEVINFO(LST,LOC,NATR,ORDERS)       ; Return device info when signing/releasing orders
+"RTN","ORWD2",7,0)
+ ; Y(0)=Prompt Chart ^ Prompt Label ^ Prompt Requisition ^ Prompt Work
+"RTN","ORWD2",8,0)
+ ;      ^ Chart Device ^ Label Device ^ Requisition Device ^ Work Device
+"RTN","ORWD2",9,0)
+ ; for Prompt X: *=no print, 0=autoprint, 1=prompt&dev 2=prompt only 
+"RTN","ORWD2",10,0)
+ ; Y(n)=ORIFN;ACT ^ Chart ^ Label ^ Requisition ^ Service ^ Work
+"RTN","ORWD2",11,0)
+ ; LOC=location (ptr 44), NATR=nature of order (ptr 100.02)
+"RTN","ORWD2",12,0)
+ ; ORDERS=ORIFN;ACT ^ R | S | E (released, signed, error)
+"RTN","ORWD2",13,0)
+ N NATCHT,NATWRK,WHENCHT,PRMTCHT,PRMTLBL,PRMTREQ,PRMTWRK
+"RTN","ORWD2",14,0)
+ N DOCHT,DOLBL,DOREQ,DOWRK,RELEASE,ORDERID,I,J,X
+"RTN","ORWD2",15,0)
+ N NDCR,NODE,NPCC,NPWC
+"RTN","ORWD2",16,0)
+ S (DOCHT,DOLBL,DOREQ,DOWRK,I,J)=0,LOC=+LOC_";SC("
+"RTN","ORWD2",17,0)
+ S NATR=$O(^ORD(100.02,"C",NATR,0))
+"RTN","ORWD2",18,0)
+ S NATCHT=+$P($G(^ORD(100.02,NATR,1)),U,2),NATWRK=+$P($G(^(1)),U,5)
+"RTN","ORWD2",19,0)
+ S WHENCHT=$$GET^XPAR("ALL^"_LOC,"ORPF PRINT CHART COPY WHEN",1,"I")
+"RTN","ORWD2",20,0)
+ I '$L(WHENCHT) S WHENCHT="R"
+"RTN","ORWD2",21,0)
+ S PRMTCHT=$$GET^XPAR("ALL^"_LOC,"ORPF PROMPT FOR CHART COPY",1,"I")
+"RTN","ORWD2",22,0)
+ S PRMTLBL=$$GET^XPAR("ALL^"_LOC,"ORPF PROMPT FOR LABELS",1,"I")
+"RTN","ORWD2",23,0)
+ S PRMTREQ=$$GET^XPAR("ALL^"_LOC,"ORPF PROMPT FOR REQUISITIONS",1,"I")
+"RTN","ORWD2",24,0)
+ S PRMTWRK=$$GET^XPAR("ALL^"_LOC,"ORPF PROMPT FOR WORK COPY",1,"I")
+"RTN","ORWD2",25,0)
+ N BBPKG S BBPKG=+$O(^DIC(9.4,"B","VBECS",0))
+"RTN","ORWD2",26,0)
+ D INSRTBB(.ORDERS) ; insert any blood bank child lab orders into ORDERS array
+"RTN","ORWD2",27,0)
+ F  S I=$O(ORDERS(I)) Q:'I  I $P(ORDERS(I),U,2)'["E" D
+"RTN","ORWD2",28,0)
+ . S ORDERID=$P(ORDERS(I),U),RELEASE=($P(ORDERS(I),U,2)["R")
+"RTN","ORWD2",29,0)
+ . S J=J+1,LST(J)=ORDERID_"^^^^"
+"RTN","ORWD2",30,0)
+ . ;AGP this section check the order for DC Reason and grabs the print requirement
+"RTN","ORWD2",31,0)
+ . ;from the Nature of Order file.
+"RTN","ORWD2",32,0)
+ . S NPCC=1,NPWC=1
+"RTN","ORWD2",33,0)
+ . S NDCR=$P($G(^OR(100,+ORDERID,6)),U) I NDCR>0 D
+"RTN","ORWD2",34,0)
+ . .S NODE=$G(^ORD(100.02,NDCR,1))
+"RTN","ORWD2",35,0)
+ . .S NPCC=+$P(NODE,U,2)
+"RTN","ORWD2",36,0)
+ . .S NPWC=+$P(NODE,U,5)
+"RTN","ORWD2",37,0)
+ . ; skip chart copy if nature doesn't print, no match to 'print when',
+"RTN","ORWD2",38,0)
+ . ; prompt parameter says don't print, or is lab child of blood bank 
+"RTN","ORWD2",39,0)
+ . I NPCC,NATCHT,($P(ORDERS(I),U,2)[WHENCHT),(PRMTCHT'="*"),$$HASFMTC,$$NOTBB(+ORDERS(I)) S $P(LST(J),U,2)=1,DOCHT=1
+"RTN","ORWD2",40,0)
+ . ; skip label if not released, no label format, or prompt parameter
+"RTN","ORWD2",41,0)
+ . ; says don't print
+"RTN","ORWD2",42,0)
+ . I RELEASE,(PRMTLBL'="*"),$$HASFMTL S $P(LST(J),U,3)=1,DOLBL=1
+"RTN","ORWD2",43,0)
+ . ; skip requisition if not released, no requistion format, or the
+"RTN","ORWD2",44,0)
+ . ; prompt parameter says don't print
+"RTN","ORWD2",45,0)
+ . I RELEASE,(PRMTREQ'="*"),$$HASFMTR S $P(LST(J),U,4)=1,DOREQ=1
+"RTN","ORWD2",46,0)
+ . ; skip service copy if not releasing
+"RTN","ORWD2",47,0)
+ . I RELEASE S $P(LST(J),U,5)=1
+"RTN","ORWD2",48,0)
+ . ; skip work copy if nature doesn't print, not released, no work
+"RTN","ORWD2",49,0)
+ . ; copy format, or prompt parameter says don't print
+"RTN","ORWD2",50,0)
+ . I NPWC,NATWRK,RELEASE,(PRMTWRK'="*"),$$HASFMTW,$$NOTBB(+ORDERS(I)) S $P(LST(J),U,6)=1,DOWRK=1
+"RTN","ORWD2",51,0)
+ S LST(0)=$$DEFDEV
+"RTN","ORWD2",52,0)
+ Q
+"RTN","ORWD2",53,0)
+MANUAL(REC,LOC,ORDERS)   ; return device info for manual prints
+"RTN","ORWD2",54,0)
+ N DOCHT,DOLBL,DOREQ,DOWRK,ORDERID,I
+"RTN","ORWD2",55,0)
+ N PRMTCHT,PRMTLBL,PRMTREQ,PRMTWRK  ; (so undefined for DEFDEV call)
+"RTN","ORWD2",56,0)
+ S (DOCHT,DOLBL,DOREQ,DOWRK,I,J)=0,LOC=+LOC_";SC("
+"RTN","ORWD2",57,0)
+ N BBPKG S BBPKG=+$O(^DIC(9.4,"B","VBECS",0))
+"RTN","ORWD2",58,0)
+ D INSRTBB(.ORDERS) ; insert any blood bank child lab orders into ORDERS array
+"RTN","ORWD2",59,0)
+ F  S I=$O(ORDERS(I)) Q:'I  D  Q:DOCHT&DOLBL&DOREQ&DOWRK
+"RTN","ORWD2",60,0)
+ . S ORDERID=$P(ORDERS(I),U)
+"RTN","ORWD2",61,0)
+ . I $$HASFMTC,$$NOTBB(+ORDERS(I)) S DOCHT=1
+"RTN","ORWD2",62,0)
+ . I $$HASFMTL S DOLBL=1
+"RTN","ORWD2",63,0)
+ . I $$HASFMTR S DOREQ=1
+"RTN","ORWD2",64,0)
+ . I $$HASFMTW,$$NOTBB(+ORDERS(I)) S DOWRK=1
+"RTN","ORWD2",65,0)
+ S REC=$$DEFDEV
+"RTN","ORWD2",66,0)
+ Q
+"RTN","ORWD2",67,0)
+ ;
+"RTN","ORWD2",68,0)
+ ; PRIVATE CALLS
+"RTN","ORWD2",69,0)
+ ;
+"RTN","ORWD2",70,0)
+DEFDEV()        ; returns string of prompt flags & default devices
+"RTN","ORWD2",71,0)
+ ; called from DEVINFO & MANUAL
+"RTN","ORWD2",72,0)
+ ; expects LOC,DOCHT,DOLBL,DOREQ,DOWRK to be defined
+"RTN","ORWD2",73,0)
+ ; optionally expects PRMTCHT, PRMTLBL, PRMTREQ, PRMTWRK
+"RTN","ORWD2",74,0)
+ N X
+"RTN","ORWD2",75,0)
+ I DOCHT D
+"RTN","ORWD2",76,0)
+ . S $P(X,U,1)=$G(PRMTCHT,1)
+"RTN","ORWD2",77,0)
+ . S $P(X,U,5)=$TR($$GET^XPAR("ALL^"_LOC,"ORPF CHART COPY PRINT DEVICE",1,"B"),U,";")
+"RTN","ORWD2",78,0)
+ E  S $P(X,U,1)="*"
+"RTN","ORWD2",79,0)
+ I DOLBL D
+"RTN","ORWD2",80,0)
+ . S $P(X,U,2)=$G(PRMTLBL,1)
+"RTN","ORWD2",81,0)
+ . S $P(X,U,6)=$TR($$GET^XPAR("ALL^"_LOC,"ORPF LABEL PRINT DEVICE",1,"B"),U,";")
+"RTN","ORWD2",82,0)
+ E  S $P(X,U,2)="*"
+"RTN","ORWD2",83,0)
+ I DOREQ D
+"RTN","ORWD2",84,0)
+ . S $P(X,U,3)=$G(PRMTREQ,1)
+"RTN","ORWD2",85,0)
+ . S $P(X,U,7)=$TR($$GET^XPAR("ALL^"_LOC,"ORPF REQUISITION PRINT DEVICE",1,"B"),U,";")
+"RTN","ORWD2",86,0)
+ E  S $P(X,U,3)="*"
+"RTN","ORWD2",87,0)
+ I DOWRK D
+"RTN","ORWD2",88,0)
+ . S $P(X,U,4)=$G(PRMTWRK,1)
+"RTN","ORWD2",89,0)
+ . S $P(X,U,8)=$TR($$GET^XPAR("ALL^"_LOC,"ORPF WORK COPY PRINT DEVICE",1,"B"),U,";")
+"RTN","ORWD2",90,0)
+ E  S $P(X,U,4)="*"
+"RTN","ORWD2",91,0)
+ Q X
+"RTN","ORWD2",92,0)
+ ;
+"RTN","ORWD2",93,0)
+HASFMTC()       ; returns 1 if a chart copy format is available
+"RTN","ORWD2",94,0)
+ ; called from DEVINFO & MANUAL, expects ORDERID & DOLBL to be defined
+"RTN","ORWD2",95,0)
+ I DOCHT=1 Q 1  ; already know we're doing at least 1 label
+"RTN","ORWD2",96,0)
+ Q ''$$GET^XPAR("SYS","ORPF CHART COPY FORMAT",1,"I")
+"RTN","ORWD2",97,0)
+ ;
+"RTN","ORWD2",98,0)
+HASFMTL()       ; returns 1 if a label format is available
+"RTN","ORWD2",99,0)
+ ; called from DEVINFO & MANUAL, expects ORDERID & DOLBL to be defined
+"RTN","ORWD2",100,0)
+ I DOLBL=1 Q 1  ; already know we're doing at least 1 label
+"RTN","ORWD2",101,0)
+ N PKG S PKG=+$P($G(^OR(100,+ORDERID,0)),U,14)
+"RTN","ORWD2",102,0)
+ Q ''$$GET^XPAR("SYS","ORPF WARD LABEL FORMAT",PKG,"I")
+"RTN","ORWD2",103,0)
+ ;
+"RTN","ORWD2",104,0)
+HASFMTR()       ; returns 1 if a requisition format is available
+"RTN","ORWD2",105,0)
+ ; called from DEVINFO & MANUAL, expects ORDERID & DOREQ to be defined
+"RTN","ORWD2",106,0)
+ ;I DOREQ=1 Q 1  ; already know we're doing at least 1 requisition
+"RTN","ORWD2",107,0)
+ N PKG,DLG S PKG=+$P($G(^OR(100,+ORDERID,0)),U,14),DLG=+$P($G(^OR(100,+ORDERID,0)),U,5)
+"RTN","ORWD2",108,0)
+ I PKG=$O(^DIC(9.4,"B","DIETETICS",0)),DLG'=$O(^ORD(101.41,"B","FHW SPECIAL MEAL",0)) Q 0 ;no requisitions
+"RTN","ORWD2",109,0)
+ I DOREQ=1 Q 1  ; already know we're doing at least 1 requisition
+"RTN","ORWD2",110,0)
+ Q ''$$GET^XPAR("SYS","ORPF WARD REQUISITION FORMAT",PKG,"I")
+"RTN","ORWD2",111,0)
+ ;
+"RTN","ORWD2",112,0)
+HASFMTW()       ; returns 1 if a work copy format is available
+"RTN","ORWD2",113,0)
+ ; called from DEVINFO & MANUAL, expects ORDERID & DOWRK to be defined
+"RTN","ORWD2",114,0)
+ I DOWRK=1 Q 1  ; already know we're doing at least 1 work copy
+"RTN","ORWD2",115,0)
+ Q ''$$GET^XPAR("SYS","ORPF WORK COPY FORMAT",1,"I") ; not at pkg level
+"RTN","ORWD2",116,0)
+ ;
+"RTN","ORWD2",117,0)
+INSRTBB(ORDRLST) ; Insert child lab orders for any orders going to VBECS
+"RTN","ORWD2",118,0)
+ ; called from DEVINFO, MANUAL
+"RTN","ORWD2",119,0)
+ ; expects BBPKG to be defined
+"RTN","ORWD2",120,0)
+ Q:'BBPKG
+"RTN","ORWD2",121,0)
+ N I,LABPKG,SUBID,CHILD,ACT,KIND
+"RTN","ORWD2",122,0)
+ S LABPKG=+$O(^DIC(9.4,"B","LAB SERVICE",0)) Q:'LABPKG
+"RTN","ORWD2",123,0)
+ S I=0 F  S I=$O(ORDRLST(I)) Q:'I  I $P(ORDRLST(I),U,2)'["E" D
+"RTN","ORWD2",124,0)
+ . I $P($G(^OR(100,+ORDRLST(I),0)),U,14)'=BBPKG Q
+"RTN","ORWD2",125,0)
+ . S SUBID=.0001
+"RTN","ORWD2",126,0)
+ . S CHILD=0 F  S CHILD=$O(^OR(100,+ORDRLST(I),2,CHILD)) Q:'CHILD  D
+"RTN","ORWD2",127,0)
+ . . I $P($G(^OR(100,CHILD,0)),U,14)'=LABPKG Q
+"RTN","ORWD2",128,0)
+ . . S SUBID=SUBID+.0001,ACT=+$P(^OR(100,CHILD,3),U,7),KIND=$P(ORDRLST(I),U,2)
+"RTN","ORWD2",129,0)
+ . . S ORDRLST(I+SUBID)=CHILD_";"_ACT_U_KIND
+"RTN","ORWD2",130,0)
+ . S I=I+SUBID
+"RTN","ORWD2",131,0)
+ Q
+"RTN","ORWD2",132,0)
+NOTBB(CHILD) ; returns 1 if the order is not a blood bank child lab order
+"RTN","ORWD2",133,0)
+ ; called from DEVINFO, MANUAL
+"RTN","ORWD2",134,0)
+ ; expects BBPKG to be defined
+"RTN","ORWD2",135,0)
+ N PARENT S PARENT=$P(^OR(100,CHILD,3),U,9)
+"RTN","ORWD2",136,0)
+ I PARENT,$P(^OR(100,PARENT,0),U,14)=BBPKG Q 0
+"RTN","ORWD2",137,0)
+ Q 1
+"VER")
+8.0^22.0
+"BLD",8925,6)
+^337
+**END**
+**END**
+

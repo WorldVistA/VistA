@@ -1,0 +1,216 @@
+$TXT Created by              at DEVESS.DOMAIN.EXT  (KIDS) on Wednesday, 04/30/14 at 11:04
+=============================================================================
+Run Date: JUN 17, 2014                     Designation: PX*1*203
+Package : PX - PCE PATIENT CARE ENCOUNTER     Priority: Mandatory
+Version : 1       SEQ #152                      Status: Released
+                  Compliance Date: AUG 01, 2014
+=============================================================================
+
+Associated patches: (v)PX*1*168    <<= must be installed BEFORE `PX*1*203'
+                    (v)LEX*2*80    <<= must be installed BEFORE `PX*1*203'
+                    (v)ICD*18*57   <<= must be installed BEFORE `PX*1*203'
+
+Subject: Remediation of routines where STS ICD-10 patches exist
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ *****************************ATTENTION*********************************
+ *                                                                     *
+ * The following patches must be installed immediately after the       *
+ * install of ICD*18*57/LEX*2*80: 1. PX*1*203, 2. EC*2.0*124,          *
+ * 3. ROR*1.5*23.                                                      *
+ *                                                                     *
+ ***********************************************************************
+  
+ This patch remediates routine PXCEPOV1 to use ICR 3990 APIs CODEC^ICDCODE,
+ ICDD^ICDCODE and ICDDX^ICDCODE to pull in diagnosis description and 
+ category into the Provider Narrative and Provider Narrative 
+ Category fields.  It also remediates routine PXAIPOV to pull in diagnosis
+ description correctly when DATA2PCE^PXAPI is called from Event Capture by 
+ using CODEC^ICDCODE and ICDD^ICDCODE from ICR 3990.  Similarly to PXAIPOV,
+ routines PXBSTOR and PXCEVFI4 have been modified to call CODEC^ICDCODE and
+ ICDD^ICDCODE to pull in Dx Description when CPT, Immunization, and Skin 
+ Test options enter in diagnosis data.
+  
+ During IOC production testing of STS ICD-10 patches (LEX*2.0*80 and
+ ICD*18.0*57), Event Capture, when it sends diagnosis data over to PCE,
+ was populating UNKNOWN into Provider Narrative since Field 10 of ICD 
+ DIAGNOSIS (#80) file is no longer the Free Text DESCRIPTION Field.  The
+ Diagnosis List routine PXBGPOV2 similarly had to be remediated for the
+ same reason that ICD DIAGNOSIS (#80) file, Field 10 is no longer the
+ Free Text DESCRIPTION Field after STS ICD-10 patches are installed.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ --------------------------
+  
+ Data Dictionary
+ ---------------
+  
+ File Name (#)                Field Name (#)          New/Modified/Deleted
+ -------------                --------------          --------------------
+ N/A
+  
+ Dialog Name                                          New/Modified/Deleted
+ -----------                                          --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)    New/Modified/Deleted
+ -------------      ----      -------------    --------------------       
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+ Test Sites:
+ -----------
+ VA Pittsburgh Healthcare System, Pittsburgh, PA
+ Boise VA Medical Center, Boise, ID
+ John D. Dingell VA Medical Center, Detroit, MI
+ Miami VA Healthcare System, Miami, FL
+  
+ Patch Installation:
+ -------------------
+ Installation of this patch will not take more than 2 minutes.  It is
+ recommended, since so many applications call into PCE, that users are
+ logged out of VistA while installation is taking place.
+   
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 2 minutes
+ to install.
+  
+ This is a MUMPS only patch and does not update any GUI application.
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (PX*1.0*203):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter PX*1.0*203.
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**[Patch List]**;Aug 12, 1996;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXAIPOV
+    Before: B22661224   After: B24363290  **28,73,69,108,112,130,124,174,
+                                           168,203**
+Routine Name: PXBGPOV2
+    Before: B32290278   After: B37370726  **1,5,11,136,149,124,203**
+Routine Name: PXBSTOR
+    Before: B40327690   After: B42381168  **73,88,149,124,164,203**
+Routine Name: PXCEPOV1
+    Before: B27429965   After: B33219732  **134,149,124,170,203**
+Routine Name: PXCEVFI4
+    Before: B25786304   After: B27747505  **124,203**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 23, 2014
+Completed By:                               Date Completed: JUN 16, 2014
+Released By :                               Date Released : JUN 17, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

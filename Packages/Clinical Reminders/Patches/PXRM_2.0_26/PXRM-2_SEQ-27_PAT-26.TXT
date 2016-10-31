@@ -1,0 +1,475 @@
+
+=============================================================================
+Run Date: JUL 24, 2014                     Designation: PXRM*2*26
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #27                      Status: Released
+                  Compliance Date: AUG 24, 2014
+=============================================================================
+
+Associated patches: (v)LEX*2*80    <<= must be installed BEFORE `PXRM*2*26'
+                    (v)PXRM*2*24   <<= must be installed BEFORE `PXRM*2*26'
+                    (v)DG*5.3*862  <<= must be installed BEFORE `PXRM*2*26'
+                    (v)GMPL*2*44   <<= must be installed BEFORE `PXRM*2*26'
+
+Subject: CLINICAL REMINDERS ICD-10 CHANGES
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+  - Other
+
+Description:
+============
+
+ 
+ General Overview:
+ =================
+ This patch is part of the Computerized Patient Record System CPRSv30
+ project. This project will modify the Computerized Patient Record 
+ System, Text Integration Utilities, Consults, Health Summary, Problem 
+ List, Clinical Reminders, and Order Entry/Results Reporting domains to
+ meet the requirements proposed by the Dept. of Health and Human Services 
+ to replace the ICD-9 code set with the ICD-10 code set.
+ 
+ The Clinical Reminders changes are implemented in a multi-package build that
+ contains DG*5.3*862, GMPL*2.0*44, and PXRM*2.0*26. Detailed information about
+ each of these builds and installation instructions can be found in the
+ Installation Guide: PXRM_2_0_26_IG.PDF. This document can be obtained from one
+ of the anonymous ftp directories or from the VistA Documentation Library:
+ www.domain.ext/vdl.
+ 
+ Because this is a multi-package build, it can only be distributed as a host
+ file; no builds are included in the patch messages. The name of the host file
+ is: CR_ICD-10_UPDATE.KID; it can be obtained from one of the anonymous ftp
+ directories.
+  
+ On January 16, 2009, the Centers for Medicare & Medicaid Services (CMS)
+ released a final rule for replacing the 30-year-old ICD-9-CM code set with
+ International Classification of Diseases, Tenth Revision, Clinical Modification
+ (ICD-10-CM) and International Classification of Diseases, Tenth Revision,
+ Procedure Coding System (ICD-10-PCS) with dates of service, or date of
+ discharge for inpatients, that occur on or after the industry activation date.
+ The classification system consists of more than 68,000 codes, compared to
+ approximately 13,000 ICD-9-CM codes. There are nearly 87,000 ICD-10-PCS codes,
+ while ICD-9-CM has nearly 3,800 procedure codes. Both systems also expand the
+ number of characters allotted from five and four respectively to seven
+ alpha-numeric characters. This value does not include the decimal point, which
+ follows the third character for the ICD-10-CM code set. There is no decimal
+ point in the ICD-10-PCS code set. These code sets have the potential to reveal
+ more about quality of care, so that data can be used in a more meaningful way
+ to better understand complications, better design clinically robust algorithms,
+ and better track the outcomes of care. ICD-10-CM also incorporates greater
+ specificity and clinical detail to provide information for clinical decision
+ making and outcomes research.
+ 
+ Remedy Tickets:
+  ==============
+  623745
+  718406
+  761925
+  783078
+  810582
+  823815
+  862866
+  867073
+  868728
+  896951
+  916079
+  946668
+ 
+ Test Sites:
+ ===========
+ Miami VA Healthcare System
+ VA Northern California Health Care System
+ Orlando VA Medical Center
+ 
+  
+ Software & Documentation Retrieval Instructions:
+ ================================================
+ The software for this set of patches is not being distributed through the 
+ National Patch Module. There is a multi-package build named CLINICAL REMINDERS
+ ICD-10 UPDATE 1.0 which contains the following KIDS builds: DG*5.3*862,
+ GMPL*2.0*44, and PXRM*2.0*26. The associated host file is named
+ CR_ICD-10_UPDATE.KID.
+  
+ The preferred method for obtaining these files is to use File
+ Transfer  Protocol (FTP) to download them from: 
+ ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. 
+ Sites may also elect to retrieve the files directly from a specific 
+ server as follows:
+  
+ Albany          ftp.domain.ext 
+ <ftp://ftp.domain.ext>
+ Hines           ftp.domain.ext  
+ <ftp://ftp.domain.ext>
+ Salt Lake City  ftp.domain.ext    
+ <ftp://ftp.domain.ext>
+  
+ CR_ICD-10-UPDATE.ZIP contains the following files:
+  
+  PXRM_2_0_26_IG.PDF
+  PXRM_2_0_26_RN.PDF
+  PXRM_2_0_26_UM.PDF
+  PXRM_2_0_MM.PDF
+  PXRM_2_0_TM.PDF
+  PXRM_INDEX_TM.PDF
+ 
+ Documentation can also be found on the VistA Documentation Library
+ (VDL) at: http://www.domain.ext/vdl/
+  
+ Title                         File Name                      FTP
+ Mode
+ ----------------------------------------------------------------------- 
+ CLINICAL REMINDERS ICD-10 UPDATE 1.0
+                               CR_ICD-10-UPDATE.KID           ASCII
+ Clinical Reminders Patch 26 Installation Guide
+                               PXRM_2_0_26_IG.PDF             Binary
+ Clinical Reminders Patch 26 Release Notes
+                               PXRM_2_0_26_RN.PDF             Binary
+ Clinical Reminders User Manual
+                               PXRM_2_0_26_UM.PDF             Binary
+ Clinical Reminders Manager's Manual
+                               PXRM_2_0_MM.PDF                Binary
+ Clinical Reminders Technical Manual
+                               PXRM_2_0_TM.PDF                Binary
+ Clinical Reminders Index Technical Manual
+                               PXRM_INDEX_TM.PDF              Binary
+ 
+ 
+ Build Components:
+ =================
+ 
+  Data Dictionary:
+  ================
+ 
+ FILE #       NAME
+ -------------------------------------------------------------------------------
+ 801.41      REMINDER DIALOG                
+ 801.45      REMINDER FINDING TYPE PARAMETER
+ 802.4       REMINDER FUNCTION FINDING FUNCTIONS
+ 811.2       REMINDER TAXONOMY              
+ 811.4       REMINDER COMPUTED FINDINGS     
+ 811.8       REMINDER EXCHANGE              
+ 
+  Print Template:
+  ===============
+    PXRM COMPUTED FINDING INQUIRY    FILE #811.4   SEND TO SITE
+ 
+  Input Template:
+  ===============
+    PXRM EDIT ELEMENT                FILE #801.41  SEND TO SITE
+    PXRM EDIT GROUP                  FILE #801.41  SEND TO SITE
+    PXRM EDIT NATIONAL DIALOG        FILE #801.41  SEND TO SITE
+ 
+  Form:
+  =====
+    PXRM DIALOG TAXONOMY EDIT        FILE #811.2   SEND TO SITE
+    PXRM TAXONOMY CHANGE LOG         FILE #811.2   SEND TO SITE
+    PXRM TAXONOMY EDIT               FILE #811.2   SEND TO SITE
+  
+ Installation:
+ =============
+ This patch can be loaded with users on the system, but it should be done during
+ off-hours. The installation time can vary greatly depending on a number of
+ factors, it will take anywhere from ten minutes to three hours. Before carrying
+ out the installation please read the Clinical Reminders Patch 26 Installation
+ Guide. There are a number of steps that must be performed before doing the
+ install.
+ 
+ 1. Use the 'Load a Distribution' option on the KIDS installation menu.
+    When prompted to enter a host file type in CR_ICD-10-UPDATE.KID
+ 
+ 2. On the KIDS menu under the 'INSTALLATION' menu, use the following
+    options, as desired:
+        Print Transport Global
+        Compare Transport Global to Current System
+        Verify Checksums in Transport Global
+        Backup a Transport Global
+ 
+ 3. On the KIDS menu under the 'INSTALLATION' menu, use the following
+    option to install the patch:
+        Install Package(s) (CLINICAL REMINDERS ICD-10 UPDATE 1.0)
+ 
+ 4. When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of Install?
+    NO// respond 'NO'.
+ 
+ 5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//,"
+    respond 'NO'.
+ 
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO// respond 'NO'.
+ 
+ 7. The init routines PXRMP26D, PXRMP26E, PXRMP26I, PXRMP26T, and PXRMP26X
+    may be deleted once the installation has successfully completed.
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 404
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRM
+    Before: B37992293   After: B54398070  **4,11,12,16,18,24,26**
+Routine Name: PXRMART
+    Before:  B4884352   After:  B5789982  **26**
+Routine Name: PXRMBXTL
+    Before: B29578553   After: B28912703  **12,26**
+Routine Name: PXRMCDEF
+    Before:  B2284758   After:  B2371303  **4,18,24,26**
+Routine Name: PXRMCF
+    Before: B54030816   After: B63448106  **6,12,18,26**
+Routine Name: PXRMCOPY
+    Before: B21177715   After: B21259633  **6,12,26**
+Routine Name: PXRMCPLS
+    Before:       n/a   After: B12687369  **26**
+Routine Name: PXRMCSPE
+    Before:  B1686038   After:  B1560002  **26**
+Routine Name: PXRMCSTX
+    Before: B33730668   After:  B2261498  **9,12,17,18,26**
+Routine Name: PXRMDATE
+    Before: B69746461   After: B70140007  **4,6,12,17,18,24,26**
+Routine Name: PXRMDEDI
+    Before: B22823576   After: B25523952  **4,26**
+Routine Name: PXRMDEDT
+    Before: B86390747   After: B86565471  **4,6,12,17,16,24,26**
+Routine Name: PXRMDEV
+    Before: B78211075   After: B78755601  **4,6,11,16,18,24,26**
+Routine Name: PXRMDGPT
+    Before: B43220720   After: B33156979  **4,26**
+Routine Name: PXRMDIEV
+    Before:       n/a   After: B68563179  **26**
+Routine Name: PXRMDLG1
+    Before: B23307326   After:  B7385364  **12,26**
+Routine Name: PXRMDLG4
+    Before: B92764011   After: B91752060  **4,6,12,16,26**
+Routine Name: PXRMDLG6
+    Before: B19778801   After: B20894000  **12,26**
+Routine Name: PXRMDLL
+    Before:B110071468   After:B137187250  **10,6,12,17,18,26**
+Routine Name: PXRMDLLA
+    Before: B80062265   After: B84693327  **6,12,18,26**
+Routine Name: PXRMDLLB
+    Before: B39413514   After: B33584430  **6,12,16,26**
+Routine Name: PXRMDLRP
+    Before: B90356438   After: B96040502  **12,18,26**
+Routine Name: PXRMDTAX
+    Before:       n/a   After:B200174205  **26**
+Routine Name: PXRMDUTL
+    Before:  B9494253   After: B11502615  **24,26**
+Routine Name: PXRMEFED
+    Before: B10643956   After: B10725830  **4,26**
+Routine Name: PXRMEGED
+    Before: B10382097   After: B10459294  **4,26**
+Routine Name: PXRMENOD
+    Before: B20293476   After: B24879383  **4,6,18,26**
+Routine Name: PXRMEPED
+    Before: B10077314   After: B10154511  **4,26**
+Routine Name: PXRMETH
+    Before: B98230476   After:B101071654  **4,6,26**
+Routine Name: PXRMETX
+    Before: B62331260   After: B62476117  **4,6,26**
+Routine Name: PXRMETXR
+    Before: B76063275   After: B76497570  **4,6,26**
+Routine Name: PXRMEXCS
+    Before: B15766398   After: B15773333  **6,12,26**
+Routine Name: PXRMEXFI
+    Before: B53496841   After: B55982418  **6,12,18,24,26**
+Routine Name: PXRMEXHF
+    Before: B46895809   After: B49479695  **12,17,18,26**
+Routine Name: PXRMEXIC
+    Before: B80167234   After: B84313734  **6,12,17,16,18,22,24,26**
+Routine Name: PXRMEXID
+    Before: B65987316   After: B66152122  **6,12,24,26**
+Routine Name: PXRMEXIH
+    Before: B48815644   After: B48820476  **6,12,26**
+Routine Name: PXRMEXIU
+    Before: B66069083   After: B68841657  **4,6,12,17,18,24,26**
+Routine Name: PXRMEXLB
+    Before: B64707312   After: B63445674  **6,12,26**
+Routine Name: PXRMEXLC
+    Before: B13031715   After: B13059952  **4,6,12,26**
+Routine Name: PXRMEXLM
+    Before: B46743705   After: B52621060  **6,12,17,24,26**
+Routine Name: PXRMEXLR
+    Before: B10532497   After:  B9879769  **6,17,26**
+Routine Name: PXRMEXMH
+    Before:  B9663752   After: B10764722  **26**
+Routine Name: PXRMEXMM
+    Before: B32394409   After: B32677866  **12,26**
+Routine Name: PXRMEXPD
+    Before:B195546503   After:B200143562  **12,17,16,18,22,26**
+Routine Name: PXRMEXPS
+    Before:B192149462   After:B188507722  **12,16,18,22,24,26**
+Routine Name: PXRMEXU0
+    Before:  B6669231   After: B23209797  **4,12,18,26**
+Routine Name: PXRMEXU1
+    Before: B36300309   After: B36996811  **6,12,16,26**
+Routine Name: PXRMEXU2
+    Before: B57725277   After: B74659923  **6,12,26**
+Routine Name: PXRMEXU4
+    Before: B80777182   After:B182800125  **6,12,22,26**
+Routine Name: PXRMEXWB
+    Before:       n/a   After:  B1609378  **26**
+Routine Name: PXRMFF
+    Before: B65126590   After: B72420410  **4,6,11,18,22,24,26**
+Routine Name: PXRMFFDB
+    Before: B67646936   After: B67684724  **4,6,12,18,26**
+Routine Name: PXRMFFH
+    Before:  B8850687   After: B11369552  **12,18,26**
+Routine Name: PXRMFRPT
+    Before:B123701570   After:B184393482  **12,17,16,18,22,26**
+Routine Name: PXRMGEDT
+    Before: B45680272   After: B45920622  **26**
+Routine Name: PXRMGEN
+    Before:  B4714370   After:  B4344668  **26**
+Routine Name: PXRMICHK
+    Before:B132138736   After:B191422911  **18,24,26**
+Routine Name: PXRMINDC
+    Before: B64870601   After: B76451646  **4,6,17,26**
+Routine Name: PXRMINDD
+    Before: B63358470   After: B76803119  **4,6,17,26**
+Routine Name: PXRMINDL
+    Before: B24445330   After: B24651910  **4,6,12,26**
+Routine Name: PXRMINDX
+    Before: B36208748   After: B36378752  **4,6,12,17,18,26**
+Routine Name: PXRMINTR
+    Before: B38456694   After: B45347072  **4,12,16,18,26**
+Routine Name: PXRMLCR
+    Before: B37880789   After: B39948429  **4,6,12,26**
+Routine Name: PXRMLDR
+    Before: B20371554   After: B15240412  **18,26**
+Routine Name: PXRMLEX
+    Before: B13035630   After: B35438125  **17,18,26**
+Routine Name: PXRMLEXL
+    Before:       n/a   After:B240921269  **26**
+Routine Name: PXRMLIST
+    Before:  B9382525   After:  B9607187  **6,26**
+Routine Name: PXRMLOG
+    Before: B61916340   After: B65785719  **4,6,12,17,18,26**
+Routine Name: PXRMLPOE
+    Before: B14864405   After: B15191347  **4,24,26**
+Routine Name: PXRMMSER
+    Before:B106782052   After:B106758017  **11,12,21,24,26**
+Routine Name: PXRMORCH
+    Before: B29035983   After: B34974913  **16,22,26**
+Routine Name: PXRMOUTC
+    Before: B31296456   After: B38949930  **4,6,17,26**
+Routine Name: PXRMOUTU
+    Before: B15123879   After: B17168118  **17,18,26**
+Routine Name: PXRMP26D
+    Before:       n/a   After:B226626413  **26**
+Routine Name: PXRMP26E
+    Before:       n/a   After:  B1814747  **26**
+Routine Name: PXRMP26I
+    Before:       n/a   After: B28610158  **26**
+Routine Name: PXRMP26X
+    Before:       n/a   After: B39898924  **26**
+Routine Name: PXRMPARS
+    Before:  B3493881   After:  B3546283  **4,6,26**
+Routine Name: PXRMPDS
+    Before: B79435180   After: B38727338  **12,26**
+Routine Name: PXRMPROB
+    Before: B44715259   After: B47060633  **4,26**
+Routine Name: PXRMPTTX
+    Before: B39235224   After: B39642269  **12,26**
+Routine Name: PXRMRCPT
+    Before: B20816421   After: B24259553  **4,12,26**
+Routine Name: PXRMRDI
+    Before: B38535019   After: B37867827  **4,17,18,24,26**
+Routine Name: PXRMREDF
+    Before: B87890130   After: B84708461  **4,6,12,26**
+Routine Name: PXRMREDT
+    Before: B70692621   After: B70699612  **4,6,12,18,26**
+Routine Name: PXRMRUL1
+    Before: B49843481   After: B49947013  **4,6,26**
+Routine Name: PXRMSCR
+    Before:    B88295   After:   B126404  **24,26**
+Routine Name: PXRMSEL
+    Before: B75458515   After: B75136649  **26**
+Routine Name: PXRMSINQ
+    Before:       n/a   After: B22958302  **26**
+Routine Name: PXRMSTA1
+    Before: B72929755   After: B67419179  **4,6,26**
+Routine Name: PXRMSTA2
+    Before: B24851406   After: B22367612  **4,6,26**
+Routine Name: PXRMSTAC
+    Before: B10361634   After: B10577788  **18,26**
+Routine Name: PXRMSTS
+    Before:B177106484   After:B178092687  **12,17,18,26**
+Routine Name: PXRMSXRM
+    Before: B45463918   After: B51532846  **6,17,26**
+Routine Name: PXRMTAX
+    Before: B65791721   After: B60136875  **4,6,12,18,24,26**
+Routine Name: PXRMTAXD
+    Before:   B831541   After: B68009180  **26**
+Routine Name: PXRMTAXL
+    Before:       n/a   After: B59845028  **26**
+Routine Name: PXRMTDLG
+    Before: B19639441   After: B19639441  **26**
+Routine Name: PXRMTERM
+    Before: B55250159   After: B55315672  **4,6,11,18,26**
+Routine Name: PXRMTIU
+    Before:  B6286331   After:  B7669051  **4,12,26**
+Routine Name: PXRMTMED
+    Before: B13077287   After: B13031751  **1,4,6,12,26**
+Routine Name: PXRMTXCE
+    Before:       n/a   After: B21765274  **26**
+Routine Name: PXRMTXCR
+    Before:       n/a   After: B74745189  **26**
+Routine Name: PXRMTXCS
+    Before:       n/a   After:  B3010053  **26**
+Routine Name: PXRMTXDL
+    Before:       n/a   After:  B1299916  **26**
+Routine Name: PXRMTXIC
+    Before:       n/a   After:  B8164040  **26**
+Routine Name: PXRMTXIH
+    Before:       n/a   After: B25527600  **26**
+Routine Name: PXRMTXIM
+    Before:       n/a   After:B193866629  **26**
+Routine Name: PXRMTXIN
+    Before:       n/a   After: B68427938  **26**
+Routine Name: PXRMTXSM
+    Before:       n/a   After: B41443129  **26**
+Routine Name: PXRMUIDR
+    Before:       n/a   After:  B9563816  **26**
+Routine Name: PXRMUTIL
+    Before:B113964494   After:B128848927  **4,6,11,12,17,18,24,26**
+Routine Name: PXRMVCPT
+    Before: B26000582   After: B51805382  **4,26**
+Routine Name: PXRMVPOV
+    Before: B26252424   After: B51874901  **4,26**
+Routine Name: PXRMXEVL
+    Before:  B1729475   After:  B1989772  **4,12,26**
+Routine Name: PXRMXSE1
+    Before: B30585167   After: B30616308  **4,6,12,26**
+Routine Name: PXRMXT
+    Before: B32803390   After: B32837496  **4,26**
+Routine Name: PXRMXTA
+    Before: B53827588   After: B53931120  **4,12,26**
+Routine Name: PXRMXTB
+    Before:  B7862686   After:  B7902302  **6,12,26**
+ 
+Routine list of preceding patches: 24
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 02, 2012
+Completed By:                               Date Completed: JUL 24, 2014
+Released By :                               Date Released : JUL 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

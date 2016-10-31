@@ -1,0 +1,209 @@
+$TXT Created by                 at MNTVUU.DOMAIN.EXT  (KIDS) on Tuesday, 03/11/14 at 13:08
+=============================================================================
+Run Date: NOV 05, 2014                     Designation: PSX*2*76
+Package : PSX - CMOP                          Priority: Mandatory
+Version : 2        SEQ #67                      Status: Released
+                  Compliance Date: DEC 06, 2014
+=============================================================================
+
+Associated patches: (v)PSX*2*64    <<= must be installed BEFORE `PSX*2*76'
+                    (v)PSX*2*69    <<= must be installed BEFORE `PSX*2*76'
+
+Subject: BAD ADDRESS INDICATOR, DATA DICTIONARY, USER MANUAL UPDATE & DUP MAIL MSG
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Informational
+
+Description:
+============
+
+  
+ This patch modifies the Consolidate Mail Outpatient Pharmacy (CMOP) v2.0 
+ application as described below:
+  
+ 1. A correction was made to the Data Dictionary for the input transform
+    and the description of The CMOP System file (#550), fields were Non-CS
+    Days to Transmit (#11) and CS Days to Transmit (#12).
+  
+ 2. A correction was made to make sure Bad Address Indicator(BAI) error
+    message is set for mailman when the BAI is set.
+  
+ 3. A correction was made to the CMOP User Manual to update the Drug
+    Enter/Edit (PSS Drug Enter/Edit) option.
+    
+ 4. A correction made to not duplicate Patient Address error message in
+    Mailman messages.
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ 1. INC000000939739 - Data Dictionary update
+ 2. INC000000890843 - BAI not showing an error message in mailman message
+ 3. INC000000795400 - CMOP User Manual Update
+    Duplicates:
+    INC000000799549 - Incorrect documentation on CMOP User's Manual
+ 4. INC000000463390 - Patient Address error message showing twice in
+                           mail man message
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participation Test Sites:
+ =========================
+ Hudson Valley HCS
+ Boise VA Medical Center
+ VA Ann Arbor Healthcare System
+  
+ Remedy Overview:
+ ================
+ 1. INC000000939739 - Data Dictionary Update
+  
+    Problem:
+    -------
+    Site reported that the description in CMOP shows 0-30 days to pull 
+    from suspend for Non Controlled substance and Controlled substance
+    but the CMOP user manual is showing 0-10 days for pull from suspense
+  
+    Resolution:
+    -----------
+    The Description and Input Transform for the Non-CS Days to Transmit
+    (#550,11) and CS Days to Transmit (#550,12) will be updated to show and
+    allow for correct days to transmit.
+  
+ 2. INC000000890843 - BAI not showing an error message in mail man 
+                      message
+  
+    Problem:
+    --------
+    Site reported that if a patient does not have an address and BAI (Bad 
+    Address Indicator) is set, the Patient address indicator shows up
+    instead of the BAI
+  
+    Resolution:
+    -----------
+    Modified routine PSXMISC1 to check for BAI and set error message for
+    Bad Address Indicator.
+  
+ 3. INC000000795400 - CMOP User Manual update
+  
+    Problem:
+    -------
+    Documentation in CMOP user's manual page 18 and 19 is incorrect. These
+    pages still show the screen captures of Drug Enter/Edit option that was
+    used prior to implementation of current Drug Enter/Edit (PSS Drug
+    Enter/Edit) option.
+  
+    Resolution:
+    -------
+    Change Documentation to show new Drug Enter/Edit steps.
+  
+ 4. INC000000463390 - Patient Address error message showing twice in 
+                      mail man Message
+  
+    Problem: 
+    --------
+    The CMOP system "Patient Address" error rejects message is showing up 
+    twice on the mail message users are receiving.
+  
+    Resolution:
+    -----------
+    Modified routine PSXBPSUT to check for no address when checking 
+    for E-Pharmacy prescription.
+  
+ DOCUMENTATION RETRIEVAL:
+ ------------------------ 
+ Sites may retrieve documentation in one of the following ways:
+  
+  (1) The preferred method is to FTP the files from
+      download.vista.domain.ext, which will transmit the files from the
+      first available FTP server.
+  
+  (2) Sites may also elect to retrieve documentation directly from the 
+      ANONYMOUS SOFTWARE DIRECTORY from a specific server as follows:
+  
+      Albany          ftp.domain.ext
+      Hines           ftp.domain.ext
+      Salt Lake City  ftp.domain.ext
+  
+      The documentation distribution includes: 
+  
+      File Name                Description               Retrieval Format
+      =========                ===========               ================
+      psx_2_um_r1014.pdf       User Manual CMOP V. 2.0   Binary  
+      psx_2_p76_um_cp.pdf      User Manual Change Pages  Binary
+  
+  
+  (3) Once released, documentation may be retrieved from VISTA
+      Documentation Library (VDL) on the Internet at the following address:
+      http://www.domain.ext/vdl
+  
+  
+ Installation Instructions:
+ ==========================
+  
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+  Installation will take less than 5 minutes.
+  Suggested time to install: non-peak requirement hours.
+   
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter PSX*2.0*76).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the 
+            patch is installed.
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport 
+            global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package 
+         PSX*2.0*76.
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install? NO//",
+         respond No.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", respond No.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;CMOP;**[Patch List]**;11 Apr 97;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSXBPSUT
+    Before:  B5985053   After:  B6577149  **48,63,65,69,76**
+Routine Name: PSXMISC1
+    Before: B46713652   After: B47206332  **3,18,23,28,30,42,41,52,54,
+                                           58,64,76**
+ 
+Routine list of preceding patches: 64, 69
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 22, 2014
+Completed By:                               Date Completed: OCT 29, 2014
+Released By :                               Date Released : NOV 05, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

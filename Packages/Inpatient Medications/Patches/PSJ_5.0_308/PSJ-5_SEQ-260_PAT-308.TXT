@@ -1,0 +1,184 @@
+$TXT Created by                   A at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 03/20/14 at 15:17
+=============================================================================
+Run Date: SEP 22, 2014                     Designation: PSJ*5*308
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #260                      Status: Released
+                  Compliance Date: OCT 23, 2014
+=============================================================================
+
+Associated patches: (v)PSJ*5*279   <<= must be installed BEFORE `PSJ*5*308'
+
+Subject: IMR 6 BCMA ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This Patch Addresses 4 issues:
+  
+ 1. Orders on the Medication Administrative History (MAH) report are 
+ missing or not showing in Bar Code Medication Administration (BCMA) or 
+ Computerized Patient Record System (CPRS). 
+  
+ 2. An undefined error occurs when trying to access the "Edit Med Log" 
+ option in BCMA.
+  
+ 3. An undefined error occurs when trying to view the MAH in BCMA.
+  
+ 4. An undefined error occurs when accessing a patient who has a PRN order 
+ which is tied to a clinic without an appointment. 
+  
+ ASSOCIATED NSR(S):
+ ==================
+  N/A
+  
+ ASSOCIATED PSI(S):
+ ==================
+  N/A
+  
+   
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC000000970510 - Bar Code Med Admin - Medication History Issue:
+      Duplicate: INC000001025261
+  
+ 2. INC000000970511 - Bar Code Med Admin - Clinic Orders:
+      Duplicate: INC000000971816
+      Duplicate: INC000000993066
+  
+ 3. INC000000961141 - Inpatient Medications - Receiving Error  
+      Duplicate: INC000000974186 
+      Duplicate: INC000001028693
+  
+ 4. INC000000982669 - <UNDEFINED>GETPRNS+58^PSBPRN *PSBOIT 
+      Duplicate: INC000000999598
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Lebanon VAMC
+ Upstate New York HCS
+ Roseburg VAMC
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC0000000970510 - Bar Code Med Admin - Medication History Issue:
+    
+    Problem:
+    --------
+    Orders are missing from the MAH in both BCMA/CPRS when the order is a
+    "one time" dose and is tied to a clinic that is not in the CLINIC
+    DEFINITION file (#53.46) with the patient no longer an inpatient.
+  
+    Resolution:
+    -----------
+    The routine PSJBCMA was modified to return historical data if the
+    patient was admitted during the frame of the report.
+  
+  
+ 2. INC00000000970511 - Bar Code Med Admin - Clinic Orders: 
+  
+    Problem:
+    --------
+    The "Edit Med Log" option in the BCMA Graphic User Interface (GUI) will
+    return an undefined error when the order is tied to a clinic that is
+    not in the CLINIC DEFINITION file (#53.46) and the patient is no longer
+    an inpatient.
+  
+    Resolution:
+    -----------
+    Modified routine PSJBCMA to return patient data if the patient was 
+    admitted when the med log entry was recorded.
+  
+ 3. INC00000000961141 - Inpatient Medications - Receiving Error 
+  
+    Problem:
+    --------
+    When running the MAH in BCMA an undefined error is returned when the
+    order is tied to a clinic that is not in the CLINIC DEFINITION file
+    (#53.46) and the patient is no longer an inpatient.
+  
+    Resolution:
+    -----------
+    The routine PSJBCMA was modified to return historical data if the
+    patient was admitted during the time frame of the report.
+  
+ 4. INC000000982669 - <UNDEFINED>GETPRNS+58^PSBPRN *PSBOIT
+  
+    Problem:
+    --------
+    An Undefined error occurs if one of these "Hybrid" orders
+    (Inpatient Med tied to Clinic, but not an appointment) is a PRN,
+    which requires a PRN Effectiveness, but has not yet had one entered.
+    Once the patient is discharged, an undefined error will occur when 
+    trying to access the patient in BCMA.
+  
+    Resolution:
+    -----------
+    The routine PSJBCMA was modified to return historical data if the 
+    patient was admitted during the frame of the report and if that
+    patient has a PRN order.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ Do not install this patch while Inpatient Medications options are
+ being used. If this is not possible, we recommend to install during
+ Non-Peak hours. Installation will take no longer than 5 minutes. 
+   
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+    
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSJ*5.0*308):
+           a.  Verify Checksums in Transport Global - This option will
+               allow you to ensure the integrity of the routines that are
+               in the transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option 
+               will allow you to view all changes that will be made when
+               this patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will 
+               not backup any other changes such as DD's or templates.
+    
+    4. Use the Install Package(s) option and select the package
+       PSJ*5.0*308.
+    
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+       respond NO.
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJBCMA
+    Before:B104152395   After:B122612748  **32,41,46,57,63,66,56,69,58,
+                                           81,91,104,111,112,186,159,173,
+                                           190,113,225,253,267,279,308**
+ 
+Routine list of preceding patches: 279
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 27, 2014
+Completed By:                               Date Completed: SEP 09, 2014
+Released By :                               Date Released : SEP 22, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

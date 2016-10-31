@@ -1,0 +1,1409 @@
+
+=============================================================================
+Run Date: JUN 17, 2014                     Designation: ICD*18*57
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #66                     Status: Released
+                  Compliance Date: AUG 01, 2014
+=============================================================================
+
+Associated patches: (v)ICD*18*6    <<= must be installed BEFORE `ICD*18*57'
+                    (v)ICD*18*12   <<= must be installed BEFORE `ICD*18*57'
+                    (v)ICD*18*15   <<= must be installed BEFORE `ICD*18*57'
+                    (v)ICD*18*29   <<= must be installed BEFORE `ICD*18*57'
+                    (v)LEX*2*81    <<= must be installed BEFORE `ICD*18*57'
+                    (v)TIU*1*267   <<= must be installed BEFORE `ICD*18*57'
+                    (v)ICD*18*62   <<= must be installed BEFORE `ICD*18*57'
+                    (v)PSO*7*404   <<= must be installed BEFORE `ICD*18*57'
+                    (v)GMPL*2*43   <<= must be installed BEFORE `ICD*18*57'
+                    (v)RA*5*112    <<= must be installed BEFORE `ICD*18*57'
+                    (v)ONC*2.11*56 <<= must be installed BEFORE `ICD*18*57'
+                    (v)IBD*3*64    <<= must be installed BEFORE `ICD*18*57'
+                    (v)ICD*18*69   <<= must be installed BEFORE `ICD*18*57'
+                    (v)LR*5.2*429  <<= must be installed BEFORE `ICD*18*57'
+                    (v)DG*5.3*870  <<= must be installed BEFORE `ICD*18*57'
+                    (v)ACKQ*3*22   <<= must be installed BEFORE `ICD*18*57'
+                    (v)LEX*2*94    <<= must be installed BEFORE `ICD*18*57'
+
+Subject: ICD-10-CM/PCS Code Set
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Print Template
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ *****************************ATTENTION*********************************
+ *                                                                     *
+ *   The following patches must be installed immediately after the     *
+ *   install of ICD*18*57/LEX*2*80:                                    *
+ *                                                                     *
+ *     1     PX*1.0*203                                                *
+ *     2     EC*2.0*124                                                *
+ *     3     ROR*1.5*23                                                *
+ *                                                                     *
+ ***********************************************************************
+ 
+  This patch exports the International Classification of Diseases 
+  (ICD), 10th Revision, Clinical Mod (ICD-10-CM), and Procedure 
+  Coding System (ICD-10-PCS) Code Set.
+  
+  This is a multi-package Kernel Installation and Distribution System
+  (KIDS) distribution consisting of the following two builds:
+  
+    Install
+    Order    Build         Subject
+    -------  ----------    ------------------------------------------
+       1     ICD*18.0*57   ICD-10-CM/PCS Coding System Implementation
+       2     LEX*2.0*80    ICD-10-CM/PCS Lexicon Implementation
+  
+  Install Name:  ICD*18.0*57
+  
+    NOTE:  This message does not contain an installable KIDS build, nor
+           does it contain any routines or data.  The installable KIDS 
+           distribution and accompanying data host file can be obtained
+           using the File Transfer Protocol (FTP) instructions and  
+           installation instructions found in this patch description.
+  
+  ENHANCEMENTS:
+  ============ 
+  
+    ICD*18.0*57
+    ===========
+  
+     Data Dictionaries
+     -----------------
+  
+       ICD DIAGNOSIS file 80 Re-designed
+  
+          .01       CODE NUMBER (RF), [0;1]
+          1.1       CODING SYSTEM (*P80.4'), [1;1]
+          1.2       IDENTIFIER (F), [1;2]
+          1.3       UNACCEPTABLE AS PRINCIPAL DX (S), [1;3]
+          1.4       MDC13 (NJ2,0), [1;4]
+          1.5       MDC24 (S), [1;5]
+          1.6       MDC25 (S), [1;6]
+          1.7       ICD EXPANDED (S), [1;7]
+          1.8       EXCLUDE FROM LOOKUP (CJ1), [ ; ]
+          1.9       POA EXEMPT (S), [1;9]
+          10        SEX (Multiple-80.04), [5;0]
+                    .01  SEX EFFECTIVE DATE (D), [0;1]
+                    1    SEX (S), [0;2]
+          11        AGE LOW (Multiple-80.011), [6;0]
+                    .01  AGE LOW EFFECTIVE DATE (D), [0;1]
+                    1    AGE LOW (NJ2,0), [0;2]
+          12        AGE HIGH (Multiple-80.012), [7;0]
+                    .01  AGE HIGH EFFECTIVE DATE (D), [0;1]
+                    1    AGE HIGH (NJ3,0), [0;2]
+          20        ICD CODES NOT TO USE WITH (Multiple-80.01), [N;0]
+                    .01  ICD CODE NOT TO USE WITH (MP80'X), [0;1]
+          30        ICD CODES REQUIRED WITH (Multiple-80.02), [R;0]
+                    .01  ICD CODE REQUIRED WITH (MP80'X), [0;1]
+          40        ICD CODES NOT CC WITH (Multiple-80.03), [2;0]
+                    .01  ICD CODE NOT CC WITH (MP80'), [0;1]
+          66        STATUS (Multiple-80.066), [66;0]
+                    .01  STATUS EFFECTIVE DATE (RD), [0;1]
+                    .02  STATUS (RS), [0;2]
+          67        DIAGNOSIS (Multiple-80.067), [67;0]
+                    .01  DIAGNOSIS EFFECTIVE DATE (MRD), [0;1]
+                    1    DIAGNOSIS (RF), [0;2]
+          68        DESCRIPTION (Multiple-80.068), [68;0]
+                    .01  DESCRIPTION EFFECTIVE DATE (MRD), [0;1]
+                    1    DESCRIPTION (RF), [1;1]
+                    2    NON-SDO DESCRIPTIVE KEYWORDS (F), [2;1]
+          71        DRG GROUPER (Multiple-80.071), [3;0]
+                    .01  DRG GROUPER EFFECTIVE DATE (MMD), [0;1]
+                    1    DRG (Multiple-80.711), [1;0]
+                         .01  DRG (MP80.2'), [0;1]
+          72        MAJOR DIAGNOSTIC CATEGORY (Multiple-80.072), [4;0]
+                    .01  MDC EFFECTIVE DATE (MD), [0;1]
+                    1    MDC (P80.3'), [0;2]
+          73        DRG DIAGNOSIS IDENTIFIER CODES (Multiple-80.073), [73;0]
+                    .01  DRG DIAGNOSIS IDENTIFIER CODE (MP82'), [0;1]
+          103       COMPLICATION/COMORBIDITY (Multiple-80.0103), [69;0]
+                    .01  CC EFFECTIVE DATE (D), [0;1]
+                    1    COMPLICATION/COMORBIDITY (S), [0;2]
+                    2    PRIMARY (S), [0;3]
+ 
+         Re-designed cross-references
+  
+           Coding System Specific Cross-References
+  
+             ^ICD9("ABA",SYS,(CODE_" "),IEN)
+             ^ICD9("ACTS",SYS,(CODE_" "),STATUS,EFF,IEN1,IEN2)
+             ^ICD9("AD",SYS,WORD,IEN1,EFF,IEN2)
+             ^ICD9("ADSS",SYS,(CODE_" "),EFF,IEN1,IEN2)
+             ^ICD9("AN",SYS,NUM,IEN)
+             ^ICD9("ASTS",SYS,(CODE_" "),EFF,IEN1,IEN2)
+  
+           Special Purpose Cross-References
+  
+             ^ICD9("AVA",(CODE_" "),IEN)   VA Local Code
+             ^ICD9("AEXC",(CODE_" "),IEN)  Exclude from lookup
+  
+           Legacy Cross-References
+  
+             ^ICD9("AB",(CODE_" "),IEN)
+             ^ICD9("ACC",IEN,COD)
+             ^ICD9("ACT",(CODE_" "),STATUS,EFF,IEN1,IEN2)
+             ^ICD9("ADS",(CODE_" "),EFF,IEN1,IEN2)
+             ^ICD9("AST",(CODE_" "),EFF,IEN1,IEN2)
+             ^ICD9("BA",(CODE_" "),IEN)
+             ^ICD9("D",WORD,IEN1,EFF,IEN2)
+  
+           Where:
+             
+             CODE     ICD Diagnosis Code
+             SYS      Coding System (1/30)
+             STATUS   Activation Status (0/1)
+             EFF      Effective Date
+             WORD     Single word parsed from description
+             NUM      Numeric representation of a code
+             IEN      Internal Entry Number - DA
+             IEN1     Internal Entry Number - DA(1)
+             IEN2     Internal Entry Number - DA
+  
+       ICD OPERATION/PROCEDURE file 80.1 Re-designed:
+  
+          .01       CODE NUMBER (RF), [0;1]
+          1.1       CODING SYSTEM (*P80.4'), [1;1]
+          1.2       IDENTIFIER (F), [1;2]
+          1.5       MDC24 (S), [1;5]
+          1.7       ICD EXPANDED (S), [1;7]
+          1.8       EXCLUDE FROM LOOKUP (CJ1), [ ; ]
+          10        SEX (Multiple-80.11), [3;0]
+                    .01  SEX EFFECTIVE DATE (D), [0;1]
+                    1    SEX (S), [0;2]
+          20        MAJOR O.R. PROC (F), [M;1]
+          66        STATUS (Multiple-80.166), [66;0]
+                    .01  STATUS EFFECTIVE DATE (RD), [0;1]
+                    .02  STATUS (RS), [0;2]
+          67        OPERATION/PROCEDURE (Multiple-80.167), [67;0]
+                    .01  OPER/PROCEDURE EFFECTIVE DATE (MRD), [0;1]
+                    1    OPERATION/PROCEDURE (RF), [0;2]
+          68        DESCRIPTION (Multiple-80.168), [68;0]
+                    .01  DESCRIPTION EFFECTIVE DATE (MRD), [0;1]
+                    1    DESCRIPTION (RF), [1;1]
+                    2    NON-SDO DESCRIPTIVE KEYWORDS (F), [2;1]
+          71        DRG GROUPER (Multiple-80.171), [2;0]
+                    .01  DRG GROUPER EFFECTIVE DATE (MD), [0;1]
+                    1    MAJOR DIAGNOSTIC CATEGORIES (Multiple-80.1711), [1;0]
+                         .01  MAJOR DIAGNOSTIC CATEGORY (MP80.3'), [0;1]
+                         1    DRG (Multiple-80.17111), [1;0]
+                              .01  DRG (MP80.2'), [0;1]
+          73        DRG PROCEDURE IDENTIFIER CODES (Multiple-80.173), [73;0]
+                    .01  DRG PROCEDURE IDENTIFIER CODE (MP82.1'), [0;1]
+ 
+         Re-designed cross-references
+  
+           Coding System Specific Cross-References
+  
+             ^ICD0("ABA",SYS,(CODE_" "),IEN)
+             ^ICD0("ACTS",SYS,(CODE_" "),STATUS,EFF,IEN1,IEN2)
+             ^ICD0("AD",SYS,WORD,IEN1,EFF,IEN2)
+             ^ICD0("ADSS",SYS,(CODE_" "),EFF,IEN1,IEN2)
+             ^ICD0("AN",SYS,NUM,IEN)
+             ^ICD0("ASTS",SYS,(CODE_" "),EFF,IEN1,IEN2)
+  
+           Special Purpose Cross-References
+  
+             ^ICD0("AEXC",(CODE_" "),IEN)
+             ^ICD0("AVA",(CODE_" "),IEN)
+  
+           Legacy Cross-References
+  
+             ^ICD0("AB",(CODE_" "),IEN)
+             ^ICD0("ACT",(CODE_" "),STATUS,EFF,IEN1,IEN2)
+             ^ICD0("ADS",(CODE_" "),EFF,IEN1,IEN2)
+             ^ICD0("AST",(CODE_" "),EFF,IEN1,IEN2)
+             ^ICD0("BA",(CODE_" "),IEN)
+             ^ICD0("D",WORD,IEN1,EFF,IEN2)
+  
+           Where:
+              
+             CODE     ICD Diagnosis Code
+             SYS      Coding System (1/30)
+             STATUS   Activation Status (0/1)
+             EFF      Effective Date
+             WORD     Single word parsed from description
+             NUM      Numeric representation of a code
+             IEN      Internal Entry Number - DA
+             IEN1     Internal Entry Number - DA(1)
+             IEN2     Internal Entry Number - DA
+  
+       ICD CODING SYSTEMS file 80.4 New:
+  
+          .001  ICD CODING SYSTEM (NJ4,0), [ ]
+          .01   ICD CODING SYSTEM NOMENCLATURE (F), [0;1]
+          .02   CODING SYSTEM ABBREVIATION (F), [0;2]
+          .03   ICD FILE (*P1'), [0;3]
+          .04   IMPLEMENTATION DATE (D), [0;4]
+  
+         Cross-References
+ 
+           ^ICDS("B",NOM,IEN)
+           ^ICDS("C",SAB,IEN)
+           ^ICDS("F",FIL,IEN)
+  
+           Where:
+  
+             NOM    Coding System Nomenclature
+             SAB    Coding System Abbreviation
+             FIL    File Number (80/80.1)
+  
+       DRG DIAGNOSIS IDENTIFIER CODES file #82 New:
+  
+          .01   IDENTIFIER CODE (RF), [0;1]
+           1    DESCRIPTION (RF), [0;2]
+  
+         Cross-References
+ 
+           ^ICDID("B",ID,IEN)
+  
+           Where:
+  
+             ID     ICD Diagnosis Identifier
+  
+       DRG PROCEDURE IDENTIFIER CODES file #82.1 New:
+  
+          .01   IDENTIFIER CODE (RF), [0;1]
+           1    DESCRIPTION (RF), [0;2]
+  
+         Cross-References
+  
+           ^ICDIP("B",ID,IEN)
+  
+           Where:
+  
+             ID     ICD Diagnosis Identifier
+  
+  
+       DRG CC EXCLUSIONS file #82.13 new:
+  
+          .01       EXCLUSION CODE (RF), [0;1]
+           1        PDX (Multiple-82.131), [1;0]
+                    .01      PDX (MRP80'), [0;1]
+  
+         Cross-References
+  
+           ^ICDCCEX("B",EC,IEN)
+  
+           Where:
+  
+             EX     Exclusion Code
+  
+ 
+    Files (data)
+    ------------
+  
+      The following files were updated to include ICD-10
+      data, effective Oct 1, 2014:
+  
+        ICD DIAGNOSIS file 80
+        ICD OPERATION/PROCEDURE file 80.1
+  
+      The following file is exported with data:
+  
+        ICD CODING SYSTEMS file 80.4
+  
+     Routines
+     --------
+  
+       Modified:
+  
+         ICD-9 Legacy Application Programming Interfaces (APIs)
+  
+           ICDAPIU    ICD Utilities for APIs
+           ICDCOD     ICD Inquire
+           ICDCODE    ICD Code APIs
+           ICDDRG     DRG APIs
+           ICDDRGM    DRG APIs
+           ICDGTDRG   DRG APIs
+           ICDREF     DRG APIs
+           ICDSUPT    ICD SUPPORT FOR APIs
+          
+         File Support
+          
+           ICDID      ICD File Identifiers
+          
+       New:
+  
+         ICD Data Extraction APIs
+  
+           ICDEX      Main Entry Points
+           ICDEXA     APIs/Utilities (formerly ICDAPIU)
+           ICDEXA2    APIs/Utilities (cont)
+           ICDEXA3    APIs/Utilities (cont)
+           ICDEXC     Code APIs (formerly ICDCODE)
+           ICDEXC2    Code APIs (cont)
+           ICDEXC3    Code APIs (cont)
+           ICDEXC4    Code APIs (cont)
+           ICDEXD     DRG (from ICDDRG, ICDDRGX, ICDGTDRG)
+           ICDEXD2    DRG (cont) (from ICDDRG, ICDREF)
+           ICDEXD3    DRG (cont) (support for LEXQ*)
+           ICDEXD4    DRG (cont) (support for ICDGTDRG, ICDDRG, ICDREF)
+           ICDEXD5    DRG (cont) (support for ICDGTDRG, ICDDRG, ICDREF)
+           ICDEXH     API Help
+           ICDEXLK    Special Lookup 
+           ICDEXLK2   Special Lookup, Ask
+           ICDEXLK3   Special Lookup, Search
+           ICDEXLK4   Special Lookup, Text
+           ICDEXLK5   Special Lookup, List
+           ICDEXLK6   Special Lookup, Miscellaneous
+           ICDEXS     Support (formerly ICDSUPT)
+           ICDEXS2    Support (continued)
+  
+         ICD Miscellaneous
+  
+           ICDDIC     ICD DIC Prototype
+           ICDDICA    ICD DIC Prototype (ask)
+           ICDIDX     MUMPS Indexing Routine
+           ICDIDX2    MUMPS Indexing Routine for history 
+           ICDTOKN    Parse Text into Words (indexing and lookup)
+           ICDSAPI    ICD Search API (redundant, calls Fileman)
+           ICDXCODE   ICD basic data APIs (redundant, calls extraction)
+  
+       Deleted:
+  
+         Delete at Site by installation:
+  
+           ICD0IDX   ICD9IDX
+  
+         Delete by IRM after install:
+ 
+           Environment Check, Pre-Install and Post-Install routines
+  
+           ICD1857   ICD1857P
+ 
+  
+    LEX*2.0*80
+    ==========
+  
+     Data Dictionaries
+     -----------------
+  
+       CODES file 757.02 modified
+  
+         Cross-References added
+  
+           ^LEX(757.02,"ADX",CODE,EFF,STA,IEN1,IEN2)
+           ^LEX(757.02,"APR",CODE,EFF,STA,IEN1,IEN2)
+  
+           Where
+  
+             CODE     ICD Diagnosis OR Procedure Code
+             EFF      Effective Date
+             STA      Activation Status (0/1)
+             IEN1     Internal Entry Number - DA(1)
+             IEN2     Internal Entry Number - DA
+ 
+       CODING SYSTEMS file 757.03 new fields added
+  
+          11    IMPLEMENTATION DATE (D), [2;1]
+          12    SEARCH THRESHOLD (N)     [2;2]
+  
+       CHARACTER POSITIONS new file 757.033
+  
+          .01   IDENTIFIER (RF), [0;1]
+          .02   FRAGMENT (F), [0;2]
+          .03   DATE ENTERED (D), [0;3]
+          .04   SOURCE (P757.03'), [0;4]
+          .05   DETAILS (S), [0;5]
+          1     STATUS (Multiple-757.331), [1;0]
+                .01  STATUS EFFECTIVE DATE (MD), [0;1]
+                .02  STATUS (S), [0;2]
+          2     NAME/TITLE (Multiple-757.332), [2;0]
+                .01  NAME/TITLE EFFECTIVE DATE (MD), [0;1]
+                .02  NAME/TITLE (F), [1;1]
+          3     DESCRIPTION (Multiple-757.043), [3;0]
+                .01  DESCRIPTION EFFECTIVE DATE (MD), [0;1]
+                .02  DESCRIPTION (F), [1;1]
+          4     EXPLANATION (Multiple-757.334), [4;0]
+                .01  EXPLANATION EFFECTIVE DATE (MD), [0;1]
+                .02  EXPLANATION (F), [1;1]
+          5     INCLUDES (Multiple-757.335), [5;0]
+                .01  INCLUDES EFFECTIVE DATE (MD), [0;1]
+                .02  INCLUDE (Multiple-757.345), [1;0]
+                     .01  SYNONYM (MMF), [0;1]
+   
+     Files (data)
+     ------------
+  
+       The following Lexical files have had the ICD-10 Diagnosis
+       and Procedures added:
+  
+          MAJOR CONCEPT MAP  757
+          CONCEPT USAGE      757.001
+          EXPRESSIONS        757.01
+          CODES              757.02
+          SEMANTIC MAP       757.1
+  
+       The SUBSET DEFINITIONS file 757.2 has been modified to 
+       include the two new Subsets:
+  
+          ICD-10 Diagnosis
+          ICD-10 Procedures
+  
+       The LOOK-UP SCREENS file 757.3 has been modified to include
+       ICD-10 in the screens:
+ 
+          Problem/Diagnosis (ICD-9, ICD-10, CPT-4 and HCPCS)
+          Problem/Diagnosis (ICD-9, ICD-10, CPT-4, HCPCS and DSM-IV)
+          ICD-10 Diagnosis/Procedures
+          ICD-9 and ICD-10 Diagnosis/Procedures
+          ICD-10 Diagnosis
+          ICD-10 Operation/Procedure
+          Diagnosis (ICD-9 or ICD-10)
+  
+       The DISPLAYS file 757.31 has been modified to include the
+       display of ICD-10 codes:
+ 
+          ICD-9 and ICD-10 Diagnosis (only)
+          ICD-9 and ICD-10 Diagnosis and Procedures
+          ICD-9, ICD-10 and CPT codes
+          ICD-9, ICD-10, CPT and DSM
+          ICD-10 Diagnosis (only)
+          ICD-10 Diagnosis and Procedures
+  
+       The following two new fields in file 757.03 are populated 
+       with data.
+  
+          11    Implementation Date
+          12    Search Threshold
+  
+       The new file CHARACTER POSITIONS #757.033 is populated with
+       data.
+  
+     Routines
+     --------
+     
+       Modified:
+  
+         Lexicon Lookup
+  
+           LEXA       Look-up (Silent)        
+           LEXA1      Lexicon Look-up (Loud)        
+           LEXA4      Look-up (Loud) Unresolved Narrative         
+           LEXAB      Look-up Exact Match "B" index         
+           LEXABC     Look-up by Code         
+           LEXAL      Look-up List (Global)         
+           LEXALK     Look-up by Words        
+           LEXAR      Look-up (Interpret User Response)         
+           LEXAR3     Look-up Response (Help, Def, MAX)         
+           LEXAR4     Look-up Response (Select Entry)         
+           LEXAR5     Look-up Response (Select Entry)         
+           LEXAR6     Look-up Response (Unresolved Narr)        
+           LEXASC     Look-up by Shortcuts        
+           LEXASO     Look-up Display String (Sources)  
+  
+         Lexicon Query
+  
+           LEXQC      Changes - Extract
+           LEXQC2     Changes - Save 
+           LEXQC3     Changes - ICD/ICP/10D/10P
+           LEXQC4     Changes - CPT/MOD
+           LEXQCM     CPT Modifiers - Extract
+           LEXQCM2    CPT Modifiers - Save 
+           LEXQCP     CPT Procedures - Extract 
+           LEXQCP2    CPT Procedures - Save
+           LEXQCPA    CPT Procedures - Ask
+           LEXQH      History - Main 
+           LEXQHL1    History - ICD-9/10 Diagnosis Extr
+           LEXQHL2    History - ICD-9/10 Procedure Extr
+           LEXQHL3    History - CPT/HCPCS Extract
+           LEXQHL4    History - CPT Modifier Extract
+           LEXQHL5    History - Lexicon ICD/CPT Extract
+           LEXQHLM    History - Extract Misc 
+           LEXQID     ICD Diagnosis - Extract
+           LEXQID2    ICD Diagnosis - Extract (cont)
+           LEXQID3    ICD Diagnosis - Extract (cont)
+           LEXQID4    ICD Diagnosis - Save 
+           LEXQIDA    ICD Diagnosis - Ask
+           LEXQIP     ICD Procedure - Extract
+           LEXQIP2    ICD Procedure - Extract
+           LEXQIP3    ICD Procedure - Save 
+           LEXQIPA    ICD Procedure - Ask
+           LEXQL      Lookup Code
+           LEXQL2     Lookup Code (Build List) 
+           LEXQL3     Lookup ICD Code
+           LEXQL4     Lookup Code (CPT/MOD)
+           LEXQM      Miscellaneous
+  
+         Lexicon Miscellaneous Application Programming Interface (APIs)
+  
+           LEXCODE    Retrieval of IEN^Term based on Code 
+           LEXRXE     Re-Index 757.1 B/AMCC/AMCT/ASTT
+           LEXRXF     Re-Index 757.21 B/C/AA
+           LEXRXG     Re-Index 757.33 B/C/G
+           LEXRXXP    Re-Index Parse
+           LEXRXXS    Re-Index Save/Send
+           LEXSET     Setup Appl/User Defaults for Look-up
+           LEXSET2    Appl/Sub/Mode/User Defaults
+           LEXSET3    Overwrite/Merge Appl/User Defaults
+           LEXSET4    Setup Functions 
+           LEXSET5    Setup Appl/User Defaults for Look-up
+           LEXSRC2    Classification Code Source Util 
+           LEXTRAN    Lexicon code and text wrapper APIs 
+           LEXTRAN1   Lexicon code and text wrapper APIs 
+           LEXU       Miscellaneous Lexicon Utilities 
+           LEXXGI     Global Import (Needs ^LEXM) 
+           LEXXGI2    Global Import (Update w/^LEXM)
+           LEXXGI3    Global Import (Needs ^LEXM)
+           LEXXGI4    Global Import (repair at site)
+  
+         Lexicon Cross-References
+  
+           LEXNDX4    Linked Word Indexes
+           LEXNDX6    Supplemental Word Indexes
+           LEXNDX8    Set/kill indexes 757.02 
+           LEXRXXT3   Re-index (tasked)
+           LEXTOKN    Parse String into Words
+           LEXTOKN2   Parse String into Words
+  
+         Lexicon Defaults
+  
+           LEXDCC     Default Display
+           LEXDCX     Default Shortcut Context        
+           LEXDD1     Display Defaults        
+           LEXDD2     Display Defaults - Build List       
+           LEXDD4     Display Defaults - List Elements        
+           LEXDDS     Display Defaults - Single User        
+           LEXDDSP    Display Defaults - Single User Parse        
+           LEXDFL     Default Filter        
+           LEXDFN2    Default Names
+           LEXDFSB    Default Filter - Include/Exclude
+           LEXDFSE    Default Filter - Exclude Semantics        
+           LEXDM2     Default Misc - Ask to delete        
+           LEXDM4     Default Misc - Files/User/Service       
+           LEXDMGT    Defaults - Manager/Update       
+           LEXDMGU    Defaults - Manager/User Group       
+           LEXDMGV    Defaults - Manager/Verify       
+           LEXDVO     Default Vocabulary        
+  
+       New:
+  
+         Lexicon ICD-10 Specific
+  
+           LEX10CS    ICD-10 Code Set
+           LEX10CS2   ICD-10 Code Set (cont)
+           LEX10CX    ICD-10 Suggestions - Main
+           LEX10CX2   ICD-10 Suggestions - Source (get)
+           LEX10CX3   ICD-10 Suggestions - Target (find)
+           LEX10CX4   ICD-10 Suggestions - Ask 
+           LEX10CX5   ICD-10 Suggestions - Misc
+           LEX10DBC   ICD-10 Diagnosis Lookup by Code
+           LEX10DBR   ICD-10 Diagnosis Lookup by Root
+           LEX10DBT   ICD-10 Diagnosis Lookup by Text
+           LEX10DL    ICD-10 Diagnosis Prototype
+           LEX10DLS   ICD-10 Diagnosis Prototype
+           LEX10DU    ICD-10 Diagnosis Utilities
+           LEX10DX    ICD-9  Diagnosis
+           LEX10PL    ICD-10 Procedure Prototype
+           LEX10PLA   ICD-10 Procedure Prototype
+           LEX10PLS   ICD-10 Procedure Prototype
+           LEX10PR    ICD-10 Procedure Code
+           LEX10TAX   Post ICD-10 Taxonomies
+  
+         Lexicon (general)
+  
+           LEXDMGS    Search Threshold
+           LEXHLP2    Context Sensitive Help Text
+           LEXQC3     Changes - ICD/ICP/10D/10P
+           LEXQC4     Changes - CPT/MOD
+           LEXQL4     Lookup Code (CPT/MOD)
+           LEXU2      Miscellaneous Lexicon Utilities (cont)
+           LEXU3      Miscellaneous Lexicon Utilities (cont)
+           LEXU4      Miscellaneous Lexicon Utilities (cont)
+           LEXUH      Miscellaneous Lexicon Utilities (Help)
+           LEXXM      Mixed Case
+           LEXXM1     Mixed Case (1)
+           LEXXM2     Mixed Case (2)
+           LEXXM3     Mixed Case (3)
+           LEXXM4     Mixed Case (4)
+           LEXXM5     Mixed Case (5)
+           LEXXM6     Mixed Case (+6)
+           LEXXMM     Mixed Case (Miscellaneous)
+ 
+       Documentation changes:
+ 
+           LEXAR7    LEXDFSS   LEXDM     LEXDMGO   LEXEDF1   LEXEDF2
+           LEXERF    LEXERI    LEXHLP    LEXLK2    LEXMTLU   LEXNDX1
+           LEXNDX2   LEXNDX3   LEXNDX5   LEXRX     LEXRXB    LEXRXC
+           LEXRXD    LEXRXD4   LEXRXE    LEXRXF    LEXRXG    LEXRXXP
+           LEXRXXS   LEXSC     LEXSC2    LEXSC3    LEXXFI    LEXXFI3
+           LEXXFI4   LEXXFI6   LEXXFI7   LEXXFI8   LEXXFQ    LEXXII
+           LEXXII2
+ 
+       Edit First two lines only (SACC compliant):
+ 
+           LEXA2     LEXA3     LEXABC2   LEXAFIL   LEXAL2    LEXAM
+           LEXAMD    LEXAMD2   LEXAR2    LEXAS     LEXAS2    LEXAS3
+           LEXAS4    LEXAS5    LEXAS6    LEXAS7    LEXDCCC   LEXDCCS
+           LEXDCXS   LEXDD3    LEXDDSD   LEXDDSS   LEXDDT1   LEXDDT2
+           LEXDDTC   LEXDDTD   LEXDDTF   LEXDDTV   LEXDFLC   LEXDFLS
+           LEXDFLT   LEXDFN    LEXDFSI   LEXDFSO   LEXDFST   LEXDM3
+           LEXDMG    LEXDSV    LEXDVOS   LEXLK     LEXPRNT   LEXRXD4
+           LEXSET4
+ 
+       Deleted:
+  
+         Delete at Site by installation:
+  
+           LEXIENV   LEXILG    LEXILGD   LEXILGO   LEXILGP   LEXILGU
+           LEXILGX   LEXLGM    LEXLGM2   LEXLGM3   LEXPL     LEXPLEM
+           LEXPLIA   LEXPLUP   LEXXST    LEXXST2   LEXXST3   LEXXST4
+           LEXTOLKN
+ 
+         Delete by IRM after install:
+ 
+           Environment Check, Pre-Install and Post-Install routines
+  
+           LEX2080   LEX2080A  LEX2080B  LEX2080C  LEX2080P
+ 
+  
+      Options
+      -------
+  
+        New:
+  
+            [LEX MGR EDIT SEARCH THRESHOLD]
+            Edit Search Threshold for a Coding System
+  
+               This allows a manager to edit the search threshold for a coding
+               system.  That is the default number of record to examine before
+               prompting the user to continue or refine the search.  
+  
+        Modified:
+  
+            The following options were modified to change the order that they
+            appear on the [LEX MGR EDIT LEXICON] managers menu:
+               
+               [LEX MGR EDIT LEXICON]      Edit Lexicon (menu)
+               [LEX MGR EDIT DEFN]         Edit Term Definition 
+               [LEX MGR EDIT SHORTCUTS]    Edit Shortcuts by Context
+               
+            The following options are "run routine" type options.  While 
+            the option has not change, the routine it calls has, giving
+            the option the appearance that it has changed.
+  
+               [LEX CSV ICD QUERY]           ICD Diagnosis Code Set Query
+               [LEX CSV ICP QUERY]           ICD Procedure Code Set Query
+               [LEX CSV HISTORY]             Code History
+               [LEX CSV ICD/CPT CHANGE LIST] ICD/CPT Code Set Change List
+ 
+   
+  REMEDY TICKETS:
+  ==============
+ 
+    ICD*18.0*57
+ 
+      221565 - Duplicate ICD Procedure code 32.41
+      223750 - Duplicate ICD Procedure code 32.41 (dupe of 221565)
+      239262 - Duplicate ICD Procedure code 32.41 (dupe of 221565)
+      331089 - Duplicate ICD Procedure code 32.41 (dupe of 221565)
+      333612 - Duplicate ICD Procedure code 32.41 (dupe of 221565)
+      340389 - Duplicate ICD Procedure code 32.41 (dupe of 221565)
+      222300 - Text Histories for Problem List
+      949177 - UNDEFINED error editing Audiology (QUASAR)
+      983036 - Infinite loop IB - ICD Lookup with Variable Pointer
+ 
+    LEX*2.0*80
+ 
+      609125 - %DT variable in CODE^LEXTRAN
+      736579 - ICD-9 Filter displays DSM-IV Codes
+      994832 - LEDI issue w/SNOMED CT codes and IENs in LEXTRAN1
+ 
+  
+  TEST SITES:
+  ==========
+ 
+    VAMC, Coatesville, PA                 Independent/Medium  VISN  4
+    VAMC, Miami FL                        Independent/Large   VISN  8
+    VAMC, Orlando FL                      Independent/Medium  VISN  8
+    Northern California HCS, Martinez CA  Independent/Large   VISN 21
+ 
+ 
+  DISK SPACE REQUIREMENTS:
+  =======================
+  
+    The ICD Grouper globals ^ICD9, ^ICD0 and the Lexicon global ^LEX will 
+    increase in size by 351.29 MB.  These are fairly static files, with 
+    minor edits on a quarterly basis. 
+ 
+    In addition to the permanent size increases of the static globals, the
+    installing system will need to be able to accommodate three temporary 
+    files, which will need to coexist for a short time. 
+ 
+        ICD_18_57.GBL  Global Hostfile
+        ^LEXM export global
+        ICD_18_57.KID KIDS Installation Hostfile
+ 
+    Disk Space Requirements:
+ 
+        Increased Permanent Space            351.29 MB  ^ICD9, ^ICD0, ^LEX
+        Temporary Space                     2677.85 MB  *.GBL, *.KID and ^LEXM
+        Total additional Space Required     3029.14 MB
+ 
+    Additional sizing information can be found in the document titled 'Disk 
+    Capacity Requirements for ICD*18.0*57/LEX*2.0*80 ICD-10 Implementation' 
+    (see ICD_18_57_DISK_REQ.PDF listed in the section FTP Software Retrieval)
+ 
+  
+  DOCUMENTATION RETRIEVAL:
+  =======================
+  
+    Updated documentation describing the functionality introduced by this 
+    patch is available in the [ANONYMOUS.SOFTWARE] directories at the 
+    following Internet addresses:
+  
+       Preferred or Specific Server   Internet address
+       ----------------------------   -------------------------
+       First available ftp server     download.vista.domain.ext <-- preferred
+       Albany                         ftp.domain.ext
+       Hines                          ftp.domain.ext
+       Salt Lake City                 ftp.domain.ext
+  
+    Below is a list of the documentation files related to this patch and 
+    available via the FTP sites listed above.
+  
+      File Name                               Protocol
+      -------------------                     --------
+      ICD_18_57_ICDTM.PDF                     binary   ICD Technical Manual
+      ICD_18_57_LEXTM.PDF                     binary   Lexicon Technical Manual
+      ICD_18_57_LEXUM.PDF                     binary   Lexicon User Manual
+  
+    After this patch is released, the updated manuals may also be retrieved 
+    from the Internet at http://www.domain.ext/vdl
+  
+  
+  FTP Software Retrieval
+  ======================
+  
+    Host File                File Name                  FTP Protocol
+    -------------------      ----------------           ------------
+    KIDS Distribution        ICD_18_57.KID                 ASCII
+    Data Host File           ICD_18_57.GBL                 ASCII
+    Disk Size Requirements   ICD_18_57_DISK_REQ.PDF        Binary
+    Installation Guide       ICD_18_57_IG.PDF              Binary
+  
+    These files may be downloaded directly from the following FTP servers:
+  
+         FTP Server               Internet address
+      *  Preferred Server         download.vista.domain.ext  <-- 
+         Albany                   ftp.domain.ext
+         Hines                    ftp.domain.ext
+         Salt Lake City           ftp.domain.ext
+  
+      *  The preferred server download.vista.domain.ext will transmit 
+         the file from the first available FTP server.
+  
+         Files are available in the ANONYMOUS.SOFTWARE directory.
+ 
+    Estimated FTP times:
+ 
+       ICD_18_57_IG.PDF         926 KB     2 to  5 seconds
+       ICD_18_57_DISK_REQ.PDF   220 KB     1 to  3 seconds
+       ICD_18_57.KID            2.4 MB     4 to 10 seconds
+       ICD_18_57.GBL            1.5 GB    40 to 75 minutes
+ 
+  
+  INSTALLATION INSTRUCTIONS:
+  =========================
+ 
+    We strongly recommend you use the Installation Guide ICD_18_57_IG.PDF
+    to install this patch.  Common errors and installation warnings are 
+    clearly marked in the installation guide with bold red text and a 
+    warning triangle.
+ 
+      Common errors include:
+ 
+        Control Character Error on Global Save, run CLR^LEXAR7 first
+        Full File Error during FTP/Global Load, check for disk space
+ 
+      Installation warnings include:
+ 
+        Install during Non-Peak Hours
+        Users must be off the system for the KIDS install
+        Place TaskMan in a Wait State for the Installation
+        The ICD files will be temporarily deleted, monitor the error trap 
+        Do not interrupt the Installation
+        Do not Queue this Installation
+    
+    1)  Users should be off the system during the installation of this 
+        patch but other users may be on the system. It is recommended 
+        that this patch be installed during non-peak hours. 
+  
+        Global backup, preparation and installation timing:
+   
+            Backup
+            --------------
+            Lexicon Global       ^LEX           1.3 GB    20 to  50 minutes
+            ICD Diagnosis        ^ICD9           53 MB     1 to  11 minutes
+            ICD Procedure        ^ICD0            9 MB     1 to   8 minutes
+            Total Backup                        1.4 GB    22 to  69 minutes
+ 
+ 
+            Preparation - Data Host Files
+            -----------------------------
+            FTP                  ICD_18_57.KID  2.4 MB     4 to  10 seconds
+            FTP                  ICD_18_57.GBL  1.5 GB    40 to  75 minutes
+            Global Restore ^%GI      ^LEXM      1.4 GB    25 to  50 minutes
+            Total Data                          2.9 GB    65 to 125 minutes
+            
+            KIDS Installation
+            -----------------
+            Install #1           ICD*18.0*57              .1 to   1 minute
+            Install #2           LEX*2.0*80              13 to 124 minutes
+            Total                                        13 to 125 minutes
+           
+            Total Estimated Time 1.75 to 5.25 hours.
+ 
+            The wide range of install times can be caused by the number
+            of users  on the system, activity and the type of system 
+            (UNIX/OpenVMS).
+ 
+    2)  Create a backup of the following global files before continuing:
+   
+            Lexical Files                   #757-757.41       ^LEX
+            ICD DIAGNOSIS File                 #80            ^ICD9
+            ICD OPERATION/PROCEDURE File       #80.1          ^ICD0
+   
+        These backup files may get as large as 1.4 gigabytes.  Make sure
+        space is available before proceeding.  It should take from 22 to
+        69 minutes to create the backup files.
+  
+        Before you begin backing up the data in the ^LEX global, first clear
+        out the UNRESOLVED NARRATIVE file 757.06.  This will prevent the
+        backup procedure from encountering a control character and aborting
+        in error.  At the programmer prompt, run the following routine:
+  
+           >D CLR^LEXAR7
+  
+        When you are creating a backup of non-subscripted globals, you are
+        saving the entire global.  You should use the utility ^%GO for
+        non-subscripted globals, and when prompted for a global, enter 
+        the global root (global name only, no open parenthesis, no file
+        number and no commas, as shown below).  Example:
+   
+            Enter            To create a Backup copy of:
+            ------           --------------------------
+            ^LEX             Lexical Files
+            ^ICD9            ICD DIAGNOSIS File
+            ^ICD0            ICD OPERATION/PROCEDURE File
+  
+    3)  Make sure user and IO variables (D ^XUP) are setup for programmer
+        access.
+  
+    4)  Place TaskMan in a Wait State for the Installation
+ 
+        TaskMan must remain running but in a WAIT state for the duration of 
+        the KIDS installation.  Once the install is complete, restore 
+        TaskMan by removing TaskMan from a WAIT state. 
+ 
+    5)  Install the data from the global host file ICD_18_57.GBL.  This
+        file contains the Lexicon Utility's import global ^LEXM.
+  
+        This global is approximately 1.4 gigabyte in size.  Make sure
+        there is sufficient space available to load this global with
+        journaling on.  The loading of the global should take from 
+        25 to 50 minutes.
+  
+        Programmer Mode
+  
+          From the Programmer prompt, execute the following routine:
+        
+            D ^%GI
+            
+            Global input
+            
+            Device: VA5$:[ANONYMOUS.SOFTWARE]ICD_18_57.GBL
+            Parameters? "RS" => 
+            Globals were saved on 17 Jan 2014   3:32 PM   Cache
+            with description: ICD*18.0*57/LEX*2.0*80 Data
+            
+            Input option: A
+            ^LEXM
+ 
+    6)  Distribution Load:
+       
+        Load the KIDS Distribution from the host file ICD_18_57.KID which
+        you obtained via FTP.  This KIDS file is a multi-package distribution
+        containing the following KIDS builds with the specified install order:
+  
+           Install Order     KIDS Build
+                 1           ICD*18.0*57
+                 2           LEX*2.0*80
+  
+        Environment Check:
+  
+           This distribution has an "all or nothing" environment check.  
+           The environment check routines for both builds must pass for
+           the install to continue. Key elements that the environment 
+           check is looking for:
+  
+              Code Set Versioning (CSV)              2003
+              Code Text Descriptors (CTD)            2004
+              Query Options (LEXQ)                   2009
+              Latest Data Updates to ICD             2012
+              Latest DRG Grouper Updates and Fixes   2013
+ 
+           WARNING  WARNING  WARNING  WARNING  WARNING  WARNING  WARNING 
+        
+           This install will completely delete the Data Dictionaries
+           and data for both the ICD DIAGNOSIS file #80 and the ICD 
+           OPERATION/PROCEDURE file #80.1.  You will be asked if you
+           want to continue.  
+ 
+           If the account you are in is not mapped to another namespace, 
+           or if the account you are in is mapped to another namespace but
+           that namespace is also scheduled to receive this patch, then 
+           respond 'YES' to the prompt "Do you want to continue?"
+ 
+          
+    7)  Make sure users are off the system.
+        
+        The KIDS install will completely delete the Data Dictionaries and 
+        data for both the ICD DIAGNOSIS file #80 and ICD OPERATION/PROCEDURE 
+        file #80.1.  If users are still on the system they will be generating
+        errors for the period of time that the system is without the ICD 
+        files 80 and 80.1.
+ 
+ 
+    8)  KIDS Installation:
+  
+        Install the patch using the KIDS Installation Menu action
+        "Install Package(s)" and the install name ICD*18.0*57.
+ 
+          During the environment check, you will be asked if you wish to 
+          continue.  If the account you are in is not mapped to another 
+          namespace, or if the account you are in is mapped to another 
+          namespace but that namespace is also scheduled to receive this
+          patch, then respond 'YES' to the prompt "Do you wish to continue?"
+ 
+          The environment check will run a checksum on the incoming data
+          to ensure that the data file received via FTP and loaded is
+          identical to the distribution data.  This checksum will run
+          about 5-20 minutes depending on your system.
+  
+          Respond "Yes" at the "Want KIDS to Rebuild Menu Trees Upon 
+          Completion of Install?" prompt.
+  
+          Respond "Yes" at the "Want KIDS to INHIBIT LOGONs during
+          the install?" prompt.
+  
+          Respond "NO" at the "Want to DISABLE Scheduled Options,
+          Menu Options, and Protocols?" prompt.
+ 
+        The KIDS install should take from 13 to 125 minutes.
+ 
+ 
+    9)  Restore TaskMan by removing TaskMan from a WAIT state. 
+ 
+ 
+   10)  Cleanup
+       
+        The Environment Check routines ICD1857 and LEX2080, and the 
+        Post-Install routines ICD1857P, LEX2080P, LEX2080A, LEX2080B
+        and LEX2080C should be deleted using the KERNEL option 
+        'Delete Routines' [XTRDEL] upon completion of the installation.
+ 
+ 
+  MULTI-PACKAGE DISTRIBUTION ROUTINE SUMMARY:
+  ==========================================
+  
+    ICD*18.0*57
+    ===========
+  
+      The second line of each of these routines will look like:
+  
+      <tab>;;18.0;DRG Grouper;**[PATCH LIST]**;Oct 20, 2000
+  
+                  Checksums      Checksums  
+      Routine    Before Patch   After Patch  Patch List (2nd Line)
+      --------   ------------   -----------  ---------------------
+      ICD1857      <Env Chk>     176584453   57
+      ICD1857P    <Pre/Post>      10496780   57
+      ICD0IDX      11419052       <Deleted>  
+      ICD9IDX      11648583       <Deleted>  
+      ICDAPIU      36736755        1779997   6,11,12,15,57
+      ICDCOD        5243995        5702581   7,57
+      ICDCODE      75863718       17241457   6,12,14,29,57
+      ICDDIC         <new>        40496787   57
+      ICDDICA        <new>        99850836   57
+      ICDDRG       27872352       34375895   2,7,10,14,20,31,37,57
+      ICDDRGM      25118508       31028651   7,36,57
+      ICDEX          <new>        73946334   57
+      ICDEXA         <new>        28447306   57
+      ICDEXA2        <new>        66742760   57
+      ICDEXA3        <new>       159565550   57
+      ICDEXC         <new>       108523477   57
+      ICDEXC2        <new>        74960854   57
+      ICDEXC3        <new>        75483213   57
+      ICDEXC4        <new>        11534357   57
+      ICDEXD         <new>        28893974   57
+      ICDEXD2        <new>        91571446   57
+      ICDEXD3        <new>        14191421   57
+      ICDEXD4        <new>        78522708   57
+      ICDEXD5        <new>        63389361   57
+      ICDEXH         <new>        89157219   57
+      ICDEXLK        <new>       199827276   57
+      ICDEXLK2       <new>       168472768   57
+      ICDEXLK3       <new>        98024730   57
+      ICDEXLK4       <new>        25896513   57
+      ICDEXLK5       <new>        75373289   57
+      ICDEXLK6       <new>        83204817   57
+      ICDEXS         <new>       149154345   57
+      ICDEXS2        <new>         4261248   57
+      ICDGTDRG     50975145        3954114   7,12,14,17,57
+      ICDID        14387573       42005252   12,15,57
+      ICDIDX         <new>        81806882   57
+      ICDIDX2        <new>        39101671   57
+      ICDREF        1396078         499599   14,17,57
+      ICDSAPI        <new>         3564588   57
+      ICDSUPT       4162240        4754457   6,57
+      ICDTOKN        <new>        33213278   57
+      ICDXCODE       <new>         7083997   57
+ 
+ 
+    LEX*2.0*80
+    ==========
+  
+      The second line of each of these routines will look like:
+  
+      <tab>;;2.0;<package name>;**[PATCH LIST]**;Sep 23, 1996
+  
+                  Checksums      Checksums  
+      Routine    Before Patch   After Patch  Patch List (2nd Line)
+      --------   ------------   -----------  ---------------------
+      LEX2080      <Env Chk>     184435059   80
+      LEX2080P    <Post-Ins>      91320913   80
+      LEX10CS        <new>        72383021   80
+      LEX10CS2       <new>        50802408   80
+      LEX10CX        <new>        90915734   80
+      LEX10CX2       <new>        27454248   80
+      LEX10CX3       <new>        97828924   80
+      LEX10CX4       <new>        37820297   80
+      LEX10CX5       <new>        45896269   80
+      LEX10DBC       <new>         9636063   80
+      LEX10DBR       <new>         8889238   80
+      LEX10DBT       <new>         9014801   80
+      LEX10DL        <new>        57481356   80
+      LEX10DLS       <new>        50742305   80
+      LEX10DU        <new>       116539995   80
+      LEX10DX        <new>        28706888   80
+      LEX10PL        <new>       120447479   80
+      LEX10PLA       <new>        39916196   80
+      LEX10PLS       <new>        85504731   80
+      LEX10PR        <new>        47282338   80
+      LEX10TAX       <new>        83701759   80
+      LEX2080A       <new>        57341845   80
+      LEX2080B       <new>        59256107   80
+      LEX2080C       <new>        58859352   80
+      LEXA         44698793       53072237   3,4,6,19,25,36,38,43,55,73,
+                                             80
+      LEXA1        38731910       69671285   3,4,6,11,15,38,55,73,80
+      LEXA2          535269         597135   38,80
+      LEXA3        15059941       15059941   1,4,80
+      LEXA4        21030061       22480783   3,6,15,80
+      LEXAB         9544212       10463880   25,80
+      LEXABC       46217187       68137439   4,25,26,29,38,73,51,80
+      LEXABC2      25816397       25634318   4,80
+      LEXAFIL        205120         201610   80
+      LEXAL        37971689       72078379   6,55,80
+      LEXAL2       12928118       14217830   80
+      LEXALK       22806965       35871965   2,3,6,25,51,80
+      LEXAM        15878015       18114833   80
+      LEXAMD       24549577       28007514   6,25,80
+      LEXAMD2       2872185        2872185   6,80
+      LEXAR        17442980       18722296   3,19,25,55,80
+      LEXAR2        1018662        1200564   80
+      LEXAR3       38300154       79678965   73,80
+      LEXAR4        9905737       10464362   4,5,6,25,55,80
+      LEXAR5       25152319       56192093   14,25,26,38,55,73,80
+      LEXAR6       33720085       38407694   3,9,11,80
+      LEXAR7       17047262       18786524   9,25,73,80
+      LEXAS         6614534        6614534   4,80
+      LEXAS2       10917713       11730023   80
+      LEXAS3        4196429        4196429   80
+      LEXAS4        8439698        8439698   80
+      LEXAS5       14441583       15308783   80
+      LEXAS6        6676230        6676230   41,80
+      LEXAS7       18643877       18643877   80
+      LEXASC        6679811        7966749   25,80
+      LEXASO       16929355       18758787   25,32,73,80
+      LEXCODE      38198808       71456026   25,73,80
+      LEXDCC        4957812        5534473   80
+      LEXDCCC       8352647        8993729   80
+      LEXDCCS      12310875       13152111   80
+      LEXDCX        4372991        4881405   80
+      LEXDCXS      20695673       21843767   80
+      LEXDD1       22014117       25092584   80
+      LEXDD2        3129195        3584925   80
+      LEXDD3         947330        1122704   80
+      LEXDD4       14098487       13932965   80
+      LEXDDS        2093495        2531478   80
+      LEXDDSD       8702123        9566423   80
+      LEXDDSP      14491280       15948891   80
+      LEXDDSS       2858762        3222865   80
+      LEXDDT1       5416359        5978859   80
+      LEXDDT2       4317509        4823705   80
+      LEXDDTC       1554828        1795542   80
+      LEXDDTD       1846548        2129676   80
+      LEXDDTF      13760824       14904532   80
+      LEXDDTV       3335880        3758286   80
+      LEXDFL        4960220        5442174   80
+      LEXDFLC        795201         911217   80
+      LEXDFLS      14832359       15732119   80
+      LEXDFLT       2054932        2257084   80
+      LEXDFN       15697638       17432462   6,80
+      LEXDFN2      10551696       11535780   80
+      LEXDFSB       3384984        3384984   80
+      LEXDFSE      11756941       12795665   80
+      LEXDFSI       9333756        9975036   80
+      LEXDFSO       6471992        7103084   80
+      LEXDFSS      18377628       19790328   80
+      LEXDFST       6173810        6779396   80
+      LEXDM        14264609       15365543   81,80
+      LEXDM2       12707166       14152696   80
+      LEXDM3        2911195        3366699   80
+      LEXDM4       30212363       31719160   4,80
+      LEXDMG       10098170       10875914   80
+      LEXDMGO       5510946        6104772   80
+      LEXDMGS        <new>         7121139   80
+      LEXDMGT      13311302       14879684   80
+      LEXDMGU      19106674       17558143   80
+      LEXDMGV      12206347       10768836   80
+      LEXDSV        5732630        6361439   80
+      LEXDVO        4237055        4750248   80
+      LEXDVOS      13847911       14773585   80
+      LEXEDF1      14571584       16274240   3,25,80
+      LEXEDF2      21442230       23335121   80
+      LEXERF        6241374        6876897   80
+      LEXERI       25688427       28387082   80
+      LEXHLP       44256661       49116460   11,80
+      LEXHLP2        <new>        43406586   80
+      LEXIENV       2220341       <Deleted>  
+      LEXILG        3264267       <Deleted>  
+      LEXILGD       6547962       <Deleted>  
+      LEXILGO       7485420       <Deleted>  
+      LEXILGP       6881976       <Deleted>  
+      LEXILGU       6610815       <Deleted>  
+      LEXILGX       7059394       <Deleted>  
+      LEXLGM       24937877       <Deleted>  
+      LEXLGM2      12066085       <Deleted>  
+      LEXLGM3       7626310       <Deleted>  
+      LEXLK         4258330        4772038   80
+      LEXLK2       34120218       35967054   6,19,80
+      LEXMTLU       3910098        4465457   11,80
+      LEXNDX1      13157193       15300301   80
+      LEXNDX2      21432451       24352657   51,80
+      LEXNDX3       9214968       10557269   80
+      LEXNDX4      20468165       25651972   80
+      LEXNDX5       6805423        7594232   80
+      LEXNDX6       7394894       13564352   80
+      LEXNDX8      33490445       57045957   25,73,80
+      LEXPL        18846088       <Deleted>  
+      LEXPLEM      21438486       <Deleted>  
+      LEXPLIA       5712377       <Deleted>  
+      LEXPLUP       5493248       <Deleted>  
+      LEXPRNT      14926711       16064767   80
+      LEXQC       101390114        5018665   62,80
+      LEXQC2       14109806       13016948   62,80
+      LEXQC3         <new>        22152952   80
+      LEXQC4         <new>        47380274   80
+      LEXQCM       67014752       69421811   62,68,80
+      LEXQCM2      58451026       59164466   62,80
+      LEXQCP       77088041       79602950   62,80
+      LEXQCP2      56468860       57182153   62,80
+      LEXQCPA       9847253        9841880   62,80
+      LEXQH        19745844       20466600   62,80
+      LEXQHL1      94982465       95304509   62,80
+      LEXQHL2      92433013       90489365   62,80
+      LEXQHL3      40808701       40434251   62,80
+      LEXQHL4     101257381      100552373   62,80
+      LEXQHL5      13324910       21983988   62,80
+      LEXQHLM       8941107        7914203   62,80
+      LEXQID       46340703       59190420   62,73,80
+      LEXQID2      36269222       35722447   62,73,80
+      LEXQID3      61299678       74079700   62,80
+      LEXQID4      62471424       67283614   62,80
+      LEXQIDA      55078060       51204614   62,80
+      LEXQIP       67055751       87751371   62,73,80
+      LEXQIP2      18474806       10742392   62,80
+      LEXQIP3      28550330       28040002   62,73,80
+      LEXQIPA       3508695        3640982   62,80
+      LEXQL        49347251       69016427   62,80
+      LEXQL2       36280170       49164602   62,80
+      LEXQL3       34226328       12608656   62,80
+      LEXQL4         <new>        39546926   80
+      LEXQM        27832557       27832926   62,80
+      LEXRX        25440682       29831306   81,80
+      LEXRXB       52650110       53080223   81,80
+      LEXRXC      104836918      105521717   81,80
+      LEXRXD       72163787       72709975   81,80
+      LEXRXD4      78250103       78250103   81,80
+      LEXRXE       59805790       60291807   81,80
+      LEXRXF       89637737       90798435   81,80
+      LEXRXG       75572745       76130411   81,80
+      LEXRXXP      22174903       22155217   81,80
+      LEXRXXS     124182348      125584554   81,80
+      LEXRXXT3      2392111        2474933   81,80
+      LEXSC         3047995        3537512   80
+      LEXSC2        8240546        9055298   11,80
+      LEXSC3        9634238       10957166   80
+      LEXSET       11622540       17938997   25,80
+      LEXSET2      18221774       18221774   6,80
+      LEXSET3      12976280       12976280   6,80
+      LEXSET4       3072931        3440677   80
+      LEXSET5      22917951       25961242   6,11,80
+      LEXSRC2      47664785       52534156   25,28,73,80
+      LEXTOKN        <new>        54550782   80
+      LEXTOKN2       <new>        13220121   80
+      LEXTOLKN     38854621       <Deleted>  
+      LEXTRAN      74420928       77492995   41,59,73,80
+      LEXTRAN1     91365999      109851516   59,73,51,80
+      LEXU         21563695      137452070   2,6,9,15,25,36,73,51,80
+      LEXU2          <new>       131844732   80
+      LEXU3          <new>        65261771   80
+      LEXU4          <new>        63972250   80
+      LEXUH          <new>       105430964   80
+      LEXXFI       53802032       61706578   32,46,49,41,59,73,80
+      LEXXFI3      36032723       36033514   32,80
+      LEXXFI4      23614617       23615408   32,80
+      LEXXFI6       7377365        7378156   32,80
+      LEXXFI7      41558940       40222921   32,49,80
+      LEXXFI8      38145534       39455696   32,80
+      LEXXFQ       15590093       17747138   4,25,73,80
+      LEXXGI       41415628       55219661   4,25,26,27,28,29,46,49,50,41,
+                                             59,73,80
+      LEXXGI2      66127456       66453808   25,26,28,29,46,49,50,73,80
+      LEXXGI3      21977980       20329956   59,80
+      LEXXGI4      22057583      168770794   51,80
+      LEXXGP1        <new>       211142742   80
+      LEXXGP2        <new>       136699834   80
+      LEXXII       40032247       41394926   32,46,49,50,41,59,73,80
+      LEXXII2      32005202       32320657   59,80
+      LEXXM          <new>        70674913   80
+      LEXXM1         <new>        23924703   80
+      LEXXM2         <new>        28282174   80
+      LEXXM3         <new>        82567477   80
+      LEXXM4         <new>        52053731   80
+      LEXXM5         <new>        16058487   80
+      LEXXM6         <new>        53334113   80
+      LEXXMM         <new>        37694855   80
+      LEXXST       68105086       <Deleted>  
+      LEXXST2      19441321       <Deleted>  
+      LEXXST3      23757267       <Deleted>  
+      LEXXST4      16472154       <Deleted> 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;18.0;DRG Grouper;**[Patch List]**;Oct 20, 2000;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ICD0IDX
+    Before: B11419052   After:    Delete  
+Routine Name: ICD1857
+    Before:       n/a   After:B176584453  **57**
+Routine Name: ICD1857P
+    Before:       n/a   After: B10496780  **57**
+Routine Name: ICD9IDX
+    Before: B11648583   After:    Delete  
+Routine Name: ICDAPIU
+    Before: B36736755   After:  B1779997  **6,11,12,15,57**
+Routine Name: ICDCOD
+    Before:  B5243995   After:  B5702581  **7,57**
+Routine Name: ICDCODE
+    Before: B75863718   After: B17241457  **6,12,14,29,57**
+Routine Name: ICDDIC
+    Before:       n/a   After: B40496787  **57**
+Routine Name: ICDDICA
+    Before:       n/a   After: B99850836  **57**
+Routine Name: ICDDRG
+    Before: B27872352   After: B34375895  **2,7,10,14,20,31,37,57**
+Routine Name: ICDDRGM
+    Before: B25118508   After: B31028651  **7,36,57**
+Routine Name: ICDEX
+    Before:       n/a   After: B73946334  **57**
+Routine Name: ICDEXA
+    Before:       n/a   After: B28447306  **57**
+Routine Name: ICDEXA2
+    Before:       n/a   After: B66742760  **57**
+Routine Name: ICDEXA3
+    Before:       n/a   After:B159565550  **57**
+Routine Name: ICDEXC
+    Before:       n/a   After:B108523477  **57**
+Routine Name: ICDEXC2
+    Before:       n/a   After: B74960854  **57**
+Routine Name: ICDEXC3
+    Before:       n/a   After: B75483213  **57**
+Routine Name: ICDEXC4
+    Before:       n/a   After: B11534357  **57**
+Routine Name: ICDEXD
+    Before:       n/a   After: B28893974  **57**
+Routine Name: ICDEXD2
+    Before:       n/a   After: B91571446  **57**
+Routine Name: ICDEXD3
+    Before:       n/a   After: B14191421  **57**
+Routine Name: ICDEXD4
+    Before:       n/a   After: B78522708  **57**
+Routine Name: ICDEXD5
+    Before:       n/a   After: B63389361  **57**
+Routine Name: ICDEXH
+    Before:       n/a   After: B89157219  **57**
+Routine Name: ICDEXLK
+    Before:       n/a   After:B199827276  **57**
+Routine Name: ICDEXLK2
+    Before:       n/a   After:B168472768  **57**
+Routine Name: ICDEXLK3
+    Before:       n/a   After: B98024730  **57**
+Routine Name: ICDEXLK4
+    Before:       n/a   After: B25896513  **57**
+Routine Name: ICDEXLK5
+    Before:       n/a   After: B75373289  **57**
+Routine Name: ICDEXLK6
+    Before:       n/a   After: B83204817  **57**
+Routine Name: ICDEXS
+    Before:       n/a   After:B149154345  **57**
+Routine Name: ICDEXS2
+    Before:       n/a   After:  B4261248  **57**
+Routine Name: ICDGTDRG
+    Before: B50975145   After:  B3954114  **7,12,14,17,57**
+Routine Name: ICDID
+    Before: B14387573   After: B42005252  **12,15,57**
+Routine Name: ICDIDX
+    Before:       n/a   After: B81806882  **57**
+Routine Name: ICDIDX2
+    Before:       n/a   After: B39101671  **57**
+Routine Name: ICDREF
+    Before:  B1396078   After:   B499599  **14,17,57**
+Routine Name: ICDSAPI
+    Before:       n/a   After:  B3564588  **57**
+Routine Name: ICDSUPT
+    Before:  B4162240   After:  B4754457  **6,57**
+Routine Name: ICDTOKN
+    Before:       n/a   After: B33213278  **57**
+Routine Name: ICDXCODE
+    Before:       n/a   After:  B7083997  **57**
+ 
+Routine list of preceding patches: 15, 17, 29, 36, 37
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 27, 2011
+Completed By:                               Date Completed: JUN 16, 2014
+Released By :                               Date Released : JUN 17, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

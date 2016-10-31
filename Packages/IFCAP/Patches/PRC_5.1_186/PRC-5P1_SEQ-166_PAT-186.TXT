@@ -1,0 +1,207 @@
+$TXT Created by                at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Friday, 05/01/15 at 12:08
+=============================================================================
+Run Date: SEP 22, 2015                     Designation: PRC*5.1*186
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #166                    Status: Released
+                  Compliance Date: OCT 23, 2015
+=============================================================================
+
+Associated patches: (v)PRC*5.1*126 <<= must be installed BEFORE `PRC*5.1*186'
+                    (v)PRC*5.1*148 <<= must be installed BEFORE `PRC*5.1*186'
+                    (v)PRC*5.1*181 <<= must be installed BEFORE `PRC*5.1*186'
+
+Subject: DUPE X-REF ISSUE IN FILE 443;FISCAL RPT ISSUE;ALL/DELIVERY ORD NOT AUTO OBLIGATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following 3 issues:
+  
+ 1. Direct sets causing duplicate entries in REQUEST WORKSHEET file (#443)
+  
+ 2. Fiscal Pending Action report not showing approved amendments.
+  
+ 3. All/Delivery orders not auto obligating for Delivery Orders.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC000000752542 Site numerous approvals to be done, but no data
+  
+ 2. INC000001051782 Fiscal Pending Action report issue
+  
+ 3. INC000000952389 All/Delivery orders not auto obligating for Delivery 
+                    Orders.
+        Duplicate:  INC000001095895  FCP 039 D.O. not fully obligating 
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ IOWA
+ BAY PINES
+ TOGUS
+  
+  
+ REMEDY OVERVIEW:
+ ================ 
+ 1. INC000000752542 Site numerous approvals to be done, but no data
+  
+    Problem:
+    --------
+    Sites saw either duplicate entries in their file REQUEST WORKSHEET
+    (#443) or excessive approvals to be completed when they enter the 
+    Accountable Officer Menu, but when they use option Process a 
+    Request in PPM [PRCHP REQST], the option shows there is nothing to
+    approve.
+  
+  
+   Resolution:
+    -----------                    
+    Modify 5 routines to change the direct file sets to Fileman edits or
+    re-indexing when the status field changes for a requisition.  One area 
+    that caused the direct sets:
+  
+    a. When a request is processed, but status 'Returned to Service' 
+       entered and then the requisition is re-edited by staff.
+  
+ Routines: PRCH410, PRCHSP, PRCHE2, PRCSAPP2, PRCVIBF,
+           PRC186P (pre-install)
+  
+  
+ 2. INC000001051782 Fiscal Pending Action report issue
+  
+    Problem:
+    ---------
+    Site found that an order with an approved amendment could be overlooked
+    by Fiscal (lost paper work or approved amendment alert) and they would
+    not be aware to run the option 'Amendment Processing' [PRCFA 
+    AMENDMENT PROCESSING] to move amended order back to original order.
+    This missing process resulted in an order not being sent for 6 months.
+  
+    Resolution:
+    -----------
+    Modify the Fiscal Pending Action report to include any approved
+    amendments against an order that needs Fiscal intervention to run
+    Amendment Processing to move amendment data back to original order.
+  
+ Routines: PRCB2A
+  
+ 3. INC000000952389 All/Delivery orders not auto obligating for Delivery 
+                    Orders.
+  
+    Problem:
+    ---------
+    Site found that when the All/Delivery switch is on (site level or FCP 
+    level) for either type that Delivery Orders DO NOT auto obligate and 
+    show as not obligated on FCP Running Balance report.
+  
+    Resolution:
+    -----------
+    Modify routine to insure that Delivery Orders check to see if either 
+    the site or FCP All/Delivery switch is on for either, and, if so, set
+    the auto obligation switch to on.
+  
+ Routines: PRCH410
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+   *********************************************************************
+   PLEASE NOTE: Pre install routine PRC186P will be deleted once the
+   install is complete.  If you wish to check the checksum of these
+   routines please use the 'Verify Checksums in Transport Global' under
+   the Installation Menu.
+   *********************************************************************
+   
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*186)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*186.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", choose NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', choose YES. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+        Enter Delivery Order          [PRCH ENTER DELIVERY ORDER]
+        New 2237 (Service) Request    [PRCSENRB]
+        Process a Request in PPM      [PRCHPM REQST]
+        Remove 2237 from P.O.         [PRCHPC PO REMOVE 2237]
+        Edit a 2237 (Service)         [PRCSEDTD]
+        Fiscal Pending Action         [PRCB RPT FISCAL PENDING ACTION] 
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRC186P
+    Before:       n/a   After: B12302631  **186**
+Routine Name: PRCB2A
+    Before: B11997995   After: B19986802  **126,186**
+Routine Name: PRCH410
+    Before: B48806860   After: B53172728  **123,171,181,186**
+Routine Name: PRCHE2
+    Before: B20073631   After: B20776197  **186**
+Routine Name: PRCHSP
+    Before: B26609111   After: B27828068  **186**
+Routine Name: PRCSAPP2
+    Before: B21099667   After: B21728941  **14,81,148,186**
+Routine Name: PRCVIBF
+    Before: B39152455   After: B41028216  **81,186**
+ 
+Routine list of preceding patches: 126, 148, 181
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 05, 2013
+Completed By:                               Date Completed: SEP 18, 2015
+Released By :                               Date Released : SEP 22, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

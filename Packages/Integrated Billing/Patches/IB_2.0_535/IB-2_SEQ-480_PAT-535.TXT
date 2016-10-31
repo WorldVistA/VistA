@@ -1,0 +1,123 @@
+
+=============================================================================
+Run Date: SEP 26, 2014                     Designation: IB*2*535
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #480                      Status: Released
+                  Compliance Date: OCT 26, 2014
+=============================================================================
+
+
+Subject: IB SITE PARAMETER MEDICARE PAYER UPDATE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ ***************************************************************
+ This is an INFORMATIONAL patch that includes instructions to
+ manually enter "CMS" as a MEDICARE PAYER (#51.25) in the IB SITE 
+ PARAMETERS file (#350.9) via FileMan.  There are no routines 
+ or KIDs builds.  You must follow the instructions in order to 
+ set this up correctly.
+ ***************************************************************
+  
+ The eBusiness Solutions, eInsurance and Financial Services Center (FSC) 
+ teams have succeeded in directly connecting into the Medicare database in 
+ order to verify Medicare coverage.  This connection will save the 
+ Department of Veterans Affairs almost $1 million dollars per year 
+ in transaction fees currently paid to private sector clearinghouses.  
+ By changing one parameter in each VistA system, additional money will be 
+ saved in labor costs.  This parameter enables the system to auto-update the 
+ patient insurance file which eliminates the need for staff to manually
+ verify this coverage.  Unfortunately, this IB parameter can only be
+ changed by IRM staff.
+  
+  
+ ASSOCIATED REMEDY:
+ =================
+ INC000001048389 Integrated Billing - e-IIV:
+  
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ Maryland HCS (Baltimore)
+ Washington DC
+ White River Junction
+  
+   
+ REMEDY OVERVIEW:
+ ===============
+  
+ INC000001048389 Integrated Billing - e-IIV:
+  
+ Problem: 
+ ========
+ The eInsurance team has requested the IB SITE PARAMATER file (#350.9) be
+ updated with a value of "CMS" for the MEDICARE PAYER (#51.25) field. 
+     
+ Resolution:
+ ===========
+ Provide instructions to add "CMS" to the MEDICARE PAYER (#51.25) field 
+ via FileMan including all necessary fields. 
+  
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ NOTE:  The CMS entry is already in the Payer (#365.12) file in your
+ Production/Live Account since it was automatically sent by FSC.  It 
+ may not be in the file in a Test/Mirror account. 
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+   
+ This update to the IB SITE PARAMETERS can be done at any time.
+  
+ Use VA FileMan to update the MEDICARE PAYER (#51.25) field. The following
+ text describes the steps needed to properly update the entry.
+  
+  
+ VA FileMan 22.0
+  
+ Select OPTION: ENTER OR EDIT FILE ENTRIES  
+  
+ INPUT TO WHAT FILE: PATIENT// 350.9  IB SITE PARAMETERS
+                                           
+ EDIT WHICH FIELD: ALL// 51.25  MEDICARE PAYER
+ THEN EDIT FIELD: <enter>
+  
+ Select IB SITE PARAMETERS NAME: <insert site number/name>
+ MEDICARE PAYER: MEDICARE WNR// CMS  
+  
+ Once the entry has been added you can verify the update by entering
+ the entry again and confirming the value has been updated.
+  
+ Select OPTION: ENTER OR EDIT FILE ENTRIES  
+  
+  
+  
+ INPUT TO WHAT FILE: IB SITE PARAMETERS// 
+ EDIT WHICH FIELD: ALL//    MEDICARE PAYER
+ THEN EDIT FIELD: 
+  
+  
+ Select IB SITE PARAMETERS NAME: <insert site number/name>
+ MEDICARE PAYER: CMS// 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 02, 2014
+Completed By:                               Date Completed: SEP 24, 2014
+Released By :                               Date Released : SEP 26, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

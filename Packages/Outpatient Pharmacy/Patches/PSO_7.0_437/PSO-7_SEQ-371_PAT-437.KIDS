@@ -1,0 +1,1153 @@
+EMERGENCY Released PSO*7*437 SEQ #371
+Extracted from mail message
+**KIDS**:PSO*7.0*437^
+
+**INSTALL NAME**
+PSO*7.0*437
+"BLD",9198,0)
+PSO*7.0*437^OUTPATIENT PHARMACY^0^3141001^y
+"BLD",9198,1,0)
+^^18^18^3141001^
+"BLD",9198,1,1,0)
+This patch addresses the following:
+"BLD",9198,1,2,0)
+ 
+"BLD",9198,1,3,0)
+1. New Jersey had an issue with the setup after the installation of
+"BLD",9198,1,4,0)
+   patch PSO*7*408. When they tried to transmit Controlled Substances
+"BLD",9198,1,5,0)
+   prescriptions to the State Prescription Monitoring Program (SPMP),
+"BLD",9198,1,6,0)
+   there was an issue with the VMS local directory, "USER$:[EXTRACT.SPMP]"
+"BLD",9198,1,7,0)
+   conversion to the Unix/Linux format, "/USER$/EXTRACT/SPMP". This patch
+"BLD",9198,1,8,0)
+   fixes this issue.
+"BLD",9198,1,9,0)
+ 
+"BLD",9198,1,10,0)
+2. Patch PSO*7*313, had this verbiage:
+"BLD",9198,1,11,0)
+   "The Outpatient Pharmacy is being modified to require the entry of a 
+"BLD",9198,1,12,0)
+   duration for a dose preceding a THEN conjunction if the schedule for
+"BLD",9198,1,13,0)
+   such dose is not a ONE-TIME type schedule. If the dose preceding the
+"BLD",9198,1,14,0)
+   THEN conjunction is a ONE-TIME type schedule the software will continue
+"BLD",9198,1,15,0)
+   to allow the Duration field to be left blank (optional)".
+"BLD",9198,1,16,0)
+ 
+"BLD",9198,1,17,0)
+   It was supposed to allow a ONE-TIME type schedule to proceed without
+"BLD",9198,1,18,0)
+   the duration, but it did not. This patch corrects this issue.
+"BLD",9198,4,0)
+^9.64PA^^
+"BLD",9198,6.3)
+3
+"BLD",9198,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9198,"KRN",.4,0)
+.4
+"BLD",9198,"KRN",.401,0)
+.401
+"BLD",9198,"KRN",.402,0)
+.402
+"BLD",9198,"KRN",.403,0)
+.403
+"BLD",9198,"KRN",.5,0)
+.5
+"BLD",9198,"KRN",.84,0)
+.84
+"BLD",9198,"KRN",3.6,0)
+3.6
+"BLD",9198,"KRN",3.8,0)
+3.8
+"BLD",9198,"KRN",9.2,0)
+9.2
+"BLD",9198,"KRN",9.8,0)
+9.8
+"BLD",9198,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",9198,"KRN",9.8,"NM",1,0)
+PSOSPMU1^^0^B105028322
+"BLD",9198,"KRN",9.8,"NM",2,0)
+PSOORED4^^0^B56839136
+"BLD",9198,"KRN",9.8,"NM","B","PSOORED4",2)
+
+"BLD",9198,"KRN",9.8,"NM","B","PSOSPMU1",1)
+
+"BLD",9198,"KRN",19,0)
+19
+"BLD",9198,"KRN",19.1,0)
+19.1
+"BLD",9198,"KRN",101,0)
+101
+"BLD",9198,"KRN",409.61,0)
+409.61
+"BLD",9198,"KRN",771,0)
+771
+"BLD",9198,"KRN",779.2,0)
+779.2
+"BLD",9198,"KRN",870,0)
+870
+"BLD",9198,"KRN",8989.51,0)
+8989.51
+"BLD",9198,"KRN",8989.52,0)
+8989.52
+"BLD",9198,"KRN",8994,0)
+8994
+"BLD",9198,"KRN","B",.4,.4)
+
+"BLD",9198,"KRN","B",.401,.401)
+
+"BLD",9198,"KRN","B",.402,.402)
+
+"BLD",9198,"KRN","B",.403,.403)
+
+"BLD",9198,"KRN","B",.5,.5)
+
+"BLD",9198,"KRN","B",.84,.84)
+
+"BLD",9198,"KRN","B",3.6,3.6)
+
+"BLD",9198,"KRN","B",3.8,3.8)
+
+"BLD",9198,"KRN","B",9.2,9.2)
+
+"BLD",9198,"KRN","B",9.8,9.8)
+
+"BLD",9198,"KRN","B",19,19)
+
+"BLD",9198,"KRN","B",19.1,19.1)
+
+"BLD",9198,"KRN","B",101,101)
+
+"BLD",9198,"KRN","B",409.61,409.61)
+
+"BLD",9198,"KRN","B",771,771)
+
+"BLD",9198,"KRN","B",779.2,779.2)
+
+"BLD",9198,"KRN","B",870,870)
+
+"BLD",9198,"KRN","B",8989.51,8989.51)
+
+"BLD",9198,"KRN","B",8989.52,8989.52)
+
+"BLD",9198,"KRN","B",8994,8994)
+
+"BLD",9198,"QUES",0)
+^9.62^^
+"BLD",9198,"REQB",0)
+^9.611^1^1
+"BLD",9198,"REQB",1,0)
+PSO*7.0*408^2
+"BLD",9198,"REQB","B","PSO*7.0*408",1)
+
+"MBREQ")
+0
+"PKG",141,-1)
+1^1
+"PKG",141,0)
+OUTPATIENT PHARMACY^PSO^OUTPATIENT LABELS, PROFILE, INVENTORY, PRESCRIPTIONS
+"PKG",141,20,0)
+^9.402P^^
+"PKG",141,22,0)
+^9.49I^1^1
+"PKG",141,22,1,0)
+7.0^2971216^2980917^11712
+"PKG",141,22,1,"PAH",1,0)
+437^3141001
+"PKG",141,22,1,"PAH",1,1,0)
+^^18^18^3141001
+"PKG",141,22,1,"PAH",1,1,1,0)
+This patch addresses the following:
+"PKG",141,22,1,"PAH",1,1,2,0)
+ 
+"PKG",141,22,1,"PAH",1,1,3,0)
+1. New Jersey had an issue with the setup after the installation of
+"PKG",141,22,1,"PAH",1,1,4,0)
+   patch PSO*7*408. When they tried to transmit Controlled Substances
+"PKG",141,22,1,"PAH",1,1,5,0)
+   prescriptions to the State Prescription Monitoring Program (SPMP),
+"PKG",141,22,1,"PAH",1,1,6,0)
+   there was an issue with the VMS local directory, "USER$:[EXTRACT.SPMP]"
+"PKG",141,22,1,"PAH",1,1,7,0)
+   conversion to the Unix/Linux format, "/USER$/EXTRACT/SPMP". This patch
+"PKG",141,22,1,"PAH",1,1,8,0)
+   fixes this issue.
+"PKG",141,22,1,"PAH",1,1,9,0)
+ 
+"PKG",141,22,1,"PAH",1,1,10,0)
+2. Patch PSO*7*313, had this verbiage:
+"PKG",141,22,1,"PAH",1,1,11,0)
+   "The Outpatient Pharmacy is being modified to require the entry of a 
+"PKG",141,22,1,"PAH",1,1,12,0)
+   duration for a dose preceding a THEN conjunction if the schedule for
+"PKG",141,22,1,"PAH",1,1,13,0)
+   such dose is not a ONE-TIME type schedule. If the dose preceding the
+"PKG",141,22,1,"PAH",1,1,14,0)
+   THEN conjunction is a ONE-TIME type schedule the software will continue
+"PKG",141,22,1,"PAH",1,1,15,0)
+   to allow the Duration field to be left blank (optional)".
+"PKG",141,22,1,"PAH",1,1,16,0)
+ 
+"PKG",141,22,1,"PAH",1,1,17,0)
+   It was supposed to allow a ONE-TIME type schedule to proceed without
+"PKG",141,22,1,"PAH",1,1,18,0)
+   the duration, but it did not. This patch corrects this issue.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PSOORED4")
+0^2^B56839136^B56835310
+"RTN","PSOORED4",1,0)
+PSOORED4 ;BIR/SAB - Edit front door dosing ;07/13/00
+"RTN","PSOORED4",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**46,91,78,99,111,117,133,159,148,251,391,372,416,313,437**;DEC 1997;Build 3
+"RTN","PSOORED4",3,0)
+ ;External reference ^PS(51 supported by DBIA 2224
+"RTN","PSOORED4",4,0)
+ ;External reference to PS(51.2 supported by DBIA 2226
+"RTN","PSOORED4",5,0)
+ ;External reference to PS(51.1 supported by DBIA 2225
+"RTN","PSOORED4",6,0)
+ ;called from psoornew
+"RTN","PSOORED4",7,0)
+ ;
+"RTN","PSOORED4",8,0)
+DOSE(PSORXED) ;
+"RTN","PSOORED4",9,0)
+ I '$G(PSODRUG("IEN")) W !,"DRUG NAME REQUIRED!" D 2^PSOORNW1 I '$G(PSODRUG("IEN")) S VALMSG="No Dispense Drug Selected" Q
+"RTN","PSOORED4",10,0)
+ K ROU,STRE,UNITN,PSODOSE M PSODOSE=PSORXED
+"RTN","PSOORED4",11,0)
+ D KV K FIELD,DOSEOR,DUPD,X,Y,UNITS S ENT=1,OLENT=$G(PSORXED("ENT"))
+"RTN","PSOORED4",12,0)
+ASK I $G(ORD) W !!,"Possible SIG: " D
+"RTN","PSOORED4",13,0)
+ .;Coded only for outside orders with no Patient Instructions
+"RTN","PSOORED4",14,0)
+ .I $O(SIG(""))="",$G(ORD),$P($G(^PS(52.41,ORD,"EXT")),"^")'="" D SIGS^PSOHCPRS
+"RTN","PSOORED4",15,0)
+ .S INST=0 F  S INST=$O(SIG(INST)) Q:'INST  S MIG=SIG(INST) D
+"RTN","PSOORED4",16,0)
+ ..F SG=1:1:$L(MIG," ") W:$X+$L($P(MIG," ",SG)_" ")>IOM !?14 W $P(MIG," ",SG)_" "
+"RTN","PSOORED4",17,0)
+ K SG,INST,MIG
+"RTN","PSOORED4",18,0)
+ S ROU="PSOORED4",II=ENT D ASK^PSOBKDED K ROU,II I $G(JUMP) K JUMP G JUMP
+"RTN","PSOORED4",19,0)
+ G:$D(DIRUT) EXQ
+"RTN","PSOORED4",20,0)
+ ;
+"RTN","PSOORED4",21,0)
+ I $G(VERB)]"" S PSORXED("VERB",ENT)=VERB G DUPD
+"RTN","PSOORED4",22,0)
+VER D VER^PSOOREDX I X[U,$L(X)>1 S FIELD="VER" G JUMP
+"RTN","PSOORED4",23,0)
+ G:$D(DTOUT)!($D(DUOUT)) EXQ
+"RTN","PSOORED4",24,0)
+ I X="@" K PSORXED("VERB",ENT),VERB G DUPD
+"RTN","PSOORED4",25,0)
+ S:X'="" (PSORXED("VERB",ENT),VERB)=X
+"RTN","PSOORED4",26,0)
+DUPD ;
+"RTN","PSOORED4",27,0)
+ I $G(PSORXED("DOSE",ENT))'?.N&($G(PSORXED("DOSE",ENT))'?.N1".".N)!'DOSE("LD") K PSORXED("DOSE ORDERED",ENT),DUPD G NOU1
+"RTN","PSOORED4",28,0)
+ D DUPD^PSOOREDX
+"RTN","PSOORED4",29,0)
+ S DIR("B")=$S($G(PSORXED("DOSE ORDERED",ENT))]"":PSORXED("DOSE ORDERED",ENT),1:1) S:$E($G(DIR("B")),1)="." DIR("B")="0"_$G(DIR("B")) K:DIR("B")="" DIR("B")
+"RTN","PSOORED4",30,0)
+ D ^DIR I X[U,$L(X)>1 S FIELD="DUPD" G JUMP
+"RTN","PSOORED4",31,0)
+ G:$D(DTOUT)!($D(DUOUT)) EXQ
+"RTN","PSOORED4",32,0)
+ I X="@"!(X=0) W !,"Dispense Units Per Dose is Required!!",! G DUPD
+"RTN","PSOORED4",33,0)
+ D STR^PSOOREDX
+"RTN","PSOORED4",34,0)
+NOU1 G:'$G(PSORXED("DOSE ORDERED",ENT)) RTE
+"RTN","PSOORED4",35,0)
+ D CNON^PSOORED3
+"RTN","PSOORED4",36,0)
+ N PSONDEF
+"RTN","PSOORED4",37,0)
+ I $G(NOUN)]"" S PSORXED("NOUN",ENT)=NOUN
+"RTN","PSOORED4",38,0)
+NOU D NOU^PSOOREDX I X[U,$L(X)>1 S FIELD="NOU" G JUMP
+"RTN","PSOORED4",39,0)
+ G:$D(DTOUT)!($D(DUOUT)) EXQ
+"RTN","PSOORED4",40,0)
+ I X="@" K PSORXED("NOUN",ENT),NOUN G RTE
+"RTN","PSOORED4",41,0)
+ I X'="",$G(PSONDEF)="" S NOUN=X
+"RTN","PSOORED4",42,0)
+ I X'="",$G(PSONDEF)'=X S NOUN=X
+"RTN","PSOORED4",43,0)
+ S:X'="" PSORXED("NOUN",ENT)=X
+"RTN","PSOORED4",44,0)
+ ;
+"RTN","PSOORED4",45,0)
+RTE K JUMP S ROU="PSOORED4" D RTE^PSOBKDED K ROU
+"RTN","PSOORED4",46,0)
+ I $G(JUMP) K JUMP G JUMP
+"RTN","PSOORED4",47,0)
+ G:$D(DTOUT)!($D(DUOUT)) EXQ
+"RTN","PSOORED4",48,0)
+ ;
+"RTN","PSOORED4",49,0)
+SCH D SCH^PSOBKDED I X[U,$L(X)>1 S FIELD="SCH" G JUMP
+"RTN","PSOORED4",50,0)
+ G:$D(DTOUT)!($D(DUOUT)) EXQ
+"RTN","PSOORED4",51,0)
+ S SCH=Y D SCH^PSOSIG I $G(SCH)']"" G SCH
+"RTN","PSOORED4",52,0)
+ S PSORXED("SCHEDULE",ENT)=SCH W " ("_SCHEX_")" K SCH,SCHEX,X,Y,PSOSCH
+"RTN","PSOORED4",53,0)
+ S:PSORXED("ENT")<ENT PSORXED("ENT")=ENT
+"RTN","PSOORED4",54,0)
+ ;
+"RTN","PSOORED4",55,0)
+DUR D KV K EXP S DIR(0)="52.0113,4",DIR("A")="LIMITED DURATION (IN DAYS, HOURS OR MINUTES)"
+"RTN","PSOORED4",56,0)
+ S DIR("B")=$S($G(PSORXED("DURATION",ENT))]"":PSORXED("DURATION",ENT),1:"") K:DIR("B")="" DIR("B")
+"RTN","PSOORED4",57,0)
+ D ^DIR I X[U,$L(X)>1 S FIELD="DUR" G JUMP
+"RTN","PSOORED4",58,0)
+ G:$D(DTOUT)!($D(DUOUT)) EXQ
+"RTN","PSOORED4",59,0)
+ D DUR1^PSOOREDX
+"RTN","PSOORED4",60,0)
+ ;
+"RTN","PSOORED4",61,0)
+CON D CON^PSOOREDX I X[U,$L(X)>1 S FIELD="CON" G JUMP
+"RTN","PSOORED4",62,0)
+ G:$D(DTOUT)!($D(DUOUT)) EXQ
+"RTN","PSOORED4",63,0)
+ I X="@",$G(PSORXED("CONJUNCTION",ENT))="" W !,?10,"Invalid Entry - nothing to delete!!" G CON
+"RTN","PSOORED4",64,0)
+ S:X'=""&(X'="@") PSORXED("CONJUNCTION",ENT)=Y
+"RTN","PSOORED4",65,0)
+ I X="@",$D(PSORXED("CONJUNCTION",ENT)) D CON1^PSOOREDX G:$D(DIRUT) EXQ G:'Y CON N CKX S CKX=1 D UPD^PSOOREDX G CON
+"RTN","PSOORED4",66,0)
+ ;
+"RTN","PSOORED4",67,0)
+ N PSODLBD4 S PSOSAVX=X,PSODLBD4=1
+"RTN","PSOORED4",68,0)
+ ;*437
+"RTN","PSOORED4",69,0)
+ I '$$DUROK^PSOORED3(.PSORXED,ENT) D  G DUR
+"RTN","PSOORED4",70,0)
+ . W !!,"Duration is required for the dosage entered prior to the THEN conjunction.",$C(7),!
+"RTN","PSOORED4",71,0)
+ I $G(PSORXED("CONJUNCTION",ENT))]"" S PSOCKCON=1 D DCHK1^PSODOSUT G:$G(PSONEW("DFLG")) EX S ENT=ENT+1 K DIR G ASK
+"RTN","PSOORED4",72,0)
+ E  K PSOCKCON D DCHK1^PSODOSUT I $D(DTOUT)!($D(DUOUT)) S PSORX("DFLG")=1,PSONEW("DFLG")=1 G EX  ;don't need to print the full summary, just the last sequence. 
+"RTN","PSOORED4",73,0)
+ I PSOSAVX="",$G(PSORXED) K PSOCKCON,PSOEDDOS
+"RTN","PSOORED4",74,0)
+ K PSOSAVX
+"RTN","PSOORED4",75,0)
+ ;
+"RTN","PSOORED4",76,0)
+ S X=$G(PSORXED("INS")) D SIG^PSOHELP S:$G(INS1)]"" PSORXED("SIG")=$E(INS1,2,9999999)
+"RTN","PSOORED4",77,0)
+ D EN^PSOFSIG(.PSORXED),VERI I $G(CKX),'$G(PSOSIGFL) D MP1 K CKX
+"RTN","PSOORED4",78,0)
+ I $G(PSOSIGFL)=1 D  I '$G(PSOSIGFL) Q
+"RTN","PSOORED4",79,0)
+ .I $D(OR0),$P(OR0,"^",24)=1 S VALMSG="Digitally Signed Order - No such changes allowed." K PSORXED,PSOSIGFL M PSORXED=PSODOSE D EN^PSOFSIG(.PSORXED) D  Q
+"RTN","PSOORED4",80,0)
+ ..I $D(PSOBDR) K PSODRUG M PSODRUG=PSOBDR K PSOBDR,PSOBDRG
+"RTN","PSOORED4",81,0)
+ .S PSORXED("ENT")=ENT,SIGOK=1,VALMSG="This change will create a new prescription!",NCPDPFLG=1
+"RTN","PSOORED4",82,0)
+ K QTYHLD S:$G(PSORXED("QTY")) QTYHLD=PSORXED("QTY") D QTY^PSOSIG(.PSORXED) I $G(PSORXED("QTY")) S QTY=1
+"RTN","PSOORED4",83,0)
+ I $G(QTYHLD),'$G(PSORXED("QTY")) S PSORXED("QTY")=QTYHLD
+"RTN","PSOORED4",84,0)
+ K QTYHLD
+"RTN","PSOORED4",85,0)
+ I '$G(PSORXED("QTY")),$P(OR0,"^",10) S PSORXED("QTY")=$P(OR0,"^",10)
+"RTN","PSOORED4",86,0)
+EX ;
+"RTN","PSOORED4",87,0)
+ K PSOBDR,PSOBDRG,PSOSCH,DUPD,STRE,UNITN,SCH,VERB,NOUN,DOSEOR,RTE,DUR,X,Y,ENTS,PSODOSE,OLENT,FIELD,FLDNM,AR,NM,ENT,STRE,UNITN,PSODOSE,ERTE,ROU
+"RTN","PSOORED4",88,0)
+KV K DTOUT,DUOUT,DIR,DIRUT
+"RTN","PSOORED4",89,0)
+ Q
+"RTN","PSOORED4",90,0)
+EXQ ;
+"RTN","PSOORED4",91,0)
+ K PSORXED,PSOSIGFL M PSORXED=PSODOSE D EN^PSOFSIG(.PSORXED) D MP1
+"RTN","PSOORED4",92,0)
+ I $D(PSOBDR) M PSODRUG=PSOBDR K PSOBDR,PSOBDRG
+"RTN","PSOORED4",93,0)
+ G EX Q
+"RTN","PSOORED4",94,0)
+MP1 D MP1^PSOOREDX
+"RTN","PSOORED4",95,0)
+ Q
+"RTN","PSOORED4",96,0)
+VERI ;checks for changes to dosing instructions
+"RTN","PSOORED4",97,0)
+ S ENTS=0
+"RTN","PSOORED4",98,0)
+ F I=0:0 S I=$O(PSORXED("DOSE",I)) Q:'I  S ENTS=$G(ENTS)+1
+"RTN","PSOORED4",99,0)
+ I ENTS<OLENT!(ENTS>OLENT) S PSOSIGFL=1 Q
+"RTN","PSOORED4",100,0)
+ F I=1:1:OLENT D
+"RTN","PSOORED4",101,0)
+ .I +PSODOSE("DOSE",I)'=$G(PSORXED("DOSE",I)) S PSOSIGFL=1
+"RTN","PSOORED4",102,0)
+ .I $G(PSODOSE("DURATION",I))]"" D
+"RTN","PSOORED4",103,0)
+ ..S DURATION=$S($E(PSODOSE("DURATION",I),1)'?.N:$E(PSODOSE("DURATION",I),2,99)_$E(PSODOSE("DURATION",I),1),1:PSODOSE("DURATION",I))
+"RTN","PSOORED4",104,0)
+ ..I +DURATION'=+$G(PSORXED("DURATION",I)) S PSOSIGFL=1
+"RTN","PSOORED4",105,0)
+ .I $G(PSODOSE("CONJUNCTION",I))'=$G(PSORXED("CONJUNCTION",I)) S PSOSIGFL=1
+"RTN","PSOORED4",106,0)
+ .I PSODOSE("ROUTE",I)'=$G(PSORXED("ROUTE",I)) S PSOSIGFL=1
+"RTN","PSOORED4",107,0)
+ .I PSODOSE("SCHEDULE",I)'=$G(PSORXED("SCHEDULE",I)) S PSOSIGFL=1
+"RTN","PSOORED4",108,0)
+ K DURATION Q
+"RTN","PSOORED4",109,0)
+JUMP ;jump to fields
+"RTN","PSOORED4",110,0)
+ I $L($E(X,2,99))<3 W !,"Field Name Must Be At Least 3 Characters in Length",! G @FIELD
+"RTN","PSOORED4",111,0)
+ D FNM^PSOOREDX
+"RTN","PSOORED4",112,0)
+ I FLDNM']"" K X,NM,FLDNM W !,"INVALID FIELD NAME.  PLEASE TRY AGAIN!",! G @FIELD
+"RTN","PSOORED4",113,0)
+ F AR=1:1:PSORXED("ENT") W !,AR_". "_$P(FLDNM,"^",2)_": "_$S(NM="ROU"&($G(PSORXED($P(FLDNM,"^"),AR))):$P(^PS(51.2,PSORXED($P(FLDNM,"^"),AR),0),"^"),1:$G(PSORXED($P(FLDNM,"^"),AR))) S AR1=AR
+"RTN","PSOORED4",114,0)
+ D KV S DIR("A",1)="* Indicates which fields will create a New Order",DIR("A")="Select Field to Edit by number",DIR(0)="NO^1:"_AR1 D ^DIR G:$D(DIRUT) @FIELD
+"RTN","PSOORED4",115,0)
+ D JFN^PSOOREDX G:FLDNM="" @FIELD G @FLDNM
+"RTN","PSOORED4",116,0)
+ G EX
+"RTN","PSOORED4",117,0)
+ Q
+"RTN","PSOORED4",118,0)
+HLP ;help text for med route
+"RTN","PSOORED4",119,0)
+ D FULL^VALM1 W !,"Please enter how patient will use the medication!"
+"RTN","PSOORED4",120,0)
+ S DIC=51.2,X="??",DIC(0)="M",DIC("S")="I $P(^PS(51.2,+Y,0),""^"",4)" D ^DIC K DIC,X,Y
+"RTN","PSOORED4",121,0)
+ Q
+"RTN","PSOORED4",122,0)
+SCHLP ;
+"RTN","PSOORED4",123,0)
+ D FULL^VALM1 W !,"You can choose an entry from the Administration Schedule File (#51.1),",!,"Medication Instruction File (#51) or enter free text."
+"RTN","PSOORED4",124,0)
+ W !,"The free text entry cannot contain more than 2 spaces or be greater than 20",!,"characters in length."
+"RTN","PSOORED4",125,0)
+ W ! S DIR(0)="S^A:Administration Schedule File;M:Medication Instruction File;B:Both;F:Free Text",DIR("B")="Both"
+"RTN","PSOORED4",126,0)
+ S DIR("A")="Do you want to list from" D ^DIR I Y="F"!($G(DIRUT)) K X,Y G X
+"RTN","PSOORED4",127,0)
+ S LBL=Y G @LBL
+"RTN","PSOORED4",128,0)
+A ;display 51.1 entries only
+"RTN","PSOORED4",129,0)
+B K X,Y,DIC S X="??",DIC="^PS(51.1,",DIC(0)="QES",DIC("W")="D DICW^PSOORED4",D="APPSJ" W ! D IX^DIC
+"RTN","PSOORED4",130,0)
+ K DIC,X I LBL="A"!($G(DTOUT)) K LBL G X
+"RTN","PSOORED4",131,0)
+ I Y=-1!($G(DUOUT)) K DIR,DTOUT,DUOUT S DIR(0)="Y",DIR("B")="No",DIR("A")="Do you want to continue with the Medication Instruction File"
+"RTN","PSOORED4",132,0)
+ D ^DIR I 'Y!($G(DTOUT)) K DIR,X,Y G X
+"RTN","PSOORED4",133,0)
+M K X,Y,DIC S DIC=51,X="??",DIC(0)="M" D ^DIC K DIC,X,Y,DTOUT,DUOUT,LBL
+"RTN","PSOORED4",134,0)
+X S DIR("?")="^D SCHLP^PSOORED4",DIR("A")="Schedule: ",DIR(0)="FA^1:20^I X[""""""""!(X?.E1C.E)!($A(X)=45)!($L(X,"" "")>3)!($L(X)>20)!($L(X)<1) K X"
+"RTN","PSOORED4",135,0)
+ S DIR("B")=$S($D(PSOSCH)&('$D(PSORXED("SCHEDULE",ENT))):PSOSCH,$G(PSORXED("SCHEDULE",ENT))]"":PSORXED("SCHEDULE",ENT),1:"") K:DIR("B")="" DIR("B")
+"RTN","PSOORED4",136,0)
+ Q
+"RTN","PSOORED4",137,0)
+DICW ;
+"RTN","PSOORED4",138,0)
+ S Z=$P(^PS(51.1,+Y,0),"^",5),Z=$S(Z="O":-1,Z="S":1,Z="R":-2,1:0) W:Z "  ",$S(Z>0:"SHIFT",Z=-2:"RANGE",1:"ONE-TIME")
+"RTN","PSOORED4",139,0)
+ I Z'<0,$D(PSJW),$D(^(PSJPP'="PSJ"+1,PSJW,0)),$P(^(0),"^",Z+2)]"" W "  ",$P(^(0),"^",Z+2)
+"RTN","PSOORED4",140,0)
+ ;Naked reference on DICW+2 is from DICW+1, ^PS(51.1,+Y,0)
+"RTN","PSOORED4",141,0)
+ Q
+"RTN","PSOSPMU1")
+0^1^B105028322^B104921271
+"RTN","PSOSPMU1",1,0)
+PSOSPMU1 ;BIRM/MFR - State Prescription Monitoring Program Utilities ;10/07/12
+"RTN","PSOSPMU1",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**408,437**;DEC 1997;Build 3
+"RTN","PSOSPMU1",3,0)
+ ; 
+"RTN","PSOSPMU1",4,0)
+SETLN(NSPC,TEXT,REV,UND,HIG) ; Sets a line to be displayed in the Body section
+"RTN","PSOSPMU1",5,0)
+ N X
+"RTN","PSOSPMU1",6,0)
+ S:$G(TEXT)="" $E(TEXT,80)=""
+"RTN","PSOSPMU1",7,0)
+ S:$L(TEXT)>80 TEXT=$E(TEXT,1,80)
+"RTN","PSOSPMU1",8,0)
+ S LINE=LINE+1,^TMP(NSPC,$J,LINE,0)=$G(TEXT)
+"RTN","PSOSPMU1",9,0)
+ ;
+"RTN","PSOSPMU1",10,0)
+ I LINE>$G(PSOLSTLN) D SAVE^VALM10(LINE) S PSOLSTLN=LINE
+"RTN","PSOSPMU1",11,0)
+ ;
+"RTN","PSOSPMU1",12,0)
+ I $G(REV) D  Q
+"RTN","PSOSPMU1",13,0)
+ . D CNTRL^VALM10(LINE,1,$L(TEXT),IORVON,IOINORM)
+"RTN","PSOSPMU1",14,0)
+ . I $G(UND) D CNTRL^VALM10(LINE,$L(TEXT)+1,80,IOUON,IOINORM)
+"RTN","PSOSPMU1",15,0)
+ I $G(UND) D CNTRL^VALM10(LINE,1,80,IOUON,IOINORM)
+"RTN","PSOSPMU1",16,0)
+ I $G(HIG) D
+"RTN","PSOSPMU1",17,0)
+ . D CNTRL^VALM10(LINE,HIG,80,IOINHI_$S($G(UND):IOUON,1:""),IOINORM)
+"RTN","PSOSPMU1",18,0)
+ Q
+"RTN","PSOSPMU1",19,0)
+ ;
+"RTN","PSOSPMU1",20,0)
+RXFILL(RXIEN) ; Select Prescription Fill #
+"RTN","PSOSPMU1",21,0)
+ N RXFILL,DIR,I,Y,DIRUT,DTOUT,FILLARR,RTSFILL,RTSFLDT
+"RTN","PSOSPMU1",22,0)
+ S RXFILL=0,FILLARR(0)=""
+"RTN","PSOSPMU1",23,0)
+ K DIR S DIR("A")=" Fill",DIR("B")=0
+"RTN","PSOSPMU1",24,0)
+ S DIR(0)="S^0:Original  ("_$$FMTE^XLFDT($$RXFLDT^PSOBPSUT(RXIEN,0),2)_")  "_$$MWA(RXIEN,0)
+"RTN","PSOSPMU1",25,0)
+ F I=1:1 Q:'$D(^PSRX(RXIEN,1,I))  D
+"RTN","PSOSPMU1",26,0)
+ . S DIR(0)=DIR(0)_";"_I_":Refill "_I_"  ("_$$FMTE^XLFDT($$RXFLDT^PSOBPSUT(RXIEN,I),2)_")  "_$$MWA(RXIEN,I),FILLARR(I)=""
+"RTN","PSOSPMU1",27,0)
+ F I=1:1 Q:'$D(^PSRX(RXIEN,"P",I))  D
+"RTN","PSOSPMU1",28,0)
+ . S DIR(0)=DIR(0)_";P"_I_":Partial "_I_" ("_$$FMTE^XLFDT($$RXFLDT^PSOBPSUT(RXIEN,"P"_I),2)_")  "_$$MWA(RXIEN,"P"_I),FILLARR("P"_I)=""
+"RTN","PSOSPMU1",29,0)
+ F I=1:1 Q:'$D(^PSRX(RXIEN,"RTS",I))  D
+"RTN","PSOSPMU1",30,0)
+ . S RTSFILL=$P(^PSRX(RXIEN,"RTS",I,0),"^",2) I $D(FILLARR(RTSFILL)) Q
+"RTN","PSOSPMU1",31,0)
+ . S RTSFLDT=$P(^PSRX(RXIEN,"RTS",I,0),"^",3)
+"RTN","PSOSPMU1",32,0)
+ . S FILLARR(RTSFILL)=""
+"RTN","PSOSPMU1",33,0)
+ . S DIR(0)=DIR(0)_";"_RTSFILL_":"_$S(RTSFILL["P":"Partial "_$E(RTSFILL,2,9),1:"Refill "_RTSFILL)_"  ("_$$FMTE^XLFDT(RTSFLDT,2)_") "_$$MWA(RXIEN,RTSFILL)
+"RTN","PSOSPMU1",34,0)
+ D ^DIR I $D(DIRUT)!$D(DTOUT) Q "^"
+"RTN","PSOSPMU1",35,0)
+ S RXFILL=$G(Y)
+"RTN","PSOSPMU1",36,0)
+ Q RXFILL
+"RTN","PSOSPMU1",37,0)
+ ;
+"RTN","PSOSPMU1",38,0)
+MWA(RXIEN,FILL) ; Returns the Rx delivering (WINDOW/MAIL/ADMIN IN CLINIC)
+"RTN","PSOSPMU1",39,0)
+ I FILL["P" Q $$GET1^DIQ(52.2,$E(FILL,2,3)_","_RXIEN,.02)
+"RTN","PSOSPMU1",40,0)
+ I FILL Q:$$GET1^DIQ(52.1,FILL_","_RXIEN,23,"I") "ADMIN IN CLINIC" Q $$GET1^DIQ(52.1,FILL_","_RXIEN,2)
+"RTN","PSOSPMU1",41,0)
+ Q:$$GET1^DIQ(52,RXIEN,14,"I") "ADMIN IN CLINIC"
+"RTN","PSOSPMU1",42,0)
+ Q $$GET1^DIQ(52,RXIEN,11)
+"RTN","PSOSPMU1",43,0)
+ ;
+"RTN","PSOSPMU1",44,0)
+GATHER(STATE,BEGDTTM,ENDDTTM,RECTYPE,RTSONLY) ; Gathers all CS prescriptions for Data Range
+"RTN","PSOSPMU1",45,0)
+ ;Input: STATE   - Pointer to the STATE file (#5)
+"RTN","PSOSPMU1",46,0)
+ ;       BEGDTTM - Date Range Begin Date/Time
+"RTN","PSOSPMU1",47,0)
+ ;       ENDDTTM - Date Range End Date/Time
+"RTN","PSOSPMU1",48,0)
+ ;       RECTYPE - Record Type for Released Rx's only (N: New / R: Revise)
+"RTN","PSOSPMU1",49,0)
+ ;       RTSONLY - Return To Stock Fills Only (1: YES / 0: NO)
+"RTN","PSOSPMU1",50,0)
+ ;Output: $$GATHER - Number of Rx's found
+"RTN","PSOSPMU1",51,0)
+ ;        ^TMP("PSOSPMRX",$J,STATE,RX,FILL)=Record Type (N/R/V) - List of Rx's gathered
+"RTN","PSOSPMU1",52,0)
+ N GATHER,XREF,RXRLDT,RXIEN,RXFILL,FILL,RTSDT,ENDRTSDT
+"RTN","PSOSPMU1",53,0)
+ ;
+"RTN","PSOSPMU1",54,0)
+ S GATHER=0 K ^TMP("PSOSPMRX",$J)
+"RTN","PSOSPMU1",55,0)
+ ; - Gathering Released Original Fills/Refills/Partials
+"RTN","PSOSPMU1",56,0)
+ I '$G(RTSONLY) D
+"RTN","PSOSPMU1",57,0)
+ . F XREF="AL","AM" D
+"RTN","PSOSPMU1",58,0)
+ . . S RXRLDT=BEGDTTM,ENDRLDT=ENDDTTM S:'$P(ENDRLDT,".",2) ENDRLDT=ENDRLDT+.25
+"RTN","PSOSPMU1",59,0)
+ . . F  S RXRLDT=$O(^PSRX(XREF,RXRLDT)) Q:'RXRLDT!(RXRLDT>ENDRLDT)  D
+"RTN","PSOSPMU1",60,0)
+ . . . S RXIEN=0 F  S RXIEN=$O(^PSRX(XREF,RXRLDT,RXIEN)) Q:'RXIEN  D
+"RTN","PSOSPMU1",61,0)
+ . . . . S RXFILL="" F  S RXFILL=$O(^PSRX(XREF,RXRLDT,RXIEN,RXFILL)) Q:RXFILL=""  D
+"RTN","PSOSPMU1",62,0)
+ . . . . . S FILL=$S(XREF="AL":RXFILL,1:"P"_RXFILL)
+"RTN","PSOSPMU1",63,0)
+ . . . . . I '$$RXRLDT^PSOBPSUT(RXIEN,FILL) Q
+"RTN","PSOSPMU1",64,0)
+ . . . . . I $$SCREEN^PSOSPMUT(RXIEN,FILL) Q
+"RTN","PSOSPMU1",65,0)
+ . . . . . I $$RXSTATE^PSOBPSUT(RXIEN,0)'=STATE Q
+"RTN","PSOSPMU1",66,0)
+ . . . . . S ^TMP("PSOSPMRX",$J,STATE,RXIEN,FILL)=RECTYPE
+"RTN","PSOSPMU1",67,0)
+ . . . . . S GATHER=GATHER+1
+"RTN","PSOSPMU1",68,0)
+ ;
+"RTN","PSOSPMU1",69,0)
+ ; ASAP 1995 does not support transmissions of Return To Stock fills in the same file
+"RTN","PSOSPMU1",70,0)
+ I $$GET1^DIQ(58.41,STATE,1,"I")="1995",'$G(RTSONLY) Q GATHER
+"RTN","PSOSPMU1",71,0)
+ ;
+"RTN","PSOSPMU1",72,0)
+ ; - Gathering Fills Returned To Stock
+"RTN","PSOSPMU1",73,0)
+ S RTSDT=BEGDTTM-.0000001,ENDRTSDT=ENDDTTM S:'$P(ENDRTSDT,".",2) ENDRTSDT=ENDRTSDT+.25
+"RTN","PSOSPMU1",74,0)
+ F  S RTSDT=$O(^PSRX("ARTS",RTSDT)) Q:'RTSDT!(RTSDT>ENDRTSDT)  D
+"RTN","PSOSPMU1",75,0)
+ . S RXIEN=0 F  S RXIEN=$O(^PSRX("ARTS",RTSDT,RXIEN)) Q:'RXIEN  D
+"RTN","PSOSPMU1",76,0)
+ . . S RTSIEN=0 F  S RTSIEN=$O(^PSRX("ARTS",RTSDT,RXIEN,RTSIEN)) Q:'RTSIEN  D
+"RTN","PSOSPMU1",77,0)
+ . . . S FILL=$$GET1^DIQ(52.07,RTSIEN_","_RXIEN,1,"I")
+"RTN","PSOSPMU1",78,0)
+ . . . I '$D(^PS(58.42,"ARX",RXIEN,FILL)) Q
+"RTN","PSOSPMU1",79,0)
+ . . . I $$RXRLDT^PSOBPSUT(RXIEN,FILL) Q
+"RTN","PSOSPMU1",80,0)
+ . . . I $$SCREEN^PSOSPMUT(RXIEN,FILL) Q
+"RTN","PSOSPMU1",81,0)
+ . . . I $D(^TMP("PSOSPMRX",$J,STATE,RXIEN,FILL)) Q
+"RTN","PSOSPMU1",82,0)
+ . . . I $$RXSTATE^PSOBPSUT(RXIEN,0)'=STATE Q
+"RTN","PSOSPMU1",83,0)
+ . . . S ^TMP("PSOSPMRX",$J,STATE,RXIEN,FILL)="V"
+"RTN","PSOSPMU1",84,0)
+ . . . S GATHER=GATHER+1
+"RTN","PSOSPMU1",85,0)
+ Q GATHER
+"RTN","PSOSPMU1",86,0)
+ ;
+"RTN","PSOSPMU1",87,0)
+BLDBAT(EXPTYPE,BEGRLDT,ENDRLDT) ; Given a list of Rx's builds a new Export Batch
+"RTN","PSOSPMU1",88,0)
+ ; Input: (r) EXPTYPE - Export Type ((MA)naul/(SC)heduled/(RX) Single Rx)/(VD) Void Only
+"RTN","PSOSPMU1",89,0)
+ ;        (o) BEGRLDT  - Begin Release Date (FM Format) (Required for M and S batches)
+"RTN","PSOSPMU1",90,0)
+ ;        (o) ENDRLDT - End Release Date (FM Format) (Required for M and S batches)
+"RTN","PSOSPMU1",91,0)
+ ;        (r) List of Rx's: ^TMP("PSOSPMRX",$J,STATE,RXIEN,RXFILL)=Record Type ((N)ew/(R)evise/(V)oid)
+"RTN","PSOSPMU1",92,0)
+ ;                          Note: This ^TMP global will be cleaned up at the end
+"RTN","PSOSPMU1",93,0)
+ ;Output: BATCHIEN - New Batch IEN (Pointer to #58.42) OR "01^Error Message"
+"RTN","PSOSPMU1",94,0)
+ ;
+"RTN","PSOSPMU1",95,0)
+ N STATE,SPOK,RX,FILL,BATCHIEN,%,DIC,DR,DA,X,XX,DINUM,DLAYGO,DD,DO
+"RTN","PSOSPMU1",96,0)
+ I '$O(^TMP("PSOSPMRX",$J,0)) Q "-1^No prescription data"
+"RTN","PSOSPMU1",97,0)
+ ;
+"RTN","PSOSPMU1",98,0)
+ S (STATE,RX)=0,FILL=""
+"RTN","PSOSPMU1",99,0)
+ F  S STATE=$O(^TMP("PSOSPMRX",$J,STATE)) Q:'STATE  D  I $P(BATCHIEN,"^")=-1 Q
+"RTN","PSOSPMU1",100,0)
+ . S XX=$$SPOK^PSOSPMUT(STATE) I $P(XX,"^",1)=-1 S BATCHIEN=XX Q
+"RTN","PSOSPMU1",101,0)
+ . F  L +^PS(58.42,0):$S(+$G(^DD("DILOCKTM"))>0:+^DD("DILOCKTM"),1:3) Q:$T  H 3
+"RTN","PSOSPMU1",102,0)
+ . S (DINUM,BATCHIEN)=$O(^PS(58.42,999999999999),-1)+1
+"RTN","PSOSPMU1",103,0)
+ . I EXPTYPE'="VD" W !!,"Creating Batch #",DINUM," for ",$$GET1^DIQ(58.41,STATE,.01),"..."
+"RTN","PSOSPMU1",104,0)
+ . S DIC="^PS(58.42,",X=DINUM,DIC(0)="",DIC("DR")="1////"_STATE_";2///"_EXPTYPE_";8///"_$$NOW^XLFDT()
+"RTN","PSOSPMU1",105,0)
+ . I $G(BEGRLDT) D
+"RTN","PSOSPMU1",106,0)
+ . . S DIC("DR")=DIC("DR")_";4///"_BEGRLDT_";5///"_$G(ENDRLDT)
+"RTN","PSOSPMU1",107,0)
+ . S DLAYGO=58.42 K DD,DO D FILE^DICN K DD,DO
+"RTN","PSOSPMU1",108,0)
+ . L -^PS(58.42,0)
+"RTN","PSOSPMU1",109,0)
+ . I Y=-1 S BATCHIEN="-1^Export Batch could not be created" Q
+"RTN","PSOSPMU1",110,0)
+ . F  S RX=$O(^TMP("PSOSPMRX",$J,STATE,RX)) Q:'RX  D
+"RTN","PSOSPMU1",111,0)
+ . . F  S FILL=$O(^TMP("PSOSPMRX",$J,STATE,RX,FILL)) Q:FILL=""  D
+"RTN","PSOSPMU1",112,0)
+ . . . K DIC,DINUM,DA S DIC="^PS(58.42,"_BATCHIEN_",""RX"",",DIC(0)="",DA(1)=BATCHIEN
+"RTN","PSOSPMU1",113,0)
+ . . . S X=RX,DIC("DR")="1///"_FILL_";2///"_^TMP("PSOSPMRX",$J,STATE,RX,FILL)
+"RTN","PSOSPMU1",114,0)
+ . .  .S DLAYGO=58.42001 K DD,DO D FILE^DICN K DD,DO
+"RTN","PSOSPMU1",115,0)
+ . I EXPTYPE'="VD" W "Done."
+"RTN","PSOSPMU1",116,0)
+ K ^TMP("PSOSPMRX",$J)
+"RTN","PSOSPMU1",117,0)
+ Q BATCHIEN
+"RTN","PSOSPMU1",118,0)
+ ;
+"RTN","PSOSPMU1",119,0)
+LOADRTS(RXIEN,FILL,ARRAY) ; Load ARRAY with Return To Stock Information
+"RTN","PSOSPMU1",120,0)
+ ;Input: Rx IEN - Pointer to PRESCRIPTION file (#52)
+"RTN","PSOSPMU1",121,0)
+ ;       Fill # - "0":Original / "1"..:Refill #1... / "P1"..:Partial 1...
+"RTN","PSOSPMU1",122,0)
+ ;       ARRAY  - Return Array (most recent Return To Stock data for the fill)
+"RTN","PSOSPMU1",123,0)
+ N RTSIEN,NODE0,NODE1
+"RTN","PSOSPMU1",124,0)
+ K ARRAY S RTSIEN=0
+"RTN","PSOSPMU1",125,0)
+ F  S RTSIEN=$O(^PSRX(RXIEN,"RTS",RTSIEN)) Q:'RTSIEN  D
+"RTN","PSOSPMU1",126,0)
+ . S NODE0=$G(^PSRX(RXIEN,"RTS",RTSIEN,0))
+"RTN","PSOSPMU1",127,0)
+ . S NODE1=$G(^PSRX(RXIEN,"RTS",RTSIEN,1))
+"RTN","PSOSPMU1",128,0)
+ . I $P(NODE0,"^",2)'=FILL Q
+"RTN","PSOSPMU1",129,0)
+ . S ARRAY("DIVISION")=$P(NODE0,"^",13) ; Division
+"RTN","PSOSPMU1",130,0)
+ . S ARRAY("RELDTTM")=$P(NODE1,"^",2)   ; Release Date/Time
+"RTN","PSOSPMU1",131,0)
+ . S ARRAY("NDC")=$P(NODE0,"^",15)      ; NDC
+"RTN","PSOSPMU1",132,0)
+ . S ARRAY("QTY")=$P(NODE0,"^",4)       ; Quantity
+"RTN","PSOSPMU1",133,0)
+ . S ARRAY("DAYSUP")=$P(NODE0,"^",5)    ; Days Supply
+"RTN","PSOSPMU1",134,0)
+ . S ARRAY("RPHIEN")=$P(NODE0,"^",9)    ; Pharmacist IEN
+"RTN","PSOSPMU1",135,0)
+ . S ARRAY("PRVIEN")=$P(NODE1,"^",1)    ; Provider IEN
+"RTN","PSOSPMU1",136,0)
+ Q
+"RTN","PSOSPMU1",137,0)
+ ;
+"RTN","PSOSPMU1",138,0)
+PREPFILE(STATE,DATETIME,RTSONLY) ; Prepare Files (FTP Script and Output Data files)
+"RTN","PSOSPMU1",139,0)
+ ;Input: STATE - Pointer to STATE file (#5)
+"RTN","PSOSPMU1",140,0)
+ ;       DATETIME - Date/Time for the file names (format: YYYYMMDDHHMMSS)
+"RTN","PSOSPMU1",141,0)
+ ;       RTSONLY  - Return To Stock Only Batch? (1: YES)
+"RTN","PSOSPMU1",142,0)
+ N PSOOS,LOCDIR,PREFIX,FILEXT,FTPIP,FTPUSR,FTPPORT,FTPDIR,FTPFILE,INPTFILE,LOGFILE,EXPFILE
+"RTN","PSOSPMU1",143,0)
+ ; - Operating System
+"RTN","PSOSPMU1",144,0)
+ S PSOOS=$$OS^%ZOSV()
+"RTN","PSOSPMU1",145,0)
+ ;
+"RTN","PSOSPMU1",146,0)
+ I +$$SPOK^PSOSPMUT(STATE)=-1 Q $$SPOK^PSOSPMUT(STATE)
+"RTN","PSOSPMU1",147,0)
+ ;
+"RTN","PSOSPMU1",148,0)
+ ; - Retrieving the Local Directory for the corresponding OS
+"RTN","PSOSPMU1",149,0)
+ I PSOOS["VMS" S LOCDIR=$$GET1^DIQ(58.41,STATE,4)
+"RTN","PSOSPMU1",150,0)
+ I PSOOS["UNIX" S LOCDIR=$$GET1^DIQ(58.41,STATE,15)
+"RTN","PSOSPMU1",151,0)
+ I PSOOS["NT" S LOCDIR=$$GET1^DIQ(58.41,STATE,16)
+"RTN","PSOSPMU1",152,0)
+ ;
+"RTN","PSOSPMU1",153,0)
+ S PREFIX=$$GET1^DIQ(58.41,STATE,5)
+"RTN","PSOSPMU1",154,0)
+ S FILEXT=$$GET1^DIQ(58.41,STATE,6)
+"RTN","PSOSPMU1",155,0)
+ S FTPIP=$$GET1^DIQ(58.41,STATE,7)
+"RTN","PSOSPMU1",156,0)
+ S FTPUSR=$$GET1^DIQ(58.41,STATE,8)
+"RTN","PSOSPMU1",157,0)
+ S FTPPORT=$$GET1^DIQ(58.41,STATE,9)
+"RTN","PSOSPMU1",158,0)
+ S FTPDIR=$$GET1^DIQ(58.41,STATE,10)
+"RTN","PSOSPMU1",159,0)
+ ;
+"RTN","PSOSPMU1",160,0)
+ S INPTFILE="SPMP_FTP_"_DATETIME_".DAT"
+"RTN","PSOSPMU1",161,0)
+ I PSOOS["VMS"!(PSOOS["NT") S FTPFILE="SPMP_FTP_"_DATETIME_".COM"
+"RTN","PSOSPMU1",162,0)
+ S LOGFILE="SPMP_FTP_"_DATETIME_".LOG"
+"RTN","PSOSPMU1",163,0)
+ S EXPFILE=PREFIX_DATETIME_".up"
+"RTN","PSOSPMU1",164,0)
+ I $G(RTSONLY) S EXPFILE="BACK_"_EXPFILE
+"RTN","PSOSPMU1",165,0)
+ ;
+"RTN","PSOSPMU1",166,0)
+ D OPEN^%ZISH("INPTFILE",LOCDIR,INPTFILE,"W")  I POP Q "-1^FTP Script file <"_LOCDIR_INPTFILE_">  could not be created."
+"RTN","PSOSPMU1",167,0)
+ D USE^%ZISUTL("INPTFILE")
+"RTN","PSOSPMU1",168,0)
+ W:FTPDIR'="" "cd "_FTPDIR,!
+"RTN","PSOSPMU1",169,0)
+ W "put "_$S(PSOOS["UNIX":LOCDIR,1:"")_EXPFILE,!
+"RTN","PSOSPMU1",170,0)
+ W "rename "_EXPFILE_" "_$P(EXPFILE,".up",1)_FILEXT,!
+"RTN","PSOSPMU1",171,0)
+ W "exit",!
+"RTN","PSOSPMU1",172,0)
+ D CLOSE^%ZISH("INPTFILE")
+"RTN","PSOSPMU1",173,0)
+ I POP Q "-1^FTP Input file <"_INPTFILE_"> cannot be created."
+"RTN","PSOSPMU1",174,0)
+ ;
+"RTN","PSOSPMU1",175,0)
+ ; This sFTP command file is not needed for Linux/Unix
+"RTN","PSOSPMU1",176,0)
+ I PSOOS["VMS"!(PSOOS["NT") D  I POP Q "-1^FTP Script file <"_LOCDIR_FTPFILE_"> could not be created."
+"RTN","PSOSPMU1",177,0)
+ . D OPEN^%ZISH("FTPFILE",LOCDIR,FTPFILE,"W")
+"RTN","PSOSPMU1",178,0)
+ . D USE^%ZISUTL("FTPFILE")
+"RTN","PSOSPMU1",179,0)
+ . ; VMS Secure FTP
+"RTN","PSOSPMU1",180,0)
+ . I PSOOS["VMS" D
+"RTN","PSOSPMU1",181,0)
+ . . W "$ SET VERIFY=(PROCEDURE,IMAGE)",!
+"RTN","PSOSPMU1",182,0)
+ . . I LOCDIR'="" W "$ SET DEFAULT "_LOCDIR,!
+"RTN","PSOSPMU1",183,0)
+ . . W "$ sftp"_$S(FTPPORT:" -oPort="_FTPPORT,1:"")_" -oidentityfile="""_$$XVMSDIR(LOCDIR)_"VMSSSHID."" -""B"" "_INPTFILE_" "_FTPUSR_"@"_FTPIP,!
+"RTN","PSOSPMU1",184,0)
+ . . W "$ exit",!
+"RTN","PSOSPMU1",185,0)
+ . ; Windows/Open NT Secure FTP
+"RTN","PSOSPMU1",186,0)
+ . I PSOOS["NT" D
+"RTN","PSOSPMU1",187,0)
+ . . I LOCDIR'="" W "cd ",LOCDIR,!
+"RTN","PSOSPMU1",188,0)
+ . . W "sftp"_$S(FTPPORT:" -oPort="_FTPPORT,1:"")_" -oidentityfile="""_LOCDIR_"VMSSSHKEY"" -B "_LOCDIR_INPTFILE_" "_FTPUSR_"@"_FTPIP,!
+"RTN","PSOSPMU1",189,0)
+ . . W "exit 0",!
+"RTN","PSOSPMU1",190,0)
+ . D CLOSE^%ZISH("FTPFILE")
+"RTN","PSOSPMU1",191,0)
+ ;
+"RTN","PSOSPMU1",192,0)
+ I PSOOS["VMS" D  I POP Q "-1^FTP Script file <"_LOCDIR_"VMSSSHID.> could not be created."
+"RTN","PSOSPMU1",193,0)
+ . D OPEN^%ZISH("VMSSSHID",LOCDIR,"VMSSSHID.","W")
+"RTN","PSOSPMU1",194,0)
+ . D USE^%ZISUTL("VMSSSHID")
+"RTN","PSOSPMU1",195,0)
+ . W "IDKEY "_$$XVMSDIR(LOCDIR)_"VMSSSHKEY"
+"RTN","PSOSPMU1",196,0)
+ . D CLOSE^%ZISH("FTPFILE")
+"RTN","PSOSPMU1",197,0)
+ ;
+"RTN","PSOSPMU1",198,0)
+ D SAVEKEYS(STATE,LOCDIR)
+"RTN","PSOSPMU1",199,0)
+ ;
+"RTN","PSOSPMU1",200,0)
+ Q (LOCDIR_"^"_EXPFILE_"^"_$G(FTPFILE)_"^"_$G(INPTFILE)_"^"_LOGFILE_"^"_$P(EXPFILE,".up")_FILEXT)
+"RTN","PSOSPMU1",201,0)
+ ;
+"RTN","PSOSPMU1",202,0)
+FTPFILE(STATEIP,STATEUSR,LOCDIR,FTPFILE,LOGFILE,INPTFILE,FTPPORT) ; Issue the Secure FTP command
+"RTN","PSOSPMU1",203,0)
+ N PSOOS,PV,XPV1
+"RTN","PSOSPMU1",204,0)
+ S PSOOS=$$OS^%ZOSV()
+"RTN","PSOSPMU1",205,0)
+ I PSOOS["VMS" S XPV1="S PV=$ZF(-1,""@"_LOCDIR_FTPFILE_"/OUTPUT="_LOCDIR_LOGFILE_""")"
+"RTN","PSOSPMU1",206,0)
+ I PSOOS["UNIX" S XPV1="S PV=$ZF(-1,""sftp"_$S(FTPPORT:" -oPort="_FTPPORT,1:"")_" -oidentityfile="""""_LOCDIR_"linuxsshkey"""" -b "_LOCDIR_INPTFILE_" "_$TR(STATEUSR,"""","")_"@"_STATEIP_" > "_LOCDIR_LOGFILE_""")"
+"RTN","PSOSPMU1",207,0)
+ I PSOOS["NT" S XPV1="S PV=$ZF(-1,"""_LOCDIR_FTPFILE_">"_LOCDIR_LOGFILE_""")"
+"RTN","PSOSPMU1",208,0)
+ ;
+"RTN","PSOSPMU1",209,0)
+ X XPV1  ; Execute the FTP command
+"RTN","PSOSPMU1",210,0)
+ ;
+"RTN","PSOSPMU1",211,0)
+ ; Error flag logic
+"RTN","PSOSPMU1",212,0)
+ I PV=-1 Q "-1^Secure FTP Transmission failed"
+"RTN","PSOSPMU1",213,0)
+ ;
+"RTN","PSOSPMU1",214,0)
+ Q ""
+"RTN","PSOSPMU1",215,0)
+ ;
+"RTN","PSOSPMU1",216,0)
+DELFILE(FILE) ; Deletes file
+"RTN","PSOSPMU1",217,0)
+ N PV
+"RTN","PSOSPMU1",218,0)
+ I $$OS^%ZOSV()["VMS"  D DELVMS(FILE)
+"RTN","PSOSPMU1",219,0)
+ I $$OS^%ZOSV()["UNIX" D DELUNIX(FILE)
+"RTN","PSOSPMU1",220,0)
+ I $$OS^%ZOSV()["NT" D DELWIN(FILE)
+"RTN","PSOSPMU1",221,0)
+ I PV=-1 Q "-1^There was an error deleting the file locally."
+"RTN","PSOSPMU1",222,0)
+ Q ""
+"RTN","PSOSPMU1",223,0)
+ ;
+"RTN","PSOSPMU1",224,0)
+DELVMS(FILE) ; Delete VMS files
+"RTN","PSOSPMU1",225,0)
+ N XPV
+"RTN","PSOSPMU1",226,0)
+ S XPV="S PV=$ZF(-1,""DEL "_FILE_";*"")"
+"RTN","PSOSPMU1",227,0)
+ X XPV
+"RTN","PSOSPMU1",228,0)
+ Q
+"RTN","PSOSPMU1",229,0)
+DELWIN(FILE) ; Delete windows files
+"RTN","PSOSPMU1",230,0)
+ N XPV
+"RTN","PSOSPMU1",231,0)
+ S XPV="S PV=$ZF(-1,""DEL "_FILE_""")"
+"RTN","PSOSPMU1",232,0)
+ X XPV
+"RTN","PSOSPMU1",233,0)
+ Q
+"RTN","PSOSPMU1",234,0)
+DELUNIX(FILE) ; Delete Unix files
+"RTN","PSOSPMU1",235,0)
+ N XPV
+"RTN","PSOSPMU1",236,0)
+ S XPV="S PV=$ZF(-1,""rm -f "_FILE_""")"
+"RTN","PSOSPMU1",237,0)
+ X XPV
+"RTN","PSOSPMU1",238,0)
+ Q
+"RTN","PSOSPMU1",239,0)
+ ;
+"RTN","PSOSPMU1",240,0)
+PAUSE ; Pauses screen until user hits Return
+"RTN","PSOSPMU1",241,0)
+ W ! K DIR S DIR("A")="Press Return to continue",DIR(0)="E" D ^DIR
+"RTN","PSOSPMU1",242,0)
+ Q
+"RTN","PSOSPMU1",243,0)
+ ;
+"RTN","PSOSPMU1",244,0)
+XVMSDIR(VMSDIR) ; Converts a VMS directory from "USER$:[SPMP]" to "/USER$/SPMP/" format
+"RTN","PSOSPMU1",245,0)
+ Q "/"_$TR(VMSDIR,".[]:","///") ;*437
+"RTN","PSOSPMU1",246,0)
+ ;
+"RTN","PSOSPMU1",247,0)
+SAVEKEYS(STATE,LOCDIR) ; Saves Key
+"RTN","PSOSPMU1",248,0)
+ N WLINE
+"RTN","PSOSPMU1",249,0)
+ D OPEN^%ZISH("VMSSSHKEY",LOCDIR,"VMSSSHKEY","W")
+"RTN","PSOSPMU1",250,0)
+ D USE^%ZISUTL("VMSSSHKEY")
+"RTN","PSOSPMU1",251,0)
+ F WLINE=1:1 Q:'$D(^PS(58.41,STATE,"PRVKEY",WLINE))  D
+"RTN","PSOSPMU1",252,0)
+ . W $$DECRYP^XUSRB1(^PS(58.41,STATE,"PRVKEY",WLINE,0)),!
+"RTN","PSOSPMU1",253,0)
+ D CLOSE^%ZISH("VMSSSHKEY")
+"RTN","PSOSPMU1",254,0)
+ ;
+"RTN","PSOSPMU1",255,0)
+ I $$OS^%ZOSV()["UNIX" D  Q
+"RTN","PSOSPMU1",256,0)
+ . N XPV
+"RTN","PSOSPMU1",257,0)
+ . S XPV="S PV=$ZF(-1,""ssh-keygen -i -f "_LOCDIR_"VMSSSHKEY > "_LOCDIR_"linuxsshkey"")"
+"RTN","PSOSPMU1",258,0)
+ . X XPV
+"RTN","PSOSPMU1",259,0)
+ . S XPV="S PV=$ZF(-1,""chmod 600 "_LOCDIR_"linuxsshkey"")"
+"RTN","PSOSPMU1",260,0)
+ . X XPV
+"RTN","PSOSPMU1",261,0)
+ ;
+"RTN","PSOSPMU1",262,0)
+ D OPEN^%ZISH("VMSSSHKEY",LOCDIR,"VMSSSHKEY.PUB","W")
+"RTN","PSOSPMU1",263,0)
+ D USE^%ZISUTL("VMSSSHKEY")
+"RTN","PSOSPMU1",264,0)
+ F WLINE=1:1 Q:'$D(^PS(58.41,STATE,"PUBKEY",WLINE))  D
+"RTN","PSOSPMU1",265,0)
+ . W $$DECRYP^XUSRB1(^PS(58.41,STATE,"PUBKEY",WLINE,0)),!
+"RTN","PSOSPMU1",266,0)
+ D CLOSE^%ZISH("VMSSSHKEY")
+"RTN","PSOSPMU1",267,0)
+ Q
+"RTN","PSOSPMU1",268,0)
+ ;
+"RTN","PSOSPMU1",269,0)
+LINUXDIR() ; Returns the Linux Directory for SPMP sFTP
+"RTN","PSOSPMU1",270,0)
+ N CURDIR
+"RTN","PSOSPMU1",271,0)
+ I $$OS^%ZOSV()'="UNIX" Q ""
+"RTN","PSOSPMU1",272,0)
+ I $$UP^XLFSTR($$VERSION^%ZOSV(1))'["CACHE" Q ""
+"RTN","PSOSPMU1",273,0)
+ ; Retrieving the current directory
+"RTN","PSOSPMU1",274,0)
+ X "S CURDIR=$ZU(12)"
+"RTN","PSOSPMU1",275,0)
+ Q $P(CURDIR,"/",1,4)_"/user/sftp/spmp/"
+"RTN","PSOSPMU1",276,0)
+ ;
+"RTN","PSOSPMU1",277,0)
+DIREXIST(DIR) ; Returns whether the Linux Directory for SPMP sFTP already exists
+"RTN","PSOSPMU1",278,0)
+ N DIREXIST
+"RTN","PSOSPMU1",279,0)
+ I DIR="" Q 0
+"RTN","PSOSPMU1",280,0)
+ I $$OS^%ZOSV()'="UNIX" Q 0
+"RTN","PSOSPMU1",281,0)
+ I $$UP^XLFSTR($$VERSION^%ZOSV(1))'["CACHE" Q 0
+"RTN","PSOSPMU1",282,0)
+ I $E(DIR,$L(DIR))="/" S $E(DIR,$L(DIR))=""
+"RTN","PSOSPMU1",283,0)
+ X "S DIREXIST=$ZSEARCH(DIR)"
+"RTN","PSOSPMU1",284,0)
+ Q $S(DIREXIST="":0,1:1)
+"RTN","PSOSPMU1",285,0)
+ ;
+"RTN","PSOSPMU1",286,0)
+MAKEDIR(DIR) ; Create a new directory
+"RTN","PSOSPMU1",287,0)
+ N MKDIR
+"RTN","PSOSPMU1",288,0)
+ I $$OS^%ZOSV()'="UNIX" Q
+"RTN","PSOSPMU1",289,0)
+ I $$UP^XLFSTR($$VERSION^%ZOSV(1))'["CACHE" Q
+"RTN","PSOSPMU1",290,0)
+ I $$DIREXIST(DIR) Q
+"RTN","PSOSPMU1",291,0)
+ X "S MKDIR=$ZF(-1,""mkdir ""_DIR)"
+"RTN","PSOSPMU1",292,0)
+ I 'MKDIR X "S MKDIR=$ZF(-1,""chmod 777 ""_DIR)"
+"RTN","PSOSPMU1",293,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",9198,6)
+^371
+**END**
+**END**
+

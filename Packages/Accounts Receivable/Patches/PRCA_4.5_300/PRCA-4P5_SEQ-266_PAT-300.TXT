@@ -1,0 +1,201 @@
+$TXT Created by                      CARVDD.DOMAIN.EXT  (KIDS) on Thursday, 07/17/14 at 20:15
+=============================================================================
+Run Date: SEP 17, 2014                     Designation: PRCA*4.5*300
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #266                    Status: Released
+                  Compliance Date: SEP 28, 2014
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*153<<= must be installed BEFORE `PRCA*4.5*300'
+
+Subject: ALLOW 6 CHARACTER BILL NUMBERS
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This Accounts Receivable (PRCA) patch introduces the following change to
+ VistA's Accounts Receivable Module:
+  
+ The Accounts Receivable System shall provide the ability for the Bill No.
+ (field .01) of the Accounts Receivable file (file #430) to store a 6-10
+ character claim number plus a 3 character station number and a hyphen.
+  
+ This patch is associated with Integrated Billing (IB) IB*2.0*488 and each 
+ patch should be installed one after the other.  There is no install order 
+ preference.
+  
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)             Field Name (#)              New/Modified/Deleted
+ ------------------        ----------------            --------------------
+ ACCOUNTS RECEIVABLE (#430)                            Modified
+                           BILL NO. (#.01)             Modified
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)        New/Modified/Deleted
+ -------------      ----      -------------        --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ 20110503 -  Electronic Data Interchange (EDI) New Standards and Operating
+             Rules (Veterans Health Administration) VHA Provider-Side TCRs
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+  This patch addresses the following Remedy Ticket(s):
+  ----------------------------------------------------
+  INC000000540117  LEX - Six Digit Bill Number
+  
+  Overview of the Remedy Ticket:
+  ------------------------------
+  AR staff is trying to put several bills into VISTA with only SIX digits.
+  When they go into the option Select Audit/Setup a New Accounts Receivable
+  this happens:
+  
+  Select Audit/Set up a New Accounts Receivable Option: ?
+  
+           Audit an Electronic Bill
+           Set up and Audit New Accounts Receivable
+           Amended Bill Audit
+           Edit an Incomplete Accounts Receivable
+  
+  Select Audit/Set up a New Accounts Receivable Option: SET up and Audit
+  New Accounts Receivable
+  SITE: LEXINGTON-CDD VAMC//     KY  VAMC      596A4
+  ACCOUNTS RECEIVABLE BILL NO. : 0000K0000
+  
+  Please enter 7 character bill number.
+  It must be in the following format: K400001, K481234 or '(N)ew' to get
+  the next available number.  (Enter "^" to exit)
+  
+  Resolution:
+  -----------
+  Corrected the INPUT TRANSFORM for the Bill No. field (.01) in the
+  Accounts Receivable file (#430).  Changed the code so that it would
+  accept both 6-character and 7-character Bill Numbers.  Also changed
+  the HELP and DESCRIPTION for this field to reflect the correct
+  messages describing what would be allowed as input for the Bill No.
+  
+  
+ TEST Sites:
+ ===========
+  Tennessee Valley HCS
+  Mountain Home, TN
+  Richmond, VA
+  Asheville, NC
+  Hampton, VA
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to FTP the files from
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+ File Description                       File Name                 FTP Mode
+ --------------------------------------------------------------------------
+ AR Release Notes/Installation Guide    PRCA_4_5_P300_rn.pdf      Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions
+ -------------------------
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.  This patch is associated with
+ IB*2.0*488.
+  
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PRCA*4.5*300).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package 
+      PRCA*4.5*300.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCASET
+    Before:  B6950731   After:  B7758197  **16,25,40,51,67,158,153,300**
+ 
+Routine list of preceding patches: 153
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 21, 2013
+Completed By:                               Date Completed: SEP 17, 2014
+Released By :                               Date Released : SEP 17, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,695 @@
+$TXT Created by                 CHEYL106.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Wednesday, 11/25/15 at 14:07
+=============================================================================
+Run Date: DEC 29, 2015                     Designation: LEX*2*104
+Package : LEX - LEXICON UTILITY               Priority: Mandatory
+Version : 2        SEQ #94                      Status: Released
+                  Compliance Date: JAN 12, 2016
+=============================================================================
+
+Associated patches: (v)LEX*2*101   <<= must be installed BEFORE `LEX*2*104'
+
+Subject: Code Set FY16 2nd Qtr Update
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+  Patch Description List of Code Set Changes
+  ==========================================
+ 
+  This patch contains the FY16 2nd Quarter Code Set distribution with 3026
+  changes effective Jan 01, 2016.  This patch also exports 13843 changes to
+  the SNOMED CT coding system.  This patch installs the data for the
+  following Informational patch:
+   
+            ICPT*6.0*74
+   
+  This patch writes to the following files:
+   
+       CPT                       #81       ^ICPT(       ICR 4489
+       CPT CATEGORY              #81.1     ^DIC(81.1,   ICR 4490
+       CPT COPYRIGHT             #81.2     ^DIC(81.2,   ICR 4491
+       CPT MODIFIER              #81.3     ^DIC(81.3,   ICR 4492
+       LEXICON files          #757-757.41  ^LEX(        N/A
+       SUBSET DEFINITIONS       #757.2     ^LEXT(       N/A
+   
+  ENHANCEMENTS
+  ============
+   
+    FY16 2nd Quarter Update
+ 
+      CPT Procedure Additions
+      -----------------------
+ 
+        Effective Jan 01, 2016                              (126 Codes)
+          0394T   0395T   0396T   0397T   0398T   0399T   0400T   0401T
+          0402T   0403T   0404T   0405T   0406T   0407T   10035   10036
+          31652   31653   31654   33477   37252   37253   39401   39402
+          43210   47531   47532   47533   47534   47535   47536   47537
+          47538   47539   47540   47541   47542   47543   47544   49185
+          50430   50431   50432   50433   50434   50435   50606   50693
+          50694   50695   50705   50706   54437   54438   61645   61650
+          61651   64461   64462   64463   65785   69209   72081   72082
+          72083   72084   73501   73502   73503   73521   73522   73523
+          73551   73552   74712   74713   77767   77768   77770   77771
+          77772   78265   78266   80081   81162   81170   81218   81219
+          81272   81273   81276   81311   81314   81412   81432   81433
+          81434   81437   81438   81442   81490   81493   81525   81528
+          81535   81536   81538   81540   81545   81595   88350   90621
+          90625   90697   92537   92538   93050   96931   96932   96933
+          96934   96935   96936   99177   99415   99416
+ 
+      CPT Procedure Inactivations
+      ---------------------------
+ 
+        Effective Jan 01, 2016                               (91 Codes)
+          0099T   0103T   0123T   0182T   0223T   0224T   0225T   0233T
+          0240T   0241T   0243T   0244T   0262T   0311T   21805   31620
+          37202   37250   37251   39400   47136   47500   47505   47510
+          47511   47525   47530   47560   47561   47630   50392   50393
+          50394   50398   64412   67112   70373   72010   72069   72090
+          73500   73510   73520   73530   73540   73550   74305   74320
+          74327   74475   74480   75896   75945   75946   75980   75982
+          77776   77777   77785   77786   77787   82486   82487   82488
+          82489   82491   82492   82541   82543   82544   83788   88347
+          90645   90646   90669   90692   90693   90703   90704   90705
+          90706   90708   90712   90719   90720   90721   90725   90727
+          90735   92543   95973
+ 
+      HCPCS Procedure Additions
+      -------------------------
+ 
+        Effective Jan 01, 2016                              (216 Codes)
+          A4337   C1822   C2613   C2645   C9458   C9459   C9460   C9743
+          E0465   E0466   G0475   G0476   G9473   G9474   G9475   G9476
+          G9477   G9478   G9479   G9480   G9496   G9497   G9498   G9499
+          G9500   G9501   G9502   G9503   G9504   G9505   G9506   G9507
+          G9508   G9509   G9510   G9511   G9512   G9513   G9514   G9515
+          G9516   G9517   G9518   G9519   G9520   G9521   G9522   G9523
+          G9524   G9525   G9526   G9529   G9530   G9531   G9532   G9533
+          G9534   G9535   G9536   G9537   G9538   G9539   G9540   G9541
+          G9542   G9543   G9544   G9547   G9548   G9549   G9550   G9551
+          G9552   G9553   G9554   G9555   G9556   G9557   G9558   G9559
+          G9560   G9561   G9562   G9563   G9572   G9573   G9574   G9577
+          G9578   G9579   G9580   G9581   G9582   G9583   G9584   G9585
+          G9593   G9594   G9595   G9596   G9597   G9598   G9599   G9600
+          G9601   G9602   G9603   G9604   G9605   G9606   G9607   G9608
+          G9609   G9610   G9611   G9612   G9613   G9614   G9615   G9616
+          G9617   G9618   G9619   G9620   G9621   G9622   G9623   G9624
+          G9625   G9626   G9627   G9628   G9629   G9630   G9631   G9632
+          G9633   G9634   G9635   G9636   G9637   G9638   G9639   G9640
+          G9641   G9642   G9643   G9644   G9645   G9646   G9647   G9648
+          G9649   G9650   G9651   G9652   G9653   G9654   G9655   G9656
+          G9657   G9658   G9659   G9660   G9661   G9662   G9663   G9664
+          G9665   G9666   G9667   G9668   G9669   G9670   G9671   G9672
+          G9673   G9674   G9675   G9676   G9677   J0202   J0596   J0714
+          J0875   J1443   J1447   J1575   J1833   J2407   J2502   J2547
+          J7121   J7205   J7297   J7298   J7313   J7328   J7512   J7999
+          J8655   J9032   J9039   J9271   J9299   J9308   L8607   P9070
+          P9071   P9072   Q4161   Q4162   Q4163   Q4164   Q4165   Q9980
+ 
+      HCPCS Procedure Inactivations
+      -----------------------------
+ 
+        Effective Jan 01, 2016                              (102 Codes)
+          A7011   C9025   C9026   C9027   C9245   C9246   C9247   C9251
+          C9442   C9443   C9444   C9445   C9446   C9448   C9449   C9450
+          C9451   C9452   C9724   C9737   E0450   E0460   E0461   E0463
+          E0464   G0154   G0431   G0434   G6018   G6019   G6020   G6021
+          G6022   G6023   G6024   G6025   G6027   G6028   G8503   G8504
+          G8505   G8512   G8513   G8514   G8515   G8516   G8517   G8521
+          G8522   G8523   G8527   G8528   G8529   G8530   G8531   G8532
+          G8533   G8713   G8714   G8717   G8718   G8720   G8870   G8871
+          G8951   G9320   G9323   G9325   G9328   G9343   G9346   G9362
+          G9363   G9369   G9370   G9376   G9377   G9378   G9379   G9391
+          G9392   G9433   J0886   J1446   J7302   J7506   J9010   J9170
+          Q9975   Q9976   Q9977   Q9978   Q9979   S0195   S0605   S2360
+          S2361   S3721   S3854   S3890   S5011   S9015
+ 
+      HCPCS Procedures Re-Used
+      ------------------------
+ 
+        Effective Jan 01, 2016                               (12 Codes)
+          E1012   G0296   G0297   G0298   G0299   G0300   J0695   J2860
+          J7188   J7340   J7503   Q9950
+ 
+      HCPCS Procedure Revisions
+      -------------------------
+ 
+        Effective Jan 01, 2016                             (2479 Codes)
+          A0021   A0080   A0090   A0120   A0130   A0140   A0384   A0392
+          A0422   A0424   A0426   A0427   A0432   A0888   A4206   A4207
+          A4208   A4209   A4221   A4222   A4223   A4232   A4233   A4234
+          A4235   A4236   A4252   A4253   A4264   A4280   A4300   A4301
+          A4311   A4312   A4313   A4314   A4315   A4316   A4326   A4331
+          A4338   A4340   A4351   A4352   A4355   A4356   A4357   A4358
+          A4360   A4369   A4372   A4373   A4385   A4387   A4389   A4390
+          A4392   A4393   A4394   A4407   A4408   A4409   A4410   A4411
+          A4412   A4413   A4414   A4415   A4417   A4419   A4422   A4423
+          A4425   A4426   A4427   A4428   A4429   A4430   A4431   A4432
+          A4434   A4435   A4455   A4459   A4466   A4481   A4520   A4555
+          A4558   A4566   A4580   A4590   A4595   A4602   A4604   A4627
+          A4630   A4640   A4642   A4648   A4650   A4674   A4680   A4714
+          A4719   A4720   A4721   A4722   A4723   A4724   A4725   A4726
+          A5056   A5057   A5083   A5105   A5112   A5500   A5501   A5503
+          A5504   A5505   A5506   A5507   A5508   A5510   A5512   A5513
+          A6000   A6022   A6025   A6196   A6197   A6198   A6203   A6204
+          A6205   A6207   A6209   A6210   A6211   A6212   A6213   A6214
+          A6216   A6217   A6218   A6219   A6220   A6221   A6222   A6223
+          A6224   A6228   A6229   A6230   A6231   A6232   A6233   A6234
+          A6235   A6236   A6237   A6238   A6239   A6242   A6243   A6244
+          A6245   A6246   A6247   A6251   A6252   A6253   A6254   A6255
+          A6256   A6258   A6266   A6402   A6403   A6404   A6407   A6413
+          A6441   A6442   A6443   A6444   A6445   A6446   A6447   A6448
+          A6449   A6450   A6451   A6452   A6453   A6454   A6455   A6456
+          A6509   A6510   A6511   A6550   A7003   A7005   A7017   A7020
+          A7025   A7026   A7027   A7028   A7029   A7034   A7045   A7046
+          A7048   A7503   A7505   A7506   A7507   A7508   A7509   A7520
+          A7521   A7522   A8002   A8003   A9153   A9155   A9180   A9272
+          A9274   A9276   A9277   A9278   A9279   A9283   A9501   A9507
+          A9509   A9516   A9520   A9538   A9540   A9541   A9542   A9543
+          A9550   A9553   A9554   A9559   A9560   A9567   A9569   A9570
+          A9571   A9572   A9576   A9577   A9578   A9579   A9599   A9604
+          A9900   B4034   B4035   B4036   B4087   B4088   B4102   B4103
+          B4104   B4149   B4150   B4152   B4153   B4154   B4155   B4157
+          B4158   B4159   B4160   B4161   B4162   B4164   B4168   B4172
+          B4176   B4178   B4180   B4189   B4193   B4197   B4199   B4216
+          B5000   B5100   B5200   B9000   C1716   C1717   C1719   C1725
+          C1730   C1731   C1733   C1750   C1751   C1752   C1766   C1820
+          C1883   C1892   C1893   C1894   C1896   C2616   C2624   C2629
+          C2630   C2634   C2635   C2636   C2637   C2698   C5271   C5272
+          C5273   C5274   C5275   C5276   C5277   C5278   C8902   C8903
+          C8905   C8906   C8908   C8911   C8914   C8921   C8922   C8923
+          C8924   C8925   C8926   C8927   C8928   C8929   C8930   C8933
+          C8936   C8957   C9250   C9349   C9352   C9353   C9354   C9356
+          C9358   C9359   C9360   C9361   C9362   C9363   C9364   C9600
+          C9601   C9602   C9603   C9604   C9605   C9606   C9607   C9608
+          C9725   C9726   C9728   C9734   C9741   C9742   C9800   C9899
+          E0105   E0110   E0111   E0112   E0114   E0116   E0144   E0161
+          E0168   E0181   E0190   E0231   E0232   E0260   E0261   E0265
+          E0266   E0270   E0294   E0295   E0296   E0297   E0301   E0302
+          E0303   E0304   E0328   E0329   E0352   E0371   E0424   E0425
+          E0430   E0431   E0433   E0434   E0435   E0439   E0440   E0446
+          E0470   E0471   E0472   E0483   E0485   E0486   E0500   E0550
+          E0555   E0560   E0565   E0580   E0604   E0610   E0615   E0630
+          E0636   E0637   E0638   E0639   E0641   E0642   E0675   E0676
+          E0691   E0692   E0693   E0694   E0705   E0720   E0730   E0731
+          E0740   E0747   E0748   E0760   E0761   E0762   E0764   E0765
+          E0766   E0769   E0770   E0781   E0782   E0783   E0785   E0786
+          E0849   E0856   E0870   E0911   E0912   E0946   E0955   E0956
+          E0957   E0960   E0970   E0973   E0978   E0983   E0984   E0990
+          E1003   E1004   E1005   E1006   E1007   E1008   E1009   E1010
+          E1011   E1017   E1018   E1028   E1031   E1035   E1036   E1038
+          E1039   E1050   E1060   E1070   E1083   E1084   E1085   E1086
+          E1087   E1088   E1089   E1090   E1092   E1093   E1100   E1110
+          E1130   E1140   E1150   E1170   E1172   E1180   E1190   E1195
+          E1220   E1225   E1226   E1230   E1231   E1232   E1233   E1234
+          E1240   E1260   E1270   E1290   E1352   E1354   E1356   E1357
+          E1358   E1390   E1391   E1510   E1592   E1800   E1801   E1802
+          E1805   E1806   E1810   E1811   E1815   E1816   E1818   E1821
+          E1825   E1830   E1831   E1840   E1841   E1902   E2201   E2203
+          E2205   E2213   E2220   E2221   E2222   E2225   E2227   E2228
+          E2231   E2293   E2294   E2295   E2310   E2311   E2312   E2313
+          E2321   E2322   E2323   E2325   E2327   E2328   E2329   E2330
+          E2331   E2351   E2359   E2360   E2361   E2363   E2365   E2366
+          E2367   E2370   E2371   E2373   E2374   E2375   E2376   E2377
+          E2381   E2382   E2383   E2384   E2385   E2386   E2387   E2388
+          E2390   E2391   E2392   E2394   E2395   E2397   E2500   E2502
+          E2504   E2506   E2508   E2510   E2511   E2607   E2608   E2611
+          E2612   E2613   E2614   E2615   E2616   E2617   E2620   E2621
+          E2622   E2623   E2624   E2625   E2626   E2627   E2628   E2629
+          E2630   E2632   E8000   E8001   E8002   G0103   G0106   G0108
+          G0109   G0117   G0118   G0120   G0121   G0123   G0124   G0128
+          G0129   G0130   G0141   G0143   G0144   G0145   G0147   G0148
+          G0151   G0152   G0153   G0155   G0156   G0157   G0158   G0159
+          G0160   G0161   G0162   G0163   G0164   G0175   G0176   G0177
+          G0179   G0180   G0181   G0182   G0186   G0204   G0206   G0219
+          G0237   G0238   G0239   G0245   G0246   G0247   G0248   G0249
+          G0250   G0252   G0255   G0257   G0260   G0268   G0269   G0270
+          G0271   G0276   G0278   G0279   G0281   G0282   G0283   G0288
+          G0289   G0293   G0294   G0295   G0302   G0303   G0304   G0305
+          G0306   G0329   G0333   G0341   G0342   G0343   G0364   G0365
+          G0372   G0380   G0381   G0382   G0383   G0384   G0389   G0396
+          G0397   G0398   G0399   G0400   G0402   G0403   G0404   G0405
+          G0406   G0407   G0408   G0409   G0410   G0411   G0412   G0413
+          G0414   G0415   G0416   G0420   G0421   G0422   G0423   G0424
+          G0425   G0426   G0427   G0428   G0429   G0432   G0433   G0435
+          G0436   G0437   G0438   G0439   G0445   G0446   G0448   G0451
+          G0453   G0454   G0455   G0459   G0460   G0463   G0464   G0466
+          G0467   G0468   G0469   G0470   G0471   G0472   G0913   G0915
+          G6002   G6003   G6004   G6005   G6006   G6007   G6008   G6009
+          G6010   G6011   G6012   G6013   G6014   G6015   G6016   G6017
+          G8395   G8396   G8397   G8398   G8399   G8400   G8401   G8404
+          G8405   G8410   G8415   G8416   G8417   G8418   G8419   G8420
+          G8422   G8427   G8428   G8430   G8431   G8433   G8442   G8451
+          G8458   G8460   G8461   G8465   G8473   G8474   G8475   G8476
+          G8477   G8483   G8494   G8495   G8496   G8497   G8498   G8499
+          G8500   G8506   G8509   G8510   G8511   G8535   G8539   G8540
+          G8541   G8542   G8543   G8549   G8551   G8559   G8560   G8561
+          G8562   G8563   G8564   G8566   G8567   G8568   G8571   G8577
+          G8578   G8601   G8602   G8627   G8628   G8633   G8634   G8646
+          G8647   G8648   G8649   G8650   G8651   G8652   G8653   G8654
+          G8655   G8656   G8657   G8658   G8659   G8660   G8661   G8662
+          G8663   G8664   G8665   G8666   G8667   G8668   G8669   G8670
+          G8671   G8672   G8673   G8674   G8694   G8697   G8709   G8721
+          G8722   G8724   G8725   G8726   G8730   G8731   G8733   G8735
+          G8749   G8752   G8753   G8754   G8755   G8757   G8758   G8759
+          G8761   G8762   G8765   G8784   G8807   G8808   G8810   G8815
+          G8839   G8840   G8842   G8843   G8844   G8846   G8848   G8849
+          G8851   G8854   G8855   G8857   G8858   G8861   G8865   G8866
+          G8869   G8872   G8873   G8874   G8875   G8876   G8877   G8880
+          G8882   G8898   G8907   G8911   G8912   G8913   G8914   G8915
+          G8916   G8917   G8918   G8923   G8924   G8925   G8927   G8928
+          G8929   G8934   G8935   G8936   G8937   G8938   G8939   G8941
+          G8942   G8946   G8950   G8952   G8953   G8955   G8959   G8960
+          G8961   G8962   G8963   G8964   G8965   G8966   G8968   G8969
+          G8971   G8972   G8975   G8978   G8979   G8980   G8981   G8982
+          G8983   G8984   G8985   G8986   G8987   G8988   G8989   G8990
+          G8991   G8992   G8993   G8994   G8995   G8996   G8997   G8998
+          G8999   G9016   G9017   G9018   G9019   G9020   G9033   G9034
+          G9035   G9036   G9050   G9051   G9052   G9053   G9054   G9055
+          G9056   G9057   G9058   G9059   G9060   G9061   G9062   G9063
+          G9064   G9065   G9066   G9067   G9068   G9069   G9070   G9071
+          G9072   G9073   G9074   G9075   G9077   G9078   G9079   G9080
+          G9083   G9084   G9085   G9086   G9087   G9088   G9089   G9090
+          G9091   G9092   G9093   G9094   G9095   G9096   G9097   G9098
+          G9099   G9100   G9101   G9102   G9103   G9104   G9105   G9106
+          G9107   G9108   G9109   G9110   G9111   G9112   G9113   G9114
+          G9115   G9116   G9117   G9123   G9124   G9125   G9126   G9128
+          G9129   G9130   G9131   G9132   G9133   G9134   G9135   G9136
+          G9137   G9138   G9139   G9140   G9143   G9147   G9148   G9157
+          G9158   G9159   G9160   G9161   G9162   G9163   G9164   G9165
+          G9166   G9167   G9168   G9169   G9170   G9171   G9172   G9173
+          G9174   G9175   G9176   G9186   G9191   G9192   G9196   G9197
+          G9198   G9203   G9204   G9205   G9206   G9207   G9208   G9209
+          G9210   G9211   G9212   G9213   G9217   G9219   G9222   G9223
+          G9226   G9227   G9228   G9229   G9231   G9232   G9233   G9235
+          G9236   G9238   G9239   G9240   G9241   G9242   G9246   G9247
+          G9250   G9251   G9255   G9259   G9261   G9262   G9263   G9264
+          G9265   G9266   G9267   G9268   G9269   G9270   G9273   G9274
+          G9277   G9278   G9279   G9280   G9281   G9282   G9283   G9284
+          G9285   G9286   G9287   G9288   G9289   G9290   G9291   G9292
+          G9293   G9294   G9296   G9297   G9298   G9299   G9300   G9301
+          G9302   G9303   G9304   G9305   G9306   G9307   G9308   G9309
+          G9310   G9313   G9314   G9315   G9316   G9317   G9319   G9321
+          G9322   G9326   G9327   G9329   G9340   G9341   G9342   G9344
+          G9345   G9347   G9348   G9349   G9350   G9351   G9352   G9353
+          G9354   G9359   G9380   G9381   G9382   G9383   G9384   G9385
+          G9386   G9389   G9390   G9393   G9394   G9395   G9396   G9399
+          G9400   G9401   G9402   G9403   G9404   G9406   G9408   G9409
+          G9410   G9411   G9412   G9413   G9414   G9415   G9416   G9417
+          G9418   G9419   G9420   G9421   G9422   G9423   G9424   G9425
+          G9426   G9427   G9428   G9429   G9431   G9432   G9434   G9436
+          G9439   G9442   G9452   G9453   G9454   G9455   G9456   G9457
+          G9458   G9460   G9464   G9466   G9467   G9468   G9469   G9470
+          G9471   G9472   H0002   H0003   H0010   H0011   H0012   H0013
+          H0015   H0016   H0017   H0018   H0019   H0020   H0021   H0023
+          H0024   H0025   H0026   H0027   H0028   H0029   H0048   H1011
+          J0129   J0153   J0270   J0275   J0400   J0571   J0572   J0573
+          J0574   J0575   J0594   J0698   J0702   J0706   J0717   J0740
+          J0888   J1071   J1100   J1300   J1322   J1410   J1438   J1439
+          J1442   J1459   J1557   J1561   J1562   J1566   J1568   J1569
+          J1571   J1572   J1573   J1590   J1599   J1650   J1710   J1743
+          J1830   J1835   J2020   J2274   J2323   J2354   J2543   J2545
+          J2724   J2778   J2791   J2950   J3030   J3121   J3246   J3302
+          J3303   J3370   J3410   J3420   J3471   J7182   J7186   J7187
+          J7192   J7195   J7307   J7308   J7321   J7323   J7324   J7325
+          J7508   J7511   J7604   J7605   J7606   J7607   J7608   J7609
+          J7610   J7611   J7612   J7613   J7614   J7615   J7620   J7622
+          J7624   J7626   J7627   J7628   J7629   J7631   J7632   J7633
+          J7634   J7635   J7636   J7637   J7638   J7639   J7640   J7641
+          J7642   J7643   J7644   J7645   J7647   J7648   J7649   J7650
+          J7657   J7658   J7659   J7660   J7667   J7668   J7669   J7670
+          J7674   J7676   J7680   J7681   J7682   J7683   J7684   J7685
+          J7686   J8700   J9225   J9226   J9303   K0011   K0017   K0018
+          K0056   K0073   K0455   K0462   K0601   K0602   K0603   K0604
+          K0605   K0606   K0607   K0609   K0669   K0672   K0733   K0738
+          K0739   K0740   K0744   K0745   K0746   K0800   K0801   K0802
+          K0806   K0807   K0808   K0813   K0814   K0815   K0816   K0820
+          K0821   K0822   K0823   K0824   K0825   K0826   K0827   K0828
+          K0829   K0830   K0831   K0835   K0836   K0837   K0838   K0839
+          K0840   K0841   K0842   K0843   K0848   K0849   K0850   K0851
+          K0852   K0853   K0854   K0855   K0856   K0857   K0858   K0859
+          K0860   K0861   K0862   K0863   K0864   K0868   K0869   K0870
+          K0871   K0877   K0878   K0879   K0880   K0884   K0885   K0886
+          K0890   K0891   L0112   L0113   L0120   L0150   L0160   L0172
+          L0174   L0190   L0200   L0450   L0452   L0454   L0455   L0456
+          L0457   L0458   L0460   L0462   L0464   L0466   L0467   L0468
+          L0469   L0470   L0472   L0480   L0482   L0484   L0486   L0488
+          L0490   L0491   L0492   L0621   L0622   L0623   L0624   L0625
+          L0626   L0627   L0628   L0629   L0630   L0631   L0632   L0633
+          L0634   L0635   L0636   L0637   L0638   L0639   L0640   L0641
+          L0642   L0643   L0648   L0649   L0650   L0651   L0700   L0710
+          L0859   L1000   L1001   L1005   L1010   L1085   L1110   L1200
+          L1600   L1610   L1620   L1630   L1640   L1650   L1652   L1660
+          L1680   L1685   L1686   L1690   L1700   L1720   L1730   L1755
+          L1810   L1820   L1831   L1832   L1833   L1834   L1836   L1840
+          L1843   L1844   L1845   L1846   L1847   L1848   L1860   L1900
+          L1902   L1904   L1906   L1907   L1910   L1920   L1930   L1932
+          L1940   L1945   L1950   L1951   L1960   L1970   L1971   L1980
+          L1990   L2000   L2005   L2010   L2020   L2030   L2034   L2035
+          L2036   L2037   L2038   L2040   L2050   L2060   L2070   L2080
+          L2090   L2106   L2108   L2112   L2114   L2116   L2126   L2128
+          L2132   L2134   L2136   L2180   L2186   L2192   L2210   L2220
+          L2232   L2250   L2270   L2275   L2300   L2320   L2330   L2350
+          L2375   L2387   L2415   L2425   L2430   L2500   L2510   L2520
+          L2525   L2526   L2540   L2570   L2600   L2610   L2624   L2627
+          L2628   L2755   L2760   L2800   L2820   L2830   L2840   L2850
+          L2861   L3000   L3010   L3020   L3031   L3090   L3170   L3224
+          L3225   L3250   L3252   L3600   L3610   L3620   L3630   L3640
+          L3650   L3660   L3670   L3671   L3674   L3675   L3677   L3678
+          L3702   L3720   L3730   L3740   L3760   L3762   L3763   L3764
+          L3765   L3766   L3806   L3807   L3808   L3891   L3900   L3901
+          L3904   L3905   L3906   L3908   L3912   L3913   L3915   L3916
+          L3917   L3919   L3921   L3923   L3924   L3925   L3927   L3929
+          L3930   L3931   L3933   L3935   L3960   L3961   L3962   L3967
+          L3971   L3973   L3975   L3976   L3977   L3978   L3980   L3981
+          L3982   L3984   L4350   L4360   L4361   L4386   L4387   L4396
+          L4397   L4631   L5150   L5160   L5210   L5220   L5230   L5250
+          L5270   L5280   L5312   L5321   L5331   L5341   L5400   L5410
+          L5420   L5430   L5450   L5460   L5500   L5505   L5510   L5520
+          L5530   L5535   L5540   L5560   L5570   L5580   L5585   L5590
+          L5595   L5600   L5610   L5611   L5613   L5614   L5616   L5617
+          L5643   L5645   L5646   L5648   L5650   L5652   L5654   L5655
+          L5656   L5658   L5661   L5665   L5666   L5668   L5670   L5671
+          L5673   L5679   L5683   L5685   L5695   L5698   L5701   L5702
+          L5703   L5711   L5712   L5714   L5716   L5718   L5722   L5726
+          L5728   L5780   L5781   L5782   L5785   L5790   L5795   L5811
+          L5812   L5814   L5816   L5818   L5822   L5826   L5828   L5830
+          L5840   L5848   L5850   L5855   L5856   L5857   L5858   L5859
+          L5920   L5925   L5940   L5950   L5960   L5961   L5962   L5964
+          L5966   L5968   L5969   L5971   L5973   L5975   L5976   L5979
+          L5984   L5985   L6026   L6055   L6130   L6205   L6300   L6350
+          L6380   L6382   L6384   L6386   L6400   L6450   L6500   L6550
+          L6570   L6580   L6582   L6584   L6586   L6588   L6590   L6611
+          L6616   L6621   L6623   L6629   L6638   L6646   L6675   L6676
+          L6677   L6684   L6687   L6688   L6694   L6695   L6696   L6697
+          L6698   L6706   L6707   L6711   L6712   L6713   L6714   L6715
+          L6721   L6722   L6880   L6881   L6882   L6883   L6884   L6885
+          L6890   L6895   L6900   L6905   L6910   L6915   L6920   L6925
+          L6930   L6935   L6940   L6945   L6950   L6955   L6960   L6965
+          L6970   L6975   L7181   L7190   L7360   L7362   L7364   L7366
+          L7400   L7401   L7402   L7403   L7404   L7405   L7900   L7902
+          L8000   L8001   L8002   L8049   L8417   L8509   L8511   L8512
+          L8513   L8515   L8603   L8604   L8605   L8606   L8619   L8621
+          L8622   L8623   L8624   L8629   L8631   L8659   L8681   L8683
+          L8684   L8685   L8686   L8687   L8688   L8689   L8692   L8695
+          L8696   L9900   P3000   P3001   P9017   P9048   P9054   P9057
+          P9603   P9604   P9612   P9615   Q0083   Q0085   Q0091   Q0138
+          Q0139   Q0161   Q0162   Q0163   Q0164   Q0166   Q0167   Q0169
+          Q0173   Q0174   Q0175   Q0177   Q0180   Q0181   Q0478   Q0479
+          Q0481   Q0482   Q0483   Q0484   Q0485   Q0486   Q0487   Q0488
+          Q0489   Q0490   Q0491   Q0492   Q0493   Q0494   Q0495   Q0496
+          Q0497   Q0498   Q0499   Q0500   Q0501   Q0503   Q0504   Q0506
+          Q0507   Q0508   Q0509   Q0510   Q0511   Q0512   Q1004   Q1005
+          Q2004   Q2035   Q2036   Q2037   Q2038   Q2039   Q2043   Q2050
+          Q2052   Q4013   Q4014   Q4015   Q4016   Q4051   Q4074   Q4081
+          Q4082   Q4112   Q4113   Q4114   Q4147   Q4153   Q5002   Q5003
+          Q5101   Q9953   Q9954   Q9955   Q9956   Q9957   Q9958   Q9964
+          Q9965   Q9966   Q9967   Q9968   Q9969   R0070   R0075   S0021
+          S0091   S0119   S0142   S0155   S0170   S0171   S0172   S0174
+          S0175   S0176   S0177   S0178   S0179   S0182   S0183   S0187
+          S0189   S0197   S0199   S0201   S0207   S0220   S0221   S0250
+          S0255   S0257   S0260   S0270   S0271   S0272   S0274   S0281
+          S0302   S0310   S0316   S0320   S0340   S0341   S0342   S0353
+          S0354   S0390   S0395   S0400   S0613   S0618   S0622   S0630
+          S1016   S1030   S1031   S1034   S1035   S1040   S2055   S2066
+          S2067   S2068   S2070   S2083   S2095   S2107   S2118   S2120
+          S2150   S2152   S2205   S2206   S2207   S2208   S2209   S2230
+          S2342   S2348   S2350   S2351   S2400   S2402   S2403   S2409
+          S2900   S3601   S3620   S3722   S3840   S3844   S3852   S3861
+          S3866   S3870   S4011   S4042   S4989   S5010   S5013   S5014
+          S5035   S5036   S5100   S5101   S5102   S5105   S5110   S5111
+          S5115   S5116   S5120   S5121   S5125   S5126   S5130   S5131
+          S5135   S5136   S5140   S5141   S5145   S5146   S5150   S5151
+          S5160   S5161   S5162   S5165   S5170   S5175   S5185   S5497
+          S5498   S5501   S5502   S5517   S5520   S5521   S5522   S5523
+          S8030   S8055   S8080   S8085   S8097   S8186   S8930   S8948
+          S8990   S8999   S9034   S9061   S9088   S9098   S9110   S9122
+          S9123   S9152   S9208   S9209   S9211   S9212   S9213   S9214
+          S9325   S9326   S9327   S9328   S9329   S9330   S9331   S9335
+          S9336   S9338   S9339   S9340   S9341   S9342   S9343   S9345
+          S9346   S9347   S9348   S9349   S9351   S9353   S9355   S9357
+          S9359   S9361   S9363   S9364   S9365   S9366   S9367   S9368
+          S9370   S9372   S9373   S9374   S9375   S9376   S9377   S9379
+          S9381   S9401   S9433   S9445   S9446   S9474   S9475   S9490
+          S9494   S9497   S9500   S9501   S9502   S9503   S9504   S9529
+          S9537   S9538   S9542   S9558   S9559   S9560   S9562   S9590
+          S9810   S9900   S9960   S9961   S9986   S9989   S9992   S9994
+          T1007   T1009   T1010   T1019   T1020   T1022   T1023   T1024
+          T1025   T1026   T1028   T1029   T1502   T1503   T1505   T1999
+          T2007   T4525   T4526   T4527   T4528   T4529   T4531   T4532
+          T4543   T4544   V2103   V2104   V2105   V2106   V2107   V2108
+          V2109   V2110   V2111   V2112   V2113   V2202   V2203   V2204
+          V2205   V2206   V2207   V2208   V2209   V2210   V2211   V2212
+          V2213   V2219   V2300   V2301   V2303   V2304   V2305   V2306
+          V2307   V2308   V2309   V2310   V2311   V2312   V2313   V2314
+          V2502   V2503   V2512   V2520   V2521   V2522   V2523   V2530
+          V2531   V2615   V2710   V2730   V2745   V2782   V2783   V2787
+          V5267   V5274   V5281   V5282   V5288   V5289   V5336
+ 
+      CPT/HCPCS Modifier Pairs
+      ------------------------
+                                      Added  Inact  React  Revise  Total
+                                      -----  -----  -----  ------  -----
+        Effective Jan 01, 2011     *      1     --     --      --      1
+        
+                                   *  update from a previous quarter
+ 
+      SNOMED CT Changes
+      -----------------
+                           Effective  Added  Inact  React  Revise  Total
+                          ----------  -----  -----  -----  ------  -----
+        SNOMED Codes      09/01/2015   3286    224     10      --   3520
+        SNOMED Terms
+          Concepts        07/01/2005     --    165     --      --    165
+          Synonyms        07/01/2005     --    535     --      --    535
+          Fully Specified 07/01/2005    535    165     --      --    700
+          Concepts        01/01/2006     --      3     --      --      3
+          Synonyms        01/01/2006     --      3     --      --      3
+          Fully Specified 01/01/2006      3      3     --      --      6
+          Concepts        01/31/2007     --      2     --      --      2
+          Fully Specified 01/31/2007     --      2     --      --      2
+          Concepts        07/31/2007     --      3     --      --      3
+          Fully Specified 07/31/2007     --      3     --      --      3
+          Concepts        01/31/2008     --      1     --      --      1
+          Synonyms        01/31/2008     --      1     --      --      1
+          Fully Specified 01/31/2008      1      1     --      --      2
+          Concepts        07/31/2008     --      1     --      --      1
+          Synonyms        07/31/2008     --      2     --      --      2
+          Fully Specified 07/31/2008      2      1     --      --      3
+          Concepts        01/31/2009     --      1     --      --      1
+          Fully Specified 01/31/2009     --      1     --      --      1
+          Concepts        01/31/2010     --      4     --      --      4
+          Fully Specified 01/31/2010     --      4     --      --      4
+          Synonyms        01/31/2011     --      1     --      --      1
+          Fully Specified 01/31/2011      1     --     --      --      1
+          Synonyms        07/31/2011     --      2     --      --      2
+          Fully Specified 07/31/2011      2     --     --      --      2
+          Synonyms        01/31/2013     --      6     --      --      6
+          Fully Specified 01/31/2013      6     --     --      --      6
+          Concepts        09/01/2014     --     29     --      --     29
+          Synonyms        09/01/2014     --     26     --      --     26
+          Fully Specified 09/01/2014     26     29     --      --     55
+          Concepts        01/31/2015     --      7     --      --      7
+          Synonyms        01/31/2015     --      5     --      --      5
+          Fully Specified 01/31/2015      5      7     --      --     12
+          Concepts        03/01/2015     --      8     --      --      8
+          Synonyms        03/01/2015     --      3     --      --      3
+          Fully Specified 03/01/2015      3      8     --      --     11
+          Fully Specified 07/31/2015   2135     --     --      --   2135
+          Concepts        09/01/2015   3286     --     --      --   3286
+          Fully Specified 09/01/2015   3286     --     --      --   3286
+                                      -----  -----  -----  ------  -----
+                                      12577   1256     10      --  13843
+ 
+  REPAIR/ENHANCEMENT TICKETS:
+  ==========================
+ 
+    I5925067FY16  Fix cross-reference causing UNDEFINED error
+    I6492300FY16  Modifier QW with HCPCS Code G0434
+ 
+  OTHER CHANGES:
+  =============
+ 
+    Add new subset definitions (file #757.2):
+ 
+      DSS ICD-9 Diagnosis
+      DSS ICD-9 Procedures
+      DSS ICD-10 Diagnosis
+      DSS ICD-10 Procedures
+      DSS CPT/HCPCS Procedures
+  
+ 
+  FTP SOFTWARE RETRIEVAL:
+  =======================
+ 
+    Global Host File:                  LEX_2_104.GBL  (ASCII)
+ 
+    The host file is 175 MB in size and could take up to 12 minutes to FTP.
+ 
+    The preferred method is to FTP the files from download.vista.domain.ext,
+    which will transmit the files from the first available FTP server.
+ 
+    The files may also be downloaded directly from a particular FTP
+    location at the following locations:
+ 
+         Hines           ftp.domain.ext
+         Albany          ftp.domain.ext
+         Salt Lake       ftp.domain.ext
+ 
+         Files are available in the ANONYMOUS.SOFTWARE directory. 
+ 
+  INSTALLATION INSTRUCTIONS
+  =========================
+ 
+     1)  Users may be on the system during the install of LEX*2.0*104.
+         It is recommended that this patch be installed during non-peak
+         hours.  This patch should take from 76 to 104 minutes to install
+         depending on the system.
+ 
+             Create a backup    70-90 minutes
+             Load the Global    1-3 minutes
+             Kids Install       5-11 minutes
+ 
+     2)  Size/Disk Space Requirements:
+ 
+         The changes to the Lexicon, ICD and CPT globals will result in a
+         combined growth of about 17 MB of data.  The import global ^LEXM
+         is about 128 MB in size.  Make sure there is sufficient space for
+         the growth to the VistA globals and the import global before
+         continuing.
+ 
+ 
+     3)  Create a backup of the following global files before continuing:
+ 
+             CPT                         #81         ^ICPT(
+             CPT Category                #81.1       ^DIC(81.1,
+             CPT Copyright               #81.2       ^DIC(81.2,
+             CPT Modifier                #81.3       ^DIC(81.3,
+             Lexicon Files            #757-757.41    ^LEX(
+             Lexicon Subsets            #757.2       ^LEXT(
+ 
+         These backup files may get as large as 2.5 gigabytes.  Make sure
+         space is available before proceeding.  It should take from 70 to
+         90 minutes to create the backup files.
+ 
+         When you are creating a backup of non-subscripted globals, you are
+         saving the entire global.  You should use the utility ^%GO for
+         non-subscripted globals, and when prompted for a global, enter 
+         the global root (global name only, no open parenthesis, no file
+         number and no commas, as shown below).  Examples:
+ 
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^ICPT            CPT
+             ^LEX             Lexicon Files
+             ^LEXT            Lexicon Subsets
+ 
+         When you are creating a backup of a subscripted global, you are
+         saving a partial global (a file within a global).  You should use
+         the utility ^%GOGEN, and when prompted for a global, enter the open
+         global reference (as shown below).  Examples:
+ 
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^DIC(81.1,       CPT Category
+             ^DIC(81.2,       CPT Copyright
+             ^DIC(81.3,       CPT Modifier
+ 
+     4)  Install the data from the global host file LEX_2_104.GBL.  This
+         file contains the Lexicon Utility's import global ^LEXM.
+ 
+         This global is approximately 128 megabytes in size.  Make sure
+         there is sufficient space available to load this global with
+         journaling on.  The loading of the global should take from 
+         1 to 3 minutes.
+ 
+         From the Programmer prompt, execute the following routine:
+ 
+            >D ^%GI
+ 
+            Global input
+ 
+            Device: VA5$:[ANONYMOUS.SOFTWARE]LEX_2_104.GBL Parameter: RS=>
+            Globals were saved on 30 Nov 2015  12:44 PM  Cache
+            with description: LEX*2.0*104/ICPT*6.0*74 Data
+ 
+            Input option: A
+              ^LEXM
+ 
+     5)  Set up user and IO variables (D ^XUP) for programmer access.
+ 
+     6)  Distribution Load:
+ 
+         Load the KIDS Distribution from the Packman Message using the
+         Packman function "Install/Check Message."
+ 
+     7)  KIDS Installation:
+ 
+         Install the patch using the KIDS Installation Menu action
+         "Install Package(s)" and the install name LEX*2.0*104.
+ 
+           Respond "NO" at the "Want KIDS to INHIBIT LOGONs during
+           the install?" prompt.
+ 
+           Respond "NO" at the "Want to DISABLE Scheduled Options,
+           Menu Options, and Protocols?" prompt.
+ 
+         The KIDs install should take from 5-11 minutes
+ 
+     8)  Cleanup
+ 
+         a)  The Environment Check routine LEX2104 and the Post-Install 
+             routine LEX2104P should be deleted using the KERNEL option 
+             'Delete Routines' [XTRDEL] upon completion of the
+             installation.
+  
+  ROUTINE SUMMARY:
+  =============== 
+  
+    The second line of each of these routines will look like:
+  
+        <tab>;;2.0;LEXICON UTILITY;**[PATCH LIST]**;Sep 23, 1996
+  
+    The following checksums were created using CHECK1^XTSUMBLD 
+  
+                  Checksums      Checksums  
+      Routine    Before Patch   After Patch   Patch List (2nd Line)
+      --------  -------------  -------------  ---------------------
+      LEX2104      NA           152665691     104
+      LEX2104P     NA            22497005     104
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;LEXICON UTILITY;**[Patch List]**;Sep 23, 1996;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LEX2104
+    Before:       n/a   After:B152665691  **104**
+Routine Name: LEX2104P
+    Before:       n/a   After: B22497005  **104**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 30, 2015
+Completed By:                               Date Completed: DEC 24, 2015
+Released By :                               Date Released : DEC 29, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

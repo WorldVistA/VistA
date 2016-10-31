@@ -1,0 +1,218 @@
+
+=============================================================================
+Run Date: NOV 25, 2014                     Designation: PXRM*2*39
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #31                      Status: Released
+                  Compliance Date: DEC 26, 2014
+=============================================================================
+
+Associated patches: (v)PXRM*2*24   <<= must be installed BEFORE `PXRM*2*39'
+
+Subject: AIRBORNE HAZARD/BURNPIT EVALUATION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Airborne Hazard and Open Burn Pit Registry Initial Evaluation
+  
+ The Airborne Hazard and Burn Pit Registry Clinical Reminder Dialog 
+ Template was developed by the War-Related illness and Injury Study Center 
+ (WRIISC) and Office of Public Health - Post-Deployment Health.  The 
+ purpose of this template is to support the provider in a focused 
+ evaluation of a Veteran who requests an examination after completing the 
+ Airborne Hazards and Open Burn Pit Registry Self-Assessment.  The 
+ template may also be useful for encounters where deployment health 
+ concerns are expressed regardless of whether the Veteran is participating 
+ in the registry.  The template may be completed by a primary care 
+ provider, environmental health clinician, post-deployment champion, or a 
+ pulmonologist.  This template is critical to improving the process and 
+ documentation of clinical care, and facilitating high quality care and 
+ programmatic quality improvement.
+  
+ Recommendations:
+ ================
+ It is recommended that the reminder dialog first be installed into TEST 
+ account.  After installation into TEST account the CAC/HIS will need to 
+ provide the appropriate stakeholder(s)s access to TEST account so the 
+ dialog can be reviewed.  The stakeholders should be familiar with the 
+ functionality and content of the dialog before implementing into 
+ Production.
+  
+ This dialog should be linked to the progress note title, AIRBORNE 
+ HAZARD/BURN PIT REGISTRY INITIAL EVALUATION NOTE.  The CAC/HIS will need 
+ to create the note title and link it to the VHA Enterprise Standard 
+ Title, PERSIAN GULF REGISTRY E & M NOTE.
+  
+ Associated Remedy Tickets:
+ ==========================
+ 1.  INC000000943599 - Airborne Hazard and Burn Pit Dialog
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Site(s)
+ ==========================
+ Indianapolis VAMC, IN 
+ Detroit VAMC, MI
+ VA New Jersey HCS 
+  
+ REMEDY OVERVIEW:
+ ================
+ 1.  INC000000943599 -Airborne Hazard and Burn Pit Dialog
+  
+  
+ Problem:
+ --------
+ The War-Related Illness and Injury Study Center (WRIISC) and Office of 
+ Public Health - Post-Deployment Health have developed the Airborne Hazard 
+ and Burn Pit Registry Clinical Reminder Dialog Template to be implemented.
+  
+ Resolution:
+ -----------
+ This patch, PXRM*2*39, contains two routines, PXRMP39E and PXRMP39I.  
+ They are init tasks that add new entries to the REMINDER EXCHANGE 
+ (#811.8) file and the contents of these entries are installed during the 
+ post-init.  These routines can be deleted after the install.  They 
+ perform the following during installation:
+  
+   1.  COMPONENT INVENTORY 
+   The VA-AH-BPR INITIAL EVALUATION NOTE Reminder Dialog contains:  
+    1 Dialog
+    3 Branching Terms
+   21 TIU objects
+    7 Health Factor Categories
+   68 Health Factors
+    2 TIU Template Fields
+    1 Sponsor
+  
+   2.  REMINDER DIALOG NAME:  
+   VA-AH-BPR INITIAL EVALUATION NOTE
+  
+   3.  TERMS:
+   The following 3 branching reminder terms are exported with the reminder.
+   These terms require local modification and mapping.
+   VA-AH-BPR AUDIT C DUE (BRANCHING LOGIC)
+   VA-AH-BPR PTSD SCREEN DUE (BRANCHING LOGIC)
+   VA-AH-BPR DEPRESSION SCREEN DUE (BRANCHING LOGIC)
+  
+   4.  LOCAL ORDER DIALOGS:
+   The dialog has eight elements used for ordering appropriate
+   interventions through the note.  The "Additional findings" field in the
+   elements will need to be mapped to the correct local order dialog (quick
+   order, generic order, order set, or order menu).  Instructions are
+   included below.
+  
+   5.  PATIENT DATA OBJECTS:
+   Twenty-one TIU /health summary objects/types will install with this 
+   patch; however, only twelve are new.  The NEW HEALTH SUMMARY TYPES WILL
+   NEED TO BE MAPPED TO LOCAL ITEMS.
+  
+   6.  HEALTH FACTORS:
+   There are 7 new health factors categories containing 68 new health 
+   factors.  Three health factors should already exist; CURRENT SMOKER, 
+   PREVIOUS SMOKER, and LIFETIME NON-SMOKER.
+  
+ Build Components:
+ =================
+ N/A
+  
+ Data Dictionary:
+ ================
+ N/A
+  
+ Software & Documentation Retrieval Instructions:
+ ================================================
+ This patch is being distributed as a host file.  The name of the host 
+ file is PXRM_2_0_39.KID.  This file should be downloaded in ASCII format.
+  
+ The preferred method for obtaining these files is to use File Transfer 
+ Protocol (FTP) to download them from:
+  
+     ftp://download.vista.domain.ext/.
+  
+  
+ This transmits the files from the first available FTP server.  Sites may 
+ also elect to retrieve the files directly from a specific server as 
+ follows:
+  
+     Albany              ftp.domain.ext
+     Hines               ftp.domain.ext
+     Salt Lake City      ftp.domain.ext
+  
+ The Install and Setup Guide is also available on the above servers.  It 
+ is available as .pdf format.  This file should be downloaded in BINARY 
+ format.  
+  
+     File Name:                  Description:            Protocol:
+     ==========                  ============            =========
+     PXRM_2_0_39_IG.PDF          PXRM*2.0*39 Install     BINARY
+                                 and Setup Guide
+     PXRM_2_0_39.KID             PXRM*2.0*39 Host File   ASCII
+     PXRM_2_0_39_CAC_CKLIST.PDF  CAC Checklist           BINARY
+  
+ Documentation can also be found on the VistA Documentation Library (VDL) 
+ at:  http://www.domain.ext/vdl/
+  
+ Installation:
+ =============
+ This patch can be loaded with users on the system.  Installation will 
+ take ten to fifteen minutes.  Refer to the Install and Setup Guide, 
+ PXRM_2_0_39_IG.PDF, for complete details.
+  
+  
+ 1.  Use the "Load a Distribution" option on the KIDS installation menu.  
+     When prompted to enter a host file type in PXRM_2_0_39.KID
+  
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     options, as desired:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify checksums in Transport Global
+         Backup a Transport Global
+  
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use PXRM*2.0*39
+  
+ 4.  When prompted "Want KIDS to INHIBIT LOGONs during the install?  
+     NO//," respond 'NO'.
+  
+ 5.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO// respond 'NO'.
+  
+ 6.  After successful installation, the following init routines may be 
+     deleted
+  
+     PXRMP39E
+     PXRMP39I
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 209
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMP39E
+    Before:       n/a   After:   B995838  **39**
+Routine Name: PXRMP39I
+    Before:       n/a   After:  B2487287  **39**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 11, 2013
+Completed By:                               Date Completed: NOV 25, 2014
+Released By :                               Date Released : NOV 25, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

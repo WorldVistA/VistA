@@ -1,0 +1,140 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 12/10/14 at 16:24
+=============================================================================
+Run Date: FEB 17, 2015                     Designation: IB*2*541
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #491                      Status: Released
+                  Compliance Date: FEB 19, 2015
+=============================================================================
+
+
+Subject: CY2015 TRICARE PHARMACY ADMINISTRATIVE FEE UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will update the pharmacy administrative charge based on a new
+ DISPENSING FEE field (#1.01) to $11.16, for RATE SCHEDULE NAME = 'TRRI-RX'
+ (TRICARE REIMB. INS.) and RATE SCHEDULE NAME = 'TR-RX' (TRIARE), for 
+ Reimbursement Insurance prescription claims in the RATE SCHEDULE file 
+ (#363). This has an effective date of February 20, 2015.
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1. INC000001090350 TRICARE Pharmacy Administrative Fee Update for CY2015
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Upstate New York HCS
+ VA Maryland HCS
+ VA Caribbean HCS
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001090350 TRICARE Pharmacy Administrative Fee Update for CY2015
+  
+ Problem:
+ --------
+ The Chief Business Office has requested a patch to update the pharmacy
+ administrative fee $11.16 of the 3rd party prescription for the Tricare and
+ Tricare Reimbursement Insurance rate types with an effective date of
+ February 20, 2015.
+  
+ Resolution:
+ -----------
+ A post-init routine IB20P541 was created to inactivate the current 
+ DISPENSING FEE for the TRICARE and TRICARE REIMB. INS. rate types with an
+ inactive date of February 19, 2015. It also added the DISPENSING FEE field
+ (#1.01) of $11.16 for RATE SCHEDULE NAME = 'TRRI-RX'(TRICARE REIMB. INS.)
+ and RATE SCHEDULE NAME = 'TR-RX' (TRIARE) in the RATE SCHEDULE file (#363)
+ with an effective date of February 20, 2015.
+  
+    ==================== INSTALLATION INSTRUCTIONS ====================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes. 
+   
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+   
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*541):
+   
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+  
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+  
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+   
+ 4.   Select Installation Option: Install Package(s)
+    
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+  
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//',answer NO.
+  
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//',answer NO.
+   
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P541.
+  
+ 6.   Example of successful installation.
+  
+ Patch IB*2.0*541 Post-Install starts...
+  
+     >>>TRICARE REIMB. INS. rate schedule with adjustments added
+     >>>TRICARE rate schedule with adjustments added
+  
+     Total 2 entries updated in the Rate Schedule file (#363)
+  
+ Patch IB*2.0*541 Post-Install is complete.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 31
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P541
+    Before:       n/a   After:  B6888273  **541**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 08, 2014
+Completed By:                               Date Completed: FEB 10, 2015
+Released By :                               Date Released : FEB 17, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,703 @@
+Released SR*3*186 SEQ #177
+Extracted from mail message
+**KIDS**:SR*3.0*186^
+
+**INSTALL NAME**
+SR*3.0*186
+"BLD",10012,0)
+SR*3.0*186^SURGERY^0^3160128^y
+"BLD",10012,1,0)
+^^12^12^3160128^
+"BLD",10012,1,1,0)
+The patch addresses two (2) issues:
+"BLD",10012,1,2,0)
+ 
+"BLD",10012,1,3,0)
+1.   When a user edits the PROSTHESIS INSTALLED data for a completed
+"BLD",10012,1,4,0)
+     surgery case using the Operation option [SROMEN-OP] of the
+"BLD",10012,1,5,0)
+     Operation Menu option [SROPER] of the Surgery Menu option
+"BLD",10012,1,6,0)
+     [SROMENU] and answers "NO" when prompted to create an addendum,
+"BLD",10012,1,7,0)
+     an application error occurs.
+"BLD",10012,1,8,0)
+ 
+"BLD",10012,1,9,0)
+2.   When a user edits Surgery Flag Interface Fields and enters a
+"BLD",10012,1,10,0)
+     caret ("^") to escape the edit session prior to completion, the
+"BLD",10012,1,11,0)
+     application erroneously adds a field delimiter to the selected
+"BLD",10012,1,12,0)
+     category record in the SURGERY INTERFACE PARAMETER File (#133.2).
+"BLD",10012,4,0)
+^9.64PA^^
+"BLD",10012,6.3)
+3
+"BLD",10012,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10012,"KRN",.4,0)
+.4
+"BLD",10012,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",10012,"KRN",.401,0)
+.401
+"BLD",10012,"KRN",.402,0)
+.402
+"BLD",10012,"KRN",.403,0)
+.403
+"BLD",10012,"KRN",.5,0)
+.5
+"BLD",10012,"KRN",.84,0)
+.84
+"BLD",10012,"KRN",3.6,0)
+3.6
+"BLD",10012,"KRN",3.8,0)
+3.8
+"BLD",10012,"KRN",9.2,0)
+9.2
+"BLD",10012,"KRN",9.8,0)
+9.8
+"BLD",10012,"KRN",9.8,"NM",0)
+^9.68A^3^2
+"BLD",10012,"KRN",9.8,"NM",2,0)
+SROESNR1^^0^B56593567
+"BLD",10012,"KRN",9.8,"NM",3,0)
+SRHLSCRN^^0^B26150504
+"BLD",10012,"KRN",9.8,"NM","B","SRHLSCRN",3)
+
+"BLD",10012,"KRN",9.8,"NM","B","SROESNR1",2)
+
+"BLD",10012,"KRN",19,0)
+19
+"BLD",10012,"KRN",19.1,0)
+19.1
+"BLD",10012,"KRN",101,0)
+101
+"BLD",10012,"KRN",409.61,0)
+409.61
+"BLD",10012,"KRN",771,0)
+771
+"BLD",10012,"KRN",779.2,0)
+779.2
+"BLD",10012,"KRN",870,0)
+870
+"BLD",10012,"KRN",8989.51,0)
+8989.51
+"BLD",10012,"KRN",8989.52,0)
+8989.52
+"BLD",10012,"KRN",8994,0)
+8994
+"BLD",10012,"KRN","B",.4,.4)
+
+"BLD",10012,"KRN","B",.401,.401)
+
+"BLD",10012,"KRN","B",.402,.402)
+
+"BLD",10012,"KRN","B",.403,.403)
+
+"BLD",10012,"KRN","B",.5,.5)
+
+"BLD",10012,"KRN","B",.84,.84)
+
+"BLD",10012,"KRN","B",3.6,3.6)
+
+"BLD",10012,"KRN","B",3.8,3.8)
+
+"BLD",10012,"KRN","B",9.2,9.2)
+
+"BLD",10012,"KRN","B",9.8,9.8)
+
+"BLD",10012,"KRN","B",19,19)
+
+"BLD",10012,"KRN","B",19.1,19.1)
+
+"BLD",10012,"KRN","B",101,101)
+
+"BLD",10012,"KRN","B",409.61,409.61)
+
+"BLD",10012,"KRN","B",771,771)
+
+"BLD",10012,"KRN","B",779.2,779.2)
+
+"BLD",10012,"KRN","B",870,870)
+
+"BLD",10012,"KRN","B",8989.51,8989.51)
+
+"BLD",10012,"KRN","B",8989.52,8989.52)
+
+"BLD",10012,"KRN","B",8994,8994)
+
+"BLD",10012,"QDEF")
+^^^^NO^^^^^^NO
+"BLD",10012,"QUES",0)
+^9.62^^
+"BLD",10012,"REQB",0)
+^9.611^2^2
+"BLD",10012,"REQB",1,0)
+SR*3.0*41^2
+"BLD",10012,"REQB",2,0)
+SR*3.0*184^2
+"BLD",10012,"REQB","B","SR*3.0*184",2)
+
+"BLD",10012,"REQB","B","SR*3.0*41",1)
+
+"MBREQ")
+0
+"PKG",308,-1)
+1^1
+"PKG",308,0)
+SURGERY^SR^SURGICAL DATA COLLECTION AND OPERATIONS SCHEDULING
+"PKG",308,20,0)
+^9.402P^^
+"PKG",308,22,0)
+^9.49I^1^1
+"PKG",308,22,1,0)
+3.0^2930624^2940818
+"PKG",308,22,1,"PAH",1,0)
+186^3160128
+"PKG",308,22,1,"PAH",1,1,0)
+^^12^12^3160128
+"PKG",308,22,1,"PAH",1,1,1,0)
+The patch addresses two (2) issues:
+"PKG",308,22,1,"PAH",1,1,2,0)
+ 
+"PKG",308,22,1,"PAH",1,1,3,0)
+1.   When a user edits the PROSTHESIS INSTALLED data for a completed
+"PKG",308,22,1,"PAH",1,1,4,0)
+     surgery case using the Operation option [SROMEN-OP] of the
+"PKG",308,22,1,"PAH",1,1,5,0)
+     Operation Menu option [SROPER] of the Surgery Menu option
+"PKG",308,22,1,"PAH",1,1,6,0)
+     [SROMENU] and answers "NO" when prompted to create an addendum,
+"PKG",308,22,1,"PAH",1,1,7,0)
+     an application error occurs.
+"PKG",308,22,1,"PAH",1,1,8,0)
+ 
+"PKG",308,22,1,"PAH",1,1,9,0)
+2.   When a user edits Surgery Flag Interface Fields and enters a
+"PKG",308,22,1,"PAH",1,1,10,0)
+     caret ("^") to escape the edit session prior to completion, the
+"PKG",308,22,1,"PAH",1,1,11,0)
+     application erroneously adds a field delimiter to the selected
+"PKG",308,22,1,"PAH",1,1,12,0)
+     category record in the SURGERY INTERFACE PARAMETER File (#133.2).
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","SRHLSCRN")
+0^3^B26150504^B26127710
+"RTN","SRHLSCRN",1,0)
+SRHLSCRN ;B'HAM ISC/DLR - Surgery Interface Menu to initial field settings ; [ 05/06/98   7:14 AM ]
+"RTN","SRHLSCRN",2,0)
+ ;;3.0;Surgery ;**41,186**;24 Jun 93;Build 3
+"RTN","SRHLSCRN",3,0)
+ ; Per VHA Directive 10-93-142, this routine SHOULD NOT be modified.
+"RTN","SRHLSCRN",4,0)
+ N CNT,CNT1,OUT,SRA,SRX,SRY,SROBR,SROBX
+"RTN","SRHLSCRN",5,0)
+ S (CNT,SRX)=0 F  S SRX=$O(^SRO(133.2,SRX)) Q:'SRX  I $D(^SRO(133.2,SRX,2,0)) S CNT=CNT+1,CNT(CNT)=SRX D
+"RTN","SRHLSCRN",6,0)
+ .S (CNT1,SRY)=0 F  S SRY=$O(^SRO(133.2,SRX,2,SRY)) Q:'SRY  S CNT1=CNT1+1,CNT(CNT,CNT1)=SRY,CNT(CNT,0)=CNT1
+"RTN","SRHLSCRN",7,0)
+ F  W @IOF S (OUT,SROBR)=0 S SROBR=$$HDR(SROBR) Q:$G(OUT)=1  D
+"RTN","SRHLSCRN",8,0)
+ .I +SROBR>0&(+SROBR'>CNT) D OBR Q:$G(OUT)=1  F  W @IOF S SROBX=0 S OUT=0,SROBX=$$HDR1(SROBR,SROBX) Q:$G(OUT)=1  D:$D(CNT(SROBR,SROBX))
+"RTN","SRHLSCRN",9,0)
+ ..D KDIR S DA=CNT(SROBR,SROBX),DIR("A")="Enter the new setting",DIR(0)="133.2,3" D ^DIR I $D(DIRUT) S OUT=1 Q
+"RTN","SRHLSCRN",10,0)
+ ..I SRA'[Y,Y'="I" W !,"This setting does not correspond to the upper level setting.",!," Press <RETURN> to continue:" R X:DTIME Q
+"RTN","SRHLSCRN",11,0)
+ ..S $P(^SRO(133.2,CNT(SROBR,SROBX),0),U,4)=Y I $D(^(1,0)) S X=0 F  S X=$O(^SRO(133.2,CNT(SROBR,SROBX),1,X)) Q:'X  S $P(^SRO(133.2,X,0),U,4)=Y
+"RTN","SRHLSCRN",12,0)
+ W @IOF
+"RTN","SRHLSCRN",13,0)
+EXIT D KDIR
+"RTN","SRHLSCRN",14,0)
+ Q
+"RTN","SRHLSCRN",15,0)
+HDR(SROBR) ;header for the OBR Menu
+"RTN","SRHLSCRN",16,0)
+ N HDR,SRX
+"RTN","SRHLSCRN",17,0)
+ S HDR="Surgery Interface Setup Menu" W ?((IOM-$L(HDR))/2),HDR
+"RTN","SRHLSCRN",18,0)
+ W !!,"To change the setting in one of the following categories, enter the",!,"corresponding number.",!," (R - Receive)",!," (S - Send)",!," (S/R - Send and Receive)",!," (I - Ignore)"
+"RTN","SRHLSCRN",19,0)
+ W !!
+"RTN","SRHLSCRN",20,0)
+ S SRX=0 F  S SRX=$O(CNT(SRX)) Q:'SRX  W !,$J(SRX,3),".  ",$P(^SRO(133.2,CNT(SRX),0),U)," ",$S($P(^(0),U,4)'="":"("_$P(^(0),U,4)_")",1:"(I)")
+"RTN","SRHLSCRN",21,0)
+ W ! D KDIR S DIR(0)="NO:1:CNT" D  D ^DIR S:$D(DIRUT) OUT=1 I '$D(DIRUT) S SROBR=Y
+"RTN","SRHLSCRN",22,0)
+ .S DIR("?")="Enter the corresponding number of the category you wish to edit. To edit underlying fields, set the category to R for receive or S to send."
+"RTN","SRHLSCRN",23,0)
+ .S DIR("?",1)="The categories above refer to VISTA Surgery data fields.  Below are examples:"
+"RTN","SRHLSCRN",24,0)
+ .S DIR("?",2)="OPERATION -> File 130 fields."
+"RTN","SRHLSCRN",25,0)
+ .S DIR("?",3)="TOURNIQUET -> TIME TOURNIQUET APPLIED (#.48) and File 130.02 fields."
+"RTN","SRHLSCRN",26,0)
+ .S DIR("?",4)="MONITOR -> MONITORS (#.293) and File 130.41 fields."
+"RTN","SRHLSCRN",27,0)
+ .S DIR("?",5)="MEDICATION -> MEDICATIONS (#.375) and File 130.33 fields."
+"RTN","SRHLSCRN",28,0)
+ .S DIR("?",6)="ANESTHESIA -> ANESTHESIA TECHNIQUE (#.37) and File 130.06 fields."
+"RTN","SRHLSCRN",29,0)
+ Q SROBR
+"RTN","SRHLSCRN",30,0)
+HDR1(SROBR,SROBX) ;header for the OBX Menu
+"RTN","SRHLSCRN",31,0)
+ N HDR1,SRX
+"RTN","SRHLSCRN",32,0)
+ S HDR1=$P(^SRO(133.2,CNT(SROBR),0),U)_" DATA" W ?((IOM-$L(HDR1))/2),HDR1
+"RTN","SRHLSCRN",33,0)
+ W !!,"Toggle the current setting to (R)eceive, (S)end, or (I)gnore."
+"RTN","SRHLSCRN",34,0)
+ W !
+"RTN","SRHLSCRN",35,0)
+ S SRX=0 F  S SRX=$O(CNT(SROBR,SRX)) Q:SRX>(CNT(SROBR,0)\2+(CNT(SROBR,0)#2))!('SRX)  D
+"RTN","SRHLSCRN",36,0)
+ .W !,$J(SRX,2),". ",$P(^SRO(133.2,CNT(SROBR,SRX),0),U)," ",$S($P(^(0),U,4)'="":"("_$P(^(0),U,4)_")",1:"(I)")
+"RTN","SRHLSCRN",37,0)
+ .I $D(CNT(SROBR,SRX+(CNT(SROBR,0)\2+(CNT(SROBR,0)#2)))) D
+"RTN","SRHLSCRN",38,0)
+ ..W ?40,$J(SRX+(CNT(SROBR,0)\2+(CNT(SROBR,0)#2)),2),". ",$P(^SRO(133.2,CNT(SROBR,SRX+(CNT(SROBR,0)\2+(CNT(SROBR,0)#2))),0),U)," ",$S($P(^(0),U,4)'="":"("_$P(^(0),U,4)_")",1:"(I)")
+"RTN","SRHLSCRN",39,0)
+ W ! D KDIR S DIR(0)="NO:1:CNT(SROBR,0)",DIR("?")="To toggle the current setting of an item, enter its corresponding number." D SDIR D ^DIR S:$D(DIRUT) OUT=1 I '$D(DIRUT) S SROBX=Y
+"RTN","SRHLSCRN",40,0)
+ Q SROBX
+"RTN","SRHLSCRN",41,0)
+OBR ;
+"RTN","SRHLSCRN",42,0)
+ N X,X1
+"RTN","SRHLSCRN",43,0)
+ D KDIR S DIR("A")="Do you wish to change the current setting of "_$P(^SRO(133.2,CNT(SROBR),0),U),DIR(0)="133.2,3^O",DA=CNT(SROBR) D ^DIR I $D(DIRUT) S OUT=1 Q
+"RTN","SRHLSCRN",44,0)
+ S $P(^SRO(133.2,CNT(SROBR),0),U,4)=Y I $D(^SRO(133.2,CNT(SROBR),1,0)) S X=0 F  S X=$O(^SRO(133.2,CNT(SROBR),1,X)) Q:'X  S:Y'="S/R" $P(^SRO(133.2,X,0),U,4)=Y
+"RTN","SRHLSCRN",45,0)
+ S SRA=Y I Y="S/R" K DA
+"RTN","SRHLSCRN",46,0)
+ I SRA="S" D
+"RTN","SRHLSCRN",47,0)
+ .I $D(^SRO(133.2,CNT(SROBR),1,0)) S X=0 F  S X=$O(^SRO(133.2,CNT(SROBR),1,X)) Q:'X  S:$P(^SRO(133.2,X,0),U,4)="R" $P(^SRO(133.2,X,0),U,4)="S"
+"RTN","SRHLSCRN",48,0)
+ .I $D(^SRO(133.2,CNT(SROBR),2,0)) S X=0 F  S X=$O(^SRO(133.2,CNT(SROBR),2,X)) Q:'X  S:$P(^SRO(133.2,X,0),U,4)="R" $P(^(0),U,4)="S" I $D(^SRO(133.2,X,1,0)) S X1=0 F  S X1=$O(^SRO(133.2,X,1,X1)) Q:'X1  S $P(^SRO(133.2,X1,0),U,4)="S"
+"RTN","SRHLSCRN",49,0)
+ I SRA="R" D
+"RTN","SRHLSCRN",50,0)
+ .I $D(^SRO(133.2,CNT(SROBR),1,0)) S X=0 F  S X=$O(^SRO(133.2,CNT(SROBR),1,X)) Q:'X  S:$P(^SRO(133.2,X,0),U,4)="S" $P(^SRO(133.2,X,0),U,4)="R"
+"RTN","SRHLSCRN",51,0)
+ .I $D(^SRO(133.2,CNT(SROBR),2,0)) S X=0 F  S X=$O(^SRO(133.2,CNT(SROBR),2,X)) Q:'X  S:$P(^SRO(133.2,X,0),U,4)="S" $P(^(0),U,4)="R" I $D(^SRO(133.2,X,1,0)) S X1=0 F  S X1=$O(^SRO(133.2,X,1,X1)) Q:'X1  S $P(^SRO(133.2,X1,0),U,4)="R"
+"RTN","SRHLSCRN",52,0)
+ I $P(^SRO(133.2,CNT(SROBR),0),U,4)="I" S OUT=1
+"RTN","SRHLSCRN",53,0)
+ Q
+"RTN","SRHLSCRN",54,0)
+KDIR ;kills all DIR variables
+"RTN","SRHLSCRN",55,0)
+ K DIR,DIRUT,DUOUT,DTOUT,DIROUT
+"RTN","SRHLSCRN",56,0)
+ Q
+"RTN","SRHLSCRN",57,0)
+SDIR ;sets the DIR help screen for the OBX identifiers
+"RTN","SRHLSCRN",58,0)
+ S DIR("?",1)="These items correspond to fields in the VISTA Surgery package."
+"RTN","SRHLSCRN",59,0)
+ I SROBR=1 D
+"RTN","SRHLSCRN",60,0)
+ .S DIR("?",1)="The items above refer to VISTA Surgery package fields.  Below are examples:"
+"RTN","SRHLSCRN",61,0)
+ .S DIR("?",2)="  HR -> End Pulse (#.84)"
+"RTN","SRHLSCRN",62,0)
+ .S DIR("?",3)="  BP -> End BP    (#.85)"
+"RTN","SRHLSCRN",63,0)
+ .S DIR("?",4)="  RR -> End Resp  (#.86)"
+"RTN","SRHLSCRN",64,0)
+ Q
+"RTN","SROESNR1")
+0^2^B56593567^B55559388
+"RTN","SROESNR1",1,0)
+SROESNR1 ;BIR/ADM - NURSE REPORT E-SIG UTILITY ;06/07/2011
+"RTN","SROESNR1",2,0)
+ ;;3.0;Surgery;**100,143,157,176,182,184,186**;24 Jun 93;Build 3
+"RTN","SROESNR1",3,0)
+ ;** NOTICE: This routine is part of an implementation of a nationally
+"RTN","SROESNR1",4,0)
+ ;**         controlled procedure.  Local modifications to this routine
+"RTN","SROESNR1",5,0)
+ ;**         are prohibited.
+"RTN","SROESNR1",6,0)
+ ;
+"RTN","SROESNR1",7,0)
+MULT ; process multiples
+"RTN","SROESNR1",8,0)
+ N I,SRFF,SRI,SRK1,SRP,SRJ,SRFLD,SRNP,SRN,SRCAT,SRP,SRSUB,SRL,SRE,SRE1,SRW,X,Y
+"RTN","SROESNR1",9,0)
+ S SRI="."_$P(SRK,".",2) D TR S SRK1=SRP
+"RTN","SROESNR1",10,0)
+ F SRJ=0:1 S SRFLD=$P($T(@SRK1+SRJ),";;",2) Q:SRFLD=""  D ^SROESNRA
+"RTN","SROESNR1",11,0)
+ Q
+"RTN","SROESNR1",12,0)
+REV N SRP D TR S SRK1=SRP D
+"RTN","SROESNR1",13,0)
+ .I SRCAT="Anesthesia Technique(s)" D REV^SROESNR3 Q
+"RTN","SROESNR1",14,0)
+ .S SRFLD=$P($T(@SRK1+SRJ),";;",2)
+"RTN","SROESNR1",15,0)
+ Q
+"RTN","SROESNR1",16,0)
+TR S SRP=SRI,SRP=$TR(SRP,"1234567890.,","ABCDEFGHIJPK")
+"RTN","SROESNR1",17,0)
+ Q
+"RTN","SROESNR1",18,0)
+ ;;
+"RTN","SROESNR1",19,0)
+PBC ;;Other Scrubbed Assistant(s)^0;30^28,0
+"RTN","SROESNR1",20,0)
+ ;;Other Scrubbed Assistant(s)^01-Other Scrubbed Assistant-130.23,.01-2^28,0;1
+"RTN","SROESNR1",21,0)
+ ;;Other Scrubbed Assistant(s)^02-Comments-130.23,1;W-4^28,1,0;1
+"RTN","SROESNR1",22,0)
+ ;;
+"RTN","SROESNR1",23,0)
+PBH ;;O.R. Circulating Nurse(s)^0;.111^19,0
+"RTN","SROESNR1",24,0)
+ ;;O.R. Circulating Nurse(s)^01-O.R. Circulating Nurse-130.28,.01-2^19,0;1
+"RTN","SROESNR1",25,0)
+ ;;O.R. Circulating Nurse(s)^02-Educational Status-130.28,3-4^19,0;3
+"RTN","SROESNR1",26,0)
+PBI ;;O.R. Circulating Nurse(s)^03X-Time On-130.29,.01-4^19,1,0;1
+"RTN","SROESNR1",27,0)
+ ;;O.R. Circulating Nurse(s)^04X-Time Off-130.29,1-6^19,1,0;2
+"RTN","SROESNR1",28,0)
+ ;;O.R. Circulating Nurse(s)^05X-Reason for Relief-130.29,2-6^19,1,0;3
+"RTN","SROESNR1",29,0)
+ ;;O.R. Circulating Nurse(s)^06X-Comment-130.29,3;W-6^19,1,1,0;1
+"RTN","SROESNR1",30,0)
+ ;;
+"RTN","SROESNR1",31,0)
+PCF ;;O.R. Scrub Nurse(s)^0;.112^23,0
+"RTN","SROESNR1",32,0)
+ ;;O.R. Scrub Nurse(s)^01-O.R. Scrub Nurse-130.36,.01-2^23,0;1
+"RTN","SROESNR1",33,0)
+ ;;O.R. Scrub Nurse(s)^02-Educational Status-130.36,3-4^23,0;3
+"RTN","SROESNR1",34,0)
+ ;;O.R. Scrub Nurse(s)^03X-Time On-130.36,.01-4^19,1,0;1
+"RTN","SROESNR1",35,0)
+ ;;O.R. Scrub Nurse(s)^04X-Time Off-130.36,1-6^19,1,0;2
+"RTN","SROESNR1",36,0)
+ ;;O.R. Scrub Nurse(s)^05X-Reason for Relief-130.36,2-6^19,1,0;3
+"RTN","SROESNR1",37,0)
+ ;;O.R. Scrub Nurse(s)^06X-Comment-130.36,3;W-6^19,1,1,0;1
+"RTN","SROESNR1",38,0)
+ ;;
+"RTN","SROESNR1",39,0)
+PBD ;;Other Persons in O.R.^0;31^32,0
+"RTN","SROESNR1",40,0)
+ ;;Other Persons in O.R.^01-Other Person in O.R.-130.24,.01-2^32,0;1
+"RTN","SROESNR1",41,0)
+ ;;Other Persons in O.R.^02-Title/Organization-130.24,1-4^32,0;2
+"RTN","SROESNR1",42,0)
+ ;;
+"RTN","SROESNR1",43,0)
+PJFE ;;Surgery Position(s)^0;65^42,0
+"RTN","SROESNR1",44,0)
+ ;;Surgery Position(s)^01-Position-130.065,.01-2^42,0;1
+"RTN","SROESNR1",45,0)
+ ;;Surgery Position(s)^02-Placed-130.065,1-4^42,0;2
+"RTN","SROESNR1",46,0)
+ ;;
+"RTN","SROESNR1",47,0)
+PCA ;;Restraints and Position Aids^0;.13^20,0
+"RTN","SROESNR1",48,0)
+ ;;Restraints and Position Aids^01-Restraint/Position Aid-130.31,.01-2^20,0;1
+"RTN","SROESNR1",49,0)
+ ;;Restraints and Position Aids^02-Applied By-130.31,1-4^20,0;2
+"RTN","SROESNR1",50,0)
+ ;;Restraints and Position Aids^03-Comments-130.31,2-4^20,0;3
+"RTN","SROESNR1",51,0)
+ ;;
+"RTN","SROESNR1",52,0)
+PJBH ;;Principal CPT Modifier^0;28^OPMOD,0
+"RTN","SROESNR1",53,0)
+ ;;Principal CPT Modifier^01-CPT Modifier-130.028,.01-2^OPMOD,0;1
+"RTN","SROESNR1",54,0)
+ ;;
+"RTN","SROESNR1",55,0)
+PAF ;;Other Procedures Performed^0;.42^13,0
+"RTN","SROESNR1",56,0)
+ ;;Other Procedures Performed^01-Other Procedure-130.16,.01-2^13,0;1
+"RTN","SROESNR1",57,0)
+ ;;Other Procedures Performed^02-CPT Code-130.16,3-4^13,2;1
+"RTN","SROESNR1",58,0)
+PAFD ;;Other Procedures Performed^03-CPT Modifier-130.164,.01-4^13,MOD,0;1
+"RTN","SROESNR1",59,0)
+ ;;Other Procedures Performed^04X-Completed-130.16,2-4^13,0;3
+"RTN","SROESNR1",60,0)
+ ;;Other Procedures Performed^05X-Procedure Code Comments-130.16,1.5;W-4^13,1,0;1
+"RTN","SROESNR1",61,0)
+ ;;
+"RTN","SROESNR1",62,0)
+PJB ;;Tourniquet^0;.48^2,0
+"RTN","SROESNR1",63,0)
+ ;;Tourniquet^01-Time Applied-130.02,.01-2^2,0;1
+"RTN","SROESNR1",64,0)
+ ;;Tourniquet^02-Time Released-130.02,3-4^2,0;4
+"RTN","SROESNR1",65,0)
+ ;;Tourniquet^03-Site Applied-130.02,1-4^2,0;2
+"RTN","SROESNR1",66,0)
+ ;;Tourniquet^04-Pressure Applied (in TORR)-130.02,4-4^2,0;5
+"RTN","SROESNR1",67,0)
+ ;;Tourniquet^05-Applied By-130.02,2-4^2,0;3
+"RTN","SROESNR1",68,0)
+ ;;
+"RTN","SROESNR1",69,0)
+PCB ;;Thermal Unit^0;.757^21,0
+"RTN","SROESNR1",70,0)
+ ;;Thermal Unit^01-Thermal Unit-130.32,.01-2^21,0;1
+"RTN","SROESNR1",71,0)
+ ;;Thermal Unit^02-Temperature-130.32,2-4^21,0;3
+"RTN","SROESNR1",72,0)
+ ;;Thermal Unit^03-Time On-130.32,1-4^21,0;2
+"RTN","SROESNR1",73,0)
+ ;;Thermal Unit^04-Time Off-130.32,3-4^21,0;4
+"RTN","SROESNR1",74,0)
+ ;;
+"RTN","SROESNR1",75,0)
+PJA ;;Prosthesis Installed^0;.47^1,0
+"RTN","SROESNR1",76,0)
+ ;;Prosthesis Installed^01-Item-130.01,.01-2^1,0;1
+"RTN","SROESNR1",77,0)
+ ;;Prosthesis Installed^02-Sterility Checked-130.01,8-4^1,2;1
+"RTN","SROESNR1",78,0)
+ ;;Prosthesis Installed^03-Sterility Expiration Date-130.01,9-4^1,2;2
+"RTN","SROESNR1",79,0)
+ ;;Prosthesis Installed^04-RN Verifier-130.01,10-4^1,2;3
+"RTN","SROESNR1",80,0)
+ ;;Prosthesis Installed^05-Vendor-130.01,1-4^1,0;2
+"RTN","SROESNR1",81,0)
+ ;;Prosthesis Installed^06-Model-130.01,2-4^1,0;3
+"RTN","SROESNR1",82,0)
+ ;;Prosthesis Installed^07-Lot/Serial Number-130.01,2.5-4^1,0;5;retired by SR176
+"RTN","SROESNR1",83,0)
+ ;;Prosthesis Installed^08-Sterile Resp-130.01,5-4^1,0;7
+"RTN","SROESNR1",84,0)
+ ;;Prosthesis Installed^09-Size-130.01,6-4^1,1;1
+"RTN","SROESNR1",85,0)
+ ;;Prosthesis Installed^10-Quantity-130.01,7-4^1,1;2
+"RTN","SROESNR1",86,0)
+ ;;Prosthesis Installed^11-Lot Number-130.01,11-4^1,1;3
+"RTN","SROESNR1",87,0)
+ ;;Prosthesis Installed^12-Serial Number-130.01,12-4^1,1;4
+"RTN","SROESNR1",88,0)
+ ;;Prosthesis Installed^13-Provider Read Back Performed-130.01,13-4^1,1;5
+"RTN","SROESNR1",89,0)
+ ;;
+"RTN","SROESNR1",90,0)
+PCC ;;Medications^0;.375^22,0
+"RTN","SROESNR1",91,0)
+ ;;Medications^01-Medication-130.33,.01-2^22,0;1
+"RTN","SROESNR1",92,0)
+PCD ;;Medications^02-Time Administered-130.34,.01-4^22,1,0;1
+"RTN","SROESNR1",93,0)
+ ;;Medications^03-Route-130.34,4-6^22,1,0;5
+"RTN","SROESNR1",94,0)
+ ;;Medications^04-Dose-130.34,1-6^22,1,0;2
+"RTN","SROESNR1",95,0)
+ ;;Medications^05-Ordered By-130.34,2-6^22,1,0;3
+"RTN","SROESNR1",96,0)
+ ;;Medications^06-Administered By-130.34,3-6^22,1,0;4
+"RTN","SROESNR1",97,0)
+ ;;Medications^07-Comments-130.34,5-6^22,1,0;6
+"RTN","SROESNR1",98,0)
+ ;;
+"RTN","SROESNR1",99,0)
+PJH ;;Irrigation Solution(s)^0;.39^26,0
+"RTN","SROESNR1",100,0)
+ ;;Irrigation Solution(s)^01-Irrigation Solution-130.08,.01-2^26,0;1
+"RTN","SROESNR1",101,0)
+PCI ;;Irrigation Solution(s)^02-Time Utilized-130.39,.01-4^26,1,0;1
+"RTN","SROESNR1",102,0)
+ ;;Irrigation Solution(s)^03-Amount-130.39,1-6^26,1,0;2
+"RTN","SROESNR1",103,0)
+ ;;Irrigation Solution(s)^04-Provider-130.39,2-6^26,1,0;3
+"RTN","SROESNR1",104,0)
+ ;;
+"RTN","SROESNR1",105,0)
+PJD ;;Blood Replacement Fluids^0;.27^4,0
+"RTN","SROESNR1",106,0)
+ ;;Blood Replacement Fluids^01-Replacement Fluid Type-130.04,.01-2^4,0;1
+"RTN","SROESNR1",107,0)
+ ;;Blood Replacement Fluids^02-Quantity (ml)-130.04,1-4^4,0;2
+"RTN","SROESNR1",108,0)
+ ;;Blood Replacement Fluids^03-Source Identification-130.04,3-4^4,0;4
+"RTN","SROESNR1",109,0)
+ ;;Blood Replacement Fluids^04-VA Identification-130.04,4-4^4,0;5
+"RTN","SROESNR1",110,0)
+ ;;Blood Replacement Fluids^05-Comments-130.04,5;W-4^4,1,0;1
+"RTN","SROESNR1",111,0)
+ ;;
+"RTN","SROESNR1",112,0)
+PAA ;;Laser Performed^0;135^56,0
+"RTN","SROESNR1",113,0)
+ ;;Laser Performed^01-Laser Name-130.11,.01-4^56,0;1
+"RTN","SROESNR1",114,0)
+ ;;Laser Performed^02-Laser Type-130.11,1-4^56,0;2
+"RTN","SROESNR1",115,0)
+ ;;Laser Performed^03-Laser Start Time-130.11,2-4^56,0;3
+"RTN","SROESNR1",116,0)
+ ;;Laser Performed^04-Laser End Date-130.11,3-4^56,0;4
+"RTN","SROESNR1",117,0)
+ ;;Laser Performed^05-Laser Test Fire-130.11,4-4^56,0;5
+"RTN","SROESNR1",118,0)
+ ;;Laser Performed^06-Laser Delivery System-130.11,5-4^56,0;6
+"RTN","SROESNR1",119,0)
+ ;;Laser Performed^07-Pulse Mode-130.11,6-4^56,0;7
+"RTN","SROESNR1",120,0)
+ ;;Laser Performed^08-Power/Average Power-130.11,7-4^56,0;8
+"RTN","SROESNR1",121,0)
+ ;;Laser Performed^09-Interval/Repetition Rate-130.11,8-4^56,0;9
+"RTN","SROESNR1",122,0)
+ ;;Laser Performed^10-Total Joules Delivered-130.11,9-4^56,0;10
+"RTN","SROESNR1",123,0)
+ ;;Laser Performed^11-Watts Delivered-130.11,10-4^56,0;11
+"RTN","SROESNR1",124,0)
+ ;;Laser Performed^12-Wave Form-130.11,11-4^56,0;12
+"RTN","SROESNR1",125,0)
+ ;;Laser Performed^13-Pulse Width-130.11,12-4^56,0;13
+"RTN","SROESNR1",126,0)
+ ;;Laser Performed^14-Energy Joules-130.11,13-4^56,0;14
+"RTN","SROESNR1",127,0)
+ ;;Laser Performed^15-Duration-130.11,14-4^56,0;15
+"RTN","SROESNR1",128,0)
+ ;;Laser Performed^16-Patient Precautions-130.11,15-4^56,0;16
+"RTN","SROESNR1",129,0)
+ ;;Laser Performed^17-Laser On Standby When Not In Use-130.11,16-4^56,0;17
+"RTN","SROESNR1",130,0)
+ ;;Laser Performed^18-Laser Off and Key Secured At End Of Use-130.11,17-4^56,0;18
+"RTN","SROESNR1",131,0)
+ ;;Laser Performed^19-Personnel Precautions-130.11,18-4^56,0;19
+"RTN","SROESNR1",132,0)
+ ;;
+"RTN","SROESNR1",133,0)
+PJAC ;;Cell Saver(s)^0;130^45,0
+"RTN","SROESNR1",134,0)
+ ;;Cell Saver(s)^01-Cell Saver ID-130.013,.01-2^45,0;1
+"RTN","SROESNR1",135,0)
+ ;;Cell Saver(s)^02-Operator-130.013,1-4^45,0;2
+"RTN","SROESNR1",136,0)
+ ;;Cell Saver(s)^03-Amount Salvaged (ml)-130.013,2-4^45,0;3
+"RTN","SROESNR1",137,0)
+ ;;Cell Saver(s)^04-Amount Reinfused (ml)-130.013,3-4^45,0;4
+"RTN","SROESNR1",138,0)
+ ;;Cell Saver(s)^05-Comments-130.013,5;W-4^45,2,0;1
+"RTN","SROESNR1",139,0)
+PJACD ;;Cell Saver(s)^06-Disposables Name-130.0134,.01-4^45,1,0;1
+"RTN","SROESNR1",140,0)
+ ;;Cell Saver(s)^07-Lot Number-130.0134,1-6^45,1,0;2
+"RTN","SROESNR1",141,0)
+ ;;Cell Saver(s)^08-Quantity-130.0134,2-6^45,1,0;3
+"RTN","SROESNR1",142,0)
+ ;;
+"RTN","SROESNR1",143,0)
+PAH ;;Other Diagnosis^0;.74^15,0
+"RTN","SROESNR1",144,0)
+ ;;Other Diagnosis^01X-Other Diagnosis-130.18,.01-2^15,0;1
+"RTN","SROESNR1",145,0)
+ ;;Other Diagnosis^02-ICD Diagnosis Code-130.18,3-2^15,0;3
+"RTN","SROESNR1",146,0)
+ ;;Other Diagnosis^03X-Diagnosis Comments-130.18,2;W-4^15,1,0;1
+"RTN","SROESNR1",147,0)
+ ;;
+"RTN","SROESNR1",148,0)
+PJFDG ;;Organ to be Transplanted^0;647^63,0
+"RTN","SROESNR1",149,0)
+ ;;Organ to be Transplanted^01-Organ to be Transplanted-130.0647,.01-2^63,0;1
+"RTN","SROESNR1",150,0)
+ ;;
+"RTN","SROESNR1",151,0)
+PJFFD ;;Donor Vessel UNOS ID^0;664^57,0
+"RTN","SROESNR1",152,0)
+ ;;Donor Vessel UNOS ID^01-Donor Vessel UNOS ID-130.0664,.01-2^57,0;1
+"RTN","SROESNR1",153,0)
+ ;;
+"VER")
+8.0^22.0
+"BLD",10012,6)
+^177
+**END**
+**END**
+

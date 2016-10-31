@@ -1,0 +1,173 @@
+$TXT Created by            at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 12/10/14 at 13:14
+=============================================================================
+Run Date: DEC 22, 2014                     Designation: PRS*4*144
+Package : PRS - PAID                          Priority: EMERGENCY
+Version : 4       SEQ #130                      Status: Released
+                  Compliance Date: DEC 24, 2014
+=============================================================================
+
+Associated patches: (v)PRS*4*139   <<= must be installed BEFORE `PRS*4*144'
+
+Subject: DECEMBER 26, 2014 HOLIDAY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ On 12/5/2014, President Obama signed an executive order that excuses
+ executive branch non-Postal Service employees from duty on Friday, 
+ December 26, 2014, except where agency officials decide they must remain
+ open because of national security, defense, or other public reasons.
+  
+ When the President signs an executive order declaring a non-holiday day as
+ an official holiday, a patch must be released that will modify the
+ software to identify this non-holiday day as a holiday.
+  
+ This declared holiday falls within pay period 14-25 which runs from
+ 12/14/2014 through 12/27/2014.
+  
+ Payroll usually opens pay periods on the Thursday immediately preceding
+ the first day of the pay period. For pay period 14-25 this would be
+ Thursday 12/11/2014.  For pay period 14-26, this would be Thursday, 
+ 12/25/2014. However, the VistA PAID/Enhanced Time & Attendance (ETA)
+ software will allow the opening of pay periods up to 7 days prior to the
+ first day of the pay period.
+  
+ Patch PRS*4*144 adds December 26, 2014 as a holiday to the Enhanced Time
+ and Attendance module of PAID 4.0 (ETA) software.  Because pay period
+ 14-25 will already be open at the sites, this patch will loop through pp
+ 14-25 Time & Attendance records and set the holiday as needed.  Once the
+ patch is installed, December 26, 2014 will be treated as all other
+ holidays in ETA.
+  
+ ***Note, for employees whose tour has already placed the Christmas Holiday
+ on 12/26 due to the employee's tour (example, Sunday-Wednesday, Friday
+ tour), the holiday may need to be manually placed, as an existing issue
+ with the Open Next Pay Period option may not properly place the Holiday. 
+    
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A   
+  
+     
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC000001091544 - December 26, 2014 Holiday
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Pittsburgh HCS
+ Salisbury W.G. (Bill) Hefner VAMC
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001091544 - December 26, 2014 Holiday
+  
+ Problem:
+ --------
+ Presidential Executive Order declares December 26, 2014 as an official 
+ federal holiday.  PAID ETA must be updated to reflect this additional
+ holiday.
+  
+ Resolution:
+ ----------- 
+ Modified routine PRS8HD to add December 26, 2014 to list of official 
+ holidays for 2014.  Also created routine PRSXP144 to loop through pay
+ period 14-25 Time & Attendance records and set the holiday.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch should be installed while PAID ETA users are off the system.  
+ Install time - less than 5 minutes.
+   
+   1.   Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.
+   
+   2.   Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]:
+   
+            Edits and Distribution ...
+            Utilities ...
+            Installation ...
+            Patch Monitor Main Menu ...
+   
+        Select Kernel Installation & Distribution System Option: INStallation
+                            ---
+     1      Load a Distribution
+     2      Verify Checksums in Transport Global
+     3      Print Transport Global
+     4      Compare Transport Global to Current System
+     5      Backup a Transport Global
+     6      Install Package(s)
+            Restart Install of Package(s)
+            Unload a Distribution
+   
+             Select Installation Option:
+   
+   3.   From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter PRS*4.0*144):
+   
+        a.  Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+        b.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed. It compares all components of this patch
+            (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+        d.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+   
+   4.   Use the Install Package(s) option and select the package
+        PRS*4.0*144.
+   
+        a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+            NO//', answer NO
+        b.  When prompted 'Want to DISABLE Scheduled Options, Menu
+            Options, and Protocols? YES//', answer YES
+        c.  When prompted 'Enter options you wish to mark as 'Out Of 
+            Order':' Enter the following options:
+  
+            Open Next Pay Period            [PRSA PP OPEN] 
+  
+        d.  When prompted 'Enter protocols you wish to mark as 'Out Of
+            Order':' press <return>.
+  
+   5.  Optional - Delete Post Install routine PRSXP144.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRS8HD
+    Before: B31179285   After: B31839963  **4,33,72,88,94,98,113,118,122,
+                                           123,139,144**
+Routine Name: PRSXP144
+    Before:       n/a   After:  B4444865  **144**
+ 
+Routine list of preceding patches: 139
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 08, 2014
+Completed By:                               Date Completed: DEC 19, 2014
+Released By :                               Date Released : DEC 22, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

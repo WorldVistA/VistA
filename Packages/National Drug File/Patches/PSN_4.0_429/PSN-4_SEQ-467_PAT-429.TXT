@@ -1,0 +1,245 @@
+$TXT Created by               CMNT.FO-BIRM.DOMAIN.EXT  (KIDS) on Tuesday, 12/01/15 at 15:49
+=============================================================================
+Run Date: JUL 07, 2016                     Designation: PSN*4*429
+Package : PSN - NATIONAL DRUG FILE            Priority: Mandatory
+Version : 4       SEQ #467                      Status: Released
+                  Compliance Date: AUG 07, 2016
+=============================================================================
+
+Associated patches: (v)PSN*4*296   <<= must be installed BEFORE `PSN*4*429'
+
+Subject: GREATER THAN 90 DAYS SUPPLY ENHANCEMENT 
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch is part of the Pharmacy Safety Updates project which was 
+ established to address specific New Service Requests (NSRs) as well as
+ Remedy Ticket(s) and a Patient Safety Issue (PSI) related to the VistA
+ Pharmacy applications as approved by the Health Systems Enterprise Systems
+ Manager(ESM).
+   
+ This project is comprised of patches from five different applications, as
+ shown below:
+   
+    APPLICATION/VERSION                                  PATCH
+    -----------------------------------------------------------------
+    PHARMACY DATA MANAGEMENT (PDM) V. 1.0                PSS*1*189
+    OUTPATIENT PHARMACY (OP) V. 7.0                      PSO*7*444
+    INPATIENT MEDICATIONS (IM) V.5.0                     PSJ*5*313
+    NATIONAL DRUG FILE (NDF) V. 4.0                      PSN*4*429
+    INTEGRATED BILLING (IB) V. 2.0                       IB*2*545
+  
+  
+ The following New service Requests (NSRs) are being addressed by this patch:
+     
+  NSRs 20060601/20111206 Allow Dispensing of Greater Than 90 Day Supply
+  ---------------------------------------------------------------------------
+  The Outpatient Pharmacy and supporting VistA applications are being modified
+  to allow dispensing of more than 90 day supply fill for outpatient 
+  prescriptions. The new limit will be 365 days and will be set for each drug
+  individually. See below for more information on specific menu 
+  options related to this enhancement.  
+     
+   
+ The following National Drug File (NDF) functionality was modified:
+  
+ 1. A new field called MAXIMUM DAYS SUPPLY (#32) was added to the VA PRODUCT
+    file (#50.68) for storing the national maximum day supply value for a
+    medication in an outpatient prescription. This field will not be populated
+    initially by Pharmacy Product System - National (PPS-N) as changes will be
+    required to that application to edit and export this new field. 
+   
+ 2. Inquire to VA Product Info For Local Drug [PSNLOOK] option
+    This option was modified to display the new field as seen below:
+    
+    ...
+   
+       Override DF Exclude from Dosage Checks: No
+    
+       Auto-Create Default Possible Dosage? Yes
+       Reduced Co-pay: None
+       Maximum Days Supply: 360
+  
+    ...
+  
+ 3. Inquire to National Files [PSNACT] option
+    This option was also modified to display the new field as seen below:
+  
+    ...
+   
+       Auto-Create Default Possible Dosage? No
+           Possible Dosages To Auto-Create: 1x Possible Dosage
+                                   Package: Both Inpatient and Outpatient
+    
+       Reduced Co-pay: None
+       Maximum Days Supply: 360
+    
+       Press return to continue or '^' to exit: 
+    ...
+   
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)        Field Name (#)                       New/Modified/Deleted
+ ------------------   --------------------------------     --------------------
+ VA PRODUCT(#50.68)   MAXIMUM DAYS SUPPLY (#32)            New
+  
+ Forms Associated:
+  
+ Form Name             File #                              New/Modified/Deleted
+ ---------             ------                              --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                           New/Modified/Deleted
+ ---------------                                           --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                     Type                      New/Modified/Deleted
+ -----------                     ----                      --------------------
+ N/A
+   
+ Protocols Associated:
+  
+ Protocol Name                                             New/Modified/Deleted
+ -------------                                             --------------------
+ N/A
+    
+ Security Keys Associated:
+  
+ Security Key Name                                         New/Modified/Deleted
+ -------------                                             --------------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name        Type    File Name (#)                New/Modified/Deleted
+ -------------        -----   -------------------------    --------------------
+ N/A  
+    
+ New Service Requests (NSRs):
+ ----------------------------
+ 20060601
+ 20111206
+  
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO00002098  
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A  
+     
+      
+ TEST Sites:
+ ===========
+ LOUISVILLE, KY
+ NEW YORK HARBOR HCS
+ HEARTLAND EAST
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ No documentation associated with this patch
+   
+  
+ Patch Installation: 
+  
+ Pre Installation Overview
+ --------------------------
+ This project is comprised of patches from five different applications as 
+ listed here.  The patches will get released together and the suggested 
+ installation order is as shown.  
+  
+ An installation guide released with patch PSS*1*189, discusses the 
+ installation process as PSS*1*189 is the patch that must be installed 
+ first.
+  
+  APPLICATION/VERSION                                  PATCH
+  -----------------------------------------------------------------
+  PHARMACY DATA MANAGEMENT (PDM) V. 1.0                PSS*1*189
+  OUTPATIENT PHARMACY (OP) V. 7.0                      PSO*7*444
+  INPATIENT MEDICATIONS (IM) V.5.0                     PSJ*5*313
+  NATIONAL DRUG FILE (NDF) V. 4.0                      PSN*4*429
+  INTEGRATED BILLING (IB) V. 2.0                       IB*2*545
+  -----------------------------------------------------------------
+  
+ Post Installation Overview
+ --------------------------
+ N/A
+  
+     
+ Installation Instructions
+ -------------------------
+ Although this installation will not take much time, it is recommended 
+ that it be installed overnight to prevent any disruption of service to 
+ other users.
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSN*4.0*429).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package PSN*4.0*429.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;NATIONAL DRUG FILE;**[Patch List]**; 30 Oct 98;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSNACT
+    Before:B119301998   After:B106329201  **22,35,47,62,65,70,160,169,
+                                           262,296,429**
+Routine Name: PSNLOOK
+    Before: B48743973   After: B48493462  **2,3,5,11,22,27,62,70,169,262,
+                                           296,429**
+ 
+Routine list of preceding patches: 296
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 26, 2015
+Completed By:                               Date Completed: JUL 07, 2016
+Released By :                               Date Released : JUL 07, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,159 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 05/20/15 at 16:46
+=============================================================================
+Run Date: OCT 27, 2015                     Designation: TIU*1*295
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #263                      Status: Released
+                  Compliance Date: NOV 27, 2015
+=============================================================================
+
+Associated patches: (v)TIU*1*205   <<= must be installed BEFORE `TIU*1*295'
+                    (v)TIU*1*222   <<= must be installed BEFORE `TIU*1*295'
+
+Subject: REASSIGNMENT & ERROR CORRECTION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Text Integration
+ Utilities (TIU) package:
+  
+ 1) The reassignment of certain TIU documents are required to be
+    accomplished twice before the reassign is successful.
+  
+ 2) Error occurs in TIUSRVR1 when TIUDA is passed in null 
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+        1. INC000000427368
+             duplicates: INC000000070190,INC000000070456,
+                         INC000000345278,INC000000359337,
+                         INC000000622499,INC000000710753
+                         INC000000711125,INC000000720216,
+                         INC000001074958
+  
+         2. INC000001251478
+             duplicate:  INC000001251703
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Lebanon
+ Detroit
+  
+  
+ REMEDY TICKET OVERVIEW:
+ ======================
+ 1. INC000000427368
+  
+   Problem:
+   --------
+   In certain situations, re-assigning a TIU document must be accomplished 
+   twice in order for it to be successful.  When the document being
+   reassigned has the TIU Document Parameter 'ASK DX/CPT ON ALL OPT VISITS'
+   set to YES & the visit type is A, I, or T and the document is not set to
+   CREDIT STOP CODE ON COMPLETION the defer logic is called which causes no
+   visit record to be created although it does set CREDIT STOP CODE ON
+   COMPLETION which allows the next effort to reassign the document to
+   complete successfully.
+  
+   Resolution:
+   -----------
+   The defer logic in TIUPXAP1 is being modified with this patch to not 
+   execute when it is called from the reassign routine TIURD3.  This is
+   done by passing a variable (TIUREASS) from routine TIURD3 to TIUPXAP1.
+  
+  
+ 2. INC000001251478
+  
+   Problem:
+   --------
+   Site reported receiving the error message "Error Getting reply from DoD"
+   when attempting to pull patient records in VistA Web.  It was determined
+   that an error was occurring in station 200 when TIU RPC 'TIU GET RECORD
+   TEXT' was called with variable TIUDA = null.
+  
+   Resolution:
+   ----------
+   There is existing logic in TIUSRVR1 that is located too low in the 
+   routine to prevent this error. This patch moves this logic in the 
+   Routine up several lines where it should have been located originally
+   thus preventing this error from occurring.
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  It is recommended to install 
+ this patch when users are off the system.  It should take less than 2
+ minutes to install this patch.
+  
+   1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+   2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+   3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter TIU*1.0*295)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+   4. Use the Install Package(s) option and select the package TIU*1.0*295.
+  
+   5.  When Prompted "Rebuild Menu Tree Upon Completion: NO//, respond NO.
+  
+   6. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+   7. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUPXAP1
+    Before: B32890821   After: B33744423  **15,29,20,89,82,107,117,126,
+                                           124,149,179,205,295**
+Routine Name: TIURD3
+    Before: B66718658   After: B68096138  **61,124,113,112,295**
+Routine Name: TIUSRVR1
+    Before: B41541143   After: B42513780  **19,32,87,89,100,109,112,173,
+                                           186,208,211,222,295**
+ 
+Routine list of preceding patches: 205, 222
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 08, 2015
+Completed By:                               Date Completed: OCT 06, 2015
+Released By :                               Date Released : OCT 27, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

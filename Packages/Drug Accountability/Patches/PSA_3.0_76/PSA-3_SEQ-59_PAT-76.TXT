@@ -1,0 +1,186 @@
+$TXT Created by                 MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 06/20/13 at 12:37
+=============================================================================
+Run Date: OCT 27, 2014                     Designation: PSA*3*76
+Package : PSA - DRUG ACCOUNTABILITY           Priority: Mandatory
+Version : 3        SEQ #59                      Status: Released
+                  Compliance Date: NOV 26, 2014
+=============================================================================
+
+Associated patches: (v)PSA*3*15    <<= must be installed BEFORE `PSA*3*76'
+                    (v)PSA*3*66    <<= must be installed BEFORE `PSA*3*76'
+
+Subject: INVOICE VERIFYING AND OUTPATIENT DISPENSING (ALL DRUGS) ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following problems:
+ 1.  Controlled Substance transaction is not recorded in the Drug 
+     Accountability Transaction (#58.81) file.
+ 2.  Outpatient Dispensing (All Drugs) [PSA OP ALL DRUGS] option is not 
+     updating files properly. 
+ 3.  A calculation is corrected for certain Drug (#50) file updates.
+  
+ ASSOCIATED NSR(s): 
+ ================== 
+ N/A
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000000443727 - Verify invoices and no action is taken
+    Duplicates:
+     INC000000587815 - Inventory update issue
+     INC000000777827 - Controlled Substances invoices not updating
+     INC000000782786 - Vault inventory not incrementing after verification
+ 2. INC000000212726 - Outpatient Dispensing (All Drugs) Option not working
+ 3. INC000000842761 - Drug Accountability - Drug File Updates
+  
+ PARTICIPATING TEST SITES:
+ ========================= 
+ Beckley VA Medical Center
+ Central Texas Veterans Health Care System
+ Jack C. Montgomery VAMC - Muskogee
+ Oklahoma City VA Medical Center 
+  
+ REMEDY OVERVIEW:
+ ================ 
+ 1. INC000000443727 - Verify invoices and no action is taken
+  
+ Problem
+ -------
+ When a Controlled Substance follows a drug that has a quantity of 0,
+ the Verify Invoices [PSA VERIFY INVOICES] routine does not create the
+ Controlled Substance transaction in the Drug Accountability Transaction
+ (#58.81) file.
+  
+ Resolution
+ ----------
+ Routine PSAVER6 will be modified clear the 0 quantity after verifying a
+ drug with a quantity of zero.
+  
+ Technical
+ ---------
+ GETDATA+1^PSAVER6 routine will be modified to kill the PSAQTY variable. 
+  
+ 2. INC000000212726 - Outpatient Dispensing (All Drugs) Option not working
+  
+ Problem
+ ------- 
+ When the Outpatient Dispensing (All Drugs) [PSA OP ALL DRUGS] option is
+ run, no updates are being made to the Drug Accountability Transaction 
+ (#58.81) file or the Drug Accountability Stats (#58.8) file.
+  
+ Resolution
+ ----------
+ Routine PSAOP4 will be modified to update the Drug Accountability Stats 
+ (#58.8) file and the Drug Accountability Transaction (#58.81) file.
+ Routine PSAOP2 will be modified to display the "Updating history and
+ dispensing totals." message.
+  
+ Technical
+ ---------
+ STOP+1^PSAOP2 routine will be modified to display the "Updating history and
+ dispensing totals." message.  The I $O(^TMP("PSA",$J,0)) will be changed to
+ I $D(^TMP("PSA",$J))
+ ^PSAOP4 routine will be modified to Q:PSADRUGN="" rather than 'Q:PSADRUGN
+  
+ 3. INC000000842761 - Drug Accountability - Drug File Updates
+  
+ Problem
+ -------
+ When the invoiced Price Per Order Unit is .01 and Dispense Units Per Order 
+ Unit is 100, the Price Per Dispense Unit is calculating it at 0 when it
+ should be .0001 during invoice processing/verifying.
+  
+ Resolution
+ ----------
+ Routine PSAVER7 will be modified to correctly calculate the Price Per
+ Dispense Unit.
+  
+ Technical
+ ---------
+ The Price Per Dispense Unit variable PSANPDU in the SYNONYM+4^PSAVER7 routine
+ will be modified to calculate 4 decimal points instead of 3.
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ Suggested time to install: non-peak requirement hours. The patch should be
+ installed when NO Drug Accountability users are on the system.
+  
+ Install Time - less than 5 minutes
+  
+  
+  1.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  2.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter PSA*3.0*76):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  3.  Use the Install Package(s) option and select the package
+      PSA*3.0*76.
+  
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the
+          install? NO//', answer NO.
+      b.  When prompted 'Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DRUG ACCOUNTABILITY/INVENTORY INTERFACE;**[Patch List]**; 10/24/97;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSAOP2
+    Before: B33216667   After: B33713808  **3,15,76**
+Routine Name: PSAOP4
+    Before:  B6478536   After:  B6589601  **3,76**
+Routine Name: PSAVER6
+    Before: B57278289   After: B57426665  **1,3,21,42,53,57,61,64,76**
+Routine Name: PSAVER7
+    Before: B23883307   After: B24126749  **12,21,42,56,64,66,76**
+ 
+Routine list of preceding patches: 15, 66
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 18, 2013
+Completed By:                               Date Completed: OCT 06, 2014
+Released By :                               Date Released : OCT 27, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

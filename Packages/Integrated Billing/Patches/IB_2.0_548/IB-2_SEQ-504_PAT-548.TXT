@@ -1,0 +1,122 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 08/05/15 at 16:46
+=============================================================================
+Run Date: JAN 08, 2016                     Designation: IB*2*548
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #504                      Status: Released
+                  Compliance Date: FEB 08, 2016
+=============================================================================
+
+
+Subject: IB IPV6 CONVERSION
+
+Category: 
+  - Data Dictionary
+
+Description:
+============
+
+ In preparation for the VA's transition from Internet Protocol version 4 
+ (IPv4) to Internet Protocol version 6 (IPv6), the IB package will require
+ modifications to make it IPv6 ready.
+  
+  
+ Associated NSR:
+ ==============
+ N/A
+  
+ Associated Remedy ticket:
+ =========================
+ 1. INC000001106647 Integrated Billing IPV6 Conversion
+  
+  
+ Test Sites:
+ ===========
+ Central Plains HCS
+ Huntington, WV
+ Louisville, KY
+  
+     
+ REMEDY OVERVIEW:
+ ===============
+ 1. INC000001106647 Integrated Billing IPV6 Conversion
+  
+ Problem:
+ ========
+ In preparation for the VA's transition from IPv4 to IPv6 the IB package 
+ will require modifications to make it IPv6 ready.
+  
+ Internet Protocol version 6 (IPv6) is the latest version of the Internet 
+ Protocol (IP), the communications protocol that provides an identification
+ and location system for computers on networks and routes traffic across 
+ the Internet. IPv6 was developed by the Internet Engineering Task Force 
+ (IETF) to deal with the long-anticipated problem of IPv4 address 
+ exhaustion. IPv6 is intended to replace IPv4.
+  
+ Vista is only compatible with Ipv4 currently and this effort is to prepare
+ for Ipv6 compatibility.
+  
+ Resolution:
+ ===========
+ The length of the TCP/IP ADDRESS (#9.03) field and CLAIMSMANAGER TCP/IP
+ ADDRESS (#50.05) field are increased to accommodate with IPv6 address  
+ formats in the IB SITE PARAMETERS (#350.9) file data dictionary.
+  
+        ================INSTALLATION INSTRUCTIONS =================
+ This patch can be loaded with users on the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+    
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+    
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+    
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter IB*2.0*548)
+  
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+    
+    4. Use the Install Package(s) option and select the package IB*2.0*548.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+    
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? YES//", respond YES.
+   
+    7.  When prompted 'Enter options you wish to mark as 'Out Of 
+        Order':'  Enter the following options:
+  
+        MCCR Site Parameter Display/Edit  [IBJ MCCR SITE PARAMETERS]
+      
+        When prompted 'Enter protocols you wish to mark as 'Out Of 
+        Order':', press <Enter>.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 12, 2015
+Completed By:                               Date Completed: DEC 31, 2015
+Released By :                               Date Released : JAN 08, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

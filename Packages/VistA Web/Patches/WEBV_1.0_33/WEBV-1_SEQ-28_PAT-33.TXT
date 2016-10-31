@@ -1,0 +1,185 @@
+
+=============================================================================
+Run Date: AUG 12, 2015                     Designation: WEBV*1*33
+Package : WEBV - VISTA WEB                    Priority: Mandatory
+Version : 1        SEQ #28                      Status: Released
+                  Compliance Date: SEP 12, 2015
+=============================================================================
+
+
+Subject: VLER DISPLAY ISSUES
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ ***************************** PLEASE NOTE ********************************
+ *                                                                        *
+ * Version 16.1.7 of VistAWeb (build last updated 3/24/15) will be        *
+ * promoted to the production server for national release on 8/13/2015    *
+ *                                                                        *
+ * NOTE: This patch is loaded on the National VistAWeb server. There is   *
+ * nothing that local sites can or need to do besides communicate         *
+ * changes to users.                                                      *
+ *                                                                        *
+ **************************************************************************
+   
+ VistAWeb (VW) v16.1.7 includes a fix for the following issues:
+   
+ 1.  The result section of a C32 does not display data for certain types.
+   
+ 2.  Missing fields in the Encounters section of a C32.
+  
+ 3.  Table headers being shown for empty sections in a C32.
+   
+ 4.  Hyperlink no longer exists.   
+   
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+   
+   
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1.  INC000001106094 - Issue related to the display of references  
+  
+ 2.  INC000001122467 - Issues with display of Encounter Discharge 
+                       Summaries
+   
+ 3.  INC000001081333 - VistAWeb is displaying an empty table
+   
+ 4.  INC000001250142 - Hyperlink no longer exists
+   
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Puget Sound HCS
+ Pacific Islands HCS
+ Indianapolis VAMC
+   
+   
+ REMEDY TICKET OVERVIEW:
+ =======================
+  
+ 1.  INC000001106094 - Issue related to the display of references
+   
+     Problem:
+     ======== 
+     In the Results section of a C32, there are entries that display as 
+     "Unknown" for the Result Type. For these entries, no other data is
+     shown even though the entry may have data related to it in a reference
+     value.
+   
+     Resolution:
+     ===========
+     The code in stylesheet NhinCommon.xsl has been modified so that the 
+     Result-Unit field will search for data by a reference value after it 
+     searches all previous data sources. 
+   
+ 2.  INC000001122467 - Issues with display of Encounter Discharge 
+                       Summaries
+   
+     Problem:
+     ======== 
+     C32s sent from the partner Epic Health do not display the "Encounter 
+     Type" and "Encounter Comments" fields in the Encounter section.
+   
+     Resolution:
+     ===========
+     Changes have been made to the stylesheet NhinCommon.xsl to look in 
+     additional locations when looking for the data for the "Encounter
+     Type" and "Encounter Comments" fields.
+  
+ 3.  INC000001081333 - VistAWeb is displaying an empty table
+   
+     Problem:
+     ======== 
+     When a provider sends a C32 document and that C32 contains a title 
+     for a section that has no data that section's title is displayed
+     along with a column header for a table that is empty.
+   
+     Resolution:
+     ===========
+     The code in cda2detail.xsl has been modified so that the stylesheet 
+     checks to see if the section it is about to build a table for has
+     data before building the column header for that section. Additionally,
+     the message that displays when there is no data has been changed to
+     make more sense to the user.
+     
+ 4.  INC000001250142 - Hyperlink no longer exists. 
+  
+     Problem:
+     ======== 
+     The left hand menu when you have a patient selected in VistAWeb shows 
+     the user the double dagger character and a hyperlink to show a
+     definition of Non-VA health data. This link no longer exists and 
+     should be removed, but the reminder that a double dagger is for Non-VA
+     data should remain.
+  
+     Resolution:
+     ===========
+     Hyperlink has been removed but the text still remains. 
+   
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ N/A
+   
+   
+ DOCUMENTATION INFORMATION:
+ ==========================
+ Please refer to the VistAWeb CPRS Access and Installation Guide, the 
+ VistAWeb User Manual and the VistAWeb Technical Guide for more
+ information. The manuals are provided in Microsoft Word and Adobe PDF
+ formats on the web at the following addresses:
+   
+     http://www.domain.ext/vdl 
+     http://vista.domain.ext/vistaweb
+   
+ The Adobe PDF files are also available for FTP transfer. The preferred
+ method is to FTP the files from:
+   
+     - download.vista.domain.ext.
+   
+ This transmits the files from the first available FTP server. 
+ Sites may also elect to retrieve documents directly from a specific 
+ server, as shown below. These files MUST be obtained in BINARY mode.
+   
+ CIO FIELD OFFICE FTP ADDRESS DIRECTORY:
+   
+ Albany               ftp.domain.ext []
+ Hines                ftp.domain.ext  []
+ Salt Lake City       ftp.domain.ext    []
+  
+ Username is "anonymous" without the quotes. You must FTP in BINARY mode.
+ Once in the FTP server, change directory into the software directory 
+ (i.e., cd software). The names of the files are as shown below:
+   
+ WEBV_1_33_UM.DOC
+ WEBV_1_33_UM.PDF
+      and
+ WEBV_1_33_IG.zip
+   
+ The following files can be found in zip file above:
+   
+ NVW_Prod_v16_1_7_Install_Guide_20141104.doc
+ NVW_Prod_v16_1_7_Install_Guide_20141104.pdf
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 24, 2015
+Completed By:                               Date Completed: AUG 12, 2015
+Released By :                               Date Released : AUG 12, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

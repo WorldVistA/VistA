@@ -1,0 +1,205 @@
+$TXT Created by  at DEVVCC.FO-ALBANY.DOMAIN.EXT  (KIDS) on Friday, 07/31/15 at 13:25
+=============================================================================
+Run Date: NOV 19, 2015                     Designation: EC*2*130
+Package : EC - EVENT CAPTURE                  Priority: EMERGENCY
+Version : 2       SEQ #122                      Status: Released
+                  Compliance Date: NOV 20, 2015
+=============================================================================
+
+Associated patches: (v)EC*2*126    <<= must be installed BEFORE `EC*2*130'
+
+Subject: ECS FY 2015 SUSTAINMENT UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Following the release of the Event Capture FY 2015 Sustainment patch 
+ EC*2*126, a problem was discovered with the filtering logic and the use 
+ of the INSTITUTION field in the HOSPITAL LOCATION file.
+  
+ A change was made in two places of the software as it relates to 
+ filtering, or limiting, the choices presented to the user.  This was done 
+ to reduce the potential for selecting the incorrect clinic or appointment.
+  
+ The issue is that the institution is not routinely populated for entries 
+ in the HOSPITAL LOCATION file.  As a result, clinics and appointments are 
+ inappropriately being removed from the selection list.
+  
+ Problem #1: The recent visits box doesn't show appointments as expected.
+  
+   ASSOCIATED REMEDY:
+   ==================
+   1292477 and duplicates  
+   
+   ASSOCIATED NSR:
+   ===============
+   N/A
+  
+   Problem:  
+   --------
+   When building the list of appointments for the recent visits box, the 
+   location selected by the user is compare against the institution
+   associated with the appointment's clinic.  As the institution isn't
+   reliably filled in for a clinic, the appointment may be left off the
+   list when it shouldn't be.
+  
+   Resolution:
+   -----------
+   The logic will be changed so that the institution will be obtained from
+   the division associated with the clinic.  Each clinic must have a 
+   division and each division must have an institution.  This will give us
+   a reliable location to get the institution from to compare against the
+   selected location for event capture workload.
+  
+ Problem #2: When editing event code screens you may receive an error 
+ stating that the default associated clinic is inactive.
+  
+   ASSOCIATED REMEDY:
+   ==================
+   1289709 and duplicates
+  
+   ASSOCIATED NSR:
+   ===============
+   N/A
+  
+   Problem:
+   --------
+   When determining which clinics can be associated with an event code
+   screen a comparison is made between the location selected and the
+   institution of the clinic. As the institution isn't reliably filled in
+   for a clinic, the clinic may be incorrectly identified as inactive or
+   unavailable for selection.
+  
+   Resolution:
+   -----------
+   The logic will be changed so that the institution will be obtained from
+   the division associated with the clinic.  Each clinic must have a 
+   division and each division must have an institution.  This will give us
+   a reliable location to get the institution from to compare against the
+   selected location for the event code screen.
+  
+ Test Sites:
+ -----------
+ Louisville
+ Albuquerque
+ Battle Creek
+  
+ Installation Instructions
+ ========================= 
+  
+ Pre-Installation Items:
+ =======================
+  
+ * Environment Check:
+      
+   Programmer access is required for installing this patch.
+  
+   ** NOTE ** -- Prior to installation, the installer must ensure the  
+                 DUZ(0) node of the DUZ array is set to the "@" symbol.
+   
+ * Users On the System:
+    
+   This patch modifies routines used by the Event Capture application and
+   may affect many users.
+  
+   This patch may be installed with users on the system, but should be
+   loaded during non-peak hours to minimize disruption to users and to
+   reduce the possibility of errors when the routines are updated.
+  
+   If installed during the normal workday, it is recommended that the
+   following selection(s) in the OPTION (#19) file, and all of their
+   descendants be disabled to prevent possible conflicts while running
+   the KIDS Install. Other VISTA users will not be affected.
+  
+         EC GUI Context version 2.2.0.0   ... EC GUI CONTEXT
+    
+ * Software Installation Time:
+  
+   The estimated installation time is less than 5 minutes during off peak
+   hours.
+  
+ * Required Builds:
+    
+   The following is a list of REQUIRED builds for this KIDS
+   distribution.  KIDS will not allow the installation of this patch
+   without their prior installation.
+  
+   Required Build(s):
+   ------------------
+   EC*2.0*126
+  
+ Installation Steps:
+ ===================
+   
+   1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+  
+   2.  From the Kernel Installation and Distribution System Menu, select
+       the Installation menu.
+  
+   3.  From this menu, you may elect to use the following options
+       (when prompted for INSTALL NAME, enter EC*2.0*130):
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+       c. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+   4.  Use the Install Package(s) option and select the package EC*2.0*130.
+  
+   5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? NO//'  Answer YES unless your system does this in a
+       nightly TaskMan process.
+  
+   6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//' answer NO.
+  
+   7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//' answer YES.
+     
+   8.  When prompted 'Enter options you wish to mark as 'Out Of Order':'  
+       Enter the following options:
+      
+       EC GUI Context version 2.2.0.0   ... EC GUI CONTEXT
+  
+   9.  When prompted 'Enter protocols you wish to mark as 'Out Of
+       Order':' press <enter>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECUMRPC1
+    Before:B100564674   After:B101055937  **25,30,33,72,94,95,105,100,
+                                           107,110,112,126,130**
+Routine Name: ECUTL1
+    Before: B66986146   After: B67581197  **10,13,17,42,54,76,107,122,126,130**
+ 
+Routine list of preceding patches: 126
+
+=============================================================================
+User Information:
+Entered By  :                  Date Entered  : JUL 30, 2015
+Completed By:                 Date Completed: NOV 16, 2015
+Released By :                 Date Released : NOV 19, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

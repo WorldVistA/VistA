@@ -1,0 +1,73 @@
+
+=============================================================================
+Run Date: DEC 16, 2014                     Designation: MAG*3*155
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #109                      Status: Released
+                  Compliance Date: JAN 16, 2015
+=============================================================================
+
+
+Subject: MAG INDEX TERMS UPDATE
+
+Category: 
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ Patch MAG*3.0*155 is a new MAG Index Term update patch which will add
+ New procedure - CT Angiography
+ New Specialty - Sleep Medicine
+ .
+ 1) New Procedure/Event: CT Angiography  
+        Abbreviation:  CTA  
+           Specialty: Radiology
+   
+ 2) New Specialty: Sleep Medicine
+  Abbreviation:  Sleep
+  Associate with existing Procedure/Events: Visit and Sleep Study
+   
+ 3) Existing Procedure/Event: Acupuncture
+   add to Specialty:  Chiropractic
+   
+ 4) Existing Procedure/Event: IV
+   add to Specialty: Radiology
+  
+ The files to be updated are:
+   
+  #2005.84  IMAGE INDEX FOR SPECIALTY/SUBSPECIALTY
+  
+ This file has all the specialties and subspecialties to associate with an 
+ image. These specialties will be used to allow clinicians the flexibility to 
+ filter images according to only the images they are interested in 
+ researching or viewing.
+  
+  #2005.85  IMAGE INDEX FOR PROCEDURE/EVENT FILE
+  
+ This file has all the possible procedures or procedural events that an image 
+ can be associated with and that will be used for indexing of images. The 
+ PROCEDURE/EVENT associated with an image can be used in filters defined by a 
+ clinician.
+
+Routine Information:
+====================
+Routine Name: MAGIP155
+    Checksum:
+  25157718
+ Description of Changes:
+  POST INSTALL ROUTINE, WILL BE REMOVED AFTER KID INSTALLED
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 22, 2014
+Completed By:                               Date Completed: DEC 04, 2014
+Released By :                               Date Released : DEC 16, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

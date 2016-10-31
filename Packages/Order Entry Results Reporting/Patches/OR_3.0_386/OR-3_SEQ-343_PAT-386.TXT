@@ -1,0 +1,246 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 05/14/14 at 19:47
+=============================================================================
+Run Date: AUG 13, 2014                     Designation: OR*3*386
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #343                      Status: Released
+                  Compliance Date: SEP 13, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*296    <<= must be installed BEFORE `OR*3*386'
+                    (v)OR*3*363    <<= must be installed BEFORE `OR*3*386'
+
+Subject: DOW ADMIN TIME CHANGE, DIET QUICK ORDER ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the ORDER ENTRY/RESULTS 
+ REPORTING (OR) package:
+  
+ 1. Day of the week schedule changes are not updated in the order text
+  
+ 2. Editing a diet Quick Order allows user to order a regular diet with 
+    another diet
+  
+ 3. Deleting a diet on a diet Quick Order can cause an error when signing 
+    the Quick Order 
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1. INC000000070921 - LEB-0804-20731 Day of week schedule displays 
+                      differently on meds tab
+ 2. INC000000939179 - QO allows regular diet to be ordered with another
+                      diet on edit
+ 3. INC000000960066 - Deleting a diet from a Quick order causes CPRS error
+  
+  
+ Test Sites:
+ ===========
+ Central Texas HCS
+ Ann Arbor VAMC
+ Sierra Nevada VAMC
+  
+  
+ Remedy Ticket Overview:
+ =======================
+ 1. INC000000070921 - LEB-0804-20731 Day of week schedule displays 
+                      differently on meds tab
+  
+    Problem:
+    ========
+    The problem occurs when a user uses option [PSJ OE] to edit the 
+    administration time on a verified unit dose medication that has a "Day
+    of the week" schedule. The schedule gets updated automatically in
+    Inpatient Pharmacy, but does not get updated on the Computerized 
+    Patient Record System (CPRS) order.
+  
+    Resolution:
+    ===========
+    CPRS will now update the order when there is a schedule change.
+   
+    Routine ORMPS2 has been modified to check the Health Level 7 (HL7)
+    message against the current "SCHEDULE" response. If they do not match,
+    the logic is redirected to RO^ORMPS (the logic that updates the order
+    and creates a new action).
+  
+  
+ 2. INC000000939179 - QO allows regular diet to be ordered with another
+                      diet on edit
+  
+    Problem:
+    ========
+    If a user edits an existing diet Quick Order using option [ORCM
+    QUICK ORDERS], the system allows a regular diet to be ordered with
+    another diet.
+  
+    Resolution:
+    ===========
+    The validation logic has been changed to not allow regular diet orders
+    to be ordered with other diets.
+  
+    Routine ORCDFH1 has been modified to set the TOTAL variable properly on
+    an edit. ORCDFH1 has also been modified to check if the current diet is
+    regular, and if so, to not allow other diets to be ordered with it.
+    
+    Created post-install routine ORY386 to identify existing Quick Orders 
+    that have both a regular diet and another diet. This routine will send
+    a mailman message to the user letting them know that the Quick Order
+    needs to be manually corrected. The format of the message is as 
+    follows: 
+  
+    Subj: OR*3.0*386 install routine has completed  [#149762]
+          03/19/14@15:10 5 lines
+    From: ORDER ENTRY/RESULTS REPORTING PACKAGE  In 'IN' basket.   Page 1  
+          *New*
+          ---------------------------------------------------------------
+  
+    The following Diet Quick Orders have both a Regular/NPO and another 
+    diet. They must be manually edited.
+  
+    (1st quick order here)   IEN - (internal entry# here)
+    (2nd quick order here)   IEN - (internal entry# here)
+    (And so on...)
+  
+    <OR if no diet Quick Orders are found with both a Regular and 
+    another diet>
+    "None Found"
+  
+    ***Note: The user may manually edit any existing diet Quick Orders 
+    identified by this message that contain both a Regular/NPO diet and 
+    another diet using option [ORCM QUICK ORDERS]. 
+  
+ 3. INC000000960066 - Deleting a diet from a Quick order causes CPRS error
+  
+    Problem:
+    ========
+    When a user edits an existing diet Quick Order using option [ORCM   
+    QUICK ORDERS], if the user removes a diet without replacing with
+    another diet, an error occurs when trying to sign the order in CPRS.
+    The code is saving the instances of each diet with non-sequential
+    instance numbers.
+  
+    Resolution:
+    ===========
+    The code that saves the order dialog has been changed to reorganize the
+    instances if one gets deleted.
+  
+    Routine ORCMEDT0 has been modified to use a newly created ICNT
+    (instance count) variable instead of the INST (previous instance
+    number) variable.
+  
+    A post-install routine ORY386 has been created to clean up existing
+    Quick Orders with instances that are out of order. This routine will
+    send a mailman message to the user that runs the install stating which
+    Quick Orders (if any) were updated. The format of the message is as
+    follows:
+  
+    Subj: OR*3.0*386 install routine has completed  [#149762]
+          03/19/14@15:10 5 lines
+    From: ORDER ENTRY/RESULTS REPORTING PACKAGE  In 'IN' basket.   Page 1  
+          *New*
+          ---------------------------------------------------------------
+  
+    OR*3.0*386 install routine has completed
+    The instances for the following Quick Orders have been changed
+  
+    (1st Quick Order here)   IEN - (internal entry# here)
+    (2nd Quick Order here)   IEN - (internal entry# here)
+    (And so on...)
+  
+    <Or if no out of order instances are found> 
+    "No changes"
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low. Installation time will 
+ be less than 2 minutes.
+  
+ NOTE:  Pre-Init routine ORY386 will be automatically deleted at the 
+ end of the installation process.  In order to verify the checksum
+ for that routine, use the following option BEFORE installing:
+  
+ 2      Verify Checksums in Transport Global
+    
+  
+    1.  Choose the PackMan message containing this patch and invoke the 
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+    2.  Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+    3.  From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter OR*3.0*386):
+    
+    
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will
+            not backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option
+            will allow you to view all changes that will be made when
+            this patch is installed.  It compares all components of this
+            patch (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+    
+    4.  Use the Install Package(s) option and select the package
+        OR*3.0*386.
+    
+        a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+            install? NO//", answer NO.
+        b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+            Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCDFH1
+    Before: B22101872   After: B24674182  **73,95,243,386**
+Routine Name: ORCMEDT0
+    Before: B17670670   After: B19035854  **46,60,190,215,243,296,386**
+Routine Name: ORMPS2
+    Before: B49592916   After: B50459648  **94,116,129,134,186,190,195,
+                                           215,265,243,280,363,386**
+Routine Name: ORY386
+    Before:       n/a   After:  B9828447  **386**
+ 
+Routine list of preceding patches: 296, 363
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 11, 2013
+Completed By:                               Date Completed: AUG 12, 2014
+Released By :                               Date Released : AUG 13, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

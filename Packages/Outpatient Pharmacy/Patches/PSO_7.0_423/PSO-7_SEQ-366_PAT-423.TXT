@@ -1,0 +1,189 @@
+
+=============================================================================
+Run Date: MAY 22, 2014                     Designation: PSO*7*423
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #366                      Status: Released
+                  Compliance Date: JUN 22, 2014
+=============================================================================
+
+
+Subject: UPDATES TO THE OUTPATIENT PHARMACY TECHNICAL MANUAL/SECURITY GUIDE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  *********************************************************************
+  *********************************************************************
+  *********************************************************************
+      This is an INFORMATIONAL patch that includes updates to the
+      Outpatient Pharmacy V.7.0 Technical Manual/Security Guide.
+  
+      These updates cover HL7 specifications for the following 
+      two areas:
+  
+      Outpatient Pharmacy - Interface Dispense Completion 
+      Outpatient Pharmacy - Permanent and Temporary Patient Address
+  
+  *********************************************************************
+  *********************************************************************
+  *********************************************************************
+  
+ Associated Remedy Ticket(s):
+ ============================
+ 1.  INC000000808231 - Outpatient Pharmacy - HL7 Interface Issue
+ 2.  INC000000814498 - Outpatient Pharmacy - HL7 Interface Issue 
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+     
+     
+ Participating Test Sites:
+ =========================
+ N/A
+  
+   
+ Remedy Overview:
+ ================
+ 1.  INC000000808231 - Outpatient Pharmacy - HL7 Interface Issue
+   
+   Problem:
+   --------
+   HL7 documentation is incorrect in the Technical manual for RXD segment.
+  
+  
+   Resolution:
+   -----------
+   Examined code in PSOHLDIS. Analysis dictates that the following pages 
+   of the Outpatient Pharmacy V.7.0  Technical Manual/Security Guide need 
+   to be updated:
+  
+   1.  Updated the RXD segment example (page 65)
+  
+   RXD segment example (old):
+   --------------------------
+   RXD|1|D0082^DIGOXIN 0.25MG TAB^99PSNDF^372.3^DIGOXIN 0.25MG 
+   TAB^99PSD|20031215||||123987||6505-00-584-0398~20031212|1234567^OPPROVIDE
+   R1^ONE|||123456789101112131415|||||45201|20041201|BAXTER
+  
+   RXD segment example (new):
+   --------------------------
+   RXD|1|D0082^DIGOXIN 0.25MG TAB^99PSNDF^372.3^DIGOXIN 0.25MG 
+   TAB^99PSD|20031215||||123987||06505-5840-00^20031212^1|1234567^OPPROVIDE
+   R1^ONE|||123456789101112131415|||||45201|20041201|BAXTER
+  
+  
+   2.  Updated the RXD-9 Element Name & Example  (page 66)
+  
+   ELEMENT NAME (old):
+   -------------------
+   Dispensing Provider
+  
+   ELEMENT NAME (new):
+   -------------------
+   Dispensing Provider(Verifying/Dispensing Pharmacist)
+  
+  
+   3.  Updated the RXD-9 Dispense Notes (page 66)
+  
+   [RXD-9] Dispense Notes (old):
+   -----------------------------
+   [RXD-9] Dispense Notes contains two components. First component is the 
+   NDC code and the second component is the release date/time of the 
+   prescription from the dispensing machine.
+  
+   [RXD-9] Dispense Notes (new):
+   -----------------------------
+   [RXD-9] Dispense Notes contains 3 components: 1) The NDC code. 2) The 
+   release date time. 3) The Vendor Dispense Code.
+  
+   
+ 2.  INC000000814498 - Outpatient Pharmacy - HL7 Interface Issue
+  
+   Problem:
+   --------
+   Outpatient Pharmacy Technical Manual needs PID-11 documentation updated.
+  
+   Resolution:
+   -----------
+   Update page 59 of the Outpatient Pharmacy V.7.0  Technical Manual/
+   Security Guide to insert the following note regarding PID-11 Patient
+   Address:
+  
+   [PID-11] Patient Address
+   ------------------------
+   The PID-11 segment contains the following data:
+      -  Patient Permanent Address       1st up-arrow piece
+      -  Patient Place of Birth (City & State)   2nd up-arrow piece
+      -  Patient Temporary Address       3rd up-arrow piece 
+  
+   PID||||Permanent Address^Place of Birth^Temporary Address||||
+  
+   [PID-11] Patient Permanent Address
+   When the permanent address is active, it is the only address in PID-11
+  
+   Example: 321 Dakota Ave.~""~WASHINGTON~DC~20032~USA~P~""~001
+  
+   [PID-11] Patient Temporary Address
+   When the temporary address is active, both the temporary and permanent 
+   addresses are located in PID-11.
+  
+   Example: 321 Dakota Ave.~""~WASHINGTON~DC~20032~USA~P~""~001^^1234 Lake 
+   Park Ave.
+          ~""~Crofton~MD~21114~USA 
+  
+  
+ Documentation Retrieval:
+ ========================
+ Updated documentation is available for download.
+  
+ The preferred method is to FTP the files from download.vista.domain.ext.
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+   Albany             ftp.domain.ext  
+   Hines              ftp.domain.ext   
+   Salt Lake City     ftp.domain.ext     
+  
+ The documentation distribution includes:
+  
+   File Name          Description        
+   =========          ===========            
+   pso_7_tm_r0514     Outpatient Pharmacy V.7.0 Tech Manual/Security Guide
+  
+   Retrieval format should be BINARY.
+  
+   The documentation will be in the form of Adobe Acrobat file.
+  
+  
+   Documentation can also be found on the VA Software Document Library at:  
+   http://www.domain.ext/vdl/
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done.      ******
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 12, 2013
+Completed By:                               Date Completed: MAY 20, 2014
+Released By :                               Date Released : MAY 22, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

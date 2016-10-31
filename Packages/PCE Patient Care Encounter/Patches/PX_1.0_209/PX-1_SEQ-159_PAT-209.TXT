@@ -1,0 +1,256 @@
+$TXT Created by                    CTST.FO-BIRM.DOMAIN.EXT  (KIDS) on Thursday, 05/21/15 at 16:07
+=============================================================================
+Run Date: SEP 03, 2015                     Designation: PX*1*209
+Package : PX - PCE PATIENT CARE ENCOUNTER     Priority: Mandatory
+Version : 1       SEQ #159                      Status: Released
+                  Compliance Date: OCT 04, 2015
+=============================================================================
+
+Associated patches: (v)PX*1*194    <<= must be installed BEFORE `PX*1*209'
+                    (v)PX*1*199    <<= must be installed BEFORE `PX*1*209'
+                    (v)PX*1*200    <<= must be installed BEFORE `PX*1*209'
+                    (v)PX*1*201    <<= must be installed BEFORE `PX*1*209'
+
+Subject: ENHANCEMENTS TO PX SAVE DATA RPC
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch includes updates to the PX SAVE DATA Remote Procedure Call 
+ (RPC) and to the DATA2PCE^PXAPI Application Program Interface (API) to 
+ support additional immunization fields.
+  
+ o The following immunization fields have been added to the PCELIST array 
+   parameter of the PX SAVE DATA RPC: CVX Code (placeholder), Event
+   Information Source, Dosage, Route of Administration, Site of
+   Administration, Lot number, Manufacturer, and Expiration Date. The new
+   fields are optional, and the changes are backward compatible. See the 
+   Patient Care Encounter (PCE) Technical Manual for a full description of 
+   this RPC.
+  
+ o The following immunization fields have been added to the INPUTROOT array
+   parameter of the DATA2PCE API: Lot Number, Event Information Source,
+   Route of Administration, Site of Administration, and Dosage. The new
+   fields are optional, and the changes are backward compatible. See the 
+   Patient Care Encounter (PCE) Technical Manual for a full description of 
+   this API.
+  
+ o A defect was found where if an immunization SERIES which was greater 
+   than the MAX # IN SERIES field (#.05) in the IMMUNIZATION file 
+   (#9999999.14) was passed into the DATA2PCE API, the SERIES and
+   subsequent immunization fields would fail to file. This patch modifies
+   the API, so as long as the SERIES value passed in is one of the
+   set-of-codes defined for the field, the DATA2PCE API will file it.
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ APIs Associated:
+  
+ API                        New/Modified/Deleted
+ --------------             --------------------
+ DATA2PCE^PXAPI             Modified
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ RPCs Associated:
+  
+ RPC                 New/Modified/Deleted
+ -------------       --------------------
+ PX SAVE DATA        Modified
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Cleveland, OH
+ Hampton, VA
+ Heartland-East HCS, MO
+ San Antonio, TX
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/. 
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                           File Name               FTP Mode
+ -----------------------------------------------------------------------
+ Patient Care Encounter (PCE)    PX_1_TM_R0315.PDF       binary
+ Technical Manual V. 2.0      
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     # PX*1.0*209:
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+     Answer NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+     Answer NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+     Answer NO.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**[Patch List]**;Aug 12, 1996;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXAIIMM
+    Before:  B7183500   After:  B9319960  **45,124,209**
+Routine Name: PXAIIMMV
+    Before:  B4109825   After: B13493156  **199,209**
+Routine Name: PXKFCPT1
+    Before: B23493411   After: B23838795  **11,73,124,194,209**
+Routine Name: PXKFIMM
+    Before:  B2843857   After:  B4311499  **22,124,201,209**
+Routine Name: PXRPC
+    Before: B39810837   After: B64293018  **200,209**
+ 
+Routine list of preceding patches: 194, 199, 200, 201
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 26, 2015
+Completed By:                               Date Completed: SEP 02, 2015
+Released By :                               Date Released : SEP 03, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

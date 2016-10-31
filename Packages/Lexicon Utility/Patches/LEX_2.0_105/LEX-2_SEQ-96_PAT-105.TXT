@@ -1,0 +1,298 @@
+$TXT Created by                 CHEYL106.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 02/25/16 at 10:59
+=============================================================================
+Run Date: MAR 30, 2016                     Designation: LEX*2*105
+Package : LEX - LEXICON UTILITY               Priority: Mandatory
+Version : 2        SEQ #96                      Status: Released
+                  Compliance Date: APR 06, 2016
+=============================================================================
+
+Associated patches: (v)ICD*18*82   <<= must be installed BEFORE `LEX*2*105'
+                    (v)LEX*2*104   <<= must be installed BEFORE `LEX*2*105'
+
+Subject: Code Set FY16 3rd Qtr Update
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+  - Other
+
+Description:
+============
+
+  This patch contains one change from FY04 1st Qtr (effective Oct 01, 2003),
+  two changes from FY10 2nd Qtr (effective Jan 01, 2010), one change from
+  FY11 2nd Qtr (effective Jan 01, 2011) and 2538 changes from FY16 2nd Qtr
+  (effective Jan 01, 2016).  This patch also exports 17426 changes to the
+  SNOMED CT coding system.  This patch installs the data for the following
+  Informational patches:
+   
+            ICD*18.0*85
+            ICPT*6.0*75
+   
+  This patch writes to the following files:
+   
+       ICD OPERATION/PROCEDURE   #80.1     ^ICD0(       ICR 4486
+       CPT                       #81       ^ICPT(       ICR 4489
+       CPT CATEGORY              #81.1     ^DIC(81.1,   ICR 4490
+       CPT MODIFIER              #81.3     ^DIC(81.3,   ICR 4492
+       LEXICON files          #757-757.41  ^LEX(        N/A
+   
+  ENHANCEMENTS
+  ============
+ 
+    FY16 3rd Quarter Update
+ 
+      HCPCS Procedure Additions
+      -------------------------
+ 
+        Effective Jan 01, 2016                                (7 Codes)
+          G0477   G0478   G0479   G0480   G0481   G0482   G0483
+ 
+      HCPCS Procedure Inactivations
+      -----------------------------
+ 
+        Effective Jan 01, 2016                               (31 Codes)
+          C9453   C9454   C9455   G6030   G6031   G6032   G6034   G6035
+          G6036   G6037   G6038   G6039   G6040   G6041   G6042   G6043
+          G6044   G6045   G6046   G6047   G6048   G6049   G6050   G6051
+          G6052   G6053   G6054   G6055   G6056   G6057   G6058
+ 
+      HCPCS Procedures Re-Used
+      ------------------------
+ 
+        Effective Jan 01, 2016                                 (1 Code)
+          J3380
+ 
+      HCPCS Procedure Revisions  (10 Codes)
+      -------------------------
+ 
+        Effective Oct 01, 2003 (FY04 1st Qtr)                  (1 Code)
+          G0298
+ 
+        Effective Jan 01, 2016 (FY16 2nd Qtr)                 (9 Codes)
+          G8925   G9226   G9448   G9574   G9666   G9676   J0571   J7205
+          L1904
+ 
+      CPT/HCPCS Modifier Pairs
+      ------------------------
+                                      Added  Inact  React  Revise  Total
+                                      -----  -----  -----  ------  -----
+        Effective Feb 17, 2016     *      4     --     --      --      4
+        
+                                   *  update from a previous quarter
+ 
+      SNOMED CT Changes
+      -----------------
+                           Effective  Added  Inact  React  Revise  Total
+                          ----------  -----  -----  -----  ------  -----
+        SNOMED Codes      01/31/2016   3085    726     13      --   3824
+        SNOMED Terms                  12608   4805     13      --  17426
+ 
+ 
+      ICD-10-PCS Procedures
+      ---------------------
+ 
+        This patch removes Major Diagnostic Categories and DRGs Groups from
+        107 ICD-10-PCS codes that are only used in clusters.  These codes 
+        will inherit the Major Diagnostic Category and DRG groups from the
+        cluster.
+    
+           02H40JZ   02H40MZ   02H44JZ   02H44MZ   02H60JZ   02H60MZ
+           02H64JZ   02H64MZ   02H70JZ   02H70MZ   02H74JZ   02H74MZ
+           02HK0JZ   02HK0MZ   02HK3MZ   02HK4JZ   02HK4MZ   02HL0JZ
+           02HL0MZ   02HL3MZ   02HL4JZ   02HL4MZ   05H533Z   05H633Z
+           05HM33Z   05HN33Z   05HP33Z   05HQ33Z   06HM33Z   06HN33Z
+           0DQF0ZZ   0DQG0ZZ   0DQL0ZZ   0DQM0ZZ   0F757DZ   0F758DZ
+           0F767DZ   0F768DZ   0F787DZ   0F788DZ   0F797DZ   0F798DZ
+           0F7D8DZ   0FHB8DZ   0FPBXDZ   0FPDXDZ   0JH604Z   0JH605Z
+           0JH606Z   0JH634Z   0JH635Z   0JH636Z   0JH804Z   0JH805Z
+           0JH806Z   0JH834Z   0JH835Z   0JH836Z   0PS33ZZ   0PS43ZZ
+           0QS03ZZ   0QS13ZZ   0SP908Z   0SP948Z   0SPB08Z   0SPB48Z
+           0TTD0ZZ   4A02X4A   B5130ZA   B5131ZA   B513YZA   B513ZZA
+           B5140ZA   B5141ZA   B514YZA   B514ZZA   B5150ZA   B5151ZA
+           B515YZA   B515ZZA   B5160ZA   B5161ZA   B516YZA   B516ZZA
+           B5170ZA   B5171ZA   B517YZA   B517ZZA   B51B0ZA   B51B1ZA
+           B51BYZA   B51BZZA   B51C0ZA   B51C1ZA   B51CYZA   B51CZZA
+           B51D0ZA   B51D1ZA   B51DYZA   B51DZZA   B543ZZA   B544ZZA
+           B546ZZA   B547ZZA   B54BZZA   B54CZZA   B54DZZA 
+ 
+ 
+  REQUEST/INCIDENTS:
+  =================
+ 
+    I7247776FY16 - Add HCPCS J3380 as a Re-Used Code
+    I7667771FY16 - HCPCS code J3380 missing (duplicate of I7247776FY16)
+    I6713699FY16 - Add/Inactivated codes C9453, C9454 and C9455
+    I7033166FY16 - Add/Inactivate code C9453 (duplicate of I6713699FY16)
+    R7172950FY16 - Modifiers 50/RT/LT with CPT code 69209 (ear irrigation)
+    R7408407FY16 - NU and RR Modifiers with HCPCS code E2622 (wheelchair)
+    R7073968FY16 - Convert RA (Re-Activate) codes to RU (Re-Use)
+                      HCPCS Codes E1012, G0296, G0297, G0299, G0300, 
+                      J0695, J2860, J7188, J7340, J7503 and Q9950
+ 
+  OTHER CHANGES:
+  =============
+ 
+    Convert CPT Short Descriptions to UPPERCASE (file 81 only)
+    Fix 30 duplicate HCPCS Descriptions (Lexicon only)
+ 
+ 
+  SFTP SOFTWARE RETRIEVAL:
+  =======================
+        
+    Global Host File:                  LEX_2_105.GBL  (ASCII)
+        
+    The host file is 175 MB in size and could take up to 5 minutes to SFTP.
+    The preferred method is to retrieve the file from:
+        
+        download.vista.domain.ext.
+        
+    This transmits the files from the first available server. Sites may 
+    also elect to retrieve files directly from a specific server. 
+        
+    Sites may retrieve the software directly using Secure File Transfer
+    Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following
+    OI Field Offices:
+        
+        Albany            domain.ext
+        Hines             domain.ext
+        Salt Lake City    domain.ext
+ 
+  INSTALLATION INSTRUCTIONS
+  =========================
+ 
+     1)  Users may be on the system during the install of LEX*2.0*105.
+         It is recommended that this patch be installed during non-peak
+         hours.  This patch should take from 56 to 93 minutes to install
+         depending on the system.
+ 
+             Create a backup    50-80 minutes
+             Load the Global     2- 4 minutes
+             Kids Install        4- 9 minutes
+ 
+     2)  Size/Disk Space Requirements:
+ 
+         The changes to the Lexicon, ICD and CPT globals will result in a
+         combined growth of about 5.12 MB of data.  The import global ^LEXM
+         is about 134 MB in size.  Make sure there is sufficient space for
+         the growth to the VistA globals and the import global before
+         continuing.
+ 
+ 
+     3)  Create a backup of the following global files before continuing:
+ 
+             ICD Operation/Procedure     #80.1       ^ICD0(
+             CPT                         #81         ^ICPT(
+             CPT Category                #81.1       ^DIC(81.1,
+             CPT Modifier                #81.3       ^DIC(81.3,
+             Lexicon Files            #757-757.41    ^LEX(
+ 
+         These backup files may get as large as 2.11 gigabytes.  Make sure
+         space is available before proceeding.  It should take from 50 to
+         80 minutes to create the backup files.
+ 
+         When you are creating a backup of non-subscripted globals, you are
+         saving the entire global.  You should use the utility ^%GO for
+         non-subscripted globals, and when prompted for a global, enter 
+         the global root (global name only, no open parenthesis, no file
+         number and no commas, as shown below).  Examples:
+ 
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^ICD0            ICD Operation/Procedure
+             ^ICPT            CPT
+             ^LEX             Lexicon Files
+ 
+         When you are creating a backup of a subscripted global, you are
+         saving a partial global (a file within a global).  You should use
+         the utility ^%GOGEN, and when prompted for a global, enter the open
+         global reference (as shown below).  Examples:
+ 
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^DIC(81.1,       CPT Category
+             ^DIC(81.3,       CPT Modifier
+ 
+     4)  Install the data from the global host file LEX_2_105.GBL.  This
+         file contains the Lexicon Utility's import global ^LEXM.
+ 
+         This global is approximately 175 megabytes in size.  Make sure
+         there is sufficient space available to load this global with
+         journaling on.  The loading of the global should take from 
+         2 to 4 minutes.
+ 
+         From the Programmer prompt, execute the following routine:
+ 
+            >D ^%GI
+            
+            Global input
+            
+            Device: VA5$:[ANONYMOUS.SOFTWARE]LEX_2_105.GBL
+            Parameters? "RS" => 
+            Globals were saved on 25 Feb 2016  11:45 AM   Cache
+            with description: LEX*2.0*105 Data
+            
+            Input option: A
+            ^LEXM
+ 
+     5)  Set up user and IO variables (D ^XUP) for programmer access.
+ 
+     6)  Distribution Load:
+ 
+         Load the KIDS Distribution from the Packman Message using the
+         Packman function "Install/Check Message."
+ 
+     7)  KIDS Installation:
+ 
+         Install the patch using the KIDS Installation Menu action
+         "Install Package(s)" and the install name LEX*2.0*105.
+ 
+           Respond "NO" at the "Want KIDS to INHIBIT LOGONs during
+           the install?" prompt.
+ 
+           Respond "NO" at the "Want to DISABLE Scheduled Options,
+           Menu Options, and Protocols?" prompt.
+ 
+         The KIDs install should take from 4 to 9 minutes
+ 
+     8)  Cleanup
+ 
+         a)  The Environment Check routine LEX2105 and the Post-Install 
+             routine LEX2105P should be deleted using the KERNEL option 
+             'Delete Routines' [XTRDEL] upon completion of the
+             installation.
+ 
+             NOTE:  The installation of this patch should trigger an
+                    update protocol and may spawn background tasks for 
+                    the Clinical Reminders or Consult packages.  You 
+                    do not need to wait for these background jobs to 
+                    complete to delete the Environment Check and 
+                    Post-Install routines.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;LEXICON UTILITY;**[Patch List]**;Sep 23, 1996;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LEX2105
+    Before:       n/a   After:B155420426  **105**
+Routine Name: LEX2105P
+    Before:       n/a   After: B20996513  **105**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 09, 2015
+Completed By:                               Date Completed: MAR 29, 2016
+Released By :                               Date Released : MAR 30, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

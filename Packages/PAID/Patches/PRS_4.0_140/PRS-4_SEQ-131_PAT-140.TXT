@@ -1,0 +1,274 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 08/12/14 at 19:39
+=============================================================================
+Run Date: JAN 05, 2015                     Designation: PRS*4*140
+Package : PRS - PAID                          Priority: Mandatory
+Version : 4       SEQ #131                      Status: Released
+                  Compliance Date: FEB 05, 2015
+=============================================================================
+
+
+Subject: ESR PAY PERIOD, TELEWORK CODE
+
+Category: 
+  - Routine
+  - Informational
+
+Description:
+============
+
+ This patch addresses two issues:
+   
+ 1. Part time Physician Memorandums have incorrect pay period designations
+    after 2012.
+ 2. Two new codes need to be added to the Telework Code file.
+  
+ *******************************************************
+ PLEASE NOTE:
+ Issue number 2 - additions to the Telework Code File - is 
+ a MANUAL update!  This patch WILL NOT automatically add the
+ codes.  Instructions are provided below to manually add the
+ codes to the PAID CODES file.  PLEASE make sure the Payroll 
+ Department receives the instructions below.
+ ******************************************************* 
+  
+    
+ ASSOCIATED NSR(s):
+ ==================
+ N/A   
+  
+     
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC000000723885 - Pt Physician Memorandum Problem
+    Duplicates:
+    INC000000726451 - PAID - Other
+    INC000000729706 - Pay Period Date Issue with Part Time
+    INC000000754735 - PP not starting over for 2013
+    INC000000771433 - PT Physician Memorandum Issue
+    INC000000800265 - Option [PRSP PS MR] not incrementing 
+                      into 2013
+    INC000000800375 - PTP ESR pay period issue
+    INC000000801423 - P P issue
+    INC000000806435 - PT Dr ESR Issue
+    INC000000807878 - Surplus 2012 pay periods in ESR
+    INC000000810607 - ESR timecard pay period dates incorrect
+    INC000000811198 - ESR records for bad 2012 pay periods
+    INC000000814367 - ESR pay period issue
+    INC000000815553 - PRSP HR MR not showing correctly
+    INC000000816634 - PT Physician ESR pay period issue
+    INC000000817412 - Part Time Adjustable Tour is incorrect
+    INC000000819027 - ESR pay periods incorrect
+    INC000000819281 - PT phys pay periods
+    INC000000819466 - ESR pay periods incorrect
+    INC000000820660 - ESRs issue
+    INC000000821406 - ESR pay period calculation issue
+    INC000000828177 - ESR stopped populating in PP 12-27
+    INC000000829619 - Pt Physician menu Memoranda Report 
+                              doesn't show pp for FY13 correctly
+    INC000000831909 - ESR pay period issue
+    INC000000835783 - PT physician esr pay period
+    INC000000836138 - Part Time Physician memorandum still
+                      display wrong payperiods
+    INC000000852871 - ESR pay period issue
+    INC000000861869 - PT Physician 2013 ESR Showing Wrong PP's
+    INC000000876309 - PT physician memorandum PPD issue
+    INC000000881501 - ESR pay periods
+ 2. INC000000765760 - Telework Code Changes
+    Duplicates:
+    INC000000815808 - Telework Indicator issue
+    INC000000822065 - New telework codes
+    INC000000827683 - telework codes not showing
+    INC000000886960 - telework code is blank
+    INC000000891197 - telework indicator not correct
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Oklahoma City VAMC
+ VA Heartland East HCS (St. Louis)
+ VA North Florida/South Georgia HCS (Lake City)
+  
+     
+ Remedy Overview:
+ ================
+ 1. INC0000000723885 - Pt Physician Memorandum Problem
+  
+ Problem:
+ --------
+ Sites have reported that some Part Time Physician Memorandums have
+ incorrect pay period designations.  The pay periods for 2012 are 
+ correct but instead of 2013 pay periods, the 2012 pay periods 
+ continued past the valid 12-27 pay period designation (i.e.
+ 12-28, 12-29, 12-30, etc - instead of 13-01, 13-02, 13-03, etc).
+  
+ Resolution:
+ -----------
+ A post install routine has been developed to correct the invalid
+ pay period designations in the PT PHYSICIAN MEMORANDUM file (#458.7).
+ The routine will also propagate the timecard data for the affected
+ pay periods into the Part Time Physician Memorandum.
+  
+ ROUTINE: PRSXP140
+  
+  
+ 2. INC000000765760 - Telework Code Changes
+  
+ Problem:
+ --------
+ Human Resources Information System (HRIS) Bulletin 12-18A: AMENDED M/U
+ Telework Indicator mandates the addition of two new Telework Codes - M and
+ W.  
+  
+ Resolution:
+ -----------
+ In order for the new Telework Codes to become active, they must be entered
+ into the PAID (Personnel and Accounting Integrated Data System)/ETA 
+ (Enhanced Time and Attendance) package via the UPDATE PAID CODES [PRSD
+ UPDATE PAID CODES] option.  This option requires the PRSD PAID CODES  
+ security key. 
+   
+ Below is a screen capture of how to input the new codes (after patch
+ install):
+  
+ ########################## 
+ Select OPTION NAME: UPDATE PAID CODES  PRSD UPDATE PAID CODES     
+      Update PAID Codes
+ Update PAID Codes
+  
+ Select FILE: TELEWORK INDICATOR  
+  
+ Select TELEWORK INDICATOR TELEWORK CODE: M
+   Are you adding 'M' as a new TELEWORK INDICATOR (the 10TH 
+          for this PAID CODE FILES)? No// Y  (Yes)
+  
+ TELEWORK CODE: M// 
+ DESCRIPTION: EMPLOYEE WORKS 100% OF THE TIME IN NON VA-OWNED
+ OR LEASED SPACE LOCATED OUTSIDE THE LOCAL COMMUTING AREA OF 
+ HIS OR HER WORKSITE.
+ ELIGIBLE CODE: Y  YES
+  
+ Select TELEWORK INDICATOR TELEWORK CODE: W
+   Are you adding 'W' as a new TELEWORK INDICATOR (the 11TH
+         for this PAID CODE FILES)? No// Y  (Yes)
+  
+ TELEWORK CODE: W// 
+ DESCRIPTION: AN EMPLOYEE WORKS 100% OF THE TIME IN NON VA-OWNED
+ OR LEASED SPACE LOCATED WITHIN THE LOCAL COMMUTING AREA OF THE PARENT STATION.
+ ELIGIBLE CODE: Y  YES
+  
+ Select TELEWORK INDICATOR TELEWORK CODE: 
+  
+ Select FILE:  
+ ########################## 
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ If installed during the normal workday, it is recommended that the PAID
+ users be off the system and that the PAID PART TIME PHYSICIAN ETA options
+ (PRSP*) in the OPTION (#19) file be disabled to prevent possible conflicts
+ while running the KIDS install. The PART TIME PHYSICIAN ETA options can be
+ selected by using the PAID ETA namespace of PRSP and the asterisk, or
+ wildcard character (*) as shown in step 4.c. of the installation
+ instructions.  Other VISTA users will not be affected.
+  
+ Install Time - less than 5 minutes.
+  
+  
+ *********  ATTENTION  *************************
+ A manual update by the Payroll Department is required to resolve the 
+ #2 issue in this patch.  Please contact the Payroll Group at your
+ site to coordinate the update.  The instructions for completing
+ the update are in the Resolution portion of the #2 issue located 
+ above.  The update may be completed before or after the installation 
+ of this patch.
+ ***********************************************
+  
+  
+ *******  ATTENTION  *******************
+ Post Install routine PRSXP140 will remain on your system after the patch
+ install has completed.  The routine may be deleted.
+ ***************************************
+  
+  
+ ********  ATTENTION  ***************
+ During install, a list of corrected Part Time Physician Memoranda
+ will display.  The list should be forwarded to the Payroll Department
+ so they may verify the corrections.
+ ************************************
+   
+ 1.   Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+   
+ 2.   Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]:
+   
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+          Patch Monitor Main Menu ...
+   
+      Select Kernel Installation & Distribution System Option: INStallation
+                            ---
+   1      Load a Distribution
+   2      Verify Checksums in Transport Global
+   3      Print Transport Global
+   4      Compare Transport Global to Current System
+   5      Backup a Transport Global
+   6      Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+   
+      Select Installation Option:
+   
+ 3.   From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter PRS*4.0*140):
+   
+      a.  Print Transport Global - this option will allow you to view
+          the components of the KIDS build.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+      d.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+   
+ 4.   Use the Install Package(s) option and select the package
+      PRS*4.0*140.
+   
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+          NO//', answer NO
+      b.  When prompted 'Want to DISABLE Scheduled Options, Menu
+          Options, and Protocols? YES//', answer YES.
+      c.  When prompted 'Enter options you wish to mark as 'Out Of
+          Order':', enter PRSP*
+      d.  When prompted 'Enter protocols you wish to mark as 'Out Of
+          Order':', press <return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRSXP140
+    Before:       n/a   After: B13173934  **140**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 07, 2013
+Completed By:                               Date Completed: DEC 15, 2014
+Released By :                               Date Released : JAN 05, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

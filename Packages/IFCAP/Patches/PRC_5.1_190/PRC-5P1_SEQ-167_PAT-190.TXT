@@ -1,0 +1,220 @@
+$TXT Created by                at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Thursday, 09/17/15 at 16:02
+=============================================================================
+Run Date: SEP 24, 2015                     Designation: PRC*5.1*190
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #167                    Status: Released
+                  Compliance Date: OCT 25, 2015
+=============================================================================
+
+Associated patches: (v)PRC*5.1*115 <<= must be installed BEFORE `PRC*5.1*190'
+                    (v)PRC*5.1*180 <<= must be installed BEFORE `PRC*5.1*190'
+
+Subject: AMENDMENT DELIVERY DATE;FILE 424/424.1 PURGING;VENDOR DISPLAY OPTION
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will address the following 3 issues:
+  
+ 1. Do not ask Delivery Date when cancelling order via amendment
+  
+ 2. Subscript error when cleansing/purging files 424/424.1
+  
+ 3. Vendor lookup by DUN & Bradstreet number fails 
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+  
+ Associated Remedy Ticket(S):
+ ===========================
+ 1. INC000001082133 Amendment processing does not require delivery date 
+                    query when cancelling order
+                                
+ 2. INC0000001088195 Site received subscript error when cleansing file 424
+  
+ 3. INC0000001061745 Vendor Display option does not work for DUN & 
+                     Bradstreet # lookup
+  
+  
+ Participating Test Sites:
+ ========================
+ NEW YORK HARBOR
+ MEMPHIS
+ BATTLE CREEK
+  
+ Remedy Overview:
+ ================ 
+ 1. INC000001082133 Amendment processing does not require delivery date
+                    query when cancelling order
+  
+    Problem:
+    --------
+    When cancelling order using Amendment processing the user should not
+    be asked Delivery Date.
+  
+  
+    Resolution:
+    -----------                    
+    Modify routine to not ask Delivery Date when cancelling order or 
+    assigning new purchase order number during amendment processing.
+  
+  
+    Routines: PRCHAMU
+  
+  
+ 2. INC0000001088195 Site received subscript error when cleansing file 424
+  
+    Problem:
+    ---------
+    Multiple sites received a subscript error when cleansing file 424 
+    during year-end archive/purge processing.  The subscript error was
+    caused by entries in file 424 where the Authorization Number did not
+    have a sequence portion, causing the subscript error when deleting
+    cross  the reference tied to the sequence number.
+  
+  
+    Resolution:
+    -----------
+    Modify the cleansing routine for file 1358 DAILY RECORD [#424] and
+    file 1358 AUTHORIZATION DETAIL [#424.1] to handle an entry with
+    an Authorization Number with missing sequence number being purged.
+    Also, extend the cleansing process to look for all potential data 
+    errors and clean entries appropriately.
+  
+  
+    Routines: PRCGF424
+  
+  
+ 3. INC0000001061745 Vendor Display option does not work for DUN & 
+                     Bradstreet # lookup
+  
+    Problem:
+    --------
+    Site found the DUN & Bradstreet number lookup did not work properly 
+    when using option DISPLAY VENDOR.  Entering the D&B number did not pull
+    up the appropriate vendor as the number MUST be preceded by DUN to do a
+    proper D&B lookup, ex. DUN123456.
+  
+  
+    Resolution:
+    -----------
+    Modify the option PRCH DISPLAY VENDOR to use a new routine in lieu of
+    the Fileman lookup which did not present meaningful documentation when
+    looking up a vendor by D&B number.  The new routine intervenes with new
+    help documentation that the user must precede the D&B number with 
+    'DUN'.
+  
+  
+    Routines: PRCHVEND (new)
+  
+ OLD OPTION ==>>
+  
+ NUMBER: 10396                          NAME: PRCH DISPLAY VENDOR
+   MENU TEXT: Vendor Display             TYPE: inquire
+   CREATOR: 
+  DESCRIPTION:   Display on-line, all data from the Vendor Master file for 
+  a selected Vendor.  
+   DIC {DIC}: PRC(440,                   DIC(0): AEMQ
+   DIC {DIQ}: PRC(440,                   TIMESTAMP: 55633,50722
+   TIMESTAMP OF PRIMARY MENU: 59269,27708
+   UPPERCASE MENU TEXT: VENDOR DISPLAY   
+  
+ NEW OPTION ==>>
+  
+ NUMBER: 10396                           NAME: PRCH DISPLAY VENDOR
+   MENU TEXT: Vendor Display             TYPE: run routine
+   CREATOR:                              PACKAGE: IFCAP
+  DESCRIPTION:   Display on-line, all data from the Vendor Master file for 
+  a selected Vendor.  
+   ROUTINE: PRCHVEND                     TIMESTAMP: 55633,50722
+   UPPERCASE MENU TEXT: VENDOR DISPLAY
+  
+  
+ Installation Instructions:
+ =========================
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*190)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*190.
+  
+    5. When Prompted " Want KIDS to Rebuild Menu Trees Upon Completion of  
+       Install? NO//", respond NO.  
+  
+    6. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+  
+    7. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', respond YES. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":", enter the following options:
+  
+     Vendor Display                        [PRCH DISPLAY VENDOR] 
+     Clean Files 424/424.1 after purging   [PRCG CLEAN 424/424.1 FILES]
+     Amendment To Delivery Order           [PRCH AMEND DELIVERY ORDER]
+     Amendment To Purchase Card Order      [PRCH AMENDMENT TO P/C ORDER]
+     Amendment to Purchase Order           [PRCHPC AMEND]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":", just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCGF424
+    Before: B10015845   After:  B9816570  **115,190**
+Routine Name: PRCHAMU
+    Before: B58833091   After: B62902897  **21,117,175,180,190**
+Routine Name: PRCHVEND
+    Before:       n/a   After:   B710657  **190**
+ 
+Routine list of preceding patches: 115, 180
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 19, 2014
+Completed By:                               Date Completed: SEP 18, 2015
+Released By :                               Date Released : SEP 24, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

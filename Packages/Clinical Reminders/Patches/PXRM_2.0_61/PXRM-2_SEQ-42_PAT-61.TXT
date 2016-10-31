@@ -1,0 +1,210 @@
+
+=============================================================================
+Run Date: SEP 14, 2015                     Designation: PXRM*2*61
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #42                      Status: Released
+                  Compliance Date: SEP 29, 2015
+=============================================================================
+
+
+Subject: TAXONOMY UPDATES INC 2, IRAQ REMINDER URL UPDATE
+
+Category: 
+  - Routine
+  - Informational
+
+Description:
+============
+
+ This patch fixes the following 2 issues:
+  
+ 1.      The National Taxonomy Reminder Updates were created to assist 
+         sites with the transition from ICD-9 to ICD-10 codes.
+  
+ 2.      IRAQ & AFGHAN Post-Deployment URL Updates.
+  
+  
+  
+ Associated Remedy Tickets:
+ ===========================
+ 1.  INC000001265257 - National Taxonomy Reminder Dialog
+ 2.  INC000001280666 - SNOMED Codes    
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Site(s):
+ ===========================
+ Boise, ID
+ Fayetteville, NC
+ Marion, IL
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1.  INC000001265257 - National Taxonomy Reminder Dialog 
+ 2.  INC000001280666 - SNOMED Codes                      
+  
+ Problem:
+ ---------
+ This patch is the second patch being developed and released to update 
+ national reminder taxonomies to include ICD10 and SNOMED codes. On 
+ October 1, 2015, the VA will begin to use ICD-10 diagnosis codes in place 
+ of ICD-9.  In preparation for this change, the national clinical reminder 
+ taxonomies are being reviewed and updated by the responsible Program 
+ Offices in VACO.  Some of the taxonomies are also being updated to 
+ include SNOMED-CT codes which are currently used in VistA/CPRS on the 
+ problem list.   And in some cases HCPCS codes, CPT codes and ICD10 
+ procedure codes are being added or updated.  This taxonomy patch covers 
+ the second set of taxonomies whose review has been completed.  
+  
+ The process for review included a detailed review by HIMS coding staff to 
+ provide possible ICD10 codes for inclusion and then subsequent review by 
+ SMEs designated by the responsible Program Office.  The responsible 
+ Program Office is listed as the sponsor in each taxonomy definition.
+  
+ In the process of reviewing all the national taxonomies, a large number 
+ of old and outdated Taxonomies were found that were originally used in 
+ reminders that were distributed in 1996.  Most of those old, antiquated 
+ reminders have already been inactivated and renamed but the taxonomies 
+ that were included in them had not been reviewed or updated.  These 
+ taxonomies are being renamed with a leading 'ZZ' and inactivated by this 
+ patch.  These taxonomies should not be in use at any site and there are 
+ no plans to support them or update them.
+  
+ Sites should run a Taxonomy Inquiry for each taxonomy being updated 
+ (refer to appendix B) and either print out or save to a file for 
+ comparison after patch install.
+  
+  
+ Resolution:
+ ------------
+ This patch, PXRM*2.0*61, contains two routines, PXRMP61E and PXRMP61I. 
+ They are init tasks that add new entries (IRAQ UPDATES & TAXONOMY UPDATES 
+ INC 2) to the REMINDER EXCHANGE file (#811.8) and the contents of these 
+ entries are installed during the post-init.
+  
+ These routines can be deleted after the install.  
+  
+  
+ 2.  INC000001280666 - SNOMED Codes
+  
+ Problem:
+ --------
+ HPS was contacted about an issue with the URL's not functioning anymore.  
+ These URL's were changed and now are working correctly with the release of
+ this patch.  To accomplish this, 2 reminder dialog elements were
+ changed.  They are as follows:
+  
+   1)  VA-TEXT OIF WEB SITES
+   2)  VA-TEXT OIF INTRO
+  
+ In the IRAQ & AFGHAN POST-DEPLOYMENT SCREEN reminder dialog, the 
+ hyperlinks were no longer working.  This was corrected and the number of 
+ links was reduced.
+  
+ Resolution:
+ ------------
+ This patch, PXRM*2.0*61, contains two routines, PXRMP61E and PXRMP61I. 
+ They are init tasks that add new entries (IRAQ UPDATES & TAXONOMY UPDATES 
+ INC 2) to the REMINDER EXCHANGE file (#811.8) and the contents of these 
+ entries are installed during the post-init.  
+  
+ These routines can be deleted after the install.
+  
+  
+  
+ Build Components:
+ =================
+ N/A
+  
+ Data Dictionary:
+ ================
+ N/A
+  
+ Software & Documentation Retrieval Instructions:
+ ================================================
+ This patch is being distributed as a host file.  The name of the host 
+ file is PXRM_2_0_61.KID.  This file should be downloaded in ASCII format.
+  
+ The preferred method for obtaining this file is to use File Transfer
+ Protocol (FTP) to download it from:
+  
+     ftp://download.vista.domain.ext/.
+  
+ This transmits the file from the first available FTP server.  Sites may
+ also elect to retrieve the file directly from a specific server as 
+ follows:
+  
+         Albany          ftp.domain.ext
+         Hines           ftp.domain.ext
+         Salt Lake City  ftp.domain.ext
+  
+    File Name:                 Description:               Protocol:
+    ==========                 ============               =========
+    PXRM_2_0_61_RN.PDF         PXRM*2.0*61 Release        BINARY
+                               Notes
+    PXRM_2_0_61.KID            PXRM*2.0*61 Host File       ASCII
+  
+ Documentation can also be found on the VistA Documentation
+ Library (VDL) at:  http://www.domain.ext/vdl/
+  
+ Installation:
+ =============
+ This patch can be loaded with users on the system.  Installation will 
+ take five minutes.  Refer to the Release Notes, PXRM_2_0_61_RN.PDF, for
+ complete details.
+  
+ 1.  Use the "Load a Distribution" option on the KIDS installation menu. 
+  
+     When prompted to enter a host file type in PXRM_2_0_61.KID
+  
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     options, as desired:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify checksums in Transport Global
+         Backup a Transport Global
+  
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use PXRM*2.0*61
+  
+ 4.  When prompted "Want KIDS to INHIBIT LOGONs during the install?  
+     NO//," respond 'NO'.
+  
+ 5.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO// respond 'NO'.
+  
+ 6.  After successful installation, the following init routines may be   
+     deleted:
+     PXRMP61E
+     PXRMP61I
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 221
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMP61E
+    Before:       n/a   After:  B1036146  **61**
+Routine Name: PXRMP61I
+    Before:       n/a   After:  B4469033  **61**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 05, 2015
+Completed By:                               Date Completed: SEP 11, 2015
+Released By :                               Date Released : SEP 14, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

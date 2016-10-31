@@ -1,0 +1,205 @@
+$TXT Created by                at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Tuesday, 07/22/14 at 08:56
+=============================================================================
+Run Date: DEC 22, 2014                     Designation: PRC*5.1*188
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #163                    Status: Released
+                  Compliance Date: JAN 22, 2015
+=============================================================================
+
+Associated patches: (v)PRC*5.1*74  <<= must be installed BEFORE `PRC*5.1*188'
+                    (v)PRC*5.1*170 <<= must be installed BEFORE `PRC*5.1*188'
+
+Subject: REMOVE CC FROM CP EXCEPTION LIST;IFCAP MANUALS UPDATE;FRACTIONAL RECEIPT QTY
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will address the following 3 issues:
+  
+ 1. Remove CC 8243 from Control Point Listing w/Cost Center Exceptions
+                                      
+ 2. Site references need to be removed from IFCAP manual
+                                                                   
+ 3. Prevent fractional quantities being entered on inventory item receipts
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Associated Remedy Ticket(s):
+ ===========================
+ 1. INC000000984216 Remove 8243 from Control Point Listing w/Cost 
+                    Center Exceptions
+    Duplicates:
+    INC000000983365 Remove 8243 from CP List
+    INC000000973289 CP/Listing w/exceptions report
+  
+ 2. INC000000993695 Site references need to be removed from IFCAP 
+                    manual
+  
+ 3. INC000000988679 Fractional quantities being entered on inventory 
+                    item receipts
+  
+  
+ Participating Test Sites:
+ ========================
+ NEW YORK HARBOR
+ MOUNTAIN HOME
+ HUNTINGTON
+  
+ Remedy Overview:
+ =============== 
+ 1. INC000000984216 Remove 8243 from Control Point Listing w/Cost 
+                    Center Exceptions
+  
+    Problem:
+    --------
+    Site requests Control Point (CP) listing with Cost Center exceptions
+    be modified to remove control point 8243 from exception checks.
+    
+    Resolution:
+    -----------                    
+    Modify routine (where cost center check is hard coded) to remove
+    cost center 8243 from CP exception listing.
+    
+    Routines: PRCB1A3
+  
+ 2. INC000000993695 Site references need to be removed from IFCAP 
+                    Technical Manual
+  
+    Problem:
+    ---------
+    Support found site references were left in the last documentation 
+    update of the IFCAP Technical Manual.
+  
+  
+    Resolution:
+    -----------
+    Modify the IFCAP Technical Manual by removing any site references from
+    the documentation.
+  
+  
+    Routines: none  (IFCAP documentation manual)
+  
+  
+ 3. INC000000988679 Fractional quantities being entered on inventory 
+                    item receipts
+  
+    Problem:
+    ---------
+    Site was able to receive a fractional quantity even though there was
+    a logical check to prevent fraction receipts, but the check was 
+    bypassed due to a superfluous check based on Packaging Multiple
+    and/or Unit Conversion Factor calculating to even number.
+    
+  
+    Resolution:
+    -----------
+    Remove the superfluous check based on Packaging Multiple and/or 
+    Unit Conversion Factor from the fraction receipt quantity check.
+  
+    Routines: PRCHREC1
+  
+ Documentation Retrieval:
+ ------------------------ 
+  Sites may retrieve documentation in one of the following ways:
+  
+  (1) The preferred method is to FTP the files from
+      download.vista.domain.ext, which will transmit the files from the
+      first available FTP server.
+  
+  (2) Sites may also elect to retrieve documentation directly from the 
+      ANONYMOUS SOFTWARE DIRECTORY from a specific server as follows:
+  
+      Albany          ftp.domain.ext
+      Hines           ftp.domain.ext
+      Salt Lake City  ftp.domain.ext
+  
+      The documentation distribution includes: 
+    
+      File Name                 Description              Retrieval Format
+      =========                 ===========              ================
+      ifcp5_1tech_manual.pdf    IFCAP Technical Manual   BINARY
+  
+   
+  (3) Once released, documentation may be retrieved from VISTA
+      Documentation Library (VDL) on the Internet at the following
+      address: http://www.domain.ext/vdl 
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*188)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*188.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", hit Enter.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', hit Enter. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following options:
+  
+     Receipt of Purchase Order                      [PRCHPM PO REC]
+     Control Point Listing w/Cost Center Exceptions [PRCB FCP LIST EXCP]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":", just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCB1A3
+    Before: B19207496   After: B19454352  **76,74,188**
+Routine Name: PRCHREC1
+    Before: B23986631   After: B24270850  **133,170,188**
+ 
+Routine list of preceding patches: 74, 170
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 17, 2014
+Completed By:                               Date Completed: DEC 18, 2014
+Released By :                               Date Released : DEC 22, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

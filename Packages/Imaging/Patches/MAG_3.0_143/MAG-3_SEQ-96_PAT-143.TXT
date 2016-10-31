@@ -1,0 +1,44 @@
+
+=============================================================================
+Run Date: MAY 27, 2014                     Designation: MAG*3*143
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3        SEQ #96                      Status: Released
+                  Compliance Date: JUN 27, 2014
+=============================================================================
+
+
+Subject: GROUP POINTER ISSUE IMPORT OCX
+
+Category: 
+  - Other
+
+Description:
+============
+
+ This Patch fixes an Issue with the VistA Imaging Import API OCX.
+ Issue:  when a site imports multiple images with the intention of linking 
+ the Image Group to a TIU Note,  the Import is successful, but the Image 
+ Group is not Linked to the TIU Note.
+ The Fix is in the Import API OCX.  This OCX is used by the Background 
+ Processor when the Import Queue is processed.   
+ This Patch will Unregister the existing OCX,  install and Register the 
+ New OCX (MagImportXControl1.ocx) in the ...\vista\imaging\lib   folder on 
+ the BackGround Processor machine.  
+ This Patch is only for the Background processor(s) at the sites.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 26, 2013
+Completed By:                               Date Completed: MAY 23, 2014
+Released By :                               Date Released : MAY 27, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

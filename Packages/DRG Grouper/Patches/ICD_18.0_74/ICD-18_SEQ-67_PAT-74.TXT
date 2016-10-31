@@ -1,0 +1,265 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 01/29/14 at 11:20
+=============================================================================
+Run Date: JUN 19, 2014                     Designation: ICD*18*74
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #67                     Status: Released
+                  Compliance Date: JUL 20, 2014
+=============================================================================
+
+Associated patches: (v)ICD*18*70   <<= must be installed BEFORE `ICD*18*74'
+                    (v)ICD*18*71   <<= must be installed BEFORE `ICD*18*74'
+                    (v)ICD*18*72   <<= must be installed BEFORE `ICD*18*74'
+
+Subject: VARIOUS DRG GROUPER FIXES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The DRG (Diagnostic Related Group) Grouper is used to compute and
+ display the DRG for a patient based on that patient's diagnoses
+ and any operations/procedures performed.  It uses a mixture of 
+ formulas, Diagnosis and Operation identifiers, and tables that rely
+ on data added to the DRG file (#80.2), the ICD DIAGNOSIS file (#80)
+ and the ICD OPERATION/PROCEDURE file (#80.1).  These files,
+ the date, and the age of the patient determine which codes are
+ needed to calculate the proper DRG.
+    
+ This patch corrects various DRG calculations.
+    
+ ASSOCIATED REMEDY TICKETS:
+ ========================== 
+ 1)INC000000893627 - DRG Grouper - Other:
+ 2)INC000000897851 - 620 vs 621
+ 3)INC000000897860 - 663 vs 664
+ 4)INC000000900766 - DRG discrepancy between VistA & Quantim
+ 5)INC000000907339 - DRG discrepancy between VistA & Quantim
+ 6)INC000000916660 - DRG Miscalculation
+ 7)INC000000918874 - DRG Grouper - Other:
+ 8)INC000000940773 - DRG discrepancy between VistA & Quantim
+ 9)INC000000940782 - DRG discrepancy between VistA & Quantim  
+      
+ ASSOCIATED NSR's:
+ =================
+ N/A
+         
+      
+ PARTICIPATING TEST SITES:
+ =========================
+ Honolulu, HI (VA Pacific Islands HCS)
+ Louisville, KY
+ Providence, RI
+ Upstate New York HCS
+         
+      
+ REMEDY OVERVIEW:
+ ================
+ 1) INC000000893627 - DRG Grouper - Other:
+    
+    Problem:
+    ========
+    DRG 781 is incorrectly calculating to DRG 782 in VistA.
+       
+    Solution:
+    =========
+    Updated routines ICDTBL7E and ICDTBL7F to account for correct
+    diagnosis codes.
+    
+    
+ 2) INC000000897851 - 620 vs 621
+    
+    Problem:
+    ========
+    DRG 620 is incorrectly calculating to DRG 621 in VistA.
+       
+    Solution:
+    =========
+    Updated routines ICDTBL6E and ICDTBL6F to account for correct
+    diagnosis codes.
+    
+    
+ 3) INC000000897860 - 663 vs 664
+       
+    Problem:
+    ========
+    DRG 663 is incorrectly calculating to DRG 664 in VistA.
+    
+    Solution:
+    =========
+    Updated routines ICDTBL6E and ICDTBL6F to account for correct
+    diagnosis codes.
+         
+              
+ 4) INC000000900766 - DRG discrepancy between VistA & Quantim
+        
+    Problem:
+    ========
+    DRG 168 is incorrectly calculating to DRG 167 in VistA.
+     
+    Solution:
+    =========
+    Updated routines ICDTBL1E and ICDTBL1F to account for correct
+    diagnosis codes. 
+        
+        
+ 5) INC000000907339 - DRG discrepancy between VistA & Quantim
+      
+    Problem:
+    ========
+    DRG 308 is incorrectly calculating to DRG 310 in VistA.
+       
+    Solution:
+    =========
+    Updated routines ICDTBL3E and ICDTBL3F to account for correct
+    diagnosis codes.
+  
+  
+ 6) INC000000916660 - DRG Miscalculation
+      
+    Problem:
+    ========
+    DRG 26 is incorrectly calculating to DRG 25 in VistA.
+       
+    Solution:
+    =========
+    Updated routines ICDTBL0E and ICDTBL0F to account for correct
+    diagnosis codes.
+  
+  
+ 7) INC000000918874 - DRG Grouper - Other:
+      
+    Problem:
+    ========
+    DRG 682 is incorrectly calculating to DRG 683 in VistA.
+       
+    Solution:
+    =========
+    Updated routines ICDTBL6E and ICDTBL6F to account for correct
+    diagnosis codes.
+  
+  
+ 8) INC000000940773 - DRG discrepancy between VistA & Quantim
+      
+    Problem:
+    ========
+    DRG 694 is incorrectly calculating to DRG 684 in VistA.
+       
+    Solution:
+    =========
+    Updated routines ICDTBL6E and ICDTBL6F to account for correct
+    diagnosis codes.
+  
+  
+ 9) INC000000940782 - DRG discrepancy between VistA & Quantim
+      
+    Problem:
+    ========
+    DRG 309 is incorrectly calculating to DRG 310 in VistA.
+       
+    Solution:
+    =========
+    Updated routines ICDTBL3E and ICDTBL3F to account for correct
+    diagnosis codes.
+    
+         
+ INSTALLATION INSTRUCTIONS:
+ ===========================
+ This patch may be run with users on the system.  However, it would
+ be preferable if Medical Records coders were off the system.
+  
+ Installation will take less than 5 minutes.
+      
+    1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+        the KIDS distribution included with this message.
+        NOTE:  If the required patches are not installed, the transport 
+        global will be removed.  If the transport global is removed you will
+        need to repeat this step.
+      
+    2.  From the Kernel Installation and Distribution System Menu, select
+        the Installation menu.
+      
+    3.  From this menu, you may elect to use the following options
+        (when prompted for INSTALL NAME, enter ICD*18.0*74):
+          a.  Compare Transport Global to Current System  - this option will
+              allow you to view all changes that will be made when the patch
+              is installed.  It compares all components of the patch 
+              (routines, DDs, templates, etc.).
+          b.  Verify Checksums in Transport Global - this option will
+              allow you to ensure the integrity of the routines that are in
+              the transport global.
+          c.  Print Transport Global - this option will allow you to view the
+              components of the KIDS build.
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+      
+    4.  Use the Install Package(s) option and select the package 
+        ICD*18.0*74.
+      
+    5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+        NO//', respond No.
+      
+    6.  When prompted, 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? YES//', respond Yes.
+      
+        When prompted, 'Enter options you wish to mark as 'Out Of Order':',
+        enter: 
+                        PTF Menu  [DG PTF MENU]
+  
+        When prompted, 'Enter protocols you wish to mark as 'Out Of 
+        Order':', press enter.
+      
+    7.  Following installation of this patch, it is necessary to run the
+        Update Transfer DRG's for Current FY [DG PTF UPDATE TRANSFER
+        DRG'S] option in order to make the transfer DRGs correspond to
+        the appropriate grouper.  This option updates/recalculates the 
+        transfer DRGs for PTF records opened during the current fiscal
+        year. The option is locked with the DG PTFSUP security key.
+        The Menu path is PTF Menu/Update DRG Information Menu/Update 
+        Transfer DRGs for current FY.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;18.0;DRG Grouper;**[Patch List]**;Oct 20, 2000;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ICDTBL0E
+    Before: B23414190   After: B23895138  **65,62,71,74**
+Routine Name: ICDTBL0F
+    Before: B23932948   After: B24417174  **72,74**
+Routine Name: ICDTBL1E
+    Before:  B9970948   After: B10223674  **65,69,74**
+Routine Name: ICDTBL1F
+    Before:  B9971146   After: B10223873  **72,74**
+Routine Name: ICDTBL3E
+    Before:  B9236898   After: B10012928  **65,69,71,74**
+Routine Name: ICDTBL3F
+    Before:  B9156224   After:  B9932254  **72,74**
+Routine Name: ICDTBL6E
+    Before: B13576530   After: B13348555  **65,69,70,74**
+Routine Name: ICDTBL6F
+    Before: B13576539   After: B13348564  **72,74**
+Routine Name: ICDTBL7E
+    Before: B14226611   After: B14226989  **65,74**
+Routine Name: ICDTBL7F
+    Before: B15079902   After: B15080280  **72,74**
+ 
+Routine list of preceding patches: 70, 71, 72
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 09, 2014
+Completed By:                               Date Completed: JUN 12, 2014
+Released By :                               Date Released : JUN 19, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

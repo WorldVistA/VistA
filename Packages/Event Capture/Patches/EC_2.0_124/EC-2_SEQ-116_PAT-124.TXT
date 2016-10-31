@@ -1,0 +1,209 @@
+$TXT Created by           at DEVESS.DOMAIN.EXT  (KIDS) on Friday, 04/18/14 at 17:31
+=============================================================================
+Run Date: JUN 17, 2014                     Designation: EC*2*124
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #116                      Status: Released
+                  Compliance Date: AUG 01, 2014
+=============================================================================
+
+Associated patches: (v)EC*2*104    <<= must be installed BEFORE `EC*2*124'
+                    (v)LEX*2*80    <<= must be installed BEFORE `EC*2*124'
+                    (v)ICD*18*57   <<= must be installed BEFORE `EC*2*124'
+
+Subject: ICD-9 Remediation of ECUURPC routine
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ *****************************ATTENTION*********************************
+ *                                                                     *
+ * The following patches must be installed immediately after the       *
+ * install of ICD*18*57/LEX*2*80: 1. PX*1*203, 2. EC*2.0*124,          *
+ * 3. ROR*1.5*23.                                                      *
+ *                                                                     *
+ ***********************************************************************
+  
+ Once the STS ICD-10 software is released, the currently fielded Event 
+ Capture GUI software will experience a silent lookup failure using ^DIC 
+ with certain ICD-9 codes.
+  
+ The STS ICD-10 updates for the ICD-10 remediation will no longer allow 
+ numeric code lookups on the ICD DIAGNOSIS File #80, so the Event Capture 
+ routine ECUURPC has been updated to address this issue.
+  
+ The records will now display correctly in the Event Capture GUI when 
+ Updates are performed to existing records.
+  
+ In addition the correct information will now be transmitted to PCE and the
+ related data will also display correctly.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ --------------------------
+  
+ Data Dictionary
+ ---------------
+  
+ File Name (#)                Field Name (#)          New/Modified/Deleted
+ -------------                --------------          --------------------
+ N/A
+  
+ Dialog Name                                          New/Modified/Deleted
+ -----------                                          --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                File #                      New/Modified/Deleted
+ ---------                ------                      --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)    New/Modified/Deleted
+ -------------      ----      -------------    --------------------       
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Coatesville VAMC, Coatesville, PA
+ Miami VAMC, Miami, FL
+ Orlando VAMC, Orlando, FL
+ Pittsburgh HCS, Pittsburgh, PA 
+  
+  
+ Patch Installation:
+ ------------------
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ This is a MUMPS only patch and does not update the GUI application. 
+ Installation of the patch will not take more than 2 minutes.
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 2
+ minutes to install.
+  
+ If installed during the normal workday, it is recommended that the 
+ following selection(s) in the OPTION (#19) file, and all of their 
+ descendants be disabled to prevent possible conflicts while running the 
+ KIDS Install. Other VISTA users will not be affected.
+  
+     EC GUI Context version 2.1.3.5   ... EC GUI CONTEXT
+  
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (EC*2.0*124):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter EC*2.0*124.
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond YES.
+  
+     Enter the following options:
+     EC GUI CONTEXT                      EC GUI Context version 2.1.3.5
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECUURPC
+    Before:  B5650806   After:  B6143414  **25,42,49,94,95,76,104,124**
+ 
+Routine list of preceding patches: 104
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 16, 2014
+Completed By:                               Date Completed: JUN 16, 2014
+Released By :                               Date Released : JUN 17, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

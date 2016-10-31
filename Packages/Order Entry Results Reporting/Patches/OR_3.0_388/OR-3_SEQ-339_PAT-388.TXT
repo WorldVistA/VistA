@@ -1,0 +1,193 @@
+$TXT Created by                    MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 04/11/14 at 12:50
+=============================================================================
+Run Date: JUN 19, 2014                     Designation: OR*3*388
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #339                      Status: Released
+                  Compliance Date: JUL 20, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*331    <<= must be installed BEFORE `OR*3*388'
+
+Subject: NON-VA QO TIME, IV QO HELP MSG, AUTO D/C DD FIXES
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will resolve the following issues in the ORDER ENTRY/RESULTS 
+ REPORTING (OR) package:
+  
+ 1. When the Start Date/Time field of a non-VA medication quick order is 
+    set up with a value of 'NOW', that value is blank when the quick order
+    is selected  for an inpatient on the Computerized Patient Record System
+    (CPRS).
+  
+ 2. When adding or editing an IV medication quick order, an inaccurate 
+    help message is displayed when two or more question marks are entered
+    in the Infusion rate field.
+  
+ 3. The data dictionary description for the TYPE OF EVENT field (#2) of the
+    OE/RR AUTO-DC RULES file (#100.6) is incorrect.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKET(S) 
+ ===========================
+ 1. INC000000218091 - Herbal Quick Order Start Date/Time Not Functioning
+ 2. INC000000962466 - Inaccurate help message displayed for IV medication  
+                      quick order
+ 3. INC000000883067 - OERR - Documentation 
+  
+  
+ TEST SITES:
+ ===========
+ Mountain Home
+ Charleston
+ Columbus
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000218091 - Herbal Quick Order Start Date/Time Not Functioning
+  
+    Problem:
+    ========
+    When a user is adding or editing a quick order for a non-VA medication
+    in the Enter/edit quick orders option [ORCM QUICK ORDERS] and they
+    enter 'NOW' as the date and time value in the Start Date/Time field and
+    then select the quick order in the Orders tab in CPRS, the Start Date
+    field is blank. This occurs for inpatients only.
+  
+    Resolution:
+    ===========
+    Modified the API BLDQRSP^ORWDXM1 to bypass clearing the Start Date/Time
+    field for a non-VA medication quick order for inpatients.
+  
+ 2. INC000000962466 - Inaccurate help message displayed for IV medication  
+                      quick order
+  
+    Problem:
+    ========
+    When a user is adding or editing an IV medication quick order in the 
+    Enter/edit quick orders option [ORCM QUICK ORDERS] and they enter
+    either two or three question marks at the Infuse over time prompt (for
+    intermittent infusion) or the Infusion Rate prompt (for continuous
+    infusion) the following help text is displayed: "This response can be
+    free text, from 1-30 characters in length. Enter the number of minutes
+    over which to infuse this medication." This message is misleading
+    because the response for the intermittent infusion rate must be a whole
+    number and the response for a continuous infusion is no longer allowed
+    the 30 characters.
+  
+    Resolution:
+    ===========
+    Modified the API ENRATE^ORCDPSIV to display the following message when 
+    the user enters two or more question marks at the Infuse over time
+    prompt (for intermittent infusion) or the Infusion Rate prompt (for
+    continuous infusion): "Enter the number of minutes over which to
+    infuse this medication." This is consistent to what is displayed when
+    one question mark is entered.
+  
+ 3) INC000000883067 - OERR - Documentation 
+  
+    Problem:
+    ========
+    The data dictionary's description for the TYPE OF EVENT field (#2) in
+    the OE/RR AUTO-DC RULES file (#100.6) references the wrong field when
+    describing OR events.
+  
+    Note: This problem corresponds to a change made in Patch SR*3*157, 
+    released 11/1/2006. The help text in the data dictionary was not
+    modified when SR*3*157 was released.
+  
+    Resolution:
+    ===========
+    Modified the data dictionary's description text for the TYPE OF EVENT 
+    field (#2) in the OE/RR AUTO-DC RULES file (#100.6) by replacing the 
+    field name TIME PAT OUT OF OR with field name TIME PAT IN OR.
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low. Installation time will 
+ be less than 2 minutes.
+    
+    1.  Choose the PackMan message containing this patch and invoke the 
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+    2.  Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+    3.  From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter OR*3.0*388):
+    
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will
+            not backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option
+            will allow you to view all changes that will be made when
+            this patch is installed.  It compares all components of this
+            patch (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+    
+    4.  Use the Install Package(s) option and select the package
+        OR*3.0*388.
+    
+        a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+            install? NO//", answer NO.
+        b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+            Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCDPSIV
+    Before:B121037905   After:B121517971  **4,38,48,158,195,243,296,280,388**
+Routine Name: ORWDXM1
+    Before: B96832603   After:B102077765  **10,85,131,132,141,178,185,
+                                           187,215,243,280,331,388**
+ 
+Routine list of preceding patches: 331
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 05, 2014
+Completed By:                               Date Completed: JUN 16, 2014
+Released By :                               Date Released : JUN 19, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

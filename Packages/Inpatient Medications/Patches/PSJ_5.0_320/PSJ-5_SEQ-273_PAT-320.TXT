@@ -1,0 +1,233 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 07/20/15 at 07:49
+=============================================================================
+Run Date: JAN 19, 2016                     Designation: PSJ*5*320
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #273                      Status: Released
+                  Compliance Date: FEB 19, 2016
+=============================================================================
+
+Associated patches: (v)PSJ*5*181   <<= must be installed BEFORE `PSJ*5*320'
+                    (v)PSJ*5*198   <<= must be installed BEFORE `PSJ*5*320'
+
+Subject: IV Label/Remote Allergy/BCBU Dup Orders
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will resolve the following issues:
+  
+ 1)     Undefined error on reprint of IV Labels.
+ 2)     Remote allergy entries are not being displayed when there are no 
+        local allergies.
+ 3)     BCBU patient shows duplicate orders
+  
+ Associated Remedy tickets:
+ ==========================
+ 1)     INC000000827649:        Undefined error on reprint of IV labels
+        Duplicates:
+        INC000000887696     <UNDEFINED>CLASSDSP+15^PSODGAL1
+        INC000000891333     CLASSDSP+15^PSODGAL1 error
+        INC000001259883     Outpatient Pharmacy label issue
+  
+ 2)     INC000001260009:        Remote allergy entries are not being displayed
+                                when there are no local allergies.
+  
+ 3)     INC000001240752:        BCBU patient shows duplicate 
+                  
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Erie VAMC 
+ Boston HCS
+  
+  
+ Remedy Overview:
+ ================
+  
+ 1)      INC000000827649        Undefined errors on reprint of IV labels.
+  
+  
+   Problem:
+   -----------
+   Menu option PSJI MGR, Label Menu, Individual Labels (IV) is used to 
+   reprint a label for a patient with x number of IV Orders.  When the user
+   goes to enter a new  order using menu option Order Entry (IV) for a 
+   second patient that has fewer IV orders in the Pharmacy Patient file 
+   (#55) than the previous patient and this second patient has a drug class
+   allergy to the medication being ordered, the Undefined error will occur.
+  
+  
+   Resolution:
+   --------------
+   A modification was made in the EXIT ACTION of Option PSJI LBLI.  This 
+   will clean up any leftover variables after executing the Individual 
+   Labels (IV) menu option.
+  
+  
+ 2)     INC000001260009:        Remote allergy entries, nor the titles,
+                                are being displayed when there are no local
+                                allergy entries or no known allergies (NKA).
+  
+   Patient Safety Issue:
+   --------------------
+   PSPO 2881
+  
+                    
+  
+   Problem:
+   -----------
+   When a patient has no known local allergies (NKA) or no allergy 
+   assessment, the remote allergy information does not display on the 
+   Inpatient Patient Information screen. 
+  
+   Resolution:
+   --------------
+   Modify routine PSJLMUTL to ensure that the Remote Allergy information 
+   and/or headers are always displayed on the Inpatient Patient Information
+   Screen. 
+  
+  
+ 3)     INC000001240752:        BCBU patient shows duplicate order with an
+                                order reference of "UU" on the BCBU Mar report.
+  
+   Patient Safety Issue:
+   --------------------
+   PSPO 2852
+  
+  
+   Problem:
+   --------
+   After renewing a discontinued Unit Dose order, due to patient movement,
+   duplicate orders were found on the BCBU MAR report.
+  
+   Resolution:
+   ------------
+   A modification was made to routine PSGOERI that will prevent the duplicate
+   orders from being created.   A post-install routine is included in this
+   patch to identify any affected orders.
+  
+  
+   ** Please be sure to see the POST-INSTALL INSTRUCTIONS section for 
+   instructions on how to discontinue and re-enter these orders.
+  
+  
+ Other Components
+ ================
+ ENTRIES IN FILE #19 (OPTION)
+ OPTION: PSJI LBLI
+ EXIT ACTION: D KILL^XUSCLEAN
+  
+ Installation Instructions:
+ ==========================
+ It is recommended that the install take place during non-peak hours.
+  
+ Install Time - takes 5 minutes or less.
+  
+ 1.  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+    
+ 2.  Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+ 3.  From this menu, you may elect to use the following options
+     (When prompted for the INSTALL NAME, enter PSJ*5.0*320):
+    
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option
+         will allow you to view all changes that will be made when
+         this patch is installed.  It compares all components of this
+         patch (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will
+         allow you to ensure the integrity of the routines that are
+         in the transport global.
+    
+ 4.  Use the Install Package(s) option and select the package PSJ*5.0*320.
+  
+     a.  When prompted " Want KIDS to Rebuild Menu Trees Upon Completion
+         of Install? NO//", answer NO.
+     b.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+         NO//", answer NO.
+     c.  When prompted "Want to DISABLE Scheduled Options and Menu Options
+         and Protocols? NO//", answer NO.
+  
+ POST INSTALL INSTRUCTIONS:
+ -------------------------------------------
+ This patch contains a post-install routine that will IDENTIFY any active
+ orders that contain "UU" in NODE 4 of the ORDER File (#100). 
+  
+ A mailman message will be sent to the installer which will contain any 
+ active orders containing the "UU", if any exist.
+  
+ The installer should look for this message in MailMan:
+ 'Background job for PSJ*5*320 Post Install'.
+  
+ If the message states 'NO AFFECTED ORDERS FOUND', installation of the 
+ patch is complete and there is no more action required.
+  
+ If the message contains patient DFNs, the message should be forwarded to 
+ the Pharmacy ADPAC so that the orders can be discontinued and re-entered.
+  
+ If your site is using BCBU then the following steps would need to be 
+ taken:
+ 1)     Using Fileman, delete the patient from BCBU workstation. (file 
+ #53.7)
+ 2)     Using menu option [PSB BCBU INIT SINGLE PT], re-initialize the BCBU
+         patient.
+  
+ If you have any questions on this process, please log a CA SDM ticket.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOERI
+    Before: B17021979   After: B17028217  **17,27,31,88,110,137,181,320**
+Routine Name: PSJ320PO
+    Before:       n/a   After: B16430880  **320**
+Routine Name: PSJLMUTL
+    Before: B56399275   After: B56316538  **7,67,58,85,111,160,198,320**
+ 
+Routine list of preceding patches: 181, 198
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 08, 2015
+Completed By:                               Date Completed: JAN 06, 2016
+Released By :                               Date Released : JAN 19, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

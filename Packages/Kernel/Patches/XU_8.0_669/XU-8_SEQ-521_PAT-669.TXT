@@ -1,0 +1,294 @@
+
+=============================================================================
+Run Date: MAY 24, 2016                     Designation: XU*8*669
+Package : XU - KERNEL                         Priority: EMERGENCY
+Version : 8       SEQ #521                      Status: Released
+                  Compliance Date: MAY 26, 2016
+=============================================================================
+
+
+Subject: REMOVE DELETE ALERTS OVER 14 DAYS OPTION FROM ALERT MANAGEMENT MENU
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Recently Health Systems Platform has seen an increase in sites 
+ accidently running the Delete Old (>14 d) Alerts [XQALERT DELETE OLD] 
+ option.  
+  
+ The Delete Old (>14 d) Alerts [XQALERT DELETE OLD] 
+ resides on the Alert Management [XQALERT MGR] menu and is
+ used to remove Alerts which remain in the User file after a period of
+ at least two weeks.  It is assumed that if a user has not either
+ seen or performed an action associated with an alert for this
+ period, that it cannot be an urgent item for the user. 
+  
+ The Delete Old (>14 d) Alerts option [XQALERT DELETE OLD]
+ purges unprocessed alerts from the ALERT file (#8992) and
+ forwards required alerts to backup reviewers, supervisors
+ or surrogates. It also purges alert tracking information from the
+ ALERT TRACKING file (#8992.1).
+  
+ This option can be run either directly or as a queued nightly job.
+ If the user queues the option, a retention period other than
+ the 14-day default can be specified which overrides the alert
+ retention value of 14 days.  Running it directly, will use the
+ 14 day default and can mistakenly cause thousands of alerts
+ to be deleted from the system. 
+  
+ This Informational patch will resolve the issue by removing
+ the Delete Old (>14 d) Alerts [XQALERT DELETE OLD] option
+ from the Alert Management [XQALERT MGR] menu so the
+ option will not be accidentally run and delete alerts from the system.
+  
+ Currently the Alert Management Menu contains the
+ Delete Old (>14 d) Alerts option.
+  
+ D ^XUP
+ Select OPTION NAME: ALERT MANAGEMENT  XQALERT MGR  Alert Management
+  
+    SURO   Alerts - Set/Remove Surrogate for User
+           Delete Old (>14 d) Alerts   < <  
+           Make an alert on the fly
+           Purge Alerts for a User
+           Set Backup Reviewer for Alerts
+           Surrogate for which Users?
+  
+ Perform the following to delete the 
+ Delete Old (>14 d) Alerts [XQALERT DELETE OLD] 
+ from the Alert Management [XQALERT MGR] menu using 
+ the Menu Management option.
+  
+ D ^XUP
+ Select OPTION NAME: MENU MAN          XUMAINT Menu Management
+           Edit options
+           Key Management ...
+           Secure Menu Delegation ...
+           Restrict Availability of Options
+           Option Access By User
+           List Options by Parents and Use
+           Fix Option File Pointers
+           Help Processor ..
+ OPED      Screen-based Option Editor
+           Display Menus and Options ...
+           Menu Rebuild Menu ...
+           Out-Of-Order Set Management ...
+           See if a User Has Access to a Particular Option
+           Show Users with a Selected primary Menu
+  
+ Select Menu Management <TEST ACCOUNT> Option: EDIT  Edit options
+  
+ Select OPTION to edit: ALERT MANAGEMENT  XQALERT MGR  Management
+ NAME: XQALERT MGR// 
+ MENU TEXT: Alert Management// 
+ PACKAGE: 
+ OUT OF ORDER MESSAGE: 
+ LOCK: 
+ REVERSE/NEGATIVE LOCK: 
+ DESCRIPTION:
+ This option provides a menu of options for managing alerts.  These options
+ include the ability to delete options based on time or a particular user,
+ to generate a new alert, etc.
+ EDIT Option: 
+ TYPE: menu// 
+ HEADER: 
+ ENTRY ACTION: 
+ EXIT ACTION: 
+ Select ITEM: XQAL SET BACKUP REVIEWER// XQALERT DELETE OLD Delete Old 
+ (>14d) Alerts
+  
+          ...OK? Yes//   (Yes)      
+  
+   ITEM: XQALERT DELETE OLD// @
+    SURE YOU WANT TO DELETE THE ENTIRE ITEM? Y
+  
+ Select ITEM: ^
+  
+ Select OPTION to edit:^
+  
+ Check the ALERT MANAGEMENT menu after manual deletion.
+ The Delete Old (>14 d) Alerts [XQALERT DELETE OLD]
+ should no longer display.
+  
+ D ^XUP
+ Select OPTION NAME: ALERT MANAGEMENT  XQALERT MGR Alert Management
+    SURO   Alerts - Set/Remove Surrogate for User
+           Make an alert on the fly
+           Purge Alerts for a User
+           Set Backup Reviewer for Alerts
+           Surrogate for which Users?
+  
+ ** Option [XQALERT DELETE OLD] is now removed
+ from the [XQALERT MGR] menu.
+  
+  
+ Blood Bank Team Coordination: 
+ =============================
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: 
+  Patch XU*8*653 contains changes to a package referenced
+  in ProPath standard titled: BBM Team Review of VistA Patches.
+  This patch does not alter or modify any VistA Blood Bank
+  software design safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: 
+  
+  
+  Patch Components
+  ================
+   
+  Files & Fields Associated:
+  
+  File Name (Number)         Field Name (Number)  New/Modified/Deleted
+  ------------------         -------------------  --------------------
+  NA
+  
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+ NA
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ NA
+   
+  
+ Options Associated:
+ ================
+  
+  
+ Option Name                    Type                New/Modified/Deleted
+ -----------                    ----                --------------------
+           
+ ALERT MANAGEMENT [XQALERT MGR] Menu                    Modified
+  
+  
+ Protocols Associated:
+ =====================
+  
+ Protocol Name     New/Modified/Deleted
+ -------------     -------------------- 
+ NA
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ NA
+  
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)  New/Modified/Deleted 
+ -------------     ----     ------------------  --------------------
+ NA
+  
+  
+ Additional Information:
+ NA
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NA
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ NA
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ NA
+  
+ Problem:
+ --------
+ Health Systems Platform has seen an increase in sites 
+ accidently running the Delete Old (>14 d) Alerts [XQALERT DELETE OLD] 
+ option which may delete unprocessed alerts from the system. 
+  
+ ----------
+  
+ Resolution:
+ ----------
+ This Informational patch will resolve the issue by removing
+ the Delete Old (>14 d) Alerts [XQALERT DELETE OLD] option
+ from the Alert Management [XQALERT MGR] menu so the
+ option will not be accidentally run and delete alerts from the system. 
+  
+  
+ Test Sites: (Patch Tracking Message #)
+ ----------
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Albany:     domain.ext
+ Hines:     domain.ext  
+ Salt Lake City:     domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Title     File Name     FTP Mode
+ -----------------------------------------------------------------------
+ NA
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ NA
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ NA
+  
+  
+ Installation Instructions
+ -------------------------
+  
+ NA
+  
+ Post-Installation Instructions
+ ------------------------------
+ NA
+  
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 19, 2016
+Completed By:                               Date Completed: MAY 24, 2016
+Released By :                               Date Released : MAY 24, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

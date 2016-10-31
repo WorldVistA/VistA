@@ -1,0 +1,95 @@
+
+=============================================================================
+Run Date: DEC 30, 2015                     Designation: NHIN*1*10
+Package : NHIN - NATIONAL HEALTH INFO NETWORK Priority: Mandatory
+Version : 1         SEQ #8                      Status: Released
+                  Compliance Date: JAN 06, 2016
+=============================================================================
+
+
+Subject: VLER eHX Increment 7 Release 1 (v6.6.0.8) Informational Patch
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Note: Technical support staff at Austin Information Technology Center 
+ (AITC) will install this enhancement release on the eHealth Exchange 
+ (formerly VLER and formerly NHIN) servers located there using a 
+ pre-approved Request for Change Order and Implementation Plan.  This 
+ deployment is scheduled to take place on October 15, 2015 from 8:00 PM EST
+ - 11:00 PM EST.
+  
+ No effort is required by local sites.  User Acceptance Test is by the 
+ direction of the eHealth Exchange Business Owner and no MOUs are required.
+ **************************************************************************
+ eHealth Exchange (formerly VLER and formerly NHIN) Adapter Release 
+ 6.6.0.8 contains code changes (enhancements) to the eHealth Exchange 
+ Adapter module.  These changes are Work Items that were recorded and 
+ tracked in the eHealth Exchange area of Rational Team Concert, the 
+ VA-prescribed tool used for tracking requirements and associated test 
+ plans.  This release contains the Work Items completed during production 
+ deployment.
+  
+ This enhancement release consists of the following enhancements to the 
+ eHealth Exchange system:
+ - Laboratory Data: Microbiology results will be added to the Consolidated 
+ Clinical Document Architecture (C-CDA) CCD provided to external 
+ partners.  This will be accessed from VistA via the Accession Virtual 
+ Patient Record (VPR) extract.
+ - Data Filtering and Security: Additional data filtering will be provided 
+ to allow sensitive data to be filtered out (i.e., not provided on the 
+ C-CDA) unless the user designates to have sensitive information shared.  
+ No user interface will be provided for defining "sensitive" data 
+ elements. This capability is considered a proof of concept and will not 
+ be enabled in the release of this increment.
+ In addition to these two enhancements, two defects identified in 
+ Increment 5 (v6.4.0.17) will be addressed and resolved with this release, 
+ as follows:
+ - A fix to a Release 6.4.0.17 UAT defect which will cause only the 
+ Primary Care Provider to have its Addresses displayed
+ - A fix to a Release 6.4.0.17 UAT defect which caused Headers to be 
+ displayed even if no data was retrieved for that Information block. 
+  
+ Test sites: N/A
+ The upgraded software will be deployed to a centralized system at AITC.
+  
+ Sensitive or private information is given identifiers in LOINC, VUID, or
+ ICD languages in the database, and if the information is restricted by the
+ patient, the adapter will filter out this information in clinical
+ documents. As of September 2015, this sensitive data filtering
+ functionality is not planned for release in production, but may be
+ released at a later date.
+  
+ External Partner Test Sites: Sentara and Multicare were able to 
+ successfully pull C-CDA and C32 documents respectively from the system. 
+  
+ Downstream Dependent System Testing: Testing efforts with the Direct 
+ Secure Messaging, VistAWeb, and MyHealtheVet downstream systems were
+ successful.
+  
+ Remedy tickets: None
+  
+  
+ Routine Information:
+ ====================
+ No routines included.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:                          Hold Date     : OCT 04, 2015
+Entered By  :                               Date Entered  : SEP 28, 2015
+Completed By:                               Date Completed: SEP 30, 2015
+Released By :                               Date Released : DEC 30, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

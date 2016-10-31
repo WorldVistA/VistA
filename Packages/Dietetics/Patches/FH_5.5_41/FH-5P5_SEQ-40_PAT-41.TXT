@@ -1,0 +1,166 @@
+$TXT Created by                      DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 03/15/16 at 16:37
+=============================================================================
+Run Date: JUN 02, 2016                     Designation: FH*5.5*41
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #40                    Status: Released
+                  Compliance Date: JUL 03, 2016
+=============================================================================
+
+
+Subject: GENERAL SOFTWARE FIXES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issues:
+  
+ 1. Adding Food/Food Drug allergies MALTITOL, MANNITOL, and XYLITOL to 
+    FHSELA2.
+ 2. Incremental Locks missing timeouts in routines FHNO5, FHORD7, and 
+    FHORD72.
+ 3. Adding Food/Food Drug allergy SASSAFRAS to FHSELA2.
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ PATIENT SAFETY ISSUES:
+ ======================
+ N/A
+  
+ ASSOCIATED CA SDM TICKETS:
+ ==========================
+ 1. R6557528FY16 - GMR ALLERGIES file (#120.82) changes that will require 
+    a FH patch 
+ 2. R7909214FY16 - Incremental Locks are missing timeouts
+ 3. R7960069FY16 - GMR ALLERGIES file (#120.82) change (SASSFRAS) that 
+    will require a FH patch
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VA New York Harbor HCS (Brooklyn)
+ Edith Nourse Rogers Memorial Veterans Hospital (Bedford)
+ VA North Florida / South Georgia VA Health Care System  (Lake City)
+  
+ CA SDM OVERVIEW:
+ ================
+ 1. R6557528FY16 - GMR ALLERGIES file (#120.82) changes that will require 
+    a FH patch 
+  
+ Problem:
+ --------
+ The New Term Rapid Turnaround (NTRT) Allergy team has recently added 
+ MALTITOL, MANNITOL, and XYLITOL as food allergies to the GMR ALLERGY 
+ file (#120.82). These new food allergies must be added to the routine 
+ FHSELA2 in order to be mapped as allergy type food preference dislikes 
+ in the Dietetics package.
+  
+ Resolution:
+ -----------
+ Routine FHSELA2 has a hard coded list of food allergies. It uses this hard
+ coded list to present to the user for adding a food allergy preference
+ dislike to the FOOD PREFERENCES file (#115.2) and then map it to a
+ matching record in the GMR ALLERGY file (#120.89). MALTITOL, MANNITOL, and
+ XYLITOL will be added to the hard coded list of food allergies in routine
+ FHSELA2 so they may be presented to the user.
+  
+ 2. R7909214FY16 - Incremental Locks are missing timeouts
+  
+ Problem:
+ --------
+ During the research for Remedy ticket INC000001039784, the  code checking
+ routine ^XINDEX was run on the following routines FHNO%, FHORD7, and 
+ FHORD72. All returned "Lock missing Timeout" errors. This is a violation 
+ of the VA M Programming Standards and Conventions (SAC) section 2.4.6.1.
+  
+ Resolution:
+ -----------
+ This patch will modify Routines FHNO5, FHORD7, and FHORD72 to include
+ timeouts to the incremental locks. This will correct the violations of the
+ SAC section 2.4.6.1.
+  
+ 3. R7960069FY16 - GMR ALLERGIES file (#120.82) change (SASSFRAS) that will
+ require a FH patch.
+  
+ Problem:
+ --------
+ The New Term Rapid Turnaround (NTRT) Allergy team has recently added 
+ SASSAFRAS as a food allergy to the GMR ALLERGY file (#120.82). This new
+ food allergy must be added to the routine FHSELA2 in order to be mapped as
+ an allergy type food preference dislike in the Dietetics package.
+  
+ Resolution:
+ -----------
+ Routine FHSELA2 has a hard coded list of food allergies. It uses this hard
+ coded list to present to the user for adding a food allergy preference
+ dislike to the FOOD PREFERENCES file (#115.2) and then map it to a
+ matching record in the GMR ALLERGY file (#120.89). SASSAFRAS will be added
+ to the hard coded list of food allergies in routine FHSELA2 so it may be
+ presented to the user.
+  
+ =================== INSTALLATION INSTRUCTIONS =====================
+   
+  Installation will take less than 2 minutes. Users may be on the system.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options
+        (when prompted for INSTALL NAME, enter FH*5.5*41)
+   
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+   
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch (routines,
+           DDs, templates, etc.).
+   
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+   
+     4. Use the Install Package(s) option and select the package FH*5.5*41.
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//", respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHNO5
+    Before: B75252666   After: B76460915  **5,41**
+Routine Name: FHORD7
+    Before: B15930347   After: B16343408  **8,41**
+Routine Name: FHORD72
+    Before: B10206008   After: B10642497  **41**
+Routine Name: FHSELA2
+    Before:B127039563   After:B130400991  **8,13,23,25,28,35,37,39,40,41**
+ 
+Routine list of preceding patches: 5, 40
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 09, 2016
+Completed By:                               Date Completed: JUN 01, 2016
+Released By :                               Date Released : JUN 02, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,167 @@
+
+=============================================================================
+Run Date: JUN 24, 2015                     Designation: ICD*18*80
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #74                     Status: Released
+                  Compliance Date: JUL 25, 2015
+=============================================================================
+
+
+Subject: VERIFY PATCH ICD*18.0*64 INSTALLED PROPERLY
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This is an informational patch that contains instructions to verify 
+ that patch ICD*18.0*64 was installed properly in TEST and PRODUCTION
+ accounts. There are no routines, data or data dictionaries included.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1) INC000001268888 - DRG Grouper - Patch:
+    duplicate:
+    INC000001271720 - ICD Files - Patch:
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+         
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Connecticut HCS (West Haven)
+ El Paso VA HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1) INC000001268888 - DRG Grouper - Patch:
+    
+     Problem:
+     ========
+     ICD-10 patch ICD*18.0*64 included a .GBL file that contained data 
+     to be loaded into several VistA files.  If the .GBL file was not
+     properly loaded in the system before the Kernel Installation & 
+     Distribution System (KIDS) build was installed, it is possible
+     that these files were not updated properly and entries may have
+     been deleted. These missing entries will affect the use of ICD-10
+     codes starting October 1, 2015.
+     
+     Solution:
+     =========
+     Verify files DRG SURGICAL HIERARCHY (#80.5), DRG HAC (#80.6), DRG 
+     DIAGNOSIS IDENTIFIER CODES (#82), DRG PROCEDURE IDENTIFIER CODES
+     (#82.1), DRG PROCEDURE CODE COMBINATIONS (#82.11), DRG DIAGNOSIS
+     CODE COMBINATIONS (#82.12) and DRG CC EXCLUSIONS (#82.13) were
+     loaded properly in VistA TEST and PRODUCTION accounts.
+     
+  
+  
+ How to check if the ICD*18.0*64 installation was not installed properly:
+ ========================================================================
+ Information Resource Management (IRM) should perform an ^%G lookup
+ on several files. The following instructions will show the zero node
+ of the files, and the third piece of the node contains the total
+ number of entries in that file. The count should match the entries
+ listed in the table below under the "Expected # of entries" column. 
+ If your count matches the "Actual # of entries" column, you have a
+ potential issue and should log a Remedy ticket as soon as possible so
+ the problem can be corrected. Please tell the National Service Desk to
+ mark the ticket as 'HIGH' priority.
+  
+  
+  From the programmer prompt enter the following:
+  
+  D ^%G <return>
+  
+  Device: <return>
+  Right margin: 80 => <return>
+  Screen size for paging (0=nopaging)? 24 => <return>
+  For help on global specifications DO HELP^%G
+                                                                                 
+  Global ^ICDRS(0) <return>
+  ^ICDRS(0)="DRG SURGICAL HIERARCHY^80.5D^1^1"
+  
+  Global ^ICDHAC(0) <return>
+  ^ICDHAC(0)="DRG HAC^80.6^1^1"
+  
+  Global ^ICDID(0) <return>
+  ^ICDID(0)="DRG DIAGNOSIS IDENTIFIER CODES^82^265^265"
+  
+  Global ^ICDIP(0) <return>
+  ^ICDIP(0)="DRG PROCEDURE IDENTIFIER CODES^82.1^214^214"
+  
+  Global ^ICDIDP(0) <return>
+  ^ICDIDP(0)="DRG PROCEDURE CODE COMBINATIONS^82.11P^33^33"
+  
+  Global ^ICDIDD(0) <return>
+  ^ICDIDD(0)="DRG DIAGNOSIS CODE COMBINATIONS^82.12P^2^2"
+  
+  Global ^ICDCCEX(0) <return>
+  ^ICDCCEX(0)="DRG CC EXCLUSIONS^82.13^1491^1491"
+  
+ ***Verify the information listed above matches the information found in 
+    your TEST and PRODUCTION accounts.***
+  
+  
+ DRG file names and entry counts:
+ ================================
+  
+ File     File                            Expected # of       Actual # of
+ Number   Name                               entries             entries
+ ------   ----                               -------             -------
+ 80.5     DRG SURGICAL HIERARCHY               1                    0
+ 80.6     DRG HAC                              1                    0
+ 82       DRG DIAGNOSIS IDENTIFIER CODES       265                  1
+ 82.1     DRG PROCEDURE IDENTIFIER CODES       214                  0
+ 82.11    DRG PROCEDURE CODE COMBINATIONS      33                   0
+ 82.12    DRG DIAGNOSIS CODE COMBINATIONS      2                    0
+ 82.13    DRG CC EXCLUSIONS                    1491                 0
+  
+  
+ Instructions to Complete Action:
+ ================================ 
+  
+ STEP 1: Review the Informational Patch to verify proper patch
+         installation.  Please be sure to read and perform all
+         instructions listed in this informational patch.  If these
+         steps are not performed, this could result in severe issues
+         when ICD-10 codes are actived on October 1, 2015. 
+  
+ STEP 2: Verify completion of action. 
+        1) All instructions listed in this Informational patch (ICD*18.0*80) 
+           have been followed.
+        2) Send an email to the VAOITPDICD_10_DRGVerification@domain.ext 
+           mailgroup confirming the ICD*18.0*64 patch and .GBL file 
+           were installed correctly in test and production accounts.
+  
+           ********************************************************
+           ***Please include your site name in the subject line.***
+           ********************************************************
+  
+        3) If the ICD*18.0*64 patch and .GBL file were not installed 
+           correctly, please open a high priority Remedy ticket to 
+           receive additional instructions and help with re-installing
+           the required patch.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 17, 2015
+Completed By:                               Date Completed: JUN 24, 2015
+Released By :                               Date Released : JUN 24, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

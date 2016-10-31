@@ -1,0 +1,334 @@
+
+=============================================================================
+Run Date: SEP 04, 2014                     Designation: OR*3*385
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #347                      Status: Released
+                  Compliance Date: OCT 30, 2014
+=============================================================================
+
+Associated patches: (v)PXRM*2*26   <<= must be installed BEFORE `OR*3*385'
+                    (v)OR*3*361    <<= must be installed BEFORE `OR*3*385'
+
+Subject: CPRS GUI v30.A
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ IMPORTANT INFORMATION: Please read the Overview Guide 
+ (ICD-10_PROD_OVERVIEW_GUIDE_GROUPS_5_6_7.pdf) posted on the 
+ Anonymous directory or specified FTP directory for installation order.
+ This is critical for proper functionality of the ICD-10 Software.
+  
+ This patch contains the ICD-10 project enhancements for the Computerized 
+ Patient Records System CPRSv30.A project. This project will modify CPRS,
+ TIU, GMRC, GMTS, GMPL, PXRM, and OERR to meet the requirements proposed by
+ the Dept. of Health and Human Services to adopt ICD-10 code set 
+ standards. Please see the CPRS GUI v30.A Release Notes for a summary of 
+ the changes and enhancements.
+  
+ On January 16, 2009, the Centers for Medicare & Medicaid Services (CMS) 
+ released a final rule for replacing the 30-year-old ICD-9-CM code set 
+ with International Classification of Diseases, Tenth Revision, Clinical
+ Modification (ICD-10-CM) and International Classification of Diseases, 
+ Tenth Revision, Procedure Coding System (ICD-10-PCS) with dates of 
+ service, or date of discharge for inpatients, that occur on or after 
+ the industry activation date. The classification system consists of more
+ than 68,000 codes, compared to approximately 13,000 ICD-9-CM codes. There
+ are nearly 87,000 ICD-10-PCS codes, while ICD-9-CM has nearly 3,800
+ procedure codes. Both systems also expand the number of characters
+ allotted from five and four respectively to seven alpha-numeric
+ characters. This value does not include the decimal point, which follows
+ the third character for the ICD-10-CM code set. There is no decimal point
+ in the ICD-10-PCS code set. These code sets have the potential to reveal
+ more about quality of care, so that data can be used in a more meaningful
+ way to better understand complications, better design clinically robust
+ algorithms, and better track the outcomes of care. ICD-10-CM also
+ incorporates greater specificity and clinical detail to provide
+ information for clinical decision making and outcomes research.
+  
+ NOTE: Functionality specific to activation of the ICD-10 code set shall 
+ not be seen by end users until the code set has been activated.
+  
+ CPRS GUI v30.A consists of one host file, an updated CPRS GUI, and 
+ several Help files, too many to list (which will be located in a 
+ directory named HELP):
+  
+ 1.      OR_30_385.KID
+ 2.      CPRSChart.exe
+ 3.      CPRS_30A_Help.zip (HELP Directory of files)
+  
+ To see the current status and target dates for Sites/VISN/Regions please 
+ refer to the following site:
+  
+ http://vaww.oed.portal.domain.ext/projects/CPRS/v30/30a/Public/Deployment/CPRS
+ v30a Deployment Schedule.xlsx
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ OR CPRS GUI CHART     Broker                    Modified
+  
+ Protocols Associated:
+  
+ Protocol Name              New/Modified/Deleted
+ -------------              -------------------- 
+ ORC COMMENT PROBLEM              Modified
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ NSR 20070902, ICD-10-CM Conversion
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+ Problem:
+ -------
+ 1. With ICD-10 activation, users were unable to annotate an existing 
+ problem with an inactive ICD-9 code without having to update/change the 
+ problem to a SNOMED CT equivalent term first on the Problems tab (whether 
+ date is before/after Oct 1, 2015).
+  
+ 2. Detroit reported a IS NOT A VALID FLOATING POINT VALUE error in IOC 
+ test of the Group Notes (GN) app. It appears that this error is due to 
+ some missing RPCs (ORWGN IDTVALID & ORWGN MAXFRQ) that failed to get 
+ registered on the OR CPRS GUI CHART option in patch OR*3*353 T8. 
+  
+ 3. With ICD-9 active, when a user selects a SNOMED CT (SCT)/ICD-9 problem 
+ from their pick/selection list to add to the Problem list, the system 
+ saves and stores the SCT Designation code as the Concept code which is 
+ incorrect. This is displayed incorrectly as well on the Problem 
+ list. Problems are being incorrectly flagged ("#" indicator) with 
+ an inactive SCT code due to the incorrect designation code association.
+  
+ 4. When selecting the ICD-9 diagnosis code V65.49 from the TELEPHONE 
+ DIAGNOSES section of the National Telephone encounter form dialog, the 
+ selected diagnosis code does not appear under the Selected Diagnoses 
+ section for confirmation of selection. This issue only occurs when the 
+ user tries to select a diagnosis which has similar codes but different 
+ descriptions and are listed sequentially on the form. In the reported 
+ scenario, the user tried to select one or both of the V65.49 codes which 
+ were listed sequentially after one another with two different 
+ descriptions, COUNSELING W/OUT SICKNESS and HEALTH ADVICE INSTRUCTIONS. 
+ As a result the selected diagnoses did not appear under the Selected 
+ Diagnoses section of the dialog.
+  
+ Resolution:
+ ----------
+ 1. The restriction has been removed so that users can now annotate any 
+ problem regardless of the current active coding system and without having 
+ to update the problem first.
+  
+ 2. CPRS will register and export the two GN RPC's on the GUI CHART option
+ for GN. IOC GN sites will no longer have to manually register the RPC's
+ with every CPRS GUI iteration install.
+  
+ 3. This has been resolved so that the correct SCT concept and designation 
+ codes are retrieved, saved, and stored appropriately when adding a SCT 
+ problem from a user selection list.
+  
+ 4. This bug has been resolved so that upon selection of an ICD-9 
+ diagnosis (which has similar codes but different descriptions and are 
+ sequentially listed) on the encounter form dialog, it will appear under 
+ the Selected Diagnoses section of the dialog.
+  
+ Test Sites:
+ ===========
+ Denver, CO
+ Detroit, MI
+ Dublin, GA
+ Orlando, FL 
+  
+  
+ Documentation and Software Retrieval:
+ =====================================
+ The following documents can be downloaded from the FTP address as 
+ directed by the CPRS Implementation team.
+  
+ The updated documentation associated with this patch is:
+  
+ File Name               Contents               
+ ---------               --------               
+ CPRSGUITM.DOC           CPRS GUI Technical Manual (Word version) 
+ CPRSGUITM.PDF           CPRS GUI Technical Manual 
+ CPRSGUIUM.DOC           CPRS GUI User Manual      (Word version)
+ CPRSGUIUM.PDF           CPRS GUI User Manual   
+ OR_30_385_IG.DOC        CPRS GUI v30.A Installation Guide
+                         (Word Version)       
+ OR_30_385_IG.PDF        CPRS GUI v30.A Installation Guide
+ OR_30_385_RN.DOC        CPRS GUI v30.A Release Notes (Word Version) 
+ OR_30_385_RN.PDF        CPRS GUI v30.A Release Notes
+ ICD-10_PROD_OVERVIEW    ICD-10 Production Overview Guide Groups 5-7       
+ _GUIDE_GROUPS_5_6_7.pdf
+  
+  
+ CPRS documentation can also be found in the VA Software Document Library:
+  
+ http://www.domain.ext/vdl.
+  
+ Sites will retrieve VistA software from an FTP address as directed by the
+ CPRS Implementation team. Installation instructions will be distributed
+ when your site begins the implementation process.
+  
+ The software distribution includes:
+  
+ File Name              Contents          Retrieval Format
+ ---------              --------          ----------------
+ OR_30_385.ZIP          CPRSCHART.EXE     Binary
+ CPRS_30A_Help.ZIP      HELP Directory    Binary
+ CPRS_30A.MSP           GUI Installer     Binary
+ (*This is the generic MSP filename. Specific filenames will differ 
+ depending on the site it is targeted for.)
+  
+ OR_30_385_SRC.ZIP      CPRS v30.A Source Binary
+ OR_30_385.KID          KIDS Build        Ascii
+  
+  
+ Patch Installation:
+ ===================
+  
+ Installation Overview
+ ---------------------
+ N/A 
+  
+ Pre-installation Instructions
+ -----------------------------
+ There are no pre-install steps for this patch.
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install. 
+  
+  
+ 1.  Download the OR_30_385.KID file from the appropriate
+     FTP Server to a directory on your system.
+  
+ 2.  Use the LOAD A DISTRIBUTION option on the KIDS INSTALLATION menu, and
+     enter: [DIR:]OR_30_385.KID, where [DIR:] is the local directory where
+     you have stored the host file.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #:
+     OR*3.0*385.
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install: OR*3.0*385.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'    Answer 'NO' 
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'    Answer 'YES'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//'    Answer 'NO' 
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0//"   Respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCPROB
+    Before: B26200127   After: B24954470  **27,48,181,385**
+Routine Name: ORQQPL
+    Before: B30115835   After: B32815951  **9,10,85,173,306,361,385**
+Routine Name: ORQQPL1
+    Before: B97265691   After: B93536539  **10,85,148,173,203,206,249,
+                                           243,280,306,361,385**
+Routine Name: ORQQPL3
+    Before: B68312739   After: B77595608  **10,148,173,243,280,306,361,385**
+Routine Name: ORWLEX
+    Before:       n/a   After:  B8576655  **385**
+Routine Name: ORWPCE
+    Before: B60062605   After: B64200861  **10,85,116,173,190,195,215,
+                                           243,295,280,306,361,385**
+Routine Name: ORWPCE3
+    Before: B58956270   After: B60736821  **10,85,116,190,280,306,371,361,385**
+ 
+Routine list of preceding patches: 181, 361
+
+=============================================================================
+User Information:                          Hold Date     : SEP 04, 2014
+Entered By  :                               Date Entered  : NOV 19, 2013
+Completed By:                               Date Completed: AUG 25, 2014
+Released By :                               Date Released : SEP 04, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

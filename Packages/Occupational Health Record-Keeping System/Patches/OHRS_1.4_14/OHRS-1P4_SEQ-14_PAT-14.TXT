@@ -1,0 +1,98 @@
+
+=============================================================================
+Run Date: DEC 17, 2015                     Designation: OHRS*1.4*14
+Package : OHRS - OCCUPAT HEALTH RECORD-KEEPIN Priority: Mandatory
+Version : 1.4        SEQ #14                    Status: Released
+                  Compliance Date: JAN 17, 2016
+=============================================================================
+
+
+Subject: OHRS 1.4.14 Maintenance Release
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch announces the National Release of Occupational Health Record-Keeping 
+ System (OHRS) version 1.4.14. No additional action is necessary for sites 
+ except to communicate the below modifications of OHRS 1.4.14 to users. 
+ 
+ The new OHRS 1.4.14 version addresses the defect on Patient Information 
+ Risk Profile screen and there are no new enhancements.
+  
+ This build corrects 1 issue within the OHRS application and replaces
+ Occupational Health Record-Keeping System (OHRS) version 1.4.13.
+  
+ 1) Patient information risk profile cannot be changed 
+  
+ ASSOCIATED REMEDY TICKET(s):
+ ============================
+  
+ 1) INC000001304015 - OCCUPATIONAL HEALTH RECORD-KEEPING SYSTEM
+      - OHRS - PatientIssue:
+           Patient information risk profile frequency cannot be changed 
+   
+   
+ ASSOCIATED NSR(s):
+ ==================
+   N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+  Philadelphia VAMC, Philadelphia, PA
+  NJHCS - EO Campus, East Orange, NJ
+  Amarillo VAHCS, Amarillo, TX
+  Northern California HCS East Bay, Martinez, CA
+ 
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1) INC000001304015 - OCCUPATIONAL HEALTH RECORD-KEEPING SYSTEM
+       - OHRS - Patient Issue:
+         Patient information risk profile frequency cannot be changed 
+  
+     Problem:
+       The risk profile is not updating the change in status on the 
+       patient information tab. Employee job risks are entered in the 
+       Risk Profile in OHRS and several risks can be entered. 
+       In the recent ticket, a nurse practitioner was trying to 
+       update the status of an EXISTING risk in OHRS, but OHRS 
+       didn't save the update. 
+  
+   Solution:
+       The problem on the Risk profile screen has been fixed by 
+       modifying the code - to enable the removal of the job risk 
+       when the frequency "End risk" is selected.         
+   
+ DOCUMENTATION:
+ ==============
+     The User Guide is available on VA Documentation Library (VDL) at:
+     http://www.domain.ext/vdl/ in the HealtheVet section.
+   
+ ADDITIONAL INFORMATION:
+ =======================
+     If you have any questions concerning the implementation of this
+     application, please contact the VA Service Desk at 1-888-596-4357 or 
+     log a Remedy Ticket via Remedy for CISS-OHRS
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 19, 2015
+Completed By:                               Date Completed: DEC 16, 2015
+Released By :                               Date Released : DEC 17, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

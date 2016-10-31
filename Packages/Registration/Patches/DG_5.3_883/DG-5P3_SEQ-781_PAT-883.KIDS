@@ -1,0 +1,397 @@
+Released DG*5.3*883 SEQ #781
+Extracted from mail message
+**KIDS**:DG*5.3*883^
+
+**INSTALL NAME**
+DG*5.3*883
+"BLD",8945,0)
+DG*5.3*883^REGISTRATION^0^3140303^y
+"BLD",8945,1,0)
+^^2^2^3140303^
+"BLD",8945,1,1,0)
+Registration changes for the VIA Project. See patch description for 
+"BLD",8945,1,2,0)
+details.
+"BLD",8945,4,0)
+^9.64PA^^
+"BLD",8945,6.3)
+2
+"BLD",8945,"ABPKG")
+n
+"BLD",8945,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8945,"KRN",.4,0)
+.4
+"BLD",8945,"KRN",.401,0)
+.401
+"BLD",8945,"KRN",.402,0)
+.402
+"BLD",8945,"KRN",.403,0)
+.403
+"BLD",8945,"KRN",.5,0)
+.5
+"BLD",8945,"KRN",.84,0)
+.84
+"BLD",8945,"KRN",3.6,0)
+3.6
+"BLD",8945,"KRN",3.8,0)
+3.8
+"BLD",8945,"KRN",9.2,0)
+9.2
+"BLD",8945,"KRN",9.8,0)
+9.8
+"BLD",8945,"KRN",19,0)
+19
+"BLD",8945,"KRN",19.1,0)
+19.1
+"BLD",8945,"KRN",101,0)
+101
+"BLD",8945,"KRN",409.61,0)
+409.61
+"BLD",8945,"KRN",771,0)
+771
+"BLD",8945,"KRN",779.2,0)
+779.2
+"BLD",8945,"KRN",870,0)
+870
+"BLD",8945,"KRN",8989.51,0)
+8989.51
+"BLD",8945,"KRN",8989.52,0)
+8989.52
+"BLD",8945,"KRN",8994,0)
+8994
+"BLD",8945,"KRN",8994,"NM",0)
+^9.68A^2^2
+"BLD",8945,"KRN",8994,"NM",1,0)
+DG SENSITIVE RECORD ACCESS^^0
+"BLD",8945,"KRN",8994,"NM",2,0)
+DG SENSITIVE RECORD BULLETIN^^0
+"BLD",8945,"KRN",8994,"NM","B","DG SENSITIVE RECORD ACCESS",1)
+
+"BLD",8945,"KRN",8994,"NM","B","DG SENSITIVE RECORD BULLETIN",2)
+
+"BLD",8945,"KRN","B",.4,.4)
+
+"BLD",8945,"KRN","B",.401,.401)
+
+"BLD",8945,"KRN","B",.402,.402)
+
+"BLD",8945,"KRN","B",.403,.403)
+
+"BLD",8945,"KRN","B",.5,.5)
+
+"BLD",8945,"KRN","B",.84,.84)
+
+"BLD",8945,"KRN","B",3.6,3.6)
+
+"BLD",8945,"KRN","B",3.8,3.8)
+
+"BLD",8945,"KRN","B",9.2,9.2)
+
+"BLD",8945,"KRN","B",9.8,9.8)
+
+"BLD",8945,"KRN","B",19,19)
+
+"BLD",8945,"KRN","B",19.1,19.1)
+
+"BLD",8945,"KRN","B",101,101)
+
+"BLD",8945,"KRN","B",409.61,409.61)
+
+"BLD",8945,"KRN","B",771,771)
+
+"BLD",8945,"KRN","B",779.2,779.2)
+
+"BLD",8945,"KRN","B",870,870)
+
+"BLD",8945,"KRN","B",8989.51,8989.51)
+
+"BLD",8945,"KRN","B",8989.52,8989.52)
+
+"BLD",8945,"KRN","B",8994,8994)
+
+"BLD",8945,"QUES",0)
+^9.62^^
+"BLD",8945,"REQB",0)
+^9.611^^
+"KRN",8994,628,-1)
+0^1
+"KRN",8994,628,0)
+DG SENSITIVE RECORD ACCESS^PTSEC^DGSEC4^2^P^^^^^^1
+"KRN",8994,628,1,0)
+^^11^11^3000118^^^
+"KRN",8994,628,1,1,0)
+This Remote Procedure Call (RPC) will:
+"KRN",8994,628,1,2,0)
+ 
+"KRN",8994,628,1,3,0)
+        - Verify user is not accessing his/her own Patient file record if
+"KRN",8994,628,1,4,0)
+the Restrict Patient Record Access (#1201) field in the MAS parameters
+"KRN",8994,628,1,5,0)
+(#43) file is set to yes and the user does not hold the DG RECORD ACCESS
+"KRN",8994,628,1,6,0)
+security key.  If parameter set to yes and user is not a key holder , a
+"KRN",8994,628,1,7,0)
+social security number must be defined in the New Person file for the user
+"KRN",8994,628,1,8,0)
+to access any Patient file record.
+"KRN",8994,628,1,9,0)
+ 
+"KRN",8994,628,1,10,0)
+        - Determine if user accessing a sensitive record or an employee's
+"KRN",8994,628,1,11,0)
+record.
+"KRN",8994,628,2,0)
+^8994.02A^4^3
+"KRN",8994,628,2,1,0)
+DFN^1^^1^1
+"KRN",8994,628,2,1,1,0)
+^^1^1^3000112^^
+"KRN",8994,628,2,1,1,1,0)
+DFN = Patient (#2) file DFN.
+"KRN",8994,628,2,3,0)
+DGMSG^1^1^0^2
+"KRN",8994,628,2,3,1,0)
+^^3^3^3000112^^^^
+"KRN",8994,628,2,3,1,1,0)
+DGMSG = 1 - if message should be generated when a user's SSN is undefined
+"KRN",8994,628,2,3,1,2,0)
+        0 - message will not be generated
+"KRN",8994,628,2,3,1,3,0)
+        If not defined, defaults to 1.
+"KRN",8994,628,2,4,0)
+DGOPT^1^^0^3
+"KRN",8994,628,2,4,1,0)
+^^1^1^3000118^^^^
+"KRN",8994,628,2,4,1,1,0)
+Contains Option name^Menu text for DG Security Log update.
+"KRN",8994,628,2,"B","DFN",1)
+
+"KRN",8994,628,2,"B","DGMSG",3)
+
+"KRN",8994,628,2,"B","DGOPT",4)
+
+"KRN",8994,628,2,"PARAMSEQ",1,1)
+
+"KRN",8994,628,2,"PARAMSEQ",2,3)
+
+"KRN",8994,628,2,"PARAMSEQ",3,4)
+
+"KRN",8994,628,3,0)
+^^26^26^3000118^
+"KRN",8994,628,3,1,0)
+RESULT(1) = -1-RPC/API failed 
+"KRN",8994,628,3,2,0)
+               Required variable not defined
+"KRN",8994,628,3,3,0)
+             0-No display/action required
+"KRN",8994,628,3,4,0)
+               Not an employee, not sensitive or not accessing own Patient
+"KRN",8994,628,3,5,0)
+               record
+"KRN",8994,628,3,6,0)
+             1-Display warning message
+"KRN",8994,628,3,7,0)
+               Sensitive - inpatient or a DG SENSITIVITY key holder
+"KRN",8994,628,3,8,0)
+               or Employee and DG SECURITY OFFICER key holder
+"KRN",8994,628,3,9,0)
+             2-Display warning message, require OK to continue and call
+"KRN",8994,628,3,10,0)
+               DG SENSITIVE RECORD BULLETIN RPC to update DG Security Log
+"KRN",8994,628,3,11,0)
+               file and generate Sensitive Record Access mail message.
+"KRN",8994,628,3,12,0)
+               Sensitive - not an inpatient and not a key holder
+"KRN",8994,628,3,13,0)
+               or Employee/not a DG SECURITY OFFICER key holder
+"KRN",8994,628,3,14,0)
+             3-Access to record denied
+"KRN",8994,628,3,15,0)
+               Accessing own Patient file record
+"KRN",8994,628,3,16,0)
+             4-Access to Patient file (#2) records denied
+"KRN",8994,628,3,17,0)
+               SSN not defined
+"KRN",8994,628,3,18,0)
+RESULT(2-n) = error message or warning/Privacy Act message.  Error and
+"KRN",8994,628,3,19,0)
+warning messages will begin in RESULT(2) array.  The Privacy Act message
+"KRN",8994,628,3,20,0)
+is the longest message and will utilize RESULT(2)- RESULT(8).
+"KRN",8994,628,3,21,0)
+ 
+"KRN",8994,628,3,22,0)
+If RESULT(1)=1, the DG Security Log file is updated.
+"KRN",8994,628,3,23,0)
+If RESULT(1)=2, the user must acknowledge they want to access the
+"KRN",8994,628,3,24,0)
+restricted record and the application must call the DG SENSITIVE RECORD
+"KRN",8994,628,3,25,0)
+BULLETIN RPC to update the DG Security Log file and generate the Sensitive
+"KRN",8994,628,3,26,0)
+Record Access mail message.
+"KRN",8994,629,-1)
+0^2
+"KRN",8994,629,0)
+DG SENSITIVE RECORD BULLETIN^NOTICE^DGSEC4^1^P^^^^^^1
+"KRN",8994,629,1,0)
+^^5^5^3000112^^^
+"KRN",8994,629,1,1,0)
+This Remote Procedure Call (RPC) will add an entry to the DG SECURITY LOG
+"KRN",8994,629,1,2,0)
+(#38.1) file and/or generate the sensitive record access bulletin
+"KRN",8994,629,1,3,0)
+depending on the value in ACTION input parameter.  If ACTION parameter not
+"KRN",8994,629,1,4,0)
+defined, defaults to update DG Security Log file and generate Sensitive
+"KRN",8994,629,1,5,0)
+Record Access mail message.
+"KRN",8994,629,2,0)
+^8994.02A^5^3
+"KRN",8994,629,2,1,0)
+ACTION^1^1^0^3
+"KRN",8994,629,2,1,1,0)
+^^3^3^3000112^^^^
+"KRN",8994,629,2,1,1,1,0)
+ACTION = 1 - Set DG Security Log entry
+"KRN",8994,629,2,1,1,2,0)
+         2 - Generate Sensitive Record Access bulletin
+"KRN",8994,629,2,1,1,3,0)
+         3 - Both
+"KRN",8994,629,2,2,0)
+DFN^1^^1^1
+"KRN",8994,629,2,2,1,0)
+^^1^1^3000112^^^
+"KRN",8994,629,2,2,1,1,0)
+DFN = Patient (#2) file DFN
+"KRN",8994,629,2,5,0)
+DGOPT^1^^0^2
+"KRN",8994,629,2,5,1,0)
+^^2^2^3000112^^^^
+"KRN",8994,629,2,5,1,1,0)
+DGOPT = Option Name^Menu test 
+"KRN",8994,629,2,5,1,2,0)
+        If not defined, OP^XQCHK identifies option or defaults to UNKNOWN.
+"KRN",8994,629,2,"B","ACTION",1)
+
+"KRN",8994,629,2,"B","DFN",2)
+
+"KRN",8994,629,2,"B","DGOPT",5)
+
+"KRN",8994,629,2,"PARAMSEQ",1,2)
+
+"KRN",8994,629,2,"PARAMSEQ",2,5)
+
+"KRN",8994,629,2,"PARAMSEQ",3,1)
+
+"KRN",8994,629,3,0)
+^^3^3^3000112^^^^
+"KRN",8994,629,3,1,0)
+RESULT=1 - successfully added entry and/or generated sensitive record
+"KRN",8994,629,3,2,0)
+           access bulletin
+"KRN",8994,629,3,3,0)
+       0 - unsuccessful
+"MBREQ")
+0
+"ORD",16,8994)
+8994;16;1;;;;;;;RPCDEL^XPDIA1
+"ORD",16,8994,0)
+REMOTE PROCEDURE
+"PKG",114,-1)
+1^1
+"PKG",114,0)
+REGISTRATION^DG^PATIENT REGISTRATION, ADMISSION, DISCHARGE, EMBOSSER 
+"PKG",114,20,0)
+^9.402P^^
+"PKG",114,22,0)
+^9.49I^1^1
+"PKG",114,22,1,0)
+5.3^2930813^2930821
+"PKG",114,22,1,"PAH",1,0)
+883^3140303
+"PKG",114,22,1,"PAH",1,1,0)
+^^2^2^3140303
+"PKG",114,22,1,"PAH",1,1,1,0)
+Registration changes for the VIA Project. See patch description for 
+"PKG",114,22,1,"PAH",1,1,2,0)
+details.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"VER")
+8.0^22.0
+"BLD",8945,6)
+^781
+**END**
+**END**
+

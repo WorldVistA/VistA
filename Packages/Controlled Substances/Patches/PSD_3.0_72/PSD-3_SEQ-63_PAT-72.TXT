@@ -1,0 +1,167 @@
+$TXT Created by                 MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 12/12/13 at 09:42
+=============================================================================
+Run Date: APR 03, 2014                     Designation: PSD*3*72
+Package : PSD - CONTROLLED SUBSTANCES         Priority: Mandatory
+Version : 3        SEQ #63                      Status: Released
+                  Compliance Date: MAY 04, 2014
+=============================================================================
+
+Associated patches: (v)PSD*3*55    <<= must be installed BEFORE `PSD*3*72'
+                    (v)PSD*3*68    <<= must be installed BEFORE `PSD*3*72'
+
+Subject: OUTPATIENT DISPENSING AND NURSE ACTIVITY REPORT ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following 2 problems:
+  
+ 1. The Activity Report [PSD NURSE DISP REPORT] does not take into account
+    balance adjustments when a dose is signed out for a patient using the
+    Sign Out Dose for Patient [PSD NURSE DISPENSING] option.
+  
+ 2. When there are multiple transactions for the same date/time but with
+    different pharmacy locations, not all of the transactions show up on
+    the RX (Prescription) Outpatient Dispensing Report [PSD RX DISPENSING
+    REPORT]. 
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000000438928 - Balance Adjustment Problem w/Activity Report
+    Duplicates:
+    INC000000462527 - Balance Adjustment Problem w/Activity Report
+    INC000000473633 - Inventory Issue
+    INC000000481706 - Reports Activity/Balances off
+    INC000000620233 - Nurses Activity Report does not match Balance Report
+  
+ 2. INC000000457994 - RX not showing on report
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Iron Mountain, MI
+ Oklahoma City, OK
+ St. Cloud, MN
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. INC000000438928 - Balance Adjustment Problem w/Activity Report
+  
+  
+    Problem:
+    --------
+    The Activity Report [PSD NURSE DISP REPORT] does not take into account
+    balance adjustments when a dose is signed out for a patient using the
+    Sign Out Dose for Patient [PSD NURSE DISPENSING] option.
+  
+    Resolution:
+    -----------
+    The Activity Report [PSD NURSE DISP REPORT] will be modified to account
+    for the balance adjustment when a dose is signed out for the patient
+    using the Sign Out Dose for Patient [PSD NURSE DISPENSING] option.
+  
+    Technical:
+    ----------
+    ^PSDPAT1 and ^PSDPAT2 will be modified to account for Sign Out Dose for
+    Patient and balance adjustment within the same transaction.
+  
+  
+ 2. INC000000457994 - RX not showing on report
+  
+    Problem:
+    --------
+    When there are multiple transactions for the same date/time and
+    different pharmacy locations, not all of the transactions show up on
+    the RX (Prescription) Outpatient Dispensing Report [PSD RX DISPENSING
+    REPORT].
+  
+    Resolution:
+    -----------
+    The RX (Prescription) Outpatient Dispensing Report [PSD RX DISPENSING
+    REPORT] will be modified to include all transactions for a single
+    date/time entry and multiple pharmacy locations.
+  
+    Technical:
+    ----------
+    Modify ^PSDOPTI routine to use $D(^PSD(58.81,"ACT",PSDT,PSDLOC))
+    when looping through the ^PSD(58.81,"ACT" index instead of
+    $O(^PSD(58.81,"ACT",PSDT,PSDLOC))=PSDLOC.
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ If installed during the normal workday, it is recommended that the 
+ the Controlled Substance users be off the system.  Other VISTA users
+ will not be affected.
+  
+ Installation will take less than 1 minute.
+   
+ Suggested time to install: Non-peak requirement hours.
+   
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+   
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSD*3.0*72):
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch
+              is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSD*3.0*72.
+   
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+       respond NO.
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONTROLLED SUBSTANCES;**[Patch List]**;13 Feb 97;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSDOPTI
+    Before: B27738410   After: B27705341  **18,55,72**
+Routine Name: PSDPAT1
+    Before: B73058275   After: B84339158  **7,62,68,72**
+Routine Name: PSDPAT2
+    Before: B45069536   After: B54527056  **68,72**
+ 
+Routine list of preceding patches: 55, 68
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 03, 2011
+Completed By:                               Date Completed: MAR 17, 2014
+Released By :                               Date Released : APR 03, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,653 @@
+$TXT Created by              at DEVFEX.DOMAIN.EXT  (KIDS) on Monday, 12/15/14 at 16:41
+=============================================================================
+Run Date: JAN 13, 2015                     Designation: DVBA*2.7*187
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #165                    Status: Released
+                  Compliance Date: FEB 13, 2015
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*185<<= must be installed BEFORE `DVBA*2.7*187'
+
+Subject: CAPRI ENHANCEMENTS
+
+Category: 
+  - Enhancement (Mandatory)
+  - Other
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ I. OVERVIEW
+  
+    This patch (DVBA*2.7*187) and CAPRI GUI v187 provides enhancements
+    and  defect fixes for the CAPRI GUI and the VistA automated Medical 
+    Information Exchange (AMIE) package.  Please refer to the 
+    'FUNCTIONAL OVERVIEW' section (III) for the specific changes and 
+    primary functionality being delivered.
+  
+    This patch introduces enhancements to the AUTOMATED MED INFO EXCHANGE
+    (AMIE) V 2.7 package in support of Data Access Service (DAS).
+  
+  
+  
+ II. ASSOCIATED REMEDY TICKETS & NEW SERVICE REQUESTS
+  
+    1. ASSOCIATED REMEDY TICKETS
+       The following section lists the Remedy tickets associated 
+       with this patch:
+  
+     a. INC000000998063 - CAPRI - Other: Transmit to Virtual VA bug 
+          Duplicates:     None
+     
+     b. INC000000970009 - CAPRI - Wrong exam comments on 2507 screen 
+          Duplicates:     None
+   
+     c. INC000000938270 - CAPRI - Other:   
+          Duplicates:     None
+  
+     d. INC000000959449 - CAPRI - Authorized Patient: 
+          Duplicates:     None
+   
+     e. INC000000919417 - ONEEMAIL+15^DVBAB1A  
+          Duplicates:     1032732 - error CAPRI exam complete email
+                          driver
+  
+     f. INC000000819092 - CAPRI News Items not saving read/clear status 
+          Duplicates:     None
+  
+     g. INC000001005379 - CAPRI - Other: new patient entry fails if 
+                          space at end
+          Duplicates:     None
+  
+    2. NEW SERVICE REQUESTS
+       The following section lists New Service Requests associated
+       with this patch:
+       N/A
+  
+   
+ III. FUNCTIONAL OVERVIEW
+   
+    The following is an overview of the changes and primary
+    functionality that will be delivered in CAPRI GUI v187 and this
+    VistA patch (DVBA*2.7*187).
+     
+     1. The following enhancements that were requested by Veterans Health
+        Administration Veterans Affairs Central Office (VHAVACO) are being
+        addressed:
+   
+      a.  CAPRI users need to be able to select "DBQ Medical SHA" as an 
+          exam type.
+  
+  
+          A new entry is being added to the AMIE EXAM file (#396.6). 
+          The new entry will have an IEN of 463.  The TITLE will be
+          "DBQ Medical SHA". 
+  
+  
+  
+      b.  CAPRI has been modified to contain a new security key of 
+          "DVBA CAPRI GETDOCSFROMVLER", which will allow access to the 
+          new menu option "Get Docs from DAS" under the CAPRI File
+          menu. Any user that requires access to this menu must be
+          assigned this key.  If this key is not assigned to a user,
+          the File menu will not be displayed. 
+  
+  
+  
+  
+      c.  For CAPRI users that once had the security key "DVBA
+          CAPRI DENY_GETVBADOCS" applied to their user accounts, to
+          deny access to the "Get Docs from Virtual VA" functionality,
+          the business now requires the security key to be replaced.
+          The new security key DVBA CAPRI GETVBADOCS will be added to
+          CAPRI. The old key denied access, the new one grants access.
+          Only current non-terminated users will get the new key.
+          Note: The person installing this patch must hold the  XUMGR
+          security key. 
+  
+      d.  When DAS receives the exam result from the provider, it 
+          stores a notification in its database. CAPRI will query for a 
+          Manifest Available notification and using that 
+          notification, query for Exam Result Available notifications 
+          which provide links to the exam results themselves.
+  
+      e.  For each 2507 exam request, one or more exam results are
+          requested. In some cases, additional exams are performed in the
+          course of the examination.  The VBA reviewer is alerted when
+          all exam results from a provider have been completed and
+          submitted to DAS. After the exam results have been 
+          submitted, the provider is required to submit a manifest list
+          of all exam results that have been generated in response to an
+          exam request. When that manifest is submitted to DAS, 
+          DAS stores a Manifest available notification in its 
+          database.  CAPRI will query DAS for any Manifest available
+          notifications available for a given station and display a list
+          of  patients / exam results available to the reviewer.
+  
+  
+      f.  When an examiner signs and completes multiple templates that 
+          have been merged together, CAPRI separates the current merged/
+          concatenated exam report back into single exams for the purpose
+          of PDF file creation.
+  
+      g.  DBQ Transmission Failure.  If a DBQ transmission to DAS fails,
+          CAPRI displays a message indicating a transmission failure.  
+          CAPRI now provides users one opportunity to retransmit the failed
+          transmission. Since exam data is stored in VVA and VistA, CAPRI 
+          does not store the failed transmission and users can locate the
+          data from either system. 
+  
+  
+      h.  A new menu option has been created under the File Menu:  Get 
+          Docs from DAS.  This function retrieves available exam
+          results based on user input.  Once the list of exams is
+          displayed, the user can select a specific exam and display 
+          the results.
+  
+      i.  VHA users may assign one or many exams to a vendor.  CAPRI will 
+          notify DAS that a new 2507 Exam Request for a vendor has 
+          been submitted.  
+                                
+      j.  CAPRI will retrieve vendor exam results that have a status of
+          Pending-Under Review.  A VHA examiner will review these exams and
+          either mark them complete or reject them and send them back to
+          the vendor for more information.
+  
+      k.  One entry in the AMIE EXAM file (#396.6) has been renamed
+          to conform with new names determined DBQ Governance Group.
+          DBQ Medical Opinion 1 has been renamed to DBQ Medical Opinion.
+  
+      l.  The following entries in the AMIE EXAM file (#396.6) have been 
+          inactivated:  
+  
+          Entry Number    EXAM NAME
+          438             DBQ Medical Opinion 2
+          439             DBQ Medical Opinion 3
+          440             DBQ Medical Opinion 4
+          441             DBQ Medical Opinion 5
+          433             DBQ CARDIO Ischemic heart disease
+          416             DBQ MUSC Flatfoot (pes planus)
+  
+          The current version of the DBQ Medical Opinion allows for input
+          of multiple Medical Opinions, so that multiple DBQ Medical 
+          Opinion selections are no longer necessary.
+  
+  
+    2. The following Remedy tickets are being addressed:
+  
+      a.  INC000000998063 - CAPRI - Other: Transmit to Virtual VA bug 
+                
+          Problem
+          -------
+          After a user selects "Transmit to Virtual VA", after the 
+          attempt is complete, the status caption indicates the 
+          application is in a "Sending state."
+    
+          Solution
+          --------
+          After the Virtual VA transmission attempt is complete, the 
+          status caption will be reset to "Ready". 
+  
+  
+      b.  INC000000970009 - CAPRI - Wrong exam comments on 2507 screen    
+  
+          Problem
+          -------
+          When adding a 2507 Exam request the "Routing Location 
+          Information" will be populated with the COMMENT FOR GUI (#3) 
+          from the CAPRI DIVISION EXAM LIST file (#396.15) record with 
+          the largest DIVISION (.01) value - pointer to Medical Center 
+          Division file (#40.8).
+  
+  
+          Solution
+          --------
+          Prior to displaying the form to add a 2507 Exam request, the 
+          "Routing Location Information" will be set to null until a
+          "Routing Location" is selected.
+  
+  
+      c.  INC000000938270 - CAPRI - Other:    
+  
+          Problem
+          -------
+          When sending email notifications triggered by events in 
+          CAPRI the process assumes the "Requestor" has an EMAIL 
+          ADDRESS (#.151) in the NEW PERSON file (#200) but if the value 
+          does not exist a subscript error occurs.
+  
+  
+          Solution
+          --------
+          Prior to sending an email notification the process will verify 
+          the "Requestor" has an EMAIL ADDRESS (#.151).  If not, the 
+          notification attempt will not proceed.
+  
+  
+      d.  INC000000959449 - CAPRI - Authorized Patient:    
+  
+          Problem
+          -------
+          If a user accesses a template/worksheet via the "My Unsigned 
+          C&P Worksheets" option, the patient info is different than 
+          what is displayed and stored on the main screen so when the 
+          print functionality is utilized it pulls the data from the 
+          main screen rather than the newly opened template/worksheet 
+          and populates the footer with the wrong patient data.
+  
+  
+          Solution
+          --------
+          If the print functionality is triggered from within the
+          worksheet module the patient info will be pulled from the
+          template header rather than from the main form.
+          
+          
+      e.  INC000000919417 - ONEEMAIL+15^DVBAB1A    
+          
+          Problem
+          -------
+          While in a 2507 Request, if a user (other than the initial 
+          requestor) edits the request,  the "Requestor" value will reflect
+          the name of the user who edited the request and not the user who 
+          submitted the initial 2507 Request.
+  
+  
+          Solution
+          --------
+          Modify the code so that the user editing the request is no longer
+          being passed to Vista to be updated as the new "Requestor".
+  
+  
+      f.  INC000000819092 - CAPRI News Items not saving read/clear
+          status    
+  
+          Problem
+          -------
+          When determining if a user has read the "news items", the code 
+          looks for the existence of the CAPRINewsReadInfo.txt file in the 
+          users' "Temp" directory, but with the migration to Windows 7, it 
+          is VA policy that this directory be purged upon every restart 
+          therefore the flag/file is removed after every restart.
+  
+  
+          Solution
+          --------
+          The function to set the users' "Temp" directory in CAPRI
+          currently identifies a location that is typically purged upon 
+          restart.  The function has been modified to first attempt to
+          create a CAPRI specific directory that is not purged and
+          identify that as the "Temp" directory. 
+         
+  
+  
+  
+      g.  INC000001005379 - CAPRI - Other: new patient entry fails if 
+                            space at end   
+  
+          Problem
+          -------
+          While entering a new patient through CAPRI, if either the first
+          or last name contain leading or trailing spaces an error will 
+          occur while trying to lookup existing potential matches.       
+  
+  
+          Solution
+          --------
+          Prior to searching for potential matches, the leading and
+          trailing spaces will be removed.
+  
+  
+    3. The following defects that were reported directly to the CAPRI
+       development team are being addressed:
+  
+        a. Modify CAPRI to change ALL references to location of
+           Temporary Files from the standard TEMP folder. 
+  
+          Problem
+          -------
+          Throughout CAPRI there are several files that are saved
+          locally to the users' workstation.  Due to a new security 
+          policy added with Windows 7, the TEMP folder currently
+          identified by CAPRI is purged upon restart which causes
+          problems with several files needed for historical purposes.
+  
+          Solution
+          --------
+          The function in CAPRI to define the users TEMP folder has
+          been modified to attempt to create a "CAPRI" specific folder
+          that will not be purged and save all documents (EX: CAPRI 
+          Audit logs, Save History logs, Error logs, and template 
+          files),  except the temporary VVA and VLER files.   
+  
+  
+    4. Added/Modified Routines 
+  
+        a. Add: DVBA187P
+           Description: This routine is the DVBA*2.7*187 post install
+           routine.
+           There are two sections:
+              1) AMIE FILE UPDATE
+              2) SECURITY KEY ASSIGNER 
+  
+        b. Modify: DVBAB1A
+           Description: CAPRI Exam Complete Email Driver. Modified code
+           to quit mail send if user does not have a mailbox setup.
+           Note: This will prevent the ONEEMAIL+15^DVBAB1A error.
+  
+  
+ IV. TECHNICAL COMPONENTS
+  
+   The following section describes the technical components being exported
+   with this patch. 
+  
+                                      UP    SEND  DATA               USER
+                                      DATE  SEC.  COMES  SITE   RSLV OVER
+ FILE #   FILE NAME                   DD    CODE  W/FILE DATA   PTS  RIDE
+ ------------------------------------------------------------------------
+  
+ 396.45   2507 EXAM CONTRACTORS       YES   YES   NO                  NO
+ Partial DD: subDD: 396.45     fld: 105
+ 396.3    2507 REQUEST                YES   YES   NO                  NO
+ Partial DD: subDD: 396.3      fld: 46
+  
+    a.  File #  396.45 , field 105 - VLER ENABLED has been added to denote
+        if the contractor is a VLER DAS enabled contractor.
+  
+    b.  File #396.3, field 46 - REQUEST UUID has been added to store the
+        2507 request's UUID (universally unique identifier) for VLER  DAS.
+  
+   
+  
+   1.  Added/Modified Routines 
+        a. Add: DVBA187P
+           Description: This routine is the DVBA*2.7*187 post install
+                        routine. This routine has two sections.
+            1) AMIE UPDATE
+            Adds "DBQ Medical SHA"
+            entry to AMIE EXAM file (#396.6).
+  
+            2) SECURITY KEY ASSIGNER
+            Includes the new security key
+            DVBA CAPRI GETVBADOCS and assigns persons to it. The
+            person must have the DVBA CAPRI GUI option and
+            must not have the old key.
+            Only current non-terminated users will get the new key.
+            NOTE: The user who installs this patch must have the
+            XUMGR security key assigned to them.
+            Messages will be created for users who should get the new
+            key, and successful updates to the persons assigned the
+            new key. This message is generated for the installer.
+  
+  
+       b. Modified: DVBAB1A
+           Description: CAPRI Exam Complete Email Driver. Modified code
+                        to quit mail send if user does not have a mailbox
+                        setup. This will resolve the ONEEMAIL+15^DVBAB1A
+                        error.
+     
+  
+   2. The following Security Keys are being added/modified to the
+      SECURITY KEY File (#19.1):
+  
+      a. NAME: DVBA CAPRI GETDOCSFROMVLER
+         DESCRIPTIVE NAME: Get VLER DAS documents
+         PERSON LOOKUP: LOOKUP
+         KEEP AT TERMINATE: YES 
+         SEND TO J2EE: 
+         DESCRIPTION:
+         The key will allow users to run queries from VLER DAS.
+  
+  
+  
+      b. NAME: DVBA CAPRI GETVBADOCS
+         DESCRIPTIVE NAME: VIEW GET DOCS FROM VIRTUAL VA
+         PERSON LOOKUP: LOOKUP
+         KEEP AT TERMINATE: YES
+         SEND TO J2EE: 
+         DESCRIPTION:
+          DVBA CAPRI GETVBADOCS is a security key for CAPRI users to view
+          the "Get Docs from Virtual VA" option in CAPRI
+  
+          A security key is being phased out called DVBA CAPRI DENY_
+          GETVBADOCS. That key would deny a user from accessing 
+          "Get Docs from Virtual VA" functionality. It has been decided
+          to grant access to the "Get Docs from Virtual VA" 
+          functionality rather than deny it. The new security key, 
+          DVBA CAPRI GETVBADOCS, is now added to a user's security key
+          options to grant access.
+          Only current non-terminated users will get the new key.
+  
+          Note: The person installing this patch must hold the  XUMGR
+          security key.
+  
+  
+   3. The following entry is being added to the AMIE EXAM file (#396.6):
+       
+      a. DBQ Medical SHA
+         
+         The new entry will have an IEN of 463. It will not have a
+         worksheet number. The REPORTING PROGRAM NAME for this new entry
+         will be DVBCQDRV. The STATUS will be "ACTIVE". 
+  
+   4. The following files have been modified
+      
+      a. 396.45   2507 EXAM CONTRACTORS 
+      b. 396.3    2507 REQUEST 
+  
+  
+ V. SOFTWARE AND DOCUMENTATION RETRIEVAL
+     
+   1. VistA Patch DVBA*2.7*187
+    
+      a. The VistA server software is being distributed as a PackMan patch
+         message through the National Patch Module (NPM). The KIDS build
+         for this patch is DVBA*2.7*187.
+  
+   2. CAPRI GUI v187 Client Software & User Documentation
+  
+      a.  The CAPRI GUI v187 client software is being distributed as
+          executable CAPRI.exe ([DVBA_27_P187_12.zip]). The 
+          installed executable for this patch is client version 
+          187.10 with a size of 9,865 KB.
+  
+          The CAPRI GUI v187 client software and documentation for this
+          patch may be retrieved directly using FTP. The preferred method
+          is to FTP the files from:
+  
+             download.vista.domain.ext
+  
+         This transmits the files from the first available FTP server.
+         Sites may also elect to retrieve software directly from a specific
+         server as follows:
+  
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.domain.ext   []
+         Hines              ftp.domain.ext    []
+         Salt Lake City     ftp.domain.ext      []
+  
+        The following files will be available:
+  
+        File Name             Contents                     Retrieval format
+        ---------             --------                     ----------------
+        DVBA_27_P187_12.zip   File(s) indented below:      BINARY
+         - CAPRI.exe          CAPRI v187 executable
+         - VACAPRIVVA.dll     Virtual VA dynamically linked library
+         - CAPRI_Help.chm     CAPRI On-line Help
+         - CAPRI.map          CAPRI error map
+         - CAPRISession.r2w   Reflections session configuration
+         - ssh_config         Secure Shell configuration       
+         - CAPRI_GUI_ISG.doc  CAPRI GUI Installation Supplemental Guide
+         - Libeay32.dll       VLER /DAS dynamically linked library
+         - Ssleay32.dll       VLER /DAS dynamically linked library
+         - QPDF.exe           Support PDF compression and Linearization
+         - QPDF13.dll         Support PDF compression and Linearization
+         - LIBGCC_S_DW2-1.dll Support PDF compression and Linearization
+         - LIBSTDC++-6.dll    Support PDF compression and Linearization
+  
+        DVBA_27_P187_RN.PDF   Patch Release Notes          BINARY
+        DVBA_27_P187_UM.PDF   Updated CAPRI User Manual    BINARY 
+        CAPRI_SYSADMINTECHGUIDE_DVBA_27_TM.PDF SAT Guide   BINARY
+  
+       The VistA Documentation Library (VDL) web site will also contain the
+       'Release Notes' and updated 'CAPRI User Manual'. This web site is
+       usually updated within 1-3 days of the patch release date.
+  
+       The VDL web address for CAPRI user documentation is:
+      
+          http://www.domain.ext/vdl/application.asp?appid=133
+  
+  
+ VI. INSTALLATION REQUIREMENTS/NOTES:
+  
+  1. Users On the System
+  
+     a. This patch (DVBA*2.7*187) may be installed while CAPRI users are
+        still using the previously released version of the CAPRI GUI
+        (i.e. DVBA_27_186.exe).
+  
+     b. Once the installation of this patch has been completed, CAPRI users
+        must be upgraded to the new released version of the CAPRI GUI
+        (CAPRI.exe [DVBA_27_P187_12.zip]). PLEASE REFER to the 
+        CAPRI_GUI_ISG.doc document within the DVBA_27_P187_12.zip file
+        for supplemental installation instructions regarding the
+        installation of the following files and instruction if your site
+        installs on a SHARED NETWORK DRIVE or CAPRI is accessed via CPRS:
+  
+            VACAPRIVVA.dll        Virtual VA dynamically linked library
+            CAPRI_Help.chm        CAPRI On-line Help
+            CAPRI.map             CAPRI error map
+            CAPRISession.r2w      Reflections session configuration
+            ssh_config            Secure Shell configuration
+            Libeay32.dll          VLER /DAS dynamically linked library
+            Ssleay32.dll          VLER /DAS dynamically linked library
+            QPDF.exe              Support PDF compression and Linearization
+            QPDF13.dll            Support PDF compression and Linearization
+            LIBGCC_S_DW2-1.dll    Support PDF compression and Linearization
+            LIBSTDC++-6.dll       Support PDF compression and Linearization
+  
+  
+     c. This patch modifies routines used by the CAPRI GUI application 
+        and the Automated Medical Information Exchange (AMIE) package. It
+        should be installed during non-peak hours to minimize disruption to
+        users and to reduce the possibility of errors when the routines are
+        updated.
+  
+  2. VistA Options
+         
+     a. The following VistA options should be disabled while installing
+        this patch: NONE.
+  
+  3. Software Installation Time
+  
+     a. The estimated installation time for VistA patch DVBA*2.7*187 is 
+        less than 5 minutes during off peak hours.
+   
+  4. Required Builds
+  
+     a. The following is a list of REQUIRED builds for this KIDS
+        distribution (DVBA*2.7*187). KIDS will not allow the installation
+        of this patch without their prior installation.
+  
+        Required Builds:
+        ----------------
+        DVBA*2.7*185
+  
+  
+ VII. INSTALLATION INSTRUCTIONS:
+  
+    NOTE: The user who installs this patch must have the XUMGR security
+          key assigned to them.
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+  
+    2. From the 'Kernel Installation & Distribution System' menu, select
+       the Installation menu.
+  
+    3. From this menu, you may now elect to use the following options (when
+       prompted for INSTALL NAME, enter DVBA*2.7*187).
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any changes such as DDs or templates.
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when the patch
+          is installed.  It compares all components of the patch (routines,
+          DDs, templates, etc.).
+       c. Verify Checksums in Transport Global - This option will allow you
+          to ensure the integrity of the routines that are in the transport
+          global.
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+    4. Use the Install Package(s) option and select package DVBA*2.7*187.
+  
+    5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? NO//', respond NO.
+  
+    6. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', it is recommended you answer NO.
+  
+    7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', respond NO.
+  
+    8. If CAPRI GUI users have not already been upgraded to the new 
+       version of the CAPRI GUI v187 (CAPRI.exe [DVBA_27_P187_12.zip]), 
+       they MUST be upgraded immediately following the installation
+       of this patch.
+  
+    9.  NOTE: Post-install routine DVBA187P is a temporary routine used
+        as part of the post-install process. This routine will NOT be
+        deleted after install so that it may catch issues during install.
+        The message will be stored in the INSTALL file (#9.7).  To view
+        messages related to this install, perform a FileMan Inquire on 
+        the Install file (#9.7).  The message "OK to delete DVBA187P" 
+        will be displayed after a successful post install.
+  
+  
+  
+  
+  
+  
+ VIII. TEST SITES
+  
+   The following sites participated in the testing of the CAPRI GUI v187
+   and DVBA*2.7*187 VistA server software.
+  
+    Test Sites:
+    ---------- 
+   
+    * Greater LA
+    * Alexandria
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA187P
+    Before:       n/a   After: B80895477  **187**
+Routine Name: DVBAB1A
+    Before: B28591193   After: B29208076  **185,187**
+ 
+Routine list of preceding patches: 185
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 17, 2013
+Completed By:                               Date Completed: JAN 08, 2015
+Released By :                               Date Released : JAN 13, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

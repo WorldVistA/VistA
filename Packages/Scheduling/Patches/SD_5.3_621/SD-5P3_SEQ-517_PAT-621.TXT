@@ -1,0 +1,277 @@
+$TXT Created by                   at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 11/19/14 at 16:58
+=============================================================================
+Run Date: FEB 12, 2015                     Designation: SD*5.3*621
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #517                    Status: Released
+                  Compliance Date: MAR 15, 2015
+=============================================================================
+
+Associated patches: (v)SD*5.3*405  <<= must be installed BEFORE `SD*5.3*621'
+                    (v)SD*5.3*544  <<= must be installed BEFORE `SD*5.3*621'
+                    (v)SD*5.3*547  <<= must be installed BEFORE `SD*5.3*621'
+
+Subject: SCHEDULING APPOINTMENT AND REPORTING ISSUES
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses the following five (5) Remedy tickets:
+ 1. Appointment Management [SDAM APPT MGT] allows entry of a desired date
+    that's prior to the patient's date of birth or clinic availability.
+ 2. The Transmission History Report - Full [SCDX AMBCAR XMIT HIST FULL]
+    option prints 'TRY LATER' when the output is directed to MailMan
+    (P-MESSAGE) or a file/printer.
+ 3. The CLINIC SERVICES RESOURCES field (#29) in the HOSPITAL LOCATION 
+    File (#44) points to a file that no longer exists.
+ 4. The *COMMUNICATION FORMAT field (#2007) in the HOSPITAL LOCATION 
+    File (#44) points to a file that no longer exists.
+ 5. Appointments entered using a past date display the incorrect Scheduling
+    Request Type.
+             
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ 1. INC000000592781 - Desired dates allowed that are prior to DOB or clinic
+                      availability
+ 2. INC000000784133 - SCDX AMBCAR XMIT HIST FULL report not printing 
+ 3. INC000001004429 - Field (#29) in File (#44) points to non-existent file   
+ 4. INC000001059672 - Field (#2007) in File (#44) points to non-existent file
+ 5. INC000001015947 - Past date appt has incorrect Scheduling Request Type 
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ New York Harbor HCS, New York, NY
+ Salisbury VAMC, Salisbury, NC
+  
+  
+ Remedy Ticket Overview:
+ =======================
+ 1. INC000000592781 - Desired dates allowed that are prior to DOB or clinic
+                      availability
+  
+    Problem:
+    --------
+    When making an appointment in the Appointment Management options (see 
+    below), a desired date that is  prior to the patient's date of birth (DOB)
+    or clinic availability date is allowed.
+        Appointment Management [SDAM APPT MGT]
+        Make Appointment [SDM]
+        Multiple Appointment Booking [SDMULTIBOOK]
+        Make Consult Appointment [SC MAKE CONSULT APPOINTMENT]
+  
+  
+    Resolution:
+    -----------
+    Routine SDM0 has been modified to call AVCHK^SDM1 to check if the desired
+    date is prior to the patient's DOB. Also a call is made to AVCHK1^SDM1 to 
+    check if the desired date is prior to the clinic's availability date.
+  
+  
+ 2. INC000000784133 - SCDX AMBCAR XMIT HIST FULL report not printing
+  
+    Problem:
+    --------
+    The Transmission History Report - Full [SCDX AMBCAR XMIT HIST FULL] report
+    does not print when the output is sent to MailMan (P-MESSAGE) or a 
+    file/printer. The report's output is only viewable on the screen.
+  
+    Resolution:
+    -----------
+    Routine SCDXPRN2 has been modified to remove the call to routine 
+    EN^XUTMDEVQ which handles the output device; to now allow the call EN1^DIP 
+    which in turn calls the ^%ZIS entry point to handle the output device.
+  
+  
+ 3. INC000001004429 - Field (#29) in File (#44) points to non-existent file
+  
+    Problem:
+    --------
+    The CLINIC SERVICES RESOURCE Field (#29) in the HOSPITAL LOCATION 
+    File (#44) points to the CLINIC SERVICES RESOURCE File (#403.12); a file
+    that no longer exists. Additionally, when the CLINIC SERVICES RESOURCE
+    File (#403.12) was deleted the DD for the file was not cleaned up well
+    leaving the two nodes below.
+  
+        Global ^DD(403.12
+        ^DD(403.12,.01,5,1,0)="44^.01^12"
+        ^DD(403.12,"TRB",44,.01,12,.01)=""
+  
+    Resolution:
+    -----------
+    The data type for the CLINIC SERVICES RESOURCE Field (#29) was changed
+    to free text. An asterisk (*) was added before the field name to indicate
+    it's no longer used. Also, the technical description filed was updated 
+    with the following:
+        This field is no longer used. It was a pointer to the CLINIC SERVICES 
+        RESOURCE File (#403.12) which no longer exists.
+         
+    Additionally, post-install routine SD53P621 removed the DD nodes from 
+    the CLINIC SERVICES RESOURCE File (#403.12) that were not properly cleaned 
+    up.
+  
+    Before DD for Field (#29)
+    -------------------------
+    44,29      CLINIC SERVICES RESOURCE 0;29 POINTER ** TO AN UNDEFINED FILE ** 
+  
+               LAST EDITED:      JUN 05, 1995 
+               DESCRIPTION:      This field is used to associate the clinic with
+                                 a Clinic Services Resource.  
+  
+                                 UNEDITABLE
+  
+    After DD for Field (#29)
+    ------------------------
+    44,29     *CLINIC SERVICES RESOURCE 0;29 FREE TEXT
+  
+               INPUT TRANSFORM:  K:$L(X)>10!($L(X)<1) X
+               LAST EDITED:      AUG 25, 2014 
+               HELP-PROMPT:      Answer must be 1-10 characters in length. 
+               DESCRIPTION:      This field is used to associate the clinic with
+                                 a Clinic Services Resource.  
+  
+               TECHNICAL DESCR:  This field is no longer used. It was a pointer
+                                 to the CLINIC SERVICES RESOURCE File (#403.12)
+                                 which no longer exists.  
+  
+ 4. INC000001059672 - Field (#2007) in File (#44) points to non-existent file
+  
+    Problem:
+    --------
+    The *COMMUNICATIONS FORMAT Field (#2007) in the HOSPITAL LOCATION 
+    File (#44) points to a file in VistA, File (#44.8) that does not exist.
+    This field is no longer used.
+  
+    Resolution:
+    -----------
+    The data type for the *COMMUNICATIONS FORMAT Field (#2007) was changed
+    to free text, and the technical description field was updated with the
+    following:       
+        This field is no longer used. It was a pointer to File (#44.8) 
+        which no longer exists.
+  
+  
+    Before DD for Field (#2007)
+    ---------------------------
+    44,2007    *COMMUNICATION FORMAT  R;2 POINTER ** TO AN UNDEFINED FILE ** 
+  
+               LAST EDITED:      JUN 12, 1984
+  
+    After DD for Field (#2007)
+    --------------------------
+    44,2007    *COMMUNICATION FORMAT  R;2 FREE TEXT
+  
+               INPUT TRANSFORM:  K:$L(X)>10!($L(X)<1) X
+               LAST EDITED:      SEP 18, 2014 
+               HELP-PROMPT:      Answer must be 1-10 characters in length. 
+               TECHNICAL DESCR:  This field is no longer used. It was a pointer
+                                 to File (#44.8) which no longer exists. 
+  
+  
+ 5. INC000001015947 - Past date appt has incorrect Scheduling Request Type
+  
+    Problem:
+    --------
+    Appointments entered with a past date display the incorrect Scheduling
+    Request Type.
+    
+  
+    Resolution:
+    -----------
+    Routine SDM1A has been modified so that past appointments will have a
+    Scheduling Request Type of 'O' FOR OTHER THAN 'NEXT AVA.' APPT.
+  
+   
+  Installation Instructions:
+  ==========================
+  Install Time - less than 3 minutes.
+  Suggested time to install: non-peak requirement hours.
+   
+   
+  1. Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+  2. From the Kernel Installation & Distribution System menu, select 
+     the Installation menu.  
+  
+  3. From this menu, you may select to use the following options: 
+     (when prompted for INSTALL NAME, enter SD*5.3*621)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       SD*5.3*621.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.  
+  
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//", hit ENTER.
+  
+       a) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+  
+          Appointment Management           [SDAM APPT MGT]
+          Make Appointment                 [SDM]
+          Multiple Appointment Booking     [SDMULTIBOOK]
+          Make Consult Appointment         [SC MAKE CONSULT APPOINTMENT]
+          Transmission History Report-Full [SCDX AMBCAR XMIT HIST FULL]
+  
+       b) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+  
+ NOTE: After the patch is installed, delete the routine SD53P621 by using
+       Delete Routine [XTRDEL] option.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCDXPRN2
+    Before: B31733220   After: B28222804  **128,135,405,621**
+Routine Name: SD53P621
+    Before:       n/a   After:   B403498  **621**
+Routine Name: SDM0
+    Before: B88208979   After: B90223264  **140,167,206,186,223,237,241,
+                                           384,334,547,621**
+Routine Name: SDM1A
+    Before: B59959589   After: B59582269  **26,94,155,206,168,223,241,
+                                           263,327,478,446,544,621**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 14, 2014
+Completed By:                               Date Completed: FEB 05, 2015
+Released By :                               Date Released : FEB 12, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

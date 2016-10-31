@@ -1,0 +1,169 @@
+
+=============================================================================
+Run Date: MAR 23, 2015                     Designation: EAS*1*129
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #101                      Status: Released
+                  Compliance Date: APR 23, 2015
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) APPLICATION, VERSION 4.1.1
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this informational patch is to announce the release of the
+ Enrollment System (ES) 4.1.1 application version software. 
+  
+ ES 4.1.1 is a maintenance release of the Enrollment System Core (ESC)
+ application. This version applies 24 updates to correct design, code and
+ security related defects introduced in previous ES releases.  
+  
+ Enhancements:
+ =============
+ 1.     CCR 13261. Corrected Title attribute to correctly display
+        'Enrollment System' versus legacy 'Enrollment System Redesign'.  
+ 
+ 2.     CCR 13162. Corrected defect of ES sending attended search parameter
+        to Master Veteran Index (MVI) upon unsolicited Z11 messages from
+        Veterans Benefits Administration (VBA). 
+ 
+ 3.     CCR 13236. Corrected defect of when accessing the
+        ES-demographics-personal page an exception can occur if the Veteran's
+        Social Security Number (SSN) text property contains a null string.
+ 
+ 4.     CCR 13177. Corrected performance issue of ES QM reports not
+        completing in timely fashion. 
+ 
+ 5.     CCR 13257. Corrected defect of Veteran merge search 'not found'
+        messages displaying proper status. 
+ 
+ 6.     CCR 13028. Corrected design defect of Health Benefit Plan history
+        records being inserted to the database HBP_H tables upon every person
+        record change. 
+ 
+ 7.     CCR 13343. Removed ES local username password authentication to
+        support Identity and Access Management (IAM) Siteminder enterprise
+        user authentication integration.
+  
+ 8.     CCR 13395. Corrected defect of SSN verification requests being
+        skipped upon small number of new enrollment determinations. Added
+        batch job to clean up the previous records. 
+ 
+ 9.     CCR 13413. Corrected defect of ES processing move events for
+        non-Vista/non-medical treating facilities.  
+ 
+ 10.    CCR 13414. Implemented Change Request (CR) for accepting spinal cord
+        injury updates from VistA.  
+ 
+ 11.    CCR 13439. Corrected design defect for Income Verification Match (IVM)
+        error messages being sent with length too long for storage.  
+ 
+ 12.    CCR 12938. Corrected security vulnerability related to web application
+        is vulnerable to cross site scripting attacks. 
+ 
+ 13.    CCR 12937. Corrected security vulnerability related to web application
+        is vulnerable to cross site request forgery. 
+ 
+ 14.    CCR 12939. Corrected security vulnerability related to web application
+        is vulnerable to not enforcing authorization on some protected pages. 
+ 
+ 15.    CCR 12654. Corrected defect related to ORFZ11's from VBA failing due to
+        optimistic locking exception.
+ 
+ 16.    CCR 13520. Corrected defect of previous years means test (MT) defaulted
+        on new records income year (IY). 
+ 
+ 17.    CCR 13300. Corrected defect of unauthorized VA Seal/Logo displayed on
+        ES header banner.  
+ 
+ 18.    CCR 13538. Corrected defect of error stack trace displayed upon
+        financials update for associate with null first or last name.
+ 
+ 19.    CCR 13500. Updated Military Service Data Sharing (MSDS) query to allow
+        transaction upon null gender receipt from MVI. 
+ 
+ 20.    CCR 13219. Corrected defect of ES sending missing required traits on
+        trait based searches from unsolicited Z11 from VBA. 
+ 
+ 21.    CCR 13649. Added batch job to cleanup abandoned enrollment 
+        applications. 
+ 
+ 22.    CCR 13564. Corrected defect of ES HINQ responses not removing  
+        unemployable indicator if deleted. 
+ 
+ 23.    CCR 13564. Corrected defect of ES stack trace being displayed  
+        when proxy preferred facility add fails from MVI. 
+ 
+ 24.    CCR 12942. Corrected security vulnerability related to web application
+        does not configure cookies securely. 
+ 
+ 
+  
+ What to Expect:
+ ===============
+ No changes to any VistA packages are required. During deployment of ES 4.1.1
+ HL7 messaging to and from ES will be disabled. Implementation is expected to
+ take less than 8 hours. 
+  
+  
+ Implementation:
+ ===============
+ ESR 4.1.1 is a centrally managed web-based application and will be
+ implemented as a one-time rollout by the ES Technical team and the AITC. No
+ software will be installed at the facilities. ES application will be
+ unavailable during the deployment window. 
+  
+  
+ Implementation Date:
+ ====================
+ March 21, 2015
+  
+ Associated Remedy Tickets:
+ ==========================
+ INC000000987352
+ INC000000458955
+ INC000000956617
+ INC000001043168
+ INC000001059935
+ INC000001069298
+ INC000001075541
+ INC000001082201
+ INC000000496760
+ INC000000945776
+ INC000001071735
+ INC000001038187
+ INC000000990564
+ INC000001104535
+ INC000001078706
+ INC000001003363
+ 
+  
+ Reporting Problems:
+ ===================
+ Problems associated with ES application should be reported via Remedy 
+ or contact the National Help Desk (NHD) 1-888-596-4357 for assistance.
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:                          Hold Date     : MAR 21, 2015
+Entered By  :                               Date Entered  : JAN 28, 2015
+Completed By:                               Date Completed: MAR 12, 2015
+Released By :                               Date Released : MAR 23, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

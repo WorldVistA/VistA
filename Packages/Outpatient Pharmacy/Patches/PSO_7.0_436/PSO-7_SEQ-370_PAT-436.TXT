@@ -1,0 +1,313 @@
+
+=============================================================================
+Run Date: OCT 27, 2014                     Designation: PSO*7*436
+Package : PSO - OUTPATIENT PHARMACY           Priority: EMERGENCY
+Version : 7       SEQ #370                      Status: Released
+                  Compliance Date: NOV 27, 2014
+=============================================================================
+
+Associated patches: (v)PSO*7*408   <<= must be installed BEFORE `PSO*7*436'
+
+Subject: MOCHA 2.0 POST RELEASE EMERGENCY PATCH
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch is part of MOCHA 2.0 POST RELEASE FOLLOW UP 1.0 build that 
+ includes PSJ*5*311 and PSO*7*436.
+  
+ This patch PSO*7*436 corrects the following issues:
+  
+ 1. Remedy Ticket 1016418 - During finish of an order, the system has the
+ ability for duplicate outpatient orders to become active when the
+ processing pharmacist does not enter an electronic signature when 
+ prompted during Max Single Dose order check processing. A modification has
+ been made to prompt the user to discontinue duplicate drug orders after
+ accept of the order when this scenario occurs. (RTC 109847) (PSPO 2598)
+  
+ 2. When a user up-carets out of the display of dose warnings for a 
+ complex order that has four or more dosing sequences, the system by-passes
+ the prompts for electronic signature and intervention.  A modification
+ has been made to prompt the user for electronic signature and intervention
+ when the user up carets (^) during Max Single Dose order check display for
+ complex orders. (RTC 45871) (PSPO 2571)
+  
+ 3. When a user answers NO or up carets (^) at the "Are you sure you want 
+ to Accept this order?" prompt during finish of an order twice in a row,
+ the system does not discontinue duplicate drug and duplicate therapy
+ orders. This is a legacy issue and has been corrected to discontinue 
+ duplicate drug and duplicate therapy orders appropriately. (RTC 111852)
+  
+ 4. During site testing of MOCHA 2.0, problems were reported where the
+ Drug Name and/or the date in VA FileMan format can mistakenly appear in
+ the Dosage field and Sig field of a PRESCRIPTION file (#52) entry or a
+ PENDING OUTPATIENT ORDERS file (#52.41) entry. This was corrected with a 
+ patch (PSO*7*433) only distributed to the six MOCHA 2.0 test sites. The
+ correction made was for ORDERS file (#100) and in Pharmacy. In Pharmacy
+ the invalid data was first removed from the appropriate Dosage fields, and
+ after that the Sig was rebuilt.  New fields were added to PRESCRIPTION
+ file (#52) to track these modifications.
+  
+ Because these modifications are part of the permanent record for each 
+ order at MOCHA 2.0 test sites, the new fields are being distributed 
+ nationally so that the data dictionary is standard across all VA sites. 
+ Additionally these fields can be used in future.
+  
+ A new NATIONAL DATA UTILITY CLEANUP multiple (#725) is being added to
+ PRESCRIPTION file (#52) that will contain fields for original and modified
+ dosage and SIG information. Also the date of the modification, the
+ functionality that initiated the clean-up and any comments about the
+ cleanup. 
+  
+ 5. For the dose warning signature prompt 'Enter your Current Signature 
+ Code:', additional help text is being added.
+  
+    a. If the user does not enter a signature code, the following message
+       will be displayed and the user will be prompted to enter their
+       signature code again.
+  
+          WARFARIN 10MG TAB: Single dose amount of 20 MILLIGRAMS 
+          exceeds the maximum single dose amount of 15 MILLIGRAMS.
+  
+           Enter your Current Signature Code:
+  
+           *** You must enter your Current Signature Code. ***
+  
+           Enter your Current Signature Code:
+  
+     b. If the user doesn't enter their signature code again, the following
+        message will be displayed.
+  
+             *** A Signature Code must be entered to continue with this
+                 order. ***
+  
+             Press <Enter> to return to the order...
+  
+      c. If the user enters one or more question marks at the "Press
+         <Enter> to return to the order..." prompt, the messaged will be
+         displayed again.
+  
+              *** A Signature Code must be entered to continue with this
+                  order. ***
+  
+              Press <Enter> to return to the order... ?
+  
+              Enter either RETURN or '^'.
+  
+              Press <Enter> to return to the order...
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ --------------------------
+  
+ Forms Associated:
+  
+ FILE# File Name (Number)  Field Name (Number)          New/Modified/Delete
+ ------------------------  ----------------------       -------------------
+ 52    PRESCRIPTION (#52)                                    Modified
+  
+                           NATIONAL DATA UTILITY
+                               CLEANUP multiple (#725)       New
+                           DATE/TIME OF ACTIVITY (#.01)      New
+                           INITIATED BY (#1)                 New
+                           CHANGED DOSAGE multiple (#2)      New
+                              DOSE SEQUENCE (#.01)           New
+                              OLD VALUE (#1)                 New
+                              NEW VALUE (#2)                 New
+  
+                           OLD SIG (#3)                      New
+                           NEW SIG (#4)                      New
+                           COMMENT (#5)                      New
+  
+  
+ Mail Groups Associated:
+  
+  Mail Group Name          New/Modified/Deleted
+  ---------------          -------------------- 
+  N/A
+  
+  
+ Options Associated:
+  
+  Option Name                 Type       Action
+  -----------                 ----       ------
+  N/A
+  
+  
+ Protocols Associated:
+  
+  Protocol Name                            New/Modified/Deleted
+  -------------                            -------------------- 
+  N/A  
+  
+  
+ Security Keys Associated:
+  
+  Security Key Name
+  -----------------
+  N/A
+  
+  
+ Templates Associated:
+  
+  Template Name     Type        File Name (Number)  New/Modified/Deleted
+  -------------     ----        ------------------  --------------------
+  N/A
+  
+  
+ Additional Information:
+ N/A
+  
+ Associated Change Requests: 
+ ---------------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ 2598, 2571 
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ 1016418 - During finish of an order, the system has the
+ ability for duplicate outpatient orders to become active when the
+ processing pharmacist does not enter an electronic signature when 
+ prompted during Max Single Dose order check processing.
+  
+  
+  
+ Test Sites:
+ -----------
+ CHARLESTON, SC
+ HEARTLAND WEST, MO
+ PALO ALTO HCS, CA
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A.
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch can be obtained from the ANONYMOUS.SOFTWARE directory at one of
+ the OI Field Offices.  The preferred method is to FTP the file from
+ DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first 
+ available server.  Alternatively, sites may elect to retrieve the file 
+ from a specific OI Field Office.
+  
+    OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+    Albany              FTP.DOMAIN.EXT        
+    Hines               FTP.DOMAIN.EXT         
+    Salt Lake City      FTP.DOMAIN.EXT           
+  
+ The MOCHA 2.0 POST RELEASE FOLLOW UP 1.0 software distribution includes: 
+  
+    File Name                      Contents           Retrieval Format
+    ----------------------------   ---------          ----------------
+    MOCHA_2_0_POST_RELEASE_                           ASCII
+       FOLLOW_UP.KID               PSO*7*436
+                                   PSJ*5*311
+  
+ Installation Instructions
+ -------------------------
+ It is not necessary to disable options and this patch may be queued for
+ install. It is recommended to install this patch during non-peak hours 
+ and it should take less than 2 minutes to install this patch.
+  
+ 1.  Download MOCHA_2_0_POST_RELEASE_FOLLOW_UP.KID into your local
+     directory.
+  
+ 2.  From the Kernel Installation & Distribution System (KIDS) menu, select
+     Installation.
+  
+ 3.  Select the Load a Distribution and enter the directory that you 
+     FTP'ed the host file to and MOCHA_2_0_POST_RELEASE_FOLLOW_UP.KID.  
+     Example:  USER$:[ABC]MOCHA_2_0_POST_RELEASE_FOLLOW_UP.KID 
+  
+ 4.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter "MOCHA 2.0 POST RELEASE FOLLOW UP 1.0"):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 5.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch install
+         and enter "MOCHA 2.0 POST RELEASE FOLLOW UP 1.0" at the INSTALL
+         NAME prompt.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//'  answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//'  answer NO
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ None.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSODOSU2
+    Before:B105360523   After:B115401790  **251,375,372,436**
+Routine Name: PSODOSUN
+    Before: B84411682   After: B93344191  **251,379,372,416,436**
+Routine Name: PSODOSUT
+    Before:B130658909   After:B130783308  **251,375,372,416,436**
+Routine Name: PSOLMPO
+    Before:  B1183408   After:  B1379839  **46,225,436**
+Routine Name: PSOORNEW
+    Before: B94116441   After: B93914156  **11,23,27,32,55,46,71,90,94,
+                                           106,131,133,143,237,222,258,
+                                           206,225,251,386,390,391,372,
+                                           416,431,313,408,436**
+ 
+Routine list of preceding patches: 408
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 09, 2014
+Completed By:                               Date Completed: OCT 27, 2014
+Released By :                               Date Released : OCT 27, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

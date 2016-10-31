@@ -1,0 +1,128 @@
+
+=============================================================================
+Run Date: DEC 08, 2014                     Designation: OHRS*1.4*11
+Package : OHRS - OCCUPAT HEALTH RECORD-KEEPIN Priority: Mandatory
+Version : 1.4        SEQ #11                    Status: Released
+                  Compliance Date: JAN 08, 2015
+=============================================================================
+
+
+Subject: OHRS MAINTENANCE UPDATE
+
+Category: 
+  - Routine
+  - Informational
+
+Description:
+============
+
+                        
+  
+ *************************************************************
+ This is to announce the updates to OHRS web application
+ version 1.4.11 will be rolled out nationally December 8, 2014
+ 
+ This release corrects one defect within the OHRS application
+ and replaces OHRS version 1.4.10:
+ 
+ 1. One particular scenario for the OHRS ID3 report is
+    not working correctly. When the new flu season starts,
+    the Vaccination Status Report is not dropping the date
+    of decision from the date of decision column when a patient
+    has declined a vaccination.
+ 
+ *************************************************************
+  
+ RELEASE INFORMATION:
+ ====================
+ 
+    This is an informational release notice only.
+  
+  
+  
+ REMEDY TICKET OVERVIEW:
+ ================
+  
+ 1. Remedy Incident # INC000001041487: ID3 Report - 
+    As of Aug 1, Date of Decision should drop off the ID3 
+    report. Ran reports for Vaccinated and Not Vaccinated, 
+    Date of Decision still there from 2013.
+ 
+  
+    PROBLEM:
+    =======
+    
+    One scenario for ID3 reports for seasonal influenza 
+    is not working as per the Requirements. When the new
+    flu season starts, Vaccination Status Report is not 
+    dropping the date of decision from the date of decision 
+    column when a patient has declined a vaccination because 
+    the report query on the back end database is not working 
+    correctly to determine the date a patient declined an 
+    encounter. Per the requirements, as the new flu season
+    starts on August 1st of each year, the previous year's
+    date of decision should drop off and the value should be
+    Null, which is not working for the Vaccination Declined
+    scenario. 
+ 
+    SOLUTION:                                   
+    ========
+    Added additional conditions to the SQL statement in the 
+    OHRS code for Seasonal Influenza to check for encounter 
+    dates before July 31st of the current year and drop off 
+    the dates once the new flu season starts on August 1st.
+  
+  
+ TEST SITES:
+ ====================== 
+    Philadelphia VAMC, PA
+    NJHCS - EO Campus
+    VA Hudson Valley HCS
+    Amarillo VAHCS
+    Atlanta VA Medical Center
+    Madison VA Medical Center
+    Northern California HCS East Bay
+ 
+  
+  
+ DOCUMENTATION:
+ ======================
+    The User Guide is available on VA Documentation Library (VDL) at:
+    http://www.domain.ext/vdl/ in the HealtheVet section.
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+    If you have any questions concerning the implementation of this 
+    application, please contact the VA Service Desk at 1-888-596-4357
+    or log a Remedy Ticket via Remedy for CISS-OHRS
+ 
+ 
+ Routine Information:
+ ====================
+ 
+    No routines included.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 15, 2014
+Completed By:                               Date Completed: DEC 08, 2014
+Released By :                               Date Released : DEC 08, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included
