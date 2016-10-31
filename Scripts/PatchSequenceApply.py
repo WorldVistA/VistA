@@ -333,7 +333,7 @@ class PatchSequenceApply(object):
                             globals=associatedGlobals)
     logger.info("Applying Patch %s" % patchInfo)
     assert kidsInstaller
-    return kidsInstaller.runInstallation(self._testClient)
+    return kidsInstaller.runInstallation(self._testClient, self._testClient2)
 
   """ check to see if patch is ready to be installed """
   def __isPatchReadyToInstall__(self, patchInfo, patchList = None):
@@ -409,22 +409,26 @@ def main():
   assert os.path.exists(outputDir)
   """ create the VistATestClient"""
   testClient = VistATestClientFactory.createVistATestClientWithArgs(result)
+  testClient2 = VistATestClientFactory.createVistATestClientWithArgs(result)
   assert testClient
   initConsoleLogging()
   with testClient as vistAClient:
     patchSeqApply = PatchSequenceApply(vistAClient, outputDir)
-    if result.upToPatch:
-      patchSeqApply.generatePatchSequence(inputPatchDir,
-                                               result.upToPatch, True)
-    else:
-      patchSeqApply.generatePatchSequence(inputPatchDir, result.onlyPatch)
-    if result.install:
-      if result.onlyPatch:
-        patchSeqApply.applyPatchSequenceByNumber("All")
-      elif result.upToPatch:
-        patchSeqApply.applyPatchSequenceByInstallName(result.upToPatch)
+    assert testClient2
+    with testClient2 as vistAClient2:
+      patchSeqApply._testClient2 = vistAClient2
+      if result.upToPatch:
+        patchSeqApply.generatePatchSequence(inputPatchDir,
+                                                 result.upToPatch, True)
       else:
-        patchSeqApply.applyPatchSequenceByNumber(result.numOfPatch)
+        patchSeqApply.generatePatchSequence(inputPatchDir, result.onlyPatch)
+      if result.install:
+        if result.onlyPatch:
+          patchSeqApply.applyPatchSequenceByNumber("All")
+        elif result.upToPatch:
+          patchSeqApply.applyPatchSequenceByInstallName(result.upToPatch)
+        else:
+          patchSeqApply.applyPatchSequenceByNumber(result.numOfPatch)
 
 if __name__ == '__main__':
   main()

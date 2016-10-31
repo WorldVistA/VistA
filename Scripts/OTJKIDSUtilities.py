@@ -178,7 +178,7 @@ with testClient:
   KIDSInstaller = DefaultKIDSBuildInstaller(result.KIDSbuild,KIDSParser.installNameList[0],None,os.path.join(result.outputDir,'InstallLog.txt'),
                                             KIDSParser.installNameList,1,printTG=result.outputDir)
 
-  KIDSInstaller.runInstallation(testClient,KIDSParser.installNameList)
+  KIDSInstaller.runInstallation(testClient)
   print "Installation of " + result.KIDSbuild+ " : DONE"
   # Run the XINDEX utility on each build that was installed by the KIDS build
   for name in KIDSParser.installNameList:
