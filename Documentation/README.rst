@@ -13,6 +13,13 @@ programs related to one.
 
 .. contents::
 
+How to Contribute
+-----------------
+
+The OSEHRA VistA repository uses a `Gerrit Review instance`_ to accept incoming
+changes from the community.  For instructions on setting up the  and an example
+workflow, see the `Contributor Git Instructions`_
+
 Build CPRS
 ----------
 
@@ -169,6 +176,8 @@ directory and includes:
 
   * `M Standards and Conventions`_
 
+.. _'Gerrit Review instance': http://review.code.osehra.org
+.. _'Contributor Git Instructions': ContributorInstructions.rst
 .. _testingChanges: testingChanges.rst
 .. _`Troubleshooting Page`: Troubleshooting.rst
 .. _ObtainingandInstallAuxPrograms: ObtainingandInstallAuxPrograms.rst
