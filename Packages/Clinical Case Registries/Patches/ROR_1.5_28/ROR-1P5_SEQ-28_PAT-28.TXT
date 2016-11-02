@@ -1,0 +1,731 @@
+$TXT Created by               DEVVLD.DOMAIN.EXT  (KIDS) on Monday, 06/27/16 at 14:00
+=============================================================================
+Run Date: AUG 15, 2016                     Designation: ROR*1.5*28
+Package : ROR - CLINICAL CASE REGISTRIES      Priority: Mandatory
+Version : 1.5        SEQ #28                    Status: Released
+                  Compliance Date: SEP 15, 2016
+=============================================================================
+
+Associated patches: (v)ROR*1.5*26  <<= must be installed BEFORE `ROR*1.5*28'
+                    (v)PSN*4*473   <<= must be installed BEFORE `ROR*1.5*28'
+
+Subject: CCR MINOR ENHANCEMENTS/MAINTENANCE
+
+Category: 
+  - Other
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch includes several enhancements and corrections to the Clinical
+ Case Registries (CCR) package.  These changes include:
+   
+     1. Five new local registries added: (Crohn's Disease - VA CROHNS,
+         Dementia - VA DEMENTIA, Hepatitis B - VA HEPB, Thyroid Cancer - 
+         VA THYROID CA and Ulcerative Colitis - VA UC) including the
+         following functionality:
+           a. The set up and initial build of the new registries.
+           b. Adding the new registries to the nightly job that searches
+              for and adds patients to them, based on registry-specific
+              International Classification of Disease, 9th edition (ICD-9),
+              International Classification of Disease, 10th edition
+              (ICD-10) procedure codes and Current Procedural Technology 
+              (CPT) procedure codes.
+           c. The standard local reports currently available in CCR will be
+              available for the new registries.
+   
+     2. It was discovered that the CCR national database is missing some
+         problem list entries for the patients in the HIV and Hepatitis-C
+         registries dating from 2009 through 2011.  To recover this data,
+         this patch will force the CCR nightly job [ROR TASK] to perform a
+         one time re-extract of all problem list entries that were added 
+         from 1/1/2009 to the present for patients in these two registries.
+         This may cause a slight increase in the amount of time it takes
+         the nightly job to finish the first time it runs after the
+         installation of this patch.
+  
+     3. A problem was discovered with the header display if a user selects
+         the "Complete" or "Summary" report option when running a report.  
+         The words 'Complete Report' or 'Summary Report' are supposed to
+         display after the label Options:, but currently, nothing is being
+         displayed there. 
+  
+     4. Six new medications have been added to the ROR GENERIC DRUG file
+         (#799.51) to be used as inclusion criteria for patients in the
+         respective registry(s).
+           a. HIV registry: ATAZANAVIR/COBICISTAT, COBICISTAT/DARUNAVIR,
+                             ELVITEGRAVIR
+           b. HEP C registry: OMBITASVIR/PARATEPREVIR/RITONAVIR,
+                              DACLATASVIR, ELBASVIR/GRAZOPREVIR
+  
+     5. A new selection criteria parameter has been added to the DAA Lab
+        Monitoring report.  The parameter is used to screen the drug list
+        for whether the drug was DAA supplied or in-house filled.
+  
+     6. A correction was made for a defect found where the ICN value does
+        not appear on the INPATIENT UTILIZATION report when the user
+        selects to include additional identifier in the report request.
+  
+     7. When the VA TOTAL KNEE and VA TOTAL HIP registries were added to 
+        the CCR system by a previous patch, the word Registry was not
+        added to the display name of the registries.  This was fixed in
+        this patch by adding the word 'Registry' to the entry in the 
+        SHORT DESCRIPTION (#4) field of the ROR REGISTRY PARAMETERS file
+        (#798.1) for the VA TOTAL KNEE and VA TOTAL HIP registry entries. 
+  
+     8. A modification was made to allow the DAA Lab Monitoring report to 
+        use all drugs defined for the registry as well as locally defined
+        drugs as screening criteria for the report.
+  
+     9. Conversion of GUI from Delphi XE5 to Delphi XE8.
+  
+    10. The version of the CCR software has been updated to 1.5.28. 
+   
+   
+   
+  Patch Components:
+  -----------------
+   
+  File Data Included:
+   
+  File Name (Number)         Entry Name               New/Modified/Deleted
+  ------------------         ------------------       --------------------
+  ROR REGISTRY PARAMETERS    VA CROHNS                New
+   (#798.1)                  VA UC                    New
+                             VA DEMENTIA              New
+                             VA THYROID CA            New
+                             VA HEPB                  New
+                             VA TOTAL HIP             Modified
+                             VA TOTAL KNEE            Modified
+   
+  ROR SELECTION RULE         VA CROHNS PTF            New
+   (#798.2)                  VA CROHNS PTF (ICD10)    New       
+                             VA CROHNS PROBLEM        New
+                             VA CROHNS PROBLEM        New
+                                (ICD10)
+                             VA CROHNS VPOV           New
+                             VA CROHNS VPOV (ICD10)   New
+                             VA DEMENTIA PTF          New
+                             VA DEMENTIA PTF (ICD10)  New 
+                             VA DEMENTIA PROBLEM      New
+                             VA DEMENTIA PROBLEM      New
+                                (ICD10)
+                             VA DEMENTIA VPOV         New
+                             VA THYROID CA            New
+                             VA HEPB                  New
+                             VA TOTAL HIP             Modified
+                             VA TOTAL KNEE            Modified
+  
+  ROR SELECTION RULE         VA CROHNS PTF            New
+   (#798.2)                  VA CROHNS PTF (ICD10)    New       
+                             VA CROHNS PROBLEM        New
+                             VA CROHNS PROBLEM        New
+                                (ICD10)
+                             VA CROHNS VPOV           New
+                             VA CROHNS VPOV (ICD10)   New
+                             VA DEMENTIA PTF          New
+                             VA DEMENTIA PTF (ICD10)  New 
+                             VA DEMENTIA PROBLEM      New
+                             VA DEMENTIA PROBLEM      New
+                                (ICD10)
+  
+                             VA DEMENTIA VPOV (ICD10) New
+                             VA HEPB PTF              New
+                             VA HEPB PTF (ICD10)      New 
+                             VA HEPB PROBLEM          New
+                             VA HEPB PROBLEM (ICD10)  New
+                             VA HEPB VPOV             New
+                             VA HEPB VPOV (ICD10)     New
+                             VA THYROID CA PTF        New
+                             VA THYROID CA PTF        New 
+                                (ICD10)
+                             VA THYROID CA PROBLEM    New
+                             VA THYROID CA PROBLEM    New
+                                (ICD10)
+                             VA THYROID CA VPOV       New
+                             VA THYROID CA VPOV       New
+                                (ICD10)
+                             VA UC PTF                New
+                             VA UC PTF (ICD10)        New 
+                             VA UC PROBLEM            New
+                             VA UC PROBLEM (ICD10)    New
+                             VA UC VPOV               New
+                             VA UC VPOV (ICD10)       New
+  
+   ROR ICD SEARCH (#798.5)   VA CROHNS                New
+                             VA DEMENTIA              New
+                             VA HEPB                  New
+                             VA THYROID CA            New
+                             VA UC                    New
+        
+   ROR XML ITEM (#799.31)    DAA_DRUGS                New
+  
+   ROR REPORT PARAMETERS     DAA Lab Monitoring       Modified
+     (#799.34)
+  
+   ROR GENERIC DRUG          DACLATASVIR              New
+     (#799.51)               OBITASVIR/PARATEPREVIR/  New
+                              RATAZANAVIR/COBICISTAT   
+                             COBICISTAT/DARUNAVIR     New
+                             ELVITEGRAVIR             New
+                             ELBASVIR/GRAZOPREVIR     New
+  
+   ROR LIST ITEM (#799.1)    eGFR by CKD-EPI          New
+                                                      Registry: VA CROHNS
+                             eGFR by MDRD             New
+                                                      Registry: VA CROHNS
+                             Creatinine clearance     New
+                              by Cockroft-Gault       
+                                                      Registry: VA CROHNS
+                             FIB-4                    New
+                                                      Registry: VA CROHNS
+                             APRI                     New
+                                                      Registry: VA CROHNS
+                             MELD-Na                  New
+                                                      Registry: VA CROHNS
+                             MELD                     New
+                                                      Registry: VA CROHNS
+                             BMI                      New
+                                                      Registry: VA CROHNS
+                             Registry Lab             New
+                                                      Registry: VA CROHNS
+                             eGFR by CKD-EPI          New
+                                                      Registry: VA DEMENTIA
+                             eGFR by MDRD             New 
+                                                      Registry: VA DEMENTIA
+                             Creatinine clearance     New
+                              by Cockcroft-Gault      
+                                                      Registry: VA DEMENTIA
+                             FIB-4                    New
+                                                      Registry: VA DEMENTIA
+                             APRI                     New
+                                                      Registry: VA DEMENTIA
+                             MELD-Na                  New
+                                                      Registry: VA DEMENTIA
+                             MELD                     New
+                                                      Registry: VA DEMENTIA
+                             BMI                      New          
+                                                      Registry: VA DEMENTIA
+                             Registry Lab             New                 
+                                                      Registry: VA DEMENTIA
+                             eGFR by CKD-EPI          New
+                                                      Registry: VA HEPB
+                             eGFR by MDRD             New 
+                                                      Registry: VA HEPB
+                             Creatinine clearance     New
+                              by Cockcroft-Gault      
+                                                      Registry: VA HEPB
+                             FIB-4                    New
+                                                      Registry: VA HEPB
+                             APRI                     New
+                                                      Registry: VA HEPB
+                             MELD-Na                  New
+                                                      Registry: VA HEPB
+                             MELD                     New
+                                                      Registry: VA HEPB
+                             BMI                      New       
+                                                      Registry: VA HEPB
+                             Registry Lab             New                 
+                                                      Registry: VA HEPB
+                             eGFR by CKD-EPI          New
+                                                   Registry: VA THYROID CA
+                             eGFR by MDRD             New 
+                                                   Registry: VA THYROID CA
+                             Creatinine clearance     New
+                              by Cockcroft-Gault   
+                                                   Registry: VA THYROID CA
+                             FIB-4                    New
+                                                   Registry: VA THYROID CA
+                             APRI                     New
+                                                   Registry: VA THYROID CA
+                             MELD-Na                  New
+                                                   Registry: VA THYROID CA
+                             MELD                     New
+                                                   Registry: VA THYROID CA
+                             BMI                      New       
+                                                   Registry: VA THYROID CA
+                             Registry Lab             New                 
+                                                   Registry: VA THYROID CA
+                             eGFR by CKD-EPI          New
+                                                      Registry: VA UC
+                             eGFR by MDRD             New 
+                                                      Registry: VA UC
+                             Creatinine clearance     New
+                              by Cockcroft-Gault      
+                                                      Registry: VA UC
+                             FIB-4                    New
+                                                      Registry: VA UC
+                             APRI                     New
+                                                      Registry: VA UC
+                             MELD-Na                  New
+                                                      Registry: VA UC
+                             MELD                     New
+                                                      Registry: VA UC
+                             BMI                      New          
+                                                      Registry: VA UC
+                             Registry Lab             New                 
+                                                      Registry: VA UC
+  
+  New Service Requests (NSRs):
+  ----------------------------  
+  N/A
+  
+   
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+   
+   
+  Remedy Ticket(s) & Overview:
+  ----------------------------
+  N/A
+  
+  
+  Test Sites:
+  ----------
+  San Antonio, Tx
+  Palo Alto HCS, Ca
+  Coatesville, Pa
+   
+   
+  Installation Files
+  ==================
+   
+  GUI Update
+  ----------
+  IMPORTANT NOTE:  This patch includes a revised Graphical User 
+  Interface (GUI) application which must be distributed to the 
+  appropriate workstations.  After the patch is installed correctly,
+  and the GUI is updated, the version of the GUI will be 1.5.28.
+   
+  File Name         Contents      Transfer Mode  
+  ---------         -----------   -------------
+  ROR1_5P28GUI.ZIP  Zipped GUI    BINARY
+   
+  The file listed above may be obtained via Secure File Transfer
+  PROTOCOL (SFTP).  The preferred method is to SFTP the file from:
+  Download.vista.domain.ext.
+   
+  This transmits the file from the first available FTP server.  Sites 
+  may also elect to retrieve software directly from a specific server
+  as follows:
+   
+  OIFO              SFTP Address               Directory
+  ----------------  -------------------------  --------------------
+  Albany            domain.ext       []
+  Hines             domain.ext        []
+  Salt Lake City    domain.ext          []
+   
+   
+  M Code
+  ------
+  Included as a standard PackMan message.
+   
+   
+  Documentation Files
+  ===================
+   
+  The documentation has been updated and is distributed in the following
+  two zipped files. Each zip file contains both the .DOC and .PDF formats. 
+   
+  File Name             Description                        Protocol
+  ----------------------------------------------------------------- 
+  ROR1_5P28DOC1.ZIP     ROR User Manual                    BINARY
+   
+  ROR1_5P28DOC2.ZIP     Release Notes,                     BINARY
+                        Technical Manual/Security Guide,
+                        Installation/Implementation 
+                        Guide
+   
+   
+  The revised CCR documentation is available on the
+  ANONYMOUS.SOFTWARE directory at one of the following
+   
+  OIFO             FTP Address                Directory
+  --------------   ------------------------   ------------------
+  Albany           domain.ext       
+  Hines            domain.ext        
+  Salt Lake City   domain.ext          
+   
+  Sites may retrieve documentation in one of the following ways:
+   
+  1. The preferred method is to use SFTP to download the files from 
+     download.vista.domain.ext, which will transmit the files from the 
+     first available server.
+   
+  2. Sites may also elect to retrieve documentation directly from a 
+     specific server listed above.
+   
+  Documentation may also be retrieved from the VistA Documentation 
+  Library (VDL) on the Intranet at the following address:
+  http://www4.domain.ext/vdl
+   
+   
+  Patch Installation Overview:
+  ============================ 
+   
+  This patch includes an M patch and a revised Graphical User Interface
+  (GUI) executable.
+   
+  Below is a summary of the installation steps required for this patch.
+   
+  1.  Install M components.
+  2.  Update GUI.
+    
+    
+  Patch Installation:
+  ------------------
+   
+  M INSTALLATION INSTRUCTIONS:
+  ----------------------------
+  Installation of the patch will not take more than 5 minutes. This patch
+  can be installed with VistA users online, but Registry users should be
+  logged out of the CCR Registry Application, as a new GUI is to be
+  installed. There are no options that need to be disabled prior to patch
+  install.
+   
+  NOTE: The nightly task (Registry Update & Data Extraction [ROR TASK] 
+  option) must not be running during the installation.
+   
+  Pre/Post Installation Overview:
+  -------------------------------
+  The pre-installation routine for this patch checks to be sure the task 
+  Initialize new registries (one time) [ROR INITIALIZE] is not running.  
+  If it is, the user is informed of the task number found and that the job
+  must finish or be terminated before the patch can be installed.  The 
+  patch installation then exits, incomplete.  Routine name is PRE^RORP028.
+   
+  The post-installation routine for this patch is POST^RORP028 and 
+  performs the following functions:
+   
+     - Modifies two registry entries' SHORT DESCRIPTION field (#4) of the
+       ROR REGISTRY PARAMETERS file (#798.1) to add the word 'Registry'.
+       These registries were recently added by patch ROR*1.5*26 and this is
+       needed to keep the display of registry names in the CCR GUI
+       consistent. The registries affected are VA TOTAL HIP (Total Hip
+       Replacement Registry) and VA TOTAL KNEE (Total Knee Replacement
+       Registry).
+  
+     - Adds a new selection panel to the DAA Lab Monitoring report.
+  
+     - Sets the flag to force the nightly job HL7 extract to back pull the
+       problem list entries from 2009 forward for patients in the HIV and
+       Hepatitis-C registries.
+  
+     - Schedules the Initialize new registries (one time) [ROR INITIALIZE]
+       option to run. If the new registries included in the patch have
+       already been initialized, the user can opt not to re-do the 
+       initialize for each registry.
+  
+     - Adds nine entries to the ROR LIST ITEM file (#799.1) for each of the
+       new registries added with this patch.
+  
+   
+  Installation Instructions:
+  --------------------------
+  The post-initialization routine for this patch schedules the Initialize 
+  new registries (one time) [ROR INITIALIZE] task to run.  During the 
+  installation process, you will be presented with a series of questions
+  that must be answered that will be used to schedule this task.
+  
+  The following questions provide the parameters needed to schedule
+  this task:
+   
+  Maximum number of registry update subtasks:
+    [valid response is a number 0-10]
+   
+  Suspend the post-install during the peak hours:
+    [valid response is Yes/No]
+     If the answer to this question is Yes, then the following 2 questions 
+     must be answered:
+   
+        Suspension start time:
+          [valid response is any valid time input]
+   
+        Suspension end time:
+          [valid response is any valid time input occurring after the 
+           start time]
+   
+   Date/Time to run the new registry initialize task:
+    [valid response is a date/time that is at least 15 minutes in the 
+     future.]
+    
+  
+ If this patch was previously installed and one or more of the new
+  registries has already been initialized, the following will be
+  prompted to allow this step to be skipped for each of the new 
+  registries:
+  
+     >> New registry <registry name (internal entry number of registry)>
+  has already completed initialization
+  Do you want to rerun its initialization?: NO// 
+  
+ Once initialized, do not respond YES to this prompt unless you are
+ requested to do so by the CCR team.
+  
+  
+  Installation steps:
+  ------------------
+   
+  1. Unschedule or delete the Registry Update & Data Extraction [ROR
+     TASK] job (CCR nightly job).
+  
+  2. Choose the PackMan message containing this patch.
+   
+  3.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+  4.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME enter the 
+      patch designation 'ROR*1.5*28':
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.    It is
+          recommended this step be done as it will be needed if a rollback
+          is required for this patch in the future.
+      b.  **Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+            ** Note that for this patch, this option will produce a system
+               error due to the known problem with Fileman not correctly
+               handling the lookup to a file with no B cross reference.
+               There is currently no workaround for this problem.
+               The error expected to be produced is:
+                 I C["P",$D(@("^"_$P(^(0),U,3)_"0)")) S C=$P(^(0),U,2)
+                 Q:'$D(^(+Y,0))  S Y=$P(^(0),U) I $D(^DD(+C,.01,0)) S
+                 C=$P(^(0),U,2) G S
+                 <SYNTAX>S+1^DIQ
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       
+  5.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+   
+  6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//', respond NO
+  
+  7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//', respond NO
+  
+  8.  The post-initialization routine for this performs the following 
+      functions:
+          a. Updates data in the following files:
+                 ROR REGISTRY PARAMETERS (#798.1)
+                 ROR REPORT PARAMETERS (#799.34)
+  
+          b. Adds nine entries to the ROR LIST ITEM file (#799.1) for each
+             of the new registries added with this patch.
+  
+          c. Adds new panel for 'DAA_DRUGS' selection criteria to the DAA
+             Lab Monitoring report in the ROR REPORT PARAMETERS file
+             (#799.34)
+  
+          d. Updates the SHORT DESCRIPTION names of the VA TOTAL HIP and VA
+             TOTAL KNEE registries in the ROR REGISTRY PARAMETERS file
+             (#798.1)
+    
+          e. Sets the flag to force the nightly job HL7 extract to back
+             pull the problem list entries from 2009 forward for patients
+             in the HIV and Hepatitis-C registries.
+  
+          f. Schedules the Initialize new registries (one time) [ROR 
+             INITIALIZE] option to run. This task sets up and populates the
+             5 new registries added with this patch.
+  
+          g. You must periodically (at least once per day) check the status
+             of the Initialize new registries (one time) [ROR INITIALIZE]
+             job.  When it has successfully completed, you must restart the
+             Registry Update & Data Extraction [ROR TASK] job.
+   
+  
+  INSTALLATION EXAMPLE:
+  ====================
+   
+  Select Installation <TEST ACCOUNT> Option: INSTall Package(s)
+ Select INSTALL NAME:    ROR*1.5*28    2/26/16@11:45:42
+      => ROR*1.5*28 TEST V .3
+  
+ This Distribution was loaded on Feb 26, 2016@11:45:42 with header of 
+    ROR*1.5*28 TEST V .3
+    It consisted of the following Install(s):
+      ROR*1.5*28
+ Checking Install for Package ROR*1.5*28
+ Will first run the Environment Check Routine, RORP028
+  
+ Install Questions for ROR*1.5*28
+  
+ Incoming Files:
+  
+    798.1     ROR REGISTRY PARAMETERS  (including data)
+ Note:  You already have the 'ROR REGISTRY PARAMETERS' File.
+ I will OVERWRITE your data with mine.
+  
+    798.2     ROR SELECTION RULE  (including data)
+ Note:  You already have the 'ROR SELECTION RULE' File.
+ I will OVERWRITE your data with mine.
+  
+    798.5     ROR ICD SEARCH  (including data)
+ Note:  You already have the 'ROR ICD SEARCH' File.
+ I will OVERWRITE your data with mine.
+  
+    799.31    ROR XML ITEM  (including data)
+ Note:  You already have the 'ROR XML ITEM' File.
+ I will OVERWRITE your data with mine.
+  
+    799.51    ROR GENERIC DRUG  (including data)
+ Note:  You already have the 'ROR GENERIC DRUG' File.
+ I will OVERWRITE your data with mine.
+  
+ Maximum number of registry update subtasks :  (0-10): 5// 
+  
+ Suspend the post-install during the peak hours? NO// 
+  
+ Date/Time to run the new registry initialize task:  2/26/16@12:01// 
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   WORKSTATION
+  
+  Install Started for ROR*1.5*28 : 
+                Feb 26, 2016@11:46:29
+  
+ Build Distribution Date: Feb 26, 2016
+  
+  Installing Routines:
+                Feb 26, 2016@11:46:29
+  
+  Running Pre-Install Routine: PRE^RORP028
+  
+    *** Checking to be sure ROR INITIALIZE task is not already running
+  
+  Installing Data Dictionaries: 
+                Feb 26, 2016@11:46:30
+  
+  Installing Data: ..
+                Feb 26, 2016@11:46:32
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing DIALOG
+                Feb 26, 2016@11:46:32
+  
+  Running Post-Install Routine: POST^RORP028
+  
+ POST INSTALL START
+  
+ >> Adding new panel to DAA Lab Monitoring report
+  
+    o New panel already exists for registry
+  
+    >> Step complete
+  
+ >> Updating Short Description for 2 Registries
+  
+    o VA TOTAL KNEE registry description updated
+  
+    o VA TOTAL HIP registry description updated
+  
+    >> Step complete
+  
+ >> Updating List Items for new registries
+  
+    >> Step complete
+  
+ >> Initiating background job to set up registries added with this patch
+  
+    *** Checking for registry(s) to be initialized
+  
+      The following registry(s) will be populated with new patients: 
+           VA CROHNS
+           VA DEMENTIA
+           VA HEPB
+           VA THYROID CA
+           VA UC
+  
+    *** Storing registry setup parameters
+  
+   =============================================
+  
+   Number of registry update (sub)tasks... 5
+  
+   Suspend the tasks during peak hours.... No
+  
+   =============================================
+  
+ The scheduled task number is 8159988
+  
+                                    
+ ROR*1.5*28                                   
+ -------------------------------------------------------------------------
+  
+    >> Step complete
+  
+ >> Setting flag for back pull of problem list for HIV/HEPC registries
+  
+    >> Step complete
+  
+ POST INSTALL COMPLETE
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  ROR*1.5*28 Installed. 
+                Feb 26, 2016@11:46:33
+  
+  Not a production UCI
+  
+  NO Install Message sent 
+  
+ Install Completed
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.5;CLINICAL CASE REGISTRIES;**[Patch List]**;Feb 17, 2006;Build 66
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ROREXPR
+    Before: B25327319   After: B30053573  **28**
+Routine Name: ROREXT01
+    Before: B58409462   After: B60677930  **10,21,28**
+Routine Name: RORHL17
+    Before: B32627161   After: B37241996  **10,19,28**
+Routine Name: RORP028
+    Before:       n/a   After: B84005676  **28**
+Routine Name: RORUTL11
+    Before:  B4300869   After:  B4484027  **13,14,15,17,18,20,19,21,22,
+                                           24,27,25,26,28**
+Routine Name: RORUTL14
+    Before: B10147900   After: B10594346  **28**
+Routine Name: RORUTL15
+    Before: B58131600   After: B63032078  **13,26,28**
+Routine Name: RORX005B
+    Before:  B7236567   After:  B9080085  **28**
+Routine Name: RORX022A
+    Before:B139990962   After:B147471078  **8,13,17,18,19,21,28**
+ 
+Routine list of preceding patches: 26
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 25, 2016
+Completed By:                               Date Completed: AUG 10, 2016
+Released By :                               Date Released : AUG 15, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

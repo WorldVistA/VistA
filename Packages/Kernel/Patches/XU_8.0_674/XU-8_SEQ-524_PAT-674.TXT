@@ -1,0 +1,238 @@
+$TXT Created by                  KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Friday, 09/16/16 at 08:42
+=============================================================================
+Run Date: SEP 28, 2016                     Designation: XU*8*674
+Package : XU - KERNEL                         Priority: EMERGENCY
+Version : 8       SEQ #524                      Status: Released
+                  Compliance Date: OCT 03, 2016
+=============================================================================
+
+Associated patches: (v)XU*8*569    <<= must be installed BEFORE `XU*8*674'
+
+Subject: FIX XQCS TMP GLOBAL
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch fixes a problem where Cache process IDs (PIDs or $J) are reused
+ during periods of high-volume client-server connections (many new
+ connections within a day). Data in the ^TMP("XQCS",$J) global is not
+ deleted when a connection is reset, and will persist into a new user
+ session, often causing RPC Broker connection errors.
+  
+ This patch ensures that processes do not reuse ^TMP("XQCS") nodes for 
+ previously used PIDs.
+  
+  
+ Blood Bank Clearance
+ ====================
+ Clearance - 09/16/2016
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8.0*674 contains 
+ changes to a package referenced in ProPath standard titled: BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA
+ Blood Bank software design safeguards or safety critical elements
+ functions.
+   
+ RISK ANALYSIS: Changes made by patch XU*8.0*674 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)   Field Name (Number)             New/Modified/Deleted
+ ------------------   -------------------             --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                Type                      New/Modified/Deleted
+ ---------                ----                      -------------------- 
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type                      New/Modified/Deleted
+ -----------            ----                      -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+ --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+ ------------------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name       Type    File Name (Number)   New/Modified/Deleted 
+ -------------       ----    ------------------   --------------------
+ N/A
+  
+  
+ Remote Procedure Calls Associated:
+  
+ RPC Name                      Type         New/Modified/Deleted
+ --------                      ----         --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  I10534388FY16 ANR87053 INTERMITTENT RPC BROKER ERRORS
+  
+ 1. I10534388FY16 ANR87053 INTERMITTENT RPC BROKER ERRORS
+  
+ Problem:
+ -------
+ CPRS and CAPRI users receive intermittent errors "The remote procedure 
+ XUS SIGNON SETUP is not registered to the option XUS SIGNON." The remote 
+ procedure name or option name may vary, but the result is temporary 
+ inability to sign in or an occasional GUI crash. Client applications 
+ (including but not limited to Veterans Crisis Line) built using Medical
+ Domain Web Services (MDWS) or the MDWS MDO.DLL experience the problem more
+ frequently due to the stateless nature of the connection, and
+ non-descriptive errors are returned. The result is that users cannot sign
+ in to the MDWS applications. This is especially noticeable on Monday
+ mornings when there is a higher volume of VistA connections, or during
+ periods of network instability.
+  
+ Resolution:
+ ----------
+ During periods of high-volume activity (many new connections) or network 
+ instability (disconnects leading to RPC Broker listener restarts), VistA 
+ servers may reuse internal job numbers ($J). A temporary global used to 
+ store information for a particular job is not being cleared, and the data 
+ persists to the next job when a job number is reused. The resolution is 
+ to kill the temporary global upon a new connection (user not yet 
+ authenticated) so that it may be rebuilt for the new connection.
+  
+  
+ Test Sites: (Patch Tracking Message #8045714)
+ ----------
+ Central Arkansas Veterans Healthcare System - Little Rock (598 - Large)
+ Martinsburg VA Medical Center - Martinsburg WV (613 - Large)
+ James H. Quillen VA Medical Center - Mountain Home TN (621 - Large)
+ St. Cloud VA Medical Center - St. Cloud MN (656 - Small)
+ VA Healthcare Network Upstate New York (Buffalo, Batavia, Canandaigua, 
+   Syracuse, Bath, Albany) - Canandaigua NY (528 - Integrated)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ No changes have been made to Kernel documentation as a result of this 
+ patch. However, the most up-to-date VA Kernel end-user documentation 
+ is available on the VHA Software Document Library (VDL) at the following
+ Internet Website:
+      https://www.domain.ext/vdl/application.asp?appid=10
+   
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+  
+  
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch can be queued for installation. TaskMan does not have to be
+ stopped, HL7 filers do not need to be stopped, and users may be on the
+ system.  There are no menu options or protocols that need to be disabled.
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system.  This patch should 
+ take less than 1 minute to install.  It may be queued for installation.
+  
+ There are no options that need to be disabled.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XU*8.0*674):
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer "NO".   
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer "NO".
+  
+ 7.  If prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer "NO".
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' answer "0" to 
+     "60" or "Q" (to queue the output to a printer).
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ There are no post-installation tasks.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XQCS
+    Before: B35440882   After: B36087553  **15,28,82,116,115,177,188,157,
+                                           253,569,674**
+ 
+Routine list of preceding patches: 569
+
+=============================================================================
+User Information:                          Hold Date     : SEP 28, 2016
+Entered By  :                               Date Entered  : SEP 16, 2016
+Completed By:                               Date Completed: SEP 28, 2016
+Released By :                               Date Released : SEP 28, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

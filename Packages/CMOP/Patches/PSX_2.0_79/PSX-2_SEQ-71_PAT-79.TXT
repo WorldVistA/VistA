@@ -1,0 +1,193 @@
+
+=============================================================================
+Run Date: AUG 25, 2016                     Designation: PSX*2*79
+Package : PSX - CMOP                          Priority: Mandatory
+Version : 2        SEQ #71                      Status: Released
+                  Compliance Date: SEP 24, 2016
+=============================================================================
+
+Associated patches: (v)PSX*2*74    <<= must be installed BEFORE `PSX*2*79'
+
+Subject: MCCF ePHARMACY COMPLIANCE PHASE 3
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch has enhancements that extend the capabilities of the Veterans 
+ Health Information Systems and Technology Architecture (VistA) electronic 
+ pharmacy (ePharmacy) billing system.  Below is a list of all the applications 
+ involved in this project along with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*448
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2*550
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*20
+    CONSOLIDATED MAIL OUTPATIENT PHARMACY (CMOP) V. 2.0   PSX*2*79
+    PHARMACY DATA MANAGEMENT (PDM) V. 1.0                 PSS*1*192
+  
+ All five of these patches are being released in the Kernel Installation and 
+ Distribution System (KIDS) multi-build distribution.
+  
+ KIDS multi-build name: BPS PSO IB PSX PSS BUNDLE 9.0
+   KIDS Host File name: BPS_1_20_PSO_IB_PSX_PSS.KID
+  
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+  1. The CMOP routine which determines the 3/4 days' supply hold of the
+     prescription was modified to no longer check the DEA, special handling
+     field of the Drug file (#50) to determine the billable status of the drug.
+     Instead this patch bundle introduces new functionality and new Drug file
+     fields to determine if a drug is billable or not.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ N/A
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ N/A                       
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+ Templates Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ 20140411 - Medical Care Collection Fund (MCCF) ePharmacy Compliance Phase 3
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA HEARTLAND - WEST, VISN 15 (589)
+ LEXINGTON VAMC-LEESTOWN (596)
+ HUNTER HOLMES MCGUIRE HOSPITAL - RICHMOND (652)
+ BIRMINGHAM VAMC (521)
+ CENTRAL ARKANSAS HEALTH CARE SYSTEM - LITTLE ROCK (598)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. This
+ transmits the files from the first available server. Sites may also elect to
+ retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI Field
+ Offices:
+    
+     Albany:                 domain.ext
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www.domain.ext/vdl
+  
+ Title                                 File Name               Transfer Mode
+ ---------------------------------------------------------------------------
+ Release Notes/Installation Guide      PSX_2_P79_RN.PDF        Binary
+ User Manual                           PSX_2_UM.PDF            Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions
+ -------------------------
+ Please see the Installation Instructions associated with patch BPS*1.0*20.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CMOP;**[Patch List]**;11 Apr 97;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSXRPPL2
+    Before: B51636489   After: B55367229  **65,69,73,74,79**
+ 
+Routine list of preceding patches: 74
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 02, 2015
+Completed By:                               Date Completed: JUL 07, 2016
+Released By :                               Date Released : AUG 25, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

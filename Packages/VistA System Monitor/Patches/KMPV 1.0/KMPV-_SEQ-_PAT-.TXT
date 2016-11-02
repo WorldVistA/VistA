@@ -1,0 +1,262 @@
+
+=============================================================================
+Run Date: AUG 29, 2016                     Designation: KMPV 1
+Package : KMPV - VISTA SYSTEM MONITOR         Priority: Mandatory
+Version : 1.0                                   Status: Released
+                  Compliance Date: SEP 29, 2016
+=============================================================================
+
+
+Subject: VISTA SYSTEM MONITOR
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Input Template
+
+Description:
+============
+
+ The purpose of patch KMPV*1.0*0 is to install the VistA System Monitor 
+ (VSM) as part of the Capacity Management (KMP*) tools suite. This includes
+ 2 independent monitors. The first is the VistA Timed Collection Monitor 
+ (VTCM). VTCM will collect Cache metrics at regularly scheduled intervals 
+ such that they can be used in conjunction with metrics collected via 
+ other deployed capacity management tools. The second monitor is the VistA 
+ Storage Monitor (VSTM). VSTM will collect statistics on storage 
+ utilization.
+  
+ Blood Bank Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch KMPV*1.0*0 does not
+ contain any changes to the VISTA BLOOD BANK Software as defined by ProPath
+ standard titled: BBM Team Review of VistA Patches. Patch KMPV*1.0*0 does
+ not alter or modify any software designs safeguards or safety critical
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch KMPV*1.0*0 have no effect on Blood 
+ Bank Software functionality, there RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exists as a result of 
+ installation of this patch.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)       Field Name (Number)          NEW/MODIFIED/DELETED
+ ------------------       -------------------          --------------------
+ VSM CONFIGURATION (#8969) MONITOR KEY (#.01)                           NEW
+                           ONOFF (#.02)                                 NEW
+                           FULL NAME (#.03)                             NEW
+                           VERSION (#.04)                               NEW
+                           VERSION INSTALL DATE (#.05)                  NEW
+                           DAYS TO KEEP DATA (#1.01)                    NEW
+                           COLLECTION INTERVAL (#1.02)                  NEW
+                           CACHE DAILY TASK (#1.03)                     NEW
+                           ALLOW TEST SYSTEM (#1.04)                    NEW
+                           TASKMAN SCHEDULE FREQUENCY (#1.05)           NEW
+                           TASKMAN SCHEDULE START (#1.06)               NEW
+                           TASKMAN OPTION (#1.07)                       NEW
+                           LAST START TIME (#2.01)                      NEW
+                           LAST STOP TIME (#2.02)                       NEW
+                           LAST RUN TIME (#2.03)                        NEW
+                           NATIONAL DATA EMAIL ADDRESS (#3.01)          NEW
+                           NATIONAL SUPPORT EMAIL ADDRESS (#3.02)       NEW
+                           VSM CFG EMAIL ADDRESS (#3.03)                NEW
+                           LOCAL SUPPORT EMAIL ADDRESS (#3.04)          NEW
+  
+ VSM MONITOR DEFAULTS(#8969.02) MONITOR KEY (#.01)                      NEW
+                                DAYS TO KEEP DATA (#.02)                NEW
+                                COLLECTION INTERVAL (#.03)              NEW
+                                CACHE DAILY TASK (#.04)                 NEW
+                                ALLOW TEST SYSTEM (#.05)                NEW
+                                TASKMAN SCHEDULE FREQUENCY (#.06)       NEW
+                                TASKMAN SCHEDULE START (#.07)           NEW
+                                TASKMAN OPTION (#.08)                   NEW
+                                NATIONAL DATA EMAIL ADDRESS (#1.01)     NEW
+                                NATIONAL SUPPORT EMAIL ADDRESS (#1.02)  NEW
+                                VSM CFG EMAIL ADDRESS (#1.03)           NEW
+  
+ VSM CACHE TASK LOG (#8969.03)  DATE (#.01)                             NEW
+                                NODE (#.02)                             NEW
+                                VTCM RUNTIME (#.03)                     NEW
+                                VSTM RUNTIME (#.04)                     NEW
+  
+  
+ Forms Associated:
+  
+ Form Name:               File Number:   New/Modified/Deleted
+ ----------               ------------   --------------------
+ KMPV Edit Configuration  8969           New
+ KMPV View Configuration  8969           New
+  
+ Mail Groups Associated:   No mail groups created on VistA
+  
+ Options Associated:
+  
+ Options Name:                               Type:    New/Modified/Deleted:
+ -------------                               -----    ---------------------
+ KMPV VSM MANAGEMENT [KMPV VSM MANAGEMENT]                  Runtime  New
+ KMPV VTCM DATA TRANSMISSION [KMPV VTCM DATA TRANSMISSION]  Runtime  New
+ KMPV VSTM DATA TRANSMISSION [KMPV VSTM DATA TRANSMISSION]  Runtime  New
+ KMPV-CLIENT-SRV [KMPV-CLIENT-SRV]                          Server   New
+  
+ Protocols Associated:
+  
+ Protocol Name:                             New/Modified/Deleted:
+ --------------                             ---------------------
+ Delete Data         [KMPV DELETE DATA]      New
+ Edit CFG            [KMPV EDIT CFG]         New
+ KMPV MANAGMENT MENU [KMPV MANAGEMENT MENU]  New
+ Restore CFG         [KMPV RESTORE CFG]      New
+ Start Monitor       [KMPV START MONITOR]    New
+ Stop Monitor        [KMPV STOP MONITOR]     New
+ View CFG            [KMPV VIEW CFG]         New
+  
+ Security Keys Associated:
+  
+ Security Key Name:  New/Modified/Deleted:
+ ------------------  ---------------------
+ KMPVOPS             New
+  
+ Templates Associated:
+                                                  
+ Templated Name:  Type:  File Name (Number):       New/Modified/Deleted:
+ ---------------  -----  -------------------       ---------------------
+ KMPV MANAGEMENT  List   VSM CONFIGURATION (8969)  New
+  
+  
+ Integration Agreements:
+  
+ IA#:   Name-Components:                                     Usage:      
+ -----  ----------------                                     ------ 
+ 10097  %ZOSV-GETENV, $$OS, $$VERSION                        Supported 
+ 10112  VASITE-$$SITE                                        Supported
+ 10060  New Person File                                      Supported    
+ 1966   DBIA1966                                             Subscription
+ 2734   MESSAGE & MAILBOX UTILITIES API-$$NETNAME            Supported
+ 10073  MAILMAN: Message Body Access, including Servers-REC  Supported
+ 6247   Direct KMPV read to KMPTMP                           Private 
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Problem:
+ --------
+ There exists a need to quantify VistA workload such that resource demand 
+ can be determined for capacity planning of current and future VistA 
+ deployments.
+  
+ Resolution:
+ ---------
+ The VistA System Monitor will collect Cache specific metrics in such a 
+ way that they can be correlated with other tools gathering operating 
+ system level metrics. Combined this will provide the ability to plan 
+ future deployments based on current business workloads.
+  
+ Test Sites:
+ -----------
+ Bay Pines VA Healthcare System
+ VA Connecticut HCS (West Haven, Newington)
+ Edward Hines Jr. VA Hospital (Hines)
+  
+  
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve software directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+  
+  Albany            domain.ext
+  Hines             domain.ext
+  Salt Lake City    domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+  
+ Title:                   File Name:             FTP Mode:
+ -----------------------------------------------------------
+ Installation Guide      kmpv1_0ig.pdf             BINARY
+ Technical Manual        kmpv1_0tm.pdf             BINARY
+ User Manual             kmpv1_0um.pdf             BINARY
+  
+                          
+ Patch Installation:
+  
+ Installation Instructions:
+ --------------------------
+  
+ **************************************************************************
+ *  Due to the technical, functional and logical dependencies between     *
+ *  this and other Capacity Management packages this patch will be        *
+ *  released with XU*8.0*568.  Please see Patch XU*8.0*568                *
+ *  for installation instruction                                          *
+ **************************************************************************
+  
+ Checksum and 2nd Line Information:
+ ----------------------------------
+  
+ The second lines of the routines should be as follows:
+  
+      ;;1.0;VISTA SYSTEM MONITOR;;9/1/2015;Build 89
+  
+  
+ The checksums below are new checksums, and
+  can be checked with CHECK1^XTSUMBLD.
+  
+ Routine Name: KMPVCBG
+     Before:       n/a   After:B127056439
+ Routine Name: KMPVCCFG
+     Before:       n/a   After: B46283730  
+ Routine Name: KMPVCSRV
+     Before:       n/a   After:B116070804
+ Routine Name: KMPVLM
+     Before:       n/a   After: B26751962  
+ Routine Name: KMPVPST1
+     Before:       n/a   After: B16080867 
+ Routine Name: KMPVRUN
+     Before:       n/a   After:  B4241858  
+ Routine Name: KMPVVSTM
+     Before:       n/a   After: B25826060  
+ Routine Name: KMPVVTCM
+     Before:       n/a   After: B33477833 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 17, 2015
+Completed By:                               Date Completed: AUG 25, 2016
+Released By :                               Date Released : AUG 29, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

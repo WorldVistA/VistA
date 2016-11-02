@@ -1,0 +1,173 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 02/13/15 at 15:15
+=============================================================================
+Run Date: SEP 20, 2016                     Designation: TIU*1*288
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #273                      Status: Released
+                  Compliance Date: OCT 21, 2016
+=============================================================================
+
+Associated patches: (v)TIU*1*271   <<= must be installed BEFORE `TIU*1*288'
+                    (v)TIU*1*282   <<= must be installed BEFORE `TIU*1*288'
+
+Subject: MISC TIU DOCUMENT PARAMETER FIXES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following 3 issues:
+ 1) Document parameters cannot be deleted.
+ 2) Multiple TIU DOCUMENT PARAMETER records can be created.
+ 3) TIU report displays more document types than requested.
+  
+  
+ ASSOCIATED TICKETS:
+ ===================
+ 1) INC000001069253 - Text Integration Utility - Document Parameters:
+    I9935962FY16(d)
+ 2) INC000001082264 - Text Integration Utility - Document Parameters:
+ 3) INC000001072528 - TIU REVIEW SCREEN MIS MANAGER and TIU REVIEW SCREEN 
+    I9937843FY16(d)   MRT not pulling in the correct report
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+       
+       
+ PARTICIPATING TEST SITES:
+ =========================
+ John D. Dingell VAMC (Detroit, MI)
+ Fayetteville VAMC (NC)
+ Iowa City VA HCS (IA) 
+       
+       
+ TICKET OVERVIEW:
+ ================
+  
+ 1) INC000001069253 - Text Integration Utility - Document Parameters:
+  
+   Problem 1:
+   ---------
+ Document parameters cannot be deleted.  Using the @ at the DOCUMENT 
+ DEFINITION: prompt in Document Parameter Edit [TIU DOCUMENT PARAMETER
+ EDIT] option appears to allow the parameters to be deleted but they are
+ actually not deleted.
+  
+   Resolution 1:
+   ------------
+ Modify routine TIUDPEDT to correct the code that prevented the @ from 
+ being correctly sent to the FileMan edit routine (^DIE). This will allow 
+ users with appropriate FileMan access the ability to delete the parameter.
+  
+ 2) INC000001082264 - Text Integration Utility - Document Parameters:
+  
+   Problem 2:
+   ----------
+ While researching ticket INC000001069253, I found that there was the 
+ ability to create multiple TIU DOCUMENT PARAMETERS (#8925.95) file records
+ for a single document title or class.  If the DOCUMENT DEFINITION (#.01)
+ field is modified then multiple parameter records can be created.  Only
+ one parameter record should exist for any document title, class, or
+ document class. A user would have to ignore a warning message (by
+ overwriting NO to YES) before this issue could occur but the warning
+ message isn't clear about what can occur.  What occurs is that the
+ parameter record being edited is moved to another document title or
+ class.  This 'new' record is in addition to any parameter record(s) that
+ may have already existed.
+  
+   Resolution 2:
+   ------------
+ Modify routine TIUDPEDT so that the DOCUMENT DEFINITION (#.01) field 
+ cannot be modified after selection.  If the DOCUMENT DEFINITION (#.01)
+ field is edited then the message "This field cannot be modified." is
+ displayed and the user will remain at the DOCUMENT DEFINITION prompt.  @
+ (delete) and ^ (exit) are still valid entries.
+  
+  
+ 3) INC000001072528 - TIU REVIEW SCREEN MIS MANAGER  and TIU REVIEW SCREEN 
+                      MRT not pulling in the correct report
+  
+   Problem 3:
+   ---------
+ The Multiple Patient Documents [TIU REVIEW SCREEN MIS MANAGER] option and 
+ Multiple Patient Documents [TIU REVIEW SCREEN MRT] are pulling in more
+ documents types than the intended document type (i.e. discharge summaries)
+ into the TIU report.
+  
+   Resolution 3:
+   ------------
+ The routine TIURM1 is not always making correct decisions for including
+ addendums on the reports.  If an addendum's parent type is a type selected
+ by the user to display on the report then it is displayed correctly but if
+ the parent is not of a selected type then it is dropping into logic that
+ selects the addendum anyway.  The logic that it drops into will be updated
+ to only select the addendum if the addendum is a type the user requested
+ for the report.
+  
+ INSTALLATION INSTRUCTIONS:
+ ========================== 
+ It is not necessary to disable any options. It is strongly recommended to 
+ install this patch when users are off the system.  It should take less than 2
+ minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter TIU*1.0*288)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       TIU*1.0*288
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUDPEDT
+    Before:  B4279272   After:  B4925500  **198,206,212,282,288**
+Routine Name: TIURM1
+    Before: B40265162   After: B40029751  **100,113,271,288**
+ 
+Routine list of preceding patches: 271, 282
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 16, 2014
+Completed By:                               Date Completed: SEP 16, 2016
+Released By :                               Date Released : SEP 20, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

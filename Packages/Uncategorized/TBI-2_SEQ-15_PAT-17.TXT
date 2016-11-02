@@ -1,0 +1,150 @@
+
+=============================================================================
+Run Date: AUG 18, 2016                     Designation: TBI*2*17
+Package : TBI - TRAUMATIC BRAIN INJURY        Priority: Mandatory
+Version : 2        SEQ #15                      Status: Released
+                  Compliance Date: SEP 18, 2016
+=============================================================================
+
+
+Subject: HREG Sustainment Release Patch 17
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ ===========           
+ ***********************************************************************
+ This patch announces the National Release of Traumatic Brain Injury Patch 
+ TBI*2.0*17. TBI*2.0*17 will be deployed to the production server for 
+ national release on 08/22/2016 at 9 p.m. Eastern time. No additional 
+ action is required from sites.
+ **********************************************************************
+  
+ RELEASE INFORMATION:
+ ===================
+ TBI Patch 2.0*17 contains code changes (defect fixes enhancements) to the 
+ TBI Registry. These changes are Work Items that were recorded and tracked 
+ in the Registries Project Area of RTC.
+  
+ This patch contains the TBI Work Items completed for Release 9 for the   
+ production deployment.
+  
+ TBI Patch 2.0*17 includes the TBI Registry Work Items listed below:
+  
+ 1)      238219: TBI: Refactor VA Low Vision Visual Functioning Survey
+ 2)      315196: TBI: Fix Duration for CRS Monthly Performance Metrics 
+ Report
+ 3)      319707: TBI: DEF_Quebec User Evaluation of Satisfaction with 
+ Assistive Technology-Question 6 Wording
+ 4)      325768: TBI: Release 9 Fortify Tasks for TBI
+ 5)      326814: TBI: Changes for . NET 4.6
+  
+ The following describes each component of the TBI Patch 2.0*17
+  
+ 1) 238219: 
+ Issue: Refactor delete-then-save pattern.
+  
+ Solution: Instrument was refactored to provide better data integrity and 
+ reduce data loss scenarios.
+  
+ 2) 315196:  
+ Issue: The beginning and end times of the calls are set to the same value 
+ so the duration is always zero.
+  
+ Solution: Modified the MDWSLog and RegistriesDataAccess classes to use 
+ the correct beginning and end times so the duration of the calls can be 
+ correctly measured.
+  
+  
+ 3) 319707: 
+ Issue: The wording on question 6 of the Quebec User Evaluation of 
+ Satisfaction with Assistive Technology (QUEST) instrument is "how easy it 
+ is to user your assistive device?".  The wording should be "how easy it 
+ is to use your assistive device?".
+  
+ Solution: The wording on question 6 of the Quebec User Evaluation of 
+ Satisfaction with Assistive Technology (QUEST) instrument was changed to 
+ "how easy it is to use your assistive device?".
+  
+ 4)  325768: 
+  
+ Issue: Address Critical and High issues identified by Fortify software 
+ scans.
+  
+ Solution: A number of critical and high issues were discussed in this 
+ release.
+  
+ 5) 326814: 
+  
+ Issue: Make required code changes (if any) for mandatory .NET 4.6  
+ upgrade.
+  
+ Solution: Changes were made to the TBI web.config file as well as 
+ JavaScript changes to the Comprehensive TBI Evaluation and TBI Follow Up 
+ instruments.
+  
+ SOFTWARE:
+ =========
+ TBI is a web-based application. Changes will be applied to the national 
+ production servers and will be immediately available to the users. No 
+ changes at the local site are required for this patch.
+ ================
+ DOCUMENTATION:
+ ================
+ NOTE: NO DOCUMENT UPDATES WERE REQUIRED FOR THIS PATCH
+  
+ Additional Information:
+ ===================
+ TBI Design and User Documentation is located on TSPR:
+  
+ http://tspr.vista.domain.ext/warboard/anotebk.asp?proj=1313&Type=Active  
+  
+ Documentation Retrieval Instructions:
+ The preferred method is to SFTP the files from 
+ sftp://download.vista.domain.ext/.
+   
+ This transmits the files from the first available SFTP server.
+ Sites may also elect to retrieve software directly from a specific server 
+ as follows:
+   
+ Albany              sftp.domain.ext  
+ Hines               sftp.domain.ext
+ Salt Lake City      sftp.domain.ext
+  
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+   
+ Title                              File Name              FTP Mode
+ -----------------------------------------------------------------------
+ TBI Instruments User Manual       TBIINSUM.PDF           BINARY
+  
+ REMEDY TICKETS AND OVERVIEW:
+ =============================
+ There are no Remedy Tickets associated with this patch.
+  
+ TEST SITES:
+ ===========
+ Houston, TX
+ Lebanon, PA
+ Dallas, TX
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 08, 2016
+Completed By:                               Date Completed: AUG 16, 2016
+Released By :                               Date Released : AUG 18, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

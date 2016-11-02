@@ -1,0 +1,221 @@
+$TXT Created by                   at VIALAB1.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 07/13/16 at 12:33
+=============================================================================
+Run Date: SEP 15, 2016                     Designation: VIAB*1*7
+Package : VIAB - VISTA INTEGRATION ADAPTOR    Priority: Mandatory
+Version : 1         SEQ #7                      Status: Released
+                  Compliance Date: OCT 16, 2016
+=============================================================================
+
+Associated patches: (v)VIAB*1*5    <<= must be installed BEFORE `VIAB*1*7'
+                    (v)OR*3*433    <<= must be installed BEFORE `VIAB*1*7'
+                    (v)TIU*1*306   <<= must be installed BEFORE `VIAB*1*7'
+
+Subject: VIA INCREMENT 3 UPDATES
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ The VistA integration Adaptor (VIA) system is a middleware used to transport
+ clinical and non-clinical electronic information between producing and
+ consuming applications in VA systems.  VIA utilizes remote procedure calls
+ (RPCs) for data requested by consuming applications.
+ 
+ The purpose of this patch is to publish RPCs that were added to the VIAB WEB
+ SERVICES OPTION in the OPTION file (#19), RPC field (#320) thus allowing VIA
+ access to them. 
+  
+ This patch is one of a series of patches that will allow access for use by VIA: 
+    OR*3*433
+    TIU*1*306
+    VIAB*1*7
+ 
+ Three new RPCs were created to meet the needs of consuming applications.
+    
+    VIAB GETSURR   This RPC returns information about a user's surrogate,
+                   including start/time and end date/time, if they are 
+                   specified.
+    
+    VIAB GET USER DIVISIONS
+                   This RPC provides divisional information on the DUZ that 
+                   is passed in as the input parameter.
+  
+    VIAB SITENAME  This RPC will provide the Site Name to the calling
+                   application, given the site ID or station number is 
+                   passed in.
+ 
+ VIA was granted access to ICR #2533 by Kernel to use the function DIV4^XUSER.
+  
+ 
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+   
+  File Name (Number)         Field Name (Number)     New/Modified/Deleted
+  ------------------         -------------------     --------------------
+  N/A
+   
+  Forms Associated:
+   
+  Form Name                    File #               New/Modified/Deleted
+  ---------                    ------               --------------------
+  N/A
+   
+  Mail Groups Associated:
+   
+  Mail Group Name          New/Modified/Deleted
+  ---------------          --------------------
+  N/A
+  
+  Options Associated:
+    
+  Option Name               Type                    New/Modified/Deleted
+  -----------               ----                    --------------------
+   VIAB WEB SERVICES OPTION  Broker (Client/Server)  Modified
+ 
+   RPCs added to VIAB WEB SERVICES option by this patch:
+       ORQPT PROVIDERS
+       ORWMC PATIENT PROCEDURES1
+       ORWRP REPORT LISTS
+       TIU CREATE ADDENDUM RECORD
+       TIU UPDATE ADDITIONAL SIGNERS
+       VIAB GET USER DIVISIONS
+       VIAB GETSURR
+       VIAB SITENAME
+ 
+   Option Details:
+       Field                Value
+       -----                -----
+       NAME (#.01):         VIAB WEB SERVICES OPTION
+       MENU TEXT (#1):      VIAB Web Services Option
+       DESCRIPTION (#3.5):  This option is required by the Kernel Broker 
+                            to give access to the RPCs used by the Vista
+                            Integration Adapter (VIA) team. 
+ 
+ 
+  New Remote Procedure Calls:
+  --------------------------
+  VIAB GET USER DIVISIONS
+  VIAB GETSURR           
+  VIAB SITENAME
+  
+ 
+  New Service Requests (NSRs):
+  ----------------------------  
+  N/A
+    
+    
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+    
+    
+  Remedy Ticket(s) & Overview:
+  ----------------------------
+  N/A
+    
+    
+ Test Sites:
+ -----------
+ Central Alabama Veterans Health Care System
+ VA Central Western Massachusetts HCS
+ VA Gulf Coast Veterans Health Care System
+ 
+ 
+ Patch Installation:
+ -------------------  
+ 
+    
+ Pre/Post Installation Overview:
+ -------------------------------
+ Patch VIAB*1*5 must be installed prior to installation of VIAB*1*7.
+ Patch OR*3*433 must be installed prior to installation of VIAB*1*7.
+ Patch TIU*1*306 must be installed prior to installation of VIAB*1*7.
+ 
+ Pre-Installation Instructions:
+ -----------------------------
+ This patch may be installed with users on the system. This patch should 
+ take less than 5 minutes to install. 
+   
+ No menu options need to be disabled.
+   
+   
+ Installation Instructions:
+ --------------------------
+ This installation will install modified Remote Procedure Calls (RPCs).
+   
+  1.  Choose the PackMan message containing this patch.
+   
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME enter the 
+      patch VIAB*1.0*7:
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+   
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch (VIAB*1*7) to install.
+   
+  5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+      Install? YES//', press <ENTER>. 
+  
+  6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//', press <ENTER>.
+   
+  7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? NO//', press <ENTER>.
+   
+  8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+    
+    
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VISTA INTEGRATION ADAPTER;**[Patch List]**;06-FEB-2014;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VIABRPC
+    Before:       n/a   After:  B2945933  **7**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 12, 2016
+Completed By:                               Date Completed: SEP 14, 2016
+Released By :                               Date Released : SEP 15, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

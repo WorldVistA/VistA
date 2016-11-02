@@ -1,0 +1,178 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 08/08/16 at 14:03
+=============================================================================
+Run Date: SEP 30, 2016                     Designation: PRS*4*147
+Package : PRS - PAID                          Priority: Mandatory
+Version : 4       SEQ #134                      Status: Released
+                  Compliance Date: OCT 07, 2016
+=============================================================================
+
+Associated patches: (v)PRS*4*143   <<= must be installed BEFORE `PRS*4*147'
+
+Subject: PAID HYBRID UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains updates to the Hybrid table for Occupation
+ Series/Title Codes converting to Hybrid status.
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED TICKET(S):
+ =====================
+ 1. R6738632FY16 - PAID - Saturday Premium Pay Entitlement (Hybrid 
+                   067513 and 067518 MEDICAL RECORDS TECHNICIAN )
+    Dup: I10104305FY16 - PAID - Hybrid Code Additions (0675-18)
+  
+ 2. I9554360FY16 - PAID - Hybrid Additions (0858-02 CLINICAL ENGINEER
+                   and 0858-04 RESEARCH BIOMEDICAL ENGINEER)
+  
+ 3. R9983108FY16 - PAID - hybrid occupation Nursing Assistant (SCI) 
+                   with occupation series and title 062103
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Lebanon VAMC
+ Minneapolis VAMC
+ VA North Florida/South Georgia HCS
+  
+  
+ Remedy Overview:
+ ================
+  
+ 1. R6738632FY16 - PAID - Saturday Premium Pay Entitlement (Hybrid 
+                   067513 and 067518 MEDICAL RECORDS TECHNICIAN )
+    Dup: I10104305FY16 - PAID - Hybrid Code Additions (0675-18)
+  
+ Problem:
+ --------
+ New occupation series/title codes were converted to a hybrid status.
+  
+ Below is the occupations that were added in PAID for the 0675 
+ hybrid conversion:
+  
+ 067513  MEDICAL RECORDS TECHNICIAN
+ 067518  MEDICAL RECORDS TECH (ROI)
+  
+ Resolution:
+ -----------
+ The occupation series/title codes have been added to the hybrid table 
+ in routine PRSAENT1.
+  
+  
+ 2. I9554360FY16 - PAID - Hybrid Additions (0858-02 CLINICAL ENGINEER
+                   and 0858-04 RESEARCH BIOMEDICAL ENGINEER)
+  
+ Problem:
+ --------
+ New occupation series/title codes were converted to a hybrid status.
+  
+ Below is the occupations that were added in PAID for the 0858
+ hybrid conversion:
+   
+ 085802  CLINICAL ENGINEER
+ 085804  RESEARCH BIOMEDICAL ENGINEER
+  
+ Resolution:
+ -----------
+ The hybrid conversion 0858 has been added to the hybrid table 
+ in routine PRSAENT1.
+  
+  
+ 3. R9983108FY16 - PAID - hybrid occupation Nursing Assistant (SCI) 
+                   with occupation series and title 062103
+  
+ Problem:
+ --------
+ A new occupation series/title code was converted to a hybrid status.
+  
+ Below is the occupation that was added in PAID for the 0621
+ hybrid conversion:
+   
+ 062103  NURSING ASSISTANT (SCI)
+  
+ Resolution:
+ -----------
+ The occupation series/title codes have been added to the hybrid table 
+ in routine PRSAENT1.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ If installed during the normal workday, it is recommended that the PAID
+ users be off the system. 
+  
+ Install Time - less than 2 minutes.
+   
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options: 
+         (when prompted for INSTALL NAME, enter PRS*4.0*147)
+     
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this patch
+               is installed.  It compares all components of this patch
+               (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package PRS*4.0*147.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//" respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+         Protocols? YES//" respond YES.
+  
+          When prompted 'Enter options you wish to mark as 'Out Of
+          Order':', enter the following:
+   
+          Decompose Time   [PRSA PAY DECOMP]
+  
+          When prompted, 'Enter protocols you wish to mark as 'Out Of 
+          Order':', press <ENTER>.
+  
+      7. Review the installation message for errors.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRSAENT1
+    Before: B81444138   After: B81873060  **96,130,135,138,141,143,147**
+ 
+Routine list of preceding patches: 143
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 22, 2016
+Completed By:                               Date Completed: SEP 28, 2016
+Released By :                               Date Released : SEP 30, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,725 @@
+$TXT Created by              at DEVFEY.DOMAIN.EXT  (KIDS) on Monday, 05/23/16 at 13:24
+=============================================================================
+Run Date: SEP 01, 2016                     Designation: IB*2*517
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #523                      Status: Released
+                  Compliance Date: OCT 01, 2016
+=============================================================================
+
+Associated patches: (v)IB*2*62     <<= must be installed BEFORE `IB*2*517'
+                    (v)IB*2*384    <<= must be installed BEFORE `IB*2*517'
+                    (v)IB*2*438    <<= must be installed BEFORE `IB*2*517'
+                    (v)IB*2*519    <<= must be installed BEFORE `IB*2*517'
+
+Subject: E-BILLING - HCS REVIEW X12 278
+
+Category: 
+  - Input Template
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch provides the capability to send and receive X12N 5010 Health 
+ Care Services Review - Request for Review and Response transactions 
+ (278X217) in addition to X12N 5010 Health Care Services Review - Inquiry 
+ and Response transactions (278X215) for the purpose of obtaining referral 
+ certification and authorization numbers.  The numbers will then be used 
+ by IB personnel when creating claims for reimbursement from third-party 
+ payers.
+  
+ Patch IB*2*517 will include the following changes to VistA's Integrated
+ Billing Module:
+  
+ 1.  Create and transmit Accredited Standards Committee (ASC) X12N 5010
+     Health Care Services Review - Request for Review and Response 
+     (278X217) transactions to the Financial Services Center (FSC).
+         
+ 2.  Receive, store and display ASC X12N 5010 Health Care Services 
+     Review - Request for Review and Response (278X217) transactions that
+     come back from payers.
+  
+ 3.  Create and transmit ASC X12N 5010 Health Care Services Review - 
+     Inquiry and Response (278X215) transaction to FSC for a previously 
+     submitted ASC X12N 5010 Health Care Services Review - Request for
+     Review and Response (278X217) request once an ASC X12N 5010 Health
+     Care Services Review - Request for Review and Response (278x217)
+     transaction returns with a pending status.
+  
+ 4.  Receive, store and display ASC X12N 5010 Health Care Services Review -
+     Inquiry and Response (278X215) transactions that return from payers.
+  
+ 5.  Create new claims tracking site parameters in MCCR Site Parameter
+     Display/Edit [IBJ MCCR SITE PARAMETERS] for the search of the
+     appointments and the admissions.
+    
+ 6.  Create new security key, IB HCSR PARAM EDIT, to add/edit claims 
+     tracking site parameters.
+  
+ 7.  Create new Health Care Services Review (HCSR) Worklist [IBT HCSR
+     WORKLIST] for future appointments, future admissions, past
+     appointments and past admissions based on site parameters.
+  
+ 8.  Provide the ability to trigger ASC X12N 5010 Health Care Services 
+     Review - Request for Review and Response (278X217) transaction from
+     the worklist.
+         
+ 9.  Provide the ability to trigger ASC X12N 5010 Health Care Services 
+     Review - Inquiry and Response (278X215) transaction from the worklist.
+  
+ 10. Provide the ability for users to add an entry to the Health Care 
+     Services Review (HCSR) Worklist [IBT HCSR WORKLIST]
+  
+ 11. Provide the ability for users to add a reason for the deletion of an
+     entry on the Health Care Services Review (HCSR) Worklist [IBT HCSR
+     WORKLIST].
+  
+ 12. Provide the ability for users to choose between deleting data or 
+     saving data when they exit before completing an X12N Health Care
+     Service Review request (278X217) transaction.
+  
+ 13. Provide the ability to view the data Health Care Services Review 
+     (HCSR) 278 Response [IBT HCSR RESPONSE VIEW] that was transmitted in
+     an ASC X12N Health Care Services Review-Request (278) transactions.
+  
+ 14. Create a Response worklist Health Care Services Review (HCSR) Worklist
+     [IBT HCSR WORKLIST] of 278 response messages received for all ASC X12N
+     5010 Health Care Services Review - Request for Review and Response
+     (278x217) and all ASC X12N 5010 Health Care Services Review - Inquiry
+     and Response (278x215) messages submitted.
+        
+ 15. Provide the ability to automatically add the authorization number(s) 
+     to claims.
+  
+ 16. Provide the ability to automatically add an Authorization Number that 
+     is received in an Health Care Service Review response (278X217)
+     transaction to the Insurance Review for a Claims Tracking event at the
+     following times:
+  
+     *       When the final 278 is received if the billable event already 
+             exists in Claims Tracking.
+  
+     *       When the billable event is added to Claims Tracking if the  
+             Authorization Number was received prior to the event being
+             added to Claims Tracking.
+  
+ 17. Provide statistical reporting of the ASC X12N Health Care Services
+     Review-Request for Review and Response (278x217) transactions.
+  
+ 18. Provide statistical reporting of the ASC X12N Health Care Services
+     Review-Inquiry for Review and Response (278x215) transactions.
+  
+ 19. Provide the ability to send the 278 Payer IDs to be used for ASC
+     X12N Health Care Services Review-Request for Review and Response (278)
+     transactions if available.
+  
+ 20. Provide the ability to add industry standard codes that are used 
+     for ASC X12N Health Care Services Review-Request for Review and
+     Response (278) transactions.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ IB SITE PARAMETERS (#350.9)                               Modified
+                       CPAC ADM FUTURE DAYS (#62.02)       New
+                       CPAC APPT PAST DAYS (#62.03)        New
+                       CPAC ADM PAST DAYS (#62.04)         New
+                       TRICARE APPT FUTURE DAYS (#62.05)   New
+                       TRICARE ADM FUTURE DAYS (#62.06)    New
+                       TRICARE APPT PAST DAYS (#62.07)     New
+                       TRICARE ADM PAST DAYS (#62.08)      New
+                       PURGE DAYS (#62.09)                 New
+                       INQUIRY TRIGGER APPT (#62.1)        New
+                       INQUIRY TRIGGER ADM (#62.11)        New
+                       HSCR RESPONSE PURGE DAYS (#62.12)   New
+                       CPAC APPT FUTURE DAYS (#62.13)      New
+   HCSR CLINIC LIST sub-file (#350.963)                    New
+   INCLUDE CLINIC FOR PAYERS sub-file (#350.9631)          New
+   HCSR WARD LIST sub-file (#350.964)                      New
+   INCLUDE WARD FOR PAYERS sub-file (#350.9641)            New
+   HCSR INSCO APPT LIST sub-file (#350.965)                New
+   HCSR INSCO ADM LIST sub-file (#350.966)                 New
+ X12 278 REQUEST CATEGORY (#356.001)                       New
+ X12 278 CERTIFICATION TYPE CODE (#356.002)                New
+ X12 278 CURRENT HEALTH CONDITION CODE (#356.003)          New
+ X12 278 PROGNOSIS CODE (#356.004)                         New
+ X12 278 DELAY REASON CODE (#356.005)                      New
+ X12 278 DIAGNOSIS TYPE (#356.006)                         New
+ X12 278 DELIVERY PATTERN TIME CODE (#356.007)             New
+ X12 278 CONDITION CODE (#356.008)                         New
+ X12 278 ADMISSION SOURCE (#356.009)                       New
+ X12 278 PATIENT STATUS (#356.01)                          New
+ X12 278 NURSING HOME RESIDENTIAL STATUS (#356.011)        New
+ X12 278 SUBLUXATION LEVEL CODE (#356.012)                 New
+ X12 278 OXYGEN EQUIPMENT TYPE (#356.013)                  New
+ X12 278 OXYGEN TEST CONDITION (#356.014)                  New
+ X12 278 OXYGEN TEST FINDINGS (#356.015)                   New
+ X12 278 OXYGEN DELIVERY SYSTEM CODE (#356.016)            New
+ X12 278 PATIENT LOCATION (#356.017)                       New
+ X12 278 REPORT TYPE CODE (#356.018)                       New
+ X12 278 NURSING HOME LEVEL OF CARE (#356.019)             New
+ X12 278 CERTIFICATION ACTION CODES (#356.02)              New
+ X12 278 HCS DECISION REASON CODES (#356.021)              New
+ X12 278 DENTAL NUMBERING SYSTEM (#356.022)                New
+ HCSR WORKLIST DELETE REASON CODE (#356.023)               New
+ HCS REVIEW TRANSMISSION (#356.22)                         New
+ X12 271 SERVICE TYPE (#365.013)                           Modified
+ X12 271 TIME PERIOD QUALIFIER (#365.015)                  Modified
+ X12 271 QUANTITY QUALIFIER (#365.016)                     Modified
+ X12 271 ERROR CONDITION (#365.017)                        Modified
+ X12 271 CONTACT QUALIFIER (#365.021)                      Modified
+ X12 271 ENTITY IDENTIFIER CODE (#365.022)                 Modified
+ X12 271 DELIVERY FREQUENCY CODE (#365.025)                Modified
+ X12 271 LOOP ID (#365.027)                                Modified
+ BILL/CLAIMS (#399)                                        Modified
+                       PRIMARY INSURANCE POLICY (#112)     Modified
+                       SECONDARY INSURANCE POLICY (#113)   Modified
+                       TERTIARY INSURANCE POLICY (#114)    Modified
+  
+  
+ Bulletins Associated:
+                                                           New/Modified/
+ Bulletin Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Dialogs Associated:
+                                                           New/Modified/
+ Dialog Name                                                 Deleted    
+ -----------                                               -------------
+ N/A
+  
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+  
+ Functions Associated:
+                                                           New/Modified/
+ Function Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ HL Logical Link:
+                                                           New/Modified/
+ HL Logical Name                                             Deleted    
+ ---------------                                           -------------
+ HCSR OUT                                                  New 
+ IBTUPD OUT                                                New 
+  
+  
+ HL7 Application Parameters:
+                                                           New/Modified/
+ HL7 Parameter Name                                          Deleted    
+ ------------------                                        -------------
+ IB HCSR EC                                                New 
+ IB HCSR VISTA                                             New 
+ IB TABLE UPDATE FSC                                       New 
+ IB TABLE UPDATE VISTA                                     New 
+  
+  
+ HLO Application Registry:
+                                                           New/Modified/
+ HLO Registry Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+  
+ Help Frames Associated:
+                                                           New/Modified/
+ Help Frame Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ IBTR 278 MESSAGE                                          New 
+ IBTUPD MESSAGE                                            New 
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ IBT 278 CERTIFICATION        run routine                  New 
+ REPORT                                                    
+ IBT 278 DISPOSITION          run routine                  New 
+ REPORT                                                    
+ IBT 278 STATISTICAL          run routine                  New 
+ REPORT                                                    
+ IBT HCSR NIGHTLY PROCESS     run routine                  New 
+ IBT HCSR RESPONSE VIEW       run routine                  New 
+ IBT HCSR WORKLIST            run routine                  New 
+ IBT OUTPUT MENU              menu                         Modified 
+ IBT USER COMBINED            menu                         Modified 
+ MCCR/UR MENU                                              
+ IBT USER MENU (IR)           menu                         Modified 
+ ZTMQUEUABLE OPTIONS          menu                         Modified 
+  
+  
+ Parameter Definitions:
+                                                           New/Modified/
+ Parameter Name                                              Deleted    
+ --------------                                            -------------
+ N/A
+  
+  
+  
+ Parameter Template:
+                                                           New/Modified/
+ Template Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ IB TABLE UPDATE                                           New 
+ IB TBLUPD IN                                              New 
+ IBJ EXIT                                                  Modified 
+ IBJP CLAIMS TRACKING MENU                                 Modified 
+ IBJP CT EDIT ALL                                          Modified 
+ IBJP CT GENERAL EDIT                                      Modified 
+ IBJP CT RANDOM SAMPLE EDIT                                Modified 
+ IBJP CT TRACKING EDIT                                     Modified 
+ IBJP HCSR ADM INSCO ADD                                   New 
+ IBJP HCSR ADM INSCO DEL                                   New 
+ IBJP HCSR ADM INSCO EDIT                                  New 
+ IBJP HCSR ADM INSCO MENU                                  New 
+ IBJP HCSR APPT INSCO ADD                                  New 
+ IBJP HCSR APPT INSCO DEL                                  New 
+ IBJP HCSR APPT INSCO EDIT                                 New 
+ IBJP HCSR APPT INSCO MENU                                 New 
+ IBJP HCSR CLINIC ADD                                      New 
+ IBJP HCSR CLINIC ADD PAYER                                New 
+ IBJP HCSR CLINIC DEL                                      New 
+ IBJP HCSR CLINIC DEL PAYER                                New 
+ IBJP HCSR CLINICS EDIT                                    New 
+ IBJP HCSR CLINICS MENU                                    New 
+ IBJP HCSR OTHER EDIT                                      New 
+ IBJP HCSR PARAMETERS EDIT                                 New 
+ IBJP HCSR PARAMETERS MENU                                 New 
+ IBJP HCSR WARD ADD                                        New 
+ IBJP HCSR WARD ADD PAYER                                  New 
+ IBJP HCSR WARD DEL                                        New 
+ IBJP HCSR WARD DEL PAYER                                  New 
+ IBJP HCSR WARDS EDIT                                      New 
+ IBJP HCSR WARDS MENU                                      New 
+ IBT HCSR ADD COMMENT                                      New 
+ IBT HCSR ADD COMMENT WORKLIST                             New 
+ IBT HCSR COPY 278 REQUEST                                 New 
+ IBT HCSR ENTRY MENU                                       New 
+ IBT HCSR EXPAND ENTRY                                     New 
+ IBT HCSR IN PROGRESS EE REM                               New 
+ IBT HCSR IN PROGRESS EE SET                               New 
+ IBT HCSR IN PROGRESS REM                                  New 
+ IBT HCSR IN PROGRESS SET                                  New 
+ IBT HCSR LIST DEL                                         New 
+ IBT HCSR LIST SORT                                        New 
+ IBT HCSR MANUAL 278 REQUEST                               New 
+ IBT HCSR NEXT REVIEW                                      New 
+ IBT HCSR REFRESH                                          New 
+ IBT HCSR RESPONSE EDIT                                    New 
+ IBT HCSR RESPONSE EE SEND278                              New 
+ IBT HCSR RESPONSE EXPAND ENTRY                            New 
+ IBT HCSR RESPONSE IN PROGRESS EE REM                      New 
+ IBT HCSR RESPONSE IN PROGRESS EE SET                      New 
+ IBT HCSR RESPONSE IN PROGRESS REM                         New 
+ IBT HCSR RESPONSE IN PROGRESS SET                         New 
+ IBT HCSR RESPONSE LIST DEL                                New 
+ IBT HCSR RESPONSE LIST SORT                               New 
+ IBT HCSR RESPONSE MENU                                    New 
+ IBT HCSR RESPONSE NEXT REVIEW                             New 
+ IBT HCSR RESPONSE REFRESH                                 New 
+ IBT HCSR RESPONSE VIEW MENU                               New 
+ IBT HCSR SEND 278 ADD DATA                                New 
+ IBT HCSR SEND 278 INQUIRY                                 New 
+ IBT HCSR SEND 278 REQUEST                                 New 
+ IBT HCSR SEND 278 REQUEST SHORT                           New 
+ IBT HCSR SEND 278 SHORT                                   New 
+ IBT HCSR SEND 278 SHORT MENU                              New 
+ IBT HCSR VIEW PENDING RESPONSE                            New 
+ IBT HCSR VIEW X12 MESSAGE                                 New 
+ IBT HCSR WORKLIST MENU                                    New 
+ IBTR HCSR IN                                              New 
+ IBTR HCSR INQUIRY                                         New 
+ IBTR HCSR OUT                                             New 
+ IBTR HCSR RESPONSE                                        New 
+ VALM BLANK 1                                              Modified 
+ VALM BLANK 2                                              Modified 
+  
+  
+ Remote Procedures Associated:
+                                                           New/Modified/
+ Remote Procedure Name                                       Deleted    
+ ---------------------                                     -------------
+ N/A
+  
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ IB HCSR PARAM EDIT                                        New 
+  
+  
+ Templates, Input Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ IB ADD/EDIT 278    Input     HCS REVIEW TRANSMISSION      New 
+                              (#356.22)                    
+ IB CREATE 278      Input     HCS REVIEW TRANSMISSION      New 
+ REQUEST                      (#356.22)                    
+ IB CREATE 278      Input     HCS REVIEW TRANSMISSION      New 
+ REQUEST SHORT                (#356.22)                    
+  
+  
+ Templates, List Associated:
+                                                           New/Modified/
+ Template Name      Type                                     Deleted    
+ -------------      ----                                   -------------
+ IBJP CLAIMS        List                                   Modified 
+ TRACKING                                                  
+ IBJP HCSR ADM      List                                   New 
+ INSCO                                                     
+ IBJP HCSR APPT     List                                   New 
+ INSCO                                                     
+ IBJP HCSR CLINICS  List                                   New 
+ IBJP HCSR          List                                   New 
+ PARAMETERS                                                
+ IBJP HCSR WARDS    List                                   New 
+ IBT CLAIMS         List                                   Modified 
+ TRACKING EDITOR                                           
+ IBT                List                                   Modified 
+ COMMUNICATIONS                                            
+ EDITOR                                                    
+ IBT HCSR ENTRY     List                                   New 
+ IBT HCSR RESPONSE  List                                   New 
+ VIEW                                                      
+ IBT HCSR RESPONSE  List                                   New 
+ WORKLIST                                                  
+ IBT HCSR SEND 278  List                                   New 
+ SHORT                                                     
+ IBT HCSR WORKLIST  List                                   New 
+  
+  
+ Templates, Print Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+  
+ Templates, Sort Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ 20110503 - Electronic Data Interchange (EDI) New Standards and Operating
+            Rules (Veterans Health Administration) VHA Provider-Side 
+            Technical Compliance Requirements (TCRs)
+  
+ 20140414 - Medical Care Collection Fund (MCCF) eBilling Compliance Phase 3
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Tennessee Valley HCS
+ Memphis
+ Providence
+ Columbus
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                           File Name                        FTP Mode
+ -----------------------------------------------------------------------
+ Claims Tracking and Health      ib_2_0_CT_ug.pdf               binary
+ Care Service Review
+ IB User Manual                  ib_2_0_um.pdf                  binary
+ IB Release Notes/Installation   ib_2_0_p517_rn.pdf             binary
+ Guide                                                   
+ IB Technical Manual             ib_2_0_tm.pdf                  binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The post installation routine, IBY517PO, sets up defaults for the new IB 
+ SITE PARAMETERS (#350.9) fields, and the routine is automatically deleted 
+ after the install.  The post install also schedules the HCSR NIGHTLY 
+ PROCESS [IBT HCSR NIGHTLY PROCESS].
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. Installation may be queued.  
+  
+ This patch should take less than 5 minutes to install.
+  
+  
+ Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch, IB*2.0*517.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch #(ex.
+     IB*2.0*517):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Enter the Coordinator for the Mail Group 'IBTR 278
+     MESSAGE':', respond with the name of the person who will be the
+     coordinator for this new mail group.  This would be the Information
+     Resource Management (IRM) representative or person responsible
+     for HL7 issues.
+  
+ 6.  When prompted 'Enter the Coordinator for the Mail Group 'IBTUPD
+     MESSAGE':', respond with the name of the person who will be the
+     coordinator for this new mail group. This would be the IRM or person
+     responsible for HL7 issues.
+  
+ 7.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? YES//', respond YES.
+  
+ 8.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', respond NO.
+  
+ 9.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', respond NO.
+  
+ 10.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ Once the installation has been completed, it might be necessary to 
+ change the scheduled time of the new HCSR NIGHTLY PROCESS [IBT HCSR
+ NIGHTLY PROCESS], which sends inquiries on pending entries and purges old
+ entries, to run at a more convenient time.  It is initially set to run
+ daily at 9PM.
+  
+ If installing into a production account, enable the logical links for the
+ HL7 interfaces.
+  
+ 1.  From the HL7 Main Menu [HL MAIN MENU], select Filer and Link
+     Management Options [HL MENU FILER LINK MGT].
+ 2.  Select Start/Stop Links [HL START].
+ 3.  When prompted to "Select HL LOGICAL LINK NODE:" enter "HCSR OUT"
+     and press ENTER. 
+ 4.  The system will display "This LLP has been enabled!" to confirm 
+     that the HCSR OUT link has successfully started.
+ 5.  Repeat with HL LOGICAL LINK "IBTUPD OUT" 
+  
+ There is one new Security Key, IB HCSR PARAM EDIT. Assignment 
+ of this Security Key will be coordinated with eBilling, CPAC and VAMCs. 
+ IRMs will not have to assign the security key upon installation.
+  
+ The person that is assigned this new Security Key will need to run menu
+ option IBJ MCCR SITE PARAMETERS [MCCR Site Parameter Display/Edit] and 
+ select the 'HS' action to add the Insurance Companies, Clinics, and Wards
+ that are to be 'included' in the search.
+  
+ NOTE: If Insurance Companies to be included are not set, then the
+ nightly process will not find any appointments or admission to add to
+ the HCSR Worklist. At this point, no insurance companies should be set.  
+ eBilling will work with VAMCs to set TRICARE/CHAMPVA at some point in the 
+ future.  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 240
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCNS4
+    Before:       n/a   After:  B3702577  **517**
+Routine Name: IBJPC
+    Before: B14718227   After: B34128004  **39,517**
+Routine Name: IBJPC1
+    Before:       n/a   After:B109463109  **517**
+Routine Name: IBJPC2
+    Before:       n/a   After: B18114113  **517**
+Routine Name: IBJPC3
+    Before:       n/a   After: B14208611  **517**
+Routine Name: IBJPM
+    Before: B10881232   After: B11156673  **39,137,184,271,316,416,438,517**
+Routine Name: IBMFNHLI
+    Before:       n/a   After:B107548431  **517**
+Routine Name: IBTRH1
+    Before:       n/a   After:B195054371  **517**
+Routine Name: IBTRH1A
+    Before:       n/a   After:B221868988  **517**
+Routine Name: IBTRH1B
+    Before:       n/a   After: B30643582  **517**
+Routine Name: IBTRH2
+    Before:       n/a   After:B142856464  **517**
+Routine Name: IBTRH2A
+    Before:       n/a   After:B101621694  **517**
+Routine Name: IBTRH2B
+    Before:       n/a   After:  B4869140  **517**
+Routine Name: IBTRH3
+    Before:       n/a   After:B110798316  **517**
+Routine Name: IBTRH3A
+    Before:       n/a   After:B156802114  **517**
+Routine Name: IBTRH3B
+    Before:       n/a   After:B148426620  **517**
+Routine Name: IBTRH5
+    Before:       n/a   After:B229496459  **517**
+Routine Name: IBTRH5A
+    Before:       n/a   After:B142025931  **517**
+Routine Name: IBTRH5B
+    Before:       n/a   After:B121449376  **517**
+Routine Name: IBTRH5C
+    Before:       n/a   After:B109276107  **517**
+Routine Name: IBTRH5D
+    Before:       n/a   After:B177666961  **517**
+Routine Name: IBTRH5E
+    Before:       n/a   After:B137475866  **517**
+Routine Name: IBTRH5F
+    Before:       n/a   After:B134425924  **517**
+Routine Name: IBTRH5G
+    Before:       n/a   After: B92609469  **517**
+Routine Name: IBTRH5H
+    Before:       n/a   After: B25009378  **517**
+Routine Name: IBTRH5I
+    Before:       n/a   After:B233667896  **517**
+Routine Name: IBTRH5J
+    Before:       n/a   After:B115879805  **517**
+Routine Name: IBTRH5K
+    Before:       n/a   After: B41363452  **517**
+Routine Name: IBTRH6
+    Before:       n/a   After:B163678664  **517**
+Routine Name: IBTRH7
+    Before:       n/a   After: B41208064  **517**
+Routine Name: IBTRH8
+    Before:       n/a   After:B196836390  **517**
+Routine Name: IBTRH8A
+    Before:       n/a   After:B120085680  **517**
+Routine Name: IBTRHDE
+    Before:       n/a   After:B135940675  **517**
+Routine Name: IBTRHDE1
+    Before:       n/a   After:  B5388716  **517**
+Routine Name: IBTRHLI
+    Before:       n/a   After:  B2260238  **517**
+Routine Name: IBTRHLI1
+    Before:       n/a   After: B11775197  **517**
+Routine Name: IBTRHLI2
+    Before:       n/a   After:B196116381  **517**
+Routine Name: IBTRHLI3
+    Before:       n/a   After:B185121370  **517**
+Routine Name: IBTRHLO
+    Before:       n/a   After:B150899426  **517**
+Routine Name: IBTRHLO1
+    Before:       n/a   After:B184271063  **517**
+Routine Name: IBTRHLO2
+    Before:       n/a   After: B22869624  **517**
+Routine Name: IBTRHLU
+    Before:       n/a   After:  B3594614  **517**
+Routine Name: IBTRHRC
+    Before:       n/a   After:B203075385  **517**
+Routine Name: IBTRHRD
+    Before:       n/a   After:B116950528  **517**
+Routine Name: IBTRHRS
+    Before:       n/a   After:B158405913  **517**
+Routine Name: IBTRP
+    Before:  B4755209   After:  B8798598  **517**
+Routine Name: IBTUTL
+    Before: B16901114   After: B52307998  **23,62,517**
+Routine Name: IBTUTL1
+    Before: B60382231   After: B61280810  **13,223,249,292,384,517**
+Routine Name: IBY517PO
+    Before:       n/a   After: B30255307  **517**
+Routine Name: IBY517PR
+    Before:       n/a   After:   B911220  **517**
+ 
+Routine list of preceding patches: 62, 384, 438
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 10, 2013
+Completed By:                               Date Completed: AUG 02, 2016
+Released By :                               Date Released : SEP 01, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

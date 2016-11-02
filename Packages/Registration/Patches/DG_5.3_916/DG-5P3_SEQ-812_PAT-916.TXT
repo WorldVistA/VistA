@@ -1,0 +1,179 @@
+
+=============================================================================
+Run Date: SEP 07, 2016                     Designation: DG*5.3*916
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #812                    Status: Released
+                  Compliance Date: OCT 07, 2016
+=============================================================================
+
+Associated patches: (v)IB*2*549    <<= must be installed BEFORE `DG*5.3*916'
+
+Subject: EINSURANCE-COMPLIANCE PHASE 3 FY15
+
+Category: 
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Below is a list of all the applications involved in this project along 
+ with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2.0*549
+    REGISTRATION (DG) V. 5.3                              DG*5.3*916
+   
+ The patches (IB*2.0*549 and DG*5.3*916) are being released in the
+ Kernel Installation and Distribution System (KIDS) multi-build 
+ distribution as IB_DG_BUNDLE_1_0.KID.
+  
+ A new style MUMPS cross reference was added to the DATE OF DEATH field
+ (#2,.351) which is invoked when the DATE OF DEATH is populated and has
+ not previously been manually entered. This code terms all of the patient's
+ active insurance policies (without an expiration date, regardless of 
+ whether or not an effective date exists). The term date is
+ to be set to the date of death+1.  This is associated with ICR #6231.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ PATIENT (#2)               DATE OF DEATH (#.351)    Modified
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name        Type      File Name (Number)    New/Modified/Deleted
+ -------------        ----      ------------------    --------------------
+ N/A
+  
+ Additional Information:
+ ----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ---------------------------  
+ NSR 20140413 - Medical Care Collection Fund (MCCF) eInsurance Compliance 
+ Phase 3
+  
+ Patient Safety Issues (PSIs):
+ ----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ Bay Pines, FL
+ Central Plains HCS
+ Chillicothe, OH
+ Louisville, KY
+  
+  
+ DOCUMENTATION RETRIEVAL INSTRUCTIONS
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+    Albany:               domain.ext
+    Hines:                domain.ext
+    Salt Lake City:       domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  http://www.domain.ext/vdl/
+  
+ Title                              File Name                FTP Mode
+ --------------------------------------------------------------------
+ Release Notes/Installation Guide   dg_5_3_p916_rn.pdf       Binary
+    
+  
+  
+ Installation Instructions:
+ -------------------------
+ The components sent with this patch DG*5.3*916 have been included in the
+ host file IB_DG_BUNDLE_1_0.KID. Please follow the installation
+ instructions listed in the patch description for patch IB*2.0*549.
+  
+  
+   *************************************************************
+   * Note that there are very important pre and post install   *
+   * instructions that need to be followed when installing the *
+   * host file. Follow the installation instructions for patch *
+   * IB*2.0*549.                                               *
+   *************************************************************
+  
+  
+ The host file IB_DG_BUNDLE_1_0.KID, contains the following patches:
+  
+         IB*2.0*549
+         DG*5.3*916
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 14, 2015
+Completed By:                               Date Completed: AUG 12, 2016
+Released By :                               Date Released : SEP 07, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,123 @@
+$TXT Created by                 at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 05/19/16 at 11:10
+=============================================================================
+Run Date: AUG 17, 2016                     Designation: PSX*2*80
+Package : PSX - CMOP                          Priority: Mandatory
+Version : 2        SEQ #70                      Status: Released
+                  Compliance Date: SEP 17, 2016
+=============================================================================
+
+Associated patches: (v)PSX*2*41    <<= must be installed BEFORE `PSX*2*80'
+
+Subject: PSXR BATCH REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects a problem in the Consolidate Mail Outpatient 
+ Pharmacy (CMOP) v2.0 application where the PSXR BATCH INQUIRY [View 
+ Transmission] option was getting hung up when being run.
+  
+  
+ Associated tickets:
+ ===================
+ 1. R8577328FY16 - PSXR BATCH INQUIRY
+  
+ Associated NSR(s):
+ =============
+ N/A
+  
+ Participating Test Sites:
+ =================
+ VA Connecticut Health Care System (West Haven)
+ W.G. (Bill) Hefner VA Medical Center (Salisbury)
+ Robley Rex VA Medical Center (Louisville)
+  
+  
+ Remedy Overview:
+ ==============
+ 1. R8577328FY16 - PSXR BATCH INQUIRY
+  
+  
+   Problem:
+   --------
+   Site reported that when using the PSXR BATCH INQUIRY [View Transmission]
+   option, it takes a while to display due to the CMOP TRANSMISSION file
+   (# 550.2) having so many transmissions.
+  
+   Resolution:
+   ------------
+   Modified routine PSXSTAT to retrieve the most recent transmission.
+   
+   
+ Installation Instructions:
+ =================
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+  Installation will take less than 5 minutes.
+  Suggested time to install: non-peak requirement hours.
+   
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter PSX*2.0*80).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the 
+            patch is installed.
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport 
+            global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package 
+         PSX*2.0*80.
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install? NO//",
+         respond No.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//", respond YES.
+  
+         When prompted, 'Enter options you wish to mark as 'Out Of
+         order':', enter the following option:
+  
+                 PSXR BATCH INQUIRY       View Transmission
+         When prompted, 'Enter protocols you wish to mark as 'Out Of 
+         Order':', press <ENTER>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;CMOP;**[Patch List]**;11 Apr 97;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSXSTAT
+    Before: B27758719   After: B27680486  **41,80**
+ 
+Routine list of preceding patches: 41
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 05, 2016
+Completed By:                               Date Completed: AUG 10, 2016
+Released By :                               Date Released : AUG 17, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

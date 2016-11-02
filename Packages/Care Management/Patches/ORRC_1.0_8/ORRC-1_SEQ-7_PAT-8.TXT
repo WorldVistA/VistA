@@ -1,0 +1,300 @@
+$TXT Created by              E at CHEYL50.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Monday, 10/19/15 at 08:38
+=============================================================================
+Run Date: AUG 25, 2016                     Designation: ORRC*1*8
+Package : ORRC - CARE MANAGEMENT              Priority: Mandatory
+Version : 1         SEQ #7                      Status: Released
+                  Compliance Date: SEP 24, 2016
+=============================================================================
+
+
+Subject: CARE MANAGEMENT VER 1.8
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+  
+  
+ Patch ORRC*1*8 addresses the following five (5) Remedy tickets:
+  
+ 1.   INC000000137195 - Go To Chart Issues
+  
+ 2.   INC000000138203 - Future Tasks
+  
+ 3.   INC000000189875 - Error on Go to Chart
+  
+ 4.   INC000000204620 - Question about patch ORRC*1*7
+  
+ 5.   INC000000929785 - Install Guide needs updating & New
+                        AutoInstaller
+  
+  
+ Patch ORRC*1*8 has two software components. The software components
+ consists of the Graphical User Interface (GUI) - JAVA build, Care
+ Management 1.8.0, and the Veterans Health Information Systems and
+ Technology Architecture (VistA) build, ORRC*1*8.   The patch 
+ ORRC*1*8  ensures sure that the Care Management application can
+ be launched with any version beyond JRE1.6 (32 bit).   It also
+ enhances the functionality of the Care Management application by
+ supporting the coexistence of the Clinician and the Nursing
+ Dashboard. It addresses the issues related to JRE and saving of
+ future tasks in the Clinician and the Nursing Dashboard.  It will
+ synchronize the VistA server and Care Management GUI version.
+  
+ Also, the minimum, operational, base-line for Care Management 1.8.0
+ functionality includes the installation of these VistA patches :
+  
+ Software                     Version    Patch Information
+ --------                     -------    -----------------
+ VistALink                     1.6        XOBV 1.6
+ Order Entry/Results Reporting 3.0        OR*3*153 (Hepatitis C
+                                          Reporting)
+  
+ Note: TIU*1.0*150 is required to run OR*3.0*153
+  
+  
+ CPRS GUI                      29         OR*3.0*248.
+  
+  
+  
+  
+    ASSOCIATED OPTIONS:
+    ===================
+      Option Name          Type     New/Modified/Deleted
+      -----------          ----     --------------------
+      ORRCMC DASHBOARD     Menu     Modified - 
+                                    MENU TEXT; supports Care Management
+                                    GUI version 1.8.0.
+  
+    ASSOCIATED NSR: 
+    ===============
+      N/A
+  
+  
+    PARTICIPATING TEST SITES: 
+    =========================
+      Miami VA Medical Center, Florida
+      Orlando VA Medical Center, Florida
+      San Juan VA Medical Center, Puerto Rico
+      Pittsburgh VA Medical Center, Pennsylvania
+  
+  
+    Remedy Overview:
+    ================
+      1. INC000000137195 - Go To Chart Issues
+  
+         Problem: 
+         --------
+         There were times when tabs would become locked/"frozen"
+         after accessing Computerized Patient Record System (CPRS)
+         via the Care Management(CM) - Go To Chart Link and the displayed
+         tab was unexpected.
+  
+         Resolution: 
+         -----------
+         Recompiled the CM code using Java 1.6+ version and
+         issue seems to resolved itself.  There is no locking/"freezing"
+         behavior when running under Java 1.6+ version.
+  
+  
+      2. INC000000138203 - Future Tasks
+  
+         Problem:  
+         --------
+         Future tasks did not display for users per the Care Management 
+         - Tasks Column.
+  
+         Resolution:
+         ----------- 
+         Modified CM Java files to comply with Java 1.6 code and
+         saving of task functionality works as intended. 
+    
+  
+      3. INC000000189875 - Error on Go to Chart
+  
+         Problem: 
+         --------
+         An error, "ERROR+33^XOBVLL", was produced in the error
+         trap when users click on the 'go to chart' link.
+  
+         Resolution:
+         -----------
+         Recompiled the CM code using Java 1.6+ versions and issue
+         seems to resolved itself. Errors are not experiences when 
+         clicked on the "Go to Chart" link while running the application 
+         under Java 1.6+ version (32 bit).
+  
+  
+      4. INC000000204620 - question about patch ORRC*1*7
+        
+         Duplicates:  
+         -----------
+         INC000000205669, INC000000218015, 
+         INC000000713102, INC000001049008
+  
+         Problem:  
+         --------
+         Questions and concerns pertaining to the Care Management
+         application operating within an insecure JAVA Runtime
+         Environment (JRE).
+  
+         Resolution:
+         -----------
+         Recompiled the CM code using Java 1.6+ (32 bit) version.
+  
+  
+      5. INC000000929785 - Install Guide needs updating & New AutoInstaller
+  
+         Problem:  
+         --------
+         Care Management documentation needed to be updated to
+         accurately reflect Care Management development.
+  
+         
+         Resolution:
+         ----------- 
+         Updated the install guide to reflect the new changes in
+         Care Management version 1.8.
+  
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library
+ at:
+ http://www4.domain.ext/vdl/
+   
+ The documentation includes:
+   
+  Binary Java Client Files - ORRC_1_8.ZIP Format: Binary
+ ---------------------------------------------------------------------
+  
+   FILE NAME                 DESCRIPTION
+   =========                 ===========
+   ORRC_1_8_IG.pdf           Care Management Installation Guide v 1.8.0
+   
+   ORRC_1_8_TM.pdf           Care Management Technical Manual v 1.8.0
+   
+   ORRC_1_8_UM.pdf           Care Management User Manual v 1.8.0
+  
+  
+  
+ Installation Instructions:
+ --------------------------
+ Care Management GUI is a JAVA based web application build. This is a 
+ centralized server promotion.  The VistA patch component (ORRC*1*8) can be
+ loaded with active VistA users, but it is recommended that it be
+ installed when user activity is low.  Installation time will be less than
+ 3 minutes.
+  
+  1.  Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option:Installation
+                                                              ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter ORRC*1.0*8):
+      
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as Data Dictionary(DD)'s or
+          templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  4.  Use the Install Package(s) option and select the package
+      ORRC*1.0*8.
+  
+      a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? NO//", answer NO.
+      b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? NO//", answer NO.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ The post-installation routine POST^ORRCY08 will run automatically.
+ This routine maintains the Care Management version number (1.8.0) as 
+ synchronized with the GUI version being installed as part of ORRC*1*8.  
+ "Care Management Dashboard 1.8.0" will display when this post routine
+ has completed properly.  There is a Client/Server Compatibility Check 
+ when users start-up the Care Management GUI.  No error will display when 
+ VistA patch ORRC*1*8 has installed correctly.  Routine ORRCY08 may be
+ deleted after ORRC*1*8 has installed correctly; deletion of that post 
+ routine will not affect Care Management 1.8.0 performance.
+  
+ *****Additional setup is required, please read the Care Management 
+ Installation Guide.*****
+ The Care Management software package requires three separate
+ installation procedures: one for installing M-specific components on your
+ M server, one for installing Java components on the HealtheVet 
+ Desktop/Care Management  users' workstations and another for changing 
+ the settings file to reflect the site's Vista connection.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CARE MANAGEMENT;**[Patch List]**;Jul 15, 2003;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORRCY08
+    Before:       n/a   After:  B2082563  **8**
+ Description of Changes:
+  ORRCY08 contains the post installation routine POST^ORRCY08.  That routine
+  will run automatically and will maintain the Care Management version
+  number and synchronize with patch ORRC*1*8 GUI.
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 10, 2006
+Completed By:                               Date Completed: JUL 07, 2016
+Released By :                               Date Released : AUG 25, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,227 @@
+$TXT Created by               at DVACACHE.FO-BIRM.DOMAIN.EXT  (KIDS) on Friday, 02/26/16 at 09:12
+=============================================================================
+Run Date: OCT 05, 2016                     Designation: PSS*1*193
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #174                      Status: Released
+                  Compliance Date: NOV 04, 2016
+=============================================================================
+
+Associated patches: (v)PSS*1*180   <<= must be installed BEFORE `PSS*1*193'
+
+Subject: PHARMACY INTERFACE AUTOMATION PROJECT (PIA)
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ The Pharmacy Interface Automation Project will provide a new standard
+ bi-directional Health Level Seven (HL7) interface to the Pharmacy
+ Automated Dispensing Equipment (PADE) located at the point of care areas
+ such as Inpatient wards, Outpatient Clinics etc. The outbound HL7 messages
+ will be triggered when drugs are added or modified depending on the site
+ parameter setup.
+  
+ The following two patches are provided for this project:
+   PSJ*5*317 - Inpatient Medications V. 5.0.
+   PSS*1*193 - Pharmacy Data Management V. 1.0.
+  
+ Note: The patches should be installed in the order listed above as the 
+ logical link, PSJ PADE used in the PSS patch is transported in the PSJ
+ patch.
+  
+ As part of this patch PSS*1*193, the following enhancements were made:
+  
+ 1. Two new protocols PSS MFNM01 CLIENT and PSS MFNM01 SERVER were added to
+ facilitate sending Master Files Notification (MFN) HL7 drug messages to
+ PADE.
+  
+ 2. The Send Entire Drug File to External Interface [PSS MASTER FILE 
+ ALL]  option was modified to allow transmission of the drug file to an 
+ Inpatient Interface (PADE) depending on the PADE setup. It also 
+ provides the flexibility of sending all drugs marked for Unit Dose, 
+ Intravenous (IV) or Ward Stock or send selected drugs to PADE.
+  
+ Since this option now allows to send all or selected drugs to PADE, the
+ option name "Send Entire Drug File to External Interface" was changed  
+ to "Send Drug File Entries to External Interface"
+  
+ 3. A new PSS PADE INIT security key was added so that holders of this key 
+ can only send "all" drugs to PADE noted in item 2.
+  
+ 4. Option Drug Enter/Edit [PSS DRUG ENTER/EDIT] was modified to send an 
+ addition/update/both or none to PADE provided it is setup to receive such
+ updates.
+  
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)         Field Name (#)         New/Modified/Deleted
+ ------------          --------------         --------------------
+ N/A
+  
+ Form Name             File #                  New/Modified/Deleted
+ ---------             ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                New/Modified/Deleted
+ ---------------                                --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                          Type         New/Modified/Deleted
+ -----------                          ----         --------------------
+ Send Drug File Entries to External   Option       Modified
+ Interface [PSS MASTER FILE ALL]
+  
+   
+ Protocols Associated:
+  
+ Protocol Name                              New/Modified/Deleted
+ -------------                              --------------------
+ PSS MFNM01 SERVER                          New
+ PSS MFNM01 CLIENT                          New
+  
+    
+ Security Keys Associated:
+  
+ Security Key Name                           New/Modified/Deleted
+ -------------                               --------------------
+ PSS PADE INIT                               New 
+  
+ Templates Associated:
+  
+ Template Name              Type    File Name (#)      New/Modified/Deleted
+ -------------              ----    -------------      --------------------
+ N/A
+   
+ New Service Requests (NSRs):
+ ----------------------------
+ 20000801 - Inpatient Pharmacy Orders HL7 Interface
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A  
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+     
+  
+ TEST Sites:
+ ===========
+ HC NETWORK UPSTATE NY (ALBANY)
+ HEARTLAND-WEST HCS
+ INDIANAPOLIS, IN
+ LONG BEACH, CA
+  
+      
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at
+ the following OI Field Offices:
+  
+  Albany         domain.ext
+  Hines          domain.ext
+  Salt Lake City domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ File Description                        File Name                FTP Mode
+ --------------------------------------------------------------------------
+ Pharmacy Data Management User Manual    PSS_1_UM_R0916.PDF       Binary
+  
+ Pharmacy Data Management Technical      PSS_1_TM_R0916.PDF       Binary
+ Manual/ Security Guide
+  
+  
+ Patch Installation: 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A 
+  
+     
+ Installation Instructions
+ -------------------------
+ This patch should be installed with users off the system during off-peak
+ hours. Installation takes less than two minutes.
+  
+  1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+  2. From the Kernel Installation & Distribution System menu, select the
+     Installation menu.
+   
+  3. From this menu, you may select to use the following options:
+     (when prompted for INSTALL NAME, enter PSS*1.0*193)
+   
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+   
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+   
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+   
+  4. Use the Install Package(s) option and select the package PSS*1.0*193.
+   
+  5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+     respond NO.
+   
+  6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//" respond NO. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 17
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSDEE
+    Before: B98607664   After:B110481507  **3,5,15,16,20,22,28,32,34,33,
+                                           38,57,47,68,61,82,90,110,155,
+                                           156,180,193**
+Routine Name: PSSHLDFS
+    Before:       n/a   After: B33701533  **193**
+Routine Name: PSSMSTR
+    Before:  B1853023   After: B51317382  **82,193**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 10, 2015
+Completed By:                               Date Completed: SEP 19, 2016
+Released By :                               Date Released : OCT 05, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,246 @@
+
+=============================================================================
+Run Date: AUG 29, 2016                     Designation: KMPD*3*3
+Package : KMPD - CAPACITY MANAGEMENT TOOLS    Priority: Mandatory
+Version : 3         SEQ #2                      Status: Released
+                  Compliance Date: SEP 29, 2016
+=============================================================================
+
+Associated patches: (v)KMPD*3*0    <<= must be installed BEFORE `KMPD*3*3'
+
+Subject: UPDATE CPRS COVERSHEET LOAD REPORTING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses three issues with CPRS Coversheet Load reporting. 
+  
+ 1. Current reports and status checks look only at background coversheet 
+ load times. This patch will update routines to look check and report on 
+ both background and foreground coversheet load times.
+  
+ 2. The date range selector for reports is returning in incorrect start 
+ date.
+  
+ 3. Currently the data sent to the National Database only includes the 
+ delta between the minimum and maximum load times for each hour. With this
+ patch all data will be sent. Data will also be available for longer time
+ periods at greater detail.
+  
+  
+ Blood Bank Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch KMPD*3*3 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches. Patch KMPD*3*3 
+ does not alter or modify any software designs, safeguards or safety 
+ critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch KMPD*3*3 have no effect on Blood 
+ Bank Software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exists as a result of 
+ installation of this patch.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)        Field Name (Number)   New/Modified/Deleted
+ ------------------        -------------------   --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name         File #         New/Modified/Deleted
+ ---------         ------         --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name          Type        New/Modified/Deleted
+ -----------          ----        --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                    New/Modified/Deleted
+ -------------                    --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)   New/Modified/Deleted
+ -------------     ----     ------------------   --------------------
+ N/A
+  
+  
+  
+ New Service Requests (NSRs):
+ ---------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+  
+ Problem:
+ --------
+ Problem 1: Reports and status checks only look at background coversheet 
+ load times.
+  
+ Problem 2: Data returned in the report does not match the date range 
+ requested in the date prompt.
+  
+ Problem 3: Data reported to national level does not contain sufficient 
+ detail for proper analysis.
+  
+  
+ Resolution:
+ -----------
+ Resolution 1: Updates reports and status checks to look at both 
+ background and foreground load times. Data is stored under separate 
+ subscripts. Routines must look at both and correlate each foreground and 
+ background data set.
+  
+ Resolution 2: Fixed the date prompt code to return parameters as 
+ requested by the end user.
+  
+ Resolution 3: Report all data. Analysis and reporting can then include 
+ actual minimum, maximum and average load times per specified time 
+ periods. Additional analysis can be done regarding use of CPRS.
+  
+  
+ Test Sites:
+ -----------
+ Bay Pines VA Healthcare System
+ VA Connecticut HCS (West Haven, Newington)
+ Edward Hines Jr. VA Hospital (Hines)
+  
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve software directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+  
+  Albany            domain.ext
+  Hines             domain.ext
+  Salt Lake City    domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+  
+  
+ Title:                  File Name:           FTP Mode:
+ ------------------------------------------------------
+ User Manual             KMPD3_0UM.PDF        BINARY    
+ Technical Manual        KMPD3_0TM.PDF        BINARY
+ Installation Guide      KMPD3_0IF.PDF        BINARY
+  
+ Patch Installation:
+  
+ Installation Instructions:
+ --------------------------
+  
+ **************************************************************************
+ *  Due to the technical, functional and logical dependencies between     *
+ *  this and other Capacity Management packages this patch will be        *
+ *  released with XU*8.0*568.  Please see Patch XU*8.0*568                *
+ *  for installation instruction.                                         *
+ **************************************************************************
+  
+  
+ Checksum and 2nd Line Information:
+ ----------------------------------
+  
+ The second lines of the routines should be as follows:
+ ;;3.0;Capacity Management Tools;**3**;Jan 15, 2013;Build 41
+  
+  
+ The checksums below are new checksums, and
+  can be checked with CHECK1^XTSUMBLD.
+  
+ Routine Name: KMPDBD01
+         Before:  B1585127       After: B1657961         **3**
+ Routine Name: KMPDRDAT
+         Before:  n/a            After: B21746222        **3**
+ Routine Name: KMPDSSS
+         Before:  B33896326      After: B33242782        **3**
+ Routine Name: KMPDTM
+         Before:  B22150434      After: B27757282        **3**
+ Routine Name: KMPDTP1
+         Before:  B21923015      After: B37151192        **3**
+ Routine Name: KMPDTP2
+         Before:  B21316448      After: B34056989        **3**
+ Routine Name: KMPDTP3
+         Before:  B20017179      After: B41193781        **3**
+ Routine Name: KMPDTP4
+         Before:  B27036478      After: B40761189        **3**
+ Routine Name: KMPDTP5
+         Before:  B28201133      After: B39279349        **3**
+ Routine Name: KMPDTP6
+         Before:  B26949846      After: B34394776        **3**
+ Routine Name: KMPDTP7
+         Before:  B23266885      After: B26694983        **3**
+ Routine Name: KMPDTU10
+         Before:  B33247279      After: B33489133        **3**
+ Routine Name: KMPDTU11
+         Before:  B4686971       After: B4891419         **3**
+ Routine Name: KMPDUTL
+         Before:  B11442645      After: B11972661        **3**
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 07, 2015
+Completed By:                               Date Completed: AUG 25, 2016
+Released By :                               Date Released : AUG 29, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

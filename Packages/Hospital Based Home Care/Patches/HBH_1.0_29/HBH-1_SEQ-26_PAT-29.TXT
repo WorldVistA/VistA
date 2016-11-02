@@ -1,0 +1,211 @@
+$TXT Created by              at MNTVUU.DOMAIN.EXT  (KIDS) on Monday, 12/07/15 at 12:08
+=============================================================================
+Run Date: SEP 20, 2016                     Designation: HBH*1*29
+Package : HBH - HOSPITAL BASED HOME CARE      Priority: Mandatory
+Version : 1        SEQ #26                      Status: Released
+                  Compliance Date: OCT 21, 2016
+=============================================================================
+
+
+Subject: DD CHANGE TO FIX UNDEFINED ERROR IN FILE 633.2
+
+Category: 
+  - Data Dictionary
+
+Description:
+============
+
+ A user has reported an undefined error in FileMan when editing the COUNTY 
+ CODE field (#25) in the HBHC MEDICAL FOSTER HOME file (#633.2). This
+ issue is caused by the code in the INPUT/OUTPUT TRANSFORM for this field. 
+ Patch HBH*1.0*29 will update the Data Dictionary by removing the variable 
+ D0 from all KILL commands preventing the error from occurring.
+  
+  
+ ASSOCIATED TICKETS:
+ ===================
+ 1. I6127195FY16 - Users are kicked out of the system when editing the county
+                   code for HBHC
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Coatesville VAMC
+ Heartland West HCS
+  
+ TICKET OVERVIEW:
+ ================
+ 1. I6127195FY16 - Users are kicked out of the system when editing the county
+                   code for HBHC
+  
+    Duplicate:
+    I7514195FY16(d)
+   
+ Problem: 
+ --------
+ When editing the COUNTY CODE field (#25)  in the HBHC MEDICAL FOSTER HOME
+ file (#633.2), an undefined error occurs. 
+   
+ Resolution:
+ -----------
+ The D0 variable will be removed from all KILL commands in the INPUT/OUTPUT
+ Transform of the HBHC MEDICAL FOSTER HOME file (#633.2), preventing the
+ undefined error from occurring.
+  
+  
+  
+ DATA DICTIONARY:
+ ================
+  
+ BEFORE:
+ -------
+  
+ 633.2,25      COUNTY CODE            0;15 NUMBER (Required)
+  
+               INPUT TRANSFORM:  S Z0=$S($P($G(^HBHC(633.2,D0,0)),U,10):+^HBHC(6
+                                 31.8,$P(^HBHC(633.2,D0,0),U,10),0),1:0) K:'Z0 X
+                                  Q:'Z0!'$D(^DIC(5,Z0,1,0))  S DIC="^DIC(5,Z0,1,
+                                 ",DIC(0)="QEM" D ^DIC S X=+Y K:Y'>0 X K D0,Z0,D
+                                 IC
+               OUTPUT TRANSFORM: S Y(0)=Y Q:Y']""  S Z0=$S($P($G(^HBHC(633.2,D0,
+                                 0)),U,10):+^HBHC(631.8,$P(^HBHC(633.2,D0,0),U,1
+                                 0),0),1:"") Q:'Z0  S Y=$P($S($D(^DIC(5,Z0,1,Y,0
+                                 )):^(0),1:""),U)_"  ("_$P($S($D(^(0)):^(0),1:""
+                                 ),U,3)_")" K D0
+  
+  
+ STANDARD DATA DICTIONARY #633.2 -- HBHC MEDICAL FOSTER HOME FILE   
+                                                    NOV 10,2015@15:33:25  PAGE 2
+ STORED IN ^HBHC(633.2,  (2 ENTRIES)   SITE: TEST.CHEYENNE.DOMAIN.EXT   UCI:
+ CHEY
+ 19,ROU                                                         (VERSION 1.0)   
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ -------------------------------------------------------------------------------
+               LAST EDITED:      OCT 28, 2015 
+               HELP-PROMPT:      Answer with 3 digit numeric county code, or 
+                                 county name, of county where Medical Foster 
+                                 Home (MFH) is located.  County codes are 
+                                 checked for validity of State Code entered. 
+               DESCRIPTION:      This field represents 3 digit numeric code of
+                                 County, in State file (#5), of Medical Foster
+                                 Home (MFH) location. County codes are checked
+                                 for validity of State Code entered.  Input
+                                 transform also validates State for existance in
+                                 HBHC VALID STATE CODE file (#631.8).  
+                                  
+                                 Output transform displays both County Name &
+                                 County Code in (nnn). 
+  
+ STANDARD DATA DICTIONARY #633.2 -- HBHC MEDICAL FOSTER HOME FILE   
+                                                    NOV 10,2015@15:33:26  PAGE 3
+ STORED IN ^HBHC(633.2,  (2 ENTRIES)   SITE: TEST.CHEYENNE.DOMAIN.EXT   UCI:
+ CHEY
+ 19,ROU                                                         (VERSION 1.0)   
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ -------------------------------------------------------------------------------
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+  
+ AFTER:
+ ------
+ 633.2,25      COUNTY CODE            0;15 NUMBER (Required)
+  
+               INPUT TRANSFORM:  S Z0=$S($P($G(^HBHC(633.2,D0,0)),U,10):+^HBHC(6
+                                 31.8,$P(^HBHC(633.2,D0,0),U,10),0),1:0) K:'Z0 X
+                                  Q:'Z0!'$D(^DIC(5,Z0,1,0))  S DIC="^DIC(5,Z0,1,
+                                 ",DIC(0)="QEM" D ^DIC S X=+Y K:Y'>0 X K Z0,DIC
+               OUTPUT TRANSFORM: S Y(0)=Y Q:Y']""  S Z0=$S($P($G(^HBHC(633.2,D0,
+                                 0)),U,10):+^HBHC(631.8,$P(^HBHC(633.2,D0,0),U,1
+                                 0),0),1:"") Q:'Z0  S Y=$P($S($D(^DIC(5,Z0,1,Y,0
+                                 )):^(0),1:""),U)_"  ("_$P($S($D(^(0)):^(0),1:""
+                                 ),U,3)_")"
+  
+  
+ STANDARD DATA DICTIONARY #633.2 -- HBHC MEDICAL FOSTER HOME FILE   
+                                                    NOV 10,2015@15:33:25  PAGE 2
+ STORED IN ^HBHC(633.2,  (2 ENTRIES)   SITE: TEST.CHEYENNE.DOMAIN.EXT   UCI:
+ CHEY
+ 19,ROU                                                         (VERSION 1.0)   
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ -------------------------------------------------------------------------------
+               LAST EDITED:      OCT 28, 2015 
+               HELP-PROMPT:      Answer with 3 digit numeric county code, or 
+                                 county name, of county where Medical Foster 
+                                 Home (MFH) is located.  County codes are 
+                                 checked for validity of State Code entered. 
+               DESCRIPTION:      This field represents 3 digit numeric code of
+                                 County, in State file (#5), of Medical Foster
+                                 Home (MFH) location. County codes are checked
+                                 for validity of State Code entered.  Input
+                                 transform also validates State for existence in
+                                 HBHC VALID STATE CODE file (#631.8).  
+                                  
+                                 Output transform displays both County Name &
+                                 County Code in (nnn). 
+  
+ STANDARD DATA DICTIONARY #633.2 -- HBHC MEDICAL FOSTER HOME FILE   
+                                                    NOV 10,2015@15:33:26  PAGE 3
+ STORED IN ^HBHC(633.2,  (2 ENTRIES)   SITE: TEST.CHEYENNE.DOMAIN.EXT   UCI:
+ CHEY
+ 19,ROU                                                         (VERSION 1.0)   
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ -------------------------------------------------------------------------------
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is not necessary to disable any options.  You may install 
+ this patch at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter HBH*1.0*29)
+    
+          a.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          b.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+  
+     4. Use the Install Package(s) option and select the package 
+        HBH*1.0*29.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//", respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 05, 2015
+Completed By:                               Date Completed: SEP 13, 2016
+Released By :                               Date Released : SEP 20, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

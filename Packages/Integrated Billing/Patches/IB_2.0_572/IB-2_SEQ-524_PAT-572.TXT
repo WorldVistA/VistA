@@ -1,0 +1,164 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 08/16/16 at 15:11
+=============================================================================
+Run Date: SEP 06, 2016                     Designation: IB*2*572
+Package : IB - INTEGRATED BILLING             Priority: EMERGENCY
+Version : 2       SEQ #524                      Status: Released
+                  Compliance Date: SEP 09, 2016
+=============================================================================
+
+
+Subject: RC 124 FOR FIVE MENTAL HEALTH DIAGNOSIS RELATED GROUPS CORRECTION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Previously released patch IB*2.0*561 applied default revenue code 124 
+ (PSYCHIATRIC) to five Mental Health Diagnosis Related Groups (DRGs) 881, 
+ 882, 883, 885 and 886.  These charge items included R&B (Room & Board)
+ 101, Intensive Care Unit 200, and Ancillary Services 240 in the CHARGE
+ ITEM file (#363.2).
+  
+ This patch will still apply default code 124 to R&B but remove it for
+ Intensive Care Unit 200, and Ancillary Services 240.
+  
+  
+ ASSOCIATED TICKET(S):
+ =====================
+ 1. R10150360FY16 Emergency Patch Request - Corrected Routine for IB*2*561
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ Bay Pines
+ Erie
+ Louisville
+ Pittsburgh
+   
+  
+ OVERVIEW:
+ =========
+ 1. R10150360FY16 Emergency Patch Request - Corrected Routine for IB*2*561
+  
+ Problem:
+ --------
+ The Chief Business Office (CBO) has requested a corrected routine for
+ IB*2.0*561.
+  
+ Site user reported default 124 revenue code was applying to Ancillary 240
+ Charge Item for DRG 885.
+  
+ Resolution:
+ -----------
+ A post-init routine IB20P572 was created to assign the 124 revenue code
+ for the following Mental Health Diagnosis Related Groups (DRGs) to the
+ Room & Board 101 Charge Items with an effective date of October 1st, 2015
+ or January 1st, 2016: 881, 882, 883, 885 and 886 if they don't exist in
+ the CHARGE ITEM file (#363.2).
+  
+ It also removes the default 124 code in those five DRGs for the Intensive
+ Care Unit 200 and the Ancillary Services 240 Charge Items in the CHARGE 
+ ITEM file (#363.2).
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+    
+ 1.   LOAD TRANSPORT GLOBAL
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+     
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+     
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*572):
+   
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+   
+ 4.   Select Installation Option: Install Package(s)
+   
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//', answer NO
+    
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P572.
+   
+ 6.   Example of successful installation. The number of charges updated
+      will vary from site to site depending on the size of inpatient
+      charge items.
+  
+   Revenue Code 124 for Mental Health Diagnosis Fix Post-Install .....
+  
+ >>Correcting 124 for MH DRGs of R&B 101 on 1-OCT-15 or 1-JAN-16: 881, 882, 883, 885 & 886...
+  
+   Done.  60 existing inpatient charge items updated (#363.2)
+  
+   Revenue Code 124 for Mental Health Diagnosis Fix Post-Install Complete
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 39
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P572
+    Before:       n/a   After:  B8731091  **572**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 11, 2016
+Completed By:                               Date Completed: AUG 31, 2016
+Released By :                               Date Released : SEP 06, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,211 @@
+
+=============================================================================
+Run Date: AUG 29, 2016                     Designation: KMPS*2*1
+Package : KMPS - SAGG PROJECT                 Priority: Mandatory
+Version : 2         SEQ #3                      Status: Released
+                  Compliance Date: SEP 29, 2016
+=============================================================================
+
+Associated patches: (v)XU*8*568        install with patch       `KMPS*2*1'
+
+Subject: ENABLE SAGG FOR LINUX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch enables the Statistical Analysis of Global Growth (SAGG) 
+ package to work on the Linux operating systems. It also alters the 
+ collection routine such that storage metrics are captured for all
+ mounted volume sets.
+  
+  
+ Blood Bank Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch KMPS*2*1 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches. Patch KMP2*2*1 
+ does not alter or modify any software designs, safeguards or safety 
+ critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch KMPS*2*1 have no effect on Blood 
+ Bank Software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exists as a result of 
+ installation of this patch.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)        Field Name (Number)   New/Modified/Deleted
+ ------------------        -------------------   --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name         File #         New/Modified/Deleted
+ ---------         ------         --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                                   Type   New/Modified/Deleted
+ -----------                                   ----   --------------------
+ SAGG Project Manager Menu [KMPS SAGG MANAGER] menu          Modified
+ SAGG Environement         [KMPS SAGG STATUS]  run routine   Modified
+ Stop SAGG Collection      [KMPS SAGG STOP]    run routine   Modified
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                    New/Modified/Deleted
+ -------------                    --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)   New/Modified/Deleted
+ -------------     ----     ------------------   --------------------
+ N/A
+  
+  
+  
+ New Service Requests(NSRs):
+ ----------------------------
+ N/A - no new service requests.
+  
+ Patient Safety Issues(PSIs):
+ -----------------------------
+ N/A - no patient safety issues.
+  
+ Remedy Ticket(s) & Overview:
+ -----------------------------
+ N/A - No remedy tickets associated with this patch.
+  
+  
+ Problem:
+ --------
+ SAGG was originally written to function on Windows and VMS operating 
+ systems. Storage metrics are not properly collected when Cache/VistA
+ is running on the Linux operating system. These metrics are needed to 
+ plan storage configuration and purchases.
+  
+ Resolution:
+ -----------
+ Re-write SAGG metric collection to utilize current Cache versions APIs to 
+ collect storage metrics on all operating systems.  Additionally SAGG will 
+ now collect storage metrics on all volume sets.
+  
+  
+ Test Sites:
+ -----------
+ Bay Pines VA Healthcare System
+ VA Connecticut HCS (West Haven, Newington)
+ Edward Hines Jr. VA Hospital (Hines)
+  
+  
+  
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve software directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+  
+  Albany            domain.ext
+  Hines             domain.ext
+  Salt Lake City    domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+  
+ Title                         File Name                   FTP Mode
+ ------------------------------------------------------------------
+ User Manual                   kmps2_0um.pdf               Binary
+ Technical Manual              kmps2_0tm.pdf               Binary
+  
+  
+ Patch Installation:
+  
+ Installation Instructions:
+ --------------------------
+  
+  
+ **************************************************************************
+ *  Due to the technical, functional and logical dependencies between     *
+ *  this and other Capacity Management packages this patch will be        *
+ *  released with XU*8.0*568.  Please see Patch XU*8.0*568                *
+ *  for installation instruction                                          *
+ **************************************************************************
+  
+  
+ Checksum and 2nd Line Information:
+ ----------------------------------
+  
+ The second lines of the routines should be as follows:
+  
+   ;;2.0;Statistical Analysis of Global Growth;**1**;Jul 02, 2007;Build 67
+  
+  
+ The checksums below are new checksums, and
+  can be checked with CHECK1^XTSUMBLD.
+  
+ Routine Name: KMPSGE
+     Before: B45420632   After: B32317948  **1**
+ Routine Name: KMPSLK
+     Before: B24144588   After: B24217869  **1**
+ Routine Name: KMPSPOST
+     Before:       n/a   After:   B859700  **1**
+ Routine Name: KMPSUTL
+     Before: B14249417   After: B14390275  **1**
+ Routine Name: KMPSUTL1
+     Before:  B5705138   After:  B5780636  **1**
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 30, 2010
+Completed By:                               Date Completed: AUG 25, 2016
+Released By :                               Date Released : AUG 29, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

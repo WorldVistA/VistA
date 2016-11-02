@@ -1,0 +1,1479 @@
+Released PSS*1*193 SEQ #174
+Extracted from mail message
+**KIDS**:PSS*1.0*193^
+
+**INSTALL NAME**
+PSS*1.0*193
+"BLD",9172,0)
+PSS*1.0*193^PHARMACY DATA MANAGEMENT^0^3160226^y
+"BLD",9172,1,0)
+^^35^35^3160226^
+"BLD",9172,1,1,0)
+The Pharmacy Interface Automation Project will provide a new standard
+"BLD",9172,1,2,0)
+bi-directional HL7 interface to the Pharmacy Automated Dispensing
+"BLD",9172,1,3,0)
+Equipment (PADE) located at the point of care areas such as Inpatient
+"BLD",9172,1,4,0)
+wards, Outpatient Clinics etc. The outbound HL7 messages will be triggered
+"BLD",9172,1,5,0)
+when drugs are added or modified depending on the site parameter setup.
+"BLD",9172,1,6,0)
+ 
+"BLD",9172,1,7,0)
+The following two patches are provided for this project:
+"BLD",9172,1,8,0)
+  PSJ*5*317 - Inpatient Medications V. 5.0.
+"BLD",9172,1,9,0)
+  PSS*1*193 - Pharmacy Data Management V. 1.0.
+"BLD",9172,1,10,0)
+ 
+"BLD",9172,1,11,0)
+Note: The patches should be installed in the order listed above as the 
+"BLD",9172,1,12,0)
+logical link, PSJ PADE used in the PSS patch is transported in the PSJ
+"BLD",9172,1,13,0)
+patch.
+"BLD",9172,1,14,0)
+ 
+"BLD",9172,1,15,0)
+As part of this patch PSS*1*193, the following enhancements were made:
+"BLD",9172,1,16,0)
+ 
+"BLD",9172,1,17,0)
+1. Two new protocols PSS MFNM01 CLIENT and PSS MFNM01 SERVER were added to
+"BLD",9172,1,18,0)
+facilitate sending MFN HL7 drug messages to PADE.
+"BLD",9172,1,19,0)
+ 
+"BLD",9172,1,20,0)
+2. The Send Entire Drug File to External Interface [PSS MASTER FILE 
+"BLD",9172,1,21,0)
+ALL]  option was modified to allow transmission of the drug file to an 
+"BLD",9172,1,22,0)
+Inpatient Interface (PADE) depending on the PADE setup. It also 
+"BLD",9172,1,23,0)
+provides the flexibility of sending all drugs marked for Unit Dose, 
+"BLD",9172,1,24,0)
+Intravenous (IV) or Ward Stock or send selected drugs to PADE.
+"BLD",9172,1,25,0)
+ 
+"BLD",9172,1,26,0)
+Since this option now allows to send all or selected drugs to PADE, the
+"BLD",9172,1,27,0)
+option name "Send Entire Drug File to External Interface" was changed  
+"BLD",9172,1,28,0)
+to "Send Drug File Entries to External Interface"
+"BLD",9172,1,29,0)
+ 
+"BLD",9172,1,30,0)
+3. A new PSS PADE INIT security key was added so that holders of this key 
+"BLD",9172,1,31,0)
+can only send "all" drugs to PADE noted in item 2.
+"BLD",9172,1,32,0)
+ 
+"BLD",9172,1,33,0)
+4. Option Drug Enter/Edit [PSS DRUG ENTER/EDIT] was modified to send an 
+"BLD",9172,1,34,0)
+addition/update/both or none to PADE provided it is setup to receive such
+"BLD",9172,1,35,0)
+updates.
+"BLD",9172,4,0)
+^9.64PA^^0
+"BLD",9172,6)
+3^
+"BLD",9172,6.3)
+17
+"BLD",9172,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9172,"KRN",.4,0)
+.4
+"BLD",9172,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",9172,"KRN",.401,0)
+.401
+"BLD",9172,"KRN",.402,0)
+.402
+"BLD",9172,"KRN",.403,0)
+.403
+"BLD",9172,"KRN",.5,0)
+.5
+"BLD",9172,"KRN",.84,0)
+.84
+"BLD",9172,"KRN",3.6,0)
+3.6
+"BLD",9172,"KRN",3.8,0)
+3.8
+"BLD",9172,"KRN",9.2,0)
+9.2
+"BLD",9172,"KRN",9.8,0)
+9.8
+"BLD",9172,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",9172,"KRN",9.8,"NM",1,0)
+PSSDEE^^0^B110481507
+"BLD",9172,"KRN",9.8,"NM",2,0)
+PSSMSTR^^0^B51317382
+"BLD",9172,"KRN",9.8,"NM",3,0)
+PSSHLDFS^^0^B33701533
+"BLD",9172,"KRN",9.8,"NM","B","PSSDEE",1)
+
+"BLD",9172,"KRN",9.8,"NM","B","PSSHLDFS",3)
+
+"BLD",9172,"KRN",9.8,"NM","B","PSSMSTR",2)
+
+"BLD",9172,"KRN",19,0)
+19
+"BLD",9172,"KRN",19,"NM",0)
+^9.68A^1^1
+"BLD",9172,"KRN",19,"NM",1,0)
+PSS MASTER FILE ALL^^0
+"BLD",9172,"KRN",19,"NM","B","PSS MASTER FILE ALL",1)
+
+"BLD",9172,"KRN",19.1,0)
+19.1
+"BLD",9172,"KRN",19.1,"NM",0)
+^9.68A^1^1
+"BLD",9172,"KRN",19.1,"NM",1,0)
+PSS PADE INIT^^0
+"BLD",9172,"KRN",19.1,"NM","B","PSS PADE INIT",1)
+
+"BLD",9172,"KRN",101,0)
+101
+"BLD",9172,"KRN",101,"NM",0)
+^9.68A^2^2
+"BLD",9172,"KRN",101,"NM",1,0)
+PSS MFNM01 SERVER^^0
+"BLD",9172,"KRN",101,"NM",2,0)
+PSS MFNM01 CLIENT^^0
+"BLD",9172,"KRN",101,"NM","B","PSS MFNM01 CLIENT",2)
+
+"BLD",9172,"KRN",101,"NM","B","PSS MFNM01 SERVER",1)
+
+"BLD",9172,"KRN",409.61,0)
+409.61
+"BLD",9172,"KRN",409.61,"NM",0)
+^9.68A^^
+"BLD",9172,"KRN",771,0)
+771
+"BLD",9172,"KRN",771,"NM",0)
+^9.68A^^0
+"BLD",9172,"KRN",779.2,0)
+779.2
+"BLD",9172,"KRN",870,0)
+870
+"BLD",9172,"KRN",870,"NM",0)
+^9.68A^^0
+"BLD",9172,"KRN",8989.51,0)
+8989.51
+"BLD",9172,"KRN",8989.51,"NM",0)
+^9.68A^^
+"BLD",9172,"KRN",8989.52,0)
+8989.52
+"BLD",9172,"KRN",8994,0)
+8994
+"BLD",9172,"KRN","B",.4,.4)
+
+"BLD",9172,"KRN","B",.401,.401)
+
+"BLD",9172,"KRN","B",.402,.402)
+
+"BLD",9172,"KRN","B",.403,.403)
+
+"BLD",9172,"KRN","B",.5,.5)
+
+"BLD",9172,"KRN","B",.84,.84)
+
+"BLD",9172,"KRN","B",3.6,3.6)
+
+"BLD",9172,"KRN","B",3.8,3.8)
+
+"BLD",9172,"KRN","B",9.2,9.2)
+
+"BLD",9172,"KRN","B",9.8,9.8)
+
+"BLD",9172,"KRN","B",19,19)
+
+"BLD",9172,"KRN","B",19.1,19.1)
+
+"BLD",9172,"KRN","B",101,101)
+
+"BLD",9172,"KRN","B",409.61,409.61)
+
+"BLD",9172,"KRN","B",771,771)
+
+"BLD",9172,"KRN","B",779.2,779.2)
+
+"BLD",9172,"KRN","B",870,870)
+
+"BLD",9172,"KRN","B",8989.51,8989.51)
+
+"BLD",9172,"KRN","B",8989.52,8989.52)
+
+"BLD",9172,"KRN","B",8994,8994)
+
+"BLD",9172,"QUES",0)
+^9.62^^
+"BLD",9172,"REQB",0)
+^9.611^1^1
+"BLD",9172,"REQB",1,0)
+PSS*1.0*180^2
+"BLD",9172,"REQB","B","PSS*1.0*180",1)
+
+"KRN",19,12641,-1)
+0^1
+"KRN",19,12641,0)
+PSS MASTER FILE ALL^Send Drug File Entries to External Interface^^R^^^^^^^^
+"KRN",19,12641,25)
+PSSMSTR
+"KRN",19,12641,"U")
+SEND DRUG FILE ENTRIES TO EXTE
+"KRN",19.1,687,-1)
+0^1
+"KRN",19.1,687,0)
+PSS PADE INIT^PSS DADE INIT^l^n^0
+"KRN",19.1,687,1,0)
+^^5^5^3160122^
+"KRN",19.1,687,1,1,0)
+This security key enables users to transmit the entire drug file (or UD 
+"KRN",19.1,687,1,2,0)
+and IV marked drugs) to Pharmacy Automated Dispensing Equipment (PADE) 
+"KRN",19.1,687,1,3,0)
+System(s) within the "Send Drug File Entries to External Interface" Vista 
+"KRN",19.1,687,1,4,0)
+option. This action is typically a onetime event to send a copy of the 
+"KRN",19.1,687,1,5,0)
+formulary to a new PADE vendor.
+"KRN",101,6115,-1)
+0^1
+"KRN",101,6115,0)
+PSS MFNM01 SERVER^^^E^^^^^^^^
+"KRN",101,6115,1,0)
+^^1^1^3150625^
+"KRN",101,6115,1,1,0)
+PDM MASTER FILE UPDATE
+"KRN",101,6115,770)
+PSJ VISTA^^MFN^M01^37^^^AL^NE^2.4^
+"KRN",101,6115,775,0)
+^101.0775PA^1^1
+"KRN",101,6115,775,1,0)
+6116
+"KRN",101,6115,775,1,"^")
+PSS MFNM01 CLIENT
+"KRN",101,6116,-1)
+0^2
+"KRN",101,6116,0)
+PSS MFNM01 CLIENT^^^S^^^^^^^^
+"KRN",101,6116,1,0)
+^^1^1^3150625^
+"KRN",101,6116,1,1,0)
+PDM MASTER FILE UPDATE CLIENT
+"KRN",101,6116,770)
+^PSJ PADE SERVER^^M01^^^PSJ PADE^^^^ACK
+"KRN",101,6116,773)
+1^1
+"KRN",101,6116,774)
+
+"MBREQ")
+0
+"ORD",3,19.1)
+19.1;3;;;KEY^XPDTA1;KEYF1^XPDIA1;KEYE1^XPDIA1;KEYF2^XPDIA1;;KEYDEL^XPDIA1
+"ORD",3,19.1,0)
+SECURITY KEY
+"ORD",15,101)
+101;15;;;PRO^XPDTA;PROF1^XPDIA;PROE1^XPDIA;PROF2^XPDIA;;PRODEL^XPDIA
+"ORD",15,101,0)
+PROTOCOL
+"ORD",18,19)
+19;18;;;OPT^XPDTA;OPTF1^XPDIA;OPTE1^XPDIA;OPTF2^XPDIA;;OPTDEL^XPDIA
+"ORD",18,19,0)
+OPTION
+"PKG",517,-1)
+1^1
+"PKG",517,0)
+PHARMACY DATA MANAGEMENT^PSS^Maintenance of Pharmacy files.
+"PKG",517,20,0)
+^9.402P^^
+"PKG",517,22,0)
+^9.49I^1^1
+"PKG",517,22,1,0)
+1.0^2970930^2971014^11595
+"PKG",517,22,1,"PAH",1,0)
+193^3160226^11943
+"PKG",517,22,1,"PAH",1,1,0)
+^^35^35^3160226
+"PKG",517,22,1,"PAH",1,1,1,0)
+The Pharmacy Interface Automation Project will provide a new standard
+"PKG",517,22,1,"PAH",1,1,2,0)
+bi-directional HL7 interface to the Pharmacy Automated Dispensing
+"PKG",517,22,1,"PAH",1,1,3,0)
+Equipment (PADE) located at the point of care areas such as Inpatient
+"PKG",517,22,1,"PAH",1,1,4,0)
+wards, Outpatient Clinics etc. The outbound HL7 messages will be triggered
+"PKG",517,22,1,"PAH",1,1,5,0)
+when drugs are added or modified depending on the site parameter setup.
+"PKG",517,22,1,"PAH",1,1,6,0)
+ 
+"PKG",517,22,1,"PAH",1,1,7,0)
+The following two patches are provided for this project:
+"PKG",517,22,1,"PAH",1,1,8,0)
+  PSJ*5*317 - Inpatient Medications V. 5.0.
+"PKG",517,22,1,"PAH",1,1,9,0)
+  PSS*1*193 - Pharmacy Data Management V. 1.0.
+"PKG",517,22,1,"PAH",1,1,10,0)
+ 
+"PKG",517,22,1,"PAH",1,1,11,0)
+Note: The patches should be installed in the order listed above as the 
+"PKG",517,22,1,"PAH",1,1,12,0)
+logical link, PSJ PADE used in the PSS patch is transported in the PSJ
+"PKG",517,22,1,"PAH",1,1,13,0)
+patch.
+"PKG",517,22,1,"PAH",1,1,14,0)
+ 
+"PKG",517,22,1,"PAH",1,1,15,0)
+As part of this patch PSS*1*193, the following enhancements were made:
+"PKG",517,22,1,"PAH",1,1,16,0)
+ 
+"PKG",517,22,1,"PAH",1,1,17,0)
+1. Two new protocols PSS MFNM01 CLIENT and PSS MFNM01 SERVER were added to
+"PKG",517,22,1,"PAH",1,1,18,0)
+facilitate sending MFN HL7 drug messages to PADE.
+"PKG",517,22,1,"PAH",1,1,19,0)
+ 
+"PKG",517,22,1,"PAH",1,1,20,0)
+2. The Send Entire Drug File to External Interface [PSS MASTER FILE 
+"PKG",517,22,1,"PAH",1,1,21,0)
+ALL]  option was modified to allow transmission of the drug file to an 
+"PKG",517,22,1,"PAH",1,1,22,0)
+Inpatient Interface (PADE) depending on the PADE setup. It also 
+"PKG",517,22,1,"PAH",1,1,23,0)
+provides the flexibility of sending all drugs marked for Unit Dose, 
+"PKG",517,22,1,"PAH",1,1,24,0)
+Intravenous (IV) or Ward Stock or send selected drugs to PADE.
+"PKG",517,22,1,"PAH",1,1,25,0)
+ 
+"PKG",517,22,1,"PAH",1,1,26,0)
+Since this option now allows to send all or selected drugs to PADE, the
+"PKG",517,22,1,"PAH",1,1,27,0)
+option name "Send Entire Drug File to External Interface" was changed  
+"PKG",517,22,1,"PAH",1,1,28,0)
+to "Send Drug File Entries to External Interface"
+"PKG",517,22,1,"PAH",1,1,29,0)
+ 
+"PKG",517,22,1,"PAH",1,1,30,0)
+3. A new PSS PADE INIT security key was added so that holders of this key 
+"PKG",517,22,1,"PAH",1,1,31,0)
+can only send "all" drugs to PADE noted in item 2.
+"PKG",517,22,1,"PAH",1,1,32,0)
+ 
+"PKG",517,22,1,"PAH",1,1,33,0)
+4. Option Drug Enter/Edit [PSS DRUG ENTER/EDIT] was modified to send an 
+"PKG",517,22,1,"PAH",1,1,34,0)
+addition/update/both or none to PADE provided it is setup to receive such
+"PKG",517,22,1,"PAH",1,1,35,0)
+updates.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","PSSDEE")
+0^1^B110481507^B98607664
+"RTN","PSSDEE",1,0)
+PSSDEE ;BIR/WRT-MASTER DRUG ENTER/EDIT ROUTINE ;01/21/00
+"RTN","PSSDEE",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**3,5,15,16,20,22,28,32,34,33,38,57,47,68,61,82,90,110,155,156,180,193**;9/30/97;Build 17
+"RTN","PSSDEE",3,0)
+ ;
+"RTN","PSSDEE",4,0)
+ ;Reference to ^PS(59 supported by DBIA #1976
+"RTN","PSSDEE",5,0)
+ ;Reference to REACT1^PSNOUT supported by DBIA #2080
+"RTN","PSSDEE",6,0)
+ ;Reference to $$UP^XLFSTR(X) supported by DBIA #10104
+"RTN","PSSDEE",7,0)
+ ;Reference to $$PSJDF^PSNAPIS(P1,P3) supported by DBIA #2531
+"RTN","PSSDEE",8,0)
+ ;
+"RTN","PSSDEE",9,0)
+BEGIN N PSSUPRAF
+"RTN","PSSDEE",10,0)
+ S PSSFLAG=0 D ^PSSDEE2 S PSSZ=1 F PSSXX=1:1 K DA D ASK Q:PSSFLAG
+"RTN","PSSDEE",11,0)
+DONE D ^PSSDEE2 K PSSFLAG Q
+"RTN","PSSDEE",12,0)
+ASK W ! S DIC="^PSDRUG(",DIC(0)="QEALMNTV",DLAYGO=50,DIC("T")="" D ^DIC K DIC I Y<0 S PSSFLAG=1 Q
+"RTN","PSSDEE",13,0)
+ N PSINACT S (FLG1,FLG2,FLG3,FLG4,FLG5,FLG6,FLG7,FLAG,FLGKY,FLGOI,PSINACT)=0 K ^TMP($J,"ADD"),^TMP($J,"SOL")
+"RTN","PSSDEE",14,0)
+ S DA=+Y,DISPDRG=DA L +^PSDRUG(DISPDRG):0 I '$T W !,$C(7),"Another person is editing this one." Q
+"RTN","PSSDEE",15,0)
+ I $G(^PSDRUG(DA,"I")) S PSINACT=$G(^PSDRUG(DA,"I")) I PSINACT,PSINACT<DT S PSINACT=1  ;;<<*180 - RJS
+"RTN","PSSDEE",16,0)
+ S PSSHUIDG=1,PSSNEW=$P(Y,"^",3) D USE,NOPE,COMMON,DEA,MF K PSSHUIDG,PSSUPRAF
+"RTN","PSSDEE",17,0)
+ ; if any outpatient site has a dispense machine running HL7 V.2.4, then
+"RTN","PSSDEE",18,0)
+ ; run the new routine and create message
+"RTN","PSSDEE",19,0)
+ N XX,DNSNAM,DNSPORT,DVER,DMFU,PSSUPRA
+"RTN","PSSDEE",20,0)
+ F XX=0:0 S XX=$O(^PS(59,XX)) Q:'XX  D
+"RTN","PSSDEE",21,0)
+ .S DVER=$$GET1^DIQ(59,XX_",",105,"I"),DMFU=$$GET1^DIQ(59,XX_",",105.2)
+"RTN","PSSDEE",22,0)
+ .S DNSNAM=$$GET1^DIQ(59,XX_",",2006),DNSPORT=$$GET1^DIQ(59,XX_",",2007)
+"RTN","PSSDEE",23,0)
+ .D:DVER="2.4"&(DNSNAM'="")&(DMFU="YES") DRG^PSSDGUPD(DISPDRG,PSSNEW,DNSNAM,DNSPORT)
+"RTN","PSSDEE",24,0)
+ D DRG^PSSHUIDG(DISPDRG,PSSNEW) L -^PSDRUG(DISPDRG)
+"RTN","PSSDEE",25,0)
+ S XX=$P($G(^PSDRUG(DISPDRG,2)),"^",3) I XX["U"!(XX["I") D  S XX=""
+"RTN","PSSDEE",26,0)
+ .S XX=$$SNDHL7^PSSMSTR() D:XX
+"RTN","PSSDEE",27,0)
+ ..Q:PSSNEW&'((XX=2)!(XX=3))  ;U=1,N=2,B=3
+"RTN","PSSDEE",28,0)
+ ..Q:'PSSNEW&(XX=2)  ;U=1,N=2,B=3
+"RTN","PSSDEE",29,0)
+ ..N VAR
+"RTN","PSSDEE",30,0)
+ ..I PSSNEW&((XX=2)!(XX=3)) S VAR="Would you like to send this new drug to PADE"
+"RTN","PSSDEE",31,0)
+ ..E  S VAR="Would you like to send a drug file update to PADE"
+"RTN","PSSDEE",32,0)
+ ..W !!,"This drug is marked for either UD or IV use, and you have at least"
+"RTN","PSSDEE",33,0)
+ ..W !,"one active Pharmacy Automated Dispensing Equipment (PADE)."
+"RTN","PSSDEE",34,0)
+ ..K DIR,DIRUT,DUOUT,DTOUT
+"RTN","PSSDEE",35,0)
+ ..S DIR(0)="Y",DIR("A")=VAR
+"RTN","PSSDEE",36,0)
+ ..S DIR("?")="Enter Y for Yes or N for No." D ^DIR K DIR
+"RTN","PSSDEE",37,0)
+ ..Q:'Y
+"RTN","PSSDEE",38,0)
+ ..N PSSPADE S PSSPADE=1 S XX=""
+"RTN","PSSDEE",39,0)
+ ..D ENP^PSSHLDFS(DISPDRG,$S(PSSNEW:"MAD",1:"MUP"))
+"RTN","PSSDEE",40,0)
+ K FLG3,PSSNEW
+"RTN","PSSDEE",41,0)
+ Q
+"RTN","PSSDEE",42,0)
+COMMON S DIE="^PSDRUG(",DR="[PSSCOMMON]" D ^DIE Q:$D(Y)!($D(DTOUT))  W:'$D(Y) !,"PRICE PER DISPENSE UNIT: " S:'$D(^PSDRUG(DA,660)) $P(^PSDRUG(DA,660),"^",6)="" W:'$D(Y) $P(^PSDRUG(DA,660),"^",6)
+"RTN","PSSDEE",43,0)
+ D DEA,CK,ASKND,OIKILL^PSSDEE1,COMMON1
+"RTN","PSSDEE",44,0)
+ Q
+"RTN","PSSDEE",45,0)
+COMMON1 W !,"Just a reminder...you are editing ",$P(^PSDRUG(DISPDRG,0),"^"),"."
+"RTN","PSSDEE",46,0)
+ S (PSSVVDA,DA)=DISPDRG D DOSN^PSSDOS S DA=PSSVVDA K PSSVVDA D USE,APP,ORDITM^PSSDEE1
+"RTN","PSSDEE",47,0)
+ Q
+"RTN","PSSDEE",48,0)
+CK D DSPY^PSSDEE1 S FLGNDF=0
+"RTN","PSSDEE",49,0)
+ Q
+"RTN","PSSDEE",50,0)
+ASKND S %=-1 I $D(^XUSEC("PSNMGR",DUZ)) D MESSAGE^PSSDEE1 W !!,"Do you wish to match/rematch to NATIONAL DRUG file" S %=1 S:FLGMTH=1 %=2 D YN^DICN
+"RTN","PSSDEE",51,0)
+ I %=0 W !,"If you answer ""yes"", you will attempt to match to NDF." G ASKND
+"RTN","PSSDEE",52,0)
+ S PSSUPRAF=%
+"RTN","PSSDEE",53,0)
+ I %=2 K X,Y Q
+"RTN","PSSDEE",54,0)
+ I %<0 K X,Y Q
+"RTN","PSSDEE",55,0)
+ I %=1 D  ;;<<*180 - RJS
+"RTN","PSSDEE",56,0)
+ .D RSET^PSSDEE1
+"RTN","PSSDEE",57,0)
+ .I 'PSINACT D EN1^PSSUTIL(DISPDRG,1)
+"RTN","PSSDEE",58,0)
+ .S X="PSNOUT" X ^%ZOSF("TEST") I  D REACT1^PSNOUT S DA=DISPDRG I $D(^PSDRUG(DA,"ND")),$P(^PSDRUG(DA,"ND"),"^",2)]"" D ONE
+"RTN","PSSDEE",59,0)
+ Q  ;;<< *180 - RJS
+"RTN","PSSDEE",60,0)
+ONE S PSNP=$G(^PSDRUG(DA,"I")) I PSNP,PSNP<DT Q
+"RTN","PSSDEE",61,0)
+ W !,"You have just VERIFIED this match and MERGED the entry." D CKDF D EN2^PSSUTIL(DISPDRG,1) S:'$D(OLDDF) OLDDF="" I OLDDF'=NEWDF S FLGNDF=1 D WR
+"RTN","PSSDEE",62,0)
+ Q
+"RTN","PSSDEE",63,0)
+CKDF S NWND=^PSDRUG(DA,"ND"),NWPC1=$P(NWND,"^",1),NWPC3=$P(NWND,"^",3),DA=NWPC1,K=NWPC3 S X=$$PSJDF^PSNAPIS(DA,K) S NEWDF=$P(X,"^",2),DA=DISPDRG
+"RTN","PSSDEE",64,0)
+ N PSSK D PKIND^PSSDDUT2
+"RTN","PSSDEE",65,0)
+ Q
+"RTN","PSSDEE",66,0)
+NOPE S ZAPFLG=0 I '$D(^PSDRUG(DA,"ND")),$D(^PSDRUG(DA,2)),$P(^PSDRUG(DA,2),"^",1)']"" D DFNULL
+"RTN","PSSDEE",67,0)
+ I '$D(^PSDRUG(DA,"ND")),'$D(^PSDRUG(DA,2)) D DFNULL
+"RTN","PSSDEE",68,0)
+ I $D(^PSDRUG(DA,"ND")),$P(^PSDRUG(DA,"ND"),"^",2)']"",$D(^PSDRUG(DA,2)),$P(^PSDRUG(DA,2),"^",1)']"" D DFNULL
+"RTN","PSSDEE",69,0)
+ Q
+"RTN","PSSDEE",70,0)
+DFNULL S OLDDF="",ZAPFLG=1
+"RTN","PSSDEE",71,0)
+ Q
+"RTN","PSSDEE",72,0)
+ZAPIT I $D(ZAPFLG),ZAPFLG=1,FLGNDF=1,OLDDF'=NEWDF D CKIV^PSSDEE1
+"RTN","PSSDEE",73,0)
+ Q
+"RTN","PSSDEE",74,0)
+APP W !!,"MARK THIS DRUG AND EDIT IT FOR: " D CHOOSE
+"RTN","PSSDEE",75,0)
+ Q
+"RTN","PSSDEE",76,0)
+CHOOSE I $D(^XUSEC("PSORPH",DUZ))!($D(^XUSEC("PSXCMOPMGR",DUZ))) W !,"O  - Outpatient" S FLG1=1
+"RTN","PSSDEE",77,0)
+ I $D(^XUSEC("PSJU MGR",DUZ)) W !,"U  - Unit Dose" S FLG2=1
+"RTN","PSSDEE",78,0)
+ I $D(^XUSEC("PSJI MGR",DUZ)) W !,"I  - IV" S FLG3=1
+"RTN","PSSDEE",79,0)
+ I $D(^XUSEC("PSGWMGR",DUZ)) W !,"W  - Ward Stock" S FLG4=1
+"RTN","PSSDEE",80,0)
+ I $D(^XUSEC("PSAMGR",DUZ))!($D(^XUSEC("PSA ORDERS",DUZ))) W !,"D  - Drug Accountability" S FLG5=1
+"RTN","PSSDEE",81,0)
+ I $D(^XUSEC("PSDMGR",DUZ)) W !,"C  - Controlled Substances" S FLG6=1
+"RTN","PSSDEE",82,0)
+ I $D(^XUSEC("PSORPH",DUZ)) W !,"X  - Non-VA Med" S FLG7=1
+"RTN","PSSDEE",83,0)
+ I FLG1,FLG2,FLG3,FLG4,FLG5,FLG6 S FLAG=1
+"RTN","PSSDEE",84,0)
+ I FLAG W !,"A  - ALL"
+"RTN","PSSDEE",85,0)
+ W !
+"RTN","PSSDEE",86,0)
+ I 'FLG1,'FLG2,'FLG3,'FLG4,'FLG5,'FLG6,'FLG7 W !,"You do not have the proper keys to continue. Sorry, this concludes your editing session.",! S FLGKY=1 K DIRUT,X Q
+"RTN","PSSDEE",87,0)
+ I FLGKY'=1 D
+"RTN","PSSDEE",88,0)
+ . K DIR S DIR(0)="FO^1:30"
+"RTN","PSSDEE",89,0)
+ . S DIR("A")="Enter your choice(s) separated by commas "
+"RTN","PSSDEE",90,0)
+ . F  D ^DIR Q:$$CHECK($$UP^XLFSTR(X))
+"RTN","PSSDEE",91,0)
+ . S PSSANS=X,PSSANS=$$UP^XLFSTR(PSSANS) D BRANCH,BRANCH1
+"RTN","PSSDEE",92,0)
+ Q
+"RTN","PSSDEE",93,0)
+ ;
+"RTN","PSSDEE",94,0)
+CHECK(X) ; Validates Application Use response
+"RTN","PSSDEE",95,0)
+ N CHECK,I,C
+"RTN","PSSDEE",96,0)
+ S CHECK=1 I X=""!(Y["^")!($D(DIRUT)) Q CHECK
+"RTN","PSSDEE",97,0)
+ F I=1:1:$L(X,",") D
+"RTN","PSSDEE",98,0)
+ . S C=$P(X,",",I) W !?43,C," - "
+"RTN","PSSDEE",99,0)
+ . I C="O",FLG1 W "Outpatient" Q
+"RTN","PSSDEE",100,0)
+ . I C="U",FLG2 W "Unit Dose" Q
+"RTN","PSSDEE",101,0)
+ . I C="I",FLG3 W "IV" Q
+"RTN","PSSDEE",102,0)
+ . I C="W",FLG4 W "Ward Stock" Q
+"RTN","PSSDEE",103,0)
+ . I C="D",FLG5 W "Drug Accountability" Q
+"RTN","PSSDEE",104,0)
+ . I C="C",FLG6 W "Controlled Substances" Q
+"RTN","PSSDEE",105,0)
+ . I C="X",FLG7 W "Non-VA Med" Q
+"RTN","PSSDEE",106,0)
+ . W "Invalid Entry",$C(7) S CHECK=0
+"RTN","PSSDEE",107,0)
+ Q CHECK
+"RTN","PSSDEE",108,0)
+BRANCH D:PSSANS["O" OP D:PSSANS["U" UD D:PSSANS["I" IV D:PSSANS["W" WS
+"RTN","PSSDEE",109,0)
+ D:PSSANS["D" DACCT D:PSSANS["C" CS D:PSSANS["X" NVM
+"RTN","PSSDEE",110,0)
+ Q
+"RTN","PSSDEE",111,0)
+BRANCH1 I FLAG,PSSANS["A" D OP,UD,IV,WS,DACCT,CS,NVM
+"RTN","PSSDEE",112,0)
+ Q
+"RTN","PSSDEE",113,0)
+OP I FLG1 D
+"RTN","PSSDEE",114,0)
+ . W !,"** You are NOW editing OUTPATIENT fields. **"
+"RTN","PSSDEE",115,0)
+ . S PSIUDA=DA,PSIUX="O^Outpatient Pharmacy" D ^PSSGIU
+"RTN","PSSDEE",116,0)
+ . I %=1 D
+"RTN","PSSDEE",117,0)
+ . . S DIE="^PSDRUG(",DR="[PSSOP]" D ^DIE K DIR D OPEI,ASKCMOP
+"RTN","PSSDEE",118,0)
+ . . S X="PSOCLO1" X ^%ZOSF("TEST") I  D ASKCLOZ S FLGOI=1
+"RTN","PSSDEE",119,0)
+ I FLG1 D CKCMOP
+"RTN","PSSDEE",120,0)
+ Q
+"RTN","PSSDEE",121,0)
+CKCMOP I $P($G(^PSDRUG(DISPDRG,2)),"^",3)'["O" S:$D(^PSDRUG(DISPDRG,3)) $P(^PSDRUG(DISPDRG,3),"^",1)=0 K:$D(^PSDRUG("AQ",DISPDRG)) ^PSDRUG("AQ",DISPDRG) S DA=DISPDRG D ^PSSREF
+"RTN","PSSDEE",122,0)
+ Q
+"RTN","PSSDEE",123,0)
+UD I FLG2 W !,"** You are NOW editing UNIT DOSE fields. **" S PSIUDA=DA,PSIUX="U^Unit Dose" D ^PSSGIU I %=1 S DIE="^PSDRUG(",DR="62.05;212.2" D ^DIE S DIE="^PSDRUG(",DR="212",DR(2,50.0212)=".01;1" D ^DIE S FLGOI=1
+"RTN","PSSDEE",124,0)
+ Q
+"RTN","PSSDEE",125,0)
+IV I FLG3 W !,"** You are NOW editing IV fields. **" S (PSIUDA,PSSDA)=DA,PSIUX="I^IV" D ^PSSGIU I %=1 D IV1 S FLGOI=1
+"RTN","PSSDEE",126,0)
+ Q
+"RTN","PSSDEE",127,0)
+IV1 K PSSIVOUT ;This variable controls the selection process loop.
+"RTN","PSSDEE",128,0)
+ W !,"Edit Additives or Solutions: " K DIR S DIR(0)="SO^A:ADDITIVES;S:SOLUTIONS;" D ^DIR Q:$D(DIRUT)  S PSSASK=Y(0) D:PSSASK="ADDITIVES" ENA^PSSVIDRG D:PSSASK="SOLUTIONS" ENS^PSSVIDRG I '$D(PSSIVOUT) G IV1
+"RTN","PSSDEE",129,0)
+ K PSSIVOUT
+"RTN","PSSDEE",130,0)
+ Q
+"RTN","PSSDEE",131,0)
+WS I FLG4 W !,"** You are NOW editing WARD STOCK fields. **" S DIE="^PSDRUG(",DR="300;301;302" D ^DIE
+"RTN","PSSDEE",132,0)
+ Q
+"RTN","PSSDEE",133,0)
+DACCT I FLG5 W !,"** You are NOW editing DRUG ACCOUNTABILITY fields. **" S DIE="^PSDRUG(",DR="441" D ^DIE S DIE="^PSDRUG(",DR="9",DR(2,50.1)="1;2;400;401;402;403;404;405" D ^DIE
+"RTN","PSSDEE",134,0)
+ Q
+"RTN","PSSDEE",135,0)
+CS I FLG6 W !,"** You are NOW Marking/Unmarking for CONTROLLED SUBS. **" S PSIUDA=DA,PSIUX="N^Controlled Substances" D ^PSSGIU
+"RTN","PSSDEE",136,0)
+ Q
+"RTN","PSSDEE",137,0)
+NVM I FLG7 W !,"** You are NOW Marking/Unmarking for NON-VA MEDS. **" S PSIUDA=DA,PSIUX="X^Non-VA Med" D ^PSSGIU
+"RTN","PSSDEE",138,0)
+ Q
+"RTN","PSSDEE",139,0)
+ASKCMOP I $D(^XUSEC("PSXCMOPMGR",DUZ)) W !!,"Do you wish to mark to transmit to CMOP? " K DIR S DIR(0)="Y",DIR("?")="If you answer ""yes"", you will attempt to mark this drug to transmit to CMOP."
+"RTN","PSSDEE",140,0)
+ D ^DIR I "Nn"[X K X,Y,DIRUT Q
+"RTN","PSSDEE",141,0)
+ I "Yy"[X S PSXFL=0 D TEXT^PSSMARK H 7 N PSXUDA S (PSXUM,PSXUDA)=DA,PSXLOC=$P(^PSDRUG(DA,0),"^"),PSXGOOD=0,PSXF=0,PSXBT=0 D BLD^PSSMARK,PICK2^PSSMARK S DA=PSXUDA
+"RTN","PSSDEE",142,0)
+ Q
+"RTN","PSSDEE",143,0)
+ASKCLOZ W !!,"Do you wish to mark/unmark as a LAB MONITOR or CLOZAPINE DRUG? " K DIR S DIR(0)="Y",DIR("?")="If you answer ""yes"", you will have the opportunity to edit LAB MONITOR or CLOZAPINE fields."
+"RTN","PSSDEE",144,0)
+ D ^DIR I "Nn"[X K X,Y,DIRUT Q
+"RTN","PSSDEE",145,0)
+ I "Yy"[X S NFLAG=0 D MONCLOZ
+"RTN","PSSDEE",146,0)
+ Q
+"RTN","PSSDEE",147,0)
+MONCLOZ K PSSAST D FLASH W !,"Mark/Unmark for Lab Monitor or Clozapine: " K DIR S DIR(0)="S^L:LAB MONITOR;C:CLOZAPINE;" D ^DIR Q:$D(DIRUT)  S PSSAST=Y(0) D:PSSAST="LAB MONITOR" ^PSSLAB D:PSSAST="CLOZAPINE" CLOZ
+"RTN","PSSDEE",148,0)
+ Q
+"RTN","PSSDEE",149,0)
+FLASH K LMFLAG,CLFALG,WHICH S WHICH=$P($G(^PSDRUG(DISPDRG,"CLOZ1")),"^"),LMFLAG=0,CLFLAG=0
+"RTN","PSSDEE",150,0)
+ I WHICH="PSOCLO1" S CLFLAG=1
+"RTN","PSSDEE",151,0)
+ I WHICH'="PSOCLO1" S:WHICH'="" LMFLAG=1
+"RTN","PSSDEE",152,0)
+ Q
+"RTN","PSSDEE",153,0)
+CLOZ Q:NFLAG  Q:$D(DTOUT)  Q:$D(DIRUT)  Q:$D(DUOUT)  W !,"** You are NOW editing CLOZAPINE fields. **" D ^PSSCLDRG
+"RTN","PSSDEE",154,0)
+ Q
+"RTN","PSSDEE",155,0)
+USE K PACK S PACK="" S:$P($G(^PSDRUG(DISPDRG,"PSG")),"^",2)]"" PACK="W" I $D(^PSDRUG(DISPDRG,2)) S PACK=PACK_$P(^PSDRUG(DISPDRG,2),"^",3)
+"RTN","PSSDEE",156,0)
+ I PACK'="" D
+"RTN","PSSDEE",157,0)
+ .W $C(7) N XX W !! F XX=1:1:79 W "*"
+"RTN","PSSDEE",158,0)
+ .W !,"This entry is marked for the following PHARMACY packages: "
+"RTN","PSSDEE",159,0)
+ .D USE1
+"RTN","PSSDEE",160,0)
+ Q
+"RTN","PSSDEE",161,0)
+USE1 W:PACK["O" !," Outpatient" W:PACK["U" !," Unit Dose" W:PACK["I" !," IV"
+"RTN","PSSDEE",162,0)
+ W:PACK["W" !," Ward Stock" W:PACK["D" !," Drug Accountability"
+"RTN","PSSDEE",163,0)
+ W:PACK["N" !," Controlled Substances" W:PACK["X" !," Non-VA Med"
+"RTN","PSSDEE",164,0)
+ W:'$D(PACK) !," NONE"
+"RTN","PSSDEE",165,0)
+ I PACK'["O",PACK'["U",PACK'["I",PACK'["W",PACK'["D",PACK'["N",PACK'["X" W !," NONE"
+"RTN","PSSDEE",166,0)
+ Q
+"RTN","PSSDEE",167,0)
+WR I ^XMB("NETNAME")'["CMOP-" W:OLDDF'="" !,"The dosage form has changed from "_OLDDF_" to "_NEWDF_" due to",!,"matching/rematching to NDF.",!,"You will need to rematch to Orderable Item.",!
+"RTN","PSSDEE",168,0)
+ Q
+"RTN","PSSDEE",169,0)
+PRIMDRG I $D(^PS(59.7,1,20)),$P(^PS(59.7,1,20),"^",1)=4!($P(^PS(59.7,1,20),"^",1)=4.5) I $D(^PSDRUG(DISPDRG,2)) S VAR=$P(^PSDRUG(DISPDRG,2),"^",3) I VAR["U"!(VAR["I") D PRIM1
+"RTN","PSSDEE",170,0)
+ Q
+"RTN","PSSDEE",171,0)
+PRIM1 W !!,"You need to match this drug to ""PRIMARY DRUG"" file as well.",! S DIE="^PSDRUG(",DR="64",DA=DISPDRG D ^DIE K VAR
+"RTN","PSSDEE",172,0)
+ Q
+"RTN","PSSDEE",173,0)
+MF I $P($G(^PS(59.7,1,80)),"^",2)>1 I $D(^PSDRUG(DISPDRG,2)) S PSSOR=$P(^PSDRUG(DISPDRG,2),"^",1) I PSSOR]"" D EN^PSSPOIDT(PSSOR),EN2^PSSHL1(PSSOR,"MUP")
+"RTN","PSSDEE",174,0)
+ Q
+"RTN","PSSDEE",175,0)
+MFA I $P($G(^PS(59.7,1,80)),"^",2)>1 S PSSOR=$P(^PS(52.6,ENTRY,0),"^",11),PSSDD=$P(^PS(52.6,ENTRY,0),"^",2) I PSSOR]"" D EN^PSSPOIDT(PSSOR),EN2^PSSHL1(PSSOR,"MUP") D MFDD
+"RTN","PSSDEE",176,0)
+ Q
+"RTN","PSSDEE",177,0)
+MFS I $P($G(^PS(59.7,1,80)),"^",2)>1 S PSSOR=$P(^PS(52.7,ENTRY,0),"^",11),PSSDD=$P(^PS(52.7,ENTRY,0),"^",2) I PSSOR]"" D EN^PSSPOIDT(PSSOR),EN2^PSSHL1(PSSOR,"MUP") D MFDD
+"RTN","PSSDEE",178,0)
+ Q
+"RTN","PSSDEE",179,0)
+MFDD I $D(^PSDRUG(PSSDD,2)) S PSSOR=$P(^PSDRUG(PSSDD,2),"^",1) I PSSOR]"" D EN^PSSPOIDT(PSSOR),EN2^PSSHL1(PSSOR,"MUP")
+"RTN","PSSDEE",180,0)
+ Q
+"RTN","PSSDEE",181,0)
+OPEI ;
+"RTN","PSSDEE",182,0)
+ S DIE="^PSDRUG(",DR="28",DA=DISPDRG
+"RTN","PSSDEE",183,0)
+ D ^DIE
+"RTN","PSSDEE",184,0)
+ Q:'+$P($G(^PSDRUG(DA,6)),"^")
+"RTN","PSSDEE",185,0)
+OPEI2 ; get external dispensing devices associated with the drug
+"RTN","PSSDEE",186,0)
+ W !!,"Defining a dispensing device at the drug level for a division will override"
+"RTN","PSSDEE",187,0)
+ W !,"the dispensing device settings in the OUTPATIENT SITE File (#59). If populated,",!,"the drug will be sent to the dispensing device for that division.",!
+"RTN","PSSDEE",188,0)
+ S DR="906"
+"RTN","PSSDEE",189,0)
+ D ^DIE
+"RTN","PSSDEE",190,0)
+ Q
+"RTN","PSSDEE",191,0)
+DEA ;
+"RTN","PSSDEE",192,0)
+ I $P($G(^PSDRUG(DISPDRG,3)),"^")=1,($P(^PSDRUG(DISPDRG,0),"^",3)[1!($P(^(0),"^",3)[2)) D DSH
+"RTN","PSSDEE",193,0)
+ Q
+"RTN","PSSDEE",194,0)
+DSH W !!,"****************************************************************************"
+"RTN","PSSDEE",195,0)
+ W !,"This entry contains a ""1"" or a ""2"" in the ""DEA, SPECIAL HDLG""",!,"field, therefore this item has been UNMARKED for CMOP transmission."
+"RTN","PSSDEE",196,0)
+ W !,"****************************************************************************",! S $P(^PSDRUG(DISPDRG,3),"^")=0 K ^PSDRUG("AQ",DISPDRG) S DA=DISPDRG N % D ^PSSREF
+"RTN","PSSDEE",197,0)
+ Q
+"RTN","PSSHLDFS")
+0^3^B33701533^n/a
+"RTN","PSSHLDFS",1,0)
+PSSHLDFS ;BIR/MHA - PADE HL7 SERVER ;6/10/15
+"RTN","PSSHLDFS",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**193**;9/30/97;Build 17
+"RTN","PSSHLDFS",3,0)
+ ; Reference to ^ORD(101 is supported by DBIA #872
+"RTN","PSSHLDFS",4,0)
+ ;
+"RTN","PSSHLDFS",5,0)
+ ; Description:
+"RTN","PSSHLDFS",6,0)
+ ; This routine is to service Pharmacy Data Management's HL7 messaging
+"RTN","PSSHLDFS",7,0)
+ ; to external applications.  The entry point, "ENP" is accessed via
+"RTN","PSSHLDFS",8,0)
+ ; PSS DRUG ENTER/EDIT option and the entry point, "PROCESS1" is accessed
+"RTN","PSSHLDFS",9,0)
+ ; by PSS MASTER FILE ALL, Inpatient Interface (PADE) option. This routine
+"RTN","PSSHLDFS",10,0)
+ ; basically consists of subroutines to generate HL7 messages.
+"RTN","PSSHLDFS",11,0)
+ ;
+"RTN","PSSHLDFS",12,0)
+ENP(PSSHLDRG,PSSACT) ;
+"RTN","PSSHLDFS",13,0)
+ ; set up environment for message       
+"RTN","PSSHLDFS",14,0)
+ ; INPUT
+"RTN","PSSHLDFS",15,0)
+ ;  PSSHLDRG = IEN of DRUG file (#50)
+"RTN","PSSHLDFS",16,0)
+ ;  PSSACT = Message type - send new drug (MAD) or drug update (MUD)
+"RTN","PSSHLDFS",17,0)
+ ; OUTPUT
+"RTN","PSSHLDFS",18,0)
+ ;   ENTRY OR ENTRIES IN OUTGOING VISTA HL7 INTERFACE QUEUE
+"RTN","PSSHLDFS",19,0)
+ ;   
+"RTN","PSSHLDFS",20,0)
+EN ;
+"RTN","PSSHLDFS",21,0)
+ N XX,VR,SPNAM,DNSNAM,DNSPORT,PSSD,PSSNM
+"RTN","PSSHLDFS",22,0)
+ S SPNAM="PSS MFNM01 SERVER"
+"RTN","PSSHLDFS",23,0)
+ S VR=$O(^ORD(101,"B",SPNAM,0))
+"RTN","PSSHLDFS",24,0)
+ I 'VR D EN^DDIOL("Drug Update Protocol "_SPNAM_" is NOT Installed.","","$C(7),!!") Q
+"RTN","PSSHLDFS",25,0)
+ S XX=0 F  S XX=$O(^PS(58.7,XX)) Q:'XX  D   ;sends HL7 message for each PADE SERVER
+"RTN","PSSHLDFS",26,0)
+ .S PSSD=$G(^PS(58.7,XX,0))
+"RTN","PSSHLDFS",27,0)
+ .Q:PSSD=""
+"RTN","PSSHLDFS",28,0)
+ .S PSSNM=$P(PSSD,"^"),DNSNAM=$P(PSSD,"^",2),DNSPORT=$P(PSSD,"^",3)
+"RTN","PSSHLDFS",29,0)
+ .Q:PSSNM=""!(DNSNAM="")!(DNSPORT="")
+"RTN","PSSHLDFS",30,0)
+ .S VR=$P(PSSD,"^",4) Q:VR&(VR<DT)
+"RTN","PSSHLDFS",31,0)
+ .S VR=$P(PSSD,"^",5) Q:VR="X"!(VR="")
+"RTN","PSSHLDFS",32,0)
+ .S PSSHLDRG=+$G(PSSHLDRG),PSSACT=$G(PSSACT)
+"RTN","PSSHLDFS",33,0)
+ .I PSSHLDRG D PROCESS1(SPNAM,PSSHLDRG,PSSACT,DNSNAM,DNSPORT)
+"RTN","PSSHLDFS",34,0)
+ Q
+"RTN","PSSHLDFS",35,0)
+ ;
+"RTN","PSSHLDFS",36,0)
+PROCESS1(SPNAM,DRG,PSSACT,DNSNAM,DNSPORT) ;  Process 1 drug entry per message
+"RTN","PSSHLDFS",37,0)
+ ;  Init HL params and begin building msg
+"RTN","PSSHLDFS",38,0)
+ N PSSHLFS,PSSHLCS,PSSMSG,HL,HLA,PSSHLCNT,PSSFAC,PSSFNAM,PSSFIEN
+"RTN","PSSHLDFS",39,0)
+ N PSSEVDT,PSSRSLT,PSS50,STATUS,HLSCOUNT,PSSHLDT,PSSHLERR,PSSHLSCS
+"RTN","PSSHLDFS",40,0)
+ N PSSUIUO,SEG
+"RTN","PSSHLDFS",41,0)
+ S PSSEVDT=$$NOW^XLFDT(),PSSHLDT=+$$HLDATE^HLFNC(PSSEVDT,"TS")
+"RTN","PSSHLDFS",42,0)
+ K ^TMP("HLS",$J)
+"RTN","PSSHLDFS",43,0)
+ M PSS50=^PSDRUG(DRG) I $G(PSS50("I"))&($P($G(PSS50("I")),"^")<DT) S PSSHLERR=5506 K HLA Q
+"RTN","PSSHLDFS",44,0)
+ D INIT^HLFNC2(SPNAM,.HL)
+"RTN","PSSHLDFS",45,0)
+ S PSSHLFS=$G(HL("FS")),PSSHLCS=$E(HL("ECH"),1),PSSHLSCS=$E(HL("ECH"),4)
+"RTN","PSSHLDFS",46,0)
+ S PSSFIEN=$$KSP^XUPARAM("INST"),PSSFNAM=$$GET1^DIQ(4,PSSFIEN,.01)
+"RTN","PSSHLDFS",47,0)
+ K HLA,HLEVN
+"RTN","PSSHLDFS",48,0)
+ S (PSSHLCNT,PSSCNT)=0
+"RTN","PSSHLDFS",49,0)
+ ; Build segments & transmit
+"RTN","PSSHLDFS",50,0)
+ D MFI(PSSACT,.HLSCOUNT)
+"RTN","PSSHLDFS",51,0)
+ D MFE(DRG,.PSS50,PSSACT,.HLSCOUNT)
+"RTN","PSSHLDFS",52,0)
+ D ZFM(DRG,.PSS50,PSSACT,.HLSCOUNT)
+"RTN","PSSHLDFS",53,0)
+ D TRANS
+"RTN","PSSHLDFS",54,0)
+ K ^TMP("HLS",$J)
+"RTN","PSSHLDFS",55,0)
+ Q
+"RTN","PSSHLDFS",56,0)
+ ;
+"RTN","PSSHLDFS",57,0)
+MFI(ACTION,PSSCNT) ;  MFI Seg
+"RTN","PSSHLDFS",58,0)
+ S PSSCNT=1
+"RTN","PSSHLDFS",59,0)
+ S SEG="MFI"_PSSHLFS
+"RTN","PSSHLDFS",60,0)
+ S $P(SEG,PSSHLFS,2)="CDM"_PSSHLCS_"FORMULARY"_PSSHLFS
+"RTN","PSSHLDFS",61,0)
+ S $P(SEG,PSSHLFS,4)=$S(ACTION="MAD":"REP",1:"UPD")_PSSHLFS
+"RTN","PSSHLDFS",62,0)
+ S $P(SEG,PSSHLFS,7)="NE"
+"RTN","PSSHLDFS",63,0)
+ S PSSARRAY("HLS",PSSCNT)=SEG
+"RTN","PSSHLDFS",64,0)
+ D STORE(.PSSARRAY,PSSCNT) K PSSARRAY S PSSCNT=$G(PSSCNT)+1
+"RTN","PSSHLDFS",65,0)
+ Q
+"RTN","PSSHLDFS",66,0)
+ ;
+"RTN","PSSHLDFS",67,0)
+MFE(DRG,FILE50,ACTION,PSSCNT) ;  MFE Seg
+"RTN","PSSHLDFS",68,0)
+ S SEG="MFE"_PSSHLFS_ACTION
+"RTN","PSSHLDFS",69,0)
+ S $P(SEG,PSSHLFS,5)=$$GIVECODE(DRG,PSSHLCS)
+"RTN","PSSHLDFS",70,0)
+ S $P(SEG,PSSHLFS,6)="CE"
+"RTN","PSSHLDFS",71,0)
+ S PSSARRAY("HLS",PSSCNT)=SEG
+"RTN","PSSHLDFS",72,0)
+ D STORE(.PSSARRAY,HLSCOUNT) K PSSARRAY S PSSCNT=$G(PSSCNT)+1
+"RTN","PSSHLDFS",73,0)
+ Q
+"RTN","PSSHLDFS",74,0)
+ ;
+"RTN","PSSHLDFS",75,0)
+ZFM(DRG,FILE50,ACTION,PSSCNT) ;  ZFM Seg [optional]
+"RTN","PSSHLDFS",76,0)
+ ;  This segment is optional, send if it passes criteria below
+"RTN","PSSHLDFS",77,0)
+ N NDF,SCHED,II,ND,DONE,X,Y,PSSPROD0,PSSSYN,PSSDOSF,PSSDSQ
+"RTN","PSSHLDFS",78,0)
+ N PSSOI,PSSSOL,PSSVOL,PSSVOLU,PSSCLASS,CLASSNAM,GENDRG
+"RTN","PSSHLDFS",79,0)
+ N PSSUOFI,PSSORDU,PSSPROD,PSSDRINF,PSSCPDU,PSSCPOU,PSSNDC,PSSREOL,PSSDLNM
+"RTN","PSSHLDFS",80,0)
+ K ^TMP($J,"PSSHLNDF"),^TMP($J,"PSSCLASS")
+"RTN","PSSHLDFS",81,0)
+ S PSSPROD=+$G(FILE50("ND")),PSSOI=+$G(FILE50(2)),GENDRG=""
+"RTN","PSSHLDFS",82,0)
+ I PSSPROD S GENDRG=$P($G(^PSNDF(50.6,PSSPROD,0)),"^") S:GENDRG]"" GENDRG=PSSHLCS_PSSPROD_PSSHLCS_GENDRG_PSSHLCS_"99PSNDF"
+"RTN","PSSHLDFS",83,0)
+ S SEG="ZFM"_PSSHLFS_$S(ACTION="MAD":"A",ACTION="MDL":"D",1:"C")
+"RTN","PSSHLDFS",84,0)
+ ; Item ID (Drug ID)
+"RTN","PSSHLDFS",85,0)
+ S $P(SEG,PSSHLFS,3)=$$GIVECODE(DRG,PSSHLCS)_GENDRG
+"RTN","PSSHLDFS",86,0)
+ ;  Generic Name
+"RTN","PSSHLDFS",87,0)
+ S $P(SEG,PSSHLFS,4)=$P($G(^PS(50.7,PSSOI,0)),"^")
+"RTN","PSSHLDFS",88,0)
+ S NDF=+$P($G(FILE50("ND")),"^",3)
+"RTN","PSSHLDFS",89,0)
+ S SCHED=+$P($G(FILE50(0)),"^",3) I (SCHED<1)!(SCHED>5) S SCHED="U"
+"RTN","PSSHLDFS",90,0)
+ ;  Item Class (Narcotic Schedule)
+"RTN","PSSHLDFS",91,0)
+ S $P(SEG,PSSHLFS,5)=SCHED
+"RTN","PSSHLDFS",92,0)
+ ; Facility
+"RTN","PSSHLDFS",93,0)
+ S $P(SEG,PSSHLFS,7)=PSSFNAM_PSSHLCS_"D"_PSSHLCS_PSSFIEN
+"RTN","PSSHLDFS",94,0)
+ ;  Brand Name
+"RTN","PSSHLDFS",95,0)
+ S PSSSYN="",II=0 F  S II=$O(FILE50(1,II)) Q:'II!$G(DONE)  S ND=$G(FILE50(1,II,0)) I $P(ND,"^")]"",$P(ND,"^",3)=0 S PSSSYN=$P(ND,"^"),DONE=1
+"RTN","PSSHLDFS",96,0)
+ S:PSSSYN]"" $P(SEG,PSSHLFS,8)=PSSSYN
+"RTN","PSSHLDFS",97,0)
+ ;  Dosage Form
+"RTN","PSSHLDFS",98,0)
+ N NATDRG,VAPROD S PSSDOSF="",NATDRG=$P($G(FILE50("ND")),"^"),VAPROD=$P($G(FILE50("ND")),"^",3) S PSSDRINF=$$DFSU^PSNAPIS(NATDRG,VAPROD)
+"RTN","PSSHLDFS",99,0)
+ S X=$P($G(^PS(50.7,PSSOI,0)),"^",2) S:X PSSDOSF=$P($G(^PS(50.606,X,0)),"^")
+"RTN","PSSHLDFS",100,0)
+ S $P(SEG,PSSHLFS,9)=PSSDOSF
+"RTN","PSSHLDFS",101,0)
+ ;  Drug Strength
+"RTN","PSSHLDFS",102,0)
+ S PSSDSQ=$G(FILE50("DOS"))
+"RTN","PSSHLDFS",103,0)
+ S:$P(PSSDSQ,"^")]"" $P(SEG,PSSHLFS,10)=$P(PSSDSQ,"^")_PSSHLFS_$P($G(^PS(50.607,$P(PSSDSQ,"^",2),0)),"^")
+"RTN","PSSHLDFS",104,0)
+ I PSSDSQ="" S PSSDSQ=$P(PSSDRINF,"^",4) S:PSSDSQ]"" $P(SEG,PSSHLFS,10)=PSSDSQ_PSSHLFS_$P(PSSDRINF,"^",6)
+"RTN","PSSHLDFS",105,0)
+ ;  Therapeutic Class
+"RTN","PSSHLDFS",106,0)
+ S PSSCLASS=$P($G(FILE50("ND")),"^",6) I PSSCLASS D C^PSN50P65(PSSCLASS,,"PSSCLASS") D
+"RTN","PSSHLDFS",107,0)
+ .S CLASSNAM=$P($G(^TMP($J,"PSSCLASS",PSSCLASS,1)),"^") I CLASSNAM'="" S $P(SEG,PSSHLFS,15)=CLASSNAM
+"RTN","PSSHLDFS",108,0)
+ ;  Cost Per Dispense Unit
+"RTN","PSSHLDFS",109,0)
+ S PSSCPDU=+$P($G(FILE50(660)),"^",6) I PSSCPDU'=""  S $P(SEG,PSSHLFS,16)=PSSCPDU
+"RTN","PSSHLDFS",110,0)
+ ;  National Drug Code
+"RTN","PSSHLDFS",111,0)
+ S $P(SEG,PSSHLFS,18)=$P($G(FILE50(2)),"^",4)
+"RTN","PSSHLDFS",112,0)
+ S PSSARRAY("HLS",PSSCNT)=SEG
+"RTN","PSSHLDFS",113,0)
+ K ^TMP($J,"PSSHLNDF")
+"RTN","PSSHLDFS",114,0)
+ D STORE(.PSSARRAY,HLSCOUNT) K PSSARRAY S PSSCNT=$G(PSSCNT)+1
+"RTN","PSSHLDFS",115,0)
+ Q
+"RTN","PSSHLDFS",116,0)
+ ;
+"RTN","PSSHLDFS",117,0)
+GIVECODE(ID,CS) ;  Give code
+"RTN","PSSHLDFS",118,0)
+ N DRGID,DRGNM,DRGNM2,DRGSTR,DRUGND
+"RTN","PSSHLDFS",119,0)
+ Q:'$D(^PSDRUG(+ID)) ""
+"RTN","PSSHLDFS",120,0)
+ S DRUGND=$G(^PSDRUG(+ID,"ND"))
+"RTN","PSSHLDFS",121,0)
+ S DRGID=$P(DRUGND,"^",3),DRGNM=$P($G(^PSDRUG(+ID,0)),"^")
+"RTN","PSSHLDFS",122,0)
+ S DRGSTR=ID_CS_DRGNM_CS_"99PSD"
+"RTN","PSSHLDFS",123,0)
+ S DRGNM2=$P(DRUGND,"^",2)
+"RTN","PSSHLDFS",124,0)
+ S DRGSTR=DRGSTR_$S(DRGID:CS_DRGID_CS_DRGNM2_CS_"99PSP",1:"")
+"RTN","PSSHLDFS",125,0)
+ Q DRGSTR
+"RTN","PSSHLDFS",126,0)
+ ;
+"RTN","PSSHLDFS",127,0)
+STORE(SEGMENT,NODE) ;  Store to HL7 SEG("HLS" array
+"RTN","PSSHLDFS",128,0)
+ N NEXTND,I S NEXTND=+$O(^TMP("HLS",$J,""),-1)+1 S:'NEXTND NEXTND=1
+"RTN","PSSHLDFS",129,0)
+ F I=1:1:NODE D
+"RTN","PSSHLDFS",130,0)
+ .I ($G(SEGMENT("HLS",I))'="") S ^TMP("HLS",$J,NEXTND)=SEGMENT("HLS",I),NEXTND=NEXTND+1
+"RTN","PSSHLDFS",131,0)
+ Q
+"RTN","PSSHLDFS",132,0)
+ ;
+"RTN","PSSHLDFS",133,0)
+TRANS ;  Generate HLMA entry and send message
+"RTN","PSSHLDFS",134,0)
+ N HLP,PSSMFSND S HLP=""
+"RTN","PSSHLDFS",135,0)
+ S HLP("SUBSCRIBER")="^^^^~"_DNSNAM_":"_DNSPORT_"~DNS"
+"RTN","PSSHLDFS",136,0)
+ ;W !,"Generating HL7 message and Sending "_$P($$GIVECODE^PSSHLDFS(DRG,"-"),",",1,2)_" drug to PADE",!
+"RTN","PSSHLDFS",137,0)
+ W !,"Generating HL7 message and Sending "_DRG_"-"_$P(^PSDRUG(DRG,0),"^"),!
+"RTN","PSSHLDFS",138,0)
+ D GENERATE^HLMA(SPNAM,"GM",1,.PSSMFSND,"",.HLP)
+"RTN","PSSHLDFS",139,0)
+ I +$P(PSSMFSND,U,2) D
+"RTN","PSSHLDFS",140,0)
+ .W !!,"Drug Update transmission to PADE(s) failed because the HL7 Message could not generate."
+"RTN","PSSHLDFS",141,0)
+ .W !,"  Reason(s): "_$P(PSSMFSND,U,2)," ",$P(PSSMFSND,U,3),!
+"RTN","PSSHLDFS",142,0)
+ Q
+"RTN","PSSHLDFS",143,0)
+ ;
+"RTN","PSSMSTR")
+0^2^B51317382^B1853023
+"RTN","PSSMSTR",1,0)
+PSSMSTR ;BIR/PWC-Send Master Drug File to External Interface ;04/05/04
+"RTN","PSSMSTR",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**82,193**;09/30/97;Build 17
+"RTN","PSSMSTR",3,0)
+ ;Reference to ^PS(59 supported by IA # 1976
+"RTN","PSSMSTR",4,0)
+ ;
+"RTN","PSSMSTR",5,0)
+ ;This routine will loop through the Drug file and send all drugs
+"RTN","PSSMSTR",6,0)
+ ;to each dispensing machine for each outpatient site file.
+"RTN","PSSMSTR",7,0)
+ ;It will only send to each site that has a dispensing machine running
+"RTN","PSSMSTR",8,0)
+ ;HL7 V.2.4 and has the Master File Update enabled.
+"RTN","PSSMSTR",9,0)
+ ;As part of Pharmacy Interface Automation Project (PIA), this routine
+"RTN","PSSMSTR",10,0)
+ ;is modified to send all drugs to an active Pharmacy Automated Dispensing
+"RTN","PSSMSTR",11,0)
+ ;Equipment (PADE), located at the point of care areas such as 
+"RTN","PSSMSTR",12,0)
+ ;Inpatient wards, Outpatient Clinics etc.
+"RTN","PSSMSTR",13,0)
+ ;Task this job out
+"RTN","PSSMSTR",14,0)
+ ;
+"RTN","PSSMSTR",15,0)
+EN ; Begin processing PSS Master File All send drugs via HL7
+"RTN","PSSMSTR",16,0)
+ W @IOF N ZTSAVE,ZTRTN,ZTDESC,ZTIO,ZTDTH,X,Y
+"RTN","PSSMSTR",17,0)
+ D KV
+"RTN","PSSMSTR",18,0)
+ S DIR("A")="Send Drug file to which External Interface below?"
+"RTN","PSSMSTR",19,0)
+ S DIR(0)="SO^1:Outpatient Interface (OPAI);2:Inpatient Interface (PADE)"
+"RTN","PSSMSTR",20,0)
+ S DIR("?",1)="  Option 1 is for sending to the Outpatient Pharmacy Automation Interface."
+"RTN","PSSMSTR",21,0)
+ S DIR("?",2)="  Option 2 is for sending to the Pharmacy Automated Dispensing Equipment (PADE)"
+"RTN","PSSMSTR",22,0)
+ S DIR("?",3)="  located at the point of care."
+"RTN","PSSMSTR",23,0)
+ S DIR("?",4)="  OR Enter '^' to quit."
+"RTN","PSSMSTR",24,0)
+ S DIR("?",5)=""
+"RTN","PSSMSTR",25,0)
+ S DIR("?")="*Caution: This is usually done on the initial setup of the dispensing equipment."
+"RTN","PSSMSTR",26,0)
+ D ^DIR Q:'Y
+"RTN","PSSMSTR",27,0)
+ W !!,"You selected to send the Drug file to the "_Y(0),!
+"RTN","PSSMSTR",28,0)
+ I Y=1 D  Q
+"RTN","PSSMSTR",29,0)
+ . S ZTRTN="BUILD^PSSMSTR",ZTDESC="MASTER DRUG FILE UPDATE",ZTIO=""
+"RTN","PSSMSTR",30,0)
+ . S ZTDTH=$H D NOW^%DTC S PSSDTM=% D ^%ZTLOAD
+"RTN","PSSMSTR",31,0)
+ ;*193 - PADE
+"RTN","PSSMSTR",32,0)
+ N SPNAM,PROT S SPNAM="PSS MFNM01 SERVER"
+"RTN","PSSMSTR",33,0)
+ S PROT=$O(^ORD(101,"B",SPNAM,0))
+"RTN","PSSMSTR",34,0)
+ I '$$SNDHL7() W !!,"*Drug transmission is not setup for PADE",!! H 2 G EN
+"RTN","PSSMSTR",35,0)
+ I 'PROT W !!,"Drug Update Protocol "_SPNAM_" is NOT Installed",!! H 2 G EN
+"RTN","PSSMSTR",36,0)
+EN1 ;
+"RTN","PSSMSTR",37,0)
+ W !!,?5,"This only sends your Drug selections as NEW additions to PADE"
+"RTN","PSSMSTR",38,0)
+ W !?5,"If you need to send drug updates, then use the PSS DRUG/ENTER EDIT option"
+"RTN","PSSMSTR",39,0)
+ W !
+"RTN","PSSMSTR",40,0)
+ D KV
+"RTN","PSSMSTR",41,0)
+ S DIR("A")="Send all or selected drugs to the PADE system?"
+"RTN","PSSMSTR",42,0)
+ S DIR(0)="SO^1:Send all drugs marked for a package;2:Send selected drugs"
+"RTN","PSSMSTR",43,0)
+ S DIR("?",1)="  Option 1 is for sending all the active drugs by package"
+"RTN","PSSMSTR",44,0)
+ S DIR("?",2)="  Option 2 is for sending selected drugs only"
+"RTN","PSSMSTR",45,0)
+ S DIR("?",3)="  OR Enter '^' to quit."
+"RTN","PSSMSTR",46,0)
+ S DIR("?",4)=""
+"RTN","PSSMSTR",47,0)
+ S DIR("?")="*Caution: Option 1 is usually done on the initial setup of the dispensing equipment."
+"RTN","PSSMSTR",48,0)
+ D ^DIR G:'Y EN
+"RTN","PSSMSTR",49,0)
+ N PSSPADE S PSSPADE=1
+"RTN","PSSMSTR",50,0)
+ G:Y=2 SDRG
+"RTN","PSSMSTR",51,0)
+ I '$D(^XUSEC("PSS PADE INIT",DUZ)) D  G EN1
+"RTN","PSSMSTR",52,0)
+ .W $C(7),!!,?9,"**You need the PSS PADE INIT key."
+"RTN","PSSMSTR",53,0)
+ .W !,?11,"Please contact your Pharmacy Coordinator for access",! H 2
+"RTN","PSSMSTR",54,0)
+ N PSSCPK S PSSCPK=""
+"RTN","PSSMSTR",55,0)
+ I '$D(IOINORM)!('$D(IOINHI)) N IORVOFF,IORVON,IOINHI,IOINORM D
+"RTN","PSSMSTR",56,0)
+ .S X="IORVOFF;IORVON;IOINHI;IOINORM" D ENDR^%ZISS
+"RTN","PSSMSTR",57,0)
+ W !,"WARNING - With this option, you will be sending a large number of"
+"RTN","PSSMSTR",58,0)
+ W !,"drugs from your drug file to ""build"" a working database or drugs"
+"RTN","PSSMSTR",59,0)
+ W !,"on your PADE system. It is imperative to ",IORVON_IOINHI,"NOT",IOINORM_IORVOFF," RUN this option if you"
+"RTN","PSSMSTR",60,0)
+ W !,"already have a working formulary of drugs on your PADE system;"
+"RTN","PSSMSTR",61,0)
+ W !,"as resending may overwrite modifications to the fields that you"
+"RTN","PSSMSTR",62,0)
+ W !,"have made on your PADE system.",!!
+"RTN","PSSMSTR",63,0)
+ D KV ; CHECK FOR APPLICATION PACKAGE USAGE U,IV or Ward Stock
+"RTN","PSSMSTR",64,0)
+ S DIR(0)="Y",DIR("B")="NO",DIR("A")="Do you want to continue"
+"RTN","PSSMSTR",65,0)
+ S DIR("?")="Enter Y for Yes or N for No." D ^DIR K DIR
+"RTN","PSSMSTR",66,0)
+ G:'Y EN
+"RTN","PSSMSTR",67,0)
+ D KV W !
+"RTN","PSSMSTR",68,0)
+ S DIR(0)="Y",DIR("B")="NO",DIR("A")="Do you want to send drugs marked for UD package"
+"RTN","PSSMSTR",69,0)
+ S DIR("?")="Enter Y for Yes or N for No." D ^DIR K DIR
+"RTN","PSSMSTR",70,0)
+ G:$D(DIRUT) EN1
+"RTN","PSSMSTR",71,0)
+ S:Y PSSCPK="U"
+"RTN","PSSMSTR",72,0)
+ W !
+"RTN","PSSMSTR",73,0)
+ S DIR(0)="Y",DIR("B")="NO",DIR("A")="Do you want to send drugs marked for IV package"
+"RTN","PSSMSTR",74,0)
+ S DIR("?",1)="This option will look for 'I' in the application package field"
+"RTN","PSSMSTR",75,0)
+ S DIR("?",2)="of the drug file (#50) in determining if the drug is marked for"
+"RTN","PSSMSTR",76,0)
+ S DIR("?",3)="this package. The system will NOT check to see if there is an"
+"RTN","PSSMSTR",77,0)
+ S DIR("?",4)="additive or solution associated with the drug in determining if"
+"RTN","PSSMSTR",78,0)
+ S DIR("?",5)="it will be sent."
+"RTN","PSSMSTR",79,0)
+ S DIR("?",6)=""
+"RTN","PSSMSTR",80,0)
+ S DIR("?")="Enter Y for Yes or N for No." D ^DIR K DIR
+"RTN","PSSMSTR",81,0)
+ G:$D(DIRUT) EN1
+"RTN","PSSMSTR",82,0)
+ S:Y PSSCPK=$G(PSSCPK)_"I"
+"RTN","PSSMSTR",83,0)
+ W !
+"RTN","PSSMSTR",84,0)
+ S DIR(0)="Y",DIR("B")="NO",DIR("A")="Do you want to send drugs marked for Ward Stock package"
+"RTN","PSSMSTR",85,0)
+ S DIR("?",1)="This option will only look for 'W' in the application package field"
+"RTN","PSSMSTR",86,0)
+ S DIR("?",2)="of the drug file (#50) in determining if the drug is marked for"
+"RTN","PSSMSTR",87,0)
+ S DIR("?",3)="this package. It is possible for drugs to be used in the AR/WS"
+"RTN","PSSMSTR",88,0)
+ S DIR("?",4)="package but NOT marked with a 'W' in the application package field."
+"RTN","PSSMSTR",89,0)
+ S DIR("?",5)="Those drugs would not be sent with this option and must be added to"
+"RTN","PSSMSTR",90,0)
+ S DIR("?",6)="your PADE system manually."
+"RTN","PSSMSTR",91,0)
+ S DIR("?",7)=""
+"RTN","PSSMSTR",92,0)
+ S DIR("?")="Enter Y for Yes or N for No." D ^DIR K DIR
+"RTN","PSSMSTR",93,0)
+ G:$D(DIRUT) EN1
+"RTN","PSSMSTR",94,0)
+ G:PSSCPK=""&('Y) EN1
+"RTN","PSSMSTR",95,0)
+ S:Y PSSCPK=$G(PSSCPK)_"W"
+"RTN","PSSMSTR",96,0)
+EPD ;
+"RTN","PSSMSTR",97,0)
+ W !!,"Drug File Queued to be sent to PADE" H 2
+"RTN","PSSMSTR",98,0)
+ ;D PADE
+"RTN","PSSMSTR",99,0)
+ ;Q
+"RTN","PSSMSTR",100,0)
+ S ZTRTN="PADE^PSSMSTR",ZTDESC="MASTER DRUG FILE UPDATE TO PADE",ZTIO=""
+"RTN","PSSMSTR",101,0)
+ S ZTSAVE("PSSCPK")="",ZTSAVE("PSSPADE")="",ZTDTH=$H D NOW^%DTC S PSSDTM=% D ^%ZTLOAD
+"RTN","PSSMSTR",102,0)
+ Q
+"RTN","PSSMSTR",103,0)
+ ;
+"RTN","PSSMSTR",104,0)
+BUILD ;
+"RTN","PSSMSTR",105,0)
+ N XX,DVER,DMFU,DNSNAM,DNSPORT
+"RTN","PSSMSTR",106,0)
+ F XX=0:0 S XX=$O(^PSDRUG(XX)) Q:'XX  D
+"RTN","PSSMSTR",107,0)
+ . F YY=0:0 S YY=$O(^PS(59,YY)) Q:'YY  D
+"RTN","PSSMSTR",108,0)
+ .. S DVER=$$GET1^DIQ(59,YY_",",105,"I") Q:DVER'="2.4"  ;HL7 2.4
+"RTN","PSSMSTR",109,0)
+ .. S DMFU=$$GET1^DIQ(59,YY_",",105.2) Q:DMFU'="YES"    ;enable MFU
+"RTN","PSSMSTR",110,0)
+ .. S DNSNAM=$$GET1^DIQ(59,YY_",",2006)    ;DNS name of dispense machine
+"RTN","PSSMSTR",111,0)
+ .. S DNSPORT=$$GET1^DIQ(59,YY_",",2007)   ;Port # of dispense machine
+"RTN","PSSMSTR",112,0)
+ .. I DNSNAM'="" D DRG^PSSDGUPD(XX,"NEW",DNSNAM,DNSPORT)
+"RTN","PSSMSTR",113,0)
+ K XX,YY,DVER,DMFU,DNSNAM,DNSPORT
+"RTN","PSSMSTR",114,0)
+ Q
+"RTN","PSSMSTR",115,0)
+ ;
+"RTN","PSSMSTR",116,0)
+PADE ;
+"RTN","PSSMSTR",117,0)
+ N PSSG,PSSAP,PSSDRG,SPNAM,I S SPNAM="PSS MFNM01 SERVER"
+"RTN","PSSMSTR",118,0)
+ S PSSDRG=0,PSSAP=""
+"RTN","PSSMSTR",119,0)
+ F  S PSSDRG=$O(^PSDRUG(PSSDRG)) Q:'PSSDRG  D
+"RTN","PSSMSTR",120,0)
+ .Q:$G(^PSDRUG(PSSDRG,"I"))&($P($G(^("I")),"^")<DT)
+"RTN","PSSMSTR",121,0)
+ .S PSSAP=$P($G(^(2)),"^",3),PSSG=0 Q:PSSAP=""
+"RTN","PSSMSTR",122,0)
+ .F I=1:1:$L(PSSCPK) I PSSAP[$E(PSSCPK,I) S PSSG=1 Q
+"RTN","PSSMSTR",123,0)
+ .Q:'PSSG
+"RTN","PSSMSTR",124,0)
+ .D SPADE
+"RTN","PSSMSTR",125,0)
+ Q
+"RTN","PSSMSTR",126,0)
+ ;
+"RTN","PSSMSTR",127,0)
+SPADE ;
+"RTN","PSSMSTR",128,0)
+ N XX,VR,DNSNAM,DNSPORT,PSSD,PSSNM
+"RTN","PSSMSTR",129,0)
+ S XX=0 F  S XX=$O(^PS(58.7,XX)) Q:'XX  D
+"RTN","PSSMSTR",130,0)
+ .S PSSD=$G(^PS(58.7,XX,0))
+"RTN","PSSMSTR",131,0)
+ .Q:PSSD=""
+"RTN","PSSMSTR",132,0)
+ .S PSSNM=$P(PSSD,"^"),DNSNAM=$P(PSSD,"^",2),DNSPORT=$P(PSSD,"^",3)
+"RTN","PSSMSTR",133,0)
+ .Q:PSSNM=""!(DNSNAM="")!(DNSPORT="")  ;CHECK PADE, DNS NAME & PORT ARE DEFINED
+"RTN","PSSMSTR",134,0)
+ .S VR=$P(PSSD,"^",4) Q:VR&(VR<DT)  ;INACTIVE DATE CHECK
+"RTN","PSSMSTR",135,0)
+ .S VR=$P(PSSD,"^",5) Q:VR="X"!(VR="")  ;SEND DRUG UPDATE
+"RTN","PSSMSTR",136,0)
+ .D PROCESS1^PSSHLDFS(SPNAM,PSSDRG,"MAD",DNSNAM,DNSPORT)
+"RTN","PSSMSTR",137,0)
+ Q
+"RTN","PSSMSTR",138,0)
+SNDHL7() ; Check if at least one PADE vendor equipment is setup to accept 
+"RTN","PSSMSTR",139,0)
+ ; HL7 Drug messages.
+"RTN","PSSMSTR",140,0)
+ ;  Input  - None
+"RTN","PSSMSTR",141,0)
+ ;  Output - 1, send HL7 message
+"RTN","PSSMSTR",142,0)
+ ;           0, don't send message
+"RTN","PSSMSTR",143,0)
+ ;
+"RTN","PSSMSTR",144,0)
+ N XX,VR,FLG,SPNAM,DNSNAM,DNSPORT,PSSD,PSSNM
+"RTN","PSSMSTR",145,0)
+ S (FLG,XX)=0 F  S XX=$O(^PS(58.7,XX)) Q:'XX!(FLG)  D
+"RTN","PSSMSTR",146,0)
+ .S PSSD=$G(^PS(58.7,XX,0))
+"RTN","PSSMSTR",147,0)
+ .Q:PSSD=""
+"RTN","PSSMSTR",148,0)
+ .S PSSNM=$P(PSSD,"^"),DNSNAM=$P(PSSD,"^",2),DNSPORT=$P(PSSD,"^",3)
+"RTN","PSSMSTR",149,0)
+ .Q:PSSNM=""!(DNSNAM="")!(DNSPORT="")  ;CHECK PADE, DNS NAME & PORT ARE DEFINED
+"RTN","PSSMSTR",150,0)
+ .S VR=$P(PSSD,"^",4) Q:VR&(VR<DT)  ;INACTIVE DATE CHECK
+"RTN","PSSMSTR",151,0)
+ .S VR=$P(PSSD,"^",5) Q:VR="X"!(VR="")  ;SEND NONE
+"RTN","PSSMSTR",152,0)
+ .S FLG=$S(VR="U":1,VR="N":2,1:3)  ;SEND DRUG MESSAGES
+"RTN","PSSMSTR",153,0)
+ Q FLG
+"RTN","PSSMSTR",154,0)
+ ;
+"RTN","PSSMSTR",155,0)
+KV K DIR,DIRUT,DUOUT,DTOUT
+"RTN","PSSMSTR",156,0)
+ Q
+"RTN","PSSMSTR",157,0)
+ ;
+"RTN","PSSMSTR",158,0)
+SDRG ;
+"RTN","PSSMSTR",159,0)
+ W !!,?5,"You may select a single Drug or several Drugs",!!
+"RTN","PSSMSTR",160,0)
+ N PSSDRUG K DIC,DUOUT,DTOUT S DIC(0)="QEAM",DIC="^PSDRUG("
+"RTN","PSSMSTR",161,0)
+ S DIC("S")="I $S('$D(^PSDRUG(+Y,""I"")):1,'^(""I""):1,DT'>^(""I""):1,1:0)"
+"RTN","PSSMSTR",162,0)
+ F  D ^DIC Q:Y<0  D
+"RTN","PSSMSTR",163,0)
+ . S PSSDRUG(+Y)=""
+"RTN","PSSMSTR",164,0)
+ K DA,DIC
+"RTN","PSSMSTR",165,0)
+ I $G(DUOUT)!($G(DTOUT))!('$O(PSSDRUG(""))) G EN
+"RTN","PSSMSTR",166,0)
+ N PSSDRG,SPNAM S SPNAM="PSS MFNM01 SERVER"
+"RTN","PSSMSTR",167,0)
+ S PSSDRG=0
+"RTN","PSSMSTR",168,0)
+ F  S PSSDRG=$O(PSSDRUG(PSSDRG)) Q:'PSSDRG  D SPADE
+"RTN","PSSMSTR",169,0)
+ Q
+"RTN","PSSMSTR",170,0)
+ ;
+"VER")
+8.0^22.0
+"BLD",9172,6)
+^174
+**END**
+**END**
+

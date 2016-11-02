@@ -1,0 +1,546 @@
+$TXT Created by               at DVACACHE.FO-BIRM.DOMAIN.EXT  (KIDS) on Thursday, 08/25/16 at 11:11
+=============================================================================
+Run Date: OCT 05, 2016                     Designation: PSJ*5*317
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #283                      Status: Released
+                  Compliance Date: NOV 05, 2016
+=============================================================================
+
+Associated patches: (v)PSJ*5*191   <<= must be installed BEFORE `PSJ*5*317'
+                    (v)PSJ*5*244   <<= must be installed BEFORE `PSJ*5*317'
+                    (v)PSJ*5*315   <<= must be installed BEFORE `PSJ*5*317'
+                    (v)PSJ*5*316   <<= must be installed BEFORE `PSJ*5*317'
+                    (v)PSJ*5*323   <<= must be installed BEFORE `PSJ*5*317'
+
+Subject: PHARMACY INTERFACE AUTOMATION PROJECT (PIA)
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Input Template
+  - Other
+
+Description:
+============
+
+ The Pharmacy Interface Automation Project (PIA) will provide a new
+ standard bi-directional Health Level Seven (HL7) to the Pharmacy
+ Automated Dispensing Equipment (PADE) server. The PADE will route the
+ message to a cabinet located at the point of care areas such as Inpatient
+ wards, Outpatient Clinics etc.
+  
+ The following two patches are provided for this project:
+   PSJ*5*317 - Inpatient Medications V. 5.0.
+   PSS*1*193 - Pharmacy Data Management V. 1.0.
+  
+ Note: The patches should be installed in the order listed above as the 
+ logical link, PSJ PADE used in the PSS patch is transported in the PSJ
+ patch.
+  
+ 1.  The following new files were created:
+     PADE SYSTEM SETUP file (#58.7)
+     PADE SEND AREA file (#58.71)
+     PADE OUTBOUND MESSAGES file (#58.72)
+     PADE INVENTORY SYSTEM file (#58.601) 
+     PADE INBOUND TRANSACTIONS file (#58.6)
+     PADE DISPENSING DEVICE file (#58.63)
+     PADE USER file (#58.64)
+     
+ 2.  A new menu, PADE Main Menu [PSJ PADE MAIN MENU], with the following
+     options was created:
+     PADE Send Area Setup [PSJ PADE SEND AREA SETUP] option
+     PADE System Setup [PSJ PADE SETUP] option
+     PADE Send Surgery Cases [PSJ PADE SEND SURGERY CASES] option
+     PADE Send Patient Orders [PSJ PADE SEND ORDERS] option
+     PADE Inventory Setup [PSJ PADE INVENTORY MENU] option
+        ...Inventory System Setup [PSJ PADE INVENTORY SYSTEM] option
+        ...Dispensing Device Setup [PSJ PADE DEVICE SETUP] option
+     PADE Reports [PSJ PADE REPORTS MENU] option
+        ...PADE On-Hand Amounts [PSJ PADE INVENTORY REPORT] option
+        ...PADE Transaction Report [PSJ PADE TRANSACTION REPORT] option
+  
+ 3.  A new security key, PSJ PADE MGR, was created to allow access to the 
+     above menus noted in item 2.
+  
+ 4.  The option, PADE System Division Setup [PSJ PADE DIVISION SETUP],
+     was exported as a separate option so that it can be given to an
+     assigned user to set up a division under a PADE.
+  
+ 5.  A new security key, PSJ PADE ADV, was created to allow access to the 
+     above option noted in item 4.
+  
+ 6.  The option, PADE Surgery Task [PSJ PADE SURGERY TASK], was exported as
+     a standalone option so that sites can schedule it as a recurring task.
+  
+ 7.  The option, PADE Appointment Task [PSJ PADE APPOINTMENT TASK], was
+     exported as a standalone option so that sites can schedule it as a
+     recurring task.
+  
+ 8.  Two HL7 application parameters, PSJ VISTA and PSJ PADE SERVER, were
+     created for site specific information.
+  
+ 9.  One Logical Link, PSJ PADE, was created to support the Outbound HL7
+     messages.
+  
+ 10. The following protocols were created to receive and send outbound
+     Admission, Discharge and Transfer (ADT) events:
+     PSJ ADT-A01 ROUTER
+     PSJ ADT-A01 SERVER - Admission event
+     PSJ ADT-A01 CLIENT
+     PSJ ADT-A02 SERVER - Transfer event
+     PSJ ADT-A02 CLIENT
+     PSJ ADT-A03 SERVER - Discharge event 
+     PSJ ADT-A03 CLIENT
+     PSJ ADT-A08 SERVER - Demographic changes
+     PSJ ADT-A08 CLIENT
+     PSJ ADT-A11 SERVER - Cancel Admission event
+     PSJ ADT-A11 CLIENT
+     PSJ ADT-A12 SERVER - Cancel Transfer event
+     PSJ ADT-A12 CLIENT
+     PSJ ADT-A13 SERVER - Cancel Discharge event
+     PSJ ADT-A13 CLIENT
+  
+     PSJ ADT-A01 ROUTER is setup as a subscribing protocol to VAFC ADT-A01 
+     SERVER, VAFC ADT-A02 SERVER, VAFC ADT-A03 SERVER, VAFC ADT-A08 SERVER,
+     VAFC ADT-A08-TSP SERVER (bed switch), VAFC ADT-A11 SERVER, VAFC
+     ADT-A12 SERVER, VAFC ADT-A13 SERVER.
+  
+     In the REGISTRATION V. 5.3 package, options like Admit a Patient [DG
+     ADMIT PATIENT], Transfer a Patient [DG TRANSFER PATIENT], Discharge a
+     Patient [DG DISCHARGE PATIENT], Switch Bed [DG BED SWITCH] etc., will
+     trigger appropriate outbound HL7 messages.
+     The routine tied to protocol PSJ ADT-A01 ROUTER that subscribes to 
+     these events (VAFC ADT related protocol) will scan the HL7 message and
+     will build a modified copy of the HL7  message including the Allergy
+     (AL1) and the Observation/Result (OBX) segments. The generated HL7
+     message will be sent to the respective PADE via the Vitria Interface
+     Engine (VIE).
+  
+ 11. The following protocols were created to receive and send outbound
+     Clinic check-ins and appointments.
+      PSJ SIU-SDAM ROUTER - subscribing protocol to VAFC ADT-A08-SDAM
+      SERVER 
+      PSJ SIU-S12 SERVER - event driver for clinic check-in 
+      PSJ SIU-S12 CLIENT - subscriber 
+  
+     During patient check-in in the Scheduling V. 5.3 package, the 
+     protocol, VAFC ADT-A08-SDAM SERVER builds a standard HL7 message.
+     The routine tied to protocol PSJ SIU-SDAM ROUTER that subscribes
+     to the VAFC ADT-A08-SDAM SERVER, will scan the HL7 message and will
+     build a new copy of the HL7 message including the Allergy (AL1)
+     and the Observation/Result (OBX) segments. The generated HL7 message
+     will be sent to the respective PADE via the Vitria Interface Engine
+     (VIE).
+  
+ 12. The following protocols were created to send outbound order messages
+     in the form of RDE-O11 HL7 messages to the appropriate PADE system.
+     PSJ RDEO11 SERVER
+     PSJ RDEO11 CLIENT
+  
+     In Inpatient Medications, when orders are verified, edited, renewed, 
+     discontinued, reinstated, put on hold/removed from hold, and when 
+     orders are discontinued in Computerized Patient Record System (CPRS)
+     V. 3.0, an outbound HL7 message will be sent to the respective PADE
+     via the Vitria Interface Engine (VIE).
+  
+ 13. The following protocols were created to receive and process inbound 
+     PADE Activity (e.g., Dispense, Load, etc.) in the form of
+     OMS-O05 HL7 messages:
+     PSJ PADE OMS-O05 EVENT
+     PSJ PADE OMS-O05 SUB
+     PSJ PADE OMS-O05 EVENT 2.3
+     PSJ PADE OMS-O05 SUB 2.3
+  
+     Backward compatible HL7 v2.3 protocols accept and parse current 
+     industry standard Pocket Maintenance (ZPM) segments to facilitate
+     transition to the new PADE standard.
+  
+     Inbound HL7 messages from the PADE vendor are validated and filed into
+     the PADE INBOUND TRANSACTION file (#58.6), which triggers an 
+     automatic update of the inventory information in the PADE INVENTORY
+     SYSTEM file (#58.601).
+  
+  14. A new multiple, DWO MESSAGE ENTITY, has been added to the PADE
+      INVENTORY SYSTEM file (#58.601) to contain mail groups that will
+      receive Mailman messages when PADE drugs are Dispensed Without an
+      Order (DWO). 
+  
+  15. A new multiple, CONFIG ERRORS MAIL GROUPS, has been added to the PADE
+      INVENTORY SYSTEM file (#58.601) to receive error messages when 
+      configuration problems are encountered with Inbound PADE HL7
+      messages.
+  
+  16. A new multiple, DATA ERRORS MAIL GROUPS, has been added to the PADE 
+      INVENTORY SYSTEM file (#58.601) to receive error messages when data 
+      validation problems are encountered with Inbound PADE HL7 messages.
+  
+  17. Inpatient Pharmacy Order Entry screens have been modified to 
+      display PADE inventory information, specifically:
+  
+      a. The Inpatient Pharmacy Order Entry order detail screens
+         will contain a new "PADE" column when displaying Dispense Drugs,
+         containing the PADE inventory availability for the displayed
+         dispense drug. To make room for the PADE inventory information,
+         the message field will continue displaying, but drug classes will
+         no longer display as a FileMan identifier when a list of dispense
+         drug choices are displayed.
+  
+      b. The Inpatient Pharmacy Order Entry Patient Profile screen
+         includes a flag, (PD), indicating whether or not the order
+         contains a drug that is a PADE stock item. If a drug is both a
+         PADE item and a Ward Stock item, the ward stock flag (WS) is
+         combined with the PADE flag (WP).
+  
+  18. A Kernel parameter, PSJ PADE OE BALANCES, has been created to allow
+      each site to control whether or not PADE inventory information
+      displays in the Inpatient Order Entry profile screens and drug
+      lookups. A prompt to set the parameter has been added to the new PSJ
+      PADE INVENTORY Input Template, accessible via the Inventory System
+      Setup [PSJ PADE INVENTORY SYSTEM] option.
+  
+  19. The option, Pick List [PSJU PL], has been modified to include the 
+      drug Internal Entry Number (IEN) field after the drug name and to
+      include the word "PADE" if the medication listed is a PADE stock
+      item.
+  
+  20. A new Protocol, PSJ LM PADE ACTIVITY, has been added to the PSJ LM 
+      PROFILE HIDDEN ACTIONS Protocol to display a new hidden action (PD) 
+      in the Inpatient Pharmacy patient profile screen. The new PD hidden
+      action displays all of the PADE transactions for the patient being
+      displayed.
+  
+  21. The Pre-Exchange DOSES prompt that displays after verifying an 
+      Inpatient Unit Dose order has been modified to default the number of 
+      doses to zero when the drug may be dispensed from PADE, and a message
+      is displayed explaining the drug is a PADE item.
+                                   
+  22. This patch also provides a log file, PADE OUTBOUND MESSAGES 
+      file (#58.72) of the outbound ADT, SIU and RDE HL7 messages to use 
+      with FileMan for trouble shooting purposes only.
+      Note: The nightly background job (PSGBRJ) has been modified to purge 
+      records older than 30 days.
+  
+ Note: This patch also exports a post-install routine PSJ317P that will 
+ setup PSJ ADT-A01 ROUTER as a subscribing protocol to VAFC ADT-A01 
+ SERVER, VAFC ADT-A02 SERVER, VAFC ADT-A03 SERVER, VAFC ADT-A08 SERVER,
+ VAFC ADT-A08-TSP SERVER, VAFC ADT-A11 SERVER, VAFC ADT-A12 SERVER and VAFC
+ ADT-A13 SERVER protocols. It will also setup protocol PSJ SIU-SDAM ROUTER
+ as a subscribing protocol to VAFC ADT-A08-SDAM SERVER protocol.
+ The post-install also sets the following field to the PSJ PADE entry in 
+ the HL LOGICAL LINK file (#870):
+    a. AUTOSTART field (#4.5) is set to 1 (Enabled) so that the PSJ PADE 
+       logical link will be started automatically when Cache or TaskMan is 
+       restarted.
+    b. DO NOT PING field (#24) is set to 1 (Yes) due to the unique aspects
+       of the PADE interface. If PSJ PADE is sent an HLO PING CLIENT 
+       message, an infinite loop will be created consisting of VIE sending
+       VistA additional CR messages and VistA not responding. This 
+       situation requires manual intervention by a member of the VIE
+       National Admins team and therefore needs to be avoided.
+  
+ This post-install routine will be deleted from your system upon completion
+ of the patch installation.
+  
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)                     Field Name   New/Modified/Deleted
+ ------------                      ----------   --------------------
+ PADE SYSTEM SETUP (#58.7)         All fields             New
+ PADE SEND AREA (#58.71)           All fields             New
+ PADE OUTBOUND MESSAGES (#58.72)   All fields             New
+ PADE DISPENSING DEVICE (#58.63)   All fields             New
+ PADE INBOUND TRANSACTIONS (#58.6) All fields             New
+ PADE INVENTORY SYSTEM (#58.601)   All fields             New
+ PADE USER (#58.64)                All fields             New 
+ INPATIENT WARD PARAMETERS (#59.6) DEFAULT 0 ON PADE      New
+                                   PRE-EXCHANGE (#8)
+  
+ Form Name             File #                  New/Modified/Deleted
+ ---------             ------                  --------------------
+ N/A
+  
+ Kernel Parameters Associated:
+  
+ Kernel Parameter Name              Entities                   Values
+ ---------------------       ---------------                 --------
+ PSJ PADE OE BALANCES        System,Division                   YES/NO
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                New/Modified/Deleted
+ ---------------                                --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                          Type         New/Modified/Deleted
+ -----------                          ----         --------------------
+ Unit Dose Medications [PSJU MGR]     Menu         Modified
+ PADE Main Menu [PSJ PADE MAIN MENU]  Menu         New
+ PADE Send Area Setup [PSJ PADE SEND  Option       New
+  AREA SETUP]
+ PADE System Setup [PSJ PADE SETUP]   Option       New
+ PADE Inventory Setup [PSJ PADE       Menu         New
+  INVENTORY MENU]
+ Inventory System Setup [PSJ PADE     Option       New
+  INVENTORY SYSTEM]
+ Dispensing Device Setup [PSJ PADE    Option       New
+  DEVICE SETUP]
+ PADE Send Surgery Cases [PSJ PADE    Option       New
+  SEND SURGERY CASES]
+ PADE Surgery Task [PSJ PADE SURGERY  Option       New
+  TASK]
+ PADE Reports [PSJ PADE REPORTS MENU] Menu         New
+ PADE On-Hand Amounts [PSJ PADE       Option       New
+  INVENTORY REPORT]
+ PADE Transaction Report [PSJ PADE    Option       New
+  TRANSACTION REPORT]                 
+ PADE System Division Setup [PSJ PADE Option       New
+  DIVISION SETUP] 
+ PADE Send Patient Orders [PSJ PADE   Option       New
+  SEND ORDERS]
+ PSJ PADE Appointment Task [PSJ PADE  Option       New
+  APPOINTMENT TASK]
+  
+   
+ Protocols Associated:
+  
+ Protocol Name                              New/Modified/Deleted
+ -------------                              --------------------
+ PSJ ADT-A01 CLIENT                         New
+ PSJ ADT-A01 ROUTER                         New
+ PSJ ADT-A01 SERVER                         New
+ PSJ ADT-A02 SERVER                         New
+ PSJ ADT-A02 CLIENT                         New
+ PSJ ADT-A03 SERVER                         New
+ PSJ ADT-A03 CLIENT                         New
+ PSJ ADT-A11 SERVER                         New
+ PSJ ADT-A11 CLIENT                         New
+ PSJ ADT-A12 SERVER                         New
+ PSJ ADT-A12 CLIENT                         New
+ PSJ ADT-A13 SERVER                         New
+ PSJ ADT-A13 CLIENT                         New
+ PSJ SIU-SDAM ROUTER                        New
+ PSJ SIU-S12 SERVER                         New
+ PSJ SIU-S12 CLIENT                         New
+ PSJ RDEO11 SERVER                          New
+ PSJ RDEO11 CLIENT                          New
+ PSJ PADE OMS-O05 EVENT                     New
+ PSJ PADE OMS-O05 SUB                       New
+ PSJ PADE OMS-O05 EVENT 2.3                 New
+ PSJ PADE OMS-O05 SUB 2.3                   New
+ PSJ LM PADE ACTIVITY                       New
+ PSJ LM PROFILE HIDDEN ACTIONS         Modified 
+    
+ Security Keys Associated:
+  
+ Security Key Name                           New/Modified/Deleted
+ -----------------                           --------------------
+ PSJ PADE ADV                                New 
+ PSJ PADE MGR                                New
+  
+ Templates Associated:
+  
+ Template Name               Type  File Name (#)  New/Modified/Deleted
+ -------------               ----  ------------   --------------------
+ PSJ PADE SYSTEM             Input  58.7          New
+ PSJ PADE INVENTORY          Input  58.601        New
+ PSJ PADE DISPENSING DEVICE  Input  58.63         New
+  
+   
+ New Service Requests (NSRs):
+ ----------------------------
+ 20000801 - Inpatient Pharmacy Orders HL7 Interface
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A  
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+     
+  
+ TEST Sites:
+ ===========
+ HC NETWORK UPSTATE NY (ALBANY)
+ HEARTLAND-WEST HCS
+ INDIANAPOLIS, IN
+ LONG BEACH, CA
+  
+      
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at
+ the following OI Field Offices:
+  
+  Albany         domain.ext
+  Hines          domain.ext
+  Salt Lake City domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ File Description                         File Name                FTP Mode
+ --------------------------------------------------------------------------
+ Inpatient Medications Pharmacist's       PSJ_5_UM_R0916.PDF       Binary
+  User Manual
+  
+ Inpatient Medications Technical          PSJ_5_TM_R0916.PDF       Binary
+  Manual/ Security Guide
+  
+ Inpatient Medications Pharmacy Interface PSJ_5_P317_IG.PDF        Binary
+  Automation Installation Guide
+  
+ Inpatient Medications Pharmacy Interface PSJ_5_P317_TG.PDF        Binary
+  Automation Startup and Troubleshooting Guide  
+  
+ Patch Installation: 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A 
+  
+     
+ Installation Instructions
+ -------------------------
+ This patch should be installed with users off the system during off-peak
+ hours. Installation takes less than five minutes.
+  
+  1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+  2. From the Kernel Installation & Distribution System menu, select the
+     Installation menu.
+   
+  3. From this menu, you may select to use the following options:
+     (when prompted for INSTALL NAME, enter PSJ*5.0*317)
+   
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+   
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+   
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+   
+  4. Use the Install Package(s) option and select the package PSJ*5.0*317.
+   
+  5. When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of 
+      Install? NO//" respond NO.  
+  
+  6. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+     respond NO.
+   
+  7. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//" respond NO. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 130
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGBRJ
+    Before: B19761653   After: B21011842  **12,50,244,317**
+Routine Name: PSGOE7
+    Before: B30726260   After: B40214304  **9,26,34,52,55,50,87,111,181,
+                                           254,267,260,288,281,317**
+Routine Name: PSGOE82
+    Before: B21878874   After: B33061347  **2,35,50,67,58,81,127,168,181,
+                                           276,317**
+Routine Name: PSGOE92
+    Before: B30935948   After: B43137679  **2,35,50,58,81,110,215,237,
+                                           276,316,317**
+Routine Name: PSGOEF1
+    Before: B30874451   After: B38004561  **2,7,35,39,45,47,50,63,67,58,
+                                           95,110,186,181,267,315,317**
+Routine Name: PSGPEN
+    Before: B40801558   After: B57822787  **30,37,50,58,115,110,127,129,
+                                           323,317**
+Routine Name: PSGPLR
+    Before: B39066813   After: B40061443  **10,50,67,119,129,191,317**
+Routine Name: PSJ317P
+    Before:       n/a   After:  B6017554  **317**
+Routine Name: PSJHLU
+    Before: B45959307   After: B50964072  **1,56,72,102,134,181,267,285,317**
+Routine Name: PSJLMPRU
+    Before: B15059824   After: B19004803  **16,58,85,110,185,181,267,323,317**
+Routine Name: PSJLMUDE
+    Before: B69470677   After: B86619867  **7,47,50,63,64,58,80,116,110,
+                                           111,164,175,201,181,254,267,
+                                           228,315,317**
+Routine Name: PSJO
+    Before: B28881243   After: B32312057  **31,58,110,181,267,275,317**
+Routine Name: PSJO2
+    Before: B20134007   After: B21667076  **58,317**
+Routine Name: PSJPAD50
+    Before:       n/a   After:B143814904  **317**
+Routine Name: PSJPAD70
+    Before:       n/a   After:B193106268  **317**
+Routine Name: PSJPAD7I
+    Before:       n/a   After: B91877682  **317**
+Routine Name: PSJPAD7U
+    Before:       n/a   After:B183094975  **317**
+Routine Name: PSJPADE
+    Before:       n/a   After: B89070355  **317**
+Routine Name: PSJPADIT
+    Before:       n/a   After:B218833371  **317**
+Routine Name: PSJPADPT
+    Before:       n/a   After: B74926353  **317**
+Routine Name: PSJPADSI
+    Before:       n/a   After:B210554864  **317**
+Routine Name: PSJPDAPP
+    Before:       n/a   After: B26391444  **317**
+Routine Name: PSJPDCL
+    Before:       n/a   After: B59118380  **317**
+Routine Name: PSJPDCLA
+    Before:       n/a   After:B123693086  **317**
+Routine Name: PSJPDCLU
+    Before:       n/a   After:B182600427  **317**
+Routine Name: PSJPDRIN
+    Before:       n/a   After:B220627483  **317**
+Routine Name: PSJPDRIP
+    Before:       n/a   After: B92189032  **317**
+Routine Name: PSJPDRTP
+    Before:       n/a   After:B164604296  **317**
+Routine Name: PSJPDRTR
+    Before:       n/a   After:B204379013  **317**
+Routine Name: PSJPDRU1
+    Before:       n/a   After:B196519581  **317**
+Routine Name: PSJPDRUT
+    Before:       n/a   After:B233123274  **317**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 15, 2015
+Completed By:                               Date Completed: SEP 19, 2016
+Released By :                               Date Released : OCT 05, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

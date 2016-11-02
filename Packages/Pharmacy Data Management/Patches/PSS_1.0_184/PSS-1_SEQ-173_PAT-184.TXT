@@ -1,0 +1,287 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 06/24/16 at 14:18
+=============================================================================
+Run Date: SEP 13, 2016                     Designation: PSS*1*184
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #173                      Status: Released
+                  Compliance Date: OCT 13, 2016
+=============================================================================
+
+Associated patches: (v)PSS*1*160   <<= must be installed BEFORE `PSS*1*184'
+                    (v)PSS*1*180   <<= must be installed BEFORE `PSS*1*184'
+
+Subject: DRUG RENEWAL, SCHEDULE EDIT, INTERFACE SCHEDULER, PEPS SERVICES SETUP CK
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following reported issues:
+  
+ 1) An error occurs during the drug renewal process if the drug has a 
+    lengthy drug-drug interaction check.
+  
+ 2) An error may occur in the option PSS SCHEDULE EDIT if the user jumps 
+    ahead to various fields.
+  
+ 3) Numerous background tasks might be tasked if the scheduling frequency 
+    in option PSS SCHEDULE PEPS INTERFACE CK is set to a low value,
+    resulting in system performance issues.
+  
+ 4) Drug-Drug Interaction Order Check cannot be validated when performing 
+    option PSS CHECK PEPS SERVICES SETUP.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Trouble Ticket(s):
+ =============================
+  
+ 1) I6674562FY16   : Drug Renewal Error
+    I7774383FY16: (d)
+    INC000000829617: (d)
+    INC000000839006: (d)
+    INC000000862915: (d)
+    INC000000871547: (d)
+    INC000000917334: (d)
+    INC000000920874: (d)
+    INC000000921178: (d)
+    INC000000940527: (d)
+    INC000000948944: (d)
+    INC000000959933: (d)
+    INC000000963830: (d)
+    INC000000970525: (d)
+    INC000000998075: (d)
+    INC000001003506: (d)
+    INC000001015443: (d)
+    INC000001015455: (d)
+    INC000001029908: (d)
+    INC000001036451: (d)
+    INC000001074575: (d)
+    INC000001081706: (d)
+    INC000001236202: (d)
+    INC000001240874: (d)
+  
+ 2) I9845326FY16 - Option PSS SCHEDULE EDIT Error
+    INC000001032384 (d)
+  
+ 3) I9845463FY16 - Interface Scheduler Option Issue
+    INC000000886030 (d)
+  
+ 4) I7730375FY16:    Check PEPS Services Option Issue
+  
+  
+ Participating Test Sites:
+ =========================
+ VA Maryland HCS 
+ Oklahoma City VAMC
+ Martinsburg VAMC
+  
+  
+ Ticket Overview:
+ ================
+  
+ 1. I6674562FY16: Drug Renewal Error
+  
+    Problem:
+    --------
+  
+    An error will occur during the renewal process if a lengthy drug-drug
+    interaction order checking message is generated.
+    
+    Resolution:
+    -----------
+   
+    Modify routine PSSHRQ21 to not duplicate drug-drug interaction 
+    sentences for medications ordered multiple times.
+  
+    Routine: PSSHRQ21
+  
+ 2) I9845326FY16: Option PSS SCHEDULE EDIT Error
+  
+    Problem:
+    --------
+  
+    An error might occur in option PSS SCHEDULE EDIT if the user uses the
+    "^" feature to skip fields and jump ahead to various fields in the
+    ADMINISTRATION SCHEDULE (#51.1) file.
+  
+    Resolution:
+    -----------
+  
+    A change was made to routine PSSJEEU to set a standard FileMan variable
+    DIE("NO^") to the value "BACKOUTOK" before invoking the edit feature.  
+    The variable setting will allow users to jump back to previously edited
+    fields (BACK) and to exit (OUTOK) but prevents users from jumping ahead
+    during the editing process.
+  
+    Routine: PSSJEEU
+  
+ 3) I9845463FY16: Interface Scheduler Option Issue
+  
+    Problem:
+    --------
+  
+    Numerous background tasks might be tasked if the scheduling frequency
+    in option PSS SCHEDULE PEPS INTERFACE CK is set to a low value.  System
+    performance issues may then occur.
+  
+    Resolution:
+    -----------
+  
+    Inform the user that the recommended scheduling frequency is 15 
+    minutes. Warn the user that the scheduling frequency should not be set
+    to a value lower than five minutes.  The user is required to 
+    acknowledge the warning message before continuing to the next step
+    which invokes the TaskMan option XUTM SCHEDULE.
+  
+    New message:
+  
+    The recommended "Rescheduling Frequency" is 15 minutes (900 seconds).
+  
+    It is currently set to 900S.
+  
+    WARNING: Do not decrease the "Rescheduling Frequency" below 5 minutes.
+  
+               System issues could occur after a downtime due to
+               multiple jobs being tasked.
+  
+      Continue to the TaskMan Schedule/Unschedule Option? NO//
+  
+    Routine: PSSHRIT
+  
+ 4) I7730375FY16: Check PEPS Services Option issue
+  
+    Problem:
+    -------- 
+  
+    The latest VA Custom Update downgraded the drug interaction severity 
+    level for Aspirin and Warfarin so they no longer trigger a drug-drug 
+    interaction warning. That drug combination is hard-coded into the PSS
+    CHECK PEPS SERVICES SETUP to confirm that drug-drug interactions are 
+    working correctly. A new drug combination needs to be substituted.
+  
+    Resolution:
+    -----------
+  
+    The option PSS CHECK PEPS SERVICES SETUP now checks for the drug-drug 
+    interaction of Warfarin and Ciprofloxacin.  The drug combination of 
+    Warfarin and Ciprofloxacin is "critical".
+    
+  
+    Routine: PSSHRIT
+  
+  
+  
+  
+ Documentation Retrieval Instructions
+ ====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+ Title                                        File Name        SFTP Mode
+ -----------------------------------------------------------------------
+ User Manual - Pharmacy Data Management V.1.0 PSS_1_UM_R0816   Binary
+  
+  
+  
+  
+  
+ Installation Instructions
+ =========================
+  
+ Users may be on the system during patch installation.
+  
+ Suggested time to install: non-peak requirement hours.
+  
+ Install Time - less than 5 minutes (unless otherwise indicated)
+  
+  1.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  2.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter PSS*1.0*184):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  3.  Use the Install Package(s) option and select the package
+      PSS*1.0*184.
+  
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the
+          install? YES//', answer NO.
+      b.  When prompted 'Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? YES//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSHRIT
+    Before:B220174770   After:B243887860  **136,168,164,173,180,184**
+Routine Name: PSSHRQ21
+    Before:B139673586   After:B152408669  **136,160,184**
+Routine Name: PSSJEEU
+    Before: B13608450   After: B13827744  **24,47,160,184**
+ 
+Routine list of preceding patches: 160, 180
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 09, 2014
+Completed By:                               Date Completed: SEP 12, 2016
+Released By :                               Date Released : SEP 13, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

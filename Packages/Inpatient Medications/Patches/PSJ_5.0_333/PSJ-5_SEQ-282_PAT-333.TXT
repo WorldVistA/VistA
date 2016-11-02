@@ -1,0 +1,181 @@
+$TXT Created by               CMNT.FO-BIRM.DOMAIN.EXT  (KIDS) on Wednesday, 08/17/16 at 15:22
+=============================================================================
+Run Date: SEP 19, 2016                     Designation: PSJ*5*333
+Package : PSJ - INPATIENT MEDICATIONS         Priority: EMERGENCY
+Version : 5       SEQ #282                      Status: Released
+                  Compliance Date: SEP 21, 2016
+=============================================================================
+
+Associated patches: (v)PSJ*5*313   <<= must be installed BEFORE `PSJ*5*333'
+
+Subject: PHARMACY SAFETY UPDATES - FOLLOW UP TO PSJ*5*313
+
+Category: 
+  - PATCH FOR A PATCH
+  - Routine
+
+Description:
+============
+
+  This patch is part of the Pharmacy Safety Updates project and will 
+  address the Patient Safety Issue (PSI) #PSPO00003281. 
+  
+  The issue is that an <UNDEFINED> error is occurring while finishing a 
+  pending order in the Inpatient Medications application causing a forced 
+  exit from the Inpatient Order Entry [PSJ OE] option when attempting to 
+  finish UNIT DOSE orders. The order being finished presents as an IV order
+  and prompts the user to finish as either UD or IV. The user is choosing
+  to finish as UD.
+  
+  PSI PSPO00003281 is CA Service Desk Ticket I9935231FY16-IP MEDS HARD 
+  ERRORING IN FINISHING ORDERS
+  
+  
+  Patch Components
+  ================
+   
+  Files & Fields Associated:
+  File Name (#)             Field Name (#)       New/Modified/Deleted 
+  -------------             --------------       --------------------
+  N/A
+  
+  Forms Associated:
+  Form Name                 File #                              
+  ---------                 -----
+  N/A
+  
+  Mail Groups Associated:
+  Mail Group Name                                 New/Modified/Deleted
+  ---------------                                 --------------------
+  N/A
+  
+  Options Associated:
+  Option Name               Type                  New/Modified/Deleted
+  -------------------       ----                  --------------------
+  N/A
+   
+  Protocols Associated:                           New/Modified/Deleted
+  Protocol Name                                   --------------------
+  -------------
+  N/A
+  
+  Security Keys Associated:
+  Security Key Name                               New/Modified/Deleted
+  -----------------                               --------------------
+  N/A 
+  
+  Templates Associated:
+  Template Name           Type    File Name (#)   New/Modified/Deleted
+  -------------           ----     ------------   --------------------
+  N/A
+   
+  
+  New Service Requests (NSRs):
+  ----------------------------
+  N/A
+  
+  
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  PSPO00003281
+  
+  
+  CA Service Desk Ticket(s) & Overviews:
+  -----------------------------
+  CA Service Desk I9935231FY16-IP MEDS HARD ERRORING IN FINISHING ORDERS 
+  
+  Problem:
+  -------
+  An <UNDEFINED> error is occurring while finishing a pending order in 
+  Inpatient Medications causing a forced exit from the Inpatient Order
+  Entry screen.  
+  
+  An undefined error occurred in routine PSIVORFA because a variable used 
+  in processing was not defined.
+  
+  The variable used by PSIVORFA is defined in routine PSJLIFN
+  
+  Resolution:
+  ---------- 
+  Modify routine PSJLIFN to switch the order of processing to ensure the 
+  variable is defined before the call is made to PSIVORFA.
+  
+  
+  TEST Sites:
+  ===========
+  HC NETWORK UPSTATE NY (ALBANY)
+  LOUISVILLE, KY
+  HEARTLAND EAST
+  
+  
+  Patch Installation: 
+  
+  Pre Installation Overview
+  --------------------------
+  N/A
+  
+  
+  Post Installation Overview
+  --------------------------
+  N/A
+  
+     
+  Installation Instructions
+  -------------------------
+  Although this installation will take less than 5 minutes and Inpatient 
+  Medications users can be on the system, it is recommended that it be 
+  installed overnight to prevent any disruption of service to users.
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSJ*5.0*333).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package PSJ*5.0*333.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJLIFN
+    Before: B52671541   After: B52505954  **1,29,34,37,42,47,50,56,94,
+                                           80,116,110,181,261,252,313,333**
+ 
+Routine list of preceding patches: 313
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 04, 2016
+Completed By:                               Date Completed: SEP 14, 2016
+Released By :                               Date Released : SEP 19, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

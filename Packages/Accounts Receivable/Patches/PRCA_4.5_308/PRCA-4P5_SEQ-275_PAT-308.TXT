@@ -1,0 +1,172 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 06/08/16 at 11:45
+=============================================================================
+Run Date: SEP 22, 2016                     Designation: PRCA*4.5*308
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #275                    Status: Released
+                  Compliance Date: SEP 30, 2016
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*299<<= must be installed BEFORE `PRCA*4.5*308'
+
+Subject: PHASE II ADJUSTMENTS FOR VA CARE VS. NON VA CARE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the request about Phase II algorithm adjustments that
+ determine whether an episode of care is identified as VA CARE vs. NON-VA
+ CARE in the Vista CBO Data Extract (VDE) process.
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+   
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1. INC000001077579 Phase II algorithm adjustment for VA CARE vs. NON-VA CARE (Fee) identification in Vista Data Extract
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Alaska
+ El Paso
+ Montana HCS
+   
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. INC000001077579 Phase II algorithm adjustment for VA CARE vs. NON-VA CARE
+ (Fee) identification in Vista Data Extract
+  
+ Problem:
+ --------
+ The CBO has requested changes based on the criteria to determine whether
+ care provided on the bill is VA or Non-VA in the CBO Data Extract process.
+  
+ Resolution:
+ -----------
+ The procedure for Veterans Affairs (VA) care vs. Non-VA care in routine
+ RCXVUTIL was modified to follow the criteria as detailed below:
+  
+ - Added a new check for Clinic Stop Code: the bill is for Non-VA care if  
+   the visit date/time and the hospital location for the outpatient are found
+   and the Clinic Stop code is '669' in the Visit file (#9000010).
+  
+ - Added a new check for prosthetics item(s): the bill is for VA care if the
+   associated prosthetics item is found in the IB Bill/Claims Prosthetics
+   file (#362.5).
+  
+ - Modified the check for rate type: the bill is for VA care if the rate type
+   is not 'Reimbursable Ins.' or none of these rate types locally defined in
+   VA facilities: 'FEE', 'FEE BASIS', 'FEE-INPT', 'NON VA CARE', 'NON-VA',
+   'NON-VA CARE', 'NON-VA FEE BASIS CARE'. 
+  
+ - Modified the check for prescription(s): the bill is for VA care if the
+   type of the charge item is 'RX' and the associated prescription is found
+   in the Prescription Refill file (#362.4), otherwise for Non-VA care if
+   the associated prescription for the 'RX' type item is not found in the
+   file (#362.4). 
+  
+ - Added a new check for bed section(s): the bill is for Non-VA care if the  
+   associated bedsection of the charge item points to 'NON-VA CARE%' or
+   'NON-VA CARE' or 'NON-VA CARE AT VA EXPENSE' in the MCCR Utility file
+   (#399.1).
+  
+ - Added a new check for patient visit(s): the bill is for Non-VA care if
+   the visit date for the outpatient is found in the Visit file (#9000010)
+   and the associated hospital location contains 'NVCC' or 'NVC' or 'VCL'
+   or 'NON-VA CARE' or 'NONVA CARE' or 'NONCOUNT FEE' or 'FEE BASIS'.
+   Otherwise it's for VA care if the associated hospital location contains
+   none of them.
+  
+ - Modified the check for outpatient encounter(s): the bill is for Non-VA
+   care if no corresponding encounter for the visit date is found in the
+   Outpatient Encounter file (#409.68).
+  
+ - Modified the final indictor as VA care for the bill if there is no above
+   criteria being met.
+  
+   
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  It is recommended this patch be installed outside of normal business
+  hours to avoid any complications resulting from users on the system.
+  Installation will take less than 2 minutes.
+   
+   1.   LOAD TRANSPORT GLOBAL 
+          ---------------------
+          Choose the PackMan message containing this patch and invoke the 
+          INSTALL/CHECK MESSAGE PackMan option.  
+    
+   2.   START UP KIDS
+        -------------
+        Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]: 
+               Edits and Distribution ...  
+               Utilities ...  
+               Installation ...
+   
+        Select Kernel Installation & Distribution System Option: INStallation
+               Load a Distribution
+               Print Transport Global 
+               Compare Transport Global to Current System 
+               Verify Checksums in Transport Global 
+               Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution 
+               Backup a Transport Global 
+   
+   3.   Select Installation Option:
+        ---------------------------
+        NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+               NAME, enter PRCA*4.5*308):
+  
+       a.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+       b.  Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+           (routines, DD's, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+   
+  4.   Select Installation Option: Install Package(s)
+   
+       **This is the step to start the installation of this KIDS patch:
+       a. Choose the Install Package(s) option to start the patch install.
+       b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+          NO//', answer NO
+       c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? NO//', answer NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCXVUTIL
+    Before: B22527268   After: B57759786  **201,299,308**
+ 
+Routine list of preceding patches: 299
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 11, 2015
+Completed By:                               Date Completed: SEP 21, 2016
+Released By :                               Date Released : SEP 22, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,159 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 06/14/16 at 09:14
+=============================================================================
+Run Date: AUG 26, 2016                     Designation: HL*1.6*167
+Package : HL - HEALTH LEVEL SEVEN             Priority: Mandatory
+Version : 1.6       SEQ #130                    Status: Released
+                  Compliance Date: NOV 13, 2016
+=============================================================================
+
+Associated patches: (v)HL*1.6*50   <<= must be installed BEFORE `HL*1.6*167'
+                    (v)DI*22.2*1   <<= must be installed BEFORE `HL*1.6*167'
+
+Subject: UPDATE FILEMAN VALIDATION LOGIC FOR V22.2
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ HL7*1.6*167 resolves a known VA FileMan (FM) 22.2 issue, SDM I9259370. 
+ User can't select HL7 messages directly from the list in the HL View 
+ Transmission Log option.  This patch should be installed right after 
+ installing FM 22.2 and patch DI*22.2*1.
+  
+  
+ Associated tickets:
+ ==================
+ I9260103FY16 - HL7 changes needed for VA FileMan 22.2
+  
+  
+ Associated NSR:
+ ==============
+ N/A
+  
+  
+ Participating Test Sites:
+ ========================
+ Heartland East HCS
+ Lebanon VAMC
+ Washington DC VAMC
+ West Palm Beach VAMC 
+  
+  
+ TICKET OVERVIEW:
+ ===============
+ I9260103FY16 - HL7 changes needed for VA FileMan 22.2
+  
+   Problem: 
+   -------
+   When a user accesses the View Transmission Log (TCP only) [HL VIEW
+   TRANSMISSION LOG] option, HL7 must validate the version of VA Fileman
+   in use.  Currently, the system will allow for v22 only but VA Fileman
+   v22.2 is in development, expected to be released in the 3rd quarter of 
+   2016.
+    
+   Resolution:
+   ----------
+   Modify the HL7 validation logic to verify that the VA Fileman version 
+   in use is equal to or greater than v22.
+  
+   Routine: HLCSRPT
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ This patch can be loaded with users on the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+   
+  
+ 1. Load Transport Global
+    ---------------------
+    Choose the PackMan message containing this patch and invoke the 
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2. Startup KIDS
+    ------------
+    Start up the Kernel Installation and Distribution System Menu
+    [XPD MAIN]:
+         Edits and Distribution ...
+         Utilities ...
+         Installation ...
+  
+    Select Kernel Installation & Distribution system Option: INStallation
+                                                             ---
+         Load a Distribution
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify Checksums in Transport Global
+         Install Package(s)
+         Restart Install of Package(s)
+         Unload a Distribution
+         Backup a Transport Global
+  
+ 3. Select Installation Option:
+    ---------------------------
+    NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+           NAME, enter HL*1.6*167):
+  
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+    b.  Print Transport Global - This option will allow you to view
+        the components of the KIDS build.
+    c.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+    d.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+  
+ 4. Select Installation Option: Install Package(s)
+    ----------------------------------------------
+    ** This is the step to start the installation of this KIDS patch:
+  
+    a. Choose the Install Package(s) option to start the patch
+       install and select the package HL*1.6*167.
+  
+    b. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', answer NO.
+  
+    c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? YES//', answer YES.
+      
+       When prompted, 'Enter options you wish to mark as 'Out Of order':', 
+       enter the following options:
+  
+       View Transmission Log (TCP only)       [HL VIEW TRANSMISSION LOG]
+  
+  
+       When prompted, 'Enter protocols you wish to mark as 'Out Of 
+       Order':' press <ENTER>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.6;HEALTH LEVEL SEVEN;**[Patch List]**;Oct 13, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HLCSRPT
+    Before: B35882711   After: B35887757  **19,50,167**
+ 
+Routine list of preceding patches: 50
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 14, 2016
+Completed By:                               Date Completed: AUG 04, 2016
+Released By :                               Date Released : AUG 26, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

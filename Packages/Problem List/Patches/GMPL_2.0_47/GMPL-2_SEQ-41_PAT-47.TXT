@@ -1,0 +1,204 @@
+
+=============================================================================
+Run Date: MAR 08, 2016                     Designation: GMPL*2*47
+Package : GMPL - PROBLEM LIST                 Priority: Mandatory
+Version : 2        SEQ #41                      Status: Released
+                  Compliance Date: JUL 27, 2016
+=============================================================================
+
+Associated patches: (v)GMPL*2*28   <<= must be installed BEFORE `GMPL*2*47'
+                    (v)GMPL*2*42   <<= must be installed BEFORE `GMPL*2*47'
+                    (v)GMPL*2*44   <<= must be installed BEFORE `GMPL*2*47'
+
+Subject: Clinical Reminders Mapping Target index update
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch resolves Remedy ticket #1066799 in which an undefined error 
+ was generated during reminder evaluation.The error was occurring because 
+ the Mapping Targets node Clinical Reminders Index entry was still present 
+ even though the data in Mapping Targets node for the corresponding 
+ Problem List entry did not have any data in it. This was occurring 
+ because Mapping Targets codes were being stored and deleted with direct 
+ sets and kills so the cross-reference on Mapping Targets was not being 
+ fired. The solution involves changing the Problem List code to use 
+ FileMan to store and delete Mapping Targets codes ensuring the 
+ cross-reference is fired.
+  
+ This patch resolves this issue and rebuilds the Reminders indices to 
+ clean up any outstanding Mapping Target cross-references that didn't get
+ deleted appropriately.
+  
+ Additionally, several other defects are resolved as a result of testing 
+ the above issue:
+  
+ 1) When editing a SCT problem that is mapped to a single ICD-9 diagnosis 
+ code using the Problem List Mgt Menu option in VistA and changing the 
+ diagnosis to a SCT term that is mapped to multiple ICD-9 diagnosis codes, 
+ it was discovered that the secondary mapped ICD-9 diagnosis code was not 
+ being saved appropriately. There was a bug in the code and it was being 
+ truncated. This is however functioning correctly in the CPRS GUI.
+  
+ 2) When removing a problem mapped to multiple ICD-9 diagnosis codes and 
+ where the PRIORITY field is undefined, the corresponding entries in the
+ Clinical Reminders Index are also removed but this was not occurring for
+ Mapping Targets. The solution to this was to add a new compound
+ cross-reference, ACRMTA, on all the fields that are subscripts in Mapping
+ Targets Index entries that are above the Mapping Targets multiple. These
+ fields are: Date Last Modified, Status, Priority, and Condition.  Now when
+ any of these fields are changed the Mapping Targets entry will be properly
+ updated.
+  
+ 3) When utilizing the following menu option #6 in the Problem List Mgt
+ Menu, "Replace Removed Problem(s) on Patient's List", the process will 
+ hang and be stuck in an infinite loop, causing the user to be stuck in 
+ this menu option. This has been addressed so this no longer occurs.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking Ticket(s) & Overview:
+ -------------------------------------
+ 1. INC000001066799: POC reports two clinical reminders are giving errors 
+ when they are reviewed.  POC states the local support has gone through 
+ the error trap and the reminders belong to one patient and are in 
+ reference to an encounter in primary care on 9/30.  POC states this 
+ encounter is causing the reminders to error out.
+  
+ 2. INC000001083547: <UNDEFINED>PROBDATA+22^GMPLPXRM error when evaluating 
+ reminder V17 P DM Nephropathy.
+  
+ 3. INC000001088567: Received error in error trap: $ZE= 
+ <UNDEFINED>PROBDATA+22^GMPLPXRM.
+  
+ 4. INC000001101238: PROBDATA+22^GMPLPXRM - missing node and of course no 
+ data; how to fix?
+  
+ Test Sites:
+ ----------
+ Cleveland, OH
+ Heartland East HCS
+ Heartland West HCS
+ Loma Linda, CA
+ Palo Alto, CA
+ San Diego, CA
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Sites may retrieve the software and/or documentation directly using 
+ the Secure File Transfer Protocol (SFTP) address as directed by the CPRS
+ Implementation team. Installation instructions will be distributed when
+ your site begins the implementation process.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ The updated documentation will not be on the vdl until after the phased
+ deployment has completed.
+  
+ Patch Installation:
+ =================== 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Please refer to the "CPRS GUI v.30.b Installation Guide" for installation 
+ and set-up information. This document is exported as OR_30_350_IG.doc and
+ OR_30_350_IG.pdf and is included in OR_30_350.ZIP and will be emailed to 
+ the installation point of contacts by the CPRS Implementation team.
+  
+ Installation of these host files must be coordinated among the personnel 
+ affected because these host files will be installed in one installation 
+ session.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;Problem List;**[Patch List]**;Aug 25, 1994;Build 59
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMPLEDT4
+    Before: B27462939   After: B27439710  **5,43,42,47**
+Routine Name: GMPLPXRM
+    Before: B41114026   After: B54071956  **27,43,44,47**
+Routine Name: GMPLRPTR
+    Before: B14705450   After: B15126076  **28,47**
+Routine Name: GMPLSAVE
+    Before:B110665367   After:B112209796  **26,31,35,37,38,36,42,47**
+Routine Name: GMPLY47
+    Before:       n/a   After: B14338538  **47**
+ 
+Routine list of preceding patches: 28, 42, 44
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 09, 2014
+Completed By:                               Date Completed: MAR 07, 2016
+Released By :                               Date Released : MAR 08, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

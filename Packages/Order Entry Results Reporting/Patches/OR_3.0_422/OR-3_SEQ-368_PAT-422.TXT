@@ -1,0 +1,230 @@
+$TXT Created by               VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 01/13/16 at 14:46
+=============================================================================
+Run Date: SEP 20, 2016                     Designation: OR*3*422
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #368                      Status: Released
+                  Compliance Date: OCT 21, 2016
+=============================================================================
+
+Associated patches: (v)OR*3*424    <<= must be installed BEFORE `OR*3*422'
+
+Subject: REMOVE LIST MANAGER RESTRICTIONS ON MNEMONICS
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ The OR*3.0*422 patch allows the use of special characters (particularly 
+ punctuation) within the Order Menu Management Menu Editor. A previous 
+ VistA patch disallowed use of special characters. The patch was intended 
+ to prevent display problems within ListManager; however, most sites are 
+ using the Computerized Patient Record System (CPRS) Graphical User 
+ Interface (GUI) and the inability to utilize punctuation can negatively 
+ impact the clarity of menu options and instructions. This modification 
+ restores the ability to use certain special characters in Order Menu 
+ Management so that users can more clearly specify order menu options.
+  
+ Use of the following special characters will now be allowed: hyphen (-), 
+ comma (,), and equal sign (=). Use of the caret (^) and semicolon (;) 
+ are still restricted because they are used as field delimiters in VistA.
+  
+ Additional changes will be made to the Data Dictionary elements of the 
+ ORDER DIALOG (#101.41) file to modify the Help displayed when entering a 
+ question mark at a VistA prompt. The affected fields are: 
+  
+ * ORDER DIALOG (#101.41) file, DISPLAY TEXT (#2) field 
+  
+ * ORDER DIALOG (#101.41) file, ITEMS (#10) sub-file, DISPLAY TEXT (#4) 
+ field 
+  
+ This intake has been implemented locally at the VA centers in Fargo, ND; 
+ Sioux Falls, SD; Meade, MD; Minneapolis, MN; Omaha, NE; Richmond, VA; St. 
+ Cloud, MN; Seattle, WA; Milwaukee, WI; Hot Springs, AR; Des Moines, IA; 
+ and Iowa City, IA. 
+  
+ The NSR for this intake addresses the following requirement: 
+  
+ * VHBAO: NEED3045 Provide the ability for the users to include 
+ punctuation and other special characters in CPRS order menu notes.
+  
+ Patch Components
+ ================
+ Files & Fields Associated:
+  
+ File Name (Number)       Field Name (Number)       New/Modified/Deleted
+ ---------------------    --------------------      --------------------
+ ORDER DIALOG (#101.41)   DISPLAY TEXT (#2)         MODIFIED
+  
+ ORDER DIALOG,
+ ITEMS (#101.412)         DISPLAY TEXT (#4)         MODIFIED
+  
+ Forms Associated:
+  
+ Form Name                File #       New/Modified/Deleted
+ ---------                ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       --------------------
+ N/A
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ----------------------------
+ NSR 20131108 REMOVE LISTMANAGER RESTRICTIONS ON MNEMONICS
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+  
+  
+ Test Sites:
+  
+ Hunter Holmes McGuire VA Medical Center (Richmond)
+ Orlando VA Medical Center
+ William S. Middleton Memorial Veterans Hospital (Madison)
+ VA Central Plains Health Care System (Omaha, Lincoln, Grand Island of NE, 
+ Des Moines, Knoxville, Iowa City of IA)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing the
+ new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                             File Name                  FTP Mode
+ -----------------------------------------------------------------------
+ CPRS RELEASE NOTES: GUI VERSION   OR_3_0_422_RN.PDF          binary
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ Pre-Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions
+ -----------------------------
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+         the Installation Menu.  From this menu, you may elect to use the 
+         following options. When prompted for the INSTALL NAME enter
+         OR*3.0*422.
+  
+         a. Verify Checksums in Transport Global - This option will 
+             allow you to ensure the integrity of the routines that are in
+             the transport global.
+         b. Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c. Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d. Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+         and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO// Press <Enter>
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO// Press <Enter>
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO// Press <Enter>
+  
+ 8.      If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+ Post-Installation Instructions
+ ==============================
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCMEDT2
+    Before: B73958895   After: B73834836  **8,46,95,422**
+Routine Name: ORUTL
+    Before: B85894949   After: B85871234  **95,280,218,350,422**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 13, 2015
+Completed By:                               Date Completed: SEP 20, 2016
+Released By :                               Date Released : SEP 20, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

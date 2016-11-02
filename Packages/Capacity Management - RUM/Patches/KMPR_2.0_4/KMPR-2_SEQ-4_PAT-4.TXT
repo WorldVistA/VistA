@@ -1,0 +1,195 @@
+
+=============================================================================
+Run Date: AUG 29, 2016                     Designation: KMPR*2*4
+Package : KMPR - CAPACITY MANAGEMENT - RUM    Priority: Mandatory
+Version : 2         SEQ #4                      Status: Released
+                  Compliance Date: SEP 29, 2016
+=============================================================================
+
+Associated patches: (v)KMPR*2*2    <<= must be installed BEFORE `KMPR*2*4'
+
+Subject: UPDATE PATCH LIST INFORMATION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The routine KMPRUTL includes a section detailing which patches have been 
+ released for specific routines. It is used to audit the package as this 
+ package runs automatically in the background. This list is currently not 
+ up to date.
+  
+  
+ Blood Bank Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch KMPR*2.0*4 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches. Patch
+ KMPR*2.0*4 does not alter or modify any software designs, safeguards or
+ safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch KMPR*2.0*4 have no effect on Blood 
+ Bank Software functionality, therefore RISK is none.
+  
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exists as a result of 
+ installation of this patch.
+  
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)        Field Name (Number)   New/Modified/Deleted
+ ------------------        -------------------   --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name         File #         New/Modified/Deleted
+ ---------         ------         --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name          Type        New/Modified/Deleted
+ -----------          ----        --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                    New/Modified/Deleted
+ -------------                    --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)   New/Modified/Deleted
+ -------------     ----     ------------------   --------------------
+ N/A
+  
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ No associated Remedy Tickets
+  
+  
+ Problem:
+ --------
+ The list of patches used to verify package integrity is not up to date.
+  
+ Resolution:
+ -----------
+ Update the patch list in the routine KMPRUTL
+  
+  
+ Test Sites:
+ -----------
+ Bay Pines VA Healthcare System
+ VA Connecticut HCS (West Haven, Newington)
+ Edward Hines Jr. VA Hospital (Hines)
+  
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ There is no updated documentation. Current documentation is available on 
+ the VistA Document Library.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve software directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+  
+  Albany            domain.ext
+  Hines             domain.ext
+  Salt Lake City    domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Installation Guide              kmpr2_0ig.pdf                   binary
+ User's Manual                   kmpr2_0um.pdf                   binary
+ Technical Manual                kmpr2_0tm.pdf                   binary
+  
+  
+ Patch Installation:
+  
+ Installation Instructions:
+ --------------------------
+  
+ **************************************************************************
+ *  Due to the technical, functional and logical dependencies between     *
+ *  this and other Capacity Management packages this patch will be        *
+ *  released with XU*8.0*568.  Please see Patch XU*8.0*568                *
+ *  for installation instruction                                          *
+ **************************************************************************
+  
+ Checksum and 2nd Line Information:
+ ----------------------------------
+  
+ The second lines of the routine should be as follows:
+ ;;2.0;CAPACITY MANAGEMENT - RUM;**1,2,4**;May 28, 2003;Build 41
+  
+ The checksums below are new checksums, and
+  can be checked with CHECK1^XTSUMBLD.
+  
+ Routine Name: KMPRUTL
+     Before: B12744359   After: B12482343  **1,2,4**
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 07, 2015
+Completed By:                               Date Completed: AUG 25, 2016
+Released By :                               Date Released : AUG 29, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

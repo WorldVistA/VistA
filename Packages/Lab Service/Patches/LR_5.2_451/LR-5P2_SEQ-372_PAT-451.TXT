@@ -1,0 +1,267 @@
+
+=============================================================================
+Run Date: OCT 05, 2016                     Designation: LR*5.2*451
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #372                    Status: Released
+                  Compliance Date: NOV 05, 2016
+=============================================================================
+
+Associated patches: (v)LR*5.2*334  <<= must be installed BEFORE `LR*5.2*451'
+
+Subject: NLT/LOINC V2.52 UPDATE
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Laboratory Logical Observation Identifiers Names and Codes (LOINC) are 
+ intended to incorporate efficiencies in the Department of Veterans 
+ Affairs (VA) VistA Laboratory system in relationship to regular updates 
+ to the LOINC in use.  The LAB LOINC file (#95.3) currently contains LOINC 
+ version 2.14 which was released in 2007.  Goal of this patch is the update
+ of 95.3 LAB LOINC and Related Files to the current 2.52 version.
+  
+ Files updated in this patch:
+ 95.3      LAB LOINC
+ 95.31     LAB LOINC COMPONENT
+ 64        WKLD CODE
+ 64.061    LAB ELECTRONIC CODES
+ 64.2      WKLD SUFFIX CODES
+ 64.21     WKLD CODE LAB SECT
+  
+ BLOOD BANK CLEARANCE
+ ====================
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*451 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*451 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*451 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENT BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Enhancement:  There is no file content update affecting Blood bank.
+  
+ LOINC Copyright acknowledgement:
+ ================================
+  
+ 1995-2015, Regenstrief Institute, Inc. and the Logical Observation
+ Identifiers Names and Codes (LOINC) Committee. All rights reserved.
+ LOINC is a trademark of the Regenstrief Institute.
+  
+ Contact information:
+ LOINC c/o Regenstrief Center for Biomedical Informatics
+ The Regenstrief Institute, Inc
+ 410 West 10th Street, Suite 2000
+ Indianapolis, IN 46202-3012
+  
+ DATA DICTIONARY MODIFICATIONS
+ =============================
+ Modification of 95.3 LAB LOINC file:
+ =====================================
+ Field #95.3,20 was modified as follows:
+ Two new members of the SET were added:
+         Code 2 = TRIAL
+         Code 3 = DISCOURAGED
+  
+ 95.3,20       STATUS                 4;1 SET
+  
+                                 '1' FOR DEL; 
+                                 '2' FOR TRIAL; 
+                                 '3' FOR DISCOURAGED; 
+  
+ New LAB LOINC file (#95.3) Data Elements
+ This section describes the new data elements being added to the LAB LOINC 
+ file (#95.3).
+  
+ The following are the data elements have been added:
+  
+ 95.3,82       VA COMMON DISPLAY NAME 82;E1,100 FREE TEXT
+  
+ Field #95.3,83
+ 95.3,83       LONG COMMON NAME       83;E1,245 FREE TEXT
+  
+ Field #95.3,84 
+ 95.3,84       EXTERNAL COPYRIGHT NOTICE 84;0   WORD-PROCESSING #95.384
+                      (IGNORE "|")
+  
+ Field #95.3,85 
+ 95.3,85       EXAMPLE UCUM UNITS     85;E1,245 FREE TEXT
+  
+ Field #95.3,86 
+ 95.3,86       REPEAT OBSERVATION     86;E1,245 FREE TEXT
+  
+ There is the special treatment to transfer WKLD file 64. This file 
+ cannot be shipped like the other files which delete all data in each file 
+ and then copy all data that is shipped. This routine copies the entire 
+ file #64 to the TRANSPORT sub-file (field #17) of the LAB NLT/CPT CODES 
+ file (#64.81). The post install routine of patch LR451 uses file #64.81 to 
+ update file #64 on site.
+  
+ SFTP SOFTWARE RETRIEVAL:
+ =======================
+  
+ KIDS Distribution Host File:                LR_52_451.KID  (ASCII)
+  
+ The host file is 55 MB in size and could take up to 3 to 5 minutes to SFTP.
+  
+    The preferred method is to SFTP the files from download.vista.domain.ext,
+    which will transmit the files from the first available SFTP server.
+  
+    The files may also be downloaded directly from a particular SFTP
+    location at the following locations:
+  
+         Hines           domain.ext
+         Albany          domain.ext
+         Salt Lake       domain.ext
+  
+         Files are available in the ANONYMOUS.SOFTWARE directory. 
+  
+ KIDS Installation:
+ ==================
+  
+ Size/Disk Space Requirements
+ ============================
+         The changes to the LAB globals will result in a combined growth
+         of about 50 MB of data.  Make sure there is sufficient space for
+         the growth to the VistA globals.
+  
+ Before Installation:
+ ====================
+ If this is the reinstallation, please call support center for assistance,
+ if this is regular (first) installation, please process with next step.
+  
+ **IMPORTANT**: Back up the Laboratory global data files; this is 
+ necessary if the data must be restored.
+  
+ Back up data files using your site's policy for backing up data.
+ If the steps are unknown, here is a way it can be done:
+ 1.      Go to a command prompt.
+ 2.      At the prompt, enter D GOGEN^%ZSPECIAL.
+ 3.      At the device prompt, enter the name of the local directory where
+         the file is to be stored with the name of the file.
+ 4.      At the Parameters? Prompt, press <enter>.
+ 5.      At the Global prompt, enter the file globals below
+  
+             LAB LOINC                   #95.3        ^LAB(95.3,
+             LAB LOINC COMPONENT         #95.31       ^LAB(95.31,
+             WKLD CODE                   #64          ^LAM
+             WKLD SUFFIX CODES           #64.2        ^LAB(64.2,
+             LAB ELECTRONIC CODES        #64.061      ^LAB(64.061,
+             WKLD CODE LAB SECT          #64.21       ^LAB(64.21,
+  
+ 6.      Verify that the file was created and exists in the directory specified.
+  
+ These backup files may get as large as 50 MB.  Make sure space is available
+ before proceeding.  It should take from 5 to 10 minutes to create the backup files.
+  
+ EXAMPLE: 
+ VISTA>d GOGEN^%ZSPECIAL
+  
+ Device: <drive><directory><station>_PRE_LR451_DATA_FILE_BKUP_<current date>.GBL
+  
+ Where:      <drive> = local drive used to store files
+         <directory> = local file directory used to store files
+           <station> = VA station number to identify facility
+  
+ Parameters? "WNS" => 
+ Warning:  Use a "V" format to avoid problems with control characters.
+ Global ^LAM -- NOTE: translation in effect
+ Global ^LAB(64.2 -- NOTE: translation in effect
+ Global ^LAB(64.21 -- NOTE: translation in effect
+ Global ^LAB(64.061 -- NOTE: translation in effect
+ Global ^LAB(95.3 -- NOTE: translation in effect
+ Global ^LAB(95.31 -- NOTE: translation in effect
+ Global ^
+  
+ Installation Instructions
+ ===========================
+ LABORATORY USERS MUST NOT ACCESSION SPECIMENS OR ENTER/VERIFY RESULTS
+ DURING THE INSTALLATION
+  
+ No laboratory background jobs need to be stopped. No options need to be 
+ placed out of service.
+  
+ All users may remain on the system. Installation time is less than 45 
+ minutes. An Alert is sent to G.LMI when the install starts and finishes.
+  
+ Note: The patch should be installed during off peak hours.
+   
+ Part of installation is the Symbol Table is dumped into
+ Error trap. This may help to trace any issue from installation.
+  
+  
+     1)  From the Kernel Installation & Distribution System menu, select 
+         the Installation menu
+  
+     2)  From this menu, select the option Load a Distribution and select
+         LR_52_451.KID 
+  
+     3)  KIDS Installation:
+  
+         Install the patch using the KIDS Installation Menu action
+         "Install Package(s)" and the install name LR*5.2*451.
+  
+           Respond "NO" at the "Want KIDS to INHIBIT LOGONs during
+           the install?" prompt.
+  
+           Respond "NO" at the "Want to DISABLE Scheduled Options,
+           Menu Options, and Protocols?" prompt.
+  
+         The KIDs install should take from 4-9 minutes
+  
+     4)  Cleanup
+            The PRE and POST installation routine LR451 may be deleted using
+            the KERNEL option 'Delete Routines' [XTRDEL] upon completion of
+            the installation.
+  
+ Testing Sites:
+ ============== 
+ Orlando VA Medical Center
+ Tampa (Florida)
+ VA Boston Health Care System (Boston, Brockton, West Roxbury)
+ VISN 2 Upstate New York Health Care System 
+ (Buffalo, Batavia, Canandaigua, Syracuse, Bath, Albany)
+  
+ OTHER CHANGES
+ =============
+ n/a
+  
+ REQUEST/INCIDENTS
+ =================
+ n/a
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 49
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR451
+    Before:       n/a   After:B100464367  **451**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 27, 2015
+Completed By:                               Date Completed: OCT 04, 2016
+Released By :                               Date Released : OCT 05, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

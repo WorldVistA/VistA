@@ -1,0 +1,603 @@
+$TXT Created by                 CPRS28.DOMAIN.EXT  (KIDS) on Thursday, 01/21/16 at 12:22
+=============================================================================
+Run Date: AUG 17, 2016                     Designation: GMPL*2*40
+Package : GMPL - PROBLEM LIST                 Priority: Mandatory
+Version : 2        SEQ #43                      Status: Released
+                  Compliance Date: SEP 17, 2016
+=============================================================================
+
+Associated patches: (v)GMPL*2*42   <<= must be installed BEFORE `GMPL*2*40'
+
+Subject: Erroneous Problem File Cleanup
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will correct several types of erroneous Problem File entries.
+ One of these include entries that contain a SNOMED CT (SCT) concept code
+ in the Diagnosis (#.01) field. This is caused by updating problems with
+ inactive ICD-9 diagnoses via the Diagnosis tab of the encounter form
+ dialog of CPRS v30A. When this occurs the SCT concept code is incorrectly
+ stored into the Diagnosis field. As a result, the corresponding details
+ display and audit history are also rendered incorrectly. This particular 
+ issue will be resolved in CPRS GUI v30B.
+  
+ This patch will perform a file scan and cleanup of these erroneous 
+ entries. Once these tasks have completed and errors have been found, two 
+ separate MailMan messages will be generated to the installer with 
+ instructions on how to access both the error and cleanup reports.
+  
+ Sample Error Scan Complete message:
+  
+ Subj: Problem File Error Scan Complete  [#151756] 07/01/15@12:56  14 lines
+ From: GMPL*2.0*40 INSTALL  In 'IN' basket.   Page 1  *New*
+ --------------------------------------------------------------------------
+ A scan of your system's Problem file #9000011 has been performed for 
+ possible errors. There are 9 record entries that contain a SNOMED CT
+ concept code in the Diagnosis field #.01.
+  
+ To see a report of these records, please access the SNOMED in Diagnosis 
+ Field Error Report [GMPL DIAG ERROR REPORT] which is attached to the
+ Problem List Mgt Menu [GMPL MGT MENU].
+  
+ These record entries will initially be corrected with the installation of
+ GMPL*2.0*40 or by running the Generate SNOMED in Diagnosis Field 
+ Err/Cleanup Rpt [GMPL GENERATE DIAG RPTS] menu option off the Problem List
+ Mgt Menu.
+  
+ Once the cleanup is complete, a separate MailMan message will be sent to 
+ the installer containing instructions on how to access the cleanup report.
+  
+  
+ Sample Cleanup Complete message:
+  
+ Subj: SNOMED Error Cleanup Complete  [#151757] 07/01/15@12:56  7 lines
+ From: GMPL*2.0*40 INSTALL  In 'IN' basket.   Page 1  *New*
+ ------------------------------------------------------------------------
+ A cleanup of the Problem file has been performed and 9 record
+ entries have been corrected. 
+  
+ These entries no longer contain a SNOMED CT concept code in the Diagnosis
+ field #.01. To see a report of these corrected records, please access the
+ SNOMED in Diagnosis Field Cleanup Report [GMPL DIAG CLEANUP REPORT] which
+ is attached to the Problem List Mgt Menu [GMPL MGT MENU].
+  
+  
+ If no errors are found by the scan, then the following example message 
+ will be generated to the installer:
+  
+ Subj: Problem File Error Scan: No Errors Found  [#68471] 07/09/15@14:04  
+ From: GMPL*2.0*40 INSTALL  In 'IN' basket.   Page 1
+ --------------------------------------------------------------------------
+ A scan of your system's Problem file #9000011 has been performed on:
+ Jul 09, 2015@14:04:24
+  
+ No errors were found that contain a SNOMED CT concept code in the
+ Diagnosis field #.01.
+  
+  
+ Three new menu options are exported and attached to the Problem List Mgt
+ Menu [GMPL MGT MENU]:
+  
+ 1. SNOMED in Diagnosis Field Error Report [GMPL DIAG ERROR REPORT]
+ 2. SNOMED in Diagnosis Field Cleanup Report [GMPL DIAG CLEANUP REPORT]
+ 3. Generate SNOMED in Diagnosis Field Err/Cleanup Rpt [GMPL GENERATE DIAG
+    RPTS]
+  
+ The first two provides a user access to both the error and cleanup 
+ reports respectively. The third option allows a user to rerun the file 
+ scan and cleanup tasks for any potential new errors.
+  
+ Sample Error Report:
+  
+                Erroneous Problem File Record Entries Report
+  
+ **NOTE**: This report is retroactive as of the last Problem file scan 
+ runtime: Jul 09, 2015@13:00:32. This report will expire and be purged from
+ the system in 30 days. If the Generate SNOMED in Diagnosis Field
+ Err/Cleanup Rpt [GMPL GENERATE DIAG RPTS] menu option is run prior to the
+ 30 days, then this report will expire on the date/time the option is run.
+ Whichever comes first.
+  
+ A scan of your system's Problem file #9000011 has been performed for 
+ possible errors. The following 9 record entries contain a SNOMED CT
+ concept code in the Diagnosis field #.01. This report contains 4 columns.
+ Please scroll to the right to see a full display of the Problem text.
+  
+ These record entries will be corrected and upon completion, a separate 
+ MailMan message will be sent to the installer containing instructions on
+ how to access the cleanup report.
+  
+  
+                   DATE LAST
+ IEN               MODIFIED       DIAGNOSIS            PROBLEM
+ ---------------   ------------   ------------------   --------------------
+ 285               MAY 28, 2015   443694000            Unresolved
+ 400               MAY 28, 2015   88805009             Chronic Systolic... 
+ 730               MAY 28, 2015   1201005              Hypertension
+ 851               MAY 28, 2015   267434003            Hyperlipidemia
+ 1075              MAY 28, 2015   63480004             Bronchitis
+ 1077              MAY 28, 2015   68449006             Arthritis, Rhemat...
+ 1079              MAY 28, 2015   25702006             Alcohol Dependence
+ 1080              MAY 28, 2015   193031009            
+ 1177              JUN 10, 2015   230572002            Unresolved
+  
+  
+ Sample Cleanup Report:
+  
+                       Problem File Cleanup Report
+  
+ **NOTE**: This report is retroactive as of the last Problem file cleanup 
+ runtime:Jul 09, 2015@13:00:32. This report will expire and be purged from
+ the system in 30 days. If the Generate SNOMED in Diagnosis Field
+ Err/Cleanup Rpt [GMPL GENERATE DIAG RPTS] menu option is run prior to the
+ 30 days, then this report will expire on the date/time the option is run.
+ Whichever comes first.
+  
+ A cleanup of the Problem file has been performed and the following 9
+ record entries have been corrected. This report contains 7 columns.
+ Please scroll to the right for more information.
+  
+ These entries no longer contain a SNOMED CT concept code in the Diagnosis 
+ field #.01. The correct primary ICD diagnosis and secondary diagnosis
+ code(s) is now stored in the appropriate fields. The corresponding SNOMED
+ CT concept and designation codes have also been correctly filed in their
+ respective fields. The provider narrative and problem fields were also
+ updated accordingly as well.
+  
+  
+                   DATE LAST      PRIMARY                          SNOMED C
+ IEN               MODIFIED       DIAGNOSIS   SECONDARY DIAGNOSIS  CONCEPT 
+ ---------------   ------------   ---------   -------------------  -------
+ 285               MAY 28, 2015   250.02                           44369...
+ 400               MAY 28, 2015   428.0                            88805...
+ 730               MAY 28, 2015   401.1                            12010...
+ 851               MAY 28, 2015   272.2                            26743...
+ 1075              MAY 28, 2015   491.9                            63480...
+ 1077              MAY 28, 2015   716.60                           68449...
+ 1079              MAY 28, 2015   305.00                           25702...
+ 1080              MAY 28, 2015   339.00                           19303...
+ 1177              JUN 10, 2015   250.60      355.9                23057...
+  
+  
+ Consequently the details display and audit history will be corrected as 
+ well and no longer display the erroneous messages respectively: No Code
+ Selected and Invalid coding system specified.
+  
+  
+ The other erroneous Problem File entries that will be corrected originate 
+ from a Patient Safety issue (PSPO 2868) where it was determined that the 
+ SNOMED mapping for the term,"History of polyp of colon" was incorrectly 
+ mapped. The SCT code 428283002 was mapped to the incorrect ICD-9 
+ diagnosis code V15.89. The description for this V code, "Other specified 
+ personal history presenting hazards to health" did not correspond with 
+ the above SNOMED description. It was determined that the ICD-9 code of 
+ V12.72 (Personal History of Colonic Polyps) was more appropriate for this
+ mapping. 
+  
+ This caused the Colonoscopy reminders to fail to trigger correctly. With 
+ the Clinical Reminders ICD-10 project, clinical reminders was updated to 
+ allow the use of ICD-10-CM and SNOMED CT codes in taxonomies. After 
+ ICD-10-CM and SNOMED CT codes have been added to taxonomy, they will be 
+ included in the list of codes to search for during reminder evaluation. 
+ For example, in order to search the Problem List for an ICD-9 diagnosis 
+ code or a SNOMED CT code, both of the codes have to be in the taxonomy. 
+ This enhancement was completed in PXRM*2.0.26 which is part of a 
+ multi-package build containing DG*5.3*862, GMPL*2.0*44, and PXRM*2.0*26. 
+ This build was released July 24, 2015 so it should be installed at all 
+ sites.
+  
+ CAC's will need to verfiy that the SNOMED CT codes are added to the 
+ taxonomies so that the linked colonoscopy reminders are triggering 
+ correctly even with an incorrect ICD-9 code or mapping. This was a 
+ workaround that could have been utilized.
+  
+ This patch scans the Problem File for these incorrect mappings and 
+ performs any necessary corrections. If any incorrect mappings are found, 
+ a mapping report will be generated to the installer via a MailMan message.
+  
+ Sample Mapping Report:
+  
+ Subj: Incorrect Mapping Report  [#160093] 01/14/16@14:32  21 lines
+ From: GMPL*2.0*40 INSTALL  In 'IN' basket.   Page 1
+ --------------------------------------------------------------------------
+  
+ Problem file scan runtime: Jan 14, 2016@14:32:58
+  
+ A scan of your system's Problem file #9000011 has been performed for 
+ possible errors. There are 5 record entries that contain an incorrect
+ SNOMED CT 428283002 to ICD-9-CM V15.89 code mapping for the term "History
+ of polyp of colon". As a result the V15.89 code is incorrectly stored in
+ the Diagnosis field #.01.
+  
+ This report contains a list of these erroneous record entries which will 
+ be corrected after the installation of GMPL*2.0*40. Once the cleanup is
+ complete, the correct V12.72 code will be stored in the Diagnosis field.
+  
+ **ATTENTION CACs!!**: Once the cleanup is complete, please also review the
+ Colonoscopy clinical reminders for the corresponding patients and verify 
+ that the corrections have been updated appropriately for those as well.
+  
+  
+ IEN               PATIENT                       PROVIDER NARRATIVE
+  
+ Subj: Incorrect Mapping Report  [#160093]   Page 2
+ --------------------------------------------------------------------------
+ -------           --------------------          --------------------------
+ 1243              CPRSPATIENT,FIVE              History of polyp of colon
+ 1244              CPRSPATIENT,ELEVEN            History of colonic polyp
+ 1245              CPRSPATIENT,FOUR              History of colonic polyp
+ 1246              CPRSPATIENT,TEN               History of polyp of colon
+ 1247              CPRSPATIENT,TWENTY            History of polyp of colon
+  
+  
+ If no incorrect mappings are found, the following sample message is 
+ generated to the installer:
+  
+ Subj: Incorrect Mapping Scan: No Errors Found  [#160096] 01/14/16@14:51  
+ 5 lines
+ From: GMPL*2.0*40 INSTALL  In 'IN' basket.   Page 1
+ --------------------------------------------------------------------------
+ A scan of your system's Problem file #9000011 has been performed on:
+ Jan 14, 2016@14:51:35
+  
+ No incorrect SNOMED CT 428283002 to ICD-9-CM V15.89 code mappings
+ for the term "History of polyp of colon" were found.
+  
+  
+ If any corrections are made, the following sample cleanup complete 
+ message is generated to the installer:
+  
+ Subj: Incorrect Mapping Cleanup Complete  [#160094] 01/14/16@14:32  5 
+ lines
+ From: GMPL*2.0*40 INSTALL  In 'IN' basket.   Page 1
+ --------------------------------------------------------------------------
+ A cleanup of the Problem file has been performed and 5 record
+ entries have been corrected.
+  
+ These entries no longer contain an incorrect mapping and a V15.89 code in 
+ the Diagnosis field #.01. The correct code of V12.82 is now stored in this
+ field.
+  
+  
+ Additionally once the corrections have completed, the audit history of 
+ the corresponding problems will also be updated appropriately under the 
+ Details display.
+  
+ ---------- Audit History ----------
+ 1/14/16: DIAGNOSIS changed by CPRSPROVIDER,ONE from (ICD-9-CM V15.89) to 
+ (ICD-9-CM V12.72)
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                     Type               New/Modified/Deleted
+ -----------                     ----               -------------------- 
+ GMPL DIAG ERROR REPORT         Action                      New
+ GMPL DIAG CLEANUP REPORT       Action                      New
+ GMPL GENERATE DIAG RPTS        Action                      New
+ GMPL MGT MENU                   Menu            Use as link for menu items
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ 1. PSPO 2868: The ICD-9-CM code for the diagnosis of "History of colonic 
+ polyp" in CPRS incorrectly corresponds to V15.89 "Other specified 
+ personal history presenting hazards to health". This caused the 
+ Colonoscopy reminders to not function correctly.
+  
+ Resolution: Correct the entries in the Problem File so that it is mapped 
+ to the correct ICD-9 code of V12.72.
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ 1. INC000001219700: An ICD-9 code is incorrect in CPRS but shows up 
+ correct in VistA.
+  
+ Resolution: Correct the entries in the Problem File so that it is mapped 
+ to the correct ICD-9 code of V12.72.
+  
+  
+ Test Sites:
+ ----------
+ Detroit
+ Hines
+ Providence 
+  
+ Software and Documentation Retrieval Instructions:
+ ------------------------------------------------- 
+ Software and/or documentation describing the new functionality introduced
+ by this patch are available.
+  
+ Since this patch is released via a packman message, it can be retrieved
+ using the 'Forward a Released Patch message' option under the Patch User
+ Menu in FORUM.
+  
+ Documentation files can be retrieved from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following 
+ OI&T Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ File Description               File Name                      FTP Mode
+ ----------------------------------------------------------------------
+ Technical Manual               gmpl_2_0_40_tm.pdf             (binary)
+ User Manual                    gmpl_2_0_40_um.pdf             (binary) 
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no special considerations for pre-installation. However there 
+ is a post-installation routine (GMPLY40) included. This routine will be 
+ automatically deleted once installation has completed.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ This patch loads several routines and may be installed with users on 
+ the system although it is STRONGLY recommended that it be installed during
+ non-peak hours to minimize potential disruption to users. This patch
+ should take less than 1 minute to install.
+  
+ **NOTE: Users should stay out of the Problem List Application entirely 
+ during the installation of this patch as a file scan and cleanup is 
+ potentially performed. Utilizing the Problem List during the file scan & 
+ cleanup tasks could lock up certain records and prevent them from being 
+ successfully corrected. If this should occur, a MailMan message will be 
+ generated to the installer identifying those records.
+  
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(ex. GMPL*2.0*40):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+     Install? NO//', respond with NO. KIDS will automatically attach the 
+     new menu options to the designated menu tree during the installation 
+     process. There is no need to rebuild the menu trees upon completion 
+     of installation.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', response with NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', respond with YES. Disable all GMPL* options and 
+     protocols. NOTE: GMPL MGT MENU option may not disable due to the 
+     build configuration. This is ok as the new menu options should be 
+     attached as sub-items during installation.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ The post-install routine will call an API that will queue the file scan 
+ and cleanup tasks for the Problem file. It is imperative that users stay 
+ out of the Problem List until the installer has received messages that 
+ these tasks have completed.
+  
+  
+ Backout Plan:
+ -------------
+ If for some reason this patch needs to be backed out, the following are 
+ the instructions.
+  
+ 1) If a backup of the routines have been created using the "Backup a 
+ Transport Global" option in Step 3 of the Patch Installation, then the
+ original routines can be restored by installing the Backup Packman
+ (MailMan) message.
+  
+  
+ Subj: Backup of GMPL*2.0*40 install on May 16, 2016  [#70907] 
+ 05/16/16@12:07 933 lines
+ From: INSTALLER,ONE  In 'IN' basket.   Page 1
+ --------------------------------------------------------------------------
+ $TXT PACKMAN BACKUP Created on Monday, 5/16/16 at 12:07:41 by 
+ INSTALLER,ONE at XXXXX.DOMAIN.EXT
+ $ROU GMPLUTL (PACKMAN_BACKUP)
+ ...
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+  
+ Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// Y
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 467  Message #70907     Unloading Routine   GMPLUTL (PACKMAN_BACKUP)
+ Line 678  Message #70907     Unloading Routine   GMPLX (PACKMAN_BACKUP)
+  
+  
+ 2) The three new menu options can be removed via FileMan:
+  
+ VA FileMan 22.2
+  
+  
+ Select OPTION: ENTER OR EDIT FILE ENTRIES  
+  
+  
+ Input to what File: OPTION//
+ EDIT WHICH FIELD: ALL// 
+  
+  
+ Select OPTION NAME: GMPL DIAG ERROR REPORT       SNOMED in Diagnosis 
+ Field Error Report
+ NAME: GMPL DIAG ERROR REPORT  Replace @
+    SURE YOU WANT TO DELETE THE ENTIRE 'GMPL DIAG ERROR REPORT' OPTION? Y  
+ (Yes)
+ SINCE THE DELETED ENTRY MAY HAVE BEEN 'POINTED TO'
+ BY ENTRIES IN THE 'AUDIT' FILE, ETC.,
+ DO YOU WANT THOSE POINTERS UPDATED (WHICH COULD TAKE QUITE A WHILE)? No// 
+ Y (Yes)
+ WHICH DO YOU WANT TO DO? --
+     1) DELETE ALL SUCH POINTERS
+     2) CHANGE ALL SUCH POINTERS TO POINT TO A DIFFERENT 'OPTION' ENTRY
+  
+ CHOOSE 1) OR 2): 1
+ DELETE ALL POINTERS? Yes//   (Yes)
+     (DELETION WILL OCCUR WHEN YOU LEAVE 'ENTER/EDIT' OPTION)
+  
+  
+ Select OPTION NAME: GMPL DIAG CLEANUP REPORT       SNOMED in Diagnosis 
+ Field Cleanup Report
+ NAME: GMPL DIAG CLEANUP REPORT  Replace @
+    SURE YOU WANT TO DELETE THE ENTIRE 'GMPL DIAG CLEANUP REPORT' OPTION? Y
+   (Yes)
+ SINCE THE DELETED ENTRY MAY HAVE BEEN 'POINTED TO'
+ BY ENTRIES IN THE 'AUDIT' FILE, ETC.,
+ DO YOU WANT THOSE POINTERS UPDATED (WHICH COULD TAKE QUITE A WHILE)? No// 
+ Y (Yes)
+ WHICH DO YOU WANT TO DO? --
+     1) DELETE ALL SUCH POINTERS
+     2) CHANGE ALL SUCH POINTERS TO POINT TO A DIFFERENT 'OPTION' ENTRY
+  
+ CHOOSE 1) OR 2): 1
+ DELETE ALL POINTERS? Yes//   (Yes)
+     (DELETION WILL OCCUR WHEN YOU LEAVE 'ENTER/EDIT' OPTION)
+  
+  
+ Select OPTION NAME: GMPL GENERATE DIAG RPTS       Generate SNOMED in 
+ Diagnosis Field Err/Cleanup Rpt
+ NAME: GMPL GENERATE DIAG RPTS  Replace @
+    SURE YOU WANT TO DELETE THE ENTIRE 'GMPL GENERATE DIAG RPTS' OPTION? 
+ Y  (Yes)
+ SINCE THE DELETED ENTRY MAY HAVE BEEN 'POINTED TO'
+ BY ENTRIES IN THE 'AUDIT' FILE, ETC.,
+ DO YOU WANT THOSE POINTERS UPDATED (WHICH COULD TAKE QUITE A WHILE)? No// 
+ Y (Yes)
+ WHICH DO YOU WANT TO DO? --
+     1) DELETE ALL SUCH POINTERS
+     2) CHANGE ALL SUCH POINTERS TO POINT TO A DIFFERENT 'OPTION' ENTRY
+  
+ CHOOSE 1) OR 2): 1
+ DELETE ALL POINTERS? Yes//   (Yes)
+     (DELETION WILL OCCUR WHEN YOU LEAVE 'ENTER/EDIT' OPTION)
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;Problem List;**[Patch List]**;Aug 25, 1994;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMPLCLN
+    Before:       n/a   After:B143436186  **40**
+Routine Name: GMPLCLNP
+    Before:       n/a   After: B88965830  **40**
+Routine Name: GMPLUTL
+    Before: B62326591   After: B62818534  **3,6,8,10,16,26,35,39,36,42,40**
+Routine Name: GMPLX
+    Before:B101606054   After:B102602938  **7,23,26,28,27,36,42,40**
+Routine Name: GMPLY40
+    Before:       n/a   After:    B38628  **40**
+ 
+Routine list of preceding patches: 42
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 09, 2009
+Completed By:                               Date Completed: AUG 16, 2016
+Released By :                               Date Released : AUG 17, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

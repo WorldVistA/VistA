@@ -1,0 +1,346 @@
+
+=============================================================================
+Run Date: AUG 29, 2016                     Designation: XU*8*568
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #523                      Status: Released
+                  Compliance Date: SEP 29, 2016
+=============================================================================
+
+Associated patches: (v)XU*8*456    <<= must be installed BEFORE `XU*8*568'
+                    (v)XU*8*550    <<= must be installed BEFORE `XU*8*568'
+
+Subject: SAGG FOR LINUX AND VMS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch enables the Statistical Analysis of Global Growth (SAGG) 
+ package to work on the Linux operating systems. It also alters SAGG such 
+ that storage metrics are captured for all mounted volume sets.
+  
+ Related VistA Capacity Management patches are also included with this 
+ patch. These include KMPD*3.0*3, KMPR*2.0*4, KMPS*2.0*1 and KMPV*1.0*0.
+ Please see related patch descriptions for details.
+  
+  
+ Blood Bank Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8.0*568 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches. Patch
+ XU*8.0*568 does not alter or modify any software designs, safeguards or
+ safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8.0*568 have no effect on Blood 
+ Bank Software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exists as a result of 
+ installation of this patch. 
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)        Field Name (Number)   New/Modified/Deleted
+ ------------------        -------------------   --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name         File #         New/Modified/Deleted
+ ---------         ------         --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name          Type        New/Modified/Deleted
+ -----------          ----        --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                    New/Modified/Deleted
+ -------------                    --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)   New/Modified/Deleted
+ -------------     ----     ------------------   --------------------
+ N/A
+  
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues(PSIs):
+ ----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ No associated Remedy Tickets
+  
+ Problem:
+ --------
+ SAGG was originally written to function on Windows and VMS operating 
+ systems. Storage metrics are not properly collected when Cache/VistA
+ is running on the Linux operating system. These metrics are needed to 
+ plan storage configuration and purchases.
+  
+ Resolution:
+ -----------
+ Re-write SAGG metric collection to utilize current Cache versions APIs to 
+ collect storage metrics on all operating systems.
+  
+  
+ Test Sites:
+ -----------
+ Bay Pines VA Healthcare System
+ VA Connecticut HCS (West Haven, Newington)
+ Edward Hines Jr. VA Hospital (Hines)
+  
+  
+  
+ Software/Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Software being released as a host file and documentation describing the 
+ new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve software directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+  
+  Albany            domain.ext
+  Hines             domain.ext
+  Salt Lake City    domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ KIDS Build                    XU_8_568.KID                    ASCII
+  
+ There are no changes to Kernel documentation. Please see Statistical
+ Analysis of Global Growth (SAGG), Resource Usage Monitor (RUM), CM Tools
+ and Vista System Monitor (VSM) documentation on the VistA Document Library
+ for changes to respective packages.
+  
+  
+  
+ Patch Installation:
+  
+ Note:  Patches XU*8.0*568, KMPD*3.0*3,KMPR*2.0*4, KMPS*2.0*1 and KMPV*1*0
+ will all be installed as part of host file XU_8_568.KID. Installation
+ instructions below are inclusive of all patches, though it is recommended
+ that installer read all related patch descriptions for awareness of
+ changes.
+  
+ Pre/Post Installation Overview:
+ ------------------------------- 
+ Prior to installation verify that there exists an entry for 
+ VISTA.CPE.DOMAIN.EXT in the DOMAIN file. If this entry does not exist 
+ then see informational patch XM*999*178 for instructions on adding this 
+ domain.
+  
+ Patches XU*8.0*568, KMPS*2.0*1 and KMPV*1*0 each have a post install 
+ routine that will run after patch installation. Post install routines 
+ will remain in the case they are needed. However, they can be deleted if 
+ desired once patch has been verified.
+  
+ The post installation routine ZOSVKSPI will save routines ZOSVKSOE, 
+ ZOSVKSOS and ZOSVKRO as %ZOSVKSE, %ZOSVKSD and %ZOSVKR respectively with 
+ a call to MOVE^%ZTMGRSET.
+  
+ The post installation routine for KMPS*2.0*1 removes entries from the 
+ G.A1B5@FO-BIRM.DOMAIN.EXT and G.A1B5@ISC-BIRM.DOMAIN.EXT mail groups.
+  
+ The post installation routine for KMPV*1*0 sets the proper values into 
+ the VSM CONFIGURATION and VSM MONITOR DEFAULTS files. 
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install. A menu rebuild will occur when the patch is installed.
+  
+ This installation can be queued. However, the post-installation step to 
+ verify the "KMPS SAGG PROJECT" option is queued in TaskMan still needs to
+ be completed seperately. 
+  
+  
+ Installation Instructions: 
+ --------------------------
+  
+ 1. Retrieve the host file from the ANONYMOUS.SOFTWARE directory at one of
+    the OI Field Offices.  The preferred method is to SFTP the file from
+    DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first
+    available server.  Alternatively, sites may elect to retrieve the file
+    from a specific OI Field Office.
+  
+    OI FIELD OFFICE     SFTP ADDRESS                    DIRECTORY
+    Albany              DOMAIN.EXT       
+    Hines               DOMAIN.EXT        
+    Salt Lake City      DOMAIN.EXT          
+  
+    The software distribution includes:
+  
+  FILE NAME             DESCRIPTION             FORMAT
+  ---------             ------------            ------
+  XU_8_568.KID           KIDS Build Host File   ASCII  
+  
+ 2. From the Kernel Installation and Distribution System Menu, select
+    the Installation Menu.  From this menu, select the option Load a 
+    Distribution and select XU_8_568.KID. KIDS will load all patches
+    from the host file.  
+  
+  
+ 3. From the Installation Menu, you may elect to use the following options.
+    When prompted for the INSTALL NAME enter the patch XU*8.0*568:
+                                          
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install, XU*8.0*568.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? YES//' enter 'YES'.     
+  
+         Note: Menu options for the KMPS*2.0*1 patch need to be rebuilt.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' enter 'NO'.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//  enter 'NO'.
+  
+         Options, menu options, or protocols  do not need to be disabled.
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Once this patch has been installed, the VSM Driver Task must be added to 
+ the Cache Task Manager. (Not VistA TaskMan). The installer must have
+ either the %All or the %Manager Role to accomplish this task.
+  
+ The installer must:
+   1. Log directly on to each Front End node and on to the Back End Node.
+   2. Navigate to a command prompt in the default namespace.
+   3. Execute the following:  D KMPVTSK^KMPVCBG
+   4. If this causes an error please send a MailMan message to 
+      G.CPE-CP-SUPPORT@VISTA.CPE.DOMAIN.EXT. This most likely means that
+      your system is not configured with the standard default namespace
+      variable. This should be fixed unless there is a specific reason at
+      your site.
+  
+ These steps will add the VSM Driver Task to each node. This step is 
+ essential for the proper operation of the VistA System Monitor.
+  
+ Verify that the KMPS SAGG REPORT option is scheduled in TaskMan. If it is 
+ not then schedule this option using "Schedule/Unschedule Options [XUTM 
+ SCHEDULE]" under the "Taskman Management" menu. It should be scheduled to 
+ run every 28 days to ensure same day-of-week collection cycles. 
+  
+  
+ NOTES: 
+    1) If this is being installed in a test system, and if testing will be 
+ done on the test system, please send a Mailman Message to
+ G.CPE-CP-SUPPORT@VISTA.CPE.DOMAIN.EXT providing the domain name and I.P. 
+ address of the test system. This will allow acknowledgements to be sent 
+ back to the site.
+    2) The KMPVOPS security key is needed to access the VSM MANAGEMENT 
+ menu option.
+    3) Once the software has been installed on the production system it is 
+ recommended to turn the VTCM and VSTM monitors OFF in the test system as 
+ they are not needed. Use the VSM Management option to stop the monitors 
+ in the test system.
+  
+  
+  
+ Checksum and 2nd Line Information:
+ ----------------------------------
+  
+ The second lines of the routines should be as follows:
+  
+ ZOSVKRO   ;;8.0;KERNEL;**90,94,107,122,143,186,550,568**;July 7, 
+ 2010;Build 48
+ ZOSVKSD   ;;8.0;KERNEL;**121,197,268,456,568**;Jul 26, 2004;Build 48
+ ZOSVKSOE  ;;8.0;KERNEL;**90,94,197,268,456,568**;Jul 26, 2004;Build 48
+ ZOSVKSPI  ;;8.0;KERNEL;**568**;Jul 26, 2004;Build 48
+  
+ The checksums below are new checksums, and
+  can be checked with CHECK1^XTSUMBLD.
+  
+ Routine Name: ZOSVKRO
+   Before: B32060181   After: B32829782  **90,94,107,122,143,186,550,568**
+ Routine Name: ZOSVKSD
+   Before: B18713219   After:  B10781494  **121,197,268,456,568**
+ Routine Name: ZOSVKSOE
+   Before:B102565199   After: B38080477  **90,94,197,268,456,568**
+ Routine Name: ZOSVKSPI
+   Before:       n/a   After:  B1280715  **568**
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 13, 2011
+Completed By:                               Date Completed: AUG 25, 2016
+Released By :                               Date Released : AUG 29, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

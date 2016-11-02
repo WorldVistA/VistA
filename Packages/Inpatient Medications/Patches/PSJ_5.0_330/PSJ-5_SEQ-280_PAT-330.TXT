@@ -1,0 +1,121 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 06/15/16 at 09:05
+=============================================================================
+Run Date: AUG 19, 2016                     Designation: PSJ*5*330
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #280                      Status: Released
+                  Compliance Date: AUG 29, 2016
+=============================================================================
+
+Associated patches: (v)PSJ*5*277   <<= must be installed BEFORE `PSJ*5*330'
+
+Subject: ADMIN TIME ISSUE WITH COPY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+ 1)     Admin time reverts back after finishing when copying a Unit Dose order
+  
+  
+  Associated Ticket(s):
+ ============================
+ R8080780FY16        Admin time changes after finishing when copying a Unit
+                          Dose order
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ ALBANY
+ PITTSBURG
+ BATTLE CREEK
+  
+ Overview:
+ ================
+ Issue 1
+ --------
+ R8080780FY16        Admin Time changes after finishing when copying a Unit
+                          Dose order
+   
+ Problem: 
+ ========
+ When there is an Admin Time change to an existing order and that order is
+ copied, during the finishing process the Admin Time reverts back to 
+ the original Admin Time.  This issue only occurs when the copy is done
+ within VistA option Inpatient Order Entry [PSJ OE].
+  
+ Resolution:
+ ===========
+ A modification was made to routine PSJORPOE to ensure the Admin 
+ Time on the new order is the same as the copied order.
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.
+ The users can be on the system during installation but the patch  
+ should be installed during non-peak hours.
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSJ*5.0*330)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSJ*5.0*330.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", Respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", Respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJORPOE
+    Before: B36799843   After: B38104572  **50,56,92,80,110,127,133,134,
+                                           113,277,330**
+ 
+Routine list of preceding patches: 277
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 23, 2016
+Completed By:                               Date Completed: AUG 09, 2016
+Released By :                               Date Released : AUG 19, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

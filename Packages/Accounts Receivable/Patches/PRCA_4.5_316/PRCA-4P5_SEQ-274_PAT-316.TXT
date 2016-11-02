@@ -1,0 +1,240 @@
+$TXT Created by                at CARVDD.DOMAIN.EXT  (KIDS) on Wednesday, 08/10/16 at 11:02
+=============================================================================
+Run Date: SEP 13, 2016                     Designation: PRCA*4.5*316
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: EMERGENCY
+Version : 4.5       SEQ #274                    Status: Released
+                  Compliance Date: SEP 16, 2016
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*303<<= must be installed BEFORE `PRCA*4.5*316'
+
+Subject: MCCF FY14 CARC RARC PRCA*4.5*303 PATCH FIX
+
+Category: 
+  - Routine
+  - PATCH FOR A PATCH
+
+Description:
+============
+
+ *** Note:  This patch has a mandatory 3 day installation compliance.
+   
+ MCCF (Medical Care Collection Fund) Enhancement for uniform use of
+ CARC/RARC (Claims Adjustment Reason Codes/Remittance Advice
+ Remark Codes) Codes.
+   
+ This patch contains a fix for the installed patch PRCA*4.5*303. The 
+ PRCA*4.5*303 patch released a routine RCDPEMSG to process CARC (File #345)
+ and RARC (File #346) updates that will be sent from the Austin Financial
+ Service Center (FSC) as mail messages to the mail group G.CARC_RARC_DATA
+ approximately 3 times during a calendar year. The FSC has a subscription
+ for the codes from the Washington Publishing Company 
+ (http://www.wpc-edi.com).  The version of RCDPEMSG routine released in
+ PRCA*4.5*303 does not handle adding new codes to files 345 and 346
+ correctly. This emergency patch corrects this defect in routine RCDPEMSG.
+  
+ This patch implements changes to the Veterans Health Information Systems 
+ and Technology Architecture (VistA) Accounts Receivable (AR) software
+ requested by the Veterans Health Administration (VHA) Chief Business
+ Office (CBO) Business Solutions to comply with legislative changes
+ mandated by the Health Insurance Portability and Accountability Act of
+ 1996 (HIPAA) as amended by Public Law (P.L.) 111-148, the Patient
+ Protection and Affordable Care Act (PPACA), Section 1104.
+     
+    
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+   
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ N/A
+   
+   
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+   
+   
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+   
+   
+ Options Associated:
+                                                           New/Modified/
+ Option Name                                  Type            Deleted    
+ -----------                                  ----         -------------
+ N/A
+    
+   
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+   
+    
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+   
+   
+ Templates Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+   
+   
+ Additional Information:
+ N/A   
+    
+ New Service Requests (NSRs)
+ ----------------------------  
+ NSR# 20130515 - Uniform Use of CARC and RARC (835) Rule
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+   
+   
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ 1. I10087313FY16 
+    
+ Problem:
+ -------
+ CARC/RARC Code transfer from SSC did not add new codes to VistA Records.
+   
+ Resolution:
+ ----------
+ Modify the routine RCDPEMSG to fix the code in tag FILEIT to build the
+ FileMan Data Array correctly to perform adding the new record when calling
+ routine UPDATE^DIE to add the new record.
+   
+   
+ Test Sites:
+ ----------
+ Alexandria VA Health Care System (Alexandria, LA) - Station 502
+ Black Hills VA Medical Center (Hot Springs, SD) - Station 568
+ South Texas Veterans Health Care System (San Antonio, TX) - Station 671
+   
+   
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Documentation can be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+ Title                                  File Name              FTP Mode
+ ----------------------------------------------------------------------
+ ePayments User Manual       ePayments_User_Manual_r0816.pdf   (binary)
+     (EDI LOCKBOX)
+ Accounts Receivables Release Notes  PRCA_4_5_P316_RN.pdf      (binary)
+  
+  
+ Patch Installation:
+   
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A  
+   
+   
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install
+   
+ No options need to be disabled.
+   
+ It is highly recommended that the IRM adds themselves to the MailMan group:
+   
+      RCDPE PAYMENTS EXCEPTONS
+   
+ This group receives error e-mails if there is an issues with reading the
+ format of the CARC/RARC files received from the FSC.
+  
+   
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes 
+ to install.
+   
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+   
+     a.  Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch 
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - this option will allow
+         you to ensure the integrity of the routines that are in
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. (ex. PRCA*4.5*316)
+   
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//',  enter NO
+   
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO//,  respond NO
+   
+ 7.  When prompted "DEVICE: HOME//",  enter HOME
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+   
+   
+ Post-Installation Instructions
+ ------------------------------
+   
+ There are no special post-installation instructions for this patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCDPEMSG
+    Before: B52639080   After: B53714233  **303,316**
+ Description of Changes:
+  Fix for creation of FileMan data array so that new records are
+  created when data is sent from FSC.
+
+ 
+Routine list of preceding patches: 303
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 05, 2016
+Completed By:                               Date Completed: SEP 13, 2016
+Released By :                               Date Released : SEP 13, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

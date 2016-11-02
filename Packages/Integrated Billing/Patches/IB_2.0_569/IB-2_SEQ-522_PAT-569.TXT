@@ -1,0 +1,143 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 07/06/16 at 13:35
+=============================================================================
+Run Date: SEP 01, 2016                     Designation: IB*2*569
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #522                      Status: Released
+                  Compliance Date: OCT 02, 2016
+=============================================================================
+
+
+Subject: OUTPATIENT PHARMACY RATE UPDATE FOR CY2016
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ This patch will update the administrative charge based on a new dispensing
+ fee $14.29 for third party pharmacy prescription claims with an effective
+ date of January 1st, 2016.
+  
+ ASSOCIATED TICKET(S):
+ =====================
+ 1. R9415684FY16 Administrative pharmacy rate update for CY2016
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Maryland Health Care System (Baltimore, Loch Raven, Perry Point)
+ C.W. Bill Young VA Medical Center (Bay Pines)
+ VA Pittsburgh Health Care System (Pittsburgh University Dr., H. J. Heinz 
+ Campus)
+  
+ OVERVIEW:
+ =========
+ 1. R9415684FY16 Administrative pharmacy rate update for CY2016
+  
+ Problem:
+ --------
+ The Chief Business Office has requested an update to the administrative 
+ charge for third party pharmacy prescription with an effective date of
+ January 1st, 2016.
+  
+ Resolution:
+ -----------
+ The post-init routine IB20P569 will call a procedure to inactivate rate
+ schedules containing the RX COST charge set for rate types: Reimbursable
+ Insurance, No Fault Insurance, Tort Feasor, Humanitarian, Ineligible,
+ Interagency, and Workers' Compensation with an inactive date of December
+ 31, 2015. It also updates the adjustments for those rate types with the
+ new dispensing fee effective from January 1st, 2016 in the RATE SCHEDULE
+ (#363) file. 
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+ 1.   LOAD TRANSPORT GLOBAL
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+   
+ 2.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*569):
+   
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+   
+ 3.   Select Installation Option: Install Package(s)
+      ----------------------------------------------
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+   
+ 4.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P569.
+  
+ 5.   Example of successful installation.
+      -----------------------------------
+ Patch IB*2.0*569 Post-Install starts...
+  
+   >>>Effect. JAN 01, 2016 of RX Rate Schedule Adjustment for the Rate Type: 
+        HUMANITARIAN added
+        INELIGIBLE added
+        INTERAGENCY added
+        NO FAULT INS. added       
+        REIMBURSABLE INS. added      
+        TORT FEASOR added    
+        WORKERS' COMP. added
+   
+      Total 7 entries added to the RATE SCHEDULE file (#363)
+   
+ Patch IB*2.0*569 Post-Install is complete.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P569
+    Before:       n/a   After:  B7434699  **569**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 27, 2016
+Completed By:                               Date Completed: AUG 19, 2016
+Released By :                               Date Released : SEP 01, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

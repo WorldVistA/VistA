@@ -1,0 +1,797 @@
+$TXT Created by                   at NHML19.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Saturday, 07/09/16 at 13:28
+=============================================================================
+Run Date: AUG 15, 2016                     Designation: HMP*2*1
+Package : HMP - HEALTH MANAGEMENT PLATFORM    Priority: Mandatory
+Version : 2         SEQ #1                      Status: Released
+                  Compliance Date: SEP 15, 2016
+=============================================================================
+
+Associated patches: (v)HMP 2.0    <<= must be installed BEFORE `HMP*2*1'
+
+Subject: UPDATES NEEDED FOR THE eHMP USER INTERFACE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ During field testing of the eHMP User Interface (UI), issues were
+ identified with the VistA routines.  This patch includes 19 defect
+ fixes. In addition, a new Remote Procedure Call (RPC), HMP PATIENT SELECT,
+ was added to the HMP UI CONTEXT menu option.
+  
+ Patch Components:
+ -----------------
+  
+ Files and Fields Associated:
+ ----------------------------
+ There are no new or modified files or fields in this patch.
+  
+ Forms Associated:
+ -----------------
+ There are no new or modified forms in this patch.
+  
+ Mail Groups Associated:
+ -----------------------
+ There are no new or modified mail groups in this patch.
+  
+ Options Associated:
+ -------------------
+  
+ Option Name              Type                       New/Modified/Deleted
+ -----------              ----                       --------------------
+ HMP UI CONTEXT           Broker (Client/Server)     Modified 
+  
+ Protocols Associated:
+ ---------------------
+ There are no new or modified protocols in this patch.
+  
+ Security Keys Associated:
+ -------------------------
+ There are no new or modified security keys in this patch.
+  
+ Templates Associated:
+ ---------------------
+ There are no new or modified templates in this patch.
+  
+ Remote Procedure Calls (RPCs):
+ ------------------------------
+ HMP PATIENT SELECT - New
+  
+  
+ Additional Information:
+ -----------------------
+ Defect Number           Routine         Description
+ -------------           -------         -----------
+ DE3411                  HMPDJFS         UNDEFINED at GETSUB+39^HMPDJFSG
+ DE3759                  HMPMETA         Operational Data Sync 
+                                         malformed JSON (20KB edge case)
+ DE3116                  HMPDJ06         Solr HL7 Date - 
+                         HMPUTLS         Incorrect Format Errors
+ DE3375                  HMPACT          HMP PATIENT ADMIT/SCHED SYNC
+                                         does not return subscribed
+                                         patients
+ DE2991                  HMPACT          HMP PATIENT SCHED SYNC 
+                                         rpc returns
+                                         Inconsistent/Unexpected Results
+ DE3869                  HMPDJFSG        Remove freshness entries 
+                                         with bad DFNs
+ US13984                 HMPPTRPC        HMP PATIENT SELECT is needed 
+                                         for developing/testing 
+                                         RDK r1.2, but is not
+                                         planned for release until the 
+                                         r1.3 timeframe
+ DE4195                  HMPEVNT         Update protocol to copy nodes 
+                                         to ^TMP and execute as
+                                         taskman job.
+                                         ICR 1298 - PXK VISIT DATA EVENT 
+                                         remediation
+ DE4220                  HMPDGMRA        Allergies with seconds will 
+                                         not sync.
+ DE4463                  HMPAT           Unable to sync patients with a 
+                         HMPCRPC1        site hash of less than 4 
+                         HMPDCRC         characters Modified all HMP 
+                         HMPDJ           routines that require the site
+                         HMPDJ1          hash to call SYS^HMPUTILS
+                         HMPDJ2
+                         HMPDJFS
+                         HMPDJFSG
+                         HMPDJFSM
+                         HMPDJFSP
+                         HMPEF
+                         HMPHTTP
+                         HMPPARAM
+                         HMPPXRM
+                         HMPTFU2
+                         HMPUPD
+                         HMPUTILS
+ DE3153                  HMPDJ08          Wrong message printed for 
+                                          Crisis notes
+ DE4173                  HMPDJ03          Send the text of the 
+                                          document for consults
+ DE3691                  HMPDJ02          The time portion is missing 
+                                          for the "lastUpdateTime"
+                         HMPDJFSG         and "stampTime" in Problem.
+                         HMPSTMP
+ DE4743                  HMPDJ09          Missing Purpose of Visit 
+                                          (POV) metastamp
+ DE4307                  HMPUTIL1         Get delete stamp times from
+                                          freshnessDatetime
+ DE1977                  HMPDJ03          Procedure Reports and 
+                                          Documents - Missing Details
+ DE4757                  HMPUTIL1         HMPDJFS API responded without 
+                                          metastamp object for
+                                          all-numeric site hashes
+ DE4781                  HMPEHL7          HL7 triggers can reach 
+                                          our protocol code and not 
+                                          have the delimiter variables 
+                                          set. Change looks for other 
+                                          variables and
+                                          sets them appropriately
+ DE4880                  HMPMETA          Regression defect
+                         HMPDJFSP 
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR #20150408 - VistA Evolution Enterprise Health Management Platform 
+ (eHMP)
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ There are no Patient Safety Issues being addressed in this patch.
+  
+ Remedy Tickets(s) & Overview:
+ -----------------------------
+ There are no remedy tickets associated with this patch.
+  
+ Test Sites:
+ -----------
+ Hampton
+ San Antonio
+ Loma Linda
+ San Diego
+ Portland
+  
+ Patch Installation:
+ -------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+  
+ 1.  Choose the PackMan message containing this patch.
+ 2.  Invoke the INSTALL/CHECK MESSAGE PackMan option.          
+ 3.  From the Kernel Installation and Distribution System Menu [XPD MAIN], 
+     select the Installation Menu [XPD INSTALLATION MENU].  From this
+     menu, you may elect to use the following option. When prompted for the
+     INSTALL NAME enter HMP*2.0*1
+     a. Backup a Transport Global [XPD BACKUP] - This option will create a 
+        backup message of any routines exported with this patch. It will
+        not backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System [XPD COMPARE TO 
+        SYSTEM]- This option will allow you to view all changes that will
+        be made when this patch is installed.  It compares all components
+        of this patch (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global [XPD PRINT CHECKSUM]- This 
+        option will allow you to ensure the integrity of the routines that
+        are in the transport global.
+ 4.  From the Installation Menu, select the Install Package(s) [XPD 
+     INSTALL BUILD] option and choose select the package HMP*2.0*1 
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+ Sample Installation
+ -------------------
+ Select INSTALL NAME:    HMP*2.0*1    7/9/16@13:56:56
+      => HMP*2*1 
+  
+ This Distribution was loaded on Jul 09, 2016@13:56:56 with header of 
+    HMP*2*1 
+    It consisted of the following Install(s):
+       HMP*2.0*1
+ Checking Install for Package HMP*2.0*1
+  
+ Install Questions for HMP*2.0*1
+  
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   Linux Telnet/SSH
+ --------------------------------------------------------------------------
+  
+  Install Started for HMP*2.0*1 : 
+                Jul 09, 2016@14:34:41
+  
+ Build Distribution Date: Jul 09, 2016
+  
+  Installing Routines:
+                Jul 09, 2016@14:34:41
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing REMOTE PROCEDURE
+  
+  Installing OPTION
+                Jul 09, 2016@14:34:41
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  HMP*2.0*1 Installed. 
+                Jul 09, 2016@14:34:41
+  
+  
+  
+ Install Completed
+  
+ Back-out Procedures
+ =================
+  
+ In the event that the HMP KID packages need to be backed out, the 
+ National Help Desk should be contacted for assistance from the vendor 
+ development team. The development team will assist the site with removing 
+ the VistA routines. VA FileMan will also be utilized to remove the HMP 
+ protocols from other package protocols that were added during 
+ installation.
+  
+ Back-out will be done only with the concurrence and participation of ASM 
+ and appropriate VA site/region personnel. The decision to back-out or 
+ rollback software will be a joint decision between ASM, VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option (this is done at time of 
+ install). This backup message will only contain the routines that were 
+ included in the patch. Any other changes such as data dictionary changes 
+ or templates are not in the backup message. The message containing the
+ backed up routines can be loaded with the "Xtract PackMan" function at the
+ Message Action prompt.  The Packman function "INSTALL/CHECK MESSAGE" is
+ then used to install the backed up routines onto the VistA System.
+  
+  
+ Sample Installation of Back Up Message
+ ===============================
+  
+ Select MailMan Menu <TEST ACCOUNT> Option: REad/Manage Messages
+  
+  
+ IN Basket, 8 messages (1-8)
+ *=New/!=Priority.......Subject........................From................
+  
+   7. HMP*2*1 TEST v3                                  <"NPM   
+ [#78957936]"@FORU
+   8. Backup of HMP*2.0*1 install on Jun 09, 2016      SITE,INSTALLER
+ Subj: Backup of HMP*2.0*1 install on Jun 09, 2016  [#612191] 
+ 06/09/16@09:57
+ 5910 lines
+ From: SITE,INSTALLER - SYSTEMS ANALYST  In 'IN' basket.   Page 1
+ --------------------------------------------------------------------------
+ $TXT PACKMAN BACKUP Created on Thursday, 6/9/16 at 09:57:29 by 
+ SITE,INSTALLER at VAMC.DOMAIN.EXT 
+ $ROU HMPACT (PACKMAN_BACKUP)
+ HMPACT ;ASMR/EJK - Patient Appointment Broker Call;8/4/14  15:29
+  ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Oct 10, 2014;Build 63
+  ;Per VA Directive 6402, this routine should not be modified.
+  ;
+  Q
+ ACT(ROOT,DFN,ID,ALPHA,OMEGA,DTRANGE,REMOTE,MAX,ORFHIE) ;
+  N ERR,ERRMSG,DFN,IEN,DIE,HMSTOP
+  S ERR=0,ERRMSG="",DFN="",IEN="",HMSTOP=0
+  S ROOT="XWBY"
+  K ^TMP("ORDATA",$J)
+  Q:'$D(^HMP(800001.5,"PTAPPT","HMP"))
+  S DIE="^HMP(800001.5,""PTAPPT"","
+  D FETCH
+  D CLEAN
+  Q
+  
+ Enter RETURN to continue or '^' to exit: ^
+  
+ Enter message action (in IN basket): Delete// Xtract PackMan
+ Select PackMan function: IN
+      1   INSTALL SELECTED ROUTINE(S)  
+      2   INSTALL/CHECK MESSAGE  
+ CHOOSE 1-2: 2  INSTALL/CHECK MESSAGE
+  
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// YES
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2    Message #612191    Unloading Routine   HMPACT (PACKMAN_BACKUP)
+ Line 179  Message #612191    Unloading Routine   HMPAT (PACKMAN_BACKUP)
+ Line 224  Message #612191    Unloading Routine   HMPCRPC1 (PACKMAN_BACKUP)
+ Line 509  Message #612191    Unloading Routine   HMPDCRC (PACKMAN_BACKUP)
+ Line 687  Message #612191    Unloading Routine   HMPDGMRA (PACKMAN_BACKUP)
+ Line 817  Message #612191    Unloading Routine   HMPDJ (PACKMAN_BACKUP)
+ Line 980  Message #612191    Unloading Routine   HMPDJ02 (PACKMAN_BACKUP)
+ Line 1315 Message #612191    Unloading Routine   HMPDJ03 (PACKMAN_BACKUP)
+ Line 1529 Message #612191    Unloading Routine   HMPDJ08 (PACKMAN_BACKUP)
+ Line 1748 Message #612191    Unloading Routine   HMPDJ09 (PACKMAN_BACKUP)
+ Line 1901 Message #612191    Unloading Routine   HMPDJ1 (PACKMAN_BACKUP)
+ Line 2011 Message #612191    Unloading Routine   HMPDJ2 (PACKMAN_BACKUP)
+ Line 2145 Message #612191    Unloading Routine   HMPDJFS (PACKMAN_BACKUP)
+ Line 2421 Message #612191    Unloading Routine   HMPDJFSG (PACKMAN_BACKUP)
+ Line 2816 Message #612191    Unloading Routine   HMPDJFSM (PACKMAN_BACKUP)
+ Line 3132 Message #612191    Unloading Routine   HMPDJFSP (PACKMAN_BACKUP)
+ Line 3584 Message #612191    Unloading Routine   HMPEF (PACKMAN_BACKUP)
+ Line 3908 Message #612191    Unloading Routine   HMPEHL7 (PACKMAN_BACKUP)
+ Line 3959 Message #612191    Unloading Routine   HMPEVNT (PACKMAN_BACKUP)
+ Line 4312 Message #612191    Unloading Routine   HMPHTTP (PACKMAN_BACKUP)
+ Line 4420 Message #612191    Unloading Routine   HMPMETA (PACKMAN_BACKUP)
+ Line 4771 Message #612191    Unloading Routine   HMPPARAM (PACKMAN_BACKUP)
+ Line 4883 Message #612191    Unloading Routine   HMPPXRM (PACKMAN_BACKUP)
+ Line 4974 Message #612191    Unloading Routine   HMPSTMP (PACKMAN_BACKUP)
+ Line 5273 Message #612191    Unloading Routine   HMPTFU2 (PACKMAN_BACKUP)
+ Line 5468 Message #612191    Unloading Routine   HMPUPD (PACKMAN_BACKUP)
+ Line 5585 Message #612191    Unloading Routine   HMPUTIL1 (PACKMAN_BACKUP)
+ Line 5722 Message #612191    Unloading Routine   HMPUTILS (PACKMAN_BACKUP)
+  
+  
+ Validation of Roll Back Procedure
+ ==================================
+ The Roll Back Procedure can be verified by printing the first 2 lines of 
+ the HMP Routines using the option First Line Routine Print [XU FIRST LINE 
+ PRINT].  Once the routines contained in the HMP*2.0*1 patch have been 
+ rolled back the second line of the routines will now contain the following
+  
+ ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Oct 10, 2014;Build 63
+  
+ Sample of printing the first 3 lines of routines
+ ================================================
+ Select Routine Tools <TEST ACCOUNT> Option: FIRst Line Routine Print
+  
+ PRINTS FIRST LINES
+  
+  
+ All Routines? No => No
+  
+ Routine: HMP*
+ Routine: 
+ 95 routines
+  
+ (A)lpha, (D)ate ,(P)atched, OR (S)ize ORDER: A//
+ Include line (2), Include lines 2&(3), (N)one: None//2
+ DEVICE: HOME// ;;999  HOME  (CRT)    Right Margin: 80// 
+  
+  
+              FIRST LINE LIST   UCI: CHEYL172,ROU   08/05/2016
+ HMP0311P  ;ASMR/hrubovcak - HMP DGPF ASSIGN FLAG Protocol to ITEM;Mar 20, 
+ 2015@14:34:08
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;November 
+ 30,2015;Build 63
+ HMP0311Q  ;ASMR/MAT - HMP Subscribe Client Protocols to VAFC;10/1/2015 
+ 12:49pm
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;November 
+ 30,2015;Build 63
+ HMPACT    ;ASMR/EJK - Patient Appointment Broker Call;8/4/14  15:29
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Oct 10, 
+ 2014;Build 63
+ HMPAT     ;ASMR/EJK,ASF - ASU/TIU Trigger to HMP Activity File;3/31/15  
+ 15:29
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;November 
+ 30,2015;Build 63
+ HMPCAC    ;SLC/AGP,ASMR/RRB - HMP CAC Tools;Nov 24, 2015 20:05:06
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Feb 06, 
+ 2014;Build 63
+ HMPCORD4  ;SLC/AGP,ASMR/RRB -Retrieved Orderable Items;Nov 04, 2015 
+ 12:13:23
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPCORD5  ;SLC/AGP,ASMR/EJK,RRB - Retrieved Orderable Items;Nov 04, 2015 
+ 12:13:23
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPCPRS   ;SLC/AGP,ASMR/RRB - CPRS RPC for;9/21/12 5:57pm
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPCRPC   ;SLC/AGP,ASMR/RRB - Generic RPC controller for HMP;11/7/12 
+ 5:42pm
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPCRPC1  ;SLC/AGP,ASMR/RRB - Patient and User routine;05/01/14
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPD      ;SLC/MKB,ASMR/RRB - Serve VistA data as XML via RPC ;8/2/11  
+ 15:29
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDCRC   ;SLC/MKB,AGP,ASMR/RRB - Compute CRC32 for VistA data;7/26/13 
+ 11:09am
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDERRH  ;SLC/AGP,ASMR/RRB - HMP Error Handler;3/21/12 5:44pm
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDGMPL  ;SLC/MKB,ASMR/RRB - Problem extract;8/2/11  15:29
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDGMRA  ;SLC/MKB,ASMR/RRB - Allergy/Reaction extract;Nov 02, 2015 
+ 19:24:08
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDGMV   ;SLC/MKB,ASMR/RRB,ASMR/ASF - Vitals extract;8/2/11  15:29
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJ     ;SLC/MKB,ASMR/RRB -- Serve VistA data as JSON via RPC;Oct 15, 
+ 2015 18:39:51
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJ0    ;SLC/MKB,ASMR/RRB - Serve VistA data as JSON cont;Nov 18, 2015 
+ 14:10:42
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJ00   ;SLC/MKB,ASMR/RRB - Patient demographics;8/11/11  15:29
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJ01   ;SLC/MKB,ASMR/RRB - Orders;Nov 12, 2015 14:33:52
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJ02   ;SLC/MKB,ASMR/RRB - Problems,Allergies,Vitals;Nov 12, 2015 
+ 14:52:13
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJ03   ;SLC/MKB,ASMR/RRB - Consults,ClinProcedures,CLiO;Nov 09, 2015 
+ 13:00:03
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJ04   ;SLC/MKB,ASMR/RRB - Appointments,Visits;Nov 12, 2015 15:21:17
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJ04A  ;ASMR/MKB - Admissions,PTF;Nov 12, 2015 16:42:22
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJ04E  ;SLC/MKB,ASMR/RRB - EDIS VISIT;6/25/12  16:11
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJ05   ;SLC/MKB,ASMR/RRB - Medications by order;Nov 09, 2015 15:12:10
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJ05V  ;SLC/MKB,ASMR/RRB - IV/Infusions;Nov 09, 2015 15:40:35
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJ06   ;SLC/MKB,ASMR/RRB - Laboratory;Nov 12, 2015 18:20:53
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJ07   ;SLC/MKB,ASMR/RRB - Radiology,Surgery;6/25/12  16:11
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJ08   ;SLC/MKB,ASMR/RRB - TIU Documents;6/25/12  16:11
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJ08A  ;SLC/MKB,ASMR/RRB - TIU Documents continued;10/29/2015 12:08:30
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJ09   ;SLC/MKB,ASMR/RRB - PCE;Nov 16, 2015 14:08:57
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJ09M  ;SLC/MKB,ASMR/RRB - Mental Health;Nov 16, 2015 17:15:13
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJ1    ;SLC/MKB,ASMR/RRB - HMP Patient Object RPCs;Nov 04, 2015 17:37
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJ2    ;SLC/MKB,ASMR/RRB - HMP Object RPCs;1/18/13 3:54pm
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJFS   ;SLC/KCM,ASMR/RRB -- Asynchronous Extracts and Freshness via 
+ stream; Oct 15, 2015 18:39:51
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJFS1  ;ASMR/CPC,hrubovcak - for Extract and Freshness Stream;Oct 15, 
+ 2015 18:39:51
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJFSD  ;SLC/KCM,ASMR/RRB -- Domain Lists for Extract and Freshness 
+ Stream;Oct 15, 2015 18:39:51
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJFSG  ;SLC/KCM,ASMR/RRB,CPC -- GET for Extract and Freshness 
+ Stream;Jan 29, 2016 13:05:21
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJFSM  ;SLC/KCM,ASMR/RRB - Monitoring Tools for Extracts;Nov 04, 2015 
+ 17:46:48
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJFSP  ;SLC/KCM,ASMR/RRB -- PUT/POST for Extract and Freshness 
+ Stream;Nov 04, 2015 17:46:48
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDJX    ;SLC/MKB,ASMR/RRB - New data update;11/5/13 7:02pm
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDLR    ;SLC/MKB,ASMR/RRB - Laboratory extract;Nov 05, 2015 19:21:53
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDLRA   ;SLC/MKB,ASMR/RRB - Laboratory extract by accession;Nov 05, 
+ 2015 19:21:53
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDMC    ;SLC/MKB,ASMR/RRB - Clinical Procedures (Medicine);Nov 05, 2015 
+ 19:31:41
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDMDC   ;SLC/MKB,DP,ASMR/RRB - CLiO extract;8/2/11  15:29
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDOR    ;SLC/MKB,ASMR/RRB - Orders extract;8/2/11  15:29
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDPSOR  ;SLC/MKB,ASMR/RRB,SRG - Medication extract by order;8/2/11  
+ 15:29
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDRA    ;SLC/MKB,ASMR/RRB - Radiology extract;8/2/11  15:29
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDSDAM  ;SLC/MKB,ASMR/RRB - Appointment extract;8/2/11  15:29
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDSR    ;SLC/MKB,ASMR/RRB - Surgical Procedures;8/2/11  15:29
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDTIU   ;SLC/MKB,ASMR/RRB - TIU extract;Nov 23, 2015 18:02:20
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPDVSIT  ;SLC/MKB,ASMR/RRB - Visit/Encounter extract;8/2/11  15:29
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPEASU   ;SLC/GRR,ASMR/RRB - Serve VistA reference data as JSON via 
+ RPC;10/18/12 6:26pm
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPEF     ;SLC/MKB,ASMR/RRB,JD,SRG - Serve VistA operational data as JSON 
+ via RPC;Nov 24, 2015 16:00:27
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPEF1    ;SLC/MKB,ASMR/RRB,JD,SRG - Serve VistA operational data as JSON 
+ via RPC;Nov 24, 2015 13:17:46
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPEFX    ;SLC/MKB,ASMR/RRB - Reference data update;7/19/12 2:26pm
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPEHL7   ;SLC/MJK,ASMR/RRB - HMP HL7 ADT Message Processor;03/25/2014 
+ 16:50:09
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPELAB   ;SLC/JMC,ASMR/RRB - Lab extract utilities;Nov 24, 2015 13:08:23
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 1913;Build 63
+ HMPEQ     ;SLC/MJK,ASMR/RRB - HMP Freshness Utilities;02-JUL-2014
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPEQLM   ;SLC/MJK,ASMR/RRB - Event Queue Manager;30-JUN-2014
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPEQLM1  ;SLC/MJK,ASMR/RRB - HMP Freshness Report;02-JUL-2014
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPEQLM2  ;SLC/MJK,ASMR/RRB - HMP Temporary Global Lister;01-JUL-2014
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPEVNT   ;SLC/MKB,ASMR/JD,RRB -- VistA event listeners;Oct 29, 2015 
+ 08:04:30
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPFPTC   ;SLC/MKB,AGP,ASMR/RRB - Patient look-up Utilities at 
+ Facility;Nov 04, 2015 18:37:39
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPHTTP   ;SLC/MKB,ASMR/RRB - HTTP interface;9/25/2015 10:14
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPIDX    ;SLC/MKB,ASMR/RRB,SRG - Create HMP triggers;Feb 01, 2016 
+ 14:22:27
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPJSON   ;SLC/KCM,ASMR/RRB - Decode/Encode JSON;9/25/2015 10:15
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPJSOND  ;SLC/KCM,ASMR/RRB - Decode JSON;9/25/2015 10:16
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPJSONE  ;SLC/KCM,ASMR/RRB - Encode JSON;9/25/2015 10:17
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPLIST   ;HOIFO/DP,ASMR/RRB - List Manager;02 Nov 2012
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPMDUTL  ;DSS/BLJ,ASMR/RRB - FileMan JSON utilities for HMP;4 November 
+ 2015 @16:51:35
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPMETA   ;SLC/PJH,ASMR/RRB - Utility to collect Domains, UID's and 
+ stamptimes for a patient;8/14/13  11:22
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPP3I    ;SLC/AGP,ASMR/RRB,ASF,SRG - HMP patch 3 post install ; Jan 21, 
+ 2015 16:50:00
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Oct 10, 
+ 2014;Build 63
+ HMPPARAM  ;SLC/AGP,ASMR/RRB - Parameter routine. ; 8/16/12 7:09pm
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPPATS   ;SLC/MKB,ASMR/RRB,SRG - Patient Management Utilities ;Nov 16, 
+ 2015 19:11:53
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPPDL    ;ASMR/PB - Get a users default patient list for HMP ; 07/31/2015
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Jul 31, 
+ 2015;Build 63
+ HMPPRXY2  ;ASMR/JCH,PB - Post-Install Routine to Create HMP User ; 
+ 02/01/16 11:56
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Feb 03, 
+ 2015;Build 63
+ HMPPTDEM   ;ASMR/EJK,JD - File Patient Demographic Information passed via 
+ RPC; 09/16/2014
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Oct 10, 
+ 2014;Build 63
+ HMPPTRPC  ;ASMR/MBS/CK - Patient Select RPC;May 15, 2016 14:15
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**1**;May 15, 
+ 2016;Build 4
+ HMPPXRM   ;SLC/AGP,ASMR/RRB - Clinical Reminders routine. ; 8/16/12 7:09pm
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPROS8   ;SLC/AGP,ASMR/RRB - Get CPRS User Default Roster List ; 6/11/14 
+ 8:38pm
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;AUG 17, 
+ 2011;Build 63
+ HMPSTMP   ;ASMR/JD,BL - MetaStamp ;Feb 01, 2016 12:10
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPTFU2   ;ASMR/JCH - Utilities for the Treating Facility file 391.91 ; 
+ 02/05/15 15:25
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Feb 05, 
+ 2015;Build 63
+ HMPTOOLS  ;ASMR/JD - More HMP utilities ; 9/25/15 10:59am
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPUPD    ;SLC/MKB,ASMR/RRB - Update local data ;11/13/13 2:11pm
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPUTIL1  ;SLC/AGP,ASMR/RRB,CPC - HMP utilities routine ; Jan 29, 2016 
+ 13:09:59
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPUTILS  ;SLC/AGP,ASMR/RRB -- HMP utilities routine ;8/14/13  11:22
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPXGDPT  ; ASMR/PB - Patient File Utilities;Nov 03, 2015 18:23:03
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;November 
+ 30,2015;Build 63
+ HMPXGLAB  ; ASMR/hrubovcak - Lab data retrieval ;Nov 05, 2015 15:27:37
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPXGNP   ; ASMR/hrubovcak - NEW PERSON file (#200) data retrieval ;Nov 
+ 03, 2015 18:23:03
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPXGORD  ; ASMR/hrubovcak - ORDER file (#100) data retrieval ;Nov 03, 
+ 2015 18:23:03
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPXGSD   ; ASMR/hrubovcak - Scheduling data retrieval ;Nov 20, 2015 
+ 01:49:50
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPYCSO   ;SLC/MJK,ASMR/RRB - Convert system objects utility ;8/2/11  
+ 15:29
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Sep 01, 
+ 2011;Build 63
+ HMPZ0218  ;ASMR/JCH - Clinical Procedures failing TIU patch quick fix 
+ ;Feb 18,2015@14:29:52
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**;Feb 18, 
+ 2015;Build 63
+  
+  
+               95 ROUTINES
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**[Patch List]**;May 15, 2016;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HMPACT
+    Before: B34386179   After: B33127159  **1**
+Routine Name: HMPAT
+    Before:  B3595282   After:  B3461086  **1**
+Routine Name: HMPCRPC1
+    Before:B103567295   After:B104887301  **1**
+Routine Name: HMPDCRC
+    Before: B46986534   After: B46900881  **1**
+Routine Name: HMPDGMRA
+    Before: B22211624   After: B23357348  **1**
+Routine Name: HMPDJ
+    Before: B36572187   After: B36223990  **1**
+Routine Name: HMPDJ02
+    Before:B178043401   After:B178097048  **1**
+Routine Name: HMPDJ03
+    Before: B97739485   After:B113601878  **1**
+Routine Name: HMPDJ08
+    Before: B73570854   After: B76812256  **1**
+Routine Name: HMPDJ09
+    Before: B47251770   After: B58540657  **1**
+Routine Name: HMPDJ1
+    Before: B18644090   After: B18382483  **1**
+Routine Name: HMPDJ2
+    Before: B21439862   After: B21292359  **1**
+Routine Name: HMPDJFS
+    Before: B74871558   After: B72336462  **1**
+Routine Name: HMPDJFSG
+    Before:B216382035   After:B236965209  **1**
+Routine Name: HMPDJFSM
+    Before: B91943836   After: B91843339  **1**
+Routine Name: HMPDJFSP
+    Before:B228347665   After:B228347668  **1**
+Routine Name: HMPEF
+    Before: B86254671   After: B86180151  **1**
+Routine Name: HMPEHL7
+    Before:  B3570530   After:  B6545280  **1**
+Routine Name: HMPEVNT
+    Before:B129413290   After:B135046428  **1**
+Routine Name: HMPHTTP
+    Before: B14631122   After: B14150503  **1**
+Routine Name: HMPMETA
+    Before:B122279349   After:B127426606  **1**
+Routine Name: HMPPARAM
+    Before: B16541840   After: B16345240  **1**
+Routine Name: HMPPTRPC
+    Before:       n/a   After: B10929781  **1**
+Routine Name: HMPPXRM
+    Before: B14531240   After: B14343853  **1**
+Routine Name: HMPSTMP
+    Before: B70461106   After: B79306076  **1**
+Routine Name: HMPTFU2
+    Before: B40086168   After: B39725294  **1**
+Routine Name: HMPUPD
+    Before: B25123694   After: B25062781  **1**
+Routine Name: HMPUTIL1
+    Before: B42764058   After: B46934983  **1**
+Routine Name: HMPUTILS
+    Before: B39059234   After: B41539926  **1**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 16, 2016
+Completed By:                               Date Completed: AUG 11, 2016
+Released By :                               Date Released : AUG 15, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,210 @@
+$TXT Created by               CMNT.FO-BIRM.DOMAIN.EXT  (KIDS) on Tuesday, 08/30/16 at 13:39
+=============================================================================
+Run Date: SEP 19, 2016                     Designation: PSO*7*469
+Package : PSO - OUTPATIENT PHARMACY           Priority: EMERGENCY
+Version : 7       SEQ #386                      Status: Released
+                  Compliance Date: SEP 21, 2016
+=============================================================================
+
+Associated patches: (v)PSO*7*444   <<= must be installed BEFORE `PSO*7*469'
+
+Subject: PHARMACY SAFETY UPDATES - FOLLOW UP TO PSO*7*444
+
+Category: 
+  - PATCH FOR A PATCH
+  - Routine
+
+Description:
+============
+
+  
+  This patch is part of the Pharmacy Safety Updates project and will 
+  address Patient Safety Issue (PSI) #PSPO00003291 and CA Service 
+  Desk ticket I10102695FY16.
+  
+  PSI PSPO00003291 is CA Service Desk Ticket I10020812FY16
+  --------------------------------------------------------
+  When processing outpatient medication orders, and no dispense drug is 
+  selected, the range values for the # of refills prompt is defaulting
+  to zero. 
+  
+  CA Service Desk I10102695FY16
+  -----------------------------
+  Pharmacy Technician not able to edit # of refills data field.
+  
+  
+  Patch Components
+  ================
+   
+  Files & Fields Associated:
+  File Name (#)             Field Name (#)        New/Modified/Deleted 
+  -------------             --------------        --------------------
+  N/A
+  
+  Forms Associated:
+  Form Name                 File #                              
+  ---------                 -----
+  N/A
+  
+  Mail Groups Associated:
+  Mail Group Name                                 New/Modified/Deleted
+  ---------------                                 --------------------
+  N/A
+  
+  Options Associated:
+  Option Name               Type                  New/Modified/Deleted
+  -------------------       ----                  --------------------
+  N/A
+   
+  Protocols Associated:                           New/Modified/Deleted
+  Protocol Name                                   --------------------
+  -------------
+  N/A
+  
+  Security Keys Associated:
+  Security Key Name                               New/Modified/Deleted
+  -----------------                               --------------------
+  N/A 
+  
+  Templates Associated:
+  Template Name           Type    File Name (#)   New/Modified/Deleted
+  -------------           ----     ------------   --------------------
+  N/A
+   
+  
+  New Service Requests (NSRs):
+  ----------------------------
+  N/A
+  
+  
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  PSPO00003291
+  
+  
+  CA Service Desk Ticket(s) & Overviews:
+  -------------------------------------
+  I10020812FY16 - Refills defaulting to zero (PSPO3291)
+  I10043079FY16 (Duplicate)
+  
+  Problem:
+  -------
+  When processing outpatient medication orders and no dispense drug is 
+  selected, the range values for the # of refills prompt is defaulting
+  to zero.
+  
+  Resolution:
+  ---------- 
+  Modify routine PSOUTIL to calculate the # of refills based on days supply
+  even though no dispense drug is selected.
+  
+  
+  I10102695FY16-Pharmacy Technician not able to edit # of refills data 
+  field. Only holder of PSO ADV TECH key affected. Any one holding PSORPH 
+  key NOT affected.
+  
+  Problem:
+  -------
+  When renewing a prescription using SPEED RENEW, the range values for the 
+  # of refills prompt is defaulting to zero.
+  
+  During this process the user also encounters a looping error that can
+  only be exited using the up-arrow (^).  
+  
+  After using the up-arrow to exit, an UNDEFINED error occurs when a  
+  message was displayed informing the user that the # of refills was not 
+  correct for the days supply. This happens because the correct variable 
+  name was not being used.
+  
+  
+  Resolution:
+  ---------- 
+  Modify routine PSOUTIL to calculate the # of refills based on days 
+  supply.
+  
+  The UNDEFINED error occurred in PSOORNW1. This routine will be modified
+  to use the correct variable name when displaying the message to the user.
+  
+  
+  TEST Sites:
+  ===========
+  HC NETWORK UPSTATE NY (ALBANY)
+  LOUISVILLE, KY
+  HEARTLAND EAST
+  
+  
+  Patch Installation: 
+  
+  Pre Installation Overview
+  --------------------------
+  N/A
+  
+  
+  Post Installation Overview
+  --------------------------
+  N/A
+  
+     
+  Installation Instructions
+  -------------------------
+  Although this installation will take less than 5 minutes and Outpatient 
+  Pharmacy users can be on the system, it is recommended that it be 
+  installed overnight to prevent any disruption of service to users.
+  
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSO*7.0*469).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package PSO*7.0*469.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOORNW1
+    Before: B34218715   After: B34256749  **23,46,78,117,131,133,172,148,
+                                           222,268,206,251,379,391,313,
+                                           444,469**
+Routine Name: PSOUTIL
+    Before: B95292700   After: B95814120  **64,456,444,469**
+ 
+Routine list of preceding patches: 444
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 05, 2016
+Completed By:                               Date Completed: SEP 14, 2016
+Released By :                               Date Released : SEP 19, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

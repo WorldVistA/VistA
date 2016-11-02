@@ -1,0 +1,167 @@
+
+=============================================================================
+Run Date: SEP 20, 2016                     Designation: EAS*1*142
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #113                      Status: Released
+                  Compliance Date: OCT 21, 2016
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) APPLICATION, VERSION 4.4
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Department of Veterans Affairs (VA) is obligated to support the Patient
+ Protection and Affordable Care Act (PPACA). Effective January 1, 2014, the
+ Affordable Care Act (ACA) requires minimum essential healthcare coverage by
+ every individual taxpayer. Enrollment in Veterans Health care meets the Minimum
+ Essential Coverage (MEC) threshold requirements.  For more information
+ regarding requirements, refer to 26 Code of Federal Regulations
+ (CFR)1.36B-2(c)(2)(ii) of the Treasury Notice of Proposed Rulemaking (NPRM).
+                                                                            
+ The VA is required to provide the IRS with a list or file containing
+ information on every Veteran and beneficiary that obtained MEC through the VA
+ for a tax year. The information provided to the IRS includes: name, address,
+ DOB, insurer information (VA information, Part III of the 1095B), and either a
+ full year or number of months the VA provided MEC. Section 6055(a) requires
+ every entity that provides MEC, to file annual returns reporting information
+ for each individual for whom coverage is provided. The Veterans Letter, 1095B
+ form, or equivalent communication, must be prepared annually for the prior tax
+ year and filed with the IRS.
+  
+ Enrollment System Date of Death:  MVI will become the VA's one authoritative
+ service for managing the Date of Death information.
+  
+ The purpose of this Informational patch is to announce the release of the
+ Enrollment System (ES) 4.4 software which specifically focuses on accomplishing
+ requirements of the ACA project. ES 4.4 permits the following functionality:  
+     
+ -      Enhance the E&E Web Service to provide the MEC start and end dates to 
+        an authorized consumer.
+ 
+ -      Enhance the Enrollment System to automate generation of the ACA 1095B
+        mail generation files.
+ 
+ -      Enhance the Enrollment System to receive, store and display ACA mail
+        communication status and electronic copies of the mailed documents.
+ 
+ -      Enhance the Enrollment System to provide Reports on ACA mail
+        communication and IRS transmissions
+ 
+ Enrollment System Date of Death:
+ 
+ -      Modify the Enrollment System to stop sharing Date of Death information
+        with VistA sites of record. This does not include sending the
+        Enrollment Status of 'DECEASED.
+ 
+ -      Modify the Enrollment System to ignore and not process Date of Death
+        information from VistA sites of record by applying the site list that
+        Enrollment System should ignore.
+ 
+ -      Modify the Enrollment System to send Date of Death information to MVI
+        even when the system parameter for Use MVI Date of Death Service
+        Indicator is set to "YES".
+  
+  
+  
+  
+ 
+ What to Expect:
+ ===============
+ The ES 4.4 implementation is expected to take less than eight hours.  During
+ the ES 4.4 implementation, HL7 messaging to and from the ES will be disabled by
+ the Vitria Interface Engine (VIE) team. After the ES 4.4 implementation, there
+ will be no change in VistA. 
+  
+ Implementation:
+ ===============
+ The implementation of ES 4.4 requires deployment of Java software to dedicated
+ servers at the Austin Information Technology Center (AITC). The AITC staff will
+ perform the installation with support from the development team. Support from
+ the sites is not required. 
+  
+ The ES application will be unavailable and Veteran enrollment determinations
+ will be delayed until the deployment is complete. Person Service Identity
+ Management/Master Veteran Index (PSIM/MVI) and messaging to/from the sites will
+ be unavailable during the deployment. An Automated Notification Reporting (ANR)
+ will be created to announce the deployment that will list all impacted systems
+ and to track the outage.
+  
+ Implementation Date:
+ ====================
+ 09/17/2016
+  
+ Implementation Files:
+ =====================
+ N/A
+  
+ Documentation Retrieval:
+ ========================
+ The user documentation is available on the Office of Information Field Office
+ (OIFO) ANONYMOUS.SOFTWARE directories listed below:
+  
+    OIFO                  Address                      Directory
+ Albany               domain.ext        
+ Hines                domain.ext         
+ Salt Lake City       domain.ext           
+  
+  
+ The user documentation files listed below may be obtained via Secure Shell 
+ File Transfer Protocol (SFTP). 
+  
+ Sites may also select to retrieve documentation from a specific server 
+ as shown in the above table.
+  
+ The following files should be downloaded in the binary file transfer method. 
+  
+ Filename                                       Description
+ --------                                       -----------
+ ES_4_4_Developers_Guide                        Developer's Guide 
+ ES_4_4_InstallGuide                            Installation, Back-Out and
+                                                Rollback Guide 
+ ES_4_4_Release_Notes                           Release Notes 
+ ES_4_4_Production_Operations_Manual            Production Operations Manual 
+ ES_4_4_User_Guide                              User Guide
+  
+  
+ Mandate:
+ ========
+ N/A
+  
+ CA Service Manager Ticket(s) & Overview:
+ ==========================
+ N/A
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Reporting Problems:
+ ===================
+ N/A
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 12, 2016
+Completed By:                               Date Completed: SEP 20, 2016
+Released By :                               Date Released : SEP 20, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

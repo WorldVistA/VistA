@@ -1,0 +1,1383 @@
+
+=============================================================================
+Run Date: MAR 08, 2016                     Designation: OR*3*350
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #362                      Status: Released
+                  Compliance Date: JUL 27, 2016
+=============================================================================
+
+Associated patches: (v)TIU*1*268       install with patch       `OR*3*350'
+                    (c)PSJ*5*307       install with patch       `OR*3*350'
+                    (v)OR*3*157    <<= must be installed BEFORE `OR*3*350'
+                    (v)OR*3*311    <<= must be installed BEFORE `OR*3*350'
+                    (v)OR*3*312    <<= must be installed BEFORE `OR*3*350'
+                    (v)OR*3*317    <<= must be installed BEFORE `OR*3*350'
+                    (v)OR*3*318    <<= must be installed BEFORE `OR*3*350'
+                    (v)OR*3*322    <<= must be installed BEFORE `OR*3*350'
+                    (v)OR*3*341    <<= must be installed BEFORE `OR*3*350'
+                    (v)OR*3*348    <<= must be installed BEFORE `OR*3*350'
+                    (v)OR*3*349    <<= must be installed BEFORE `OR*3*350'
+                    (v)PSJ*5*267   <<= must be installed BEFORE `OR*3*350'
+                    (v)OR*3*356    <<= must be installed BEFORE `OR*3*350'
+                    (v)OR*3*363    <<= must be installed BEFORE `OR*3*350'
+                    (v)LEX*2*86    <<= must be installed BEFORE `OR*3*350'
+                    (v)OR*3*366    <<= must be installed BEFORE `OR*3*350'
+                    (v)OR*3*374    <<= must be installed BEFORE `OR*3*350'
+                    (v)OR*3*388    <<= must be installed BEFORE `OR*3*350'
+                    (v)OR*3*389    <<= must be installed BEFORE `OR*3*350'
+                    (v)OR*3*392    <<= must be installed BEFORE `OR*3*350'
+                    (v)OR*3*394    <<= must be installed BEFORE `OR*3*350'
+                    (v)GMPL*2*45   <<= must be installed BEFORE `OR*3*350'
+                    (v)OR*3*404    <<= must be installed BEFORE `OR*3*350'
+                    (v)OR*3*418    <<= must be installed BEFORE `OR*3*350'
+
+Subject: CPRS GUI v30.B
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ The Computerized Patient Record System (CPRS) Graphical User Interface
+ (GUI) v30.B is an enhancement release with the following modifications:
+  
+ 1) Clinic Orders: Clinic Orders will focus on clinic medications (the 
+ ordering, processing and documenting administration of the clinic 
+ medication). The enhancements and new functionality to CPRS, Legacy 
+ Pharmacy and BCMA will provide the following: 
+  
+  a) CPRS - Clinic Medication Orders will function comparable to Inpatient 
+  Medications. In addition, CPRS will allow all authorized VHA personnel 
+  with prescribing privileges to easily recognize and access a One Step 
+  process to document clinic orders and the administration by the clinician
+  from any area where orders can be called. 
+  
+  b) BCMA will work with Clinic Medication Orders no matter what the 
+  patient status (Inpatient or Outpatient) is ensuring the same BCMA 
+  standard of care for medication administration in all clinics. Note: 
+  These changes will eliminate the need for outpatients being admitted to a
+  non-count ward/clinic. 
+  
+  c) Improved Patient Safety by allowing order checks for 'clinic' orders. 
+  
+  d) Improved Patient Safety by implementing the same bar code scanning 
+  methodology used in BCMA - to ensure the Five Rights of medication 
+  administration is applied to administering clinic order medications. 
+  
+  e) Improved Work flows by providing easy access and minimal steps to 
+  write a clinic order, process and document administration for clinic 
+  medications. 
+  
+ 2) Consult Order Dialog Change: A request has been made to rename a field
+ in the Computerized Patient Record System (CPRS) Consult Order Dialog from
+ 'Earliest Appropriate Date' (EAD) to 'Clinically Indicated Date' (CID).
+ This is being done to support new Veterans Access, Control, and 
+ Accountability Act (VACAA) guidelines for measuring wait times. Patches
+ GMRC*3.0*81 and GMTS*2.7*112 also contain information regarding this
+ change and are being released in conjunction with OR*3*350. The following
+ changes are being implemented.
+  
+  a) The order and edit/resubmit dialogs for both consult and procedure
+  orders, the SF-513, the Consults tab detail display and the order details
+  view on the Orders tab are all updated to use the CID nomenclature.
+  
+  b) The ORCDGMRC EARLIEST DATE DEFAULT parameter is being replaced by a 
+  new parameter, ORCDGMRC CLIN IND DATE DEFAULT.  The EAD parameter was 
+  restricted to a PACKAGE level value.  The CID parameter allows for 
+  DIVISION, SYSTEM, and PACKAGE.  The PACKAGE level value will be exported 
+  as NULL, which will force a provider to actively choose a date when 
+  placing consult/procedure orders.
+  
+  c) A new option, ORW CLIN IND DATE DFLT, has been added to the OR PARAM
+  COORDINATOR MENU. This option will allow users to assign DIVISION and/or
+  SYSTEM level values to the ORCDGMRC CLIN IND DATE DEFAULT parameter.
+  
+ 3) Lab Display Status: Targets changes to lab and report tab display 
+ changes.
+  
+ 4) Software changes are being made to correct several Patient Safety 
+ Issues (PSPOs), and additional miscellaneous defect fixes.
+  
+ For a complete listing of patches included in this release, please 
+ refer to the CPRS GUI v.30.b (Patch OR*3.0*350) Release notes.
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ DISPLAY GROUP (#101.41)                         Modified
+ OE/RR REPORT (#101.24)                          Modified
+ OE/RR NOTIFICATIONS        PROCESSING FLAGS     New
+   (#100.9)                   (#2)
+ ORDER DIALOG (#101.41)                          Modified 
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ OR BCMA ORDER COM      Broker             Modified
+ OR CPRS GUI CHART      Broker             Modified
+ OR DEBUG REPORT        Action             New
+ OR PARAM IRM MENU      Menu               Modified
+ OR PARAM COORDINATOR   Menu               Modified
+   MENU
+ ORW CLIN IND DATE DFLT Action             New 
+  
+ Parameters Associated:
+  
+ Parameter Name                New/Modified/Deleted
+ --------------                --------------------
+ OR LAB TAB DEFAULT REPORT     New
+ OR REPORT DATE SELECT TYPE    New
+ ORCDGMRC CLIN IND DATE        New
+   DEFAULT
+ OR MOB DLL VERSION            New
+ ORPARAM OVER DATELINE         New
+  
+ Protocols Associated:         
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Remote Procedure Calls Associated:
+  
+ Remote Procedure Call Name           New/Modified/Deleted
+ --------------------------           --------------------
+ ORBCMA5 JOB                          New
+ ORBCMA5 LOCK                         New
+ ORBCMA5 UNLOCK                       New
+ ORDEBUG SAVEDESC                     New
+ ORDEBUG SAVERPCS                     New
+ ORQQCN GET USER AUTH                 Modified
+ ORUTL ISCLORD                        New
+ ORUTL4 DLL                           New
+ ORWDXM1 BLDQRSP                      Modified
+ ORWRP1A RADIO                        New
+ ORWU OVERDL                          New
+ ORQQPL EDIT LOAD                     Modified
+ ORWPS COVER                          Modified
+ ORWU MOBAPP                          New
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ ORSUPPLY
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ Developer Issues
+ -----------------
+ 1. Non-VA Medication Quick Order Dialogs with Complex Dosages
+  
+ Problem
+ -------
+ It is possible to create non-VA medication quick orders with complex 
+ dosages even though the Document Herbal/OTC/Non-VA Medications dialog in 
+ the Computerized Patient Record System Graphical User Interface (CPRS 
+ GUI) does not handle complex quick orders.
+  
+ Resolution
+ ----------
+ The ability to create non-VA medication quick order dialogs with complex 
+ dosages is now removed. During the post-install, a report will be 
+ generated listing all non-VA medication quick order dialogs with complex 
+ dosages. Sites may edit these order dialogs to remove the complex dosages 
+ at their discretion.
+  
+ 2. Post CPRS v29 Report Issues
+  
+ Problem
+ -------
+ Two issues were identified with the printing of reports released with 
+ Computerized Patient Record System (CPRS) version 29:
+  
+   a. When printing any of the electronic Prescribing for Controlled 
+      Substances (ePCS) reports installed with patch OR*3*218 to a printer,
+      blank pages are randomly inserted in the reports.  The quick order 
+      reports released with patch OR*3*366 also exhibit this problem.
+   b. Sites find it difficult to identify the users on the Provider 
+      Incomplete Configuration Report who need immediate assistance versus 
+      those who do not (for example, differentiating between physicians and
+      nurse practitioner).
+  
+ Resolution
+ ----------
+ The issues are corrected as follows:
+  
+   a. All of the reports are corrected to no longer insert blank pages.
+   b. Providers' title will now appear on the Provider Incomplete 
+      Configuration Report to assist sites in determining which users they
+      need to take action on.
+  
+ 3. CPRS v27 Inpatient Medication Order Detailed Display Issue
+  
+ Problem
+ -------
+ CPRS version 27 introduced a problem with the Order Details dialog box 
+ when viewing a complex inpatient medication order.  The dialog box did 
+ not show the order's schedule.
+  
+ Resolution
+ ----------
+ The code is modified to properly display the order's schedule for complex 
+ inpatient medication orders.
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ 20070506 - Clinic Orders (Partially) 
+ Clinic Orders will focus on clinic medications (the ordering and 
+ processing of the clinic medication).  In the Orders tab of CPRS, there 
+ are two new medication dialog options: Clinic Medications and Clinic 
+ Infusion. Clinic Medication Orders will function comparable to Inpatient
+ Medications.  In addition, the new functionality provides a warning to
+ indicate to the user that a past date was chosen when ordering a clinic
+ medication for future administration.
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ PSI-03-043/PSPO 44/PSPO 1495
+ Outpatient medication orders entered with DONE as a priority did not 
+ appear on the Meds tab in CPRS, were never sent to Outpatient Pharmacy 
+ and were missed in future order checks. See Remedy ticket 67690 for 
+ resolution.
+  
+ PSI-05-083/PSPO 218 Item #4
+ Inpatient Medication orders only appear on the Orders tab and not on the
+ Meds tab or in BCMA.  These orders will now display in all areas. Also, a
+ priority of DONE could be selected when using the Inpatient Medication
+ order dialog in CPRS GUI. See Remedy ticket 108406 for resolution.
+  
+ PSI-06-038/PSPO 299
+ When an outpatient with non-VA medications is admitted, the non-VA 
+ medications appear on the inpatient's coversheet in the Active 
+ Medications section and appear in the Active Orders view on the Orders 
+ tab. See associated Remedy tickets HD136027 and HD180136 for resolution.
+  
+ PSI-07-027/PSPO 480
+ When the hold is removed from an order in CPRS, the status the order had 
+ when it was placed on hold is the same status that displays when the user 
+ attempts to sign the order. If the order is expired, this status is not 
+ updated and displayed to the user unless the user 
+ refreshes the screen. This is true for other actions such as pending to 
+ active. See associated Remedy ticket HD176676 for resolution.
+  
+ PSPO 1187
+ Tubefeeding orders are confusing and not communicating issues to 
+ providers. So, they are difficult to get correct. See Remedy ticket 
+ 290535 for resolution.
+  
+ PSPO 1201
+ When a provider processes an unsigned order alert, occasionally a blank 
+ Orders tab is presented, which may lead the provider to believe that no 
+ action is necessary. This happens because the unsigned order has lapsed 
+ by the time the alert is processed. See associated Remedy ticket HD293275.
+  
+ PSPO 1267
+ When a provider orders a medication for an outpatient using the inpatient 
+ medication order dialog, the order appears on the Orders tab in the 
+ Outpatient Medications display group and on the Medications tab in the 
+ Inpatient section. See associated Remedy ticket HD280989 for resolution.
+  
+ PSPO 1604
+ Users can create CPRS personal quick orders with a value for the Schedule 
+ field and a blank Dose field. When creating system-wide quick orders in 
+ VistA, the Schedule field cannot be filled unless a value is placed in 
+ the Dose field. This happens because the VistA Quick Order editor does 
+ not allow entry into a child item if the parent item is blank. See 
+ associated Remedy ticket HD366596 for resolution.
+  
+ PSPO 1913 and 2149
+ The user is able to create multiple sessions with patient context for 
+ each session when there should only be one CPRS with patient context. See 
+ associated Remedy tickets 449620 and 580169 for resolution.
+  
+ PSPO 1664
+ A speech pathologist noticed during inpatient rounds that a delayed order 
+ of "soft + thins" diet was activated upon patient transfer. However, 
+ this patch was at risk of dyspepsia. See Remedy ticket 385397 for 
+ resolution.
+  
+ PSPO 2052
+ When a patient requests a renewal for a non-renewable Schedule II 
+ controlled substance through the AudioCARE AudioRenewal module, an 
+ informational alert is generated that contains the drug name in the 
+ message. When processed, the alert simply disappears. See associated 
+ Remedy tickets HD478854 and HD717451 for resolution.
+  
+ PSPO 2165
+ A problem was reported with notes not being saved under the
+ following conditions:
+ 1)      Boilerplated note title used to enter a progress note,
+ 2)      User used the right/left mouse buttons simultaneously with the
+         middle wheel to zoom on the text.
+  
+ However when attempting to recreate this problem in CPRS GUIv29 the notes 
+ were consistently saved. See associated Remedy ticket 354377 for
+ resolution.
+  
+ PSPO 2221 
+ A provider was entering an inpatient medication order when CPRS had an
+ abnormal termination. See Remedy 614497 for resolution.
+  
+ PSPO 2334
+ When a user processes a lab notification and proceeds to switch patients, 
+ the notification message text of the previous notification does not clear 
+ out in the header caption of the labs tab. See associated Remedy ticket 
+ INC000000768368 for resolution.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ HD136027
+ HD180136
+ HD176676
+ HD215437
+ HD238394 
+ HD335195
+ HD390473
+ HD293275
+ HD366596
+ HD514882
+ HD478854
+ HD717451
+ HD481460
+ HD280989
+ INC000000067690
+ INC000000069154
+ INC000000069312
+ INC000000070157
+ INC000000070588
+ INC000000108406
+ INC000000172679
+ INC000000202393
+ INC000000290535
+ INC000000343735
+ INC000000423142
+ INC000000470004
+ INC000000882041
+ INC000000892823
+ INC000000901156
+ INC000000910219
+ INC000001202824
+ INC000000614497
+ INC000000385397
+ INC000000449620
+ INC000000580169
+ INC000000358459
+ INC000000418697
+ INC000000237478
+ INC000000276632
+ INC000000388190
+ INC000000449476
+ INC000000532291
+ INC000000583696
+ INC000000337933
+ INC000000274701
+ INC000000279302
+ INC000000469465
+ INC000000070106
+ INC000000217354
+ INC000000354377
+ INC000000481233
+ INC000000181466
+ INC000000174830
+ INC000000069384
+ INC000000070680
+ INC000001089151
+ INC000000768368
+ I6220103FY16 
+  
+ 1. HD136027 Non-VA meds show as active order on Inpatients
+    HD180136 Non VA Meds Display Question
+  
+ Problem:
+ -------
+ Two issues were identified with these tickets:
+ (1) For inpatients, CPRS lists non-VA medications in the Active Orders 
+ view  on the Orders tab.
+ (2) For inpatients, CPRS lists non-VA medications in the Active 
+ Medications section on the Coversheet.
+  
+ Resolution:
+ ----------
+ Issue 1 is resolved by filtering out non-VA medications from the Active 
+ Orders view. The Current Orders view will continue to include non-VA 
+ medications. Issue 2 is resolved by filtering out non-VA medications from 
+ the Active Medications section on the coversheet for inpatients.
+  
+  
+ 2. HD176676 1 CPRS issue
+  
+ Problem:
+ -------
+ Two issues were identified with this ticket:
+ (1) When an inpatient medication order with a status of hold expires (its
+     stop date is in the past), the order status is not updated to expired.
+     Any user is then able to release that expired order from hold. This
+     gives the false impression that the order is once again active since
+     the Pharmacy and BCMA packages consider the order expired.
+ (2) When Pharmacy changes a held medication order's status, the order text
+     continues to say HOLD regardless of the new status.
+  
+ Resolution:
+ ----------
+ Issue 1 is addressed in associated patch PSJ*5*267. OR*3*350 addresses
+ issue 2 by modifying the code that handles HL7 messages from the Pharmacy
+ package. Whenever an order with a status of hold changes status, a release
+ from hold action is always created before changing the order's status.
+  
+  
+ 3. HD215437 2 Med order says HOLD, but has been released from HOLD
+    HD238394 2 Reinstate
+ of D/C of order on provider hold does not remove
+             hold on order tab from order text
+    HD335195 Medication order still has "HOLD" in front of it on Orders Tab
+             but has been released from hold
+    HD390473 2 Med Still on hold on Orders tab, Active on Meds tab
+  
+ Problem:
+ -------
+ When a pharmacist either holds or releases a hold on a medication order
+ from within the Pharmacy package, the order text on the Orders tab is not 
+ synced with the order status (when the status is HOLD, the text does not 
+ contain HOLD or when the text contains HOLD, the status is ACTIVE).
+  
+ Resolution:
+ ----------
+ The code that handles HL7 messages from the Pharmacy package was modified 
+ so that regardless of the nature of order selected by the pharmacist, an 
+ action will always be created when an order is held and when an order is 
+ released from hold.
+  
+  
+ 4. HD280989 Inpatient Med Pkg Order sent to Outpt Med Display Group
+  
+ Problem:
+ -------
+ When a provider uses the inpatient medications order dialog to order a 
+ medication for an outpatient, the resulting order is displayed in the 
+ outpatient medications display group on the orders tab and in the 
+ inpatient section on the Medications tab.
+  
+ Resolution:
+ ----------
+ This issue is indirectly fixed by the redesign of clinic medications. 
+ When a provider uses the inpatient medication order dialog to order a 
+ medication for an outpatient, CPRS will prompt the provider to confirm 
+ that they intend to place a clinic medication order. If the provider 
+ proceeds, the resulting order will appear in the clinic medications 
+ display group on the Orders tab and in the Inpatient Medications section 
+ on the Medications tab.
+  
+  
+ 5. HD293275 ALERTS DISAPPEARING ON REFILLS, ORDERS NO LONGER THERE
+  
+ Problem:
+ -------
+ CPRS lapses orders that remain unsigned after the number of days 
+ specified in parameters OR LAPSE ORDERS and OR LAPSE ORDERS DFLT. When 
+ the provider processes the unsigned order alert and the order has already 
+ lapsed, a blank Orders tab is presented.
+  
+ Resolution:
+ ----------
+ Patch OR*3*280 (CPRS version 28) added functionality to remove the 
+ unsigned order alert when the referenced order is lapsed. OR*3*350 
+ introduces the LAPSED UNSIGNED ORDER notification that when processed, 
+ will present the Orders tab to the provider showing which unsigned orders 
+ were lapsed.
+  
+ This notification is exported with the following parameter values set at 
+ the package level:
+  
+           ORB ARCHIVE PERIOD: 30 days
+         ORB DELETE MECHANISM: Individual Recipient
+       ORB FORWARD SUPERVISOR: 0 (never)
+       ORB FORWARD SURROGATES: 0 (never)
+          ORB PROCESSING FLAG: Disabled
+      ORB PROVIDER RECIPIENTS: OAPT (Ordering provider, Attending provider,
+                                     Primary provider, and Team)
+                  ORB URGENCY: High
+  
+  
+ 6. HD366596 1 Quick Order Does not allow blank DOSAGE
+    HD514882 3 Stack Error when returning through fields of a Quick Order
+  
+ Problem:
+ -------
+ When creating system-wide quick orders in VistA, the Schedule field 
+ cannot be filled unless a value is placed in the Dose field. This happens 
+ because the VistA Quick Order editor does not allow entry into a child 
+ item if the parent item is blank.
+  
+ Resolution:
+ ----------
+ Users can now create both simple and complex system-wide quick orders 
+ with a blank dosage field.
+  
+  
+ 7. HD478854 Audio Renewal request
+    HD717451 AudioRenewal alerts for controlled substance Rx missing
+  
+ Problem:
+ -------
+ Renewal requests for non-renewable Schedule II controlled substances 
+ generate an informational alert that when processed, is simply deleted. 
+ This may cause the provider to accidentally miss placing the renewal 
+ order.
+  
+ Resolution:
+ ----------
+ The existing OP RX RENEWAL REQUEST notification is converted into an 
+ action alert that when processed, will take the user to the Orders tab 
+ which shows only the non-renewable order. This alert has also been renamed
+ to OP NON-RENEWABLE RX RENEWAL to reflect the change in the notification's
+ functionality.
+  
+  
+ 8. HD481460 6 SCHEDULE required for quick orders
+  
+ Problem:
+ -------
+ Users cannot create system quick orders with a blank value for the 
+ Schedule field. In addition, users cannot delete a value from the 
+ And/Then conjunction field for complex dosing quick orders.
+  
+ Resolution:
+ ----------
+ The Schedule field is no longer a required field and users are now able 
+ to leave the And/Then conjunction field blank.
+  
+  
+ 9. INC000000882041 OERR - Other: Duplicate VA numbers
+    INC000000892823 <UNDEFINED>DUPVAQ+16~ORDEA01A *DISINC
+  
+ Problem:
+ -------
+ When the Duplicate VA Numbers report is queued, the error 
+ <UNDEFINED>DUPVAQ+16~ORDEA01A *DISINC is generated and the report does 
+ not generate.
+  
+ Resolution:
+ ----------
+ The code that queues the report is modified to properly save the DISINC 
+ variable.
+  
+  
+ 10. INC000000614497 Inpatient medication and CPRS order locked issue
+  
+ Problem:
+ -------
+ A provider was entering an inpatient medication order when CPRS had an 
+ abnormal termination. This set a patient lock for the record and the 
+ provider was not able to enter additional orders. 
+  
+ Resolution:
+ ----------
+ Multiple potential lock issues were identified and have been addressed. 
+ The lock and unlock code now falls inside of a Try/Finally statement 
+ which will force the unlock to fire when the code terminates.
+  
+    
+ 11. INC000000385397 Correct activation of a delayed diet order caused a 
+                     patient to be fed an inappropriate diet
+  
+ Problem:
+ -------
+ It was noticed by a speech pathologist during inpatient rounds at the 
+ reporting site that a delayed order of "soft + thins" diet (this is a 
+ thin watery diet) was activated upon patient transfer as expected, 
+ however since the patient was at risk of dyspepsia (difficulty in
+ swallowing), they should have remained on the "nectar thick" diet (this is
+ a thicker liquid diet with a consistency of honey) they were on prior to
+ transfer.  
+  
+ Resolution:
+ ----------
+ Modifications were made to the current software (pop-up) so that users 
+ are prompted with both current and future delayed orders when entering 
+ new diet orders.
+  
+  
+ 12. INC000000449620 More than one session of CPRS with patient context
+     INC000000580169 CCOW ISSUE WHEN ONE SESSION IS EDITING AN ORDER
+  
+ Problem:
+ -------
+ The user was able to create multiple sessions with patient context for 
+ each session when there should only be one CPRS with patient context. 
+ There were multiple instances where a modal window would prevent the CPRS
+ application from accepting messages. This would prevent the session from 
+ closing the window and switching to the proper context.  
+  
+ Resolution:
+ ----------
+ The code was modified to check if order sets, order dialogs or order 
+ action windows were modal, if so then we would allow CPRS to close the 
+ window and process the context request.
+  
+    
+ 13. INC000000358459 "Edit Common List" rearrange issue 
+  
+ Problem:
+ -------
+ When using "Edit Common List" as you would move the position a selected 
+ item, a tool tip would appear and halt all other events until an item in 
+ the list was clicked. This usually happened around the third click.
+  
+ Resolution:
+ ----------
+ This has to do with the ItemTipEnabled property. To combat this issue the
+ OnClick events for the up and down buttons were moved into the OnMouseDown
+ event. When the MouseDown event fires the ItemTipEnabled is set to false
+ and then returned to on when the MouseUp event is fired.
+  
+  
+ 14. INC000000418697 Use of Recall appointments for writing orders 
+  
+ Problem:
+ -------
+ When writing an order for a recall appointment a user with the ORES key 
+ would correctly be prompted about the missing date/time. However if the
+ user had either the ORELSE key or the OREMAS key they would not receive
+ the prompt and later when the order was saved would receive an M Error.
+  
+ Resolution:
+ ----------
+ To correct this issue an additional check was put in for the change and
+ copy actions. This check will verify that a location exist and time has
+ been selected. If not the user will see the correct prompt.
+  
+  
+ 15. INC000000237478 Error saving notes Document #: 0 
+  
+ Problem:
+ -------
+ When completing/updating a consult the user tries to write a second note
+ via the notes tab. The second note is completed and signed and the user 
+ tries to return to the original consult note. When attempting to save the
+ consult note they receive the save error.
+  
+ Resolution:
+ ----------
+ This issue is caused because CPRS is only designed to handle one note Edit
+ at a time. Code has been added that will inform the user of this fact just
+ as it does on the notes tab.
+  
+  
+ 16. INC000000276632 Provider comments in outpatient medications   
+  
+ Problem:
+ -------
+ A provider was trying to change the preexisting comments for an 
+ outpatient medication and did not uncheck the patient instruction box. 
+ The user must remember to uncheck the patient instruction box or the 
+ providers previous comments show up in the current script along with the 
+ new comments.  
+  
+ Resolution:
+ ----------
+ The patient instruction label has been modified to now read "Patient 
+ Instructions - A check in this box below WILL INCLUDE the patient 
+ instructions in this order." A hint was added to the patient 
+ instruction check box that states "A check in this box WILL INCLUDE 
+ the patient instructions in this order."
+  
+    
+ 17. INC000000388190 Sorting issue on consult service list 
+  
+ Problem:
+ -------
+ When ordering a consult, the consult to service list does not sort 
+ properly 
+  
+ Resolution:
+ ----------
+ There was a custom sort method that did not function as expected. This 
+ has now been rewritten to correctly sort by a specific piece.
+  
+     
+ 18. INC000000449476 Pharmacy Objects do not print correctly 
+  
+ Problem:
+ -------
+ This is an addition to remedy ticket INC000000144336 (released in CPRS 
+ 28). It was found at test sites that a carriage return was not being 
+ added if the print space was less than 10 characters.
+  
+ Resolution:
+ ----------
+ Modified method to now include a carriage return when length is less than 
+ 10 characters.
+  
+  
+ 19. INC000000070157 Prevent duplicate entry of IV components
+                      
+  
+ Problem:
+ -------
+ Currently, the CPRS IV (Infusion) ordering dialog allows for the 
+ selection of the same item multiple times.
+  
+ Resolution:
+ ----------
+ The dialog was modified to prevent selection of the same additive 
+ multiple times.
+  
+    
+ 20. INC000000337933 Quick Order creation: missing additional dose box
+  
+ Problem:
+ -------
+ When creating quick orders via the GUI there was no way to save the     
+ order with the "Give additional dose now" check box checked.
+  
+ Resolution:
+ ----------
+ When the quick order is saved via the GUI the check box will have its 
+ state saved.
+  
+  
+ 21. INC000000274701 Review/Sign Changes doesn't display previous 
+                     session unsigned orders  
+  
+ Problem:
+ -------
+ CPRS is designed to hold both the current session changes and the previous
+ sessions changes in the same variable. When either selecting a new 
+ patient or refreshing the current patient, CPRS returns all changes and 
+ loads them to a global variable. If the select new patient is cancelled
+ and the review/sign changes action is used again, the variable is
+ overwritten with the changes from prior sessions.
+  
+ Resolution:
+ ----------
+ A temporary list is made that will be used to restore the change list 
+ in case the user cancels out of the patient selection.
+  
+  
+ 22. INC000000279302 Duration or Total Volume list doesn't enforce 
+                     unique selection  
+  
+ Problem:
+ -------
+ When placing an infusion order the Duration of Total Volume list box does 
+ not enforce unique entries before auto selecting. The selection box 
+ contains both Days and Doses and when a provider types in "D" it will 
+ select the first "D" word in the list. In this case Days would be auto 
+ selected.
+  
+ Resolution:
+ ----------
+ To correct this the auto complete functionality needed to be rewritten to 
+ now take in unique matches before selecting from the list.
+  
+    
+ 23. INC000000469465 Attempting to add a new interdisciplinary note  
+  
+ Problem:
+ -------
+ When viewing the notes while they are sorted by title the user was trying 
+ to add an interdisciplinary note to an actual note (right pane of notes
+ tab) and not the interdisciplinary group (left pane of notes tab).
+  
+ Resolution:
+ ----------
+ The condition that was used to determine if the actions should show was 
+ not fired when the selecting an item from the note pane (right). The logic
+ has been moved into its own method so that it can be called from both
+ panes as needed.
+  
+  
+ 24. INC000000070106 Restricting OI for Lab Orders    
+  
+ Problem:
+ -------
+ When an orderable item (lab) is set as "QuickOrder restricted" it is 
+ being restricted from both Labs and quick-order.
+  
+ Resolution:
+ ----------
+ An update was made to the orderable items RPC to now check if the dialog 
+ is a quick order or not. Using this information the return list can now 
+ filter appropriately. 
+  
+   
+ 25. INC000000217354 Reminder dialog templates allow ordering of consult 
+                     tracker services   
+  
+ Problem:
+ -------
+ When a service is set up as a tracking only service a user without the 
+ proper rights is able to make a quick order as a finding item. This is 
+ inconsistent with the way that it works directly through consults.
+  
+ Resolution:
+ ----------
+ When making a consult quick order, check if the service is set to 
+ grouping. If so, then stop and display the error. If it is marked as 
+ tracking then check if the user has the correct rights (user level) and 
+ if so, then continue, else halt and display message.
+  
+  
+ 26. INC000000354377 Increased margins due to zooming in on the note
+  
+ Problem:
+ -------
+ When using the zoom feature while editing a note, the margins increase 
+ width causing the text to wrap at one character per line. The background 
+ auto save of the note fires off and saves the note in this format.
+  
+ Resolution:
+ ----------
+ The zoom functionality was removed from CPRS since it was not intended to 
+ be used.
+  
+  
+ 27. INC000000481233 Change button loses position  
+  
+ Problem:
+ -------
+ Change button loses position with dual monitors. If you expand your 
+ display greater than the width of your main display, the change button 
+ will overwrite information.
+  
+ Resolution:
+ ----------
+ To ensure that the button does not lose its position the anchor 
+ properties for the button need to be modified. The code that was used to 
+ try to calculate the position is not needed since these anchors can do 
+ this for us.
+  
+    
+ 28. INC000000181466 Automatically defaulting cosigner name
+  
+ Problem:
+ -------
+ When entering a note the cosigner name is carried over from previous 
+ notes. 
+   
+ Resolution:
+ ----------
+ There was code that was once designed to set the cosigner to the last one
+ used. Since there is now an option to specify the default cosigner, this
+ code is irrelevant.
+  
+  
+ 29. INC000000174830 Long delay with no hourglass for "all signed notes" 
+                     view
+  
+ Problem:
+ -------
+ When loading a large number of notes for a patient there is no 
+ "hourglass" letting the user know that CPRS is still working.
+  
+ Resolution:
+ ----------
+ The issue dealt with building the tree list of the notes. CPRS would take 
+ some time to build this list and not show an hourglass to the user. An 
+ hourglass has been added to this loop as well as rewriting the loop to get
+ a 94% speed increase.
+  
+  
+ 30. INC000000069384 Sign on chart for transcriptionist
+  
+ Problem:
+ -------
+ A transcriptionist writes a note and tries to sign it, they are presented 
+ with the "sign on chart" option. However when doing this the document 
+ remains in an unsigned status.   
+  
+ Resolution:
+ ----------
+ This option is designed for orders and the logic that determines if this 
+ option should show needed to be corrected.
+  
+  
+ 31. INC000000070680 Orders - Active time period honored by Auto D/C 
+                     Release Event  
+  
+ Problem:
+ -------
+ On the orders tab if the custom view is changed to "only list placed
+ During time period" then only active orders for that time period are
+ displayed. However, if "auto d/c release events" view is then used only 
+ the ones that fall in the time period used from the prior view are
+ displayed.
+  
+ Resolution:
+ ----------
+ The dates used to filter the results should be cleared when using the 
+ "AutoDC/Release Event Orders" view.
+  
+  
+ 32. INC000001089151 Health Summary - Health Summary Component:
+  
+ Problem:
+ -------
+ The medication reconciliation tool (part of Health Summary) does not 
+ include non-VA medications for inpatients. This was the result of code 
+ changes for patient safety issue PSI-06-038/PSPO 299 to remove non-VA 
+ medications from the Active Medications section on the cover sheet for 
+ inpatients.
+  
+ Resolution:
+ ----------
+ The code was further modified to return non-VA medications when called by 
+ the medication reconciliation tool only; the coversheet will continue to 
+ filter out non-VA medications for inpatients.
+  
+ 33. INC000000768368 Lab Results
+  
+ Problem:
+ -------
+ When a provider processes a lab results notification for a particular 
+ patient and then proceeds to switch patient records, the notification 
+ message text of the previous patient's lab results was still displayed 
+ under the header caption of the Most Recent Labs view on the Labs tab. 
+ This may cause the provider to misinterpret the lab results for the 
+ current patient.
+  
+ Resolution:
+ ----------
+ The software has been corrected so that after lab notification processing 
+ and switching of patients, the previous lab notification text will be 
+ cleared out from the header caption display of the current patient's 
+ lab results.
+  
+ 34. INC000000067690 WPB-0803-30791 done ordrs not appearing on meds tab
+     INC000000069154
+     INC000000343735
+  
+ Problem:
+ -------
+ Outpatient medication orders entered in CPRS using the Priority of DONE 
+ do not appear on the meds tab. This is because they are considered to be 
+ already completed. 
+  
+ Resolution:
+ ----------
+ DONE is being removed as a priority. Providers are being encouraged to 
+ use the new feature for One-Step Clinic Admin orders that will ensure 
+ orders are in Pharmacy as well as CPRS.
+  
+ 35. INC000000069312 ORDER DIALOG 'PSO SUPPLY'
+     INC000000423142
+  
+ Problem:
+ -------
+ The PSO SUPPLY dialog has never worked correctly. It still required a 
+ user to be authorized to write medication orders.
+  
+ Solution:
+ --------
+ Changes have been made to the supply order dialog to allow a user with 
+ the OR SUPPLY key to write supply orders without being authorized to 
+ write medication orders.
+  
+ 36. INC000000070588  RX showing complete status. Can select DONE as a 
+     INC000000108406  priority
+  
+ Problem:
+ -------
+ This is a long-outstanding patient safety issue. The final requirement to 
+ fully correct the item was to create the One-Step Clinic Admin 
+ functionality for providers.
+  
+ Solution:
+ --------
+ Created the One-Step Clinic Admin functionality for providers.
+  
+ 37. INC000000172679  Problem with IMO order 
+  
+ Problem:
+ -------
+ The root problem is with the fact that IMO was never intended to handle 
+ an Inpatient.
+  
+ Solution:
+ --------
+ Clinic Orders (the replacement for IMO) will handle clinic orders for 
+ Inpatient as well as Outpatients. This is done in conjunction with the 
+ changes already released in Inpatient Medications.
+  
+ 38. INC000000202393  Flagging an unreleased Inpatient Med order 
+                      doesn't appear in Pharmacy
+  
+ Problem:
+ -------
+ Flagging an unreleased Inpatient Medications order was causing an issue 
+ because the flag information was not appearing in Pharmacy.
+  
+ Solution:
+ --------
+ The flag is now passed to Pharmacy so they can display it.
+  
+ 39. INC000000290535  Tubefeeding order increased in difficulty
+  
+ Problem:
+ -------
+ Tubefeeding orders are confusing.
+  
+ Solution:
+ --------
+ Hover text was added, calculations were corrected to prevent entering 
+ something with over the maximum amount of fluids and the help text was 
+ updated to remove the unapproved abbreviations.
+  
+ 40. INC000000470004  Choosing note titles to display within OPTIONS
+  
+ Problem:
+ -------
+ On the Notes tab within Options you can configure a document list 
+ preference. But, when you try to choose a title from the Document Class of
+ Discharge Summary and then "Save Changes", it doesn't work the way it does
+ when you set note titles at the Progress Note Document Class. When you go
+ into create a New Summary, the title you chose within the options does
+ not appear at the top of my list of discharge summary notes.
+  
+ Solution:
+ --------
+ Corrected display of discharge summary notes.
+  
+ 41. INC000000532291  Complex quick orders with empty dose rows load as
+                      simple orders.
+  
+ Problem:
+ -------
+ If a complex quick order with an empty dose row loads into the GUI it 
+ loads as a simple order.
+  
+ Solution:
+ --------
+ The call that loads the quick orders has been modified to correctly deal 
+ with empty dose rows.
+  
+ 42. INC000000583696 Each succeeding diet order makes box shrink
+  
+ Problem:
+ -------
+ For each subsequent diet order placed, the order dialog box continues to 
+ shrink. When entering a diet order on an inpatient, the Diet Order box
+ appears fairly normal, e.g., they can see the entire order box (Accept
+ Order/Quit). But then with each subsequent order the box shrinks.
+  
+ Solution:
+ --------
+ Sizing of box has been modified to remain consistent.
+  
+ 43. INC000000901156 Drug name appended to dose for Complex Order
+  
+ Problem:
+ -------
+ The problem with trailing spaces had been corrected previously for simple 
+ orders. However, complex orders had not been addressed. The issue being 
+ that trailing spaces on drug names were causing the drug name to be 
+ appended incorrectly.
+  
+ Solution:
+ --------
+ Drug names with trailing spaces no longer cause the drug name to be 
+ appended incorrectly to the dosage text.
+  
+ 44. INC000000910219 Inpatient Medications: Other
+     INC000001202824 Receiving 'invalid integer' error when renewing
+  
+ Problem:
+ -------
+ When renewing Inpatient Medications orders, there could be an issue with 
+ receiving an 'invalid integer' error.
+  
+ Solution:
+ --------
+ When renewing an order an error could occur that would prevent that action
+ from happening in the CPRS GUI. This has been corrected to ensure that
+ when the referencing the number of days it uses a default of 0 instead of
+ experiencing an invalid integer error.
+  
+ 45. I6220103FY16 Diagnoses are being removed from the Encounter if NOT 
+                  initially added to the Problem List
+  
+ Problem:
+ -------
+ When editing a completed note encounter and adding the previous 
+ primary diagnosis to the Problem List, the newly added SNOMED/ICD-10 
+ primary diagnosis is not saved in CPRS & PCE and the previous ICD-10 
+ diagnosis is removed from the encounter. This resulted in errors and
+ potentially lost workload/VERA if the encounters are not corrected. This 
+ applies only to diagnoses that are NOT initially added to the Problem 
+ List and that are added later.
+  
+ Solution:
+ --------
+ This is corrected so that the newly added diagnoses are saved 
+ appropriately in CPRS and PCE when editing a completed note encounter.
+  
+ Test Sites:
+ ===========
+ Cleveland, OH
+ Heartland - East
+ Heartland - West
+ Loma Linda, CA
+ Palo Alto, CA
+ San Diego, CA
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ the Secure File Transfer Protocol (SFTP) address as directed by the CPRS
+ Implementation team. Installation instructions will be distributed when
+ your site begins the implementation process.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ The updated documentation will not be on the vdl until after the phased
+ deployment has completed.
+  
+ File Name                       Contents               
+ ---------                       --------               
+ CPRSGUITM.PDF                   CPRS Technical Manual: GUI Version
+ CPRSGUIUM.PDF                   CPRS User Guide: GUI Version
+ CPRSLMTM.PDF                    CPRS Technical Manual
+ OR_30_350_RN.PDF                CPRS GUI v.30.B (Patch OR*3.0*350) 
+                                      Release Notes
+ OR_30_350_IG.PDF                CPRS GUI v.30.B Installation Guide
+  
+ Patch Installation:
+ =================== 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Please refer to the "CPRS GUI v.30.b Installation Guide" for installation 
+ and set-up information. This document is exported as OR_30_350_IG.doc and
+ OR_30_350_IG.pdf and is included in OR_30_350.ZIP and will be emailed to 
+ the installation point of contacts by the CPRS Implementation team.
+  
+ Installation of these host files must be coordinated among the personnel 
+ affected because these host files will be installed in one installation 
+ session.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 77
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORAREN
+    Before: B44893839   After: B51653568  **336,349,350**
+Routine Name: ORB3
+    Before: B97635419   After:B140213780  **31,74,91,105,139,190,220,253,
+                                           265,296,348,350**
+Routine Name: ORB3FUP1
+    Before: B64991738   After: B77909013  **9,64,74,105,139,243,350**
+Routine Name: ORB3TIM2
+    Before: B42852684   After: B43382102  **102,215,251,265,356,350**
+Routine Name: ORBCMA5
+    Before:  B3393504   After:  B8075398  **133,350**
+Routine Name: ORCACT0
+    Before: B64282861   After: B64590852  **7,27,48,72,86,92,94,141,165,
+                                           177,173,190,215,243,289,204,
+                                           306,350**
+Routine Name: ORCACT01
+    Before: B75438939   After: B77384512  **94,116,134,141,163,187,190,
+                                           213,243,306,374,350**
+Routine Name: ORCDFHTF
+    Before: B18867074   After: B19437978  **7,141,215,350**
+Routine Name: ORCDLG1
+    Before: B72953104   After: B84017168  **60,71,95,110,243,350**
+Routine Name: ORCDPS
+    Before: B42346131   After: B41761091  **4,38,62,86,94,129,350**
+Routine Name: ORCDPS1
+    Before: B80784611   After: B86245200  **94,117,141,149,195,215,243,
+                                           280,337,311,350**
+Routine Name: ORCDPS2
+    Before: B67607141   After: B68376826  **94,116,125,131,243,311,350**
+Routine Name: ORCDPS3
+    Before: B45430987   After: B45751820  **94,116,134,158,149,190,277,
+                                           243,289,317,350**
+Routine Name: ORCXPND1
+    Before: B82803363   After: B97571749  **26,67,75,89,92,94,148,159,
+                                           188,172,215,243,280,340,306,
+                                           350**
+Routine Name: ORDD100A
+    Before:  B8486642   After:  B8843443  **24,138,157,350**
+Routine Name: ORDEA01
+    Before: B44517612   After: B46652455  **218,374,350**
+Routine Name: ORDEA01A
+    Before:B172812749   After:B131930344  **218,350**
+Routine Name: ORDEA01B
+    Before: B16135241   After:B129635261  **218,350**
+Routine Name: ORDEBUG
+    Before:       n/a   After: B15661026  **350**
+Routine Name: ORDEBUG1
+    Before:       n/a   After: B10131141  **350**
+Routine Name: ORDEBUG2
+    Before:       n/a   After:  B5203678  **350**
+Routine Name: ORDV02
+    Before: B73651377   After: B73541446  **109,118,146,141,208,318,350**
+Routine Name: ORDV02B
+    Before:       n/a   After: B40982123  **350**
+Routine Name: ORDV02C
+    Before:       n/a   After: B22064710  **350**
+Routine Name: ORDV06B
+    Before: B36021752   After: B43803935  **312,350**
+Routine Name: ORIMO
+    Before:  B2288142   After:  B2334294  **187,190,195,215,243,350**
+Routine Name: ORMBLD
+    Before: B43506557   After: B44600527  **3,33,26,45,79,97,133,168,187,
+                                           190,195,215,350**
+Routine Name: ORMBLDGM
+    Before:  B5907339   After:  B6024774  **26,68,97,190,195,280,361,350**
+Routine Name: ORMFN
+    Before: B37182976   After: B42446020  **26,97,94,176,215,243,280,350**
+Routine Name: ORMGMRC
+    Before: B44816636   After: B45026486  **3,26,68,92,153,174,195,255,
+                                           243,280,350**
+Routine Name: ORMPS
+    Before: B82154291   After: B86715269  **3,54,62,86,92,94,116,138,152,
+                                           141,165,149,213,195,243,306,
+                                           350**
+Routine Name: ORMPS1
+    Before: B70284401   After: B71509240  **86,92,94,116,134,152,158,149,
+                                           190,195,215,265,275,243,280,
+                                           350**
+Routine Name: ORMPS2
+    Before: B49592916   After: B48612384  **94,116,129,134,186,190,195,
+                                           215,265,243,280,363,350**
+Routine Name: ORPRS04
+    Before: B42854284   After: B42879835  **11,69,92,121,350**
+Routine Name: ORQ11
+    Before: B66045788   After: B65899286  **7,27,48,72,78,99,94,148,141,
+                                           177,186,190,195,215,243,295,
+                                           322,350**
+Routine Name: ORQ21
+    Before: B35230929   After: B35534512  **141,190,195,215,243,361,350**
+Routine Name: ORQOR2
+    Before: B13837546   After: B14557366  **6,32,92,122,144,190,251,350**
+Routine Name: ORQOREP
+    Before:B106806677   After: B92933905  **366,350**
+Routine Name: ORQQCN2
+    Before: B33486661   After: B36811080  **10,85,125,131,149,215,242,280,350**
+Routine Name: ORQQPL
+    Before: B32815951   After: B33314965  **9,10,85,173,306,361,385,350**
+Routine Name: ORQQPL1
+    Before: B93536539   After: B93414156  **10,85,148,173,203,206,249,
+                                           243,280,306,361,385,350**
+Routine Name: ORQQPL4
+    Before: B12182023   After: B15703032  **306,361,350**
+Routine Name: ORTSKLPS
+    Before:  B6566762   After:  B8724691  **243,280,350**
+Routine Name: ORUTL
+    Before: B53928458   After: B85894949  **95,280,218,350**
+Routine Name: ORUTL4
+    Before:       n/a   After: B10368867  **350**
+Routine Name: ORWCIRN
+    Before:  B9046507   After: B10494851  **10,101,109,132,141,160,208,
+                                           239,215,243,350**
+Routine Name: ORWDCN32
+    Before: B19324752   After: B19344504  **10,85,306,350**
+Routine Name: ORWDPS1
+    Before: B56868000   After: B58422591  **85,132,141,163,215,255,243,
+                                           306,350**
+Routine Name: ORWDPS3
+    Before: B20975704   After: B24262284  **85,94,116,132,187,195,215,280,350**
+Routine Name: ORWDPS32
+    Before: B70700114   After: B77153006  **10,85,94,190,195,237,243,350**
+Routine Name: ORWDPS33
+    Before: B40244944   After: B41340191  **243,280,350**
+Routine Name: ORWDX
+    Before: B66876839   After: B70259913  **10,85,125,131,132,141,164,
+                                           178,187,190,195,215,246,243,
+                                           283,296,280,306,350**
+Routine Name: ORWDX1
+    Before: B52703503   After: B53489734  **85,187,195,215,243,296,341,350**
+Routine Name: ORWDXM1
+    Before:B102077765   After:B106096775  **10,85,131,132,141,178,185,
+                                           187,215,243,280,331,388,350**
+Routine Name: ORWDXM3
+    Before:B104533418   After:B111449239  **10,85,131,132,141,185,187,
+                                           190,195,215,243,303,296,280,
+                                           350**
+Routine Name: ORWDXM4
+    Before: B41799270   After: B43181122  **10,85,215,296,280,394,350**
+Routine Name: ORWDXR01
+    Before: B28161629   After: B29178545  **187,190,195,215,280,345,311,350**
+Routine Name: ORWGAPID
+    Before: B59091643   After: B58657928  **215,243,350**
+Routine Name: ORWOR2
+    Before: B36026297   After: B39008801  **141,350**
+Routine Name: ORWPCE4
+    Before: B18602559   After: B22821566  **10,85,116,173,190,195,215,
+                                           243,295,280,306,361,350**
+Routine Name: ORWPS
+    Before: B65159605   After: B65076275  **10,85,116,132,141,173,203,
+                                           190,195,265,275,243,280,350**
+Routine Name: ORWRP1A
+    Before:  B7916046   After:  B8386925  **109,160,350**
+Routine Name: ORWRP3
+    Before: B10390812   After: B12651269  **109,120,132,215,243,350**
+Routine Name: ORWU
+    Before: B60173136   After: B62530173  **10,85,132,148,149,187,195,
+                                           215,243,350**
+Routine Name: ORY350
+    Before:       n/a   After: B70128695  **350**
+Routine Name: ORY350A
+    Before:       n/a   After: B20572876  **350**
+Routine Name: ORY350B
+    Before:       n/a   After: B73339519  **350**
+Routine Name: ORY350E
+    Before:       n/a   After: B23254860  **350**
+Routine Name: ORY350F
+    Before:       n/a   After:    Delete  
+ 
+Routine list of preceding patches: 121, 157, 311, 312, 317, 318, 322, 341
+                           348, 349, 356, 363, 366, 374, 385, 388, 394
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 12, 2011
+Completed By:                               Date Completed: MAR 07, 2016
+Released By :                               Date Released : MAR 08, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

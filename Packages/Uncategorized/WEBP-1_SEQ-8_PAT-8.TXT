@@ -1,0 +1,201 @@
+
+=============================================================================
+Run Date: SEP 19, 2016                     Designation: WEBP*1*8
+Package : WEBP - PATIENT CENTERED MANAGEMENT  Priority: Mandatory
+Version : 1         SEQ #8                      Status: Released
+                  Compliance Date: SEP 26, 2016
+=============================================================================
+
+
+Subject: PCMM WEB V1.8 CONFIG UPDATES AND FACILITY TYPE OF OTHER IMPLEMENTATION
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Patient-Centered Management Module (PCMM) Web application version 
+ WEBP*1*8 will implement the following configuration changes to current 
+ functionality that will reduce errors received by users and allow the 
+ system to function more efficiently.
+  
+  
+ Configuration and Software Changes:
+ ===================================
+ RTC 371459 - If it is determined through discussion with user or a 
+ helpdesk ticket that an individual team needs to be re-synced to update 
+ the VistA files, then a managed operation is needed to force an immediate 
+ VistA sync for this team. The published managed operation can be run by 
+ an administrator in the Spring JMX console. PCMM Web will now provide the 
+ ability to perform a direct VistA re-sync for a team that processes this 
+ task immediately without placing the task in a nightly queue.
+  
+ CA-SDM Ticket:
+ I10500809FY16           I10304183FY16           I10255346FY16
+ I10036403FY16           I9959271FY16            R9969644FY16
+ I9647449FY16            I10295361FY16           R10158431FY16
+  
+  
+ RTC 361887 - Sites that have been waiting the longest in the Staff Update 
+ job queue for staff updates need to be processed each night before all 
+ other sites are processed. PCMM Web optimized the Staff update/refresh 
+ job by changing the sort order with the oldest date in the queue to be 
+ pulled to the top of the queue to process these sites before processing 
+ other sites in the queue.
+  
+ CA-SDM Ticket:
+ I10284528FY16
+  
+  
+ RTC 330961 - PCMM Web needs to add an additional Facility Type of OTHER 
+ so PCMM Web will include sites that are defined as OTHER in the 
+ institution file in VistA and allow users to open these teams that 
+ migrated in and process patient assignments. Facility Type of OTHER was 
+ added and will now be displayed in PCMM Web in the Station login dropdown 
+ box and the Create a Team station dropdown box. This allows the users to 
+ log into this division and create new teams or open existing teams to 
+ continue patient assignments.
+  
+ CA-SDM Ticket:
+ I9016826FY16            I9964907FY16            I8934080FY16
+  
+  
+ RTC 260518 - The auto-inactivation (AI) job runs nightly and needs to be 
+ optimized to increase its reliability. The AI nightly job needs to be 
+ changed to remove the repetition of completed steps when the process is 
+ interrupted and restarted. The AI process will now keep track of the last 
+ step completed and if this job is interrupted in the middle of processing 
+ a site, it will only run the steps that are needed for completion upon 
+ restarting the process. This will prevent this process from starting over 
+ at step 1 and allow the process to complete tasks that were interrupted 
+ more efficiently.
+  
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ RTC 331958 - The Team Validation query is being executed excessively and 
+ running for a long time causing DB locks to occur. A way to speed up the 
+ run time of this query is needed to prevent further DB locks caused by 
+ the continuing execution of this query. PCMM Web added a constraint to 
+ optimize this query by using table partitioning efficiently. By using 
+ table partitioning, this reduced the run time of the query by order of 
+ magnitude.
+  
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ RTC 374502 - The VistA sync process has a very inefficient piece of code 
+ in the VistALink invocations that may slow down PCMM Web's VistALink 
+ operations by a factor of 2. PCMM Web will now cache introduction text 
+ that shows up in VistALink login window for 10 minutes and will use 
+ cached data instead of querying VistA information on each VistALink 
+ invocation.
+  
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ Implementation:
+ ===============
+ The PCMM Web WEBP*1*8 is a centrally managed web-based application and 
+ will be implemented and deployed to a central web server.  No installation
+ is required by sites.
+  
+  
+ Implementation Files:
+ =====================
+ None
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated: N/A
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A
+  
+ Options Associated: N/A
+  
+ Protocols Associated: N/A
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20070415 - Rehost/Reengineer PCMM
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ CA-SDM Ticket(s):
+ -----------------
+ Listed above with appropriate RTC Defect identified.
+  
+ Test Sites:
+ -----------
+ N/A
+  
+  
+ Documentation:
+ ==============
+  
+ Title                            File Name                 SFTP Mode
+ -----------------------------------------------------------------------
+ No documentation updates for this release. 
+  
+  
+ Patch Installation:
+ ===================
+  
+ There is no local VistA installation for PCMM Web. All installations will 
+ be done on the national web server.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ If you have any questions concerning the implementation of this 
+ application, please contact the VA Service Desk at 1-888-596-4357 or 
+ directly log a CA SDM ticket using the category: 
+ NTL.APP.HealtheVet VistA.PCMM Web.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 09, 2016
+Completed By:                               Date Completed: SEP 19, 2016
+Released By :                               Date Released : SEP 19, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

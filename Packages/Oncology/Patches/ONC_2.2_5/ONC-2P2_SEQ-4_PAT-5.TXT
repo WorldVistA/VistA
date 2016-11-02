@@ -1,0 +1,558 @@
+
+=============================================================================
+Run Date: SEP 14, 2016                     Designation: ONC*2.2*5
+Package : ONC - ONCOLOGY                      Priority: Mandatory
+Version : 2.2         SEQ #4                    Status: Released
+                  Compliance Date: OCT 15, 2016
+=============================================================================
+
+Associated patches: (v)ONC*2.2*7   <<= must be installed BEFORE `ONC*2.2*5'
+
+Subject: ABSTRACT AND EXTRACT FIXES AND UPDATES
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch contains enhancements that extend and improve the functionality
+ of the VistA OncoTrax package.  The purpose of this release is to update
+ the functionality as described below.
+  
+ All Data Dictionary modifications and additions have been reviewed and
+ approved by the Data Base Administrator. 
+  
+ CA SERVICE DESK MANAGER INCIDENTS ADDRESSED:
+ I7282506FY16
+ BMC REMEDY INCIDENT ADDRESSED:
+ INC000001107492 - IPv6 Transition for Oncology 
+  
+ 1. Remove Recurrence Date-1st Flag if Date of First Recurrence is modified
+  
+ Registrars need the RECURRENCE TYPE-1ST FLAG (#165.5, #999.21) field to be
+ deleted if the registrar modifies the DATE OF FIRST RECURRENCE (#165.5, #70)
+ field.  The RECURRENCE TYPE-1ST FLAG was added to the EDITS Modifications
+ module in a previous patch so that users are allowed to override the calculated
+ value.  However this field needs to be reset if the recurrence is edited.
+ This was accomplished by adding a trigger cross-reference to the DATE OF
+ FIRST RECURRENCE (#165.5,#70) field so that if the field is modified it will
+ delete the value in the RECURRENCE TYPE-1ST FLAG (#165.5, #999.21) field.
+  
+ 2. Add time stamp to the Date Case Completed and Date Case Last Changed fields
+  
+ To assist managers/supervisor in verification of the date and time a case was
+ either completed or changed, the DATE CASE COMPLETED (#165.5, #90) and DATE
+ CASE LAST CHANGED (#165.5, #198) fields will now store and display the date &
+ time.  Previously these fields only stored the date and not a time stamp, so
+ this patch will add the time stamp to both fields.  This will be displayed in
+ the Abstract Edit Primary [ONCO ABSTRACT-EDIT] option.
+  
+ 3. Change Case Administration and Timeliness Report to Display Elapsed Days
+ To Completion
+  
+ Two options have been updated to display the ELAPSED DAYS TO
+ COMPLETION (#165.5, #157) field: the Timeliness Report [ONC TIMELINESS REPORT]
+ option and the Abstract Edit Primary [ONCO ABSTRACT-EDIT] option, under the
+ Case Administration section. This replaces the display of ELAPSED MONTHS TO
+ COMPLETION (#165.5, #157.1) field.  The reason is that the CoC's (Commission
+ on Cancer) Completeness Report now uses days to completion rather than months
+ to completion. 
+  
+ 4. Add the name of the registrar who created a follow-up in the
+ Case Administration display
+  
+ In the Abstract Edit Primary [ONCO ABSTRACT-EDIT] option, under the Case
+ Administration section, the name of the registrar who last edited the Abstract,
+ stored in the CASE LAST CHANGED BY (#165.5, #199) field is displayed after the
+ DATE CASE LAST CHANGED (#165.5, #198) field.  This field will be triggered to
+ record the name of the registrar who did the editing even if it was a
+ Follow-Up added.
+   
+ 5. Allow registrar to over-ride '988' value stuffed in discontinued Site
+ Specific Factor (SSF) fields
+  
+ For SSF fields that have been discontinued a value of '988' is stuffed into
+ the fields.  It was not possible for registrars to go in
+ and enter a value for those fields.  Some sites however, may still choose to
+ use those fields even though they have been discontinued by Collaborative 
+ Staging.  For this reason, this patch will add checks to the stuffing of
+ discontinued fields to check if the SSF has a value first and if so do not
+ stuff; this allows the registrar to enter a value which will override the
+ stuffed value.
+  
+ 6. Expand the Performance Status at DX codes
+  
+ Expand the allowable selections for the PERFORMANCE STATUS AT
+ DX (#165.5, #227) field to include ECOG and KPS (Karnofsky Performance
+ Scale) values.  No conversion of existing data is necessary.  The description
+ and help text for this field has also been expanded and modified for the
+ new selections.  The newly added codes are:
+        0        ECOG 0
+        1        ECOG 1
+        2        ECOG 2
+        3        ECOG 3
+        4        ECOG 4
+        5        ECOG 5
+        9        UNKNOWN
+       10        KPS 10
+       20        KPS 20
+       30        KPS 30
+       40        KPS 40
+       50        KPS 50
+       60        KPS 60
+       70        KPS 70
+       80        KPS 80
+       90        KPS 90
+      100        KPS 100
+  
+ 7. Remove Clinical and Pathologic TNM fields from required items
+  
+ To change an Abstract Status to "Complete" there is a list of required
+ data items that must be filled in.  If any of these fields are not entered
+ there is a warning displayed and the abstract will not change to complete.
+ The CLINICAL T (#165.5, #37.1), CLINICAL N (#165.5, #37.2), PATHOLOGIC
+ T (#165.5, #85) and PATHOLOGIC N (#165.5, #86) fields are no longer
+ required to complete an abstract and have been removed from the
+ required fields check.
+  
+ 8. Update the text for Surgical Procedure code selection #15 of
+ LUNG (C34._) cases
+  
+ For LUNG (C34._) cases, the SURGERY OF PRIMARY (F) (#165.5, #58.6) field
+ will be updated to add the text "; RFA" to code selection #15.  The new code
+ text will now look like this:
+       15    Local tumor destruction, NOS; RFA
+  
+ 9. Add 10 User Defined Fields (UDF) for creation and use at each facility
+  
+ Add 10 new fields in the abstract, UDF #1 - #10.  The fields are free text,
+ 1-6 characters long.   These 10 new fields have been added to the Abstract Edit
+ Primary [ONCO ABSTRACT-EDIT] option in a new module:  9. User-Defined Fields.
+ They will also show up within the Abstract towards the end just before the
+ Abstract Status.
+  
+ 10. Add newly required codes to Other Staging System
+  
+ Expand the allowable selections for the OTHER STAGING SYSTEM (#165.5,
+ #39) field.  This field is a pointer to the OTHER STAGING FOR ONCOLOGY (#164.3)
+ File.  The new PCLC and UNOS codes have been added to the file for selection
+ in the OTHER STAGING SYSTEM field.  The newly added fields are:
+    BCLC A0
+    BCLC A1
+    BCLC A2
+    BCLC A3
+    BCLC A4
+    BCLC B
+    BCLC C
+    BCLC D
+    UNOS T1
+    UNOS T2
+    UNOS T3
+    UNOS T4a
+    UNOS T4b
+  
+ 11. Add new Clinical and Pathologic Stage Descriptor fields to the Abstract 
+  
+ Add CLINICAL STAGE DESCRIPTOR (#165.5, #241) and PATHOLOGIC STAGE
+ DESCRIPTOR (#165.5, #242) fields to the abstract (after the STAGE GROUP fields)
+ for all primary sites.  The codes and help text for these set of codes fields
+ was also expanded.  
+  
+ 12. Screen C18.1 cases from RQRS option regardless of selected sorting fields
+  
+ Screen the C18.1 (67181) cases from the Create RQRS Extract [CREATE RQRS
+ EXTRACT] option when user runs the option sorted by DATE CASE LAST
+ CHANGED (#165.5, #198) or ACCESSION NUMBER (#165.5, #.05).  Currently the
+ C18.1 cases are only screened when the user runs the option sorted by DATE
+ DX (#165.5, #3).
+  
+ 13. Remove of the Print Abstract-Brief (80c) [PRINT ABSTRACT-BRIEF 80] option
+  
+ The Print Abstract-Brief (80c) [PRINT ABSTRACT-BRIEF 80] option which had been
+ marked for deletion previously, will be removed from the Abstracting/Printing
+ [ABSTRACT ENTRY/PRINT] menu. 
+  
+ 14. Remove skipping of Performance Status at DX
+  
+ For abstracts which skip over the Staging/TNM coding (for instance, UNKNOWN
+ primaries) the abstract would also skip past the PERFORMANCE STATUS AT
+ DX (#165.5, #227) field.  This has been modified so that the PERFORMANCE
+ STATUS AT DX field is not skipped and may be edited by the user.
+  
+ 15. Correct auto-staging for angiosarcoma and malignant mesenchymoma cases
+  
+ For C38._ and C49._  cases with Histology of 8990/3 or 9120/3 the Abstract
+ Edit Primary [ONCO ABSTRACT-EDIT] option would stuff the staging fields with
+ '88' and skip over this section.  This is no longer correct and will be fixed.
+ For these cases the fields will no longer be stuffed and skipped; the
+ registrars will now be able to edit these fields.
+  
+ 16. New selection in RQRS Option to select All Analytic Cases
+  
+ Previously the Create RQRS Extract [ONCO RQRS EXTRACT] option would only
+ include Breast, Colon and Rectum cases.  A new selection is needed which will
+ allow the user to select ALL cases.  The previous selection will remain so
+ users can run the report either by selecting ALL cases or only Breast, Colon
+ and Rectum cases.
+  
+ 17. Internet Protocol v6
+  
+ Routines ONCX10 and ONCXURL will be updated to allow for
+ handling of new Internet Protocol v6 format, while retaining the existing
+ functionality to handle the old Internet Protocol v4 format.  Since the
+ IPv6 is not yet in use, installation and testing of this functionality should
+ just confirm that no new problems are introduced and that Collaborative
+ Staging and EDITS continue to work correctly. 
+  
+ 18. Correct EDITS error returned for C17.9 cases with Histology of 9930/3
+  
+ When completing an abstract for cases with PRIMARY SITE (#165.5, #20)
+ field = "C17.9" and HISTOLOGY (ICD-O-3) (#165.5, 22.3) field = "99303" an
+ EDITS error was being returned.  The EDITS error indicated a "00" for
+ SURGERY  OF PRIMARY (F) (#165.5, #58.6) field.  The OncoTrax code was
+ sending an incorrect value for field #58.6 to the EDITS URL which was
+ resulting in an error being returned by the EDITS.  This code was modified
+ to send the correct value for field #58.6 which eliminates the EDITS error.
+  
+ 19. Accession Only Abstract Status trigger Abstracted By field
+  
+ When setting an ABSTRACT STATUS (#165.5, #91) to "Accession Only"
+ a trigger will be added to set the ABSTRACTED BY (#165.5, #92) field to
+ record the Registrar's Name.  Previously this field was only triggered
+ for Abstracts to "Complete".  This is needed for QA at sites so that
+ facilities will be able to track "Accession Only" cases.
+  
+ 20. Update code text value for SEER Summary Stage
+  
+ For the SEER SUMMARY STAGE 2000 (#165.5, #35) and SEER SUMMARY
+ STAGE ABBREVIATED (#165.5, #35.1) fields the text value for selection #8
+ needs to be updated to "NA/Benign".
+  
+ 21. Exclude ICD10 PHI Codes from ACOS & State/VACCR Data Download options
+  
+ The Create ACOS Data Download [ONCO #SITE-CREATE ACOS DISK] and Create
+ State/VACCR Data Download [ONCO #STATE DATA DISK]
+ options were excluding ICD9 PHI codes from the COMORBIDITY section if the
+ user chose to exclude them.  This patch will also allow the user to exclude
+ the ICD10 PHI codes from the SECONDARY DIAGNOSIS section if the user chooses
+ to exclude them.
+  
+ 22. Value of N88 not allowed for CLIN & PATH T,N,M,GROUP fields for C44 cases
+  
+ For Cutaneous Leiomyosarcoma cases with Primary Site = C44 and
+ Histology = 8890/3 the user was not able to enter the '88' value for Clinical
+ and Pathologic Staging fields.  This is fixed so that '88' values are allowed
+ and show up in the help text.
+  
+ 23. Histology 9421/1 obsolete for cases with DATE DX of 1/1/2001 or later
+  
+ For cases with a Date DX of 1/1/2001 or later the Histology of 9421/1 is
+ obsolete and will no longer be selectable.  The user will see the following
+ message: 94211 is obsolete for primaries starting 2001!!!!
+  
+ 24. Update of the Health Summary ONC Remote Data View
+  
+ The Collaborative Staging section will be removed from the Health Summary
+ ONC Remote Data View.  This was required due to the display of old/outdated
+ AJCC 6th Edition fields.  Also, since Collaborative Staging of TNM values
+ will be retired with 2016 and later cases, these obsolete fields should be
+ removed from the displays anyway.  These changes are included in the
+ associated Health Summary patch, GMTS*2.7*117, which must be installed in
+ conjunction with patch ONC*2.2*5.
+  
+ 25. CA Service Desk Incident # 7282506FY16: Queuing Issue in Automatic
+ Casefinding-PTF Search Option
+  
+ The Automatic Casefinding-PTF Search [ONCO SUSPENSE-CASEFIND (PTF)] option
+ was modified for ICD-10 in Patch ONC*2.2*7, but a problem with queueing the
+ report was found.  If the report was queued to print at a later time, the
+ report would error out with an Undefined SBCIND variable.  This has been fixed.
+  
+ 26. New HEMA @FAC Fields Created and Added to the Abstract
+  
+ Two new @FAC fields were created and added to the Abstract: HEMA
+ TRANS/ENDOCRINE PROC @FAC (#165.5, #153.2) and HEMA TRANS/ENDOCRINE PR@FAC
+ DT (#165.5, #153.3).  These 2 new fields have been added to the Abstract Edit
+ Primary [ONCO ABSTRACT-EDIT] option for display and editing.  The 2 fields were
+ also added to the Print Abstract-Extended (80c) [ONCO ABSTRACT-EXTENDED 80]
+ and Print Complete Abstract (132c) [ONCO ABSTRACT-PRINT/E0132] report options.
+  
+ 27. Change Default of Secondary Diagnosis Prompt to YES
+  
+ In the Complete Abstract [ONCOXM10] option the default value for the "Would
+ you like to edit the SECONDARY DIAGNOSIS #1-10 prompts" has been changed
+ from "No" to "Yes".
+  
+ 28. Fix Code for Follow-Up Status (#160, #15.2) Field & Convert Incorrect Values
+  
+ The FOLLOW-UP STATUS (#160, #15.2) field was not being set correctly by the
+ OncoTrax software.  This field is not editable by the Registrars, it is only
+ set within the code.  For patients with only 1 Primary and a Class of Case
+ for that primary of 00 or 30-99 the Follow-Up Status should always be set to
+ 0 (Inactive).  The code was allowing these to be set to 1 (Active) or 8 (LTF)
+ which was not correct.  The code to set the field was corrected and an item
+ was added to the Post-Init routine to correct any bad values in existing
+ entries.
+  
+ 29. Correct Staging for Waldenstrom Cases (Primary Site=C42.0, Histology=9761/3)
+  
+ Waldentrom Cases with SITE/GP=HEMATO/RETICULO, PRIMARY SITE=C42.0 and
+ HISTOLOGY=9761/3 were not staging correctly.  These cases were not correctly
+ dropping into the 'SYSTEMIC DISEASE - No EOD/TMN Coding' section.  This is now
+ corrected so that these cases will drop into the correct staging and have the
+ correct default values filled in.      
+  
+ 30. Correct the TNM Staging for Pancreas Cases with Histology = 8240 - 8244
+  
+ Pancreas Cases with a Histology in the range of 8240-8244 were defaulting the
+ TNM Staging values to 88's.  Previously this was correct because these cases
+ were excluded from TNM Staging, but beginning in 2010 these Histologies are
+ now included as part of the Pancreas schema.  This is corrected so that these
+ cases will allow TNM staging values to be entered. 
+   
+    
+ Patch Components
+ ================
+ Routines:
+ ---------
+ This release contains 34 routines. 
+  
+ Files & Fields Associated:     
+ File Name (#)              Field Name (#)                   New/Modified/Deleted
+ -------------              ------------------               --------------------
+ ONCOLOGY PRIMARY (#165.5)  SEER SUMMARY STAGE 2000 (#35)    Modified
+                            RADIATION @FAC (#51.4)           Modified
+                            CHEMOTHERAPY @FAC (#53.3)        Modified
+                            HORMONE THERAPY @FAC (#54.3)     Modified
+                            IMMUNOTHERAPY @FAC (#55.3)       Modified
+                            OTHER TREATMENT @FAC (#57.3)     Modified
+                            DATE OF FIRST RECURRENCE (#70)   Modified
+                            DATE CASE COMPLETED (#90)        Modified
+                            DATE CASE LAST CHANGED (#198)    Modified
+                            PERFORMANCE STATUS AT DX (#227)  Modified 
+                            HEMA TRANS/ENDOCRINE PROC @FAC (#153.2)  New
+                            HEMA TRANS/ENDOCRINE PR@FAC DT (#153.3)  New
+                            TNM CLIN DESCRIPTOR (#241)       Modified
+                            TNM PATH DESCRIPTOR (#242)       Modified
+                            UDF1 (#284)                      New
+                            UDF2 (#284.1)                    New
+                            UDF3 (#284.2)                    New
+                            UDF4 (#284.3)                    New
+                            UDF5 (#284.4)                    New
+                            UDF6 (#284.5)                    New
+                            UDF7 (#284.6)                    New
+                            UDF8 (#284.7)                    New
+                            UDF9 (#284.8)                    New
+                            UDF10 (#284.9)                   New
+  
+  
+ Forms Associated:                                          
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:                             
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+ Option Name                                        Type    New/Modified/Deleted
+ -----------                                        ----    --------------------
+ N/A 
+  
+ Protocols Associated:                                     
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:                         
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+ Template Name              Type      File Name (#)     New/Modified/Deleted
+ -------------              ----      -------------     --------------------
+ ONCO ABSTRACT-I            Input     #165.5            Modified 
+ ONCOY55                    Print     #165.5            Modified 
+  
+ Test Sites
+ ==========
+ Hines VAMC 
+ Washington, DC VAMC 
+ West Haven, Ct
+  
+ Documentation Retrieval:
+ ========================
+ There is no new documentation associated with this patch.
+  
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ==============================
+ There is no pre-installation routine, but there is a post installation
+ routine (ONC2PS05) associated with this patch.  The routine ONC2PS05 may 
+ optionally be deleted by the installer after the installation is complete.
+  
+  
+ Installation instructions:
+ ==========================
+ This patch should be loaded with Oncology users off the system. 
+ Installation should take less than 15 minutes.  Please DO NOT QUEUE this
+ patch.
+  
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  
+ This patch is available as a Kernel Installation and Distribution
+ System (KIDS) distribution file.  The Host File is named ONC22P5.KID.
+     
+ Software Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+  
+  
+ 1. Load the KIDS distribution file via the 'Load a Distribution' option 
+ on the KIDS Installation menu. 
+  
+ 2. Prior to installing the patch you may want to make use of the following
+ optional installation options located on the KIDS Installation menu:
+  
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+    b.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+  
+    c.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+  
+ 3. Install the KIDS distribution via the 'Install Package(s)' option on 
+ the KIDS Installation menu.
+  
+    a.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+        Install? NO//' Answer NO.
+  
+    b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//' Answer NO.
+   
+    c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//' Answer NO. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.2;ONCOLOGY;**[Patch List]**;Jul 31, 2013;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ONC2PS05
+    Before:       n/a   After: B15386240  **5**
+Routine Name: ONCACD0
+    Before:B172794194   After:B184758090  **1,4,5**
+Routine Name: ONCACD1
+    Before: B66324874   After: B71259107  **1,4,5**
+Routine Name: ONCACDU1
+    Before: B36326632   After: B47366223  **1,4,7,5**
+Routine Name: ONCACDU2
+    Before:B117684945   After:B119516553  **1,4,7,5**
+Routine Name: ONCATF1
+    Before: B40406368   After: B52321975  **1,5**
+Routine Name: ONCCS
+    Before: B57102325   After: B58774411  **1,4,5**
+Routine Name: ONCCS2
+    Before:B161364697   After:B114251425  **1,4,5**
+Routine Name: ONCCS3
+    Before:B165294557   After:B129668253  **1,5**
+Routine Name: ONCCS4
+    Before:       n/a   After:B112818523  **5**
+Routine Name: ONCDTX
+    Before: B77514496   After: B80330484  **1,5**
+Routine Name: ONCDTX1
+    Before: B16707284   After: B19374560  **1,5**
+Routine Name: ONCNTX1
+    Before: B56514658   After: B62064130  **1,5**
+Routine Name: ONCOAIF
+    Before: B52230791   After: B52773252  **1,4,5**
+Routine Name: ONCOAIP
+    Before:B104755079   After:B111415051  **1,4,5**
+Routine Name: ONCOAIP2
+    Before: B18454221   After: B24643610  **1,4,5**
+Routine Name: ONCOCC
+    Before: B44658900   After: B50012224  **1,5**
+Routine Name: ONCOCFP
+    Before: B60462094   After: B60703734  **1,7,5**
+Routine Name: ONCOCOS
+    Before: B10618905   After: B10736400  **1,5**
+Routine Name: ONCOCRF
+    Before: B14483451   After: B18529127  **1,5**
+Routine Name: ONCODIS
+    Before:   B774180   After:   B774104  **1,4,7,5**
+Routine Name: ONCODSP
+    Before: B55457846   After: B55463101  **1,4,5**
+Routine Name: ONCODSR
+    Before: B90029978   After: B90897333  **1,5**
+Routine Name: ONCOEDC
+    Before: B26708219   After: B30501240  **1,5**
+Routine Name: ONCOEDC1
+    Before: B42257754   After: B41015408  **1,5**
+Routine Name: ONCOPA1
+    Before: B58176718   After: B58176942  **1,5**
+Routine Name: ONCOPA2
+    Before: B44535183   After: B46065983  **1,5**
+Routine Name: ONCOTN
+    Before:B125327405   After:B122391694  **1,4,5**
+Routine Name: ONCPAT1
+    Before:  B8589668   After:  B8598027  **1,5**
+Routine Name: ONCPTX
+    Before: B84842424   After: B86311833  **1,5**
+Routine Name: ONCTIME
+    Before: B14762855   After: B15284666  **1,5**
+Routine Name: ONCUTX1
+    Before: B32335696   After: B36437776  **1,5**
+Routine Name: ONCX10
+    Before: B13422084   After: B13514830  **1,5**
+Routine Name: ONCXURL
+    Before:  B3380054   After:  B3753041  **1,5**
+ 
+Routine list of preceding patches: 7
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 09, 2015
+Completed By:                               Date Completed: AUG 24, 2016
+Released By :                               Date Released : SEP 14, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

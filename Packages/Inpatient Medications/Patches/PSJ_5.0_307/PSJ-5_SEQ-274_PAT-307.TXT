@@ -1,0 +1,161 @@
+
+=============================================================================
+Run Date: MAR 08, 2016                     Designation: PSJ*5*307
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #274                      Status: Released
+                  Compliance Date: JUL 27, 2016
+=============================================================================
+
+Associated patches: (v)PSJ*5*311   <<= must be installed BEFORE `PSJ*5*307'
+
+Subject: CLINIC ONE-STEP ORDERS - INFUSION ORDERS FOR INPATIENT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ 1. When using the One-Step Clinic Admin tool to write a Clinic Infusion
+ order for a patient with a status of Inpatient, an error was received -
+ "Invalid Nature of Order". PSJHL10 has been modified to correctly validate
+ the order.
+  
+ 2. When using the One-Step Clinic Admin tool, the user should not be able 
+ to select a clinic that is defined as allowing Inpatient Medications 
+ unless that clinic also allows sending data to BCMA. In order to 
+ facilitate this, a new Application Programming Interface (API) has been 
+ developed to allow the Computerized Patient Record System (CPRS) One-Step 
+ Admin tool to check the clinic definition.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A 
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ 20070506 (partially) 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ Cleveland, OH
+ Heartland-East HCS, MO
+ Heartland-West HCS, KS
+ Loma Linda, CA
+ Palo Alto, CA
+ San Diego, CA 
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Sites may retrieve the software and/or documentation directly using 
+ the Secure File Transfer Protocol (SFTP) address as directed by the CPRS
+ Implementation team. Installation instructions will be distributed when
+ your site begins the implementation process.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ The documentation will not be available on the vdl until after the phased 
+ deployment has been completed.
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ API Manual - Pharmacy         pharm_1_api_r0113.pdf           Binary
+  Reengineering (PRE)          pharm_1_api_r0113.doc           Binary 
+  
+ Patch Installation:
+ =================== 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Please refer to the "CPRS GUI v.30.b Installation Guide" for installation 
+ and set-up information. This document is exported as OR_30_350_IG.doc and
+ OR_30_350_IG.pdf and is included in OR_30_350.ZIP and will be emailed to 
+ the installation point of contacts by the CPRS Implementation team.
+  
+ Installation of these host files must be coordinated among the personnel 
+ affected because these host files will be installed in one installation 
+ session.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJ53P46
+    Before:       n/a   After:  B1789187  **307**
+Routine Name: PSJHL10
+    Before: B75460781   After: B77000666  **58,78,91,109,110,195,257,307**
+Routine Name: PSJIMO1
+    Before: B67864783   After: B68607232  **257,299,311,307**
+ 
+Routine list of preceding patches: 311
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 21, 2014
+Completed By:                               Date Completed: MAR 07, 2016
+Released By :                               Date Released : MAR 08, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,198 @@
+$TXT Created by               at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 05/09/16 at 19:33
+=============================================================================
+Run Date: AUG 11, 2016                     Designation: GMRA*4*49
+Package : GMRA - ADVERSE REACTION TRACKING    Priority: Mandatory
+Version : 4        SEQ #48                      Status: Released
+                  Compliance Date: SEP 10, 2016
+=============================================================================
+
+Associated patches: (v)GMRA*4*34   <<= must be installed BEFORE `GMRA*4*49'
+
+Subject: ID BAND FLAG PARAMETER AND CR REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch GMRA*4.0*49 addresses the following two issues:
+  
+ 1. Excessive number of entries in the PATIENT ALLERGIES file (#120.8)
+    causes issues with the allergy HL7 messages.
+  
+ 2. Embedded carriage returns in some old allergy HL7 messages prevented 
+    the messages from being sent.
+  
+ Associated Remedy Ticket(s): 
+ ============================
+ 1. INC0000000981450 MARK ID BAND FLAG site parameter check
+    Duplicate: I9996846FY16
+ 2. INC0000000291735 CARRIAGE RETURNS in HL7 Allergy Messages
+    Duplicates:
+               INC0000000251260 
+               INC0000000422496
+               INC0000000422498 
+               INC0000000422499 
+               I9449152FY16
+  
+ Associated NSR(s): 
+ ==================
+ N/A
+  
+ Participating Test Sites: 
+ =========================
+ Upstate New York (Syracuse)
+ Milwaukee VAMC
+ Iron Mountain VAMC
+  
+ Remedy Ticket Overview:
+ =======================
+ 1. INC0000000981450 MARK ID BAND FLAG site parameter check
+  
+ Problem:
+ --------
+ Routine GMRAMCU0 doesn't check the MARK ID BAND FLAG site parameter 
+ before the calls are made to add multiples to the ID BAND MARKED field 
+ (#14) in the PATIENT ALLERGY file (#120.8). The routine is called every
+ time a wristband is printed. This sometimes leads to an excessive number
+ of entries in the PATIENT ALLERGIES file (#120.8) which causes issues with
+ the allergy HL7 messages.
+    
+ Solution:
+ ---------                     
+ Modified routine GMRAMCU0 to check the MARK ID BAND FLAG site parameter 
+ before adding multiples to the ID BAND MARKED field (#14) in the PATIENT 
+ ALLERGY file (#120.8). 
+  
+ Routine: GMRAMCU0 
+  
+ 2. INC0000000291735 CARRIAGE RETURNS in HL7 Allergy Messages
+  
+ Problem:
+ --------
+ There might be some old patient allergy HL7 messages that may have never 
+ made it to the Health Data Repository (HDR) because of embedded carriage
+ returns. The carriage returns are no longer an issue but the old messages
+ need to be identified and resent.
+  
+ Solution:
+ ---------
+ Since these messages were purged years ago, we will create a report that 
+ will identify patient allergies with carriage returns embedded in the 
+ comments field as part of this patch. The report will include the patient 
+ DFN, Patient Allergy IEN, and Reactant. The report will be printed to the 
+ screen and sent to the person installing the patch, all holders of the 
+ GMRA-ALLERGY VERIFY security key, as well as Pharmacy Benefits Management 
+ Services. Any carriage returns (as well as line feeds which usually 
+ follow the carriage returns) found will be automatically converted to a 
+ space by the patch. Records for patients that are deceased will be 
+ excluded. The sites for which this report returns records will need to 
+ review them and edit these patient allergy records to trigger a new HL7 
+ message to HDR. Use the GMRA PATIENT A/AR EDIT [Enter/Edit Patient 
+ Reaction Data] option to select the affected records then accept all 
+ existing values. This will update the data in HDR.
+  
+ The post-install message will appear in your MailMan IN Basket like below:
+  
+ If the report returned records with carriage returns: (Note the "ACTION 
+ REQUIRED" preceding the Subject)
+  
+ *=New/!=Priority.......Subject.....................From...................
+ *21.ACTION REQUIRED GMRA*4*49 Post-Install Results GMRA*4.0*49 POST 
+ INSTALL
+  
+ The appropriate staff at each site will need to follow the instructions in
+ the MailMan message to trigger a new HL7 message to HDR and notify 
+ Pharmacy Benefits Management Services (send message to
+ Silverman.Robert@FORUM.DOMAIN.EXT) when this has been completed.
+  
+ If the report returned records with carriage returns: (Note the subject 
+ is NOT preceded with "ACTION REQUIRED")
+  
+ *=New/!=Priority.......Subject.....................From...................
+ *21.GMRA*4*49 Post-Install Results GMRA*4.0*49 POST INSTALL
+  
+ If the message is NOT preceded with "ACTION REQUIRED" there should be no
+ records on the report in the message and NO FURTHER ACTION is required.
+  
+  
+    ==================== Installation Instructions ===================
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+ 2. From the Kernel Installation and Distribution System Menu, select
+    the Installation menu.
+  
+ 3. From this menu, you may select to use the following options (when
+    prompted for INSTALL NAME, enter GMRA*4.0*49).      
+  
+     a. Backup a Transport Global - this option will create a backup
+        message of any routines exported with the patch. It will NOT
+        backup any other changes such as DDs or templates.
+     b. Compare Transport Global to Current System - this option will
+        allow you to view all changes that will be made when the patch 
+        is installed
+     c. Verify Checksums in Transport Global - this option will ensure
+        the integrity of the routines that are in the transport global.
+     d. Print Transport Global - this option will allow you to view
+        the components of the KIDS build.
+  
+ 4. Use the Install Package(s) option and select the package GMRA*4.0*49.
+  
+ 5. When prompted "Want KIDS to INHIBIT LOGONS during install? NO//",
+    respond NO.
+  
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+    and Protocols? YES//", respond YES.
+    
+    When prompted, 'Enter options you wish to mark as 'Out Of order':', 
+    enter the following options:
+              
+    Print Patient Wristband    [DGPW PATIENT WRISTBAND PRINT]
+  
+    When prompted, 'Enter protocols you wish to mark as 'Out Of Order':', 
+    press <ENTER>.
+  
+ 7. If there are any patient allergies with carriage returns embedded in 
+    the comments field ,they will appear on the report printed to the
+    screen. Also, a MailMan report with instructions will be sent to the
+    person installing the patch, all holders of the GMRA-ALLERGY VERIFY
+    security key, as well as to Pharmacy Benefits Management Services. The
+    appropriate staff at each site will need to follow the instructions in
+    the MailMan message to trigger a new HL7 message to HDR and notify
+    Pharmacy Benefits Management Services (send message to
+    Silverman.Robert@FORUM.DOMAIN.EXT ) when this has been completed.
+  
+ 8. After the installation completes, successfully delete routine GMRAPS49.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;Adverse Reaction Tracking;**[Patch List]**;Mar 29, 1996;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRAMCU0
+    Before:  B1907266   After:  B2241480  **49**
+Routine Name: GMRAPS49
+    Before:       n/a   After: B33101236  **49**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 21, 2014
+Completed By:                               Date Completed: AUG 03, 2016
+Released By :                               Date Released : AUG 11, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

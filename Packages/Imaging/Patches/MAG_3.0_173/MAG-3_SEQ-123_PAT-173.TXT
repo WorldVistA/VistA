@@ -1,0 +1,344 @@
+Two routines included
+=============================================================================
+Run Date: SEP 30, 2016                     Designation: MAG*3*173
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #123                      Status: Released
+                  Compliance Date: OCT 31, 2016
+=============================================================================
+
+
+Subject: TELEPATHOLOGY MAINTENANCE
+
+Category: 
+  - Print Template
+  - Other
+
+Description:
+============
+
+ Associated Patches:  This patch must be installed after MAG*3.0*162.
+  
+ Subject:  TELEPATHOLOGY UPDATE
+  
+ Category:  OTHER
+  
+ Description:
+ ===========
+ MAG*3.0*173 has emergency fixes for the VistA Imaging processing 
+ Laboratory (LAB) images of Telepathology.  It will fix email 
+ notifications being generated because of an error and some undefined 
+ error issues when the LAB images are processed in the Text Gateway.
+  
+ Patch Components:
+ ================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P 173_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch.  
+ MAG3_0P173_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software:
+ File Name       Description
+ MAG3_0P173.KID  Kernel Installation and Distribution System (KIDS) build 
+                 for Patch
+  
+ Documentation:
+ =============
+ This document, MAG3_0173_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Fields Associated:
+ =========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ ================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ ======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ==================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ ====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ ========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ ====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ ======================
+ New Service Requests (NSRs):
+ ===========================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+  
+ 1. Defect 194669 (Tickets I9738934FY16, I10130099FY16, and 
+ ==========================================================
+ I10236113FY16) Anatomic Pathology Generating HL7 Email Alerts
+ =============================================================
+ Problem:  Multiple sites have reported receiving an email notification of 
+ an HL7 Anatomic pathology issue.  The notification is:
+  
+ An error occurred in EDIT^MAGT7MA when trying to create and/or send an 
+ HL7 message.  The error message is as follows:
+  
+ "-53`No test found in LAB(60) file for LRSS="SP""
+ Please notify your local IRM Staff.
+  
+ Several issues were identified:
+ 1. The variables LRI and LRDFN are sometimes not being passed in the HL7 
+ message from the Laboratory system to Telepathology.
+ 2. The Internal Entry Number (IEN) numbers for LAB codes CY (Cytology), 
+ EM (Electron Microscopy) and SP (Surgical Pathology) were hardcoded, but 
+ it was found that they can be different at each site.
+  
+ Resolution:  The following modifications were made:
+ 1. If the LRI or Data File Number (DFN) are null in the HL7 message, the 
+ study is ignored.
+ 2. Instead of hardcoding the IEN associated with a lab code, the routine 
+ was modified to look up the IEN of the procedure by searching the 
+ LABORATORY TEST file #60 by the lab procedure.
+  
+ 2. Defect 194632 (Tickets R9978605FY16 and I10155657FY16)  Text Gateway
+ ======================================================================= 
+ Error "PATIENT NOT IN DATABASE"
+ ==============================
+ Problem:  Sites are reporting that the Text Gateway was generating the 
+ error "PATIENT NOT IN DATABASE" in the PID segment of HL7 messages which 
+ delayed or halted Text Gateway processing.  This error occurred because 
+ the LAB referral patient was not registered in the VistA Patient database.
+  
+ Some patients are defined within the laboratory package itself, but not 
+ in the VistA Patient file.  For example, patients that are referrals are 
+ in the REFERRAL PATIENT files (#67) but may not be in the VISTA PATIENT 
+ file (#2).
+  
+ Resolution:  The new VistA MAGT7MA routine resolves this issue by 
+ checking the PARENT FILE field (#.02) of the LAB DATA file (#63).  If the 
+ PARENT FILE field is not "PATIENT", the order is skipped.
+  
+ Test Sites:
+ ==========
+ The following sites are test sites for this patch:
+         Milwaukee
+         Minneapolis
+         Iron Mountain
+         Phoenix
+  
+ Software and Documentation Retrieval Instructions:
+ =================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from 
+ anonymous@download.vista.domain.ext from the COMMAND prompt (example:  
+ sftp anonymous@download.vista.domain.ext). This transmits the files from 
+ the first available server. 
+  
+ Sites may also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ When using Attachmate Reflection (Secure Shell):
+ Albany:         domain.ext
+ Hines:          domain.ext
+ Salt Lake City: domain.ext
+    
+ When using the COMMAND prompt (example: sftp 
+ anonymous@domain.ext): 
+ Albany:         anonymous@domain.ext
+ Hines:          anonymous@domain.ext
+ Salt Lake City: anonymous@domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/.
+  
+ Patch Installation:
+ ==================
+ Pre/Post Installation Overview:
+ ==============================
+ MAG*3.0*173 must be installed on the VistA System.  This patch must be 
+ installed by the compliance date to conform to VHA Directive 2001-023.
+  
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch.  This patch can be loaded while the VistA Imaging System is active 
+ and users are on the system.  Installing the MAG*3.0*173 KIDS only takes 
+ 2-3 minutes.
+  
+ Pre-Installation Instructions:
+ =============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+  
+ Note:  All released VistA Imaging patches must be installed on the VistA 
+ system before installing MAG*3.0*173.
+  
+ VistA System (KIDS) Installation Instructions 
+ ============================================
+ Installation Steps 
+ ==================
+ KIDS installation will take less than one minute.
+ 1. On the VistA system, access the Kernel Installation and Distribution 
+ System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+         a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to 
+ load the KIDS distribution.
+         b. When prompted, enter the path and file name (MAG3_0P173.KID) 
+ of the MAG*3.0*173 KIDS file.
+         c. When prompted to continue with the load, enter "YES". A 
+ Distribution OK! message will be displayed when the load is complete.
+ 4. After loading the KIDS file, use the following options to verify the 
+ contents of the patch and to back up any affected routines.
+         a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - 
+ Run this option if you want to ensure the integrity of the routines in 
+ the patch. 
+         b. Compare Transport Global to Current System [XPD COMPARE TO 
+ SYSTEM] - Run this option if you want to view all changes that will be 
+ made when the patch is installed.  All components (routines, options, and 
+ so on) in the patch will be compared.
+         c. Backup a Transport Global [XPD BACKUP] - Run this option if 
+ you want to create a backup message of any routines exported with the 
+ patch.  It will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+         a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+         b. When prompted for the install name, enter "MAG*3.0*173".
+         c. Answer "NO" to the following prompts, if they appear:
+  
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6. When installation is finished, an Install Complete message will be 
+ displayed.
+  
+ KIDS Installation Example
+ =========================
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing 
+ the KIDS file in a namespace on which it has previously been installed, 
+ your output may be different.
+  
+ Uninstalling MAG*3.0*173
+ ========================
+ If it is necessary to uninstall the MAG*3.0*173 VistA KIDS, you needed to
+ select the "Kernel Installation & Distribution System" menu option, 
+ "Backup a Transport Global" (see installation section above, step 4c), 
+ before you installed the patch.
+  
+ Administrators will need to use the PackMan function INSTALL/CHECK 
+ MESSAGE.  Check your MailMan messages for the backup message sent by the 
+ "Backup a Transport Global" function.
+  
+ 1.  Select the message shown below:
+  
+ Backup of MAG*3.0*173 install on <mmm dd, yyyy>    <user name>
+  
+ 2. Select the Xtract PackMan option.
+ 3. Select the Install/Check Message option.
+ 4. Enter "Yes" at the prompt.
+ 5. Enter "No" at the backup prompt.  There is no need to back up the 
+    backup.
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1 ROUTINE LOAD
+    2 GLOBAL LOAD
+    3 PACKAGE LOAD
+    4 SUMMARIZE MESSAGE
+    5 PRINT MESSAGE
+    6 INSTALL/CHECK MESSAGE
+    7 INSTALL SELECTED ROUTINE(S)
+    8 TEXT PRINT/DISPLAY
+    9 COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2    Message #42925     Unloading Routine   MAGT7MA (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ . . .
+  
+ Routine Information:
+ ===================
+ VistA KIDS Checksums:
+ ====================
+ This section lists modified routines for the VistA KIDS build.  For each 
+ routine, the second line will contain the following information: 
+  
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 19;Mar 27, 2015
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine         Checksum Before Checksum After  Patch List
+ MAGT7MA         117303477       130892650       **138, 173**
+ MAGIP173        NA              4013661         **173**
+ Routine MAGIP173 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+
+Routine Information:
+====================
+Routine Name: MAGIP173
+    Checksum:
+  Value = 4013661
+ Description of Changes:
+  POST INSTALL routine (will be deleted after KIDS installation)
+
+Routine Name: MAGT7MA
+    Checksum:
+  Value = 130892650
+ Description of Changes:
+  1.  If the LRI or Data File Number (DFN) are null in the HL7 message, the study is ignored.
+  2.  Instead of hardcoding the IEN associated with a lab code, the routine was modified to look up the IEN
+      of the procedure by searching the LABORATORY TEST file #60 by the lab procedure.
+  3.  The new VistA MAGT7MA routine resolves this issue by checking the PARENT FILE field (#.02) of the LAB
+      DATA file (#63).  If the PARENT FILE field is not "PATIENT", the order is skipped.
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 23, 2016
+Completed By:                               Date Completed: SEP 29, 2016
+Released By :                               Date Released : SEP 30, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+

@@ -1,0 +1,181 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 07/27/16 at 09:46
+=============================================================================
+Run Date: SEP 23, 2016                     Designation: IB*2*571
+Package : IB - INTEGRATED BILLING             Priority: EMERGENCY
+Version : 2       SEQ #526                      Status: Released
+                  Compliance Date: SEP 30, 2016
+=============================================================================
+
+
+Subject: FY17 IB STOP CODE UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch updates Integrated Billing Clinic Stop Codes to reflect 
+ Fiscal Year 2017 changes.
+  
+ ****************************NOTICE***********************************
+ *                                                                   *
+ * This patch is being released as "emergency", with a shortened     *
+ * compliance date of 9/30/16 to ensure the patch is installed       *
+ * before the 10/1/16 effective date                                 *
+ *                                                                   *
+ *********************************************************************
+  
+ ASSOCIATED TICKETS:
+ ==================
+ 1. I9878147FY16    FY17 IB STOP CODE UPDATE
+  
+ ASSOCIATED NSR's:
+ ================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ VA Pittsburgh HCS (Pittsburgh University Dr., H. J. Heinz Campus)
+ Jack C. Montgomery VA Medical Center (Muskogee)
+ Chillicothe VA Medical Center 
+  
+ TICKET OVERVIEW:
+ ===============
+ 1. I9878147FY16    FY17 IB STOP CODE UPDATE
+   
+    Problem: 
+    -------
+    As requested by the Chief Business Office (CBO), the IB CLINIC
+    STOP CODE BILLABLE TYPES (#352.5) file needs to be updated to
+    reflect changes for Fiscal Year 2017.
+   
+    Resolution:
+    ----------
+    Add and update requested Stop Codes as described below:
+  
+ STOP CODE ADDED
+ ---------------
+  
+ STOP   EFFECTIVE                                                OVERRIDE
+ CODE   DATE         BILLABLE TYPE  DESCRIPTION                     FLAG
+ --------------------------------------------------------------------------
+ 669    MAY  1,2016  NON-BILLABLE  CCC CLIN (NON VA CARE CL CONS)  OVERRIDE
+  
+ STOP CODE MODIFIED
+ ------------------
+  
+ OLD: 
+   
+ STOP    EFFECTIVE                                                OVERRIDE
+ CODE    DATE         BILLABLE TYPE  DESCRIPTION                     FLAG
+ ---------------------------------------------------------------------------
+ 502     DEC  6,2001  BASIC CARE     MENTAL HEALTH-IND
+ 546     OCT  1,2002  NON-BILLABLE   TELEPHONE/MHICM               OVERRIDE
+ 552     OCT  1,2007  BASIC CARE     MH INTENSIVE CASE MGMT (MHICM)
+ 564     JUL  1,2002  BASIC CARE     MH TEAM CASE MGT
+ 567     OCT  1,2002  BASIC CARE     MH INTENSIVE CASE MGMT GRP
+  
+ NEW:
+  
+ STOP    EFFECTIVE                                                OVERRIDE
+ CODE    DATE       BILLABLE TYPE   DESCRIPTION                     FLAG
+ ---------------------------------------------------------------------------
+ 502     OCT  1,2016  BASIC CARE    MENTAL HEALTH-IND               
+ 546     OCT  1,2016  NON-BILLABLE  TELELEPHONE/MCIMH (ICMHR)       OVERRIDE
+ 552     OCT  1,2016  NON-BILLABLE  MH INTEN CASE MGMT-IND (ICMHR)  OVERRIDE
+ 564     OCT  1,2016  NON-BILLABLE  MH TEAM CASE MGT                
+ 567     OCT  1,2016  BASIC CARE    MH INTEN CASE MGMT-GRP (ICMHR)
+  
+ INSTALLATION INSTRUCTIONS:
+ =========================
+ It is not necessary to disable any options. You may install this patch at
+ any time without interruption to users. It should take less than 2 minutes
+ to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter IB*2.0*571)
+    
+        a.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+        b.  Print Transport Global - This option will allow you to view
+            the components of the KIDS build.
+        c.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this 
+            patch is installed.  It compares all components of this patch
+            (routines, DD's, templates, etc.).
+        d.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        IB*2.0*571.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO// respond NO.
+  
+     7. You may delete routine IB20P571 after the installation.
+  
+ *** After the install please review the installation to verify the
+     Stop Codes were added. See below:
+     NOTE: If any type of error message is displayed during installation
+     create a ticket to resolve the issue.
+  
+  DSS Clinic Stop Codes, Post-Install Starting
+   
+   Adding new codes to file 352.5
+   
+     669  CCC CLIN (NON VA CARE CL CONS)
+   
+       1 entry added to 352.5
+   
+   Updating Stop Code entries in file 352.5
+   
+     502  MENTAL HEALTH-IND
+   
+     546  TELELEPHONE/MCIMH (ICMHR)
+   
+     552  MH INTEN CASE MGMT-IND (ICMHR)
+   
+     564  MH TEAM CASE MGT
+   
+     567  MH INTEN CASE MGMT-GRP (ICMHR)
+   
+       5 updates added to file 352.5
+   
+  DSS Clinic Stop Codes, Post-Install Complete
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P571
+    Before:       n/a   After: B11545339  **571**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 25, 2016
+Completed By:                               Date Completed: SEP 21, 2016
+Released By :                               Date Released : SEP 23, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

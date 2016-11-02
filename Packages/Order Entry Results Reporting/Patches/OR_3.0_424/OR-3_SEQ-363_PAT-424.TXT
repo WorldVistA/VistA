@@ -1,0 +1,217 @@
+
+=============================================================================
+Run Date: MAR 08, 2016                     Designation: OR*3*424
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #363                      Status: Released
+                  Compliance Date: JUL 27, 2016
+=============================================================================
+
+Associated patches: (v)OR*3*350    <<= must be installed BEFORE `OR*3*424'
+
+Subject: 30B M Side Adjustments
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch resolves M side issues related to the Computerized Patient
+ Record System (CPRS) Graphical User Interface (GUI) v30.B release. 
+ These issues are:
+  
+ 1) A potential undefined error when running the All Medications report
+ from the Reports tab.
+  
+ 2) Corrects an issue with patient instructions related to 
+ Supplies/Devices quick orders.
+  
+ 3) Prevents users from selecting clinics whose unit dose medications
+ clinic definition attribute "SEND TO BCMA" is set to "NO" for the One
+ Step Clinic Administration process.
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A 
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Parameters Associated:
+  
+ Parameter Name                New/Modified/Deleted
+ --------------                --------------------
+ N/A
+  
+ Protocols Associated:         
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Remote Procedure Calls Associated:
+  
+ Remote Procedure Call Name           New/Modified/Deleted
+ --------------------------           --------------------
+ N/A                              
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ Problem:
+ --------
+ 1. When the pointer reference between an order in CPRS and Pharmacy is
+ missing, an undefined error will occur in the All Medications report 
+ on the Reports tab.
+  
+ Resolution:
+ -----------
+ 1. The code that creates the All Medications report was changed so 
+ that the missing reference between CPRS and Pharmacy will not cause the
+ report to generate an error.
+  
+ Problem:
+ --------
+ 2. For pharmacy orderable items that contain patient instructions, 
+ when creating a quick order for SUPPLIES/DEVICES, CPRS will ignore 
+ an answer of "NO" to the prompt "Include Patient Instructions in 
+ Sig?" and will include the default patient instructions when 
+ processing that quick order.
+  
+ Resolution:
+ -----------
+ 2. CPRS will no longer populate the patient instructions in this 
+ scenario.
+  
+ Problem:
+ --------
+ 3. If the user selects a clinic whose unit dose medications clinic 
+ definition attribute "SEND TO BCMA" is set to "NO", during One Step 
+ Clinic Administration, a server error is generated.
+  
+ Resolution:
+ -----------
+ 3. Clinics whose unit dose medications clinic definition attribute
+ "SEND TO BCMA" set to "No" are no longer selectable for the One Step 
+ Clinic Administration process.
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+ Test Sites:
+ ===========
+ Cleveland, OH
+ Heartland - East
+ Heartland - West
+ Loma Linda, CA
+ Palo Alto, CA
+ San Diego, CA
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Sites may retrieve the software and/or documentation directly using 
+ the Secure File Transfer Protocol (SFTP) address as directed by the CPRS
+ Implementation team. Installation instructions will be distributed when
+ your site begins the implementation process.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ The updated documentation will not be on the vdl until after the phased
+ deployment has completed.
+  
+ Patch Installation:
+ =================== 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Please refer to the "CPRS GUI v.30.b Installation Guide" for installation 
+ and set-up information. This document is exported as OR_30_350_IG.doc and
+ OR_30_350_IG.pdf and is included in OR_30_350.ZIP and will be emailed to 
+ the installation point of contacts by the CPRS Implementation team.
+  
+ Installation of these host files must be coordinated among the personnel 
+ affected because these host files will be installed in one installation 
+ session.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORDV06B
+    Before: B43803935   After: B43977169  **312,350,424**
+Routine Name: ORIMO
+    Before:  B2334294   After:  B3277195  **187,190,195,215,243,350,424**
+Routine Name: ORUTL4
+    Before: B10368867   After: B10505895  **350,424**
+Routine Name: ORWDPS2
+    Before: B57106070   After: B63130016  **85,116,125,131,132,148,141,
+                                           195,215,258,243,424**
+Routine Name: ORWDX
+    Before: B70259913   After: B72026068  **10,85,125,131,132,141,164,
+                                           178,187,190,195,215,246,243,
+                                           283,296,280,306,350,424**
+Routine Name: ORWU
+    Before: B62530173   After: B62136332  **10,85,132,148,149,187,195,
+                                           215,243,350,424**
+ 
+Routine list of preceding patches: 350
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 01, 2015
+Completed By:                               Date Completed: MAR 07, 2016
+Released By :                               Date Released : MAR 08, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

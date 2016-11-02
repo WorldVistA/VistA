@@ -1,0 +1,271 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 08/31/16 at 14:35
+=============================================================================
+Run Date: OCT 07, 2016                     Designation: DGBT*1*28
+Package : DGBT - BENEFICIARY TRAVEL           Priority: Mandatory
+Version : 1        SEQ #30                      Status: Released
+                  Compliance Date: NOV 07, 2016
+=============================================================================
+
+Associated patches: (v)DGBT*1*25   <<= must be installed BEFORE `DGBT*1*28'
+
+Subject: REPORT OF CLAIMS, ZIP CODE, DENIAL LETTER, ONE WAY/ROUND TRIP, CLAIM DELETION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 7 issues:
+   
+     1. The Report Of Claim Amounts report is not displaying values for 
+        Special Mode claims.
+   
+     2. The Bene Travel software is incorrectly displaying 9 digit zip codes.
+   
+     3. The denial letter is not printing the correct user name.
+   
+     4. There is duplicate wording in the denial letter template.  
+  
+     5. Special Mode claims are incorrectly displaying 'One Way' every time.
+  
+     6. An undefined error occurs when there is single division.
+  
+     7. Existing claims are being erased.
+  
+                  
+ Associated NSR(s):
+ ==================
+ N/A
+      
+      
+ Associated Ticket(s):
+ =====================
+  1. INC000000840342 - Bene Travel - General: Report Showing $0.00
+        DUP: INC000000848649
+        DUP: INC000000854474
+        DUP: I9939495FY16
+  
+  2. INC000000848999 - Bene Travel - 9 digit zip codes printing with two 
+                       dashes "- -".
+        DUP: I9940754FY16
+  
+  3. INC000000966732 - Bene Travel - General: Denial Letter Print
+        DUP: I9941631FY16
+  
+  4. INC000001035335 - Bene Travel - General: Denial Letter duplicate wording
+        DUP: INC000001231273
+        DUP: I9941765FY16
+  
+  5. INC000001118197 - Bene Travel - General: SP Mode - Round Trip/One Way not
+                       displaying correctly
+        DUP: I9942099FY16
+  
+  6. I5637262FY15 - Bene Travel terminated sessions 
+  
+  7. I7382571FY16 - Bene Travel Claims are being deleted
+  
+  
+ Participating Test Sites:
+ =========================
+ James J. Peters VA Medical Center (Bronx, NY)
+ VA Tennessee Valley Health Care System
+ Veterans Health Care System of the Ozarks (Fayetteville)     
+       
+ Ticket Overview:
+ ================
+  1. INC000000840342 - Bene Travel - General: Report Showing $0.00
+    
+      Problem:
+      --------
+      The 'Standard Claims Output' report in the Report of Claim Amounts 
+      [DGBT BENE TRAVEL REPORT] option is not adding the TOTAL INVOICE AMOUNT
+      (#60) field from Special Mode claims to the $TOTAL column of the report.
+    
+      Resolution:
+      -----------
+      Routine DGBTOA2 has been modified to use the TOTAL INVOICE AMOUNT (#60) 
+      value instead of AMOUNT PAYABLE (#10) field for when the claim type is 
+      Special Mode.
+   
+   
+  2. INC000000848999 - Bene Travel - 9 digit zip codes printing with two 
+                       dashes "- -".
+    
+      Problem:
+      --------
+      If the ZIP (#1.04) field of the INSTITUTION (#4) file contains a nine 
+      digit zip code, a hyphen is being improperly saved in the ZIP 
+      CODE/DESTINATION (#28.2) field of the BENEFICIARY TRAVEL CLAIM (#392) 
+      file.
+    
+      Resolution:
+      -----------
+      Routine DGBTE1 has been modified to remove the hyphen from the nine 
+      digit zip code before it is saved in the ZIP CODE/DESTINATION (#28.2) 
+      field. Routines DGBTCD and DGBTCR have been modified to display the 
+      FileMan external format for the zip code. Also, created post-init 
+      routine DGBT1P28 to correct any existing zip code entries in the 
+      BENEFICIARY TRAVEL CLAIM (#392) file that contain a hyphen.
+                
+               
+  3. INC000000966732 - Bene Travel - General: Denial Letter Print
+    
+      Problem:
+      --------
+      The Reprint Denial of Benefits Letters [DGBT REPRINT DENIAL LETTERS] 
+      option is incorrectly displaying the name of the current user, rather 
+      than the name of the user that entered the claim.
+   
+      Resolution:
+      -----------
+      Routine DGBTDLT1 has been modified to display the name of the user that 
+      entered the claim rather than the current user.
+         
+         
+  4. INC000001035335 - Bene Travel - General: Denial Letter duplicate wording
+    
+      Problem:
+      --------
+      The phrase "date you completed travel associated with your" is repeated
+      in the BT Denial of Benefits Letter when "30 Day Application 
+      Requirement" is selected as the reason for denial.
+         
+      Resolution:
+      -----------     
+      The TEXT (#1) field of the "30 DAY APPLICATION REQUIREMENT" entry in the
+      BENEFICIARY TRAVEL DENIAL REASONS (#392.8) file is modified with
+      routine DGBT1P28 to remove the duplicate wording. The corrected
+      version will replace the existing text in the field, even if it has 
+      already been corrected at the site.
+  
+  5. INC000001118197 - Bene Travel - General: SP Mode - Round Trip/One Way not
+                       displaying correctly
+  
+      Problem:
+      --------
+      When using the View of Claim [DGBT BENE TRAVEL VIEW] option to view a 
+      special mode claim, the "One Way/Round Trip:" prompt will always display
+      'One Way'.
+  
+      Resolution:
+      -----------   
+      Routine DGBTCDSP has been modified to correctly display the appropriate 
+      trip type.
+  
+  
+  6. I5637262FY15 - Bene Travel terminated sessions 
+  
+      Problem:
+      --------
+      Sites are getting an undefined error when the MULTIDIVISION MED CENTER?
+      (#11) field in the MAS PARAMETER (#43) file is set to zero.
+  
+      Resolution:
+      -----------   
+      Modified code in routine DGBTE to prevent the undefined error when the 
+      MULTIDIVISION MED CENTER? (#11) field is set to zero.
+  
+  
+  7. I7382571FY16 - Bene Travel Claims are being deleted
+    
+      Problem:
+      --------
+      If a clerk goes into an existing claim and then enters a "^" at the 
+      "Is this a Mileage or Special Mode Claim?: M//" prompt, all fields in the 
+      claim will be deleted.
+   
+      Resolution:
+      -----------
+      Routine DGBTE has been modified by adding a check to see if the clerk
+      is editing an existing claim, if so the fields in the claim will be
+      preserved.
+  
+  
+ Installation Instructions:
+ ==========================
+ Installation time will vary based on the size of the Beneficiary Travel
+ Claim (#392) file.
+    
+ Suggested time to install: Non-peak hours when users are not on the 
+ system.
+     
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options: 
+         (when prompted for INSTALL NAME, enter DGBT*1.0*28)
+     
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this patch
+               is installed.  It compares all components of this patch
+               (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package DGBT*1.0*28. 
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+         Protocols? YES//", respond YES. When prompted to select the
+         options you would like to place out of order, enter the following:
+  
+            Beneficiary Travel Menu          [DGBT BENE TRAVEL MENU]
+            Claim Enter/Edit                 [DGBT BENE TRAVEL SCREEN]
+            Report of Claim Amounts          [DGBT BENE TRAVEL REPORT]
+  
+      7. When prompted, 'Enter protocols you wish to mark as 'Out Of 
+         Order':', press <ENTER>.
+  
+      8. Optional: You may delete the routine DGBT1P28 after installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;Beneficiary Travel;**[Patch List]**;September 25, 2001;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGBT1P28
+    Before:       n/a   After:  B6585492  **28**
+Routine Name: DGBTCD
+    Before: B29294198   After: B30154199  **2,7,9,20,22,25,28**
+Routine Name: DGBTCDSP
+    Before: B37725892   After: B38322177  **20,21,22,28**
+Routine Name: DGBTCR
+    Before: B25363129   After: B26266236  **7,14,20,28**
+Routine Name: DGBTDLT1
+    Before: B74264382   After: B75968041  **20,28**
+Routine Name: DGBTE
+    Before: B51704812   After: B53217422  **2,19,20,22,25,28**
+Routine Name: DGBTE1
+    Before: B31835437   After: B32593680  **8,12,13,20,21,22,25,28**
+Routine Name: DGBTOA2
+    Before: B16658158   After: B17831216  **2,7,21,28**
+ 
+Routine list of preceding patches: 25
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 16, 2015
+Completed By:                               Date Completed: OCT 03, 2016
+Released By :                               Date Released : OCT 07, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

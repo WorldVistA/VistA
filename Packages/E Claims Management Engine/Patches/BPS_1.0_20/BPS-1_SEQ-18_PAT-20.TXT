@@ -1,0 +1,678 @@
+
+=============================================================================
+Run Date: AUG 25, 2016                     Designation: BPS*1*20
+Package : BPS - E CLAIMS MGMT ENGINE          Priority: Mandatory
+Version : 1        SEQ #18                      Status: Released
+                  Compliance Date: SEP 24, 2016
+=============================================================================
+
+Associated patches: (v)BPS*1*18    <<= must be installed BEFORE `BPS*1*20'
+                    (v)BPS*1*19    <<= must be installed BEFORE `BPS*1*20'
+
+Subject: MCCF ePHARMACY COMPLIANCE PHASE 3
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ This patch has enhancements that extend the capabilities of the Veterans 
+ Health Information Systems and Technology Architecture (VistA) electronic 
+ pharmacy (ePharmacy) billing system.  Below is a list of all the applications 
+ involved in this project along with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*448
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2*550
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*20
+    CONSOLIDATED MAIL OUTPATIENT PHARMACY (CMOP) V. 2.0   PSX*2*79
+    PHARMACY DATA MANAGEMENT (PDM) V. 1.0                 PSS*1*192
+  
+ All five of these patches are being released in the Kernel Installation and 
+ Distribution System (KIDS) multi-build distribution.
+  
+ KIDS multi-build name: BPS PSO IB PSX PSS BUNDLE 9.0
+   KIDS Host File name: BPS_1_20_PSO_IB_PSX_PSS.KID
+  
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+  1. The CMT Add/View Comments list manager screen, within the ECME User
+     screen [BPS USER SCREEN], will contain an additional action of P Add
+     Pharmacy/OPECC Comment which triggers the system to prompt for a line 
+     number item and the comment.  The date, time, and user will be recorded
+     for each entry.  Pharmacy comments entered will be displayed on the
+     Outpatient Pharmacy Reject Information screen and the ECME User screen
+     [BPS USER SCREEN].
+  
+  2. The system will allow the user to use an action that resubmits a claim
+     from the ECME User screen [BPS USER SCREEN] for a non-billable TRICARE
+     or CHAMPVA prescription with a pseudo-rejection of eT or eC.
+  
+  3. The ECME User Screen [BPS USER SCREEN] will display an indicator of RS 
+     when a claim is manually resubmitted from the ECME User Screen [BPS USER
+     SCREEN]. The resubmission indicator will only be captured and displayed
+     for the last transaction and an indicator may be overwritten. The Change
+     View action will allow users to select Resubmission and display the ECME
+     User Screen [BPS USER SCREEN] data based on the user selection.
+  
+  4. The ECME User Screen [BPS USER SCREEN] will contain a new hidden action
+     with a new list manager screen called OPECC Reject Information containing
+     the following actions:
+  
+         VW    View Rx
+         MP    Medication Profile
+         VER   View ePharmacy Rx
+         PI    Patient Information
+  
+  5. The ECME User Screen [BPS USER SCREEN] will contain a new hidden action
+     called RER Resubmit Claim w/o Reversal which resubmits a claim without
+     doing a reversal first, regardless of the previous VistA claim status.
+  
+  6. The ECME User Screen [BPS USER SCREEN] actions will be updated as follows:
+  
+     CV  Change View           REV Reverse Payable Claim FR  Further Research
+     SO  Sort List             RES Resubmit Claim        VER View ePharmacy RX
+     CMT Add/View Comments     CLO Close Claim           WRK Send to Worklist
+  
+  7. The UD Display Update, LOG Print Claim Log, and EX Exit actions will
+     become hidden actions on the ECME User Screen [BPS USER SCREEN]. 
+  
+  8. The ECME User Screen [BPS USER SCREEN] will display non-billable TRICARE
+     entries with a pseudo-rejection code of eT or non-billable CHAMPVA entries
+     with a pseudo-rejection code of eC.  An open/closed indicator will display
+     on the ECME screen for each non-billable entry and the entry will default
+     to an Open entry.
+  
+  9. The ECME User Screen [BPS USER SCREEN] will contain a new hidden action of
+     Open/Close Non-Billable Entry which will mark the entry as Open or Closed
+     for the purposes of displaying or not displaying the entry on the ECME
+     User screen and capture the following:  user name, date, time, comment.
+  
+ 10. The ECME User Screen [BPS USER SCREEN] Change View action will offer a
+     choice of displaying open non-billable entries, closed non-billable
+     entries or all and display the ECME User Screen data based on the user
+     selection.
+  
+ 11. The ECME User Screen [BPS USER SCREEN] will make these actions unavailable
+     for non-billable entries:
+  
+        REV     Reverse Payable Claim
+        CLO     Close Claim
+        LOG     Print Claim Log
+        WRK     Send to Worklist
+        ROC     Reopen Closed Claims
+        RED     Resubmit Claim w/EDITS
+        RH      Release Copay (On FR  Further Research)
+        RER     Resubmit Claim w/o Reversal
+  
+ 12. The Closed Claims Report [BPS RPT CLOSED CLAIMS] will display the billed
+     amount in the Excel download format.  When the report is not run to
+     capture report data for an Excel document, the Amount Billed will not be
+     included in the report.
+  
+ 13. The Potential TRICARE Claims Report [BPS COB RPT TRICARE CLAIMS] will be
+     renamed to Potential Claims Report for Dual Eligible [BPS POTENTIAL CLAIMS
+     RPT DUAL].  It will prompt the user for patient eligibility, sort the
+     report appropriately, and display patient eligibility in the heading of
+     the report.
+  
+ 14. The VistA ECME system will use indicator "RS" to indicate that a claim was
+     resubmitted via the ECME User Screen [BPS USER SCREEN].  To accomplish
+     this, the bill type filter will be changed and RS as an indicator will be
+     displayed on certain reports where applicable.
+  
+ 15. The Other Reports Menu [BPS MENU RPT OTHER] will contain a new report
+     called OPECC Productivity Report [BPS OPECC PRODUCTIVITY REPORT].  The
+     report will display information for the claim, by transaction date, with
+     the option for a summary, detail or Excel format.
+  
+ 16. A new SECURITY KEY called BPS SUPERVISOR is implemented with this patch.
+     This key is required for anyone accessing the OPECC Productivity Report
+     [BPS OPECC PRODUCTIVITY REPORT].
+  
+ 17. The system will support new and modified data elements and fields for
+     NCPDP Telecommunications version E7 according to the October 2015 
+     NCPDP release. Support for new and modified reject codes through this 
+     release is also included.
+  
+ 18. The system will no longer contain non-beneficial code for NCPDP version
+     5.1.  Some of the version 5.1 code will remain as a roadmap to use the
+     next time NCPDP implements major versions.
+  
+ 19. HL7 transmissions for ePharmacy plans, processors, and PBMs (PHARMACY
+     BENEFITS MANAGER) from FSC will be re-directed to use the ePharmacy HL7
+     link on EPHARM OUT instead of IIV EC.
+  
+ 20. The Vitria Interface Version will be updated to version 5 and a new
+     registration message will be sent to AITC to communicate that updates have
+     occurred.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ BPS RESPONSES (#9002313.03)                               Modified
+   RESPONSES sub-file (#9002313.0301)                      Modified
+                       QUAN LIMIT PER SPC TM PD COUNT      New
+                         (#2087) 
+                       DAYS SUP LIM PER SPC TM PD CNT      New
+                         (#2090) 
+   QUAN LIMIT TIME PERIOD MLTPL sub-file (#9002313.032087)   New
+   DAYS SUPPLY LIM TM PD MULTIPLE sub-file (#9002313.032091) New
+  
+ BPS NCPDP CLARIFICATION CODES (#9002313.25)               Modified
+  
+ BPS PAYER RESPONSE OVERRIDES (#9002313.32)                Modified
+                       ADJUDICATED PAYMENT TYPE (#.1)      Modified
+                       QUAN LIMIT PER SPC TIME PERIOD      New
+                         (#.11) 
+                       QUANTITY LIMIT TIME PERIOD (#.12)   New
+                       DAYS SUP LIM PER SPC TM PERIOD      New
+                         (#.13) 
+                       DAYS SUPPLY LIMIT TIME PERIOD       New
+                         (#.14) 
+                       INGREDIENT COST PAID (#.15)         New
+                       DISPENSING FEE PAID (#.16)          New
+                       REMAINING DEDUCTIBLE AMOUNT (#.17)  New
+                       AMT APPLIED TO PERIODIC DEDUCT      New
+                         (#.18)
+  
+ BPS LOG OF TRANSACTIONS (#9002313.57)                     Modified
+                       TRANSACTION TYPE (#19)              Modified
+                       NON-BILLABLE REASON (#301)          New
+                       NON-BILLABLE CLOSED (#302)          New
+                       NON-BILLABLE DATE CLOSED (#303)     New
+                       NON-BILLABLE CLOSED BY (#304)       New
+                       NON-BILLABLE CLOSED COMMENT (#305)  New
+                       NON-BILLABLE DATE RE-OPENED (#306)  New
+                       NON-BILLABLE RE-OPENED BY (#307)    New
+                       NON-BILLABLE RE-OPENED COMMENT      New
+                         (#308) 
+   COMMENT MULTIPLE sub-file (#9002313.57111)              Modified
+                       PHARMACY (#.04)                     New
+  
+ BPS TRANSACTION (#9002313.59)                             Modified
+                       TRANSACTION TYPE (#19)              Modified
+                       NON-BILLABLE REASON (#301)          New
+                       NON-BILLABLE CLOSED (#302)          New
+                       NON-BILLABLE DATE CLOSED (#303)     New
+                       NON-BILLABLE CLOSED BY (#304)       New
+                       NON-BILLABLE CLOSED COMMENT (#305)  New
+                       NON-BILLABLE DATE RE-OPENED (#306)  New
+                       NON-BILLABLE RE-OPENED BY (#307)    New
+                       NON-BILLABLE RE-OPENED COMMENT      New
+                         (#308) 
+   COMMENT MULTIPLE sub-file (#9002313.59111)              Modified
+                       PHARMACY (#.04)                     New
+  
+ BPS NCPDP FIELD DEFS (#9002313.91)                        Modified
+ BPS NCPDP REJECT CODES (#9002313.93)                      Modified
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ BPS MENU RPT OTHER           menu                         Modified 
+ BPS OPECC PRODUCTIVITY       run routine                  New 
+ REPORT                                                    
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ BPS OPECC REJECT INFO MEDICATION PROFILE                  New 
+ BPS OPECC REJECT INFO PATIENT INFORMATION                 New 
+ BPS OPECC REJECT INFO VIEW RX                             New 
+ BPS OPECC REJECT MENU                                     New 
+ BPS OPECC REJECT VIEW ECME RX                             New 
+ BPS PRTCL CMT ADD                                         Modified 
+ BPS PRTCL CMT ADD PHARM                                   New 
+ BPS PRTCL CMT EXIT                                        Modified 
+ BPS PRTCL CMT MENU                                        Modified 
+ BPS PRTCL USRSCR HIDDEN ACTIONS                           Modified 
+ BPS PRTCL USRSCR OPECC REJECT INFORMATION                 New 
+ BPS PRTCL USRSCR OPEN/CLOSE NON-BILLABLE                  New 
+ ENTRY                                                     
+ BPS PRTCL USRSCR RESUB NO REVERSE                         New 
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ BPS SUPERVISOR                                            New 
+  
+  
+ Templates Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ BPS LSTMN ECME     List      N/A                          Modified 
+ USRSCR                                                    
+ BPS OPECC REJECT   List      N/A                          New 
+ INFORMATION                                               
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ 20140411 - Medical Care Collection Fund (MCCF) ePharmacy Compliance Phase 3
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA HEARTLAND - WEST, VISN 15 (589)
+ LEXINGTON VAMC-LEESTOWN (596)
+ HUNTER HOLMES MCGUIRE HOSPITAL - RICHMOND (652)
+ BIRMINGHAM VAMC (521)
+ CENTRAL ARKANSAS HEALTH CARE SYSTEM - LITTLE ROCK (598)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also elect
+ to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+     Albany:                 domain.ext
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at: 
+ http://www.domain.ext/vdl
+  
+ Title                                 File Name               Transfer Mode
+ ---------------------------------------------------------------------------
+ Release Notes/Installation Guide      BPS_1_P20_RN.PDF        Binary
+ User Manual                           BPS_1_UM.PDF            Binary
+ Technical Manual/Security Guide       BPS_1_TM.PDF            Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There is a pre-install routine associated with this patch named EN^BPS20PRE. 
+ The purpose of the pre install routine is to:
+  
+  a. Update the NCPDP reject codes/descriptions in BPS NCPDP REJECT CODES
+     (#9002313.93).
+  
+ The pre-install routine is automatically deleted by the system if allowed by
+ your Kernel site parameters configuration. You may delete routine BPS20PRE if
+ the installation was successful and it is not automatically deleted by KIDS.
+  
+ There is a post-install routine associated with this patch named 
+ POST^BPS20PST. The purpose of the post-install routine is to:
+  
+  a. Remove the cached hidden parent menu protocol for the ECME User Screen. 
+  b. Refine and update the list of visible actions on the ECME User Screen.
+  c. Update the Vitria Interface version from 4 to 5.
+  d. Perform ePharmacy registration with AITC.
+  e. Rename an ECME report option and menu mnemonic.
+  f. Modify the ePharmacy HL7 links by adding the DNS server name and 
+     removing the IP address.
+  
+ The post-install routine is automatically deleted by the system if allowed by
+ your Kernel site parameters configuration. You may delete routine BPS20PST if
+ the installation was successful and it is not automatically deleted by KIDS.
+  
+  
+ Installation Instructions
+ -------------------------
+  
+ ***** IMPORTANT NOTE *****
+  
+ The ePharmacy Logical Links must be stopped before patch installation.  This 
+ can be done with the option "Start/Stop Links" [HL START].  The ePharmacy 
+ Logical Links which need to be stopped are the following:
+  
+     BPS NCPDP
+     EPHARM OUT
+  
+ **************************
+  
+ To avoid disruptions, these patches should be installed during non-peak hours
+ when there is minimal activity on the system. Avoid times when ECME claims are
+ being transmitted. Of particular concern are the options below.
+  
+     1. BPS NIGHTLY BACKGROUND JOB [BPS NIGHTLY BACKGROUND JOB]
+        Do not install the patch when ECME claims are being generated by the
+        BPS Nightly Background Job option. Wait for this job to finish or
+        Complete the installation before this job starts.
+  
+     2. Scheduled CS Transmission [PSXR SCHEDULED CS TRANS] and
+        Scheduled Non-CS Transmission [PSXR SCHEDULED NON-CS TRANS]
+        Do not install the patch when prescriptions are being transmitted to
+        CMOP. Wait for the CMOP transmissions to finish or complete the
+        installation before the transmissions start. Both the CS (Controlled
+        Substances) and the non-CS CMOP transmission options should be checked.
+        Check with Pharmacy Service or your Pharmacy ADPAC to find out when
+        CMOP transmissions occur.
+  
+ This multi-build installation may take between 1 to 10 minutes to install 
+ depending on the amount of data in the files being converted.
+  
+ This multi-build installation can be queued but should not be queued at a 
+ time when the BPS NIGHTY BACKGROUND JOB or CMOP transmission processes
+ are scheduled.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+ 1.  OBTAIN PATCHES
+     --------------
+     Obtain the host file BPS_1_20_PSO_IB_PSX_PSS.KID, which contains the
+     following patches:
+  
+         BPS*1.0*20
+         PSO*7.0*448
+         IB*2.0*550
+         PSX*2.0*79
+         PSS*1.0*192
+  
+     Sites may retrieve VistA software from download.vista.domain.ext. This
+     transmits the file from the first available server. Sites may also elect
+     to retrieve this file directly from a specific server.
+  
+     Sites may retrieve the software directly using Secure File Transfer (SFTP)
+     from the ANONYMOUS.SOFTWARE directory at the following Field Offices:
+    
+         Albany:                 domain.ext
+         Hines:                  domain.ext    
+         Salt Lake City:         domain.ext
+  
+     File Name                            Transfer Mode
+     --------------------------------------------------
+     BPS_1_20_PSO_IB_PSX_PSS.KID          ASCII
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option: Installation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+     Select Installation Option:
+  
+ 3.  LOAD TRANSPORT GLOBAL FOR MULTI-BUILD
+     -------------------------------------
+     From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file BPS_1_20_PSO_IB_PSX_PSS.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]BPS_1_20_PSO_IB_PSX_PSS.KID).
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       Loading Distribution...
+  
+         BPS PSO IB PSX PSS BUNDLE 9.0
+         BPS*1.0*20
+         PSO*7.0*448
+         IB*2.0*550
+         PSX*2.0*79
+         PSS*1.0*192
+  
+       Use INSTALL NAME: BPS PSO IB PSX PSS BUNDLE 9.0 to install this
+       Distribution. 
+  
+ 4.  RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD
+     -------------------------------------------------
+     From the Installation menu, you may select to use the following
+     options (when prompted for the INSTALL NAME, enter
+     BPS PSO IB PSX PSS BUNDLE 9.0):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as data dictionaries or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, data dictionaries, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 5.  INSTALL MULTI-BUILD
+     -------------------
+     This is the step to start the installation of this KIDS patch.  This
+     will need to be run for the BPS PSO IB PSX PSS BUNDLE 9.0.
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted for the "Select INSTALL NAME:", enter BPS PSO IB PSX PSS
+         BUNDLE 9.0.
+     c.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO//", enter NO.
+     d.  When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+         enter NO.
+     e.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", enter NO.
+     f.  When prompted "Device: HOME//", respond with the correct device.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ The new security key added by this patch, BPS SUPERVISOR, is needed in order 
+ to run the new ECME report called "OPECC Productivity Report" [BPS OPECC 
+ PRODUCTIVITY REPORT]. Please check with the OPECC supervisor and assign this 
+ security key as directed.
+  
+ ***** IMPORTANT NOTE *****
+  
+ Please re-start the ePharmacy Logical Links using the "Start/Stop Links" 
+ [HL START] menu option.  The ePharmacy Logical Links are the following:
+  
+     BPS NCPDP
+     EPHARM OUT
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;E CLAIMS MGMT ENGINE;**[Patch List]**;JUN 2004;Build 27
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: BPS20PRE
+    Before:       n/a   After:  B9993195  **20**
+Routine Name: BPS20PST
+    Before:       n/a   After: B54584565  **20**
+Routine Name: BPSBUTL
+    Before: B96713533   After:B120426085  **1,3,2,5,7,8,9,10,11,15,20**
+Routine Name: BPSCMT01
+    Before: B20954371   After: B22342250  **1,5,20**
+Routine Name: BPSECA8
+    Before: B32681715   After: B25111830  **1,5,10,12,11,15,20**
+Routine Name: BPSECMPS
+    Before:B117919679   After:B148784399  **1,2,5,6,7,10,11,15,19,20**
+Routine Name: BPSJACK
+    Before: B36662405   After: B32888755  **1,2,5,7,20**
+Routine Name: BPSJAREG
+    Before: B11441916   After: B11748725  **1,2,5,7,20**
+Routine Name: BPSJHLI
+    Before:  B2158650   After:  B4405994  **1,20**
+Routine Name: BPSJHLT
+    Before: B56866826   After: B84683560  **1,10,15,19,20**
+Routine Name: BPSJPREG
+    Before: B20416052   After: B20911223  **1,3,2,5,7,20**
+Routine Name: BPSJVAL1
+    Before: B16799335   After: B14575875  **1,5,7,20**
+Routine Name: BPSNCPD2
+    Before: B60489856   After: B91792201  **1,5,6,7,8,10,11,20**
+Routine Name: BPSNCPD3
+    Before: B64625279   After: B65718099  **1,5,6,7,8,10,11,15,19,20**
+Routine Name: BPSNCPD5
+    Before: B76118605   After: B76247724  **7,8,10,11,20**
+Routine Name: BPSNCPD6
+    Before: B28397403   After: B30082238  **7,8,10,11,20**
+Routine Name: BPSNCPDP
+    Before: B93601523   After: B97543196  **1,3,4,2,5,6,7,8,10,11,19,20**
+Routine Name: BPSOPR
+    Before:       n/a   After: B53670373  **20**
+Routine Name: BPSOPR2
+    Before:       n/a   After:B114125532  **20**
+Routine Name: BPSOPR3
+    Before:       n/a   After: B63864385  **20**
+Routine Name: BPSOS03
+    Before:  B9935989   After: B15562725  **1,5,10,20**
+Routine Name: BPSOSCD
+    Before:B104589879   After:B104057958  **1,3,2,5,7,8,10,11,15,19,20**
+Routine Name: BPSOSH2
+    Before:B141967265   After:B140036379  **1,5,8,10,15,19,20**
+Routine Name: BPSOSIY
+    Before: B71169390   After: B74487088  **1,3,5,6,7,8,10,11,20**
+Routine Name: BPSOSIZ
+    Before: B13539436   After: B18104655  **1,5,7,8,10,20**
+Routine Name: BPSOSRB
+    Before: B38172979   After: B39920456  **1,5,7,8,10,11,20**
+Routine Name: BPSOSRX
+    Before: B40198470   After: B40932013  **1,5,7,8,10,20**
+Routine Name: BPSOSRX5
+    Before: B43074906   After: B43227076  **7,8,10,11,20**
+Routine Name: BPSOSRX8
+    Before: B21154002   After: B22384839  **7,10,11,20**
+Routine Name: BPSOSSG
+    Before: B31935652   After: B30642361  **1,5,10,11,20**
+Routine Name: BPSOSU
+    Before: B38973910   After: B43285498  **1,2,5,7,10,20**
+Routine Name: BPSOSUC
+    Before:  B8931865   After: B10039062  **1,5,7,10,11,14,20**
+Routine Name: BPSPRRX5
+    Before: B46870876   After: B82229263  **8,10,11,20**
+Routine Name: BPSPSOU1
+    Before:       n/a   After: B14671447  **20**
+Routine Name: BPSREOP1
+    Before: B60493248   After: B57917968  **3,7,10,11,20**
+Routine Name: BPSRES
+    Before:B155712159   After:B159042443  **3,5,7,8,10,11,20**
+Routine Name: BPSRPT0
+    Before: B27167649   After: B27167649  **1,5,7,10,11,19,20**
+Routine Name: BPSRPT1
+    Before: B58952344   After: B64732997  **1,5,7,8,10,11,19,20**
+Routine Name: BPSRPT3
+    Before:B122921088   After:B124301535  **1,3,5,7,11,14,19,20**
+Routine Name: BPSRPT7
+    Before:B164190587   After:B164643275  **1,3,5,7,8,10,11,19,20**
+Routine Name: BPSRPT8
+    Before:B147944651   After:B149255320  **1,3,5,7,8,10,11,19,20**
+Routine Name: BPSRPT9
+    Before:B106079505   After:B113826199  **8,18,20**
+Routine Name: BPSRPT9A
+    Before: B95077796   After: B99973308  **8,9,18,20**
+Routine Name: BPSRSRLC
+    Before:  B2312265   After:  B2880037  **1,20**
+Routine Name: BPSSCR01
+    Before: B17522420   After: B17496726  **1,5,11,20**
+Routine Name: BPSSCR03
+    Before: B42385571   After: B67802855  **1,5,7,8,10,11,20**
+Routine Name: BPSSCR04
+    Before: B53618434   After: B54656509  **1,5,11,20**
+Routine Name: BPSSCRCL
+    Before: B82378286   After: B86678930  **1,3,5,7,8,11,15,19,20**
+Routine Name: BPSSCRCV
+    Before: B47413521   After: B55540510  **1,5,7,11,14,20**
+Routine Name: BPSSCRLG
+    Before:B241284581   After:B253455016  **1,5,7,8,10,11,15,18,20**
+Routine Name: BPSSCRN0
+    Before:       n/a   After:  B8359563  **20**
+Routine Name: BPSSCRRJ
+    Before:       n/a   After:B126798258  **20**
+Routine Name: BPSSCRRS
+    Before: B38581404   After: B80029514  **1,3,5,7,8,10,11,20**
+Routine Name: BPSSCRRV
+    Before: B40545723   After: B43226039  **1,5,6,7,8,20**
+Routine Name: BPSSCRSL
+    Before: B14563351   After: B14919740  **1,7,11,20**
+Routine Name: BPSSCRU2
+    Before: B47071661   After: B51790246  **1,3,5,10,11,20**
+Routine Name: BPSSCRU3
+    Before: B30414230   After: B43064796  **1,5,7,8,9,10,20**
+Routine Name: BPSSCRU6
+    Before: B17791929   After: B19836949  **3,8,10,20**
+Routine Name: BPSTEST
+    Before:B147504088   After:B213983196  **6,7,8,10,11,15,19,20**
+Routine Name: BPSUTIL
+    Before: B11432819   After: B13282594  **1,3,2,5,6,20**
+Routine Name: BPSWRKLS
+    Before: B29522243   After: B32047440  **7,8,11,15,20**
+ 
+Routine list of preceding patches: 18, 19
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 02, 2015
+Completed By:                               Date Completed: JUL 07, 2016
+Released By :                               Date Released : AUG 25, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

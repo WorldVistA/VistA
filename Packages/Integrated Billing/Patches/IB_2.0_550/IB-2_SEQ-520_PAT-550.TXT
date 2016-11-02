@@ -1,0 +1,343 @@
+
+=============================================================================
+Run Date: AUG 25, 2016                     Designation: IB*2*550
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #520                      Status: Released
+                  Compliance Date: SEP 24, 2016
+=============================================================================
+
+Associated patches: (v)IB*2*416    <<= must be installed BEFORE `IB*2*550'
+                    (v)IB*2*516    <<= must be installed BEFORE `IB*2*550'
+                    (v)IB*2*526    <<= must be installed BEFORE `IB*2*550'
+                    (v)IB*2*534    <<= must be installed BEFORE `IB*2*550'
+
+Subject: MCCF ePHARMACY COMPLIANCE PHASE 3
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ This patch has enhancements that extend the capabilities of the Veterans 
+ Health Information Systems and Technology Architecture (VistA) electronic 
+ pharmacy (ePharmacy) billing system.  Below is a list of all the applications 
+ involved in this project along with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*448
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2*550
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*20
+    CONSOLIDATED MAIL OUTPATIENT PHARMACY (CMOP) V. 2.0   PSX*2*79
+    PHARMACY DATA MANAGEMENT (PDM) V. 1.0                 PSS*1*192
+  
+ All five of these patches are being released in the Kernel Installation and 
+ Distribution System (KIDS) multi-build distribution.
+  
+ KIDS multi-build name: BPS PSO IB PSX PSS BUNDLE 9.0
+   KIDS Host File name: BPS_1_20_PSO_IB_PSX_PSS.KID
+  
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+  1. The Patient Release of Information [IBCNR RELEASE OF INFORMATION] 
+     option contains actions to add a new ROI and to view/edit an existing ROI. 
+     These actions were modified to allow the user to enter any date for the 
+     expiration date as long as it is after the effective date of the ROI.
+  
+  2. The e-Pharmacy Menu [IBCNR E-PHARMACY MENU] contains a new report option
+     of RER ROI Expiration Report [IBCNR ROI EXPIRATION REPORT] without
+     requiring a security key.
+  
+  3. The new ROI Expiration Report [IBCNR ROI EXPIRATION REPORT] will prompt
+     the user for the following:
+  
+        Beginning Expiration Date
+        Ending Expiration Date
+        Status of (A)ctive, (I)nactive, or (B)oth
+  
+     The beginning expiration date has a default value of T-180 and the ending
+     expiration date has a default value of T+60. 
+  
+  4. The new ROI Expiration Report [IBCNR ROI EXPIRATION REPORT] will display
+     patient name, insurance name, date of death, effective date, expiration
+     date, date added and the drug name. The report is sorted by expiration
+     date in reverse chronological order.
+  
+  5. The Group Plan Worksheet Report [IBCNR GROUP PLAN WORKSHEET] will display
+     the VA Plan ID instead of the Pharmacy Plan.
+  
+  6. The option Match Multiple Group Plans [IBCNR GROUP PLAN MATCH] will
+     display the VA Plan ID instead of the Pharmacy Plan.
+  
+  7. The option Match Group Plan to a Pharmacy [IBCNR PLAN MATCH] will display
+     the VA Plan ID instead of the Pharmacy Plan.
+  
+  8. IB Billing Determination will use the new ePharmacy Billable fields to
+     assess billable status of the ePharmacy prescription.
+  
+  9. IB Billing Determination will use the new field called Sensitive Diagnosis
+     Drug to determine drugs used exclusively to treat a sensitive diagnosis
+     and will examine the system to find a Release of Information (ROI) record
+     on file to determine if the drug is billable or not.
+  
+ 10. When the system automatically populates the non-billable reason and the
+     associated free text ROI reason, the system will use "ROI NOT OBTAINED"
+     and free text reason "NO ACTIVE/VALID ROI FOR DRUG OR INSURANCE".
+  
+ 11. The IB back billing processes shall use the same date of service algorithm
+     used in outpatient pharmacy and in ECME. A claim can be back-billed
+     through Claims Tracking and the action to Generate ECME Rx Bills.
+  
+ 12. The IB Billing Event Log shall contain new drug file fields in the finish
+     event for billing events that do not generate a claim because of
+     non-billable determination.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ IB NCPDP EVENT LOG (#366.14)                              Modified
+   EVENT sub-file (#366.141)                               Modified
+                       DRUG ECME BILLABLE (#7.06)          New
+                       DRUG ECME BILLABLE TRICARE (#7.07)  New
+                       DRUG ECME BILLABLE CHAMPVA (#7.08)  New
+                       DRUG SENSITIVE DIAGNOSIS (#7.09)    New
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ IBCNR E-PHARMACY MENU        menu                         Modified 
+ IBCNR EDIT PAYER             run routine                  Delete 
+ IBCNR ROI EXPIRATION         run routine                  New 
+ REPORT                       
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+ Templates Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ IBCNR GROUP PLAN   List      N/A                          Modified 
+ MATCH                                                     
+ IBCNR PLAN MATCH   List      N/A                          Modified 
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ 20140411 - Medical Care Collection Fund (MCCF) ePharmacy Compliance Phase 3
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA HEARTLAND - WEST, VISN 15 (589)
+ LEXINGTON VAMC-LEESTOWN (596)
+ HUNTER HOLMES MCGUIRE HOSPITAL - RICHMOND (652)
+ BIRMINGHAM VAMC (521)
+ CENTRAL ARKANSAS HEALTH CARE SYSTEM - LITTLE ROCK (598)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also elect
+ to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+     Albany:                 domain.ext
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at: 
+ http://www.domain.ext/vdl
+  
+ Title                                 File Name                Transfer Mode
+ ----------------------------------------------------------------------------
+ Release Notes/Installation Guide      IB_2_0_P550_RN.PDF       Binary
+ User Manual                           IB_2_0_UM.PDF            Binary
+ Technical Manual/Security Guide       IB_2_0_TM.PDF            Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There is a post-install routine associated with this patch named 
+ POST^IBY550PO.  The purpose of the post-install routine is to:
+  
+  a. Remove the references to the Payer file (365.12) from the ePharmacy PLAN
+     file (366.03). Both the data and the field definition are removed. 
+  b. Remove all E-PHARM payer application data from the Payer file (365.12).
+     ePharmacy does not use the Payer file.
+  c. Remove the E-PHARM entry from the payer application dictionary file
+     (365.13).
+  
+ The post-install routine is automatically deleted by the system if allowed by 
+ your Kernel site parameters configuration. You may delete this routine if the 
+ installation was successful and it is not automatically deleted by KIDS.
+  
+  
+ Installation Instructions
+ -------------------------
+ Please see the Installation Instructions associated with patch BPS*1.0*20.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCBB11
+    Before: B95727608   After: B96464375  **51,343,363,371,395,392,401,
+                                           384,400,436,432,516,550**
+Routine Name: IBCNEHLI
+    Before:  B8196060   After:  B7817332  **184,252,251,271,300,416,550**
+Routine Name: IBCNRE1
+    Before: B14123296   After:    Delete  
+Routine Name: IBCNRE2
+    Before: B12782236   After: B12751444  **251,550**
+Routine Name: IBCNRHLT
+    Before: B14102069   After: B13273530  **251,435,550**
+Routine Name: IBCNRHLU
+    Before:  B7442206   After:  B8116443  **251,550**
+Routine Name: IBCNRMFE
+    Before:  B8335815   After:  B7262621  **251,276,550**
+Routine Name: IBCNRMFK
+    Before:  B5880062   After:  B5869085  **251,550**
+Routine Name: IBCNRP
+    Before: B23991821   After: B23991702  **251,516,550**
+Routine Name: IBCNRPM2
+    Before: B20488193   After: B20472874  **251,276,550**
+Routine Name: IBCNRRP3
+    Before: B58110020   After: B58130731  **251,276,516,550**
+Routine Name: IBCNRU1
+    Before: B36756107   After: B30407184  **251,276,435,550**
+Routine Name: IBCNRZCM
+    Before:  B3893703   After:  B3870682  **251,550**
+Routine Name: IBCNRZP0
+    Before:   B925392   After:    Delete  
+Routine Name: IBCNRZPL
+    Before:  B7494348   After:  B6548655  **251,550**
+Routine Name: IBCNRZPP
+    Before:       n/a   After: B13594389  **550**
+Routine Name: IBCNRZRX
+    Before: B13620171   After:    Delete  
+Routine Name: IBNCPBB1
+    Before:  B4732084   After:  B4476268  **384,550**
+Routine Name: IBNCPDP
+    Before:  B5636694   After: B14785713  **223,276,363,383,384,411,435,
+                                           452,550**
+Routine Name: IBNCPDP1
+    Before:B164054794   After:B179115393  **223,276,339,363,383,405,384,
+                                           411,434,437,435,455,452,473,
+                                           494,534,550**
+Routine Name: IBNCPDP2
+    Before: B84172572   After: B82759628  **223,276,342,347,363,383,405,
+                                           384,411,435,452,526,550**
+Routine Name: IBNCPDPU
+    Before:B125879968   After:B126640808  **223,276,347,383,405,384,437,
+                                           435,452,511,534,550**
+Routine Name: IBNCPDR
+    Before:  B7723137   After:  B9280847  **384,550**
+Routine Name: IBNCPDR1
+    Before:  B4262134   After:  B3213258  **384,550**
+Routine Name: IBNCPDR2
+    Before:  B8736079   After:  B9323055  **384,550**
+Routine Name: IBNCPDR4
+    Before: B32682440   After: B31809366  **384,550**
+Routine Name: IBNCPDRA
+    Before:       n/a   After: B35956392  **550**
+Routine Name: IBNCPDRB
+    Before:       n/a   After: B19609001  **550**
+Routine Name: IBNCPEV
+    Before:B102192248   After: B98081615  **342,363,383,384,411,435,452,
+                                           521,516,550**
+Routine Name: IBNCPEV1
+    Before: B67774383   After: B78796257  **342,339,363,411,435,452,516,550**
+Routine Name: IBNCPLOG
+    Before: B83304395   After: B86545576  **342,339,363,383,411,435,452,
+                                           534,550**
+Routine Name: IBNCPUT1
+    Before: B20040520   After: B21678012  **342,363,384,550**
+Routine Name: IBTRKR3
+    Before: B54376358   After: B54454971  **13,43,121,160,247,275,260,
+                                           309,336,312,339,347,405,384,
+                                           550**
+Routine Name: IBY550PO
+    Before:       n/a   After:  B5495891  **550**
+ 
+Routine list of preceding patches: 416, 516, 526, 534
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 02, 2015
+Completed By:                               Date Completed: JUL 07, 2016
+Released By :                               Date Released : AUG 25, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

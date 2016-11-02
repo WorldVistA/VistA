@@ -1,0 +1,504 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 04/13/16 at 13:56
+=============================================================================
+Run Date: SEP 19, 2016                     Designation: EC*2*132
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #126                      Status: Released
+                  Compliance Date: OCT 19, 2016
+=============================================================================
+
+Associated patches: (v)EC*2*128    <<= must be installed BEFORE `EC*2*132'
+
+Subject: FY17 UPDATE TO EC NATIONAL PROCEDURE (#725) FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch addresses 1 issue:
+   
+  1. This patch will update the EC NATIONAL PROCEDURE (#725) file by 
+     inactivating 156 existing procedures, adding 65 new procedures, 
+     changing 4 CPT codes, and changing 98 procedure names in the file.
+   
+       
+  ASSOCIATED NSR(S):
+  ==================
+  N/A
+      
+      
+  ASSOCIATED REMEDY TICKET(S):
+  ============================
+  1. I8253294FY16 - FY17 Event Capture National Procedure (#725) File Update
+       
+      
+  PARTICIPATING TEST SITES:
+  =========================
+  Battle Creek VAMC
+  VAMHCS (PERRY POINT)
+  Wilkes-Barre VA Medical Center
+     
+     
+  REMEDY OVERVIEW:
+  ================
+   
+  1. I8253294FY16 - FY17 Event Capture National Procedure (#725) File Update
+   
+     Problem:
+     --------
+     The Managerial Cost Accounting Office (MCAO) requested an update to the EC 
+     NATIONAL PROCEDURE (#725) file. The request is to inactivate 156 existing
+     procedures, add 65 new procedures, change 4 CPT codes, and change 98
+     procedure names in the file.
+  
+    
+     Resolution:
+     -----------
+     The routines included in this patch will update the EC NATIONAL 
+     PROCEDURE file (#725) by inactivating 156 existing procedures, adding
+     65 new procedures, changing 4 CPT codes, and changing 98 procedure
+     names in the file.
+    
+     The entries that will be inactivated in the NATIONAL PROCEDURE (#725) file
+     on 10/01/16 are:
+    
+         Natl #         Description               
+        ------          ---------------------           
+        SD001           BEDDAY STATE DOM 001
+        SD002           BEDDAY STATE DOM 002
+        SD003           BEDDAY STATE DOM 003
+        SD004           BEDDAY STATE DOM 004
+        SD005           BEDDAY STATE DOM 005
+        SD006           BEDDAY STATE DOM 006
+        SD007           BEDDAY STATE DOM 007
+        SD008           BEDDAY STATE DOM 008
+        SD009           BEDDAY STATE DOM 009
+        SD012           BEDDAY STATE DOM 012
+        SD013           BEDDAY STATE DOM 013
+        SD014           BEDDAY STATE DOM 014
+        SD015           BEDDAY STATE DOM 015
+        SD016           BEDDAY STATE DOM 016
+        SD017           BEDDAY STATE DOM 017
+        SD018           BEDDAY STATE DOM 018
+        SD019           BEDDAY STATE DOM 019
+        SD020           BEDDAY STATE DOM 020      
+        SD021           BEDDAY STATE DOM 021
+        SD022           BEDDAY STATE DOM 022
+        SD023           BEDDAY STATE DOM 023
+        SD024           BEDDAY STATE DOM 024
+        SD025           BEDDAY STATE DOM 025
+        SD026           BEDDAY STATE DOM 026
+        SD027           BEDDAY STATE DOM 027
+        SD028           BEDDAY STATE DOM 028
+        SD029           BEDDAY STATE DOM 029
+        SD030           BEDDAY STATE DOM 030
+        SD031           BEDDAY STATE DOM 031
+        SD032           BEDDAY STATE DOM 032
+        SD033           BEDDAY STATE DOM 033
+        SD034           BEDDAY STATE DOM 034
+        SD035           BEDDAY STATE DOM 035
+        SD036           BEDDAY STATE DOM 036
+        SD037           BEDDAY STATE DOM 037
+        SD038           BEDDAY STATE DOM 038
+        SD039           BEDDAY STATE DOM 039
+        SD040           BEDDAY STATE DOM 040
+        SD041           BEDDAY STATE DOM 041
+        SD042           BEDDAY STATE DOM 042
+        SH001           BEDDAY STATE HOSPITAL 001
+        SH002           BEDDAY STATE HOSPITAL 002
+        SH003           BEDDAY STATE HOSPITAL 003
+        SH004           BEDDAY STATE HOSPITAL 004
+        SH005           BEDDAY STATE HOSPITAL 005
+        SH006           BEDDAY STATE HOSPITAL 006
+        SH007           BEDDAY STATE HOSPITAL 007
+        SH008           BEDDAY STATE HOSPITAL 008
+        SH009           BEDDAY STATE HOSPITAL 009
+        SH012           BEDDAY STATE HOSPITAL 012
+        SH013           BEDDAY STATE HOSPITAL 013
+        SH014           BEDDAY STATE HOSPITAL 014
+        SH015           BEDDAY STATE HOSPITAL 015
+        SH016           BEDDAY STATE HOSPITAL 016
+        SH017           BEDDAY STATE HOSPITAL 017
+        SH018           BEDDAY STATE HOSPITAL 018
+        SH019           BEDDAY STATE HOSPITAL 019
+        SH020           BEDDAY STATE HOSPITAL 020
+        SN001           BEDDAY STATE HOME 001
+        SN002           BEDDAY STATE HOME 002
+        SN003           BEDDAY STATE HOME 003
+        SN004           BEDDAY STATE HOME 004
+        SN005           BEDDAY STATE HOME 005
+        SN006           BEDDAY STATE HOME 006
+        SN007           BEDDAY STATE HOME 007
+        SN008           BEDDAY STATE HOME 008
+        SN009           BEDDAY STATE HOME 009
+        SN012           BEDDAY STATE HOME 012
+        SN013           BEDDAY STATE HOME 013
+        SN014           BEDDAY STATE HOME 014
+        SN015           BEDDAY STATE HOME 015
+        SN016           BEDDAY STATE HOME 016
+        SN017           BEDDAY STATE HOME 017
+        SN018           BEDDAY STATE HOME 018
+        SN019           BEDDAY STATE HOME 019
+        SN020           BEDDAY STATE HOME 020
+        SN021           BEDDAY STATE HOME 021
+        SN022           BEDDAY STATE HOME 022
+        SN023           BEDDAY STATE HOME 023
+        SN024           BEDDAY STATE HOME 024
+        SN025           BEDDAY STATE HOME 025
+        SN026           BEDDAY STATE HOME 026
+        SN027           BEDDAY STATE HOME 027
+        SN028           BEDDAY STATE HOME 028
+        SN029           BEDDAY STATE HOME 029
+        SN030           BEDDAY STATE HOME 030
+        SN031           BEDDAY STATE HOME 031
+        SN032           BEDDAY STATE HOME 032
+        SN033           BEDDAY STATE HOME 033
+        SN034           BEDDAY STATE HOME 034
+        SN035           BEDDAY STATE HOME 035
+        SN036           BEDDAY STATE HOME 036
+        SN037           BEDDAY STATE HOME 037
+        SN038           BEDDAY STATE HOME 038
+        SN039           BEDDAY STATE HOME 039
+        SN040           BEDDAY STATE HOME 040
+        SN041           BEDDAY STATE HOME 041
+        SN042           BEDDAY STATE HOME 042
+        SN043           BEDDAY STATE HOME 043
+        SN044           BEDDAY STATE HOME 044
+        SN045           BEDDAY STATE HOME 045
+        SN046           BEDDAY STATE HOME 046
+        SN047           BEDDAY STATE HOME 047
+        SN048           BEDDAY STATE HOME 048
+        SN049           BEDDAY STATE HOME 049
+        SN050           BEDDAY STATE HOME 050
+        SN051           BEDDAY STATE HOME 051
+        SN052           BEDDAY STATE HOME 052
+        SN053           BEDDAY STATE HOME 053
+        SN054           BEDDAY STATE HOME 054
+        SN055           BEDDAY STATE HOME 055
+        SN056           BEDDAY STATE HOME 056
+        SN057           BEDDAY STATE HOME 057
+        SN058           BEDDAY STATE HOME 058
+        SN059           BEDDAY STATE HOME 059
+        SN060           BEDDAY STATE HOME 060
+        SN061           BEDDAY STATE HOME 061
+        SN062           BEDDAY STATE HOME 062
+        SN063           BEDDAY STATE HOME 063
+        SN064           BEDDAY STATE HOME 064
+        SN065           BEDDAY STATE HOME 065
+        SN066           BEDDAY STATE HOME 066
+        SN067           BEDDAY STATE HOME 067
+        SN068           BEDDAY STATE HOME 068
+        SN069           BEDDAY STATE HOME 069
+        SN070           BEDDAY STATE HOME 070
+        SN071           BEDDAY STATE HOME 071
+        SN072           BEDDAY STATE HOME 072
+        SN073           BEDDAY STATE HOME 073
+        SN074           BEDDAY STATE HOME 074
+        SN075           BEDDAY STATE HOME 075
+        SN076           BEDDAY STATE HOME 076
+        SN077           BEDDAY STATE HOME 077
+        SN078           BEDDAY STATE HOME 078
+        SN079           BEDDAY STATE HOME 079
+        SN080           BEDDAY STATE HOME 080
+        SN081           BEDDAY STATE HOME 081
+        SN082           BEDDAY STATE HOME 082
+        SN083           BEDDAY STATE HOME 083
+        SN084           BEDDAY STATE HOME 084
+        SN085           BEDDAY STATE HOME 085
+        SN086           BEDDAY STATE HOME 086
+        SN087           BEDDAY STATE HOME 087
+        SN088           BEDDAY STATE HOME 088
+        SN089           BEDDAY STATE HOME 089
+        SN090           BEDDAY STATE HOME 090
+        SN091           BEDDAY STATE HOME 091
+        SN092           BEDDAY STATE HOME 092
+        SN093           BEDDAY STATE HOME 093
+        SN094           BEDDAY STATE HOME 094
+        SN095           BEDDAY STATE HOME 095
+        SN096           BEDDAY STATE HOME 096
+        SN097           BEDDAY STATE HOME 097
+        SN098           BEDDAY STATE HOME 098
+        SN099           BEDDAY STATE HOME 099
+        SN100           BEDDAY STATE HOME 100
+  
+  
+     The entries that will be added in the NATIONAL PROCEDURE (#725) file are:
+  
+         Natl #         Description                     CPT CODE
+        ------          ---------------------           ----------  
+        BR059           CAT F/U PROSTH DEV              97762
+        BR060           LS AT ASSESS                    97755
+        BR061           LS F/U PROSTH DEV               97762
+        BR062           MS AT ASSESS                    97755
+        BR063           MS F/U PROSTH DEV               97762
+        BR064           OM AT ASSESS                    97755
+        BR065           OMF/U PROSTH DEV                97762
+        BR066           LV AT ASSESS                    97755
+        BR067           LV F/U PROSTH DEV               97762
+        CI001           YOGA / GRP 30M                                  
+        CI002           YOGA / IND 30M                                  
+        CI003           YOGA / GRP REMOT 30M                    
+        CI004           YOGA / IND REMOT 30M                    
+        CI005           TAI CHI / GRP 30M                               
+        CI006           TAI CHI / IND 30M                               
+        CI007           QI GONG / GRP 30M                               
+        CI008           QI GONG / IND 30M                               
+        CI009           REIKI / GRP 30M                                 
+        CI010           REIKI / IND 15M                                 
+        CI011           HEAL TCH / GRP 30M                              
+        CI013           HEAL TCH / IND 15M                              
+        CI014           WHL HLTH CO IP / GRP 30M                
+        CI015           WHL HLTH CO IP / IND 30M                        
+        CI016           WHL HLTH CO TEL / IND 15M                               
+        CI017           WHL HLTH PR FAC / GRP 30M                               
+        CI018           WHL HLTH PR FAC / IND 30M                               
+        CI019           OTR RXN TQ / GRP 30M                                    
+        CI020           OTR RXN TQ / IND 30M                                    
+        CI021           BIOFDBK / GRP 30M                                       
+        CI022           BIOFDBK / IND 30M                                       
+        CI023           MDFLNS / GRP 30M                                        
+        CI024           MDFLNS / IND 30M                                        
+        CI025           MDTN / GRP 30M                                  
+        CI026           MDTN / IND 30M                                  
+        CI027           WELL BNG MSG / IND 30M                                  
+        CI028           WHL HLTH ED / GRP 30M                                   
+        CI029           WHL HLTH ED / IND 30M                                   
+        CI030           OTHR MVMT TRPY/GRP 30M                                  
+        CI031           OTHR MVMT TRPY/IND 30M                                  
+        CI032           BIOFLD OTHR / GRP 30M                                   
+        CI033           BIOFLD OTHR / IND 30M                                   
+        CI034           CRT WHC IP / GRP 30M                                    
+        CI035           CRT WHC IP / IND 30M                                    
+        CI036           CRT WHC TEL / IND 15M                                   
+        CI037           ACUPT / GRP 30M                                 
+        CI038           ACUPT / IND 30M                                 
+        CI039           BFA / GRP 30                                    
+        CI040           BFA / IND 30                                    
+        CI041           EDMR / IND 30M                                  
+        CI042           EDMR / GRP 30M                                  
+        CI043           EXP ART THRPY / GRP 30M                                 
+        CI044           EXP ART THRPY / IND 30M                                 
+        CI045           NAT AM HLG / GRP 30M                                    
+        CI046           NAT AM HLG / IND 30M                                    
+        CI047           IH CONSULT / GRP 30M                                    
+        CI048           IH CONSULT / IND 30M                                    
+        CI049           TRMT MSG / IND <30M                                     
+        CI050           AML AST THRPY / GRP 30M                                 
+        CI051           AML AST THRPY / IND 30M                                 
+        CI052           EQN THRPY / GRP 30M                                     
+        CI053           EQN THRPY / IND 30M                                     
+        CI054           CLIN HYP / GRP 30M                                      
+        CI055           CLIN HYP / IND 30M                                      
+        CI056           MDFLNS / GRP 120M                                       
+        SP571           WAX REMOV UNI INSTR             69209
+       
+          
+     The entries whose CPT Codes will be changed in the NATIONAL PROCEDURE 
+     (#725) file are:
+  
+         Natl #         Description                     CPT CODE
+        ------          ---------------------           ----------  
+        SP086           ACOUST REFLEX DECAY TEST        92570
+        SP256           PI/PB FUNCTION                  92522 
+        SP064           CAL W/REC,BIL;BITHER            92537
+        SP231           CAL W/REC,BIL;MONOTH            92538
+  
+             
+     The entries whose procedure names will be changed the NATIONAL PROCEDURE 
+     (#725) file are:
+    
+         Natl #         Description                
+        ------          ---------------------            
+        NU194           MOVE QUESTION W/PT 1ST15M
+        RC092           CASE MGMT IND
+        RC093           CASE MGMT GRP 2-4
+        RC094           CASE MGMT GRP 5-8
+        SD010           BASIC RATE, STATE DOM
+        SD011           SVC-CONNECT(SC) STATE DOM
+        SH010           BASIC RATE, STATE ADHC
+        SH011           SVC-CONNECT(SC) ST ADHC
+        SN010           BASIC RATE, STATE HOME
+        SN011           SVC-CONNECT(SC) STATE HME 
+        SP147           E&M, OUTPATIENT EST
+        SP196           TELEPHONE SERVICE, 5-10 MIN
+        SP197           TELEPHONE SERVICE,11-20 MIN
+        SP198           TELEPHONE SERVICE, 21-30 MIN
+        SP206           DISABILITY EXAMINATION
+        SP364           FITTING/ORIENTATION/CHECKING OF HEARING AID
+        SP365           REPAIR/MODIFICATION OF HEARING AID
+        SP366           CONFORMITY EVAL, REAL-EAR MEASUREMENT
+        SP367           HEARING AID, MON, BODY WORN, AIR CONDUCTION
+        SP368           HEARING AID, MON, BODY WORN, BONE CONDUCTION
+        SP369           HEARING AID, MONAURAL, ITE
+        SP370           HEARING AID, MONAURAL, BTE
+        SP371           HEARING AID, EYEGLASS, AIR CONDUCTION
+        SP372           HEARING AID, EYEGLASS, BONE CONUDCTION
+        SP373           DISPENSING FEE, UNSPECIFIED HEARING AID
+        SP374           HEARING AID, BILATERAL, BODY WORN
+        SP375           DISPENSING FEE, BILATERAL HEARING AID
+        SP376           HEARING AID, BINAURAL, BODY HEARING AID
+        SP377           HEARING AID, BINAURAL, ITE
+        SP378           HEARING AID, BINAURAL, BTE
+        SP379           HEARING AID, BINAURAL, EYEGLASS
+        SP380           DISPENSING FEE, BINAURAL HEARING AID
+        SP381           HEARING AID, CROS, ITE
+        SP382           HEARING AID, CROS, BTE
+        SP383           HEARING AID, CROS, GLASSES
+        SP384           DISPENSING FEE, CROS
+        SP385           HEARING AID, BICROS, ITE
+        SP386           HEARING AID, BICROS, BTE
+        SP387           HEARING AID, BICROS, GLASSES
+        SP388           DISPENSING FEE, BICROS
+        SP389           HEARING AID, MISCELLANEOUS SERVICE
+        SP391           OUTCOME VERIFICATION, QUESTIONNAIRE
+        SP392           ADJUST, DIGITAL PROGRAM, OR RE-PROGRAM
+        SP422           COCHLEAR IMPLANT DEVICE/SYSTEM
+        SP423           COCHLEAR IMPLANT EXT SPEECH PROCESSOR, REPL
+        SP428           ARTIFICIAL LARYNX, ANY TYPE
+        SP429           TRACHEOSTOMY SPEAKING VALVE
+        SP430           CI TRANSMIT CABLE RPL
+        SP431           TRACHEOSTOMA FILTER
+        SP434           TRACH INNER CANNULA
+        SP435           TRACHEOSTOMY CARE KIT FOR NEW TRACHEOSTOMY
+        SP436           TRACHEOSTOMY CARE KIT FOR EST TRACHEOSTOMY
+        SP452           REPAIR/MODIFICATION OF PROSTHETIC DEVICE
+        SP473           COMMUNICATION BOARD
+        SP503           ALCOHOL WIPES
+        SP504           SKIN PROTECTIVE BARRIER
+        SP505           ADHESIVE REMOVER WIPES
+        SP506           SKIN BARRIER WIPE/SWAB
+        SP507           TRACH VALVE W DIAPHRAGM
+        SP508           DIAPHRAGM VALVE REPL
+        SP509           HMES FILTER HOLDER OR CAP
+        SP510           HMES FILTER
+        SP511           HMES VALVE HOUSING
+        SP512           HMES ADHESIVE DISC
+        SP513           HMES HOLDER WITH FILTER
+        SP514           HMES HOUSING WITH ADHESIVE
+        SP515           HMES SYSTEM
+        SP516           LARYNGECTOMY TUBE NON-CUFF
+        SP517           LARYNGECTOMY TUBE CUFFED
+        SP518           TRACH SHOWER PROTECT
+        SP519           TRACH STENT/STUD/BUTTON
+        SP520           TRACH TUBE PLUG/STOP
+        SP521           ALERTING DEVICE, NOC
+        SP522           UNLISTED MISC PROSTH SERVICE
+        SP523           TRACH INSERT, INDWELL REPL
+        SP524           GEL CAP TRACH VOICE PROSTH
+        SP525           TRACH PROSTH CLEANING DEV
+        SP526           REPL TEPDIALATOR
+        SP527           GEL CAP APPLICATION
+        SP528           COCHLEAR IMPLANT HEADSET
+        SP529           COCHLEAR MICROPHONE REPL
+        SP530           COCHLEAR IMPLANT COIL REPL
+        SP531           LITHIUM ION BAT,CIDEVBDY
+        SP532           CI BATTERY ZINC AIR
+        SP533           CI BATTERY ALKALINE
+        SP534           COMP GERIATRIC ASSESSMENT
+        SP535           COUNSELING ADV DIRECTIVES
+        SP536           DISEASE MGMT PROG INITIAL
+        SP537           DISEASE MGMT FOLLOWUP
+        SP538           DISEASE MGMT PER DIEM
+        SP539           AUDIOMETRY FOR HEARING AID
+        SP544           PROSTHETIC IMPLANT, NOS
+        SP549           LITHIUM BAT,CIDEV,EARLVL
+        SP550           SEMI-IMPLNT MIDEAR HRDV
+        SP553           ONLINE SERVICE
+        SP001           WAX REMOV UNI INSTR               
+        SP064           CAL W/REC,BIL;BITHER
+        SP231           CAL W/REC,BIL;MONOTH
+  
+  
+    ===========================================================================
+     Note: The new EC NATIONAL PROCEDURE Numbers could exist in some site's
+     environment. If the EC NATIONAL PROCEDURE Numbers exist, then the system
+     will add the new numbers and it will keep what the sites have on file. In
+     addition, a message similar to the one below will be printed during
+     installation: 
+     
+     ***EXAMPLE***
+     "Entry #3457 for 99999 SAMPLE [CPT: 99999] (XXXXX)  ...
+     successfully added. Your site has a local procedure (entry #90999) in
+     File #725 which uses XXXXX as its National Number. Please inactivate
+     this local procedure."
+     
+  Please review the installed message.
+  ==========================================================================
+    
+    
+  Installation Instructions:
+  ==========================
+    
+      ***************************NOTE****************************  
+      * It is not necessary to disable any options. You may    *
+      * install these routines at any time without interruption *
+      * to users.                                               *
+      ***********************************************************
+    
+     Installation will take less than 2 minutes.
+    
+     Suggested time to install: Non-peak requirement hours.
+     
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options: 
+         (when prompted for INSTALL NAME, enter EC*2.0*132)
+     
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this patch
+               is installed.  It compares all components of this patch
+               (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package EC*2.0*132.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+         Protocols? NO//", respond NO.
+  
+      7. Review the installation message for errors.
+   
+      8. You may delete the routines EC2P132A, EC2P132B, and EC2P132C from your
+         production system after the patch has been successfully tested.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EC2P132A
+    Before:       n/a   After:  B2320959  **132**
+Routine Name: EC2P132B
+    Before:       n/a   After: B78983636  **132**
+Routine Name: EC2P132C
+    Before:       n/a   After: B40957634  **132**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 01, 2016
+Completed By:                               Date Completed: JUL 22, 2016
+Released By :                               Date Released : SEP 19, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

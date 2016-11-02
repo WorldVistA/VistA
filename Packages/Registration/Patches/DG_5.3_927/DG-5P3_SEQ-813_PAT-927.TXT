@@ -1,0 +1,159 @@
+$TXT Created by                 K at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 05/11/16 at 13:15
+=============================================================================
+Run Date: SEP 15, 2016                     Designation: DG*5.3*927
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #813                    Status: Released
+                  Compliance Date: SEP 30, 2016
+=============================================================================
+
+
+Subject: TREATING SPECIALTY UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will inactivate 11 Treating Specialty (TS) Codes with an 
+ inactivation date of 10/01/2016.
+  
+ *************************************************************************
+ NOTE: This patch has a shortened compliance date because it must be 
+ installed by 09/30/2016. The 11 TS Codes will be inactivated on 
+ 10/01/2016.
+ ************************************************************************* 
+  
+  
+ ASSOCIATED NSR: 
+ ===============
+ N/A
+                         
+   
+ ASSOCIATED CA TICKET: 
+ =====================
+ 1. I8567851FY16-Update of Treating Specialties Requested 
+  
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+ Captain James A. Lovell FHCC (North Chicago)
+ VA Maryland HCS 
+ Tuscaloosa VAMC
+ Edith Nourse Rogers Memorial Veterans Hospital (Bedford)
+   
+  
+ CA TICKET OVERVIEW:
+ ===================
+ 1. I8567851FY16-Update of Treating Specialties Requested
+  
+  Problem:
+  --------
+  The Business Owner is requesting 11 TS Codes be inactivated, with an
+  an inactivation date of 10/01/2016.
+   
+  Resolution:
+  -----------
+  The following treating specialty codes within the SPECIALTY (#42.4) 
+  file and the FACILITY TREATING SPECIALTY (#45.7) file will become
+  inactive as of 10/01/2016.
+  
+    Treating             Treating                     INACTIVE DATE
+    Specialty            Specialty   
+    Code                 Name 
+    -----------------------------------------------------------------
+    1A                   SHORT STAY GRECC-NHCU           10/01/16
+    1B                   LONG STAY GRECC-NHCU            10/01/16
+    1C                   SHORT STAY GRECC-GEM-NHCU       10/01/16
+    1D                   GRECC-GEM-REHAB                 10/01/16
+    1E                   GRECC-MED                       10/01/16
+    23                   SPINAL CORD INJURY OBSERVATION  10/01/16
+    31                   GEM ACUTE MEDICINE              10/01/16
+    33                   GEM PSYCHIATRIC BEDS            10/01/16
+    35                   GEM REHABILITATION MEDICINE     10/01/16
+    57                   PROCTOLOGY                      10/01/16
+    87                   GEM DOMICILIARY                 10/01/16
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ --------------------------
+  
+ *************************************************************************
+ NOTE: Please remember to move the patients that are assigned to these 
+   Treating specialties to the appropriate Treating specialty before
+   installation of this patch. 
+  
+   Please review the installed messages to verify that all Treating 
+   Specialty Codes updated correctly.
+  
+   ***EXAMPLE***
+   >>>Inactive date added to TS code 23 in the Specialty file.<<<
+  
+      FACILITY TREATING SPECIALTY FILE being checked to see if any entries 
+      are pointing to 23.  If so, they will be inactivated.>>>
+ **************************************************************************
+  
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes.
+ Suggested time to install: non-peak requirement hours.
+   
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter DG*5.3*927).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch 
+            is installed.
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package 
+         DG*5.3*927.
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+         respond No.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//" respond No.
+  
+      7. Post-Install routine DG53P927 will be deleted automatically by
+         the build.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53927A
+    Before:       n/a   After:  B4871683  **927**
+Routine Name: DG53927B
+    Before:       n/a   After:  B5262868  **927**
+Routine Name: DG53P927
+    Before:       n/a   After:    B37426  **927**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 04, 2016
+Completed By:                               Date Completed: SEP 13, 2016
+Released By :                               Date Released : SEP 15, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

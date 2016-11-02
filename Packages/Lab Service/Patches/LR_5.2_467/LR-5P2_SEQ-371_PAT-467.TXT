@@ -1,0 +1,185 @@
+$TXT Created by                 at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Friday, 04/22/16 at 10:39
+=============================================================================
+Run Date: SEP 01, 2016                     Designation: LR*5.2*467
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #371                    Status: Released
+                  Compliance Date: OCT 02, 2016
+=============================================================================
+
+Associated patches: (v)LR*5.2*457  <<= must be installed BEFORE `LR*5.2*467'
+
+Subject: DRAW TIME OF 0, PROCESSED TESTS SHOW AS ACTIVE, EXCLUDED LOCATIONS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following items:
+  
+ 1. INC000001085378 - Draw time: 0
+ 2. INC000001056020 - Processed tests showing as "active"
+ 3. I7997705FY16    - Tests accessioned from excluded locations
+  
+ Associated NSR:
+ ===============
+ N/A
+  
+ Associated Tickets:
+ ===================
+ 1. INC000001085378 - Draw time: 0
+    I10029683FY16 (d)
+  
+ 2. INC000001056020 - Processed tests showing as "active"
+    I10033444FY16 (d)
+  
+ 3. I7997705FY16    - Tests accessioned from excluded locations
+  
+ Participating Test Sites:
+ =========================
+ Fayetteville VAMC (NC)
+ Minneapolis VAMC
+ VA Pittsburgh HCS
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*467 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by ProPath
+ standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*467 does not 
+ alter or modify any software design safeguards or safety critical elements
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*467 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of
+ installation of this patch.
+  
+ Remedy Ticket Overview:
+ =======================
+ 1. INC000001085378 - Draw time: 0
+  
+    Problem:
+    --------
+    When a patient has a lab order within the Howdy lookup date range that
+    includes a test that is defined in the HOWDY SITE FILE (#69.86) as an
+    order label test, and also has an order for a different date in the
+    date range that doesn't have an order label test included in the order,
+    the "Scan patient card" option [LRHY PATIENT CARD SCAN] will result in
+    the order which has the order label test being given incorrect
+    draw/collection data in the LAB ORDER ENTRY FILE (#69).
+  
+  
+    Solution:
+    ---------
+    Modify routines LRHYB and LRHYPH0 to handle the draw/collection times
+    for order label tests properly. 
+  
+    Routines: LRHYB, LRHYPH0
+  
+ 2. INC000001056020 - Processed tests showing as "active"
+  
+    Problem:
+    --------
+    When a lab order has tests with multiple collection samples and one of
+    the collection samples is accessioned outside of Howdy and then
+    resulted, the use of Howdy to accession the remaining collection
+    samples results in the changing of the collection data and status of
+    the collection sample that was accessioned outside of Howdy.
+     
+    Solution:
+    ---------
+    Modify routine LRHYPH0 to not try to accession collection samples that
+    are already marked as "Collected".    
+     
+    Routine: LRHYPH0  
+  
+ 3. I7997705FY16 - Tests accessioned from excluded locations
+  
+    Problem:
+    --------
+    When a lab test is ordered in CPRS for a future date within the Howdy
+    lookup range from a non-excluded location, and another test is ordered
+    for the same date from an excluded location, both tests are
+    accessioned.
+  
+    Solution:
+    ---------
+    Modify routine LRHYA to not accession either test in this situation,
+    but to display the message "Check with clerk at the desk".
+  
+    Routine: LRHYA
+  
+    ==================== INSTALLATION INSTRUCTIONS ====================
+   The install time for this patch is less than 2 minutes. This patch can
+   be installed when Laboratory users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system to avoid
+       problems loading and/or installing this patch.
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu.  This
+       option will load the KIDS patch onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system.  You now need to use KIDS to install the transport global.
+  
+   3.  On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+   4.  Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+  
+   5.  On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+       Print Transport Global
+       Compare Transport Global to Current System
+       Backup a Transport Global
+  
+      If you wish to preserve a copy of the routines exported in this patch
+      prior to installation, you should use the 'Backup a Transport Global'
+      option at this time. You may also compare the routines in your
+      production account to the routines in the patch by using the 'Compare
+      a Transport Global to Current System' option.
+  
+   6.  Use the 'Install Package(s)' option under the 'Installation' menu
+       and select the package 'LR*5.2*467.
+  
+      If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+      choose 'NO'.
+  
+      If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRHYA
+    Before: B39254631   After: B39499345  **405,446,457,467**
+Routine Name: LRHYB
+    Before: B43402214   After: B41352929  **405,417,446,457,467**
+Routine Name: LRHYPH0
+    Before: B40393749   After: B41189566  **405,457,467**
+ 
+Routine list of preceding patches: 457
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 02, 2015
+Completed By:                               Date Completed: AUG 23, 2016
+Released By :                               Date Released : SEP 01, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

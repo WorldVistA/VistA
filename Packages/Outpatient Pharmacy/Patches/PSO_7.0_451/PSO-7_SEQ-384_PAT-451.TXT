@@ -1,0 +1,599 @@
+$TXT Created by               at CINP.FO-BIRM.DOMAIN.EXT  (KIDS) on Friday, 06/03/16 at 09:08
+=============================================================================
+Run Date: AUG 11, 2016                     Designation: PSO*7*451
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #384                      Status: Released
+                  Compliance Date: SEP 12, 2016
+=============================================================================
+
+Associated patches: (v)PSO*7*437   <<= must be installed BEFORE `PSO*7*451'
+
+Subject: STATE PRESCRIPTION MONITORING PROGRAM (SPMP) ENHANCEMENT
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The State Prescription Monitoring Program (SPMP) Enhancement project was
+ established to further enhance the VistA SPMP functionality released by patch
+ PSO*7*408 in September 2014. The SPMP VistA functionality is used to identify
+ prescriptions for controlled substance drugs, Schedule 2 through 5, dispensed
+ to veterans by the Veterans Health Administration (VHA) Outpatient Pharmacy
+ facilities and to create and transmit an export file containing this
+ information to the Prescription Drug Monitoring Program (PDMP) of each state
+ on a daily basis.
+  
+ During the implementation of PSO*7*408, it was discovered that some states
+ had unique requirements that could not be addressed by current functionality.
+ As a result transmissions to those states were rejected. Patch PSO*7*451 will
+ enhance the SPMP functionality to allow VHA to fulfill specific state
+ requirements and successfully transmit data to those states PDMPs. This patch
+ also enhances the management of Secure SHell (SSH) Keys by streamlining the
+ creation of SSH Keys and restricting user access to the Private SSH Key
+ content. In addition, a few miscellaneous issues have also been addressed,
+ which are described below.
+  
+ All the changes introduced by this patch were related to the options under
+ the State Prescription Monitoring Program (SPMP) Menu [PSO SPMP MENU] which
+ is located under the Supervisor Functions [PSO SUPERVISOR] menu option. 
+  
+ The following functionality enhancements will be delivered by this patch:
+  
+ 1. View/Edit ASAP Definitions [PSO SPMP ASAP DEFINITIONS] option
+    -------------------------------------------------------------
+    Some extensive enhancements have been made to this option to allow full 
+    user customization of the American Society for Automation in Pharmacy
+    (ASAP) data definition format (protocol) used to report outpatient
+    controlled substance prescription data to the states.
+  
+    a) The term '/Edit' has been added to the external name of this option
+       and the term 'VIEW' was removed from the internal option name.
+   
+    b) This option has been modified to include full customization capability 
+       for the ASAP definitions 3.0 and later versions, which will allow sites 
+       to fulfill states PDMPs' specific requirements. Moreover, sites will
+       be able to create new ASAP versions by copying an existing one, which
+       will hopefully allow them to continue transmissions well into the
+       future as new ASAP versions are released and adopted by the state's
+       PDMPs.
+       
+       Below is a list of actions that have been added to this option:
+        
+       CV  Copy ASAP Version  CE  Customize Element     ED  Edit Delimiters
+       CS  Customize Segment  DC  Delete Customization  
+   
+       For more information on these new actions see the Outpatient Pharmacy
+       Manager's User Manual in the State Prescription Monitoring Program
+       (SPMP) section.
+  
+    c) Customized Data Elements and Segments will be identified by an '*' 
+       (asterisk) displayed to the right of the Data Element or Segment ID.
+  
+ 2. View/Edit SPMP State Parameters [PSO SPMP STATE PARAMETERS] option
+    ------------------------------------------------------------------
+    A few modifications have been made to this option to support the new 
+    functionality released by this patch.
+  
+    a) The parameter WINDOWS/NT LOCAL DIRECTORY was removed from this option
+       because this module no longer supports this operating system  due to
+       the increase in the complexity for handling SSH Keys and the fact that 
+       VHA does not use WINDOWS/NT operating system for VistA database at any
+       of its sites.
+  
+    b) The parameter REPORTING FREQUENCY IN DAYS was modified to allow a
+       maximum value of 30 days. Before this field allowed a maximum value of
+       99 days.
+         
+    c) A new parameter called RENAME FILE AFTER UPLOAD was added right after
+       the 'FILE EXTENSION' parameter. The current transmission creates and
+       sends the data file with the ".UP" file extension (for "upload"); once
+       the file is transmitted a command within sFTP (Secure File Transfer 
+       Protocol) is issued to rename the file to ".DAT" (or ".TXT") file
+       extension. This new parameter will allow the site to control whether
+       they want to keep the existing functionality by setting this parameter
+       to 'YES' or if they would like to create and transmit the file without
+       renaming it by setting this parameter to 'NO'. The parameter will be
+       initially exported with a default value of 'YES', which is consistent
+       with the existing released functionality.
+  
+    d) The parameters STATE SFTP SERVER IP ADDRESS and STATE SFTP SERVER
+       USERNAME had their maximum value lengths increased from 30 to 60 and
+       50 characters respectively to accommodate longer PDMP's DNS (Domain
+       Name System) names and the usernames they assign to VHA sites.
+  
+    e) For security reasons the parameters SFTP PRIVATE KEY TEXT and SFTP
+       PUBLIC KEY TEXT have been removed from this option as the SSH
+       encryption keys content will be handled by a new option called Manage
+       Secure SHell (SSH) Keys [PSO SPMP SSH KEY MANAGEMENT], which is
+       described below.
+   
+ 3. Manage Secure SHell (SSH) Keys [PSO SPMP SSH KEY MANAGEMENT] option 
+    -------------------------------------------------------------------
+    This new option was created to automate the management of SSH encryption
+    keys and to improve the security regarding their content. This new option
+    will allow sites to view the public SSH key, create a new SSH key pair and
+    also to delete an existing SSH key pair. In addition, this new option will
+    provide an extensive help text on how the SSH keys are used in the 
+    transmission process, which is shown below:
+    
+      Select one of the following:
+  
+           V         View Public SSH Key
+           N         Create New SSH Key Pair
+           D         Delete SSH Key Pair
+           H         Help with SSH Keys
+  
+      Action: V// H  Help with SSH Keys
+   
+    Secure SHell (SSH) Encryption Keys are used to automate the data 
+    transmission to the State Prescription Monitoring Programs (SPMPs). Follow
+    the steps below to successfully setup SPMP transmissions from VistA to the
+    state/vendor server:
+  
+    Step 1: Select the 'N' (Create New SSH Key Pair) Action and follow the
+            prompts to create a new pair of SSH keys. If you already have an
+            existing SSH Key Pair you can skip this step. You can check
+            whether you already have an existing SSH Key Pair through the 'V'
+            (View Public SSH Key) Action.
+  
+         Encryption Type: DSA or RSA?
+         ----------------------------
+         Digital Signature Algorithm (DSA) and Rivest, Shamir & Adleman (RSA)
+         are two of the most common encryption algorithms used by the IT
+         industry for securely sharing data. The majority of SPMP servers can
+         handle either type; however there are vendors that accept only one
+         specific type. You will need to contact the SPMP vendor support to
+         determine which type to select.
+  
+    Step 2: Share the Public SSH Key content with the state/vendor. In order
+            to successfully establish SPMP transmissions the state/vendor will
+            have to install/configure the new SSH Key created in step 1 for
+            the user id they assigned to your site. Use the 'V' (View Public
+            SSH Key) Action to retrieve the content of the Public SSH key. The
+            Public SSH Key should not contain line-feed characters, therefore
+            after you copy & paste it from the terminal emulator into an email
+            or text editor make sure it contains only one line of text (no 
+            wrapping).
+   
+ 4. View/Export Single Prescription [PSO SPMP SINGLE RX VIEW/EXPORT] option
+    -----------------------------------------------------------------------
+    This option was modified to highlight custom Data Elements and Segments by
+    changing the font appearance according to the terminal emulator settings
+    for highlighted text as well as by adding an '*' (asterisk) to the right of
+    the Data Element or Segment ID.
+  
+ 5. View/Export Batch [PSO SPMP BATCH VIEW/EXPORT] and Export Batch Processing
+    [PSO SPMP BATCH PROCESSING] options
+    --------------------------------------------------------------------------
+    When exporting a batch through one of these two options the users will now
+    have three different choices to execute the transmission: 'B' for 
+    Background (via TaskMan), which queues the transmission to be performed in
+    the background through TaskMan; 'F' for Foreground, which executes the
+    transmission in the foreground as it did before this patch and 'D' for
+    Debug Mode (Foreground), which will execute the transmission in the
+    foreground however it will display the sFTP debug steps, which can be very
+    helpful for troubleshooting transmission problems. 
+    Before this patch the transmission was always executed in the foreground
+    which made it difficult to troubleshoot issues with the transmissions, 
+    especially the scheduled transmissions, which are always executed in the
+    background. Below is a screen capture of the prompt for choosing the
+    transmission execution mode:
+   
+    Select Item(s): Quit// EXP   Export Batch  
+   
+    Indicate whether the transmission should be queued to run on the
+    Background via TaskMan, on the Foreground (Terminal Screen) or in Debug
+    Mode (Foreground)
+  
+       Select one of the following:
+  
+           B         Background
+           F         Foreground
+           D         Debug Mode (Foreground)
+  
+    Running Mode: F// 
+  
+ 6. PSO SPMP NOTIFICATIONS Mail Group
+    ---------------------------------
+    The existing mail group PSO SPMP NOTIFICATIONS released by PSO*7*408 will
+    be modified from type PRIVATE to PUBLIC.
+  
+ 7. SPMP Transmission Failed MailMan Message
+    ----------------------------------------
+    The Mailman message generated by the SPMP Scheduled Background Job as well
+    as by the (B)ackground option mentioned above for exporting a batch to the
+    state was modified to include Operating System sFTP Log Information, as in
+    this example from an OpenVMS environment:
+  
+    Subj: NEW YORK Prescription Monitoring Program Transmission Failed [#99999]
+    02/29/16@12:44  26 lines
+    From: SPMP TRANSMISSION  In 'IN' basket.   Page 1
+    --------------------------------------------------------------------------
+    There was a problem with the transmission of information about Controlled
+    Substance prescriptions to the NEW YORK State Prescription Monitoring
+    Program (SPMP).
+  
+    Batch #: 41
+    Period : 02/29/16 thru 02/29/16
+    Error  : Secure FTP Transmission failed.
+  
+    Please, use the option Export Batch Processing [PSO SPMP BATCH PROCESSING]
+    to manually transmit this batch to the state.
+    
+    sFTP Log:
+    ========
+    $ SET VERIFY=(PROCEDURE,IMAGE)
+    $ SET DEFAULT USER$:[SPMP]
+    $ sftp -"D3" -oIdentityFile="/USER$/SPMP/VMSSSHID." -"B" SPMP_FTP_201606021
+    6.INP -oUser=VATEST 54.175.203.159
+    debug( 2-JUN-2016 17:37:28.02): Ssh2/SSH2.C:1896: CRTL version (SYS$SHARE:D
+    SHR.EXE ident) is V8.3-01
+    debug( 2-JUN-2016 17:37:28.04): SshAppCommon/SSHAPPCOMMON.C:313: Allocating
+    bal SshRegex context.
+    debug( 2-JUN-2016 17:37:28.05): SshConfig/SSHCONFIG.C:3482: Metaconfig pars
+    stopped at line 4.
+    debug( 2-JUN-2016 17:37:28.05): SshConfig/SSHCONFIG.C:890: Setting variable
+    rboseMode' to 'FALSE'.
+    debug( 2-JUN-2016 17:37:28.06): SshConfig/SSHCONFIG.C:3390: Unable to open 
+    /ssh2_config
+    debug( 2-JUN-2016 17:37:28.07): Connecting to 54.175.203.159, port 22... 
+     not used)
+    debug( 2-JUN-2016 17:37:28.07): Ssh2/SSH2.C:2881: Entering event loop.
+    debug( 2-JUN-2016 17:37:28.12): Ssh2Client/SSHCLIENT.C:1655: Creating tra
+     protocol
+    debug( 2-JUN-2016 17:37:28.12): SshAuthMethodClient/SSHAUTHMETHODC.C:104:
+    "publickey" to usable methods. 
+    %TCPIP-E-SSH_FC_ERR_DEST, destination is not directory or does not exist
+   
+    ...
+  
+    debug( 2-JUN-2016 17:37:35.66): Ssh2/SSH2.C:327: locally_generated = TRUE
+    Disconnected; no more authentication methods available (No further authent
+    on methods available.).
+    debug( 2-JUN-2016 17:37:35.66): Ssh2Client/SSHCLIENT.C:1731: Destroying 
+    debug( 2-JUN-2016 17:37:35.66): SshConfig/SSHCONFIG.C:2888: Freeing pki. 
+    pki != NULL, user_pki = NULL)
+    debug( 2-JUN-2016 17:37:35.66): SshConnection/SSHCONN.C:2636: Destroying
+    debug( 2-JUN-2016 17:37:35.66): Ssh2Client/SSHCLIENT.C:1799: Destroying 
+    completed.
+    debug( 2-JUN-2016 17:37:35.66): SshAuthMethodClient/SSHAUTHMETHODC.C:109: 
+    oying authentication method array.
+    %TCPIP-F-SSH_FATAL, non-specific fatal error condition 
+  
+ 8. PSO SPMP ADMIN Security Key
+    ---------------------------
+    A new security key was created to restrict access to the following SPMP
+    functionalities:
+  
+       - ASAP Definition Customization updates through the option View/Edit
+         ASAP Definitions [PSO SPMP ASAP DEFINITIONS]. Visualization of the
+         current ASAP Definition is not restricted.
+  
+       - SPMP Parameters value updates through the option View/Edit SPMP State
+         Parameters [PSO SPMP STATE PARAMETERS]. Visualization of the current
+         SPMP parameters is not restricted.
+   
+       - SSH Key generation or replacement through the option Manage Secure
+         SHell (SSH) Keys [PSO SPMP SSH KEY MANAGEMENT]. Visualization of the
+         current public key is not restricted.
+  
+ 9. Misleading "File Successfully Transmitted" message for Linux OS
+    ---------------------------------------------------------------
+    The previous algorithm used to identify whether the SPMP sFTP data
+    transmission was successful was not 100% accurate for Linux Operating
+    Systems. A new algorithm has been created and it should reflect the
+    transmission status with much greater accuracy when transmitting data
+    from a Linux based environment.
+  
+ 10.SPMP Files Access Restrictions
+    ------------------------------
+    The FILE ACCESS setting for the SPMP files below will be opened up so
+    users can use FileMan to view and search their content. The files were
+    unintentionally released in PSO*7*408 as restricted.
+  
+     - SPMP ASAP RECORD DEFINITION (#58.4)
+     - SPMP EXPORT BATCH (#58.42)
+  
+ 11. Pharmacy DEA Number (ASAP Data Element PHA03)
+     ---------------------------------------------
+     The Pharmacy DEA# was previously retrieved from the INSTITUTION file
+     (#4) through the RELATED INSTITUTION field (#100) in the OUTPATIENT
+     SITE file (#59). Now, the software will look for a DEA# for the
+     institution in NPI INSTITUTION field (#101) in the OUTPATIENT SITE
+     file (#59). If the DEA# for the NPI Institution is blank the software
+     will retrieve the DEA# for the Related Institution, like it was doing
+     before this patch.
+  
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)      Field Name (#)                         New/Modified/Deleted
+ -----------------  -------------------------------------- --------------------
+ SPMP ASAP RECORD DEFINITION (#58.4)                     
+                    VERSION sub-file (#58.4001)
+                    -DATA ELEMENT DELIMITER CHAR (#.02)    New
+                    -SEGMENT TERMINATOR CHAR (#.03)        New
+                    -END OF LINE ESCAPE CHAR(S) (#.04)     New
+                    -SEGMENT sub-file (#58.40011)
+                    --LEVEL (#.06)                         New
+                    --DATA ELEMENT sub-file (#58.400111)
+                    ---ELEMENT VALUE (M EXPRESSION) (#.08) New
+  
+ SPMP STATE PARAMETERS (#58.41)                       
+                    ASAP VERSION (#1)                      Modified
+                    STATE SFTP SERVER IP ADDRESS (#7)      Modified
+                    STATE SFTP SERVER USERNAME (#8)        Modified
+                    SFTP TRANSMISSION MODE (#13)           Modified
+                    RENAME FILE AFTER UPLOAD (#17)         New
+                    SFTP SSH KEY FORMAT (#18)              New
+                    SFTP SSH KEY ENCRYPTION (#19)          New
+                    SFTP SSH PRIVATE KEY TEXT (#100)       Modified
+                    SFTP SSH PUBLIC KEY TEXT (#200)        Modified
+  
+ SPMP EXPORT BATCH (#58.42)           
+                    PRESCRIPTIONS sub-file (#58.42001)
+                    -NDC SENT (#3)                         New
+   
+ Mail Groups Associated:
+  
+ Mail Group Name                                           New/Modified/Deleted
+ ---------------                                           --------------------
+ N/A   
+  
+ Options Associated:
+  
+ Option Name                     Type                      New/Modified/Deleted
+ -----------                     ----                      --------------------
+ PSO SPMP ASAP DEFINITIONS       Action                    New
+ PSO SPMP VIEW ASAP DEFINITIONS  Action                    Delete
+ PSO SPMP SSH KEY MANAGEMENT     Action                    New
+ PSO SPMP MENU                   Menu                      Modified
+   
+ Protocols Associated:
+  
+ Protocol Name                                             New/Modified/Deleted
+ -------------                                             --------------------
+ PSO SPMP3 COPY VERSION                                    New
+ PSO SPMP3 CUSTOMIZE DATA ELEMENT                          New
+ PSO SPMP3 CUSTOMIZE SEGMENT                               New
+ PSO SPMP3 DELETE CUSTOMIZATION                            New
+ PSO SPMP3 EDIT DELIMETERS                                 New
+ PSO SPMP3 MENU                                            Modified
+ PSO SPMP3 SHOW DETAILS                                    Modified
+   
+ Security Keys Associated:
+  
+ Security Key Name                                         New/Modified/Deleted
+ -------------                                             --------------------
+ PSO SPMP ADMIN                                            New
+  
+ Templates Associated:
+  
+ Template Name                  Type    File Name (#)      New/Modified/Deleted
+ -------------                  ----    -------------      --------------------
+ PSO SPMP VIEW ASAP DEFINITION  List    N/A                Modified
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ 20150701 - State Prescription Monitoring Program Enhancement
+  
+    
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A  
+  
+  
+ Remedy/CA-SDM Ticket(s) & Overviews:
+ -----------------------------------
+ N/A
+    
+  
+ TEST Sites:
+ ===========
+ BEDFORD, MA
+ BOSTON HCS
+ CHEYENNE, WY
+ HINES, IL
+ INDIANAPOLIS, IN
+ IRON MOUNTAIN, MI
+ LOUISVILLE, KY
+ MONTANA HCS 
+ NORTHAMPTON, MA
+ SAN DIEGO, CA
+ ST CLOUD, MN
+ TENNESSEE VALLEY HCS
+   
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ File Description                        File Name                FTP Mode
+ --------------------------------------------------------------------------
+ Outpatient Pharmacy V. 7.0 Manager's    PSO_7_MAN_UM_R0816.PDF   (binary)
+ User Manual
+ Outpatient Pharmacy V. 7.0 Technical    PSO_7_TM_R0816.PDF       (binary)
+ Manual/Security Guide 
+ SPMP Enhancement Release Notes          PSO_7_P451_RN.PDF        (binary)
+ SPMP Enhancement Installation Guide     PSO_7_P451_IG.PDF        (binary)
+  
+     Documentation can also be retrieved from the VA Software Documentation
+     Library (VDL) on the Internet at the following address:
+     http://www4.domain.ext/vdl.
+  
+  
+ Patch Installation: 
+  
+ Pre-Install Process
+ -------------------
+ In order to successfully install the newly improved and customizable ASAP
+ definition that is being distributed by this patch we will first completely
+ delete the existing content of the SPMP ASAP RECORD DEFINITION file (#58.4)
+ which is where the ASAP definitions are stored.  
+  
+ Note: This step will happen automatically and no user action is required.
+  
+  
+ Post-Install Process
+ --------------------
+ The post-install routine PSO451PI in the patch PSO*7*451 will automatically
+ perform a few updates related to the SPMP functionality:
+   
+ - The FILE ACCESS setting for the files below will be opened up so users
+   can use FileMan to view and search their content. They were unintentionally
+   released in PSO*7*408 as restricted.
+  
+     SPMP ASAP RECORD DEFINITION (#58.4)
+     SPMP EXPORT BATCH (#58.42)
+  
+ - The new field/parameter RENAME FILE AFTER UPLOAD (#17) in the SPMP STATE
+   PARAMETERS file (#58.41) will automatically be set to 1 (YES).
+  
+ - The parameter setting workaround for sites transmitting Appriss AWARxE will
+   be automatically corrected the following way:
+    
+   Before:
+   =======
+       STATE SFTP SERVER IP ADDRESS: prodpmpsftp 54.175.203.159
+       STATE SFTP SERVER USERNAME  : -oUser=username
+  
+   After:
+   ======
+       STATE SFTP SERVER IP ADDRESS: sftp.pmpclearinghouse.net
+       STATE SFTP SERVER USERNAME  : username@prodpmpsftp
+  
+ - The mail group PSO SPMP NOTIFICATIONS will be changed to type 'PUBLIC'
+   as it was incorrectly released as 'PRIVATE' by PSO*7*408.
+   
+ Notes: - These updates will happen automatically and no user action is
+          required.
+        - The post-install routine PSO451PI will be deleted from your system
+          upon completion of the patch installation.
+    
+  
+ Installation Instructions
+ -------------------------
+ Do not install this patch while Outpatient Pharmacy users are on the
+ system. Installation will take no longer than 3 minutes. Also, avoid
+ scheduling this patch to install when the PSO SPMP SCHEDULED EXPORT option
+ is scheduled to run, typically at 1:00 AM local time.
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSO*7.0*451).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package PSO*7.0*451.
+  
+   5. When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of 
+      Install? NO//" respond NO. 
+  
+   6. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   7. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+  
+ Post-Installation Instructions
+ ------------------------------
+ 1. Confirm the mailgroup PSO SPMP NOTIFICATIONS contains appropriate
+    pharmacy users (ADPAC, pharmacy CHIEF, Informaticist, etc) who will
+    monitor the status of transmissions to SPMP, review/correct errors and
+    troubleshoot failed transmissions. 
+ 2. Once you complete installing this patch refer to the SPMP Installation
+    Guide Document for detailed instructions on how to configure the
+    transmissions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 114
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSO451PI
+    Before:       n/a   After:  B4221073  **451**
+Routine Name: PSOASAP
+    Before:       n/a   After: B85867649  **451**
+Routine Name: PSOASAP0
+    Before:B194204356   After:B164871797  **408,451**
+Routine Name: PSOSPMA3
+    Before:       n/a   After:B171421989  **451**
+Routine Name: PSOSPMB3
+    Before:       n/a   After: B46180556  **451**
+Routine Name: PSOSPMKY
+    Before:       n/a   After:B101316264  **451**
+Routine Name: PSOSPML0
+    Before: B30087960   After: B32864109  **408,451**
+Routine Name: PSOSPML1
+    Before: B45648973   After: B47175688  **408,451**
+Routine Name: PSOSPML2
+    Before: B29821538   After: B55672544  **408,451**
+Routine Name: PSOSPML3
+    Before: B10148038   After: B57979959  **408,451**
+Routine Name: PSOSPML4
+    Before: B79601311   After: B93991952  **408,451**
+Routine Name: PSOSPML6
+    Before:  B4614418   After:  B4610506  **408,451**
+Routine Name: PSOSPMSP
+    Before:B143138804   After:B106425657  **408,451**
+Routine Name: PSOSPMU0
+    Before:       n/a   After: B23897100  **451**
+Routine Name: PSOSPMU1
+    Before:B105028322   After:B128483290  **408,437,451**
+Routine Name: PSOSPMU2
+    Before:       n/a   After: B10133979  **451**
+Routine Name: PSOSPMU3
+    Before:       n/a   After:B137219252  **451**
+Routine Name: PSOSPMUT
+    Before:B178191137   After:B182085149  **408,451**
+ 
+Routine list of preceding patches: 437
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 22, 2015
+Completed By:                               Date Completed: AUG 11, 2016
+Released By :                               Date Released : AUG 11, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

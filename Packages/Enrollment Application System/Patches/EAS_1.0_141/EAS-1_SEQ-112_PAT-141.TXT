@@ -1,0 +1,100 @@
+
+=============================================================================
+Run Date: AUG 22, 2016                     Designation: EAS*1*141
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #112                      Status: Released
+                  Compliance Date: SEP 22, 2016
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) APPLICATION, VERSION 4.3.2
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this informational patch is to announce the release of the
+ Enrollment System (ES) 4.3.2 application version software. 
+   
+ ES 4.3.2 is a maintenance release of the Enrollment System Core (ESC)
+ application. This version applies 5 updates to correct design, code,
+ security and 508 compliance related defects introduced in previous ES
+ releases.  
+   
+ The following changes are associated with ES 4.3.2
+ =============
+ 1.     Disable ability to accept change of the veteran indicator from VistA,
+        if eligibility is verified in ES.  
+   
+ 2.     Correct defect in ES displaying the incorrect preferred facility on the
+        facilities screen. SDM #I7276837FY16.   
+   
+ 3.     Remediate Fortify security findings. 
+   
+ 4.     Fixed defect in the processDateOfDeath batch job to allow deletes for
+        records than need to be cleaned up that have date of death incorrectly
+        set. 
+   
+ 5.     Upgrade and remediate all ES reports for section 508 compliance. 
+   
+   
+  What to Expect:
+  ===============
+  No changes to any VistA packages are required. During deployment of ES 4.3.2
+  HL7 messaging to and from ES will be disabled as well as E&E web services
+  and ES to IVM Bi-Directional services. Implementation is expected to take
+  less than 8 hours. 
+   
+   
+  Implementation:
+  ===============
+  ESR 4.3.2 is a centrally managed web-based application and will be
+  implemented as a one-time rollout by the ES Technical team and the AITC. No
+  software will be installed at the facilities. ES application will be
+  unavailable during the deployment window. 
+   
+   
+  Implementation Date:
+  ====================
+  
+  August 20, 2016
+     
+  Associated CA Service Desk Manager Tickets:
+  ===========================
+  I7276837FY16 - The Preferred Facility under Demographics, Personal Screen
+  does not Match the PF on the Facility Screen
+ 
+  I8733636FY16  - The system placed patient in PG 8d appropriately based on
+  the 10% but the system also indicated he was copay exempt but he shouldn't be
+  based on his income
+ 
+  
+  Reporting Problems:
+  ===================
+  Problems associated with ES application should be reported via CA Service
+  Desk Manager (SDM) or contact the National Help Desk (NHD) 1-888-596-4357
+  for assistance.
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 12, 2016
+Completed By:                               Date Completed: AUG 22, 2016
+Released By :                               Date Released : AUG 22, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

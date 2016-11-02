@@ -1,0 +1,271 @@
+$TXT Created by                 CHEYL54.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 08/25/16 at 08:37
+=============================================================================
+Run Date: SEP 28, 2016                     Designation: MBAA*1*1
+Package : MBAA - MOBILE SCHEDULING APPLICATIO Priority: Mandatory
+Version : 1         SEQ #1                      Status: Released
+                  Compliance Date: OCT 29, 2016
+=============================================================================
+
+
+Subject: MOBILESCHEDULING APPLICATIONS SUITE (MBAA)
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ The new Mobile Scheduling Application Suite (MBAA) package will enable 
+ the exchange of data between VistA and VA mobile scheduling applications 
+ via the use of Remote Procedure Calls (RPCs).  These MBAA RPCs allow 
+ authorized users of the VA mobile application(s) to retrieve and write 
+ scheduling data to the VistA Scheduling package files. Currently there 
+ are two mobile applications that have been developed.  Veteran 
+ Appointment Request (VAR) is a veteran facing application that provides 
+ Veterans with information from VistA to schedule Primary Care clinic 
+ appointments, view future booked appointments, and cancel future 
+ appointments that were made using the Mobile App.  Additionally, using 
+ VAR, Veterans can enter an appointment request for a Primary Care or 
+ Mental Health appointment and that request will then be processed in the 
+ VA Scheduling Staff facing application, Scheduling Manager (SM).  
+ SM is a web-based scheduling application that allows scheduling
+ staff to view and process Veteran appointment requests placed by Veterans 
+ in the VAR mobile application.
+  
+ This patch release includes only the RPCs, routines, and an option for 
+ the VistA system. MBAA has created a new option, MBAA SCHEDULING CALENDAR 
+ VIEW. All the new MBAA RPCs are registered to this new option. The option 
+ should be assigned to users of the SM mobile application.
+  
+ In the VAR application, Veteran users are logged-in using an application 
+ proxy, Department of Defense User. All sites will need to ensure this 
+ user entry has been established in the New Person file #200.  
+  
+ This patch is being released prior to the deployment of 
+ the supported web applications Veteran Appointment Request (VAR) and 
+ Scheduling Manager (SM). The web applications will be implemented using 
+ a phased release schedule. Each site will be contacted by a member of 
+ the VAR/SM Release Team or a designated POC from the VISN to coordinate 
+ the deployment of the web applications and a VAR/SM Implementation will 
+ assist with the training of staff as well as outreach and communications 
+ to the veterans. The installation of the VistA MBAA patch will ensure 
+ that each site is prepared for the implementation once the web 
+ applications release reaches each VAMC site. For any questions about the 
+ phased release, please contact the Release and Implementation Team at 
+ VAR_Release_Team@domain.ext.
+  
+ Refer to the MBAA*1*1 PREINSTALL GUIDE for pre-installation and 
+ configuration instructions.  These steps MUST be completed prior to 
+ install.
+  
+ Patch Components:
+ -----------------
+  
+ Remote Procedure Calls (RPCs):
+ MBAA APPOINTMENT LIST BY NAME  
+ MBAA APPOINTMENT MAKE  
+ MBAA CANCEL APPOINTMENT  
+ MBAA FACILITY WAIT LIST  
+ MBAA GET CLINIC AVAILABILITY  
+ MBAA GET CLINIC DETAILS  
+ MBAA LIST CANCELLATION REASONS  
+ MBAA PATIENT PENDING APPT  
+ MBAA PROVIDERS BY CLINIC  
+ MBAA REMOVE FROM EWL  
+ MBAA VERIFY CLINIC ACCESS  
+ MBAA WAIT LIST BY DFN  
+  
+ Files & Fields Associated:
+ N/A
+  
+ Forms Associated:
+ N/A 
+  
+ Mail Groups Associated:
+ N/A
+  
+ Options Associated:
+  
+ Option Name                     Type       New/Modified/Deleted
+ -----------                     ----       -------------------- 
+ MBAA SCHEDULING CALENDAR VIEW   Broker             New
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name
+ --------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ BOSTON HEALTHCARE SYSTEM
+ MANCHESTER VA MEDICAL CENTER
+ CONNECTICUT HEALTHCARE SYSTEM
+ WHITE RIVER JUNCTION VA MEDICAL CENTER
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The preferred method is to retrieve files from 
+ download.vista.domain.ext.This transmits the files from the first 
+ available server. Sites may also elect to retrieve files directly from a 
+ specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Albany: domain.ext
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at http://www4.domain.ext/vdl/
+  
+ Title                           File Name                  SFTP Mode
+ --------------------------------------------------------------------
+ MBAA*1*1 PREINSTALL GUIDE       MBAA_PREINSTALL_1_1.PDF    BINARY  
+ Scheduling Manager User Guide   SM_USER_GUIDE_1_1.PDF      BINARY
+ Veteran Appt Request User Guide VAR_USER_GUIDE_2_1.PDF     BINARY 
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ Refer to the MBAA*1*1 PREINSTALL GUIDE for pre-installation and 
+ configuration instructions.  These steps MUST be completed prior to 
+ install
+  
+ Installation Instructions:
+ -------------------------- 
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  1.  Choose the PackMan message containing this patch.
+  2.  Invoke the INSTALL/CHECK MESSAGE PackMan option.          
+  3.  From the Kernel Installation and Distribution System Menu [XPD 
+      MAIN], select the Installation Menu [XPD INSTALLATION MENU].  From
+      this menu, you may elect to use the following options. When prompted
+      for the INSTALL NAME enter MBAA*1.0*1
+      a. Backup a Transport Global [XPD BACKUP] - This option will create 
+         backup message of any routines exported with this patch. It will
+         not backup any other changes such as DD's or templates.
+      b. Compare Transport Global to Current System [XPD COMPARE TO 
+         SYSTEM]- This option will allow you to view all changes that will
+         be made when this patch is installed.  It compares all components
+         of this patch (routines, DD's, templates, etc.).
+      c. Verify Checksums in Transport Global [XPD PRINT CHECKSUM]- This 
+         option will allow you to ensure the integrity of the routines that
+         are in the transport global.
+  4.  From the Installation Menu, select the Install Package(s) [XPD 
+      INSTALL BUILD] option and choose select the package MBAA*1.0*1. 
+  5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//', respond NO.
+  6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      respond NO.
+  7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//', respond NO.
+  8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+   
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;Scheduling Calendar View;**[Patch List]**;Feb 10, 2016;Build 85
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MBAAAPI1
+    Before:       n/a   After: B12399401  **1**
+Routine Name: MBAAAPIE
+    Before:       n/a   After: B22483643  **1**
+Routine Name: MBAADAL1
+    Before:       n/a   After:   B585387  **1**
+Routine Name: MBAALEXT
+    Before:       n/a   After:   B454239  **1**
+Routine Name: MBAAMAP1
+    Before:       n/a   After: B37295947  **1**
+Routine Name: MBAAMAP2
+    Before:       n/a   After: B71740579  **1**
+Routine Name: MBAAMAP3
+    Before:       n/a   After: B15125035  **1**
+Routine Name: MBAAMAP4
+    Before:       n/a   After: B15516986  **1**
+Routine Name: MBAAMAPI
+    Before:       n/a   After:  B1705181  **1**
+Routine Name: MBAAMDA1
+    Before:       n/a   After: B66171145  **1**
+Routine Name: MBAAMDA2
+    Before:       n/a   After: B17922124  **1**
+Routine Name: MBAAMDA3
+    Before:       n/a   After: B10404049  **1**
+Routine Name: MBAAMDA4
+    Before:       n/a   After:  B4043284  **1**
+Routine Name: MBAAMDAL
+    Before:       n/a   After:  B8935806  **1**
+Routine Name: MBAAMRP1
+    Before:       n/a   After:  B3062007  **1**
+Routine Name: MBAAMRP2
+    Before:       n/a   After:  B2288454  **1**
+Routine Name: MBAAMRPC
+    Before:       n/a   After:   B230431  **1**
+Routine Name: MBAARPC1
+    Before:       n/a   After: B58612031  **1**
+Routine Name: MBAARPC2
+    Before:       n/a   After: B78656995  **1**
+Routine Name: MBAARPC3
+    Before:       n/a   After:  B3456217  **1**
+Routine Name: MBAARPCL
+    Before:       n/a   After:B175476210  **1**
+Routine Name: MBAAWLAP
+    Before:       n/a   After:  B8952366  **1**
+Routine Name: MBAAWLDA
+    Before:       n/a   After: B38800212  **1**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 06, 2014
+Completed By:                               Date Completed: SEP 28, 2016
+Released By :                               Date Released : SEP 28, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

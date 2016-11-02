@@ -1,0 +1,229 @@
+
+=============================================================================
+Run Date: MAR 08, 2016                     Designation: GMPL*2*45
+Package : GMPL - PROBLEM LIST                 Priority: Mandatory
+Version : 2        SEQ #42                      Status: Released
+                  Compliance Date: JUL 27, 2016
+=============================================================================
+
+Associated patches: (v)LEX*2*86    <<= must be installed BEFORE `GMPL*2*45'
+                    (v)GMPL*2*46   <<= must be installed BEFORE `GMPL*2*45'
+                    (v)GMPL*2*47   <<= must be installed BEFORE `GMPL*2*45'
+
+Subject: CHANGES TO PROBLEM LIST COMMENTS IN SUPPORT OF NSR 20130312
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch is part of the Computerized Patient Records System CPRS v30.B 
+ project and includes enhancements to the Problem List comments/annotation 
+ functionality in support of NSR 20130312.
+  
+ This NSR contains two requests:
+  
+ 1. Removal of the block on one clinician editing or deleting a Problem 
+ List comment entered by another. The current situation poses a 
+ potential patient safety risk whereby invalid comments remaining on a 
+ problem list entry can mislead clinicians by displaying information that 
+ is no longer valid. This may include such things as obsolete data, care 
+ plans/intentions that are no longer applicable. As a historical note, 
+ this block is a VA creation, was not part of the original design, and 
+ does not exist in the IHS version.
+  
+ 2. Increasing the length of the comment field from 60 characters 
+ to 200. The original length is an artifact of 1980's disk space, and was 
+ never intended to remain at that size.
+  
+ These two minimal modifications would remove two significant barriers to 
+ the effective clinical use of the Problem List in general. The issues to 
+ be corrected are major contributors to clinicians carrying around their 
+ own problem lists in progress notes, a practice which has been widely 
+ criticized as a patient safety issue. Both the block and the size limit 
+ on Problem List annotations are universally unpopular with clinical users.
+  
+ This patch also addresses a few other issues:
+  
+ 1. The ability to add duplicate problems when creating/editing a user
+ selection list in VistA. This is resolved so that duplicate problems can 
+ no longer be added to a selection list category. When attempting to do 
+ so, the user will be presented with a warning message and prompt to 
+ enter another search term to be added.
+  
+ 2. NTRT requests/bulletins for unmapped problems are generated to the
+ Standards and Terminology Systems (STS) team incorrectly. When ICD-10 
+ implementation becomes active, there is no longer a need to generate 
+ these bulletins as the STS team will no longer be responsible to map
+ between SNOMED CT (SCT) and ICD-10 diagnoses. These bulletins will be
+ disabled when a user selects a SCT term that is mapped to R69. by 
+ default. However these bulletins will continue to be enabled for unmapped 
+ problems that contain a SCT and 799.9 pairing.
+  
+ 3. When utilizing the Lexicon search within the following areas of the 
+ Problem List Manager interface: addition of a new problem, modification of
+ an existing problem, & addition of a problem onto a user selection list; 
+ SCT designation ID's are either missing or being returned incorrectly for 
+ certain concepts(particularly "Fatigue (SCT 84229001)"). This has been 
+ resolved so that the correct designation ID's are being returned for the 
+ corresponding concepts.
+  
+ 4. An <UNDEFINED>NEW+28^GMPLSAVE *GMPSYN("S") error would occur when 
+ adding a SCT/ICD-10 diagnosis to the Problem List via Encounter form 
+ dialog. This error has been corrected.
+  
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)       New/Modified/Deleted
+ ------------------          ----------------------    --------------------
+ PROBLEM FILE (#9000011)     NOTE NARRATIVE (#.03)          MODIFIED
+  
+  
+ Forms Associated:
+  
+ Form Name             File #     New/Modified/Deleted
+ ---------             ------     --------------------
+ N/A                   N/A        N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------     
+ N/A                      N/A
+  
+ Options Associated:
+  
+ Option Name                     Type               New/Modified/Deleted
+ -----------                     ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                            New/Modified/Deleted
+ -------------                            -------------------- 
+ GMPL ANNOTATE                                 MODIFIED
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name     Type      File Name (Number)      New/Modified/Deleted
+ -------------     ----      ------------------      --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ -------------------------------------------------------------
+ NSR 20130312: CPRS-Remove block on changes to Problem List comments
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ ----------
+ Cleveland
+ Heartland-East
+ Heartland-West
+ Loma Linda
+ Palo Alto
+ San Diego
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Sites may retrieve the software and/or documentation directly using 
+ the Secure File Transfer Protocol (SFTP) address as directed by the CPRS
+ Implementation team. Installation instructions will be distributed when
+ your site begins the implementation process.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ The updated documentation will not be on the vdl until after the phased
+ deployment has completed.
+  
+ Title                           File Name           FTP Mode
+ ------------------------------------------------------------
+ Problem List User Manual        gmpl_2_0_45_um.doc  Binary
+ Problem List Technical Manual   gmpl_2_0_45_tm.doc  Binary
+  
+  
+ Patch Installation:
+ =================== 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Please refer to the "CPRS GUI v.30.b Installation Guide" for installation 
+ and set-up information. This document is exported as OR_30_350_IG.doc and
+ OR_30_350_IG.pdf and is included in OR_30_350.ZIP and will be emailed to 
+ the installation point of contacts by the CPRS Implementation team.
+  
+ Installation of these host files must be coordinated among the personnel 
+ affected because these host files will be installed in one installation 
+ session.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;Problem List;**[Patch List]**;Aug 25, 1994;Build 58
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMPL1
+    Before: B38061003   After: B41592331  **3,20,28,43,42,45**
+Routine Name: GMPLBLDC
+    Before: B38822286   After: B77042279  **3,7,28,36,42,45**
+Routine Name: GMPLDISP
+    Before: B47156024   After: B53108852  **21,26,35,36,42,45**
+Routine Name: GMPLEDT1
+    Before: B33830935   After: B33842333  **17,20,26,28,35,42,45**
+Routine Name: GMPLEDT3
+    Before: B31817969   After: B31430518  **26,35,36,42,45**
+Routine Name: GMPLEDT4
+    Before: B27439710   After: B30908694  **5,43,42,47,45**
+Routine Name: GMPLHIST
+    Before: B21393527   After: B22139789  **7,26,31,35,36,42,46,45**
+Routine Name: GMPLSAVE
+    Before:B112209796   After:B132948390  **26,31,35,37,38,36,42,47,45**
+Routine Name: GMPLUTL2
+    Before: B87546177   After: B93300856  **10,18,21,26,35,36,42,45**
+ 
+Routine list of preceding patches: 46, 47
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 18, 2014
+Completed By:                               Date Completed: MAR 07, 2016
+Released By :                               Date Released : MAR 08, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

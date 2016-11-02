@@ -1,0 +1,131 @@
+$TXT Created by                at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Friday, 06/24/16 at 14:32
+=============================================================================
+Run Date: AUG 31, 2016                     Designation: GEC*2*39
+Package : GEC - GENERIC CODE SHEET            Priority: Mandatory
+Version : 2        SEQ #35                      Status: Released
+                  Compliance Date: OCT 01, 2016
+=============================================================================
+
+Associated patches: (v)GEC*2*36    <<= must be installed BEFORE `GEC*2*39'
+
+Subject: MODIFY 'PRC GECS PURGE' FOR DATE CONTROL
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issue:
+  
+ 1. Modify 'PRC GECS PURGE' for improved date control
+  
+ Associated Ticket(s):
+ =====================
+ 1. I8152049FY16 - Modify IFCAP Annual Purge option 'PRC GECS PURGE' for
+                   date control
+               
+ Associated NSR(s):
+ ==================
+ N/A 
+  
+ Participating Test Sites:
+ =========================
+ Wilkes-Barre VAMC
+ VA Maryland HCS (Baltimore)
+ VA Connecticut HCS (West Haven) 
+  
+ Ticket Overview:
+ ================ 
+ 1. I8152049FY16 - Modify IFCAP Annual Purge option 'PRC GECS PURGE' for
+                   date control
+  
+    Problem:
+    --------
+    Correct the IFCAP Annual Purge process, Step 14 (Purge Transmission 
+    Records/Code Sheets), to use a universal date check to control 
+    incorrect date entry during the step purge process to prevent
+    massive file data reconstruction when incorrect dates are entered
+    during the purge processing.
+    
+    Resolution:
+    -----------                    
+    Create a universal date query check for the archive/purge process,
+    Step 14, 'Purge Transmission Records/Code Sheets' that will prevent a
+    user from entering a more current date that would cause detrimental 
+    data loss and prevent time consuming file restores.
+  
+    The following purge step will be modified for the date control:
+  
+    STEP 14  Purge Transmission Records/Code Sheets
+    
+    Routine: GECSPURG
+  
+    ==================== INSTALLATION INSTRUCTIONS =====================
+    You may install this patch at any time without interruption to users.
+    It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter GEC*2.0*39)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       GEC*2.0*39.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", choose 'No'.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', choose 'YES'. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following options:
+  
+          Purge Transmission Records/Code Sheets    [PRC GECS PURGE]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":", just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;GEC;**[Patch List]**;MAR 14, 1995;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GECSPURG
+    Before:  B8984257   After: B12897403  **23,36,39**
+ 
+Routine list of preceding patches: 36
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 28, 2016
+Completed By:                               Date Completed: AUG 25, 2016
+Released By :                               Date Released : AUG 31, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

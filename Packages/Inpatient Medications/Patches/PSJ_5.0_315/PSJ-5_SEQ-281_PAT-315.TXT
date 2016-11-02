@@ -1,0 +1,533 @@
+$TXT Created by                    R at CMAI.FO-BIRM.DOMAIN.EXT  (KIDS) on Wednesday, 07/27/16 at 15:39
+=============================================================================
+Run Date: AUG 30, 2016                     Designation: PSJ*5*315
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #281                      Status: Released
+                  Compliance Date: SEP 30, 2016
+=============================================================================
+
+Associated patches: (u)PSB*3*83        install with patch       `PSJ*5*315'
+                    (u)PSB*3*87        install with patch       `PSJ*5*315'
+                    (v)PSJ*5*216   <<= must be installed BEFORE `PSJ*5*315'
+                    (v)PSJ*5*252   <<= must be installed BEFORE `PSJ*5*315'
+                    (v)PSJ*5*255   <<= must be installed BEFORE `PSJ*5*315'
+                    (v)PSJ*5*268   <<= must be installed BEFORE `PSJ*5*315'
+                    (v)PSJ*5*278   <<= must be installed BEFORE `PSJ*5*315'
+                    (v)PSJ*5*281   <<= must be installed BEFORE `PSJ*5*315'
+                    (v)PSJ*5*285   <<= must be installed BEFORE `PSJ*5*315'
+                    (v)PSJ*5*287   <<= must be installed BEFORE `PSJ*5*315'
+                    (v)PSS*1*191   <<= must be installed BEFORE `PSJ*5*315'
+                    (v)PSJ*5*318   <<= must be installed BEFORE `PSJ*5*315'
+
+Subject: INPATIENT MEDICATIONS ENHANCEMENTS (CASDDPE)
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  
+ ******************************* ATTENTION ********************************
+   
+ Clinical Ancillary Services (CAS) Development-Delivery of Pharmacy 
+ Enhancements (DDPE) VA Inpatient Medication Administration - Transdermal
+ enhancement includes 5 patches that must be installed in the following
+ order:
+  
+ 1.      PSS*1*191
+ 2.      PSJ*5*315
+ 3.      PSB*3*83
+ 4.      PSB*3*87
+ 5.      OR*3*417
+  
+ ATTENTION: This enhancement also includes a new Graphical User Interface
+ (GUI) executable, BCMA GUI PSB3_P083.EXE. Installation of this GUI is
+ required immediately after the KIDS install for the Patch to function.
+  
+ For retrieval and installation instructions, please see the Client 
+ Installation Instructions section.
+ **************************************************************************
+  
+ Patch PSJ*5.0*315 provides enhancements to the Inpatient Medications 
+ application and to support enhancements for the Bar Code Medications 
+ Administrations (BCMA) application for Transdermal Administrations. These 
+ enhancements include:
+  
+      1. Currently Sites have to create fake removal orders to allow for 
+ appropriate removal of medications in BCMA.  This patch will alleviate 
+ that issue by prompting the user for DURATION OF ADMINISTRATION based on
+ the value stored in the PROMPT FOR REMOVAL IN BCMA field (#12) contained
+ in the ORDERABLE ITEM file (#50.7).  This field implements changes that
+ will support enhancements to the BCMA and Inpatient Medication
+ applications to display the removal times in Inpatient Medication orders
+ using rules determined by the value of this field. The PROMPT FOR REMOVAL
+ IN BCMA field (#12) can be set for Orderable Items that require removal to
+ the following values:
+  
+      NULL/0=No Removal Required 
+      1 = Removal at Next Administration 
+      2 = Removal Period Optional Prior to Next Administration  
+      3 = Removal Period Required Prior to Next Administration
+  
+  
+      2. Routines added for this patch will add the new DURATION OF 
+ ADMINISTRATION prompt to the option Inpatient Order Entry [PSJ OE] then 
+ calculate the appropriate removal times and display them for verification.
+ The NON-VERIFIED ORDERS file (#53.1) and UNIT DOSE sub-file(#62) of the 
+ PHARMACY PATIENT file (#55) will be updated to include new fields that 
+ will control the removal process.  These two files will have these 4
+ fields added: DURATION OF ADMINISTRATION field (#137), REMOVE TIMES
+ field(#138), REMOVE PERIOD field(#139) and BCMA PROMPT FOR REMOVAL FLAG
+ field(#140).  A new field called PROMPT FOR REMOVAL IN BCMA field(#12)
+ created in the ORDERABLE ITEMS file (#50.7) by patch PSS*1.0*191 will be
+ used for information to be stored in the BCMA PROMPT FOR REMOVAL FLAG
+ field(#140) in the NON-VERIFIED ORDERS file(#53.1) and the UNIT DOSE
+ sub-file(#62) of the PHARMACY PATIENT file (#55).
+  
+      3. The Edit Clinic Med Orders Start Date/Time [PSJ ECO] option will 
+ have changes to anticipate these new fields and request additional user 
+ activity when the orders require specific information that can 
+ only be entered via the Inpatient Order Entry [PSJ OE] option.
+  
+      4. This patch contains a post-install routine PSJ5P315 that sends a 
+ report listing all legacy orders for Medications that require removal.  
+ In order to prevent confusion by users of the BCMA GUI application these 
+ orders will need to be discontinued and reordered to include the
+ removal information.  This same report can be recalled from the Pharmacy
+ Data Management [PSS MGR] menu using the Orders for MRRs With Removal
+ Properties [PSS MRR ORDERS DIAGNOSTIC RPT] option.
+  
+      5. The Order View Hidden Actions Menu [PSJ LM ORDER VIEW HIDDEN
+ ACTIONS] protocol has been modified to include a hidden action for calling
+ the Administration History report. A new protocol, Admin History for OI
+ [PSJ LM ADM HIST], was added for the new hidden action.  This report 
+ allows viewing of other orders for the Orderable Item listed in the Order
+ Detail for the selected Order. The menu item Other Pharmacy Options [PSJ
+ LM OTHER PHARMACY OPTIONS] has been shortened to read Other Pharm Options
+ in order to allow the columns to align correctly.  The AH menu option 
+ will not be available during the period in which PSJ*5.0*315 is installed,
+ but PSB*3.0*83 is not.  If the user attempts to run this option during 
+ this time they will get the following message: Report not available until
+ install of patch PSB*3.0*83.
+  
+        This patch requires patch PSS*1.0*191.
+        
+        The full functionality introduced in this patch will not be
+        available until patches PSB*3.0*83 and possibly PSB*3.0*87 
+        for Bar Code Back Up (BCBU) are installed.
+  
+        Pre-existing orders will remain unaffected with installation.
+  
+  
+ ********** SPECIAL NOTE on Times Per Day (TPD) orders**********:
+  
+      To avoid confusion it is strongly recommended that  MRR medications
+ needing to use a TPD schedule with asynchronous administrations and
+ removals to have the PROMPT FOR REMOVAL IN BCMA field (#12) set to a
+ value of 3.  The Pharmacist will then always be prompted for the Duration
+ of Administration and a proper removal time can be entered in the
+ Inpatient Order Entry [PSJ OE] option. 
+      
+      In order to maintain adequate flexibility for Times per Day (TPD)
+ schedules such as BID, TID and QID for MRR medication orders; these 
+ schedules are not validated to the extent that other continuous schedule
+ types are validated.  The intent was to allow a variety of administrations
+ and removals that may be asynchronous in order to process correctly; for
+ instance this will allow having two administrations 6 hours apart followed
+ by a 12 hour medication-free period.
+  
+      Normally the frequency used by the existing ADMINISTRATION 
+ SCHEDULE file (#51.1) setup would expect a 12 hour frequency for 
+ continuous schedule types (24 hours divided by 2 administrations equals
+ 12) and this is what is standard practice.
+         
+      Existing MRRs set to have the medication removed at the next 
+ Duration of Administration would need to have a Duration of Administration
+ value entered for TPD schedules, otherwise the stored frequency in the
+ ADMINISTRATION SCHEDULE file (#51.1) would be used and this could result 
+ in an incorrect removal period.  Therefore we recommend setting the MRR
+ value to a 3 (Duration of Administration Required). If the MRR is set to a
+ value of 1 in the PROMPT FOR REMOVAL IN BCMA field (#12), the Pharmacist
+ would not receive the verification screen that appears for  Duration of
+ Administration entries and may not be aware of this issue.
+         
+ The following is an example of using a type 1 Prompt for Removal in BCMA
+ for TPD's (Not recommended Condition):
+  
+      The MRR medication needs to be administered at 0900 and removed 
+ at 1500, with a new administration added at 1500 then removed at 2100.  
+        
+      The BID  schedule is used with the PROMPT FOR REMOVAL IN BCMA
+ field (#12)  value set to a 1 and the Frequency for BID schedule set to 
+ 12 hours.
+      
+      The Pharmacist would only see the administration times of 0900 
+ and 1500.
+        
+      The system would then use the frequency stored in the 
+ ADMINISTRATION SCHEDULE file (#51.1) of 12 hours, so that Removal
+ Times on the enhanced BCMA would then calculate as removal at 2100 and
+ 0300, which would be in conflict with the administration times.
+  
+ The following is an example of using a type 3 Prompt for Removal in BCMA
+ for TPD's (Recommended condition):
+  
+      The MRR medication needs to be administered at 0900 and removed 
+ at 1500, with a new administration added at 1500 then removed at 2100.  
+        
+      The BID  schedule is used with the PROMPT FOR REMOVAL IN BCMA 
+ field (#12)  value set to a 3.  In this case the Frequency is no longer 
+ used. 
+        
+      The Pharmacist would see the administration times of 0900 and 
+ 1500 and enter the appropriate Duration of Administration  which would be 
+ 6 hours.
+        
+      The system would create a verification display showing 
+ administration at 0900 followed by and Administration and Removal at 1500 
+ then a Removal at 2100 as ordered by the Physician.
+  
+ Files & Fields Associated:
+  
+ File Name (Number)    Field Name (Number)         New/Modified/Deleted
+ ------------------    -------------------         --------------------
+ NON-VERIFIED ORDERS(#53.1) DURATION OF ADMINISTRATION (#137)   New
+ NON-VERIFIED ORDERS(#53.1) REMOVE TIMES (#138)                 New
+ NON-VERIFIED ORDERS(#53.1) REMOVE PERIOD (#139)                New
+ NON-VERIFIED ORDERS(#53.1) BCMA PROMPT FOR REMOVAL FLAG (#140) New
+ PHARMACY PATIENT(#55) 
+   UNIT DOSE(#62)         DURATION OF ADMINISTRATION (#137)   New
+ PHARMACY PATIENT(#55) 
+   UNIT DOSE(#62)         REMOVE TIMES (#138)                 New
+ PHARMACY PATIENT(#55) 
+   UNIT DOSE(#62)         REMOVE PERIOD (#139)                New
+ PHARMACY PATIENT(#55) 
+   UNIT DOSE(#62)         BCMA PROMPT FOR REMOVAL FLAG (#140) New
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A 
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A 
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ Order View Hidden   [PSJ LM ORDER VIEW HIDDEN ACTIONS]             
+  Actions Menu        Modified
+  
+ Admin History by OI [PSJ LM ADM HIST]
+                      New
+  
+ Other Pharmacy      [PSJ LM OTHER PHARMACY OPTIONS]
+  Options            Modified
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A 
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR 20141012: Pharmacy Safety Enhancements: The Veterans Health 
+ Administration (VHA) Pharmacy Benefits Management (PBM) supports 
+ enhancing functionality of  the VistA Pharmacy package and Bar Code 
+ Medication Administration (BCMA) software packages.  This request 
+ identifies, consolidates, and combines requirements needed for near-term 
+ enhancements to VistA Pharmacy and/or BCMA.
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO 3243: Results in a null stop date on an order that then causes it to
+ enter a state where it is not accessible in the Patient Profile screen, 
+ and varying behavior in CPRS depending on whether the order is a Clinic 
+ or Inpatient order.
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Problem:
+ -------
+  
+ Resolution:
+ ----------
+  
+ Test Sites:
+ ----------
+ PITTSBURGH HCS
+ VISN2/UPSTATE NY
+ ST. CLOUD, MN -VAMC 
+  
+ Documentation and Software Retrieval Instructions:
+ -----------------------------------------------------------------------
+ Updated documentation describing the new functionality and installation 
+ instructions introduced by this patch are available.
+  
+ Files can be obtained from the ANONYMOUS.SOFTWARE directory at one of the
+ OI Field Offices. The preferred method is to retrieve the file using
+ Secure File Transfer Protocol (SFTP) from DOWNLOAD.VISTA.DOMAIN.EXT, which
+ will transmit the file from the first available server. Alternatively,
+ sites may elect to retrieve the file from a specific OI Field Office.
+  
+ OI FIELD OFFICE         FTP ADDRESS             DIRECTORY 
+ Albany:                 domain.ext     
+ Hines:                  domain.ext      
+ Salt Lake City:         domain.ext       
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ INPATIENT MEDICATIONS RELEASE NOTES                             
+ psj_5_p315_rn.pdf                                              Binary
+  
+ INPATIENT MEDICATIONS NURSE'S USER MANUAL
+ psj_5_nurse_um_r0816.pdf                                       Binary
+  
+ INPATIENT MEDICATIONS PHARMACIST'S USER MANUAL                  
+ psj_5_phar_um_r0816.pdf                                        Binary
+  
+ INPATIENT MEDICATIONS TECHNICAL MANUAL/ SECURITY GUIDE          
+ psj_5_tm_r0816.pdf                                             Binary
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ A post-installation routine PSJ5P315 will run with this install. See post 
+ install instructions below for details.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.  Patch PSS*1.0*191 is required to install this patch.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch PSJ*5.0*315.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     PSJ*5.0*315:
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//,' respond Yes
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//,' respond No 
+  
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ The post-install routine generates a preliminary patient order 
+ report listing the approximate number of active patient orders that may
+ need to be discontinued and re-created.  This report is emailed to
+ holders of the PSJI MGR, PSJU MGR, PSJU RPH, and PSJ RPHARM keys, and also
+ the installer of this patch.  Please delete the post install routine 
+ (PSJ5P315) after you have received this mailman report.
+  
+ Sites may periodically run "Pharmacy Data Management" [PSS MRR ORDERS
+ DIAGNOSTIC RPT] under "Pharmacy Data Management" [PSS MGR] to update the
+ preliminary estimates of active patient orders that may need to be
+ discontinued and re-created.  They may need to do this if they aren't 
+ able to process active orders right after install.  The report 
+ should be run periodically after install to insure that all active 
+ orders get cancelled and re-ordered.  Sites may also run the Orderable
+ Items that Require Removal Report [PSS MRR ORDERABLE ITEMS RPT] under
+ "Orderable Item Management" [PSS ORDERABLE ITEM MANAGEMENT] to verify
+ which Orderable Items have been marked for PROMPT FOR REMOVAL IN BCMA.
+  
+ After both PSJ*5*315 has been installed and PROMPT FOR REMOVAL IN BCMA 
+ field (#12) have been updated for relevant orderable items, sites should
+ generate a new "Orders for MRRs With Removal Properties" [PSS MRR ORDERS 
+ DIAGNOSTIC RPT] report for the most current and accurate list of orders 
+ that need to be addressed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 73
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGAH
+    Before:       n/a   After: B25445995  **315**
+Routine Name: PSGOD
+    Before: B24552546   After: B25616562  **67,58,111,133,181,286,281,315**
+Routine Name: PSGOE
+    Before: B26201410   After: B26260388  **22,29,56,72,95,80,133,181,275,315**
+Routine Name: PSGOE0
+    Before: B12881111   After: B13276254  **110,315**
+Routine Name: PSGOE1
+    Before: B29072557   After: B29572227  **7,19,26,39,58,85,80,110,127,
+                                           133,134,315**
+Routine Name: PSGOE3
+    Before: B24652954   After: B25305463  **58,81,315**
+Routine Name: PSGOE41
+    Before: B27985656   After: B97415312  **50,63,64,69,58,111,136,113,
+                                           267,315**
+Routine Name: PSGOE8
+    Before: B48942874   After: B52703048  **47,50,65,72,110,111,188,192,
+                                           113,223,269,287,315**
+Routine Name: PSGOE81
+    Before: B32608596   After:B107835999  **26,50,64,58,82,110,111,136,
+                                           113,267,315**
+Routine Name: PSGOE9
+    Before: B40776926   After: B45686408  **11,47,50,72,110,111,188,192,
+                                           207,113,223,269,315**
+Routine Name: PSGOE91
+    Before: B37734191   After:B114506960  **50,64,58,110,111,136,113,179,
+                                           265,267,285,315**
+Routine Name: PSGOEE
+    Before:B101870372   After:B103314834  **4,7,29,47,64,58,82,91,110,
+                                           111,112,142,179,181,254,267,
+                                           268,281,315**
+Routine Name: PSGOEE0
+    Before: B28840533   After: B31021765  **58,95,179,216,315**
+Routine Name: PSGOEEW
+    Before: B28923213   After: B28844185  **7,58,111,315**
+Routine Name: PSGOEF
+    Before:B103709466   After:B119034802  **7,30,29,35,39,47,50,56,80,
+                                           116,110,111,133,153,134,222,
+                                           113,181,260,199,281,315**
+Routine Name: PSGOEF1
+    Before: B28843982   After: B30874451  **2,7,35,39,45,47,50,63,67,58,
+                                           95,110,186,181,267,315**
+Routine Name: PSGOEM
+    Before: B32911590   After: B46502031  **81,260,315**
+Routine Name: PSGOER
+    Before: B85734604   After: B87272469  **11,30,29,35,70,58,95,110,111,
+                                           133,141,198,181,246,278,281,
+                                           315**
+Routine Name: PSGOETO
+    Before: B38155409   After: B39634920  **3,13,25,31,33,50,68,58,85,
+                                           105,90,117,110,111,112,161,254,
+                                           267,268,315**
+Routine Name: PSGOT
+    Before: B23046911   After: B23271906  **13,68,90,110,173,134,161,254,
+                                           267,257,315**
+Routine Name: PSGOTR
+    Before: B21776310   After: B22276864  **110,127,133,129,267,257,255,315**
+Routine Name: PSGVW
+    Before: B31699559   After: B32841979  **50,58,85,80,104,110,267,315**
+Routine Name: PSGVW0
+    Before: B10085740   After: B11075567  **49,54,85,267,315**
+Routine Name: PSJ5P315
+    Before:       n/a   After: B42106508  **315**
+Routine Name: PSJBCMA
+    Before:B124935631   After:B138494525  **32,41,46,57,63,66,56,69,58,
+                                           81,91,104,111,112,186,159,173,
+                                           190,113,225,253,267,279,308,
+                                           318,315**
+Routine Name: PSJBCMA1
+    Before:B120598961   After:B132466379  **32,41,46,57,63,66,56,58,81,
+                                           91,104,186,159,173,253,267,279,
+                                           315**
+Routine Name: PSJCLOR2
+    Before:B116286849   After:B116946050  **275,279,315**
+Routine Name: PSJCLOR5
+    Before: B68088373   After: B94059685  **275,315**
+Routine Name: PSJCOM
+    Before: B41203922   After: B42503350  **110,186,267,281,315**
+Routine Name: PSJCOM1
+    Before: B48577144   After: B49883276  **110,127,281,315**
+Routine Name: PSJHL3
+    Before: B97470088   After:B118359131  **1,11,14,40,42,47,50,56,58,
+                                           92,101,102,123,110,111,152,134,
+                                           226,267,260,281,315**
+Routine Name: PSJHL7
+    Before: B54843805   After: B55553130  **42,47,50,70,82,110,127,133,
+                                           275,279,315**
+Routine Name: PSJLMGUD
+    Before: B30490889   After: B31031159  **25,58,85,116,110,111,267,275,315**
+Routine Name: PSJLMUDE
+    Before: B66391198   After: B69470677  **7,47,50,63,64,58,80,116,110,
+                                           111,164,175,201,181,254,267,
+                                           228,315**
+Routine Name: PSJOE
+    Before:B103230773   After:B105816972  **7,26,29,33,42,50,56,72,58,
+                                           85,95,80,110,111,133,140,151,
+                                           149,181,252,281,315**
+Routine Name: PSJOE1
+    Before: B30534447   After: B31281544  **2,7,25,30,47,56,64,179,181,
+                                           252,281,315**
+Routine Name: PSJOEA
+    Before: B31162928   After: B31606537  **110,127,133,167,171,254,315**
+Routine Name: PSJORRE
+    Before: B35461891   After: B37472856  **22,51,50,58,81,110,111,112,
+                                           134,225,275,315**
+Routine Name: PSJORRE1
+    Before: B41040676   After: B42580655  **22,51,50,58,81,91,110,111,
+                                           134,225,275,315**
+ 
+Routine list of preceding patches: 216, 228, 255, 281, 285, 287, 318
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 09, 2015
+Completed By:                               Date Completed: AUG 30, 2016
+Released By :                               Date Released : AUG 30, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

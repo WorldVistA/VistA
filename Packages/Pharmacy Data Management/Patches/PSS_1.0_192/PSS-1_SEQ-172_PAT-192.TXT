@@ -1,0 +1,266 @@
+
+=============================================================================
+Run Date: AUG 25, 2016                     Designation: PSS*1*192
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #172                      Status: Released
+                  Compliance Date: SEP 24, 2016
+=============================================================================
+
+Associated patches: (v)PSS*1*104   <<= must be installed BEFORE `PSS*1*192'
+                    (v)PSS*1*189   <<= must be installed BEFORE `PSS*1*192'
+
+Subject: MCCF ePHARMACY COMPLIANCE PHASE 3
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Input Template
+
+Description:
+============
+
+ This patch has enhancements that extend the capabilities of the Veterans 
+ Health Information Systems and Technology Architecture (VistA) electronic 
+ pharmacy (ePharmacy) billing system.  Below is a list of all the applications 
+ involved in this project along with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*448
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2*550
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*20
+    CONSOLIDATED MAIL OUTPATIENT PHARMACY (CMOP) V. 2.0   PSX*2*79
+    PHARMACY DATA MANAGEMENT (PDM) V. 1.0                 PSS*1*192
+  
+ All five of these patches are being released in the Kernel Installation and 
+ Distribution System (KIDS) multi-build distribution.
+  
+ KIDS multi-build name: BPS PSO IB PSX PSS BUNDLE 9.0
+   KIDS Host File name: BPS_1_20_PSO_IB_PSX_PSS.KID
+  
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+  1. Three new fields for ePharmacy billable assessment have been added to the
+     Drug File (#50) which will be Yes/No fields:
+  
+        ePharmacy Billable (#84)
+        ePharmacy Billable (TRICARE) (#85)
+        ePharmacy Billable (CHAMPVA) (#86)
+  
+     The fields will be used in Integrated Billing to assess billable status
+     for a prescription instead of basing assessment on the DEA, Special HDLG
+     field.  
+  
+  2. A new field called Sensitive Diagnosis Drug (#87) has been added to the
+     Drug File (#50) which will be a Yes/No field.  The field is used in
+     Integrated Billing to assess sensitive diagnosis status for a prescription
+     instead of basing the assessment on the DEA, Special HDLG field.
+  
+  3. The system option Drug Enter/Edit [PSS DRUG ENTER/EDIT] contains prompts
+     to allow the user to enter the new ePharmacy data at the main level.
+  
+  4. The help text references to "E" and "U" have been removed from the DEA,
+     Special HDLG field, however, the user will still be able to enter "E" or
+     "U". If the user enters an "E" or "U" in the DEA, Special HDLG field, a
+     warning message is displayed indicating the values no longer have any
+     ePharmacy impact and refer the user to the new fields which replace the
+     "E" and "U" functionality.
+  
+  5. The option Lookup into Dispense Drug File [PSS LOOK] displays the
+     following new ePharmacy values:
+   
+        ePharmacy Billable
+        ePharmacy Billable (TRICARE)
+        ePharmacy Billable (CHAMPVA)
+        Sensitive Diagnosis Drug
+  
+  6. During the patch installation, the system populates the ePharmacy Billable
+     field according to existing logic based on values in the DEA, Special HDLG
+     field, and removes the "E" from the DEA, Special HDLG field.  Also, the
+     system populates the Sensitive Diagnosis Drug field to Yes if the DEA,
+     Special HDLG field contains "U" and removes the "U" from the DEA, Special
+     HDLG field.
+  
+  7. The system generates one post installation report showing the value of the
+     DEA Special HDLG field before the patch is installed and the value of the
+     DEA Special HDLG field after the patch is installed and the "E" and "U"
+     characters are removed.  The functions of both characters have been
+     replaced by the new DRUG file (#50) fields to maintain consistency
+     throughout the VA.  A drug will only be on the report if the value for the
+     DEA Special HDLG field is changed for that drug.  The report also displays
+     drugs that do not have any value in the DEA Special Handling Field.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ DRUG (#50)                                                Modified
+                       EPHARMACY BILLABLE (#84)            New
+                       EPHARMACY BILLABLE (TRICARE) (#85)  New
+                       EPHARMACY BILLABLE (CHAMPVA) (#86)  New
+                       SENSITIVE DIAGNOSIS (#87)           New
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ N/A                       
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+ Templates Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ PSSCOMMON          Input     DRUG (#50)                   Modified
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ 20140411 - Medical Care Collection Fund (MCCF) ePharmacy Compliance Phase 3
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA HEARTLAND - WEST, VISN 15 (589)
+ LEXINGTON VAMC-LEESTOWN (596)
+ HUNTER HOLMES MCGUIRE HOSPITAL - RICHMOND (652)
+ BIRMINGHAM VAMC (521)
+ CENTRAL ARKANSAS HEALTH CARE SYSTEM - LITTLE ROCK (598)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also elect
+ to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+     Albany:                 domain.ext
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at: 
+ http://www.domain.ext/vdl
+  
+ Title                                 File Name               Transfer Mode
+ ---------------------------------------------------------------------------
+ Release Notes/Installation Guide      PSS_1_P192_RN.PDF       Binary
+ User Manual                           PSS_1_UM.PDF            Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There is a post-install routine associated with this patch named PSS192PO.
+ The purpose of the post-install routine is to:
+  
+  a. Examine every drug in the Drug file (#50) to determine if it is billable
+     or not and if the drug is a Sensitive Diagnosis Drug or not.
+  b. Set the new ePharmacy Billable field as appropriate.
+  c. Set the new Sensitive Diagnosis Drug field as appropriate.
+  d. Remove the "E" and "U" characters from the DEA, Special HDLG field.
+  e. Identify and report all drugs with a blank DEA, Special HDLG field. 
+  f. Prepare and send an email message containing all of the Drug file changes
+     to users who hold the PSO EPHARMACY SITE MANAGER security key.
+  
+ The post-install routine is automatically deleted by the system if allowed by 
+ your Kernel site parameters configuration. You may delete this routine if the 
+ installation was successful and it is not automatically deleted by KIDS.
+  
+  
+ Installation Instructions
+ -------------------------
+ Please see the Installation Instructions associated with patch BPS*1.0*20.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSS192PO
+    Before:       n/a   After:B100977929  **192**
+Routine Name: PSS50
+    Before: B20914479   After: B25607113  **85,104,192**
+Routine Name: PSSDDUT2
+    Before:B170893168   After:B173773291  **3,21,61,81,95,127,126,139,
+                                           131,143,188,189,192**
+Routine Name: PSSLOOK
+    Before: B86061726   After: B89759845  **3,7,15,16,20,24,29,38,68,61,
+                                           87,90,127,147,170,189,192**
+ 
+Routine list of preceding patches: 104, 189
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 02, 2015
+Completed By:                               Date Completed: JUL 11, 2016
+Released By :                               Date Released : AUG 25, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

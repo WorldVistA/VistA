@@ -1,0 +1,210 @@
+
+=============================================================================
+Run Date: SEP 14, 2016                     Designation: GMTS*2.7*117
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7       SEQ #107                    Status: Released
+                  Compliance Date: OCT 15, 2016
+=============================================================================
+
+Associated patches: (v)GMTS*2.7*72 <<= must be installed BEFORE `GMTS*2.7*117'
+
+Subject: Remove Collaborative Stage + Other Updates For ONC Remote Data View
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains enhancements that extend and improve the functionality
+ of the VistA Health Summary package.  The purpose of this release is to update
+ the functionality as described below.
+ 
+ 1. Update of the Health Summary ONC Remote Data View
+ The ONC Remote Data View in Health Summary was outdated and needed several
+ updates, additions and deletions.  The changes are listed below:
+ 
+ a) The Collaborative Staging section was removed from the Health Summary ONC
+ Remote Data View.  This was required due to the display of old/outdated AJCC
+ 6th Edition fields and also, since Collaborative Staging of Malignant Tumor
+ TNM values will be retired with 2016 and later cases, these obsolete fields
+ needed to be removed from the displays anyway.
+ 
+ b) The Date of First Contact (#165.5, #155) and Laterality (#165.5, #28)
+ fields were added to the display in the Cancer Identification section.
+ 
+ c) The following fields were added to the First Course of Treatment section:
+ Surgery of Primary Site @FAC (#165.5, #50.3)
+ Surgery of Other Site (#165.5, #139.2)
+ Surg of Other Site @FAC (#165.5, #139.3)
+ METS Site Resected (#165.5, #139.6)
+ Radiation @FAC (#165.5, #51.4)
+ Chemotherapy @FAC (#165.5, #53.3)
+ Hormone Therapy @FAC (#165.5, #54.3)
+ Immunotherapy @FAC (#165.5, #55.3)
+ HEMA Trans/Endocrine @FAC (#165.5, #153.2)
+ Other Treatment @FAC (#165.5, #57.3)
+ Palliative Care @FAC (#165.5, #13)
+ 
+ d) The following fields were added under the Subsequent Course of Treatment
+ section:
+ Scope of LN Surgery (#165.51, #35)
+ Surgical Proc/Other Site (#165.51, #36)
+ METS Site Resected (#165.51, #40)
+ 
+ e) The Date Last Contact (#165.5, #200) field was added to the end of
+ the display.
+ 
+ Patch Components
+ ================
+ Routines:
+ ---------
+ This release contains 2 routines: 
+ GMTSONE
+ GMTSONE1
+  
+ Files & Fields Associated:     
+ File Name (#)              Field Name (#)                   New/Modified/Deleted
+ -------------              ------------------               --------------------
+ N/A
+  
+ Forms Associated:                                          
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:                             
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+ Option Name                                        Type    New/Modified/Deleted
+ -----------                                        ----    --------------------
+ N/A 
+  
+ Protocols Associated:                                     
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:                         
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+ Template Name              Type      File Name (#)     New/Modified/Deleted
+ -------------              ----      -------------     --------------------
+ N/A
+  
+ Test Sites
+ ==========
+ Hines VAMC 
+ Washington, DC VAMC 
+ West Haven, Ct HCS
+  
+ Documentation Retrieval:
+ ========================
+ There is no new documentation for this patch.
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ==============================
+ N/A 
+  
+  
+ Installation instructions:
+ ==========================
+ This patch should be loaded with Health Summary users off the system. 
+ Installation will take less than 5 minutes.  Patch installation may be queued.
+  
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+     
+ Software Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file.
+ This patch is available as a Kernel Installation and Distribution
+ System (KIDS) distribution file.  The Host File is named GMTS27P117.KID.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+  
+  
+ 1. Load the KIDS distribution file via the 'Load a Distribution' option 
+ on the KIDS Installation menu. 
+  
+ 2. Prior to installing the patch you may want to make use of the following
+ optional installation options located on the KIDS Installation menu:
+  
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+    b.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+  
+    c.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+  
+ 3. Install the KIDS distribution via the 'Install Package(s)' option on 
+ the KIDS Installation menu.
+  
+    a.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+        Install? NO//' Answer NO.
+  
+    b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//' Answer NO.
+   
+    c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//' Answer NO.
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSONE
+    Before:  B4151194   After:  B4165395  **36,35,42,54,56,72,117**
+Routine Name: GMTSONE1
+    Before: B64993784   After:B144053030  **72,117**
+ 
+Routine list of preceding patches: 72
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 21, 2016
+Completed By:                               Date Completed: AUG 24, 2016
+Released By :                               Date Released : SEP 14, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,114 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 06/21/16 at 14:12
+=============================================================================
+Run Date: AUG 17, 2016                     Designation: TIU*1*304
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #271                      Status: Released
+                  Compliance Date: SEP 17, 2016
+=============================================================================
+
+Associated patches: (v)TIU*1*295   <<= must be installed BEFORE `TIU*1*304'
+
+Subject: TIU UNDEF ERROR VIEWING CONSULT LINKED TO NON-EXISTENT TIU NOTE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue
+  
+ 1) Correct cause of error <UNDEFINED> PRINT+23^GMRCTIUP
+  
+ Associated CA SDM ticket(s):
+ ============================
+ 1) I9348197FY16 - GMRC IS CAUSING ONGOING ERRORS
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ ========================= 
+ Wilmington VAMC (DE)  
+ Charles George VAMC (Asheville, NC) 
+ Upstate New York HCS (VISN 2 North)
+  
+    
+ CA SDM Overview:
+ ================
+ 1) I9348197FY16 - GMRC IS CAUSING ONGOING ERRORS
+  
+   Problem: 
+   -------- 
+   This patch addresses an error that can occur when viewing a consult in
+   CPRS. The error <UNDEFINED> PRINT+23^GMRCTIUP occurs when viewing a
+   consult that is linked to a non-existent TIU note.
+  
+   Resolution:
+   -----------
+   Routine TIUSRVR1 is modified to initialize variable TIUY which is
+   returned back to the calling routine.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is not necessary to disable any options.  It is recommended to install
+ this patch when users are off the system. It should take less than one (1)
+ minute to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter TIU*1.0*304)
+   
+       a.  Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+       b.  Print Transport Global - This option will allow you to view
+           the components of the KIDS build.
+       c.  Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+           (routines, DD's, templates, etc.).
+       d.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package TIU*1.0*304.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUSRVR1
+    Before: B42513780   After: B43572995  **19,32,87,89,100,109,112,173,
+                                           186,208,211,222,295,304**
+ 
+Routine list of preceding patches: 295
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 20, 2016
+Completed By:                               Date Completed: AUG 12, 2016
+Released By :                               Date Released : AUG 17, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

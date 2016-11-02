@@ -1,0 +1,2017 @@
+Released OR*3*422 SEQ #368
+Extracted from mail message
+**KIDS**:OR*3.0*422^
+
+**INSTALL NAME**
+OR*3.0*422
+"BLD",9611,0)
+OR*3.0*422^ORDER ENTRY/RESULTS REPORTING^0^3160113^y
+"BLD",9611,1,0)
+^^182^182^3160112^^
+"BLD",9611,1,1,0)
+The OR*3.0*422 patch allows the use of special characters (particularly 
+"BLD",9611,1,2,0)
+punctuation) within the Order Menu Management Menu Editor. A previous 
+"BLD",9611,1,3,0)
+VistA patch disallowed use of special characters. The patch was intended 
+"BLD",9611,1,4,0)
+to prevent display problems within ListManager; however, most sites are 
+"BLD",9611,1,5,0)
+using the Computerized Patient Record System (CPRS) Graphical User 
+"BLD",9611,1,6,0)
+Interface (GUI) and the inability to utilize punctuation can negatively 
+"BLD",9611,1,7,0)
+impact the clarity of menu options and instructions. This modification 
+"BLD",9611,1,8,0)
+restores the ability to use certain special characters in Order Menu 
+"BLD",9611,1,9,0)
+Management so that users can more clearly specify order menu options. 
+"BLD",9611,1,10,0)
+ 
+"BLD",9611,1,11,0)
+Use of the following special characters will now be allowed: hyphen (-), 
+"BLD",9611,1,12,0)
+semicolon (;), comma (,), and equal sign (=). Use of the caret (^) is 
+"BLD",9611,1,13,0)
+still restricted because it is used as a field delimiter in VistA. 
+"BLD",9611,1,14,0)
+ 
+"BLD",9611,1,15,0)
+Additional changes will be made to the Data Dictionary elements of the 
+"BLD",9611,1,16,0)
+ORDER DIALOG (#101.41) file to modify the Help displayed when entering a 
+"BLD",9611,1,17,0)
+question mark at a VistA prompt. The affected fields are: 
+"BLD",9611,1,18,0)
+ 
+"BLD",9611,1,19,0)
+* ORDER DIALOG (#101.41) file, DISPLAY TEXT (#2) field 
+"BLD",9611,1,20,0)
+ 
+"BLD",9611,1,21,0)
+* ORDER DIALOG (#101.41) file, ITEMS (#10) sub-file, DISPLAY TEXT (#4) 
+"BLD",9611,1,22,0)
+field 
+"BLD",9611,1,23,0)
+ 
+"BLD",9611,1,24,0)
+This intake has been implemented locally at the VA centers in Fargo, ND; 
+"BLD",9611,1,25,0)
+Sioux Falls, SD; Meade, MD; Minneapolis, MN; Omaha, NE; Richmond, VA; St. 
+"BLD",9611,1,26,0)
+Cloud, MN; Seattle, WA; Milwaukee, WI; Hot Springs, AR; Des Moines, IA; 
+"BLD",9611,1,27,0)
+and Iowa City, IA. 
+"BLD",9611,1,28,0)
+ 
+"BLD",9611,1,29,0)
+The NSR for this intake addresses the following requirement: 
+"BLD",9611,1,30,0)
+ 
+"BLD",9611,1,31,0)
+* VHBAO: NEED3045 Provide the ability for the users to include 
+"BLD",9611,1,32,0)
+punctuation and other special characters in CPRS order menu notes.
+"BLD",9611,1,33,0)
+ 
+"BLD",9611,1,34,0)
+Patch Components
+"BLD",9611,1,35,0)
+================
+"BLD",9611,1,36,0)
+ 
+"BLD",9611,1,37,0)
+Files & Fields Associated:
+"BLD",9611,1,38,0)
+ 
+"BLD",9611,1,39,0)
+File Name (Number)       Field Name (Number)       New/Modified/Deleted
+"BLD",9611,1,40,0)
+---------------------    --------------------      --------------------
+"BLD",9611,1,41,0)
+ORDER DIALOG (#101.41)   DISPLAY TEXT (#2)         MODIFIED
+"BLD",9611,1,42,0)
+ 
+"BLD",9611,1,43,0)
+ORDER DIALOG,
+"BLD",9611,1,44,0)
+ITEMS (#101.412)         DISPLAY TEXT (#4)         MODIFIED
+"BLD",9611,1,45,0)
+ 
+"BLD",9611,1,46,0)
+ 
+"BLD",9611,1,47,0)
+ 
+"BLD",9611,1,48,0)
+Forms Associated:
+"BLD",9611,1,49,0)
+ 
+"BLD",9611,1,50,0)
+Form Name                File #       New/Modified/Deleted
+"BLD",9611,1,51,0)
+---------                ------       --------------------
+"BLD",9611,1,52,0)
+N/A
+"BLD",9611,1,53,0)
+ 
+"BLD",9611,1,54,0)
+Mail Groups Associated:
+"BLD",9611,1,55,0)
+ 
+"BLD",9611,1,56,0)
+Mail Group Name          New/Modified/Deleted
+"BLD",9611,1,57,0)
+---------------          --------------------
+"BLD",9611,1,58,0)
+N/A
+"BLD",9611,1,59,0)
+ 
+"BLD",9611,1,60,0)
+Options Associated:
+"BLD",9611,1,61,0)
+ 
+"BLD",9611,1,62,0)
+Option Name            Type               New/Modified/Deleted
+"BLD",9611,1,63,0)
+-----------            ----               --------------------
+"BLD",9611,1,64,0)
+N/A
+"BLD",9611,1,65,0)
+ 
+"BLD",9611,1,66,0)
+Protocols Associated:
+"BLD",9611,1,67,0)
+ 
+"BLD",9611,1,68,0)
+Protocol Name       New/Modified/Deleted
+"BLD",9611,1,69,0)
+-------------       --------------------
+"BLD",9611,1,70,0)
+N/A
+"BLD",9611,1,71,0)
+ 
+"BLD",9611,1,72,0)
+Security Keys Associated:
+"BLD",9611,1,73,0)
+ 
+"BLD",9611,1,74,0)
+Security Key Name
+"BLD",9611,1,75,0)
+-----------------
+"BLD",9611,1,76,0)
+N/A
+"BLD",9611,1,77,0)
+ 
+"BLD",9611,1,78,0)
+Templates Associated:
+"BLD",9611,1,79,0)
+ 
+"BLD",9611,1,80,0)
+Template Name      Type      File Name (Number)  New/Modified/Deleted 
+"BLD",9611,1,81,0)
+-------------      ----      ------------------  --------------------
+"BLD",9611,1,82,0)
+N/A
+"BLD",9611,1,83,0)
+ 
+"BLD",9611,1,84,0)
+Additional Information:
+"BLD",9611,1,85,0)
+ 
+"BLD",9611,1,86,0)
+ 
+"BLD",9611,1,87,0)
+New Service Requests (NSRs)
+"BLD",9611,1,88,0)
+----------------------------
+"BLD",9611,1,89,0)
+NSR 20131108 REMOVE LISTMANAGER RESTRICTIONS ON MNEMONICS
+"BLD",9611,1,90,0)
+ 
+"BLD",9611,1,91,0)
+Patient Safety Issues (PSIs)
+"BLD",9611,1,92,0)
+-----------------------------
+"BLD",9611,1,93,0)
+N/A
+"BLD",9611,1,94,0)
+ 
+"BLD",9611,1,95,0)
+Remedy Ticket(s) & Overview
+"BLD",9611,1,96,0)
+---------------------------
+"BLD",9611,1,97,0)
+N/A
+"BLD",9611,1,98,0)
+ 
+"BLD",9611,1,99,0)
+Problem:
+"BLD",9611,1,100,0)
+--------
+"BLD",9611,1,101,0)
+With the switch to using CPRS GUI Order Menus rather than ListManager 
+"BLD",9611,1,102,0)
+ordering menu options, there remains a limitation on the characters 
+"BLD",9611,1,103,0)
+allowed to build menu items.  Specifically, the equal sign (=), comma 
+"BLD",9611,1,104,0)
+(,), semi-colon (;), and hyphen (-) are restricted when they do not need 
+"BLD",9611,1,105,0)
+to be.
+"BLD",9611,1,106,0)
+ 
+"BLD",9611,1,107,0)
+Resolution:
+"BLD",9611,1,108,0)
+-----------
+"BLD",9611,1,109,0)
+Remove the restrictions on certain special characters by modifying the 
+"BLD",9611,1,110,0)
+CHKNAM tag inside the ORUTL routine in order to remove the restriction 
+"BLD",9611,1,111,0)
+for the characters stated above.  The up-arrow (^) still remains as a 
+"BLD",9611,1,112,0)
+restricted character because of M (MUMPS) restrictions.
+"BLD",9611,1,113,0)
+ 
+"BLD",9611,1,114,0)
+Test Sites:
+"BLD",9611,1,115,0)
+ 
+"BLD",9611,1,116,0)
+Hunter Holmes McGuire VA Medical Center (Richmond)
+"BLD",9611,1,117,0)
+ 
+"BLD",9611,1,118,0)
+Orlando VA Medical Center
+"BLD",9611,1,119,0)
+ 
+"BLD",9611,1,120,0)
+William S. Middleton Memorial Veterans Hospital (Madison)
+"BLD",9611,1,121,0)
+ 
+"BLD",9611,1,122,0)
+VA Central Plains Health Care System (Omaha, Lincoln, Grand Island of NE, 
+"BLD",9611,1,123,0)
+Des Moines, Knoxville, Iowa City of IA)
+"BLD",9611,1,124,0)
+ 
+"BLD",9611,1,125,0)
+ 
+"BLD",9611,1,126,0)
+Documentation Retrieval Instructions
+"BLD",9611,1,127,0)
+------------------------------------ 
+"BLD",9611,1,128,0)
+ 
+"BLD",9611,1,129,0)
+ 
+"BLD",9611,1,130,0)
+Pre/Post Installation Overview
+"BLD",9611,1,131,0)
+------------------------------
+"BLD",9611,1,132,0)
+ 
+"BLD",9611,1,133,0)
+ 
+"BLD",9611,1,134,0)
+Pre-Installation Instructions
+"BLD",9611,1,135,0)
+-------------------------
+"BLD",9611,1,136,0)
+This patch may be installed with users on the system although it is
+"BLD",9611,1,137,0)
+recommended that it be installed during non-peak hours to minimize 
+"BLD",9611,1,138,0)
+potential disruption to users.  This patch should take less than 5 
+"BLD",9611,1,139,0)
+minutes to install.
+"BLD",9611,1,140,0)
+ 
+"BLD",9611,1,141,0)
+ 
+"BLD",9611,1,142,0)
+Installation Instructions
+"BLD",9611,1,143,0)
+-----------------------------
+"BLD",9611,1,144,0)
+1.      Choose the PackMan message containing this patch.
+"BLD",9611,1,145,0)
+ 
+"BLD",9611,1,146,0)
+2.      Choose the INSTALL/CHECK MESSAGE PackMan option.  
+"BLD",9611,1,147,0)
+ 
+"BLD",9611,1,148,0)
+3.      From the Kernel Installation and Distribution System Menu, select 
+"BLD",9611,1,149,0)
+        the Installation Menu.  From this menu, you may elect to use the 
+"BLD",9611,1,150,0)
+        following options. When prompted for the INSTALL NAME enter
+"BLD",9611,1,151,0)
+        OR*3.0*422.
+"BLD",9611,1,152,0)
+ 
+"BLD",9611,1,153,0)
+        a. Verify Checksums in Transport Global - This option will 
+"BLD",9611,1,154,0)
+            allow you to ensure the integrity of the routines that are in
+"BLD",9611,1,155,0)
+            the transport global.
+"BLD",9611,1,156,0)
+        b. Print Transport Global - This option will allow you to view
+"BLD",9611,1,157,0)
+            the components of the KIDS build.
+"BLD",9611,1,158,0)
+        c. Compare Transport Global to Current System - This option will
+"BLD",9611,1,159,0)
+            allow you to view all changes that will be made when this 
+"BLD",9611,1,160,0)
+            patch is installed.  It compares all components of this patch
+"BLD",9611,1,161,0)
+            (routines, DD's, templates, etc.).
+"BLD",9611,1,162,0)
+        d. Backup a Transport Global - This option will create a backup
+"BLD",9611,1,163,0)
+            message of any routines exported with this patch. It will not
+"BLD",9611,1,164,0)
+            backup any other changes such as DD's or templates.
+"BLD",9611,1,165,0)
+ 
+"BLD",9611,1,166,0)
+4.      From the Installation Menu, select the Install Package(s) option 
+"BLD",9611,1,167,0)
+        and choose the patch to install.
+"BLD",9611,1,168,0)
+ 
+"BLD",9611,1,169,0)
+5.      When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+"BLD",9611,1,170,0)
+        Install? NO// Press <Enter>
+"BLD",9611,1,171,0)
+ 
+"BLD",9611,1,172,0)
+6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+"BLD",9611,1,173,0)
+        NO// Press <Enter>
+"BLD",9611,1,174,0)
+ 
+"BLD",9611,1,175,0)
+7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+"BLD",9611,1,176,0)
+        and Protocols? NO// Press <Enter>
+"BLD",9611,1,177,0)
+ 
+"BLD",9611,1,178,0)
+8.      If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+"BLD",9611,1,179,0)
+ 
+"BLD",9611,1,180,0)
+ 
+"BLD",9611,1,181,0)
+Post-Installation Instructions
+"BLD",9611,1,182,0)
+N/A
+"BLD",9611,4,0)
+^9.64PA^101.41^1
+"BLD",9611,4,101.41,0)
+101.41
+"BLD",9611,4,101.41,2,0)
+^9.641^101.412^2
+"BLD",9611,4,101.41,2,101.41,0)
+ORDER DIALOG  (File-top level)
+"BLD",9611,4,101.41,2,101.41,1,0)
+^9.6411^2^1
+"BLD",9611,4,101.41,2,101.41,1,2,0)
+DISPLAY TEXT
+"BLD",9611,4,101.41,2,101.412,0)
+ITEMS  (sub-file)
+"BLD",9611,4,101.41,2,101.412,1,0)
+^9.6411^4^1
+"BLD",9611,4,101.41,2,101.412,1,4,0)
+DISPLAY TEXT
+"BLD",9611,4,101.41,222)
+y^y^p^^^^n^^n
+"BLD",9611,4,101.41,224)
+
+"BLD",9611,4,"APDD",101.41,101.41)
+
+"BLD",9611,4,"APDD",101.41,101.41,2)
+
+"BLD",9611,4,"APDD",101.41,101.412)
+
+"BLD",9611,4,"APDD",101.41,101.412,4)
+
+"BLD",9611,4,"B",101.41,101.41)
+
+"BLD",9611,6.3)
+2
+"BLD",9611,"ABPKG")
+n
+"BLD",9611,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9611,"KRN",.4,0)
+.4
+"BLD",9611,"KRN",.401,0)
+.401
+"BLD",9611,"KRN",.402,0)
+.402
+"BLD",9611,"KRN",.403,0)
+.403
+"BLD",9611,"KRN",.5,0)
+.5
+"BLD",9611,"KRN",.84,0)
+.84
+"BLD",9611,"KRN",3.6,0)
+3.6
+"BLD",9611,"KRN",3.8,0)
+3.8
+"BLD",9611,"KRN",9.2,0)
+9.2
+"BLD",9611,"KRN",9.8,0)
+9.8
+"BLD",9611,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",9611,"KRN",9.8,"NM",1,0)
+ORUTL^^0^B85871234
+"BLD",9611,"KRN",9.8,"NM",2,0)
+ORCMEDT2^^0^B73834836
+"BLD",9611,"KRN",9.8,"NM","B","ORCMEDT2",2)
+
+"BLD",9611,"KRN",9.8,"NM","B","ORUTL",1)
+
+"BLD",9611,"KRN",19,0)
+19
+"BLD",9611,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",9611,"KRN",19.1,0)
+19.1
+"BLD",9611,"KRN",101,0)
+101
+"BLD",9611,"KRN",409.61,0)
+409.61
+"BLD",9611,"KRN",771,0)
+771
+"BLD",9611,"KRN",779.2,0)
+779.2
+"BLD",9611,"KRN",870,0)
+870
+"BLD",9611,"KRN",8989.51,0)
+8989.51
+"BLD",9611,"KRN",8989.52,0)
+8989.52
+"BLD",9611,"KRN",8994,0)
+8994
+"BLD",9611,"KRN","B",.4,.4)
+
+"BLD",9611,"KRN","B",.401,.401)
+
+"BLD",9611,"KRN","B",.402,.402)
+
+"BLD",9611,"KRN","B",.403,.403)
+
+"BLD",9611,"KRN","B",.5,.5)
+
+"BLD",9611,"KRN","B",.84,.84)
+
+"BLD",9611,"KRN","B",3.6,3.6)
+
+"BLD",9611,"KRN","B",3.8,3.8)
+
+"BLD",9611,"KRN","B",9.2,9.2)
+
+"BLD",9611,"KRN","B",9.8,9.8)
+
+"BLD",9611,"KRN","B",19,19)
+
+"BLD",9611,"KRN","B",19.1,19.1)
+
+"BLD",9611,"KRN","B",101,101)
+
+"BLD",9611,"KRN","B",409.61,409.61)
+
+"BLD",9611,"KRN","B",771,771)
+
+"BLD",9611,"KRN","B",779.2,779.2)
+
+"BLD",9611,"KRN","B",870,870)
+
+"BLD",9611,"KRN","B",8989.51,8989.51)
+
+"BLD",9611,"KRN","B",8989.52,8989.52)
+
+"BLD",9611,"KRN","B",8994,8994)
+
+"BLD",9611,"QUES",0)
+^9.62^^
+"BLD",9611,"REQB",0)
+^9.611^1^1
+"BLD",9611,"REQB",1,0)
+OR*3.0*424^1
+"BLD",9611,"REQB","B","OR*3.0*424",1)
+
+"FIA",101.41)
+ORDER DIALOG
+"FIA",101.41,0)
+^ORD(101.41,
+"FIA",101.41,0,0)
+101.41I
+"FIA",101.41,0,1)
+y^y^p^^^^n^^n
+"FIA",101.41,0,10)
+
+"FIA",101.41,0,11)
+
+"FIA",101.41,0,"RLRO")
+
+"FIA",101.41,0,"VR")
+3.0^OR
+"FIA",101.41,101.41)
+1
+"FIA",101.41,101.41,2)
+
+"FIA",101.41,101.412)
+1
+"FIA",101.41,101.412,4)
+
+"MBREQ")
+0
+"PKG",188,-1)
+1^1
+"PKG",188,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",188,20,0)
+^9.402P^^
+"PKG",188,22,0)
+^9.49I^1^1
+"PKG",188,22,1,0)
+3.0^2971217^2981113^1
+"PKG",188,22,1,"PAH",1,0)
+422^3160113
+"PKG",188,22,1,"PAH",1,1,0)
+^^182^182^3160113
+"PKG",188,22,1,"PAH",1,1,1,0)
+The OR*3.0*422 patch allows the use of special characters (particularly 
+"PKG",188,22,1,"PAH",1,1,2,0)
+punctuation) within the Order Menu Management Menu Editor. A previous 
+"PKG",188,22,1,"PAH",1,1,3,0)
+VistA patch disallowed use of special characters. The patch was intended 
+"PKG",188,22,1,"PAH",1,1,4,0)
+to prevent display problems within ListManager; however, most sites are 
+"PKG",188,22,1,"PAH",1,1,5,0)
+using the Computerized Patient Record System (CPRS) Graphical User 
+"PKG",188,22,1,"PAH",1,1,6,0)
+Interface (GUI) and the inability to utilize punctuation can negatively 
+"PKG",188,22,1,"PAH",1,1,7,0)
+impact the clarity of menu options and instructions. This modification 
+"PKG",188,22,1,"PAH",1,1,8,0)
+restores the ability to use certain special characters in Order Menu 
+"PKG",188,22,1,"PAH",1,1,9,0)
+Management so that users can more clearly specify order menu options. 
+"PKG",188,22,1,"PAH",1,1,10,0)
+ 
+"PKG",188,22,1,"PAH",1,1,11,0)
+Use of the following special characters will now be allowed: hyphen (-), 
+"PKG",188,22,1,"PAH",1,1,12,0)
+semicolon (;), comma (,), and equal sign (=). Use of the caret (^) is 
+"PKG",188,22,1,"PAH",1,1,13,0)
+still restricted because it is used as a field delimiter in VistA. 
+"PKG",188,22,1,"PAH",1,1,14,0)
+ 
+"PKG",188,22,1,"PAH",1,1,15,0)
+Additional changes will be made to the Data Dictionary elements of the 
+"PKG",188,22,1,"PAH",1,1,16,0)
+ORDER DIALOG (#101.41) file to modify the Help displayed when entering a 
+"PKG",188,22,1,"PAH",1,1,17,0)
+question mark at a VistA prompt. The affected fields are: 
+"PKG",188,22,1,"PAH",1,1,18,0)
+ 
+"PKG",188,22,1,"PAH",1,1,19,0)
+* ORDER DIALOG (#101.41) file, DISPLAY TEXT (#2) field 
+"PKG",188,22,1,"PAH",1,1,20,0)
+ 
+"PKG",188,22,1,"PAH",1,1,21,0)
+* ORDER DIALOG (#101.41) file, ITEMS (#10) sub-file, DISPLAY TEXT (#4) 
+"PKG",188,22,1,"PAH",1,1,22,0)
+field 
+"PKG",188,22,1,"PAH",1,1,23,0)
+ 
+"PKG",188,22,1,"PAH",1,1,24,0)
+This intake has been implemented locally at the VA centers in Fargo, ND; 
+"PKG",188,22,1,"PAH",1,1,25,0)
+Sioux Falls, SD; Meade, MD; Minneapolis, MN; Omaha, NE; Richmond, VA; St. 
+"PKG",188,22,1,"PAH",1,1,26,0)
+Cloud, MN; Seattle, WA; Milwaukee, WI; Hot Springs, AR; Des Moines, IA; 
+"PKG",188,22,1,"PAH",1,1,27,0)
+and Iowa City, IA. 
+"PKG",188,22,1,"PAH",1,1,28,0)
+ 
+"PKG",188,22,1,"PAH",1,1,29,0)
+The NSR for this intake addresses the following requirement: 
+"PKG",188,22,1,"PAH",1,1,30,0)
+ 
+"PKG",188,22,1,"PAH",1,1,31,0)
+* VHBAO: NEED3045 Provide the ability for the users to include 
+"PKG",188,22,1,"PAH",1,1,32,0)
+punctuation and other special characters in CPRS order menu notes.
+"PKG",188,22,1,"PAH",1,1,33,0)
+ 
+"PKG",188,22,1,"PAH",1,1,34,0)
+Patch Components
+"PKG",188,22,1,"PAH",1,1,35,0)
+================
+"PKG",188,22,1,"PAH",1,1,36,0)
+ 
+"PKG",188,22,1,"PAH",1,1,37,0)
+Files & Fields Associated:
+"PKG",188,22,1,"PAH",1,1,38,0)
+ 
+"PKG",188,22,1,"PAH",1,1,39,0)
+File Name (Number)       Field Name (Number)       New/Modified/Deleted
+"PKG",188,22,1,"PAH",1,1,40,0)
+---------------------    --------------------      --------------------
+"PKG",188,22,1,"PAH",1,1,41,0)
+ORDER DIALOG (#101.41)   DISPLAY TEXT (#2)         MODIFIED
+"PKG",188,22,1,"PAH",1,1,42,0)
+ 
+"PKG",188,22,1,"PAH",1,1,43,0)
+ORDER DIALOG,
+"PKG",188,22,1,"PAH",1,1,44,0)
+ITEMS (#101.412)         DISPLAY TEXT (#4)         MODIFIED
+"PKG",188,22,1,"PAH",1,1,45,0)
+ 
+"PKG",188,22,1,"PAH",1,1,46,0)
+ 
+"PKG",188,22,1,"PAH",1,1,47,0)
+ 
+"PKG",188,22,1,"PAH",1,1,48,0)
+Forms Associated:
+"PKG",188,22,1,"PAH",1,1,49,0)
+ 
+"PKG",188,22,1,"PAH",1,1,50,0)
+Form Name                File #       New/Modified/Deleted
+"PKG",188,22,1,"PAH",1,1,51,0)
+---------                ------       --------------------
+"PKG",188,22,1,"PAH",1,1,52,0)
+N/A
+"PKG",188,22,1,"PAH",1,1,53,0)
+ 
+"PKG",188,22,1,"PAH",1,1,54,0)
+Mail Groups Associated:
+"PKG",188,22,1,"PAH",1,1,55,0)
+ 
+"PKG",188,22,1,"PAH",1,1,56,0)
+Mail Group Name          New/Modified/Deleted
+"PKG",188,22,1,"PAH",1,1,57,0)
+---------------          --------------------
+"PKG",188,22,1,"PAH",1,1,58,0)
+N/A
+"PKG",188,22,1,"PAH",1,1,59,0)
+ 
+"PKG",188,22,1,"PAH",1,1,60,0)
+Options Associated:
+"PKG",188,22,1,"PAH",1,1,61,0)
+ 
+"PKG",188,22,1,"PAH",1,1,62,0)
+Option Name            Type               New/Modified/Deleted
+"PKG",188,22,1,"PAH",1,1,63,0)
+-----------            ----               --------------------
+"PKG",188,22,1,"PAH",1,1,64,0)
+N/A
+"PKG",188,22,1,"PAH",1,1,65,0)
+ 
+"PKG",188,22,1,"PAH",1,1,66,0)
+Protocols Associated:
+"PKG",188,22,1,"PAH",1,1,67,0)
+ 
+"PKG",188,22,1,"PAH",1,1,68,0)
+Protocol Name       New/Modified/Deleted
+"PKG",188,22,1,"PAH",1,1,69,0)
+-------------       --------------------
+"PKG",188,22,1,"PAH",1,1,70,0)
+N/A
+"PKG",188,22,1,"PAH",1,1,71,0)
+ 
+"PKG",188,22,1,"PAH",1,1,72,0)
+Security Keys Associated:
+"PKG",188,22,1,"PAH",1,1,73,0)
+ 
+"PKG",188,22,1,"PAH",1,1,74,0)
+Security Key Name
+"PKG",188,22,1,"PAH",1,1,75,0)
+-----------------
+"PKG",188,22,1,"PAH",1,1,76,0)
+N/A
+"PKG",188,22,1,"PAH",1,1,77,0)
+ 
+"PKG",188,22,1,"PAH",1,1,78,0)
+Templates Associated:
+"PKG",188,22,1,"PAH",1,1,79,0)
+ 
+"PKG",188,22,1,"PAH",1,1,80,0)
+Template Name      Type      File Name (Number)  New/Modified/Deleted 
+"PKG",188,22,1,"PAH",1,1,81,0)
+-------------      ----      ------------------  --------------------
+"PKG",188,22,1,"PAH",1,1,82,0)
+N/A
+"PKG",188,22,1,"PAH",1,1,83,0)
+ 
+"PKG",188,22,1,"PAH",1,1,84,0)
+Additional Information:
+"PKG",188,22,1,"PAH",1,1,85,0)
+ 
+"PKG",188,22,1,"PAH",1,1,86,0)
+ 
+"PKG",188,22,1,"PAH",1,1,87,0)
+New Service Requests (NSRs)
+"PKG",188,22,1,"PAH",1,1,88,0)
+----------------------------
+"PKG",188,22,1,"PAH",1,1,89,0)
+NSR 20131108 REMOVE LISTMANAGER RESTRICTIONS ON MNEMONICS
+"PKG",188,22,1,"PAH",1,1,90,0)
+ 
+"PKG",188,22,1,"PAH",1,1,91,0)
+Patient Safety Issues (PSIs)
+"PKG",188,22,1,"PAH",1,1,92,0)
+-----------------------------
+"PKG",188,22,1,"PAH",1,1,93,0)
+N/A
+"PKG",188,22,1,"PAH",1,1,94,0)
+ 
+"PKG",188,22,1,"PAH",1,1,95,0)
+Remedy Ticket(s) & Overview
+"PKG",188,22,1,"PAH",1,1,96,0)
+---------------------------
+"PKG",188,22,1,"PAH",1,1,97,0)
+N/A
+"PKG",188,22,1,"PAH",1,1,98,0)
+ 
+"PKG",188,22,1,"PAH",1,1,99,0)
+Problem:
+"PKG",188,22,1,"PAH",1,1,100,0)
+--------
+"PKG",188,22,1,"PAH",1,1,101,0)
+With the switch to using CPRS GUI Order Menus rather than ListManager 
+"PKG",188,22,1,"PAH",1,1,102,0)
+ordering menu options, there remains a limitation on the characters 
+"PKG",188,22,1,"PAH",1,1,103,0)
+allowed to build menu items.  Specifically, the equal sign (=), comma 
+"PKG",188,22,1,"PAH",1,1,104,0)
+(,), semi-colon (;), and hyphen (-) are restricted when they do not need 
+"PKG",188,22,1,"PAH",1,1,105,0)
+to be.
+"PKG",188,22,1,"PAH",1,1,106,0)
+ 
+"PKG",188,22,1,"PAH",1,1,107,0)
+Resolution:
+"PKG",188,22,1,"PAH",1,1,108,0)
+-----------
+"PKG",188,22,1,"PAH",1,1,109,0)
+Remove the restrictions on certain special characters by modifying the 
+"PKG",188,22,1,"PAH",1,1,110,0)
+CHKNAM tag inside the ORUTL routine in order to remove the restriction 
+"PKG",188,22,1,"PAH",1,1,111,0)
+for the characters stated above.  The up-arrow (^) still remains as a 
+"PKG",188,22,1,"PAH",1,1,112,0)
+restricted character because of M (MUMPS) restrictions.
+"PKG",188,22,1,"PAH",1,1,113,0)
+ 
+"PKG",188,22,1,"PAH",1,1,114,0)
+Test Sites:
+"PKG",188,22,1,"PAH",1,1,115,0)
+ 
+"PKG",188,22,1,"PAH",1,1,116,0)
+Hunter Holmes McGuire VA Medical Center (Richmond)
+"PKG",188,22,1,"PAH",1,1,117,0)
+ 
+"PKG",188,22,1,"PAH",1,1,118,0)
+Orlando VA Medical Center
+"PKG",188,22,1,"PAH",1,1,119,0)
+ 
+"PKG",188,22,1,"PAH",1,1,120,0)
+William S. Middleton Memorial Veterans Hospital (Madison)
+"PKG",188,22,1,"PAH",1,1,121,0)
+ 
+"PKG",188,22,1,"PAH",1,1,122,0)
+VA Central Plains Health Care System (Omaha, Lincoln, Grand Island of NE, 
+"PKG",188,22,1,"PAH",1,1,123,0)
+Des Moines, Knoxville, Iowa City of IA)
+"PKG",188,22,1,"PAH",1,1,124,0)
+ 
+"PKG",188,22,1,"PAH",1,1,125,0)
+ 
+"PKG",188,22,1,"PAH",1,1,126,0)
+Documentation Retrieval Instructions
+"PKG",188,22,1,"PAH",1,1,127,0)
+------------------------------------ 
+"PKG",188,22,1,"PAH",1,1,128,0)
+ 
+"PKG",188,22,1,"PAH",1,1,129,0)
+ 
+"PKG",188,22,1,"PAH",1,1,130,0)
+Pre/Post Installation Overview
+"PKG",188,22,1,"PAH",1,1,131,0)
+------------------------------
+"PKG",188,22,1,"PAH",1,1,132,0)
+ 
+"PKG",188,22,1,"PAH",1,1,133,0)
+ 
+"PKG",188,22,1,"PAH",1,1,134,0)
+Pre-Installation Instructions
+"PKG",188,22,1,"PAH",1,1,135,0)
+-------------------------
+"PKG",188,22,1,"PAH",1,1,136,0)
+This patch may be installed with users on the system although it is
+"PKG",188,22,1,"PAH",1,1,137,0)
+recommended that it be installed during non-peak hours to minimize 
+"PKG",188,22,1,"PAH",1,1,138,0)
+potential disruption to users.  This patch should take less than 5 
+"PKG",188,22,1,"PAH",1,1,139,0)
+minutes to install.
+"PKG",188,22,1,"PAH",1,1,140,0)
+ 
+"PKG",188,22,1,"PAH",1,1,141,0)
+ 
+"PKG",188,22,1,"PAH",1,1,142,0)
+Installation Instructions
+"PKG",188,22,1,"PAH",1,1,143,0)
+-----------------------------
+"PKG",188,22,1,"PAH",1,1,144,0)
+1.      Choose the PackMan message containing this patch.
+"PKG",188,22,1,"PAH",1,1,145,0)
+ 
+"PKG",188,22,1,"PAH",1,1,146,0)
+2.      Choose the INSTALL/CHECK MESSAGE PackMan option.  
+"PKG",188,22,1,"PAH",1,1,147,0)
+ 
+"PKG",188,22,1,"PAH",1,1,148,0)
+3.      From the Kernel Installation and Distribution System Menu, select 
+"PKG",188,22,1,"PAH",1,1,149,0)
+        the Installation Menu.  From this menu, you may elect to use the 
+"PKG",188,22,1,"PAH",1,1,150,0)
+        following options. When prompted for the INSTALL NAME enter
+"PKG",188,22,1,"PAH",1,1,151,0)
+        OR*3.0*422.
+"PKG",188,22,1,"PAH",1,1,152,0)
+ 
+"PKG",188,22,1,"PAH",1,1,153,0)
+        a. Verify Checksums in Transport Global - This option will 
+"PKG",188,22,1,"PAH",1,1,154,0)
+            allow you to ensure the integrity of the routines that are in
+"PKG",188,22,1,"PAH",1,1,155,0)
+            the transport global.
+"PKG",188,22,1,"PAH",1,1,156,0)
+        b. Print Transport Global - This option will allow you to view
+"PKG",188,22,1,"PAH",1,1,157,0)
+            the components of the KIDS build.
+"PKG",188,22,1,"PAH",1,1,158,0)
+        c. Compare Transport Global to Current System - This option will
+"PKG",188,22,1,"PAH",1,1,159,0)
+            allow you to view all changes that will be made when this 
+"PKG",188,22,1,"PAH",1,1,160,0)
+            patch is installed.  It compares all components of this patch
+"PKG",188,22,1,"PAH",1,1,161,0)
+            (routines, DD's, templates, etc.).
+"PKG",188,22,1,"PAH",1,1,162,0)
+        d. Backup a Transport Global - This option will create a backup
+"PKG",188,22,1,"PAH",1,1,163,0)
+            message of any routines exported with this patch. It will not
+"PKG",188,22,1,"PAH",1,1,164,0)
+            backup any other changes such as DD's or templates.
+"PKG",188,22,1,"PAH",1,1,165,0)
+ 
+"PKG",188,22,1,"PAH",1,1,166,0)
+4.      From the Installation Menu, select the Install Package(s) option 
+"PKG",188,22,1,"PAH",1,1,167,0)
+        and choose the patch to install.
+"PKG",188,22,1,"PAH",1,1,168,0)
+ 
+"PKG",188,22,1,"PAH",1,1,169,0)
+5.      When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+"PKG",188,22,1,"PAH",1,1,170,0)
+        Install? NO// Press <Enter>
+"PKG",188,22,1,"PAH",1,1,171,0)
+ 
+"PKG",188,22,1,"PAH",1,1,172,0)
+6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+"PKG",188,22,1,"PAH",1,1,173,0)
+        NO// Press <Enter>
+"PKG",188,22,1,"PAH",1,1,174,0)
+ 
+"PKG",188,22,1,"PAH",1,1,175,0)
+7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+"PKG",188,22,1,"PAH",1,1,176,0)
+        and Protocols? NO// Press <Enter>
+"PKG",188,22,1,"PAH",1,1,177,0)
+ 
+"PKG",188,22,1,"PAH",1,1,178,0)
+8.      If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+"PKG",188,22,1,"PAH",1,1,179,0)
+ 
+"PKG",188,22,1,"PAH",1,1,180,0)
+ 
+"PKG",188,22,1,"PAH",1,1,181,0)
+Post-Installation Instructions
+"PKG",188,22,1,"PAH",1,1,182,0)
+N/A
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","ORCMEDT2")
+0^2^B73834836^B73958895
+"RTN","ORCMEDT2",1,0)
+ORCMEDT2 ;SLC/MKB-Menu Editor cont ; 15 Dec 2015  10:00 AM
+"RTN","ORCMEDT2",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**8,46,95,422**;Dec 17, 1997;Build 2
+"RTN","ORCMEDT2",3,0)
+SELECT(ACTION,Y) ; -- Select item from menu
+"RTN","ORCMEDT2",4,0)
+ N X,XQORM K Y S XQORM=+ORMENU_";"_$J
+"RTN","ORCMEDT2",5,0)
+ S XQORM(0)="Ah",XQORM("A")="Select Item(s): ",XQORM("??")="D LIST^ORDD41(+ORMENU)"
+"RTN","ORCMEDT2",6,0)
+ S X="Enter the items you wish to "_ACTION_", either by mnemonic or text.",XQORM("?")="W !,"""_X_""""
+"RTN","ORCMEDT2",7,0)
+ D EN^XQORM
+"RTN","ORCMEDT2",8,0)
+ Q
+"RTN","ORCMEDT2",9,0)
+ ;
+"RTN","ORCMEDT2",10,0)
+ADDITM ; -- Add new item(s) to menu
+"RTN","ORCMEDT2",11,0)
+ N DA,DR,DIE,DONE,OREBLD,DLG,ROW,COL,POS
+"RTN","ORCMEDT2",12,0)
+ D FULL^VALM1 S VALMBCK="R"
+"RTN","ORCMEDT2",13,0)
+ S DA(1)=+ORMENU,DIE="^ORD(101.41,"_DA(1)_",10,"
+"RTN","ORCMEDT2",14,0)
+ S:'$D(^ORD(101.41,+ORMENU,10,0)) ^(0)="^101.412AI^^"
+"RTN","ORCMEDT2",15,0)
+ S (DONE,OREBLD)=0 F  D  Q:DONE  W !
+"RTN","ORCMEDT2",16,0)
+ . S DLG=$$ITEM^ORCMEDT0 I DLG'>0 S DONE=1 Q
+"RTN","ORCMEDT2",17,0)
+ADD1 . S ROW=$$ROW Q:ROW="^"
+"RTN","ORCMEDT2",18,0)
+ . S COL=$$COL Q:COL="^"  S POS=ROW_"."_COL
+"RTN","ORCMEDT2",19,0)
+ . I $D(^ORD(101.41,+ORMENU,10,"B",POS)) W $C(7),!,"There is another item in this position already!" G:'$$SHIFT("down") ADD1 D INSERT(POS)
+"RTN","ORCMEDT2",20,0)
+ . S DA=$$NEXT(POS) Q:'DA  S OREBLD=1
+"RTN","ORCMEDT2",21,0)
+ . S DR="2////"_DLG_";4;3" D ^DIE
+"RTN","ORCMEDT2",22,0)
+ I OREBLD W !!,"Rebuilding menu display ..." D INIT^ORCMEDIT S VALMBCK="R"
+"RTN","ORCMEDT2",23,0)
+ Q
+"RTN","ORCMEDT2",24,0)
+ ;
+"RTN","ORCMEDT2",25,0)
+ADDTXT ; -- Add new text to menu
+"RTN","ORCMEDT2",26,0)
+ N DA,DR,DIE,DONE,OREBLD,TXT,ROW,COL,POS,HDR
+"RTN","ORCMEDT2",27,0)
+ D FULL^VALM1 S VALMBCK="R",DIE="^ORD(101.41,"_+ORMENU_",10,"
+"RTN","ORCMEDT2",28,0)
+ S:'$D(^ORD(101.41,+ORMENU,10,0)) ^(0)="^101.412AI^^"
+"RTN","ORCMEDT2",29,0)
+ S (DONE,OREBLD)=0 F  D  Q:DONE  W !
+"RTN","ORCMEDT2",30,0)
+ . S TXT=$$TEXT I "^"[TXT S DONE=1 Q
+"RTN","ORCMEDT2",31,0)
+AT1 . S ROW=$$ROW Q:ROW="^"
+"RTN","ORCMEDT2",32,0)
+ . S COL=$$COL Q:COL="^"  S POS=ROW_"."_COL
+"RTN","ORCMEDT2",33,0)
+ . I $D(^ORD(101.41,+ORMENU,10,"B",POS)) W $C(7),!,"There is another item in this position already!" G:'$$SHIFT("down") AT1 D INSERT(POS)
+"RTN","ORCMEDT2",34,0)
+ . S HDR=$$OUTPUT Q:HDR="^"
+"RTN","ORCMEDT2",35,0)
+ . S DA=$$NEXT(POS) Q:'DA  S OREBLD=1
+"RTN","ORCMEDT2",36,0)
+ . S DR="4///"_TXT_";5///"_HDR D ^DIE
+"RTN","ORCMEDT2",37,0)
+ I OREBLD W !!,"Rebuilding menu display ..." D INIT^ORCMEDIT S VALMBCK="R"
+"RTN","ORCMEDT2",38,0)
+ Q
+"RTN","ORCMEDT2",39,0)
+ ;
+"RTN","ORCMEDT2",40,0)
+ADDROW ; -- Add new row to menu
+"RTN","ORCMEDT2",41,0)
+ N X,Y,DIR
+"RTN","ORCMEDT2",42,0)
+ S DIR(0)="NAO^1:999",DIR("A")="ROW: ",VALMBCK=""
+"RTN","ORCMEDT2",43,0)
+ S DIR("?")="Enter the number of the row where the new line should appear; all menu items in and below this row number will be shifted down one line."
+"RTN","ORCMEDT2",44,0)
+ D ^DIR Q:$D(DTOUT)!$D(DUOUT)!(Y="")
+"RTN","ORCMEDT2",45,0)
+ D INSERT(+Y) S VALMBCK="R"
+"RTN","ORCMEDT2",46,0)
+ W !!,"Rebuilding menu display ..." D INIT^ORCMEDIT
+"RTN","ORCMEDT2",47,0)
+ Q
+"RTN","ORCMEDT2",48,0)
+ ;
+"RTN","ORCMEDT2",49,0)
+TEXT(X) ; -- Display text
+"RTN","ORCMEDT2",50,0)
+ N Y,DIR
+"RTN","ORCMEDT2",51,0)
+ S DIR(0)="FAO^1:80",DIR("A")="DISPLAY TEXT: " S:$L($G(X)) DIR("B")=X
+"RTN","ORCMEDT2",52,0)
+ S DIR("?",1)="Enter the text to be displayed on this menu.  The ; and ^ characters" ;**95
+"RTN","ORCMEDT2",53,0)
+ S DIR("?",2)="are not allowed. Text longer than the column width will" ;**95
+"RTN","ORCMEDT2",54,0)
+ S DIR("?")="not wrap and will not display correctly." ;**95
+"RTN","ORCMEDT2",55,0)
+ASK D ^DIR S:$D(DTOUT)!$D(DUOUT) Y="^;" S:X="@" Y=$S($D(DIR("B")):"@",1:"") ;**95
+"RTN","ORCMEDT2",56,0)
+ I Y'="^" I $$CHKNAM^ORUTL(Y) W $C(7),"??",!,"You may not use the ^ or ; character in your display text." G ASK ;If text doesn't pass input transfrom then ask again **95
+"RTN","ORCMEDT2",57,0)
+ Q Y
+"RTN","ORCMEDT2",58,0)
+ ;
+"RTN","ORCMEDT2",59,0)
+OUTPUT(Z) ; -- Output flag
+"RTN","ORCMEDT2",60,0)
+ N X,Y,DIR
+"RTN","ORCMEDT2",61,0)
+ S DIR(0)="YA",DIR("A")="HEADER: ",DIR("B")=$S($G(Z)=2:"YES",1:"NO")
+"RTN","ORCMEDT2",62,0)
+ S DIR("?")="Enter YES if this text is to be a header, underlined and displaying over the mnemonic; to display this text normally, enter NO."
+"RTN","ORCMEDT2",63,0)
+ D ^DIR S Z=$S($D(DTOUT)!$D(DUOUT):"^",Y:2,1:1)
+"RTN","ORCMEDT2",64,0)
+ Q Z
+"RTN","ORCMEDT2",65,0)
+ ;
+"RTN","ORCMEDT2",66,0)
+NEXT(POS) ; -- Returns next available DA in ORMENU
+"RTN","ORCMEDT2",67,0)
+ N I,HDR,LAST,TOTAL,DA
+"RTN","ORCMEDT2",68,0)
+ S HDR=$G(^ORD(101.41,+ORMENU,10,0)),TOTAL=+$P(HDR,U,4)
+"RTN","ORCMEDT2",69,0)
+ S LAST=$O(^ORD(101.41,+ORMENU,10,"?"),-1)
+"RTN","ORCMEDT2",70,0)
+ S I=LAST F I=(I+1):1 Q:'$D(^ORD(101.41,+ORMENU,10,I,0))
+"RTN","ORCMEDT2",71,0)
+ S DA=I,^ORD(101.41,+ORMENU,10,DA,0)=POS,$P(HDR,U,3,4)=DA_U_(TOTAL+1)
+"RTN","ORCMEDT2",72,0)
+ S ^ORD(101.41,+ORMENU,99)=$H,^(10,0)=HDR,^("B",POS,DA)=""
+"RTN","ORCMEDT2",73,0)
+ Q DA
+"RTN","ORCMEDT2",74,0)
+ ;
+"RTN","ORCMEDT2",75,0)
+REMOVE ; -- Remove item(s) from menu
+"RTN","ORCMEDT2",76,0)
+ N DA,DIK,ORY,ORI,ORDEL,ORPOS
+"RTN","ORCMEDT2",77,0)
+ D FULL^VALM1 S VALMBCK="R"
+"RTN","ORCMEDT2",78,0)
+ D SELECT("remove",.ORY) Q:ORY'>0  Q:'$$SURE
+"RTN","ORCMEDT2",79,0)
+ S ORDEL=$$SHIFT("up") Q:ORDEL="^"
+"RTN","ORCMEDT2",80,0)
+ S DA(1)=+ORMENU,DIK="^ORD(101.41,"_DA(1)_",10,"
+"RTN","ORCMEDT2",81,0)
+ S ORI=0 F  S ORI=$O(ORY(ORI)) Q:'ORI  S DA=+ORY(ORI),ORPOS=$P(^ORD(101.41,+ORMENU,10,DA,0),U) D ^DIK,DELETE(ORPOS):ORDEL
+"RTN","ORCMEDT2",82,0)
+ W !!,"Rebuilding menu display ..." D INIT^ORCMEDIT
+"RTN","ORCMEDT2",83,0)
+ Q
+"RTN","ORCMEDT2",84,0)
+ ;
+"RTN","ORCMEDT2",85,0)
+REMROW ; -- Remove row from menu
+"RTN","ORCMEDT2",86,0)
+ N X,Y,DIR,ORPOS,ORDEL,OROW,DA,DIK
+"RTN","ORCMEDT2",87,0)
+ S DIR(0)="NAO^1:999",DIR("A")="ROW: ",VALMBCK=""
+"RTN","ORCMEDT2",88,0)
+ S DIR("?")="Enter the number of the row to clear items from"
+"RTN","ORCMEDT2",89,0)
+ D ^DIR Q:$D(DTOUT)!$D(DUOUT)!(Y="")  S OROW=+Y Q:'$$SURE
+"RTN","ORCMEDT2",90,0)
+ S ORDEL=$$SHIFT("up",1) Q:ORDEL="^"  S VALMBCK="R"
+"RTN","ORCMEDT2",91,0)
+ S DA(1)=+ORMENU,DIK="^ORD(101.41,"_DA(1)_",10,"
+"RTN","ORCMEDT2",92,0)
+ S ORPOS=OROW F  S ORPOS=$O(^ORD(101.41,+ORMENU,10,"B",ORPOS)) Q:$P(ORPOS,".")'=OROW  S DA=$O(^(ORPOS,0)) D:DA ^DIK
+"RTN","ORCMEDT2",93,0)
+ D:ORDEL DELETE(OROW)
+"RTN","ORCMEDT2",94,0)
+ W !!,"Rebuilding menu display ..." D INIT^ORCMEDIT
+"RTN","ORCMEDT2",95,0)
+ Q
+"RTN","ORCMEDT2",96,0)
+ ;
+"RTN","ORCMEDT2",97,0)
+SURE() ; -- Are you sure?
+"RTN","ORCMEDT2",98,0)
+ N X,Y,DIR W !
+"RTN","ORCMEDT2",99,0)
+ S DIR(0)="YA",DIR("A")="Are you sure you want to remove these items? "
+"RTN","ORCMEDT2",100,0)
+ S DIR("?")="Enter YES if you want to remove these items from this menu; NO will cancel this action."
+"RTN","ORCMEDT2",101,0)
+ D ^DIR
+"RTN","ORCMEDT2",102,0)
+ Q +Y
+"RTN","ORCMEDT2",103,0)
+ ;
+"RTN","ORCMEDT2",104,0)
+MOVE ; -- Move item(s) in menu
+"RTN","ORCMEDT2",105,0)
+ N STOP,OREBLD,DA,DR,DIE,NODE0,ROW,COL,POS,NEW
+"RTN","ORCMEDT2",106,0)
+ D FULL^VALM1 S VALMBCK="R"
+"RTN","ORCMEDT2",107,0)
+ S DA(1)=+ORMENU,DIE="^ORD(101.41,"_DA(1)_",10,"
+"RTN","ORCMEDT2",108,0)
+ D SELECT("move",.ORY) Q:ORY'>0
+"RTN","ORCMEDT2",109,0)
+ S (STOP,OREBLD,ORI)=0 F  S ORI=$O(ORY(ORI)) Q:ORI'>0  D  Q:STOP  W !
+"RTN","ORCMEDT2",110,0)
+ . S DA=+ORY(ORI),NODE0=$G(^ORD(101.41,+ORMENU,10,DA,0)),POS=$P(NODE0,U)
+"RTN","ORCMEDT2",111,0)
+MV1 . S ROW=$$ROW($P(POS,".")) I ROW="^" S STOP=1 Q
+"RTN","ORCMEDT2",112,0)
+ . S COL=$$COL($P(POS,".",2)) I COL="^" S STOP=1 Q
+"RTN","ORCMEDT2",113,0)
+ . S NEW=ROW_"."_COL Q:NEW=POS
+"RTN","ORCMEDT2",114,0)
+ . I $D(^ORD(101.41,+ORMENU,10,"B",NEW)) W $C(7),!,"There is another item in this position already!" G:'$$SHIFT("down") MV1 D INSERT(NEW)
+"RTN","ORCMEDT2",115,0)
+ . S OREBLD=1,DR=".01///"_NEW D ^DIE
+"RTN","ORCMEDT2",116,0)
+ I OREBLD W !!,"Rebuilding menu display ..." D INIT^ORCMEDIT S VALMBCK="R"
+"RTN","ORCMEDT2",117,0)
+ Q
+"RTN","ORCMEDT2",118,0)
+ ;
+"RTN","ORCMEDT2",119,0)
+ROW(X) ; -- Edit row placement
+"RTN","ORCMEDT2",120,0)
+ N Y,DIR
+"RTN","ORCMEDT2",121,0)
+ S DIR(0)="NA^1:999",DIR("A")="ROW: " S:$G(X) DIR("B")=X K X
+"RTN","ORCMEDT2",122,0)
+ S DIR("?")="Enter the row in which you want this item to appear, by number"
+"RTN","ORCMEDT2",123,0)
+ D ^DIR S:$D(DTOUT)!$D(DUOUT)!(Y="") Y="^"
+"RTN","ORCMEDT2",124,0)
+ Q Y
+"RTN","ORCMEDT2",125,0)
+ ;
+"RTN","ORCMEDT2",126,0)
+COL(X) ; -- Edit column placement
+"RTN","ORCMEDT2",127,0)
+ N Y,DIR
+"RTN","ORCMEDT2",128,0)
+ S DIR(0)="NA^1:"_ORCOL,DIR("A")="COLUMN: " S:$G(X) DIR("B")=X K X
+"RTN","ORCMEDT2",129,0)
+ S DIR("?")="Enter the number of the column in which you want this item to be placed."
+"RTN","ORCMEDT2",130,0)
+ D ^DIR S:$D(DTOUT)!$D(DUOUT)!(Y="") Y="^"
+"RTN","ORCMEDT2",131,0)
+ Q Y
+"RTN","ORCMEDT2",132,0)
+ ;
+"RTN","ORCMEDT2",133,0)
+SHIFT(DIRECTN,ROW) ; -- Resolve collision
+"RTN","ORCMEDT2",134,0)
+ N X,Y,DIR
+"RTN","ORCMEDT2",135,0)
+ S DIR(0)="YA",DIR("B")="YES"
+"RTN","ORCMEDT2",136,0)
+ S DIR("A")="Do you want to shift items "_$S('$G(ROW):"in this column ",1:"")_DIRECTN_"? "
+"RTN","ORCMEDT2",137,0)
+ S DIR("?")="Enter YES to move the entries "_$S('$G(ROW):"in this column ",1:"")_DIRECTN_" one line"
+"RTN","ORCMEDT2",138,0)
+ D ^DIR S:$D(DTOUT)!$D(DUOUT) Y="^"
+"RTN","ORCMEDT2",139,0)
+ Q Y
+"RTN","ORCMEDT2",140,0)
+ ;
+"RTN","ORCMEDT2",141,0)
+INSERT(Y) ; -- Make room for item at position Y
+"RTN","ORCMEDT2",142,0)
+ N CP,POS,DA S CP=$P(Y,".",2),POS=999.999
+"RTN","ORCMEDT2",143,0)
+ F  S POS=$O(^ORD(101.41,+ORMENU,10,"B",POS),-1) Q:POS<Y  I (CP="")!($P(POS,".",2)=CP) S DA=$O(^(POS,0)) D
+"RTN","ORCMEDT2",144,0)
+ . S X=($P(POS,".")+1)_"."_$P(POS,".",2),$P(^ORD(101.41,+ORMENU,10,DA,0),U)=X
+"RTN","ORCMEDT2",145,0)
+ . S ^ORD(101.41,+ORMENU,10,"B",X,DA)="" K ^ORD(101.41,+ORMENU,10,"B",POS)
+"RTN","ORCMEDT2",146,0)
+ Q
+"RTN","ORCMEDT2",147,0)
+ ;
+"RTN","ORCMEDT2",148,0)
+DELETE(Y) ; -- Remove item at position Y
+"RTN","ORCMEDT2",149,0)
+ N CP,POS,DA S POS=Y,CP=$P(Y,".",2)
+"RTN","ORCMEDT2",150,0)
+ F  S POS=$O(^ORD(101.41,+ORMENU,10,"B",POS)) Q:POS'>0  I (CP="")!($P(POS,".",2)=CP) S DA=$O(^(POS,0)) D
+"RTN","ORCMEDT2",151,0)
+ . S X=($P(POS,".")-1)_"."_$P(POS,".",2),$P(^ORD(101.41,+ORMENU,10,DA,0),U)=X
+"RTN","ORCMEDT2",152,0)
+ . S ^ORD(101.41,+ORMENU,10,"B",X,DA)="" K ^ORD(101.41,+ORMENU,10,"B",POS)
+"RTN","ORCMEDT2",153,0)
+ Q
+"RTN","ORCMEDT2",154,0)
+ ;
+"RTN","ORCMEDT2",155,0)
+EDIT ; -- Edit item(s) in menu
+"RTN","ORCMEDT2",156,0)
+ N STOP,OREBLD,DA,DR,DIE,OR0,ORY,ORI,PTR,ROW,COL,POS,NEWPOS,ORDG,P
+"RTN","ORCMEDT2",157,0)
+ D FULL^VALM1,SELECT("change",.ORY) S VALMBCK="R" Q:ORY'>0
+"RTN","ORCMEDT2",158,0)
+ S (STOP,OREBLD,ORI)=0 F  S ORI=$O(ORY(ORI)) Q:ORI'>0  D  Q:STOP  W !
+"RTN","ORCMEDT2",159,0)
+ . S DA=+ORY(ORI),OR0=$G(^ORD(101.41,+ORMENU,10,DA,0)),PTR=+$P(OR0,U,2)
+"RTN","ORCMEDT2",160,0)
+ . S DIE("NO^")="OUTOK",DA(1)=+ORMENU,DIE="^ORD(101.41,"_DA(1)_",10,"
+"RTN","ORCMEDT2",161,0)
+ . I PTR S P=$$ITEM^ORCMEDT0(PTR) S:'P STOP=1 I P S DR=$S(P'=PTR:"2////"_P_";",1:"")_"4;3" D ^DIE S:$D(Y) STOP=1 ;^ or timeout
+"RTN","ORCMEDT2",162,0)
+ . I 'PTR D  Q:STOP  ;edit #4&5
+"RTN","ORCMEDT2",163,0)
+ . . N X1,X2 S X1=$P(OR0,U,4),X2=$P(OR0,U,5)
+"RTN","ORCMEDT2",164,0)
+ED0 . . S X1=$$TEXT($P(OR0,U,4)) I X1="^" S STOP=1 Q
+"RTN","ORCMEDT2",165,0)
+ . . I X1="@" G:'$$SURE ED0 S DIK=DIE,(STOP,OREBLD)=1 D ^DIK Q
+"RTN","ORCMEDT2",166,0)
+ . . S X2=$$OUTPUT(X2) S:X2="^" STOP=1,X2=$P(OR0,U,5)
+"RTN","ORCMEDT2",167,0)
+ . . S ^ORD(101.41,+ORMENU,99)=$H,$P(^(10,DA,0),U,4,5)=X1_U_X2
+"RTN","ORCMEDT2",168,0)
+ . S:OR0'=$G(^ORD(101.41,+ORMENU,10,DA,0)) OREBLD=1,OR0=$G(^(0))
+"RTN","ORCMEDT2",169,0)
+ . Q:$G(STOP)  S PTR=+$P(OR0,U,2)
+"RTN","ORCMEDT2",170,0)
+ED1 . S POS=$P(OR0,U),ROW=$$ROW($P(POS,".")) I ROW="^" S STOP=1 Q
+"RTN","ORCMEDT2",171,0)
+ . S COL=$$COL($P(POS,".",2)) I COL="^" S STOP=1 Q
+"RTN","ORCMEDT2",172,0)
+ . S NEWPOS=ROW_"."_COL G:POS=NEWPOS ED2 ; no change
+"RTN","ORCMEDT2",173,0)
+ . I $D(^ORD(101.41,+ORMENU,10,"B",NEWPOS)) W $C(7),!,"There is another item in this position already!" G:'$$SHIFT("down") ED1 D INSERT(NEWPOS)
+"RTN","ORCMEDT2",174,0)
+ . S OREBLD=1,DR=".01///"_NEWPOS D ^DIE
+"RTN","ORCMEDT2",175,0)
+ED2 . Q:'PTR  S TYPE=$P($G(^ORD(101.41,PTR,0)),U,4),ORDG=+$P($G(^(0)),U,5)
+"RTN","ORCMEDT2",176,0)
+ . I TYPE'="M",$$EDTITM(TYPE) D QCK0^ORCMEDT1(PTR):TYPE="Q",SET0^ORCMEDT1(PTR):TYPE="O",EN1^ORCMEDT3(PTR):TYPE="D"
+"RTN","ORCMEDT2",177,0)
+ I OREBLD W !!,"Rebuilding menu display ..." D INIT^ORCMEDIT S VALMBCK="R"
+"RTN","ORCMEDT2",178,0)
+ Q
+"RTN","ORCMEDT2",179,0)
+ ;
+"RTN","ORCMEDT2",180,0)
+EDTITM(X) ; -- Edit item itself?
+"RTN","ORCMEDT2",181,0)
+ N Y,DIR S DIR(0)="YA",DIR("B")="YES",Y=""
+"RTN","ORCMEDT2",182,0)
+ S:X="Q" DIR("A")="Edit this quick order? ",DIR("?")="Enter YES to edit the responses in this quick order, or NO to exit."
+"RTN","ORCMEDT2",183,0)
+ S:X="O" DIR("A")="Edit this order set? ",DIR("?")="Enter YES to edit the orders in this set, or NO to exit."
+"RTN","ORCMEDT2",184,0)
+ S:X="D" DIR("A")="Edit this order dialog? ",DIR("?")="Enter YES to edit the prompts in this dialog, or NO to exit."
+"RTN","ORCMEDT2",185,0)
+ I $D(DIR("A")) D ^DIR S:$D(DTOUT)!(X["^") Y="^"
+"RTN","ORCMEDT2",186,0)
+ Q Y
+"RTN","ORUTL")
+0^1^B85871234^B85894949
+"RTN","ORUTL",1,0)
+ORUTL ;SLC/DCM,RWF - ORDER UTILITIES ; 12 Jan 2016  4:58 PM
+"RTN","ORUTL",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**95,280,218,350,422**;Dec 17, 1997;Build 2
+"RTN","ORUTL",3,0)
+ISCLORD(ORY,ORIFN) ;;RPC to test if an order is a clinic order
+"RTN","ORUTL",4,0)
+ S ORIFN=+ORIFN
+"RTN","ORUTL",5,0)
+ S ORY=0
+"RTN","ORUTL",6,0)
+ I 'ORIFN Q
+"RTN","ORUTL",7,0)
+ N ORZ0 S ORZ0=$G(^OR(100,ORIFN,0))
+"RTN","ORUTL",8,0)
+ N ORTO S ORTO=$P(ORZ0,U,11)
+"RTN","ORUTL",9,0)
+ I ORTO=$$CLINMDDG S ORY=1
+"RTN","ORUTL",10,0)
+ I ORTO=$$CLINIVDG S ORY=1
+"RTN","ORUTL",11,0)
+ Q
+"RTN","ORUTL",12,0)
+CLINMDDG() ;RETURN THE IEN OF THE CLINIC MEDICATIONS DISPLAY GROUP
+"RTN","ORUTL",13,0)
+ Q $O(^ORD(100.98,"B","CLINIC MEDICATIONS",0))
+"RTN","ORUTL",14,0)
+CLINIVDG() ;RETURN THE IEN OF THE CLINIC INFUSIONS DISPLAY GROUP
+"RTN","ORUTL",15,0)
+ Q $O(^ORD(100.98,"B","CLINIC INFUSIONS",0))
+"RTN","ORUTL",16,0)
+LOC ;;GET PT. LOCATION
+"RTN","ORUTL",17,0)
+ S C(1)=$S($D(ORL(2))#2:$S(ORL(2)[";":$S($D(@("^"_$P(ORL(2),";",2)_+ORL(2)_",0)")):$P(^(0),"^"),1:""),1:""),1:"")
+"RTN","ORUTL",18,0)
+ I 'OR4,ORVP[";DPT(",$D(ORL(2)),ORL(2) Q
+"RTN","ORUTL",19,0)
+ G:$L(C(1)) LOC1 S (CT,C)=0,O=1 I ORVP[";DPT(",$O(^DPT(+ORVP,"DE",0))>0 W !!,"Currently enrolled in the following clinics: ",!
+"RTN","ORUTL",20,0)
+ I  S I=0 F L=0:0 S I=$O(^DPT(+ORVP,"DE",I)) Q:I'>0  I $D(^(I,0)) S Y=^(0) I $P(Y,"^",2)'="I",'$P(Y,"^",3) I $D(^SC(+Y,0)) S X=^(0) D
+"RTN","ORUTL",21,0)
+ . I $D(^SC(+Y,"I")) S ORIA=+^("I"),ORRA=$P(^("I"),"^",2) I $S('ORIA:0,ORIA>DT:0,ORRA'>DT&(ORRA):0,1:1) Q
+"RTN","ORUTL",22,0)
+ . S CT=CT+1 W:(CT#2) !?17 W:'(CT#2) ?47 W $P(X,"^") S C=C+1,C(1)=$P(X,"^") S:C'=1 C=-1
+"RTN","ORUTL",23,0)
+ W !
+"RTN","ORUTL",24,0)
+LOC1 S C=1 W !,"Patient Location: " W:C=1&($L(C(1))) C(1),"//" R X:DTIME G QUIT:'$T,QUIT:C'=1&(X=""),LOC:$L(X)>20!(X'?.ANP),QUIT:X[U
+"RTN","ORUTL",25,0)
+ S DIC("S")="I ""FI""'[$P(^(0),""^"",3),'$P($G(^(""OOS"")),""^"")",DIC=44,DIC(0)=$S(C=1&($L(C(1)))&(X=""):"EMQOZX",1:"EMQZ")
+"RTN","ORUTL",26,0)
+ S:X="" X=C(1) D ^DIC G LOC:X["?" S:Y>0 ORL=+Y_";SC(",ORL(0)=$S($L($P(Y(0),"^",2)):$P(Y(0),"^",2),1:$E($P(Y(0),"^"),1,4))
+"RTN","ORUTL",27,0)
+ K ORIA,ORRA I $D(^SC(+Y,"I")) S ORIA=+^("I"),ORRA=$P(^("I"),U,2)
+"RTN","ORUTL",28,0)
+ I $S('$D(ORIA):0,'ORIA:0,ORIA>DT:0,ORRA'>DT&(ORRA):0,1:1) W $C(7)," This location has been inactivated." K ORL G LOC
+"RTN","ORUTL",29,0)
+ I Y<0 W "  You must select a standard location." G LOC
+"RTN","ORUTL",30,0)
+ K DIC,C,ORIA,ORRA Q
+"RTN","ORUTL",31,0)
+QUIT S OREND=1 K DIC,C Q
+"RTN","ORUTL",32,0)
+READ ;;Hold screen
+"RTN","ORUTL",33,0)
+ I $D(IOST) Q:$E(IOST)'="C"
+"RTN","ORUTL",34,0)
+ W ! I $D(IOSL),$Y<(IOSL-4) G READ
+"RTN","ORUTL",35,0)
+ W !?5,"Press return to continue  " R X:$S($D(DTIME):DTIME,1:300)
+"RTN","ORUTL",36,0)
+ Q
+"RTN","ORUTL",37,0)
+CHKNAM(X,Y) ;Input transform to not allow certain characters
+"RTN","ORUTL",38,0)
+ ;X is the text to be checked, Y are the characters not allowed as sent in by the input transform of the field
+"RTN","ORUTL",39,0)
+ N I,J I '$D(Y) S Y=";^" ;if no special characters sent in, set list to all
+"RTN","ORUTL",40,0)
+ F I=1:1:$L(Y) I X[($E(Y,I)) S J=1
+"RTN","ORUTL",41,0)
+ Q +$G(J)
+"RTN","ORUTL",42,0)
+CHKMNE(X) ;Input transform to not allow use of standard Lmgr Mnemonics
+"RTN","ORUTL",43,0)
+ N Y
+"RTN","ORUTL",44,0)
+ S Y=$$UP^XLFSTR(X) ;check to make sure mnemonic isn't set to lower case of restricted entries.  List Manager is case insensitive
+"RTN","ORUTL",45,0)
+ I Y="ADPL"!(Y="DN")!(Y="Q")!(Y="FS")!(Y="GO")!(Y="?")!(Y="??")!(Y="LS")!(Y="+")!(Y="-")!(Y="PL")!(Y="PS")!(Y="RD")!(Y="SL")!(Y="<")!(Y=">")!(Y="UP")!(Y="PI")!(Y="CWAD")!(Y="TD")!(Y="EX") Q 1
+"RTN","ORUTL",46,0)
+ Q 0
+"RTN","ORUTL",47,0)
+PAD(ORX,ORL) ; Pads string to specified length
+"RTN","ORUTL",48,0)
+ N ORY
+"RTN","ORUTL",49,0)
+ S ORY="",$P(ORY," ",(ORL-$L(ORX))+1)=""
+"RTN","ORUTL",50,0)
+ Q ORY
+"RTN","ORUTL",51,0)
+MAIL(XMTEXT,XMSUB,XMY,SUBSCR) ;SEND AN EMAIL
+"RTN","ORUTL",52,0)
+ ;PARAMETERS: XMTEXT => STRING CONTAINING NAME OF ARRAY CONTAINING MESSAGE TEXT (REQUIRED)
+"RTN","ORUTL",53,0)
+ ;            XMSUB  => STRING CONTAINING THE SUBJECT OF THE MESSAGE (REQUIRED)
+"RTN","ORUTL",54,0)
+ ;            XMY    => REFERENCE TO AN ARRAY CONTAINING THE RECIPIENTS (OPTIONAL)
+"RTN","ORUTL",55,0)
+ ;            SUBSCR => STRING CONTAINING THE SUBSCIPT WITHIN ^XTMP WHERE RECIPIENTS ARE STORED (OPTIONAL)
+"RTN","ORUTL",56,0)
+ ;RETURN: $$MAIL => STRING CONTAINING XMMG (ERROR STRING)^XMERR (NUMBER OF ERRORS)
+"RTN","ORUTL",57,0)
+ N XMMG,XMDUZ,XMZ,XMERR,DIFROM,ORMSG
+"RTN","ORUTL",58,0)
+ Q:'$D(XMTEXT)!($G(XMSUB)="")
+"RTN","ORUTL",59,0)
+ I $D(XMY)=0 D
+"RTN","ORUTL",60,0)
+ .I $G(SUBSCR)'="",($Q(^XTMP(SUBSCR,0))[SUBSCR) D  Q
+"RTN","ORUTL",61,0)
+ ..K ^XTMP(SUBSCR,0)
+"RTN","ORUTL",62,0)
+ ..M XMY=^XTMP(SUBSCR)
+"RTN","ORUTL",63,0)
+ ..K ^XTMP(SUBSCR)
+"RTN","ORUTL",64,0)
+ .I $D(ZTQUEUED)>0 D
+"RTN","ORUTL",65,0)
+ ..S XMY(DUZ)=""
+"RTN","ORUTL",66,0)
+ .E  D
+"RTN","ORUTL",67,0)
+ ..S ORMSG(1)=" "
+"RTN","ORUTL",68,0)
+ ..S ORMSG(2)="Select the recipient(s) of the report below."
+"RTN","ORUTL",69,0)
+ ..D MAILOUT(.ORMSG)
+"RTN","ORUTL",70,0)
+ N DUZ ;FORCE SENDER TO BE POSTMASTER
+"RTN","ORUTL",71,0)
+ D ^XMD ;ICR #10070
+"RTN","ORUTL",72,0)
+ K ORMSG
+"RTN","ORUTL",73,0)
+ I $D(XMMG)>0 D
+"RTN","ORUTL",74,0)
+ .S ORMSG(1)=" "
+"RTN","ORUTL",75,0)
+ .S ORMSG(2)="Unable to email the report:"
+"RTN","ORUTL",76,0)
+ .S ORMSG(3)=XMMG
+"RTN","ORUTL",77,0)
+ .D MAILOUT(.ORMSG)
+"RTN","ORUTL",78,0)
+ Q $G(XMMG)_U_$G(XMERR)
+"RTN","ORUTL",79,0)
+MAILOUT(MESSAGE) ;OUTPUT THE ORMSG ARRAY FROM MAIL LINE TAG
+"RTN","ORUTL",80,0)
+ ;IF KIDS IS NOT EXECUTING, OUTPUT THE MESSAGE TO THE SCREEN
+"RTN","ORUTL",81,0)
+ I $G(XPDNM)="" D
+"RTN","ORUTL",82,0)
+ .N LINE S LINE=0 F  S LINE=$O(MESSAGE(LINE)) Q:+$G(LINE)=0  W MESSAGE(LINE),!
+"RTN","ORUTL",83,0)
+ E  D MES^XPDUTL(.MESSAGE)
+"RTN","ORUTL",84,0)
+ Q
+"RTN","ORUTL",85,0)
+WRAP(ORLINE,OROUTPUT,ORDINDEN,ORTRIM,OROI) ;WRAP THE TEXT SO THAT IT IS NO MORE THAN IOM (80 OR 132) CHARACTERS WIDE
+"RTN","ORUTL",86,0)
+ ;PARAMETERS: ORLINE  =>SINGLE LINE OF TEXT TO WRAP
+"RTN","ORUTL",87,0)
+ ;            OROUTPUT=>NAME OF ARRAY THAT WILL STORE THE WRAPPED TEXT IN THE FORMAT:
+"RTN","ORUTL",88,0)
+ ;                      OROUTPUT=NUMBER OF LINES OF TEXT RETURNED
+"RTN","ORUTL",89,0)
+ ;                      OROUTPUT(N)=LINE N OF TEXT
+"RTN","ORUTL",90,0)
+ ;            ORDINDEN=>FOR RETURNED TEXT, DETERMINE WHETHER TO INDENT LINES 2 THROUGH LAST (1) OR NOT (0)
+"RTN","ORUTL",91,0)
+ ;                      DEFAULT: 1
+"RTN","ORUTL",92,0)
+ ;            ORTRIM  =>FOR RETURNED TEXT, STRIP TRAILING SPACES ON EACH LINE (1) OR NOT (0)
+"RTN","ORUTL",93,0)
+ ;                      DEFAULT: 1
+"RTN","ORUTL",94,0)
+ ;            OROI    =>FOR RETURNED TEXT, THE COLUMN NUMBER TO INDENT LINES 2 THROUGH LAST 2
+"RTN","ORUTL",95,0)
+ ;                      DEFAULT: CALCULATE COLUMN TO INDENT TO
+"RTN","ORUTL",96,0)
+ N ORRETURN,ORTEMP,ORINDENT,ORIOM
+"RTN","ORUTL",97,0)
+ S ORIOM=$G(IOM),ORDINDEN=+$G(ORDINDEN,1),ORTRIM=+$G(ORTRIM,1),OROI=+$G(OROI)
+"RTN","ORUTL",98,0)
+ S:'+ORIOM ORIOM=80
+"RTN","ORUTL",99,0)
+ I ORDINDEN,'OROI D
+"RTN","ORUTL",100,0)
+ .N ORCHR
+"RTN","ORUTL",101,0)
+ .I ORLINE[":",($L($P(ORLINE,":"))<ORIOM) S ORINDENT=$$REPEAT^XLFSTR(" ",$L($P(ORLINE,":"))+2)
+"RTN","ORUTL",102,0)
+ .I ORLINE'[":",($E(ORLINE,1)=" ") D
+"RTN","ORUTL",103,0)
+ ..F ORCHR=1:1:$L(ORLINE) Q:$E(ORLINE,ORCHR)'=" "
+"RTN","ORUTL",104,0)
+ ..S ORINDENT=$$REPEAT^XLFSTR(" ",ORCHR-1)
+"RTN","ORUTL",105,0)
+ .I ORLINE'[":",($E(ORLINE,1)'=" ") D
+"RTN","ORUTL",106,0)
+ ..N START,END
+"RTN","ORUTL",107,0)
+ ..F ORCHR=1:1:$L(ORLINE) Q:+$G(END)  D
+"RTN","ORUTL",108,0)
+ ...I '+$G(START),($E(ORLINE,ORCHR)=" "),($E(ORLINE,ORCHR+1)=" ") S START=1
+"RTN","ORUTL",109,0)
+ ...I +$G(START),($E(ORLINE,ORCHR)'=" ") S END=1
+"RTN","ORUTL",110,0)
+ ..S:+$G(START)>0 ORINDENT=$$REPEAT^XLFSTR(" ",ORCHR-2)
+"RTN","ORUTL",111,0)
+ I ORDINDEN,OROI>0 S ORINDENT=$$REPEAT^XLFSTR(" ",OROI)
+"RTN","ORUTL",112,0)
+ S ORTEMP=1,ORTEMP(ORTEMP)=ORLINE
+"RTN","ORUTL",113,0)
+ F  Q:$L(ORTEMP(ORTEMP))<(ORIOM+1)  D
+"RTN","ORUTL",114,0)
+ .N ORTEMP1,ORCHR
+"RTN","ORUTL",115,0)
+ .F ORCHR=ORIOM:-1:1 Q:$E(ORTEMP(ORTEMP),ORCHR)=" "
+"RTN","ORUTL",116,0)
+ .S:ORCHR=1 ORCHR=ORIOM
+"RTN","ORUTL",117,0)
+ .S ORTEMP1=ORTEMP(ORTEMP)
+"RTN","ORUTL",118,0)
+ .S ORTEMP(ORTEMP)=$E(ORTEMP1,1,ORCHR)
+"RTN","ORUTL",119,0)
+ .S:ORTRIM ORTEMP(ORTEMP)=$$TRIM^XLFSTR(ORTEMP(ORTEMP),"R")
+"RTN","ORUTL",120,0)
+ .S ORTEMP=ORTEMP+1
+"RTN","ORUTL",121,0)
+ .S ORTEMP(ORTEMP)=$G(ORINDENT)_$E(ORTEMP1,ORCHR+1,*)
+"RTN","ORUTL",122,0)
+ S ORTEMP=0 F  S ORTEMP=$O(ORTEMP(ORTEMP)) Q:+ORTEMP=0  D
+"RTN","ORUTL",123,0)
+ .S @OROUTPUT=1+$G(@OROUTPUT)
+"RTN","ORUTL",124,0)
+ .S @OROUTPUT@(@OROUTPUT)=ORTEMP(ORTEMP)
+"RTN","ORUTL",125,0)
+ Q
+"RTN","ORUTL",126,0)
+DEVICE(ZTRTN,ZTDESC,%ZIS,ZTSAVE) ;PROMPT THE USER FOR THE OUTPUT DEVICE
+"RTN","ORUTL",127,0)
+ ;PARAMETERS: ZTRTN  => LINE TAG THAT STARTS PRINTING THE REPORT
+"RTN","ORUTL",128,0)
+ ;            ZTDESC => TASKMAN TASK DESCRIPTION
+"RTN","ORUTL",129,0)
+ ;            %ZIS   => FLAGS TO PASS TO ^%ZIS
+"RTN","ORUTL",130,0)
+ ;            ZTSAVE => VARIABLES TO SAVE FOR TASKMAN
+"RTN","ORUTL",131,0)
+ N POP,CBUFFER
+"RTN","ORUTL",132,0)
+ S %ZIS("B")="",CBUFFER=0
+"RTN","ORUTL",133,0)
+ D ^%ZIS
+"RTN","ORUTL",134,0)
+ Q:+$G(POP)
+"RTN","ORUTL",135,0)
+ I $D(IO("Q")) D  Q
+"RTN","ORUTL",136,0)
+ .N ZTSK,ORTEXT
+"RTN","ORUTL",137,0)
+ .S ORTEXT=$P(ZTDESC,"OR ",2)
+"RTN","ORUTL",138,0)
+ .S ZTSAVE("CBUFFER")=""
+"RTN","ORUTL",139,0)
+ .D ^%ZTLOAD,HOME^%ZIS
+"RTN","ORUTL",140,0)
+ .K IO("Q")
+"RTN","ORUTL",141,0)
+ .I +$G(ZTSK)>0 W !,"Successfully queued the "_ORTEXT_" report.",!,"Task Number: "_ZTSK,! H 2
+"RTN","ORUTL",142,0)
+ I '$D(IO("Q")) D
+"RTN","ORUTL",143,0)
+ .U IO
+"RTN","ORUTL",144,0)
+ .I $E(IOST,1,2)="C-" W @IOF S CBUFFER=3
+"RTN","ORUTL",145,0)
+ .D @ZTRTN,^%ZISC
+"RTN","ORUTL",146,0)
+ Q
+"RTN","ORUTL",147,0)
+HEADER(TITLE,PAGE,HEADER,NEWRPT) ;OUTPUT THE REPORT'S HEADER
+"RTN","ORUTL",148,0)
+ ;PARAMETERS: TITLE  => THE TITLE OF THE REPORT
+"RTN","ORUTL",149,0)
+ ;            PAGE   => (REFERENCE) PAGE NUMBER
+"RTN","ORUTL",150,0)
+ ;            HEADER => (REFERENCE) COLUMN NAMES, FORMATTED AS:
+"RTN","ORUTL",151,0)
+ ;                      COLUMN(LINE_NUMBER)=TEXT
+"RTN","ORUTL",152,0)
+ ;                      NOTE: LINE_NUMBER STARTS AT ONE
+"RTN","ORUTL",153,0)
+ ;            NEWRPT => (OPTIONAL) ALLOWS PRINTING OF MULTIPLE REPORTS
+"RTN","ORUTL",154,0)
+ ;                      ONE AFTER THE OTHER
+"RTN","ORUTL",155,0)
+ ;                      UNDEFINED: NOT PRINTING MULTIPLE REPORTS
+"RTN","ORUTL",156,0)
+ ;                      0 (DEFAULT): THIS IS NOT THE START OF A
+"RTN","ORUTL",157,0)
+ ;                                   NEW REPORT
+"RTN","ORUTL",158,0)
+ ;                      1: THIS IS THE START OF A NEW REPORT
+"RTN","ORUTL",159,0)
+ ;RETURNS: 0 => USER WANTS TO CONTINUE PRINTING
+"RTN","ORUTL",160,0)
+ ;         1 => USER DOES NOT WANT TO CONTINUE PRINTING
+"RTN","ORUTL",161,0)
+ Q:$$STOPTASK 1
+"RTN","ORUTL",162,0)
+ N X,END
+"RTN","ORUTL",163,0)
+ S PAGE=1+$G(PAGE)
+"RTN","ORUTL",164,0)
+ I PAGE>1!(+$G(NEWRPT)) D  Q:$G(END) 1
+"RTN","ORUTL",165,0)
+ .I $E(IOST,1,2)="C-" W !,"Press RETURN to continue or '^' to exit: " R X:DTIME S END='$T!(X=U) Q:$G(END)
+"RTN","ORUTL",166,0)
+ .I $Y>0,$Y<=IOSL W @IOF
+"RTN","ORUTL",167,0)
+ .I $Y>IOSL S $Y=0
+"RTN","ORUTL",168,0)
+ I PAGE=1,($E(IOST,1,2)="C-"),('+$G(NEWRPT)) W @IOF
+"RTN","ORUTL",169,0)
+ N NOW,INDEX
+"RTN","ORUTL",170,0)
+ S NOW=$$UP^XLFSTR($$HTE^XLFDT($H)),NOW=$P(NOW,"@",1)_"  "_$P($P(NOW,"@",2),":",1,2)
+"RTN","ORUTL",171,0)
+ W $$LJ^XLFSTR($E(TITLE,1,46),47," ")_NOW_"   PAGE "_PAGE,!
+"RTN","ORUTL",172,0)
+ S INDEX=0 F  S INDEX=$O(HEADER(INDEX)) Q:'INDEX  W HEADER(INDEX),!
+"RTN","ORUTL",173,0)
+ W $$REPEAT^XLFSTR("-",(IOM-1)),!
+"RTN","ORUTL",174,0)
+ Q 0
+"RTN","ORUTL",175,0)
+STOPTASK() ;DETERMINE IF TASKMAN HAS ASKED PROCESS TO STOP
+"RTN","ORUTL",176,0)
+ ;RETURNS: 0 => TASKMAN HAS NOT ASKED TASK TO STOP
+"RTN","ORUTL",177,0)
+ ;         1 => TASKMAN HAS ASKED TASK TO STOP
+"RTN","ORUTL",178,0)
+ I $D(ZTQUEUED),($$S^%ZTLOAD) D  Q:$G(ZTSTOP)=1 1
+"RTN","ORUTL",179,0)
+ .S ZTSTOP=$$S^%ZTLOAD("Received stop request"),ZTSTOP=1
+"RTN","ORUTL",180,0)
+ Q 0
+"RTN","ORUTL",181,0)
+FMERROR(ERROR) ;OUTPUT FILEMAN ERROR
+"RTN","ORUTL",182,0)
+ ;PARAMETERS: ERROR => (REFERENCE) ARRAY CONTAINING THE FILEMAN ERROR
+"RTN","ORUTL",183,0)
+ N OUT
+"RTN","ORUTL",184,0)
+ W !!,"Unable to generate the report due to the following FileMan error:",!
+"RTN","ORUTL",185,0)
+ W "FILEMAN ERROR #"_ERROR("DIERR",1)_":",!
+"RTN","ORUTL",186,0)
+ N IDX S IDX="" F  S IDX=$O(ERROR("DIERR",1,"TEXT",IDX)) Q:'IDX  D WRAP(ERROR("DIERR",1,"TEXT",IDX),"OUT")
+"RTN","ORUTL",187,0)
+ S IDX=0 F  S IDX=$O(OUT(IDX)) Q:+$G(IDX)=0  W OUT(IDX),!
+"RTN","ORUTL",188,0)
+ Q
+"RTN","ORUTL",189,0)
+DIVPRMPT(DIV) ;PROMPT THE USER FOR WHICH ACTIVE DIVISION(S)
+"RTN","ORUTL",190,0)
+ ;PARAMETERS: DIV => REFERENCE TO ARRAY WHICH WILL CONTAIN THE SELECTED DIVISION(S) WHEN THIS FINISHES
+"RTN","ORUTL",191,0)
+ ;                   FORMAT: DIV(FILE #4 IEN)=INSTITUTION NAME
+"RTN","ORUTL",192,0)
+ ;                           IF THE USER SELECTS ALL DIVISIONS, THEN ONLY THE FOLLOWING IS RETURNED:
+"RTN","ORUTL",193,0)
+ ;                           DIV("ALL")="all divisions"
+"RTN","ORUTL",194,0)
+ ;RETURNS: -1 USER ENTERED CARET AT PROMPT IF SITE IS MULTIDIVISIONAL
+"RTN","ORUTL",195,0)
+ ;          0 INSTITUTION FILE POINTER IS MISSING FOR ALL SELECTED DIVISIONS
+"RTN","ORUTL",196,0)
+ ;          1 SUCCESSFUL SELECTION OF DIVISION(S)
+"RTN","ORUTL",197,0)
+ N SELDIV,BADDIV,TIUDI,IDX,DIR,X,Y,DTOUT,DUOUT,DIRUT,DIROUT,COUNT,DELIMIT
+"RTN","ORUTL",198,0)
+ F  D  Q:+$G(SELDIV)=1!(+$G(SELDIV)=-1)
+"RTN","ORUTL",199,0)
+ .D SELDIV^TIULA
+"RTN","ORUTL",200,0)
+ .S IDX=0 F  S IDX=$O(TIUDI(IDX)) Q:+$G(IDX)=0  D
+"RTN","ORUTL",201,0)
+ ..S DIV(TIUDI(IDX))=$P($$SITE^VASITE(,IDX),U,2),COUNT=1+$G(COUNT)
+"RTN","ORUTL",202,0)
+ .I SELDIV=1,('$D(DIV)) S DIV("ALL")="all divisions"
+"RTN","ORUTL",203,0)
+ .I $D(BADDIV) D
+"RTN","ORUTL",204,0)
+ ..N TEXT,OUTPUT
+"RTN","ORUTL",205,0)
+ ..S DELIMIT=", "
+"RTN","ORUTL",206,0)
+ ..F IDX=1:1:$L(BADDIV,",")  D
+"RTN","ORUTL",207,0)
+ ...S:IDX=$L(BADDIV,",") DELIMIT=" and "
+"RTN","ORUTL",208,0)
+ ...S TEXT=$S($G(TEXT)'="":TEXT_DELIMIT,1:"")_$P(BADDIV,",",IDX)
+"RTN","ORUTL",209,0)
+ ..S BADDIV="I'm sorry, but "_TEXT_" "_$S($L(BADDIV,",")=1:"is not a valid division.",$L(BADDIV,",")>1:"are not valid divisions.",1:"you selected an invalid division.")
+"RTN","ORUTL",210,0)
+ ..D WRAP^ORUTL(BADDIV,"OUTPUT")
+"RTN","ORUTL",211,0)
+ ..W !!
+"RTN","ORUTL",212,0)
+ ..F IDX=1:1:OUTPUT W OUTPUT(IDX),!
+"RTN","ORUTL",213,0)
+ ..I $D(DIV) D
+"RTN","ORUTL",214,0)
+ ...S DIR(0)="Y"_U,DIR("A")="Do you want to continue with the valid division"_$S(COUNT>1:"s",1:"")_" already selected"
+"RTN","ORUTL",215,0)
+ ...S DIR("B")="YES"
+"RTN","ORUTL",216,0)
+ ...D ^DIR
+"RTN","ORUTL",217,0)
+ ...Q:$D(DIRUT)
+"RTN","ORUTL",218,0)
+ ...S:Y SELDIV=1
+"RTN","ORUTL",219,0)
+ Q SELDIV
+"RTN","ORUTL",220,0)
+HASDIV(Y,DIV,RET) ;DETERMINE IF THE SPECIFIED USER BELONGS TO A SET OF DIVISIONS RETURNED BY DIVPRMPT^ORUTL
+"RTN","ORUTL",221,0)
+ ;PARAMETERS: Y => IEN IN THE NEW PERSON FILE (#200)
+"RTN","ORUTL",222,0)
+ ;            DIV => REFERENCE TO ARRAY CONTAINING SELECTED DIVISIONS
+"RTN","ORUTL",223,0)
+ ;                   FORMAT: DIV(FILE_#4_IEN)=INSTITUTION NAME
+"RTN","ORUTL",224,0)
+ ;                           DIV("FOUND",FILE_#4_IEN)=INSTITUTION NAME <-- FOR DISCOVERED DIVISIONS
+"RTN","ORUTL",225,0)
+ ;            RET => 1 TO RETURN DISCOVERED DIVISIONS IN DIV ARRAY, WHEN "ALL DIVISIONS" ARE SELECTED
+"RTN","ORUTL",226,0)
+ ;                   0 TO NOT RETURN DISCOVERED DIVISIONS (DEFAULT)
+"RTN","ORUTL",227,0)
+ ;RETURNS: NAME OF Y'S DIVISION
+"RTN","ORUTL",228,0)
+ ;         EMPTY STRING IF Y'S DIVISION IS NOT A SELECTED DIVISION
+"RTN","ORUTL",229,0)
+ N DIVISION S DIVISION=""
+"RTN","ORUTL",230,0)
+ S RET=+$G(RET)
+"RTN","ORUTL",231,0)
+ I $D(DIV) D
+"RTN","ORUTL",232,0)
+ .N DIVISIONS,IDX,HASDIV
+"RTN","ORUTL",233,0)
+ .;IA #2533
+"RTN","ORUTL",234,0)
+ .S HASDIV=$$DIV4^XUSER(.DIVISIONS,Y)
+"RTN","ORUTL",235,0)
+ .I HASDIV=0 D
+"RTN","ORUTL",236,0)
+ ..N IEN
+"RTN","ORUTL",237,0)
+ ..S IEN=$P($$SITE^VASITE(),U)
+"RTN","ORUTL",238,0)
+ ..S:+IEN=0 IEN=DUZ(2)
+"RTN","ORUTL",239,0)
+ ..S DIVISIONS(IEN)=1
+"RTN","ORUTL",240,0)
+ .I $G(DIV("ALL"))="all divisions" D  Q
+"RTN","ORUTL",241,0)
+ ..N IEN
+"RTN","ORUTL",242,0)
+ ..S IEN=0 F  S IEN=$O(DIVISIONS(IEN)) Q:'+IEN  D
+"RTN","ORUTL",243,0)
+ ...I DIVISIONS(IEN) D
+"RTN","ORUTL",244,0)
+ ....S DIVISION=$$GET1^DIQ(4,IEN_",",.01)
+"RTN","ORUTL",245,0)
+ ....S:RET DIV("FOUND",IEN)=DIVISION
+"RTN","ORUTL",246,0)
+ ..I DIVISION="" D
+"RTN","ORUTL",247,0)
+ ...S IEN=$O(DIVISIONS(0)),DIVISION=$$GET1^DIQ(4,IEN_",",.01)
+"RTN","ORUTL",248,0)
+ ...S:RET DIV("FOUND",IEN)=DIVISION
+"RTN","ORUTL",249,0)
+ .S IDX=0 F  S IDX=$O(DIVISIONS(IDX)) Q:+$G(IDX)=0  D
+"RTN","ORUTL",250,0)
+ ..I $D(DIV(IDX)) D
+"RTN","ORUTL",251,0)
+ ...I DIVISION'="",(DIVISIONS(IDX)=1) S DIVISION=DIV(IDX)
+"RTN","ORUTL",252,0)
+ ...I DIVISION="" S DIVISION=DIV(IDX)
+"RTN","ORUTL",253,0)
+ Q DIVISION
+"RTN","ORUTL",254,0)
+LHASDIV(LOC,DIV,RET) ;DETERMINE IF THE SPECIFIED LOCATION BELONGS TO A SET OF DIVISIONS RETURNED BY DIVPRMPT^ORUTL
+"RTN","ORUTL",255,0)
+ ;PARAMETERS: LOC => VARIABLE POINTER TO HOSPITAL LOCATION FILE (#44)
+"RTN","ORUTL",256,0)
+ ;            DIV => REFERENCE TO ARRAY CONTAINING SELECTED DIVISIONS
+"RTN","ORUTL",257,0)
+ ;                   FORMAT: DIV(FILE_#4_IEN)=INSTITUTION NAME
+"RTN","ORUTL",258,0)
+ ;                           DIV("FOUND",FILE_#4_IEN)=INSTITUTION NAME <-- FOR DISCOVERED DIVISIONS
+"RTN","ORUTL",259,0)
+ ;            RET => 1 TO RETURN DISCOVERED DIVISIONS IN DIV ARRAY, WHEN "ALL DIVISIONS" ARE SELECTED
+"RTN","ORUTL",260,0)
+ ;                   0 TO NOT RETURN DISCOVERED DIVISIONS (DEFAULT)
+"RTN","ORUTL",261,0)
+ ;RETURNS: NAME OF LOC'S DIVISION
+"RTN","ORUTL",262,0)
+ ;         EMPTY STRING IF LOC'S DIVISION IS NOT A SELECTED DIVISION
+"RTN","ORUTL",263,0)
+ N DIVISION,LOCDIV
+"RTN","ORUTL",264,0)
+ S DIVISION="",LOCDIV=0,LOC=$G(LOC),RET=+$G(RET)
+"RTN","ORUTL",265,0)
+ I $D(DIV) D
+"RTN","ORUTL",266,0)
+ .I LOC>0 D
+"RTN","ORUTL",267,0)
+ ..N GLOREF,HLIEN
+"RTN","ORUTL",268,0)
+ ..S GLOREF=U_$$UP^XLFSTR($P(LOC,";",2))_+LOC_",0)"
+"RTN","ORUTL",269,0)
+ ..I GLOREF'?1"^SC("1.N1",0)" Q
+"RTN","ORUTL",270,0)
+ ..;IA #10040
+"RTN","ORUTL",271,0)
+ ..S LOCDIV=$P($G(@GLOREF),U,15)
+"RTN","ORUTL",272,0)
+ ..I +LOCDIV D
+"RTN","ORUTL",273,0)
+ ...N ORFND
+"RTN","ORUTL",274,0)
+ ...;IA #2817
+"RTN","ORUTL",275,0)
+ ...S ORFND=0,HLIEN=0 F  S HLIEN=$O(^DG(40.8,"AD",HLIEN)) Q:HLIEN=""  D
+"RTN","ORUTL",276,0)
+ ....I $D(^DG(40.8,"AD",HLIEN,LOCDIV)) D
+"RTN","ORUTL",277,0)
+ .....S ORFND=1
+"RTN","ORUTL",278,0)
+ .....I '$D(DIV("ALL")),$D(DIV(HLIEN)) S DIVISION=DIV(HLIEN)
+"RTN","ORUTL",279,0)
+ .....I $D(DIV("ALL")) D
+"RTN","ORUTL",280,0)
+ ......S DIVISION=$$GET1^DIQ(4,HLIEN_",",.01)
+"RTN","ORUTL",281,0)
+ ......S:RET DIV("FOUND",HLIEN)=DIVISION
+"RTN","ORUTL",282,0)
+ ...I DIVISION="",'ORFND S LOCDIV=0
+"RTN","ORUTL",283,0)
+ .I 'LOC!('LOCDIV) D
+"RTN","ORUTL",284,0)
+ ..N IEN
+"RTN","ORUTL",285,0)
+ ..S IEN=+$P($$SITE^VASITE(),U)
+"RTN","ORUTL",286,0)
+ ..S:'IEN IEN=+DUZ(2)
+"RTN","ORUTL",287,0)
+ ..Q:'IEN
+"RTN","ORUTL",288,0)
+ ..I $G(DIV("ALL"))="all divisions" D
+"RTN","ORUTL",289,0)
+ ...S DIVISION=$$GET1^DIQ(4,IEN_",",.01)
+"RTN","ORUTL",290,0)
+ ...S:RET DIV("FOUND",IEN)=DIVISION
+"RTN","ORUTL",291,0)
+ ..I '$D(DIV("ALL")),($D(DIV(IEN))) S DIVISION=DIV(IEN)
+"RTN","ORUTL",292,0)
+ Q DIVISION
+"UP",101.41,101.412,-1)
+101.41^10
+"UP",101.41,101.412,0)
+101.412
+"VER")
+8.0^22.0
+"^DD",101.41,101.41,2,0)
+DISPLAY TEXT^FX^^0;2^K:$L(X)>80!($L(X)<3)!($$CHKNAM^ORUTL(X)) X
+"^DD",101.41,101.41,2,1,0)
+^.1
+"^DD",101.41,101.41,2,1,1,0)
+101.41^C
+"^DD",101.41,101.41,2,1,1,1)
+S ^ORD(101.41,"C",$$UP^XLFSTR($E(X,1,63)),DA)=""
+"^DD",101.41,101.41,2,1,1,2)
+K ^ORD(101.41,"C",$$UP^XLFSTR($E(X,1,63)),DA)
+"^DD",101.41,101.41,2,1,1,"DT")
+2950112
+"^DD",101.41,101.41,2,1,2,0)
+101.41^AM2^MUMPS
+"^DD",101.41,101.41,2,1,2,1)
+D REDOM^ORDD41
+"^DD",101.41,101.41,2,1,2,2)
+D REDOM^ORDD41
+"^DD",101.41,101.41,2,1,2,"%D",0)
+^^1^1^2990210^
+"^DD",101.41,101.41,2,1,2,"%D",1,0)
+Update TIMESTAMP whenever DISPLAY TEXT is changed.
+"^DD",101.41,101.41,2,1,2,"DT")
+2990210
+"^DD",101.41,101.41,2,3)
+Answer must be 3-80 characters and cannot contain an up-arrow (^) or semi-colon (;).
+"^DD",101.41,101.41,2,21,0)
+^.001^1^1^3010913^^^^
+"^DD",101.41,101.41,2,21,1,0)
+The text of this dialog's name as it appears on a menu or subheader.
+"^DD",101.41,101.41,2,"DT")
+3000823
+"^DD",101.41,101.412,4,0)
+DISPLAY TEXT^FX^^0;4^K:$L(X)>80!($L(X)<1)!($$CHKNAM^ORUTL(X)) X
+"^DD",101.41,101.412,4,1,0)
+^.1
+"^DD",101.41,101.412,4,1,1,0)
+101.41^AMM4^MUMPS
+"^DD",101.41,101.412,4,1,1,1)
+D REDOX^ORDD41
+"^DD",101.41,101.412,4,1,1,2)
+D REDOX^ORDD41
+"^DD",101.41,101.412,4,1,1,"%D",0)
+^^1^1^2990210^
+"^DD",101.41,101.412,4,1,1,"%D",1,0)
+Update TIMESTAMP whenever DISPLAY TEXT is changed.
+"^DD",101.41,101.412,4,1,1,"DT")
+2990210
+"^DD",101.41,101.412,4,3)
+Answer must be 1-80 characters in length and cannot contain an up-arrow (^) or semi-colon (;).
+"^DD",101.41,101.412,4,21,0)
+^.001^2^2^3010419^^^^
+"^DD",101.41,101.412,4,21,1,0)
+This field allows the text that normally appears for this item to be
+"^DD",101.41,101.412,4,21,2,0)
+replaced with alternate text for use in this dialog or menu.
+"^DD",101.41,101.412,4,"DT")
+3000823
+"BLD",9611,6)
+^368
+**END**
+**END**
+

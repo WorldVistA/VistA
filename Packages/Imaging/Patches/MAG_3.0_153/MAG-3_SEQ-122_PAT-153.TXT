@@ -1,0 +1,483 @@
+
+=============================================================================
+Run Date: AUG 25, 2016                     Designation: MAG*3*153
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #122                      Status: Released
+                  Compliance Date: SEP 30, 2016
+=============================================================================
+
+
+Subject: VistARad Maintenance X
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Associated Patches:  
+ ==================
+ Before MAG*3.0*153 can be installed, MAG*3.0*152 
+ must be installed. 
+  
+ Subject:  VISTARAD MAINTENANCE X
+ =======
+  
+ Category:  OTHER
+ ========
+  
+ Description:
+ ===========
+ This patch addresses several VistARad problems reported by the sites. 
+ When a study has multiple image series and only one of them is shown in 
+ the viewer window at load time, an attempt to visualize another image 
+ series from the study may produce an unsorted sequence of images. If a 
+ study has the total image size of about 2.8GB, VistARad fails to load it 
+ on Windows 7 x64, even though it has access to 4GB of address space on 
+ this platform.  On certain images, measurements or annotations created 
+ using VistARad will disappear if the mouse buttons are not held down.  
+ Also, the elliptical tool is displaying erroneous information when using 
+ the Hounsfield unit option.
+  
+ Note:  All sites running VistA Imaging 3.0 must install the KIDS portion 
+ of this patch.  At sites that have implemented VistARad, installation of 
+ both the KIDS and the client software is required. The MAG*3.0*153 KIDS 
+ is backward compatible with the MAG*3.0*152, MAG*3.0*133 and the 
+ MAG*3.0*120 client software.  Installation of the client software may be 
+ phased in according to each site's needs. 
+  
+ Patch Components:
+ ================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P153_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch.  
+ MAG3_0P153_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software:
+ ========
+ File Name                       Description
+ ---------                       -----------
+ MAG3_0P153.KID                  KIDS build for Patch 153
+ MAG3_0P153_VRAD_setup.exe       VistARad Installation File
+  
+ Documentation:
+ =============
+ This document, MAG3_0153_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.  The 
+ following user documentation was updated:  
+ MAG_VISTARAD_QUICK_REFERENCE_CARD.PDF, MAG_VISTARAD_USER_GUIDE.PDF, 
+ MAG_VRAD_Quick_Start_Guide.PDF.
+  
+ Files & Fields Associated:
+ File Name (Number)      Field Name (Number)   New/Modified/Deleted
+ ------------------      -------------------   --------------------
+ None
+  
+ Forms Associated:
+ Form Name        File#       New/Modified/Deleted
+ ---------        -----       --------------------
+ None
+  
+ Mail Groups Associated:
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ None
+  
+ Options Associated:
+ Option Name        Type     Modified/Deleted
+ -----------        ----     ----------------
+ None
+  
+ Protocols Associated:
+ Protocol Name         New/Modified/Deleted
+ ------------------    --------------------
+ None
+  
+ Security Keys Associated:
+ Security Key Name
+ -----------------------
+ None
+  
+ Templates Associated:
+ Template Name    Type    File Name   Number   New/Modified/Deleted
+ -------------    ----    ---------   ------   --------------------
+ None
+  
+ Additional Information:
+ ======================
+ New Service Requests (NSRs):
+ ===========================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ Issue 4 below (the elliptical tool sometimes displays erroneous 
+ information when using the Hounsfield unit option) is a potential PSI 
+ (PSPO00003163). 
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ 1.  Remedy Ticket INC000000622962 (Defect 194689): Pet CTs not Displaying 
+ in Correct Order
+ ==========================================================================
+ Problem:
+ It is not unusual for study images to be subdivided into separate 
+ series.  This is often done according to image modality types.  For 
+ example, a Computed Tomography (CT)/Positron Emission Tomography (PET) 
+ scan may have a CT image series and a PET image series.  If the current 
+ hanging protocol loads only one image series, the user may want to 
+ visualize a second image series by manually placing it in a viewer 
+ window.  In this case, the images may appear in the order different from 
+ the sorting order of the hanging protocol.  This happens because image 
+ series are sorted only at load time.
+  
+ Resolution:
+ The code was modified so that the image series are also sorted when they 
+ are placed in the viewer window.
+  
+ 2.  Remedy Ticket INC000000993396 (Defect 194688) :Only First Image of 
+ Fluoroscopy Study is Viewable
+ ==========================================================================
+ Problem:
+ When VistARad detects that a study is too big to fit into available 
+ memory, it prompts the user to split it into separate image stacks that 
+ can be loaded and purged separately.  This functionality, however, does 
+ not work for studies with multi-frame images.
+  
+ Resolution:
+ Code was modified to update the assessment of available memory to produce 
+ a better approximation of its size.
+  
+ 3.  CA Service Desk Manager (SDM) Ticket I6975956FY16 (Defect 277979): 
+ VistARad Measurements Disappear
+ ==========================================================================
+ Problem:
+ When images with Group 6000 overlays are viewed in VistARad, measurements 
+ or annotations created using VistARad will disappear if the mouse buttons 
+ are not held down.
+  
+ Resolution:
+ The problem happened because of a conflict between annotation rendering 
+ and new overlay functionality.  Overlays were disabled and enabled as the 
+ user interacted with the program.  This affected the way annotations and 
+ measurements were rendered.  The code was modified to synchronize the 
+ rendering order of the overlays, annotations, and measurements.
+  
+ 4.  Remedy Ticket INC000001226929 (Defect:  294798): Elliptical Tool 
+ Displaying Erroneous Information when Using Hounsfield Unit Option
+ ==========================================================================
+ Problem:
+ On rare occasions, CT scanners are displaying values that are out of 
+ range for average values (AVs) and standard deviations (SDs).  There can 
+ be an erroneous reading when measuring small objects, typically 
+ surrounded by tissue of a much different density, when using the 
+ elliptical tool for selecting the Region of Interest (ROI) for the 
+ Hounsfield unit option.
+  
+ Resolution:
+ The code was modified to remove the elliptical tool for the Hounsfield 
+ unit option.
+  
+ Test Sites:
+ ==========
+ The following sites are test sites for this patch:
+   Fayetteville, NC VA Medical Center
+   Charleston VA Medical Center
+   Martinsburg VA Medical Center
+  
+ Software and Documentation Retrieval Instructions:
+ =================================================
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from 
+ download.vista.domain.ext.  This transmits the files from the first 
+ available server.  Sites may also elect to retrieve files directly from a 
+ specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Albany: domain.ext
+ Hines:  domain.ext
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/.
+  
+ Installation instructions are included in this document.
+ Note:   Information about last-minute changes to this patch will be 
+ provided in a readme file.
+  
+ Patch Installation:
+ ==================
+ Pre/Post Installation Overview:MAG*3.0*153 must be installed on the VistA 
+ System and on 64-bit workstations on which the VistA Imaging Applications 
+ will be used. This patch must be installed by the compliance date to 
+ conform to VHA Directive 2001-023.
+  
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch.  Installing the MAG*3.0*153 KIDS takes 2-5 minutes.
+  
+ Pre-Installation Instructions:
+ =============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed. Routine MAGIP153 is an 
+ installation routine that is automatically deleted after the KIDS 
+ installation.
+  
+ Note:  All released VistA Imaging patches must be installed on the VistA 
+ system before installing MAG*3.0*153.
+ The patch installation files can be downloaded from one of the OI Field 
+ Office anonymous directories.  All instructions in this section assume 
+ that the distribution files for this patch have been copied to a local 
+ storage location.  For the list of distribution files for this patch, see 
+ the Distribution of Software section.
+  
+ Installation Instructions:
+ =========================
+ VistA System (KIDS) Installation 
+ ================================
+ Installation Steps 
+ ==================
+ KIDS installation will take less than one minute.
+ 1. On the VistA system, access the Kernel Installation and Distribution 
+ System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+   a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load 
+ the KIDS distribution.
+   b. When prompted, enter the path and file name (MAG3_0P153.KID) of the 
+ Patch 153 KIDS file.  A Distribution OK! message will be displayed.
+   c. When prompted to continue with the load, enter "YES". 
+ 4. When prompted to run the Environment Check Routine, enter "YES".  
+ After loading the KIDS file, use the following options to verify the 
+ contents of the patch and to back up any affected routines.
+   a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this 
+ option if you want to ensure the integrity of the routines in the patch. 
+   b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] - 
+ Run this option if you want to view all changes that will be made when 
+ the patch is installed.  All components (routines, options, and so on) in 
+ the patch will be compared.
+   c. Backup a Transport Global [XPD BACKUP] - Run this option if you want 
+ to create a backup message of any routines exported with the patch.  It 
+ will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+   a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+   b. When prompted for the install name, enter "MAG*3.0*153".
+   c. Answer "NO" to the following prompts:
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6. When installation is finished, an Install Complete message will be 
+ displayed.
+  
+ KIDS Installation Example
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing 
+ the KIDS file in a namespace on which it has previously been installed, 
+ your output may be different.
+ Select Installation Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*153      2/22/16@06:45:17
+      => VistA Imaging V3.0 - Patch 153 - VistARAD viewer issues  ;Created 
+ on
+  
+ This Distribution was loaded on Feb 22, 2016@06:45:17 with header of 
+    VistA Imaging V3.0 - Patch 153 - VistARAD viewer issues  ;Created on 
+ Feb 11
+ , 2016@09:48:37
+    It consisted of the following Install(s):
+     MAG*3.0*153
+ Checking Install for Package MAG*3.0*153
+ Will first run the Environment Check Routine, MAGJMN1
+  
+ Wait for Background Compile program to stop;
+      this might take up to a few minutes..
+  
+ Background Compile Stopped; proceeding with install.
+  
+ Install Questions for MAG*3.0*153
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  Install Started for MAG*3.0*153 : 
+                Feb 22, 2016@06:46:09
+  
+ Build Distribution Date: Feb 11, 2016
+  
+  Installing Routines:....
+                Feb 22, 2016@06:46:09
+  
+  Running Post-Install Routine: POSTINST^MAGJMN1. ... Enabling background 
+ compile
+  
+ Background Compile Enabled.
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*153 Installed. 
+                Feb 22, 2016@06:46:12
+  
+ VistARad Client Installation
+ The following steps can be used to install VistARad for the first time or 
+ to update a workstation that is running VistARad MAG*3.0*120, MAG*3.0*133 
+ or MAG*3.0*152 to VistARad MAG*3.0*153.  Installation should take two to 
+ three minutes.
+ Note:  If a version of VistARad older than MAG*3.0*120 is installed, use 
+ Add/Remove Programs in the Windows Control Panel to remove VistARad 
+ before using the steps below.
+  
+ 1. Log in to the workstation as an administrator, and ensure that no 
+ other programs are running. 
+ 2. Initiate the installation:
+ Windows 7:  Right-click on the MAG3_0P153_VistARad_Setup.exe, and select 
+ the Run as Administrator option to start the installation wizard.
+ 3. After the setup launches
+   a. You may be prompted to install the Microsoft Visual C++ 2005 
+ Redistributable Package.  Click "Install" to complete this step.
+   b. There will be a brief delay as the VistARad installation files are 
+ extracted.
+ Note:  There are no configurable installation options.  VistARad will be 
+ installed in:  Windows 7: C:\Program Files (x86) 
+ \VistA\Imaging\MAG_VistARad.
+ 4. When the Welcome page appears, click "Next".
+ 5. When the Ready to Install page displays, click "Install".
+ 6. Installation of MAG*3.0*153 starts automatically.  After installation 
+ is complete, click "Finish" to exit the wizard.
+ 7. You may be prompted to re-start your workstation in order for the 
+ configuration changes to take effect.  Click "Yes" to complete this step.
+ 8. Use the VistARad shortcut on the desktop or in the Windows Start menu 
+ (Start | Programs | VistA Imaging Programs | MAG_VistARad_Patch153) to 
+ start VistARad.
+ 9. From the Help | About menu, verify that the software client version is 
+ 3.0.153.1.
+  
+ Post-Installation Instructions:
+ ==============================
+ Uninstalling MAG*3.0*153 KIDS
+ =============================
+ Note:  To uninstall MAG*3.0*153, the "Backup a Transport Global" menu 
+ option must have been selected during the Kernel Installation & 
+ Distribution System (KIDS) install process (see KIDS Installation section 
+ above, step 4C).
+  
+ If it is necessary to uninstall MAG*3.0*153, administrators will need to 
+ use the PackMan function INSTALL/CHECK MESSAGE.  Check your MailMan 
+ messages for the backup message sent by the Backup a Transport Global 
+ function.
+  
+ 1. Select the message shown below:
+ Backup of MAG*3.0*153 install on <mmm dd, yyyy>  <user name>
+  
+ 2. Select the Xtract Packman option
+ 3. Select the Install/Check Message option
+ 4. Enter "Yes" at the prompt
+ 5. Enter "No" at the backup prompt.  There is no need to backup the 
+ backup.
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+  
+ Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// YES
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2    Message #43517     Unloading Routine   MAGJMN1
+ (PACKMAN_BACKUP)
+ Line 380  Message #43517     Unloading Routine   MAGJTU4V
+ (PACKMAN_BACKUP)
+ Line 680  Message #43517     Unloading Routine   MAGJUTL5
+ (PACKMAN_BACKUP)
+  
+  
+ Select PackMan function:<return>
+  
+ Enter message action (in IN basket): Ignore//
+  
+ The MAG*3.0*153 KIDS Uninstall is now complete.
+  
+ Uninstalling VistARad Client MAG*3.0*153
+ If it is necessary to uninstall the MAG*3.0*153 client, use the Uninstall 
+ option from the Windows Control Panel to uninstall:  "VistARad MAG 3.0 
+ Patch 153".
+ Then install one of the previous versions of VistARad which was included 
+ in MAG*3.0*152, MAG*3.0*133 or MAG*3.0*120.
+  
+ Routine Information:
+ ===================
+ VistA KIDS Checksums:
+ ====================
+ This section lists modified routines for the Veterans Health Information 
+ Systems and Technology Architecture (VistA) Kernel Installation and 
+ Distribution System (KIDS) build.  For each routine, the second line will 
+ contain the following information: 
+  
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 15
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine    Checksum Before Checksum After  Patch List
+ MAGJMN1      98640707      98640707        **16, 9, 22, 18, 65, 76, 
+                                            101, 90, 115, 120, 133, 152,
+                                            153**       
+ MAGJTU4V     5008429        5207279         **90, 115, 120, 133, 152, 
+                                            153**
+ MAGJUTL5     38212673      38198826        **65, 76, 101, 90, 115, 
+                                            104, 120, 133, 152, 153**
+ Routine MAGIP153 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 29, 2014
+Completed By:                               Date Completed: AUG 24, 2016
+Released By :                               Date Released : AUG 25, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

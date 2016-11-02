@@ -1,0 +1,146 @@
+$TXT Created by             at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 11/19/15 at 14:08
+=============================================================================
+Run Date: SEP 21, 2016                     Designation: MD*1*45
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #32                      Status: Released
+                  Compliance Date: OCT 22, 2016
+=============================================================================
+
+Associated patches: (v)MD*1*37     <<= must be installed BEFORE `MD*1*45'
+
+Subject: CORRECTION FOR AUTO CHECK-IN SETUP
+
+Category: 
+  - Routine
+  - PATCH FOR A PATCH
+
+Description:
+============
+
+ This patch will correct the following issue:
+ 1) The Auto Study Check-In Setup [MD AUTO CHECK-IN SETUP] option is 
+    currently exiting the code when attempting to edit an existing clinic
+    for a procedure defined with multiple clinics.
+  
+ Associated CA/SDM ticket:
+ ========================
+ 1) I5605614FY15 - Auto Check-in Setup Functionality
+  
+ Associated NSR(s):
+ =================
+ N/A
+       
+ Participating Test Sites:
+ ========================
+ Iowa City VA HCS (IA)
+ Orlando VAMC (FL)
+ Cheyenne VAMC (WY)
+ James J. Peters VAMC (Bronx, NY)
+      
+  
+ CA/SDM Overview:
+ ===============     
+ 1) I5605614FY15 Auto Check-in Setup Functionality
+            
+   Problem:
+   --------
+   Auto Study Check-In Setup [MD AUTO CHECK-IN SETUP] option is currently 
+   exiting the code when attempting to edit an existing clinic for a 
+   procedure defined with multiple clinics.
+       
+   Resolution:
+   -----------  
+   A modification will be made in routine MDWSETUP to allow it to continue 
+   the process flow as designed for the update and/or addition of clinics
+   for a procedure.
+         
+ Installation Instructions:
+ =========================
+ If installed during the normal workday, it is recommended that the 
+ Clinical Procedures users be off the system.  Other VISTA users will not
+ be affected.
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+      
+ 1.  Load Transport Global 
+     ---------------------------
+  
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter MD*1.0*45):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO.
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Apr 01, 2004;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDWSETUP
+    Before: B68509741   After: B71583488  **14,11,37,45**
+ 
+Routine list of preceding patches: 37
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 21, 2015
+Completed By:                               Date Completed: SEP 16, 2016
+Released By :                               Date Released : SEP 21, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

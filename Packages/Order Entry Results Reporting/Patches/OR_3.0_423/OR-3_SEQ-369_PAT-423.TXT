@@ -1,0 +1,538 @@
+
+=============================================================================
+Run Date: SEP 21, 2016                     Designation: OR*3*423
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #369                      Status: Released
+                  Compliance Date: OCT 22, 2016
+=============================================================================
+
+Associated patches: (v)OR*3*269    <<= must be installed BEFORE `OR*3*423'
+                    (v)OR*3*348    <<= must be installed BEFORE `OR*3*423'
+                    (v)OR*3*350    <<= must be installed BEFORE `OR*3*423'
+                    (v)OR*3*389    <<= must be installed BEFORE `OR*3*423'
+
+Subject: CPRS V30C
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is a follow up to the Computerized Patient Record System 
+ (CPRS) Graphical User Interface (GUI) v30.B release.
+  
+ The following issues are addressed by this patch in addition to the items 
+ listed under the Defect Tracking System section:
+  
+ 1. OR*3.0*389 released an addition to the ORDER MENU MANAGEMENT [ORCM
+ MGMT] menu. The Create Clinic Order QOs from Inpatient QOs [OR CONV INPT 
+ QO TO CLIN ORD QO] option was added to convert clinic order quick orders 
+ from existing inpatient quick orders. This new utility included the 
+ ability to "copy" or "move" quick orders. The copy action would also try 
+ to delete the original quick order if the user wanted to do so.
+  
+ An issue was discovered in the copy process where the utility was 
+ checking for any items pointing to (using) the original quick order, 
+ *before* the user was prompted about deleting the original quick order. 
+ If any pointers were found, the utility would then issue a message 
+ stating: "Cannot delete order dialog - other file entries point to this 
+ order dialog!" This creates user confusion, as the user was never 
+ actually asked about deleting the quick order.
+  
+ This issue has been resolved by correcting the logic used during the copy 
+ process. When copying quick orders, users will be prompted with, 
+ "Do you want to delete the original quick order?" If yes, the utility 
+ will then check for any pointers and issue the "cannot delete" message 
+ when pointers are found. Jazz 300410
+ Example:
+      Select one of the following:
+  
+           1         MOVE
+           2         COPY
+  
+ Enter response: 2  COPY
+ NAME: COPY TEST FOR OR*3*423
+  
+   Quick order copy complete.
+  
+ Do you want to delete the original quick order? NO// YES
+ Cannot delete order dialog - other file entries point to this order 
+ dialog!
+  
+ 423 UNIT DOSE DEL ON COPY T1 is pointed to by:
+ FILE #    IEN       NAME
+ ------------------------
+ 801.41    4703      PXRM ELEM 1
+  
+ Press any key to continue:
+  
+ 2. Three new reports were added to CPRS on the Labs Tab and Reports Tab
+ with the installation of Patch OR*3.0*350 or CPRS Version 30b. Those
+ reports are the Lab Overview (Collected Specimens), Pending Lab Orders and
+ Lab Orders (All). It has been reported that not all orders are being
+ displayed. The problem is that the orders are being pulled from the
+ database using the Order Date/Time rather than the Collection Date/Time.
+ Since the Order Date/Time can be very different from the actual Collection
+ Date/Time, some of the orders appear to be missing from the display
+ because the Order Date/Time doesn't fall within the date range selected by
+ the user. The fix for this problem is to use the Collection Date/Time
+ rather than the Order Date/Time when pulling data from the database.
+  
+ Another problem affecting the content of these three reports was found
+ dealing with the purging of old orders and accessions in the VISTA Lab
+ package. The purged orders did not display on the reports because the
+ extract routine was pulling from the files that had been purged. This
+ has been corrected with this patch and you should now see the orders
+ affected by the Lab purge in the reports. Jazz 311865
+  
+ There was also a problem where Lab orders that had been merged in the lab 
+ files were showing up twice on the reports. This was corrected by 
+ modifying the extract routine to properly handle merged orders. Jazz 
+ 311880
+  
+ These reports that have Lab Test Names longer than 25 characters is
+ causing the results display in the Details pane to all run together making
+ it difficult to read. This has been corrected so that Test Names longer
+ than 25 characters will use the Lab Test Print name instead of the Lab
+ Test Name. Jazz 315346, 349857
+  
+ 3. Patch OR*3.0*389 created two new cross references in the ORDERS file 
+ (#100) on the DIALOG (100,2) and the ITEM ORDERED (100,7) fields 
+ respectively. It was discovered that these new cross references were not 
+ being populated for new orders created after the install of OR*3.0*389.
+  
+ This patch will queue a tasked job to search through ORDERS and add
+ any missing "C" and/or "D" cross reference entries. The post-install will
+ look up the install date of OR*3.0*389, and use the day before that date
+ as the start date to begin searching for missing cross reference entries.
+ E.g. OR*3.0*389 installed on April 7, 2016; start date will be April 6,
+ 2016. This patch also updates the order save process to populate the cross
+ references.
+  
+ If the install date for OR*3.0*389 is not found, the patch will abort and 
+ ask the installer to submit a help desk ticket for further assistance. 
+ When the cross reference setting process has successfully completed, a 
+ MailMan message with the subject of "PATCH OR*3.0*423 ORDER INDEX 
+ CORRECTION STATUS" will be sent to the patch installer (DUZ). The text of 
+ the message is:
+  
+   "The file #100 index correction from OR*3.0*423 was successfully
+   completed."
+  
+ If the tasked job is asked to stop before the cross reference setting 
+ process has completed, a status message, with the same subject as above, 
+ will be sent to the installer. The text of that message is:
+  
+   "The file #100 index correction in OR*3.0*423 has unexpectedly stopped.
+    If you or the system manager did not stop the process, please check the
+    error log and file a help desk ticket for assistance.
+  
+    To requeue the cleanup/conversion process, run RESTART^ORY423 from the
+    programmer prompt and when asked for the starting order date, enter
+    3150722.1337"
+  
+ NOTE: The date shown above (3150722.1337) is just an example. If you
+ receive the status message indicating the process has unexpectedly
+ stopped, use the date listed in your message, not the date shown here in
+ this example.
+  
+ Exactly how long the tasked job will take to run will vary according to 
+ the number of orders that have been entered since OR*3.0*389 has been 
+ installed. While running, the task itself will appear in TaskMan and 
+ other task monitoring options with the following message: 
+ "File 100 C/D Index Correction". Jazz 322145
+  
+ 4. As part of the installation of patch OR*3*350 (CPRS v30b), all 
+ Outpatient Medication quick orders that were built for orderable items 
+ that were considered supply items were converted to the PSO SUPPLY 
+ dialog. While this works correctly for providers using the quick orders, 
+ if a nurse uses them then issues may occur later (dependent on several 
+ other settings). For example, the nurse may not be able to change, copy 
+ or renew the orders. Therefore, this patch has a post-install routine 
+ that will move these quick orders back to the Outpatient Medication 
+ dialog. This is a temporary measure. Once the issues with the PSO SUPPLY 
+ dialog are corrected, a new menu option will be created to allow the site 
+ to determine when (if) they wish to move their supply quick orders to the 
+ PSO SUPPLY dialog. There will be a future patch to correct the PSO SUPPLY 
+ dialog issues. Jazz 337290
+  
+ 5. CPRS 30B (OR*3*350) included functionality related to what was IMO but 
+ is now Clinic Medications and Infustions.  This included 2 new order 
+ dialogs that allow for simplicity of entering these orders.  When using 
+ these dialogs the user is shown a message "You are about to enter a 
+ Clinic Medication/Infusion order.  Are you sure this is what you want to 
+ do?"  During 30B deployment it was determined that if the patient was an 
+ outpatient and the current location was a Clinic Setup for Clinic orders, 
+ then this message should not display.  This patch makes the change so 
+ that it does not display in this scenario.  It also changes it so that in 
+ situations where the message does display, that the default action is the 
+ "Yes" button so that the user can hit enter to get by it. Jazz 329483
+  
+ 6. When flagging an Orderable Item (OI) for Inpatient Meds, the flagged 
+ OI alert would not fire sometimes for items in an IV order. This was due 
+ to the fact that IV orders contain multiple Orderable Items.  This patch 
+ corrects this in that the alert can fire for any of the OIs in the IV 
+ order. Jazz item: 258188, HD: 69339, 70141, 155223, 606492
+  
+ 7. When flagging an Orderable Item (OI) for Inpatient Meds, if an order 
+ was placed for that OI as a Clinic Medication/Infusion or an Inpatient 
+ med for a patient that is currently an outpatient, then the flagged OI 
+ alert would not fire.  With this patch it will now fire correctly in 
+ those situations. Jazz item 258189
+  
+ 8. A defect was introduced with OR*3*350 (CPRS 30B) where if the IV 
+ ORDER DIALOG in file 101.41 (PSJ OR PAT OE) has the field "ASK FOR 
+ ANOTHER ORDER" set to "NO" then when an IV order was placed it would 
+ file 2 IV orders that were duplicates.  Although this was found on the IV 
+ ORDER DIALOG it also was possible for this to happen on other order types 
+ as well.  This issue is fixed now so that in this scenario only a single 
+ IV order is placed. Jazz 328611 and 336043
+  
+ 9. When manually typing a Reason for Request (vs. insertion via template)
+ the text is not wrapping as you approach the right margin. This issue was
+ caused by the CPRS GUI application moving from Delphi 2006 to Delphi XE3.
+ The text field used in the Reason for Request was updated to have
+ different behavior with respect to scrolling regions and automatically
+ wrapping lines of text. The properties of this text field have been 
+ updated to restore automatic wrapping of text as the text approaches the
+ right margin. Jazz 317140
+  
+ 10. The tab order in the main CPRS application form, fFrame, was 
+ inadvertently changed. This change created tab order issues on several of 
+ the CPRS Tabs. For example, in CPRS GUI 30a after moving to the Consults 
+ Tab, pressing the TAB key once would select the first consult in the list.
+ In 30b, the same action would select the patient header bar and require
+ multiple presses of the TAB key to move through the header bar and into
+ the list of consults. Similar behavior of additional tabbing can be seen
+ on other CPRS Tabs. The tab order in fFrame has been restored to its 30a
+ state which will generally have the initial press of the TAB key select
+ the first item of interest on a given CPRS TAB (the first consult, note,
+ report, etc.). Jazz 336244
+  
+ 11. When a user accesses the template editor in CPRS, the template drawer 
+ no longer displays correctly nor can the templates be accessed 
+ appropriately until the user logs out of CPRS and then logs back in. 
+ This issue has been corrected. Jazz 258591
+  
+ 12. Supply quick orders that were created from Outpatient quick orders no 
+ longer honored the QO-ONLY field. This patch corrects this issue by 
+ adding the ability to move the QO-ONLY restriction to the supply quick 
+ order. Jazz 301893
+  
+ 13. A site reported an issue with the new MOVE feature for quick orders. 
+ There was no indication that the action was occurring. This patch 
+ corrects this problem by adding an additional confirmation prompt after 
+ the MOVE action is selected. Jazz 328177
+  
+ 14. Sites utilizing the Server List function from a Citrix server 
+ reported that it was no longer functioning. This patch corrects this 
+ issue. Jazz 329474
+  
+ 15. The color of the CWAD display in the CPRS Postings box was 
+ unintentionally modified in CPRS V30B. This patch corrects this problem 
+ by reverting the CWAD color back to the CPRS V30A color. Jazz 329489
+  
+ 16. A site reported a problem with being unable to use personal 
+ templates. When selecting a template from the drawer and then 
+ right-clicking and selecting edit, the system was not auto-selecting the 
+ template. This patch corrects this issue. Jazz 331308
+  
+ 17. When you slected an order set of unit dose medications and the 
+ encounter location was set to a clinic set up to allow administration of 
+ Inpatient Medication orders, you were prompted to confirm you wanted to 
+ enter a clinic medication order. However, if you answered NO, only the 
+ first order was ignored. This patch corrects this issue so that the 
+ prompt will now show up until you respond with a YES. Jazz 337007
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A 
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                Type               New/Modified/Deleted
+ -----------                ----               -------------------- 
+ OR CPRS GUI CHART          BROKER             MODIFIED
+ OR CONV INPT QO TO CLIN    RUN ROUTINE        MODIFIED      
+   ORD QO
+ OR SUPPLY NF CONVERSION    RUN ROUTINE        NEW
+ OR SUPPLY OP CONVERSION    RUN ROUTINE        NEW
+ OR SUPPLY UTIL MENU        MENU               NEW
+ ORCM MGMT                  MENU               MODIFIED
+  
+ Parameters Associated:
+  
+ Parameter Name                New/Modified/Deleted
+ --------------                --------------------
+ N/A
+  
+ Protocols Associated:         
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Remote Procedure Calls Associated:
+  
+ Remote Procedure Call Name           New/Modified/Deleted
+ --------------------------           --------------------
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ 856 - Flagged Orderable Item alert not working because of patient status
+ 3227 - Ask for Another Order Prompt in the Order Dialog file - setting 
+ can cause duplicate orders.
+ 3259 - Lab data from a different patient inadvertently displays along 
+ with the selected patient's data on the CPRS Labs tab "Most Recent" 
+ option after processing a Lab notification
+  
+ Defect Tracking System Ticket(s) & Overview
+ --------------------------------------------
+ 1. I5957404FY16  Group Notes package not saving all of Encounter data
+  
+ Problem:
+ --------
+ Certain procedure codes (99078, 90853, H0005) that are selected from
+ the search results are not saving to PCE correctly when completing a Group
+ Notes encounter. As a result these encounters were flagged as incomplete 
+ on the ACTION REQUIRED status report. Jazz 258758
+  
+ Resolution:
+ ----------
+ There is a bug in the ORWPCE4 LEX RPC that incorrectly renders the
+ procedure code and returns an empty code in the return results. This has 
+ been corrected so that the appropriate procedure codes are returned to 
+ Group Notes and saved to PCE correctly.
+  
+ 2. I8043301FY16  PATCH OR*3*389 POST INSTALL ITEMS
+  
+ Problem:
+ --------
+ Since the introduction of Earliest Appropriate Date (EAD) in CPRS GUI v28,
+ prosthetics quick orders have been stuffed with a default response/value
+ for the EAD field when using the quick order editor. This was discovered 
+ by a site during their review of the CONSULT/PROCEDURE QOs EARLIEST 
+ APPROPRIATE DATE DEFAULT VALUE report generated during the installation of
+ OR*3.0*389 which assists in the review of consult quick orders in advance 
+ of the change from EAD to Clinically Indicated Date (CID) in CPRS GUI 
+ v30.b. Jazz 303682
+  
+ Resolution:
+ -----------
+ When creating/editing quick orders, the EAD/CID prompt is already being 
+ filtered out if the consult service is a prosthetics service. Now, the 
+ default value for this prompt will also be filtered out when the consult 
+ service is a prosthetics service.
+  
+ Order dialog GMRCOR CONSULT, sequence 4.5 OR GTX EARLIEST DATE
+ Before OR*3.0*423
+ DEFAULT: S Y=$$GET^XPAR("PKG","ORCDGMRC EARLIEST DATE DEFAULT",1,"Q")
+  
+ After OR*3.0*423
+ DEFAULT:
+ DEFAULT: Q:'$G(ORSERV)  S:$G(^GMR(123.5,ORSERV,"INT"))'=1 
+ Y=$$GET^XPAR("DIV^SYS^PKG","ORCDGMRC CLIN IND DATE DEFAULT",1,"Q")
+  
+ 3. Problem:
+ The down arrow for the Collection Date/Time field in the diagnostic test
+ section of the Blood Bank order dialog on the orders Tab is disappearing
+ after a Diagnostic test is selected for Lab Collect. Jazz 329452
+  
+ Resolution:
+ This has been corrected so the down arrow does not disappear.
+  
+ 5. Problem:
+ The All Medications Report on the Reports Tab gets an Undefined error when
+ the link between CPRS and Pharmacy is missing. Jazz 258774
+  
+ Resolution:
+ The code that creates the ALL MEDICATIONS report has been changed so that
+ the missing reference between CPRS and Pharmacy will not cause the report
+ to error out.
+  
+ 6. Problem:
+ A provider reported that the Pending Lab orders lab info from Patient A 
+ appeared on Patient B's lab tab info. This occurred when the provider 
+ viewed lab data on the Labs Tab for Patient A and then viewed Patient B's 
+ lab data  via a View Alert. Jazz 348917
+  
+ Resolution:
+ This has been resolved by clearing out the previous patients lab data 
+ on the screen before showing the current patients information. 
+ Other unnecessary information, like date range selection and grid 
+ display has been removed from the screen that shows the previous 
+ patient's lab results when processing a different patient's lab alert.
+  
+ Test Sites:
+ ===========
+ Central Plains HCS, IA
+ Hines, IL
+ Upstate New York HCS
+ Salem, VA 
+  
+ Documentation and Software Retrieval:
+ =====================================
+ CPRS V30C is being released as a host file. The software and 
+ documentation are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Albany: domain.ext
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Title                     File Name           FTP Mode
+ -----------------------------------------------------------------------
+ CPRS v30c Install Guide   OR_30_423_IG.docx    Binary
+  
+  
+ Patch Installation:
+ =================== 
+ ***Important Note***
+ One site has reported a sporadic issue with the date range selection 
+ prompts not displaying for some reports, such as the Lab Worksheet. The
+ issue only occurred when the OR REPORT DATE SELECT TYPE parameter is set
+ to NO or blank.
+  
+ If this occurs at your site, you can change the OR REPORT DATE SELECT 
+ TYPE to YES, which will toggle your display to the radio button view.
+  
+ Please refer to the CPRS v30c (OR*3*423) Installation Guide: 
+ OR_30_423_IG.docx for file names and installation instructions, 
+ including how to set the parameter above if you need assistance.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 19
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORB3F1
+    Before: B10770422   After: B26395205  **9,74,139,190,220,423**
+Routine Name: ORB3SPEC
+    Before: B93913902   After: B95914098  **139,220,215,280,348,423**
+Routine Name: ORCMEDT9
+    Before: B48472878   After: B52002206  **389,423**
+Routine Name: ORCSAVE
+    Before: B98204455   After: B99645257  **7,56,70,73,92,94,116,141,163,
+                                           187,190,195,243,303,293,280,
+                                           306,286,269,423**
+Routine Name: ORCXPND1
+    Before: B97571749   After: B99799009  **26,67,75,89,92,94,148,159,
+                                           188,172,215,243,280,340,306,
+                                           350,423**
+Routine Name: ORDV02B
+    Before: B40982123   After: B32191615  **350,423**
+Routine Name: ORDV02C
+    Before: B22064710   After: B17644720  **350,423**
+Routine Name: ORDV02D
+    Before:       n/a   After: B33524231  **423**
+Routine Name: ORQOR2
+    Before: B14557366   After: B16133259  **6,32,92,122,144,190,251,350,423**
+Routine Name: ORSPUTIL
+    Before:       n/a   After:  B5339128  **423**
+Routine Name: ORWDXM1
+    Before:B106096775   After:B106857204  **10,85,131,132,141,178,185,
+                                           187,215,243,280,331,388,350,
+                                           423**
+Routine Name: ORWOR2
+    Before: B39008801   After: B33533980  **141,350,423**
+Routine Name: ORWPCE4
+    Before: B22821566   After: B23255140  **10,85,116,173,190,195,215,
+                                           243,295,280,306,361,350,423**
+Routine Name: ORY423
+    Before:       n/a   After: B29308775  **423**
+Routine Name: ORY4230
+    Before:       n/a   After: B15650295  **423**
+Routine Name: ORY42301
+    Before:       n/a   After: B71295993  **423**
+Routine Name: ORY42302
+    Before:       n/a   After: B78839911  **423**
+Routine Name: ORY42303
+    Before:       n/a   After: B82195528  **423**
+Routine Name: ORY42304
+    Before:       n/a   After: B57396163  **423**
+Routine Name: ORY42305
+    Before:       n/a   After: B65132619  **423**
+Routine Name: ORY42306
+    Before:       n/a   After: B64186028  **423**
+Routine Name: ORY42307
+    Before:       n/a   After: B43427611  **423**
+Routine Name: ORY4231
+    Before:       n/a   After: B40549530  **423**
+Routine Name: ORY4232
+    Before:       n/a   After: B26766770  **423**
+Routine Name: ORY4233
+    Before:       n/a   After: B12996402  **423**
+Routine Name: ORY4234
+    Before:       n/a   After: B13526302  **423**
+Routine Name: ORY423A
+    Before:       n/a   After:  B9027788  **423**
+Routine Name: ORY423E
+    Before:       n/a   After:  B3271209  **423**
+Routine Name: ORY423ES
+    Before:       n/a   After: B12635175  **423**
+ 
+Routine list of preceding patches: 269, 348, 350, 389
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 24, 2015
+Completed By:                               Date Completed: SEP 19, 2016
+Released By :                               Date Released : SEP 21, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

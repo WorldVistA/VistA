@@ -1,0 +1,188 @@
+$TXT Created by                at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Wednesday, 03/23/16 at 13:59
+=============================================================================
+Run Date: OCT 04, 2016                     Designation: PRC*5.1*192
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #171                    Status: Released
+                  Compliance Date: NOV 04, 2016
+=============================================================================
+
+Associated patches: (v)PRC*5.1*96  <<= must be installed BEFORE `PRC*5.1*192'
+                    (v)PRC*5.1*156 <<= must be installed BEFORE `PRC*5.1*192'
+                    (v)PRC*5.1*184 <<= must be installed BEFORE `PRC*5.1*192'
+                    (v)PRC*5.1*186 <<= must be installed BEFORE `PRC*5.1*192'
+
+Subject: DELIVERY ORDER PP%;SIMPLIFIED ORDER MAX;FMS DEPOSIT POSTING
+
+Category: 
+  - Routine
+  - Input Template
+
+Description:
+============
+
+ This patch will address the following 3 issues:
+  
+ 1. Delivery Orders not reflecting the Prompt Pay %
+  
+ 2. Raise order limit to $3500 for Simplified orders
+  
+ 3. Insure correct Fund Control Point (FCP) adjusted for Financial 
+    Management System (FMS) deposits received by IFCAP
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED TICKET(S):
+ =====================
+ 1. I6588022FY16 Delivery Orders not reflecting the Prompt Pay %
+  
+ 2. R6237345FY16 Raise order limit to $3500 for Simplified orders
+        Duplicate:  I6310122FY16  Requisitions limited to $3000
+  
+ 3. I6665715FY16 Insure correct Fund Control Point (FCP) adjusted for 
+                 FMS deposits received by IFCAP
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ ST. CLOUD VAMC
+ GREATER LOS ANGELES 
+  
+  
+ TICKET OVERVIEW:
+ ================ 
+ 1. I6588022FY16   Delivery Orders not reflecting the Prompt Pay %
+  
+    Problem:
+    --------
+    When the Delivery Switch for a site or FCP is set to 'on', the Delivery
+    Order auto obligation process does not post net amount to the FCP, 
+    ignoring the Prompt Pay % reduction to cost.
+  
+  
+    Resolution:
+    -----------                    
+    For Delivery Orders (with Delivery Order switch on for auto obligate),
+    modify the amount set against the FCP to be the Net amount to 
+    account for Prompt Pay %.
+  
+ Routines: PRCH410
+  
+  
+ 2. R6237345FY16   Raise order limit to $3500 for Simplified orders
+  
+    Problem:
+    ---------
+    Sites found that ancillary requisitions and Simplified Purchase Card 
+    orders were limited to $3000, when the limit was increased to $3500
+    on 10/01/2015 per FAR 2.101.
+  
+    Resolution:
+    -----------
+    Modify the processing checks for order amount in Convert Temporary 
+    2237 and Simplified Purchase Card orders to raise the maximum cost 
+    allowed from $3000 to $3500.
+  
+ Routines: PRCHCON1,PRCHNPO       INPUT TEMPLATE:  PRCHSIMP
+  
+  
+ 3. I6665715FY16   Insure correct Fund Control Point (FCP) adjusted for 
+                   FMS deposits received by IFCAP
+  
+    Problem:
+    ---------
+    Site found that some FMS deposits sent to site could post to 
+    incorrect FCP when an order number is included that could match an
+    existing order number on file, which would use the order FCP in lieu 
+    of the transaction directed FCP. 
+  
+    Resolution:
+    -----------
+    Modify the FMS deposit processing to ensure that orders having an
+    extra digit are ignored and logic defaults to the transaction directed
+    FCP.
+  
+ Routines: PRCSREC
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+   
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*192)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*192.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", choose NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', choose YES. 
+  
+       a. When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+  
+        Enter Delivery Order                  [PRCH ENTER DELIVERY ORDER]
+        Convert Temporary 2237 to PC Request  [PRCH CONV TEMP]
+        New Simplified Purchase Card Order    [PRCH ENTER SIMPLIFIED ORDER]
+  
+       b. When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCH410
+    Before: B53172728   After: B55006523  **123,171,181,186,192**
+Routine Name: PRCHCON1
+    Before: B24300474   After: B26064104  **108,156,192**
+Routine Name: PRCHNPO
+    Before: B62074705   After: B63173747  **7,11,79,108,123,184,192**
+Routine Name: PRCSREC
+    Before: B22653875   After: B24573467  **96,192**
+ 
+Routine list of preceding patches: 96, 156, 184, 186
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 07, 2016
+Completed By:                               Date Completed: SEP 23, 2016
+Released By :                               Date Released : OCT 04, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

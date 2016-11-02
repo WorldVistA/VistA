@@ -1,0 +1,214 @@
+$TXT Created by                    MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 02/02/16 at 13:08
+=============================================================================
+Run Date: AUG 10, 2016                     Designation: PSO*7*450
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #383                      Status: Released
+                  Compliance Date: SEP 09, 2016
+=============================================================================
+
+Associated patches: (v)PSO*7*282   <<= must be installed BEFORE `PSO*7*450'
+                    (v)PSO*7*313   <<= must be installed BEFORE `PSO*7*450'
+                    (v)PSO*7*391   <<= must be installed BEFORE `PSO*7*450'
+
+Subject: PSO PHYSICIAN AND ORDER EDIT FIXES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch addresses (3) issues:
+  
+ 1. When editing a new prescription, if a user accepts the prescription 
+    after using the up caret ("^") when editing, the prescription will be
+    deleted.
+  
+ 2. Users are able to jump to fields that are not allowed when using the 
+    Edit Provider option [PSO PROVIDER EDIT]. 
+  
+ 3. When editing a new prescription, if a user allows a timeout at the 
+    Noun Prompt, no changes made prior will be saved. 
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Associated Trouble Ticket(s):
+ =============================
+  
+ 1. INC000000471452: Up Arrow Deletes Order when Editing
+  
+ 2. INC000001072835: Jump Back Problem
+    INC000001103861: (d)
+  
+ 3. I6623146FY16: Timeout issue
+  
+ Participating Test Sites:
+ =========================
+ Martinsburg VAMC
+ Philadelphia VAMC
+ Hudson Valley HCS 
+  
+ Ticket Overview:
+ ================
+  
+ 1. INC000000471452 - Up Arrow Deletes Order when Editing 
+  
+     Problem:
+     --------
+     When entering a new order, Patient Prescription Processing 
+     [PSO LM BACKDOOR ORDERS] if a user enters "NO" in
+     response to the prompt "Is this correct", the user is given the
+     opportunity to change the entries made during the initial input.  The
+     user is presented with a review screen displaying the editable items
+     for the order.  If the user enters 5, for Dosage, the user is 
+     able to change up to 6 items.  If the up caret ("^") is entered (to 
+     exit editing) for any of these items, the user is returned to 
+     the review screen and given the opportunity to either Accept, 
+     or Edit another item.  When the user enters Accept, the new order
+     currently being entered is DELETED.  If the new order was to replace a
+     current order that order is NOT DISCONTINUED.
+    
+     Resolution:
+     -----------
+     Modified PSOORED5 to recognize, when user enters "^" during 
+     editing process, the user is not trying to exit the OPTION, 
+     but only exit the editing of the new order.  Check if EDIT 
+     is being performed, and if so, delete "^" flag (DUOUT) and 
+     continue processing at the point where a modified SIG is 
+     updated.  The order is subsequently saved, and if applicable, 
+     replaces any current duplicate order. Modified PSOBKDED to 
+     recognize when the user is in edit mode and consequently not 
+     overlay any modified responses with system defaults.
+  
+  
+    Routines: PSOORED5, PSOBKDED
+  
+  
+ 2) INC000001072835 - Jump Back Problem
+  
+   
+     Problem:
+     --------
+     When a user is using the Edit Provider option [PSO PROVIDER EDIT],
+     questions like DEA EXPIRATION DATE field (#747.44) are being asked
+     when they shouldn't be.  Additionally, jumping back to previous
+     questions is not being allowed.
+  
+  
+     Resolution:
+     -----------
+     Investigation into this OPTION reveals that certain questions are
+     skipped via branching logic based on the answer to the PROVIDER
+     TYPE.  Following are the various valid responses to this field:
+            
+            1    FULL TIME
+            2    PART TIME
+            3    C & A
+            4    FEE BASIS
+            5    HOUSE STAFF
+     
+     If the user responds with anything other than FEE BASIS (#4), the
+     following fields are skipped, via branching logic:
+             
+             747.44      DEA EXPIRATION DATE
+                 29      SERVICE/SECTION
+             8932.1      PERSON CLASS
+     
+     Therefore, DEA EXPIRATION DATE is a valid jump to field, if the 
+     PROVIDER TYPE is FEE BASIS.  The branching logic and subsequent 
+     up caret jump logic must be modified to recognize which PROVIDER 
+     TYPE has been selected, and react accordingly via switching the 
+     following fields which are asked, and which are available for 
+     up caret jumping.  This will be accomplished with splitting up 
+     the original DR string into Continuation-DR strings.
+  
+  
+    Routine: PSOPRVW
+  
+ 3) I6623146FY16 - Timeout problem
+  
+   
+    Problem:
+    --------
+  
+     When a user edits a new prescription, Patient Prescription Processing 
+     [PSO LM BACKDOOR ORDERS] if they make a change prior to the NOUN
+     prompt and allow a timeout at that prompt, no changes will be saved.
+  
+    Resolution:
+    -----------
+   
+     Modify routine PSOORED5 to allow the changes made to be saved.
+  
+  
+ =============INSTALLATION INSTRUCTIONS=================
+  
+ Pharmacy users should not be processing prescriptions while patch is 
+ being installed.  It should take less than 5 minutes to install this
+ patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*450)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSO*7.0*450.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOBKDED
+    Before: B82028505   After: B82491582  **11,46,91,78,99,117,133,143,
+                                           268,378,416,282,450**
+Routine Name: PSOORED5
+    Before: B60490141   After: B61788281  **46,75,78,100,99,117,133,251,
+                                           378,372,416,313,450**
+Routine Name: PSOPRVW
+    Before: B40061242   After: B45848236  **11,146,153,263,268,264,398,
+                                           391,450**
+ 
+Routine list of preceding patches: 282, 313, 391
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 14, 2015
+Completed By:                               Date Completed: AUG 03, 2016
+Released By :                               Date Released : AUG 10, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

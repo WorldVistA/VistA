@@ -1,0 +1,338 @@
+
+=============================================================================
+Run Date: AUG 25, 2016                     Designation: PSO*7*448
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #385                      Status: Released
+                  Compliance Date: SEP 24, 2016
+=============================================================================
+
+Associated patches: (v)PSO*7*427   <<= must be installed BEFORE `PSO*7*448'
+
+Subject: MCCF ePHARMACY COMPLIANCE PHASE 3
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ This patch has enhancements that extend the capabilities of the Veterans 
+ Health Information Systems and Technology Architecture (VistA) electronic 
+ pharmacy (ePharmacy) billing system.  Below is a list of all the applications 
+ involved in this project along with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*448
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2*550
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*20
+    CONSOLIDATED MAIL OUTPATIENT PHARMACY (CMOP) V. 2.0   PSX*2*79
+    PHARMACY DATA MANAGEMENT (PDM) V. 1.0                 PSS*1*192
+  
+ All five of these patches are being released in the Kernel Installation and 
+ Distribution System (KIDS) multi-build distribution.
+  
+ KIDS multi-build name: BPS PSO IB PSX PSS BUNDLE 9.0
+   KIDS Host File name: BPS_1_20_PSO_IB_PSX_PSS.KID
+  
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+  1. To reduce refill-too-soon third party claim rejections for new
+     prescriptions, prior prescriptions will now be checked for the same
+     patient and drug to verify that 3/4 of the days' supply has elapsed on the
+     prior prescription before the new prescription may be filled.  When
+     checking a prior prescription for the same patient and drug, the prior
+     prescription cannot be in a non-verified status, the prior prescription
+     must have a release date, and the prior prescription must have an
+     expiration date no earlier than 120 days prior to the current date.  The
+     3/4 days' supply change applies to prescriptions that are renewed, locally
+     suspended, suspended via CMOP or modified using the SDC - Suspense Date
+     Calc action.
+  
+  2. When an RRR reject is resubmitted in the foreground, and the claim
+     response is E PAYABLE, the system will now display six fields of
+     additional information to the user:  total amount paid, ingredient cost
+     paid, amount of copay/coinsurance, dispensing fee paid, amount applied to
+     periodic deductible and remaining deductible amount.
+  
+  3. When a claim is rejected and the user is presented with the reject
+     notification, the default value will now be 'Q' (for quit) if the reject
+     is related to ROI and the patient's eligibility is either TRICARE or
+     CHAMPVA.
+  
+  4. The claim processing messages will now display Veteran eligibility,
+     similar to the displays which indicate TRICARE and CHAMPVA eligibility.
+  
+  5. The Third Party Payer Rejects - Worklist [PSO REJECTS WORKLIST] has been
+     modified to contain the action VER View ePharmacy Rx on the hidden action
+     menu.
+  
+  6. The Reject Information screen, which displays any comments on a given
+     reject, has been modified to display comments entered by an Outpatient
+     Pharmacy Electronic Claims Coordinator (OPECC) and flagged as being for
+     the pharmacist.  (See BPS*1*20, released with this patch, which modifies
+     the OPECC User Screen to allow the user to flag comments as being for the
+     pharmacist.)
+  
+  7. The Reject Information screen has been modified to allow the user to
+     perform the Resubmit action on a TRICARE or CHAMPVA non-billable
+     prescription with an open pseudo-rejection code of eT or eC.  In this
+     context, though the user is selecting the Resubmit action, the claim
+     will be the first claim submitted for the prescription.
+  
+  8. The Reject Information screen has been modified to display Veteran
+     eligibility at the top of the screen in the same manner as it is already
+     displaying TRICARE and CHAMPVA for those eligibilities.  The Reject
+     Information subsection on that screen has also been modified to display
+     Veteran eligibility.
+  
+  9. Prior to this patch, the Reject Information screen would sometimes display
+     at the top of the screen a different eligibility than it would in the
+     Reject Information subsection of that same screen. That error has been
+     corrected with this patch.
+  
+ 10. If a rejected prescription has been resolved to a payable Veteran
+     claim, the Reject Information screen will no longer display a reject
+     type and it will now display '**' around the reject status of E
+     PAYABLE.
+  
+ 11. The Reject Information subsection of the Reject Information screen has
+     been modified to display the word RESUBMISSION when a claim has been
+     resubmitted from the ECME User Screen.  (This is the same place on the
+     screen where the BACK-BILL indicator is already displayed.)
+  
+ 12. Three actions have been added to the hidden action menu of the OP
+     Medications edit screen.
+  
+        VER    View ePharmacy RX.
+        RES    Resubmit Claim.  The user is not allowed to resubmit a TRICARE
+               or CHAMPVA non-billable prescription from here.
+        REV    Reverse Claim.
+  
+ 13. The new Pharmacy Productivity/Revenue Report [PSO PRODUCTIVITY 
+     REVENUE RPT] has been created. The option to run this report has been
+     added to the ePharmacy Menu [PSO EPHARMACY MENU].  To facilitate this
+     report, which identifies closed/resolved rejects according to the date
+     closed/resolved, a new cross-reference has been added to file# 52
+     Prescription - 'CLSDAT', which lists all closed/resolved rejects
+     sorted by Closed Date/Time.
+  
+ 14. When a resubmit is initiated from Outpatient Pharmacy, the system will now
+     capture the user's name and the origin of the resubmit, which are needed
+     for productivity reporting.
+  
+ 15. The Ignored Rejects Report [PSO IGNORED REJECTS REPORT] has been modified
+     to display the Billed Amount and, in the heading of the first page, the
+     message 'Note: Billed Amount is what was billed and cannot be used to
+     determine potential revenue.'
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ PRESCRIPTION (#52)                                        Modified
+   REJECT INFO sub-file (#52.25)                           Modified
+                       CLOSED DATE/TIME (#10)              Modified
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ PSO EPHARMACY MENU           menu                         Modified 
+ PSO PRODUCTIVITY REVENUE     run routine                  New 
+ RPT                                                        
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                             Deleted/Attach
+ -------------                                             ---------------
+ PSO BPS MED PROF MENU                                     New
+ PSO BPS PAT INFO MENU                                     New
+ PSO HIDDEN ACTIONS                                        Modified 
+ PSO LM BACKDOOR PRTCL USRSCR RESUBMIT                     New 
+ PSO LM BACKDOOR PRTCL USRSCR REVERSE                      New 
+ PSO LM BACKDOOR PRTCL USRSCR VERIFY                       New
+ PSO LM EXIT2                                              Attach to Menu 
+ PSO PMP CHANGE VIEW                                       Attach to Menu
+ PSO PMP SIG DISPLAY                                       Attach to Menu
+ PSO PMP STATUS GROUP                                      Attach to Menu
+ PSO REJECTS HIDDEN ACTIONS #1                             Modified 
+ PSO REJECTS VIEW ECME RX                                  New
+ VALM QUIT                                                 Attach to Menu
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+ Templates Associated:
+                                                           New/Modified/
+ Template Name                        Type                   Deleted
+ -------------                        ----                 -------------
+ PSO BPS PATIENT INFORMATION          LIST                   New
+ PSO BPS PMP MAIN                     LIST                   New
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ 20140411 - Medical Care Collection Fund (MCCF) ePharmacy Compliance Phase 3
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA HEARTLAND - WEST, VISN 15 (589)
+ LEXINGTON VAMC-LEESTOWN (596)
+ HUNTER HOLMES MCGUIRE HOSPITAL - RICHMOND (652)
+ BIRMINGHAM VAMC (521)
+ CENTRAL ARKANSAS HEALTH CARE SYSTEM - LITTLE ROCK (598)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. This
+ transmits the files from the first available server. Sites may also elect to
+ retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+     Albany:                 domain.ext
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www.domain.ext/vdl
+  
+ Title                              File Name                  Transfer Mode
+ ---------------------------------------------------------------------------
+ Release Notes/Installation Guide   PSO_7_P448_RN.PDF          Binary
+ Manager User Manual                PSO_7_MAN_UM.PDF           Binary
+ Pharmacist User Manual             PSO_7_PHARM_UM.PDF         Binary
+ Technician User Manual             PSO_7_TECH_UM.PDF          Binary
+ Technical Manual/Security Guide    PSO_7_TM.PDF               Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There is a post-install routine associated with this patch named PSO7P448.
+ The purpose of the post-install routine is to:
+  
+  a. Create an index file of all ePharmacy rejections by the date
+     closed/resolved.
+  b. Remove the cached hidden parent menu protocol for the Outpatient Pharmacy
+     List Manager screens.
+  
+ The post-install routine is automatically deleted by the system if allowed by 
+ your Kernel site parameters configuration. You may delete this routine if the 
+ installation was successful and it is not automatically deleted by KIDS.
+  
+  
+ Installation Instructions
+ -------------------------
+ Please see the Installation Instructions associated with patch BPS*1.0*20.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSO7P448
+    Before:       n/a   After: B12946571  **448**
+Routine Name: PSOBPSR1
+    Before: B37279361   After: B41182836  **260,448**
+Routine Name: PSOBPSU1
+    Before: B77585767   After:B113607101  **148,260,281,287,303,289,290,
+                                           358,359,385,403,427,448**
+Routine Name: PSOBPSU3
+    Before:       n/a   After: B16909866  **448**
+Routine Name: PSOPROD1
+    Before:       n/a   After:B163837671  **448**
+Routine Name: PSOPROD2
+    Before:       n/a   After:B141671167  **448**
+Routine Name: PSOREJP0
+    Before:B124398750   After:B126948878  **148,260,287,289,385,421,427,448**
+Routine Name: PSOREJP1
+    Before:B185402834   After:B201229195  **148,247,260,281,287,289,290,
+                                           358,359,385,403,421,427,448**
+Routine Name: PSOREJP2
+    Before:B181854051   After:B183401384  **148,247,260,287,289,358,385,
+                                           403,421,427,448**
+Routine Name: PSOREJP3
+    Before:B123136868   After:B184519079  **260,287,289,290,358,359,385,
+                                           403,421,427,448**
+Routine Name: PSOREJU3
+    Before: B84746710   After: B86770782  **287,290,358,359,385,421,427,448**
+Routine Name: PSOREJU4
+    Before: B33316257   After: B82956615  **289,290,358,359,385,421,448**
+Routine Name: PSOREJUT
+    Before:B107104625   After:B110735693  **148,247,260,287,289,290,358,
+                                           359,385,403,421,427,448**
+Routine Name: PSOSULB1
+    Before: B43792538   After: B46165452  **10,200,264,289,367,421,448**
+ 
+Routine list of preceding patches: 427
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 02, 2015
+Completed By:                               Date Completed: JUL 07, 2016
+Released By :                               Date Released : AUG 25, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

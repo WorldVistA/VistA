@@ -1,0 +1,167 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 08/02/16 at 11:24
+=============================================================================
+Run Date: OCT 03, 2016                     Designation: IB*2*570
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #527                      Status: Released
+                  Compliance Date: NOV 03, 2016
+=============================================================================
+
+
+Subject: CY2016 COST BASED AND INTER-AGENCY RATE UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains two updates:
+  
+ * 68 Cost Based and Inter-Agency billing rates with an effective date of
+   07/07/2016 in the CHARGE ITEM file (#363.2).
+  
+ * 1 Condition Code in the MCCR UTILITY file (#399.1).
+  
+ ASSOCIATED TICKET(S):
+ =====================
+ 1. R8566245FY16   CY2016 Cost Based and Inter-Agency billing rate updates
+ 2. R9683655FY16   Need a new condition code
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Pittsburgh HCS (Pittsburgh University Dr., H. J. Heinz Campus)
+ VA Caribbean Healthcare System (San Juan)
+ VA Nebraska-Western Iowa Health Care System (Omaha, Central Iowa, and 
+ Iowa City)
+   
+ OVERVIEW:
+ =========
+ 1. R8566245FY16   CY2016 Cost Based and Inter-Agency billing rate updates
+  
+ Problem:
+ --------
+ The Chief Business Office has requested a patch to update the Cost Based
+ and Inter-Agency rates to the Charge Master, with an effective date of
+ 07/07/2016.
+  
+ It also includes the outpatient dental (Ineligible/Emergency dental care)
+ for Cost Based and Inter-Agency rates which will distinguish from the
+ outpatient visit rates.
+  
+ Resolution:
+ -----------
+ The post-init routine IB20P570 will add 68 Cost Based and Inter-Agency
+ billing charges with an effective date of 07/07/2016 to the CHARGE ITEM
+ file (#363.2).
+  
+ 2. R9683655FY16   Need a new condition code
+  
+ Problem:
+ --------
+ The Chief Business Office has requested the following update to the MCCR
+ UTILITY file (#399.1).
+  
+ Condition Code:
+  54    NO SKILL HH VISITS IN BILL PERIOD. POLICY EXCEPT DOC AT HHA. (new)
+  
+ Resolution:
+ -----------
+ The post-init routine IB20P570 will add the new condition code to the MCCR
+ UTILITY file (#399.1).
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+   
+ 1.   LOAD TRANSPORT GLOBAL
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+    
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+     
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*570):
+   
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+   
+ 4.   Select Installation Option: Install Package(s)
+   
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+   
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P570.
+  
+ 6.   Example of successful installation.
+  
+     IB*2.0*570 Post-Install .....
+  
+     >> 68 Cost Based/Interagency Charge Items added (#363.2).
+  
+     >> 1 Condition Code added (#399.1).
+  
+     IB*2*570 Post-Install Complete
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 22
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P570
+    Before:       n/a   After: B50646761  **570**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 05, 2016
+Completed By:                               Date Completed: SEP 29, 2016
+Released By :                               Date Released : OCT 03, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

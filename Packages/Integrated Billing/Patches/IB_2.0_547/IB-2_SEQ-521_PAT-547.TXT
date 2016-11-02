@@ -1,0 +1,824 @@
+$TXT Created by                 at DEVVPP.DOMAIN.EXT  (KIDS) on Thursday, 06/09/16 at 17:16
+=============================================================================
+Run Date: AUG 31, 2016                     Designation: IB*2*547
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #521                      Status: Released
+                  Compliance Date: SEP 30, 2016
+=============================================================================
+
+Associated patches: (v)IB*2*214    <<= must be installed BEFORE `IB*2*547'
+                    (v)IB*2*451    <<= must be installed BEFORE `IB*2*547'
+                    (v)IB*2*473    <<= must be installed BEFORE `IB*2*547'
+                    (v)IB*2*489    <<= must be installed BEFORE `IB*2*547'
+                    (v)IB*2*516    <<= must be installed BEFORE `IB*2*547'
+                    (v)IB*2*522    <<= must be installed BEFORE `IB*2*547'
+
+Subject: MCCF FY15 EBILLING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Important Note: In production, there is one **MANDATORY** pre-installation
+ activity associated with this install.
+  
+ The IB Staff MUST empty the 837 extract/transmission queue PRIOR to the
+ installation of this patch.
+  
+ Please reference instructions from the Pre/Post Installation Overview for 
+ further details.
+  
+ The purpose of this patch is to meet the requirements for the MCCF 
+ eBilling Compliance Phase 3 project related to Integrated Billing (IB).
+ Integrated Billing is a software module within Veterans Health Information
+ Systems and Technology Architecture (VistA) that provides the ability for
+ billing personnel to submit claims in either a paper or electronic format
+ to third-party payers. The IB module also transmits and receives HL7
+ messages from FSC. This effort will include adding a new inbound HL7
+ message for the ASC X12N Health Care Claim Request For Additional
+ Information (RFAI) (277) transactions to the existing interfaces with FSC.
+  
+ The following features of the IB software will be affected by this 
+ project:
+ *     Enter/Edit Billing Information [IB EDIT BILLING INFO] option
+ *     Printed Claims
+ *     Insurance Company Entry/Edit [IBCN INSURANCE CO EDIT] option
+ *     IB SITE PARAMETERS (#350.9) file
+ *     Claims Status Awaiting Resolution [IBCE CLAIMS STATUS AWAITING]
+ *     Third Party Joint Inquiry [IBJ THIRD PARTY JOINT INQUIRY] option
+ *     EDI Menu for Electronic Bills [IBCE 837 EDI MENU] option 
+ *     View/Resubmit Claims - Live or Test [IBCE PREV TRANSMITTED CLAIMS] 
+           option
+ *     Medicare Management Worklist (MRW) [IBCE MRA MANAGEMENT] option
+ *     Billing Reports
+ *     Copy and Cancel (CLON) [IB COPY AND CANCEL] option
+ *     COB Management Worklist [IBCE COB MANAGEMENT] option
+ *     RFAI Management Worklist [IBRFI 277 WORKLIST] option
+ *     ASC X12N Health Care Claim (837) Transactions
+ *     ASC X12N Health Care Claim Request For Additional Information (277)
+  
+ Enter/Edit Billing Information [IB EDIT BILLING INFO] option
+ *     Make any necessary changes to the logic for determining Current 
+           Procedural Terminology (CPT)/Healthcare Common Procedure Coding 
+           System (HCPCS) code service lines and revenue codes to ensure 
+           that identical codes either:
+      *     Combine and calculate the correct number of units - no Print 
+                   Order
+      *     Do not combine - Print Order
+ *     Remove the fatal error that prevents the authorization of a claim 
+           for a patient with only a last name in the Patient file
+ *     Remove the fatal error that prevents the authorization of a claim 
+           for a subscriber with only a last name
+ *     Remove the obsolete Present on Admission (POA) code option of 
+           Blank/Exempt from POA Reporting
+      
+ Printed Claims 
+ *     Add the ability to print the amount paid on a claim by the previous 
+           payer(s) in Box 29 of the CMS-1500 claim form when a 
+           secondary/tertiary claim is printed locally
+ *     Remove the printing of the admission date and time from the UB04 
+           claim form (FL12/13) when an outpatient, institutional claim is
+           printed locally
+ *     Remove the printing of the discharge time from the UB04 claim form
+           (FL16) when an outpatient, institutional claim is printed
+           locally
+  
+ Insurance Company Entry/Edit [IBCN INSURANCE CO EDIT] option
+ *     Add the ability to define multiple Additional Primary Payer 
+           Identification numbers for an insurance company for the purpose
+           of routing claims to different administrative contractors for
+           both Medicare Will Not Reimburse (WNR) and commercial
+           [non-Medicare (WNR)] insurance companies
+ *     Add the ability to view what is defined as the insurance company 
+           addresses in Insurance Company Entry/Edit [IBCN INSURANCE CO 
+           EDIT] option and View Insurance Company [IBCN VIEW INSURANCE CO]
+           option even if the address is incomplete or blank
+ *     Add the ability to define a Utilization Management Organization 
+           (UMO) identifier to be transmitted in the X12N 5010 Health Care
+           Services Review - Request for Review and Response (278)
+           transaction
+       
+ IB SITE PARAMETERS (#350.9) file 
+ *     Add a parameter that controls how long the VistA system will store 
+           American Standard Code (ASC) X12N Health Care Claim Request For 
+           Additional Information (277) transactions (default = infinity)
+ *     Add a parameter that controls how long an ASC X12N Health Care Claim
+           Request For Additional Information (277) transaction will 
+           display on the ASC X12N Health Care Claim Request For Additional
+           Information (277) worklist
+ *     Add the ability to maintain a list of revenue codes that will be 
+           used to make some printed claims exempt from tracking
+ *     Add ability to define Alternate Primary Payer ID Types to be used to
+           qualify Alternate Primary Payer IDs 
+       
+ Claims Status Awaiting Resolution [IBCE CLAIMS STATUS AWAITING] option 
+ (CSA)
+ *     Add the ability to view through Claims Status Awaiting Resolution 
+           [IBCE CLAIMS STATUS AWAITING] option (CSA), the Health Care 
+           Clearing House (HCCH) that sent a Claim Status (277) message for
+           a claim when the message source is an HCCH
+       
+ Third Party Joint Inquiry [IBJ THIRD PARTY JOINT INQUIRY] option (TPJI)
+ *     Add the ability to view through Third Party Joint Inquiry [IBJ THIRD
+           PARTY JOINT INQUIRY] option (TPJI),  the HCCH that sent a Claim 
+           Status (277) message for a claim when the message source is an 
+           HCCH 
+ *     Modify the Electronic Explanation of Benefits (EEOB) view within the
+           Claim Information action to display the Claim Adjustment Reason 
+           Codes (CARCs) and Remittance Advice Remark Codes (RARCs)
+           descriptions from the new AR EDI CARC DATA (#345) and AR EDI
+           RARC DATA (#346) files.
+ *     Add the ability to view comments added to the Request for Additional
+           Information (RFAI) Worklist for a claim
+         
+ EDI Menu For Electronic Bills [IBCE 837 EDI MENU] option 
+ *     Modify the Electronic Explanation of Benefits (EEOB) to display the
+           Claim Adjustment Reason Codes (CARCs) and Remittance Advice
+           Remark Codes (RARCs) descriptions from the new AR EDI CARC DATA
+           (#345) and AR EDI RARC DATA (#346) files from the following
+           locations:
+      *     Print EOB [IBCE PRINT EOB] option
+      
+ View/Resubmit Claims - Live or Test [IBCE PREV TRANSMITTED CLAIMS] option 
+ (RCB)
+ *     Add the ability to look up claims for an insurance company by 
+           Electronic Data Interchange (EDI) Payer ID in addition to the 
+           name of the insurance company
+ *     Add the ability to search for claims that were previously printed 
+            and transmit them via the test queue
+         
+ Medicare Management Worklist [IBCE MRA MANAGEMENT] option (MRW)
+ *     Modify the EEOB view to display the CARCs and Remittance Advice 
+           Remark Codes (RARCs) descriptions from the new AR EDI CARC DATA 
+           (#345) and AR EDI RARC DATA (#346) files from the following 
+           options:
+      *     View MRA EOB [IBCEM VIEW MRA EOB] option
+      *     MRW [IBCE MRA MANAGEMENT] option
+      
+ Billing Reports 
+ *     Add the ability to track claims that are printed locally based on 
+           specific search criteria for CPAC and TRICARE/CHAMPVA claims
+ *     Modify the Re-generate Unbilled Amounts Report [IBT RE-GEN 
+           UNBILLED REPORT]summary to display the summary totals before
+           divisional totals and to provide the ability to select whether
+           or not the report is sorted by division
+       
+ Copy and Cancel [IB COPY AND CANCEL] option (CLON)
+ *     Modify the existing logic associated with copying a claim to ensure
+           the Coordination of Benefits (COB) data associated with the 
+           cancelled claim is associated with the new copy
+       
+ COB Management Worklist [IBCE COB MANAGEMENT] option (CBW)
+ *     Add the ability to search for claims on the COB Management 
+           Worklist by payer sequence and to sort the claims by payer 
+           sequence
+ *     Modify the EEOB to display the CARCs and RARCs descriptions from 
+           the new AR EDI CARC DATA (#345) and AR EDI RARC DATA (#346) 
+           files from the following CBW actions:
+      *     Print EOB/MRA
+      *     View EOB
+       
+ RFAI Management Worklist [IBRFI 277 WORKLIST] option
+ *     Add the ability to view and manage manually, requests for 
+           additional claim information (ASC X12N Health Care Claim Request
+           For Additional Information (277) transactions) received from 
+           payers
+         
+ ASC X12N Health Care Claim (837) Transactions
+ *     Add the ability to transmit all claims with a rate type for which
+           the insurer is responsible in an ASC X12N Health Care Claim 
+           (837) transaction
+ *     Add the ability to transmit up to 25 procedures codes in an 
+           institutional ASC X12N Health Care Claim (837) transaction
+ *     Add the ability to transmit up to 12 External Cause of Injury 
+           diagnosis codes in an institutional ASC X12N Health Care Claim 
+           (837) transaction|TAB|
+ *     Modify the ASC X12N Health Care Claim (837) layout to include 
+           maximum allowable data element lengths for the insurance 
+           fields whose lengths were increased by the eInsurance Patch 
+           IB*2*497
+ *     Modify the ASC X12N Health Care Claim (837) layout to only 
+           transmit an admission date on inpatient claims
+ *     Modify the ASC X12N Health Care Claim (837) layout to only transmit
+           a discharge date/time on inpatient claims
+         
+ ASC X12N Health Care Claim Request For Additional Information (277) 
+   Transactions
+ *     Add the ability to receive a ASC X12N Health Care Claim Request 
+           For Additional Information (277) equivalent transaction from 
+           FSC
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ NEW PERSON (#200)                                         New Entry
+ INSURANCE COMPANY (#36)                                   Modified
+                       EDI ID NUMBER - PROF (#3.02)        Modified
+                       EDI ID NUMBER - INST (#3.04)        Modified
+                       EDI - UMO (278) ID (#7.01)          New
+   ALTERNATE INST PAYER ID TYPE sub-file (#36.015)         New
+   ALTERNATE PROF PAYER ID TYPE sub-file (#36.016)         New
+ IB SITE PARAMETERS (#350.9)                               Modified
+                       PURGE DAYS 277 RFAI (#52.01)        New
+                       WORKLIST PURGE DAYS 277 RFAI        New
+                         (#52.02) 
+   PRINTED CLAIMS RC EXCLUSIONS sub-file (#350.9399)       New
+   PRIMARY PAYER ID TYPES MED sub-file (#350.981)          New
+   PRIMARY PAYER ID TYPES COM sub-file (#350.982)          New
+ IB ALTERNATE PRIMARY ID TYPE (#355.98)                    New
+ IB BILL/CLAIMS DIAGNOSIS (#362.3)                         Modified
+                       POA INDICATOR (#.04)                Modified
+ IB FORM SKELETON DEFINITION (#364.6)
+      Screen: I $$INCLUDE^IBY547PR(6,Y)
+ IB FORM FIELD CONTENT (#364.7)
+      Screen: I $$INCLUDE^IBY547PR(7,Y)
+ HEALTH CARE CLAIM RFAI (277) (#368)                       New
+ X12 277 CLAIM STATUS CATEGORY (#368.001)                  New
+ X12 277 PRODUCT OR SERVICE ID QUAL (#368.002)             New
+ BILL/CLAIMS (#399)                                        Modified
+                       FORM TYPE (#.19)                    Modified
+                       PRIMARY INSURANCE CARRIER (#101)    Modified
+                       SECONDARY INSURANCE CARRIER (#102)  Modified
+                       TERTIARY INSURANCE CARRIER (#103)   Modified
+                       PRIMARY PAYER-ALT ID TYPE (#140)    New
+                       PRIMARY PAYER-ALT ID (#141)         New
+                       SECONDARY PAYER-ALT ID TYPE (#142)  New
+                       SECONDARY PAYER-ALT ID (#143)       New
+                       TERTIARY PAYER-ALT ID TYPE (#144)   New
+                       TERTIARY PAYER-ALT ID (#145)        New
+ HL7 Message Type (#771.2)                                 New Entry
+ HL7 VERSION (#771.5)                                      New Entry
+ HL7 Event Type Code (#779.001)                            New Entry
+ HL7 MESSAGE STRUCTURE CODE (#779.005)                     New Entry
+  
+  
+ Bulletins Associated:
+                                                           New/Modified/
+ Bulletin Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Dialogs Associated:
+                                                           New/Modified/
+ Dialog Name                                                 Deleted    
+ -----------                                               -------------
+ N/A
+  
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+  
+ Functions Associated:
+                                                           New/Modified/
+ Function Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ HL Logical Link:
+                                                           New/Modified/
+ HL Logical Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ HL7 Application Parameters:
+                                                           New/Modified/
+ HL7 Parameter Name                                          Deleted    
+ ------------------                                        -------------
+ IB RFAI VISTA                                             New 
+ RFAI FSC                                                  New 
+  
+  
+ HLO Application Registry:
+                                                           New/Modified/
+ HLO Registry Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+  
+ Help Frames Associated:
+                                                           New/Modified/
+ Help Frame Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ IBRFI 277 MESSAGE                                         New 
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ IB OUTPUT MANAGEMENT         menu                         Modified 
+ REPORTS                                                   
+ IB PRINTED CLAIMS REPORT     run routine                  New 
+ IBCE 837 EDI MENU            menu                         Modified 
+ IBRFI 277 WORKLIST           run routine                  New 
+  
+  
+ Parameter Definitions:
+                                                           New/Modified/
+ Parameter Name                                              Deleted    
+ --------------                                            -------------
+ N/A
+  
+  
+  
+ Parameter Template:
+                                                           New/Modified/
+ Template Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ IBCE EXIT                                                 Modified
+ IBCE VIEW LOC PRINT MENU                                  New 
+ IBCE VIEW PREV TRANS                                      Modified 
+ IBCE VIEW PREV TRANS EXIT                                 Modified 
+ IBCE VIEW PREV TRANS REPORT                               Modified 
+ IBCE VIEW PREV TRANS RESUB                                Modified 
+ IBCE VIEW PREV TRANS SELECT                               Modified 
+ IBJP ADMIN CONTRACTOR COM ADD TYPE                        New 
+ IBJP ADMIN CONTRACTOR COM DEL TYPE                        New 
+ IBJP ADMIN CONTRACTOR COM MENU                            New 
+ IBJP ADMIN CONTRACTOR MED ADD TYPE                        New 
+ IBJP ADMIN CONTRACTOR MED DEL TYPE                        New 
+ IBJP ADMIN CONTRACTOR MED MENU                            New 
+ IBJP IB REVENUE CODES ADD                                 New 
+ IBJP IB REVENUE CODES DEL                                 New 
+ IBJP IB REVENUE CODES EXIT                                New 
+ IBJP IB REVENUE CODES MENU                                New 
+ IBRFI 277 IN                                              New 
+ IBRFI 277 RESPONSE                                        New
+ IBRFI COMMENTS MENU                                       New 
+ IBRFI CSA TPJI                                            New 
+ IBRFI DETAIL COMMENT                                      New 
+ IBRFI DETAIL MENU                                         New 
+ IBRFI DETAIL REMOVE                                       New 
+ IBRFI DETAIL REVIEW                                       New 
+ IBRFI ENTER COMMENTS 1                                    New 
+ IBRFI INITIAL WL MENU                                     New 
+ IBRFI RESORT                                              New 
+ IBRFI SELECT MESSAGE                                      New 
+  
+  
+ Remote Procedures Associated:
+                                                           New/Modified/
+ Remote Procedure Name                                       Deleted    
+ ---------------------                                     -------------
+ N/A
+  
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+  
+ Templates, Input Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ IB SCREEN102       Input     BILL/CLAIMS (#399)            
+ IB SCREEN10H       Input     BILL/CLAIMS (#399)            
+ IBEDIT INS CO1     Input     INSURANCE COMPANY (#36)      Modified 
+  
+  
+ Templates, List Associated:
+                                                           New/Modified/
+ Template Name      Type                                     Deleted    
+ -------------      ----                                   -------------
+ IBCE VIEW LOC      List                                   New 
+ PRINT                                                     
+ IBJP ADMIN         List                                   New 
+ CONTRACTOR COM                                            
+ IBJP ADMIN         List                                   New 
+ CONTRACTOR MED                                            
+ IBJP IB REVENUE    List                                   New 
+ CODES                                                     
+ IBRFI 277 DETAIL   List                                   New 
+ WL                                                        
+ IBRFI 277 WL       List                                   New 
+ IBRFI COMMENTS     List                                   New 
+  
+  
+ Templates, Print Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+  
+ Templates, Sort Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ NSR 20140414 - Medical Care Collection Fund (MCCF) eBilling Compliance 
+ Phase 3
+     
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+     
+ Defect Tracking System Ticket(s) & Overview
+ ---------------------------
+     
+ 1. Remedy ticket - #1262831
+    
+ Problem:
+ -------
+ Problem with Re-Generate Unbilled Amounts Report [IBT RE-GEN UNBILLED 
+ REPORT]. After install of IB*2*516 the last 3 columns of the report for
+ CPT, I. Rate, and P. Rate no longer display data.
+      
+ Resolution:
+ ----------
+ Corrected with the install of this patch.  We modified the Re-generate 
+ Unbilled Amounts report summary to display the summary totals before
+ divisional totals and to provide the ability to select whether or not the
+ report is sorted by division.
+      
+ 2.  CA SDM Ticket - #I6528186FY16
+  
+ Problem:
+ --------
+ If the user selects to sort the CBW (COB Management Worklist) by
+ Secondary Insurance Company, when the worklist displays the Secondary
+ Insurance Company name in the header is incorrect.
+  
+ Resolution:
+ -----------
+ Corrected with the install of this patch.  The IBCAPP2 routine was
+ incorrectly assuming for secondary claims where Medicare was the insurer,
+ that the tertiary insurance company was the current insurance company
+ name to use in the header.
+  
+ Test Sites:
+ ----------
+ Pittsburgh
+ South Texas
+ Northern Indiana
+ Illiana
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+    Albany:                 domain.ext
+    Hines:                  domain.ext    
+    Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: 
+ http://www.domain.ext/vdl/
+  
+ Title                                 File Name            Transfer Mode
+ --------------------------------------------------------------------------
+ Release Notes/Installation Guide      ib_2_0_p547_rn.pdf   Binary
+ EDI User Guide                        edi_user_guide.pdf   Binary
+ Integrated Billing (IB) V.2.0
+ Technical/Security Manual             ib_2_0_tm.pdf        Binary
+  
+ Patch Installation:
+    
+ Pre/Post Installation Overview
+ ------------------------------
+ ****Important Note: In production, there is one **MANDATORY**
+ pre-installation activity associated with this install.
+     
+ The IB Staff MUST empty the 837 extract/transmission queue
+ PRIOR to the installation of this patch. ***
+     
+ The site Information Resource Management (IRM) would coordinate with the
+ Billing Department to insure that the 837 extract/transmission queue is
+ empty. The Billing Department should be aware of the set of instructions
+ to be executed. If not billing supervisor can be contacted. Once the
+ Billing Department has completed the instruction, the Billing department
+ is to inform IRM that the patch installation could proceed.
+    
+ The instructions to empty the queue are as follows:
+    
+ Select the option:   TRANSMIT EDI BILLS - MANUAL [IBCE 837 MANUAL 
+ TRANSMIT]
+     
+   What is the purpose of this option?
+    This option is used to by-pass the normal daily/nightly transmission
+    queues if the need arises to get the claim to the payer quickly.
+     
+   When is this option used?
+    There are occasions when there is a need to transmit a claim(s)
+    immediately instead of waiting for the batching frequency as scheduled
+    in the MCCR Site Parameter.  This option will allow sending individual
+    claim(s) or all claims in a ready for extract status.
+      
+   Upon selecting this option you will be prompted with the following:
+     Select one of the following:
+      A  Transmit (A)LL bills in READY FOR EXTRACT status
+      S  Transmit only (S)ELECTED bills
+     
+   You should select 'A' for ALL
+     
+ Once the Billing Department has completed the instruction, the Billing
+ department is to inform IRM that the patch installation could proceed.
+     
+ There are no other mandatory pre-installation activities associated
+ with this package.
+    
+ The Pre-install routine (IBY547PR) will automatically do the following:
+ *     Update all active rate types to be transmittable electronically.
+ *     Update the ouptut formatter entries.
+    
+ The Post-install (IBY547PO) will automatically do the following:
+ *     Set new CROSS-REFERENCES for existing fields 3.02 (EDI ID NUMBER
+           - PROF) & 3.04 (EDI ID NUMBER - INST) in file 36 (INSURANCE 
+           COMPANY). 
+ *     Set new multi=field (#15 PRINTED CLAIMS RC EXCLUSIONS) in file 
+           #350.9 (IB SITE PARAMETERS) for the default Revenue Code 
+           Exclusions on the Printed Claims Report.  (270-279 & 290-299)
+ *     Set initial values in new multiple (#81 PRIMARY PAYER ID TYPES 
+           MED) in file #350.9 to the default Administrative Contractors 
+           for Medicare.  (DME)
+ *     Set initial values in fields 52.01 & 52.02 in file #350.9.  RFAI 
+           Transaction Purge Days (#52.01) set to null for 'no purge' and 
+           RFAI Worklist Purge Days (#52.02) set to 20 days.
+     
+ Routines IBY547PO and IBY547PR can be manually deleted by IT/IRM upon
+ completion of the installation.
+    
+ Installation Instructions
+ -------------------------
+    
+   ******************************************************************
+   *  You should install this patch during non-peak hours, when no  *
+   *  Integrated Billing or Accounts Receivable users are on the    *
+   *  system. Installation may be queued.                           *
+   ******************************************************************
+     
+         ****There are no options to disable.
+   
+ Install Time: Less than 10 minutes.
+    
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+     
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+    
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     IB*2.0*547):
+    
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+          
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+     
+ 5.  When prompted 'Enter the Coordinator for the Mail Group 'IBRFI 277 
+     MESSAGE':, respond with the name of the person who will be the
+     coordinator for this new mail group.  This would be the IRM or person
+     responsible for HL7 issues.
+     
+ 6.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'  You may press return to accept the default answer of 
+     NO IF your system rebuilds menu trees nightly using TaskMan. If you 
+     do not have this scheduled as a nightly task, you must answer YES to 
+     rebuild the menu trees.  This could affect users on the system 
+     and your installation time will increase.
+        
+ 7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  Press return to accept the default of NO.    
+     
+ 8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// Press return to accept the default of NO.    
+    
+ 9.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+    
+ Post-Installation Instructions
+ ------------------------------
+ Routines IBY547PO and IBY547PR can be manually deleted by IT/IRM upon
+ completion of the installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 119
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCAPP2
+    Before: B49339546   After: B52487921  **432,447,516,547**
+Routine Name: IBCBB
+    Before: B76368179   After: B79149601  **80,51,137,288,327,361,371,
+                                           377,400,432,461,547**
+Routine Name: IBCBB9
+    Before:  B8708481   After:  B7577761  **51,137,155,349,371,432,547**
+Routine Name: IBCC
+    Before: B65165308   After: B65758578  **2,19,77,80,51,142,137,161,
+                                           199,241,155,276,320,358,433,
+                                           432,447,516,547**
+Routine Name: IBCCC1
+    Before: B10846914   After: B11074104  **80,109,106,51,320,358,433,432,547**
+Routine Name: IBCCCB
+    Before: B65683261   After: B69153739  **80,106,51,151,137,182,155,
+                                           323,436,432,447,547**
+Routine Name: IBCE837
+    Before: B82438812   After: B86551026  **137,191,197,232,296,349,547**
+Routine Name: IBCECOB
+    Before: B27628888   After: B35210416  **137,155,288,432,488,516,547**
+Routine Name: IBCECOB1
+    Before:B141608790   After:B144950163  **137,155,288,348,377,417,432,
+                                           447,488,516,547**
+Routine Name: IBCECSA5
+    Before: B69687266   After: B92877287  **137,135,263,280,155,349,489,
+                                           488,547**
+Routine Name: IBCECSA6
+    Before:B168448681   After:B177663056  **137,135,155,417,431,451,488,547**
+Routine Name: IBCEF1
+    Before: B60116186   After: B67394178  **52,124,51,137,210,155,349,
+                                           371,447,547**
+Routine Name: IBCEF2
+    Before: B68782434   After: B78152141  **52,85,51,137,232,155,296,349,
+                                           403,400,432,488,461,547**
+Routine Name: IBCEM
+    Before: B59477823   After: B60823035  **137,191,155,371,547**
+Routine Name: IBCEMCA
+    Before: B50663666   After: B50686321  **320,547**
+Routine Name: IBCEMSR6
+    Before:       n/a   After: B40067499  **547**
+Routine Name: IBCEMSR7
+    Before:       n/a   After: B12041405  **547**
+Routine Name: IBCEMSRP
+    Before:       n/a   After: B11656625  **547**
+Routine Name: IBCEMU2
+    Before: B50579600   After: B52413436  **155,320,349,436,547**
+Routine Name: IBCEPTC
+    Before: B73846372   After: B92340697  **296,320,348,349,547**
+Routine Name: IBCEPTC0
+    Before: B19837123   After: B40575166  **320,348,547**
+Routine Name: IBCEPTC1
+    Before: B16490219   After: B19060601  **296,320,547**
+Routine Name: IBCEPTC2
+    Before: B48277704   After: B52666304  **296,320,348,349,547**
+Routine Name: IBCEPTC3
+    Before: B61167367   After: B64803891  **320,547**
+Routine Name: IBCEU1
+    Before: B90709480   After: B91847621  **137,155,296,349,371,432,473,547**
+Routine Name: IBCEU6
+    Before: B13249318   After: B13711797  **155,371,432,547**
+Routine Name: IBCF23
+    Before: B46459420   After: B49750471  **52,80,106,122,51,152,137,402,
+                                           432,488,547**
+Routine Name: IBCF23A
+    Before: B20324273   After: B37854610  **51,432,516,547**
+Routine Name: IBCNSC
+    Before: B26150929   After: B36416057  **46,137,184,276,320,371,400,
+                                           488,547**
+Routine Name: IBCNSC0
+    Before:  B9881323   After: B13502229  **371,547**
+Routine Name: IBCNSC01
+    Before: B59075221   After: B73912803  **52,137,191,184,232,320,349,
+                                           371,399,416,432,494,519,547**
+Routine Name: IBCNSC02
+    Before: B55602026   After: B56719125  **320,371,547**
+Routine Name: IBCNSC1
+    Before: B80307925   After: B84078544  **62,137,232,291,320,348,349,
+                                           371,400,519,516,547**
+Routine Name: IBCSC10
+    Before:  B3383615   After:  B8325466  **432,547**
+Routine Name: IBCSC102
+    Before: B41297495   After: B47787919  **432,447,461,547**
+Routine Name: IBCSC10H
+    Before: B44927826   After: B51814065  **432,488,547**
+Routine Name: IBCSC4F
+    Before: B34285009   After: B36628771  **106,403,400,522,547**
+Routine Name: IBCSCE
+    Before:  B9204544   After: B10358004  **52,80,91,106,51,137,236,245,
+                                           287,349,371,400,432,447,547**
+Routine Name: IBCSCP
+    Before: B11636365   After: B12277958  **52,51,161,266,432,447,547**
+Routine Name: IBCU
+    Before: B52974983   After: B86259413  **52,106,51,191,232,323,320,
+                                           384,432,547**
+Routine Name: IBJPS
+    Before:  B4384435   After:  B6490988  **39,52,70,115,143,51,137,161,
+                                           155,320,348,349,377,384,400,
+                                           432,494,461,516,547**
+Routine Name: IBJPS2
+    Before: B45274108   After: B54853458  **39,52,115,143,51,137,161,155,
+                                           320,348,349,377,384,400,432,
+                                           494,461,516,547**
+Routine Name: IBJPS5
+    Before:       n/a   After:  B7748441  **547**
+Routine Name: IBJPS6
+    Before:       n/a   After:B107465430  **547**
+Routine Name: IBJTTC
+    Before: B69337757   After: B92801270  **39,377,431,432,447,547**
+Routine Name: IBRFIHL1
+    Before:       n/a   After: B29928361  **547**
+Routine Name: IBRFIHL2
+    Before:       n/a   After:B153552095  **547**
+Routine Name: IBRFIHLI
+    Before:       n/a   After:  B4300194  **547**
+Routine Name: IBRFIHLU
+    Before:       n/a   After:  B7107625  **547**
+Routine Name: IBRFIN
+    Before:       n/a   After:  B7093032  **547**
+Routine Name: IBRFIWL
+    Before:       n/a   After:B194634880  **547**
+Routine Name: IBRFIWL1
+    Before:       n/a   After:B148319097  **547**
+Routine Name: IBRFIWLA
+    Before:       n/a   After:B115196222  **547**
+Routine Name: IBTRKR
+    Before: B36589425   After: B38263485  **23,43,45,56,214,547**
+Routine Name: IBTUBO
+    Before: B35610159   After: B47033794  **19,31,32,91,123,159,192,235,
+                                           248,155,516,547**
+Routine Name: IBTUBO1
+    Before: B62446159   After: B65321637  **19,31,32,91,123,159,247,155,
+                                           277,339,399,516,547**
+Routine Name: IBTUBO2
+    Before: B49823798   After: B54785777  **19,31,32,91,123,159,192,155,
+                                           309,347,437,516,547**
+Routine Name: IBTUBO3
+    Before: B28228475   After: B42226483  **123,159,192,155,277,516,547**
+Routine Name: IBTUBUL
+    Before: B72452562   After: B60799593  **19,123,159,217,155,356,516,547**
+Routine Name: IBY547PO
+    Before:       n/a   After: B11193414  **547**
+Routine Name: IBY547PR
+    Before:       n/a   After: B46231321  **547**
+ 
+Routine list of preceding patches: 214, 473, 516, 522
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 09, 2015
+Completed By:                HRISTOPHER     Date Completed: AUG 02, 2016
+Released By :                               Date Released : AUG 31, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

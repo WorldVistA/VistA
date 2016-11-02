@@ -1,0 +1,232 @@
+$TXT Created by               MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 07/26/16 at 10:20
+=============================================================================
+Run Date: AUG 10, 2016                     Designation: IB*2*562
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #519                      Status: Released
+                  Compliance Date: SEP 10, 2016
+=============================================================================
+
+
+Subject: IB MT FIX/DISCH SPECIAL CASES
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ Patch IB*2.0*562 addresses 1 issue:
+  
+ 1) Numerous sites have reported an issue with intermittent records 
+ of the SPECIAL INPATIENT BILLING CASES File (#351.2) not having discharge
+ dates when this information is present in the PATIENT MOVEMENT file 
+ (#405).  
+                         
+   
+ ASSOCIATED TICKETS: 
+ ==================
+ 1)  I7532910FY16 - Unable to complete Disposition process
+      Duplicates:
+      R7844182FY16 - Receiving error message "You must wait until this 
+                     patient"
+      I7768275FY16 - STIL Reports Issue
+      R7746666FY16 - TICKET TO NTL SUP Management Systems
+      R7620587FY16 - Clear Inpatient Disposition
+      I7604027FY16 - Inpatient accounts cannot be dispositioned
+      I7596384FY16 - Unable to complete the disposition process for 
+                     patients
+      I7596362FY16 - Unable to complete the disposition process for 
+                     patients
+      R7590824FY16 - FAR VHAFARBURETN X3870 ANNEX-Per the OI&T POC we need
+      R7590724FY16 - ***Please assign ticket to NTL SUP MANAGEMENT 
+                     SYSTEMS***
+      I7588587FY16 - SPIL Clean up Report for Sioux Falls
+      I7568467FY16 - Disposition Special Inpatient Billing Cases
+      R7565090FY16 - Unable to complete the disposition process for the..
+      I7556150FY16 - Unable to complete the disposition process in 
+                     integrated
+      I7549084FY16 - Unable to complete the disposition process for  
+                     patients
+      I7546317FY16 - problem with a Menu option for integrate 
+                     billing:Menu.
+      R7539073FY16 - this is an extension to the previous request per.
+      R7537298FY16 - x83456 Bldg133ca room 1d 103 please contact customer 
+                     at.
+      I7536125FY16 - Special IP cases to be dispositioned
+      R7532733FY16 - VA BHHCS-TICKET REQUESTED W/NSD(I7532910FY16) for 
+                     routine..
+      I7529240FY16 - IB-Disposition Special Inpatient Billing Cases Issue
+      I7505684FY16 - AEU reports old special inpatient billing cases that 
+                     users.
+      I7482748FY16 - HAM-"Disposition Special Inpatient Billing Cases"
+      I7444751FY16 - Several Records in File 351.2 That do not have a 
+                     matching.
+      I5698603FY15 - INPATIENT BILLING CANNOT BE DISPOSITIONED
+      I8334849FY16 - special inpatient cases 
+      R8315890FY16 - There is an encounter on the Saginaw SPIL report
+                     that is...
+      I8223397FY16 - SPIL Report issue
+      I8195150FY16 - Integrated Billing-SPIL report
+      R8167384FY16 - We are unable to complete the disposition process
+                     for the...
+      I8085010FY16 - Inpatient billing cannot be dispositioned 
+      R7995140FY16 - Inpatient billing cannot be dispositioned
+      I7963017FY16 - In CPRS user cannot disposition old cases
+      R7941256FY16 - this is the Integrated billing issue that needs to
+                     be assigned
+      I7632752FY16 - vISTA-we are unable to complete the disposition
+      I7729481FY16 - Has encounters that are still in an admitted state
+                     in IB
+      I7771563FY16 - PAL-unable to complete the dispostion process for a
+                     list..
+      I7798084FY16 - Unable to close encounters
+      I7835475FY16 - AEU request assistance with IB. POC states the...
+      R7905891FY16 - Inpatient billing cannot be dispositioned
+  
+  
+ ASSOCIATED NSR: 
+ ===============
+ N/A
+  
+   
+ PARTICIPATING TEST SITES: 
+ =========================
+ Caribbean HCS (San Juan)
+ Indianapolis
+ Pittsburgh HCS
+  
+  
+ TICKET OVERVIEW:
+ ================
+ 1)  I7532910FY16-Unable to complete Disposition process
+  
+ Problem:
+ --------
+ Sites have reported intermittent records in the SPECIAL INPATIENT 
+ BILLING CASES file (#351.2) are missing the discharge date that is
+ present in the PATIENT MOVEMENT file (#405).
+  
+ Resolution:
+ -----------
+ Routine IB2P562A looks at the SPECIAL INPATIENT BILLING CASES file
+ (#351.2) for records missing a discharge date and if found adds the 
+ discharge date obtained from the PATIENT MOVEMENT file (#405).
+  
+ Post install routine IB2P562 will add the new menu option IB MT 
+ Fix/Disch Special Cases [IB MT FIX/DISCH SPECIAL CASES] to the Automated
+ Means Test Billing Menu [IB MEANS TEST MENU]. 
+  
+  
+ Options Associated:
+  
+ Option Name                         Type           New/Modified/Deleted
+ -----------                         ----           -------------------- 
+ IB MT Fix/Disch Special Cases       run routine    New
+  
+  
+ DOCUMENTATION RETRIEVAL INSTRUCTIONS:
+ =====================================
+ Updated documentation describing the new functionality introduced by 
+ this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+ Title                                            File Name      SFTP Mode
+ -----------------------------------------------------------------------
+ Integrated Billing (IB) V. 2.0 Technical Manual  ib_2_0_tm       Binary
+ Integrated Billing (IB) V. 2.0 User Manual       ib_2_0_um       Binary
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes.
+ Suggested time to install: non-peak requirement hours.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options (when
+        prompted for INSTALL NAME, enter IB*2.0*562).      
+  
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch 
+           is installed.
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+        **Note:  Routine IB2P562 is automatically deleted so be sure to
+                 check the checksums before installation is completed.
+                 Routine IB2P562A remains on the VistA system.
+        d. Print Transport Global - this option will allow you to view
+           the components of the KIDS build.
+      
+     4. Use the Install Package(s) option and select the package 
+        IB*2.0*562.
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//",
+        respond No.
+   
+     6. When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+        Install? NO//", respond No.
+  
+        When prompted "Want to DISABLE Scheduled Options, Menu Options,
+        and Protocols? YES//", respond Yes.
+  
+        When prompted, "Enter options you wish to mark as 'Out Of 
+        Order':", enter:
+              
+        List Special Inpatient Billing Cases [IB MT LIST SPECIAL CASES]
+            
+        Disposition Special Inpatient Billing Cases [IB MT DISP SPECIAL
+        CASES]
+           
+        When prompted, "Enter protocols you wish to mark as 'Out Of
+        Order':", press enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB2P562
+    Before:       n/a   After:  B1435849  **562**
+Routine Name: IB2P562A
+    Before:       n/a   After:  B1762830  **562**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 04, 2016
+Completed By:                               Date Completed: AUG 05, 2016
+Released By :                               Date Released : AUG 10, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
