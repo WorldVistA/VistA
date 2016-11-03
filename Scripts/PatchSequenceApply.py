@@ -56,8 +56,9 @@ from VistATaskmanUtil import VistATaskmanUtil
 class PatchSequenceApply(object):
   DEFAULT_VISTA_LOG_FILENAME = "VistAInteraction.log"
   DEFAULT_OUTPUT_FILE_LOG = "PatchAnalyzer.log"
-  def __init__(self, testClient, logFileDir):
+  def __init__(self, testClient, logFileDir, testClient2=None):
     self._testClient = testClient
+    self._testClient2 = testClient2
     curTimestamp = getCurrentTimestamp()
     logFileName = "%s.%s" % (self.DEFAULT_VISTA_LOG_FILENAME, curTimestamp)
     self._logFileName = os.path.join(logFileDir,
