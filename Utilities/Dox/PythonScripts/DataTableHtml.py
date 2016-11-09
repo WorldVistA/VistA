@@ -61,6 +61,7 @@ data_table_list_with_columns_init_setup = Template("""
   $(document).ready(function() {
     $("#${tableName}").dataTable({
         "bInfo": true,
+        "dom": 'f<"toolbar">rtilp',
         "iDisplayLength": 25,
         "sPaginationType": "full_numbers",
         "bStateSave": true,
@@ -100,6 +101,8 @@ data_table_list_with_columns_init_setup = Template("""
       }
     });
 
+    $$("div.toolbar").html('<button onclick="clearFilters()">Clear Search</button>');
+
     table
      .search('')
      .columns().search('')
@@ -128,6 +131,7 @@ data_table_large_list_with_columns_init_setup = Template("""
       $$("#${tableName}").dataTable({
         "bProcessing": true,
         "bStateSave": true,
+        "dom": 'f<"toolbar">rtilp',
         "iDisplayLength": 10,
         "sPaginationType": "full_numbers",
         "bDeferRender": true,
@@ -167,13 +171,29 @@ data_table_large_list_with_columns_init_setup = Template("""
           });
         }
       });
-      var table = $('#${tableName}').DataTable();
 
-      table
-        .search( '' )
-        .columns().search( '' )
-        .draw();
+    $$("div.toolbar").html('<button onclick="clearFilters()">Clear Search</button>');
+
+    var table = $('#${tableName}').DataTable();
+    table
+      .search( '' )
+      .columns().search( '' )
+      .draw();
 }); </script>
+""")
+
+data_table_clear_filters = Template("""
+<script type="text/javascript" id="js">
+  function clearFilters() {
+    var table = $('#${tableName}').DataTable();
+    table
+      .search( '' )
+      .columns().search( '' )
+      .draw();
+    $("select").prop('selectedIndex', 0);
+    $('#${tableName} tfoot input').val('');
+  }
+</script>
 """)
 
 data_table_record_init_setup = Template("""
@@ -208,6 +228,9 @@ def outputDataListTableHeader(output, tName, columns=None, searchColumnNames=Non
                                                                       searchColumns="||".join(searchColumns))
   output.write("%s\n" % initSet)
 
+  clear_filters = data_table_clear_filters.safe_substitute(tableName=tName)
+  output.write("%s\n" % clear_filters)
+
 def outputLargeDataListTableHeader(output, src, tName, columns=None, searchColumnNames=None):
   output.write("%s\n" % data_table_reference)
   if columns is None and searchColumnNames is None:
@@ -225,6 +248,9 @@ def outputLargeDataListTableHeader(output, src, tName, columns=None, searchColum
                                                                             columnNames=",".join(columnNames),
                                                                             searchColumns="||".join(searchColumns))
   output.write("%s\n" % initSet)
+
+  clear_filters = data_table_clear_filters.safe_substitute(tableName=tName)
+  output.write("%s\n" % clear_filters)
 
 def outputDataRecordTableHeader(output, tName):
   output.write("%s\n" % data_table_reference)
