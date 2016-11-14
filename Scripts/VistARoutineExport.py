@@ -83,13 +83,14 @@ class VistARoutineExport(object):
     vistATestClient.waitForPrompt(1200)
     connection.send('\r')
   def exportRoutines(self, vistATestClient,
-                     outputFileName, routineList, excludeList=None):
+                     outputFileName, routineList, excludeList=None,exceptionList=None):
     if not routineList:
       return True
     return self.__exportRoutineImpl__(vistATestClient,
                                       outputFileName,
                                       routineList,
-                                      excludeList)
+                                      excludeList,
+                                      exceptionList)
   def exportAllRoutines(self, vistATestClient, outputFileName, excludeList=None,exceptionList=None):
     return self.__exportRoutineImpl__(vistATestClient,
                                       outputFileName,
@@ -111,6 +112,8 @@ def main():
                       help='only specified routine names')
   parser.add_argument('-e', '--exclude', nargs='*', default=None,
                       help='exclude specified routine names')
+  parser.add_argument('-x', '--exception', nargs='*', default=None,
+                      help='except specified routine names from the excluded routines')
   result = parser.parse_args();
   print (result)
   outputFilename = result.outputFile
@@ -127,10 +130,12 @@ def main():
     vistARoutineExport = VistARoutineExport()
     if isAllRoutines:
       vistARoutineExport.exportAllRoutines(vistAClient, outputFilename,
-                                           result.exclude)
+                                           result.exclude,
+                                           result.exception)
     else:
       vistARoutineExport.exportRoutines(vistAClient, outputFilename,
                                         result.routines,
-                                        result.exclude)
+                                        result.exclude,
+                                        result.exception)
 if __name__ == '__main__':
   main()

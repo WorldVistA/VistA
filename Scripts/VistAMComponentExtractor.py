@@ -45,7 +45,7 @@ ROUTINE_EXTRACT_EXCLUDE_LIST = (
 
 """ List of routine names that are to be included again after the above has excluded a set of them """
 ROUTINE_EXTRACT_EXCEPTION_LIST = (
-  "%ut*"
+  "%ut*",
 )
 
 """ Extract routines/globals from a VistA instance and import
