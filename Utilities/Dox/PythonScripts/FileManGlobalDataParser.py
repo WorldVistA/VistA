@@ -666,6 +666,8 @@ class FileManGlobalDataParser(object):
     return package
 
   def _updateInstallReference(self):
+    if not os.path.exists(self.outDir+"/9_7"):
+      os.mkdir(self.outDir+"/9_7")
     installData = self._glbData['9.7']
     output = os.path.join(self.outDir, "install_information.json")
     installJSONData = {}

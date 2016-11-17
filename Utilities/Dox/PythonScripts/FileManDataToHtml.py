@@ -61,7 +61,7 @@ def getFileHtmlLink(dataEntry, value, **kargs):
   entryName = str(value)
   htmlFile = getDataEntryHtmlFileByName(entryName, dataEntry.ien,
                                         dataEntry.fileNo)
-  return "<a href=\"%s\">%s</a>" % (htmlFile, value)
+  return "<a href=\"../%s/%s\">%s</a>" % (dataEntry.fileNo.replace(".","_"),htmlFile, value)
 
 def getRoutineName(inputString):
   tagRoutine = inputString.split('^')
@@ -102,7 +102,7 @@ def getFileManFilePointerLink(dataEntry, value, **kargs):
     fields = value.split('^')
     if len(fields) == 3: # fileNo, ien, name
       refFile = getDataEntryHtmlFileByName(fields[2], fields[1], fields[0])
-      value = '<a href="%s">%s</a>' % (refFile, fields[-1])
+      value = '<a href="../%s/%s">%s</a>' % (fields[0].replace(".","_"),refFile, fields[-1])
     elif len(fields) == 2:
       value = 'File: %s, IEN: %s' % (fields[0], fields[1])
     else:
@@ -142,7 +142,7 @@ def getFreeTextLink(dataEntry, value, **kargs):
       # Once the information is available check for the target in any available information in that file
       for entry in glbData.outFileManData[file].dataEntries:
         if value == glbData.outFileManData[file].dataEntries[entry].fields[field].value:
-          return '<a href="%s-%s.html">%s</a>' % (file,entry, glbData.outFileManData[file].dataEntries[entry].fields[field].value)
+          return '<a href="../%s/%s-%s.html">%s</a>' % (glbData.outFileManData[file].dataEntries[entry].fileNo.replace(".","_"),file,entry, glbData.outFileManData[file].dataEntries[entry].fields[field].value)
   return value
 
 """
@@ -278,7 +278,7 @@ def convertFilePointerToHtml(inputValue):
   fields = inputValue.split('^')
   if len(fields) == 3: # fileNo, ien, name
     refFile = getDataEntryHtmlFileByName(fields[2], fields[1], fields[0])
-    value = '<a href="%s">%s</a>' % (refFile, fields[-1])
+    value = '<a href="../%s/%s">%s</a>' % (fields[0].replace(".","_"),refFile, fields[-1])
     name = fields[-1]
   elif len(fields) == 2:
     value = 'File: %s, IEN: %s' % (fields[0], fields[1])
@@ -319,6 +319,8 @@ class FileManDataToHtml(object):
     for fileNo in getKeys(fileManDataMap.iterkeys(), float):
       fileManData = fileManDataMap[fileNo]
       if fileNo == '8994':
+        if not os.path.exists(outDir+"/8994"):
+          os.mkdir(outDir+"/8994")
         if crossRef:
           allPackages = crossRef.getAllPackages()
           allRpcs = []
@@ -326,11 +328,13 @@ class FileManDataToHtml(object):
             if package.rpcs:
               logging.info("generating RPC list for package: %s"
                            % package.getName())
-              self._generateRPCListHtml(package.rpcs, package.getName())
+              self._generateRPCListHtml(package.rpcs, package.getName(),fileNo)
               allRpcs.extend(package.rpcs)
           if allRpcs:
-            self._generateRPCListHtml(allRpcs, "All")
+            self._generateRPCListHtml(allRpcs, "All",fileNo)
       elif fileNo == '101':
+        if not os.path.exists(outDir+"/101"):
+          os.mkdir(outDir+"/101")
         if crossRef:
           allPackages = crossRef.getAllPackages()
           allHl7s = []
@@ -339,18 +343,20 @@ class FileManDataToHtml(object):
             if package.hl7:
               logging.info("generating HL7 list for package: %s"
                            % package.getName())
-              self._generateHL7ListByPackage(package.hl7, package.getName())
+              self._generateHL7ListByPackage(package.hl7, package.getName(),fileNo)
               allHl7s.extend(package.hl7)
             if package.protocol:
               logging.info("generating Protocol list for package: %s"
                            % package.getName())
-              self._generateProtocolListByPackage(package.protocol, package.getName())
+              self._generateProtocolListByPackage(package.protocol, package.getName(), fileNo)
               allProtocols.extend(package.protocol)
           if allHl7s:
-            self._generateHL7ListByPackage(allHl7s, "All")
+            self._generateHL7ListByPackage(allHl7s, "All",fileNo)
           if allProtocols:
-            self._generateProtocolListByPackage(allProtocols, "All")
+            self._generateProtocolListByPackage(allProtocols, "All",fileNo)
       elif fileNo== '779.2':
+        if not os.path.exists(outDir+"/779_2"):
+          os.mkdir(outDir+"/779_2")
         if crossRef:
           allPackages = crossRef.getAllPackages()
           allHLOs = []
@@ -358,12 +364,16 @@ class FileManDataToHtml(object):
             if package.hlo:
               logging.info("generating HLO list for package: %s"
                            % package.getName())
-              self._generateHLOListByPackage(package.hlo, package.getName(),gblDataParser )
+              self._generateHLOListByPackage(package.hlo, package.getName(),gblDataParser,fileNo)
               allHLOs.extend(package.hlo)
           if allHLOs:
-            self._generateHLOListByPackage(allHLOs,"All",gblDataParser )
+            self._generateHLOListByPackage(allHLOs,"All",gblDataParser,fileNo)
       elif fileNo == '19':
         """ generate all option list """
+        if not os.path.exists(outDir+"/19"):
+          os.mkdir(outDir+"/19")
+        if not os.path.exists(outDir+"/menus"):
+          os.mkdir(outDir+"/menus")
         allOptionList = []
         allMenuList = []
         serverMenuList = []
@@ -382,11 +392,11 @@ class FileManDataToHtml(object):
         self._generateDataListByPackage(allOptionList, "All", option_list_fields,
                                         "Option",
                                         [x[0] for x in option_list_fields],
-                                        ["Name", "Lock"])
+                                        ["Name", "Lock"],fileNo)
         self._generateDataListByPackage(allMenuList, "All", menu_list_fields,
-                                        "Menu",
+                                        "menus",
                                         [x[0] for x in menu_list_fields],
-                                        ["Name", "Menu Text", "Lock"])
+                                        ["Name", "Menu Text", "Lock"],fileNo)
 
         self._generateServerMenu(allMenuList, allOptionList, serverMenuList)
         self._generateMenuDependency(allMenuList, allOptionList)
@@ -520,7 +530,7 @@ class FileManDataToHtml(object):
         outJson['type'] = item.fields['4'].value
       if item in menuDepDict:
         self._addChildMenusToJson(menuDepDict[item], menuDepDict, outJson, item)
-      with open(os.path.join(self.outDir, "VistAMenu-%s.json" % item.ien), 'w') as output:
+      with open(os.path.join(self.outDir+"/Menus", "VistAMenu-%s.json" % item.ien), 'w') as output:
         logging.info("Generate File: %s" % output.name)
         json.dump(outJson, output)
 
@@ -544,7 +554,7 @@ class FileManDataToHtml(object):
       logging.debug("Adding child %s to parent %s" % (childDict['name'], outJson['name']))
       outJson.setdefault('children',[]).append(childDict)
 
-  def _generateRPCListHtml(self, dataEntryLst, pkgName):
+  def _generateRPCListHtml(self, dataEntryLst, pkgName, fileNo):
     """
       Specific logic to handle RPC List
       @TODO move the logic to a specific file
@@ -553,9 +563,9 @@ class FileManDataToHtml(object):
     searchColumnNames = ["Name", "Tag", "Routine"]
     return self._generateDataListByPackage(dataEntryLst,
                                      pkgName, rpc_list_fields, "RPC",
-                                     columnNames, searchColumnNames)
+                                     columnNames, searchColumnNames, fileNo)
 
-  def _generateHL7ListByPackage(self, dataEntryLst, pkgName):
+  def _generateHL7ListByPackage(self, dataEntryLst, pkgName, fileNo):
     """
       Specific logic to handle HL7 List
       @TODO move the logic to a specific file
@@ -565,10 +575,10 @@ class FileManDataToHtml(object):
     return self._generateDataListByPackage(dataEntryLst, pkgName,
                                            hl7_list_fields, "HL7",
                                            hl7_column_names,
-                                           searchColumnNames,
+                                           searchColumnNames, fileNo,
                                            hl7_table_header_fields)
 
-  def _generateProtocolListByPackage(self, dataEntryLst, pkgName):
+  def _generateProtocolListByPackage(self, dataEntryLst, pkgName, fileNo):
     """
       Specific logic to handle HL7 List
       @TODO move the logic to a specific file
@@ -577,9 +587,9 @@ class FileManDataToHtml(object):
     searchColumnNames = ["Name", "Lock", "Description", "Entry Action", "Exit Action"]
     return self._generateDataListByPackage(dataEntryLst, pkgName,
                                            protocol_list_fields, "Protocols",
-                                           columnNames, searchColumnNames)
+                                           columnNames, searchColumnNames, fileNo)
 
-  def _generateHLOListByPackage(self, dataEntryLst, pkgName , fileManDataMap):
+  def _generateHLOListByPackage(self, dataEntryLst, pkgName , fileManDataMap, fileNo):
     """
       Specific logic to handle HLO List
       @TODO move the logic to a specific file
@@ -588,13 +598,13 @@ class FileManDataToHtml(object):
                          "Action Tag", "Action Routine"]
     return self._generateDataListByPackage(dataEntryLst, pkgName,
                                            HLO_list_fields, "HLO",
-                                           HLO_column_names, searchColumnNames,
+                                           HLO_column_names, searchColumnNames, fileNo,
                                            HLO_table_header_fields)
 
   def _generateDataListByPackage(self, dataEntryLst, pkgName, list_fields,
-                                 listName, columnNames, searchColumnNames,
+                                 listName, columnNames, searchColumnNames, fileNo,
                                  custom_header=None):
-    outDir = self.outDir
+    outDir = os.path.join(self.outDir, fileNo.replace(".","_"))
     with open("%s/%s-%s.html" % (outDir, pkgName, listName), 'w+') as output:
       output.write("<html>\n")
       tName = safeElementId("%s-%s" % (listName, pkgName))
@@ -663,6 +673,9 @@ class FileManDataToHtml(object):
     outDir = self.outDir
     isLargeFile = len(fileManData.dataEntries) > 4500
     tName = normalizePackageName(fileManData.name)
+    outDir = os.path.join(self.outDir, fileNo.replace(".","_"))
+    if not os.path.exists(outDir):
+      os.mkdir(outDir)
     with open("%s/%s.html" % (outDir, fileNo), 'w') as output:
       output.write("<html>\n")
       if isLargeFile:
@@ -684,7 +697,7 @@ class FileManDataToHtml(object):
           name = dataEntry.name
           if isFilePointerType(dataEntry):
             link, name = convertFilePointerToHtml(dataEntry.name)
-          dataHtmlLink = "<a href=\"%s\">%s</a>" % (getDataEntryHtmlFile(dataEntry, ien, fileNo),
+          dataHtmlLink = "<a href=\"../%s/%s\">%s</a>" % (fileNo.replace(".","_"),getDataEntryHtmlFile(dataEntry, ien, fileNo),
                                                     name)
           tableRow = [dataHtmlLink, dataEntry.ien]
           output.write("<tr>\n")
@@ -711,20 +724,24 @@ class FileManDataToHtml(object):
           name = dataEntry.name
           if isFilePointerType(dataEntry):
             link, name = convertFilePointerToHtml(dataEntry.name)
-          dataHtmlLink = "<a href=\"%s\">%s</a>" % (getDataEntryHtmlFile(dataEntry, ien, fileNo),
+          dataHtmlLink = "<a href=\"../%s/%s\">%s</a>" % (fileNo.replace(".","_"),getDataEntryHtmlFile(dataEntry, ien, fileNo),
                                                     name)
           outArray.append([dataHtmlLink, ien])
         json.dump(outJson, output)
 
   def _convertFileManDataToHtml(self, fileManData):
-    outDir = self.outDir
     for ien in getKeys(fileManData.dataEntries.keys(), float):
+      outDir = self.outDir
       tName = safeElementId("%s-%s" % (fileManData.fileNo, ien))
       dataEntry = fileManData.dataEntries[ien]
       if not dataEntry.name:
         logging.warn("no name for %s" % dataEntry)
         continue
       name = dataEntry.name
+      if dataEntry.fileNo:
+        outDir = os.path.join(self.outDir, dataEntry.fileNo.replace(".","_"))
+        if not os.path.exists(outDir):
+          os.mkdir(outDir)
       if isFilePointerType(dataEntry):
         link, name = convertFilePointerToHtml(dataEntry.name)
       outHtmlFileName = getDataEntryHtmlFile(dataEntry, ien, fileManData.fileNo)
