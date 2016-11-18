@@ -95,7 +95,9 @@ class PatchInfo(object):
     self.kidsInfoSha1 = None
     self.rundate = None
     self.status = None
+    self.subject = None
     self.priority = None
+    self.description = []
     """ attributes related to multibuilds """
     self.isMultiBuilds = False
     self.multiBuildsList = None
@@ -127,7 +129,7 @@ class PatchInfo(object):
 
   def __str__(self):
     return ("%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,"
-        " %s, %s, %s, %s, %s\n%s, \ninfo:%s\nglobal:%s, %s, %s" %
+        " %s, %s, %s, %s, %s\n%s, \ninfo:%s\nglobal:%s, %s, %s,\nsubject: %s,\nDescription; %s" %
              (self.package, self.namespace, self.version,
               self.patchNo, self.seqNo, self.installName,
               self.kidsFilePath, self.kidsSha1, self.kidsSha1Path,
@@ -136,7 +138,7 @@ class PatchInfo(object):
               self.isMultiBuilds, self.multiBuildsList, self.otherKidsInfoList,
               self.priority, self.depKIDSBuild,
               self.associatedInfoFiles, self.associatedGlobalFiles,
-              self.hasCustomInstaller, self.customInstallerPath) )
+              self.hasCustomInstaller, self.customInstallerPath,self.subject, self.description) )
   def __repr__(self):
     return self.__str__()
 
@@ -154,12 +156,14 @@ class PatchInfoParser(object):
                               "^Package : (?P<name>.*) Priority: (?P<pri>.*)")
   VERSION_STATUS_REGEX = re.compile(
                             "^Version : (?P<no>.*) Status: (?P<status>.*)")
-  SUBJECT_PART_START_REGEX = re.compile("^Subject: ")
+  SUBJECT_PART_START_REGEX = re.compile("^Subject:(?P<subj>.*)")
   ASSOCIATED_PATCH_START_REGEX = re.compile("^Associated patches: ")
   ASSOCIATED_PATCH_START_INDEX = 20
   ASSOCIATED_PATCH_SECTION_REGEX = re.compile("^ {%d,%d}\(v\)" %
                                               (ASSOCIATED_PATCH_START_INDEX,
                                                ASSOCIATED_PATCH_START_INDEX))
+  DESCRIPTION_REGEX = re.compile("^ *Description:")
+  INSTALL_INSTRUCTIONS_REGEX = re.compile("Installation Instructions", re.I)
 
   def __init__(self):
     pass
@@ -169,6 +173,7 @@ class PatchInfoParser(object):
     @return PatchInfo object if has installName, otherwise None
   """
   def parseKIDSInfoFile(self, infoFile):
+    inDescription=False
     logger.debug("Parsing Info file %s" % infoFile)
     patchInfo = PatchInfo()
     assert os.path.exists(infoFile)
@@ -178,9 +183,24 @@ class PatchInfoParser(object):
       line = line.rstrip(" \r\n")
       if len(line) == 0:
         continue
-      """ subject part are treated as end of parser section for now"""
-      if self.SUBJECT_PART_START_REGEX.search(line):
-        break;
+      """ install instructions are treated as end of parser section for now"""
+      ret = self.INSTALL_INSTRUCTIONS_REGEX.search(line)
+      if ret:
+        inDescription=False
+        break
+      if inDescription:
+        patchInfo.description.append(line)
+        continue
+      ret = self.DESCRIPTION_REGEX.search(line)
+      if ret:
+        inDescription=True
+        continue
+      ret = self.SUBJECT_PART_START_REGEX.search(line)
+      if ret:
+        print ret.group('subj')
+        print ret
+        patchInfo.subject= ret.group('subj')
+        continue
       ret = self.RUNDATE_DESIGNATION_REGEX.search(line)
       if ret:
         patchInfo.rundate = datetime.strptime(ret.group('date'),

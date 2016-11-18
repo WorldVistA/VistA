@@ -65,6 +65,10 @@ def generateCommitMsgFileByPatchInfo(patchInfo, commitMsgFile,
     if patchInfo.multiBuildsList:
       topicLine = "Install: %s" % (", ".join(patchInfo.multiBuildsList))
     output.write("%s\n" % topicLine)
+    output.write("\nPatch Subject: %s" % patchInfo.subject)
+    output.write('\n')
+    output.write("Description:\n\n" + '\n'.join([str(x) for x in patchInfo.description]))
+    output.write('\n')
     output.write('\n')
     output.write('Use default answers for KIDS load/install questions.\n')
     output.write('\n')
@@ -103,7 +107,7 @@ def getWebLinkForPatchSourceByFile(filePath, reposHash, fileType=False):
   webLink = Template(PATCH_SRC_WEB_LINK)
   packageLink = webLink.substitute(type=typeName,
                                    patch_dir=packageDir,
-                                   hb=reposHash)
+                                   hb="master")
   return packageLink
 
 def testSinglePatchCommitMsg():
