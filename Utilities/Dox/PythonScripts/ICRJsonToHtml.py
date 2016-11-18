@@ -307,6 +307,8 @@ class ICRJsonToHtml(object):
 
     def _generateICRSummaryPageImpl(self, inputJson, listName, pkgName, isForAll=False):
         outDir = self._outDir
+        listName = listName.strip()
+        pkgName = pkgName.strip()
         pkgHtmlName = pkgName
         outFilename = "%s/%s-%s.html" % (outDir, pkgName, listName)
         if not isForAll:
@@ -316,7 +318,7 @@ class ICRJsonToHtml(object):
             outFilename = "%s/%s" % (outDir, pkgHtmlName)
         with open(outFilename, 'w+') as output:
             output.write("<html>\n")
-            tName = safeElementId("%s-%s" % (listName, pkgName))
+            tName = "%s-%s" % (listName.replace(' ', '_'), pkgName.replace(' ', '_'))
             useAjax = useAjaxDataTable(len(inputJson))
             columnNames = [x[0] for x in summary_list_fields]
             searchColumns = ['IA #', 'Name', 'Custodial Package',
