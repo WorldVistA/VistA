@@ -74,7 +74,7 @@ data_table_list_with_columns_init_setup = Template("""
       var column = this;
       var name = columns[index].name;
       if (${searchColumns}) {
-        var select = $('<input type="text" placeholder="Search '+name+'" />')
+        var select = $('<input type="text" name="' + name + '" placeholder="Search ' + name + '" />')
           .appendTo( $(column.footer()).empty() )
           .on('keyup change', function() {
             if (column.search() !== this.value) {
@@ -84,7 +84,7 @@ data_table_list_with_columns_init_setup = Template("""
             }
           });
       } else {
-        var select = $('<select><option value=""></option></select>')
+        var select = $('<select name="' + name + '"><option value=""></option></select>')
           .appendTo($(column.footer()).empty())
           .on('change', function() {
             var val = $.fn.dataTable.util.escapeRegex($(this).val());
@@ -144,7 +144,7 @@ data_table_large_list_with_columns_init_setup = Template("""
             var column = this;
             var name = columns[index].name;
             if (${searchColumns}) {
-              var select = $('<input type="text" placeholder="Search '+name+'" />')
+              var select = $('<input type="text" name="' + name + '" placeholder="Search '+name+'" />')
                 .appendTo( $(column.footer()).empty() )
                 .on('keyup change', function () {
                   if (column.search() !== this.value) {
@@ -154,7 +154,7 @@ data_table_large_list_with_columns_init_setup = Template("""
                   }
               });
             } else {
-              var select = $('<select><option value=""></option></select>')
+              var select = $('<select name="' + name + '"><option value=""></option></select>')
                 .appendTo($(column.footer()).empty())
                 .on('change', function() {
                   var val = $.fn.dataTable.util.escapeRegex($(this).val());
