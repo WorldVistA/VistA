@@ -1,4 +1,4 @@
-ZGO ; [Public] Save globals to ZWR files organized by FileMan ;2016-11-15  6:15 PM
+ZGO ; [Public] Save globals to ZWR files organized by FileMan ; 11/25/16 2:32pm
  ;---------------------------------------------------------------------------
  ; Copyright 2011 The Open Source Electronic Health Record Agent
  ;
@@ -143,8 +143,9 @@ STARTJOBS  ; [Private] Start child workers
  I 'CORES S CORES=8
  N JOBPAR
  I +$SY=47 S JOBPAR="RUNJOBS:(IN=""/dev/null"":OUT="""_$P_""":ERR="""_$P_""")"
- I +$SY=0 S JOBPAR="RUNJOBS:(::$P:$P)"
- N I F I=1:1:CORES J @JOBPAR W !,"Started Job PID "_$ZJOB
+ I +$SY=0 S JOBPAR="RUNJOBS:(::""/dev/null"":""worklist.log"")"
+ N I F I=1:1:CORES J @JOBPAR W !,"Started Job PID "_$S(+$SY=47:$ZJOB,1:$JOB)
+ I +$SY=0 W !,"Tail worklist.log to see the status of a Cache Export"
  QUIT
  ;
 RUNJOBS ; [Private] Run child workers
@@ -163,7 +164,6 @@ RUNJOBS ; [Private] Run child workers
  . L -^XTMP("ZGO","GLOBALS",G) ; Unlock
  L -^ZGO($J)
  QUIT
-
 VISIT(G) ; [Private] Visit export Files; and if there is a non-Fileman node, export that separately.
  w !,$J,": ",G,!
  n gDev ; global device
