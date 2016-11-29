@@ -1,4 +1,4 @@
-ZGO ; [Public] Save globals to ZWR files organized by FileMan ; 11/25/16 2:32pm
+ZGO ; [Public] Save globals to ZWR files organized by FileMan ; 11/29/16 10:04am
  ;---------------------------------------------------------------------------
  ; Copyright 2011 The Open Source Electronic Health Record Agent
  ;
@@ -142,17 +142,20 @@ STARTJOBS  ; [Private] Start child workers
  . I $ZV["Darwin" o "p":(shell="/bin/sh":comm="sysctl -n hw.ncpu")::"pipe" u "p" r CORES c "p"
  I 'CORES S CORES=8
  N JOBPAR
+ N CACHENULL S CACHENULL="/dev/null"
+ I +$SY=0,$ZV["Windows" S CACHENULL="//./nul"
+ N OUTCACHE S OUTCACHE=$$DEFDIR^%ZISH_"worklist.log"
  I +$SY=47 S JOBPAR="RUNJOBS:(IN=""/dev/null"":OUT="""_$P_""":ERR="""_$P_""")"
- I +$SY=0 S JOBPAR="RUNJOBS:(::""/dev/null"":""worklist.log"")"
- N I F I=1:1:CORES J @JOBPAR W !,"Started Job PID "_$S(+$SY=47:$ZJOB,1:$JOB)
- I +$SY=0 W !,"Tail worklist.log to see the status of a Cache Export"
+ I +$SY=0 S JOBPAR="RUNJOBS:(::CACHENULL:OUTCACHE)"
+ N I F I=1:1:CORES J @JOBPAR W !,"Started Job PID "_$ZJOB
+ I +$SY=0 W !,"Tail "_OUTCACHE_" to see the status of a Cache Export"
  QUIT
  ;
 RUNJOBS ; [Private] Run child workers
  L +^ZGO($J) ; Wait on Semaphore
  N DIR S DIR=$P(^XTMP("ZGO",0),"^",4)
  D CONFIG
- N G S G=""
+ N G S G=0
  F  S G=$O(^XTMP("ZGO","GLOBALS",G)) Q:G=""  D
  . L +^XTMP("ZGO","GLOBALS",G):0 E  QUIT
  . N FILES M FILES=^XTMP("ZGO","FILES")
@@ -165,6 +168,7 @@ RUNJOBS ; [Private] Run child workers
  L -^ZGO($J)
  QUIT
 VISIT(G) ; [Private] Visit export Files; and if there is a non-Fileman node, export that separately.
+ s $et="d ^%ZTER HALT"
  w !,$J,": ",G,!
  n gDev ; global device
  N gHasFiles S gHasFiles=$O(FILES(G,""))'=""!($d(FILES(G))=1)
@@ -182,7 +186,9 @@ VISIT(G) ; [Private] Visit export Files; and if there is a non-Fileman node, exp
  .. s tracker(fileGlobal)=""
  .. n fDev s fDev=$$OPENFILE(fileRef)
  .. I +$SY=47 U fDev ZWRITE @fileGlobal@(*) ; GT.M speed up!
- .. e  d DUMP(fDev,fileGlobal) ; On Cache, ZWRITE is really slow.
+ .. I +$SY=0 d  ; On Cache, ZWRITE is really slow
+ ... d:$d(@fileGlobal)#2 WRITE(fDev,fileGlobal) ; head node
+ ... d DUMP(fDev,fileGlobal)
  .. d CLOSE(fDev)
  .. i $d(FILES(G))=1 s done=1
  .. k @fileRef,FILEROOTS(fileNumber)
@@ -229,8 +235,8 @@ VISIT(G) ; [Private] Visit export Files; and if there is a non-Fileman node, exp
  . s $e(fullSubs,$l(fullSubs))=""
  . n gNode s gNode=G_"("_fullSubs_")"
  . I +$SY=47 U gDev ZWRITE @gNode@(*) ; GT.M speed up!
- . E  D DUMP(gDev,gNode)
-  D CLOSE(gDev)
+ . I +$SY=0 D WRITE(gDev,gNode)
+ D CLOSE(gDev)
  quit
  ;
 DUMP(IO,G) ; Dump everything under node G, excluding G itself
