@@ -1,4 +1,4 @@
-ZGO ; [Public] Save globals to ZWR files organized by FileMan ; 11/29/16 10:04am
+ZGO ; [Public] Save globals to ZWR files organized by FileMan ; 11/30/16 2:07pm
  ;---------------------------------------------------------------------------
  ; Copyright 2011 The Open Source Electronic Health Record Agent
  ;
@@ -211,7 +211,8 @@ VISIT(G) ; [Private] Visit export Files; and if there is a non-Fileman node, exp
  . n fullSubs s fullSubs=""             ; obtain subscripts
  . n i f i=1:1:$ql(glo) d               ; ditto
  .. n sub s sub=$qs(glo,i)              ; ditto
- .. i +sub'=sub s sub=q_sub_q           ; quote non-numeric values
+ .. i sub?1.N,+sub=sub
+ .. e  s sub=q_sub_q                    ; quote non-numeric values
  .. s fullSubs=fullSubs_sub_","         ; add a comma to the end
  . s $e(fullSubs,$l(fullSubs))=""       ; remove final comma
  . k @("^TMP("_$J_","_fullSubs_")")     ; Okay. We know we exported that.
@@ -230,7 +231,8 @@ VISIT(G) ; [Private] Visit export Files; and if there is a non-Fileman node, exp
  . n fullSubs s fullSubs=""
  . n i f i=2:1:$ql(notSaved) d
  .. n sub s sub=$qs(notSaved,i)
- .. i +sub'=sub s sub=q_sub_q
+ .. i sub?1.N,+sub=sub
+ .. e  s sub=q_sub_q
  .. s fullSubs=fullSubs_sub_","
  . s $e(fullSubs,$l(fullSubs))=""
  . n gNode s gNode=G_"("_fullSubs_")"
