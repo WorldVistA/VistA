@@ -137,6 +137,9 @@ class InitCrossReferenceGenerator(object):
       for line in zwrFile:
         if lineNo == 0:
           globalDes = line.strip()
+          # Removing the extra text in the header of the ZWR file
+          # to tell if it needs to be added or skipped
+          globalDes = globalDes.replace("OSEHRA ZGO Export: ",'')
           if globalDes.startswith("^"):
             logger.info ("No Description: Skip this file: %s" % file)
             skipFile.append(file)
@@ -144,7 +147,7 @@ class InitCrossReferenceGenerator(object):
             package.addGlobalNamespace(namespace)
             break
         if lineNo == 1:
-          assert line.strip() == 'ZWR'
+          assert re.search('ZWR', line.strip())
         if lineNo >= 2:
           info = line.strip().split('=')
           globalName = info[0]
