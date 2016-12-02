@@ -1,4 +1,4 @@
-ZGO ; [Public] Save globals to ZWR files organized by FileMan ; 11/30/16 2:07pm
+ZGO ; [Public] Save globals to ZWR files organized by FileMan ; 12/2/16 1:50pm
  ;---------------------------------------------------------------------------
  ; Copyright 2011 The Open Source Electronic Health Record Agent
  ;
@@ -16,7 +16,8 @@ ZGO ; [Public] Save globals to ZWR files organized by FileMan ; 11/30/16 2:07pm
  ;---------------------------------------------------------------------------
  ;
 EN ; [Public] Interactive Entry Point
- N  D CONFIG
+ N (ZGODEBUG)
+ D CONFIG
  W "ZWR Global Output, organized by FileMan"
  D ASKDIR Q:DIR["^"
  D DUMPALL
@@ -91,6 +92,10 @@ WRITEHDR(VAL) ; Writes out the date/time in the header
  Q 0
 DUMPALL ; Dump All globals
  S ^XTMP("ZGO",0)=$$DT^XLFDT_"^"_$$DT^XLFDT_"^"_"Children for extraction^"_DIR
+ I $G(ZGODEBUG) D  QUIT
+ . D FILES,GLOBALS
+ . N G S G=0
+ . F  S G=$O(GLOBALS(G)) Q:G=""  D VISIT(G)
  L +^ZGO ; Child jobs must wait on Semaphore
  D STARTJOBS
  D FILES
@@ -147,7 +152,7 @@ STARTJOBS  ; [Private] Start child workers
  N OUTCACHE S OUTCACHE=$$DEFDIR^%ZISH_"worklist.log"
  I +$SY=47 S JOBPAR="RUNJOBS:(IN=""/dev/null"":OUT="""_$P_""":ERR="""_$P_""")"
  I +$SY=0 S JOBPAR="RUNJOBS:(::CACHENULL:OUTCACHE)"
- N I F I=1:1:CORES J @JOBPAR W !,"Started Job PID "_$ZJOB
+ N I F I=1:1:CORES J @JOBPAR W !,"Started Job PID "_$S(+$SY=0:$ZCHILD,1:$ZJOB)
  I +$SY=0 W !,"Tail "_OUTCACHE_" to see the status of a Cache Export"
  QUIT
  ;
@@ -193,7 +198,6 @@ VISIT(G) ; [Private] Visit export Files; and if there is a non-Fileman node, exp
  .. i $d(FILES(G))=1 s done=1
  .. k @fileRef,FILEROOTS(fileNumber)
  ;
- ;
  i done quit  ; All exported. No need for any other checks.
  ;
  ; Now see if any of the data did not get written out (e.g. ^DD)
@@ -223,7 +227,8 @@ VISIT(G) ; [Private] Visit export Files; and if there is a non-Fileman node, exp
  ; Stanza: Export leftovers
  ; Stuff still remains... okay then, no choice.
  n orig s orig=$na(^TMP($J))
- s gDev=$$OPENGBL(G)
+ i $d(FILES(G))=1 s gDev=$$OPENFILE($NA(FILES(G))) i 1 ; ^DIC
+ e  s gDev=$$OPENGBL(G)
  i $d(@orig)#2 D WRITE(gDev,G)
  n notSaved s notSaved=orig
  ; loop through every node in ^TMP, find the corresponding node in G, and export that.
