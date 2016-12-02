@@ -348,15 +348,14 @@ That command will print the necessary arguments and flags that need to be set.
  usage: WebPageGenerator.py [-h] -mr MREPOSITDIR -pr PATCHREPOSITDIR -xl
                            XINDEXLOGDIR -fs FILESCHEMADIR -db FILEMANDBJSON -o
                            OUTPUTDIR -gp GITPATH [-hd] [-dp DOTPATH] [-is]
-                           [-lf OUTPUTLOGFILENAME] -rj RTNJSON]
+                           [-lf OUTPUTLOGFILENAME] -rj RTNJSON [-dj DEPJSON]
 
  VistA Visual Cross-Reference Documentation Generator
-
 
  optional arguments:
   -h, --help            show this help message and exit
   -o OUTPUTDIR, --outputDir OUTPUTDIR
-                        Output Web Page dirctory
+                        Output Web Page directory
   -gp GITPATH, --gitPath GITPATH
                         Path to the folder containing git excecutable
   -hd, --hasDot         is Dot installed
@@ -366,17 +365,24 @@ That command will print the necessary arguments and flags that need to be set.
   -lf OUTPUTLOGFILENAME, --outputLogFileName OUTPUTLOGFILENAME
                         the output Logging file
   -rj RTNJSON, --rtnJson RTNJSON
+                        routine reference in VistA Data file in JSON format
+  -dj DEPJSON, --depJson DEPJSON
+                        JSON file to store Package dependency information
 
- Call Graph Log Parser Releated Arguments:
-  Argument for Parsing Call Graph and Schema logs
+ Initial CrossReference Generator Arguments:
+  Argument for generating initial CrossReference
 
-  -xl XINDEXLOGDIR, --xindexLogDir XINDEXLOGDIR
-                        Input XINDEX log files directory, nomally
-                        under${CMAKE_BUILD_DIR}/Docs/CallerGraph/
   -mr MREPOSITDIR, --MRepositDir MREPOSITDIR
                         VistA M Component Git Repository Directory
   -pr PATCHREPOSITDIR, --patchRepositDir PATCHREPOSITDIR
                         VistA Git Repository Directory
+
+ Call Graph Log Parser Releated Arguments:
+  Argument for Parsing XINDEX Call Graph logs
+
+  -xl XINDEXLOGDIR, --xindexLogDir XINDEXLOGDIR
+                        Input XINDEX log files directory, nomally
+                        under${CMAKE_BUILD_DIR}/Docs/CallerGraph/
 
  Data Dictionary Parser Auguments:
   -fs FILESCHEMADIR, --fileSchemaDir FILESCHEMADIR
@@ -402,6 +408,8 @@ before it is able to run successfully.
 * ``-db`` or ``--filemanDbJson`` - fileman db call information in JSON format.
 * ``-rj`` or ``--rtnJson``  -  path to the DataParser routine information in
   JSON format.
+* ``-dj`` or ``--depJson`` - path to a file where the package dependency information
+  will be stored
 
 All other flags or arguments are optional, but do have an effect on the
 output files.
@@ -436,6 +444,7 @@ Git Bash:
      -fs  ~/Work/OSEHRA/VistA-build/Docs/Schema
      -db ~/Work/OSEHRA/filemanDBCall.json
      -rj ~/Work/OSEHRA/DataParserOut/Routine-Ref.json
+     -dj ~/Work/OSEHRA/DataParserOut/PackageDep.json
 
 and the example run of the analyzer:
 
@@ -447,6 +456,7 @@ and the example run of the analyzer:
      -fs  ~/Work/OSEHRA/VistA-build/Docs/Schema
      -db ~/Work/OSEHRA/filemanDBCall.json
      -rj ~/Work/OSEHRA/DataParserOut/Routine-Ref.json
+     -dj ~/Work/OSEHRA/DataParserOut/PackageDep.json
  2014-10-27 12:39:47,243 INFO Total # of Packages is 140
  2014-10-27 12:39:47,433 INFO Total Search Files are 2933
  2014-10-27 12:39:52,933 INFO Package: Uncategorized is new
