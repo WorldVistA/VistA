@@ -1,4 +1,4 @@
-ZGO ; [Public] Save globals to ZWR files organized by FileMan ; 12/2/16 1:50pm
+ZGO ; [Public] Save globals to ZWR files organized by FileMan ; 12/6/16 4:01pm
  ;---------------------------------------------------------------------------
  ; Copyright 2011 The Open Source Electronic Health Record Agent
  ;
@@ -66,6 +66,12 @@ SINGLEDUMP(DIR) ; [Public] Dump everything into one file
  ;
 CONFIG ; Obtain configuration for Open and obtaining globals
  I $D(CONFIG) Q
+ ; Kill garbage globals
+ K ^A7RTMP1,^DIZ("ZDBSVR"),^SYS
+ ; Kill invalid top nodes
+ ZK ^%ZIS,^%ZISL,^%ZTER,^%ZTSCH,^%ZUA,^%ZUT
+ ZK ^DIC,^ECC,^ECT,^DIC,^LAC,^LEX,^LEXC,^PRPF,^PRPFT,^PSNDF,^PSNDF(0),^USC,^XIP
+ ;
  I $ZV["Cache" D  Q
  . S CONFIG("OPENIORW")="O IO:(""WNS""):1"
  . S CONFIG("GLOBALS")="D Fetch^%SYS.GD(""*"",1,0) S G="""" F  S G=$O(^CacheTempJ($J,G)) Q:G=""""  I G'?.E1L.E S GLOBALS(G)="""""
