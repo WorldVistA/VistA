@@ -203,6 +203,8 @@ def backupCacheDataByGitHash(instanceName, origDataPath, backupDir,
     logger.error("Can not stop cache instance %s" % instanceName)
     return False
   from GitUtils import getGitRepoRevisionHash
+  if gitReposBranch is None:
+    gitReposBranch = "HEAD"
   backupHash = getGitRepoRevisionHash(gitReposBranch, gitReposDir)
   destFile = os.path.join(backupDir, getCacheBackupNameByHash(backupHash))
   if not os.path.exists(destFile):
