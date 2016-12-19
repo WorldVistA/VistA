@@ -2189,7 +2189,7 @@ if __name__ == '__main__':
         description='VistA Visual Cross-Reference Documentation Generator',
         parents=[crossRefArgParse])
     parser.add_argument('-o', '--outputDir', required=True,
-                        help='Output Web Page dirctory')
+                        help='Output Web Page directory')
     parser.add_argument('-gp', '--gitPath', required=True,
                         help='Path to the folder containing git excecutable')
     parser.add_argument('-hd', '--hasDot', required=False, default="False",
@@ -2203,6 +2203,7 @@ if __name__ == '__main__':
                         help='the output Logging file')
     parser.add_argument('-rj','--rtnJson', required=True,help='routine reference in VistA '
         'Data file in JSON format')
+    parser.add_argument('-dj','--depJson', required=False, help='JSON file to store Package dependency information')
     result = parser.parse_args();
     if not result.outputLogFileName:
         outputLogFile = getTempLogFile()
@@ -2210,7 +2211,10 @@ if __name__ == '__main__':
         outputLogFile = result.outputLogFileName
     initLogging(outputLogFile)
     logger.debug (result)
-    crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(result)
+    pkgDepJson = None
+    if result.depJson:
+      pkgDepJson = os.path.abspath(result.depJson)
+    crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(result,pkgDepJson)
     logger.info ("Starting generating web pages....")
     doxDir = os.path.join(result.patchRepositDir, 'Utilities/Dox')
     webPageGen = WebPageGenerator(crossRef,

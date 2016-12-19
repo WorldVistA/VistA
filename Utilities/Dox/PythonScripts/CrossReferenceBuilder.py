@@ -65,8 +65,7 @@ class CrossReferenceBuilder(object):
         if filemanDbJson:
             crossRef = parseFileManDBJSONFile(crossRef,
                                    filemanDbJson).getCrossReference()
-        if pkgDepJson:
-          crossRef.generateAllPackageDependencies(os.path.abspath(pkgDepJson))
+        crossRef.generateAllPackageDependencies(pkgDepJson)
         return crossRef
     def buildCrossReferenceFromMongoDB(self):
         pass
