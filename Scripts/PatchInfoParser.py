@@ -197,8 +197,6 @@ class PatchInfoParser(object):
         continue
       ret = self.SUBJECT_PART_START_REGEX.search(line)
       if ret:
-        print ret.group('subj')
-        print ret
         patchInfo.subject= ret.group('subj')
         continue
       ret = self.RUNDATE_DESIGNATION_REGEX.search(line)
