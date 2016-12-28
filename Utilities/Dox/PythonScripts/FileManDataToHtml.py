@@ -300,6 +300,11 @@ class FileManDataToHtml(object):
     self.crossRef = crossRef
     self.outDir = outDir
     self.glbData = glbData
+    # a map of a tuple of menu options (parent, child) which point to the synonym for the child option
+    #
+    #  Example: ('DGBT BENE TRAVEL MENU', 'DGBT TRAVEL REPORTS MENU') : [RPTS]
+    #
+    self.synonymMap = {}
 
   def outputFileManDataAsHtml(self, gblDataParser):
     """
@@ -477,6 +482,8 @@ class FileManDataToHtml(object):
             subEntry = menuData.dataEntries[subIen]
             value = subEntry.name
             childIen = value.split('^')[1]
+            if '2' in subEntry.fields:
+              self.synonymMap[(dataEntry.name, menuDict[childIen].name)] =  "[" + subEntry.fields['2'].value+ "]"
             if childIen in menuDict:
               menuDepDict[dataEntry].add(menuDict[childIen])
               logging.info("Adding %s to %s" % (menuDict[childIen].name,
@@ -512,25 +519,28 @@ class FileManDataToHtml(object):
       if '4' in item.fields:
         outJson['type'] = item.fields['4'].value
       if item in menuDepDict:
-        self._addChildMenusToJson(menuDepDict[item], menuDepDict, outJson)
+        self._addChildMenusToJson(menuDepDict[item], menuDepDict, outJson, item)
       with open(os.path.join(self.outDir, "VistAMenu-%s.json" % item.ien), 'w') as output:
         logging.info("Generate File: %s" % output.name)
         json.dump(outJson, output)
 
-  def _addChildMenusToJson(self, children, menuDepDict, outJson):
+  def _addChildMenusToJson(self, children, menuDepDict, outJson, parent):
     for item in children:
+      synonym=''
+      if (parent.name,item.name) in self.synonymMap:
+        synonym = self.synonymMap[(parent.name,item.name)]
       childDict = {}
-      childDict['name'] = item.name
+      childDict['name'] = synonym + item.name
       childDict['ien'] = item.ien
       if '1' in item.fields:
-        childDict['name'] = item.fields['1'].value
+        childDict['name'] = synonym + item.fields['1'].value
         childDict['option'] = item.name
       if '3' in item.fields:
         childDict['lock'] = item.fields['3'].value
       if '4' in item.fields:
         childDict['type'] = item.fields['4'].value
       if item in menuDepDict:
-        self._addChildMenusToJson(menuDepDict[item], menuDepDict, childDict)
+        self._addChildMenusToJson(menuDepDict[item], menuDepDict, childDict, item)
       logging.debug("Adding child %s to parent %s" % (childDict['name'], outJson['name']))
       outJson.setdefault('children',[]).append(childDict)
 
