@@ -1078,6 +1078,7 @@ class PLActions (Actions):
     def editpart2(self, ssn, probnum, itemnum, chgval, icd10='',snomed=''):
         ''' Edit for lock test'''
         self.VistA.wait(':')
+        self.VistA.write('')
         probList=[chgval,icd10,snomed]
         probIndex = 0
         while True:
