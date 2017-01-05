@@ -83,6 +83,7 @@ class Routine(object):
         self._nakedGlobals = dict()
         self._markedItems = dict()
         self._labelReference = dict()
+        self._entryPoints    = dict()
         self._calledRoutines = RoutineDepDict()
         self._callerRoutines = RoutineDepDict()
         self._refGlobals = dict()
@@ -164,6 +165,7 @@ class Routine(object):
             self._labelReference[varName] = LabelReference
         else:
             self._labelReference[varName].appendLineOffsets(LabelReference.getLineOffsets())
+
     def getExternalReference(self):
         output = dict()
         for routineDict in self._calledRoutines.itervalues():
@@ -195,6 +197,45 @@ class Routine(object):
         routine.addCallerRoutines(self, callTag, lineOccurences)
     def getCalledRoutines(self):
         return self._calledRoutines
+
+    """
+      It removes the "$$" notation from entry points and
+      removes any given paramters.
+    """
+    def __generateEntryList__(self, entries, totalEntries):
+      if type(entries) is list:
+          totalEntries.append(entries[0].replace('$','').split('(',1))
+      else:
+        if '(' in entries:
+          totalEntries.append(entries.replace('$','').split('(',1)[0])
+        else:
+          totalEntries.append(entries.replace('$',''))
+      return totalEntries
+
+    """ Check all values within the entries of the JSON that are specific to the routine
+    that match the current entry point"""
+    def __checkForICR__(self, entryPt, rtnJson):
+      entryPtList=[]
+      icrVals=[]
+      for icrEntry in rtnJson:
+        if 'COMPONENT/ENTRY POINT' in icrEntry:
+          for entry in icrEntry['COMPONENT/ENTRY POINT']:
+            if 'COMPONENT/ENTRY POINT' in entry.keys():
+              entryPtList = self.__generateEntryList__(entry['COMPONENT/ENTRY POINT'],entryPtList)
+              if entryPt in entryPtList:
+                entryPtList.pop(entryPtList.index(entryPt))
+                icrVals.append(icrEntry['NUMBER'])
+      return icrVals
+    """  Add an EntryPoint value to a routine, after checking for ICR values"""
+    def addEntryPoint(self, entryPt, comm, icrJSON):
+        icrVals=[]
+        if entryPt not in self._entryPoints:
+            if icrJSON:
+              icrVals = self.__checkForICR__(entryPt.split("(")[0], icrJSON)
+            self._entryPoints[entryPt] = { "comments": comm, "icr": icrVals}
+    def getEntryPoints(self):
+        return self._entryPoints
+
     def addCallerRoutines(self, depRoutine, callTag, lineOccurences):
         self.addCallDepRoutines(depRoutine, callTag, lineOccurences, False)
     def getCallerRoutines(self):

@@ -84,6 +84,74 @@ into the structure of the VistA-M repository.
 See `Prepare M Repository`_ for instructions on how to populate the VistA-M
 repository from an installed MUMPS environment.
 
+ICR Information
+***************
+
+A recent addition to the WebPageGenerator will add a list of entry points for
+each routine and and any ICR entries that correspond with that entry point
+for each routine page. This requires a JSON formatted file  of ICR information
+to be supplied to the web page generator. The source file of ICR information
+can be found on the following website:
+
+  http://foia-vista.osehra.org/VistA_Integration_Agreement/
+
+Once you have downloaded the file, we will use a Python script to parse and
+save the output in a JSON format.  The file to use is found in the
+``Utilities/Dox/PythonScripts`` directory and is named ``ICRParser.py``.
+The signature of the script is simple:
+
+.. parsed-literal::
+
+  $ python  ICRParser.py -h
+  usage: ICRParser.py [-h] icrfile outJson
+
+  VistA ICR File Parser
+
+  positional arguments:
+    icrfile     path to the VistA ICR file
+    outJson     path to the output JSON file
+
+  optional arguments:
+    -h, --help  show this help message and exit
+
+Simply use the downloaded file above as the ``icrfile`` and enter a path
+to save the information to as the second argument.
+
+An example run will look like this:
+
+.. parsed-literal::
+
+  $ python  ICRParser.py ~/Desktop/October_11_2016_IA_Listing_Descriptions.TXT VA-ICR-10-16.json
+  2017-01-18 10:02:34,928 WARNING Ignore line INTEGRATION REFERENCES LIST                    OCT 11,2016  16:13    PAGE 1
+  2017-01-18 10:02:34,928 WARNING Ignore line --------------------------------------------------------------------------------
+  2017-01-18 10:02:34,928 INFO Starting of new item: NUMBER: 1                               IA #: 1
+  2017-01-18 10:02:34,931 WARNING Ignore blank line for current field: [DATE ACTIVATED]
+  2017-01-18 10:02:34,931 INFO Starting of new item: NUMBER: 2                               IA #: 2
+  2017-01-18 10:02:34,931 WARNING Ignore blank line for current field: [ISC]
+  2017-01-18 10:02:34,931 INFO Starting of new item: NUMBER: 3                               IA #: 3
+  2017-01-18 10:02:34,933 WARNING Ignore blank line for current field: [ISC]
+  2017-01-18 10:02:34,933 INFO Starting of new item: NUMBER: 4                               IA #: 4
+  2017-01-18 10:02:34,933 WARNING Ignore blank line for current field: [ISC]
+  2017-01-18 10:02:34,933 INFO Starting of new item: NUMBER: 5                               IA #: 5
+
+The output in the file can be examined for a structured look into the ICR
+information that was recieved:
+
+.. parsed-literal::
+ [
+    {
+        "DATE CREATED": "1989/07/27",
+        "STATUS": "Active",
+        "COMPONENT/ENTRY POINT": [
+            {
+                "VARIABLES": [
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "Set, when an option with type protocol menu is",
+                            "encountered, to the internal number of the option before execution is turned",
+                            "over to OE/RR."
+ <snip>
+
 XINDEX based cross reference output and Fileman Schema
 ******************************************************
 To configure the environment to to generate the XINDEX-based cross reference
@@ -348,7 +416,8 @@ That command will print the necessary arguments and flags that need to be set.
  usage: WebPageGenerator.py [-h] -mr MREPOSITDIR -pr PATCHREPOSITDIR -xl
                            XINDEXLOGDIR -fs FILESCHEMADIR -db FILEMANDBJSON -o
                            OUTPUTDIR -gp GITPATH [-hd] [-dp DOTPATH] [-is]
-                           [-lf OUTPUTLOGFILENAME] -rj RTNJSON [-dj DEPJSON]
+                           [-lf OUTPUTLOGFILENAME] -rj RTNJSON -icr ICRJSON
+                           [-dj DEPJSON]
 
  VistA Visual Cross-Reference Documentation Generator
 
@@ -366,6 +435,8 @@ That command will print the necessary arguments and flags that need to be set.
                         the output Logging file
   -rj RTNJSON, --rtnJson RTNJSON
                         routine reference in VistA Data file in JSON format
+  -icr ICRJSON, --icrJson ICRJSON
+                        JSON formatted information of DBIA/ICR
   -dj DEPJSON, --depJson DEPJSON
                         JSON file to store Package dependency information
 
@@ -408,6 +479,8 @@ before it is able to run successfully.
 * ``-db`` or ``--filemanDbJson`` - fileman db call information in JSON format.
 * ``-rj`` or ``--rtnJson``  -  path to the DataParser routine information in
   JSON format.
+* ``-icr`` or ``--icrJson`` - Path to the JSON information of the DBIA/ICR
+  information from the VA.
 * ``-dj`` or ``--depJson`` - path to a file where the package dependency information
   will be stored
 
@@ -444,6 +517,7 @@ Git Bash:
      -fs  ~/Work/OSEHRA/VistA-build/Docs/Schema
      -db ~/Work/OSEHRA/filemanDBCall.json
      -rj ~/Work/OSEHRA/DataParserOut/Routine-Ref.json
+     -icr ~/Work/OSEHRA/VA-ICR-10-16.json
      -dj ~/Work/OSEHRA/DataParserOut/PackageDep.json
 
 and the example run of the analyzer:
@@ -456,6 +530,7 @@ and the example run of the analyzer:
      -fs  ~/Work/OSEHRA/VistA-build/Docs/Schema
      -db ~/Work/OSEHRA/filemanDBCall.json
      -rj ~/Work/OSEHRA/DataParserOut/Routine-Ref.json
+     -icr ~/Work/OSEHRA/VA-ICR-10-16.json
      -dj ~/Work/OSEHRA/DataParserOut/PackageDep.json
  2014-10-27 12:39:47,243 INFO Total # of Packages is 140
  2014-10-27 12:39:47,433 INFO Total Search Files are 2933
