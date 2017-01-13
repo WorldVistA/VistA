@@ -80,7 +80,7 @@ implementation
 
 {$R *.DFM}
 
-uses rOrders, rODBase, fODMedFA, fODMedComplex;
+uses rOrders, rODBase, fODMedFA, fODMedComplex, System.Types;
 
 const
   REFILLS_DFLT  = '0';
@@ -310,7 +310,7 @@ procedure TfrmODMedOut.cboMedicationNeedData(Sender: TObject; const StartFrom: s
 { retrieves a subset of inpatient medication orderable items }
 begin
   inherited;
-  FMedCombo.ForDataUse(SubSetOfOrderItems(StartFrom, Direction, 'S.O RX'));
+  FMedCombo.ForDataUse(SubSetOfOrderItems(StartFrom, Direction, 'S.O RX', Responses.QuickOrder));
 end;
 
 procedure TfrmODMedOut.cboMedicationSelect(Sender: TObject);

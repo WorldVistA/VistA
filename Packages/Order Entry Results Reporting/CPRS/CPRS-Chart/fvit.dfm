@@ -9,8 +9,8 @@ inherited frmVit: TfrmVit
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  ExplicitWidth = 499
-  ExplicitHeight = 361
+  ExplicitWidth = 507
+  ExplicitHeight = 372
   PixelsPerInch = 96
   TextHeight = 13
   object cmdOK: TButton [0]
@@ -307,7 +307,6 @@ inherited frmVit: TfrmVit
       Width = 59
       Height = 21
       DropDownCount = 2
-      ItemHeight = 13
       TabOrder = 2
       OnChange = cboTempChange
       OnEnter = SetVitPointer
@@ -372,7 +371,6 @@ inherited frmVit: TfrmVit
       Top = 142
       Width = 58
       Height = 21
-      ItemHeight = 13
       TabOrder = 7
       OnChange = cboHeightChange
       OnEnter = SetVitPointer
@@ -401,7 +399,6 @@ inherited frmVit: TfrmVit
       Top = 166
       Width = 58
       Height = 21
-      ItemHeight = 13
       TabOrder = 9
       OnChange = cboWeightChange
       OnEnter = SetVitPointer
@@ -448,6 +445,7 @@ inherited frmVit: TfrmVit
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 10
+      Text = ''
       OnEnter = SetVitPointer
       OnKeyPress = FormKeyPress
       CharsNeedMatch = 1
@@ -565,7 +563,8 @@ inherited frmVit: TfrmVit
         'Status = stsDefault')
       (
         'Component = txtMeasDate'
-        'Status = stsDefault')
+        'Text = Vital Measured Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = cboPain'
         'Status = stsDefault')

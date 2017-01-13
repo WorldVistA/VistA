@@ -119,7 +119,106 @@ var
   SigText, LineBreak, PageBreak, LeftMask: string;
   LinesPerPage, Limit, Z: Integer;
   WrappedSig: TStringList;
+
+  function WrapTextOverride(const Line, BreakStr: string; const BreakChars: TSysCharSet;
+  MaxCol: Integer): string;
+const
+  QuoteChars = ['"'];
+  FirstIndex = Low(string);
+  StrAdjust = 1 - Low(string);
+var
+  Col, Pos: Integer;
+  LinePos: Integer;
+  BreakLen, BreakPos: Integer;
+  QuoteChar, CurChar: Char;
+  ExistingBreak: Boolean;
+  L: Integer;
 begin
+  Col := FirstIndex;
+  Pos := FirstIndex;
+  LinePos := FirstIndex;
+  BreakPos := 0;
+  QuoteChar := #0;
+  ExistingBreak := False;
+  BreakLen := BreakStr.Length;
+  Result := '';
+  while Pos <= High(Line) do
+  begin
+    CurChar := Line[Pos];
+    if IsLeadChar(CurChar) then
+    begin
+      L := CharLength(Line, Pos) div SizeOf(Char) - 1;
+      Inc(Pos, L);
+      Inc(Col, L);
+    end
+    else
+    begin
+    if CharInSet(CurChar, QuoteChars) then
+      if QuoteChar = #0 then
+        QuoteChar := CurChar
+      else if CurChar = QuoteChar then
+        QuoteChar := #0;
+    if QuoteChar = #0 then
+    begin
+      if CurChar = BreakStr[FirstIndex] then
+      begin
+        ExistingBreak := StrLComp(PChar(BreakStr), PChar(@Line[Pos]), BreakLen) = 0;
+        if ExistingBreak then
+        begin
+          Inc(Pos, BreakLen-1);
+          BreakPos := Pos;
+        end;
+      end;
+
+      if not ExistingBreak then
+        if CharInSet(CurChar, BreakChars) then
+          BreakPos := Pos;
+      end;
+    end;
+
+    Inc(Pos);
+    Inc(Col);
+
+    if not CharInSet(QuoteChar, QuoteChars) and (ExistingBreak or
+      ((Col > MaxCol - StrAdjust) and (BreakPos > LinePos))) then
+    begin
+      Col := FirstIndex;
+      Result := Result + Line.SubString(LinePos - FirstIndex, BreakPos - LinePos + 1);
+      if not CharInSet(CurChar, QuoteChars) then
+      begin
+        while Pos <= High(Line) do
+        begin
+          if CharInSet(Line[Pos], BreakChars) then
+          begin
+            Inc(Pos);
+            ExistingBreak := False;
+          end
+          else
+          begin
+            if StrLComp(PChar(@Line[Pos]), sLineBreak, Length(sLineBreak)) = 0 then
+            begin
+              Inc(Pos, Length(sLineBreak));
+              ExistingBreak := True;
+            end
+            else
+              Break;
+          end;
+        end;
+      end;
+      if (Pos <= High(Line)) and not ExistingBreak then
+        Result := Result + BreakStr;
+
+      Inc(BreakPos);
+      LinePos := BreakPos;
+      Pos := LinePos;
+      ExistingBreak := False;
+    end;
+  end;
+  Result := Result + Line.SubString(LinePos - FirstIndex);
+ end;
+
+
+  begin
   aBasket := TStringList.Create;
   aBasket.Clear;
   aHead := '';
@@ -143,7 +242,8 @@ begin
               aHead := aHead + x;
         end;
     end;
-  if length(aHead) > 0 then
+
+  if length(aHead) > 0 then                     
     begin
       FReportText.Lines.Add(aHead);
       FReportText.Lines.Add('-------------------------------------------------------------------------------');
@@ -187,13 +287,18 @@ begin
                        if DistanceRemaining < Limit then begin
                         DistanceRemaining := TotalSpaceAvailable;
                         LeftMask := '';
+                        X := X + LineBreak;
                        end;
                        WrappedSig := TStringList.Create;
                        try
-                        WrappedSig.Text := WrapText(SigText, LineBreak + LeftMask, [' '], DistanceRemaining);
+                        WrappedSig.Text := WrapTextOverride(SigText, LineBreak + LeftMask, [' '], DistanceRemaining);
                         For Z := 0 to WrappedSig.Count - 1 do begin
                           Inc(Cnt);
-                          If Cnt > LinesPerPage then x := x  + PageBreak;
+                          If Cnt > LinesPerPage then
+                          begin
+                           x := x  + PageBreak + LineBreak;
+                           Cnt := 0;
+                          end;
                           X := X + WrappedSig.Strings[Z] + LineBreak;
                         end;
                        finally

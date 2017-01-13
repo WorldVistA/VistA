@@ -94,7 +94,7 @@ const
 implementation
 
 uses
-  VA508AccessibilityManager, VA508ImageListLabeler;
+  UITypes, VA508AccessibilityManager, VA508ImageListLabeler;
 
 const
   MANAGER_CLASS_REQUIRED = 'Cannot create a %s component without a ' + #13#10 +
@@ -417,7 +417,7 @@ const
   LEFT_PAREN  = '(';
   RIGHT_PAREN = ')';
   COMMA       = ',';
-  EQUALS      = '=';
+//  EQUALS      = '=';
 
 { TVA508Parser }
 
@@ -524,7 +524,7 @@ begin
   case FState of
     tsNormal:               if FIsSymbol and (FTokenName = FClassName) then
                               FState := tsPendingEqualChar;
-    tsPendingEqualChar:     if FIsChar and (FTokenName = EQUALS) then
+    tsPendingEqualChar:     if FIsChar and (FTokenName = '=') then
                               FState := tsPendingClassSymbol
                             else
                               FState := tsNormal;

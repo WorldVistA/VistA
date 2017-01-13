@@ -14,8 +14,8 @@ inherited frmTemplateEditor: TfrmTemplateEditor
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  ExplicitWidth = 748
-  ExplicitHeight = 596
+  ExplicitWidth = 756
+  ExplicitHeight = 597
   PixelsPerInch = 96
   TextHeight = 13
   object splMain: TSplitter [0]
@@ -108,10 +108,6 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           Height = 23
           Hint = 'Copy Shared Template into Personal Template List'
           Enabled = False
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 1
-          OnClick = sbCopyRightClick
           Glyph.Data = {
             76010000424D7601000000000000760000002800000020000000100000000100
             0400000000000001000000000000000000001000000010000000000000000000
@@ -126,6 +122,10 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             1111111111777711111111111100011111111111117771111111111111001111
             1111111111771111111111111101111111111111117111111111}
           NumGlyphs = 2
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 1
+          OnClick = sbCopyRightClick
         end
         object sbCopyLeft: TBitBtn
           Tag = 1
@@ -135,10 +135,6 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           Height = 23
           Hint = 'Copy Personal Template into Shared Template List'
           Enabled = False
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
-          OnClick = sbCopyLeftClick
           Glyph.Data = {
             76010000424D7601000000000000760000002800000020000000100000000100
             0400000000000001000000000000000000001000000010000000000000000000
@@ -153,6 +149,10 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             111111117777F1111111111110001111111111111777F1111111111111001111
             111111111177F111111111111110111111111111111711111111}
           NumGlyphs = 2
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 0
+          OnClick = sbCopyLeftClick
         end
       end
       object pnlPersonal: TPanel
@@ -188,7 +188,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           Indent = 19
           PopupMenu = popTemplates
           RightClickSelect = True
-          TabOrder = 1
+          TabOrder = 3
           OnChange = tvTreeChange
           OnDragDrop = tvTreeDragDrop
           OnDragOver = tvTreeDragOver
@@ -211,7 +211,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           Height = 24
           Align = alBottom
           BevelOuter = bvNone
-          TabOrder = 2
+          TabOrder = 4
           DesignSize = (
             189
             24)
@@ -224,10 +224,6 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             Hint = 'Move Personal Template Up'
             Anchors = [akTop, akRight]
             Enabled = False
-            ParentShowHint = False
-            ShowHint = True
-            TabOrder = 1
-            OnClick = sbMoveUpClick
             Glyph.Data = {
               76010000424D7601000000000000760000002800000020000000100000000100
               0400000000000001000000000000000000001000000010000000000000000000
@@ -242,6 +238,10 @@ inherited frmTemplateEditor: TfrmTemplateEditor
               1111111177777711111111111000011111111111177771111111111111001111
               1111111111771111111111111111111111111111111111111111}
             NumGlyphs = 2
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 0
+            OnClick = sbMoveUpClick
           end
           object sbPerDown: TBitBtn
             Tag = 1
@@ -252,10 +252,6 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             Hint = 'Move Personal Template Down'
             Anchors = [akTop, akRight]
             Enabled = False
-            ParentShowHint = False
-            ShowHint = True
-            TabOrder = 2
-            OnClick = sbMoveDownClick
             Glyph.Data = {
               76010000424D7601000000000000760000002800000020000000100000000100
               0400000000000001000000000000000000001000000010000000000000000000
@@ -270,6 +266,10 @@ inherited frmTemplateEditor: TfrmTemplateEditor
               11111111777777F1111111110000001111111111777777F11111111100000011
               1111111177777711111111111111111111111111111111111111}
             NumGlyphs = 2
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 1
+            OnClick = sbMoveDownClick
           end
           object sbPerDelete: TBitBtn
             Tag = 1
@@ -281,10 +281,6 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             Anchors = [akTop, akRight]
             Caption = 'Delete'
             Enabled = False
-            ParentShowHint = False
-            ShowHint = True
-            TabOrder = 3
-            OnClick = sbDeleteClick
             Glyph.Data = {
               76010000424D7601000000000000760000002800000020000000100000000100
               0400000000000001000000000000000000001000000010000000000000000000
@@ -300,6 +296,10 @@ inherited frmTemplateEditor: TfrmTemplateEditor
               0111177111111117711111111111111111111111111111111111}
             Layout = blGlyphRight
             NumGlyphs = 2
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 2
+            OnClick = sbDeleteClick
           end
           object cbPerHide: TCheckBox
             Left = 0
@@ -311,7 +311,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             Caption = 'Hide &Inactive'
             ParentShowHint = False
             ShowHint = True
-            TabOrder = 0
+            TabOrder = 3
             OnClick = cbPerHideClick
           end
         end
@@ -324,7 +324,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           Align = alTop
           BevelOuter = bvNone
           PopupMenu = popTemplates
-          TabOrder = 3
+          TabOrder = 0
         end
         object pnlPerSearch: TPanel
           Left = 0
@@ -333,7 +333,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           Height = 38
           Align = alTop
           BevelOuter = bvNone
-          TabOrder = 0
+          TabOrder = 1
           OnResize = pnlPerSearchResize
           DesignSize = (
             189
@@ -350,7 +350,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             ParentShowHint = False
             PopupMenu = popTemplates
             ShowHint = True
-            TabOrder = 1
+            TabOrder = 2
             OnClick = btnFindClick
           end
           object edtPerSearch: TCaptionEdit
@@ -373,7 +373,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             Width = 80
             Height = 17
             Caption = 'Match Case'
-            TabOrder = 2
+            TabOrder = 3
             OnClick = cbPerFindOptionClick
           end
           object cbPerWholeWords: TCheckBox
@@ -383,7 +383,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             Width = 109
             Height = 17
             Caption = 'Whole Words Only'
-            TabOrder = 3
+            TabOrder = 4
             OnClick = cbPerFindOptionClick
           end
         end
@@ -462,7 +462,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             Caption = 'E&xclude from Group Boilerplate'
             ParentShowHint = False
             ShowHint = True
-            TabOrder = 5
+            TabOrder = 6
             WordWrap = True
             OnClick = cbExcludeClick
             AutoSize = True
@@ -492,7 +492,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             MaxLength = 1
             ParentShowHint = False
             ShowHint = True
-            TabOrder = 7
+            TabOrder = 8
             Text = '0'
             OnChange = edtGapChange
             OnKeyPress = edtGapKeyPress
@@ -510,7 +510,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             Max = 3
             ParentShowHint = False
             ShowHint = True
-            TabOrder = 8
+            TabOrder = 11
           end
           object edtName: TCaptionEdit
             Left = 38
@@ -537,7 +537,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             Font.Name = 'MS Sans Serif'
             Font.Style = []
             ParentFont = False
-            TabOrder = 6
+            TabOrder = 4
             object cbDisplayOnly: TCheckBox
               Left = 6
               Top = 15
@@ -614,7 +614,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             Caption = 'Hide Items in Templates Dra&wer'
             ParentShowHint = False
             ShowHint = True
-            TabOrder = 4
+            TabOrder = 5
             WordWrap = True
             OnClick = cbHideItemsClick
             AutoSize = True
@@ -656,6 +656,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             Sorted = False
             SynonymChars = '<>'
             TabOrder = 2
+            Text = ''
             OnChange = cbxRemDlgsChange
             CharsNeedMatch = 1
           end
@@ -665,7 +666,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             Width = 47
             Height = 16
             Caption = 'Lock'
-            TabOrder = 9
+            TabOrder = 12
             OnClick = cbLockClick
           end
         end
@@ -701,7 +702,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         Indent = 19
         PopupMenu = popTemplates
         RightClickSelect = True
-        TabOrder = 1
+        TabOrder = 3
         OnChange = tvTreeChange
         OnDragDrop = tvTreeDragDrop
         OnDragOver = tvTreeDragOver
@@ -724,7 +725,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         Height = 24
         Align = alBottom
         BevelOuter = bvNone
-        TabOrder = 2
+        TabOrder = 4
         DesignSize = (
           297
           24)
@@ -736,10 +737,6 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           Hint = 'Move Shared Template Up'
           Anchors = [akTop, akRight]
           Enabled = False
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 1
-          OnClick = sbMoveUpClick
           Glyph.Data = {
             76010000424D7601000000000000760000002800000020000000100000000100
             0400000000000001000000000000000000001000000010000000000000000000
@@ -754,6 +751,10 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             1111111177777711111111111000011111111111177771111111111111001111
             1111111111771111111111111111111111111111111111111111}
           NumGlyphs = 2
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 0
+          OnClick = sbMoveUpClick
         end
         object sbShDown: TBitBtn
           Left = 217
@@ -763,10 +764,6 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           Hint = 'Move Shared Template Down'
           Anchors = [akTop, akRight]
           Enabled = False
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 2
-          OnClick = sbMoveDownClick
           Glyph.Data = {
             76010000424D7601000000000000760000002800000020000000100000000100
             0400000000000001000000000000000000001000000010000000000000000000
@@ -781,6 +778,10 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             11111111777777F1111111110000001111111111777777F11111111100000011
             1111111177777711111111111111111111111111111111111111}
           NumGlyphs = 2
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 1
+          OnClick = sbMoveDownClick
         end
         object sbShDelete: TBitBtn
           Left = 240
@@ -791,10 +792,6 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           Anchors = [akTop, akRight]
           Caption = 'Delete'
           Enabled = False
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 3
-          OnClick = sbDeleteClick
           Glyph.Data = {
             76010000424D7601000000000000760000002800000020000000100000000100
             0400000000000001000000000000000000001000000010000000000000000000
@@ -810,6 +807,10 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             0111177111111117711111111111111111111111111111111111}
           Layout = blGlyphRight
           NumGlyphs = 2
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 2
+          OnClick = sbDeleteClick
         end
         object cbShHide: TCheckBox
           Left = 0
@@ -821,7 +822,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           Caption = '&Hide Inactive'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 0
+          TabOrder = 3
           OnClick = cbShHideClick
         end
       end
@@ -833,7 +834,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         Align = alTop
         BevelOuter = bvNone
         PopupMenu = popTemplates
-        TabOrder = 3
+        TabOrder = 0
       end
       object pnlShSearch: TPanel
         Left = 0
@@ -842,7 +843,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         Height = 38
         Align = alTop
         BevelOuter = bvNone
-        TabOrder = 0
+        TabOrder = 1
         OnResize = pnlShSearchResize
         DesignSize = (
           297
@@ -858,7 +859,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           ParentShowHint = False
           PopupMenu = popTemplates
           ShowHint = True
-          TabOrder = 1
+          TabOrder = 2
           OnClick = btnFindClick
         end
         object edtShSearch: TCaptionEdit
@@ -879,7 +880,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           Width = 80
           Height = 17
           Caption = 'Match Case'
-          TabOrder = 2
+          TabOrder = 3
           OnClick = cbShFindOptionClick
         end
         object cbShWholeWords: TCheckBox
@@ -888,7 +889,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           Width = 109
           Height = 17
           Caption = 'Whole Words Only'
-          TabOrder = 3
+          TabOrder = 4
           OnClick = cbShFindOptionClick
         end
       end
@@ -932,6 +933,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         Sorted = False
         SynonymChars = '<>'
         TabOrder = 1
+        Text = ''
         OnChange = cboOwnerChange
         OnNeedData = cboOwnerNeedData
         CharsNeedMatch = 1
@@ -981,7 +983,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
     Height = 21
     Align = alTop
     BevelOuter = bvNone
-    TabOrder = 1
+    TabOrder = 2
     Visible = False
     object lblCOMParam: TLabel
       Left = 283
@@ -1009,7 +1011,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       Width = 380
       Height = 21
       Align = alClient
-      TabOrder = 0
+      TabOrder = 2
       OnChange = edtCOMParamChange
       Caption = 'Passed Value'
     end
@@ -1034,7 +1036,8 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       Pieces = '2'
       Sorted = False
       SynonymChars = '<>'
-      TabOrder = 1
+      TabOrder = 0
+      Text = ''
       OnChange = cbxCOMObjChange
       CharsNeedMatch = 1
     end
@@ -1046,7 +1049,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
     Height = 21
     Align = alTop
     BevelOuter = bvNone
-    TabOrder = 3
+    TabOrder = 1
     Visible = False
     object lblLink: TLabel
       Left = 0
@@ -1083,6 +1086,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       TabPositions = '30,5000'
       TabOrder = 0
       TabStop = True
+      Text = ''
       OnExit = cbxLinkExit
       OnNeedData = cbxLinkNeedData
       CharsNeedMatch = 1
@@ -1094,9 +1098,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
     Width = 740
     Height = 251
     Align = alClient
-    TabOrder = 4
-    ExplicitLeft = 138
-    ExplicitTop = 221
+    TabOrder = 3
     object pnlBoilerplate: TPanel
       Left = 1
       Top = 1
@@ -1107,8 +1109,6 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       TabOrder = 0
       OnCanResize = pnlBoilerplateCanResize
       OnResize = pnlBoilerplateResize
-      ExplicitLeft = 17
-      ExplicitTop = 2
       object splBoil: TSplitter
         Left = 0
         Top = 14
@@ -1152,7 +1152,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         ParentFont = False
         PlainText = True
         PopupMenu = popBoilerplate
-        ScrollBars = ssBoth
+        ScrollBars = ssVertical
         TabOrder = 1
         WantTabs = True
         OnChange = reBoilChange
@@ -1172,8 +1172,6 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         Constraints.MinHeight = 30
         TabOrder = 2
         Visible = False
-        ExplicitLeft = -1
-        ExplicitTop = 154
         object lblGroupBP: TLabel
           Left = 0
           Top = 0
@@ -1215,7 +1213,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           PopupMenu = popGroup
           ReadOnly = True
           ScrollBars = ssBoth
-          TabOrder = 0
+          TabOrder = 1
           WantReturns = False
           OnSelectionChange = reGroupBPSelectionChange
         end
@@ -1226,7 +1224,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           Height = 3
           Align = alTop
           BevelOuter = bvNone
-          TabOrder = 1
+          TabOrder = 0
         end
       end
       object pnlBP: TPanel
@@ -1281,7 +1279,6 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         Constraints.MinHeight = 30
         TabOrder = 3
         Visible = False
-        ExplicitTop = 158
         object lblNotes: TLabel
           Left = 0
           Top = 0
@@ -1305,7 +1302,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           ParentFont = False
           PlainText = True
           PopupMenu = popNotes
-          ScrollBars = ssBoth
+          ScrollBars = ssVertical
           TabOrder = 0
           WantTabs = True
           OnChange = reNotesChange
@@ -1324,9 +1321,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
     Height = 27
     Align = alBottom
     BevelOuter = bvNone
-    TabOrder = 2
-    ExplicitLeft = 40
-    ExplicitTop = 498
+    TabOrder = 4
     DesignSize = (
       740
       27)
@@ -1339,7 +1334,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       Caption = 'Apply'
       ParentShowHint = False
       ShowHint = False
-      TabOrder = 5
+      TabOrder = 2
       OnClick = btnApplyClick
     end
     object btnCancel: TButton
@@ -1353,7 +1348,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       ModalResult = 2
       ParentShowHint = False
       ShowHint = False
-      TabOrder = 4
+      TabOrder = 1
       OnClick = btnCancelClick
     end
     object btnOK: TButton
@@ -1365,7 +1360,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       Caption = 'OK'
       ParentShowHint = False
       ShowHint = False
-      TabOrder = 3
+      TabOrder = 0
       OnClick = btnOKClick
     end
     object cbEditShared: TCheckBox
@@ -1374,7 +1369,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       Width = 129
       Height = 17
       Caption = 'E&dit Shared Templates'
-      TabOrder = 0
+      TabOrder = 3
       OnClick = cbEditSharedClick
     end
     object cbNotes: TCheckBox
@@ -1388,7 +1383,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       Caption = 'Sh&ow Template Notes'
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 2
+      TabOrder = 5
       OnClick = cbNotesClick
     end
     object cbEditUser: TCheckBox
@@ -1397,7 +1392,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       Width = 123
       Height = 17
       Caption = 'E&dit User'#39's Templates'
-      TabOrder = 1
+      TabOrder = 4
       Visible = False
       OnClick = cbEditSharedClick
     end
@@ -1436,12 +1431,10 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         'Status = stsDefault')
       (
         'Component = sbCopyRight'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = sbCopyLeft'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = pnlPersonal'
         'Status = stsDefault')
@@ -1453,20 +1446,16 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         'Status = stsDefault')
       (
         'Component = sbPerUp'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = sbPerDown'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = sbPerDelete'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = cbPerHide'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = pnlPersonalGap'
         'Status = stsDefault')
@@ -1548,20 +1537,16 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         'Status = stsDefault')
       (
         'Component = sbShUp'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = sbShDown'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = sbShDelete'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = cbShHide'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = pnlSharedGap'
         'Status = stsDefault')
@@ -1605,8 +1590,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         'Status = stsOK')
       (
         'Component = cbxCOMObj'
-        'Property = Caption'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = pnlLink'
         'Status = stsDefault')

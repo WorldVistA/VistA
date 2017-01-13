@@ -2,20 +2,24 @@ inherited frmOrdersReleaseEvent: TfrmOrdersReleaseEvent
   Left = 410
   Top = 145
   Caption = 'Release to Service'
-  ClientHeight = 461
-  ClientWidth = 486
+  ClientHeight = 567
+  ClientWidth = 598
   Position = poScreenCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   ExplicitWidth = 494
   ExplicitHeight = 495
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object lblRelease: TLabel [0]
     Left = 0
     Top = 0
-    Width = 486
-    Height = 13
+    Width = 598
+    Height = 16
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     Layout = tlCenter
     WordWrap = True
@@ -23,18 +27,25 @@ inherited frmOrdersReleaseEvent: TfrmOrdersReleaseEvent
   end
   object pnlMiddle: TPanel [1]
     Left = 0
-    Top = 13
-    Width = 486
-    Height = 413
+    Top = 16
+    Width = 598
+    Height = 508
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     TabOrder = 0
     object cklstOrders: TCaptionCheckListBox
       Left = 1
       Top = 1
-      Width = 484
-      Height = 411
+      Width = 596
+      Height = 506
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
-      ItemHeight = 16
       ParentShowHint = False
       ShowHint = True
       Style = lbOwnerDrawVariable
@@ -42,33 +53,46 @@ inherited frmOrdersReleaseEvent: TfrmOrdersReleaseEvent
       OnDrawItem = cklstOrdersDrawItem
       OnMeasureItem = cklstOrdersMeasureItem
       OnMouseMove = cklstOrdersMouseMove
+      Caption = ''
     end
   end
   object pnlBottom: TPanel [2]
     Left = 0
-    Top = 426
-    Width = 486
-    Height = 35
+    Top = 524
+    Width = 598
+    Height = 43
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alBottom
     TabOrder = 1
     DesignSize = (
-      486
-      35)
+      598
+      43)
     object btnOK: TButton
-      Left = 324
-      Top = 8
-      Width = 69
-      Height = 20
+      Left = 399
+      Top = 10
+      Width = 85
+      Height = 24
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akTop, akRight, akBottom]
       Caption = 'OK'
       TabOrder = 0
       OnClick = btnOKClick
     end
     object btnCancel: TButton
-      Left = 404
-      Top = 8
-      Width = 69
-      Height = 20
+      Left = 497
+      Top = 10
+      Width = 85
+      Height = 24
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akTop, akRight, akBottom]
       Cancel = True
       Caption = 'Cancel'

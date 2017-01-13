@@ -3,8 +3,8 @@ inherited frmVitals: TfrmVitals
   Top = 211
   BorderIcons = [biSystemMenu]
   Caption = 'Vitals'
-  ClientHeight = 375
-  ClientWidth = 514
+  ClientHeight = 462
+  ClientWidth = 633
   OldCreateOrder = True
   Position = poScreenCenter
   OnCreate = FormCreate
@@ -12,32 +12,47 @@ inherited frmVitals: TfrmVitals
   OnKeyUp = FormKeyUp
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object pnlTop: TPanel [0]
     Left = 0
     Top = 0
-    Width = 514
-    Height = 221
+    Width = 633
+    Height = 272
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
     object lblNoResults: TStaticText
-      Left = 196
-      Top = 58
-      Width = 217
-      Height = 17
+      Left = 241
+      Top = 71
+      Width = 271
+      Height = 20
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'No measurement to graph for this date range.'
       TabOrder = 2
     end
     object chtChart: TChart
-      Left = 95
+      Left = 117
       Top = 0
-      Width = 419
-      Height = 221
+      Width = 516
+      Height = 272
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       AllowPanning = pmNone
-      AllowZoom = False
       BackWall.Brush.Color = clWhite
       BackWall.Brush.Style = bsClear
+      Legend.Alignment = laTop
+      Legend.Inverted = True
+      Legend.Shadow.HorizSize = 2
+      Legend.Shadow.VertSize = 2
       Title.Text.Strings = (
         'test name')
       Title.Visible = False
@@ -45,41 +60,47 @@ inherited frmVitals: TfrmVitals
       OnClickSeries = chtChartClickSeries
       OnUndoZoom = chtChartUndoZoom
       LeftAxis.Title.Caption = 'units'
-      Legend.Alignment = laTop
-      Legend.Inverted = True
-      Legend.ShadowSize = 2
       View3D = False
+      Zoom.Allow = False
       Align = alClient
       BevelOuter = bvNone
       PopupMenu = popChart
       TabOrder = 1
       OnMouseDown = chtChartMouseDown
+      ColorPaletteIndex = 13
       object serTestY: TLineSeries
-        Marks.ArrowLength = 8
+        Marks.Arrow.Visible = True
+        Marks.Callout.Brush.Color = clBlack
+        Marks.Callout.Arrow.Visible = True
         Marks.Visible = False
         SeriesColor = clBlue
         Title = 'Mean'
+        Brush.BackColor = clDefault
         Pointer.Brush.Color = clBlue
+        Pointer.Brush.Gradient.EndColor = clBlue
         Pointer.Draw3D = False
+        Pointer.Gradient.EndColor = clBlue
         Pointer.InflateMargins = True
         Pointer.Style = psDiamond
         Pointer.Visible = True
         XValues.DateTime = True
         XValues.Name = 'X'
-        XValues.Multiplier = 1.000000000000000000
         XValues.Order = loAscending
-        YValues.DateTime = False
         YValues.Name = 'Y'
-        YValues.Multiplier = 1.000000000000000000
         YValues.Order = loNone
       end
       object serTestX: TLineSeries
-        Marks.ArrowLength = 8
+        Marks.Arrow.Visible = True
+        Marks.Callout.Brush.Color = clBlack
+        Marks.Callout.Arrow.Visible = True
         Marks.Visible = False
         SeriesColor = clBlue
         Title = 'Dialstolic'
+        Brush.BackColor = clDefault
         Pointer.Brush.Color = clBlue
+        Pointer.Brush.Gradient.EndColor = clBlue
         Pointer.Draw3D = False
+        Pointer.Gradient.EndColor = clBlue
         Pointer.HorizSize = 3
         Pointer.InflateMargins = True
         Pointer.Style = psRectangle
@@ -87,66 +108,72 @@ inherited frmVitals: TfrmVitals
         Pointer.Visible = True
         XValues.DateTime = True
         XValues.Name = 'X'
-        XValues.Multiplier = 1.000000000000000000
         XValues.Order = loAscending
-        YValues.DateTime = False
         YValues.Name = 'Y'
-        YValues.Multiplier = 1.000000000000000000
         YValues.Order = loNone
       end
       object serTest: TLineSeries
-        Marks.ArrowLength = 8
+        Marks.Arrow.Visible = True
+        Marks.Callout.Brush.Color = clBlack
+        Marks.Callout.Arrow.Visible = True
         Marks.Visible = False
         SeriesColor = clBlue
         Title = 'Systolic'
+        Brush.BackColor = clDefault
+        Pointer.Brush.Gradient.EndColor = clBlue
+        Pointer.Gradient.EndColor = clBlue
         Pointer.InflateMargins = True
         Pointer.Style = psCircle
         Pointer.Visible = True
         XValues.DateTime = True
         XValues.Name = 'X'
-        XValues.Multiplier = 1.000000000000000000
         XValues.Order = loAscending
-        YValues.DateTime = False
         YValues.Name = 'Y'
-        YValues.Multiplier = 1.000000000000000000
         YValues.Order = loNone
       end
       object serTime: TPointSeries
-        Marks.ArrowLength = 8
+        Marks.Arrow.Visible = True
+        Marks.Callout.Brush.Color = clBlack
+        Marks.Callout.Arrow.Visible = True
+        Marks.Callout.Length = 8
         Marks.Visible = False
         SeriesColor = clSilver
         ShowInLegend = False
         Title = 'Time'
+        ClickableLine = False
         Pointer.Draw3D = False
         Pointer.HorizSize = 3
         Pointer.InflateMargins = True
         Pointer.Style = psCircle
         Pointer.VertSize = 3
         Pointer.Visible = False
-        XValues.DateTime = False
         XValues.Name = 'X'
-        XValues.Multiplier = 1.000000000000000000
         XValues.Order = loAscending
-        YValues.DateTime = False
         YValues.Name = 'Y'
-        YValues.Multiplier = 1.000000000000000000
         YValues.Order = loNone
       end
     end
     object pnlLeft: TORAutoPanel
       Left = 0
       Top = 0
-      Width = 95
-      Height = 221
+      Width = 117
+      Height = 272
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alLeft
       TabOrder = 0
       object lstDates: TORListBox
         Left = 1
-        Top = 25
-        Width = 93
-        Height = 132
+        Top = 31
+        Width = 115
+        Height = 162
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alTop
-        ItemHeight = 13
         Items.Strings = (
           '1^Today'
           '8^One Week'
@@ -168,34 +195,50 @@ inherited frmVitals: TfrmVitals
       end
       object pnlLeftClient: TORAutoPanel
         Left = 1
-        Top = 157
-        Width = 93
-        Height = 68
+        Top = 193
+        Width = 115
+        Height = 84
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         BevelOuter = bvNone
         TabOrder = 2
         object chkValues: TCheckBox
-          Left = 9
-          Top = 8
-          Width = 76
-          Height = 17
+          Left = 11
+          Top = 10
+          Width = 94
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Values'
           TabOrder = 0
           OnClick = chkValuesClick
         end
         object chk3D: TCheckBox
-          Left = 9
-          Top = 42
-          Width = 76
-          Height = 17
+          Left = 11
+          Top = 52
+          Width = 94
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = '3D'
           TabOrder = 2
           OnClick = chk3DClick
         end
         object chkZoom: TCheckBox
-          Left = 9
-          Top = 25
-          Width = 76
-          Height = 17
+          Left = 11
+          Top = 31
+          Width = 94
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Zoom'
           TabOrder = 1
           OnClick = chkZoomClick
@@ -204,17 +247,25 @@ inherited frmVitals: TfrmVitals
       object pnlEnterVitals: TPanel
         Left = 1
         Top = 1
-        Width = 93
-        Height = 24
+        Width = 115
+        Height = 30
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alTop
         Caption = 'pnlEnterVitals'
         TabOrder = 0
         OnResize = pnlEnterVitalsResize
         object btnEnterVitals: TButton
-          Left = 8
+          Left = 10
           Top = 0
-          Width = 75
-          Height = 25
+          Width = 92
+          Height = 31
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Enter Vitals'
           TabOrder = 0
           OnClick = btnEnterVitalsClick
@@ -224,16 +275,24 @@ inherited frmVitals: TfrmVitals
   end
   object pnlBottom: TPanel [1]
     Left = 0
-    Top = 221
-    Width = 514
-    Height = 154
+    Top = 272
+    Width = 633
+    Height = 190
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alBottom
     TabOrder = 1
     object grdVitals: TCaptionStringGrid
-      Left = 96
+      Left = 118
       Top = 1
-      Width = 417
-      Height = 152
+      Width = 514
+      Height = 188
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       Color = clCream
       ColCount = 6
@@ -243,7 +302,7 @@ inherited frmVitals: TfrmVitals
       RowCount = 8
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -15
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing]
@@ -263,22 +322,29 @@ inherited frmVitals: TfrmVitals
     object pnlButtons: TPanel
       Left = 1
       Top = 1
-      Width = 95
-      Height = 152
+      Width = 117
+      Height = 188
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
       DesignSize = (
-        95
-        152)
+        117
+        188)
       object lstVitals: TCaptionListBox
         Left = 0
-        Top = 16
-        Width = 95
-        Height = 119
+        Top = 20
+        Width = 117
+        Height = 146
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Style = lbOwnerDrawFixed
         Anchors = [akLeft, akTop, akRight, akBottom]
-        ItemHeight = 16
         Items.Strings = (
           'Temperature'
           'Pulse'

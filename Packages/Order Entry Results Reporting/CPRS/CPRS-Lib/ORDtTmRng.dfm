@@ -57,4 +57,12 @@ object ORfrmDateRange: TORfrmDateRange
     TabOrder = 1
     OnClick = cmdCancelClick
   end
+  object VA508Man: TVA508AccessibilityManager
+    Left = 16
+    Top = 72
+    Data = (
+      (
+        'Component = ORfrmDateRange'
+        'Status = stsDefault'))
+  end
 end

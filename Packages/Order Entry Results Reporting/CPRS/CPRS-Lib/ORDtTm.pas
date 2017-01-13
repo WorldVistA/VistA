@@ -7,11 +7,14 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs, StdCtrls, Buttons,
   Grids, Calendar, ExtCtrls, ORFn, ORNet, ORDtTmCal, Mask, ComCtrls, OR2006Compatibility,
-  ORCtrls, VAClasses;
+  ORCtrls, VAClasses, VA508AccessibilityManager, VA508AccessibilityRouter;
 
 type
   TORfrmDtTm = class(Tfrm2006Compatibility)
-    bvlFrame: TBevel;
+    VA508AccessibilityManager1: TVA508AccessibilityManager;
+    TxtDateSelected: TLabel;
+    Label1: TLabel;
+	bvlFrame: TBevel;
     lblDate: TPanel;
     txtTime: TEdit;
     lstHour: TListBox;
@@ -113,6 +116,7 @@ type
     function  GetCaption(): string;
   protected
     procedure Change; override;
+    procedure KeyPress(var Key: Char); override;
     procedure KeyDown(var Key: Word; Shift: TShiftState); override;
     property DateButton: TORDateButton read FButton;
     procedure SetEnabled(Value: Boolean); override; //wat v28  when disabling TORDateBox, button still appears active, this addresses that
@@ -242,19 +246,12 @@ implementation
 const
   FMT_DATETIME = 'mmm d,yyyy@hh:nn';
   FMT_DATEONLY = 'mmm d,yyyy';
-  (*
-  HOURS_AMPM: array[0..23] of string[3] =
-    ('12a','  1','  2','  3','  4','  5','  6','  7','  8','  9','10 ','11 ',
-     '12p','  1','  2','  3','  4','  5','  6','  7','  8','  9','10 ','11 ');
-  HOURS_MIL:  array[0..23] of string[2] =
-    ('00','01','02','03','04','05','06','07','08','09','10','11',
-     '12','13','14','15','16','17','18','19','20','21','22','23');
-  *)
   AdjVertSize = 8;
   FontHeightText = 'BEFHILMSTVWXZfgjmpqtyk';
 
 var
   uServerToday: TFMDateTime;
+  FormatSettings: TFormatSettings;
 
 { Server-dependent functions ---------------------------------------------------------------- }
 
@@ -265,10 +262,16 @@ begin
 end;
 
 function ServerFMNow: TFMDateTime;
+var
+  aStr: string;
 begin
-  if ActiveBroker
-    then Result := StrToFloat(sCallV('ORWU DT', ['NOW']))
-    else Result := DateTimeToFMDateTime(Now);
+  if ActiveBroker then
+    begin
+      CallVistA('ORWU DT', ['NOW'], aStr);
+      Result := StrToFloat(aStr);
+    end
+  else
+    Result := DateTimeToFMDateTime(Now);
 end;
 
 function ServerNow: TDateTime;
@@ -284,19 +287,16 @@ begin
   Result := FMDateTimeToDateTime(uServerToday);
 end;
 
-(*
-function ServerFMToday: TFMDateTime;    // never referenced in this unit
-begin
-  if uServerToday = 0 then uServerToday := Int(ServerFMNow);
-  Result := uServerToday;
-end;
-*)
-
 function ServerParseFMDate(const AString: string): TFMDateTime;
+var
+  aStr: string;
 begin
-  if ActiveBroker
-    then Result := StrToFloat(sCallV('ORWU DT', [AString, 'TSX']))
-    else Result := 0;
+  if ActiveBroker then
+    begin
+      CallVistA('ORWU DT', [AString, 'TSX'], aStr);
+      Result := StrToFloat(aStr);
+    end
+  else Result := 0;
 end;
 
 function RelativeDateTime(ADateTime: TDateTime): string;
@@ -330,16 +330,23 @@ end;
 procedure TORfrmDtTm.FormCreate(Sender: TObject);
 begin
   ResizeAnchoredFormToFont(self);
-  //FormStyle := fsStayOnTop;
   lstHour.TopIndex := 6;
   FFromSelf := False;
-  calSelectChange(Self);
+ // calSelectChange(Self);
+  If ScreenReaderSystemActive then begin
+     GetScreenReader.Speak(Label1.Caption);
+  end;
 end;
 
 procedure TORfrmDtTm.calSelectChange(Sender: TObject);
 begin
   lblDate.Caption := FormatDateTime('mmmm d, yyyy', calSelect.CalendarDate);
   FNowPressed := False;
+  If ScreenReaderSystemActive then begin
+     //TxtDateSelected.Caption := lblDate.Caption;
+     TxtDateSelected.Caption := Label1.Caption + ' ' + lblDate.Caption;
+     GetScreenReader.Speak(lblDate.Caption);
+  end;
 end;
 
 procedure TORfrmDtTm.imgPrevMonthMouseDown(Sender: TObject;
@@ -386,8 +393,7 @@ end;
 
 procedure TORfrmDtTm.txtTimeChange(Sender: TObject);
 begin
-  if not FFromSelf then
-  begin
+  if not FFromSelf then begin
     lstHour.ItemIndex := -1;
     lstMinute.ItemIndex := -1;
   end;
@@ -404,44 +410,28 @@ end;
 procedure TORfrmDtTm.lstMinuteClick(Sender: TObject);
 var
   AnHour, AMinute: Integer;
-//  AmPm: string;
 begin
-  if lstHour.ItemIndex < 0 then Exit;
+  if lstHour.ItemIndex >=  0 then begin
+    AnHour := lstHour.ItemIndex;
 
-  // if ampm time -
-  //case lstHour.ItemIndex of
-  //    0: AnHour := 12;
-  //1..12: AnHour := lstHour.ItemIndex;
-  //else   AnHour := lstHour.ItemIndex - 12;
-  //end;
-  //if lstHour.ItemIndex > 11 then AmPm := 'PM' else AmPm := 'AM';
+    AMinute := lstMinute.ItemIndex * 5;
+    if (AnHour = 0) and (AMinute = 0) then AMinute := 1;  //<-------------- NEW CODE
+    FFromSelf := True;
+    txtTime.Text := Format('%.2d:%.2d ', [AnHour, AMinute]);
 
-  // if military time
-  AnHour := lstHour.ItemIndex;
-
-  AMinute := lstMinute.ItemIndex * 5;
-  if (AnHour = 0) and (AMinute = 0) then AMinute := 1;  //<-------------- NEW CODE
-  FFromSelf := True;
-  // if ampm time -
-  //txtTime.Text := Format('%d:%.2d ' + AmPm, [AnHour, AMinute]);
-
-  // if military time
-  txtTime.Text := Format('%.2d:%.2d ', [AnHour, AMinute]);
-
-  FFromSelf := False;
+    FFromSelf := False;
+  end;
 end;
 
 procedure TORfrmDtTm.cmdNowClick(Sender: TObject);
 begin
   calSelect.CalendarDate := ServerToday;
-  //txtTime.Text := FormatDateTime('h:nn ampm', ServerNow);  // if ampm time
   txtTime.Text := FormatDateTime('hh:nn', ServerNow);        // if ampm time
   FNowPressed := True;
 end;
 
 procedure TORfrmDtTm.cmdMidnightClick(Sender: TObject);
 begin
-  //txtTime.Text := '11:59 PM';  // if ampm time
   txtTime.Text := '23:59';      // if military time
 end;
 
@@ -449,15 +439,12 @@ procedure TORfrmDtTm.cmdOKClick(Sender: TObject);
 var
   x: string;
 begin
-  if TimeIsRequired and (Length(txtTime.Text) = 0) then
-  begin
+  if TimeIsRequired and (Length(txtTime.Text) = 0) then begin
     InfoBox('An entry for time is required.', 'Missing Time', MB_OK);
     Exit;
   end;
-  if Length(txtTime.Text) > 0 then
-  begin
+  if Length(txtTime.Text) > 0 then begin
     x := Trim(txtTime.Text);
-    //if (x='00:00') or (x='0:00') or (x='00:00:00') or (x='0:00:00') then x := '00:00:01';
     if (x='00:00') or (x='0:00') or (x='00:00:00') or (x='0:00:00') then x := '00:01';  //<------- CHANGED CODE
     StrToTime(x);
     txtTime.Text := x;
@@ -481,9 +468,10 @@ end;
 constructor TORDateTimeDlg.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  if not (csDesigning in ComponentState)
-    then FDateTime := ServerToday
-    else FDateTime  := SysUtils.Date;
+  if not (csDesigning in ComponentState) then
+    FDateTime := ServerToday
+  else
+    FDateTime  := SysUtils.Date;
 end;
 
 function TORDateTimeDlg.Execute: Boolean;
@@ -494,15 +482,13 @@ var
 begin
   frmDtTm := TORfrmDtTm.Create(Application);
   try
-    with frmDtTm do
-    begin
+    with frmDtTm do begin
       calSelect.CalendarDate := Int(FDateTime);
       if Frac(FDateTime) > 0
         //then txtTime.Text := FormatDateTime('h:nn ampm', FDateTime);  // if ampm time
         then txtTime.Text := FormatDateTime('hh:nn', FDateTime);        // if military time
       if RequireTime then TimeIsRequired := True;
-      if DateOnly then
-      begin
+      if DateOnly then begin
         txtTime.Visible     := False;
         lstHour.Visible     := False;
         lstMinute.Visible   := False;
@@ -514,13 +500,13 @@ begin
         ClientWidth := ClientWidth - txtTime.Width - HORZ_SPACING;
       end;
       Result := (ShowModal = IDOK);
-      if Result then
-      begin
+      if Result then begin
         FDateTime := Int(calSelect.CalendarDate);
         if Length(txtTime.Text) > 0 then FDateTime := FDateTime + StrToTime(txtTime.Text);
-        if FNowPressed
-          then FRelativeTime := 'NOW'
-          else FRelativeTime := RelativeDateTime(FDateTime);
+        if FNowPressed then
+          FRelativeTime := 'NOW'
+        else
+          FRelativeTime := RelativeDateTime(FDateTime);
       end;
     end;
   finally
@@ -536,8 +522,7 @@ end;
 procedure TORDateTimeDlg.SetDateOnly(Value: Boolean);
 begin
   FDateOnly := Value;
-  if FDateOnly then
-  begin
+  if FDateOnly then begin
     FRequireTime := False;
     FDateTime := Int(FDateTime);
   end;
@@ -587,8 +572,7 @@ var
 
 begin
   inherited;
-  if assigned(FButton) then
-  begin
+  if assigned(FButton) then begin
     if BorderStyle = bsNone then
       ofs := 0
     else
@@ -603,18 +587,14 @@ var
   Y: integer;
 
 begin
-  if(FTemplateField <> Value) then
-  begin
+  if(FTemplateField <> Value) then begin
     FTemplateField := Value;
     Y := TextHeightByFont(Font.Handle, FontHeightText);
-    if Value then
-    begin
+    if Value then begin
       FButton.Width := Y+2;
       Height := Y;
       BorderStyle := bsNone;
-    end
-    else
-    begin
+    end else begin
       FButton.Width := 18;
       Height := y + AdjVertSize;
       BorderStyle := bsSingle;
@@ -633,16 +613,14 @@ var
   ParsedDate: TFMDateTime;
 begin
   DateDialog := TORDateTimeDlg.Create(Application);
-  if Length(Text) > 0 then
-  begin
+  if Length(Text) > 0 then begin
     ParsedDate := ServerParseFMDate(Text);
     if ParsedDate > -1 then FFMDateTime := ParsedDate else FFMDateTime := 0;
   end;
   DateDialog.DateOnly := FDateOnly;
   DateDialog.FMDateTime := FFMDateTime;
   DateDialog.RequireTime := FRequireTime;
-  if DateDialog.Execute then
-  begin
+  if DateDialog.Execute then begin
     FFMDateTime := DateDialog.FMDateTime;
     UpdateText;
     FTimeIsNow := DateDialog.RelativeTime = 'NOW';
@@ -668,6 +646,12 @@ begin
   end;
 end;
 
+procedure TORDateBox.KeyPress(var Key: Char);
+begin
+ if Key = #13 then Key := #0;
+ inherited;
+end;
+
 function TORDateBox.GetFMDateTime: TFMDateTime;
 begin
   Result := 0;
@@ -680,8 +664,7 @@ begin
   Result := '';
   if FTimeIsNow then Result := 'NOW'
   else if UpperCase(Text) = 'NOW' then Result := 'NOW'
-  else if Length(Text) > 0 then
-  begin
+  else if Length(Text) > 0 then begin
     FFMDateTime := ServerParseFMDate(Text);
     if FFMDateTime > 0 then Result := RelativeDateTime(FMDateTimeToDateTime(FFMDateTime));
   end;
@@ -690,8 +673,7 @@ end;
 procedure TORDateBox.SetDateOnly(Value: Boolean);
 begin
   FDateOnly := Value;
-  if FDateOnly then
-  begin
+  if FDateOnly then begin
     FRequireTime := False;
     FFMDateTime := Int(FFMDateTime);
     if FFormat = FMT_DATETIME then FFormat := FMT_DATEONLY;
@@ -708,8 +690,7 @@ end;
 procedure TORDateBox.SetRequireTime(Value: Boolean);
 begin
   FRequireTime := Value;
-  if FRequireTime then
-  begin
+  if FRequireTime then begin
     if FFormat = FMT_DATEONLY then FFormat := FMT_DATETIME;
     SetDateOnly(False);
   end;
@@ -730,19 +711,18 @@ end;
 
 procedure TORDateBox.UpdateText;
 begin
-  if FFMDateTime > 0 then
-  begin
-    if (FFormat =FMT_DATETIME) and (Frac(FFMDateTime) = 0)
-      then Text := FormatFMDateTime(FMT_DATEONLY, FFMDateTime)
-      else Text := FormatFMDateTime(FFormat, FFMDateTime);
+  if FFMDateTime > 0 then begin
+    if (FFormat =FMT_DATETIME) and (Frac(FFMDateTime) = 0) then
+      Text := FormatFMDateTime(FMT_DATEONLY, FFMDateTime)
+    else
+      Text := FormatFMDateTime(FFormat, FFMDateTime);
   end;
 end;
 
 procedure TORDateBox.Validate(var ErrMsg: string);
 begin
   ErrMsg := '';
-  if Length(Text) > 0 then
-  begin
+  if Length(Text) > 0 then begin
    {
 !!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - ZZZZZZBELLC !!!!!!
     //We need to make sure that there is a date entered before parse
@@ -761,14 +741,13 @@ var
   x: string;
 begin
   Validate(x);
-  if Length(x) = 0 then Result := True else Result := False;
-  if Length(Text) = 0 then Result := False;
+  Result := (Length(x) = 0);
+  if (Length(Text) = 0) then Result := False;
 end;
 
 procedure TORDateBox.SetBlackColorMode(Value: boolean);
 begin
-  if FBlackColorMode <> Value then
-  begin
+  if FBlackColorMode <> Value then begin
     FBlackColorMode := Value;
     LoadEllipsis(FButton.Glyph, FBlackColorMode);
   end;
@@ -776,16 +755,16 @@ end;
 
 procedure TORDateBox.SetCaption(const Value: string);
 begin
-    if not Assigned(FCaption) then begin
-       FCaption := TStaticText.Create(self);
-       FCaption.AutoSize := False;
-       FCaption.Height := 0;
-       FCaption.Width  := 0;
-       FCaption.Visible := True;
-       FCaption.Parent := Parent;
-       FCaption.BringtoFront;
-    end;
-    FCaption.Caption := Value;
+  if not Assigned(FCaption) then begin
+     FCaption := TStaticText.Create(self);
+     FCaption.AutoSize := False;
+     FCaption.Height := 0;
+     FCaption.Width  := 0;
+     FCaption.Visible := True;
+     FCaption.Parent := Parent;
+     FCaption.BringtoFront;
+  end;
+  FCaption.Caption := Value;
 end;
 
 procedure TORDateBox.SetEnabled(Value: Boolean);
@@ -794,7 +773,7 @@ begin
   inherited;
 end;
 
-function TORDateBox.GetCaption(): string;
+function TORDateBox.GetCaption: string;
 begin
     result := FCaption.Caption;
 end;
@@ -815,12 +794,10 @@ end;
 function DaysPerMonth(AYear, AMonth: Integer): Integer;
 const
   DaysInMonth: array[1..12] of Integer = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-
 begin
   if(AYear < 1) or (AMonth < 1) then
     Result := 0
-  else
-  begin
+  else begin
     Result := DaysInMonth[AMonth];
     if (AMonth = 2) and IsLeapYear(AYear) then Inc(Result); { leap-year Feb is special }
   end;
@@ -839,8 +816,7 @@ const
 
 procedure TORYearEdit.SetTemplateField(const Value: boolean);
 begin
-  if(FTemplateField <> Value) then
-  begin
+  if(FTemplateField <> Value) then begin
     FTemplateField := Value;
     if Value then
       BorderStyle := bsNone
@@ -865,11 +841,11 @@ end;
 
 destructor TORDateCombo.Destroy;
 begin
-  KillObj(@FMonthCombo);
-  KillObj(@FDayCombo);
-  KillObj(@FYearEdit);
-  KillObj(@FYearUD);
-  KillObj(@FCalBtn);
+  if assigned(FMonthCombo) then FMonthCombo.Free;
+  if assigned(FDayCombo) then FDayCombo.Free;
+  if assigned(FYearEdit) then FYearEdit.Free;
+  if assigned(FYearUD) then FYearUD.Free;
+  if assigned(FCalBtn) then FCalBtn.Free;
   inherited;
 end;
 
@@ -881,14 +857,11 @@ end;
 function TORDateCombo.InitDays(GetSize: boolean): integer;
 var
   dy: integer;
-
 begin
   Result := 0;
-  if(assigned(FDayCombo)) then
-  begin
+  if(assigned(FDayCombo)) then begin
     dy := DaysPerMonth(FYear, FMonth) + 1;
-    while (FDayCombo.Items.Count < dy) do
-    begin
+    while (FDayCombo.Items.Count < dy) do begin
       if(FDayCombo.Items.Count = 0) then
         FDayCombo.Items.Add(' ')
       else
@@ -906,27 +879,23 @@ end;
 function TORDateCombo.InitMonths(GetSize: boolean): integer;
 var
   i, Size: integer;
-
 begin
   Result := 0;
-  if(assigned(FMonthCombo)) then
-  begin
+  if(assigned(FMonthCombo)) then begin
     FMonthCombo.Items.Clear;
     FMonthCombo.Items.Add(' ');
-    for i := 1 to 12 do
-    begin
+    for i := 1 to 12 do begin
       if FLongMonths then
-        FMonthCombo.Items.Add(LongMonthNames[i])
+        FMonthCombo.Items.Add(FormatSettings.LongMonthNames[i])
       else
-        FMonthCombo.Items.Add(ShortMonthNames[i]);
-      if(GetSize) then
-      begin
+        FMonthCombo.Items.Add(FormatSettings.ShortMonthNames[i]);
+      if GetSize then begin
         Size := TextWidthByFont(Font.Handle, FMonthCombo.Items[i]);
         if(Result < Size) then
           Result := Size;
       end;
     end;
-    if(GetSize) then
+    if GetSize then
       inc(Result, ComboBoxAdjSize);
   end;
 end;
@@ -936,9 +905,8 @@ var
   Wide, X, Y: integer;
 
 begin
-  if(not FRebuilding) then
-  begin
-    FRebuilding := TRUE;
+  if(not FRebuilding) then begin
+    FRebuilding := True;
     try
       ControlStyle := ControlStyle + [csAcceptsControls];
       try
@@ -946,10 +914,8 @@ begin
         if not FTemplateField then
           inc(Y,AdjVertSize);
         X := 0;
-        if(FIncludeMonth) then
-        begin
-          if(not assigned(FMonthCombo)) then
-          begin
+        if (FIncludeMonth) then begin
+          if (not assigned(FMonthCombo)) then begin
             FMonthCombo := TORMonthCombo.Create(Self);
             FMonthCombo.Parent := Self;
             FMonthCombo.Top := 0;
@@ -967,10 +933,8 @@ begin
           FMonthCombo.ItemIndex := FMonth;
           inc(X, Wide + DateComboCtrlGap);
 
-          if(FIncludeDay) then
-          begin
-            if(not assigned(FDayCombo)) then
-            begin
+          if (FIncludeDay) then begin
+            if (not assigned(FDayCombo)) then begin
               FDayCombo := TORDayCombo.Create(Self);
               FDayCombo.Parent := Self;
               FDayCombo.Top := 0;
@@ -987,17 +951,21 @@ begin
             FDayCombo.Left := X;
             FDayCombo.ItemIndex := FDay;
             inc(X, Wide + DateComboCtrlGap);
-          end
-          else
-            KillObj(@FDayCombo);
-        end
-        else
-        begin
-          KillObj(@FDayCombo);
-          KillObj(@FMonthCombo);
+          end else if assigned(FDayCombo) then begin
+            FDayCombo.Free;
+            FDayCombo := nil;
+          end;
+        end else begin
+          if assigned(FDayCombo) then begin
+            FDayCombo.Free;
+            FDayCombo := nil;
+          end;
+          if assigned(FMonthCombo) then begin
+            FMonthCombo.Free;
+            FMonthCombo := nil;
+          end;
         end;
-        if(not assigned(FYearEdit)) then
-        begin
+        if (not assigned(FYearEdit)) then begin
           FYearEdit := FORYearEditClass.Create(Self);
           FYearEdit.Parent := Self;
           FYearEdit.Top := 0;
@@ -1012,8 +980,7 @@ begin
         FYearEdit.Height := Y;
         FYearEdit.Left := X;
         inc(X, Wide);
-        if(not assigned(FYearUD)) then
-        begin
+        if (not assigned(FYearUD)) then begin
           FYearUD := TUpDown.Create(Self);
           FYearUD.Parent := Self;
           FYearUD.Thousands := FALSE;
@@ -1027,10 +994,8 @@ begin
         FYearUD.Height := Y;
         FYearUD.Position := FYear;
         inc(X, FYearUD.Width + DateComboCtrlGap);
-        if(FIncludeBtn) then
-        begin
-          if(not assigned(FCalBtn)) then
-          begin
+        if (FIncludeBtn) then begin
+          if (not assigned(FCalBtn)) then begin
             FCalBtn := TORDateButton.Create(Self);
             FCalBtn.TabStop := FALSE;
             FCalBtn.Parent := Self;
@@ -1044,9 +1009,10 @@ begin
           FCalBtn.Height := Wide;
           FCalBtn.Left := X;
           inc(X, Wide + DateComboCtrlGap);
-        end
-        else
-          KillObj(@FCalBtn);
+        end else if assigned(FCalBtn) then begin
+          FCalBtn.Free;
+          FCalBtn := nil;
+        end;
         Self.Width := X - DateComboCtrlGap;
         Self.Height := Y;
         CheckDays;
@@ -1063,25 +1029,22 @@ end;
 
 procedure TORDateCombo.SetBlackColorMode(Value: boolean);
 begin
-  if FBlackColorMode <> Value then
-  begin
+  if FBlackColorMode <> Value then begin
     FBlackColorMode := Value;
-    if assigned(FCalBtn) then    
+    if assigned(FCalBtn) then
       LoadEllipsis(FCalBtn.Glyph, FBlackColorMode);
   end;
 end;
 
 procedure TORDateCombo.SetDay(Value: integer);
 begin
-  if(not assigned(FDayCombo)) and (not (csLoading in ComponentState)) then
+  if (not assigned(FDayCombo)) and (not (csLoading in ComponentState)) then
     Value := 0;
-  if(Value > DaysPerMonth(FYear, FMonth)) then
+  if (Value > DaysPerMonth(FYear, FMonth)) then
     Value := 0;
-  if(FDay <> Value) then
-  begin
+  if (FDay <> Value) then begin
     FDay := Value;
-    if(assigned(FDayCombo)) then
-    begin
+    if(assigned(FDayCombo)) then begin
       if(FDayCombo.Items.Count <= FDay) then
         InitDays(FALSE);
       FDayCombo.ItemIndex := FDay;
@@ -1092,8 +1055,7 @@ end;
 
 procedure TORDateCombo.SetIncludeBtn(const Value: boolean);
 begin
-  if(FIncludeBtn <> Value) then
-  begin
+  if(FIncludeBtn <> Value) then begin
     FIncludeBtn := Value;
     Rebuild;
   end;
@@ -1103,8 +1065,7 @@ procedure TORDateCombo.SetIncludeDay(Value: boolean);
 begin
   if(Value) and (not FIncludeMonth) then
     Value := FALSE;
-  if(FIncludeDay <> Value) then
-  begin
+  if(FIncludeDay <> Value) then begin
     FIncludeDay := Value;
     if(not Value) then FDay := 0;
     Rebuild;
@@ -1113,11 +1074,9 @@ end;
 
 procedure TORDateCombo.SetIncludeMonth(const Value: boolean);
 begin
-  if(FIncludeMonth <> Value) then
-  begin
+  if(FIncludeMonth <> Value) then begin
     FIncludeMonth := Value;
-    if(not Value) then
-    begin
+    if(not Value) then begin
       FIncludeDay := FALSE;
       FMonth := 0;
       FDay := 0;
@@ -1132,8 +1091,7 @@ begin
     Value := 0;
   if(Value <0) or (Value > 12) then
     Value := 0;
-  if(FMonth <> Value) then
-  begin
+  if(FMonth <> Value) then begin
     FMonth := Value;
     if(assigned(FMonthCombo)) then
       FMonthCombo.ItemIndex := FMonth;
@@ -1144,8 +1102,7 @@ end;
 
 procedure TORDateCombo.SetLongMonths(const Value: boolean);
 begin
-  if(FLongMonths <> Value) then
-  begin
+  if(FLongMonths <> Value) then begin
     FLongMonths := Value;
     Rebuild;
   end;
@@ -1153,22 +1110,17 @@ end;
 
 procedure TORDateCombo.SetYear(const Value: integer);
 begin
-  if(FYear <> Value) then
-  begin
+  if(FYear <> Value) then begin
     FYear := Value;
     if(FYear < FirstYear) or (FYear > LastYear) then
       FYear := 0;
-    if(not FYearChanging) and (assigned(FYearEdit)) and (assigned(FYearUD)) then
-    begin
-      FYearChanging := TRUE;
+    if(not FYearChanging) and (assigned(FYearEdit)) and (assigned(FYearUD)) then begin
+      FYearChanging := True;
       try
-        if(FYear = 0) then
-        begin
+        if(FYear = 0) then begin
           FYearEdit.Text := '    ';
           FYearUD.Position := FirstYear-1
-        end
-        else
-        begin
+        end else begin
           FYearEdit.Text := IntToStr(FYear);
           FYearUD.Position := FYear;
         end;
@@ -1205,7 +1157,7 @@ end;
 procedure TORDateCombo.YearChanged(Sender: TObject);
 begin
   if FYearChanging then exit;
-  FYearChanging := TRUE;
+  FYearChanging := True;
   try
     FYear := StrToIntDef(FYearEdit.Text, 0);
     if(FYear < FirstYear) or (FYear > LastYear) then
@@ -1219,7 +1171,7 @@ begin
     CheckDays;
     DoChange;
   finally
-    FYearChanging := FALSE;
+    FYearChanging := False;
   end;
 end;
 
@@ -1228,13 +1180,11 @@ var
   MaxDays: integer;
 
 begin
-  if(FIncludeMonth and assigned(FMonthCombo)) then
-  begin
+  if(FIncludeMonth and assigned(FMonthCombo)) then begin
     FMonthCombo.Enabled := (FYear > 0);
     if (FYear = 0) then
-      SetMonth(0); 
-    if(FIncludeMonth and FIncludeDay and assigned(FDayCombo)) then
-    begin
+      SetMonth(0);
+    if(FIncludeMonth and FIncludeDay and assigned(FDayCombo)) then begin
       FDayCombo.Enabled := ((FYear > 0) and (FMonth > 0));
       MaxDays := DaysPerMonth(FYear, FMonth);
       if(FDay > MaxDays) then
@@ -1262,7 +1212,6 @@ var
   mm, dd, yy: integer;
   m, d, y: word;
   DateDialog: TORDateTimeDlg;
-
 begin
   DateDialog := TORDateTimeDlg.Create(self);
   try
@@ -1271,10 +1220,8 @@ begin
     yy := FYear;
     DecodeDate(Now, y, m, d);
     if(FYear = 0) then FYear := y;
-    if(FYear = y) then
-    begin
-      if((FMonth = 0) or (FMonth = m)) and (FDay = 0) then
-      begin
+    if(FYear = y) then begin
+      if((FMonth = 0) or (FMonth = m)) and (FDay = 0) then begin
         FMonth := m;
         FDay := d;
       end;
@@ -1284,17 +1231,14 @@ begin
     if(FDay = 0) then
       FDay := 1;
     DateDialog.FMDateTime := GetFMDate;
-    DateDialog.DateOnly := TRUE;
-    DateDialog.RequireTime := FALSE;
-    if DateDialog.Execute then
-    begin
+    DateDialog.DateOnly := True;
+    DateDialog.RequireTime := False;
+    if DateDialog.Execute then begin
       FYear := 0;
       FMonth := 0;
       FDay := 0;
       SetFMDate(DateDialog.FMDateTime);
-    end
-    else
-    begin
+    end else begin
       SetYear(yy);
       SetMonth(mm);
       SetDay(dd);
@@ -1308,17 +1252,15 @@ procedure TORDateCombo.YearUDChange(Sender: TObject; var AllowChange: Boolean;
                                     NewValue: Smallint; Direction: TUpDownDirection);
 var
   y, m, d: word;
-
 begin
   if FYearChanging then exit;
-  FYearChanging := TRUE;
+  FYearChanging := True;
   try
-    if FYearUD.Position = (FirstYear-1) then
-    begin
+    if FYearUD.Position = (FirstYear-1) then begin
       DecodeDate(Now, y, m, d);
       FYear := y;
       FYearUD.Position := y;
-      AllowChange := FALSE;
+      AllowChange := False;
     end
     else
       FYear := NewValue;
@@ -1339,8 +1281,7 @@ end;
 
 procedure TORDateCombo.YearKeyPress(Sender: TObject; var Key: Char);
 begin
-  if(Key in ['0'..'9']) and (FYearEdit.Text = '    ') then
-  begin
+  if CharInSet(Key, ['0'..'9']) and (FYearEdit.Text = '    ') then begin
     FYearEdit.Text := Key + '   ';
     Key := #0;
     FYearEdit.SelStart := 1;
@@ -1359,17 +1300,13 @@ end;
 procedure TORDateCombo.SetFMDate(const Value: TFMDateTime);
 var
   ival, mo, dy: integer;
-              
 begin
-  if(Value = 0) then
-  begin
+  if(Value = 0) then begin
     SetYear(0);
     SetMonth(0);
-  end
-  else
-  begin
+  end else begin
     ival := trunc(Value);
-    if(length(inttostr(ival)) <> 7) then
+    if(length(IntToStr(ival)) <> 7) then
       exit;
     dy := (ival mod 100);
     ival := ival div 100;
@@ -1385,14 +1322,12 @@ end;
 function TORDateCombo.DateText: string;
 begin
   Result := '';
-  if(FYear > 0) then
-  begin
-    if(FMonth > 0) then
-    begin
+  if(FYear > 0) then begin
+    if(FMonth > 0) then begin
       if FLongMonths then
-        Result := LongMonthNames[FMonth]
+        Result := FormatSettings.LongMonthNames[FMonth]
       else
-        Result := ShortMonthNames[FMonth];
+        Result := FormatSettings.ShortMonthNames[FMonth];
       if(FDay > 0) then
         Result := Result + ' ' + IntToStr(FDay);
       Result := Result + ', ';
@@ -1421,12 +1356,10 @@ end;
 function TORDateCombo.Text: string;
 var
   tmp, fmt, m: string;
-
 begin
   Result := '';
   tmp := FloatToStr(FMDate);
-  if(tmp <> '') and (tmp <> '0') and (length(Tmp) >= 7) then
-  begin
+  if(tmp <> '') and (tmp <> '0') and (length(Tmp) >= 7) then begin
     if FLongMonths then
       m := 'mmmm'
     else
@@ -1442,7 +1375,6 @@ begin
   end;
 end;
 
-
 procedure Register;
 { used by Delphi to put components on the Palette }
 begin
@@ -1451,8 +1383,7 @@ end;
 
 procedure TORDateCombo.SetTemplateField(const Value: boolean);
 begin
-  if FTemplateField <> Value then
-  begin
+  if FTemplateField <> Value then begin
     FTemplateField := Value;
     Rebuild;
   end;
@@ -1460,5 +1391,6 @@ end;
 
 initialization
   uServerToday := 0;
+  FormatSettings := TFormatSettings.Create;
 
 end.

@@ -1,5 +1,5 @@
 unit fARTAllgy;
-
+  
 interface
 
 uses
@@ -216,94 +216,98 @@ end;
 function EnterEditAllergy(AllergyIEN: integer; AddNew, MarkAsEnteredInError: boolean; AnOwner: TComponent = nil; ARefNum: Integer = -1): boolean;
 var
   Allergy: string;
-begin      
+begin
   Result := False;
   if AnOwner = nil then AnOwner := Application;
 
   if not LockedForOrdering then Exit;//SMT Lets Lock Allergies
-  if frmARTAllergy <> nil then
-  begin
-    InfoBox('You are already entering/editing an Allergy.', 'Information', MB_OK);
-    exit;
-  end;
-  uAddingNew := AddNew;
-  uEditing := (not AddNew) and (not MarkAsEnteredInError);
-  uEnteredInError := MarkAsEnteredInError;
-  frmARTAllergy := TfrmARTAllergy.Create(AnOwner);
-  if ARefNum <> -1 then frmARTAllergy.RefNum := ARefNum;
-  if frmARTAllergy.AbortAction then exit;
-  with frmARTAllergy do
-    try
-      ResizeFormToFont(TForm(frmARTAllergy));
-      FChanged     := False;
-      Changing := True;
-      if uEditing then
-        begin
-          frmARTAllergy.Caption := TX_CAP_EDITING;
-          FEditAllergyIEN := AllergyIEN;
-          if FEditAllergyIEN = 0 then exit;
-          StatusText(TX_STS_EDITING);
-          OldRec := LoadAllergyForEdit(FEditAllergyIEN);
-          NewRec.IEN := OldRec.IEN;
-          SetupDialog;
-        end
-      else if uEnteredInError then
-        begin
-          frmARTAllergy.Caption := TX_CAP_ERROR;
-          FEditAllergyIEN := AllergyIEN;
-          if FEditAllergyIEN = 0 then exit;
-          StatusText(TX_STS_ERROR);
-          OldRec := LoadAllergyForEdit(FEditAllergyIEN);
-          NewRec.IEN := OldRec.IEN;
-          SetupDialog;
-        end
-      else if uAddingNew then
-        begin
-          SetupVerifyFields(NewRec);
-          SetupEnteredInErrorFields(NewRec);
-          AllergyLookup(Allergy, ckNoKnownAllergies.Enabled);
-          if Piece(Allergy, U, 1) = '-1' then
-            begin
-              ckNoKnownAllergies.Checked := True;
-              Result := EnterNKAForPatient;
-              frmARTAllergy.Close;
-              Exit;
-            end
-          else if Allergy <> '' then
-            begin
-              lstAllergy.Clear;
-              lstAllergy.Items.Add(Allergy);
-              cboAllergyType.SelectByID(Piece(Allergy, U, 4));
-            end
-          else
-            begin
-              Result := False;
-              Close;
-              exit;
-            end;
-          calOriginated.FMDateTime := FMNow;
-          Changing := False;
-          ControlChange(lstAllergy);
-        end;
-      StatusText('');
-      if OldRec.IEN = -1 then
-      begin
-        Result := False;
-        Close;
-        Exit;
-      end;
-
-      origlbl508.Caption := 'Originator. Read Only. Value is ' + cboOriginator.SelText;
-      origdtlbl508.Caption := 'Origination Date. Read Only. Value is '+ calOriginated.Text;
-      Show;
-      Result := FChanged;
-    finally
-//      uAddingNew := FALSE;
-//      uEditing := FALSE;
-//      uEnteredInError := FALSE;
-//      uUserCanVerify := FALSE;
-      //frmARTAllergy.Release;
+  try
+    if frmARTAllergy <> nil then
+    begin
+      InfoBox('You are already entering/editing an Allergy.', 'Information', MB_OK);
+      exit;
     end;
+    uAddingNew := AddNew;
+    uEditing := (not AddNew) and (not MarkAsEnteredInError);
+    uEnteredInError := MarkAsEnteredInError;
+    frmARTAllergy := TfrmARTAllergy.Create(AnOwner);
+    if ARefNum <> -1 then frmARTAllergy.RefNum := ARefNum;
+    if frmARTAllergy.AbortAction then exit;
+    with frmARTAllergy do
+      try
+        ResizeFormToFont(TForm(frmARTAllergy));
+        FChanged     := False;
+        Changing := True;
+        if uEditing then
+          begin
+            frmARTAllergy.Caption := TX_CAP_EDITING;
+            FEditAllergyIEN := AllergyIEN;
+            if FEditAllergyIEN = 0 then exit;
+            StatusText(TX_STS_EDITING);
+            OldRec := LoadAllergyForEdit(FEditAllergyIEN);
+            NewRec.IEN := OldRec.IEN;
+            SetupDialog;
+          end
+        else if uEnteredInError then
+          begin
+            frmARTAllergy.Caption := TX_CAP_ERROR;
+            FEditAllergyIEN := AllergyIEN;
+            if FEditAllergyIEN = 0 then exit;
+            StatusText(TX_STS_ERROR);
+            OldRec := LoadAllergyForEdit(FEditAllergyIEN);
+            NewRec.IEN := OldRec.IEN;
+            SetupDialog;
+          end
+        else if uAddingNew then
+          begin
+            SetupVerifyFields(NewRec);
+            SetupEnteredInErrorFields(NewRec);
+            AllergyLookup(Allergy, ckNoKnownAllergies.Enabled);
+            if Piece(Allergy, U, 1) = '-1' then
+              begin
+                ckNoKnownAllergies.Checked := True;
+                Result := EnterNKAForPatient;
+                frmARTAllergy.Close;
+                Exit;
+              end
+            else if Allergy <> '' then
+              begin
+                lstAllergy.Clear;
+                lstAllergy.Items.Add(Allergy);
+                cboAllergyType.SelectByID(Piece(Allergy, U, 4));
+              end
+            else
+              begin
+                Result := False;
+                Close;
+                exit;
+              end;
+            calOriginated.FMDateTime := FMNow;
+            Changing := False;
+            ControlChange(lstAllergy);
+          end;
+        StatusText('');
+        if OldRec.IEN = -1 then
+        begin
+          Result := False;
+          Close;
+          Exit;
+        end;
+
+        origlbl508.Caption := 'Originator. Read Only. Value is ' + cboOriginator.SelText;
+        origdtlbl508.Caption := 'Origination Date. Read Only. Value is '+ calOriginated.Text;
+        Show;
+        Result := FChanged;
+      finally
+  //      uAddingNew := FALSE;
+  //      uEditing := FALSE;
+  //      uEnteredInError := FALSE;
+  //      uUserCanVerify := FALSE;
+        //frmARTAllergy.Release;
+      end;
+  finally
+    UnlockIfAble;
+  end;
 end;
 
 procedure TfrmARTAllergy.FormCreate(Sender: TObject);
@@ -906,6 +910,10 @@ procedure TfrmARTAllergy.SymptomDateBoxExit(Sender: TObject);
 begin
   inherited;
   SetDate;
+  if TabIsPressed then
+    btnRemove.SetFocus()
+  else if ShiftTabIsPressed then
+    lstSelectedSymptoms.SetFocus();
 end;
 
 procedure TfrmARTAllergy.btnAgent1Click(Sender: TObject);

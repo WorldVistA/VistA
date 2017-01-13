@@ -20,6 +20,9 @@ type
     procedure cboImmReactionChange(Sender: TObject);
     procedure ckbContraClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormPaint(Sender: TObject);
+    procedure ckbContraEnter(Sender: TObject);
+    procedure ckbContraExit(Sender: TObject);
   private
   protected
     procedure UpdateNewItemStr(var x: string); override;
@@ -45,9 +48,9 @@ var
 begin
   if(NotUpdating) and (cboImmSeries.Text <> '') then
   begin
-    for i := 0 to lbGrid.Items.Count-1 do
-      if(lbGrid.Selected[i]) then
-        TPCEImm(lbGrid.Items.Objects[i]).Series := cboImmSeries.ItemID;
+    for i := 0 to lstRenameMe.Items.Count-1 do
+      if(lstRenameMe.Items[i].Selected) then
+        TPCEImm(lstRenameMe.Objects[i]).Series := cboImmSeries.ItemID;
     GridChanged;
   end;
 end;
@@ -59,9 +62,9 @@ var
 begin
   if(NotUpdating) and (cboImmReaction.Text <> '') then
   begin
-    for i := 0 to lbGrid.Items.Count-1 do
-      if(lbGrid.Selected[i]) then
-        TPCEImm(lbGrid.Items.Objects[i]).Reaction := cboImmReaction.ItemID;
+    for i := 0 to lstRenameMe.Items.Count-1 do
+      if(lstRenameMe.Items[i].Selected) then
+        TPCEImm(lstRenameMe.Objects[i]).Reaction := cboImmReaction.ItemID;
     GridChanged;
   end;
 end;
@@ -73,11 +76,23 @@ var
 begin
   if(NotUpdating) then
   begin
-    for i := 0 to lbGrid.Items.Count-1 do
-      if(lbGrid.Selected[i]) then
-        TPCEImm(lbGrid.Items.Objects[i]).Contraindicated := ckbContra.Checked;
+    for i := 0 to lstRenameMe.Items.Count-1 do
+      if(lstRenameMe.Items[i].Selected) then
+        TPCEImm(lstRenameMe.Objects[i]).Contraindicated := ckbContra.Checked;
     GridChanged;
   end;
+end;
+
+procedure TfrmImmunizations.ckbContraEnter(Sender: TObject);
+begin
+  inherited;
+  frmImmunizations.Invalidate;
+end;
+
+procedure TfrmImmunizations.ckbContraExit(Sender: TObject);
+begin
+  inherited;
+  frmImmunizations.Invalidate;
 end;
 
 procedure TfrmImmunizations.FormCreate(Sender: TObject);
@@ -89,6 +104,21 @@ begin
   FPCECode := 'IMM';
   PCELoadORCombo(cboImmReaction);
   PCELoadORCombo(cboImmSeries);
+end;
+
+procedure TfrmImmunizations.FormPaint(Sender: TObject);
+begin
+inherited;
+  if ckbContra.Focused = True then
+  begin
+    frmImmunizations.Canvas.Pen.Width := 1;
+    frmImmunizations.Canvas.Pen.Style := psDot;
+    frmImmunizations.Canvas.MoveTo(lblContra.Left - 2,lblContra.Top - 1);
+    frmImmunizations.Canvas.LineTo(lblContra.Left + lblContra.Width + 2,lblContra.Top - 1);
+    frmImmunizations.Canvas.LineTo(lblContra.Left + lblContra.Width + 2,lblContra.Top + lblContra.Height);
+    frmImmunizations.Canvas.LineTo(lblContra.Left - 2,lblContra.Top + lblContra.Height);
+    frmImmunizations.Canvas.LineTo(lblContra.Left - 2,lblContra.Top - 1);
+  end;
 end;
 
 procedure TfrmImmunizations.UpdateNewItemStr(var x: string);
@@ -114,7 +144,7 @@ begin
   begin
     BeginUpdate;
     try
-      ok := (lbGrid.SelCount > 0);
+      ok := (lstRenameMe.SelCount > 0);
       lblSeries.Enabled := ok;
       lblReaction.Enabled := ok;
       cboImmSeries.Enabled := ok;
@@ -129,11 +159,11 @@ begin
         Contra := FALSE;
         Ser := NoPCEValue;
         React := NoPCEValue;
-        for i := 0 to lbGrid.Items.Count-1 do
+        for i := 0 to lstRenameMe.Items.Count-1 do
         begin
-          if lbGrid.Selected[i] then
+          if lstRenameMe.Items[i].Selected then
           begin
-            Obj := TPCEImm(lbGrid.Items.Objects[i]);
+            Obj := TPCEImm(lstRenameMe.Objects[i]);
             if(First) then
             begin
               First := FALSE;

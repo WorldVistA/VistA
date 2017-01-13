@@ -14,10 +14,8 @@ inherited frmEncounterFrame: TfrmEncounterFrame
   OnDestroy = FormDestroy
   OnResize = FormResize
   OnShow = FormShow
-  ExplicitLeft = 290
-  ExplicitTop = 108
-  ExplicitWidth = 640
-  ExplicitHeight = 458
+  ExplicitWidth = 648
+  ExplicitHeight = 462
   PixelsPerInch = 96
   TextHeight = 13
   object Bevel1: TBevel [0]

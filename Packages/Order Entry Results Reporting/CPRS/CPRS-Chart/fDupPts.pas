@@ -5,17 +5,17 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, Dialogs, StdCtrls, ORCtrls, ExtCtrls, OrFn, fBase508Form,
-  VA508AccessibilityManager;
+  VA508AccessibilityManager, Vcl.ComCtrls;
 
 type
   TfrmDupPts = class(TfrmBase508Form)
     pnlDupPts: TPanel;
+    pnlSelDupPt: TPanel;
+    lblSelDupPts: TLabel;
+    Panel1: TPanel;
     btnOK: TButton;
     btnCancel: TButton;
-    pnlSelDupPt: TPanel;
-    lboSelPt: TORListBox;
-    lblDupPts: TLabel;
-    lblSelDupPts: TLabel;
+    lboSelPt: TCaptionListView;
     procedure btnCancelClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
@@ -51,7 +51,7 @@ begin
   fPtSel.DupDFN := 'Cancel'; // Pre-set as default.
   theDups := tStringList.create;
   FastAssign(fPtSel.PtStrs, theDups);
-  FastAssign(theDups, lboSelPt.Items);
+  FastAssign(theDups, lboSelPt.ItemsStrings);
   ResizeAnchoredFormToFont(self);
 end;
 

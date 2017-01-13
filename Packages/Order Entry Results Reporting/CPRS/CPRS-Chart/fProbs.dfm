@@ -12,16 +12,16 @@ inherited frmProblems: TfrmProblems
   OnMouseMove = FormMouseMove
   OnShow = FormShow
   ExplicitWidth = 647
-  ExplicitHeight = 409
+  ExplicitHeight = 413
   PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape
     Top = 350
     Width = 631
-    Margins.Left = 6
-    Margins.Top = 6
-    Margins.Right = 6
-    Margins.Bottom = 6
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Constraints.MinHeight = 5
     ExplicitTop = 350
     ExplicitWidth = 631
@@ -30,10 +30,10 @@ inherited frmProblems: TfrmProblems
     Left = 159
     Width = 2
     Height = 350
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     OnMoved = sptHorzMoved
     ExplicitLeft = 159
     ExplicitWidth = 2
@@ -42,10 +42,10 @@ inherited frmProblems: TfrmProblems
   inherited pnlLeft: TPanel
     Width = 159
     Height = 350
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Constraints.MinWidth = 37
     ExplicitWidth = 159
     ExplicitHeight = 350
@@ -54,10 +54,6 @@ inherited frmProblems: TfrmProblems
       Top = 304
       Width = 159
       Height = 46
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Align = alBottom
       BevelOuter = bvNone
       Constraints.MinHeight = 46
@@ -67,10 +63,6 @@ inherited frmProblems: TfrmProblems
         Top = 2
         Width = 159
         Height = 22
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         Align = alBottom
         Caption = 'Other Problem'
         TabOrder = 0
@@ -83,10 +75,6 @@ inherited frmProblems: TfrmProblems
         Top = 24
         Width = 159
         Height = 22
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         Align = alBottom
         Caption = 'Cancel'
         TabOrder = 1
@@ -100,10 +88,6 @@ inherited frmProblems: TfrmProblems
       Top = 0
       Width = 159
       Height = 304
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
@@ -112,10 +96,6 @@ inherited frmProblems: TfrmProblems
         Top = 0
         Width = 159
         Height = 19
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         Align = alTop
         Caption = 'View options'
         HorzOffset = 2
@@ -128,10 +108,6 @@ inherited frmProblems: TfrmProblems
         Top = 19
         Width = 159
         Height = 97
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         Align = alTop
         ExtendedSelect = False
         ItemHeight = 13
@@ -157,10 +133,6 @@ inherited frmProblems: TfrmProblems
         Top = 116
         Width = 159
         Height = 24
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         Align = alTop
         Caption = 'New problem'
         TabOrder = 1
@@ -174,10 +146,6 @@ inherited frmProblems: TfrmProblems
       Top = 0
       Width = 159
       Height = 304
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 2
@@ -188,10 +156,6 @@ inherited frmProblems: TfrmProblems
         Top = 270
         Width = 159
         Height = 13
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         Align = alBottom
         AutoSize = False
         Caption = 'Enter new problem:'
@@ -201,10 +165,6 @@ inherited frmProblems: TfrmProblems
         Top = 283
         Width = 159
         Height = 21
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         Align = alBottom
         TabOrder = 0
         OnExit = lstViewExit
@@ -217,10 +177,6 @@ inherited frmProblems: TfrmProblems
       Top = 0
       Width = 159
       Height = 304
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Align = alClient
       BevelOuter = bvNone
       Constraints.MinHeight = 90
@@ -231,10 +187,6 @@ inherited frmProblems: TfrmProblems
         Width = 159
         Height = 3
         Cursor = crVSplit
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         Align = alTop
       end
       object pnlProbCats: TPanel
@@ -242,10 +194,6 @@ inherited frmProblems: TfrmProblems
         Top = 0
         Width = 159
         Height = 157
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
@@ -254,10 +202,6 @@ inherited frmProblems: TfrmProblems
           Top = 0
           Width = 159
           Height = 13
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
           Align = alTop
           AutoSize = False
           Caption = 'Problem categories'
@@ -268,10 +212,6 @@ inherited frmProblems: TfrmProblems
           Width = 159
           Height = 144
           Hint = 'Select problem category'
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
           TabStop = False
           Align = alClient
           ExtendedSelect = False
@@ -293,10 +233,6 @@ inherited frmProblems: TfrmProblems
         Top = 160
         Width = 159
         Height = 144
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 1
@@ -305,10 +241,6 @@ inherited frmProblems: TfrmProblems
           Top = 0
           Width = 159
           Height = 13
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
           Align = alTop
           AutoSize = False
           Caption = 'Problems'
@@ -321,10 +253,6 @@ inherited frmProblems: TfrmProblems
           Width = 159
           Height = 131
           Hint = 'Select problem to add'
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
           Align = alClient
           Ctl3D = False
           ExtendedSelect = False
@@ -347,10 +275,10 @@ inherited frmProblems: TfrmProblems
     Left = 161
     Width = 470
     Height = 350
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Constraints.MinWidth = 30
     OnExit = pnlRightExit
     OnResize = pnlRightResize
@@ -362,10 +290,6 @@ inherited frmProblems: TfrmProblems
       Top = 0
       Width = 470
       Height = 19
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Align = alTop
       Caption = 'Active Problems List'
       HorzOffset = 2
@@ -378,10 +302,6 @@ inherited frmProblems: TfrmProblems
       Top = 36
       Width = 470
       Height = 314
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Align = alClient
       TabOrder = 0
       Visible = False
@@ -392,10 +312,6 @@ inherited frmProblems: TfrmProblems
       Top = 36
       Width = 470
       Height = 314
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Style = lbOwnerDrawVariable
       Align = alClient
       Color = clCream
@@ -417,10 +333,6 @@ inherited frmProblems: TfrmProblems
       Top = 19
       Width = 470
       Height = 17
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Sections = <
         item
           ImageIndex = -1

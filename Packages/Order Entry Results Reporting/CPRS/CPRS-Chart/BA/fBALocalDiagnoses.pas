@@ -248,7 +248,6 @@ var
   i: integer;
   thisOrderID: string;
   tempDxRec: TBADxRecord;
-  {$ifdef debug}thismsg: string;{$endif}
 begin
    //** Initialize
   if Assigned(UBAGlobals.OrderIDList) then
@@ -1116,7 +1115,7 @@ begin
    except
       on EListError do
          begin
-         {$ifdef debug}Show508Message('EListError in frmBALocalDiagnoses.ListSelectedOrders()');{$endif}
+//         {$ifdef debug}Show508Message('EListError in frmBALocalDiagnoses.ListSelectedOrders()');{$endif}
          raise;
          end;
     end; //try
@@ -1143,7 +1142,7 @@ begin
    except
       on EListError do
          begin
-         {$ifdef debug}Show508Message('EListError in frmBALocalDiagnoses.AddDiagnosisToPersonalDiagnosesListClick()');{$endif}
+//         {$ifdef debug}Show508Message('EListError in frmBALocalDiagnoses.AddDiagnosisToPersonalDiagnosesListClick()');{$endif}
          raise;
          end;
     end; //try

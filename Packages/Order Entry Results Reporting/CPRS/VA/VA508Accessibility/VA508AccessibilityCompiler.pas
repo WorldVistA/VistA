@@ -1,7 +1,7 @@
 unit VA508AccessibilityCompiler;
 
-{$UNDEF VA508COMPILER}
 {$DEFINE VA508COMPILER}
+{$UNDEF VA508COMPILER}
 
 { TODO -oJeremy Merrill -c508 :
 Add additional warning types:
@@ -681,7 +681,8 @@ var
     try
       if FindFirst(AFileName, faAnyFile, SR) = 0 then
       begin
-        SRData := IntToStr(SR.Size) + '/' + IntToStr(SR.Time);
+//        SRData := IntToStr(SR.Size) + '/' + IntToStr(SR.Time);
+        SRData := IntToStr(SR.Size) + '/' + DateTimeToStr(SR.TimeStamp);
         CacheXRefIndex := CacheXRef.IndexOf(AFileName);
         if CacheXRefIndex < 0 then
         begin

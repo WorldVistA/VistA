@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Types, Dialogs, ComCtrls, Themes, UxTheme, ORFn, ExtCtrls, StdCtrls;
+  Types, Dialogs, ComCtrls, CommCtrl, Themes, UxTheme, ORFn, ExtCtrls, StdCtrls;
 
 type
 
@@ -15,6 +15,7 @@ type
     FCodeSys: string;
     FCodeIEN: string;
     FCodeDescription: string;
+    FDesignationID: string;
     FTargetCodeSys: string;
     FTargetCode: string;
     FTargetCodeIEN: string;
@@ -28,6 +29,7 @@ type
     property CodeSys: string read FCodeSys write FCodeSys;
     property CodeIEN: string read FCodeIEN write FCodeIEN;
     property CodeDescription: string read FCodeDescription write FCodeDescription;
+    property DesignationID: string read FDesignationID write FDesignationID;
     property TargetCode: string read FTargetCode write FTargetCode;
     property TargetCodeSys: string read FTargetCodeSys write FTargetCodeSys;
     property TargetCodeIEN: string read FTargetCodeIEN write FTargetCodeIEN;
@@ -61,6 +63,8 @@ type
     fShowDesc: boolean;
     fShowCode: boolean;
     fShowTargetCode: boolean;
+    tvHintText: String;
+    fDefTreeViewWndProc: TWndMethod;
     function GetSelectedNode: TLexTreeNode;
     procedure SetSelectedNode(const Value: TLexTreeNode);
     procedure SetShowCode(const Value: boolean);
@@ -89,6 +93,7 @@ type
   public
     { Public declarations }
     procedure SetColumnTreeModel(ResultSet: TStrings);
+    procedure TreeViewWndProc(var Message: TMessage);
     function FindNode(AValue:String): TLexTreeNode;
     property SelectedNode: TLexTreeNode read GetSelectedNode write SetSelectedNode;
     property ShowDescription: boolean read GetShowDescription write SetShowDescription;
@@ -101,6 +106,7 @@ type
     property CodeTitle: string read GetCodeTitle write SetCodeTitle;
     property TargetTitle: string read GetTargetTitle write SetTargetTitle;
     property SeparatorSpace: integer read GetSeparatorSpace write SetSeparatorSpace;
+    property DefTreeViewWndProc: TWndMethod read fDefTreeViewWndProc write fDefTreeViewWndProc;
     procedure ClearData;
   end;
 
@@ -115,6 +121,64 @@ const
   TreeExpanderSpacing = 6;
 
 { TTreeGridFrame }
+
+procedure TTreeGridFrame.TreeViewWndProc(var Message: TMessage);
+var
+  Pt: TPoint;
+  Node: TTreeNode;
+  LItemRect: TRect;
+  LMaxWidth: integer;
+begin
+  if Message.Msg = WM_NOTIFY then
+  begin
+    with TWMNotify(Message) do
+    begin
+      if NMHdr^.Code = TTN_NEEDTEXTW then
+      begin
+        if (PToolTipTextW(NMHdr)^.uFlags and TTF_IDISHWND) <> 0 then
+        begin
+          GetCursorPos(Pt);
+          Pt := tv.ScreenToClient(Pt);
+          Node := tv.GetNodeAt(Pt.X, Pt.Y);
+          if Node <> nil then
+          begin
+            tvHintText := Node.Text;
+
+            with PToolTipTextW(NMHdr)^ do
+            begin
+              lpszText := PWideChar(tvHintText);
+              hInst := 0;
+            end;
+
+            LItemRect := Node.DisplayRect(True);
+            if LItemRect.Left < 0 then
+              LItemRect.Left := 0;
+            LItemRect.TopLeft := tv.ClientToScreen
+              (LItemRect.TopLeft);
+
+            LMaxWidth := SendMessage(NMHdr^.hwndFrom, TTM_GETMAXTIPWIDTH, 0, 0);
+            if LMaxWidth = -1 then
+            begin
+              LMaxWidth := 250; // use whatever you need...
+              SendMessage(NMHdr^.hwndFrom, TTM_SETMAXTIPWIDTH, LMaxWidth, 0);
+            end;
+
+            SendMessage(NMHdr^.hwndFrom, TTM_ADJUSTRECT, WPARAM(True),
+              LPARAM(@LItemRect));
+            SetWindowPos(NMHdr^.hwndFrom, HWND_TOP, LItemRect.Left,
+              LItemRect.Top, 0, 0, SWP_NOACTIVATE or SWP_NOSIZE or
+              SWP_NOOWNERZORDER);
+
+            Message.Result := 1;
+          end;
+        end;
+      end;
+
+      Exit;
+    end;
+  end;
+  fDefTreeViewWndProc(Message);
+end;
 
 procedure TTreeGridFrame.ClearData;
 begin

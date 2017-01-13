@@ -89,6 +89,8 @@ type
     pnlView: TPanel;
     txtView: TVA508StaticText;
     mnuActUnhold: TMenuItem;
+    Z5: TMenuItem;
+    mnuActOneStep: TMenuItem;
     procedure mnuChartTabClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -158,6 +160,7 @@ type
     procedure SortbyDrugalphabeticallystatusactivestatusrecentexpired1Click(
       Sender: TObject);
     procedure mnuActUnholdClick(Sender: TObject);
+    procedure mnuActOneStepClick(Sender: TObject);
   private
     FIterating: Boolean;
     FActionOnMedsTab: Boolean;
@@ -242,7 +245,7 @@ implementation
 uses uCore, rCore, fFrame, fRptBox, uOrders, fODBase, fOrdersDC, fOrdersHold, fOrdersUnhold,
      fOrdersRenew, fOMNavA, fOrdersRefill, fMedCopy, fOrders, fODChild, rODBase, 
      StrUtils, fActivateDeactivate, VA2006Utils, VA508AccessibilityRouter,
-  VAUtils;
+     VAUtils, System.UITypes;
 
 {$R *.DFM}
 
@@ -1498,6 +1501,12 @@ begin
   'O':      ActivateOrderSet(   Piece(DialogInfo, ';', 1), DelayEvent, Self, 0);
   else InfoBox('Unsupported dialog type', 'Error', MB_OK);
   end; {case}
+end;
+
+procedure TfrmMeds.mnuActOneStepClick(Sender: TObject);
+begin
+  inherited;
+  ShowOneStepAdmin;
 end;
 
 procedure TfrmMeds.mnuActRefillClick(Sender: TObject);

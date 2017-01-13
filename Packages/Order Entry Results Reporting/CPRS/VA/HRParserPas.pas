@@ -31,7 +31,7 @@ unit HRParserPas;
 interface
 
 uses
-  HRParser;
+  HRParser, SysUtils;
 
 const
   {THRParserPas tokens.}
@@ -202,7 +202,7 @@ begin
     begin
       //FTokenBuf.Write(FSourceBuf[FSourcePos]);
       Inc( FSourcePos );
-      while FSourceBuf[ FSourcePos ] in [ '0'..'9' ] do
+      while CharInSet(FSourceBuf[ FSourcePos ], [ '0'..'9' ]) do
       begin
         FTokenBuf.Write( FSourceBuf[ FSourcePos ] );
         Inc( FSourcePos );
@@ -216,7 +216,7 @@ begin
     begin
       //FTokenBuf.Write(FSourceBuf[FSourcePos]);
       Inc( FSourcePos );
-      while FSourceBuf[ FSourcePos ] in [ '0'..'9', 'A'..'F', 'a'..'f' ] do
+      while CharInSet(FSourceBuf[ FSourcePos ], [ '0'..'9', 'A'..'F', 'a'..'f' ]) do
         begin
         FTokenBuf.Write( FSourceBuf[ FSourcePos ] );
         Inc( FSourcePos );

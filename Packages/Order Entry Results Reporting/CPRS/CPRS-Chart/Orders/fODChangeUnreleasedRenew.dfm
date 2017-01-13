@@ -6,8 +6,8 @@ inherited frmODChangeUnreleasedRenew: TfrmODChangeUnreleasedRenew
   ClientWidth = 529
   OldCreateOrder = False
   OnCreate = FormCreate
-  ExplicitWidth = 537
-  ExplicitHeight = 198
+  ExplicitWidth = 545
+  ExplicitHeight = 209
   PixelsPerInch = 96
   TextHeight = 13
   object Panel2: TPanel [0]
@@ -17,7 +17,6 @@ inherited frmODChangeUnreleasedRenew: TfrmODChangeUnreleasedRenew
     Height = 82
     Align = alClient
     TabOrder = 0
-    ExplicitHeight = 81
     object lblRefill: TLabel
       Left = 9
       Top = 15
@@ -38,6 +37,7 @@ inherited frmODChangeUnreleasedRenew: TfrmODChangeUnreleasedRenew
       Width = 121
       Height = 21
       TabOrder = 0
+      Caption = ''
     end
     object cboPickup: TORComboBox
       Left = 216
@@ -46,6 +46,7 @@ inherited frmODChangeUnreleasedRenew: TfrmODChangeUnreleasedRenew
       Height = 21
       Style = orcsDropDown
       AutoSelect = True
+      Caption = ''
       Color = clWindow
       DropDownCount = 8
       ItemHeight = 13
@@ -59,6 +60,7 @@ inherited frmODChangeUnreleasedRenew: TfrmODChangeUnreleasedRenew
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 1
+      Text = ''
       CharsNeedMatch = 1
     end
   end
@@ -69,7 +71,6 @@ inherited frmODChangeUnreleasedRenew: TfrmODChangeUnreleasedRenew
     Height = 82
     Align = alClient
     TabOrder = 3
-    ExplicitHeight = 81
     object Label1: TLabel
       Left = 61
       Top = 16
@@ -119,6 +120,7 @@ inherited frmODChangeUnreleasedRenew: TfrmODChangeUnreleasedRenew
     ReadOnly = True
     ScrollBars = ssVertical
     TabOrder = 2
+    Caption = ''
   end
   object Panel1: TPanel [3]
     Left = 0
@@ -127,7 +129,6 @@ inherited frmODChangeUnreleasedRenew: TfrmODChangeUnreleasedRenew
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 138
     object btnOK: TButton
       Left = 348
       Top = 7
@@ -163,10 +164,12 @@ inherited frmODChangeUnreleasedRenew: TfrmODChangeUnreleasedRenew
         'Status = stsDefault')
       (
         'Component = txtStart'
-        'Status = stsDefault')
+        'Text = start Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = txtStop'
-        'Status = stsDefault')
+        'Text = Stop Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = memOrder'
         'Status = stsDefault')

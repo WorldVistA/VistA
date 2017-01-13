@@ -1061,9 +1061,9 @@ begin
           GetAllSpecimens(cboSpecimen);
         if ItemIEN = 0 then SetError(TX_NO_SPECIMEN);
       end;
-      
-  If ALabTest.Urgency <= 0 then begin
-    with ALabTest do
+
+  If (ALabTest <> nil) and (ALabTest.Urgency <= 0) then begin
+   with ALabTest do
     ChangeUrgency(cboUrgency.ItemID);
    ControlChange(Self);
   end;
@@ -1222,7 +1222,7 @@ end;
 procedure TfrmODLab.cboAvailTestNeedData(Sender: TObject;
               const StartFrom: string; Direction, InsertAt: Integer);
 begin
-  cboAvailTest.ForDataUse(SubsetOfOrderItems(StartFrom, Direction, 'S.LAB'));
+  cboAvailTest.ForDataUse(SubsetOfOrderItems(StartFrom, Direction, 'S.LAB', Responses.QuickOrder));
 end;
 
 procedure TfrmODLab.cboAvailTestExit(Sender: TObject);

@@ -5,10 +5,12 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Controls, Forms, uConst, rConsults,
   rOrders, ORFn, Dialogs, ORCtrls, stdCtrls, strUtils, fODBase, fODMedOIFA,
-  VA508AccessibilityRouter, XUDsigS, ORNet;
+  VA508AccessibilityRouter, ORNet, DateUtils, TRPCb;
 
 type
   EOrderDlgFail = class(Exception);
+  TLoadMOBProc = procedure(
+  aConnectParams: WideString; aRunParams: WideString; var aResult: longBool);
 
   //FQOAltOI = record
   //OI: integer;
@@ -23,7 +25,6 @@ function LockedForOrdering: Boolean;
 function IsValidActionOnComplexOrder(AnOrderID, AnAction: string;
     AListBox: TListBox; var CheckedList: TStringList; var ErrMsg: string; var ParentOrderID: string): boolean;  //PSI-COMPLEX
 procedure UnlockIfAble;
-function SetSAN(Self: TComponent): string;
 function OrderCanBeLocked(OrderID: string): Boolean;
 procedure UnlockOrderIfAble(OrderID: string);
 procedure AddSelectedToChanges(AList: TList);
@@ -69,12 +70,15 @@ procedure SetFontSize( FontSize: integer);
 procedure NextMove(var NMRec: TNextMoveRec; LastIndex: Integer; NewIndex: Integer);
 //function GetQOAltOI: integer;
 
-{ Inpatient medication for Outpatient}
+{ Inpatient medication for Outpatient / Clinic Medications}
 function IsIMODialog(DlgID: integer): boolean;
 function AllowActionOnIMO(AnEvtTyp: char): boolean;
 function IMOActionValidation(AnId: string; var IsIMOOD: boolean; var x: string; AnEventType: char): boolean;
 function IMOTimeFrame: TFMDateTime;
-
+procedure ShowOneStepAdmin;
+procedure LoadMOBDLL;
+procedure UnloadMOBDLL;
+function IsMOBDLLVersionOK: Boolean;
 
 var
 uAutoAc: Boolean;
@@ -82,6 +86,8 @@ InptDisp : Integer;
 OutptDisp: Integer;
 MedsDisp : Integer;
 ClinDisp : Integer; //IMO
+ClinOrdDisp : Integer;
+ClinIVDisp : Integer;
 NurDisp  : Integer;
 IVDisp   : Integer;
 CsltDisp : Integer;
@@ -90,6 +96,8 @@ ImgDisp  : Integer;
 DietDisp : Integer;
 NonVADisp: Integer;
 MedsInDlgIen  : Integer;
+ClinMedsDlgIen : Integer;
+ClinIVDlgIen : Integer;
 MedsOutDlgIen : Integer;
 MedsNVADlgIen : Integer;
 MedsInDlgFormId  : Integer;
@@ -97,6 +105,7 @@ MedsOutDlgFormId : Integer;
 MedsNVADlgFormID : Integer;
 MedsIVDlgIen: Integer;
 MedsIVDlgFormID: Integer;
+ClinIVDlgFormID: Integer;
 NSSchedule: boolean;
 OriginalMedsOutHeight: Integer;
 OriginalMedsInHeight: Integer;
@@ -110,7 +119,7 @@ uses fODDiet, fODMisc, fODGen, fODMedIn, fODMedOut, fODText, fODConsult, fODProc
      fEncnt, fEffectDate, fOMVerify, fOrderSaveQuick, fOMSet, rMisc, uODBase, rODMeds,
      fLkUpLocation, fOrdersPrint, fOMAction, fARTAllgy, fOMHTML, fOrders, rODBase,
      fODChild, fMeds, rMeds, rPCE, frptBox, fODMedNVA, fODChangeUnreleasedRenew, rODAllergy,
-     UBAGlobals, fClinicWardMeds, uTemplateFields, VAUtils;
+     UBAGlobals, fClinicWardMeds, uTemplateFields, VAUtils, System.UITypes, rTIU, ORSystem, RpcConf1, uInit;
 
 var
   uPatientLocked: Boolean;
@@ -120,9 +129,11 @@ var
   uOrderHTML: TfrmOMHTML;
   uOrderMenu: TfrmOMNavA;
   uOrderSet: TfrmOMSet;
+  uOrderSetClinMedMsg: Boolean;
   uLastConfirm: string;
   uOrderSetTime: TFMDateTime;
   uNewMedDialog: Integer;
+  MOBDLLHandle : THandle = 0;
   //QOALTOI: FQOAltOI;
 
 const
@@ -169,9 +180,17 @@ const
   STEP_FORWARD  = 1;
   STEP_BACK     = -1;
   TX_NOINPT     = ': You cannot place inpatient medication orders from a clinic location for selected patient.';
+  TX_CLDELAYED  = 'You cannot place a clinic medication order during a delayed ordering session.';
   TX_IMO_WARNING1 = 'You are ';
-  TX_IMO_WARNING2 = ' Clinic Orders. The New orders will be saved as Clinic Orders and MAY NOT be available in BCMA';
+  TX_IMO_WARNING2 = ' Clinic Medications. The New orders will be saved as Clinic Medications and MAY NOT be available in BCMA';
+  TX_PAST_DATE  = 'If this medication has been already administered by the clinician then go to the One Step Clinic Med Admin option.' +
+                  CRLF + CRLF + 'OR' + CRLF + CRLF +
+                  'If you are a nurse and need to document a clinic medication that has been previously administered greater than 23 hours in the past you need to go to BCMA.';
 
+  SHARE_DIR = '\VISTA\Common Files\';
+//  MOBDLLName = 'BCMAOrderCom.dll';
+  MOBDLLName = 'OrderCom.dll';
+  LoadMOBProc: TLoadMOBProc = nil;
 
 function CreateOrderDialog(Sender: TComponent; FormID: integer; AnEvent: TOrderDelayEvent; ODEvtID: integer = 0): TfrmODBase;
 { creates an order dialog based on the FormID and returns a pointer to it }
@@ -182,7 +201,7 @@ var
 begin
   Result := nil;
   // allows the FormCreate to check event under which dialog is created
-  if AnEvent.EventType in ['A','D','T','M','O'] then
+  if CharInSet(AnEvent.EventType, ['A','D','T','M','O']) then
   begin
    SetOrderEventTypeOnCreate(AnEvent.EventType);
    SetOrderEventIDOnCreate(AnEvent.EventIFN);
@@ -191,18 +210,20 @@ begin
    SetOrderEventTypeOnCreate(#0);
    SetOrderEventIDOnCreate(0);
   end;
-  SetOrderFormIDOnCreate(FormID);  
+  SetOrderFormIDOnCreate(FormID);
   // check to see if we should use the new med dialogs
   if uNewMedDialog = 0 then
   begin
     if UseNewMedDialogs then uNewMedDialog := 1 else uNewMedDialog := -1;
   end;
-  if (uNewMedDialog > 0) and ((FormID = OD_MEDOUTPT) or (FormID = OD_MEDINPT)) then
+  if (uNewMedDialog > 0) and ((FormID = OD_MEDOUTPT) or (FormID = OD_MEDINPT) or (FormID = OD_CLINICMED)) then
       FormID := OD_MEDS;
   // create the form for a given ordering dialog
   case FormID of
   OD_MEDIV:     DialogClass := TfrmODMedIV;
   OD_MEDINPT:   DialogClass := TfrmODMedIn;
+  OD_CLINICMED: DialogClass := TfrmODMedIn;
+  OD_CLINICINF: DialogClass := TfrmODMedIV;
   OD_MEDS:      DialogClass := TfrmODMeds;
   OD_MEDOUTPT:  DialogClass := TfrmODMedOut;
   OD_MEDNONVA:  DialogClass := TfrmODMedNVA;
@@ -232,72 +253,6 @@ begin
   SetOrderEventIDOnCreate(0);
   SetOrderFormIDOnCreate(0);
 end;
-
-function SetSAN(Self: TComponent): string;
-var
-  crypto: TCryptography;
-  i: Integer;
-  setUPN, successMsg: string;
-begin
-    Result := '';
-    if InfoBox(
-      '        '
-      + User.name
-      + CRLF
-      + 'Your VistA account has not been linked to a PIV card.'
-      + CRLF
-      + 'CPRS will now attempt to retrieve some information'
-      + CRLF
-      + 'from your PIV card in order for you to digitally sign orders.'
-      + CRLF
-      + 'This will require entry of the PIN associated with your PIV card.'
-      + CRLF
-      + 'Would you like to continue?',
-      'Digital Signing Setup',MB_YESNO or MB_ICONQUESTION) = IDYES then
-      begin
-        crypto := TCryptography.Create();
-        crypto.VistaUserName := RPCBrokerV.User.Name;
-        Result := getSANFromCard(Self,crypto);
-        if Result='' then ShowMsg('CPRS was not able to link your VistA account to a PIV card.')
-        else
-        begin
-          setUPN := sCallV('XUS PKI SET UPN', [Result]);
-          if setUPN = '1' then
-          begin
-            fFrame.frmFrame.DigitalSigningSetup1.Visible := False;
-            successMsg :=
-              '        '
-              + User.name
-              + CRLF
-              + 'Your PIV card (' + Result + ') has been successfully linked'
-              + CRLF
-              + 'to this VistA account, which will allow you to digitally sign orders.'
-              + CRLF
-              + 'This process does not however provide you the authorization to place'
-              + CRLF
-              + 'controlled substance prescription orders.'
-              + CRLF;
-            CallV('ORDEA LNKMSG',[]);
-            for i := 0 to RPCBrokerV.Results.Count - 1 do
-            begin
-              successMsg := successMsg + CRLF + RPCBrokerV.Results.Strings[i];
-            end;
-            ShowMsg(successMsg);
-            end
-          else begin
-            ShowMsg(
-              '        '
-              + User.name
-              + CRLF
-              + 'CPRS was not able to link your VistA account to a PIV card.'
-              + CRLF
-              + 'One possible cause is that your card is already linked to another VistA account.');
-              Result:='';
-          end;
-        end;
-        crypto.Free;
-      end;
-end; 
 
 function AuthorizedUser: Boolean;
 begin
@@ -464,7 +419,8 @@ begin
     (ResolvedDialog.DisplayGroup = OutptDisp) or
     (ResolvedDialog.DisplayGroup = MedsDisp) or
     (ResolvedDialog.DisplayGroup =  NonVADisp) or
-    (ResolvedDialog.DisplayGroup =  ClinDisp) then
+    (ResolvedDialog.DisplayGroup =  ClinDisp) or
+    (ResolvedDialog.DisplayGroup =  ClinIVDisp) then
   begin
     if (AnEvent.EventType <> 'D') and (AnEvent.EventIFN > 0) then
     begin
@@ -479,6 +435,12 @@ begin
       begin
         //AGP changes to handle IMO INV Dialog opening the unit dose dialog.
         if (ResolvedDialog.DisplayGroup = ClinDisp) and (Resolveddialog.DialogIEN = MedsIVDlgIEN) and (ResolvedDialog.FormID = MedsIVDlgFormId) then
+          begin
+            ResolvedDialog.DisplayGroup := IVDisp;
+            ResolvedDialog.DialogIEN    := MedsIVDlgIen;
+            ResolvedDialog.FormID       := MedsIVDlgFormId;
+          end
+        else if (ResolvedDialog.DisplayGroup = ClinIVDisp) and (Resolveddialog.DialogIEN = ClinIVDlgIen) and (ResolvedDialog.FormID = ClinIVDlgFormId) then
           begin
             ResolvedDialog.DisplayGroup := IVDisp;
             ResolvedDialog.DialogIEN    := MedsIVDlgIen;
@@ -548,12 +510,16 @@ begin
   MedsDisp := DisplayGroupByName('RX');
   IVDisp   := DisplayGroupByName('IV RX');
   ClinDisp := DisplayGroupByName('C RX');
+  ClinOrdDisp := DisplayGroupByName('CLINIC ORDERS');
+  ClinIVDisp := DisplayGroupByName('CI RX');
   NurDisp  := DisplayGroupByName('NURS');
   CsltDisp := DisplayGroupByName('CSLT');
   ProcDisp := DisplayGroupByName('PROC');
   ImgDisp  := DisplayGroupByName('XRAY');
   DietDisp := DisplayGroupByName('DO');
   NonVADisp := DisplayGroupByName('NV RX');
+  ClinMedsDlgIen :=  DlgIENForName('PSJ OR CLINIC OE');
+  ClinIVDlgIen :=  DlgIENForName('CLINIC OR PAT FLUID OE');
   MedsInDlgIen  := DlgIENForName('PSJ OR PAT OE');
   MedsOutDlgIen := DlgIENForName('PSO OERR');
   MedsNVADlgIen := DlgIENForName('PSH OERR');
@@ -562,6 +528,7 @@ begin
   MedsOutDlgFormId := FormIDForDialog(MedsOutDlgIen);
   MedsNVADlgFormID := FormIDForDialog(MedsNVADlgIen);
   MedsIVDlgFormID := FormIDForDialog(MedsIVDlgIen);
+  ClinIVDlgFormID := FormIDForDialog(ClinIVDlgIen);
 end;
 
 function GMRCCanCloseDialog(dialog : TfrmODBase) : Boolean;
@@ -873,6 +840,9 @@ const
                   'current, valid DEA# on record and is ineligible' + CRLF + 'to sign the order.';
   TX_SCHFAIL    = CRLF + 'could not be completed. Provider is not authorized' + CRLF +
                   'to prescribe medications in Federal Schedule ';
+  TX_SCH_ONE    = CRLF + 'could not be completed. Electronic prescription of medications in' + CRLF +
+                  'Federal Schedule 1 is prohibited.' + CRLF + CRLF +
+                  'Valid Schedule 1 investigational medications require paper prescription.';
   TX_NO_DETOX   = CRLF + 'could not be completed. Provider does not have a' + CRLF +
                   'valid Detoxification/Maintenance ID number on' + CRLF +
                   'record and is ineligible to sign the order.';
@@ -892,12 +862,16 @@ const
   TX_NO_SVC = 'The order or quick order you have selected does not specify a consult service.' + CRLF +
               'Please contact your Clinical Coordinator/IRM staff to fix this order.';
   TC_NO_SVC = 'No service specified';
+  TX_CLIN_NEEDED = 'For this type of order a clinic location must be selected. You may also want to choose a current date and time (not older than 24 hours).  Would you like to continue?';
+  TX_NO_CLIN_SELECTED = 'A clinic location was not selected. Switching back to original location and aborting order process.';
+  TX_PAST_DATE_SELECTED = 'You currently have a past date selected for this visit. Do you want to select a current date?';
+  TX_NOT_VALID_IMO = 'You have selected a location that has not been designated for Clinic Medications; this medication may not be ordered for the current location. Please contact Pharmacy Service if you feel that this is not correct.';
 var
   ResolvedDialog: TOrderDialogResolved;
   x, EditedOrder, chkCopay, OrderID, PkgInfo,OrderPtEvtID,OrderEvtID,NssErr, tempUnit, tempSupply, tempDrug, tempSch: string;
   temp,tempDur,tempQuantity, tempRefills: string;
-  i, ODItem, tempOI, ALTOI: integer;
-  DrugCheck, InptDlg, IsAnIMOOrder, DrugTestDlgType: boolean;
+  i, ODItem, tempOI, ALTOI, rLevel, tmpDialogIEN: integer;
+  DrugCheck, InptDlg, IsAnIMOOrder, DrugTestDlgType, ShowClinOrdMsg: boolean;
   IsPsoSupply,IsDischargeOrPass,IsPharmacyOrder,IsConsultOrder,ForIMO, IsNewOrder: boolean;
   tmpResp: TResponse;
   CxMsg: string;
@@ -906,8 +880,74 @@ var
   //CsltFrmID: integer;
   FirstNumericPos: Integer;
   DEAFailStr, TX_INFO: string;
+  ClinicLocationMsg : string;
+
+  function GetClinicLocation(): boolean;  //returning true means clinic location not selected or it was cancelled
+  var
+    yesterday: TDateTime;
+//    chooseCurrentDate : boolean;
+  begin
+  //init
+    rLevel := rLevel + 1;
+    Result := False;
+    yesterday := subtractMinutesFromDateTime(date(),1440);
+
+  //get a clinic location otherwise return true
+    if (LocationType(Encounter.Location) = 'W') or (Encounter.NeedVisit) then
+    begin
+      if InfoBox(TX_CLIN_NEEDED, TC_PROV_LOC,MB_YESNO or MB_DEFBUTTON2 or MB_ICONQUESTION) = IDYES then
+      begin
+        if rLevel = 1 then Encounter.CreateSaved('Switching back to location prior to Clinic Medications session');
+        UpdateVisit((anOwner as TForm).Font.Size, DfltTIULocation);
+        if Encounter.NeedVisit then
+        begin
+          Result := True;
+          Exit;
+        end
+        else if (LocationType(Encounter.Location) = 'W') then
+        begin
+          InfoBox(TX_NO_CLIN_SELECTED, TC_PROV_LOC, MB_OK or MB_ICONWARNING);
+          Encounter.SwitchToSaved(False);
+          Result := True;
+          Exit;
+        end;
+      end
+      else
+      begin
+        Result := True;
+        Exit;
+      end;
+    end;
+    //check if location is marked for clinic orders
+    if not(IsValidIMOLoc(Encounter.Location, Patient.DFN)) then
+    begin
+      InfoBox(TX_NOT_VALID_IMO, TC_PROV_LOC, MB_OK or MB_ICONWARNING);
+      Encounter.SwitchToSaved(False);
+      Result := True;
+      Exit;
+    end;
+
+  //try to get a current date but don't force it
+    if comparedate(FMDateTimeToDateTime(Encounter.DateTime),yesterday)<=0 then
+    begin
+      if InfoBox(TX_PAST_DATE_SELECTED, TC_PROV_LOC,MB_YESNO or MB_DEFBUTTON2 or MB_ICONQUESTION) = IDYES then
+      begin
+        UpdateVisit((anOwner as TForm).Font.Size, DfltTIULocation);
+        Result := GetClinicLocation();
+      end
+      else
+      begin
+        InfoBox(TX_PAST_DATE, 'Clinic Order', MB_OK or MB_ICONWARNING);
+        //If past date selected, ask If this medication has been already administered by the clinician, then go to the One Step Clinic Med Admin option.
+        //OR If you are a nurse and need to document a clinic medication that has been previously administered greater than 23 hours in the past,
+        //you need to go to BCMA.”
+      end;
+
+    end;
+  end;
 
 begin
+  rLevel := 0;
   IsPsoSupply := False;
   Result := False;
   IsDischargeOrPass := False;
@@ -920,7 +960,7 @@ begin
   InptDlg := False;
   //We need to get the first numeric postion
   for FirstNumericPos := 1 to Length(AnID) do begin
-   if AnID[FirstNumericPos] in ['0'..'9'] then break;
+   if CharInSet(AnID[FirstNumericPos], ['0'..'9']) then break;
   end;
 
   //QOAltOI.OI := 0;
@@ -995,26 +1035,100 @@ begin
       if (PassDrugTest(ResolvedDialog.DialogIEN, 'Q', DrugTestDlgType)=false) then Exit
       else PassDrugTstCall := True;
     end;
-  if (ForIMO and ( (ResolvedDialog.DialogIEN = MedsInDlgIen)
-    or (ResolvedDialog.DialogIEN = MedsIVDlgIen)) ) then
-    ResolvedDialog.DisplayGroup := ClinDisp;
+
+  tmpDialogIEN := ResolvedDialog.DialogIEN;
+
+  //clinic medication logic
+  if  (AnEvent.EventType = 'C') and not(LocationType(Encounter.Location) = '') and IsValidIMOLoc(Encounter.Location, Patient.DFN) then
+  begin
+    if ((ResolvedDialog.DialogIEN = MedsInDlgIen) and (not(patient.Inpatient) or not(LocationType(Encounter.Location) = 'W'))) then
+    begin
+      if (ResolvedDialog.DialogType = 'C') or (ResolvedDialog.DialogType = 'X') then
+        ResolvedDialog.FormID := OD_CLINICMED
+      else
+      begin
+        //change dialog to the clinic orders dialog
+        ResolvedDialog.InputID := IntToStr(ClinMedsDlgIen);
+        ResolvedDialog.DisplayGroup := ClinDisp;
+        BuildResponses(ResolvedDialog, GetKeyVars, AnEvent, ForIMO);
+      end;
+    end else if ((ResolvedDialog.DialogIEN = MedsIVDlgIen) and (not(patient.Inpatient) or not(LocationType(Encounter.Location) = 'W'))) then
+    begin
+      if (ResolvedDialog.DialogType = 'C') or (ResolvedDialog.DialogType = 'X') then
+        ResolvedDialog.FormID := OD_CLINICINF
+      else
+      begin
+        //change dialog to the clinic infusions dialog
+        ResolvedDialog.InputID := IntToStr(ClinIVDlgIen);
+        ResolvedDialog.DisplayGroup := ClinIVDisp;
+        BuildResponses(ResolvedDialog, GetKeyVars, AnEvent, ForIMO);
+      end;
+    end else if ((ResolvedDialog.DisplayGroup = InptDisp) and (not(patient.Inpatient) or not(LocationType(Encounter.Location) = 'W'))) then
+    begin
+      if (ResolvedDialog.DialogType = 'C') or (ResolvedDialog.DialogType = 'X') then
+        ResolvedDialog.FormID := OD_CLINICMED
+      else
+      begin
+        BuildResponses(ResolvedDialog, GetKeyVars, AnEvent, ForIMO);
+        ResolvedDialog.DisplayGroup := ClinDisp;
+        ResolvedDialog.FormID := OD_CLINICMED;
+      end;
+    end else if ((ResolvedDialog.DisplayGroup = IVDisp) and (not(patient.Inpatient) or not(LocationType(Encounter.Location) = 'W'))) then
+    begin
+      if (ResolvedDialog.DialogType = 'C') or (ResolvedDialog.DialogType = 'X') then
+        ResolvedDialog.FormID := OD_CLINICINF
+      else
+      begin
+        BuildResponses(ResolvedDialog, GetKeyVars, AnEvent, ForIMO);
+        ResolvedDialog.DisplayGroup := ClinIVDisp;
+        ResolvedDialog.FormID := OD_CLINICINF;
+      end;
+    end else
+  end;
+
+  ClinicLocationMsg := 'You are about to enter a Clinic ';
+  if (ResolvedDialog.DialogIEN = ClinMedsDlgIen) or (ResolvedDialog.DialogIEN = MedsInDlgIen) or (ResolvedDialog.FormID = OD_CLINICMED) then
+  begin
+    ClinicLocationMsg := ClinicLocationMsg + 'Medication';
+  end else if (ResolvedDialog.DialogIEN = ClinIVDlgIen) or (ResolvedDialog.DialogIEN = MedsIVDlgIen) or (ResolvedDialog.FormID = OD_CLINICINF) then
+  begin
+    ClinicLocationMsg := ClinicLocationMsg + 'Infusion';
+  end;
+  ClinicLocationMsg := ClinicLocationMsg + ' order.  Are you sure this is what you want to do?';
+
   ResetDialogProperties(AnID, AnEvent, ResolvedDialog);
- {* AGP CHANGE 26.20 Remove restriction to allowed for ordering of inpatient medication for an inpatient from an outpatient location
-   //jd imo change
-   if (ResolvedDialog.DisplayGroup = InptDisp) and (Patient.Inpatient) and (AnEvent.EventIFN < 1) then
-   begin
-     if IsClinicLoc(Encounter.Location) then
-     begin
-       MessageDlg(TX_NOINPT, mtWarning, [mbOK], 0);
-       Exit;
-     end;
-   end;
-   //jd imo change end  *}
+
+  if ((ResolvedDialog.DisplayGroup = ClinDisp) or (ResolvedDialog.DisplayGroup = ClinIVDisp)) then
+  begin
+    if not(AnEvent.EventType = 'C') then
+    begin
+      InfoBox(TX_CLDELAYED, 'Clinic Medication', MB_OK or MB_ICONWARNING);
+      Exit;
+    end;
+
+    ShowClinOrdMsg := true;
+    if not(Patient.Inpatient) and ((tmpDialogIEN = ClinMedsDlgIen) or (tmpDialogIEN = ClinIVDlgIen)) then ShowClinOrdMsg := false;
+
+
+    if ((uOrderSet = nil) or (not(uOrderSet = nil) and not(uOrderSetClinMedMsg))) and ShowClinOrdMsg then
+    begin
+      uOrderSetClinMedMsg := True;
+      if ((InfoBox(ClinicLocationMsg, 'Clinic Location', MB_YESNO or MB_DEFBUTTON1 or MB_ICONQUESTION) = ID_NO)) then
+      begin
+        uOrderSetClinMedMsg := False;
+        Exit;
+      end;
+    end;
+    //if GetClinicLocation() returns true then cancel the order process
+    if GetClinicLocation() then Exit;
+  end;
+
    if (ResolvedDialog.DisplayGroup = InptDisp) or
       (ResolvedDialog.DisplayGroup = OutptDisp) or
       (ResolvedDialog.DisplayGroup = MedsDisp) or
       (ResolvedDialog.DisplayGroup = IVDisp) or
       (ResolvedDialog.DisplayGroup =  NonVADisp) or
+      (ResolvedDialog.DisplayGroup =  ClinIVDisp) or
       (ResolvedDialog.DisplayGroup =  ClinDisp) then  IsPharmacyOrder := True
    else
       IsPharmacyOrder := False;
@@ -1111,7 +1225,16 @@ begin
      AnEvent.EventType := 'C';
      AnEvent.Effective := 0;
   end;
+  //CQ 20854 - Display Supplies Only - JCS
+  SetOrderFormDlgIDOnCreate(anID);
   uOrderDialog := CreateOrderDialog(AnOwner, ResolvedDialog.FormID, AnEvent, StrToIntDef(OrderEvtID,0));
+  if Not Assigned(uOrderDialog) then
+  begin
+    ClearOrderRecall;
+    UnlockIfAble;
+    exit;
+  end;
+
   uOrderDialog.IsSupply := IsPsoSupply;
 
   {For copy, change, transfer actions on an None-IMO order, the new order should not be treated as IMO order
@@ -1161,7 +1284,7 @@ begin
                      if PkgInfo = 'PSO' then InptDlg := False
                      else if PkgInfo = 'PSJ' then InptDlg := True;
                      DEAFailStr := DEACheckFailed(ODItem, InptDlg);
-                     while (StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5]) and (uOrderDialog.FillerID <> 'PSH') do
+                     while (StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..6]) and (uOrderDialog.FillerID <> 'PSH') do
                      begin
                        case StrToIntDef(Piece(DEAFailStr,U,1),0) of
                          1: TX_INFO := TX_DEAFAIL1 + #13 + Responses.OrderText + #13 + TX_DEAFAIL2;  //prescriber has an invalid or no DEA#
@@ -1169,7 +1292,16 @@ begin
                          3: TX_INFO := TX_DEAFAIL1 + #13 + Responses.OrderText + #13 + TX_NO_DETOX;  //prescriber has an invalid or no Detox#
                          4: TX_INFO := TX_DEAFAIL1 + #13 + Responses.OrderText + #13 + TX_EXP_DEA1 + Piece(DEAFailStr,U,2) + TX_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
                          5: TX_INFO := TX_DEAFAIL1 + #13 + Responses.OrderText + #13 + TX_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TX_EXP_DETOX2;  //valid detox#, but expired DEA#
+                         6: TX_INFO := TX_DEAFAIL1 + #13 + Responses.OrderText + #13 + TX_SCH_ONE;  //schedule 1's are prohibited from electronic prescription
                        end;
+                       if StrToIntDef(Piece(DEAFailStr,U,1),0)=6 then
+                         begin
+                           InfoBox(TX_INFO, TC_DEAFAIL, MB_OK);
+                           if (ResolvedDialog.DialogType = 'X') and not Changes.ExistForOrder(EditedOrder)
+                           then UnlockOrder(EditedOrder);
+                           uOrderDialog.Close;
+                           Exit;
+                         end;
                        if InfoBox(TX_INFO + TX_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL) = IDRETRY then
                          begin
                            DEAContext := True;
@@ -1238,7 +1370,7 @@ begin
 
           if ResolvedDialog.QuickLevel <> QL_AUTO then
              begin
-               if CharAt(AnID, 1) in ['C','T','X'] then
+               if CharInSet(CharAt(AnID, 1), ['C','T','X']) then
                   begin
                   Position := poScreenCenter;
                   FormStyle := fsNormal;
@@ -1486,6 +1618,7 @@ var
   str: string;
 begin
   InitialCall := False;
+  uOrderSetClinMedMsg := False;
   if ScreenReaderActive then
     begin
       for i := 0 to AList.Count - 1 do
@@ -1538,14 +1671,14 @@ begin
   begin
     uOrderSet.Close;
     Application.ProcessMessages;
-    if uOrderSet <> nil then Exit;
+    if (uOrderSet <> nil) and not (fsModal in uOrderSet.FormState) then Exit;
   end;
   { if another ordering dialog is showing, make sure it is closed first }
   if uOrderDialog <> nil then
   begin
     uOrderDialog.Close;
     Application.ProcessMessages;  // allow close to finish
-    if uOrderDialog <> nil then Exit;
+    if (uOrderDialog <> nil) and not (fsModal in uOrderDialog.FormState) then Exit;
   end;
   if uOrderHTML <> nil then
   begin
@@ -1564,7 +1697,7 @@ begin
   begin
     uOrderAction.Close;
     Application.ProcessMessages;
-    if uOrderAction <> nil then Exit;
+    if (uOrderAction <> nil) and not (fsModal in uOrderAction.FormState) then Exit;
   end;
   if frmARTAllergy <> nil then   //SMT Add to account for allergies.
   begin
@@ -1597,30 +1730,34 @@ begin
   end;
   { then try to lock the patient (provider & encounter checked first to not leave lock) }
   if not LockedForOrdering then Exit;
-  { make sure any current ordering process has completed, but don't drop patient lock }
-  uKeepLock := True;
-  if not CloseOrdering then Exit;
-  uKeepLock := False;
-  { get the delay event for this order (if applicable) }
-  if AnEvent.EventType in ['A','D','T','M','O'] then
-  begin
-    if (AnEvent.EventName = '') and (AnEvent.EventType <> 'D') then
-      Exit;
-    x := AnEvent.EventType + IntToStr(AnEvent.Specialty);
-    if (uLastConfirm <> x ) and (not XfInToOutNow) then
-    begin
-      uLastConfirm := x;
-      case AnEvent.EventType of
-      'A','M','O','T': x := AnEvent.EventName;
-      'D': x := 'Discharge';
-      end;
-      if isExistedEvent(Patient.DFN,IntToStr(AnEvent.EventIFN),tmpPtEvt) then
-        if PtEvtEmpty(tmpPtEvt)then
-          InfoBox(TX_DELAY + x + TX_DELAY1, TC_DELAY, MB_OK or MB_ICONWARNING);
-    end;
-  end
-  else uLastConfirm := '';
-  Result := True;
+  try
+   { make sure any current ordering process has completed, but don't drop patient lock }
+   uKeepLock := True;
+   if not CloseOrdering then Exit;
+   uKeepLock := False;
+   { get the delay event for this order (if applicable) }
+   if CharInSet(AnEvent.EventType, ['A','D','T','M','O']) then
+   begin
+     if (AnEvent.EventName = '') and (AnEvent.EventType <> 'D') then
+       Exit;
+     x := AnEvent.EventType + IntToStr(AnEvent.Specialty);
+     if (uLastConfirm <> x ) and (not XfInToOutNow) then
+     begin
+       uLastConfirm := x;
+       case AnEvent.EventType of
+       'A','M','O','T': x := AnEvent.EventName;
+       'D': x := 'Discharge';
+       end;
+       if isExistedEvent(Patient.DFN,IntToStr(AnEvent.EventIFN),tmpPtEvt) then
+         if PtEvtEmpty(tmpPtEvt)then
+           InfoBox(TX_DELAY + x + TX_DELAY1, TC_DELAY, MB_OK or MB_ICONWARNING);
+     end;
+   end
+   else uLastConfirm := '';
+   Result := True;
+  Except
+   UnlockIfAble;
+  end;
 end;
 
 function ReadyForNewOrder1(AnEvent: TOrderDelayEvent): Boolean;
@@ -1637,25 +1774,29 @@ begin
   end;
   { then try to lock the patient (provider & encounter checked first to not leave lock) }
   if not LockedForOrdering then Exit;
-  { make sure any current ordering process has completed, but don't drop patient lock }
-  uKeepLock := True;
-  if not CloseOrdering then Exit;
-  uKeepLock := False;
-  { get the delay event for this order (if applicable) }
-  if AnEvent.EventType in ['A','D','T','M','O'] then
-  begin
-    x := AnEvent.EventType + IntToStr(AnEvent.Specialty);
-    if (uLastConfirm <> x ) and (not XfInToOutNow) then
-    begin
-      uLastConfirm := x;
-      case AnEvent.EventType of
-      'A','M','T','O': x := AnEvent.EventName;
-      'D': x := AnEvent.EventName;  //'D': x := 'Discharge';
-      end;
-    end;
-  end
-  else uLastConfirm := '';
-  Result := True;
+  try
+   { make sure any current ordering process has completed, but don't drop patient lock }
+   uKeepLock := True;
+   if not CloseOrdering then Exit;
+   uKeepLock := False;
+   { get the delay event for this order (if applicable) }
+   if CharInSet(AnEvent.EventType, ['A','D','T','M','O']) then
+   begin
+     x := AnEvent.EventType + IntToStr(AnEvent.Specialty);
+     if (uLastConfirm <> x ) and (not XfInToOutNow) then
+     begin
+       uLastConfirm := x;
+       case AnEvent.EventType of
+       'A','M','T','O': x := AnEvent.EventName;
+       'D': x := AnEvent.EventName;  //'D': x := 'Discharge';
+       end;
+     end;
+   end
+   else uLastConfirm := '';
+   Result := True;
+  Except
+   UnlockIfAble;
+  end;
 end;
 
 procedure SetConfirmEventDelay;
@@ -1905,6 +2046,7 @@ end;
 procedure DestroyingOrderSet;
 begin
   uOrderSet := nil;
+  uOrderSetClinMedMsg := False;
   uOrderSetTime := 0;
   if not ActiveOrdering then
   begin
@@ -2135,7 +2277,7 @@ begin
     Td := IMOTimeFrame;
     if IsValidIMOLoc(Encounter.Location,Patient.DFN) and (Encounter.DateTime > Td) then
       Result := True
-    else if AnEvtTyp in ['A','T'] then
+    else if CharInSet(AnEvtTyp, ['A','T']) then
       Result := True;
   end;
 end;
@@ -2146,7 +2288,7 @@ var
 begin
   // jd imo change
   Result := True;
-  if CharAt(AnID, 1) in ['X','C'] then  // transfer IMO order doesn't need check
+  if CharInSet(CharAt(AnID, 1), ['X','C']) then  // transfer IMO order doesn't need check
   begin
     IsIMOOD := IsIMOOrder(Copy(AnID, 2, Length(AnID)));
     If IsIMOOD then
@@ -2207,6 +2349,150 @@ function IMOTimeFrame: TFMDateTime;
 begin
   Result := DateTimeToFMDateTime(FMDateTimeToDateTime(FMNow) - (23/24));
 end;
+
+//CQ 15530 - Add BCMA Med Order Button Functionality as part of Clinic Orders - JCS
+procedure ShowOneStepAdmin;
+const
+  TX_NOT_VALID_IMO = 'You have selected a location that has not been designated for One Step Clinic Admin; this action may not be taken for the current location. Please contact Pharmacy Service if you feel that this is not correct.';
+var
+  aAppHandle, jobNumber: string;
+  Result: longBool;
+  aConnectionParams,
+  aFunctionParams: WideString;
+begin
+  if not IsMOBDLLVersionOK then exit;
+  try
+    try
+      //CQ 21753 - Suppress provider selection when encounter form is called - jcs
+      if Encounter.Location = 0 then UpdateEncounter(NPF_SUPPRESS);
+      frmFrame.DisplayEncounterText;
+
+      //check if location is marked for clinic orders
+      if not(IsValidIMOLoc(Encounter.Location, Patient.DFN)) then
+      begin
+        InfoBox(TX_NOT_VALID_IMO, TC_PROV_LOC, MB_OK or MB_ICONWARNING);
+        exit;
+      end;
+
+      if Encounter.location = 0 then
+      begin
+        InfoBox('An enounter location must be selected', 'Encounter Location Required!', MB_OK);
+        exit;
+      end;
+
+      SuspendTimeout;
+      LoadMOBDLL;
+      if MOBDLLHandle <> 0 then
+        begin
+          aAppHandle := TRPCB.GetAppHandle(RPCBrokerV);
+          jobNumber := sCallv('ORBCMA5 JOB', [NIL]);
+          @LoadMOBProc := GetProcAddress(MOBDLLHandle,PAnsiChar(AnsiString('LaunchMOB')));
+          if assigned(LoadMOBProc) then
+          begin
+            aConnectionParams := aAppHandle + '^' +
+                      GetServerIP(RPCBrokerV.Server) + '^' +
+                      IntToStr(RPCBrokerV.ListenerPort) + '^' +
+                      RPCBrokerV.User.Division;
+            aFunctionParams := Patient.DFN + '^' +
+                      'CPRS' + '^' +
+                      IntToStr(User.DUZ) + '^' +
+                      '' + '^' +
+                      IntToStr(Encounter.Location) + '^' +
+                      jobNumber;
+
+            LoadMOBProc(PWideChar(aConnectionParams), PWideChar(aFunctionParams), Result);
+            if result then frmFrame.mnuFileRefreshClick(Application);
+          end
+        else
+          MessageDLG('Can''t find function "'+'LaunchMOB'+'".',mtError,[mbok],0);
+        end
+      else
+        MessageDLG('Can''t find library '+MOBDLLName+'.',mtError,[mbok],0);
+    except
+      on  E: Exception do
+        begin
+          InfoBox('Error Executing ' + MOBDLLName + '. Error Message: ' + E.Message, 'Error Executing DLL', MB_OK);
+        end;
+    end;
+  finally
+    ResumeTimeout;
+    @LoadMOBProc := nil;
+    UnloadMOBDLL;
+  end;
+end;
+
+//CQ 15530 - Add BCMA Med Order Button Functionality as part of Clinic Orders - JCS
+procedure LoadMOBDLL;
+//var
+//  MOBDLLPath: string;
+begin
+  if MOBDLLHandle = 0 then
+  begin
+  //  MOBDLLPath := GetProgramFilesPath + SHARE_DIR + MOBDLLName;
+//    MOBDLLHandle := LoadLibrary(PChar(MOBDLLPath));
+    MOBDLLHandle := LoadDll(MOBDLLName);
+  end;
+end;
+
+//CQ 15530 - Add BCMA Med Order Button Functionality as part of Clinic Orders - JCS
+procedure UnloadMOBDLL;
+begin
+  if MOBDLLHandle <> 0 then
+  begin
+    FreeLibrary(MOBDLLHandle);
+    MOBDLLHandle := 0;
+  end;
+end;
+
+//CQ 15530 - Add BCMA Med Order Button Functionality as part of Clinic Orders - JCS
+function IsMOBDLLVersionOK: Boolean;
+var
+  MOBDLLPath, MOBDLLRequiredVersion, DLLVersion, ResultStr: string;
+
+  procedure DisplayError;
+  var Msg: String;
+  begin
+  if MOBDLLPath = '' then
+    Msg := 'A problem with the ' + MOBDLLName + ' file was detected. ' +
+      'The One Step Clinic Administrion cannot be used at this time.' + #13#13 +
+      '<FILE MISSING OR INVALID>'
+  else
+    Msg := 'A problem with the ' + MOBDLLName + ' file was detected. ' +
+      'The One Step Clinic Administrion cannot be used at this time.' + #13#13 +
+      'CPRS requires a minimum version of ' + MOBDLLRequiredVersion + ' but version ' +
+      DLLVersion + ' was found or should be in the following path ' + MOBDLLPath;
+
+
+    InfoBox(Msg, 'Unable to launch the One Step Clinic Admin DLL', MB_OK);
+  end;
+
+begin
+  Result := True;
+
+  MOBDLLPath := FindDllDir(MOBDLLName);
+  if MOBDLLPath = '' then
+  begin
+    DisplayError;
+    Result := False;
+  end
+  else
+  begin
+  DLLVersion := ClientVersion(MOBDLLPath);
+    if DLLVersion = '' then DLLVersion := '<FILE MISSING OR INVALID>';
+    ResultStr := DLLVersionCheck(MOBDLLName, DLLVersion);
+    MOBDLLRequiredVersion := Piece(ResultStr, '^', 2);
+
+
+    if (pieces(DLLVersion, '.', 1, 3) <> pieces(MOBDLLRequiredVersion, '.', 1, 3)) or
+      ((piece(DLLVersion, '.', 4) <> '*') and
+      (StrToIntDef(piece(DLLVersion, '.', 4), 0) < StrToIntDef(piece(MOBDLLRequiredVersion, '.', 4), 0))) then
+      begin
+        DisplayError;
+        Result := False;
+      end;
+  end;
+end;
+
 
 initialization
   uPatientLocked := False;

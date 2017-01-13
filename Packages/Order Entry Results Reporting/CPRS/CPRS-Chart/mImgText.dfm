@@ -2,8 +2,9 @@ object fraImgText: TfraImgText
   Left = 0
   Top = 0
   Width = 451
-  Height = 240
+  Height = 20
   Align = alTop
+  AutoScroll = True
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11

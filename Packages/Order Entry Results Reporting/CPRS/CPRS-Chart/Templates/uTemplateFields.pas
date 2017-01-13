@@ -210,9 +210,9 @@ const
   ScreenReaderCodeIDs:   array[0..ScreenReaderShownCount] of string  =
       (ScreenReaderStopCodeID, ScreenReaderContinueCodeID);
   ScreenReaderCodeLines: array[0..ScreenReaderShownCount] of string  =
-      (ScreenReaderStopCodeLine, ScreenReaderContinueCodeLine); 
+      (ScreenReaderStopCodeLine, ScreenReaderContinueCodeLine);
 
-  TemplateFieldTypeCodes: array[TTemplateFieldType] of string[1] =
+  TemplateFieldTypeCodes: array[TTemplateFieldType] of string =
                          {  dftUnknown      } ('',
                          {  dftEditBox      }  'E',
                          {  dftComboBox     }  'C',
@@ -263,7 +263,7 @@ const
                    { dftTExt         }  'TEXT',
                    { dftScreenReader }  'SRST');
 
-  TemplateFieldDateCodes: array[TTmplFldDateType] of string[1] =
+  TemplateFieldDateCodes: array[TTmplFldDateType] of string =
                          { dtUnknown        } ('',
                          { dtDate           }  'D',
                          { dtDateTime       }  'T',
@@ -274,12 +274,12 @@ const
 
   MaxTFWPLines = 20;
   MaxTFEdtLen = 70;
-  
+
 implementation
 
 uses
   rTemplates, ORCtrls, mTemplateFieldButton, dShared, uConst, uCore, rCore, Windows,
-  VAUtils, VA508AccessibilityManager, VA508AccessibilityRouter;
+  VAUtils, VA508AccessibilityManager, VA508AccessibilityRouter, System.UITypes, System.Types;
 
 const
   NewTemplateField = 'NEW TEMPLATE FIELD';
@@ -679,7 +679,7 @@ begin
   if(length(Fld.FldName) < 3) then
     msg := 'Field Name must be at least three characters in length'
   else
-  if(not (Fld.FldName[1] in ['A'..'Z','0'..'9'])) then
+  if(not CharInSet(Fld.FldName[1], ['A'..'Z','0'..'9'])) then
     msg := 'First Field Name character must be "A" - "Z", or "0" - "9"'
   else
   if(assigned(uTmplFlds)) then
@@ -2084,7 +2084,6 @@ var
   nLbl: TVA508ChainedLabel;
   sLblHeight: integer;
   TabOrdr: integer;
-
 const
   FOCUS_RECT_MARGIN = 2; {The margin around the panel so the label won't
                         overlay the focus rect on its parent panel.}
@@ -2220,6 +2219,7 @@ const
         lbl.TabStop := FALSE;
         ScreenReaderSystem_Stop;
       end;
+      Add2TabOrder(TWinControl(ctrl));
     end
     else
     begin

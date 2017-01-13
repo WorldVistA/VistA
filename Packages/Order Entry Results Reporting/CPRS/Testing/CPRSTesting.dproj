@@ -1,0 +1,186 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{d008760c-d3c7-4922-b5ca-7134478bce35}</ProjectGuid>
+        <MainSource>CPRSTesting.dpr</MainSource>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+        <DCC_DependencyCheckOutputName>..\Bin\$(Configuration)\CPRSTesting.exe</DCC_DependencyCheckOutputName>
+        <FrameworkType>VCL</FrameworkType>
+        <ProjectVersion>14.4</ProjectVersion>
+        <Base>True</Base>
+        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <TargetedPlatforms>1</TargetedPlatforms>
+        <AppType>Console</AppType>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
+        <Base_Win32>true</Base_Win32>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+        <Cfg_1>true</Cfg_1>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+        <Cfg_2>true</Cfg_2>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win32)'!=''">
+        <Cfg_2_Win32>true</Cfg_2_Win32>
+        <CfgParent>Cfg_2</CfgParent>
+        <Cfg_2>true</Cfg_2>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base)'!=''">
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;System.Win;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_Release>28</VerInfo_Release>
+        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=12/22/2009;FileVersion=1.0.28.6;InternalName=1.0.28.6 server required;LegalCopyright=Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.;LegalTrademarks=;OriginalFilename=Patch 280;ProductName=Computerized Patient Record System;ProductVersion=1.0.0.0;Comments=Version 1.0.28.6</VerInfo_Keys>
+        <VerInfo_Build>6</VerInfo_Build>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1)'!=''">
+        <Version>7.0</Version>
+        <DCC_AssertionsAtRuntime>False</DCC_AssertionsAtRuntime>
+        <DCC_DebugInformation>False</DCC_DebugInformation>
+        <DCC_WriteableConstants>True</DCC_WriteableConstants>
+        <DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
+        <DCC_RangeChecking>True</DCC_RangeChecking>
+        <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+        <DCC_MapFile>3</DCC_MapFile>
+        <DCC_StackSize>32768,1048576</DCC_StackSize>
+        <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+        <DCC_ExeOutput>Bin\$(Configuration)</DCC_ExeOutput>
+        <DCC_DcuOutput>Dcu\$(Configuration)</DCC_DcuOutput>
+        <DCC_ObjOutput>Dcu\$(Configuration)</DCC_ObjOutput>
+        <DCC_HppOutput>Dcu\$(Configuration)</DCC_HppOutput>
+        <DCC_DcpOutput>Dcp\$(Configuration)</DCC_DcpOutput>
+        <DCC_BplOutput>Bpl</DCC_BplOutput>
+        <DCC_UnitSearchPath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Chart\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\CPRS-Lib;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\CPRS-Chart\XuDigSig;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\..\..\RPC Broker\BDK\Source;D:/Work/OSEHRA/VistA/Packages/Order Entry Results Reporting/CPRS/CPRS-Chart/XuDigSig;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_ResourcePath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Chart\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\CPRS-Lib;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\CPRS-Chart\XuDigSig;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\..\..\RPC Broker\BDK\Source;D:/Work/OSEHRA/VistA/Packages/Order Entry Results Reporting/CPRS/CPRS-Chart/XuDigSig;$(DCC_ResourcePath)</DCC_ResourcePath>
+        <DCC_ObjPath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Chart\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\CPRS-Lib;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\CPRS-Chart\XuDigSig;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\..\..\RPC Broker\BDK\Source;D:/Work/OSEHRA/VistA/Packages/Order Entry Results Reporting/CPRS/CPRS-Chart/XuDigSig;$(DCC_ObjPath)</DCC_ObjPath>
+        <DCC_IncludePath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Chart\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\CPRS-Lib;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\CPRS-Chart\XuDigSig;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\..\..\RPC Broker\BDK\Source;D:/Work/OSEHRA/VistA/Packages/Order Entry Results Reporting/CPRS/CPRS-Chart/XuDigSig;$(DCC_IncludePath)</DCC_IncludePath>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2)'!=''">
+        <Version>7.0</Version>
+        <DCC_AssertionsAtRuntime>False</DCC_AssertionsAtRuntime>
+        <DCC_WriteableConstants>True</DCC_WriteableConstants>
+        <DCC_RangeChecking>True</DCC_RangeChecking>
+        <DCC_MapFile>3</DCC_MapFile>
+        <DCC_StackSize>32768,1048576</DCC_StackSize>
+        <DCC_ExeOutput>Bin\$(Configuration)</DCC_ExeOutput>
+        <DCC_DcuOutput>Dcu\$(Configuration)</DCC_DcuOutput>
+        <DCC_ObjOutput>Dcu\$(Configuration)</DCC_ObjOutput>
+        <DCC_HppOutput>Dcu\$(Configuration)</DCC_HppOutput>
+        <DCC_DcpOutput>Dcp\$(Configuration)</DCC_DcpOutput>
+        <DCC_BplOutput>Bpl</DCC_BplOutput>
+        <DCC_UnitSearchPath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Chart\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\CPRS-Lib;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\CPRS-Chart\XuDigSig;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\..\..\RPC Broker\BDK\Source;D:/Work/OSEHRA/VistA/Packages/Order Entry Results Reporting/CPRS/CPRS-Chart/XuDigSig;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_ResourcePath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Chart\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\CPRS-Lib;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\CPRS-Chart\XuDigSig;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\..\..\RPC Broker\BDK\Source;D:/Work/OSEHRA/VistA/Packages/Order Entry Results Reporting/CPRS/CPRS-Chart/XuDigSig;$(DCC_ResourcePath)</DCC_ResourcePath>
+        <DCC_ObjPath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Chart\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\CPRS-Lib;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\CPRS-Chart\XuDigSig;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\..\..\RPC Broker\BDK\Source;D:/Work/OSEHRA/VistA/Packages/Order Entry Results Reporting/CPRS/CPRS-Chart/XuDigSig;$(DCC_ObjPath)</DCC_ObjPath>
+        <DCC_IncludePath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Chart\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\CPRS-Lib;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\CPRS-Chart\XuDigSig;D:\Work\OSEHRA\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\..\..\..\RPC Broker\BDK\Source;D:/Work/OSEHRA/VistA/Packages/Order Entry Results Reporting/CPRS/CPRS-Chart/XuDigSig;$(DCC_IncludePath)</DCC_IncludePath>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <VerInfo_Build>0</VerInfo_Build>
+        <Manifest_File>None</Manifest_File>
+        <VerInfo_Release>0</VerInfo_Release>
+        <DCC_DcpOutput>Dcp\Debug</DCC_DcpOutput>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <DCC_DcuOutput>Dcu\Debug</DCC_DcuOutput>
+        <DCC_ExeOutput>Bin\Debug</DCC_ExeOutput>
+    </PropertyGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Delphi.Personality.12</Borland.Personality>
+        <Borland.ProjectType>VCLApplication</Borland.ProjectType>
+        <BorlandProject>
+            <Delphi.Personality>
+                <Parameters>
+                    <Parameters Name="UseLauncher">False</Parameters>
+                    <Parameters Name="LoadAllSymbols">True</Parameters>
+                    <Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
+                </Parameters>
+                <VersionInfo>
+                    <VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+                    <VersionInfo Name="AutoIncBuild">False</VersionInfo>
+                    <VersionInfo Name="MajorVer">1</VersionInfo>
+                    <VersionInfo Name="MinorVer">0</VersionInfo>
+                    <VersionInfo Name="Release">28</VersionInfo>
+                    <VersionInfo Name="Build">6</VersionInfo>
+                    <VersionInfo Name="Debug">False</VersionInfo>
+                    <VersionInfo Name="PreRelease">False</VersionInfo>
+                    <VersionInfo Name="Special">False</VersionInfo>
+                    <VersionInfo Name="Private">False</VersionInfo>
+                    <VersionInfo Name="DLL">False</VersionInfo>
+                    <VersionInfo Name="Locale">1033</VersionInfo>
+                    <VersionInfo Name="CodePage">1252</VersionInfo>
+                </VersionInfo>
+                <VersionInfoKeys>
+                    <VersionInfoKeys Name="CompanyName">Department of Veterans Affairs</VersionInfoKeys>
+                    <VersionInfoKeys Name="FileDescription">12/22/2009</VersionInfoKeys>
+                    <VersionInfoKeys Name="FileVersion">1.0.28.6</VersionInfoKeys>
+                    <VersionInfoKeys Name="InternalName">1.0.28.6 server required</VersionInfoKeys>
+                    <VersionInfoKeys Name="LegalCopyright">Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.</VersionInfoKeys>
+                    <VersionInfoKeys Name="LegalTrademarks"/>
+                    <VersionInfoKeys Name="OriginalFilename">Patch 280</VersionInfoKeys>
+                    <VersionInfoKeys Name="ProductName">Computerized Patient Record System</VersionInfoKeys>
+                    <VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+                    <VersionInfoKeys Name="Comments">Version 1.0.28.6</VersionInfoKeys>
+                </VersionInfoKeys>
+                <Source>
+                    <Source Name="MainSource">CPRSTesting.dpr</Source>
+                </Source>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="D:\Work\OSEHRA\vista-delphi-dev\CPRS\VA\Bpl\VASharedXE3.bpl">File D:\Work\OSEHRA\vista-delphi-dev\CPRS\VA\Bpl\VASharedXE3.bpl not found</Excluded_Packages>
+                </Excluded_Packages>
+            </Delphi.Personality>
+            <Platforms>
+                <Platform value="Win32">True</Platform>
+                <Platform value="Win64">False</Platform>
+            </Platforms>
+        </BorlandProject>
+        <ProjectFileVersion>12</ProjectFileVersion>
+    </ProjectExtensions>
+    <Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
+    <ItemGroup>
+        <DelphiCompile Include="$(MainSource)">
+            <MainSource>MainSource</MainSource>
+        </DelphiCompile>
+        <DCCReference Include="..\..\..\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\UnitTest.pas">
+            <Form>UnitTest</Form>
+        </DCCReference>
+        <DCCReference Include="..\..\..\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\Tests\UTSignonCnf.pas">
+            <Form>UTSignonCnf</Form>
+        </DCCReference>
+        <DCCReference Include="..\..\..\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\Tests\UTXlfMime.pas">
+            <Form>UTXuDsigS</Form>
+        </DCCReference>
+        <DCCReference Include="..\..\..\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\Tests\UTWcrypt2.pas">
+            <Form>UTXuDsigS</Form>
+        </DCCReference>
+        <DCCReference Include="..\..\..\VistA\Packages\Order Entry Results Reporting\CPRS\Testing\Tests\UTWinSCard.pas">
+            <Form>UTXuDsigS</Form>
+        </DCCReference>
+        <BuildConfiguration Include="Debug">
+            <Key>Cfg_2</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Base">
+            <Key>Base</Key>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Release">
+            <Key>Cfg_1</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+    </ItemGroup>
+    <Import Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj" Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')"/>
+</Project>

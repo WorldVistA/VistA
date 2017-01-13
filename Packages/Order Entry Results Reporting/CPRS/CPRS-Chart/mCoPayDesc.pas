@@ -4,7 +4,7 @@ interface
 
 uses 
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  ExtCtrls, StdCtrls, ORCtrls, UBAConst, VA508AccessibilityManager;
+  ExtCtrls, StdCtrls, ORCtrls, UBAConst, VA508AccessibilityManager, rMisc, uConst;
 
 type
   TfraCoPayDesc = class(TFrame)
@@ -40,6 +40,10 @@ type
     pnlSHD: TPanel;
     lblSHAD: TVA508StaticText;
     lblSHAD2: TVA508StaticText;
+    ScrollBox1: TScrollBox;
+    pnlCL: TPanel;
+    lblCL: TVA508StaticText;
+    lblCL2: TVA508StaticText;
     procedure lblEnter(Sender: TObject);
     procedure lblExit(Sender: TObject);
   private
@@ -53,7 +57,7 @@ type
 
 implementation
 
-uses rPCE, UBAGlobals, VAUtils, VA508AccessibilityRouter;
+uses uGlobalVar, rPCE, UBAGlobals, VAUtils, VA508AccessibilityRouter, ORFn;
 
 {$R *.DFM}
 var
@@ -84,6 +88,13 @@ begin
   lblHNC2.Hint        := BAFactorsRec.FBAFactorHNC;
   lblSHAD.Hint        := BAFactorsRec.FBAFactorSHAD;
   lblSHAD2.Hint       := BAFactorsRec.FBAFactorSHAD;
+  lblCL.Visible := IsLejeuneActive;
+  lblCL2.Visible := IsLejeuneActive;
+  if IsLejeuneActive then
+  begin
+   lblCL.Hint          := BAFactorsRec.FBAFactorCL;
+   lblCL2.Hint         := BAFactorsRec.FBAFactorCL;
+  end;
   if ScreenReaderActive then
     ConvertShortLabelsToLong;
 end;
@@ -99,6 +110,8 @@ begin
   lblMST.ShowHint := CaptionsOn;
   lblHNC.ShowHint := CaptionsOn;
   lblSHAD.ShowHint := CaptionsOn;
+  if IsLejeuneActive then
+   lblCL.ShowHint := CaptionsOn;
   //Long captions
   lblSC2.ShowHint := CaptionsOn;
   lblCV2.ShowHint := CaptionsOn;
@@ -108,6 +121,8 @@ begin
   lblMST2.ShowHint  := CaptionsOn;
   lblHNC2.ShowHint := CaptionsOn;
   lblSHAD2.ShowHint := CaptionsOn;
+  if IsLejeuneActive then
+   lblCL2.ShowHint := CaptionsOn;
 end;
 
 procedure TfraCoPayDesc.lblEnter(Sender: TObject);
@@ -130,6 +145,11 @@ begin
   lblSHAD2.Caption := BAFactorsRec.FBAFactorSHAD;
   lblMST2.Caption := BAFactorsRec.FBAFactorMST;
   lblHNC2.Caption := BAFactorsRec.FBAFactorHNC;
+
+  if IsLejeuneActive then
+  begin
+   lblCL2.Caption := BAFactorsRec.FBAFactorCL;
+  end;
 end;
 
 procedure TfraCoPayDesc.ShowTreatmentFactorHints(var pHintText: string;
@@ -149,7 +169,7 @@ begin
   except
      on E: Exception do
         begin
-        {$ifdef debug}Show508Message('Unhandled exception in procedure TfrmSignOrders.ShowTreatmentFactorHints()');{$endif}
+//        {$ifdef debug}Show508Message('Unhandled exception in procedure TfrmSignOrders.ShowTreatmentFactorHints()');{$endif}
         raise;
         end;
   end;
@@ -173,8 +193,8 @@ begin
   except
      on E: Exception do
         begin
-        {$ifdef debug}Show508Message('Unhandled exception in procedure TfrmSignOrders.ShowTreatmentFactorHints()');{$endif}
-        raise;
+//        {$ifdef debug}Show508Message('Unhandled exception in procedure TfrmSignOrders.ShowTreatmentFactorHints()');{$endif}
+          raise;
         end;
   end;
 end;

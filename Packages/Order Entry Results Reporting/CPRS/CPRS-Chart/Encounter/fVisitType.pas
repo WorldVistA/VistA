@@ -291,6 +291,7 @@ begin
     uProviders.PrimaryIdx := idx;
   RefreshProviders;
   lbProviders.SelectByIEN(AIEN);
+  btnPrimary.SetFocus;
 end;
 
 procedure TfrmVisitType.cboPtProviderDblClick(Sender: TObject);

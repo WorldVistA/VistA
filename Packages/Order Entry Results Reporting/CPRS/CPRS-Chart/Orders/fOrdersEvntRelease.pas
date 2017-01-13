@@ -158,12 +158,29 @@ begin
   ShowEvents(fTotal);
 end;
 
-procedure TfrmOrdersEvntRelease.grdEvtListDrawCell(Sender: TObject; ACol,
-  ARow: Integer; Rect: TRect; State: TGridDrawState);
+procedure TfrmOrdersEvntRelease.grdEvtListDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
 begin
- inherited;
- grdEvtList.Canvas.TextRect(Rect, Rect.Left+2, Rect.Top+2,
+  if gdFixed in State then
+    begin
+      grdEvtList.Canvas.Brush.Color := clBtnFace;
+      grdEvtList.Canvas.Font.Color := clBtnText;
+    end
+  else if gdSelected in State then
+    begin
+      grdEvtList.Canvas.Brush.Color := clHighlight;
+      grdEvtList.Canvas.Font.Color := clHighlightText;
+    end
+  else
+    begin
+      grdEvtList.Canvas.Font.Color := clWindowText;
+      grdEvtList.Canvas.Brush.Color := clWindow;
+    end;
+
+  grdEvtList.Canvas.TextRect(Rect, Rect.Left + 2, Rect.Top + 2,
     Piece(grdEvtList.Cells[ACol, ARow], TAB, 1));
+
+  grdEvtList.Canvas.Font.Color := clWindowText;
+  grdEvtList.Canvas.Brush.Color := clWindow;
 end;
 
 procedure TfrmOrdersEvntRelease.grdEvtListMouseDown(Sender: TObject;
@@ -287,6 +304,7 @@ begin
   if temptot = 0 then
   begin
     grdEvtList.RowCount := 2;
+    grdEvtList.FixedRows := 1;
     grdEvtList.Cells[0,1] := 'No event order found';
     btnOK.Enabled := False;
   end else

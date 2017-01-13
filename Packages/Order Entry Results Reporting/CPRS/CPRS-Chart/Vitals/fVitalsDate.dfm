@@ -6,8 +6,8 @@ inherited frmVitalsDate: TfrmVitalsDate
   ClientWidth = 355
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitWidth = 363
-  ExplicitHeight = 87
+  ExplicitWidth = 371
+  ExplicitHeight = 98
   DesignSize = (
     355
     60)
@@ -67,7 +67,8 @@ inherited frmVitalsDate: TfrmVitalsDate
     Data = (
       (
         'Component = dteVitals'
-        'Status = stsDefault')
+        'Text = Vitals entry Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = btnOK'
         'Status = stsDefault')

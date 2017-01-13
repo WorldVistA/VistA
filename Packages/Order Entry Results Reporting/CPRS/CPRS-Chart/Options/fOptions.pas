@@ -4,9 +4,18 @@ interface
 
 uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
   Buttons, ComCtrls, ExtCtrls, ORCtrls, OrFn, Dialogs, ORDtTmRng, fBAOptionsDiagnoses,
-  uBAGlobals, fBase508Form, VA508AccessibilityManager, fAutoSz;
+  uBAGlobals, fBase508Form, VA508AccessibilityManager, fAutoSz, Vcl.CheckLst, Messages;
 
 type
+
+  TTabSheet = class(ComCtrls.TTabSheet)
+  private
+    FColor: TColor;
+    procedure WMEraseBkGnd(var Msg: TWMEraseBkGnd); message WM_ERASEBKGND;
+  public
+    constructor Create(aOwner: TComponent); override;
+  end;
+
   TfrmOptions = class(TfrmAutoSz)
     pnlMain: TPanel;
     pnlBottom: TPanel;
@@ -100,6 +109,8 @@ type
     memReport2: TMemo;
     imgReport1: TImage;
     imgReport2: TImage;
+    PnlNoteTop: TPanel;
+    PnlNoteCl: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnCoverDaysClick(Sender: TObject);
@@ -131,6 +142,8 @@ type
     procedure btnGraphSettingsClick(Sender: TObject);
     procedure btnGraphViewsClick(Sender: TObject);
     procedure pagOptionsEnter(Sender: TObject);
+    procedure pagOptionsDrawTab(Control: TCustomTabControl; TabIndex: Integer;
+      const Rect: TRect; Active: Boolean);
   private
     { Private declarations }
     FdirtyNotifications: boolean;  // used to determine edit changes to Notifications
@@ -165,8 +178,7 @@ uses fOptionsDays, fOptionsReminders, fOptionsSurrogate,
      fOptionsPatientSelection, fOptionsLists, fOptionsTeams, fOptionsCombinations,
      fOptionsOther, fOptionsNotes, fOptionsTitles, fOptionsReportsCustom, fOptionsReportsDefault,
      fGraphs, fGraphSettings, fGraphProfiles, rGraphs, uGraphs,
-     rOptions, rCore, uCore, uOptions, UBACore, fFrame,
-  VA508AccessibilityRouter;
+     rOptions, rCore, uCore, uOptions, UBACore, fFrame, UITypes, VA508AccessibilityRouter, Themes;
      //fTestDialog;
 
 {$R *.DFM}
@@ -274,6 +286,7 @@ begin
   if (Encounter.Provider = 0) and not IsCIDCProvider(User.DUZ) then
       btnDiagnoses.Enabled := False;
   FGiveMultiTabMessage := ScreenReaderSystemActive;
+
 end;
 
 procedure TfrmOptions.FormDestroy(Sender: TObject);
@@ -390,8 +403,10 @@ begin
   if FdirtyOtherStuff then
     ApplyOtherStuff;
   CheckApply;
-  if Sender = btnOK then
+  if Sender = btnOK then begin
+    ModalResult := mrOk;
     Close;
+  end;
 end;
 
 procedure TfrmOptions.LoadNotifications;
@@ -735,6 +750,40 @@ begin
   actiontype := false;
   DialogOptionsGraphProfiles(actiontype);
   // if changes were made then view listing should be updated ***********
+end;
+
+procedure TfrmOptions.pagOptionsDrawTab(Control: TCustomTabControl;
+  TabIndex: Integer; const Rect: TRect; Active: Boolean);
+var
+  AText: string;
+  APoint: TPoint;
+begin
+  with (Control as TPageControl).Canvas do
+  begin
+    FillRect(Rect);
+    AText := TPageControl(Control).Pages[TabIndex].Caption;
+    with Control.Canvas do
+    begin
+      APoint.x := (Rect.Right - Rect.Left) div 2 - TextWidth(AText) div 2;
+      APoint.y := (Rect.Bottom - Rect.Top) div 2 - TextHeight(AText) div 2;
+      TextRect(Rect, Rect.Left + APoint.x, Rect.Top + APoint.y, AText);
+    end;
+  end;
+end;
+
+
+//----------------- TTabSheet -----------------//
+constructor TTabSheet.Create(aOwner: TComponent);
+begin
+  inherited;
+  FColor := clBtnFace;
+end;
+
+procedure TTabSheet.WMEraseBkGnd(var Msg: TWMEraseBkGnd);
+begin
+    Brush.Color := FColor;
+    Windows.FillRect(Msg.dc, ClientRect, Brush.Handle);
+    Msg.Result := 1;
 end;
 
 end.

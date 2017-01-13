@@ -12,16 +12,16 @@ unit CPRSChart_TLB;
 // ************************************************************************ //
 
 // PASTLWTR : 1.2
-// File generated on 8/26/2015 5:30:20 PM from Type Library described below.
+// File generated on 1/24/2011 11:37:00 AM from Type Library described below.
 
 // ************************************************************************  //
-// Type Lib: C:\pf\cprs\OR_3_385\CPRS-chart\CPRSChart.tlb (1)
+// Type Lib: C:\Vista\cprs\main\CPRS-Chart\CPRSChart.tlb (1)
 // LIBID: {0A4A6086-6504-11D5-82DE-00C04F72C274}
 // LCID: 0
 // Helpfile: 
 // HelpString: CPRSChart Library
 // DepndLst: 
-//   (1) v2.0 stdole, (C:\Windows\SysWOW64\stdole2.tlb)
+//   (1) v2.0 stdole, (C:\WINDOWS\system32\stdole2.tlb)
 // ************************************************************************ //
 {$TYPEDADDRESS OFF} // Unit must be compiled without type-checked pointers. 
 {$WARN SYMBOL_PLATFORM OFF}

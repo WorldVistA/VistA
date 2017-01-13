@@ -49,9 +49,10 @@ var
 begin
   if(NotUpdating) and (cboSkinResults.Text <> '') then
   begin
-    for i := 0 to lbGrid.Items.Count-1 do
-      if(lbGrid.Selected[i]) then
-        TPCESkin(lbGrid.Items.Objects[i]).Results := cboSkinResults.ItemID;
+    for i := 0 to lstRenameMe.Items.Count-1 do
+      if(lstRenameMe.Items[i].Selected) then
+        TPCESkin(lstRenameMe.Objects[i]).Results := cboSkinResults.ItemID;
+
     GridChanged;
   end;
 end;
@@ -71,9 +72,10 @@ begin
   if(NotUpdating) then
   begin
     x := StrToIntDef(EdtReading.Text, 0);
-    for i := 0 to lbGrid.Items.Count-1 do
-      if(lbGrid.Selected[i]) then
-        TPCESkin(lbGrid.Items.Objects[i]).Reading := x;
+    for i := 0 to lstRenameMe.Items.Count-1 do
+      if(lstRenameMe.Items[i].Selected) then
+        TPCESkin(lstRenameMe.Objects[i]).Reading := x;
+
     GridChanged;
   end;
 end;
@@ -176,7 +178,7 @@ begin
   begin
     BeginUpdate;
     try
-      ok := (lbGrid.SelCount > 0);
+      ok := (lstRenameMe.SelCount > 0);
       lblSkinResults.Enabled := ok;
       lblReading.Enabled := ok;
       cboSkinResults.Enabled := ok;
@@ -189,11 +191,11 @@ begin
         SameRead := TRUE;
         Res := NoPCEValue;
         Read := 0;
-        for i := 0 to lbGrid.Items.Count-1 do
+       for i := 0 to lstRenameMe.Items.Count-1 do
         begin
-          if lbGrid.Selected[i] then
+          if lstRenameMe.Items[i].Selected then
           begin
-            Obj := TPCESkin(lbGrid.Items.Objects[i]);
+            Obj := TPCESkin(lstRenameMe.Objects[i]);
             if(First) then
             begin
               First := FALSE;
@@ -209,6 +211,7 @@ begin
             end;
           end;
         end;
+     
         if(SameRes) then
           cboSkinResults.SelectByID(Res)
         else

@@ -51,7 +51,7 @@ begin
       ClientWidth  := W; pnlBase.Width  := W;
       ClientHeight := H; pnlBase.Height := H;
       FChanged := False;
-      if SrcType in ['C','S'] then with cboSource do
+      if CharInSet(SrcType, ['C','S']) then with cboSource do
          begin
            FastAssign(SubsetOfRadSources(SrcType), cboSource.Items);
            if Items.Count > 0 then

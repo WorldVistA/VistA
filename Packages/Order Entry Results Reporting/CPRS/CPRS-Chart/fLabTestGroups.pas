@@ -35,6 +35,8 @@ type
     cmdAddTest: TButton;
     lblDefine: TVA508StaticText;
     lblTestGroup: TLabel;
+    lbl508TstGrp: TVA508StaticText;
+    lbl508Order: TVA508StaticText;
     procedure FormCreate(Sender: TObject);
     procedure cboTestsNeedData(Sender: TObject; const StartFrom: string;
       Direction, InsertAt: Integer);
@@ -151,6 +153,15 @@ begin
   cmdDown.Enabled := false;
   pnlDownButton.TabStop := false;
   lstList.Clear;
+  if ScreenReaderSystemActive then
+  begin
+    lbl508TstGrp.Enabled := True;
+    lbl508TstGrp.Visible := True;
+    lbl508TstGrp.TabStop := True;
+    lbl508Order.Enabled := True;
+    lbl508Order.Visible := True;
+    lbl508Order.TabStop := True;
+  end;
 end;
 
 procedure TfrmLabTestGroups.cboTestsNeedData(Sender: TObject;

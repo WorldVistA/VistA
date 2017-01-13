@@ -144,7 +144,7 @@ begin
     defaultIEN := rpcGetTitleDefault(cboDocumentClass.ItemIEN);
     if defaultIEN > 0 then SelectByIEN(defaultIEN)
     else ItemIndex := -1;
-    if ItemIndex > -1 then
+    if (ItemIndex > -1) and (defaultIEN > 0) then
     begin
       lblDefault.Caption := DisplayText[ItemIndex];
       lblDefault.Tag := ItemIEN;

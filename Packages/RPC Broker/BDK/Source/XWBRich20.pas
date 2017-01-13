@@ -1,3 +1,4 @@
+{$WARN UNSAFE_CODE OFF}
 { **************************************************************
 	Package: XWB - Kernel RPCBroker
 	Date Created: Sept 18, 1997 (Version 1.1)
@@ -293,7 +294,8 @@ type
 
 implementation
 
-uses Printers, Consts, ComStrs, ActnList, StdActns, ShellAPI, Types;
+uses 
+  UITypes, Types, Printers, Consts, ComStrs, ActnList, StdActns, ShellAPI, CommDlg;
 
 type
   PFontHandles = ^TFontHandles;
@@ -1155,7 +1157,7 @@ var
   Ext: string;
   Convert: PConversionFormat;
 begin
-  Ext := AnsiLowerCaseFileName(ExtractFileExt(Filename));
+  Ext := AnsiLowerCase(ExtractFileExt(Filename));
   System.Delete(Ext, 1, 1);
   Convert := ConversionFormatList;
   while Convert <> nil do
@@ -1180,7 +1182,8 @@ var
   Ext: string;
   Convert: PConversionFormat;
 begin
-  Ext := AnsiLowerCaseFileName(ExtractFileExt(Filename));
+//  Ext := AnsiLowerCaseFileName(ExtractFileExt(Filename)); xe3 fix
+  Ext := AnsiLowerCase(ExtractFileExt(Filename));
   System.Delete(Ext, 1, 1);
   Convert := ConversionFormatList;
   while Convert <> nil do
@@ -1341,8 +1344,10 @@ begin
   // RichEd20 does not pass the WM_RBUTTONUP message to defwndproc,
   // so we get no WM_CONTEXTMENU message.  Simulate message here.
   if Win32MajorVersion < 5 then
+{$WARN UNSAFE_CAST OFF}
     Perform(WM_CONTEXTMENU, Handle, LParam(PointToSmallPoint(
       ClientToScreen(SmallPointToPoint(Message.Pos)))));
+{$WARN UNSAFE_CAST ON}
   inherited;
 end;
 
@@ -1648,8 +1653,10 @@ begin
     cpMax := cpMin + Length;
   end;
   Flags := 0;
-  if stWholeWord in Options then Flags := Flags or FT_WHOLEWORD;
-  if stMatchCase in Options then Flags := Flags or FT_MATCHCASE;
+//  if stWholeWord in Options then Flags := Flags or FT_WHOLEWORD; xe3 fix
+  if stWholeWord in Options then Flags := Flags or CommDlg.FR_WHOLEWORD;
+//  if stMatchCase in Options then Flags := Flags or FT_MATCHCASE; xe3 fix
+  if stMatchCase in Options then Flags := Flags or CommDlg.FR_MATCHCASE;
   Find.lpstrText := PChar(SearchStr);
   Result := SendMessage(Handle, EM_FINDTEXT, Flags, LongInt(@Find));
 end;
@@ -1661,7 +1668,8 @@ begin
   New(NewRec);
   with NewRec^ do
   begin
-    Extension := AnsiLowerCaseFileName(Ext);
+//    Extension := AnsiLowerCaseFileName(Ext);  xe3 fix
+    Extension := AnsiLowerCase(Ext);
     ConversionClass := AClass;
     Next := ConversionFormatList;
   end;
@@ -1673,6 +1681,7 @@ class procedure TXWBCustomRichEdit.RegisterConversionFormat(const AExtension: st
 begin
   AppendConversionFormat(AExtension, AConversionClass);
 end;
+{$WARN UNSAFE_CODE ON}
 
 end.
 

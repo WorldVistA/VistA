@@ -34,6 +34,9 @@ inherited frmPtSelDemog: TfrmPtSelDemog
       TabOrder = 12
       Visible = False
       WantReturns = False
+      OnEnter = MemoEnter
+      OnKeyDown = MemoKeyDown
+      Caption = ''
     end
     object lblPtName: TStaticText
       Tag = 2

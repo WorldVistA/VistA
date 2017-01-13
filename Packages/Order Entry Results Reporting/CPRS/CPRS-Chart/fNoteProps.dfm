@@ -10,10 +10,8 @@ inherited frmNoteProperties: TfrmNoteProperties
   OnDestroy = FormDestroy
   OnResize = FormResize
   OnShow = FormShow
-  ExplicitLeft = 384
-  ExplicitTop = 56
-  ExplicitWidth = 551
-  ExplicitHeight = 710
+  ExplicitWidth = 559
+  ExplicitHeight = 714
   PixelsPerInch = 96
   TextHeight = 13
   object lblNewTitle: TLabel [0]
@@ -96,6 +94,7 @@ inherited frmNoteProperties: TfrmNoteProperties
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 0
+    Text = ''
     OnDblClick = cboNewTitleDblClick
     OnDropDownClose = cboNewTitleDropDownClose
     OnEnter = cboNewTitleEnter
@@ -138,6 +137,7 @@ inherited frmNoteProperties: TfrmNoteProperties
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 2
+    Text = ''
     OnEnter = cboAuthorEnter
     OnExit = cboAuthorExit
     OnMouseClick = cboAuthorMouseClick
@@ -167,6 +167,7 @@ inherited frmNoteProperties: TfrmNoteProperties
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 3
+    Text = ''
     OnExit = cboCosignerExit
     OnNeedData = cboCosignerNeedData
     CharsNeedMatch = 1
@@ -178,7 +179,7 @@ inherited frmNoteProperties: TfrmNoteProperties
     Height = 21
     Caption = 'OK'
     Default = True
-    TabOrder = 9
+    TabOrder = 8
     OnClick = cmdOKClick
   end
   object cmdCancel: TButton [11]
@@ -188,7 +189,7 @@ inherited frmNoteProperties: TfrmNoteProperties
     Height = 21
     Cancel = True
     Caption = 'Cancel'
-    TabOrder = 10
+    TabOrder = 9
     OnClick = cmdCancelClick
   end
   object cboProcSummCode: TORComboBox [12]
@@ -217,6 +218,7 @@ inherited frmNoteProperties: TfrmNoteProperties
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 4
+    Text = ''
     CharsNeedMatch = 1
   end
   object calProcDateTime: TORDateBox [13]
@@ -230,92 +232,7 @@ inherited frmNoteProperties: TfrmNoteProperties
     RequireTime = True
     Caption = 'Procedure Date/Time'
   end
-  object pnlSurgery: TORAutoPanel [14]
-    Tag = 2
-    Left = 0
-    Top = 217
-    Width = 543
-    Height = 153
-    Align = alBottom
-    BevelOuter = bvNone
-    TabOrder = 6
-    Visible = False
-    object lblSurgDate: TLabel
-      Tag = 2
-      Left = 2
-      Top = 40
-      Width = 62
-      Height = 13
-      Caption = 'Surgery Date'
-    end
-    object lblSurgProc: TLabel
-      Tag = 2
-      Left = 98
-      Top = 40
-      Width = 49
-      Height = 13
-      Caption = 'Procedure'
-    end
-    object lblSurgeon: TLabel
-      Tag = 2
-      Left = 362
-      Top = 40
-      Width = 40
-      Height = 13
-      Caption = 'Surgeon'
-    end
-    object bvlSurgery: TBevel
-      Tag = 2
-      Left = 1
-      Top = 2
-      Width = 531
-      Height = 2
-    end
-    object lblSurgery1: TStaticText
-      Tag = 2
-      Left = 103
-      Top = 8
-      Width = 284
-      Height = 17
-      Caption = 'This document title must be associated with a surgery case.'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 1
-    end
-    object lblSurgery2: TStaticText
-      Tag = 2
-      Left = 93
-      Top = 22
-      Width = 335
-      Height = 17
-      Caption = 
-        'Select one of the following or press cancel and choose a differe' +
-        'nt title.'
-      TabOrder = 2
-    end
-    object lstSurgery: TORListBox
-      Tag = 2
-      Left = 0
-      Top = 52
-      Width = 543
-      Height = 101
-      Align = alBottom
-      ItemHeight = 13
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 0
-      Caption = 'Associated Surgery Case'
-      ItemTipColor = clWindow
-      LongList = False
-      Pieces = '3,2,4'
-      TabPositions = '16,60,85'
-    end
-  end
-  object pnlConsults: TORAutoPanel [15]
+  object pnlConsults: TPanel [14]
     Tag = 1
     Left = 0
     Top = 370
@@ -323,72 +240,8 @@ inherited frmNoteProperties: TfrmNoteProperties
     Height = 153
     Align = alBottom
     BevelOuter = bvNone
-    TabOrder = 7
+    TabOrder = 6
     Visible = False
-    object lblConsult1: TLabel
-      Tag = 1
-      Left = 3
-      Top = 8
-      Width = 309
-      Height = 13
-      Caption = 
-        'This progress note title must be associated with a consult reque' +
-        'st.'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ParentFont = False
-    end
-    object lblConsult2: TLabel
-      Tag = 1
-      Left = 3
-      Top = 22
-      Width = 247
-      Height = 13
-      Caption = 'Select one of the following or choose a different title.'
-    end
-    object lblCsltDate: TLabel
-      Tag = 1
-      Left = 2
-      Top = 40
-      Width = 104
-      Height = 13
-      Caption = 'Consult Request Date'
-    end
-    object lblCsltServ: TLabel
-      Tag = 1
-      Left = 128
-      Top = 40
-      Width = 36
-      Height = 13
-      Caption = 'Service'
-    end
-    object lblCsltProc: TLabel
-      Tag = 1
-      Left = 261
-      Top = 40
-      Width = 49
-      Height = 13
-      Caption = 'Procedure'
-    end
-    object lblCsltStat: TLabel
-      Tag = 1
-      Left = 416
-      Top = 40
-      Width = 30
-      Height = 13
-      Caption = 'Status'
-    end
-    object lblCsltNotes: TLabel
-      Tag = 1
-      Left = 482
-      Top = 40
-      Width = 38
-      Height = 13
-      Caption = '# Notes'
-    end
     object bvlConsult: TBevel
       Tag = 1
       Left = 1
@@ -396,44 +249,122 @@ inherited frmNoteProperties: TfrmNoteProperties
       Width = 531
       Height = 2
     end
-    object lstRequests: TORListBox
-      Tag = 1
+    object pnlCTop: TPanel
       Left = 0
-      Top = 52
+      Top = 0
       Width = 543
-      Height = 101
-      Align = alBottom
-      ItemHeight = 13
-      ParentShowHint = False
-      ShowHint = True
+      Height = 41
+      Align = alTop
+      BevelOuter = bvNone
       TabOrder = 0
-      Caption = 'Associated Consult Request'
-      ItemTipColor = clWindow
-      LongList = False
-      Pieces = '2,3,4,5,6'
-      TabPositions = '21,43,69,83'
-      OnChange = lstRequestsChange
+      object pnlCButtons: TPanel
+        Left = 334
+        Top = 0
+        Width = 209
+        Height = 41
+        Align = alRight
+        BevelOuter = bvNone
+        TabOrder = 0
+        object btnShowList: TButton
+          Left = 21
+          Top = 10
+          Width = 100
+          Height = 21
+          Caption = 'Show Unresolved'
+          TabOrder = 0
+          OnClick = btnShowListClick
+        end
+        object btnDetails: TButton
+          Left = 127
+          Top = 10
+          Width = 75
+          Height = 21
+          Caption = 'Show Details'
+          TabOrder = 1
+          OnClick = btnDetailsClick
+        end
+      end
+      object pnlCText: TPanel
+        Left = 0
+        Top = 0
+        Width = 334
+        Height = 41
+        Align = alClient
+        BevelOuter = bvNone
+        TabOrder = 1
+        object lblConsult1: TLabel
+          Tag = 1
+          Left = 3
+          Top = 10
+          Width = 309
+          Height = 13
+          Caption = 
+            'This progress note title must be associated with a consult reque' +
+            'st.'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ParentFont = False
+        end
+        object lblConsult2: TLabel
+          Tag = 1
+          Left = 3
+          Top = 22
+          Width = 247
+          Height = 13
+          Caption = 'Select one of the following or choose a different title.'
+        end
+      end
     end
-    object btnShowList: TButton
-      Left = 335
-      Top = 13
-      Width = 100
-      Height = 21
-      Caption = 'Show Unresolved'
+    object lstRequests: TCaptionListView
+      Left = 0
+      Top = 41
+      Width = 543
+      Height = 112
+      Margins.Left = 8
+      Margins.Right = 8
+      Align = alClient
+      Columns = <
+        item
+          Caption = 'Consult Request Date'
+          Width = 120
+        end
+        item
+          Caption = 'Service'
+          Tag = 1
+          Width = 120
+        end
+        item
+          Caption = 'Procedure'
+          Tag = 2
+          Width = 160
+        end
+        item
+          Caption = 'Status'
+          Width = 70
+        end
+        item
+          Caption = '# Notes'
+        end>
+      HideSelection = False
+      HoverTime = 0
+      IconOptions.WrapText = False
+      ReadOnly = True
+      RowSelect = True
+      ParentShowHint = False
+      ShowWorkAreas = True
+      ShowHint = True
       TabOrder = 1
-      OnClick = btnShowListClick
-    end
-    object btnDetails: TButton
-      Left = 450
-      Top = 13
-      Width = 75
-      Height = 21
-      Caption = 'Show Details'
-      TabOrder = 2
-      OnClick = btnDetailsClick
+      ViewStyle = vsReport
+      OnChange = CaptionListView1Change
+      AutoSize = False
+      Caption = 'Associated Consult Request'
+      Pieces = '2,3,4,5,6'
     end
   end
-  object pnlPRF: TORAutoPanel [16]
+  object pnlPRF: TPanel [15]
     Tag = 3
     Left = 0
     Top = 523
@@ -441,7 +372,7 @@ inherited frmNoteProperties: TfrmNoteProperties
     Height = 153
     Align = alBottom
     BevelOuter = bvNone
-    TabOrder = 8
+    TabOrder = 7
     Visible = False
     object lblPRF: TLabel
       Tag = 1
@@ -497,6 +428,97 @@ inherited frmNoteProperties: TfrmNoteProperties
       RowSelect = True
       TabOrder = 0
       ViewStyle = vsReport
+      AutoSize = False
+    end
+  end
+  object pnlSurgery: TPanel [16]
+    Tag = 2
+    Left = 0
+    Top = 217
+    Width = 543
+    Height = 153
+    Align = alBottom
+    BevelOuter = bvNone
+    TabOrder = 12
+    Visible = False
+    object bvlSurgery: TBevel
+      Tag = 2
+      Left = 1
+      Top = 2
+      Width = 531
+      Height = 2
+    end
+    object lblSurgery1: TStaticText
+      Tag = 2
+      AlignWithMargins = True
+      Left = 100
+      Top = 8
+      Width = 440
+      Height = 17
+      Margins.Left = 100
+      Margins.Top = 8
+      Margins.Bottom = 0
+      Align = alTop
+      Caption = 'This document title must be associated with a surgery case.'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 0
+    end
+    object lblSurgery2: TStaticText
+      Tag = 2
+      AlignWithMargins = True
+      Left = 90
+      Top = 25
+      Width = 450
+      Height = 17
+      Margins.Left = 90
+      Margins.Top = 0
+      Align = alTop
+      Caption = 
+        'Select one of the following or press cancel and choose a differe' +
+        'nt title.'
+      TabOrder = 1
+    end
+    object lstSurgery: TCaptionListView
+      Left = 0
+      Top = 45
+      Width = 543
+      Height = 108
+      Margins.Left = 8
+      Margins.Right = 8
+      Align = alClient
+      Columns = <
+        item
+          Caption = 'Surgery Date'
+          Width = 180
+        end
+        item
+          Caption = 'Procedure'
+          Tag = 1
+          Width = 100
+        end
+        item
+          Caption = 'Surgeon'
+          Tag = 2
+          Width = 160
+        end>
+      HideSelection = False
+      HoverTime = 0
+      IconOptions.WrapText = False
+      ReadOnly = True
+      RowSelect = True
+      ParentShowHint = False
+      ShowWorkAreas = True
+      ShowHint = True
+      TabOrder = 2
+      ViewStyle = vsReport
+      AutoSize = False
+      Caption = 'Associated Surgery Case'
+      Pieces = '3,2,4'
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
@@ -506,7 +528,7 @@ inherited frmNoteProperties: TfrmNoteProperties
         'Status = stsDefault')
       (
         'Component = calNote'
-        'Label = lblDateTime'
+        'Text = Date/Time of Note. Press the enter key to access.'
         'Status = stsOK')
       (
         'Component = cboAuthor'
@@ -525,8 +547,20 @@ inherited frmNoteProperties: TfrmNoteProperties
         'Status = stsDefault')
       (
         'Component = calProcDateTime'
-        'Property = Caption'
+        'Text = Procedure Date/Time. Press the enter key to access.'
         'Status = stsOK')
+      (
+        'Component = pnlConsults'
+        'Status = stsDefault')
+      (
+        'Component = pnlPRF'
+        'Status = stsDefault')
+      (
+        'Component = lvPRF'
+        'Status = stsDefault')
+      (
+        'Component = frmNoteProperties'
+        'Status = stsDefault')
       (
         'Component = pnlSurgery'
         'Status = stsDefault')
@@ -540,10 +574,13 @@ inherited frmNoteProperties: TfrmNoteProperties
         'Component = lstSurgery'
         'Status = stsDefault')
       (
-        'Component = pnlConsults'
+        'Component = pnlCTop'
         'Status = stsDefault')
       (
-        'Component = lstRequests'
+        'Component = pnlCButtons'
+        'Status = stsDefault')
+      (
+        'Component = pnlCText'
         'Status = stsDefault')
       (
         'Component = btnShowList'
@@ -552,13 +589,11 @@ inherited frmNoteProperties: TfrmNoteProperties
         'Component = btnDetails'
         'Status = stsDefault')
       (
-        'Component = pnlPRF'
-        'Status = stsDefault')
-      (
-        'Component = lvPRF'
-        'Status = stsDefault')
-      (
-        'Component = frmNoteProperties'
-        'Status = stsDefault'))
+        'Component = lstRequests'
+        
+          'Text = This progress note title must be associated with a consul' +
+          't request.'#13#10'Select one of the following or choose a different ti' +
+          'tle.'
+        'Status = stsOK'))
   end
 end

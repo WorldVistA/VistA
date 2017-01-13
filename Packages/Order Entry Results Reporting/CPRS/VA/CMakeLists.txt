@@ -13,5 +13,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-add_delphi_package(VAShared2007)
+add_delphi_package(VASharedXE3)
 add_subdirectory(VA508Accessibility)

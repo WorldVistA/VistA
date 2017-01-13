@@ -3,7 +3,7 @@ unit ORClasses;
 interface
 
 uses
-  SysUtils, Classes, Controls, ComCtrls, ExtCtrls, StdCtrls, Forms, ORFn;
+  SysUtils, System.Types, Classes, Controls, ComCtrls, ExtCtrls, StdCtrls, Forms, ORFn;
 
 type
   TNotifyProc = procedure(Sender: TObject);

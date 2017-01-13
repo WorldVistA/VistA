@@ -57,7 +57,7 @@ function GetFormattedLabReport(AReport: string; ADaysBack: Integer; const Patien
   ATests: TStrings; ADate1, ADate2: TFMDateTime; ARemoteSiteID, ARemoteQuery: string): TStrings;
 function TestInfo(Test: String): TStrings;
 function LabPatchInstalled: boolean;
-
+function UseRadioButtons: Boolean;
 
 implementation
 
@@ -371,6 +371,20 @@ begin
         PatchChecked := True;
       end;
   Result := uLabPatchInstalled.PatchInstalled;
+end;
+
+function UseRadioButtons: Boolean;
+var
+  aRPC :TStringList;
+begin
+  aRPC := TStringList.Create;
+  aRPC.Clear;
+  Result := false;
+  aRPC.Add('ORWRP1A RADIO^1');
+  if RPCCheck(aRPC) then //checks for RPC (valid/active)
+    Result := sCallV(piece(aRPC[0],'^',1),[nil]) = '1';
+  aRPC.Clear;
+  aRPC.Free;
 end;
 
 end.

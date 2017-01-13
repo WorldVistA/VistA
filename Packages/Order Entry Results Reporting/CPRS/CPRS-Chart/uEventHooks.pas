@@ -153,7 +153,7 @@ begin
     begin
       if RPCName <> '' then
       begin
-        tmpRPCVersion := RPCBrokerV.RpcVersion;
+        tmpRPCVersion := String(RPCBrokerV.RpcVersion);
         tmpClearParameters := RPCBrokerV.ClearParameters;
         tmpClearResults := RPCBrokerV.ClearResults;
         tmpResults := RPCBrokerV.Results.Text;
@@ -250,7 +250,7 @@ end;
 
 function TCPRSBroker.Server: WideString;
 begin
-  Result := RPCBrokerV.Server;
+  Result := WideString(RPCBrokerV.Server);
 end;
 
 procedure TCPRSBroker.Set_ClearParameters(Value: WordBool);
@@ -304,7 +304,7 @@ end;
 procedure TCPRSBroker.Initialize;
 begin
   FContext := '';
-  FRPCVersion := RPCBrokerV.RpcVersion;
+  FRPCVersion := String(RPCBrokerV.RpcVersion);
   FClearParameters := RPCBrokerV.ClearParameters;
   FClearResults := RPCBrokerV.ClearResults;
   FResults := '';

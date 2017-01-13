@@ -6,7 +6,7 @@ uses
   SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
   Forms, Dialogs, ORFn, uProbs, StdCtrls, Buttons, ExtCtrls, ORctrls, uConst,
   fAutoSz, uInit, fBase508Form, VA508AccessibilityManager, Grids, fProbFreetext,
-  ComCtrls, Windows, rPCE, mTreeGrid;
+  ComCtrls, Windows, rPCE, mTreeGrid, VA508AccessibilityRouter;
 
 type
   TfrmPLLex = class(TfrmBase508Form)
@@ -79,6 +79,7 @@ uses
 var
  ProblemNOSs: TStringList;
  TriedExtend: Boolean = false;
+ InitSearch: Boolean = false; // dont want to speak while searching
 
 const
   TX799 = '799.9';
@@ -141,6 +142,8 @@ begin
   lblStatus.caption := status;
   lblStatus.Invalidate;
   lblStatus.Update;
+  if ScreenReaderSystemActive then
+      GetScreenReader.Speak(lblStatus.caption);
 end;
 
 procedure TfrmPLLex.SetICDVersion(ADate: TFMDateTime = 0);
@@ -260,6 +263,9 @@ begin
   SetICDVersion(ADate);
   tgfLex.HorizPanelSpace := 8;
   tgfLex.VertPanelSpace := 4;
+
+  tgfLex.DefTreeViewWndProc := tgfLex.tv.WindowProc;
+  tgfLex.tv.WindowProc := tgfLex.TreeViewWndProc;
 end;
 
 procedure TfrmPLLex.ebLexKeyPress(Sender: TObject; var Key: Char);
@@ -347,6 +353,8 @@ begin
 end;
 
 procedure TfrmPLLex.tgfLextvChange(Sender: TObject; Node: TTreeNode);
+Var
+ ReaderTxt: TStringList;
 begin
   inherited;
   tgfLex.tvChange(Sender, Node);
@@ -360,6 +368,26 @@ begin
     bbOK.Enabled := true;
     bbOK.Default := true;
     bbSearch.Default := false;
+
+    if not InitSearch then
+    begin
+     ReaderTxt := TStringList.Create;
+     try
+     if ScreenReaderSystemActive then
+      if tgfLex.mmoDesc.visible then
+       ReaderTxt.Add('Description: ' + tgfLex.mmoDesc.Lines.Text);
+      if tgfLex.mmoCode.visible then
+       ReaderTxt.Add(tgfLex.CodeTitle + ' '+  tgfLex.mmoCode.Lines.Text);
+      if tgfLex.pnlTargetCodeSys.Visible then
+
+      //if tgfLex.mmoTargetCode.visible then
+       ReaderTxt.Add(tgfLex.TargetTitle + ' ' + tgfLex.mmoTargetCode.Lines.Text);
+
+       GetScreenReader.Speak(ReaderTxt.Text);
+     finally
+       ReaderTxt.Free;
+     end;
+    end;
   end;
 end;
 
@@ -393,7 +421,9 @@ begin
   TriedExtend := false;
   ProblemNOSs.Clear;
   DisableFreeText;
+  InitSearch := true;
   processSearch(false);
+  InitSearch := false;
 end;
 
 procedure TfrmPLLex.SetColumnTreeModel(ResultSet: TStrings);

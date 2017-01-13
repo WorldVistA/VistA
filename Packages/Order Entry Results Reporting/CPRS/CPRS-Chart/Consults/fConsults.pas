@@ -11,7 +11,7 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs, ORDtTm,
   fHSplit, stdCtrls, ExtCtrls, Menus, ComCtrls, ORCtrls, ORFn, uConsults, rOrders, uPCE,
   ORClasses, uConst, fDrawers, rTIU, uTIU, uDocTree, RichEdit, fPrintList,
-  VA508AccessibilityManager, fBase508Form, VA508ImageListLabeler;
+  VA508AccessibilityManager, fBase508Form, VA508ImageListLabeler, ORextensions;
 
 type
   TfrmConsults = class(TfrmHSplit)
@@ -324,9 +324,7 @@ type
     procedure CompleteConsult(IsIDChild: boolean; AnIDParent: integer; UseClinProcTitles: boolean);
     procedure InsertAddendum;
     procedure SetSubjectVisible(ShouldShow: Boolean);
-    procedure SaveCurrentNote(var Saved: Boolean);
     procedure SaveEditedConsult(var Saved: Boolean);
-    procedure SetEditingIndex(const Value: Integer);
     procedure ShowPCEControls(ShouldShow: Boolean);
     procedure SetActionMenus ;
     procedure SetResultMenus ;
@@ -340,7 +338,6 @@ type
     function StartNewEdit(NewNoteType: integer): Boolean;
     procedure UnlockConsultRequest(ANote: Int64; AConsult: Integer = 0);
     function CanFinishReminder: boolean;
-    property EditingIndex: Integer read FEditingIndex write SetEditingIndex;
     function VerifyNoteTitle: Boolean;
     procedure UpdateNoteTreeView(DocList: TStringList; Tree: TORTreeView; AContext: integer);
     procedure EnableDisableIDNotes;
@@ -349,6 +346,7 @@ type
     procedure DoAttachIDChild(AChild, AParent: TORTreeNode);
     function UserIsSigner(NoteIEN: integer): boolean;
   public
+    property OrderID: string read FOrderID;
     function CustomCanFocus(Control: TWinControl): Boolean; //CB
     function LinesVisible(richedit: Trichedit): integer; //CB
     function ActiveEditOf(AnIEN: Int64): Boolean;
@@ -362,8 +360,10 @@ type
     procedure NotifyOrder(OrderAction: Integer; AnOrder: TOrder); override;
     function AuthorizedUser: Boolean;
     procedure AssignRemForm;
-    property OrderID: string read FOrderID;
     procedure LstConsultsToPrint;
+    procedure SaveCurrentNote(var Saved: Boolean);
+    procedure SetEditingIndex(const Value: Integer);
+    property EditingIndex: Integer read FEditingIndex write SetEditingIndex;
   published
     property Drawers: TFrmDrawers read GetDrawers; // Keep Drawers published
   end;
@@ -399,9 +399,10 @@ uses fVisit, rCore, uCore, rConsults, fConsultBS, fConsultBD, fSignItem,
      Clipbrd, rReports, fRptBox, fConsult513Prt, fODConsult, fODProc, fCsltNote, fAddlSigners,
      fOrders, rVitals, fFrame, fNoteDR, fEditProc, fEditConsult, uOrders, rODBase, uSpell, {*KCM*}
      fTemplateEditor, fNotePrt, fNotes, fNoteProps, fNotesBP, fReminderTree,
-     fReminderDialog, uReminders, fConsMedRslt, fTemplateFieldEditor,
-     dShared, rTemplates, fIconLegend, fNoteIDParents, fNoteCPFields,
-     uTemplates, fTemplateDialog, DateUtils, uVA508CPRSCompatibility, VA508AccessibilityRouter;
+     fReminderDialog, uReminders, fConsMedRslt, fTemplateFieldEditor, System.Types,
+     dShared, rTemplates, fIconLegend, fNoteIDParents, fNoteCPFields, rECS, ORNet, trpcb,
+     uTemplates, fTemplateDialog, DateUtils, uVA508CPRSCompatibility, VA508AccessibilityRouter,
+     System.UITypes;
 
 const
   CT_ORDERS =   4;                               // ID for orders tab used by frmFrame
@@ -551,6 +552,15 @@ var
   uIDNotesActive: boolean;
 
 { TPage common methods --------------------------------------------------------------------- }
+
+procedure TfrmConsults.SetEditingIndex(const Value: Integer);
+begin
+  FEditingIndex := Value;
+  if(FEditingIndex < 0) then
+    KillReminderDialog(Self);
+  if(assigned(frmReminderTree)) then
+    frmReminderTree.EnableActions;
+end;
 
 function TfrmConsults.AllowContextChange(var WhyNot: string): Boolean;
 begin
@@ -830,6 +840,7 @@ begin
         FEditNote.NeedCPT  := uPCEEdit.CPTRequired;
          // create the note
         PutNewNote(CreatedNote, FEditNote);
+
         uPCEEdit.NoteIEN := CreatedNote.IEN;
         if CreatedNote.IEN > 0 then LockDocument(CreatedNote.IEN, CreatedNote.ErrorText);
         if CreatedNote.ErrorText = '' then
@@ -915,7 +926,8 @@ begin
     begin
       DocInfo := MakeXMLParamTIU(IntToStr(CreatedNote.IEN), FEditNote);
       ExecuteTemplateOrBoilerPlate(TmpBoilerPlate, FEditNote.Title, ltTitle, Self, 'Title: ' + FEditNote.TitleName, DocInfo);
-      QuickCopyWith508Msg(TmpBoilerPlate, memResults);
+      memResults.Lines.Text := TmpBoilerPlate.Text;
+      SpeakStrings(TmpBoilerPlate);
       TmpBoilerPlate.Free;
     end;
     if EnableAutosave then // Don't enable autosave until after dialog fields have been resolved
@@ -975,6 +987,7 @@ begin
     FEditNote.LocationName := ExternalName(uPCEEdit.Location, 44);
     FEditNote.VisitDate    := uPCEEdit.DateTime;
     PutAddendum(CreatedNote, FEditNote, FEditNote.Addend);
+
     uPCEEdit.NoteIEN := CreatedNote.IEN;
     if CreatedNote.IEN > 0 then LockDocument(CreatedNote.IEN, CreatedNote.ErrorText);
     if CreatedNote.ErrorText = '' then
@@ -1118,7 +1131,8 @@ begin
     begin
       DocInfo := MakeXMLParamTIU(IntToStr(lstNotes.ItemIEN), FEditNote);
       ExecuteTemplateOrBoilerPlate(TmpBoilerPlate, FEditNote.Title, ltTitle, Self, 'Title: ' + FEditNote.TitleName, DocInfo);
-      QuickCopyWith508Msg(TmpBoilerPlate, memResults);
+      memResults.Lines.Text := TmpBoilerPlate.Text;
+      SpeakStrings(TmpBoilerPlate);
       TmpBoilerPlate.Free;
     end;
     if EnableAutosave then // Don't enable autosave until after dialog fields have been resolved
@@ -2219,7 +2233,7 @@ begin
 //  tvConsults.Enabled := False;
   x := Piece(lstConsults.Items[lstConsults.ItemIndex], U, 12);
   if x <> '' then
-    IsProcedure := (x[1] in ['P', 'M'])
+    IsProcedure := CharInSet(x[1], ['P', 'M'])
   else
     IsProcedure := (Piece(lstConsults.Items[lstConsults.ItemIndex], U, 9) = 'Procedure');
   //if SetActionContext(Font.Size,FActionType, IsProcedure, ConsultRec.ConsultProcedure) then
@@ -2773,8 +2787,9 @@ end;
 procedure TfrmConsults.popNoteMemoPasteClick(Sender: TObject);
 begin
   inherited;
-  FEditCtrl.SelText := Clipboard.AsText; {*KCM*}
-  //FEditCtrl.PasteFromClipboard;        // use AsText to prevent formatting
+ // FEditCtrl.SelText := Clipboard.AsText; {*KCM*}
+  ScrubTheClipboard;
+  FEditCtrl.PasteFromClipboard;        // use AsText to prevent formatting
 end;
 
 procedure TfrmConsults.popNoteMemoReformatClick(Sender: TObject);
@@ -3569,15 +3584,6 @@ begin
   Result := frmDrawers;
 end;
 
-procedure TfrmConsults.SetEditingIndex(const Value: Integer);
-begin
-  FEditingIndex := Value;
-  if(FEditingIndex < 0) then
-    KillReminderDialog(Self);
-  if(assigned(frmReminderTree)) then
-    frmReminderTree.EnableActions;
-end;
-
 function TfrmConsults.LockConsultRequest(AConsult: Integer): Boolean;
 { returns true if consult successfully locked }
 begin
@@ -3723,7 +3729,46 @@ begin
             with tvCsltNotes do Selected := FindPieceNode(ANoteID, 1, U, Items.GetFirstNode);
           end;
       end;
-  end;
+  end else
+    //notes section
+    if frmNotes.EditingIndex > -1 then
+    begin
+      case NewNoteType of
+        NT_ACT_ADDENDUM: begin
+            Msg := TX_NEW_SAVE1 + MakeConsultNoteDisplayText(frmNotes.lstNotes.Items
+              [frmNotes.EditingIndex]) + TX_NEW_SAVE3;
+            CapMsg := TC_NEW_SAVE3;
+          end;
+        NT_ACT_EDIT_NOTE: begin
+            Msg := TX_NEW_SAVE1 + MakeConsultNoteDisplayText(frmNotes.lstNotes.Items
+              [frmNotes.EditingIndex]) + TX_NEW_SAVE4;
+            CapMsg := TC_NEW_SAVE4;
+          end;
+        NT_ACT_ID_ENTRY: begin
+            Msg := TX_NEW_SAVE1 + MakeConsultNoteDisplayText(frmNotes.lstNotes.Items
+              [frmNotes.EditingIndex]) + TX_NEW_SAVE5;
+            CapMsg := TC_NEW_SAVE5;
+          end;
+      else
+        begin
+          Msg := TX_NEW_SAVE1 + MakeNoteDisplayText(frmNotes.lstNotes.Items
+            [frmNotes.EditingIndex]) + TX_NEW_SAVE2;
+          CapMsg := TC_NEW_SAVE2;
+        end;
+      end;
+      if InfoBox(Msg, CapMsg, MB_YESNO) = IDNO then Result := False
+      else
+      begin
+        frmNotes.SaveCurrentNote(Saved);
+        if not Saved then Result := False
+        else
+        begin
+          with tvConsults do Selected := FindPieceNode(AConsultID, 1, U, Items.GetFirstNode);
+          tvConsultsClick(Self);
+          with tvCsltNotes do Selected := FindPieceNode(ANoteID, 1, U, Items.GetFirstNode);
+        end;
+      end;
+    end;
 end;
 
 function TfrmConsults.LacksRequiredForCreate: Boolean;
@@ -3976,7 +4021,11 @@ begin
     RightPanel := pnlRight;
     CanFinishProc := CanFinishReminder;
     DisplayPCEProc := DisplayPCE;
-    Drawers := frmDrawers;
+
+    DrawerReminderTV := Drawers.tvReminders;
+    DrawerReminderTreeChange := Drawers.NotifyWhenRemTreeChanges;
+    DrawerRemoveReminderTreeChange := Drawers.RemoveNotifyWhenRemTreeChanges;
+
     NewNoteRE := memResults;
     NoteList := lstNotes;
   end;
@@ -4006,7 +4055,8 @@ var
   procedure AssignBoilerText;
   begin
     ExecuteTemplateOrBoilerPlate(BoilerText, FEditNote.Title, ltTitle, Self, 'Title: ' + FEditNote.TitleName, DocInfo);
-    QuickCopyWith508Msg(BoilerText, memResults);
+    memResults.Lines.Text := BoilerText.Text;
+    SpeakStrings(BoilerText);
     FChanged := False;
   end;
 
@@ -4021,19 +4071,18 @@ begin
        assigned(GetLinkedTemplate(IntToStr(FEditNote.Title), ltTitle)) then
     begin
       DocInfo := MakeXMLParamTIU(IntToStr(lstNotes.ItemIEN), FEditNote);
-      if NoteEmpty then AssignBoilerText else
-      begin
+      if NoteEmpty then AssignBoilerText else begin
         case QueryBoilerPlate(BoilerText) of
         0:  { do nothing } ;                         // ignore
-        1: begin
-             ExecuteTemplateOrBoilerPlate(BoilerText, FEditNote.Title, ltTitle, Self, 'Title: ' + FEditNote.TitleName, DocInfo);
-             QuickCopyWith508Msg(BoilerText, memResults);  // append
-           end;
-        2: AssignBoilerText;                         // replace
+        1:  begin // append
+              ExecuteTemplateOrBoilerPlate(BoilerText, FEditNote.Title, ltTitle, Self, 'Title: ' + FEditNote.TitleName, DocInfo);
+              memResults.Lines.AddStrings(BoilerText);
+              SpeakStrings(BoilerText);
+            end;
+        2:  AssignBoilerText;                         // replace
         end;
       end;
-    end else
-    begin
+    end else begin
       if Sender = mnuActLoadBoiler
         then InfoBox(TX_NO_BOIL, TC_NO_BOIL, MB_OK)
         else
@@ -4135,8 +4184,11 @@ end;
 
 procedure TfrmConsults.UpdateNoteTreeView(DocList: TStringList; Tree: TORTreeView; AContext: integer);
 var
-  i: integer;
+  ReturnCursor, I: Integer;
 begin
+  ReturnCursor := Screen.Cursor;
+  Screen.Cursor := crHourGlass;
+  try
   with Tree do
     begin
       uChanging := True;
@@ -4148,10 +4200,13 @@ begin
           lstNotes.Items.Add(DocList[i]);
         end;
       FCurrentNoteContext.Status := IntToStr(AContext);
-      BuildDocumentTree(DocList, '0', Tree, nil, FCurrentNoteContext, CT_CONSULTS);
+      BuildDocumentTree2(DocList, Tree, FCurrentNoteContext, CT_CONSULTS);
       Items.EndUpdate;
       uChanging := False;
     end;
+  finally
+   Screen.Cursor := ReturnCursor;
+  end;
 end;
 
 procedure TfrmConsults.tvCsltNotesChange(Sender: TObject; Node: TTreeNode);
@@ -4212,6 +4267,11 @@ begin
           lstNotesClick(Self);
           SendMessage(memConsult.Handle, WM_VSCROLL, SB_TOP, 0);
         end;
+
+     //display orphaned warning
+     if PDocTreeObject(Selected.Data)^.Orphaned then
+       MessageDlg(ORPHANED_NOTE_TEXT, mtInformation, [mbOK], -1);
+
     end;
 end;
 

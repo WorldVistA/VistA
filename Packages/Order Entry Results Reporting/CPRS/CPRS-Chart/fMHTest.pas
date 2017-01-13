@@ -93,7 +93,7 @@ var
 
 implementation
 
-uses fFrame,rReminders, VA508AccessibilityRouter;
+uses rMisc, fFrame,rReminders, VA508AccessibilityRouter;
 
 {$R *.DFM}
 
@@ -152,18 +152,27 @@ type
   end;
 
 const
-  MHDLLName = 'YS_MHA_A.DLL';
+ DLL_PARAM = 'The YS MHA_A DLL NAME parameter is not setup on this system. Please contact your IRM';
+ // MHDLLName = 'YS_MHA_A_XE3.DLL';
   //MHDLLAUXName = 'YS_MHA_AUX.DLL';
+var
+ MHDLLName: string;
 
 procedure LoadMHDLL;
-var
-  MHPath: string;
+//var
+//  MHPath: string;
 
 begin
-  if MHDLLHandle = 0 then
-  begin
-    MHPath := GetProgramFilesPath + SHARE_DIR + MHDLLName;
-    MHDLLHandle := LoadLibrary(PChar(MHPath));
+  if MHDLLHandle = 0 then begin
+    MHDLLName := GetUserParam('YS MHA_A DLL NAME');
+    if Trim(MHDLLName) = '' then begin
+      ShowMessage(DLL_PARAM);
+ //    exit;
+    end else begin
+      MHDLLHandle := LoadDll(MHDLLName);
+    end;
+//    MHPath := GetProgramFilesPath + SHARE_DIR + MHDLLName;
+//    MHDLLHandle := LoadLibrary(PChar(MHPath));
   end;
 end;
 
@@ -179,7 +188,7 @@ end;
 procedure ProcessMsg;
 var
   SaveCursor: TCursor;
-  
+
 begin
   if(Screen.Cursor = crHourGlass) then
   begin

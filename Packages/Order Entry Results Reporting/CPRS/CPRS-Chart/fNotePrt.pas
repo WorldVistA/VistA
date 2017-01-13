@@ -59,14 +59,22 @@ procedure PrintNote(ANote: Longint; const ANoteTitle: string; MultiNotes: boolea
 var
   frmNotePrint: TfrmNotePrint;
   DefPrt: string;
+  AllowToPrint: string;
+  AllowPrint: Shortint;
+
 begin
-  frmNotePrint := TfrmNotePrint.Create(Application);
-  try
-    ResizeFormToFont(TForm(frmNotePrint));
-    with frmNotePrint do
-    begin
-      { check to see of Chart Print allowed outside of MAS }
-      if AllowChartPrintForNote(ANote) then
+  AllowToPrint := AllowPrintOfNote(ANote);
+  AllowPrint := strtoint(Piece(AllowToPrint, U, 1));
+  if AllowPrint > 0 then
+  begin
+    frmNotePrint := TfrmNotePrint.Create(Application);
+    try
+      ResizeFormToFont(TForm(frmNotePrint));
+      with frmNotePrint do
+      begin
+        { check to see of Chart Print allowed outside of MAS }
+        //if AllowChartPrintForNote(ANote) then
+        if AllowPrint = 2 then
         begin
           {This next code begs the question: Why are we even bothering to check
           radWorkCopy if we immediately check the other button?
@@ -80,21 +88,20 @@ begin
           }
           radWorkCopy.Checked := True;
           radChartCopy.Checked := True;
-        end
-      else
+        end else
         begin
           radChartCopy.Enabled := False;
           radWorkCopy.Checked := True;
         end;
 
-      lblNoteTitle.Text := ANoteTitle;
-      frmNotePrint.Caption := 'Print ' + Piece(Piece(ANoteTitle, #9, 2), ',', 1);
-      FNote := ANote;
-      DefPrt := GetDefaultPrinter(User.Duz, Encounter.Location);
+        lblNoteTitle.Text := ANoteTitle;
+        frmNotePrint.Caption := 'Print ' + Piece(Piece(ANoteTitle, #9, 2), ',', 1);
+        FNote := ANote;
+        DefPrt := GetDefaultPrinter(User.Duz, Encounter.Location);
 
-      if User.CurrentPrinter = '' then User.CurrentPrinter := DefPrt;
+        if User.CurrentPrinter = '' then User.CurrentPrinter := DefPrt;
 
-      with cboDevice do
+        with cboDevice do
         begin
           if Printer.Printers.Count > 0 then
             begin
@@ -110,20 +117,23 @@ begin
             InitLongList('');
         end;
 
-      if ((DefPrt = 'WIN;Windows Printer') and (User.CurrentPrinter = DefPrt)) then
-        cmdOKClick(frmNotePrint) //CQ6660
-        //Commented out for CQ6660
-         //or
-         //((User.CurrentPrinter <> '') and
-          //(MultiNotes = True)) then
-           //frmNotePrint.cmdOKClick(frmNotePrint)
-        //end CQ6660
-      else
-        frmNotePrint.ShowModal;
+        if ((DefPrt = 'WIN;Windows Printer') and (User.CurrentPrinter = DefPrt)) then
+          cmdOKClick(frmNotePrint) //CQ6660
+          //Commented out for CQ6660
+          //or
+          //((User.CurrentPrinter <> '') and
+            //(MultiNotes = True)) then
+            //frmNotePrint.cmdOKClick(frmNotePrint)
+          //end CQ6660
+        else
+          frmNotePrint.ShowModal;
+      end;
+    finally
+      frmNotePrint.Release;
     end;
-  finally
-    frmNotePrint.Release;
-  end;
+  end
+  else
+    InfoBox(Piece(AllowToPrint, U, 2), 'Not Allowed to Print', MB_OK);
 end;
 
 procedure TfrmNotePrint.DisplaySelectDevice;

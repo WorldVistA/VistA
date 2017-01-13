@@ -1,3 +1,7 @@
+{$WARN UNSAFE_CODE OFF}
+{$WARN UNSAFE_CAST OFF}
+{$WARN UNSAFE_TYPE OFF}
+
 unit VAUtils;
 
 {TODO  -oJeremy Merrill -cMessageHandlers : Change component list to use hex address for uComponentList
@@ -35,6 +39,7 @@ function Pieces(const S: string; Delim: char; FirstNum, LastNum: Integer): strin
 procedure FreeAndNilTStringsAndObjects(var Strings);
 
 // Returns true if a screen reader programm is running
+function OldScreenReaderActive: boolean;
 function ScreenReaderActive: boolean;
 
 // Special Coding for Screen Readers only enabled if screen reader was
@@ -197,7 +202,42 @@ function FileVersionValue(const AFileName, AValueName: string): string;
 // allows for . and , delimited version numbers
 function VersionOK(OriginalVersion, CheckVersion: string): boolean;
 
+{================================================================================================}
+{  WidthInPixels - Function designed to give the width of the passed string in pixels using the  }
+{                  passed font.  Designed to be used when a canvas may not be available.         }
+{------------------------------------------------------------------------------------------------}
+{  AFont - Font the passed string will be using                                                  }
+{  Value - string being evaluated for pixel width                                                }
+{================================================================================================}
+function WidthInPixels(AFont: TFont; Value: string): integer;
+
+{===============================================================================================}
+{  HeightInPixels - Function designed to give the maximum height of the passed font in pixels.  }
+{                   Designed to be used when a canvas may not be available.                     }
+{-----------------------------------------------------------------------------------------------}
+{  AFont - Font to be evaluated for maximum pixel height                                        }
+{===============================================================================================}
+function HeightInPixels(AFont: TFont): integer;
+
+
+type
+  TD2006CmdLineSwitchType = (clstD2006ValueNextParam, clstD2006ValueAppended);
+  TD2006CmdLineSwitchTypes = set of TD2006CmdLineSwitchType;
+
+{ This version is used to return values.
+  Switch values may be specified in the following ways on the command line:
+    -p Value                - clstValueNextParam
+    -pValue or -p:Value     - clstValueAppended
+
+  Pass the SwitchTypes parameter to exclude either of these switch types.
+  Switch may be 1 or more characters in length. }
+function D2006FindCmdLineSwitch(const Switch: string; var Value: string; IgnoreCase: Boolean = True;
+  const SwitchTypes: TD2006CmdLineSwitchTypes = [clstD2006ValueNextParam, clstD2006ValueAppended]): Boolean;
+
+
 implementation
+
+uses tlhelp32;
 
 function Piece(const S: string; Delim: char; PieceNum: Integer): string;
 { returns the Nth piece (PieceNum) of a string delimited by Delim }
@@ -298,18 +338,54 @@ begin
   FreeAndNil(list);
 end;
 
+function ProcessExists(exeFileName: string): Boolean;
+var
+  ContinueLoop: BOOL;
+  FSnapshotHandle: THandle;
+  FProcessEntry32: TProcessEntry32;
+begin
+  FSnapshotHandle := CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+  FProcessEntry32.dwSize := SizeOf(FProcessEntry32);
+  ContinueLoop := Process32First(FSnapshotHandle, FProcessEntry32);
+  Result := False;
+  while Integer(ContinueLoop) <> 0 do
+  begin
+    if ((UpperCase(ExtractFileName(FProcessEntry32.szExeFile)) =
+      UpperCase(ExeFileName)) or (UpperCase(FProcessEntry32.szExeFile) =
+      UpperCase(ExeFileName))) then
+    begin
+      Result := True;
+    end;
+    ContinueLoop := Process32Next(FSnapshotHandle, FProcessEntry32);
+  end;
+  CloseHandle(FSnapshotHandle);
+end;
 
 function ScreenReaderActive: boolean;
+var
+ JawsParam: String;
+begin
+  Result := ProcessExists('jfw.exe');
+  if not Result then
+  begin
+   {$Ifdef VER180}
+     D2006FindCmdLineSwitch('SCREADER', JawsParam, True, [clstD2006ValueAppended]);
+    {$Else}
+      FindCmdLineSwitch('SCREADER', JawsParam, True, [clstValueAppended]);
+    {$EndIf}
+   if Trim(JawsParam) <> '' then
+    Result := ProcessExists(Trim(JawsParam));
+  end;
+end;
+
+function OldScreenReaderActive: boolean;
 var
   ListStateOn : longbool;
   Success: longbool;
 begin
   //Determine if a screen reader is currently being used.
   Success := SystemParametersInfo(SPI_GETSCREENREADER, 0, @ListStateOn,0);
-  if Success and ListStateOn then
-    Result := TRUE
-  else
-    Result := FALSE;
+  Result := (Success and ListStateOn);
 end;
 
 var
@@ -1326,7 +1402,7 @@ begin
     line := line + ' ' + Parameters;
   shell := CreateOleObject('WScript.Shell');
   try
-    exec := shell.Exec(line);
+   exec := shell.Exec(line);
     try
       While exec.status = 0 do
         Sleep(100);
@@ -1398,11 +1474,111 @@ begin
   end;
 end;
 
+{ WidthInPixels }
+function WidthInPixels(AFont:TFont; Value: string): integer;
+var
+  DC: HDC;          // working drawing context
+  SaveFont: HFont;  // current font
+  Extent: TSize;    // stores size of text sent to context
+begin
+  DC := GetDC(0);                                                         // get the drawing context of main window
+  try
+    SaveFont := SelectObject(DC, AFont.Handle);                           // save the current font and replace with passed font
+    try
+    {$Ifdef VER180}
+     GetTextExtentPoint32(DC, PAnsiChar(Value), length(Value), Extent);  // evaluate text in context
+    {$Else}
+       GetTextExtentPoint32(DC, PWideChar(Value), length(Value), Extent);  // evaluate text in context
+    {$EndIf}
+      Result := Extent.cx + 1;                                            // grab the width
+    finally
+      SelectObject(DC, SaveFont);                                         // restore the current font
+    end;
+  finally
+    ReleaseDC(0, DC);                                                     // release the drawing context
+  end;
+end;
+
+{ HeightInPixels }
+function HeightInPixels(AFont: TFont): integer;
+var
+  DC: HDC;                  // working drawing context
+  SaveFont: HFont;          // current font
+  FontMetrics: TTextMetric; // metric to contain information about passed font
+begin
+  DC := GetDC(0);                               // get the drawing context
+  try
+    SaveFont := SelectObject(DC, AFont.Handle); // save current font and replace with passed one
+    try
+      GetTextMetrics(DC, FontMetrics);          // get the metrics on the passed font
+      Result := FontMetrics.tmHeight;           // return the height metric
+    finally
+      SelectObject(DC, SaveFont);               // restore current font
+    end;
+  finally
+    ReleaseDC(0, DC);                           // release the drawing context
+  end;
+end;
+
+
+//Add functionality from XE3
+function D2006FindCmdLineSwitch(const Switch: string; var Value: string; IgnoreCase: Boolean = True;
+  const SwitchTypes: TD2006CmdLineSwitchTypes = [clstD2006ValueNextParam, clstD2006ValueAppended]): Boolean;
+type
+  TCompareProc = function(const S1, S2: string): Boolean;
+var
+  Param: string;
+  I, ValueOfs,
+  SwitchLen, ParamLen: Integer;
+  SameSwitch: TCompareProc;
+begin
+  Result := False;
+  Value := '';
+  if IgnoreCase then
+    SameSwitch := SameText else
+    SameSwitch := SameStr;
+  SwitchLen := Length(Switch);
+
+  for I := 1 to ParamCount do
+  begin
+    Param := ParamStr(I);
+
+//    if (Param[1] in SwitchChars) and  SameSwitch(System.Copy(Param, 2, SwitchLen), Switch) then
+    if CharInSet(Param[1], SwitchChars) and  SameSwitch(System.Copy(Param, 2, SwitchLen), Switch) then
+    begin
+      ParamLen := Length(Param);
+      // Look for an appended value if the param is longer than the switch
+      if (ParamLen > SwitchLen + 1) then
+      begin
+        // If not looking for appended value switches then this is not a matching switch
+        if not (clstD2006ValueAppended in SwitchTypes) then
+          Continue;
+        ValueOfs := SwitchLen + 1;
+        if Param[ValueOfs + 1] = ':' then
+          Inc(ValueOfs);
+        Value := System.Copy(Param, ValueOfs + 1, MaxInt);
+      end
+      // If the next param is not a switch, then treat it as the value
+      else if (clstD2006ValueNextParam in SwitchTypes) and (I < ParamCount) and
+              not CharInSet(ParamStr(I+1)[1], SwitchChars) then
+//              not (ParamStr(I+1)[1] in SwitchChars) then
+
+        Value := ParamStr(I+1);
+      Result := True;
+      Break;
+    end;
+  end;
+end;
+
+
 initialization
   ScreenReaderSupportEnabled;
 
 finalization
   CleanupMessageHandlerSystem;
 
+{$WARN UNSAFE_TYPE ON}
+{$WARN UNSAFE_CAST ON}
+{$WARN UNSAFE_CODE ON}
 end.
 

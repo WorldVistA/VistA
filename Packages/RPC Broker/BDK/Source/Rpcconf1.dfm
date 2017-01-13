@@ -17,6 +17,9 @@ object rpcConfig: TrpcConfig
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  DesignSize = (
+    428
+    157)
   PixelsPerInch = 96
   TextHeight = 16
   object cboServer: TComboBox
@@ -28,7 +31,6 @@ object rpcConfig: TrpcConfig
     Style = csDropDownList
     Anchors = [akLeft, akTop, akRight]
     DropDownCount = 6
-    ItemHeight = 16
     ParentShowHint = False
     ShowHint = True
     TabOrder = 0
@@ -127,9 +129,6 @@ object rpcConfig: TrpcConfig
     Font.Height = -13
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
-    ParentFont = False
-    TabOrder = 1
-    OnClick = btnOkClick
     Glyph.Data = {
       BE060000424DBE06000000000000360400002800000024000000120000000100
       0800000000008802000000000000000000000001000000010000000000000000
@@ -188,7 +187,10 @@ object rpcConfig: TrpcConfig
       0303}
     Margin = 2
     NumGlyphs = 2
+    ParentFont = False
     Spacing = -1
+    TabOrder = 1
+    OnClick = btnOkClick
     IsControl = True
   end
   object btnCancel: TBitBtn
@@ -203,12 +205,13 @@ object rpcConfig: TrpcConfig
     Font.Height = -13
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
-    ParentFont = False
-    TabOrder = 2
-    OnClick = butCancelClick
     Kind = bkCancel
     Margin = 2
+    NumGlyphs = 2
+    ParentFont = False
     Spacing = -1
+    TabOrder = 2
+    OnClick = butCancelClick
     IsControl = True
   end
   object btnHelp: TBitBtn
@@ -217,8 +220,9 @@ object rpcConfig: TrpcConfig
     Width = 85
     Height = 25
     Anchors = [akRight, akBottom]
-    TabOrder = 4
     Kind = bkHelp
+    NumGlyphs = 2
+    TabOrder = 4
   end
   object btnNew: TButton
     Left = 327

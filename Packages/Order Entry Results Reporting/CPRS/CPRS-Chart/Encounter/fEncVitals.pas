@@ -102,9 +102,7 @@ implementation
 {$R *.DFM}
 
 uses UCore, rCore, rPCE, fPCELex, fPCEOther, fVitals,fVisit, fFrame, fEncnt,
-     fEncounterFrame, uInit
-  //   , fGMV_InputTemp // Vitals Lite 2004-05-21
-     , VA508AccessibilityRouter;
+     fEncounterFrame, uInit, VA508AccessibilityRouter, System.UITypes;
 
 const
   TX_VDATE_REQ1 = 'Entered vitals information can not be saved without a Date.' + CRLF +
@@ -573,18 +571,19 @@ end;
 procedure TfrmEncVitals.btnEnterVitalsClick(Sender: TObject);
 var
   VLPtVitals : TGMV_VitalsEnterDLG;
-  GMV_FName : String;
+  //GMV_FName : String;
+  GMV_Fname: AnsiString;
 begin
   inherited;
   if VitalsDLLHandle = 0 then Exit;//The DLL was initialized on Create, but just in case....
   GMV_FName := 'GMV_VitalsEnterDLG';
-  @VLPtVitals := GetProcAddress(VitalsDLLHandle,PChar(GMV_FName));
+  @VLPtVitals := GetProcAddress(VitalsDLLHandle,PAnsiChar(GMV_FName));
   if assigned(VLPtVitals) then
   begin
     VLPtVitals(
       RPCBrokerV,
       Patient.DFN,
-      FloatToStr(uEncPCEData.Location),
+      IntToStr(uEncPCEData.Location),
       GMV_DEFAULT_TEMPLATE,
       GMV_APP_SIGNATURE,
       FMDateTimeToDateTime(uEncPCEData.DateTime),
@@ -593,7 +592,7 @@ begin
     );
   end
   else
-    MessageDLG('Unable to find function "'+GMV_FName+'".',mtError,[mbok],0);
+    MessageDLG('Unable to find function "'+string(GMV_FName)+'".',mtError,[mbok],0);
   @VLPtVitals := nil;
   LoadVitalsList;
 end;
@@ -602,11 +601,12 @@ procedure TfrmEncVitals.LoadVitalsList;
 var
   VitalsList : TStringList;
   VLPtVitals : TGMV_LatestVitalsList;
-  GMV_FName : String;
+  //GMV_FName : String;
+  GMV_FName: AnsiString;
 begin
   if VitalsDLLHandle = 0 then Exit;//The DLL was initialized on Create, but just in case....
   GMV_FName := 'GMV_LatestVitalsList';
-  @VLPtVitals := GetProcAddress(VitalsDLLHandle,PChar(GMV_FName));
+  @VLPtVitals := GetProcAddress(VitalsDLLHandle,PAnsiChar(GMV_FName));
   if assigned(VLPtVitals) then
   begin
     VitalsList := VLPtVitals(RPCBrokerV,Patient.DFN,U,false);
@@ -614,7 +614,7 @@ begin
       LoadVitalView(VitalsList);
   end
   else
-    MessageDLG('Can''t find function "'+GMV_FName+'".',mtError,[mbok],0);
+    MessageDLG('Can''t find function "'+string(GMV_FName)+'".',mtError,[mbok],0);
   @VLPtVitals := nil;
 end;
 //End Vitals Lite

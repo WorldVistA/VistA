@@ -159,7 +159,8 @@ implementation
 
 {$R *.DFM}
 
-uses LoginFrm, fSgnonDlg, Trpcb;
+uses 
+  UITypes, LoginFrm, fSgnonDlg, Trpcb;
 
 procedure TfrmSignonConfig.Button1Click(Sender: TObject);
 begin
@@ -277,8 +278,8 @@ begin
   frmSignonConfig.Controller := Self;
   OrigHelp := Application.HelpFile;             // Save original helpfile.
   try
-    Application.HelpFile := ReadRegData(HKLM, REG_BROKER, 'BrokerDr') +
-                           '\clagent.hlp';      // Identify ConnectTo helpfile.
+//    Application.HelpFile := ReadRegData(HKLM, REG_BROKER, 'BrokerDr') +
+//                           '\clagent.hlp';      // Identify ConnectTo helpfile.
     with frmSignonConfig do
     begin
       // set selections for entry to form

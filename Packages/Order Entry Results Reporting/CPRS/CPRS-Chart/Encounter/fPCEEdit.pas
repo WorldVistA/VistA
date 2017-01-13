@@ -14,7 +14,6 @@ type
     lblNote: TMemo;
     btnCancel: TButton;
     Label1: TStaticText;
-    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -37,9 +36,9 @@ const
   TX_NOPCE_HDR   = 'Can not edit encounter';
 
 var
-  uPCETemp: TPCEData = nil;
-  uPCETempOld: TPCEData = nil;
-  uPatient: string = '';
+  uPCETemp: TPCEData;
+  uPCETempOld: TPCEData;
+  uPatient: string;
 
 function EditPCEData(NoteData: TPCEData): boolean;   // Returns TRUE if NoteData is edited
 var
@@ -50,11 +49,10 @@ var
 begin
   Result := FALSE;
   (* agp moved from FormCreate to addrss a problem with editing an encounter without a note displaying in CPRS*)
-  if uPatient <> Patient.DFN then
-    begin
-      KillObj(@uPCETemp);
-      KillObj(@uPCETempOld);
-    end;
+  if uPatient <> Patient.DFN then begin
+    FreeAndNil(uPCETemp);
+    FreeAndNil(uPCETempOld);
+  end;
   uPatient := Patient.DFN;
   if (Encounter.VisitCategory = 'H') then
   begin
@@ -110,7 +108,6 @@ begin
     end;
     if not assigned(uPCETemp) then
       uPCETemp := TPCEData.Create;
-    uPCETemp.UseEncounter := True;
     if not CanEditPCE(uPCETemp) then
     begin
       if FutureEncounter(uPCETemp) then
@@ -121,6 +118,7 @@ begin
       Exit;
     end;
     uPCETemp.PCEForNote(USE_CURRENT_VISITSTR, uPCETempOld);
+    uPCETemp.UseEncounter := True;
     UpdatePCE(uPCETemp);
     if not assigned(uPCETempOld) then
       uPCETempOld := TPCEData.Create;
@@ -134,23 +132,13 @@ begin
   end;
 end;
 
-procedure TfrmPCEEdit.FormCreate(Sender: TObject);
-begin
-  (* agp moved to EditPCEData procedure to addrss a problem
-  with editing an encounter without a note displaying in CPRS
-  if uPatient <> Patient.DFN then
-    begin
-      KillObj(@uPCETemp);
-      KillObj(@uPCETempOld);
-    end;
-  uPatient := Patient.DFN;   *)
-end;
-
 initialization
+  uPCETemp := nil;
+  uPCETempOld := nil;
+  uPatient := '';
 
 finalization
-  KillObj(@uPCETemp);
-  KillObj(@uPCETempOld);
-  uPatient := '';
+  FreeAndNil(uPCETemp);
+  FreeAndNil(uPCETempOld);
 
 end.

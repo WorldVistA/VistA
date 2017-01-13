@@ -72,6 +72,9 @@ const
                  'current, valid DEA# on record and is ineligible' + CRLF + 'to sign the order.';
   TXT_SCHFAIL  = CRLF + 'could not be completed. Provider is not authorized' + CRLF +
                  'to prescribe medications in Federal Schedule ';
+  TXT_SCH_ONE  = ' could not be completed.' + CRLF +
+                 'Electronic prescription of medications in Federal Schedule 1 is prohibited.' + CRLF + CRLF +
+                 'Valid Schedule 1 investigational medications require paper prescription.';
   TXT_NO_DETOX = CRLF + 'could not be completed. Provider does not have a' + CRLF +
                  'valid Detoxification/Maintenance ID number on' + CRLF + 'record and is ineligible to sign the order.';
   TXT_EXP_DETOX1 = CRLF + 'could not be completed. Provider''s Detoxification/Maintenance' + CRLF +
@@ -103,28 +106,40 @@ begin
     end;
     DEAFailStr := '';
     DEAFailStr := DeaCheckPassed(SetItem.OIIEN, SetItem.InPkg, AnEventType);
-    case StrToIntDef(Piece(DEAFailStr,U,1),0) of
-      1:  TX_INFO := TXT_DEAFAIL1 + Piece(SetList[i], U, 3) + TXT_DEAFAIL2;  //prescriber has an invalid or no DEA#
-      2:  TX_INFO := TXT_DEAFAIL1 + Piece(SetList[i], U, 3) + TXT_SCHFAIL + Piece(DEAFailStr,U,2) + '.';  //prescriber has no schedule privileges in 2,2N,3,3N,4, or 5
-      3:  TX_INFO := TXT_DEAFAIL1 + Piece(SetList[i], U, 3) + TXT_NO_DETOX;  //prescriber has an invalid or no Detox#
-      4:  TX_INFO := TXT_DEAFAIL1 + Piece(SetList[i], U, 3) + TXT_EXP_DEA1 + Piece(DEAFailStr,U,2) + TXT_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
-      5:  TX_INFO := TXT_DEAFAIL1 + Piece(SetList[i], U, 3) + TXT_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TXT_EXP_DETOX2;  //valid detox#, but expired DEA#
-    end;
-    if StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] then
-      if InfoBox(TX_INFO + TXT_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL or MB_ICONERROR) = IDRETRY then
-        begin
-          DEAContext := True;
-          fFrame.frmFrame.mnuFileEncounterClick(Self);
-          DEAFailStr := '';
-          DEAFailStr := DeaCheckPassed(SetItem.OIIEN, SetItem.InPkg, AnEventType);
-          if StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] then Continue
-        end
-      else
-        begin
-          FClosebyDeaCheck := True;
-          Close;
-          Exit;
+    if DEAFailStr <> '' then
+      begin
+        case StrToIntDef(Piece(DEAFailStr,U,1),0) of
+          1:  TX_INFO := TXT_DEAFAIL1 + Piece(SetList[i], U, 3) + TXT_DEAFAIL2;  //prescriber has an invalid or no DEA#
+          2:  TX_INFO := TXT_DEAFAIL1 + Piece(SetList[i], U, 3) + TXT_SCHFAIL + Piece(DEAFailStr,U,2) + '.';  //prescriber has no schedule privileges in 2,2N,3,3N,4, or 5
+          3:  TX_INFO := TXT_DEAFAIL1 + Piece(SetList[i], U, 3) + TXT_NO_DETOX;  //prescriber has an invalid or no Detox#
+          4:  TX_INFO := TXT_DEAFAIL1 + Piece(SetList[i], U, 3) + TXT_EXP_DEA1 + Piece(DEAFailStr,U,2) + TXT_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
+          5:  TX_INFO := TXT_DEAFAIL1 + Piece(SetList[i], U, 3) + TXT_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TXT_EXP_DETOX2;  //valid detox#, but expired DEA#
+          6:  TX_INFO := TXT_DEAFAIL1 + Piece(SetList[i], U, 3) + TXT_SCH_ONE;  //schedule 1's are prohibited from electronic prescription
         end;
+        if StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..6] then
+          begin
+            if StrToIntDef(Piece(DEAFailStr,U,1),0)=6 then
+              begin
+                InfoBox(TX_INFO, TC_DEAFAIL, MB_OK);
+                FClosebyDeaCheck := True;
+                Continue;
+              end;
+            if InfoBox(TX_INFO + TXT_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL or MB_ICONERROR) = IDRETRY then
+              begin
+                DEAContext := True;
+                fFrame.frmFrame.mnuFileEncounterClick(Self);
+                DEAFailStr := '';
+                DEAFailStr := DeaCheckPassed(SetItem.OIIEN, SetItem.InPkg, AnEventType);
+                if StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] then Continue
+              end
+            else
+              begin
+                FClosebyDeaCheck := True;
+                Close;
+                Exit;
+              end;
+          end;
+      end;
     lstSet.Items.InsertObject(InsertAt, Piece(SetList[i], U, 3), SetItem);
     Inc(InsertAt);
   end;
@@ -240,7 +255,7 @@ begin
   end;
   // ignore if delay from other than current itemindex
   // (prevents completion of an order set from calling DoNextItem)
-  if Message.WParam = lstSet.ItemIndex then
+  if Integer(Message.WParam) = lstSet.ItemIndex then
     if lstSet.ItemIndex < lstSet.Items.Count - 1 then DoNextItem else Close;
 end;
 
@@ -365,7 +380,7 @@ begin
     begin
       DEAFailStr := '';
       DEAFailStr := DEACheckFailed(StrToIntDef(tmpIenList[i],0), InptDlg);
-      if StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] then
+      if StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..6] then
       begin
         Result := DEAFailStr;
         Break;

@@ -60,6 +60,7 @@ inherited frmReportPrt: TfrmReportPrt
       EditMask = '99999;0; '
       MaxLength = 5
       TabOrder = 1
+      Text = ''
     end
     object txtPageLength: TMaskEdit
       Left = 184
@@ -70,6 +71,7 @@ inherited frmReportPrt: TfrmReportPrt
       EditMask = '99999;0; '
       MaxLength = 5
       TabOrder = 2
+      Text = ''
     end
     object cboDevice: TORComboBox
       Left = 8
@@ -78,6 +80,7 @@ inherited frmReportPrt: TfrmReportPrt
       Height = 140
       Style = orcsSimple
       AutoSelect = True
+      Caption = ''
       Color = clWindow
       DropDownCount = 8
       ItemHeight = 13
@@ -94,6 +97,7 @@ inherited frmReportPrt: TfrmReportPrt
       SynonymChars = '<>'
       TabPositions = '30'
       TabOrder = 0
+      Text = ''
       OnChange = cboDeviceChange
       OnNeedData = cboDeviceNeedData
       CharsNeedMatch = 1

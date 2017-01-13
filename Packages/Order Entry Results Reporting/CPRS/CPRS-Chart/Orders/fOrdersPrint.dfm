@@ -7,6 +7,8 @@ inherited frmOrdersPrint: TfrmOrdersPrint
   OldCreateOrder = True
   Position = poScreenCenter
   OnKeyUp = FormKeyUp
+  ExplicitWidth = 372
+  ExplicitHeight = 326
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBase: TORAutoPanel [0]
@@ -35,7 +37,8 @@ inherited frmOrdersPrint: TfrmOrdersPrint
       Lines.Strings = (
         
           'One or more of the following prints are available for this set o' +
-          'f orders.  '
+          'f orders. '
+        ' '
         'Check those you desire and select a device, if necessary.  ')
       ReadOnly = True
       TabOrder = 14
@@ -51,7 +54,8 @@ inherited frmOrdersPrint: TfrmOrdersPrint
       Lines.Strings = (
         
           'Highlighted items are configured to print automatically in all c' +
-          'ases for '
+          'ases '
+        'for '
         'this location.  Greyed out items are not available.')
       ReadOnly = True
       TabOrder = 15
@@ -94,13 +98,13 @@ inherited frmOrdersPrint: TfrmOrdersPrint
     end
     object lstChartDevice: TORListBox
       Left = 127
-      Top = 93
+      Top = 95
       Width = 121
-      Height = 21
+      Height = 17
       ExtendedSelect = False
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ItemHeight = 13
@@ -116,9 +120,9 @@ inherited frmOrdersPrint: TfrmOrdersPrint
     end
     object lstLabelDevice: TORListBox
       Left = 127
-      Top = 129
+      Top = 131
       Width = 121
-      Height = 21
+      Height = 17
       ItemHeight = 13
       ParentShowHint = False
       ShowHint = True
@@ -131,9 +135,9 @@ inherited frmOrdersPrint: TfrmOrdersPrint
     end
     object lstReqDevice: TORListBox
       Left = 127
-      Top = 168
+      Top = 170
       Width = 121
-      Height = 21
+      Height = 17
       ItemHeight = 13
       ParentShowHint = False
       ShowHint = True
@@ -146,9 +150,9 @@ inherited frmOrdersPrint: TfrmOrdersPrint
     end
     object lstWorkDevice: TORListBox
       Left = 127
-      Top = 206
+      Top = 208
       Width = 121
-      Height = 21
+      Height = 17
       ItemHeight = 13
       ParentShowHint = False
       ShowHint = True

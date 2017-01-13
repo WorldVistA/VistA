@@ -9,7 +9,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Controls, Forms, ComObj, StdCtrls, ComCtrls,
-  rCore, ORFn, Word2000, Office_TLB, Variants, clipbrd, ActiveX, Contnrs, PSAPI, ExtCtrls;
+  rCore, ORFn, Word2000, Variants, clipbrd, ActiveX, Contnrs, PSAPI, ExtCtrls;
 
 type
   TSpellCheckAvailable = record
@@ -829,7 +829,8 @@ begin
         Lines.Insert(i, FBeforeLines[i]);
       for i := 0 to FAfterLines.Count-1 do
         Lines.Add(FAfterLines[i]);
-      FastAssign(Lines, FEditControl.Lines);
+      FEditControl.Lines.Text :=  Lines.Text;
+  //    FastAssign(Lines, FEditControl.Lines);
     finally
       Lines.Free;
     end;
@@ -943,7 +944,8 @@ constructor TMSWordThread.CreateThread(SpellCheck: boolean; AEditControl: TCusto
   begin
     Lines := TStringList.Create;
     try
-      FastAssign(AEditControl.Lines, Lines);
+      Lines.Text := AEditControl.Lines.Text;
+     // FastAssign(AEditControl.Lines, Lines);
 
       while (Lines.Count > 0) and (trim(Lines[Lines.Count-1]) = '') do
       begin
@@ -998,7 +1000,9 @@ begin
   Application.OnActivate := OnAppActivate;
   FOldFormChange := Screen.OnActiveFormChange;
   Screen.OnActiveFormChange := OnFormChange;
+{$WARN SYMBOL_DEPRECATED OFF}
   Resume;
+{$WARN SYMBOL_DEPRECATED ON}
 end;
 
 procedure TMSWordThread.WordError;

@@ -7,96 +7,77 @@ inherited frmDiagnoses: TfrmDiagnoses
   TextHeight = 13
   inherited lblSection: TLabel
     Width = 89
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'Diagnoses Section'
     ExplicitWidth = 89
   end
   inherited lblList: TLabel
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
   end
   inherited lblComment: TLabel
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
   end
   inherited bvlMain: TBevel
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
   end
   inherited btnOK: TBitBtn
-    Margins.Left = 7
-    Margins.Top = 7
-    Margins.Right = 7
-    Margins.Bottom = 7
-    TabOrder = 7
-  end
-  inherited btnCancel: TBitBtn
-    Margins.Left = 7
-    Margins.Top = 7
-    Margins.Right = 7
-    Margins.Bottom = 7
-    TabOrder = 8
-  end
-  inherited pnlGrid: TPanel
-    Width = 523
     Margins.Left = 6
     Margins.Top = 6
     Margins.Right = 6
     Margins.Bottom = 6
-    TabOrder = 1
-    ExplicitWidth = 523
-    inherited lbGrid: TORListBox
-      Tag = 20
-      Width = 523
-      Margins.Left = 6
-      Margins.Top = 6
-      Margins.Right = 6
-      Margins.Bottom = 6
-      Pieces = '1,2,3'
-      ExplicitWidth = 523
-    end
-    inherited hcGrid: THeaderControl
-      Width = 523
-      Margins.Left = 6
-      Margins.Top = 6
-      Margins.Right = 6
-      Margins.Bottom = 6
-      Sections = <
-        item
-          ImageIndex = -1
-          MinWidth = 60
-          Text = 'Add to PL'
-          Width = 60
-        end
-        item
-          ImageIndex = -1
-          MinWidth = 65
-          Text = 'Primary'
-          Width = 65
-        end
-        item
-          ImageIndex = -1
-          MinWidth = 110
-          Text = 'Selected Diagnoses'
-          Width = 110
-        end>
-      ExplicitWidth = 523
-    end
+    TabOrder = 7
   end
-  inherited edtComment: TCaptionEdit
+  inherited btnCancel: TBitBtn
+    Margins.Left = 6
+    Margins.Top = 6
+    Margins.Right = 6
+    Margins.Bottom = 6
+    TabOrder = 8
+  end
+  inherited pnlGrid: TPanel
+    Width = 523
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
+    TabOrder = 1
+    ExplicitWidth = 523
+    inherited lstRenameMe: TCaptionListView
+      Width = 523
+      Columns = <
+        item
+          Caption = 'Add to PL'
+          Width = 80
+        end
+        item
+          Caption = 'Primary'
+          Width = 120
+        end
+        item
+          Caption = 'Selected Diagnoses'
+          Width = 150
+        end>
+      Pieces = '1,2,3'
+      ExplicitWidth = 523
+    end
+  end
+  inherited edtComment: TCaptionEdit
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabOrder = 3
   end
   object cmdDiagPrimary: TButton [8]
@@ -104,10 +85,6 @@ inherited frmDiagnoses: TfrmDiagnoses
     Top = 306
     Width = 75
     Height = 21
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     Caption = 'Primary'
     Enabled = False
     TabOrder = 5
@@ -118,75 +95,71 @@ inherited frmDiagnoses: TfrmDiagnoses
     Top = 258
     Width = 76
     Height = 38
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     Caption = 'Add to Problem list'
     TabOrder = 4
     WordWrap = True
     OnClick = ckbDiagProbClicked
   end
   inherited btnRemove: TButton
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabOrder = 6
   end
   inherited btnSelectAll: TButton
     Left = 454
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabOrder = 2
     TabStop = True
     ExplicitLeft = 454
   end
   inherited pnlMain: TPanel
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabOrder = 0
     inherited splLeft: TSplitter
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
     end
     inherited lbxSection: TORListBox
       Tag = 20
       Height = 196
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       IntegralHeight = True
       OnDrawItem = lbxSectionDrawItem
       Pieces = '2,3'
       ExplicitHeight = 196
     end
     inherited pnlLeft: TPanel
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       inherited lbSection: TORListBox
         Tag = 20
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         TabOrder = 0
       end
       inherited btnOther: TButton
         Tag = 12
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Other Diagnosis...'
         TabOrder = 1
       end
@@ -229,12 +202,6 @@ inherited frmDiagnoses: TfrmDiagnoses
         'Status = stsDefault')
       (
         'Component = pnlGrid'
-        'Status = stsDefault')
-      (
-        'Component = lbGrid'
-        'Status = stsDefault')
-      (
-        'Component = hcGrid'
         'Status = stsDefault')
       (
         'Component = btnOK'

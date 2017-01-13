@@ -101,7 +101,7 @@ begin
       begin
         DlgOI := StrtoIntDef(Responses.IValueFor('ORDERABLE',AnInstance),0);
         DEAFailStr := DEACheckFailedForIVOnOutPatient(DlgOI,'S');
-        while StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] do
+        while StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..6] do
           begin
             case StrToIntDef(Piece(DEAFailStr,U,1),0) of
               1:  TX_INFO := TX_DEAFAIL;  //prescriber has an invalid or no DEA#
@@ -109,7 +109,14 @@ begin
               3:  TX_INFO := TX_NO_DETOX;  //prescriber has an invalid or no Detox#
               4:  TX_INFO := TX_EXP_DEA1 + Piece(DEAFailStr,U,2) + TX_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
               5:  TX_INFO := TX_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TX_EXP_DETOX2;  //valid detox#, but expired DEA#
+              6:  TX_INFO := TX_SCH_ONE;  //schedule 1's are prohibited from electronic prescription
             end;
+            if StrToIntDef(Piece(DEAFailStr,U,1),0)=6 then
+              begin
+                InfoBox(TX_INFO, TC_DEAFAIL, MB_OK);
+                AbortOrder := True;
+                Exit;
+              end;
             if InfoBox(TX_INFO + TX_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL) = IDRETRY then
               begin
                 DEAContext := True;
@@ -130,7 +137,7 @@ begin
       begin
         DlgOI := StrtoIntDef(Responses.IValueFor('ADDITIVE',AnInstance),0);
         DEAFailStr := DEACheckFailedForIVOnOutPatient(DlgOI,'A');
-        while StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] do
+        while StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..6] do
           begin
             case StrToIntDef(Piece(DEAFailStr,U,1),0) of
               1:  TX_INFO := TX_DEAFAIL;  //prescriber has an invalid or no DEA#
@@ -138,7 +145,14 @@ begin
               3:  TX_INFO := TX_NO_DETOX;  //prescriber has an invalid or no Detox#
               4:  TX_INFO := TX_EXP_DEA1 + Piece(DEAFailStr,U,2) + TX_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
               5:  TX_INFO := TX_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TX_EXP_DETOX2;  //valid detox#, but expired DEA#
+              6:  TX_INFO := TX_SCH_ONE;  //schedule 1's are prohibited from electronic prescription
             end;
+            if StrToIntDef(Piece(DEAFailStr,U,1),0)=6 then
+              begin
+                InfoBox(TX_INFO, TC_DEAFAIL, MB_OK);
+                AbortOrder := True;
+                Exit;
+              end;
             if InfoBox(TX_INFO + TX_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL) = IDRETRY then
               begin
                 DEAContext := True;
@@ -159,7 +173,7 @@ begin
   begin          //if auto-accept of unit dose, NON-VA, or Outpatient meds
     DlgOI := StrtoIntDef(Responses.IValueFor('ORDERABLE',1),0);
     DEAFailStr := DEACheckFailed(DlgOI,InptDlg);
-    while StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] do
+    while StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..6] do
       begin
         case StrToIntDef(Piece(DEAFailStr,U,1),0) of
           1:  TX_INFO := TX_DEAFAIL;  //prescriber has an invalid or no DEA#
@@ -167,7 +181,14 @@ begin
           3:  TX_INFO := TX_NO_DETOX;  //prescriber has an invalid or no Detox#
           4:  TX_INFO := TX_EXP_DEA1 + Piece(DEAFailStr,U,2) + TX_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
           5:  TX_INFO := TX_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TX_EXP_DETOX2;  //valid detox#, but expired DEA#
+          6:  TX_INFO := TX_SCH_ONE;  //schedule 1's are prohibited from electronic prescription
         end;
+        if StrToIntDef(Piece(DEAFailStr,U,1),0)=6 then
+          begin
+            InfoBox(TX_INFO, TC_DEAFAIL, MB_OK);
+            AbortOrder := True;
+            Exit;
+          end;
         if InfoBox(TX_INFO + TX_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL) = IDRETRY then
           begin
             DEAContext := True;

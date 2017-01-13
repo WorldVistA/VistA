@@ -335,8 +335,10 @@ begin
   if fraEvntDelayList.MatchedCancel then
   begin
     OKPressed := False;
-    Close;
-    Exit;
+    //cq 21647 - Allow the user to make another selection after pop up message - jcs
+    fraEvntDelayList.MatchedCancel := False;
+    //Close;
+    //Exit;
   end;
 end;
 

@@ -2,115 +2,167 @@ inherited frmGraphData: TfrmGraphData
   Left = 0
   Top = 0
   Caption = 'GraphData - displayed only for testing'
-  ClientHeight = 582
-  ClientWidth = 782
+  ClientHeight = 761
+  ClientWidth = 1023
   Font.Name = 'Tahoma'
   WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = btnRefreshClick
-  ExplicitWidth = 790
-  ExplicitHeight = 609
-  PixelsPerInch = 96
-  TextHeight = 13
+  ExplicitWidth = 1031
+  ExplicitHeight = 793
+  PixelsPerInch = 120
+  TextHeight = 17
   object pnlData: TPanel [0]
     Left = 0
     Top = 0
-    Width = 782
-    Height = 504
+    Width = 1023
+    Height = 659
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     TabOrder = 0
   end
   object pnlInfo: TPanel [1]
     Left = 0
-    Top = 504
-    Width = 782
-    Height = 78
+    Top = 659
+    Width = 1023
+    Height = 102
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alBottom
     TabOrder = 1
     object lblInfo: TLabel
-      Left = 14
-      Top = 5
-      Width = 162
-      Height = 13
+      Left = 18
+      Top = 7
+      Width = 206
+      Height = 17
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Resize form before clicking button'
     end
     object lblInfoPersonal: TLabel
-      Left = 184
-      Top = 19
-      Width = 41
-      Height = 13
+      Left = 243
+      Top = 25
+      Width = 51
+      Height = 17
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Alignment = taRightJustify
       Caption = 'Personal'
     end
     object lblInfoPublic: TLabel
-      Left = 198
-      Top = 33
-      Width = 27
-      Height = 13
+      Left = 259
+      Top = 43
+      Width = 35
+      Height = 17
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Alignment = taRightJustify
       Caption = 'Public'
     end
     object lblPublic: TLabel
-      Left = 232
-      Top = 33
-      Width = 3
-      Height = 13
+      Left = 303
+      Top = 43
+      Width = 4
+      Height = 17
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
     end
     object lblPersonal: TLabel
-      Left = 231
-      Top = 19
-      Width = 3
-      Height = 13
+      Left = 302
+      Top = 25
+      Width = 4
+      Height = 17
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
     end
     object lblCurrent: TLabel
-      Left = 232
-      Top = 5
-      Width = 3
-      Height = 13
+      Left = 303
+      Top = 7
+      Width = 4
+      Height = 17
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
     end
     object lblInfoCurrent: TLabel
-      Left = 188
-      Top = 5
-      Width = 37
-      Height = 13
+      Left = 247
+      Top = 7
+      Width = 47
+      Height = 17
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Alignment = taRightJustify
       Caption = 'Current'
     end
     object btnData: TButton
-      Left = 14
-      Top = 22
-      Width = 75
-      Height = 25
+      Left = 18
+      Top = 29
+      Width = 98
+      Height = 32
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'TStringLists'
       TabOrder = 0
       OnClick = btnDataClick
     end
     object btnRefresh: TButton
-      Left = 102
-      Top = 22
-      Width = 75
-      Height = 25
+      Left = 133
+      Top = 29
+      Width = 98
+      Height = 32
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Refresh'
       Enabled = False
       TabOrder = 1
       OnClick = btnRefreshClick
     end
     object btnTesting: TButton
-      Left = 14
-      Top = 50
-      Width = 75
-      Height = 25
+      Left = 18
+      Top = 65
+      Width = 98
+      Height = 33
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Testing'
       TabOrder = 2
       OnClick = btnTestingClick
     end
     object memTesting: TMemo
-      Left = 120
-      Top = 48
-      Width = 649
-      Height = 27
+      Left = 157
+      Top = 63
+      Width = 849
+      Height = 35
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       ScrollBars = ssVertical
       TabOrder = 3
     end

@@ -6,16 +6,16 @@ inherited frmVisitType: TfrmVisitType
   Constraints.MinHeight = 465
   Constraints.MinWidth = 600
   OnCloseQuery = FormCloseQuery
-  ExplicitWidth = 600
-  ExplicitHeight = 465
+  ExplicitWidth = 608
+  ExplicitHeight = 476
   PixelsPerInch = 96
   TextHeight = 13
   inherited btnOK: TBitBtn
     Left = 436
     Top = 414
     TabOrder = 3
-    ExplicitLeft = 474
-    ExplicitTop = 459
+    ExplicitLeft = 436
+    ExplicitTop = 414
   end
   object pnlTop: TPanel [1]
     Left = 0
@@ -25,7 +25,6 @@ inherited frmVisitType: TfrmVisitType
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 630
     object splLeft: TSplitter
       Left = 145
       Top = 0
@@ -48,7 +47,6 @@ inherited frmVisitType: TfrmVisitType
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitHeight = 145
       object lblVTypeSection: TLabel
         Left = 0
         Top = 0
@@ -85,9 +83,6 @@ inherited frmVisitType: TfrmVisitType
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 2
-      ExplicitLeft = 431
-      ExplicitWidth = 199
-      ExplicitHeight = 145
       object lblMod: TLabel
         Left = 0
         Top = 0
@@ -125,8 +120,6 @@ inherited frmVisitType: TfrmVisitType
         CheckBoxes = True
         CheckEntireLine = True
         OnClickCheck = lbModsClickCheck
-        ExplicitWidth = 199
-        ExplicitHeight = 132
       end
     end
     object pnlSection: TPanel
@@ -155,7 +148,6 @@ inherited frmVisitType: TfrmVisitType
         Height = 92
         Style = lbOwnerDrawFixed
         Align = alClient
-        ItemHeight = 16
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0
@@ -168,9 +160,6 @@ inherited frmVisitType: TfrmVisitType
         CheckBoxes = True
         CheckEntireLine = True
         OnClickCheck = lbxVisitsClickCheck
-        ExplicitLeft = -3
-        ExplicitTop = 7
-        ExplicitWidth = 281
       end
     end
   end
@@ -182,59 +171,80 @@ inherited frmVisitType: TfrmVisitType
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitTop = 145
-    ExplicitWidth = 630
     inline fraVisitRelated: TfraVisitRelated
-      Left = 384
+      Left = 342
       Top = 0
-      Width = 208
+      Width = 250
       Height = 164
       Align = alRight
       TabOrder = 1
-      ExplicitLeft = 422
-      ExplicitWidth = 208
+      TabStop = True
+      ExplicitLeft = 342
+      ExplicitWidth = 250
       ExplicitHeight = 164
-      inherited gbVisitRelatedTo: TGroupBox
-        Width = 208
+      inherited ScrollBox1: TScrollBox
+        Width = 250
         Height = 164
-        ExplicitWidth = 208
+        ExplicitWidth = 250
         ExplicitHeight = 164
-        inherited chkMSTYes: TCheckBox
-          Top = 127
-          ExplicitTop = 127
-        end
-        inherited chkMSTNo: TCheckBox
-          Top = 127
-          ExplicitTop = 127
-        end
-        inherited chkHNCYes: TCheckBox
-          Top = 143
-          ExplicitTop = 143
-        end
-        inherited chkHNCNo: TCheckBox
-          Top = 142
-          Width = 150
-          Height = 18
-          Caption = 'Head and/or Neck Cancer     No'
-          ExplicitTop = 142
-          ExplicitWidth = 150
-          ExplicitHeight = 18
+        inherited Panel1: TPanel
+          Width = 233
+          ExplicitWidth = 233
+          inherited gbVisitRelatedTo: TGroupBox
+            Width = 233
+            ExplicitWidth = 233
+            inherited chkMSTYes: TCheckBox
+              Top = 127
+              ExplicitTop = 127
+            end
+            inherited chkMSTNo: TCheckBox
+              Top = 127
+              Caption = 'MST  '
+              ExplicitTop = 127
+            end
+            inherited chkECNo: TCheckBox
+              Caption = 'Southwest Asia Conditions  '
+            end
+            inherited chkIRNo: TCheckBox
+              Caption = 'Ionizing Radiation Exposure  '
+            end
+            inherited chkAONo: TCheckBox
+              Caption = 'Agent Orange Exposure '
+            end
+            inherited chkSCNo: TCheckBox
+              Caption = 'Service Connected Condition '
+            end
+            inherited chkHNCYes: TCheckBox
+              Top = 143
+              ExplicitTop = 143
+            end
+            inherited chkHNCNo: TCheckBox
+              Top = 142
+              Width = 150
+              Height = 18
+              ExplicitTop = 142
+              ExplicitWidth = 150
+              ExplicitHeight = 18
+            end
+            inherited chkCVNo: TCheckBox
+              Caption = 'Combat Vet (Combat Related)  '
+            end
+          end
         end
       end
     end
     object pnlSC: TPanel
       Left = 0
       Top = 0
-      Width = 384
+      Width = 342
       Height = 164
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitWidth = 422
       object lblSCDisplay: TLabel
         Left = 0
         Top = 0
-        Width = 384
+        Width = 342
         Height = 13
         Align = alTop
         Caption = 'Service Connection && Rated Disabilities'
@@ -243,7 +253,7 @@ inherited frmVisitType: TfrmVisitType
       object memSCDisplay: TCaptionMemo
         Left = 0
         Top = 13
-        Width = 384
+        Width = 342
         Height = 151
         Align = alClient
         Color = clBtnFace
@@ -254,7 +264,6 @@ inherited frmVisitType: TfrmVisitType
         TabOrder = 0
         OnEnter = memSCDisplayEnter
         Caption = 'Service Connection && Rated Disabilities'
-        ExplicitWidth = 422
       end
     end
   end
@@ -266,8 +275,6 @@ inherited frmVisitType: TfrmVisitType
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 2
-    ExplicitTop = 309
-    ExplicitWidth = 630
     object btnAdd: TButton
       Left = 260
       Top = 35
@@ -334,12 +341,12 @@ inherited frmVisitType: TfrmVisitType
         Sorted = False
         SynonymChars = '<>'
         TabOrder = 0
+        Text = ''
         CheckEntireLine = True
         OnChange = cboPtProviderChange
         OnDblClick = cboPtProviderDblClick
         OnNeedData = cboPtProviderNeedData
         CharsNeedMatch = 1
-        ExplicitWidth = 260
       end
     end
     object pnlBottomRight: TPanel
@@ -376,8 +383,6 @@ inherited frmVisitType: TfrmVisitType
         Pieces = '2'
         OnChange = lbProvidersChange
         CheckEntireLine = True
-        ExplicitTop = 11
-        ExplicitWidth = 220
       end
     end
   end
@@ -385,8 +390,8 @@ inherited frmVisitType: TfrmVisitType
     Left = 517
     Top = 414
     TabOrder = 4
-    ExplicitLeft = 555
-    ExplicitTop = 459
+    ExplicitLeft = 517
+    ExplicitTop = 414
   end
   inherited amgrMain: TVA508AccessibilityManager
     Left = 8
@@ -422,52 +427,68 @@ inherited frmVisitType: TfrmVisitType
         'Status = stsDefault')
       (
         'Component = fraVisitRelated.chkSCYes'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkAOYes'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkIRYes'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkECYes'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkMSTYes'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkMSTNo'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkECNo'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkIRNo'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkAONo'
-        'Status = stsDefault')
+        'Text = Service Connected Condition     Yes'
+        'Status = stsOK')
       (
         'Component = fraVisitRelated.chkSCNo'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkHNCYes'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkHNCNo'
-        'Status = stsDefault')
+        'Text = Service Connected Condition    No'
+        'Status = stsOK')
       (
         'Component = fraVisitRelated.chkCVYes'
-        'Status = stsDefault')
+        'Text = Combat Vet (Combat Related)     Yes'
+        'Status = stsOK')
       (
         'Component = fraVisitRelated.chkCVNo'
-        'Status = stsDefault')
+        'Text = Combat Vet (Combat Related)    No'
+        'Status = stsOK')
+      (
+        'Component = fraVisitRelated.chkAOYes'
+        'Text = Agent Orange Exposure     Yes'
+        'Status = stsOK')
+      (
+        'Component = fraVisitRelated.chkAONo'
+        'Text = Agent Orange Exposure    No'
+        'Status = stsOK')
+      (
+        'Component = fraVisitRelated.chkIRYes'
+        'Text = Ionizing Radiation Exposure     Yes'
+        'Status = stsOK')
+      (
+        'Component = fraVisitRelated.chkIRNo'
+        'Text = Ionizing Radiation Exposure    No'
+        'Status = stsOK')
+      (
+        'Component = fraVisitRelated.chkECYes'
+        'Text = Southwest Asia Conditions     Yes'
+        'Status = stsOK')
+      (
+        'Component = fraVisitRelated.chkECNo'
+        'Text = Southwest Asia Conditions     No'
+        'Status = stsOK')
       (
         'Component = fraVisitRelated.chkSHDYes'
-        'Status = stsDefault')
+        'Text = Shipboard Hazard and Defense     Yes'
+        'Status = stsOK')
       (
         'Component = fraVisitRelated.chkSHDNo'
-        'Status = stsDefault')
+        'Text = Shipboard Hazard and Defense     No'
+        'Status = stsOK')
+      (
+        'Component = fraVisitRelated.chkMSTYes'
+        'Text = MST     Yes'
+        'Status = stsOK')
+      (
+        'Component = fraVisitRelated.chkMSTNo'
+        'Text = MST     No'
+        'Status = stsOK')
+      (
+        'Component = fraVisitRelated.chkHNCYes'
+        'Text = Head and/or Neck Cancer    Yes'
+        'Status = stsOK')
+      (
+        'Component = fraVisitRelated.chkHNCNo'
+        'Text = Head and/or Neck Cancer     No'
+        'Status = stsOK')
       (
         'Component = fraVisitRelated.lblSCNo'
         'Status = stsDefault')

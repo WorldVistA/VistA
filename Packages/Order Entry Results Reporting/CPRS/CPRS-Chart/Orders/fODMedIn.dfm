@@ -66,6 +66,7 @@ inherited frmODMedIn: TfrmODMedIn
     Height = 127
     Style = orcsSimple
     AutoSelect = True
+    Caption = ''
     Color = clWindow
     DropDownCount = 8
     ItemHeight = 13
@@ -82,6 +83,7 @@ inherited frmODMedIn: TfrmODMedIn
     SynonymChars = '<>'
     TabPositions = '30,33'
     TabOrder = 2
+    Text = ''
     OnChange = ControlChange
     OnExit = cboDispenseExit
     OnMouseClick = cboDispenseMouseClick
@@ -94,6 +96,7 @@ inherited frmODMedIn: TfrmODMedIn
     Height = 167
     Style = orcsSimple
     AutoSelect = True
+    Caption = ''
     Color = clWindow
     DropDownCount = 11
     ItemHeight = 13
@@ -107,6 +110,7 @@ inherited frmODMedIn: TfrmODMedIn
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 1
+    Text = ''
     OnChange = ControlChange
     OnExit = cboMedicationSelect
     OnMouseClick = cboMedicationSelect
@@ -116,16 +120,14 @@ inherited frmODMedIn: TfrmODMedIn
   inherited memOrder: TCaptionMemo
     TabOrder = 10
   end
-  inherited cmdAccept: TButton
-    TabOrder = 8
-  end
-  object cboRoute: TORComboBox [12]
+  object cboRoute: TORComboBox [11]
     Left = 364
     Top = 18
     Width = 72
     Height = 90
     Style = orcsSimple
     AutoSelect = True
+    Caption = ''
     Color = clWindow
     DropDownCount = 8
     ItemHeight = 13
@@ -139,16 +141,18 @@ inherited frmODMedIn: TfrmODMedIn
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 4
+    Text = ''
     OnChange = ControlChange
     CharsNeedMatch = 1
   end
-  object cboSchedule: TORComboBox [13]
+  object cboSchedule: TORComboBox [12]
     Left = 442
     Top = 18
     Width = 72
     Height = 90
     Style = orcsSimple
     AutoSelect = True
+    Caption = ''
     Color = clWindow
     DropDownCount = 8
     ItemHeight = 13
@@ -161,10 +165,11 @@ inherited frmODMedIn: TfrmODMedIn
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 5
+    Text = ''
     OnChange = ControlChange
     CharsNeedMatch = 1
   end
-  object memComments: TMemo [14]
+  object memComments: TMemo [13]
     Left = 223
     Top = 128
     Width = 212
@@ -173,13 +178,14 @@ inherited frmODMedIn: TfrmODMedIn
     TabOrder = 6
     OnChange = ControlChange
   end
-  object cboPriority: TORComboBox [15]
+  object cboPriority: TORComboBox [14]
     Left = 442
     Top = 128
     Width = 72
     Height = 58
     Style = orcsSimple
     AutoSelect = True
+    Caption = ''
     Color = clWindow
     DropDownCount = 8
     ItemHeight = 13
@@ -193,10 +199,11 @@ inherited frmODMedIn: TfrmODMedIn
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 7
+    Text = ''
     OnChange = ControlChange
     CharsNeedMatch = 1
   end
-  object txtDosage: TCaptionEdit [16]
+  object txtDosage: TCaptionEdit [15]
     Left = 224
     Top = 18
     Width = 134
@@ -206,19 +213,20 @@ inherited frmODMedIn: TfrmODMedIn
     OnChange = ControlChange
     Caption = 'Dosage'
   end
+  inherited cmdAccept: TButton
+    TabOrder = 8
+  end
   inherited cmdQuit: TButton
     TabOrder = 9
   end
-  inherited pnlMessage: TPanel
-    TabOrder = 11
-  end
-  object cboMedAlt: TORComboBox [19]
+  object cboMedAlt: TORComboBox [18]
     Left = 6
     Top = 18
     Width = 202
     Height = 21
     Style = orcsDropDown
     AutoSelect = True
+    Caption = ''
     Color = clWindow
     DropDownCount = 11
     ItemHeight = 13
@@ -232,12 +240,16 @@ inherited frmODMedIn: TfrmODMedIn
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 0
+    Text = ''
     Visible = False
     OnChange = ControlChange
     OnExit = cboMedicationSelect
     OnMouseClick = cboMedicationSelect
     OnNeedData = cboMedicationNeedData
     CharsNeedMatch = 1
+  end
+  inherited pnlMessage: TPanel
+    TabOrder = 11
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (

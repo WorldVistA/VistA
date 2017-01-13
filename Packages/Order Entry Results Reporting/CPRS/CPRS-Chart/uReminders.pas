@@ -110,7 +110,7 @@ type
     function Enabled: boolean;
     procedure SetChecked(const Value: boolean);
     procedure UpdateData;
-    function OneValidCode(Choices: TORStringList; ChoicesActiveDates: TList; encDt: TFMDateTime): string;
+    function oneValidCode(Choices: TORStringList; ChoicesActiveDates: TList; encDt: TFMDateTime): String;
     procedure setActiveDates(Choices: TORStringList; ChoicesActiveDates: TList; ActiveDates: TStringList);
     procedure GetData;
     function TrueIndent: integer;
@@ -285,13 +285,16 @@ type
   TRemCanFinishProc = function: boolean of object;
   TRemDisplayPCEProc = procedure of object;
 
+  TTreeChangeNotifyEvent = procedure(Proc: TNotifyEvent) of object;
   TRemForm = record
     Form: TForm;
     PCEObj: TPCEData;
     RightPanel: TPanel;
     CanFinishProc: TRemCanFinishProc;
     DisplayPCEProc: TRemDisplayPCEProc;
-    Drawers: TFrmDrawers;
+    DrawerReminderTV: TORTreeView;
+    DrawerReminderTreeChange: TTreeChangeNotifyEvent;
+    DrawerRemoveReminderTreeChange: TTreeChangeNotifyEvent;
     NewNoteRE: TRichEdit;
     NoteList: TORListBox;
   end;
@@ -403,10 +406,11 @@ const
 
 implementation
 
-uses rCore, uCore, rReminders, fRptBox, uConst, fReminderDialog, fNotes, rMisc,
-     fMHTest, rPCE, rTemplates, dShared, uTemplateFields, fIconLegend, fReminderTree, uInit,
-     VAUtils, VA508AccessibilityRouter, VA508AccessibilityManager, uDlgComponents,
-  fBase508Form;
+uses
+  rCore, uCore, rReminders, fRptBox, uConst, fReminderDialog, fNotes, rMisc,
+  fMHTest, rPCE, rTemplates, dShared, uTemplateFields, fIconLegend, fReminderTree, uInit,
+  VAUtils, VA508AccessibilityRouter, VA508AccessibilityManager, uDlgComponents,
+  fBase508Form, System.Types, System.UITypes;
 
 type
   TRemFolder = (rfUnknown, rfDue, rfApplicable, rfNotApplicable, rfEvaluated, rfOther);
@@ -431,7 +435,7 @@ type
     FPntBatch: String;
     FButtonText: String;
     FCheckNum: String;
-  protected  
+  protected
   public
     property lbl: TControl read Flbl write Flbl;
     property lbl2: TControl read Flbl2 write Flbl2;
@@ -467,7 +471,7 @@ var
   ElementChecked: TRemDlgElement = nil;
   HistRootCount: longint = 0;
   uRemFolders: TRemFolders = [rfUnknown];
-  
+
 const
   DueText = 'Due';
   ApplicableText = 'Applicable';
@@ -2072,7 +2076,7 @@ end;
 
 var
   ScootOver: integer = 0;
-  
+
 procedure WordWrap(AText: string; Output: TStrings; LineLength: integer;
                                                    AutoIndent: integer = 4; MHTest: boolean = false);
 var
@@ -3002,7 +3006,7 @@ var
   TempSL: TORStringList;
   RData: TRemData;
   RPrompt: TRemPrompt;
-  Tmp, Tmp2, ChoiceTmp: string;
+  Tmp, Tmp2, choiceTmp: string;
   NewLine: boolean;
   dt: TRemDataType;
   pt: TRemPromptType;
@@ -3010,7 +3014,7 @@ var
   ChoicesActiveDates:   TStringList;
   ChoiceIdx: integer;
   Piece7: string;
-  EncDt: TFMDateTime;
+  encDt: TFMDateTime;
 
 begin
   if FHaveData then exit;
@@ -3040,7 +3044,16 @@ begin
                   end;
               end;
           end;
+
       if(idx >= 0) and (Pieces(TempSL[idx-1],U,1,6) <> Pieces(TempSL[idx],u,1,6)) then
+
+//      if(idx >= 0) and ((Pieces(TempSL[idx-1],U,1,6) <> Pieces(TempSL[idx],u,1,6)) or
+//      ((Pieces(TempSL[idx-1],U,1,6) = Pieces(TempSL[idx],u,1,6)) and
+//      ((pos(':',Piece(TempSL[idx],U,7)) > 0) and (pos(':',Piece(TempSL[idx-1],U,7)) > 0))) and
+//      (Piece(TempSL[idx],U,7) <> Piece(TempSL[idx-1],U,7))) then
+
+//      if (idx >= 0) then
+
       begin
         dt := Code2DataType(piece(TempSL[idx], U, r3Type));
         if(dt <> dtUnknown) and ((dt <> dtOrder) or
@@ -3064,7 +3077,7 @@ begin
 //            FRoot := FRec3;
             i := idx + 1;
             ChoiceIdx := 0;
-            while (i < TempSL.Count) and (TempSL.PiecesEqual(i, ['5', FID, FTaxID])) do
+            while(i < TempSL.Count) and (TempSL.PiecesEqual(i, ['5', FID, FTaxID])) do
             begin
               if (Pieces(TempSL[i-1],U,1,6) = Pieces(TempSL[i],U,1,6)) then
                 begin
@@ -3452,7 +3465,7 @@ begin
 // click, which will set the focus after the mouse click.  All other cases and the
 // ClicksDisabled will be FALSE and the focus is reset here.  If we don't make this
 // check, you can't click on the check box..
-  if (Last508KeyCode = VK_UP) or (Last508KeyCode = VK_LEFT) then 
+  if (Last508KeyCode = VK_UP) or (Last508KeyCode = VK_LEFT) then
   begin
     UnfocusableControlEnter(nil, Sender);
     exit;
@@ -4182,7 +4195,7 @@ var
                      begin
                        ActDt := StrToIntDef((Piece(TStringList(Prompt.FData.FChoicesActiveDates[m]).Strings[n], ':', 1)),0);
                        InActDt := StrToIntDef((Piece(TStringList(Prompt.FData.FChoicesActiveDates[m]).Strings[n], ':', 2)),9999999);
-                       Piece12 := Piece(Piece(Prompt.FData.FChoices.Strings[m],U,12),':',1);
+                       Piece12 := Piece(Prompt.FData.FChoices.Strings[m],U,12);
                        Prompt.FData.FChoices.SetStrPiece(m,12,Piece12);
                        if (EncDt >= ActDt) and (EncDt <= InActDt) then
                           ActChoicesSL.AddObject(Prompt.FData.FChoices[m], Prompt.FData.FChoices.Objects[m]);
@@ -4220,9 +4233,8 @@ var
                   Prompt.FData.FChoicesMin := MinX;
                   Prompt.FData.FChoicesMax := MaxX;
                 end
-                else
-                DoLbl := FALSE
-              end   
+                else DoLbl := FALSE
+              end
               else
               if(pt = ptMHTest) or ((pt = ptGaf) and (MHDLLFound = true)) then
               begin
@@ -4407,7 +4419,7 @@ var
     else
       inc(Y, pnl.Height);
   end;
-  
+
 begin
   Result := nil;
   cb := nil;
@@ -4543,7 +4555,7 @@ begin
       Result := AutoFocusControl
   end;
   if ScreenReaderSystemActive then
-    ScreenReaderSystem_Stop;    
+    ScreenReaderSystem_Stop;
 end;
 
 //This is used to get the template field values if this reminder is not the
@@ -4981,7 +4993,7 @@ begin
 end;
 
 //agp ICD-10 add this function to scan for valid codes against encounter date.
-function TRemDlgElement.OneValidCode(Choices: TORStringList; ChoicesActiveDates: TList;
+function TRemDlgElement.oneValidCode(Choices: TORStringList; ChoicesActiveDates: TList;
   encDt: TFMDateTime): string;
 var
   C,cnt, lastItem: integer;
@@ -5002,7 +5014,6 @@ begin
   end;
   if (cnt = 1) then Result := Choices[lastItem];
 end;
-
 
 function TRemDlgElement.IndentChildrenInPN: boolean;
 begin
@@ -5848,6 +5859,8 @@ begin
     (Sender as TORComboBox).DroppedDown := FALSE;
 end;
 
+
+
 function TRemPrompt.PromptOK: boolean;
 var
   pt: TRemPromptType;
@@ -6313,7 +6326,6 @@ begin
   end
 end;
 
-
 function TRemPrompt.RemDataChoiceActive(RData: TRemData; j: integer; EncDt: TFMDateTime):Boolean;
 var
   ActDt, InActDt: Double;
@@ -6356,7 +6368,7 @@ begin
     begin                                                  {there's a primary diagnosis}
       for i := 0 to FParent.FData.Count-1 do               {if there is return True}
       begin
-        EncDt := RemForm.PCEObj.VisitDateTime;     
+        EncDt := RemForm.PCEObj.VisitDateTime;
         RData := TRemData(FParent.FData[i]);
         if(RData.DataType = dtDiagnosis) then
         begin
@@ -6369,7 +6381,7 @@ begin
             for j := 0 to RData.FChoices.Count-1 do
             begin
              if RemDataChoiceActive(RData, j, EncDt) then
-             begin                                             
+             begin
               if(assigned(RData.FChoices.Objects[j])) and
                 (copy(RData.FChoicePrompt.FValue,k+1,1)='1') then
               begin
@@ -6380,7 +6392,7 @@ begin
                 end;
               end; //if FChoices.Objects (which is the RemPCERoot object) is assigned
               inc(k);
-             end; //if FChoices[j] is active                       
+             end; //if FChoices[j] is active
             end; //loop through FChoices
           end; //If there are FChoices and an FChoicePrompt (i.e.: is this a ptDataList}
         end;
@@ -6478,14 +6490,14 @@ begin
           else
           if(assigned(RData.FChoices)) and (assigned(RData.FChoicePrompt)) then
           begin
-            k := 0;                                                
+            k := 0;
             for j := 0 to RData.FChoices.Count-1 do
             begin
              if RemDataChoiceActive(RData, j, EncDt) then
-             begin                                             
+             begin
               if(Primary) then
               begin
-                if(assigned(RData.FChoices.Objects[j])) and  
+                if(assigned(RData.FChoices.Objects[j])) and
                   (copy(RData.FChoicePrompt.FValue,k+1,1)='1') then
                 begin
                   PrimaryDiagRoot := TRemPCERoot(RData.FChoices.Objects[j]);
@@ -6504,7 +6516,7 @@ begin
                 end;
               end;
               inc(k);
-             end;                                       
+             end;
             end;
           end;
         end;
@@ -6513,10 +6525,10 @@ begin
     end;
     if(assigned(FParent) and assigned(FParent.FData) and IsSyncPrompt(pt)) then
     begin
-      for i := 0 to FParent.FData.Count-1 do    
+      for i := 0 to FParent.FData.Count-1 do
       begin
-        RData := TRemData(FParent.FData[i]); 
-        if(assigned(RData.FPCERoot)) and (RemDataActive(RData, EncDt)) then 
+        RData := TRemData(FParent.FData[i]);
+        if(assigned(RData.FPCERoot)) and (RemDataActive(RData, EncDt)) then
           RData.FPCERoot.Sync(Self);
         if(assigned(RData.FChoices)) then
         begin

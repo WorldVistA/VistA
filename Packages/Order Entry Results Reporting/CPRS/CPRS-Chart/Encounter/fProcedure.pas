@@ -24,7 +24,6 @@ type
     procedure FormResize(Sender: TObject); override;
     procedure splRightMoved(Sender: TObject);
     procedure clbListClick(Sender: TObject);
-    procedure lbGridSelect(Sender: TObject);
     procedure btnSelectAllClick(Sender: TObject);
     procedure lbModsClickCheck(Sender: TObject; Index: Integer);
     procedure lbSectionClick(Sender: TObject);
@@ -37,6 +36,10 @@ type
     procedure lbxSectionExit(Sender: TObject);
     procedure lbModsExit(Sender: TObject);
     procedure btnOtherExit(Sender: TObject);
+    procedure lstRenameMeClick(Sender: TObject);
+    procedure lstRenameMeChange(Sender: TObject; Item: TListItem;
+      Change: TItemChange);
+    procedure lstRenameMeInsert(Sender: TObject; Item: TListItem);
   private
     FCheckingCode: boolean;
     FCheckingMods: boolean;
@@ -76,9 +79,9 @@ var
 begin
   if(NotUpdating) then
   begin
-    for i := 0 to lbGrid.Items.Count-1 do
-      if(lbGrid.Selected[i]) then
-        TPCEProc(lbGrid.Items.Objects[i]).Quantity := spnProcQty.Position;
+    for i := 0 to lstRenameMe.Items.Count-1 do
+      if(lstRenameMe.Items[i].Selected) then
+        TPCEProc(lstRenameMe.Objects[i]).Quantity := spnProcQty.Position;
     GridChanged;
   end;
 end;
@@ -90,9 +93,9 @@ begin
   inherited;
   if(NotUpdating) then
   begin
-    for i := 0 to lbGrid.Items.Count-1 do
-      if(lbGrid.Selected[i]) then
-        TPCEProc(lbGrid.Items.Objects[i]).Provider := cboProvider.ItemIEN;
+    for i := 0 to lstRenameMe.Items.Count-1 do
+      if(lstRenameMe.Items[i].Selected) then
+        TPCEProc(lstRenameMe.Objects[i]).Provider := cboProvider.ItemIEN;
     FProviderChanging := TRUE; // CQ 11707
     try
       GridChanged;
@@ -137,7 +140,7 @@ begin
   begin
     BeginUpdate;
     try
-      ok := (lbGrid.SelCount > 0);
+      ok := (lstRenameMe.SelCount > 0);
       lblProcQty.Enabled := ok;
       txtProcQty.Enabled := ok;
       spnProcQty.Enabled := ok;
@@ -150,11 +153,11 @@ begin
         SameProv := TRUE;
         Prov := 0;
         Qty := 1;
-        for i := 0 to lbGrid.Items.Count-1 do
+        for i := 0 to lstRenameMe.Items.Count-1 do
         begin
-          if lbGrid.Selected[i] then
+          if lstRenameMe.Items[i].Selected then
           begin
-            Obj := TPCEProc(lbGrid.Items.Objects[i]);
+            Obj := TPCEProc(lstRenameMe.Objects[i]);
             if(First) then
             begin
               First := FALSE;
@@ -241,13 +244,6 @@ begin
   ShowModifiers;
 end;
 
-procedure TfrmProcedures.lbGridSelect(Sender: TObject);
-begin
-  inherited;
-  Sync2Grid;
-  ShowModifiers;
-end;
-
 procedure TfrmProcedures.btnSelectAllClick(Sender: TObject);
 begin
   inherited;
@@ -274,11 +270,11 @@ begin
   ProcName := '';
   Hint := '';
 //  Needed := '';
-  for i := 0 to lbGrid.Items.Count-1 do
+  for i := 0 to lstRenameMe.Items.Count-1 do
   begin
-    if(lbGrid.Selected[i]) then
+    if(lstRenameMe.Items[i].Selected) then
     begin
-      Proc := TPCEProc(lbGrid.Items.Objects[i]);
+      Proc := TPCEProc(lstRenameMe.Objects[i]);
       Codes := Codes + Proc.Code + U;
       if(ProcName = '') then
         ProcName := Proc.Narrative
@@ -330,12 +326,12 @@ begin
   try
     cnt := 0;
     Mods := ';';
-    for i := 0 to lbGrid.Items.Count-1 do
+    for i := 0 to lstRenameMe.Items.Count-1 do
     begin
-      if(lbGrid.Selected[i]) then
+      if(lstRenameMe.Items[i].Selected) then
       begin
         inc(cnt);
-        Mods := Mods + TPCEProc(lbGrid.Items.Objects[i]).Modifiers;
+        Mods := Mods + TPCEProc(lstRenameMe.Objects[i]).Modifiers;
         FModsReadOnly := FALSE;
       end;
     end;
@@ -400,11 +396,11 @@ begin
       DoChk := FALSE;
       Add := (lbMods.Checked[Index]);
       ModIEN := piece(lbMods.Items[Index],U,1) + ';';
-      for i := 0 to lbGrid.Items.Count-1 do
+      for i := 0 to lstRenameMe.Items.Count-1 do
       begin
-        if(lbGrid.Selected[i]) then
+        if(lstRenameMe.Items[i].Selected) then
         begin
-          PCEObj := TPCEProc(lbGrid.Items.Objects[i]);
+          PCEObj := TPCEProc(lstRenameMe.Objects[i]);
           idx := pos(';' + ModIEN, ';' + PCEObj.Modifiers);
           if(idx > 0) then
           begin
@@ -462,10 +458,10 @@ begin
     begin
       UpdateModifierList(lbxSection.Items, Index); // CQ#16439
       lbxSection.Checked[Index] := TRUE;    
-      for i := 0 to lbGrid.Items.Count-1 do
+      for i := 0 to lstRenameMe.Items.Count-1 do
       begin
-        if(lbGrid.Selected[i]) then
-        with TPCEProc(lbGrid.Items.Objects[i]) do
+        if(lstRenameMe.Items[i].Selected) then
+        with TPCEProc(lstRenameMe.Objects[i]) do
         begin
           if(Category = GetCat) and
             (Pieces(lbxSection.Items[Index], U, 1, 2) = Code + U + Narrative) then
@@ -501,6 +497,28 @@ begin
       lbSection.SetFocus;
 end;
 
+procedure TfrmProcedures.lstRenameMeChange(Sender: TObject; Item: TListItem;
+  Change: TItemChange);
+begin
+  inherited;
+  Sync2Grid;
+  ShowModifiers;
+end;
+
+procedure TfrmProcedures.lstRenameMeClick(Sender: TObject);
+begin
+  inherited;
+    Sync2Grid;
+  ShowModifiers;
+end;
+
+procedure TfrmProcedures.lstRenameMeInsert(Sender: TObject; Item: TListItem);
+begin
+  inherited;
+  Sync2Grid;
+  ShowModifiers;
+end;
+
 procedure TfrmProcedures.btnOtherClick(Sender: TObject);
 begin
   inherited;
@@ -511,8 +529,8 @@ end;
 procedure TfrmProcedures.btnOtherExit(Sender: TObject);
 begin
   if TabIsPressed then begin
-    if lbGrid.CanFocus then
-      lbGrid.SetFocus;
+    if lstRenameMe.CanFocus then
+      lstRenameMe.SetFocus;
   end
   else if ShiftTabIsPressed then
     if lbMods.CanFocus then
@@ -560,14 +578,15 @@ begin
   { Comment out the block below (and the "var" block above) }
   {  to allow but not require entry of a provider with each new CPT entered}
 //------------------------------------------------
-  for i := 0 to lbGrid.Items.Count - 1 do
+  for i := 0 to lstRenameMe.Items.Count - 1 do
   begin
-    AProc := TPCEProc(lbGrid.Items.Objects[i]);
+    AProc := TPCEProc(lstRenameMe.Objects[i]);
     if AProc.fIsOldProcedure then continue;
     if (AProc.Provider = 0) then
     begin
       Result := True;
-      lbGrid.ItemIndex := i;
+      lstRenameMe.ItemIndex := i;
+      lstRenameMe.Items[i].Selected := true;
       exit;
     end;
   end;
@@ -579,8 +598,8 @@ var
   i: integer;
 begin
   inherited;
-  for i := 0 to lbGrid.Items.Count - 1 do
-    TPCEProc(lbGrid.Items.Objects[i]).fIsOldProcedure := True;
+  for i := 0 to lstRenameMe.Items.Count - 1 do
+    TPCEProc(lstRenameMe.Objects[i]).fIsOldProcedure := True;
 end;
 
 initialization

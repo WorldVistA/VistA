@@ -38,7 +38,7 @@ type
     ProvDiagnosis: string ;                 {  30}       { * }
     ProvDxCode: string;                     {  30.1}
     RequestProcessingActivity: TStringList; {  40}
-    EarliestDate: TFMDateTime;
+    ClinicallyIndicatedDate: TFMDateTime;
     //LatestDate: TFMDateTime; //dropped requirement WAT
   end ;
 
@@ -53,7 +53,7 @@ type
     ConsultProcName: string;
     Urgency: integer;
     UrgencyName: string;
-    EarliestDate: TFMDateTime;
+    ClinicallyIndicatedDate: TFMDateTime;
     //LatestDate: TFMDateTime; //dropped requirement WAT
     Place: string;
     PlaceName: string;
@@ -246,7 +246,7 @@ var
   x: string;
 begin
   x := RawText;
-  if Piece(x, U, 1)[1] in ['A', 'N', 'E'] then
+  if CharInSet(Piece(x, U, 1)[1], ['A', 'N', 'E']) then
     x := Piece(x, U, 2)
   else
     begin

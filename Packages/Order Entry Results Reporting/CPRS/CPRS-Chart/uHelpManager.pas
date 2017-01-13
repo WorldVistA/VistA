@@ -12,7 +12,7 @@ type
   public
     HelpHandle: hWnd;
     class function GetInstance: THelpManager;
-    function ExecHelp(Command: Word; Data: Integer; var CallHelp: Boolean): Boolean;
+    function ExecHelp(Command: Word; Data: NativeInt; var CallHelp: Boolean): Boolean;
   end;
 
 implementation
@@ -396,7 +396,7 @@ const
 {  CallHelp : Call Win help system          }
 {  Returns true if help called              }
 {===========================================}
-function THelpManager.ExecHelp(Command: word; Data: integer; var CallHelp: boolean): boolean;
+function THelpManager.ExecHelp(Command: word; Data: NativeInt; var CallHelp: boolean): boolean;
 var
   hc: THelpContexts; // loop variable
   errorcode: integer;

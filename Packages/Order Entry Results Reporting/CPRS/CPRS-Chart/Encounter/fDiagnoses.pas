@@ -25,7 +25,6 @@ type
       Rect: TRect; State: TOwnerDrawState);
     procedure lbxSectionDrawItem(Control: TWinControl; Index: Integer;
       Rect: TRect; State: TOwnerDrawState);
-    procedure lbGridSelect(Sender: TObject);
   private
     procedure EnsurePrimaryDiag;
     procedure GetSCTforICD(ADiagnosis: TPCEDiag);
@@ -47,9 +46,9 @@ const
   TX_INACTIVE_ICD_SCT_CODE = 'This problem references BOTH an ICD and a SNOMED CT code that are not active as of the date ' +
                              'of this encounter. Please update the codes now.';
   TX_ICD_LACKS_SCT_CODE    = 'Addition of a diagnosis to the problem list requires a SNOMED CT code. Please ' +
-                             'select the SNOMED CT concept which best describes the diagnosis. ';
+                             'select the SNOMED CT concept which best describes the diagnosis: ';
   TX_PROB_LACKS_SCT_CODE   = 'You''ve selected to update a problem from the Problem List which now requires a SNOMED CT code. ' +
-                             'Please enter a SNOMED CT equivalent term which best describes the diagnosis. ';
+                             'Please enter a SNOMED CT equivalent term which best describes the diagnosis: ';
 
   TC_INACTIVE_CODE         = 'Problem Contains Inactive Code';
   TC_NONSPEC_CODE          = 'Problem Contains Non-Specific Code';
@@ -66,13 +65,14 @@ const
 var
   frmDiagnoses: TfrmDiagnoses;
   dxList : TStringList;
+  PLUpdated: boolean = False;
 
 implementation
 
 {$R *.DFM}
 
 uses
-  fEncounterFrame, uConst, UBACore, VA508AccessibilityRouter, fPCELex, rPCE, uProbs, rProbs;
+  fEncounterFrame, uConst, UBACore, VA508AccessibilityRouter, fPCELex, rPCE, uProbs, rProbs, rCore;
 
 type
   TORCBImgIdx = (iiUnchecked, iiChecked, iiGrayed, iiQMark, iiBlueQMark,
@@ -125,17 +125,17 @@ var
   Primary: Boolean;
 
 begin
-  with lbGrid do
+  with lstRenameMe do
   begin
     Primary := False;
     for i := 0 to Items.Count - 1 do
-      if TPCEDiag(Items.Objects[i]).Primary then
+      if TPCEDiag(Objects[i]).Primary then
         Primary := True;
 
     if not Primary and (Items.Count > 0) then
     begin
       GridIndex := Items.Count - 1;//0; zzzzzzbellc CQ 15836
-      TPCEDiag(Items.Objects[Items.Count - 1]).Primary := True;
+      TPCEDiag(Objects[Items.Count - 1]).Primary := True;
       GridChanged;
     end;
   end;
@@ -149,9 +149,9 @@ var
 begin
   inherited;
   gi := GridIndex;
-  with lbGrid do for i := 0 to Items.Count - 1 do
+  with lstRenameMe do for i := 0 to Items.Count - 1 do
   begin
-    ADiagnosis := TPCEDiag(Items.Objects[i]);
+    ADiagnosis := TPCEDiag(Objects[i]);
     ADiagnosis.Primary := (gi = i);
   end;
   GridChanged;
@@ -164,19 +164,19 @@ begin
   inherited;
   if(NotUpdating) then
   begin
-    for i := 0 to lbGrid.Items.Count-1 do
+    for i := 0 to lstRenameMe.Items.Count-1 do
     begin
-      if(lbGrid.Selected[i]) then
+      if(lstRenameMe.Items[i].Selected) then
       begin
-        TPCEDiag(lbGrid.Items.Objects[i]).AddProb := (ckbDiagProb.Checked) and
-                                                     (not isProblem(TPCEDiag(lbGrid.Items.Objects[i]))) and
-                                                     (TPCEDiag(lbGrid.Items.Objects[i]).Category <> PL_ITEMS);
+        TPCEDiag(lstRenameMe.Objects[i]).AddProb := (ckbDiagProb.Checked) and
+                                                     (not isProblem(TPCEDiag(lstRenameMe.Objects[i]))) and
+                                                     (TPCEDiag(lstRenameMe.Objects[i]).Category <> PL_ITEMS);
         //TODO: Add check for I10Active
-        if TPCEDiag(lbGrid.Items.Objects[i]).AddProb and
+        if TPCEDiag(lstRenameMe.Objects[i]).AddProb and
           (Piece(Encounter.GetICDVersion, U, 1) = '10D') and
-          (not ((pos('SCT', TPCEDiag(lbGrid.Items.Objects[i]).Narrative) > 0) or
-          (pos('SNOMED', TPCEDiag(lbGrid.Items.Objects[i]).Narrative) > 0))) then
-            GetSCTforICD(TPCEDiag(lbGrid.Items.Objects[i]));
+          (not ((pos('SCT', TPCEDiag(lstRenameMe.Objects[i]).Narrative) > 0) or
+          (pos('SNOMED', TPCEDiag(lstRenameMe.Objects[i]).Narrative) > 0))) then
+            GetSCTforICD(TPCEDiag(lstRenameMe.Objects[i]));
       end;
     end;
     GridChanged;
@@ -204,7 +204,7 @@ end;
 procedure TfrmDiagnoses.UpdateNewItemStr(var x: string);
 begin
   inherited;
-  if lbGrid.Items.Count = 0 then
+  if lstRenameMe.Items.Count = 0 then
     x := x + U + '1'
   else
     x := x + U + '0';
@@ -215,11 +215,12 @@ var
   AList: TStringList;
   ProbRec: TProbRec;
   CodeSysStr: String;
+  DateOfInt: TFMDateTime;
 begin
   // Update problem list entry with new ICD (& SCT) code(s) (& narrative).
   AList := TStringList.create;
   try
-    FastAssign(EditLoad(AplIEN, Encounter.Provider, User.StationNumber), AList) ;
+    FastAssign(EditLoad(AplIEN), AList) ;
     ProbRec := TProbRec.create(AList);
     ProbRec.PIFN := AplIEN;
 
@@ -239,10 +240,13 @@ begin
       ProbRec.SCTConcept.DHCPtoKeyVal(Pieces(ASCTCode, U, 1, 2));
       //TODO: need to accommodate changes to Designation Code
       ProbRec.Narrative.DHCPtoKeyVal(U + Piece(ASCTCode, U, 3));
+      ProbRec.SCTDesignation.DHCPtoKeyVal(Piece(ASCTCode, U, 4) + U + Piece(ASCTCode, U, 4));
     end;
 
     ProbRec.RespProvider.DHCPtoKeyVal(IntToStr(Encounter.Provider) + u + Encounter.ProviderName);
-    ProbRec.CodeDateStr := FormatFMDateTime('mm/dd/yy', Encounter.DateTime);
+    if Encounter.DateTime = 0 then DateOfInt := FMNow
+    else DateOfInt := Encounter.DateTime;
+    ProbRec.CodeDateStr := FormatFMDateTime('mm/dd/yy', DateOfInt);
     AList.Clear;
     FastAssign(EditSave(ProbRec.PIFN, User.DUZ, User.StationNumber, '1', ProbRec.FilerObject, ''), AList);
   finally
@@ -316,9 +320,9 @@ begin
   result := false;
   pCode := piece(problem, U, 1);
   pNarrative := piece(problem, U, 2);
-  for i := 0 to lbGrid.Items.Count - 1 do
+  for i := 0 to lstRenameMe.Items.Count - 1 do
   begin
-    dx := lbGrid.Items[i];
+    dx := lstRenameMe.Strings[i];
     narr := piece(dx, U, 3);
     code := ExtractCode(narr, 'ICD');
     sct := ExtractCode(narr, 'SCT');
@@ -352,32 +356,32 @@ begin
   begin
     BeginUpdate;
     try
-      cmdDiagPrimary.Enabled := (lbGrid.SelCount = 1);
-      OK := (lbGrid.SelCount > 0);
+      cmdDiagPrimary.Enabled := (lstRenameMe.SelCount = 1);
+      OK := (lstRenameMe.SelCount > 0);
       PLItemCount := 0;
       if OK then
-        for k := 0 to lbGrid.Items.Count - 1 do
+        for k := 0 to lstRenameMe.Items.Count - 1 do
         begin
-          if (lbGrid.Selected[k]) then
+          if (lstRenameMe.Items[k].Selected) then
           begin
-            if (TPCEDiag(lbGrid.Items.Objects[k]).Category = PL_ITEMS) or isProblem(TPCEDiag(lbGrid.Items.Objects[k])) then
+            if (TPCEDiag(lstRenameMe.Objects[k]).Category = PL_ITEMS) or isProblem(TPCEDiag(lstRenameMe.Objects[k])) then
               PLItemCount := PLItemCount + 1;
           end;
         end;
-      OK := OK and (PLItemCount < lbGrid.SelCount);
+      OK := OK and (PLItemCount < lstRenameMe.SelCount);
       ckbDiagProb.Enabled := OK;
       if(OK) then
       begin
         j := 0;
-        for i := 0 to lbGrid.Items.Count-1 do
+        for i := 0 to lstRenameMe.Items.Count-1 do
         begin
-          if(lbGrid.Selected[i]) and (TPCEDiag(lbGrid.Items.Objects[i]).AddProb) then
+          if(lstRenameMe.Items[i].Selected) and (TPCEDiag(lstRenameMe.Objects[i]).AddProb) then
             inc(j);
         end;
         if(j = 0) then
           ckbDiagProb.Checked := FALSE
         else
-        if(j < lbGrid.SelCount) then
+        if(j < lstRenameMe.SelCount) then
           ckbDiagProb.State := cbGrayed
         else
           ckbDiagProb.Checked := TRUE;
@@ -445,8 +449,7 @@ begin
             I10Description := Piece(ICDCode, U, 2) + ' (' + Piece(ICDCode, U, 4) + #32 + Piece(ICDCode, U, 1) + ')';
             LexiconLookup(SCTCode, LX_SCT, 0, True, InputStr, TX_PROB_LACKS_SCT_CODE + CRLF + CRLF + I10Description);
 
-
-            if (Piece(SCTCode, U, 3) <> '') then
+            if (Piece(SCTCode, U, 4) <> '') then
             begin
               SecItem := lbxSection.Items[Index];
               SetPiece(SecItem, U, 2, Piece(SCTCode, U, 2));
@@ -456,7 +459,7 @@ begin
               lbxSection.Checked[Index] := True;
               if plIEN <> '' then
               begin
-                SCTPar := Piece(SCTCode, U, 3) + U + Piece(SCTCode, U, 3) + U + Piece(SCTCode, U, 2);
+                SCTPar := Piece(SCTCode, U, 4) + U + Piece(SCTCode, U, 4) + U + Piece(SCTCode, U, 2) + U + Piece(SCTCode, U, 3);
               end;
               FUpdatingGrid := FALSE;
             end
@@ -471,6 +474,7 @@ begin
           end;
           ICDPar := Piece(ICDCode, U, 3) + U + Piece(ICDCode, U, 1) + U + Piece(ICDCode, U, 2) + U + Piece(ICDCode, U, 4);
           UpdateProblem(plIEN, ICDPar, SCTPar);
+          PLUpdated := True;
         end;
         FUpdatingGrid := FALSE;
       end
@@ -501,6 +505,7 @@ begin
         begin
           SCTPar := Piece(SCTCode, U, 3) + U + Piece(SCTCode, U, 3) + U + Piece(SCTCode, U, 2);
           UpdateProblem(plIEN, '', SCTPar);
+          PLUpdated := True;
         end;
         FUpdatingGrid := FALSE;
       end
@@ -542,6 +547,7 @@ begin
           SCTPar := Piece(SCTCode, U, 3) + U + Piece(SCTCode, U, 3) + U + Piece(SCTCode, U, 2);
           ICDPar := Piece(ICDCode, U, 3) + U + Piece(ICDCode, U, 1) + U + Piece(ICDCode, U, 2) + U + Piece(ICDCode, U, 4);
           UpdateProblem(plIEN, ICDPar, SCTPar);
+          PLUpdated := True;
         end;
         FUpdatingGrid := FALSE;
       end
@@ -574,6 +580,7 @@ begin
         begin
           SCTPar := Piece(SCTCode, U, 3) + U + Piece(SCTCode, U, 3) + U + Piece(SCTCode, U, 2);
           UpdateProblem(plIEN, '', SCTPar);
+          PLUpdated := True;
         end;
         FUpdatingGrid := FALSE;
       end
@@ -671,12 +678,8 @@ begin
   inherited;
   if  BILLING_AWARE then
      GetEncounterDiagnoses;
-end;
-
-procedure TfrmDiagnoses.lbGridSelect(Sender: TObject);
-begin
-  inherited;
-  Sync2Grid;
+  if ckbDiagProb.Checked then
+     PLUpdated := True;
 end;
 
 procedure TfrmDiagnoses.lbSectionClick(Sender: TObject);
@@ -693,9 +696,9 @@ var
 begin
   inherited;
   UBAGlobals.BAPCEDiagList.Clear;
-  with lbGrid do for i := 0 to Items.Count - 1 do
+  with lstRenameMe do for i := 0 to Items.Count - 1 do
   begin
-    ADiagnosis := TPCEDiag(Items.Objects[i]);
+    ADiagnosis := TPCEDiag(Objects[i]);
     dxCode :=  ADiagnosis.Code;
     dxName :=  ADiagnosis.Narrative;
     if BAPCEDiagList.Count = 0 then
@@ -709,9 +712,12 @@ var
   Code, msg, ICDDescription: String;
 begin
   // look-up SNOMED CT
-  ICDDescription := ADiagnosis.Narrative + ' (' + Piece(Encounter.GetICDVersion, U, 2) + #32 + ADiagnosis.Code + ')';
+  if Pos('ICD-10-CM', ADiagnosis.Narrative) > 0 then
+    ICDDescription := ADiagnosis.Narrative
+  else
+    ICDDescription := ADiagnosis.Narrative + ' (' + Piece(Encounter.GetICDVersion, U, 2) + #32 + ADiagnosis.Code + ')';
   msg := TX_ICD_LACKS_SCT_CODE + CRLF + CRLF + ICDDescription;
-  LexiconLookup(Code, LX_SCT, 0, False, ADiagnosis.Narrative, msg);
+  LexiconLookup(Code, LX_SCT, 0, False, '', msg);
   if (Code = '') then
   begin
     ckbDiagProb.Checked := False;

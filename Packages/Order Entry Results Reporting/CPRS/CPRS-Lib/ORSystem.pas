@@ -5,7 +5,8 @@ unit ORSystem;
 
 interface
 
-uses SysUtils, Windows, Classes, Forms, Registry, ORFn;
+uses 
+  Windows;
 
 const
   CPRS_ROOT_KEY =  HKEY_LOCAL_MACHINE;
@@ -19,15 +20,11 @@ const
   CPRS_USER_LAST = 'Software\Vista\CPRS\LastUpdate';
   CPRS_LAST_DATE = 'Software\Vista\CPRS\DateUpdated';
 
-function AppOutOfDate(AppName: string): Boolean;
 function ClientVersion(const AFileName: string): string;
 function CompareVersion(const A, B: string): Integer;
 procedure CopyFileDate(const Source, Dest: string);
 procedure CopyLastWriteTime(const Source, Dest: string);
-//procedure CopyFileWithDate(const FromFileName, ToFileName: string);
 procedure Delay(i: Integer);
-//procedure FileCopy(const FromFileName, ToFileName: string);
-//procedure FileCopyWithDate(const FromFileName, ToFileName: string);
 function FullToFilePart(const AFileName: string): string;
 function FullToPathPart(const AFileName: string): string;
 function IsWin95Style: Boolean;
@@ -46,10 +43,12 @@ procedure UserRegWriteDateTime(const AKey, AName: string; AValue: TDateTime);
 function UserRegReadInt(const AKey, AName: string): Integer;
 procedure UserRegWriteInt(const AKey, AName: string; AValue: Integer);
 procedure RunProgram(const AppName: string);
-function UpdateSelf: Boolean;
 function BorlandDLLVersionOK: boolean;
 
 implementation
+
+uses
+  SysUtils, Classes, Forms, Registry, ORFn;
 
 const
   CREATE_KEY = True;  // cause key to be created if it's not in the registry
@@ -66,57 +65,6 @@ begin
     Windows.FindClose(AHandle);
     Result.LowPart  := FindData.ftLastWriteTime.dwLowDateTime;
     Result.HighPart := FindData.ftLastWriteTime.dwHighDateTime;
-  end;
-end;
-
-function AppOutOfDate(AppName: string): Boolean;
-const
-  FIVE_SECONDS = 0.000055;
-  FIVE_SECONDS_NT = 50000000;
-var
-  GoldName, DriveRoot, x: string;
-  DriveType: Integer;
-  LastWriteApp, LastWriteGold: LARGE_INTEGER;
-begin
-  Result := False;
-  // check command line params for no-update parameter
-  if ParamIndex('NOCOPY') > 0 then Exit;
-  // check time of last update, don't retry if too recently called
-  if Abs(Now - UserRegReadDateTime(CPRS_LAST_DATE, FullToFilePart(AppName))) < FIVE_SECONDS
-    then Exit;
-  // check auto-update registry entry
-  if RegReadBool(CPRS_REG_AUTO) = False then Exit;
-  // check directory - if remote then don't allow update
-  if Pos('\\', AppName) = 1 then Exit;
-  if Pos(':', AppName) > 0
-    then DriveRoot := Piece(AppName, ':', 1) + ':\'
-    else DriveRoot := '\';
-  DriveType := GetDriveType(PChar(DriveRoot));
-  if not ((DriveType = DRIVE_FIXED) or (DriveType = DRIVE_REMOVABLE)) then Exit;
-  // check registry to see if updates limited to particular directory
-  x := RegReadStr(CPRS_REG_ONLY);
-  if (Length(x) > 0) and (CompareText(x, FullToPathPart(AppName)) <> 0) then Exit;
-  // check for different file date in the gold directory
-  GoldName := RegReadStr(CPRS_REG_GOLD);
-  if (Length(GoldName) = 0)  then exit;
-  if not DirectoryExists(GoldName) then
-  begin
-    if Pos('"', Goldname) > 0 then
-    begin
-      Goldname := Copy(GoldName, 2, MaxInt);
-      if Pos('"', Goldname) > 0 then
-        Goldname := Copy(GoldName, 1, Length(GoldName) - 1);
-    end;
-  end;
-  if (not DirectoryExists(GoldName)) then Exit;
-  GoldName := GoldName + FullToFilePart(AppName);
-  if FileExists(GoldName) then
-  begin
-    LastWriteApp  := FileLastWrite(AppName);
-    LastWriteGold := FileLastWrite(GoldName);
-    // check within 5 seconds to work around diffs in NTFS & FAT timestamps
-    if Abs(LastWriteApp.QuadPart - LastWriteGold.QuadPart) > FIVE_SECONDS_NT then Result := True;
-    //if CompareFileTime(LastWriteApp, LastWriteGold) <> 0 then Result := True;
   end;
 end;
 
@@ -494,36 +442,6 @@ begin
   CreateProcess(nil, PChar(AppName), nil, nil, False, DETACHED_PROCESS or NORMAL_PRIORITY_CLASS,
     nil, nil, StartInfo, ProcInfo);
 end;
-
-function UpdateSelf: Boolean;
-var
-  CPRSUpdate: string;
-begin
-  // auto-update if newer version available
-  Result := False;
-  CPRSUpdate := RegReadStr(CPRS_REG_GOLD) + 'CPRSUpdate.exe';
-  if not FileExists(CPRSUpdate) then CPRSUpdate := 'CPRSUpdate.exe';
-  if AppOutOfDate(Application.ExeName) and FileExists(CPRSUpdate) then
-  begin
-    Result := True;
-    RunProgram(CPRSUpdate + ' COPY=' + QuotedExeName);
-  end;
-end;
-
-(*
-procedure UpdateAppFromGold(const AppName: string);
-var
-  GoldName: string;
-begin
-  Delay(1500);
-  // do a rename of AppName in case problem?
-  GoldName := RegReadStr(CPRS_REG_GOLD);
-  if Length(GoldName) = 0 then Exit;
-  if GoldName[Length(GoldName)] <> '\' then GoldName := GoldName + '\';
-  GoldName := GoldName + ReverseStr(Piece(ReverseStr(AppName), '\', 1));
-  CopyFileWithDate(GoldName, AppName);
-end;
-*)
 
 function BorlandDLLVersionOK: boolean;
 const

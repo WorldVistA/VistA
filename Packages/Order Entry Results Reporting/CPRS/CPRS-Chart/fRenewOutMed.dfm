@@ -102,7 +102,8 @@ inherited frmRenewOutMed: TfrmRenewOutMed
       Pieces = '2'
       Sorted = False
       SynonymChars = '<>'
-      TabOrder = 1
+      TabOrder = 2
+      Text = ''
       CharsNeedMatch = 1
     end
     object txtRefills: TCaptionEdit
@@ -110,7 +111,7 @@ inherited frmRenewOutMed: TfrmRenewOutMed
       Top = 31
       Width = 49
       Height = 21
-      TabOrder = 0
+      TabOrder = 1
       Caption = 'Refills'
     end
   end

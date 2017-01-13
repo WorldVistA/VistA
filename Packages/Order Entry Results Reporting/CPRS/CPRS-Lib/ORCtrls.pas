@@ -1,3 +1,5 @@
+{$WARN UNSAFE_CODE OFF}
+{$WARN UNSAFE_CAST OFF}
 unit ORCtrls; // Oct 26, 1997 @ 10:00am
 
 // To Do:  eliminate topindex itemtip on mousedown (seen when choosing clinic pts)
@@ -6,7 +8,7 @@ interface // -------------------------------------------------------------------
 
 uses Windows, Messages, SysUtils, Classes, Graphics, Controls, StdCtrls, Forms,
   ComCtrls, Commctrl, Buttons, ExtCtrls, Grids, ImgList, Menus, CheckLst,
-  Variants, VAClasses, typinfo;
+  Variants, VAClasses, typinfo, System.Math;
 
 const
   UM_SHOWTIP = (WM_USER + 9436); // message id to display item tip         **was 300
@@ -80,6 +82,7 @@ type
 
   TORListBox = class(TListBox, IVADynamicProperty, IORBlackColorModeCompatible)
   private
+    FNonSelectedIndex: Integer; // Index of non selected focused index
     FFocusIndex: Integer; // item with focus when using navigation keys
     FLargeChange: Integer; // visible items less one
     FTipItem: Integer; // item currently displaying ItemTip
@@ -129,6 +132,7 @@ type
     FIsPartOfComboBox: boolean;
     FBlackColorMode: boolean;
     FHideSelection: boolean;
+    ItemRecList: TList; //Holds all allocated ItemRecs
     procedure AdjustScrollBar;
     procedure CreateScrollBar;
     procedure FreeScrollBar;
@@ -233,6 +237,7 @@ type
     property ItemID: Variant read GetItemID;
     property ItemIEN: Int64 read GetItemIEN;
     property FocusIndex: Integer read FFocusIndex write SetFocusIndex;
+    property NonSelectedIndex: Integer read FNonSelectedIndex;
     property DisplayText[Index: Integer]: string read GetDisplayText;
     property References[Index: Integer]: Variant read GetReference write SetReference;
     property ShortCount: Integer read FWaterMark;
@@ -1003,12 +1008,62 @@ type
     property Caption: string read GetCaption write SetCaption;
   end;
 
+  TCaptionListItem  = class(ComCtrls.TListItem)
+   Private
+    fItemString: String;
+    fObject: TObject;
+   public
+    property ItemString: String read fItemString write fItemString;
+    property aObject: TObject read fObject write fObject;
+  end;
+
+  TCaptionListStringList = class(classes.TStringList)
+   private
+    fParentCLV: TObject;
+   public
+     procedure Assign(Source: TPersistent); override;
+     constructor CreateWithParent(Parent: TObject);
+  end;
+
   TCaptionListView = class(TListView, IVADynamicProperty)
+  private
+   FPieces: array[0..MAX_TABS] of Integer;
+   FItemsStrings: TCaptionListStringList;
+   FAutoSize: Boolean;
+   function GetPieces: string;
+   function Get(Index: Integer): String;
+   function GetObj(Index: Integer): TObject;
+   function GetItemIEN: Int64;
+   function GetIEN(AnIndex: Integer): Int64;
+   function GetItemID: Variant;
+   function GetItemsStrings: TCaptionListStringList;
+   procedure SetPieces(const Value: string);
+   Procedure SetFromStringList(AValue: TCaptionListStringList);
+   procedure Put(Index: Integer; Item: String);
+   procedure PutObj(Index: Integer; ItemObject: TObject);
+   procedure WMSetFocus(var Message: TMessage); message WM_SETFOCUS;
+   procedure CreateItemClass(Sender: TCustomListView; var ItemClass: TListItemClass);
+   function AddItemToList(aStr: string; aObject: TObject): TCaptionListItem;
   public
+    property ItemIEN: Int64 read GetItemIEN;
+    property ItemID: Variant read GetItemID;
+    property ItemsStrings: TCaptionListStringList read GetItemsStrings write SetFromStringList;
     function SupportsDynamicProperty(PropertyID: integer): boolean;
     function GetDynamicProperty(PropertyID: integer): string;
+    function SelectByIEN(AnIEN: Int64): Integer;
+    procedure AutoSizeColumns();
+    property Strings[Index: Integer]: String read Get write Put; default;
+    property Objects[Index: Integer]: TObject read GetObj write PutObj;
+    Function Add(aStr: string): Integer; overload;
+    Function Add(aStr: string; aObject: TObject): Integer; overload;
+    function AddObject(aStr: string; aObject: TObject): Integer;
+    procedure EditItem(Index: Integer; aStr: String);
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
   published
+    property AutoSize: Boolean read FAutoSize write FAutoSize;
     property Caption;
+    property Pieces: string read GetPieces write SetPieces;
   end;
 
   TCaptionStringGrid = class(TStringGrid, IVADynamicProperty)
@@ -1027,6 +1082,9 @@ type
     property JustToTab: boolean read FJustToTab write FJustToTab default FALSE;
   end;
 
+function AverageWidth(AFont: TFont): integer;
+function AverageHeight(AFont: TFont): integer;
+
 function FontWidthPixel(FontHandle: THandle): Integer;
 function FontHeightPixel(FontHandle: THandle): Integer;
 function ItemTipKeyHook(Code: Integer; wParam: WPARAM; lParam: LPARAM): LRESULT; StdCall;
@@ -1044,10 +1102,10 @@ implementation // --------------------------------------------------------------
 {$R ORCTRLS}
 
 uses
-  VAUtils;
+  System.Types, VAUtils;
 
 const
-  ALPHA_DISTRIBUTION: array[0..100] of string[3] = ('', ' ', 'ACE', 'ADG', 'ALA', 'AMI', 'ANA', 'ANT',
+  ALPHA_DISTRIBUTION: array[0..100] of string = ('', ' ', 'ACE', 'ADG', 'ALA', 'AMI', 'ANA', 'ANT',
     'ARE', 'ASU', 'AZO', 'BCP', 'BIC', 'BOO', 'BST', 'CAF', 'CAR', 'CD6', 'CHE', 'CHO', 'CMC', 'CON', 'CPD',
     'CVI', 'DAA', 'DEF', 'DEP', 'DIA', 'DIH', 'DIP', 'DP ', 'EAR', 'EM ', 'EPI', 'ETH', 'F2G', 'FIB', 'FML',
     'FUM', 'GEL', 'GLU', 'GPQ', 'HAL', 'HEM', 'HIS', 'HUN', 'HYL', 'IDS', 'IND', 'INT', 'ISO', 'KEX', 'LAN',
@@ -1124,6 +1182,32 @@ begin
     end;
   end;
   Dec(Result, GetSystemMetrics(SM_CXVSCROLL));
+end;
+
+function AverageWidth(AFont: TFont): integer;
+var
+  bmp: TBitmap;
+begin
+  bmp := TBitmap.Create;
+  try
+    bmp.Canvas.Font.Assign(AFont);
+    Result := Trunc(bmp.Canvas.TextWidth('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz') / 52 ) + 1;
+  finally
+    bmp.Free;
+  end;
+end;
+
+function AverageHeight(AFont: TFont): integer;
+var
+  bmp: TBitmap;
+begin
+  bmp := TBitmap.Create;
+  try
+    bmp.Canvas.Font.Assign(AFont);
+    Result := bmp.Canvas.TextHeight('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz');
+  finally
+    bmp.Free;
+  end;
 end;
 
 function FontWidthPixel(FontHandle: THandle): Integer;
@@ -1682,6 +1766,7 @@ begin
   FFirstLoad := True;
   FCurrentTop := -1;
   FFocusIndex := -1;
+  FNonSelectedIndex := -1;
   ShowHint := True;
   FHideSynonyms := FALSE;
   FSynonymChars := '<>';
@@ -1692,15 +1777,24 @@ begin
   FCaseChanged := TRUE;
   FLookupPiece := 0;
   FIsPartOfComboBox := False;
+  //Holds all ItemRecs for memory cleanup
+  ItemRecList := TList.Create;
 end;
 
 destructor TORListBox.Destroy;
 { ensures that the special records associated with each listbox item are disposed }
+var
+ I: integer;
 begin
   FMItems.Free;
   if uItemTip <> nil then uItemTip.Hide;
   DestroyItems;
   RemoveItemTipRef; //kcm
+  //Clean up itemrecs
+  for I := 0 to ItemRecList.Count - 1 do
+   if Assigned(ItemRecList[i]) then
+    Dispose(ItemRecList[i]);
+  ItemRecList.Free;
   inherited Destroy;
 end;
 
@@ -1841,15 +1935,15 @@ procedure TORListBox.LBSetItemData(var Message: TMessage);
 var
   ItemRec: PItemRec;
 begin
-  if not FFromSelf then with Message do
+  if not FFromSelf then
     begin
       FFromSelf := True;
-      ItemRec := PItemRec(SendMessage(Handle, LB_GETITEMDATA, WParam, 0)); // WParam: list index
+      ItemRec := PItemRec(SendMessage(Handle, LB_GETITEMDATA, Message.WParam, 0)); // WParam: list index
       FFromSelf := False;
       if (assigned(ItemRec)) then
-        ItemRec^.UserObject := TObject(LParam);
-      LParam := Integer(ItemRec);
-      if uItemTip.FShowing and (uItemTip.FListBox = Self) and (uItemTip.FListItem = WParam) then
+        ItemRec^.UserObject := TObject(Message.LParam);
+      Message.LParam := Integer(ItemRec);
+      if uItemTip.FShowing and (uItemTip.FListBox = Self) and (uItemTip.FListItem = Integer(Message.WParam)) then
         uItemTip.UpdateText(FALSE);
     end;
   inherited;
@@ -1907,6 +2001,7 @@ procedure TORListBox.LBAddString(var Message: TMessage);
   has what's visible (based on Pieces, TabPosition properties) and substitute that in LParam }
 var
   ItemRec: PItemRec;
+  ItemPos: Integer;
 begin
   if not FFromSelf then
   begin
@@ -1920,6 +2015,9 @@ begin
         end;
     end; // -- special long list processing - end
     New(ItemRec);
+    //Add to our ItemRec List
+    ItemRecList.Add(ItemRec);
+
     with ItemRec^, Message do
     begin
       UserObject := nil;
@@ -1937,7 +2035,12 @@ begin
         SendMessage(Handle, LB_SETITEMDATA, Result, Integer(ItemRec)); // Result: new item index
         FFromSelf := False;
       end
-      else Dispose(ItemRec);
+      else begin
+       ItemPos := ItemRecList.IndexOf(ItemRec);
+       ItemRecList.Delete(ItemPos);
+       Dispose(ItemRec);
+      end;
+
   end
   else inherited;
 end;
@@ -1946,6 +2049,7 @@ procedure TORListBox.LBInsertString(var Message: TMessage);
 { intercepts LB_INSERTSTRING, similar to LBAddString except for special long list processing }
 var
   ItemRec: PItemRec;
+  ItemPos: Integer;
 begin
   if not FFromSelf then
   begin
@@ -1958,7 +2062,7 @@ begin
       end
       else with Message do
         begin
-          if WParam > FWaterMark then
+          if Integer(WParam) > FWaterMark then
           begin // make sure insert above watermark
             FMItems.MList.Move(WParam, FWaterMark);
             WParam := FWaterMark;
@@ -1967,6 +2071,9 @@ begin
         end;
     end; // -- special long list processing - end
     New(ItemRec);
+    //Add to our ItemRec List
+    ItemRecList.Add(ItemRec);
+
     with ItemRec^, Message do
     begin
       UserObject := nil;
@@ -1983,7 +2090,12 @@ begin
         SendMessage(Handle, LB_SETITEMDATA, Result, Integer(ItemRec)); // Result: new item index
         FFromSelf := False;
       end
-      else Dispose(ItemRec);
+      else begin
+       ItemPos := ItemRecList.IndexOf(ItemRec);
+       ItemRecList.Delete(ItemPos);
+       Dispose(ItemRec);
+      end;
+
   end
   else inherited;
 end;
@@ -1992,6 +2104,7 @@ procedure TORListBox.LBDeleteString(var Message: TMessage);
 { intercept LB_DELETESTRING and dispose the record associated with the item being deleted }
 var
   ItemRec: PItemRec;
+  ItemPos: Integer;
 begin
   with Message do
   begin
@@ -2002,6 +2115,9 @@ begin
     begin
       if FLongList and not FFromNeedData then
         Dec(FWaterMark);
+      ItemPos := ItemRecList.IndexOf(ItemRec);
+      ItemRecList.Delete(ItemPos);
+
       Dispose(ItemRec);
     end;
   end;
@@ -2016,6 +2132,7 @@ procedure TORListBox.LBResetContent(var Message: TMessage);
 var
   ItemCount, i: Integer;
   ItemRec: PItemRec;
+  ItemPos: Integer;
 begin
   if not FFromSelf then
   begin
@@ -2025,6 +2142,9 @@ begin
       FFromSelf := True;
       ItemRec := PItemRec(SendMessage(Handle, LB_GETITEMDATA, i, 0));
       FFromSelf := False;
+      ItemPos := ItemRecList.IndexOf(ItemRec);
+       ItemRecList.Delete(ItemPos);
+
       Dispose(ItemRec);
     end;
     Perform(LB_SETCOUNT, 0, 0);
@@ -2321,7 +2441,7 @@ end;
 
 procedure TORListBox.DestroyItems;
 var
-  ItemCount, i: Integer;
+  ItemCount, i, ItemPos: Integer;
   ItemRec: PItemRec;
 
 begin
@@ -2334,7 +2454,12 @@ begin
       ItemRec := PItemRec(SendMessage(Handle, LB_GETITEMDATA, i, 0));
       FFromSelf := False;
       if Assigned(ItemRec) then
+      begin
+        ItemPos := ItemRecList.IndexOf(ItemRec);
+        ItemRecList.Delete(ItemPos);
         Dispose(ItemRec);
+      end;
+
     end;
     FItemsDestroyed := TRUE;
 
@@ -2583,6 +2708,10 @@ begin
       ItemRec := PItemRec(SendMessage(Handle, LB_GETITEMDATA, Index, 0)); // WParam: list index
       FFromSelf := OldFromSelf;
 
+      //Set the NonSelectedIndex
+      if (odFocused in State) and (not (odSelected in State)) then
+       FNonSelectedIndex := Index;
+
       if (FCheckBoxes) then
       begin
         if (assigned(ItemRec)) then
@@ -2760,7 +2889,7 @@ begin
   begin
     TrueOffset := TopIndex;
     TmpIdx := TopIndex;
-    while ((TmpIdx < Message.wParam) and (TmpIdx < Items.Count)) do
+    while ((TmpIdx < Integer(Message.wParam)) and (TmpIdx < Items.Count)) do
     begin
       if (Perform(LB_GETITEMHEIGHT, TmpIdx, 0) > 0) then
         inc(TrueOffset);
@@ -3067,7 +3196,7 @@ procedure TORListBox.ResetItems;
 var
   SaveItems: TList;
   Strings: TStringList;
-  i, Pos: Integer;
+  i, Pos, ItemPos: Integer;
   ItemRec, ItemRec2: PItemRec;
   SaveListMode: Boolean;
   RealVerify: Boolean;
@@ -3108,6 +3237,10 @@ begin
           ItemRec2^.CheckedState := ItemRec^.CheckedState;
         end;
       end;
+             ItemPos := ItemRecList.IndexOf(ItemRec);
+       ItemRecList.Delete(ItemPos);
+      Dispose(ItemRec);
+
     end;
   finally
     SaveItems.Free;
@@ -3298,7 +3431,7 @@ begin {NeedData}
     StartFrom := Uppercase(StartFrom);
   StartFrom := Copy(StartFrom, 1, 128); // limit length to 128 characters
   CtrlPos := 0; // make sure no ctrl characters
-  for CharPos := 1 to Length(StartFrom) do if StartFrom[CharPos] in [#0..#31] then
+  for CharPos := 1 to Length(StartFrom) do if CharInSet(StartFrom[CharPos], [#0..#31]) then
     begin
       CtrlPos := CharPos;
       break;
@@ -3925,6 +4058,7 @@ begin
   FListBox.OnMouseUp := FwdMouseUp;
   FListBox.OnNeedData := FwdNeedData;
   FListBox.OnClickCheck := CheckBoxSelected;
+  FListBox.IntegralHeight := true;
   FListBox.Visible := True;
   FItems := FListBox.Items;
   FMItems := FListBox.MItems;
@@ -6200,6 +6334,7 @@ begin
             FocRect := Rect;
             TxtHeight := DrawText(Handle, PChar(Caption), Length(Caption), FocRect,
               DrawOptions or DT_CALCRECT);
+            if (TxtHeight = 1) then TxtHeight := TextHeight(Caption);
             FSingleLine := (TxtHeight = TextHeight(Caption));
             Rect.Bottom := Rect.Top + TxtHeight + 1;
             FocRect := Rect;
@@ -6242,6 +6377,7 @@ var
   OldColor: TColor;
   DrawOptions: UINT;
   TempBitMap: boolean;
+  WorkStr: string;
 
 begin
   if (not (csDestroying in ComponentState)) then
@@ -6250,71 +6386,66 @@ begin
     try
       FCanvas.Handle := DrawItemStruct.hDC;
       try
-        with FCanvas do
+        FCanvas.Brush.Color := Self.Color;
+        FCanvas.Brush.Style := bsSolid;
+(*        InflateRect(R, 1, 1);
+        FCanvas.FillRect(R);
+        InflateRect(R, -1, -1); *)
+        fCanvas.FillRect(ClientRect);
+
+        Brush.Style := bsClear;
+        FCanvas.Font := Self.Font;
+
+        if (Enabled or (csDesigning in ComponentState)) then
         begin
-          Brush.Color := Self.Color;
-          Brush.Style := bsSolid;
-          InflateRect(R, 1, 1);
-          FillRect(R);
-          InflateRect(R, -1, -1);
-
-          Brush.Style := bsClear;
-          Font := Self.Font;
-
-          if (Enabled or (csDesigning in ComponentState)) then
-          begin
-            DrawText(Handle, PChar(Caption), Length(Caption), FocusRect, DrawOptions);
-          end
-          else
-          begin
-            OldColor := Font.Color;
-            try
-              if Ctl3D then
-              begin
-                OffsetRect(FocusRect, 1, 1);
-                Font.Color := clBtnHighlight;
-                DrawText(Handle, PChar(Caption), Length(Caption), FocusRect, DrawOptions);
-                OffsetRect(FocusRect, -1, -1);
-              end;
-              Font.Color := clGrayText;
-              DrawText(Handle, PChar(Caption), Length(Caption), FocusRect, DrawOptions);
-            finally
-              Font.Color := OldColor;
+          WorkStr := Caption;
+//          FCanvas.TextRect(FocusRect, WorkStr);
+          DrawText(FCanvas.Handle, PWideChar(Caption), Length(Caption), FocusRect, DrawOptions);
+        end else begin
+          OldColor := Font.Color;
+          try
+            if Ctl3D then begin
+              OffsetRect(FocusRect, 1, 1);
+              FCanvas.Font.Color := clBtnHighlight;
+              DrawText(FCanvas.Handle, PWideChar(Caption), Length(Caption), FocusRect, DrawOptions);
+              OffsetRect(FocusRect, -1, -1);
             end;
-
-            Brush.Color := Self.Color;
-            Brush.Style := bsSolid;
+            FCanvas.Font.Color := clGrayText;
+            DrawText(FCanvas.Handle, PWideChar(Caption), Length(Caption), FocusRect, DrawOptions);
+          finally
+            FCanvas.Font.Color := OldColor;
           end;
 
-          if ((DrawItemStruct.itemState and ODS_FOCUS) <> 0) then
-          begin
-            InflateRect(FocusRect, 1, 1);
-            if (FFocusOnBox) then
-              //TempRect := Rect(0, 0, CheckWidth - 1, CheckWidth - 1)
-              TempRect := Rect(0, 0, CheckWidth + 2, CheckWidth + 5)
-            else
-              TempRect := FocusRect;
-            //UnionRect(Temp2Rect,ClipRect,TempRect);
-            //ClipRect := Temp2Rect;
-            Pen.Color := clWindowFrame;
-            Brush.Color := clBtnFace;
-            DrawFocusRect(TempRect);
-            InflateRect(FocusRect, -1, -1);
-          end;
-
-          if Alignment = taLeftJustify then
-            R.Left := ClientWidth - Bitmap.Width
-          else
-            R.Left := 0;
-          if (FWordWrap) then
-            R.Top := FocusRect.Top
-          else
-          begin
-            R.Top := ((ClientHeight - Bitmap.Height + 1) div 2) - 1;
-            if R.Top < 0 then R.Top := 0
-          end;
-          Draw(R.Left, R.Top, Bitmap);
+          FCanvas.Brush.Color := Self.Color;
+          FCanvas.Brush.Style := bsSolid;
         end;
+
+        if ((DrawItemStruct.itemState and ODS_FOCUS) <> 0) then begin
+          InflateRect(FocusRect, 1, 1);
+          if (FFocusOnBox) then
+            //TempRect := Rect(0, 0, CheckWidth - 1, CheckWidth - 1)
+            TempRect := Rect(0, 0, CheckWidth + 2, CheckWidth + 5)
+          else
+            TempRect := FocusRect;
+          //UnionRect(Temp2Rect,ClipRect,TempRect);
+          //ClipRect := Temp2Rect;
+          FCanvas.Pen.Color := clWindowFrame;
+          FCanvas.Brush.Color := clBtnFace;
+          FCanvas.DrawFocusRect(TempRect);
+          InflateRect(FocusRect, -1, -1);
+        end;
+
+        if Alignment = taLeftJustify then
+          R.Left := ClientWidth - Bitmap.Width
+        else
+          R.Left := 0;
+        if (FWordWrap) then
+          R.Top := FocusRect.Top
+        else begin
+          R.Top := ((ClientHeight - Bitmap.Height + 1) div 2) - 1;
+          if R.Top < 0 then R.Top := 0
+        end;
+        FCanvas.Draw(R.Left, R.Top, Bitmap);
       finally
         FCanvas.Handle := 0;
       end;
@@ -7208,6 +7339,62 @@ end;
 
 { TCaptionListView }
 
+constructor TCaptionListView.Create(AOwner: TComponent);
+begin
+  Inherited;
+  FAutoSize := False;
+  self.OnCreateItemClass := CreateItemClass;
+  FItemsStrings := TCaptionListStringList.CreateWithParent(self);
+end;
+
+destructor TCaptionListView.Destroy;
+begin
+  Inherited;
+  FItemsStrings.Free;
+end;
+
+function TCaptionListView.AddItemToList(aStr: string; aObject: TObject): TCaptionListItem;
+Var
+ NewItem: TCaptionListItem;
+ X: Integer;
+begin
+  NewItem := TCaptionListItem(Items.Add);
+  NewItem.ItemString := aStr;
+  if Assigned(aObject) then
+   NewItem.aObject := aObject;
+  for X := 1 to FPieces[0] do
+  begin
+   if X = 1 then
+     NewItem.Caption := Piece(aStr, '^', FPieces[x])
+   else
+    NewItem.SubItems.Add(Piece(aStr, '^', FPieces[x]));
+  end;
+  result := NewItem;
+  AutoSizeColumns;
+end;
+
+function TCaptionListView.Add(aStr: string): Integer;
+begin
+ Result := Add(aStr, nil);
+end;
+
+
+function TCaptionListView.AddObject(aStr: string; aObject: TObject): Integer;
+var
+ aItem: TCaptionListItem;
+begin
+ aItem := AddItemToList(aStr, aObject);
+ Result := aItem.Index;
+end;
+
+function TCaptionListView.Add(aStr: string; aObject: TObject): Integer;
+var
+ aItem: TCaptionListItem;
+begin
+ aItem := AddItemToList(aStr, aObject);
+ Result := aItem.Index;
+end;
+
 function TCaptionListView.GetDynamicProperty(PropertyID: integer): string;
 begin
   if PropertyID = DynaPropAccesibilityCaption then
@@ -7221,6 +7408,210 @@ begin
   Result := (PropertyID = DynaPropAccesibilityCaption);
 end;
 
+function TCaptionListView.GetPieces: string;
+{ returns the pieces of an item currently selected for display }
+begin
+  Result := IntArrayToString(FPieces);
+end;
+
+procedure TCaptionListView.SetPieces(const Value: string);
+{ converts a string of comma-delimited integers into an array of string pieces to display }
+begin
+  StringToIntArray(Value, FPieces);
+end;
+
+//called when adding items
+procedure TCaptionListView.AutoSizeColumns;
+Var
+ Z, MaxB, MaxH: integer;
+begin
+  //only auto size the columns if it is enabled (disabled by default)
+  if not(FAutoSize) then exit;
+  
+ //Look at the header and the last added row
+ for Z := 0 to Columns.Count - 1 do
+ begin
+  MaxH := Max(Columns[Z].Width, Canvas.TextWidth(Columns[Z].Caption));
+  if Z = 0 then
+    MaxB := Canvas.TextWidth(Items[Items.Count - 1].Caption)
+  else
+    MaxB := Canvas.TextWidth(Items[Items.Count - 1].SubItems.Strings[Z - 1]);
+
+  Columns[Z].Width := Max(MaxH, MaxB) + 20;
+  end;
+
+end;
+
+function TCaptionListView.GetItemIEN: Int64;
+{ return as an integer the first piece of the currently selected item }
+begin
+  if assigned(Selected)
+    then Result := StrToInt64Def(Piece(Strings[Selected.Index], '^', 1), 0)
+  else Result := 0;
+end;
+
+function TCaptionListView.GetItemID: Variant;
+{ return as a variant the first piece of the currently selected item }
+begin
+  if assigned(Selected) then Result := Piece(Strings[Selected.Index], '^', 1) else Result := '';
+end;
+
+procedure TCaptionListView.WMSetFocus(var Message: TMessage);
+//var
+// aRect: TRect;
+ begin
+ inherited;
+ if Self.ItemIndex = -1 then
+  ListView_SetItemState(Self.Handle, 0, LVIS_FOCUSED, LVIS_FOCUSED);
+ RedrawWindow(Self.Handle, nil, 0, RDW_ERASE or RDW_INVALIDATE or RDW_UPDATENOW);
+end;
+
+procedure TCaptionListView.EditItem(Index: Integer; aStr: String);
+Var
+ NewItem: TCaptionListItem;
+ X: Integer;
+begin
+  NewItem := TCaptionListItem(Items[Index]);
+  NewItem.ItemString := aStr;
+  for X := 1 to FPieces[0] do
+  begin
+   if X = 1 then
+     NewItem.Caption := Piece(aStr, '^', FPieces[x])
+   else
+    NewItem.SubItems.Add(Piece(aStr, '^', FPieces[x]));
+  end;
+end;
+
+function TCaptionListView.Get(Index: Integer): String;
+begin
+  if Cardinal(Index) < Cardinal(Items.Count) then
+   Result := TCaptionListItem(Items[Index]).ItemString;
+end;
+
+procedure TCaptionListView.Put(Index: Integer; Item: String);
+var
+  TheItem: TCaptionListItem;
+  X: Integer;
+begin
+  if (Index >= 0) and (Index < Items.Count) then
+  begin
+  TheItem := TCaptionListItem(Items[Index]);
+  TheItem.ItemString := Item;
+  for X := 1 to FPieces[0] do
+  begin
+   if X = 1 then
+     TheItem.Caption := Piece(Item, '^', FPieces[x])
+   else
+    TheItem.SubItems.Strings[x-2] := Piece(Item, '^', FPieces[x]);
+   // TheItem.SubItems.Add(Piece(Item, '^', FPieces[x]));
+  end;
+
+  end;
+end;
+
+function TCaptionListView.GetObj(Index: Integer): TObject;
+begin
+ Result := nil;
+ if Cardinal(Index) < Cardinal(Items.Count) then
+   Result := TCaptionListItem(Items[Index]).aObject;
+end;
+
+procedure TCaptionListView.PutObj(Index: Integer; ItemObject: TObject);
+var
+  TheItem: TCaptionListItem;
+begin
+  if (Index >= 0) and (Index < Items.Count) then
+  begin
+  TheItem := TCaptionListItem(Items[Index]);
+  TheItem.aObject := ItemObject;
+  end;
+end;
+
+procedure TCaptionListView.CreateItemClass(Sender: TCustomListView; var ItemClass: TListItemClass);
+begin
+ ItemClass := TCaptionListItem;
+end;
+
+
+function TCaptionListView.GetItemsStrings: TCaptionListStringList;
+var
+ I: Integer;
+begin
+  FItemsStrings.Clear;
+  for i := 0 to Items.Count-1 do begin
+
+   if Assigned(TCaptionListItem(Items[i]).aObject) then
+    TStringList(FItemsStrings).AddObject(TCaptionListItem(Items[i]).ItemString, TCaptionListItem(Items[i]).aObject)
+   else
+     TStringList(FItemsStrings).Add(TCaptionListItem(Items[i]).ItemString);
+  end;
+  Result := FItemsStrings;
+end;
+
+Procedure TCaptionListView.SetFromStringList(AValue: TCaptionListStringList);
+Var
+ NewItem: TCaptionListItem;
+ X, I: Integer;
+begin
+  Items.Clear;
+  for i := 0 to AValue.Count - 1 do
+  begin
+  NewItem := TCaptionListItem(Items.Add);
+  NewItem.ItemString := AValue.Strings[i];
+
+  if Assigned(AValue.Objects[i]) then
+    NewItem.aObject := aValue.Objects[i];
+
+  for X := 1 to FPieces[0] do
+  begin
+   if X = 1 then
+     NewItem.Caption := Piece(AValue.Strings[i], '^', FPieces[x])
+   else
+    NewItem.SubItems.Add(Piece(AValue.Strings[i], '^', FPieces[x]));
+  end;
+  end;
+
+end;
+
+function TCaptionListView.GetIEN(AnIndex: Integer): Int64;
+{ return as an integer the first piece of the Item identified by AnIndex }
+begin
+  if (AnIndex < Items.Count) and (AnIndex > -1)
+    then Result := StrToInt64Def(Piece(ItemsStrings[AnIndex], '^', 1), 0)
+  else Result := 0;
+end;
+
+function TCaptionListView.SelectByIEN(AnIEN: Int64): Integer;
+{ cause the item where the first piece = AnIEN to be selected (sets ItemIndex) }
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := 0 to Items.Count - 1 do
+    if GetIEN(i) = AnIEN then
+    begin
+      ItemIndex := i;
+      Items[i].selected := true;
+      Result := i;
+      break;
+    end;
+end;
+
+constructor TCaptionListStringList.CreateWithParent(Parent: TObject);
+begin
+ inherited Create;
+ fParentCLV := Parent;
+end;
+
+procedure TCaptionListStringList.Assign(Source: TPersistent);
+begin
+  inherited;
+  if fParentCLV is TCaptionListView then
+   TCaptionListView(fParentCLV).SetFromStringList(TCaptionListStringList(Source));
+end;
+
+
+
 initialization
   //uItemTip := TItemTip.Create(Application);  // all listboxes share a single ItemTip window
   uItemTipCount := 0;
@@ -7231,5 +7622,7 @@ finalization
   //uItemTip.Free;                           // don't seem to need this - called by Application
   DestroyORCBBitmaps;
 
+{$WARN UNSAFE_CAST ON}
+{$WARN UNSAFE_CODE ON}
 end.
 

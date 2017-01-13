@@ -10,7 +10,7 @@ inherited frmIconLegend: TfrmIconLegend
   OldCreateOrder = False
   OnClose = FormClose
   ExplicitWidth = 372
-  ExplicitHeight = 342
+  ExplicitHeight = 349
   PixelsPerInch = 96
   TextHeight = 13
   object pcMain: TPageControl [0]
@@ -50,7 +50,6 @@ inherited frmIconLegend: TfrmIconLegend
         TabOrder = 0
         TabStop = True
         ExplicitWidth = 358
-        ExplicitHeight = 20
         inherited img: TImage
           Left = 28
           Width = 30
@@ -84,7 +83,6 @@ inherited frmIconLegend: TfrmIconLegend
         Top = 60
         Width = 184
         Height = 189
-        Caption = 'Panel1'
         TabOrder = 1
         object Label2: TLabel
           Left = 1
@@ -121,7 +119,6 @@ inherited frmIconLegend: TfrmIconLegend
           ExplicitLeft = 1
           ExplicitTop = 161
           ExplicitWidth = 182
-          ExplicitHeight = 20
           inherited img: TImage
             Left = 14
             Picture.Data = {
@@ -163,7 +160,6 @@ inherited frmIconLegend: TfrmIconLegend
           ExplicitLeft = 1
           ExplicitTop = 21
           ExplicitWidth = 182
-          ExplicitHeight = 20
           inherited img: TImage
             Left = 14
             Picture.Data = {
@@ -205,7 +201,6 @@ inherited frmIconLegend: TfrmIconLegend
           ExplicitLeft = 1
           ExplicitTop = 81
           ExplicitWidth = 182
-          ExplicitHeight = 20
           inherited img: TImage
             Width = 36
             Picture.Data = {
@@ -253,7 +248,6 @@ inherited frmIconLegend: TfrmIconLegend
           ExplicitLeft = 1
           ExplicitTop = 101
           ExplicitWidth = 182
-          ExplicitHeight = 20
           inherited img: TImage
             Width = 36
             Picture.Data = {
@@ -301,7 +295,6 @@ inherited frmIconLegend: TfrmIconLegend
           ExplicitLeft = 1
           ExplicitTop = 61
           ExplicitWidth = 182
-          ExplicitHeight = 20
           inherited img: TImage
             Left = 7
             Width = 30
@@ -349,7 +342,6 @@ inherited frmIconLegend: TfrmIconLegend
           ExplicitLeft = 1
           ExplicitTop = 121
           ExplicitWidth = 182
-          ExplicitHeight = 20
           inherited img: TImage
             Width = 36
             Picture.Data = {
@@ -397,7 +389,6 @@ inherited frmIconLegend: TfrmIconLegend
           ExplicitLeft = 1
           ExplicitTop = 141
           ExplicitWidth = 182
-          ExplicitHeight = 20
           inherited img: TImage
             Width = 36
             Picture.Data = {
@@ -445,7 +436,6 @@ inherited frmIconLegend: TfrmIconLegend
           ExplicitLeft = 1
           ExplicitTop = 41
           ExplicitWidth = 182
-          ExplicitHeight = 20
           inherited img: TImage
             Left = 14
             Picture.Data = {
@@ -475,7 +465,6 @@ inherited frmIconLegend: TfrmIconLegend
         Top = 60
         Width = 173
         Height = 189
-        Caption = 'Panel2'
         TabOrder = 2
         object Label1: TLabel
           Left = 1
@@ -512,7 +501,6 @@ inherited frmIconLegend: TfrmIconLegend
           ExplicitLeft = 1
           ExplicitTop = 141
           ExplicitWidth = 171
-          ExplicitHeight = 20
           inherited img: TImage
             Width = 36
             Picture.Data = {
@@ -560,7 +548,6 @@ inherited frmIconLegend: TfrmIconLegend
           ExplicitLeft = 1
           ExplicitTop = 61
           ExplicitWidth = 171
-          ExplicitHeight = 20
           inherited img: TImage
             Left = 7
             Width = 30
@@ -608,7 +595,6 @@ inherited frmIconLegend: TfrmIconLegend
           ExplicitLeft = 1
           ExplicitTop = 101
           ExplicitWidth = 171
-          ExplicitHeight = 20
           inherited img: TImage
             Width = 36
             Picture.Data = {
@@ -656,7 +642,6 @@ inherited frmIconLegend: TfrmIconLegend
           ExplicitLeft = 1
           ExplicitTop = 81
           ExplicitWidth = 171
-          ExplicitHeight = 20
           inherited img: TImage
             Width = 36
             Picture.Data = {
@@ -704,7 +689,6 @@ inherited frmIconLegend: TfrmIconLegend
           ExplicitLeft = 1
           ExplicitTop = 121
           ExplicitWidth = 171
-          ExplicitHeight = 20
           inherited img: TImage
             Width = 36
             Picture.Data = {
@@ -752,7 +736,6 @@ inherited frmIconLegend: TfrmIconLegend
           ExplicitLeft = 1
           ExplicitTop = 21
           ExplicitWidth = 171
-          ExplicitHeight = 20
           inherited img: TImage
             Left = 14
             Picture.Data = {
@@ -794,7 +777,6 @@ inherited frmIconLegend: TfrmIconLegend
           ExplicitLeft = 1
           ExplicitTop = 161
           ExplicitWidth = 171
-          ExplicitHeight = 20
           inherited img: TImage
             Left = 14
             Picture.Data = {
@@ -836,7 +818,6 @@ inherited frmIconLegend: TfrmIconLegend
           ExplicitLeft = 1
           ExplicitTop = 41
           ExplicitWidth = 171
-          ExplicitHeight = 20
           inherited img: TImage
             Left = 14
             Picture.Data = {
@@ -878,7 +859,6 @@ inherited frmIconLegend: TfrmIconLegend
         TabStop = True
         ExplicitTop = 20
         ExplicitWidth = 358
-        ExplicitHeight = 20
         inherited img: TImage
           Left = 35
           Picture.Data = {
@@ -919,7 +899,6 @@ inherited frmIconLegend: TfrmIconLegend
         TabStop = True
         ExplicitTop = 40
         ExplicitWidth = 358
-        ExplicitHeight = 20
         inherited img: TImage
           Left = 35
           Picture.Data = {
@@ -947,9 +926,13 @@ inherited frmIconLegend: TfrmIconLegend
     object Reminders: TTabSheet
       Caption = 'Reminders'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       inline fraImgText1: TfraImgText
         Left = 0
-        Top = 0
+        Top = 8
         Width = 358
         Height = 26
         Align = alTop
@@ -962,6 +945,7 @@ inherited frmIconLegend: TfrmIconLegend
         ParentFont = False
         TabOrder = 0
         TabStop = True
+        ExplicitTop = 8
         ExplicitWidth = 358
         ExplicitHeight = 26
         inherited img: TImage
@@ -994,7 +978,7 @@ inherited frmIconLegend: TfrmIconLegend
       end
       inline fraImgText2: TfraImgText
         Left = 0
-        Top = 26
+        Top = 34
         Width = 358
         Height = 26
         Align = alTop
@@ -1007,7 +991,7 @@ inherited frmIconLegend: TfrmIconLegend
         ParentFont = False
         TabOrder = 1
         TabStop = True
-        ExplicitTop = 26
+        ExplicitTop = 34
         ExplicitWidth = 358
         ExplicitHeight = 26
         inherited img: TImage
@@ -1034,7 +1018,7 @@ inherited frmIconLegend: TfrmIconLegend
       end
       inline fraImgText3: TfraImgText
         Left = 0
-        Top = 52
+        Top = 60
         Width = 358
         Height = 26
         Align = alTop
@@ -1047,7 +1031,7 @@ inherited frmIconLegend: TfrmIconLegend
         ParentFont = False
         TabOrder = 2
         TabStop = True
-        ExplicitTop = 52
+        ExplicitTop = 60
         ExplicitWidth = 358
         ExplicitHeight = 26
         inherited img: TImage
@@ -1074,7 +1058,7 @@ inherited frmIconLegend: TfrmIconLegend
       end
       inline fraImgText4: TfraImgText
         Left = 0
-        Top = 78
+        Top = 86
         Width = 358
         Height = 26
         Align = alTop
@@ -1087,7 +1071,7 @@ inherited frmIconLegend: TfrmIconLegend
         ParentFont = False
         TabOrder = 3
         TabStop = True
-        ExplicitTop = 78
+        ExplicitTop = 86
         ExplicitWidth = 358
         ExplicitHeight = 26
         inherited img: TImage
@@ -1114,7 +1098,7 @@ inherited frmIconLegend: TfrmIconLegend
       end
       inline fraImgText5: TfraImgText
         Left = 0
-        Top = 104
+        Top = 112
         Width = 358
         Height = 26
         Align = alTop
@@ -1127,7 +1111,7 @@ inherited frmIconLegend: TfrmIconLegend
         ParentFont = False
         TabOrder = 4
         TabStop = True
-        ExplicitTop = 104
+        ExplicitTop = 112
         ExplicitWidth = 358
         ExplicitHeight = 26
         inherited img: TImage
@@ -1159,7 +1143,7 @@ inherited frmIconLegend: TfrmIconLegend
       end
       inline fraImgText6: TfraImgText
         Left = 0
-        Top = 130
+        Top = 138
         Width = 358
         Height = 26
         Align = alTop
@@ -1172,7 +1156,7 @@ inherited frmIconLegend: TfrmIconLegend
         ParentFont = False
         TabOrder = 5
         TabStop = True
-        ExplicitTop = 130
+        ExplicitTop = 138
         ExplicitWidth = 358
         ExplicitHeight = 26
         inherited img: TImage
@@ -1219,7 +1203,7 @@ inherited frmIconLegend: TfrmIconLegend
       end
       inline fraImgText7: TfraImgText
         Left = 0
-        Top = 156
+        Top = 164
         Width = 358
         Height = 40
         Align = alTop
@@ -1232,7 +1216,7 @@ inherited frmIconLegend: TfrmIconLegend
         ParentFont = False
         TabOrder = 6
         TabStop = True
-        ExplicitTop = 156
+        ExplicitTop = 164
         ExplicitWidth = 358
         ExplicitHeight = 40
         inherited img: TImage
@@ -1307,7 +1291,6 @@ inherited frmIconLegend: TfrmIconLegend
         TabStop = True
         ExplicitTop = 40
         ExplicitWidth = 358
-        ExplicitHeight = 20
         inherited img: TImage
           Left = 74
           Picture.Data = {
@@ -1348,7 +1331,6 @@ inherited frmIconLegend: TfrmIconLegend
         TabStop = True
         ExplicitTop = 60
         ExplicitWidth = 358
-        ExplicitHeight = 20
         inherited img: TImage
           Left = 74
           Picture.Data = {
@@ -1389,7 +1371,6 @@ inherited frmIconLegend: TfrmIconLegend
         TabStop = True
         ExplicitTop = 80
         ExplicitWidth = 358
-        ExplicitHeight = 20
         inherited img: TImage
           Left = 74
           Picture.Data = {
@@ -1440,7 +1421,6 @@ inherited frmIconLegend: TfrmIconLegend
         TabStop = True
         ExplicitTop = 100
         ExplicitWidth = 358
-        ExplicitHeight = 20
         inherited img: TImage
           Left = 74
           Width = 30
@@ -1486,7 +1466,6 @@ inherited frmIconLegend: TfrmIconLegend
         TabStop = True
         ExplicitTop = 120
         ExplicitWidth = 358
-        ExplicitHeight = 20
         inherited img: TImage
           Left = 74
           Width = 32
@@ -1533,7 +1512,6 @@ inherited frmIconLegend: TfrmIconLegend
         TabStop = True
         ExplicitTop = 140
         ExplicitWidth = 358
-        ExplicitHeight = 20
         inherited img: TImage
           Left = 74
           Picture.Data = {
@@ -1584,7 +1562,6 @@ inherited frmIconLegend: TfrmIconLegend
         TabStop = True
         ExplicitTop = 160
         ExplicitWidth = 358
-        ExplicitHeight = 20
         inherited img: TImage
           Left = 74
           Picture.Data = {
@@ -1643,7 +1620,6 @@ inherited frmIconLegend: TfrmIconLegend
         TabStop = True
         ExplicitTop = 180
         ExplicitWidth = 358
-        ExplicitHeight = 20
         inherited img: TImage
           Left = 74
           Top = 1
@@ -1687,7 +1663,6 @@ inherited frmIconLegend: TfrmIconLegend
         TabOrder = 8
         TabStop = True
         ExplicitWidth = 358
-        ExplicitHeight = 20
         inherited img: TImage
           Left = 74
           Picture.Data = {
@@ -1740,7 +1715,6 @@ inherited frmIconLegend: TfrmIconLegend
         TabStop = True
         ExplicitTop = 20
         ExplicitWidth = 358
-        ExplicitHeight = 20
         inherited img: TImage
           Left = 74
           Top = 1
@@ -1788,7 +1762,6 @@ inherited frmIconLegend: TfrmIconLegend
         TabStop = True
         ExplicitTop = 220
         ExplicitWidth = 358
-        ExplicitHeight = 20
         inherited img: TImage
           Left = 74
           Top = 1
@@ -1833,7 +1806,6 @@ inherited frmIconLegend: TfrmIconLegend
         TabStop = True
         ExplicitTop = 200
         ExplicitWidth = 358
-        ExplicitHeight = 20
         inherited img: TImage
           Left = 74
           Top = 1
@@ -2914,7 +2886,6 @@ inherited frmIconLegend: TfrmIconLegend
         TabStop = True
         ExplicitTop = 77
         ExplicitWidth = 358
-        ExplicitHeight = 20
         inherited img: TImage
           Left = 74
           Width = 32

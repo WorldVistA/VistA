@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, VA2006Utils;
+  StdCtrls, ExtCtrls{, VA2006Utils};
 
 type
   TfraImgText = class(TFrame)
@@ -14,13 +14,13 @@ type
 
 implementation
 
-uses VA508AccessibilityRouter;
+//uses VA508AccessibilityRouter;
 
 {$R *.DFM}
 
 { TfraImgText }
 
 initialization
-  SpecifyFormIsNotADialog(TfraImgText);
+  //SpecifyFormIsNotADialog(TfraImgText);
 
 end.

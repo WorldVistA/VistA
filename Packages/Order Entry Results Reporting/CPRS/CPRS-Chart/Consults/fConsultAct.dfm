@@ -9,8 +9,8 @@ inherited frmConsultAction: TfrmConsultAction
   Constraints.MinWidth = 600
   OldCreateOrder = True
   Position = poScreenCenter
-  ExplicitWidth = 600
-  ExplicitHeight = 456
+  ExplicitWidth = 608
+  ExplicitHeight = 467
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBase: TPanel [0]
@@ -21,7 +21,6 @@ inherited frmConsultAction: TfrmConsultAction
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitHeight = 379
     object pnlForward: TPanel
       Left = 0
       Top = 0
@@ -30,7 +29,6 @@ inherited frmConsultAction: TfrmConsultAction
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitHeight = 379
       object lblToService: TOROffsetLabel
         Left = 2
         Top = 0
@@ -103,6 +101,7 @@ inherited frmConsultAction: TfrmConsultAction
         Sorted = False
         SynonymChars = '<>'
         TabOrder = 3
+        Text = ''
         OnNeedData = NewPersonNeedData
         CharsNeedMatch = 1
       end
@@ -127,6 +126,7 @@ inherited frmConsultAction: TfrmConsultAction
         Sorted = False
         SynonymChars = '<>'
         TabOrder = 2
+        Text = ''
         CharsNeedMatch = 1
       end
       object treService: TORTreeView
@@ -164,6 +164,7 @@ inherited frmConsultAction: TfrmConsultAction
         Sorted = True
         SynonymChars = '<>'
         TabOrder = 0
+        Text = ''
         OnKeyPause = cboServiceSelect
         OnMouseClick = cboServiceSelect
         CharsNeedMatch = 1
@@ -177,7 +178,6 @@ inherited frmConsultAction: TfrmConsultAction
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitHeight = 379
       object pnlSigFind: TPanel
         Left = 0
         Top = 0
@@ -211,7 +211,6 @@ inherited frmConsultAction: TfrmConsultAction
         Alignment = taLeftJustify
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitHeight = 224
         object lblComments: TOROffsetLabel
           Left = 0
           Top = 0
@@ -239,7 +238,6 @@ inherited frmConsultAction: TfrmConsultAction
           ScrollBars = ssVertical
           TabOrder = 0
           Caption = 'Comments'
-          ExplicitHeight = 170
         end
         object pnlAlert: TPanel
           Left = 0
@@ -249,7 +247,6 @@ inherited frmConsultAction: TfrmConsultAction
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 1
-          ExplicitTop = 189
           object lblAutoAlerts: TStaticText
             Left = 6
             Top = 1
@@ -276,7 +273,6 @@ inherited frmConsultAction: TfrmConsultAction
         Align = alBottom
         BevelOuter = bvNone
         TabOrder = 2
-        ExplicitTop = 281
         DesignSize = (
           368
           98)
@@ -356,6 +352,7 @@ inherited frmConsultAction: TfrmConsultAction
           SynonymChars = '<>'
           TabOrder = 1
           TabStop = True
+          Text = ''
           OnNeedData = NewPersonNeedData
           CharsNeedMatch = 1
         end
@@ -414,7 +411,8 @@ inherited frmConsultAction: TfrmConsultAction
         'Status = stsDefault')
       (
         'Component = calDateofAction'
-        'Status = stsDefault')
+        'Text = Date/Time of this action. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = cmdOK'
         'Status = stsDefault')

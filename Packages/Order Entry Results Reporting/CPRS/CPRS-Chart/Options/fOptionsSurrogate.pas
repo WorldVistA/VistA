@@ -115,6 +115,7 @@ begin
   with dlgSurrogateDateRange do
   while not ok do
   begin
+    RequireTime := true;              //cq 18349 PSPO 1225
     FMDateStart := TempSurrogate.Start;
     FMDateStop := TempSurrogate.Stop;
     if Execute then

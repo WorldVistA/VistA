@@ -2,8 +2,6 @@ inherited frmHealthFactors: TfrmHealthFactors
   Left = 374
   Top = 205
   Caption = 'Health Factor page'
-  ExplicitLeft = 374
-  ExplicitTop = 205
   PixelsPerInch = 96
   TextHeight = 13
   object lblHealthLevel: TLabel [0]
@@ -26,25 +24,21 @@ inherited frmHealthFactors: TfrmHealthFactors
   end
   inherited pnlGrid: TPanel
     TabOrder = 1
-    inherited lbGrid: TORListBox
-      Tag = 70
-      Caption = 'Selected Health Factors'
-      Pieces = '1,2'
-    end
-    inherited hcGrid: THeaderControl
-      Sections = <
+    inherited lstRenameMe: TCaptionListView
+      Columns = <
         item
-          ImageIndex = -1
-          MinWidth = 85
-          Text = 'Level/Severity'
-          Width = 85
+          Caption = 'Level/Severity'
+          Width = 140
         end
         item
-          ImageIndex = -1
-          MinWidth = 130
-          Text = 'Selected Health Factors'
-          Width = 130
+          Caption = 'Selected Health Factors'
+          Tag = 1
+          Width = 150
         end>
+      Caption = 'Selected Health Factors'
+      Pieces = '1,2'
+      ExplicitLeft = -2
+      ExplicitTop = -3
     end
   end
   inherited edtComment: TCaptionEdit
@@ -74,6 +68,7 @@ inherited frmHealthFactors: TfrmHealthFactors
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 4
+    Text = ''
     OnChange = cboHealthLevelChange
     CharsNeedMatch = 1
   end
@@ -88,7 +83,6 @@ inherited frmHealthFactors: TfrmHealthFactors
     TabOrder = 0
     inherited lbxSection: TORListBox
       Tag = 70
-      ExplicitLeft = 210
     end
     inherited pnlLeft: TPanel
       inherited lbSection: TORListBox
@@ -138,12 +132,6 @@ inherited frmHealthFactors: TfrmHealthFactors
         'Status = stsDefault')
       (
         'Component = pnlGrid'
-        'Status = stsDefault')
-      (
-        'Component = lbGrid'
-        'Status = stsDefault')
-      (
-        'Component = hcGrid'
         'Status = stsDefault')
       (
         'Component = btnOK'

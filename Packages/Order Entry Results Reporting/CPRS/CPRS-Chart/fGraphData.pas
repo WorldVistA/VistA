@@ -146,7 +146,7 @@ begin
     PersonalSetting := '';
     PublicEditor := false;
     Status := '';
-    //TurboOn := true; 
+    //TurboOn := true;
     //Cache := true;
     TurboOn := false;   //*v29* turbo turned off
     Cache := false;     //*v29* cache turned off

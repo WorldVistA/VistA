@@ -1,14 +1,11 @@
 program CPRSChart;
 
-
-
-
-
 uses
   ShareMem,
   Forms,
   WinHelpViewer,
   ORSystem,
+  Windows, 
   fPage in '@SOURCE@\fPage.pas' {frmPage},
   fHSplit in '@SOURCE@\fHSplit.pas' {frmHSplit},
   fHP in '@SOURCE@\fHP.pas' {frmHP},
@@ -330,35 +327,41 @@ uses
   fPINPrompt in '@SOURCE@\XuDigSig\fPINPrompt.pas',
   fProbFreetext in '@SOURCE@\fProbFreetext.pas' {frmProbFreetext},
   mImgText in '@SOURCE@\mImgText.pas' {fraImgText},
-  uHelpManager in '@SOURCE@\uHelpManager.pas';
-
+  uHelpManager in '@SOURCE@\uHelpManager.pas',
+  mColumnTree in '@SOURCE@\mColumnTree.pas' {ColumnTreeFrame: TFrame},
+  mDrawers in '@SOURCE@\mDrawers.pas' {fraDrawers: TFrame},
+  mRadioListView in '@SOURCE@\mRadioListView.pas' {RadioLVFrame: TFrame},
+  fDebugReport in '@SOURCE@\fDebugReport.pas' {fDebugReport},
+  uGlobalVar in '@SOURCE@\uGlobalVar.pas',
+  ORExtensions in '@SOURCE@\ORExtensions.pas',
+  fFocusedControls in '@SOURCE@\fFocusedControls.pas' {fFocusedControls},
+  mTreeGrid in '@SOURCE@\mTreeGrid.pas' {TreeGridFrame: TFrame};
+  
 {$R '@SOURCE@\CPRSChart.tlb'}
-
+{$R '@SOURCE@\CPRSChart.res' '@SOURCE@\CPRSChart.rc'}
 {$R '@SOURCE@\CPRSChart.res'}
+{$SetPEFlags IMAGE_FILE_RELOCS_STRIPPED}
 
 begin
-  if not UpdateSelf then                          // only start if not copying new version
+  if not BorlandDLLVersionOK then exit;         // Exit immediately if old or missing BORLNDMM.DLL
+//    RegisterCPRSTypeLibrary;                      // will halt program if /regserver or /unregserver param
+  Application.Initialize;
+
+  frmSplash := nil;
+  if ParamSearch('SPLASH') <> 'OFF' then
   begin
-    if not BorlandDLLVersionOK then exit;         // Exit immediately if old or missing BORLNDMM.DLL
-    RegisterCPRSTypeLibrary;                      // will halt program if /regserver or /unregserver param
-    Application.Initialize;
-
-    frmSplash := nil;
-    if ParamSearch('SPLASH') <> 'OFF' then
-    begin
-      frmSplash := TfrmSplash.Create(nil);  // show splash screen
-      frmSplash.Show;                               //         "
-      frmSplash.Refresh;                            //         "
-    end;
-    Application.Title := 'CPRS - Patient Chart';
-    Application.HelpFile := 'help\cprs.htm';
-    Application.CreateForm(TdmodShared, dmodShared);
-    Application.CreateForm(TfrmFrame, frmFrame);
-    Application.CreateForm(TfrmSearchStop, frmSearchStop);
-    Application.CreateForm(TfrmProbFreetext, frmProbFreetext);
-    if assigned(frmSplash) then
-      frmSplash.Free;                               // close & free splash screen
-
-    Application.Run;
+    frmSplash := TfrmSplash.Create(nil);  // show splash screen
+    frmSplash.Show;                               //         "
+    frmSplash.Refresh;                            //         "
   end;
+  Application.Title := 'CPRS - Patient Chart';
+  Application.HelpFile := 'help\cprs.htm';
+  Application.CreateForm(TdmodShared, dmodShared);
+  Application.CreateForm(TfrmFrame, frmFrame);
+  Application.CreateForm(TfrmSearchStop, frmSearchStop);
+  Application.CreateForm(TfrmProbFreetext, frmProbFreetext);
+  if assigned(frmSplash) then
+    frmSplash.Free;                               // close & free splash screen
+
+  Application.Run;
 end.

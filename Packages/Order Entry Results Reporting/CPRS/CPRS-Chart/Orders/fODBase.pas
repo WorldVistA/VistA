@@ -89,6 +89,7 @@ type
     function InstanceCount(const APromptID: string): Integer;
     function IValueFor(const APromptID: string; AnInstance: Integer): string;
     function NextInstance(const APromptID: string; LastInstance: Integer): Integer;
+    function TotalRows: Integer;
     function OrderCRC: string;
     procedure Remove(const APromptID: string; AnInstance: Integer);
     procedure SaveQuickOrder(var ANewIEN: Integer; const ADisplayName: string);
@@ -167,6 +168,8 @@ type
     FEvtID    :    Integer;
     FEvtType  :    Char;
     FEvtName  :    string;
+    //CQ 20854 - Display Supplies Only - JCS
+    FEvtDlgID:     String;
     FIncludeOIPI:  boolean;
     FIsIMO:        boolean;  //imo
     FMessageClickX: integer;
@@ -217,6 +220,8 @@ type
     property EvtID: integer             read FEvtID        write FEvtID;
     property EvtType: Char              read FEvtType      write FEvtType;
     property EvtName: String            read FEvtName      write FEvtName;
+    //CQ 20854 - Display Supplies Only - JCS
+    property EvtDlgID: string           read FEvtDlgID     write FEvtDlgID;
     property IncludeOIPI: boolean       read FIncludeOIPI  write FIncludeOIPI;
     property IsIMO:boolean              read FIsIMO        write FIsIMO;
     property IsSupply: boolean          read FIsSupply     write FIsSupply;
@@ -248,7 +253,8 @@ implementation
 
 uses fOCAccept, uODBase, rCore, rMisc, fODMessage,
   fTemplateDialog, uEventHooks, uTemplates, rConsults,fOrders,uOrders,
-  fFrame, uTemplateFields, fClinicWardMeds, fODDietLT, rODDiet, VAUtils;
+  fFrame, uTemplateFields, fClinicWardMeds, fODDietLT, rODDiet, VAUtils,
+  System.Types;
 
 const
   TX_ACCEPT = 'Accept the following order?' + CRLF + CRLF;
@@ -748,6 +754,17 @@ begin
     if (PromptID = APromptID) then Inc(Result);
 end;
 
+function TResponses.TotalRows: Integer;
+var
+  TotalRows: Integer;
+begin
+  TotalRows := HigherOf(InstanceCount('INSTR'), InstanceCount('ROUTE'));
+  TotalRows := HigherOf(TotalRows, InstanceCount('SCHEDULE'));
+  TotalRows := HigherOf(TotalRows, InstanceCount('DAYS'));
+  TotalRows := HigherOf(TotalRows, (InstanceCount('CONJ')+1));
+  Result := TotalRows;
+end;
+
 function TResponses.NextInstance(const APromptID: string; LastInstance: Integer): Integer;
 var
   i: Integer;
@@ -1023,24 +1040,7 @@ begin
     OCList       := FOrderChecks;
     DigSig       := DEASig;
     IsIMODialog  := IsIMOOrder;       //IMO
-    if IsIMODialog then
-      DGroup := ClinDisp;
-    //AGP Change 26.35, 26.41 8518 added text order
-    //AGP Change 26.55 remove IMO functionality for inpatient
-    (*if (Patient.Inpatient = true) and (IsValidIMOLoc(encounter.Location,Patient.DFN)=true) and
-      ((ConstructOrder.DialogName = 'PSJ OR PAT OE') or (ConstructOrder.DialogName = 'PSJI OR PAT FLUID OE') or
-      (ConstructOrder.DialogName = 'OR GXTEXT WORD PROCESSING ORDE')) and
-      ((FEditOrder = '') and (Self.FEventName = '') and (Self.FCopyOrder = '')) then
-      begin
-       if frmClinicWardMeds.ClinicOrWardLocation(Encounter.location) = Encounter.Location then
-          begin
-            ConstructOrder.IsIMODialog := True;
-            ConstructOrder.DGroup := ClinDisp;
-          end
-       else IMOLoc := Patient.Location;
-      end; *)
-    //AGP Change 26.51, change logic to set text orders to IMO for outpatients at an outpatient location.
-    //AGP Text orders are only treated as IMO if the order display group is a nursing display group
+
     if (Patient.Inpatient = False) and (IsValidIMOLoc(encounter.Location,Patient.DFN)=true) and
        (((pos('OR GXTEXT WORD PROCESSING ORDER',ConstructOrder.DialogName)>0) and (ConstructOrder.DGroup = NurDisp)) or
        ((ConstructOrder.DialogName = 'OR GXMISC GENERAL') and (ConstructOrder.DGroup = NurDisp)) or
@@ -1048,7 +1048,7 @@ begin
       ((FEditOrder = '') and (Self.FEventName = '') and (Self.FCopyOrder = '')) then
          begin
             ConstructOrder.IsIMODialog := True;
-            ConstructOrder.DGroup := ClinDisp;
+            ConstructOrder.DGroup := ClinOrdDisp;
           end;
     IsEventDefaultOR := EventDefaultOD;
     if IsUDGroup or QOUDGroup then
@@ -1218,7 +1218,7 @@ end;
 
 procedure TResponses.SetEventDelay(AnEvent: TOrderDelayEvent);
 begin
-  with AnEvent do if EventType in ['A','D','T','M','O'] then
+  with AnEvent do if CharInSet(EventType, ['A','D','T','M','O']) then
   begin
     FEventIFN  := EventIFN;
     FEventName := EventName;
@@ -1251,6 +1251,8 @@ begin
     if (Controls[i] is TLabel) or (Controls[i] is TButton) or (Controls[i] is TStaticText) then Continue;
     if FPreserve.IndexOf(Controls[i]) < 0 then ClearControl(Controls[i]);
   end;
+  if assigned(memOrder) then memOrder.Clear();
+
   FChanging := False;
   ShowOrderMessage( False );
 end;
@@ -1354,7 +1356,7 @@ begin
   ORDER_COPY:  Responses.SetCopyOrder(ID);
   ORDER_QUICK: Responses.SetQuickOrderByID(ID);
   end;
-  if Responses.FEventType in ['A','D','T','M','O'] then Caption := Caption + ' (Delayed ' + Responses.FEventName + ')'; // ' (Event Delayed)';
+  if CharInSet(Responses.FEventType, ['A','D','T','M','O']) then Caption := Caption + ' (Delayed ' + Responses.FEventName + ')'; // ' (Event Delayed)';
   if OrderAction in [ORDER_EDIT, ORDER_COPY] then cmdQuit.Caption := 'Cancel';
 end;
 
@@ -1451,6 +1453,8 @@ begin
   FEvtID     := OrderEventIDOnCreate;
   FEvtType   := OrderEventTypeOnCreate;
   FEvtName   := OrderEventNameOnCreate;
+  //CQ 20854 - Display Supplies Only - JCS
+  FEvtDlgID  := OrderFormDlgIDOnCreate;
   DefaultButton := cmdAccept;
 end;
 
@@ -1726,6 +1730,8 @@ begin
   SaveUserBounds(Self);
   FClosing := True;
   Action := caFree;
+  Encounter.SwitchToSaved(True);
+  frmFrame.DisplayEncounterText;
   (*
   if User.NoOrdering then Exit;
   if Length(memOrder.Text) > 0 then

@@ -32,7 +32,7 @@ set(CMAKE_INSTALL_PREFIX "/" CACHE INTERNAL "This does not install")
 set(VISTA_HAVE_BUILD_TOOL 1)
 if("${CMAKE_GENERATOR}" MATCHES "Borland Makefiles")
   execute_process(COMMAND ${CMAKE_MAKE_PROGRAM} -h OUTPUT_VARIABLE output ERROR_VARIABLE output)
-  if("x${output}" MATCHES "MAKE Version[^\n]*Borland")
+  if("x${output}" MATCHES "MAKE Version[^\n]*Embarcadero")
     # This may be a Delphi build environment.
     option(BUILD_DELPHI "Build Delphi Software (BDK, CPRS)" OFF)
   else()

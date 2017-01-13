@@ -3,39 +3,56 @@ inherited frmOrders: TfrmOrders
   Top = 177
   HelpContext = 4000
   Caption = 'Orders Page'
-  ClientHeight = 591
-  ClientWidth = 766
+  ClientHeight = 727
+  ClientWidth = 943
   HelpFile = 'overvw'
   Menu = mnuOrders
   OnDestroy = FormDestroy
   OnShow = FormShow
-  ExplicitWidth = 774
-  ExplicitHeight = 645
+  ExplicitWidth = 959
+  ExplicitHeight = 785
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   inherited shpPageBottom: TShape
-    Top = 586
-    Width = 766
-    ExplicitTop = 528
-    ExplicitWidth = 766
+    Top = 721
+    Width = 943
+    Margins.Left = 6
+    Margins.Top = 6
+    Margins.Right = 6
+    Margins.Bottom = 6
+    ExplicitTop = 721
+    ExplicitWidth = 943
   end
   inherited sptHorz: TSplitter
-    Left = 117
-    Height = 586
+    Left = 144
+    Height = 721
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     OnMoved = sptHorzMoved
-    ExplicitLeft = 117
-    ExplicitHeight = 528
+    ExplicitLeft = 144
+    ExplicitHeight = 721
   end
   inherited pnlLeft: TPanel
-    Width = 117
-    Height = 586
-    ExplicitWidth = 117
-    ExplicitHeight = 586
+    Width = 144
+    Height = 721
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    Constraints.MinWidth = 46
+    ExplicitWidth = 144
+    ExplicitHeight = 721
     object OROffsetLabel1: TOROffsetLabel
       Left = 0
       Top = 0
-      Width = 117
-      Height = 19
+      Width = 144
+      Height = 23
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       Caption = 'View Orders'
       HorzOffset = 2
@@ -45,9 +62,13 @@ inherited frmOrders: TfrmOrders
     end
     object lblWrite: TLabel
       Left = 0
-      Top = 97
-      Width = 117
-      Height = 19
+      Top = 119
+      Width = 144
+      Height = 24
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       AutoSize = False
       Caption = 'Write Orders'
@@ -58,24 +79,31 @@ inherited frmOrders: TfrmOrders
     end
     object sptVert: TSplitter
       Left = 0
-      Top = 75
-      Width = 117
-      Height = 4
+      Top = 92
+      Width = 144
+      Height = 5
       Cursor = crVSplit
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       OnMoved = sptVertMoved
     end
     object lstSheets: TORListBox
       Left = 0
-      Top = 19
-      Width = 117
-      Height = 56
+      Top = 23
+      Width = 144
+      Height = 69
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
-      Constraints.MinHeight = 30
-      ItemHeight = 13
+      Constraints.MinHeight = 37
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 0
+      TabOrder = 1
       OnClick = lstSheetsClick
       Caption = 'View Orders'
       ItemTipColor = clWindow
@@ -84,14 +112,17 @@ inherited frmOrders: TfrmOrders
     end
     object lstWrite: TORListBox
       Left = 0
-      Top = 116
-      Width = 117
-      Height = 470
+      Top = 143
+      Width = 144
+      Height = 578
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
-      ItemHeight = 13
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 2
+      TabOrder = 4
       OnClick = lstWriteClick
       Caption = 'Write Orders'
       ItemTipColor = clWindow
@@ -100,32 +131,45 @@ inherited frmOrders: TfrmOrders
     end
     object btnDelayedOrder: TORAlignButton
       Left = 0
-      Top = 79
-      Width = 117
-      Height = 18
+      Top = 97
+      Width = 144
+      Height = 22
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       Caption = 'Write Delayed Orders'
-      TabOrder = 1
+      TabOrder = 2
       OnClick = btnDelayedOrderClick
       Alignment = taLeftJustify
     end
   end
   inherited pnlRight: TPanel
-    Left = 121
-    Width = 645
-    Height = 586
+    Left = 149
+    Width = 794
+    Height = 721
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    Constraints.MinWidth = 37
     ParentColor = True
     ParentCtl3D = False
     ParentFont = False
     OnResize = pnlRightResize
-    ExplicitLeft = 121
-    ExplicitWidth = 645
-    ExplicitHeight = 586
+    ExplicitLeft = 149
+    ExplicitWidth = 794
+    ExplicitHeight = 721
     object lblOrders: TOROffsetLabel
       Left = 0
       Top = 0
-      Width = 645
-      Height = 19
+      Width = 794
+      Height = 23
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       Caption = 'Active Orders'
       HorzOffset = 2
@@ -134,11 +178,15 @@ inherited frmOrders: TfrmOrders
       WordWrap = False
     end
     object imgHide: TImage
-      Left = 520
+      Left = 640
       Top = 0
       Width = 16
       Height = 16
       Hint = 'All Active Orders not Visible'
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       AutoSize = True
       ParentShowHint = False
       Picture.Data = {
@@ -156,9 +204,13 @@ inherited frmOrders: TfrmOrders
     end
     object hdrOrders: THeaderControl
       Left = 0
-      Top = 19
-      Width = 645
-      Height = 17
+      Top = 23
+      Width = 794
+      Height = 21
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Sections = <
         item
           ImageIndex = -1
@@ -225,9 +277,13 @@ inherited frmOrders: TfrmOrders
     end
     object lstOrders: TCaptionListBox
       Left = 0
-      Top = 36
-      Width = 645
-      Height = 550
+      Top = 44
+      Width = 794
+      Height = 677
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Style = lbOwnerDrawVariable
       Align = alClient
       Color = clCream
@@ -529,6 +585,13 @@ inherited frmOrders: TfrmOrders
       object mnuActSign: TMenuItem
         Caption = 'Si&gn Selected...'
         OnClick = mnuActSignClick
+      end
+      object Z7: TMenuItem
+        Caption = '-'
+      end
+      object mnuActOneStep: TMenuItem
+        Caption = 'One Step Clinic Admin'
+        OnClick = mnuActOneStepClick
       end
     end
     object mnuOpt: TMenuItem

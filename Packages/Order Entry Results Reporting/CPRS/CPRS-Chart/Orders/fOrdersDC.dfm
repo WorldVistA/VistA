@@ -2,38 +2,49 @@ inherited frmDCOrders: TfrmDCOrders
   Left = 316
   Top = 226
   Caption = 'Discontinue / Cancel Orders'
-  ClientHeight = 289
-  ClientWidth = 425
+  ClientHeight = 356
+  ClientWidth = 523
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitLeft = 316
-  ExplicitTop = 226
-  ExplicitWidth = 433
-  ExplicitHeight = 323
+  ExplicitWidth = 539
+  ExplicitHeight = 394
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object Label1: TLabel [0]
     Left = 0
     Top = 0
-    Width = 425
-    Height = 13
+    Width = 523
+    Height = 16
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     Caption = 'The following orders will be discontinued -'
     WordWrap = True
-    ExplicitWidth = 196
+    ExplicitWidth = 247
   end
   object Panel1: TPanel [1]
     Left = 0
-    Top = 13
-    Width = 425
-    Height = 188
+    Top = 16
+    Width = 523
+    Height = 184
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     TabOrder = 0
+    ExplicitHeight = 231
     object lstOrders: TCaptionListBox
       Left = 1
       Top = 1
-      Width = 423
-      Height = 186
+      Width = 521
+      Height = 182
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Style = lbOwnerDrawVariable
       Align = alClient
       ItemHeight = 13
@@ -41,34 +52,47 @@ inherited frmDCOrders: TfrmDCOrders
       OnDrawItem = lstOrdersDrawItem
       OnMeasureItem = lstOrdersMeasureItem
       Caption = 'The following orders will be discontinued '
+      ExplicitHeight = 229
     end
   end
   object Panel2: TPanel [2]
     Left = 0
-    Top = 201
-    Width = 425
-    Height = 88
+    Top = 200
+    Width = 523
+    Height = 156
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alBottom
-    Constraints.MinHeight = 88
+    Constraints.MinHeight = 108
     TabOrder = 1
     DesignSize = (
-      425
-      88)
+      523
+      156)
     object lblReason: TLabel
       Left = 1
       Top = 1
-      Width = 423
-      Height = 13
+      Width = 521
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       Caption = 'Reason for Discontinue (select one)'
-      ExplicitWidth = 169
+      ExplicitWidth = 212
     end
     object lstReason: TORListBox
-      Left = 3
-      Top = 19
-      Width = 218
-      Height = 60
-      ItemHeight = 13
+      Left = 1
+      Top = 25
+      Width = 268
+      Height = 116
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      IntegralHeight = True
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
@@ -78,26 +102,36 @@ inherited frmDCOrders: TfrmDCOrders
       Pieces = '2'
     end
     object cmdOK: TButton
-      Left = 267
-      Top = 54
-      Width = 72
-      Height = 21
+      Left = 329
+      Top = 113
+      Width = 88
+      Height = 26
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akRight, akBottom]
       Caption = 'OK'
       Default = True
       TabOrder = 2
       OnClick = cmdOKClick
+      ExplicitTop = 66
     end
     object cmdCancel: TButton
-      Left = 347
-      Top = 54
-      Width = 72
-      Height = 21
+      Left = 427
+      Top = 113
+      Width = 89
+      Height = 26
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akRight, akBottom]
       Cancel = True
       Caption = 'Cancel'
       TabOrder = 3
       OnClick = cmdCancelClick
+      ExplicitTop = 66
     end
   end
   inherited amgrMain: TVA508AccessibilityManager

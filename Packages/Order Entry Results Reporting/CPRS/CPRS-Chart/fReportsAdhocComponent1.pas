@@ -107,7 +107,7 @@ var
 
 implementation
 
-uses fReportsAdhocSubItem1, fReports, uCore, rReports;
+uses fReportsAdhocSubItem1, fReports, uCore, rReports, System.Types;
 
 {$R *.DFM}
 type
@@ -310,7 +310,16 @@ begin
           gpbDisplay.Enabled := True;
           lblICD.Enabled := True;
           cboICD.Enabled := True;
-          cboICD.Text := PHSCompRec(Items.Objects[ItemIndex])^.ICDText;
+          if Piece(Items[ItemIndex],'^',7) = 'L' then       //cq 21962
+            cboICD.Text := 'Long text';
+          if Piece(Items[ItemIndex],'^',7) = 'S' then
+            cboICD.Text := 'Short text';
+          if Piece(Items[ItemIndex],'^',7) = 'C' then
+            cboICD.Text := 'Code only';
+          if Piece(Items[ItemIndex],'^',7) = 'T' then
+            cboICD.Text := 'Text only';
+          if Piece(Items[ItemIndex],'^',7) = 'N' then
+            cboICD.Text := 'None';
         end;
       if length(Piece(Items[ItemIndex],'^',8))>0 then
         begin
@@ -774,7 +783,7 @@ begin
           sComponents.Strings[i] := s;
         end;
     end;
-  QuickCopy(sComponents,Dest);
+  FastAssign(sComponents, Dest);
   sComponents.Free;
 end;
 

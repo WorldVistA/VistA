@@ -43,7 +43,6 @@ const
   'yYgjf"5VdHc#uA,W1i+v''6|@pr{n;DJ!8(btPGaQM.LT3oe?NB/&9>Z`-}02*%x<7lsqz4OS ~E$\R]KI[:UwC_=h)kXmF',
   '5:iar.{YU7mBZR@-K|2 "+~`M%8sq4JhPo<_X\Sg3WC;Tuxz,fvEQ1p9=w}FAI&j/keD0c?)LN6OHV]lGy''$*>nd[(tb!#');
 
-
 implementation
 
 uses mfunstr {for Translate function};

@@ -3,21 +3,25 @@ inherited frmDrawers: TfrmDrawers
   Top = 335
   BorderStyle = bsNone
   Caption = 'frmDrawers'
-  ClientHeight = 365
-  ClientWidth = 189
+  ClientHeight = 449
+  ClientWidth = 233
   OnCanResize = FormCanResize
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnResize = FormResize
   ExplicitWidth = 189
   ExplicitHeight = 365
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object pnlRemindersButton: TKeyClickPanel [0]
     Left = 0
-    Top = 193
-    Width = 189
-    Height = 22
+    Top = 238
+    Width = 233
+    Height = 27
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     BevelOuter = bvNone
     Caption = 'Reminders'
@@ -29,8 +33,12 @@ inherited frmDrawers: TfrmDrawers
     object sbReminders: TORAlignSpeedButton
       Left = 0
       Top = 0
-      Width = 189
-      Height = 22
+      Width = 233
+      Height = 27
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       AllowAllUp = True
       GroupIndex = 1
@@ -56,9 +64,13 @@ inherited frmDrawers: TfrmDrawers
   end
   object pnlEncounterButton: TKeyClickPanel [1]
     Left = 0
-    Top = 107
-    Width = 189
-    Height = 22
+    Top = 132
+    Width = 233
+    Height = 27
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     BevelOuter = bvNone
     Caption = 'Encounter'
@@ -70,8 +82,12 @@ inherited frmDrawers: TfrmDrawers
     object sbEncounter: TORAlignSpeedButton
       Left = 0
       Top = 0
-      Width = 189
-      Height = 22
+      Width = 233
+      Height = 27
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       AllowAllUp = True
       GroupIndex = 1
@@ -98,8 +114,12 @@ inherited frmDrawers: TfrmDrawers
   object pnlTemplatesButton: TKeyClickPanel [2]
     Left = 0
     Top = 0
-    Width = 189
-    Height = 22
+    Width = 233
+    Height = 27
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     BevelOuter = bvNone
     Caption = 'Templates'
@@ -111,8 +131,12 @@ inherited frmDrawers: TfrmDrawers
     object sbTemplates: TORAlignSpeedButton
       Left = 0
       Top = 0
-      Width = 189
-      Height = 22
+      Width = 233
+      Height = 27
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       AllowAllUp = True
       GroupIndex = 1
@@ -135,14 +159,17 @@ inherited frmDrawers: TfrmDrawers
       Spacing = 2
       OnClick = sbTemplatesClick
       OnResize = sbResize
-      ExplicitTop = -6
     end
   end
   object pnlOrdersButton: TKeyClickPanel [3]
     Left = 0
-    Top = 279
-    Width = 189
-    Height = 22
+    Top = 343
+    Width = 233
+    Height = 27
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     BevelOuter = bvNone
     Caption = 'Orders'
@@ -154,8 +181,12 @@ inherited frmDrawers: TfrmDrawers
     object sbOrders: TORAlignSpeedButton
       Left = 0
       Top = 0
-      Width = 189
-      Height = 22
+      Width = 233
+      Height = 27
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       AllowAllUp = True
       GroupIndex = 1
@@ -181,11 +212,14 @@ inherited frmDrawers: TfrmDrawers
   end
   object lbOrders: TORListBox [4]
     Left = 0
-    Top = 301
-    Width = 189
-    Height = 64
+    Top = 370
+    Width = 233
+    Height = 79
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
-    ItemHeight = 13
     Items.Strings = (
       'Orders')
     ParentShowHint = False
@@ -198,11 +232,14 @@ inherited frmDrawers: TfrmDrawers
   end
   object lbEncounter: TORListBox [5]
     Left = 0
-    Top = 129
-    Width = 189
-    Height = 64
+    Top = 159
+    Width = 233
+    Height = 79
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
-    ItemHeight = 13
     Items.Strings = (
       'Encounter')
     ParentShowHint = False
@@ -215,18 +252,26 @@ inherited frmDrawers: TfrmDrawers
   end
   object pnlTemplates: TPanel [6]
     Left = 0
-    Top = 22
-    Width = 189
-    Height = 85
+    Top = 27
+    Width = 233
+    Height = 105
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
     Visible = False
     object tvTemplates: TORTreeView
       Left = 0
-      Top = 38
-      Width = 189
-      Height = 47
+      Top = 47
+      Width = 233
+      Height = 58
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       DragMode = dmAutomatic
       HideSelection = False
@@ -253,21 +298,29 @@ inherited frmDrawers: TfrmDrawers
     object pnlTemplateSearch: TPanel
       Left = 0
       Top = 0
-      Width = 189
-      Height = 38
+      Width = 233
+      Height = 47
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
       OnResize = pnlTemplateSearchResize
       DesignSize = (
-        189
-        38)
+        233
+        47)
       object btnFind: TORAlignButton
-        Left = 134
+        Left = 165
         Top = 0
-        Width = 55
-        Height = 21
+        Width = 68
+        Height = 26
         Hint = 'Find Template'
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akTop, akRight]
         Caption = 'Find'
         ParentShowHint = False
@@ -279,8 +332,12 @@ inherited frmDrawers: TfrmDrawers
       object edtSearch: TCaptionEdit
         Left = 0
         Top = 0
-        Width = 134
+        Width = 165
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         TabOrder = 0
         OnChange = edtSearchChange
@@ -290,18 +347,26 @@ inherited frmDrawers: TfrmDrawers
       end
       object cbMatchCase: TCheckBox
         Left = 0
-        Top = 21
-        Width = 80
-        Height = 17
+        Top = 26
+        Width = 98
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Match Case'
         TabOrder = 2
         OnClick = cbFindOptionClick
       end
       object cbWholeWords: TCheckBox
-        Left = 80
-        Top = 21
-        Width = 109
-        Height = 17
+        Left = 98
+        Top = 26
+        Width = 135
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Whole Words Only'
         TabOrder = 3
         OnClick = cbFindOptionClick
@@ -310,10 +375,14 @@ inherited frmDrawers: TfrmDrawers
   end
   object tvReminders: TORTreeView [7]
     Left = 0
-    Top = 215
-    Width = 189
-    Height = 64
+    Top = 265
+    Width = 233
+    Height = 78
     HelpContext = 11300
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     HideSelection = False
     Images = dmodShared.imgReminders
