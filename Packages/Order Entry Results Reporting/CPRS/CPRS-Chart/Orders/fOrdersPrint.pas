@@ -67,7 +67,7 @@ implementation
 {$R *.DFM}
 
 uses
-  fDeviceSelect, uCore, ORNet, fOrders;
+  fDeviceSelect, uCore, ORNet, fOrders, System.UITypes;
 
 procedure SetupOrdersPrint(OrderList: TStringList; var DeviceInfo: string; Nature: Char; SelectAll: Boolean; var PrintIt: Boolean;
                            PrintTitle: string = ''; PrintLoc: Integer = 0);

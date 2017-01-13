@@ -87,6 +87,7 @@ type
     function SortData(Node: TORTreeNode): string;
 //    procedure PositionToReminder(Sender: TObject);
     procedure ProcessedRemindersChanged(Sender: TObject);
+    procedure WMMenuSelect(var Msg: TWMMenuSelect) ; message WM_MENUSELECT;
   public
     procedure EnableActions;
     procedure SetFontSize( NewFontSize: integer);
@@ -107,7 +108,7 @@ const
 implementation
 
 uses uReminders, dShared, uConst, fReminderDialog, fNotes, rMisc,
-     rReminders, fRemCoverSheet, VA2006Utils;
+     rReminders, fRemCoverSheet, VA2006Utils, VA508AccessibilityRouter;
 
 {$R *.DFM}
 
@@ -670,6 +671,34 @@ begin
   KillObj(@ReminderDialogInfo, TRUE);
   UpdateReminderDialogStatus;
   EnableActions;
+end;
+
+
+//Hack for jaws so that "checked" and "not checked" will be read
+procedure TfrmReminderTree.WMMenuSelect(var Msg: TWMMenuSelect) ;
+var
+ menuItem : TMenuItem;
+begin
+ inherited;
+ If ScreenReaderSystemActive then
+ begin
+  if (Msg.MenuFlag <> $FFFF) or (Msg.IDItem <> 0) then
+  begin
+   if Msg.MenuFlag and MF_POPUP <> MF_POPUP then
+   begin
+    menuItem := Self.Menu.FindItem(Msg.IDItem, fkCommand) ;
+    if (UpperCase(menuItem.Parent.Caption) = '&VIEW') and (menuItem.ImageIndex > 0) then
+    begin
+      if (menuItem.ImageIndex mod 2) > 0 then
+       GetScreenReader.Speak('Checked')
+      else
+       GetScreenReader.Speak('Not Checked');
+    end;
+
+   end;
+  end;
+ end;
+
 end;
 
 procedure TfrmReminderTree.memActionClick(Sender: TObject);

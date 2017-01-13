@@ -7,8 +7,8 @@ inherited frmLabCollectTimes: TfrmLabCollectTimes
   ClientWidth = 439
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitWidth = 447
-  ExplicitHeight = 197
+  ExplicitWidth = 455
+  ExplicitHeight = 208
   PixelsPerInch = 96
   TextHeight = 13
   object lblFutureTimes: TMemo [0]
@@ -36,6 +36,7 @@ inherited frmLabCollectTimes: TfrmLabCollectTimes
     OnChange = calLabCollectChange
     DateOnly = True
     RequireTime = False
+    Caption = ''
   end
   object lstLabCollTimes: TORListBox [2]
     Left = 210
@@ -46,6 +47,7 @@ inherited frmLabCollectTimes: TfrmLabCollectTimes
     ParentShowHint = False
     ShowHint = True
     TabOrder = 1
+    Caption = ''
     ItemTipColor = clWindow
     LongList = False
     Pieces = '2'
@@ -78,7 +80,7 @@ inherited frmLabCollectTimes: TfrmLabCollectTimes
     CalColors.TitleTextColor = clBtnText
     CalColors.MonthBackColor = clWindow
     CalColors.TrailingTextColor = clGrayText
-    Date = 36507.853976585640000000
+    Date = 36507.614243518520000000
     ShowTodayCircle = False
     TabOrder = 4
     TabStop = True
@@ -92,7 +94,8 @@ inherited frmLabCollectTimes: TfrmLabCollectTimes
         'Status = stsDefault')
       (
         'Component = calLabCollect'
-        'Status = stsDefault')
+        'Text = Lab Collect Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = lstLabCollTimes'
         'Status = stsDefault')

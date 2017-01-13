@@ -60,8 +60,12 @@ type
     btnDefinitions: TButton;
     pnlOtherViews: TPanel;
     lblOtherViews: TLabel;
-    lblSelectOthers: TLabel;
     splViews: TSplitter;
+    lbl508EditInfo: TVA508StaticText;
+    lbl508EditInfo1: TVA508StaticText;
+    lbl508Apply: TVA508StaticText;
+    lbl508SelectOthers: TVA508StaticText;
+    lbl508SelectionInfo: TVA508StaticText;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -135,7 +139,7 @@ implementation
 {$R *.DFM}
 
 uses
-  rGraphs, fGraphData, fGraphOthers, fRptBox, VAUtils;
+  UITypes, rGraphs, fGraphData, fGraphOthers, fRptBox, VAUtils;
 
 procedure DialogOptionsGraphProfiles(var actiontype: boolean);
 // create the form and make it modal, return an action
@@ -248,8 +252,32 @@ begin
 end;
 
 procedure TfrmGraphProfiles.FormCreate(Sender: TObject);
+var
+  IsScreenReaderActive: boolean;
 begin
   FPublicEditor := GraphPublicEditor;
+  IsScreenReaderActive := ScreenReaderActive;
+  lbl508EditInfo.Enabled := IsScreenReaderActive;
+  lbl508EditInfo.Visible := IsScreenReaderActive;
+  lbl508EditInfo.TabStop := IsScreenReaderActive;
+  lbl508EditInfo1.Enabled := IsScreenReaderActive;
+  lbl508EditInfo1.Visible := IsScreenReaderActive;
+  lbl508EditInfo1.TabStop := IsScreenReaderActive;
+  lbl508SelectionInfo.Enabled := IsScreenReaderActive;
+  lbl508SelectionInfo.Visible := IsScreenReaderActive;
+  lbl508SelectionInfo.TabStop := IsScreenReaderActive;
+  lbl508Apply.Enabled := IsScreenReaderActive;
+  lbl508Apply.Visible := IsScreenReaderActive;
+  lbl508Apply.TabStop := IsScreenReaderActive;
+  lbl508SelectOthers.TabStop := IsScreenReaderActive;
+  lblEditInfo.Enabled := not IsScreenReaderActive;
+  lblEditInfo.Visible := not IsScreenReaderActive;
+  lblEditInfo1.Enabled := not IsScreenReaderActive;
+  lblEditInfo1.Visible := not IsScreenReaderActive;
+  lblSelectionInfo.Enabled := not IsScreenReaderActive;
+  lblSelectionInfo.Visible := not IsScreenReaderActive;
+  lblApply.Enabled := not IsScreenReaderActive;
+  lblApply.Visible := not IsScreenReaderActive;
 end;
 
 procedure TfrmGraphProfiles.FormShow(Sender: TObject);
@@ -1578,19 +1606,19 @@ begin                       // text defined in uGraphs
   RadSourcePat.Hint := HINT_PAT_SOURCE;
   RadSourceAll.Hint := HINT_ALL_SOURCE;
   lblSelectionInfo.Hint := HINT_SELECTION_INFO;
+  lbl508SelectionInfo.Hint := HINT_SELECTION_INFO;
   lblSource.Hint := HINT_SOURCE;
   lstSources.Hint := HINT_SOURCE;
   pnlSources.Hint := HINT_SOURCE;
   pnlAllSources.Hint := HINT_SOURCE;
   splViews.Hint := HINT_SOURCE;
-  lblSelectOthers.Hint := HINT_OTHER_SOURCE;
+  lbl508SelectOthers.Hint := HINT_OTHER_SOURCE;
   lblOtherViews.Hint := HINT_OTHER_SOURCE;
   lstOtherSources.Hint := HINT_OTHER_SOURCE;
   pnlOtherSources.Hint := HINT_OTHER_SOURCE;
   pnlOtherSourcesBottom.Hint := HINT_OTHER_SOURCE;
   pnlOtherViews.Hint := HINT_OTHER_SOURCE;
   lblOtherViews.Hint := HINT_OTHER_SOURCE;
-  lblSelectOthers.Hint := HINT_OTHER_SOURCE;
   lblOtherPersons.Hint := HINT_OTHERS;
   cboUser.Hint := HINT_OTHERS;
   pnlOtherSourcesUser.Hint := HINT_OTHERS;

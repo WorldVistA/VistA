@@ -1,6 +1,7 @@
 inherited frmOrdersEvntRelease: TfrmOrdersEvntRelease
   Left = 196
   Top = 66
+  BorderIcons = [biSystemMenu]
   Caption = 'Auto DC/Release Event Orders'
   ClientHeight = 328
   ClientWidth = 443
@@ -8,8 +9,8 @@ inherited frmOrdersEvntRelease: TfrmOrdersEvntRelease
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  ExplicitWidth = 451
-  ExplicitHeight = 355
+  ExplicitWidth = 459
+  ExplicitHeight = 366
   PixelsPerInch = 96
   TextHeight = 13
   object pnlTop: TPanel [0]
@@ -93,19 +94,21 @@ inherited frmOrdersEvntRelease: TfrmOrdersEvntRelease
         object Label2: TLabel
           Left = 1
           Top = 1
-          Width = 244
+          Width = 290
           Height = 13
           Align = alTop
           Caption = '  Enter the number of events you would like to view '
           WordWrap = True
+          ExplicitWidth = 244
         end
         object Label3: TLabel
           Left = 1
           Top = 14
-          Width = 156
+          Width = 290
           Height = 13
           Align = alTop
           Caption = '  (Input "ALL" to view all events):'
+          ExplicitWidth = 156
         end
       end
     end
@@ -161,6 +164,7 @@ inherited frmOrdersEvntRelease: TfrmOrdersEvntRelease
       Anchors = [akLeft, akTop, akRight, akBottom]
       ColCount = 2
       DefaultRowHeight = 22
+      DefaultDrawing = False
       FixedCols = 0
       RowCount = 7
       Options = [goFixedVertLine, goFixedHorzLine, goHorzLine, goRowSizing, goColSizing, goTabs, goRowSelect]

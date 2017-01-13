@@ -4,23 +4,25 @@ inherited frmOptionsReportsCustom: TfrmOptionsReportsCustom
   BorderIcons = [biSystemMenu, biHelp]
   BorderStyle = bsDialog
   Caption = 'Individual CPRS Report Settings'
-  ClientHeight = 383
+  ClientHeight = 387
   ClientWidth = 503
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
+  ExplicitWidth = 509
+  ExplicitHeight = 415
   PixelsPerInch = 96
   TextHeight = 13
   object Bevel3: TBevel [0]
     Left = 0
-    Top = 352
+    Top = 356
     Width = 503
     Height = 2
     Align = alBottom
   end
   object Panel1: TPanel [1]
     Left = 0
-    Top = 354
+    Top = 358
     Width = 503
     Height = 29
     Align = alBottom
@@ -73,6 +75,7 @@ inherited frmOptionsReportsCustom: TfrmOptionsReportsCustom
       Align = alTop
       ColCount = 4
       DefaultRowHeight = 20
+      DefaultDrawing = False
       FixedCols = 0
       RowCount = 16
       Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goDrawFocusSelected, goTabs]
@@ -99,6 +102,7 @@ inherited frmOptionsReportsCustom: TfrmOptionsReportsCustom
       Visible = False
       OnExit = edtMaxExit
       OnKeyPress = edtMaxKeyPress
+      Caption = ''
     end
     object odbStop: TORDateBox
       Left = 136
@@ -188,13 +192,16 @@ inherited frmOptionsReportsCustom: TfrmOptionsReportsCustom
         'Status = stsDefault')
       (
         'Component = odbStop'
-        'Status = stsDefault')
+        'Text = Stop Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = odbStart'
-        'Status = stsDefault')
+        'Text = start Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = odbTool'
-        'Status = stsDefault')
+        'Text = Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = Panel3'
         'Status = stsDefault')

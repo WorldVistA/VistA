@@ -31,6 +31,7 @@ type
    PtHNC:boolean;
    PtMST:boolean;
    PtSHAD:boolean;
+   PtCL: Boolean;
    constructor Create(Alist:TStringList);
    function GetGMPDFN(dfn:string;name:String):string;
  public
@@ -45,7 +46,6 @@ type
     protected
   public
      constructor Create;
-  published
      property  OrderNum: string read FOrderNum write FOrderNum;
      procedure AddBAPCEDiag(DiagStr:string);
      procedure ClearBAPCEDiagList;
@@ -112,6 +112,7 @@ end;
      FBAFactorHNC       : string;
      FBAFactorCV        : string;
      FBAFactorSHAD       : string;
+     FBAFactorCL        : String;
   end;
 
   TBAPLFactorsIN = class(TOBject)
@@ -207,7 +208,7 @@ var
   Dx4               : string;
   TFactors          : string;
   SC,AO,IR          : string;
-  MST,HNC,CV,SHD,EC : string;
+  MST,HNC,CV,SHD,EC,CL  : string;
   PLFactorsIndexes  : TStringList;
   BAHoldPrimaryDx   : string;     //  used to verify primart dx has been changed.
   BAPrimaryDxChanged: boolean;
@@ -1070,6 +1071,7 @@ begin
       7: PtHNC              := (AList[i] = '1');
       8: PtMST              := (AList[i] = '1');
       9: PtSHAD              := (AList[i] = '1');
+      10: PtCL              := (AList[i] = '1');
     end;
 end;
 

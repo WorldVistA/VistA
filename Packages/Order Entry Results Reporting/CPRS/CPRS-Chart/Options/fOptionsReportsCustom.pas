@@ -112,6 +112,10 @@ begin
         Left := leftvalue;
       end;
       ResizeAnchoredFormToFont(frmOptionsReportsCustom);
+      // grdReport draws on the canvas which is a different font than the control;
+      // Default drawing set to true duplicated the text in each selected cell
+      grdReport.Canvas.Font := Label1.Font;
+      grdReport.DefaultRowHeight := 24;
       ShowModal;
       actiontype := btnApply.Tag;
     end;
@@ -204,7 +208,7 @@ begin
       edtMax.Visible := False;
       ShowEditor(grdReport.Col, grdReport.Row, #0);
     end;
-  if Key in [#32..#127] then ShowEditor(grdReport.Col, grdReport.Row, Key);
+  if CharInSet(Key, [#32..#127]) then ShowEditor(grdReport.Col, grdReport.Row, Key);
  signal := 0;
 end;
 

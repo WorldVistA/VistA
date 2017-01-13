@@ -14,13 +14,13 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 foreach(package
-  Borland2007
-  VA2007
-  ORCtrlLib2007
-  ORDateLib2007
+  BorlandXE3
+  #VA2007
+  ORCtrlLibXE3
+  #ORDateLib2007
   )
   add_delphi_package(${package})
 endforeach()
 
-add_dependencies(ORCtrlLib2007 VAShared2007)
-add_dependencies(ORDateLib2007 ORCtrlLib2007 XWB_R2007)
+add_dependencies(ORCtrlLibXE3 VASharedXE3)
+#add_dependencies(ORDateLib2007 ORCtrlLib2007 XWB_R2007)

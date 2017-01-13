@@ -4,7 +4,7 @@ unit ORCtrlsDsgn;                                    // Oct 26, 1997 @ 10:00am
 
 interface  // --------------------------------------------------------------------------------
 
-uses Classes, DesignIntf, DesignEditors, TypInfo, ORCtrls, SysUtils;
+uses Classes, DesignIntf, DesignEditors, TypInfo, ORCtrls, SysUtils, ORDtTm;
 
 type
   TORImageIndexesPropertyEditor = class(TPropertyEditor)
@@ -33,7 +33,9 @@ type
 procedure Register;
 
 implementation
-  
+
+uses ORStaticText, ORRadioCheck, ORSplitter;
+
 { TORImageIndexesPropertyEditor }
 
 type
@@ -155,8 +157,8 @@ begin
     [TORListBox, TORComboBox, TORAutoPanel, TOROffsetLabel, TORAlignEdit,
     TORAlignButton, TORAlignSpeedButton, TORTreeView, TORCheckBox, TORListView,
     TKeyClickPanel, TKeyClickRadioGroup, TCaptionListBox, TCaptionCheckListBox,
-    TCaptionMemo, TCaptionEdit, TCaptionTreeView, TCaptionComboBox,
-    TCaptionListView, TCaptionStringGrid, TCaptionRichEdit{, TORAlignBitBtn, TORCalendar}]);
+    TCaptionMemo, TCaptionEdit, TCaptionTreeView, TCaptionComboBox, TORDateTimeDlg, TORDateBox, TORDateCombo,
+    TCaptionListView, TCaptionStringGrid, TCaptionRichEdit, TORStaticText, TORRadioCheck, TORSplitter{, TORCheckPanel, TORAlignBitBtn, TORCalendar}]);
   RegisterPropertyEditor( TypeInfo(string), TORCheckBox, 'ImageIndexes',
                           TORImageIndexesPropertyEditor);
 end;

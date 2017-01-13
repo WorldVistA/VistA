@@ -5,11 +5,12 @@ interface
 uses
   SysUtils, Windows, Classes, Controls, Forms, StdCtrls;
 
-procedure QuickCopyWith508Msg(AFrom, ATo: TObject; docType: string = '');
-procedure QuickAddWith508Msg(AFrom, ATo: TObject; docType: string = '');
-procedure FastAssignWith508Msg(source, destination: TStrings; docType: string = '');
+procedure QuickCopyWith508Msg(AFrom, ATo: TObject; docType: string = ''); deprecated;
+procedure QuickAddWith508Msg(AFrom, ATo: TObject; docType: string = ''); deprecated;
+procedure FastAssignWith508Msg(source, destination: TStrings; docType: string = ''); deprecated;
 
 procedure SpeakTextInserted(docType: string = '');
+procedure SpeakStrings(AnObject: TObject; docType: string = '');
 function GetTabText: string;
 procedure SpeakPatient;
 procedure SpeakTabAndPatient;
@@ -125,6 +126,12 @@ type
     function GetInstructions(Component: TWinControl): string; override;
   end;
 
+procedure SpeakStrings(AnObject: TObject; docType: string = '');
+begin
+  if (AnObject is TStrings) and (TStrings(AnObject).Count > 0) then
+    SpeakTextInserted(docType);
+end;
+
 procedure SpeakTextInserted(docType: string = '');
 begin
   if docType = '' then
@@ -136,15 +143,13 @@ end;
 procedure QuickCopyWith508Msg(AFrom, ATo: TObject; docType: string = '');
 begin
   QuickCopy(AFrom, ATo);
-  if (AFrom is TStrings) and (TStrings(AFrom).Count > 0) then
-    SpeakTextInserted(docType);
+  SpeakStrings(AFrom, docType);
 end;
 
 procedure QuickAddWith508Msg(AFrom, ATo: TObject; docType: string = '');
 begin
   QuickAdd(AFrom, ATo);
-  if (AFrom is TStrings) and (TStrings(AFrom).Count > 0) then
-    SpeakTextInserted(docType);
+  SpeakStrings(AFrom, docType);
 end;
 
 procedure FastAssignWith508Msg(source, destination: TStrings; docType: string = '');

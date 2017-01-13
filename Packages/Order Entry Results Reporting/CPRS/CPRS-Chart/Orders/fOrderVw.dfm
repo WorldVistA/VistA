@@ -6,10 +6,9 @@ inherited frmOrderView: TfrmOrderView
   ClientWidth = 421
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitLeft = 340
-  ExplicitTop = 165
-  ExplicitWidth = 429
-  ExplicitHeight = 440
+  OnKeyUp = FormKeyUp
+  ExplicitWidth = 437
+  ExplicitHeight = 451
   PixelsPerInch = 96
   TextHeight = 13
   object pnlView: TPanel [0]
@@ -26,6 +25,7 @@ inherited frmOrderView: TfrmOrderView
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 0
+    OnEnter = pnlViewEnter
     object lblView: TLabel
       Left = 1
       Top = 1
@@ -37,6 +37,18 @@ inherited frmOrderView: TfrmOrderView
       Layout = tlCenter
       ExplicitWidth = 153
       ExplicitHeight = 13
+    end
+    object lbl508View: TStaticText
+      Left = 1
+      Top = 1
+      Width = 419
+      Height = 19
+      Align = alClient
+      Alignment = taCenter
+      BevelEdges = []
+      Caption = 'All Services, Active Orders'
+      TabOrder = 0
+      Visible = False
     end
   end
   object Panel1: TPanel [1]
@@ -82,6 +94,7 @@ inherited frmOrderView: TfrmOrderView
         HideSelection = False
         Indent = 19
         TabOrder = 0
+        OnChange = trFiltersChange
         OnClick = trFiltersClick
         Caption = 'Order Status'
       end
@@ -114,6 +127,7 @@ inherited frmOrderView: TfrmOrderView
         HideSelection = False
         Indent = 19
         TabOrder = 0
+        OnChange = treServiceChange
         OnClick = treServiceClick
         Caption = 'Service/Section'
       end
@@ -137,6 +151,7 @@ inherited frmOrderView: TfrmOrderView
       Caption = 'Only List Orders Placed During Time Period'
       TabOrder = 0
       OnClick = chkDateRangeClick
+      OnEnter = chkDateRangeEnter
     end
     object GroupBox1: TGroupBox
       Left = 4
@@ -196,7 +211,7 @@ inherited frmOrderView: TfrmOrderView
       Caption = 'Reverse Chronological Sequence'
       Checked = True
       State = cbChecked
-      TabOrder = 2
+      TabOrder = 3
     end
     object chkByService: TCheckBox
       Left = 6
@@ -206,7 +221,7 @@ inherited frmOrderView: TfrmOrderView
       Caption = 'Group Orders by Service'
       Checked = True
       State = cbChecked
-      TabOrder = 3
+      TabOrder = 2
     end
     object cmdOK: TButton
       Left = 246
@@ -262,10 +277,12 @@ inherited frmOrderView: TfrmOrderView
         'Status = stsDefault')
       (
         'Component = calFrom'
-        'Status = stsDefault')
+        'Text = From Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = calThru'
-        'Status = stsDefault')
+        'Text = Through Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = chkInvChrono'
         'Status = stsDefault')
@@ -280,6 +297,9 @@ inherited frmOrderView: TfrmOrderView
         'Status = stsDefault')
       (
         'Component = frmOrderView'
+        'Status = stsDefault')
+      (
+        'Component = lbl508View'
         'Status = stsDefault'))
   end
 end

@@ -94,7 +94,7 @@ implementation
 {$R *.DFM}
 
 uses rODBase, ORFn, fODBase,fODGen, fODAuto, fOMVerify, uCore, rMisc, uODBase,
-  fOrders, VAUtils;
+  fOrders, VAUtils, System.UITypes, System.Types;
 
 const
   TX_NOFORM    = 'This selection does not have an associated windows form.';

@@ -18,29 +18,18 @@ procedure Register;
 implementation
 
 uses Classes,
-  {$IFDEF D6_OR_HIGHER}
   DesignIntf, DesignEditors, DesignMenus,
-  {$ELSE}
-  DsgnIntf,
-  {$ENDIF}
-     ExptIntf, //Delphi units
-     Trpcb, {CCOWRPCBroker, }
-     RpcbEdtr, XWBRich20,             //Broker units
-//{$IFDEF VER130}
-//    VERGENCECONTEXTORLib_TLB_D50;
-//{$ENDIF}
-//{$IFDEF VER140}
-//  VERGENCECONTEXTORLib_TLB_D60; //CCOW
-//ENDIF}
-    VergenceContextorLib_TLB;
+  Trpcb, {CCOWRPCBroker,}
+  RpcbEdtr, XWBRich20,             //Broker units
+  VergenceContextorLib_TLB;
 
 procedure Register;
 begin
-  //RegisterComponents('Kernel',[TRPCBroker, TCCOWRPCBroker, TXWBRichEdit, TContextorControl]);
-  RegisterComponents('Kernel',[TRPCBroker, TXWBRichEdit, TContextorControl]);
+  RegisterComponents('Kernel',[TRPCBroker, {TCCOWRPCBroker,} TXWBRichEdit, TContextorControl]);
+
   RegisterPropertyEditor(TypeInfo(TRemoteProc),nil,'',TRemoteProcProperty);
   RegisterPropertyEditor(TypeInfo(TServer),nil,'',TServerProperty);
-  RegisterPropertyEditor(TypeInfo(TRpcVersion),nil,'',TRpcVersionProperty);
+  //RegisterPropertyEditor(TypeInfo(TRpcVersion),nil,'',TRpcVersionProperty);
 end;
 
 end.

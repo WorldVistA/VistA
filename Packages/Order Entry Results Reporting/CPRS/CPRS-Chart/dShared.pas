@@ -1,4 +1,5 @@
 unit dShared;
+
 interface
 
 uses
@@ -29,10 +30,11 @@ type
     FInEditor: boolean;
     FOnTemplateLock: TNotifyEvent;
     FTagIndex: longint;
-    FDrawerTrees: TList;
+    FDrawerTrees: array of TWinControl;
     FRefreshObject: boolean;
   protected
     procedure EncounterLocationChanged(Sender: TObject);
+    function IndexOfDrawer(ADrawer: TWinControl): integer;
   public
     function ImgIdx(Node: TTreeNode): integer;
     procedure AddTemplateNode(Tree: TTreeView; var EmptyCount: integer;
@@ -42,8 +44,9 @@ type
               var EmptyCount: integer; AllowInactive: boolean = FALSE): boolean;
     procedure Resync(SyncNode: TTreeNode; AllowInactive: boolean;
                                 var EmptyCount: integer);
-    procedure AddDrawerTree(DrawerForm: TForm);
-    procedure RemoveDrawerTree(DrawerForm: TForm);
+    procedure AddDrawerTree(ADrawer: TWinControl);
+
+    procedure RemoveDrawerTree(ADrawer: TWinControl);
     procedure Reload;
     procedure LoadTIUObjects;
     function BoilerplateOK(const Txt, CRDelim: string; ObjList: TStringList;
@@ -59,6 +62,8 @@ type
     property TIUObjects: TStringList read FTIUObjects;
     property RefreshObject: boolean read FRefreshObject write FRefreshObject;
     procedure FindRichEditText(AFindDialog: TFindDialog; ARichEdit: TRichEdit);
+    procedure FindRichEditTextAll(Rich: TRichEdit; AFindDialog: TFindDialog; Color: TColor; Style:
+     TFontStyles);
     procedure ReplaceRichEditText(AReplaceDialog: TReplaceDialog; ARichEdit: TRichEdit);
   end;
 
@@ -74,7 +79,9 @@ const
 
 implementation
 
-uses fDrawers, rTemplates, uCore, uTemplateFields, uEventHooks, VA508AccessibilityRouter;
+uses
+  mDrawers, fDrawers, rTemplates, uCore, uTemplateFields, uEventHooks, VA508AccessibilityRouter,
+  System.UITypes;
 
 {$R *.DFM}
 
@@ -235,13 +242,11 @@ begin
   end;
 end;
 
-procedure TdmodShared.Resync(SyncNode: TTreeNode; AllowInactive: boolean;
-                                var EmptyCount: integer);
+procedure TdmodShared.Resync(SyncNode: TTreeNode; AllowInactive: boolean; var EmptyCount: integer);
 var
   FromGet: boolean;
   IDCount, SyncLevel, i: integer;
   SyncExpanded: boolean;
-  //SelNode,
   Node: TTreeNode;
   Template: TTemplate;
   IDSort, CurExp: TStringList;
@@ -479,7 +484,6 @@ end;
 
 procedure TdmodShared.dmodSharedCreate(Sender: TObject);
 begin
-  FDrawerTrees := TList.Create;
   imgReminders.Overlay(6,0);
   imgReminders.Overlay(7,1);
   imgReminders2.Overlay(4,0);
@@ -487,27 +491,35 @@ end;
 
 procedure TdmodShared.dmodSharedDestroy(Sender: TObject);
 begin
-  KillObj(@FDrawerTrees);
+ // KillObj(@FDrawerTrees);
+  SetLength(FDrawerTrees, 0);
   KillObj(@FTIUObjects);
+
 end;
 
-procedure TdmodShared.AddDrawerTree(DrawerForm: TForm);
+procedure TdmodShared.AddDrawerTree(ADrawer: TWinControl);
 begin
-  if(assigned(FDrawerTrees)) and (FDrawerTrees.IndexOf(DrawerForm) < 0) then
-    FDrawerTrees.Add(DrawerForm);
+  if (IndexOfDrawer(ADrawer) < 0) then begin
+    SetLength(FDrawerTrees, Length(FDrawerTrees) + 1);
+    FDrawerTrees[Length(FDrawerTrees) - 1] := ADrawer;
+  end;
   Encounter.Notifier.NotifyWhenChanged(EncounterLocationChanged);
 end;
 
-procedure TdmodShared.RemoveDrawerTree(DrawerForm: TForm);
+procedure TdmodShared.RemoveDrawerTree(ADrawer: TWinControl);
 var
-  idx: integer;
-
+  i, idx: integer;
 begin
-  if(assigned(FDrawerTrees)) then
+ // if(assigned(FDrawerTrees)) then
+  if Length(FDrawerTrees) > 0 then
   begin
-    idx := FDrawerTrees.IndexOf(DrawerForm);
-    if(idx >= 0) then
-      FDrawerTrees.Delete(idx);
+    idx := IndexOfDrawer(ADrawer);
+    if(idx >= 0) then begin
+      for i := idx to Length(fDrawerTrees) - 2 do begin
+        fDrawerTrees[i] := fDrawerTrees[i+1];
+      end;
+      SetLength(fDrawerTrees, Length(fDrawerTrees) - 1);
+    end;
   end;
 end;
 
@@ -516,11 +528,16 @@ var
   i: integer;
 
 begin
-  if(assigned(FDrawerTrees)) then
-  begin
+  //if(assigned(FDrawerTrees)) then begin
+  if Length(FDrawerTrees) > 0 then begin
     ReleaseTemplates;
-    for i := 0 to FDrawerTrees.Count-1 do
-      TfrmDrawers(FDrawerTrees[i]).ExternalReloadTemplates;
+    for i := 0 to Length(FDrawerTrees) - 1 do begin
+      if (fDrawerTrees[i] is TfrmDrawers) then begin
+        TfrmDrawers(FDrawerTrees[i]).ExternalReloadTemplates;
+      end else if (fDrawerTrees[i] is TfraDrawers) then begin
+        TfraDrawers(FDrawerTrees[i]).ExternalReloadTemplates;
+      end;
+    end;
   end;
 end;
 
@@ -689,10 +706,17 @@ var
   i: integer;
 
 begin
-  if(assigned(FDrawerTrees)) then
+  //if(assigned(FDrawerTrees)) then
+  if Length(FDrawerTrees) > 0 then
   begin
-    for i:= 0 to FDrawerTrees.count-1 do
-      TfrmDrawers(FDrawerTrees[i]).UpdatePersonalTemplates;
+    for i:= 0 to Length(FDrawerTrees) - 1 do begin
+      if (fDrawerTrees[i] is TfrmDrawers) then begin
+        TfrmDrawers(FDrawerTrees[i]).UpdatePersonalTemplates;
+      end else if (fDrawerTrees[i] is TfraDrawers) then begin
+        TfraDrawers(FDrawerTrees[i]).UpdatePersonalTemplates;
+      end;
+
+    end;
   end;
 end;
 
@@ -755,6 +779,14 @@ begin
       end;
     until (i < 1) or (IEN = '');
   end;
+end;
+
+function TdmodShared.IndexOfDrawer(ADrawer: TWinControl): integer;
+begin
+  Result := 0;
+  while (Result < Length(FDrawerTrees)) and (FDrawerTrees[Result] <> ADrawer) do inc(Result);
+  if (Result = Length(FDrawerTrees)) then
+    Result := -1;
 end;
 
 function TdmodShared.InDialog(Node: TTreeNode): boolean;
@@ -842,9 +874,43 @@ begin
       SelStart := 0;
       SelLength := 0;
       Windows.SetFocus(AFindDialog.Handle);
-      //AFindDialog.CloseDialog;
     end;
   end;
+end;
+
+procedure TdmodShared.FindRichEditTextAll(Rich: TRichEdit; AFindDialog: TFindDialog; Color:
+TColor; Style: TFontStyles);
+var
+ CharPos, CharPos2, endChars: Integer;
+ SearchOpts: TSearchTypes;
+ Format: CHARFORMAT2;
+begin
+ //Clear out the variables
+ CharPos := 0;
+ endChars := 0;
+ SearchOpts := [];
+ if Length(Rich.Text) > 0 then
+  endChars := Length(Rich.Text);
+ repeat
+  //Get the search options
+  if frMatchCase in AFindDialog.Options then Include(SearchOpts, stMatchCase);
+  if frWholeWord in AFindDialog.Options then Include(SearchOpts, stWholeWord);
+  //find the text and save the position
+  CharPos2 := Rich.FindText(AFindDialog.FindText, CharPos, endChars, SearchOpts);
+  CharPos := CharPos2 + 1;
+  //Select the word
+  Rich.SelStart := CharPos2;
+  Rich.SelLength := Length(AFindDialog.FindText);
+  //Set the background color
+  FillChar(Format, SizeOf(Format), 0);
+  Format.cbSize := SizeOf(Format);
+  Format.dwMask := CFM_BACKCOLOR;
+  Format.crBackColor := Color;
+  Rich.Perform(EM_SETCHARFORMAT, SCF_SELECTION, Longint(@Format));
+  //Set the style of the found word
+  Rich.SelAttributes.Style := Style;
+ until charpos = 0;
+ AFindDialog.CloseDialog;
 end;
 
 procedure TdmodShared.ReplaceRichEditText(AReplaceDialog: TReplaceDialog; ARichEdit: TRichEdit);
@@ -864,7 +930,6 @@ begin
           NewStart := ARichEdit.SelStart + Length(AReplaceDialog.ReplaceText);
           ARichEdit.SelText := AReplaceDialog.ReplaceText;
           ARichEdit.SelStart := NewStart;
-          //Replacements := Replacements + 1;
         end;
       FindRichEditText(AReplaceDialog, ARichEdit);
     end

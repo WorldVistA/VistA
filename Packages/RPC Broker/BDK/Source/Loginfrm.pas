@@ -26,31 +26,31 @@ uses
   SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
   Forms, Dialogs, StdCtrls, XWBut1, ExtCtrls, Buttons,
   Hash, MFunStr, Trpcb, SgnonCnf, frmSignonMessage, ShellApi,
-   Windows, XWBRich20{, ActiveX}; //, {OleServer;}
+   Windows, XWBRich20, Vcl.ComCtrls{, ActiveX}; //, {OleServer;}
 
 { TODO : remove units from directory:  APi, xuesap_TLB, fRPCBTimer, fConfirmMapping,  fESSOConf }
 
 type       
   TfrmSignon = class(TForm)
-    Panel1: TPanel;
-    Panel7: TPanel;
-    Panel8: TPanel;
-    Label1: TLabel;
-    Label2: TLabel;
+    pnlUpper: TPanel;
+    pnlLower: TPanel;
+    pnlCode: TPanel;
+    ttlAccessCode: TLabel;
+    ttlVerifyCode: TLabel;
     verifyCode: TEdit;
     accessCode: TEdit;
     btnOk: TBitBtn;
     btnCancel: TBitBtn;
-    Image1: TImage;
-    Bevel1: TBevel;
-    Bevel2: TBevel;
-    Bevel3: TBevel;
-    Bevel4: TBevel;
-    Bevel5: TBevel;
-    Label3: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
-    Label6: TLabel;
+    imgVA: TImage;
+    bvlStatus: TBevel;
+    bvlServer: TBevel;
+    bvlVolume: TBevel;
+    bvlUCI: TBevel;
+    bvlPort: TBevel;
+    ttlServer: TLabel;
+    ttlVolume: TLabel;
+    ttlUCI: TLabel;
+    ttlPort: TLabel;
     lblServer: TLabel;
     lblVolume: TLabel;
     lblUCI: TLabel;
@@ -71,6 +71,7 @@ type
     procedure WMSysCommand(var Message: TWMSysCommand); message WM_SYSCOMMAND;
    public
      DefaultSignonConfiguration: TSignonValues;
+     procedure ResizeStatus;
 public
 end;
 
@@ -90,12 +91,33 @@ implementation
 
 
 uses
-  RpcSlogin, VCEdit, fRPCBErrMsg, RpcConf1, XlfSid;  // XlfSid added 051219  JLI
+  UITypes, RpcSlogin, VCEdit, fRPCBErrMsg, RpcConf1, XlfSid;
 
 var
   SysMenu: HMenu;
 
 {$R *.DFM}
+
+procedure TfrmSignon.ResizeStatus;
+begin
+  lblServer.Left := ttlServer.Left + ttlServer.Width + 16;
+  bvlServer.Width := ttlServer.Width + lblServer.Width + 24;
+
+  bvlVolume.Left := bvlServer.Left + bvlServer.Width + 4;
+  ttlVolume.Left := bvlVolume.Left + 4;
+  lblVolume.Left := ttlVolume.Left + ttlVolume.Width + 16;
+  bvlVolume.Width := ttlVolume.Width + lblVolume.Width + 24;
+
+  bvlUCI.Left := bvlVolume.Left + bvlVolume.Width + 4;
+  ttlUCI.Left := bvlUCI.Left + 4;
+  lblUCI.Left := ttlUCI.Left + ttlUCI.Width + 16;
+  bvlUCI.Width := ttlUCI.Width + lblUCI.Width + 24;
+
+  bvlPort.Left := bvlUCI.Left + bvlUCI.Width + 4;
+  ttlPort.Left := bvlPort.Left + 4;
+  lblPort.Left := ttlPort.Left + ttlPort.Width + 16;
+  bvlPort.Width := ttlPort.Width + lblPort.Width + 24;
+end;
 
 procedure PrepareSignonForm(AppBroker: TRPCBroker);
 begin
@@ -106,48 +128,34 @@ function SetUpSignOn: Boolean;
 begin
   Result := True;       //By default Signon is needed.
   if LoginfrmSignonBroker = nil then LoginfrmSignonBroker := frmSignon.RpcbiBroker;
-  {SignonBroker superseeds RpcbiBroker}
-  with frmSignon do
-  begin
-    try
-    with LoginfrmSignonBroker do
-    begin
-      if not (LoginfrmSignonBroker.SecurityPhrase = '') then
-      begin
-        with Param[0] do              // start BSE JLI 060130
-        begin
-          Value := '-35^' + Encrypt(LoginfrmSignonBroker.SecurityPhrase);
-          PType := literal;
-        end;    // with               //  end BSE  JLI 060130
-      end
-           //  following lines added 051219  JLI
-      else with Param[0] do
-      begin
-        Ptype := literal;
-        Value := Encrypt(GetNTLogonSid);
-      end;
-      RemoteProcedure := 'XUS SIGNON SETUP';
-           //   end of addition 051219  JLI
-      Call;
+  {SignonBroker supercedes RpcbiBroker}
+  try
+    if not (LoginfrmSignonBroker.SecurityPhrase = '') then begin
+      LoginfrmSignonBroker.Param[0].Value := '-35^' + Encrypt(LoginfrmSignonBroker.SecurityPhrase);
+      LoginfrmSignonBroker.Param[0].PType := literal;
+    end else begin
+      LoginfrmSignonBroker.Param[0].Ptype := literal;
+      LoginfrmSignonBroker.Param[0].Value := Encrypt(GetNTLogonSid);
     end;
-    except                  {P4}
-      frmSignon.Free;    {P4}  // Release  jli 041104
-      exit;                 {P4}
-    end;                    {P4}
-    lblServer.Caption := LoginfrmSignonBroker.Results[0];
-    lblVolume.Caption := LoginfrmSignonBroker.Results[1];
-    lblUCI.Caption    := LoginfrmSignonBroker.Results[2];
-    lblPort.Caption   := LoginfrmSignonBroker.Results[3];
+    LoginfrmSignonBroker.RemoteProcedure := 'XUS SIGNON SETUP';
+    LoginfrmSignonBroker.Call;
+  except
+    // JLI 090424 line containing frmSignon.Free below commented out, since this is freed in Authenticate User and results in an Access Violation
+    on error: Exception do Raise;
+  end;
+  if LoginfrmSignonBroker.RPCBError = '' then begin
+    frmSignon.lblServer.Caption := Trim(LoginfrmSignonBroker.Results[0]);
+    frmSignon.lblVolume.Caption := Trim(LoginfrmSignonBroker.Results[1]);
+    frmSignon.lblUCI.Caption := Trim(LoginfrmSignonBroker.Results[2]);
+    frmSignon.lblPort.Caption := Trim(LoginfrmSignonBroker.Results[3]);
+    frmSignon.ResizeStatus;
+
     intDeviceLock   := 0;
     if LoginfrmSignonBroker.Results.Count > 5 then    //Server sent single signon info.
-      if LoginfrmSignonBroker.Results[5] = '1' then   //Signon not needed
-        Result := False
-      else
-        Result := True;
+      Result := (LoginfrmSignonBroker.Results[5] <> '1');   //Signon not needed
     LoginfrmSignonBroker.Login.IsProductionAccount := False;
     LoginfrmSignonBroker.Login.DomainName := '';
-    if LoginfrmSignonBroker.Results.Count > 7 then
-    begin
+    if LoginfrmSignonBroker.Results.Count > 7 then begin
       LoginfrmSignonBroker.Login.DomainName := LoginfrmSignonBroker.Results[6];
       if LoginfrmSignonBroker.Results[7] = '1' then
         LoginfrmSignonBroker.Login.IsProductionAccount := True;
@@ -265,9 +273,9 @@ begin
     RemoteProcedure := 'XUS INTRO MSG';
     lstCall(introText.Lines);
   end;
-  OrigHelp := Application.HelpFile;             // Save original helpfile.
-  Application.HelpFile := ReadRegData(HKLM, REG_BROKER, 'BrokerDr') +
-                           '\clagent.hlp';      // Identify ConnectTo helpfile.
+//  OrigHelp := Application.HelpFile;             // Save original helpfile.
+//  Application.HelpFile := ReadRegData(HKLM, REG_BROKER, 'BrokerDr') +
+//                           '\clagent.hlp';      // Identify ConnectTo helpfile.
 end;
 
 procedure TfrmSignon.FormCreate(Sender: TObject);

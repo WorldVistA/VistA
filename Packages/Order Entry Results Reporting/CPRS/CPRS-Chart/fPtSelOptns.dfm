@@ -77,7 +77,7 @@ inherited frmPtSelOptns: TfrmPtSelOptns
         Tag = 14
         Left = 1
         Top = 58
-        Width = 115
+        Width = 109
         Height = 17
         Caption = '&Specialties'
         TabOrder = 3
@@ -87,7 +87,7 @@ inherited frmPtSelOptns: TfrmPtSelOptns
         Tag = 13
         Left = 1
         Top = 39
-        Width = 116
+        Width = 109
         Height = 17
         Caption = '&Team/Personal'
         TabOrder = 2
@@ -137,6 +137,7 @@ inherited frmPtSelOptns: TfrmPtSelOptns
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 1
+      Text = ''
       OnExit = cboListExit
       OnKeyPause = cboListKeyPause
       OnMouseClick = cboListMouseClick
@@ -164,6 +165,7 @@ inherited frmPtSelOptns: TfrmPtSelOptns
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 2
+      Text = ''
       OnExit = cboDateRangeExit
       OnMouseClick = cboDateRangeMouseClick
       CharsNeedMatch = 1
@@ -176,8 +178,7 @@ inherited frmPtSelOptns: TfrmPtSelOptns
         'Status = stsDefault')
       (
         'Component = bvlPtList'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = radAll'
         'Text = Patient List All'

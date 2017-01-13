@@ -79,6 +79,7 @@ procedure UpdateAdditionalSigners(IEN: integer; Signers: TStrings);
 procedure ChangeCosigner(IEN: integer; Cosigner: int64);
 
 { Printing }
+function AllowPrintOfNote(ANote: Integer): string;
 function AllowChartPrintForNote(ANote: Integer): Boolean;
 procedure PrintNoteToDevice(ANote: Integer; const ADevice: string; ChartCopy: Boolean;
   var ErrMsg: string);
@@ -908,6 +909,16 @@ begin
 end;
 
 { Printing --------------------------------------------------------------------------------- }
+
+function AllowPrintOfNote(ANote: Integer): string;
+{ returns
+          0 message Can't print at all (fails bus rules)
+          1 Can print work copy only
+          2 Can print work or chart copy (Param=1 or user is MAS)
+ }
+ begin
+   Result := sCallV('TIU CAN PRINT WORK/CHART COPY', [ANote]);
+ end;
 
 function AllowChartPrintForNote(ANote: Integer): Boolean;
 { returns true if a progress note may be printed outside of MAS }

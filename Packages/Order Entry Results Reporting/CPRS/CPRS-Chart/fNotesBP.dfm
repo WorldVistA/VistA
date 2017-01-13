@@ -7,8 +7,9 @@ inherited frmNotesBP: TfrmNotesBP
   ClientWidth = 310
   Position = poScreenCenter
   OnKeyUp = FormKeyUp
+  OnShow = FormShow
   ExplicitWidth = 318
-  ExplicitHeight = 182
+  ExplicitHeight = 189
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TStaticText [0]
@@ -21,29 +22,13 @@ inherited frmNotesBP: TfrmNotesBP
     Caption = 'The selected title has associated boilerplate text.'
     TabOrder = 1
   end
-  object radOptions: TRadioGroup [1]
-    Left = 0
-    Top = 17
-    Width = 310
-    Height = 110
-    Align = alClient
-    Caption = ' Choose from: '
-    ItemIndex = 0
-    Items.Strings = (
-      '&Ignore the boilerplate text (text of note will not change).'
-      '&Append the boilerplate text to the text in the note.'
-      '&Replace the text in the note with the boilerplate text.')
-    TabOrder = 0
-    ExplicitHeight = 103
-  end
-  object btnPanel: TPanel [2]
+  object btnPanel: TPanel [1]
     Left = 0
     Top = 127
     Width = 310
     Height = 28
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 120
     object cmdPreview: TButton
       Left = 6
       Top = 4
@@ -64,13 +49,50 @@ inherited frmNotesBP: TfrmNotesBP
       OnClick = cmdCloseClick
     end
   end
+  object grpOptions: TGroupBox [2]
+    Left = 0
+    Top = 17
+    Width = 310
+    Height = 110
+    Align = alClient
+    Caption = 'Choose from: '
+    TabOrder = 0
+    TabStop = True
+    OnEnter = grpOptionsEnter
+    object radReplace: TRadioButton
+      Left = 16
+      Top = 71
+      Width = 273
+      Height = 17
+      Caption = '&Replace the text in the note with the boilerplate text.'
+      TabOrder = 2
+      OnExit = radReplaceExit
+    end
+    object radAppend: TRadioButton
+      Left = 16
+      Top = 48
+      Width = 257
+      Height = 17
+      Caption = '&Append the boilerplate text to the text in the note.'
+      TabOrder = 1
+      OnExit = radAppendExit
+    end
+    object radIgnore: TRadioButton
+      Left = 16
+      Top = 25
+      Width = 286
+      Height = 17
+      Caption = '&Ignore the boilerplate text (text of note will not change).'
+      Checked = True
+      TabOrder = 0
+      TabStop = True
+      OnExit = radIgnoreExit
+    end
+  end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
       (
         'Component = Label1'
-        'Status = stsDefault')
-      (
-        'Component = radOptions'
         'Status = stsDefault')
       (
         'Component = btnPanel'
@@ -83,6 +105,18 @@ inherited frmNotesBP: TfrmNotesBP
         'Status = stsDefault')
       (
         'Component = frmNotesBP'
+        'Status = stsDefault')
+      (
+        'Component = grpOptions'
+        'Status = stsDefault')
+      (
+        'Component = radReplace'
+        'Status = stsDefault')
+      (
+        'Component = radAppend'
+        'Status = stsDefault')
+      (
+        'Component = radIgnore'
         'Status = stsDefault'))
   end
 end

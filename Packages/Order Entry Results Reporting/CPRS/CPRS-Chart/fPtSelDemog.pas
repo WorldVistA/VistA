@@ -26,6 +26,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure MemoEnter(Sender: TObject);
+    procedure MemoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     FLastDFN: string;
     FOldWinProc :TWndMethod;
@@ -118,7 +120,13 @@ begin
   end else
     lblCombatVet.Caption := '';
   CV.Free;
-  Memo.SelectAll;
+ // Memo.SelectAll;
+  if ScreenReaderSystemActive then
+  begin
+    Memo.SelStart := 0;
+    GetScreenReader.Speak('Selected Patient Demographics');
+    GetScreenReader.Speak(Memo.Text);
+  end;
 end;
 
 procedure TfrmPtSelDemog.ToggleMemo;
@@ -203,6 +211,30 @@ procedure TfrmPtSelDemog.FormShow(Sender: TObject);
 begin
   inherited;
   lblCombatVet.Caption := '';
+end;
+
+procedure TfrmPtSelDemog.MemoEnter(Sender: TObject);
+begin
+  inherited;
+  if ScreenReaderSystemActive then
+  begin
+    Memo.SelStart := 0;
+    GetScreenReader.Speak('Selected Patient Demographics');
+    GetScreenReader.Speak(Memo.Text);
+  end;
+end;
+
+procedure TfrmPtSelDemog.MemoKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if ScreenReaderSystemActive then
+  begin
+    if Memo.SelStart = Memo.GetTextLen then
+      if ((Key = VK_DOWN) or (Key = VK_RIGHT)) then GetScreenReader.Speak('End of Data');
+    if Memo.SelStart = 0 then
+      if ((Key = VK_UP) or (Key = VK_LEFT)) then GetScreenReader.Speak('Start of Data')
+  end;
 end;
 
 initialization

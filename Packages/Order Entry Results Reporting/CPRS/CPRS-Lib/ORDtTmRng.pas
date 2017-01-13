@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ORFn, OR2006Compatibility, ORDtTm;
+  StdCtrls, ORFn, OR2006Compatibility, ORDtTm, VA508AccessibilityManager;
 
 type
   TORfrmDateRange = class(Tfrm2006Compatibility)
@@ -13,6 +13,7 @@ type
     cmdOK: TButton;
     cmdCancel: TButton;
     lblInstruct: TLabel;
+    VA508Man: TVA508AccessibilityManager;
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -25,21 +26,7 @@ type
   end;
 
   TORDateRangeDlg = class(TComponent)
-  private
-    FTextOfStart: string;
-    FTextOfStop: string;
-    FFMDateStart: TFMDateTime;
-    FFMDateStop: TFMDateTime;
-    FRelativeStart: string;
-    FRelativeStop: string;
-    FDateOnly: Boolean;
-    FRequireTime: Boolean;
-    FInstruction: string;
-    FLabelStart: string;
-    FLabelStop: string;
-    FFormat: string;
-    procedure SetDateOnly(Value: Boolean);
-    procedure SetFMDateStart(Value: TFMDateTime);
+  private    FTextOfStart: string;    FTextOfStop: string;    FFMDateStart: TFMDateTime;    FFMDateStop: TFMDateTime;    FRelativeStart: string;    FRelativeStop: string;    FDateOnly: Boolean;    FRequireTime: Boolean;    FInstruction: string;    FLabelStart: string;    FLabelStop: string;    FFormat: string;    procedure SetDateOnly(Value: Boolean);    procedure SetFMDateStart(Value: TFMDateTime);
     procedure SetFMDateStop(Value: TFMDateTime);
     procedure SetTextOfStart(const Value: string);
     procedure SetTextOfStop(const Value: string);
@@ -50,17 +37,7 @@ type
     property RelativeStart: string    read FRelativeStart;
     property RelativeStop:  string    read FRelativeStop;
   published
-    property DateOnly:    Boolean     read FDateOnly    write SetDateOnly;
-    property FMDateStart: TFMDateTime read FFMDateStart write SetFMDateStart;
-    property FMDateStop:  TFMDateTime read FFMDateStop  write SetFMDateStop;
-    property Instruction: string      read FInstruction write FInstruction;
-    property LabelStart:  string      read FLabelStart  write FLabelStart;
-    property LabelStop:   string      read FLabelStop   write FLabelStop;
-    property RequireTime: Boolean     read FRequireTime write SetRequireTime;
-    property Format:      string      read FFormat      write FFormat;
-    property TextOfStart: string      read FTextOfStart write SetTextOfStart;
-    property TextOfStop:  string      read FTextOfStop  write SetTextOfStop;
- end;
+    property DateOnly:    Boolean     read FDateOnly    write SetDateOnly;    property FMDateStart: TFMDateTime read FFMDateStart write SetFMDateStart;    property FMDateStop:  TFMDateTime read FFMDateStop  write SetFMDateStop;    property Instruction: string      read FInstruction write FInstruction;    property LabelStart:  string      read FLabelStart  write FLabelStart;    property LabelStop:   string      read FLabelStop   write FLabelStop;    property RequireTime: Boolean     read FRequireTime write SetRequireTime;    property Format:      string      read FFormat      write FFormat;    property TextOfStart: string      read FTextOfStart write SetTextOfStart;    property TextOfStop:  string      read FTextOfStop  write SetTextOfStop; end;
   procedure Register;
 
 implementation
@@ -97,18 +74,11 @@ begin
         FCalStart.FMDateTime := FFMDateStart;
         FCalStart.Text := FormatFMDateTime(FFormat, FFMDateStart);
       end;
-      if FFMDateStop > 0 then
-      begin
+      if FFMDateStop > 0 then      begin
         FCalStop.FMDateTime := FFMDateStop;
         FCalStop.Text := FormatFMDateTime(FFormat, FFMDateStop);
       end;
-      FCalStart.DateOnly    := FDateOnly;
-      FCalStop.DateOnly     := FDateOnly;
-      FCalStart.RequireTime := FRequireTime;
-      FCalStop.RequireTime  := FRequireTime;
-      lblInstruct.Caption  := FInstruction;
-      lblStart.Caption     := FLabelStart;
-      lblStop.Caption      := FLabelStop;
+      FCalStart.DateOnly    := FDateOnly;      FCalStop.DateOnly     := FDateOnly;      FCalStart.RequireTime := FRequireTime;      FCalStop.RequireTime  := FRequireTime;      lblInstruct.Caption  := FInstruction;      lblStart.Caption     := FLabelStart;      lblStop.Caption      := FLabelStop;
       Result := (ShowModal = IDOK);
       if Result then
       begin
@@ -120,6 +90,9 @@ begin
         FRelativeStop  := FCalStop.RelativeTime;
       end;
     end;
+
+
+
   finally
     frmDateRange.Free;
   end;
@@ -177,7 +150,9 @@ end;
 procedure TORfrmDateRange.cmdOKClick(Sender: TObject);
 var
   ErrMsg: string;
+
 begin
+
   FCalStart.Validate(ErrMsg);
   if ErrMsg <> '' then
   begin
@@ -206,6 +181,9 @@ end;
 
 procedure TORfrmDateRange.FormCreate(Sender: TObject);
 { Create date boxes here to avoid problem where TORDateBox is not already on component palette. }
+var
+  item: TVA508AccessibilityItem;
+  id: integer;
 begin
   FCalStart := TORDateBox.Create(Self);
   FCalStart.Parent := Self;
@@ -217,6 +195,18 @@ begin
   FCalStop.TabOrder := 1;
   ResizeAnchoredFormToFont(self);
   UpdateColorsFor508Compliance(self);
+
+  VA508Man.AccessData.Add.component := FCalStart;
+  item := VA508Man.AccessData.FindItem(FCalStart, False);
+  id:= item.INDEX;
+  VA508Man.AccessData[id].AccessText := 'From date/time. Press the enter key to access.';
+
+  VA508Man.AccessData.Add.component := FCalStop;
+  item := VA508Man.AccessData.FindItem(FCalStop, False);
+  id:= item.INDEX;
+  VA508Man.AccessData[id].AccessText := 'Through date/time. Press the enter key to access.';
+
+
 end;
 
 procedure TORfrmDateRange.FormDestroy(Sender: TObject);

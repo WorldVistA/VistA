@@ -8,19 +8,27 @@ inherited frmSurgery: TfrmSurgery
   HelpFile = 'overvw'
   Menu = mnuNotes
   OnDestroy = FormDestroy
-  ExplicitWidth = 720
-  ExplicitHeight = 417
+  ExplicitWidth = 728
+  ExplicitHeight = 421
   PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape
     Top = 358
     Width = 712
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     ExplicitTop = 358
     ExplicitWidth = 712
   end
   inherited sptHorz: TSplitter
     Left = 64
     Height = 358
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     AutoSnap = False
     OnCanResize = sptHorzCanResize
     ExplicitLeft = 64
@@ -29,6 +37,11 @@ inherited frmSurgery: TfrmSurgery
   inherited pnlLeft: TPanel
     Width = 64
     Height = 358
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    Constraints.MinWidth = 37
     ExplicitWidth = 64
     ExplicitHeight = 358
     object lblCases: TOROffsetLabel
@@ -61,7 +74,7 @@ inherited frmSurgery: TfrmSurgery
       Height = 21
       Align = alBottom
       Caption = 'New Report'
-      TabOrder = 0
+      TabOrder = 1
       Visible = False
       OnClick = cmdNewNoteClick
     end
@@ -72,7 +85,7 @@ inherited frmSurgery: TfrmSurgery
       Height = 21
       Align = alBottom
       Caption = 'Encounter'
-      TabOrder = 1
+      TabOrder = 2
       Visible = False
       OnClick = cmdPCEClick
     end
@@ -83,7 +96,7 @@ inherited frmSurgery: TfrmSurgery
       Height = 294
       Align = alClient
       BevelOuter = bvNone
-      TabOrder = 2
+      TabOrder = 0
       object splDrawers: TSplitter
         Left = 0
         Top = 291
@@ -100,9 +113,10 @@ inherited frmSurgery: TfrmSurgery
         ItemHeight = 13
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 1
+        TabOrder = 3
         Visible = False
         OnClick = lstNotesClick
+        Caption = ''
         ItemTipColor = clWindow
         LongList = False
       end
@@ -134,6 +148,11 @@ inherited frmSurgery: TfrmSurgery
     Left = 68
     Width = 644
     Height = 358
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    Constraints.MinWidth = 30
     ExplicitLeft = 68
     ExplicitWidth = 644
     ExplicitHeight = 358
@@ -145,62 +164,6 @@ inherited frmSurgery: TfrmSurgery
       Cursor = crVSplit
       Align = alBottom
     end
-    object pnlRead: TPanel
-      Left = 0
-      Top = 0
-      Width = 644
-      Height = 309
-      Align = alClient
-      BevelOuter = bvNone
-      TabOrder = 0
-      object lblTitle: TOROffsetLabel
-        Left = 0
-        Top = 0
-        Width = 644
-        Height = 19
-        Align = alTop
-        Caption = 'No Surgery Cases Found'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = []
-        HorzOffset = 2
-        ParentFont = False
-        ParentShowHint = False
-        ShowHint = True
-        Transparent = False
-        VertOffset = 6
-        WordWrap = False
-      end
-      object memSurgery: TRichEdit
-        Left = 0
-        Top = 19
-        Width = 644
-        Height = 290
-        Align = alClient
-        Color = clCream
-        Ctl3D = True
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Courier New'
-        Font.Style = []
-        Lines.Strings = (
-          
-            'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRUSTVWXYZabcdefghijkl' +
-            'mnopqrstuvwxyz12')
-        ParentCtl3D = False
-        ParentFont = False
-        PlainText = True
-        PopupMenu = popNoteMemo
-        ReadOnly = True
-        ScrollBars = ssBoth
-        TabOrder = 0
-        WantReturns = False
-        WordWrap = False
-      end
-    end
     object memPCEShow: TRichEdit
       Left = 0
       Top = 313
@@ -208,8 +171,14 @@ inherited frmSurgery: TfrmSurgery
       Height = 45
       Align = alBottom
       Color = clCream
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
       Lines.Strings = (
         '<No encounter information entered>')
+      ParentFont = False
       PlainText = True
       ReadOnly = True
       ScrollBars = ssVertical
@@ -223,7 +192,7 @@ inherited frmSurgery: TfrmSurgery
       Height = 309
       Align = alClient
       BevelOuter = bvNone
-      TabOrder = 1
+      TabOrder = 0
       Visible = False
       OnResize = pnlWriteResize
       object memNewNote: TRichEdit
@@ -232,17 +201,17 @@ inherited frmSurgery: TfrmSurgery
         Width = 644
         Height = 242
         Align = alClient
-        Font.Charset = DEFAULT_CHARSET
+        Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -12
         Font.Name = 'Courier New'
         Font.Style = []
         MaxLength = 2147483645
         ParentFont = False
         PlainText = True
         PopupMenu = popNoteMemo
-        ScrollBars = ssBoth
-        TabOrder = 0
+        ScrollBars = ssVertical
+        TabOrder = 1
         WantTabs = True
         OnChange = memNewNoteChange
         OnKeyDown = memNewNoteKeyDown
@@ -254,7 +223,7 @@ inherited frmSurgery: TfrmSurgery
         Height = 67
         Align = alTop
         BevelOuter = bvNone
-        TabOrder = 1
+        TabOrder = 0
         OnResize = pnlFieldsResize
         DesignSize = (
           644
@@ -278,7 +247,7 @@ inherited frmSurgery: TfrmSurgery
           ShowHint = True
         end
         object lblAuthor: TLabel
-          Left = 426
+          Left = 425
           Top = 6
           Width = 148
           Height = 13
@@ -299,7 +268,7 @@ inherited frmSurgery: TfrmSurgery
           ShowAccelChar = False
         end
         object lblCosigner: TLabel
-          Left = 331
+          Left = 330
           Top = 21
           Width = 243
           Height = 13
@@ -329,7 +298,7 @@ inherited frmSurgery: TfrmSurgery
           Color = clCream
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -12
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentColor = False
@@ -339,7 +308,7 @@ inherited frmSurgery: TfrmSurgery
           ShowHint = True
         end
         object cmdChange: TButton
-          Left = 580
+          Left = 579
           Top = 6
           Width = 58
           Height = 21
@@ -351,17 +320,74 @@ inherited frmSurgery: TfrmSurgery
         object txtSubject: TCaptionEdit
           Left = 48
           Top = 40
-          Width = 590
+          Width = 589
           Height = 21
           Hint = 'Subject is limited to a maximum of 80 characters.'
           Anchors = [akLeft, akTop, akRight]
           MaxLength = 80
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 1
+          TabOrder = 2
           Text = 'txtSubject'
           Caption = 'Subject'
         end
+      end
+    end
+    object pnlRead: TPanel
+      Left = 0
+      Top = 0
+      Width = 644
+      Height = 309
+      Align = alClient
+      BevelOuter = bvNone
+      TabOrder = 1
+      object lblTitle: TOROffsetLabel
+        Left = 0
+        Top = 0
+        Width = 644
+        Height = 19
+        Align = alTop
+        Caption = 'No Surgery Cases Found'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        HorzOffset = 2
+        ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
+        Transparent = False
+        VertOffset = 6
+        WordWrap = False
+        ExplicitWidth = 120
+      end
+      object memSurgery: TRichEdit
+        Left = 0
+        Top = 19
+        Width = 644
+        Height = 290
+        Align = alClient
+        Color = clCream
+        Ctl3D = True
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Courier New'
+        Font.Style = []
+        Lines.Strings = (
+          
+            'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRUSTVWXYZabcdefghijkl' +
+            'mnopqrstuvwxyz12')
+        ParentCtl3D = False
+        ParentFont = False
+        PlainText = True
+        PopupMenu = popNoteMemo
+        ReadOnly = True
+        ScrollBars = ssBoth
+        TabOrder = 0
+        WantReturns = False
+        WordWrap = False
       end
     end
   end

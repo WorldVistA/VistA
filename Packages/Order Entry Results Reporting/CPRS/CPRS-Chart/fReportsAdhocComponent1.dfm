@@ -10,8 +10,8 @@ inherited frmReportsAdhocComponent1: TfrmReportsAdhocComponent1
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  ExplicitWidth = 641
-  ExplicitHeight = 486
+  ExplicitWidth = 649
+  ExplicitHeight = 490
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter [0]
@@ -21,7 +21,6 @@ inherited frmReportsAdhocComponent1: TfrmReportsAdhocComponent1
     Height = 401
     Beveled = True
     OnCanResize = Splitter1CanResize
-    ExplicitHeight = 394
   end
   object ORComboBox1: TORComboBox [1]
     Left = 0
@@ -45,6 +44,7 @@ inherited frmReportsAdhocComponent1: TfrmReportsAdhocComponent1
     Sorted = True
     SynonymChars = '<>'
     TabOrder = 0
+    Text = ''
     OnDblClick = btnAddComponentClick
     OnKeyDown = ORComboBox1KeyDown
     CharsNeedMatch = 1
@@ -130,7 +130,7 @@ inherited frmReportsAdhocComponent1: TfrmReportsAdhocComponent1
       Height = 375
       Beveled = True
       OnCanResize = Splitter4CanResize
-      ExplicitHeight = 368
+      ExplicitHeight = 376
     end
     object Panel1: TPanel
       Left = 1
@@ -333,7 +333,6 @@ inherited frmReportsAdhocComponent1: TfrmReportsAdhocComponent1
         Top = 64
         Width = 63
         Height = 21
-        ItemHeight = 13
         TabOrder = 4
         OnExit = cboTimeLimitExit
         Items.Strings = (
@@ -413,7 +412,6 @@ inherited frmReportsAdhocComponent1: TfrmReportsAdhocComponent1
           Width = 121
           Height = 21
           Enabled = False
-          ItemHeight = 13
           TabOrder = 2
           OnExit = cboICDExit
           Items.Strings = (

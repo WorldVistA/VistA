@@ -717,21 +717,21 @@ begin
       frmVisitType.fraVisitRelated.GetRelated(uEncPCEData);
       Providers.Merge(uProviders);
     end;
-
+    //ZZZZZZBELLC
     if FormListContains(CT_DiagNm) then
-      SetDiagnoses(frmDiagnoses.lbGrid.Items);
+      SetDiagnoses(frmDiagnoses.lstRenameMe.ItemsStrings);
     if FormListContains(CT_ProcNm) then
-      SetProcedures(frmProcedures.lbGrid.Items);
+     SetProcedures(frmProcedures.lstRenameMe.ItemsStrings);
     if FormListContains(CT_ImmNm) then
-      SetImmunizations(frmImmunizations.lbGrid.Items);
+       SetImmunizations(frmImmunizations.lstRenameMe.ItemsStrings);
     if FormListContains(CT_SkinNm) then
-      SetSkinTests(frmSkinTests.lbGrid.Items);
+       SetSkinTests(frmSkinTests.lstRenameMe.ItemsStrings);
     if FormListContains(CT_PedNm) then
-      SetPatientEds(frmPatientEd.lbGrid.Items);
+      SetPatientEds(frmPatientEd.lstRenameMe.ItemsStrings);
     if FormListContains(CT_HlthNm) then
-      SetHealthFactors(frmHealthFactors.lbGrid.Items);
+      SetHealthFactors(frmHealthFactors.lstRenameMe.ItemsStrings);
     if FormListContains(CT_XamNm) then
-      SetExams(frmExams.lbGrid.Items);
+      SetExams(frmExams.lstRenameMe.ItemsStrings);
   end;
 end;
 

@@ -89,7 +89,7 @@ end;
 procedure TfrmOptionsNewList.txtNewListKeyPress(Sender: TObject;
   var Key: Char);
 begin
-  if not (Key in ['A'..'Z', 'a'..'z', '0'..'9', #32, #8]) then
+  if not CharInSet(Key, ['A'..'Z', 'a'..'z', '0'..'9', #32, #8]) then
   begin
     Key := #0;
     beep;

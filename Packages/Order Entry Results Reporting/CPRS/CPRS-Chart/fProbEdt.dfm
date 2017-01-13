@@ -4,14 +4,14 @@ inherited frmdlgProb: TfrmdlgProb
   HelpContext = 2000
   BorderIcons = []
   Caption = 'frmdlgProb'
-  ClientHeight = 394
-  ClientWidth = 494
+  ClientHeight = 444
+  ClientWidth = 722
   OldCreateOrder = True
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  ExplicitWidth = 510
-  ExplicitHeight = 432
+  ExplicitWidth = 738
+  ExplicitHeight = 479
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel [0]
@@ -19,10 +19,6 @@ inherited frmdlgProb: TfrmdlgProb
     Top = 357
     Width = 47
     Height = 13
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     Caption = 'Recorded'
     Visible = False
   end
@@ -31,10 +27,6 @@ inherited frmdlgProb: TfrmdlgProb
     Top = 368
     Width = 45
     Height = 13
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     Caption = 'Resolved'
     Visible = False
   end
@@ -43,228 +35,168 @@ inherited frmdlgProb: TfrmdlgProb
     Top = 382
     Width = 41
     Height = 13
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     Caption = 'Updated'
     Visible = False
   end
   object pnlComments: TPanel [3]
     Left = 0
-    Top = 200
-    Width = 494
-    Height = 166
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 217
+    Width = 722
+    Height = 199
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
     DesignSize = (
-      494
-      166)
+      722
+      199)
     object Bevel1: TBevel
       Left = 3
       Top = 1
-      Width = 482
-      Height = 166
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 710
+      Height = 199
       Anchors = [akLeft, akTop, akRight, akBottom]
+      ExplicitWidth = 482
+      ExplicitHeight = 166
     end
-    object lblCmtDate: TOROffsetLabel
-      Left = 10
-      Top = 20
-      Width = 29
-      Height = 15
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Caption = 'Date'
-      HorzOffset = 6
-      Transparent = False
-      VertOffset = 2
-      WordWrap = False
-    end
-    object lblComment: TOROffsetLabel
-      Left = 75
-      Top = 20
-      Width = 50
-      Height = 15
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Caption = 'Comment'
-      HorzOffset = 6
-      Transparent = False
-      VertOffset = 2
-      WordWrap = False
-    end
-    object lblCom: TStaticText
-      Left = 10
-      Top = 6
-      Width = 53
-      Height = 17
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Caption = 'Comments'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ParentFont = False
+    object lstComments: TCaptionListView
+      AlignWithMargins = True
+      Left = 8
+      Top = 44
+      Width = 706
+      Height = 152
+      Margins.Left = 8
+      Margins.Right = 8
+      Align = alClient
+      Columns = <
+        item
+          Caption = 'Comment Date'
+          Width = 100
+        end
+        item
+          Caption = 'Comment'
+          Tag = 1
+          Width = 200
+        end>
+      HideSelection = False
+      HoverTime = 0
+      IconOptions.WrapText = False
+      ReadOnly = True
+      RowSelect = True
+      ParentShowHint = False
+      ShowWorkAreas = True
+      ShowHint = True
       TabOrder = 0
-    end
-    object bbAdd: TBitBtn
-      Left = 176
-      Top = 10
-      Width = 100
-      Height = 22
-      Hint = 'Add a new comment'
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Anchors = [akTop, akRight]
-      Caption = 'Add comment'
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 1
-      OnClick = bbAddComClick
-      Layout = blGlyphBottom
-      NumGlyphs = 2
-    end
-    object bbRemove: TBitBtn
-      Left = 383
-      Top = 10
-      Width = 100
-      Height = 22
-      Hint = 'Remove selected comment'
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Anchors = [akTop, akRight]
-      Caption = 'Remove comment'
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 3
-      OnClick = bbRemoveClick
-      Layout = blGlyphBottom
-      NumGlyphs = 2
-    end
-    object lstComments: TORListBox
-      Left = 10
-      Top = 38
-      Width = 475
-      Height = 120
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Anchors = [akLeft, akTop, akRight, akBottom]
-      ExtendedSelect = False
-      ItemHeight = 13
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 4
+      ViewStyle = vsReport
+      OnChange = lstCommentsChange
+      AutoSize = False
       Caption = 'Comments'
-      ItemTipColor = clWindow
-      LongList = True
       Pieces = '1,2'
-      TabPositions = '1,12'
-      OnChange = ControlChange
     end
-    object bbEdit: TBitBtn
-      Left = 279
-      Top = 10
-      Width = 100
-      Height = 22
-      Hint = 'Edit selected comment'
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Anchors = [akTop, akRight]
-      Caption = 'Edit comment'
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 2
-      OnClick = bbEditClick
-      Layout = blGlyphBottom
-      NumGlyphs = 2
+    object Panel1: TPanel
+      Left = 0
+      Top = 0
+      Width = 722
+      Height = 41
+      Align = alTop
+      BevelOuter = bvNone
+      TabOrder = 1
+      DesignSize = (
+        722
+        41)
+      object bbAdd: TBitBtn
+        Left = 394
+        Top = 10
+        Width = 100
+        Height = 22
+        Hint = 'Add a new comment'
+        Anchors = [akTop, akRight]
+        Caption = 'Add comment'
+        Layout = blGlyphBottom
+        NumGlyphs = 2
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 0
+        OnClick = bbAddComClick
+      end
+      object bbEdit: TBitBtn
+        Left = 500
+        Top = 10
+        Width = 100
+        Height = 22
+        Hint = 'Edit selected comment'
+        Anchors = [akTop, akRight]
+        Caption = 'Edit comment'
+        Enabled = False
+        Layout = blGlyphBottom
+        NumGlyphs = 2
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 1
+        OnClick = bbEditClick
+      end
+      object bbRemove: TBitBtn
+        Left = 606
+        Top = 10
+        Width = 100
+        Height = 22
+        Hint = 'Remove selected comment'
+        Anchors = [akTop, akRight]
+        Caption = 'Remove comment'
+        Enabled = False
+        Layout = blGlyphBottom
+        NumGlyphs = 2
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 2
+        OnClick = bbRemoveClick
+      end
     end
   end
   object pnlBottom: TPanel [4]
     Left = 0
-    Top = 366
-    Width = 494
+    Top = 416
+    Width = 722
     Height = 28
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 4
     DesignSize = (
-      494
+      722
       28)
     object bbQuit: TBitBtn
-      Left = 407
+      Left = 635
       Top = 4
       Width = 78
       Height = 21
       Hint = 'Cancel problem update...'
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Anchors = [akTop, akRight]
       Cancel = True
       Caption = 'Cancel'
+      Layout = blGlyphBottom
       ModalResult = 2
+      NumGlyphs = 2
       TabOrder = 3
       OnClick = bbQuitClick
-      Layout = blGlyphBottom
-      NumGlyphs = 2
     end
     object bbFile: TBitBtn
-      Left = 321
+      Left = 549
       Top = 4
       Width = 78
       Height = 21
       Hint = 'Submit problem update...'
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Anchors = [akTop, akRight]
       Caption = 'OK'
+      Layout = blGlyphBottom
       ModalResult = 1
+      NumGlyphs = 2
       TabOrder = 2
       OnClick = bbFileClick
-      Layout = blGlyphBottom
-      NumGlyphs = 2
     end
     object ckVerify: TCheckBox
       Left = 15
       Top = 7
       Width = 130
       Height = 15
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       TabStop = False
       Caption = 'Problem Verified'
       TabOrder = 0
@@ -275,10 +207,6 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 6
       Width = 94
       Height = 21
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       TabStop = False
       Color = clInactiveCaptionText
       Enabled = False
@@ -291,13 +219,9 @@ inherited frmdlgProb: TfrmdlgProb
   end
   object edResDate: TCaptionEdit [5]
     Left = 151
-    Top = 372
+    Top = 422
     Width = 94
     Height = 21
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     TabStop = False
     Color = clInactiveCaptionText
     Enabled = False
@@ -309,13 +233,9 @@ inherited frmdlgProb: TfrmdlgProb
   end
   object edUpdate: TCaptionEdit [6]
     Left = 151
-    Top = 372
+    Top = 422
     Width = 94
     Height = 21
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     TabStop = False
     Color = clInactiveCaptionText
     Enabled = False
@@ -328,500 +248,436 @@ inherited frmdlgProb: TfrmdlgProb
   object pnlTop: TPanel [7]
     Left = 0
     Top = 0
-    Width = 494
-    Height = 200
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Width = 722
+    Height = 217
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
-    DesignSize = (
-      494
-      200)
-    object lblAct: TLabel
-      Left = 12
-      Top = 4
-      Width = 34
-      Height = 13
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Caption = 'Activity'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ParentFont = False
-      Visible = False
-    end
-    object lblLoc: TLabel
-      Left = 187
-      Top = 149
-      Width = 28
-      Height = 13
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Caption = 'Clinic:'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ParentFont = False
-    end
-    object Label3: TLabel
-      Left = 187
-      Top = 105
-      Width = 70
-      Height = 13
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Caption = 'Resp Provider:'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ParentFont = False
-    end
-    object Label6: TLabel
-      Left = 187
-      Top = 63
-      Width = 69
-      Height = 13
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Caption = 'Date of Onset:'
-    end
-    object rgStatus: TKeyClickRadioGroup
-      Left = 9
-      Top = 64
-      Width = 81
-      Height = 124
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Caption = 'Status'
-      ItemIndex = 0
-      Items.Strings = (
-        'Active'
-        'Inactive')
-      TabOrder = 2
-      TabStop = True
-      OnClick = rgStatusClick
-      OnEnter = rgStatusEnter
-    end
-    object rgStage: TKeyClickRadioGroup
-      Left = 92
-      Top = 64
-      Width = 87
-      Height = 124
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Caption = 'Immediacy'
-      Ctl3D = True
-      ItemIndex = 2
-      Items.Strings = (
-        'Acute'
-        'Chronic'
-        '<unknown>')
-      ParentCtl3D = False
-      TabOrder = 3
-      TabStop = True
-      OnClick = ControlChange
-    end
-    object bbChangeProb: TBitBtn
-      Left = 316
-      Top = 18
-      Width = 124
-      Height = 21
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Anchors = [akTop, akRight]
-      Caption = 'Change problem...'
-      TabOrder = 1
-      OnClick = bbChangeProbClick
-      Layout = blGlyphBottom
-    end
-    object edProb: TCaptionEdit
-      Left = 9
-      Top = 19
-      Width = 294
-      Height = 21
-      Hint = 'Problem Name'
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Anchors = [akLeft, akTop, akRight]
-      ReadOnly = True
+    object Panel2: TPanel
+      Left = 0
+      Top = 0
+      Width = 722
+      Height = 51
+      Align = alTop
       TabOrder = 0
-      Text = 'Problem Title'
-      OnChange = ControlChange
-      Caption = 'Activity'
-    end
-    object gbTreatment: TGroupBox
-      Left = 289
-      Top = 52
-      Width = 196
-      Height = 142
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Anchors = [akTop, akRight]
-      Caption = 'Treatment Factors'
-      TabOrder = 8
       DesignSize = (
-        196
-        142)
-      object lblYN: TLabel
-        Left = 3
-        Top = 12
-        Width = 35
+        722
+        51)
+      object lblAct: TLabel
+        Left = 12
+        Top = 4
+        Width = 34
         Height = 13
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Caption = 'Yes No'
+        Caption = 'Activity'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+        Visible = False
       end
-      object ckNSC: TCheckBox
-        Left = 24
-        Top = 26
-        Width = 160
-        Height = 17
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+      object bbChangeProb: TBitBtn
+        Left = 544
+        Top = 18
+        Width = 124
+        Height = 21
         Anchors = [akTop, akRight]
-        Caption = 'Service Connected '
-        Enabled = False
+        Caption = 'Change problem...'
+        Layout = blGlyphBottom
         TabOrder = 1
-        OnClick = ckNSCClick
+        OnClick = bbChangeProbClick
       end
-      object ckNRad: TCheckBox
-        Left = 24
-        Top = 58
-        Width = 154
-        Height = 17
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Anchors = [akTop, akRight]
-        Caption = 'Radiation '
-        Enabled = False
-        TabOrder = 5
-        OnClick = ckNSCClick
-      end
-      object ckNAO: TCheckBox
-        Left = 24
-        Top = 42
-        Width = 154
-        Height = 17
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Anchors = [akTop, akRight]
-        Caption = 'Agent Orange '
-        Enabled = False
-        TabOrder = 3
-        OnClick = ckNSCClick
-      end
-      object ckNENV: TCheckBox
-        Left = 24
-        Top = 74
-        Width = 149
-        Height = 17
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Anchors = [akTop, akRight]
-        Caption = 'Southwest Asia Conditions'
-        Enabled = False
-        TabOrder = 7
-        OnClick = ckNSCClick
-      end
-      object ckNHNC: TCheckBox
-        Left = 24
-        Top = 122
-        Width = 149
-        Height = 17
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Anchors = [akTop, akRight]
-        Caption = 'Head and/or Neck Cancer'
-        Enabled = False
-        TabOrder = 13
-        OnClick = ckNSCClick
-      end
-      object ckNMST: TCheckBox
-        Left = 24
-        Top = 106
-        Width = 149
-        Height = 17
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Anchors = [akTop, akRight]
-        Caption = 'MST'
-        Enabled = False
-        TabOrder = 11
-        OnClick = ckNSCClick
-      end
-      object ckNSHAD: TCheckBox
-        Left = 24
-        Top = 90
-        Width = 170
-        Height = 17
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Caption = 'Shipboard Hazard and Defense'
-        TabOrder = 9
-        OnClick = ckNSCClick
-      end
-      object ckYSC: TCheckBox
-        Left = 6
-        Top = 26
-        Width = 17
-        Height = 17
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Enabled = False
+      object edProb: TCaptionEdit
+        Left = 9
+        Top = 19
+        Width = 522
+        Height = 21
+        Hint = 'Problem Name'
+        Anchors = [akLeft, akTop, akRight]
+        ReadOnly = True
         TabOrder = 0
-        OnClick = ckNSCClick
+        Text = 'Problem Title'
+        OnChange = ControlChange
+        Caption = 'Activity'
       end
-      object ckYAO: TCheckBox
-        Left = 6
-        Top = 42
-        Width = 17
-        Height = 17
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Enabled = False
-        TabOrder = 2
-        OnClick = ckNSCClick
-      end
-      object ckYRad: TCheckBox
-        Left = 6
-        Top = 58
-        Width = 17
-        Height = 17
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Enabled = False
-        TabOrder = 4
-        OnClick = ckNSCClick
-      end
-      object ckYENV: TCheckBox
-        Left = 6
+    end
+    object Panel3: TPanel
+      Left = 0
+      Top = 51
+      Width = 464
+      Height = 166
+      Align = alClient
+      TabOrder = 1
+      DesignSize = (
+        464
+        166)
+      object Label3: TLabel
+        Left = 185
         Top = 74
-        Width = 17
-        Height = 17
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Enabled = False
-        TabOrder = 6
-        OnClick = ckNSCClick
+        Width = 70
+        Height = 13
+        Caption = 'Resp Provider:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
-      object ckYSHAD: TCheckBox
-        Left = 6
-        Top = 90
-        Width = 17
-        Height = 17
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Enabled = False
-        TabOrder = 8
-        OnClick = ckNSCClick
+      object Label6: TLabel
+        Left = 185
+        Top = 28
+        Width = 69
+        Height = 13
+        Caption = 'Date of Onset:'
       end
-      object ckYMST: TCheckBox
-        Left = 6
-        Top = 106
-        Width = 17
-        Height = 17
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Enabled = False
-        TabOrder = 10
-        OnClick = ckNSCClick
+      object lblLoc: TLabel
+        Left = 185
+        Top = 120
+        Width = 28
+        Height = 13
+        Caption = 'Clinic:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
-      object ckYHNC: TCheckBox
-        Left = 6
-        Top = 122
-        Width = 17
-        Height = 17
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Enabled = False
-        TabOrder = 12
-        OnClick = ckNSCClick
+      object cbLoc: TORComboBox
+        Left = 185
+        Top = 139
+        Width = 268
+        Height = 21
+        Anchors = [akLeft, akTop, akRight]
+        Style = orcsDropDown
+        AutoSelect = True
+        Caption = ''
+        Color = clWindow
+        DropDownCount = 8
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ItemHeight = 13
+        ItemTipColor = clWindow
+        ItemTipEnable = True
+        ListItemsOnly = True
+        LongList = True
+        LookupPiece = 0
+        MaxLength = 0
+        ParentFont = False
+        Pieces = '2'
+        Sorted = False
+        SynonymChars = '<>'
+        TabOrder = 5
+        Text = ''
+        OnChange = ControlChange
+        OnClick = cbLocClick
+        OnKeyPress = cbLocKeyPress
+        OnNeedData = cbLocNeedData
+        CharsNeedMatch = 1
+      end
+      object cbProv: TORComboBox
+        Left = 186
+        Top = 93
+        Width = 267
+        Height = 21
+        Anchors = [akLeft, akTop, akRight]
+        Style = orcsDropDown
+        AutoSelect = True
+        Caption = 'Resp Provider'
+        Color = clWindow
+        DropDownCount = 8
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ItemHeight = 13
+        ItemTipColor = clWindow
+        ItemTipEnable = True
+        ListItemsOnly = True
+        LongList = True
+        LookupPiece = 2
+        MaxLength = 0
+        ParentFont = False
+        Pieces = '2,3'
+        Sorted = False
+        SynonymChars = '<>'
+        TabOrder = 3
+        Text = ''
+        OnChange = ControlChange
+        OnClick = cbProvClick
+        OnKeyPress = cbProvKeyPress
+        OnNeedData = cbProvNeedData
+        CharsNeedMatch = 1
+      end
+      object cbServ: TORComboBox
+        Left = 186
+        Top = 139
+        Width = 267
+        Height = 21
+        Anchors = [akLeft, akTop, akRight]
+        Style = orcsDropDown
+        AutoSelect = True
+        Caption = 'Service:'
+        Color = clWindow
+        DropDownCount = 8
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ItemHeight = 13
+        ItemTipColor = clWindow
+        ItemTipEnable = True
+        ListItemsOnly = True
+        LongList = True
+        LookupPiece = 0
+        MaxLength = 0
+        ParentFont = False
+        Pieces = '2'
+        Sorted = False
+        SynonymChars = '<>'
+        TabOrder = 4
+        Text = ''
+        Visible = False
+        OnChange = ControlChange
+        OnNeedData = cbServNeedData
+        CharsNeedMatch = 1
+      end
+      object edOnsetdate: TCaptionEdit
+        Tag = 3
+        Left = 187
+        Top = 47
+        Width = 266
+        Height = 21
+        Anchors = [akLeft, akTop, akRight]
+        TabOrder = 2
+        Text = 'Today'
+        OnChange = ControlChange
+        Caption = 'Date of Onset'
+      end
+      object rgStage: TKeyClickRadioGroup
+        Left = 92
+        Top = 25
+        Width = 87
+        Height = 136
+        Caption = 'Immediacy'
+        Ctl3D = True
+        ItemIndex = 2
+        Items.Strings = (
+          'Acute'
+          'Chronic'
+          '<unknown>')
+        ParentCtl3D = False
+        TabOrder = 1
+        TabStop = True
+        OnClick = ControlChange
+      end
+      object rgStatus: TKeyClickRadioGroup
+        Left = 9
+        Top = 25
+        Width = 81
+        Height = 136
+        Caption = 'Status'
+        ItemIndex = 0
+        Items.Strings = (
+          'Active'
+          'Inactive')
+        TabOrder = 0
+        TabStop = True
+        OnClick = rgStatusClick
+        OnEnter = rgStatusEnter
       end
     end
-    object cbServ: TORComboBox
-      Left = 186
-      Top = 166
-      Width = 97
-      Height = 21
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Anchors = [akLeft, akTop, akRight]
-      Style = orcsDropDown
-      AutoSelect = True
-      Caption = 'Service:'
-      Color = clWindow
-      DropDownCount = 8
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ItemHeight = 13
-      ItemTipColor = clWindow
-      ItemTipEnable = True
-      ListItemsOnly = True
-      LongList = True
-      LookupPiece = 0
-      MaxLength = 0
-      ParentFont = False
-      Pieces = '2'
-      Sorted = False
-      SynonymChars = '<>'
-      TabOrder = 7
-      Visible = False
-      OnChange = ControlChange
-      OnNeedData = cbServNeedData
-      CharsNeedMatch = 1
-    end
-    object cbLoc: TORComboBox
-      Left = 185
-      Top = 168
-      Width = 98
-      Height = 21
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Anchors = [akLeft, akTop, akRight]
-      Style = orcsDropDown
-      AutoSelect = True
-      Color = clWindow
-      DropDownCount = 8
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ItemHeight = 13
-      ItemTipColor = clWindow
-      ItemTipEnable = True
-      ListItemsOnly = True
-      LongList = True
-      LookupPiece = 0
-      MaxLength = 0
-      ParentFont = False
-      Pieces = '2'
-      Sorted = False
-      SynonymChars = '<>'
-      TabOrder = 6
-      OnChange = ControlChange
-      OnClick = cbLocClick
-      OnKeyPress = cbLocKeyPress
-      OnNeedData = cbLocNeedData
-      CharsNeedMatch = 1
-    end
-    object cbProv: TORComboBox
-      Left = 186
-      Top = 122
-      Width = 97
-      Height = 21
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Anchors = [akLeft, akTop, akRight]
-      Style = orcsDropDown
-      AutoSelect = True
-      Caption = 'Resp Provider'
-      Color = clWindow
-      DropDownCount = 8
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ItemHeight = 13
-      ItemTipColor = clWindow
-      ItemTipEnable = True
-      ListItemsOnly = True
-      LongList = True
-      LookupPiece = 2
-      MaxLength = 0
-      ParentFont = False
-      Pieces = '2,3'
-      Sorted = False
-      SynonymChars = '<>'
-      TabOrder = 5
-      OnChange = ControlChange
-      OnClick = cbProvClick
-      OnKeyPress = cbProvKeyPress
-      OnNeedData = cbProvNeedData
-      CharsNeedMatch = 1
-    end
-    object edOnsetdate: TCaptionEdit
-      Left = 187
-      Top = 79
-      Width = 96
-      Height = 21
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Anchors = [akLeft, akTop, akRight]
-      TabOrder = 4
-      Text = 'Today'
-      OnChange = ControlChange
-      Caption = 'Date of Onset'
+    object ScrollBox1: TScrollBox
+      Left = 464
+      Top = 51
+      Width = 258
+      Height = 166
+      Align = alRight
+      TabOrder = 2
+      object Panel4: TPanel
+        Left = 0
+        Top = 0
+        Width = 254
+        Height = 159
+        Align = alTop
+        AutoSize = True
+        TabOrder = 0
+        object gbTreatment: TGroupBox
+          Left = 1
+          Top = 1
+          Width = 252
+          Height = 157
+          Align = alClient
+          Caption = 'Treatment Factors'
+          TabOrder = 0
+          object lblYN: TLabel
+            Left = 3
+            Top = 12
+            Width = 35
+            Height = 13
+            Caption = 'Yes No'
+          end
+          object ckNSC: TCheckBox
+            Left = 24
+            Top = 26
+            Width = 160
+            Height = 17
+            Caption = 'Service Connected '
+            Enabled = False
+            TabOrder = 1
+            OnClick = ckNSCClick
+          end
+          object ckNRad: TCheckBox
+            Left = 24
+            Top = 58
+            Width = 154
+            Height = 17
+            Caption = 'Radiation '
+            Enabled = False
+            TabOrder = 5
+            OnClick = ckNSCClick
+          end
+          object ckNAO: TCheckBox
+            Left = 24
+            Top = 42
+            Width = 154
+            Height = 17
+            Caption = 'Agent Orange '
+            Enabled = False
+            TabOrder = 3
+            OnClick = ckNSCClick
+          end
+          object ckNENV: TCheckBox
+            Left = 24
+            Top = 74
+            Width = 149
+            Height = 17
+            Caption = 'Southwest Asia Conditions'
+            Enabled = False
+            TabOrder = 7
+            OnClick = ckNSCClick
+          end
+          object ckNHNC: TCheckBox
+            Left = 24
+            Top = 122
+            Width = 149
+            Height = 17
+            Caption = 'Head and/or Neck Cancer'
+            Enabled = False
+            TabOrder = 13
+            OnClick = ckNSCClick
+          end
+          object ckNMST: TCheckBox
+            Left = 24
+            Top = 106
+            Width = 149
+            Height = 17
+            Caption = 'MST'
+            Enabled = False
+            TabOrder = 11
+            OnClick = ckNSCClick
+          end
+          object ckNSHAD: TCheckBox
+            Left = 24
+            Top = 90
+            Width = 170
+            Height = 17
+            Caption = 'Shipboard Hazard and Defense'
+            Enabled = False
+            TabOrder = 9
+            OnClick = ckNSCClick
+          end
+          object ckYSC: TCheckBox
+            Left = 6
+            Top = 26
+            Width = 17
+            Height = 17
+            Enabled = False
+            TabOrder = 0
+            OnClick = ckNSCClick
+          end
+          object ckYAO: TCheckBox
+            Left = 6
+            Top = 42
+            Width = 17
+            Height = 17
+            Enabled = False
+            TabOrder = 2
+            OnClick = ckNSCClick
+          end
+          object ckYRad: TCheckBox
+            Left = 6
+            Top = 58
+            Width = 17
+            Height = 17
+            Enabled = False
+            TabOrder = 4
+            OnClick = ckNSCClick
+          end
+          object ckYENV: TCheckBox
+            Left = 6
+            Top = 74
+            Width = 17
+            Height = 17
+            Enabled = False
+            TabOrder = 6
+            OnClick = ckNSCClick
+          end
+          object ckYSHAD: TCheckBox
+            Left = 6
+            Top = 90
+            Width = 17
+            Height = 17
+            Enabled = False
+            TabOrder = 8
+            OnClick = ckNSCClick
+          end
+          object ckYMST: TCheckBox
+            Left = 6
+            Top = 106
+            Width = 17
+            Height = 17
+            Enabled = False
+            TabOrder = 10
+            OnClick = ckNSCClick
+          end
+          object ckYHNC: TCheckBox
+            Left = 6
+            Top = 122
+            Width = 17
+            Height = 17
+            Enabled = False
+            TabOrder = 12
+            OnClick = ckNSCClick
+          end
+          object ckNCL: TCheckBox
+            Left = 24
+            Top = 140
+            Width = 149
+            Height = 17
+            Caption = 'Camp Lejeune'
+            Enabled = False
+            TabOrder = 14
+            OnClick = ckNSCClick
+          end
+          object ckYCL: TCheckBox
+            Left = 6
+            Top = 140
+            Width = 17
+            Height = 17
+            Enabled = False
+            TabOrder = 15
+            OnClick = ckNSCClick
+          end
+        end
+      end
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
@@ -829,21 +685,6 @@ inherited frmdlgProb: TfrmdlgProb
     Data = (
       (
         'Component = pnlComments'
-        'Status = stsDefault')
-      (
-        'Component = lblCom'
-        'Status = stsDefault')
-      (
-        'Component = bbAdd'
-        'Status = stsDefault')
-      (
-        'Component = bbRemove'
-        'Status = stsDefault')
-      (
-        'Component = lstComments'
-        'Status = stsDefault')
-      (
-        'Component = bbEdit'
         'Status = stsDefault')
       (
         'Component = pnlBottom'
@@ -887,25 +728,32 @@ inherited frmdlgProb: TfrmdlgProb
         'Status = stsDefault')
       (
         'Component = ckNSC'
-        'Status = stsDefault')
+        'Text = Service Connected Condition    No'
+        'Status = stsOK')
       (
         'Component = ckNRad'
-        'Status = stsDefault')
+        'Text = Ionizing Radiation Exposure    No'
+        'Status = stsOK')
       (
         'Component = ckNAO'
-        'Status = stsDefault')
+        'Text = Agent Orange Exposure    No'
+        'Status = stsOK')
       (
         'Component = ckNENV'
-        'Status = stsDefault')
+        'Text = Southwest Asia Conditions     No'
+        'Status = stsOK')
       (
         'Component = ckNHNC'
-        'Status = stsDefault')
+        'Text = Head and/or Neck Cancer    No'
+        'Status = stsOK')
       (
         'Component = ckNMST'
-        'Status = stsDefault')
+        'Text = MST     No'
+        'Status = stsOK')
       (
         'Component = ckNSHAD'
-        'Status = stsDefault')
+        'Text = Shipboard Hazard and Defense     Yes'
+        'Status = stsOK')
       (
         'Component = cbServ'
         'Status = stsDefault')
@@ -925,24 +773,66 @@ inherited frmdlgProb: TfrmdlgProb
         'Status = stsDefault')
       (
         'Component = ckYSC'
-        'Status = stsDefault')
+        'Text = Service Connected Condition     Yes'
+        'Status = stsOK')
       (
         'Component = ckYAO'
-        'Status = stsDefault')
+        'Text = Agent Orange Exposure     Yes'
+        'Status = stsOK')
       (
         'Component = ckYRad'
-        'Status = stsDefault')
+        'Text = Ionizing Radiation Exposure     Yes'
+        'Status = stsOK')
       (
         'Component = ckYENV'
-        'Status = stsDefault')
+        'Text = Southwest Asia Conditions     Yes'
+        'Status = stsOK')
       (
         'Component = ckYSHAD'
-        'Status = stsDefault')
+        'Text = Shipboard Hazard and Defense     Yes'
+        'Status = stsOK')
       (
         'Component = ckYMST'
-        'Status = stsDefault')
+        'Text = MST     Yes'
+        'Status = stsOK')
       (
         'Component = ckYHNC'
-        'Status = stsDefault'))
+        'Text = Head and/or Neck Cancer    No'
+        'Status = stsOK')
+      (
+        'Component = lstComments'
+        'Status = stsDefault')
+      (
+        'Component = Panel1'
+        'Status = stsDefault')
+      (
+        'Component = bbAdd'
+        'Status = stsDefault')
+      (
+        'Component = bbEdit'
+        'Status = stsDefault')
+      (
+        'Component = bbRemove'
+        'Status = stsDefault')
+      (
+        'Component = Panel2'
+        'Status = stsDefault')
+      (
+        'Component = Panel3'
+        'Status = stsDefault')
+      (
+        'Component = ScrollBox1'
+        'Status = stsDefault')
+      (
+        'Component = Panel4'
+        'Status = stsDefault')
+      (
+        'Component = ckNCL'
+        'Text = Camp Lejeune    No'
+        'Status = stsOK')
+      (
+        'Component = ckYCL'
+        'Text = Camp Lejeune    Yes'
+        'Status = stsOK'))
   end
 end

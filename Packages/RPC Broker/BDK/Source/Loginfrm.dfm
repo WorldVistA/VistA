@@ -1,12 +1,12 @@
 object frmSignon: TfrmSignon
-  Left = 115
-  Top = 114
-  Width = 779
-  Height = 580
+  Left = 180
+  Top = 178
   HelpContext = 1
   ActiveControl = accessCode
   Anchors = [akTop]
   Caption = 'VISTA Sign-on'
+  ClientHeight = 542
+  ClientWidth = 763
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,9 +19,12 @@ object frmSignon: TfrmSignon
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
+  DesignSize = (
+    763
+    542)
   PixelsPerInch = 96
   TextHeight = 13
-  object Panel1: TPanel
+  object pnlUpper: TPanel
     Left = 5
     Top = 0
     Width = 761
@@ -37,66 +40,107 @@ object frmSignon: TfrmSignon
       Width = 749
       Height = 397
       Align = alClient
-      Font.Charset = DEFAULT_CHARSET
+      Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
       Font.Name = 'Courier New'
       Font.Style = [fsBold]
       URLDetect = True
       Lines.Strings = (
-        
-          '1234567890123456789012345678901234567890123456789012345678901234' +
-          '5678901234567890                                                ' +
-          '                                   '#13
-        
-          '         1         2         3         4         5         6    ' +
-          '     7         8'#13
-        
-          '                                                                ' +
-          '                   '#13
-        '   http://vaww.isc-sf.domain.ext'#13
-        'a                 '#13
-        'b'#13
-        'c                 '#13
-        'd'#13
-        'e                 '#13
-        'f'#13
-        'g                 '#13
-        'h'#13
-        'i                 '#13
-        'j'#13
-        'k                 '#13
-        'l'#13
-        'm                 '#13
-        'n'#13
-        'o                 '#13
-        
-          'p                                                               ' +
-          '   '#13
-        'q                 '#13
-        'r'#13
-        's                 '#13
-        't'#13
-        'u                 '#13
-        'v'#13
-        'w                 '#13
-        'x'#13
-        'y                 '#13)
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        '')
       ParentFont = False
       ReadOnly = True
       ScrollBars = ssVertical
       TabOrder = 0
     end
   end
-  object Panel7: TPanel
+  object pnlLower: TPanel
     Left = 0
-    Top = 409
-    Width = 771
+    Top = 398
+    Width = 763
     Height = 144
     Align = alBottom
     BevelOuter = bvNone
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 1
-    object Image1: TImage
+    DesignSize = (
+      763
+      144)
+    object imgVA: TImage
       Left = 8
       Top = 8
       Width = 117
@@ -256,44 +300,45 @@ object frmSignon: TfrmSignon
         88888888888888888000}
       Stretch = True
     end
-    object Bevel1: TBevel
+    object bvlStatus: TBevel
       Left = 0
       Top = 118
-      Width = 771
+      Width = 763
       Height = 26
       Align = alBottom
       Style = bsRaised
+      ExplicitTop = 113
     end
-    object Bevel2: TBevel
+    object bvlServer: TBevel
       Left = 4
       Top = 120
-      Width = 165
+      Width = 250
       Height = 20
       Anchors = [akLeft, akBottom]
     end
-    object Bevel3: TBevel
-      Left = 172
+    object bvlVolume: TBevel
+      Left = 260
       Top = 120
-      Width = 109
+      Width = 183
       Height = 20
       Anchors = [akLeft, akBottom]
     end
-    object Bevel4: TBevel
-      Left = 284
+    object bvlUCI: TBevel
+      Left = 449
       Top = 120
-      Width = 85
+      Width = 168
       Height = 20
       Anchors = [akLeft, akBottom]
     end
-    object Bevel5: TBevel
-      Left = 372
+    object bvlPort: TBevel
+      Left = 623
       Top = 120
-      Width = 117
+      Width = 137
       Height = 20
       Anchors = [akLeft, akBottom]
     end
-    object Label3: TLabel
-      Left = 8
+    object ttlServer: TLabel
+      Left = 4
       Top = 122
       Width = 43
       Height = 16
@@ -306,8 +351,8 @@ object frmSignon: TfrmSignon
       Font.Style = []
       ParentFont = False
     end
-    object Label4: TLabel
-      Left = 176
+    object ttlVolume: TLabel
+      Left = 264
       Top = 122
       Width = 49
       Height = 16
@@ -320,8 +365,8 @@ object frmSignon: TfrmSignon
       Font.Style = []
       ParentFont = False
     end
-    object Label5: TLabel
-      Left = 288
+    object ttlUCI: TLabel
+      Left = 454
       Top = 122
       Width = 25
       Height = 16
@@ -334,8 +379,8 @@ object frmSignon: TfrmSignon
       Font.Style = []
       ParentFont = False
     end
-    object Label6: TLabel
-      Left = 376
+    object ttlPort: TLabel
+      Left = 638
       Top = 122
       Width = 27
       Height = 16
@@ -351,9 +396,10 @@ object frmSignon: TfrmSignon
     object lblServer: TLabel
       Left = 64
       Top = 122
-      Width = 5
+      Width = 47
       Height = 16
       Anchors = [akLeft, akBottom]
+      Caption = 'Server'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
@@ -362,11 +408,12 @@ object frmSignon: TfrmSignon
       ParentFont = False
     end
     object lblVolume: TLabel
-      Left = 240
+      Left = 328
       Top = 122
-      Width = 5
+      Width = 53
       Height = 16
       Anchors = [akLeft, akBottom]
+      Caption = 'Volume'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
@@ -375,11 +422,12 @@ object frmSignon: TfrmSignon
       ParentFont = False
     end
     object lblUCI: TLabel
-      Left = 328
+      Left = 494
       Top = 122
-      Width = 5
+      Width = 26
       Height = 16
       Anchors = [akLeft, akBottom]
+      Caption = 'UCI'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
@@ -388,11 +436,12 @@ object frmSignon: TfrmSignon
       ParentFont = False
     end
     object lblPort: TLabel
-      Left = 416
+      Left = 678
       Top = 122
-      Width = 5
+      Width = 29
       Height = 16
       Anchors = [akLeft, akBottom]
+      Caption = 'Port'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
@@ -400,15 +449,18 @@ object frmSignon: TfrmSignon
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object Panel8: TPanel
-      Left = 422
+    object pnlCode: TPanel
+      Left = 414
       Top = 0
       Width = 349
       Height = 118
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 0
-      object Label1: TLabel
+      DesignSize = (
+        349
+        118)
+      object ttlAccessCode: TLabel
         Left = 24
         Top = 16
         Width = 97
@@ -422,7 +474,7 @@ object frmSignon: TfrmSignon
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object Label2: TLabel
+      object ttlVerifyCode: TLabel
         Left = 35
         Top = 56
         Width = 86
@@ -480,9 +532,6 @@ object frmSignon: TfrmSignon
         Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 2
-        OnClick = btnOkClick
         Glyph.Data = {
           BE060000424DBE06000000000000360400002800000024000000120000000100
           0800000000008802000000000000000000000001000000010000000000000000
@@ -541,7 +590,10 @@ object frmSignon: TfrmSignon
           0303}
         Margin = 2
         NumGlyphs = 2
+        ParentFont = False
         Spacing = -1
+        TabOrder = 2
+        OnClick = btnOkClick
         IsControl = True
       end
       object btnCancel: TBitBtn
@@ -556,10 +608,6 @@ object frmSignon: TfrmSignon
         Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
-        ModalResult = 2
-        ParentFont = False
-        TabOrder = 3
-        OnClick = btnCancelClick
         Glyph.Data = {
           DE010000424DDE01000000000000760000002800000024000000120000000100
           0400000000006801000000000000000000001000000000000000000000000000
@@ -578,8 +626,12 @@ object frmSignon: TfrmSignon
           3333333333333333333888330000333333333333333333333333333333333333
           0000}
         Margin = 2
+        ModalResult = 2
         NumGlyphs = 2
+        ParentFont = False
         Spacing = -1
+        TabOrder = 3
+        OnClick = btnCancelClick
         IsControl = True
       end
       object cbxChangeVerifyCode: TCheckBox
@@ -610,6 +662,8 @@ object frmSignon: TfrmSignon
     LogIn.Mode = lmAVCodes
     LogIn.PromptDivision = False
     OldConnectionOnly = False
+    UseSecureConnection = secureNone
+    SSHHide = False
     Left = 16
     Top = 24
   end

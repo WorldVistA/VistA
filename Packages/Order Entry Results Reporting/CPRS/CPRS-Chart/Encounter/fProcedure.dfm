@@ -2,8 +2,6 @@ inherited frmProcedures: TfrmProcedures
   Left = 548
   Top = 172
   Caption = 'Encounter Procedure'
-  ExplicitWidth = 632
-  ExplicitHeight = 434
   PixelsPerInch = 96
   TextHeight = 13
   object lblProcQty: TLabel [0]
@@ -63,28 +61,19 @@ inherited frmProcedures: TfrmProcedures
     Width = 523
     TabOrder = 1
     ExplicitWidth = 523
-    inherited lbGrid: TORListBox
-      Tag = 30
+    inherited lstRenameMe: TCaptionListView
       Width = 523
-      Caption = 'Selected Procedures'
-      Pieces = '1,2'
-      ExplicitWidth = 523
-    end
-    inherited hcGrid: THeaderControl
-      Width = 523
-      Sections = <
+      Columns = <
         item
-          ImageIndex = -1
-          MinWidth = 52
-          Text = 'Quantity'
-          Width = 52
+          Caption = 'Quantity'
+          Width = 80
         end
         item
-          ImageIndex = -1
-          MinWidth = 112
-          Text = 'Selected Procedures'
-          Width = 112
+          Caption = 'Selected Procedures'
+          Width = 120
         end>
+      Caption = 'Selected Procedures'
+      Pieces = '1,2'
       ExplicitWidth = 523
     end
   end
@@ -92,7 +81,7 @@ inherited frmProcedures: TfrmProcedures
     TabOrder = 2
   end
   object spnProcQty: TUpDown [11]
-    Left = 353
+    Left = 348
     Top = 371
     Width = 15
     Height = 21
@@ -135,6 +124,7 @@ inherited frmProcedures: TfrmProcedures
     SynonymChars = '<>'
     TabOrder = 3
     TabStop = True
+    Text = ''
     OnChange = cboProviderChange
     OnNeedData = cboProviderNeedData
     CharsNeedMatch = 1
@@ -267,12 +257,6 @@ inherited frmProcedures: TfrmProcedures
         'Status = stsDefault')
       (
         'Component = pnlGrid'
-        'Status = stsDefault')
-      (
-        'Component = lbGrid'
-        'Status = stsDefault')
-      (
-        'Component = hcGrid'
         'Status = stsDefault')
       (
         'Component = btnOK'

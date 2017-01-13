@@ -10,6 +10,7 @@ uses SysUtils, Windows, Messages, Classes, Controls, StdCtrls, ExtCtrls, ComCtrl
 const
   U = '^';
   CRLF = #13#10;
+  RICHCR = #13;
   BOOLCHAR: array[Boolean] of Char = ('0', '1');
   UM_STATUSTEXT = (WM_USER + 302);               // used to send update status msg to main form
 
@@ -19,13 +20,12 @@ const
 
 var
   ScrollBarHeight: integer = 0;
-
+  //Used for the sort by peice
+  SortADelim: Char;
+  SortPieceNum: Integer;
 type
-  TCharacterSet = Set of Char;
   TFMDateTime = Double;
   TORIdleCallProc = procedure(Msg: string);
-{ sundries }
-function CharInSet(AChar: Char; ASetOfChar: TCharacterSet) : Boolean;
 
 { Date/Time functions }
 function DateTimeToFMDateTime(ADateTime: TDateTime): TFMDateTime;
@@ -74,8 +74,11 @@ procedure SetPiece(var x: string; Delim: Char; PieceNum: Integer; const NewPiece
 procedure SetPieces(var x: string; Delim: Char; Pieces: Array of Integer;
                                                 FromString: string);
 procedure SortByPiece(AList: TStringList; ADelim: Char; PieceNum: Integer);
+function  SortByPiece2(List: TStringList; Index1, Index2: Integer): Integer;
+
 function DelimCount(const Str, Delim: string): integer;
-procedure QuickCopy(AFrom, ATo: TObject);
+//procedure QuickCopy(AFrom, ATo: TObject);
+function QuickCopy(AFrom, ATo: TObject): boolean;
 procedure QuickAdd(AFrom, ATo: TObject);
 procedure FastAssign(source, destination: TStrings);
 procedure FastAddStrings(source, destination: TStrings);
@@ -111,8 +114,15 @@ function NumCharsFitInWidth(AFontHandle: THandle; const x: string; const MaxLen:
 function PopupComponent(Sender: TObject; PopupMenu: TPopupMenu): TComponent;
 procedure ReformatMemoParagraph(AMemo: TCustomMemo);
 
+function SplitUsingSeparators(const Value: string; PreSeparators, PostSeparators: TSysCharSet): TStringList;
 function WrapTextByPixels(const Value: string; WrapWidth: integer; ACanvas: TCanvas;
                           PreSeparators, PostSeparators: TSysCharSet): TStringList;
+function WrapTextByChar(const Value: string; WrapWidth: integer; ACanvas: TCanvas;
+                        PreSeparators, PostSeparators: TSysCharSet): TStringList;
+function FindFontMetrics(AFont: TFont): TTextMetric;
+function FontWidthInPixels(AFont:TFont; Value: string): integer;
+function FontHeightInPixels(AFont: TFont): integer;
+
 
 function BlackColorScheme: Boolean;
 function NormalColorScheme: Boolean;
@@ -132,6 +142,8 @@ function ListGridRowHeight(AListBox: TListBox; AHeader: THeaderControl; ARow, AC
 function CPRSInstances: integer;
 { You MUST pass an address to an object variable to get KillObj to work }
 procedure KillObj(ptr: Pointer; KillObjects: boolean = FALSE);
+procedure ClearTStringList(var AStringList: TStringList);
+procedure ClearTList(var AList: TList);
 
 { do NOT use CallWhenIdle to call RPCs.  Use CallRPCWhenIdle in ORNet }
 procedure CallWhenIdle(CallProc: TORIdleCallProc; Msg: String);
@@ -146,19 +158,20 @@ procedure ScrollControl(Window: TScrollingWinControl; ScrollingUp: boolean; Amou
 implementation  // ---------------------------------------------------------------------------
 
 uses
-  ORCtrls, Grids, Chart, CheckLst, VAUtils;
+  ORCtrls, Grids, VCLTee.Chart, CheckLst, VAUtils, VCLTee.TeEngine, VCLTee.TeCanvas,
+  VCLTee.TeeProcs;
 
 const
   { names of months used by FormatFMDateTime }
-  MONTH_NAMES_SHORT: array[1..12] of string[3] =
+  MONTH_NAMES_SHORT: array[1..12] of string =
     ('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
-  MONTH_NAMES_LONG:  array[1..12] of string[9] =
+  MONTH_NAMES_LONG:  array[1..12] of string =
     ('January','February','March','April','May','June','July','August','September','October',
      'November', 'December');
 
      // ConvertSpecialStrings arrays
-  SearchChars:  array[0..7] of String = (' Ii ',' Iii ',' Iv ',' Vi ',' Vii ',' Viii ',' Ix ','-Va');
-  ReplaceChars: array[0..7] of String = (' II ',' III ',' IV ',' VI ',' VII ',' VIII ',' IX ','-VA');
+  SearchChars:  array[0..7] of String = ('Ii','Iii','Iv','Vi','Vii','Viii','Ix','-Va');
+  ReplaceChars: array[0..7] of String = ('II','III','IV','VI','VII','VIII','IX','-VA');
 
   { table for calculating CRC values (DWORD is Integer in Delphi 3, Cardinal in Delphi 4}
   CRC32_TABLE: array[0..255] of DWORD =
@@ -287,7 +300,7 @@ begin {FormatFMDateTime}
     case UpCase(AFormat[1]) of
     '"': begin                                                                 // literal
            Delete(AFormat, 1, 1);
-           while not (CharAt(AFormat, 1) in [#0, '"']) do
+           while not (CharInSet(CharAt(AFormat, 1), [#0, '"'])) do
            begin
              Result := Result + AFormat[1];
              Delete(AFormat, 1, 1);
@@ -345,9 +358,9 @@ var
 begin
   Result := False;
   if Length(x) < 7 then Exit;
-  for i := 1 to 7 do if not (x[i] in ['0'..'9']) then Exit;
+  for i := 1 to 7 do if not (CharInSet(x[i], ['0'..'9'])) then Exit;
   if (Length(x) > 7) and (x[8] <> '.') then Exit;
-  if (Length(x) > 8) and not (x[9] in ['0'..'9']) then Exit;
+  if (Length(x) > 8) and not (CharInSet(x[9], ['0'..'9'])) then Exit;
   Result := True;
 end;
 
@@ -423,7 +436,7 @@ var
   i: Integer;
 begin
   Result := False;
-  for i := 1 to Length(x) do if x[i] in ['A'..'Z','a'..'z'] then
+  for i := 1 to Length(x) do if CharInSet(x[i], ['A'..'Z','a'..'z']) then
   begin
     Result := True;
     break;
@@ -436,7 +449,7 @@ var
   i: Integer;
 begin
   Result := False;
-  for i := 1 to Length(x) do if x[i] in ['!'..'~'] then  // ordinal values 33..126
+  for i := 1 to Length(x) do if CharInSet(x[i], ['!'..'~']) then  // ordinal values 33..126
   begin
     Result := True;
     break;
@@ -457,12 +470,66 @@ begin
 end;
 
 function ConvertSpecialStrings(const x: string): string;
-var i : Integer;
+var
+ i, II, LastPos : Integer;
+ TempStr, DummyStr: String;
+ ChangeChar:Boolean;
+
 begin
-   for i := 0 to Length(SearchChars)-1 do
+  //Look for each type of roman numeral
+  for i := 0 to Length(SearchChars)-1 do
+  begin
+    TempStr := Result;
+    LastPos := Pos(SearchChars[i], TempStr);
+    While LastPos > 0 do
+    begin
+     ChangeChar := False;
+
+     //This is the end of the string
+     if ((LastPos + (Length(SearchChars[i]) - 1)) = Length(Result)) and
+      (Result[LastPos - 1] = ' ') then
+      ChangeChar := true
+     else
+
+      if not CharInSet(Result[LastPos + Length(SearchChars[i])], ['A'..'Z']) and
+      not CharInSet(Result[LastPos + Length(SearchChars[i])], ['a'..'z']) and
+      (Result[LastPos - 1] = ' ') then
+        ChangeChar := true;
+
+      if ChangeChar then
+      begin
+        //copy up to replace + replace + after replace
+        Result := Copy(Result, 1, LastPos - 1) + ReplaceChars[i] + Copy(Result, LastPos + (Length(SearchChars[i])), Length(Result));
+      end ;
+
+             DummyStr := '';
+       for II := 1 to Length(SearchChars[i]) do
+        DummyStr := DummyStr + 'X';
+
+       //copy up to replace + replace + after replace
+       TempStr := Copy(TempStr, 1, LastPos - 1) + DummyStr + Copy(TempStr, LastPos + (Length(SearchChars[i])), Length(Result));
+
+
+
+
+      //Look for the next instance
+      LastPos := Pos(SearchChars[i], TempStr);
+
+
+    end;
+
+
+  {  if Copy(Result, Length(Result) - (Length(SearchChars[i]) + 1), Length(Result)) = ' ' + SearchChars[i] then
+     //Copy up to the suffix and then append the Roman
+     Result := Copy(Result, 1, (Length(Result) - Length(SearchChars[i]))) + SearchChars[i];
+    end;   }
+  end;
+
+
+ {  for i := 0 to Length(SearchChars)-1 do
     begin
        Result := StringReplace(Result,SearchChars[i], ReplaceChars[i],[rfReplaceAll]);
-    end;
+    end; }
 end;
 
 function UpdateCrc32(Value: DWORD; var Buffer: array of Byte; Count: Integer): DWORD;
@@ -511,10 +578,13 @@ end;
 function FilteredString(const x: string; ATabWidth: Integer = 8): string;
 var
   i, j: Integer;
+  xc: AnsiChar;
 begin
   Result := '';
   for i := 1 to Length(x) do
-    case x[i] of
+  begin
+    xc := AnsiChar(x[i]);
+    case xc of
             #9: for j := 1 to (ATabWidth - (Length(Result) mod ATabWidth)) do
                   Result := Result + ' ';
      #32..#127: Result := Result + x[i];
@@ -522,6 +592,7 @@ begin
   #10,#13,#160: Result := Result + ' ';
     #161..#255: Result := Result + x[i];
     end;
+  end;
   if Copy(Result, Length(Result), 1) = ' ' then Result := TrimRight(Result) + ' ';
 end;
 
@@ -529,19 +600,23 @@ procedure ExpandTabsFilter(AList: TStrings; ATabWidth: Integer);
 var
   i, j, k: Integer;
   x, y: string;
+  xc: AnsiChar;
 begin
   with AList do for i := 0 to Count - 1 do
   begin
     x := Strings[i];
     y := '';
     for j := 1 to Length(x) do
-      case x[j] of
+    begin
+      xc := AnsiChar(x[j]);
+      case xc of
                 #9: for k := 1 to (ATabWidth - (Length(y) mod ATabWidth)) do y := y + ' ';
          #32..#127: y := y + x[j];
         #128..#159: y := y + '?';
               #160: y := y + ' ';
         #161..#255: y := y + x[j];
       end;
+    end;
     if Copy(y, Length(y), 1) = ' ' then y := TrimRight(y) + ' ';
     Strings[i] := y;
     //Strings[i] := TrimRight(y) + ' ';
@@ -553,8 +628,8 @@ function ExtractInteger(x: string): Integer;
 var
   i: Integer;
 begin
-  while (Length(x) > 0) and not (x[1] in ['0'..'9']) do Delete(x, 1, 1);
-  for i := 1 to Length(x) do if not (x[i] in ['0'..'9']) then break;
+  while (Length(x) > 0) and not CharInSet(x[1], ['0'..'9']) do Delete(x, 1, 1);
+  for i := 1 to Length(x) do if not CharInSet(x[i], ['0'..'9']) then break;
   Result := StrToIntDef(Copy(x, 1, i - 1), 0);
 end;
 
@@ -563,8 +638,8 @@ function ExtractFloat(x: string): Extended;
 var
   i: Integer;
 begin
-  while (Length(x) > 0) and not (x[1] in ['0'..'9', '.']) do Delete(x, 1, 1);
-  for i := 1 to Length(x) do if not (x[i] in ['0'..'9','.']) then break;
+  while (Length(x) > 0) and not CharInSet(x[1], ['0'..'9', '.']) do Delete(x, 1, 1);
+  for i := 1 to Length(x) do if not CharInSet(x[i], ['0'..'9','.']) then break;
   Result := StrToFloatDef(Copy(x, 1, i - 1), 0);
 end;
 
@@ -621,10 +696,10 @@ var
 begin
   Result := x;
   for i := 2 to Length(x) do
-     if (not (x[i-1] in [' ',',','-','.','/','^'])) and (x[i] in ['A'..'Z'])
+     if (not CharInSet(x[i-1], [' ',',','-','.','/','^','['])) and CharInSet(x[i], ['A'..'Z'])
  // save line    if (not (x[i-1] in [' ','''',',','-','.','/','^'])) and (x[i] in ['A'..'Z'])
       then Result[i] := Chr(Ord(x[i]) + 32)
-     else if ((x[i-1] in [' ',',','-','.','/','^'])) and (x[i] in ['a'..'z'])
+     else if (CharInSet(x[i-1], [' ',',','-','.','/','^','['])) and CharInSet(x[i], ['a'..'z'])
       then Result[i] := Chr(Ord(x[i]) - 32);
   //Call added to satisfy the need for special string handling(Roman Numerals II-XI) GRE-06/02
   Result := ConvertSpecialStrings(x);
@@ -744,15 +819,29 @@ begin
 end;
 
 procedure SortByPiece(AList: TStringList; ADelim: Char; PieceNum: Integer);
-var
-  i: integer;
+//var
+//  i: integer;
 begin
-  for i := 0 to AList.Count - 1 do
+{  for i := 0 to AList.Count - 1 do
     AList[i] := Piece(AList[i], ADelim, PieceNum) + ADelim + AList[i];
   AList.Sort;
   for i := 0 to AList.Count - 1 do
-    AList[i] := Copy(AList[i], Pos(ADelim, AList[i]) + 1, MaxInt);
+    AList[i] := Copy(AList[i], Pos(ADelim, AList[i]) + 1, MaxInt);  }
+  SortADelim := ADelim;
+  SortPieceNum := PieceNum;
+  AList.CustomSort(SortByPiece2);
 end;
+
+function SortByPiece2(List: TStringList; Index1, Index2: Integer): Integer;
+var
+  Str1, Str2: string;
+begin
+   // get the strings to compare
+  Str1 := Piece(List[Index1], SortADelim, SortPieceNum);
+  Str2 := Piece(List[Index2], SortADelim, SortPieceNum);
+  Result := AnsiCompareText(Str1, Str2);
+end;
+
 
 function DelimCount(const Str, Delim: string): integer;
 var
@@ -786,7 +875,7 @@ type
 type
   QuickCopyError = class(Exception);
 
-procedure QuickCopy(AFrom, ATo: TObject);
+function QuickCopy(AFrom, ATo: TObject): boolean;
 var
   ms: TMemoryStream;
   idx: integer;
@@ -835,6 +924,7 @@ var
 
 
 begin
+  Result := True;
   fix[0] := FALSE;
   fix[1] := FALSE;
   idx := 0;
@@ -932,8 +1022,12 @@ var
   ms: TMemoryStream;
 begin
   destination.Clear;
-  if (source is TStringList) and (destination is TStringList) then
+  if ((source is TStringList) and (destination is TStringList)) or
+     ((source is TStrings) and (destination is TStrings)) then
     destination.Assign(source)
+  else
+    if (source is TStringList) and (destination is TStrings) then
+      destination.AddStrings(source)
   else
   if (CompareText(source.ClassName, 'TRichEditStrings') = 0) then
     destination.Assign(source)
@@ -941,7 +1035,7 @@ begin
   begin
     ms := TMemoryStream.Create;
     try
-      source.SaveToStream(ms);
+      source.SaveToStream(ms, TEncoding.Default);
       ms.Seek(0, soFromBeginning);
       destination.LoadFromStream(ms);
     finally
@@ -958,12 +1052,15 @@ begin
   if (source is TStringList) and (destination is TStringList) then
     destination.AddStrings(source)
   else
+  if (source is TStringList) and (destination is TStrings) then
+    destination.AddStrings(source)
+  else
   begin
     ms := TMemoryStream.Create;
     try
       destination.SaveToStream(ms);
       ms.Seek(0, soFromEnd);
-      source.SaveToStream(ms);
+      source.SaveToStream(ms, TEncoding.Default);
       ms.Seek(0, soFromBeginning);
       destination.Clear;
       destination.LoadFromStream(ms);
@@ -982,7 +1079,7 @@ begin
   i := 1;
   while i <= length(Result) do
   begin
-    if Result[i] in ['a'..'z','A'..'Z','0'..'9',#32] then
+    if CharInSet(Result[i], ['a'..'z','A'..'Z','0'..'9',#32]) then
       inc(i)
     else
       delete(Result,i,1);
@@ -1070,7 +1167,7 @@ end;
 function InfoBox(const Text, Caption: string; Flags: Word): Integer;
 { wrap the messagebox object in case we want to modify it later }
 begin
-  Result := Application.MessageBox(PChar(Text), PChar(Caption), Flags or MB_TOPMOST);
+  Result := Application.MessageBox(PWideChar(Text), PWideChar(Caption), Flags or MB_TOPMOST);
 end;
 
 procedure LimitEditWidth(AControl: TWinControl; NumChars: Integer);
@@ -1768,9 +1865,9 @@ begin
     OldText := SelText;
     NewText := '';
     repeat
-      x := Copy(OldText, 1, Pos(CRLF, OldText) - 1);
+      x := Copy(OldText, 1, Pos(RICHCR, OldText) - 1);
       if Length(x) = 0 then x := OldText;
-      Delete(OldText, 1, Length(x) + 2);  {delete text + CRLF}
+      Delete(OldText, 1, Length(x) + 1);  {delete text + RICHCR}
       if (NewText <> '') and (Copy(NewText, Length(NewText), 1) <> ' ') and
          (Copy(x, 1, 1) <> ' ') then NewText := NewText + ' ';
       NewText := NewText + x;
@@ -2119,6 +2216,26 @@ begin
   end;
 end;
 
+procedure ClearTStringList(var AStringList: TStringList);
+begin
+  if assigned(AStringList) then begin
+    while (AStringList.Count > 0) do begin
+      if assigned(AStringList.Objects[AStringList.Count - 1]) then AStringList.Objects[AStringList.Count - 1].Free;
+      AStringList.Delete(AStringList.Count - 1);
+    end;
+  end;
+end;
+
+procedure ClearTList(var AList: TList);
+begin
+  if assigned(AList) then begin
+    while (AList.Count > 0) do begin
+      if assigned(AList[AList.Count - 1]) then TObject(AList[AList.Count - 1]).Free;
+      AList.Delete(AList.Count - 1);
+    end;
+  end;
+end;
+
 { Idle Processing }
 
 type
@@ -2301,11 +2418,6 @@ begin
   end;
 end;
 
-function CharInSet(AChar: Char; ASetOfChar: TCharacterSet) : Boolean;
-begin
-  result := (AChar in ASetOfChar);
-end;
-
 function SplitUsingSeparators(const Value: string; PreSeparators, PostSeparators: TSysCharSet): TStringList;
 var
   i: integer;
@@ -2371,6 +2483,83 @@ begin
   finally
     if assigned(WordList) then
       WordList.Free;
+  end;
+end;
+
+function WrapTextByChar(const Value: string; WrapWidth: integer; ACanvas: TCanvas;
+                        PreSeparators, PostSeparators: TSysCharSet): TStringList;
+var
+  WordList: TStringList;
+  i, len: integer;
+begin
+  Result := TStringList.Create;
+  WordList := SplitUsingSeparators(Value, PreSeparators, PostSeparators);
+  try
+    i := 0;
+    while (i < WordList.Count) do begin
+      if Result.Count = 0 then
+        Len := Length(WordList[i])
+      else
+        Len := Length(Result[Result.Count - 1] + ' ' + WordList[i]);
+      if Len > WrapWidth then begin
+        Result.Add(WordList[i]);
+      end else begin
+        if Result.Count = 0 then
+          Result.Add(WordList[i])
+        else
+          Result[Result.Count - 1] := Result[Result.Count - 1] + ' ' + WordList[i];
+      end;
+      inc(i);
+    end;
+  finally
+    if assigned(WordList) then
+      WordList.Free;
+  end;
+end;
+
+function FindFontMetrics(AFont: TFont): TTextMetric;
+var
+  DC: HDC;                  // working drawing context
+  SaveFont: HFont;          // current font
+//  FontMetrics: TTextMetric; // metric to contain information about passed font
+begin
+  DC := GetDC(0);                               // get the drawing context
+  try
+    SaveFont := SelectObject(DC, AFont.Handle); // save current font and replace with passed one
+    try
+      GetTextMetrics(DC, Result);          // get the metrics on the passed font
+    finally
+      SelectObject(DC, SaveFont);               // restore current font
+    end;
+  finally
+    ReleaseDC(0, DC);                           // release the drawing context
+  end;
+end;
+
+{ FontHeightInPixels }
+function FontHeightInPixels(AFont: TFont): integer;
+begin
+  Result := FindFontMetrics(AFont).tmHeight;
+end;
+
+{ FontWidthInPixels }
+function FontWidthInPixels(AFont:TFont; Value: string): integer;
+var
+  DC: HDC;          // working drawing context
+  SaveFont: HFont;  // current font
+  Extent: TSize;    // stores size of text sent to context
+begin
+  DC := GetDC(0);                                                         // get the drawing context of main window
+  try
+    SaveFont := SelectObject(DC, AFont.Handle);                           // save the current font and replace with passed font
+    try
+      GetTextExtentPoint32(DC, PWideChar(Value), length(Value), Extent);  // evaluate text in context
+      Result := Extent.cx + 1;                                            // grab the width
+    finally
+      SelectObject(DC, SaveFont);                                         // restore the current font
+    end;
+  finally
+    ReleaseDC(0, DC);                                                     // release the drawing context
   end;
 end;
 

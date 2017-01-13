@@ -1,19 +1,22 @@
 inherited frmODDiet: TfrmODDiet
   Left = 541
   Top = 398
-  Width = 532
-  Height = 291
+  Width = 650
+  Height = 375
+  Anchors = [akLeft, akTop, akRight, akBottom]
   Caption = 'Diet Order'
-  ExplicitWidth = 532
-  ExplicitHeight = 291
+  Constraints.MinHeight = 305
+  Constraints.MinWidth = 528
+  ExplicitWidth = 650
+  ExplicitHeight = 375
   PixelsPerInch = 96
   TextHeight = 13
   object nbkDiet: TPageControl [0]
     Left = 0
     Top = 0
-    Width = 524
+    Width = 634
     Height = 194
-    ActivePage = pgeOutPt
+    ActivePage = pgeTubefeeding
     Align = alTop
     TabOrder = 4
     TabStop = False
@@ -21,10 +24,6 @@ inherited frmODDiet: TfrmODDiet
     OnChanging = nbkDietChanging
     object pgeDiet: TTabSheet
       Caption = 'Diet'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object lblDietAvail: TLabel
         Left = 4
         Top = 0
@@ -68,8 +67,8 @@ inherited frmODDiet: TfrmODDiet
         Caption = 'Delivery'
       end
       object cboDietAvail: TORComboBox
-        Left = 4
-        Top = 14
+        Left = 3
+        Top = 19
         Width = 188
         Height = 140
         Style = orcsSimple
@@ -88,6 +87,7 @@ inherited frmODDiet: TfrmODDiet
         Sorted = False
         SynonymChars = '<>'
         TabOrder = 0
+        Text = ''
         OnExit = cboDietAvailExit
         OnMouseClick = cboDietAvailMouseClick
         OnNeedData = cboDietAvailNeedData
@@ -170,6 +170,7 @@ inherited frmODDiet: TfrmODDiet
         Sorted = False
         SynonymChars = '<>'
         TabOrder = 6
+        Text = ''
         OnChange = DietChange
         CharsNeedMatch = 1
       end
@@ -361,6 +362,7 @@ inherited frmODDiet: TfrmODDiet
         Sorted = False
         SynonymChars = '<>'
         TabOrder = 0
+        Text = ''
         OnExit = cboDietAvailExit
         OnKeyDown = cboOPDietAvailKeyDown
         OnMouseClick = cboOPDietAvailMouseClick
@@ -397,6 +399,7 @@ inherited frmODDiet: TfrmODDiet
         Sorted = False
         SynonymChars = '<>'
         TabOrder = 6
+        Text = ''
         OnChange = OPChange
         CharsNeedMatch = 1
       end
@@ -438,10 +441,6 @@ inherited frmODDiet: TfrmODDiet
     end
     object pgeTubefeeding: TTabSheet
       Caption = 'Tubefeeding'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object lblTFProductList: TLabel
         Left = 4
         Top = 0
@@ -469,6 +468,13 @@ inherited frmODDiet: TfrmODDiet
         Width = 39
         Height = 13
         Caption = 'Quantity'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlue
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+        OnClick = lblTFQuantityClick
       end
       object lblTFProduct: TLabel
         Left = 152
@@ -512,6 +518,7 @@ inherited frmODDiet: TfrmODDiet
         Sorted = False
         SynonymChars = '<>'
         TabOrder = 0
+        Text = ''
         OnExit = cboProductExit
         OnMouseClick = cboProductMouseClick
         CharsNeedMatch = 1
@@ -538,9 +545,12 @@ inherited frmODDiet: TfrmODDiet
         RowCount = 1
         FixedRows = 0
         Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goDrawFocusSelected]
+        ParentShowHint = False
         ScrollBars = ssVertical
+        ShowHint = True
         TabOrder = 1
         OnDrawCell = grdSelectedDrawCell
+        OnMouseMove = grdSelectedMouseMove
         OnSelectCell = grdSelectedSelectCell
         Caption = 'Selected Products'
       end
@@ -591,7 +601,6 @@ inherited frmODDiet: TfrmODDiet
         Height = 21
         Style = csDropDownList
         Ctl3D = False
-        ItemHeight = 0
         ParentCtl3D = False
         TabOrder = 2
         Visible = False
@@ -626,6 +635,7 @@ inherited frmODDiet: TfrmODDiet
         Height = 21
         Style = orcsDropDown
         AutoSelect = True
+        Caption = ''
         Color = clWindow
         DropDownCount = 8
         ItemHeight = 13
@@ -641,16 +651,13 @@ inherited frmODDiet: TfrmODDiet
         TabPositions = '12'
         TabOrder = 6
         TabStop = True
+        Text = ''
         OnChange = TFChange
         CharsNeedMatch = 1
       end
     end
     object pgeEarlyLate: TTabSheet
       Caption = 'Early / Late Tray'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object lblELStart: TLabel
         Left = 287
         Top = 2
@@ -862,6 +869,7 @@ inherited frmODDiet: TfrmODDiet
         Height = 21
         Style = orcsDropDown
         AutoSelect = True
+        Caption = ''
         Color = clWindow
         DropDownCount = 8
         ItemHeight = 13
@@ -877,16 +885,13 @@ inherited frmODDiet: TfrmODDiet
         TabPositions = '12'
         TabOrder = 3
         TabStop = True
+        Text = ''
         OnChange = ELChange
         CharsNeedMatch = 1
       end
     end
     object pgeIsolations: TTabSheet
       Caption = 'Isolations / Precautions'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object lblIsolation: TLabel
         Left = 4
         Top = 0
@@ -947,10 +952,6 @@ inherited frmODDiet: TfrmODDiet
     end
     object pgeAdditional: TTabSheet
       Caption = 'Additional Order'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object lblAddlOrder: TLabel
         Left = 4
         Top = 24
@@ -995,6 +996,7 @@ inherited frmODDiet: TfrmODDiet
         Height = 21
         Style = orcsDropDown
         AutoSelect = True
+        Caption = ''
         Color = clWindow
         DropDownCount = 8
         ItemHeight = 13
@@ -1010,45 +1012,78 @@ inherited frmODDiet: TfrmODDiet
         TabPositions = '12'
         TabOrder = 2
         TabStop = True
+        Text = ''
         OnChange = AOChange
         CharsNeedMatch = 1
       end
     end
   end
   inherited memOrder: TCaptionMemo
-    Top = 208
-    ExplicitTop = 208
+    Top = 213
+    Width = 412
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    Anchors = [akLeft, akRight, akBottom]
+    ExplicitTop = 213
+    ExplicitWidth = 412
   end
   inherited cmdAccept: TButton
-    Left = 445
-    Top = 208
+    Left = 427
+    Top = 213
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    Anchors = [akRight, akBottom]
     TabOrder = 2
-    ExplicitLeft = 445
-    ExplicitTop = 208
+    ExplicitLeft = 427
+    ExplicitTop = 213
   end
   inherited cmdQuit: TButton
-    Left = 445
-    Top = 235
+    Left = 426
+    Top = 242
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    Anchors = [akRight, akBottom]
     TabOrder = 3
-    ExplicitLeft = 445
-    ExplicitTop = 235
+    ExplicitLeft = 426
+    ExplicitTop = 242
   end
   inherited pnlMessage: TPanel
-    Top = 197
+    Top = 202
     Height = 57
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    Anchors = [akLeft, akBottom]
     TabOrder = 1
-    ExplicitTop = 197
+    ExplicitTop = 202
     ExplicitHeight = 57
     inherited imgMessage: TImage
       Top = 10
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       ExplicitTop = 10
     end
     inherited memMessage: TRichEdit
       Height = 45
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       ExplicitHeight = 45
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 8
+    Top = 16
     Data = (
       (
         'Component = nbkDiet'
@@ -1070,10 +1105,12 @@ inherited frmODDiet: TfrmODDiet
         'Status = stsDefault')
       (
         'Component = calDietStart'
-        'Status = stsDefault')
+        'Text = Effective Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = calDietStop'
-        'Status = stsDefault')
+        'Text = Expiration Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = cboDelivery'
         'Status = stsDefault')
@@ -1112,10 +1149,12 @@ inherited frmODDiet: TfrmODDiet
         'Status = stsDefault')
       (
         'Component = calOPStart'
-        'Status = stsDefault')
+        'Text = Start Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = calOPStop'
-        'Status = stsDefault')
+        'Text = Stop Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = cboOPDietAvail'
         'Status = stsDefault')
@@ -1160,7 +1199,8 @@ inherited frmODDiet: TfrmODDiet
         'Status = stsDefault')
       (
         'Component = calOPTFStart'
-        'Status = stsDefault')
+        'Text = Start Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = cboOPTFRecurringMeals'
         'Status = stsDefault')
@@ -1193,10 +1233,12 @@ inherited frmODDiet: TfrmODDiet
         'Status = stsDefault')
       (
         'Component = calELStart'
-        'Status = stsDefault')
+        'Text = Start Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = calELStop'
-        'Status = stsDefault')
+        'Text = Stop Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = grpDoW'
         'Status = stsDefault')
@@ -1247,7 +1289,8 @@ inherited frmODDiet: TfrmODDiet
         'Status = stsDefault')
       (
         'Component = calOPAOStart'
-        'Status = stsDefault')
+        'Text = Start Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = cboOPAORecurringMeals'
         'Status = stsDefault')

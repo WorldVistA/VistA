@@ -7,6 +7,8 @@ inherited frmConsultsView: TfrmConsultsView
   ClientWidth = 406
   OldCreateOrder = True
   Position = poScreenCenter
+  ExplicitWidth = 422
+  ExplicitHeight = 411
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBase: TORAutoPanel [0]
@@ -153,6 +155,7 @@ inherited frmConsultsView: TfrmConsultsView
       Sorted = True
       SynonymChars = '<>'
       TabOrder = 0
+      Text = ''
       OnKeyPause = cboServiceSelect
       OnMouseClick = cboServiceSelect
       CharsNeedMatch = 1
@@ -183,6 +186,7 @@ inherited frmConsultsView: TfrmConsultsView
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 5
+      Text = ''
       CharsNeedMatch = 1
     end
   end
@@ -193,10 +197,12 @@ inherited frmConsultsView: TfrmConsultsView
         'Status = stsDefault')
       (
         'Component = calBeginDate'
-        'Status = stsDefault')
+        'Text = Beginning Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = calEndDate'
-        'Status = stsDefault')
+        'Text = Ending Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = lstStatus'
         'Status = stsDefault')

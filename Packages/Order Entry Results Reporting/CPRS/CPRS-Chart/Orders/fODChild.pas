@@ -29,7 +29,11 @@ type
   end;
 
 function ActionOnComplexOrder(AnList: TStringList; CaptionTxt: string = ''; ShowCancel: boolean = False): boolean;
+
 implementation
+
+uses
+  System.UITypes;
 
 {$R *.DFM}
 function ActionOnComplexOrder(AnList: TStringList; CaptionTxt: string; ShowCancel: boolean): boolean;

@@ -39,33 +39,28 @@ type
     cmdOK: TButton;
     cmdCancel: TButton;
     pnlConsults: TORAutoPanel;
-    lblConsult1: TLabel;
-    lblConsult2: TLabel;
-    lblCsltDate: TLabel;
-    lblCsltServ: TLabel;
-    lblCsltProc: TLabel;
-    lblCsltStat: TLabel;
-    lblCsltNotes: TLabel;
-    lstRequests: TORListBox;
     bvlConsult: TBevel;
-    pnlSurgery: TORAutoPanel;
-    lblSurgery1: TStaticText;
-    lblSurgery2: TStaticText;
-    lblSurgDate: TLabel;
-    lblSurgProc: TLabel;
-    lblSurgeon: TLabel;
-    lstSurgery: TORListBox;
-    bvlSurgery: TBevel;
     cboProcSummCode: TORComboBox;
     lblProcSummCode: TOROffsetLabel;
     calProcDateTime: TORDateBox;
     lblProcDateTime: TOROffsetLabel;
-    btnShowList: TButton;
     pnlPRF: TORAutoPanel;
     lblPRF: TLabel;
     Bevel1: TBevel;
     lvPRF: TCaptionListView;
+    pnlSurgery: TORAutoPanel;
+    bvlSurgery: TBevel;
+    lblSurgery1: TStaticText;
+    lblSurgery2: TStaticText;
+    lstSurgery: TCaptionListView;
+    pnlCTop: TPanel;
+    pnlCButtons: TPanel;
+    pnlCText: TPanel;
+    lblConsult1: TLabel;
+    lblConsult2: TLabel;
+    btnShowList: TButton;
     btnDetails: TButton;
+    lstRequests: TCaptionListView;
     procedure FormShow(Sender: TObject);
     procedure cboNewTitleNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
@@ -89,7 +84,8 @@ type
     procedure calNoteEnter(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnDetailsClick(Sender: TObject);
-    procedure lstRequestsChange(Sender: TObject);
+    procedure CaptionListView1Change(Sender: TObject; Item: TListItem;
+      Change: TItemChange);
   private
     FIsNewNote : Boolean;     // Is set at the begining of the function: ExecuteNoteProperties
     FCosignIEN: Int64;      // store cosigner that was passed in
@@ -99,8 +95,8 @@ type
     FLastAuthor: Int64;     // set by mouseclick to avoid redundant call on exit
     FLastTitle: Integer;    // set by mouseclick to avoid redundant call on exit
     //FFixCursor: Boolean;    // to fix the problem where the list box is an I-bar
-    FLastCosigner: Int64;      // holds cosigner from previous note (for defaulting)
-    FLastCosignerName: string; // holds cosigner from previous note (for defaulting)
+   // FLastCosigner: Int64;      // holds cosigner from previous note (for defaulting)
+   // FLastCosignerName: string; // holds cosigner from previous note (for defaulting)
     FCallingTab: integer;
     FIDNoteTitlesOnly: boolean;
     FToday: string;
@@ -141,7 +137,7 @@ implementation
 
 {$R *.DFM}
 
-uses uCore, rCore, rConsults, uConsults, rSurgery, fRptBox;
+uses uCore, rCore, rConsults, uConsults, rSurgery, fRptBox, VA508AccessibilityRouter;
 
 { Initial values in ANote
 
@@ -297,8 +293,8 @@ begin
       FCosignIEN        := ANote.Cosigner;
       FCosignName       := ANote.CosignerName;
       FDocType          := ANote.DocType;
-      FLastCosigner     := ANote.LastCosigner;
-      FLastCosignerName := ANote.LastCosignerName;
+     // FLastCosigner     := ANote.LastCosigner;
+     // FLastCosignerName := ANote.LastCosignerName;
       SetCosignerRequired(True);
       // setup package fields
       SetGenericFormSize;
@@ -356,8 +352,8 @@ begin
           CosignerName := Piece(cboCosigner.Items[cboCosigner.ItemIndex], U, 2);
           // The LastCosigner fields are used to default the cosigner in subsequent notes.
           // These fields are not reset with new notes & not passed into TIU.
-          LastCosigner := Cosigner;
-          LastCosignerName := CosignerName;
+         // LastCosigner := Cosigner;
+         // LastCosignerName := CosignerName;
         end else
         begin
           Cosigner := 0;
@@ -454,11 +450,11 @@ begin
     begin
       if lblCosigner.Visible then
       begin
-        if FCosignIEN = 0 then
+       { if FCosignIEN = 0 then
         begin
           FCosignIEN  := FLastCosigner;
           FCosignName := FLastCosignerName;
-        end;
+        end; }
         if FCosignIEN = 0 then DefaultCosigner(FCosignIEN, FCosignName);
         cboCosigner.InitLongList(FCosignName);
         if FCosignIEN > 0 then cboCosigner.SelectByIEN(FCosignIEN);
@@ -480,6 +476,7 @@ const
 var
   i: Integer;
   SavedIEN: integer;
+  item: TVA508AccessibilityItem;
 begin
   ShouldShow := ShouldShow and (FCallingTab = CT_NOTES);
   if FDocType = TYP_ADDENDUM then ShouldShow := False;
@@ -494,30 +491,41 @@ begin
     begin
       for i := 0 to uConsultsList.Count - 1 do
         if Pos(Piece(uConsultsList[i], U, 5), ACTIVE_STATUS) > 0 then
-          lstRequests.Items.Add(uConsultsList[i]);
+          lstRequests.Add(uConsultsList[i]);
       lblConsult2.Caption := UNRESOLVED_CONSULTS;
     end
     else
     begin
       lblConsult2.Caption := ALL_CONSULTS;
-      FastAssign(uConsultsList, lstRequests.Items);
+      FastAssign(uConsultsList, lstRequests.ItemsStrings);
     end;
     lblConsult1.Visible := (cboNewTitle.ItemIndex > -1);
     lstRequests.SelectByIEN(SavedIEN);
-    btnDetails.Enabled := (lstRequests.ItemIndex > -1);
+    btnDetails.Enabled := Assigned(lstRequests.Selected);
+    //update 508
+    item := amgrMain.AccessData.FindItem(lstRequests, False);
+    if lblConsult1.Visible then
+     amgrMain.AccessData[item.Index].AccessText := lblConsult1.Caption +' '+ lblConsult2.Caption
+    else
+     amgrMain.AccessData[item.Index].AccessText := lblConsult2.Caption;
   end
 end;
 
 procedure TfrmNoteProperties.ShowSurgCaseList(ShouldShow: Boolean);
 { called initially & whenever title changes }
+var
+ item: TVA508AccessibilityItem;
 begin
   pnlSurgery.Visible := ShouldShow;
   if FDocType = TYP_ADDENDUM then ShouldShow := False;
   if ShouldShow then
   begin
     ClientHeight := cboCosigner.Top + cboCosigner.Height + PIXEL_SPACE + pnlSurgery.Height;
-    if lstSurgery.Items.Count = 0 then ListSurgeryCases(lstSurgery.Items);
-  end
+    if lstSurgery.Items.Count = 0 then ListSurgeryCases(lstSurgery.ItemsStrings);
+    item := amgrMain.AccessData.FindItem(lstSurgery, False);
+    amgrMain.AccessData[item.Index].AccessText := lblSurgery1.Caption + ' ' + lblSurgery2.Caption;
+  end;
+
 end;
 
 { cboNewTitle events }
@@ -692,9 +700,9 @@ begin
         end
       else
         begin
-          if ((pnlConsults.Visible) and (lstRequests.ItemIndex < 0)) then
+          if ((pnlConsults.Visible) and (not Assigned(lstRequests.Selected))) then
             ErrMsg := ErrMsg + TX_REQ_REQUEST
-          else if ((pnlSurgery.Visible) and (lstSurgery.ItemIndex < 0)) then
+          else if ((pnlSurgery.Visible) and (Assigned(lstSurgery.Selected))) then
             ErrMsg := ErrMsg + TX_REQ_SURGCASE
           else if (pnlPRF.Visible) then
           begin
@@ -818,7 +826,15 @@ begin
     (Sender as TORDateBox).SelectAll;
 end;
 
+procedure TfrmNoteProperties.CaptionListView1Change(Sender: TObject;
+  Item: TListItem; Change: TItemChange);
+begin
+  btnDetails.Enabled := (lstRequests.ItemIEN > 0);
+end;
+
 procedure TfrmNoteProperties.ShowPRFList(ShouldShow: Boolean);
+var
+ item: TVA508AccessibilityItem;
 begin
   pnlPRF.Visible := ShouldShow and not (FDocType = TYP_ADDENDUM);
   if pnlPRF.Visible then
@@ -836,6 +852,9 @@ begin
     lvPRF.Columns.BeginUpdate;
     lvPRF.Columns.EndUpdate;
     //End Fix for CQ: 6926
+
+    item := amgrMain.AccessData.FindItem(lvPRF, False);
+    amgrMain.AccessData[item.Index].AccessText := lblPRF.Caption;
   end
 end;
 
@@ -916,15 +935,10 @@ begin
   try
     LoadConsultDetail(ConsultDetail, lstRequests.ItemIEN) ;
     ReportBox(ConsultDetail, 'Consult Details: #' + lstRequests.ItemID + ' - ' +
-               Piece(lstRequests.Items[lstRequests.ItemIndex], U, 3), TRUE);
+               Piece(lstRequests.Strings[lstRequests.Selected.Index], U, 3), TRUE);
   finally
     ConsultDetail.Free;
   end;
-end;
-
-procedure TfrmNoteProperties.lstRequestsChange(Sender: TObject);
-begin
-  btnDetails.Enabled := (lstRequests.ItemIEN > 0);
 end;
 
 end.

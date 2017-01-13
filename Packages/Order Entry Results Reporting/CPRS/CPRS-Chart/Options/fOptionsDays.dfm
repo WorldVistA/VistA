@@ -5,59 +5,89 @@ inherited frmOptionsDays: TfrmOptionsDays
   BorderIcons = [biSystemMenu, biHelp]
   BorderStyle = bsDialog
   Caption = 'Date Range Defaults on Cover Sheet'
-  ClientHeight = 337
-  ClientWidth = 328
+  ClientHeight = 415
+  ClientWidth = 404
   HelpFile = 'CPRSWT.HLP'
   Position = poDefault
   OnCreate = FormCreate
   OnShow = FormShow
-  PixelsPerInch = 96
-  TextHeight = 13
+  ExplicitWidth = 320
+  ExplicitHeight = 240
+  PixelsPerInch = 120
+  TextHeight = 16
   object bvlTop: TBevel [0]
-    Left = 11
-    Top = 9
-    Width = 310
-    Height = 2
+    Left = 14
+    Top = 11
+    Width = 381
+    Height = 3
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
   end
   object bvlMiddle: TBevel [1]
-    Left = 11
-    Top = 155
-    Width = 310
+    Left = 14
+    Top = 191
+    Width = 381
     Height = 2
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
   end
   object lblVisitStop: TLabel [2]
-    Left = 15
-    Top = 251
-    Width = 25
-    Height = 13
+    Left = 18
+    Top = 309
+    Width = 31
+    Height = 16
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'Stop:'
   end
   object lblVisitStart: TLabel [3]
-    Left = 15
-    Top = 197
-    Width = 25
-    Height = 13
+    Left = 18
+    Top = 242
+    Width = 30
+    Height = 16
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'Start:'
   end
   object lblLabOutpatient: TLabel [4]
-    Left = 15
-    Top = 103
-    Width = 77
-    Height = 13
+    Left = 18
+    Top = 127
+    Width = 96
+    Height = 16
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'Outpatient days:'
   end
   object lblLabInpatient: TLabel [5]
-    Left = 15
-    Top = 47
-    Width = 69
-    Height = 13
+    Left = 18
+    Top = 58
+    Width = 86
+    Height = 16
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'Inpatient days:'
   end
   object lblVisitValue: TMemo [6]
-    Left = 136
-    Top = 219
-    Width = 169
-    Height = 73
+    Left = 167
+    Top = 270
+    Width = 208
+    Height = 89
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabStop = False
     BorderStyle = bsNone
     Color = clBtnFace
@@ -67,10 +97,14 @@ inherited frmOptionsDays: TfrmOptionsDays
     TabOrder = 13
   end
   object lblLabValue: TMemo [7]
-    Left = 136
-    Top = 71
-    Width = 169
-    Height = 74
+    Left = 167
+    Top = 87
+    Width = 208
+    Height = 91
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabStop = False
     BorderStyle = bsNone
     Color = clBtnFace
@@ -80,27 +114,39 @@ inherited frmOptionsDays: TfrmOptionsDays
     TabOrder = 14
   end
   object lblVisit: TStaticText [8]
-    Left = 15
-    Top = 164
-    Width = 115
-    Height = 17
+    Left = 18
+    Top = 202
+    Width = 145
+    Height = 20
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'Appointments and visits'
     TabOrder = 11
   end
   object lblLab: TStaticText [9]
-    Left = 15
-    Top = 16
-    Width = 55
-    Height = 17
+    Left = 18
+    Top = 20
+    Width = 69
+    Height = 20
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'Lab results'
     TabOrder = 12
   end
   object pnlBottom: TPanel [10]
     Left = 0
-    Top = 304
-    Width = 328
-    Height = 33
+    Top = 374
+    Width = 404
+    Height = 41
     HelpContext = 9010
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alBottom
     BevelOuter = bvNone
     ParentColor = True
@@ -108,27 +154,39 @@ inherited frmOptionsDays: TfrmOptionsDays
     object bvlBottom: TBevel
       Left = 0
       Top = 0
-      Width = 328
+      Width = 404
       Height = 2
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
     end
     object btnOK: TButton
-      Left = 167
-      Top = 8
-      Width = 75
-      Height = 22
+      Left = 206
+      Top = 10
+      Width = 92
+      Height = 27
       HelpContext = 9996
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'OK'
       ModalResult = 1
       TabOrder = 0
       OnClick = btnOKClick
     end
     object btnCancel: TButton
-      Left = 247
-      Top = 8
-      Width = 75
-      Height = 22
+      Left = 304
+      Top = 10
+      Width = 92
+      Height = 27
       HelpContext = 9997
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Cancel = True
       Caption = 'Cancel'
       ModalResult = 2
@@ -136,11 +194,15 @@ inherited frmOptionsDays: TfrmOptionsDays
     end
   end
   object txtLabInpatient: TCaptionEdit [11]
-    Left = 15
-    Top = 66
-    Width = 42
+    Left = 18
+    Top = 81
+    Width = 52
     Height = 21
     HelpContext = 9013
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabOrder = 0
     Text = '1'
     OnChange = txtLabInpatientChange
@@ -149,11 +211,15 @@ inherited frmOptionsDays: TfrmOptionsDays
     Caption = 'Inpatient days'
   end
   object spnLabInpatient: TUpDown [12]
-    Left = 57
-    Top = 66
-    Width = 16
-    Height = 21
+    Left = 70
+    Top = 81
+    Width = 20
+    Height = 26
     HelpContext = 9013
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Associate = txtLabInpatient
     Max = 999
     Position = 1
@@ -162,11 +228,15 @@ inherited frmOptionsDays: TfrmOptionsDays
     OnClick = spnLabInpatientClick
   end
   object txtLabOutpatient: TCaptionEdit [13]
-    Left = 15
-    Top = 121
-    Width = 42
+    Left = 18
+    Top = 149
+    Width = 52
     Height = 21
     HelpContext = 9014
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabOrder = 2
     Text = '1'
     OnChange = txtLabOutpatientChange
@@ -175,11 +245,15 @@ inherited frmOptionsDays: TfrmOptionsDays
     Caption = 'Outpatient days'
   end
   object spnLabOutpatient: TUpDown [14]
-    Left = 57
-    Top = 121
-    Width = 16
-    Height = 21
+    Left = 70
+    Top = 149
+    Width = 20
+    Height = 26
     HelpContext = 9014
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Associate = txtLabOutpatient
     Max = 999
     Position = 1
@@ -189,11 +263,15 @@ inherited frmOptionsDays: TfrmOptionsDays
   end
   object txtVisitStart: TCaptionEdit [15]
     Tag = -180
-    Left = 15
-    Top = 214
-    Width = 79
+    Left = 18
+    Top = 263
+    Width = 98
     Height = 21
     HelpContext = 9015
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     MaxLength = 12
     TabOrder = 5
     Text = '0'
@@ -204,11 +282,15 @@ inherited frmOptionsDays: TfrmOptionsDays
   end
   object spnVisitStart: TUpDown [16]
     Tag = -180
-    Left = 94
-    Top = 214
-    Width = 15
-    Height = 21
+    Left = 116
+    Top = 263
+    Width = 18
+    Height = 26
     HelpContext = 9015
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Associate = txtVisitStart
     Min = -999
     Max = 999
@@ -218,11 +300,15 @@ inherited frmOptionsDays: TfrmOptionsDays
   end
   object txtVisitStop: TCaptionEdit [17]
     Tag = 30
-    Left = 15
-    Top = 269
-    Width = 79
+    Left = 18
+    Top = 331
+    Width = 98
     Height = 21
     HelpContext = 9015
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     MaxLength = 12
     TabOrder = 7
     Text = '0'
@@ -233,11 +319,15 @@ inherited frmOptionsDays: TfrmOptionsDays
   end
   object spnVisitStop: TUpDown [18]
     Tag = 30
-    Left = 94
-    Top = 269
-    Width = 16
-    Height = 21
+    Left = 116
+    Top = 331
+    Width = 19
+    Height = 26
     HelpContext = 9015
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Associate = txtVisitStop
     Min = -999
     Max = 999
@@ -246,15 +336,19 @@ inherited frmOptionsDays: TfrmOptionsDays
     OnClick = spnVisitStopClick
   end
   object btnLabDefaults: TButton [19]
-    Left = 245
-    Top = 32
-    Width = 75
-    Height = 22
+    Left = 302
+    Top = 39
+    Width = 92
+    Height = 27
     HelpContext = 9011
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'Use Defaults'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -15
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
@@ -262,15 +356,19 @@ inherited frmOptionsDays: TfrmOptionsDays
     OnClick = btnLabDefaultsClick
   end
   object btnVisitDefaults: TButton [20]
-    Left = 245
-    Top = 184
-    Width = 75
-    Height = 22
+    Left = 302
+    Top = 226
+    Width = 92
+    Height = 28
     HelpContext = 9012
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'Use Defaults'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -15
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False

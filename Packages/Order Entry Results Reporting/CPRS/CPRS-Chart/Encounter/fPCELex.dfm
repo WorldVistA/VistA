@@ -82,12 +82,12 @@ inherited frmPCELex: TfrmPCELex
         Align = alLeft
         Caption = '&Extend Search'
         Enabled = False
+        NumGlyphs = 2
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0
         Visible = False
         OnClick = cmdExtendedSearchClick
-        NumGlyphs = 2
       end
     end
     object pnlSearch: TPanel
@@ -291,6 +291,7 @@ inherited frmPCELex: TfrmPCELex
       BevelInner = bvLowered
       BevelKind = bkFlat
       BevelOuter = bvLowered
+      Caption = ''
       TabOrder = 0
       ShowAccelChar = True
     end

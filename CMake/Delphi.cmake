@@ -19,7 +19,7 @@ if(NOT "${CMAKE_GENERATOR}" MATCHES "Borland Makefiles")
   message(FATAL_ERROR "This project works only with CMake's \"Borland Makefiles\" generator")
 endif()
 execute_process(COMMAND ${CMAKE_MAKE_PROGRAM} -h OUTPUT_VARIABLE output ERROR_VARIABLE output)
-if(NOT "x${output}" MATCHES "MAKE Version[^\n]*Borland")
+if(NOT "x${output}" MATCHES "MAKE Version[^\n]*Embarcadero")
   message(FATAL_ERROR "Make tool \"${CMAKE_MAKE_PROGRAM}\" is not a Borland make!  Fix your PATH.")
 endif()
 if(NOT DEFINED ENV{BDS} OR
@@ -29,14 +29,14 @@ if(NOT DEFINED ENV{BDS} OR
     "The environment is missing BDS or FrameworkDir or FrameworkVersion.\n"
     "Run CMake from an environment with \"rsvars.bat\" loaded such as the RAD Studio prompt.")
 endif()
-if(NOT EXISTS $ENV{FrameworkDir}$ENV{FrameworkVersion}/Borland.Delphi.Targets)
-  message(FATAL_ERROR "The framework directory in the current environment (%FrameworkDir%%FrameworkVersion%):
-  $ENV{FrameworkDir}$ENV{FrameworkVersion}
-does not contain \"Borland.Delphi.Targets\".
-Note that Delphi 2007 installs its framework files incorrectly on 64-bit Windows, as documented at
-  http://qc.embarcadero.com/wc/qcmain.aspx?d=54409
-")
-endif()
+#if(NOT EXISTS $ENV{FrameworkDir}$ENV{FrameworkVersion}/Borland.Delphi.Targets)
+#  message(FATAL_ERROR "The framework directory in the current environment (%FrameworkDir%%FrameworkVersion%):
+#  $ENV{FrameworkDir}$ENV{FrameworkVersion}
+#does not contain \"Borland.Delphi.Targets\".
+#Note that Delphi 2007 installs its framework files incorrectly on 64-bit Windows, as documented at
+#  http://qc.embarcadero.com/wc/qcmain.aspx?d=54409
+#")
+#endif()
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Build Configuration (Debug,Release)" FORCE)

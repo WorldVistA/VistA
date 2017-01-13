@@ -7,6 +7,8 @@ inherited frmOptionsReportsDefault: TfrmOptionsReportsDefault
   ClientHeight = 205
   ClientWidth = 384
   OnCreate = FormCreate
+  ExplicitWidth = 390
+  ExplicitHeight = 233
   PixelsPerInch = 96
   TextHeight = 13
   object Label2: TLabel [0]
@@ -122,6 +124,7 @@ inherited frmOptionsReportsDefault: TfrmOptionsReportsDefault
     OnKeyPress = odcDfStartKeyPress
     DateOnly = True
     RequireTime = False
+    Caption = ''
   end
   object odcDfStop: TORDateBox [9]
     Left = 96
@@ -134,6 +137,7 @@ inherited frmOptionsReportsDefault: TfrmOptionsReportsDefault
     OnKeyPress = odcDfStopKeyPress
     DateOnly = True
     RequireTime = False
+    Caption = ''
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
@@ -157,10 +161,12 @@ inherited frmOptionsReportsDefault: TfrmOptionsReportsDefault
         'Status = stsDefault')
       (
         'Component = odcDfStart'
-        'Status = stsDefault')
+        'Text = Start Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = odcDfStop'
-        'Status = stsDefault')
+        'Text = Stop Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = frmOptionsReportsDefault'
         'Status = stsDefault'))

@@ -1,3 +1,4 @@
+{$WARN UNSAFE_CODE OFF}
 unit VERGENCECONTEXTORLib_TLB;
 { **************************************************************
 	Package: XWB - Kernel RPCBroker
@@ -1755,4 +1756,5 @@ begin
     TContextorParticipant]);
 end;
 }
+{$WARN UNSAFE_CODE ON}
 end.

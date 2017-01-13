@@ -4,62 +4,80 @@ inherited frmGraphs: TfrmGraphs
   BorderIcons = []
   BorderStyle = bsNone
   Caption = 'CPRS Graphing - CPRSpatient,One'
-  ClientHeight = 400
-  ClientWidth = 592
+  ClientHeight = 492
+  ClientWidth = 729
   PopupMenu = mnuPopGraphStuff
   Position = poDesigned
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  ExplicitWidth = 592
-  ExplicitHeight = 400
-  PixelsPerInch = 96
-  TextHeight = 13
+  ExplicitWidth = 729
+  ExplicitHeight = 492
+  PixelsPerInch = 120
+  TextHeight = 16
   object pnlHeader: TPanel [0]
     Left = 0
     Top = 0
-    Width = 592
-    Height = 21
+    Width = 729
+    Height = 26
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
     object pnlTemp: TPanel
-      Left = 416
+      Left = 512
       Top = 0
-      Width = 73
-      Height = 17
+      Width = 90
+      Height = 21
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       TabOrder = 1
       Visible = False
     end
     object pnlInfo: TORAutoPanel
       Left = 0
       Top = 0
-      Width = 592
-      Height = 21
+      Width = 729
+      Height = 26
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       BevelOuter = bvNone
       Caption = 'Select multiple items using Ctrl-click or Shift-click.'
       Color = clCream
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -15
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
       TabOrder = 2
     end
     object chartBase: TChart
-      Left = 146
+      Left = 180
       Top = -2
-      Width = 105
-      Height = 17
+      Width = 129
+      Height = 20
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       AllowPanning = pmNone
-      AllowZoom = False
       BackWall.Brush.Color = clWhite
       BackWall.Brush.Style = bsClear
       Gradient.EndColor = clPurple
       Gradient.Visible = True
+      Legend.Alignment = laTop
+      Legend.LegendStyle = lsSeries
+      Legend.ResizeChart = False
       Title.Text.Strings = (
         'fsdfs dfs fsd')
       Title.Visible = False
@@ -73,72 +91,92 @@ inherited frmGraphs: TfrmGraphs
       BottomAxis.Increment = 0.000694444444444444
       BottomAxis.Maximum = 25.000000000000000000
       BottomAxis.Visible = False
-      Legend.Alignment = laTop
-      Legend.LegendStyle = lsSeries
-      Legend.ResizeChart = False
       TopAxis.LabelsOnAxis = False
       View3D = False
+      Zoom.Allow = False
+      Zoom.Pen.Color = clFuchsia
       Color = clRed
       TabOrder = 0
       Visible = False
       OnDblClick = mnuPopGraphDetailsClick
       OnMouseDown = chartBaseMouseDown
       OnMouseUp = chartBaseMouseUp
+      ColorPaletteIndex = 13
     end
   end
   object pnlFooter: TPanel [1]
     Left = 0
-    Top = 371
-    Width = 592
-    Height = 29
+    Top = 457
+    Width = 729
+    Height = 35
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 2
     object lblDateRange: TLabel
-      Left = 3
-      Top = 8
-      Width = 61
-      Height = 13
+      Left = 4
+      Top = 10
+      Width = 76
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Date Range:'
     end
     object btnClose: TButton
-      Left = 510
-      Top = 4
-      Width = 70
-      Height = 21
+      Left = 628
+      Top = 5
+      Width = 86
+      Height = 26
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Close'
       TabOrder = 4
       OnClick = btnCloseClick
     end
     object btnChangeSettings: TButton
-      Left = 380
-      Top = 4
-      Width = 85
-      Height = 21
+      Left = 468
+      Top = 5
+      Width = 104
+      Height = 26
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Settings...'
       TabOrder = 3
       OnClick = btnChangeSettingsClick
     end
     object cboDateRange: TORComboBox
-      Left = 70
-      Top = 6
-      Width = 121
-      Height = 21
+      Left = 86
+      Top = 7
+      Width = 149
+      Height = 24
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Style = orcsDropDown
       AutoSelect = True
+      Caption = ''
       Color = clWindow
       DropDownCount = 9
       Items.Strings = (
         'S^Date Range...'
         '1^Today'
         '2^One Week'
-        '3^Two Weeks'
-        '4^One Month'
-        '5^Six Months'
-        '6^One Year'
-        '7^Two Years'
-        '8^All Results')
-      ItemHeight = 13
+        '3^One Month'
+        '4^Six Months'
+        '5^One Year'
+        '6^Two Years'
+        '7^All Results')
+      ItemHeight = 16
       ItemTipColor = clWindow
       ItemTipEnable = True
       ListItemsOnly = False
@@ -150,24 +188,34 @@ inherited frmGraphs: TfrmGraphs
       SynonymChars = '<>'
       TabOrder = 0
       TabStop = True
+      Text = ''
       OnChange = cboDateRangeChange
       OnDropDown = cboDateRangeDropDown
+      OnExit = cboDateRangeExit
       CharsNeedMatch = 1
     end
     object chkDualViews: TCheckBox
-      Left = 197
-      Top = 7
-      Width = 85
-      Height = 17
+      Left = 242
+      Top = 9
+      Width = 105
+      Height = 21
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Split Views'
       TabOrder = 1
       OnClick = chkDualViewsClick
     end
     object btnGraphSelections: TButton
-      Left = 288
-      Top = 4
-      Width = 85
-      Height = 21
+      Left = 354
+      Top = 5
+      Width = 105
+      Height = 26
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Select/Define...'
       TabOrder = 2
       OnClick = btnGraphSelectionsClick
@@ -175,86 +223,117 @@ inherited frmGraphs: TfrmGraphs
   end
   object pnlMain: TPanel [2]
     Left = 0
-    Top = 21
-    Width = 592
-    Height = 350
+    Top = 26
+    Width = 729
+    Height = 431
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
     object splGraphs: TSplitter
       Left = 0
-      Top = 249
-      Width = 592
-      Height = 3
+      Top = 306
+      Width = 729
+      Height = 4
       Cursor = crVSplit
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alBottom
       Beveled = True
       Color = clBtnShadow
       ParentColor = False
       OnMoved = splGraphsMoved
-      ExplicitTop = 261
     end
     object pnlTop: TPanel
       Tag = 1
       Left = 0
       Top = 0
-      Width = 592
-      Height = 249
+      Width = 729
+      Height = 306
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
       object splItemsTop: TSplitter
-        Left = 148
+        Left = 182
         Top = 0
-        Width = 2
-        Height = 249
+        Height = 306
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         AutoSnap = False
         Beveled = True
         MinSize = 15
         OnMoved = splItemsTopMoved
-        ExplicitHeight = 261
       end
       object pnlItemsTop: TPanel
         Left = 0
         Top = 0
-        Width = 148
-        Height = 249
+        Width = 182
+        Height = 306
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alLeft
         BevelOuter = bvNone
         TabOrder = 0
         object pnlItemsTopInfo: TPanel
           Left = 0
           Top = 0
-          Width = 148
-          Height = 22
+          Width = 182
+          Height = 27
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 0
           DesignSize = (
-            148
-            22)
+            182
+            27)
           object bvlBottomLeft: TBevel
             Left = 0
             Top = 0
             Width = 2
-            Height = 22
+            Height = 27
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alLeft
-            ExplicitHeight = 25
           end
           object bvlBottomRight: TBevel
-            Left = 146
+            Left = 180
             Top = 0
             Width = 2
-            Height = 22
+            Height = 27
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alRight
             Visible = False
-            ExplicitHeight = 25
           end
           object chkItemsTop: TCheckBox
-            Left = 40
+            Left = 49
             Top = 2
-            Width = 105
-            Height = 20
+            Width = 129
+            Height = 25
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Alignment = taLeftJustify
             Anchors = [akTop, akRight]
             Caption = 'Individual Graphs'
@@ -266,45 +345,54 @@ inherited frmGraphs: TfrmGraphs
         end
         object pcTop: TPageControl
           Left = 0
-          Top = 22
-          Width = 148
-          Height = 227
+          Top = 27
+          Width = 182
+          Height = 279
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           ActivePage = tsTopItems
           Align = alClient
           TabOrder = 1
           object tsTopItems: TTabSheet
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Caption = 'Items'
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object lvwItemsTop: TListView
               Left = 0
               Top = 0
-              Width = 140
-              Height = 199
+              Width = 174
+              Height = 248
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
               Align = alClient
               BevelInner = bvNone
               BevelOuter = bvNone
               Columns = <
                 item
                   Caption = 'Item'
-                  Width = 100
+                  Width = 123
                 end
                 item
                   Caption = 'Type'
-                  Width = 60
+                  Width = 74
                 end
                 item
                   Caption = 'View'
-                  Width = 40
+                  Width = 49
                 end
                 item
                   Caption = 'Classification'
+                  Width = 62
                 end
                 item
                   Caption = 'Remote Location'
-                  Width = 150
+                  Width = 185
                 end>
               HideSelection = False
               MultiSelect = True
@@ -323,34 +411,43 @@ inherited frmGraphs: TfrmGraphs
             end
           end
           object tsTopViews: TTabSheet
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Caption = 'Views'
             ImageIndex = 1
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object splViewsTop: TSplitter
               Left = 0
-              Top = 196
-              Width = 140
-              Height = 2
+              Top = 246
+              Width = 174
+              Height = 1
               Cursor = crVSplit
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
               Align = alBottom
               OnMoved = splViewsTopMoved
-              ExplicitTop = 149
+              ExplicitTop = 239
+              ExplicitWidth = 172
             end
             object lstViewsTop: TORListBox
               Left = 0
               Top = 0
-              Width = 140
-              Height = 196
+              Width = 174
+              Height = 246
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
               Align = alClient
-              ItemHeight = 13
               ParentShowHint = False
               ShowHint = False
               TabOrder = 0
               OnEnter = lstViewsTopEnter
               OnMouseDown = lstViewsTopMouseDown
+              Caption = ''
               ItemTipColor = clWindow
               LongList = False
               Pieces = '2'
@@ -358,14 +455,18 @@ inherited frmGraphs: TfrmGraphs
             end
             object memViewsTop: TRichEdit
               Left = 0
-              Top = 198
-              Width = 140
+              Top = 247
+              Width = 174
               Height = 1
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
               Align = alBottom
               Color = clCream
               Font.Charset = ANSI_CHARSET
               Font.Color = clWindowText
-              Font.Height = -11
+              Font.Height = -15
               Font.Name = 'Courier New'
               Font.Style = []
               Lines.Strings = (
@@ -380,30 +481,38 @@ inherited frmGraphs: TfrmGraphs
             end
           end
           object tsTopCustom: TTabSheet
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Caption = 'Custom'
             ImageIndex = 2
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
           end
         end
       end
       object pnlTopRightPad: TPanel
         Tag = 50
-        Left = 577
+        Left = 710
         Top = 0
-        Width = 15
-        Height = 249
+        Width = 19
+        Height = 306
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 1
       end
       object pnlScrollTopBase: TPanel
-        Left = 150
+        Left = 185
         Top = 0
-        Width = 426
-        Height = 249
+        Width = 524
+        Height = 306
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 2
@@ -411,8 +520,12 @@ inherited frmGraphs: TfrmGraphs
         object pnlBlankTop: TPanel
           Left = 0
           Top = 0
-          Width = 426
-          Height = 219
+          Width = 524
+          Height = 270
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alClient
           BevelOuter = bvNone
           TabOrder = 2
@@ -422,8 +535,12 @@ inherited frmGraphs: TfrmGraphs
           Tag = 5
           Left = 0
           Top = 0
-          Width = 426
-          Height = 219
+          Width = 524
+          Height = 270
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alClient
           BevelInner = bvNone
           BevelOuter = bvNone
@@ -434,23 +551,37 @@ inherited frmGraphs: TfrmGraphs
         end
         object pnlDatelineTop: TPanel
           Left = 0
-          Top = 219
-          Width = 426
-          Height = 30
+          Top = 270
+          Width = 524
+          Height = 36
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 1
           object chartDatelineTop: TChart
-            Left = 20
+            Left = 25
             Top = 0
-            Width = 406
-            Height = 30
+            Width = 499
+            Height = 36
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             AllowPanning = pmNone
             BackWall.Brush.Color = clWhite
             BackWall.Brush.Style = bsClear
             BackWall.Pen.Visible = False
             Gradient.EndColor = clWhite
             Gradient.StartColor = 8421631
+            Legend.Alignment = laBottom
+            Legend.Color = clCream
+            Legend.LegendStyle = lsSeries
+            Legend.Shadow.HorizSize = 1
+            Legend.Shadow.VertSize = 1
+            Legend.Visible = False
             Title.Text.Strings = (
               '')
             Title.Visible = False
@@ -477,11 +608,6 @@ inherited frmGraphs: TfrmGraphs
             LeftAxis.RoundFirstLabel = False
             LeftAxis.Title.Caption = ' '
             LeftAxis.Visible = False
-            Legend.Alignment = laBottom
-            Legend.Color = clCream
-            Legend.LegendStyle = lsSeries
-            Legend.ShadowSize = 1
-            Legend.Visible = False
             RightAxis.Automatic = False
             RightAxis.AutomaticMaximum = False
             RightAxis.AutomaticMinimum = False
@@ -493,49 +619,49 @@ inherited frmGraphs: TfrmGraphs
             TopAxis.LabelsOnAxis = False
             View3D = False
             View3DWalls = False
+            Zoom.Pen.Color = clFuchsia
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
             OnDblClick = mnuPopGraphDetailsClick
             OnMouseDown = chartBaseMouseDown
             OnMouseUp = chartBaseMouseUp
+            ColorPaletteIndex = 13
             object serDatelineTop: TGanttSeries
-              ColorEachPoint = True
-              Marks.ArrowLength = 0
+              Marks.Arrow.Visible = True
+              Marks.Callout.Brush.Color = clBlack
+              Marks.Callout.Arrow.Visible = True
               Marks.Visible = False
               SeriesColor = clRed
               ShowInLegend = False
               OnGetMarkText = serDatelineTopGetMarkText
+              ClickableLine = False
+              Pointer.Brush.Gradient.EndColor = 919731
+              Pointer.Gradient.EndColor = 919731
               Pointer.InflateMargins = False
               Pointer.Style = psRectangle
               Pointer.Visible = True
-              XValues.DateTime = True
               XValues.Name = 'Start'
-              XValues.Multiplier = 1.000000000000000000
               XValues.Order = loAscending
-              YValues.DateTime = False
               YValues.Name = 'Y'
-              YValues.Multiplier = 1.000000000000000000
               YValues.Order = loNone
-              StartValues.DateTime = True
               StartValues.Name = 'Start'
-              StartValues.Multiplier = 1.000000000000000000
               StartValues.Order = loAscending
-              EndValues.DateTime = True
               EndValues.Name = 'End'
-              EndValues.Multiplier = 1.000000000000000000
               EndValues.Order = loNone
-              NextTask.DateTime = False
               NextTask.Name = 'NextTask'
-              NextTask.Multiplier = 1.000000000000000000
               NextTask.Order = loNone
             end
           end
           object pnlDatelineTopSpacer: TORAutoPanel
             Left = 0
             Top = 0
-            Width = 20
-            Height = 30
+            Width = 25
+            Height = 36
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alLeft
             BevelOuter = bvNone
             TabOrder = 1
@@ -543,10 +669,14 @@ inherited frmGraphs: TfrmGraphs
         end
       end
       object memTop: TMemo
-        Left = 576
+        Left = 709
         Top = 0
         Width = 1
-        Height = 249
+        Height = 306
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alRight
         BevelInner = bvNone
         BevelOuter = bvNone
@@ -569,17 +699,24 @@ inherited frmGraphs: TfrmGraphs
     object pnlBottom: TPanel
       Tag = 1
       Left = 0
-      Top = 252
-      Width = 592
-      Height = 98
+      Top = 310
+      Width = 729
+      Height = 121
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 1
       object splItemsBottom: TSplitter
-        Left = 148
+        Left = 182
         Top = 0
-        Width = 2
-        Height = 98
+        Height = 121
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         AutoSnap = False
         Beveled = True
         MinSize = 15
@@ -588,16 +725,24 @@ inherited frmGraphs: TfrmGraphs
       object pnlItemsBottom: TPanel
         Left = 0
         Top = 0
-        Width = 148
-        Height = 98
+        Width = 182
+        Height = 121
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alLeft
         BevelOuter = bvNone
         TabOrder = 0
         object pnlItemsBottomInfo: TPanel
           Left = 0
           Top = 0
-          Width = 148
-          Height = 22
+          Width = 182
+          Height = 27
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 0
@@ -605,24 +750,34 @@ inherited frmGraphs: TfrmGraphs
             Left = 0
             Top = 0
             Width = 2
-            Height = 22
+            Height = 27
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alLeft
-            ExplicitHeight = 25
           end
           object bvlTopRight: TBevel
-            Left = 146
+            Left = 180
             Top = 0
             Width = 2
-            Height = 22
+            Height = 27
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alRight
             Visible = False
-            ExplicitHeight = 25
           end
           object chkItemsBottom: TCheckBox
-            Left = 39
+            Left = 48
             Top = 2
-            Width = 105
-            Height = 20
+            Width = 129
+            Height = 25
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Alignment = taLeftJustify
             Caption = 'Individual Graphs'
             Checked = True
@@ -634,45 +789,54 @@ inherited frmGraphs: TfrmGraphs
         end
         object pcBottom: TPageControl
           Left = 0
-          Top = 22
-          Width = 148
-          Height = 76
+          Top = 27
+          Width = 182
+          Height = 94
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           ActivePage = tsBottomItems
           Align = alClient
           TabOrder = 1
           object tsBottomItems: TTabSheet
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Caption = 'Items'
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object lvwItemsBottom: TListView
               Left = 0
               Top = 0
-              Width = 140
-              Height = 48
+              Width = 174
+              Height = 63
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
               Align = alClient
               BevelInner = bvNone
               BevelOuter = bvNone
               Columns = <
                 item
                   Caption = 'Item'
-                  Width = 100
+                  Width = 123
                 end
                 item
                   Caption = 'Type'
-                  Width = 60
+                  Width = 74
                 end
                 item
                   Caption = 'View'
-                  Width = 40
+                  Width = 49
                 end
                 item
                   Caption = 'Classification'
+                  Width = 62
                 end
                 item
                   Caption = 'Remote Location'
-                  Width = 150
+                  Width = 185
                 end>
               HideSelection = False
               MultiSelect = True
@@ -691,33 +855,42 @@ inherited frmGraphs: TfrmGraphs
             end
           end
           object tsBottomViews: TTabSheet
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Caption = 'Views'
             ImageIndex = 1
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object splViewsBottom: TSplitter
               Left = 0
-              Top = 45
-              Width = 140
+              Top = 60
+              Width = 174
               Height = 2
               Cursor = crVSplit
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
               Align = alBottom
               OnMoved = splViewsTopMoved
-              ExplicitTop = 25
+              ExplicitTop = 52
+              ExplicitWidth = 172
             end
             object lstViewsBottom: TORListBox
               Left = 0
               Top = 0
-              Width = 140
-              Height = 45
+              Width = 174
+              Height = 60
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
               Align = alClient
-              ItemHeight = 13
               ParentShowHint = False
               ShowHint = False
               TabOrder = 0
               OnEnter = lstViewsBottomEnter
+              Caption = ''
               ItemTipColor = clWindow
               LongList = False
               Pieces = '2'
@@ -725,14 +898,18 @@ inherited frmGraphs: TfrmGraphs
             end
             object memViewsBottom: TRichEdit
               Left = 0
-              Top = 47
-              Width = 140
+              Top = 62
+              Width = 174
               Height = 1
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
               Align = alBottom
               Color = clCream
               Font.Charset = ANSI_CHARSET
               Font.Color = clWindowText
-              Font.Height = -11
+              Font.Height = -15
               Font.Name = 'Courier New'
               Font.Style = []
               Lines.Strings = (
@@ -747,38 +924,50 @@ inherited frmGraphs: TfrmGraphs
             end
           end
           object tsBottomCustom: TTabSheet
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Caption = 'Custom'
             ImageIndex = 2
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
           end
         end
       end
       object pnlBottomRightPad: TPanel
         Tag = 50
-        Left = 577
+        Left = 710
         Top = 0
-        Width = 15
-        Height = 98
+        Width = 19
+        Height = 121
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 1
       end
       object pnlScrollBottomBase: TPanel
-        Left = 150
+        Left = 185
         Top = 0
-        Width = 426
-        Height = 98
+        Width = 524
+        Height = 121
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 2
         object pnlBlankBottom: TPanel
           Left = 0
           Top = 0
-          Width = 426
-          Height = 68
+          Width = 524
+          Height = 84
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alClient
           BevelOuter = bvNone
           TabOrder = 2
@@ -786,22 +975,36 @@ inherited frmGraphs: TfrmGraphs
         end
         object pnlDatelineBottom: TPanel
           Left = 0
-          Top = 68
-          Width = 426
-          Height = 30
+          Top = 84
+          Width = 524
+          Height = 37
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 1
           object chartDatelineBottom: TChart
-            Left = 20
+            Left = 25
             Top = 0
-            Width = 406
-            Height = 30
+            Width = 499
+            Height = 37
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             AllowPanning = pmNone
             BackWall.Brush.Color = clWhite
             BackWall.Brush.Style = bsClear
             BackWall.Pen.Visible = False
             Gradient.EndColor = clGradientActiveCaption
+            Legend.Alignment = laBottom
+            Legend.Color = clCream
+            Legend.LegendStyle = lsSeries
+            Legend.Shadow.HorizSize = 1
+            Legend.Shadow.VertSize = 1
+            Legend.Visible = False
             Title.Text.Strings = (
               '')
             Title.Visible = False
@@ -827,11 +1030,6 @@ inherited frmGraphs: TfrmGraphs
             LeftAxis.MinorGrid.Visible = True
             LeftAxis.RoundFirstLabel = False
             LeftAxis.Title.Caption = ' '
-            Legend.Alignment = laBottom
-            Legend.Color = clCream
-            Legend.LegendStyle = lsSeries
-            Legend.ShadowSize = 1
-            Legend.Visible = False
             RightAxis.Automatic = False
             RightAxis.AutomaticMaximum = False
             RightAxis.AutomaticMinimum = False
@@ -843,49 +1041,51 @@ inherited frmGraphs: TfrmGraphs
             TopAxis.LabelsOnAxis = False
             View3D = False
             View3DWalls = False
+            Zoom.Pen.Color = clFuchsia
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
             OnDblClick = mnuPopGraphDetailsClick
             OnMouseDown = chartBaseMouseDown
             OnMouseUp = chartBaseMouseUp
+            ColorPaletteIndex = 13
             object serDatelineBottom: TGanttSeries
-              ColorEachPoint = True
-              Marks.ArrowLength = 0
+              Marks.Arrow.Visible = True
+              Marks.Callout.Brush.Color = clBlack
+              Marks.Callout.Arrow.Visible = True
+              Marks.Emboss.Color = 8553090
+              Marks.Shadow.Color = 8750469
               Marks.Visible = False
               SeriesColor = clRed
               ShowInLegend = False
               OnGetMarkText = serDatelineTopGetMarkText
+              ClickableLine = False
+              Pointer.Brush.Gradient.EndColor = 10708548
+              Pointer.Gradient.EndColor = 10708548
               Pointer.InflateMargins = True
               Pointer.Style = psRectangle
               Pointer.Visible = True
-              XValues.DateTime = True
               XValues.Name = 'Start'
-              XValues.Multiplier = 1.000000000000000000
               XValues.Order = loAscending
-              YValues.DateTime = False
               YValues.Name = 'Y'
-              YValues.Multiplier = 1.000000000000000000
               YValues.Order = loNone
-              StartValues.DateTime = True
               StartValues.Name = 'Start'
-              StartValues.Multiplier = 1.000000000000000000
               StartValues.Order = loAscending
-              EndValues.DateTime = True
               EndValues.Name = 'End'
-              EndValues.Multiplier = 1.000000000000000000
               EndValues.Order = loNone
-              NextTask.DateTime = False
               NextTask.Name = 'NextTask'
-              NextTask.Multiplier = 1.000000000000000000
               NextTask.Order = loNone
             end
           end
           object pnlDatelineBottomSpacer: TORAutoPanel
             Left = 0
             Top = 0
-            Width = 20
-            Height = 30
+            Width = 25
+            Height = 37
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alLeft
             BevelOuter = bvNone
             TabOrder = 1
@@ -895,8 +1095,12 @@ inherited frmGraphs: TfrmGraphs
           Tag = 5
           Left = 0
           Top = 0
-          Width = 426
-          Height = 68
+          Width = 524
+          Height = 84
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alClient
           BevelInner = bvNone
           BorderStyle = bsNone
@@ -906,10 +1110,14 @@ inherited frmGraphs: TfrmGraphs
         end
       end
       object memBottom: TMemo
-        Left = 576
+        Left = 709
         Top = 0
         Width = 1
-        Height = 98
+        Height = 121
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alRight
         BevelInner = bvNone
         BevelOuter = bvNone
@@ -1238,7 +1446,7 @@ inherited frmGraphs: TfrmGraphs
       Caption = '-'
       Visible = False
     end
-    object mnuTest: TMenuItem
+    object mnutest: TMenuItem
       Caption = 'testing'
       Enabled = False
       Visible = False

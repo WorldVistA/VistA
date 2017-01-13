@@ -607,7 +607,7 @@ begin
           fOnLogEvent('VistA Name = ' + getVistAUserName);
 
           isDisplayNameCorrect := (Pos(UpperCase(Copy(aCertDisplayName, 1, 1)), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') > 0) and // Starts with a character
-            (Pos(Copy(aCertDisplayName, Length(aCertDisplayName) - 1, 1), '0123456789)') > 0) and // Ends with a number or paren
+            (Pos(Copy(aCertDisplayName, Length(aCertDisplayName), 1), '0123456789)') > 0) and // Ends with a number or paren
             (Pos(UpperCase(Copy(aVistAUserName, 1, Pos(',', aVistAUserName) - 1)), UpperCase(aCertDisplayName)) > 0); // Contains the users last name from VistA - Not the best but oh well :(
 
           if not isDisplayNameCorrect then
@@ -1227,7 +1227,7 @@ begin
       raise EPKIEncryptionError.Create(DLG_89802035);
 
     fOnLogEvent('Acquiring Context for ' + fCSPName);
-    if CryptAcquireContextA(@aHandle, PAnsiChar(''), PAnsiChar(aCSPName), PKI_ACTIVE_CLIENT_TYPE, 0) then
+    if CryptAcquireContextA(@aHandle, PWideChar(''), PWideChar(aCSPName), PKI_ACTIVE_CLIENT_TYPE, 0) then
       try
         // Store this internally so it can be present multiple times for multiple signing or until cleared
         fCurrentPIN := aPKIPIN;

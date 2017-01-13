@@ -113,7 +113,7 @@ function CreateReportTextComponent(ParentForm: TForm): TRichEdit;
 implementation
 
 const
-  Months: array[1..12] of string[3] = ('JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC');
+  Months: array[1..12] of String = ('JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC');
 
 constructor TCellObject.Create;
 
@@ -248,10 +248,10 @@ begin
   if not Result then
   begin
       // Remove thousands seperators
-    S := StringReplace(S, ThousandSeparator, '', [rfReplaceAll]);
+    S := StringReplace(S, FormatSettings.ThousandSeparator, '', [rfReplaceAll]);
       // change DecimalSeperator to '.' because Val only recognizes that, not
       // the locale specific decimal char... then try again.  Stupid Val.
-    S := StringReplace(S, DecimalSeparator, '.', [rfReplaceAll]);
+    S := StringReplace(S, FormatSettings.DecimalSeparator, '.', [rfReplaceAll]);
     Val(S, V, NumCode);
     Result := (NumCode = 0);
   end;

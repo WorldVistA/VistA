@@ -80,9 +80,9 @@ inherited frmPLLex: TfrmPLLex
         Margins.Right = 0
         Align = alRight
         Caption = '&Search'
+        NumGlyphs = 2
         TabOrder = 1
         OnClick = bbSearchClick
-        NumGlyphs = 2
       end
     end
     object pnlButtons: TPanel
@@ -113,9 +113,9 @@ inherited frmPLLex: TfrmPLLex
         Align = alRight
         Caption = '&OK'
         Enabled = False
+        NumGlyphs = 2
         TabOrder = 2
         OnClick = bbOKClick
-        NumGlyphs = 2
       end
       object bbCan: TBitBtn
         AlignWithMargins = True
@@ -130,9 +130,9 @@ inherited frmPLLex: TfrmPLLex
         Align = alRight
         Cancel = True
         Caption = '&Cancel'
+        NumGlyphs = 2
         TabOrder = 3
         OnClick = bbCanClick
-        NumGlyphs = 2
       end
       object bbExtendedSearch: TBitBtn
         Left = 12
@@ -143,12 +143,12 @@ inherited frmPLLex: TfrmPLLex
         Align = alLeft
         Caption = '&Extend Search'
         Enabled = False
+        NumGlyphs = 2
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0
         Visible = False
         OnClick = bbExtendedSearchClick
-        NumGlyphs = 2
       end
       object bbFreetext: TBitBtn
         Left = 105
@@ -307,6 +307,7 @@ inherited frmPLLex: TfrmPLLex
       BevelInner = bvLowered
       BevelKind = bkFlat
       BevelOuter = bvLowered
+      Caption = ''
       TabOrder = 0
       ShowAccelChar = True
     end

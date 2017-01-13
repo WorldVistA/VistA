@@ -103,7 +103,7 @@ implementation
 {$R *.DFM}
 
 uses rODBase, rODRad, rOrders, uCore, rCore, fODRadApproval, fODRadConShRes, fLkUpLocation, fFrame,
-  uFormMonitor;
+  uFormMonitor, System.UITypes;
 
 const
   TX_NO_PROC          = 'An Imaging Procedure must be specified.'    ;
@@ -434,8 +434,8 @@ begin
       j := 0;
       for i := 1 to Length(txtReason.Text) do
         begin
-          if txtReason.Text[i] in ['A'..'Z','a'..'z','0'..'9'] then j := j + 1;
-          if not (txtReason.Text[i] in ['A'..'Z','a'..'z','0'..'9']) and (j > 0) then j := 0;
+          if CharInSet(txtReason.Text[i], ['A'..'Z','a'..'z','0'..'9']) then j := j + 1;
+          if not CharInSet(txtReason.Text[i], ['A'..'Z','a'..'z','0'..'9']) and (j > 0) then j := 0;
           if j = 2 then break;
         end;
       if j < 2 then SetError(TX_NO_REASON);
@@ -446,8 +446,8 @@ begin
     j := 0;
     for i := 1 to Length(memHistory.Text) do
       begin
-        if memHistory.Text[i] in ['A'..'Z','a'..'z','0'..'9'] then j := j + 1;
-        if not (memHistory.Text[i] in ['A'..'Z','a'..'z','0'..'9']) and (j > 0) then j := 0;
+        if CharInSet(memHistory.Text[i], ['A'..'Z','a'..'z','0'..'9']) then j := j + 1;
+        if not CharInSet(memHistory.Text[i], ['A'..'Z','a'..'z','0'..'9']) and (j > 0) then j := 0;
         if j = 2 then break;
       end;
     if j < 2 then SetError(TX_BAD_HISTORY);
@@ -459,7 +459,7 @@ begin
       if ((not Patient.Inpatient) and (Self.EvtType = 'A')) then
         AskLoc := False;
       if ItemID = '' then SetError(TX_NO_CATEGORY);
-      if (CharAt(ItemID,1) in ['C','S']) and (Contract = '') then SetError(TX_NO_SOURCE);
+      if CharInSet(CharAt(ItemID,1), ['C','S']) and (Contract = '') then SetError(TX_NO_SOURCE);
       if (CharAt(ItemID, 1) = 'R')       and (Research = '') then SetError(TX_NO_SOURCE);
       if ((CharAt(ItemID, 1) = 'O') and (LocationType(Encounter.Location) = 'W')) then
       begin
@@ -627,12 +627,12 @@ begin
   Research := '';
   with cboCategory do
     begin
-      if CharAt(ItemID,1) in ['C','S','R'] then
+      if CharInSet(CharAt(ItemID,1), ['C','S','R']) then
         begin
           SelectSource(Font.Size, CharAt(ItemID,1), Source);
           if Source = '-1' then
             InfoBox(TX_NO_AGREE, TX_NO_AGREE_CAP, MB_OK or MB_ICONWARNING)
-          else if CharAt(ItemID,1) in ['C','S'] then
+          else if CharInSet(CharAt(ItemID,1), ['C','S']) then
             Contract := Source
           else if ItemID='R' then
             Research := Source;

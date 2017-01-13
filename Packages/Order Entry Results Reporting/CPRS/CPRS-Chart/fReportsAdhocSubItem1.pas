@@ -63,7 +63,7 @@ function ExecuteForm2: Boolean;
 
 implementation
 
-uses fReportsAdhocComponent1, rReports, VAUtils;
+uses fReportsAdhocComponent1, rReports, VAUtils, System.Types;
 
 {$R *.DFM}
 

@@ -148,7 +148,6 @@ type
     FVisitCategory: Char;                        // A=ambulatory,T=Telephone,H=inpt,E=historic
     FStandAlone:    Boolean;                     // true if visit not related to appointment
     FNotifier:      IORNotifier;                 // Event handlers for location changes
-    FICD10ImplDate:  TFMDateTime;                 // ICD-10-CM Activation Date
     function GetLocationName: string;
     function GetLocationText: string;
     function GetProviderName: string;
@@ -182,7 +181,6 @@ type
     property VisitCategory:   Char        read GetVisitCategory write SetVisitCategory;
     property VisitStr:        string      read GetVisitStr;
     property Notifier:        IORNotifier read FNotifier implements IORNotifier;
-    property ICD10ImplDate: TFMDateTime read FICD10ImplDate;
   end;
 
   TChangeItem = class
@@ -399,6 +397,7 @@ var
   Notifications: TNotifications;
   HasFlag: boolean;
   FlagList: TStringList;
+  ICD10ImplDate: TFMDateTime;
   //hds7591  Clinic/Ward movement.
   TempEncounterLoc: Integer; // used to Save Encounter Location when user selected "Review Sign Changes" from "File"
   TempEncounterLocName: string; // since in the path PatientRefresh is done prior to checking if patient has been admitted while entering OPT orders.
@@ -846,7 +845,7 @@ constructor TEncounter.Create;
 begin
   inherited;
   FNotifier := TORNotifier.Create(Self, TRUE);
-  FICD10ImplDate := GetICD10ImplementationDate;
+  ICD10ImplDate := GetICD10ImplementationDate;
 end;
 
 destructor TEncounter.Destroy;
@@ -952,10 +951,13 @@ begin
   else // otherwise compare I-10 Impl dt with Encounter date/time
     cd := FDateTime;
 
-  if (FICD10ImplDate > cd) then
-    Result := 'ICD^ICD-9-CM'
-  else
-    Result := '10D^ICD-10-CM';
+   if ICD10ImplDate <> 0 then
+     begin
+        if (ICD10ImplDate > cd) then
+          Result := 'ICD^ICD-9-CM'
+        else
+          Result := '10D^ICD-10-CM';
+     end;
 end;
 
 function TEncounter.NeedVisit: Boolean;
@@ -1053,6 +1055,7 @@ begin
   end;
   FChanged := False;
 end;
+
 
 { TChangeItem ------------------------------------------------------------------------------ }
 

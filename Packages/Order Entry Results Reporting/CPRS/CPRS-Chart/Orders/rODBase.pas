@@ -89,7 +89,7 @@ function ResolveScreenRef(const ARef: string): string;
 function SubsetOfEntries(const StartFrom: string; Direction: Integer;
   const XRef, GblRef, ScreenRef: string): TStrings;
 function SubSetOfOrderItems(const StartFrom: string; Direction: Integer;
-  const XRef: string): TStrings;
+  const XRef: string; QuickOrderDlgIen: Integer): TStrings;
 function GetDefaultCopay(AnOrderID: string): String;
 procedure SetDefaultCoPayToNewOrder(AnOrderID, CoPayInfo:string);
 procedure ValidateNumericStr(const x, Dom: string; var ErrMsg: string);
@@ -107,7 +107,9 @@ procedure PutQuickOrder(var NewIEN: Integer; const CRC, DisplayName: string; DGr
 { Medication Calls }
 function AmountsForIVFluid(AnIEN: Integer; FluidType: Char): string;
 procedure AppendMedRoutes(Dest: TStrings);
-procedure CheckAuthForMeds(var x: string);
+
+//CQ 21724 - Nurses should be able to order supplies - jcs
+procedure CheckAuthForMeds(var x: string; dlgID: string = '');
 function DispenseMessage(AnIEN: Integer): string;
 procedure LookupRoute(const AName: string; var ID, Abbreviation: string);
 function MedIsSupply(AnIEN: Integer): Boolean;
@@ -468,7 +470,7 @@ begin
     Param[5].Value := IntToStr(ConstructOrder.OrderItem);
     Param[6].PType := literal;
     Param[6].Value := AnOrder.EditOf;        // null if new order, otherwise ORIFN of original
-    if (ConstructOrder.DGroup = IVDisp) or (ConstructOrder.DialogName = 'PSJI OR PAT FLUID OE') then
+    if (ConstructOrder.DGroup = IVDisp) or (ConstructOrder.DGroup = ClinIVDisp) or (ConstructOrder.DialogName = 'PSJI OR PAT FLUID OE') then
       SetupORDIALOG(Param[7], ConstructOrder.ResponseList, True)
     else
       SetupORDIALOG(Param[7], ConstructOrder.ResponseList);
@@ -503,14 +505,14 @@ begin
       else
        Param[7].Mult[y] := OCStr;
     end;
-    if ConstructOrder.DelayEvent in ['A','D','T','M','O'] then
+    if CharInSet(ConstructOrder.DelayEvent, ['A','D','T','M','O']) then
       Param[7].Mult['"OREVENT"'] := ConstructOrder.PTEventPtr;
     if ConstructOrder.LogTime > 0
       then Param[7].Mult['"ORSLOG"'] := FloatToStr(ConstructOrder.LogTime);
     Param[7].Mult['"ORTS"'] := IntToStr(Patient.Specialty);  // pass in treating specialty for ORTS
     Param[8].PType := literal;
     Param[8].Value := ConstructOrder.DigSig;
-    if Constructorder.IsIMODialog then
+    if (Constructorder.IsIMODialog) or (ConstructOrder.DGroup = ClinDisp) or (ConstructOrder.DGroup = ClinIVDisp) then
     begin
       Param[9].PType := literal;                       //IMO
       Param[9].Value := FloatToStr(Encounter.DateTime);
@@ -585,12 +587,12 @@ begin
 end;
 
 function SubSetOfOrderItems(const StartFrom: string; Direction: Integer;
-  const XRef: string): TStrings;
+  const XRef: string; QuickOrderDlgIen: Integer): TStrings;
 { returns a pointer to a list of orderable items matching an S.xxx cross reference (for use in
   a long list box) -  The return value is  a pointer to RPCBrokerV.Results, so the data must
   be used BEFORE the next broker call! }
 begin
-  CallV('ORWDX ORDITM', [StartFrom, Direction, XRef]);
+  CallV('ORWDX ORDITM', [StartFrom, Direction, XRef, QuickOrderDlgIen]);
   Result := RPCBrokerV.Results;
 end;
 
@@ -747,9 +749,11 @@ begin
   FastAddStrings(uMedRoutes, Dest);
 end;
 
-procedure CheckAuthForMeds(var x: string);
+procedure CheckAuthForMeds(var x: string; dlgID: string = '');
 begin
-  x := Piece(sCallV('ORWDPS32 AUTH', [Encounter.Provider]), U, 2);
+  //CQ 21724 - Nurses should be able to order supplies, pass in dlgID
+  //from fODMeds - jcs
+  x := Piece(sCallV('ORWDPS32 AUTH', [Encounter.Provider, dlgID]), U, 2);
 end;
 
 function DispenseMessage(AnIEN: Integer): string;

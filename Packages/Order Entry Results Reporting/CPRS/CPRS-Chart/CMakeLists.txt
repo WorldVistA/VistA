@@ -14,7 +14,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 add_delphi_project(CPRSChart)
-add_dependencies(CPRSChart ORDateLib2007)
+#add_dependencies(CPRSChart ORDateLibXE3)
 
 set(BUILD_DELPHI_XuDigSig_DIR "${CMAKE_CURRENT_SOURCE_DIR}/XuDigSig" CACHE PATH "Path to Folder that contains the MPL licensed files or local replacements")
 if(NOT BUILD_DELPHI_XuDigSig_DIR)

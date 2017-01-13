@@ -33,9 +33,6 @@ object frmSignonConfig: TfrmSignonConfig
     Width = 77
     Height = 27
     Caption = 'OK'
-    ModalResult = 1
-    TabOrder = 5
-    OnClick = OKBtnClick
     Glyph.Data = {
       DE010000424DDE01000000000000760000002800000024000000120000000100
       0400000000006801000000000000000000001000000000000000000000000000
@@ -54,8 +51,11 @@ object frmSignonConfig: TfrmSignonConfig
       333A333333333333333338330000333333333333333333333333333333333333
       0000}
     Margin = 2
+    ModalResult = 1
     NumGlyphs = 2
     Spacing = -1
+    TabOrder = 5
+    OnClick = OKBtnClick
     IsControl = True
   end
   object CancelBtn: TBitBtn
@@ -66,8 +66,6 @@ object frmSignonConfig: TfrmSignonConfig
     Cancel = True
     Caption = 'Cancel'
     Default = True
-    ModalResult = 2
-    TabOrder = 0
     Glyph.Data = {
       DE010000424DDE01000000000000760000002800000024000000120000000100
       0400000000006801000000000000000000001000000000000000000000000000
@@ -86,8 +84,10 @@ object frmSignonConfig: TfrmSignonConfig
       3333333333333333333888330000333333333333333333333333333333333333
       0000}
     Margin = 2
+    ModalResult = 2
     NumGlyphs = 2
     Spacing = -1
+    TabOrder = 0
     IsControl = True
   end
   object HelpBtn: TBitBtn
@@ -95,10 +95,11 @@ object frmSignonConfig: TfrmSignonConfig
     Top = 128
     Width = 77
     Height = 27
-    TabOrder = 6
     Kind = bkHelp
     Margin = 2
+    NumGlyphs = 2
     Spacing = -1
+    TabOrder = 6
     IsControl = True
   end
   object rgrWindowPosition: TRadioGroup
@@ -171,8 +172,6 @@ object frmSignonConfig: TfrmSignonConfig
     Height = 27
     HelpContext = 4
     Caption = '&Defaults'
-    ModalResult = 5
-    TabOrder = 1
     Glyph.Data = {
       76010000424D7601000000000000760000002800000020000000100000000100
       0400000000000001000000000000000000001000000010000000000000000000
@@ -187,8 +186,10 @@ object frmSignonConfig: TfrmSignonConfig
       99333773FF3333777733339993333339933333773FFFFFF77333333999999999
       3333333777333777333333333999993333333333377777333333}
     Margin = 2
+    ModalResult = 5
     NumGlyphs = 2
     Spacing = -1
+    TabOrder = 1
     IsControl = True
   end
   object FontDialog1: TFontDialog
@@ -197,13 +198,10 @@ object frmSignonConfig: TfrmSignonConfig
     Font.Height = -13
     Font.Name = 'System'
     Font.Style = []
-    MinFontSize = 0
-    MaxFontSize = 0
     Left = 136
     Top = 200
   end
   object ColorDialog1: TColorDialog
-    Ctl3D = True
     Left = 336
     Top = 216
   end

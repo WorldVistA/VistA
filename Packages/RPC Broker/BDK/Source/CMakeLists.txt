@@ -14,13 +14,13 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 foreach(package
-  XWB_R2007
-  XWB_D2007
-  SharedRPCBroker_R2007
-  SharedRPCBroker_D2007
+  XWB_RXE3
+  XWB_DXE3
+  #SharedRPCBroker_R2007
+ # SharedRPCBroker_D2007
   )
   add_delphi_package(${package})
 endforeach()
 
-add_dependencies(XWB_D2007 XWB_R2007)
-add_dependencies(SharedRPCBroker_D2007 SharedRPCBroker_R2007)
+add_dependencies(XWB_DXE3 XWB_RXE3)
+#add_dependencies(SharedRPCBroker_D2007 SharedRPCBroker_R2007)

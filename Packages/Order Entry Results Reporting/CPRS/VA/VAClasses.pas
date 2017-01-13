@@ -77,7 +77,7 @@ type
     FOnChange: TVAListChangeEvent;
   protected
     procedure Notify(Ptr: Pointer; Action: TListNotification); override;
-  published
+  public
     property OnChange: TVAListChangeEvent read FOnChange write FOnChange;
   end;
 

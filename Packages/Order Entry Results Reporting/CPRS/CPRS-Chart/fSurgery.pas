@@ -7,7 +7,7 @@ uses
   fHSplit, StdCtrls, ExtCtrls, Menus, ComCtrls, ORCtrls, ORFn, uConst, ORDtTm,
   uPCE, ORClasses, fDrawers, ImgList, fSurgeryView, rSurgery, uSurgery,
   uCaseTree, uTIU, fBase508Form, VA508AccessibilityManager,
-  VA508ImageListLabeler;
+  VA508ImageListLabeler, ORextensions;
 
 type
   TfrmSurgery = class(TfrmHSplit)
@@ -273,7 +273,8 @@ uses fFrame, fVisit, fEncnt, rCore, uCore, fNoteBA, fNoteBD, fSignItem, fEncount
      rPCE, Clipbrd, fNoteCslt, fNotePrt, rVitals, fAddlSigners, fNoteDR, fConsults, uSpell,
      fTIUView, fTemplateEditor, uReminders, fReminderDialog, uOrders, rConsults, fReminderTree,
      fNoteProps, fNotesBP, fTemplateFieldEditor, uTemplates, dShared, rTemplates,
-     FIconLegend, fPCEEdit, rTIU, fRptBox, fTemplateDialog, VA508AccessibilityRouter;
+     FIconLegend, fPCEEdit, rTIU, fRptBox, fTemplateDialog, VA508AccessibilityRouter,
+     System.Types, rECS, ORNet, trpcb;
 
 const
   CT_SURGERY  = 11;                             // chart tab - surgery
@@ -930,6 +931,7 @@ begin
       FEditNote.NeedCPT  := uPCEEdit.CPTRequired;
        // create the note
       PutNewNote(CreatedNote, FEditNote);
+
       uPCEEdit.NoteIEN := CreatedNote.IEN;
       if CreatedNote.IEN > 0 then LockDocument(CreatedNote.IEN, CreatedNote.ErrorText);
       if CreatedNote.ErrorText = '' then
@@ -1048,6 +1050,7 @@ begin
     FEditNote.LocationName := ExternalName(uPCEEdit.Location, 44);
     FEditNote.VisitDate    := uPCEEdit.DateTime;
     PutAddendum(CreatedNote, FEditNote, FEditNote.Addend);
+
     uPCEEdit.NoteIEN := CreatedNote.IEN;
     if CreatedNote.IEN > 0 then LockDocument(CreatedNote.IEN, CreatedNote.ErrorText);
     if CreatedNote.ErrorText = '' then
@@ -1905,8 +1908,9 @@ end;
 procedure TfrmSurgery.popNoteMemoPasteClick(Sender: TObject);
 begin
   inherited;
-  FEditCtrl.SelText := Clipboard.AsText; {*KCM*}
-  //FEditCtrl.PasteFromClipboard;        // use AsText to prevent formatting
+ // FEditCtrl.SelText := Clipboard.AsText; {*KCM*}
+  ScrubTheClipboard;
+  FEditCtrl.PasteFromClipboard;        // use AsText to prevent formatting
 end;
 
 procedure TfrmSurgery.popNoteMemoReformatClick(Sender: TObject);
@@ -2573,7 +2577,6 @@ begin
     mnuViewDetail.Enabled    := False;
     mnuActChange.Enabled     := True;
     mnuActLoadBoiler.Enabled := True;
-    //UpdateReminderFinish;
   end else
   begin
     StatusText('Retrieving selected surgery report...');

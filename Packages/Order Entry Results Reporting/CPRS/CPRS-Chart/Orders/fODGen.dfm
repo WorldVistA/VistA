@@ -15,6 +15,10 @@ inherited frmODGen: TfrmODGen
   end
   inherited memOrder: TCaptionMemo
     Top = 209
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     ExplicitTop = 209
   end
   object sbxMain: TScrollBox [2]
@@ -24,19 +28,42 @@ inherited frmODGen: TfrmODGen
     Height = 185
     Align = alTop
     TabOrder = 4
-    ExplicitWidth = 520
   end
   inherited cmdAccept: TButton
     Top = 209
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     ExplicitTop = 209
   end
   inherited cmdQuit: TButton
     Top = 234
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     ExplicitTop = 234
   end
   inherited pnlMessage: TPanel
     Top = 191
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     ExplicitTop = 191
+    inherited imgMessage: TImage
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+    end
+    inherited memMessage: TRichEdit
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+    end
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (

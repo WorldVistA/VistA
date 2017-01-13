@@ -7,8 +7,8 @@ inherited frmLabTestGroups: TfrmLabTestGroups
   OldCreateOrder = True
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitWidth = 465
-  ExplicitHeight = 461
+  ExplicitWidth = 473
+  ExplicitHeight = 472
   PixelsPerInch = 96
   TextHeight = 13
   object pnlLabTestGroups: TORAutoPanel [0]
@@ -17,7 +17,6 @@ inherited frmLabTestGroups: TfrmLabTestGroups
     Width = 457
     Height = 434
     Align = alClient
-    Caption = 'Specimen'
     TabOrder = 0
     object bvlTestGroups: TBevel
       Left = 1
@@ -86,7 +85,7 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       Alignment = taLeftJustify
       AutoSize = True
       Caption = 'Define Test Groups'
-      TabOrder = 10
+      TabOrder = 12
       ShowAccelChar = True
     end
     object pnlUpButton: TKeyClickPanel
@@ -97,7 +96,7 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       BevelOuter = bvNone
       Constraints.MaxHeight = 29
       Constraints.MaxWidth = 29
-      TabOrder = 5
+      TabOrder = 7
       TabStop = True
       OnClick = cmdUpClick
       OnEnter = pnlUpButtonEnter
@@ -121,7 +120,7 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       BevelOuter = bvNone
       Constraints.MaxHeight = 29
       Constraints.MaxWidth = 29
-      TabOrder = 6
+      TabOrder = 8
       TabStop = True
       OnClick = cmdDownClick
       OnEnter = pnlDownButtonEnter
@@ -143,7 +142,7 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       Width = 72
       Height = 21
       Caption = 'OK'
-      TabOrder = 8
+      TabOrder = 10
       OnClick = cmdOKClick
     end
     object cmdCancel: TButton
@@ -154,7 +153,7 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       Cancel = True
       Caption = 'Cancel'
       ModalResult = 2
-      TabOrder = 9
+      TabOrder = 11
     end
     object cmdClear: TButton
       Left = 189
@@ -163,7 +162,7 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       Height = 21
       Caption = 'Remove All'
       Enabled = False
-      TabOrder = 3
+      TabOrder = 4
       OnClick = cmdClearClick
     end
     object cmdRemove: TButton
@@ -173,7 +172,7 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       Height = 21
       Caption = 'Remove One'
       Enabled = False
-      TabOrder = 4
+      TabOrder = 5
       OnClick = cmdRemoveClick
     end
     object lstList: TORListBox
@@ -184,7 +183,7 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       ItemHeight = 13
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 7
+      TabOrder = 9
       OnClick = lstListClick
       Caption = 'Tests to be displayed'
       ItemTipColor = clWindow
@@ -216,6 +215,7 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       SynonymChars = '<>'
       TabOrder = 0
       TabStop = True
+      Text = ''
       OnChange = cboTestsChange
       OnDblClick = cmdAddTestClick
       OnEnter = cboTestsEnter
@@ -243,7 +243,8 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       Pieces = '2'
       Sorted = False
       SynonymChars = '<>'
-      TabOrder = 11
+      TabOrder = 13
+      Text = ''
       OnClick = cboUsersClick
       OnNeedData = cboUsersNeedData
       CharsNeedMatch = 1
@@ -256,7 +257,7 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       ItemHeight = 13
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 12
+      TabOrder = 14
       Caption = 'Test Groups'
       ItemTipColor = clWindow
       LongList = False
@@ -270,7 +271,7 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       Height = 21
       Caption = 'Replace'
       Enabled = False
-      TabOrder = 14
+      TabOrder = 16
       OnClick = cmdReplaceClick
     end
     object cboSpecimen: TORComboBox
@@ -296,6 +297,7 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 1
+      Text = ''
       OnNeedData = cboSpecimenNeedData
       CharsNeedMatch = 1
     end
@@ -306,7 +308,7 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       Height = 21
       Caption = 'Delete'
       Enabled = False
-      TabOrder = 15
+      TabOrder = 17
       OnClick = cmdDeleteClick
     end
     object cmdAdd: TButton
@@ -318,7 +320,7 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       Enabled = False
       ParentShowHint = False
       ShowHint = False
-      TabOrder = 13
+      TabOrder = 15
       OnClick = cmdAddClick
     end
     object cmdAddTest: TButton
@@ -330,6 +332,36 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       Enabled = False
       TabOrder = 2
       OnClick = cmdAddTestClick
+    end
+    object lbl508TstGrp: TVA508StaticText
+      Name = 'lbl508TstGrp'
+      Left = 173
+      Top = 198
+      Width = 8
+      Height = 39
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      Alignment = taLeftJustify
+      Caption = ''
+      Enabled = False
+      TabOrder = 3
+      Visible = False
+      ShowAccelChar = True
+    end
+    object lbl508Order: TVA508StaticText
+      Name = 'lbl508Order'
+      Left = 173
+      Top = 304
+      Width = 8
+      Height = 52
+      Alignment = taLeftJustify
+      Caption = ''
+      Enabled = False
+      TabOrder = 6
+      Visible = False
+      ShowAccelChar = True
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
@@ -394,6 +426,14 @@ inherited frmLabTestGroups: TfrmLabTestGroups
         'Status = stsDefault')
       (
         'Component = lblDefine'
-        'Status = stsDefault'))
+        'Status = stsDefault')
+      (
+        'Component = lbl508TstGrp'
+        'Text = To create a New Test Group, limit selection to 7 tests.'
+        'Status = stsOK')
+      (
+        'Component = lbl508Order'
+        'Text = Arrange order of tests for display.'
+        'Status = stsOK'))
   end
 end

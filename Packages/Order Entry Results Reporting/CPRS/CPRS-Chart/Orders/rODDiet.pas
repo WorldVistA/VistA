@@ -50,7 +50,7 @@ function OutpatientPatchInstalled: boolean;
 function UserHasFHAUTHKey: boolean;
 procedure GetCurrentRecurringOPMeals(Dest: TStrings; MealType: string = '');
 function OutpatientLocationConfigured(ALocation: string): boolean;
-
+procedure CheckForDelayedDietOrders(var OutPutText: String; CurrentView: TOrderView; DispGrp: integer);
 
 implementation
 
@@ -172,7 +172,7 @@ end;
 function DietDialogType(GroupIEN: Integer): Char;
 begin
   Result := CharAt(sCallV('ORWDFH FINDTYP', [GroupIEN]), 1);
-  if not (Result in ['A', 'D', 'E', 'N', 'P', 'T', 'M']) then Result := 'D';
+  if not CharInSet(Result, ['A', 'D', 'E', 'N', 'P', 'T', 'M']) then Result := 'D';
 end;
 
 function OutpatientPatchInstalled: boolean;
@@ -210,5 +210,56 @@ function OutpatientLocationConfigured(ALocation: string): boolean;
 begin
   Result := (sCallV('ORWDFH NFSLOC READY', [ALocation]) = '1');
 end;
+
+procedure CheckForDelayedDietOrders(var OutPutText: String; CurrentView: TOrderView; DispGrp: integer);
+Var
+ i, Z: Integer;
+ AList: TList;
+ EventList: TstringList;
+ x, PtEvtIFN, PtEvtName: string;
+const
+  TX_DEL = 'There are diet orders in future events which will not be affected by this action.';
+begin
+  CallV('OREVNTX PAT', [Patient.DFN]);
+  if RPCBrokerV.Results.Count > 1 then
+  begin
+   AList := TList.Create;
+   EventList := TStringList.Create;
+    try
+     for i := 1 to RPCbrokerV.Results.Count - 1 do EventList.Add(RPCBrokerV.Results.Strings[i]);
+     For i := 0 to EventList.Count - 1 do begin
+      PtEvtIFN := Piece(EventList.Strings[i], '^', 1);
+      PtEvtName := Piece(EventList.Strings[i], '^', 2);
+      LoadOrdersAbbr(AList, CurrentView, PtEvtIFN);
+      for Z := AList.Count - 1 downto 0 do
+      begin
+        if TOrder(Alist.Items[Z]).DGroup <> DispGrp then
+        begin
+          TOrder(AList.Items[Z]).Free;
+          AList.Delete(Z);
+        end;
+      end;
+      if AList.Count > 0 then
+      begin
+        x := '';
+        RetrieveOrderFields(AList, 0, 0);
+        OutPutText := OutPutText + CRLF + 'Delayed event: ' + PtEvtName;
+        for Z := 0 to AList.Count - 1 do
+          with TOrder(AList.Items[Z]) do
+          begin
+            x := x + #9 +  StringReplace(Text, #13#10, #13#10#9, [rfReplaceAll, rfIgnoreCase]) + CRLF;
+          end;
+        OutPutText := OutPutText + CRLF + x;
+       end;
+     end;
+     If OutPutText > '' then OutputText := TX_DEL + CRLF + OutputText;
+    finally
+      EventList.Free;
+      with AList do for i := 0 to Count - 1 do TOrder(Items[i]).Free;
+      AList.Free;
+    end;
+  end;
+end;
+
 
 end.

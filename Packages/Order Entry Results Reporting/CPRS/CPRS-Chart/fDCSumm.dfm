@@ -8,28 +8,41 @@ inherited frmDCSumm: TfrmDCSumm
   HelpFile = 'overvw'
   Menu = mnuSumms
   OnDestroy = FormDestroy
-  ExplicitWidth = 687
-  ExplicitHeight = 436
+  ExplicitWidth = 695
+  ExplicitHeight = 440
   PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape
     Top = 377
     Width = 679
-    ExplicitTop = 358
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    ExplicitTop = 377
     ExplicitWidth = 679
   end
   inherited sptHorz: TSplitter
     Left = 64
     Width = 3
     Height = 377
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     OnCanResize = sptHorzCanResize
     ExplicitLeft = 64
     ExplicitWidth = 3
-    ExplicitHeight = 358
+    ExplicitHeight = 377
   end
   inherited pnlLeft: TPanel
     Width = 64
     Height = 377
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    Constraints.MinWidth = 37
     ExplicitWidth = 64
     ExplicitHeight = 377
     object lblSumms: TOROffsetLabel
@@ -54,7 +67,6 @@ inherited frmDCSumm: TfrmDCSumm
       Align = alBottom
       AutoSize = False
       Caption = ' '
-      ExplicitTop = 334
     end
     object cmdNewSumm: TORAlignButton
       Left = 0
@@ -92,7 +104,7 @@ inherited frmDCSumm: TfrmDCSumm
         Height = 3
         Cursor = crVSplit
         Align = alBottom
-        ExplicitTop = 291
+        ExplicitTop = 311
       end
       object lstSumms: TORListBox
         Left = 0
@@ -106,9 +118,10 @@ inherited frmDCSumm: TfrmDCSumm
         ParentShowHint = False
         PopupMenu = popSummList
         ShowHint = True
-        TabOrder = 0
+        TabOrder = 2
         Visible = False
         OnClick = lstSummsClick
+        Caption = ''
         ItemTipColor = clWindow
         LongList = False
         Pieces = '2,3'
@@ -127,7 +140,7 @@ inherited frmDCSumm: TfrmDCSumm
         PopupMenu = popSummList
         ReadOnly = True
         StateImages = dmodShared.imgImages
-        TabOrder = 1
+        TabOrder = 0
         OnChange = tvSummsChange
         OnClick = tvSummsClick
         OnCollapsed = tvSummsCollapsed
@@ -145,6 +158,11 @@ inherited frmDCSumm: TfrmDCSumm
     Left = 67
     Width = 612
     Height = 377
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    Constraints.MinWidth = 30
     ExplicitLeft = 67
     ExplicitWidth = 612
     ExplicitHeight = 377
@@ -155,7 +173,7 @@ inherited frmDCSumm: TfrmDCSumm
       Height = 4
       Cursor = crVSplit
       Align = alBottom
-      ExplicitTop = 309
+      ExplicitWidth = 613
     end
     object memPCEShow: TRichEdit
       Left = 0
@@ -164,8 +182,14 @@ inherited frmDCSumm: TfrmDCSumm
       Height = 45
       Align = alBottom
       Color = clCream
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
       Lines.Strings = (
         '<No encounter information entered>')
+      ParentFont = False
       PlainText = True
       ReadOnly = True
       ScrollBars = ssVertical
@@ -189,9 +213,9 @@ inherited frmDCSumm: TfrmDCSumm
         Width = 612
         Height = 276
         Align = alClient
-        Font.Charset = DEFAULT_CHARSET
+        Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -12
         Font.Name = 'Courier New'
         Font.Style = []
         MaxLength = 2147483645
@@ -203,6 +227,7 @@ inherited frmDCSumm: TfrmDCSumm
         WantTabs = True
         OnChange = memNewSummChange
         OnKeyUp = memNewSummKeyUp
+        ExplicitHeight = 172
       end
       object pnlFields: TORAutoPanel
         Left = 0
@@ -231,7 +256,7 @@ inherited frmDCSumm: TfrmDCSumm
           Color = clCream
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -12
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentColor = False
@@ -239,7 +264,7 @@ inherited frmDCSumm: TfrmDCSumm
           ParentShowHint = False
           ShowAccelChar = False
           ShowHint = True
-          TabOrder = 1
+          TabOrder = 0
         end
         object lblVisit: TStaticText
           Left = 6
@@ -248,7 +273,7 @@ inherited frmDCSumm: TfrmDCSumm
           Height = 17
           Caption = 'Adm: 10/20/99   2BMED'
           ShowAccelChar = False
-          TabOrder = 2
+          TabOrder = 4
         end
         object lblRefDate: TStaticText
           Left = 237
@@ -261,7 +286,7 @@ inherited frmDCSumm: TfrmDCSumm
           ParentShowHint = False
           ShowAccelChar = False
           ShowHint = True
-          TabOrder = 3
+          TabOrder = 1
         end
         object lblCosigner: TStaticText
           Left = 307
@@ -276,7 +301,7 @@ inherited frmDCSumm: TfrmDCSumm
           ParentShowHint = False
           ShowAccelChar = False
           ShowHint = True
-          TabOrder = 4
+          TabOrder = 5
         end
         object lblDictator: TStaticText
           Left = 402
@@ -290,7 +315,7 @@ inherited frmDCSumm: TfrmDCSumm
           ParentShowHint = False
           ShowAccelChar = False
           ShowHint = True
-          TabOrder = 5
+          TabOrder = 2
         end
         object lblDischarge: TStaticText
           Left = 6
@@ -308,7 +333,7 @@ inherited frmDCSumm: TfrmDCSumm
           Height = 21
           Anchors = [akTop, akRight]
           Caption = 'Change...'
-          TabOrder = 0
+          TabOrder = 3
           OnClick = cmdChangeClick
         end
       end
@@ -331,7 +356,7 @@ inherited frmDCSumm: TfrmDCSumm
         Caption = 'No Discharge Summaries Found'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -12
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         HorzOffset = 2
@@ -341,6 +366,7 @@ inherited frmDCSumm: TfrmDCSumm
         Transparent = False
         VertOffset = 6
         WordWrap = False
+        ExplicitWidth = 154
       end
       object sptList: TSplitter
         Left = 0
@@ -349,6 +375,8 @@ inherited frmDCSumm: TfrmDCSumm
         Height = 3
         Cursor = crVSplit
         Align = alTop
+        ExplicitTop = 112
+        ExplicitWidth = 613
       end
       object memSumm: TRichEdit
         Left = 0
@@ -358,9 +386,9 @@ inherited frmDCSumm: TfrmDCSumm
         Align = alClient
         Color = clCream
         Ctl3D = True
-        Font.Charset = DEFAULT_CHARSET
+        Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -12
         Font.Name = 'Courier New'
         Font.Style = []
         Lines.Strings = (
@@ -373,9 +401,10 @@ inherited frmDCSumm: TfrmDCSumm
         PopupMenu = popSummMemo
         ReadOnly = True
         ScrollBars = ssBoth
-        TabOrder = 0
+        TabOrder = 1
         WantReturns = False
         WordWrap = False
+        ExplicitHeight = 108
       end
       object lvSumms: TCaptionListView
         Left = 0
@@ -418,13 +447,14 @@ inherited frmDCSumm: TfrmDCSumm
         RowSelect = True
         SmallImages = dmodShared.imgNotes
         StateImages = dmodShared.imgImages
-        TabOrder = 1
+        TabOrder = 0
         ViewStyle = vsReport
         Visible = False
         OnColumnClick = lvSummsColumnClick
         OnCompare = lvSummsCompare
         OnResize = lvSummsResize
         OnSelectItem = lvSummsSelectItem
+        AutoSize = False
         Caption = 'No Discharge Summaries Found'
       end
     end

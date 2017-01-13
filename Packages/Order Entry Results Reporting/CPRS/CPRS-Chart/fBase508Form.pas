@@ -15,7 +15,8 @@ type
   TfrmBase508Form = class(TForm)
     amgrMain: TVA508AccessibilityManager;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    function FormHelp(Command: Word; Data: Integer; var CallHelp: Boolean): Boolean;
+    function FormHelp(Command: Word; Data: NativeInt;
+      var CallHelp: Boolean): Boolean;
   private
     HelpClicked: boolean;
     OldCursor: TCursor;
@@ -291,7 +292,8 @@ begin
   end;
 end;
 
-function TfrmBase508Form.FormHelp(Command: Word; Data: Integer; var CallHelp: Boolean): Boolean;
+function TfrmBase508Form.FormHelp(Command: Word; Data: NativeInt;
+  var CallHelp: Boolean): Boolean;
 begin
   Result := THelpManager.GetInstance.ExecHelp(Command, Data, CallHelp);
 end;

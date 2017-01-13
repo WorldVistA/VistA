@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ORFn, ComCtrls, ExtCtrls, fFrame, fBase508Form,
-  VA508AccessibilityManager, uReports;
+  VA508AccessibilityManager, uReports, Vcl.Menus;
 
 type
   TfrmReportBox = class(TfrmBase508Form)
@@ -15,11 +15,14 @@ type
     cmdPrint: TButton;
     dlgPrintReport: TPrintDialog;
     cmdClose: TButton;
+    pmnu: TPopupMenu;
+    mnuCopy: TMenuItem;
     procedure memReportClick(Sender: TObject);
     procedure cmdPrintClick(Sender: TObject);
     procedure cmdCloseClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormResize(Sender: TObject);
+    procedure mnuCopyClick(Sender: TObject);
   end;
 
 procedure ReportBox(ReportText: TStrings; ReportTitle: string; AllowPrint: boolean);
@@ -217,6 +220,12 @@ end;
 procedure TfrmReportBox.memReportClick(Sender: TObject);
 begin
   //Close;
+end;
+
+procedure TfrmReportBox.mnuCopyClick(Sender: TObject);
+begin
+  inherited;
+  memReport.CopyToClipboard;
 end;
 
 procedure TfrmReportBox.cmdPrintClick(Sender: TObject);

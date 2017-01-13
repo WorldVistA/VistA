@@ -7,8 +7,8 @@ inherited frmTIUView: TfrmTIUView
   ClientWidth = 358
   OldCreateOrder = True
   Position = poScreenCenter
-  ExplicitWidth = 366
-  ExplicitHeight = 463
+  ExplicitWidth = 374
+  ExplicitHeight = 474
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBase: TORAutoPanel [0]
@@ -156,6 +156,7 @@ inherited frmTIUView: TfrmTIUView
       Sorted = True
       SynonymChars = '<>'
       TabOrder = 2
+      Text = ''
       OnNeedData = cboAuthorNeedData
       CharsNeedMatch = 1
     end
@@ -230,6 +231,7 @@ inherited frmTIUView: TfrmTIUView
         Sorted = False
         SynonymChars = '<>'
         TabOrder = 1
+        Text = ''
         CharsNeedMatch = 1
       end
       object ckShowSubject: TCheckBox
@@ -285,6 +287,7 @@ inherited frmTIUView: TfrmTIUView
         Sorted = False
         SynonymChars = '<>'
         TabOrder = 1
+        Text = ''
         CharsNeedMatch = 1
       end
       object radTreeSort: TRadioGroup
@@ -342,10 +345,12 @@ inherited frmTIUView: TfrmTIUView
         'Status = stsDefault')
       (
         'Component = calBeginDate'
-        'Status = stsDefault')
+        'Text = Beginning Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = calEndDate'
-        'Status = stsDefault')
+        'Text = Ending Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = lstStatus'
         'Status = stsDefault')

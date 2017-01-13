@@ -10,7 +10,7 @@ uses
 
 type
   TSigItemType = (siServiceConnected, siAgentOrange, siIonizingRadiation,
-                  siEnvironmentalContaminants, siMST, siHeadNeckCancer, siCombatVeteran, siSHAD);
+                  siEnvironmentalContaminants, siMST, siHeadNeckCancer, siCombatVeteran, siSHAD, siCL);
 
   TSigItemTagInfo =  record
     SigType: TSigItemType;
@@ -85,7 +85,7 @@ const
 
   TX_Order_Error = 'All Service Connection and/or Rated Disabilities questions must be answered, '+#13+
                    'and at least one diagnosis selected for each order that requires a diagnosis.';
-                   
+
   TC_Diagnosis_Error = ' Missing Diagnosis';
   TX_Diagnosis_Error = ' One or more Orders have not been assigned a Diagnosis';
   INIT_STR = '';
@@ -93,14 +93,14 @@ const
 
 var
   uSigItems: TSigItems = nil; //BAPHII 1.3.1
-  uSigItemsCS: TSigItems = nil; 
+  uSigItemsCS: TSigItems = nil;
 
 
 implementation
 
 uses
   ORFn, ORNet, uConst, TRPCB, rOrders, rPCE, fOrdersSign, fReview,UBAGlobals,
-  uCore , VAUtils;
+  uGlobalVar, uCore, VAUtils, rMisc;
 
 type
   ItemStatus = (isNA, isChecked, isUnchecked, isUnknown);
@@ -115,7 +115,8 @@ const
         { siMST                       }  ('MST', 'MST'), //'Military Sexual Trauma'
         { siHeadNeckCancer            }  ('HNC', 'Head and/or Neck Cancer'),
         { siCombatVeteran             }  ('CV',  'Combat Veteran Related'),
-        { siSHAD                      }  ('SHD', 'Shipboard Hazard and Defense'));
+        { siSHAD                      }  ('SHD', 'Shipboard Hazard and Defense') ,
+        { siCL                        }  ('CL', 'Camp Lejeune'));
 
   SigItemDisplayOrder: array[TSigItemType] of TSigItemType =
      (  siServiceConnected,
@@ -125,7 +126,8 @@ const
         siEnvironmentalContaminants,
         siSHAD,
         siMST,
-        siHeadNeckCancer);
+        siHeadNeckCancer,
+        siCL);
 
   StsChar: array[ItemStatus] of char =
            { isNA        } ('N',
@@ -136,7 +138,7 @@ const
   ColIdx = 30000;
   AllIdx = 31000;
   NA_FLAGS = 'NNNNNNNN';
-
+  NA_FLAGS_CL = 'NNNNNNNNN';
 var
   uSingletonFlag: boolean = FALSE;
   FlagCount: integer;
@@ -291,7 +293,6 @@ begin
   FItems := TORStringList.Create;
   Fcb := TList.Create;
   tempCkBx := TORCheckBox.Create(Owner);
-
 end;
 
 destructor TSigItems.Destroy;
@@ -514,8 +515,12 @@ try
                      if BILLING_AWARE then
                         begin
                            if not UBACore.OrderRequiresSCEI(Piece(s,U,1)) then
-                              FItems.SetStrPiece(idx,4, NA_FLAGS)
-                           else
+                           begin
+                            if IsLejeuneActive then
+                             FItems.SetStrPiece(idx,4, NA_FLAGS_CL)
+                            else
+                             FItems.SetStrPiece(idx,4, NA_FLAGS);
+                           end else
                               begin
 
                               if UBAGlobals.BAUnsignedOrders.Count > 0 then
@@ -565,6 +570,9 @@ try
             // code added 01/17/2006 - check dc'd nurse orders,
             // originals where requiring CIDC if assigned to patient.
              if (BILLING_AWARE) and (not UBACore.IsOrderBillable(Piece(s,U,1))) then
+              if IsLejeuneActive then
+               s :=  NA_FLAGS_CL
+              else
                s :=  NA_FLAGS;
 
             for si := low(TSigItemType) to high(TSigItemType) do
@@ -640,6 +648,8 @@ try
          for sx := low(TSigItemType) to high(TSigItemType) do
          begin                                                // print buttons on header of columns ie SC,AO,IR, etc....
             si := SigItemDisplayOrder[sx];
+            if (si = siCL) and (not IsLejeuneActive) then
+              Continue;
             FAllCheck[si] := TRUE;
             btn := TButton.Create(ownr);
             btn.Parent := prnt;
@@ -692,6 +702,8 @@ try
                         for sx := low(TSigItemType) to high(TSigItemType) do
                            begin
                              si := SigItemDisplayOrder[sx];
+                             if (si = siCL) and (not IsLejeuneActive) then
+                              Continue;
                              StsCode := Flags[ord(si)+1];
                              StsIdx := isNA;
 
@@ -937,6 +949,7 @@ begin
     begin
       if FcbX[si] > FLastValidX then
       begin
+        if (si = siCL) and (not IsLejeuneActive) then continue;
         lb.Canvas.MoveTo(FcbX[si] - FValidGap, Rect.Top);
         lb.Canvas.LineTo(FcbX[si] - FValidGap, Rect.Bottom);
       end;
@@ -1152,7 +1165,7 @@ begin
   except
      on EAccessViolation do
         begin
-        {$ifdef debug}Show508Message('EAccessViolation in uSignItems.GetTempCkBxState()');{$endif}
+//        {$ifdef debug}Show508Message('EAccessViolation in uSignItems.GetTempCkBxState()');{$endif}
         raise;
         end;
   end;

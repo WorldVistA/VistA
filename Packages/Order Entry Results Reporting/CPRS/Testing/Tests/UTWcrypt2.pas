@@ -1176,7 +1176,7 @@ begin
   certStore := Wcrypt2.CertOpenSystemStore(Null,'CA');
   CertContext := Wcrypt2.CertEnumCertificatesInStore(certStore,NIL);
 
-  extension := Wcrypt2.CertFindExtension(PChar('2.5.29.31'),
+  extension := Wcrypt2.CertFindExtension(PAnsiChar('2.5.29.31'),
                CertContext.pCertInfo.cExtension,
                CertContext.pCertInfo.rgExtension);
 
@@ -1311,7 +1311,7 @@ var
   //taken from Lines 462-520 of XuDSigS.pas
 begin
   WriteLn(Output,'Start VerifyRevocation');
-  certStore := Wcrypt2.CertOpenSystemStore(null,pCHar('MY'));
+  certStore := Wcrypt2.CertOpenSystemStore(null,PAnsiChar('MY'));
   CertContext := Wcrypt2.CertEnumCertificatesInStore(CertStore, nil);
   ZeroMemory(@RevPara,sizeof(CERT_REVOCATION_PARA));
   Zeromemory(@RevStatus,sizeof(CERT_REVOCATION_STATUS));

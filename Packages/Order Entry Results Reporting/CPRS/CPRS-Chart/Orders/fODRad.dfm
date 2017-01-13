@@ -15,6 +15,10 @@ inherited frmODRad: TfrmODRad
     Left = 0
     Top = 326
     Width = 490
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 4
     ExplicitLeft = 0
@@ -31,6 +35,7 @@ inherited frmODRad: TfrmODRad
     ShowHint = True
     TabOrder = 3
     Visible = False
+    Caption = ''
     ItemTipColor = clWindow
     LongList = False
   end
@@ -91,6 +96,7 @@ inherited frmODRad: TfrmODRad
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 0
+      Text = ''
       OnChange = cboImTypeChange
       OnDropDownClose = cboImTypeDropDownClose
       OnExit = cboImTypeExit
@@ -132,6 +138,7 @@ inherited frmODRad: TfrmODRad
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 1
+      Text = ''
       OnClick = cboProcedureSelect
       OnExit = cboProcedureExit
       OnNeedData = cboProcedureNeedData
@@ -160,6 +167,7 @@ inherited frmODRad: TfrmODRad
       Sorted = True
       SynonymChars = '<>'
       TabOrder = 2
+      Text = ''
       OnKeyDown = cboAvailModKeyDown
       OnMouseClick = cboAvailModMouseClick
       CharsNeedMatch = 1
@@ -181,7 +189,6 @@ inherited frmODRad: TfrmODRad
     Height = 322
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelOuter = bvNone
-    Caption = 'pnlRightBase'
     TabOrder = 1
     object pnlRight: TORAutoPanel
       Left = 0
@@ -305,6 +312,7 @@ inherited frmODRad: TfrmODRad
         Sorted = False
         SynonymChars = '<>'
         TabOrder = 1
+        Text = ''
         OnChange = ControlChange
         CharsNeedMatch = 1
       end
@@ -329,6 +337,7 @@ inherited frmODRad: TfrmODRad
         Sorted = False
         SynonymChars = '<>'
         TabOrder = 2
+        Text = ''
         OnChange = ControlChange
         CharsNeedMatch = 1
       end
@@ -353,6 +362,7 @@ inherited frmODRad: TfrmODRad
         Sorted = False
         SynonymChars = '<>'
         TabOrder = 3
+        Text = ''
         OnChange = cboCategoryChange
         CharsNeedMatch = 1
       end
@@ -387,6 +397,7 @@ inherited frmODRad: TfrmODRad
         Sorted = False
         SynonymChars = '<>'
         TabOrder = 4
+        Text = ''
         OnChange = ControlChange
         CharsNeedMatch = 1
       end
@@ -510,6 +521,10 @@ inherited frmODRad: TfrmODRad
   inherited cmdAccept: TButton
     Left = 497
     Top = 326
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akRight, akBottom]
     TabOrder = 5
     ExplicitLeft = 497
@@ -518,6 +533,10 @@ inherited frmODRad: TfrmODRad
   inherited cmdQuit: TButton
     Left = 498
     Top = 353
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akRight, akBottom]
     TabOrder = 6
     ExplicitLeft = 498
@@ -528,6 +547,10 @@ inherited frmODRad: TfrmODRad
     Top = 318
     Width = 408
     Height = 55
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabOrder = 2
     OnMouseUp = pnlMessageMouseUp
     ExplicitLeft = 5
@@ -537,6 +560,10 @@ inherited frmODRad: TfrmODRad
     inherited imgMessage: TImage
       Left = 10
       Top = 9
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       ExplicitLeft = 10
       ExplicitTop = 9
     end
@@ -544,6 +571,10 @@ inherited frmODRad: TfrmODRad
       Left = 55
       Width = 344
       Height = 43
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       ExplicitLeft = 55
       ExplicitWidth = 344
       ExplicitHeight = 43
@@ -580,13 +611,15 @@ inherited frmODRad: TfrmODRad
         'Status = stsDefault')
       (
         'Component = calPreOp'
-        'Status = stsDefault')
+        'Text = PreOp Schedule Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = chkIsolation'
         'Status = stsDefault')
       (
         'Component = calRequestDate'
-        'Status = stsDefault')
+        'Text = Desired Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = cboUrgency'
         'Status = stsDefault')

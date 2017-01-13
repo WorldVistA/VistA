@@ -1,3 +1,4 @@
+{$WARN UNSAFE_CAST OFF}
 { **************************************************************
 	Package: XWB - Kernel RPCBroker
 	Date Created: Sept 18, 1997 (Version 1.1)
@@ -42,7 +43,7 @@ This is the hierarchy of things:
 
 v1.1*4 Silent Login changes (DCM) 10/22/98
 
-1.1*6 Polling to support terminating arphaned server jobs. (P6)
+1.1*6 Polling to support terminating orphaned server jobs. (P6)
       == DPC 4/99
 
 1.1*8 Check for Multi-Division users. (P8) - REM 7/13/99
@@ -66,7 +67,7 @@ uses
   WinProcs, WinTypes, Windows,
   extctrls, {P6}
   {VA}
-  XWBut1, {RpcbEdtr,} MFunStr, Hash, //;  //P14 -- pack split
+  XWBut1, MFunStr, Hash, //P14 -- pack split
   ComObj, ActiveX, OleCtrls, VERGENCECONTEXTORLib_TLB;
 
 const
@@ -79,10 +80,10 @@ type
 TParamType = (literal, reference, list, global, empty, stream, undefined);  // 030107 JLI Modified for new message protocol
 
 //P14 -- pack split -- Types moved from RpcbEdtr.pas.
-TAccessVerifyCodes = string[255];  //to use TAccessVerifyCodesProperty editor use this type
-TRemoteProc = string[100];         //to use TRemoteProcProperty editor use this type
-TServer = string[255];             //to use TServerProperty editor use this type
-TRpcVersion = string[255];         //to use TRpcVersionProperty editor use this type
+TAccessVerifyCodes = string;  //to use TAccessVerifyCodesProperty editor use this type
+TRemoteProc = string;         //to use TRemoteProcProperty editor use this type
+TServer = string;             //to use TServerProperty editor use this type
+TRpcVersion = string;         //to use TRpcVersionProperty editor use this type
 
 TRPCBroker = class;
 TVistaLogin = class;
@@ -92,7 +93,6 @@ TShowErrorMsgs = (semRaise, semQuiet);  // p13
 TOnLoginFailure = procedure (VistaLogin: TVistaLogin) of object; //p13
 TOnRPCBFailure = procedure (RPCBroker: TRPCBroker) of object; //p13
 TOnPulseError = procedure(RPCBroker: TRPCBroker; ErrorText: String) of object;
-// TOnRPCCall = procedure (RPCBroker: TRPCBroker; SetNum: Integer; RemoteProcedure: TRemoteProc; CurrentContext: String; RpcVersion: TRpcVersion; Param: TParams; RPCTimeLimit: Integer; Results, Sec, App: PChar; DateTime: TDateTime) of object;
 TSecure = (secureNone, secureAttachmate, securePlink);
 
 {------ EBrokerError ------}
@@ -135,8 +135,7 @@ public
   property Count: Word read GetCount;
   property First: string read GetFirst;
   property Last: string read GetLast;
-  property MultArray[I: string]: string
-           read GetFMultiple write SetFMultiple; default;
+  property MultArray[I: string]: string read GetFMultiple write SetFMultiple; default;
   property Sorted: boolean read GetSorted write SetSorted;
 end;
 
@@ -201,7 +200,6 @@ private
   procedure SetNTToken(const Value: String);
   procedure SetVerifyCode(const Value: String);
   procedure SetDivision(const Value: String);
-  //procedure SetWorkstationIPAddress(const Value: String);
   procedure SetMode(const Value: TLoginMode);
   procedure SetMultiDivision(Value: Boolean);
   procedure SetDuz(const Value: string);
@@ -272,8 +270,8 @@ end;
   Once connected you can access server data.}
 
 TRPCBroker = class(TComponent)
-//private
 private
+  IsVisual: boolean; //Show graphics (default true)
 protected
   FBrokerVersion: String;
   FIsBackwardCompatibleConnection: Boolean;
@@ -289,6 +287,7 @@ protected
   FListenerPort: integer;
   FParams: TParams;
   FResults: TStrings;
+  FOnCallResultStr: String;
   FRemoteProcedure: TRemoteProc;
   FRpcVersion: TRpcVersion;
   FServer: TServer;
@@ -303,7 +302,6 @@ protected
   FRPCBError:     String;
   FOnPulseError: TOnPulseError;
   FSecurityPhrase: String;     // BSE JLI 060130
-  // Added from CCOWRPCBroker
   FCCOWLogonIDName: String;
   FCCOWLogonIDValue: String;
   FCCOWLogonName: String;
@@ -314,6 +312,7 @@ protected
   FCCOWLogonVpid: String;
   FCCOWLogonVpidValue: String;
   FWasUserDefined: Boolean;
+  FOnRPCCall: TNotifyEvent;
   // end of values from CCOWRPCBroker
   // values for handling SSH tunnels
   FUseSecureConnection: TSecure;
@@ -366,6 +365,7 @@ public
   property    BrokerVersion: String read FBrokerVersion;
   property IsNewStyleConnection: Boolean read FIsNewStyleConnection;
   property    SecurityPhrase: String read FSecurityPhrase write FSecurityPhrase;  // BSE JLI 060130
+  property    OnCallResultStr: String read FOnCallResultStr;
   // brought in from CCOWRPCBroker
   function GetCCOWtoken(Contextor: TContextorControl): string;
   function IsUserCleared: Boolean;
@@ -405,13 +405,20 @@ published
       default True;
   property    OldConnectionOnly: Boolean read FOldConnectionOnly write 
       FOldConnectionOnly;
+  property    OnRPCCall: TNotifyEvent read FOnRPCCall write FOnRPCCall;
   // 080624 added property to permit app to set secure connection if desired
-//  property    UseSecureConnection: Boolean read FUseSecureConnection write
-//      FUseSecureConnection;
    property UseSecureConnection: TSecure read FUseSecureConnection write
         FUSeSecureConnection;
    property SSHHide: Boolean read FSSHHide write FSSHHide;
 end;
+
+{------ TRPCThreadBroker ------}
+{:Extended class to ignore the visual elemenets when borker is threaded}
+TRPCThreadBroker = Class(TRpcBroker)
+  published
+   constructor Create(AOwner: TComponent); override;
+End;
+
 
 {procedure Register;}  //P14 --pack split
 procedure StoreConnection(Broker: TRPCBroker);
@@ -503,21 +510,21 @@ begin
 end;
 
 {------------------------- TMult.ClearAll -------------------------
-One by one, all Mult items are freed.
+  One by one, all Mult items are freed.
 ------------------------------------------------------------------}
 procedure TMult.ClearAll;
 var
   I: integer;
 begin
-     for I := 0 to FMultiple.Count - 1 do begin
-        FMultiple.Objects[I].Free;
-        FMultiple.Objects[I] := nil;
-     end;
-     FMultiple.Clear;
+  for I := 0 to FMultiple.Count - 1 do begin
+    FMultiple.Objects[I].Free;
+    FMultiple.Objects[I] := nil;
+  end;
+  FMultiple.Clear;
 end;
 
 {------------------------- TMult.GetCount -------------------------
-Returns the number of elements in the multiple
+  Returns the number of elements in the multiple
 ------------------------------------------------------------------}
 function TMult.GetCount: Word;
 begin
@@ -556,24 +563,24 @@ begin
     S := TString(FMultiple.Objects[FMultiple.IndexOf(Index)]);
   except
     on EListError do begin
-       {build appropriate error message}
-       strError := iff(Self.Name <> '', Self.Name, 'TMult_instance');
-       strError := strError + '[' + Index + ']' + #13#10 + 'is undefined';
-       try
-         ParamRecord := Self.Owner;
-         BrokerComponent := Self.Owner.Owner.Owner;
-         if (ParamRecord is TParamRecord) and (BrokerComponent is TRPCBroker) then begin
-           I := 0;
-           {if there is an easier way to figure out which array element points
-           to this instance of a multiple, use it}   // p13
-           while TRPCBroker(BrokerComponent).Param[I] <> ParamRecord do inc(I);
-           strError := '.Param[' + IntToStr(I) + '].' + strError;
-           strError := iff(BrokerComponent.Name <> '', BrokerComponent.Name,
-                           'TRPCBroker_instance') + strError;
-         end;
-       except
-       end;
-       raise Exception.Create(strError);
+      {build appropriate error message}
+      strError := iff(Self.Name <> '', Self.Name, 'TMult_instance');
+      strError := strError + '[' + Index + ']' + #13#10 + 'is undefined';
+      try
+        ParamRecord := Self.Owner;
+        BrokerComponent := Self.Owner.Owner.Owner;
+        if (ParamRecord is TParamRecord) and (BrokerComponent is TRPCBroker) then begin
+          I := 0;
+          {if there is an easier way to figure out which array element points
+          to this instance of a multiple, use it}   // p13
+          while TRPCBroker(BrokerComponent).Param[I] <> ParamRecord do inc(I);
+          strError := '.Param[' + IntToStr(I) + '].' + strError;
+          strError := iff(BrokerComponent.Name <> '', BrokerComponent.Name,
+                          'TRPCBroker_instance') + strError;
+        end;
+      except
+      end;
+      raise Exception.Create(strError);
     end;
   end;
   Result := S.Str;
@@ -598,12 +605,11 @@ var
 begin
   Pos := FMultiple.IndexOf(Index);       {see if this subscript already exists}
   if Pos = -1 then begin                 {if subscript is new}
-     S := TString.Create;                {create string object}
-     S.Str := Value;                     {put value in it}
-     FMultiple.AddObject(Index, S);      {add it}
-   end
-  else
-     TString(FMultiple.Objects[Pos]).Str := Value; { otherwise replace the value}
+    S := TString.Create;                {create string object}
+    S.Str := Value;                     {put value in it}
+    FMultiple.AddObject(Index, S);      {add it}
+  end else
+    TString(FMultiple.Objects[Pos]).Str := Value; { otherwise replace the value}
 end;
 
 {---------------------- TMult.SetSorted ------------------------
@@ -628,15 +634,15 @@ var
 begin
   Result := '';
   if StartSubscript = '' then
-     if Direction > 0 then Result := First
-     else Result := Last
+    if Direction > 0 then Result := First
+    else Result := Last
   else begin
-     Index := Position(StartSubscript);
-     if Index > -1 then
-        if (Index < (Count - 1)) and (Direction > 0) then
-           Result := FMultiple[Index + 1]
-        else if (Index > 0) and (Direction < 0) then
-           Result := FMultiple[Index - 1];
+    Index := Position(StartSubscript);
+    if Index > -1 then
+      if (Index < (Count - 1)) and (Direction > 0) then
+        Result := FMultiple[Index + 1]
+      else if (Index > 0) and (Direction < 0) then
+        Result := FMultiple[Index - 1];
   end
 end;
 
@@ -658,7 +664,7 @@ function TMult.Subscript(const Position: longint): string;
 begin
   Result := '';
   if (Position > -1) and (Position < Count) then
-     Result := FMultiple[Position];
+    Result := FMultiple[Position];
 end;
 
 {---------------------- TParamRecord.Create -----------------------
@@ -747,12 +753,12 @@ end;
 function TParams.GetParameter(Index: integer): TParamRecord;
 begin
   if Index >= FParameters.Count then             {if element out of bounds,}
-     while FParameters.Count <= Index do
-       FParameters.Add(nil);                     {setup place holders}
+    while FParameters.Count <= Index do
+      FParameters.Add(nil);                     {setup place holders}
   if FParameters.Items[Index] = nil then begin   {if just a place holder,}
-     {point it to new memory block}
-     FParameters.Items[Index] := TParamRecord.Create(Self);
-     TParamRecord(FParameters.Items[Index]).PType := undefined; {initialize}
+    {point it to new memory block}
+    FParameters.Items[Index] := TParamRecord.Create(Self);
+    TParamRecord(FParameters.Items[Index]).PType := undefined; {initialize}
   end;
   Result := FParameters.Items[Index];            {return requested parameter}
 end;
@@ -762,10 +768,10 @@ end;
 procedure TParams.SetParameter(Index: integer; Parameter: TParamRecord);
 begin
   if Index >= FParameters.Count then             {if element out of bounds,}
-     while FParameters.Count <= Index do
-       FParameters.Add(nil);                     {setup place holders}
+    while FParameters.Count <= Index do
+      FParameters.Add(nil);                     {setup place holders}
   if FParameters.Items[Index] = nil then         {if just a place holder,}
-     FParameters.Items[Index] := Parameter;      {point it to passed parameter}
+    FParameters.Items[Index] := Parameter;      {point it to passed parameter}
 end;
 
 {------------------------ TRPCBroker.Create -----------------------
@@ -779,16 +785,20 @@ begin
   FBrokerVersion := CURRENT_RPC_VERSION;
 
   FClearParameters := boolean(StrToInt
-                   (ReadRegDataDefault(HKLM,REG_BROKER,'ClearParameters','1')));
+                   (ReadRegDataDefault(HKCU,REG_BROKER,'ClearParameters','1')));
+//                   (ReadRegDataDefault(HKLM,REG_BROKER,'ClearParameters','1')));
   FClearResults := boolean(StrToInt
-                   (ReadRegDataDefault(HKLM,REG_BROKER,'ClearResults','1')));
+                   (ReadRegDataDefault(HKCU,REG_BROKER,'ClearResults','1')));
+//                   (ReadRegDataDefault(HKLM,REG_BROKER,'ClearResults','1')));
   FDebugMode := False;
   FParams := TParams.Create(Self);
   FResults := TStringList.Create;
-  FServer := ReadRegDataDefault(HKLM,REG_BROKER,'Server','BROKERSERVER');
+  FServer := ReadRegDataDefault(HKCU,REG_BROKER,'Server','BROKERSERVER');
+//  FServer := ReadRegDataDefault(HKLM,REG_BROKER,'Server','BROKERSERVER');
   FPulse  := TTimer.Create(Self);  //P6
   FListenerPort := StrToInt
-                  (ReadRegDataDefault(HKLM,REG_BROKER,'ListenerPort','9200'));
+                  (ReadRegDataDefault(HKCU,REG_BROKER,'ListenerPort','9200'));
+//                  (ReadRegDataDefault(HKLM,REG_BROKER,'ListenerPort','9200'));
   FRpcVersion := '0';
   FRPCTimeLimit := MIN_RPCTIMELIMIT;
   with FPulse do ///P6
@@ -804,6 +814,9 @@ begin
   XWBWinsock := TXWBWinsock.Create;
 
   FIsBackwardCompatibleConnection := True;  // default
+
+  IsVisual := True; //default
+
   Application.ProcessMessages;
 end;
 
@@ -836,7 +849,7 @@ in the multiple field of this context option will be permitted to run.
 function TRPCBroker.CreateContext(strContext: string): boolean;
 var
   InternalBroker: TRPCBroker;                       {use separate component}
-  Str: String;
+  S: String;
 begin
   Result := False;
   Connected := True;
@@ -844,8 +857,7 @@ begin
   try
     InternalBroker := TRPCBroker.Create(Self);
     InternalBroker.FSocket := Self.Socket;   // p13 -- permits multiple broker connections to same server/port
-    with InternalBroker do
-    begin
+    with InternalBroker do begin
 {
       TXWBWinsock(InternalBroker.XWBWinsock).IsBackwardsCompatible := TXWBWinsock(Self.XWBWinsock).IsBackwardsCompatible;
       TXWBWinsock(InternalBroker.XWBWinsock).OriginalConnectionOnly := TXWBWinsock(Self.XWBWinsock).OriginalConnectionOnly;
@@ -863,26 +875,20 @@ begin
       Param[0].PType := literal;
       Param[0].Value := Encrypt(strContext);
       try
-        Str := strCall;
-        if Str = '1' then
-        begin                   // make the call  // p13
+        S := strCall;
+        if S = '1' then begin                   // make the call  // p13
           Result := True;                       // p13
           self.FCurrentContext := strContext;        // p13
-        end                                     // p13
-        else
-        begin
+        end else begin
           Result := False;
           self.FCurrentContext := '';
         end;
       except            // Code added to return False if User doesn't have access
-        on e: EBrokerError do
-        begin
+        on e: EBrokerError do begin
           self.FCurrentContext := '';
-          if Pos('does not have access to option',e.Message) > 0 then
-          begin
+          if Pos('does not have access to option',e.Message) > 0 then begin
             Result := False
-          end
-          else
+          end else
             Raise;
         end;
       end;
@@ -955,16 +961,11 @@ var
 begin
   RPCBError := '';
   Login.ErrorText := '';
-  if (Connected <> Value) and not(csReading in ComponentState) then
-  begin
-    if Value and (FConnecting <> Value) then
-    begin                 {connect}
+  if (Connected <> Value) and not(csReading in ComponentState) then begin
+    if Value and (FConnecting <> Value) then begin                 {connect}
       // if change servers, remove SSH port, username, pw
-      if not (FLastServer = '') then
-      begin
-        if (not (FLastServer = Server))
-           or (not (FLastPort = ListenerPort)) then
-        begin
+      if not (FLastServer = '') then begin
+        if (not (FLastServer = Server)) or (not (FLastPort = ListenerPort)) then begin
           SSHport := '';
           SSHUser := '';
           SSHpw := '';
@@ -976,53 +977,45 @@ begin
       FSocket := ExistingSocket(Self);
       FConnecting := True; // FConnected := True;
       try
-        if FSocket = 0  then
-        begin
+        if FSocket = 0  then begin
           {Execute Client Agent from directory in Registry.}
-          BrokerDir := ReadRegData(HKLM, REG_BROKER, 'BrokerDr');
+          BrokerDir := ReadRegData(HKCU, REG_BROKER, 'BrokerDr');
+//          BrokerDir := ReadRegData(HKLM, REG_BROKER, 'BrokerDr');
           if BrokerDir <> '' then
             ProcessExecute(BrokerDir + '\ClAgent.Exe', sw_ShowNoActivate)
           else
             ProcessExecute('ClAgent.Exe', sw_ShowNoActivate);
 
-          if DebugMode and (not OldConnectionOnly) then
-          begin
+          if DebugMode and (not OldConnectionOnly) then begin
             Str1 := 'Control of debugging has been moved from the client to the server. To start a Debug session, do the following:'+#13#10#13#10;
             Str2 := '1. On the server, set initial breakpoints where desired.'+#13#10+'2. DO DEBUG^XWBTCPM.'+#13#10+'3. Enter a unique Listener port number (i.e., a port number not in general use).'+#13#10;
             Str3 := '4. Connect the client application using the port number entered in Step #3.';
             ShowMessage(Str1 + Str2 + Str3);
           end;
 
-
-
           CheckSSH;
-          if not (FUseSecureConnection = secureNone) then
-          begin
+          if not (FUseSecureConnection = secureNone) then begin
             if not StartSecureConnection(PseudoServer, PseudoPortStr) then
               exit;
             // Val(PseudoPortStr,PseudoPort,Code)
             PseudoPort := StrToInt(PseudoPortStr);
-          end
-          else
-          begin
+          end else begin
             PseudoPort := ListenerPort;
             PseudoServer := Server;
           end;
-              TXWBWinsock(XWBWinsock).IsBackwardsCompatible := FIsBackwardCompatibleConnection;
-              TXWBWinsock(XWBWinsock).OldConnectionOnly := FOldConnectionOnly;
-              FSocket := TXWBWinsock(XWBWinsock).NetworkConnect(DebugMode, PseudoServer, // FServer,
-                                    PseudoPort, FRPCTimeLimit);
-              Prefix := TXWBWinsock(XWBWinsock).Prefix;
-              FIsNewStyleConnection := TXWBWinsock(XWBWinsock).IsNewStyle;
-              AuthenticateUser(Self);
+          TXWBWinsock(XWBWinsock).IsBackwardsCompatible := FIsBackwardCompatibleConnection;
+          TXWBWinsock(XWBWinsock).OldConnectionOnly := FOldConnectionOnly;
+          FSocket := TXWBWinsock(XWBWinsock).NetworkConnect(DebugMode, PseudoServer, // FServer,
+                                PseudoPort, FRPCTimeLimit);
+          Prefix := TXWBWinsock(XWBWinsock).Prefix;
+          FIsNewStyleConnection := TXWBWinsock(XWBWinsock).IsNewStyle;
+          AuthenticateUser(Self);
           StoreConnection(Self);  //MUST store connection before CreateContext()
           //CCOW start
-          if (FContextor <> nil) and (length(CCOWtoken) = 0) then
-          begin
+          if (FContextor <> nil) and (length(CCOWtoken) = 0) then begin
           //Get new CCOW token
             CCOWToken := GetCCOWHandle(Self);
-            if Length(CCOWToken) > 0 then
-            begin
+            if Length(CCOWToken) > 0 then begin
               try
                 RPCBContextor := TContextorControl.Create(Application);
                 RPCBContextor.Run('BrokerLoginModule#', PassCode1+PassCode2, TRUE, '*');
@@ -1046,21 +1039,17 @@ begin
           //CCOW end
           FPulse.Enabled := True; //P6 Start heartbeat.
           CreateContext('');      //Closes XUS SIGNON context.
-        end
-        else
-        begin                     //p13
+        end else begin                     //p13
           StoreConnection(Self);
           FPulse.Enabled := True; //p13
         end;                      //p13
         FConnected := True;         // jli mod 12/17/01
         FConnecting := False;
-        // 080620 If connected via SSH, With no command box
+        // 080620 if connected via SSH, With no command box
         //        visible, should let users know they have it.
-        if not (CommandBoxProcessHandle = 0) then
-        begin
+        if not (CommandBoxProcessHandle = 0) then begin
           thisOwner := self.Owner;
-          if (thisOwner is TForm) then
-          begin
+          if (thisOwner is TForm) then begin
             thisParent := TForm(self.Owner);
             if not (Pos('(SSH Secure connection)',thisParent.Caption) > 0) then
               thisParent.Caption := thisParent.Caption + ' (SSH Secure connection)';
@@ -1074,20 +1063,18 @@ begin
           FConnected := False;
           FConnecting := False;
           if not (CommandBoxProcessHandle = 0) then
-                TerminateProcess(CommandBoxProcessHandle,10);
+            TerminateProcess(CommandBoxProcessHandle,10);
           FRPCBError := E.Message;               // p13  handle errors as specified
           if Login.ErrorText <> '' then
             FRPCBError := E.Message + chr(10) + Login.ErrorText;
           if Assigned(FOnRPCBFailure) then       // p13
             FOnRPCBFailure(Self)                 // p13
           else if ShowErrorMsgs = semRaise then
-            Raise;                               // p13
-//          raise;   {this is where I would do OnNetError}
+            Raise;                               // p13 //          raise;   {this is where I would do OnNetError}
         end{on};
       end{try};
     end{if}
-    else if not Value then
-    begin                           //p13
+    else if not Value then begin                           //p13
       FConnected := False;          //p13
       FPulse.Enabled := False;      //p13
       if RemoveConnection(Self) = NoMore then begin
@@ -1096,15 +1083,12 @@ begin
         FSocket := 0;                {store internal}
         //FConnected := False;      //p13
         // 080618 following added to close command box if SSH is being used
-        if not (CommandBoxProcessHandle = 0) then
-        begin
+        if not (CommandBoxProcessHandle = 0) then begin
           TerminateProcess(CommandBoxProcessHandle,10);
           thisOwner := self.Owner;
-          if (thisOwner is TForm) then
-          begin
+          if (thisOwner is TForm) then begin
             thisParent := TForm(self.Owner);
-            if (Pos('(SSH Secure connection)',thisParent.Caption) > 0) then
-            begin
+            if (Pos('(SSH Secure connection)',thisParent.Caption) > 0) then begin
               // 080620 remove ' (SSH Secure connection)' on disconnection
               thisParent.Caption := Copy(thisParent.Caption,1,Length(thisParent.Caption)-24);
             end;
@@ -1128,7 +1112,7 @@ end;
 procedure TRPCBroker.SetClearResults(Value: Boolean);
 begin
   if Value then begin   {if True}
-     FResults.Clear;
+    FResults.Clear;
   end;
   FClearResults := Value;
 end;
@@ -1144,11 +1128,12 @@ end;
 ------------------------------------------------------------------}
 procedure   TRPCBroker.SetRPCTimeLimit(Value: integer);
 begin
-  if Value <> FRPCTimeLimit then
+  if Value <> FRPCTimeLimit then begin
     if Value > MIN_RPCTIMELIMIT then
       FRPCTimeLimit := Value
     else
       FRPCTimeLimit := MIN_RPCTIMELIMIT;
+  end;
 end;
 
 {----------------------- TRPCBroker.SetServer ---------------------
@@ -1157,7 +1142,7 @@ procedure TRPCBroker.SetServer(Value: TServer);
 begin
   {if changing the name of the server, make sure to disconnect first}
   if (Value <> FServer) and Connected then begin
-     Connected := False;
+    Connected := False;
   end;
   FServer := Value;
 end;
@@ -1183,9 +1168,9 @@ begin
   App := StrAlloc(255);
 
   try
-    if FPulse.Enabled then          ///P6 If Broker was sending pulse,
+    if FPulse.Enabled then          ///P6 if Broker was sending pulse,
     begin
-     FPulse.Enabled := False;      ///   Stop pulse &
+      FPulse.Enabled := False;      ///   Stop pulse &
       blnRestartPulse := True;     //   Set flag to restart pulse after RPC.
     end;
 {
@@ -1235,6 +1220,13 @@ begin
     Sec := nil;
     StrDispose(App);
     App := nil;
+    if assigned(FOnRPCCall) then
+    begin
+    	Result := Value;
+    	if Result = nil then Result := StrNew('');
+        self.FOnCallResultStr := Result;
+    	FOnRPCCall(self);
+    end;
     if ClearParameters then ClearParameters := True;    //prepare for next call
   end;
   Result := Value;
@@ -1245,26 +1237,32 @@ begin
     FRPCBError := BrokerError.Message;               // p13  handle errors as specified
     if Login.ErrorText <> '' then
       FRPCBError := BrokerError.Message + chr(10) + Login.ErrorText;
-    if Assigned(FOnRPCBFailure) then       // p13
-    begin
+    if Assigned(FOnRPCBFailure) then begin      // p13
       FOnRPCBFailure(Self);
       StrDispose(Result);
-    end
-    else if FShowErrorMsgs = semRaise then
-    begin
+    end else if FShowErrorMsgs = semRaise then begin
       StrDispose(Result);                 // return memory we won't use - caused a memory leak
-              Raise BrokerError;                               // p13
-    end
-    else   // silent, just return error message in FRPCBError
+      Raise BrokerError;                               // p13
+    end else   // silent, just return error message in FRPCBError
       BrokerError.Free;   // return memory in BrokerError - otherwise is a memory leak
 //          raise;   {this is where I would do OnNetError}
   end;  // if BrokerError <> nil
 end;
 
+{------------------------ TRPCThreadBroker.Create -----------------------
+------------------------------------------------------------------}
+constructor TRPCThreadBroker.Create(AOwner: TComponent);
+begin
+ Inherited Create(AOwner);
+ if assigned(XWBWinsock) then
+  XWBWinsock.Free;
+ XWBWinsock := TXWBThreadWinsock.Create;
+ IsVisual := False;
+end;
 
 {-------------------------- DisconnectAll -------------------------
 Find all connections in BrokerAllConnections list for the passed in
-server:listenerport combination and disconnect them. If at least one
+server:listenerport combination and disconnect them. if at least one
 connection to the server:listenerport is found, then it and all other
 Brokers to the same server:listenerport will be disconnected; True
 will be returned.  Otherwise False will return.
@@ -1307,7 +1305,7 @@ end;
 
 {------------------------ RemoveConnection ------------------------
 Result of this function will be False, if there are no more connections
-to the same server:listenerport as the passed in Broker.  If at least
+to the same server:listenerport as the passed in Broker.  if at least
 one other connection is found to the same server:listenerport, then Result
 will be True.
 ------------------------------------------------------------------}
@@ -1365,7 +1363,7 @@ var
   OldExceptionHandler: TExceptionEvent;
   OldHandle: THandle;
 begin
-  With ConnectingBroker do
+  with ConnectingBroker do
   begin
     SaveParam := TParams.Create(nil);
     SaveParam.Assign(Param);                  //save off settings
@@ -1391,11 +1389,9 @@ begin
     end;
 
     //CCOW start
-    if ConnectingBroker.KernelLogIn and (not (ConnectingBroker.Contextor = nil)) then
-    begin
+    if ConnectingBroker.KernelLogIn and (not (ConnectingBroker.Contextor = nil)) then begin
       CCOWtoken := ConnectingBroker.GetCCOWtoken(ConnectingBroker.Contextor);
-      if length(CCOWtoken)>0 then
-      begin
+      if length(CCOWtoken)>0 then begin
         ConnectingBroker.FKernelLogIn := false;
         ConnectingBroker.Login.Mode := lmAppHandle;
         ConnectingBroker.Login.LogInHandle := CCOWtoken;
@@ -1406,17 +1402,21 @@ begin
     if not ConnectingBroker.FKernelLogIn then
     begin
       if ConnectingBroker.FLogin <> nil then     //the user.  vistalogin contains login info
-      begin
         blnsignedon := SilentLogin(ConnectingBroker);    // RpcSLogin unit
-        if not blnSignedOn then
-        begin     //Switch back to Kernel Login
+      if not blnSignedOn then
+      begin
+        if not (ConnectingBroker.Contextor = nil) then begin     //Switch back to Kernel Login
           ConnectingBroker.FKernelLogIn := true;
           ConnectingBroker.Login.Mode := lmAVCodes;
-          if not (CCOWtoken = '') then
-            ConnectingBroker.Contextor := nil; // token didn't work turn off UserContext
+          // set Contextor in Broker nil so it won't try to set token, etc.
+          ConnectingBroker.Contextor := nil;
+        end else begin
+          TXWBWinsock(ConnectingBroker.XWBWinsock).NetworkDisconnect(ConnectingBroker.FSocket);
         end;
-      end;
+      end else
+        GetBrokerInfo(ConnectingBroker);
     end;
+
     if ConnectingBroker.FKernelLogIn then
     begin   //p13
       CCOWToken := '';  //  061201 JLI if can't sign on with Token clear it so can get new one
@@ -1432,22 +1432,16 @@ begin
         OldHandle := GetForegroundWindow;
         SetForegroundWindow(frmSignon.Handle);
         PrepareSignonForm(ConnectingBroker);
-        if SetUpSignOn then                       //SetUpSignOn in loginfrm unit.
-        begin                                     //True if signon needed
-          if frmSignOn.lblServer.Caption <> '' then
-          begin
+        if SetUpSignOn then begin                      //SetUpSignOn in loginfrm unit.
+          if frmSignOn.lblServer.Caption <> '' then begin                                    //True if signon needed
             frmSignOn.ShowModal;                    //do interactive logon   // p13
             if frmSignOn.Tag = 1 then               //Tag=1 for good logon
               blnSignedOn := True;                   //Successfull logon
-          end
-        end
-        else                                      //False when no logon needed
-          blnSignedOn := NoSignOnNeeded;          //Returns True always (for now!)
-        if blnSignedOn then                       //P6 If logged on, retrieve user info.
-        begin
+          end end else                                      //False when no logon needed
+            blnSignedOn := NoSignOnNeeded;          //Returns True always (for now!)
+        if blnSignedOn then begin                      //P6 if logged on, retrieve user info.
           GetBrokerInfo(ConnectingBroker);
-          if not SelDiv.ChooseDiv('',ConnectingBroker) then
-          begin
+          if not SelDiv.ChooseDiv('',ConnectingBroker) then begin
             blnSignedOn := False;//P8
             {Select division if multi-division user.  First parameter is 'userid'
             (DUZ or username) for future use. (P8)}
@@ -1468,18 +1462,7 @@ begin
       if Assigned(OldExceptionHandler) then
         Application.OnException := OldExceptionHandler;
     end;   //if kernellogin
-{                                                 // p13  following section for silent signon
-    if not ConnectingBroker.FKernelLogIn then
-      if ConnectingBroker.FLogin <> nil then     //the user.  vistalogin contains login info
-        blnsignedon := SilentLogin(ConnectingBroker);    // RpcSLogin unit
-}
-    if not blnsignedon then
-    begin
-      ConnectingBroker.FLogin.FailedLogin(ConnectingBroker.FLogin);
-      TXWBWinsock(ConnectingBroker.XWBWinsock).NetworkDisconnect(ConnectingBroker.FSocket);
-    end
-    else
-      GetBrokerInfo(ConnectingBroker);
+                                                 // p13  following section for silent signon
   finally
     //reset the Broker
     with ConnectingBroker do
@@ -1509,7 +1492,7 @@ P6  Retrieve information about user with XWB GET BROKER INFO
 procedure GetBrokerInfo(ConnectedBroker: TRPCBroker);
 begin
   GetUserInfo(ConnectedBroker);  //  p13  Get User info into User property (TVistaUser object)
-  With ConnectedBroker do        //(dcm) Use one of objects below
+  with ConnectedBroker do        //(dcm) Use one of objects below
   begin                          // and skip this RPC? or make this and
     RemoteProcedure := 'XWB GET BROKER INFO';   // others below as components
     try
@@ -1518,7 +1501,7 @@ begin
         if StrToInt(Results[0]) > MINIMUM_TIMEOUT then
           FPulse.Interval := (StrToInt(Results[0]) * 10 * PULSE_PERCENTAGE);
     except
-      On e: EBrokerError do
+      on e: EBrokerError do
         ShowMessage('A problem was encountered getting Broker information.  '+e.Message);  //TODO
     end;
   end;
@@ -1580,7 +1563,7 @@ begin
     PROCESS_INFORMATION. }
   Rslt := CreateProcess(PChar(Command), nil, nil, nil, False,
     NORMAL_PRIORITY_CLASS, nil, nil, StartupInfo, ProcessInfo);
-  { If Rslt is true, then the CreateProcess call was successful.
+  { if Rslt is true, then the CreateProcess call was successful.
     Otherwise, GetLastError will return an error code representing the
     error which occurred. }
   if Rslt then
@@ -1604,12 +1587,11 @@ this AppHandle to perform a silent login via the lmAppHandle mode
 function  GetAppHandle(ConnectedBroker : TRPCBroker): String;   // p13
 begin
   Result := '';
-  with ConnectedBroker do
-    begin
-      RemoteProcedure := 'XUS GET TOKEN';
-      Call;
-      Result := Results[0];
-    end;
+  with ConnectedBroker do begin
+    RemoteProcedure := 'XUS GET TOKEN';
+    Call;
+    Result := Results[0];
+  end;
 end;
 
 {----------------------- TRPCBroker.DoPulseOnTimer-----------------
@@ -1634,8 +1616,8 @@ begin
   try
     try
       strCall;                                //Make the call
-    except on e: EBrokerError do
-      begin
+    except 
+      on e: EBrokerError do begin
 //        Connected := False;                // set the connection as disconnected
         if Assigned(FOnPulseError) then
           FOnPulseError(Self, e.Message)
@@ -1685,8 +1667,10 @@ end;
 
 procedure TVistaLogin.FailedLogin(Sender: TObject);         // p13
 begin
-  if Assigned(FOnFailedLogin) then FOnFailedLogin(Self)
-  else  TXWBWinsock(TRPCBroker(Sender).XWBWinsock).NetError('',XWB_BadSignOn);
+  if Assigned(FOnFailedLogin) then 
+    FOnFailedLogin(Self)
+  else 
+    TXWBWinsock(TRPCBroker(Sender).XWBWinsock).NetError('',XWB_BadSignOn);
 end;
 
 procedure TVistaLogin.SetAccessCode(const Value: String);   // p13
@@ -1789,32 +1773,31 @@ Function ShowApplicationAndFocusOK(anApplication: TApplication): boolean;
 var
   j: integer;
   Stat2: set of (sWinVisForm,sWinVisApp,sIconized);
-//  hFGWnd: THandle;
 begin
   Stat2 := []; {sWinVisForm,sWinVisApp,sIconized}
 
-  If anApplication.MainForm <> nil then
-    If IsWindowVisible(anApplication.MainForm.Handle)
+  if anApplication.MainForm <> nil then
+    if IsWindowVisible(anApplication.MainForm.Handle)
       then Stat2 := Stat2 + [sWinVisForm];
 
-  If IsWindowVisible(anApplication.Handle)
-      then Stat2 := Stat2 + [sWinVisApp];
+  if IsWindowVisible(anApplication.Handle)
+    then Stat2 := Stat2 + [sWinVisApp];
 
-  If IsIconic(anApplication.Handle)
-      then Stat2 := Stat2 + [sIconized];
+  if IsIconic(anApplication.Handle)
+    then Stat2 := Stat2 + [sIconized];
 
   Result := true;
-  If sIconized in Stat2 then begin {A}
+  if sIconized in Stat2 then begin {A}
     j := SendMessage(anApplication.Handle,WM_SYSCOMMAND,SC_RESTORE,0);
     Result := j<>0;
   end;
-  If Stat2 * [sWinVisForm,sIconized] = [] then begin {S}
+  if Stat2 * [sWinVisForm,sIconized] = [] then begin {S}
     if anApplication.MainForm <> nil then
       anApplication.MainForm.Show;
   end;
-  If (Stat2 * [sWinVisForm,sIconized] <> []) or
+  if (Stat2 * [sWinVisForm,sIconized] <> []) or
      (sWinVisApp in Stat2) then begin {G}
-{$IFNDEF D6_OR_HIGHER}
+(*{$IFNDEF D6_OR_HIGHER}
     hFGWnd := GetForegroundWindow;
     try
       AttachThreadInput(
@@ -1826,7 +1809,7 @@ begin
           GetWindowThreadProcessId(hFGWnd, nil),
           GetCurrentThreadId, False);
     end;
-{$ENDIF}
+{$ENDIF}*)
   end;
 end;
 
@@ -1850,12 +1833,11 @@ begin
     CCOWDataItem1 := CCowContextItem.Present(Name);
     if (CCOWdataItem1 <> nil) then    //1
     begin
-      If CCOWdataItem1.Value = '' then
+      if CCOWdataItem1.Value = '' then
         Result := True
       else
         FWasUserDefined := True;
-    end
-    else
+    end else
       Result := True;
   finally
   end; //try
@@ -1889,54 +1871,53 @@ begin
 end;
 
 //CCOW start
-procedure TRPCBroker.CCOWsetUser(Uname, token, Domain, Vpid: string; Contextor:
-    TContextorControl);
+procedure TRPCBroker.CCOWsetUser(Uname, token, Domain, Vpid: string; Contextor: TContextorControl);
 var
   CCOWdata: IContextItemCollection;             //CCOW
   CCOWdataItem1,CCOWdataItem2,CCOWdataItem3: IContextItem;
   CCOWdataItem4,CCOWdataItem5: IContextItem;    //CCOW
   Cname: string;
 begin
-    if Contextor <> nil then
-    begin
-      try
-         //Part 1
-         Contextor.StartContextChange;
-         //Part 2 Set the new proposed context data
-         CCOWdata := CoContextItemCollection.Create;
-         CCOWdataItem1 := CoContextItem.Create;
-         Cname := CCOW_LOGON_ID;
-         CCOWdataItem1.Name := Cname;
-         CCOWdataItem1.Value := domain;
-         CCOWData.Add(CCOWdataItem1);
-         CCOWdataItem2 := CoContextItem.Create;
-         Cname := CCOW_LOGON_TOKEN;
-         CCOWdataItem2.Name := Cname;
-         CCOWdataItem2.Value := token;
-         CCOWdata.Add(CCOWdataItem2);
-         CCOWdataItem3 := CoContextItem.Create;
-         Cname := CCOW_LOGON_NAME;
-         CCOWdataItem3.Name := Cname;
-         CCOWdataItem3.Value := Uname;
-         CCOWdata.Add(CCOWdataItem3);
-         //
-         CCOWdataItem4 := CoContextItem.Create;
-         Cname := CCOW_LOGON_VPID;
-         CCOWdataItem4.Name := Cname;
-         CCOWdataItem4.Value := Vpid;
-         CCOWdata.Add(CCOWdataItem4);
-         //
-         CCOWdataItem5 := CoContextItem.Create;
-         Cname := CCOW_USER_NAME;
-         CCOWdataItem5.Name := Cname;
-         CCOWdataItem5.Value := Uname;
-         CCOWdata.Add(CCOWdataItem5);
-         //Part 3 Make change
-         Contextor.EndContextChange(true, CCOWdata);
-         //We don't need to check CCOWresponce
-       finally
-       end;  //try
-    end; //if
+  if Contextor <> nil then
+  begin
+    try
+      //Part 1
+      Contextor.StartContextChange;
+      //Part 2 Set the new proposed context data
+      CCOWdata := CoContextItemCollection.Create;
+      CCOWdataItem1 := CoContextItem.Create;
+      Cname := CCOW_LOGON_ID;
+      CCOWdataItem1.Name := Cname;
+      CCOWdataItem1.Value := domain;
+      CCOWData.Add(CCOWdataItem1);
+      CCOWdataItem2 := CoContextItem.Create;
+      Cname := CCOW_LOGON_TOKEN;
+      CCOWdataItem2.Name := Cname;
+      CCOWdataItem2.Value := token;
+      CCOWdata.Add(CCOWdataItem2);
+      CCOWdataItem3 := CoContextItem.Create;
+      Cname := CCOW_LOGON_NAME;
+      CCOWdataItem3.Name := Cname;
+      CCOWdataItem3.Value := Uname;
+      CCOWdata.Add(CCOWdataItem3);
+      //
+      CCOWdataItem4 := CoContextItem.Create;
+      Cname := CCOW_LOGON_VPID;
+      CCOWdataItem4.Name := Cname;
+      CCOWdataItem4.Value := Vpid;
+      CCOWdata.Add(CCOWdataItem4);
+      //
+      CCOWdataItem5 := CoContextItem.Create;
+      Cname := CCOW_USER_NAME;
+      CCOWdataItem5.Name := Cname;
+      CCOWdataItem5.Value := Uname;
+      CCOWdata.Add(CCOWdataItem5);
+      //Part 3 Make change
+      Contextor.EndContextChange(true, CCOWdata);
+      //We don't need to check CCOWresponce
+    finally
+    end;  //try
+  end; //if
 end;
 
 //Get Token from CCOW context
@@ -1986,21 +1967,20 @@ begin
   name := CCOW_LOGON_ID;
   if (Contextor <> nil) then
   try
-      CCOWcontextItem := Contextor.CurrentContext;
-      //See if context contains the ID item
-      CCOWdataItem1 := CCOWcontextItem.Present(name);
-      if (CCOWdataItem1 <> nil) then    //1
-      begin
-           result := CCOWdataItem1.Value;
-           if result <> '' then
-             FWasUserDefined := True;
-      end;
+    CCOWcontextItem := Contextor.CurrentContext;
+    //See if context contains the ID item
+    CCOWdataItem1 := CCOWcontextItem.Present(name);
+    if (CCOWdataItem1 <> nil) then    //1
+    begin
+    result := CCOWdataItem1.Value;
+    if result <> '' then
+      FWasUserDefined := True;
+    end;
   finally
   end; //try
 end;
 
-function TRPCBroker.IsUserContextPending(aContextItemCollection:
-    IContextItemCollection): Boolean;
+function TRPCBroker.IsUserContextPending(aContextItemCollection: IContextItemCollection): Boolean;
 var
   CCOWdataItem1: IContextItem;                  //CCOW
   Val1: String;
@@ -2093,42 +2073,42 @@ begin
   PasswordEntry.Free;
 end;
 
-function TRPCBroker.StartSecureConnection(var PseudoServer, PseudoPort:
-    String): Boolean;
+function TRPCBroker.StartSecureConnection(var PseudoServer, PseudoPort: String): Boolean;
 var
   CmndLine: String;
 begin
-    // PseudoPort := NewSocket();
-    PseudoPort := FSSHPort;
-    if FSSHPort = '' then
-      PseudoPort := IntToStr(ListenerPort);
-    PseudoServer := '127.0.0.1';
-    if (FSSHUser = '') then
+  // PseudoPort := NewSocket();
+  PseudoPort := FSSHPort;
+  if FSSHPort = '' then
+    PseudoPort := IntToStr(ListenerPort);
+  PseudoServer := '127.0.0.1';
+  if (FSSHUser = '') then
+  begin
+    FSSHUser := getSSHUsername;
+  end;
+  if FUseSecureConnection = secureAttachmate then
+  begin
+    CmndLine := 'SSH2 -L '+PseudoPort+':'+FServer+':'+IntToStr(ListenerPort)+' -S -o "TryEmptyPassword yes" -o "MACs=hmac-sha1" -o "FipsMode yes" -o "StrictHostKeyChecking no" -o "connectionReuse no" '+FSSHUser+'@'+Server;
+  end;
+  if FUseSecureConnection = securePlink then
+  begin
+    if FSSHpw = '' then
     begin
-      FSSHUser := getSSHUsername;
+      FSSHpw := getSSHPassWord
     end;
-    if FUseSecureConnection = secureAttachmate then
-    begin
-      CmndLine := 'SSH2 -L '+PseudoPort+':'+FServer+':'+IntToStr(ListenerPort)+' -S -o "TryEmptyPassword yes" -o "MACs=hmac-sha1" -o "FipsMode yes" -o "StrictHostKeyChecking no" -o "connectionReuse no" '+FSSHUser+'@'+Server;
-    end;
-    if FUseSecureConnection = securePlink then
-    begin
-      if FSSHpw = '' then
-      begin
-        FSSHpw := getSSHPassWord
-      end;
-      CmndLine := 'plink.exe -L '+PseudoPort    // -v
-           +':'+PseudoServer+':'+
-          IntToStr(ListenerPort)+' '+FSSHUser+'@'+FServer +' -pw '+ FSSHpw;
-        // IntToStr(ListenerPort)+' '+FSSHUser+'@'+FServer+' -pw 914Qemu5';
-    end;
-    if FSSHhide then
-      StartProgSLogin(CmndLine, nil, SW_HIDE)
-    else
-      StartProgSLogin(CmndLine, nil, SW_SHOWMINIMIZED);
-    Sleep(5000);
-    result := true;
+    CmndLine := 'plink.exe -L '+PseudoPort    // -v
+         +':'+PseudoServer+':'+
+        IntToStr(ListenerPort)+' '+FSSHUser+'@'+FServer +' -pw '+ FSSHpw;
+      // IntToStr(ListenerPort)+' '+FSSHUser+'@'+FServer+' -pw 914Qemu5';
+  end;
+  if FSSHhide then
+    StartProgSLogin(CmndLine, nil, SW_HIDE)
+  else
+    StartProgSLogin(CmndLine, nil, SW_SHOWMINIMIZED);
+  Sleep(5000);
+  result := true;
 end;
+{$WARN UNSAFE_CAST ON}
 
 end.
 

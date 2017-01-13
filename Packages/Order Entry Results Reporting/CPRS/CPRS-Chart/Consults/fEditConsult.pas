@@ -37,8 +37,8 @@ type
     btnCmtCancel: TButton;
     btnCmtOther: TButton;
     cmdLexSearch: TButton;
-    lblEarliest: TStaticText;
-    calEarliest: TORDateBox;
+    lblClinicallyIndicated: TStaticText;
+    calClinicallyIndicated: TORDateBox;
     lblLatest: TStaticText;
     calLatest: TORDateBox;
     mnuPopProvDx: TPopupMenu;
@@ -75,7 +75,7 @@ type
     procedure memCommentKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure memCommentKeyPress(Sender: TObject; var Key: Char);
-    procedure calEarliestExit(Sender: TObject);
+    procedure calClinicallyIndicatedExit(Sender: TObject);
     procedure calLatestExit(Sender: TObject);
     procedure memCommentExit(Sender: TObject);
   private
@@ -84,12 +84,11 @@ type
     FChanging: boolean;
     FEditCtrl: TCustomEdit;
     FNavigatingTab: boolean;
-    FEarliestDate: TFMDateTime;
+    FClinicallyIndicatedDate: TFMDateTime;
     FProstheticsSvc: boolean;
-    //FLatestDate: TFMDateTime;
     procedure SetProvDiagPromptingMode;
     procedure SetUpCombatVet;
-    procedure SetUpEarliestDate;
+    procedure SetUpClinicallyIndicatedDate;
   protected
     procedure InitDialog;
     procedure Validate(var AnErrMsg: string);
@@ -132,8 +131,7 @@ const
   TX_INACTIVE_CODE   = 'The provisional diagnosis code is not active as of today''s date.' + #13#10 +
                        'Another code must be selected';
   TC_INACTIVE_CODE   = 'Inactive ICD Code';
-  TX_PAST_DATE       = 'Earliest appropriate date must be today or later.';
-  TX_BAD_DATES       = 'Latest appropriate date must be equal to or later than earliest date.';
+  TX_PAST_DATE       = 'Clinically indicated date must be today or later.';
 
 function EditResubmitConsult(FontSize: Integer; ConsultIEN: integer): boolean;
 begin
@@ -212,13 +210,11 @@ begin
   cboPlace.SelectByID(OldRec.Place);
   with cboUrgency do for i := 0 to Items.Count-1 do
     if UpperCase(DisplayText[i]) = UpperCase(OldRec.UrgencyName) then ItemIndex := i;
-  SetUpEarliestDate;         //wat v28
+  SetUpClinicallyIndicatedDate;         //wat v28
   if Not FProstheticsSvc then         //wat v28
     begin
-      calEarliest.FMDateTime := OldRec.EarliestDate;
-      FEarliestDate := OldRec.EarliestDate;
-      //calLatest.FMDateTime := OldRec.LatestDate;
-      //FLatestDate := OldRec.LatestDate;
+      calClinicallyIndicated.FMDateTime := OldRec.ClinicallyIndicatedDate;
+      FClinicallyIndicatedDate := OldRec.ClinicallyIndicatedDate;
     end;
   txtProvDiag.Text := OldRec.ProvDiagnosis;
   ProvDx.Code := OldRec.ProvDxCode;
@@ -247,6 +243,7 @@ begin
       pnlCombatVet.SendToBack;
     end;
   FChanging := False;
+  ControlChange(Self);    //CQ20913
   StatusText('');
 end;
 
@@ -282,7 +279,7 @@ begin
     SetError(TX_INACTIVE_CODE);
   if Not FProstheticsSvc then     //wat v28
     begin
-       if calEarliest.FMDateTime < FMToday     then SetError(TX_PAST_DATE);
+       if calClinicallyIndicated.FMDateTime < FMToday     then SetError(TX_PAST_DATE);
     end;
 
 end;
@@ -356,21 +353,13 @@ begin
            UrgencyName := '';
          end;
 
-     if FEarliestDate > 0 then
+     if FClinicallyIndicatedDate > 0 then
      begin
-       if FEarliestDate <> OldRec.EarliestDate then
-         EarliestDate := FEarliestDate
+       if FClinicallyIndicatedDate <> OldRec.ClinicallyIndicatedDate then
+         ClinicallyIndicatedDate := FClinicallyIndicatedDate
        else
-         EarliestDate := 0;
+         ClinicallyIndicatedDate := 0;
      end;
-
-(*     if FLatestDate > 0 then
-     begin
-       if FLatestDate <> OldRec.LatestDate then
-         LatestDate := FLatestDate
-       else
-         LatestDate := 0;
-     end;*)
 
      with cboPlace do if Length(ItemID) > 0 then
        if ItemID <> OldRec.Place then
@@ -462,10 +451,10 @@ begin
       if not ValidSave then Action := caNone;
 end;
 
-procedure TfrmEditCslt.calEarliestExit(Sender: TObject);
+procedure TfrmEditCslt.calClinicallyIndicatedExit(Sender: TObject);
 begin
   inherited;
-  FEarliestDate := calEarliest.FMDateTime;
+  FClinicallyIndicatedDate := calClinicallyIndicated.FMDateTime;
   ControlChange(Self);
 end;
 
@@ -587,12 +576,18 @@ procedure TfrmEditCslt.cmdLexSearchClick(Sender: TObject);
 var
   Match: string;
   i: integer;
+  EncounterDate: TFMDateTime;
 begin
   inherited;
 {Begin BillingAware}
   if  BILLING_AWARE then BADxUpdated := FALSE;
 {End BillingAware}
-  LexiconLookup(Match, LX_ICD);
+  if (Encounter.VisitCategory = 'A') or (Encounter.VisitCategory = 'I') then
+    EncounterDate := Encounter.DateTime
+  else
+    EncounterDate := FMNow;
+
+  LexiconLookup(Match, LX_ICD, EncounterDate);
   if Match = '' then Exit;
   ProvDx.Code := Piece(Match, U, 1);
   ProvDx.Text := Piece(Match, U, 2);
@@ -770,19 +765,19 @@ begin
     Key := #0;  //Disable shift-tab processin
 end;
 
-procedure TfrmEditCslt.SetUpEarliestDate;  //wat v28
+procedure TfrmEditCslt.SetUpClinicallyIndicatedDate;  //wat v28
 begin
   if IsProstheticsService(cboService.ItemIEN) = '1' then
     begin
-      lblEarliest.Enabled := False;
-      calEarliest.Enabled := False;
-      calEarliest.Text := '';
+      lblClinicallyIndicated.Enabled := False;
+      calClinicallyIndicated.Enabled := False;
+      calClinicallyIndicated.Text := '';
       FProstheticsSvc := true;
     end
   else
     begin
-      lblEarliest.Enabled := True;
-      calEarliest.Enabled := True;
+      lblClinicallyIndicated.Enabled := True;
+      calClinicallyIndicated.Enabled := True;
       FProstheticsSvc := false;
     end;
 end;

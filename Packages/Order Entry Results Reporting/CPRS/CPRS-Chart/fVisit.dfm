@@ -9,6 +9,8 @@ inherited frmVisit: TfrmVisit
   OldCreateOrder = True
   Position = poScreenCenter
   OnCreate = FormCreate
+  ExplicitWidth = 444
+  ExplicitHeight = 301
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBase: TORAutoPanel [0]
@@ -68,6 +70,7 @@ inherited frmVisit: TfrmVisit
         Text = 'NOW'
         DateOnly = False
         RequireTime = True
+        Caption = ''
       end
       object cboLocation: TORComboBox
         Left = 0
@@ -76,6 +79,7 @@ inherited frmVisit: TfrmVisit
         Height = 118
         Style = orcsSimple
         AutoSelect = True
+        Caption = ''
         Color = clWindow
         DropDownCount = 8
         ItemHeight = 13
@@ -89,6 +93,7 @@ inherited frmVisit: TfrmVisit
         Sorted = False
         SynonymChars = '<>'
         TabOrder = 0
+        Text = ''
         OnNeedData = cboLocationNeedData
         CharsNeedMatch = 1
       end
@@ -190,7 +195,8 @@ inherited frmVisit: TfrmVisit
         'Status = stsDefault')
       (
         'Component = timVisitDate'
-        'Status = stsDefault')
+        'Text = Date/Time of visit. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = cboLocation'
         'Status = stsDefault')

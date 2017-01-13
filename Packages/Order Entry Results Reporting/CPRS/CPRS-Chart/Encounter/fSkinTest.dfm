@@ -2,8 +2,6 @@ inherited frmSkinTests: TfrmSkinTests
   Left = 213
   Top = 163
   Caption = 'Encounter Skin Test form'
-  ExplicitLeft = 213
-  ExplicitTop = 163
   PixelsPerInch = 96
   TextHeight = 13
   object lblSkinResults: TLabel [0]
@@ -49,30 +47,23 @@ inherited frmSkinTests: TfrmSkinTests
   end
   inherited pnlGrid: TPanel
     TabOrder = 1
-    inherited lbGrid: TORListBox
-      Tag = 50
+    inherited lstRenameMe: TCaptionListView
+      Columns = <
+        item
+          Caption = 'Results'
+          Width = 80
+        end
+        item
+          Caption = 'Reading'
+          Tag = 1
+          Width = 120
+        end
+        item
+          Caption = 'Selected Skin Tests'
+          Width = 150
+        end>
       Caption = 'Selected Skin Tests'
       Pieces = '1,2,3'
-    end
-    inherited hcGrid: THeaderControl
-      Sections = <
-        item
-          ImageIndex = -1
-          MinWidth = 50
-          Text = 'Results'
-          Width = 55
-        end
-        item
-          ImageIndex = -1
-          MinWidth = 55
-          Text = 'Reading'
-          Width = 55
-        end
-        item
-          ImageIndex = -1
-          Text = 'Selected Skin Tests'
-          Width = 110
-        end>
     end
   end
   inherited edtComment: TCaptionEdit
@@ -142,6 +133,7 @@ inherited frmSkinTests: TfrmSkinTests
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 4
+    Text = ''
     OnChange = cboSkinResultsChange
     CharsNeedMatch = 1
   end
@@ -220,12 +212,6 @@ inherited frmSkinTests: TfrmSkinTests
         'Status = stsDefault')
       (
         'Component = pnlGrid'
-        'Status = stsDefault')
-      (
-        'Component = lbGrid'
-        'Status = stsDefault')
-      (
-        'Component = hcGrid'
         'Status = stsDefault')
       (
         'Component = btnOK'

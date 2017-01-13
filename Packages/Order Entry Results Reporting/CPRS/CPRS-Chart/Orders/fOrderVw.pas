@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fAutoSz, StdCtrls, ComCtrls, ExtCtrls, ORCtrls, ORFn, rOrders, ORDtTm,
-  VA508AccessibilityManager;
+  fBase508form, VA508AccessibilityManager;
 
 type
   TfrmOrderView = class(TfrmAutoSz)
@@ -30,6 +30,7 @@ type
     cmdOK: TButton;
     cmdCancel: TButton;
     Splitter1: TSplitter;
+    lbl508View: TStaticText;
     procedure FormCreate(Sender: TObject);
     procedure treServiceClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
@@ -38,6 +39,11 @@ type
     procedure calChange(Sender: TObject);
     procedure trFiltersClick(Sender: TObject);
     procedure Splitter1Moved(Sender: TObject);
+    procedure treServiceChange(Sender: TObject; Node: TTreeNode);
+    procedure trFiltersChange(Sender: TObject; Node: TTreeNode);
+    procedure chkDateRangeEnter(Sender: TObject);
+    procedure pnlViewEnter(Sender: TObject);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     FChanged: Boolean;
     FDGroup: Integer;
@@ -61,6 +67,9 @@ procedure SelectOrderView(var OrderView: TOrderView);
 implementation
 
 {$R *.DFM}
+
+uses
+VA508AccessibilityRouter, VAUtils;
 
 const
   TX_DATES = 'To list orders for a specific date range, both From & Thru dates are required.';
@@ -111,6 +120,8 @@ begin
 end;
 
 procedure TfrmOrderView.FormCreate(Sender: TObject);
+var
+  IsScreenReaderActive: Boolean;
 begin
   inherited;
   FChanged := False;
@@ -128,6 +139,30 @@ begin
     uFilterList.Free;
     uFilterList := nil;    
   end;
+  IsScreenReaderActive := ScreenReaderActive;
+  //lbl508View.Enabled := IsScreenReaderActive;
+  lbl508View.Visible := IsScreenReaderActive;
+  pnlView.TabStop := IsScreenReaderActive;
+  lbl508View.TabStop := IsScreenReaderActive;
+  lblView.Visible := not IsScreenReaderActive;
+  //lblView.Enabled := not IsScreenReaderActive;
+end;
+
+procedure TfrmOrderView.FormKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if pnlView.Focused then
+  begin
+    if (Key = VK_TAB) then
+    begin
+      if ssShift in Shift then
+      begin
+        cmdCancel.SetFocus(); //Force back to Cancel button instead of focus on pnlView
+        Key := 0;
+      end;
+    end;
+  end;
 end;
 
 procedure TfrmOrderView.UpdateViewName;
@@ -144,6 +179,7 @@ begin
     then FilterText := FFilterName
     else FilterText := FFilterName + ' Orders';
   lblView.Caption := FilterText + ' - ' + FDGroupName + DateText;
+  lbl508View.Caption := lblView.Caption;
 end;
 
 procedure TfrmOrderView.SynchViewData;
@@ -223,6 +259,18 @@ begin
   end;
 end;
 
+procedure TfrmOrderView.pnlViewEnter(Sender: TObject);
+begin
+  inherited;
+  lbl508View.SetFocus;
+end;
+
+procedure TfrmOrderView.treServiceChange(Sender: TObject; Node: TTreeNode);
+begin
+  inherited;
+  treServiceClick(Sender);
+end;
+
 procedure TfrmOrderView.treServiceClick(Sender: TObject);
 var
   Node: TTreeNode;
@@ -259,6 +307,14 @@ begin
   UpdateViewName;
 end;
 
+procedure TfrmOrderView.chkDateRangeEnter(Sender: TObject);
+begin
+  inherited;
+  if chkDateRange.Checked = False then
+    amgrMain.AccessData.Items[7].AccessText := 'Only List Orders Placed During Time Period. Date fields hidden until checked.'
+  else amgrMain.AccessData.Items[7].AccessText := 'Only List Orders Placed During Time Period.'
+end;
+
 procedure TfrmOrderView.calChange(Sender: TObject);
 begin
   inherited;
@@ -292,6 +348,12 @@ procedure TfrmOrderView.cmdCancelClick(Sender: TObject);
 begin
   inherited;
   Close;
+end;
+
+procedure TfrmOrderView.trFiltersChange(Sender: TObject; Node: TTreeNode);
+begin
+  inherited;
+  trFiltersClick(Sender);
 end;
 
 procedure TfrmOrderView.trFiltersClick(Sender: TObject);

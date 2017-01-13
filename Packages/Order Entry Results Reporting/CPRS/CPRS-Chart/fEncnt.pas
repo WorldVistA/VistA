@@ -11,7 +11,7 @@ unit fEncnt;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  Windows, Messages, SysUtils, Classes, Graphics, Vcl.Controls, Forms, Dialogs,
   StdCtrls, ORCtrls, ORDtTm, ORFn, ExtCtrls, ComCtrls, ORDtTmRng, fAutoSz, rOptions, fBase508Form,
   VA508AccessibilityManager, fFrame;
 
@@ -83,7 +83,7 @@ type
     OKPressed: Boolean;
     DoNotNeedLocation: Boolean;     //AGP This is used to not force a location when writing a delayed order
     procedure AppShowHint(var HintStr: string; var CanShow: Boolean;
-                          var HintInfo: THintInfo);
+                          var HintInfo: Vcl.Controls.THintInfo);
     procedure SetVisitCat;
     function AllowAutoFocusChange: Boolean;
   public
@@ -402,7 +402,7 @@ var
 begin
   inherited;
   msg := '';
-  if DoNotNeedLocation = False then
+  if (not DoNotNeedLocation) or (DoNotNeedLocation and (FLocation > 0)) then
     begin
       if FLocation = 0 then msg := TX_NO_LOC;
       if FDateTime <= 0 then msg := msg + CRLF + TX_NO_DATE
@@ -458,7 +458,7 @@ end;
  }
 
 procedure TfrmEncounter.AppShowHint(var HintStr: string;
-  var CanShow: Boolean; var HintInfo: THintInfo);
+  var CanShow: Boolean; var HintInfo: Vcl.Controls.THintInfo);
 const
   HistHintDelay = 30000; // 30 seconds
 

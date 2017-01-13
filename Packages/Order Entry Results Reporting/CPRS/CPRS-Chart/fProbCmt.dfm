@@ -6,16 +6,16 @@ inherited frmProbCmt: TfrmProbCmt
   ClientWidth = 403
   OldCreateOrder = True
   Position = poScreenCenter
-  ExplicitWidth = 411
-  ExplicitHeight = 128
+  ExplicitWidth = 419
+  ExplicitHeight = 139
   PixelsPerInch = 96
   TextHeight = 13
   object lblComment: TOROffsetLabel [0]
     Left = 9
     Top = 10
-    Width = 209
+    Width = 215
     Height = 15
-    Caption = 'Enter a new comment (up to 60 characters):'
+    Caption = 'Enter a new comment (up to 200 characters):'
     HorzOffset = 2
     Transparent = False
     VertOffset = 2
@@ -26,9 +26,9 @@ inherited frmProbCmt: TfrmProbCmt
     Top = 30
     Width = 386
     Height = 21
-    MaxLength = 60
+    MaxLength = 200
     TabOrder = 0
-    Caption = 'Enter a new comment (up to 60 characters)'
+    Caption = 'Enter a new comment (up to 200 characters)'
   end
   object bbOK: TBitBtn [2]
     Left = 115
@@ -49,9 +49,9 @@ inherited frmProbCmt: TfrmProbCmt
     Cancel = True
     Caption = 'Cancel'
     ModalResult = 2
+    NumGlyphs = 2
     TabOrder = 2
     OnClick = bbCancelClick
-    NumGlyphs = 2
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (

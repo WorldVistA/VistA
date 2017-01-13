@@ -218,7 +218,8 @@ implementation
 
 uses fTemplateView, uCore, rTemplates, fTemplateEditor, dShared, uReminders,
   fReminderDialog, RichEdit, fRptBox, Clipbrd, fTemplateDialog, fIconLegend,
-  VA508AccessibilityRouter, uVA508CPRSCompatibility, VAUtils, fFindingTemplates;
+  VA508AccessibilityRouter, uVA508CPRSCompatibility, VAUtils, fFindingTemplates,
+  System.Types;
 
 {$R *.DFM}
 

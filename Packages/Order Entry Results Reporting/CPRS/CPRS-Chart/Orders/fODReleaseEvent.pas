@@ -45,7 +45,7 @@ implementation
 {$R *.DFM}
 
 uses rCore, rOrders, uConst, fOrdersPrint, uCore, uOrders, fOrders, rODLab, fRptBox,
-  VAUtils;
+  VAUtils, System.Types;
 
 const
   TX_SAVERR1 = 'The error, ';

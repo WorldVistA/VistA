@@ -2,27 +2,38 @@ inherited frmReports: TfrmReports
   Left = 356
   Top = 69
   HelpContext = 9000
+  Margins.Left = 5
+  Margins.Top = 5
+  Margins.Right = 5
+  Margins.Bottom = 5
   Caption = 'Reports Page'
   ClientHeight = 627
-  ClientWidth = 717
+  ClientWidth = 889
   HelpFile = 'qnoback'
   OnDestroy = FormDestroy
-  OnShow = FormShow
-  ExplicitWidth = 725
-  ExplicitHeight = 661
+  ExplicitWidth = 905
+  ExplicitHeight = 665
   PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape
     Top = 617
-    Width = 717
+    Width = 889
     Height = 10
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     ExplicitTop = 617
-    ExplicitWidth = 717
+    ExplicitWidth = 889
     ExplicitHeight = 10
   end
   inherited sptHorz: TSplitter
     Left = 119
     Height = 617
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     OnMoved = sptHorzMoved
     ExplicitLeft = 119
     ExplicitHeight = 617
@@ -30,13 +41,18 @@ inherited frmReports: TfrmReports
   inherited pnlLeft: TPanel
     Width = 119
     Height = 617
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    Constraints.MinWidth = 37
     ExplicitWidth = 119
     ExplicitHeight = 617
     object Splitter1: TSplitter
       Left = 0
-      Top = 259
+      Top = 260
       Width = 119
-      Height = 6
+      Height = 5
       Cursor = crVSplit
       Align = alBottom
       Color = clBtnFace
@@ -47,7 +63,7 @@ inherited frmReports: TfrmReports
       Left = 0
       Top = 0
       Width = 119
-      Height = 259
+      Height = 260
       Align = alClient
       BevelOuter = bvNone
       Constraints.MinWidth = 30
@@ -68,7 +84,7 @@ inherited frmReports: TfrmReports
         Left = 0
         Top = 19
         Width = 119
-        Height = 240
+        Height = 241
         Align = alClient
         HideSelection = False
         Indent = 18
@@ -80,7 +96,6 @@ inherited frmReports: TfrmReports
         OnKeyDown = tvReportsKeyDown
         Caption = 'Available Reports'
         NodePiece = 0
-        ExplicitLeft = -1
       end
     end
     object pnlLeftBottom: TPanel
@@ -139,12 +154,21 @@ inherited frmReports: TfrmReports
         Height = 226
         Style = lbOwnerDrawFixed
         Align = alClient
-        ItemHeight = 13
+        Items.Strings = (
+          'S^Date Range...'
+          '1^Today'
+          '8^One Week'
+          '31^One Month'
+          '183^Six Months'
+          '366^One Year'
+          '732^Two Year'
+          '50000^All Results')
         ParentShowHint = False
         ShowHint = True
         TabOrder = 1
         OnClick = lstQualifierClick
         OnDrawItem = lstQualifierDrawItem
+        Caption = ''
         ItemTipColor = clWindow
         LongList = False
         Pieces = '2,3'
@@ -217,7 +241,7 @@ inherited frmReports: TfrmReports
           Align = alClient
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -12
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ItemHeight = 13
@@ -226,12 +250,11 @@ inherited frmReports: TfrmReports
           ShowHint = True
           TabOrder = 1
           OnClick = lstDateRangeClick
+          Caption = ''
           ItemTipColor = clWindow
           LongList = False
           Pieces = '2'
           TabPositions = '10'
-          ExplicitLeft = -1
-          ExplicitTop = 82
         end
       end
     end
@@ -280,56 +303,69 @@ inherited frmReports: TfrmReports
   end
   inherited pnlRight: TPanel
     Left = 123
-    Width = 594
+    Width = 766
     Height = 617
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    Constraints.MinWidth = 30
     ExplicitLeft = 123
-    ExplicitWidth = 594
+    ExplicitWidth = 766
     ExplicitHeight = 617
     object sptHorzRight: TSplitter
       Left = 0
-      Top = 177
-      Width = 594
-      Height = 4
+      Top = 218
+      Width = 766
+      Height = 3
       Cursor = crVSplit
       Align = alTop
       Visible = False
       OnCanResize = sptHorzRightCanResize
     end
+    object sptHorzRightTop: TSplitter
+      Left = 0
+      Top = 88
+      Width = 766
+      Height = 3
+      Cursor = crVSplit
+      Align = alTop
+      Visible = False
+    end
     object pnlRightTop: TPanel
       Left = 0
       Top = 0
-      Width = 594
-      Height = 57
+      Width = 766
+      Height = 88
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
       object lblProcTypeMsg: TOROffsetLabel
         Left = 0
         Top = 0
-        Width = 594
+        Width = 766
         Height = 17
         Align = alTop
         HorzOffset = 3
         Transparent = False
         VertOffset = 2
         WordWrap = False
-        ExplicitWidth = 529
       end
       object TabControl1: TTabControl
         Left = 0
-        Top = 40
-        Width = 594
-        Height = 20
-        Align = alTop
+        Top = 70
+        Width = 766
+        Height = 18
+        Align = alBottom
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -12
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         HotTrack = True
         ParentFont = False
         Style = tsButtons
-        TabHeight = 16
+        TabHeight = 18
         TabOrder = 0
         TabStop = False
         Visible = False
@@ -338,54 +374,227 @@ inherited frmReports: TfrmReports
       object pnlTopRtLabel: TPanel
         Left = 0
         Top = 17
-        Width = 594
-        Height = 23
+        Width = 766
+        Height = 25
         Align = alTop
         TabOrder = 1
         object lblTitle: TOROffsetLabel
-          Left = 1
+          Left = 7
           Top = 1
-          Width = 495
-          Height = 21
+          Width = 607
+          Height = 23
           Align = alClient
+          Color = clCream
           HorzOffset = 3
-          Transparent = True
-          VertOffset = 6
+          ParentColor = False
+          Transparent = False
+          VertOffset = 2
           WordWrap = False
-          ExplicitWidth = 312
-          ExplicitHeight = 26
         end
         object chkMaxFreq: TCheckBox
-          Left = 496
+          Left = 662
           Top = 1
           Width = 97
-          Height = 21
+          Height = 23
+          Hint = 'Remove Max/Site limit (shown for programmers only)'
           Align = alRight
           Caption = 'Max/Site OFF'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
           Visible = False
           OnClick = chkMaxFreqClick
+        end
+        object btnClear: TButton
+          Left = 614
+          Top = 1
+          Width = 48
+          Height = 23
+          Hint = 'Clear default settings and reload (only shown for programmers)'
+          Align = alRight
+          Caption = 'Clear'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 1
+          Visible = False
+          OnClick = btnClearClick
+        end
+        object btnAppearRt: TButton
+          Left = 759
+          Top = 1
+          Width = 6
+          Height = 23
+          Align = alRight
+          Caption = '      '
+          Enabled = False
+          TabOrder = 2
+          OnClick = btnAppearRtClick
+        end
+        object btnAppearLt: TButton
+          Left = 1
+          Top = 1
+          Width = 6
+          Height = 23
+          Align = alLeft
+          Caption = '      '
+          Enabled = False
+          TabOrder = 3
+        end
+      end
+      object pnlRightTopHeaderMid: TPanel
+        Left = 0
+        Top = 42
+        Width = 766
+        Height = 28
+        Align = alClient
+        TabOrder = 2
+        Visible = False
+        object pnlRightTopHeaderMidUpper: TPanel
+          Left = 1
+          Top = 1
+          Width = 764
+          Height = 26
+          Align = alClient
+          Color = clInfoBk
+          TabOrder = 0
+          object grpDateRange: TGroupBox
+            Left = 1
+            Top = 1
+            Width = 762
+            Height = 24
+            Align = alClient
+            Color = clCream
+            ParentColor = False
+            TabOrder = 0
+            object rdo1Week: TRadioButton
+              Tag = 2
+              AlignWithMargins = True
+              Left = 173
+              Top = 3
+              Width = 58
+              Height = 17
+              Margins.Top = 1
+              Margins.Bottom = 1
+              Caption = '1 Week'
+              TabOrder = 2
+              OnClick = rdo1WeekClick
+            end
+            object rdo1Month: TRadioButton
+              Tag = 3
+              AlignWithMargins = True
+              Left = 237
+              Top = 3
+              Width = 65
+              Height = 17
+              Margins.Top = 1
+              Margins.Bottom = 1
+              Caption = '1 Month'
+              TabOrder = 3
+              OnClick = rdo1MonthClick
+            end
+            object rdo6Month: TRadioButton
+              Tag = 4
+              AlignWithMargins = True
+              Left = 308
+              Top = 3
+              Width = 65
+              Height = 17
+              Margins.Top = 1
+              Margins.Bottom = 1
+              Caption = '6 Months'
+              TabOrder = 4
+              OnClick = rdo6MonthClick
+            end
+            object rdo1Year: TRadioButton
+              Tag = 5
+              AlignWithMargins = True
+              Left = 379
+              Top = 3
+              Width = 50
+              Height = 17
+              Margins.Top = 1
+              Margins.Bottom = 1
+              Caption = '1 Year'
+              TabOrder = 5
+              OnClick = rdo1YearClick
+            end
+            object rdo2Year: TRadioButton
+              Tag = 6
+              AlignWithMargins = True
+              Left = 435
+              Top = 3
+              Width = 61
+              Height = 17
+              Margins.Top = 1
+              Margins.Bottom = 1
+              Caption = '2 Years'
+              TabOrder = 6
+              OnClick = rdo2YearClick
+            end
+            object rdoAllResults: TRadioButton
+              Tag = 7
+              AlignWithMargins = True
+              Left = 501
+              Top = 3
+              Width = 75
+              Height = 17
+              Margins.Top = 1
+              Margins.Bottom = 1
+              Caption = 'All Results'
+              TabOrder = 7
+              OnClick = rdoAllResultsClick
+            end
+            object rdoToday: TRadioButton
+              Tag = 1
+              AlignWithMargins = True
+              Left = 112
+              Top = 3
+              Width = 55
+              Height = 17
+              Margins.Top = 1
+              Margins.Bottom = 1
+              Caption = 'Today'
+              TabOrder = 1
+              OnClick = rdoTodayClick
+            end
+            object rdoDateRange: TRadioButton
+              AlignWithMargins = True
+              Left = 10
+              Top = 3
+              Width = 96
+              Height = 17
+              Margins.Top = 1
+              Margins.Bottom = 1
+              Caption = 'Date Range...'
+              Checked = True
+              TabOrder = 0
+              TabStop = True
+              OnMouseUp = rdoDateRangeMouseUp
+            end
+          end
         end
       end
     end
     object pnlRightBottom: TPanel
       Left = 0
-      Top = 181
-      Width = 594
-      Height = 436
+      Top = 221
+      Width = 766
+      Height = 396
       Align = alClient
       TabOrder = 2
-      object WebBrowser1: TWebBrowser
+      object WebBrowser: TWebBrowser
         Left = 1
         Top = 31
-        Width = 592
-        Height = 277
+        Width = 764
+        Height = 237
         TabStop = False
         Align = alClient
         TabOrder = 1
-        OnDocumentComplete = WebBrowser1DocumentComplete
+        OnDocumentComplete = WebBrowserDocumentComplete
+        ExplicitWidth = 753
+        ExplicitHeight = 234
         ControlData = {
-          4C0000002F3D0000A11C00000000000000000000000000000000000000000000
+          4C000000F64E00007F1800000000000000000000000000000000000000000000
           000000004C000000000000000000000001000000E0D057007335CF11AE690800
           2B2E126208000000000000004C0000000114020000000000C000000000000046
           8000000000000000000000000000000000000000000000000000000000000000
@@ -394,7 +603,7 @@ inherited frmReports: TfrmReports
       object Memo1: TMemo
         Left = 1
         Top = 1
-        Width = 592
+        Width = 764
         Height = 30
         TabStop = False
         Align = alTop
@@ -412,8 +621,8 @@ inherited frmReports: TfrmReports
       end
       object memText: TRichEdit
         Left = 1
-        Top = 308
-        Width = 592
+        Top = 268
+        Width = 764
         Height = 127
         Align = alBottom
         Color = clCream
@@ -436,9 +645,9 @@ inherited frmReports: TfrmReports
     end
     object pnlRightMiddle: TPanel
       Left = 0
-      Top = 57
-      Width = 594
-      Height = 120
+      Top = 91
+      Width = 766
+      Height = 127
       Align = alTop
       Constraints.MaxHeight = 700
       Constraints.MinHeight = 50
@@ -447,8 +656,8 @@ inherited frmReports: TfrmReports
       object lvReports: TCaptionListView
         Left = 1
         Top = 1
-        Width = 592
-        Height = 118
+        Width = 764
+        Height = 125
         Hint = 'To sort, click on column headers|'
         Align = alClient
         Columns = <>
@@ -466,6 +675,7 @@ inherited frmReports: TfrmReports
         OnCompare = lvReportsCompare
         OnKeyUp = lvReportsKeyUp
         OnSelectItem = lvReportsSelectItem
+        AutoSize = False
       end
     end
   end
@@ -520,7 +730,7 @@ inherited frmReports: TfrmReports
         'Component = pnlRightBottom'
         'Status = stsDefault')
       (
-        'Component = WebBrowser1'
+        'Component = WebBrowser'
         'Status = stsDefault')
       (
         'Component = Memo1'
@@ -548,6 +758,48 @@ inherited frmReports: TfrmReports
         'Status = stsDefault')
       (
         'Component = chkMaxFreq'
+        'Status = stsDefault')
+      (
+        'Component = pnlRightTopHeaderMid'
+        'Status = stsDefault')
+      (
+        'Component = pnlRightTopHeaderMidUpper'
+        'Status = stsDefault')
+      (
+        'Component = grpDateRange'
+        'Status = stsDefault')
+      (
+        'Component = rdo1Week'
+        'Status = stsDefault')
+      (
+        'Component = rdo1Month'
+        'Status = stsDefault')
+      (
+        'Component = rdo6Month'
+        'Status = stsDefault')
+      (
+        'Component = rdo1Year'
+        'Status = stsDefault')
+      (
+        'Component = rdo2Year'
+        'Status = stsDefault')
+      (
+        'Component = rdoAllResults'
+        'Status = stsDefault')
+      (
+        'Component = rdoToday'
+        'Status = stsDefault')
+      (
+        'Component = rdoDateRange'
+        'Status = stsDefault')
+      (
+        'Component = btnClear'
+        'Status = stsDefault')
+      (
+        'Component = btnAppearRt'
+        'Status = stsDefault')
+      (
+        'Component = btnAppearLt'
         'Status = stsDefault'))
   end
   object PopupMenu1: TPopupMenu

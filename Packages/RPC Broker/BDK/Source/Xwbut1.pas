@@ -3,9 +3,15 @@
 	Date Created: Sept 18, 1997 (Version 1.1)
 	Site Name: Oakland, OI Field Office, Dept of Veteran Affairs
 	Developers: Danila Manapsal, Don Craven, Joel Ivey
-	Description: Contains utilities used by the BDK.
-	Current Release: Version 1.1 Patch 47 (Jun. 17, 2008))
+	Description: Contains TRPCBroker and related components.
+  Unit: Xwbut1 contains utilities used by the BDK.
+	Current Release: Version 1.1 Patch 50
 *************************************************************** }
+
+{ **************************************************
+  Changes in v1.1.47 (JLI 6/17/2008) XWB*1.1*47
+  1. Deleted unused code.
+************************************************** }
 
 unit Xwbut1;
 
@@ -60,7 +66,8 @@ implementation
 ------------------------------------------------------------------}
 Function BuildSect(s1: string; s2: string): string;
 var
-   s, x: string[100];
+//   s, x: string[100];  // JLI 090804  no real reason for the array
+  s, x: String;  // JLI 090804
 begin
      if s2 <> '' then
           s := s1 + s2

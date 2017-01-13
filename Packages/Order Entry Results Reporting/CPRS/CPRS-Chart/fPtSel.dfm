@@ -12,9 +12,8 @@ inherited frmPtSel: TfrmPtSel
   OnDestroy = FormDestroy
   OnResize = FormResize
   OnShow = FormShow
-  ExplicitTop = -20
-  ExplicitWidth = 793
-  ExplicitHeight = 589
+  ExplicitWidth = 801
+  ExplicitHeight = 593
   PixelsPerInch = 96
   TextHeight = 13
   object sptVert: TSplitter [0]
@@ -52,7 +51,7 @@ inherited frmPtSel: TfrmPtSel
       ForeColor = clHighlight
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clCaptionText
-      Font.Height = -11
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentColor = False
@@ -77,6 +76,13 @@ inherited frmPtSel: TfrmPtSel
       Height = 13
       Caption = 'Patient'
       ShowAccelChar = False
+    end
+    object lblPtDemo: TLabel
+      Left = 494
+      Top = 4
+      Width = 104
+      Height = 13
+      Caption = 'Patient Demographics'
     end
     object cboPatient: TORComboBox
       Left = 216
@@ -103,6 +109,7 @@ inherited frmPtSel: TfrmPtSel
       SynonymChars = '<>'
       TabPositions = '20,25,30'
       TabOrder = 1
+      Text = ''
       OnChange = cboPatientChange
       OnDblClick = cboPatientDblClick
       OnEnter = cboPatientEnter

@@ -41,6 +41,7 @@ type
     txtCmdRemove: TVA508StaticText;
     txtCmdForward: TVA508StaticText;
     txtCmdProcess: TVA508StaticText;
+    lblPtDemo: TLabel;
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
     procedure cboPatientChange(Sender: TObject);
@@ -107,6 +108,7 @@ type
     procedure AdjustButtonSize(pButton:TButton);
     procedure AdjustNotificationButtons;
     procedure SetupDemographicsForm;
+    procedure SetupDemographicsLabel;
     procedure ShowDisabledButtonTexts;
 
   public
@@ -129,7 +131,7 @@ implementation
 
 uses rCore, uCore, fDupPts, fPtSens, fPtSelDemog, fPtSelOptns, fPatientFlagMulti,
      uOrPtf, fAlertForward, rMisc, fFrame, fRptBox, VA508AccessibilityRouter,
-     VAUtils;
+     VAUtils, System.Types;
 
 var
   FDragging: Boolean = False;
@@ -827,12 +829,14 @@ begin
   frmPtSelDemog.Left := cboPatient.Left + cboPatient.Width + 9;
   frmPtSelDemog.Width := pnlPtSel.Width - frmPtSelDemog.Left - 2;
   frmPtSelOptns.Width := cboPatient.Left-8;
+  SetupDemographicsLabel;
 end;
 
 procedure TfrmPtSel.Loaded;
 begin
   inherited;
   SetupDemographicsForm;
+  SetupDemographicsLabel;
 
   frmPtSelOptns := TfrmPtSelOptns.Create(Self);  // Was application - kcm
   with frmPtSelOptns do
@@ -884,6 +888,16 @@ begin
     frmPtSelDemog.Memo.Show;
     frmPtSelDemog.Memo.BringToFront;
   end;
+end;
+
+procedure TfrmPtSel.SetupDemographicsLabel;
+var
+  intAdjust: Integer;
+
+begin
+  intAdjust := Round(PixelsPerInch * MainFontSize / 96);
+  lblPtDemo.Top := frmPtSelDemog.Top - Round(lblPtDemo.Height * PixelsPerInch / 96 + intAdjust);
+  lblPtDemo.Left := frmPtSelDemog.Left
 end;
 
 procedure TfrmPtSel.RPLDisplay;
@@ -972,20 +986,20 @@ begin
   piece9 := Piece(thisList[listIndex],U,9);
   piece10 := Piece(thisList[listIndex],U,1);
 
-  thisDateTime := Piece(thisList[listIndex],U,5);
+  thisDateTime := ShortString(Piece(thisList[listIndex],U,5));
 
   tempYr := '';
   for k := 1 to 4 do
-   tempYr := tempYr + thisDateTime[k];
+   tempYr := tempYr + String(thisDateTime[k]);
 
   tempDt := '';
   for k := 6 to 10 do
-   tempDt := tempDt + thisDateTime[k];
+   tempDt := tempDt + String(thisDateTime[k]);
 
   tempTime := '';
   //Use 'Length' to prevent stuffing the control chars into the date when a trailing zero is missing
   for k := 11 to Length(thisDateTime) do //16 do
-   tempTime := tempTime + thisDateTime[k];
+   tempTime := tempTime + String(thisDateTime[k]);
 
   newDtTime := '';
   newDtTime := newDtTime + tempDt + '/' + tempYr + tempTime;

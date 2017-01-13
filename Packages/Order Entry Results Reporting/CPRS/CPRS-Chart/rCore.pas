@@ -1201,7 +1201,7 @@ begin
   if impDt <> '' then
     Result := StrToFMDateTime(impDt)
   else
-    Result := 3141001;  //Default to 10/01/2014
+    Result := 0;
 end;
 
 procedure ListApptAll(Dest: TStrings; const DFN: string; From: TFMDateTime = 0;

@@ -13,19 +13,19 @@ inherited frmReportBox: TfrmReportBox
   Position = poScreenCenter
   OnClose = FormClose
   OnResize = FormResize
-  ExplicitWidth = 356
-  ExplicitHeight = 353
+  ExplicitWidth = 364
+  ExplicitHeight = 357
   PixelsPerInch = 96
   TextHeight = 13
   object lblFontTest: TLabel [0]
     Left = 148
     Top = 208
     Width = 77
-    Height = 14
+    Height = 15
     Caption = 'lblFontTest'
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -12
     Font.Name = 'Courier New'
     Font.Style = []
     ParentFont = False
@@ -39,13 +39,15 @@ inherited frmReportBox: TfrmReportBox
     Color = clCream
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -12
     Font.Name = 'Courier New'
     Font.Style = []
     HideScrollBars = False
     Lines.Strings = (
       'memReport')
     ParentFont = False
+    PlainText = True
+    PopupMenu = pmnu
     ReadOnly = True
     ScrollBars = ssBoth
     TabOrder = 0
@@ -109,5 +111,15 @@ inherited frmReportBox: TfrmReportBox
   object dlgPrintReport: TPrintDialog
     Left = 318
     Top = 41
+  end
+  object pmnu: TPopupMenu
+    AutoPopup = False
+    Left = 312
+    Top = 136
+    object mnuCopy: TMenuItem
+      Caption = '&Copy'
+      ShortCut = 16451
+      OnClick = mnuCopyClick
+    end
   end
 end

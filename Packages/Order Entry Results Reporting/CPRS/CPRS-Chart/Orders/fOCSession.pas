@@ -143,7 +143,7 @@ end;
  Clears OrderList If False. }
 function ExecuteSessionOrderChecks(OrderList: TStringList) : Boolean;
 var
-  i, j, k, l, m, rowcnt: Integer;
+  i, j, k, l, m, n, rowcnt: Integer;
   LastID, NewID, gridtext: string;
   CheckList,remOC: TStringList;
   OCRec: TOCRec;
@@ -258,6 +258,8 @@ begin
         frmOCSession.ShowModal;
         Result := not frmOCSession.CancelSignProcess;
         if frmOCSession.CancelSignProcess then begin
+          for n := 0 to OrderList.Count - 1 do
+            UnlockOrder(Piece(OrderList[n], U, 1));
           OrderList.Clear;
           if Assigned(frmFrame) then
             frmFrame.SetActiveTab(CT_ORDERS);

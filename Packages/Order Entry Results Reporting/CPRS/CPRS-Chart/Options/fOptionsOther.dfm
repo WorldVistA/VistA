@@ -15,6 +15,8 @@ inherited frmOptionsOther: TfrmOptionsOther
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnShow = FormShow
+  ExplicitWidth = 335
+  ExplicitHeight = 464
   PixelsPerInch = 96
   TextHeight = 13
   object lblMedsTab: TLabel [0]
@@ -170,6 +172,7 @@ inherited frmOptionsOther: TfrmOptionsOther
     SynonymChars = '<>'
     TabOrder = 2
     TabStop = True
+    Text = ''
     CharsNeedMatch = 1
   end
   object chkLastTab: TCheckBox [12]
@@ -326,10 +329,12 @@ inherited frmOptionsOther: TfrmOptionsOther
         'Status = stsDefault')
       (
         'Component = dtStart'
-        'Status = stsDefault')
+        'Text = Start Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = dtStop'
-        'Status = stsDefault')
+        'Text = Stop Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = lblTabDefault'
         'Status = stsDefault')

@@ -760,8 +760,8 @@ type
   
   //CRYPT* function signatures
 
-  function CryptAcquireContextA( pHProv: Pointer; pszContainer: PAnsiChar; pszProvider: PAnsiChar; dwProvType: DWORD; dwFlags: DWORD) : boolean; stdcall;
-  function CryptAcquireContext( pHProv: Pointer; pszContainer: PAnsiChar; pszProvider: PAnsiChar; dwProvType: DWORD; dwFlags: DWORD) : boolean; stdcall;
+  function CryptAcquireContextA( pHProv: Pointer; pszContainer: PWideChar; pszProvider: PWideChar; dwProvType: DWORD; dwFlags: DWORD) : boolean; stdcall;
+  function CryptAcquireContext( pHProv: Pointer; pszContainer: PWideChar; pszProvider: PWideChar; dwProvType: DWORD; dwFlags: DWORD) : boolean; stdcall;
   function CryptGetProvParam(hProv: HCRYPTPROV; dwParam: DWORD; pbData:  pointer; pdwDataLen: pointer; dwFlags: DWORD) : boolean; stdcall;
   function CryptDestroyKey(hPassKey: HCRYPTKEY) : boolean; stdcall;
   function CryptCreateHash(hProv: HCRYPTPROV; c_HASH_ALGID: ALG_ID;kHEY: HCRYPTKEY; dwFlags: DWORD;phHash: pointer) : boolean; stdcall;

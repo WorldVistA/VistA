@@ -13,8 +13,8 @@ inherited frmTemplateDialog: TfrmTemplateDialog
   OnMouseWheel = FormMouseWheel
   OnPaint = FormPaint
   OnShow = FormShow
-  ExplicitWidth = 640
-  ExplicitHeight = 440
+  ExplicitWidth = 648
+  ExplicitHeight = 451
   PixelsPerInch = 96
   TextHeight = 13
   object sbMain: TScrollBox [0]

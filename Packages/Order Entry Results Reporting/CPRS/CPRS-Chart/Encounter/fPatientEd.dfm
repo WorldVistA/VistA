@@ -2,8 +2,6 @@ inherited frmPatientEd: TfrmPatientEd
   Left = 275
   Top = 267
   Caption = 'Patient Education'
-  ExplicitLeft = 275
-  ExplicitTop = 267
   PixelsPerInch = 96
   TextHeight = 13
   object lblUnderstanding: TLabel [0]
@@ -26,25 +24,21 @@ inherited frmPatientEd: TfrmPatientEd
   end
   inherited pnlGrid: TPanel
     TabOrder = 1
-    inherited lbGrid: TORListBox
-      Tag = 60
-      Caption = 'Selected Patient Educations'
-      Pieces = '1,2'
-    end
-    inherited hcGrid: THeaderControl
-      Sections = <
+    inherited lstRenameMe: TCaptionListView
+      Columns = <
         item
-          ImageIndex = -1
-          MinWidth = 124
-          Text = 'Level of Understanding'
-          Width = 124
+          Caption = 'Level of Understanding'
+          Width = 150
         end
         item
-          ImageIndex = -1
-          MinWidth = 150
-          Text = 'Selected Patient Educations'
+          Caption = 'Selected Patient Educations'
+          Tag = 1
           Width = 150
         end>
+      Caption = 'Selected Patient Educations'
+      Pieces = '1,2'
+      ExplicitLeft = -2
+      ExplicitTop = -3
     end
   end
   inherited edtComment: TCaptionEdit
@@ -73,6 +67,7 @@ inherited frmPatientEd: TfrmPatientEd
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 4
+    Text = ''
     OnChange = cboPatUnderstandingChange
     CharsNeedMatch = 1
   end
@@ -135,12 +130,6 @@ inherited frmPatientEd: TfrmPatientEd
         'Status = stsDefault')
       (
         'Component = pnlGrid'
-        'Status = stsDefault')
-      (
-        'Component = lbGrid'
-        'Status = stsDefault')
-      (
-        'Component = hcGrid'
         'Status = stsDefault')
       (
         'Component = btnOK'

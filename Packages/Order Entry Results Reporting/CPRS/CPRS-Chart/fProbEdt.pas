@@ -3,15 +3,22 @@ unit fProbEdt;
 interface
 
 uses
-  SysUtils, windows, Messages, Classes, Graphics, Controls,
+  SysUtils, windows, Messages, Classes, Graphics, Vcl.Controls,
   Forms, Dialogs, StdCtrls, Buttons, ExtCtrls, Grids,
   ORCtrls, Vawrgrid, uCore, Menus, uConst, fBase508Form,
-  VA508AccessibilityManager;
+  VA508AccessibilityManager, Vcl.ComCtrls;
 
 const
   SOC_QUIT = 1;        { close single dialog }
 
 type
+  tVA508Captions = record
+   CheckBox: TCheckBox;
+   OrigCaption: String;
+   OrigWidth: Integer;
+   VA508Label: TStaticText;
+  end;
+
   TfrmdlgProb = class(TfrmBase508Form)
     Label1: TLabel;
     Label5: TLabel;
@@ -23,13 +30,6 @@ type
     bbFile: TBitBtn;
     pnlComments: TPanel;
     Bevel1: TBevel;
-    lblCmtDate: TOROffsetLabel;
-    lblComment: TOROffsetLabel;
-    lblCom: TStaticText;
-    bbAdd: TBitBtn;
-    bbRemove: TBitBtn;
-    lstComments: TORListBox;
-    bbEdit: TBitBtn;
     pnlTop: TPanel;
     lblAct: TLabel;
     rgStatus: TKeyClickRadioGroup;
@@ -60,6 +60,17 @@ type
     Label3: TLabel;
     edOnsetdate: TCaptionEdit;
     Label6: TLabel;
+    lstComments: TCaptionListView;
+    Panel1: TPanel;
+    bbAdd: TBitBtn;
+    bbEdit: TBitBtn;
+    bbRemove: TBitBtn;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    ScrollBox1: TScrollBox;
+    Panel4: TPanel;
+    ckNCL: TCheckBox;
+    ckYCL: TCheckBox;
     procedure bbQuitClick(Sender: TObject);
     procedure bbAddComClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -89,6 +100,8 @@ type
     function  TreatmentsCked(ckBox: Integer):String;
     procedure ckNSCClick(Sender: TObject);
     procedure rgStatusEnter(Sender: TObject);
+    procedure lstCommentsChange(Sender: TObject; Item: TListItem;
+      Change: TItemChange);
   private
     { Private declarations }
     FEditing: Boolean;
@@ -105,7 +118,7 @@ type
     FSilent: boolean;
     FCanQuit: boolean;
     FSearchString: String;
-
+    VA508Captions: Array of tVA508Captions;
     procedure UMTakeFocus(var Message: TMessage); message UM_TAKEFOCUS;
     procedure ShowComments;
     procedure GetEditedComments;
@@ -113,6 +126,8 @@ type
     function  OkToQuit:boolean;
     procedure ShowServiceCombo;
     procedure ShowClinicLocationCombo;
+    procedure HandleVA508Caption();
+
   protected
     procedure CreateParams(var Params: TCreateParams); override;
     procedure DoShow; override;
@@ -144,7 +159,7 @@ implementation
 {$R *.DFM}
 
 uses ORFn, uProbs, fProbs, rProbs, fCover, rCover, rCore, rOrders, fProbCmt, fProbLex, rPCE, uInit  ,
-     VA508AccessibilityRouter;
+     VA508AccessibilityRouter, VAUtils, rMisc, uGlobalVar;
 
 type
   TDialogItem = class { for loading edits & quick orders }
@@ -197,7 +212,7 @@ begin
   cmt := NewComment ;
   if StrToInt(Piece(cmt, U, 1)) > 0 then
     begin
-      lstComments.Items.Add(Pieces(cmt, U, 2, 3)) ;
+      lstComments.Add(Pieces(cmt, U, 2, 3)) ;
       fChanged := true;
     end ;
 end;
@@ -206,11 +221,11 @@ procedure TfrmdlgProb.bbEditClick(Sender: TObject);
 var
   cmt: string    ;
 begin
-  if lstComments.ItemIndex < 0 then Exit;
-  cmt := EditComment(lstComments.Items[lstComments.ItemIndex]) ;
+  if not Assigned(lstComments.Selected) then Exit;
+  cmt := EditComment(lstComments.Strings[lstComments.Selected.Index]) ;
   if StrToInt(Piece(cmt, U, 1)) > 0 then
     begin
-      lstComments.Items[lstComments.ItemIndex] := Pieces(cmt, U, 2, 3) ;
+      lstComments.Strings[lstComments.Selected.Index] := Pieces(cmt, U, 2, 4) ;
       fChanged := true;
     end ;
 end;
@@ -236,6 +251,8 @@ begin
   if (ChkBoxName = 'CKNMST') then ckYMST.Checked := not ckNMST.Checked;
   if (ChkBoxName = 'CKYHNC') then ckNHNC.Checked := not ckYHNC.Checked;
   if (ChkBoxName = 'CKNHNC') then ckYHNC.Checked := not ckNHNC.Checked;
+  if (ChkBoxName = 'CKYCL') then ckNCL.Checked := not ckYCL.Checked;
+  if (ChkBoxName = 'CKNCL') then ckYCL.Checked := not ckNCL.Checked;
 end;
 
 procedure TfrmdlgProb.ckTreatments(value: String; ckBox: Integer);
@@ -250,6 +267,8 @@ procedure TfrmdlgProb.ckTreatments(value: String; ckBox: Integer);
      4 -> Shipboard Hazard and Defense
      5 -> MST
      6 -> Head and/or Neck Cancer
+     7 -> Camp Lejeune
+
 }
 Var
  yptr,nptr :^TCheckBox;
@@ -290,6 +309,12 @@ begin
           yptr := @ckYHNC;
           nptr := @ckNHNC;
         end;
+    7 : begin
+          //Camp Lejeune
+          yptr := @ckYCL;
+          nptr := @ckNCL;
+        end;
+
     else begin
            Exit;
          end;
@@ -323,6 +348,8 @@ function TfrmdlgProb.TreatmentsCked(ckBox: Integer):String;
      4 -> Shipboard Hazard and Defense
      5 -> MST
      6 -> Head and/or Neck Cancer
+     7 -> Camp Lejeune
+
 }
 Var
  yptr,nptr :^TCheckBox;
@@ -363,6 +390,12 @@ begin
           yptr := @ckYHNC;
           nptr := @ckNHNC;
         end;
+    7 : begin
+          //Camp Lejeune - Veterans
+          yptr := @ckYCL;
+          nptr := @ckNCL;
+        end;
+
     else begin
            Result := '';
            Exit;
@@ -439,6 +472,9 @@ begin
         ckNHNC.enabled        := false;
         ckNMST.enabled        := false;
         ckNSHAD.enabled       := false;
+        ckNCL.enabled         := false;
+        ckYCL.enabled         := false;
+
         if Reason = 'R' then bbFile.caption := 'Remove';
       end;
     edProb.Caption := lblact.Caption;
@@ -453,7 +489,7 @@ begin
     if Reason <> 'A' then
       begin {edit,remove or display existing problem}
         problemIFN := Piece(subjProb, u, 1);
-        FastAssign(EditLoad(ProblemIFN, User.DUZ, PLPt.ptVAMC), AList) ;   //V17.5   RV
+        FastAssign(EditLoad(ProblemIFN), AList) ;   //V17.5   RV
       end
     else {new  problem}
       SetDefaultProb(Alist, subjProb);
@@ -541,7 +577,7 @@ begin
           begin
             ckYSHAD.Enabled := True;
             ckNSHAD.Enabled := True;
-            ckTreatments(ProbRec.SHADProlem,4);
+            ckTreatments(ProbRec.SHADProblem,4);
           end
           else
           begin
@@ -572,6 +608,18 @@ begin
             ckYHNC.Enabled := False;
             ckNHNC.Enabled := False;
           end;
+          if PtCL then
+          begin
+            ckYCL.Enabled := True;
+            ckNCL.Enabled := True;
+            ckTreatments(ProbRec.CLProblem,7);
+          end
+          else
+          begin
+            ckYCL.Enabled := False;
+            ckNCL.Enabled := False;
+          end;
+
         end ;
 
     {cbProv.InitLongList(ProbRec.RespProvider.extern) ;
@@ -645,8 +693,8 @@ begin
     else
       begin
         bbAdd.Enabled := TRUE;
-        bbEdit.Enabled := TRUE;
-        bbRemove.Enabled := TRUE;
+   //     bbEdit.Enabled := TRUE;
+   //     bbRemove.Enabled := TRUE;
         pnlComments.Hint := '';
       end ;
    // ===================  changed code - REV 7/30/98  =========================
@@ -675,6 +723,9 @@ begin
       InitialFocus := rgStatus
     else
       InitialFocus := rgStatus.Buttons[rgStatus.ItemIndex] as TWinControl;
+
+    if ScreenReaderActive then
+     HandleVA508Caption();
   finally
     alist.free;
   end;
@@ -686,7 +737,7 @@ var
 begin
   with ProbRec do
     for i:=0 to Pred(fComments.count) do
-      lstComments.Items.Add(TComment(fComments[i]).ExtDateAdd + '^' + TComment(fComments[i]).Narrative);
+      lstComments.Add(TComment(fComments[i]).ExtDateAdd + '^' + TComment(fComments[i]).Narrative + '^' + TComment(fComments[i]).AuthorID);
 end;
 
 
@@ -782,17 +833,19 @@ begin
     ProbRec.DateOnsetStr := edOnsetDate.text;
     ProbRec.DateResStr   := edResDate.text;{aka inactivation date}
     ProbRec.DateRecStr   := edRecDate.text;{recorded anywhere}
-    if edUpdate.text = '' then
-      ProbRec.DateModStr := DatetoStr(trunc(FMNow))
+    if fChanged or (edUpdate.text = '') then
+      ProbRec.DateModStr := InttoStr(trunc(FMNow))
     else
       ProbRec.DateModStr := edUpdate.text; {last update}
-    (*if ckSC.enabled then *)Probrec.SCProblem    := TreatmentsCked(0);
-    if ckYAO.enabled then ProbRec.AOProblem    := TreatmentsCked(1);
-    if ckYRAD.enabled then Probrec.RadProblem  := TreatmentsCked(2);
-    if ckYENV.enabled then ProbRec.ENVProblem  := TreatmentsCked(3);
-    if ckYSHAD.Enabled then ProbRec.SHADProlem := TreatmentsCked(4);
-    if ckYMST.enabled then ProbRec.MSTProblem  := TreatmentsCked(5);
-    if ckYHNC.enabled then ProbRec.HNCProblem  := TreatmentsCked(6);
+    (*if ckSC.enabled then *)Probrec.SCProblem  := TreatmentsCked(0);
+    if ckYAO.enabled then ProbRec.AOProblem     := TreatmentsCked(1);
+    if ckYRAD.enabled then Probrec.RadProblem   := TreatmentsCked(2);
+    if ckYENV.enabled then ProbRec.ENVProblem   := TreatmentsCked(3);
+    if ckYSHAD.Enabled then ProbRec.SHADProblem := TreatmentsCked(4);
+    if ckYMST.enabled then ProbRec.MSTProblem   := TreatmentsCked(5);
+    if ckYHNC.enabled then ProbRec.HNCProblem   := TreatmentsCked(6);
+    if ckYCL.enabled then ProbRec.CLProblem     := TreatmentsCked(7);
+
     if cbProv.itemindex = -1 then {Get provider}
       begin
         Probrec.respProvider.intern := '0';
@@ -883,12 +936,13 @@ begin
   for i := 0 to pred(ProbRec.CommentCount) do
     if i < lstComments.Items.Count then with lstComments do
       begin
-        if Items[i] = 'DELETED' then
+        if Strings[i] = 'DELETED' then
           TComment(ProbRec.fComments[i]).Narrative := '' {this deletes the comment}
         else
           begin
-            TComment(ProbRec.fComments[i]).DateAdd := Piece(lstComments.Items[i], U, 1) ;
-            TComment(ProbRec.fComments[i]).Narrative := Piece(lstComments.Items[i], U, 2) ;
+            TComment(ProbRec.fComments[i]).DateAdd := Piece(lstComments.Strings[i], U, 1) ;
+            TComment(ProbRec.fComments[i]).Narrative := Piece(lstComments.Strings[i], U, 2) ;
+            TComment(ProbRec.fComments[i]).AuthorID := Piece(lstComments.Strings[i], U, 3) ;
           end;
       end;
 end;
@@ -906,16 +960,16 @@ begin
    begin
     with lstComments do
      begin
-      if (lstComments.Items[i] <> 'DELETED') and (Piece(lstComments.Items[i], u, 2) <> '') then
-       ProbRec.AddNewComment(Piece(lstComments.Items[i],u,2));
+      if (lstComments.Strings[i] <> 'DELETED') and (Piece(lstComments.Strings[i], u, 2) <> '') then
+       ProbRec.AddNewComment(Piece(lstComments.Strings[i],u,2));
      end;
    end;
   end;
 
 procedure TfrmdlgProb.bbRemoveClick(Sender: TObject);
 begin
- if (lstComments.Items.Count = 0) or (lstComments.ItemIndex < 0) then exit ;
- lstComments.Items[lstComments.ItemIndex] := 'DELETED' ;
+ if (lstComments.Items.Count = 0) or (lstComments.SelCount < 0) then exit ;
+ lstComments.Strings[lstComments.Selected.Index] := 'DELETED' ;
  fChanged := true;
 end;
 
@@ -1023,6 +1077,8 @@ begin  {BODY }
   alist.add('NEW' + v + '1.16' + v + '0' + u + 'NO'); {MST}
   alist.add('NEW' + v + '1.17' + v + '0' + u + 'NO'); {CV}
   alist.add('NEW' + v + '1.18' + v + '0' + u + 'NO'); {SHAD}
+  if IsLejeuneActive then alist.add('NEW' + v + '1.19' + v + '0' + u + 'NO'); {CL}
+
   if Piece(prob, u, 6) <> '' then
     alist.Add('NEW' + v + '80001' + v + Piece(prob, u, 6) + u + Piece(prob, u, 6)); {SCT Concept}
   if Piece(prob, u, 7) <> '' then
@@ -1081,9 +1137,9 @@ begin
     end ;
   for i:=0 to pred(lstComments.Items.Count) do
     begin
-      if Piece(lstComments.Items[i],u,2)<>'' then {may have blank lines at bottom}
+      if Piece(lstComments.Strings[i],u,2)<>'' then {may have blank lines at bottom}
         begin
-          ds:=DateStringOk(Piece(lstComments.Items[i],u,1));
+          ds:=DateStringOk(Piece(lstComments.Strings[i],u,1));
           if ds='ERROR' then
             begin
               msg('Comment #' + inttostr(i));
@@ -1108,6 +1164,8 @@ begin
   if (not Application.Terminated) and (not uInit.TimedOut) then   {prevents GPF if system close box is clicked
                                                                    while frmDlgProbs is visible}
      if Assigned(frmProblems) then PostMessage(frmProblems.Handle, UM_CLOSEPROBLEM, 0, 0);
+  SetLength(VA508Captions, 0);
+
   inherited Destroy ;
 end;
 
@@ -1155,6 +1213,9 @@ end;
 procedure TfrmdlgProb.FormCreate(Sender: TObject);
 begin
   FSilent := False;
+  ckNCL.Visible := IsLejeuneActive;
+  ckYCL.Visible := IsLejeuneActive;
+
 end;
 
 { old TPLDlgForm Methods }
@@ -1168,6 +1229,8 @@ begin
   FInitialShow := True;
   FModified := False;
   FEditing := False;
+
+
 end;
 
 procedure TfrmdlgProb.CreateParams(var Params: TCreateParams);
@@ -1195,6 +1258,15 @@ begin
   BorderIcons := [];
   BorderStyle := bsNone;
   HandleNeeded;
+end;
+
+procedure TfrmdlgProb.lstCommentsChange(Sender: TObject; Item: TListItem;
+  Change: TItemChange);
+begin
+  inherited;
+  bbEdit.Enabled := lstComments.ItemIndex <> -1 ;
+  bbRemove.Enabled := lstComments.ItemIndex <> -1 ;
+  ControlChange(Sender);
 end;
 
 procedure TfrmdlgProb.DoShow;
@@ -1264,7 +1336,7 @@ procedure TfrmdlgProb.bbChangeProbClick(Sender: TObject);
 const
   TX799 = '799.9';
 var
-   newprob: string ;
+   newprob, CSysAbbr: string ;
    frmPLLex: TfrmPLLex;
 begin
   if PLUser.usUseLexicon then
@@ -1307,8 +1379,11 @@ begin
       ProbRec.Problem.DHCPtoKeyVal(Piece(NewProb,u,1) + u + Piece(NewProb,u,2)) ;    {1.01}
       ProbRec.Diagnosis.DHCPtoKeyVal(Piece(NewProb,u,4) + u + Piece(NewProb,u,3)) ;   {.01}
       ProbRec.Narrative.DHCPtoKeyVal(u + Piece(NewProb,u,2));                         {.05}
-      ProbRec.SCTConcept.DHCPtoKeyVal(Piece(NewProb, u, 6) + u + Piece(NewProb, u, 6));
-      ProbRec.SCTDesignation.DHCPtoKeyVal(Piece(NewProb, u, 7) + u + Piece(NewProb, u, 7));
+      ProbRec.SCTConcept.DHCPtoKeyVal(Piece(NewProb, u, 6) + u + Piece(NewProb, u, 6));      {80001}
+      ProbRec.SCTDesignation.DHCPtoKeyVal(Piece(NewProb, u, 7) + u + Piece(NewProb, u, 7));  {80002}
+      ProbRec.CodeDateStr := InttoStr(trunc(FMNow));  {80201}
+      if Piece(NewProb, u, 8)='ICD-9-CM' then CSysAbbr := 'ICD' else CSysAbbr := '10D';
+      ProbRec.CodeSystem.DHCPtoKeyVal(CSysAbbr + u + Piece(NewProb, u, 8));  {80202}
 
       {mark it as changed}
       fchanged := true ;
@@ -1335,6 +1410,71 @@ procedure TfrmdlgProb.cbServNeedData(Sender: TObject; const StartFrom: String;
 begin
   cbServ.ForDataUse(ServiceSearch(StartFrom, Direction));
 end;
+
+//procedure TfraVisitRelated.HandleVA508Caption(ParentCheckBox: TCheckBox; chkEnabled: Boolean);
+procedure TfrmdlgProb.HandleVA508Caption();
+Var
+ i,X: Integer;
+ LabelExist: Boolean;
+ ParentCheckBox: TCheckBox;
+begin
+ for x := 0 to ComponentCount -1 do
+ begin
+   if Components[x] is TCheckBox then
+   begin
+    ParentCheckBox := TCheckBox(Components[x]);
+
+ LabelExist := False;
+ for I := Low(VA508Captions) to High(VA508Captions) do
+ begin
+   if VA508Captions[i].CheckBox = ParentCheckBox then
+   begin
+    LabelExist := true;
+    //Setup the caption
+    if ParentCheckBox.Enabled then
+    begin
+     VA508Captions[i].CheckBox.Caption := VA508Captions[i].OrigCaption;
+     VA508Captions[i].CheckBox.Width := VA508Captions[i].OrigWidth;
+    end else begin
+     VA508Captions[i].CheckBox.Caption := '';
+     VA508Captions[i].CheckBox.Width := 20;
+    end;
+    //handle the label's visibility
+    VA508Captions[i].VA508Label.Visible := not ParentCheckBox.Enabled;
+    Break;
+   end;
+  if LabelExist then Break;
+ end;
+
+
+ if (not ParentCheckBox.Enabled) and (ParentCheckBox.Visible) and (not LabelExist) and (Trim(ParentCheckBox.Caption) <> '') then
+ begin
+  SetLength(VA508Captions, length(VA508Captions) + 1);
+  with VA508Captions[High(VA508Captions)] do
+  begin
+   CheckBox := ParentCheckBox;
+   OrigCaption := ParentCheckBox.Caption;
+   OrigWidth := ParentCheckBox.Width;
+
+  ParentCheckBox.Width := 20;
+   ParentCheckBox.Caption := '';
+
+   VA508Label := TStaticText.Create(ParentCheckBox.Owner);
+   VA508Label.Parent := ParentCheckBox.Parent;
+   VA508Label.Top := ParentCheckBox.Top;
+   VA508Label.Left := ParentCheckBox.Left + 15;
+   VA508Label.TabStop := true;
+   VA508Label.Caption := Trim(OrigCaption) + ' disabled';
+   VA508Label.TabOrder := ParentCheckBox.TabOrder;
+   VA508Label.Visible := true;
+  end;
+ end;
+
+  end;
+ end;
+end;
+
+
 
 initialization
   SpecifyFormIsNotADialog(TfrmdlgProb);

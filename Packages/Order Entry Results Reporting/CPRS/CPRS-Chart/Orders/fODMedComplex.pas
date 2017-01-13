@@ -63,7 +63,7 @@ implementation
 
 {$R *.DFM}
 
-uses rODBase;
+uses rODBase, System.Types;
 
 const
   COL_SELECT   =  0;
@@ -241,7 +241,7 @@ procedure TfrmODMedComplex.grdDosesKeyPress(Sender: TObject; var Key: Char);
 begin
   inherited;
   if Key = #13 then ShowEditor(grdDoses.Col, grdDoses.Row, #0);
-  if Key in [#32..#127] then ShowEditor(grdDoses.Col, grdDoses.Row, Key);
+  if CharInSet(Key, [#32..#127]) then ShowEditor(grdDoses.Col, grdDoses.Row, Key);
 end;
 
 procedure TfrmODMedComplex.grdDosesMouseUp(Sender: TObject; Button: TMouseButton;

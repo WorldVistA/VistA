@@ -25,9 +25,14 @@ type
     bbtnOK: TBitBtn;
     bbtnCancel: TBitBtn;
   private
+    function GetAddress: string;
+    function GetPort: string;
+    procedure SetAddress(const Value: string);
+    procedure SetPort(const Value: string);
     { Private declarations }
   public
-    { Public declarations }
+    property Address: string read GetAddress write SetAddress;
+    property Port: string read GetPort write SetPort;
   end;
 
 var
@@ -36,5 +41,27 @@ var
 implementation
 
 {$R *.DFM}
+
+{ TfrmAddServer }
+
+function TfrmAddServer.GetAddress: string;
+begin
+  Result := edtAddress.Text;
+end;
+
+function TfrmAddServer.GetPort: string;
+begin
+  Result := edtPortNumber.Text;
+end;
+
+procedure TfrmAddServer.SetAddress(const Value: string);
+begin
+  edtAddress.Text := Value;
+end;
+
+procedure TfrmAddServer.SetPort(const Value: string);
+begin
+  edtPortNumber.Text := Value;
+end;
 
 end.

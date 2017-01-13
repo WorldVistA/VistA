@@ -3,25 +3,33 @@ inherited frmODMedComplex: TfrmODMedComplex
   Top = 307
   BorderIcons = []
   Caption = 'Complex Dose'
-  ClientHeight = 227
-  ClientWidth = 445
+  ClientHeight = 279
+  ClientWidth = 548
   Position = poScreenCenter
   OnCreate = FormCreate
   ExplicitWidth = 453
   ExplicitHeight = 254
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object Bevel1: TBevel [0]
-    Left = 6
-    Top = 174
-    Width = 433
-    Height = 2
+    Left = 7
+    Top = 214
+    Width = 533
+    Height = 3
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
   end
   object grdDoses: TStringGrid [1]
-    Left = 6
-    Top = 6
-    Width = 433
-    Height = 135
+    Left = 7
+    Top = 7
+    Width = 533
+    Height = 167
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     DefaultColWidth = 78
     DefaultRowHeight = 21
     RowCount = 6
@@ -41,33 +49,46 @@ inherited frmODMedComplex: TfrmODMedComplex
       21)
   end
   object cmdOK: TButton [2]
-    Left = 290
-    Top = 184
-    Width = 72
-    Height = 21
+    Left = 357
+    Top = 226
+    Width = 89
+    Height = 26
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'OK'
     TabOrder = 5
     OnClick = cmdOKClick
   end
   object cmdCancel: TButton [3]
-    Left = 368
-    Top = 184
-    Width = 72
-    Height = 21
+    Left = 453
+    Top = 226
+    Width = 89
+    Height = 26
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'Cancel'
     TabOrder = 6
     OnClick = cmdCancelClick
   end
   object cboRoute: TORComboBox [4]
-    Left = 170
-    Top = 200
-    Width = 72
-    Height = 21
+    Left = 209
+    Top = 246
+    Width = 89
+    Height = 24
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Style = orcsDropDown
     AutoSelect = False
+    Caption = ''
     Color = clWindow
     DropDownCount = 8
-    ItemHeight = 13
+    ItemHeight = 16
     ItemTipColor = clWindow
     ItemTipEnable = True
     ListItemsOnly = False
@@ -78,18 +99,24 @@ inherited frmODMedComplex: TfrmODMedComplex
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 1
+    Text = ''
     Visible = False
     OnClick = cboRouteClick
     OnExit = cboRouteExit
     CharsNeedMatch = 1
   end
   object cboSchedule: TORComboBox [5]
-    Left = 169
-    Top = 176
-    Width = 72
-    Height = 21
+    Left = 208
+    Top = 217
+    Width = 89
+    Height = 24
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Style = orcsDropDown
     AutoSelect = False
+    Caption = ''
     Color = clWindow
     DropDownCount = 8
     ItemHeight = 13
@@ -102,25 +129,34 @@ inherited frmODMedComplex: TfrmODMedComplex
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 2
+    Text = ''
     Visible = False
     OnExit = cboScheduleExit
     CharsNeedMatch = 1
   end
   object pnlInstruct: TPanel [6]
-    Left = 6
-    Top = 177
-    Width = 150
-    Height = 21
+    Left = 7
+    Top = 218
+    Width = 185
+    Height = 26
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     BevelOuter = bvNone
     TabOrder = 0
     Visible = False
     OnEnter = pnlInstructEnter
     OnExit = pnlInstructExit
     object btnUnits: TSpeedButton
-      Left = 86
+      Left = 106
       Top = 1
-      Width = 63
-      Height = 15
+      Width = 77
+      Height = 19
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'TABLET(S)'
       Flat = True
       Glyph.Data = {
@@ -138,10 +174,15 @@ inherited frmODMedComplex: TfrmODMedComplex
     object cboInstruct: TORComboBox
       Left = -1
       Top = -1
-      Width = 86
-      Height = 21
+      Width = 106
+      Height = 24
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Style = orcsDropDown
       AutoSelect = False
+      Caption = ''
       Color = clWindow
       DropDownCount = 8
       ItemHeight = 13
@@ -154,31 +195,44 @@ inherited frmODMedComplex: TfrmODMedComplex
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 0
+      Text = ''
       CharsNeedMatch = 1
     end
   end
   object pnlDays: TPanel [7]
-    Left = 6
-    Top = 201
-    Width = 67
-    Height = 21
+    Left = 7
+    Top = 247
+    Width = 83
+    Height = 26
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     BevelOuter = bvNone
     TabOrder = 3
     Visible = False
     OnEnter = pnlDaysEnter
     OnExit = pnlDaysExit
     object Label1: TLabel
-      Left = 43
-      Top = 4
-      Width = 22
-      Height = 13
+      Left = 53
+      Top = 5
+      Width = 30
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'days'
     end
     object txtDays: TCaptionEdit
       Left = 0
       Top = 0
-      Width = 25
+      Width = 31
       Height = 21
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       AutoSelect = False
       TabOrder = 0
       Text = '0'
@@ -186,29 +240,41 @@ inherited frmODMedComplex: TfrmODMedComplex
       Caption = 'days'
     end
     object UpDown2: TUpDown
-      Left = 25
+      Left = 31
       Top = 0
-      Width = 15
-      Height = 21
+      Width = 18
+      Height = 26
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Associate = txtDays
       Max = 999
       TabOrder = 1
     end
   end
   object cmdInsert: TButton [8]
-    Left = 6
-    Top = 149
-    Width = 79
-    Height = 17
+    Left = 7
+    Top = 183
+    Width = 98
+    Height = 21
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'Insert Row'
     TabOrder = 7
     OnClick = cmdInsertClick
   end
   object cmdRemove: TButton [9]
-    Left = 92
-    Top = 149
-    Width = 91
-    Height = 17
+    Left = 113
+    Top = 183
+    Width = 112
+    Height = 21
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'Remove Row'
     TabOrder = 8
     OnClick = cmdRemoveClick

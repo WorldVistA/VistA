@@ -19,7 +19,7 @@ type
     lblPlace: TLabel;
     lblAttn: TLabel;
     lblLatest: TStaticText;
-    lblEarliest: TStaticText;
+    lblClinicallyIndicated: TStaticText;
     pnlReason: TPanel;
     lblReason: TLabel;
     memReason: TRichEdit;
@@ -37,7 +37,7 @@ type
     radOutpatient: TRadioButton;
     btnDiagnosis: TButton;
     cmdLexSearch: TButton;
-    calEarliest: TORDateBox;
+    calClinicallyIndicated: TORDateBox;
     calLatest: TORDateBox;
     mnuPopProvDx: TPopupMenu;
     mnuPopProvDxDelete: TMenuItem;
@@ -118,7 +118,7 @@ type
     function NotinIndex(AList: TStringList; i: integer): boolean;
     function GetItemIndex(Service: String; Index: integer): integer;
     procedure SetUpCombatVet;
-    procedure SetUpEarliestDate; //wat v28
+    procedure SetUpClinicallyIndicatedDate; //wat v28
     procedure setup508Label(lbl: TVA508StaticText; ctrl: TORComboBox);
   protected
     procedure InitDialog; override;
@@ -172,8 +172,7 @@ const
   TX_INACTIVE_CODE1  = 'The provisional diagnosis code is not active as of today''s date.' + #13#10;
   TX_INACTIVE_CODE_REQD     = 'Another code must be selected before the order can be saved.';
   TX_INACTIVE_CODE_OPTIONAL = 'If another code is not selected, no code will be saved.';
-  TX_PAST_DATE       = 'Earliest appropriate date must be today or later.';
-  TX_BAD_DATES       = 'Latest appropriate date must be equal to or later than earliest date.';
+  TX_PAST_DATE       = 'Clinically indicated date must be today or later.';
 
   TX_SVC_HRCHY = 'services/specialties hierarchy';
   TX_VIEW_SVC_HRCHY = 'View services/specialties hierarchically';
@@ -240,7 +239,7 @@ begin
   CtrlInits.LoadDefaults(Defaults);
   txtAttn.InitLongList('') ;
   PreserveControl(txtAttn);
-  PreserveControl(calEarliest);
+  PreserveControl(calClinicallyIndicated);
     if (patient.CombatVet.IsEligible = True) then
    begin
      SetUpCombatVet;
@@ -274,7 +273,7 @@ begin
       cboCategory.SelectById('I');
       SetControl(cboPlace, 'Inpt Place');
       SetControl(cboUrgency, 'Inpt Cslt Urgencies');        //S.GMRCT
-      SetControl(calEarliest, 'EarliestDate');  //wat v29
+      SetControl(calClinicallyIndicated, 'Clin Ind Date');
     end
    else
     begin
@@ -284,7 +283,7 @@ begin
       cboCategory.SelectById('O');
       SetControl(cboPlace, 'Outpt Place');
       SetControl(cboUrgency, 'Outpt Urgencies');      //S.GMRCO
-      SetControl(calEarliest, 'EarliestDate');  //wat v29
+      SetControl(calClinicallyIndicated, 'Clin Ind Date');
     end ;
   end ;
   StatusText('Initializing Long List');
@@ -307,14 +306,23 @@ const
   TX_INACTIVE_SVC = 'This consult service is currently inactive and not receiving requests.' + CRLF +
                     'Please contact your Clinical Coordinator/IRM staff to fix this order.';
   TX_INACTIVE_SVC_CAP = 'Inactive Service';
+  TX_TRACK_SVC = 'This consult service is currently set to tracking only and can only be ordered by' + CRLF +
+  'authorized personnel. Please contact your Clinical Coordinator/IRM staff if you feel' + CRLF +
+  'you''ve received this message in error.';
+  TX_TRACK_SVC_CAP = 'Tracking Service';
+  TX_GROUP_SVC = 'This consult service is currently set to grouper only and not receiving requests.' + CRLF +
+  'Please contact your Clinical Coordinator/IRM staff to fix this order.';
+  TX_GROUP_SVC_CAP = 'Grouping Service';
   TX_NO_SVC = 'The order or quick order you have selected does not specify a consult service.' + CRLF +
               'Please contact your Clinical Coordinator/IRM staff to fix this order.';
   TC_NO_SVC = 'No service specified';
 var
  i:integer;
- AList: TStringList;
+ AList, TempAList: TStringList;
  tmpResp: TResponse;
  SvcIEN: string;
+ TempSvcList: TStrings;
+ TempUserLevel: String;
 begin
   inherited;
   LLS_LINE_INDEX := -1;
@@ -335,13 +343,41 @@ begin
           Exit;
         end;
       if SvcIEN = '-1' then
-        begin
+       begin
           InfoBox(TX_INACTIVE_SVC, TX_INACTIVE_SVC_CAP, MB_OK);
           AbortOrder := True;
           Close;
           Exit;
+       end else begin
+        //Is this tracking or grouping? CB
+        TempSvcList := TStringList.Create();
+        TempAList := TStringList.Create();
+        try
+         FastAssign(LoadServiceList(False, StrToIntDef(SvcIEN, 1), 0), TempSvcList); {RV}
+         FastAssign(TempSvcList, TempAList);
+         //Grouper
+         if Piece(TempAList.Strings[0], U, 5) = '1' then begin
+          InfoBox(TX_GROUP_SVC, TX_GROUP_SVC_CAP, MB_ICONERROR or MB_OK);
+          AbortOrder := True;
+          Close;
+          Exit;
+         end;
+         //Tracking
+         if Piece(TempAList.Strings[0], U, 5) = '2' then begin
+          //Does the user have the required rights?
+          TempUserLevel := GetServiceUserLevel(StrToInt(SvcIEN), 0);
+          if StrtoInt(TempUserLevel) < 2 then begin
+            InfoBox(TX_TRACK_SVC, TX_TRACK_SVC_CAP, MB_ICONERROR or MB_OK);
+            AbortOrder := True;
+            Close;
+            Exit;
+          end;
+         end;
+        finally
+          TempAList.Free;
+          TempSvcList.Free;
         end;
-
+       end;
       cboService.Items.Add(SvcIEN + U + tmpResp.EValue + '^^^^' + tmpResp.IValue);
       cboService.SelectByID(SvcIEN);
       tmpResp := TResponse(FindResponseByName('CLASS',1));
@@ -353,8 +389,8 @@ begin
       SetControl(cboUrgency,    'URGENCY',   1);
       SetControl(cboPlace,      'PLACE',     1);
       SetControl(txtAttn,       'PROVIDER',  1);
-      SetControl(calEarliest,   'EARLIEST',  1);
-      SetUpEarliestDate;   //wat v28
+      SetControl(calClinicallyIndicated,   'CLINICALLY',  1);
+      SetUpClinicallyIndicatedDate;   //wat v28
       cboService.Enabled := False;
       setup508Label(servicelbl508, cboService);
       cboService.Font.Color := clGrayText;
@@ -478,7 +514,7 @@ begin
       else
         SetError(TX_SELECT_DIAG);
     end;
-  if (lblEarliest.Enabled) and (calEarliest.FMDateTime < FMToday) then SetError(TX_PAST_DATE);
+  if (lblClinicallyIndicated.Enabled) and (calClinicallyIndicated.FMDateTime < FMToday) then SetError(TX_PAST_DATE);
 end;
 
 procedure TfrmODCslt.txtAttnNeedData(Sender: TObject;
@@ -658,7 +694,7 @@ begin
       SetControl(cboUrgency,    'URGENCY',     1);
       SetControl(cboPlace,      'PLACE',     1);
       SetControl(txtAttn,       'PROVIDER',  1);
-      SetControl(calEarliest,   'EARLIEST',  1);
+      SetControl(calClinicallyIndicated,   'CLINICALLY',  1);
       SetTemplateDialogCanceled(FALSE);
       SetControl(memReason,     'COMMENT',   1);
       if WasTemplateDialogCanceled and OrderContainsObjects then
@@ -688,7 +724,7 @@ begin
         end;
     end;
   SetProvDiagPromptingMode;
-  SetUpEarliestDate; //wat v28
+  SetUpClinicallyIndicatedDate; //wat v28
   tmpSvc := Piece(cboService.Items[cboService.ItemIndex], U, 6);
   pnlMessage.TabOrder := treService.TabOrder + 1;
   OrderMessage(ConsultMessage(StrToIntDef(tmpSvc, 0)));
@@ -724,7 +760,7 @@ begin
   with cboUrgency    do  Responses.Update('URGENCY',   1, ItemID, Text);
   with cboPlace      do  Responses.Update('PLACE',     1, ItemID, Text);
   with txtAttn       do  Responses.Update('PROVIDER',  1, ItemID, Text);
-  with calEarliest   do if Length(Text) > 0 then Responses.Update('EARLIEST',  1, Text,   Text);
+  with calClinicallyIndicated   do if Length(Text) > 0 then Responses.Update('CLINICALLY',  1, Text,   Text);
   //with txtProvDiag   do if Length(Text) > 0 then Responses.Update('MISC',      1, Text,   Text);
   if Length(ProvDx.Text)                > 0 then Responses.Update('MISC',      1, ProvDx.Text,   ProvDx.Text)
    else Responses.Update('MISC',      1, '',   '');
@@ -889,7 +925,7 @@ begin
               SetControl(cboUrgency,    'URGENCY',     1);
               SetControl(cboPlace,      'PLACE',     1);
               SetControl(txtAttn,       'PROVIDER',  1);
-              SetControl(calEarliest,   'EARLIEST',  1);
+              SetControl(calClinicallyIndicated,   'CLINICALLY',  1);
               SetTemplateDialogCanceled(FALSE);
               SetControl(memReason,     'COMMENT',   1);
               if WasTemplateDialogCanceled and OrderContainsObjects then
@@ -941,7 +977,7 @@ begin
   OrderMessage(ConsultMessage(StrToIntDef(tmpSvc, 0)));
   //OrderMessage(ConsultMessage(cboService.ItemIEN));
   ControlChange(Self) ;
-  SetUpEarliestDate;    //wat v28
+  SetUpClinicallyIndicatedDate;    //wat v28
   setup508Label(servicelbl508, cboService);
 end;
 
@@ -1053,12 +1089,18 @@ procedure TfrmODCslt.cmdLexSearchClick(Sender: TObject);
 var
   Match: string;
   i: integer;
+  EncounterDate: TFMDateTime;
 begin
   inherited;
 
  if  BILLING_AWARE then BADxUpdated := FALSE;
 
- LexiconLookup(Match, LX_ICD);
+ if (Encounter.VisitCategory = 'A') or (Encounter.VisitCategory = 'I') then
+    EncounterDate := Encounter.DateTime
+ else
+    EncounterDate := FMNow;
+
+ LexiconLookup(Match, LX_ICD, EncounterDate);
  if Match = '' then Exit;
  ProvDx.Code := Piece(Piece(Match, U, 1), '/', 1);
  ProvDx.Text := Piece(Match, U, 2);
@@ -1093,12 +1135,14 @@ begin
   //  Returns:  string  A^B
   //     A = O (optional), R (required) or S (suppress)
   //     B = F (free-text) or L (lexicon)
+  with ProvDx do if (Reqd = '') or (PromptMode = '') then Exit;
   if (ProvDx.PreviousPromptMode <> '') and (ProvDx.PromptMode <> ProvDx.PreviousPromptMode) then
   begin
     ProvDx.Code := '';
     ControlChange(Self);
   end;
-  with ProvDx do if (Reqd = '') or (PromptMode = '') then Exit;
+
+
   if ProvDx.Reqd = 'R' then
   begin
     lblProvDiag.Caption := TX_PROVDX_REQD;
@@ -1313,7 +1357,7 @@ begin
   TmpSL := TStringList.Create;
   try
     Result := GetDefaultReasonForRequest(Service + CSLT_PTR, Resolve);
-    FastAssign(Result, TmpSL);
+    TmpSL.Text := Result.Text;
     x := TmpSL.Text;
     ExpandOrderObjects(x, HasObjects);
     TmpSL.Text := x;
@@ -1321,14 +1365,15 @@ begin
     ExecuteTemplateOrBoilerPlate(TmpSL, cboService.ItemIEN , ltConsult, nil, 'Reason for Request: ' + cboService.DisplayText[cboService.ItemIndex], DocInfo);
     AbortOrder := WasTemplateDialogCanceled;
     Responses.OrderContainsObjects := HasObjects or TemplateBPHasObjects;
-    if AbortOrder then
-    begin
+    if AbortOrder then begin
       Result.Text := '';
       Close;
       Exit;
-    end
-    else
-      FastAssignWith508Msg(TmpSL, Result);
+    end else begin
+      Result.Text := TmpSL.Text;
+      if Result.Count > 0 then
+        SpeakTextInserted;
+    end;
   finally
     TmpSL.Free;
   end;
@@ -1642,20 +1687,20 @@ begin
      pnlMain.Anchors := [akLeft,akTop,akRight,akBottom];
 end;
 
-procedure TfrmODCslt.SetUpEarliestDate;  //wat v28
+procedure TfrmODCslt.SetUpClinicallyIndicatedDate;  //wat v28
 begin
   if IsProstheticsService(cboService.ItemIEN) = '1' then
     begin
-      lblEarliest.Enabled := False;
-      calEarliest.Enabled := False;
-      calEarliest.Text := '';
-      Responses.Update('EARLIEST',1,'','');
+      lblClinicallyIndicated.Enabled := False;
+      calClinicallyIndicated.Enabled := False;
+      calClinicallyIndicated.Text := '';
+      Responses.Update('CLINICALLY',1,'','');
     end
   else
     begin
-      lblEarliest.Enabled := True;
-      calEarliest.Enabled := True;
-      if calEarliest.Text = 'T' then calEarliest.Text := 'TODAY';
+      lblClinicallyIndicated.Enabled := True;
+      calClinicallyIndicated.Enabled := True;
+      if calClinicallyIndicated.Text = 'T' then calClinicallyIndicated.Text := 'TODAY';
     end;
 end;
 

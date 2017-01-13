@@ -11,8 +11,8 @@ inherited frmReminderTree: TfrmReminderTree
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  ExplicitWidth = 480
-  ExplicitHeight = 295
+  ExplicitWidth = 488
+  ExplicitHeight = 299
   PixelsPerInch = 96
   TextHeight = 13
   object pnlTop: TPanel [0]
@@ -27,7 +27,6 @@ inherited frmReminderTree: TfrmReminderTree
     Constraints.MinWidth = 300
     TabOrder = 0
     OnResize = pnlTopResize
-    ExplicitHeight = 221
     object tvRem: TORTreeView
       Tag = 999
       Left = 0
@@ -101,7 +100,6 @@ inherited frmReminderTree: TfrmReminderTree
       BevelOuter = bvNone
       Caption = 'pnlTopRight'
       TabOrder = 2
-      ExplicitHeight = 204
       object bvlGap: TBevel
         Left = 0
         Top = 207
@@ -120,7 +118,6 @@ inherited frmReminderTree: TfrmReminderTree
         TabStop = False
         Style = lbOwnerDrawFixed
         Align = alClient
-        ItemHeight = 16
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0
@@ -132,7 +129,6 @@ inherited frmReminderTree: TfrmReminderTree
         ItemTipEnable = False
         LongList = False
         OnChange = lbRemChange
-        ExplicitHeight = 187
       end
     end
   end

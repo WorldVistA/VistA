@@ -8,6 +8,8 @@ inherited frmRemVisitInfo: TfrmRemVisitInfo
   ClientWidth = 316
   Position = poOwnerFormCenter
   OnCreate = FormCreate
+  ExplicitWidth = 322
+  ExplicitHeight = 249
   DesignSize = (
     316
     221)
@@ -32,9 +34,19 @@ inherited frmRemVisitInfo: TfrmRemVisitInfo
     ExplicitTop = 27
     ExplicitWidth = 207
     ExplicitHeight = 174
-    inherited gbVisitRelatedTo: TGroupBox
+    inherited ScrollBox1: TScrollBox
       Width = 207
       Height = 174
+      ExplicitWidth = 207
+      ExplicitHeight = 174
+      inherited Panel1: TPanel
+        Width = 190
+        ExplicitWidth = 190
+        inherited gbVisitRelatedTo: TGroupBox
+          Width = 190
+          ExplicitWidth = 190
+        end
+      end
     end
   end
   object btnOK: TButton
@@ -90,52 +102,68 @@ inherited frmRemVisitInfo: TfrmRemVisitInfo
         'Status = stsDefault')
       (
         'Component = fraVisitRelated.chkSCYes'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkAOYes'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkIRYes'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkECYes'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkMSTYes'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkMSTNo'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkECNo'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkIRNo'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkAONo'
-        'Status = stsDefault')
+        'Text = Service Connected Condition     Yes'
+        'Status = stsOK')
       (
         'Component = fraVisitRelated.chkSCNo'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkHNCYes'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkHNCNo'
-        'Status = stsDefault')
+        'Text = Service Connected Condition    No'
+        'Status = stsOK')
       (
         'Component = fraVisitRelated.chkCVYes'
-        'Status = stsDefault')
+        'Text = Combat Vet (Combat Related)     Yes'
+        'Status = stsOK')
       (
         'Component = fraVisitRelated.chkCVNo'
-        'Status = stsDefault')
+        'Text = Combat Vet (Combat Related)    No'
+        'Status = stsOK')
+      (
+        'Component = fraVisitRelated.chkAOYes'
+        'Text = Agent Orange Exposure     Yes'
+        'Status = stsOK')
+      (
+        'Component = fraVisitRelated.chkAONo'
+        'Text = Agent Orange Exposure    No'
+        'Status = stsOK')
+      (
+        'Component = fraVisitRelated.chkIRYes'
+        'Text = Ionizing Radiation Exposure     Yes'
+        'Status = stsOK')
+      (
+        'Component = fraVisitRelated.chkIRNo'
+        'Text = Ionizing Radiation Exposure    No'
+        'Status = stsOK')
+      (
+        'Component = fraVisitRelated.chkECYes'
+        'Text = Southwest Asia Conditions     Yes'
+        'Status = stsOK')
+      (
+        'Component = fraVisitRelated.chkECNo'
+        'Text = Southwest Asia Conditions     No'
+        'Status = stsOK')
       (
         'Component = fraVisitRelated.chkSHDYes'
-        'Status = stsDefault')
+        'Text = Shipboard Hazard and Defense     Yes'
+        'Status = stsOK')
       (
         'Component = fraVisitRelated.chkSHDNo'
-        'Status = stsDefault')
+        'Text = Shipboard Hazard and Defense     No'
+        'Status = stsOK')
+      (
+        'Component = fraVisitRelated.chkMSTYes'
+        'Text = MST     Yes'
+        'Status = stsOK')
+      (
+        'Component = fraVisitRelated.chkMSTNo'
+        'Text = MST     No'
+        'Status = stsOK')
+      (
+        'Component = fraVisitRelated.chkHNCYes'
+        'Text = Head and/or Neck Cancer    Yes'
+        'Status = stsOK')
+      (
+        'Component = fraVisitRelated.chkHNCNo'
+        'Text = Head and/or Neck Cancer    No'
+        'Status = stsOK')
       (
         'Component = fraVisitRelated.lblSCNo'
         'Status = stsDefault')
@@ -150,7 +178,8 @@ inherited frmRemVisitInfo: TfrmRemVisitInfo
         'Status = stsDefault')
       (
         'Component = dteVitals'
-        'Status = stsDefault')
+        'Text = Vital entry Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = btnNow'
         'Status = stsDefault')

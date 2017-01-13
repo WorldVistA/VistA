@@ -2,8 +2,6 @@ inherited frmExams: TfrmExams
   Left = 509
   Top = 223
   Caption = 'Encounter Examinations'
-  ExplicitLeft = 509
-  ExplicitTop = 223
   PixelsPerInch = 96
   TextHeight = 13
   object lblExamResults: TLabel [0]
@@ -26,24 +24,19 @@ inherited frmExams: TfrmExams
   end
   inherited pnlGrid: TPanel
     TabOrder = 1
-    inherited lbGrid: TORListBox
-      Caption = 'Exams'
-      Pieces = '1,2'
-    end
-    inherited hcGrid: THeaderControl
-      Sections = <
+    inherited lstRenameMe: TCaptionListView
+      Columns = <
         item
-          ImageIndex = -1
-          MinWidth = 60
-          Text = 'Results'
-          Width = 60
+          Caption = 'Results'
+          Width = 100
         end
         item
-          ImageIndex = -1
-          MinWidth = 90
-          Text = 'Selected Exams'
-          Width = 90
+          Caption = 'Selected Exams'
+          Tag = 1
+          Width = 120
         end>
+      Caption = 'Exams'
+      Pieces = '1,2'
     end
   end
   inherited edtComment: TCaptionEdit
@@ -72,6 +65,7 @@ inherited frmExams: TfrmExams
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 4
+    Text = ''
     OnChange = cboExamResultsChange
     CharsNeedMatch = 1
   end
@@ -134,12 +128,6 @@ inherited frmExams: TfrmExams
         'Status = stsDefault')
       (
         'Component = pnlGrid'
-        'Status = stsDefault')
-      (
-        'Component = lbGrid'
-        'Status = stsDefault')
-      (
-        'Component = hcGrid'
         'Status = stsDefault')
       (
         'Component = btnOK'

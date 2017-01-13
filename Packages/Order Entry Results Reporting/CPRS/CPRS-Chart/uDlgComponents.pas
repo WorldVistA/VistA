@@ -229,7 +229,7 @@ const
 
 implementation
 
-uses uCore, ORClasses, ORFn, VA508AccessibilityRouter, uTemplateFields;
+uses System.UITypes, System.Types, uCore, ORClasses, ORFn, VA508AccessibilityRouter, uTemplateFields;
 
 var
   SRCheckBox: TCPRSDialogParentCheckBox = nil;

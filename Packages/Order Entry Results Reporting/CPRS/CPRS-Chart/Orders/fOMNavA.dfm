@@ -11,10 +11,8 @@ inherited frmOMNavA: TfrmOMNavA
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnResize = FormResize
-  ExplicitLeft = 212
-  ExplicitTop = 354
-  ExplicitWidth = 491
-  ExplicitHeight = 312
+  ExplicitWidth = 499
+  ExplicitHeight = 316
   PixelsPerInch = 96
   TextHeight = 13
   object pnlTool: TPanel [0]
@@ -28,9 +26,10 @@ inherited frmOMNavA: TfrmOMNavA
     Color = clHighlight
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clHighlightText
-    Font.Height = -11
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
+    ParentBackground = False
     ParentFont = False
     TabOrder = 1
     OnMouseDown = pnlToolMouseDown
@@ -45,7 +44,7 @@ inherited frmOMNavA: TfrmOMNavA
       Caption = 'Done'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBtnText
-      Font.Height = -11
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
@@ -59,8 +58,6 @@ inherited frmOMNavA: TfrmOMNavA
       Height = 17
       Caption = 'Back'
       Enabled = False
-      TabOrder = 1
-      OnClick = cmdPrevClick
       Glyph.Data = {
         06010000424D06010000000000007600000028000000180000000C0000000100
         0400000000009000000000000000000000001000000010000000000000000000
@@ -75,6 +72,8 @@ inherited frmOMNavA: TfrmOMNavA
       Margin = 0
       NumGlyphs = 2
       Spacing = 80
+      TabOrder = 1
+      OnClick = cmdPrevClick
     end
     object cmdNext: TBitBtn
       Left = 20
@@ -83,8 +82,6 @@ inherited frmOMNavA: TfrmOMNavA
       Height = 17
       Caption = 'Forward'
       Enabled = False
-      TabOrder = 2
-      OnClick = cmdNextClick
       Glyph.Data = {
         06010000424D06010000000000007600000028000000180000000C0000000100
         0400000000009000000000000000000000001000000010000000000000000000
@@ -99,6 +96,8 @@ inherited frmOMNavA: TfrmOMNavA
       Margin = 0
       NumGlyphs = 2
       Spacing = 80
+      TabOrder = 2
+      OnClick = cmdNextClick
     end
   end
   object grdMenu: TCaptionStringGrid [1]
@@ -113,6 +112,7 @@ inherited frmOMNavA: TfrmOMNavA
     DefaultColWidth = 160
     DefaultRowHeight = 15
     DefaultDrawing = False
+    DrawingStyle = gdsClassic
     FixedCols = 0
     FixedRows = 0
     Options = [goFixedVertLine, goFixedHorzLine]

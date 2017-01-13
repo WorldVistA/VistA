@@ -9,8 +9,6 @@ inherited frmOptionsSurrogate: TfrmOptionsSurrogate
   ClientWidth = 313
   HelpFile = 'CPRSWT.HLP'
   OnShow = FormShow
-  ExplicitLeft = 232
-  ExplicitTop = 107
   PixelsPerInch = 96
   TextHeight = 13
   object lblSurrogate: TLabel [0]
@@ -72,6 +70,7 @@ inherited frmOptionsSurrogate: TfrmOptionsSurrogate
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 0
+    Text = ''
     OnChange = cboSurrogateChange
     OnExit = cboSurrogateChange
     OnKeyDown = cboSurrogateKeyDown

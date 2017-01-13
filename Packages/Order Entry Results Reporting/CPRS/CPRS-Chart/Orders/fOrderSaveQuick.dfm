@@ -6,10 +6,8 @@ inherited frmSaveQuickOrder: TfrmSaveQuickOrder
   ClientWidth = 355
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitLeft = 308
-  ExplicitTop = 171
-  ExplicitWidth = 363
-  ExplicitHeight = 362
+  ExplicitWidth = 371
+  ExplicitHeight = 373
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel [0]
@@ -89,9 +87,10 @@ inherited frmSaveQuickOrder: TfrmSaveQuickOrder
       Caption = 'Display selected medication earlier'
       TabOrder = 2
       TabStop = True
-      OnClick = cmdUpClick
       OnEnter = pnlUpButtonEnter
       OnExit = pnlUpButtonExit
+      OnMouseDown = pnlUpButtonMouseDown
+      OnMouseUp = pnlUpButtonMouseUp
       DesignSize = (
         30
         27)
@@ -110,7 +109,8 @@ inherited frmSaveQuickOrder: TfrmSaveQuickOrder
           333333333CCCCC33333333333CCCCC33333333333CCCCC33333333333CCCCC33
           3333333CCCCCCCCC33333333CCCCCCC3333333333CCCCC333333333333CCC333
           33333333333C3333333333333333333333333333333333333333}
-        OnClick = cmdUpClick
+        OnMouseDown = cmdUpMouseDown
+        OnMouseUp = cmdUpMouseUp
       end
     end
     object pnlDownButton: TKeyClickPanel
@@ -122,15 +122,16 @@ inherited frmSaveQuickOrder: TfrmSaveQuickOrder
       Caption = 'Display selected medication  later'
       TabOrder = 3
       TabStop = True
-      OnClick = cmdDownClick
       OnEnter = pnlUpButtonEnter
       OnExit = pnlUpButtonExit
+      OnMouseDown = pnlDownButtonMouseDown
+      OnMouseUp = pnlDownButtonMouseUp
       DesignSize = (
         31
         26)
       object cmdDown: TSpeedButton
         Left = 0
-        Top = 1
+        Top = -1
         Width = 31
         Height = 22
         Anchors = [akLeft, akTop, akRight, akBottom]
@@ -143,7 +144,8 @@ inherited frmSaveQuickOrder: TfrmSaveQuickOrder
           333333333CCCCC3333333333CCCCCCC33333333CCCCCCCCC333333333CCCCC33
           333333333CCCCC33333333333CCCCC33333333333CCCCC33333333333CCCCC33
           333333333CCCCC33333333333333333333333333333333333333}
-        OnClick = cmdDownClick
+        OnMouseDown = cmdDownMouseDown
+        OnMouseUp = cmdDownMouseUp
       end
     end
     object cmdRename: TButton

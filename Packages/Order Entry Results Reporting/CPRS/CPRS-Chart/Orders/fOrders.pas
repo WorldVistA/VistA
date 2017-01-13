@@ -1,3 +1,83 @@
+{$A8,B-,C+,D+,E-,F-,G+,H+,I+,J+,K-,L+,M-,N-,O+,P+,Q-,R-,S-,T-,U-,V+,W-,X+,Y+,Z1}
+{$MINSTACKSIZE $00004000}
+{$MAXSTACKSIZE $00100000}
+{$IMAGEBASE $00400000}
+{$APPTYPE GUI}
+{$WARN SYMBOL_DEPRECATED ON}
+{$WARN SYMBOL_LIBRARY ON}
+{$WARN SYMBOL_PLATFORM ON}
+{$WARN SYMBOL_EXPERIMENTAL ON}
+{$WARN UNIT_LIBRARY ON}
+{$WARN UNIT_PLATFORM ON}
+{$WARN UNIT_DEPRECATED ON}
+{$WARN UNIT_EXPERIMENTAL ON}
+{$WARN HRESULT_COMPAT ON}
+{$WARN HIDING_MEMBER ON}
+{$WARN HIDDEN_VIRTUAL ON}
+{$WARN GARBAGE ON}
+{$WARN BOUNDS_ERROR ON}
+{$WARN ZERO_NIL_COMPAT ON}
+{$WARN STRING_CONST_TRUNCED ON}
+{$WARN FOR_LOOP_VAR_VARPAR ON}
+{$WARN TYPED_CONST_VARPAR ON}
+{$WARN ASG_TO_TYPED_CONST ON}
+{$WARN CASE_LABEL_RANGE ON}
+{$WARN FOR_VARIABLE ON}
+{$WARN CONSTRUCTING_ABSTRACT ON}
+{$WARN COMPARISON_FALSE ON}
+{$WARN COMPARISON_TRUE ON}
+{$WARN COMPARING_SIGNED_UNSIGNED ON}
+{$WARN COMBINING_SIGNED_UNSIGNED ON}
+{$WARN UNSUPPORTED_CONSTRUCT ON}
+{$WARN FILE_OPEN ON}
+{$WARN FILE_OPEN_UNITSRC ON}
+{$WARN BAD_GLOBAL_SYMBOL ON}
+{$WARN DUPLICATE_CTOR_DTOR ON}
+{$WARN INVALID_DIRECTIVE ON}
+{$WARN PACKAGE_NO_LINK ON}
+{$WARN PACKAGED_THREADVAR ON}
+{$WARN IMPLICIT_IMPORT ON}
+{$WARN HPPEMIT_IGNORED ON}
+{$WARN NO_RETVAL ON}
+{$WARN USE_BEFORE_DEF ON}
+{$WARN FOR_LOOP_VAR_UNDEF ON}
+{$WARN UNIT_NAME_MISMATCH ON}
+{$WARN NO_CFG_FILE_FOUND ON}
+{$WARN IMPLICIT_VARIANTS ON}
+{$WARN UNICODE_TO_LOCALE ON}
+{$WARN LOCALE_TO_UNICODE ON}
+{$WARN IMAGEBASE_MULTIPLE ON}
+{$WARN SUSPICIOUS_TYPECAST ON}
+{$WARN PRIVATE_PROPACCESSOR ON}
+{$WARN UNSAFE_TYPE OFF}
+{$WARN UNSAFE_CODE OFF}
+{$WARN UNSAFE_CAST OFF}
+{$WARN OPTION_TRUNCATED ON}
+{$WARN WIDECHAR_REDUCED ON}
+{$WARN DUPLICATES_IGNORED ON}
+{$WARN UNIT_INIT_SEQ ON}
+{$WARN LOCAL_PINVOKE ON}
+{$WARN MESSAGE_DIRECTIVE ON}
+{$WARN TYPEINFO_IMPLICITLY_ADDED ON}
+{$WARN RLINK_WARNING ON}
+{$WARN IMPLICIT_STRING_CAST ON}
+{$WARN IMPLICIT_STRING_CAST_LOSS ON}
+{$WARN EXPLICIT_STRING_CAST OFF}
+{$WARN EXPLICIT_STRING_CAST_LOSS OFF}
+{$WARN CVT_WCHAR_TO_ACHAR ON}
+{$WARN CVT_NARROWING_STRING_LOST ON}
+{$WARN CVT_ACHAR_TO_WCHAR ON}
+{$WARN CVT_WIDENING_STRING_LOST ON}
+{$WARN NON_PORTABLE_TYPECAST ON}
+{$WARN XML_WHITESPACE_NOT_ALLOWED ON}
+{$WARN XML_UNKNOWN_ENTITY ON}
+{$WARN XML_INVALID_NAME_START ON}
+{$WARN XML_INVALID_NAME ON}
+{$WARN XML_EXPECTED_CHARACTER ON}
+{$WARN XML_CREF_NO_RESOLVE ON}
+{$WARN XML_NO_PARM ON}
+{$WARN XML_NO_MATCHING_PARM ON}
+{$WARN IMMUTABLE_STRINGS OFF}
 unit fOrders;
 
 {$OPTIMIZATION OFF}                              // REMOVE AFTER UNIT IS DEBUGGED
@@ -99,6 +179,8 @@ type
     mnuViewRemoteData: TMenuItem;
     mnuViewPostings: TMenuItem;
     mnuOptimizeFields: TMenuItem;
+    Z7: TMenuItem;
+    mnuActOneStep: TMenuItem;
     procedure mnuChartTabClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -163,6 +245,7 @@ type
       Section: THeaderSection);
     procedure sptHorzMoved(Sender: TObject);
     procedure sptVertMoved(Sender: TObject);
+    procedure mnuActOneStepClick(Sender: TObject);
   private
     { Private declarations }
     OrderListClickProcessing : Boolean;
@@ -203,14 +286,16 @@ type
     procedure RefreshOrderList(FromServer: Boolean; APtEvtID: string = '');
     procedure RetrieveVisibleOrders(AnIndex: Integer);
     procedure RemoveSelectedFromChanges(AList: TList);
-    procedure SetOrderView(AFilter, ADGroup: Integer; const AViewName: string; NotifSort: Boolean);
+    procedure SetOrderView(AFilter, ADGroup: Integer; const AViewName: string; NotifSort: Boolean; aDaysOverride: integer = 0);
+    procedure SetCannedView(AFilter, ADGroup: Integer; const AViewName: string; NotifSort: Boolean; aDaysOverride: integer = 0);
+    procedure OrderViewReset;
     //procedure SetEvtIFN(var AnEvtIFN: integer);
     procedure UseDefaultSort;
     procedure SynchListToOrders;
     procedure ActivateDeactiveRenew;
     procedure ValidateSelected(const AnAction, WarningMsg, WarningTitle: string);
     procedure ViewAlertedOrders(OrderIEN: string; Status: integer; DispGrp: string;
-          BySvc, InvDate: boolean; Title: string);
+          BySvc, InvDate: boolean; Title: string; aDaysOverride: integer = 0);
     procedure UMDestroy(var Message: TMessage); message UM_DESTROY;
     function GetStartStopText(StartTime: string; StopTime: string): string;
     function GetOrderText(AnOrder: TOrder; Index: integer; Column: integer): string;
@@ -271,7 +356,7 @@ uses fFrame, fEncnt, fOrderVw, fRptBox, fLkUpLocation, fOrdersDC, fOrdersCV, fOr
      fOMNavA, rCore, fOCSession, fOrdersPrint, fOrdersTS, fEffectDate, fODActive, fODChild,
      fOrdersCopy, fOMVerify, fODAuto, rODBase, uODBase, rMeds,fODValidateAction, fMeds, uInit, fBALocalDiagnoses,
      fODConsult, fClinicWardMeds, fActivateDeactivate, VA2006Utils, rodMeds,
-     VA508AccessibilityRouter, VAUtils;
+     VA508AccessibilityRouter, VAUtils, System.Types, System.UITypes;
 
 {$R *.DFM}
 
@@ -295,6 +380,7 @@ const
   STS_NEW          = 19;
   STS_CURRENT      = 23;
   STS_EXPIRED      = 27;
+  STS_FIXED        = -1;
   FM_DATE_ONLY     = 7;
   CT_ORDERS        =  4;       // chart tab - doctor's orders
 
@@ -743,7 +829,21 @@ begin
     begin
       StatusText('Retrieving orders list...');
       if not FFromDCRelease then
-        LoadOrdersAbbr(uOrderList, FCurrentView, APtEvtID)
+      begin
+        if not Notifications.IndOrderDisplay then
+        begin
+          if FCurrentView.Filter = -1 then
+          begin
+            SetCannedView(STS_ACTIVE, DGroupAll, 'Active Orders (includes Pending & Recent Activity) - ALL SERVICES', False);
+          end;
+          LoadOrdersAbbr(uOrderList, FCurrentView, APtEvtID)
+        end
+        else
+        begin
+           LoadOrdersAbbr(uOrderList, FCurrentView, APtEvtID, Piece(Notifications.RecordID, '^', 2));
+           StatusText(Notifications.RecordID);
+        end;
+      end
       else
       begin
         ClearOrders(uOrderList);
@@ -824,7 +924,15 @@ begin
 end;
 
 procedure TfrmOrders.SetOrderView(AFilter, ADGroup: Integer; const AViewName: string;
-  NotifSort: Boolean);
+  NotifSort: Boolean; aDaysOverride: integer = 0);
+begin
+  if not CanChangeOrderView then Exit;
+  SetCannedView(AFilter, ADGroup, AViewName, NotifSort, aDaysOverride);
+  RefreshOrderList(FROM_SERVER);
+end;
+
+procedure TfrmOrders.SetCannedView(AFilter, ADGroup: Integer; const AViewName: string;
+  NotifSort: Boolean; aDaysOverride: integer = 0);
 { sets up a 'canned' order view, assumes the date range is never restricted }
 var
   tmpDate: TDateTime;
@@ -864,6 +972,14 @@ begin
       TimeFrom := ExpiredOrdersStartDT;
       TimeThru := FMNow;
     end;
+
+    {Update date range if aDaysOverride > 0}
+    if aDaysOverride > 0 then
+    begin
+      TimeFrom := DateTimeToFMDateTime(trunc(Now) - aDaysOverride);
+      TimeThru := FMNow;
+    end;
+
     Filter    := AFilter;
     DGroup    := ADGroup;
     CtxtTime  := 0;
@@ -874,36 +990,40 @@ begin
     EventDelay.Specialty := 0;
     EventDelay.Effective := 0;
   end;
-  RefreshOrderList(FROM_SERVER);
 end;
 
 procedure TfrmOrders.mnuViewActiveClick(Sender: TObject);
 begin
   inherited;
+  OrderViewReset;
   SetOrderView(STS_ACTIVE, DGroupAll, 'Active Orders (includes Pending & Recent Activity) - ALL SERVICES', False);
 end;
 
 procedure TfrmOrders.mnuViewCurrentClick(Sender: TObject);
 begin
   inherited;
+  OrderViewReset;
   SetOrderView(STS_CURRENT, DGroupAll, 'Current Orders (Active & Pending Status Only) - ALL SERVICES', False);
 end;
 
 procedure TfrmOrders.mnuViewExpiringClick(Sender: TObject);
 begin
   inherited;
+  OrderViewReset;
   SetOrderView(STS_EXPIRING, DGroupAll, 'Expiring Orders - ALL SERVICES', False);
 end;
 
 procedure TfrmOrders.mnuViewExpiredClick(Sender: TObject);
 begin
   inherited;
+  OrderViewReset;
   SetOrderView(STS_EXPIRED, DGroupAll, 'Recently Expired Orders - ALL SERVICES', False);
 end;
 
 procedure TfrmOrders.mnuViewUnsignedClick(Sender: TObject);
 begin
   inherited;
+  OrderViewReset;
   SetOrderView(STS_UNSIGNED, DGroupAll, 'Unsigned Orders - ALL SERVICES', False);
 end;
 
@@ -913,6 +1033,7 @@ var
 begin
   inherited;
   if not CanChangeOrderView then Exit;
+  OrderViewReset;
   AnOrderView := TOrderView.Create;              //       - this starts fresh instead, since CPRS v22
   try
     AnOrderView.Assign(FCurrentView);              // RV - v27.1 - preload form with current view params
@@ -928,6 +1049,7 @@ begin
     AnOrderView.EventDelay.Effective := 0;
     AnOrderView.EventDelay.EventIFN  := 0;
     AnOrderView.EventDelay.EventName := 'All Services, Active';*)
+
     SelectOrderView(AnOrderView);
     with AnOrderView do if Changed then
     begin
@@ -969,6 +1091,7 @@ procedure TfrmOrders.mnuViewDfltShowClick(Sender: TObject);
 begin
   inherited;
   if not CanChangeOrderView then Exit;
+  OrderViewReset;
   if HighlightFromMedsTab > 0 then
     lstSheets.ItemIndex := lstSheets.SelectByIEN(HighlightFromMedsTab);
   if lstSheets.ItemIndex < 0 then
@@ -1029,7 +1152,8 @@ begin
           FastAssign(DetailOrder(BigOrderID), tmpList);
           if ((TOrder(Items.Objects[i]).DGroupName = 'Inpt. Meds') or
               (TOrder(Items.Objects[i]).DGroupName = 'Out. Meds') or
-              (TOrder(Items.Objects[i]).DGroupName = 'Clinic Orders') or
+              (TOrder(Items.Objects[i]).DGroupName = 'Clinic Infusions') or
+              (TOrder(Items.Objects[i]).DGroupName = 'Clinic Medications') or
               (TOrder(Items.Objects[i]).DGroupName = 'Infusion')) then
             begin
               tmpList.Add('');
@@ -1095,6 +1219,14 @@ begin
       ReportBox(ResultOrderHistory(BigOrderID), 'Order Results History- ' + BigOrderID, True);
     Selected[i] := False;
     StatusText('');
+  end;
+end;
+
+procedure TfrmOrders.OrderViewReset();
+begin
+  if Notifications.Active then
+  begin
+    frmFrame.stsArea.Panels.Items[1].Text := '';
   end;
 end;
 
@@ -1535,6 +1667,11 @@ begin
   //frmFrame.UpdatePtInfoOnRefresh;
   if not ActiveOrdering then SetConfirmEventDelay;
   NextIndex := lstWrite.ItemIndex;
+  if (NextIndex < 0) then
+  begin
+    OrderListClickProcessing := false;
+    Exit;
+  end;
   if (FCurrentView.EventDelay.PtEventIFN>0) and (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN, FCurrentView.EventDelay.EventName)) then
   begin
     OrderListClickProcessing := false;
@@ -1639,6 +1776,7 @@ begin
     with lstOrders do for i := 0 to Items.Count - 1 do if Selected[i] then
     begin
       AnOrder := TOrder(Items.Objects[i]);
+
       if (AnAction = 'RN') and (PassDrugTest(StrtoINT(Piece(AnOrder.ID, ';',1)), 'E', True, True)=True) then
         begin
           ShowMsg('Cannot renew Clozapine orders.');
@@ -1805,26 +1943,30 @@ begin
   if not (FCurrentView.EventDelay.EventIFN>0) then
     if not EncounterPresent then Exit;                    // make sure have provider & location
   if not LockedForOrdering then Exit;
-  if (FCurrentView.EventDelay.PtEventIFN>0) and (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN, FCurrentView.EventDelay.EventName)) then
-    Exit;
-  SelectedList := TList.Create;
   try
-    //if CheckOrderStatus = True then Exit;
-    ValidateSelected(OA_DC, TX_NO_DC, TC_NO_DC); // validate DC action on each order
-    ActivateDeactiveRenew;   //AGP 26.53 TURN OFF UNTIL FINAL DECISION CAN BE MADE
-    MakeSelectedList(SelectedList);                     // build list of orders that remain
-    // updating the Changes object happens in ExecuteDCOrders, based on individual order
-    if ExecuteDCOrders(SelectedList,DelEvt) then SynchListToOrders;
-    UpdateUnsignedOrderAlerts(Patient.DFN);
-    with Notifications do
-      if Active and (FollowUp = NF_ORDER_REQUIRES_ELEC_SIGNATURE) then
-        UnsignedOrderAlertFollowup(Piece(RecordID, U, 2));
-    UpdateExpiringMedAlerts(Patient.DFN);
-    UpdateUnverifiedMedAlerts(Patient.DFN);
-    UpdateUnverifiedOrderAlerts(Patient.DFN);
+   if (FCurrentView.EventDelay.PtEventIFN>0) and (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN, FCurrentView.EventDelay.EventName)) then
+     Exit;
+   SelectedList := TList.Create;
+   try
+     //if CheckOrderStatus = True then Exit;
+     ValidateSelected(OA_DC, TX_NO_DC, TC_NO_DC); // validate DC action on each order
+     ActivateDeactiveRenew;   //AGP 26.53 TURN OFF UNTIL FINAL DECISION CAN BE MADE
+     MakeSelectedList(SelectedList);                     // build list of orders that remain
+     // updating the Changes object happens in ExecuteDCOrders, based on individual order
+     if ExecuteDCOrders(SelectedList,DelEvt) then
+      SynchListToOrders;
+     UpdateUnsignedOrderAlerts(Patient.DFN);
+     with Notifications do
+       if Active and (FollowUp = NF_ORDER_REQUIRES_ELEC_SIGNATURE) then
+         UnsignedOrderAlertFollowup(Piece(RecordID, U, 2));
+     UpdateExpiringMedAlerts(Patient.DFN);
+     UpdateUnverifiedMedAlerts(Patient.DFN);
+     UpdateUnverifiedOrderAlerts(Patient.DFN);
+   finally
+     SelectedList.Free;
+   end;
   finally
-    SelectedList.Free;
-    UnlockIfAble;
+   UnlockIfAble;
   end;
 end;
 
@@ -1840,7 +1982,7 @@ begin
     ShowMsg('You are not authorized to manual release delayed orders.');
     Exit;
   end;
-   if not EncounterPresent(TX_SIGN_LOC) then Exit;
+   if not EncounterPresent(TX_REL_LOC) then Exit;
 
   if not LockedForOrdering then Exit;
   SelectedList := TList.Create;
@@ -1875,32 +2017,35 @@ begin
   if NoneSelected(TX_NOSEL) then Exit;
   if not AuthorizedUser then Exit;
   if not LockedForOrdering then Exit;
-  //if (FCurrentView.EventDelay.PtEventIFN>0) and (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN, FCurrentView.EventDelay.EventName)) then
-  //  Exit;
-  DoesDestEvtOccur := False;
-  DestPtEvtID := 0;
-  DestPtEvtName := '';
-  SelectedList := TList.Create;
   try
-    if CheckOrderStatus = True then Exit;
-    ValidateSelected(OA_CHGEVT, TX_NO_CV, TC_NO_CV);   // validate Change Event action on each order
-    MakeSelectedList(SelectedList);                     // build list of orders that remain
-    if ExecuteChangeEvt(SelectedList,DoesDestEvtOccur,DestPtEvtId,DestPtEvtName) then
-      SynchListToOrders
-    else
-      Exit;
-    UpdateUnsignedOrderAlerts(Patient.DFN);
-    with Notifications do
-      if Active and (FollowUp = NF_ORDER_REQUIRES_ELEC_SIGNATURE) then
-        UnsignedOrderAlertFollowup(Piece(RecordID, U, 2));
-    UpdateExpiringMedAlerts(Patient.DFN);
-    UpdateUnverifiedMedAlerts(Patient.DFN);
-    UpdateUnverifiedOrderAlerts(Patient.DFN);
+    //if (FCurrentView.EventDelay.PtEventIFN>0) and (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN, FCurrentView.EventDelay.EventName)) then
+    //  Exit;
+    DoesDestEvtOccur := False;
+    DestPtEvtID := 0;
+    DestPtEvtName := '';
+    SelectedList := TList.Create;
+    try
+      if CheckOrderStatus = True then Exit;
+      ValidateSelected(OA_CHGEVT, TX_NO_CV, TC_NO_CV);   // validate Change Event action on each order
+      MakeSelectedList(SelectedList);                     // build list of orders that remain
+      if ExecuteChangeEvt(SelectedList,DoesDestEvtOccur,DestPtEvtId,DestPtEvtName) then
+        SynchListToOrders
+      else
+        Exit;
+      UpdateUnsignedOrderAlerts(Patient.DFN);
+      with Notifications do
+        if Active and (FollowUp = NF_ORDER_REQUIRES_ELEC_SIGNATURE) then
+          UnsignedOrderAlertFollowup(Piece(RecordID, U, 2));
+      UpdateExpiringMedAlerts(Patient.DFN);
+      UpdateUnverifiedMedAlerts(Patient.DFN);
+      UpdateUnverifiedOrderAlerts(Patient.DFN);
+    finally
+      SelectedList.Free;
+    end;
   finally
-    SelectedList.Free;
-    UnlockIfAble;
-    if DoesDestEvtOccur then
-      PtEvtCompleted(DestPtEvtID,DestPtEvtName);
+   UnlockIfAble;
+   if DoesDestEvtOccur then
+     PtEvtCompleted(DestPtEvtID,DestPtEvtName);
   end;
 end;
 
@@ -1914,21 +2059,24 @@ begin
   if not AuthorizedUser then Exit;
   if not EncounterPresent then Exit;                    // make sure have provider & location
   if not LockedForOrdering then Exit;
-  if (FCurrentView.EventDelay.PtEventIFN>0) and (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN, FCurrentView.EventDelay.EventName)) then
-    Exit;
-  SelectedList := TList.Create;
   try
-    if CheckOrderStatus = True then Exit;
-    ValidateSelected(OA_HOLD, TX_NO_HOLD, TC_NO_HOLD);  // validate hold action on each order
-    MakeSelectedList(SelectedList);                     // build list of orders that remain
-    if ExecuteHoldOrders(SelectedList) then             // confirm & perform hold
-    begin
-      AddSelectedToChanges(SelectedList);               // send held orders to changes
-      SynchListToOrders;                                // ensure ID's in lstOrders are correct
+    if (FCurrentView.EventDelay.PtEventIFN>0) and (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN, FCurrentView.EventDelay.EventName)) then
+      Exit;
+    SelectedList := TList.Create;
+    try
+      if CheckOrderStatus = True then Exit;
+      ValidateSelected(OA_HOLD, TX_NO_HOLD, TC_NO_HOLD);  // validate hold action on each order
+      MakeSelectedList(SelectedList);                     // build list of orders that remain
+      if ExecuteHoldOrders(SelectedList) then             // confirm & perform hold
+      begin
+        AddSelectedToChanges(SelectedList);               // send held orders to changes
+        SynchListToOrders;                                // ensure ID's in lstOrders are correct
+      end;
+    finally
+      SelectedList.Free;
     end;
   finally
-    SelectedList.Free;
-    UnlockIfAble;
+   UnlockIfAble;
   end;
 end;
 
@@ -2261,7 +2409,7 @@ begin
 
 end;
 
-procedure TfrmOrders.mnuActReleaseClick(Sender: TObject);
+procedure TfrmOrders.mnuActReleaseClick (Sender: TObject);
 { release orders to services without a signature, do appropriate prints }
 var
   SelectedList: TList;
@@ -2328,6 +2476,13 @@ begin
   end;
 end;
 
+//CQ 15530 - Add BCMA Med Order Button Functionality as part of Clinic Orders - JCS
+procedure TfrmOrders.mnuActOneStepClick(Sender: TObject);
+begin
+  inherited;
+  ShowOneStepAdmin;
+end;
+
 procedure TfrmOrders.mnuActSignClick(Sender: TObject);
 { obtain signature for orders, release them to services, do appropriate prints }
 var
@@ -2348,47 +2503,49 @@ begin
    if not EncounterPresent(TX_SIGN_LOC) then Exit;
   end;
   if not LockedForOrdering then Exit;
-
-  //CQ 18392 and CQ 18121 Made changes to this code, PtEVTComplete function and the finally statement at the end to support the fix for these CQs
-  if (FCurrentView.EventDelay.PtEventIFN>0) then
-      Delayed := (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN, FCurrentView.EventDelay.EventName, false, true));
-  //if (FCurrentView.EventDelay.PtEventIFN>0) and (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN, FCurrentView.EventDelay.EventName)) then
-  //  Exit;
-
-  SelectedList := TList.Create;
   try
-    ValidateSelected(OA_SIGN, TX_NO_SIGN, TC_NO_SIGN);  // validate sign action on each order
-    MakeSelectedList(SelectedList);
-    {billing Aware}
-    if BILLING_AWARE then
-    begin
-       UBACore.rpcBuildSCIEList(SelectedList);   // build list of orders and Billable Status
-       UBACore.CompleteUnsignedBillingInfo(rpcGetUnsignedOrdersBillingData(OrderListSCEI) );
-    end;
+    //CQ 18392 and CQ 18121 Made changes to this code, PtEVTComplete function and the finally statement at the end to support the fix for these CQs
+    if (FCurrentView.EventDelay.PtEventIFN>0) then
+        Delayed := (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN, FCurrentView.EventDelay.EventName, false, true));
+    //if (FCurrentView.EventDelay.PtEventIFN>0) and (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN, FCurrentView.EventDelay.EventName)) then
+    //  Exit;
 
-   {billing Aware}
-    ExecuteReleaseOrderChecks(SelectedList);            // call order checking
-    if not uInit.TimedOut then
-      if ExecuteSignOrders(SelectedList)                  // confirm, sign & release
-        then RemoveSelectedFromChanges(SelectedList);     // remove signed orders from Changes
-    UpdateUnsignedOrderAlerts(Patient.DFN);
-    with Notifications do
-      if Active and (FollowUp = NF_ORDER_REQUIRES_ELEC_SIGNATURE) then
-        UnsignedOrderAlertFollowup(Piece(RecordID, U, 2));
-      if Active then
+    SelectedList := TList.Create;
+    try
+      ValidateSelected(OA_SIGN, TX_NO_SIGN, TC_NO_SIGN);  // validate sign action on each order
+      MakeSelectedList(SelectedList);
+      {billing Aware}
+      if BILLING_AWARE then
       begin
-        UpdateExpiringMedAlerts(Patient.DFN);
-        UpdateUnverifiedMedAlerts(Patient.DFN);
-        UpdateUnverifiedOrderAlerts(Patient.DFN);
+         UBACore.rpcBuildSCIEList(SelectedList);   // build list of orders and Billable Status
+         UBACore.CompleteUnsignedBillingInfo(rpcGetUnsignedOrdersBillingData(OrderListSCEI) );
       end;
-    if not uInit.TimedOut then
-      begin
-        SendMessage(Application.MainForm.Handle, UM_NEWORDER, ORDER_SIGN, 0);
-        if lstSheets.ItemIndex < 0 then
-          lstSheets.ItemIndex := 0;
-      end;
+
+     {billing Aware}
+      ExecuteReleaseOrderChecks(SelectedList);            // call order checking
+      if not uInit.TimedOut then
+        if ExecuteSignOrders(SelectedList)                // confirm, sign & release
+          then RemoveSelectedFromChanges(SelectedList);   // remove signed orders from Changes
+      UpdateUnsignedOrderAlerts(Patient.DFN);
+      with Notifications do
+        if Active and (FollowUp = NF_ORDER_REQUIRES_ELEC_SIGNATURE) then
+          UnsignedOrderAlertFollowup(Piece(RecordID, U, 2));
+        if Active then
+        begin
+          UpdateExpiringMedAlerts(Patient.DFN);
+          UpdateUnverifiedMedAlerts(Patient.DFN);
+          UpdateUnverifiedOrderAlerts(Patient.DFN);
+        end;
+      if not uInit.TimedOut then
+        begin
+          SendMessage(Application.MainForm.Handle, UM_NEWORDER, ORDER_SIGN, 0);
+          if lstSheets.ItemIndex < 0 then
+            lstSheets.ItemIndex := 0;
+        end;
+    finally
+      SelectedList.Free;
+    end;
   finally
-    SelectedList.Free;
     UnlockIfAble;
     //CQ #17491: Added UpdatePtInfoOnRefresh here to allow for the updating of the patient
     //status indicator in the header bar if the patient becomes admitted/discharged.
@@ -2536,12 +2693,12 @@ begin
         end;
       NF_DEA_AUTO_DC_CS_MED_ORDER      :
         begin
-          ViewAlertedOrders(OrderIEN, STS_RECENT, '',  False, True, 'All Services, Recent Activity');
+          ViewAlertedOrders(OrderIEN, STS_DISCONTINUED, 'PHARMACY',  False, True, 'Pharmacy, PKI Issues', 30);
           Notifications.Delete;
         end;
       NF_DEA_CERT_REVOKED              :
         begin
-          ViewAlertedOrders(OrderIEN, STS_RECENT, '',  False, True, 'All Services, Recent Activity');
+          ViewAlertedOrders(OrderIEN, STS_DISCONTINUED, 'PHARMACY',  False, True, 'Pharmacy, PKI Issues', 30);
           Notifications.Delete;
         end;
       NF_FLAGGED_OI_EXP_INPT           :
@@ -2560,12 +2717,31 @@ begin
           ViewAlertedOrders(OrderIEN, STS_DISCONTINUED, 'CONSULTS',  False, True, 'Consults, Cancelled');
           with lstOrders do Selected[ItemIndex] := True;
         end;
+      NF_RX_RENEWAL_REQUEST            :
+        begin
+          if (Notifications.AlertData <> '') then
+          begin
+            Notifications.IndOrderDisplay := True;
+            ViewAlertedOrders('', STS_FIXED, '',  False, True, 'Outpatient Medications');
+            UpdateIndOrderAlerts();
+          end
+          else
+          begin
+             SetOrderView(STS_ACTIVE, DGroupAll, 'Active Orders (includes Pending & Recent Activity) - ALL SERVICES', False);
+          end;
+        end;
+      NF_LAPSED_ORDER                  :
+        begin
+          Notifications.IndOrderDisplay := True;
+          ViewAlertedOrders('', STS_FIXED, '',  False, True, 'Lapsed (never processed) Orders - ALL SERVICES');
+          UpdateIndOrderAlerts();
+        end;
     else mnuViewUnsignedClick(Self);
     end;
 end;
 
 procedure TfrmOrders.ViewAlertedOrders(OrderIEN: string; Status: integer; DispGrp: string;
-          BySvc, InvDate: boolean; Title: string);  {**KCM**}
+          BySvc, InvDate: boolean; Title: string; aDaysOverride: integer = 0);  {**KCM**}
 var
   i, ADGroup: integer;
   DGroups: TStrings;
@@ -2583,7 +2759,7 @@ begin
   finally
     DGroups.Free;
   end;
-  SetOrderView(Status, ADGroup, Title, True);
+  SetOrderView(Status, ADGroup, Title, True, aDaysOverride);
   with lstOrders do
     begin
       if Length(OrderIEN) > 0 then
@@ -2767,6 +2943,9 @@ begin
   AnOrderView.EventDelay.Effective := 0;
   AnOrderView.EventDelay.EventIFN  := 0;
   AnOrderView.EventDelay.EventName := 'All Services, Active';
+  //Clear the current view dates
+  FCurrentView.TimeFrom := 0;
+  FCurrentView.TimeThru := 0;
   SelectEvtReleasedOrders(AnOrderView);
   with AnOrderView do if Changed then
   begin

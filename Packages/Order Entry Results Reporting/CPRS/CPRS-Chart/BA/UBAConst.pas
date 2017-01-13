@@ -30,6 +30,7 @@ const
   MILITARY_SEXUAL_TRAUMA  = 'MST';
   COMBAT_VETERAN          = 'CV';
   SHIPBOARD_HAZARD_DEFENSE= 'SHD';
+  CAMP_LEJEUNE            = 'CL';
 
   MAX_DX = 4;
   DXREC_INIT_FIELD_VAL        = '';

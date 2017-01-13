@@ -4,34 +4,46 @@ inherited frmODRadConShRes: TfrmODRadConShRes
   ActiveControl = txtResearch
   BorderStyle = bsDialog
   Caption = 'Contract/Sharing/Research Source'
-  ClientHeight = 121
-  ClientWidth = 288
+  ClientHeight = 149
+  ClientWidth = 354
   OldCreateOrder = True
   Position = poScreenCenter
   ExplicitWidth = 294
   ExplicitHeight = 146
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object pnlBase: TORAutoPanel [0]
     Left = 0
     Top = 0
-    Width = 288
-    Height = 121
+    Width = 354
+    Height = 149
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
     object SrcLabel: TLabel
-      Left = 12
-      Top = 14
-      Width = 107
-      Height = 13
+      Left = 15
+      Top = 17
+      Width = 133
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Select or enter source:'
     end
     object cmdOK: TButton
-      Left = 58
-      Top = 74
-      Width = 75
-      Height = 25
+      Left = 71
+      Top = 91
+      Width = 93
+      Height = 31
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'OK'
       Default = True
       ModalResult = 1
@@ -39,10 +51,14 @@ inherited frmODRadConShRes: TfrmODRadConShRes
       OnClick = cmdOKClick
     end
     object cmdCancel: TButton
-      Left = 139
-      Top = 74
-      Width = 75
-      Height = 25
+      Left = 171
+      Top = 91
+      Width = 92
+      Height = 31
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Cancel = True
       Caption = 'Cancel'
       ModalResult = 2
@@ -50,10 +66,14 @@ inherited frmODRadConShRes: TfrmODRadConShRes
       OnClick = cmdCancelClick
     end
     object cboSource: TORComboBox
-      Left = 14
-      Top = 31
-      Width = 262
-      Height = 21
+      Left = 17
+      Top = 38
+      Width = 323
+      Height = 24
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Style = orcsDropDown
       AutoSelect = True
       Caption = 'Select or enter source:'
@@ -70,13 +90,18 @@ inherited frmODRadConShRes: TfrmODRadConShRes
       Sorted = True
       SynonymChars = '<>'
       TabOrder = 0
+      Text = ''
       CharsNeedMatch = 1
     end
     object txtResearch: TCaptionEdit
-      Left = 12
-      Top = 31
-      Width = 261
+      Left = 15
+      Top = 38
+      Width = 321
       Height = 21
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       MaxLength = 40
       TabOrder = 1
       Caption = 'Select or enter source:'
