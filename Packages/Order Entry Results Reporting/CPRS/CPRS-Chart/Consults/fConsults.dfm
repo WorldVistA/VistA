@@ -9,8 +9,8 @@ inherited frmConsults: TfrmConsults
   OnDestroy = FormDestroy
   OnHide = FormHide
   OnShow = FormShow
-  ExplicitWidth = 723
-  ExplicitHeight = 475
+  ExplicitWidth = 731
+  ExplicitHeight = 479
   PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape
@@ -45,62 +45,6 @@ inherited frmConsults: TfrmConsults
       Cursor = crVSplit
       Align = alBottom
     end
-    object pnlRead: TPanel
-      Left = 0
-      Top = 0
-      Width = 630
-      Height = 350
-      Align = alClient
-      BevelOuter = bvNone
-      TabOrder = 0
-      object lblTitle: TOROffsetLabel
-        Left = 0
-        Top = 0
-        Width = 630
-        Height = 19
-        Align = alTop
-        Caption = 'Details of Selected Consult'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = []
-        HorzOffset = 2
-        ParentFont = False
-        ParentShowHint = False
-        ShowHint = True
-        Transparent = False
-        VertOffset = 6
-        WordWrap = False
-      end
-      object memConsult: TRichEdit
-        Left = 0
-        Top = 19
-        Width = 630
-        Height = 331
-        Align = alClient
-        Color = clCream
-        Ctl3D = True
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Courier New'
-        Font.Style = []
-        Lines.Strings = (
-          
-            'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRUSTVWXYZabcdefghijkl' +
-            'mnopqrstuvwxyz12')
-        ParentCtl3D = False
-        ParentFont = False
-        PlainText = True
-        PopupMenu = popNoteMemo
-        ReadOnly = True
-        ScrollBars = ssBoth
-        TabOrder = 0
-        WantReturns = False
-        WordWrap = False
-      end
-    end
     object memPCEShow: TRichEdit
       Left = 0
       Top = 354
@@ -108,6 +52,12 @@ inherited frmConsults: TfrmConsults
       Height = 62
       Align = alBottom
       Color = clCream
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
       TabOrder = 2
       WantReturns = False
     end
@@ -118,7 +68,7 @@ inherited frmConsults: TfrmConsults
       Height = 350
       Align = alClient
       BevelOuter = bvNone
-      TabOrder = 1
+      TabOrder = 0
       OnResize = pnlResultsResize
       object memResults: TRichEdit
         Left = 0
@@ -133,7 +83,7 @@ inherited frmConsults: TfrmConsults
         Font.Style = []
         ParentFont = False
         PopupMenu = popNoteMemo
-        ScrollBars = ssBoth
+        ScrollBars = ssVertical
         TabOrder = 1
         WantTabs = True
         OnChange = memResultChange
@@ -168,7 +118,7 @@ inherited frmConsults: TfrmConsults
           ParentShowHint = False
           ShowAccelChar = False
           ShowHint = True
-          TabOrder = 3
+          TabOrder = 1
         end
         object lblAuthor: TStaticText
           Left = 402
@@ -182,7 +132,7 @@ inherited frmConsults: TfrmConsults
           ParentShowHint = False
           ShowAccelChar = False
           ShowHint = True
-          TabOrder = 4
+          TabOrder = 2
         end
         object lblVisit: TStaticText
           Left = 6
@@ -191,7 +141,7 @@ inherited frmConsults: TfrmConsults
           Height = 17
           Caption = 'Vst: 10/20/99 Pulmonary Clinic, Dr. Welby'
           ShowAccelChar = False
-          TabOrder = 5
+          TabOrder = 4
         end
         object lblCosigner: TStaticText
           Left = 307
@@ -206,7 +156,7 @@ inherited frmConsults: TfrmConsults
           ParentShowHint = False
           ShowAccelChar = False
           ShowHint = True
-          TabOrder = 6
+          TabOrder = 5
         end
         object lblSubject: TStaticText
           Left = 6
@@ -214,7 +164,7 @@ inherited frmConsults: TfrmConsults
           Width = 43
           Height = 17
           Caption = 'Subject:'
-          TabOrder = 7
+          TabOrder = 8
         end
         object lblNewTitle: TStaticText
           Left = 6
@@ -234,7 +184,7 @@ inherited frmConsults: TfrmConsults
           ParentShowHint = False
           ShowAccelChar = False
           ShowHint = True
-          TabOrder = 2
+          TabOrder = 0
         end
         object cmdChange: TButton
           Left = 556
@@ -243,7 +193,7 @@ inherited frmConsults: TfrmConsults
           Height = 21
           Anchors = [akTop, akRight]
           Caption = 'Change...'
-          TabOrder = 0
+          TabOrder = 3
           OnClick = cmdChangeClick
         end
         object txtSubject: TCaptionEdit
@@ -256,10 +206,66 @@ inherited frmConsults: TfrmConsults
           MaxLength = 80
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 1
+          TabOrder = 6
           Text = 'txtSubject'
           Caption = 'Subject'
         end
+      end
+    end
+    object pnlRead: TPanel
+      Left = 0
+      Top = 0
+      Width = 630
+      Height = 350
+      Align = alClient
+      BevelOuter = bvNone
+      TabOrder = 1
+      object lblTitle: TOROffsetLabel
+        Left = 0
+        Top = 0
+        Width = 630
+        Height = 19
+        Align = alTop
+        Caption = 'Details of Selected Consult'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        HorzOffset = 2
+        ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
+        Transparent = False
+        VertOffset = 6
+        WordWrap = False
+      end
+      object memConsult: TRichEdit
+        Left = 0
+        Top = 19
+        Width = 630
+        Height = 331
+        Align = alClient
+        Color = clCream
+        Ctl3D = True
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Courier New'
+        Font.Style = []
+        Lines.Strings = (
+          
+            'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRUSTVWXYZabcdefghijkl' +
+            'mnopqrstuvwxyz12')
+        ParentCtl3D = False
+        ParentFont = False
+        PlainText = True
+        PopupMenu = popNoteMemo
+        ReadOnly = True
+        ScrollBars = ssBoth
+        TabOrder = 0
+        WantReturns = False
+        WordWrap = False
       end
     end
   end
@@ -347,9 +353,10 @@ inherited frmConsults: TfrmConsults
         ParentShowHint = False
         PopupMenu = popNoteMemo
         ShowHint = True
-        TabOrder = 4
+        TabOrder = 6
         Visible = False
         OnClick = lstNotesClick
+        Caption = ''
         ItemTipColor = clWindow
         LongList = False
         Pieces = '2,3'
@@ -427,6 +434,7 @@ inherited frmConsults: TfrmConsults
         TabOrder = 1
         Visible = False
         OnClick = lstConsultsClick
+        Caption = ''
         ItemTipColor = clWindow
         LongList = False
         Pieces = '2,3,4,5'
@@ -443,7 +451,7 @@ inherited frmConsults: TfrmConsults
         Indent = 19
         PopupMenu = popNoteList
         ReadOnly = True
-        TabOrder = 0
+        TabOrder = 3
         OnClick = tvConsultsClick
         OnCollapsed = tvConsultsCollapsed
         OnExit = tvConsultsExit

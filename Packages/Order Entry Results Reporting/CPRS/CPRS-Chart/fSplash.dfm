@@ -4,66 +4,66 @@ inherited frmSplash: TfrmSplash
   BorderIcons = []
   BorderStyle = bsNone
   Caption = 'CPRS Splash Screen'
-  ClientHeight = 412
-  ClientWidth = 386
+  ClientHeight = 507
+  ClientWidth = 475
   OldCreateOrder = True
-  Position = poOwnerFormCenter
+  Position = poMainFormCenter
   OnCreate = FormCreate
-  ExplicitWidth = 386
-  ExplicitHeight = 412
-  PixelsPerInch = 96
-  TextHeight = 13
+  ExplicitWidth = 475
+  ExplicitHeight = 507
+  PixelsPerInch = 120
+  TextHeight = 16
   object pnlMain: TPanel [0]
     Left = 0
     Top = 0
-    Width = 386
-    Height = 412
+    Width = 475
+    Height = 507
     Align = alClient
     BevelWidth = 3
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clGrayText
-    Font.Height = -12
+    Font.Height = -15
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
     TabOrder = 1
     object lblVersion: TStaticText
-      Left = 43
-      Top = 230
-      Width = 300
-      Height = 13
+      Left = 53
+      Top = 283
+      Width = 369
+      Height = 16
       Alignment = taCenter
       AutoSize = False
       Caption = 'version main'
       Font.Charset = ANSI_CHARSET
       Font.Color = clGrayText
-      Font.Height = -12
+      Font.Height = -15
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
       TabOrder = 0
     end
     object lblCopyright: TStaticText
-      Left = 43
-      Top = 249
-      Width = 300
-      Height = 13
+      Left = 53
+      Top = 306
+      Width = 369
+      Height = 16
       Alignment = taCenter
       AutoSize = False
       Caption = 'Department of Veterans Affairs'
       Font.Charset = ANSI_CHARSET
       Font.Color = clGrayText
-      Font.Height = -12
+      Font.Height = -15
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
       TabOrder = 1
     end
     object pnlImage: TPanel
-      Left = 40
-      Top = 40
-      Width = 306
-      Height = 166
+      Left = 49
+      Top = 49
+      Width = 377
+      Height = 205
       BevelInner = bvLowered
       BevelOuter = bvNone
       BevelWidth = 3
@@ -72,8 +72,8 @@ inherited frmSplash: TfrmSplash
       object Image1: TImage
         Left = 3
         Top = 3
-        Width = 300
-        Height = 160
+        Width = 371
+        Height = 199
         Align = alClient
         AutoSize = True
         Center = True
@@ -1605,17 +1605,17 @@ inherited frmSplash: TfrmSplash
           929293939393D4CF86CFD49392D1858A7C7B7B7B7B7B}
         Proportional = True
         Stretch = True
-        ExplicitLeft = 2
-        ExplicitTop = 2
-        ExplicitWidth = 244
-        ExplicitHeight = 130
+        ExplicitLeft = 4
+        ExplicitTop = 4
+        ExplicitWidth = 369
+        ExplicitHeight = 195
       end
     end
     object pnl508Disclaimer: TPanel
-      Left = 32
-      Top = 272
-      Width = 321
-      Height = 100
+      Left = 39
+      Top = 335
+      Width = 395
+      Height = 123
       BevelKind = bkTile
       BevelOuter = bvNone
       Locked = True
@@ -1624,8 +1624,8 @@ inherited frmSplash: TfrmSplash
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 311
-        Height = 90
+        Width = 385
+        Height = 113
         Align = alClient
         BevelEdges = []
         BevelInner = bvNone
@@ -1634,11 +1634,11 @@ inherited frmSplash: TfrmSplash
         Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGrayText
-        Font.Height = -12
+        Font.Height = -15
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         Lines.Strings = (
-          'Dept. of Veterans Affairs OI&T Product Development staff have '
+          'Veteran'#39's Administration OI&T Product Development staff have '
           'made every effort during the design, development and testing of '
           'this application to ensure full accessibility to all users in '
           
@@ -1653,16 +1653,16 @@ inherited frmSplash: TfrmSplash
     end
   end
   object lblSplash: TStaticText [1]
-    Left = 62
-    Top = 212
-    Width = 261
-    Height = 18
+    Left = 76
+    Top = 261
+    Width = 322
+    Height = 22
     Alignment = taCenter
     AutoSize = False
     Caption = 'Computerized Patient Record System'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clGrayText
-    Font.Height = -15
+    Font.Height = -18
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False

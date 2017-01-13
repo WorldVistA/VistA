@@ -240,7 +240,7 @@ implementation
 {$R *.dfm}
 
 uses rODBase, rODLab, uCore, rCore, fODLabOthCollSamp, fODLabOthSpec, fODLabImmedColl, fLabCollTimes,
- rOrders, uODBase, fRptBox;
+ rOrders, uODBase, fRptBox, System.UITypes;
 
 var
   uSelectedItems: TStringList;   //Selected Items in ListView- if TestYes =1 then test else component
@@ -3178,13 +3178,13 @@ end;
 procedure TfrmODBBank.cboAvailTestNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 begin
-  cboAvailTest.ForDataUse(SubsetOfOrderItems(StartFrom, Direction, FVbecLookup));
+  cboAvailTest.ForDataUse(SubsetOfOrderItems(StartFrom, Direction, FVbecLookup, Responses.QuickOrder));
 end;
 
 procedure TfrmODBBank.cboAvailCompNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 begin
-  cboAvailComp.ForDataUse(SubsetOfOrderItems(StartFrom, Direction, FVbecLookup));
+  cboAvailComp.ForDataUse(SubsetOfOrderItems(StartFrom, Direction, FVbecLookup, Responses.QuickOrder));
 end;
 
 procedure TfrmODBBank.cmdImmedCollClick(Sender: TObject);
@@ -4177,13 +4177,11 @@ begin
         with Application do
           begin
             NormalizeTopMosts;
-            aMSBOSContinue :=
-              MessageBox(PChar('The number of units ordered' + x + CRLF +
-               'Exceeds the maximum number recommended for '
-               + cboSurgery.text + CRLF + CRLF +
-               'If you need to order more than the recommended maximum units, please enter a justification in the Comment box.')
-               ,PChar('Maximum Number of Units Exceeded'),
-               MB_OK);
+            MessageBox(PChar('The number of units ordered' + x + CRLF +
+                       'Exceeds the maximum number recommended for '
+                        + cboSurgery.text + CRLF + CRLF +
+                        'If you need to order more than the recommended maximum units, please enter a justification in the Comment box.'),
+                        PChar('Maximum Number of Units Exceeded'), MB_OK);
             RestoreTopMosts;
           end;
       end;

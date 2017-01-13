@@ -4,8 +4,6 @@ inherited frmGAF: TfrmGAF
   ActiveControl = edtScore
   Caption = 'frmGAF'
   OnActivate = FormActivate
-  ExplicitLeft = 8
-  ExplicitTop = 8
   PixelsPerInch = 96
   TextHeight = 13
   object lblScore: TLabel [0]
@@ -94,41 +92,28 @@ inherited frmGAF: TfrmGAF
     ExplicitLeft = 0
     ExplicitTop = 35
     ExplicitWidth = 624
-    inherited lbGrid: TORListBox
+    inherited lstRenameMe: TCaptionListView
       Width = 624
-      TabStop = False
-      MultiSelect = True
+      Columns = <
+        item
+          Caption = 'GAF Score'
+          Width = 80
+        end
+        item
+          Caption = 'Date Determined'
+          Tag = 1
+          Width = 120
+        end
+        item
+          Caption = 'Determined By'
+          Width = 100
+        end
+        item
+          Caption = 'Comment'
+          Width = 80
+        end>
       Caption = 'Most recent Global Assessment of Functioning (GAF) scores'
       Pieces = '1,2,3,4'
-      ExplicitWidth = 624
-    end
-    inherited hcGrid: THeaderControl
-      Width = 624
-      Sections = <
-        item
-          ImageIndex = -1
-          MinWidth = 65
-          Text = 'GAF Score'
-          Width = 65
-        end
-        item
-          ImageIndex = -1
-          MinWidth = 95
-          Text = 'Date Determined'
-          Width = 95
-        end
-        item
-          ImageIndex = -1
-          MinWidth = 85
-          Text = 'Determined By'
-          Width = 85
-        end
-        item
-          ImageIndex = -1
-          MinWidth = 60
-          Text = 'Comment'
-          Width = 60
-        end>
       ExplicitWidth = 624
     end
   end
@@ -182,6 +167,7 @@ inherited frmGAF: TfrmGAF
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 4
+    Text = ''
     OnExit = cboGAFProviderExit
     OnNeedData = cboGAFProviderNeedData
     CharsNeedMatch = 1
@@ -214,7 +200,8 @@ inherited frmGAF: TfrmGAF
         'Status = stsDefault')
       (
         'Component = dteGAF'
-        'Status = stsDefault')
+        'Text = Determined Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = cboGAFProvider'
         'Status = stsDefault')
@@ -223,12 +210,6 @@ inherited frmGAF: TfrmGAF
         'Status = stsDefault')
       (
         'Component = pnlGrid'
-        'Status = stsDefault')
-      (
-        'Component = lbGrid'
-        'Status = stsDefault')
-      (
-        'Component = hcGrid'
         'Status = stsDefault')
       (
         'Component = btnOK'

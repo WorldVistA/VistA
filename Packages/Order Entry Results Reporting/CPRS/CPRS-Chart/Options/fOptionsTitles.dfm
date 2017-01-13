@@ -82,6 +82,7 @@ inherited frmOptionsTitles: TfrmOptionsTitles
     Sorted = True
     SynonymChars = '<>'
     TabOrder = 0
+    Text = ''
     OnClick = cboDocumentClassClick
     CharsNeedMatch = 1
   end
@@ -233,6 +234,7 @@ inherited frmOptionsTitles: TfrmOptionsTitles
     Sorted = True
     SynonymChars = '<>'
     TabOrder = 1
+    Text = ''
     OnChange = cboDocumentTitlesChange
     OnDblClick = btnAddClick
     OnNeedData = cboDocumentTitlesNeedData

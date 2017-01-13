@@ -2,37 +2,50 @@ inherited frmInvalidActionList: TfrmInvalidActionList
   Left = 445
   Top = 142
   Caption = 'Invalidated action orders'
-  ClientHeight = 519
-  ClientWidth = 526
+  ClientHeight = 639
+  ClientWidth = 647
   Position = poScreenCenter
   OnCreate = FormCreate
   OnResize = FormResize
-  PixelsPerInch = 96
-  TextHeight = 13
+  ExplicitWidth = 320
+  ExplicitHeight = 240
+  PixelsPerInch = 120
+  TextHeight = 16
   object pnlTop: TPanel [0]
     Left = 0
     Top = 0
-    Width = 526
-    Height = 229
+    Width = 647
+    Height = 282
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     TabOrder = 0
     object Label1: TLabel
       Left = 1
       Top = 1
-      Width = 524
-      Height = 24
+      Width = 645
+      Height = 30
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       AutoSize = False
       Caption = 'You can'#39't take this action on the following orders'
     end
     object lstActDeniedOrders: TCaptionListBox
       Left = 1
-      Top = 52
-      Width = 524
-      Height = 176
+      Top = 64
+      Width = 645
+      Height = 217
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Style = lbOwnerDrawVariable
       Align = alClient
-      ItemHeight = 16
       TabOrder = 0
       OnDrawItem = lstActDeniedOrdersDrawItem
       OnMeasureItem = lstActDeniedOrdersMeasureItem
@@ -40,9 +53,13 @@ inherited frmInvalidActionList: TfrmInvalidActionList
     end
     object hdrAction: THeaderControl
       Left = 1
-      Top = 25
-      Width = 524
-      Height = 27
+      Top = 31
+      Width = 645
+      Height = 33
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Sections = <
         item
           ImageIndex = -1
@@ -61,23 +78,30 @@ inherited frmInvalidActionList: TfrmInvalidActionList
   end
   object pnlBottom: TPanel [1]
     Left = 0
-    Top = 229
-    Width = 526
-    Height = 249
+    Top = 282
+    Width = 647
+    Height = 306
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     TabOrder = 1
-    ExplicitHeight = 256
     object Label2: TLabel
       Left = 1
       Top = 1
-      Width = 524
-      Height = 40
+      Width = 645
+      Height = 49
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       AutoSize = False
       Caption = 'The following orders will be taken action:'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -15
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
@@ -85,12 +109,15 @@ inherited frmInvalidActionList: TfrmInvalidActionList
     end
     object lstValidOrders: TCaptionListBox
       Left = 1
-      Top = 41
-      Width = 524
-      Height = 207
+      Top = 50
+      Width = 645
+      Height = 255
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Style = lbOwnerDrawVariable
       Align = alClient
-      ItemHeight = 16
       TabOrder = 0
       OnDrawItem = lstValidOrdersDrawItem
       OnMeasureItem = lstValidOrdersMeasureItem
@@ -99,20 +126,27 @@ inherited frmInvalidActionList: TfrmInvalidActionList
   end
   object Panel1: TPanel [2]
     Left = 0
-    Top = 478
-    Width = 526
-    Height = 41
+    Top = 588
+    Width = 647
+    Height = 51
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 485
     DesignSize = (
-      526
-      41)
+      647
+      51)
     object btnOK: TButton
-      Left = 440
-      Top = 12
-      Width = 75
-      Height = 21
+      Left = 542
+      Top = 15
+      Width = 92
+      Height = 26
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akRight, akBottom]
       Caption = 'OK'
       TabOrder = 0

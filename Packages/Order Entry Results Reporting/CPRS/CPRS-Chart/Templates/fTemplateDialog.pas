@@ -51,8 +51,7 @@ type
     procedure BuildCB(CBidx: integer; var Y: integer; FirstTime: boolean);
     procedure ItemChecked(Sender: TObject);
     procedure BuildAllControls;
-    procedure AppShowHint(var HintStr: string; var CanShow: Boolean;
-                          var HintInfo: THintInfo);
+    procedure AppShowHint(var HintStr: string; var CanShow: Boolean; var HintInfo: Controls.THintInfo);
     procedure FieldChanged(Sender: TObject);
     procedure EntryDestroyed(Sender: TObject);
     function GetObjectID( Control: TControl): string;
@@ -80,7 +79,7 @@ var
 implementation
 
 uses dShared, uTemplateFields, fRptBox, uInit, rMisc, uDlgComponents,
-  VA508AccessibilityRouter, VAUtils;
+  VA508AccessibilityRouter, VAUtils, fFrame;
 
 {$R *.DFM}
 
@@ -247,7 +246,7 @@ begin
         frmTemplateDialog.btnAll.Visible := FALSE;
       end;
       frmTemplateDialog.BuildAllControls;
-      repeat                      
+      repeat
          frmTemplateDialog.ShowModal;
          if(frmTemplateDialog.ModalResult = mrOK) then
            GetText(SL, TRUE)     {TRUE = Include embedded fields}
@@ -255,7 +254,7 @@ begin
           if (not PreviewMode) and (not frmTemplateDialog.Silent) and (not uInit.TimedOut) then
             begin
               CancelMsg := 'If you cancel, your changes will not be saved.  Are you sure you want to cancel?';
-              if (InfoBox(CancelMsg, 'Cancel Dialog Processing', MB_YESNO or MB_DEFBUTTON2 or MB_ICONQUESTION) = ID_YES) then 
+              if (InfoBox(CancelMsg, 'Cancel Dialog Processing', MB_YESNO or MB_DEFBUTTON2 or MB_ICONQUESTION) = ID_YES) then
                 begin
                   SL.Clear;
                   Result := TRUE;
@@ -556,6 +555,8 @@ begin
       Entry.AutoDestroyOnPanelFree := TRUE;
       Entry.OnDestroy := EntryDestroyed;
       Entries.AddObject(EID, Entry);
+
+      //Populate the Copy/Paste control
     end
     else
       Entry := TTemplateDialogEntry(Entries.Objects[idx]);
@@ -717,8 +718,7 @@ begin
   SizeFormToCancelBtn();
 end;
 
-procedure TfrmTemplateDialog.AppShowHint(var HintStr: string;
-  var CanShow: Boolean; var HintInfo: THintInfo);
+procedure TfrmTemplateDialog.AppShowHint(var HintStr: string; var CanShow: Boolean; var HintInfo: Controls.THintInfo);
 const
   HistHintDelay = 1200000; // 20 minutes
 

@@ -25,12 +25,14 @@ function ScreenReaderDLLsExist: boolean;
 function IsScreenReaderSupported(Unload: Boolean): boolean;
 function InitializeScreenReaderLink: boolean;
 procedure CloseScreenReaderLink;
+function CheckForJaws(): Boolean;
 
 
 type
   TVA508RegisterCustomBehaviorProc = procedure(BehaviorType: integer; Before, After: PChar); stdcall;
   TVA508SpeakTextProc = procedure(Text: PChar); stdcall;
   TVA508IsRunningFunc = function(HighVersion, LowVersion: Word): BOOL; stdcall;
+  TVA508CheckJawsFunc =  function(): BOOL; stdcall;
   TVA508ConfigChangePending = function: boolean; stdcall;
   TVA508ComponentDataProc = procedure (WindowHandle: HWND;
                                    DataStatus:   LongInt = DATA_NONE;
@@ -44,6 +46,7 @@ type
 var
   SRSpeakText: TVA508SpeakTextProc = nil;
   SRIsRunning: TVA508IsRunningFunc = nil;
+  SRCheckJaws: TVA508CheckJawsFunc = nil;
   SRRegisterCustomBehavior: TVA508RegisterCustomBehaviorProc = nil;
   SRComponentData: TVA508ComponentDataProc = nil;
   SRConfigChangePending: TVA508ConfigChangePending = nil;
@@ -57,7 +60,11 @@ implementation
 uses VAUtils, VA508AccessibilityRouter, VA508AccessibilityManager;
 
 const
+{$Ifdef VER180}
   ScreenReaderFileExtension = '.SR';
+{$Else}
+  ScreenReaderFileExtension = '.SR3';
+{$EndIf}
   ScreenReaderCommonFilesDir = 'VistA\Common Files\';
   ScreenReaderSearchSpec = '*' + ScreenReaderFileExtension;
 {$WARNINGS OFF}   // Ignore platform specific code warning
@@ -167,6 +174,21 @@ end;
 {$HINTS ON}
 {$ENDREGION}
 
+{$REGION 'CheckForJaws Proc Definition'}
+const
+  TVA508CheckJawsFuncName = 'FindJaws';
+
+function FindJaws(): BOOL; stdcall;
+{$HINTS OFF}   // Ignore unused variable hint
+var
+  CompileVerification: TVA508CheckJawsFunc;
+begin
+  CompileVerification := FindJaws;
+  Result := FALSE; // avoid compiler warning...
+end;
+{$HINTS ON}
+{$ENDREGION}
+
 {$REGION 'ConfigChangePending Proc Definition'}
 const
   TVA508ConfigChangePendingName = 'ConfigChangePending';
@@ -237,6 +259,25 @@ begin
     SRComponentData := GetProcAddress(DLLHandle, TVA508ComponentDataProcName);
     SRConfigChangePending := GetProcAddress(DLLHandle, TVA508ConfigChangePendingName);    
     DoInitialize := TRUE;
+  end;
+end;
+
+function CheckForJaws(): Boolean;
+var
+  FileName: string;
+  I: integer;
+begin
+  result := false;
+  for I := 0 to ValidSRFiles.Count - 1 do
+  begin
+   FileName := ValidSRFiles[I];
+   DLLHandle := LoadLibrary(PChar(FileName));
+   if DLLHandle > HINSTANCE_ERROR then
+   begin
+    SRShutDown := GetProcAddress(DLLHandle, TVA508ShutDownProcName); //need for the close
+    SRCheckJaws := GetProcAddress(DLLHandle, TVA508CheckJawsFuncName);
+    result := SRCheckJaws;
+   end;
   end;
 end;
 

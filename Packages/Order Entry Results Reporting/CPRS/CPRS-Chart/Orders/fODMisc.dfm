@@ -39,13 +39,7 @@ inherited frmODMisc: TfrmODMisc
   inherited cmdAccept: TButton
     TabOrder = 6
   end
-  inherited cmdQuit: TButton
-    TabOrder = 7
-  end
-  inherited pnlMessage: TPanel
-    TabOrder = 1
-  end
-  object cboCare: TORComboBox [8]
+  object cboCare: TORComboBox [6]
     Left = 8
     Top = 25
     Width = 292
@@ -66,12 +60,13 @@ inherited frmODMisc: TfrmODMisc
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 0
+    Text = ''
     OnExit = ControlChange
     OnMouseClick = ControlChange
     OnNeedData = cboCareNeedData
     CharsNeedMatch = 1
   end
-  object calStart: TORDateBox [9]
+  object calStart: TORDateBox [7]
     Left = 6
     Top = 114
     Width = 140
@@ -83,7 +78,7 @@ inherited frmODMisc: TfrmODMisc
     RequireTime = False
     Caption = 'Start Date/Time'
   end
-  object calStop: TORDateBox [10]
+  object calStop: TORDateBox [8]
     Left = 158
     Top = 114
     Width = 140
@@ -94,7 +89,7 @@ inherited frmODMisc: TfrmODMisc
     RequireTime = False
     Caption = 'Stop Date/Time'
   end
-  object txtComment: TCaptionEdit [11]
+  object txtComment: TCaptionEdit [9]
     Left = 6
     Top = 67
     Width = 508
@@ -103,6 +98,12 @@ inherited frmODMisc: TfrmODMisc
     OnChange = ControlChange
     Caption = 'Instructions'
   end
+  inherited cmdQuit: TButton
+    TabOrder = 7
+  end
+  inherited pnlMessage: TPanel
+    TabOrder = 1
+  end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
       (
@@ -110,10 +111,12 @@ inherited frmODMisc: TfrmODMisc
         'Status = stsDefault')
       (
         'Component = calStart'
-        'Status = stsDefault')
+        'Text = Start Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = calStop'
-        'Status = stsDefault')
+        'Text = Stop Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = txtComment'
         'Status = stsDefault')

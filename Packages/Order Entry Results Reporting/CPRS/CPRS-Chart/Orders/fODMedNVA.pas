@@ -1607,7 +1607,7 @@ begin
             if DoseFields = '' then
             begin
               for UnitIndex := 1 to Length(ADose) do
-                if not (ADose[UnitIndex] in ['0'..'9','.']) then Break;
+                if not CharInSet(ADose[UnitIndex], ['0'..'9','.']) then Break;
               DoseUnits := Copy(ADose, UnitIndex, Length(ADose));
             end
             else DoseUnits := Piece(DoseFields, '&', 2);
@@ -2005,7 +2005,7 @@ begin
           lblAdminTime.Caption := '';
     end;
     if CurSchedule <> FLastSchedule then UpdateStartExpires(CurSchedule);
-    if Responses.EventType in ['A','D','T','M','O'] then lblAdminTime.Visible := False;
+    if CharInSet(Responses.EventType, ['A','D','T','M','O']) then lblAdminTime.Visible := False;
   end;
   if not FInptDlg then
   begin
@@ -2040,7 +2040,7 @@ begin
   TabletNum := Piece(AStr,' ',1);
   if CharAt(TabletNum,1)='.' then
   begin
-    if CharAt(TabletNum,2) in ['0','1','2','3','4','5','6','7','8','9'] then
+    if CharInSet(CharAt(TabletNum,2), ['0','1','2','3','4','5','6','7','8','9']) then
     begin
       TabletNum := '0' + TabletNum;
       AStr := '0' + AStr;

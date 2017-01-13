@@ -20,6 +20,8 @@ inherited frmCover: TfrmCover
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
+    ExplicitTop = 345
+    ExplicitWidth = 632
   end
   object pnlBase: TPanel [1]
     Left = 0
@@ -186,7 +188,6 @@ inherited frmCover: TfrmCover
               Caption = ''
               ItemTipColor = clWindow
               LongList = False
-              ExplicitWidth = 208
             end
           end
         end

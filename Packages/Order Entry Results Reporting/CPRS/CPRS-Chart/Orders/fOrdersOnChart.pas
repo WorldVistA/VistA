@@ -33,7 +33,7 @@ implementation
 {$R *.DFM}
 
 uses rCore, rOrders, uConst, fOrdersPrint, uOrders, fFrame, UCore,
-  fClinicWardMeds, rODLab, fRptBox;
+  fClinicWardMeds, rODLab, fRptBox, System.UITypes;
 
 const
   TX_SAVERR1 = 'The error, ';

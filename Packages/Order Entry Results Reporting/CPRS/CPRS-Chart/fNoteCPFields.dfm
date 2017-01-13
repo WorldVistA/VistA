@@ -6,8 +6,8 @@ inherited frmNoteCPFields: TfrmNoteCPFields
   ClientWidth = 249
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitWidth = 257
-  ExplicitHeight = 178
+  ExplicitWidth = 265
+  ExplicitHeight = 189
   PixelsPerInch = 96
   TextHeight = 13
   object lblAuthor: TLabel [0]
@@ -63,6 +63,7 @@ inherited frmNoteCPFields: TfrmNoteCPFields
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 0
+    Text = ''
     OnNeedData = cboAuthorNeedData
     CharsNeedMatch = 1
   end
@@ -92,6 +93,7 @@ inherited frmNoteCPFields: TfrmNoteCPFields
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 1
+    Text = ''
     CharsNeedMatch = 1
   end
   object calProcDateTime: TORDateBox [5]
@@ -144,7 +146,8 @@ inherited frmNoteCPFields: TfrmNoteCPFields
         'Status = stsDefault')
       (
         'Component = calProcDateTime'
-        'Status = stsDefault')
+        'Text = Procedure Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = cmdOK'
         'Status = stsDefault')

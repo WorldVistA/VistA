@@ -30,6 +30,7 @@ inherited frmODBase: TfrmODBase
     ReadOnly = True
     ScrollBars = ssVertical
     TabOrder = 0
+    Caption = ''
   end
   object cmdAccept: TButton [1]
     Left = 442
@@ -77,7 +78,7 @@ inherited frmODBase: TfrmODBase
       Color = clInfoBk
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clInfoText
-      Font.Height = -11
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False

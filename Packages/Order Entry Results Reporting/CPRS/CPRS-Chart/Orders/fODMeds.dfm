@@ -1,40 +1,43 @@
 inherited frmODMeds: TfrmODMeds
   Left = 321
   Top = 183
-  Width = 584
-  Height = 578
+  Width = 535
+  Height = 687
   AutoScroll = True
   Caption = 'Medication Order'
   Constraints.MinHeight = 325
-  Constraints.MinWidth = 452
+  Constraints.MinWidth = 500
   OnShow = FormShow
-  ExplicitWidth = 584
-  ExplicitHeight = 578
+  ExplicitWidth = 535
+  ExplicitHeight = 687
   DesignSize = (
-    576
-    544)
+    519
+    649)
   PixelsPerInch = 96
   TextHeight = 13
   object pnlMeds: TPanel [0]
     Left = 6
     Top = 34
-    Width = 580
-    Height = 476
+    Width = 529
+    Height = 625
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelOuter = bvNone
-    TabOrder = 1
+    TabOrder = 6
+    ExplicitWidth = 506
+    ExplicitHeight = 623
     object sptSelect: TSplitter
       Left = 0
       Top = 133
-      Width = 580
+      Width = 529
       Height = 4
       Cursor = crVSplit
       Align = alTop
+      ExplicitWidth = 690
     end
     object lstQuick: TCaptionListView
       Left = 0
       Top = 0
-      Width = 580
+      Width = 529
       Height = 133
       Align = alTop
       BevelInner = bvLowered
@@ -61,13 +64,15 @@ inherited frmODMeds: TfrmODMeds
       OnEnter = ListViewEnter
       OnKeyUp = ListViewKeyUp
       OnResize = ListViewResize
+      AutoSize = False
       Caption = 'Quick Orders'
+      ExplicitWidth = 506
     end
     object lstAll: TCaptionListView
       Left = 0
       Top = 137
-      Width = 580
-      Height = 339
+      Width = 529
+      Height = 488
       Align = alClient
       BevelInner = bvLowered
       BevelOuter = bvNone
@@ -93,22 +98,29 @@ inherited frmODMeds: TfrmODMeds
       OnEnter = ListViewEnter
       OnKeyUp = ListViewKeyUp
       OnResize = ListViewResize
+      AutoSize = False
       Caption = 'All Medication orders'
+      ExplicitWidth = 506
+      ExplicitHeight = 486
     end
   end
   inherited memOrder: TCaptionMemo
     Tag = 13
-    Top = 511
-    Width = 502
+    Top = 659
+    Width = 450
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akLeft, akRight, akBottom]
-    TabOrder = 4
-    ExplicitTop = 511
-    ExplicitWidth = 502
+    TabOrder = 3
+    ExplicitTop = 657
+    ExplicitWidth = 427
   end
   object txtMed: TEdit [2]
-    Left = 6
-    Top = 12
-    Width = 580
+    Left = 1
+    Top = 4
+    Width = 529
     Height = 21
     Anchors = [akLeft, akTop, akRight]
     AutoSelect = False
@@ -118,10 +130,11 @@ inherited frmODMeds: TfrmODMeds
     OnExit = txtMedExit
     OnKeyDown = txtMedKeyDown
     OnKeyUp = txtMedKeyUp
+    ExplicitWidth = 506
   end
   object btnSelect: TButton [3]
-    Left = 515
-    Top = 511
+    Left = 463
+    Top = 659
     Width = 72
     Height = 21
     Anchors = [akRight, akBottom]
@@ -130,40 +143,49 @@ inherited frmODMeds: TfrmODMeds
     Enabled = False
     TabOrder = 5
     OnClick = btnSelectClick
+    ExplicitLeft = 440
+    ExplicitTop = 657
   end
   object pnlFields: TPanel [4]
-    Left = 6
-    Top = 44
-    Width = 580
-    Height = 465
+    Left = 1
+    Top = 34
+    Width = 533
+    Height = 607
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelOuter = bvNone
     Enabled = False
+    ParentBackground = False
     TabOrder = 2
     Visible = False
     OnResize = pnlFieldsResize
+    ExplicitWidth = 510
+    ExplicitHeight = 605
     object pnlTop: TPanel
       Left = 0
       Top = 0
-      Width = 580
-      Height = 192
+      Width = 533
+      Height = 334
       Align = alClient
       Constraints.MinHeight = 80
-      TabOrder = 3
+      ParentBackground = False
+      TabOrder = 0
+      ExplicitWidth = 510
+      ExplicitHeight = 350
       DesignSize = (
-        580
-        192)
+        533
+        334)
       object lblRoute: TLabel
-        Left = 280
+        Left = 232
         Top = 23
         Width = 29
         Height = 13
         Anchors = [akTop, akRight]
         Caption = 'Route'
         Visible = False
+        ExplicitLeft = 389
       end
       object lblSchedule: TLabel
-        Left = 394
+        Left = 347
         Top = 22
         Width = 45
         Height = 13
@@ -171,9 +193,10 @@ inherited frmODMeds: TfrmODMeds
         Caption = 'Schedule'
         Visible = False
         WordWrap = True
+        ExplicitLeft = 504
       end
       object txtNSS: TLabel
-        Left = 442
+        Left = 395
         Top = 22
         Width = 71
         Height = 13
@@ -181,27 +204,27 @@ inherited frmODMeds: TfrmODMeds
         Caption = '(Day-Of-Week)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
-        Font.Height = -11
+        Font.Height = -12
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
         Visible = False
         WordWrap = True
         OnClick = txtNSSClick
+        ExplicitLeft = 552
       end
       object grdDoses: TCaptionStringGrid
         Left = 0
         Top = 36
-        Width = 580
-        Height = 151
+        Width = 532
+        Height = 283
         Anchors = [akLeft, akTop, akRight, akBottom]
         ColCount = 7
         DefaultColWidth = 76
         DefaultRowHeight = 21
         Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goTabs]
         ScrollBars = ssVertical
-        TabOrder = 8
-        OnDrawCell = grdDosesDrawCell
+        TabOrder = 4
         OnEnter = grdDosesEnter
         OnExit = grdDosesExit
         OnKeyDown = grdDosesKeyDown
@@ -210,6 +233,8 @@ inherited frmODMeds: TfrmODMeds
         OnMouseUp = grdDosesMouseUp
         Caption = 'Complex Dosage'
         JustToTab = True
+        ExplicitWidth = 509
+        ExplicitHeight = 299
         ColWidths = (
           76
           76
@@ -220,15 +245,15 @@ inherited frmODMeds: TfrmODMeds
           76)
       end
       object lblGuideline: TStaticText
-        Left = 0
-        Top = 1
+        Left = 1
+        Top = 5
         Width = 181
         Height = 17
         Caption = 'Display Restrictions/Guidelines'
         Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
-        Font.Height = -11
+        Font.Height = -12
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold, fsUnderline]
         ParentColor = False
@@ -236,6 +261,7 @@ inherited frmODMeds: TfrmODMeds
         ShowAccelChar = False
         TabOrder = 0
         TabStop = True
+        Transparent = False
         Visible = False
         OnClick = lblGuidelineClick
       end
@@ -256,8 +282,8 @@ inherited frmODMeds: TfrmODMeds
       object cboDosage: TORComboBox
         Left = 1
         Top = 36
-        Width = 279
-        Height = 150
+        Width = 231
+        Height = 294
         Anchors = [akLeft, akTop, akRight, akBottom]
         Style = orcsSimple
         AutoSelect = True
@@ -275,19 +301,22 @@ inherited frmODMeds: TfrmODMeds
         Sorted = False
         SynonymChars = '<>'
         TabPositions = '27,32'
-        TabOrder = 4
+        TabOrder = 5
+        Text = ''
         OnChange = cboDosageChange
         OnClick = cboDosageClick
         OnExit = cboDosageExit
         OnKeyUp = cboDosageKeyUp
         CharsNeedMatch = 1
         UniqueAutoComplete = True
+        ExplicitWidth = 208
+        ExplicitHeight = 310
       end
       object cboRoute: TORComboBox
-        Left = 280
+        Left = 232
         Top = 36
         Width = 113
-        Height = 151
+        Height = 294
         Anchors = [akTop, akRight, akBottom]
         Style = orcsSimple
         AutoSelect = True
@@ -306,19 +335,22 @@ inherited frmODMeds: TfrmODMeds
         ShowHint = True
         Sorted = False
         SynonymChars = '<>'
-        TabOrder = 5
+        TabOrder = 6
+        Text = ''
         OnChange = cboRouteChange
         OnClick = ControlChange
         OnExit = cboRouteExit
         OnKeyUp = cboRouteKeyUp
         CharsNeedMatch = 1
         UniqueAutoComplete = True
+        ExplicitLeft = 209
+        ExplicitHeight = 310
       end
       object cboSchedule: TORComboBox
-        Left = 394
+        Left = 347
         Top = 36
-        Width = 178
-        Height = 151
+        Width = 182
+        Height = 294
         Anchors = [akTop, akRight, akBottom]
         Style = orcsSimple
         AutoSelect = False
@@ -335,7 +367,8 @@ inherited frmODMeds: TfrmODMeds
         Pieces = '1'
         Sorted = True
         SynonymChars = '<>'
-        TabOrder = 6
+        TabOrder = 7
+        Text = ''
         OnChange = cboScheduleChange
         OnClick = cboScheduleClick
         OnEnter = cboScheduleEnter
@@ -343,40 +376,47 @@ inherited frmODMeds: TfrmODMeds
         OnKeyUp = cboScheduleKeyUp
         CharsNeedMatch = 1
         UniqueAutoComplete = True
+        ExplicitLeft = 324
+        ExplicitHeight = 310
       end
       object chkPRN: TCheckBox
-        Left = 530
+        Left = 482
         Top = 37
-        Width = 42
+        Width = 43
         Height = 18
         Anchors = [akTop, akRight]
         Caption = 'PRN'
         Color = clBtnFace
         ParentColor = False
-        TabOrder = 7
+        TabOrder = 8
         OnClick = chkPRNClick
+        ExplicitLeft = 459
       end
       object btnXInsert: TButton
-        Left = 403
+        Left = 352
         Top = 3
-        Width = 79
+        Width = 78
         Height = 17
+        Anchors = [akTop, akRight]
         Caption = 'Insert Row'
         ParentShowHint = False
         ShowHint = True
         TabOrder = 1
         OnClick = btnXInsertClick
+        ExplicitLeft = 329
       end
       object btnXRemove: TButton
-        Left = 488
+        Left = 437
         Top = 3
         Width = 79
         Height = 17
+        Anchors = [akTop, akRight]
         Caption = 'Remove Row'
         ParentShowHint = False
         ShowHint = True
         TabOrder = 2
         OnClick = btnXRemoveClick
+        ExplicitLeft = 414
       end
       object pnlXAdminTime: TPanel
         Left = 432
@@ -409,7 +449,8 @@ inherited frmODMeds: TfrmODMeds
       Pieces = '5'
       Sorted = False
       SynonymChars = '<>'
-      TabOrder = 0
+      TabOrder = 1
+      Text = ''
       Visible = False
       OnChange = cboXDosageChange
       OnClick = cboXDosageClick
@@ -440,7 +481,8 @@ inherited frmODMeds: TfrmODMeds
       Pieces = '2'
       Sorted = False
       SynonymChars = '<>'
-      TabOrder = 1
+      TabOrder = 2
+      Text = ''
       Visible = False
       OnChange = cboXRouteChange
       OnClick = cboXRouteClick
@@ -524,7 +566,7 @@ inherited frmODMeds: TfrmODMeds
       Width = 106
       Height = 21
       BevelOuter = bvNone
-      TabOrder = 2
+      TabOrder = 3
       Visible = False
       OnEnter = pnlXScheduleEnter
       OnExit = pnlXScheduleExit
@@ -554,6 +596,7 @@ inherited frmODMeds: TfrmODMeds
         SynonymChars = '<>'
         TabOrder = 0
         TabStop = True
+        Text = ''
         OnChange = cboXScheduleChange
         OnClick = cboXScheduleClick
         OnEnter = cboXScheduleEnter
@@ -577,18 +620,21 @@ inherited frmODMeds: TfrmODMeds
     end
     object pnlBottom: TPanel
       Left = 0
-      Top = 192
-      Width = 580
+      Top = 334
+      Width = 533
       Height = 273
       Align = alBottom
-      TabOrder = 5
+      ParentBackground = False
+      TabOrder = 6
+      ExplicitTop = 325
+      ExplicitWidth = 510
       DesignSize = (
-        580
+        533
         273)
       object lblComment: TLabel
-        Left = 4
-        Top = 5
-        Width = 52
+        Left = 7
+        Top = 7
+        Width = 54
         Height = 16
         Alignment = taRightJustify
         AutoSize = False
@@ -618,12 +664,13 @@ inherited frmODMeds: TfrmODMeds
         Caption = 'Refills'
       end
       object lblPriority: TLabel
-        Left = 503
+        Left = 455
         Top = 61
         Width = 31
         Height = 13
         Anchors = [akTop, akRight]
         Caption = 'Priority'
+        ExplicitLeft = 385
       end
       object Image1: TImage
         Left = 5
@@ -632,7 +679,6 @@ inherited frmODMeds: TfrmODMeds
         Height = 31
         Anchors = [akLeft, akBottom]
         Visible = False
-        ExplicitTop = 177
       end
       object chkDoseNow: TCheckBox
         Left = 3
@@ -640,13 +686,13 @@ inherited frmODMeds: TfrmODMeds
         Width = 247
         Height = 21
         Caption = 'Give additional dose now'
-        TabOrder = 8
+        TabOrder = 14
         OnClick = chkDoseNowClick
       end
       object memComment: TCaptionMemo
-        Left = 57
+        Left = 63
         Top = 2
-        Width = 513
+        Width = 465
         Height = 43
         Anchors = [akLeft, akTop, akRight]
         ScrollBars = ssVertical
@@ -654,6 +700,7 @@ inherited frmODMeds: TfrmODMeds
         OnChange = ControlChange
         OnClick = memCommentClick
         Caption = 'Comments'
+        ExplicitWidth = 442
       end
       object lblQtyMsg: TStaticText
         Left = 4
@@ -661,7 +708,7 @@ inherited frmODMeds: TfrmODMeds
         Width = 206
         Height = 17
         Caption = '>> Quantity Dispensed: Multiples of 100 <<'
-        TabOrder = 13
+        TabOrder = 1
       end
       object txtSupply: TCaptionEdit
         Left = 2
@@ -669,7 +716,7 @@ inherited frmODMeds: TfrmODMeds
         Width = 60
         Height = 21
         AutoSize = False
-        TabOrder = 1
+        TabOrder = 4
         Text = '0'
         OnChange = txtSupplyChange
         OnClick = txtSupplyClick
@@ -681,7 +728,8 @@ inherited frmODMeds: TfrmODMeds
         Width = 15
         Height = 21
         Associate = txtSupply
-        TabOrder = 2
+        Max = 32766
+        TabOrder = 5
       end
       object txtQuantity: TCaptionEdit
         Left = 80
@@ -689,7 +737,7 @@ inherited frmODMeds: TfrmODMeds
         Width = 40
         Height = 21
         AutoSize = False
-        TabOrder = 3
+        TabOrder = 6
         Text = '0'
         OnChange = txtQuantityChange
         OnClick = txtQuantityClick
@@ -702,7 +750,7 @@ inherited frmODMeds: TfrmODMeds
         Height = 21
         Associate = txtQuantity
         Max = 32766
-        TabOrder = 4
+        TabOrder = 7
       end
       object txtRefills: TCaptionEdit
         Left = 140
@@ -710,7 +758,7 @@ inherited frmODMeds: TfrmODMeds
         Width = 30
         Height = 21
         AutoSize = False
-        TabOrder = 5
+        TabOrder = 8
         Text = '0'
         OnChange = txtRefillsChange
         OnClick = txtRefillsClick
@@ -723,7 +771,7 @@ inherited frmODMeds: TfrmODMeds
         Height = 21
         Associate = txtRefills
         Max = 11
-        TabOrder = 6
+        TabOrder = 9
       end
       object grpPickup: TGroupBox
         Left = 188
@@ -731,7 +779,7 @@ inherited frmODMeds: TfrmODMeds
         Width = 172
         Height = 36
         Caption = 'Pick Up'
-        TabOrder = 7
+        TabOrder = 2
         object radPickWindow: TRadioButton
           Left = 105
           Top = 14
@@ -761,8 +809,8 @@ inherited frmODMeds: TfrmODMeds
         end
       end
       object cboPriority: TORComboBox
-        Left = 502
-        Top = 76
+        Left = 455
+        Top = 80
         Width = 72
         Height = 21
         Anchors = [akTop, akRight]
@@ -781,10 +829,12 @@ inherited frmODMeds: TfrmODMeds
         Pieces = '2'
         Sorted = False
         SynonymChars = '<>'
-        TabOrder = 9
+        TabOrder = 3
+        Text = ''
         OnChange = ControlChange
         OnKeyUp = cboPriorityKeyUp
         CharsNeedMatch = 1
+        ExplicitLeft = 432
       end
       object stcPI: TStaticText
         Left = 2
@@ -800,8 +850,15 @@ inherited frmODMeds: TfrmODMeds
         Top = 137
         Width = 14
         Height = 21
+        Hint = 
+          'A check in this box WILL INCLUDE the patientins tructions in thi' +
+          's order.'
+        BiDiMode = bdLeftToRight
         Color = clBtnFace
+        ParentBiDiMode = False
         ParentColor = False
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 18
         Visible = False
         OnClick = chkPtInstructClick
@@ -809,21 +866,27 @@ inherited frmODMeds: TfrmODMeds
       object memPI: TMemo
         Left = 23
         Top = 139
-        Width = 547
+        Width = 499
         Height = 35
+        Hint = 
+          'A check in this box below WILL INCLUDE the patients instructions' +
+          ' in this order.'
         TabStop = False
         Anchors = [akLeft, akTop, akRight]
+        ParentShowHint = False
         ReadOnly = True
         ScrollBars = ssVertical
+        ShowHint = True
         TabOrder = 19
         Visible = False
         OnClick = memPIClick
         OnKeyDown = memPIKeyDown
+        ExplicitWidth = 476
       end
       object memDrugMsg: TMemo
         Left = 37
         Top = 220
-        Width = 533
+        Width = 485
         Height = 51
         Anchors = [akLeft, akRight, akBottom]
         Color = clCream
@@ -831,11 +894,13 @@ inherited frmODMeds: TfrmODMeds
         ScrollBars = ssVertical
         TabOrder = 20
         Visible = False
+        ExplicitTop = 202
+        ExplicitWidth = 462
       end
       object lblAdminSch: TMemo
         Left = 344
         Top = 120
-        Width = 68
+        Width = 23
         Height = 15
         Anchors = [akLeft, akTop, akRight]
         Color = clCream
@@ -843,8 +908,9 @@ inherited frmODMeds: TfrmODMeds
         ReadOnly = True
         ScrollBars = ssVertical
         ShowHint = True
-        TabOrder = 10
+        TabOrder = 16
         Visible = False
+        ExplicitWidth = 0
       end
       object lblAdminTime: TVA508StaticText
         Name = 'lblAdminTime'
@@ -854,7 +920,7 @@ inherited frmODMeds: TfrmODMeds
         Height = 15
         Alignment = taLeftJustify
         Caption = 'lblAdminTime'
-        TabOrder = 11
+        TabOrder = 15
         TabStop = True
         ShowAccelChar = True
       end
@@ -881,7 +947,8 @@ inherited frmODMeds: TfrmODMeds
       MaxLength = 0
       Sorted = False
       SynonymChars = '<>'
-      TabOrder = 6
+      TabOrder = 5
+      Text = ''
       Visible = False
       OnChange = cboXSequenceChange
       OnEnter = cboXSequenceEnter
@@ -892,36 +959,57 @@ inherited frmODMeds: TfrmODMeds
     end
   end
   inherited cmdAccept: TButton
-    Left = 514
-    Top = 511
+    Left = 462
+    Top = 659
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akRight, akBottom]
-    TabOrder = 6
+    TabOrder = 4
     TabStop = False
     Visible = False
-    ExplicitLeft = 514
-    ExplicitTop = 511
+    ExplicitLeft = 439
+    ExplicitTop = 657
   end
   inherited cmdQuit: TButton
-    Left = 514
-    Top = 536
+    Left = 462
+    Top = 685
     Width = 51
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akRight, akBottom]
-    TabOrder = 7
-    ExplicitLeft = 514
-    ExplicitTop = 536
+    TabOrder = 8
+    ExplicitLeft = 439
+    ExplicitTop = 683
     ExplicitWidth = 51
   end
   inherited pnlMessage: TPanel
     Left = 31
     Top = 200
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    TabOrder = 1
     OnEnter = pnlMessageEnter
     ExplicitLeft = 31
     ExplicitTop = 200
     inherited imgMessage: TImage
       Left = 2
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       ExplicitLeft = 2
     end
     inherited memMessage: TRichEdit
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       OnKeyDown = memMessageKeyDown
     end
   end

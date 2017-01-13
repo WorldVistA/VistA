@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs, uCore,
   fAutoSz, StdCtrls, ORFn, ORCtrls, ExtCtrls, Buttons, VA508AccessibilityManager,
-  ComCtrls, fBase508Form, CommCtrl, mTreeGrid;
+  ComCtrls, fBase508Form, CommCtrl, mTreeGrid, rCore;
 
 type
   TfrmPCELex = class(TfrmBase508Form)
@@ -55,7 +55,7 @@ type
     function ParseNarrCode(ANarrCode: String): String;
     procedure SetApp(LexApp: Integer);
     procedure SetDate(ADate: TFMDateTime);
-    procedure SetICDVersion;
+    procedure SetICDVersion(ADate: TFMDateTime);
     procedure enableExtend;
     procedure disableExtend;
     procedure updateStatus(status: String);
@@ -71,7 +71,7 @@ implementation
 
 {$R *.DFM}
 
-uses rPCE, uProbs, rProbs, UBAGlobals;
+uses rPCE, uProbs, rProbs, UBAGlobals, fEncounterFrame;
 
 var
   TriedExtend: Boolean = false;
@@ -83,14 +83,18 @@ begin
   frmPCELex := TfrmPCELex.Create(Application);
   try
     ResizeFormToFont(TForm(frmPCELex));
-    if (ADate = 0) and not ((Encounter.VisitCategory = 'E') or (Encounter.VisitCategory = 'H')
-      or (Encounter.VisitCategory = 'D')) then
-        ADate := Encounter.DateTime;
+
+    if (ADate = 0) and Assigned(uEncPCEData) then
+      begin
+         if uEncPCEData.VisitCategory = 'E' then ADate := FMNow
+         else ADate := uEncPCEData.VisitDateTime;
+      end;
+
     if ADefaultToInput and (AInputString <> '') then
       frmPCELex.txtSearch.Text := Piece(frmPCELex.ParseNarrCode(AInputString), U, 2);
     frmPCELex.SetApp(ALexApp);
     frmPCELex.SetDate(ADate);
-    frmPCELex.SetICDVersion;
+    frmPCELex.SetICDVersion(ADate);
     frmPCELex.FMessage := AMessage;
     frmPCELex.FExtend := AExtend;
     if (ALexApp = LX_ICD) then
@@ -125,6 +129,9 @@ begin
   PLUser := TPLUserParams.create(UserProps);
   FSuppressCodes := PLUser.usSuppressCodes;
   ResizeAnchoredFormToFont(self);
+
+  tgfLex.DefTreeViewWndProc := tgfLex.tv.WindowProc;
+  tgfLex.tv.WindowProc := tgfLex.TreeViewWndProc;
 end;
 
 procedure TfrmPCELex.FormShow(Sender: TObject);
@@ -190,9 +197,20 @@ begin
   FDate := ADate;
 end;
 
-procedure TfrmPCELex.SetICDVersion;
+procedure TfrmPCELex.SetICDVersion(ADate: TFMDateTime);
 begin
-  FICDVersion := Encounter.GetICDVersion;
+  if ADate = 0 then
+     begin
+       FICDVersion := Encounter.GetICDVersion;
+     end
+  else
+     begin
+       if ICD10ImplDate > ADate then
+         FICDVersion := 'ICD^ICD-9-CM'
+       else
+         FICDVersion := '10D^ICD-10-CM';
+     end;
+
   if (Piece(FICDVersion, '^', 1) = '10D') then
     FI10Active := True;
   cmdExtendedSearch.Hint := 'Search ' + Piece(FICDVersion, '^', 2) + ' Diagnoses...';
@@ -321,7 +339,10 @@ begin
 
       //TODO: Need to accommodate Designation Code in ColumnTreeNode...
       if CodeSys = 'SNOMED CT' then
-        CodeIEN := Code
+      begin
+        CodeIEN := Code;
+        DesignationID := Piece(RecStr, '^', 7);
+      end
       else
         CodeIEN := Piece(RecStr, '^', 9);
 
@@ -484,7 +505,7 @@ begin
     if (Copy(Node.CodeSys, 0, 3) = 'ICD') then
       FCode := Node.Code + U + Node.Text
     else if (Copy(Node.CodeSys, 0, 3) = 'SNO')  then
-      FCode := Node.TargetCode + U + Node.Text + ' (SNOMED CT ' + Node.Code + ')';
+      FCode := Node.TargetCode + U + Node.Text + ' (SNOMED CT ' + Node.Code + ')' + U + Node.DesignationID;
 
     FCode := FCode + U + Node.CodeIEN + U + Node.CodeSys;
   end
@@ -660,8 +681,8 @@ var
   error, intDecimal: Integer;
 begin
   Result := False;
-  if (DecimalSeparator <> '.') then
-    intDecimal := Pos(DecimalSeparator, inStr)
+  if (FormatSettings.DecimalSeparator <> '.') then
+    intDecimal := Pos(FormatSettings.DecimalSeparator, inStr)
   else
     intDecimal := 0;
   if (intDecimal > 0) then
@@ -670,7 +691,7 @@ begin
   if (dbl = 0.0) then
     ; //do nothing
   if (intDecimal > 0) then
-    inStr[intDecimal] := DecimalSeparator;
+    inStr[intDecimal] := FormatSettings.DecimalSeparator;
   if (error = 0) then
     Result := True;
 end;

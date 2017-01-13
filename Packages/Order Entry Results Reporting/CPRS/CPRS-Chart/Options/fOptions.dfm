@@ -1,7 +1,8 @@
 inherited frmOptions: TfrmOptions
   Left = 315
   Top = 110
-  Height = 397
+  Width = 571
+  Height = 440
   HelpContext = 9999
   VertScrollBar.Range = 360
   BorderIcons = [biSystemMenu, biHelp]
@@ -11,14 +12,14 @@ inherited frmOptions: TfrmOptions
   HelpFile = 'CPRSWT.HLP'
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitWidth = 443
-  ExplicitHeight = 397
+  ExplicitWidth = 571
+  ExplicitHeight = 440
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBottom: TPanel [0]
     Left = 0
-    Top = 339
-    Width = 437
+    Top = 382
+    Width = 565
     Height = 30
     HelpContext = 9999
     Align = alBottom
@@ -33,7 +34,6 @@ inherited frmOptions: TfrmOptions
       HelpContext = 9007
       Caption = 'OK'
       Default = True
-      ModalResult = 1
       TabOrder = 0
       OnClick = btnApplyClick
     end
@@ -63,8 +63,8 @@ inherited frmOptions: TfrmOptions
   object pnlMain: TPanel [1]
     Left = 0
     Top = 0
-    Width = 437
-    Height = 339
+    Width = 565
+    Height = 382
     Align = alClient
     BevelOuter = bvNone
     BorderWidth = 5
@@ -73,19 +73,25 @@ inherited frmOptions: TfrmOptions
     object pagOptions: TPageControl
       Left = 5
       Top = 5
-      Width = 427
-      Height = 329
+      Width = 555
+      Height = 372
       HelpContext = 9999
       ActivePage = tsCoverSheet
       Align = alClient
+      OwnerDraw = True
       TabOrder = 0
+      OnDrawTab = pagOptionsDrawTab
       OnEnter = pagOptionsEnter
       object tsCoverSheet: TTabSheet
         HelpContext = 9700
         Caption = 'General'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         DesignSize = (
-          419
-          301)
+          547
+          344)
         object bvlCoverDays: TBevel
           Left = 125
           Top = 16
@@ -230,7 +236,7 @@ inherited frmOptions: TfrmOptions
         object lblCoverReminderDesc: TMemo
           Left = 125
           Top = 115
-          Width = 275
+          Width = 303
           Height = 67
           TabStop = False
           Anchors = [akLeft, akTop, akRight]
@@ -259,7 +265,7 @@ inherited frmOptions: TfrmOptions
         object lblCoverDaysDesc: TMemo
           Left = 125
           Top = 27
-          Width = 275
+          Width = 303
           Height = 70
           TabStop = False
           Anchors = [akLeft, akTop, akRight]
@@ -302,7 +308,7 @@ inherited frmOptions: TfrmOptions
         object lblOtherParametersDesc: TMemo
           Left = 124
           Top = 195
-          Width = 275
+          Width = 303
           Height = 78
           TabStop = False
           Anchors = [akLeft, akTop, akRight]
@@ -317,9 +323,9 @@ inherited frmOptions: TfrmOptions
           TabOrder = 8
         end
         object btnCoverDays: TButton
-          Left = 255
+          Left = 283
           Top = 67
-          Width = 145
+          Width = 115
           Height = 22
           HelpContext = 9001
           Anchors = [akTop, akRight]
@@ -334,9 +340,9 @@ inherited frmOptions: TfrmOptions
           OnClick = btnCoverDaysClick
         end
         object btnCoverReminders: TButton
-          Left = 255
+          Left = 283
           Top = 150
-          Width = 145
+          Width = 115
           Height = 22
           HelpContext = 9002
           Anchors = [akTop, akRight]
@@ -351,9 +357,9 @@ inherited frmOptions: TfrmOptions
           OnClick = btnCoverRemindersClick
         end
         object btnOtherParameters: TButton
-          Left = 254
+          Left = 282
           Top = 269
-          Width = 145
+          Width = 115
           Height = 22
           HelpContext = 9003
           Anchors = [akTop, akRight]
@@ -371,6 +377,10 @@ inherited frmOptions: TfrmOptions
       object tsNotifications: TTabSheet
         HelpContext = 9030
         Caption = 'Notifications'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object bvlNotifications: TBevel
           Left = 88
           Top = 16
@@ -485,8 +495,8 @@ inherited frmOptions: TfrmOptions
         end
         object lvwNotifications: TCaptionListView
           Left = 0
-          Top = 142
-          Width = 419
+          Top = 185
+          Width = 547
           Height = 159
           HelpContext = 9035
           Align = alBottom
@@ -513,6 +523,7 @@ inherited frmOptions: TfrmOptions
           OnDblClick = lvwNotificationsDblClick
           OnEnter = lvwNotificationsEnter
           OnMouseDown = lvwNotificationsMouseDown
+          AutoSize = False
           Caption = 
             'You can turn on or off these notifications except those that are' +
             ' mandatory.'
@@ -565,6 +576,10 @@ inherited frmOptions: TfrmOptions
         HelpContext = 9040
         Caption = 'Order Checks'
         ImageIndex = 3
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object lblOrderChecksDesc: TLabel
           Left = 125
           Top = 27
@@ -652,8 +667,8 @@ inherited frmOptions: TfrmOptions
         end
         object lvwOrderChecks: TCaptionListView
           Left = 0
-          Top = 93
-          Width = 419
+          Top = 136
+          Width = 547
           Height = 208
           HelpContext = 9041
           Align = alBottom
@@ -680,6 +695,7 @@ inherited frmOptions: TfrmOptions
           OnDblClick = lvwNotificationsDblClick
           OnEnter = lvwNotificationsEnter
           OnMouseDown = lvwNotificationsMouseDown
+          AutoSize = False
           Caption = 
             'You can turn on or off these notifications except those that are' +
             ' mandatory.'
@@ -689,6 +705,10 @@ inherited frmOptions: TfrmOptions
         HelpContext = 9050
         Caption = 'Lists/Teams'
         ImageIndex = 4
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object bvlPatientSelection: TBevel
           Left = 144
           Top = 16
@@ -919,196 +939,224 @@ inherited frmOptions: TfrmOptions
         HelpContext = 9200
         Caption = 'Notes'
         ImageIndex = 4
-        DesignSize = (
-          419
-          301)
-        object bvlNotesNotes: TBevel
-          Left = 88
-          Top = 16
-          Width = 312
-          Height = 2
-        end
-        object bvlNotesTitles: TBevel
-          Left = 112
-          Top = 155
-          Width = 288
-          Height = 2
-        end
-        object imgNotesNotes: TImage
-          Left = 16
-          Top = 27
-          Width = 41
-          Height = 41
-          Picture.Data = {
-            055449636F6E0000010002002020100000000000E80200002600000010101000
-            00000000280100000E0300002800000020000000400000000100040000000000
-            8002000000000000000000000000000000000000000000000000800000800000
-            0080800080000000800080008080000080808000C0C0C0000000FF0000FF0000
-            00FFFF00FF000000FF00FF00FFFF0000FFFFFF00077777700077770000000000
-            00000000000000777000077700000000000000000FFFFF000FFFF00777000000
-            000000000FFFFFFFFFFFFF0007770000000000000FFFFFFFFFFFFFFFF0077000
-            000000000FFFFFFFFFFFFFFFFF007700000000000FFFFFFFFFFFFFFFFFF00700
-            000000000FFFFFFFFFFFFFFFFFFF0770000000000FFFFFF77777777777770077
-            777770000FFFFFFFFFFFFFFFFFFFF000000077000FFFFFFFFFFFFFFFFFFFFFFF
-            FFF007700FFFFFFFFFFFFFFFFFFFFFFFFFFF00700FFFFFFFFFFFFFFFFFFFFFFF
-            FFFFF0700FFFFFFFFFFFFFFFFFFFFFFFFFFFF0770FFFFFFFFFFFFFFFFFFFFFFF
-            FFFFF0070FFFFFF77777777777777777777777070FFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFF070FFFFFFFFFFFFFFFFFFFFFFFFFFFFF070FFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFF070FFFFFFFFFFFFFFFFFFFFFFFFFFFFF070FFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFF070FFFFFFFFFFFFFFFFFFFFFFFFFFFFF070FFFFFF77777777777777777
-            777777070FFFFFFFFFFFFFFFFFFFFFFFFFFFFF070FFFFFF0FFF0FF00FFFF0FFF
-            000FFF070FFFFFF0FF00F0FF0FFF0FFF0FFFFF070FFFFFF0F0F0F0FF0FFF0FFF
-            00FFFF070FFFFFF00FF0F0FF0FFF0FFF0FFFFF070FFFFFF0FFF0FF00FF00000F
-            000FFF070FFFFFFFFFFFFFFFFFFFFFFFFFFFFF070FFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFF070000000000000000000000000000000081C3FFFF0000FFFF00003FFF
-            00000FFF000007FF000003FF000003FF000001FF000000070000000300000001
-            0000000100000001000000000000000000000000000000000000000000000000
-            0000000000000000000000000000000000000000000000000000000000000000
-            0000000000000000000000000000000000000001280000001000000020000000
-            0100040000000000C00000000000000000000000000000000000000000000000
-            00008000008000000080800080000000800080008080000080808000C0C0C000
-            0000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0077777777
-            0000000000000000770000000FFFFFFF007000000FFFFFFFFF0770000FF77777
-            777007770FFFFFFFFFFFF0070FFFFFFFFFFFFF070FF77777777777070FFFFFFF
-            FFFFFF070FFFFFFFFFFFFF070FF77777777777070FF9F9999F9F99070FF9999F
-            9F9F9F070FF9F9F9F99999070FFFFFFFFFFFFF07000000000000000700FF0000
-            003F0000001F0000000700000000000000000000000000000000000000000000
-            00000000000000000000000000000000000000000000000000000000}
-        end
-        object imgNotes: TImage
-          Left = 16
-          Top = 163
-          Width = 41
-          Height = 41
-          Picture.Data = {
-            055449636F6E0000010002002020100000000000E80200002600000010101000
-            00000000280100000E0300002800000020000000400000000100040000000000
-            8002000000000000000000000000000000000000000000000000800000800000
-            0080800080000000800080008080000080808000C0C0C0000000FF0000FF0000
-            00FFFF00FF000000FF00FF00FFFF0000FFFFFF00077777700077770000000000
-            00000000000000777000077700000000000000000FFFFF000FFFF00777000000
-            000000000FFFFFFFFFFFFF0007770000000000000FFFFFFFFFFFFFFFF0077000
-            000000000FFFFFFFFFFFFFFFFF007700000000000FFFFFFFFFFFFFFFFFF00700
-            000000000FFFFFFFFFFFFFFFFFFF0770000000000FFFFFF77777777777770077
-            777770000FFFFFFFFFFFFFFFFFFFF000000077000FFFFFFFFFFFFFFFFFFFFFFF
-            FFF007700FFFFFFFFFFFFFFFFFFFFFFFFFFF00700FFFFFFFFFFFFFFFFFFFFFFF
-            FFFFF0700FFFFFFFFFFFFFFFFFFFFFFFFFFFF0770FFFFFFFFFFFFFFFFFFFFFFF
-            FFFFF0070FFFFFF77777777777777777777777070FFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFF070FFFFFFFFFFFFFFFFFFFFFFFFFFFFF070FFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFF070FFFFFFFFFFFFFFFFFFFFFFFFFFFFF070FFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFF070FFFFFFFFFFFFFFFFFFFFFFFFFFFFF070FFFFFF77777777777777777
-            777777070FFFFFFFFFFFFFFFFFFFFFFFFFFFFF070FFFFFFFF0FFF0FFF0FFF000
-            F000FF070FFFFFFFF0FFF0FFF0FFF0FFF0FFFF070FFFFFFFF0FFF0FFF0FFF0FF
-            F00FFF070FFFFFFFF0FFF0FFF0FFF0FFF0FFFF070FFFFFF00000F0F00000F0FF
-            F000FF070FFFFFFFFFFFFFFFFFFFFFFFFFFFFF070FFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFF070000000000000000000000000000000081C3FFFF0000FFFF00003FFF
-            00000FFF000007FF000003FF000003FF000001FF000000070000000300000001
-            0000000100000001000000000000000000000000000000000000000000000000
-            0000000000000000000000000000000000000000000000000000000000000000
-            0000000000000000000000000000000000000001280000001000000020000000
-            0100040000000000C00000000000000000000000000000000000000000000000
-            00008000008000000080800080000000800080008080000080808000C0C0C000
-            0000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0077777777
-            0000000000000000770000000FFFFFFF007000000FFFFFFFFF0770000FF77777
-            777007770FFFFFFFFFFFF0070FFFFFFFFFFFFF070FF77777777777070FFFFFFF
-            FFFFFF070FFFFFFFFFFFFF070FF77777777777070FF9F9999F9F99070FF9999F
-            9F9F9F070FF9F9F9F99999070FFFFFFFFFFFFF07000000000000000700FF0000
-            003F0000001F0000000700000000000000000000000000000000000000000000
-            00000000000000000000000000000000000000000000000000000000}
-        end
-        object lblNotesNotesDesc: TMemo
-          Left = 125
-          Top = 27
-          Width = 275
-          Height = 30
-          TabStop = False
-          BorderStyle = bsNone
-          Color = clBtnFace
-          Lines.Strings = (
-            'Configure defaults for editing and saving notes.')
-          ReadOnly = True
-          TabOrder = 4
-        end
-        object lblNotesTitlesDesc: TMemo
-          Left = 125
-          Top = 165
-          Width = 275
-          Height = 78
-          TabStop = False
-          Anchors = [akLeft, akTop, akRight]
-          BorderStyle = bsNone
-          Color = clBtnFace
-          Lines.Strings = (
-            'Configure document list preferences.')
-          ReadOnly = True
-          TabOrder = 5
-        end
-        object lblNotesNotes: TStaticText
-          Left = 13
-          Top = 9
-          Width = 32
-          Height = 17
-          Caption = 'Notes'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 2
-        end
-        object lblNotesTitles: TStaticText
-          Left = 13
-          Top = 145
-          Width = 81
-          Height = 17
-          Caption = 'Document Titles'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 3
-        end
-        object btnNotesNotes: TButton
-          Left = 255
-          Top = 67
-          Width = 145
-          Height = 22
-          HelpContext = 9201
-          Anchors = [akTop, akRight]
-          Caption = '&Notes...'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 0
-          OnClick = btnNotesNotesClick
-        end
-        object btnNotesTitles: TButton
-          Left = 255
-          Top = 205
-          Width = 145
-          Height = 22
-          HelpContext = 9202
-          Anchors = [akTop, akRight]
-          Caption = '&Document Titles...'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          ParentFont = False
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
+        object PnlNoteCl: TPanel
+          Left = 0
+          Top = 89
+          Width = 547
+          Height = 255
+          Align = alClient
+          BevelOuter = bvNone
           TabOrder = 1
-          OnClick = btnNotesTitlesClick
+          DesignSize = (
+            547
+            255)
+          object imgNotes: TImage
+            Left = 16
+            Top = 32
+            Width = 41
+            Height = 41
+            Picture.Data = {
+              055449636F6E0000010002002020100000000000E80200002600000010101000
+              00000000280100000E0300002800000020000000400000000100040000000000
+              8002000000000000000000000000000000000000000000000000800000800000
+              0080800080000000800080008080000080808000C0C0C0000000FF0000FF0000
+              00FFFF00FF000000FF00FF00FFFF0000FFFFFF00077777700077770000000000
+              00000000000000777000077700000000000000000FFFFF000FFFF00777000000
+              000000000FFFFFFFFFFFFF0007770000000000000FFFFFFFFFFFFFFFF0077000
+              000000000FFFFFFFFFFFFFFFFF007700000000000FFFFFFFFFFFFFFFFFF00700
+              000000000FFFFFFFFFFFFFFFFFFF0770000000000FFFFFF77777777777770077
+              777770000FFFFFFFFFFFFFFFFFFFF000000077000FFFFFFFFFFFFFFFFFFFFFFF
+              FFF007700FFFFFFFFFFFFFFFFFFFFFFFFFFF00700FFFFFFFFFFFFFFFFFFFFFFF
+              FFFFF0700FFFFFFFFFFFFFFFFFFFFFFFFFFFF0770FFFFFFFFFFFFFFFFFFFFFFF
+              FFFFF0070FFFFFF77777777777777777777777070FFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFF070FFFFFFFFFFFFFFFFFFFFFFFFFFFFF070FFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFF070FFFFFFFFFFFFFFFFFFFFFFFFFFFFF070FFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFF070FFFFFFFFFFFFFFFFFFFFFFFFFFFFF070FFFFFF77777777777777777
+              777777070FFFFFFFFFFFFFFFFFFFFFFFFFFFFF070FFFFFFFF0FFF0FFF0FFF000
+              F000FF070FFFFFFFF0FFF0FFF0FFF0FFF0FFFF070FFFFFFFF0FFF0FFF0FFF0FF
+              F00FFF070FFFFFFFF0FFF0FFF0FFF0FFF0FFFF070FFFFFF00000F0F00000F0FF
+              F000FF070FFFFFFFFFFFFFFFFFFFFFFFFFFFFF070FFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFF070000000000000000000000000000000081C3FFFF0000FFFF00003FFF
+              00000FFF000007FF000003FF000003FF000001FF000000070000000300000001
+              0000000100000001000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000001280000001000000020000000
+              0100040000000000C00000000000000000000000000000000000000000000000
+              00008000008000000080800080000000800080008080000080808000C0C0C000
+              0000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0077777777
+              0000000000000000770000000FFFFFFF007000000FFFFFFFFF0770000FF77777
+              777007770FFFFFFFFFFFF0070FFFFFFFFFFFFF070FF77777777777070FFFFFFF
+              FFFFFF070FFFFFFFFFFFFF070FF77777777777070FF9F9999F9F99070FF9999F
+              9F9F9F070FF9F9F9F99999070FFFFFFFFFFFFF07000000000000000700FF0000
+              003F0000001F0000000700000000000000000000000000000000000000000000
+              00000000000000000000000000000000000000000000000000000000}
+          end
+          object bvlNotesTitles: TBevel
+            Left = 112
+            Top = 19
+            Width = 288
+            Height = 2
+          end
+          object lblNotesTitles: TStaticText
+            Left = 13
+            Top = 9
+            Width = 81
+            Height = 17
+            Caption = 'Document Titles'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+            TabOrder = 2
+          end
+          object lblNotesTitlesDesc: TMemo
+            Left = 125
+            Top = 33
+            Width = 303
+            Height = 78
+            Anchors = [akLeft, akTop, akRight]
+            BorderStyle = bsNone
+            Color = clBtnFace
+            Lines.Strings = (
+              'Configure document list preferences.')
+            ReadOnly = True
+            TabOrder = 0
+          end
+          object btnNotesTitles: TButton
+            Left = 283
+            Top = 81
+            Width = 115
+            Height = 22
+            HelpContext = 9202
+            Anchors = [akTop, akRight]
+            Caption = '&Document Titles...'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+            TabOrder = 1
+            OnClick = btnNotesTitlesClick
+          end
+        end
+        object PnlNoteTop: TPanel
+          Left = 0
+          Top = 0
+          Width = 547
+          Height = 89
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 0
+          DesignSize = (
+            547
+            89)
+          object bvlNotesNotes: TBevel
+            Left = 88
+            Top = 16
+            Width = 312
+            Height = 2
+          end
+          object imgNotesNotes: TImage
+            Left = 16
+            Top = 27
+            Width = 41
+            Height = 41
+            Picture.Data = {
+              055449636F6E0000010002002020100000000000E80200002600000010101000
+              00000000280100000E0300002800000020000000400000000100040000000000
+              8002000000000000000000000000000000000000000000000000800000800000
+              0080800080000000800080008080000080808000C0C0C0000000FF0000FF0000
+              00FFFF00FF000000FF00FF00FFFF0000FFFFFF00077777700077770000000000
+              00000000000000777000077700000000000000000FFFFF000FFFF00777000000
+              000000000FFFFFFFFFFFFF0007770000000000000FFFFFFFFFFFFFFFF0077000
+              000000000FFFFFFFFFFFFFFFFF007700000000000FFFFFFFFFFFFFFFFFF00700
+              000000000FFFFFFFFFFFFFFFFFFF0770000000000FFFFFF77777777777770077
+              777770000FFFFFFFFFFFFFFFFFFFF000000077000FFFFFFFFFFFFFFFFFFFFFFF
+              FFF007700FFFFFFFFFFFFFFFFFFFFFFFFFFF00700FFFFFFFFFFFFFFFFFFFFFFF
+              FFFFF0700FFFFFFFFFFFFFFFFFFFFFFFFFFFF0770FFFFFFFFFFFFFFFFFFFFFFF
+              FFFFF0070FFFFFF77777777777777777777777070FFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFF070FFFFFFFFFFFFFFFFFFFFFFFFFFFFF070FFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFF070FFFFFFFFFFFFFFFFFFFFFFFFFFFFF070FFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFF070FFFFFFFFFFFFFFFFFFFFFFFFFFFFF070FFFFFF77777777777777777
+              777777070FFFFFFFFFFFFFFFFFFFFFFFFFFFFF070FFFFFF0FFF0FF00FFFF0FFF
+              000FFF070FFFFFF0FF00F0FF0FFF0FFF0FFFFF070FFFFFF0F0F0F0FF0FFF0FFF
+              00FFFF070FFFFFF00FF0F0FF0FFF0FFF0FFFFF070FFFFFF0FFF0FF00FF00000F
+              000FFF070FFFFFFFFFFFFFFFFFFFFFFFFFFFFF070FFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFF070000000000000000000000000000000081C3FFFF0000FFFF00003FFF
+              00000FFF000007FF000003FF000003FF000001FF000000070000000300000001
+              0000000100000001000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000001280000001000000020000000
+              0100040000000000C00000000000000000000000000000000000000000000000
+              00008000008000000080800080000000800080008080000080808000C0C0C000
+              0000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0077777777
+              0000000000000000770000000FFFFFFF007000000FFFFFFFFF0770000FF77777
+              777007770FFFFFFFFFFFF0070FFFFFFFFFFFFF070FF77777777777070FFFFFFF
+              FFFFFF070FFFFFFFFFFFFF070FF77777777777070FF9F9999F9F99070FF9999F
+              9F9F9F070FF9F9F9F99999070FFFFFFFFFFFFF07000000000000000700FF0000
+              003F0000001F0000000700000000000000000000000000000000000000000000
+              00000000000000000000000000000000000000000000000000000000}
+          end
+          object btnNotesNotes: TButton
+            Left = 283
+            Top = 67
+            Width = 115
+            Height = 22
+            HelpContext = 9201
+            Anchors = [akTop, akRight]
+            Caption = '&Notes...'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+            TabOrder = 1
+            OnClick = btnNotesNotesClick
+          end
+          object lblNotesNotes: TStaticText
+            Left = 13
+            Top = 9
+            Width = 32
+            Height = 17
+            Caption = 'Notes'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+            TabOrder = 2
+          end
+          object lblNotesNotesDesc: TMemo
+            Left = 125
+            Top = 27
+            Width = 275
+            Height = 30
+            TabStop = False
+            BorderStyle = bsNone
+            Color = clBtnFace
+            Lines.Strings = (
+              'Configure defaults for editing and saving notes.')
+            ReadOnly = True
+            TabOrder = 0
+          end
         end
       end
       object tsCprsReports: TTabSheet
         Caption = 'Reports'
         ImageIndex = 5
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object bvlReports: TBevel
           Left = 80
           Top = 16
@@ -1373,9 +1421,13 @@ inherited frmOptions: TfrmOptions
       object tsGraphs: TTabSheet
         Caption = 'Graphs'
         ImageIndex = 6
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         DesignSize = (
-          419
-          301)
+          547
+          344)
         object bvlGraphSettings: TBevel
           Left = 104
           Top = 16
@@ -1506,7 +1558,7 @@ inherited frmOptions: TfrmOptions
         object memGraphViews: TMemo
           Left = 125
           Top = 27
-          Width = 275
+          Width = 303
           Height = 68
           TabStop = False
           Anchors = [akLeft, akTop, akRight]
@@ -1522,6 +1574,7 @@ inherited frmOptions: TfrmOptions
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 8
     Data = (
       (
         'Component = pnlBottom'
@@ -1654,7 +1707,8 @@ inherited frmOptions: TfrmOptions
         'Status = stsDefault')
       (
         'Component = btnNotesNotes'
-        'Status = stsDefault')
+        'Text = Configure defaults for editing and saving notes.'
+        'Status = stsOK')
       (
         'Component = btnNotesTitles'
         'Status = stsDefault')
@@ -1708,6 +1762,12 @@ inherited frmOptions: TfrmOptions
         'Status = stsDefault')
       (
         'Component = frmOptions'
+        'Status = stsDefault')
+      (
+        'Component = PnlNoteTop'
+        'Status = stsDefault')
+      (
+        'Component = PnlNoteCl'
         'Status = stsDefault'))
   end
 end

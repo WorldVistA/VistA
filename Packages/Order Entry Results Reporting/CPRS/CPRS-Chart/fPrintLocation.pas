@@ -55,6 +55,7 @@ type
              var wardIEN: integer; var wardLocation: string; ContainsIMOOrders: boolean; displayEncSwitch: boolean = false);
   procedure SwitchEncounterLoction(pEncounterLoc: integer; pEncounterLocName, pEncounterLocText: string; pEncounterDT: TFMDateTime; pEncounterVC: Char);
   function rpcIsPatientOnWard(Patient: string): string;
+  function rpcIsClinicOrder(IEN: string): string;
   end;
 
 var
@@ -125,7 +126,7 @@ if frmPrintLocation.DisplayOrders = true then
  CloseOK := True;
  Action := caFree;
  frmPrintLocation.FormClose(frmPrintLocation, Action);
- if Action = caFree then frmPrintLocation.Close; 
+ if Action = caFree then frmPrintLocation.Close;
 end;
 
 procedure TfrmPrintLocation.btnWardClick(Sender: TObject);
@@ -211,7 +212,7 @@ end;
 procedure TfrmPrintLocation.orderGridKeyPress(Sender: TObject; var Key: Char);
 begin
   inherited;
-  if Key in [#32..#127] then ShowEditor(OrderGrid.Col, OrderGrid.Row, Key);
+  if CharInSet(Key, [#32..#127]) then ShowEditor(OrderGrid.Col, OrderGrid.Row, Key);
 end;
 
 procedure TfrmPrintLocation.orderGridMouseDown(Sender: TObject;
@@ -241,7 +242,7 @@ var
   ColControl: TWinControl;
 begin
   inherited;
-    if frmPrintLocation = nil then exit;    
+    if frmPrintLocation = nil then exit;
     with frmPrintLocation do
       begin
         if (frmPrintLocation.WLoc = '') and (frmPrintLocation.CLoc = '') then exit;
@@ -335,15 +336,15 @@ procedure TfrmPrintLocation.PrintLocation(OrderLst: TStringList; pEncounterLoc:i
           ContainsIMOOrders: boolean; displayEncSwitch: boolean = false);
 var
 OrderInfo, OrderText: string;
-cidx, i, widx: integer;
+cidx, i, widx, count: integer;
 begin
   frmPrintLocation := TfrmPrintLocation.Create(Application);
   try
+  count := 0;
   frmPrintLocation.DisplayOrders := true;
   frmPrintLocation.CloseOK := false;
   ClinicArr := TStringList.Create;
   WardArr := TStringList.Create;
-  frmPrintlocation.orderGrid.RowCount := OrderLst.Count + 1;
   CurrentLocationForPatient(Patient.DFN, WardIEN, WardLocation, ASvc);
   frmPrintLocation.lblEncounter.Enabled := displayEncSwitch;
   frmPrintLocation.cboEncLoc.Enabled := displayEncSwitch;
@@ -356,10 +357,20 @@ begin
   for i := 0 to OrderLst.Count - 1 do
     begin
     OrderInfo := Piece(OrderLst.Strings[i],':',1);
-    OrderText := AnsiReplaceText(Piece(OrderLst.Strings[i],':',2),CRLF,'');
-    frmPrintLocation.orderGrid.Cells[COL_ORDERINFO,i+1] := OrderInfo;
-    frmPrintLocation.orderGrid.Cells[COL_ORDERTEXT,i+1] := OrderText;
+    if frmPrintLocation.rpcIsClinicOrder(OrderInfo)='0' then
+      begin
+      count := count+1;
+      OrderText := AnsiReplaceText(Piece(OrderLst.Strings[i],':',2),CRLF,'');
+      frmPrintLocation.orderGrid.Cells[COL_ORDERINFO,count] := OrderInfo;
+      frmPrintLocation.orderGrid.Cells[COL_ORDERTEXT,count] := OrderText;
+      end
+    else
+      begin
+      ClinicLst.Add(OrderInfo);
+      end;
     end;
+
+  frmPrintlocation.orderGrid.RowCount := count + 1;
   frmPrintLocation.cbolocation.Items.Add(frmPrintLocation.CLoc);
   frmPrintLocation.cbolocation.Items.Add(frmPrintLocation.WLoc);
   if frmPrintLocation.cboEncLoc.Enabled = True then
@@ -367,7 +378,7 @@ begin
       frmPrintLocation.cboEncLoc.Items.Add(frmPrintLocation.CLoc);
       frmPrintLocation.cboEncLoc.Items.Add(frmPrintLocation.WLoc);
     end;
-  frmPrintLocation.ShowModal;
+  if count>0 then frmPrintLocation.ShowModal;
   if assigned(ClinicArr) then ClinicLst.AddStrings(ClinicArr);
   if assigned(WardArr) then WardLst.AddStrings(WardArr);
   ProcessClinicOrders(WardLst, ClinicLst, WardIEN, pEncounterLoc, ContainsIMOOrders);
@@ -424,6 +435,12 @@ function TfrmPrintLocation.rpcIsPatientOnWard(Patient: string): string;
 begin
   //Ward Loction Name^Ward Location IEN
   result := sCallV('ORWDX1 PATWARD',[Patient]);
+end;
+
+
+function TfrmPrintLocation.rpcIsClinicOrder(IEN: string): string;
+begin
+  result := sCallV('ORUTL ISCLORD',[IEN]);
 end;
 
 procedure TfrmPrintLocation.ShowEditor(ACol, ARow: Integer; AChar: Char);
@@ -494,7 +511,7 @@ begin
   cidx := frmPrintLocation.cboEncLoc.Items.IndexOf(frmPrintLocation.CLoc);
   widx := frmPrintLocation.cboEncLoc.Items.IndexOf(frmPrintLocation.WLoc);
   if frmPrintLocation.cboEncLoc.Enabled = FALSE then frmPrintLocation.cboEncLoc.ItemIndex := widx;
-  
+
   if frmPrintLocation.cboEncLoc.ItemIndex = cidx then
     begin
       Encounter.Location := pEncounterLoc;

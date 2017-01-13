@@ -4,7 +4,7 @@ interface
 
 uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls, 
   Buttons, ORCtrls, ORfn, ExtCtrls, fAutoSz, ORDtTm, fConsultAlertTo, fRptBox,
-  VA508AccessibilityManager;
+  VA508AccessibilityManager, Vcl.ComCtrls, Vcl.ImgList;
 
 type
   TMedResultRec = record
@@ -16,20 +16,22 @@ type
   end;
 
   TfrmConsMedRslt = class(TfrmAutoSz)
+    pnlBase: TORAutoPanel;
+    pnlAction: TPanel;
+    pnlbottom: TPanel;
+    pnlMiddle: TPanel;
+    pnlButtons: TPanel;
     cmdOK: TButton;
     cmdCancel: TButton;
-    lstMedResults: TORListBox;
-    SrcLabel: TLabel;
-    pnlBase: TORAutoPanel;
-    cmdDetails: TButton;
     ckAlert: TCheckBox;
-    lblDateofAction: TOROffsetLabel;
+    cmdDetails: TButton;
     calDateofAction: TORDateBox;
+    lblDateofAction: TOROffsetLabel;
     lblActionBy: TOROffsetLabel;
     cboPerson: TORComboBox;
-    lblResultName: TOROffsetLabel;
-    lblResultDate: TOROffsetLabel;
-    lblSummary: TOROffsetLabel;
+    SrcLabel: TLabel;
+    lstMedResults: TCaptionListView;
+    ImageList1: TImageList;
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
     procedure cmdDetailsClick(Sender: TObject);
@@ -37,8 +39,9 @@ type
     procedure NewPersonNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure FormDestroy(Sender: TObject);
-    procedure lstMedResultsDrawItem(Control: TWinControl; Index: Integer;
-      Rect: TRect; State: TOwnerDrawState);
+ //   procedure lstMedResultsDrawItem(Control: TWinControl; Index: Integer;
+ //     Rect: TRect; State: TOwnerDrawState);
+    procedure FormCreate(Sender: TObject);
   protected
     procedure ShowDetailsDestroyed(Sender: TObject);
   private
@@ -67,6 +70,23 @@ function SelectMedicineResult(ConsultIEN: integer; FormTitle: string; var MedRes
 { displays Medicine Result selection form and returns a record of the selection }
 var
   frmConsMedRslt: TfrmConsMedRslt;
+
+  procedure DisplayImage(LstView: TCaptionListView);
+  var
+   x: String;
+   I: Integer;
+  begin
+    for I := 0 to LstView.Items.Count - 1 do
+    begin
+     x := LstView.Strings[i];
+
+    if StrToIntDef(Piece(x, U, 5), 0) > 0 then
+     LstView.Items[i].ImageIndex := 0
+    else
+     LstView.Items[i].ImageIndex := -1;
+    end;
+  end;
+
 begin
   frmConsMedRslt := TfrmConsMedRslt.Create(Application);
   try
@@ -82,13 +102,15 @@ begin
 
       if MedResult.Action = 'ATTACH' then
         begin
-          FastAssign(GetAssignableMedResults(ConsultIEN), lstMedResults.Items);
+          FastAssign(GetAssignableMedResults(ConsultIEN), lstMedResults.ItemsStrings);
           ckAlert.Visible := True;
+          DisplayImage(lstMedResults);
         end
       else if MedResult.Action = 'REMOVE' then
         begin
-          FastAssign(GetRemovableMedResults(ConsultIEN), lstMedResults.Items);
+          FastAssign(GetRemovableMedResults(ConsultIEN), lstMedResults.ItemsStrings);
           ckAlert.Visible := False;
+          DisplayImage(lstMedResults);
         end;
       if lstMedResults.Items.Count > 0 then
         ShowModal
@@ -180,13 +202,27 @@ begin
   (Sender as TORComboBox).ForDataUse(SubSetOfPersons(StartFrom, Direction));
 end;
 
+procedure TfrmConsMedRslt.FormCreate(Sender: TObject);
+var
+ AnImage: TBitMap;
+begin
+  inherited;
+  AnImage := TBitMap.Create;
+  try
+   AnImage.LoadFromResourceName(hInstance, 'BMP_IMAGEFLAG_1');
+   ImageList1.Add(AnImage,nil);
+  finally
+    AnImage.Free;
+  end;
+end;
+
 procedure TfrmConsMedRslt.FormDestroy(Sender: TObject);
 begin
   inherited;
   KillObj(@FShowDetails);
 end;
 
-procedure TfrmConsMedRslt.lstMedResultsDrawItem(Control: TWinControl;
+{procedure TfrmConsMedRslt.lstMedResultsDrawItem(Control: TWinControl;
   Index: Integer; Rect: TRect; State: TOwnerDrawState);
 var
   x: string;
@@ -199,16 +235,16 @@ begin
   AnImage := TBitMap.Create;
   try
     with (Control as TORListBox).Canvas do  { draw on control canvas, not on the form }
-      begin
+  {    begin
         x := (Control as TORListBox).Items[Index];
         FillRect(Rect);       { clear the rectangle }
-        AnImage.LoadFromResourceName(hInstance, 'BMP_IMAGEFLAG_1');
+  {      AnImage.LoadFromResourceName(hInstance, 'BMP_IMAGEFLAG_1');
         (Control as TORListBox).ItemHeight := HigherOf(TextHeight(x), AnImage.Height);
         if StrToIntDef(Piece(x, U, 5), 0) > 0 then
           begin
             BrushCopy(Bounds(Rect.Left, Rect.Top, AnImage.Width, AnImage.Height),
               AnImage, Bounds(0, 0, AnImage.Width, AnImage.Height), clRed); {render ImageFlag}
-          end;
+ {         end;
         TextOut(Rect.Left + AnImage.Width, Rect.Top, Piece(x, U, 2));
         TextOut(Rect.Left + AnImage.Width + TextWidth(STD_PROC_TEXT), Rect.Top, Piece(x, U, 3));
         TextOut(Rect.Left + AnImage.Width + TextWidth(STD_PROC_TEXT) + TextWidth(STD_DATE), Rect.Top, Piece(x, U, 4));
@@ -216,6 +252,6 @@ begin
   finally
     AnImage.Free;
   end;
-end;
+end; }
 
 end.

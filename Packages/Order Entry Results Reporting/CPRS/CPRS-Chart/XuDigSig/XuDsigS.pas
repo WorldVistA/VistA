@@ -533,7 +533,7 @@ begin
   //So, Open the MY Store
   if hCertStore = 0 then
   begin
-    hCertStore := CertOpenSystemStore(0, PChar('MY'));
+    hCertStore := CertOpenSystemStore(0, PAnsiChar('MY'));
   end;
   if pCertContext <> nil then
   begin
@@ -718,7 +718,7 @@ begin
               rgExtension := pCertContext.pCertInfo.rgExtension;
               cExtension := pCertContext.pCertInfo.cExtension;
               // see if we get the CRL dist point
-              pce := CertFindExtension(PChar('2.5.29.31'), cExtension, rgExtension);
+              pce := CertFindExtension(PAnsiChar('2.5.29.31'), cExtension, rgExtension);
               if pce <> nil then
                 CRLURL := CRLDistPoint(pce.Value.pbData, pce.Value.cbData);
               RevocationStatusOK := true;

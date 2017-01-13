@@ -13,14 +13,14 @@ inherited frmEditProc: TfrmEditProc
   ExplicitWidth = 580
   ExplicitHeight = 458
   DesignSize = (
-    572
-    424)
+    564
+    420)
   PixelsPerInch = 96
   TextHeight = 13
   object pnlCombatVet: TPanel [0]
     Left = 0
     Top = 0
-    Width = 572
+    Width = 564
     Height = 25
     Align = alTop
     BevelOuter = bvLowered
@@ -35,11 +35,12 @@ inherited frmEditProc: TfrmEditProc
       Name = 'txtCombatVet'
       Left = 1
       Top = 1
-      Width = 570
+      Width = 562
       Height = 23
       Align = alClient
       Alignment = taCenter
       BevelOuter = bvNone
+      Caption = ''
       Enabled = False
       TabOrder = 0
       ShowAccelChar = True
@@ -89,7 +90,7 @@ inherited frmEditProc: TfrmEditProc
       Width = 332
       Height = 32
       Color = clInfoBk
-      Font.Charset = DEFAULT_CHARSET
+      Font.Charset = ANSI_CHARSET
       Font.Color = clInfoText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
@@ -196,14 +197,14 @@ inherited frmEditProc: TfrmEditProc
       Width = 560
       Height = 151
       Anchors = [akLeft, akTop, akRight, akBottom]
-      Font.Charset = DEFAULT_CHARSET
+      Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'Courier New'
       Font.Style = []
       ParentFont = False
       PopupMenu = popReason
-      ScrollBars = ssBoth
+      ScrollBars = ssVertical
       TabOrder = 14
       WantTabs = True
       OnChange = ControlChange
@@ -233,6 +234,7 @@ inherited frmEditProc: TfrmEditProc
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 2
+      Text = ''
       OnChange = ControlChange
       CharsNeedMatch = 1
     end
@@ -276,6 +278,7 @@ inherited frmEditProc: TfrmEditProc
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 10
+      Text = ''
       OnChange = ControlChange
       CharsNeedMatch = 1
     end
@@ -315,6 +318,7 @@ inherited frmEditProc: TfrmEditProc
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 3
+      Text = ''
       OnChange = ControlChange
       OnNeedData = txtAttnNeedData
       CharsNeedMatch = 1
@@ -347,6 +351,7 @@ inherited frmEditProc: TfrmEditProc
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 0
+      Text = ''
       OnChange = cboProcSelect
       OnNeedData = cboProcNeedData
       CharsNeedMatch = 1
@@ -358,6 +363,7 @@ inherited frmEditProc: TfrmEditProc
       Height = 21
       Style = orcsDropDown
       AutoSelect = True
+      Caption = ''
       Color = clWindow
       DropDownCount = 8
       ItemHeight = 13
@@ -370,6 +376,7 @@ inherited frmEditProc: TfrmEditProc
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 15
+      Text = ''
       Visible = False
       OnChange = ControlChange
       CharsNeedMatch = 1
@@ -402,6 +409,7 @@ inherited frmEditProc: TfrmEditProc
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 1
+      Text = ''
       OnChange = ControlChange
       CharsNeedMatch = 1
     end
@@ -411,6 +419,12 @@ inherited frmEditProc: TfrmEditProc
       Width = 560
       Height = 38
       Anchors = [akLeft, akTop, akRight]
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
       PopupMenu = popReason
       TabOrder = 13
       WantTabs = True
@@ -446,12 +460,12 @@ inherited frmEditProc: TfrmEditProc
       TabOrder = 11
       OnClick = cmdLexSearchClick
     end
-    object lblEarliest: TStaticText
+    object lblClinicallyIndicated: TStaticText
       Left = 190
       Top = 49
-      Width = 121
+      Width = 117
       Height = 17
-      Caption = 'Earliest appropriate date:'
+      Caption = 'Clinically indicated date:'
       TabOrder = 21
     end
     object lblLatest: TStaticText
@@ -463,15 +477,16 @@ inherited frmEditProc: TfrmEditProc
       TabOrder = 22
       Visible = False
     end
-    object calEarliest: TORDateBox
+    object calClinicallyIndicated: TORDateBox
       Left = 190
       Top = 65
       Width = 164
       Height = 21
       TabOrder = 4
-      OnExit = calEarliestExit
+      OnExit = calClinicallyIndicatedExit
       DateOnly = True
       RequireTime = False
+      Caption = ''
     end
     object calLatest: TORDateBox
       Left = 362
@@ -484,6 +499,7 @@ inherited frmEditProc: TfrmEditProc
       OnExit = calLatestExit
       DateOnly = True
       RequireTime = False
+      Caption = ''
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
@@ -564,17 +580,23 @@ inherited frmEditProc: TfrmEditProc
         'Component = cmdLexSearch'
         'Status = stsDefault')
       (
-        'Component = lblEarliest'
+        'Component = lblClinicallyIndicated'
         'Status = stsDefault')
       (
         'Component = lblLatest'
         'Status = stsDefault')
       (
-        'Component = calEarliest'
-        'Status = stsDefault')
+        'Component = calClinicallyIndicated'
+        
+          'Text = Earliest appropriate Date/Time. Press the enter key to ac' +
+          'cess.'
+        'Status = stsOK')
       (
         'Component = calLatest'
-        'Status = stsDefault')
+        
+          'Text = Latest appropriate Date/Time. Press the enter key to acce' +
+          'ss.'
+        'Status = stsOK')
       (
         'Component = pnlCombatVet'
         'Status = stsDefault')

@@ -6,7 +6,8 @@ inherited frmPCEEdit: TfrmPCEEdit
   ClientHeight = 128
   ClientWidth = 543
   Position = poScreenCenter
-  OnCreate = FormCreate
+  ExplicitWidth = 549
+  ExplicitHeight = 156
   DesignSize = (
     543
     128)
@@ -27,7 +28,6 @@ inherited frmPCEEdit: TfrmPCEEdit
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 5
-    ExplicitWidth = 201
   end
   object lblNew: TMemo [1]
     Left = 136

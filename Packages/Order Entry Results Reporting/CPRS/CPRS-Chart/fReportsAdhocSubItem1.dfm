@@ -3,34 +3,48 @@ inherited frmReportsAdhocSubItem1: TfrmReportsAdhocSubItem1
   Top = 170
   BorderIcons = [biSystemMenu]
   Caption = 'frmReportsAdhocSubItem1'
-  ClientHeight = 314
+  ClientHeight = 386
   OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
   ExplicitWidth = 320
   ExplicitHeight = 341
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object GroupBox1: TGroupBox [0]
     Left = 0
     Top = 0
-    Width = 427
-    Height = 314
+    Width = 526
+    Height = 386
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     Color = clBtnFace
     ParentColor = False
     TabOrder = 0
     object Splitter3: TSplitter
-      Left = 201
-      Top = 49
-      Width = 5
-      Height = 230
+      Left = 247
+      Top = 60
+      Width = 7
+      Height = 283
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      ExplicitTop = 64
+      ExplicitHeight = 279
     end
     object pnl7Button: TKeyClickPanel
-      Left = 395
-      Top = 81
-      Width = 19
-      Height = 24
+      Left = 486
+      Top = 100
+      Width = 24
+      Height = 29
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       BevelOuter = bvNone
       TabOrder = 4
       TabStop = True
@@ -40,8 +54,12 @@ inherited frmReportsAdhocSubItem1: TfrmReportsAdhocSubItem1
       object SpeedButton7: TSpeedButton
         Left = 1
         Top = 1
-        Width = 17
-        Height = 22
+        Width = 21
+        Height = 27
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Enabled = False
         Glyph.Data = {
           76010000424D7601000000000000760000002800000020000000100000000100
@@ -61,10 +79,14 @@ inherited frmReportsAdhocSubItem1: TfrmReportsAdhocSubItem1
       end
     end
     object pnl8Button: TKeyClickPanel
-      Left = 395
-      Top = 106
-      Width = 19
-      Height = 24
+      Left = 486
+      Top = 130
+      Width = 24
+      Height = 30
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       BevelOuter = bvNone
       TabOrder = 5
       TabStop = True
@@ -74,8 +96,12 @@ inherited frmReportsAdhocSubItem1: TfrmReportsAdhocSubItem1
       object SpeedButton8: TSpeedButton
         Left = 1
         Top = 1
-        Width = 17
-        Height = 22
+        Width = 21
+        Height = 27
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Enabled = False
         Glyph.Data = {
           76010000424D7601000000000000760000002800000020000000100000000100
@@ -96,16 +122,20 @@ inherited frmReportsAdhocSubItem1: TfrmReportsAdhocSubItem1
     end
     object ORComboBox2: TORComboBox
       Left = 2
-      Top = 49
-      Width = 199
-      Height = 230
+      Top = 60
+      Width = 245
+      Height = 283
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Style = orcsSimple
       Align = alLeft
       AutoSelect = True
       Caption = 'File Selections'
       Color = clWindow
       DropDownCount = 8
-      ItemHeight = 13
+      ItemHeight = 16
       ItemTipColor = clWindow
       ItemTipEnable = True
       ListItemsOnly = False
@@ -116,18 +146,24 @@ inherited frmReportsAdhocSubItem1: TfrmReportsAdhocSubItem1
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 1
+      Text = ''
       OnDblClick = btnAddSelClick
       OnKeyUp = ORComboBox2KeyUp
       OnNeedData = ORComboBox2NeedData
       CharsNeedMatch = 1
+      ExplicitTop = 64
+      ExplicitHeight = 279
     end
     object ORListBox1: TORListBox
-      Left = 232
-      Top = 48
-      Width = 161
-      Height = 129
+      Left = 286
+      Top = 59
+      Width = 198
+      Height = 159
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DragMode = dmAutomatic
-      ItemHeight = 13
       ParentShowHint = False
       ShowHint = True
       TabOrder = 3
@@ -141,59 +177,90 @@ inherited frmReportsAdhocSubItem1: TfrmReportsAdhocSubItem1
     end
     object Panel4: TPanel
       Left = 2
-      Top = 15
-      Width = 423
-      Height = 34
+      Top = 18
+      Width = 522
+      Height = 42
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
+      ExplicitTop = 22
+      ExplicitWidth = 521
       object Label4: TLabel
         Left = 0
-        Top = 20
-        Width = 71
-        Height = 13
+        Top = 25
+        Width = 91
+        Height = 16
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'File Selections:'
       end
       object Label5: TLabel
-        Left = 232
-        Top = 20
-        Width = 99
-        Height = 13
+        Left = 286
+        Top = 25
+        Width = 126
+        Height = 16
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'File Entries Selected:'
       end
       object Label6: TStaticText
-        Left = 232
+        Left = 286
         Top = 1
-        Width = 98
-        Height = 17
+        Width = 123
+        Height = 20
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Selections allowed: '
         TabOrder = 0
       end
       object lblLimit: TStaticText
-        Left = 328
+        Left = 404
         Top = 1
-        Width = 42
-        Height = 17
+        Width = 52
+        Height = 20
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'No Limit'
         TabOrder = 1
       end
     end
     object Panel5: TPanel
       Left = 2
-      Top = 279
-      Width = 423
-      Height = 33
+      Top = 343
+      Width = 522
+      Height = 41
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 6
+      ExplicitWidth = 521
       DesignSize = (
-        423
-        33)
+        522
+        41)
       object btnCancel: TButton
-        Left = 341
-        Top = 4
-        Width = 75
-        Height = 25
+        Left = 420
+        Top = 5
+        Width = 92
+        Height = 31
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akRight, akBottom]
         Cancel = True
         Caption = 'Cancel'
@@ -201,10 +268,14 @@ inherited frmReportsAdhocSubItem1: TfrmReportsAdhocSubItem1
         OnClick = btnCancelClick
       end
       object btnOK: TButton
-        Left = 251
-        Top = 4
-        Width = 75
-        Height = 25
+        Left = 309
+        Top = 5
+        Width = 92
+        Height = 31
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akRight, akBottom]
         Caption = 'OK'
         TabOrder = 0
@@ -212,35 +283,51 @@ inherited frmReportsAdhocSubItem1: TfrmReportsAdhocSubItem1
       end
     end
     object Panel8: TPanel
-      Left = 208
-      Top = 56
-      Width = 25
-      Height = 137
+      Left = 256
+      Top = 69
+      Width = 31
+      Height = 169
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       BevelOuter = bvNone
       TabOrder = 2
       object btnAddSel: TButton
-        Left = 4
-        Top = 5
-        Width = 17
-        Height = 22
+        Left = 5
+        Top = 6
+        Width = 21
+        Height = 27
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = '>'
         TabOrder = 0
         OnClick = btnAddSelClick
       end
       object btnRemoveSel: TButton
-        Left = 4
-        Top = 30
-        Width = 17
-        Height = 22
+        Left = 5
+        Top = 37
+        Width = 21
+        Height = 27
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = '<'
         TabOrder = 1
         OnClick = btnRemoveSelClick
       end
       object btnRemoveAllSel: TButton
-        Left = 4
-        Top = 55
-        Width = 17
-        Height = 22
+        Left = 5
+        Top = 68
+        Width = 21
+        Height = 27
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = '<<'
         TabOrder = 2
         OnClick = btnRemoveAllSelClick

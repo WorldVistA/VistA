@@ -182,7 +182,7 @@ function EditDialogFields: boolean;
 
 implementation
 
-uses rTemplates, fTemplateDialog, Clipbrd, uSpell, uConst,
+uses rTemplates, fTemplateDialog, Clipbrd, uSpell, uConst, System.UITypes,
      fTemplateFields, VAUtils;
 
 {$R *.DFM}
@@ -469,7 +469,7 @@ begin
   ChangeSizes := FALSE;
   FUpdating := TRUE;
   try
-    QuickCopy(reItems, cbxDefault);
+    cbxDefault.Items.Assign(reItems.Lines);
     idx := -1;
     if(assigned(FFld)) and reItems.Visible and cbxDefault.Visible then
     begin

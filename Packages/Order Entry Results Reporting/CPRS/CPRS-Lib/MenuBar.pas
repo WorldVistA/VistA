@@ -1,20 +1,18 @@
-
-{*******************************************************}
-{                                                       }
-{  Implements a TToolbar descendant that has a Menu to  }
-{  make IDE like Toolbar menus very easy.  This works   }
-{  only in Delphi 4.0                                   }
-{                                                       }
-{       Copyright (c) 1995,98 Inprise Corporation       }
-{                                                       }
-{*******************************************************}
+{ ******************************************************* }
+{ }
+{ Implements a TToolbar descendant that has a Menu to }
+{ make IDE like Toolbar menus very easy.  This works }
+{ only in Delphi 4.0 }
+{ }
+{ Copyright (c) 1995,98 Inprise Corporation }
+{ }
+{ ******************************************************* }
 
 unit MenuBar;
 
 interface
 
-uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+uses Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ToolWin, ComCtrls, Menus;
 
 type
@@ -23,9 +21,10 @@ type
     FMenu: TMainMenu;
     procedure SetMenu(const Value: TMainMenu);
   protected
-    procedure GetChildren(Proc: TGetChildProc; Root: TComponent); override;
+    { protected declarations }
   public
     constructor Create(AOwner: TComponent); override;
+    procedure GetChildren(Proc: TGetChildProc; Root: TComponent); override;
   published
     property EdgeBorders default [];
     property Menu: TMainMenu read FMenu write SetMenu;
@@ -48,8 +47,7 @@ begin
   Flat := True;
   ShowCaptions := True;
   EdgeBorders := [];
-  ControlStyle := [csCaptureMouse, csClickEvents,
-    csDoubleClicks, csMenuEvents, csSetCaption];
+  ControlStyle := [csCaptureMouse, csClickEvents, csDoubleClicks, csMenuEvents, csSetCaption];
 end;
 
 procedure TMenuBar.GetChildren(Proc: TGetChildProc; Root: TComponent);
@@ -61,14 +59,15 @@ var
   i: Integer;
   Button: TToolButton;
 begin
-  if FMenu = Value then exit;
+  if FMenu = Value then
+    exit;
   if Assigned(FMenu) then
     for i := ButtonCount - 1 downto 0 do
       Buttons[i].Free;
   FMenu := Value;
-  if not Assigned(FMenu) then exit;
-  for i := ButtonCount to FMenu.Items.Count - 1 do
-  begin
+  if not Assigned(FMenu) then
+    exit;
+  for i := ButtonCount to FMenu.Items.Count - 1 do begin 
     Button := TToolButton.Create(Self);
     try
       Button.AutoSize := True;

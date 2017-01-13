@@ -397,7 +397,7 @@ type
     FComplexManager: TVA508ComplexComponentManager;
     procedure ClearRedirect;
     function Redirect(RedirectType: TManagedType): boolean;
-  published
+//  published
   public
     constructor Create;
     destructor Destroy; override;
@@ -1049,7 +1049,7 @@ begin
         GetPropList(ClsInfo, STRING_FILTER, pList);
         for i := 0 to pCount - 1 do
         begin
-          name := pList^[I]^.Name;
+          name := String(pList^[I]^.Name);
           if (info.IndexOf(name) < 0) then
             info.Add(name);
         end;

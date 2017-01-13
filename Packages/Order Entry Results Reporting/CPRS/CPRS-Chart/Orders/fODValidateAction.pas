@@ -44,7 +44,7 @@ type
 implementation
 
 uses
-  VA2006Utils;
+  VA2006Utils, System.UITypes;
 
 {$R *.DFM}
 

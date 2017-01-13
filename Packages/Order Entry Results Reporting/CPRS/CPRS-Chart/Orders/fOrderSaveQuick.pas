@@ -29,12 +29,28 @@ type
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
     procedure txtDisplayNameChange(Sender: TObject);
-    procedure cmdUpClick(Sender: TObject);
-    procedure cmdDownClick(Sender: TObject);
+  //  procedure cmdUpClick(Sender: TObject);
+ //   procedure cmdDownClick(Sender: TObject);
     procedure cmdRenameClick(Sender: TObject);
     procedure cmdDeleteClick(Sender: TObject);
     procedure pnlUpButtonEnter(Sender: TObject);
     procedure pnlUpButtonExit(Sender: TObject);
+    procedure cmdUpMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure cmdUpMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure cmdDownMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure cmdDownMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure pnlDownButtonMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure pnlDownButtonMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure pnlUpButtonMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure pnlUpButtonMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     OKPressed: Boolean;
   end;
@@ -124,7 +140,7 @@ begin
     ResizeFormToFont(TForm(frmSaveQuickOrder));
     with frmSaveQuickOrder do
     begin
-      if (ResponseSet.DisplayGroup = ClinDisp) and (ResponseSet.Dialog = 'PSJI OR PAT FLUID OE') then
+      if (ResponseSet.DisplayGroup = ClinIVDisp) then
         begin
           ResponseSet.DisplayGroup := IVDisp;
           IsClinicOrder := True;
@@ -133,6 +149,7 @@ begin
         DGroupName := NameOfDGroup(InptDisp)
       else
         DGroupName := NameOfDGroup(ResponseSet.DisplayGroup);
+
       if DGroupName = 'Inpt. Meds' then
         begin
           ResponseSet.DisplayGroup := InptDisp;
@@ -192,7 +209,7 @@ begin
     if GetIEN(i) = -1 then AnIndex := i;
   if AnIndex > -1 then lstQuickList.Items[AnIndex] := '-1^' + txtDisplayName.Text;
 end;
-
+{
 procedure TfrmSaveQuickOrder.cmdUpClick(Sender: TObject);
 var
   NewIndex: Integer;
@@ -219,7 +236,7 @@ begin
     Items.Move(ItemIndex, NewIndex);
     ItemIndex := NewIndex;
   end;
-end;
+end; }
 
 procedure TfrmSaveQuickOrder.cmdRenameClick(Sender: TObject);
 var
@@ -243,6 +260,29 @@ begin
 
 end;
 
+procedure TfrmSaveQuickOrder.cmdUpMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+ NewIndex: Integer;
+begin
+ inherited;
+ with lstQuickList do
+ begin
+  ItemTipEnable := false;
+  if ItemIndex < 1 then Exit;
+  NewIndex := ItemIndex - 1;
+  Items.Move(ItemIndex, NewIndex);
+  ItemIndex := NewIndex;
+ end;
+end;
+
+procedure TfrmSaveQuickOrder.cmdUpMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  inherited;
+  lstQuickList.ItemTipEnable := true;
+end;
+
 procedure TfrmSaveQuickOrder.cmdDeleteClick(Sender: TObject);
 begin
   inherited;
@@ -257,6 +297,29 @@ begin
     if InfoBox(TX_DEL_CONFIRM + DisplayText[ItemIndex], TC_DEL_CONFIRM,
       MB_YESNO or MB_ICONQUESTION) = IDYES then Items.Delete(ItemIndex);
   end;
+end;
+
+procedure TfrmSaveQuickOrder.cmdDownMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+ NewIndex: Integer;
+begin
+ inherited;
+ with lstQuickList do
+ begin
+  ItemTipEnable := false;
+  if ItemIndex > Items.Count - 2 then Exit;
+  NewIndex := ItemIndex + 1;
+  Items.Move(ItemIndex, NewIndex);
+  ItemIndex := NewIndex;
+ end;
+end;
+
+procedure TfrmSaveQuickOrder.cmdDownMouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  inherited;
+  lstQuickList.ItemTipEnable := true;
 end;
 
 procedure TfrmSaveQuickOrder.FormCreate(Sender: TObject);
@@ -295,6 +358,29 @@ begin
   Close;
 end;
 
+procedure TfrmSaveQuickOrder.pnlDownButtonMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+ NewIndex: Integer;
+begin
+ inherited;
+ with lstQuickList do
+ begin
+  ItemTipEnable := false;
+  if ItemIndex > Items.Count - 2 then Exit;
+  NewIndex := ItemIndex + 1;
+  Items.Move(ItemIndex, NewIndex);
+  ItemIndex := NewIndex;
+ end;
+end;
+
+procedure TfrmSaveQuickOrder.pnlDownButtonMouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  inherited;
+  lstQuickList.ItemTipEnable := true;
+end;
+
 procedure TfrmSaveQuickOrder.pnlUpButtonEnter(Sender: TObject);
 begin
   inherited;
@@ -305,6 +391,29 @@ procedure TfrmSaveQuickOrder.pnlUpButtonExit(Sender: TObject);
 begin
   inherited;
   TPanel(Sender).BevelOuter := bvNone;
+end;
+
+procedure TfrmSaveQuickOrder.pnlUpButtonMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+ NewIndex: Integer;
+begin
+ inherited;
+ with lstQuickList do
+ begin
+  ItemTipEnable := false;
+  if ItemIndex < 1 then Exit;
+  NewIndex := ItemIndex - 1;
+  Items.Move(ItemIndex, NewIndex);
+  ItemIndex := NewIndex;
+ end;
+end;
+
+procedure TfrmSaveQuickOrder.pnlUpButtonMouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  inherited;
+  lstQuickList.ItemTipEnable := true;
 end;
 
 end.

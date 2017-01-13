@@ -65,7 +65,7 @@ end;
    {This property editor checks to make sure that RpcVersion is not eimpty.
     If it is, it stuffs '0' (default).}
 
-TRpcVersionProperty = class(TStringProperty)
+(*TRpcVersionProperty = class(TStringProperty)
 private
   { Private declarations }
 protected
@@ -73,7 +73,7 @@ protected
 public
   { Public declarations }
   procedure SetValue(const Value: string); override;
-end;
+end;*)
 
 
 procedure Register;
@@ -133,13 +133,13 @@ end;
 
 procedure TServerProperty.GetValues(Proc: TGetStrProc);
 var
-  ServerList: TStringList;
+  sl: TStringList;
   I: integer;
 begin
-  ServerList := TStringList.Create;
-  GetHostList(ServerList);
-  for I := 0 to ServerList.Count - 1 do Proc(ServerList[I]);
-  ServerList.Free;
+  sl := TStringList.Create;
+  GetHostList(sl);
+  for I := 0 to sl.Count - 1 do Proc(sl[I]);
+  sl.Free;
 end;
 
 procedure TServerProperty.SetValue(const Value: string);
@@ -147,7 +147,7 @@ begin
   SetStrValue(Piece(Value,'   [',1));  {get just the  name}
 end;
 
-procedure TRpcVersionProperty.SetValue(const Value: string);
+(*procedure TRpcVersionProperty.SetValue(const Value: string);
 begin
 {
   try
@@ -165,13 +165,13 @@ begin
     ShowMessage('RPCVersion cannot be empty.  Default is 0 (zero).');
     SetStrValue('0');
   end;
-end;
+end;*)
 
 procedure Register;
 begin
   RegisterPropertyEditor(TypeInfo(TRemoteProc),nil,'',TRemoteProcProperty);
   RegisterPropertyEditor(TypeInfo(TServer),nil,'',TServerProperty);
-  RegisterPropertyEditor(TypeInfo(TRpcVersion),nil,'',TRpcVersionProperty);
+//  RegisterPropertyEditor(TypeInfo(TRpcVersion),nil,'',TRpcVersionProperty);
 end;
 
 end.

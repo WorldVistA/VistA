@@ -87,14 +87,14 @@ type
 
   TGMV_VitalsEnterForm = function(
          RPCBrokerV: TRPCBroker;
-        aPatient, aLocation, aTemplate,aSignature:String;
+        aPatient, aLocation, aTemplate,aSignature:string;
         aDateTime:TDateTime): TCustomForm; stdcall;
 
   TGMV_VitalsEnterDLG = function(
          RPCBrokerV: TRPCBroker;
-        aDFN, aLocation, aTemplate,aSignature:String;
+        aDFN, aLocation, aTemplate,aSignature:string;
         aDateTime:TDateTime;
-        aName,anInfo:String): Integer; stdcall;
+        aName,anInfo:string): Integer; stdcall;
 
   TGFM_VitalsViewDLG = function(
          RPCBrokerV: TRPCBroker;
@@ -102,7 +102,7 @@ type
         DateStart, DateStop,
         aSignature,
         aContextIn,aContextOut,
-        aName,anInfo,aHospitalName:String): Integer; stdcall;
+        aName,anInfo,aHospitalName:string): Integer; stdcall;
 
   TGMV_VitalsViewForm = function(
          RPCBrokerV: TRPCBroker;
@@ -111,12 +111,12 @@ type
         aSignature,
         aContextIn,aContextOut,
         aName,anInfo,
-        aDynamicParameter {HospitolName^Vital Type Abbreviation} :String): TCustomForm; stdcall;
+        aDynamicParameter {HospitalName^Vital Type Abbreviation} :string): TCustomForm; stdcall;
 
   TGMV_LatestVitalsList = function (
          RPCBrokerV: TRPCBroker;
         aDFN,
-        aDelim:String;
+        aDelim:string;
         bSilent:Boolean
         ): TStringList; stdcall;
 
@@ -178,7 +178,7 @@ const
 implementation
 
 uses
-  uCore, rCore, rVitals, Contnrs, fVitalsDate, VAUtils;
+  rMisc, uCore, rCore, rVitals, Contnrs, fVitalsDate, VAUtils;
   
 var
   uVitalFrames: TComponentList = nil;
@@ -234,7 +234,7 @@ begin
                     VValue := FloatToStr(Round((StrToFloat(VValue) * 9.0 / 5.0 +32.0)*100)/100);
                   VUnit := 'F';
                 end;
-                
+
     vtHeight:   if VUnit = 'CM' then
                 begin
                   if StrToFloat(VValue) > 0 then
@@ -433,14 +433,14 @@ begin
     i := 1;
     while (Ht[i] <> '''') do
     begin
-      if (Ht[i] in ['0'..'9']) or (Ht[i] = '.') then
+      if CharInSet(Ht[i], ['0'..'9']) or (Ht[i] = '.') then
         feetstr := feetstr + Ht[i];
       inc(i);
     end;
     while (i <= length(Ht)) and (Ht[i] <> '"') and
      (Ht[i] <> '') do
       begin
-      if (Ht[i] in ['0'..'9']) or (Ht[i] = '.') then
+      if CharInSet(Ht[i], ['0'..'9']) or (Ht[i] = '.') then
         inchstr := inchstr + Ht[i];
         inc(i);
       end;
@@ -458,7 +458,7 @@ begin
     for i := 1 to (length(Ht)) do
     begin
       c := Ht[i]; //first character
-      if (c in ['0'..'9']) or (c = '.') then
+      if CharInSet(c, ['0'..'9']) or (c = '.') then
         result := result + c;
       if (c = '"') then break;
     end;
@@ -619,18 +619,17 @@ var
     i: Integer;
 begin
   Result := True;
-  for i := 1 to Length(x) do if not (x[i] in ['0'..'9','.']) then Result := False;
+  for i := 1 to Length(x) do if not CharInSet(x[i], ['0'..'9','.']) then Result := False;
 end;
 
 procedure LoadVitalsDLL;
-var
-  GMV_LibName: String;
-
+//var
+//  GMV_LibName: WideString;
 begin
-  if VitalsDLLHandle = 0 then
-  begin
-    GMV_LibName := GetProgramFilesPath + SHARE_DIR + VitalsDLLName;
-    VitalsDLLHandle := LoadLibrary(PChar(GMV_LibName));
+  if VitalsDLLHandle = 0 then begin
+//    GMV_LibName := ExcludeTrailingPathDelimiter(GetProgramFilesPath) + SHARE_DIR + VitalsDLLName;
+//    VitalsDLLHandle := LoadLibrary(PWideChar(GMV_LibName));
+    VitalsDLLHandle := LoadDll(VitalsDLLName);
   end;
 end;
 

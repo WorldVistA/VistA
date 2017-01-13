@@ -2,16 +2,15 @@ inherited frmGraphProfiles: TfrmGraphProfiles
   Left = 721
   Top = 528
   BorderIcons = [biSystemMenu, biHelp]
-  BorderStyle = bsDialog
   Caption = 'Select Items and Define Views'
-  ClientHeight = 386
+  ClientHeight = 390
   ClientWidth = 477
   Position = poMainFormCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  ExplicitWidth = 483
-  ExplicitHeight = 411
+  ExplicitWidth = 493
+  ExplicitHeight = 425
   PixelsPerInch = 96
   TextHeight = 13
   object lblSelection: TLabel [0]
@@ -61,11 +60,13 @@ inherited frmGraphProfiles: TfrmGraphProfiles
   object lblSelectandDefine: TLabel [5]
     Left = 8
     Top = 350
-    Width = 359
-    Height = 13
+    Width = 324
+    Height = 26
     Caption = 
       'Use Select/Define button or Right-click on graphs to select item' +
       's for display.'
+    Enabled = False
+    Visible = False
     WordWrap = True
   end
   object lblEditInfo1: TLabel [6]
@@ -81,8 +82,10 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Width = 36
     Height = 13
     Caption = 'Person:'
+    Enabled = False
     ParentShowHint = False
     ShowHint = False
+    Visible = False
     WordWrap = True
   end
   object btnClear: TButton [8]
@@ -94,7 +97,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Enabled = False
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 7
+    TabOrder = 13
     OnClick = btnClearClick
   end
   object btnSave: TButton [9]
@@ -106,7 +109,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Enabled = False
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 11
+    TabOrder = 16
     OnClick = btnSaveClick
   end
   object btnDelete: TButton [10]
@@ -118,7 +121,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Enabled = False
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 8
+    TabOrder = 14
     OnClick = btnDeleteClick
   end
   object btnRemoveOne: TButton [11]
@@ -130,7 +133,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Enabled = False
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 5
+    TabOrder = 9
     OnClick = btnRemoveOneClick
   end
   object btnRemoveAll: TButton [12]
@@ -142,7 +145,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Enabled = False
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 6
+    TabOrder = 10
     OnClick = btnRemoveAllClick
   end
   object lstItemsDisplayed: TORListBox [13]
@@ -154,8 +157,9 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     ParentShowHint = False
     ShowHint = False
     Sorted = True
-    TabOrder = 2
+    TabOrder = 8
     OnDblClick = lstItemsDisplayedDblClick
+    Caption = ''
     ItemTipColor = clWindow
     LongList = False
     Pieces = '3'
@@ -163,11 +167,11 @@ inherited frmGraphProfiles: TfrmGraphProfiles
   end
   object pnlSource: TPanel [14]
     Left = 247
-    Top = -2
+    Top = 3
     Width = 190
     Height = 25
     BevelOuter = bvNone
-    TabOrder = 10
+    TabOrder = 3
     object radSourcePat: TRadioButton
       Left = 106
       Top = 5
@@ -202,9 +206,10 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     ParentShowHint = False
     ShowHint = False
     Sorted = True
-    TabOrder = 1
+    TabOrder = 5
     Visible = False
     OnDblClick = cboAllItemsClick
+    Caption = ''
     ItemTipColor = clWindow
     LongList = False
     Pieces = '3'
@@ -213,18 +218,42 @@ inherited frmGraphProfiles: TfrmGraphProfiles
   object pnlApply: TPanel [16]
     Left = 0
     Top = 344
-    Width = 366
+    Width = 377
     Height = 36
     BevelOuter = bvNone
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 14
+    TabOrder = 18
     object lblApply: TLabel
       Left = 8
       Top = 2
       Width = 138
       Height = 13
       Caption = 'Display Items for Graphing to:'
+    end
+    object radNeither: TRadioButton
+      Left = 208
+      Top = 17
+      Width = 81
+      Height = 17
+      Caption = 'No Change'
+      TabOrder = 4
+    end
+    object radBoth: TRadioButton
+      Left = 141
+      Top = 17
+      Width = 57
+      Height = 17
+      Caption = 'Both'
+      TabOrder = 3
+    end
+    object radBottom: TRadioButton
+      Left = 74
+      Top = 17
+      Width = 57
+      Height = 17
+      Caption = 'Bottom'
+      TabOrder = 2
     end
     object radTop: TRadioButton
       Left = 8
@@ -233,32 +262,21 @@ inherited frmGraphProfiles: TfrmGraphProfiles
       Height = 17
       Caption = 'Top'
       Checked = True
-      TabOrder = 0
+      TabOrder = 1
       TabStop = True
     end
-    object radBottom: TRadioButton
-      Left = 74
-      Top = 17
-      Width = 57
-      Height = 17
-      Caption = 'Bottom'
-      TabOrder = 1
-    end
-    object radBoth: TRadioButton
-      Left = 141
-      Top = 17
-      Width = 57
-      Height = 17
-      Caption = 'Both'
-      TabOrder = 2
-    end
-    object radNeither: TRadioButton
-      Left = 208
-      Top = 17
-      Width = 81
-      Height = 17
-      Caption = 'No Change'
-      TabOrder = 3
+    object lbl508Apply: TVA508StaticText
+      Name = 'lbl508Apply'
+      Left = 8
+      Top = 2
+      Width = 140
+      Height = 15
+      Alignment = taLeftJustify
+      Caption = 'Display Items for Graphing to:'
+      Enabled = False
+      TabOrder = 0
+      Visible = False
+      ShowAccelChar = True
     end
   end
   object btnAdd: TButton [17]
@@ -270,7 +288,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Enabled = False
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 4
+    TabOrder = 7
     OnClick = cboAllItemsClick
   end
   object btnAddAll: TButton [18]
@@ -282,7 +300,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Enabled = False
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 3
+    TabOrder = 6
     OnClick = cboAllItemsClick
   end
   object btnRename: TButton [19]
@@ -294,7 +312,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Enabled = False
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 9
+    TabOrder = 15
     OnClick = btnRenameClick
   end
   object btnSavePublic: TButton [20]
@@ -306,7 +324,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Enabled = False
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 12
+    TabOrder = 17
     OnClick = btnSaveClick
   end
   object cboAllItems: TORComboBox [21]
@@ -316,6 +334,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Height = 228
     Style = orcsSimple
     AutoSelect = True
+    Caption = ''
     Color = clWindow
     DropDownCount = 8
     ItemHeight = 13
@@ -330,22 +349,23 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     ShowHint = False
     Sorted = False
     SynonymChars = '<>'
-    TabOrder = 0
+    TabOrder = 4
+    Text = ''
     OnChange = cboAllItemsChange
     OnDblClick = cboAllItemsClick
     OnNeedData = cboAllItemsNeedData
     CharsNeedMatch = 1
   end
   object btnClose: TButton [22]
-    Left = 370
+    Left = 371
     Top = 353
-    Width = 95
+    Width = 97
     Height = 21
     Cancel = True
     Caption = 'Close'
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 15
+    TabOrder = 19
     OnClick = btnCloseClick
   end
   object pnlAllSources: TPanel [23]
@@ -356,22 +376,20 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     BevelOuter = bvNone
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 16
+    TabOrder = 0
     object splViews: TSplitter
       Left = 0
-      Top = 122
+      Top = 121
       Width = 128
       Height = 3
       Cursor = crVSplit
       Align = alBottom
-      ExplicitTop = 0
-      ExplicitWidth = 125
     end
     object pnlSources: TPanel
       Left = 0
       Top = 0
       Width = 128
-      Height = 122
+      Height = 121
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
@@ -391,7 +409,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
         Left = 0
         Top = 13
         Width = 128
-        Height = 109
+        Height = 108
         Align = alClient
         ItemHeight = 13
         ParentShowHint = False
@@ -400,6 +418,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
         OnDblClick = lstSourcesDblClick
         OnEnter = lstSourcesEnter
         OnExit = lstSourcesExit
+        Caption = ''
         ItemTipColor = clWindow
         LongList = False
         Pieces = '2'
@@ -408,9 +427,9 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     end
     object pnlOtherSources: TPanel
       Left = 0
-      Top = 125
+      Top = 124
       Width = 128
-      Height = 120
+      Height = 121
       Align = alBottom
       BevelInner = bvRaised
       BevelOuter = bvLowered
@@ -418,15 +437,15 @@ inherited frmGraphProfiles: TfrmGraphProfiles
       TabOrder = 1
       object pnlOtherSourcesUser: TPanel
         Left = 3
-        Top = 76
+        Top = 3
         Width = 122
-        Height = 41
-        Align = alBottom
+        Height = 51
+        Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
         object lblOtherPersons: TLabel
           Left = 0
-          Top = 7
+          Top = 17
           Width = 122
           Height = 13
           Align = alBottom
@@ -435,12 +454,13 @@ inherited frmGraphProfiles: TfrmGraphProfiles
         end
         object cboUser: TORComboBox
           Left = 0
-          Top = 20
+          Top = 30
           Width = 122
           Height = 21
           Style = orcsDropDown
           Align = alBottom
           AutoSelect = True
+          Caption = ''
           Color = clWindow
           DropDownCount = 6
           Items.Strings = (
@@ -455,26 +475,39 @@ inherited frmGraphProfiles: TfrmGraphProfiles
           Pieces = '2'
           Sorted = False
           SynonymChars = '<>'
-          TabOrder = 0
+          TabOrder = 1
           TabStop = True
+          Text = ''
           OnClick = cboUserClick
           OnNeedData = cboUserNeedData
           CharsNeedMatch = 1
         end
+        object lbl508SelectOthers: TVA508StaticText
+          Name = 'lbl508SelectOthers'
+          Left = 0
+          Top = 0
+          Width = 122
+          Height = 15
+          Align = alTop
+          Alignment = taLeftJustify
+          Caption = 'Select Views from others'
+          TabOrder = 0
+          ShowAccelChar = True
+        end
       end
       object pnlOtherSourcesBottom: TPanel
         Left = 3
-        Top = 3
+        Top = 54
         Width = 122
-        Height = 73
-        Align = alClient
+        Height = 64
+        Align = alBottom
         BevelOuter = bvNone
         TabOrder = 1
         object lstOtherSources: TORListBox
           Left = 0
-          Top = 30
+          Top = 20
           Width = 122
-          Height = 43
+          Height = 44
           Align = alClient
           BevelInner = bvNone
           BevelOuter = bvNone
@@ -485,6 +518,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
           OnDblClick = lstSourcesDblClick
           OnEnter = lstOtherSourcesEnter
           OnExit = lstOtherSourcesExit
+          Caption = ''
           ItemTipColor = clWindow
           LongList = False
           Pieces = '2'
@@ -494,27 +528,18 @@ inherited frmGraphProfiles: TfrmGraphProfiles
           Left = 0
           Top = 0
           Width = 122
-          Height = 30
+          Height = 20
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
           object lblOtherViews: TLabel
             Left = 0
-            Top = 17
+            Top = 7
             Width = 122
             Height = 13
             Align = alBottom
             Caption = 'Other Views:'
             ExplicitWidth = 60
-          end
-          object lblSelectOthers: TLabel
-            Left = 0
-            Top = 0
-            Width = 122
-            Height = 13
-            Align = alTop
-            Caption = 'Select Views from others'
-            ExplicitWidth = 116
           end
         end
       end
@@ -528,7 +553,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Caption = 'Show Other Views'
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 17
+    TabOrder = 21
     Visible = False
     OnClick = btnViewsClick
   end
@@ -537,7 +562,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Top = 232
     Width = 425
     Height = 49
-    TabOrder = 13
+    TabOrder = 20
     Visible = False
     object lblSave: TLabel
       Left = 184
@@ -562,6 +587,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
+      Caption = ''
       ItemTipColor = clWindow
       LongList = False
     end
@@ -598,8 +624,47 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Caption = 'View Definitions...'
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 18
+    TabOrder = 1
     OnClick = btnDefinitionsClick
+  end
+  object lbl508EditInfo: TVA508StaticText [27]
+    Name = 'lbl508EditInfo'
+    Left = 142
+    Top = 278
+    Width = 204
+    Height = 15
+    Alignment = taLeftJustify
+    Caption = 'Items for Graphing can be saved as Views.'
+    Enabled = False
+    TabOrder = 11
+    Visible = False
+    ShowAccelChar = True
+  end
+  object lbl508EditInfo1: TVA508StaticText [28]
+    Name = 'lbl508EditInfo1'
+    Left = 142
+    Top = 294
+    Width = 189
+    Height = 15
+    Alignment = taLeftJustify
+    Caption = 'Edit Views by saving to the same name.'
+    Enabled = False
+    TabOrder = 12
+    Visible = False
+    ShowAccelChar = True
+  end
+  object lbl508SelectionInfo: TVA508StaticText [29]
+    Name = 'lbl508SelectionInfo'
+    Left = 142
+    Top = 8
+    Width = 90
+    Height = 15
+    Alignment = taLeftJustify
+    Caption = 'Select items using:'
+    Enabled = False
+    TabOrder = 2
+    Visible = False
+    ShowAccelChar = True
   end
   inherited amgrMain: TVA508AccessibilityManager
     Left = 448
@@ -616,13 +681,16 @@ inherited frmGraphProfiles: TfrmGraphProfiles
         'Status = stsDefault')
       (
         'Component = btnRemoveOne'
-        'Status = stsDefault')
+        'Text = Remove selected item from graphing.'
+        'Status = stsOK')
       (
         'Component = btnRemoveAll'
-        'Status = stsDefault')
+        'Text = Remove all items from graphing.'
+        'Status = stsOK')
       (
         'Component = lstItemsDisplayed'
-        'Status = stsDefault')
+        'Label = lblDisplay'
+        'Status = stsOK')
       (
         'Component = pnlSource'
         'Status = stsDefault')
@@ -654,23 +722,25 @@ inherited frmGraphProfiles: TfrmGraphProfiles
         'Component = pnlApply'
         'Status = stsDefault')
       (
-        'Component = radTop'
-        'Status = stsDefault')
-      (
-        'Component = radBottom'
+        'Component = radNeither'
         'Status = stsDefault')
       (
         'Component = radBoth'
         'Status = stsDefault')
       (
-        'Component = radNeither'
+        'Component = radBottom'
+        'Status = stsDefault')
+      (
+        'Component = radTop'
         'Status = stsDefault')
       (
         'Component = btnAdd'
-        'Status = stsDefault')
+        'Text = Add selected item to graphing.'
+        'Status = stsOK')
       (
         'Component = btnAddAll'
-        'Status = stsDefault')
+        'Text = Add all items to graphing.'
+        'Status = stsOK')
       (
         'Component = btnRename'
         'Status = stsDefault')
@@ -679,7 +749,8 @@ inherited frmGraphProfiles: TfrmGraphProfiles
         'Status = stsDefault')
       (
         'Component = cboAllItems'
-        'Status = stsDefault')
+        'Label = lblSelection'
+        'Status = stsOK')
       (
         'Component = btnClose'
         'Status = stsDefault')
@@ -709,7 +780,8 @@ inherited frmGraphProfiles: TfrmGraphProfiles
         'Status = stsDefault')
       (
         'Component = lstOtherSources'
-        'Status = stsDefault')
+        'Label = lblOtherViews'
+        'Status = stsOK')
       (
         'Component = btnViews'
         'Status = stsDefault')
@@ -718,6 +790,21 @@ inherited frmGraphProfiles: TfrmGraphProfiles
         'Status = stsDefault')
       (
         'Component = pnlOtherViews'
+        'Status = stsDefault')
+      (
+        'Component = lbl508EditInfo'
+        'Status = stsDefault')
+      (
+        'Component = lbl508EditInfo1'
+        'Status = stsDefault')
+      (
+        'Component = lbl508Apply'
+        'Status = stsDefault')
+      (
+        'Component = lbl508SelectOthers'
+        'Status = stsDefault')
+      (
+        'Component = lbl508SelectionInfo'
         'Status = stsDefault'))
   end
 end

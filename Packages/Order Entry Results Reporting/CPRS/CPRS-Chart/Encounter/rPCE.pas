@@ -46,6 +46,8 @@ type
     CVDflt:   Boolean;        // default if prompting Comabt Veteran
     SHDAllow: Boolean;        // prompt for Shipboard Hazard and Defense
     SHDDflt:  Boolean;        // default if prompting Shipboard Hazard and Defense
+    CLAllow:  Boolean;        // prompt for camp lejeune
+    CLDflt:   Boolean;        // default if propmpting camp lejeune
   end;
 
   TPCEListCodesProc = procedure(Dest: TStrings; SectionIndex: Integer);
@@ -165,7 +167,7 @@ function IsNonCountClinic(ALocation: integer): boolean;
 
 implementation
 
-uses TRPCB, rCore, uCore, uConst, fEncounterFrame, UBAGlobals, UBAConst;
+uses uGlobalVar, TRPCB, rCore, uCore, uConst, fEncounterFrame, UBAGlobals, UBAConst, rMisc, fDiagnoses;
 
 var
   uLastLocation:  Integer;
@@ -474,7 +476,8 @@ var
   i: Integer;
   x: string;
 begin
-  if (uLastLocation <> uEncLocation) or (uLastDFN <> patient.DFN) or (uLastEncDt <> Trunc(uEncPCEData.VisitDateTime)) then LoadEncounterForm; // reinstated, since CIDC is gone.
+  if (uLastLocation <> uEncLocation) or (uLastDFN <> patient.DFN) or (uLastEncDt <> Trunc(uEncPCEData.VisitDateTime)) or PLUpdated then LoadEncounterForm; // reinstated, since CIDC is gone.
+  if PLUpdated then PLUpdated := False;
   for i := 0 to uDiagnoses.Count - 1 do if CharAt(uDiagnoses[i], 1) = U then
   begin
     x := Piece(uDiagnoses[i], U, 2);
@@ -526,7 +529,7 @@ begin
     for i := 1 to (uProblems.count-1) do //start with 1 because strings[0] is the count of elements.
     begin
       //filter out 799.9 and inactive codes when ICD-9 is active
-       if (ICDVersion = 'ICD') and (piece(uProblems.Strings[i],U,3) = '799.9') then continue;
+       if (ICDVersion = 'ICD') and ((piece(uProblems.Strings[i],U,3) = '799.9') or (piece(uProblems.Strings[i],U,13) = '#')) then continue;
       // otherwise add all active problems (including 799.9, R69, and inactive codes) to udiagnosis
       uDiagnoses.add(piece(uProblems.Strings[i], U, 3) + U + piece(uProblems.Strings[i], U, 2) + U +
                        piece(uProblems.Strings[i], U, 13) + U + piece(uProblems.Strings[i], U, 1) + U +
@@ -817,7 +820,7 @@ begin
         OK := FALSE;
         repeat
           idx := uModifiers.IndexOfPiece(Code, U, 3, LastIdx);
-          if(idx > 0) then
+          if(idx >= 0) then
           begin
             if(pos(U + IntToStr(idx) + U, OKMods)>0) then
             begin
@@ -869,7 +872,7 @@ begin
         OK := FALSE;
         repeat
           idx := uModifiers.IndexOfPiece(Code, U, 3, LastIdx);
-          if(idx > 0) then
+          if(idx >= 0) then
           begin
             if(pos(U + IntToStr(idx) + U, OKMods)>0) then
             begin
@@ -1101,6 +1104,13 @@ begin
     CVDflt   := Piece(Piece(x, ';', 7), U, 2) = '1';
     SHDAllow := Piece(Piece(x, ';', 8), U, 1) = '1';
     SHDDflt  := Piece(Piece(x, ';', 8), U, 2) = '1';
+    // Camp Lejeune
+    if IsLejeuneActive then
+    begin
+     CLAllow := Piece(Piece(x, ';', 9), U, 1) = '1';
+     CLDflt  := Piece(Piece(x, ';', 9), U, 2) = '1';
+    end;
+
   end;
 end;
 

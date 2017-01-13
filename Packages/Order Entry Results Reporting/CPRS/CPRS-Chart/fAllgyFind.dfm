@@ -9,7 +9,7 @@ inherited frmAllgyFind: TfrmAllgyFind
   Position = poScreenCenter
   OnCreate = FormCreate
   ExplicitWidth = 451
-  ExplicitHeight = 497
+  ExplicitHeight = 504
   PixelsPerInch = 96
   TextHeight = 13
   object lblSearch: TLabel [0]
@@ -64,9 +64,6 @@ inherited frmAllgyFind: TfrmAllgyFind
     Height = 21
     TabOrder = 0
     OnChange = txtSearchChange
-    Caption = 
-      'Enter causative agent for Allergy or Adverse Drug Reaction (Ente' +
-      'r at least 3 characters)'
   end
   object cmdSearch: TButton [5]
     Left = 362
@@ -148,7 +145,12 @@ inherited frmAllgyFind: TfrmAllgyFind
     Data = (
       (
         'Component = txtSearch'
-        'Status = stsDefault')
+        
+          'Text = Enter causative agent for Allergy or Adverse Drug Reactio' +
+          'n (Enter the FIRST FEW LETTERS of the causative agent (minimum o' +
+          'f 3) to allow for a comprehensive search. Only one reactant may ' +
+          'be entered at a time)   Search for:'
+        'Status = stsOK')
       (
         'Component = cmdSearch'
         'Status = stsDefault')

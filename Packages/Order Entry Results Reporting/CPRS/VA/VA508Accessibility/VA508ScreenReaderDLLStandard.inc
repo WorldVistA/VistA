@@ -13,6 +13,8 @@ This DLL must export the routines shown below (they should use this include file
 // Checks to see if the screen reader is currently running
 function IsRunning(HighVersion, LowVersion: Word): BOOL; stdcall;
 
+function FindJaws(): BOOL; stdcall;
+
 // Executed after IsRunning returns TRUE, when the DLL is accepted as the screen reader of choice
 // if result returns a string, Initialization failed with retuned error message
 // TComponentDataRequestProc is defined in the VA508AccessibilityConst unit

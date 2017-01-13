@@ -19,8 +19,8 @@ object fraEvntDelayList: TfraEvntDelayList
     object lblEffective: TLabel
       Left = 4
       Top = 32
-      Width = 73
-      Height = 13
+      Width = 83
+      Height = 16
       Caption = 'Effective Date:'
     end
     object orDateBox: TORDateBox
@@ -49,39 +49,43 @@ object fraEvntDelayList: TfraEvntDelayList
       Left = 1
       Top = 1
       Width = 259
-      Height = 13
+      Height = 16
       Align = alTop
       Caption = 'Event Delay List:'
-      ExplicitWidth = 81
+      ExplicitWidth = 94
     end
     object mlstEvents: TORListBox
       Left = 1
-      Top = 35
+      Top = 38
       Width = 259
-      Height = 180
+      Height = 177
       Align = alClient
-      ItemHeight = 13
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
       OnClick = mlstEventsClick
       OnKeyUp = mlstEventsKeyUp
+      Caption = ''
       ItemTipColor = clWindow
       LongList = False
       Pieces = '9'
       OnChange = mlstEventsChange
       RightClickSelect = True
       CheckEntireLine = True
+      ExplicitTop = 35
+      ExplicitHeight = 180
     end
     object edtSearch: TCaptionEdit
       Left = 1
-      Top = 14
+      Top = 17
       Width = 259
       Height = 21
       Align = alTop
       TabOrder = 1
       OnChange = edtSearchChange
       OnKeyDown = edtSearchKeyDown
+      Caption = ''
+      ExplicitTop = 14
     end
   end
 end

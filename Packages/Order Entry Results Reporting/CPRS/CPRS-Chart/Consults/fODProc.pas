@@ -31,8 +31,8 @@ type
     radInpatient: TRadioButton;
     radOutpatient: TRadioButton;
     txtProvDiag: TCaptionEdit;
-    lblEarliest: TStaticText;
-    calEarliest: TORDateBox;
+    lblClinicallyIndicated: TStaticText;
+    calClinicallyIndicated: TORDateBox;
     lblLatest: TStaticText;
     calLatest: TORDateBox;
     mnuPopProvDx: TPopupMenu;
@@ -124,8 +124,7 @@ const
   TX_INACTIVE_CODE1  = 'The provisional diagnosis code is not active as of today''s date.' + #13#10;
   TX_INACTIVE_CODE_REQD     = 'Another code must be selected before the order can be saved.';
   TX_INACTIVE_CODE_OPTIONAL = 'If another code is not selected, no code will be saved.';
-  TX_PAST_DATE       = 'Earliest appropriate date must be today or later.';
-  TX_BAD_DATES       = 'Latest appropriate date must be equal to or later than earliest date.';
+  TX_PAST_DATE       = 'Clinically indicated date must be today or later.';
 
 { ********* Static Unit Methods ************ }
 
@@ -156,7 +155,7 @@ begin
   ReadServerVariables;
   cboProc.InitLongList('') ;
   txtAttn.InitLongList('') ;
-  PreserveControl(calEarliest);
+  PreserveControl(calClinicallyIndicated);
   PreserveControl(txtAttn);
   PreserveControl(cboProc);
   if (patient.CombatVet.IsEligible = True) then
@@ -188,7 +187,7 @@ begin
       cboCategory.SelectById('I');
       SetControl(cboPlace, 'Inpt Place');
       SetControl(cboUrgency, 'Inpt Proc Urgencies');      //S.GMRCR
-      SetControl(calEarliest, 'EarliestDate');  //wat v29
+      SetControl(calClinicallyIndicated, 'Clin Ind Date');
     end
    else
     begin
@@ -198,7 +197,7 @@ begin
       cboCategory.SelectById('O');
       SetControl(cboPlace, 'Outpt Place');
       SetControl(cboUrgency, 'Outpt Urgencies');     //S.GMRCO
-      SetControl(calEarliest, 'EarliestDate');  //wat v29
+      SetControl(calClinicallyIndicated, 'Clin Ind Date');
     end ;
   end ;
   txtAttn.ItemIndex := -1;
@@ -215,7 +214,7 @@ begin
       Close;
       Exit;
     end;
-  if calEarliest.Text = 'T' then calEarliest.Text := 'TODAY';
+  if calClinicallyIndicated.Text = 'T' then calClinicallyIndicated.Text := 'TODAY';
   StatusText('');
   Changing := False;
 end;
@@ -241,7 +240,7 @@ begin
     SetControl(cboUrgency,    'URGENCY',     1);
     SetControl(cboPlace,      'PLACE',     1);
     SetControl(txtAttn,       'PROVIDER',  1);
-    SetControl(calEarliest,   'EARLIEST',  1);
+    SetControl(calClinicallyIndicated,   'CLINICALLY',  1);
     cboProc.Enabled := False;
     cboProc.Font.Color := clGrayText;
    //SetControl(cboService,    'SERVICE',   1);     // to fix OR*3.0*95 bug in v17.6  (RV)
@@ -273,7 +272,7 @@ begin
     SetControl(memReason,     'COMMENT',   1);
     if WasTemplateDialogCanceled then
     begin
-      AbortOrder := True;   
+      AbortOrder := True;
       OkToFreeProcDialog := true;
       SetTemplateDialogCanceled(FALSE);
       Close;
@@ -318,7 +317,7 @@ begin
       else
         SetError(TX_SELECT_DIAG);
     end;
-  if calEarliest.FMDateTime < FMToday     then SetError(TX_PAST_DATE);
+  if calClinicallyIndicated.FMDateTime < FMToday     then SetError(TX_PAST_DATE);
 end;
 
 procedure TfrmODProc.txtAttnNeedData(Sender: TObject;
@@ -392,7 +391,7 @@ begin
   with cboUrgency    do if ItemIEN      > 0 then Responses.Update('URGENCY',   1, ItemID, Text);
   with cboPlace      do if ItemID     <> '' then Responses.Update('PLACE',     1, ItemID, Text);
   with txtAttn       do if ItemIEN      > 0 then Responses.Update('PROVIDER',  1, ItemID, Text);
-  with calEarliest   do if Length(Text) > 0 then Responses.Update('EARLIEST',  1, Text, Text);
+  with calClinicallyIndicated   do if Length(Text) > 0 then Responses.Update('CLINICALLY',  1, Text, Text);
   if Length(ProvDx.Text)                > 0 then Responses.Update('MISC',      1, ProvDx.Text,   ProvDx.Text)
    else Responses.Update('MISC',      1, '',   '');
   if Length(ProvDx.Code)                > 0 then Responses.Update('CODE',      1, ProvDx.Code,   ProvDx.Code)
@@ -416,7 +415,7 @@ begin
       Responses.QuickOrder := ExtractInteger(ItemID);
       Responses.SetControl(cboProc, 'ORDERABLE', 1);
       FLastProcID := ItemID;
-     end; 
+     end;
     with cboService do
       begin
         Clear;
@@ -462,7 +461,7 @@ begin
       SetControl(cboUrgency,    'URGENCY',     1);
       SetControl(cboPlace,      'PLACE',     1);
       SetControl(txtAttn,       'PROVIDER',  1);
-      SetControl(calEarliest,   'EARLIEST',  1);
+      SetControl(calClinicallyIndicated,   'CLINICALLY',  1);
       SetTemplateDialogCanceled(FALSE);
       SetControl(memReason,     'COMMENT',   1);
       if WasTemplateDialogCanceled and OrderContainsObjects then
@@ -567,9 +566,15 @@ procedure TfrmODProc.cmdLexSearchClick(Sender: TObject);
 var
   Match: string;
   i: integer;
+  EncounterDate: TFMDateTime;
 begin
   inherited;
-  LexiconLookup(Match, LX_ICD);
+  if (Encounter.VisitCategory = 'A') or (Encounter.VisitCategory = 'I') then
+    EncounterDate := Encounter.DateTime
+  else
+    EncounterDate := FMNow;
+
+  LexiconLookup(Match, LX_ICD, EncounterDate);
   if Match = '' then Exit;
   ProvDx.Code := Piece(Piece(Match, U, 1),'/',1);
   ProvDx.Text := Piece(Match, U, 2);
@@ -602,10 +607,10 @@ begin
   //     A = O (optional), R (required) or S (suppress)
   //     B = F (free-text) or L (lexicon)
   if (ProvDx.PreviousPromptMode <> '') and (ProvDx.PromptMode <> ProvDx.PreviousPromptMode) then
-   begin
-     ProvDx.Code := '';
-     ControlChange(Self);
-   end;
+    begin
+      ProvDx.Code := '';
+      ControlChange(Self);
+    end;
   with ProvDx do if (Reqd = '') or (PromptMode = '') then Exit;
   if ProvDx.Reqd = 'R' then
     lblProvDiag.Caption := TX_PROVDX_REQD
@@ -804,7 +809,7 @@ begin
   TmpSL := TStringList.Create;
   try
     Result := GetDefaultReasonForRequest(Piece(cboProc.Items[cboProc.ItemIndex], U, 4), Resolve);
-    FastAssign(Result, TmpSL);
+    TmpSL.Text := Result.Text;
     x := TmpSL.Text;
     ExpandOrderObjects(x, HasObjects);
     TmpSL.Text := x;
@@ -813,14 +818,15 @@ begin
                    ltProcedure, nil, 'Reason for Request: ' + cboProc.DisplayText[cboProc.ItemIndex], DocInfo);
     AbortOrder := WasTemplateDialogCanceled;
     Responses.OrderContainsObjects := HasObjects or TemplateBPHasObjects;
-    if AbortOrder then
-    begin
+    if AbortOrder then begin
       Result.Text := '';
       Close;
       Exit;
-    end
-    else
-      FastAssignWith508Msg(TmpSL, Result);
+    end else begin
+      Result.Text := TmpSL.Text;
+      if Result.Count > 0 then
+        SpeakTextInserted;
+    end;
   finally
     TmpSL.Free;
   end;

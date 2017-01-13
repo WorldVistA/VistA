@@ -7,7 +7,7 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fHSplit, StdCtrls, ExtCtrls, Menus, ComCtrls, ORCtrls, ORFn, uConst, ORDtTm,
   uPCE, ORClasses, fDrawers, rDCSumm, uDocTree, uDCSumm, uTIU, fPrintList,
-  VA508AccessibilityManager, fBase508Form, VA508ImageListLabeler;
+  VA508AccessibilityManager, fBase508Form, VA508ImageListLabeler, ORextensions;
 
 type
   TfrmDCSumm = class(TfrmHSplit)
@@ -291,8 +291,9 @@ implementation
 uses fFrame, fVisit, fEncnt, rCore, uCore, fNoteBA, fNoteBD, fSignItem, fEncounterFrame,
      rPCE, Clipbrd, fNotePrt, fAddlSigners, fNoteDR, uSpell, rVitals, fTIUView,
      fTemplateEditor, rTIU, fDCSummProps, fNotesBP, fTemplateFieldEditor, uTemplates,
-     fReminderDialog, dShared, rTemplates, fIconLegend, fNoteIDParents,
-     fTemplateDialog, uVA508CPRSCompatibility, VA508AccessibilityRouter;
+     fReminderDialog, dShared, rTemplates, fIconLegend, fNoteIDParents, rECS, ORNet, trpcb,
+     fTemplateDialog, uVA508CPRSCompatibility, VA508AccessibilityRouter, System.Types,
+     System.UITypes;
 
 const
   NA_CREATE     = 0;                             // New Summ action - create new Summ
@@ -778,6 +779,7 @@ begin
           FEditDCSumm.NeedCPT  := uPCEEdit.CPTRequired;
            // create the note
           PutNewDCSumm(CreatedSumm, FEditDCSumm);
+
           uPCEEdit.NoteIEN := CreatedSumm.IEN;
           if CreatedSumm.IEN > 0 then LockDocument(CreatedSumm.IEN, CreatedSumm.ErrorText);
           if CreatedSumm.ErrorText = '' then
@@ -842,7 +844,8 @@ begin
     begin
       DocInfo := MakeXMLParamTIU(IntToStr(CreatedSumm.IEN), FEditDCSumm);
       ExecuteTemplateOrBoilerPlate(TmpBoilerPlate, FEditDCSumm.Title, ltTitle, Self, 'Title: ' + FEditDCSumm.TitleName, DocInfo);
-      QuickCopyWith508Msg(TmpBoilerPlate, memNewSumm);
+      memNewSumm.Lines.Text := TmpBoilerPlate.Text;
+      SpeakStrings(TmpBoilerPlate);
       TmpBoilerPlate.Free;
     end;
     if EnableAutosave then // Don't enable autosave until after dialog fields have been resolved
@@ -892,6 +895,7 @@ begin
         if DischargeDateTime <= 0 then DischargeDateTime := FMNow;
       end;
     PutDCAddendum(CreatedSumm, FEditDCSumm, FEditDCSumm.Addend);
+
     uPCEEdit.NoteIEN := CreatedSumm.IEN;
     if CreatedSumm.IEN > 0 then LockDocument(CreatedSumm.IEN, CreatedSumm.ErrorText);
     if CreatedSumm.ErrorText = '' then
@@ -1886,8 +1890,9 @@ end;
 procedure TfrmDCSumm.popSummMemoPasteClick(Sender: TObject);
 begin
   inherited;
-  FEditCtrl.SelText := Clipboard.AsText; {*KCM*}
-  //FEditCtrl.PasteFromClipboard;        // use AsText to prevent formatting
+  //FEditCtrl.SelText := Clipboard.AsText; {*KCM*}
+  ScrubTheClipboard;
+  FEditCtrl.PasteFromClipboard;        // use AsText to prevent formatting
 end;
 
 procedure TfrmDCSumm.popSummMemoReformatClick(Sender: TObject);
@@ -2497,7 +2502,8 @@ var
   procedure AssignBoilerText;
   begin
     ExecuteTemplateOrBoilerPlate(BoilerText, FEditDCSumm.Title, ltTitle, Self, 'Title: ' + FEditDCSumm.TitleName, DocInfo);
-    QuickCopyWith508Msg(BoilerText, memNewSumm);
+    memNewSumm.Lines.Text := BoilerText.Text;
+    SpeakStrings(BoilerText);
     FChanged := False;
   end;
 
@@ -2510,22 +2516,20 @@ begin
     NoteEmpty := memNewSumm.Text = '';
     LoadBoilerPlate(BoilerText, FEditDCSumm.Title);
     if (BoilerText.Text <> '') or
-       assigned(GetLinkedTemplate(IntToStr(FEditDCSumm.Title), ltTitle)) then
-    begin
+       assigned(GetLinkedTemplate(IntToStr(FEditDCSumm.Title), ltTitle)) then begin
       DocInfo := MakeXMLParamTIU(IntToStr(lstSumms.ItemIEN), FEditDCSumm);
-      if NoteEmpty then AssignBoilerText else
-      begin
+      if NoteEmpty then AssignBoilerText else begin
         case QueryBoilerPlate(BoilerText) of
-        0:  { do nothing } ;                         // ignore
-        1: begin
-             ExecuteTemplateOrBoilerPlate(BoilerText, FEditDCSumm.Title, ltTitle, Self, 'Title: ' + FEditDCSumm.TitleName, DocInfo);
-             QuickAddWith508Msg(BoilerText, memNewSumm);  // append
-           end;
-        2: AssignBoilerText                          // replace
+          0:  { do nothing } ;                         // ignore
+          1: begin
+               ExecuteTemplateOrBoilerPlate(BoilerText, FEditDCSumm.Title, ltTitle, Self, 'Title: ' + FEditDCSumm.TitleName, DocInfo);
+               memNewSumm.Lines.AddStrings(BoilerText);  // append
+               SpeakStrings(BoilerText);
+             end;
+          2: AssignBoilerText                          // replace
         end;
       end;
-    end else
-    begin
+    end else begin
       if Sender = mnuActLoadBoiler
         then InfoBox(TX_NO_BOIL, TC_NO_BOIL, MB_OK)
         else
@@ -2673,16 +2677,29 @@ begin
 end;
 
 procedure TfrmDCSumm.UpdateTreeView(DocList: TStringList; Tree: TORTreeView);
+Var
+ ReturnCursor: Integer;
 begin
+  Screen.Cursor := crHourGlass;
+  try
   with Tree do
     begin
       uChanging := True;
       Items.BeginUpdate;
       FastAddStrings(DocList, lstSumms.Items);
-      BuildDocumentTree(DocList, '0', Tree, nil, FCurrentContext, CT_DCSUMM);
+      ReturnCursor := Screen.Cursor;
+      Screen.Cursor := crHourGlass;
+      try
+        BuildDocumentTree2(DocList, Tree, FCurrentContext, CT_DCSUMM);
+      finally
+       Screen.Cursor := ReturnCursor;
+      end;
       Items.EndUpdate;
       uChanging := False;
     end;
+  finally
+    Screen.Cursor := crDefault;
+  end;
 end;
 
 procedure TfrmDCSumm.tvSummsChange(Sender: TObject; Node: TTreeNode);
@@ -2798,6 +2815,11 @@ begin
           lstSummsClick(Self);
           SendMessage(memSumm.Handle, WM_VSCROLL, SB_TOP, 0);
         end;
+
+      //display orphaned warning
+      if PDocTreeObject(Selected.Data)^.Orphaned then
+       MessageDlg(ORPHANED_NOTE_TEXT, mtInformation, [mbOK], -1);
+
       SendMessage(tvSumms.Handle, WM_HSCROLL, SB_THUMBTRACK, 0);
       RedrawActivate(lvSumms.Handle);
       RedrawActivate(memSumm.Handle);
@@ -3228,7 +3250,6 @@ procedure TfrmDCSumm.popSummMemoInsTemplateClick(Sender: TObject);
 begin
   frmDrawers.mnuInsertTemplateClick(Sender);
 end;
-
 
 {Returns True & Displays a Message if Currently No D/C Summary is Selected,
  Otherwise returns false and does not display a message.}

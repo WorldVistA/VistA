@@ -48,7 +48,7 @@ inherited frmODVitals: TfrmODVitals
     OnChange = ControlChange
     Caption = 'Additional Instructions'
   end
-  object cboMeasurement: TORComboBox [10]
+  object cboMeasurement: TORComboBox [9]
     Left = 6
     Top = 21
     Width = 130
@@ -69,10 +69,11 @@ inherited frmODVitals: TfrmODVitals
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 4
+    Text = ''
     OnChange = ControlChange
     CharsNeedMatch = 1
   end
-  object cboSchedule: TORComboBox [11]
+  object cboSchedule: TORComboBox [10]
     Left = 144
     Top = 21
     Width = 130
@@ -93,10 +94,11 @@ inherited frmODVitals: TfrmODVitals
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 5
+    Text = ''
     OnChange = ControlChange
     CharsNeedMatch = 1
   end
-  object calStart: TORDateBox [12]
+  object calStart: TORDateBox [11]
     Left = 282
     Top = 21
     Width = 115
@@ -108,7 +110,7 @@ inherited frmODVitals: TfrmODVitals
     RequireTime = False
     Caption = 'Start Date'
   end
-  object calStop: TORDateBox [13]
+  object calStop: TORDateBox [12]
     Left = 282
     Top = 64
     Width = 115
@@ -119,7 +121,7 @@ inherited frmODVitals: TfrmODVitals
     RequireTime = False
     Caption = 'Stop Date'
   end
-  object grpCallHO: TGroupBox [14]
+  object grpCallHO: TGroupBox [13]
     Left = 407
     Top = 9
     Width = 107
@@ -267,7 +269,7 @@ inherited frmODVitals: TfrmODVitals
       TabOrder = 9
     end
   end
-  object chkCallHO: TCheckBox [15]
+  object chkCallHO: TCheckBox [14]
     Left = 414
     Top = 8
     Width = 73
@@ -289,10 +291,12 @@ inherited frmODVitals: TfrmODVitals
         'Status = stsDefault')
       (
         'Component = calStart'
-        'Status = stsDefault')
+        'Text = Start Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = calStop'
-        'Status = stsDefault')
+        'Text = Stop Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = grpCallHO'
         'Status = stsDefault')

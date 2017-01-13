@@ -11,7 +11,7 @@ function ClinicFilterList(LocList: TStringList): TStrings ;
 function ClinicSearch(DummyArg:string): TStrings ;
 function ProblemDelete(ProblemIFN: string; ProviderID: int64; ptVAMC, Comment: string): TStrings ;
 {function ProblemDetail}
-function EditLoad(ProblemIFN: string; ProviderID: int64; ptVAMC: string): TStrings ;
+function EditLoad(ProblemIFN: string): TStrings ;
 function EditSave(ProblemIFN: string; ProviderID: int64; ptVAMC, PrimUser: string;
            ProbFile: TStringList; SearchString: String): TStrings ;
 function InitPt(const PatientDFN: string): TStrings ;  //*DFN*
@@ -67,9 +67,9 @@ begin
    Result := RPCBrokerV.Results ;
 end ;
 
-function EditLoad(ProblemIFN: string; ProviderID: int64; ptVAMC: string): TStrings ;
+function EditLoad(ProblemIFN: string): TStrings ;
 begin
-   CallV('ORQQPL EDIT LOAD',[ProblemIFN, ProviderID, ptVAMC]);
+   CallV('ORQQPL EDIT LOAD',[ProblemIFN]);
    Result := RPCBrokerV.Results ;
 end ;
 

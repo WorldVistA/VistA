@@ -36,25 +36,40 @@ type
     procedure AddSizesToStrList(theList: TStringList);
   end;
 
+  SettingSizeArray = array of integer;
+
 function DetailPrimaryCare(const DFN: string): TStrings;  //*DFN*
 procedure GetToolMenu;
 procedure ListSymbolTable(Dest: TStrings);
 function MScalar(const x: string): string;
 procedure SetShareNode(const DFN: string; AHandle: HWND);  //*DFN*
 function ServerHasPatch(const x: string): Boolean;
+function SiteSpansIntlDateLine: boolean;
+function RPCCheck(aRPC: TStrings):Boolean;
 function ServerVersion(const Option, VerClient: string): string;
 function PackageVersion(const Namespace: string): string;
+
+function ProgramFilesDir: string;
+function ApplicationDirectory: string;
+function VistaCommonFilesDirectory: string;
+function DropADir(DirName: string): string;
+function RelativeCommonFilesDirectory: string;
+function FindDllDir(DllName: string): string;
+function LoadDll(DllName: string): HMODULE;
+function DllVersionCheck(DllName: string; DLLVersion: string): string;
 
 procedure SaveUserBounds(AControl: TControl);
 procedure SaveUserSizes(SizingList: TStringList);
 procedure SetFormPosition(AForm: TForm);
 procedure SetUserBounds(var AControl: TControl);
 procedure SetUserBounds2(AName: string; var v1, v2, v3, v4: integer);
+procedure SetUserBoundsArray(AName: string; var SettingArray: SettingSizeArray);
 procedure SetUserWidths(var AControl: TControl);
 procedure SetUserColumns(var AControl: TControl);
 procedure SetUserString(StrName: string; var Str: string);
 function StrUserBounds(AControl: TControl): string;
 function StrUserBounds2(AName: string; v1, v2, v3, v4: integer): string;
+function StrUserBoundsArray(AName: string; SizeArray: SettingSizeArray): string;
 function StrUserWidth(AControl: TControl): string;
 function StrUserColumns(AControl: TControl): string;
 function StrUserString(StrName: string; Str: string): string;
@@ -66,7 +81,7 @@ var
 
 implementation
 
-uses TRPCB, fOrders, math;
+uses TRPCB, fOrders, math, Registry;
 
 var
   uBounds, uWidths, uColumns: TStringList;
@@ -223,6 +238,31 @@ begin
   Result := sCallV('ORWU PATCH', [x]) = '1';
 end;
 
+function SiteSpansIntlDateLine: boolean;
+begin
+  Result := sCallV('ORWU OVERDL', []) = '1';
+end;
+
+function RPCCheck(aRPC: TStrings):Boolean; //aRPC format array of RPC's Name^Version
+//All RPC's in the list must come back true/active
+var
+  i: integer;
+begin
+  Result := false;
+  CallV('XWB ARE RPCS AVAILABLE',['L',aRPC]);
+  if RPCBrokerV.Results.Count > 0 then
+    for i := 0 to RPCBrokerV.Results.Count - 1 do
+      begin
+        if RPCBrokerV.Results[i] = '1' then
+          Result := true
+        else
+          begin
+            Result := false;
+            Break;
+          end;
+      end;
+end;
+
 function ServerVersion(const Option, VerClient: string): string;
 begin
   Result := sCallV('ORWU VERSRV', [Option, VerClient]);
@@ -306,6 +346,19 @@ begin
   v2 := StrToIntDef(Piece(x, ',', 2), 0);
   v3 := StrToIntDef(Piece(x, ',', 3), 0);
   v4 := StrToIntDef(Piece(x, ',', 4), 0);
+end;
+
+procedure SetUserBoundsArray(AName: string; var SettingArray: SettingSizeArray);
+var
+  i: integer;
+  x: string;
+begin
+  if uBounds = nil then LoadSizes;
+  x := uBounds.Values[AName];
+  SetLength(SettingArray, uBounds.Count);
+  for i := 0 to (uBounds.Count - 1) do begin
+    SettingArray[i] := StrToIntDef(Piece(x, ',', i), 0);
+  end;
 end;
 
 
@@ -422,6 +475,16 @@ begin
                                   IntToStr(v3) + ',' + IntToStr(v4);
 end;
 
+function StrUserBoundsArray(AName: string; SizeArray: SettingSizeArray): string;
+var
+  i: integer;
+begin
+  Result := 'B' + U + AName + U;
+  for i := 0 to (Length(SizeArray) - 1) do begin
+    Result := Result + ',' + IntToStr(SizeArray[i]);
+  end;
+end;
+
 function StrUserWidth(AControl: TControl): string;
 var
   x: string;
@@ -525,6 +588,86 @@ begin
   end
   else //Currently is in the NameList
     FSizeList[nameIndex] := ASize;
+end;
+
+function ProgramFilesDir: string;
+var
+  Registry: TRegistry;
+begin
+  Result := '';
+  Registry := TRegistry.Create;
+  try
+    Registry.RootKey := HKEY_LOCAL_MACHINE;
+    Registry.OpenKeyReadOnly('SOFTWARE\Microsoft\Windows\CurrentVersion');
+    if (TOSVersion.Architecture = arIntelX64) then begin
+      Result := Registry.ReadString('ProgramFilesDir (x86)');
+    end else begin
+      Result := Registry.ReadString('ProgramFilesDir');
+    end;
+    Registry.CloseKey;
+    Result := IncludeTrailingPathDelimiter(Result);
+  finally
+    Registry.Free;
+  end;
+end;
+
+function ApplicationDirectory: string;
+begin
+  Result := IncludeTrailingPathDelimiter(ExtractFileDir(Application.ExeName));
+end;
+
+function VistaCommonFilesDirectory: string;
+begin
+  Result := ProgramFilesDir + 'Vista\Common Files\';
+end;
+
+function DropADir(DirName: string): string;
+var
+  i: integer;
+begin
+  Result := DirName;
+  i := Length(Result) - 1;
+  while (i > 0) and (Result[i] <> '\') do dec(i);
+  if (i = 0) then
+    Result := ''
+  else
+    Result := IncludeTrailingPathDelimiter(copy(Result, 1, i));
+end;
+
+function RelativeCommonFilesDirectory: string;
+begin
+  Result := DropADir(ApplicationDirectory) + 'Common Files\';
+end;
+
+function FindDllDir(DllName: string): string;
+begin
+  if FileExists(ApplicationDirectory + DllName) then begin
+    Result := ApplicationDirectory + DllName;
+  end else if FileExists(RelativeCommonFilesDirectory + DllName) then begin
+    Result := RelativeCommonFilesDirectory + DllName;
+  end else if FileExists(VistaCommonFilesDirectory + DllName) then begin
+    Result := VistaCommonFilesDirectory + DllName;
+  end else begin
+    Result := '';
+  end;
+
+end;
+
+function LoadDll(DllName: string): HMODULE;
+var
+  LibName: string;
+begin
+  LibName := FindDllDir(DllName);
+  if LibName = '' then begin
+    Result := LoadLibrary(PWideChar(DllName));
+  end else begin
+    Result := LoadLibrary(PWideChar(LibName));
+  end;
+end;
+
+function DllVersionCheck(DllName: string; DLLVersion: string): string;
+begin
+  Result := sCallV('ORUTL4 DLL', [DllName, DllVersion]);
 end;
 
 initialization

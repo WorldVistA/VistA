@@ -158,7 +158,7 @@ begin
     Perform(WM_NextDlgCtl, 0, 0);
     exit;
   end;
-  if not (Key in ['0'..'9', #8]) then
+  if not CharInSet(Key, ['0'..'9', #8]) then
   begin
     Key := #0;
     beep;

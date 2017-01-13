@@ -263,7 +263,7 @@ const
   NewTemplateName = 'New Template';
   FirstRealTemplateType = ttMyRoot;
   LastRealTemplateType = ttGroup;
-  TemplateTypeCodes: array[FirstRealTemplateType..LastRealTemplateType] of string[2] =
+  TemplateTypeCodes: array[FirstRealTemplateType..LastRealTemplateType] of string =
                                                                   ('P','R','TF','CF','OF','C','T','G');
   BadNameText = CRLF + CRLF + 'Valid Template names must start with an alphanumber '+
                 'character, and be at least 3 characters in length.' + CRLF +
@@ -331,7 +331,7 @@ type
                           efItems, efLock);
 
 const
-  TemplateActiveCode: array[boolean] of string[1] = ('I','A');
+  TemplateActiveCode: array[boolean] of string = ('I','A');
   TemplateExportTag: array[TTemplateExportField] of string = // From Field Names in File 8927
                 {  efName            }  ('NAME',
                 {  efBlankLines      }   'BLANK_LINES',
@@ -439,13 +439,13 @@ begin
     Result := TRUE;
     if(WholeWordsOnly) then
     begin
-      if((i > 1) and (Str[i-1] in AlphaNumeric)) then
+      if((i > 1) and CharInSet(Str[i-1], AlphaNumeric)) then
         Result := FALSE
       else
       begin
         j := length(SubStr);
         if((i+j) <= length(Str)) then
-          Result := (not (Str[i+j] in AlphaNumeric));
+          Result := (not CharInSet(Str[i+j], AlphaNumeric));
       end;
     end;
   end
@@ -1028,7 +1028,7 @@ begin
   if(Text = NewTemplateName) or (length(Text) < 3) then
     Result := TRUE
   else
-  if(not (Text[1] in ['a'..'z','A'..'Z','0'..'9'])) then
+  if(not CharInSet(Text[1], ['a'..'z','A'..'Z','0'..'9'])) then
     Result := TRUE;
 end;
 
@@ -1094,7 +1094,7 @@ var
   OldCur: TCursor;
   idx, TmpVar, RangeStart, RangeEnd: oleVariant;
   ddTotal, ffTotal, ffStartCur, ffEndCur, ffEndLast : integer;
-  ffRange, textRange: Range;
+  ffRange, textRange: WordRange;
   tmp, TemplateName, fName: string;
   tmpType, tfIdx: TTemplateFieldType;
   tmpDate: TTmplFldDateType;
@@ -1531,7 +1531,7 @@ begin
         end;
       if(txt <> '') then
       begin
-        CheckBoilerplate4Fields(txt, CaptionText);
+        CheckBoilerplate4Fields(txt, CaptionText, False);
         SL.Text := txt;
       end;
     end;
@@ -1539,7 +1539,7 @@ begin
   else
   begin
     txt := SL.Text;
-    CheckBoilerplate4Fields(txt, CaptionText);
+    CheckBoilerplate4Fields(txt, CaptionText, False);
     DocInfo := '';
     SL.Text := txt;
   end;
@@ -1569,7 +1569,7 @@ end;
 constructor TTemplate.Create(DataString: string);
 var
   i: TTemplateType;
-  Code: string[2];
+  Code: string;
 
 begin
   FCloning := TRUE;

@@ -86,14 +86,19 @@ begin
 end;
 
 function DetailGeneric(IEN: integer; ID, aRPC: string): TStrings;
+var
+  dfn: String;
 begin
-  CallV(aRPC, [Patient.DFN, IEN, ID]);
+  dfn := Patient.DFN;
+  if (aRPC = 'ORQQPL DETAIL') then
+    dfn := dfn + U + FloatToStr(Encounter.DateTime);
+  CallV(aRPC, [dfn, IEN, ID]);
   Result := RPCBrokerV.Results;
 end;
 
 function DetailProblem(IEN: Integer): TStrings;
 begin
-  CallV('ORQQPL DETAIL', [Patient.DFN, IEN, '']);
+  CallV('ORQQPL DETAIL', [Patient.DFN + U + FloatToStr(Encounter.DateTime), IEN, '']);
   Result := RPCBrokerV.Results;
 end;
 
@@ -188,6 +193,10 @@ var
 begin
   Param[0] := Patient.DFN;
   Param[1] := '';
+  // v30 - for Problem List, concatenate Enc Date/Time as 2nd '^'-piece of Param[0]
+  if (AID = '10') and (Encounter.DateTime <> 0) then
+    Param[0] := Param[0] + U + FloatToStr(Encounter.DateTime);
+
   if AID = '50' then
     begin
       if (InteractiveRemindersActive) then  //special path for Reminders
@@ -220,6 +229,7 @@ begin
       x0 := tmplist[i];
       x2 := Piece(x0, U, 2);
       if Pos('(', x2) > 0 then SetPiece(x2, '(', 2, UpperCase(Piece(x2, '(', 2)));
+      if Piece(x0, U, 17)='1' then SetPiece(x2, '-', 1, UpperCase(Piece(x2, '-', 1)));
       SetPiece(x0, U, 2, x2);
       tmplist[i] := x0;
     end;
@@ -254,7 +264,7 @@ var
   i: integer;
   x0, x2: string;
 begin
-  CallV('ORQQPL LIST', [Patient.DFN, ACTIVE_PROBLEMS]);
+  CallV('ORQQPL LIST', [Patient.DFN + U + FloatToStr(Encounter.DateTime), ACTIVE_PROBLEMS]);
   MixedCaseList(RPCBrokerV.Results);
   FastAssign(RPCBrokerV.Results, Dest);
   for i := 0 to Dest.Count - 1 do
@@ -304,7 +314,7 @@ end;
 
 procedure ListActiveMeds(Dest: TStrings);
 begin
-  CallV('ORWPS COVER', [Patient.DFN]);  // PharmID^DrugName^OrderID^StatusName
+  CallV('ORWPS COVER', [Patient.DFN, '1']);  // PharmID^DrugName^OrderID^StatusName
   ExtractActiveMeds(Dest, TStringList(RPCBrokerV.Results));
 end;
 

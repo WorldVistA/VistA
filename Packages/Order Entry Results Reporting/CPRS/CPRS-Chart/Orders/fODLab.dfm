@@ -109,6 +109,7 @@ inherited frmODLab: TfrmODLab
     ReadOnly = True
     TabOrder = 16
     Text = 'txtImmedColl'
+    Caption = ''
   end
   object calCollTime: TORDateBox [14]
     Left = 149
@@ -119,6 +120,7 @@ inherited frmODLab: TfrmODLab
     OnChange = ControlChange
     DateOnly = False
     RequireTime = False
+    Caption = ''
   end
   object pnlUrineVolume: TORAutoPanel [15]
     Left = 378
@@ -146,6 +148,7 @@ inherited frmODLab: TfrmODLab
       Height = 21
       TabOrder = 0
       OnExit = txtUrineVolumeExit
+      Caption = ''
     end
   end
   object pnlAntiCoagulation: TORAutoPanel [16]
@@ -174,6 +177,7 @@ inherited frmODLab: TfrmODLab
       Height = 21
       TabOrder = 0
       OnExit = txtAntiCoagulantExit
+      Caption = ''
     end
   end
   object pnlOrderComment: TORAutoPanel [17]
@@ -203,6 +207,7 @@ inherited frmODLab: TfrmODLab
       Height = 21
       TabOrder = 0
       OnExit = txtOrderCommentExit
+      Caption = ''
     end
   end
   object pnlHide: TORAutoPanel [18]
@@ -250,6 +255,7 @@ inherited frmODLab: TfrmODLab
       Height = 21
       TabOrder = 0
       OnExit = txtDoseTimeExit
+      Caption = ''
     end
     object txtDrawTime: TCaptionEdit
       Left = 10
@@ -258,6 +264,7 @@ inherited frmODLab: TfrmODLab
       Height = 21
       TabOrder = 1
       OnExit = txtDrawTimeExit
+      Caption = ''
     end
   end
   object pnlPeakTrough: TORAutoPanel [20]
@@ -350,6 +357,7 @@ inherited frmODLab: TfrmODLab
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 0
+    Text = ''
     OnClick = cboAvailTestSelect
     OnExit = cboAvailTestExit
     OnNeedData = cboAvailTestNeedData
@@ -376,6 +384,7 @@ inherited frmODLab: TfrmODLab
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 18
+    Text = ''
     OnChange = cboFrequencyChange
     CharsNeedMatch = 1
   end
@@ -400,6 +409,7 @@ inherited frmODLab: TfrmODLab
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 1
+    Text = ''
     OnChange = cboCollSampChange
     OnEnter = cboCollSampMouseClick
     OnKeyPause = cboCollSampKeyPause
@@ -429,6 +439,7 @@ inherited frmODLab: TfrmODLab
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 3
+    Text = ''
     OnChange = cboSpecimenChange
     OnEnter = cboSpecimenMouseClick
     OnKeyPause = cboSpecimenKeyPause
@@ -456,6 +467,7 @@ inherited frmODLab: TfrmODLab
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 5
+    Text = ''
     OnChange = cboUrgencyChange
     CharsNeedMatch = 1
   end
@@ -491,6 +503,7 @@ inherited frmODLab: TfrmODLab
     ShowHint = True
     TabOrder = 26
     Visible = False
+    Caption = ''
     ItemTipColor = clWindow
     LongList = False
   end
@@ -515,6 +528,7 @@ inherited frmODLab: TfrmODLab
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 14
+    Text = ''
     OnChange = cboCollTimeChange
     OnExit = cboCollTimeExit
     CharsNeedMatch = 1
@@ -540,6 +554,7 @@ inherited frmODLab: TfrmODLab
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 13
+    Text = ''
     OnChange = cboCollTypeChange
     CharsNeedMatch = 1
   end
@@ -569,12 +584,7 @@ inherited frmODLab: TfrmODLab
     Visible = False
     ShowAccelChar = True
   end
-  inherited cmdAccept: TButton
-    Left = 443
-    TabOrder = 23
-    ExplicitLeft = 443
-  end
-  object specimenlbl508: TVA508StaticText [35]
+  object specimenlbl508: TVA508StaticText [34]
     Name = 'specimenlbl508'
     Left = 210
     Top = 56
@@ -587,10 +597,7 @@ inherited frmODLab: TfrmODLab
     Visible = False
     ShowAccelChar = True
   end
-  inherited cmdQuit: TButton
-    TabOrder = 24
-  end
-  object CollSamplbl508: TVA508StaticText [37]
+  object CollSamplbl508: TVA508StaticText [35]
     Name = 'CollSamplbl508'
     Left = 187
     Top = 31
@@ -602,6 +609,14 @@ inherited frmODLab: TfrmODLab
     TabOrder = 2
     Visible = False
     ShowAccelChar = True
+  end
+  inherited cmdAccept: TButton
+    Left = 443
+    TabOrder = 23
+    ExplicitLeft = 443
+  end
+  inherited cmdQuit: TButton
+    TabOrder = 24
   end
   inherited pnlMessage: TPanel
     Left = 18
@@ -632,7 +647,8 @@ inherited frmODLab: TfrmODLab
         'Status = stsDefault')
       (
         'Component = calCollTime'
-        'Status = stsDefault')
+        'Text = Collection Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = pnlUrineVolume'
         'Status = stsDefault')

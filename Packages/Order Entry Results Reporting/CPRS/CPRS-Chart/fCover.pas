@@ -1034,7 +1034,13 @@ begin
            laMHV.Visible := false;
 
            paVAA.Show;
-           end;
+           end
+     else begin
+      LaVAA2.Visible := False;
+      LaMHV.Visible := False;
+      PaVAA.Hide;
+
+     end;
   end; //with
 //end VAA & MHV
 end;

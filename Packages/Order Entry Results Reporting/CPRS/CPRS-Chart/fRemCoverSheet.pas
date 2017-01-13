@@ -17,7 +17,12 @@ type
     lblRemLoc: TLabel;
     pnlMiddle: TPanel;
     pnlRight: TPanel;
+    mlgnCat: TfraImgText;
+    mlgnRem: TfraImgText;
+    mlgnAdd: TfraImgText;
     pnlCAC: TORAutoPanel;
+    mlgnRemove: TfraImgText;
+    mlgnLock: TfraImgText;
     imgMain: TImageList;
     sbUp: TBitBtn;
     sbDown: TBitBtn;
@@ -63,16 +68,6 @@ type
     lblView: TLabel;
     lblCAC: TVA508StaticText;
     VA508ImageListLabeler1: TVA508ImageListLabeler;
-    lblCategory: TLabel;
-    imgCategory: TImage;
-    lblReminder: TLabel;
-    imgReminder: TImage;
-    lblAdd: TLabel;
-    imgAdd: TImage;
-    lblRemove: TLabel;
-    imgRemove: TImage;
-    lblLock: TLabel;
-    imgLock: TImage;
     procedure cbxLocationNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure cbxServiceNeedData(Sender: TObject; const StartFrom: String;
@@ -478,7 +473,7 @@ var
   i, idx: integer;
 
 begin
-  idx := FData.IndexOfPiece(DataCode[Level] + IntToStr(IEN));
+  idx := FData.IndexOfPiece(String(DataCode[Level]) + IntToStr(IEN));
   if idx < 0 then
   begin
     if (IEN = 0) and (not (Level in [dlPackage, dlSystem])) then
@@ -503,7 +498,7 @@ begin
         FastAssign(GetCoverSheetLvlData(lvl, cls),  tmpSL);
         if (not Add) and (tmpSL.Count = 0) then
           FreeAndNil(tmpSL);
-        idx := FData.AddObject(DataCode[Level] + IntToStr(IEN), tmpSL);
+        idx := FData.AddObject(String(DataCode[Level]) + IntToStr(IEN), tmpSL);
       except
         tmpSL.Free;
         raise;
@@ -1052,7 +1047,7 @@ var
   idx: integer;
 
 begin
-  idx := FData.IndexOfPiece(DataCode[FEditingLevel] + IntToStr(FEditingIEN));
+  idx := FData.IndexOfPiece(String(DataCode[FEditingLevel]) + IntToStr(FEditingIEN));
   if idx >= 0 then
   begin
     tmp := FData[idx];
@@ -1436,7 +1431,7 @@ begin
           end;
       end;
       if ScreenReaderSystemActive then
-        GetScreenReader.Speak('Reminder Added to ' + DataName[FEditingLevel] + ' Level Reminders List');
+        GetScreenReader.Speak(Piece(TORTreeNode(tvAll.Selected).StringData, U, 2) + 'added to ' + DataName[FEditingLevel] + ' level reminders list');
     end;
   end;
 end;
@@ -1487,6 +1482,7 @@ procedure TfrmRemCoverSheet.sbCopyLeftClick(Sender: TObject);
 var
   idx, Index, i: integer;
   tmpSL: TORStringList;
+  strSelect: String;
 
 begin
   if assigned(lvCover.Selected) then
@@ -1498,6 +1494,7 @@ begin
       Index := lvCover.Selected.Index;
       if Idx >= 0 then
       begin
+        strSelect := lvCover.Selected.Caption;
         tmpSL.Delete(Idx);
         MarkListAsChanged;
         UpdateMasterListView;
@@ -1513,7 +1510,7 @@ begin
             end;
         end;
         if ScreenReaderSystemActive then
-          GetScreenReader.Speak('Reminder Removed from ' + DataName[FEditingLevel] + ' Level Reminders List');
+          GetScreenReader.Speak(strSelect + 'removed from ' + DataName[FEditingLevel] + ' level reminders list');
       end;
     end;
     if sbCopyLeft.Enabled and (not sbCopyLeft.Focused) then
@@ -1574,7 +1571,7 @@ begin
         Code := copy(FData[i],1,1);
         for lvl := low(TRemCoverDataLevel) to high(TRemCoverDataLevel) do
         begin
-          if DataCode[lvl] = Code then
+          if String(DataCode[lvl]) = Code then
           begin
             Level := lvl;
             break;
@@ -1969,13 +1966,11 @@ procedure TfrmRemCoverSheet.FormCreate(Sender: TObject);
 begin
   FSavePause := Application.HintHidePause;   //Save Hint Pause setting
   Application.HintHidePause := 20000;   //Reset Hint Pause to 20 seconds
-  //mlgnLock.hint := 'Lock a Reminder to prevent it''s removal from a lower'
-  imgLock.hint := 'Lock a Reminder to prevent it''s removal from a lower'
-         + CRLF + 'level Coversheet display.  For example, if you lock'
-         + CRLF + 'a Reminder at the Service level, then that Reminder'
-         + CRLF + 'cannot be removed from the coversheet display at'
-         + CRLF + 'the Location, User Class, or User levels.';
-  lblLock.hint := imgLock.hint;       
+  mlgnLock.hint := 'Lock a Reminder to prevent it''s removal from a lower'
+          + CRLF + 'level  Coversheet display.  For example, if you lock'
+          + CRLF + 'a Reminder at the Service level, then that Reminder'
+          + CRLF + 'can not be removed from the coversheet display at'
+          + CRLF + 'the Location, User Class, or User levels.';
   fOldFocusChanged := Screen.OnActiveControlChange;
   Screen.OnActiveControlChange := ActiveControlChanged;
 end;

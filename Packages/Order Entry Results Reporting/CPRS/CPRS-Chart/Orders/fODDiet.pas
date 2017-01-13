@@ -5,9 +5,20 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fODBase, ComCtrls, ExtCtrls, StdCtrls, Grids, ORCtrls, ORDtTm, ORFn, uConst,
-  VA508AccessibilityManager;
+  VA508AccessibilityManager, StrUtils;
 
 type
+
+  TlbGrid508Manager = class(TVA508ComponentManager)
+   private
+    HeaderStr: String;
+    function GetTextToSpeak(LB: TCaptionStringGrid): String;
+    function ToBlankIfEmpty(aString : String) : String;
+   public
+    constructor Create; override;
+    function GetValue(Component: TWinControl): string; override;
+  end;
+
   TfrmODDiet = class(TfrmODBase)
     nbkDiet: TPageControl;
     pgeDiet: TTabSheet;
@@ -155,6 +166,9 @@ type
     procedure cmdOPRemoveClick(Sender: TObject);
     procedure cboOPDietAvailKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure grdSelectedMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure lblTFQuantityClick(Sender: TObject);
   private
     FNextCol: Integer;
     FNextRow: Integer;
@@ -162,6 +176,7 @@ type
     FIsolationID: string;
     FTabChanging: Boolean;
     FGiveMultiTabMessage: boolean;
+    lbGrid508Manager : TlbGrid508Manager;
     procedure DietCheckForNPO;
     procedure DietCheckForTF;
     function GetMealTime: string;
@@ -207,6 +222,7 @@ var
   uDialogName: string;
   uFHAUTH: boolean;
   uRecurringMealList: TStringList;
+  FOldHintHidePause: integer;
 
 implementation
 
@@ -237,18 +253,19 @@ const
 
   // CQ #15833 - Removed references of 'c' and 'cc', changed 100CC example to 100ML - JCS
   TX_HLPQTY = CRLF + 'Valid entries for quantity:' + CRLF + CRLF +
-              'Units             K for Kcals;  M for ml;  O for oz.;  U for units (e.g. cans), PKG' + CRLF +
-              'Frequency     DAILY  HOUR  QH  BID  TID  QID  Q2H  Q3H  Q4H  Q6H' + CRLF + CRLF +
+              'Units             K for Kcals;  M for ml;  O for oz.; PKG' + CRLF +
+              'Frequency     DAY  HOUR  QH  BID  TID  QID  Q2H  Q3H  Q4H  Q6H' + CRLF + CRLF +
               'Or   100 ml/HR X 16  for 16 hours' + CRLF + CRLF +
               'IF powder form product, Then' + CRLF +
               '          (# GRAMS or # Unit or PKG) / FREQUENCY' + CRLF + CRLF +
               'Examples:' + CRLF +
               '          20 GRAMS/Day' + CRLF +
               '          1 PKG/TID' + CRLF +
-              '          6 U/D' + CRLF +
-              '          1 U/Q3H' + CRLF +
+              '          6 Units/DAY' + CRLF +
+              '          1 Units/Q3H' + CRLF +
               '          50ml/TID' + CRLF +
-              '          100 ML/HR';
+              '          100 ML/HR' + CRLF + CRLF +
+              'The Amount field is read only and calculated based on the Quantity';
   TX_ELMEAL      = 'A meal must be selected.';
   TX_ELTIME      = 'A meal time must be selected.';
   TX_ELNOSTART   = 'A valid start date must be entered.';
@@ -326,6 +343,7 @@ var
   ALocation: string;   //ptr to #44 hospital location
 begin
   inherited;
+  FOldHintHidePause := Application.HintHidePause;
   FGiveMultiTabMessage := ScreenReaderSystemActive;
   AbortOrder := False;
   uRecurringMealList := TStringList.Create;
@@ -379,12 +397,21 @@ begin
           chkBagged.Visible := uDietParams.Bagged;
         end;
     end;
+
+  lbGrid508Manager := TlbGrid508Manager.Create;
+  amgrMain.ComponentManager[grdSelected] := lbGrid508Manager;
+
+   lbGrid508Manager.HeaderStr := lblTFProduct.Caption +'^'
+   + lblTFStrength.Caption +'^'
+   + lblTFQuantity.Caption +'^'
+   + lblTFAmount.Caption;
 end;
 
 procedure TfrmODDiet.FormDestroy(Sender: TObject);
 begin
   TFClearGrid;
   uRecurringMealList.Free;
+  Application.HintHidePause := FOldHintHidePause;
   inherited;
 end;
 
@@ -577,6 +604,8 @@ begin
       if (Length(Cells[2, i]) > 0) and (Length(Cells[3, i]) = 0)
         then SetError(TX_TFAMT + Cells[0, i] + TX_HLPQTY);
       Sum := Sum + StrToIntDef(Piece(Cells[3, i], 'c', 1), 0);
+      //CQ 21583 - Addressing numerous PSI 1187 issues - JCS
+      Sum := Sum + StrToIntDef(LeftStr(Cells[3, i], Pos('ml', Cells[3, i]) - 1), 0);
     end;
     if Sum > 5000 then SetError(TX_TF5000);
     if not OrderForInpatient then
@@ -769,7 +798,7 @@ end;*)
 procedure TfrmODDiet.nbkDietChange(Sender: TObject);
 var
   x: string ;
-  CxMsg: string;
+  CxMsg, DLMsg: string;
 begin
   inherited;
   // much of the logic here can be eliminated if ClearDialogControls starts clearing containers
@@ -786,9 +815,10 @@ begin
     AllowQuickOrder := True;
     x := CurrentDietText;
     CheckForAutoDCDietOrders(Self.EvtID, Self.DisplayGroup, x, CxMsg, nbkDiet);
+    If Self.EvtID = 0 then CheckForDelayedDietOrders(DLMsg, frmOrders.TheCurrentView, Self.DisplayGroup);
     if CxMsg <> '' then
     begin
-      if InfoBox(CxMsg + CRLF +
+      if InfoBox(CxMsg + DLMsg + CRLF +
                 'Are you sure?', 'Confirm', MB_ICONWARNING or MB_YESNO) = ID_NO then
       begin
         AbortOrder := True;
@@ -1285,6 +1315,21 @@ begin
   end;
 end;
 
+//CQ 21583 - Addressing numerous PSI 1187 issues - JCS
+procedure TfrmODDiet.grdSelectedMouseMove(Sender: TObject; Shift: TShiftState;
+  X, Y: Integer);
+var aCol , aRow: integer;
+begin
+  Application.HintHidePause := 10000;
+  grdSelected.MouseToCell(X,Y,acol , arow);
+
+  if aCol = 2 then
+    hint := txtQuantity.hint
+  else
+    hint := '';
+  inherited;
+end;
+
 procedure TfrmODDiet.grdSelectedSelectCell(Sender: TObject; Col, Row: Integer;
   var CanSelect: Boolean);
 
@@ -1375,6 +1420,8 @@ procedure TfrmODDiet.cboStrengthEnter(Sender: TObject);
 begin
   inherited;
   SetNextCell(2, grdSelected.Row);
+  if ScreenReaderSystemActive then
+   GetScreenReader.Speak('Row ' + IntToStr(grdSelected.Row + 1)+', Strength');
 end;
 
 procedure TfrmODDiet.cboStrengthKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -1421,6 +1468,8 @@ procedure TfrmODDiet.txtQuantityEnter(Sender: TObject);
 begin
   inherited;
   SetNextCell(-1, -1);
+  if ScreenReaderSystemActive then
+   GetScreenReader.Speak('Row ' + IntToStr(grdSelected.Row + 1)+', Quanity');
 end;
 
 procedure TfrmODDiet.txtQuantityKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -1625,6 +1674,13 @@ begin
   if radLT1.Checked then Result := False;
   if radLT2.Checked then Result := False;
   if radLT3.Checked then Result := False;
+end;
+
+procedure TfrmODDiet.lblTFQuantityClick(Sender: TObject);
+begin
+  inherited;
+  //CQ 21583 - Addressing numerous PSI 1187 issues - JCS
+  infoBox(TX_HLPQTY, 'Informational Help Text', MB_OK);
 end;
 
 procedure TfrmODDiet.grpMealClick(Sender: TObject);
@@ -2029,7 +2085,7 @@ begin
   AWinEnd := FMDateTimeToDateTime(AEnd);
   i := AWinStart;
   repeat
-    Days := Days + FMDayLetters[DayOfTheWeek(i)];
+    Days := Days + String(FMDayLetters[DayOfTheWeek(i)]);
     i := i + 1;
   until i > AWinEnd;
   Result := Days;
@@ -2292,7 +2348,7 @@ function TfrmODDiet.PatientHasRecurringMeals(var MealList: TStringList; MealType
 const
   TX_NO_RECURRING_MEALS = 'For outpatients, this type of order requires association with an existing recurring' + CRLF +
                           'meal order.  There are currently no active recurring meal orders for this patient.' + CRLF + CRLF +
-                          'Those orders must be signed and released before they can be linked to this item.'; 
+                          'Those orders must be signed and released before they can be linked to this item.';
   TC_NO_RECURRING_MEALS = 'Unable to order ' ;
 begin
   MealList.Clear;
@@ -2305,6 +2361,38 @@ begin
   else
     Result := True;
 end;
+
+constructor TlbGrid508Manager.Create;
+begin
+  inherited Create([mtValue, mtItemChange]);
+end;
+
+function TlbGrid508Manager.GetTextToSpeak(LB: TCaptionStringGrid): String;
+var
+  textToSpeak : String;
+begin
+  textToSpeak := '';
+
+  textToSpeak := 'Row ' + IntToStr(Lb.Row + 1)+', '+ Piece(HeaderStr, '^', (LB.Col + 1)) + ', ' + ToBlankIfEmpty(LB.Cells[lb.Col, Lb.Row]);
+  Result := textToSpeak;
+
+end;
+
+function TlbGrid508Manager.GetValue(Component: TWinControl): string;
+var
+  LB : TCaptionStringGrid;
+begin
+  LB := TCaptionStringGrid(Component);
+  Result := GetTextToSpeak(LB);
+end;
+
+function TlbGrid508Manager.ToBlankIfEmpty(aString: String): String;
+begin
+  Result := aString;
+  if aString = '' then
+  Result := 'blank';
+end;
+
 
 end.
 

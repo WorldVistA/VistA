@@ -42,7 +42,7 @@ implementation
 {$R *.DFM}
 
 uses Hash, rCore, rOrders, uConst, fSignItem, fOrdersPrint, uCore, uOrders, fRptBox,
-  fFrame, fClinicWardMeds, rODLab;
+  fFrame, fClinicWardMeds, rODLab, System.UITypes;
 
 const
   TX_SAVERR1 = 'The error, ';

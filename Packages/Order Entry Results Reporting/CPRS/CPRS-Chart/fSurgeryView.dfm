@@ -7,8 +7,7 @@ inherited frmSurgeryView: TfrmSurgeryView
   ClientWidth = 358
   OldCreateOrder = True
   Position = poScreenCenter
-  ExplicitWidth = 366
-  ExplicitHeight = 229
+  ExplicitWidth = 374
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBase: TORAutoPanel [0]
@@ -133,6 +132,7 @@ inherited frmSurgeryView: TfrmSurgeryView
         Sorted = False
         SynonymChars = '<>'
         TabOrder = 1
+        Text = ''
         CharsNeedMatch = 1
       end
       object radTreeSort: TRadioGroup
@@ -164,10 +164,12 @@ inherited frmSurgeryView: TfrmSurgeryView
         'Status = stsDefault')
       (
         'Component = calBeginDate'
-        'Status = stsDefault')
+        'Text = Start Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = calEndDate'
-        'Status = stsDefault')
+        'Text = Stop Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = cmdOK'
         'Status = stsDefault')

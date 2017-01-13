@@ -143,7 +143,7 @@ type
     // FProblemsVisible[FItemData[i]] = 'Y'
     FWarningShown: boolean;
     FOldFramePnlPatientExit: TNotifyEvent;
-    FMousing: TDateTime;
+  //  FMousing: TDateTime;
     FSilent: boolean;
     procedure frmFramePnlPatientExit(Sender: TObject);
     procedure UMCloseProblem(var Message:TMessage); message UM_CLOSEPROBLEM; {pdr}
@@ -190,7 +190,7 @@ const
   TC_NO_PATIENT      = 'No patient is selected';
   TX_INACTIVE_CODE_V = 'references an inactive ICD code, and must be updated'  + #13#10 +
                        'using the ''Change'' option before it can be verified.';
-  TC_INACTIVE_CODE   = 'Inactive Code';  
+  TC_INACTIVE_CODE   = 'Inactive Code';
   TX_INACTIVE_ICODE  = 'This problem references an inactive ICD code,' + #13#10 +
                        'and must be updated using the ''Change'' option.';
   TC_INACTIVE_ICODE  = 'Inactive ICD code';
@@ -567,7 +567,7 @@ begin
             pProviderName := Encounter.ProviderName ;
             AList := TStringList.Create;
             ProblemIFN := Piece(MString(wgProbData.ItemIndex), U, 1);
-            FastAssign(EditLoad(ProblemIFN, pProviderID, PLPt.ptVAMC), AList) ;
+            FastAssign(EditLoad(ProblemIFN), AList) ;
             if Alist.count = 0 then
               begin
                 InfoBox('No Data on Host for problem ' + ProblemIFN, 'Information', MB_OK or MB_ICONINFORMATION);
@@ -1459,7 +1459,7 @@ begin
   try
     problemIFN := Piece(Line, U, 1);
     {get the basic info - could shortcut, but try this for now}
-    FastAssign(EditLoad(ProblemIFN, pProviderID, PLPt.ptVAMC), AList) ;
+    FastAssign(EditLoad(ProblemIFN), AList) ;
     probRec := TProbrec.create(Alist);
     probRec.PIFN := problemIFN;
     ProbRec.RespProvider.DHCPtoKeyVal(inttostr(Encounter.Provider) + u + Encounter.ProviderName);   {REV - V13}
@@ -1540,7 +1540,7 @@ var
 begin
   Alist := TStringList.create;
   ProblemIFN := Piece(MString(wgProbData.ItemIndex), U, 1);
-  FastAssign(EditLoad(ProblemIFN, pProviderID, PLPt.ptVAMC), AList) ;
+  FastAssign(EditLoad(ProblemIFN), AList) ;
   AProbRec:=TProbRec.Create(Alist); {create a problem object}
   SvcCat := Encounter.VisitCategory;
   if (SvcCat = 'E') or (SvcCat = 'H') then
@@ -1952,20 +1952,20 @@ to
 procedure TFrmProblems.lstViewExit(Sender: TObject);
 begin
   inherited;
-  if IncSecond(FMousing,1) < Now  then
+ { if IncSecond(FMousing,1) < Now  then
   begin
     if (Screen.ActiveControl = bbNewProb) or
         (Screen.ActiveControl = bbOtherProb) or
         (Screen.ActiveControl = bbCancel) then
       FindNextControl( bbCancel, True, True, False).SetFocus;
   end;
-  FMousing := 0;
+  FMousing := 0; }
 end;
 
 procedure TFrmProblems.pnlRightExit(Sender: TObject);
 begin
   inherited;
-  if IncSecond(FMousing,1) < Now then
+{  if IncSecond(FMousing,1) < Now then
   begin
     if (Screen.ActiveControl = frmFrame.pnlPatient) then
     begin
@@ -1985,13 +1985,13 @@ begin
         FindNextControl( bbOtherProb, False, True, False).SetFocus;
     end;
   end;
-  FMousing := 0;
+  FMousing := 0; }
 end;
 
 procedure TFrmProblems.bbNewProbExit(Sender: TObject);
 begin
   inherited;
-  if IncSecond(FMousing,1) < Now then
+{  if IncSecond(FMousing,1) < Now then
   begin
     if (Screen.ActiveControl = pnlProbDlg) or
         (Screen.ActiveControl = wgProbData) then
@@ -2001,20 +2001,20 @@ begin
         (Screen.ActiveControl = lstCatPick) then
       FindNextControl( frmFrame.pnlPatient, False, True, False).SetFocus;
   end;
-  FMousing := 0;
+  FMousing := 0;}
 end;
 
 procedure TFrmProblems.frmFramePnlPatientExit(Sender: TObject);
 begin
   FOldFramePnlPatientExit(Sender);
   inherited;
-  if IncSecond(FMousing,1) < Now then
+{  if IncSecond(FMousing,1) < Now then
   begin
     if (Screen.ActiveControl = pnlProbDlg) or
         (Screen.ActiveControl = wgProbData) then
       FindNextControl( pnlProbDlg, False, True, False).SetFocus;
   end;
-  FMousing := 0;
+  FMousing := 0;}
 end;
 
 procedure TFrmProblems.FormHide(Sender: TObject);
@@ -2041,7 +2041,7 @@ procedure TfrmProblems.FormMouseMove(Sender: TObject; Shift: TShiftState;
   X, Y: Integer);
 begin
   inherited;
-  FMousing := Now;
+ // FMousing := Now;
 end;
 
 procedure TfrmProblems.ShowPnlView;

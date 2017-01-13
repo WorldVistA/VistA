@@ -15,7 +15,8 @@ procedure rpcClearNotifications;
 procedure rpcSetNotifications(aList: TStringList);
 procedure rpcSetOrderChecks(aList: TStringList);
 procedure rpcSetOtherStuff(aString: String);
-
+procedure rpcSetCopyPaste(aString: String);
+function rpcGetCopyPaste: String;
 function rpcGetOtherTabs: TStrings;
 function rpcGetOther: String;
 procedure rpcSetOther(info: String);
@@ -148,7 +149,17 @@ begin
   CallV('ORWTPP SAVENOTO', [aString]);
 end;
 
+procedure rpcSetCopyPaste(aString: String);
+begin
+  CallV('ORWTIU SVCPIDNT', [aString]);
+end;
+
 //..............................................................................
+
+function rpcGetCopyPaste: String;
+begin
+ Result := sCallV('ORWTIU LDCPIDNT', [nil]);
+end;
 
 function rpcGetOtherTabs: TStrings;
 begin

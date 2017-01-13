@@ -7,8 +7,8 @@ inherited frmNotesByDate: TfrmNotesByDate
   ClientWidth = 251
   OldCreateOrder = True
   Position = poScreenCenter
-  ExplicitWidth = 259
-  ExplicitHeight = 178
+  ExplicitWidth = 267
+  ExplicitHeight = 189
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBase: TORAutoPanel [0]
@@ -94,10 +94,12 @@ inherited frmNotesByDate: TfrmNotesByDate
         'Status = stsDefault')
       (
         'Component = calBeginDate'
-        'Status = stsDefault')
+        'Text = Beginning Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = calEndDate'
-        'Status = stsDefault')
+        'Text = Ending Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = radSort'
         'Status = stsDefault')

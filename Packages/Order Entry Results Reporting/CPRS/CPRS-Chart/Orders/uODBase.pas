@@ -18,6 +18,11 @@ procedure SetOrderEventIDOnCreate(AnEvtID: integer);
 function OrderEventIDOnCreate: integer;
 procedure SetOrderEventNameOnCreate(AnEvtNm: string);
 function OrderEventNameOnCreate: string;
+
+//CQ 20854 - Display Supplies Only - JCS
+procedure SetOrderFormDlgIDOnCreate(AnID: String);
+function OrderFormDlgIDOnCreate: String;
+
 function GetKeyVars: string;
 procedure PopKeyVars(NumLevels: Integer = 1);
 procedure PushKeyVars(const NewVals: string);
@@ -37,6 +42,9 @@ var
   uOrderFormID: Integer;
   uFillerAppID: TStringList;
   uKeyVarList:  TStringList;
+  //CQ 20854 - Display Supplies Only - JCS
+  uOrderEventDlgID: String;
+
 
 { Order Checking }
 
@@ -95,6 +103,18 @@ end;
 function OrderEventIDOnCreate: integer;
 begin
   Result := uOrderEventID;
+end;
+
+//CQ 20854 - Display Supplies Only - JCS
+procedure SetOrderFormDlgIDOnCreate(AnID: String);
+begin
+  uOrderEventDlgID := AnID;
+end;
+
+//CQ 20854 - Display Supplies Only - JCS
+function OrderFormDlgIDOnCreate: String;
+begin
+  Result :=uOrderEventDlgID;
 end;
 
 function GetKeyVars: string;

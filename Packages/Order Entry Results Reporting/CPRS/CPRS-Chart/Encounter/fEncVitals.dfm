@@ -4,8 +4,8 @@ inherited frmEncVitals: TfrmEncVitals
   Caption = 'Vitals'
   OnActivate = FormActivate
   OnShow = FormShow
-  ExplicitWidth = 632
-  ExplicitHeight = 427
+  ExplicitWidth = 640
+  ExplicitHeight = 438
   PixelsPerInch = 96
   TextHeight = 13
   object lvVitals: TCaptionListView [0]
@@ -24,6 +24,7 @@ inherited frmEncVitals: TfrmEncVitals
     ShowHint = True
     TabOrder = 1
     ViewStyle = vsReport
+    AutoSize = False
   end
   object pnlBottom: TPanel [1]
     Left = 0
@@ -64,6 +65,10 @@ inherited frmEncVitals: TfrmEncVitals
   inherited btnOK: TBitBtn
     Left = 208
     Top = 374
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'OK No Show'
     TabOrder = 2
     Visible = False
@@ -73,6 +78,10 @@ inherited frmEncVitals: TfrmEncVitals
   inherited btnCancel: TBitBtn
     Left = 289
     Top = 374
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'Cancel No Show'
     TabOrder = 3
     Visible = False
@@ -107,7 +116,7 @@ inherited frmEncVitals: TfrmEncVitals
       Caption = 'Date'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
@@ -174,7 +183,7 @@ inherited frmEncVitals: TfrmEncVitals
       Caption = 'Last Measure'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
@@ -241,7 +250,7 @@ inherited frmEncVitals: TfrmEncVitals
       Caption = 'Vital'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
@@ -339,7 +348,6 @@ inherited frmEncVitals: TfrmEncVitals
       Width = 57
       Height = 21
       DropDownCount = 2
-      ItemHeight = 13
       TabOrder = 8
       OnChange = cboTempChange
       OnEnter = SetVitPointer
@@ -377,7 +385,6 @@ inherited frmEncVitals: TfrmEncVitals
       Top = 142
       Width = 57
       Height = 21
-      ItemHeight = 13
       TabOrder = 25
       OnChange = cboHeightChange
       OnEnter = SetVitPointer
@@ -404,7 +411,6 @@ inherited frmEncVitals: TfrmEncVitals
       Top = 166
       Width = 57
       Height = 21
-      ItemHeight = 13
       TabOrder = 30
       OnChange = cboWeightChange
       OnEnter = SetVitPointer
@@ -449,6 +455,7 @@ inherited frmEncVitals: TfrmEncVitals
       SynonymChars = '<>'
       TabOrder = 34
       TabStop = True
+      Text = ''
       OnEnter = SetVitPointer
       CharsNeedMatch = 1
     end
@@ -590,7 +597,8 @@ inherited frmEncVitals: TfrmEncVitals
         'Status = stsDefault')
       (
         'Component = txtMeasDate'
-        'Status = stsDefault')
+        'Text = Current vital Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = cboPain'
         'Status = stsDefault')

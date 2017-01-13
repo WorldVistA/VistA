@@ -32,7 +32,7 @@ implementation
 
 {$R *.DFM}
 
-uses ORFn, rODMeds, rMisc;
+uses ORFn, rODMeds, rMisc, System.UITypes;
 
 procedure CheckFormularyOI(var AnIEN: Integer; var AName: string; ForInpatient: Boolean);
 

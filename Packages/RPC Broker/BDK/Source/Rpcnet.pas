@@ -3,18 +3,21 @@
 	Date Created: Sept 18, 1997 (Version 1.1)
 	Site Name: Oakland, OI Field Office, Dept of Veteran Affairs
 	Developers: Danila Manapsal, Don Craven, Joel Ivey
-	Description: winsock utilities.
-	Current Release: Version 1.1 Patch 47 (Jun. 17, 2008))
+	Description: Contains TRPCBroker and related components.
+  Unit: RpcNet winsock utilities.
+	Current Release: Version 1.1 Patch 50
 *************************************************************** }
+
+{ **************************************************
+  Changes in v1.1.13 (JLI 8/23/2000) XWB*1.1*13
+  1. Made changes to cursor dependent on current cursor being crDefault
+     so that the application can set it to a different cursor for long or
+     repeated processes without the cursor 'flashing' repeatedly.
+************************************************** }
 
 
 unit RpcNet ;
-{
-  Changes in v1.1.13 (JLI -- 8/23/00) -- XWB*1.1*13
-    Made changes to cursor dependent on current cursor being crDefault so
-       that the application can set it to a different cursor for long or
-       repeated processes without the cursor 'flashing' repeatedly.
-}
+
 interface
 
 uses
@@ -51,7 +54,8 @@ type
      InUse: boolean;
      pTCPResult: Pointer;
      strTemp: string; {generic output string for async calls}
-     chrTemp: PChar; {generic out PChar for async calls}
+//     chrTemp: PChar; {generic out PChar for async calls}  // JLI 090804
+     chrTemp: PAnsiChar; {generic out PChar for async calls}  // JLI 090804
      hTCP: THandle; {pseudo handle for async calls}
      hWin: hWnd; {handle for owner window}
      CallWait: boolean;
@@ -70,9 +74,12 @@ function libGetCurrentProcess: word;
 {Socket functions using library RPCLIB.DLL, in this case called locally}
 
 //function  libAbortCall(inst: integer): integer; export;   //P14
-function  libGetHostIP1(inst: integer; HostName: PChar;
-          var outcome: PChar): integer; export;
-function  libGetLocalIP(inst: integer; var outcome: PChar): integer; export;
+//function  libGetHostIP1(inst: integer; HostName: PChar;  // JLI 090804
+//          var outcome: PChar): integer; export;  // JLI 090804
+function  libGetHostIP1(inst: integer; HostName: PAnsiChar;  // JLI 090804
+          var outcome: PAnsiChar): integer; export;  // JLI 090804
+//function  libGetLocalIP(inst: integer; var outcome: PChar): integer; export;  // JLI 090804
+function  libGetLocalIP(inst: integer; var outcome: PAnsiChar): integer; export;  // JLI 090804
 procedure libClose(inst: integer); export;
 function  libOpen:integer; export;
 
@@ -81,7 +88,8 @@ function GetTCPError:string;
 {Secure Hash Algorithm functions, library SHA.DLL and local interfaces}
 
 function libGetLocalModule: PChar; export;
-function GetFileHash(fn: PChar): longint; export;
+//function GetFileHash(fn: PChar): longint; export;  // JLI 090804
+function GetFileHash(fn: PAnsiChar): longint; export;  // JLI 090804
 
 implementation
 
@@ -100,11 +108,14 @@ begin
   Result := GetCurrentProcess;
 end;
 
-function libGetLocalIP(inst: integer; var outcome: PChar): integer;
+//function libGetLocalIP(inst: integer; var outcome: PChar): integer;  // JLI 090804
+function libGetLocalIP(inst: integer; var outcome: PAnsiChar): integer;  // JLI 090804
 var
-   local: PChar;
+//   local: PChar;  // JLI 090804
+   local: PAnsiChar;  // JLI 090804
 begin
-     local := StrAlloc(255);
+//     local := StrAlloc(255);  // JLI 090804
+     local := PAnsiChar(StrAlloc(255));  // JLI 090804
      gethostname( local, 255);
      Result := libGetHostIP1(inst, local, outcome);
      StrDispose(local);
@@ -122,7 +133,8 @@ begin
 
 end;
 
-function GetFileHash(fn: PChar): longint;
+//function GetFileHash(fn: PChar): longint;  // JLI 090804
+function GetFileHash(fn: PAnsiChar): longint;  // JLI 090804
 var
    hFn: integer;
    finfo: TOFSTRUCT;
@@ -154,10 +166,8 @@ begin
      RPCFRM1 := TRPCFRM1.Create(nil);    //P14
      with WRec[inst] do
      begin
-     {$WARN SYMBOL_DEPRECATED OFF}
      hWin := AllocateHWnd(RPCFRM1.wndproc);
-     {$WARN SYMBOL_DEPRECATED ON}
-                                 
+
      WSAStartUp(WINSOCK1_1, WSData);
      WSAUnhookBlockingHook;
 
@@ -174,14 +184,14 @@ begin
      begin
         InUse := False;
         WSACleanup;
-     {$WARN SYMBOL_DEPRECATED OFF}
         DeallocateHWnd(hWin);
-     {$WARN SYMBOL_DEPRECATED ON}
-     end;             
+     end;
 end;
 
-function libGetHostIP1(inst: integer; HostName: PChar;
-         var outcome: PChar): integer;
+//function libGetHostIP1(inst: integer; HostName: PChar;  // JLI 090804
+//         var outcome: PChar): integer;  // JLI 090804
+function libGetHostIP1(inst: integer; HostName: PAnsiChar;  // JLI 090804
+         var outcome: PAnsiChar): integer;  // JLI 090804
 var
    //RPCFRM1: TRPCFRM1; {P14}
    //wMsg: TMSG;        {P14}
@@ -311,7 +321,8 @@ begin
 
    hTCP := msgSock.WParam;
    
-   chrTemp := StrAlloc(512);
+//   chrTemp := StrAlloc(512);  // JLI 090804
+   chrTemp := PAnsiChar(StrAlloc(512));  // JLI 090804
 
    CallWait := False;
    If CallAbort = True then  { User aborted call }
@@ -323,7 +334,7 @@ begin
    WSAError := WSAGetAsyncError(hTCP); { in case async call failed }
    If  WSAError < 0 then
    begin
-        StrPCopy(chrTemp,IntToStr(WSAError));
+        StrPCopy(chrTemp,AnsiString(IntToStr(WSAError)));
         exit;
    end;
 
@@ -335,7 +346,7 @@ begin
          begin
               StrCopy(chrTemp, 'Unknown!');
               if rpcconfig <> nil then
-                rpcconfig.panel4.Caption := StrPas(chrTemp);
+                rpcconfig.panel4.Caption := String(StrPas(chrTemp));
               exit;
          end;
       {success, return resolved address}

@@ -72,7 +72,7 @@ var
 begin
   x := RawText;
   if Copy(Piece(x, U, 9), 1, 4) = '    ' then SetPiece(x, U, 9, 'Dis: ');
-  if Piece(x, U, 1)[1] in ['A', 'N', 'E'] then
+  if CharInSet(Piece(x, U, 1)[1], ['A', 'N', 'E']) then
     Result := Piece(x, U, 2)
   else
     Result := FormatFMDateTime('mmm dd,yy', MakeFMDateTime(Piece(x, U, 3))) + '  ' +

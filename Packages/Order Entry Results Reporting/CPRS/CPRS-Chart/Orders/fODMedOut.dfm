@@ -69,7 +69,7 @@ inherited frmODMedOut: TfrmODMedOut
     Caption = 'SC? Y/N'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
@@ -148,6 +148,7 @@ inherited frmODMedOut: TfrmODMedOut
     Height = 168
     Style = orcsSimple
     AutoSelect = True
+    Caption = ''
     Color = clWindow
     DropDownCount = 8
     ItemHeight = 13
@@ -164,6 +165,7 @@ inherited frmODMedOut: TfrmODMedOut
     SynonymChars = '<>'
     TabPositions = '30,33'
     TabOrder = 2
+    Text = ''
     OnChange = ControlChange
     OnExit = cboDispenseExit
     OnMouseClick = cboDispenseMouseClick
@@ -176,6 +178,7 @@ inherited frmODMedOut: TfrmODMedOut
     Height = 208
     Style = orcsSimple
     AutoSelect = True
+    Caption = ''
     Color = clWindow
     DropDownCount = 11
     ItemHeight = 13
@@ -189,6 +192,7 @@ inherited frmODMedOut: TfrmODMedOut
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 0
+    Text = ''
     OnChange = ControlChange
     OnExit = cboMedicationSelect
     OnMouseClick = cboMedicationSelect
@@ -197,6 +201,10 @@ inherited frmODMedOut: TfrmODMedOut
   end
   inherited memOrder: TCaptionMemo
     Top = 235
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabOrder = 15
     ExplicitTop = 235
   end
@@ -207,6 +215,7 @@ inherited frmODMedOut: TfrmODMedOut
     Height = 77
     Style = orcsSimple
     AutoSelect = True
+    Caption = ''
     Color = clWindow
     DropDownCount = 8
     ItemHeight = 13
@@ -220,6 +229,7 @@ inherited frmODMedOut: TfrmODMedOut
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 4
+    Text = ''
     OnChange = ControlChange
     CharsNeedMatch = 1
   end
@@ -230,6 +240,7 @@ inherited frmODMedOut: TfrmODMedOut
     Height = 77
     Style = orcsSimple
     AutoSelect = True
+    Caption = ''
     Color = clWindow
     DropDownCount = 8
     ItemHeight = 13
@@ -242,6 +253,7 @@ inherited frmODMedOut: TfrmODMedOut
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 5
+    Text = ''
     OnChange = ControlChange
     CharsNeedMatch = 1
   end
@@ -262,6 +274,7 @@ inherited frmODMedOut: TfrmODMedOut
     Height = 21
     Style = orcsDropDown
     AutoSelect = True
+    Caption = ''
     Color = clWindow
     DropDownCount = 8
     ItemHeight = 13
@@ -275,6 +288,7 @@ inherited frmODMedOut: TfrmODMedOut
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 11
+    Text = ''
     OnChange = ControlChange
     CharsNeedMatch = 1
   end
@@ -285,6 +299,7 @@ inherited frmODMedOut: TfrmODMedOut
     Height = 21
     Style = orcsDropDown
     AutoSelect = True
+    Caption = ''
     Color = clWindow
     DropDownCount = 11
     ItemHeight = 13
@@ -298,6 +313,7 @@ inherited frmODMedOut: TfrmODMedOut
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 1
+    Text = ''
     Visible = False
     OnChange = ControlChange
     OnExit = cboMedicationSelect
@@ -312,6 +328,7 @@ inherited frmODMedOut: TfrmODMedOut
     Height = 77
     Style = orcsSimple
     AutoSelect = True
+    Caption = ''
     Color = clWindow
     DropDownCount = 8
     ItemHeight = 13
@@ -324,6 +341,7 @@ inherited frmODMedOut: TfrmODMedOut
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 3
+    Text = ''
     OnChange = ControlChange
     CharsNeedMatch = 1
   end
@@ -334,6 +352,7 @@ inherited frmODMedOut: TfrmODMedOut
     Height = 21
     Style = orcsDropDown
     AutoSelect = True
+    Caption = ''
     Color = clWindow
     DropDownCount = 8
     ItemHeight = 13
@@ -347,6 +366,7 @@ inherited frmODMedOut: TfrmODMedOut
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 9
+    Text = ''
     OnChange = ControlChange
     CharsNeedMatch = 1
   end
@@ -357,6 +377,7 @@ inherited frmODMedOut: TfrmODMedOut
     Height = 21
     Style = orcsDropDown
     AutoSelect = True
+    Caption = ''
     Color = clWindow
     DropDownCount = 8
     ItemHeight = 13
@@ -370,6 +391,7 @@ inherited frmODMedOut: TfrmODMedOut
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 10
+    Text = ''
     OnChange = ControlChange
     OnEnter = cboSCEnter
     CharsNeedMatch = 1
@@ -414,20 +436,44 @@ inherited frmODMedOut: TfrmODMedOut
   end
   inherited cmdAccept: TButton
     Top = 235
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabOrder = 13
     ExplicitTop = 235
   end
   inherited cmdQuit: TButton
     Top = 262
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabOrder = 14
     ExplicitTop = 262
   end
   inherited pnlMessage: TPanel
     Left = 6
     Top = 190
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabOrder = 16
     ExplicitLeft = 6
     ExplicitTop = 190
+    inherited imgMessage: TImage
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+    end
+    inherited memMessage: TRichEdit
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+    end
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (

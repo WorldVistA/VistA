@@ -78,6 +78,7 @@ type
    PtHNC:boolean;
    PtMST:boolean;
    PtSHAD:boolean;
+   PtCL: Boolean;
    constructor Create(Alist:TStringList);
    function GetGMPDFN(dfn:string;name:String):string;
    function Today:string;
@@ -148,6 +149,7 @@ type
    fMST:TKeyVal;              {1.16}
    fCV:TKeyVal;               {1.17}  // this is not used  value is always NULL
    fSHAD:TKeyVal;             {1.18}
+   fCL:TKeyVal;               {1.19}
    fSCTConcept:TKeyval;       {80001}
    fSCTDesignation:TKeyVal;   {80002}
    fNTRTRequested: TKeyVal;   {80101}
@@ -182,6 +184,8 @@ type
    Procedure SetMSTProblem(value:String);
    Function GetSHADProblem:String;
    Procedure SetSHADProblem(value:String);
+   Function GetCLProblem:String;
+   Procedure SetCLProblem(value:String);
    function GetStatus:String;
    procedure SetStatus(value:String);
    function GetPriority:String;
@@ -235,7 +239,8 @@ type
    property ENVProblem:String read GetENVProblem write SetENVProblem;
    property HNCProblem:String read GetHNCProblem write SetHNCProblem;
    property MSTProblem:String read GetMSTProblem write SetMSTProblem;
-   property SHADProlem:String read GetSHADProblem write SetSHADProblem;
+   property SHADProblem:String read GetSHADProblem write SetSHADProblem;
+   property CLProblem:String read GetCLProblem write SetCLProblem;
    property Status:String read GetStatus write SetStatus;
    property Narrative:TKeyVal read fNarrative write SetNarrative;
    property Diagnosis:TKeyVal read fDiagnosis write fDiagnosis;
@@ -298,7 +303,7 @@ function FixQuotes(Instring: string): string;
 implementation
 
 uses
-  rCore, uCore, Types;
+  uGlobalVar, rCore, uCore, System.Types, rMisc;
 
 const
   Months: array[1..12] of string[3] = ('JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC');
@@ -396,6 +401,7 @@ begin
       8: PtMST              := (AList[i] = '1');
      //9:CombatVet   Not tracked in Problem list
       10: PtSHAD             := (AList[i] = '1');
+      11: PtCL               := (AList[i] = '1');
     end;
 end;
 
@@ -539,6 +545,7 @@ begin
   LoadField(fMST,'1.16','MST');
   LoadField(fCV,'1.17','CV');   // not used at this time
   LoadField(fSHAD,'1.18','SHD');
+  LoadField(fCL, '1.19', 'CL');
   LoadField(fSCTConcept,'80001','SCTC');
   LoadField(fSCTDesignation,'80002','SCTD');
   LoadField(fNTRTRequested, '80101', 'NTRT');
@@ -576,6 +583,7 @@ begin
   fMST.free;
   fSHAD.Free;
   fCV.Free;
+  fCL.Free;
   fSCTConcept.free;
   fSCTDesignation.free;
   fNTRTRequested.Free;
@@ -624,6 +632,7 @@ begin
   fMST:=TKeyVal.create;
   fCV := TKeyVal.create;
   fSHAD:=TKeyVal.Create;
+  fCL := TKeyVal.Create;
   fSCTConcept:=TKeyVal.Create;
   fSCTDesignation:=TKeyVal.Create;
   fNTRTRequested := TKeyVal.Create;
@@ -1054,6 +1063,31 @@ begin
     end;
 end;
 
+function TProbrec.GetCLProblem:String;
+begin
+    result := fCL.intern;
+end;
+
+procedure TProbRec.SetCLProblem(value:String);
+begin
+    if value = '1' then
+    begin
+      fCL.intern := '1';
+      fCL.extern := 'Yes';
+    end
+    else if value = '0' then
+    begin
+      fCL.intern := '0';
+      fCL.extern := 'No';
+    end
+    else
+    begin
+        fCL.intern := '';
+        fCL.extern := 'Unknown';
+    end;
+end;
+
+
 function TProbRec.GetStatus:String;
 begin
   result := Uppercase(fStatus.intern);
@@ -1205,13 +1239,17 @@ function TProbRec.GetAltFilerObject:TstringList;
   - Date recorded (1.09) is non-editable, causes error if present}
 var
   i: integer;
-  fldID,fldVal: string;
+  fldID,fldVal, Fields: string;
 begin
   fFilerObj.Clear;
+  if IsLejeuneActive then
+   Fields := '^.01^.12^.13^1.01^1.05^1.07^1.08^1.1^1.11^1.12^1.13^1.15^1.16^1.18^1.19^80001^80002^80201^80202^'
+  else
+   Fields := '^.01^.12^.13^1.01^1.05^1.07^1.08^1.1^1.11^1.12^1.13^1.15^1.16^1.18^80001^80002^80201^80202^';
   for i := 0 to pred(fFieldList.count) do
     begin
-      fldID := fFieldList[i];                      
-      if pos(u + fldID + u, '^.01^.12^.13^1.01^1.05^1.07^1.08^1.1^1.11^1.12^1.13^1.15^1.16^1.18^80001^80002^80201^80202^') > 0 then
+      fldID := fFieldList[i];
+      if pos(u + fldID + u, Fields) > 0 then
         {is a field eligible for update}
         begin
           fldVal := TKeyVal(fFieldList.objects[i]).intern;

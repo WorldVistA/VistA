@@ -56,6 +56,7 @@ type
     FHNCRelated: integer;
     FCVRelated: integer;
     FSHDRelated: integer;
+    FCLRelated:  Integer;
     FLastWidth: integer;
     FUseBox2: boolean;
     FExitOK: boolean;
@@ -117,10 +118,11 @@ const
 
 implementation
 
-uses fNotes, uPCE, uOrders, rOrders, uCore, rMisc, rReminders,
+uses
+  fNotes, uPCE, uOrders, rOrders, uCore, rMisc, rReminders,
   fReminderTree, uVitals, rVitals, RichEdit, fConsults, fTemplateDialog,
   uTemplateFields, fRemVisitInfo, rCore, uVA508CPRSCompatibility,
-  VA508AccessibilityRouter, VAUtils;
+  VA508AccessibilityRouter, VAUtils, uGlobalVar;
 
 {$R *.DFM}
 
@@ -203,7 +205,8 @@ begin
           if(OwningForm = frmNotes) then
             begin
               frmNotes.AssignRemForm;
-              if FutureEncounter(RemForm.PCEObj) then Err := 'Can not process a reminder dialog for a future encounter date.';
+              if (not SpansIntlDateLine) and FutureEncounter(RemForm.PCEObj) then
+                Err := 'Can not process a reminder dialog for a future encounter date.';
             end
           else
           if(OwningForm = frmConsults) then
@@ -214,8 +217,8 @@ begin
         end;
       end;
     end;
-    if (Err = '') and (FutureEncounter(RemForm.PCEObj)) then
-       Err := 'Can not process a reminder dialog for a future encounter date.';
+    if (Err = '') and (FutureEncounter(RemForm.PCEObj)) and (not SpansIntlDateLine) then
+      Err := 'Can not process a reminder dialog for a future encounter date.';
     if Err <> '' then
     begin
       InfoBox(Err, 'Reminders in Process', MB_OK or MB_ICONERROR);
@@ -246,6 +249,8 @@ begin
         frmRemDlg.FHNCRelated := RemForm.PCEObj.HNCRelated;
         frmRemDlg.FCVRelated  := RemForm.PCEObj.CVRelated;
         frmRemDlg.FSHDRelated := RemForm.PCEObj.SHADRelated;
+        if IsLejeuneActive then
+         frmRemDlg.FCLRelated  := RemForm.PCEObj.CLRelated; //Camp Lejeune
       end;
       UpdateReminderFinish;
       if IsTemplate then
@@ -399,7 +404,8 @@ begin
   with FSCCond do
     FSCPrompt := (SCAllow or AOAllow or IRAllow or ECAllow or MSTAllow or HNCAllow or CVAllow); *)
   NotifyWhenRemindersChange(RemindersChanged);
-  RemForm.Drawers.NotifyWhenRemTreeChanges(RemindersChanged);
+  RemForm.DrawerReminderTreeChange(RemindersChanged);
+//  RemForm.Drawers.NotifyWhenRemTreeChanges(RemindersChanged);
   KillReminderDialogProc := KillReminderDialog;
 end;
 
@@ -416,7 +422,9 @@ begin
   RemDlgSpltr1 := pnlBottom.Height;
   RemDlgSpltr2 := reData.Height;
 //  SaveDialogSplitterPos(Name + 'Splitters', pnlBottom.Height, reData.Height);
-  RemForm.Drawers.RemoveNotifyWhenRemTreeChanges(RemindersChanged);
+
+  RemForm.DrawerRemoveReminderTreeChange(RemindersChanged);
+//  RemForm.Drawers.RemoveNotifyWhenRemTreeChanges(RemindersChanged);
   RemoveNotifyRemindersChange(RemindersChanged);
   KillReminderDialogProc := nil;
   ClearControls(TRUE);
@@ -743,7 +751,7 @@ begin
     reData.Clear;
     LastCat := BadType;
     tmp := RemForm.PCEObj.StrVisitType(FSCRelated, FAORelated, FIRRelated,
-                          FECRelated, FMSTRelated, FHNCRelated, FCVRelated,FSHDRelated);
+                          FECRelated, FMSTRelated, FHNCRelated, FCVRelated,FSHDRelated, FCLRelated);
     if FProcessingTemplate then
       i := GetReminderData(FReminder, TmpData)
     else
@@ -957,10 +965,15 @@ var
 begin
   Result := -1;
   CurReminderList := TORStringList.Create;
-  Sel := TORTreeNode(RemForm.Drawers.tvReminders.Selected);
+
+  Sel := TORTreeNode(RemForm.DrawerReminderTV.Selected);
+
+//  Sel := TORTreeNode(RemForm.Drawers.tvReminders.Selected);
   NodeCheck := (assigned(Sel) and assigned(FReminder) and
                (Piece(Sel.StringData,U,1) = RemCode +FReminder.IEN));
-  Node := TORTreeNode(RemForm.Drawers.tvReminders.Items.GetFirstNode);
+
+  Node := TORTreeNode(RemForm.DrawerReminderTV.Items.GetFirstNode);
+//  Node := TORTreeNode(RemForm.Drawers.tvReminders.Items.GetFirstNode);
   while assigned(Node) do
   begin
     Data := TORTreeNode(Node).StringData;
@@ -1763,7 +1776,7 @@ begin
   try
     frmRemVisitInfo.fraVisitRelated.InitAllow(FSCCond);
     frmRemVisitInfo.fraVisitRelated.InitRelated(FSCRelated, FAORelated,
-                FIRRelated, FECRelated, FMSTRelated, FHNCRelated, FCVRelated, FSHDRelated);
+                FIRRelated, FECRelated, FMSTRelated, FHNCRelated, FCVRelated, FSHDRelated, FCLRelated);
     frmRemVisitInfo.dteVitals.FMDateTime := VitalsDate;
     frmRemVisitInfo.ShowModal;
     if frmRemVisitInfo.ModalResult = mrOK then
@@ -1772,7 +1785,7 @@ begin
       if VitalsDate <= FMNow then
         FVitalsDate := VitalsDate;
       frmRemVisitInfo.fraVisitRelated.GetRelated(FSCRelated, FAORelated,
-                FIRRelated, FECRelated, FMSTRelated, FHNCRelated, FCVRelated, FSHDRelated);
+                FIRRelated, FECRelated, FMSTRelated, FHNCRelated, FCVRelated, FSHDRelated, FCLRelated);
       FSCPrompt := FALSE;
       UpdateText(nil);
     end;

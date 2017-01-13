@@ -247,7 +247,7 @@ procedure TfrmODMedIn.cboMedicationNeedData(Sender: TObject; const StartFrom: st
 { retrieves a subset of inpatient medication orderable items }
 begin
   inherited;
-  FMedCombo.ForDataUse(SubSetOfOrderItems(StartFrom, Direction, 'S.UD RX'));
+  FMedCombo.ForDataUse(SubSetOfOrderItems(StartFrom, Direction, 'S.UD RX', Responses.QuickOrder));
 end;
 
 procedure TfrmODMedIn.cboMedicationSelect(Sender: TObject);

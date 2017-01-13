@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  ORCtrls, StdCtrls, Buttons, fBase508Form, VA508AccessibilityManager;
+  ORCtrls, StdCtrls, Buttons, fBase508Form, VA508AccessibilityManager, uCore;
 
 type
   TfrmProbCmt = class(TfrmBase508Form)
@@ -84,7 +84,7 @@ begin
       end
       else
       begin
-        fCmtResult := '1^'+FormatFMDateTime('mmm dd yyyy',FMToday)+'^'+ edComment.Text;
+        fCmtResult := '1^'+FormatFMDateTime('mmm dd yyyy',FMToday)+'^'+ edComment.Text + '^' + IntToStr(User.DUZ);
         ModalResult := mrOK;
       end;
     end

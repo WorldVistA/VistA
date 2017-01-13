@@ -3,7 +3,7 @@ inherited frmFrame: TfrmFrame
   Top = 102
   Caption = ']='
   ClientHeight = 673
-  ClientWidth = 793
+  ClientWidth = 803
   FormStyle = fsMDIForm
   Menu = mnuFrame
   OldCreateOrder = True
@@ -14,14 +14,14 @@ inherited frmFrame: TfrmFrame
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnResize = FormResize
-  ExplicitWidth = 809
+  ExplicitWidth = 819
   ExplicitHeight = 731
   PixelsPerInch = 96
   TextHeight = 13
   object pnlNoPatientSelected: TPanel [0]
     Left = 0
     Top = 0
-    Width = 793
+    Width = 803
     Height = 673
     Align = alClient
     Caption = 'No patient is currently selected'
@@ -33,56 +33,74 @@ inherited frmFrame: TfrmFrame
     ParentFont = False
     TabOrder = 1
     Visible = False
-    ExplicitHeight = 653
   end
   object pnlPatientSelected: TPanel [1]
     Left = 0
     Top = 0
-    Width = 793
+    Width = 803
     Height = 673
     Align = alClient
     TabOrder = 0
-    ExplicitHeight = 653
     object bvlPageTop: TBevel
       Left = 1
-      Top = 41
-      Width = 791
-      Height = 1
+      Top = 50
+      Width = 801
+      Height = 2
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
-      ExplicitWidth = 674
+      ExplicitWidth = 791
     end
     object pnlToolbar: TPanel
       Left = 1
       Top = 1
-      Width = 791
-      Height = 40
+      Width = 801
+      Height = 49
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
       object bvlToolTop: TBevel
         Left = 0
         Top = 0
-        Width = 791
+        Width = 801
         Height = 1
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alTop
         Style = bsRaised
-        ExplicitWidth = 674
+        ExplicitWidth = 791
       end
       object pnlCCOW: TPanel
         Left = 0
         Top = 1
-        Width = 39
-        Height = 39
+        Width = 48
+        Height = 48
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alLeft
         BevelWidth = 2
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 8
+        TabOrder = 0
         object imgCCOW: TImage
           Left = 2
           Top = 2
-          Width = 35
-          Height = 35
+          Width = 44
+          Height = 44
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alClient
           Center = True
           Picture.Data = {
@@ -113,26 +131,32 @@ inherited frmFrame: TfrmFrame
             0A0A0A5D5D5D5D5D5D0C0C5D5D5D5D5D0A0A5D5D5D5D5D5D5D0C0C0C5D5D5D0A
             0A0A2F5D5D5D5D5D5D5D0C0C0C5D5D0A0A0A305D5D5D5D5D5D5D5D0C0C5D5D02
             0A0A025D5D5D5D5D0C0C0C0C0C5D5D5D5D5D5D5D5D5D5D5D0C0C0C0C5D5D}
+          ExplicitHeight = 45
         end
       end
       object pnlPatient: TKeyClickPanel
-        Left = 39
+        Left = 48
         Top = 1
-        Width = 187
-        Height = 39
+        Width = 230
+        Height = 48
         Hint = 'Click for more patient information.'
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alLeft
         BevelWidth = 2
         Color = clInfoBk
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clInfoBk
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'MS Sans Serif'
         Font.Style = []
+        ParentBackground = False
         ParentFont = False
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 0
+        TabOrder = 1
         TabStop = True
         OnClick = pnlPatientClick
         OnEnter = pnlPrimaryCareEnter
@@ -140,14 +164,18 @@ inherited frmFrame: TfrmFrame
         OnMouseDown = pnlPatientMouseDown
         OnMouseUp = pnlPatientMouseUp
         object lblPtName: TStaticText
-          Left = 6
-          Top = 4
-          Width = 118
-          Height = 17
+          Left = 7
+          Top = 5
+          Width = 142
+          Height = 20
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'No Patient Selected'
           Font.Charset = ANSI_CHARSET
           Font.Color = clInfoText
-          Font.Height = -12
+          Font.Height = -15
           Font.Name = 'MS Sans Serif'
           Font.Style = [fsBold]
           ParentFont = False
@@ -159,14 +187,18 @@ inherited frmFrame: TfrmFrame
           OnMouseUp = pnlPatientMouseUp
         end
         object lblPtSSN: TStaticText
-          Left = 6
-          Top = 19
-          Width = 64
-          Height = 17
+          Left = 7
+          Top = 23
+          Width = 75
+          Height = 20
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = '000-00-0000'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clInfoText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -178,14 +210,18 @@ inherited frmFrame: TfrmFrame
           OnMouseUp = pnlPatientMouseUp
         end
         object lblPtAge: TStaticText
-          Left = 175
-          Top = 19
+          Left = 215
+          Top = 23
           Width = 4
           Height = 4
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Alignment = taRightJustify
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clInfoText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -198,22 +234,26 @@ inherited frmFrame: TfrmFrame
         end
       end
       object pnlVisit: TKeyClickPanel
-        Left = 226
+        Left = 278
         Top = 1
-        Width = 119
-        Height = 39
+        Width = 147
+        Height = 48
         Hint = 'Click to change provider/location.'
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alLeft
         BevelWidth = 2
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBtnFace
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 1
+        TabOrder = 2
         TabStop = True
         OnClick = pnlVisitClick
         OnEnter = pnlPrimaryCareEnter
@@ -221,13 +261,17 @@ inherited frmFrame: TfrmFrame
         OnMouseDown = pnlVisitMouseDown
         OnMouseUp = pnlVisitMouseUp
         object lblPtLocation: TStaticText
-          Left = 6
-          Top = 4
+          Left = 7
+          Top = 5
           Width = 4
           Height = 4
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -15
           Font.Name = 'MS Sans Serif'
           Font.Style = [fsBold]
           ParentFont = False
@@ -240,13 +284,17 @@ inherited frmFrame: TfrmFrame
           OnMouseUp = pnlVisitMouseUp
         end
         object lblPtProvider: TStaticText
-          Left = 6
-          Top = 19
+          Left = 7
+          Top = 23
           Width = 4
           Height = 4
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBtnText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -259,22 +307,26 @@ inherited frmFrame: TfrmFrame
         end
       end
       object pnlPrimaryCare: TKeyClickPanel
-        Left = 345
+        Left = 425
         Top = 1
-        Width = 117
-        Height = 39
+        Width = 10
+        Height = 48
         Hint = 'Primary Care Team / Primary Care Provider'
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alClient
         BevelWidth = 2
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBtnFace
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 2
+        TabOrder = 4
         TabStop = True
         OnClick = pnlPrimaryCareClick
         OnEnter = pnlPrimaryCareEnter
@@ -282,13 +334,17 @@ inherited frmFrame: TfrmFrame
         OnMouseDown = pnlPrimaryCareMouseDown
         OnMouseUp = pnlPrimaryCareMouseUp
         object lblPtCare: TStaticText
-          Left = 6
-          Top = 4
+          Left = 7
+          Top = 5
           Width = 4
           Height = 4
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBtnText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -300,13 +356,17 @@ inherited frmFrame: TfrmFrame
           OnMouseUp = pnlPrimaryCareMouseUp
         end
         object lblPtAttending: TStaticText
-          Left = 6
-          Top = 19
+          Left = 7
+          Top = 23
           Width = 4
           Height = 4
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBtnText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -318,13 +378,17 @@ inherited frmFrame: TfrmFrame
           OnMouseUp = pnlPrimaryCareMouseUp
         end
         object lblPtMHTC: TStaticText
-          Left = 6
-          Top = 34
+          Left = 7
+          Top = 42
           Width = 4
           Height = 4
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBtnText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -335,22 +399,26 @@ inherited frmFrame: TfrmFrame
         end
       end
       object pnlReminders: TKeyClickPanel
-        Left = 686
+        Left = 671
         Top = 1
-        Width = 35
-        Height = 39
+        Width = 43
+        Height = 48
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alRight
         BevelWidth = 2
         Caption = 'Reminders'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBtnFace
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 6
+        TabOrder = 7
         TabStop = True
         OnClick = pnlRemindersClick
         OnEnter = pnlPrimaryCareEnter
@@ -360,39 +428,52 @@ inherited frmFrame: TfrmFrame
         object imgReminder: TImage
           Left = 2
           Top = 2
-          Width = 31
-          Height = 35
+          Width = 39
+          Height = 44
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alClient
           Center = True
           OnMouseDown = pnlRemindersMouseDown
           OnMouseUp = pnlRemindersMouseUp
+          ExplicitHeight = 45
         end
         object anmtRemSearch: TAnimate
           Left = 2
           Top = 2
-          Width = 31
-          Height = 35
+          Width = 39
+          Height = 44
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alClient
           Visible = False
         end
       end
       object pnlPostings: TKeyClickPanel
-        Left = 721
+        Left = 714
         Top = 1
-        Width = 70
-        Height = 39
+        Width = 87
+        Height = 48
         Hint = 'Click to display patient postings.'
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alRight
         BevelWidth = 2
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBtnFace
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 7
+        TabOrder = 8
         TabStop = True
         OnClick = pnlPostingsClick
         OnEnter = pnlPrimaryCareEnter
@@ -400,16 +481,20 @@ inherited frmFrame: TfrmFrame
         OnMouseDown = pnlPostingsMouseDown
         OnMouseUp = pnlPostingsMouseUp
         object lblPtPostings: TStaticText
-          Left = 5
-          Top = 4
-          Width = 57
-          Height = 13
+          Left = 6
+          Top = 5
+          Width = 70
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Alignment = taCenter
           AutoSize = False
           Caption = 'No Postings'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBtnText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -421,36 +506,45 @@ inherited frmFrame: TfrmFrame
           OnMouseUp = pnlPostingsMouseUp
         end
         object lblPtCWAD: TStaticText
-          Left = 6
-          Top = 19
-          Width = 57
-          Height = 13
+          Left = 7
+          Top = 23
+          Width = 71
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Alignment = taCenter
           AutoSize = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clMaroon
-          Font.Height = -12
+          Font.Height = -15
           Font.Name = 'MS Sans Serif'
           Font.Style = [fsBold]
           ParentFont = False
           ParentShowHint = False
           ShowHint = False
           TabOrder = 1
+          Transparent = False
           OnClick = pnlPostingsClick
           OnMouseDown = pnlPostingsMouseDown
           OnMouseUp = pnlPostingsMouseUp
         end
       end
       object paVAA: TKeyClickPanel
-        Left = 462
+        Left = 396
         Top = 1
-        Width = 60
-        Height = 39
+        Width = 73
+        Height = 48
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alRight
         BevelOuter = bvNone
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBtnFace
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
@@ -459,14 +553,18 @@ inherited frmFrame: TfrmFrame
         TabOrder = 3
         Visible = False
         DesignSize = (
-          60
-          39)
+          73
+          48)
         object laVAA2: TButton
           Left = 0
-          Top = 19
-          Width = 59
-          Height = 20
+          Top = 23
+          Width = 73
+          Height = 22
           Hint = 'Click to display patient insurance data'
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Anchors = [akLeft, akTop, akRight, akBottom]
           Caption = 'laVAA2'
           ParentShowHint = False
@@ -477,9 +575,13 @@ inherited frmFrame: TfrmFrame
         object laMHV: TButton
           Left = 0
           Top = 0
-          Width = 59
-          Height = 18
+          Width = 73
+          Height = 19
           Hint = 'Click to display MHV data'
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Anchors = [akLeft, akTop, akRight, akBottom]
           Caption = 'laMHV'
           ParentShowHint = False
@@ -489,18 +591,26 @@ inherited frmFrame: TfrmFrame
         end
       end
       object pnlCVnFlag: TPanel
-        Left = 522
+        Left = 469
         Top = 1
-        Width = 91
-        Height = 39
+        Width = 112
+        Height = 48
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alRight
-        TabOrder = 4
+        TabOrder = 5
         object btnCombatVet: TButton
           Left = 1
-          Top = 20
-          Width = 89
-          Height = 18
+          Top = 25
+          Width = 110
+          Height = 22
           Hint = 'Click to display combat veteran eligibility details.'
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alBottom
           Caption = 'CV JAN 30, 2008'
           ParentShowHint = False
@@ -511,9 +621,13 @@ inherited frmFrame: TfrmFrame
         object pnlFlag: TKeyClickPanel
           Left = 1
           Top = 1
-          Width = 89
-          Height = 19
+          Width = 110
+          Height = 24
           Hint = 'Click to display patient record flags.'
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alClient
           BevelWidth = 2
           ParentShowHint = False
@@ -528,15 +642,19 @@ inherited frmFrame: TfrmFrame
           object lblFlag: TLabel
             Left = 2
             Top = 2
-            Width = 85
-            Height = 15
+            Width = 106
+            Height = 20
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alClient
             Alignment = taCenter
             Caption = 'Flag'
             Enabled = False
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBtnFace
-            Font.Height = -11
+            Font.Height = -15
             Font.Name = 'MS Sans Serif'
             Font.Style = [fsBold]
             ParentFont = False
@@ -545,28 +663,44 @@ inherited frmFrame: TfrmFrame
             OnClick = pnlFlagClick
             OnMouseDown = pnlFlagMouseDown
             OnMouseUp = pnlFlagMouseUp
-            ExplicitWidth = 25
-            ExplicitHeight = 13
+            ExplicitWidth = 32
+            ExplicitHeight = 16
           end
+        end
+        object txtCmdFlags: TVA508StaticText
+          Name = 'txtCmdFlags'
+          Left = 0
+          Top = 0
+          Width = 105
+          Height = 15
+          Alignment = taLeftJustify
+          Caption = 'Flags Button Disabled'
+          TabOrder = 2
+          Visible = False
+          ShowAccelChar = True
         end
       end
       object pnlRemoteData: TKeyClickPanel
-        Left = 613
+        Left = 581
         Top = 1
-        Width = 73
-        Height = 39
+        Width = 90
+        Height = 48
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alRight
         BevelWidth = 2
         Caption = 'Remote Data'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBtnFace
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 5
+        TabOrder = 6
         TabStop = True
         OnClick = pnlCIRNClick
         OnEnter = pnlPrimaryCareEnter
@@ -576,15 +710,19 @@ inherited frmFrame: TfrmFrame
         object pnlVistaWeb: TKeyClickPanel
           Left = 2
           Top = 2
-          Width = 69
-          Height = 18
+          Width = 86
+          Height = 23
           Hint = 'Click to open VistaWeb'
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alTop
           BevelWidth = 2
           Caption = 'VistaWeb'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBtnFace
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -600,14 +738,18 @@ inherited frmFrame: TfrmFrame
           object lblVistaWeb: TLabel
             Left = 2
             Top = 2
-            Width = 65
-            Height = 14
+            Width = 82
+            Height = 19
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alClient
             Alignment = taCenter
             Caption = 'VistaWeb'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clInfoText
-            Font.Height = -8
+            Font.Height = -12
             Font.Name = 'MS Sans Serif'
             Font.Style = []
             ParentFont = False
@@ -619,15 +761,19 @@ inherited frmFrame: TfrmFrame
         end
         object pnlCIRN: TKeyClickPanel
           Left = 2
-          Top = 20
-          Width = 69
-          Height = 17
+          Top = 25
+          Width = 86
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alClient
           BevelWidth = 2
           Caption = 'Remote Data'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBtnFace
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -643,21 +789,26 @@ inherited frmFrame: TfrmFrame
           object lblCIRN: TLabel
             Left = 2
             Top = 2
-            Width = 65
-            Height = 13
+            Width = 82
+            Height = 17
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alClient
             Alignment = taCenter
             Caption = 'Remote Data'
             Enabled = False
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBtnFace
-            Font.Height = -8
+            Font.Height = -12
             Font.Name = 'MS Sans Serif'
             Font.Style = []
             ParentFont = False
             Layout = tlCenter
             OnClick = pnlCIRNClick
             ExplicitWidth = 63
+            ExplicitHeight = 13
           end
         end
       end
@@ -665,8 +816,12 @@ inherited frmFrame: TfrmFrame
     object stsArea: TStatusBar
       Left = 1
       Top = 651
-      Width = 791
+      Width = 801
       Height = 21
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Panels = <
         item
           Width = 200
@@ -689,17 +844,16 @@ inherited frmFrame: TfrmFrame
         end>
       PopupMenu = popAlerts
       SizeGrip = False
-      ExplicitTop = 631
     end
     object tabPage: TTabControl
       Left = 1
       Top = 629
-      Width = 791
+      Width = 801
       Height = 22
       Align = alBottom
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -12
+      Font.Height = -15
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
@@ -708,33 +862,35 @@ inherited frmFrame: TfrmFrame
       OnChange = tabPageChange
       OnMouseDown = tabPageMouseDown
       OnMouseUp = tabPageMouseUp
-      ExplicitTop = 609
     end
     object pnlPage: TPanel
       Left = 1
-      Top = 42
-      Width = 791
-      Height = 587
+      Top = 52
+      Width = 801
+      Height = 577
       Align = alClient
       BevelOuter = bvNone
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -12
+      Font.Height = -15
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
       TabOrder = 2
-      ExplicitHeight = 567
       object lstCIRNLocations: TORListBox
-        Left = 424
+        Left = 522
         Top = 0
-        Width = 209
-        Height = 78
+        Width = 257
+        Height = 96
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         TabStop = False
         Style = lbOwnerDrawFixed
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
-        Font.Height = -12
+        Font.Height = -15
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ItemHeight = 13
@@ -742,7 +898,7 @@ inherited frmFrame: TfrmFrame
         ParentShowHint = False
         PopupMenu = popCIRN
         ShowHint = False
-        TabOrder = 0
+        TabOrder = 1
         Visible = False
         OnClick = lstCIRNLocationsClick
         OnExit = lstCIRNLocationsExit
@@ -751,7 +907,6 @@ inherited frmFrame: TfrmFrame
         LongList = False
         Pieces = '2,3,4'
         TabPositions = '16'
-        OnChange = lstCIRNLocationsChange
         RightClickSelect = True
         CheckBoxes = True
         CheckEntireLine = True
@@ -824,12 +979,10 @@ inherited frmFrame: TfrmFrame
         'Status = stsDefault')
       (
         'Component = laVAA2'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = laMHV'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = stsArea'
         'Status = stsDefault')
@@ -865,6 +1018,9 @@ inherited frmFrame: TfrmFrame
         'Status = stsDefault')
       (
         'Component = lblPtMHTC'
+        'Status = stsDefault')
+      (
+        'Component = txtCmdFlags'
         'Status = stsDefault'))
   end
   object mnuFrame: TMainMenu
@@ -1164,6 +1320,10 @@ inherited frmFrame: TfrmFrame
         Enabled = False
         Visible = False
       end
+      object mnuDebugReport: TMenuItem
+        Caption = 'Debug Report'
+        OnClick = mnuDebugReportClick
+      end
       object Z5: TMenuItem
         Caption = '-'
       end
@@ -1178,6 +1338,11 @@ inherited frmFrame: TfrmFrame
       object mnuHelpSymbols: TMenuItem
         Caption = 'Symbol Table'
         OnClick = mnuHelpSymbolsClick
+      end
+      object mnuFocusChanges: TMenuItem
+        AutoCheck = True
+        Caption = 'Show Focus Changes'
+        OnClick = mnuFocusChangesClick
       end
       object Z6: TMenuItem
         Caption = '-'
@@ -1231,6 +1396,7 @@ inherited frmFrame: TfrmFrame
   end
   object AppEvents: TApplicationEvents
     OnActivate = AppEventsActivate
+    OnMessage = AppEventsMessage
     OnShortCut = AppEventsShortCut
     Left = 336
     Top = 256

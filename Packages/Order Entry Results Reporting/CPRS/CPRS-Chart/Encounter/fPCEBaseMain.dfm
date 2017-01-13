@@ -38,24 +38,25 @@ inherited frmPCEBaseMain: TfrmPCEBaseMain
   end
   inherited btnCancel: TBitBtn
     Left = 544
-    TabOrder = 2
     ExplicitLeft = 544
   end
   inherited pnlGrid: TPanel
     Width = 475
     TabOrder = 0
     ExplicitWidth = 475
-    inherited lbGrid: TORListBox
+    inherited lstRenameMe: TCaptionListView
       Width = 475
-      MultiSelect = True
-      OnClick = lbGridSelect
-      OnExit = lbGridExit
-      OnChange = lbGridSelect
-      CheckEntireLine = True
-      ExplicitWidth = 475
-    end
-    inherited hcGrid: THeaderControl
-      Width = 475
+      Columns = <
+        item
+          Width = 30
+        end
+        item
+          Width = 120
+        end>
+      OnChange = lstRenameMeChange
+      OnClick = lstRenameMeClick
+      OnExit = lstRenameMeExit
+      OnInsert = lstRenameMeInsert
       ExplicitWidth = 475
     end
   end
@@ -111,7 +112,6 @@ inherited frmPCEBaseMain: TfrmPCEBaseMain
       Style = lbOwnerDrawFixed
       Align = alClient
       ExtendedSelect = False
-      ItemHeight = 16
       ParentShowHint = False
       ShowHint = True
       TabOrder = 1
@@ -202,12 +202,6 @@ inherited frmPCEBaseMain: TfrmPCEBaseMain
         'Status = stsDefault')
       (
         'Component = pnlGrid'
-        'Status = stsDefault')
-      (
-        'Component = lbGrid'
-        'Status = stsDefault')
-      (
-        'Component = hcGrid'
         'Status = stsDefault')
       (
         'Component = btnOK'

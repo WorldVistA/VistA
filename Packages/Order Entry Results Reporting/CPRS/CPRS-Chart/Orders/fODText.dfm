@@ -85,10 +85,12 @@ inherited frmODText: TfrmODText
         'Status = stsDefault')
       (
         'Component = txtStart'
-        'Status = stsDefault')
+        'Text = Start Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = txtStop'
-        'Status = stsDefault')
+        'Text = Stop Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = memOrder'
         'Label = lblOrderSig'

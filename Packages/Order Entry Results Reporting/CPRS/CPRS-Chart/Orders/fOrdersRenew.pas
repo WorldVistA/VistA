@@ -58,6 +58,9 @@ const
                   'current, valid DEA# on record and is ineligible' + CRLF + 'to sign the order.';
   TX_SCHFAIL    = CRLF + 'could not be renewed. Provider is not authorized' + CRLF +
                   'to prescribe medications in Federal Schedule ';
+  TX_SCH_ONE    = CRLF + 'could not be renewed. Electronic prescription of medications in' + CRLF +
+                  'Federal Schedule 1 is prohibited.' + CRLF + CRLF +
+                  'Valid Schedule 1 investigational medications require paper prescription.';
   TX_NO_DETOX   = CRLF + 'could not be renewed. Provider does not have a' + CRLF +
                   'valid Detoxification/Maintenance ID number on' + CRLF +
                   'record and is ineligible to sign the order.';
@@ -133,7 +136,7 @@ begin
               OrderableItemIen := GetOrderableIen(TheOrder.ID);
               DEAFailStr := '';
               DEAFailStr := DEACheckFailed(OrderableItemIen, InptDlg);
-              while StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] do
+              while StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..6] do
                  begin
                    case StrToIntDef(Piece(DEAFailStr,U,1),0) of
                      1:  TX_INFO := TX_DEAFAIL1 + #13 + TheOrder.Text + #13 + TX_DEAFAIL2;  //prescriber has an invalid or no DEA#
@@ -141,6 +144,13 @@ begin
                      3:  TX_INFO := TX_DEAFAIL1 + #13 + TheOrder.Text + #13 + TX_NO_DETOX;  //prescriber has an invalid or no Detox#
                      4:  TX_INFO := TX_DEAFAIL1 + #13 + TheOrder.Text + #13 + TX_EXP_DEA1 + Piece(DEAFailStr,U,2) + TX_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
                      5:  TX_INFO := TX_DEAFAIL1 + #13 + TheOrder.Text + #13 + TX_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TX_EXP_DETOX2;  //valid detox#, but expired DEA#
+                     6:  TX_INFO := TX_DEAFAIL1 + #13 + TheOrder.Text + #13 + TX_SCH_ONE;   //schedule 1's are prohibited from electronic prescription
+                   end;
+                   if StrToIntDef(Piece(DEAFailStr,U,1),0)=6 then
+                   begin
+                     InfoBox(TX_INFO, TC_DEAFAIL, MB_OK);
+                     UnlockOrder(TheOrder.ID);
+                     Exit;
                    end;
                    if InfoBox(TX_INFO + TX_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL) = IDRETRY then
                    begin

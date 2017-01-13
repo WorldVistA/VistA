@@ -7,7 +7,7 @@ interface
 uses
   UBAGlobals,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, checklst, uConst, ExtCtrls, uCore, mCoPayDesc, XUDsigS,
+  StdCtrls, checklst, uConst, ExtCtrls, uCore, mCoPayDesc, oPKIEncryption,
   ORCtrls, Menus, UBACore, ORClasses, ORNet, fBase508Form, fPrintLocation,
   VA508AccessibilityManager, fCSRemaining, rODMeds;
 
@@ -156,7 +156,6 @@ var
     FRVTFHintWindowActive: boolean;
     FRVTFHintWindow: THintWindow;
     {End BillingAware}
-    crypto: TCryptography;
     currentlySelectedItem: integer; //CQ5063
     currentItems: TStringList; //CQ5063
 
@@ -167,7 +166,7 @@ implementation
 uses ORFn, rCore, fNotes, fConsults, fOrders, rOrders, Hash, fDCSumm, fOCSession, uOrders,
      fSignItem, fOrdersPrint, fLkUpLocation, fFrame, uSignItems, fSurgery,
      fBALocalDiagnoses, UBAConst, UBAMessages, fOrdersSign, fClinicWardMeds,
-     rODLab, fRptBox, VAUtils;
+     rODLab, fRptBox, VAUtils, System.Types, System.UITypes;
 
 const
   SP_NONE  = 0;
@@ -327,7 +326,6 @@ begin
               frmReview.ShowModal;
               Result := frmReview.FOKPressed;
               CSRemaining(frmReview.lstReview.items,frmReview.lstCSReview.items);
-              LastPINvalue := '';
            end
            else
            begin
@@ -897,8 +895,6 @@ var
   tmpOrders: TStringList;
   ChangeItem: TChangeItem;
 begin
-  Result := True;
-  if Changes.Documents.Count > 0 then Exit;
   if(FullList) then
   begin
     tmpOrders := TStringList.Create;
@@ -1167,7 +1163,7 @@ var
   ChangeItem, TempChangeItem: TChangeItem;
   OrderList, CSOrderList, TotalOrderList, OrderPrintList: TStringList;
   SaveCoPay, PINRetrieved: boolean;
-  DigSigErr, DigStoreErr, CryptoChecked, displayEncSwitch, DelayOnly: Boolean;
+  displayEncSwitch, DelayOnly: Boolean;
   SigData, SigUser, SigDrugSch, SigDEA: string;
   cSignature, cHashData, cCrlUrl, cErr, WardName, ASvc: string;
   UsrAltName, IssuanceDate, PatientName, PatientAddress, DetoxNumber, ProviderName, ProviderAddress: string;
@@ -1178,9 +1174,10 @@ var
   EncLocName, EncLocText, tempInpLoc: string;
   EncLocIEN: integer;
   EncDT: TFMDateTime;
-  EncVC: Char;  
-  PINResult : TPinResult;
-  PINLock : string;
+  EncVC: Char;
+  aPKIEncryptionEngine: IPKIEncryptionEngine;
+  aPKIEncryptionDataDEAOrder: IPKIEncryptionDataDEAOrder;
+  aMessage, successMsg: string;
 
   function OrdersSignedOrReleased: Boolean;
   var
@@ -1206,7 +1203,7 @@ var
     begin
       s := Piece(OrderList[i], U, 2);
       x := s[1];
-      if ((s <> '') and (s[1] in [SS_ONCHART, SS_ESIGNED, SS_NOTREQD])) or
+      if ((s <> '') and CharInSet(s[1], [SS_ONCHART, SS_ESIGNED, SS_NOTREQD])) or
          (Piece(OrderList[i], U, 3) = RS_RELEASE) then
       begin
          Result := TRUE;
@@ -1218,7 +1215,7 @@ var
     begin
       s := Piece(CSOrderList[i], U, 2);
       x := s[1];
-      if ((s <> '') and (s[1] in [SS_ONCHART, SS_ESIGNED, SS_NOTREQD])) or
+      if ((s <> '') and CharInSet(s[1], [SS_ONCHART, SS_ESIGNED, SS_NOTREQD])) or
          (Piece(CSOrderList[i], U, 3) = RS_RELEASE) then
       begin
          Result := TRUE;
@@ -1233,31 +1230,6 @@ var
   begin
     i := Pos(del,s);
     Result := copy(s,i+1,length(s));
-  end;
-
-  procedure Log2File(  crypto: TCryptography) ;
-  var
-    f: TextFile;
-  begin
-    AssignFile(f,'c:\hashLog.txt');
-    if not(FileExists('c:\hashLog.txt')) then
-    begin
-      ReWrite(f) ;
-      Write(f,'cprs 29 hash log' + CRLF + CRLF);
-      CloseFile(f);
-    end;
-
-    Append(f);
-    WriteLn(f, '==============' + crypto.OrderNumber + CRLF +
-                      'IssuanceDate: "' + crypto.IssuanceDate + '"' + CRLF +
-                      'DrugName: "' + crypto.DrugName + '"' + CRLF +
-                      'Quantity: "' + crypto.Quantity + '"' + CRLF +
-                      'Directions: "' + crypto.Directions + '"' + CRLF +
-                      'DetoxNumber: "' + crypto.DetoxNumber + '"' + CRLF +
-                      'DeaNumber: "' + crypto.DeaNumber + '"' + CRLF +
-                      'OrderNumber: "' + crypto.OrderNumber + '"' + CRLF +
-                      CRLF);
-    CloseFile(f);
   end;
 
 begin
@@ -1367,10 +1339,9 @@ begin
             end
             else if (ChangeItem <> nil) and (ChangeItem.ItemType = CH_ORD) and (radSignChart.Checked) then
               OrderList.Add(ChangeItem.ID + U + SS_ONCHART + U + RS_RELEASE + U + NO_WRITTEN);
-
           end; {with lstReview}
-		  
-		 with lstCSReview do for i := 0 to Items.Count - 1 do
+
+          with lstCSReview do for i := 0 to Items.Count - 1 do
           begin
             ChangeItem := TChangeItem(Items.Objects[i]);
             if (ChangeItem <> nil) and (ChangeItem.ItemType = CH_ORD) then
@@ -1480,186 +1451,129 @@ begin
             end; {if ItemType}
           end; {with lstCSReview}
 
-//add csorderlist to totalorderlist in order to do order checking
-for i := 0 to CSOrderList.Count - 1 do
-begin
-  TotalOrderList.add(CSOrderList.strings[i]);
-end;
+        end; {OR_PHYSICIAN}
+      end; {case User.OrderRole}
 
-//add orderlist to totalorderlist in order to do order checking
-for i := 0 to OrderList.Count - 1 do
-begin
-  TotalOrderList.add(OrderList.strings[i]);
-end;
-//do order checkign on totalorderlist.  Any order's cancelled will no longer be in totalorderlist
-While (TotalOrderList.Count > 0) do
-begin
-  IsOk := ExecuteSessionOrderChecks(TotalOrderList);  // any cancelled orders will be removed from OrderList
-  if IsOk then Break;
-end;
-//remove any orders from csorderlist that are no longer part of totalorderlist
-i := CSOrderList.Count - 1;
-while i>=0 do
-begin
-  if (TotalOrderList.IndexOf(CSOrderList.strings[i])=-1) then CSOrderList.Delete(i);
-  i := i - 1;
-end;
+          //add csorderlist to totalorderlist in order to do order checking
+          for i := 0 to CSOrderList.Count - 1 do
+          begin
+            TotalOrderList.add(CSOrderList.strings[i]);
+          end;
 
-//remove any orders from orderlist that are no longer part of totalorderlist   
-i := OrderList.Count - 1;
-while i>=0 do
-begin
-  if (TotalOrderList.IndexOf(OrderList.strings[i])=-1) then OrderList.Delete(i);
-  i := i - 1;
-end;
+          //add orderlist to totalorderlist in order to do order checking
+          for i := 0 to OrderList.Count - 1 do
+          begin
+            TotalOrderList.add(OrderList.strings[i]);
+          end;
+          //do order checkign on totalorderlist.  Any order's cancelled will no longer be in totalorderlist
+          While (TotalOrderList.Count > 0) do
+          begin
+            IsOk := ExecuteSessionOrderChecks(TotalOrderList);  // any cancelled orders will be removed from OrderList
+            if IsOk then Break;
+          end;
+          //remove any orders from csorderlist that are no longer part of totalorderlist
+          i := CSOrderList.Count - 1;
+          while i>=0 do
+          begin
+            if (TotalOrderList.IndexOf(CSOrderList.strings[i])=-1) then CSOrderList.Delete(i);
+            i := i - 1;
+          end;
+
+          //remove any orders from orderlist that are no longer part of totalorderlist
+          i := OrderList.Count - 1;
+          while i>=0 do
+          begin
+            if (TotalOrderList.IndexOf(OrderList.strings[i])=-1) then OrderList.Delete(i);
+            i := i - 1;
+          end;
 
           if CSOrderList.Count > 0 then
           begin
-          //check if sc boxes were answered here before dig signing process
-          inherited;
-          if not IsUserNurseProvider(User.DUZ) then
-          begin
-               if (not SigItems.OK2SaveSettings) or (not SigItemsCS.OK2SaveSettings) then
-               begin
-                 if (cmdOk.Caption = 'Don''t Sign') then
-                    //
-                 else
+            //check if sc boxes were answered here before dig signing process
+            inherited;
+            if not IsUserNurseProvider(User.DUZ) then
+            begin
+                 if (not SigItems.OK2SaveSettings) or (not SigItemsCS.OK2SaveSettings) then
                  begin
-                    InfoBox(TX_Order_Error, 'Review/Sign Orders', MB_OK);
-                    Exit;
-                 end
-               end;
-          end;
-          
-          LastPINvalue := '';
-          //isXuDSigSLogging := true;
-          PINRetrieved := false;
-          //get altusername
-          UsrAltName := sCallV('XUS PKI GET UPN', []);
-          //if SAN is blank then attempt to retrieve from card to set it
-          if UsrAltName='' then
-          begin
-            UsrAltName := SetSAN(fReview.frmReview);
-            if not(UsrAltName='')  then
-            begin
-              PINRetrieved := true;
+                   if (cmdOk.Caption = 'Don''t Sign') then
+                      //
+                   else
+                   begin
+                      InfoBox(TX_Order_Error, 'Review/Sign Orders', MB_OK);
+                      Exit;
+                   end
+                 end;
             end;
-          end;
-          //if still blank then cancel digital signing
-          if UsrAltName='' then PINResult := prCancel
-          else if not(PINRetrieved) then
-          try
-          begin
-            PINLock := sCallV('ORDEA PINLKCHK', []);
-            if PINLock = '1' then PINResult := prLocked
-            else PINResult := checkPINValue(fReview.frmReview);
-          end
-          except
-           PINResult := prError;
-          end;
 
-          if PINResult = prError then ShowMsg('Problem getting PIN.  Cannot Digitally Sign.')
-          else if PINResult=prLocked then
-          begin
-            if PINLock = '0' then sCallV('ORDEA PINLKSET', []);
-            ShowMsg('Card has been locked.  Cannot Digitally Sign.')
-          end
-          else if PINResult=prCancel then ShowMsg('Digital Signing has been cancelled.')
-          else
-            begin
-              try
+            try
+              //get PKI engine components ready
+              NewPKIEncryptionEngine(RPCBrokerV, aPKIEncryptionEngine);
+              NewPKIEncryptionDataDEAOrder(aPKIEncryptionDataDEAOrder);
+
+              //check if reader is ready, card in slot, SAN is set in vista user account
+              //if no SAN set it will perform the link process in IsDigitalSignatureAvailable
+              CallV('ORDEA LNKMSG',[]);
+              for i := 0 to RPCBrokerV.Results.Count - 1 do
               begin
-                crypto := TCryptography.Create;
-                //call rpc to get hash fields other than drug info
-                CallV('ORDEA HASHINFO', [Patient.DFN, User.DUZ]);
-                for i := 0 to RPCBrokerV.Results.Count -1 do
-                begin
-                  if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'IssuanceDate' then IssuanceDate := Piece2end(RPCBrokerV.Results.Strings[i],':');
-                  if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'PatientName' then PatientName := Piece2end(RPCBrokerV.Results.Strings[i],':');
-                  if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'PatientAddress' then PatientAddress := Piece2end(RPCBrokerV.Results.Strings[i],':');
-                  if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'DetoxNumber' then DetoxNumber := Piece2end(RPCBrokerV.Results.Strings[i],':');
-                  if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'ProviderName' then ProviderName := Piece2end(RPCBrokerV.Results.Strings[i],':');
-                  if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'ProviderAddress' then ProviderAddress := Piece2end(RPCBrokerV.Results.Strings[i],':');
-                  if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'DeaNumber' then SigDEA := Piece2end(RPCBrokerV.Results.Strings[i],':');
-                end;
-                for i := 0 to CSOrderList.Count - 1 do
-                begin
-                  CallV('ORDEA ORDHINFO', [Piece(Piece(CSOrderList.strings[i],U,1),';',1)]);
-                  DrugName := '';
-                  Quantity := '';
-                  Directions := '';
-                  for k := 0 to RPCBrokerV.Results.Count -1 do
+                successMsg := successMsg + CRLF + RPCBrokerV.Results.Strings[i];
+              end;
+              if not IsDigitalSignatureAvailable(aPKIEncryptionEngine, aMessage, successMsg) then
+                raise Exception.Create('There was a problem linking your PIV card. Either the '
+                    + 'PIV card name does NOT match your VistA account name or the PIV card is already '
+                    + 'linked to another VistA account.  Ensure that the correct PIV card has '
+                    + 'been inserted for your VistA account. Please contact your PIV Card Coordinator '
+                    + 'if you continue to have problems.')
+              else
+                fframe.frmFrame.DigitalSigningSetup1.Visible := False;
+
+              //do PIN entry
+              case VerifyPKIPIN(aPKIEncryptionEngine) of
+                prOK:
                   begin
-                    if Piece(RPCBrokerV.Results.Strings[k],':',1) = 'DrugName' then DrugName := Piece2end(RPCBrokerV.Results.Strings[k],':');
-                    if Piece(RPCBrokerV.Results.Strings[k],':',1) = 'Quantity' then Quantity := Piece2end(RPCBrokerV.Results.Strings[k],':');
-                    if Piece(RPCBrokerV.Results.Strings[k],':',1) = 'Directions' then Directions := Piece(Piece2end(RPCBrokerV.Results.Strings[k],':'),U,1);
-                  end;
-                  try
-                    crypto.Reset;
-                    crypto.isDEAsig := true;
-                    crypto.UsrName := User.Name;
-                    crypto.UsrAltName := UsrAltName;
-                    crypto.IssuanceDate :=  IssuanceDate;
-                    crypto.PatientName :=   PatientName;
-                    crypto.PatientAddress :=  PatientAddress;
-                    crypto.DrugName :=     DrugName;
-                    crypto.Quantity :=   Quantity;
-                    crypto.Directions :=  Directions;
-                    crypto.DetoxNumber :=  ''; //DetoxNumber;  don't include detox in hash calc
-                    crypto.ProviderName :=  ProviderName;
-                    crypto.ProviderAddress :=  ProviderAddress;
-                    crypto.DeaNumber :=      SigDEA;
-                    crypto.OrderNumber :=   Piece(Piece(CSOrderList.strings[i],U,1),';',1);
-
-                    if false then Log2File(crypto);
-                    
-
-                    if crypto.Signdata = true then
+                    for i := 0 to CSOrderList.Count - 1 do
                     begin
-                      cSignature := crypto.SignatureStr;
-                      cHashData := crypto.HashStr;
-                      cCrlUrl := crypto.CrlUrl;
-                    end
-                    else
-                    begin
-                      ShowMsg('Could not digitally sign. An error has occurred: Hash generation failed'+CRLF+CRLF+crypto.Reason);
-                    DigStoreErr := true;
-                    end;
+                      aPKIEncryptionDataDEAOrder.Clear;
+                      aPKIEncryptionDataDEAOrder.LoadFromVistA(RPCBrokerV,Patient.DFN,IntToStr(User.DUZ),Piece(Piece(CSOrderList.strings[i],U,1),';',1));
+                      try
+                        aPKIEncryptionEngine.SignData(aPKIEncryptionDataDEAOrder);
 
-                  except
-                    on  E: Exception do
-                      begin
-                        ShowMsg('Could not digitally sign. An error has occurred: '+ E.Message);
-                        DigStoreErr := true;
+                        //if we get here without an exception then all went well with digital signing of this order
+                        cSignature := aPKIEncryptionDataDEAOrder.Signature;
+                        cHashData := aPKIEncryptionDataDEAOrder.HashText;
+                        cCrlUrl := aPKIEncryptionDataDEAOrder.CrlURL;
+                        cErr := '';
+
+                        //store digital sig info for the order
+		                    StoreDigitalSig(Piece(CSOrderList.Strings[i],U,1), cHashData, User.DUZ, cSignature, cCrlUrl, Patient.DFN, cErr);
+                        if cERR = '' then
+                          begin
+                          UpdateOrderDGIfNeeded(Piece(CSOrderList.Strings[i],U,1));
+                          //if this happens then the order will get released
+                          OrderList.Add(CSOrderList.Strings[i]);
+                          BAOrderList.Add(Piece(CSOrderList.Strings[i],U,1));
+                          end;
+                      except
+                        on E: EPKIEncryptionError do
+                          raise Exception.Create('PKI error encountered during digital signing of data: ' + E.Message);
+                        on E: Exception do
+                          raise Exception.Create('Unknown error encountered during digital signing: ' + E.Message);
                       end;
-                  end;
-
-                  if DigStoreErr then
-                    //messages shown above
-                  else
-                  begin
-                    cErr := '';
-                    StoreDigitalSig(Piece(CSOrderList.Strings[i],U,1), cHashData, User.DUZ, cSignature, cCrlUrl, Patient.DFN, cErr);
-                    if cErr = '' then
-                    begin
-                      UpdateOrderDGIfNeeded(Piece(CSOrderList.Strings[i],U,1));
-                      OrderList.Add(CSOrderList.Strings[i]);
-                      BAOrderList.Add(Piece(CSOrderList.Strings[i],U,1));
                     end;
                   end;
-                end;
+                prCancel:
+                  Exception.Create('You have cancelled the digital signing process.');
+                prLocked:
+                  Exception.Create('Your card has been locked and you cannot continue the digital signing process.');
+              else
+                  Exception.Create('There was a problem getting your PIN and the digital signing process has been stopped.');
               end;
-              finally
-                if not(crypto=nil) then
-                begin
-                  crypto.Free;
-                  crypto := nil;
-                end;
-              end;
+            except
+              on E: Exception do
+                 ShowMsg('The Controlled Substance order(s) will remain unreleased. ' + E.Message);
             end;
           end;
-        end; {OR_PHYSICIAN}
-      end; {case User.OrderRole}
+          aPKIEncryptionEngine := nil;
+          aPKIEncryptionDataDEAOrder := nil;
       if BILLING_AWARE then
          if UBAGLobals.UnsignedOrders.Count > 0 then
            UBACore.BuildSaveUnsignedList(uBAGLobals.UnsignedOrders);
@@ -1766,7 +1680,8 @@ end;
                       end;
                     //disregard Non-VA Meds orders
                     if TempChangeItem.OrderDG = NONVAMEDGROUP then continue;
-                    if TempChangeItem.OrderDG = 'Clinic Orders' then ContainsIMOORders := true;
+                    if (TempChangeItem.OrderDG = 'Clinic Medications') or (TempChangeItem.OrderDG = 'Clinic Infusions') then
+                      ContainsIMOORders := true;
                     if (tempChangeItem.OrderDG = '') then continue;
                     //Delay orders should be printed when the order is release to service not when the order is sign
                     if tempChangeItem.Delay = True then continue;
@@ -1822,7 +1737,7 @@ end;
           tempInpLoc := '';
         end;
         //hds7591  Clinic/Ward movement.
-        
+
           if SaveCoPay then
             begin
               SigItems.SaveSettings; // Save CoPay FIRST
@@ -1881,6 +1796,7 @@ end;
         end;
         StatusText('');
         UpdateUnsignedOrderAlerts(Patient.DFN);
+        UpdateIndOrderAlerts();
         with Notifications do
           if Active and (FollowUp = NF_ORDER_REQUIRES_ELEC_SIGNATURE) then
             UnsignedOrderAlertFollowup(Piece(RecordID, U, 2));
@@ -1890,16 +1806,12 @@ end;
         SendMessage(Application.MainForm.Handle, UM_NEWORDER, ORDER_SIGN, 0);
       end; {if User.OrderRole}
 
+
     finally
       FreeAndNil(OrderList);
       FreeAndNil(OrderPrintList);
       FreeAndNil(ClinicList);
       FreeAndNil(WardList);
-    end;
-    if not(crypto=nil) then
-    begin
-      crypto.Free;
-      crypto := nil;
     end;
   end;
 
@@ -1951,8 +1863,8 @@ end;
       Changes.Remove(AType, AnID);
     end;
   end;
-  UnlockIfAble;
   FOKPressed := IsOk;
+  UnlockIfAble;
   Close;
 end;
 
@@ -2061,7 +1973,7 @@ begin
                       except
                           on EListError do
                              begin
-                             {$ifdef debug}Show508Message('EListError in fReview.lstReviewMouseMove()');{$endif}
+//                             {$ifdef debug}Show508Message('EListError in fReview.lstReviewMouseMove()');{$endif}
                              raise;
                              end;
                       end;
@@ -2151,7 +2063,7 @@ try
   except
      on EListError do
         begin
-        {$ifdef debug}Show508Message('EListError in fReview.buDiagnosisClick()');{$endif}
+//        {$ifdef debug}Show508Message('EListError in fReview.buDiagnosisClick()');{$endif}
         raise;
         end;
   end;
@@ -2273,7 +2185,7 @@ thisOrderList := TStringList.Create;
   except
      on EListError do
         begin
-        {$ifdef debug}Show508Message('EListError in fReview.lstCSReviewClick()');{$endif}
+//        {$ifdef debug}Show508Message('EListError in fReview.lstCSReviewClick()');{$endif}
         raise;
         end;
   end;
@@ -2632,7 +2544,7 @@ begin
                       except
                           on EListError do
                              begin
-                             {$ifdef debug}Show508Message('EListError in fReview.lstCSReviewMouseMove()');{$endif}
+//                             {$ifdef debug}Show508Message('EListError in fReview.lstCSReviewMouseMove()');{$endif}
                              raise;
                              end;
                       end;
@@ -2718,7 +2630,7 @@ thisOrderList := TStringList.Create;
   except
      on EListError do
         begin
-        {$ifdef debug}Show508Message('EListError in fReview.lstReviewClick()');{$endif}
+//        {$ifdef debug}Show508Message('EListError in fReview.lstReviewClick()');{$endif}
         raise;
         end;
   end;
@@ -2851,7 +2763,7 @@ begin
    except
      on EListError do
         begin
-        {$ifdef debug}Show508Message('EListError in fReview.Copy1Click()');{$endif}
+//        {$ifdef debug}Show508Message('EListError in fReview.Copy1Click()');{$endif}
         raise
         end;
    end;
@@ -2924,7 +2836,7 @@ begin
   except
      on EListError do
         begin
-        {$ifdef debug}Show508Message('EListError in fReview.Paste1Click()');{$endif}
+//        {$ifdef debug}Show508Message('EListError in fReview.Paste1Click()');{$endif}
         raise;
         end;
   end;
@@ -2952,7 +2864,7 @@ begin
    except
      on EListError do
         begin
-        {$ifdef debug}Show508Message('EListError in fReview.ClearDiagnoses1Click()');{$endif}
+//        {$ifdef debug}Show508Message('EListError in fReview.ClearDiagnoses1Click()');{$endif}
         raise;
         end;
    end;
@@ -3043,6 +2955,7 @@ begin
         77,109: if (ssAlt in Shift) then ShowTreatmentFactorHints(BAFactorsRec.FBAFactorMST,fraCoPay.lblMST2); //M,m
         78,110: if (ssAlt in Shift) then ShowTreatmentFactorHints(BAFactorsRec.FBAFactorHNC,fraCoPay.lblHNC2); //N,n
         72,104: if (ssALT in Shift) then ShowTreatmentFactorHints(BAFactorsRec.FBAFactorSHAD,fraCopay.lblSHAD2); // H,h
+        76,108: if (ssALT in Shift) then ShowTreatmentFactorHints(BAFactorsRec.FBAFactorCL,fraCopay.lblCL2); // L,l
         //CQ5054
         83,115: if (ssAlt in Shift) then
                 begin
@@ -3193,6 +3106,7 @@ begin
         lblHNC.ShowHint  := false;
         lblHNC2.ShowHint := false;
         lblSHAD2.ShowHint := false;
+        lblCL2.ShowHint := false;
         end;
  end;
 

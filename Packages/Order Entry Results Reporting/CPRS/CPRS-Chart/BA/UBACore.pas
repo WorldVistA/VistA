@@ -1,6 +1,6 @@
 unit UBACore;
 
-{.$define debug}
+{$undef debug}
 
 interface
 uses
@@ -641,6 +641,7 @@ begin
    UBAGlobals.HNC := Copy(x,6,1);
    UBAGlobals.CV  := Copy(x,7,1);
    UBAGlobals.SHD := Copy(x,8,1);
+   UBAGlobals.CL  := Copy(x,9,1);
 end;
 
 
@@ -703,8 +704,12 @@ begin
           if StrPos(PChar(strTFactors),PChar(SHIPBOARD_HAZARD_DEFENSE)) <> nil then
              UBAGlobals.SHD := 'C';
 
+       if UBAGlobals.CL <> 'N' then
+          if StrPos(PChar(strTFactors),PChar(CAMP_LEJEUNE)) <> nil then
+             UBAGlobals.CL := 'C';
+
        //  Build Treatment Factor List to be passed to fOrdersSign form
-       strFlagsOut := (SC + AO + IR + EC + MST + HNC + CV + SHD);
+       strFlagsOut := (SC + AO + IR + EC + MST + HNC + CV + SHD + CL);
        UBAGlobals.BAFlagsOUT.Add(IDX + '^' + strFlagsOut );
      end;
   end;
@@ -994,6 +999,14 @@ begin
                           UBAGlobals.BAFactorsRec.FBAFactorSHAD := Piece(x,U,3)
                       else
                          UBAGlobals.BAFactorsRec.FBAFactorSHAD := (UBAGlobals.BAFactorsRec.FBAFactorSHAD + CRLF + Piece(x,U,3) );
+                   end else
+                    if piece(x,U,1) = CAMP_LEJEUNE then
+                    begin
+                       if piece(x,U,2) = '1' then
+                          UBAGlobals.BAFactorsRec.FBAFactorCL := Piece(x,U,3)
+                      else
+                         UBAGlobals.BAFactorsRec.FBAFactorCL := (UBAGlobals.BAFactorsRec.FBAFactorCL + CRLF + Piece(x,U,3) );
+
                   end;
             end;
   except
@@ -1270,6 +1283,7 @@ begin
     UBAGlobals.HNC := Copy(x,6,1);
     UBAGlobals.CV  :=  Copy(x,7,1); // load factors to global vars;
     UBAGlobals.SHD := Copy(x,8,1);
+    UBAGlobals.CL := Copy(x,9,1);
 
   if UBAGlobals.SC  <> 'N' then
        if StrPos(PChar(strTFactors),PChar(SERVICE_CONNECTED)) <> nil then
@@ -1306,6 +1320,10 @@ begin
     if UBAGlobals.SHD <> 'N' then
        if StrPos(PChar(strTFactors),PChar(SHIPBOARD_HAZARD_DEFENSE)) <> nil then
           UBAGlobals.SHD := 'C';
+
+    if UBAGlobals.CL <> 'N' then
+       if StrPos(PChar(strTFactors),PChar(CAMP_LEJEUNE)) <> nil then
+          UBAGlobals.CL := 'C';
 
      strFlagsOut := (UBAGlobals.SC + UBAGlobals.AO + UBAGlobals.IR +
                      UBAGlobals.EC + UBAGlobals.MST + UBAGlobals.HNC +

@@ -169,7 +169,7 @@ const
                 + #13 + 'You will give this view a name that can be selected from the graph.';
   HINT_BTN_SAVE_PUB   = 'Click to save a public view (available to editors only).'
                 + #13 + 'Public views can be selected by all users.';
-  HINT_APPLY          = 'Select the section you where you want to display the graph.';
+  HINT_APPLY          = 'Select the section where you want to display the graph.';
   HINT_BTN_CLOSE      = 'Click to display items for graphing.'
                 + #13 + 'Note: If you are using this from the Options menu, '
                 + #13 + 'items are not displayed (multiple graphs may be in use).'

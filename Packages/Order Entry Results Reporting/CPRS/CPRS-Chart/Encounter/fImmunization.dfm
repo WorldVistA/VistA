@@ -2,8 +2,7 @@ inherited frmImmunizations: TfrmImmunizations
   Left = 373
   Top = 169
   Caption = 'Encouner Immunization'
-  ExplicitLeft = 373
-  ExplicitTop = 169
+  OnPaint = FormPaint
   PixelsPerInch = 96
   TextHeight = 13
   object lblReaction: TLabel [0]
@@ -41,37 +40,26 @@ inherited frmImmunizations: TfrmImmunizations
   end
   inherited pnlGrid: TPanel
     TabOrder = 1
-    inherited lbGrid: TORListBox
-      Tag = 40
+    inherited lstRenameMe: TCaptionListView
+      Columns = <
+        item
+          Caption = 'Series'
+          Width = 80
+        end
+        item
+          Caption = 'Reaction'
+          Tag = 1
+          Width = 120
+        end
+        item
+          Caption = 'Contra'
+        end
+        item
+          Caption = 'Selected Immunizations'
+          Width = 150
+        end>
       Caption = 'Selected Immunizations'
       Pieces = '1,2,3,4'
-    end
-    inherited hcGrid: THeaderControl
-      Sections = <
-        item
-          ImageIndex = -1
-          MinWidth = 43
-          Text = 'Series'
-          Width = 96
-        end
-        item
-          ImageIndex = -1
-          MinWidth = 57
-          Text = 'Reaction'
-          Width = 134
-        end
-        item
-          ImageIndex = -1
-          MinWidth = 45
-          Text = 'Contra'
-          Width = 45
-        end
-        item
-          ImageIndex = -1
-          MinWidth = 124
-          Text = 'Selected Immunizations'
-          Width = 124
-        end>
     end
   end
   inherited edtComment: TCaptionEdit
@@ -100,6 +88,7 @@ inherited frmImmunizations: TfrmImmunizations
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 5
+    Text = ''
     OnChange = cboImmReactionChange
     CharsNeedMatch = 1
   end
@@ -126,6 +115,7 @@ inherited frmImmunizations: TfrmImmunizations
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 4
+    Text = ''
     OnChange = cboImmSeriesChange
     CharsNeedMatch = 1
   end
@@ -137,6 +127,8 @@ inherited frmImmunizations: TfrmImmunizations
     Enabled = False
     TabOrder = 6
     OnClick = ckbContraClick
+    OnEnter = ckbContraEnter
+    OnExit = ckbContraExit
   end
   inherited btnRemove: TButton
     TabOrder = 7
@@ -175,7 +167,8 @@ inherited frmImmunizations: TfrmImmunizations
         'Status = stsOK')
       (
         'Component = ckbContra'
-        'Status = stsDefault')
+        'Label = lblContra'
+        'Status = stsOK')
       (
         'Component = edtComment'
         'Label = lblComment'
@@ -205,12 +198,6 @@ inherited frmImmunizations: TfrmImmunizations
         'Status = stsDefault')
       (
         'Component = pnlGrid'
-        'Status = stsDefault')
-      (
-        'Component = lbGrid'
-        'Status = stsDefault')
-      (
-        'Component = hcGrid'
         'Status = stsDefault')
       (
         'Component = btnOK'

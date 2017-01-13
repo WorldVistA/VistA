@@ -14,8 +14,6 @@ type
   TCPRSTimeoutTimerAction = procedure of object;
 {$ENDIF}
 
-procedure AutoUpdateCheck;
-
 procedure InitTimeOut(AUserCondition: TCPRSTimeoutTimerCondition;
                       AUserAction: TCPRSTimeoutTimerAction);
 procedure UpdateTimeOutInterval(NewTime: Cardinal);
@@ -28,7 +26,7 @@ implementation
 
 uses
   fTimeout;
-  
+
 type
   TCPRSTimeoutTimer = class(TTimer)
   private
@@ -49,33 +47,6 @@ var
 
 function TimeoutKeyHook(Code: Integer; wParam: WPARAM; lParam: LPARAM): LRESULT; StdCall; forward;
 function TimeoutMouseHook(Code: Integer; wParam: WPARAM; lParam: LPARAM): LRESULT; StdCall; forward;
-  
-procedure AutoUpdateCheck;
-const
-{$IFDEF GroupEncounter}
-  AppHelpFile = 'CPRSGE';
-{$ELSE}
-  AppHelpFile = 'CPRS';
-  WhatsThisHelpFile = 'CPRSWT';
-{$ENDIF}
-var
-  x, CPRSUpdate :string;
-
-begin
-  CPRSUpdate := RegReadStr(CPRS_REG_GOLD) + 'CPRSUpdate.exe';
-  if not FileExists(CPRSUpdate) then CPRSUpdate := 'CPRSUpdate.exe';
-//  x := FullToPathPart(Application.ExeName) + AppHelpFile + '.HLP';
-//  if AppOutOfDate(x) and FileExists(CPRSUpdate) then RunProgram(CPRSUpdate + ' XFER="' + x + '"');
-  x := FullToPathPart(Application.ExeName) + AppHelpFile + '.CNT';
-//  if AppOutOfDate(x) and FileExists(CPRSUpdate) then RunProgram(CPRSUpdate + ' XFER="' + x + '"');
-//  x := FullToPathPart(Application.ExeName) + WhatsThisHelpFile + '.HLP';
-  if AppOutOfDate(x) and FileExists(CPRSUpdate) then RunProgram(CPRSUpdate + ' XFER="' + x + '"');
-  x := FullToPathPart(Application.ExeName) + WhatsThisHelpFile + '.CNT';
-  if AppOutOfDate(x) and FileExists(CPRSUpdate) then RunProgram(CPRSUpdate + ' XFER="' + x + '"');
-  // Moved to CPRSUpdate.EXE in early test version of v27.  This code removed for CPRS v27.27.
-  //x := FullToPathPart(Application.ExeName) + 'BORLNDMM.DLL';
-  //if AppOutOfDate(x) and FileExists(CPRSUpdate) then RunProgram(CPRSUpdate + ' XFER="' + x + '"');
-end;
 
 {** Timeout Functions **}
 

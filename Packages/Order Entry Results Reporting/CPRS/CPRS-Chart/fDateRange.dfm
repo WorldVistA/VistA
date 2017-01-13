@@ -6,8 +6,8 @@ inherited frmDateRange: TfrmDateRange
   ClientWidth = 274
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitWidth = 282
-  ExplicitHeight = 159
+  ExplicitWidth = 290
+  ExplicitHeight = 170
   PixelsPerInch = 96
   TextHeight = 13
   object lblStart: TLabel [0]
@@ -80,10 +80,12 @@ inherited frmDateRange: TfrmDateRange
     Data = (
       (
         'Component = txtStart'
-        'Status = stsDefault')
+        'Text = Begin Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = txtStop'
-        'Status = stsDefault')
+        'Text = End Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = cmdOK'
         'Status = stsDefault')

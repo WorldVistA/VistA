@@ -6,6 +6,8 @@ inherited frmODLabImmedColl: TfrmODLabImmedColl
   ClientWidth = 516
   OldCreateOrder = True
   OnShow = FormShow
+  ExplicitWidth = 532
+  ExplicitHeight = 297
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBase: TORAutoPanel [0]
@@ -88,7 +90,8 @@ inherited frmODLabImmedColl: TfrmODLabImmedColl
         'Status = stsDefault')
       (
         'Component = calImmedCollect'
-        'Status = stsDefault')
+        'Text = Collection time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = cmdOK'
         'Status = stsDefault')

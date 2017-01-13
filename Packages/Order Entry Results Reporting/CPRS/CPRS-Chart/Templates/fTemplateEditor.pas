@@ -447,9 +447,9 @@ implementation
 {$R *.DFM}
 
 uses dShared, uCore, rTemplates, fTemplateObjects, uSpell, fTemplateView,
-  fTemplateAutoGen, fDrawers, fTemplateFieldEditor, fTemplateFields, XMLUtils,
+  fTemplateAutoGen, fDrawers, mDrawers, fTemplateFieldEditor, fTemplateFields, XMLUtils,
   fIconLegend, uReminders, uConst, rCore, rEventHooks, rConsults, VAUtils,
-  rMisc, fFindingTemplates;
+  rMisc, fFindingTemplates, System.UITypes;
 
 const
   PropText = ' Template Properties ';
@@ -497,34 +497,41 @@ var
   frmTemplateObjects: TfrmTemplateObjects = nil;
   frmTemplateFields: TfrmTemplateFields = nil;
 
-procedure EditTemplates(Form: TForm; NewTemplate: boolean = FALSE;
-  CopiedText: string = ''; Shared: boolean = FALSE);
+procedure EditTemplates(Form: TForm; NewTemplate: boolean = FALSE; CopiedText: string = ''; Shared: boolean = FALSE);
 var
   frmTemplateEditor: TfrmTemplateEditor;
-  Drawers: TFrmDrawers;
+  Drawers: TObject;
   ExpandStr, SelectStr: string;
   SelNode: TTreeNode;
   SelShared: boolean;
-
+  View: TORTreeView;
 begin
   if (UserTemplateAccessLevel in [taReadOnly, taNone]) then exit;
 
   ExpandStr := '';
   SelectStr := '';
+  View := nil;
   Drawers := nil;
   if (not NewTemplate) and (CopiedText = '') then
   begin
-    if Form is TfrmDrawers then
-      Drawers := TFrmDrawers(Form)
-    else
-      if IsPublishedProp(Form, DrawersProperty) then
-        Drawers := TFrmDrawers(GetOrdProp(Form, DrawersProperty));
+    if Form is TfrmDrawers then begin
+      View := TfrmDrawers(Form).tvTemplates;
+    end else begin
+      if IsPublishedProp(Form, DrawersProperty) then begin
+        Drawers := GetObjectProp(Form, DrawersProperty);
+        if Drawers is TfrmDrawers then begin
+          View := TFrmDrawers(Drawers).tvTemplates;
+        end else if Drawers is TfraDrawers then begin
+          View := TfraDrawers(Drawers).tvTemplates;
+        end;
+      end;
+    end;
   end;
 
   if assigned(Drawers) then
   begin
-    ExpandStr := Drawers.tvTemplates.GetExpandedIDStr(1, ';');
-    SelectStr := Drawers.tvTemplates.GetNodeID(TORTreeNode(Drawers.tvTemplates.Selected), 1, ';');
+    ExpandStr := View.GetExpandedIDStr(1, ';');
+    SelectStr := View.GetNodeID(TORTreeNode(View.Selected), 1, ';');
   end;
 
   frmTemplateEditor := TfrmTemplateEditor.Create(Application);
@@ -566,7 +573,14 @@ begin
           ShowInfo(FBtnNewNode);
         end;
       end;
-      ShowModal;
+      if (frmTemplateEditor.ShowModal = mrOK) then begin
+        if assigned(Drawers) then begin
+          if Drawers is TfraDrawers then begin
+            if assigned(TfraDrawers(Drawers).OnTemplateEditEvent) then
+              TfraDrawers(Drawers).OnTemplateEditEvent;
+          end;
+        end;
+      end;
     end;
   finally
     frmTemplateEditor.Free;
@@ -688,13 +702,15 @@ begin
   Application.HintHidePause := FSavePause * 2;
   if InteractiveRemindersActive then
   begin
-    QuickCopy(GetTemplateAllowedReminderDialogs, cbxRemDlgs.Items);
+//    QuickCopy(GetTemplateAllowedReminderDialogs, cbxRemDlgs.Items);
+    cbxRemDlgs.Items.Text := GetTemplateAllowedReminderDialogs.Text;
     FCanDoReminders := (cbxRemDlgs.Items.Count > 0);
   end
   else
     FCanDoReminders := FALSE;
 
-  QuickCopy(GetAllActiveCOMObjects, cbxCOMObj.Items);
+//  QuickCopy(GetAllActiveCOMObjects, cbxCOMObj.Items);
+  cbxCOMObj.Items.Text := GetAllActiveCOMObjects.Text;
   FCanDoCOMObjects := (cbxCOMObj.Items.Count > 0);
 
   FUpdating := TRUE;
@@ -1904,6 +1920,8 @@ begin
   begin
     Tree := TTreeView(Sender);
     FDropNode := Tree.GetNodeAt(X, Y);
+    if Tree.ScreenToClient(Mouse.CursorPos).Y >= (Tree.ClientHeight - 5) then
+       Tree.Perform(WM_VSCROLL, SB_LINEDOWN, 0);
     if (((Tree = tvShared) and (FCanEditShared)) or
       ((Tree = tvPersonal) and (FCanEditPersonal))) then
     begin
@@ -2741,7 +2759,7 @@ end;
 procedure TfrmTemplateEditor.edtGapKeyPress(Sender: TObject;
   var Key: Char);
 begin
-  if (not (Key in ['0', '1', '2', '3'])) then Key := #0;
+  if (not CharInSet(Key, ['0', '1', '2', '3'])) then Key := #0;
 end;
 
 procedure TfrmTemplateEditor.edtNameExit(Sender: TObject);

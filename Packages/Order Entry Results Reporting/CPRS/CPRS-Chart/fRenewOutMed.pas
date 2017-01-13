@@ -47,7 +47,7 @@ function ExecuteRenewOutMed(var Refills: Integer; var Comments, Pickup: string;
   AnOrder: TOrder): Boolean;
 var
   frmRenewOutMed: TfrmRenewOutMed;
-  DestList: TList;
+   DestList: TList;
   HasObject: Boolean;
   i: Integer;
   Drug, Days, OrID: string;
@@ -63,7 +63,7 @@ begin
       else if TResponse(DestList.Items[i]).PromptID = 'ORDERABLE' then OrID := TResponse(DestList.Items[i]).IValue;
     end;
 
-    MaxRefills := CalcMaxRefills(Drug, StrToInt(Days), StrToInt(OrID), AnOrder.EventName = 'D');
+    MaxRefills := CalcMaxRefills(Drug, StrToIntDef(Days, 0), StrToInt(OrID), AnOrder.EventName = 'D');
 
   frmRenewOutMed := TfrmRenewOutMed.Create(Application);
   try
@@ -79,8 +79,8 @@ begin
       Pickup := frmRenewOutMed.cboPickup.ItemID;
     end;
   finally
-   frmRenewOutMed.Release;
-  end;
+    frmRenewOutMed.Release;
+    end;
   finally
     DestList.Free;
   end;

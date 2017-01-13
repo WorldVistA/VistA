@@ -1,9 +1,9 @@
 object frmAddServer: TfrmAddServer
   Left = 287
   Top = 259
-  Width = 343
-  Height = 147
   Caption = 'Add Server'
+  ClientHeight = 109
+  ClientWidth = 327
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -60,15 +60,17 @@ object frmAddServer: TfrmAddServer
     Top = 80
     Width = 75
     Height = 25
-    TabOrder = 2
     Kind = bkOK
+    NumGlyphs = 2
+    TabOrder = 2
   end
   object bbtnCancel: TBitBtn
     Left = 190
     Top = 80
     Width = 75
     Height = 25
-    TabOrder = 3
     Kind = bkCancel
+    NumGlyphs = 2
+    TabOrder = 3
   end
 end

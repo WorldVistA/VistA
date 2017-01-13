@@ -43,7 +43,8 @@ procedure GetUnresolvedConsultsInfo;
 {list box fillers}
 function  SubSetOfStatus: TStrings;
 function  SubSetOfUrgencies(ConsultIEN: integer): TStrings;
-function  LoadServiceList(Purpose: integer): TStrings ;
+function  LoadServiceList(Purpose: integer): TStrings ; overload ;
+function  LoadServiceList(ShowSynonyms: Boolean; StartService, Purpose: integer; ConsultIEN: integer = -1): TStrings ; overload;
 function  LoadServiceListWithSynonyms(Purpose: integer): TStrings ; overload;
 function  LoadServiceListWithSynonyms(Purpose, ConsultIEN: integer): TStrings ; overload;
 function  SubSetOfServices(const StartFrom: string; Direction: Integer): TStrings;
@@ -96,6 +97,7 @@ function GetConsultOrderIEN(ConsultIEN: integer): string;
 function GetServicePrerequisites(Service: string): TStrings;
 procedure GetProvDxMode(var ProvDx: TProvisionalDiagnosis; SvcIEN: string);
 function IsProstheticsService(SvcIen: int64) : string;
+function GetServiceUserLevel(ServiceIEN, UserDUZ: integer): String ;
 
 { Clinical Procedures Specific}
 function GetSavedCPFields(NoteIEN: integer): TEditNoteRec;
@@ -354,8 +356,7 @@ begin
       InOut                 := Piece(x, U, 18)  ;
       Findings              := Piece(x, U, 19)  ;
       TIUResultNarrative    := StrToIntDef(Piece(x, U, 20),0);
-      EarliestDate          := StrToFloatDef(Piece(x, U, 98), 0);
-      //LatestDate            := StrToFloatDef(Piece(x, U, 99), 0); //dropped requirement WAT
+      ClinicallyIndicatedDate          := StrToFloatDef(Piece(x, U, 98), 0);
       //ProvDiagnosis         := Piece(x, U, 23);  NO!!!!! Up to 180 Characters!!!!
       alist.delete(0) ;
       TIUDocuments := TStringList.Create ;
@@ -544,6 +545,20 @@ begin
   Result := RPCBrokerV.Results;
 end ;
 
+function LoadServiceList(ShowSynonyms: Boolean; StartService, Purpose: Integer; ConsultIEN: integer = -1): TStrings ;
+// Param 1 = Starting service (1=All Services)
+// Param 2 = Purpose:  0=display all services, 1=forward or order from possible services
+// Param 3 = Show synonyms
+// Param 4 = Consult IEN
+begin
+  if ConsultIEN > -1 then
+   Callv('ORQQCN SVC W/SYNONYMS',[StartService, Purpose, ShowSynonyms, ConsultIEN])
+  else
+   Callv('ORQQCN SVC W/SYNONYMS',[StartService, Purpose, ShowSynonyms]) ;
+  MixedCaseList(RPCBrokerV.Results) ;
+  Result := RPCBrokerV.Results;
+end ;
+
 function LoadServiceListWithSynonyms(Purpose: integer): TStrings ;
 // Param 1 = Starting service (1=All Services)
 // Param 2 = Purpose:  0=display all services, 1=forward or order from possible services
@@ -670,8 +685,7 @@ begin
          ConsultProcName := Piece(ExtractDefault(Dest, 'PROCEDURE'), U, 2);
          Urgency         := StrToIntDef(Piece(ExtractDefault(Dest, 'URGENCY'), U, 3), 0);
          UrgencyName     := Piece(ExtractDefault(Dest, 'URGENCY'), U, 2);
-         EarliestDate    := StrToFloatDef(Piece(ExtractDefault(Dest, 'EARLIEST'), U, 2), 0);
-         //LatestDate      := StrToFloatDef(Piece(ExtractDefault(Dest, 'LATEST'), U, 2), 0); //dropped requirement WAT
+         ClinicallyIndicatedDate    := StrToFloatDef(Piece(ExtractDefault(Dest, 'CLINICALLY'), U, 2), 0);
          Place           := Piece(ExtractDefault(Dest, 'PLACE'), U, 1);
          PlaceName       := Piece(ExtractDefault(Dest, 'PLACE'), U, 2);
          Attention       := StrToInt64Def(Piece(ExtractDefault(Dest, 'ATTENTION'), U, 1), 0);
@@ -738,10 +752,8 @@ begin
               for i := 0 to NewComments.Count - 1 do
                 Mult['10,' + IntToStr(i+1)] := NewComments.Strings[i];
             end;
-          if EarliestDate > 0 then
-             Mult['11']  := 'GMRCERDT^'  + FloatToStr(EarliestDate);  //wat renamed v28
-          {if LatestDate > 0 then
-             Mult['12']  := 'GMRCLATE^'  + FloatToStr(LatestDate);} //dropped requirement WAT
+          if ClinicallyIndicatedDate > 0 then
+             Mult['11']  := 'GMRCERDT^'  + FloatToStr(ClinicallyIndicatedDate);  //wat renamed v28
         end;
       CallBroker;
       Result := '0';
@@ -848,6 +860,13 @@ function IsProstheticsService(SvcIen : int64) : string;  //wat v28
  begin
    Result := sCallV('ORQQCN ISPROSVC', [SvcIen]);
  end;
+
+function GetServiceUserLevel(ServiceIEN, UserDUZ: integer): String ;
+// Param 1 = IEN of service
+// Param 2 = Users DUZ (currently can be null)
+begin
+Result := sCallV('ORQQCN GET USER AUTH',[ServiceIEN]) ;
+end;
 
 initialization
   uLastOrderedIEN := 0;

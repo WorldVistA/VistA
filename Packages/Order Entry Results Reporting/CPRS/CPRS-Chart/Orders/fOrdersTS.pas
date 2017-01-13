@@ -9,20 +9,19 @@ uses
 
 type
   TfrmOrdersTS = class(TfrmAutoSz)
-    pnlMiddle: TPanel;
     pnlTop: TPanel;
     lblPtInfo: TVA508StaticText;
-    grpChoice: TGroupBox;
-    radReleaseNow: TRadioButton;
-    radDelayed: TRadioButton;
     pnldif: TPanel;
     Image1: TImage;
-    cmdOK: TButton;
-    cmdCancel: TButton;
     lblUseAdmit: TVA508StaticText;
     lblUseTransfer: TVA508StaticText;
     pnlBottom: TPanel;
     fraEvntDelayList: TfraEvntDelayList;
+    grpChoice: TGroupBox;
+    radDelayed: TRadioButton;
+    radReleaseNow: TRadioButton;
+    cmdOK: TButton;
+    cmdCancel: TButton;
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -35,6 +34,7 @@ type
     procedure fraEvntDelayListmlstEventsChange(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure FormResize(Sender: TObject);
   private
     OKPressed: Boolean;
     FResult  : Boolean;
@@ -98,7 +98,7 @@ begin
       else
         frmOrdersTS.lblPtInfo.Caption := Patient.Name + ' currently is an outpatient.' + SpeCap;
     end;
-    if not (AnLimitEvent in ['A','D','T','M','O']) then
+    if not CharInSet(AnLimitEvent, ['A','D','T','M','O']) then
       AnLimitEvent := #0;
     frmOrdersTs.fraEvntDelayList.EvntLimit := AnLimitEvent;
     if AnEvent.EventIFN > 0 then
@@ -167,11 +167,27 @@ begin
   FImmediatelyRelease := False;
   F1stClick           := True;
   FCurrSpecialty      := '';
+  AutoSizeDisabled := true;
 end;
 
-procedure TfrmOrdersTS.cmdOKClick(Sender: TObject);   
+
+{=========================================================================================}
+{  RetrieveValueFromIndex - Acts like old ValueFromIndex                                  }
+{-----------------------------------------------------------------------------------------}
+{  XE3 changed the Value From Index to include calculating with the delimiter character.  }
+{  This routine uses the old method for calculating ValueFromIndex from D2006             }
+{=========================================================================================}
+function RetrieveValueFromIndex(s: TStrings; Index: integer): string;
+begin
+  if Index >= 0 then
+  Result := Copy(s[Index], Length(s.Names[Index]) + 2, MaxInt) else
+  Result := '';
+end;
+
+procedure TfrmOrdersTS.cmdOKClick(Sender: TObject);
 var
   tempStr: String;
+
 begin
   inherited;
   if grpChoice.Tag = 0 then
@@ -184,8 +200,9 @@ begin
     InfoBox('A release event must be selected.', 'No Selection Made', MB_OK);
     Exit;
   end;
-  
-  tempStr := fraEvntDelayList.mlstEvents.Items.ValueFromIndex[fraEvntDelayList.mlstEvents.ItemIndex];
+
+ // tempStr := fraEvntDelayList.mlstEvents.Items.ValueFromIndex[fraEvntDelayList.mlstEvents.ItemIndex];
+  tempStr := RetrieveValueFromIndex(fraEvntDelayList.mlstEvents.Items, fraEvntDelayList.mlstEvents.ItemIndex);  // CQ 21556
 
   if(fraEvntDelayList.mlstEvents.ItemIndex >= 0) and (Length(Piece(tempStr,'^',2))<1)then
   begin
@@ -291,8 +308,10 @@ begin
   if fraEvntDelayList.MatchedCancel then
   begin
     OKPressed := False;
-    Close;
-    Exit;
+    //cq 21647 - Allow the user to make another selection after pop up message - jcs
+    fraEvntDelayList.MatchedCancel := False;
+    //Close;
+    //Exit;
   end;
 end;
 
@@ -302,6 +321,12 @@ begin
   inherited;
   if Key = VK_RETURN then
      cmdOKClick(Self);
+end;
+
+procedure TfrmOrdersTS.FormResize(Sender: TObject);
+begin
+ // inherited;
+
 end;
 
 end.

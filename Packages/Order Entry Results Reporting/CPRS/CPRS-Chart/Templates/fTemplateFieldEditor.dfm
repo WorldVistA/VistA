@@ -10,8 +10,8 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnResize = FormResize
-  ExplicitWidth = 796
-  ExplicitHeight = 454
+  ExplicitWidth = 804
+  ExplicitHeight = 455
   PixelsPerInch = 96
   TextHeight = 13
   object splLeft: TSplitter [0]
@@ -27,7 +27,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
     Width = 788
     Height = 29
     Align = alBottom
-    TabOrder = 2
+    TabOrder = 3
     DesignSize = (
       788
       29)
@@ -47,7 +47,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
       Anchors = [akTop, akRight, akBottom]
       Caption = 'OK'
       ModalResult = 1
-      TabOrder = 2
+      TabOrder = 1
       OnClick = btnOKClick
     end
     object btnCancel: TButton
@@ -59,7 +59,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
       Cancel = True
       Caption = 'Cancel'
       ModalResult = 2
-      TabOrder = 3
+      TabOrder = 2
       OnClick = btnCancelClick
     end
     object btnApply: TButton
@@ -69,7 +69,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
       Height = 21
       Anchors = [akTop, akRight, akBottom]
       Caption = 'Apply'
-      TabOrder = 4
+      TabOrder = 3
       OnClick = btnApplyClick
     end
     object btnPreview: TButton
@@ -80,7 +80,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
       Anchors = [akTop, akRight, akBottom]
       Caption = 'Preview'
       Enabled = False
-      TabOrder = 1
+      TabOrder = 0
       OnClick = btnPreviewClick
     end
     object cbHide: TCheckBox
@@ -91,7 +91,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
       Caption = 'Hide Inactive Fields'
       Checked = True
       State = cbChecked
-      TabOrder = 0
+      TabOrder = 4
       OnClick = cbHideClick
     end
   end
@@ -102,7 +102,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
     Height = 366
     Align = alLeft
     Caption = 'pnlObjs'
-    TabOrder = 0
+    TabOrder = 1
     OnResize = pnlObjsResize
     object lblObjs: TLabel
       Left = 1
@@ -137,6 +137,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
       SynonymChars = '<Inactive>'
       TabPositions = '50,60,70,80,90'
       TabOrder = 0
+      Text = ''
       OnChange = cbxObjsChange
       OnKeyDown = cbxObjsKeyDown
       OnNeedData = cbxObjsNeedData
@@ -151,7 +152,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
     Height = 366
     Align = alClient
     Constraints.MinWidth = 356
-    TabOrder = 1
+    TabOrder = 2
     OnResize = FormResize
     object splBottom: TSplitter
       Left = 1
@@ -185,14 +186,14 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         Width = 352
         Height = 69
         Align = alClient
-        Font.Charset = DEFAULT_CHARSET
+        Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Courier New'
         Font.Style = []
         ParentFont = False
         PopupMenu = popText
-        ScrollBars = ssBoth
+        ScrollBars = ssVertical
         TabOrder = 0
         WantTabs = True
         OnChange = reNotesChange
@@ -303,7 +304,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         MaxLength = 60
         ParentFont = False
         PopupMenu = popText
-        TabOrder = 0
+        TabOrder = 2
         OnChange = edtNameChange
         OnEnter = edtpopControlEnter
         OnExit = edtNameExit
@@ -326,7 +327,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         ParentShowHint = False
         PopupMenu = popText
         ShowHint = True
-        TabOrder = 7
+        TabOrder = 11
         OnChange = edtLMTextChange
         OnEnter = edtpopControlEnter
         Caption = 'LM Text'
@@ -364,7 +365,8 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         Pieces = '2'
         Sorted = False
         SynonymChars = '<>'
-        TabOrder = 1
+        TabOrder = 3
+        Text = ''
         OnChange = cbxTypeChange
         CharsNeedMatch = 1
       end
@@ -374,7 +376,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         Width = 26
         Height = 21
         Anchors = [akTop, akRight]
-        TabOrder = 4
+        TabOrder = 7
         Text = '0'
         OnChange = edtTextLenChange
         Caption = 'Text Length'
@@ -387,7 +389,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         Anchors = [akTop, akRight]
         Associate = edtTextLen
         Max = 240
-        TabOrder = 5
+        TabOrder = 8
       end
       object pnlSwap: TPanel
         Left = 50
@@ -396,7 +398,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         Height = 140
         Anchors = [akLeft, akTop, akRight, akBottom]
         BevelOuter = bvNone
-        TabOrder = 6
+        TabOrder = 9
         object edtDefault: TCaptionEdit
           Left = 0
           Top = 0
@@ -411,7 +413,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           MaxLength = 70
           ParentFont = False
           PopupMenu = popText
-          TabOrder = 2
+          TabOrder = 1
           OnChange = edtDefaultChange
           OnEnter = edtpopControlEnter
           OnExit = ControlExit
@@ -424,7 +426,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           Height = 22
           Align = alTop
           BevelOuter = bvNone
-          TabOrder = 0
+          TabOrder = 2
           object lblMin: TLabel
             Left = 53
             Top = 4
@@ -454,7 +456,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Associate = edtDefNum
             Min = -9999
             Max = 9999
-            TabOrder = 1
+            TabOrder = 3
             Thousands = False
           end
           object edtDefNum: TCaptionEdit
@@ -462,7 +464,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Top = 0
             Width = 34
             Height = 21
-            TabOrder = 0
+            TabOrder = 1
             Text = '0'
             OnChange = edtDefNumChange
             Caption = 'Default Number'
@@ -475,7 +477,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Associate = edtMinVal
             Min = -9999
             Max = 9999
-            TabOrder = 3
+            TabOrder = 5
             Thousands = False
           end
           object edtMinVal: TCaptionEdit
@@ -483,7 +485,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Top = 0
             Width = 34
             Height = 21
-            TabOrder = 2
+            TabOrder = 4
             Text = '0'
             OnChange = edtMinValChange
             Caption = 'Minimum'
@@ -497,14 +499,14 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Min = 1
             Max = 999
             Position = 1
-            TabOrder = 7
+            TabOrder = 11
           end
           object edtInc: TCaptionEdit
             Left = 259
             Top = 0
             Width = 26
             Height = 21
-            TabOrder = 6
+            TabOrder = 9
             Text = '1'
             OnChange = edtIncChange
             Caption = 'Increment'
@@ -514,7 +516,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Top = 0
             Width = 34
             Height = 21
-            TabOrder = 4
+            TabOrder = 6
             Text = '0'
             OnChange = edtMaxValChange
             Caption = 'Maimum'
@@ -527,7 +529,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Associate = edtMaxVal
             Min = -9999
             Max = 9999
-            TabOrder = 5
+            TabOrder = 7
             Thousands = False
           end
         end
@@ -545,7 +547,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           MaxLength = 240
           ParentFont = False
           PopupMenu = popText
-          TabOrder = 3
+          TabOrder = 5
           OnChange = edtURLChange
           OnEnter = edtpopControlEnter
           Caption = 'URL'
@@ -563,8 +565,8 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           Font.Style = []
           ParentFont = False
           PopupMenu = popText
-          ScrollBars = ssBoth
-          TabOrder = 5
+          ScrollBars = ssVertical
+          TabOrder = 7
           WantTabs = True
           OnChange = reItemsChange
           OnEnter = edtpopControlEnter
@@ -599,8 +601,9 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           ParentFont = False
           Sorted = False
           SynonymChars = '<>'
-          TabOrder = 1
+          TabOrder = 3
           TabStop = True
+          Text = ''
           OnChange = cbxDefaultChange
           CharsNeedMatch = 1
         end
@@ -611,7 +614,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           Height = 22
           Align = alTop
           BevelOuter = bvNone
-          TabOrder = 4
+          TabOrder = 6
           DesignSize = (
             300
             22)
@@ -631,7 +634,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Anchors = [akLeft, akTop, akRight]
             MaxLength = 70
             PopupMenu = popText
-            TabOrder = 0
+            TabOrder = 1
             OnChange = edtDefaultChange
             OnEnter = edtpopControlEnter
             Caption = 'Default Date'
@@ -664,7 +667,8 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Pieces = '2'
             Sorted = False
             SynonymChars = '<>'
-            TabOrder = 1
+            TabOrder = 2
+            Text = ''
             OnChange = cbxDateTypeChange
             CharsNeedMatch = 1
           end
@@ -676,7 +680,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         Width = 19
         Height = 21
         Anchors = [akTop, akRight]
-        TabOrder = 2
+        TabOrder = 4
         Text = '1'
         OnChange = edtLenChange
         Caption = 'Field Length'
@@ -691,7 +695,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         Min = 1
         Max = 70
         Position = 1
-        TabOrder = 3
+        TabOrder = 5
       end
       object gbIndent: TGroupBox
         Left = 232
@@ -700,7 +704,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         Height = 59
         Anchors = [akLeft, akBottom]
         Caption = ' Indent '
-        TabOrder = 9
+        TabOrder = 13
         object lblIndent: TLabel
           Left = 10
           Top = 14
@@ -720,7 +724,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           Top = 10
           Width = 21
           Height = 21
-          TabOrder = 0
+          TabOrder = 1
           Text = '0'
           OnChange = edtIndentChange
           Caption = 'Indent Field'
@@ -732,7 +736,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           Height = 21
           Associate = edtIndent
           Max = 30
-          TabOrder = 1
+          TabOrder = 2
           Thousands = False
         end
         object udPad: TUpDown
@@ -742,7 +746,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           Height = 21
           Associate = edtPad
           Max = 30
-          TabOrder = 2
+          TabOrder = 5
           Thousands = False
         end
         object edtPad: TCaptionEdit
@@ -763,7 +767,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         Height = 59
         Anchors = [akLeft, akBottom]
         Caption = ' Miscellaneous '
-        TabOrder = 8
+        TabOrder = 12
         object cbActive: TCheckBox
           Left = 6
           Top = 14
@@ -781,7 +785,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           Width = 67
           Height = 17
           Caption = 'Required'
-          TabOrder = 1
+          TabOrder = 2
           OnClick = cbRequiredClick
         end
         object cbSepLines: TCheckBox
@@ -790,7 +794,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           Width = 99
           Height = 17
           Caption = 'Separate Lines'
-          TabOrder = 2
+          TabOrder = 1
           OnClick = cbSepLinesClick
         end
         object cbExclude: TCheckBox
@@ -812,7 +816,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
     Height = 25
     Align = alTop
     BevelOuter = bvNone
-    TabOrder = 3
+    TabOrder = 0
     DesignSize = (
       788
       25)
@@ -824,7 +828,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
       Align = alLeft
       AutoSize = True
       ButtonHeight = 21
-      ButtonWidth = 43
+      ButtonWidth = 37
       Caption = 'MenuBar1'
       Menu = mnuMain
       ShowCaptions = True

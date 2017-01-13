@@ -8,8 +8,8 @@ inherited frmEffectDate: TfrmEffectDate
   ClientWidth = 254
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitWidth = 320
-  ExplicitHeight = 240
+  ExplicitWidth = 260
+  ExplicitHeight = 155
   PixelsPerInch = 96
   TextHeight = 13
   object Label2: TLabel [0]
@@ -76,7 +76,8 @@ inherited frmEffectDate: TfrmEffectDate
         'Status = stsDefault')
       (
         'Component = calEffective'
-        'Status = stsDefault')
+        'Text = Effective Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = cmdOK'
         'Status = stsDefault')

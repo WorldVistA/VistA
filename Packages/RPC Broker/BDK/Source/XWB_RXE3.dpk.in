@@ -1,0 +1,65 @@
+package XWB_RXE3;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS OFF}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST ON}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'VistA RPC Broker Runtime Package'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  vcl,
+  rtl;
+
+contains
+  Xwbut1 in '@SOURCE@\Xwbut1.pas' {in 'Xwbut1.pas'},
+  XlfSid in '@SOURCE@\XlfSid.pas',
+  Hash in '@SOURCE@\Hash.pas' {in 'Hash.pas'},
+  Loginfrm in '@SOURCE@\Loginfrm.pas' {in 'Loginfrm.pas'},
+  MFunStr in '@SOURCE@\MFunStr.pas' {in 'Mfunstr.pas'},
+  Rpcberr in '@SOURCE@\Rpcberr.pas' {in 'Rpcberr.pas'},
+  Rpcconf1 in '@SOURCE@\Rpcconf1.pas' {in 'Rpcconf1.pas'},
+  RpcNet in '@SOURCE@\RpcNet.pas' {in 'Rpcnet.pas'},
+  seldiv in '@SOURCE@\seldiv.pas' {in 'SelDiv.pas'},
+  SgnonCnf in '@SOURCE@\SgnonCnf.pas' {in 'Sgnoncnf.pas'},
+  Splvista in '@SOURCE@\Splvista.pas' {in 'Splvista.pas'},
+  Trpcb in '@SOURCE@\Trpcb.pas' {in 'Trpcb.pas'},
+  VCEdit in '@SOURCE@\VCEdit.pas' {in 'Vcedit.pas'},
+  Wsockc in '@SOURCE@\Wsockc.pas' {in 'WSockc.pas'},
+  frmSignonMessage in '@SOURCE@\frmSignonMessage.pas' {in 'frmSignonMessage.pas'},
+  RpcSLogin in '@SOURCE@\RpcSLogin.pas' {in 'Rpcslogin.pas'},
+  XWBRich20 in '@SOURCE@\XWBRich20.PAS',
+  AddServer in '@SOURCE@\AddServer.pas' {frmAddServer},
+  fRPCBErrMsg in '@SOURCE@\fRPCBErrMsg.pas' {frmErrMsg},
+  fDebugInfo in '@SOURCE@\fDebugInfo.pas' {frmDebugInfo},
+  fSgnonDlg in '@SOURCE@\fSgnonDlg.pas' {frmSignonDialog},
+  VERGENCECONTEXTORLib_TLB in '@SOURCE@\VERGENCECONTEXTORLib_TLB.pas',
+  fPlinkpw in '@SOURCE@\fPlinkpw.pas' {fPlinkPassword},
+  fSSHUsername in '@SOURCE@\fSSHUsername.pas' {SSHUsername},
+  CCOW_const in '@SOURCE@\CCOW_const.pas',
+  uNetPlace in '@SOURCE@\uNetPlace.pas',
+  uTokenTools in '@SOURCE@\uTokenTools.pas';
+
+end.

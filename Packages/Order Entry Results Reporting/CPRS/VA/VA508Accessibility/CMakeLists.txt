@@ -13,5 +13,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-add_delphi_package(VA508Access2007)
-add_dependencies(VA508Access2007 VAShared2007)
+add_delphi_package(VA508AccessXE3)
+add_dependencies(VA508AccessXE3 VASharedXE3)

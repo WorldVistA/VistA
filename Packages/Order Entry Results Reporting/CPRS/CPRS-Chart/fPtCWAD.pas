@@ -4,22 +4,25 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  fAutoSz, ORCtrls, StdCtrls, ORFn, ExtCtrls, VA508AccessibilityManager;
+  fAutoSz, ORCtrls, StdCtrls, ORFn, ExtCtrls, VA508AccessibilityManager,
+  Vcl.ComCtrls, System.Math;
 
 type
   TfrmPtCWAD = class(TfrmAutoSz)
-    lstAllergies: TORListBox;
     lstNotes: TORListBox;
     lblNotes: TOROffsetLabel;
     pnlBottom: TPanel;
     btnClose: TButton;
-    lblAllergies: TOROffsetLabel;
+    lstAllergies: TCaptionListView;
     procedure FormCreate(Sender: TObject);
-    procedure lstAllergiesClick(Sender: TObject);
+ //   procedure lstAllergiesClick(Sender: TObject);
     procedure lstNotesClick(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure btnCloseClick(Sender: TObject);
+    procedure lstAllergiesKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure lstAllergiesClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -55,31 +58,60 @@ end;
 
 procedure TfrmPtCWAD.FormCreate(Sender: TObject);
 var
-  i: Integer;
+ I:integer;
 begin
   inherited;
   StatusText(TX_LST_ALLG);
-  ListAllergies(lstAllergies.Items);
+  ListAllergies(lstAllergies.ItemsStrings);
   StatusText(TX_LST_POST);
   ListPostings(lstNotes.Items);
   with lstNotes do for i := Items.Count - 1 downto 0 do
     if Items[i]='^Allergies^' then Items.Delete(i);
   StatusText('');
+
 end;
 
-procedure TfrmPtCWAD.lstAllergiesClick(Sender: TObject);
+{procedure TfrmPtCWAD.lstAllergiesClick(Sender: TObject);
 begin
   inherited;
-  with lstAllergies do
     if ItemIEN > 0 then
     begin
 { TODO -oRich V. -cART/Allergy : Allergy Box to update CWAD allergies list? }
 (*      if ARTPatchInstalled then
         AllergyBox(DetailAllergy(ItemIEN), DisplayText[ItemIndex], True, ItemIEN)
       else*)
-        ReportBox(DetailAllergy(ItemIEN), DisplayText[ItemIndex], True);
+ {       ReportBox(DetailAllergy(ItemIEN), DisplayText[ItemIndex], True);
     end;
+end; }
+
+procedure TfrmPtCWAD.lstAllergiesClick(Sender: TObject);
+var
+
+ ReportTitle: string;
+begin
+ with lstAllergies do
+ begin
+    if ItemIEN > 0 then
+    begin
+      ReportTitle := Selected.Caption+' '+Selected.SubItems.Strings[0]+' '+Selected.SubItems.Strings[1];
+      ReportBox(DetailAllergy(ItemIEN), ReportTitle, True);
+    end;
+ end;
 end;
+
+procedure TfrmPtCWAD.lstAllergiesKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if lstAllergies.Focused then
+  begin
+     case Key of
+        VK_RETURN: lstAllergiesClick(Sender);
+     end;
+  end;
+end;
+
+
 
 procedure TfrmPtCWAD.lstNotesClick(Sender: TObject);
 begin
@@ -108,5 +140,7 @@ begin
   inherited;
   Close;
 end;
+
+
 
 end.

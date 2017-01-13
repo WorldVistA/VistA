@@ -10,8 +10,8 @@ inherited frmARTAllergy: TfrmARTAllergy
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
-  ExplicitWidth = 561
-  ExplicitHeight = 465
+  ExplicitWidth = 569
+  ExplicitHeight = 476
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBase: TORAutoPanel [0]
@@ -63,6 +63,10 @@ inherited frmARTAllergy: TfrmARTAllergy
       TabOrder = 0
       object tabGeneral: TTabSheet
         Caption = 'General'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object lblAgent: TOROffsetLabel
           Left = 7
           Top = 44
@@ -213,6 +217,7 @@ inherited frmARTAllergy: TfrmARTAllergy
           ShowHint = True
           TabOrder = 3
           OnClick = lstAllergyClick
+          Caption = ''
           ItemTipColor = clWindow
           LongList = False
           Pieces = '2'
@@ -225,6 +230,7 @@ inherited frmARTAllergy: TfrmARTAllergy
           Height = 21
           Style = orcsDropDown
           AutoSelect = True
+          Caption = ''
           Color = clBtnFace
           DropDownCount = 8
           Enabled = False
@@ -248,6 +254,7 @@ inherited frmARTAllergy: TfrmARTAllergy
           SynonymChars = '<>'
           TabOrder = 8
           TabStop = True
+          Text = ''
           OnChange = ControlChange
           OnNeedData = cboOriginatorNeedData
           CharsNeedMatch = 1
@@ -263,6 +270,7 @@ inherited frmARTAllergy: TfrmARTAllergy
           OnChange = ControlChange
           DateOnly = False
           RequireTime = False
+          Caption = ''
         end
         object ckChartMarked: TCheckBox
           Left = 294
@@ -306,6 +314,7 @@ inherited frmARTAllergy: TfrmARTAllergy
           Sorted = False
           SynonymChars = '<>'
           TabOrder = 15
+          Text = ''
           OnKeyDown = cboSymptomsKeyDown
           OnMouseClick = cboSymptomsMouseClick
           OnNeedData = cboSymptomsNeedData
@@ -329,12 +338,13 @@ inherited frmARTAllergy: TfrmARTAllergy
         end
         object btnRemove: TButton
           Left = 148
-          Top = 290
+          Top = 289
           Width = 132
           Height = 21
           Caption = '&Remove'
           Enabled = False
           TabOrder = 18
+          TabStop = False
           OnClick = btnRemoveClick
         end
         object grpObsHist: TRadioGroup
@@ -375,6 +385,7 @@ inherited frmARTAllergy: TfrmARTAllergy
           Sorted = False
           SynonymChars = '<>'
           TabOrder = 13
+          Text = ''
           OnChange = ControlChange
           OnExit = ControlChange
           CharsNeedMatch = 1
@@ -389,6 +400,7 @@ inherited frmARTAllergy: TfrmARTAllergy
           OnExit = calObservedDateExit
           DateOnly = False
           RequireTime = False
+          Caption = ''
         end
         object cmdPrevObs: TButton
           Left = 202
@@ -405,7 +417,7 @@ inherited frmARTAllergy: TfrmARTAllergy
           Width = 213
           Height = 112
           Hint = 'Comments'
-          Font.Charset = DEFAULT_CHARSET
+          Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
           Font.Name = 'Courier New'
@@ -445,6 +457,7 @@ inherited frmARTAllergy: TfrmARTAllergy
           Sorted = False
           SynonymChars = '<>'
           TabOrder = 5
+          Text = ''
           OnChange = ControlChange
           CharsNeedMatch = 1
         end
@@ -502,6 +515,7 @@ inherited frmARTAllergy: TfrmARTAllergy
           OnExit = SymptomDateBoxExit
           DateOnly = False
           RequireTime = False
+          Caption = ''
         end
         object btnAgent: TButton
           Left = 175
@@ -525,6 +539,7 @@ inherited frmARTAllergy: TfrmARTAllergy
           Width = 6
           Height = 6
           Alignment = taLeftJustify
+          Caption = ''
           Enabled = False
           TabOrder = 0
           TabStop = True
@@ -535,6 +550,10 @@ inherited frmARTAllergy: TfrmARTAllergy
       object tabVerify: TTabSheet
         Caption = 'Verify'
         ImageIndex = 3
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object lblVerifier: TOROffsetLabel
           Left = 99
           Top = 51
@@ -587,6 +606,7 @@ inherited frmARTAllergy: TfrmARTAllergy
           Sorted = False
           SynonymChars = '<>'
           TabOrder = 1
+          Text = ''
           OnChange = ControlChange
           OnNeedData = cboVerifierNeedData
           CharsNeedMatch = 1
@@ -606,6 +626,10 @@ inherited frmARTAllergy: TfrmARTAllergy
       object tabEnteredInError: TTabSheet
         Caption = 'Entered In Error'
         ImageIndex = 2
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object lblErrCmts: TLabel
           Left = 7
           Top = 12
@@ -616,7 +640,7 @@ inherited frmARTAllergy: TfrmARTAllergy
         object lblEnteredInError: TLabel
           Left = 0
           Top = 330
-          Width = 521
+          Width = 83
           Height = 13
           Align = alBottom
           Alignment = taCenter
@@ -627,7 +651,6 @@ inherited frmARTAllergy: TfrmARTAllergy
           Font.Name = 'MS Sans Serif'
           Font.Style = [fsBold]
           ParentFont = False
-          ExplicitWidth = 83
         end
         object ckEnteredInError: TCheckBox
           Left = 286
@@ -644,7 +667,7 @@ inherited frmARTAllergy: TfrmARTAllergy
           Top = 27
           Width = 506
           Height = 263
-          Font.Charset = DEFAULT_CHARSET
+          Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
           Font.Name = 'Courier New'
@@ -663,6 +686,7 @@ inherited frmARTAllergy: TfrmARTAllergy
       Height = 21
       Style = orcsDropDown
       AutoSelect = True
+      Caption = ''
       Color = clBtnFace
       DropDownCount = 8
       Enabled = False
@@ -677,6 +701,7 @@ inherited frmARTAllergy: TfrmARTAllergy
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 3
+      Text = ''
       Visible = False
       OnChange = ControlChange
       CharsNeedMatch = 1
@@ -700,8 +725,7 @@ inherited frmARTAllergy: TfrmARTAllergy
         'Status = stsDefault')
       (
         'Component = tabGeneral'
-        'Property = Caption'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = ckNoKnownAllergies'
         'Status = stsDefault')
@@ -717,7 +741,8 @@ inherited frmARTAllergy: TfrmARTAllergy
         'Status = stsDefault')
       (
         'Component = calOriginated'
-        'Status = stsDefault')
+        'Text =  Origination Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = ckChartMarked'
         'Status = stsDefault')
@@ -746,7 +771,7 @@ inherited frmARTAllergy: TfrmARTAllergy
         'Status = stsDefault')
       (
         'Component = calObservedDate'
-        'Text = Reaction Date/Time'
+        'Text = Reaction Date/Time. Press the enter key to access.'
         'Status = stsOK')
       (
         'Component = cmdPrevObs'
@@ -766,8 +791,7 @@ inherited frmARTAllergy: TfrmARTAllergy
         'Status = stsOK')
       (
         'Component = tabVerify'
-        'Property = Caption'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = ckVerified'
         'Status = stsDefault')
@@ -776,11 +800,11 @@ inherited frmARTAllergy: TfrmARTAllergy
         'Status = stsDefault')
       (
         'Component = calVerifyDate'
-        'Status = stsDefault')
+        'Text = Verify Date/Time. Press the enter key to access.'
+        'Status = stsOK')
       (
         'Component = tabEnteredInError'
-        'Property = Caption'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = ckEnteredInError'
         'Status = stsDefault')
@@ -802,7 +826,7 @@ inherited frmARTAllergy: TfrmARTAllergy
         'Status = stsDefault')
       (
         'Component = SymptomDateBox'
-        'Property = Hint'
+        'Text = Symptom Date/Time. Press the enter key to access.'
         'Status = stsOK')
       (
         'Component = btnAgent'

@@ -13,14 +13,18 @@ inherited frmMeds: TfrmMeds
   OnMouseUp = FormMouseUp
   OnResize = FormResize
   OnShow = FormShow
-  ExplicitWidth = 709
-  ExplicitHeight = 717
+  ExplicitWidth = 717
+  ExplicitHeight = 725
   PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape
     Top = 524
     Width = 1028
     Height = -4
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alCustom
     ExplicitTop = 524
     ExplicitWidth = 1028
@@ -35,12 +39,11 @@ inherited frmMeds: TfrmMeds
     Align = alBottom
     AutoSnap = False
     Color = clBtnFace
-    Constraints.MaxHeight = 4
+    Constraints.MaxHeight = 5
     Constraints.MinHeight = 4
     MinSize = 100
     ParentColor = False
     OnMoved = splitTopMoved
-    ExplicitTop = 429
   end
   object pnlBottom: TORAutoPanel [2]
     Left = 0
@@ -61,7 +64,7 @@ inherited frmMeds: TfrmMeds
       Align = alBottom
       AutoSnap = False
       Color = clBtnFace
-      Constraints.MaxHeight = 4
+      Constraints.MaxHeight = 5
       Constraints.MinHeight = 4
       MinSize = 100
       ParentColor = False
@@ -74,7 +77,7 @@ inherited frmMeds: TfrmMeds
       Height = 100
       Align = alBottom
       Constraints.MinHeight = 100
-      TabOrder = 0
+      TabOrder = 1
       object lstMedsIn: TCaptionListBox
         Tag = 2
         Left = 1
@@ -97,6 +100,8 @@ inherited frmMeds: TfrmMeds
         OnExit = lstMedsExit
         OnMeasureItem = lstMedsMeasureItem
         Caption = 'Inpatient Medications'
+        ExplicitLeft = 0
+        ExplicitTop = 23
       end
       object hdrMedsIn: THeaderControl
         Left = 1
@@ -152,7 +157,7 @@ inherited frmMeds: TfrmMeds
       Align = alClient
       Caption = 'pnlNonVA'
       Constraints.MinHeight = 40
-      TabOrder = 1
+      TabOrder = 0
       object lstMedsNonVA: TCaptionListBox
         Tag = 3
         Left = 1
@@ -248,6 +253,7 @@ inherited frmMeds: TfrmMeds
       OnExit = lstMedsExit
       OnMeasureItem = lstMedsMeasureItem
       Caption = 'Outpatient Medications'
+      ExplicitLeft = 0
     end
     object hdrMedsOut: THeaderControl
       Left = 1
@@ -523,7 +529,7 @@ inherited frmMeds: TfrmMeds
         Caption = '-'
       end
       object SortbyStatusthenLocation1: TMenuItem
-        Caption = 'Sort by Status/Exp. Date (IMO first on Inpt)'
+        Caption = 'Sort by Status/Exp. Date (Clinic Orders first on Inpt)'
         OnClick = SortbyStatusthenLocation1Click
       end
       object SortbyClinicOrderthenStatusthenStopDate1: TMenuItem
@@ -580,6 +586,13 @@ inherited frmMeds: TfrmMeds
       object mnuActRefill: TMenuItem
         Caption = 'R&efill...'
         OnClick = mnuActRefillClick
+      end
+      object Z5: TMenuItem
+        Caption = '-'
+      end
+      object mnuActOneStep: TMenuItem
+        Caption = 'One Step Clinic Admin'
+        OnClick = mnuActOneStepClick
       end
     end
   end

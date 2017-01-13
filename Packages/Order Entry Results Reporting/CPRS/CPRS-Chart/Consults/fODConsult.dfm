@@ -27,7 +27,7 @@ inherited frmODCslt: TfrmODCslt
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
-    TabOrder = 0
+    TabOrder = 1
     object txtCombatVet: TVA508StaticText
       Name = 'txtCombatVet'
       Left = 1
@@ -37,6 +37,7 @@ inherited frmODCslt: TfrmODCslt
       Align = alClient
       Alignment = taCenter
       BevelOuter = bvNone
+      Caption = ''
       Enabled = False
       TabOrder = 0
       ShowAccelChar = True
@@ -53,7 +54,7 @@ inherited frmODCslt: TfrmODCslt
       '----------------------------------------------'
       '--------------------------------'
       'An order message may be displayed here.')
-    TabOrder = 2
+    TabOrder = 3
     ExplicitLeft = 3
     ExplicitTop = 384
     ExplicitWidth = 417
@@ -66,7 +67,7 @@ inherited frmODCslt: TfrmODCslt
     Height = 380
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelOuter = bvNone
-    TabOrder = 1
+    TabOrder = 0
     DesignSize = (
       598
       380)
@@ -116,17 +117,17 @@ inherited frmODCslt: TfrmODCslt
       Height = 17
       Anchors = [akTop, akRight]
       Caption = 'Latest appropriate date:'
-      TabOrder = 17
+      TabOrder = 8
       Visible = False
     end
-    object lblEarliest: TStaticText
+    object lblClinicallyIndicated: TStaticText
       Left = 309
       Top = 43
-      Width = 121
+      Width = 117
       Height = 17
       Anchors = [akTop, akRight]
-      Caption = 'Earliest appropriate date:'
-      TabOrder = 14
+      Caption = 'Clinically indicated date:'
+      TabOrder = 7
     end
     object pnlReason: TPanel
       Left = 3
@@ -136,7 +137,7 @@ inherited frmODCslt: TfrmODCslt
       Anchors = [akLeft, akTop, akRight]
       BevelOuter = bvNone
       Constraints.MinHeight = 53
-      TabOrder = 13
+      TabOrder = 20
       object lblReason: TLabel
         Left = 0
         Top = 0
@@ -162,7 +163,7 @@ inherited frmODCslt: TfrmODCslt
         MaxLength = 2147483645
         ParentFont = False
         PopupMenu = popReason
-        ScrollBars = ssBoth
+        ScrollBars = ssVertical
         TabOrder = 0
         WantTabs = True
         OnChange = ControlChange
@@ -193,7 +194,8 @@ inherited frmODCslt: TfrmODCslt
       Pieces = '2'
       Sorted = False
       SynonymChars = '<>'
-      TabOrder = 0
+      TabOrder = 3
+      Text = ''
       OnChange = ControlChange
       OnClick = cboServiceSelect
       OnExit = cboServiceExit
@@ -224,6 +226,7 @@ inherited frmODCslt: TfrmODCslt
       SynonymChars = '<>'
       TabOrder = 4
       TabStop = True
+      Text = ''
       OnChange = ControlChange
       CharsNeedMatch = 1
     end
@@ -248,7 +251,8 @@ inherited frmODCslt: TfrmODCslt
       Pieces = '2'
       Sorted = False
       SynonymChars = '<>'
-      TabOrder = 9
+      TabOrder = 12
+      Text = ''
       OnChange = ControlChange
       CharsNeedMatch = 1
     end
@@ -262,7 +266,7 @@ inherited frmODCslt: TfrmODCslt
       ParentShowHint = False
       PopupMenu = mnuPopProvDx
       ShowHint = True
-      TabOrder = 11
+      TabOrder = 13
       OnChange = txtProvDiagChange
       Caption = 'Provisional Diagnosis'
     end
@@ -288,6 +292,7 @@ inherited frmODCslt: TfrmODCslt
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 5
+      Text = ''
       OnChange = ControlChange
       OnNeedData = txtAttnNeedData
       CharsNeedMatch = 1
@@ -307,7 +312,7 @@ inherited frmODCslt: TfrmODCslt
       Indent = 19
       ParentFont = False
       ReadOnly = True
-      TabOrder = 3
+      TabOrder = 6
       Visible = False
       OnChange = treServiceChange
       OnCollapsing = treServiceCollapsing
@@ -326,6 +331,7 @@ inherited frmODCslt: TfrmODCslt
       Height = 21
       Style = orcsDropDown
       AutoSelect = True
+      Caption = ''
       Color = clWindow
       DropDownCount = 8
       ItemHeight = 13
@@ -337,7 +343,8 @@ inherited frmODCslt: TfrmODCslt
       MaxLength = 0
       Sorted = False
       SynonymChars = '<>'
-      TabOrder = 18
+      TabOrder = 0
+      Text = ''
       Visible = False
       CharsNeedMatch = 1
     end
@@ -421,7 +428,7 @@ inherited frmODCslt: TfrmODCslt
       Height = 45
       Anchors = [akTop, akRight]
       Caption = 'Patient will be seen as an:'
-      TabOrder = 8
+      TabOrder = 11
       object radInpatient: TRadioButton
         Left = 3
         Top = 20
@@ -448,7 +455,7 @@ inherited frmODCslt: TfrmODCslt
       Height = 21
       Anchors = [akTop, akRight]
       Caption = 'Diagnosis'
-      TabOrder = 10
+      TabOrder = 14
       OnClick = btnDiagnosisClick
     end
     object cmdLexSearch: TButton
@@ -458,19 +465,20 @@ inherited frmODCslt: TfrmODCslt
       Height = 21
       Anchors = [akTop, akRight]
       Caption = 'Lexicon'
-      TabOrder = 12
+      TabOrder = 15
       OnClick = cmdLexSearchClick
     end
-    object calEarliest: TORDateBox
+    object calClinicallyIndicated: TORDateBox
       Left = 309
       Top = 57
       Width = 133
       Height = 21
       Anchors = [akTop, akRight]
-      TabOrder = 6
+      TabOrder = 9
       OnChange = ControlChange
       DateOnly = True
       RequireTime = False
+      Caption = ''
     end
     object calLatest: TORDateBox
       Left = 454
@@ -478,11 +486,12 @@ inherited frmODCslt: TfrmODCslt
       Width = 136
       Height = 21
       Anchors = [akTop, akRight]
-      TabOrder = 7
+      TabOrder = 10
       Visible = False
       OnChange = ControlChange
       DateOnly = True
       RequireTime = False
+      Caption = ''
     end
     object servicelbl508: TVA508StaticText
       Name = 'servicelbl508'
@@ -502,7 +511,7 @@ inherited frmODCslt: TfrmODCslt
     Left = 427
     Top = 394
     Anchors = [akLeft, akBottom]
-    TabOrder = 3
+    TabOrder = 4
     ExplicitLeft = 427
     ExplicitTop = 394
   end
@@ -511,7 +520,7 @@ inherited frmODCslt: TfrmODCslt
     Top = 394
     Width = 61
     Anchors = [akLeft, akBottom]
-    TabOrder = 4
+    TabOrder = 6
     ExplicitLeft = 531
     ExplicitTop = 394
     ExplicitWidth = 61
@@ -521,7 +530,7 @@ inherited frmODCslt: TfrmODCslt
     Top = 374
     Width = 377
     Anchors = [akLeft, akRight, akBottom]
-    TabOrder = 5
+    TabOrder = 2
     ExplicitLeft = 13
     ExplicitTop = 374
     ExplicitWidth = 377
@@ -557,7 +566,7 @@ inherited frmODCslt: TfrmODCslt
         'Component = lblLatest'
         'Status = stsDefault')
       (
-        'Component = lblEarliest'
+        'Component = lblClinicallyIndicated'
         'Status = stsDefault')
       (
         'Component = pnlReason'
@@ -605,11 +614,17 @@ inherited frmODCslt: TfrmODCslt
         'Component = cmdLexSearch'
         'Status = stsDefault')
       (
-        'Component = calEarliest'
-        'Status = stsDefault')
+        'Component = calClinicallyIndicated'
+        
+          'Text = Earliest appropriate Date/Time. Press the enter key to ac' +
+          'cess.'
+        'Status = stsOK')
       (
         'Component = calLatest'
-        'Status = stsDefault')
+        
+          'Text = Latest appropriate Date/Time. Press the enter key to acce' +
+          'ss.'
+        'Status = stsOK')
       (
         'Component = pnlCombatVet'
         'Status = stsDefault')
