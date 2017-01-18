@@ -39,6 +39,58 @@ from CrossReferenceBuilder import CrossReferenceBuilder
 from CrossReferenceBuilder import createCrossReferenceLogArgumentParser
 from CrossReference import *
 
+
+pkgMap = {
+    'AUTOMATED INFO COLLECTION SYS': 'Automated Information Collection System',
+    'AUTOMATED MED INFO EXCHANGE': 'Automated Medical Information Exchange',
+    'BAR CODE MED ADMIN': 'Barcode Medication Administration',
+    'CLINICAL INFO RESOURCE NETWORK': 'Clinical Information Resource Network',
+    #  u'DEVICE HANDLER',
+    #  u'DISCHARGE SUMMARY',
+    'E CLAIMS MGMT ENGINE': 'E Claims Management Engine',
+    #  u'EDUCATION TRACKING',
+    'EMERGENCY DEPARTMENT': 'Emergency Department Integration Software',
+    #  u'EXTENSIBLE EDITOR',
+    #  u'EXTERNAL PEER REVIEW',
+    'FEE BASIS CLAIMS SYSTEM' : 'Fee Basis',
+    'GEN. MED. REC. - GENERATOR': 'General Medical Record - Generator',
+    'GEN. MED. REC. - I/O' : 'General Medical Record - IO',
+    'GEN. MED. REC. - VITALS' : 'General Medical Record - Vitals',
+    #  u'GRECC',
+    #  u'HEALTH MANAGEMENT PLATFORM',
+    #  u'INDIAN HEALTH SERVICE',
+    #  u'INSURANCE CAPTURE BUFFER',
+    #  u'IV PHARMACY',
+    'MASTER PATIENT INDEX': 'Master Patient Index VistA',
+    'MCCR BACKBILLING' : 'MCCR National Database - Field',
+    #  u'MINIMAL PATIENT DATASET',
+    #  u'MOBILE SCHEDULING APPLICATIONS SUITE',
+    #  u'Missing Patient Register',
+    'MYHEALTHEVET': 'My HealtheVet',
+    'NATIONAL HEALTH INFO NETWORK' : 'National Health Information Network',
+    #  u'NEW PERSON',
+    #  u'PATIENT ASSESSMENT DOCUM',
+    #  u'PATIENT FILE',
+    #  u'PROGRESS NOTES',
+    #  u'QUALITY ASSURANCE',
+    #  u'QUALITY IMPROVEMENT CHECKLIST',
+    #  u'REAL TIME LOCATION SYSTEM',
+    'TEXT INTEGRATION UTILITIES' : 'Text Integration Utility',
+    #  u'UNIT DOSE PHARMACY',
+    'VA POINT OF SERVICE (KIOSKS)' : 'VA Point of Service',
+    #  u'VDEM',
+    'VISTA INTEGRATION ADAPTOR' : 'VistA Integration Adapter',
+    'VENDOR - DOCUMENT STORAGE SYS' : 'Vendor - Document Storage Systems'
+    #  u'VETERANS ADMINISTRATION',
+    #  u'VOLUNTARY SERVICE SYSTEM',
+    #  u'VPFS',
+    #  u'cds',
+    #  u'person.demographics',
+    #  u'person.lookup',
+    #  u'term',
+    #  u'term.access'])
+} # this is the mapping between CUSTODIAL PACKAGE and packages in Dox
+
 MAX_DEPENDENCY_LIST_SIZE = 30 # Do not generate the graph if have more than 30 nodes
 PROGRESS_METER = 1000
 LOCAL_VARIABLE_SECTION_HEADER_LIST = [
@@ -224,6 +276,8 @@ def getGlobalHypeLinkByName(globalName):
     return "<a href=\"%s\">%s</a>" % (getGlobalHtmlFileNameByName(globalName),
                                       globalName);
 def getPackageHyperLinkByName(packageName):
+    if packageName in pkgMap:
+      packageName = pkgMap[packageName]
     return "<a href=\"%s\">%s</a>" % (getPackageHtmlFileName(packageName),
                                       packageName);
 def normalizePackageName(packageName):
@@ -621,6 +675,7 @@ class WebPageGenerator:
         indexListFileMan = ["Info", "Desc", "Directly Accessed By Routines",
                      "Accessed By FileMan Db Calls",
                      "Pointed To By FileMan Files",
+                     "DBIA/ICR Connections",
                      "Pointer To FileMan Files", "Fields"]
         indexListGlobal = ["Directly Accessed By Routines"]
         for package in self._allPackages.itervalues():
@@ -650,6 +705,9 @@ class WebPageGenerator:
                     writeGenericTablizedData(infoHeader, itemList, outputFile)
                     writeSectionHeader("Description", "Desc", outputFile)
                     writeListData(globalVar.getDescription(), outputFile)
+                if globalName in self._crossRef._icrJson:
+                   writeSectionHeader("DBIA/ICR Connections","DBIA/ICR Connections",outputFile)
+                   self.generateGlobalICRSection(self._crossRef._icrJson[globalName],outputFile)
                 writeSectionHeader("Directly Accessed By Routines, Total: %d" %
                                     globalVar.getTotalNumberOfReferencedRoutines(),
                                     "Directly Accessed By Routines", outputFile)
@@ -904,6 +962,38 @@ class WebPageGenerator:
         for (key, value) in packDepDict.iteritems():
             self.generatePackageInteractionDetailPage(key, value[0], value[1])
 
+    def generateGlobalICRSection(self, icrInfo,outfile):
+      icrString = "<table style='max-width:80%;'><tbody>"
+      icrString += "<tr><th class='IndexKey'>ICR LINK</th><th class='IndexKey'>Subscribing Package(s)</th><th class='IndexKey'>Fields Referenced</th><th class='IndexKey'>Description</th></th></tr>"
+      for entry in icrInfo:
+        icrString += "<tr><td class='IndexValue'><a href='http://code.osehra.org/vivian/files/ICR-%s.html'>ICR #%s</a></td>" % (entry["NUMBER"],entry["NUMBER"])
+        if "SUBSCRIBING PACKAGE" in entry:
+          icrString += "<td class='IndexValue'>"
+          for value in entry["SUBSCRIBING PACKAGE"]:
+            icrString += "<li>"+getPackageHyperLinkByName(value["SUBSCRIBING PACKAGE"])+"</li>"
+          icrString += "</td>"
+
+        icrString += "<td class='IndexValue'>"
+        if ("GLOBAL REFERENCE" in entry):
+          for reference in entry["GLOBAL REFERENCE"]:
+            if "FIELD NUMBER" in reference:
+              for value in reference["FIELD NUMBER"]:
+                name = value["FIELD NAME"] if "FIELD NAME" in value else ""
+                num = value["FIELD NUMBER"] if "FIELD NUMBER" in value else ""
+                accessString = value["ACCESS"] if "ACCESS" in value else ""
+                icrString += "%s (<a href='#%s'>%s</a>). <br/> <b>Access:</b> %s" % (name ,num,num,accessString)
+                icrString += "<br/><br/>"
+        icrString += "</td>"
+        icrString += "<td class='IndexValue'>"
+        if ("GLOBAL REFERENCE" in entry):
+          for reference in entry["GLOBAL REFERENCE"]:
+            if "GLOBAL DESCRIPTION" in reference:
+              for value in reference["GLOBAL DESCRIPTION"]:
+                icrString += value
+        icrString += "</td>"
+
+      icrString += "<tr></tbody></table>"
+      outfile.write(icrString)
     def _updatePackageDepDict(self, package, depDict, packDepDict):
         for depPack in depDict.iterkeys():
             fileName = getPackageDependencyHtmlFile(package.getName(),
@@ -2271,16 +2361,22 @@ if __name__ == '__main__':
     """
     if result.icrJson:
       icrJson = os.path.abspath(result.icrJson)
-    icrRtnJson = {}
+    parsedICRJSON = {}
     with open(icrJson, 'r') as icrFile:
       for entry in json.load(icrFile):
         if "TYPE" in entry.keys():
           if entry["TYPE"] == "Routine":
             if "ROUTINE" in entry.keys():
-              if not (entry["ROUTINE"] in icrRtnJson):
-                icrRtnJson[entry["ROUTINE"]]=[]
-              icrRtnJson[entry["ROUTINE"]].append(entry)
-    crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(result,pkgDepJson,icrRtnJson)
+              if not (entry["ROUTINE"] in parsedICRJSON):
+                parsedICRJSON[entry["ROUTINE"]]=[]
+              parsedICRJSON[entry["ROUTINE"]].append(entry)
+          if entry["TYPE"] == "File":
+            if "GLOBAL ROOT" in entry.keys():
+              entryName = "^"+entry["GLOBAL ROOT"][:-1] if entry["GLOBAL ROOT"][-1] == "(" else "^"+entry["GLOBAL ROOT"]
+              if not (entryName in parsedICRJSON):
+                parsedICRJSON[entryName]=[]
+              parsedICRJSON[entryName].append(entry)
+    crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(result,pkgDepJson,parsedICRJSON)
     logger.info ("Starting generating web pages....")
     doxDir = os.path.join(result.patchRepositDir, 'Utilities/Dox')
     webPageGen = WebPageGenerator(crossRef,
