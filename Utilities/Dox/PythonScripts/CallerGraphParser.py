@@ -452,8 +452,9 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
 # A class to parse XINDEX log file output and convert to Routine/Package
 #===============================================================================
 class CallerGraphLogFileParser(object):
-    def __init__(self, crossRef):
+    def __init__(self, crossRef,icrJson):
         self._crossRef = crossRef
+        self._crossRef._icrJson = icrJson
 
     def printResult(self):
         logger.info("Total Routines are %d" % len(self._crossRef.getAllRoutines()))
@@ -671,8 +672,8 @@ def createCallGraphLogAugumentParser():
 def parseAllCallGraphLogWithArg(arguments):
     return parseAllCallGraphLog(arguments.xindexLogDir)
 
-def parseAllCallGraphLog(xindexLogDir, crossRef):
-    xindexLogParser = CallerGraphLogFileParser(crossRef)
+def parseAllCallGraphLog(xindexLogDir, crossRef, icrJson):
+    xindexLogParser = CallerGraphLogFileParser(crossRef,icrJson)
     xindexLogParser.parseAllCallerGraphLog(xindexLogDir, "*.log")
     return xindexLogParser
 

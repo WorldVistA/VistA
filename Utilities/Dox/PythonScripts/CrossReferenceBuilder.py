@@ -41,23 +41,24 @@ def createCrossReferenceLogArgumentParser():
 class CrossReferenceBuilder(object):
     def __init__(self):
         pass
-    def buildCrossReferenceWithArgs(self, arguments, pkgDepJson=None):
+    def buildCrossReferenceWithArgs(self, arguments, pkgDepJson=None, icrJson=None):
         print pkgDepJson
         return self.buildCrossReference(arguments.xindexLogDir,
                                         arguments.MRepositDir,
                                         arguments.patchRepositDir,
                                         arguments.fileSchemaDir,
                                         arguments.filemanDbJson,
-                                        pkgDepJson)
+                                        pkgDepJson,
+                                        icrJson)
     def buildCrossReference(self, xindexLogDir, MRepositDir,
                             patchRepositDir, fileSchemaDir=None,
-                            filemanDbJson=None, pkgDepJson=None):
+                            filemanDbJson=None, pkgDepJson=None, icrJson=None):
 
         crossRef = parseCrossReferenceGeneratorArgs(MRepositDir,
                                                     patchRepositDir)
         if xindexLogDir:
             crossRef = parseAllCallGraphLog(xindexLogDir,
-                crossRef).getCrossReference()
+                crossRef, icrJson).getCrossReference()
 
         if fileSchemaDir:
             crossRef = parseDataDictionaryLogFile(crossRef,

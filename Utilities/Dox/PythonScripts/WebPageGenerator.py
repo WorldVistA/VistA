@@ -19,6 +19,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
+import re
 import os.path
 import sys
 import subprocess
@@ -55,7 +56,11 @@ RPC_REFERENCE_SECTION_HEADER_LIST = [
 HL7_REFERENCE_SECTION_HEADER_LIST = [
      "HL7 Protocol Name",
       '''Call Tags''']
-DEFAULT_VARIABLE_SECTION_HEADER_LIST = ["Name", "Line Occurrences"]
+LABEL_REFERENCE_SECTION_HEADER_LIST = ["Name", "Line Occurrences"]
+ENTRY_POINT_SECTION_HEADER_LIST = [
+"Name", "Comments", "DBIA/ICR reference"
+]
+DEFAULT_VARIABLE_SECTION_HEADER_LIST = ["Name", "Line Occurrences",]
 LINE_TAG_PER_LINE = 10
 # constants for html page
 GOOGLE_ANALYTICS_JS_CODE = """
@@ -385,6 +390,7 @@ class WebPageGenerator:
         self.__initWebTemplateFile__()
         with open(rtnJson, 'r') as jsonFile:
             self._rtnRefJson = json.load(jsonFile)
+
 
     def __initWebTemplateFile__(self):
         #load _header and _footer in the memory
@@ -1051,6 +1057,7 @@ class WebPageGenerator:
 # Method to parse the source code and generate source code page or just extract comments
 #===============================================================================
     def __generateSourceCodePageByName__(self, sourceCodeName, routine, justComment):
+        ENTRY_POINT = re.compile("^[A-Z0-9]+[(]?")
         if not routine:
             logger.error("Routine can not be None")
             return
@@ -1080,8 +1087,16 @@ class WebPageGenerator:
         for line in sourceFile:
             if lineNo <= 1:
                 routine.addComment(line)
+            if ENTRY_POINT.search(line):
+              icrJson=[]
+              (entry, extra) = line.split(" ",1)
+              if not extra[0]==";":
+                extra=''
+              if routineName in self._crossRef._icrJson:
+                icrJson = self._crossRef._icrJson[routineName]
+              routine.addEntryPoint(entry, extra, icrJson)
             if justComment and lineNo > 1:
-                break
+               continue
             if not justComment:
                 outputFile.write(line)
             lineNo += 1
@@ -1840,6 +1855,31 @@ class WebPageGenerator:
                                         outputFile, tableHeader, convFunc):
         self.generateRoutineVariableSection(outputFile, header,
                                             tableHeader, data, convFunc)
+    """ Read through all available ICR information and generate links for each found within it"""
+    def __writeICRInformation__(self, icrVals):
+      icrString = "<td class='indexvalue'>"
+      for val in icrVals:
+         icrString += "<li><a href='http://code.osehra.org/vivian/files/ICR-%s.html'>ICR #%s</a></li>" % (val,val)
+      icrString += "</td>"
+      return icrString
+    """ Write the HTML for the Entry Point section"""
+    def __writeEntryPointSection__ (self, routine,data,header,link,outputFile, tableHeader):
+        writeSectionHeader("Entry Points", "Routine Entry Points", outputFile)
+        routineName = routine.getName()
+        packageName = routine.getPackage().getName()
+        outputFile.write("<table>\n")
+        writeTableHeader(tableHeader, outputFile)
+        entryPoints = routine.getEntryPoints()
+        for entry in entryPoints:
+          comments = entryPoints[entry]["comments"] if entryPoints[entry]["comments"] else ""
+          icrNum = entryPoints[entry]["icr"] if entryPoints[entry]["icr"] else ""
+          """ Build table string"""
+          outString = "<tr><td class='indexkey'>"+entry +"</td>"
+          outString += "<td class='indexvalue'>%s</td>" % comments
+          outString += self.__writeICRInformation__(entryPoints[entry]["icr"])
+          outString += "</tr>\n"
+          outputFile.write(outString)
+        outputFile.write("</table>\n")
     def __writeRoutineDepGraphSection__(self, routine, data, header, link,
                                         outputFile, isDependency=True):
         writeSectionHeader(header, link, outputFile)
@@ -1958,6 +1998,21 @@ class WebPageGenerator:
              "generator" : self.__writeRoutineDepListSection__, # section generator
              "geneargs" : [False],
            },
+            # Entry Point section
+           {
+             "name": "Entry Points", # this is also the link name
+             "data" : routine.getEntryPoints, # the data source
+             "generator" : self.__writeEntryPointSection__, # section generator
+             "geneargs" : [ENTRY_POINT_SECTION_HEADER_LIST], # extra argument
+           },
+           # External References section
+           {
+             "name": "External References", # this is also the link name
+             "data" : routine.getExternalReference, # the data source
+             "generator" : self.__writeRoutineVariableSection__, # section generator
+             "geneargs" : [DEFAULT_VARIABLE_SECTION_HEADER_LIST,
+                           self.__convertExternalReferenceToTableData__], # extra argument
+           },
            # Used in RPC section
            {
              "name": "Used in RPC", # this is also the link name
@@ -1992,20 +2047,12 @@ class WebPageGenerator:
              "geneargs" : [GLOBAL_VARIABLE_SECTION_HEADER_LIST,
                            self.__convertGlobalVarToTableData__], # extra argument
            },
-           # External References section
-           {
-             "name": "External References", # this is also the link name
-             "data" : routine.getExternalReference, # the data source
-             "generator" : self.__writeRoutineVariableSection__, # section generator
-             "geneargs" : [DEFAULT_VARIABLE_SECTION_HEADER_LIST,
-                           self.__convertExternalReferenceToTableData__], # extra argument
-           },
            # Label References section
            {
              "name": "Label References", # this is also the link name
              "data" : routine.getLabelReferences, # the data source
              "generator" : self.__writeRoutineVariableSection__, # section generator
-             "geneargs" : [DEFAULT_VARIABLE_SECTION_HEADER_LIST,
+             "geneargs" : [LABEL_REFERENCE_SECTION_HEADER_LIST,
                            self.__convertLableReferenceToTableData__], # extra argument
            },
            # Naked Globals section
@@ -2203,6 +2250,7 @@ if __name__ == '__main__':
                         help='the output Logging file')
     parser.add_argument('-rj','--rtnJson', required=True,help='routine reference in VistA '
         'Data file in JSON format')
+    parser.add_argument('-icr','--icrJson', required=True,help='JSON formatted information of DBIA/ICR')
     parser.add_argument('-dj','--depJson', required=False, help='JSON file to store Package dependency information')
     result = parser.parse_args();
     if not result.outputLogFileName:
@@ -2214,7 +2262,25 @@ if __name__ == '__main__':
     pkgDepJson = None
     if result.depJson:
       pkgDepJson = os.path.abspath(result.depJson)
-    crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(result,pkgDepJson)
+    """
+    Reads in the ICR JSON file and generates
+    a dictionary that consists of only the routine information
+
+    Each key is a routine and it points to a list of all of the entries
+    that have that routine marked as a "ROUTINE" field.
+    """
+    if result.icrJson:
+      icrJson = os.path.abspath(result.icrJson)
+    icrRtnJson = {}
+    with open(icrJson, 'r') as icrFile:
+      for entry in json.load(icrFile):
+        if "TYPE" in entry.keys():
+          if entry["TYPE"] == "Routine":
+            if "ROUTINE" in entry.keys():
+              if not (entry["ROUTINE"] in icrRtnJson):
+                icrRtnJson[entry["ROUTINE"]]=[]
+              icrRtnJson[entry["ROUTINE"]].append(entry)
+    crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(result,pkgDepJson,icrRtnJson)
     logger.info ("Starting generating web pages....")
     doxDir = os.path.join(result.patchRepositDir, 'Utilities/Dox')
     webPageGen = WebPageGenerator(crossRef,
