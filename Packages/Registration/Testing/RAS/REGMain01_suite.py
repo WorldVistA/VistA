@@ -274,27 +274,6 @@ def reg_logflow(test_suite_details):
     finally:
         test_driver.finally_handling(test_suite_details)
 
-def setup_ward(test_suite_details):
-    ''' Set up ward for ADT testing '''
-    testname = sys._getframe().f_code.co_name
-    test_driver = TestHelper.TestDriver(testname)
-
-    test_driver.pre_test_run(test_suite_details)
-    try:
-        VistA1 = test_driver.connect_VistA(test_suite_details)
-        reg = ADTActions(VistA1)
-        reg.signon()
-        reg.adt_setup()
-        reg.signoff()
-
-        test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
-        test_driver.exception_handling(test_suite_details, e)
-    else:
-        test_driver.try_else_handling(test_suite_details)
-    finally:
-        test_driver.finally_handling(test_suite_details)
-
 def startmon(test_suite_details):
     '''This starts the Coverage Monitor'''
     testname = sys._getframe().f_code.co_name

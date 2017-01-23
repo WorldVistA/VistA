@@ -18,7 +18,6 @@ def main():
 
         # Begin Tests
         REGMain01_suite.startmon(test_suite_details)
-        REGMain01_suite.setup_ward(test_suite_details)
         REGMain01_suite.reg_test001(test_suite_details)
         REGMain01_suite.reg_test002(test_suite_details)
         REGMain01_suite.reg_test003(test_suite_details)
