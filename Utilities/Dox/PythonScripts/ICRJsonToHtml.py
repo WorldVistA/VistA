@@ -12,6 +12,7 @@ from ICRSchema import ICR_FILE_KEYWORDS_LIST, SUBFILE_FIELDS
 from ICRSchema import isSubFile, isWordProcessingField
 from WebPageGenerator import getPackageHtmlFileName, getGlobalHtmlFileNameByName
 from WebPageGenerator import getRoutineHtmlFileName
+from WebPageGenerator import pkgMap
 from DataTableHtml import outputDataTableHeader, outputDataTableFooter
 from DataTableHtml import writeTableListInfo, outputDataListTableHeader
 from DataTableHtml import outputLargeDataListTableHeader, outputDataRecordTableHeader
@@ -22,55 +23,7 @@ from FileManGlobalDataParser import generateSingleFileFieldToIenMappingBySchema
 
 dox_url = "http://code.osehra.org/dox/"
 
-pkgMap = {
-    'AUTOMATED INFO COLLECTION SYS': 'Automated Information Collection System',
-    'AUTOMATED MED INFO EXCHANGE': 'Automated Medical Information Exchange',
-    'BAR CODE MED ADMIN': 'Barcode Medication Administration',
-    'CLINICAL INFO RESOURCE NETWORK': 'Clinical Information Resource Network',
-    #  u'DEVICE HANDLER',
-    #  u'DISCHARGE SUMMARY',
-    'E CLAIMS MGMT ENGINE': 'E Claims Management Engine',
-    #  u'EDUCATION TRACKING',
-    'EMERGENCY DEPARTMENT': 'Emergency Department Integration Software',
-    #  u'EXTENSIBLE EDITOR',
-    #  u'EXTERNAL PEER REVIEW',
-    'FEE BASIS CLAIMS SYSTEM' : 'Fee Basis',
-    'GEN. MED. REC. - GENERATOR': 'General Medical Record - Generator',
-    'GEN. MED. REC. - I/O' : 'General Medical Record - IO',
-    'GEN. MED. REC. - VITALS' : 'General Medical Record - Vitals',
-    #  u'GRECC',
-    #  u'HEALTH MANAGEMENT PLATFORM',
-    #  u'INDIAN HEALTH SERVICE',
-    #  u'INSURANCE CAPTURE BUFFER',
-    #  u'IV PHARMACY',
-    #  u'MASTER PATIENT INDEX',
-    'MCCR BACKBILLING' : 'MCCR National Database - Field',
-    #  u'MINIMAL PATIENT DATASET',
-    #  u'MOBILE SCHEDULING APPLICATIONS SUITE',
-    #  u'Missing Patient Register',
-    'NATIONAL HEALTH INFO NETWORK' : 'National Health Information Network',
-    #  u'NEW PERSON',
-    #  u'PATIENT ASSESSMENT DOCUM',
-    #  u'PATIENT FILE',
-    #  u'PROGRESS NOTES',
-    #  u'QUALITY ASSURANCE',
-    #  u'QUALITY IMPROVEMENT CHECKLIST',
-    #  u'REAL TIME LOCATION SYSTEM',
-    'TEXT INTEGRATION UTILITIES' : 'Text Integration Utility',
-    #  u'UNIT DOSE PHARMACY',
-    'VA POINT OF SERVICE (KIOSKS)' : 'VA Point of Service',
-    #  u'VDEM',
-    'VISTA INTEGRATION ADAPTOR' : 'VistA Integration Adapter',
-    'VENDOR - DOCUMENT STORAGE SYS' : 'Vendor - Document Storage Systems'
-    #  u'VETERANS ADMINISTRATION',
-    #  u'VOLUNTARY SERVICE SYSTEM',
-    #  u'VPFS',
-    #  u'cds',
-    #  u'person.demographics',
-    #  u'person.lookup',
-    #  u'term',
-    #  u'term.access'])
-} # this is the mapping between CUSTODIAL PACKAGE and packages in Dox
+
 
 def normalizeName(name):
     return name.replace('/', ' ').replace('\'','').replace(',','').replace('.','').replace('&', 'and')
