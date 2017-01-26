@@ -59,7 +59,7 @@ def commitChange(commitMsgFile, gitRepoDir=None):
   logger.info(output)
   return result
 
-def addChangeSet(gitRepoDir=None, patternList=None):
+def addChangeSet(gitRepoDir=None, patternList=[]):
   """
     Utility function to add all the files changed to staging area
     @gitRepoDir: git repository directory, default is current directory.
@@ -68,12 +68,41 @@ def addChangeSet(gitRepoDir=None, patternList=None):
                   need to escape wildcard character '*'
     @return: return True if success, False otherwise
   """
-  git_command_list = ["git", "add", "-A", "--"]
-  if patternList and isinstance(patternList, list):
-    git_command_list.extend(patternList)
-
+  git_command_list = ["git", "diff", "--stat", "--stat-width=10000","--", "*.zwr"]
   result, output = _runGitCommand(git_command_list, gitRepoDir)
+  test = output.split("\n")
   logger.info(output)
+  """
+    Attempts to check each global file for more than two lines of change
+    This will prevent every global from being updated in each commit thanks to
+    the date change written in by ZGO.
+
+    This assumes the script will be run in the "Packages" directory, which necessitates the
+    removal of the "Packages/" string from the filename
+  """
+  patternIncludeList = ["*.m"]
+  for line in test:
+   group = re.match('^[ ]+Packages/(?P<filename>.+.zwr)[ ]+[|][ ]+(?P<numlines>[0-9]+) ', line)
+   if group and (group.group('filename') and group.group('numlines')):
+     if(int(group.group('numlines')) > 2):
+       patternIncludeList.append( group.group('filename'))
+  """ Now add everything that can be found or was called for"""
+  git_command_list = ["git", "add", "--"]
+  totalIncludeList = patternList + patternIncludeList
+  for file in totalIncludeList:
+   git_command = git_command_list + [file.encode('string-escape')]
+   result, output = _runGitCommand(git_command, gitRepoDir)
+  logger.info(output)
+  """ Add the untracked files through checking for "other" files and
+  then add the list
+  """
+  git_command = ["git","ls-files","-o","--exclude-standard"]
+  result, lsFilesOutput = _runGitCommand(git_command, gitRepoDir)
+  git_command_list = ["git","add"]
+  for file in lsFilesOutput.split("\n"):
+    if len(file):
+      git_command = git_command_list + [file.encode('string-escape')]
+      result, output = _runGitCommand(git_command, gitRepoDir)
   return result
 
 def switchBranch(branchName, gitRepoDir=None):
@@ -126,7 +155,7 @@ def _runGitCommand(gitCmdList, workingDir):
   """
     Private Utility function to run git command in subprocess
     @gitCmdList: a list of git commands to run
-    @workingDir: the workding directory of the child process
+    @workingDir: the working directory of the child process
     @return: return a tuple of (True, output) if success,
              (False, output) otherwise
   """
