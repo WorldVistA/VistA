@@ -61,7 +61,12 @@ def getFileHtmlLink(dataEntry, value, **kargs):
   entryName = str(value)
   htmlFile = getDataEntryHtmlFileByName(entryName, dataEntry.ien,
                                         dataEntry.fileNo)
-  return "<a href=\"../%s/%s\">%s</a>" % (dataEntry.fileNo.replace(".","_"),htmlFile, value)
+  entryDescription=''
+  if '1' in dataEntry.fields:
+    if isinstance(dataEntry.fields['1'].value, list):
+      for line in dataEntry.fields['1'].value:
+        entryDescription += ' ' + cgi.escape(line).replace('"', r"&quot;").replace("'", r"&quot;")
+  return "<a title=\"%s\" href=\"../%s/%s\">%s</a>" % (entryDescription, dataEntry.fileNo.replace(".","_"),htmlFile, value)
 
 def getRoutineName(inputString):
   tagRoutine = inputString.split('^')
