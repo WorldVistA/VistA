@@ -146,6 +146,6 @@ Vagrant.configure("2") do |config|
   #
   config.vm.provision :shell do |s|
     s.path = "autoInstaller.sh"
-    s.args = "-e -g -i " + "#{ENV['instance']}"
+    s.args = "-g -i " + "#{ENV['instance']}"
   end
 end
