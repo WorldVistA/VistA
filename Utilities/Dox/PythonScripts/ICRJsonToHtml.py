@@ -48,7 +48,11 @@ def addToPackageMap(icrEntry, pkgName):
 """ Util function to generate link for the fie """
 def getICRIndividualHtmlFileLinkByIen(value, icrEntry, **kargs):
     ien = icrEntry['NUMBER']
-    return '<a href=\"%s\">%s</a>' % ('ICR-' + ien + '.html', value)
+    ienDescription = ''
+    if "GENERAL DESCRIPTION" in icrEntry:
+      for line in icrEntry["GENERAL DESCRIPTION"]:
+        ienDescription += ' ' + cgi.escape(line).replace('"', r"&quot;").replace("'", r"&quot;")
+    return '<a title=\"%s\" href=\"%s\">%s</a>' % (ienDescription,'ICR-' + ien + '.html', value)
 
 def getPackageHRefLink(pkgName, icrEntry, **kargs):
     if pkgName in pkgMap:
