@@ -1179,7 +1179,7 @@ class WebPageGenerator:
                 routine.addComment(line)
             if ENTRY_POINT.search(line):
               icrJson=[]
-              (entry, extra) = line.split(" ",1)
+              (entry, extra) = line.replace("\t"," ").split(" ",1)
               if not extra[0]==";":
                 extra=''
               if routineName in self._crossRef._icrJson:
