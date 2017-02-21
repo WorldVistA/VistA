@@ -42,6 +42,8 @@ class ICRParser(object):
         self._curLineNo = 0
         self._curField = None
         self._curStack = []
+        self._DBAComments = False
+
     def parse(self, inputFilename, outputFilename):
         with open(inputFilename,'r') as ICRFile:
             for line in ICRFile:
@@ -51,15 +53,31 @@ class ICRParser(object):
                 if self.isIgnoredLine(line):
                     continue
                 match = START_OF_RECORD.match(line)
-                if match:
+                if match and not self._DBAComments:
                     self._startOfNewItem(match, line)
                     continue
                 match = GENERIC_START_OF_RECORD.search(line)
                 if not match:
                     match = DBA_COMMENTS.match(line)
+                    if match:
+                        self._DBAComments = True
                 if match and match.group('name') in ICR_FILE_KEYWORDS:
                     fieldName = match.group('name')
-                    if isSubFile(fieldName):
+                    if fieldName == 'DBA Comments':
+                        self._DBAComments = True
+                    if self._DBAComments:
+                        if fieldName == "DATE/TIME EDITED":
+                            self._DBAComments = False
+                    if self._DBAComments:
+                        fieldName = 'DBA Comments'
+                        if self._curField == fieldName:
+                            self._appendWordsFieldLine(line)
+                        else:
+                            self._curField = fieldName
+                            name = match.group('name') # this is the name part
+                            restOfLine = line[match.end():]
+                            self._curRecord[name] = restOfLine.strip()
+                    elif isSubFile(fieldName):
                         self._curField = fieldName
                         self._startOfSubFile(match, line)
                     else:
@@ -106,6 +124,7 @@ class ICRParser(object):
         self._curRecord = {}
         self._findKeyValueInLine(matchObj, line, self._curRecord)
         #pprint.pprint(self._curRecord)
+
     def _findKeyValueInLine(self, match, line, outObj):
         """ parse all name value pair in a line and put back in outObj"""
         name = match.group('name'); # this is the name part
@@ -120,13 +139,24 @@ class ICRParser(object):
                 allmatches.append(m);
                 allFlds.append(m.group('name'))
         if allmatches:
+            changeField = False
             for idx, rm in enumerate(allmatches):
                 if idx == 0:
-                    outObj[name] = restOfLine[:rm.start()].strip()
-                if idx == len(allmatches) -1 :
-                    outObj[rm.group('name')] = restOfLine[rm.end():].strip()
+                    val = restOfLine[:rm.start()].strip()
+                    outObj[name] = val
+                    changeField = not(name == 'DESCRIPTION' and val == "")
+                if idx == len(allmatches) -1:
+                    if changeField:
+                        self._curField = rm.group('name')
+                        outObj[self._curField] = restOfLine[rm.end():].strip()
+                    else:
+                        outObj[rm.group('name')] = restOfLine[rm.end():].strip()
                 else:
-                    outObj[allmatches[idx-1].group('name')] = restOfLine[allmatches[idx-1].end():rm.start()].strip()
+                    if changeField:
+                        self._curField = allmatches[idx-1].group('name')
+                        outObj[self._curField] = restOfLine[allmatches[idx-1].end():rm.start()].strip()
+                    else:
+                        outObj[allmatches[idx-1].group('name')] = restOfLine[allmatches[idx-1].end():rm.start()].strip()
         else:
             outObj[name] = line[match.end():].strip()
 
