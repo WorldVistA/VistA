@@ -1756,7 +1756,7 @@ class WebPageGenerator:
             # link to VA documentation
             writeSectionHeader("Documentation", "Doc", outputFile)
             if len(package.getDocLink()) > 0:
-                outputFile.write("<p><h4>VA documentation in the <a href=\"%s\">VistA Documentation Library</a>" % package.getDocLink())
+                outputFile.write("<p><h4>VA documentation in the <a target='blank' href=\"%s\">VistA Documentation Library</a>" % package.getDocLink())
                 if len(package.getDocMirrorLink()) > 0:
                     outputFile.write("&nbsp;or&nbsp;<a href=\"%s\">OSEHRA Mirror site</a></h4>\n" % package.getDocMirrorLink())
                 else:
