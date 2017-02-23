@@ -1,0 +1,543 @@
+
+=============================================================================
+Run Date: JAN 10, 2017                     Designation: MAG*3*174
+Package : MAG - IMAGING                       Priority: EMERGENCY
+Version : 3       SEQ #125                      Status: Released
+                  Compliance Date: JAN 25, 2017
+=============================================================================
+
+
+Subject: Studies not being removed from modality worklist
+
+Category: 
+  - Other
+
+Description:
+============
+
+ Associated Patches:
+ ==================
+ This patch must be installed after MAG*3.0*162.
+  
+ Subject:  
+ =======
+ MODALITY WORKLIST (MWL)
+  
+ Category:
+ ========
+ OTHER
+  
+ Description:
+ ===========
+ MAG*3.0*174 has an emergency fix for Veterans Health Information Systems 
+ and Technology Architecture (VistA) Imaging's Modality Worklist (MWL).  
+ There was an issue reported within the MWL in which patients with 
+ completed exams were not falling off the worklists once the exams had 
+ been completed and closed.  The Text Gateway MWL entries in question all 
+ have a status of "Departed" and a consult status in VistA of "Complete."
+  
+ Patch Components:
+ ================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P 174_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch.  
+ MAG3_0P174_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software:
+ ========
+ File Name                       Description
+ =========                       ===========
+ MAG3_0P174.KID                  Kernel Installation and Distribution 
+                                 System (KIDS) build for Patch 174.
+ MAG3_0P174_DICOM_setup.exe      Legacy DICOM Gateway executable file.
+  
+ Documentation:
+ =============
+ This document, MAG3_0174_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Fields Associated:
+ =========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ ================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ ======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ==================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ ====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ ========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ ====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ ======================
+ New Service Requests (NSRs):
+ ===========================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+ 1. Defect 371594 (Tickets I10241107FY16,  I10195009FY16, R10385359FY16, 
+ R10388245FY16, I10427768FY16 ) Post-162 Text Gateway - Completed Exams 
+ not Clearing the Modality Worklist (MWL)
+  
+ Problem:
+ =======  
+ There was an issue reported within the modality worklist in which 
+ patients with completed exams were not falling off the worklists once the 
+ exams had been completed and closed.  The Text Gateway MWL entries in 
+ question all have a status of "Departed" and a consult status in VistA of 
+ "Complete."
+  
+ Previously, the Check Out appointment status was split into two different 
+ statuses "SADM Cancelled" and "Departed."  Those appointments with the 
+ canceled status continued to be removed from the study, but those with 
+ the departed status just showed an updated status.  In an attempt to fix 
+ these departed statuses, sites would go in after the study had been 
+ worked and update the appointment status to "Checked Out/Departed."  This 
+ caused studies to reappear on the worklists.
+  
+ Resolution:
+ ==========
+ Appointments will now be removed from the Modality Worklist once the 
+ status is changed to "Departed."
+  
+ 2. Defect 391065 (Tickets I10075734FY16, I10593076FY16, R10720868FY16) 
+ Patients not Removed from the Dental Worklist
+  
+ Problem: 
+ ======= 
+ Two problems are occurring:  1.  studies with a status of "departed" 
+ remain on the worklist and 2. There are studies with a status of 
+ "scheduled" on the worklist but the consult shows "complete" in CPRS.  
+  
+ Resolution: 
+ ========== 
+ The system was corrected to check the Consult Request Tracking package 
+ (GMRC) status and only generate the HL7 message if the study is active.
+  
+ 3. Defect 392702 (Ticket I10884548FY16) Radiology Images not Showing 
+ Modifiers
+  
+ Problem:  
+ =======
+ Some radiology images are no longer show the modifiers.  This problem has 
+ to do with a change in P110 (part of Mega-bundle).  The change moved 
+ radiology procedure modifiers in Modality Worklist (C-Find response) from 
+ Requested Procedure Description (0032,1060) to Study comments 
+ (0032,4000).  The Requested Procedure Description (0032,4000) now holds 
+ the Current Procedural Terminology (CPT) name.
+  
+ The result is that modality vendors are no longer displaying the 
+ information they used to - specifically modifiers.
+  
+ Resolution:  
+ ==========
+ Support was added to allow the display of procedure modifiers and 
+ technologist comments in multiple DICOM fields.
+  
+ Test Sites:
+ ==========
+ The following sites are test sites for this patch:
+   Aleda E. Lutz Veteran's Administration Medical Center (VAMC) Saginaw
+   Chalmers P. Wylie VA Ambulatory Care Center Columbus
+   Richard L. Roudebush VAMC Indianapolis 
+   Charlie Norwood VAMC-Augusta, GA 
+   Dayton VA Medical Center
+   Jack C. Montgomery VAMC- Muskogee, OK
+  
+ Software and Documentation Retrieval Instructions:
+ =================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from 
+ anonymous@download.vista.domain.ext from the COMMAND prompt (example:  
+ sftp anonymous@download.vista.domain.ext). This transmits the files from 
+ the first available server. 
+  
+ Sites may also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+  
+ When using Attachmate Reflection (Secure Shell):
+  
+ Albany:         domain.ext
+ Hines:          domain.ext
+ Salt Lake City: domain.ext
+  
+ When using the COMMAND prompt (example: sftp 
+ anonymous@domain.ext): 
+ Albany:         anonymous@domain.ext
+ Hines:          anonymous@domain.ext
+ Salt Lake City: anonymous@domain.ext
+  
+ Documentation can also be found on the U.S. Department of Veterans 
+ Affairs (VA) Software Documentation Library at:
+ http://www4.domain.ext/vdl/.
+  
+ Patch Installation:
+ ==================
+ Pre/Post Installation Overview:
+ ==============================
+ MAG*3.0*174 must be installed on the VistA System.  This patch must be 
+ installed by the compliance date.
+  
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch first.  This patch can be loaded while the VistA Imaging System is 
+ active and users are on the system.  Installing the MAG*3.0*174 KIDS only 
+ takes 2-3 minutes.  However, upgrading or installing the Legacy Digital 
+ Imaging and Communications in Medicine (DICOM) Gateway (LDGW) may take 
+ 15-45 minutes per instance; it depends on the complexity of the LDGW 
+ configuration at the site.  Please make the installation plan according 
+ to the site operation schedule and notify the local 
+ administrator/users/providers.  Refer to the latest  Imaging DICOM 
+ Gateway Installation Guide at the VA SharePoint site for more details:  
+ http://vaww.oed.portal.domain.ext/applications/VistAImaging/default.aspx.
+  
+ Pre-Installation Instructions:
+ =============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+  
+ Note:  All released VistA Imaging patches must be installed on the VistA 
+ system before installing MAG*3.0*174.
+  
+ VistA System (KIDS) Installation Instructions
+ =============================================
+ Installation Steps
+ ==================
+ KIDS installation will take less than one minute.
+ 1 On the VistA system, access the Kernel Installation and Distribution 
+ System Menu [XPD MAIN].
+ 2 Run the Installation option [XPD INSTALLATION MENU].
+ 3 Load the KIDS file by performing the following steps:
+   a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load 
+ the KIDS distribution.
+   b. When prompted, enter the path and file name (MAG3_0P174.KID) of the 
+ MAG*3.0*174 KIDS file.
+   c. When prompted to continue with the load, enter "YES". A Distribution 
+ OK! message will be displayed when the load is complete.
+ 4 After loading the KIDS file, use the following options to verify the 
+ contents of the patch and to back up any affected routines.
+   a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this 
+ option if you want to ensure the integrity of the routines in the patch. 
+   b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] - 
+ Run this option if you want to view all changes that will be made when 
+ the patch is installed.  All components (routines, options, and so on) in 
+ the patch will be compared.
+   c. Backup a Transport Global [XPD BACKUP] - Run this option if you want 
+ to create a backup message of any routines exported with the patch.  It 
+ will NOT back up any of the other changes.
+ 5 After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+   a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+   b. When prompted for the install name, enter "MAG*3.0*174".
+   c. Answer "NO" to the following prompts, if they appear:
+  
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6 When installation is finished, an Install Complete message will be 
+ displayed.
+  
+ KIDS Installation Example:
+ =========================
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing 
+ the KIDS file in a namespace on which it has previously been installed, 
+ your output may be different.
+  
+ ==========================================================================
+  
+ XPD INSTALLATION MENU     Installation
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 1  Load a Distribution
+ Enter a Host File:  MAG3_0P174.KID
+  
+ KIDS Distribution saved on Sep 01, 2016@12:49:57
+ Comment: VistA Imaging V3.0 - Patch 174 - Modality Worklist
+  
+ This Distribution contains Transport Globals for the following Package(s):
+    MAG*3.0*174
+ Distribution OK!
+  
+ Want to Continue with Load? YES// 
+ Loading Distribution...
+  
+    MAG*3.0*174
+  
+ Use INSTALL NAME: MAG*3.0*174 to install this Distribution.
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 6  Install Package(s)
+  
+  
+ Select INSTALL NAME: MAG*3.0*174      9/13/16@16:24:20
+      => VistA Imaging V3.0 - Patch 174 - Modality Worklist
+  
+ This Distribution was loaded on Sep 13, 2016@16:24:20 with header of 
+    VistA Imaging V3.0 - Patch 174 - Modality Worklist  
+    It consisted of the following Install(s):
+     MAG*3.0*174
+ Checking Install for Package MAG*3.0*174
+  
+ Install Questions for MAG*3.0*174
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+ Install Started for MAG*3.0*174 : 
+                Sep 13, 2016@16:28:57
+  
+ Build Distribution Date: Sep 01, 2016
+  
+  Installing Routines:
+                Sep 13, 2016@16:28:57
+  
+  Running Post-Install Routine: POS^MAGIP174
+  
+ Post Install Mail Message: Sep 13, 2016@16:28:57
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MAG*3.0*174 Installed. 
+                Sep 13, 2016@16:28:57
+  
+ Install Message sent 
+  
+ Install Completed
+  
+ Select Installation Option: 
+  
+ Do you really want to halt? YES// 
+  
+ Logged out at Sep 13, 2016 4:29 pm
+  
+ =-=-=---------------------------------------------------------------------
+  
+ Uninstalling MAG*3.0*174 KIDS
+ =============================
+ If it is necessary to uninstall the MAG*3.0*174 VistA KIDS, you needed to 
+ select the "Kernel Installation & Distribution System" menu option, 
+ "Backup a Transport Global" (see installation section above, step 4c), 
+ before you installed the patch.
+  
+ Administrators will need to use the PackMan function INSTALL/CHECK 
+ MESSAGE.  Check your MailMan messages for the backup message sent by the 
+ "Backup a Transport Global" function.
+  
+ 1. Select the message shown below:
+  
+ Backup of MAG*3.0*174 install on <mmm dd, yyyy>    <user name>
+  
+ 2. Select the Xtract PackMan option.
+ 3. Select the Install/Check Message option.
+ 4. Enter "Yes" at the prompt.
+ 5. Enter "No" at the backup prompt.  There is no need to back up the 
+ backup.
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2    Message #42925     Unloading Routine   MAGT7MA (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ . . .
+  
+ Legacy DICOM Gateway Installation:
+ =================================
+ The Legacy DICOM Gateway executable file, MAG3_0P174_DICOM_setup.exe, 
+ should be run on all DICOM gateways.  For installing, updating, or 
+ uninstalling the Legacy DICOM, refer to the VistA Imaging DICOM Gateway 
+ Installation Guide.
+  
+ When the install is complete, use the following instructions to remove 
+ erroneous worklist items:
+  
+ 1. From the VistA DICOM Gateway Menu, select Option 4 - System Maintenance
+  
+  
+ 2. From the VistA DICOM System Maintenance list, select Option 4 - Enter 
+ Programmer Mode and then you will be at DICOM prompt.
+  
+  
+ 3. Set the following variables based on the worklist items that need to 
+ be removed. Note: Entries in programmer mode must be in ALL CAPS.
+  
+ The following provides variable setup examples:
+  
+ S MODALITY="DENT"       Modality name/abbreviation may be different on 
+ your machine
+ S TIMESTAMP="3161028"   Timestamp date. Entries will be deleted prior to 
+ this date (i.e.,                        3161028 is October, 28 2016 where 
+ 316 is 2016 (1700+316) followed by                      month and day- 
+ 10/28).
+ S STATUS="DEPARTED"     Appointment status to remove (ex."departed", 
+ "scheduled")
+  
+ 4. To delete Modality Worklist entries after the modality, timestamp and 
+ status variables have been set, enter this one line of code at the DICOM> 
+ prompt:
+  
+ S (CNT,DIV)=0,U="^" F  S DIV=$O(^MAGDWLST(2006.56,DIV)) Q:'DIV  S IEN=0 
+ F  S IEN=$O(^MAGDWLST(2006.56,DIV,1,IEN)) Q:'IEN  S 
+ NODE=^MAGDWLST(2006.56,DIV,1,IEN,0),DIVISION=DIV,TIME=$P(NODE,U,5),STAT=$P
+ (NODE,U,7),MOD=$P(NODE,U,11),DFN=$P(NODE,U,2),STUDYIEN=IEN I 
+ STAT=STATUS,MOD=MODALITY,TIMESTAMP>TIME S CNT=CNT+1 D VERIFIED^MAGDWLPB
+  
+ Routine Information:
+ ===================
+ VistA KIDS Checksums:
+ ====================
+ This section lists modified routines for the VistA KIDS build.  For each 
+ routine, the second line will contain the following information: 
+  
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 24
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ KIDS:
+ ====
+ Routine         Checksum        Checksum        Patch List
+                 Before          After
+ MAGIP174        NA              4110422         174
+ MAGDHOW0        10465024        11099680        138, 174
+ MAGDHOW1        26357227        28177499        138, 174
+ MAGDHOWC        33384506        35470701        138, 174
+ MAGDHOWS        11945066        13563936        138, 174
+ Routine MAGIP174 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+  
+ Legacy DICOM Gateway:
+ ====================
+ Routine         Checksum        Checksum        Patch List
+                 Before          After
+ MAGDWLPA        76665335        76942046        11, 51, 49, 110, 174
+ MAGDVRSN        21494340        21494340        1, 7, 9, 26, 21, 10, 36, 
+                                                 3, 30, 5, 51, 50, 52, 69,
+                                                 75, 102, 103, 54, 53, 66,
+                                                 49, 99, 123, 118, 87, 110,
+                                                 138, 156, 160, 162, 174
+ MAGDFND2        101702066       103160968       1, 10, 30, 51, 50, 54, 
+                                                 53, 49, 110, 138, 174
+ MAGDFND3        91986236        108714097       10, 30, 51, 54, 53, 49, 
+                                                 99, 123, 110, 174
+ MAGDHRC4        145171410       138693297       11, 51, 102, 49, 110, 174
+ MAGDHRC6        30484020        32964204        11, 51, 49, 110, 174
+ MAGDMFBW        90156217        97895675        9, 10, 11, 30, 69, 110, 
+                                                 138, 174
+ MAGDWLPC        52778070        55436315        11, 51, 102, 49, 110, 174
+ MAGDWLU3        101618910       104897245       21, 10, 11, 30, 53, 49, 
+                                                 123, 110, 174
+
+Routine Information:
+====================
+Routine Name: MAGDHOW0
+    Checksum:
+  11099680
+ Description of Changes:
+  Error trap call fix
+
+Routine Name: MAGDHOW1
+    Checksum:
+  27214284
+Routine Name: MAGDHOWC
+    Checksum:
+  35470701
+Routine Name: MAGDHOWS
+    Checksum:
+  13563936
+Routine Name: MAGIP174
+    Checksum:
+  4110422
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 20, 2016
+Completed By:                               Date Completed: JAN 09, 2017
+Released By :                               Date Released : JAN 10, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

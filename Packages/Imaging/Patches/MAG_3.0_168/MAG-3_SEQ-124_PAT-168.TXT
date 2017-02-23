@@ -1,0 +1,358 @@
+
+=============================================================================
+Run Date: DEC 21, 2016                     Designation: MAG*3*168
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #124                      Status: Released
+                  Compliance Date: JAN 21, 2017
+=============================================================================
+
+
+Subject: BP 2012
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Associated Patches:  
+ ==================
+ This patch must be installed after MAG*3.0*135 and MAG*3.0*158.
+  
+ Subject:
+ =======
+ BACKGROUND PROCESSOR/MICROSOFT WINDOWS SERVER 2012 COMPATIBILITY
+  
+ Category:
+ ========
+ OTHER
+  
+ Description:
+ ===========
+ The VistA Imaging Background Processor (BP) is a component in the 
+ Veterans Health Information Systems and Technology Architecture (VistA) 
+ Imaging System.  The BP runs on a Windows file server. The Background 
+ Processor ensures the archiving of Digital Imaging and Communications in 
+ Medicine (DICOM) and clinical images from Tier 1 (configured in Redundant 
+ Array of Independent Disks [RAID] groups) onto the Tier 2 shares for 
+ long-term storage.  Currently, the BP is approved to run on a Microsoft 
+ (MS) Server 2008 Operating System (OS).  MAG*3.0*168 is an informational 
+ only patch to verify that the Background Processor operates correctly on 
+ MS Windows Server 2012.
+  
+ Patch Components:
+ ================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P 168_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch.  
+ MAG3_0P168_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software:
+ ========
+ MAG3_0P168.KID- Kernel Installation and Distribution System (KIDS) - KIDS 
+ build for Patch 168
+  
+ Documentation:
+ =============
+ This document, MAG3_0168_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Supporting Documentation:
+ ========================
+ VistA Imaging System Background Processor User Manual, September 2015, 
+ Revision 13
+  
+ Files & Fields Associated:
+ =========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ ================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ ======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ==================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ ====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ ========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ ====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ ======================
+ New Service Requests (NSRs):
+ ===========================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+  
+ 1.  Defect 391075  MS Windows Server 2012 Compatibility
+ =======================================================
+ Problem:  
+ =======
+ Currently, the BP is approved to run on an MS Server 2008 OS.  Sites are 
+ upgrading their systems and it needs to be verified that the Background 
+ Processor (BP) operates correctly on MS Windows Server 2012.
+ Resolution:
+ ==========
+ VistA Imaging BP was tested to insure that it operates normally on MS 
+ Windows Server 2012.
+  
+ 2.  Defect 326481  Verifier Schedule
+ ====================================
+ Problem:
+ =======
+ The Verifier can be scheduled to run at certain times.  The M code that 
+ starts the Verifier at the scheduled time checks that the Verifier is 
+ running on certain Microsoft Operating Systems.  The list of allowed 
+ operating systems did not include Microsoft Windows Server 2012.
+ Resolution:
+ ==========
+ The M code has been modified to allow the Verifier to run on MS Windows 
+ Server 2012.
+  
+ Test Sites:
+ ==========
+ The following sites are test sites for this patch:
+  
+    VISN 15 Eastern Orbit VA Heartland Network- Marion
+    VISN15 Western Orbit VA Heartland Network- Topeka
+    Mountain Home VA Medical Center
+    Fayetteville VAMC
+  
+ Software and Documentation Retrieval Instructions:
+ =================================================
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Albany:                 domain.ext
+ Hines:                  domain.ext
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Note:   Information about last-minute changes to this patch will be 
+ provided in a readme file. If present, this file will also be located in 
+ the MAG3_0P168 directory.
+  
+ Patch Installation:
+ ==================
+ Pre/Post Installation Overview:
+ ==============================
+ Sites will need to install the current BP patches MAG*3.0*135 and 
+ MAG*3.0*158 on MS Windows Server 2012 workstation and stop running the 
+ current BP that is on MS Windows Server 2008.  For instructions to stop 
+ the current BP and install the new one, refer to the VistA Imaging System 
+ Background Processor User Manual, September 2015, Revision 13.
+  
+ Pre-Installation Instructions:
+ =============================
+ Refer to the VistA Imaging System Background Processor User Manual, 
+ September 2015, Revision 13.
+  
+ VistA System (KIDS) Installation 
+ ================================
+ Installation Steps 
+ ==================
+ Refer to the VistA Imaging System Background Processor User Manual, 
+ September 2015, Revision 13.
+  
+ 1. Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+   a. Run the Load a Distribution [XPD LOAD DISTRIBUTION] option to load 
+ the KIDS distribution.
+   b. When prompted, enter the path and file name (MAG3_0P168 .KID) of the 
+ MAG*3.0*168 KIDS file that was downloaded from the Download Server.
+   c. When prompted to continue with the load, enter "YES".  A 
+ Distribution OK! Message will be displayed when the load is complete.
+ 4. After loading the KIDS file, use the following options to verify the 
+ contents of the patch.  
+   a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this 
+ option if you want to ensure the integrity of the routines in the patch.
+   b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] - 
+ Run this option if you want to view all changes that will be made when 
+ the patch is installed.  All components (routines, options, and so on) in 
+ the patch will be compared.
+   c. Back up a Transport Global [XPD BACKUP] - Run this option if you 
+ want to create a backup message of any routines exported with the patch.  
+ The option will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+   a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+   b. When prompted for the install name, enter MAG*3.0*168.
+   c. Answer NO to the following prompts, if they appear:
+  
+ Want KIDS to INHIBIT LOGONs during the install? No//NO
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? No/NO
+ Want KIDS to Rebuild Menu Trees Upon completion of Install? No//NO
+  
+ 6. When the installation has finished, an Install Completed message will 
+ be displayed.
+ KIDS Installation Example
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If the user has already installed the patch and is 
+ installing the KIDS file in a namespace on which it has previously been 
+ installed, the output will be different.
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+  
+ Enter a Host File: C:\TEMP\MAG3_0P168.KID
+  
+ KIDS Distribution saved on May 24, 2016@17:33:34
+ Comment: MAG V3.0 PATCH 168 BGP for 2012 server
+  
+ This Distribution contains Transport Globals for the following Package(s):
+ Build MAG*3.0*168 
+ OK to continue with Load? NO// YES
+  
+ Distribution OK!
+  
+ Want to Continue with Load? YES// 
+  
+ Loading Distribution...
+  
+    MAG*3.0*168
+ Use INSTALL NAME: MAG*3.0*168 to install this Distribution.
+  
+  
+ Select Installation Option: 6 Install Package(s)
+ Select INSTALL NAME: MAG*3.0*168      5/25/16@14:14:03
+      => MAG V3.0 PATCH 168 BGP for 2012 server  ;Created on May 24, 
+ 2016@17:33
+  
+ This Distribution was loaded on May 25, 2016@14:14:03 with header of 
+    MAG V3.0 PATCH 168 BGP for 2012 server  ;Created on May 24, 
+ 2016@17:33:34
+    It consisted of the following Install(s):
+     MAG*3.0*168
+ Checking Install for Package MAG*3.0*168
+  
+ Install Questions for MAG*3.0*168
+  
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+                                 MAG*3.0*168
+  
+  Install Started for MAG*3.0*168 : 
+                May 25, 2016@14:14:22
+  
+ Build Distribution Date: May 24, 2016
+  
+  Installing Routines: MAGQBUT, MAGIP168
+  
+  
+  Running Post-Install Routine: POS^MAGIP168
+  
+ Post Install Mail Message: May 25, 2016@14:14:22
+  
+  Updating Routine file...
+  
+  MAG*3.0*168 Installed. 
+                May 25, 2016@14:14:22
+  
+  
+ Install Completed
+  
+ Jukebox/Import Queue Failure Fix
+ Issues have been reported with JUKEBOX and IMPORT queue failures on 
+ 2008/2012 servers on the Background Processor (BP) that were not seen on 
+ 2003 servers.  This failure was traced back to a setting in the SMB2 
+ protocol where a local cache is created for the remote directory. 
+ Modifying the registry to disable this setting fixes the issue.  Below 
+ are a couple of articles that describe the issue and the fix.  
+  
+ https://technet.microsoft.com/en-us/library/ff686200(v=ws.10).aspx
+ http://stackoverflow.com/questions/5159220/windows-file-share-why-sometime
+ s-newly-created-files-arent-visible-for-some-pe
+  
+ This fix should be applied to both Storage Cluster (SC) members as well 
+ as all BPs.  To apply the queue failure fix, contact Clin 3 to get the 
+ registry file and follow the steps below:
+  
+ 1.      Double click on the file:  JukeboxImportQueueRegistryFixreg.reg 
+  
+  
+  
+ 2.      When prompted, click "Yes" to continue.
+ 3.      You should see a "Success" information popup.  Click "OK".
+ 4.      You have added the registry fix.
+  
+  
+ Routine Information:
+ ===================
+ VistA KIDS Checksums:
+ ====================
+ This section lists modified routines for the VistA Kernel Installation 
+ and Distribution System (KIDS) build.  For each routine, the second line 
+ will contain the following information: 
+  
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 20
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine   Checksum Before       Checksum After  Patch List
+ MAGIP168  New                   4013698         168
+ MAGQBUT   143602408             147442023       7, 8, 48, 20, 39, 168
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 29, 2016
+Completed By:                               Date Completed: DEC 21, 2016
+Released By :                               Date Released : DEC 21, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

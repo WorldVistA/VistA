@@ -1,0 +1,847 @@
+Released IB*2*565 SEQ #531
+Extracted from mail message
+**KIDS**:IB*2.0*565^
+
+**INSTALL NAME**
+IB*2.0*565
+"BLD",10329,0)
+IB*2.0*565^INTEGRATED BILLING^0^3160920^y
+"BLD",10329,1,0)
+^^6^6^3160920^
+"BLD",10329,1,1,0)
+This patch addresses two issues. The first issue contains a PARAMETER 
+"BLD",10329,1,2,0)
+error related to a group plan's comment in the Move Subscribers to a
+"BLD",10329,1,3,0)
+Different Plan [IBCN MOVE SUBSCRIB TO PLAN] option. The second issue is
+"BLD",10329,1,4,0)
+regarding numerous claim tracking entries incorrectly filled with the
+"BLD",10329,1,5,0)
+visit date/time for inpatient events in the Admit a Patient [DG ADMIT
+"BLD",10329,1,6,0)
+PATIENT] option.
+"BLD",10329,4,0)
+^9.64PA^^
+"BLD",10329,6)
+^491
+"BLD",10329,6.3)
+41
+"BLD",10329,"ABPKG")
+n
+"BLD",10329,"INIT")
+POST^IB20P565
+"BLD",10329,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10329,"KRN",.4,0)
+.4
+"BLD",10329,"KRN",.401,0)
+.401
+"BLD",10329,"KRN",.402,0)
+.402
+"BLD",10329,"KRN",.403,0)
+.403
+"BLD",10329,"KRN",.5,0)
+.5
+"BLD",10329,"KRN",.84,0)
+.84
+"BLD",10329,"KRN",3.6,0)
+3.6
+"BLD",10329,"KRN",3.8,0)
+3.8
+"BLD",10329,"KRN",9.2,0)
+9.2
+"BLD",10329,"KRN",9.8,0)
+9.8
+"BLD",10329,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",10329,"KRN",9.8,"NM",1,0)
+IBTRKR^^0^B37890721
+"BLD",10329,"KRN",9.8,"NM",2,0)
+IBCN118^^0^B9889225
+"BLD",10329,"KRN",9.8,"NM",3,0)
+IB20P565^^0^B2952681
+"BLD",10329,"KRN",9.8,"NM","B","IB20P565",3)
+
+"BLD",10329,"KRN",9.8,"NM","B","IBCN118",2)
+
+"BLD",10329,"KRN",9.8,"NM","B","IBTRKR",1)
+
+"BLD",10329,"KRN",19,0)
+19
+"BLD",10329,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",10329,"KRN",19.1,0)
+19.1
+"BLD",10329,"KRN",101,0)
+101
+"BLD",10329,"KRN",409.61,0)
+409.61
+"BLD",10329,"KRN",771,0)
+771
+"BLD",10329,"KRN",779.2,0)
+779.2
+"BLD",10329,"KRN",870,0)
+870
+"BLD",10329,"KRN",8989.51,0)
+8989.51
+"BLD",10329,"KRN",8989.52,0)
+8989.52
+"BLD",10329,"KRN",8994,0)
+8994
+"BLD",10329,"KRN","B",.4,.4)
+
+"BLD",10329,"KRN","B",.401,.401)
+
+"BLD",10329,"KRN","B",.402,.402)
+
+"BLD",10329,"KRN","B",.403,.403)
+
+"BLD",10329,"KRN","B",.5,.5)
+
+"BLD",10329,"KRN","B",.84,.84)
+
+"BLD",10329,"KRN","B",3.6,3.6)
+
+"BLD",10329,"KRN","B",3.8,3.8)
+
+"BLD",10329,"KRN","B",9.2,9.2)
+
+"BLD",10329,"KRN","B",9.8,9.8)
+
+"BLD",10329,"KRN","B",19,19)
+
+"BLD",10329,"KRN","B",19.1,19.1)
+
+"BLD",10329,"KRN","B",101,101)
+
+"BLD",10329,"KRN","B",409.61,409.61)
+
+"BLD",10329,"KRN","B",771,771)
+
+"BLD",10329,"KRN","B",779.2,779.2)
+
+"BLD",10329,"KRN","B",870,870)
+
+"BLD",10329,"KRN","B",8989.51,8989.51)
+
+"BLD",10329,"KRN","B",8989.52,8989.52)
+
+"BLD",10329,"KRN","B",8994,8994)
+
+"BLD",10329,"QDEF")
+^^^^^^^^^^
+"BLD",10329,"QUES",0)
+^9.62^^
+"BLD",10329,"REQB",0)
+^9.611^2^2
+"BLD",10329,"REQB",1,0)
+IB*2.0*528^2
+"BLD",10329,"REQB",2,0)
+IB*2.0*547^2
+"BLD",10329,"REQB","B","IB*2.0*528",1)
+
+"BLD",10329,"REQB","B","IB*2.0*547",2)
+
+"INIT")
+POST^IB20P565
+"MBREQ")
+0
+"PKG",200,-1)
+1^1
+"PKG",200,0)
+INTEGRATED BILLING^IB^INTEGRATED BILLING
+"PKG",200,20,0)
+^9.402P^1^1
+"PKG",200,20,1,0)
+2^^IBAXDR
+"PKG",200,20,1,1)
+
+"PKG",200,20,"B",2,1)
+
+"PKG",200,22,0)
+^9.49I^1^1
+"PKG",200,22,1,0)
+2.0^2940321^2990406^2447
+"PKG",200,22,1,"PAH",1,0)
+565^3160920
+"PKG",200,22,1,"PAH",1,1,0)
+^^6^6^3160920
+"PKG",200,22,1,"PAH",1,1,1,0)
+This patch addresses two issues. The first issue contains a PARAMETER 
+"PKG",200,22,1,"PAH",1,1,2,0)
+error related to a group plan's comment in the Move Subscribers to a
+"PKG",200,22,1,"PAH",1,1,3,0)
+Different Plan [IBCN MOVE SUBSCRIB TO PLAN] option. The second issue is
+"PKG",200,22,1,"PAH",1,1,4,0)
+regarding numerous claim tracking entries incorrectly filled with the
+"PKG",200,22,1,"PAH",1,1,5,0)
+visit date/time for inpatient events in the Admit a Patient [DG ADMIT
+"PKG",200,22,1,"PAH",1,1,6,0)
+PATIENT] option.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","IB20P565")
+0^3^B2952681^n/a
+"RTN","IB20P565",1,0)
+IB20P565 ;ALB/CXW - IB*2.0*565 Post Init:Fix Visit Date/Time in CT;8-31-2016 
+"RTN","IB20P565",2,0)
+ ;;2.0;INTEGRATED BILLING;**565**;21-MAR-94;Build 41
+"RTN","IB20P565",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IB20P565",4,0)
+ Q
+"RTN","IB20P565",5,0)
+ ;
+"RTN","IB20P565",6,0)
+POST ; post-install of patch installation
+"RTN","IB20P565",7,0)
+ ; remove unnecessary visit date/time for INPAT in field/file (#.03/#356)
+"RTN","IB20P565",8,0)
+ N IBA,IBCNT,IBCTIEN,IBCTY,IBVDTM,DA,DIE,DR,X,Y S U="^"
+"RTN","IB20P565",9,0)
+ D MSG("  IB*2.0*565 Post-Install .....")
+"RTN","IB20P565",10,0)
+ D MSG("")
+"RTN","IB20P565",11,0)
+ D MSG("     >> Removing Existing Visit Date/Time for Inpatient Events, Please Wait...")
+"RTN","IB20P565",12,0)
+ S IBCNT=0,IBVDTM=""
+"RTN","IB20P565",13,0)
+ S IBCTY=$O(^IBE(356.6,"B","INPATIENT ADMISSION",0))
+"RTN","IB20P565",14,0)
+ F  S IBVDTM=$O(^IBT(356,"AVSIT",IBVDTM)) Q:IBVDTM=""  D
+"RTN","IB20P565",15,0)
+ . ; no change if visit is a pointer
+"RTN","IB20P565",16,0)
+ . I $D(^AUPNVSIT(IBVDTM)) Q
+"RTN","IB20P565",17,0)
+ . S IBCTIEN=0
+"RTN","IB20P565",18,0)
+ . F  S IBCTIEN=$O(^IBT(356,"AVSIT",IBVDTM,IBCTIEN)) Q:'IBCTIEN  D
+"RTN","IB20P565",19,0)
+ .. ; no change if not inpatient event
+"RTN","IB20P565",20,0)
+ .. I IBCTY'=+$P($G(^IBT(356,IBCTIEN,0)),U,18) Q
+"RTN","IB20P565",21,0)
+ .. S DA=IBCTIEN
+"RTN","IB20P565",22,0)
+ .. ; override the input transform
+"RTN","IB20P565",23,0)
+ .. S DIE="^IBT(356,",DR=".03////@" D ^DIE K DA,DIE,DR,X,Y
+"RTN","IB20P565",24,0)
+ .. S IBCNT=IBCNT+1
+"RTN","IB20P565",25,0)
+ D MSG("        Done.  "_IBCNT_" existing inpatient claims tracking entries updated (#356)")
+"RTN","IB20P565",26,0)
+ D MSG("")
+"RTN","IB20P565",27,0)
+ D MSG("  IB*2.0*565 Post-Install Complete")
+"RTN","IB20P565",28,0)
+ ; 
+"RTN","IB20P565",29,0)
+ Q
+"RTN","IB20P565",30,0)
+MSG(IBA) ;
+"RTN","IB20P565",31,0)
+ D MES^XPDUTL(IBA)
+"RTN","IB20P565",32,0)
+ Q
+"RTN","IBCN118")
+0^2^B9889225^B9899730
+"RTN","IBCN118",1,0)
+IBCN118 ;ALB/KML - TRIGGER LOGIC CALLED BY DD XREF 2.312, 1.08 ;06-APR-2015
+"RTN","IBCN118",2,0)
+ ;;2.0;INTEGRATED BILLING;**528,565**;21-MAR-94;Build 41
+"RTN","IBCN118",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IBCN118",4,0)
+ ;
+"RTN","IBCN118",5,0)
+TRIGSET ; trigger called from MUMPS xref from DD(2.312, 1.08)
+"RTN","IBCN118",6,0)
+ ; ensure that the new fields at the new COMMENT - SUBSCRIBER POLICY multiple (2.312, 1.18) get updated when 2.312, 1.08 is edited
+"RTN","IBCN118",7,0)
+ ;
+"RTN","IBCN118",8,0)
+ ; Expected variables:
+"RTN","IBCN118",9,0)
+ ;   DA = system wide array of iens associated with the patient record
+"RTN","IBCN118",10,0)
+ ;  DUZ = system wide user IEN
+"RTN","IBCN118",11,0)
+ ;
+"RTN","IBCN118",12,0)
+ N IBDT,IBDFN,IBPOLDA,IBCDA,IBPOLCOM
+"RTN","IBCN118",13,0)
+ ;
+"RTN","IBCN118",14,0)
+ S IBDFN=$G(DA(1)),IBPOLDA=$G(DA),IBPOLCOM=$P($G(^DPT(IBDFN,.312,IBPOLDA,1)),U,8)
+"RTN","IBCN118",15,0)
+ ;
+"RTN","IBCN118",16,0)
+ ; -- comments do not exist for the user so add comments
+"RTN","IBCN118",17,0)
+ I '$O(^DPT(IBDFN,.312,IBPOLDA,13,"C",DUZ,"")) D ADCOM(IBDFN,IBPOLDA,IBPOLCOM) Q
+"RTN","IBCN118",18,0)
+ ;
+"RTN","IBCN118",19,0)
+ ; -- get the last policy comment entered and the comment IEN
+"RTN","IBCN118",20,0)
+ S IBDT=$O(^DPT(IBDFN,.312,IBPOLDA,13,"B",""),-1),IBCDA=$O(^DPT(IBDFN,.312,IBPOLDA,13,"B",IBDT,""),-1)
+"RTN","IBCN118",21,0)
+ ;
+"RTN","IBCN118",22,0)
+ ; -- edit comment if comment exist for the user
+"RTN","IBCN118",23,0)
+ I $P(^DPT(IBDFN,.312,IBPOLDA,13,IBCDA,0),U,2)=DUZ D EDCOM(IBDFN,IBDT,IBCDA)
+"RTN","IBCN118",24,0)
+ Q
+"RTN","IBCN118",25,0)
+ ;
+"RTN","IBCN118",26,0)
+ADCOM(IBDFN,IBPOLDA,IBPOLCOM) ; add new patient policy comment to multiple (2.312, 1.18)
+"RTN","IBCN118",27,0)
+ ;
+"RTN","IBCN118",28,0)
+ L +^DPT(IBDFN,.312,IBPOLDA,13):5 I '$T D CMLKD Q
+"RTN","IBCN118",29,0)
+ ;
+"RTN","IBCN118",30,0)
+ N FDA,IENS,DIERR
+"RTN","IBCN118",31,0)
+ ;
+"RTN","IBCN118",32,0)
+ ; -- populate FDA array
+"RTN","IBCN118",33,0)
+ S IENS="+1"_","_IBPOLDA_","_IBDFN_","
+"RTN","IBCN118",34,0)
+ S FDA(2.342,IENS,.01)=$$NOW^XLFDT()
+"RTN","IBCN118",35,0)
+ S FDA(2.342,IENS,.02)=DUZ
+"RTN","IBCN118",36,0)
+ S FDA(2.342,IENS,.03)=IBPOLCOM
+"RTN","IBCN118",37,0)
+ ;
+"RTN","IBCN118",38,0)
+ ; -- add comments
+"RTN","IBCN118",39,0)
+ D UPDATE^DIE(,"FDA",,"DIERR") I $D(DIERR) W !,!,"Error...ADCOM-IBCN118...Cannot Add policy comment" D PAUSE^VALM1
+"RTN","IBCN118",40,0)
+ L -^DPT(IBDFN,.312,IBPOLDA,13)
+"RTN","IBCN118",41,0)
+ Q
+"RTN","IBCN118",42,0)
+ ;
+"RTN","IBCN118",43,0)
+EDCOM(IBDFN,IBDT,IBCDA) ; edit existing comment entry at 2.312,1.18 multiple
+"RTN","IBCN118",44,0)
+ ; Input:
+"RTN","IBCN118",45,0)
+ ;   IBDT  = date/time that comment was made
+"RTN","IBCN118",46,0)
+ ;   CMIEN = comment IEN
+"RTN","IBCN118",47,0)
+ ;
+"RTN","IBCN118",48,0)
+ ; -- only make edits to comments if the first 80 characters are different
+"RTN","IBCN118",49,0)
+ Q:$P($G(^DPT(IBDFN,.312,IBPOLDA,1)),U,8)=$E($P(^DPT(IBDFN,.312,IBPOLDA,13,IBCDA,1),U),1,80)
+"RTN","IBCN118",50,0)
+ ;
+"RTN","IBCN118",51,0)
+ N FDA,IENS,DIERR
+"RTN","IBCN118",52,0)
+ ;
+"RTN","IBCN118",53,0)
+ L +^DPT(IBDFN,.312,IBPOLDA,13):5 I '$T D CMLKD Q
+"RTN","IBCN118",54,0)
+ ;
+"RTN","IBCN118",55,0)
+ ; -- populate FDA array
+"RTN","IBCN118",56,0)
+ S IENS=IBCDA_","_IBPOLDA_","_IBDFN_","
+"RTN","IBCN118",57,0)
+ S FDA(2.342,IENS,.01)=$$NOW^XLFDT()
+"RTN","IBCN118",58,0)
+ S FDA(2.342,IENS,.02)=DUZ
+"RTN","IBCN118",59,0)
+ S FDA(2.342,IENS,.03)=$P($G(^DPT(IBDFN,.312,IBPOLDA,1)),U,8)
+"RTN","IBCN118",60,0)
+ ;
+"RTN","IBCN118",61,0)
+ ; -- update comments
+"RTN","IBCN118",62,0)
+ D FILE^DIE("","FDA","DIERR") I $D(DIERR) W !,!,"Error...EDCOM-IBCN118...Cannot edit policy comments" D PAUSE^VALM1
+"RTN","IBCN118",63,0)
+ L -^DPT(IBDFN,.312,IBPOLDA,13)
+"RTN","IBCN118",64,0)
+ Q
+"RTN","IBCN118",65,0)
+ ;
+"RTN","IBCN118",66,0)
+TRIGKIL ; remove data at 2.312, 1.18 multiple when 2.312, 1.08 gets removed
+"RTN","IBCN118",67,0)
+ ;
+"RTN","IBCN118",68,0)
+ ; -- don't kill data at 1.18 multiple since data exists at 2.313, 1.08
+"RTN","IBCN118",69,0)
+ Q:$P(^DPT(DA(1),.312,DA,1),U,8)]""
+"RTN","IBCN118",70,0)
+ ;
+"RTN","IBCN118",71,0)
+ N FDA,IBDT,CMIEN,IENS,DIERR
+"RTN","IBCN118",72,0)
+ ;
+"RTN","IBCN118",73,0)
+ S IBDT=$O(^DPT(DA(1),.312,DA,13,"BB",DUZ,""),-1)
+"RTN","IBCN118",74,0)
+ ;
+"RTN","IBCN118",75,0)
+ ; -- user doesn't have comments at the 1.18 multiple or the user has comments but not for the current date so quit
+"RTN","IBCN118",76,0)
+ Q:IBDT']""  Q:$P(IBDT,".")'=DT
+"RTN","IBCN118",77,0)
+ ;
+"RTN","IBCN118",78,0)
+ ; -- populate FDA array
+"RTN","IBCN118",79,0)
+ S CMIEN=$O(^DPT(DA(1),.312,DA,13,"BB",DUZ,IBDT,""),-1)
+"RTN","IBCN118",80,0)
+ S IENS=CMIEN_","_DA_","_DA(1)_","
+"RTN","IBCN118",81,0)
+ S FDA(2.342,IENS,.01)="@"
+"RTN","IBCN118",82,0)
+ S FDA(2.342,IENS,.02)="@"
+"RTN","IBCN118",83,0)
+ S FDA(2.342,IENS,.03)="@"
+"RTN","IBCN118",84,0)
+ ;
+"RTN","IBCN118",85,0)
+ ; -- update comments
+"RTN","IBCN118",86,0)
+ D FILE^DIE("","FDA","DIERR") I $D(DIERR) W !,!,"Error...TRIGKIL-IBCN118...Cannot Remove data from (2.312,1.18)" D PAUSE^VALM1
+"RTN","IBCN118",87,0)
+ Q
+"RTN","IBCN118",88,0)
+ ;
+"RTN","IBCN118",89,0)
+CMLKD ; -- write record locked message
+"RTN","IBCN118",90,0)
+ W !!,"Sorry, another user currently editing this entry."
+"RTN","IBCN118",91,0)
+ W !,"Try again later."
+"RTN","IBCN118",92,0)
+ D PAUSE^VALM1
+"RTN","IBCN118",93,0)
+ Q
+"RTN","IBTRKR")
+0^1^B37890721^B38263485
+"RTN","IBTRKR",1,0)
+IBTRKR ;ALB/AAS - CLAIMS TRACKER - AUTO-ENROLLER ; 4-AUG-93
+"RTN","IBTRKR",2,0)
+ ;;2.0;INTEGRATED BILLING;**23,43,45,56,214,547,565**;21-MAR-94;Build 41
+"RTN","IBTRKR",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IBTRKR",4,0)
+ ;
+"RTN","IBTRKR",5,0)
+INP ; -- Inpatient Tracker
+"RTN","IBTRKR",6,0)
+ ;    called by ibamtd  from DGPM MOVEMENT EVENTS
+"RTN","IBTRKR",7,0)
+ ;                                               add   edit   delete
+"RTN","IBTRKR",8,0)
+ ;  dgpma = after movement 0th node file 405  : data   data   null
+"RTN","IBTRKR",9,0)
+ ;  dgpmp = prior movement 0th node file 405  : null   data   data
+"RTN","IBTRKR",10,0)
+ ;  dfn   = ien of patient
+"RTN","IBTRKR",11,0)
+ ;  
+"RTN","IBTRKR",12,0)
+ N %,%H,%I,IBMVAD,IBMVTP,IBTRKR
+"RTN","IBTRKR",13,0)
+ ;
+"RTN","IBTRKR",14,0)
+ ;  inpatient claims tracking turned off
+"RTN","IBTRKR",15,0)
+ S IBTRKR=$G(^IBE(350.9,1,6)) I '$P(IBTRKR,"^",2) Q
+"RTN","IBTRKR",16,0)
+ ;
+"RTN","IBTRKR",17,0)
+ ;  movement type 1=admission, 2=transfer, 3=discharge, 6=specialty chg
+"RTN","IBTRKR",18,0)
+ S IBMVTP=$S($P(DGPMA,"^",2):$P(DGPMA,"^",2),1:$P(DGPMP,"^",2)) I 'IBMVTP Q
+"RTN","IBTRKR",19,0)
+ ;
+"RTN","IBTRKR",20,0)
+ ;  $p(14)=admission movement ptr entry in file 405
+"RTN","IBTRKR",21,0)
+ S IBMVAD=$S(DGPMA'="":$P(DGPMA,"^",14),1:$P(DGPMP,"^",14)) I 'IBMVAD Q
+"RTN","IBTRKR",22,0)
+ ;
+"RTN","IBTRKR",23,0)
+ D WRITE("Updating claims tracking ... ",2)
+"RTN","IBTRKR",24,0)
+ ;
+"RTN","IBTRKR",25,0)
+ I '$D(VAIN(1)) D INP^VADPT
+"RTN","IBTRKR",26,0)
+ ;
+"RTN","IBTRKR",27,0)
+ ;  add/edit admission
+"RTN","IBTRKR",28,0)
+ I IBMVTP=1 D ADMIT Q
+"RTN","IBTRKR",29,0)
+ ;
+"RTN","IBTRKR",30,0)
+ ;  transfer to asih (patch 23)
+"RTN","IBTRKR",31,0)
+ I $P($G(^DGPM(+$P(DGPMA,"^",15),0)),"^",2)=1 S IBMVAD=$P(DGPMA,"^",15) D ADMIT Q
+"RTN","IBTRKR",32,0)
+ ;
+"RTN","IBTRKR",33,0)
+ ;  specialty change
+"RTN","IBTRKR",34,0)
+ I IBMVTP=6 D SPECIAL Q
+"RTN","IBTRKR",35,0)
+ ;
+"RTN","IBTRKR",36,0)
+ D WRITE("completed.")
+"RTN","IBTRKR",37,0)
+ Q
+"RTN","IBTRKR",38,0)
+ ;
+"RTN","IBTRKR",39,0)
+ ;
+"RTN","IBTRKR",40,0)
+WRITE(MSG,FF)         ;  write message on screen if not silent
+"RTN","IBTRKR",41,0)
+ ;  write 'F'orm 'F'eeds count followed by msg (optional)
+"RTN","IBTRKR",42,0)
+ N %
+"RTN","IBTRKR",43,0)
+ I '$D(IB20),'$G(DGQUIET) D
+"RTN","IBTRKR",44,0)
+ .   F %=1:1:$G(FF) W !
+"RTN","IBTRKR",45,0)
+ .   W MSG
+"RTN","IBTRKR",46,0)
+ Q
+"RTN","IBTRKR",47,0)
+ ;
+"RTN","IBTRKR",48,0)
+ ;
+"RTN","IBTRKR",49,0)
+ADMIT ; -- process admission movements
+"RTN","IBTRKR",50,0)
+ ;  ibmvad is admission movement pointer to file 405
+"RTN","IBTRKR",51,0)
+ ;  dgpma  is movement entry from file 405
+"RTN","IBTRKR",52,0)
+ N %,%H,%I,IBCTFLAG,IBNEW,IBRANDOM,IBTRN,LASTADM,LASTDA,LASTDATA
+"RTN","IBTRKR",53,0)
+ ;
+"RTN","IBTRKR",54,0)
+ ;  this is a deleted admission from file 405, dgpma=null
+"RTN","IBTRKR",55,0)
+ I DGPMA="" D DELADMIT Q
+"RTN","IBTRKR",56,0)
+ ;
+"RTN","IBTRKR",57,0)
+ ;  try and relink to existing entry if already there
+"RTN","IBTRKR",58,0)
+ ;  find the last admission, check to make sure its inactive and there
+"RTN","IBTRKR",59,0)
+ ;  is not a pointer to the movement file ($p(5)).  if the current
+"RTN","IBTRKR",60,0)
+ ;  admission date is within 5 days, update the entry.
+"RTN","IBTRKR",61,0)
+ S LASTADM=$O(^IBT(356,"APTY",DFN,+$O(^IBE(356.6,"AC",1,0)),9999999),-1)
+"RTN","IBTRKR",62,0)
+ I LASTADM S LASTDA=+$O(^IBT(356,"APTY",DFN,1,LASTADM,0)),LASTDATA=$G(^IBT(356,LASTDA,0)) I $P(LASTDATA,"^",20)=0,$P(LASTDATA,"^",5)="" D  Q:$G(IBCTFLAG)
+"RTN","IBTRKR",63,0)
+ .   S %=$$FMDIFF^XLFDT($P(DGPMA,"."),$P(LASTADM,"."))
+"RTN","IBTRKR",64,0)
+ .   I %>-5,%<5 D RELINK^IBTRKRU(LASTDA,IBMVAD,$P(DGPMA,"^")),RELBULL^IBTRKRBR(DFN,LASTDA,DGPMA,+$G(VAIN(3))),WRITE("entry re-linked.") S IBCTFLAG=1
+"RTN","IBTRKR",65,0)
+ ;
+"RTN","IBTRKR",66,0)
+ ;  random sampler, admission date must equal today (dt)
+"RTN","IBTRKR",67,0)
+ I +$G(VAIN(3)),($E(+DGPMA,1,7)=DT) S IBRANDOM=$$RANDOM^IBTRKR1(+VAIN(3))
+"RTN","IBTRKR",68,0)
+ ;
+"RTN","IBTRKR",69,0)
+ N D,D0,DI,DIG,DIH,DIU,DIV,DQ,IBADMDT,IBETYP  ; variables left by ibtutl
+"RTN","IBTRKR",70,0)
+ ;  inpatient claims tracking = all patients
+"RTN","IBTRKR",71,0)
+ ;  no visit date/time for inpatient events - IB*2.0*565
+"RTN","IBTRKR",72,0)
+ I $P(IBTRKR,"^",2)=2 D  Q
+"RTN","IBTRKR",73,0)
+ .   D ADM^IBTUTL(IBMVAD,+$E(+DGPMA,1,12),$G(IBRANDOM))
+"RTN","IBTRKR",74,0)
+ .   D WRITE("entry "_$S($G(IBNEW):"added.",1:"edited."))
+"RTN","IBTRKR",75,0)
+ .   I $G(IBRANDOM),$G(IBTRN) D ADMTBULL^IBTRKRBA(DFN,IBTRN,DGPMA,+$G(VAIN(3)))
+"RTN","IBTRKR",76,0)
+ ;
+"RTN","IBTRKR",77,0)
+ ;  inpatient claims tracking = insured and ur only
+"RTN","IBTRKR",78,0)
+ I $P(IBTRKR,"^",2)=1,$S($G(IBRANDOM):1,'$$INSURED^IBCNS1(DFN,+DGPMA):0,1:$$PTCOV^IBCNSU3(DFN,+DGPMA,"INPATIENT")) D  Q
+"RTN","IBTRKR",79,0)
+ .   D ADM^IBTUTL(IBMVAD,+$E(+DGPMA,1,12),$G(IBRANDOM))
+"RTN","IBTRKR",80,0)
+ .   D WRITE("entry "_$S($G(IBNEW):"added.",1:"edited."))
+"RTN","IBTRKR",81,0)
+ .   I $G(IBRANDOM),$G(IBTRN) D ADMTBULL^IBTRKRBA(DFN,IBTRN,DGPMA,+$G(VAIN(3)))
+"RTN","IBTRKR",82,0)
+ ;
+"RTN","IBTRKR",83,0)
+ ;  inpatient claims tracking = insured and ur only, but not insurred
+"RTN","IBTRKR",84,0)
+ ;  need to send off RDV in background
+"RTN","IBTRKR",85,0)
+ N IBT
+"RTN","IBTRKR",86,0)
+ I $P(IBTRKR,"^",2)=1,'$$INSURED^IBCNS1(DFN,+DGPMA),$$TFL^IBARXMU(DFN,.IBT),'$D(^IBT(356,"ARDV",DFN)) D ADM^IBCNRDV(DFN,IBMVAD,+$E(+DGPMA,1,12),$G(IBRANDOM)) D WRITE("Remote Query for insurance sent.") Q
+"RTN","IBTRKR",87,0)
+ ;
+"RTN","IBTRKR",88,0)
+ ;
+"RTN","IBTRKR",89,0)
+ D WRITE("no action taken.")
+"RTN","IBTRKR",90,0)
+ Q
+"RTN","IBTRKR",91,0)
+ ;
+"RTN","IBTRKR",92,0)
+ ;
+"RTN","IBTRKR",93,0)
+DELADMIT ;  deleted admission
+"RTN","IBTRKR",94,0)
+ N DA,FILE,IBDATE,IBTRN,SPECALTY
+"RTN","IBTRKR",95,0)
+ S IBTRN=$O(^IBT(356,"AD",+IBMVAD,0)) I IBTRN D  Q
+"RTN","IBTRKR",96,0)
+ .   S SPECALTY=+$P($G(^UTILITY($J,"ATS",+$P(DGPMP,"^"),+$O(^UTILITY($J,"ATS",+$P(DGPMP,"^"),0)))),"^",9)
+"RTN","IBTRKR",97,0)
+ .   ;  send information bulletin
+"RTN","IBTRKR",98,0)
+ .   D DELBULL^IBTRKRBD(DFN,IBTRN,DGPMP,SPECALTY)
+"RTN","IBTRKR",99,0)
+ .   ;  clean up files pointing to 405
+"RTN","IBTRKR",100,0)
+ .   F FILE=356.9,356.91,356.94 S DA=0 F  S DA=$O(^IBT(FILE,"C",+IBMVAD,DA)) Q:'DA  D DELETE^IBTRKRU(FILE,DA)
+"RTN","IBTRKR",101,0)
+ .   S IBDATE=0 F  S IBDATE=$O(^IBT(356.93,"AMVD",+IBMVAD,IBDATE)) Q:'IBDATE  S DA=0 F  S DA=$O(^IBT(356.93,"AMVD",+IBMVAD,IBDATE,DA)) Q:'DA  D DELETE^IBTRKRU(356.93,DA)
+"RTN","IBTRKR",102,0)
+ .   ;  inactivate entry in ct 356
+"RTN","IBTRKR",103,0)
+ .   D INACTIVE^IBTRKRU(IBTRN)
+"RTN","IBTRKR",104,0)
+ .   D WRITE("entry inactivated.")
+"RTN","IBTRKR",105,0)
+ D WRITE("no action taken.")
+"RTN","IBTRKR",106,0)
+ Q
+"RTN","IBTRKR",107,0)
+ ;
+"RTN","IBTRKR",108,0)
+ ;
+"RTN","IBTRKR",109,0)
+SPECIAL ;  specialty change
+"RTN","IBTRKR",110,0)
+ ;  deleted movement
+"RTN","IBTRKR",111,0)
+ I DGPMA="" D WRITE("no action taken.") Q
+"RTN","IBTRKR",112,0)
+ ;
+"RTN","IBTRKR",113,0)
+ ;  if specialty change is past 7 days, quit
+"RTN","IBTRKR",114,0)
+ I +DGPMA<$$FMADD^XLFDT(+DT,-7) D WRITE("no action taken.") Q
+"RTN","IBTRKR",115,0)
+ ;
+"RTN","IBTRKR",116,0)
+ N IBDT,IBTSA,IBTSP,IBTRC,IBTRN,IBTRV
+"RTN","IBTRKR",117,0)
+ ;  treating specialty after
+"RTN","IBTRKR",118,0)
+ S IBTSA=$P($G(^DIC(42.4,+$P($G(^DIC(45.7,+$P(DGPMA,"^",9),0)),"^",2),0)),"^",3)
+"RTN","IBTRKR",119,0)
+ ;
+"RTN","IBTRKR",120,0)
+ ;  treating specialty before
+"RTN","IBTRKR",121,0)
+ I DGPMP'="" S IBTSP=$P($G(^DIC(42.4,+$P($G(^DIC(45.7,+$P(DGPMP,"^",9),0)),"^",2),0)),"^",3)
+"RTN","IBTRKR",122,0)
+ ;
+"RTN","IBTRKR",123,0)
+ I DGPMP="" D
+"RTN","IBTRKR",124,0)
+ .   S IBDT=9999999.9999999-$P(DGPMA,"^")
+"RTN","IBTRKR",125,0)
+ .   S IBTSP=$P($G(^DIC(45.7,+$O(^(+$O(^DGPM("ATS",+DFN,+IBMVAD,+IBDT)),0)),0)),"^",2)
+"RTN","IBTRKR",126,0)
+ .   S IBTSP=$P($G(^DIC(42.4,+IBTSP,0)),"^",3)
+"RTN","IBTRKR",127,0)
+ ;
+"RTN","IBTRKR",128,0)
+ ;  no change in major bed section
+"RTN","IBTRKR",129,0)
+ I IBTSA=IBTSP D WRITE("no action taken.") Q
+"RTN","IBTRKR",130,0)
+ ;
+"RTN","IBTRKR",131,0)
+ S IBTRN=$O(^IBT(356,"AD",+IBMVAD,0))
+"RTN","IBTRKR",132,0)
+ ;
+"RTN","IBTRKR",133,0)
+ ;  tracked as hospital review
+"RTN","IBTRKR",134,0)
+ I $O(^IBT(356.1,"C",+IBTRN,0)) D
+"RTN","IBTRKR",135,0)
+ .   I $$ALREADY(356.1,+DGPMA) Q
+"RTN","IBTRKR",136,0)
+ .   D PRE^IBTUTL2($E(+DGPMA,1,7),IBTRN,30)
+"RTN","IBTRKR",137,0)
+ .   I $G(IBTRV) D COMMENT^IBTRKRU(356.1,+IBTRV)
+"RTN","IBTRKR",138,0)
+ ;
+"RTN","IBTRKR",139,0)
+ ;  tracked as insurance review
+"RTN","IBTRKR",140,0)
+ I $O(^IBT(356.2,"C",+IBTRN,0)) D
+"RTN","IBTRKR",141,0)
+ .   I $$ALREADY(356.2,+DGPMA) Q
+"RTN","IBTRKR",142,0)
+ .   I $P($G(^IBT(356,+IBTRN,0)),"^",24) D COM^IBTUTL3($E(+DGPMA,1,12),IBTRN,30)
+"RTN","IBTRKR",143,0)
+ .   I $G(IBTRC) D COMMENT^IBTRKRU(356.2,+IBTRC)
+"RTN","IBTRKR",144,0)
+ ;
+"RTN","IBTRKR",145,0)
+ D WRITE("completed.")
+"RTN","IBTRKR",146,0)
+ Q
+"RTN","IBTRKR",147,0)
+ ;
+"RTN","IBTRKR",148,0)
+ ;
+"RTN","IBTRKR",149,0)
+ALREADY(FILE,DATE) ; -- see if already is review for date
+"RTN","IBTRKR",150,0)
+ N X,Y,IBX
+"RTN","IBTRKR",151,0)
+ S IBX=0
+"RTN","IBTRKR",152,0)
+ S X=$P(DATE,".")+.25
+"RTN","IBTRKR",153,0)
+ S Y=$O(^IBT(FILE,"ATIDT",+IBTRN,-X)) S Y=-Y I Y,$P(Y,".")=$P(DATE,".") S IBX=1
+"RTN","IBTRKR",154,0)
+ Q IBX
+"RTN","IBTRKR",155,0)
+ ;
+"RTN","IBTRKR",156,0)
+ ;
+"RTN","IBTRKR",157,0)
+NIGHTLY ; -- nightly job for claims tracking, called by IBAMTC
+"RTN","IBTRKR",158,0)
+ ;
+"RTN","IBTRKR",159,0)
+ D PURG^IBRFIHL1  ; purge RFAI file (#368) - IB*2.0*547
+"RTN","IBTRKR",160,0)
+ D PURGWL^IBRFIWLA  ; purge Out of Date WLs of RFAI file (#368) - IB*2.0*547
+"RTN","IBTRKR",161,0)
+ D UPDATE^IBTRKR1 ; pdate claims tracking site parameters (random sampler)
+"RTN","IBTRKR",162,0)
+ D ^IBTRKR2 ;       add scheduled admissions to tracking
+"RTN","IBTRKR",163,0)
+ D ^IBTRKR3 ;       add rx refill to outpatient encounters
+"RTN","IBTRKR",164,0)
+ D ^IBTRKR4 ;       add outpatient encounters to tracking
+"RTN","IBTRKR",165,0)
+ D ^IBTRKR5 ;       add outpatient prosthetics item to tracking
+"RTN","IBTRKR",166,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",10329,6)
+^531
+**END**
+**END**
+

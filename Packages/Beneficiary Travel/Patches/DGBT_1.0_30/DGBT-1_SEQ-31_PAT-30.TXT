@@ -1,0 +1,157 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 03/11/16 at 11:20
+=============================================================================
+Run Date: DEC 13, 2016                     Designation: DGBT*1*30
+Package : DGBT - BENEFICIARY TRAVEL           Priority: Mandatory
+Version : 1        SEQ #31                      Status: Released
+                  Compliance Date: JAN 13, 2017
+=============================================================================
+
+Associated patches: (v)DGBT*1*24   <<= must be installed BEFORE `DGBT*1*30'
+                    (v)DGBT*1*25   <<= must be installed BEFORE `DGBT*1*30'
+
+Subject: WAIVER AND DEDUCTIBLE CALCULATION ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 2 issues:
+   
+     1. Bene Travel is incorrectly granting deductible waivers.
+   
+     2. Claim deductibles are being modified after payment.
+  
+                  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+      
+ Associated Ticket(s):
+ =====================
+  1. INC000000945629 - Bene Travel - General: Pension/Waiver issue
+      Dup: I9941409FY16
+  
+  2. I6239128FY16 - Dayton BT user says Beneficiary Travel is losing data
+      Dup: I7087001FY16
+      Dup: I6447477FY16
+      Dup: I7409735FY16
+  
+  
+ Participating Test Sites:
+ =========================
+ VA New Jersey Health Care System (East Orange, Lyons)
+ VA North Florida / South Georgia VA Health Care System (Gainesville, 
+ Lake City)
+  
+  
+ Ticket Overview:      
+ ================
+  1. INC000000945629 - Bene Travel - General: Pension/Waiver issue
+    
+      Problem:
+      --------
+      The Bene Travel software is incorrectly granting a deductible waiver for
+      Veterans that are 100% Service Connected (SC) and have a secondary 
+      eligibility of 'Aid & Attendance' (A&A) or 'House Bound' (HB).
+   
+      Resolution:
+      -----------
+      Routines DGBT1 and DGBTRDVW have been modified to prevent the 
+      application from automatically granting waivers if Veterans are 100% SC
+      and have a secondary eligibility of A&A or HB. Routine DGBT1 has also 
+      been corrected for the 'WAIVER GRANTED:' display to appropriately
+      display 'YES' if the veteran has six total trips.
+         
+  
+  2. I6239128FY16 - Dayton BT user says Beneficiary Travel is losing data
+    
+      Problem:
+      --------
+      Once the $18 deductible cap for the month has been met for a particular
+      veteran, if a clerk uses the Claim Enter/Edit [DGBT BENE TRAVEL SCREEN] 
+      option to edit an existing claim, the deductible will be automatically 
+      set to zero.
+   
+      Resolution:
+      -----------
+      Modified routine DGBTEE and DGBTRDVW to account for the deductible value 
+      of the currently selected claim when calculating the total deductible 
+      for the month. Routine DGBTCE has also been modified to preserve the
+      deductible values of existing claims.
+         
+  
+ Installation Instructions:
+ ==========================
+ Suggested time to install: Non-peak hours when users are not on the 
+ system. You may queue the install if you wish. It should take less than
+ two minutes to install this patch.
+     
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options: 
+         (when prompted for INSTALL NAME, enter DGBT*1.0*30)
+     
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this patch
+               is installed.  It compares all components of this patch
+               (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package DGBT*1.0*30. 
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+         Protocols? YES//", respond YES. When prompted to select the
+         options you would like to place out of order, enter the following:
+  
+   
+            Beneficiary Travel Menu          [DGBT BENE TRAVEL MENU]
+            Claim Enter/Edit                 [DGBT BENE TRAVEL SCREEN]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;Beneficiary Travel;**[Patch List]**;September 25, 2001;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGBT1
+    Before:B127576754   After:B129718207  **11,20,24,30**
+Routine Name: DGBTCE
+    Before: B36783566   After: B37698850  **2,14,17,20,30**
+Routine Name: DGBTEE
+    Before: B64077046   After: B63979701  **2,14,20,21,25,30**
+Routine Name: DGBTRDVW
+    Before:  B8950555   After:  B9874213  **20,25,30**
+ 
+Routine list of preceding patches: 24, 25
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 14, 2016
+Completed By:                               Date Completed: DEC 12, 2016
+Released By :                               Date Released : DEC 13, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

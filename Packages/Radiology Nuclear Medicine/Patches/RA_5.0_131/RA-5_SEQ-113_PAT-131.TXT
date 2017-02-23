@@ -1,0 +1,103 @@
+
+=============================================================================
+Run Date: NOV 23, 2016                     Designation: RA*5*131
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #113                      Status: Released
+                  Compliance Date: DEC 24, 2016
+=============================================================================
+
+
+Subject: RAD/NUC MED 5.0 HL7 INTERFACE SPECIFICATION UPDATE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ RA*5.0*131 is a patch that updates the 'Radiology/Nuclear Medicine 5.0
+ HL7 Interface Specification' documents, both word and pdf, on the VistA 
+ Documentation Library (VDL).
+  
+ Associated Ticket(s):
+ =====================
+ R11081007FY17
+  
+ Associated NSR(s):
+ ==================
+ N/A
+       
+ Participating Test Sites:
+ =========================
+ N/A
+  
+ Ticket Overview:
+ ================
+ 1. R11081007FY17 - RAD/NUC MED 5.0 HL7 INTERFACE SPECIFICATION update
+  
+ The HL7 2.4 specifications need to be updated to address the two issues 
+ listed below:
+  
+ Problem 1:
+ ----------
+ The field 'Temporary Location' (PV1-11) is used, but specifications 
+ indicate 'X' that PV1-11 is not supported.
+  
+ Resolution 1:
+ -------------
+ The field 'Temporary Location' (PV1-11) documentation has been edited to
+ correctly that PV1-11 is conditionally supported 'C' when the patient is
+ an outpatient.
+  
+ Problem 2:
+ ----------
+ The documentation for the HL7 field 'Referring Doctor' (PV1-8) currently
+ states that ordering provider data is passed in this field.
+  
+ Resolution 2:
+ -------------
+ The field 'Referring Doctor' (PV1-8) documentation has been edited to 
+ indicate the field has always passed primary care physician (PCP) data.
+  
+   ============== Documentation Retrieval Instructions ==============
+ The updated documentation described above are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                                  File Name              SFTP Mode
+ -----------------------------------------------------------------------
+ Radiology/Nuclear Medicine 5.0         RADNM_5_HL7SPEC.DOC    Binary
+ HL7 Interface Specification
+  
+ Radiology/Nuclear Medicine 5.0         RADNM_5_HL7SPEC.PDF    Binary
+ HL7 Interface Specification
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 14, 2016
+Completed By:                               Date Completed: NOV 22, 2016
+Released By :                               Date Released : NOV 23, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

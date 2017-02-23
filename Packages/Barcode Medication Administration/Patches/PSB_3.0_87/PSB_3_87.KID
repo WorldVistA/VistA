@@ -1,0 +1,3454 @@
+KIDS Distribution saved on Oct 28, 2016@13:39:50
+CASDDPE INPATIENT MEDICATION - TRANSDERMAL ENHANCEMENTS FOR BCBU
+**KIDS**:PSB*3.0*87^
+
+**INSTALL NAME**
+PSB*3.0*87
+"BLD",9256,0)
+PSB*3.0*87^BAR CODE MED ADMIN^0^3161028^y
+"BLD",9256,1,0)
+^^42^42^3151014^
+"BLD",9256,1,1,0)
+******************************* ATTENTION ********************************
+"BLD",9256,1,2,0)
+  
+"BLD",9256,1,3,0)
+CASDDPE VA Inpatient Medication Administration - Transdermal enhancement
+"BLD",9256,1,4,0)
+includes 5 patches which must be installed in the following order:
+"BLD",9256,1,5,0)
+ 
+"BLD",9256,1,6,0)
+1.      PSS*1*191
+"BLD",9256,1,7,0)
+2.      PSJ*5*315
+"BLD",9256,1,8,0)
+3.      PSB*3*83
+"BLD",9256,1,9,0)
+4.      OR*3*417
+"BLD",9256,1,10,0)
+5.      PSB*3*87
+"BLD",9256,1,11,0)
+ 
+"BLD",9256,1,12,0)
+ATTENTION: This enhancement also includes a new Graphical User Interface
+"BLD",9256,1,13,0)
+(GUI) executable, BCMA GUI PSB3_P083.EXE. Installation of this GUI is
+"BLD",9256,1,14,0)
+required immediately after the KIDS install for the Patch to function.
+"BLD",9256,1,15,0)
+ 
+"BLD",9256,1,16,0)
+For retrieval and installation instructions, please see the Client 
+"BLD",9256,1,17,0)
+Installation Instructions section.
+"BLD",9256,1,18,0)
+**************************************************************************
+"BLD",9256,1,19,0)
+ 
+"BLD",9256,1,20,0)
+PSB*3*87 will enhance the BAR CODE MEDICATION ADMINISTRATION (BCMA) Backup
+"BLD",9256,1,21,0)
+System (BCBU) to support Medications Requiring Removal (MRR). The Backup
+"BLD",9256,1,22,0)
+System will be able to store the Removal times and duration of
+"BLD",9256,1,23,0)
+administration associated with each medication order.
+"BLD",9256,1,24,0)
+ 
+"BLD",9256,1,25,0)
+This patch will add two new fields to the ORDER NUMBER (#53.702) 
+"BLD",9256,1,26,0)
+sub-file  under the BCMA BACKUP DATA (#53.7) file.  The two new fields 
+"BLD",9256,1,27,0)
+are the REMOVE TIMING (#7.4) field and DURATION OF ADMINISTRATION (#7.5) 
+"BLD",9256,1,28,0)
+field. These fields implement changes that will support enhancements to 
+"BLD",9256,1,29,0)
+Medical Administration Record(s) MAR reports in the BCBU application.
+"BLD",9256,1,30,0)
+ 
+"BLD",9256,1,31,0)
+The MAR reports will print each Scheduled Removal times for MRR 
+"BLD",9256,1,32,0)
+medications in the Grid in the same manner as Admin times.  The Remove
+"BLD",9256,1,33,0)
+times will appear below the current scheduled Administration time in the
+"BLD",9256,1,34,0)
+Grid and will be separated by the Label "Remove" in the times column.  
+"BLD",9256,1,35,0)
+Asterisks will print in the body of the Grid in each Removal action box
+"BLD",9256,1,36,0)
+for removal times that are not valid per the Date in that column heading.
+"BLD",9256,1,37,0)
+ 
+"BLD",9256,1,38,0)
+The MAR reports will also no longer display the Order number of the
+"BLD",9256,1,39,0)
+medications being administered.
+"BLD",9256,1,40,0)
+ 
+"BLD",9256,1,41,0)
+Please refer to the BCMA Backup System (BCBU) Installation Guide for 
+"BLD",9256,1,42,0)
+PSB*3*87 for installation details.
+"BLD",9256,4,0)
+^9.64PA^53.7^1
+"BLD",9256,4,53.7,0)
+53.7
+"BLD",9256,4,53.7,2,0)
+^9.641^53.70213^2
+"BLD",9256,4,53.7,2,53.702,0)
+ORDER NUMBER  (sub-file)
+"BLD",9256,4,53.7,2,53.702,1,0)
+^9.6411^7.5^2
+"BLD",9256,4,53.7,2,53.702,1,7.4,0)
+REMOVE TIMING
+"BLD",9256,4,53.7,2,53.702,1,7.5,0)
+DURATION OF ADMINISTRATION
+"BLD",9256,4,53.7,2,53.70213,0)
+MED LOG DATE/TIME  (sub-file)
+"BLD",9256,4,53.7,2,53.70213,1,0)
+^9.6411^6^3
+"BLD",9256,4,53.7,2,53.70213,1,4,0)
+ASSOC. MED LOG GIVE DATE/TIME
+"BLD",9256,4,53.7,2,53.70213,1,5,0)
+ASSOC. MED LOG GIVE ENTERED BY
+"BLD",9256,4,53.7,2,53.70213,1,6,0)
+ASSOC. MED LOG GIVE STATUS MSG
+"BLD",9256,4,53.7,222)
+y^y^p^^^^n^^n
+"BLD",9256,4,53.7,224)
+
+"BLD",9256,4,"APDD",53.7,53.702)
+
+"BLD",9256,4,"APDD",53.7,53.702,7.4)
+
+"BLD",9256,4,"APDD",53.7,53.702,7.5)
+
+"BLD",9256,4,"APDD",53.7,53.70213)
+
+"BLD",9256,4,"APDD",53.7,53.70213,4)
+
+"BLD",9256,4,"APDD",53.7,53.70213,5)
+
+"BLD",9256,4,"APDD",53.7,53.70213,6)
+
+"BLD",9256,4,"B",53.7,53.7)
+
+"BLD",9256,6)
+6
+"BLD",9256,6.3)
+22
+"BLD",9256,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9256,"KRN",.4,0)
+.4
+"BLD",9256,"KRN",.401,0)
+.401
+"BLD",9256,"KRN",.402,0)
+.402
+"BLD",9256,"KRN",.403,0)
+.403
+"BLD",9256,"KRN",.5,0)
+.5
+"BLD",9256,"KRN",.84,0)
+.84
+"BLD",9256,"KRN",3.6,0)
+3.6
+"BLD",9256,"KRN",3.8,0)
+3.8
+"BLD",9256,"KRN",9.2,0)
+9.2
+"BLD",9256,"KRN",9.8,0)
+9.8
+"BLD",9256,"KRN",9.8,"NM",0)
+^9.68A^7^7
+"BLD",9256,"KRN",9.8,"NM",1,0)
+ALPBHL1U^^0^B87587116
+"BLD",9256,"KRN",9.8,"NM",2,0)
+ALPBFRM1^^0^B93953970
+"BLD",9256,"KRN",9.8,"NM",3,0)
+ALPBFRM2^^0^B35366898
+"BLD",9256,"KRN",9.8,"NM",4,0)
+ALPBFRMU^^0^B13574860
+"BLD",9256,"KRN",9.8,"NM",5,0)
+ALPBINP^^0^B99838805
+"BLD",9256,"KRN",9.8,"NM",6,0)
+ALPBIN^^0^B18076656
+"BLD",9256,"KRN",9.8,"NM",7,0)
+ALPBIND^^0^B60295081
+"BLD",9256,"KRN",9.8,"NM","B","ALPBFRM1",2)
+
+"BLD",9256,"KRN",9.8,"NM","B","ALPBFRM2",3)
+
+"BLD",9256,"KRN",9.8,"NM","B","ALPBFRMU",4)
+
+"BLD",9256,"KRN",9.8,"NM","B","ALPBHL1U",1)
+
+"BLD",9256,"KRN",9.8,"NM","B","ALPBIN",6)
+
+"BLD",9256,"KRN",9.8,"NM","B","ALPBIND",7)
+
+"BLD",9256,"KRN",9.8,"NM","B","ALPBINP",5)
+
+"BLD",9256,"KRN",19,0)
+19
+"BLD",9256,"KRN",19,"NM",0)
+^9.68A^^0
+"BLD",9256,"KRN",19.1,0)
+19.1
+"BLD",9256,"KRN",101,0)
+101
+"BLD",9256,"KRN",409.61,0)
+409.61
+"BLD",9256,"KRN",771,0)
+771
+"BLD",9256,"KRN",779.2,0)
+779.2
+"BLD",9256,"KRN",870,0)
+870
+"BLD",9256,"KRN",8989.51,0)
+8989.51
+"BLD",9256,"KRN",8989.52,0)
+8989.52
+"BLD",9256,"KRN",8994,0)
+8994
+"BLD",9256,"KRN","B",.4,.4)
+
+"BLD",9256,"KRN","B",.401,.401)
+
+"BLD",9256,"KRN","B",.402,.402)
+
+"BLD",9256,"KRN","B",.403,.403)
+
+"BLD",9256,"KRN","B",.5,.5)
+
+"BLD",9256,"KRN","B",.84,.84)
+
+"BLD",9256,"KRN","B",3.6,3.6)
+
+"BLD",9256,"KRN","B",3.8,3.8)
+
+"BLD",9256,"KRN","B",9.2,9.2)
+
+"BLD",9256,"KRN","B",9.8,9.8)
+
+"BLD",9256,"KRN","B",19,19)
+
+"BLD",9256,"KRN","B",19.1,19.1)
+
+"BLD",9256,"KRN","B",101,101)
+
+"BLD",9256,"KRN","B",409.61,409.61)
+
+"BLD",9256,"KRN","B",771,771)
+
+"BLD",9256,"KRN","B",779.2,779.2)
+
+"BLD",9256,"KRN","B",870,870)
+
+"BLD",9256,"KRN","B",8989.51,8989.51)
+
+"BLD",9256,"KRN","B",8989.52,8989.52)
+
+"BLD",9256,"KRN","B",8994,8994)
+
+"BLD",9256,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",9256,"QUES",0)
+^9.62^^
+"BLD",9256,"REQB",0)
+^9.611^1^1
+"BLD",9256,"REQB",1,0)
+PSB*3.0*73^2
+"BLD",9256,"REQB","B","PSB*3.0*73",1)
+
+"FIA",53.7)
+BCMA BACKUP DATA
+"FIA",53.7,0)
+^ALPB(53.7,
+"FIA",53.7,0,0)
+53.7
+"FIA",53.7,0,1)
+y^y^p^^^^n^^n
+"FIA",53.7,0,10)
+
+"FIA",53.7,0,11)
+
+"FIA",53.7,0,"RLRO")
+
+"FIA",53.7,0,"VR")
+3.0^PSB
+"FIA",53.7,53.7)
+1
+"FIA",53.7,53.702)
+1
+"FIA",53.7,53.702,7.4)
+
+"FIA",53.7,53.702,7.5)
+
+"FIA",53.7,53.70213)
+1
+"FIA",53.7,53.70213,4)
+
+"FIA",53.7,53.70213,5)
+
+"FIA",53.7,53.70213,6)
+
+"MBREQ")
+0
+"PKG",536,-1)
+1^1
+"PKG",536,0)
+BAR CODE MED ADMIN^PSB^BAR CODE MEDICATION ADMINISTRATION
+"PKG",536,20,0)
+^9.402P^^0
+"PKG",536,22,0)
+^9.49I^1^1
+"PKG",536,22,1,0)
+3.0^3040224^3040318^11874
+"PKG",536,22,1,"PAH",1,0)
+87^3161028^10000000082
+"PKG",536,22,1,"PAH",1,1,0)
+^^42^42^3161028
+"PKG",536,22,1,"PAH",1,1,1,0)
+******************************* ATTENTION ********************************
+"PKG",536,22,1,"PAH",1,1,2,0)
+  
+"PKG",536,22,1,"PAH",1,1,3,0)
+CASDDPE VA Inpatient Medication Administration - Transdermal enhancement
+"PKG",536,22,1,"PAH",1,1,4,0)
+includes 5 patches which must be installed in the following order:
+"PKG",536,22,1,"PAH",1,1,5,0)
+ 
+"PKG",536,22,1,"PAH",1,1,6,0)
+1.      PSS*1*191
+"PKG",536,22,1,"PAH",1,1,7,0)
+2.      PSJ*5*315
+"PKG",536,22,1,"PAH",1,1,8,0)
+3.      PSB*3*83
+"PKG",536,22,1,"PAH",1,1,9,0)
+4.      OR*3*417
+"PKG",536,22,1,"PAH",1,1,10,0)
+5.      PSB*3*87
+"PKG",536,22,1,"PAH",1,1,11,0)
+ 
+"PKG",536,22,1,"PAH",1,1,12,0)
+ATTENTION: This enhancement also includes a new Graphical User Interface
+"PKG",536,22,1,"PAH",1,1,13,0)
+(GUI) executable, BCMA GUI PSB3_P083.EXE. Installation of this GUI is
+"PKG",536,22,1,"PAH",1,1,14,0)
+required immediately after the KIDS install for the Patch to function.
+"PKG",536,22,1,"PAH",1,1,15,0)
+ 
+"PKG",536,22,1,"PAH",1,1,16,0)
+For retrieval and installation instructions, please see the Client 
+"PKG",536,22,1,"PAH",1,1,17,0)
+Installation Instructions section.
+"PKG",536,22,1,"PAH",1,1,18,0)
+**************************************************************************
+"PKG",536,22,1,"PAH",1,1,19,0)
+ 
+"PKG",536,22,1,"PAH",1,1,20,0)
+PSB*3*87 will enhance the BAR CODE MEDICATION ADMINISTRATION (BCMA) Backup
+"PKG",536,22,1,"PAH",1,1,21,0)
+System (BCBU) to support Medications Requiring Removal (MRR). The Backup
+"PKG",536,22,1,"PAH",1,1,22,0)
+System will be able to store the Removal times and duration of
+"PKG",536,22,1,"PAH",1,1,23,0)
+administration associated with each medication order.
+"PKG",536,22,1,"PAH",1,1,24,0)
+ 
+"PKG",536,22,1,"PAH",1,1,25,0)
+This patch will add two new fields to the ORDER NUMBER (#53.702) 
+"PKG",536,22,1,"PAH",1,1,26,0)
+sub-file  under the BCMA BACKUP DATA (#53.7) file.  The two new fields 
+"PKG",536,22,1,"PAH",1,1,27,0)
+are the REMOVE TIMING (#7.4) field and DURATION OF ADMINISTRATION (#7.5) 
+"PKG",536,22,1,"PAH",1,1,28,0)
+field. These fields implement changes that will support enhancements to 
+"PKG",536,22,1,"PAH",1,1,29,0)
+Medical Administration Record(s) MAR reports in the BCBU application.
+"PKG",536,22,1,"PAH",1,1,30,0)
+ 
+"PKG",536,22,1,"PAH",1,1,31,0)
+The MAR reports will print each Scheduled Removal times for MRR 
+"PKG",536,22,1,"PAH",1,1,32,0)
+medications in the Grid in the same manner as Admin times.  The Remove
+"PKG",536,22,1,"PAH",1,1,33,0)
+times will appear below the current scheduled Administration time in the
+"PKG",536,22,1,"PAH",1,1,34,0)
+Grid and will be separated by the Label "Remove" in the times column.  
+"PKG",536,22,1,"PAH",1,1,35,0)
+Asterisks will print in the body of the Grid in each Removal action box
+"PKG",536,22,1,"PAH",1,1,36,0)
+for removal times that are not valid per the Date in that column heading.
+"PKG",536,22,1,"PAH",1,1,37,0)
+ 
+"PKG",536,22,1,"PAH",1,1,38,0)
+The MAR reports will also no longer display the Order number of the
+"PKG",536,22,1,"PAH",1,1,39,0)
+medications being administered.
+"PKG",536,22,1,"PAH",1,1,40,0)
+ 
+"PKG",536,22,1,"PAH",1,1,41,0)
+Please refer to the BCMA Backup System (BCBU) Installation Guide for 
+"PKG",536,22,1,"PAH",1,1,42,0)
+PSB*3*87 for installation details.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+7
+"RTN","ALPBFRM1")
+0^2^B93953970
+"RTN","ALPBFRM1",1,0)
+ALPBFRM1 ;OIFO-DALLAS MW,SED,KC -STANDARD PRINT FORMATTING UTIL ;03/06/16 3:06pm
+"RTN","ALPBFRM1",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**8,48,69,59,73,87**;Mar 2004;Build 22
+"RTN","ALPBFRM1",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ALPBFRM1",4,0)
+ ;
+"RTN","ALPBFRM1",5,0)
+ ;*69 move code to print Long Wp special istructions lines near end of
+"RTN","ALPBFRM1",6,0)
+ ;    a grid boundary
+"RTN","ALPBFRM1",7,0)
+ ;*73 - add code to print Clinc Name above meds in detail lines and
+"RTN","ALPBFRM1",8,0)
+ ;      Location in heading.
+"RTN","ALPBFRM1",9,0)
+ ;*87 - add Remove timing string to print on grid from new Db RM fld.
+"RTN","ALPBFRM1",10,0)
+ ;
+"RTN","ALPBFRM1",11,0)
+F132(DATA,DAYS,MLCNT,RESULTS,ALPPAT) ; format data into a 132-column
+"RTN","ALPBFRM1",12,0)
+ ; output array...
+"RTN","ALPBFRM1",13,0)
+ ; DATA = an array containing a specific order node for a selected
+"RTN","ALPBFRM1",14,0)
+ ;        patient in file 53.7
+"RTN","ALPBFRM1",15,0)
+ ; DAYS = a number that represents the number of initial boxes
+"RTN","ALPBFRM1",16,0)
+ ;        (1 box = 1 day) to add to lines 4-10 (max=7 -- note that
+"RTN","ALPBFRM1",17,0)
+ ;        this is usually a 3-day MAR, but a 7-day MAR could be
+"RTN","ALPBFRM1",18,0)
+ ;        returned from this format utility)
+"RTN","ALPBFRM1",19,0)
+ ; MLCNT = Number of Med-log entries to print with orders
+"RTN","ALPBFRM1",20,0)
+ ; RESULTS = an array passed by reference into which the formatted
+"RTN","ALPBFRM1",21,0)
+ ;           entry is set up returns a formatted array in RESULTS
+"RTN","ALPBFRM1",22,0)
+ ;           (note: total line count is returned at RESULTS(0))
+"RTN","ALPBFRM1",23,0)
+ I $D(DATA)="" Q
+"RTN","ALPBFRM1",24,0)
+ ;
+"RTN","ALPBFRM1",25,0)
+ N ALPBADM,ALPBDAYS,ALPBDRUG,ALPBIBOX,ALPBNBOX,ALPBPBOX,ALPBSTOP,ALPBTEXT,ALPBTIME,ALPBX,DATE,LINE,BOLDON,BOLDOFF,X,ALPBPRNG,ALPBFLG,ALPBPRN,ALPBMLC,ALPBTSTART
+"RTN","ALPBFRM1",26,0)
+ N AD,AINDX,ALPBRM,ALPBDOA,REMTIM       ;*87
+"RTN","ALPBFRM1",27,0)
+ ; to use BOLD, comment out the next line and remove comments from
+"RTN","ALPBFRM1",28,0)
+ ; the following five lines...
+"RTN","ALPBFRM1",29,0)
+ S BOLDON="<<",BOLDOFF=">>"
+"RTN","ALPBFRM1",30,0)
+ ;S X="IOINHI;IOINORM"
+"RTN","ALPBFRM1",31,0)
+ ;D ENDR^%ZISS
+"RTN","ALPBFRM1",32,0)
+ ;S BOLDON=$G(IOINHI)
+"RTN","ALPBFRM1",33,0)
+ ;S BOLDOFF=$G(IOINORM)
+"RTN","ALPBFRM1",34,0)
+ ;D KILL^%ZISS
+"RTN","ALPBFRM1",35,0)
+ ;
+"RTN","ALPBFRM1",36,0)
+ ;S MLCNT=$S(+$P($G(^ALPB(53.71,1,2)),U,4)>0:+$P(^ALPB(53.71,1,2),U,4),1:1)
+"RTN","ALPBFRM1",37,0)
+ I $G(DAYS)="" S DAYS=3
+"RTN","ALPBFRM1",38,0)
+ I DAYS>7 S DAYS=7
+"RTN","ALPBFRM1",39,0)
+ S DATE=$$DT^XLFDT()
+"RTN","ALPBFRM1",40,0)
+ D FDATES^ALPBUTL(DATE,DAYS,.ALPBDAYS)
+"RTN","ALPBFRM1",41,0)
+ ; get administration timing (needed for formatting various lines)
+"RTN","ALPBFRM1",42,0)
+ S ALPBX=$P($G(DATA(4)),"^",4)
+"RTN","ALPBFRM1",43,0)
+ I ALPBX="" S ALPBADM=0
+"RTN","ALPBFRM1",44,0)
+REMOV S ALPBRM=$P($G(DATA(4.5)),U)    ;define remove string *87
+"RTN","ALPBFRM1",45,0)
+ S ALPBDOA=$P($G(DATA(4.5)),U,2)
+"RTN","ALPBFRM1",46,0)
+ I ALPBX'="" D               ;normal admin times specified
+"RTN","ALPBFRM1",47,0)
+ .S AINDX=$L(ALPBX,"-")+1
+"RTN","ALPBFRM1",48,0)
+ .S ALPBADM=0
+"RTN","ALPBFRM1",49,0)
+ .F I=1:1 Q:$P(ALPBX,"-",I)=""  D
+"RTN","ALPBFRM1",50,0)
+ ..S ALPBADM(I)=$P(ALPBX,"-",I)
+"RTN","ALPBFRM1",51,0)
+ ..S ALPBADM=ALPBADM+1
+"RTN","ALPBFRM1",52,0)
+ ..;add RM times to end of admin array, also insert RM label 1st   *87
+"RTN","ALPBFRM1",53,0)
+ ..I ALPBRM]"" D
+"RTN","ALPBFRM1",54,0)
+ ...S:I=1 ALPBADM(AINDX)="Remove ",ALPBADM=ALPBADM+1
+"RTN","ALPBFRM1",55,0)
+ ...S ALPBADM(I+AINDX)=$P(ALPBRM,"-",I)  ;I=remove tm for this admin I
+"RTN","ALPBFRM1",56,0)
+ ...S ALPBADM=ALPBADM+1
+"RTN","ALPBFRM1",57,0)
+ I ALPBX="",ALPBRM]"" D      ;one time sched, no admin times specified
+"RTN","ALPBFRM1",58,0)
+ .S ALPBADM(1)="Remove ",ALPBADM(2)=$P(ALPBRM,"-",1)
+"RTN","ALPBFRM1",59,0)
+ ;
+"RTN","ALPBFRM1",60,0)
+ ; line 1...
+"RTN","ALPBFRM1",61,0)
+ S RESULTS(1)=""
+"RTN","ALPBFRM1",62,0)
+ S RESULTS(1)=$$PAD^ALPBUTL(RESULTS(1),2)_"Location"      ;*73
+"RTN","ALPBFRM1",63,0)
+ S RESULTS(1)=$$PAD^ALPBUTL(RESULTS(1),66)_"Admin"
+"RTN","ALPBFRM1",64,0)
+ ; line 2...
+"RTN","ALPBFRM1",65,0)
+ S RESULTS(2)="Start"
+"RTN","ALPBFRM1",66,0)
+ S RESULTS(2)=$$PAD^ALPBUTL(RESULTS(2),25)_"Stop"
+"RTN","ALPBFRM1",67,0)
+ S RESULTS(2)=$$PAD^ALPBUTL(RESULTS(2),66)_"Times"
+"RTN","ALPBFRM1",68,0)
+ S RESULTS(2)=$$PAD^ALPBUTL(RESULTS(2),74)_ALPBDAYS(0)
+"RTN","ALPBFRM1",69,0)
+ I DAYS=3 S RESULTS(2)=RESULTS(2)_"   Notes"
+"RTN","ALPBFRM1",70,0)
+ ; line 3...
+"RTN","ALPBFRM1",71,0)
+ S RESULTS(3)=$$REPEAT^XLFSTR("-",132)
+"RTN","ALPBFRM1",72,0)
+ ; line 4...Clinic Name or INPATIENT                             ;*73
+"RTN","ALPBFRM1",73,0)
+ S RESULTS(4)=$S($P(DATA(0),U,5)="":"   INPATIENT",1:"   "_$P(DATA(0),U,5))       ;*73
+"RTN","ALPBFRM1",74,0)
+ ; line 5...                                                     ;*73
+"RTN","ALPBFRM1",75,0)
+ ; start and stop date/times...
+"RTN","ALPBFRM1",76,0)
+ S RESULTS(5)=$S($P($G(DATA(1)),"^")'="":$$FMTE^XLFDT($P(DATA(1),"^")),1:"Not on file")       ;*73
+"RTN","ALPBFRM1",77,0)
+ S RESULTS(5)=$$PAD^ALPBUTL(RESULTS(5),25)_$S($P($G(DATA(1)),"^",2)'="":$$FMTE^XLFDT($P(DATA(1),"^",2)),1:"Not on file")       ;73
+"RTN","ALPBFRM1",78,0)
+ ;
+"RTN","ALPBFRM1",79,0)
+ ; end of fixed line format, continue...
+"RTN","ALPBFRM1",80,0)
+ S LINE=5                                                        ;*73
+"RTN","ALPBFRM1",81,0)
+ ; get drug(s)...
+"RTN","ALPBFRM1",82,0)
+ I +$O(DATA(7,0)) D
+"RTN","ALPBFRM1",83,0)
+ .S LINE=LINE+1
+"RTN","ALPBFRM1",84,0)
+ .S RESULTS(LINE)=""
+"RTN","ALPBFRM1",85,0)
+ .S ALPBX=0
+"RTN","ALPBFRM1",86,0)
+ .F  S ALPBX=$O(DATA(7,ALPBX)) Q:'ALPBX  D
+"RTN","ALPBFRM1",87,0)
+ ..S ALPBDRUG=$G(BOLDON)_$P(DATA(7,ALPBX,0),"^",2)_$G(BOLDOFF)
+"RTN","ALPBFRM1",88,0)
+ ..;S RESULTS(LINE)=$G(RESULTS(LINE))_$P(DATA(7,ALPBX,0),"^",2)
+"RTN","ALPBFRM1",89,0)
+ ..S RESULTS(LINE)=$G(RESULTS(LINE))_ALPBDRUG
+"RTN","ALPBFRM1",90,0)
+ ..K ALPBDRUG
+"RTN","ALPBFRM1",91,0)
+ ..I +$O(DATA(7,ALPBX)) S LINE=LINE+1
+"RTN","ALPBFRM1",92,0)
+ ; any additives...
+"RTN","ALPBFRM1",93,0)
+ I +$O(DATA(8,0)) D
+"RTN","ALPBFRM1",94,0)
+ .S LINE=LINE+1
+"RTN","ALPBFRM1",95,0)
+ .S RESULTS(LINE)=" Additive(s): "
+"RTN","ALPBFRM1",96,0)
+ .S ALPBX=0
+"RTN","ALPBFRM1",97,0)
+ .F  S ALPBX=$O(DATA(8,ALPBX)) Q:'ALPBX  D
+"RTN","ALPBFRM1",98,0)
+ ..S ALPBDRUG=$P(DATA(8,ALPBX,0),"^",2)
+"RTN","ALPBFRM1",99,0)
+ ..; if UNITS is not already contained in ADDITIVE NAME, add it...
+"RTN","ALPBFRM1",100,0)
+ ..I $P(DATA(8,ALPBX,0),"^",3)'=""&(ALPBDRUG'[$P(DATA(8,ALPBX,0),"^",3)) S ALPBDRUG=ALPBDRUG_" "_$P(DATA(8,ALPBX,0),"^",3)
+"RTN","ALPBFRM1",101,0)
+ ..S ALPBDRUG=$G(BOLDON)_ALPBDRUG_$G(BOLDOFF)
+"RTN","ALPBFRM1",102,0)
+ ..S RESULTS(LINE)=RESULTS(LINE)_ALPBDRUG
+"RTN","ALPBFRM1",103,0)
+ ..K ALPBDRUG
+"RTN","ALPBFRM1",104,0)
+ ..I +$O(DATA(8,ALPBX)) D
+"RTN","ALPBFRM1",105,0)
+ ...S LINE=LINE+1
+"RTN","ALPBFRM1",106,0)
+ ...S RESULTS(LINE)=" "
+"RTN","ALPBFRM1",107,0)
+ ...S RESULTS(LINE)=$$PAD^ALPBUTL(RESULTS(LINE),14)
+"RTN","ALPBFRM1",108,0)
+ .K ALPBX
+"RTN","ALPBFRM1",109,0)
+ ; any solutions...
+"RTN","ALPBFRM1",110,0)
+ I +$O(DATA(9,0)) D
+"RTN","ALPBFRM1",111,0)
+ .S LINE=LINE+1
+"RTN","ALPBFRM1",112,0)
+ .S RESULTS(LINE)=" Solution(s): "
+"RTN","ALPBFRM1",113,0)
+ .S ALPBX=0
+"RTN","ALPBFRM1",114,0)
+ .F  S ALPBX=$O(DATA(9,ALPBX)) Q:'ALPBX  D
+"RTN","ALPBFRM1",115,0)
+ ..S ALPBDRUG=$P(DATA(9,ALPBX,0),"^",2)
+"RTN","ALPBFRM1",116,0)
+ ..; if UNITS is not already contained in SOLUTION NAME, add it...
+"RTN","ALPBFRM1",117,0)
+ ..I $P(DATA(9,ALPBX,0),"^",3)'=""&(ALPBDRUG'[$P(DATA(9,ALPBX,0),"^",3)) S ALPBDRUG=ALPBDRUG_" "_$P(DATA(9,ALPBX,0),"^",3)
+"RTN","ALPBFRM1",118,0)
+ ..S ALPBDRUG=$G(BOLDON)_ALPBDRUG_$G(BOLDOFF)
+"RTN","ALPBFRM1",119,0)
+ ..S RESULTS(LINE)=RESULTS(LINE)_ALPBDRUG
+"RTN","ALPBFRM1",120,0)
+ ..K ALPBDRUG
+"RTN","ALPBFRM1",121,0)
+ ..I +$O(DATA(9,ALPBX)) D
+"RTN","ALPBFRM1",122,0)
+ ...S LINE=LINE+1
+"RTN","ALPBFRM1",123,0)
+ ...S RESULTS(LINE)=" "
+"RTN","ALPBFRM1",124,0)
+ ...S RESULTS(LINE)=$$PAD^ALPBUTL(RESULTS(LINE),14)
+"RTN","ALPBFRM1",125,0)
+ .K ALPBX
+"RTN","ALPBFRM1",126,0)
+ ; give ($P(DATA(4),"^",1)=DOSAGE  $P(DATA(4),"^",2)=ROUTE  $P(DATA(4),"^",3)=SCHEDULE)...
+"RTN","ALPBFRM1",127,0)
+ S LINE=LINE+1
+"RTN","ALPBFRM1",128,0)
+ S RESULTS(LINE)="        Give: "_$P($G(DATA(4)),"^")_" "_$P($G(DATA(4)),"^",2)_" "_$P($G(DATA(4)),"^",3)
+"RTN","ALPBFRM1",129,0)
+ ;Set PRN Flag
+"RTN","ALPBFRM1",130,0)
+ S ALPBPRNG=0
+"RTN","ALPBFRM1",131,0)
+ S:$P($G(DATA(4)),"^",3)["PRN" ALPBPRNG=1
+"RTN","ALPBFRM1",132,0)
+ ;
+"RTN","ALPBFRM1",133,0)
+ ;S LINE=LINE+1,RESULTS(LINE)=""
+"RTN","ALPBFRM1",134,0)
+ ;
+"RTN","ALPBFRM1",135,0)
+ ; provider, pharmacist or entry person, and verifier...
+"RTN","ALPBFRM1",136,0)
+ S LINE=LINE+1
+"RTN","ALPBFRM1",137,0)
+ S RESULTS(LINE)="    Provider: "_$P($G(DATA(2)),"^")
+"RTN","ALPBFRM1",138,0)
+ S LINE=LINE+1
+"RTN","ALPBFRM1",139,0)
+ S RESULTS(LINE)="RPh/Entry by: "_$P($G(DATA(2)),"^",2)
+"RTN","ALPBFRM1",140,0)
+ I $P($G(DATA(2)),"^",3)'="" D
+"RTN","ALPBFRM1",141,0)
+ .S LINE=LINE+1
+"RTN","ALPBFRM1",142,0)
+ .S RESULTS(LINE)=" Verified by: "_$P(DATA(2),"^",3)
+"RTN","ALPBFRM1",143,0)
+ ; order number and type...
+"RTN","ALPBFRM1",144,0)
+ S LINE=LINE+1
+"RTN","ALPBFRM1",145,0)
+ S RESULTS(LINE)="      Type: "_$$OTYP^ALPBUTL($P($G(DATA(3)),"^"))
+"RTN","ALPBFRM1",146,0)
+ ; order status...
+"RTN","ALPBFRM1",147,0)
+ S LINE=LINE+1
+"RTN","ALPBFRM1",148,0)
+ S RESULTS(LINE)="      Status: "_$P($P(DATA(0),"^",3),"~",2)
+"RTN","ALPBFRM1",149,0)
+ ;
+"RTN","ALPBFRM1",150,0)
+ ; med log data...
+"RTN","ALPBFRM1",151,0)
+ S LINE=LINE+1
+"RTN","ALPBFRM1",152,0)
+ S RESULTS(LINE)="BCMA MEDICATION LOG HISTORY"
+"RTN","ALPBFRM1",153,0)
+ ;I $G(MLDATE)'="" S RESULTS(LINE)=RESULTS(LINE)_" (since "_$$FMTE^XLFDT(MLDATE)_")"
+"RTN","ALPBFRM1",154,0)
+ I +$O(DATA(10,0))=0 D
+"RTN","ALPBFRM1",155,0)
+ .S LINE=LINE+1
+"RTN","ALPBFRM1",156,0)
+ .S RESULTS(LINE)=" No Medication Log entries are on file for this order."
+"RTN","ALPBFRM1",157,0)
+ I +$O(DATA(10,0)) D
+"RTN","ALPBFRM1",158,0)
+ .S LINE=LINE+1
+"RTN","ALPBFRM1",159,0)
+ .S RESULTS(LINE)=" Log Date"
+"RTN","ALPBFRM1",160,0)
+ .S RESULTS(LINE)=$$PAD^ALPBUTL(RESULTS(LINE),16)_"Message"
+"RTN","ALPBFRM1",161,0)
+ .S RESULTS(LINE)=$$PAD^ALPBUTL(RESULTS(LINE),31)_"Log Entry Person"
+"RTN","ALPBFRM1",162,0)
+ .I $O(DATA(10,"IMLOG",0))="" D
+"RTN","ALPBFRM1",163,0)
+ ..S LINE=LINE+1
+"RTN","ALPBFRM1",164,0)
+ ..S RESULTS(LINE)=" No entries since the above date are on file."
+"RTN","ALPBFRM1",165,0)
+ .;S ALPBMDT=MLDATE
+"RTN","ALPBFRM1",166,0)
+ .S ALPBMDT=0,ALPBMLC=1
+"RTN","ALPBFRM1",167,0)
+ .F  S ALPBMDT=$O(DATA(10,"IMLOG",ALPBMDT)) Q:'ALPBMDT!(ALPBMLC>MLCNT)  D
+"RTN","ALPBFRM1",168,0)
+ ..S ALPBX=0
+"RTN","ALPBFRM1",169,0)
+ ..F  S ALPBX=$O(DATA(10,"IMLOG",ALPBMDT,ALPBX)) Q:'ALPBX!(ALPBMLC>MLCNT)  D
+"RTN","ALPBFRM1",170,0)
+ ...S LINE=LINE+1,ALPBMLC=ALPBMLC+1
+"RTN","ALPBFRM1",171,0)
+ ...S RESULTS(LINE)=" "_$$FDATE^ALPBUTL($P(DATA(10,ALPBX,0),"^",1))
+"RTN","ALPBFRM1",172,0)
+ ...S RESULTS(LINE)=$$PAD^ALPBUTL(RESULTS(LINE),16)_$P(DATA(10,ALPBX,0),"^",3)
+"RTN","ALPBFRM1",173,0)
+ ...S RESULTS(LINE)=$$PAD^ALPBUTL(RESULTS(LINE),31)_$S($P(DATA(10,ALPBX,0),"^",2)'="":$P(DATA(10,ALPBX,0),"^",2),1:"<not on file")
+"RTN","ALPBFRM1",174,0)
+ ...;check if log count reached
+"RTN","ALPBFRM1",175,0)
+ ...Q:ALPBMLC>MLCNT
+"RTN","ALPBFRM1",176,0)
+ ...;check if REMOVED action, then retrieve associated GIVEN info  *87
+"RTN","ALPBFRM1",177,0)
+ ...D:$P(DATA(10,ALPBX,0),"^",3)["REMOVED"
+"RTN","ALPBFRM1",178,0)
+ ....Q:'$P(DATA(10,ALPBX,0),"^",5)   ;in case null
+"RTN","ALPBFRM1",179,0)
+ ....S LINE=LINE+1,ALPBMLC=ALPBMLC+1
+"RTN","ALPBFRM1",180,0)
+ ....S RESULTS(LINE)=" "_$$FDATE^ALPBUTL($P(DATA(10,ALPBX,0),"^",5))
+"RTN","ALPBFRM1",181,0)
+ ....S RESULTS(LINE)=$$PAD^ALPBUTL(RESULTS(LINE),16)_$P(DATA(10,ALPBX,0),"^",7)
+"RTN","ALPBFRM1",182,0)
+ ....S RESULTS(LINE)=$$PAD^ALPBUTL(RESULTS(LINE),31)_$S($P(DATA(10,ALPBX,0),"^",6)'="":$P(DATA(10,ALPBX,0),"^",6),1:"<not on file")
+"RTN","ALPBFRM1",183,0)
+ ..K ALPBX
+"RTN","ALPBFRM1",184,0)
+ .K ALPBMDT,ALPBMLC
+"RTN","ALPBFRM1",185,0)
+ ;
+"RTN","ALPBFRM1",186,0)
+ ; BCMA LAST ACTION
+"RTN","ALPBFRM1",187,0)
+ I +$G(ALPPAT)>0 D
+"RTN","ALPBFRM1",188,0)
+ .S ALPBX=0
+"RTN","ALPBFRM1",189,0)
+ .F  S ALPBX=$O(DATA(7,ALPBX)) Q:'ALPBX  D
+"RTN","ALPBFRM1",190,0)
+ ..S ALPDRUG=$P(DATA(7,ALPBX,0),"^",1),ALPBDNM=$P(DATA(7,ALPBX,0),"^",2)
+"RTN","ALPBFRM1",191,0)
+ ..Q:+ALPDRUG'>0
+"RTN","ALPBFRM1",192,0)
+ ..S ALPLACT=$$LACT^ALPBUTL3(ALPPAT,ALPDRUG)
+"RTN","ALPBFRM1",193,0)
+ ..I ALPLACT'="" D
+"RTN","ALPBFRM1",194,0)
+ ...S LINE=LINE+1,RESULTS(LINE)=$$REPEAT^XLFSTR("-",75)
+"RTN","ALPBFRM1",195,0)
+ ...S LINE=LINE+1
+"RTN","ALPBFRM1",196,0)
+ ...S RESULTS(LINE)="Last action for "_ALPBDNM_"  "_" was "_$P(ALPLACT,"^",3)_" on "_$$FDATE^ALPBUTL($P(ALPLACT,"^",1))
+"RTN","ALPBFRM1",197,0)
+ ...S RESULTS(LINE)=RESULTS(LINE)_" By "_$S($P(ALPLACT,"^",2)'="":$P(ALPLACT,"^",2),1:"<not on file>")
+"RTN","ALPBFRM1",198,0)
+ K ALPLACT,ALPDRUG,ALPBX
+"RTN","ALPBFRM1",199,0)
+ ;
+"RTN","ALPBFRM1",200,0)
+ I LINE<11 F I=1:1 Q:LINE=11  D
+"RTN","ALPBFRM1",201,0)
+ .S LINE=LINE+1
+"RTN","ALPBFRM1",202,0)
+ .S RESULTS(LINE)=""
+"RTN","ALPBFRM1",203,0)
+ ;
+"RTN","ALPBFRM1",204,0)
+ ; now add admin times and initial boxes to lines 4-10 as required
+"RTN","ALPBFRM1",205,0)
+ ; by number of administration times...
+"RTN","ALPBFRM1",206,0)
+ S ALPBIBOX="______|"
+"RTN","ALPBFRM1",207,0)
+ S ALPBNBOX="******|"
+"RTN","ALPBFRM1",208,0)
+ I +$G(ALPBADM)=0 S ALPBADM=8
+"RTN","ALPBFRM1",209,0)
+ ;S ALPBPRN=ALPBADM+4
+"RTN","ALPBFRM1",210,0)
+ S ALPBTSTART=$P($G(DATA(1)),"^",1)
+"RTN","ALPBFRM1",211,0)
+ S ALPBSTOP=$P($G(DATA(1)),"^",2)
+"RTN","ALPBFRM1",212,0)
+ S AD=1
+"RTN","ALPBFRM1",213,0)
+ADMTIM F I=1:1:ALPBADM D    ;build admin/remove times grid
+"RTN","ALPBFRM1",214,0)
+ .S ALPBPRN=I+3
+"RTN","ALPBFRM1",215,0)
+ .S ALPBADMT=$G(ALPBADM(I))
+"RTN","ALPBFRM1",216,0)
+ .I ALPBADMT="" S ALPBADMT="    "
+"RTN","ALPBFRM1",217,0)
+ .I '$D(RESULTS(I+3)) D
+"RTN","ALPBFRM1",218,0)
+ ..S RESULTS(I+3)=" "
+"RTN","ALPBFRM1",219,0)
+ ..S LINE=LINE+1
+"RTN","ALPBFRM1",220,0)
+ .I ALPBADMT["Remove" D
+"RTN","ALPBFRM1",221,0)
+ ..S RESULTS(I+3)=$$PAD^ALPBUTL(RESULTS(I+3),65)_"| "
+"RTN","ALPBFRM1",222,0)
+ ..S AD=0
+"RTN","ALPBFRM1",223,0)
+ .E  D
+"RTN","ALPBFRM1",224,0)
+ ..S:AD RESULTS(I+3)=$$PAD^ALPBUTL(RESULTS(I+3),65)_"| "
+"RTN","ALPBFRM1",225,0)
+ ..S:'AD RESULTS(I+3)=$$PAD^ALPBUTL(RESULTS(I+3),65)_"|  "
+"RTN","ALPBFRM1",226,0)
+ .S RESULTS(I+3)=RESULTS(I+3)_$S($L(ALPBADMT)=2:ALPBADMT_"00",1:ALPBADMT)
+"RTN","ALPBFRM1",227,0)
+ .S RESULTS(I+3)=$$PAD^ALPBUTL(RESULTS(I+3),74)_"|"
+"RTN","ALPBFRM1",228,0)
+ .F J=1:1:DAYS D
+"RTN","ALPBFRM1",229,0)
+ ..I ALPBADMT="    " S ALPBTSTART=$P($P($G(DATA(1)),"^",1),".",1),ALPBSTOP=$P($P($G(DATA(1)),"^",2),".",1)
+"RTN","ALPBFRM1",230,0)
+ ..S ALPBDAY=ALPBDAYS(J)_"."_ALPBADMT
+"RTN","ALPBFRM1",231,0)
+ ..S ALPBPBOX=ALPBIBOX
+"RTN","ALPBFRM1",232,0)
+ASTER ..;prints asterisks in boxes if start date is in the future
+"RTN","ALPBFRM1",233,0)
+ ..;and if the stop date has already expired
+"RTN","ALPBFRM1",234,0)
+ ..I AD D      ;on an admin line
+"RTN","ALPBFRM1",235,0)
+ ...I ALPBDAY<ALPBTSTART S ALPBPBOX=ALPBNBOX
+"RTN","ALPBFRM1",236,0)
+ ...I ALPBDAY>ALPBSTOP!(ALPBDAY=ALPBSTOP) S ALPBPBOX=ALPBNBOX
+"RTN","ALPBFRM1",237,0)
+ ..E  D        ;on a remove line calc orig admin for this remove time
+"RTN","ALPBFRM1",238,0)
+ ...I ALPBDAY["Remove" S ALPBPBOX=ALPBNBOX Q   ;Remove lbl line = *
+"RTN","ALPBFRM1",239,0)
+ ...S REMTIM=$$FMADD^XLFDT(ALPBDAY,,,-ALPBDOA) ;Rem-Doa = orig admin
+"RTN","ALPBFRM1",240,0)
+ ...I (REMTIM<ALPBTSTART)!(REMTIM>ALPBSTOP) S ALPBPBOX=ALPBNBOX
+"RTN","ALPBFRM1",241,0)
+ ..S RESULTS(I+3)=RESULTS(I+3)_ALPBPBOX
+"RTN","ALPBFRM1",242,0)
+ .K ALPBADMT,ALPBPBOX,ALPBDAY
+"RTN","ALPBFRM1",243,0)
+ENDGRID K ALPBIBOX,ALPBNBOX
+"RTN","ALPBFRM1",244,0)
+ ; if PRN med, add line for documenting effectiveness...
+"RTN","ALPBFRM1",245,0)
+ I +ALPBPRNG D
+"RTN","ALPBFRM1",246,0)
+ .S ALPBFLG=0,ALPBPRN=ALPBPRN+1
+"RTN","ALPBFRM1",247,0)
+ .S:'$D(RESULTS(ALPBPRN)) RESULTS(ALPBPRN)=" ",ALPBFLG=1
+"RTN","ALPBFRM1",248,0)
+ .S RESULTS(ALPBPRN)=$$PAD^ALPBUTL(RESULTS(ALPBPRN),63)_"  PRN Effectiveness:_______________________________________________"   ;*87 longer
+"RTN","ALPBFRM1",249,0)
+ .S:ALPBFLG LINE=LINE+1
+"RTN","ALPBFRM1",250,0)
+ ;
+"RTN","ALPBFRM1",251,0)
+ ;*69 move SI text to here outside confines of grid
+"RTN","ALPBFRM1",252,0)
+ ; provider comments, special instructions, and other print info...
+"RTN","ALPBFRM1",253,0)
+ I +$O(DATA(5,0)) D
+"RTN","ALPBFRM1",254,0)
+ .K ALPBTEXT M ALPBTEXT=DATA(5)
+"RTN","ALPBFRM1",255,0)
+ .S ALPBX=0
+"RTN","ALPBFRM1",256,0)
+ .F  S ALPBX=$O(ALPBTEXT(ALPBX)) Q:'ALPBX  D
+"RTN","ALPBFRM1",257,0)
+ ..S ALPBLINE=ALPBTEXT(ALPBX,0)
+"RTN","ALPBFRM1",258,0)
+ ..S LINE=LINE+1
+"RTN","ALPBFRM1",259,0)
+ ..S RESULTS(LINE)=ALPBLINE
+"RTN","ALPBFRM1",260,0)
+ .K ALPBLINE,ALPBTEXT,ALPBX
+"RTN","ALPBFRM1",261,0)
+ ;
+"RTN","ALPBFRM1",262,0)
+ S LINE=LINE+1
+"RTN","ALPBFRM1",263,0)
+ S RESULTS(LINE)=$$REPEAT^XLFSTR("-",132)
+"RTN","ALPBFRM1",264,0)
+ S RESULTS(0)=LINE
+"RTN","ALPBFRM1",265,0)
+ Q
+"RTN","ALPBFRM2")
+0^3^B35366898
+"RTN","ALPBFRM2",1,0)
+ALPBFRM2 ;OIFO-DALLAS MW,SED,KC-SCREEN DISPLAY FORMATTING UTIL ;03/06/16 3:06pm
+"RTN","ALPBFRM2",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**8,87**;Mar 2004;Build 22
+"RTN","ALPBFRM2",3,0)
+ ;
+"RTN","ALPBFRM2",4,0)
+ ;*87 - add Remove Times string to report
+"RTN","ALPBFRM2",5,0)
+ ;
+"RTN","ALPBFRM2",6,0)
+F80(DATA,MLDATE,RESULTS) ; format basic output for screen (80-column) display...
+"RTN","ALPBFRM2",7,0)
+ ; DATA = array passed by reference containing the data record to be formatted
+"RTN","ALPBFRM2",8,0)
+ ; MLDATE = a date from which med log data is retrieved
+"RTN","ALPBFRM2",9,0)
+ ; returns RESULTS array with formatted output (note:  total lines returned in RESULTS(0))
+"RTN","ALPBFRM2",10,0)
+ N ALPBCMNT,ALPBMDT,ALPBTEXT,ALPBX,LINE
+"RTN","ALPBFRM2",11,0)
+ S RESULTS(0)=0
+"RTN","ALPBFRM2",12,0)
+ S RESULTS(1)=" Order Number: "_$S($P($G(DATA(0)),"^")'="":$P(DATA(0),"^"),1:"??")
+"RTN","ALPBFRM2",13,0)
+ S RESULTS(1)=$$PAD^ALPBUTL(RESULTS(1),50)_"Start: "
+"RTN","ALPBFRM2",14,0)
+ S RESULTS(1)=RESULTS(1)_$S($P($G(DATA(1)),"^")'="":$$FMTE^XLFDT($P(DATA(1),"^")),1:"<not on file>")
+"RTN","ALPBFRM2",15,0)
+ S RESULTS(2)="         Type: "_$$OTYP^ALPBUTL($P(DATA(3),"^"))
+"RTN","ALPBFRM2",16,0)
+ S RESULTS(2)=$$PAD^ALPBUTL(RESULTS(2),51)_"Stop: "
+"RTN","ALPBFRM2",17,0)
+ S RESULTS(2)=RESULTS(2)_$S($P($G(DATA(1)),"^",2)'="":$$FMTE^XLFDT($P(DATA(1),"^",2)),1:"<not on file>")
+"RTN","ALPBFRM2",18,0)
+ S RESULTS(3)="       Status: "_$P($P(DATA(0),"^",3),"~",2)
+"RTN","ALPBFRM2",19,0)
+ S LINE=3
+"RTN","ALPBFRM2",20,0)
+ ; drug(s)...
+"RTN","ALPBFRM2",21,0)
+ I +$O(DATA(7,0)) D
+"RTN","ALPBFRM2",22,0)
+ .S LINE=LINE+1
+"RTN","ALPBFRM2",23,0)
+ .S RESULTS(LINE)="         Drug: "
+"RTN","ALPBFRM2",24,0)
+ .S ALPBX=0
+"RTN","ALPBFRM2",25,0)
+ .F  S ALPBX=$O(DATA(7,ALPBX)) Q:'ALPBX  D
+"RTN","ALPBFRM2",26,0)
+ ..S RESULTS(LINE)=$G(RESULTS(LINE))_$P(DATA(7,ALPBX,0),"^",2)
+"RTN","ALPBFRM2",27,0)
+ ..I +$O(DATA(7,ALPBX)) D
+"RTN","ALPBFRM2",28,0)
+ ...S LINE=LINE+1
+"RTN","ALPBFRM2",29,0)
+ ...S RESULTS(LINE)=" "
+"RTN","ALPBFRM2",30,0)
+ ...S RESULTS(LINE)=$$PAD^ALPBUTL(RESULTS(LINE),14)
+"RTN","ALPBFRM2",31,0)
+ .K ALPBX
+"RTN","ALPBFRM2",32,0)
+ ;
+"RTN","ALPBFRM2",33,0)
+ ; any additives...
+"RTN","ALPBFRM2",34,0)
+ I +$O(DATA(8,0)) D
+"RTN","ALPBFRM2",35,0)
+ .S LINE=LINE+1
+"RTN","ALPBFRM2",36,0)
+ .S RESULTS(LINE)="Additive Info: "
+"RTN","ALPBFRM2",37,0)
+ .S ALPBX=0
+"RTN","ALPBFRM2",38,0)
+ .F  S ALPBX=$O(DATA(8,ALPBX)) Q:'ALPBX  D
+"RTN","ALPBFRM2",39,0)
+ ..S RESULTS(LINE)=RESULTS(LINE)_$P(DATA(8,ALPBX,0),"^",2)
+"RTN","ALPBFRM2",40,0)
+ ..; if UNITS isn't already contained in ADDITIVE NAME, add it...
+"RTN","ALPBFRM2",41,0)
+ ..I $P(DATA(8,ALPBX,0),"^",3)'=""&($P(DATA(8,ALPBX,0),"^",2)'[$P(DATA(8,ALPBX,0),"^",3)) S RESULTS(LINE)=RESULTS(LINE)_" "_$P(DATA(8,ALPBX,0),"^",3)
+"RTN","ALPBFRM2",42,0)
+ ..I +$O(DATA(8,ALPBX)) D
+"RTN","ALPBFRM2",43,0)
+ ...S LINE=LINE+1
+"RTN","ALPBFRM2",44,0)
+ ...S RESULTS(LINE)=" "
+"RTN","ALPBFRM2",45,0)
+ ...S RESULTS(LINE)=$$PAD^ALPBUTL(RESULTS(LINE),14)
+"RTN","ALPBFRM2",46,0)
+ .K ALPBX
+"RTN","ALPBFRM2",47,0)
+ ;
+"RTN","ALPBFRM2",48,0)
+ ; any solutions...
+"RTN","ALPBFRM2",49,0)
+ I +$O(DATA(9,0)) D
+"RTN","ALPBFRM2",50,0)
+ .S LINE=LINE+1
+"RTN","ALPBFRM2",51,0)
+ .S RESULTS(LINE)="Solution Info: "
+"RTN","ALPBFRM2",52,0)
+ .S ALPBX=0
+"RTN","ALPBFRM2",53,0)
+ .F  S ALPBX=$O(DATA(9,ALPBX)) Q:'ALPBX  D
+"RTN","ALPBFRM2",54,0)
+ ..S RESULTS(LINE)=RESULTS(LINE)_$P(DATA(9,ALPBX,0),"^",2)
+"RTN","ALPBFRM2",55,0)
+ ..; if UNITS isn't already contained in SOLUTION NAME, add it...
+"RTN","ALPBFRM2",56,0)
+ ..I $P(DATA(9,ALPBX,0),"^",3)'=""&($P(DATA(9,ALPBX,0),"^",2)'[$P(DATA(9,ALPBX,0),"^",3)) S RESULTS(LINE)=RESULTS(LINE)_" "_$P(DATA(9,ALPBX,0),"^",3)
+"RTN","ALPBFRM2",57,0)
+ ..I +$O(DATA(9,ALPBX)) D
+"RTN","ALPBFRM2",58,0)
+ ...S LINE=LINE+1
+"RTN","ALPBFRM2",59,0)
+ ...S RESULTS(LINE)=" "
+"RTN","ALPBFRM2",60,0)
+ ...S RESULTS(LINE)=$$PAD^ALPBUTL(RESULTS(LINE),14)
+"RTN","ALPBFRM2",61,0)
+ .K ALPBX
+"RTN","ALPBFRM2",62,0)
+ ;
+"RTN","ALPBFRM2",63,0)
+ ; give ($P(DATA(4),"^",1)=DOSAGE  $P(DATA(4),"^",2)=ROUTE  $P(DATA(4),"^",3)=SCHEDULE)...
+"RTN","ALPBFRM2",64,0)
+ S LINE=LINE+1
+"RTN","ALPBFRM2",65,0)
+ S RESULTS(LINE)="         Give: "_$P($G(DATA(4)),"^")_" "_$P($G(DATA(4)),"^",2)_" "_$P($G(DATA(4)),"^",3)
+"RTN","ALPBFRM2",66,0)
+ ; provider, pharmacist or entry person, and verifier...
+"RTN","ALPBFRM2",67,0)
+ S LINE=LINE+1
+"RTN","ALPBFRM2",68,0)
+ S RESULTS(LINE)="     Provider: "_$P($G(DATA(2)),"^")
+"RTN","ALPBFRM2",69,0)
+ S RESULTS(LINE)=$$PAD^ALPBUTL(RESULTS(LINE),43)_"RPh/Entry by: "_$P($G(DATA(2)),"^",2)
+"RTN","ALPBFRM2",70,0)
+ I $P($G(DATA(2)),"^",3)'="" D
+"RTN","ALPBFRM2",71,0)
+ .S LINE=LINE+1
+"RTN","ALPBFRM2",72,0)
+ .S RESULTS(LINE)="  Verified by: "_$P(DATA(2),"^",3)
+"RTN","ALPBFRM2",73,0)
+ ; administration times...
+"RTN","ALPBFRM2",74,0)
+ S LINE=LINE+1
+"RTN","ALPBFRM2",75,0)
+ S RESULTS(LINE)=" Admin. Times: "_$P($G(DATA(4)),"^",4)
+"RTN","ALPBFRM2",76,0)
+ I $P($G(DATA(4.5)),U,1)]"" D                    ;include new node *87
+"RTN","ALPBFRM2",77,0)
+ .S LINE=LINE+1
+"RTN","ALPBFRM2",78,0)
+ .S RESULTS(LINE)="Removal Times: "_$P($G(DATA(4.5)),"^",1)
+"RTN","ALPBFRM2",79,0)
+ ; provider comments, special instructions or other print info...
+"RTN","ALPBFRM2",80,0)
+ I +$O(DATA(5,0)) D
+"RTN","ALPBFRM2",81,0)
+ .M ALPBCMNT=DATA(5)
+"RTN","ALPBFRM2",82,0)
+ .D FTEXT^ALPBFRMU(78,.ALPBCMNT,.ALPBTEXT)
+"RTN","ALPBFRM2",83,0)
+ .K ALPBCMNT
+"RTN","ALPBFRM2",84,0)
+ .S ALPBX=0
+"RTN","ALPBFRM2",85,0)
+ .F  S ALPBX=$O(ALPBTEXT(ALPBX)) Q:'ALPBX  D
+"RTN","ALPBFRM2",86,0)
+ ..S LINE=LINE+1
+"RTN","ALPBFRM2",87,0)
+ ..S RESULTS(LINE)=ALPBTEXT(ALPBX,0)
+"RTN","ALPBFRM2",88,0)
+ .K ALPBTEXT,ALPBX
+"RTN","ALPBFRM2",89,0)
+ ; med log data...
+"RTN","ALPBFRM2",90,0)
+ I +$O(DATA(10,0)) D
+"RTN","ALPBFRM2",91,0)
+ .S LINE=LINE+1
+"RTN","ALPBFRM2",92,0)
+ .S RESULTS(LINE)="BCMA Medication Log History since "_$$FMTE^XLFDT(MLDATE)
+"RTN","ALPBFRM2",93,0)
+ .S LINE=LINE+1
+"RTN","ALPBFRM2",94,0)
+ .S RESULTS(LINE)=" Log Date"
+"RTN","ALPBFRM2",95,0)
+ .S RESULTS(LINE)=$$PAD^ALPBUTL(RESULTS(LINE),16)_"Message"
+"RTN","ALPBFRM2",96,0)
+ .S RESULTS(LINE)=$$PAD^ALPBUTL(RESULTS(LINE),31)_"Log Entry Person"
+"RTN","ALPBFRM2",97,0)
+ .I $O(DATA(10,"B",MLDATE))="" D
+"RTN","ALPBFRM2",98,0)
+ ..S LINE=LINE+1
+"RTN","ALPBFRM2",99,0)
+ ..S RESULTS(LINE)="No entries to report."
+"RTN","ALPBFRM2",100,0)
+ .;
+"RTN","ALPBFRM2",101,0)
+ .;begin *87 mods                                                  *87
+"RTN","ALPBFRM2",102,0)
+ .;bld admin and remove sorted array by time
+"RTN","ALPBFRM2",103,0)
+ .N LN,DAT
+"RTN","ALPBFRM2",104,0)
+ .S ALPBMDT=MLDATE
+"RTN","ALPBFRM2",105,0)
+ .F  S ALPBMDT=$O(DATA(10,"B",ALPBMDT)) Q:'ALPBMDT  D
+"RTN","ALPBFRM2",106,0)
+ ..S ALPBX=0
+"RTN","ALPBFRM2",107,0)
+ ..F  S ALPBX=$O(DATA(10,"B",ALPBMDT,ALPBX)) Q:'ALPBX  D
+"RTN","ALPBFRM2",108,0)
+ ...S DAT=DATA(10,ALPBX,0)
+"RTN","ALPBFRM2",109,0)
+ ...S LN(ALPBMDT)=$P(DAT,U,3)_U_$P(DAT,U,2)
+"RTN","ALPBFRM2",110,0)
+ ...S:$P(DAT,U,5) LN($P(DAT,U,5))=$P(DAT,U,7)_U_$P(DAT,U,6)
+"RTN","ALPBFRM2",111,0)
+ ..K ALPBX
+"RTN","ALPBFRM2",112,0)
+ .;
+"RTN","ALPBFRM2",113,0)
+ .;bld log detail lines from sorted array and add to Results print arr
+"RTN","ALPBFRM2",114,0)
+ .F ALPBMDT=0:0 S ALPBMDT=$O(LN(ALPBMDT)) Q:'ALPBMDT  D
+"RTN","ALPBFRM2",115,0)
+ ..S LINE=LINE+1
+"RTN","ALPBFRM2",116,0)
+ ..S RESULTS(LINE)=" "_$$FDATE^ALPBUTL(ALPBMDT)
+"RTN","ALPBFRM2",117,0)
+ ..S RESULTS(LINE)=$$PAD^ALPBUTL(RESULTS(LINE),16)_$P(LN(ALPBMDT),U,1)
+"RTN","ALPBFRM2",118,0)
+ ..S RESULTS(LINE)=$$PAD^ALPBUTL(RESULTS(LINE),31)_$S($P(LN(ALPBMDT),U,2)'="":$P(LN(ALPBMDT),U,2),1:"<not on file>")
+"RTN","ALPBFRM2",119,0)
+ .K ALPBMDT
+"RTN","ALPBFRM2",120,0)
+ .;end mods                                                        *87
+"RTN","ALPBFRM2",121,0)
+ ;
+"RTN","ALPBFRM2",122,0)
+ S LINE=LINE+1
+"RTN","ALPBFRM2",123,0)
+ S RESULTS(LINE)=$$REPEAT^XLFSTR("-",80)
+"RTN","ALPBFRM2",124,0)
+ S RESULTS(0)=LINE
+"RTN","ALPBFRM2",125,0)
+ Q
+"RTN","ALPBFRM2",126,0)
+ ;
+"RTN","ALPBFRM2",127,0)
+HDR(DATA,TYPE,PG,RESULTS) ; screen display header...
+"RTN","ALPBFRM2",128,0)
+ ; DATA = array passed by reference containing the data record to be formatted
+"RTN","ALPBFRM2",129,0)
+ ; TYPE = either 'A' for ALL orders or 'C' for CURRENT orders.  if null, not used in construction
+"RTN","ALPBFRM2",130,0)
+ ;        of first line of returned array
+"RTN","ALPBFRM2",131,0)
+ ; PG   = page number
+"RTN","ALPBFRM2",132,0)
+ ; RESULTS = an array passed by reference into which the formatted output will be saved
+"RTN","ALPBFRM2",133,0)
+ ; returns RESULTS array with formatted output (note:  total lines returned in RESULTS(0))
+"RTN","ALPBFRM2",134,0)
+ N ALPBX,LINE
+"RTN","ALPBFRM2",135,0)
+ I $G(TYPE)="" S TYPE="X"
+"RTN","ALPBFRM2",136,0)
+ I $G(PG)="" S PG=0
+"RTN","ALPBFRM2",137,0)
+ S RESULTS(0)=0
+"RTN","ALPBFRM2",138,0)
+ S RESULTS(1)=$S(TYPE="A":"ALL ",TYPE="C":"CURRENT ",1:"")_"ORDERS"
+"RTN","ALPBFRM2",139,0)
+ S RESULTS(1)=$$PAD^ALPBUTL(RESULTS(1),70)_"Page: "_$J(PG,3)
+"RTN","ALPBFRM2",140,0)
+ S RESULTS(2)=$P($G(DATA(0)),"^")
+"RTN","ALPBFRM2",141,0)
+ S RESULTS(2)=$$PAD^ALPBUTL(RESULTS(2),32)_"SSN: "_$P($G(DATA(0)),"^",2)
+"RTN","ALPBFRM2",142,0)
+ S RESULTS(2)=$$PAD^ALPBUTL(RESULTS(2),48)_"Ward: "_$P($G(DATA(0)),"^",5)
+"RTN","ALPBFRM2",143,0)
+ S RESULTS(3)="This record last updated: "_$S($P(DATA(0),"^",8)'="":$$FMTE^XLFDT($P(DATA(0),"^",8)),1:"<date not on file>")
+"RTN","ALPBFRM2",144,0)
+ S RESULTS(3)=$$PAD^ALPBUTL(RESULTS(3),48)_"Room: "_$P(DATA(0),"^",6)_" Bed: "_$P(DATA(0),"^",7)
+"RTN","ALPBFRM2",145,0)
+ S LINE=3
+"RTN","ALPBFRM2",146,0)
+ I +$O(DATA(1,0)) D
+"RTN","ALPBFRM2",147,0)
+ .S LINE=LINE+1
+"RTN","ALPBFRM2",148,0)
+ .S RESULTS(LINE)="Allergies: "
+"RTN","ALPBFRM2",149,0)
+ .S ALPBX=0
+"RTN","ALPBFRM2",150,0)
+ .F  S ALPBX=$O(DATA(1,ALPBX)) Q:'ALPBX  D
+"RTN","ALPBFRM2",151,0)
+ ..S RESULTS(LINE)=RESULTS(LINE)_$P(DATA(1,ALPBX,0),"^",2)
+"RTN","ALPBFRM2",152,0)
+ ..I +$O(DATA(1,ALPBX)) S RESULTS(LINE)=RESULTS(LINE)_"; "
+"RTN","ALPBFRM2",153,0)
+ S LINE=LINE+1
+"RTN","ALPBFRM2",154,0)
+ S RESULTS(LINE)=$$REPEAT^XLFSTR("-",80)
+"RTN","ALPBFRM2",155,0)
+ S RESULTS(0)=LINE
+"RTN","ALPBFRM2",156,0)
+ Q
+"RTN","ALPBFRMU")
+0^4^B13574860
+"RTN","ALPBFRMU",1,0)
+ALPBFRMU ;OIFO-DALLAS MW,SED,KC-PRINT FORMATTING UTILITIES;03/06/16 3:06pm
+"RTN","ALPBFRMU",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**8,87**;Mar 2004;Build 22
+"RTN","ALPBFRMU",3,0)
+ ;
+"RTN","ALPBFRMU",4,0)
+ ;*87 -  Stop printing the FOOT or legend.
+"RTN","ALPBFRMU",5,0)
+ ;
+"RTN","ALPBFRMU",6,0)
+FTEXT(COL,TEXT,RESULTS) ; format TEXT array...
+"RTN","ALPBFRMU",7,0)
+ ; COL  = number of columns (line length)
+"RTN","ALPBFRMU",8,0)
+ ; TEXT = array to be reformatted.  the array should be in
+"RTN","ALPBFRMU",9,0)
+ ;        standard FM format:  TEXT(1,0)=text
+"RTN","ALPBFRMU",10,0)
+ ;                             TEXT(2,0)=text
+"RTN","ALPBFRMU",11,0)
+ ;                             TEXT(n,0)=text
+"RTN","ALPBFRMU",12,0)
+ ; RESULT = array passed by reference into which reformatted text
+"RTN","ALPBFRMU",13,0)
+ ;          will be returned:  RESULTS(1,0)=formatted text to COL length
+"RTN","ALPBFRMU",14,0)
+ ;                             RESULTS(2,0)=formatted text to COL length
+"RTN","ALPBFRMU",15,0)
+ I +$G(COL)=0!('$D(TEXT)) Q
+"RTN","ALPBFRMU",16,0)
+ N ALPBTEMP,I,J,L,M,FSTRING,XSTRING
+"RTN","ALPBFRMU",17,0)
+ S (I,J)=0
+"RTN","ALPBFRMU",18,0)
+ S XSTRING=""
+"RTN","ALPBFRMU",19,0)
+ F  S I=$O(TEXT(I)) Q:'I  D
+"RTN","ALPBFRMU",20,0)
+ .S DATA=$G(TEXT(I,0))
+"RTN","ALPBFRMU",21,0)
+ .I DATA="" D  Q
+"RTN","ALPBFRMU",22,0)
+ ..S J=J+1
+"RTN","ALPBFRMU",23,0)
+ ..S ALPBTEMP(J,0)=""
+"RTN","ALPBFRMU",24,0)
+ .F L=1:1:$L(DATA) D
+"RTN","ALPBFRMU",25,0)
+ ..S XSTRING=XSTRING_$E(DATA,L)
+"RTN","ALPBFRMU",26,0)
+ ..I $L(XSTRING)=COL D
+"RTN","ALPBFRMU",27,0)
+ ...S FSTRING=XSTRING
+"RTN","ALPBFRMU",28,0)
+ ...F M=$L(XSTRING):-1:1 Q:$A($E(XSTRING,M))'>32
+"RTN","ALPBFRMU",29,0)
+ ...S FSTRING=$E(XSTRING,1,M-1)
+"RTN","ALPBFRMU",30,0)
+ ...S XSTRING=$E(XSTRING,M+1,$L(XSTRING))
+"RTN","ALPBFRMU",31,0)
+ ...S J=J+1
+"RTN","ALPBFRMU",32,0)
+ ...S ALPBTEMP(J,0)=FSTRING
+"RTN","ALPBFRMU",33,0)
+ ...S FSTRING=""
+"RTN","ALPBFRMU",34,0)
+ ...I $L(XSTRING)=COL S XSTRING=""
+"RTN","ALPBFRMU",35,0)
+ I $L(XSTRING)>0 D
+"RTN","ALPBFRMU",36,0)
+ .S J=J+1
+"RTN","ALPBFRMU",37,0)
+ .S ALPBTEMP(J,0)=XSTRING
+"RTN","ALPBFRMU",38,0)
+ M RESULTS=ALPBTEMP
+"RTN","ALPBFRMU",39,0)
+ Q
+"RTN","ALPBFRMU",40,0)
+ ;
+"RTN","ALPBFRMU",41,0)
+HDR(DATA,PG,RESULTS) ; print page header...
+"RTN","ALPBFRMU",42,0)
+ ; DATA    = an array passed by reference containing the nodes in
+"RTN","ALPBFRMU",43,0)
+ ;           a patient's record in ^ALPB(53.7,...)
+"RTN","ALPBFRMU",44,0)
+ ; PG      = page number to use
+"RTN","ALPBFRMU",45,0)
+ ; RESULTS = an array passed by reference that will be used to return
+"RTN","ALPBFRMU",46,0)
+ ;           the formated data
+"RTN","ALPBFRMU",47,0)
+ ; returns data in formated 132-column output
+"RTN","ALPBFRMU",48,0)
+ N ALPBALG,ALPBALGL,ALPBALGX,ALPBX,LINE
+"RTN","ALPBFRMU",49,0)
+ I $G(PG)="" S PG=0
+"RTN","ALPBFRMU",50,0)
+ S RESULTS(1)="MAR Ran: "_$$FMTE^XLFDT($$NOW^XLFDT())
+"RTN","ALPBFRMU",51,0)
+ S RESULTS(1)=$$PAD^ALPBUTL(RESULTS(1),32)_"Inpatient Pharmacy Orders (Backup)"
+"RTN","ALPBFRMU",52,0)
+ S RESULTS(1)=$$PAD^ALPBUTL(RESULTS(1),122)_"Page: "_$J(PG,3)
+"RTN","ALPBFRMU",53,0)
+ S RESULTS(2)=$P($G(DATA(0)),"^")
+"RTN","ALPBFRMU",54,0)
+ S RESULTS(2)=$$PAD^ALPBUTL(RESULTS(2),33)_"SSN: "_$P($G(DATA(0)),"^",2)
+"RTN","ALPBFRMU",55,0)
+ S RESULTS(2)=$$PAD^ALPBUTL(RESULTS(2),50)_"DOB: "_$S($P($G(DATA(0)),"^",3)'="":$$FMTE^XLFDT($P(DATA(0),"^",3)),1:"not on file")
+"RTN","ALPBFRMU",56,0)
+ S RESULTS(2)=$$PAD^ALPBUTL(RESULTS(2),70)_"Sex: "_$P($G(DATA(0)),"^",4)
+"RTN","ALPBFRMU",57,0)
+ S RESULTS(3)="Ward: "_$P($G(DATA(0)),"^",5)
+"RTN","ALPBFRMU",58,0)
+ S RESULTS(3)=$$PAD^ALPBUTL(RESULTS(3),32)_"Room: "_$P($G(DATA(0)),"^",6)
+"RTN","ALPBFRMU",59,0)
+ S RESULTS(3)=$$PAD^ALPBUTL(RESULTS(3),50)_"Bed: "_$P($G(DATA(0)),"^",7)
+"RTN","ALPBFRMU",60,0)
+ S RESULTS(4)=""
+"RTN","ALPBFRMU",61,0)
+ S RESULTS(4)=$$PAD^ALPBUTL(RESULTS(4),12)_"This record last updated: "
+"RTN","ALPBFRMU",62,0)
+ S RESULTS(4)=RESULTS(4)_$S($P(DATA(0),"^",8)'="":$$FMTE^XLFDT($P(DATA(0),"^",8)),1:"<date not on file>")
+"RTN","ALPBFRMU",63,0)
+ S LINE=4
+"RTN","ALPBFRMU",64,0)
+ ; report allergies...
+"RTN","ALPBFRMU",65,0)
+ I '$D(DATA(1,0)) D
+"RTN","ALPBFRMU",66,0)
+ .;no allergies reported
+"RTN","ALPBFRMU",67,0)
+ .S LINE=LINE+1,RESULTS(LINE)=""
+"RTN","ALPBFRMU",68,0)
+ .S RESULTS(LINE)="No allergies reported to the Contingency"
+"RTN","ALPBFRMU",69,0)
+ I +$O(DATA(1,0)) D
+"RTN","ALPBFRMU",70,0)
+ .S LINE=LINE+1
+"RTN","ALPBFRMU",71,0)
+ .S RESULTS(LINE)=""
+"RTN","ALPBFRMU",72,0)
+ .S ALPBALGX="Allergies: "
+"RTN","ALPBFRMU",73,0)
+ .S ALPBALGL=$L(ALPBALGX)-1
+"RTN","ALPBFRMU",74,0)
+ .S (ALPBCNT,ALPBX)=0
+"RTN","ALPBFRMU",75,0)
+ .F  S ALPBX=$O(DATA(1,ALPBX)) Q:'ALPBX  D
+"RTN","ALPBFRMU",76,0)
+ ..S ALPBALG=$P($G(DATA(1,ALPBX,0)),"^",2)
+"RTN","ALPBFRMU",77,0)
+ ..I ALPBALG="" K ALPBALG Q
+"RTN","ALPBFRMU",78,0)
+ ..I $L(ALPBALGX_ALPBALG_"; ")>90 D
+"RTN","ALPBFRMU",79,0)
+ ...S LINE=LINE+1
+"RTN","ALPBFRMU",80,0)
+ ...S RESULTS(LINE)=""
+"RTN","ALPBFRMU",81,0)
+ ...S ALPBALGX=""
+"RTN","ALPBFRMU",82,0)
+ ...S ALPBALGX=$$PAD^ALPBUTL(ALPBALGX,ALPBALGL)
+"RTN","ALPBFRMU",83,0)
+ ..S ALPBALGX=ALPBALGX_ALPBALG_$S(+$O(DATA(1,ALPBX)):"; ",1:"")
+"RTN","ALPBFRMU",84,0)
+ ..S RESULTS(LINE)=ALPBALGX
+"RTN","ALPBFRMU",85,0)
+ S RESULTS(0)=LINE
+"RTN","ALPBFRMU",86,0)
+ Q
+"RTN","ALPBFRMU",87,0)
+ ;
+"RTN","ALPBFRMU",88,0)
+FOOT ; print page footer (note: output is 5 lines)...
+"RTN","ALPBFRMU",89,0)
+ ; code adapted from original routine ^ALPFOOT by FD@NJHCS, May 2002
+"RTN","ALPBFRMU",90,0)
+ W !,"|"
+"RTN","ALPBFRMU",91,0)
+ W ?13,"SIGNATURE/TITLE"
+"RTN","ALPBFRMU",92,0)
+ W ?40,"| INIT"
+"RTN","ALPBFRMU",93,0)
+ W ?48,"|"
+"RTN","ALPBFRMU",94,0)
+ W !,"|"
+"RTN","ALPBFRMU",95,0)
+ W $$REPEAT^XLFSTR("_",38)
+"RTN","ALPBFRMU",96,0)
+ W ?40,"|_______|"
+"RTN","ALPBFRMU",97,0)
+ W !,"|"
+"RTN","ALPBFRMU",98,0)
+ W $$REPEAT^XLFSTR("_",38)
+"RTN","ALPBFRMU",99,0)
+ W ?40,"|_______|"
+"RTN","ALPBFRMU",100,0)
+ W !,"|"
+"RTN","ALPBFRMU",101,0)
+ W $$REPEAT^XLFSTR("_",38)
+"RTN","ALPBFRMU",102,0)
+ W ?40,"|_______|"
+"RTN","ALPBFRMU",103,0)
+ W !,"|"
+"RTN","ALPBFRMU",104,0)
+ W $$REPEAT^XLFSTR("_",38)
+"RTN","ALPBFRMU",105,0)
+ W ?40,"|_______|"
+"RTN","ALPBFRMU",106,0)
+ Q   ;*87 REMOVE INJECTION SITE INFORMATION ONLY LEAVE SIG LINES
+"RTN","ALPBHL1U")
+0^1^B87587116
+"RTN","ALPBHL1U",1,0)
+ALPBHL1U ;OIFO-DALLAS MW,SED,KC -HL7 MESSAGE SEGMENT PARSER AND UPDATE ;03/06/16 3:06pm
+"RTN","ALPBHL1U",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**7,69,59,73,87**;May 2002;Build 22
+"RTN","ALPBHL1U",3,0)
+ ;
+"RTN","ALPBHL1U",4,0)
+ ; passed parameters common to all functions:
+"RTN","ALPBHL1U",5,0)
+ ;   IEN   = patient's internal entry number in file 53.7
+"RTN","ALPBHL1U",6,0)
+ ;   OIEN  = the order number's internal entry number in file 53.7
+"RTN","ALPBHL1U",7,0)
+ ;   DATA  = the HL7 message line
+"RTN","ALPBHL1U",8,0)
+ ;   FS    = the HL7 field separator character (e.g., "|" or "^")
+"RTN","ALPBHL1U",9,0)
+ ;   CS    = the HL7 component separator character (e.g., "~")
+"RTN","ALPBHL1U",10,0)
+ ;   ECH   = the HL7 encoding characters
+"RTN","ALPBHL1U",11,0)
+ ;   ERR   = an array passed by reference, returned containing
+"RTN","ALPBHL1U",12,0)
+ ;           FileMan DBS call error array (if any)
+"RTN","ALPBHL1U",13,0)
+ ;
+"RTN","ALPBHL1U",14,0)
+ ;*69 - A New NTE segment will now contain WP unlimited text.  This
+"RTN","ALPBHL1U",15,0)
+ ;      text will also contain formatted text escape character \.br\
+"RTN","ALPBHL1U",16,0)
+ ;      NTE tag will now rebuild work arrays honoring the line break
+"RTN","ALPBHL1U",17,0)
+ ;      escape character prior to storing into BCMA BACKUP DATA #53.7.
+"RTN","ALPBHL1U",18,0)
+ ;**73- Add Clinic name to Order multiple for orders that were placed
+"RTN","ALPBHL1U",19,0)
+ ;       in a clinic vs. a Ward.
+"RTN","ALPBHL1U",20,0)
+ ;*87 - Add Remove logic to pull out new fields and store to DB
+"RTN","ALPBHL1U",21,0)
+ ;
+"RTN","ALPBHL1U",22,0)
+AL1(IEN,DATA,FS,CS,ERR) ; process AL1 (allergies) segment...
+"RTN","ALPBHL1U",23,0)
+ I +$G(IEN)'>0!($G(DATA)="")!($G(FS)="")!($G(CS)="") D ERRBLD^ALPBUTL1("AL1","",.ERR) Q
+"RTN","ALPBHL1U",24,0)
+ N ALPBALG,ALPBALGN,ALPBFILE,ALPBNEXT,ALPBSCHD,ALPBX,SCS,ALPBXX,ALPBSCHDLE1,ALPBX2,ALPBYY
+"RTN","ALPBHL1U",25,0)
+ S ALPBALG=+$P(DATA,FS,4)
+"RTN","ALPBHL1U",26,0)
+ I ALPBALG'>0 D ERRBLD^ALPBUTL1("AL1","Undefined allergy "_DATA,.ERR) Q
+"RTN","ALPBHL1U",27,0)
+ S ALPBALGN=$P($P(DATA,FS,4),CS,2)
+"RTN","ALPBHL1U",28,0)
+ ; is this allergy already on file for this patient?...
+"RTN","ALPBHL1U",29,0)
+ I $D(^ALPB(53.7,IEN,1,"B",ALPBALG)) S ERR("DIERR")=0 Q
+"RTN","ALPBHL1U",30,0)
+ ; if not, file it...
+"RTN","ALPBHL1U",31,0)
+ S ALPBNEXT=+$O(^ALPB(53.7,IEN,1," "),-1)+1
+"RTN","ALPBHL1U",32,0)
+ S ALPBFILE(53.701,"+"_ALPBNEXT_","_IEN_",",.01)=ALPBALG
+"RTN","ALPBHL1U",33,0)
+ S ALPBFILE(53.701,"+"_ALPBNEXT_","_IEN_",",1)=ALPBALGN
+"RTN","ALPBHL1U",34,0)
+ D UPDATE^DIE("","ALPBFILE","ALPBNEXT","ERR")
+"RTN","ALPBHL1U",35,0)
+ Q
+"RTN","ALPBHL1U",36,0)
+ ;
+"RTN","ALPBHL1U",37,0)
+ORC(IEN,OIEN,DATA,MLOG,FS,CS,ERR) ; process ORC (common order) segment...
+"RTN","ALPBHL1U",38,0)
+ ; MLOG = if 1 then this is an ORC segment with a Med Log update
+"RTN","ALPBHL1U",39,0)
+ ;        if 0 then this is a common order update
+"RTN","ALPBHL1U",40,0)
+ I +$G(IEN)'>0!(+$G(OIEN)'>0)!($G(DATA)="")!($G(MLOG)="")!($G(FS)="")!($G(CS)="") D ERRBLD^ALPBUTL1("ORC","",.ERR) Q
+"RTN","ALPBHL1U",41,0)
+ N ALPBFIEN,ALPBFILE,ALPBMREC,ALPBNEXT,ALPBTEXT,ALPBX,SVZERO      ;*87
+"RTN","ALPBHL1U",42,0)
+ S ALPBFIEN=OIEN_","_IEN_","
+"RTN","ALPBHL1U",43,0)
+ ; ORC segment with NO MedLog data...
+"RTN","ALPBHL1U",44,0)
+ I +MLOG=0 D
+"RTN","ALPBHL1U",45,0)
+ .S ALPBX=$P(DATA,FS,1)
+"RTN","ALPBHL1U",46,0)
+ .; order status...
+"RTN","ALPBHL1U",47,0)
+ .S ALPBFILE(53.702,ALPBFIEN,2)=$P(DATA,FS,6)
+"RTN","ALPBHL1U",48,0)
+ .; provider...
+"RTN","ALPBHL1U",49,0)
+ .S ALPBFILE(53.702,ALPBFIEN,5)=$P($P(DATA,FS,13),CS,2)
+"RTN","ALPBHL1U",50,0)
+ .; entry person/rph...
+"RTN","ALPBHL1U",51,0)
+ .S ALPBFILE(53.702,ALPBFIEN,5.1)=$P($P(DATA,FS,11),CS,2)
+"RTN","ALPBHL1U",52,0)
+ .; verified by...
+"RTN","ALPBHL1U",53,0)
+ .S ALPBFILE(53.702,ALPBFIEN,5.2)=$P($P(DATA,FS,12),CS,2)
+"RTN","ALPBHL1U",54,0)
+ .; set clinic name in new DD field 3.5 if a clinic order         ;*73
+"RTN","ALPBHL1U",55,0)
+ .S ALPBFILE(53.702,ALPBFIEN,3.5)=$P(DATA,FS,22)
+"RTN","ALPBHL1U",56,0)
+ .D UPDATE^DIE("","ALPBFILE","","ERR")
+"RTN","ALPBHL1U",57,0)
+ .; if this is a pending order, add special instructions...
+"RTN","ALPBHL1U",58,0)
+ .I $P($P(DATA,FS,6),CS,1)="IP" D
+"RTN","ALPBHL1U",59,0)
+ ..S ALPBTEXT(1)="CAUTION!  THIS IS A PENDING ORDER :: CHECK WITH PROVIDER OR PHARMACIST!"
+"RTN","ALPBHL1U",60,0)
+ ..D WP^DIE(53.702,ALPBFIEN,8,"A","ALPBTEXT","ERR")
+"RTN","ALPBHL1U",61,0)
+ ..K ALPBTEXT
+"RTN","ALPBHL1U",62,0)
+ ; ORC segment with specific MedLog data...
+"RTN","ALPBHL1U",63,0)
+ I +MLOG=1 D
+"RTN","ALPBHL1U",64,0)
+ .; ALPBX = med log date/time...
+"RTN","ALPBHL1U",65,0)
+ .S ALPBX=$$FMDATE^HLFNC($P(DATA,FS,10))
+"RTN","ALPBHL1U",66,0)
+ .I ALPBX="" K ALPBX Q
+"RTN","ALPBHL1U",67,0)
+ .; ALPBMREC = med log record number...
+"RTN","ALPBHL1U",68,0)
+ .S ALPBMREC=+$P($P(DATA,FS,3),CS,1)
+"RTN","ALPBHL1U",69,0)
+ .;
+"RTN","ALPBHL1U",70,0)
+ .;UPDATE, If the med log entry is already on file, update and quit.
+"RTN","ALPBHL1U",71,0)
+ .;  check for both an entry on file for the log date/time ("B" xref)
+"RTN","ALPBHL1U",72,0)
+ .;  or med log record number ("C" xref)...
+"RTN","ALPBHL1U",73,0)
+ .S ALPBNEXT=+$O(^ALPB(53.7,IEN,2,OIEN,10,"B",ALPBX,""),-1)
+"RTN","ALPBHL1U",74,0)
+ .I ALPBNEXT'>0 S ALPBNEXT=+$O(^ALPB(53.7,IEN,2,OIEN,10,"C",ALPBMREC,""))
+"RTN","ALPBHL1U",75,0)
+ .I ALPBNEXT>0 D  Q
+"RTN","ALPBHL1U",76,0)
+ ..S ALPBFILE(53.70213,ALPBNEXT_","_ALPBFIEN,.01)=ALPBX
+"RTN","ALPBHL1U",77,0)
+ ..S ALPBFILE(53.70213,ALPBNEXT_","_ALPBFIEN,1)=$P($P(DATA,FS,11),CS,2)
+"RTN","ALPBHL1U",78,0)
+ ..S ALPBFILE(53.70213,ALPBNEXT_","_ALPBFIEN,2)=$P($P(DATA,FS,6),CS,2)
+"RTN","ALPBHL1U",79,0)
+ ..I ALPBMREC>0 S ALPBFILE(53.70213,ALPBNEXT_","_ALPBFIEN,3)=ALPBMREC
+"RTN","ALPBHL1U",80,0)
+ ..;if remove status, save associated Given info for storing       *87
+"RTN","ALPBHL1U",81,0)
+ ..D:$P($P(DATA,FS,6),CS,2)["REMOVE"
+"RTN","ALPBHL1U",82,0)
+ ...S SVZERO=$G(^ALPB(53.7,IEN,2,OIEN,10,ALPBNEXT,0))
+"RTN","ALPBHL1U",83,0)
+ ...S ALPBFILE(53.70213,ALPBNEXT_","_ALPBFIEN,4)=$P(SVZERO,U,1)
+"RTN","ALPBHL1U",84,0)
+ ...S ALPBFILE(53.70213,ALPBNEXT_","_ALPBFIEN,5)=$P(SVZERO,U,2)
+"RTN","ALPBHL1U",85,0)
+ ...S ALPBFILE(53.70213,ALPBNEXT_","_ALPBFIEN,6)=$P(SVZERO,U,3)
+"RTN","ALPBHL1U",86,0)
+ ..;if Given cur action, then always set assoc Give fields to null *87
+"RTN","ALPBHL1U",87,0)
+ ..D:$P($P(DATA,FS,6),CS,2)["GIVEN"
+"RTN","ALPBHL1U",88,0)
+ ...S ALPBFILE(53.70213,ALPBNEXT_","_ALPBFIEN,4)=""
+"RTN","ALPBHL1U",89,0)
+ ...S ALPBFILE(53.70213,ALPBNEXT_","_ALPBFIEN,5)=""
+"RTN","ALPBHL1U",90,0)
+ ...S ALPBFILE(53.70213,ALPBNEXT_","_ALPBFIEN,6)=""
+"RTN","ALPBHL1U",91,0)
+ ..;
+"RTN","ALPBHL1U",92,0)
+ ..D UPDATE^DIE("","ALPBFILE","","ERR")
+"RTN","ALPBHL1U",93,0)
+ .K ALPBNEXT
+"RTN","ALPBHL1U",94,0)
+ .;
+"RTN","ALPBHL1U",95,0)
+ .;ADD, If not...
+"RTN","ALPBHL1U",96,0)
+ .S ALPBNEXT=+$O(^ALPB(53.7,IEN,2,OIEN,10," "),-1)        ;bug fix *87
+"RTN","ALPBHL1U",97,0)
+ .S ALPBFILE(53.70213,"+"_ALPBNEXT_","_ALPBFIEN,.01)=ALPBX
+"RTN","ALPBHL1U",98,0)
+ .; med log entry person...
+"RTN","ALPBHL1U",99,0)
+ .S ALPBFILE(53.70213,"+"_ALPBNEXT_","_ALPBFIEN,1)=$P($P(DATA,FS,11),CS,2)
+"RTN","ALPBHL1U",100,0)
+ .; med log transaction message...
+"RTN","ALPBHL1U",101,0)
+ .S ALPBFILE(53.70213,"+"_ALPBNEXT_","_ALPBFIEN,2)=$P($P(DATA,FS,6),CS,2)
+"RTN","ALPBHL1U",102,0)
+ .; med log record number...
+"RTN","ALPBHL1U",103,0)
+ .I ALPBMREC>0 S ALPBFILE(53.70213,"+"_ALPBNEXT_","_ALPBFIEN,3)=ALPBMREC
+"RTN","ALPBHL1U",104,0)
+ .;if Given cur action, then always init assoc. fields to null     *87
+"RTN","ALPBHL1U",105,0)
+ .D:$P($P(DATA,FS,6),CS,2)["GIVEN"
+"RTN","ALPBHL1U",106,0)
+ ..S ALPBFILE(53.70213,"+"_ALPBNEXT_","_ALPBFIEN,4)=""
+"RTN","ALPBHL1U",107,0)
+ ..S ALPBFILE(53.70213,"+"_ALPBNEXT_","_ALPBFIEN,5)=""
+"RTN","ALPBHL1U",108,0)
+ ..S ALPBFILE(53.70213,"+"_ALPBNEXT_","_ALPBFIEN,6)=""
+"RTN","ALPBHL1U",109,0)
+ .;
+"RTN","ALPBHL1U",110,0)
+ .D UPDATE^DIE("","ALPBFILE","ALPBNEXT","ERR")
+"RTN","ALPBHL1U",111,0)
+ Q
+"RTN","ALPBHL1U",112,0)
+ ;
+"RTN","ALPBHL1U",113,0)
+PV1(IEN,DATA,FS,CS,ERR) ; process PV1 (patient visit/movement) segment...
+"RTN","ALPBHL1U",114,0)
+ I +$G(IEN)=0!($G(DATA)="") D ERRBLD^ALPBUTL1("PV1","",.ERR) Q
+"RTN","ALPBHL1U",115,0)
+ N ALPBFIEN,ALPBFILE,ALPBX
+"RTN","ALPBHL1U",116,0)
+ S ALPBFIEN=IEN_","
+"RTN","ALPBHL1U",117,0)
+ S ALPBX=$P(DATA,FS,4)
+"RTN","ALPBHL1U",118,0)
+ ; ward...
+"RTN","ALPBHL1U",119,0)
+ S ALPBFILE(53.7,ALPBFIEN,4)=$P(ALPBX,CS)
+"RTN","ALPBHL1U",120,0)
+ ; room...
+"RTN","ALPBHL1U",121,0)
+ S ALPBFILE(53.7,ALPBFIEN,5)=$P(ALPBX,CS,2)
+"RTN","ALPBHL1U",122,0)
+ ; bed...
+"RTN","ALPBHL1U",123,0)
+ S ALPBFILE(53.7,ALPBFIEN,6)=$P(ALPBX,CS,3)
+"RTN","ALPBHL1U",124,0)
+ D FILE^DIE("","ALPBFILE","ERR")
+"RTN","ALPBHL1U",125,0)
+ Q
+"RTN","ALPBHL1U",126,0)
+ ;
+"RTN","ALPBHL1U",127,0)
+RXO(IEN,OIEN,DATA,FS,CS,ERR) ; process RXO (pharmacy prescription order) segment...
+"RTN","ALPBHL1U",128,0)
+ ; for inpatient meds, this segment contains an orderable item.  this
+"RTN","ALPBHL1U",129,0)
+ ; module is ONLY called if the order is "P"ending.  it only files the
+"RTN","ALPBHL1U",130,0)
+ ; orderable item if no drug is on file for the order.
+"RTN","ALPBHL1U",131,0)
+ N ALPBDIEN,ALPBDRUG,ALPBFILE,ALPBNEXT
+"RTN","ALPBHL1U",132,0)
+ I +$G(IEN)'>0!(+$G(OIEN)'>0)!($G(DATA)="")!($G(FS)="")!($G(CS)="") D ERRBLD^ALPBUTL1("RXO","",.ERR) Q
+"RTN","ALPBHL1U",133,0)
+ S ALPBDIEN=+$P($P(DATA,FS,2),CS,4)
+"RTN","ALPBHL1U",134,0)
+ S ALPBDRUG=$P($P(DATA,FS,2),CS,5)
+"RTN","ALPBHL1U",135,0)
+ I ALPBDIEN'>0 D ERRBLD^ALPBUTL1("RXO","Invalid drug IEN in RXO segment",.ERR) Q
+"RTN","ALPBHL1U",136,0)
+ ; if there is ANY drug already on file, quit...
+"RTN","ALPBHL1U",137,0)
+ I +$O(^ALPB(53.7,IEN,2,OIEN,7,0))>0 Q
+"RTN","ALPBHL1U",138,0)
+ ; if not, file it...
+"RTN","ALPBHL1U",139,0)
+ S ALPBNEXT=+$O(^ALPB(53.7,IEN,2,OIEN,7," "),-1)+1
+"RTN","ALPBHL1U",140,0)
+ S ALPBFILE(53.703,"+"_ALPBNEXT_","_OIEN_","_IEN_",",.01)=ALPBDIEN
+"RTN","ALPBHL1U",141,0)
+ S ALPBFILE(53.703,"+"_ALPBNEXT_","_OIEN_","_IEN_",",1)=ALPBDRUG
+"RTN","ALPBHL1U",142,0)
+ D UPDATE^DIE("","ALPBFILE","ALPBNEXT","ERR")
+"RTN","ALPBHL1U",143,0)
+ Q
+"RTN","ALPBHL1U",144,0)
+ ;
+"RTN","ALPBHL1U",145,0)
+RXE(IEN,OIEN,DATA,FS,CS,ECH,ERR) ; process RXE (order detail) segment...
+"RTN","ALPBHL1U",146,0)
+ ; this segment may contain the drug name, though there may not be a drug
+"RTN","ALPBHL1U",147,0)
+ ; because this can also be used for order detail for IV's which are
+"RTN","ALPBHL1U",148,0)
+ ; contained in an RXC segment.  this segment can also contain start/stop
+"RTN","ALPBHL1U",149,0)
+ ; date&time, dosage and schedule
+"RTN","ALPBHL1U",150,0)
+ I +$G(IEN)'>0!(+$G(OIEN)'>0)!($G(DATA)="")!($G(FS)="")!($G(CS)="")!($G(ECH)="") D ERRBLD^ALPBUTL1("RXE","",.ERR) Q
+"RTN","ALPBHL1U",151,0)
+ N ALPBDIEN,ALPBDRUG,ALPBFIEN,ALPBFILE,ALPBNEXT,ALPBSCHD,ALPBX,SCS
+"RTN","ALPBHL1U",152,0)
+ N ALPBDOA,ALPBREMV,ALPBTIMG,ALPBADM              ;*87
+"RTN","ALPBHL1U",153,0)
+ S SCS=$E(ECH,4)
+"RTN","ALPBHL1U",154,0)
+ S ALPBFIEN=OIEN_","_IEN_","
+"RTN","ALPBHL1U",155,0)
+ ; for drug, we'll use the one that came from the Drug file...
+"RTN","ALPBHL1U",156,0)
+ S ALPBDIEN=+$P($P(DATA,FS,3),CS,4)
+"RTN","ALPBHL1U",157,0)
+ S ALPBDRUG=$P($P(DATA,FS,3),CS,5)
+"RTN","ALPBHL1U",158,0)
+ ; is this drug already on file for this order?  if not, add it...
+"RTN","ALPBHL1U",159,0)
+ I ALPBDIEN>0&('$D(^ALPB(53.7,IEN,2,OIEN,7,"B",ALPBDIEN))) D
+"RTN","ALPBHL1U",160,0)
+ .S ALPBNEXT=+$O(^ALPB(53.7,IEN,2,OIEN,7," "),-1)+1
+"RTN","ALPBHL1U",161,0)
+ .S ALPBFILE(53.703,"+"_ALPBNEXT_","_ALPBFIEN,.01)=ALPBDIEN
+"RTN","ALPBHL1U",162,0)
+ .S ALPBFILE(53.703,"+"_ALPBNEXT_","_ALPBFIEN,1)=ALPBDRUG
+"RTN","ALPBHL1U",163,0)
+ .D UPDATE^DIE("","ALPBFILE","ALPBNEXT","ERR")
+"RTN","ALPBHL1U",164,0)
+ .K ALPBFERR,ALPBFILE,ALPBNEXT
+"RTN","ALPBHL1U",165,0)
+ S ALPBX=$P(DATA,FS,2)
+"RTN","ALPBHL1U",166,0)
+ ; start date/time...
+"RTN","ALPBHL1U",167,0)
+ S ALPBFILE(53.702,ALPBFIEN,4)=$$FMDATE^HLFNC($P(ALPBX,CS,4))
+"RTN","ALPBHL1U",168,0)
+ ; stop date/time...
+"RTN","ALPBHL1U",169,0)
+ S ALPBFILE(53.702,ALPBFIEN,4.1)=$$FMDATE^HLFNC($P(ALPBX,CS,5))
+"RTN","ALPBHL1U",170,0)
+ ; dosage...
+"RTN","ALPBHL1U",171,0)
+ S ALPBFILE(53.702,ALPBFIEN,7)=$P(ALPBX,CS,8)
+"RTN","ALPBHL1U",172,0)
+ ; schedule...   alter getting directly from RXE.1.2 pieces       ;*87
+"RTN","ALPBHL1U",173,0)
+ S ALPBTIMG=$P(ALPBX,CS,2)
+"RTN","ALPBHL1U",174,0)
+ S ALPBSCHD=$P(ALPBTIMG,SCS,1)
+"RTN","ALPBHL1U",175,0)
+ S ALPBREMV=$P(ALPBTIMG,SCS,3)
+"RTN","ALPBHL1U",176,0)
+ S ALPBDOA=$P(ALPBTIMG,SCS,4)
+"RTN","ALPBHL1U",177,0)
+ ; end                                                            ;*87
+"RTN","ALPBHL1U",178,0)
+ I $P(DATA,FS,24)'="" S ALPBSCHD=ALPBSCHD_" "_$P(DATA,FS,24)
+"RTN","ALPBHL1U",179,0)
+ I $P($P(DATA,FS,25),CS,5)'="" S ALPBSCHD=ALPBSCHD_" "_$P($P(DATA,FS,25),CS,5)
+"RTN","ALPBHL1U",180,0)
+ S ALPBFILE(53.702,ALPBFIEN,7.2)=ALPBSCHD
+"RTN","ALPBHL1U",181,0)
+ ; timing...
+"RTN","ALPBHL1U",182,0)
+ ;convert adm & rem times to 4 digit, store them & DOA to 53.7     *87
+"RTN","ALPBHL1U",183,0)
+ S ALPBADM=$P($P(DATA,FS,22),CS,2)
+"RTN","ALPBHL1U",184,0)
+ S:+ALPBADM ALPBADM=$$CNVRT4(ALPBADM,"-")
+"RTN","ALPBHL1U",185,0)
+ S:+ALPBREMV ALPBREMV=$$CNVRT4(ALPBREMV,"-")
+"RTN","ALPBHL1U",186,0)
+ S ALPBFILE(53.702,ALPBFIEN,7.3)=ALPBADM
+"RTN","ALPBHL1U",187,0)
+ S ALPBFILE(53.702,ALPBFIEN,7.4)=ALPBREMV
+"RTN","ALPBHL1U",188,0)
+ S ALPBFILE(53.702,ALPBFIEN,7.5)=ALPBDOA
+"RTN","ALPBHL1U",189,0)
+ ;
+"RTN","ALPBHL1U",190,0)
+ D UPDATE^DIE("","ALPBFILE","","ERR")
+"RTN","ALPBHL1U",191,0)
+ Q
+"RTN","ALPBHL1U",192,0)
+ ;
+"RTN","ALPBHL1U",193,0)
+RXR(IEN,OIEN,DATA,FS,CS,ERR) ; process RXR (med administration route) segment...
+"RTN","ALPBHL1U",194,0)
+ I +$G(IEN)'>0!(+$G(OIEN)'>0)!($G(DATA)="")!($G(FS)="")!($G(CS)="") D ERRBLD^ALPBUTL1("RXR","",.ERR) Q
+"RTN","ALPBHL1U",195,0)
+ N ALPBFILE
+"RTN","ALPBHL1U",196,0)
+ ; route...
+"RTN","ALPBHL1U",197,0)
+ S ALPBFILE(53.702,OIEN_","_IEN_",",7.1)=$P($P(DATA,FS,2),CS,5)
+"RTN","ALPBHL1U",198,0)
+ D UPDATE^DIE("","ALPBFILE","","ERR")
+"RTN","ALPBHL1U",199,0)
+ Q
+"RTN","ALPBHL1U",200,0)
+ ;
+"RTN","ALPBHL1U",201,0)
+RXC(IEN,OIEN,DATA,FS,CS,ERR) ; process RXC (IV orders: additives/solutions) segment...
+"RTN","ALPBHL1U",202,0)
+ I +$G(IEN)'>0!(+$G(OIEN)'>0)!($G(DATA)="")!($G(FS)="")!($G(CS)="") D ERRBLD^ALPBUTL1("RXC","",.ERR) Q
+"RTN","ALPBHL1U",203,0)
+ N ALPBFILE,ALPBFNOD,ALPBGNOD,ALPBNAM,ALPBNEXT,ALPBNUM,ALPBTYP,ALPBUNIT
+"RTN","ALPBHL1U",204,0)
+ S ALPBTYP=$P(DATA,FS,2)
+"RTN","ALPBHL1U",205,0)
+ S ALPBGNOD=$S(ALPBTYP="A":8,ALPBTYP="B":9,1:0)
+"RTN","ALPBHL1U",206,0)
+ I ALPBGNOD=0 D ERRBLD^ALPBUTL1("RXC","Unable to determine Additive or Solution in RXC segment",.ERR) Q
+"RTN","ALPBHL1U",207,0)
+ S ALPBFNOD="53.7021"_$S(ALPBGNOD=8:1,1:2)
+"RTN","ALPBHL1U",208,0)
+ S ALPBNUM=$P($P(DATA,FS,3),CS,4)
+"RTN","ALPBHL1U",209,0)
+ ; is this additive or solution already on file?...
+"RTN","ALPBHL1U",210,0)
+ I $D(^ALPB(53.7,IEN,2,OIEN,ALPBGNOD,"B",ALPBNUM)) S ERR("DIERR")=0 Q
+"RTN","ALPBHL1U",211,0)
+ ; if not, file it...
+"RTN","ALPBHL1U",212,0)
+ S ALPBNAM=$P($P(DATA,FS,3),CS,5)
+"RTN","ALPBHL1U",213,0)
+ S ALPBUNIT=$P(DATA,FS,4)_$P($P(DATA,FS,5),CS,5)
+"RTN","ALPBHL1U",214,0)
+ S ALPBNEXT=+$O(^ALPB(53.7,IEN,2,OIEN,ALPBGNOD," "),-1)+1
+"RTN","ALPBHL1U",215,0)
+ S ALPBFILE(ALPBFNOD,"+"_ALPBNEXT_","_OIEN_","_IEN_",",.01)=ALPBNUM
+"RTN","ALPBHL1U",216,0)
+ S ALPBFILE(ALPBFNOD,"+"_ALPBNEXT_","_OIEN_","_IEN_",",1)=ALPBNAM
+"RTN","ALPBHL1U",217,0)
+ S ALPBFILE(ALPBFNOD,"+"_ALPBNEXT_","_OIEN_","_IEN_",",2)=ALPBUNIT
+"RTN","ALPBHL1U",218,0)
+ D UPDATE^DIE("","ALPBFILE","ALPBNEXT","ERR")
+"RTN","ALPBHL1U",219,0)
+ Q
+"RTN","ALPBHL1U",220,0)
+ ;
+"RTN","ALPBHL1U",221,0)
+NTE(IEN,OIEN,DATA,FS,CS,ERR) ; process NTE (note) segment...
+"RTN","ALPBHL1U",222,0)
+ ; note: in the case of NTE segments, DATA is passed in as an array.
+"RTN","ALPBHL1U",223,0)
+ ; NTE data can be in multiple nodes, the first subscript of which
+"RTN","ALPBHL1U",224,0)
+ ; contains the actual NTE segments itself.
+"RTN","ALPBHL1U",225,0)
+ I +$G(IEN)'>0!(+$G(OIEN)'>0)!($D(DATA)=0)!($G(FS)="")!($G(CS)="") D ERRBLD^ALPBUTL1("NTE","",.ERR) Q
+"RTN","ALPBHL1U",226,0)
+ N ALPBFILE,I
+"RTN","ALPBHL1U",227,0)
+ ; check the status of this order.  if it is pending, abort
+"RTN","ALPBHL1U",228,0)
+ ; and do not file any special comments (note ORC module comments)...
+"RTN","ALPBHL1U",229,0)
+ I $E($P($G(^ALPB(53.7,IEN,2,OIEN,0)),"^",3),1,2)="IP" Q
+"RTN","ALPBHL1U",230,0)
+ ; examine DATA(1) and from the Pharmacy package code in the second
+"RTN","ALPBHL1U",231,0)
+ ; field, insert a header at the first subscript level of our working
+"RTN","ALPBHL1U",232,0)
+ ; array (which we will pass to the FileMan call)...
+"RTN","ALPBHL1U",233,0)
+ S ALPBFILE(1)=$S($P(DATA(1),FS,2)=6:"Provider Comments:",$P(DATA(1),FS,2)=21:"Special Instructions:",1:"Other Info:")
+"RTN","ALPBHL1U",234,0)
+ ;
+"RTN","ALPBHL1U",235,0)
+ ;*69  Rebuild the WP Instructions from the formatted NTE segment.
+"RTN","ALPBHL1U",236,0)
+ ;     The NTE text will be put into the DATA array and can contain
+"RTN","ALPBHL1U",237,0)
+ ;     the escape character \.br\ for line break.  The line break will
+"RTN","ALPBHL1U",238,0)
+ ;     allow this routine to store the WP text exactly how the Rph
+"RTN","ALPBHL1U",239,0)
+ ;     keyed it in IM backdoor.  They may have keyed in hard returns
+"RTN","ALPBHL1U",240,0)
+ ;     and spaces, so to create an aligned columnar table, i.e.
+"RTN","ALPBHL1U",241,0)
+ ;     an Insulin sliding scale.
+"RTN","ALPBHL1U",242,0)
+ S DATA(1)=$P(DATA(1),FS,4)     ;reset DATA(1) from piece 4 of DATA(1)
+"RTN","ALPBHL1U",243,0)
+ ;
+"RTN","ALPBHL1U",244,0)
+ ; Unwrap DATA array into one large field, 64k is limit
+"RTN","ALPBHL1U",245,0)
+ N ALEN,DLEN,ELEN,QUIT,ALLTXT,NEWALPB
+"RTN","ALPBHL1U",246,0)
+ S QUIT=0,ALLTXT=""
+"RTN","ALPBHL1U",247,0)
+ ;
+"RTN","ALPBHL1U",248,0)
+ ; Put formatted NTE array together as one line up to 64k
+"RTN","ALPBHL1U",249,0)
+ F I=0:0 S I=$O(DATA(I)) Q:'I  D  Q:QUIT
+"RTN","ALPBHL1U",250,0)
+ .S ALEN=$L(ALLTXT),DLEN=$L(DATA(I))
+"RTN","ALPBHL1U",251,0)
+ .I ALEN+DLEN>65536 S ELEN=65536-ALEN S ALLTXT=ALLTXT_$E(DATA(I),1,ELEN) S QUIT=1 Q
+"RTN","ALPBHL1U",252,0)
+ .S ALLTXT=ALLTXT_DATA(I)
+"RTN","ALPBHL1U",253,0)
+ ;
+"RTN","ALPBHL1U",254,0)
+ ; Build new work array from the formatted lines of the large field
+"RTN","ALPBHL1U",255,0)
+ D HL7FMT(ALLTXT,.NEWALPB)
+"RTN","ALPBHL1U",256,0)
+ ;
+"RTN","ALPBHL1U",257,0)
+ ; Now add back to the text of the new working array into the original
+"RTN","ALPBHL1U",258,0)
+ ; work array beginning with element 2, as element 1 has the heading
+"RTN","ALPBHL1U",259,0)
+ F I=0:0 S I=$O(NEWALPB(I)) Q:'I  S ALPBFILE(I+1)=NEWALPB(I)
+"RTN","ALPBHL1U",260,0)
+ ;
+"RTN","ALPBHL1U",261,0)
+ ; Store new WP text to field 8
+"RTN","ALPBHL1U",262,0)
+ D WP^DIE(53.702,OIEN_","_IEN_",",8,"","ALPBFILE","ERR")
+"RTN","ALPBHL1U",263,0)
+ Q
+"RTN","ALPBHL1U",264,0)
+ ;
+"RTN","ALPBHL1U",265,0)
+HL7FMT(NEWLN,AR) ;Unwrap formatted text array lines into a new array
+"RTN","ALPBHL1U",266,0)
+ ;  the escape character, \.br\ ,will cause a new array element to
+"RTN","ALPBHL1U",267,0)
+ ;  begin with the text after the escape character.
+"RTN","ALPBHL1U",268,0)
+ N ESC,LIN,LN,QUIT,I
+"RTN","ALPBHL1U",269,0)
+ S QUIT=0
+"RTN","ALPBHL1U",270,0)
+ F I=1:1 S LN=NEWLN D  Q:QUIT
+"RTN","ALPBHL1U",271,0)
+ . S ESC=$F(LN,"\.br\")
+"RTN","ALPBHL1U",272,0)
+ . I ESC=6 S LIN="",NEWLN=$E(LN,ESC,65536) S AR(I)=LIN Q
+"RTN","ALPBHL1U",273,0)
+ . I ESC=0 S LIN=NEWLN,NEWLN="" S AR(I)=LIN,QUIT=1 Q
+"RTN","ALPBHL1U",274,0)
+ . S LIN=$E(LN,1,ESC-6)
+"RTN","ALPBHL1U",275,0)
+ . S NEWLN=$E(LN,ESC,65536)
+"RTN","ALPBHL1U",276,0)
+ . S AR(I)=LIN
+"RTN","ALPBHL1U",277,0)
+ Q
+"RTN","ALPBHL1U",278,0)
+ ;
+"RTN","ALPBHL1U",279,0)
+CNVRT4(STR,SEP) ;Converts a time string to 4 digit for consistency
+"RTN","ALPBHL1U",280,0)
+ ;  STR - string of times
+"RTN","ALPBHL1U",281,0)
+ ;  SEP - seperator character between times
+"RTN","ALPBHL1U",282,0)
+ ;
+"RTN","ALPBHL1U",283,0)
+ N QQ
+"RTN","ALPBHL1U",284,0)
+ F QQ=1:1:$L(STR,SEP) S $P(STR,SEP,QQ)=$E($P(STR,SEP,QQ)_"0000",1,4)
+"RTN","ALPBHL1U",285,0)
+ Q STR
+"RTN","ALPBIN")
+0^6^B18076656
+"RTN","ALPBIN",1,0)
+ALPBIN ;OIFO-DALLAS/SED/KC/MW  BCMA-BCBU INPT TO HL7 INIT ;07/06/16 7:06am
+"RTN","ALPBIN",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**8,73,87**;Mar 2004;Build 22
+"RTN","ALPBIN",3,0)
+ ;
+"RTN","ALPBIN",4,0)
+ ; Reference/IA
+"RTN","ALPBIN",5,0)
+ ; DPT/10035
+"RTN","ALPBIN",6,0)
+ ; DIC(42/10039
+"RTN","ALPBIN",7,0)
+ ; DIC(42/2440
+"RTN","ALPBIN",8,0)
+ ;
+"RTN","ALPBIN",9,0)
+ ;*87 - Fix VistA Init by DIV option where Clinic orders will check if
+"RTN","ALPBIN",10,0)
+ ;      they point to DIV requested.
+"RTN","ALPBIN",11,0)
+ Q
+"RTN","ALPBIN",12,0)
+OPT ;Entry point for the option
+"RTN","ALPBIN",13,0)
+ ;Select all or by Division
+"RTN","ALPBIN",14,0)
+ALL ;Ask if the user want to send to all divisions
+"RTN","ALPBIN",15,0)
+ K DTOUT,DUOUT,DIRUT,DIROUT,DIR,ALPALL,ALPWKS,ALPDIV,ALPBDVN
+"RTN","ALPBIN",16,0)
+ S DIR(0)="Y",DIR("B")="YES"
+"RTN","ALPBIN",17,0)
+ S DIR("A")="Enter Yes or No"
+"RTN","ALPBIN",18,0)
+ S DIR("A",1)="Include all Divisions"
+"RTN","ALPBIN",19,0)
+ D ^DIR
+"RTN","ALPBIN",20,0)
+ I $D(DIRUT) G EXIT
+"RTN","ALPBIN",21,0)
+ S ALPALL=+Y
+"RTN","ALPBIN",22,0)
+ ;I +ALPALL>0 D QUE
+"RTN","ALPBIN",23,0)
+ I ALPALL'>0 D DIV
+"RTN","ALPBIN",24,0)
+ ;I +ALPALL'>0!(+ALPWKS>0) D QUE
+"RTN","ALPBIN",25,0)
+ D QUE
+"RTN","ALPBIN",26,0)
+ ;
+"RTN","ALPBIN",27,0)
+EXIT ;
+"RTN","ALPBIN",28,0)
+ K ALPB,ALPBI,ALPBJ,ALPCN,ALDFN,ALPMDT,ALPML,ALPORDR,MSCTR,MSH,ORC
+"RTN","ALPBIN",29,0)
+ K PID,PV1,ALPHLL,ALPALL,DIR,Y,DTOUT,DUOUT,DIRUT,DIROUT,ALPDIV
+"RTN","ALPBIN",30,0)
+ K ALPTST,ALPSTOP,ALPOK,ZTSAVE,ALPCNI,ALPCNT,ALP,ALPDVN
+"RTN","ALPBIN",31,0)
+ Q
+"RTN","ALPBIN",32,0)
+ ;
+"RTN","ALPBIN",33,0)
+DIV K ALPHLL,DIR,ALPDIV,DTOUT,DUOUT,DIRUT,DIROUT
+"RTN","ALPBIN",34,0)
+ S DIR(0)="PO^40.8:EMZ"
+"RTN","ALPBIN",35,0)
+ S DIR("A",1)="Enter the division that you would like to"
+"RTN","ALPBIN",36,0)
+ S DIR("A",2)="initialize"
+"RTN","ALPBIN",37,0)
+ D ^DIR
+"RTN","ALPBIN",38,0)
+ I $D(DIRUT)!(+Y'>0) S ALPDIV="" Q
+"RTN","ALPBIN",39,0)
+ S ALPDIV=$P(Y,U,1),ALPDVN=$P(Y,U,2)
+"RTN","ALPBIN",40,0)
+ D GET^ALPBPARM(.ALPHLL,ALPDIV)
+"RTN","ALPBIN",41,0)
+ I '$D(ALPHLL) W !,"No workstations defined with "_ALPDVN G DIV
+"RTN","ALPBIN",42,0)
+ALLWKS ;If no then set allow the user to select the workstation
+"RTN","ALPBIN",43,0)
+ K DTOUT,DUOUT,DIRUT,DIROUT,DIR
+"RTN","ALPBIN",44,0)
+ S DIR(0)="Y",DIR("B")="YES"
+"RTN","ALPBIN",45,0)
+ S DIR("A")="Enter Yes or No"
+"RTN","ALPBIN",46,0)
+ S DIR("A",1)="Include all workstations for the "_ALPDVN_" Division"
+"RTN","ALPBIN",47,0)
+ D ^DIR
+"RTN","ALPBIN",48,0)
+ I $D(DIRUT) G DIV
+"RTN","ALPBIN",49,0)
+ S ALPWKS=+Y
+"RTN","ALPBIN",50,0)
+ I +ALPWKS>0 Q
+"RTN","ALPBIN",51,0)
+ ;
+"RTN","ALPBIN",52,0)
+WRKSTN ;Now select which workstations for the division to be initialized
+"RTN","ALPBIN",53,0)
+ K ALPSCRN,ALPBANS
+"RTN","ALPBIN",54,0)
+ ;Set up screen
+"RTN","ALPBIN",55,0)
+ S ALP=0 F  S ALP=$O(ALPHLL("LINKS",ALP))  Q:+ALP'>0  D
+"RTN","ALPBIN",56,0)
+ . S ALPSCRN($P(ALPHLL("LINKS",ALP),U,2),ALP)=ALPHLL("LINKS",ALP)
+"RTN","ALPBIN",57,0)
+ K ALPHLL
+"RTN","ALPBIN",58,0)
+ F  D LP Q:$D(DIRUT)
+"RTN","ALPBIN",59,0)
+ ;I  $D(DIRUT)!$D(ALPHLL) W !!,"No Selected Workstations" G ALLWKS
+"RTN","ALPBIN",60,0)
+ I '$D(ALPBANS)!$D(ALPHLL) W !!,"No Selected Workstations" G ALLWKS
+"RTN","ALPBIN",61,0)
+ Q:'$D(ALPBANS)
+"RTN","ALPBIN",62,0)
+ S ALP="",ALPCNT=1
+"RTN","ALPBIN",63,0)
+ F  S ALP=$O(ALPBANS(ALP)) Q:ALP=""  D
+"RTN","ALPBIN",64,0)
+ . S ALPHLL("LINKS",ALPCNT)=ALPSCRN(ALP,$O(ALPSCRN(ALP,0)))
+"RTN","ALPBIN",65,0)
+ . S ALPCNT=ALPCNT+1
+"RTN","ALPBIN",66,0)
+ K ALPSCRN,ALPBANS
+"RTN","ALPBIN",67,0)
+ Q
+"RTN","ALPBIN",68,0)
+ ;
+"RTN","ALPBIN",69,0)
+LP ;Multiple entries
+"RTN","ALPBIN",70,0)
+ K DIR,DTOUT,DUOUT,DIRUT,DIROUT
+"RTN","ALPBIN",71,0)
+ S DIR(0)="PO^870:EMZ",DIR("A")="Select WorkStation Link "
+"RTN","ALPBIN",72,0)
+ S DIR("?")="Answer with WorkStation Link to update "
+"RTN","ALPBIN",73,0)
+ S DIR("S")="I $D(ALPSCRN($P(^HLCS(870,+Y,0),U,1)))"
+"RTN","ALPBIN",74,0)
+ D ^DIR
+"RTN","ALPBIN",75,0)
+ Q:$D(DIRUT)
+"RTN","ALPBIN",76,0)
+ S ALPBANS($P(Y,U,2),+Y)=""
+"RTN","ALPBIN",77,0)
+ W #,!!,"Selected Workstations",!!
+"RTN","ALPBIN",78,0)
+ S ALPB=""
+"RTN","ALPBIN",79,0)
+ F ALP=1:1 S ALPB=$O(ALPBANS(ALPB)) Q:ALPB=""  D
+"RTN","ALPBIN",80,0)
+ .W ?$S(ALP#2:1,1:40),ALPB
+"RTN","ALPBIN",81,0)
+ .W:ALP#2'>0 !
+"RTN","ALPBIN",82,0)
+ Q
+"RTN","ALPBIN",83,0)
+ ;
+"RTN","ALPBIN",84,0)
+QUE ;Que the job
+"RTN","ALPBIN",85,0)
+ S ZTRTN="EN^ALPBIN"
+"RTN","ALPBIN",86,0)
+ S ZTDESC="PSB - Initialize the Contingency Workstation"
+"RTN","ALPBIN",87,0)
+ S ZTIO="",ZTSAVE("ALPWKS")="",ZTSAVE("ALPDIV")=""
+"RTN","ALPBIN",88,0)
+ I $D(ALPHLL) S ZTSAVE("ALPHLL(")=""
+"RTN","ALPBIN",89,0)
+ D ^%ZTLOAD
+"RTN","ALPBIN",90,0)
+ W:$D(ZTSK) !,ZTSK
+"RTN","ALPBIN",91,0)
+ K ZTIO,ZTDESC,ZTRTN,ZTSK
+"RTN","ALPBIN",92,0)
+ Q
+"RTN","ALPBIN",93,0)
+EN ;Loop through the inpatient list.
+"RTN","ALPBIN",94,0)
+ S ALPDTS=$$FMTE^XLFDT($$NOW^XLFDT)
+"RTN","ALPBIN",95,0)
+ I +$G(ALPDIV)'>0 S ALPDIV=0
+"RTN","ALPBIN",96,0)
+ S ALPSTOP=0,ALPOK=1
+"RTN","ALPBIN",97,0)
+ N ALPDIV0 S ALPDIV0=ALPDIV                  ;save Div selected    *87
+"RTN","ALPBIN",98,0)
+ S ALPCN=""
+"RTN","ALPBIN",99,0)
+ F  S ALPCN=$O(^DPT("CN",ALPCN)) Q:ALPCN=""!(ALPSTOP)  D
+"RTN","ALPBIN",100,0)
+ . ;DIVISION SCREEN HERE
+"RTN","ALPBIN",101,0)
+ . S ALPCNI=$O(^DIC(42,"B",ALPCN,0))
+"RTN","ALPBIN",102,0)
+ . Q:+ALPCNI'>0  ;Quit if I can't decipher the Ward Location
+"RTN","ALPBIN",103,0)
+ . S ALPTST=$P($G(^DIC(42,ALPCNI,0)),U,11)
+"RTN","ALPBIN",104,0)
+ . I +ALPDIV&(ALPDIV'=ALPTST) Q
+"RTN","ALPBIN",105,0)
+ . S ALPSTOP=$$S^%ZTLOAD()
+"RTN","ALPBIN",106,0)
+ . Q:ALPSTOP
+"RTN","ALPBIN",107,0)
+ . S ALDFN=0
+"RTN","ALPBIN",108,0)
+ . F  S ALDFN=$O(^DPT("CN",ALPCN,ALDFN)) Q:+ALDFN'>0!(ALPSTOP)  D PAT^ALPBIND(ALPDIV0)
+"RTN","ALPBIN",109,0)
+ ;
+"RTN","ALPBIN",110,0)
+ N ALPNOWCL S ALPNOWCL=$$NOW^XLFDT()
+"RTN","ALPBIN",111,0)
+ D UDCLIN^ALPBIND(ALPNOWCL,ALPDIV0)          ;pass Div selected  *87
+"RTN","ALPBIN",112,0)
+ D IVCLIN^ALPBIND(ALPNOWCL,ALPDIV0)          ;pass Div selected  *87
+"RTN","ALPBIN",113,0)
+ ;
+"RTN","ALPBIN",114,0)
+ K XQA,XQAMSG
+"RTN","ALPBIN",115,0)
+ S ALPDTE=$$FMTE^XLFDT($$NOW^XLFDT)
+"RTN","ALPBIN",116,0)
+ S XQA(DUZ)=""
+"RTN","ALPBIN",117,0)
+ S XQAMSG="BCBU WORKSTATION INIT Started "_ALPDTS_" and finished "_ALPDTE_". "
+"RTN","ALPBIN",118,0)
+ ;_ALPBK_" entries sent."
+"RTN","ALPBIN",119,0)
+ D SETUP^XQALERT
+"RTN","ALPBIN",120,0)
+ K ALPDTS,ALPDTE,ALPCNT
+"RTN","ALPBIN",121,0)
+ D EXIT
+"RTN","ALPBIN",122,0)
+ Q
+"RTN","ALPBIND")
+0^7^B60295081
+"RTN","ALPBIND",1,0)
+ALPBIND ;OIFO-DALLAS/SED/KC/MW  BCMA-BCBU INPT TO HL7 INIT ;07/06/16 7:06am
+"RTN","ALPBIND",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**8,73,87**;Mar 2004;Build 22
+"RTN","ALPBIND",3,0)
+ ;
+"RTN","ALPBIND",4,0)
+ ; Reference/IA
+"RTN","ALPBIND",5,0)
+ ; DPT/10035
+"RTN","ALPBIND",6,0)
+ ; DIC(42/10039
+"RTN","ALPBIND",7,0)
+ ; DIC(42/2440
+"RTN","ALPBIND",8,0)
+ ; EN^PSJBCBU/3876
+"RTN","ALPBIND",9,0)
+ ;
+"RTN","ALPBIND",10,0)
+ ;*87 - Fix VistA Init by DIV option where Clinic orders will check if
+"RTN","ALPBIND",11,0)
+ ;      they point to DIV requested.
+"RTN","ALPBIND",12,0)
+ Q
+"RTN","ALPBIND",13,0)
+OPT ;Entry point for the option
+"RTN","ALPBIND",14,0)
+ ;Select Workstations assigned to Default.
+"RTN","ALPBIND",15,0)
+DFT K ALPHLL,DIR,ALPDIV,DTOUT,DUOUT,DIRUT,DIROUT
+"RTN","ALPBIND",16,0)
+ D GET^ALPBPARM(.ALPHLL,"")
+"RTN","ALPBIND",17,0)
+ I '$D(ALPHLL) W !,"No workstations defined for default " G EXIT
+"RTN","ALPBIND",18,0)
+ D ALLWKS
+"RTN","ALPBIND",19,0)
+ ;D:'$D(DIRUT) QUE
+"RTN","ALPBIND",20,0)
+ D QUE
+"RTN","ALPBIND",21,0)
+ G EXIT
+"RTN","ALPBIND",22,0)
+ ;
+"RTN","ALPBIND",23,0)
+ALLWKS ;If no then set allow the user to select the workstation
+"RTN","ALPBIND",24,0)
+ K DTOUT,DUOUT,DIRUT,DIROUT,DIR
+"RTN","ALPBIND",25,0)
+ S DIR(0)="Y",DIR("B")="YES"
+"RTN","ALPBIND",26,0)
+ S DIR("A")="Enter Yes or No"
+"RTN","ALPBIND",27,0)
+ S DIR("A",1)="Include all workstations"
+"RTN","ALPBIND",28,0)
+ D ^DIR
+"RTN","ALPBIND",29,0)
+ I $D(DIRUT) Q
+"RTN","ALPBIND",30,0)
+ S ALPWKS=+Y
+"RTN","ALPBIND",31,0)
+ I +ALPWKS>0 Q
+"RTN","ALPBIND",32,0)
+ ;
+"RTN","ALPBIND",33,0)
+WRKSTN ;Now select which workstations to be initialized
+"RTN","ALPBIND",34,0)
+ K ALPSCRN,ALPBANS
+"RTN","ALPBIND",35,0)
+ ;Set up screen
+"RTN","ALPBIND",36,0)
+ S ALP=0 F  S ALP=$O(ALPHLL("LINKS",ALP))  Q:+ALP'>0  D
+"RTN","ALPBIND",37,0)
+ . S ALPSCRN($P(ALPHLL("LINKS",ALP),U,2),ALP)=ALPHLL("LINKS",ALP)
+"RTN","ALPBIND",38,0)
+ K ALPHLL
+"RTN","ALPBIND",39,0)
+ F  D LP Q:$D(DIRUT)
+"RTN","ALPBIND",40,0)
+ ;I $D(DIRUT)&($D(ALPHLL)) W !!,"No Selected Workstations" G ALLWKS
+"RTN","ALPBIND",41,0)
+ I '$D(ALPBANS)!$D(ALPHLL) W !!,"No Selected Workstations" G ALLWKS
+"RTN","ALPBIND",42,0)
+ Q:'$D(ALPBANS)
+"RTN","ALPBIND",43,0)
+ S ALP="",ALPCNT=1
+"RTN","ALPBIND",44,0)
+ F  S ALP=$O(ALPBANS(ALP)) Q:ALP=""  D
+"RTN","ALPBIND",45,0)
+ . S ALPHLL("LINKS",ALPCNT)=ALPSCRN(ALP,$O(ALPSCRN(ALP,0)))
+"RTN","ALPBIND",46,0)
+ . S ALPCNT=ALPCNT+1
+"RTN","ALPBIND",47,0)
+ K ALPSCRN,ALPBANS
+"RTN","ALPBIND",48,0)
+ Q
+"RTN","ALPBIND",49,0)
+ ;
+"RTN","ALPBIND",50,0)
+LP ;Multiple entries
+"RTN","ALPBIND",51,0)
+ K DIR,DTOUT,DUOUT,DIRUT,DIROUT
+"RTN","ALPBIND",52,0)
+ S DIR(0)="PO^870:EMZ",DIR("A")="Select WorkStation Link "
+"RTN","ALPBIND",53,0)
+ S DIR("?")="Answer with WorkStation Link to update "
+"RTN","ALPBIND",54,0)
+ S DIR("S")="I $D(ALPSCRN($P(^HLCS(870,+Y,0),U,1)))"
+"RTN","ALPBIND",55,0)
+ D ^DIR
+"RTN","ALPBIND",56,0)
+ Q:$D(DIRUT)
+"RTN","ALPBIND",57,0)
+ S ALPBANS($P(Y,U,2),+Y)=""
+"RTN","ALPBIND",58,0)
+ W #,!!,"Selected Workstations",!!
+"RTN","ALPBIND",59,0)
+ S ALPB=""
+"RTN","ALPBIND",60,0)
+ F ALP=1:1 S ALPB=$O(ALPBANS(ALPB)) Q:ALPB=""  D
+"RTN","ALPBIND",61,0)
+ .W ?$S(ALP#2:1,1:40),ALPB
+"RTN","ALPBIND",62,0)
+ .W:ALP#2'>0 !
+"RTN","ALPBIND",63,0)
+ Q
+"RTN","ALPBIND",64,0)
+ ;
+"RTN","ALPBIND",65,0)
+QUE ;Que the job
+"RTN","ALPBIND",66,0)
+ S ZTRTN="EN^ALPBIND"
+"RTN","ALPBIND",67,0)
+ S ZTDESC="PSB - Initialize Default Contingency Workstation"
+"RTN","ALPBIND",68,0)
+ S ZTIO="",ZTSAVE("ALPWKS")=""
+"RTN","ALPBIND",69,0)
+ I $D(ALPHLL) S ZTSAVE("ALPHLL(")=""
+"RTN","ALPBIND",70,0)
+ D ^%ZTLOAD
+"RTN","ALPBIND",71,0)
+ W:$D(ZTSK) !,ZTSK
+"RTN","ALPBIND",72,0)
+ K ZTIO,ZTDESC,ZTRTN,ZTSK
+"RTN","ALPBIND",73,0)
+ Q
+"RTN","ALPBIND",74,0)
+EN ;Loop through the inpatient list.
+"RTN","ALPBIND",75,0)
+ Q:'$D(ALPHLL)
+"RTN","ALPBIND",76,0)
+ S ALPDTS=$$FMTE^XLFDT($$NOW^XLFDT)
+"RTN","ALPBIND",77,0)
+ K ALPSCR
+"RTN","ALPBIND",78,0)
+ S ALPSTOP=0,ALPOK=1
+"RTN","ALPBIND",79,0)
+ S ALPCN=""
+"RTN","ALPBIND",80,0)
+ F  S ALPCN=$O(^DPT("CN",ALPCN)) Q:ALPCN=""!(ALPSTOP)  D  ;Ward Location(CN)
+"RTN","ALPBIND",81,0)
+ . ;DIVISION SCREEN HERE
+"RTN","ALPBIND",82,0)
+ . S ALPCNI=$O(^DIC(42,"B",ALPCN,0))  ;Ward Name(B)
+"RTN","ALPBIND",83,0)
+ . Q:+ALPCNI'>0  ;Quit if I can't decipher the Ward Location
+"RTN","ALPBIND",84,0)
+ . S ALPDIV=$P($G(^DIC(42,ALPCNI,0)),U,11)
+"RTN","ALPBIND",85,0)
+ . ;Check to see is the Division has Machines defined to it.
+"RTN","ALPBIND",86,0)
+ . ;if it does then it is not to go to default
+"RTN","ALPBIND",87,0)
+ . K ALPTEST
+"RTN","ALPBIND",88,0)
+ . D GET^ALPBPARM(.ALPTEST,ALPDIV,1)
+"RTN","ALPBIND",89,0)
+ . Q:$D(ALPTEST)
+"RTN","ALPBIND",90,0)
+ . S ALPSTOP=$$S^%ZTLOAD()
+"RTN","ALPBIND",91,0)
+ . S ALDFN=0
+"RTN","ALPBIND",92,0)
+ . F  S ALDFN=$O(^DPT("CN",ALPCN,ALDFN)) Q:+ALDFN'>0!(ALPSTOP)  D PAT("")   ;null selected Div param *87
+"RTN","ALPBIND",93,0)
+ ;
+"RTN","ALPBIND",94,0)
+ N ALPNOWCL S ALPNOWCL=$$NOW^XLFDT()
+"RTN","ALPBIND",95,0)
+ D UDCLIN(ALPNOWCL,"")                      ;null selected Div par *87
+"RTN","ALPBIND",96,0)
+ D IVCLIN(ALPNOWCL,"")                      ;null selected Div par *87
+"RTN","ALPBIND",97,0)
+ ;
+"RTN","ALPBIND",98,0)
+ K XQA,XQAMSG
+"RTN","ALPBIND",99,0)
+ S ALPDTE=$$FMTE^XLFDT($$NOW^XLFDT)
+"RTN","ALPBIND",100,0)
+ S XQA(DUZ)=""
+"RTN","ALPBIND",101,0)
+ S XQAMSG="BCBU WORKSTATION INIT Started "_ALPDTS_" and finished "_ALPDTE_". "
+"RTN","ALPBIND",102,0)
+ ;_ALPBK_" entries sent."
+"RTN","ALPBIND",103,0)
+ D SETUP^XQALERT
+"RTN","ALPBIND",104,0)
+EXIT ;
+"RTN","ALPBIND",105,0)
+ K ALPDTS,ALPDTE,ALPCNT
+"RTN","ALPBIND",106,0)
+ K ALPB,ALPBI,ALPBJ,ALPCN,ALDFN,ALPMDT,ALPML,ALPORDR,MSCTR,MSH,ORC
+"RTN","ALPBIND",107,0)
+ K PID,PV1,ALPHLL,ALPALL,DIR,Y,DTOUT,DUOUT,DIRUT,DIROUT,ALPDIV
+"RTN","ALPBIND",108,0)
+ K ALPTST,ALPSTOP,ALPOK,ZTSAVE,ALPCNI,ALPCNT,ALP,ALPDVN,ALPSLT,ALPWKS
+"RTN","ALPBIND",109,0)
+ K PID,PV1,^TMP("PSJ",$J),^TMP("PSJBU",$J)
+"RTN","ALPBIND",110,0)
+ ;
+"RTN","ALPBIND",111,0)
+ Q
+"RTN","ALPBIND",112,0)
+MLOG ;Need to loop though the Med log file to get all med logs
+"RTN","ALPBIND",113,0)
+ ;associated with the order
+"RTN","ALPBIND",114,0)
+ Q:'$D(^PSB(53.79,"AORDX",ALDFN,ALPORDR))
+"RTN","ALPBIND",115,0)
+ S X=+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP MEDLG",1,"Q")
+"RTN","ALPBIND",116,0)
+ S X=$S(X>0:"T-"_X,1:"T-30")
+"RTN","ALPBIND",117,0)
+ D ^%DT
+"RTN","ALPBIND",118,0)
+ Q:+Y'>0  ;Cannot get a valid date
+"RTN","ALPBIND",119,0)
+ S ALPMDT=Y
+"RTN","ALPBIND",120,0)
+ F  S ALPMDT=$O(^PSB(53.79,"AORDX",ALDFN,ALPORDR,ALPMDT)) Q:+ALPMDT'>0  D
+"RTN","ALPBIND",121,0)
+ . S ALPML=0
+"RTN","ALPBIND",122,0)
+ . F  S ALPML=$O(^PSB(53.79,"AORDX",ALDFN,ALPORDR,ALPMDT,ALPML)) Q:+ALPML'>0  D
+"RTN","ALPBIND",123,0)
+ . . Q:+$P($G(^PSB(53.79,ALPML,0)),U,1)'>0  ; Bad Med-log
+"RTN","ALPBIND",124,0)
+ . . S ALPRSLT=$$MEDL^ALPBINP(ALPML)
+"RTN","ALPBIND",125,0)
+ Q
+"RTN","ALPBIND",126,0)
+MESS ;BUILD AND SEND MESSAGE
+"RTN","ALPBIND",127,0)
+ K ALPB
+"RTN","ALPBIND",128,0)
+ D EN^PSJBCBU(ALDFN,ALPORDR,.ALPB)
+"RTN","ALPBIND",129,0)
+ S ALPBI=0
+"RTN","ALPBIND",130,0)
+ F  S ALPBI=$O(ALPB(ALPBI)) Q:ALPBI'>0  D
+"RTN","ALPBIND",131,0)
+ . I $E(ALPB(ALPBI),1,3)="MSH" S MSH=ALPBI
+"RTN","ALPBIND",132,0)
+ . I $E(ALPB(ALPBI),1,3)="PID" S PID=ALPBI
+"RTN","ALPBIND",133,0)
+ . I $E(ALPB(ALPBI),1,3)="PV1" S PV1=ALPBI
+"RTN","ALPBIND",134,0)
+ . I $E(ALPB(ALPBI),1,3)="ORC" S ORC=ALPBI
+"RTN","ALPBIND",135,0)
+ I +MSH'>0 Q   ;MISSING MSH SEGMENT BAD MESSAGE
+"RTN","ALPBIND",136,0)
+ S MSCTR=$E(ALPB(MSH),4,8),ALPORD=ALPORDR
+"RTN","ALPBIND",137,0)
+ S X=$$INI^ALPBINP()
+"RTN","ALPBIND",138,0)
+ Q
+"RTN","ALPBIND",139,0)
+SNDPT ;Send a Single Patient
+"RTN","ALPBIND",140,0)
+ K DIR,DTOUT,DUOUT,DIRUT,DIROUT
+"RTN","ALPBIND",141,0)
+ S DIR(0)="PO^2:EM",DIR("A")="Select Patient "
+"RTN","ALPBIND",142,0)
+ D ^DIR
+"RTN","ALPBIND",143,0)
+ Q:$D(DIRUT)
+"RTN","ALPBIND",144,0)
+ Q:+Y'>0
+"RTN","ALPBIND",145,0)
+ S ALDFN=+Y
+"RTN","ALPBIND",146,0)
+ W !!,"Please Hold On While I send the orders",!!
+"RTN","ALPBIND",147,0)
+ D PAT("")
+"RTN","ALPBIND",148,0)
+ Q
+"RTN","ALPBIND",149,0)
+ ;
+"RTN","ALPBIND",150,0)
+PAT(ALPDIV2) ;Process and send patients  ;add DIV par specl for DIV init *87
+"RTN","ALPBIND",151,0)
+ ;New Div variable, reused in some downstream function calls    ;*87
+"RTN","ALPBIND",152,0)
+ N ALPDIV
+"RTN","ALPBIND",153,0)
+ K ^TMP("PSJBU",$J)
+"RTN","ALPBIND",154,0)
+ S X=+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP IPH",1,"Q")
+"RTN","ALPBIND",155,0)
+ S X=$S(X>0:"T-"_X,1:"T-15")
+"RTN","ALPBIND",156,0)
+ D ^%DT
+"RTN","ALPBIND",157,0)
+ Q:+Y'>0  ;Cannot get a valid date
+"RTN","ALPBIND",158,0)
+ D EN2^PSJBCBU(ALDFN,Y)
+"RTN","ALPBIND",159,0)
+ Q:'$D(^TMP("PSJBU",$J))  ; NO DATA
+"RTN","ALPBIND",160,0)
+ S ALPBJ=0
+"RTN","ALPBIND",161,0)
+ F  S ALPBJ=$O(^TMP("PSJBU",$J,ALPBJ)) Q:+ALPBJ'>0  D
+"RTN","ALPBIND",162,0)
+ . Q:'$D(^TMP("PSJBU",$J,ALPBJ,0))
+"RTN","ALPBIND",163,0)
+ . S ALPORDR=$P(^TMP("PSJBU",$J,ALPBJ,0),U,3)
+"RTN","ALPBIND",164,0)
+ . Q:+ALPORDR'>0
+"RTN","ALPBIND",165,0)
+ . D MESS
+"RTN","ALPBIND",166,0)
+ . Q:ALPORDR["P"  ;If not pending do Med-Log
+"RTN","ALPBIND",167,0)
+ . D MLOG
+"RTN","ALPBIND",168,0)
+ S ALPSTOP=$$S^%ZTLOAD()
+"RTN","ALPBIND",169,0)
+ Q
+"RTN","ALPBIND",170,0)
+ ;
+"RTN","ALPBIND",171,0)
+UDCLIN(ALPNOW,ALPDIV2) ; Unit Dose Clinic Orders                     ;*87
+"RTN","ALPBIND",172,0)
+ N ALPSEND,ALPCSTPD,ALPCN,ALPDFNAR S ALPCSTPD=ALPNOW
+"RTN","ALPBIND",173,0)
+ F  S ALPCSTPD=$O(^PS(55,"AUDC",ALPCSTPD)) Q:ALPCSTPD=""  S ALPCN="" F  S ALPCN=$O(^PS(55,"AUDC",ALPCSTPD,ALPCN)) Q:ALPCN=""  D
+"RTN","ALPBIND",174,0)
+ . ;DIVISION SCREEN
+"RTN","ALPBIND",175,0)
+ . Q:+ALPCN'>0                                               ;*87
+"RTN","ALPBIND",176,0)
+ . S ALPSEND=0                                               ;*87
+"RTN","ALPBIND",177,0)
+ . S ALPDIV=$P($G(^SC(ALPCN,0)),"^",15)                      ;*87
+"RTN","ALPBIND",178,0)
+ . ;Screen If DIV Init, If Clinic is in DIV send it.  If ALPDIV2=0, ALL DIV was selected in ^ALPBIN  ;*87
+"RTN","ALPBIND",179,0)
+ . S ALPSEND=$S(ALPDIV2&(ALPDIV2=ALPDIV):1,ALPDIV2=0:1,1:0)  ;*87
+"RTN","ALPBIND",180,0)
+ . ;Check for DFT                                            ;*87
+"RTN","ALPBIND",181,0)
+ . K ALPTEST
+"RTN","ALPBIND",182,0)
+ . D GET^ALPBPARM(.ALPTEST,ALPDIV,1)
+"RTN","ALPBIND",183,0)
+ . ;If Links defined and Init was not a Divisional init then Q  ;*87
+"RTN","ALPBIND",184,0)
+ . Q:$D(ALPTEST)&($G(ALPSEND)=0)                                ;*87
+"RTN","ALPBIND",185,0)
+ . S ALPSTOP=$$S^%ZTLOAD()
+"RTN","ALPBIND",186,0)
+ . S ALDFN=0
+"RTN","ALPBIND",187,0)
+ . F  S ALDFN=$O(^PS(55,"AUDC",ALPCSTPD,ALPCN,ALDFN)) Q:'ALDFN  S ALPDFNAR(ALDFN)=""
+"RTN","ALPBIND",188,0)
+ S ALDFN=0
+"RTN","ALPBIND",189,0)
+ F  S ALDFN=$O(ALPDFNAR(ALDFN)) Q:'ALDFN!$G(ALPSTOP)  D PAT(ALPDIV2)    ;pass Div par *87
+"RTN","ALPBIND",190,0)
+ Q
+"RTN","ALPBIND",191,0)
+ ;
+"RTN","ALPBIND",192,0)
+IVCLIN(ALPNOW,ALPDIV2) ; IV Clinic Orders
+"RTN","ALPBIND",193,0)
+ N ALPSEND,ALPCSTPD,ALPCN,ALPDFNAR S ALPCSTPD=ALPNOW
+"RTN","ALPBIND",194,0)
+ F  S ALPCSTPD=$O(^PS(55,"AIVC",ALPCSTPD)) Q:ALPCSTPD=""  S ALPCN="" F  S ALPCN=$O(^PS(55,"AIVC",ALPCSTPD,ALPCN)) Q:ALPCN=""  D
+"RTN","ALPBIND",195,0)
+ . ;DIVISION SCREEN
+"RTN","ALPBIND",196,0)
+ . Q:+ALPCN'>0                                               ;*87
+"RTN","ALPBIND",197,0)
+ . S ALPSEND=0                                               ;*87
+"RTN","ALPBIND",198,0)
+ . S ALPDIV=$P($G(^SC(ALPCN,0)),"^",15)                      ;*87
+"RTN","ALPBIND",199,0)
+ . ;Screen If DIV Init, If Clinic is in DIV send it.  If ALPDIV2=0, ALL DIV was selected in ^ALPBIN  ;*87
+"RTN","ALPBIND",200,0)
+ . S ALPSEND=$S(ALPDIV2&(ALPDIV2=ALPDIV):1,ALPDIV2=0:1,1:0)  ;*87
+"RTN","ALPBIND",201,0)
+ . ;Check for DFT                                            ;*87
+"RTN","ALPBIND",202,0)
+ . K ALPTEST
+"RTN","ALPBIND",203,0)
+ . D GET^ALPBPARM(.ALPTEST,ALPDIV,1)
+"RTN","ALPBIND",204,0)
+ . ;If Links defined and Init was not a Divisional init then Q  ;*87
+"RTN","ALPBIND",205,0)
+ . Q:$D(ALPTEST)&($G(ALPSEND)=0)                                ;*87
+"RTN","ALPBIND",206,0)
+ . S ALPSTOP=$$S^%ZTLOAD()
+"RTN","ALPBIND",207,0)
+ . S ALDFN=0
+"RTN","ALPBIND",208,0)
+ . F  S ALDFN=$O(^PS(55,"AIVC",ALPCSTPD,ALPCN,ALDFN)) Q:'ALDFN  S ALPDFNAR(ALDFN)=""
+"RTN","ALPBIND",209,0)
+ S ALDFN=0
+"RTN","ALPBIND",210,0)
+ F  S ALDFN=$O(ALPDFNAR(ALDFN)) Q:'ALDFN!$G(ALPSTOP)  D PAT(ALPDIV2)    ;pass Div par *87
+"RTN","ALPBIND",211,0)
+ Q
+"RTN","ALPBINP")
+0^5^B99838805
+"RTN","ALPBINP",1,0)
+ALPBINP ;OIFO-DALLAS/SED/KC/MW  BCMA - BCBU INPT TO HL7 ;07/06/16 7:06am
+"RTN","ALPBINP",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**8,37,73,87**;May 2007;Build 22
+"RTN","ALPBINP",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ALPBINP",4,0)
+ ;This routine will intercept the HL7 message that it sent from Pharmacy
+"RTN","ALPBINP",5,0)
+ ;to CPRS to update order information. The message is then parsed and 
+"RTN","ALPBINP",6,0)
+ ;repackage so it can be sent to the BCBU workstation.
+"RTN","ALPBINP",7,0)
+ ;
+"RTN","ALPBINP",8,0)
+ ; Reference/IA
+"RTN","ALPBINP",9,0)
+ ; EN^PSJBCBU/3876
+"RTN","ALPBINP",10,0)
+ ; $$EN^VAFHLPID/263
+"RTN","ALPBINP",11,0)
+ ; $$EN^VAFHAPV1/4512
+"RTN","ALPBINP",12,0)
+ ; EN1^GMRADPT/10099
+"RTN","ALPBINP",13,0)
+ ; EN^PSJBCMA1/2829
+"RTN","ALPBINP",14,0)
+ ;
+"RTN","ALPBINP",15,0)
+ ;*87 - add ability to send two HL7 msgs for a Remove/Give scenario.  
+"RTN","ALPBINP",16,0)
+ ;      Sends the associated Give first then the Remove Medlog trans.
+"RTN","ALPBINP",17,0)
+ ;
+"RTN","ALPBINP",18,0)
+IPH(MSG) ;CAPTURE MESSAGE ARRAY FROM PHARMACY
+"RTN","ALPBINP",19,0)
+ N VAIN,ALPMSG
+"RTN","ALPBINP",20,0)
+ S ALPMSG=$S($L($G(MSG)):MSG,1:"MSG")
+"RTN","ALPBINP",21,0)
+ I '$O(@ALPMSG@(0)) Q "0^MSG^Missing Message Array"
+"RTN","ALPBINP",22,0)
+ S MSH=0
+"RTN","ALPBINP",23,0)
+ F  S MSH=$O(@ALPMSG@(MSH)) Q:MSH'>0  Q:$E(@ALPMSG@(MSH),1,3)="MSH"
+"RTN","ALPBINP",24,0)
+ I +MSH'>0 Q "0^MSG^Missing MSH Segment Bad Message"
+"RTN","ALPBINP",25,0)
+ S MSFS=$E(@ALPMSG@(MSH),4,4)
+"RTN","ALPBINP",26,0)
+ S MSCS=$E(@ALPMSG@(MSH),5,5)
+"RTN","ALPBINP",27,0)
+ S MSCH=$E(@ALPMSG@(MSH),6,6)
+"RTN","ALPBINP",28,0)
+ S MSCTR=$E(@ALPMSG@(MSH),4,8)
+"RTN","ALPBINP",29,0)
+ ;The message is confirmed to be a Pharmacy message
+"RTN","ALPBINP",30,0)
+ I $P(@ALPMSG@(MSH),MSFS,3)'="PHARMACY" Q "1^^Not a Pharmacy Message"
+"RTN","ALPBINP",31,0)
+ ;A PID and PV1 segment is required for this message
+"RTN","ALPBINP",32,0)
+ S PID=0
+"RTN","ALPBINP",33,0)
+ F  S PID=$O(@ALPMSG@(PID)) Q:PID'>0  Q:$E(@ALPMSG@(PID),1,3)="PID"
+"RTN","ALPBINP",34,0)
+ I +PID'>0 Q "0^MSG^Missing PID Segment Bad Message"
+"RTN","ALPBINP",35,0)
+ ;Also the patient must have an inpatient status
+"RTN","ALPBINP",36,0)
+ S PV1=0
+"RTN","ALPBINP",37,0)
+ F  S PV1=$O(@ALPMSG@(PV1)) Q:PV1'>0  Q:$E(@ALPMSG@(PV1),1,3)="PV1"
+"RTN","ALPBINP",38,0)
+ I +PV1'>0 Q "0^MSG^Missing PV1 Segment Bad Message"
+"RTN","ALPBINP",39,0)
+ I $P(@ALPMSG@(PV1),MSFS,3)'="I" Q "1^^Not an Inpatient Pharmacy Message"
+"RTN","ALPBINP",40,0)
+ S ORC=0
+"RTN","ALPBINP",41,0)
+ F  S ORC=$O(@ALPMSG@(ORC)) Q:ORC'>0  Q:$E(@ALPMSG@(ORC),1,3)="ORC"
+"RTN","ALPBINP",42,0)
+ I +ORC'>0 Q "0^MSG^Missing ORC Segment Bad Message"
+"RTN","ALPBINP",43,0)
+ ;RE-BUILDING THE MESSAGE FOR BCBU
+"RTN","ALPBINP",44,0)
+ S ALPDFN=$P(@ALPMSG@(PID),MSFS,4)
+"RTN","ALPBINP",45,0)
+ I +ALPDFN'>0 Q "0^MSG^Invalid or Missing Patient - PID"
+"RTN","ALPBINP",46,0)
+ S ALPORD=$P($P(@ALPMSG@(ORC),MSFS,4),MSCS,1)
+"RTN","ALPBINP",47,0)
+ I ALPORD="" Q "0^MSG^Invalid or Missing Order Number - ORC"
+"RTN","ALPBINP",48,0)
+ K ALPB
+"RTN","ALPBINP",49,0)
+ D EN^PSJBCBU(ALPDFN,ALPORD,.ALPB)
+"RTN","ALPBINP",50,0)
+SEED ;Entry point for ^ALPBIND
+"RTN","ALPBINP",51,0)
+ N VAIN
+"RTN","ALPBINP",52,0)
+ D INIT
+"RTN","ALPBINP",53,0)
+ S SUB=0 F  S SUB=$O(ALPB(SUB)) Q:'SUB  D
+"RTN","ALPBINP",54,0)
+ . ;convert and move the message to the HLA array for transport
+"RTN","ALPBINP",55,0)
+ . S HLA("HLS",SUB)=$$CNV^ALPBUTL1(MSCTR,HLCTR,ALPB(SUB))
+"RTN","ALPBINP",56,0)
+ . ;Now check for continuations 
+"RTN","ALPBINP",57,0)
+ . S SUB1=0
+"RTN","ALPBINP",58,0)
+ . F  S SUB1=$O(ALPB(SUB,SUB1)) Q:'SUB1  D
+"RTN","ALPBINP",59,0)
+ . . S HLA("HLS",SUB,SUB1)=$$CNV^ALPBUTL1(MSCTR,HLCTR,ALPB(SUB,SUB1))
+"RTN","ALPBINP",60,0)
+ . I $E(HLA("HLS",SUB),1,3)="RXE" S RXE=SUB
+"RTN","ALPBINP",61,0)
+ . I $E(HLA("HLS",SUB),1,3)="PID" S PID=SUB
+"RTN","ALPBINP",62,0)
+ . I $E(HLA("HLS",SUB),1,3)="PV1" S PV1=SUB
+"RTN","ALPBINP",63,0)
+ K HLA("HLS",MSH)
+"RTN","ALPBINP",64,0)
+ I '$D(HLA("HLS",PID)) Q "0^MSG^Missing PID Segment Bad Message"
+"RTN","ALPBINP",65,0)
+ S ALPDFN=$P($P(HLA("HLS",PID),HLFS,4),HLCS,1)
+"RTN","ALPBINP",66,0)
+ I +ALPDFN'>0 Q "0^MSG^Invalid or Missing Patient - PID"
+"RTN","ALPBINP",67,0)
+ S HLA("HLS",PID)=$$EN^VAFHLPID(ALPDFN,"2,7,8,19")
+"RTN","ALPBINP",68,0)
+ ;Fix RXE segement for Administration Type
+"RTN","ALPBINP",69,0)
+ D RXE
+"RTN","ALPBINP",70,0)
+ ;Get the Division that the patient is associated with (Ward)
+"RTN","ALPBINP",71,0)
+ D PDIV
+"RTN","ALPBINP",72,0)
+ ;Override Ward Division with Clinic Division if present           *87
+"RTN","ALPBINP",73,0)
+ N ALPCLDIV
+"RTN","ALPBINP",74,0)
+ D:$G(ALPORD)
+"RTN","ALPBINP",75,0)
+ . S ALPCLDIV=$$CDIVOR(ALPDFN,ALPORD)  ;If Clin Ord, then returns DIV
+"RTN","ALPBINP",76,0)
+ . S:$G(ALPCLDIV) ALPDIV=ALPCLDIV
+"RTN","ALPBINP",77,0)
+ Q:(+$G(ALPDIV2)>0)&(ALPDIV'=$G(ALPDIV2)) "0^"   ;no error
+"RTN","ALPBINP",78,0)
+ ;
+"RTN","ALPBINP",79,0)
+ I ALPDIV="DOM",+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP DOM FILTER",1,"Q")>0 Q "0^^Screen of DOMICILIARY"
+"RTN","ALPBINP",80,0)
+ I '$D(HLL("LINKS")) Q "0^HL7^Missing HLL Links Array Division # "_ALPDIV
+"RTN","ALPBINP",81,0)
+ ;SET NEW PV1
+"RTN","ALPBINP",82,0)
+ D NOW^%DTC
+"RTN","ALPBINP",83,0)
+ S STRING=$$EN^VAFHAPV1(ALPDFN,%,"2,3,7,18")
+"RTN","ALPBINP",84,0)
+ S HLA("HLS",PV1)=STRING
+"RTN","ALPBINP",85,0)
+ I +ORC>0 D
+"RTN","ALPBINP",86,0)
+ . S ALPST=$$STAT^ALPBUTL1($P(HLA("HLS",ORC),HLFS,6))
+"RTN","ALPBINP",87,0)
+ . Q:ALPST=""
+"RTN","ALPBINP",88,0)
+ . S $P(HLA("HLS",ORC),HLFS,6)=$P(HLA("HLS",ORC),HLFS,6)_HLCS_ALPST
+"RTN","ALPBINP",89,0)
+ D AL1
+"RTN","ALPBINP",90,0)
+ ;Capture message to review for testing before sending
+"RTN","ALPBINP",91,0)
+ D SEND
+"RTN","ALPBINP",92,0)
+EXIT ;EXIT and kill
+"RTN","ALPBINP",93,0)
+ K HLA,SUB,SUB1,STRING,ALPLOC,HLCS,HLCTR,HLFS,MSCH,MSCS,MSCTR
+"RTN","ALPBINP",94,0)
+ K MSH,ORC,PID,PV1,RXE,RXR,ALPB,ALPBY,ALPBYN,ALPC,ALPDATA,ALPDFN
+"RTN","ALPBINP",95,0)
+ K ALPDT,ALPI,ALPII,ALPIV,ALPOPTS,ALPOR,ALPORD,ALPST
+"RTN","ALPBINP",96,0)
+ K ALPSTN,ALPSYM,EVENT,GMRA,GMRAL
+"RTN","ALPBINP",97,0)
+ Q ALPRSLT
+"RTN","ALPBINP",98,0)
+INI() ;INTIAL SET UP ENTRY
+"RTN","ALPBINP",99,0)
+ G SEED
+"RTN","ALPBINP",100,0)
+INIT ;CALL HL7 TO INITIALIZE MESSAGE VARIABLES
+"RTN","ALPBINP",101,0)
+ ;SET UP ENVIRONMENT FOR MESSAGE
+"RTN","ALPBINP",102,0)
+ K HL,HLA,HLECH,HLQ,ALPRSLT,ALPOPTS
+"RTN","ALPBINP",103,0)
+ S EVENT="PSB BCBU ORM SEND"
+"RTN","ALPBINP",104,0)
+ D INIT^HLFNC2(EVENT,.HL,1)
+"RTN","ALPBINP",105,0)
+ S HLCS=$E(HL("ECH")),HLCTR=HLFS_HL("ECH")
+"RTN","ALPBINP",106,0)
+ Q
+"RTN","ALPBINP",107,0)
+SEND ;CALL HL7 TO TRANSMIT SINGLE MESSAGE
+"RTN","ALPBINP",108,0)
+ K ALPRSLT,ALPOPTS
+"RTN","ALPBINP",109,0)
+ D GENERATE^HLMA(EVENT,"LM",1,.ALPRSLT,"",.ALPOPTS)
+"RTN","ALPBINP",110,0)
+ Q
+"RTN","ALPBINP",111,0)
+AL1 ;ALLERGY SEGMENT BUILD
+"RTN","ALPBINP",112,0)
+ ;The will build the ALP segment with the curent allergies
+"RTN","ALPBINP",113,0)
+ ;for the patient to be added to the message
+"RTN","ALPBINP",114,0)
+ N DFN
+"RTN","ALPBINP",115,0)
+ Q:+ALPDFN'>0
+"RTN","ALPBINP",116,0)
+ K GMRAL
+"RTN","ALPBINP",117,0)
+ S DFN=ALPDFN
+"RTN","ALPBINP",118,0)
+ S GMRA="0^0^111"  ;DEFINES WHAT ALLERGIES TO RETURN
+"RTN","ALPBINP",119,0)
+ D EN1^GMRADPT
+"RTN","ALPBINP",120,0)
+ Q:'$D(GMRAL)
+"RTN","ALPBINP",121,0)
+ S ALPI=0,ALPC=1,ALPSYM=""
+"RTN","ALPBINP",122,0)
+ F  S ALPI=$O(GMRAL(ALPI)) Q:+ALPI'>0  D
+"RTN","ALPBINP",123,0)
+ . S ALPADR=""
+"RTN","ALPBINP",124,0)
+ . I $P($P(GMRAL(ALPI),U,8),";",2)="P" S ALPADR="**ADR** "
+"RTN","ALPBINP",125,0)
+ . S ALPDATA="AL1"_HLFS_ALPC_HLFS_$P(GMRAL(ALPI),U,7)
+"RTN","ALPBINP",126,0)
+ . S ALPDATA=ALPDATA_HLFS_ALPI_HLCS_ALPADR_$E($P(GMRAL(ALPI),U,2),1,25)_HLCS_"VA120.8"
+"RTN","ALPBINP",127,0)
+ . ;S ALPII=0 F  S ALPII=$O(GMRAL(ALPI,"S",ALPII)) Q:+ALPII'>0  D
+"RTN","ALPBINP",128,0)
+ . ;. S ALPSYM=ALPSYM_$P(GMRAL(ALPI,"S",ALPII),";",1)_HLCS
+"RTN","ALPBINP",129,0)
+ . ;S $P(ALPDATA,HLFS,6)=ALPSYM
+"RTN","ALPBINP",130,0)
+ . S HLA("HLS",$O(HLA("HLS",9999999),-1)+1)=ALPDATA
+"RTN","ALPBINP",131,0)
+ . S ALPC=ALPC+1
+"RTN","ALPBINP",132,0)
+ K GMRAL
+"RTN","ALPBINP",133,0)
+ Q
+"RTN","ALPBINP",134,0)
+RXE ;
+"RTN","ALPBINP",135,0)
+ Q:+$G(RXE)'>0
+"RTN","ALPBINP",136,0)
+ K ^TMP("PSJ1",$J)
+"RTN","ALPBINP",137,0)
+ Q:'$D(HLA("HLS",RXE))
+"RTN","ALPBINP",138,0)
+ S DATA=HLA("HLS",RXE)
+"RTN","ALPBINP",139,0)
+ D EN^PSJBCMA1(ALPDFN,ALPORD,1)
+"RTN","ALPBINP",140,0)
+ S TYP=$P($G(^TMP("PSJ1",$J,4)),U,2)
+"RTN","ALPBINP",141,0)
+ Q:TYP="CONTINUOUS"
+"RTN","ALPBINP",142,0)
+ Q:TYP="FILL ON REQUEST"
+"RTN","ALPBINP",143,0)
+ S ALP1=$P(DATA,HLFS,2),ALP2=$P(ALP1,HLCS,2)
+"RTN","ALPBINP",144,0)
+ I ALP1[TYP Q
+"RTN","ALPBINP",145,0)
+ I ALP2[TYP Q
+"RTN","ALPBINP",146,0)
+ S $P(ALP2,"&",1)=$P(ALP2,"&",1)_" "_TYP
+"RTN","ALPBINP",147,0)
+ S $P(ALP1,HLCS,2)=ALP2,$P(DATA,HLFS,2)=ALP1
+"RTN","ALPBINP",148,0)
+ S HLA("HLS",RXE)=DATA
+"RTN","ALPBINP",149,0)
+ K TYP,ALP1,ALP2,^TMP("PSJ1",$J)
+"RTN","ALPBINP",150,0)
+ Q
+"RTN","ALPBINP",151,0)
+PDIV ;PATIENT DIVISION
+"RTN","ALPBINP",152,0)
+ ;Check ALPBMDT Variable
+"RTN","ALPBINP",153,0)
+ S:+$G(ALPBMDT)'>0 ALPBMDT=0
+"RTN","ALPBINP",154,0)
+ S ALPDIV=$$DIV^ALPBUTL1(ALPDFN,ALPBMDT)
+"RTN","ALPBINP",155,0)
+ ;Screen Dom
+"RTN","ALPBINP",156,0)
+ I ALPDIV="DOM",+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP DOM FILTER",1,"Q")>0 Q
+"RTN","ALPBINP",157,0)
+ ;Now do I send the Message or not Based of Division
+"RTN","ALPBINP",158,0)
+ I $D(ALPHLL("LINKS")) M HLL("LINKS")=ALPHLL("LINKS")
+"RTN","ALPBINP",159,0)
+ I '$D(HLL("LINKS")) D GET^ALPBPARM(.HLL,ALPDIV)
+"RTN","ALPBINP",160,0)
+ Q
+"RTN","ALPBINP",161,0)
+MEDL(ALPML) ;Use this entry to send MedLog messages
+"RTN","ALPBINP",162,0)
+ N VAIN
+"RTN","ALPBINP",163,0)
+ ;ALPML is the IEN of the MedLog for file #53.79
+"RTN","ALPBINP",164,0)
+ I '$D(ALPML) Q "0^ALPML^No Med-Log Number"
+"RTN","ALPBINP",165,0)
+ I '$D(^PSB(53.79,ALPML,0)) Q "0^"_ALPML_"^Med - Log Number Invalid"
+"RTN","ALPBINP",166,0)
+ ;First get the required HL7 Variables
+"RTN","ALPBINP",167,0)
+ D INIT
+"RTN","ALPBINP",168,0)
+ ;Need to build the PID, PV1 and ORC segments
+"RTN","ALPBINP",169,0)
+ S ALPDFN=+$P($G(^PSB(53.79,ALPML,0)),U,1)
+"RTN","ALPBINP",170,0)
+ I +ALPDFN'>0 Q "0^"_ALPML_"^Invalid or Missing Patient - Med-Log"
+"RTN","ALPBINP",171,0)
+ ;Get the Division that the patient is associated with (Ward)
+"RTN","ALPBINP",172,0)
+ D PDIV
+"RTN","ALPBINP",173,0)
+ I ALPDIV="",$G(ALPML) S ALPDIV=$$CDIV(ALPML)
+"RTN","ALPBINP",174,0)
+ ;Override Ward Division with Clinic Division if present *87
+"RTN","ALPBINP",175,0)
+ N ALPCLDIV
+"RTN","ALPBINP",176,0)
+ D:$G(ALPML)
+"RTN","ALPBINP",177,0)
+ . S ALPCLDIV=$$CDIV(ALPML)   ;If Clinic, then will return a DIV
+"RTN","ALPBINP",178,0)
+ . S:$G(ALPCLDIV) ALPDIV=ALPCLDIV
+"RTN","ALPBINP",179,0)
+ ;Quit if a specific Div was selected & Not = user selection     *87
+"RTN","ALPBINP",180,0)
+ Q:(+$G(ALPDIV2)>0)&(ALPDIV'=$G(ALPDIV2)) "0^"   ;no error
+"RTN","ALPBINP",181,0)
+ ;
+"RTN","ALPBINP",182,0)
+ I ALPDIV="DOM",+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP DOM FILTER",1,"Q")>0 Q "0^^Screen of DOMICILIARY"
+"RTN","ALPBINP",183,0)
+ I '$D(HLL("LINKS")) Q "0^"_ALPML_"^Missing HLL Links Array Med-Log"
+"RTN","ALPBINP",184,0)
+ S ALPST=$P($G(^PSB(53.79,ALPML,0)),U,9)
+"RTN","ALPBINP",185,0)
+ S ALPBY=$P($G(^PSB(53.79,ALPML,0)),U,7)
+"RTN","ALPBINP",186,0)
+ S ALPDT=$P($G(^PSB(53.79,ALPML,0)),U,6)
+"RTN","ALPBINP",187,0)
+ S ALPOR=$P($G(^PSB(53.79,ALPML,.1)),U,1)
+"RTN","ALPBINP",188,0)
+ S ALPBYN=$P($G(^VA(200,ALPBY,0)),U,1)
+"RTN","ALPBINP",189,0)
+ S ALPSTN=$S($D(ALPST):$$EXTERNAL^DILFD(53.79,".09",,ALPST),1:"Non")
+"RTN","ALPBINP",190,0)
+ I '$D(ALPOR) Q "0^"_ALPML_"^Invalid or Missing Pharmacy Order Number Med-Log"
+"RTN","ALPBINP",191,0)
+ S PID=$$EN^VAFHLPID(ALPDFN,"2,7,8,19")
+"RTN","ALPBINP",192,0)
+ I '$D(PID) Q "0^"_ALPML_"^Invalid or Missing Patient - PID Med-Log"
+"RTN","ALPBINP",193,0)
+ S PV1=$$EN^VAFHAPV1(ALPDFN,DT,"2,3,7,18")
+"RTN","ALPBINP",194,0)
+ I '$D(PV1) Q "0^"_ALPML_"^Invalid or Missing Patient Location - PV1 Med-Log"
+"RTN","ALPBINP",195,0)
+ S HLA("HLS",1)=PID
+"RTN","ALPBINP",196,0)
+ S HLA("HLS",2)=PV1
+"RTN","ALPBINP",197,0)
+ ;BUILD ORC SEGMENT
+"RTN","ALPBINP",198,0)
+ S ORC="ORC"_HLFS_"ML"_HLFS_ALPML_HLCS_"ML"_HLFS_ALPOR_HLCS_"PS"_HLFS
+"RTN","ALPBINP",199,0)
+ S ORC=ORC_HLFS_ALPST_HLCS_ALPSTN_HLFS_HLFS_HLFS_HLFS
+"RTN","ALPBINP",200,0)
+ S ORC=ORC_$$HLDATE^HLFNC(ALPDT,"TS")_HLFS_ALPBY_HLCS_ALPBYN
+"RTN","ALPBINP",201,0)
+ S HLA("HLS",3)=ORC
+"RTN","ALPBINP",202,0)
+ ;The Message is ready to send                                     *87
+"RTN","ALPBINP",203,0)
+ ; If this Medlog entry is Removed, then save HLA array and find the
+"RTN","ALPBINP",204,0)
+ ; associated Give and alter the ORC seg in the HLA array and send the
+"RTN","ALPBINP",205,0)
+ ; Removed 2nd.
+"RTN","ALPBINP",206,0)
+ I $P(HLA("HLS",3),HLFS,6)["REMOVED" D
+"RTN","ALPBINP",207,0)
+ . N SAVHLA,SAVHLL
+"RTN","ALPBINP",208,0)
+ . M SAVHLA=HLA,SAVHLL=HLL
+"RTN","ALPBINP",209,0)
+ . N GIVSTR,GIVDT,GIVBY,GIVBY,GIVBYN
+"RTN","ALPBINP",210,0)
+ . S GIVSTR=$$FINDGIVE(ALPML)
+"RTN","ALPBINP",211,0)
+ . S GIVDT=$P(GIVSTR,U,1),GIVBY=$P(GIVSTR,U,5)
+"RTN","ALPBINP",212,0)
+ . S $P(HLA("HLS",3),HLFS,6)="G"_HLCS_"GIVEN"
+"RTN","ALPBINP",213,0)
+ . S $P(HLA("HLS",3),HLFS,10)=$$HLDATE^HLFNC(GIVDT,"TS")
+"RTN","ALPBINP",214,0)
+ . S GIVBYN=$$GET1^DIQ(200,GIVBY,"NAME")
+"RTN","ALPBINP",215,0)
+ . S $P(HLA("HLS",3),HLFS,11)=GIVBY_HLCS_GIVBYN
+"RTN","ALPBINP",216,0)
+ . D SEND        ;send assoc Medlog Give per a Removed trans
+"RTN","ALPBINP",217,0)
+ . D INIT
+"RTN","ALPBINP",218,0)
+ . M HLA=SAVHLA,HLL=SAVHLL
+"RTN","ALPBINP",219,0)
+ ;
+"RTN","ALPBINP",220,0)
+ D SEND     ;send current Medlog trans
+"RTN","ALPBINP",221,0)
+ Q ALPRSLT
+"RTN","ALPBINP",222,0)
+ ;
+"RTN","ALPBINP",223,0)
+ADMQ ;Need to que a single patient init for admissions
+"RTN","ALPBINP",224,0)
+ S ALDFN=ALPDFN
+"RTN","ALPBINP",225,0)
+ S ZTDTH=$$NOW^XLFDT
+"RTN","ALPBINP",226,0)
+ S ZTRTN="PAT^ALPBIND("""")"                    ;pass null Div par *87
+"RTN","ALPBINP",227,0)
+ S ZTDESC="PSB - Initialize Single Patient on Admission Contingency Workstation"
+"RTN","ALPBINP",228,0)
+ S ZTIO="",ZTSAVE("ALDFN")=""
+"RTN","ALPBINP",229,0)
+ D ^%ZTLOAD
+"RTN","ALPBINP",230,0)
+ K ZTIO,ZTDESC,ZTRTN,ZTSK
+"RTN","ALPBINP",231,0)
+ Q
+"RTN","ALPBINP",232,0)
+PMOV(ALPDFN,ALPTYP,ALPTT,ALPBMDT) ;Entry Point to send patient movement
+"RTN","ALPBINP",233,0)
+ N VAIN
+"RTN","ALPBINP",234,0)
+ I +$G(ALPDFN)'>0 Q "0^^Missing Patient ID"
+"RTN","ALPBINP",235,0)
+ D INIT
+"RTN","ALPBINP",236,0)
+ ;Check Movement type. If not a discharge then don't pass date and time
+"RTN","ALPBINP",237,0)
+ S:$G(ALPTT)'="DISCHARGE" ALPBMDT=0
+"RTN","ALPBINP",238,0)
+ ;Get the Division that the patient is associated with
+"RTN","ALPBINP",239,0)
+ D PDIV
+"RTN","ALPBINP",240,0)
+ I ALPDIV="DOM",+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP DOM FILTER",1,"Q")>0 Q "0^^Screen of DOMICILIARY"
+"RTN","ALPBINP",241,0)
+ I '$D(HLL("LINKS")) Q "0^"_ALPDFN_"^Missing HLL Links Array Pat-Move"
+"RTN","ALPBINP",242,0)
+ S HLA("HLS",1)=$$EN^VAFHLPID(ALPDFN,"2,7,8,19")
+"RTN","ALPBINP",243,0)
+ S HLA("HLS",2)=$$EN^VAFHAPV1(ALPDFN,DT,"2,3,7,18")
+"RTN","ALPBINP",244,0)
+ S:$G(ALPTT)="DISCHARGE" $P(HLA("HLS",2),HLFS,37)=$G(ALPTYP)
+"RTN","ALPBINP",245,0)
+ D SEND
+"RTN","ALPBINP",246,0)
+ I ALPTYP=14!(ALPTYP=41) S ALPTT="ADMISSION" ;FOR RETURN FROM ASIH
+"RTN","ALPBINP",247,0)
+ I $G(ALPTT)="ADMISSION" D ADMQ
+"RTN","ALPBINP",248,0)
+ ;SEND A DISCHARGE TO DIV SENDING ASIH
+"RTN","ALPBINP",249,0)
+ I $G(ALPTYP)[13!($G(ALPTYP)[40) D
+"RTN","ALPBINP",250,0)
+ .D INIT
+"RTN","ALPBINP",251,0)
+ .S ALPWRD=$P($G(DGPMVI(5)),U,1) ;LAST WARD
+"RTN","ALPBINP",252,0)
+ .I +ALPWRD'>0 S ALPRSLT="0^^Screen - No Ward" Q  ;NO WARD
+"RTN","ALPBINP",253,0)
+ .S ALPBDIV=$P($G(^DIC(42,ALPWRD,0)),U,11)
+"RTN","ALPBINP",254,0)
+ .D GET^ALPBPARM(.HLL,ALPBDIV)
+"RTN","ALPBINP",255,0)
+ .S HLA("HLS",1)=$$EN^VAFHLPID(ALPDFN,"2,7,8,19")
+"RTN","ALPBINP",256,0)
+ .S HLA("HLS",2)=$$EN^VAFHAPV1(ALPDFN,DT,"2,3,7,18")
+"RTN","ALPBINP",257,0)
+ .S $P(HLA("HLS",2),HLFS,37)="ASIH"
+"RTN","ALPBINP",258,0)
+ .D SEND
+"RTN","ALPBINP",259,0)
+ Q ALPRSLT
+"RTN","ALPBINP",260,0)
+ ;
+"RTN","ALPBINP",261,0)
+CDIV(ML) ; Return DIVISION associated with input CLINIC
+"RTN","ALPBINP",262,0)
+ Q:'$G(ML) ""
+"RTN","ALPBINP",263,0)
+ N MLDATA,CLINICE,CLINICI,DIVE,DIVI S MLDATA=$G(^PSB(53.79,+ML,0))
+"RTN","ALPBINP",264,0)
+ S CLINICE=$P(MLDATA,"^",2),CLINICI=$O(^SC("B",CLINICE,0))
+"RTN","ALPBINP",265,0)
+ I 'CLINICI Q "" I '$D(^SC(CLINICI,0)) Q ""
+"RTN","ALPBINP",266,0)
+ S DIVI=$P($G(^SC(CLINICI,0)),"^",15),DIVE=$P($G(^DG(40.8,+DIVI,0)),"^")
+"RTN","ALPBINP",267,0)
+ D GET^ALPBPARM(.HLL,DIVE)
+"RTN","ALPBINP",268,0)
+ Q $P(^SC(CLINICI,0),"^",15)
+"RTN","ALPBINP",269,0)
+ ;
+"RTN","ALPBINP",270,0)
+CDIVOR(DFN,ORDER) ; Return DIVISION associated with input ORDER
+"RTN","ALPBINP",271,0)
+ Q:'$G(ORDER) "" Q:'$G(DFN) ""
+"RTN","ALPBINP",272,0)
+ N CLINICI,DIVI,DIVE
+"RTN","ALPBINP",273,0)
+ S CLINICI=$S(ORDER["P":+$G(^PS(53.1,+ORDER,"DSS")),ORDER["U":+$G(^PS(55,DFN,5,+ORDER,8)),ORDER["V":+$G(^PS(55,DFN,"IV",+ORDER,"DSS")),1:"")
+"RTN","ALPBINP",274,0)
+ I 'CLINICI Q "" I '$D(^SC(CLINICI,0)) Q ""
+"RTN","ALPBINP",275,0)
+ S DIVI=$P($G(^SC(CLINICI,0)),"^",15),DIVE=$P($G(^DG(40.8,+DIVI,0)),"^")
+"RTN","ALPBINP",276,0)
+ D GET^ALPBPARM(.HLL,DIVE)
+"RTN","ALPBINP",277,0)
+ Q $P(^SC(CLINICI,0),"^",15)
+"RTN","ALPBINP",278,0)
+ ;
+"RTN","ALPBINP",279,0)
+FINDGIVE(IEN) ;Finds the last Give date/time in the Audit log              *87
+"RTN","ALPBINP",280,0)
+ ;   When a Remove action occurs and saved to 53.79, the Give Action
+"RTN","ALPBINP",281,0)
+ ;   Status & Action Date/Time are overwritten. This Function will
+"RTN","ALPBINP",282,0)
+ ;   retrieve that Give info.
+"RTN","ALPBINP",283,0)
+ ;
+"RTN","ALPBINP",284,0)
+ ; Function returns - string formatted as the MAH report uses
+"RTN","ALPBINP",285,0)
+ ;  date/time ^ by initials ^ action code ^ ien of 53.79 file ^ by DUZ
+"RTN","ALPBINP",286,0)
+ ;
+"RTN","ALPBINP",287,0)
+ N DA,STR
+"RTN","ALPBINP",288,0)
+ S STR=""
+"RTN","ALPBINP",289,0)
+ F DA=99999:0 S DA=$O(^PSB(53.79,IEN,.9,DA),-1) Q:'DA  D  Q:$P(STR,U,4)
+"RTN","ALPBINP",290,0)
+ .D:^PSB(53.79,IEN,.9,DA,0)["ACTION STATUS Set to 'GIVEN'"
+"RTN","ALPBINP",291,0)
+ ..S $P(STR,U,1)=$P(^PSB(53.79,IEN,.9,DA,0),U)
+"RTN","ALPBINP",292,0)
+ ..S $P(STR,U,2)=$P(^PSB(53.79,IEN,.9,DA,0),"'",4)
+"RTN","ALPBINP",293,0)
+ ..S $P(STR,U,3)="G"
+"RTN","ALPBINP",294,0)
+ ..S $P(STR,U,4)=IEN
+"RTN","ALPBINP",295,0)
+ ..S $P(STR,U,5)=$P(^PSB(53.79,IEN,.9,DA,0),U,5)
+"RTN","ALPBINP",296,0)
+ Q STR
+"UP",53.7,53.702,-1)
+53.7^2
+"UP",53.7,53.702,0)
+53.702
+"UP",53.7,53.70213,-2)
+53.7^2
+"UP",53.7,53.70213,-1)
+53.702^10
+"UP",53.7,53.70213,0)
+53.70213
+"VER")
+8.0^22.0
+"^DD",53.7,53.702,7.4,0)
+REMOVE TIMING^F^^4.5;1^K:$L(X)>120!($L(X)<1) X
+"^DD",53.7,53.702,7.4,3)
+Answer must be 1-120 characters in length.
+"^DD",53.7,53.702,7.4,21,0)
+^^6^6^3151014^
+"^DD",53.7,53.702,7.4,21,1,0)
+The value in this field will contain a sequence of times
+"^DD",53.7,53.702,7.4,21,2,0)
+(hours of the  day) when a medication is to be removed. 
+"^DD",53.7,53.702,7.4,21,3,0)
+Only medications coded as such in the PHARMACY ORDERABLE
+"^DD",53.7,53.702,7.4,21,4,0)
+ITEM file (#50.7), will contain removal timings.  The format
+"^DD",53.7,53.702,7.4,21,5,0)
+of this timing is variable and hours are separated by a
+"^DD",53.7,53.702,7.4,21,6,0)
+dash  (-).  Examples: 0100-0900-1700 or 01-09-17.
+"^DD",53.7,53.702,7.4,"DT")
+3151014
+"^DD",53.7,53.702,7.5,0)
+DURATION OF ADMINISTRATION^NJ1,0^^4.5;2^K:+X'=X!(X>6)!(X<0)!(X?.E1"."1.N) X
+"^DD",53.7,53.702,7.5,3)
+Type a number between 0 and 6, 0 decimal digits.
+"^DD",53.7,53.702,7.5,21,0)
+^^2^2^3151001^
+"^DD",53.7,53.702,7.5,21,1,0)
+This is the duration in minutes that the medication requiring 
+"^DD",53.7,53.702,7.5,21,2,0)
+removal should be on the patient.
+"^DD",53.7,53.702,7.5,"DT")
+3151001
+"^DD",53.7,53.70213,4,0)
+ASSOC. MED LOG GIVE DATE/TIME^D^^0;5^S %DT="ESTX" D ^%DT S X=Y K:X<1 X
+"^DD",53.7,53.70213,4,3)
+Enter the date and time this medication was given on the Vista server in the BCMA Medication Log entry.
+"^DD",53.7,53.70213,4,21,0)
+^^2^2^3151116^
+"^DD",53.7,53.70213,4,21,1,0)
+This is a Give's action date and time that is associated with an Order's
+"^DD",53.7,53.70213,4,21,2,0)
+current action of Remove.
+"^DD",53.7,53.70213,4,"DT")
+3151116
+"^DD",53.7,53.70213,5,0)
+ASSOC. MED LOG GIVE ENTERED BY^F^^0;6^K:$L(X)>30!($L(X)<1) X
+"^DD",53.7,53.70213,5,3)
+Answer must be 1-30 characters in length.
+"^DD",53.7,53.70213,5,21,0)
+^^4^4^3151116^
+"^DD",53.7,53.70213,5,21,1,0)
+This is the name of the person who made the BCMA Medication Log entry
+"^DD",53.7,53.70213,5,21,2,0)
+on the VistA server that is associated with the current Remove status for
+"^DD",53.7,53.70213,5,21,3,0)
+this administration. This person could be a nurse or other clinician
+"^DD",53.7,53.70213,5,21,4,0)
+who administered the medication to the patient.
+"^DD",53.7,53.70213,5,"DT")
+3151116
+"^DD",53.7,53.70213,6,0)
+ASSOC. MED LOG GIVE STATUS MSG^F^^0;7^K:$L(X)>30!($L(X)<1) X
+"^DD",53.7,53.70213,6,3)
+Answer must be 1-30 characters in length and contain "GIVEN".
+"^DD",53.7,53.70213,6,21,0)
+^^3^3^3151116^
+"^DD",53.7,53.70213,6,21,1,0)
+This is the message associated with the BCMA Medication Log entry on the
+"^DD",53.7,53.70213,6,21,2,0)
+VistA server that is for the associated Give action that occurred prior to
+"^DD",53.7,53.70213,6,21,3,0)
+the current Remove action for this Order's administration.
+"^DD",53.7,53.70213,6,"DT")
+3151116
+**END**
+**END**

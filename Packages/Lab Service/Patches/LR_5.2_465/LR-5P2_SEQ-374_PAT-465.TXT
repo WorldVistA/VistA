@@ -1,0 +1,291 @@
+$TXT Created by                DEV.DEV.DOMAIN.EXT  (KIDS) on Thursday, 09/22/16 at 17:48
+=============================================================================
+Run Date: NOV 30, 2016                     Designation: LR*5.2*465
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #374                    Status: Released
+                  Compliance Date: DEC 31, 2016
+=============================================================================
+
+Associated patches: (v)LR*5.2*218  <<= must be installed BEFORE `LR*5.2*465'
+
+Subject: SET NUMBER OF LABELS IN LABORATORY TEST FILE (#60) FOR EACH FACILITY
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Input Template
+
+Description:
+============
+
+ The NSR20140714 Set Number of Labels in File 60 for Each Facility intake
+ modification allows multidivisional facilities to set the number of 
+ labels required for each site on the VistA instance. This number is set
+ in LABORATORY TEST File (#60). 
+  
+ The current Lab Package functionality provides only one option for
+ setting label requirements for all sites in a multidivisional facility.
+ It lacks the necessary flexibility to accommodate the requirements and
+ procedures associated with printing labels for institutions that share
+ the same Veterans Integrated System Technology Architecture (VistA) 
+ database. This modification will be useful to multidivisional facilities
+ because it enables customizing the number of labels required by
+ individual institutions within a multidivisional VistA system.
+  
+ This modification adds the following new multiple field to the 
+ LABORATORY TEST File (#60):
+  
+   INSTITUTION EXTRA LABELS field (#60.15)
+  
+ Two new sub-fields are added to the INSTITUTION EXTRA LABELS multiple:
+  
+   INSTITIUTION EXTRA LABELS (#.01)b "pointer to the Institution file (#4)
+   NUMBER OF LABELS (#1)
+  
+ The following two options are being updated to allow ADPACs or LIMs 
+ ()Laboratory Information Manager) to customize the number of labels
+ for individual institutions for each lab test:
+     Edit atomic tests   [LRDIEATOMIC]
+     Edit cosmic tests   [LRDIECOSMIC]
+  
+ These options, LRDIECOSMIC and LRDIEATOMIC now prompt the user for
+ the following two new fields:
+  
+     INSTITUTION EXTRA LABELS field (#60.15,.01).
+     NUMBER OF LABELS subfield (#60.15,1)
+  
+  
+ The LIM/ADPAC selects an available laboratory test name from the 
+ LABORATORY TEST NAME field (#60.01) and then selects the institution
+ requiring extra labels from the list of co-located institutions to 
+ populate the INSTITUTION EXTRA LABELS field (#60.15,.01). After the
+ laboratory test and co-located institution are selected, the number of
+ additional labels needed is added to the NUMBER OF LABELS 
+ subfield (#60.15,1). This field specifies the number of labels, beyond
+ the default number, set for the selected lab test at the selected
+ institution. 
+  
+ Each lab test can be configured individually for each co-located
+ institution.  After a lab test is configured, the specified number
+ of extra labels designated will print each time a user at the 
+ configured institution accessions an order for a preconfigured lab test.
+ If either the lab test, or the institution, is not configured for
+ additional labels then the default number of labels will print.
+ Each lab test can be configured for multiple institutions and each
+ institution can define the necessary number of labels to print for
+ each lab test.  The new INSTITUTION EXTRA LABELS field (#16.1) takes 
+ precedence over the existing EXTRA LABELS field (#16) of the
+ LABORATORY TEST FILE (#60).
+  
+ Important: The INSTITUTION EXTRA LABELS field (#60.15,.01) is connected
+ to the national INSTITUTION File (#4). Prior to editing the fields added
+ by this modification, ensure that co-located institutions are added to 
+ the ACCESSION AREA field (#60,6). This multiple field includes the
+ INSTITUTION field (#60.11,.01) and the ACCESSIONING AREA
+ subfield (#60.11,1).  Enter the necessary institutions and an appropriate
+ accessioning area for the laboratory test being edited. 
+  
+ Note: The new fields added to LABORATORY TEST File (#60) for this
+ modification are similar in name to existing fields, specifically the 
+ INSTITUTION field (#60.11,.01), and the EXTRA LABELS field (#60.16).
+ Care must be exercised to ensure these fields are not confused with the 
+ new fields added with this modification when edited.
+  
+ 
+ Multi-Lab Test ACCESSIONING
+ ===========================
+ 
+ When accessioning multiple lab tests, the number of Institution Extra
+ Labels will be accumulated for each test.  So the number of extra labels
+ printed include the following values:
+ 
+ (1) The original default number of labels for the accessioned tests, i.e.,
+ one label per accession.
+ 
+ -and, one of the following-
+ 
+ (2) the number of Institution Extra Labels (field 16.1) for each test if
+ that number is defined for the test and the division for which the user is
+ signed in.
+ 
+  -or- 
+ 
+ (3) the number of Extra Labels (field #16) defined for the test, if
+ Institution Extra Labels is undefined.
+  
+ So, for the following example with UREA NITROGEN and GLUCOSE being
+ accessioned together, seven (7) total labels will print.
+  
+     LAB TEST NAME: UREA NITROGEN
+       INSTITUTION: INST XYZ
+       UNIQUE ACCESSION #: NO
+          EXTRA LABELS:  4
+       COLLECTION SAMLE: SERUM
+       ACCESSION AREA: CHEMISTRY
+       INSTITUTION EXTRA LABELS: INST XYZ    # OF LABELS: null/none
+         
+     LAB TEST NAME: GLUCOSE
+       INSTITUTION: INST XYZ
+       UNIQUE ACCESSION #: NO
+          EXTRA LABELS:  null/none
+       COLLECTION SAMLE: SERUM
+       ACCESSION AREA: CHEMISTRY
+       INSTITUTION EXTRA LABELS: INST XYZ    # OF LABELS: 2
+          
+ So, we have (four) 4 extra labels for UREA NITROGEN test and
+ (two) 2 Institution Extra Labels for Glucose test and one label will
+ print for the accession (under normal conditions with no extra labels).
+ This produces
+ 
+               1 + 4 + 2  =  seven (7) total labels.
+ 
+ 
+ The NSR for this intake addresses the following requirement: 
+ ============================================================ 
+     VHBAO: NEED493878: As an authorized user of the laboratory suite,
+ I need the ability to print extra accession labels printed on label 
+ stock my facility uses, so lab test results can be easily obtained
+ and delays in patient care can be avoided.  This intake has been 
+ implemented locally at the Kansas City, MO  VAMC.
+  
+ BLOOD BANK Clearance:
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*465 have no effect on Blood
+ Bank software functionality, therefore RISK is none.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*465 does not
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*465 does not
+ alter or modify any software design safeguards or safety critical elements
+ functions.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes
+ made, no specific validation requirements exist as a result of
+ installation of this patch.
+  
+ Patch Components:
+  
+ Files & Fields Associated:
+ File Name      Number  Field Name                Number  
+ New/Modified/Deleted
+ LABORATORY TEST  60    INSTITUTION EXTRA LABELS  16.1         NEW
+                        INSTITUTION EXTRA LABELS    .01        NEW
+                        NUMBER OF LABELS            1          NEW
+ Options Associated:
+ Option Menu Text    Name            Type      New/Modified/Deleted
+ Edit atomic tests   [LRDIEATOMIC]   Input       (Edit Template Updated)
+ Edit cosmic tests   [LRDIECOMIC]        Input   (Edit Template Updated)
+  
+  
+ Templates Associated:
+ Template Name    Type    File Name        Number  New/Modified/Deleted
+ LR ATOMIC TESTS  Input   Laboratory Test  60      Modified
+ LR COSMIC TESTS  Input   Laboratory Test  60      Modified
+  
+ New Service Requests (NSRs):
+ 20140714 Set Number of Labels in File 60 for Each Facility.
+  
+ Patient Safety Issues (PSIs):
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+  N/A
+  
+ Test Sites:
+ Information regarding the IOC test sites for NSR20140714 is available
+ in the LR*5.2*465 Initial Operating Capability Entry Request and Exit
+ Summary document.
+  
+ Software and Documentation Retrieval Instructions:
+  
+ Software is being released as a PackMan message.
+  
+ Documentation can be found in the VA Software Documentation Library
+ at http://www4.domain.ext/vdl/.
+  
+  
+ Installation Instructions:
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than
+ 5 minutes to install.
+  
+ 1.      Choose the PackMan message containing this patch.
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option.  
+ 3.      From the Kernel Installation and Distribution System Menu,
+         select  the Installation Menu.  From this menu, you may 
+             elect to use the following options. When prompted for the
+                 INSTALL NAME enter LR*5.2*465.
+         a.  Verify Checksums in Transport Global - This option will 
+             allow you to ensure the integrity of the routines that are in
+             the transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+         and choose the patch to install.
+ 5.      When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO// Press <Enter>
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO// Press <Enter>
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? YES// Press <Enter>
+  
+ 8.      When prompted "Enter options you wish to mark as 'Out of Order':",
+         please enter the following options:
+             Edit atomic tests [LRDIEATOMIC]
+             Edit cosmic tests [LRDIECOMIC]
+  
+  
+ 9.      When prompted "Enter protocols you wish to mark as
+         'Out of Order':", press <return>.
+ 10.     If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+ Post-Installation Instructions:
+ N/A.
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRLABLD
+    Before: B26400973   After: B35119838  **65,161,218,465**
+ Description of Changes:
+  LRLABLD is updated to read the new Institution Extra Labels field and use
+  that value over the existing Extra Labels field to determine the number of
+  extra labels for a division.
+  
+
+ 
+Routine list of preceding patches: 218
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 13, 2015
+Completed By:                               Date Completed: NOV 22, 2016
+Released By :                               Date Released : NOV 30, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

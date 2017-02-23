@@ -1,0 +1,647 @@
+Released SR*3*188 SEQ #178
+Extracted from mail message
+**KIDS**:SR*3.0*188^
+
+**INSTALL NAME**
+SR*3.0*188
+"BLD",10322,0)
+SR*3.0*188^SURGERY^0^3160825^y
+"BLD",10322,1,0)
+^^12^12^3160815^
+"BLD",10322,1,1,0)
+The patch addresses three (3) issues:
+"BLD",10322,1,2,0)
+ 
+"BLD",10322,1,3,0)
+1.   Cases aborted prior to the release of SR*3.0*184 are displayed as 
+"BLD",10322,1,4,0)
+     "CANCELLED" in the Operation Menu option [SROPER].
+"BLD",10322,1,5,0)
+ 
+"BLD",10322,1,6,0)
+2.   Nurses are unable to sign their Nurse Intraoperative Report (NIR) 
+"BLD",10322,1,7,0)
+     in the Surgical Package when the case has been aborted using the 
+"BLD",10322,1,8,0)
+     Abort/Cancel Operation option [SROABRT].
+"BLD",10322,1,9,0)
+ 
+"BLD",10322,1,10,0)
+3.   Users are unable to enter a D Code (Dental) in the PLANNED 
+"BLD",10322,1,11,0)
+     PRINCIPAL PROCEDURE field (#27) of the SURGERY file (#130) using
+"BLD",10322,1,12,0)
+     the Non-O.R. Procedure option [SRONOP] in the Surgery package.
+"BLD",10322,4,0)
+^9.64PA^^
+"BLD",10322,6.3)
+2
+"BLD",10322,"ABPKG")
+n
+"BLD",10322,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10322,"KRN",.4,0)
+.4
+"BLD",10322,"KRN",.401,0)
+.401
+"BLD",10322,"KRN",.402,0)
+.402
+"BLD",10322,"KRN",.403,0)
+.403
+"BLD",10322,"KRN",.5,0)
+.5
+"BLD",10322,"KRN",.84,0)
+.84
+"BLD",10322,"KRN",3.6,0)
+3.6
+"BLD",10322,"KRN",3.8,0)
+3.8
+"BLD",10322,"KRN",9.2,0)
+9.2
+"BLD",10322,"KRN",9.8,0)
+9.8
+"BLD",10322,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",10322,"KRN",9.8,"NM",1,0)
+SROCPT^^0^B19721278
+"BLD",10322,"KRN",9.8,"NM",2,0)
+SROP1^^0^B5072811
+"BLD",10322,"KRN",9.8,"NM",3,0)
+SRSCAN0^^0^B27843088
+"BLD",10322,"KRN",9.8,"NM","B","SROCPT",1)
+
+"BLD",10322,"KRN",9.8,"NM","B","SROP1",2)
+
+"BLD",10322,"KRN",9.8,"NM","B","SRSCAN0",3)
+
+"BLD",10322,"KRN",19,0)
+19
+"BLD",10322,"KRN",19.1,0)
+19.1
+"BLD",10322,"KRN",101,0)
+101
+"BLD",10322,"KRN",409.61,0)
+409.61
+"BLD",10322,"KRN",771,0)
+771
+"BLD",10322,"KRN",779.2,0)
+779.2
+"BLD",10322,"KRN",870,0)
+870
+"BLD",10322,"KRN",8989.51,0)
+8989.51
+"BLD",10322,"KRN",8989.52,0)
+8989.52
+"BLD",10322,"KRN",8994,0)
+8994
+"BLD",10322,"KRN","B",.4,.4)
+
+"BLD",10322,"KRN","B",.401,.401)
+
+"BLD",10322,"KRN","B",.402,.402)
+
+"BLD",10322,"KRN","B",.403,.403)
+
+"BLD",10322,"KRN","B",.5,.5)
+
+"BLD",10322,"KRN","B",.84,.84)
+
+"BLD",10322,"KRN","B",3.6,3.6)
+
+"BLD",10322,"KRN","B",3.8,3.8)
+
+"BLD",10322,"KRN","B",9.2,9.2)
+
+"BLD",10322,"KRN","B",9.8,9.8)
+
+"BLD",10322,"KRN","B",19,19)
+
+"BLD",10322,"KRN","B",19.1,19.1)
+
+"BLD",10322,"KRN","B",101,101)
+
+"BLD",10322,"KRN","B",409.61,409.61)
+
+"BLD",10322,"KRN","B",771,771)
+
+"BLD",10322,"KRN","B",779.2,779.2)
+
+"BLD",10322,"KRN","B",870,870)
+
+"BLD",10322,"KRN","B",8989.51,8989.51)
+
+"BLD",10322,"KRN","B",8989.52,8989.52)
+
+"BLD",10322,"KRN","B",8994,8994)
+
+"BLD",10322,"QUES",0)
+^9.62^^
+"BLD",10322,"REQB",0)
+^9.611^1^1
+"BLD",10322,"REQB",1,0)
+SR*3.0*184^1
+"BLD",10322,"REQB","B","SR*3.0*184",1)
+
+"MBREQ")
+0
+"PKG",308,-1)
+1^1
+"PKG",308,0)
+SURGERY^SR^SURGICAL DATA COLLECTION AND OPERATIONS SCHEDULING
+"PKG",308,20,0)
+^9.402P^^
+"PKG",308,22,0)
+^9.49I^1^1
+"PKG",308,22,1,0)
+3.0^2930624^2940818
+"PKG",308,22,1,"PAH",1,0)
+188^3160825
+"PKG",308,22,1,"PAH",1,1,0)
+^^12^12^3160825
+"PKG",308,22,1,"PAH",1,1,1,0)
+The patch addresses three (3) issues:
+"PKG",308,22,1,"PAH",1,1,2,0)
+ 
+"PKG",308,22,1,"PAH",1,1,3,0)
+1.   Cases aborted prior to the release of SR*3.0*184 are displayed as 
+"PKG",308,22,1,"PAH",1,1,4,0)
+     "CANCELLED" in the Operation Menu option [SROPER].
+"PKG",308,22,1,"PAH",1,1,5,0)
+ 
+"PKG",308,22,1,"PAH",1,1,6,0)
+2.   Nurses are unable to sign their Nurse Intraoperative Report (NIR) 
+"PKG",308,22,1,"PAH",1,1,7,0)
+     in the Surgical Package when the case has been aborted using the 
+"PKG",308,22,1,"PAH",1,1,8,0)
+     Abort/Cancel Operation option [SROABRT].
+"PKG",308,22,1,"PAH",1,1,9,0)
+ 
+"PKG",308,22,1,"PAH",1,1,10,0)
+3.   Users are unable to enter a D Code (Dental) in the PLANNED 
+"PKG",308,22,1,"PAH",1,1,11,0)
+     PRINCIPAL PROCEDURE field (#27) of the SURGERY file (#130) using
+"PKG",308,22,1,"PAH",1,1,12,0)
+     the Non-O.R. Procedure option [SRONOP] in the Surgery package.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","SROCPT")
+0^1^B19721278^B19370849
+"RTN","SROCPT",1,0)
+SROCPT ;BIR/MAM,ADM - PRINT DESCRIPTION OF CPT CODE ON LOOKUP ; [ 05/14/99  11:28 AM ]
+"RTN","SROCPT",2,0)
+ ;;3.0;Surgery;**3,31,88,127,184,188**;24 Jun 93;Build 2
+"RTN","SROCPT",3,0)
+1 N SRCODE,SRDA,SRDATE,SRDES,SRI,SRX
+"RTN","SROCPT",4,0)
+ S SRDATE=DT
+"RTN","SROCPT",5,0)
+ S SRDA=$S($G(SRTN):SRTN,$D(DA(1)):DA(1),$D(DA):DA,1:"")
+"RTN","SROCPT",6,0)
+ I $G(SRDA) S SRDATE=$P($G(^SRF(SRDA,0)),"^",9)
+"RTN","SROCPT",7,0)
+ S SRDATE=$S($G(ICPTVDT):ICPTVDT,1:SRDATE)
+"RTN","SROCPT",8,0)
+ S SRCODE=Y,SRX=$$CPTD^ICPTCOD(SRCODE,"SRDES",,SRDATE)
+"RTN","SROCPT",9,0)
+ F SRI=1:1:SRX D:$TR(SRDES(SRI)," ")'="" EN^DDIOL(SRDES(SRI),"","!,?1")
+"RTN","SROCPT",10,0)
+ Q
+"RTN","SROCPT",11,0)
+DISPLAY ; output principal CPT
+"RTN","SROCPT",12,0)
+ I $D(Y),Y="" Q
+"RTN","SROCPT",13,0)
+ N SRCODE,SRCPT,SRDA,SRDES,SRI,SRK,SRP,SRW,SRX,SRY,SRZ
+"RTN","SROCPT",14,0)
+ S Y=$P($$CPT^ICPTCOD(Y),"^",2),SRDA=$S($D(SRTN):SRTN,1:"") Q:SRDA=""
+"RTN","SROCPT",15,0)
+ I $D(QPQPQ) D SSPRIN Q
+"RTN","SROCPT",16,0)
+ D DES I '$O(^SRF(SRDA,"OPMOD",0)) Q
+"RTN","SROCPT",17,0)
+ S SRCPT="Principal CPT Code: "_SRW D EN^DDIOL(SRCPT,"","!,?6")
+"RTN","SROCPT",18,0)
+ S SRX="Modifiers: -"
+"RTN","SROCPT",19,0)
+ S SRI=0 F  S SRI=$O(^SRF(SRDA,"OPMOD",SRI)) Q:'SRI  D
+"RTN","SROCPT",20,0)
+ .S SRZ=$P(^SRF(SRDA,"OPMOD",SRI,0),"^"),SRY=$$MOD^ICPTMOD(SRZ,"I",$P($G(^SRF(SRDA,0)),"^",9)),SRX=SRX_$P(SRY,"^",2)_" "_$E($P(SRY,"^",3),1,57) D EN^DDIOL(SRX,"","!,?7") S SRX="           -"
+"RTN","SROCPT",21,0)
+ Q
+"RTN","SROCPT",22,0)
+OTHDISP ; output other procedure CPT
+"RTN","SROCPT",23,0)
+ I $D(Y),Y="" Q
+"RTN","SROCPT",24,0)
+ N SRCODE,SRCPT,SRDA,SRDES,SRI,SRK,SRP,SRW,SRX,SRY,SRZ
+"RTN","SROCPT",25,0)
+ S SRDA(1)=$S($D(SRTN):SRTN,1:""),SRDA=$S($D(DA):DA,1:"") Q:SRDA(1)=""!(SRDA="")
+"RTN","SROCPT",26,0)
+ I $D(QPQPQ) D SSOTH Q
+"RTN","SROCPT",27,0)
+ D DES I '$O(^SRF(SRDA(1),13,SRDA,"MOD",0)) Q
+"RTN","SROCPT",28,0)
+ S SRCPT="Other CPT Code: "_SRW D EN^DDIOL(SRCPT,"","!,?6")
+"RTN","SROCPT",29,0)
+ S SRX="Modifiers: -"
+"RTN","SROCPT",30,0)
+ S SRI=0 F  S SRI=$O(^SRF(SRDA(1),13,SRDA,"MOD",SRI)) Q:'SRI  D
+"RTN","SROCPT",31,0)
+ .S SRZ=$P(^SRF(SRDA(1),13,SRDA,"MOD",SRI,0),"^"),SRY=$$MOD^ICPTMOD(SRZ,"I",$P($G(^SRF(SRDA(1),0)),"^",9)),SRX=SRX_$P(SRY,"^",2)_" "_$E($P(SRY,"^",3),1,57) D EN^DDIOL(SRX,"","!,?7") S SRX="           -"
+"RTN","SROCPT",32,0)
+ Q
+"RTN","SROCPT",33,0)
+DES ; get short name and description
+"RTN","SROCPT",34,0)
+ N X,Z,SRDAA,SRDD S (SRCODE,SRK)=Y,SRDAA=$S($D(SRTN):SRTN,$D(SRDA(1)):SRDA(1),$D(SRDA):SRDA,1:"")
+"RTN","SROCPT",35,0)
+ S SRDD=DT I $G(SRDAA) S SRDD=$E($P(^SRF(SRDAA,0),"^",9),1,7)
+"RTN","SROCPT",36,0)
+ S SRY=$$CPT^ICPTCOD(SRCODE,SRDD),SRW=$P(SRY,"^",2)_"  "_$P(SRY,"^",3)
+"RTN","SROCPT",37,0)
+ S SRY=$$CPTD^ICPTCOD(SRCODE,"SRDES",,SRDD),SRK=SRK_" " F SRI=1:1:SRY D  Q:$L(SRK_" "_X)>245  S SRK=SRK_" "_X
+"RTN","SROCPT",38,0)
+ .S X=SRDES(SRI) F  S Z=$F(X,"  ") Q:'Z  S X=$E(X,1,Z-2)_$E(X,Z,255)
+"RTN","SROCPT",39,0)
+ S Y=SRK
+"RTN","SROCPT",40,0)
+ Q
+"RTN","SROCPT",41,0)
+ACTIV(SRTN,SRCODE) ; screen for active CPT codes
+"RTN","SROCPT",42,0)
+ K ICPTVDT
+"RTN","SROCPT",43,0)
+ N SROK,SRSDATE S SROK=1,SRSDATE=DT
+"RTN","SROCPT",44,0)
+ I $G(SRTN) S SRSDATE=$E($P(^SRF(SRTN,0),"^",9),1,7)
+"RTN","SROCPT",45,0)
+ S SROK=$P($$CPT^ICPTCOD(SRCODE,SRSDATE),"^",7),ICPTVDT=SRSDATE
+"RTN","SROCPT",46,0)
+ Q SROK
+"RTN","SROCPT",47,0)
+IN ; check CPT input
+"RTN","SROCPT",48,0)
+ N SRX,SRCPT K SRCMOD S SRX=X,SRCPT=$P(SRX,"-"),SRCMOD=$P(SRX,"-",2) I SRCMOD="" K SRCMOD
+"RTN","SROCPT",49,0)
+ S X=SRCPT
+"RTN","SROCPT",50,0)
+ Q
+"RTN","SROCPT",51,0)
+SSPRIN ; append CPT modifiers to principal CPT code
+"RTN","SROCPT",52,0)
+ N SRCMOD,SRCOMMA,SRCPT,SRI,SRM,X I $O(^SRF(SRTN,"OPMOD",0)) D
+"RTN","SROCPT",53,0)
+ .S (SRCOMMA,SRI)=0,SRCMOD="",SRCPT=Y_"-" F  S SRI=$O(^SRF(SRTN,"OPMOD",SRI)) Q:'SRI  D
+"RTN","SROCPT",54,0)
+ ..S SRM=$P(^SRF(SRTN,"OPMOD",SRI,0),"^"),SRCMOD=$P($$MOD^ICPTMOD(SRM,"I"),"^",2)
+"RTN","SROCPT",55,0)
+ ..S SRCPT=SRCPT_$S(SRCOMMA:",",1:"")_SRCMOD,SRCOMMA=1
+"RTN","SROCPT",56,0)
+ .S Y=SRCPT
+"RTN","SROCPT",57,0)
+ Q
+"RTN","SROCPT",58,0)
+SSOTH ; append CPT modifiers to other CPT code
+"RTN","SROCPT",59,0)
+ N SRCMOD,SRCOMMA,SRCPT,SRI,SRM,X I $O(^SRF(SRTN,13,SRDA,"MOD",0)) D
+"RTN","SROCPT",60,0)
+ .S (SRCOMMA,SRI)=0,SRCMOD="",SRCPT=Y_"-" F  S SRI=$O(^SRF(SRTN,13,SRDA,"MOD",SRI)) Q:'SRI  D
+"RTN","SROCPT",61,0)
+ ..S SRM=$P(^SRF(SRTN,13,SRDA,"MOD",SRI,0),"^"),SRCMOD=$P($$MOD^ICPTMOD(SRM,"I"),"^",2)
+"RTN","SROCPT",62,0)
+ ..S SRCPT=SRCPT_$S(SRCOMMA:",",1:"")_SRCMOD,SRCOMMA=1
+"RTN","SROCPT",63,0)
+ .S Y=SRCPT
+"RTN","SROCPT",64,0)
+ Q
+"RTN","SROCPT",65,0)
+CHK(SRCPT) ; check entered CPT code against Surgery Codes
+"RTN","SROCPT",66,0)
+ Q:$G(SRCPT)="" 0
+"RTN","SROCPT",67,0)
+ S SRCPT=$P($$CPT^ICPTCOD(SRCPT),U,2) Q:SRCPT="" 0
+"RTN","SROCPT",68,0)
+ N SRF,SRI,SRJ,SRX,SRLIST,II S SRF=0
+"RTN","SROCPT",69,0)
+ I $E(SRCPT,1)="D" F II=0:1:9999 I $E(SRCPT,2,99)=II S SRF=1 Q  ;D0000-D9999
+"RTN","SROCPT",70,0)
+ I 'SRF F II=00100:1:01999,10000:1:79999 I +SRCPT=II S SRF=1 Q
+"RTN","SROCPT",71,0)
+ I 'SRF F SRJ=1:1 S SRLIST=$P($T(LST9K+SRJ)," ;;",2) Q:SRLIST=""!(SRF=1)  F SRI=1:1 S II=$P(SRLIST,",",SRI) Q:II=""  I +SRCPT=II S SRF=1 Q
+"RTN","SROCPT",72,0)
+ I 'SRF I SRCPT?.N1"T" S SRF=1
+"RTN","SROCPT",73,0)
+ I 'SRF D
+"RTN","SROCPT",74,0)
+ . D EN^DDIOL("Planned Principal Procedure Code for Surgical procedure must be within the ",,"!,?3")
+"RTN","SROCPT",75,0)
+ . D EN^DDIOL("range of: 00100-01999;  10000-69999;  70000-79999;  allowed 90000 codes; ",,"!,?3")
+"RTN","SROCPT",76,0)
+ . D EN^DDIOL("D0000-D9999;  xxxxT.",,"!,?3")
+"RTN","SROCPT",77,0)
+ Q SRF
+"RTN","SROCPT",78,0)
+ ;
+"RTN","SROCPT",79,0)
+LST9K ; allowed 90K codes
+"RTN","SROCPT",80,0)
+ ;;90865,90870,91040,91120,91122,92502,92504,92511,92611,92612,92613,92614,92615 
+"RTN","SROCPT",81,0)
+ ;;92616,92617,92960,92961,92970,92986,92987,92990,93312,93313,93314,93315,93316
+"RTN","SROCPT",82,0)
+ ;;93317,93318,93355,93505,93580,93581,93582,93583,93631,93650,95940,95955,95958
+"RTN","SROCPT",83,0)
+ ;;95961,95990,95991,96420,96422,96425,96440,96450,96521,96522,97597,97598,97602
+"RTN","SROCPT",84,0)
+ ;;97605,97606,97607,97608,99144,99149
+"RTN","SROP1")
+0^2^B5072811^B4644240
+"RTN","SROP1",1,0)
+SROP1 ;B'HAM ISC/MAM - SELECT OPERATION (CONT); 8 Feb 1989  2:58 PM
+"RTN","SROP1",2,0)
+ ;;3.0;Surgery;**184,188**;24 Jun 93;Build 2
+"RTN","SROP1",3,0)
+STATUS ; print case status
+"RTN","SROP1",4,0)
+ I $P($G(^SRF(SROP,30)),"^")'="" D CAN Q
+"RTN","SROP1",5,0)
+ I $P($G(^SRF(SROP,31)),"^",8)'="" D CAN Q
+"RTN","SROP1",6,0)
+ I $P($G(^SRF(SROP,.2)),"^",12) S SROPER=SROPER_" (COMPLETED)" Q
+"RTN","SROP1",7,0)
+ I $D(^SRF(SROP,.2)),$P(^(.2),"^",12)="" S SRSTAT=0 D SCH I SRSTATUS=0 D REQ Q:SRSTATUS  G NO
+"RTN","SROP1",8,0)
+ I '$D(^SRF(SROP,.2)) S SRSTAT=0 D SCH I SRSTATUS=0 D REQ Q:SRSTATUS=1  G NO
+"RTN","SROP1",9,0)
+ Q
+"RTN","SROP1",10,0)
+NO ; not requested or scheduled
+"RTN","SROP1",11,0)
+ S SROPER=SROPER_" (NOT COMPLETE)"
+"RTN","SROP1",12,0)
+ Q
+"RTN","SROP1",13,0)
+CAN ; cancelled or aborted
+"RTN","SROP1",14,0)
+ S SR(.2)=$G(^SRF(SROP,.2)) I $P(SR(.2),"^")!($P(SR(.2),"^",10))&($P($G(^SRF(SROP,30)),"^",6)>1) S SROPER=SROPER_" (ABORTED)" Q
+"RTN","SROP1",15,0)
+ I $P($G(^SRF(SROP,30)),"^",6)="",$P(SR(.2),"^")!($P(SR(.2),"^",10)) S SROPER=SROPER_" (ABORTED)" Q
+"RTN","SROP1",16,0)
+ S SROPER=SROPER_" (CANCELLED)"
+"RTN","SROP1",17,0)
+ Q
+"RTN","SROP1",18,0)
+SCH ; check to see if case is scheduled
+"RTN","SROP1",19,0)
+ I '$D(^SRF(SROP,31)) S SRSTATUS=0 Q
+"RTN","SROP1",20,0)
+ I $P($G(^SRF(SROP,31)),"^",4)="" S SRSTATUS=0 Q
+"RTN","SROP1",21,0)
+ I $P($G(^SRF(SROP,31)),"^",4) D:SRSTAT=0 TIM0 D:SRSTAT=1 TIM1 S SRSTATUS=1 Q
+"RTN","SROP1",22,0)
+ Q
+"RTN","SROP1",23,0)
+TIM0 I '$D(^SRF(SROP,.2)) S SROPER=SROPER_" (SCHEDULED)" Q
+"RTN","SROP1",24,0)
+ I $P(^SRF(SROP,.2),"^",2) S SROPER=SROPER_" (NOT COMPLETE)" Q
+"RTN","SROP1",25,0)
+ I $P(^SRF(SROP,.2),"^",2)="" S SROPER=SROPER_" (SCHEDULED)"
+"RTN","SROP1",26,0)
+ Q
+"RTN","SROP1",27,0)
+TIM1 S SROPER=SROPER_" (SCHEDULED)" Q
+"RTN","SROP1",28,0)
+REQ ; check to see if case has been requested
+"RTN","SROP1",29,0)
+ I $D(^SRF(SROP,"REQ")),$P(^("REQ"),"^")=1,'$D(^SRF(SROP,.2)) S SROPER=SROPER_" (REQUESTED)" S SRSTATUS=1 Q
+"RTN","SROP1",30,0)
+ I $D(^SRF(SROP,"REQ")),$P(^("REQ"),"^")=1,$D(^SRF(SROP,.2)),$P(^(.2),"^",2)="" S SROPER=SROPER_" (REQUESTED)" S SRSTATUS=1
+"RTN","SROP1",31,0)
+ Q
+"RTN","SROP1",32,0)
+RET I 'SRSOUT W !!,"Press RETURN to continue " R Z:DTIME
+"RTN","SROP1",33,0)
+ Q
+"RTN","SROP1",34,0)
+END W !! D ^SRSKILL
+"RTN","SROP1",35,0)
+ Q
+"RTN","SROP1",36,0)
+ABORT ; aborted case
+"RTN","SROP1",37,0)
+ S SRABORT=0 I $D(^SRF(SROP,.2)),$P(^(.2),"^",10)'="" S SRABORT=1
+"RTN","SROP1",38,0)
+ Q
+"RTN","SRSCAN0")
+0^3^B27843088^B28185776
+"RTN","SRSCAN0",1,0)
+SRSCAN0 ;BIR/MAM - CANCEL SCHEDULED OPERATIONS (CONT) ;08/10/2011
+"RTN","SRSCAN0",2,0)
+ ;;3.0;Surgery;**34,42,67,103,107,114,100,144,175,176,182,184,188**;24 Jun 93;Build 2
+"RTN","SRSCAN0",3,0)
+ ;
+"RTN","SRSCAN0",4,0)
+ G SWAP ; change of SR*3*176
+"RTN","SRSCAN0",5,0)
+CUT S X1=SRSDATE,X2=-1 D C^%DTC S SRSDT=X,X=$P($G(^SRO(133,SRSITE,0)),"^",12) S SRTIME=SRSDT_"."_$S(X'="":X,1:1500)
+"RTN","SRSCAN0",6,0)
+ S SRTYPE=$P(^SRF(SRTN,0),"^",10) I SRTYPE="S" W !!,"Case schedule type is STANDBY. "
+"RTN","SRSCAN0",7,0)
+ D NOW^%DTC S SRN=+$E(%,1,12) I SRTYPE'="S",SRN'<SRTIME G SWAP
+"RTN","SRSCAN0",8,0)
+ S SRBOTH=0 I $P($G(^SRF(SRTN,"CON")),"^") S SRBOTH=1
+"RTN","SRSCAN0",9,0)
+REQ I 'SRBOTH D ^SRSCG
+"RTN","SRSCAN0",10,0)
+ S SRSCHST=$P($G(^SRF(SRTN,31)),"^",4) K:SRSCHST&SRSOR ^SRF("AMM",SRSOR,SRSCHST,SRTN)
+"RTN","SRSCAN0",11,0)
+ S $P(^SRF(SRTN,31),"^",4)="",$P(^SRF(SRTN,31),"^",5)="",^SRF(SRTN,"REQ")=1,^SRF("AR",SRSDATE,DFN,SRTN)="",^TMP("SRPFSS",$J)=""
+"RTN","SRSCAN0",12,0)
+ K DR S DA=SRTN,DR=".02///@",DIE=130 D ^DIE K DR D OERR
+"RTN","SRSCAN0",13,0)
+ I '$P($G(^SRF(SRTN,"1.0")),"^",11) D
+"RTN","SRSCAN0",14,0)
+ .N SREQ
+"RTN","SRSCAN0",15,0)
+ .S SREQ(130,SRTN_",",1.098)=+SRN,SREQ(130,SRTN_",",1.099)=DUZ
+"RTN","SRSCAN0",16,0)
+ .D FILE^DIE("","SREQ","^TMP(""SR"",$J)")
+"RTN","SRSCAN0",17,0)
+ W !!,"Case #"_SRTN_" has been removed from the schedule and changed to a request."
+"RTN","SRSCAN0",18,0)
+ I SRBOTH G ASK
+"RTN","SRSCAN0",19,0)
+PRESS W ! K DIR S DIR(0)="E" D ^DIR
+"RTN","SRSCAN0",20,0)
+ Q
+"RTN","SRSCAN0",21,0)
+ASK S SRBOTH=0 W !!,"There is a concurrent case associated with this operation.  Do you want to",!,"remove it from the schedule also ? YES// " R SRYN:DTIME I '$T!(SRYN["^") S SRYN="N"
+"RTN","SRSCAN0",22,0)
+ S SRYN=$E(SRYN) S:SRYN="" SRYN="Y"
+"RTN","SRSCAN0",23,0)
+ I "YyNn"'[SRYN W !!,"If you want to remove both cases from the schedule, enter 'YES'.  If you",!,"answer 'NO', the cases will no longer be associated with each other." G ASK
+"RTN","SRSCAN0",24,0)
+ I "Yy"[SRYN S SRTN=$P(^SRF(SRTN,"CON"),"^") G REQ
+"RTN","SRSCAN0",25,0)
+NOCC ; no longer concurrent cases
+"RTN","SRSCAN0",26,0)
+ S DA=$P(^SRF(SRTN,"CON"),"^"),DIE=130,DR="35///@" D ^DIE S SROERR=DA D ^SROERR0 S DA=SRTN D ^DIE,OERR,UNLOCK^SROUTL(DA)
+"RTN","SRSCAN0",27,0)
+ Q
+"RTN","SRSCAN0",28,0)
+SWAP ; move data into a new entry and set up the cancel date in the old
+"RTN","SRSCAN0",29,0)
+ W ! K DIR S DIR(0)="130,17.5",DIR("A")="Cancellation Timeframe" D ^DIR S SRTF=$P(Y,"^") I $D(DIRUT) W !!,"Case NOT cancelled." D PRESS G END
+"RTN","SRSCAN0",30,0)
+ K DIR S DIR(0)="130,18",DIR("A")="Primary Cancellation Reason" D ^DIR S SRSCAN=$P(Y,"^") I $D(DIRUT) W !!,"Case NOT cancelled." D PRESS G END
+"RTN","SRSCAN0",31,0)
+ K DR S SRCON=0,DA=SRTN,DR=".02///@;102///@;235///@;284///@;323///@;17.5////"_SRTF_";18////"_SRSCAN_";67T;70////"_DUZ,DIE=130 D ^DIE S:$D(DTOUT)!$D(DUOUT) SRSOUT=1
+"RTN","SRSCAN0",32,0)
+ S SRSCHST=$P($G(^SRF(SRTN,31)),"^",4),AVOID=$P(^(30),"^",2)
+"RTN","SRSCAN0",33,0)
+ I '$P($G(^SRF(SRTN,"CON")),"^") D ^SRSCG
+"RTN","SRSCAN0",34,0)
+ S SRSDPT=$P(^SRF(SRTN,0),"^"),SRSOP=$P(^SRF(SRTN,"OP"),"^")
+"RTN","SRSCAN0",35,0)
+ S SRSSET=$P(^SRF(SRTN,31),"^",5),$P(^SRF(SRTN,31),"^",4)="",$P(^SRF(SRTN,31),"^",5)=""
+"RTN","SRSCAN0",36,0)
+SWAP2 K:SRSCHST&SRSOR ^SRF("AMM",SRSOR,SRSCHST,SRTN) D NOW^%DTC S $P(^SRF(SRTN,30),"^")=$E(%,1,12)
+"RTN","SRSCAN0",37,0)
+ I '$P($G(^SRF(SRTN,"CON")),"^") D OERR
+"RTN","SRSCAN0",38,0)
+ I SRSCAN'="" G:$P(^SRO(135,SRSCAN,0),"^",2)="D" CON
+"RTN","SRSCAN0",39,0)
+ D:'SRSOUT ^SRSCAN2
+"RTN","SRSCAN0",40,0)
+CON I '$D(SRSCC),$D(^SRF(SRTN,"CON")),$P(^("CON"),"^")'="" D CANCC^SRSUTL2 Q:SRBOTH="^"!SRSOUT  I SRBOTH=1 G CON1
+"RTN","SRSCAN0",41,0)
+ I SRCON'=0,SRTNEW'=SRCON K DR S DA=SRTNEW,DIE=130,DR="35////"_SRCON D ^DIE S DA=SRCON,DR="35////"_SRTNEW D ^DIE K DR S SROERR=SRCON D ^SROERR0
+"RTN","SRSCAN0",42,0)
+ I $G(SRDEAD)=0,$G(SRBOTH)=1,$G(SRSCC)=1 S SROERR=$P(^SRF(SRTN,"CON"),"^") D ^SROERR0 S SROERR=SRTN D ^SROERR0
+"RTN","SRSCAN0",43,0)
+END D UNLOCK^SROUTL(SRTN),^SRSKILL K SRTN W @IOF
+"RTN","SRSCAN0",44,0)
+ Q
+"RTN","SRSCAN0",45,0)
+CON1 I SRDEAD=0 G SWAP2
+"RTN","SRSCAN0",46,0)
+ K DR S DA=SRTN,DR=".02///@;102///@;235///@;284///@;323///@;17.5////"_SRTF_";18///"_$P(^SRO(135,SRSCAN,0),"^")_";67///"_AVOID_";70////"_DUZ,DIE=130 D ^DIE
+"RTN","SRSCAN0",47,0)
+ D NOW^%DTC S $P(^SRF(SRTN,30),"^")=$E(%,1,12),$P(^SRF(SRTN,31),"^",4)="",$P(^SRF(SRTN,31),"^",5)=""
+"RTN","SRSCAN0",48,0)
+OERR ; update ORDER file (100)
+"RTN","SRSCAN0",49,0)
+ S SROERR=SRTN K SRTX D ^SROERR0
+"RTN","SRSCAN0",50,0)
+ Q
+"RTN","SRSCAN0",51,0)
+ABORT ; abort surgery case
+"RTN","SRSCAN0",52,0)
+ N SRDT,SRIN,SROUT
+"RTN","SRSCAN0",53,0)
+ S Y=$E($P(^SRF(SRTN,0),"^",9),1,7) X ^DD("DD") S SRDT=Y
+"RTN","SRSCAN0",54,0)
+ W @IOF,!," "_VADM(1)_" ("_VA("PID")_")   Case #"_SRTN_" - "_SRDT
+"RTN","SRSCAN0",55,0)
+ W !! F I=1:1:80 W "-"
+"RTN","SRSCAN0",56,0)
+ I $P($G(^SRF(SRTN,30)),"^")'=""!($P($G(^SRF(SRTN,31)),"^",8)'="") W !!,"Case has been cancelled/Aborted. No action taken." D PRESS Q
+"RTN","SRSCAN0",57,0)
+ S SROUT=$P($G(^SRF(SRTN,.2)),"^",12),SRIN=$P($G(^SRF(SRTN,.2)),"^",10)
+"RTN","SRSCAN0",58,0)
+ W ! K DIR S DIR(0)="130,18.5",DIR("A")="Case Aborted?",DIR("B")="N" D ^DIR S SRTF=$P(Y,"^") I $D(DIRUT) W !!,"Case NOT cancelled/aborted." D PRESS Q
+"RTN","SRSCAN0",59,0)
+ I $G(SRTF)>1,('SROUT!'SRIN) D  I $D(DTOUT)!$D(DUOUT)!(Y="") W !!,"  TIME PAT OUT OR and TIME PAT OUT OR must be entered to ABORT the case. Please   enter these times first" D PRESS Q
+"RTN","SRSCAN0",60,0)
+ .I 'SRIN K DIR S DA=SRTN,DIR(0)="130,.205",DIR("A")="Time Patient In the O.R." D ^DIR S SRIN=Y S:Y $P(^SRF(SRTN,.2),"^",10)=Y K DIR
+"RTN","SRSCAN0",61,0)
+ .I 'SROUT K DIR S DA=SRTN,DIR(0)="130,.232",DIR("A")="Time Patient Out of the O.R." D ^DIR S SROUT=Y K DIR
+"RTN","SRSCAN0",62,0)
+ K DIR S DIR(0)="130,18",DIR("A")="Primary Cancellation Reason" D ^DIR S SRSCAN=$P(Y,"^") I $D(DIRUT) W !!,"Case NOT cancelled/aborted." D PRESS Q
+"RTN","SRSCAN0",63,0)
+ K DR S SRCON=0,DA=SRTN,DR="17T;67T;70////"_DUZ_";.205////"_SRIN_";.232////"_SROUT,DIE=130 D ^DIE S:$D(DTOUT)!$D(DUOUT) SRSOUT=1
+"RTN","SRSCAN0",64,0)
+ S $P(^SRF(SRTN,30),"^",6)=SRTF I SRTF>1 S $P(^SRF(SRTN,30),"^",5)=1
+"RTN","SRSCAN0",65,0)
+ W !!!,$S(SRTF=1:"Cancelling",1:"Aborting")_" Surgery case #",SRTN D PRESS
+"RTN","SRSCAN0",66,0)
+ S SROERR=SRTN
+"RTN","SRSCAN0",67,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",10322,6)
+^178
+**END**
+**END**
+

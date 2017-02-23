@@ -1,0 +1,158 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 10/05/16 at 12:39
+=============================================================================
+Run Date: JAN 04, 2017                     Designation: PSJ*5*329
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #286                      Status: Released
+                  Compliance Date: FEB 04, 2017
+=============================================================================
+
+Associated patches: (v)PSJ*5*281   <<= must be installed BEFORE `PSJ*5*329'
+                    (v)PSJ*5*290   <<= must be installed BEFORE `PSJ*5*329'
+
+Subject: IV TYPE/INCORRECT ORDERABLE ITEM/VISTA MAIL AUTO-DC
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+ 1) Invalid IV type allowed
+ 2) Incorrect orderable item displayed after edit
+ 3) Vista mail shows "D" and should be "DA" for Auto Discontinue
+  
+  
+ Associated Ticket(s):
+ =====================
+ 1) I9856071FY16 - Invalid IV type allowed
+    I9855745FY16(d)
+  
+ 2) I9856969FY16 - Incorrect orderable item displayed after edit
+ 3) I9856592FY16 - Vista mail shows "D" and should be "DA" for 
+                   Auto Discontinue
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Upstate New York HCS 
+ Orlando VAMC
+  
+ Ticket Overview:
+ ================
+  
+  
+ 1) I9856071FY16 - Invalid IV type allowed
+  
+   
+ Problem: 
+ ========
+ When entering an IV drug order through VistA, the user can jump (enter
+ "^schedule") to another field, leaving the IV type blank.
+  
+ Resolution:
+ ===========
+ Modifications were made to the PSIVORE routine to ensure that an IV type is
+ entered for an order.
+  
+ 2) I9856969FY16 - Incorrect Orderable Item displayed after editing.
+   
+ Problem: 
+ ========
+ When a user edits the orderable item for an IV drug order in VistA, by
+ adding a new Additive and Orderable item, when the orders gets to the
+ point of verification, the Orderable Item reverts back to the original
+ Orderable Item.
+  
+ Resolution:
+ ===========
+ A modification was made to routine PSIVORE2 to ensure that the new
+ Orderable Item is retrieved from the NON-VERIFIED ORDERS FILE (#53.1). 
+  
+  
+ 3) 9856592FY16 - Vista mail shows "D" and should be "DA" for Auto
+                  Discontinue
+  
+ Problem: 
+ ========
+ VistA mail is only showing a "D" for 'Discontinued' for orders that were
+ Auto Discontinued.  This value should be "DA".
+  
+ Resolution:
+ ===========
+ A modification was made to routine PSJLMUT1 in tags DSPLORDU, DSPLORDV &
+ PIV1 to ensure the full value is displayed in the mail message.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  
+ This patch should be installed during non-peak hours.
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSJ*5.0*329)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSJ*5.0*329.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSIVORE
+    Before: B44481597   After: B44897670  **18,29,50,56,58,81,110,127,
+                                           133,157,203,213,181,252,305,
+                                           281,329**
+Routine Name: PSIVORE2
+    Before: B15145270   After: B15080071  **21,58,101,244,290,329**
+Routine Name: PSJLMUT1
+    Before: B73799409   After: B74824116  **4,27,29,49,58,107,110,146,
+                                           175,201,181,281,329**
+ 
+Routine list of preceding patches: 281, 290
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 23, 2016
+Completed By:                               Date Completed: DEC 15, 2016
+Released By :                               Date Released : JAN 04, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

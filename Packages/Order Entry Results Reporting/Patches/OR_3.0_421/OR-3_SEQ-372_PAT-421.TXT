@@ -1,0 +1,189 @@
+
+=============================================================================
+Run Date: JAN 18, 2017                     Designation: OR*3*421
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #372                      Status: Released
+                  Compliance Date: MAR 04, 2017
+=============================================================================
+
+Associated patches: (v)OR*3*286    <<= must be installed BEFORE `OR*3*421'
+                    (v)OR*3*423    <<= must be installed BEFORE `OR*3*421'
+                    (v)OR*3*424    <<= must be installed BEFORE `OR*3*421'
+                    (v)HMP*2*1     <<= must be installed BEFORE `OR*3*421'
+
+Subject: eHMP UNSIGNED ORDERS TRIGGER
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Changes were needed in OE/RR to store data for the eHMP (Enterprise 
+ Health Management Platform).  The eHMP needed data that has dates and 
+ times with seconds and also required triggers when relevant OE/RR data 
+ were created and/or edited.  The OR* namespace routines were modified to 
+ call the appropriate eHMP API (application programmer interface) line 
+ tags, where needed.
+  
+ These eHMP APIs store the data with a date and time stamp that has 
+ seconds, which are required by the JDS (JSON data store).  The JDS is the 
+ repository for the eHMP data.
+  
+ The changes include tracking when an order was flagged or unflagged by a 
+ user.  There were also changes to store clinical data in the JDS for 
+ unsigned, as well as signed, orders.  Additionally, discontinued orders 
+ now trigger updates to the JDS.
+  
+ **NOTE**
+ HMP*2.0*2 is being released in a bundle with 6 supporting patches. It is 
+ recommended that this bundle be installed during non-peak hours with no
+ CPRS users on the system. This bundle should take less than 5 minutes to
+ install.
+  
+ The patches will be installed in the following order:
+ 1. DG*5.3*921
+ 2. MC*2.3*47
+ 3. GMRV*5*32
+ 4. PSB*3*95
+ 5. PSS*1*197
+ 6. OR*3*421
+ 7. HMP*2.0*2
+  
+ Following the installation of HMP*2.0*2, IRM staff should review the Error
+ trap for any <NOROUTINE> errors and work with the assistance of the
+ Clinical Application Coordinators (CACs) to validate the patient's orders
+ placed during the install time.
+  
+ Patch Components:
+ -----------------
+  
+ Files and Fields Associated:
+ ----------------------------
+ There are no new or modified files or fields in this patch.
+  
+ Forms Associated:
+ -----------------
+ There are no new or modified forms in this patch.
+  
+ Mail Groups Associated:
+ -----------------------
+ There are no new or modified mail groups in this patch
+  
+ Options Associated:
+ -------------------
+ There are no new or modified options in this patch.
+  
+ Protocols Associated:
+ ---------------------
+ There are no new or modified protocols in this patch. 
+  
+ Security Keys Associated:
+ -------------------------
+ There are no new or modified security keys in this patch.
+  
+ Templates Associated:
+ ---------------------
+ There are no new or modified templates in this patch.
+  
+  
+ Additional Information:
+ -----------------------
+ Defect        Description
+ ------        -----------
+ DE4502        VA-345 Non-medication Clinic Orders displaying in the meds
+                 applets
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR #20150408 - VistA Evolution Enterprise Health Management Platform 
+ (eHMP)
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ There are no PSIs associated with this patch.
+  
+ Remedy Tickets(s) & Overview
+ ----------------------------
+ There are no Remedy tickets associated with this patch.
+  
+ Test Sites:
+ -----------
+ Hampton, VA 
+ Indianapolis, IN
+ Loma Linda, CA
+ Portland, OR
+ San Antonio, TX
+ San Diego, CA
+  
+ Patch Installation:
+ -------------------
+ This patch will be installed from HMP*2.0*2 patch
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ HMP*2.0*2 is being released in a bundle with 6 supporting patches. It is 
+ recommended that this bundle be installed during non-peak hours
+ with no CPRS users on the system. This bundle should take less than 5
+ minutes to install.
+  
+ The patches will be installed in the following order:
+ 1. DG*5.3*921
+ 2. MC*2.3*47
+ 3. GMRV*5*32
+ 4. PSB*3*95
+ 5. PSS*1*197
+ 6. OR*3*421
+ 7. HMP*2.0*2
+  
+ Following the installation of HMP*2.0*2, IRM staff should review the Error
+ trap for any <NOROUTINE> errors and work with the assistance of the
+ Clinical Application Coordinators (CACs) to validate the patient's orders
+ placed during the install time.
+  
+ Installation Instructions:
+  
+ Patch OR*3.0*421 is part of a multi-build:  HMP_MULTIBUILD_2-0_P02.KID
+ See the HMP*2.0*2 patch description for the installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCSAVE
+    Before: B99645257   After:B124971276  **7,56,70,73,92,94,116,141,163,
+                                           187,190,195,243,303,293,280,
+                                           306,286,269,423,421**
+Routine Name: ORCSAVE2
+    Before: B85557974   After:B107941468  **4,27,56,70,94,116,190,157,
+                                           215,265,243,293,280,346,269,
+                                           421**
+Routine Name: ORWDX
+    Before: B72026068   After: B76124297  **10,85,125,131,132,141,164,
+                                           178,187,190,195,215,246,243,
+                                           283,296,280,306,350,424,421**
+Routine Name: ORWDXA
+    Before: B83747347   After:B118705146  **10,85,116,132,148,141,149,
+                                           187,213,195,215,243,280,306,
+                                           390,421**
+ 
+Routine list of preceding patches: 390, 423, 424
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 27, 2015
+Completed By:                               Date Completed: DEC 22, 2016
+Released By :                               Date Released : JAN 18, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

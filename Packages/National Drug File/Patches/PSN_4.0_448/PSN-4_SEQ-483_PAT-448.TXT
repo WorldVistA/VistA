@@ -1,0 +1,224 @@
+$TXT Created by                 CTST.FO-BIRM.DOMAIN.EXT  (KIDS) on Monday, 03/14/16 at 13:20
+=============================================================================
+Run Date: NOV 15, 2016                     Designation: PSN*4*448
+Package : PSN - NATIONAL DRUG FILE            Priority: Mandatory
+Version : 4       SEQ #483                      Status: Released
+                  Compliance Date: DEC 16, 2016
+=============================================================================
+
+Associated patches: (v)PSN*4*296   <<= must be installed BEFORE `PSN*4*448'
+
+Subject: ADDITIONAL NDC/UPN APIS
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch adds three components to the routine PSNAPIS, supported by 
+ Integration Control Registration (ICR) #2531, to provide additional
+ access to the NDC/UPN file (#50.67).
+  
+ 1) INTRAN - This entry point provides input transform lookup functionality
+    for fields that store NDC codes.
+  
+ 2) DRGCLS - This entry point returns class and parent class for a 
+    National Drug Code (NDC).
+  
+ 3) QLIST - This entry point provides executable help ("?" or "??") for
+    fields that store NDC codes.
+  
+ Patch Components:
+ -----------------
+  
+  
+ APIs Associated:
+  
+ API                        New/Modified/Deleted
+ --------------             --------------------
+ INTRAN^PSNAPIS                   New
+ DRGCLS^PSNAPIS                   New
+ QLIST^PSNAPIS                    New
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------  
+ N/A 
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Cleveland, OH
+ Heartland-East HCS, MO
+ San Antonio, TX
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                             File Name              FTP Mode
+ ------------------------------------------------------------------------
+ Pharmacy Re-Engineering (PRE)     PHAR_1_API_R1016.PDF   (binary)
+    API Manual
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system, preferably during 
+ non-peak hours. Installation should take less than 1 minute.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     # (PSN*4.0*448):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter PSN*4.0*448.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+     Answer NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+     Answer NO.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;NATIONAL DRUG FILE;**[Patch List]**; 30 Oct 98;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSNAPIS
+    Before: B50538431   After: B59524567  **2,3,47,70,169,108,262,296,448**
+
+=============================================================================
+User Information:                          Hold Date     : NOV 10, 2016
+Entered By  :                               Date Entered  : JUN 16, 2015
+Completed By:                               Date Completed: NOV 03, 2016
+Released By :                               Date Released : NOV 15, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

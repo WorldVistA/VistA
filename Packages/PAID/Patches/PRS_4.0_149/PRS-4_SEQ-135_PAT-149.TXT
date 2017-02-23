@@ -1,0 +1,136 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 10/13/16 at 14:51
+=============================================================================
+Run Date: JAN 20, 2017                     Designation: PRS*4*149
+Package : PRS - PAID                          Priority: Mandatory
+Version : 4       SEQ #135                      Status: Released
+                  Compliance Date: FEB 20, 2017
+=============================================================================
+
+
+Subject: PAID ANNUITANT CODE ADDITIONS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will update the PAID ANNUITANT INDICATOR (#454.0126)
+ sub file.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED TICKET(S):
+ =====================
+ 1. I10993012FY17 - PAID Annuitant Code Additions 
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ N. Florida / S.Georgia HCS 
+ Salem VAMC
+  
+  
+  
+ Ticket Overview:
+ ================
+  
+ 1. I10993012FY17 - PAID Annuitant Code Additions 
+  
+ Problem:
+ --------
+ A request was made to add six new entries to the ANNUITANT INDICATOR 
+ (#454.0126) sub file in the PAID CODE FILES (#454) file.
+  
+  
+ Resolution:
+ -----------
+ Routine PRS4P149 has been created to add six new entries to the ANNUITANT 
+ INDICATOR (#454.0126) sub file
+  
+ The following codes will be added to the file:
+  
+  Code    Description  
+  ----    ------------
+   W      FORMER CSRS PHASED RETIREE
+   M      FORMER FERS PHASED RETIREE
+   N      FERS PHASED RETIREE AND A RETIRED UNIFORM OFFICER
+   X      CSRS PHASED RETIREE AND A RETIRED UNIFORM OFFICER
+   P      FERS PHASED RETIREE AND A RETIRED UNIFORM ENLISTED
+   Y      CSRS PHASED RETIREE AND A RETIRED UNIFORM ENLISTED
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be installed with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+  
+ Install Time - less than 2 minutes.
+  
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options: 
+         (when prompted for INSTALL NAME, enter PRS*4.0*149)
+     
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this patch
+               is installed.  It compares all components of this patch
+               (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package PRS*4.0*149.
+    
+      5. When prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO.  
+     
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//", respond YES.
+   
+         When prompted "Enter options you wish to mark as 'Out Of Order':",
+         enter the following option:
+  
+                [PRSD UPDATE PAID CODES] Update PAID Codes
+  
+         When prompted "Enter protocols you wish to mark as 'Out Of
+         Order':", Press <ENTER>.
+  
+      7. Review the installation message for errors.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRS4P149
+    Before:       n/a   After:  B3405586  **149**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 07, 2016
+Completed By:                               Date Completed: JAN 18, 2017
+Released By :                               Date Released : JAN 20, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

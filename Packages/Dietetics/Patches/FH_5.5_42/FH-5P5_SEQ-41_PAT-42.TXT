@@ -1,0 +1,175 @@
+$TXT Created by                      DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 09/01/16 at 13:18
+=============================================================================
+Run Date: JAN 18, 2017                     Designation: FH*5.5*42
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #41                    Status: Released
+                  Compliance Date: FEB 18, 2017
+=============================================================================
+
+Associated patches: (v)FH*5.5*41   <<= must be installed BEFORE `FH*5.5*42'
+
+Subject: GENERAL SOFTWARE FIXES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issues:
+ 1. Adding Food, Drug/Food allergies BAY LEAVES, CARAWAY SEEDS, and
+    FRUCTOSE to routine FHSELA2.
+ 2. The Supplemental Feeding associated with a diet is not being 
+    discontinued when a new diet order becomes active at a scheduled
+    date/time. 
+  
+ PARTICIPATING TEST SITES
+ ========================
+ Charlie Norwood VA Medical Center (Augusta, Georgia)
+ Robley Rex VA Medical Center (Louisville, Kentucky)
+  
+ ASSOCIATED NSR:
+ ==============
+ N/A
+  
+ PATIENT SAFETY ISSUES:
+ =====================
+ N/A
+  
+ ASSOCIATED CA SDM TICKETS:
+ =========================
+ 1. R8802610FY16 - Add new Food, Drug/Food allergies to routine FHSELA2.
+  
+ Problem:
+ -------
+ The New Term Rapid Turnaround (NTRT) Allergy team has recently added 
+ BAY LEAVES as a food allergy and CARAWAY SEEDS, FRUCTOSE as drug/food
+ allergies to the GMR ALLERGIES file (#120.82). These new food, drug/food
+ allergies must be added to the routine FHSELA2 in order to be mapped 
+ as allergy type food preference dislikes in the Dietetics package.
+  
+ Resolution:
+ ----------
+ Routine FHSELA2 has a hard coded list of food allergies. It uses
+ this hard coded list to present to the user for adding a food 
+ allergy preference dislike to the FOOD PREFERENCES file (#115.2) 
+ and then map it to a matching record in the GMR ALLERGIES file 
+ (#120.82). BAY LEAVES, CARAWAY SEEDS, and FRUCTOSE will be added 
+ to the hard coded list of food allergies in routine FHSELA2 so
+ they may be presented to the user.
+  
+ 2. I9885798FY16 - The Supplemental Feeding associated with a diet is not 
+    being discontinued when a new diet order becomes active at a scheduled
+    date/time.
+  
+ Problem:
+ -------
+ A patient's current diet order has an associated supplemental feeding. 
+ A new diet order is placed and scheduled to start at a later time. When
+ the new diet order takes effect, the old diet is cancelled, but the 
+ associated supplemental feeding is not getting cancelled.
+  
+ Resolution:
+ ----------
+ The code used to cancel the supplemental feeding requires a variable for
+ the patient's location (WARD) to be set. If is not set the supplemental 
+ feeding cancellation process is stopped. When a diet order is scheduled
+ to start at a later date/time it is filed, a TASKMAN task is filed to 
+ update the patient's current nutrition admission to link the new diet
+ and cancel the old diet's standing orders, supplemental feedings. One
+ thing it does not do is set the variable WARD. The update process will
+ edited to define the variable WARD.
+ __________________________________________________________________________
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ ------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 
+ minutes to install.
+  
+ There are no options to disable for this patch installation.
+  
+ Installation Instructions:
+ -------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu. From this menu, you may elect to use the 
+    following options. When prompted for the INSTALL NAME enter the
+    patch FH*5.5*42:
+  
+    a. Backup a Transport Global - This option will create a backup
+       message of any routines exported with this patch. It will not
+       backup any other changes such as DDs or templates.
+  
+    b. Compare Transport Global to Current System - This option will
+       (allow you to view all changes that will be made when this
+       patch is installed. It compares all components of this patch
+       routines, DDs, templates, etc.).
+  
+    c. Verify Checksums in Transport Global - This option will allow
+       you  to ensure the integrity of the routines that are in the
+       transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option 
+    and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//' 
+    respond 'NO'.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO//' respond 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHORD7
+    Before: B16343408   After: B16786718  **8,41,42**
+ Description of Changes:
+  Inserted the following line of code at U1+2^FHORD7:
+   
+    S WARD=$G(^DPT(DFN,.1))
+   
+  This will set the variable WARD to the value of the data stored in this
+  field. It is the WARD LOCATION (field #.1) in the PATIENT file (file #2)
+  to which the patient is admitted. With the variable WARD defined, the 
+  cancellation logic in CAN^FHNO5 will not exit out unexpectedly.
+
+Routine Name: FHSELA2
+    Before:B130400991   After:B133567646  **8,13,23,25,28,35,37,39,40,41,42**
+ Description of Changes:
+  Added the following line of hard coded data to the end of routine FHSELA2:
+   
+   ;;BAY LEAVES;BAY LEAVES
+   ;;CARAWAY SEEDS;CARAWAY SEEDS
+   ;;FRUCTOSE;FRUCTOSE
+
+ 
+Routine list of preceding patches: 41
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 03, 2016
+Completed By:                               Date Completed: JAN 17, 2017
+Released By :                               Date Released : JAN 18, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

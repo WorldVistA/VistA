@@ -1,0 +1,278 @@
+$TXT Created by                E at DEVVPP.DOMAIN.EXT  (KIDS) on Wednesday, 10/12/16 at 17:20
+=============================================================================
+Run Date: DEC 19, 2016                     Designation: IB*2*574
+Package : IB - INTEGRATED BILLING             Priority: EMERGENCY
+Version : 2       SEQ #533                      Status: Released
+                  Compliance Date: DEC 22, 2016
+=============================================================================
+
+Associated patches: (v)IB*2*547    <<= must be installed BEFORE `IB*2*574'
+
+Subject: MCCF EBILLING FY15 547 WARRANTY
+
+Category: 
+  - PATCH FOR A PATCH
+  - Routine
+  - Other
+
+Description:
+============
+
+ *** Note:  This patch has a mandatory 3 day installation compliance.
+  
+ MCCF (Medical Care Collection Fund) warranty fix for the FY15 eBilling 
+ Compliance Phase 3 project.
+      
+ This patch contains a fix for the installed patch IB*2.0*547.  When 
+ testing with FSC, customer reported that they are not able to enter a 
+ professional alternate payer ID on Bill Screen 10 when the charge type is 
+ institutional and the form type is a CMS-1500.  The version of routine 
+ IBCSC10 released in IB*2.0*547 does not handle this scenario correctly.
+ This warranty patch corrects this defect in routine IBCSC10.
+      
+ In addition, requirements defects were also discovered.  There were 
+ several changes made in patch 547 to remove the printing and transmission 
+ of admission dates on all outpatient claims.  During the warranty period 
+ it was discovered that Outpatient Home Health and Outpatient Hospice 
+ claims still require the admission date and time or they will be rejected.  
+  
+ A function ($$HHLTH) was added to routine IBCEF1 to determine if a claim is 
+ Home Health or Hospice.  This function was inserted into entries #77, #98 
+ and #1305 of the IB FORM FIELD CONTENT file (# 364.7) to output the date for
+ all inpatient claims AND all Outpatient home health and hospice claims.
+  
+ The purpose of this patch is to meet the requirements for the MCCF 
+ eBilling Compliance Phase 3 project related to Integrated Billing (IB).
+ Integrated Billing is a software module within Veterans Health Information
+ Systems and Technology Architecture (VistA) that provides the ability for
+ billing personnel to submit claims in either a paper or electronic format
+ to third-party payers. 
+      
+      
+ Patch Components
+ ================
+        
+ Files & Fields Associated:
+        
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ IB FORM FIELD CONTENT (#364.7)
+      Screen: I $$INCLUDE^IBY574PR(7,Y)
+        
+        
+ Forms Associated:
+                                                            New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+      
+       
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+        
+        
+ Options Associated:
+                                                           New/Modified/
+ Option Name                                  Type            Deleted    
+ -----------                                  ----         -------------
+ N/A
+        
+       
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+      
+        
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+       
+       
+ Templates Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+       
+        
+ Additional Information:
+ N/A   
+        
+ New Service Requests (NSRs)
+ ----------------------------  
+ NSR 20140414 - Medical Care Collection Fund (MCCF) eBilling Compliance 
+ Phase 3
+       
+       
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+       
+       
+ Defect Tracking System Ticket(s) & Overview
+ ---------------------------
+ NSD Ticket# I10841525FY16
+      
+ Problem:
+ -------
+ When testing with FSC, customer reported that they are not able to enter a 
+ professional alternate payer ID on Bill Screen 10 when the charge type is 
+ institutional and the form type is a CMS-1500.
+      
+ Resolution:
+ ----------
+ Modified screen 10 screening logic to be consistent.
+ Screen 10 will now use form-type instead of charge type.
+      
+  
+ NSD Ticket# I11035267FY17
+  
+ Problem:
+ -------
+ A requirements defect was found during the warranty for patch IB*2.0*547.  
+ There were several IB changes made to remove the printing & transmission of 
+ admission dates on all outpatient claims. During the warranty period it was 
+ discovered that Outpatient Home Health and Outpatient Hospice claims still 
+ require the admission date or they will be rejected.
+      
+ Resolution:
+ ----------
+ Added $$HHLTH^IBCEF1 to determine if a claim is Home Health or Hospice.  
+  
+       
+ Test Sites:
+ ----------
+ Pittsburgh
+ South Texas
+ Northern Indiana
+      
+ Documentation Retrieval Instructions
+ ------------------------------------
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server.
+      
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+      
+    Albany:                 domain.ext
+    Hines:                  domain.ext    
+    Salt Lake City:         domain.ext
+      
+ Documentation can also be found on the VA Software Documentation Library 
+ at: 
+ http://www.domain.ext/vdl/
+      
+ Title                                 File Name            Transfer Mode
+ --------------------------------------------------------------------------
+ Release Notes/Installation Guide      ib_2_0_p574_rn.pdf   Binary
+      
+ Patch Installation:
+       
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A  
+       
+        
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users entering and editing IB claims.  
+ This patch should take less than 5 minutes to install
+        
+ No options need to be disabled.
+      
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users entering and editing IB claims.  This 
+ patch should take less than 5 minutes to install.
+            
+ 1.  Choose the PackMan message containing this patch.
+       
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+        
+ 3.  From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+       
+     a.  Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch 
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - this option will allow
+         you to ensure the integrity of the routines that are in
+         transport global.
+          
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. (ex. IB*2.0*574)
+        
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//',  enter NO
+       
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO//,  respond NO
+        
+ 7.  When prompted "DEVICE: HOME//",  enter HOME
+      
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+       
+        
+ Post-Installation Instructions
+ ------------------------------
+      
+ There are no special post-installation instructions for this patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCEF1
+    Before: B67394178   After: B71584644  **52,124,51,137,210,155,349,
+                                           371,447,547,574**
+ Description of Changes:
+  Added function $$HHLTH(IBIFN,OUT) which checks to see if a claim is
+  either an inpatient claim or an Outpatient Home Health or Hospice Claim.
+  Those claims require an admission date to be transmitted.  All other
+  claims do not.
+
+Routine Name: IBCSC10
+    Before:  B8325466   After:  B8993520  **432,547,574**
+ Description of Changes:
+  Changed ACINTEL+17^IBSCS10 to:
+  S IBINSPRF=$$ FT^IBCEF(+IBIFN)=3  
+  ; set IBINST flag=1 if it is institutional.
+
+Routine Name: IBY574PR
+    Before:       n/a   After:  B1642628  **574**
+ 
+Routine list of preceding patches: 547
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 14, 2016
+Completed By:                               Date Completed: DEC 15, 2016
+Released By :                               Date Released : DEC 19, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

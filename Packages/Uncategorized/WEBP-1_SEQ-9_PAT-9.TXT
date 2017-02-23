@@ -1,0 +1,292 @@
+
+=============================================================================
+Run Date: DEC 23, 2016                     Designation: WEBP*1*9
+Package : WEBP - PATIENT CENTERED MANAGEMENT  Priority: Mandatory
+Version : 1         SEQ #9                      Status: Released
+                  Compliance Date: JAN 22, 2017
+=============================================================================
+
+
+Subject: PCMM WEB V1.9 CONFIG UPDATES AND eHMP NEW TEAM ROLES
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Patient-Centered Management Module (PCMM) Web application version 
+ WEBP*1*9 will implement the following configuration changes to current 
+ functionality that will reduce errors received by users and allow the 
+ system to function more efficiently.
+  
+   
+ Configuration and Software Changes:
+ ===================================
+  
+ RTC 409913 - PCMM Web needs to add eHMP requirements to add 4 new Team 
+ Roles to the Non-PC Specialty (Med/Surg) care type of Service Chief, 
+ Scheduler, Physical Therapist and Triage Specialist along with 31 new 
+ FOCUSs for this care type so the user has access to these new team roles 
+ and new FOCUSs when managing a Non-PC Specialty team and patient 
+ assignments. This will allow the user to manage consult teams to support 
+ activity management within the consult process. 
+  
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ RTC 390962 - Adding a comment to the Comment section of the Alerts is 
+ causing a break in the JavaScript which freezes all of the alerts 
+ preventing any further action if a user hits the Enter key when entering 
+ a comment for a single alert. Removed the line feed for a new line and 
+ the Enter key from the JavaScript so this does not cause errors in the 
+ JavaScript and the user is able to enter comments without any problems.
+  
+ CA-SDM Ticket: 
+    I10644189FY16           I8399771FY16            R10590409FY16   
+    R11207604FY17
+  
+  
+ RTC 409920 - PCMM Web gives the user an error stating there is concurrent 
+ assignments to both PACT and HBPC teams if the patient had a previous or 
+ historical assignment to a HBPC Team when the user tries to assign the 
+ patient to a PACT team. If this error occurs, the system has detected a 
+ valid encounter and tries to complete the PACT assignment for the patient 
+ with the Start Date the same as the encounter date which conflicts with 
+ the End Date of the PC-HBPC team assignment. The system will automatically
+ override the Start Date of the PACT assignment to start on the day of the
+ assignment to the PACT team to remove the conflict but will maintain the
+ actual encounter date in the Last Encounter Date column on the patient's
+ profile.
+  
+ CA-SDM Ticket: 
+    R11627281FY17        I11185753FY17           I11231087FY17
+    R10262152FY16        I8055133FY16            I9762241FY16
+    R9746481FY16
+  
+  
+ RTC 384612 - Secure Messaging relies on a VistA API to determine the 
+ current provider for a patient by examining the most recent date in the 
+ VistA file. (e.g. POSITION ASSIGNMENT HISTORY File (#404.52) that 
+ Scheduling API $$TPPR^SCAPMC that MHV is using to retrieve the PCMM 
+ Providers from VistA.) PCMM Web stores date ranges in a way where the End 
+ Date of the first time range is equal to the Start Date of the next range 
+ so in this file there were two different records with the same date which 
+ confused the API. Secure Messaging group confirmed that automatically 
+ backdating a staff member's un-assignment End Date by 1 minute and 
+ syncing that back to VistA corrected the issue by showing the correct 
+ provider. PCMM Web will change how PCMM Web writes back to the VistA file 
+ by automatically backdating a staff member's un-assignment End Date by 1 
+ minute in VistA but maintaining the correct date in PCMM Web GUI.
+  
+ CA-SDM Ticket: No associated helpdesk tickets for this issue. 
+  
+  
+ RTC 409926 - The Patient Search query is one large query that needs to be 
+ optimized to provide faster performance when searching for patients. This 
+ query will be broken into 3 smaller separate queries that will search by 
+ 1. SSN, 2. Last Initial + last 4 SSN or 3. Patient Name. Also the search 
+ for PACT team name and assigned PCP/AP will be removed from the search 
+ query parameters which will simplify the 3 smaller queries even further 
+ by dropping multiple joins from the SQL execution. This new optimization 
+ will also remove the Team Name and PCP/AP columns from the Patient Search 
+ Results table that is displayed to the users when the patient search 
+ results are returned. 
+  
+ CA-SDM Ticket:
+    I10727804FY16           I11039650FY17           I11151695FY17
+    I10970058FY17           I10802730FY16           R10216087FY16
+    R10214927FY16           R10214673FY16           R10214669FY16 
+    R10214664FY16           R10185122FY16           I10184917FY16
+    I10143200FY16           I10461482FY16           R10675219FY16 
+    R10609911FY16           R10553035FY16           R10509995FY16  
+    I10014311FY16           R9894173FY16            R9745954FY16   
+    R11303253FY17           I10642528FY16           I9762274FY16
+    I9808090FY16            R10727792FY16           I10307360FY16 
+    I9762669FY16            I11170000FY17           I10481033FY16 
+    I11480977FY17           I9909235FY16            I10143401FY16 
+    I9788587FY16            I10054105FY16           I11537636FY17
+    I9964513FY16            I9928814FY16            R10788353FY16  
+    R9851498FY16            I9737074FY16            I10014119FY16
+  
+  
+ RTC 377578 - The CPRS Primary Care Window does not display any specialty 
+ care types team assignments when the team position the patient is 
+ assigned to is not actively staffed. The system will display all 
+ specialty care types team assignments whether the team position is 
+ actively staffed or not in the CPRS Primary Care Window using the 
+ designated tag of "SP:" followed by the team name when a user clicks on 
+ the CPRS Primary Care Header for details on the complete list of patient 
+ team assignments.
+  
+ CA-SDM Ticket: R10355776FY16
+  
+  
+ RTC 322004 - The Java code "Equals" implementation of the staff search 
+ object searches for staff members by last name and SSN. If a staff 
+ members SSN field is blank and it finds more than one staff member with 
+ the same last name then the first staff member in the list is displayed 
+ and all others are truncated. The end results would drop the duplicate 
+ records because the SSN field was blank and it was not looking at the 
+ first name in the comparison. Updated Java code "Equals" implementation 
+ of staff search object to include First Name in the comparison set. This 
+ search will now display all staff members with the same last name in the 
+ search for staff results table even if the SSN field is blank. 
+  
+ CA-SDM Ticket: 
+    R9964858FY16            I9724144FY16            I9004575FY16  
+    I8097037FY16            I8248655FY16            I11481115FY17 
+    I11083676FY17           R8683437FY16            I8605345FY16  
+    I9660761FY16            I9909244FY16            I11344504FY17
+    R9660984FY16            R11271291FY17
+  
+  
+ RTC 417422 - The Auto-Inactivation (AI) process needs to be able to 
+ provide single patient encounter information to enhance troubleshooting 
+ efforts instead of pulling encounter information for the entire station. 
+ Added code to JMS console that retrieves more information about an 
+ encounter for a single patient versus the entire station.
+  
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ RTC 419499 - When manually re-running the AI job for a site, only 1 part 
+ out of 4 parts of the AI job is re-ran which is the encounter search. 
+ Currently when this part of the AI job is manually re-ran for encounter 
+ searching, it sets the entire AI job's "Last Run Date" to that day which 
+ should not be updated as it causes gaps in the AI execution window. A new 
+ job type was created for a partial AI job run that does not update the 
+ "Last Run Date" from the last full execution of the AI job and allows 
+ easier execution of this part of the AI job when troubleshooting 
+ assignments with encounters that have not been detected.
+  
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ Configuration and Software Changes:
+ ===================================
+  
+  
+ Implementation:
+ ===============
+ The PCMM Web WEBP*1*9 is a centrally managed web-based application and 
+ will be implemented and deployed to a central web server.  No installation
+ is required by sites.
+  
+  
+ Implementation Files:
+ =====================
+ None
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated: N/A
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A
+  
+ Options Associated: N/A
+  
+ Protocols Associated: N/A
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20070415 - Rehost/Reengineer PCMM
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ CA-SDM Ticket(s):
+ -----------------
+ Listed above with appropriate RTC Defect identified.
+  
+  
+ Test Sites:
+ -----------
+ N/A
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+   Documentation can also be retrieved from the VA Software Documentation
+   Library (VDL) on the Internet at the following address:
+   http://www4.domain.ext/vdl.
+  
+ File Description              File Name                      FTP Mode
+ --------------------------------------------------------------------------
+ Patient-Centered Management   PCMM WEB VDD WEBP_1_9.DOCX     ASCII
+ Module(PCMM) Web
+  
+  
+ Patch Installation:
+ ===================
+ There is no local VistA installation for PCMM Web. All installations will 
+ be done on the national web server.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ If you have any questions concerning the implementation of this 
+ application, please contact the VA Service Desk at 1-888-596-4357 or 
+ directly log a CA SDM ticket using the category: 
+ NTL.APP.HealtheVet VistA.PCMM Web.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 27, 2016
+Completed By:                               Date Completed: DEC 23, 2016
+Released By :                               Date Released : DEC 23, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

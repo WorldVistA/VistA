@@ -1,0 +1,204 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Tuesday, 07/26/16 at 10:17
+=============================================================================
+Run Date: DEC 19, 2016                     Designation: FB*3.5*173
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #144                    Status: Released
+                  Compliance Date: DEC 28, 2016
+=============================================================================
+
+
+Subject: SUPPORT FOR MASTER VETERAN INDEX DATE OF DEATH ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ NOTE: Master Patient Index (MPI) enhancements are being distributed in
+       four VistA namespaces: DG, MPIF, RG and FB.
+       The only build enforced requirements are that:
+         - FB*3.5*173 and DG*5.3*926 be installed prior to MPIF*1.0*64 
+         - DG*5.3*926 be installed prior to RG*1.0*65
+       Therefore non-legacy sites can install FB*3.5*173 and DG*5.3*926
+       in any order, then install MPIF*1.0*64 and RG*1.0*65 patches in any
+       order (Do NOT install MPIF*1.0*64 or RG*1.0*65 on legacy sites). 
+  
+ NOTE: Legacy sites can install just the DG*5.3*926 and FB*3.5*173 patches.
+       MPIF*1.0*64 and RG*1.0*65 should NOT be installed on legacy sites.
+  
+ Enhancements
+ This enhancement patch provides additional support to allow the Master
+ Veteran Index (MVI) to support the Date of Death of patients at the
+ Medical Facilities.
+  
+ Routine FBUTLMVI was created to provide the MASTER PATIENT INDEX VISTA 
+ (MPIF) package with an Application Program Interface (API) to search for
+ FEE BASIS related activity in the FEE BASIS PAYMENT (#162), FEE BASIS 
+ PHARMACY INVOICE (#162.1) and the FEE BASIS UNAUTHORIZED CLAIMS (#162.7)
+ files for a specific patient after a specified date. This API will return
+ a count of the number of occurrences of activity that occurred for the
+ patient from the given date, as well as an array of the specific 
+ activities that occurred. The MPIF software will use this information and
+ information from other packages to confirm the validity of the reported
+ Date of Death for the patient if no activity is found.
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+    
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Central Alabama HCS
+ Indianapolis VAMC
+ Louisville VAMC
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre/Post installation routine processes.    
+   
+   
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than 2 minutes to install. This patch may be 
+ installed with users on the system.
+   
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch
+     number (i.e. FB*3.5*173):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond as per your facility's policy.  If you
+     choose to answer YES, then at the end of the patch installation,
+     KIDS will rebuild the menus which may take several hours and could
+     disrupt Computerized Patient Record System (CPRS) users.  If your
+     facility has the XQBUILDTREEQUE nightly batch job tasked to run, 
+     answer NO to this question. The nightly job will rebuild the menus
+     as scheduled.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// respond NO.
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ There are no Post Installation Instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBUTLMVI
+    Before:       n/a   After:  B4633069  **173**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 21, 2016
+Completed By:                               Date Completed: DEC 07, 2016
+Released By :                               Date Released : DEC 19, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

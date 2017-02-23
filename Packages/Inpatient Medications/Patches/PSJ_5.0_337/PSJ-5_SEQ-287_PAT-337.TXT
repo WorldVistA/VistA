@@ -1,0 +1,324 @@
+$TXT Created by               at DVACACHE.FO-BIRM.DOMAIN.EXT  (KIDS) on Thursday, 11/10/16 at 12:37
+=============================================================================
+Run Date: JAN 23, 2017                     Designation: PSJ*5*337
+Package : PSJ - INPATIENT MEDICATIONS         Priority: EMERGENCY
+Version : 5       SEQ #287                      Status: Released
+                  Compliance Date: FEB 22, 2017
+=============================================================================
+
+Associated patches: (v)PSJ*5*317   <<= must be installed BEFORE `PSJ*5*337'
+
+Subject: POST PADE FIX 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch PSJ*5.0*337 will correct the following issues discovered with 
+ Pharmacy Interface Automation (PIA) immediately after the release of patch
+ PSJ*5*317:
+  
+  1) This patch addresses an issue with incorrect dosage for orders 
+     containing more than one dispense drug when one of the dispense drug
+     has a concentration or percentage strength. The HL7 interface sends
+     one RXC component segment for each dispense drug, and the dosage sent
+     on drugs where the strength is a concentration or percentage was found
+     to be incorrect. When the strength is a concentration or percentage
+     the dosage may be calculated incorrectly; therefore the dosage for
+     these components will not be sent in the HL7 interface. For this type
+     of order, the nurse dispensing the medication from the cabinet must
+     manually verify the dosage for each component.
+  
+  2) Absent Sick In Hospital (ASIH) transfers were not tested prior to 
+     the release of patch PSJ*5*317. After the patch was released, Long
+     Beach reported that the "To ASIH" transfers are showing orders as
+     active on the Omnicell server even though they are discontinued in
+     VistA. Vendors like Omnicell use the admission pivot number as a
+     unique identifier to track orders during their stay in the hospital.
+     The HL7 message that was generated to discontinue the order was found
+     to have a null value or an incorrect pivot number. Hence, Omnicell was
+     unable to flag the order as discontinued.
+     We also tested the "From ASIH" transfers, and we found similar issues.
+     This patch will send the correct pivot number in the HL7 message for
+     both (To/From) ASIH transfers so that the vendors can flag the orders
+     accordingly.
+  
+  3) This patch addresses an issue with information missing from the 
+     PADE OUTBOUND MESSAGES file (#58.72) when the site has multiple vendor
+     setups. The first file entry has all the relevant HL7 data, but the 
+     subsequent file entries are missing Order Number, Order Action, 
+     appointment and Drug. With this patch, the subsequent file entries
+     will have these missing data.
+  
+  4) This patch addresses an issue with Inpatient Order Entry that results
+     in an undefined PSGORD variable error in routine ENDRG+17^PSGOEF1
+     when a new (backdoor) order's orderable item is changed prior to
+     accepting the order. After the New Order process is initiated in
+     Inpatient Order Entry, and all of the order prompts are populated, the
+     user is given the option edit the order details prior to accepting the
+     order. If the user changes the new unaccepted order's Orderable Item
+     to a PADE drug with more than one dispense drug associated with it,
+     the following error occurs:
+        <UNDEFINED>ENDRG+17^PSGOEF1 *PSGORD 
+     With this patch, the dispense drug lookup will execute successfully
+     when no order number is defined in the PSGORD variable.
+  
+  5) This patch addresses an issue with the Inpatient Pick List that 
+     results in an undefined error when no unit dose order is found for the
+     drug being processed, the following error occurs:
+        <UNDEFINED>DRGSTOCK+10^PSJPADSI *PSJDFLOC 
+     With this patch, the PADE drug balance lookup will not cause an error
+     when no unit dose order number is defined.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ CA Ticket: I11154758FY17 - PADE messages calculate the wrong dose 
+ -----------------------------------------------------------------
+  
+ Problem:
+ -------
+  The HL7 interface sends one RXC component segment for each dispense drug 
+  when there are more than one dispense drugs in the unit dose order. The 
+  component dosage is calculated in each RXC by multiplying the units/dose 
+  times the strength. This was calculating an incorrect component dose when
+  the strength was a concentration or percentage.  
+  
+ Resolution:
+ ----------
+  For an RXC segment which has a dispense drug where the strength is a 
+  concentration or percentage; the component dosage will not be calculated 
+  for that RXC segment.
+  Routine PSJPADE was modified to not calculate the component dosage if the
+  dispense unit contains a "/" or a "%"
+  
+  
+ CA Ticket: I11111807FY17 - Vista is not transferring data to Omnicell
+ ---------------------------------------------------------------------
+  
+ Problem:
+ -------
+  "To ASIH" transfers are showing orders as active on the Omnicell server 
+  even though they are discontinued in VistA. Omnicell uses the admission 
+  pivot number as a unique identifier to track orders during their stay in 
+  the hospital. The HL7 message that was generated to discontinue the order
+  was having a null pivot value and in some instances was having the pivot 
+  number associated with the new location (after transfer), preventing 
+  Omnicell to flag the order as discontinued.
+  
+  Also, we found that the "From ASIH" transfers too had similar issues.
+  
+ Resolution:
+ ----------
+  This patch will send the correct pivot number in the HL7 message for
+  both (To/From) ASIH transfers so that the vendor (Omnicell) can flag the
+  orders accordingly.
+  Routines PSJPDCLU, PSJPDCLA and PSJPDCL were modified to retrieve the
+  pivot number associated with the admission where the order was placed.
+  
+ CA Ticket: I11191473FY17 - PADE outbound log file missing fields
+ ----------------------------------------------------------------
+  
+ Problem:
+ -------
+  When the site has multiple vendor setups, the first file entry in the 
+  PADE OUTBOUND MESSAGES file (#58.72) has all the relevant HL7 data, but 
+  the subsequent file entries were found missing Order Number, Order 
+  Action, appointment and Drug.
+  
+ Resolution:
+ ----------
+  Routine PSJPDCLU was modified to preserve the PDL array between calls to 
+  LOG^PSJPADE, which kills this array. The PDL array is stored in PDLTMP
+  prior to looping through the list of vendors subscribing to the message,
+  and then set back into PDL before each call to LOG^PSJPADE.
+  
+  
+ CA Ticket: I11300076FY17 - $ZE= ENDRG+17^PSGOEF1 *PSGORD PADE
+ ------------------------------------------------------------------------
+  
+ Problem:
+ -------
+  If a user changes a new unaccepted order's Orderable Item to a PADE drug 
+  That has more than one dispense drug associated with it, the following 
+  error occurs:  <UNDEFINED>ENDRG+17^PSGOEF1 *PSGORD.
+  
+ Resolution:
+ ----------
+  Routine PSGOEF1 was modified for the dispense drug lookup to execute
+  successfully when no order number is defined in the PSGORD variable.
+  
+ CA Ticket: I11420824FY17 - Undefined DRGSTOCK+10^PSJPADSI *PSJDFLOC PADE
+ ------------------------------------------------------------------------
+  
+ Problem:
+ -------
+  If a Pick List processes a drug for which no unit dose order is found, 
+  the PADE drug balance lookup produces the following error: 
+   <UNDEFINED>DRGSTOCK +10^PSJPADSI  *PSJDFLOC.
+  
+ Resolution:
+ ----------
+  Modified routine PSJPADSI for the PADE drug balance lookup to gracefully
+  handle the scenario where no unit dose order number is associated with
+  the drug being printed.
+  
+  
+ Test Sites:
+ ----------
+ HC NETWORK UPSTATE NY (ALBANY)
+ INDIANAPOLIS, IN
+ LONG BEACH, CA
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ N/A
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 3 minutes
+ to install. 
+   
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSJ*5.0*337).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package PSJ*5.0*337.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOEF1
+    Before: B38004561   After: B38041202  **2,7,35,39,45,47,50,63,67,58,
+                                           95,110,186,181,267,315,317,337**
+Routine Name: PSJPADE
+    Before: B89070355   After: B91377685  **317,337**
+Routine Name: PSJPADSI
+    Before:B210554864   After:B213018114  **317,337**
+Routine Name: PSJPDCL
+    Before: B59118380   After: B59208324  **317,337**
+Routine Name: PSJPDCLA
+    Before:B123693086   After:B148639456  **317,337**
+Routine Name: PSJPDCLU
+    Before:B182600427   After:B195649926  **317,337**
+ 
+Routine list of preceding patches: 317
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 19, 2016
+Completed By:                               Date Completed: JAN 23, 2017
+Released By :                               Date Released : JAN 23, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

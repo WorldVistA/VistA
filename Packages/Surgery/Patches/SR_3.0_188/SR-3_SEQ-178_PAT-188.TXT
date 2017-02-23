@@ -1,0 +1,195 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 08/25/16 at 13:44
+=============================================================================
+Run Date: JAN 03, 2017                     Designation: SR*3*188
+Package : SR - SURGERY                        Priority: Mandatory
+Version : 3       SEQ #178                      Status: Released
+                  Compliance Date: FEB 02, 2017
+=============================================================================
+
+Associated patches: (v)SR*3*184    <<= must be installed BEFORE `SR*3*188'
+
+Subject: ABORTED STATUS, UNABLE TO SIGN NIR, UNABLE TO ENTER D CODES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch addresses three (3) issues:
+  
+ 1.   Cases aborted prior to the release of SR*3.0*184 are displayed as 
+      "CANCELLED" in the "Operation Menu" option [SROPER].
+  
+ 2.   Nurses are unable to sign their Nurse Intraoperative Report (NIR) 
+      in the Surgical Package when the case has been aborted using the 
+      "Abort/Cancel Operation" option [SROABRT].
+  
+ 3.   Users are unable to enter a D Code (Dental) in the PLANNED 
+      PRIN PROCEDURE CODE field (#27) of the SURGERY file (#130) using
+      the "Non-O.R. Procedures" option [SRONOP] in the Surgery package.
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+ Associated CA SDM ticket(s):
+ ==========================
+ 1.      I7554940FY16 - Aborted Status
+ 2.      R7494990FY16 - Unable to Sign NIR
+ 3.      I7563808FY16 - Unable to Enter D Code
+  
+  
+ Participating Test Sites:
+ =========================
+ White River Junction VA Medical Center 
+ VA South Texas Veterans Health Care System (San Antonio, Kerrville)
+  
+  
+ CA SDM Overview:
+ ================
+  
+ 1.      I7554940FY16 - Aborted Status
+  
+  
+ Problem:
+ --------
+ Cases aborted prior to the release of SR*3.0*184 are displayed as 
+ "CANCELLED" in the "Operation Menu" option [SROPER]. This occurs because
+ the SROPER option code modified by SR*3.0*184 only checks the newly 
+ added CASE ABORTED field (#18.5) in the SURGERY file (#130). Cases 
+ entered prior to SR*3.0*184 do not have the CASE ABORTED field and 
+ display as cancelled rather than aborted.
+  
+ Resolution:
+ -----------
+ The routine ^SROP1 is modified to check both in the new SR*3.0*184 
+ fashion and in the traditional manner.
+  
+ Routines: SROP1
+  
+ 2.      R7494990FY16 - Unable to Sign NIR
+  
+ Problem:
+ --------
+ Nurses are unable to sign their Nurse Intraoperative Report (NIR) in the
+ Surgical Package when the case has been aborted using the "Abort/Cancel 
+ Operation" option [SROABRT]. The code in the SROABRT option uses a FileMan
+ call (^DIE) to update the TIME PAT OUT OR field (#.232) in the SURGERY 
+ file (#130). TIME PAT OUT OR has a FIELD INDEX that creates the stub 
+ entries in TIU (Text Integration Utility) for the NIR for a case. The 
+ update code in the SROABRT option fails the Set Condition when setting 
+ the FIELD INDEX. It fails because it updates TIME PAT OUT OR directly 
+ prior to performing the FileMan call. When it fails the Set Condition, 
+ it doesn't create the TIU stub entries for the case. When the TIU stub
+ entries don't exist, the option to electronically sign a NIR are not 
+ presented to the nurse/user.
+  
+ Resolution:
+ -----------
+ The routine ^SRSCAN0 is modified to not update the TIME PAT OUT OR field
+ prior to the FileMan call.  When the premature update is removed, the 
+ SROABRT option functions properly and the option to electronically sign 
+ the NIR is presented to the nurse/user.
+  
+ Routines: SRSCAN0
+  
+ 3.      I7563808FY16 - Unable to Enter D Code
+  
+ Problem:
+ --------
+ Users are unable to enter a D Code (Dental) in the PLANNED PRIN 
+ PROCEDURE CODE field (#27) of the SURGERY file (#130) using the "Non-O.R. 
+ Procedures" option [SRONOP] in the Surgery package.
+  
+ The same is true when entering a case using the Operation options in 
+ the Surgery Package so sites are unable to document D Code procedures 
+ in the PLANNED PRIN PROCEDURE CODE field.
+  
+ The entry fails because the $$CHK^SROCPT extrinsic function, called by
+ the INPUT TRANSFORM for the PLANNED PRINCIPLE PRODECURE field, is passed
+ the IEN (Internal Entry Number) rather than the external form (display 
+ form) of the entered CPT Code. For numeric CPT Codes, this is not an 
+ issue as the IEN and the numeric value of the CPT Code are the same. For
+ alphanumeric codes (such as D Codes), the extrinsic function code needs
+ to convert the passed value to the external format.
+  
+ Resolution:
+ -----------
+ The CHK^SROCPT extrinsic function is modified to retrieve the CPT CODE 
+ field (#.01) from the CPT file (#81).
+  
+ Routines: SROCPT
+  
+  
+ Installation Instructions:
+ ==========================
+    The install time for this patch is less than 2 minutes. This patch 
+    Can be installed when Surgery users are on the system.
+  
+    NOTE: Kernel patches must be current on the target system to avoid
+          problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the 
+       Following options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       To preserve a copy of the routines exported in this patch prior
+       to installation, you should use the 'Backup a Transport Global' 
+       option at this time. You may also compare the routines in your 
+       production account to the routines in the patch by using the 
+      'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' 
+       Menu and select the package 'SR*3.0*188'.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       YES//, choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       And Protocols? YES//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;Surgery;**[Patch List]**;24 Jun 93;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SROCPT
+    Before: B19370849   After: B19721278  **3,31,88,127,184,188**
+Routine Name: SROP1
+    Before:  B4644240   After:  B5072811  **184,188**
+Routine Name: SRSCAN0
+    Before: B28185776   After: B27843088  **34,42,67,103,107,114,100,144,
+                                           175,176,182,184,188**
+ 
+Routine list of preceding patches: 184
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 12, 2016
+Completed By:                               Date Completed: DEC 28, 2016
+Released By :                               Date Released : JAN 03, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

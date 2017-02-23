@@ -1,0 +1,2323 @@
+EMERGENCY Released IB*2*574 SEQ #533
+Extracted from mail message
+**KIDS**:IB*2.0*574^
+
+**INSTALL NAME**
+IB*2.0*574
+"BLD",9895,0)
+IB*2.0*574^INTEGRATED BILLING^0^3161012^y
+"BLD",9895,1,0)
+^^210^210^3161011^^^^
+"BLD",9895,1,1,0)
+Description:
+"BLD",9895,1,2,0)
+===========
+"BLD",9895,1,3,0)
+MCCF (Medical Care Collection Fund) warranty fix for the FY15 eBilling 
+"BLD",9895,1,4,0)
+Compliance Phase 3 project.
+"BLD",9895,1,5,0)
+     
+"BLD",9895,1,6,0)
+This patch contains a fix for the installed patch IB*2.0*547.  When 
+"BLD",9895,1,7,0)
+testing with FSC, customer reported that they are not able to enter a 
+"BLD",9895,1,8,0)
+professional alternate payer ID on Bill Screen 10 when the charge type is 
+"BLD",9895,1,9,0)
+institutional and the form type is a CMS-1500.  The version of routine 
+"BLD",9895,1,10,0)
+IBCSC10 released in IB*2.0*547 does not handle this scenario correctly.
+"BLD",9895,1,11,0)
+This warranty patch corrects this defect in routine IBCSC10.
+"BLD",9895,1,12,0)
+     
+"BLD",9895,1,13,0)
+In addition, requirements defects were also discovered.  There were 
+"BLD",9895,1,14,0)
+several changes made in patch 547 to remove the printing and transmission 
+"BLD",9895,1,15,0)
+of admission dates on all outpatient claims.  During the warranty period 
+"BLD",9895,1,16,0)
+it was discovered that Outpatient Home Health and Outpatient Hospice 
+"BLD",9895,1,17,0)
+claims still require the admission date and time or they will be rejected.  
+"BLD",9895,1,18,0)
+ 
+"BLD",9895,1,19,0)
+A function ($$HHLTH) was added to routine IBCEF1 to determine if a claim is 
+"BLD",9895,1,20,0)
+Home Health or Hospice.  This function was inserted into entries #77, 98 
+"BLD",9895,1,21,0)
+and #1305 of file 364.7 to output the date for all inpatient claims AND 
+"BLD",9895,1,22,0)
+all Outpatient home health and hospice claims.
+"BLD",9895,1,23,0)
+     
+"BLD",9895,1,24,0)
+The purpose of this patch is to meet the requirements for the MCCF 
+"BLD",9895,1,25,0)
+eBilling Compliance Phase 3 project related to Integrated Billing (IB).
+"BLD",9895,1,26,0)
+Integrated Billing is a software module within Veterans Health Information
+"BLD",9895,1,27,0)
+Systems and Technology Architecture (VistA) that provides the ability for
+"BLD",9895,1,28,0)
+billing personnel to submit claims in either a paper or electronic format
+"BLD",9895,1,29,0)
+to third-party payers. 
+"BLD",9895,1,30,0)
+     
+"BLD",9895,1,31,0)
+     
+"BLD",9895,1,32,0)
+Patch Components
+"BLD",9895,1,33,0)
+================
+"BLD",9895,1,34,0)
+       
+"BLD",9895,1,35,0)
+Files & Fields Associated:
+"BLD",9895,1,36,0)
+       
+"BLD",9895,1,37,0)
+File Name (#)                                             New/Modified/
+"BLD",9895,1,38,0)
+  Sub-file Name (#)   Field Name (Number)                   Deleted
+"BLD",9895,1,39,0)
+-------------------   ---------------------------------   -------------
+"BLD",9895,1,40,0)
+IB FORM FIELD CONTENT (#364.7)
+"BLD",9895,1,41,0)
+     Screen: I $$INCLUDE^IBY547PR(7,Y)
+"BLD",9895,1,42,0)
+       
+"BLD",9895,1,43,0)
+       
+"BLD",9895,1,44,0)
+Forms Associated:
+"BLD",9895,1,45,0)
+                                                           New/Modified/
+"BLD",9895,1,46,0)
+Form Name                    File Name (Number)             Deleted    
+"BLD",9895,1,47,0)
+---------                    ------------------           -------------
+"BLD",9895,1,48,0)
+N/A
+"BLD",9895,1,49,0)
+     
+"BLD",9895,1,50,0)
+      
+"BLD",9895,1,51,0)
+Mail Groups Associated:
+"BLD",9895,1,52,0)
+                                                          New/Modified/
+"BLD",9895,1,53,0)
+Mail Group Name                                             Deleted    
+"BLD",9895,1,54,0)
+---------------                                           -------------
+"BLD",9895,1,55,0)
+       
+"BLD",9895,1,56,0)
+       
+"BLD",9895,1,57,0)
+Options Associated:
+"BLD",9895,1,58,0)
+                                                          New/Modified/
+"BLD",9895,1,59,0)
+Option Name                                  Type            Deleted    
+"BLD",9895,1,60,0)
+-----------                                  ----         -------------
+"BLD",9895,1,61,0)
+N/A
+"BLD",9895,1,62,0)
+       
+"BLD",9895,1,63,0)
+      
+"BLD",9895,1,64,0)
+Protocols Associated:
+"BLD",9895,1,65,0)
+                                                          New/Modified/
+"BLD",9895,1,66,0)
+Protocol Name                                               Deleted    
+"BLD",9895,1,67,0)
+-------------                                             -------------
+"BLD",9895,1,68,0)
+N/A
+"BLD",9895,1,69,0)
+     
+"BLD",9895,1,70,0)
+       
+"BLD",9895,1,71,0)
+Security Keys Associated:
+"BLD",9895,1,72,0)
+                                                          New/Modified/
+"BLD",9895,1,73,0)
+Security Key Name                                           Deleted    
+"BLD",9895,1,74,0)
+-----------------                                         -------------
+"BLD",9895,1,75,0)
+N/A
+"BLD",9895,1,76,0)
+      
+"BLD",9895,1,77,0)
+      
+"BLD",9895,1,78,0)
+Templates Associated:
+"BLD",9895,1,79,0)
+                                                          New/Modified/
+"BLD",9895,1,80,0)
+Template Name      Type      File Name (Number)             Deleted    
+"BLD",9895,1,81,0)
+-------------      ----      ------------------           -------------
+"BLD",9895,1,82,0)
+N/A
+"BLD",9895,1,83,0)
+      
+"BLD",9895,1,84,0)
+       
+"BLD",9895,1,85,0)
+Additional Information:
+"BLD",9895,1,86,0)
+N/A   
+"BLD",9895,1,87,0)
+       
+"BLD",9895,1,88,0)
+New Service Requests (NSRs)
+"BLD",9895,1,89,0)
+----------------------------  
+"BLD",9895,1,90,0)
+NSR 20140414 - Medical Care Collection Fund (MCCF) eBilling Compliance 
+"BLD",9895,1,91,0)
+Phase 3
+"BLD",9895,1,92,0)
+      
+"BLD",9895,1,93,0)
+      
+"BLD",9895,1,94,0)
+Patient Safety Issues (PSIs)
+"BLD",9895,1,95,0)
+-----------------------------
+"BLD",9895,1,96,0)
+N/A
+"BLD",9895,1,97,0)
+      
+"BLD",9895,1,98,0)
+      
+"BLD",9895,1,99,0)
+Defect Tracking System Ticket(s) & Overview
+"BLD",9895,1,100,0)
+---------------------------
+"BLD",9895,1,101,0)
+NSD Ticket# I10841525FY16
+"BLD",9895,1,102,0)
+     
+"BLD",9895,1,103,0)
+Problem:
+"BLD",9895,1,104,0)
+-------
+"BLD",9895,1,105,0)
+When testing with FSC, customer reported that they are not able to enter a 
+"BLD",9895,1,106,0)
+professional alternate payer ID on Bill Screen 10 when the charge type is 
+"BLD",9895,1,107,0)
+institutional and the form type is a CMS-1500.
+"BLD",9895,1,108,0)
+     
+"BLD",9895,1,109,0)
+Resolution:
+"BLD",9895,1,110,0)
+----------
+"BLD",9895,1,111,0)
+Modified screen 10 to be consistent with the screening logic on
+"BLD",9895,1,112,0)
+fields #140, #142 & #144 in file #399.  Screen 10 will now use form-type 
+"BLD",9895,1,113,0)
+instead of charge type to determine alternate payer ID.
+"BLD",9895,1,114,0)
+     
+"BLD",9895,1,115,0)
+      
+"BLD",9895,1,116,0)
+Test Sites:
+"BLD",9895,1,117,0)
+----------
+"BLD",9895,1,118,0)
+Pittsburgh
+"BLD",9895,1,119,0)
+South Texas
+"BLD",9895,1,120,0)
+Northern Indiana
+"BLD",9895,1,121,0)
+Illiana
+"BLD",9895,1,122,0)
+     
+"BLD",9895,1,123,0)
+Documentation Retrieval Instructions
+"BLD",9895,1,124,0)
+------------------------------------
+"BLD",9895,1,125,0)
+The preferred method is to retrieve files from download.vista.domain.ext.
+"BLD",9895,1,126,0)
+This transmits the files from the first available server. Sites may also 
+"BLD",9895,1,127,0)
+elect to retrieve files directly from a specific server.
+"BLD",9895,1,128,0)
+     
+"BLD",9895,1,129,0)
+Sites may retrieve the documentation directly using Secure File Transfer
+"BLD",9895,1,130,0)
+Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+"BLD",9895,1,131,0)
+Field Offices:
+"BLD",9895,1,132,0)
+     
+"BLD",9895,1,133,0)
+   Albany:                 domain.ext
+"BLD",9895,1,134,0)
+   Hines:                  domain.ext    
+"BLD",9895,1,135,0)
+   Salt Lake City:         domain.ext
+"BLD",9895,1,136,0)
+     
+"BLD",9895,1,137,0)
+Documentation can also be found on the VA Software Documentation Library 
+"BLD",9895,1,138,0)
+at: 
+"BLD",9895,1,139,0)
+http://www.domain.ext/vdl/
+"BLD",9895,1,140,0)
+     
+"BLD",9895,1,141,0)
+Title                                 File Name            Transfer Mode
+"BLD",9895,1,142,0)
+--------------------------------------------------------------------------
+"BLD",9895,1,143,0)
+Release Notes/Installation Guide      ib_2_0_p547_rn.pdf   Binary
+"BLD",9895,1,144,0)
+EDI User Guide                        edi_user_guide.pdf   Binary
+"BLD",9895,1,145,0)
+Integrated Billing (IB) V.2.0
+"BLD",9895,1,146,0)
+Technical/Security Manual             ib_2_0_tm.pdf        Binary
+"BLD",9895,1,147,0)
+     
+"BLD",9895,1,148,0)
+Patch Installation:
+"BLD",9895,1,149,0)
+      
+"BLD",9895,1,150,0)
+Pre/Post Installation Overview
+"BLD",9895,1,151,0)
+------------------------------
+"BLD",9895,1,152,0)
+N/A  
+"BLD",9895,1,153,0)
+      
+"BLD",9895,1,154,0)
+       
+"BLD",9895,1,155,0)
+Pre-Installation Instructions
+"BLD",9895,1,156,0)
+-----------------------------
+"BLD",9895,1,157,0)
+This patch may be installed with users on the system although it is 
+"BLD",9895,1,158,0)
+recommended that it be installed during non-peak hours to minimize
+"BLD",9895,1,159,0)
+potential disruption to users entering and editing IB claims.  
+"BLD",9895,1,160,0)
+This patch should take less than 5 minutes to install
+"BLD",9895,1,161,0)
+       
+"BLD",9895,1,162,0)
+No options need to be disabled.
+"BLD",9895,1,163,0)
+     
+"BLD",9895,1,164,0)
+Installation Instructions
+"BLD",9895,1,165,0)
+-------------------------
+"BLD",9895,1,166,0)
+This patch may be installed with users on the system although it is 
+"BLD",9895,1,167,0)
+recommended that it be installed during non-peak hours to minimize
+"BLD",9895,1,168,0)
+potential disruption to users entering and editing IB claims.  This 
+"BLD",9895,1,169,0)
+patch should take less than 5 minutes to install.
+"BLD",9895,1,170,0)
+           
+"BLD",9895,1,171,0)
+1.  Choose the PackMan message containing this patch.
+"BLD",9895,1,172,0)
+      
+"BLD",9895,1,173,0)
+2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+"BLD",9895,1,174,0)
+       
+"BLD",9895,1,175,0)
+3.  From the Kernel Installation & Distribution System menu, select
+"BLD",9895,1,176,0)
+    the Installation menu.
+"BLD",9895,1,177,0)
+      
+"BLD",9895,1,178,0)
+    a.  Backup a Transport Global - this option will create a backup
+"BLD",9895,1,179,0)
+        message of any routines exported with the patch. It will not
+"BLD",9895,1,180,0)
+        backup any other changes such as DDs or templates.
+"BLD",9895,1,181,0)
+    b.  Compare Transport Global to Current System - this option will
+"BLD",9895,1,182,0)
+        allow you to view all changes that will be made when the patch 
+"BLD",9895,1,183,0)
+        is installed.  It compares all components of this patch
+"BLD",9895,1,184,0)
+        (routines, DDs, templates, etc.).
+"BLD",9895,1,185,0)
+    c.  Verify Checksums in Transport Global - this option will allow
+"BLD",9895,1,186,0)
+        you to ensure the integrity of the routines that are in
+"BLD",9895,1,187,0)
+        transport global.
+"BLD",9895,1,188,0)
+         
+"BLD",9895,1,189,0)
+4.  From the Installation Menu, select the Install Package(s) option and
+"BLD",9895,1,190,0)
+    choose the patch to install. (ex. IB*2.0*574)
+"BLD",9895,1,191,0)
+       
+"BLD",9895,1,192,0)
+5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+"BLD",9895,1,193,0)
+    NO//',  enter NO
+"BLD",9895,1,194,0)
+      
+"BLD",9895,1,195,0)
+6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+"BLD",9895,1,196,0)
+    Protocols? NO//,  respond NO
+"BLD",9895,1,197,0)
+       
+"BLD",9895,1,198,0)
+7.  When prompted "DEVICE: HOME//",  enter HOME
+"BLD",9895,1,199,0)
+     
+"BLD",9895,1,200,0)
+8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+"BLD",9895,1,201,0)
+      
+"BLD",9895,1,202,0)
+       
+"BLD",9895,1,203,0)
+Post-Installation Instructions
+"BLD",9895,1,204,0)
+------------------------------
+"BLD",9895,1,205,0)
+     
+"BLD",9895,1,206,0)
+There are no special post-installation instructions for this patch.
+"BLD",9895,1,207,0)
+     
+"BLD",9895,1,208,0)
+     
+"BLD",9895,1,209,0)
+Routine Information:
+"BLD",9895,1,210,0)
+====================
+"BLD",9895,4,0)
+^9.64PA^364.7^1
+"BLD",9895,4,364.7,0)
+364.7
+"BLD",9895,4,364.7,222)
+n^n^f^^y^^y^o^n
+"BLD",9895,4,364.7,223)
+
+"BLD",9895,4,364.7,224)
+I $$INCLUDE^IBY574PR(7,Y)
+"BLD",9895,4,"B",364.7,364.7)
+
+"BLD",9895,6.3)
+12
+"BLD",9895,"ABPKG")
+n
+"BLD",9895,"INI")
+IBY574PR
+"BLD",9895,"INID")
+^^n
+"BLD",9895,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9895,"KRN",.4,0)
+.4
+"BLD",9895,"KRN",.401,0)
+.401
+"BLD",9895,"KRN",.402,0)
+.402
+"BLD",9895,"KRN",.403,0)
+.403
+"BLD",9895,"KRN",.5,0)
+.5
+"BLD",9895,"KRN",.84,0)
+.84
+"BLD",9895,"KRN",3.6,0)
+3.6
+"BLD",9895,"KRN",3.8,0)
+3.8
+"BLD",9895,"KRN",9.2,0)
+9.2
+"BLD",9895,"KRN",9.8,0)
+9.8
+"BLD",9895,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",9895,"KRN",9.8,"NM",1,0)
+IBCSC10^^0^B8993520
+"BLD",9895,"KRN",9.8,"NM",2,0)
+IBY574PR^^0^B1642628
+"BLD",9895,"KRN",9.8,"NM",3,0)
+IBCEF1^^0^B71584644
+"BLD",9895,"KRN",9.8,"NM","B","IBCEF1",3)
+
+"BLD",9895,"KRN",9.8,"NM","B","IBCSC10",1)
+
+"BLD",9895,"KRN",9.8,"NM","B","IBY574PR",2)
+
+"BLD",9895,"KRN",19,0)
+19
+"BLD",9895,"KRN",19.1,0)
+19.1
+"BLD",9895,"KRN",101,0)
+101
+"BLD",9895,"KRN",409.61,0)
+409.61
+"BLD",9895,"KRN",771,0)
+771
+"BLD",9895,"KRN",779.2,0)
+779.2
+"BLD",9895,"KRN",870,0)
+870
+"BLD",9895,"KRN",8989.51,0)
+8989.51
+"BLD",9895,"KRN",8989.52,0)
+8989.52
+"BLD",9895,"KRN",8994,0)
+8994
+"BLD",9895,"KRN","B",.4,.4)
+
+"BLD",9895,"KRN","B",.401,.401)
+
+"BLD",9895,"KRN","B",.402,.402)
+
+"BLD",9895,"KRN","B",.403,.403)
+
+"BLD",9895,"KRN","B",.5,.5)
+
+"BLD",9895,"KRN","B",.84,.84)
+
+"BLD",9895,"KRN","B",3.6,3.6)
+
+"BLD",9895,"KRN","B",3.8,3.8)
+
+"BLD",9895,"KRN","B",9.2,9.2)
+
+"BLD",9895,"KRN","B",9.8,9.8)
+
+"BLD",9895,"KRN","B",19,19)
+
+"BLD",9895,"KRN","B",19.1,19.1)
+
+"BLD",9895,"KRN","B",101,101)
+
+"BLD",9895,"KRN","B",409.61,409.61)
+
+"BLD",9895,"KRN","B",771,771)
+
+"BLD",9895,"KRN","B",779.2,779.2)
+
+"BLD",9895,"KRN","B",870,870)
+
+"BLD",9895,"KRN","B",8989.51,8989.51)
+
+"BLD",9895,"KRN","B",8989.52,8989.52)
+
+"BLD",9895,"KRN","B",8994,8994)
+
+"BLD",9895,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",9895,"QUES",0)
+^9.62^^
+"BLD",9895,"REQB",0)
+^9.611^1^1
+"BLD",9895,"REQB",1,0)
+IB*2.0*547^1
+"BLD",9895,"REQB","B","IB*2.0*547",1)
+
+"DATA",364.7,77,0)
+54^N^5^^^^N
+"DATA",364.7,77,1)
+S IBXDATA=$G(IBXSAVE("ADMDT")) S:$L(IBXDATA)=6 IBXDATA=$$DATE^IBCEU($E(IBXDATA,5,6)_$E(IBXDATA,1,4)) D:$S(IBXDATA="":$$HHLTH^IBCEF1(IBXIEN,1),1:0) F^IBCEF("N-STATEMENT COVERS FROM DATE",,,IBXIEN) I IBXDATA S IBXDATA=$$DT^IBCEFG1(IBXDATA,"","D8")
+"DATA",364.7,77,3,0)
+^364.73^3^3^3161005^^^^
+"DATA",364.7,77,3,1,0)
+If data exists from the previous extract of IBXSAVE("ADMDT"), output it.
+"DATA",364.7,77,3,2,0)
+Format date in CCYYMMDD format.  IB*2.0*547 removed the Outpatient date.
+"DATA",364.7,77,3,3,0)
+IB*2.0*574 add Outpatient date for Hospice and Home Health Claims.
+"DATA",364.7,98,0)
+142^N^78^^^^N
+"DATA",364.7,98,1)
+N A,IBZ,%DT,Y,X S IBZ=$S($$HHLTH^IBCEF1(IBXIEN,1):IBXDATA,1:""),A=$S(IBZ?6N:IBZ,1:"") K IBXDATA S:A="" Y=IBZ S X=A,%DT="PX" D:A'="" ^%DT S IBXSAVE("ADMDT")=$S(Y>0:Y,1:"")
+"DATA",364.7,98,3,0)
+^364.73^3^3^3161005^^^^
+"DATA",364.7,98,3,1,0)
+Save off data element's value in IBXSAVE array.  No output. IB*547 
+"DATA",364.7,98,3,2,0)
+requirement to use only Inpatient Admission Date/Time.
+"DATA",364.7,98,3,3,0)
+IB*574 - added date for Outpatient Home health and hospice
+"DATA",364.7,1305,0)
+1605^N^78^^^^N
+"DATA",364.7,1305,1)
+S:'$$HHLTH^IBCEF1(IBXIEN,1) IBXDATA="" I $$HHLTH^IBCEF1(IBXIEN,1) S IBXSAVE("ADTM")=$$TIME^IBCF3(IBXDATA),IBXDATA=$$DATE^IBCF2($P(IBXDATA,"."),,1)
+"DATA",364.7,1305,3,0)
+^364.73^5^5^3161005^^^^
+"DATA",364.7,1305,3,1,0)
+Save the admission time in IBXSAVE array for later use.  Format date
+"DATA",364.7,1305,3,2,0)
+without the time as MMDDYY. IB*2.0*547 removed the STATEMENT FROM date on 
+"DATA",364.7,1305,3,3,0)
+inpatient professional claims.
+"DATA",364.7,1305,3,4,0)
+IB*2.0*574  added STATEMENT FROM date for Outpatient Home Health and Hospice
+"DATA",364.7,1305,3,5,0)
+claims.
+"FIA",364.7)
+IB FORM FIELD CONTENT
+"FIA",364.7,0)
+^IBA(364.7,
+"FIA",364.7,0,0)
+364.7IP
+"FIA",364.7,0,1)
+n^n^f^^y^^y^o^n
+"FIA",364.7,0,10)
+
+"FIA",364.7,0,11)
+I $$INCLUDE^IBY574PR(7,Y)
+"FIA",364.7,0,"RLRO")
+
+"FIA",364.7,0,"VR")
+2.0^IB
+"FIA",364.7,364.7)
+0
+"FIA",364.7,364.73)
+0
+"INI")
+IBY574PR
+"IX",364.7,364.7,"ALL",0)
+364.7^ALL^Xref contains all local overrides defined for all insurance and type^MU^^F^IR^I^364.7^^^^^S
+"IX",364.7,364.7,"ALL",1)
+S ^IBA(364.7,"ALL",X2(2),DA)=""
+"IX",364.7,364.7,"ALL",1.4)
+I 'X2(2)!(X2(4)'="")!(X2(5)'="")!(X2(3)'="L") S X=0
+"IX",364.7,364.7,"ALL",2)
+K ^IBA(364.7,"ALL",X1(2),DA)
+"IX",364.7,364.7,"ALL",2.4)
+I 'X1(2)!(X1(4)'="")!(X1(5)'="")!(X1(3)'="L") S X=0
+"IX",364.7,364.7,"ALL",2.5)
+K ^IBA(364.7,"ALL")
+"IX",364.7,364.7,"ALL",11.1,0)
+^.114IA^5^5
+"IX",364.7,364.7,"ALL",11.1,1,0)
+1^F^364.7^.01^15^^F
+"IX",364.7,364.7,"ALL",11.1,1,3)
+ 
+"IX",364.7,364.7,"ALL",11.1,2,0)
+2^C^^^10^1
+"IX",364.7,364.7,"ALL",11.1,2,1.5)
+S X=$P($G(^IBA(364.6,+X(1),0)),U,3)
+"IX",364.7,364.7,"ALL",11.1,3,0)
+3^F^364.7^.02^10^^F
+"IX",364.7,364.7,"ALL",11.1,3,3)
+ 
+"IX",364.7,364.7,"ALL",11.1,4,0)
+4^F^364.7^.05^20^^F
+"IX",364.7,364.7,"ALL",11.1,4,3)
+ 
+"IX",364.7,364.7,"ALL",11.1,5,0)
+5^F^364.7^.06^20^^F
+"IX",364.7,364.7,"ALL",11.1,5,3)
+ 
+"MBREQ")
+0
+"PGL",364.7,0,5,.05)
+INSURANCE COMPANY^P36'^DIC(36,^0;5^Q
+"PKG",49,-1)
+1^1
+"PKG",49,0)
+INTEGRATED BILLING^IB^INTEGRATED BILLING
+"PKG",49,20,0)
+^9.402P^1^1
+"PKG",49,20,1,0)
+2^^IBAXDR
+"PKG",49,20,1,1)
+
+"PKG",49,20,"B",2,1)
+
+"PKG",49,22,0)
+^9.49I^1^1
+"PKG",49,22,1,0)
+2.0^2940321^2960627
+"PKG",49,22,1,"PAH",1,0)
+574^3161012
+"PKG",49,22,1,"PAH",1,1,0)
+^^210^210^3161012
+"PKG",49,22,1,"PAH",1,1,1,0)
+Description:
+"PKG",49,22,1,"PAH",1,1,2,0)
+===========
+"PKG",49,22,1,"PAH",1,1,3,0)
+MCCF (Medical Care Collection Fund) warranty fix for the FY15 eBilling 
+"PKG",49,22,1,"PAH",1,1,4,0)
+Compliance Phase 3 project.
+"PKG",49,22,1,"PAH",1,1,5,0)
+     
+"PKG",49,22,1,"PAH",1,1,6,0)
+This patch contains a fix for the installed patch IB*2.0*547.  When 
+"PKG",49,22,1,"PAH",1,1,7,0)
+testing with FSC, customer reported that they are not able to enter a 
+"PKG",49,22,1,"PAH",1,1,8,0)
+professional alternate payer ID on Bill Screen 10 when the charge type is 
+"PKG",49,22,1,"PAH",1,1,9,0)
+institutional and the form type is a CMS-1500.  The version of routine 
+"PKG",49,22,1,"PAH",1,1,10,0)
+IBCSC10 released in IB*2.0*547 does not handle this scenario correctly.
+"PKG",49,22,1,"PAH",1,1,11,0)
+This warranty patch corrects this defect in routine IBCSC10.
+"PKG",49,22,1,"PAH",1,1,12,0)
+     
+"PKG",49,22,1,"PAH",1,1,13,0)
+In addition, requirements defects were also discovered.  There were 
+"PKG",49,22,1,"PAH",1,1,14,0)
+several changes made in patch 547 to remove the printing and transmission 
+"PKG",49,22,1,"PAH",1,1,15,0)
+of admission dates on all outpatient claims.  During the warranty period 
+"PKG",49,22,1,"PAH",1,1,16,0)
+it was discovered that Outpatient Home Health and Outpatient Hospice 
+"PKG",49,22,1,"PAH",1,1,17,0)
+claims still require the admission date and time or they will be rejected.  
+"PKG",49,22,1,"PAH",1,1,18,0)
+ 
+"PKG",49,22,1,"PAH",1,1,19,0)
+A function ($$HHLTH) was added to routine IBCEF1 to determine if a claim is 
+"PKG",49,22,1,"PAH",1,1,20,0)
+Home Health or Hospice.  This function was inserted into entries #77, 98 
+"PKG",49,22,1,"PAH",1,1,21,0)
+and #1305 of file 364.7 to output the date for all inpatient claims AND 
+"PKG",49,22,1,"PAH",1,1,22,0)
+all Outpatient home health and hospice claims.
+"PKG",49,22,1,"PAH",1,1,23,0)
+     
+"PKG",49,22,1,"PAH",1,1,24,0)
+The purpose of this patch is to meet the requirements for the MCCF 
+"PKG",49,22,1,"PAH",1,1,25,0)
+eBilling Compliance Phase 3 project related to Integrated Billing (IB).
+"PKG",49,22,1,"PAH",1,1,26,0)
+Integrated Billing is a software module within Veterans Health Information
+"PKG",49,22,1,"PAH",1,1,27,0)
+Systems and Technology Architecture (VistA) that provides the ability for
+"PKG",49,22,1,"PAH",1,1,28,0)
+billing personnel to submit claims in either a paper or electronic format
+"PKG",49,22,1,"PAH",1,1,29,0)
+to third-party payers. 
+"PKG",49,22,1,"PAH",1,1,30,0)
+     
+"PKG",49,22,1,"PAH",1,1,31,0)
+     
+"PKG",49,22,1,"PAH",1,1,32,0)
+Patch Components
+"PKG",49,22,1,"PAH",1,1,33,0)
+================
+"PKG",49,22,1,"PAH",1,1,34,0)
+       
+"PKG",49,22,1,"PAH",1,1,35,0)
+Files & Fields Associated:
+"PKG",49,22,1,"PAH",1,1,36,0)
+       
+"PKG",49,22,1,"PAH",1,1,37,0)
+File Name (#)                                             New/Modified/
+"PKG",49,22,1,"PAH",1,1,38,0)
+  Sub-file Name (#)   Field Name (Number)                   Deleted
+"PKG",49,22,1,"PAH",1,1,39,0)
+-------------------   ---------------------------------   -------------
+"PKG",49,22,1,"PAH",1,1,40,0)
+IB FORM FIELD CONTENT (#364.7)
+"PKG",49,22,1,"PAH",1,1,41,0)
+     Screen: I $$INCLUDE^IBY547PR(7,Y)
+"PKG",49,22,1,"PAH",1,1,42,0)
+       
+"PKG",49,22,1,"PAH",1,1,43,0)
+       
+"PKG",49,22,1,"PAH",1,1,44,0)
+Forms Associated:
+"PKG",49,22,1,"PAH",1,1,45,0)
+                                                           New/Modified/
+"PKG",49,22,1,"PAH",1,1,46,0)
+Form Name                    File Name (Number)             Deleted    
+"PKG",49,22,1,"PAH",1,1,47,0)
+---------                    ------------------           -------------
+"PKG",49,22,1,"PAH",1,1,48,0)
+N/A
+"PKG",49,22,1,"PAH",1,1,49,0)
+     
+"PKG",49,22,1,"PAH",1,1,50,0)
+      
+"PKG",49,22,1,"PAH",1,1,51,0)
+Mail Groups Associated:
+"PKG",49,22,1,"PAH",1,1,52,0)
+                                                          New/Modified/
+"PKG",49,22,1,"PAH",1,1,53,0)
+Mail Group Name                                             Deleted    
+"PKG",49,22,1,"PAH",1,1,54,0)
+---------------                                           -------------
+"PKG",49,22,1,"PAH",1,1,55,0)
+       
+"PKG",49,22,1,"PAH",1,1,56,0)
+       
+"PKG",49,22,1,"PAH",1,1,57,0)
+Options Associated:
+"PKG",49,22,1,"PAH",1,1,58,0)
+                                                          New/Modified/
+"PKG",49,22,1,"PAH",1,1,59,0)
+Option Name                                  Type            Deleted    
+"PKG",49,22,1,"PAH",1,1,60,0)
+-----------                                  ----         -------------
+"PKG",49,22,1,"PAH",1,1,61,0)
+N/A
+"PKG",49,22,1,"PAH",1,1,62,0)
+       
+"PKG",49,22,1,"PAH",1,1,63,0)
+      
+"PKG",49,22,1,"PAH",1,1,64,0)
+Protocols Associated:
+"PKG",49,22,1,"PAH",1,1,65,0)
+                                                          New/Modified/
+"PKG",49,22,1,"PAH",1,1,66,0)
+Protocol Name                                               Deleted    
+"PKG",49,22,1,"PAH",1,1,67,0)
+-------------                                             -------------
+"PKG",49,22,1,"PAH",1,1,68,0)
+N/A
+"PKG",49,22,1,"PAH",1,1,69,0)
+     
+"PKG",49,22,1,"PAH",1,1,70,0)
+       
+"PKG",49,22,1,"PAH",1,1,71,0)
+Security Keys Associated:
+"PKG",49,22,1,"PAH",1,1,72,0)
+                                                          New/Modified/
+"PKG",49,22,1,"PAH",1,1,73,0)
+Security Key Name                                           Deleted    
+"PKG",49,22,1,"PAH",1,1,74,0)
+-----------------                                         -------------
+"PKG",49,22,1,"PAH",1,1,75,0)
+N/A
+"PKG",49,22,1,"PAH",1,1,76,0)
+      
+"PKG",49,22,1,"PAH",1,1,77,0)
+      
+"PKG",49,22,1,"PAH",1,1,78,0)
+Templates Associated:
+"PKG",49,22,1,"PAH",1,1,79,0)
+                                                          New/Modified/
+"PKG",49,22,1,"PAH",1,1,80,0)
+Template Name      Type      File Name (Number)             Deleted    
+"PKG",49,22,1,"PAH",1,1,81,0)
+-------------      ----      ------------------           -------------
+"PKG",49,22,1,"PAH",1,1,82,0)
+N/A
+"PKG",49,22,1,"PAH",1,1,83,0)
+      
+"PKG",49,22,1,"PAH",1,1,84,0)
+       
+"PKG",49,22,1,"PAH",1,1,85,0)
+Additional Information:
+"PKG",49,22,1,"PAH",1,1,86,0)
+N/A   
+"PKG",49,22,1,"PAH",1,1,87,0)
+       
+"PKG",49,22,1,"PAH",1,1,88,0)
+New Service Requests (NSRs)
+"PKG",49,22,1,"PAH",1,1,89,0)
+----------------------------  
+"PKG",49,22,1,"PAH",1,1,90,0)
+NSR 20140414 - Medical Care Collection Fund (MCCF) eBilling Compliance 
+"PKG",49,22,1,"PAH",1,1,91,0)
+Phase 3
+"PKG",49,22,1,"PAH",1,1,92,0)
+      
+"PKG",49,22,1,"PAH",1,1,93,0)
+      
+"PKG",49,22,1,"PAH",1,1,94,0)
+Patient Safety Issues (PSIs)
+"PKG",49,22,1,"PAH",1,1,95,0)
+-----------------------------
+"PKG",49,22,1,"PAH",1,1,96,0)
+N/A
+"PKG",49,22,1,"PAH",1,1,97,0)
+      
+"PKG",49,22,1,"PAH",1,1,98,0)
+      
+"PKG",49,22,1,"PAH",1,1,99,0)
+Defect Tracking System Ticket(s) & Overview
+"PKG",49,22,1,"PAH",1,1,100,0)
+---------------------------
+"PKG",49,22,1,"PAH",1,1,101,0)
+NSD Ticket# I10841525FY16
+"PKG",49,22,1,"PAH",1,1,102,0)
+     
+"PKG",49,22,1,"PAH",1,1,103,0)
+Problem:
+"PKG",49,22,1,"PAH",1,1,104,0)
+-------
+"PKG",49,22,1,"PAH",1,1,105,0)
+When testing with FSC, customer reported that they are not able to enter a 
+"PKG",49,22,1,"PAH",1,1,106,0)
+professional alternate payer ID on Bill Screen 10 when the charge type is 
+"PKG",49,22,1,"PAH",1,1,107,0)
+institutional and the form type is a CMS-1500.
+"PKG",49,22,1,"PAH",1,1,108,0)
+     
+"PKG",49,22,1,"PAH",1,1,109,0)
+Resolution:
+"PKG",49,22,1,"PAH",1,1,110,0)
+----------
+"PKG",49,22,1,"PAH",1,1,111,0)
+Modified screen 10 to be consistent with the screening logic on
+"PKG",49,22,1,"PAH",1,1,112,0)
+fields #140, #142 & #144 in file #399.  Screen 10 will now use form-type 
+"PKG",49,22,1,"PAH",1,1,113,0)
+instead of charge type to determine alternate payer ID.
+"PKG",49,22,1,"PAH",1,1,114,0)
+     
+"PKG",49,22,1,"PAH",1,1,115,0)
+      
+"PKG",49,22,1,"PAH",1,1,116,0)
+Test Sites:
+"PKG",49,22,1,"PAH",1,1,117,0)
+----------
+"PKG",49,22,1,"PAH",1,1,118,0)
+Pittsburgh
+"PKG",49,22,1,"PAH",1,1,119,0)
+South Texas
+"PKG",49,22,1,"PAH",1,1,120,0)
+Northern Indiana
+"PKG",49,22,1,"PAH",1,1,121,0)
+Illiana
+"PKG",49,22,1,"PAH",1,1,122,0)
+     
+"PKG",49,22,1,"PAH",1,1,123,0)
+Documentation Retrieval Instructions
+"PKG",49,22,1,"PAH",1,1,124,0)
+------------------------------------
+"PKG",49,22,1,"PAH",1,1,125,0)
+The preferred method is to retrieve files from download.vista.domain.ext.
+"PKG",49,22,1,"PAH",1,1,126,0)
+This transmits the files from the first available server. Sites may also 
+"PKG",49,22,1,"PAH",1,1,127,0)
+elect to retrieve files directly from a specific server.
+"PKG",49,22,1,"PAH",1,1,128,0)
+     
+"PKG",49,22,1,"PAH",1,1,129,0)
+Sites may retrieve the documentation directly using Secure File Transfer
+"PKG",49,22,1,"PAH",1,1,130,0)
+Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+"PKG",49,22,1,"PAH",1,1,131,0)
+Field Offices:
+"PKG",49,22,1,"PAH",1,1,132,0)
+     
+"PKG",49,22,1,"PAH",1,1,133,0)
+   Albany:                 domain.ext
+"PKG",49,22,1,"PAH",1,1,134,0)
+   Hines:                  domain.ext    
+"PKG",49,22,1,"PAH",1,1,135,0)
+   Salt Lake City:         domain.ext
+"PKG",49,22,1,"PAH",1,1,136,0)
+     
+"PKG",49,22,1,"PAH",1,1,137,0)
+Documentation can also be found on the VA Software Documentation Library 
+"PKG",49,22,1,"PAH",1,1,138,0)
+at: 
+"PKG",49,22,1,"PAH",1,1,139,0)
+http://www.domain.ext/vdl/
+"PKG",49,22,1,"PAH",1,1,140,0)
+     
+"PKG",49,22,1,"PAH",1,1,141,0)
+Title                                 File Name            Transfer Mode
+"PKG",49,22,1,"PAH",1,1,142,0)
+--------------------------------------------------------------------------
+"PKG",49,22,1,"PAH",1,1,143,0)
+Release Notes/Installation Guide      ib_2_0_p547_rn.pdf   Binary
+"PKG",49,22,1,"PAH",1,1,144,0)
+EDI User Guide                        edi_user_guide.pdf   Binary
+"PKG",49,22,1,"PAH",1,1,145,0)
+Integrated Billing (IB) V.2.0
+"PKG",49,22,1,"PAH",1,1,146,0)
+Technical/Security Manual             ib_2_0_tm.pdf        Binary
+"PKG",49,22,1,"PAH",1,1,147,0)
+     
+"PKG",49,22,1,"PAH",1,1,148,0)
+Patch Installation:
+"PKG",49,22,1,"PAH",1,1,149,0)
+      
+"PKG",49,22,1,"PAH",1,1,150,0)
+Pre/Post Installation Overview
+"PKG",49,22,1,"PAH",1,1,151,0)
+------------------------------
+"PKG",49,22,1,"PAH",1,1,152,0)
+N/A  
+"PKG",49,22,1,"PAH",1,1,153,0)
+      
+"PKG",49,22,1,"PAH",1,1,154,0)
+       
+"PKG",49,22,1,"PAH",1,1,155,0)
+Pre-Installation Instructions
+"PKG",49,22,1,"PAH",1,1,156,0)
+-----------------------------
+"PKG",49,22,1,"PAH",1,1,157,0)
+This patch may be installed with users on the system although it is 
+"PKG",49,22,1,"PAH",1,1,158,0)
+recommended that it be installed during non-peak hours to minimize
+"PKG",49,22,1,"PAH",1,1,159,0)
+potential disruption to users entering and editing IB claims.  
+"PKG",49,22,1,"PAH",1,1,160,0)
+This patch should take less than 5 minutes to install
+"PKG",49,22,1,"PAH",1,1,161,0)
+       
+"PKG",49,22,1,"PAH",1,1,162,0)
+No options need to be disabled.
+"PKG",49,22,1,"PAH",1,1,163,0)
+     
+"PKG",49,22,1,"PAH",1,1,164,0)
+Installation Instructions
+"PKG",49,22,1,"PAH",1,1,165,0)
+-------------------------
+"PKG",49,22,1,"PAH",1,1,166,0)
+This patch may be installed with users on the system although it is 
+"PKG",49,22,1,"PAH",1,1,167,0)
+recommended that it be installed during non-peak hours to minimize
+"PKG",49,22,1,"PAH",1,1,168,0)
+potential disruption to users entering and editing IB claims.  This 
+"PKG",49,22,1,"PAH",1,1,169,0)
+patch should take less than 5 minutes to install.
+"PKG",49,22,1,"PAH",1,1,170,0)
+           
+"PKG",49,22,1,"PAH",1,1,171,0)
+1.  Choose the PackMan message containing this patch.
+"PKG",49,22,1,"PAH",1,1,172,0)
+      
+"PKG",49,22,1,"PAH",1,1,173,0)
+2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+"PKG",49,22,1,"PAH",1,1,174,0)
+       
+"PKG",49,22,1,"PAH",1,1,175,0)
+3.  From the Kernel Installation & Distribution System menu, select
+"PKG",49,22,1,"PAH",1,1,176,0)
+    the Installation menu.
+"PKG",49,22,1,"PAH",1,1,177,0)
+      
+"PKG",49,22,1,"PAH",1,1,178,0)
+    a.  Backup a Transport Global - this option will create a backup
+"PKG",49,22,1,"PAH",1,1,179,0)
+        message of any routines exported with the patch. It will not
+"PKG",49,22,1,"PAH",1,1,180,0)
+        backup any other changes such as DDs or templates.
+"PKG",49,22,1,"PAH",1,1,181,0)
+    b.  Compare Transport Global to Current System - this option will
+"PKG",49,22,1,"PAH",1,1,182,0)
+        allow you to view all changes that will be made when the patch 
+"PKG",49,22,1,"PAH",1,1,183,0)
+        is installed.  It compares all components of this patch
+"PKG",49,22,1,"PAH",1,1,184,0)
+        (routines, DDs, templates, etc.).
+"PKG",49,22,1,"PAH",1,1,185,0)
+    c.  Verify Checksums in Transport Global - this option will allow
+"PKG",49,22,1,"PAH",1,1,186,0)
+        you to ensure the integrity of the routines that are in
+"PKG",49,22,1,"PAH",1,1,187,0)
+        transport global.
+"PKG",49,22,1,"PAH",1,1,188,0)
+         
+"PKG",49,22,1,"PAH",1,1,189,0)
+4.  From the Installation Menu, select the Install Package(s) option and
+"PKG",49,22,1,"PAH",1,1,190,0)
+    choose the patch to install. (ex. IB*2.0*574)
+"PKG",49,22,1,"PAH",1,1,191,0)
+       
+"PKG",49,22,1,"PAH",1,1,192,0)
+5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+"PKG",49,22,1,"PAH",1,1,193,0)
+    NO//',  enter NO
+"PKG",49,22,1,"PAH",1,1,194,0)
+      
+"PKG",49,22,1,"PAH",1,1,195,0)
+6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+"PKG",49,22,1,"PAH",1,1,196,0)
+    Protocols? NO//,  respond NO
+"PKG",49,22,1,"PAH",1,1,197,0)
+       
+"PKG",49,22,1,"PAH",1,1,198,0)
+7.  When prompted "DEVICE: HOME//",  enter HOME
+"PKG",49,22,1,"PAH",1,1,199,0)
+     
+"PKG",49,22,1,"PAH",1,1,200,0)
+8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+"PKG",49,22,1,"PAH",1,1,201,0)
+      
+"PKG",49,22,1,"PAH",1,1,202,0)
+       
+"PKG",49,22,1,"PAH",1,1,203,0)
+Post-Installation Instructions
+"PKG",49,22,1,"PAH",1,1,204,0)
+------------------------------
+"PKG",49,22,1,"PAH",1,1,205,0)
+     
+"PKG",49,22,1,"PAH",1,1,206,0)
+There are no special post-installation instructions for this patch.
+"PKG",49,22,1,"PAH",1,1,207,0)
+     
+"PKG",49,22,1,"PAH",1,1,208,0)
+     
+"PKG",49,22,1,"PAH",1,1,209,0)
+Routine Information:
+"PKG",49,22,1,"PAH",1,1,210,0)
+====================
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","IBCEF1")
+0^3^B71584644^B67394178
+"RTN","IBCEF1",1,0)
+IBCEF1 ;ALB/TMP - FORMATTER SPECIFIC BILL FUNCTIONS - CONT ;30-JAN-96
+"RTN","IBCEF1",2,0)
+ ;;2.0;INTEGRATED BILLING;**52,124,51,137,210,155,349,371,447,547,574**;21-MAR-94;Build 12
+"RTN","IBCEF1",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IBCEF1",4,0)
+ ;
+"RTN","IBCEF1",5,0)
+OCC(IBIFN,REL,TEXT) ;Sets up an arrays of occurrence codes for various cks
+"RTN","IBCEF1",6,0)
+ ;RETURNS 1^additional data for entry IBXSAVE("OCC",n) if REL or TEXT
+"RTN","IBCEF1",7,0)
+ ;   parameters have been met or null if conditions not met
+"RTN","IBCEF1",8,0)
+ ;If no REL or TEXT parameters sent, just extract codes array
+"RTN","IBCEF1",9,0)
+ ; IBIFN = bill ien
+"RTN","IBCEF1",10,0)
+ ; REL = 'OCC RELATED TO' value to check for
+"RTN","IBCEF1",11,0)
+ ; TEXT = text to check for the .01 field of 399.1 entry pointed to
+"RTN","IBCEF1",12,0)
+ ;         by the occurrence code
+"RTN","IBCEF1",13,0)
+ N OCC,SORT,ARR,N,DATA,CODE,CT
+"RTN","IBCEF1",14,0)
+ I '$D(IBXSAVE("OCC")),'$D(IBXSAVE("OCCS")) D
+"RTN","IBCEF1",15,0)
+ .N IBI,Z,CT1,CT2,Z0 S (IBI,CT1,CT2)=0
+"RTN","IBCEF1",16,0)
+ .F  S IBI=$O(^DGCR(399,IBIFN,"OC",IBI)) Q:'IBI  S Z=$G(^(IBI,0)) D
+"RTN","IBCEF1",17,0)
+ ..S Z0=$G(^DGCR(399.1,+Z,0))
+"RTN","IBCEF1",18,0)
+ ..Q:'$P(Z0,U,10)&'$P(Z0,U,4)  ;Not an occurrence code
+"RTN","IBCEF1",19,0)
+ ..I $P(Z0,U,10) S CT2=CT2+1,IBXSAVE("OCCS",CT2)=$S($P(Z0,U,4):$P(Z0,U,2)_U_$P(Z,U,2),1:U)_U_$P(Z,U,4)_U_$P(Z0,U)_U_$P(Z0,U,9)_U_$P(Z,U,3)_U_$P(Z,U,2)
+"RTN","IBCEF1",20,0)
+ ..I '$P(Z0,U,10) S CT1=CT1+1,IBXSAVE("OCC",CT1)=$S($P(Z0,U,4):$P(Z0,U,2)_U_$P(Z,U,2),1:U)_U_U_$P(Z0,U)_U_$P(Z0,U,9)_U_$P(Z,U,3)_U_$P(Z,U,2)
+"RTN","IBCEF1",21,0)
+ I '$D(IBXSAVE("OCC"))&'$D(IBXSAVE("OCCS")) S IBXSAVE("OCC")="" G OCCQ
+"RTN","IBCEF1",22,0)
+ ;
+"RTN","IBCEF1",23,0)
+ ; esg - IB*2*349 - order the occurrence codes
+"RTN","IBCEF1",24,0)
+ ;       Build the SORT array sorted by the occ code
+"RTN","IBCEF1",25,0)
+ F ARR="OCC","OCCS" S N=0 F  S N=$O(IBXSAVE(ARR,N)) Q:'N  S DATA=$G(IBXSAVE(ARR,N)) I $P(DATA,U,1)'="" S CODE=" "_$P(DATA,U,1),SORT(ARR,CODE,N)=DATA
+"RTN","IBCEF1",26,0)
+ ;       Loop thru the SORT array and re-build the IBXSAVE array
+"RTN","IBCEF1",27,0)
+ F ARR="OCC","OCCS" K IBXSAVE(ARR) S CODE="",CT=0 F  S CODE=$O(SORT(ARR,CODE)) Q:CODE=""  S N=0 F  S N=$O(SORT(ARR,CODE,N)) Q:'N  S CT=CT+1,IBXSAVE(ARR,CT)=SORT(ARR,CODE,N)
+"RTN","IBCEF1",28,0)
+ ;
+"RTN","IBCEF1",29,0)
+ I $G(REL)'=""!($G(TEXT)'="") D OCC1("",.OCC,$G(REL),$G(TEXT)) D:'$D(OCC) OCC1("S",.OCC,$G(REL),$G(TEXT))
+"RTN","IBCEF1",30,0)
+OCCQ Q $G(OCC)
+"RTN","IBCEF1",31,0)
+ ;
+"RTN","IBCEF1",32,0)
+OCC1(ARR,OCC,REL,TEXT) ; Search thru local array for parameters met
+"RTN","IBCEF1",33,0)
+ ; ARR = null to search OCC subscript, "S" to search OCCS subscript
+"RTN","IBCEF1",34,0)
+ N Z
+"RTN","IBCEF1",35,0)
+ S ARR="OCC"_ARR,Z=0
+"RTN","IBCEF1",36,0)
+ F  S Z=$O(IBXSAVE(ARR,Z)) Q:'Z  D
+"RTN","IBCEF1",37,0)
+ .I $G(REL)'="",$P(IBXSAVE(ARR,Z),U,5)=REL S OCC="1"_$S(REL=2:U_$P(IBXSAVE(ARR,Z),U,6),1:"") Q
+"RTN","IBCEF1",38,0)
+ .I $G(TEXT)'="",$P(IBXSAVE(ARR,Z),U,4)=TEXT S OCC="1^"_$P(IBXSAVE(ARR,Z),U,7)
+"RTN","IBCEF1",39,0)
+ Q
+"RTN","IBCEF1",40,0)
+ ;
+"RTN","IBCEF1",41,0)
+RX(IBIFN) ; Format billable prescription data for refills for 837
+"RTN","IBCEF1",42,0)
+ N Z,IBXDATA,CT
+"RTN","IBCEF1",43,0)
+ I '$D(IBXSAVE("BOX24")) D B24^IBCEF3(.IBXSAVE,IBIFN,1)
+"RTN","IBCEF1",44,0)
+ S Z="",CT=0
+"RTN","IBCEF1",45,0)
+ F  S Z=$O(IBXSAVE("BOX24",Z)) Q:Z=""  I $D(IBXSAVE("BOX24",Z,"RX")) S CT=CT+1,IBXDATA(Z)=IBXSAVE("BOX24",Z,"RX")
+"RTN","IBCEF1",46,0)
+RXQ Q CT
+"RTN","IBCEF1",47,0)
+ ;
+"RTN","IBCEF1",48,0)
+OTHPAY(IBIFN,SEQ) ; Return the other insurance payment amount for bill
+"RTN","IBCEF1",49,0)
+ ;  IBIFN and payer sequence SEQ (1-3)
+"RTN","IBCEF1",50,0)
+ N AMT,IBIFN1,PRP
+"RTN","IBCEF1",51,0)
+ S IBIFN1=$P($G(^DGCR(399,IBIFN,"M1")),U,SEQ+4),PRP=0
+"RTN","IBCEF1",52,0)
+ I IBIFN1 D
+"RTN","IBCEF1",53,0)
+ . ; IB*2.0*547 if Medicare on bill, make sure you are pulling amt paid from correct sequence
+"RTN","IBCEF1",54,0)
+ . ; code was leaving out MRA amt on tertiary bills and cloned secondary where MRA claim# does NOT match current claim#
+"RTN","IBCEF1",55,0)
+ . ;I $$MCRWNR^IBEFUNC(+$G(^DGCR(399,IBIFN,"I"_SEQ))) S AMT=$$MCRPAY^IBCEU0(IBIFN) Q
+"RTN","IBCEF1",56,0)
+ . I $$MCRWNR^IBEFUNC(+$G(^DGCR(399,IBIFN,"I"_SEQ))) S AMT=$$MCRPAY^IBCEU0(IBIFN1),PRP=1 Q
+"RTN","IBCEF1",57,0)
+ . S AMT=+$$TPR^PRCAFN(IBIFN1) I AMT S PRP=1 Q  ; A/R amount
+"RTN","IBCEF1",58,0)
+ . ; IB*2.0*547 - moved this line because it was not getting executed if IBIFN1 was not defined, which it won't be for 
+"RTN","IBCEF1",59,0)
+ . ; manually created secondary and tertiary claims.  Using new flag PRP to indicate if prior payment already found.
+"RTN","IBCEF1",60,0)
+ . ; S AMT=+$P($G(^DGCR(399,IBIFN,"U2")),U,SEQ+3) ; amount on bill
+"RTN","IBCEF1",61,0)
+ S:PRP=0 AMT=+$P($G(^DGCR(399,IBIFN,"U2")),U,SEQ+3) ; amount on bill
+"RTN","IBCEF1",62,0)
+ Q $G(AMT)
+"RTN","IBCEF1",63,0)
+ ;
+"RTN","IBCEF1",64,0)
+OUTPT(IBIFN,IBPRINT) ; Moved for space
+"RTN","IBCEF1",65,0)
+ D OUTPT^IBCEF11(IBIFN,$G(IBPRINT))
+"RTN","IBCEF1",66,0)
+ Q
+"RTN","IBCEF1",67,0)
+ ;
+"RTN","IBCEF1",68,0)
+OCC92 ;Reformats IBXSAVE("OCC") and IBXSAVE("OCCS") to fit blocks on UB-04
+"RTN","IBCEF1",69,0)
+ ; Set up IBXSAVE(32-36) arrays
+"RTN","IBCEF1",70,0)
+ N IBPG,IB32,IB33,IB34,IB35,IB36,IBFL,Z,Z0,PG
+"RTN","IBCEF1",71,0)
+ S IBPG=0
+"RTN","IBCEF1",72,0)
+ F Z=32:1:36 K IBFL(Z) S IBFL(Z)=0
+"RTN","IBCEF1",73,0)
+ M IB32=IBXSAVE("OCC"),IB36=IBXSAVE("OCCS")
+"RTN","IBCEF1",74,0)
+ S IB32=$O(IB32(""),-1),IB36=$O(IB36(""),-1),PG=1
+"RTN","IBCEF1",75,0)
+ D OCC^IBCF32
+"RTN","IBCEF1",76,0)
+ F Z=32:1:36 S Z0="" F  S Z0=$O(IBFL(Z,Z0)) Q:'Z0  S IBXSAVE("OC92",Z,Z0)=$P(IBFL(Z,Z0),U,1,3)
+"RTN","IBCEF1",77,0)
+ Q
+"RTN","IBCEF1",78,0)
+ ;
+"RTN","IBCEF1",79,0)
+BATCH() ; Moved for space IB*2*349
+"RTN","IBCEF1",80,0)
+ Q $$BATCH^IBCEF11()
+"RTN","IBCEF1",81,0)
+ ;
+"RTN","IBCEF1",82,0)
+PROC(T,TYPE) ; Find procedure code, strip '.' Function returns result
+"RTN","IBCEF1",83,0)
+ ; T = Procedure internal entry #;file reference
+"RTN","IBCEF1",84,0)
+ ; TYPE = "CPT" for only CPT/HCPCS valid
+"RTN","IBCEF1",85,0)
+ ;        "ICD" for only ICD9 valid or null for either
+"RTN","IBCEF1",86,0)
+ N Q,S
+"RTN","IBCEF1",87,0)
+ S Q="",S="^"_$P($P(T,";",2),"(")
+"RTN","IBCEF1",88,0)
+ I $G(TYPE)="" D
+"RTN","IBCEF1",89,0)
+ . I $E(S,2,3)="IC" S Q=$P($$PRCD(T),U) Q
+"RTN","IBCEF1",90,0)
+ . I T["DIC(81.3" S Q=$$MOD^ICPTMOD(+T,"I") S Q=$S(Q>0:$P(Q,U,4),1:"")
+"RTN","IBCEF1",91,0)
+ I $G(TYPE)="CPT",$E(S,2,3)="IC" S Q=$$PRCD(T) Q
+"RTN","IBCEF1",92,0)
+ I $G(TYPE)="ICD",T["ICD0" S Q=$P($$ICD0^IBACSV(+T),U)
+"RTN","IBCEF1",93,0)
+ Q $TR(Q,".")
+"RTN","IBCEF1",94,0)
+ ;
+"RTN","IBCEF1",95,0)
+FACILITY(IBIFN) ;return the Facility (Institution pointer-#4) for a bill
+"RTN","IBCEF1",96,0)
+ ; the institution of the Bill Division (399,.22) if defined, otherwise the Facility Name (350.9,.02)
+"RTN","IBCEF1",97,0)
+ ;
+"RTN","IBCEF1",98,0)
+ N IB0,IBIN S IBIN=0
+"RTN","IBCEF1",99,0)
+ S IB0=$G(^DGCR(399,+$G(IBIFN),0)) I +$P(IB0,U,22) S IBIN=$$SITE^VASITE(+$P(IB0,U,3),+$P(IB0,U,22))
+"RTN","IBCEF1",100,0)
+ I IBIN'>0 S IBIN=+$P($G(^IBE(350.9,1,0)),U,2)
+"RTN","IBCEF1",101,0)
+ Q +IBIN
+"RTN","IBCEF1",102,0)
+ ;
+"RTN","IBCEF1",103,0)
+ISRX(IBIFN) ; Function to determine if bill is a prescription refill bill
+"RTN","IBCEF1",104,0)
+ ; Returns 0 if no Rx on bill or 1 if there is.
+"RTN","IBCEF1",105,0)
+ ;
+"RTN","IBCEF1",106,0)
+ N IBRX
+"RTN","IBCEF1",107,0)
+ I $D(^IBA(362.4,"AIFN"_IBIFN)) S IBRX=1
+"RTN","IBCEF1",108,0)
+ Q +$G(IBRX)
+"RTN","IBCEF1",109,0)
+ ;
+"RTN","IBCEF1",110,0)
+ISPROS(IBIFN) ; Function to determine if bill is a prosthetics bill
+"RTN","IBCEF1",111,0)
+ ; Returns 0 if no Prosthetics on bill or 1 if there is.
+"RTN","IBCEF1",112,0)
+ ;
+"RTN","IBCEF1",113,0)
+ N IBPROS
+"RTN","IBCEF1",114,0)
+ I $D(^IBA(362.5,"AIFN"_IBIFN)) S IBPROS=1
+"RTN","IBCEF1",115,0)
+ Q +$G(IBPROS)
+"RTN","IBCEF1",116,0)
+ ;
+"RTN","IBCEF1",117,0)
+FINDINS(IBIFN,IBSEQ) ; Returns the internal entry number of the insurance
+"RTN","IBCEF1",118,0)
+ ;  company for bill ien IBIFN for payer sequence IBSEQ (or current if
+"RTN","IBCEF1",119,0)
+ ;  IBSEQ is null)
+"RTN","IBCEF1",120,0)
+ Q $P($G(^DGCR(399,IBIFN,"I"_$$COBN^IBCEF(IBIFN,$G(IBSEQ)))),U)
+"RTN","IBCEF1",121,0)
+ ;
+"RTN","IBCEF1",122,0)
+TOB(IBIFN) ; Returns UB-04 type of bill from data in the output formatter
+"RTN","IBCEF1",123,0)
+ N IBTOB,IBZ1,IBZ2,IBZ3
+"RTN","IBCEF1",124,0)
+ D F^IBCEF("N-UB-04 LOCATION OF CARE","IBZ1",,IBIFN)
+"RTN","IBCEF1",125,0)
+ D F^IBCEF("N-UB-04 BILL CLASSIFICATION","IBZ2",,IBIFN)
+"RTN","IBCEF1",126,0)
+ D F^IBCEF("N-UB-04 TIMEFRAME OF BILL","IBZ3",,IBIFN)
+"RTN","IBCEF1",127,0)
+ S IBTOB=IBZ1_IBZ2_IBZ3
+"RTN","IBCEF1",128,0)
+ Q IBTOB
+"RTN","IBCEF1",129,0)
+ ;
+"RTN","IBCEF1",130,0)
+PRCD(PRIEN,ALL,EDT) ; Function returns the code that corresponds to the variable
+"RTN","IBCEF1",131,0)
+ ; pointer data in PRIEN (ien;file)
+"RTN","IBCEF1",132,0)
+ ; ALL = if ALL=1, returns the entire $$CPT^ICPTCOD for CPT or
+"RTN","IBCEF1",133,0)
+ ;       ^code^name format for ICD result
+"RTN","IBCEF1",134,0)
+ ;       or null if lookup fails
+"RTN","IBCEF1",135,0)
+ ; EDT = Effective date to check (not used if +$G(ALL)=0)
+"RTN","IBCEF1",136,0)
+ N CODE,IBX
+"RTN","IBCEF1",137,0)
+ S CODE=""
+"RTN","IBCEF1",138,0)
+ ;Modified for Code Set Versioning
+"RTN","IBCEF1",139,0)
+ I PRIEN["ICPT" S IBX=$$CPT^ICPTCOD(+PRIEN,$G(EDT)) G:IBX'>0 PRCDQ S CODE=$S($G(ALL):IBX,1:$P(IBX,U,2))
+"RTN","IBCEF1",140,0)
+ I PRIEN["ICD0" S IBX=$$ICD0^IBACSV(+PRIEN,$G(EDT)) G:IBX="" PRCDQ S CODE=$S($G(ALL):U_$P(IBX,U)_U_$P(IBX,U,4),1:$P(IBX,U))
+"RTN","IBCEF1",141,0)
+PRCDQ Q CODE
+"RTN","IBCEF1",142,0)
+ ;
+"RTN","IBCEF1",143,0)
+NFT(FT,IBIFN) ; Returns 1 if bill IBIFN is not of form type FT (internal)
+"RTN","IBCEF1",144,0)
+ ; so the data element should not be required
+"RTN","IBCEF1",145,0)
+ S FT=$S($$FT^IBCEF(IBIFN)=FT:0,1:1)
+"RTN","IBCEF1",146,0)
+ Q FT
+"RTN","IBCEF1",147,0)
+ ;
+"RTN","IBCEF1",148,0)
+REQ(FT,INP,IBIFN) ; Determine if bill IBIFN is of form type FT and
+"RTN","IBCEF1",149,0)
+ ; Inpatient (I) or Outpatient (O) status INP [or either if (null)] 
+"RTN","IBCEF1",150,0)
+ ;
+"RTN","IBCEF1",151,0)
+ ;Returns 1 if both conditions FT and INP match for the bill
+"RTN","IBCEF1",152,0)
+ ; or 0 if either of these conditions are not true
+"RTN","IBCEF1",153,0)
+ ; I $$REQ^IBCEF1(2,"I",1) would mean if bill entry #1 is
+"RTN","IBCEF1",154,0)
+ ;                         CMS-1500/inpatient the data would be required
+"RTN","IBCEF1",155,0)
+ ; I '$$REQ^IBCEF1(2,"I",1) would mean if bill entry #1 is anything but
+"RTN","IBCEF1",156,0)
+ ;                          CMS-1500/inpatient, the data would not be
+"RTN","IBCEF1",157,0)
+ ;                          required
+"RTN","IBCEF1",158,0)
+ N Z
+"RTN","IBCEF1",159,0)
+ S Z=1
+"RTN","IBCEF1",160,0)
+ S:$$NFT(FT,IBIFN) Z=0 ; Not the form type for requirement
+"RTN","IBCEF1",161,0)
+ I Z,$G(INP)'="" D
+"RTN","IBCEF1",162,0)
+ . S Z0=$$INPAT^IBCEF(IBIFN,1),INP=$G(INP)
+"RTN","IBCEF1",163,0)
+ . S Z=$S(Z0:INP="I",1:INP="O") ;Check if I/O matches required state
+"RTN","IBCEF1",164,0)
+ Q Z
+"RTN","IBCEF1",165,0)
+ ;
+"RTN","IBCEF1",166,0)
+SET1(IBIFN,A,IBZ,IBXDATA,IBXNOREQ) ; Utility to set variables for output
+"RTN","IBCEF1",167,0)
+ ; formatter for professional EDI 
+"RTN","IBCEF1",168,0)
+ ; Returns values of A, IBXDATA, IBZ, IBXNOREQ
+"RTN","IBCEF1",169,0)
+ N Z,CT
+"RTN","IBCEF1",170,0)
+ S A="^TMP($J,""IBLCT"")"
+"RTN","IBCEF1",171,0)
+ S (Z,CT)=0
+"RTN","IBCEF1",172,0)
+ F  S Z=$O(IBXDATA(Z)) Q:'Z  D  ; Don't transmit 0-charges
+"RTN","IBCEF1",173,0)
+ . ;IB*2.0*447/TAZ - Transmit $0 charges.
+"RTN","IBCEF1",174,0)
+ . ;I $P(IBXDATA(Z),U,9),$P(IBXDATA(Z),U,8) S CT=CT+1 M IBZ(CT)=IBXDATA(Z)
+"RTN","IBCEF1",175,0)
+ . I $P(IBXDATA(Z),U,9) S CT=CT+1 M IBZ(CT)=IBXDATA(Z)
+"RTN","IBCEF1",176,0)
+ . ;IB*2.0*447
+"RTN","IBCEF1",177,0)
+ K IBXDATA
+"RTN","IBCEF1",178,0)
+ S IBXNOREQ='$$REQ(2,"O",IBIFN)
+"RTN","IBCEF1",179,0)
+ Q
+"RTN","IBCEF1",180,0)
+ ;
+"RTN","IBCEF1",181,0)
+CIADDR(IBXDATA,IBXSAVE,LINE,FORM) ; Format current ins co address line LINE for FORM
+"RTN","IBCEF1",182,0)
+ ; FORM = 1 for CMS-1500, 2 for UB-04
+"RTN","IBCEF1",183,0)
+ ; Called from output formatter - both IBXDATA, IBXSAVE parameters are
+"RTN","IBCEF1",184,0)
+ ;  passed by reference
+"RTN","IBCEF1",185,0)
+ ;
+"RTN","IBCEF1",186,0)
+ K IBXDATA
+"RTN","IBCEF1",187,0)
+ I $G(FORM)'=1 D
+"RTN","IBCEF1",188,0)
+ . ;
+"RTN","IBCEF1",189,0)
+ . ; esg - 11/17/06 - IB*2*349 - UB-04 FL-38 contains the payer name
+"RTN","IBCEF1",190,0)
+ . ;       and address on 4 lines within this 5 line box.  All 5 lines
+"RTN","IBCEF1",191,0)
+ . ;       are formatted here into the IBXDATA array.  This is the
+"RTN","IBCEF1",192,0)
+ . ;       address that shows through the envelope window.
+"RTN","IBCEF1",193,0)
+ . ;
+"RTN","IBCEF1",194,0)
+ . ; esg - 9/13/07 - IB*2*371 - Line 1 of this box contains the print
+"RTN","IBCEF1",195,0)
+ . ;       status (i.e. copy, 2nd notice, 3rd notice, MRA needed).
+"RTN","IBCEF1",196,0)
+ . ;
+"RTN","IBCEF1",197,0)
+ . N Z,Z1,LM,Q,ADDR,X,IBPSTAT
+"RTN","IBCEF1",198,0)
+ . S LM=$P($G(^IBE(350.9,1,1)),U,31)   ; UB address column parameter
+"RTN","IBCEF1",199,0)
+ . S Z=""
+"RTN","IBCEF1",200,0)
+ . I LM S $P(Z," ",LM)=""              ; beginning spaces indent
+"RTN","IBCEF1",201,0)
+ . S ADDR=$G(IBXSAVE("CADR"))          ; address data string
+"RTN","IBCEF1",202,0)
+ . ;
+"RTN","IBCEF1",203,0)
+ . D F^IBCEF("N-PRINT BILL SUBMIT STATUS","IBPSTAT",,+$G(IBXIEN))
+"RTN","IBCEF1",204,0)
+ . S Z1=Z I Z1="" S Z1=" "     ; line 1 can't start in column 1
+"RTN","IBCEF1",205,0)
+ . S IBXDATA(1)=Z1_$G(IBPSTAT),Q=1             ; line 1 print status
+"RTN","IBCEF1",206,0)
+ . S Q=Q+1
+"RTN","IBCEF1",207,0)
+ . S IBXDATA(Q)=Z_$G(IBXSAVE("CADR_NAME"))     ; line 2 payer name
+"RTN","IBCEF1",208,0)
+ . S X=$P(ADDR,U,1)
+"RTN","IBCEF1",209,0)
+ . I X'="" S Q=Q+1,IBXDATA(Q)=Z_X              ; address line 1
+"RTN","IBCEF1",210,0)
+ . S X=$P(ADDR,U,2)
+"RTN","IBCEF1",211,0)
+ . I X'="" S Q=Q+1,IBXDATA(Q)=Z_X D            ; address line 2
+"RTN","IBCEF1",212,0)
+ .. S X=$P(ADDR,U,3)
+"RTN","IBCEF1",213,0)
+ .. I X'="" S IBXDATA(Q)=IBXDATA(Q)_" "_X      ; address line 3
+"RTN","IBCEF1",214,0)
+ .. Q
+"RTN","IBCEF1",215,0)
+ . S Q=Q+1                                     ; city,st,zip on last line
+"RTN","IBCEF1",216,0)
+ . S IBXDATA(Q)=Z_$P(ADDR,U,4)_", "_$$STATE^IBCEFG1($P(ADDR,U,5))_" "_$P(ADDR,U,6)
+"RTN","IBCEF1",217,0)
+ . KILL IBXSAVE("CADR_NAME"),IBXSAVE("CADR")   ; cleanup
+"RTN","IBCEF1",218,0)
+ . Q
+"RTN","IBCEF1",219,0)
+ ;
+"RTN","IBCEF1",220,0)
+ I $G(FORM)=1 D           ; CMS-1500
+"RTN","IBCEF1",221,0)
+ . N CT,X,Z
+"RTN","IBCEF1",222,0)
+ . S:'$D(IBXSAVE("INDENT")) Z="",$P(Z," ",+$P($G(^IBE(350.9,1,1)),U,27)+1)="",IBXSAVE("INDENT")=Z
+"RTN","IBCEF1",223,0)
+ . S CT=0
+"RTN","IBCEF1",224,0)
+ . S X=$P(IBXSAVE("CADR"),U) S:X'="" CT=CT+1,IBXDATA(CT)=IBXSAVE("INDENT")_X
+"RTN","IBCEF1",225,0)
+ . S X=$S($P(IBXSAVE("CADR"),U,2)'="":$P(IBXSAVE("CADR"),U,2),1:"")_$S($P(IBXSAVE("CADR"),U,2)'="":" ",1:"")_$P(IBXSAVE("CADR"),U,3) S:X'="" CT=CT+1,IBXDATA(CT)=IBXSAVE("INDENT")_X
+"RTN","IBCEF1",226,0)
+ . S CT=CT+1,IBXDATA(CT)=IBXSAVE("INDENT")_$P(IBXSAVE("CADR"),U,4)_", "_$$STATE^IBCEFG1($P(IBXSAVE("CADR"),U,5))_" "_$P(IBXSAVE("CADR"),U,6)
+"RTN","IBCEF1",227,0)
+ . Q
+"RTN","IBCEF1",228,0)
+ ;
+"RTN","IBCEF1",229,0)
+ Q
+"RTN","IBCEF1",230,0)
+ ;
+"RTN","IBCEF1",231,0)
+HHLTH(IBIFN,OUT) ; determine if claim is hospice/home health and needs episode of care date  **574**
+"RTN","IBCEF1",232,0)
+ ; per NUBC, date the episode of care began is needed for all outpatient CMS-1500 Home Health and Hospice claims and
+"RTN","IBCEF1",233,0)
+ ; UB-04: 012x,022x,032x,034x,081x & 082x claims
+"RTN","IBCEF1",234,0)
+ ; this string is zero + the Bill Type field from screens 6&7 of enter/edit Bill: 0_field#.24(LOC OF CARE)_.25(BILL CLASS)_.26(TIMEFRAME)
+"RTN","IBCEF1",235,0)
+ ; required - IBIFN = internal claim#
+"RTN","IBCEF1",236,0)
+ ; optional - OUT = optional flag to pass to INPAT^IBCEF
+"RTN","IBCEF1",237,0)
+ ; returns a 1 if date should be included on bill and a 0 if it should NOT be included on bill
+"RTN","IBCEF1",238,0)
+ ;
+"RTN","IBCEF1",239,0)
+ N IB0,IBL,IBC,IBT
+"RTN","IBCEF1",240,0)
+ Q:$G(IBIFN)="" 0
+"RTN","IBCEF1",241,0)
+ ; all inpatient claims include date
+"RTN","IBCEF1",242,0)
+ I $$INPAT^IBCEF(IBIFN,+$G(OUT))'=0 Q 1
+"RTN","IBCEF1",243,0)
+ S IB0=$G(^DGCR(399,IBIFN,0)),IBL=$P(IB0,U,24)
+"RTN","IBCEF1",244,0)
+ ; Per Lisa Duncan, all Home health must have date, not just 032x & 034x
+"RTN","IBCEF1",245,0)
+ Q:IBL=3 1
+"RTN","IBCEF1",246,0)
+ ; not home health or hospice if LOC OF CARE = 7
+"RTN","IBCEF1",247,0)
+ Q:IBL=7 0
+"RTN","IBCEF1",248,0)
+ S IBC=$P($G(^DGCR(399.1,+$P(IB0,U,25),0)),U,2)
+"RTN","IBCEF1",249,0)
+ ; not home health or hospice if BILL CLASS is 3 or a number greater than 4
+"RTN","IBCEF1",250,0)
+ Q:IBC>4 0
+"RTN","IBCEF1",251,0)
+ Q:IBC=3 0
+"RTN","IBCEF1",252,0)
+ S IBT=IBL_IBC
+"RTN","IBCEF1",253,0)
+ ; any claim where the location of care_bill classification combo is 12,22,32,34,81 or 82 must have date
+"RTN","IBCEF1",254,0)
+ Q:"^12^22^32^34^81^82^"[IBT 1
+"RTN","IBCEF1",255,0)
+ Q 0
+"RTN","IBCSC10")
+0^1^B8993520^B8325466
+"RTN","IBCSC10",1,0)
+IBCSC10 ;ALB/MJB - MCCR SCREEN 10 (UB-82 BILL SPECIFIC INFO)  ;27 MAY 88 10:20
+"RTN","IBCSC10",2,0)
+ ;;2.0;INTEGRATED BILLING;**432,547,574**;21-MAR-94;Build 12
+"RTN","IBCSC10",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IBCSC10",4,0)
+ ;
+"RTN","IBCSC10",5,0)
+ ;MAP TO DGCRSC8
+"RTN","IBCSC10",6,0)
+ ;
+"RTN","IBCSC10",7,0)
+ ; DEM;432 - Moved IBCSC8* billing screen routines to IBCSC10* billing screen
+"RTN","IBCSC10",8,0)
+ ;           routines and created a new billing screen 8 routine IBCSC8.
+"RTN","IBCSC10",9,0)
+ ;
+"RTN","IBCSC10",10,0)
+EN S IBCUBFT=$$FT^IBCU3(IBIFN) I IBCUBFT=2 K IBCUBFT G ^IBCSC10H ; hcfa 1500
+"RTN","IBCSC10",11,0)
+ I IBCUBFT=3 K IBCUBFT G ^IBCSC102 ; ub-92
+"RTN","IBCSC10",12,0)
+ ;I $P(^DGCR(399,IBIFN,0),"^",19)=2 G ^IBCSC10H ;hcfa 1500
+"RTN","IBCSC10",13,0)
+ D ^IBCSCU S IBSR=10,IBSR1="",IBV1="000000000" S:IBV IBV1="111111111" F I="U","U1",0 S IB(I)=$S($D(^DGCR(399,IBIFN,I)):^(I),1:"")
+"RTN","IBCSC10",14,0)
+ D H^IBCSCU
+"RTN","IBCSC10",15,0)
+ S Z=1,IBW=1 X IBWW W " Bill Remark    : ",$S($P(IB("U1"),U,8)]"":$P(IB("U1"),U,8),1:IBUN)
+"RTN","IBCSC10",16,0)
+ S IBX="^^^2^9^27^45" F I=4:1:7 S Z=(I-2),IBW=1 X IBWW W " Form Locator ",$P(IBX,U,I),$S($E($P(IBX,U,I),2)="":" : ",1:": "),$S($P(IB("U1"),U,I)]"":$P(IB("U1"),U,I),1:IBUN)
+"RTN","IBCSC10",17,0)
+ S IBX=91 F I=13,14 S Z=(I-7),IBW=1,IBX=IBX+1 X IBWW W " Form Locator ",IBX,": ",$S($P(IB("U1"),U,I)]"":$P(IB("U1"),U,I),1:IBUN)
+"RTN","IBCSC10",18,0)
+ S Z=8,IBW=1 X IBWW W " Tx Auth. Code  : ",$S($P(IB("U"),U,13)]"":$P(IB("U"),U,13),1:IBUN)
+"RTN","IBCSC10",19,0)
+ G ^IBCSCP
+"RTN","IBCSC10",20,0)
+Q Q
+"RTN","IBCSC10",21,0)
+ ;
+"RTN","IBCSC10",22,0)
+ ;WCJ;IB*2.0*547
+"RTN","IBCSC10",23,0)
+ACINTEL(IBINSDAT,IBNEXT) ; build some intelligence in this Alternate ID branching logic called from both screen 10 templates.
+"RTN","IBCSC10",24,0)
+ ;
+"RTN","IBCSC10",25,0)
+ ; Input:
+"RTN","IBCSC10",26,0)
+ ; IBINSDAT - INS DATA node
+"RTN","IBCSC10",27,0)
+ ; IBNEXT -where to branch if not correct plan
+"RTN","IBCSC10",28,0)
+ ;
+"RTN","IBCSC10",29,0)
+ ; Returns - where to branch to
+"RTN","IBCSC10",30,0)
+ ;
+"RTN","IBCSC10",31,0)
+ N IBPLAN,IBEPT,IBINSPRF
+"RTN","IBCSC10",32,0)
+ S IBPLAN=$P(IBINSDAT,U,18)
+"RTN","IBCSC10",33,0)
+ I IBPLAN=""  Q IBNEXT
+"RTN","IBCSC10",34,0)
+ S IBPLAN=$G(^IBA(355.3,+IBPLAN,0))
+"RTN","IBCSC10",35,0)
+ I IBPLAN="" Q IBNEXT
+"RTN","IBCSC10",36,0)
+ S IBEPT=$P(IBPLAN,U,15)
+"RTN","IBCSC10",37,0)
+ I IBEPT="" Q IBNEXT
+"RTN","IBCSC10",38,0)
+ I IBEPT="MX" Q:'$D(^IBE(350.9,1,81,"B")) IBNEXT  ; no medicare set up in site parameters
+"RTN","IBCSC10",39,0)
+ I IBEPT'="MX" Q:'$D(^IBE(350.9,1,82,"B")) IBNEXT   ; no commercial set up in site parameters
+"RTN","IBCSC10",40,0)
+ ; Use form type not charge type 09/07/2016
+"RTN","IBCSC10",41,0)
+ ;S IBINSPRF=$$INSPRF^IBCEF(IBIFN)
+"RTN","IBCSC10",42,0)
+ S IBINSPRF=$$FT^IBCEF(+IBIFN)=3  ; set IBINST flag=1 if it is institutional,0 for professional.
+"RTN","IBCSC10",43,0)
+ ;
+"RTN","IBCSC10",44,0)
+ ; Institutional
+"RTN","IBCSC10",45,0)
+ I IBINSPRF=1 Q:'$D(^DIC(36,+IBINSDAT,15,"B")) IBNEXT   ; this insurance company has no institutional set up
+"RTN","IBCSC10",46,0)
+ ;
+"RTN","IBCSC10",47,0)
+ ; Professional
+"RTN","IBCSC10",48,0)
+ I IBINSPRF=0 Q:'$D(^DIC(36,+IBINSDAT,16,"B")) IBNEXT  ; this insurance company has no professional set up
+"RTN","IBCSC10",49,0)
+ ;
+"RTN","IBCSC10",50,0)
+ ; now it gets complicated :)
+"RTN","IBCSC10",51,0)
+ ; there needs to be one set up for this form type in the ins comp file
+"RTN","IBCSC10",52,0)
+ ; and also set up for medicare/commercial in the site parameter file
+"RTN","IBCSC10",53,0)
+ N IBTMPINS,IBTMPSP,IBLOOP,IBFOUND
+"RTN","IBCSC10",54,0)
+ M IBTMPINS=^DIC(36,+IBINSDAT,$S(IBINSPRF=1:15,1:16),"B")
+"RTN","IBCSC10",55,0)
+ M IBTMPSP=^IBE(350.9,1,$S(IBEPT="MX":81,1:82),"B")
+"RTN","IBCSC10",56,0)
+ S IBLOOP="",IBFOUND=0
+"RTN","IBCSC10",57,0)
+ F  S IBLOOP=$O(IBTMPINS(IBLOOP)) Q:IBLOOP=""  D  Q:IBFOUND
+"RTN","IBCSC10",58,0)
+ . Q:'$D(IBTMPSP(IBLOOP))
+"RTN","IBCSC10",59,0)
+ . S IBFOUND=1
+"RTN","IBCSC10",60,0)
+ I IBFOUND Q ""
+"RTN","IBCSC10",61,0)
+ Q IBNEXT
+"RTN","IBCSC10",62,0)
+ ;IBCSC10
+"RTN","IBY574PR")
+0^2^B1642628^n/a
+"RTN","IBY574PR",1,0)
+IBY574PR ;ALB/GEF - Pre-Installation for IB patch 574 ; 10/7/16 5:38pm
+"RTN","IBY574PR",2,0)
+ ;;2.0;INTEGRATED BILLING;**574**;21-MAR-94;Build 12
+"RTN","IBY574PR",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IBY574PR",4,0)
+ ;
+"RTN","IBY574PR",5,0)
+ ; delete all output formatter (O.F.) data elements included in build
+"RTN","IBY574PR",6,0)
+ D DELOF
+"RTN","IBY574PR",7,0)
+ Q
+"RTN","IBY574PR",8,0)
+ ;
+"RTN","IBY574PR",9,0)
+INCLUDE(FILE,Y) ; function to determine if O.F. entry should be included in the build
+"RTN","IBY574PR",10,0)
+ ; FILE=5,6,7 indicating file 364.x
+"RTN","IBY574PR",11,0)
+ ; Y=ien to file
+"RTN","IBY574PR",12,0)
+ NEW OK,LN,TAG,DATA
+"RTN","IBY574PR",13,0)
+ S OK=0
+"RTN","IBY574PR",14,0)
+ F LN=2:1 S TAG="ENT"_FILE_"+"_LN,DATA=$P($T(@TAG),";;",2) Q:DATA=""  I $F(DATA,U_Y_U) S OK=1 Q
+"RTN","IBY574PR",15,0)
+ Q OK
+"RTN","IBY574PR",16,0)
+ ;
+"RTN","IBY574PR",17,0)
+ ;Delete edited entries to insure clean install of new entries
+"RTN","IBY574PR",18,0)
+ ;Delete obsolete entries.
+"RTN","IBY574PR",19,0)
+DELOF ; Delete included OF entries
+"RTN","IBY574PR",20,0)
+ NEW FILE,DIK,LN,TAG,TAGLN,DATA,PCE,DA,Y
+"RTN","IBY574PR",21,0)
+ F FILE=5,6,7 S DIK="^IBA(364."_FILE_"," D
+"RTN","IBY574PR",22,0)
+ . F TAG="ENT"_FILE,"DEL"_FILE D
+"RTN","IBY574PR",23,0)
+ .. F LN=2:1 S TAGLN=TAG_"+"_LN,DATA=$P($T(@TAGLN),";;",2) Q:DATA=""  D
+"RTN","IBY574PR",24,0)
+ ... F PCE=2:1 S DA=$P(DATA,U,PCE) Q:'DA  I $D(^IBA("364."_FILE,DA,0)) D ^DIK
+"RTN","IBY574PR",25,0)
+ Q
+"RTN","IBY574PR",26,0)
+ ;
+"RTN","IBY574PR",27,0)
+ ; Example for ENT5, ENT6, ENT7, DEL5, DEL6, and DEL7:
+"RTN","IBY574PR",28,0)
+ ;;^195^254^259^269^324^325^
+"RTN","IBY574PR",29,0)
+ ; Note:  Must have beginning and ending up-carat
+"RTN","IBY574PR",30,0)
+ ;
+"RTN","IBY574PR",31,0)
+ ; 364.5 entries modified:
+"RTN","IBY574PR",32,0)
+ ;
+"RTN","IBY574PR",33,0)
+ENT5 ; OF entries in file 364.5 to be included
+"RTN","IBY574PR",34,0)
+ ;
+"RTN","IBY574PR",35,0)
+ ;
+"RTN","IBY574PR",36,0)
+ ;-----------------------------------------------------------------------
+"RTN","IBY574PR",37,0)
+ ;
+"RTN","IBY574PR",38,0)
+ENT6 ; O.F. entries in file 364.6 to be included
+"RTN","IBY574PR",39,0)
+ ;
+"RTN","IBY574PR",40,0)
+ ;
+"RTN","IBY574PR",41,0)
+ENT7 ; O.F. entries in file 364.7 to be included
+"RTN","IBY574PR",42,0)
+ ;
+"RTN","IBY574PR",43,0)
+ ;;^77^98^1305^
+"RTN","IBY574PR",44,0)
+ ;
+"RTN","IBY574PR",45,0)
+ ;-----------------------------------------------------------------------
+"RTN","IBY574PR",46,0)
+ ; 364.5 entries deleted:
+"RTN","IBY574PR",47,0)
+ ;
+"RTN","IBY574PR",48,0)
+DEL5 ; remove O.F. entries in file 364.5 (not re-added)
+"RTN","IBY574PR",49,0)
+ ;
+"RTN","IBY574PR",50,0)
+ ;;
+"RTN","IBY574PR",51,0)
+ ;
+"RTN","IBY574PR",52,0)
+ ;
+"RTN","IBY574PR",53,0)
+DEL6 ; remove O.F. entries in file 364.6 (not re-added)
+"RTN","IBY574PR",54,0)
+ ;
+"RTN","IBY574PR",55,0)
+ ;
+"RTN","IBY574PR",56,0)
+DEL7 ; remove O.F. entries in file 364.7 (not re-added)
+"RTN","IBY574PR",57,0)
+ ;
+"RTN","IBY574PR",58,0)
+ ;
+"RTN","IBY574PR",59,0)
+ ;-----------------------------------------------------------------------
+"RTN","IBY574PR",60,0)
+ ;
+"VER")
+8.0^22.0
+"^DD",364.7,364.7,0)
+FIELD^^3^12
+"^DD",364.7,364.7,0,"DDA")
+N
+"^DD",364.7,364.7,0,"DT")
+2960710
+"^DD",364.7,364.7,0,"ID",.03)
+S %I=Y,Y=$S('$D(^(0)):"",$D(^IBA(364.5,+$P(^(0),U,3),0))#2:$P(^(0),U,1),1:""),C=$P(^DD(364.5,.01,0),U,2) D Y^DIQ:Y]"" W "   ",Y,@("$E("_DIC_"%I,0),0)") S Y=%I K %I
+"^DD",364.7,364.7,0,"IX","AINS",364.7,.01)
+
+"^DD",364.7,364.7,0,"IX","AINS1",364.7,.05)
+
+"^DD",364.7,364.7,0,"IX","AINTYP",364.7,.01)
+
+"^DD",364.7,364.7,0,"IX","AINTYP1",364.7,.05)
+
+"^DD",364.7,364.7,0,"IX","AINTYP2",364.7,.06)
+
+"^DD",364.7,364.7,0,"IX","ATYPE",364.7,.01)
+
+"^DD",364.7,364.7,0,"IX","ATYPE1",364.7,.06)
+
+"^DD",364.7,364.7,0,"IX","B",364.7,.01)
+
+"^DD",364.7,364.7,0,"IX","C",364.7,.03)
+
+"^DD",364.7,364.7,0,"NM","IB FORM FIELD CONTENT")
+ 
+"^DD",364.7,364.7,0,"VRPK")
+IB
+"^DD",364.7,364.7,.01,0)
+FORM FIELD REFERENCE^RP364.6'^IBA(364.6,^0;1^Q
+"^DD",364.7,364.7,.01,1,0)
+^.1
+"^DD",364.7,364.7,.01,1,1,0)
+364.7^B
+"^DD",364.7,364.7,.01,1,1,1)
+S ^IBA(364.7,"B",$E(X,1,30),DA)=""
+"^DD",364.7,364.7,.01,1,1,2)
+K ^IBA(364.7,"B",$E(X,1,30),DA)
+"^DD",364.7,364.7,.01,1,2,0)
+364.7^ATYPE^MUMPS
+"^DD",364.7,364.7,.01,1,2,1)
+N Z1,Z0 S Z0=$G(^IBA(364.7,DA,0)),Z1=$P(Z0,U,6) I Z1'="",$P($G(^IBA(364.6,+X,0)),U,3),'$P(Z0,U,5) S ^IBA(364.7,"ATYPE",$P(^IBA(364.6,+X,0),U,3),Z1,DA)=""
+"^DD",364.7,364.7,.01,1,2,2)
+N Z0,Z1 S Z0=$G(^IBA(364.7,DA,0)),Z1=$P(Z0,U,6) I Z1'="",$P($G(^IBA(364.6,+X,0)),U,3) K ^IBA(364.7,"ATYPE",$P(^IBA(364.6,+X,0),U,3),Z1,DA)
+"^DD",364.7,364.7,.01,1,2,3)
+DO NOT DELETE
+"^DD",364.7,364.7,.01,1,2,"%D",0)
+^^1^1^2980104^^^^
+"^DD",364.7,364.7,.01,1,2,"%D",1,0)
+Xref by form and bill type
+"^DD",364.7,364.7,.01,1,2,"DT")
+2960117
+"^DD",364.7,364.7,.01,1,3,0)
+364.7^AINTYP^MUMPS
+"^DD",364.7,364.7,.01,1,3,1)
+N Z0,Z1,Z2 S Z0=$G(^IBA(364.7,DA,0)),Z1=$P(Z0,U,5),Z2=$P(Z0,U,6) I Z1,Z2'="",$P($G(^IBA(364.6,+X,0)),U,3) S ^IBA(364.7,"AINTYP",$P(^IBA(364.6,+X,0),U,3),Z1,Z2,DA)=""
+"^DD",364.7,364.7,.01,1,3,2)
+N Z0,Z1,Z2 S Z0=$G(^IBA(364.7,DA,0)),Z1=$P(Z0,U,5),Z2=$P(Z0,U,6) I Z1,Z2'="",$P($G(^IBA(364.6,+X,0)),U,3) K ^IBA(364.7,"AINTYP",$P(^IBA(364.6,+X,0),U,3),Z1,Z2,DA)
+"^DD",364.7,364.7,.01,1,3,3)
+DO NOT DELETE
+"^DD",364.7,364.7,.01,1,3,"%D",0)
+^^1^1^2971231^^^
+"^DD",364.7,364.7,.01,1,3,"%D",1,0)
+Xref by form, insurance company and bill type
+"^DD",364.7,364.7,.01,1,3,"DT")
+2960117
+"^DD",364.7,364.7,.01,1,4,0)
+364.7^AINS^MUMPS
+"^DD",364.7,364.7,.01,1,4,1)
+N Z0,Z1 S Z0=$G(^IBA(364.7,DA,0)),Z1=$P(Z0,U,5) I Z1,$P($G(^IBA(364.6,+X,0)),U,3),$P(Z0,U,6)="" S ^IBA(364.7,"AINS",$P(^IBA(364.6,+X,0),U,3),Z1,DA)=""
+"^DD",364.7,364.7,.01,1,4,2)
+N Z0,Z1 S Z0=$G(^IBA(364.7,DA,0)),Z1=$P(Z0,U,5) I Z1,$P($G(^IBA(364.6,+X,0)),U,3) K ^IBA(364.7,"AINS",$P(^IBA(364.6,+X,0),U,3),Z1,DA)
+"^DD",364.7,364.7,.01,1,4,3)
+DO NOT DELETE
+"^DD",364.7,364.7,.01,1,4,"%D",0)
+^^1^1^2971231^^
+"^DD",364.7,364.7,.01,1,4,"%D",1,0)
+Xref by form field and insurance company
+"^DD",364.7,364.7,.01,1,4,"DT")
+2960118
+"^DD",364.7,364.7,.01,3)
+Enter the billing form that this field is associated with
+"^DD",364.7,364.7,.01,21,0)
+^^2^2^2951207^^^^
+"^DD",364.7,364.7,.01,21,1,0)
+This is a pointer to the billing form field that this field is associated
+"^DD",364.7,364.7,.01,21,2,0)
+with.
+"^DD",364.7,364.7,.01,"DT")
+3000428
+"^DD",364.7,364.7,.02,0)
+SECURITY LEVEL^S^N:NATIONAL,NO EDIT;L:LOCAL;^0;2^Q
+"^DD",364.7,364.7,.02,3)
+Enter N for nationally released fields (no edit) or L for locally added fields.
+"^DD",364.7,364.7,.02,21,0)
+^^3^3^2951219^^^
+"^DD",364.7,364.7,.02,21,1,0)
+This field determines whether or not editing of the entry is allowed.  For
+"^DD",364.7,364.7,.02,21,2,0)
+NATIONAL (N) field, no local editing is allowed.  If LOCAL (L) field is
+"^DD",364.7,364.7,.02,21,3,0)
+created, editing is allowed.
+"^DD",364.7,364.7,.02,"DT")
+3000428
+"^DD",364.7,364.7,.03,0)
+DATA ELEMENT^P364.5'^IBA(364.5,^0;3^Q
+"^DD",364.7,364.7,.03,1,0)
+^.1
+"^DD",364.7,364.7,.03,1,1,0)
+364.7^C
+"^DD",364.7,364.7,.03,1,1,1)
+S ^IBA(364.7,"C",$E(X,1,30),DA)=""
+"^DD",364.7,364.7,.03,1,1,2)
+K ^IBA(364.7,"C",$E(X,1,30),DA)
+"^DD",364.7,364.7,.03,1,1,3)
+DO NOT DELETE
+"^DD",364.7,364.7,.03,1,1,"%D",0)
+^^1^1^2960702^
+"^DD",364.7,364.7,.03,1,1,"%D",1,0)
+Xref by DATA ELEMENT NAME
+"^DD",364.7,364.7,.03,1,1,"DT")
+2960702
+"^DD",364.7,364.7,.03,3)
+Enter the data element that will define this form field.  If used on a screen, it must be a fileman type.
+"^DD",364.7,364.7,.03,21,0)
+^^1^1^2960627^^^^
+"^DD",364.7,364.7,.03,21,1,0)
+This identifies the data element that be extracted for this entry.
+"^DD",364.7,364.7,.03,23,0)
+^^4^4^2960627^^^^
+"^DD",364.7,364.7,.03,23,1,0)
+This is the data element that will be allowed to be displayed/edited on a
+"^DD",364.7,364.7,.03,23,2,0)
+screen, extracted for a transmit, or printed on a printed form.  If used on
+"^DD",364.7,364.7,.03,23,3,0)
+a screen, the data element must be a fileman type and a local field (>10000
+"^DD",364.7,364.7,.03,23,4,0)
+for ifn and on a node >10000) to be editable.
+"^DD",364.7,364.7,.03,"DT")
+2960702
+"^DD",364.7,364.7,.04,0)
+SCREEN PROMPT^FX^^0;4^K:$L(X)>70!($L(X)<1) X I $D(X),$P($G(^IBE(353,+$G(^IBA(364.6,+$G(^IBA(364.7,DA,0)),0)),2)),U,2)'="S" K X
+"^DD",364.7,364.7,.04,.1)
+ 
+"^DD",364.7,364.7,.04,1,0)
+^.1^^0
+"^DD",364.7,364.7,.04,3)
+Answer must be 1-70 characters in length.
+"^DD",364.7,364.7,.04,21,0)
+3^^2^2^2960321^^^^
+"^DD",364.7,364.7,.04,21,1,0)
+This is used only by screen-type forms to place a prompt on the screen
+"^DD",364.7,364.7,.04,21,2,0)
+for a particular field.
+"^DD",364.7,364.7,.04,23,0)
+^^3^3^2960321^^^^
+"^DD",364.7,364.7,.04,23,1,0)
+This is the prompt that will preceed the data element defined for this
+"^DD",364.7,364.7,.04,23,2,0)
+entry.  If no data element, this prompt will display.  This field is only
+"^DD",364.7,364.7,.04,23,3,0)
+used for screen-type forms.
+"^DD",364.7,364.7,.04,"DT")
+2960321
+"^DD",364.7,364.7,.05,0)
+INSURANCE COMPANY^P36'^DIC(36,^0;5^Q
+"^DD",364.7,364.7,.05,1,0)
+^.1
+"^DD",364.7,364.7,.05,1,1,0)
+364.7^AINS1^MUMPS
+"^DD",364.7,364.7,.05,1,1,1)
+N Z0,Z1 S Z0=$G(^IBA(364.7,DA,0)),Z1=$P($G(^IBA(364.6,+Z0,0)),U,3) I Z1,$P(Z0,U,6)="" S ^IBA(364.7,"AINS",Z1,$E(X,1,30),DA)=""
+"^DD",364.7,364.7,.05,1,1,2)
+N Z0,Z1,Z2 S Z0=$G(^IBA(364.7,DA,0)),Z1=$P($G(^IBA(364.6,+Z0,0)),U,3),Z2=$P(Z0,U,6) K ^IBA(364.7,"AINS",Z1,$E(X,1,30),DA) I Z2'="",$D(^IBA(364.7,"AINTYP",Z1,X,Z2,DA)) S ^IBA(364.7,"ATYPE",Z1,Z2,DA)=""
+"^DD",364.7,364.7,.05,1,1,3)
+DO NOT DELETE
+"^DD",364.7,364.7,.05,1,1,"%D",0)
+^^1^1^2960118^
+"^DD",364.7,364.7,.05,1,1,"%D",1,0)
+Xref by form field and insurance company.
+"^DD",364.7,364.7,.05,1,1,"DT")
+2960118
+"^DD",364.7,364.7,.05,1,2,0)
+364.7^AINTYP1^MUMPS
+"^DD",364.7,364.7,.05,1,2,1)
+N Z0,Z1,Z2 S Z0=$G(^IBA(364.7,DA,0)),Z1=+$P($G(^IBA(364.6,+Z0,0)),U,3),Z2=$P(Z0,U,6) I Z1,Z2'="" S ^IBA(364.7,"AINTYP",Z1,$E(X,1,30),Z2,DA)="" K ^IBA(364.7,"ATYPE",Z1,Z2,DA),^IBA(364.7,"AINS",Z1,X,DA)
+"^DD",364.7,364.7,.05,1,2,2)
+N Z0,Z1,Z2 S Z0=$G(^IBA(364.7,DA,0)),Z1=+$P($G(^IBA(364.6,+Z0,0)),U,3),Z2=$P(Z0,U,6) K:Z1&(Z2'="") ^IBA(364.7,"AINTYP",Z1,$E(X,1,30),Z2,DA)
+"^DD",364.7,364.7,.05,1,2,3)
+DO NOT DELETE
+"^DD",364.7,364.7,.05,1,2,"%D",0)
+^^1^1^2960117^^^^
+"^DD",364.7,364.7,.05,1,2,"%D",1,0)
+Xref by insurance company and bill type
+"^DD",364.7,364.7,.05,1,2,"DT")
+2960117
+"^DD",364.7,364.7,.05,3)
+Enter the name of the insurance company that this field is associated with.
+"^DD",364.7,364.7,.05,21,0)
+^^2^2^2951207^
+"^DD",364.7,364.7,.05,21,1,0)
+This is the insurance company who has a need for other than the standard
+"^DD",364.7,364.7,.05,21,2,0)
+data in this field.
+"^DD",364.7,364.7,.05,"DT")
+3000428
+"^DD",364.7,364.7,.06,0)
+BILL TYPE^S^I:INPATIENT;O:OUTPATIENT;^0;6^Q
+"^DD",364.7,364.7,.06,1,0)
+^.1
+"^DD",364.7,364.7,.06,1,1,0)
+364.7^ATYPE1^MUMPS
+"^DD",364.7,364.7,.06,1,1,1)
+N Z0,Z1 S Z0=$G(^IBA(364.7,DA,0)),Z1=$P($G(^IBA(364.6,+Z0,0)),U,3) I Z1,'$P(Z0,U,5) S ^IBA(364.7,"ATYPE",Z1,$E(X,1,30),DA)=""
+"^DD",364.7,364.7,.06,1,1,2)
+N Z0,Z1,Z2 S Z0=$G(^IBA(364.7,DA,0)),Z1=$P($G(^IBA(364.6,+Z0,0)),U,3),Z2=$P(Z0,U,5) I Z1 K ^IBA(364.7,"ATYPE",Z1,$E(X,1,30),DA) I Z2,$D(^IBA(364.7,"AINTYP",Z1,Z2,X,DA)) S ^IBA(364.7,"AINS",Z1,Z2,DA)=""
+"^DD",364.7,364.7,.06,1,1,3)
+DO NOT DELETE
+"^DD",364.7,364.7,.06,1,1,"%D",0)
+^^1^1^2960117^^
+"^DD",364.7,364.7,.06,1,1,"%D",1,0)
+Xref by form and bill type.
+"^DD",364.7,364.7,.06,1,1,"DT")
+2960117
+"^DD",364.7,364.7,.06,1,2,0)
+364.7^AINTYP2^MUMPS
+"^DD",364.7,364.7,.06,1,2,1)
+N Z0,Z1,Z2 S Z0=$G(^IBA(364.7,DA,0)),Z1=+$P($G(^IBA(364.6,+Z0,0)),U,3),Z2=$P(Z0,U,5) I Z1,Z2 K:'$D(^IBA(364.7,"AINTYP",Z1,Z2,X,DA)) ^IBA(364.7,"AINS",Z1,Z2,DA) S ^IBA(364.7,"AINTYP",Z1,Z2,$E(X,1,30),DA)=""
+"^DD",364.7,364.7,.06,1,2,2)
+N Z0,Z1,Z2 S Z0=$G(^IBA(364.7,DA,0)),Z1=+$P($G(^IBA(364.6,+Z0,0)),U,3),Z2=$P(Z0,U,5) K:Z1&Z2 ^IBA(364.7,"AINTYP",Z1,Z2,$E(X,1,30),DA)
+"^DD",364.7,364.7,.06,1,2,3)
+DO NOT DELETE
+"^DD",364.7,364.7,.06,1,2,"%D",0)
+^^1^1^2960117^^^^
+"^DD",364.7,364.7,.06,1,2,"%D",1,0)
+Xref by form, insurance company and bill type
+"^DD",364.7,364.7,.06,1,2,"DT")
+2960117
+"^DD",364.7,364.7,.06,3)
+Enter the type of the bill.
+"^DD",364.7,364.7,.06,21,0)
+^^1^1^2960117^^
+"^DD",364.7,364.7,.06,21,1,0)
+This is the type of bill that requires this field.
+"^DD",364.7,364.7,.06,"DT")
+3000428
+"^DD",364.7,364.7,.07,0)
+PAD CHARACTER^S^ZL:ZERO PAD ON LEFT;ZR:ZERO PAD ON RIGHT;SL:SPACE PAD ON LEFT;SR:SPACE PAD ON RIGHT;N:NO PAD REQUIRED;^0;7^Q
+"^DD",364.7,364.7,.07,3)
+Enter the code that corresponds to the format and pad character to use for the data output in this field.
+"^DD",364.7,364.7,.07,21,0)
+^^3^3^2960126^^
+"^DD",364.7,364.7,.07,21,1,0)
+If present, this defines the character to be used to pad the DATA
+"^DD",364.7,364.7,.07,21,2,0)
+ELEMENT to its desired length and the orientation of the padding characters
+"^DD",364.7,364.7,.07,21,3,0)
+to the left or right of the data.  The default is space pad to the right.
+"^DD",364.7,364.7,.07,"DT")
+2960126
+"^DD",364.7,364.7,.08,0)
+REQUIRED^S^0:NO;1:YES;^0;8^Q
+"^DD",364.7,364.7,.08,3)
+Enter 1 (YES) if this data element is on a local screen 9 form and the data is required for the bill to be authorized.
+"^DD",364.7,364.7,.08,21,0)
+^.001^4^4^3001030^^
+"^DD",364.7,364.7,.08,21,1,0)
+This field controls the required/not required status of a data element
+"^DD",364.7,364.7,.08,21,2,0)
+on a local screen 9 form.  If this field is 1 (YES), this data element
+"^DD",364.7,364.7,.08,21,3,0)
+is always required to have data (not null) in order for a bill to be
+"^DD",364.7,364.7,.08,21,4,0)
+authorized.
+"^DD",364.7,364.7,.08,"DT")
+2951207
+"^DD",364.7,364.7,.09,0)
+EDIT STATUS^S^E:EDITABLE;D:DISPLAY ONLY;^0;9^Q
+"^DD",364.7,364.7,.09,3)
+Enter 'E' to enable editing for this field, 'D' for a display only field.
+"^DD",364.7,364.7,.09,21,0)
+^^2^2^2960320^
+"^DD",364.7,364.7,.09,21,1,0)
+This field is used to control whether or not a data element on a screen is
+"^DD",364.7,364.7,.09,21,2,0)
+editable or for display-only purposes.
+"^DD",364.7,364.7,.09,"DT")
+2960320
+"^DD",364.7,364.7,.1,0)
+EDIT GROUP NUMBER^NJ2,0^^0;10^K:+X'=X!(X>99)!(X<1)!(X?.E1"."1N.N) X
+"^DD",364.7,364.7,.1,3)
+ Enter the edit group # that this field will be included in.  Valid #'s are 1-99.
+"^DD",364.7,364.7,.1,21,0)
+^^6^6^2960321^^
+"^DD",364.7,364.7,.1,21,1,0)
+This field contains the # of the edit group that the screen data element
+"^DD",364.7,364.7,.1,21,2,0)
+will be included with.  When this group # is selected on an edit screen,
+"^DD",364.7,364.7,.1,21,3,0)
+all data elements assigned to this group # on this screen will be presented
+"^DD",364.7,364.7,.1,21,4,0)
+for editing.  If no # is entered here, this field will not be available for
+"^DD",364.7,364.7,.1,21,5,0)
+editing.  This field will only apply to screen-type forms' editable data
+"^DD",364.7,364.7,.1,21,6,0)
+element descriptions.
+"^DD",364.7,364.7,.1,"DT")
+2960321
+"^DD",364.7,364.7,1,0)
+FORMAT CODE^K^^1;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",364.7,364.7,1,3)
+This is Standard MUMPS code.
+"^DD",364.7,364.7,1,9)
+@
+"^DD",364.7,364.7,1,21,0)
+^^8^8^2951207^
+"^DD",364.7,364.7,1,21,1,0)
+This is the code that will be xecuted to format the 'raw' data element
+"^DD",364.7,364.7,1,21,2,0)
+value that is returned from the execution of the DATA ELEMENT's definition.
+"^DD",364.7,364.7,1,21,3,0)
+This code can assume the variable/array IBXDATA is available as input and
+"^DD",364.7,364.7,1,21,4,0)
+should set this variable/array as its output.  Standard calls for data
+"^DD",364.7,364.7,1,21,5,0)
+formatting have been provided.  The variables IBXPG, IBXLN, IBXCOL are the
+"^DD",364.7,364.7,1,21,6,0)
+only IBX* variables that should be changed in this routine.  These represent
+"^DD",364.7,364.7,1,21,7,0)
+the page, line, column as the first 3 levels of subscript for the output
+"^DD",364.7,364.7,1,21,8,0)
+array.
+"^DD",364.7,364.7,1,"DT")
+2951207
+"^DD",364.7,364.7,3,0)
+FORMAT CODE DESCRIPTION^364.73^^3;0
+"^DD",364.7,364.7,3,21,0)
+^.001^1^1^3010102^^
+"^DD",364.7,364.7,3,21,1,0)
+This field describes the function of the format code entered.
+"^DD",364.7,364.7,3,"DT")
+2960710
+"^DD",364.7,364.73,0)
+FORMAT CODE DESCRIPTION SUB-FIELD^^.01^1
+"^DD",364.7,364.73,0,"DT")
+2960710
+"^DD",364.7,364.73,0,"NM","FORMAT CODE DESCRIPTION")
+ 
+"^DD",364.7,364.73,0,"UP")
+364.7
+"^DD",364.7,364.73,.01,0)
+FORMAT CODE DESCRIPTION^W^^0;1^Q
+"^DD",364.7,364.73,.01,3)
+Enter a description of the processing logic of the format code.
+"^DD",364.7,364.73,.01,21,0)
+^.001^1^1^3010102^^^^
+"^DD",364.7,364.73,.01,21,1,0)
+This is a description of the processing logic of the format code.
+"^DD",364.7,364.73,.01,"DT")
+2960710
+"^DIC",364.7,364.7,0)
+IB FORM FIELD CONTENT^364.7P
+"^DIC",364.7,364.7,0,"GL")
+^IBA(364.7,
+"^DIC",364.7,364.7,"%D",0)
+^1.001^9^9^3030331^^^^
+"^DIC",364.7,364.7,"%D",1,0)
+DO NOT delete entries or edit data in this file with VA File Manager.
+"^DIC",364.7,364.7,"%D",2,0)
+ 
+"^DIC",364.7,364.7,"%D",3,0)
+This is the file that contains the specific fields to be used to produce
+"^DIC",364.7,364.7,"%D",4,0)
+the associated form or screen.  If there is no insurance company or bill
+"^DIC",364.7,364.7,"%D",5,0)
+type specified for an entry, this is assumed to be the default definition
+"^DIC",364.7,364.7,"%D",6,0)
+of the field.
+"^DIC",364.7,364.7,"%D",7,0)
+ 
+"^DIC",364.7,364.7,"%D",8,0)
+Entries in this file that are designated as having a SECURITY LEVEL of
+"^DIC",364.7,364.7,"%D",9,0)
+NATIONAL should not be deleted or edited.
+"^DIC",364.7,"B","IB FORM FIELD CONTENT",364.7)
+
+"BLD",9895,6)
+^533
+**END**
+**END**
+

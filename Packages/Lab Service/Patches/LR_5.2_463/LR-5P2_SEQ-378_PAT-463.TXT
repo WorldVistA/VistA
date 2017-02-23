@@ -1,0 +1,324 @@
+$TXT Created by              VLELAB1.AAC.DOMAIN.EXT  (KIDS) on Thursday, 12/29/16 at 08:44
+=============================================================================
+Run Date: JAN 12, 2017                     Designation: LR*5.2*463
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #378                    Status: Released
+                  Compliance Date: FEB 12, 2017
+=============================================================================
+
+
+Subject: MICROBIOLOGY ENHANCEMENTS
+
+Category: 
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch is the mechanism that will be used now and anytime in the 
+ future to nationally transfer and add new Carbapenem-Resistant
+ Enterobacteriaceae (CRE) organisms into the Etiology Field file, (#61.2).
+ This step will automatically update each facility with these
+ microbiology enhancements and other Multi-Drug resistant Organisms (MDRO) 
+ standardized reporting and eliminate the need for each individual lab to 
+ update its own local files manually.
+  
+  
+ Patch Components:
+ -----------------
+ None
+   
+ Files & Fields Associated:
+ --------------------------
+ None
+  
+ Forms Associated:
+ -----------------
+ None
+  
+ Mail Groups Associated:
+ -----------------------
+ None
+  
+ Options Associated:
+ -------------------
+ None
+  
+ Protocols Associated:
+ ---------------------
+ None
+  
+ Security Keys Associated:
+ -------------------------
+ None
+  
+ Templates Associated:
+ ---------------------
+ None
+  
+ Additional Information:
+ -----------------------
+ None
+  
+ BLOOD BANK REVIEW:
+ ------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*463 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ RISK ANALYSIS:   Changes made by patch LR*5.2*463 have no effect on Blood 
+ Bank software functionality, therefore RISK is none. 
+  
+ New Service Requests (NSRs) 
+ ---------------------------
+ NSR #20131213
+  
+ Patient Safety Issues (PSIs): 
+ -----------------------------
+ None
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ None
+    
+ Problem: 
+ --------
+ None
+  
+ Resolution: 
+ -----------
+ None
+  
+ Test Sites
+ ----------
+ LEXINGTON
+ TAMPA
+ IOWA CITY
+  
+ Documentation Retrieval Instructions: 
+ -------------------------------------
+ None
+   
+ Patch Installation:
+  
+ Pre/Post Installation Overview: 
+ -------------------------------
+ None
+  
+ Pre-Installation Instructions: 
+ -----------------------------
+  
+ Patch installation needs to be coordinated with the Laboratory 
+ Information Manager (LIM/ADPAC) at each site for the following entries in 
+ the Etiology Field File, (#61.2).
+  
+         KLEBSIELLA PNEUMONIAE, CARBAPENEM RESISTANT (CRE)
+         KLEBSIELLA OXYTOCA, CARBAPENEM RESISTANT (CRE
+         ESCHERICHIA COLI, CARBAPENEM RESISTANT (CRE)
+         ENTEROBACTER CLOACAE, CARBAPENEM RESISTANT (CRE)
+         ENTEROBACTER SPP, CARBAPENEM RESISTANT (CRE)
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be loaded with users on the system.  You may wish to 
+ install it during non-peak hours. This patch is released as a Packman 
+ message. 
+ Installation will take less than 5 minutes.  
+   
+ NOTE: Kernel patches must be current on the target system to avoid 
+ problems loading and/or installing this patch.
+    
+ 1.      Use the 'INSTALL/CHECK MESSAGE' option of the Packman menu. This 
+ option will load the KIDS patch onto your system.
+  
+ 2.      The patch has now been loaded into a Transport global on your 
+ system. You now need to use KIDS to install the transport global.
+  
+ 3.      On the 'Kernel Installation & Distribution System' Menu (KIDS), 
+ select the 'Installation' menu.
+  
+ 4.      Use the 'Verify Checksum in Transport Global' option and verify 
+ that all routines have the correct checksums.
+     
+ 5.      On the KIDS menu, under the 'Installation' menu, use the 
+ following options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+ If you wish to preserve a copy of the routines exported in this patch 
+ prior to installation, you should use the 'Backup a Transport Global' 
+ option at this time. You may also compare the routines in your production 
+ account to the routines in the patch by using the 'Compare a Transport 
+ Global to Current System' option.
+  
+ 6.      Use the 'Install Package(s)' option under the 'Installation' menu 
+ and select the package 'LR*5.2*463'.
+  
+ When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//, 
+ choose 'NO'. 
+  
+ When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+ Protocols? NO//', choose 'NO'.  
+   
+ Installation example:
+  
+ Select INSTALL NAME:    LR*5.2*463    12/29/16@09:48:52
+      => LR*5.2*463 TEST v18
+  
+ This Distribution was loaded on Dec 29, 2016@09:48:52 with header of 
+    LR*5.2*463 TEST v18
+    It consisted of the following Install(s):
+      LR*5.2*463
+ Checking Install for Package LR*5.2*463
+  
+ Install Questions for LR*5.2*463
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   TELNET PORT
+  
+                                    
+ LR*5.2*463                                   
+ The following Etiology entries were added to the Etiology file: 
+  
+ 7159109    KLEBSIELLA PNEUMONIAE, CARBAPENEM RESISTANT (CRE)
+ 7159110    KLEBSIELLA OXYTOCA, CARBAPENEM RESISTANT (CRE)
+ 7159111    ESCHERICHIA COLI, CARBAPENEM RESISTANT (CRE)
+ 7159112    ENTEROBACTER CLOACAE, CARBAPENEM RESISTANT (CRE)
+ 7159113    ENTEROBACTER SPP, CARBAPENEM RESISTANT (CRE)
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  LR*5.2*463 Installed. 
+                Dec 29, 2016@09:53:16
+  
+  Not a production UCI
+  
+  NO Install Message sent 
+  
+ Complete  
+  
+ Install Completed
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Once the install has completed, the new entries will display on 
+ your screen.  If they are new they will show as new entries and if they 
+ are already in the database they will display as found in the Etiology 
+ file.
+   
+ Once this patch installation has completed it will be necessary to view 
+ the entries via FileMan.  To do that, perform the following lookup:
+   
+  
+  
+  NCHD03:NCH>D P^DI
+   
+  VA FileMan 22.0
+   
+   
+  Select OPTION: INQUIRE TO FILE ENTRIES  
+   
+   
+   
+  OUTPUT FROM WHAT FILE: DOMAIN// ETIOLOGY
+       1   ETIOLOGY                         (16 entries)
+       2   ETIOLOGY FIELD                   (4818 entries)
+ CHOOSE 1-2: 2  ETIOLOGY FIELD             (4818 entries)
+   
+  
+  Select ETIOLOGY FIELD NAME: KLEB
+       1   KLEBSIELLA OXYTOCA  
+       2   KLEBSIELLA OXYTOCA, CARBAPENEM RESISTANT (CRE)  
+       3   KLEBSIELLA OZAENAE  
+       4   KLEBSIELLA PNEUMONIAE  
+       5   KLEBSIELLA PNEUMONIAE, CARBAPENEM RESISTANT (CRE)  
+  Press <RETURN> to see more, '^' to exit this list, OR
+ CHOOSE 1-5: 2  KLEBSIELLA OXYTOCA, CARBAPENEM RESISTANT (CRE)
+ ANOTHER ONE: 
+  STANDARD CAPTIONED OUTPUT? Yes//   (Yes)
+ Include COMPUTED fields:  (N/Y/R/B): NO//  - No record number (IEN), no 
+  Computed
+   Fields
+  
+  NAME: KLEBSIELLA OXYTOCA, CARBAPENEM RESISTANT (CRE)
+    IDENTIFIER: BACTERIUM
+    CLASS/GROUP-TRIBE/FAMILY: ENTEROBACTERIACEAE
+  
+ Continue the lookup for the following 5 new entries:
+  
+        KLEBSIELLA PNEUMONIAE, CARBAPENEM RESISTANT (CRE)
+        KLEBSIELLA OXYTOCA, CARBAPENEM RESISTANT (CRE
+        ESCHERICHIA COLI, CARBAPENEM RESISTANT (CRE)
+        ENTEROBACTER CLOACAE, CARBAPENEM RESISTANT (CRE)
+        ENTEROBACTER SPP, CARBAPENEM RESISTANT (CRE)
+  
+  
+ ETIOLOGY FIELD List                                  DEC 29, 2016@10:02   
+ PAGE 1
+ --------------------------------------------------------------------------
+ ------
+  
+ NUMBER: 7159109
+ NAME: KLEBSIELLA PNEUMONIAE, CARBAPENEM RESISTANT (CRE)
+   IDENTIFIER: BACTERIUM
+   CLASS/GROUP-TRIBE/FAMILY: ENTEROBACTERIACEAE
+  
+ NUMBER: 7159110
+ NAME: KLEBSIELLA OXYTOCA, CARBAPENEM RESISTANT (CRE)
+   IDENTIFIER: BACTERIUM
+   CLASS/GROUP-TRIBE/FAMILY: ENTEROBACTERIACEAE
+  
+ NUMBER: 7159111
+ NAME: ESCHERICHIA COLI, CARBAPENEM RESISTANT (CRE)
+   IDENTIFIER: BACTERIUM
+   CLASS/GROUP-TRIBE/FAMILY: ENTEROBACTERIACEAE
+  
+ NUMBER: 7159112
+ NAME: ENTEROBACTER CLOACAE, CARBAPENEM RESISTANT (CRE)
+   IDENTIFIER: BACTERIUM
+   CLASS/GROUP-TRIBE/FAMILY: ENTEROBACTERIACEAE
+  
+ NUMBER: 7159113
+ NAME: ENTEROBACTER SPP, CARBAPENEM RESISTANT (CRE)
+   IDENTIFIER: BACTERIUM
+   CLASS/GROUP-TRIBE/FAMILY: ENTEROBACTERIACEAE
+  
+  
+ Note: This patch will not add SNOMED-CT or Workload codes.  The workload 
+ codes vary between facilities so it will be up to the IRM to add the 
+ workload codes and the National SNOMED-CT codes when they are released.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;NOV 7, 2015;Build 77
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR463ETI
+    Before:       n/a   After:  B5368868  **463**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 06, 2015
+Completed By:                               Date Completed: JAN 11, 2017
+Released By :                               Date Released : JAN 12, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

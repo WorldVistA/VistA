@@ -1,0 +1,794 @@
+$TXT Created by                     CPRS32.DOMAIN.EXT  (KIDS) on Friday, 09/30/16 at 13:50
+=============================================================================
+Run Date: DEC 22, 2016                     Designation: LR*5.2*469
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #376                    Status: Released
+                  Compliance Date: FEB 05, 2017
+=============================================================================
+
+Associated patches: (v)LR*5.2*462  <<= must be installed BEFORE `LR*5.2*469'
+
+Subject: AP Order Dialog Enhancements
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+  
+ Description:
+ ---------------
+  
+ The build for this patch is distributed in support of the VistA Lab 
+ Enhancements (VLE) Anatomic Pathology order dialog enhancements. It
+ contains the new file LR AP DIALOG CONFIG (#69.73).
+  
+ 1- The LR AP DIALOG CONFIG(#69.73) file is used to support the building
+ and functioning of the CPRS AP DIALOG for the following thirteen 
+ tests/orderable items that will be manually added to Lab File #60 as part 
+ of the pre-install for this patch:
+      BONE MARROW
+      BRONCHIAL BIOPSY
+      BRONCHIAL CYTOLOGY
+      DERMATOLOGY
+      FINE NEEDLE ASPIRATE
+      GASTROINTESTINAL ENDOSCOPY
+      GENERAL FLUID
+      GYNECOLOGY (PAP SMEAR)
+      RENAL BIOPSY
+      TISSUE EXAM
+      URINE
+      UROLOGY,BLADDER/URETER
+      UROLOGY,PROSTATE
+ 2- The LR AP DIALOG CONFIG file was created to support the new CPRS LR
+ OTHER LAB AP TESTS order dialog.
+  
+  
+ Blood Bank Review:
+ ==================
+ All of the above changes have been reviewed by the VISTA Blood Bank 
+ Developer and found to have no impact on the VISTA BLOOD BANK SOFTWARE 
+ control functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*469 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*469 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+   
+ POTENTIAL IMPACT ON SITES: This patch contains changes to routines and 
+ files identified in ProPath standard titled: BBM Team Review of VistA 
+ Patches, group B listing. The changes have no effect on Blood Bank 
+ functionality or medical device control functions. There is no adverse 
+ potential to sites.
+  
+  
+ Patch Components:
+ --------------------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)  New/Modified/Deleted
+ ------------------      -------------------  --------------------
+ LR AP DIALOG CONFIG                                 New
+  (#69.73)
+                            
+   
+ Forms Associated:
+  
+ Form Name               File #          New/Modified/Deleted
+ ---------               ------          --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name         Type         New/Modified/Deleted
+ ----------          -----        --------------------
+ N/A
+  
+  
+   
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      -----     ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ N/A 
+  
+  
+  
+ New Service Requests (NSRs):
+ --------------------------------------------   
+ #20140511 
+ The Anatomic Pathology (AP) laboratory service needs a mechanism for 
+ clinicians to provide required patient-specific, procedure-specific, and 
+ specimen-specific information to facilitate specimen processing by 
+ pathologists. This mechanism must be in place for use by the specimen 
+ labeling application in order to generate a primary specimen label that 
+ positively identifies the specimen and accurately associates it with the 
+ patient.
+  
+ Patient Safety Issues (PSIs):
+ ---------------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ --------------------------------------------
+  
+ N/A
+  
+ Problem:
+ ------------
+ N/A
+  
+ Resolution:
+ --------------
+ N/A
+  
+ Test Sites:
+ ---------------
+ AP Dialogs w/OR*3.0*405:
+   North Florida/South Georgia Veterans Health System (Gainesville, FL)
+   Central California VA Health Care System  (Fresno, CA)
+   VA Northern California Health Care System
+   Edward Hines Jr. VA Hospital
+   Philadelphia VA Medical Center
+    
+ Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                         File Name                          FTP Mode
+ --------------------------------------------------------------------------
+ LAB_AP_ORDER DIAGLOG_DOCS.ZIP, which contains both .pdf and 
+ .docx formatted files of the following documents. Retrieval format is 
+ BINARY:
+  
+        VLE AP_Deployment_Installation_Roll Back_Back Out_Guide 
+  
+       
+ Patch Installation:
+   
+ Pre/Post Installation Overview:
+ ------------------------------------------
+ The environment check will ensure that the following ORDERABLE ITEMS and 
+ TOPOGRAPHY entries are an exact name match before patch LR*5.2*469 will 
+ be allowed to install. This matching is critical due to the dependency of
+ the configuration in LR AP DIALOG CONFIG file by ORDERABLE ITEM and 
+ TOPOGRAPHY.
+  
+ Orderable Item search Criteria:
+      First check is for an exact name match
+           If multiples found the check will fail
+           If one or more match the name but none have a display group of
+             anatomic pathology the check will fail
+           If there is one exact name match with a display group of 
+             Anatomic Pathology the check will be successful
+  
+ Specimen search Criteria:
+      First check to see if SCT code has been assigned to any specimen
+           If no association is found the check will fail
+      Find all specimen entries in the environment check that have an
+        SCT code assigned
+           Find all specimens with an exact name match
+           If SCT code is found for only one specimen check is successful
+           If an exact name matches the SCT code the check is successful
+           If multiple specimen with matching SCT code and matching names
+             the check will fail
+  
+ ORDERABLE ITEMs checked:
+  
+  BONE MARROW
+  BRONCHIAL CYTOLOGY
+  BRONCHIAL BIOPSY
+  DERMATOLOGY
+  FINE NEEDLE ASPIRATE
+  GENERAL FLUID
+  TISSUE EXAM
+  GASTROINTESTINAL ENDOSCOPY
+  GYNECOLOGY (PAP SMEAR)
+  URINE
+  UROLOGY,PROSTATE
+  UROLOGY,BLADDER/URETER
+  RENAL BIOPSY
+           
+ TOPOGRAPHY(specimens) - SNOMED CT ID codes checked:
+  
+ ABDOMEN - 113345001
+ ADRENAL GLAND - 23451007
+ ANAL CANAL - 34381000
+ APPENDIX - 66754008
+ ASCENDING COLON - 9040008
+ BILE DUCT CYTOLOGIC MATERIAL - 110928002
+ BILE DUCT MUCOUS MEMBRANE - 7035006
+ BILIARY TRACT - 34707002
+ BODY OF PANCREAS - 40133006
+ BONE - 3138006
+ BONE MARROW - 14016003
+ BREAST - 76752008
+ BRONCHIAL CYTOLOGIC MATERIAL - 110912007
+ BRONCHUS - 955009
+ CARDIAC INCISURE OF STOMACH - 5459006
+ CARDIAC OSTIUM OF STOMACH - 63853002
+ CARDIO-ESOPHAGEAL JUNCTION - 25271004
+ CECUM - 32713005
+ CEREBROSPINAL FLUID CYTOLOGIC MATERIAL - 110969006
+ CERVICAL CYTOLOGIC MATERIAL - 110949001
+ CHORIONIC VILLI - 2049008
+ COLON - 71854001
+ DESCENDING COLON - 32622004
+ DUODENUM - 38848004
+ ESOPHAGUS - 32849002
+ ESOPHAGUS, LOWER THIRD - 67173009
+ ESOPHAGUS, MIDDLE THIRD - 19000002
+ ESOPHAGUS, UPPER THIRD - 54738009
+ GASTRIC FUNDUS - 414003
+ GASTRIC JUICE - 31773000
+ GREATER CURVATURE OF STOMACH - 89382009
+ HEAD OF PANCREAS - 64163001
+ ILEUM - 34516001
+ JEJUNUM - 21306003
+ KIDNEY - 64033007
+ LEFT COLIC FLEXURE - 72592005
+ LEFT TESTIS - 63239009
+ LESSER CURVATURE OF STOMACH - 80085006
+ LIVER - 10200004
+ LUNG - 39607008
+ LYMPH NODE - 59441001
+ MEDIASTINUM - 72410000
+ NECK, LEFT SIDE - 170583000
+ NECK, RIGHT SIDE - 170303002
+ PANCREAS - 15776009
+ PAROTID GLAND - 45289007
+ PELVIS - 12921003
+ PERIRENAL TISSUE - 47145004
+ PERITONEAL CYTOLOGIC MATERIAL - 110944006
+ PERITONEUM - 15425007
+ PLEURAL CYTOLOGIC MATERIAL - 110913002
+ PROSTATE - 41216001
+ PYLORIC ANTRUM - 66051006
+ PYLORUS - 280119005
+ RECTOSIGMOID JUNCTION - 49832006
+ RECTUM - 34402009
+ RENAL PELVIS - 25990002
+ RETROPERITONEUM - 82849001
+ RIGHT COLIC FLEXURE - 48338005
+ RIGHT TESTIS - 15598003
+ SALIVARY GLAND - 385294005
+ SIGMOID COLON - 60184004
+ SKIN - 39937001
+ SMALL INTESTINE - 30315005
+ SOFT TISSUES - 87784001
+ SPLEEN - 78961009
+ STOMACH - 69695003
+ SUBLINGUAL GLAND - 88481005
+ SUBPHRENIC FOSSA - 243974009
+ SYNOVIAL CYTOLOGIC MATERIAL - 110895009
+ TAIL OF PANCREAS - 73239005
+ THYROID GLAND - 69748006
+ TISSUE - 85756007
+ TRANSVERSE COLON - 485005
+ URETER - 87953007
+ URINARY BLADDER - 89837001
+ URINE - 78014005
+ VAS DEFERENS - 57671007
+ VERTEBRA - 51282000 
+  
+ Pre-Installation Instructions:
+ -------------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install
+  
+ 1.   The Laboratory ADPAC will need to create thirteen new lab tests to 
+       support the CPRS AP DIALOG functionality. These tests must be set up
+      with a collection sample of AP SPECIMEN.
+  
+      If the COLLECTION SAMPLE file does not have an AP SPECIMEN entry
+     refer to Section 2.2 of the following document:
+           LEDI IV Installation Guide (Lab_Ledi_IV_Install_Guide.pd)
+  
+  
+ 2.   Add thirteen new tests to the LABORATORY TEST file. Below are
+      examples of what the AP tests should look like in the LABORATORY TEST
+      File (#60) once the entries have been created. 
+  
+ NOTE: Use the appropriate Institution(s), accession areas and workload
+ entries applicable for your facility.
+  
+ WARNING: Make sure there are no other entries in the LABORATORY TEST file 
+ that have the same name or synonym even though the subscript is
+ different. 
+  
+ For example: If there is an existing Bone Marrow with Subscript of 
+ 'Cytology' then you may rename the test to 'Bone Marrow (Cytology)'.
+ In addition if there is a synonym of 'Bone Marrow' then you may rename it
+ to 'Bone Marrow (CY)'.
+  
+ Set all tests up and set the TYPE field to NEITHER. When CPRS v32 is
+ available, you can set the TYPE field to BOTH.
+  
+ Workload code configuration should be done in compliance with your 
+ current Laboratory practices.
+  
+ The PRINT NAME is not important and can be whatever you wish it to be.
+  
+ The ACCESSION AREA should be whatever is in use at your facility as long 
+ as it is appropriate for the subscript of the test.
+  
+ LABORATORY TESTS (#60)
+  
+ NAME: BONE MARROW                       TYPE: NEITHER
+   SUBSCRIPT: SURGICAL PATHOLOGY         HIGHEST URGENCY ALLOWED: STAT
+   REQUIRED COMMENT: ORDER COMMENT       COMBINE TEST DURING ORDER: NO
+   PRINT NAME: BMARROW
+ COLLECTION SAMPLE: AP SPECIMEN
+ INSTITUTION: CAMP MASTER                ACCESSION AREA: SURGICAL PATHOLOGY
+ SITE NOTES DATE: MAY 03, 2016
+  NOTE:   Test added in support of the VLE-AP order dialog enhancement 
+   NATIONAL VA LAB CODE: Surgical Pathology Tissue Exam
+ CPRS SCREEN: 118-BONE MARROW
+  
+  
+ NAME: BRONCHIAL BIOPSY                  TYPE: NEITHER
+   SUBSCRIPT: SURGICAL PATHOLOGY         HIGHEST URGENCY ALLOWED: STAT
+   REQUIRED COMMENT: ORDER COMMENT       COMBINE TEST DURING ORDER: NO
+   PRINT NAME: BROBIOSP
+ COLLECTION SAMPLE: AP SPECIMEN
+ INSTITUTION: CAMP MASTER                ACCESSION AREA: SURGICAL PATHOLOGY
+ SITE NOTES DATE: MAY 03, 2016
+  NOTE:   Test added in support of the VLE-AP order dialog enhancement 
+   NATIONAL VA LAB CODE: Surgical Pathology Tissue Exam
+ CPRS SCREEN: 109-BRONCHIAL BIOPSY
+  
+  
+ NAME: BRONCHIAL CYTOLOGY                TYPE: NEITHER
+   SUBSCRIPT: CYTOLOGY                   HIGHEST URGENCY ALLOWED: STAT
+   REQUIRED COMMENT: ORDER COMMENT       COMBINE TEST DURING ORDER: NO
+   PRINT NAME: BRONC-CY
+ COLLECTION SAMPLE: AP SPECIMEN
+ INSTITUTION: CAMP MASTER                ACCESSION AREA: CYTOPATHOLOGY
+ SITE NOTES DATE: MAY 03, 2016
+  NOTE:   Test added in support of the VLE-AP order dialog enhancement 
+   NATIONAL VA LAB CODE: Report Cytology
+ CPRS SCREEN: 102-BRONCHIAL CYTOLOGY
+  
+  
+ NAME: DERMATOLOGY                       TYPE: NEITHER
+   SUBSCRIPT: SURGICAL PATHOLOGY         HIGHEST URGENCY ALLOWED: STAT
+   REQUIRED COMMENT: ORDER COMMENT       COMBINE TEST DURING ORDER: NO
+   PRINT NAME: DERMATOL
+ COLLECTION SAMPLE: AP SPECIMEN
+ INSTITUTION: CAMP MASTER                ACCESSION AREA: SURGICAL PATHOLOGY
+ SITE NOTES DATE: MAY 03, 2016
+  NOTE:   Test added in support of the VLE-AP order dialog enhancement 
+   NATIONAL VA LAB CODE: Surgical Pathology Tissue Exam
+ CPRS SCREEN: 124-DERMATOLOGY
+  
+  
+ NAME: FINE NEEDLE ASPIRATE              TYPE: NEITHER
+   SUBSCRIPT: CYTOLOGY                   HIGHEST URGENCY ALLOWED: STAT
+   REQUIRED COMMENT: ORDER COMMENT       COMBINE TEST DURING ORDER: NO
+   PRINT NAME: FNA
+ COLLECTION SAMPLE: AP SPECIMEN
+ INSTITUTION: CAMP MASTER                ACCESSION AREA: CYTOPATHOLOGY
+ SITE NOTES DATE: MAY 03, 2016
+  NOTE:   Test added in support of the VLE-AP order dialog enhancement 
+   NATIONAL VA LAB CODE: Report Cytology
+ CPRS SCREEN: 103-FINE NEEDLE ASPIRATE
+  
+  
+ NAME: GENERAL FLUID                     TYPE: NEITHER
+   SUBSCRIPT: CYTOLOGY                   HIGHEST URGENCY ALLOWED: STAT
+   REQUIRED COMMENT: ORDER COMMENT       COMBINE TEST DURING ORDER: NO
+   PRINT NAME: GENFLUID
+ COLLECTION SAMPLE: AP SPECIMEN
+ INSTITUTION: CAMP MASTER                ACCESSION AREA: CYTOPATHOLOGY
+ SITE NOTES DATE: MAY 03, 2016
+  NOTE:   Test added in support of the VLE-AP order dialog enhancement 
+   NATIONAL VA LAB CODE: Report Cytology
+ CPRS SCREEN: 125-GENERAL FLUID
+  
+  
+ NAME: TISSUE EXAM                       TYPE: NEITHER
+   SUBSCRIPT: SURGICAL PATHOLOGY         HIGHEST URGENCY ALLOWED: STAT
+   REQUIRED COMMENT: ORDER COMMENT       COMBINE TEST DURING ORDER: NO
+   PRINT NAME: GENSURG
+ COLLECTION SAMPLE: AP SPECIMEN
+ INSTITUTION: CAMP MASTER                ACCESSION AREA: SURGICAL PATHOLOGY
+ SITE NOTES DATE: MAY 03, 2016
+  NOTE:   Test added in support of the VLE-AP order dialog enhancement 
+   NATIONAL VA LAB CODE: Surgical Pathology Tissue Exam
+ CPRS SCREEN: 116-TISSUE EXAM
+  
+  
+ NAME: GASTROINTESTINAL ENDOSCOPY        TYPE: NEITHER
+   SUBSCRIPT: SURGICAL PATHOLOGY         HIGHEST URGENCY ALLOWED: STAT
+   REQUIRED COMMENT: ORDER COMMENT       COMBINE TEST DURING ORDER: NO
+   PRINT NAME: GI-EDNO
+ COLLECTION SAMPLE: AP SPECIMEN
+ INSTITUTION: CAMP MASTER                ACCESSION AREA: SURGICAL PATHOLOGY
+ SITE NOTES DATE: MAY 03, 2016
+  NOTE:   Test added in support of the VLE-AP order dialog enhancement 
+   NATIONAL VA LAB CODE: Surgical Pathology Tissue Exam
+ CPRS SCREEN: 119-GASTROINTESTINAL ENDOSCOPY
+  
+  
+ NAME: GYNECOLOGY (PAP SMEAR)            TYPE: NEITHER
+   SUBSCRIPT: CYTOLOGY                   HIGHEST URGENCY ALLOWED: STAT
+   REQUIRED COMMENT: ORDER COMMENT       COMBINE TEST DURING ORDER: NO
+   PRINT NAME: GYN-PAP
+ COLLECTION SAMPLE: AP SPECIMEN
+ INSTITUTION: CAMP MASTER                ACCESSION AREA: CYTOPATHOLOGY
+ SITE NOTES DATE: MAY 03, 2016
+  NOTE:   Test added in support of the VLE-AP order dialog enhancement 
+   NATIONAL VA LAB CODE: Report Cytology
+ CPRS SCREEN: 126-GYNECOLOGY (PAP SMEAR)
+  
+  
+ NAME: URINE                             TYPE: NEITHER
+   SUBSCRIPT: CYTOLOGY                   HIGHEST URGENCY ALLOWED: STAT
+   REQUIRED COMMENT: ORDER COMMENT       COMBINE TEST DURING ORDER: NO
+   PRINT NAME: URCYTO
+ COLLECTION SAMPLE: AP SPECIMEN
+ INSTITUTION: CAMP MASTER                ACCESSION AREA: CYTOPATHOLOGY
+ SITE NOTES DATE: MAY 03, 2016
+  NOTE:   Test added in support of the VLE-AP order dialog enhancement 
+   NATIONAL VA LAB CODE: Report Cytology
+ CPRS SCREEN: 127-URINE
+  
+  
+ NAME: UROLOGY,BLADDER/URETER            TYPE: NEITHER
+   SUBSCRIPT: SURGICAL PATHOLOGY         HIGHEST URGENCY ALLOWED: STAT
+   REQUIRED COMMENT: ORDER COMMENT       COMBINE TEST DURING ORDER: NO
+   PRINT NAME: UROBLURE
+ COLLECTION SAMPLE: AP SPECIMEN
+ INSTITUTION: CAMP MASTER                ACCESSION AREA: SURGICAL PATHOLOGY
+ SITE NOTES DATE: MAY 03, 2016
+  NOTE:   Test added in support of the VLE-AP order dialog enhancement 
+   NATIONAL VA LAB CODE: Surgical Pathology Tissue Exam
+ CPRS SCREEN: 123-UROLOGY,BLADDER/URETER
+  
+  
+ NAME: UROLOGY,PROSTATE                  TYPE: NEITHER
+   SUBSCRIPT: SURGICAL PATHOLOGY         HIGHEST URGENCY ALLOWED: STAT
+   REQUIRED COMMENT: ORDER COMMENT       COMBINE TEST DURING ORDER: NO
+   PRINT NAME: UROPROST
+ COLLECTION SAMPLE: AP SPECIMEN
+ INSTITUTION: CAMP MASTER                ACCESSION AREA: SURGICAL PATHOLOGY
+ SITE NOTES DATE: MAY 03, 2016
+  NOTE:   Test added in support of the VLE-AP order dialog enhancement 
+   NATIONAL VA LAB CODE: Surgical Pathology Tissue Exam
+ CPRS SCREEN: 121-UROLOGY,PROSTATE
+  
+  
+ NAME: RENAL BIOPSY                      TYPE: NEITHER
+   SUBSCRIPT: SURGICAL PATHOLOGY         HIGHEST URGENCY ALLOWED: STAT
+   REQUIRED COMMENT: ORDER COMMENT       COMBINE TEST DURING ORDER: NO
+   PRINT NAME: RENAL BX
+ COLLECTION SAMPLE: AP SPECIMEN
+ INSTITUTION: CAMP MASTER                ACCESSION AREA: SURGICAL PATHOLOGY
+ SITE NOTES DATE: MAY 03, 2016
+  NOTE:   Test added in support of the VLE-AP order dialog enhancement
+ CPRS SCREEN: 128-RENAL BIOPSY
+  
+  
+ 3.   Confirm the ORDERABLE ITEMS were created properly in file 101.43.
+      The number seen in the ID field will point to the internal entry 
+      number for the test in your LABORATORY TEST file.
+  
+ ORDERABLE ITEMS (#101.43):
+  
+ NAME: BONE MARROW                       ID: 719;99LRT
+   DISPLAY GROUP: LABORATORY     PACKAGE NAME: BONE MARROW
+ SET: LAB
+ SET: AP
+   LAB SECTION: SURGICAL PATHOLOGY       TYPE: neither
+  
+  
+ NAME: BRONCHIAL BIOPSY                  ID: 5125;99LRT
+   DISPLAY GROUP: LABORATORY          PACKAGE NAME: BRONCHIAL BIOPSY
+ SET: LAB
+ SET: AP
+   LAB SECTION: SURGICAL PATHOLOGY       TYPE: neither
+  
+  
+ NAME: BRONCHIAL CYTOLOGY                ID: 5126;99LRT
+   DISPLAY GROUP: LABORATORY          PACKAGE NAME: BRONCHIAL CYTOLOGY
+ SET: LAB
+ SET: AP
+   LAB SECTION: CYTOLOGY                 TYPE: neither
+  
+  
+ NAME: DERMATOLOGY                       ID: 5127;99LRT
+   DISPLAY GROUP: LABORATORY          PACKAGE NAME: DERMATOLOGY
+ SET: LAB
+ SET: AP
+   LAB SECTION: SURGICAL PATHOLOGY       TYPE: neither
+  
+  
+ NAME: FINE NEEDLE ASPIRATE              ID: 5128;99LRT
+   DISPLAY GROUP: LABORATORY          PACKAGE NAME: FINE NEEDLE ASPIRATE
+ SET: LAB
+ SET: AP
+   LAB SECTION: CYTOLOGY                 TYPE: neither
+  
+  
+ NAME: GENERAL FLUID                     ID: 5131;99LRT
+   DISPLAY GROUP: LABORATORY          PACKAGE NAME: GENERAL FLUID
+ SET: LAB
+ SET: AP
+   LAB SECTION: CYTOLOGY                 TYPE: neither
+  
+  
+ NAME: TISSUE EXAM                       ID: 5133;99LRT
+   DISPLAY GROUP: LABORATORY          PACKAGE NAME: TISSUE EXAM
+ SET: LAB
+ SET: AP
+   LAB SECTION: SURGICAL PATHOLOGY       TYPE: neither
+  
+  
+ NAME: GASTROINTESTINAL ENDOSCOPY        ID: 5129;99LRT
+   DISPLAY GROUP: LABORATORY          PACKAGE NAME: GASTROINTESTINAL 
+ ENDOSCOPY
+ SET: LAB
+ SET: AP
+   LAB SECTION: SURGICAL PATHOLOGY       TYPE: neither
+  
+  
+ NAME: GYNECOLOGY (PAP SMEAR)            ID: 5132;99LRT
+   DISPLAY GROUP: LABORATORY          PACKAGE NAME: GYNECOLOGY (PAP 
+ SMEAR)
+ SET: LAB
+ SET: AP
+   LAB SECTION: CYTOLOGY                 TYPE: neither
+  
+  
+ NAME: URINE                             ID: 5137;99LRT
+   DISPLAY GROUP: LABORATORY         PACKAGE NAME: URINE
+ SET: LAB
+ SET: AP
+   LAB SECTION: CYTOLOGY                 TYPE: neither
+  
+  
+ NAME: UROLOGY,BLADDER/URETER            ID: 5134;99LRT
+   DISPLAY GROUP: LABORATORY          PACKAGE NAME: 
+ UROLOGY,BLADDER/URETER
+ SET: LAB
+ SET: AP
+   LAB SECTION: SURGICAL PATHOLOGY       TYPE: neither
+  
+  
+ NAME: UROLOGY,PROSTATE                  ID: 5135;99LRT
+   DISPLAY GROUP: LABORATORY          PACKAGE NAME: UROLOGY,PROSTATE
+ SET: LAB
+ SET: AP
+   LAB SECTION: SURGICAL PATHOLOGY       TYPE: neither
+  
+  
+ NAME: RENAL BIOPSY                      ID: 5136;99LRT
+   DISPLAY GROUP: LABORATORY          PACKAGE NAME: RENAL BIOPSY
+ SET: LAB
+ SET: AP
+   LAB SECTION: SURGICAL PATHOLOGY       TYPE: neither
+  
+ 4.   Edit the ORDERABLE ITEM file (#101.43) and change the DISPLAY GROUP
+      from LABORATORY to ANATOMIC PATHOLOGY for all 13 ORDERABLE ITEMS
+      created by the addition of the new LABORATORY TEST entries.
+      This edit will remove the LAB entry from the SET field.
+  
+      Select OPTION: ENTER OR EDIT FILE ENTRIES  
+  
+      INPUT TO WHAT FILE: ORDERABLE ITEMS// 
+      EDIT WHICH FIELD: ALL// DISPLAY GROUP  
+      THEN EDIT FIELD: 
+  
+      Select ORDERABLE ITEMS NAME:    BONE MARROW
+      DISPLAY GROUP: LABORATORY// ANATOMIC PATHOLOGY  
+  
+  
+      Select ORDERABLE ITEMS NAME: 
+  
+      Review of Orderable Item:
+          NAME: BONE MARROW                       ID: 719;99LRT
+          DISPLAY GROUP: ANATOMIC PATHOLOGY     PACKAGE NAME: BONE MARROW
+         SET: AP
+         LAB SECTION: SURGICAL PATHOLOGY       TYPE: neither
+  
+  
+ 5.  EDIT OF DISPLAY GROUPS FILE (#100.98):  Editing the DISPLAY 
+     GROUPS file (#100.98) will display the Anatomic Pathology orders under
+     Anatomic Pathology Display Group instead of the Laboratory Display
+     group within the CPRS Order tab. The following steps will need to be
+     performed.
+     Coordinate these changes with your Clinical Coordinator.
+  
+      a. Edit ANATOMIC PATHOLOGY display group and add SP, CY and EM 
+         display groups as Members.
+         INPUT TO WHAT FILE: DISPLAY GROUP// 
+         EDIT WHICH FIELD: ALL// 
+  
+  
+         Select DISPLAY GROUP NAME: ANATOMIC PATHOLOGY  
+         NAME: ANATOMIC PATHOLOGY// 
+         Select MEMBER: SURGICAL PATHOLOGY  
+          Are you adding 'SURGICAL PATHOLOGY' as a new MEMBER (the 1ST for
+          this DISPLAY GROUP)? No// Y  (Yes)
+            MEMBER SEQUENCE: 1// 
+         Select MEMBER: CYTOLOGY  
+          Are you adding 'CYTOLOGY' as a new MEMBER (the 2ND for this
+          DISPLAY GROUP)? No // Y  (Yes)
+            MEMBER SEQUENCE: 2// 
+         Select MEMBER: ELECTRON MICROSCOPY  
+          Are you adding 'ELECTRON MICROSCOPY' as a new MEMBER (the 3RD for
+          this DISPLAY GROUP)? No// Y  (Yes)
+            MEMBER SEQUENCE: 3// 
+         Select MEMBER: 
+         MIXED NAME: Anat. Path.// 
+         SHORT NAME: AP// 
+         DEFAULT DIALOG:[leave blank]
+  
+      b.Delete the AP display groups (SP,CYand EM) from the LABORATORY 
+         display group entry.
+  
+         Select DISPLAY GROUP NAME: lab  LABORATORY
+         NAME: LABORATORY// 
+         Select MEMBER: CYTOLOGY// @
+            SURE YOU WANT TO DELETE THE ENTIRE MEMBER? Y  (Yes)
+         Select MEMBER: AUTOPSY// SURGICAL PATHOLOGY  
+                  ...OK? Yes//   (Yes)
+  
+           MEMBER: SURGICAL PATHOLOGY// @
+            SURE YOU WANT TO DELETE THE ENTIRE MEMBER? Y  (Yes)
+         Select MEMBER: ELECT  RON MICROSCOPY  
+          ...OK? Yes//   (Yes)
+  
+           MEMBER: ELECTRON MICROSCOPY// @
+            SURE YOU WANT TO DELETE THE ENTIRE MEMBER? Y  (Yes)
+         Select MEMBER: ?
+             Answer with MEMBER, or SEQUENCE
+            Choose from:
+            1            CHEMISTRY
+            2            HEMATOLOGY
+            3            MICROBIOLOGY
+            4            BLOOD BANK
+            5            ANATOMIC PATHOLOGY
+            8            AUTOPSY
+     
+              You may enter a new MEMBER, if you wish
+              Enter a display group.  A display group that is an ancestor
+              may not also be a member.
+           Answer with DISPLAY GROUP NAME
+           Do you want the entire 59-Entry DISPLAY GROUP List? 
+       
+           You may enter a new DISPLAY GROUP, if you wish
+           ANSWER MUST BE 3-30 CHARACTERS IN LENGTH
+        Select MEMBER:
+        MIXED NAME: Lab// 
+        SHORT NAME: LAB// 
+        DEFAULT DIALOG: LR OTHER LAB TESTS//
+      
+  
+  
+ Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+  recommended that it be installed during non-peak hours to minimize 
+  potential disruption to users.  This patch should take less than 5 
+  minutes to install
+  
+ This installation will add the LR AP DIALOG CONFIG file (#69.73) and 
+ configure it for the Order Dialogs and Specimens listed in the environment
+ check.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     LR*5.2*469:
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+     Respond: NO
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+     Respond: NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+     Respond: NO
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Post-Installation Instructions:
+ ---------------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Feb 14, 1996;Build 19
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR469A
+    Before:       n/a   After: B59641039  **469**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 11, 2016
+Completed By:                               Date Completed: DEC 20, 2016
+Released By :                               Date Released : DEC 22, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

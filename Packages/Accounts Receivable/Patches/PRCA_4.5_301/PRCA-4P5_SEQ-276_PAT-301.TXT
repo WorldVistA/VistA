@@ -1,0 +1,617 @@
+
+=============================================================================
+Run Date: DEC 21, 2016                     Designation: PRCA*4.5*301
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #276                    Status: Released
+                  Compliance Date: JAN 21, 2017
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*229<<= must be installed BEFORE `PRCA*4.5*301'
+                    (v)PRCA*4.5*249<<= must be installed BEFORE `PRCA*4.5*301'
+                    (v)PRCA*4.5*263<<= must be installed BEFORE `PRCA*4.5*301'
+                    (v)PRCA*4.5*265<<= must be installed BEFORE `PRCA*4.5*301'
+                    (v)PRCA*4.5*270<<= must be installed BEFORE `PRCA*4.5*301'
+                    (v)PRCA*4.5*296<<= must be installed BEFORE `PRCA*4.5*301'
+                    (v)PRCA*4.5*298<<= must be installed BEFORE `PRCA*4.5*301'
+                    (v)PRCA*4.5*303<<= must be installed BEFORE `PRCA*4.5*301'
+                    (v)PRCA*4.5*304<<= must be installed BEFORE `PRCA*4.5*301'
+                    (v)PRCA*4.5*309<<= must be installed BEFORE `PRCA*4.5*301'
+
+Subject: TREASURY CROSS-SERVICING PROGRAM
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  *****************************************************************************
+         This patch supports changes to the Veterans Health Information
+         System and Technology Architecture (VistA) for the Treasury 
+         Cross-Servicing Program (TCSP). PRCA*4.5*301 (Accounts Receivable-AR)
+         is being released in host file: PRCA_45_P301.KID.
+   
+         It is imperative that these patches be installed no later than the
+         compliance date.  Your understanding and support is appreciated.
+  *****************************************************************************
+   
+  The Chief Business Office (CBO) requested modifications to the VistA
+  Accounts Receivable Package to support the next phase in the implementation
+  of the Debt Collection Improvement Act (DCIA) of 1996 by the Department of
+  Veterans Affairs (VA).
+   
+  This patch modifies the Account Receivable (AR) v4.5 application as
+  described below:
+   
+  1.  TOP Modifications
+  -  Exclude first party bills from the TOP process unless the date the bill
+     became active is prior to the Activation Date.  Do not exclude bills
+     from the TOP process that are identified as referred to TOP.
+   
+  2.  DMC Referral Flag
+  -  The VistA system shall not modify the 90-day DMC debt referral process.
+   
+  3.  Referral File
+  -  The VistA system shall automatically create a file of delinquent first
+     party bills.
+  -  The VistA system shall create the file in IAI format, containing record
+     types H, 1, 2, 2A, 2C, 3, Z.
+  -  The VistA system shall schedule the batch process to create the referral
+     file once per week for new referrals.
+  -  The VistA system shall have the ability to stop a bill from being
+     referred to Cross-Servicing.
+   
+  4.  Update File
+  -  The VistA shall create a batch task to generate a file of updated
+     information for previously referred bills.
+  -  The VistA system shall create the file in IAI format, containing record
+     types H, 1, 2, 2A, Z.
+  -  The VistA system shall schedule the batch process to create the update
+     file once per week for new referrals.
+  -  The VistA system shall have the ability to stop a bill from being
+     updated to Cross-Servicing. 
+   
+  5.  Recall File
+  -  The VistA shall create a batch task to generate a file to recall
+     previously referred bills by debt, debtor, or case.
+  -  The VistA system shall create the file in IAI format, containing record
+     types H, 1, 2, 3, Z.
+  -  The VistA system shall schedule the batch process to create the recall
+     file once per week for new referrals.
+  -  The VistA system shall have the ability to stop a bill from being
+     recalled to Cross-Servicing.
+   
+  6.  Reconciliation File
+  -  The VistA shall create a batch task to generate a file of updated
+     information for Reconciliation bills.
+   
+  7.  Monthly Patient Statements - Bills Referred to Cross-Servicing
+  -  The VistA system shall exclude the value of bills that have been 
+     referred to Cross-Servicing from the 'Previous Balance' and 'Balance'
+     block on the monthly patient statement.
+   
+  8.  Monthly Patient Statements - Bills Not Referred to Cross-Servicing
+  -  The VistA system shall include the value of bills in the 'Previous
+     Balance' and 'Balance' block on the monthly patient statement when a
+     bill is no longer referred to Cross-Servicing.
+   
+  9.  Unprocessable File - Bills that are sent for referral to Cross-
+     Servicing but are deemed not valid are rejected and returned to
+     VistA with the source of the error and the error code.  The rejected
+     debts and error codes are stored historically and reported in debts
+     profile reports and reject reports.
+   
+ 10.  Due Process Notification (DPN) - A letter notification system for
+     debts expected to be sent to Cross-Servicing.  From Cross-Servicing
+     initialization, debts under $25.00 will be tracked for one year.  As
+     the debts become qualified to Cross-Servicing referral, AITC will be
+     notified to send due process letters.  After a sixty day waiting,
+     if the debts become qualified, the debts will be referred to Cross-
+     Servicing in the usual fashion.
+   
+ 11.  Cross-Servicing Qualified / No Third Letter Sent - A bulletin will
+     be generated by VistA when there is eligible debt for Cross-
+     Servicing and a third collection letter has not been sent.  The
+     bulletin will contain the debtor's name and bill number(s).
+   
+ 12.  Activation Date - The VistA system shall not refer bills to
+     Cross-Servicing if they were not active prior to the Activation
+     Date.  For Little Rock #598, Beckley #517, and Upstate NY #528
+     the Activation Date has been set to February 1, 2015.  For all
+     other sites, the Activation Date has been set to August 1, 2015. 
+   
+   
+  Patch Components:
+  =================
+   
+  Files & Fields Associated:
+  --------------------------
+  The following is a list of files included in this patch:
+   
+  File Name (Number)    Field Name (Number)                    New/Mod/Del
+  ------------------    -------------------                    -----------
+  AR DEBTOR (#340)      TCSP RECALL FLAG field (#7.02)             NEW
+                        TCSP RECALL DATE field (#7.03)             NEW
+                        TCSP RECALL REASON field (#7.04)           NEW
+                        DATE DEBTOR REFERRED TO TCSP field(#7.05   NEW
+   
+  AR DEBTOR (#342)      CROSS-SERVICING START DATE field (#100)    NEW
+   
+  AR BATCH PAYMENT (#344)
+                        RECEIPT PAY TYPE field (#.19)              NEW
+   
+  AR BATCH PAYMENT (#344) Subfile TRANSACTION (#344.01)
+                        PATIENT NAME OR BILL NUMBER (#.09)         MOD
+                        LOCKBOX TRANSACTION CODE (#.15)            NEW
+   
+  TCS IAI ERROR CODES (#348.5)
+                        ERROR CODE ID (#.01)                       NEW
+                        FIELD NAME/ACTION (#1)                     NEW
+                        RECORD TYPE (#2)                           NEW
+                        ERROR MESSAGE (#3)                         NEW
+   
+  TCS IAI ACTION CODES (#348.6)
+                        ACTION CODE (#.01)                         NEW
+                        ACTION DESCRIPTION (#1)                    NEW
+                        RECORD TYPE (#2)                           NEW
+   
+  TCS IAI RECORD TYPES (#348.7)
+                        RECORD TYPE ID (#.01)                      NEW
+                        RECORD TYPE DESCRIPTION (#1)               NEW
+                        DATA TYPE (#2)                             NEW
+   
+  ACCOUNTS RECEIVABLE (#430)
+                        DATE BILL REFERRED TO TCSP field (#151)    NEW
+                        TCSP RECALL FLAG field (#152)              NEW
+                        TCSP RECALL EFF. DATE field (#153)         NEW
+                        TCSP RECALL REASON field (#154)            NEW
+                        RECALL AMOUNT field (#155)                 NEW
+                        STOP TCSP REFERRAL FLAG field (#157)       NEW
+                        STOP TCSP REFERRAL EFF. DATE field (#158)  NEW
+                        STOP TCSP REFERRAL REASON field (#159)     NEW
+                        STOP TCSP REFERRAL COMMENT field (#159.1)  NEW
+                        TCSP CASE RECALL FLAG field (#159.2)       NEW
+                        TCSP CASE RECALL EFF DATE (#159.3)         NEW
+                        TCSP CASE RECALL REASON (#159.4)           NEW
+                        TCSP GENDER (#159.5)                       NEW
+                        ORIGINAL TCSP TIN field (#161)             NEW
+                        ORIGINAL TCSP DEBTOR NAME field (#162)     NEW
+                        TCSP DELINQUENCY DATE field (#163)         NEW
+                        TCSP DEBTOR ADDRESS, LINE 1 field (#164)   NEW
+                        TCSP DEBTOR ADDRESS, LINE 2 field (#165)   NEW
+                        TCSP DEBTOR ADDRESS, CITY field (#166)     NEW
+                        TCSP DEBTOR ADDRESS, STATE field (#167)    NEW
+                        TCSP DEBTOR ZIP CODE field (#168)          NEW
+                        ORIGINAL TCSP AMOUNT field (#169)          NEW
+                        CURRENT TCSP AMOUNT field (#169.1)         NEW
+                        TCSP DEBTOR PHONE (#169.2)                 NEW
+                        TCSP COUNTRY CODE (#169.3)                 NEW
+                        TCSP DOB (#169.4)                          NEW
+                        DUE PROCESS NOTIFICATION FLAG (#173)       NEW
+                        DUE PROCESS REQUEST DATE (#174)            NEW
+                        DUE PROCESS LETTER PRINT DATE (#175)       NEW
+                        DUE PROCESS REFERRAL DATE (#176)           NEW
+                        DUE PROCESS ERROR DATE (#177)              NEW
+                        DUE PROCESS ERROR CODES (#178)             NEW
+                        SEND TCSP RECORD 1 field (#191)            NEW
+                        SEND TCSP RECORD 2 field (#192)            NEW
+                        SEND TCSP RECORD 2A field (#193)           NEW
+                        SEND TCSP RECORD 2C field (#194)           NEW
+                        STOP INTEREST ADMIN CALC (#199.2)          NEW
+                        RETURNED DATE (#301)                       NEW
+                        RETURN REASON CODE (#302)                  NEW
+                        COMPROMISED INDICATOR (#303)               NEW
+                        COMPROMISE AMOUNT (#304)                   NEW
+                        CLOSED DATE (#305)                         NEW
+                        BANKRUPTCY DATE (#306)                     NEW
+                        DATE OF DEATH (#307)                       NEW
+                        DATE OF DISSOLUTION (#308)                 NEW
+  ACCOUNTS RECEIVABLE (#430) Subfile CS DECREASE ADJ TRANS NUMBER
+                          (#430.0171)
+                        CS DECREASE ADJ TRANS NUMBER (#.01)        NEW
+                        SEND TCSP RECORD 5B                        NEW
+   
+  ACCOUNTS RECEIVABLE (#430) Subfile REJECT DATE (#430.0172)
+                        REJECT DATE (#.01)                         NEW
+                        REJECT SOURCE (#1)                         NEW
+                        REJECT REASON1 (#2)                        NEW
+                        REJECT REASON2 (#3)                        NEW
+                        REJECT REASON3 (#4)                        NEW
+                        REJECT REASON4 (#5)                        NEW
+                        REJECT REASON5 (#6)                        NEW
+                        REJECT REASON6 (#7)                        NEW
+                        REJECT REASON7 (#8)                        NEW
+                        REJECT REASON8 (#9)                        NEW
+                        REJECT REASON9 (#10)                       NEW
+                        RECORD TYPE (#11)                          NEW
+                        RECORD ACTION CODE (#12)                   NEW
+                        REJECT BATCH ID (#13)                      NEW
+                        REJECT MM MSG NO. (#14)                    NEW
+   
+  AR RETURN REASON CODE (#430.5)
+                        CODE (#.01)                                NEW
+                        DESCRIPTION (#1)                           NEW
+                        CATEGORY (#2)                              NEW
+   
+  Forms Associated:
+   
+  Form Name             File #       New/Modified/Deleted
+  ---------             ------       --------------------
+  N/A
+   
+   
+  Mail Groups Associated:
+   
+  Mail Group Name          New/Modified/Deleted
+  ---------------          --------------------
+  TCSP                     NEW
+  TPC                      NEW
+  TPL                      NEW
+   
+   
+  Options Associated:
+      
+  Option Name                    Type             New/Modified/Deleted
+  -----------                    -----------      ------------------------ 
+  PRCAF SUPERVISOR MENU          MENU             MODIFIED
+  RCTCSP BILL REPORT             RUN ROUTINE      NEW
+  RCTCSP IAI ERROR CODES LIST    RUN ROUTINE      NEW
+  RCTCSP MENU                    MENU             NEW
+  RCTCSP RECALL REPORT           RUN ROUTINE      NEW
+  RCTCSP RECALLB                 RUN ROUTINE      NEW
+  RCTCSP RECALLD                 RUN ROUTINE      NEW
+  RCTCSP RECONCIL REPORT         RUN ROUTINE      NEW
+  RCTCSP REJ SERVER              SERVER           NEW
+  RCTCSP REJECT REPORT           RUN ROUTINE      NEW
+  RCTCSP REPORT                  RUN ROUTINE      NEW
+  RCTCSP STOP                    RUN ROUTINE      NEW
+  RCTCSPD SERVER                 SERVER           NEW
+  RCTCSPR SERVER                 SERVER           NEW
+   
+   
+  Protocols Associated:
+  ---------------------
+  N/A
+   
+   
+  Security Keys Associated:
+  -------------------------
+   
+  Security Key Name
+  -----------------
+  N/A
+   
+   
+  Templates Associated:
+   
+  Template Name                   Type      File Name (Number)     New/Mod/Del
+  -------------                   ----      ------------------     -----------
+  PRCA MEANS PROFILE              PRINT     ACCOUNTS RECEIVABLE    MOD
+                                               (#430)
+  PRCA OTHER PROFILE              PRINT     ACCOUNTS RECEIVABLE    MOD
+                                              (#430)
+  PRCA PROFILE                    PRINT     ACCOUNTS RECEIVABLE    MOD
+                                              (#430)
+  PRCA TCSP RECALLB               PRINT     ACCOUNTS RECEIVABLE    NEW
+                                              (#430)
+  PRCA TCSP RECALLD               PRINT     ACCOUNTS RECEIVABLE    NEW
+                                              (#430)
+  TCS IAI ERROR CODES LIST        PRINT     TCS IAI ERROR CODES    NEW
+                                              (#348.5)
+   
+   
+  Remote Procedure                          New/Mod/Del
+  ----------------                          -----------
+  N/A
+   
+   
+  Additional Information:
+  N/A
+   
+   
+  New Service Request (NSRs):
+  ---------------------------
+  N/A
+   
+   
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+   
+   
+  Remedy Ticket(s) & Overview:
+  ----------------------------
+  N/A
+   
+   
+  Test Sites:
+  -----------
+  VISN 16, Region 2, Central Arkansas Veterans Healthcare System, John L.
+  McClellan Memorial Veterans Hospital, Station #598, Little Rock,
+  Arkansas
+   
+  VISN 2, Region 4, VA Health Care Upstate New York, Station #528.
+   
+  VISN 6, Region 3, VA Mid-Atlantic Health Care Network, Beckley VA Medical
+  Center, Station #517, Beckley, West Virginia.
+   
+  VISN 6, Region 3, VA Mid-Atlantic Health Care Network, W. G. (Bill)
+  Hefner VA Medical Center, Station #659, Salisbury, North Carolina.
+   
+  VISN 23, Region 2, Nebraska-Western Iowa Health Care System, Omaha VA
+  Medical Center, Station #636, Omaha, Nebraska.
+   
+   
+  Documentation Retrieval Instructions:
+  =====================================
+  Updated documentation describing the new functionality introduced by this 
+  patch is available.
+   
+  The preferred method is to retrieve files from download.vista.domain.ext.
+  This transmits the files from the first available server. Sites may 
+  also elect to retrieve files directly from a specific server. 
+   
+  Sites may retrieve the software and/or documentation directly using Secure
+  File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+  following OI Field Offices:
+    
+  Albany:                 domain.ext
+  Hines:                  domain.ext    
+  Salt Lake City:         domain.ext
+   
+  The documentation will be in the form of Adobe Acrobat files.
+   
+  The following files should be downloaded in the binary SFTP mode.
+   
+   Filename                    Description
+   --------                    -----------
+   prca_4_5_p301_um.pdf        Cross-Servicing User Manual
+   prca_4_5_p301_rn.pdf        Cross-Servicing Release Notes / Installation Guide
+   prca_4_5_p301_tm.pdf        Accounts Receivable Technical Manual
+                                 / Security Guide
+   
+  Documentation can also be found on the VA Software Documentation Library at:
+  http://www.domain.ext/vdl/
+   
+   
+  Patch Installation:
+  ===================
+   
+  Installation Instructions:
+  --------------------------
+   
+  This patch may be run with users on the system, however because the
+  TOP options need to be placed out of order, we suggest it be
+  installed after business hours (5PM), but not when the Accounts
+  Receivable Background job is running (1AM). For large/integrated
+  sites the weekend is the most favorable time for installation.
+   
+  This patch may take up to 8 hours to install.
+   
+  The following options should be disabled during installation:
+   
+          TOP Menu                           [RCTOP MENU]
+   
+  1.  OBTAIN PATCHES
+      ==============
+   
+      Obtain the host file PRCA_45_P301.KID, which contains the following
+      one patch install:
+   
+         PRCA*4.5*301
+   
+      Sites can retrieve VistA software from the following SFTP addresses.
+      The preferred method is to SFTP the files from:
+   
+         download.vista.domain.ext
+   
+      This will transmit the files from the first available SFTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+   
+         Albany                  sftp.domain.ext
+         Hines                   sftp.domain.ext
+         Salt Lake City          sftp.domain.ext
+   
+      The PRCA_45_P301.KID host file is located in the 
+      directory.  Use ASCII Mode when downloading the file.
+   
+  2.  From the Installation menu, select the LOAD A DISTRIBUTION option.
+   
+      When prompted for "Enter a Host File:", enter the full directory path
+      where you saved the host file PRCA_45_P301.KID (e.g.,
+      SYS$SYSDEVICE:[ANONYMOUS]PRCA_45_P301.KID).
+   
+      When prompted for "OK to continue with Load? NO//", enter "YES."
+   
+      The following will display:
+   
+         Loading Distribution...
+   
+         PRCA*4.5*301
+   
+   
+  Use INSTALL NAME: PRCA*4.5*301 to install this distribution.
+   
+  3.  RUN OPTIONAL INSTALLATION OPTIONS FOR BUILD:
+      ==================================================
+      From the Installation menu, you may select to use the following
+      options (when prompted for the INSTALL NAME, enter
+      PRCA*4.5*301):
+   
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch.  It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+   
+  4.  INSTALL BUILD:
+      ====================
+      This is the step to start the installation of this KIDS build.  This
+      will need to be run for PRCA*4.5*301 build.
+   
+      a.  Choose the Install Package(s) option to start the install.
+      b.  When prompted for the "Select INSTALL NAME:", enter PRCA*4.5*301.
+      c.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion
+            of Install?" YES//  enter YES.
+      d.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? NO//"  enter NO.
+      e.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? YES//"  enter YES.
+      f.  When prompted "Enter options you wish to mark as 'Out Of
+          Order':"  enter the following options:
+   
+          TOP Menu                           [RCTOP MENU] 
+   
+      g.  When prompted "Enter protocols you wish to mark as 'Out Of
+          Order':"  enter <return>.
+      h.  When prompted "Delay Install (Minutes):  (0-60): 0//"  enter an
+          appropriate number of minutes to delay the installation in 
+          order to give users enough time to exit the disabled options
+          before the installation starts.
+      i.  When prompted "Device: Home//"  respond with the correct device.
+   
+  =================== POST-INSTALLATION INSTRUCTIONS ====================
+   
+  The post-install routine for patch PRCA*4.5*301 will flag debts
+  currently under $25 for the Due Process Notification functionality.  In
+  addition, the Cross-Servicing installation date is filed into the
+  AR Site Parameter file #342.
+   
+  The user will see the following messages displayed in the installation
+  log:
+   
+  >>>Cross-Servicing Start Date set to (current date).
+  >>>Begin the Due Process Initialization.
+  >>>The Initialization may take up to 8 hours.
+  >>>Due Process Initialization is complete.
+   
+  The post install routine PRCA45301P may be deleted from the system if the
+  post-install process has completed.
+  ========================================================================
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 144
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCAAPR1
+    Before: B43791904   After: B45827636  **34,45,108,143,141,206,192,
+                                           218,276,275,284,303,301**
+Routine Name: PRCAATR
+    Before: B19181234   After: B22771269  **36,104,172,138,233,276,303,301**
+Routine Name: PRCABJ
+    Before: B36508118   After: B39614762  **11,34,101,114,155,153,141,
+                                           165,167,173,201,237,304,301**
+Routine Name: PRCADR
+    Before: B15191429   After: B17506368  **21,45,108,141,241,301**
+Routine Name: PRCADR2
+    Before: B15662355   After: B16711783  **45,104,108,149,141,172,241,
+                                           233,263,301**
+Routine Name: PRCAEXM
+    Before: B12096933   After: B13617982  **67,103,196,301**
+Routine Name: PRCAGDR
+    Before: B10035785   After: B14896021  **78,198,219,301**
+Routine Name: PRCAGS
+    Before: B16858191   After: B22454707  **34,78,301**
+Routine Name: PRCAGST1
+    Before:  B9197569   After:  B9484383  **2,48,104,176,249,301**
+Routine Name: PRCAGT
+    Before: B19865936   After: B22272453  **100,162,165,169,219,301**
+Routine Name: PRCAGU
+    Before: B11613288   After: B12887006  **181,219,301**
+Routine Name: PRCAPRO
+    Before: B14369527   After: B14760379  **2,21,125,147,198,301**
+Routine Name: PRCAREP
+    Before: B12812144   After: B13936976  **301**
+Routine Name: PRCASER1
+    Before: B15957526   After: B16741481  **48,104,165,233,301**
+Routine Name: RC45301P
+    Before:       n/a   After:  B1337108  **301**
+Routine Name: RCBEADJ
+    Before: B66159160   After: B77125147  **169,172,204,173,208,233,298,301**
+Routine Name: RCBECHGS
+    Before: B12081486   After: B14080962  **153,237,301**
+Routine Name: RCBEIB
+    Before: B39033616   After: B41614858  **157,270,301**
+Routine Name: RCBEPAY
+    Before: B27398421   After: B26246409  **153,304,301**
+Routine Name: RCBEPAYF
+    Before: B25701767   After: B49084627  **153,301**
+Routine Name: RCBEUTR1
+    Before: B35457473   After: B36268452  **153,169,192,226,270,276,301**
+Routine Name: RCCPCPS
+    Before: B71404162   After: B80898915  **34,70,80,48,104,116,149,170,
+                                           181,190,223,237,219,265,301**
+Routine Name: RCDPAPLI
+    Before: B43587980   After: B46722534  **114,141,241,303,301**
+Routine Name: RCDPBPLI
+    Before: B47751255   After: B57251656  **114,153,301**
+Routine Name: RCDPBPLM
+    Before: B57667335   After: B61916200  **114,153,159,241,276,303,301**
+Routine Name: RCDPLPL3
+    Before: B52913516   After: B54165729  **153,304,301**
+Routine Name: RCDPLPL4
+    Before:B236411644   After:B238259256  **304,301**
+Routine Name: RCDPRPL3
+    Before: B81211213   After: B81971704  **114,148,153,173,301**
+Routine Name: RCDPURED
+    Before: B41284430   After: B50615527  **114,169,174,196,202,244,268,
+                                           271,304,301**
+Routine Name: RCDPURET
+    Before: B61262925   After: B75859214  **114,141,169,173,196,221,304,301**
+Routine Name: RCDPXPAP
+    Before: B49106296   After: B54412655  **114,150,206,296,301**
+Routine Name: RCDPXPAY
+    Before: B62956528   After: B65069620  **114,148,150,301**
+Routine Name: RCTCSJR
+    Before:       n/a   After:B113325699  **301**
+Routine Name: RCTCSJS
+    Before:       n/a   After:B200131768  **301**
+Routine Name: RCTCSJS1
+    Before:       n/a   After: B57381357  **301**
+Routine Name: RCTCSP1
+    Before:       n/a   After:B168147966  **301**
+Routine Name: RCTCSP2
+    Before:       n/a   After: B87861761  **301**
+Routine Name: RCTCSP3
+    Before:       n/a   After: B79802534  **301**
+Routine Name: RCTCSP3S
+    Before:       n/a   After: B30705650  **301**
+Routine Name: RCTCSPD
+    Before:       n/a   After:B168545559  **301**
+Routine Name: RCTCSPRS
+    Before:       n/a   After: B53928265  **301**
+Routine Name: RCTCSPU
+    Before:       n/a   After: B55616924  **301**
+Routine Name: RCTOPD
+    Before: B63586774   After: B70123756  **141,187,224,236,229,301**
+Routine Name: RCWROFF
+    Before: B34901459   After: B38468960  **168,204,309,301**
+Routine Name: RCWROFF1
+    Before: B33354440   After: B35416905  **168,204,233,301**
+ 
+Routine list of preceding patches: 229, 249, 263, 265, 296, 298, 303, 304
+                           309
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 13, 2014
+Completed By:                               Date Completed: DEC 21, 2016
+Released By :                               Date Released : DEC 21, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,795 @@
+Released MPIF*1*64 SEQ #61
+Extracted from mail message
+**KIDS**:MPIF*1.0*64^
+
+**INSTALL NAME**
+MPIF*1.0*64
+"BLD",3185,0)
+MPIF*1.0*64^MASTER PATIENT INDEX VISTA^0^3160726^y
+"BLD",3185,1,0)
+^^3^3^3160726^
+"BLD",3185,1,1,0)
+MASTER VETERAN INDEX VISTA ENHANCEMENTS - ITERATION 16 / RELEASE 2
+"BLD",3185,1,2,0)
+Refer to patch MPIF*1.0*64 in the FORUM Patch Module for a complete
+"BLD",3185,1,3,0)
+description.
+"BLD",3185,4,0)
+^9.64PA^^
+"BLD",3185,6.3)
+2
+"BLD",3185,"ABPKG")
+n
+"BLD",3185,"KRN",0)
+^9.67PA^779.2^20
+"BLD",3185,"KRN",.4,0)
+.4
+"BLD",3185,"KRN",.401,0)
+.401
+"BLD",3185,"KRN",.402,0)
+.402
+"BLD",3185,"KRN",.403,0)
+.403
+"BLD",3185,"KRN",.5,0)
+.5
+"BLD",3185,"KRN",.84,0)
+.84
+"BLD",3185,"KRN",3.6,0)
+3.6
+"BLD",3185,"KRN",3.8,0)
+3.8
+"BLD",3185,"KRN",9.2,0)
+9.2
+"BLD",3185,"KRN",9.8,0)
+9.8
+"BLD",3185,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",3185,"KRN",9.8,"NM",1,0)
+MPIFDODC^^0^B35314779
+"BLD",3185,"KRN",9.8,"NM",2,0)
+MPIFA31B^^0^B26688072
+"BLD",3185,"KRN",9.8,"NM","B","MPIFA31B",2)
+
+"BLD",3185,"KRN",9.8,"NM","B","MPIFDODC",1)
+
+"BLD",3185,"KRN",19,0)
+19
+"BLD",3185,"KRN",19.1,0)
+19.1
+"BLD",3185,"KRN",101,0)
+101
+"BLD",3185,"KRN",409.61,0)
+409.61
+"BLD",3185,"KRN",771,0)
+771
+"BLD",3185,"KRN",779.2,0)
+779.2
+"BLD",3185,"KRN",870,0)
+870
+"BLD",3185,"KRN",8989.51,0)
+8989.51
+"BLD",3185,"KRN",8989.52,0)
+8989.52
+"BLD",3185,"KRN",8994,0)
+8994
+"BLD",3185,"KRN",8994,"NM",0)
+^9.68A^1^1
+"BLD",3185,"KRN",8994,"NM",1,0)
+MPIF DOD ACTIVITY CHECK^^0
+"BLD",3185,"KRN",8994,"NM","B","MPIF DOD ACTIVITY CHECK",1)
+
+"BLD",3185,"KRN","B",.4,.4)
+
+"BLD",3185,"KRN","B",.401,.401)
+
+"BLD",3185,"KRN","B",.402,.402)
+
+"BLD",3185,"KRN","B",.403,.403)
+
+"BLD",3185,"KRN","B",.5,.5)
+
+"BLD",3185,"KRN","B",.84,.84)
+
+"BLD",3185,"KRN","B",3.6,3.6)
+
+"BLD",3185,"KRN","B",3.8,3.8)
+
+"BLD",3185,"KRN","B",9.2,9.2)
+
+"BLD",3185,"KRN","B",9.8,9.8)
+
+"BLD",3185,"KRN","B",19,19)
+
+"BLD",3185,"KRN","B",19.1,19.1)
+
+"BLD",3185,"KRN","B",101,101)
+
+"BLD",3185,"KRN","B",409.61,409.61)
+
+"BLD",3185,"KRN","B",771,771)
+
+"BLD",3185,"KRN","B",779.2,779.2)
+
+"BLD",3185,"KRN","B",870,870)
+
+"BLD",3185,"KRN","B",8989.51,8989.51)
+
+"BLD",3185,"KRN","B",8989.52,8989.52)
+
+"BLD",3185,"KRN","B",8994,8994)
+
+"BLD",3185,"QDEF")
+^^^^^^^^^^YES
+"BLD",3185,"QUES",0)
+^9.62^^
+"BLD",3185,"REQB",0)
+^9.611^3^3
+"BLD",3185,"REQB",1,0)
+MPIF*1.0*60^2
+"BLD",3185,"REQB",2,0)
+DG*5.3*926^2
+"BLD",3185,"REQB",3,0)
+FB*3.5*173^2
+"BLD",3185,"REQB","B","DG*5.3*926",2)
+
+"BLD",3185,"REQB","B","FB*3.5*173",3)
+
+"BLD",3185,"REQB","B","MPIF*1.0*60",1)
+
+"KRN",8994,647,-1)
+0^1
+"KRN",8994,647,0)
+MPIF DOD ACTIVITY CHECK^SITECK^MPIFDODC^1^P
+"KRN",8994,647,1,0)
+^8994.01^3^3^3160626^^^
+"KRN",8994,647,1,1,0)
+This RPC will be called by the MPI to look for activity of the given
+"KRN",8994,647,1,2,0)
+patient.  It will search multiple packages to verify there has been
+"KRN",8994,647,1,3,0)
+no activity since a reported date of death as a conformation.
+"KRN",8994,647,2,0)
+^8994.02A^2^2
+"KRN",8994,647,2,1,0)
+DFN^1^30^1^1
+"KRN",8994,647,2,1,1,0)
+^^1^1^3160624^
+"KRN",8994,647,2,1,1,1,0)
+This is the patient's DFN at the local site.
+"KRN",8994,647,2,2,0)
+MPIDOD^1^7^1^2
+"KRN",8994,647,2,2,1,0)
+^8994.021^3^3^3160626^^
+"KRN",8994,647,2,2,1,1,0)
+This is the reported date of death to compare for activity that may
+"KRN",8994,647,2,2,1,2,0)
+have been recorded since the date.  Input should be a 7 digit FM
+"KRN",8994,647,2,2,1,3,0)
+formatted date.
+"KRN",8994,647,2,"B","DFN",1)
+
+"KRN",8994,647,2,"B","MPIDOD",2)
+
+"KRN",8994,647,2,"PARAMSEQ",1,1)
+
+"KRN",8994,647,2,"PARAMSEQ",2,2)
+
+"KRN",8994,647,3,0)
+^8994.03^3^3^3160626^^
+"KRN",8994,647,3,1,0)
+This is a string indicating if there was activity or not.  If no activity
+"KRN",8994,647,3,2,0)
+has been found it will return 0.  If there was activity it will return
+"KRN",8994,647,3,3,0)
+1^date^type.
+"MBREQ")
+0
+"ORD",16,8994)
+8994;16;1;;;;;;;RPCDEL^XPDIA1
+"ORD",16,8994,0)
+REMOTE PROCEDURE
+"PKG",282,-1)
+1^1
+"PKG",282,0)
+MASTER PATIENT INDEX VISTA^MPIF^Master Patient Index VistA side
+"PKG",282,22,0)
+^9.49I^1^1
+"PKG",282,22,1,0)
+1.0^2990428
+"PKG",282,22,1,"PAH",1,0)
+64^3160726
+"PKG",282,22,1,"PAH",1,1,0)
+^^3^3^3160726
+"PKG",282,22,1,"PAH",1,1,1,0)
+MASTER VETERAN INDEX VISTA ENHANCEMENTS - ITERATION 16 / RELEASE 2
+"PKG",282,22,1,"PAH",1,1,2,0)
+Refer to patch MPIF*1.0*64 in the FORUM Patch Module for a complete
+"PKG",282,22,1,"PAH",1,1,3,0)
+description.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","MPIFA31B")
+0^2^B26688072^B23651277
+"RTN","MPIFA31B",1,0)
+MPIFA31B ;BP/CMC-BUILD A31 MSGS ; 7/12/16 11:03am
+"RTN","MPIFA31B",2,0)
+ ;;1.0;MASTER PATIENT INDEX VISTA;**22,24,27,28,31,25,44,46,54,59,60,64**;30 Apr 99;Build 2
+"RTN","MPIFA31B",3,0)
+ ;
+"RTN","MPIFA31B",4,0)
+ ; Integration Agreements Utilized:
+"RTN","MPIFA31B",5,0)
+ ;  START, EXC, STOP^RGHLLOG - #2796
+"RTN","MPIFA31B",6,0)
+ ;  BLDEVN, BLDPD1, BLDPID^VAFCQRY - #3630
+"RTN","MPIFA31B",7,0)
+ ;  $$PV1^VAFCSB, $$RADE^VAFCSB, $$LABE^VAFCSB, $$PHARA^VAFCSB, $$PV2^VAFCSB - #4921
+"RTN","MPIFA31B",8,0)
+TA31 ; Tasked entry point
+"RTN","MPIFA31B",9,0)
+ N TMP
+"RTN","MPIFA31B",10,0)
+ S TMP=$$A31(DFN)
+"RTN","MPIFA31B",11,0)
+ Q
+"RTN","MPIFA31B",12,0)
+ ;
+"RTN","MPIFA31B",13,0)
+A31(DFN) ;BUILD AND SEND A31
+"RTN","MPIFA31B",14,0)
+ I $P($$SITE^VASITE,"^",3)=200 Q 1
+"RTN","MPIFA31B",15,0)
+ ; ^ PATCH 25 IF this is the FHIE Host system, don't build A31 messages
+"RTN","MPIFA31B",16,0)
+ N RESLT,CNT,MPI,EVN,TCNT,ERR,PD1,PID,EN,LAB,PV1,PV2,RAD,PRE,OLD,ZPD
+"RTN","MPIFA31B",17,0)
+ N ZEL,ZSP,SIDG,NAMECOMP,DODF,DODD,DODNP,DODOPT,DODDISDT
+"RTN","MPIFA31B",18,0)
+ K HLA("HLA"),HLA("HLS")
+"RTN","MPIFA31B",19,0)
+ Q:$E($$GETICN^MPIF001(DFN),1,3)=$P($$SITE^VASITE(),"^",3) 0
+"RTN","MPIFA31B",20,0)
+ ; ^ LOCAL ICN DON'T SEND
+"RTN","MPIFA31B",21,0)
+ Q:+$$GETICN^MPIF001(DFN)=-1 0
+"RTN","MPIFA31B",22,0)
+ ; ^ NO ICN DON'T SEND
+"RTN","MPIFA31B",23,0)
+ S CNT=1
+"RTN","MPIFA31B",24,0)
+ D INIT^HLFNC2("MPIF ADT-A31 SERVER",.HL)
+"RTN","MPIFA31B",25,0)
+ I $O(HL(""))="" Q "-1^"_$P(HL,"^",2)
+"RTN","MPIFA31B",26,0)
+ S HLECH=HL("ECH"),HLFS=HL("FS"),COMP=$E(HL("ECH"),1),REP=$E(HL("ECH"),2),SUBCOMP=$E(HL("ECH"),4)
+"RTN","MPIFA31B",27,0)
+ S ERR="",TCNT=0
+"RTN","MPIFA31B",28,0)
+ D BLDEVN^VAFCQRY(DFN,"1,2",.EVN,.HL,"A31",.ERR)
+"RTN","MPIFA31B",29,0)
+ Q:ERR'="" ERR
+"RTN","MPIFA31B",30,0)
+ D BLDPID^VAFCQRY(DFN,1,"ALL",.PID,.HL,.ERR) ;**25
+"RTN","MPIFA31B",31,0)
+ Q:ERR'="" ERR
+"RTN","MPIFA31B",32,0)
+ D BLDPD1^VAFCQRY(DFN,"3",.PD1,.HL,.ERR) ;**44 NEW PD1 SEGMENT VALUES -- SENDING CMOR AGAIN AS WITHOUT 40 ON THE MPI SIDE THIS IS A PROBLEM.
+"RTN","MPIFA31B",33,0)
+ ;S PD1=$$PD1^VAFCSB ;**44 NEW PD1 SEGMENT VALUES -- IMDQ DECIDED NOT TO SEND PREFERRED FACILITY 9/7/06
+"RTN","MPIFA31B",34,0)
+ N X S X="VAFCSB" X ^%ZOSF("TEST") I $T D
+"RTN","MPIFA31B",35,0)
+ .;**44 VAFCSB coming in with DG*5.3*707
+"RTN","MPIFA31B",36,0)
+ .S PV1=$$PV1^VAFCSB ;**44 PV1 segment
+"RTN","MPIFA31B",37,0)
+ .S RAD=$$RADE^VAFCSB ;**44 OBX FOR LAST RADIOLOGY EXAM
+"RTN","MPIFA31B",38,0)
+ .S LAB=$$LABE^VAFCSB ;**44 OBX FOR LAST LAB EXAM
+"RTN","MPIFA31B",39,0)
+ .S PRE=$$PHARA^VAFCSB ;**44 OBX FOR ACTIVE PRESCRIPTIONS
+"RTN","MPIFA31B",40,0)
+ .S SIDG=$$SIG^VAFCSB(DFN)  ;**59 OBX FOR SELF ID GENDER
+"RTN","MPIFA31B",41,0)
+ .S NAMECOMP=$$NAMEOBX^VAFCSB(DFN) ;**59,MVI_3975 (mko): OBX for Patient .01 and Name Components
+"RTN","MPIFA31B",42,0)
+ .S PV2=$$PV2^VAFCSB ;**44 PV2 segment
+"RTN","MPIFA31B",43,0)
+ S DODF=$$DODF^VAFCSB(DFN)  ;**60 OBX for DOD fields
+"RTN","MPIFA31B",44,0)
+ ;**64 Story 323009 (ckn) : OBX for Additional DOD fields
+"RTN","MPIFA31B",45,0)
+ S DODD=$$DODD^VAFCSB(DFN)  ;Date Of Death Documents
+"RTN","MPIFA31B",46,0)
+ S DODOPT=$$DODOPT^VAFCSB(DFN)  ; Date Of Death Option used
+"RTN","MPIFA31B",47,0)
+ S DODNP=$$DODNTPRV^VAFCSB(DFN)  ; Date Of Death Notification provider
+"RTN","MPIFA31B",48,0)
+ S OLD=$$OLD ;**54,MVI_913: OBX to mark an older record
+"RTN","MPIFA31B",49,0)
+ S ZPD=$$EN1^VAFHLZPD(DFN,"1,17,21,34") ;25 ;**44 ADDED PSEUDO SSN REASON (34), 1 and 21 TO ZPD SEGMENT
+"RTN","MPIFA31B",50,0)
+ S ZSP=$$EN^VAFHLZSP(DFN)  ;**59
+"RTN","MPIFA31B",51,0)
+ S ZEL=$$EN^VAFHLZEL(DFN,"1,8,9",1)  ;**59
+"RTN","MPIFA31B",52,0)
+ S EN=1
+"RTN","MPIFA31B",53,0)
+ S HLA("HLS",EN)=EVN(1),EN=EN+1
+"RTN","MPIFA31B",54,0)
+ S CNT=0 F  S CNT=$O(PID(CNT)) Q:CNT=""  D
+"RTN","MPIFA31B",55,0)
+ .I CNT=1 S HLA("HLS",EN)=PID(CNT)
+"RTN","MPIFA31B",56,0)
+ .I CNT>1 S HLA("HLS",EN,CNT-1)=PID(CNT)
+"RTN","MPIFA31B",57,0)
+ S EN=EN+1
+"RTN","MPIFA31B",58,0)
+ I $G(PD1(1))'="" S HLA("HLS",EN)=PD1(1),EN=EN+1 ;**44 only pass PD1 segment if has values -- SENDING CMOR AGAIN AS WITHOUT 40 ON MPI SIDE THIS IS A PROBLEM.
+"RTN","MPIFA31B",59,0)
+ I $G(PV1)'="" S HLA("HLS",EN)=PV1,EN=EN+1 ;**44 only pass PV1 segment if has values
+"RTN","MPIFA31B",60,0)
+ I $G(PV2)'="" S HLA("HLS",EN)=PV2,EN=EN+1 ;**44 only pass PV2 segment if has values
+"RTN","MPIFA31B",61,0)
+ I $G(RAD)'="" S HLA("HLS",EN)=RAD,EN=EN+1 ;**44 only pass RADIOLOGY IN OBX segment if has values
+"RTN","MPIFA31B",62,0)
+ I $G(LAB)'="" S HLA("HLS",EN)=LAB,EN=EN+1 ;**44 only pass LAB IN OBX segment if has values
+"RTN","MPIFA31B",63,0)
+ I $G(PRE)'="" S HLA("HLS",EN)=PRE,EN=EN+1 ;**44 only pass PRESCRIPTION IN OBX segment if has values
+"RTN","MPIFA31B",64,0)
+ I $G(OLD)'="" S HLA("HLS",EN)=OLD,EN=EN+1 ;**54,MVI_913: pass OLDER RECORD in OBX if flagged as such
+"RTN","MPIFA31B",65,0)
+ I $G(SIDG)'="" S HLA("HLS",EN)=SIDG,EN=EN+1  ;**59
+"RTN","MPIFA31B",66,0)
+ I $G(DODF)'="" S HLA("HLS",EN)=DODF,EN=EN+1  ;**60 MVI_4733 (ckn) Pass DOD fields in OBX
+"RTN","MPIFA31B",67,0)
+ ;**64 Story 323009 (ckn) : Pass additional DOD fields in OBX
+"RTN","MPIFA31B",68,0)
+ I $G(DODD)'="" S HLA("HLS",EN)=DODD,EN=EN+1
+"RTN","MPIFA31B",69,0)
+ I $G(DODOPT)'="" S HLA("HLS",EN)=DODOPT,EN=EN+1
+"RTN","MPIFA31B",70,0)
+ I $G(DODNP)'="" S HLA("HLS",EN)=DODNP,EN=EN+1
+"RTN","MPIFA31B",71,0)
+ I $G(NAMECOMP)'="" S HLA("HLS",EN)=NAMECOMP,EN=EN+1 ;**59,MVI_3975 (mko): pass NAME COMPONENTS in OBX
+"RTN","MPIFA31B",72,0)
+ S HLA("HLS",EN)=ZPD,EN=EN+1 ;**44 ZPD SEGMENT
+"RTN","MPIFA31B",73,0)
+ I $G(ZSP)'="" S HLA("HLS",EN)=ZSP,EN=EN+1 ;**59 ZSP segment
+"RTN","MPIFA31B",74,0)
+ I $G(ZEL)'="" S HLA("HLS",EN)=ZEL,EN=EN+1 ;**59 ZEL segment
+"RTN","MPIFA31B",75,0)
+ S MPI=$$MPILINK^MPIFAPI()
+"RTN","MPIFA31B",76,0)
+ Q:$P($G(MPI),"^")=-1 "-1^No logical link defined for the MPI"
+"RTN","MPIFA31B",77,0)
+ S HLL("LINKS",1)="MPIF ADT-A31 CLIENT^"_MPI
+"RTN","MPIFA31B",78,0)
+ D GENERATE^HLMA("MPIF ADT-A31 SERVER","LM",1,.MPIFRSLT,"","")
+"RTN","MPIFA31B",79,0)
+ S RESLT=$S(+MPIFRSLT:MPIFRSLT,1:$P(MPIFRSLT,"^",3))
+"RTN","MPIFA31B",80,0)
+ S ^XTMP("MPIFA31%"_DFN,0)=$$FMADD^XLFDT(DT,5)_"^"_DT_"^"_"MPIA31 msg to MPI for DFN "_DFN
+"RTN","MPIFA31B",81,0)
+ I '+RESLT S ^XTMP("MPIFA31%"_DFN,"MPI",0)="A"
+"RTN","MPIFA31B",82,0)
+ K HLA,HLL("LINKS"),COMP,REP,SUBCOMP,HLA("HLA"),HLA("HLS"),MPIFRSLT
+"RTN","MPIFA31B",83,0)
+ ;**44 REMOVED HLEID, HLECH AND HLFS from Kill line above
+"RTN","MPIFA31B",84,0)
+ Q RESLT
+"RTN","MPIFA31B",85,0)
+ ;
+"RTN","MPIFA31B",86,0)
+RES ;
+"RTN","MPIFA31B",87,0)
+ N NXT,DFN,ERROR,CODE S CODE=""
+"RTN","MPIFA31B",88,0)
+ F NXT=1:1 X HLNEXT Q:HLQUIT'>0  D
+"RTN","MPIFA31B",89,0)
+ .I $E(HLNODE,1,3)="MSA" S DFN=$P($P(HLNODE,HL("FS"),7),"=",2),ERROR=$P(HLNODE,HL("FS"),4),CODE=$P(HLNODE,HL("FS"),2)
+"RTN","MPIFA31B",90,0)
+ .I $E(HLNODE,1,3)="MSA"&(CODE="AR") D
+"RTN","MPIFA31B",91,0)
+ ..; ERROR RETURNED IN MSA - LOG EXCEPTION
+"RTN","MPIFA31B",92,0)
+ ..D START^RGHLLOG(HLMTIEN,"","")
+"RTN","MPIFA31B",93,0)
+ ..;**44 check which type of exception to be logged
+"RTN","MPIFA31B",94,0)
+ ..D EXC^RGHLLOG(234,ERROR,DFN) ;**46
+"RTN","MPIFA31B",95,0)
+ ..D STOP^RGHLLOG(0)
+"RTN","MPIFA31B",96,0)
+ K:$G(DFN)>0 ^XTMP("MPIF OLD RECORDS",DFN) ;**54,MVI_913: Delete the old record designation
+"RTN","MPIFA31B",97,0)
+ K ^XTMP("MPIFA31%"_DFN)
+"RTN","MPIFA31B",98,0)
+ Q
+"RTN","MPIFA31B",99,0)
+OLD() ; Return OBX segment to flag a record as "old"
+"RTN","MPIFA31B",100,0)
+ ;**54,MVI_913: New subroutine
+"RTN","MPIFA31B",101,0)
+ Q $S($D(^XTMP("MPIF OLD RECORDS",DFN))#2:"OBX"_HL("FS")_HL("FS")_"CE"_HL("FS")_"OLDER RECORD"_HL("FS")_HL("FS")_"Y",1:"")
+"RTN","MPIFDODC")
+0^1^B35314779^n/a
+"RTN","MPIFDODC",1,0)
+MPIFDODC ;OAK/ELZ- DOD ACTIVITY CHECK ;6/9/2016
+"RTN","MPIFDODC",2,0)
+ ;;1.0;MASTER PATIENT INDEX VISTA;**64**;30 Apr 99;Build 2
+"RTN","MPIFDODC",3,0)
+ ; Integration Agreements Utilized:
+"RTN","MPIFDODC",4,0)
+ ;   IA #4433  $$SDAPI^SDAMA301
+"RTN","MPIFDODC",5,0)
+ ;   IA #4820  RX^PSO52API
+"RTN","MPIFDODC",6,0)
+ ;   IA #10062 IN5^VADPT and KVAR^VADPT
+"RTN","MPIFDODC",7,0)
+ ;   IA #92    ^DGPT("B",DFN), ^DGPT(PTF,0), ^DGPT(PTF,70)
+"RTN","MPIFDODC",8,0)
+ ;   IA #2548  OPEN^SDQ, INDEX^SDQ, PAT^SDQ, DATE^SDQ, SCANCB^SDQ,
+"RTN","MPIFDODC",9,0)
+ ;             ACTIVE^SDQ, SCAN^SDQ, CLOSE^SDQ
+"RTN","MPIFDODC",10,0)
+ ;   IA #6420  $$ACTIVITY^FBUTLMVI 
+"RTN","MPIFDODC",11,0)
+ ;   IA #2028  ^AUPNVSIT(
+"RTN","MPIFDODC",12,0)
+ ;   IA #3035  $$GETIENS^PXAAVCPT, $$CPT^PXAAVCPT
+"RTN","MPIFDODC",13,0)
+ ;
+"RTN","MPIFDODC",14,0)
+ ;
+"RTN","MPIFDODC",15,0)
+SITECK(RETURN,DFN,MPIDOD) ; - check various packages for activitiy after the
+"RTN","MPIFDODC",16,0)
+ ; date of death, called via RPC from the MPI
+"RTN","MPIFDODC",17,0)
+ ;
+"RTN","MPIFDODC",18,0)
+ N X,MPI52LST,MPINODE,MPIFB,VRETURN,MPIC,MPISDAR
+"RTN","MPIFDODC",19,0)
+ S RETURN=0
+"RTN","MPIFDODC",20,0)
+ ;
+"RTN","MPIFDODC",21,0)
+ ; Patients with appointments scheduled for dates after the current date,
+"RTN","MPIFDODC",22,0)
+ ; appointments that are cancelled should not be included.  The 
+"RTN","MPIFDODC",23,0)
+ ; appointment status should be set to blank, I, or NT.
+"RTN","MPIFDODC",24,0)
+ ; NOTE:  BLANK status is translated to R by the SDAMA301 call.
+"RTN","MPIFDODC",25,0)
+ K ^TMP($J,"SDAMA301")
+"RTN","MPIFDODC",26,0)
+ S MPISDAR("FLDS")=1
+"RTN","MPIFDODC",27,0)
+ S MPISDAR("MAX")=1
+"RTN","MPIFDODC",28,0)
+ S MPISDAR("SORT")="P"
+"RTN","MPIFDODC",29,0)
+ S MPISDAR(1)=$$FMADD^XLFDT(DT,1)
+"RTN","MPIFDODC",30,0)
+ S MPISDAR(3)="I;NT;R"
+"RTN","MPIFDODC",31,0)
+ S MPISDAR(4)=DFN
+"RTN","MPIFDODC",32,0)
+ S X=$$SDAPI^SDAMA301(.MPISDAR)
+"RTN","MPIFDODC",33,0)
+ I X S RETURN="1^"_($O(^TMP($J,"SDAMA301",DFN,0))\1)_"^Appointment Found"
+"RTN","MPIFDODC",34,0)
+ K ^TMP($J,"SDAMA301")
+"RTN","MPIFDODC",35,0)
+ Q:RETURN
+"RTN","MPIFDODC",36,0)
+ ;
+"RTN","MPIFDODC",37,0)
+ ;
+"RTN","MPIFDODC",38,0)
+ ; Patients with prescription fills requested after death.  The Log In
+"RTN","MPIFDODC",39,0)
+ ; date is the date the prescription was requested.  The fill date
+"RTN","MPIFDODC",40,0)
+ ; can be a date after the login for future fills that are scheduled.
+"RTN","MPIFDODC",41,0)
+ ; Searching back 365 days + 90 days to ensure all possible prescriptions
+"RTN","MPIFDODC",42,0)
+ ; are included in the query since prescriptions can be set for up to 1
+"RTN","MPIFDODC",43,0)
+ ; year and initially filed within the first 90 days.
+"RTN","MPIFDODC",44,0)
+ ;
+"RTN","MPIFDODC",45,0)
+ S MPI52LST="MPIPSO",MPINODE="2,P,R"
+"RTN","MPIFDODC",46,0)
+ K ^TMP($J,MPI52LST,DFN)
+"RTN","MPIFDODC",47,0)
+ D RX^PSO52API(DFN,MPI52LST,,,MPINODE,$$FMADD^XLFDT(MPIDOD,-455))
+"RTN","MPIFDODC",48,0)
+ ;
+"RTN","MPIFDODC",49,0)
+ S X=0 F  S X=$O(^TMP($J,MPI52LST,DFN,X)) Q:'X!(RETURN)  D
+"RTN","MPIFDODC",50,0)
+ . N RF,P
+"RTN","MPIFDODC",51,0)
+ . I $P($G(^TMP($J,MPI52LST,DFN,X,21)),"^")>MPIDOD S RETURN="1^"_($P(^(21),"^")\1)_"^Initial Rx Login" Q
+"RTN","MPIFDODC",52,0)
+ . I $P($G(^TMP($J,MPI52LST,DFN,X,22)),"^")>MPIDOD S RETURN="1^"_($P(^(22),"^")/1)_"^Rx Fill Date" Q
+"RTN","MPIFDODC",53,0)
+ . S RF=0 F  S RF=$O(^TMP($J,MPI52LST,DFN,X,"RF",RF)) Q:'RF!(RETURN)  D
+"RTN","MPIFDODC",54,0)
+ .. I $G(^TMP($J,MPI52LST,DFN,X,"RF",RF,7))>MPIDOD S RETURN="1^"_($P(^(7),"^")\1)_"^Refill Rx Login" Q
+"RTN","MPIFDODC",55,0)
+ .. I $G(^TMP($J,MPI52LST,DFN,X,"RF",RF,.01))>MPIDOD S RETURN="1^"_($P(^(.01),"^")\1)_"^Rx Refill Date"
+"RTN","MPIFDODC",56,0)
+ . Q:RETURN
+"RTN","MPIFDODC",57,0)
+ . S P=0 F  S P=$O(^TMP($J,MPI52LST,DFN,X,"P",P)) Q:'P!(RETURN)  D
+"RTN","MPIFDODC",58,0)
+ .. I $G(^TMP($J,MPI52LST,DFN,X,"P",P,.08))>MPIDOD S RETURN="1^"_($P(^(.08),"^")\1)_"^Partial Rx Login" Q
+"RTN","MPIFDODC",59,0)
+ .. I $G(^TMP($J,MPI52LST,DFN,X,"P",P,.01))>MPIDOD S RETURN="1^"_($P(^(.01),"^")\1)_"^Partial Rx Fill"
+"RTN","MPIFDODC",60,0)
+ ;
+"RTN","MPIFDODC",61,0)
+ K ^TMP($J,MPI52LST,DFN)
+"RTN","MPIFDODC",62,0)
+ Q:RETURN
+"RTN","MPIFDODC",63,0)
+ ;
+"RTN","MPIFDODC",64,0)
+ ;
+"RTN","MPIFDODC",65,0)
+ ; Note: The next two categories are only considered when:
+"RTN","MPIFDODC",66,0)
+ ;  (1) the VistA patient record being checked for activity has no death
+"RTN","MPIFDODC",67,0)
+ ;      date or
+"RTN","MPIFDODC",68,0)
+ ;  (2) the VistA patient record being checked for activity has a death
+"RTN","MPIFDODC",69,0)
+ ;      date, and the source is other than INPATIENT AT VAMC.
+"RTN","MPIFDODC",70,0)
+ S X=$G(^DPT(DFN,35)) I 'X!(X&($P(X,"^",3)'=1)) D  Q:RETURN
+"RTN","MPIFDODC",71,0)
+ . ;
+"RTN","MPIFDODC",72,0)
+ . N VAIP,MPIARR,PTF
+"RTN","MPIFDODC",73,0)
+ . ; i. Patients with an inpatient discharge date more than one day after
+"RTN","MPIFDODC",74,0)
+ . ;    the date of death, VHA facility: The discharge date is more than
+"RTN","MPIFDODC",75,0)
+ . ;    one day after the date of death or the patient has not been
+"RTN","MPIFDODC",76,0)
+ . ;    discharged (currently an inpatient).
+"RTN","MPIFDODC",77,0)
+ . S VAIP("D")="LAST",VAIP("M")=0 D IN5^VADPT
+"RTN","MPIFDODC",78,0)
+ . I VAIP(1),'VAIP(17) S RETURN="1^^No Discharge Movement" Q
+"RTN","MPIFDODC",79,0)
+ . I $P(VAIP(17,1),".")>$$FMADD^XLFDT(MPIDOD,1) S RETURN="1^"_(VAIP(17,1)\1)_"^Last Discharge > DOD" Q
+"RTN","MPIFDODC",80,0)
+ . D KVAR^VADPT
+"RTN","MPIFDODC",81,0)
+ . ;
+"RTN","MPIFDODC",82,0)
+ . ;
+"RTN","MPIFDODC",83,0)
+ . ;ii. Purchased care: The discharge date is more than one day after
+"RTN","MPIFDODC",84,0)
+ . ;    the date of death. If there is no discharge date, use the
+"RTN","MPIFDODC",85,0)
+ . ;    admission date.  Have to go to the PTF as the FEE ones don't
+"RTN","MPIFDODC",86,0)
+ . ;    create movements and don't show in the VADPT calls.
+"RTN","MPIFDODC",87,0)
+ . ; get the last ptf record.
+"RTN","MPIFDODC",88,0)
+ . S PTF=$O(^DGPT("B",DFN,":"),-1)_","
+"RTN","MPIFDODC",89,0)
+ . I PTF D GETS^DIQ(45,PTF_",","2;70","I","MPIARR")
+"RTN","MPIFDODC",90,0)
+ . ; really we don't care if it was FEE or not, it was after the DOD
+"RTN","MPIFDODC",91,0)
+ . I $P($G(MPIARR(45,PTF,70,"I")),".")>$$FMADD^XLFDT(MPIDOD,1) S RETURN="1^"_(MPIARR(45,PTF,70,"I")\1)_"^PTF Record with discharge after DOD" Q
+"RTN","MPIFDODC",92,0)
+ . E  I $P($G(MPIARR(45,PTF,2,"I")),".")>$$FMADD^XLFDT(MPIDOD,1) S RETURN="1"_(MPIARR(45,PTF,2,"I")\1)_"^PTF with admission after DOD"
+"RTN","MPIFDODC",93,0)
+ ;
+"RTN","MPIFDODC",94,0)
+ ; Patients with two or more of the following health care events after
+"RTN","MPIFDODC",95,0)
+ ; death
+"RTN","MPIFDODC",96,0)
+ S MPIC=0
+"RTN","MPIFDODC",97,0)
+ ; i. Visits that are not historical entries, are not non-count, and have
+"RTN","MPIFDODC",98,0)
+ ;    a procedure code recorded on the visit
+"RTN","MPIFDODC",99,0)
+ K ^TMP("DIERR",$J) D
+"RTN","MPIFDODC",100,0)
+ . N MPIQ
+"RTN","MPIFDODC",101,0)
+ . D OPEN^SDQ(.MPIQ) Q:'$G(MPIQ)
+"RTN","MPIFDODC",102,0)
+ . D INDEX^SDQ(.MPIQ,"PATIENT/DATE","SET")
+"RTN","MPIFDODC",103,0)
+ . D SCANCB^SDQ(.MPIQ,"D CALLBACK^MPIFDODC(Y0)","SET")
+"RTN","MPIFDODC",104,0)
+ . D PAT^SDQ(.MPIQ,DFN,"SET")
+"RTN","MPIFDODC",105,0)
+ . D DATE^SDQ(.MPIQ,$$FMADD^XLFDT(MPIDOD,1),9999999,"SET")
+"RTN","MPIFDODC",106,0)
+ . D ACTIVE^SDQ(.MPIQ,"TRUE","SET")
+"RTN","MPIFDODC",107,0)
+ . D SCAN^SDQ(.MPIQ,"FORWARD")
+"RTN","MPIFDODC",108,0)
+ . D CLOSE^SDQ(.MPIQ)
+"RTN","MPIFDODC",109,0)
+ K ^TMP("DIERR",$J)
+"RTN","MPIFDODC",110,0)
+ ;
+"RTN","MPIFDODC",111,0)
+ I MPIC>1,$G(VRETURN) S RETURN=VRETURN Q
+"RTN","MPIFDODC",112,0)
+ ;
+"RTN","MPIFDODC",113,0)
+ ; ii. Purchased Care with treatment dates after date of death
+"RTN","MPIFDODC",114,0)
+ S MPIFB=$$ACTIVITY^FBUTLMVI(DFN,MPIDOD,.MPIFB)
+"RTN","MPIFDODC",115,0)
+ I MPIFB+MPIC>1 S RETURN="1^"_MPIFB(+$O(MPIFB(0)))
+"RTN","MPIFDODC",116,0)
+ ;
+"RTN","MPIFDODC",117,0)
+ Q
+"RTN","MPIFDODC",118,0)
+ ;
+"RTN","MPIFDODC",119,0)
+CALLBACK(MPIOE) ; - Called back from the SDQ
+"RTN","MPIFDODC",120,0)
+ N MPIVISIT,MPICPT,MPICPTV,MPIARR,MPIS
+"RTN","MPIFDODC",121,0)
+ Q:$P(MPIOE,"^",12)=12  ; non-count encounter
+"RTN","MPIFDODC",122,0)
+ S MPIVISIT=$P(MPIOE,"^",5)_"," Q:'MPIVISIT
+"RTN","MPIFDODC",123,0)
+ D GETS^DIQ(9000010,MPIVISIT,".07","I","MPIARR")
+"RTN","MPIFDODC",124,0)
+ Q:$G(MPIARR(9000010,"4,",.07,"I"))="E"  ; historical
+"RTN","MPIFDODC",125,0)
+ S MPICPT=$$GETIENS^PXAAVCPT(+MPIVISIT,.MPICPT)
+"RTN","MPIFDODC",126,0)
+ Q:'MPICPT  ; no procedures found
+"RTN","MPIFDODC",127,0)
+ S MPIS=0
+"RTN","MPIFDODC",128,0)
+ S MPICPT=0 F  S MPICPT=$O(MPICPT(MPICPT)) Q:'MPICPT!(MPIS)  D
+"RTN","MPIFDODC",129,0)
+ . S MPICPTV=$$CPT^PXAAVCPT(MPICPT)
+"RTN","MPIFDODC",130,0)
+ . Q:$L($T(@MPICPTV))  ; cpt on the exclude list
+"RTN","MPIFDODC",131,0)
+ . S MPIC=MPIC+1,VRETURN="1^"_(MPIOE\1)_"^Multiple visits found",MPIS=1
+"RTN","MPIFDODC",132,0)
+ I MPIC>1 S SDSTOP=1
+"RTN","MPIFDODC",133,0)
+ Q
+"RTN","MPIFDODC",134,0)
+CPTS ; - list of cpt codes to ignore
+"RTN","MPIFDODC",135,0)
+98966 ;;HC PRO PHONE CALL 5-10 MIN
+"RTN","MPIFDODC",136,0)
+98967 ;;HC PRO PHONE CALL 11-20 MIN
+"RTN","MPIFDODC",137,0)
+98968 ;;HC PRO PHONE CALL 21-30 MIN
+"RTN","MPIFDODC",138,0)
+99441 ;;PHONE E/M PHYS/QHP 5-10 MIN
+"RTN","MPIFDODC",139,0)
+99373 ;;PHYSICIAN PHONE CONSULTATION
+"RTN","MPIFDODC",140,0)
+99442 ;;PHONE E/M PHYS/QHP 11-20 MIN
+"RTN","MPIFDODC",141,0)
+99371 ;;PHYSICIAN PHONE CONSULTATION
+"RTN","MPIFDODC",142,0)
+99377 ;;HOSPICE CARE SUPERVISION
+"RTN","MPIFDODC",143,0)
+99378 ;;HOSPICE CARE SUPERVISION
+"RTN","MPIFDODC",144,0)
+99372 ;;PHYSICIAN PHONE CONSULTATION
+"RTN","MPIFDODC",145,0)
+G0182 ;;HOSPICE CARE SUPERVISION
+"RTN","MPIFDODC",146,0)
+99443 ;;PHONE E/M PHYS/QHP 21-30 MIN
+"RTN","MPIFDODC",147,0)
+99380 ;;NURSING FAC CARE SUPERVISION
+"RTN","MPIFDODC",148,0)
+S0320 ;;RN TELEPHONE CALLS TO DMP
+"RTN","MPIFDODC",149,0)
+99339 ;;DOMICIL/R-HOME CARE SUPERVIS
+"RTN","MPIFDODC",150,0)
+99447 ;;INTERPROF PHONE/ONLINE 11-20
+"RTN","MPIFDODC",151,0)
+99448 ;;INTERPROF PHONE/ONLINE 21-30
+"VER")
+8.0^22.0
+"BLD",3185,6)
+^61
+**END**
+**END**
+

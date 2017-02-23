@@ -1,0 +1,255 @@
+$TXT Created by                VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Monday, 09/26/16 at 17:15
+=============================================================================
+Run Date: JAN 20, 2017                     Designation: LR*5.2*464
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #380                    Status: Released
+                  Compliance Date: FEB 20, 2017
+=============================================================================
+
+Associated patches: (v)LR*5.2*315  <<= must be installed BEFORE `LR*5.2*464'
+                    (v)LR*5.2*416  <<= must be installed BEFORE `LR*5.2*464'
+                    (v)LR*5.2*427  <<= must be installed BEFORE `LR*5.2*464'
+
+Subject: SURGICAL PATHOLOGY REPORT ENHANCEMENTS FOR READABILITY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch LR*5.2*464 modifies how columnar laboratory data is displayed in 
+ Anatomic Pathology (AP) final reports in the Computerized Patient Record 
+ System (CPRS) and VistA option: Print single report only [LRAP PRINT 
+ SINGLE]. The columnar alignment of the data is now maintained when the 
+ data is copied into free text fields within the AP reports and 
+ Supplementary Reports.
+  
+ For sites with AP electronic signature inactive:
+  
+ The lab data is originally populated in VistA and is structured in 
+ columns so that it can be easily read. In the current system, any 
+ consecutive blank spaces within the lab data are automatically reduced to 
+ one blank space when the data is copied into the report or supplementary 
+ report, causing the lab data to no longer be aligned under the 
+ appropriate column headings. This modification stops the removal of blank 
+ spaces and maintains the original alignment of the lab data to make the 
+ report more legible.
+  
+ For sites with AP electronic signature active:
+  
+ This patch also corrects the text wrapping error that occurs in free text 
+ fields populated with columnar data when the Text Integration Utility 
+ (TIU) is utilized for final reporting. This correction stops the 
+ automatic wrapping and maintains the original alignment of the lab data 
+ to make the reports more legible.
+  
+ This intake has been implemented locally at the Kansas City, Kansas VAMC. 
+  
+ This patch addresses the following requirement:
+  
+         VHBAO: NEED502503: Surgical Pathology Report Enhancement: As a 
+         health care provider, I need to view the Laboratory Surgical 
+         Pathology Report columns in-line, so the report is legible and 
+         I can provide timely care for the patient. 
+  
+  
+ BLOOD BANK Clearance:
+ =====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*464 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*464 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*464 have no effect on 
+ Blood Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)       Field Name (Number)       New/Modified/Deleted
+ -----------------------  ------------------------  --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                File #       New/Modified/Deleted
+ ---------                ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------
+ 20140715   SURGICAL PATHOLOGY REPORT ENHANCEMENTS FOR READABILITY
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Problem:
+ --------
+  
+  
+ Resolution:
+ -----------
+  
+  
+ Test Sites:
+ -----------
+ Erie VA Medical Center (Erie), PA
+ VA East Colorado Health Care System (Denver, Ft. Lyon), CO
+ Northport VA Medical Center 
+ Madison VA Medical Center (Madison), WI
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ There is no documentation associated with this patch release.
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ Installation Instructions
+ -----------------------------
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+         the Installation Menu.  From this menu, you may select to use the 
+         following options. When prompted for the INSTALL NAME enter
+         LR*5.2*464.
+  
+         a.  Verify Checksums in Transport Global - This option will 
+             allow you to ensure the integrity of the routines that are in
+             the transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+         and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO// Press <Enter>
+  
+ 6.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO// Press <Enter>
+  
+ 7.      If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR7OSAP1
+    Before: B26800282   After: B26708741  **121,227,230,259,317,315,464**
+Routine Name: LRAPAUSR
+    Before: B34793694   After: B35041396  **1,173,248,259,317,464**
+Routine Name: LRAPBR1
+    Before:B133054463   After:B133918664  **259,317,363,350,427,464**
+Routine Name: LRAPBR4
+    Before: B44190167   After: B44485116  **259,317,350,416,464**
+Routine Name: LRAURPT
+    Before: B57247419   After: B57531711  **1,72,173,248,259,464**
+Routine Name: LRSPRPT
+    Before: B65490213   After: B66074919  **1,72,248,259,317,350,416,464**
+Routine Name: LRSPRPTA
+    Before: B14810851   After: B16221916  **350,427,464**
+ 
+Routine list of preceding patches: 315, 416, 427
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 13, 2015
+Completed By:                               Date Completed: JAN 19, 2017
+Released By :                               Date Released : JAN 20, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,222 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 05/12/16 at 09:17
+=============================================================================
+Run Date: JAN 12, 2017                     Designation: HL*1.6*166
+Package : HL - HEALTH LEVEL SEVEN             Priority: Mandatory
+Version : 1.6       SEQ #131                    Status: Released
+                  Compliance Date: FEB 12, 2017
+=============================================================================
+
+Associated patches: (v)HL*1.6*122  <<= must be installed BEFORE `HL*1.6*166'
+                    (v)HL*1.6*158  <<= must be installed BEFORE `HL*1.6*166'
+
+Subject: EDIT LOGICAL LINK ERROR;<STORE> ERROR;ROUTER PROTOCOL FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses issues when editing HL LOGICAL LINKS, <STORE> errors
+ caused by excessive out queue arrays and potential issues with router
+ protocols where additional, unwanted data is processed.
+  
+  
+ Associated tickets:
+ ========================
+ 1) I9871701FY16 HL7 - Logical Links: 
+ 2) I6653157FY16 HLO creating error: STORE>OUT+9^HLOQUE
+ 3) I7437950FY16 Router protocol being present with MSH segment from previous 
+    message
+  
+ Associated NSR:
+ ==============
+ N/A
+  
+  
+ Participating Test Sites:
+ ========================
+ Muskogee VAMC
+ Heartland - West HCS
+  
+  
+ TICKET OVERVIEW:
+ ===============
+ 1) I9871701FY16 HL7 - Logical Links: 
+  
+  
+ Problem: 
+ --------
+ If the value entered for the DNS DOMAIN field (#.08) in the HL LOGICAL 
+ LINK file (#870) does not meet the requirements defined in the first 
+ condition of the INPUT TRANSFORM (less than 70 characters but more than 
+ 4) the value (X) is deleted and in the next command tries to call a 
+ function and pass in X (which no longer exists), producing an <UNDEFINED> 
+ error.
+    
+ Resolution:
+ ----------
+ Prior to executing the second function, the INPUT TRANSFORM will be
+ modified to verify the passed value (X) exists.  If it does not,
+ it will not proceed in filing the data. 
+  
+  
+ Data Dictionary:
+ ----------------
+  
+ Before:
+  
+ 870,.08       DNS DOMAIN             0;8 FREE TEXT
+  
+               INPUT TRANSFORM:  K:$L(X)>70!($L(X)<4) X S HLIP=$$ADDRESS^XLFNSLK
+                                 (X) K:('HLIP)&($P($G(^HLCS(869.3,1,0)),"^",3)="
+                                 P")&($P($$SITE^VASITE,"^",3)) X I HLIP S HLIP=$
+                                 $IP^HLMA3(DA,HLIP) 
+  
+ After:
+  
+ 870,.08       DNS DOMAIN             0;8 FREE TEXT
+  
+               INPUT TRANSFORM:  K:$L(X)>70!($L(X)<4) X I $D(X) S HLIP=$$ADDRESS
+                                 ^XLFNSLK(X) K:('HLIP)&($P($G(^HLCS(869.3,1,0)),
+                                 "^",3)="P")&($P($$SITE^VASITE,"^",3)) X I HLIP 
+                                 S HLIP=$$IP^HLMA3(DA,HLIP)
+  
+  
+ 2) I6653157FY16 HLO creating error: STORE>OUT+9^HLOQUE 
+  
+ Problem: 
+ --------
+ It appears there is a process in VPS that creates a new "OUTQUEUE" with each
+ process, which has led to an extremely large number of queues.  As a
+ result, the process of counting the queues results in a store error
+ because it stores the number in an array which is limited in space.
+   
+ Resolution:
+ ----------
+ The count process will no longer store each queue in an array due to the size
+ constraints thereby circumventing any possibility of a <STORE> error.
+  
+ *VMS HLO Developer Manual update page 91 (See document retrieval section 
+ below)
+  
+ Routine: HLOQUE
+  
+ 3) I7437950FY16 Router protocol being present with MSH segment from previous 
+    message
+  
+ Problem: 
+ --------
+ While trying to provide the router protocol the message contents from the 
+ HL7 MESSAGE TEXT file (#772), there is a potential to also provide the
+ message header ("MSH") from the HL7 MESSAGE ADMINISTRATION file (#773)
+ from a subscriber protocol, previously processed which could cause
+ problems during message validation.
+    
+ Resolution:
+ ----------
+ When setting up the utility that presents the message contents to the router
+ protocol, variables will be set to notify the utility that the HL7 MESSAGE
+ ADMINISTRATION file (#773) message header should not be processed.
+  
+ Routine: HLCS 
+  
+  
+ Documentation Retrieval Instructions:
+ =====================================
+ The VMS HLO Developer Manual was updated with issue 2 above.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+    
+ File Name                     Title                          SFTP Mode
+ =========                     =====                          =========
+ vms_hlo_developer_manual.pdf  VMS_HLO_Developer_Manual         BINARY
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+ This patch can be loaded with users on the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+   
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter HL*1.6*166)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package HL*1.6*166.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? YES//", respond YES.
+  
+    7.  When prompted 'Enter options you wish to mark as 'Out Of 
+        Order':'  Enter the following options:
+  
+         Link Edit           [HL EDIT LOGICAL LINKS]
+         HLO SYSTEM MONITOR  [HLO SYSTEM MONITOR]
+  
+    8.  When prompted 'Enter protocols you wish to mark as 'Out Of 
+        Order':', press Enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.6;HEALTH LEVEL SEVEN;**[Patch List]**;Oct 13, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HLCS
+    Before: B35933605   After: B37118785  **2,9,14,19,43,57,109,132,122,166**
+Routine Name: HLOQUE
+    Before:B154240206   After:B157549548  **126,132,134,137,138,143,147,
+                                           153,158,166**
+ 
+Routine list of preceding patches: 122, 158
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 10, 2016
+Completed By:                               Date Completed: DEC 13, 2016
+Released By :                               Date Released : JAN 12, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

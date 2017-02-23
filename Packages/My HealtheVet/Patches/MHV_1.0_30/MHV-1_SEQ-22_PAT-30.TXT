@@ -1,0 +1,165 @@
+
+=============================================================================
+Run Date: DEC 15, 2016                     Designation: MHV*1*30
+Package : MHV - MYHEALTHEVET                  Priority: Mandatory
+Version : 1        SEQ #22                      Status: Released
+                  Compliance Date: JAN 17, 2017
+=============================================================================
+
+
+Subject: MYHEALTHEVET RELEASE 2017.1.0.0 INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The quarterly MyHealtheVet Release MHV_2017.1.0.0 will be promoted to the 
+ MHV Production environment on Saturday, December 17, 2016 starting at 
+ 10:00PM EST.
+  
+ ================================================================
+ Veteran Facing Enhancements (VFE) Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ LEGACY SM ENHANCEMENTS 
+ JAZZ    417508  SM: Keep MHV/SM traits in sync
+ JAZZ    417506  SM: Populate Middle name field in SM for patient
+ JAZZ    419006  SM: Display Middle name of Patient in SM admin Portal
+ JAZZ    417503  SM: Update SM user traits with data from MHV
+ JAZZ    417500  SM: Update duplicate accounts in SM
+ JAZZ    357163  Story: Timeout Phase 1 implementation - SM Patient
+ JAZZ    422989  MHV-SM integration landing page Terms and Conditions link
+ JAZZ    428418  Incorrect content is being displayed on SM Patient 
+ session expired page
+  
+ MHV PORTAL ENHANCEMENTS
+ JAZZ    374562  SRE: User reports print option is non-operational on the
+ pharmacy medication list SRE Component(s) Affected: RxRefill
+ JAZZ    422989  MHV-SM integration landing page Terms and Conditions link 
+ SRE Component(s) Affected: Secure Messaging
+ JAZZ    344418  SRE: The message that is getting displayed when one of the
+ VistA facilities is not reachable is not correct. SRE Component(s) 
+ Affected: RxRefill, User Management
+ JAZZ    412029  SRE: Message is not being displayed on Pharmacy pages 
+ after max number of refreshes per day limit is reached. SRE Component(s) 
+ Affected: RxRefill, Common
+ JAZZ    417506  SM: Populate Middle name field in SM for patient SRE 
+ Component(s) Affected: Secure Messaging
+ JAZZ    279111  Story: MHV Enhancement - Session Lock Page: AC-11(1) - 
+ MHV National Portal and SM
+  
+ DATABASE ENHANCEMENTS
+  
+ JAZZ    417500  Update duplicate accounts in SM
+ JAZZ    417503  Update SM user traits with data from MHV
+ JAZZ    417506  Populate Middle name field in SM for patient
+ JAZZ    417508  Keep MHV/SM traits in sync
+  
+ ================================================================
+ I&I Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ MHV PORTAL ENHANCEMENTS
+ JAZZ    422024  Admin Portal Help Desk - Last Sign-in Partner Used is not 
+ displaying the right value SRE Component(s) Affected: User Management, 
+ Hooks
+ JAZZ    419878  Task: Automated Account Deactivation SRE Component(s)
+ Affected: User Management, Common
+ JAZZ    422438  Defect: Multiple AAL Entries when logging in through 
+ SIP/DSLogon SRE Component(s) Affected: Hooks
+ JAZZ    423204  SRE: Clicking cancel on Blue Button PDF warning message 
+ does not cancel SRE Component(s) Affected: BlueButton
+ JAZZ    424933  Manage Account Access header is not the correct size SRE 
+ Component(s) Affected: User Management
+ JAZZ    425695  Sign In Partners - Remote ID Proofing and Delegation - 
+ Development - SSOe session timeout SRE Component(s) Affected: Hooks
+ JAZZ    425991  AAL for Block/Unblock Access not correct SRE Component(s) 
+ Affected: User Management
+ JAZZ    426191  100% AAL failures when users log in with a DS Logon 
+ credential and a message is sent to MVI to connect their account. SRE 
+ Component(s). Affected: User Management
+ JAZZ    432205  Defect: User profile not found using traits resulting in 
+ "unrecoverable error" message during Single Sign On
+  
+ MHV LEGACY (ADMIN PORTAL) ENHANCEMENTS
+ JAZZ    385323  Task: Automated Account Deactivation Coding
+ JAZZ    416187  Story: Automated Deactivation - Development
+ JAZZ    422024  Admin Portal Help Desk - Last Sign-in Partner Used is not 
+ displaying the right value
+ JAZZ    418654  Admin Portal Block DS LOGON - Block DS Logon Access 
+ Date/Time is not getting updated
+  
+ DATABASE ENHANCEMENTS
+ JAZZ    385323  Automated Account Deactivation Coding
+ JAZZ    419878  Automated Account Deactivation Testing
+  
+ ================================================================
+ Innovations Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ MHV PORTAL ENHANCEMENTS
+  
+ JAZZ    423084  JsonProvider needs to be configured to be more flexible 
+ SRE Component(s) Affected: Common
+ JAZZ    426329  Fixed issue with multiple refresh requests to PHRR SRE 
+ Component(s): BlueButton
+ JAZZ    423215  SRE: Advanced users selects the Health Records, 
+ Customize a Report and VA Health Summary take the user to Customize a 
+ Report SRE. Component(s) Affected: BlueButton, User Management
+ JAZZ    429934  Fix parse issue for study images files with series > 2 
+ digits SRE Component(s) Affected: BlueButton
+  
+ SM LEGACY ENHANCEMENTS 
+ JAZZ    426090  US: API: SM Removed Forward Functionality
+  
+ PHR-R ENHANCEMENTS 
+ JAZZ    427326  PHRR Appointments not clearing from evault when a user 
+ transitions to having 0 records from Pathways
+  
+ ====================================================
+ Sustainment Team (NATIONAL RELEASE):
+ ====================================================
+  
+ SM LEGACY ENHANCEMENTS 
+ JAZZ    363860  Fix Fortify critical/high items for Secure Messaging
+ JAZZ    331013  SM: Resolve Fortify scan findings
+  
+ MHV LEGACY (ADMIN PORTAL) ENHANCEMENTS
+ JAZZ    417764  Fix Fortify critical/high items for Admin Portal - sprint 
+ 59
+ JAZZ    413277  Upgrade Admin Portal encryption from DES to AES or Triple 
+ DES
+ JAZZ    416693  Fix cross site scripting vulnerability on MHV Admin 
+ Portal search result page
+  
+ DATABASE ENHANCEMENTS
+ JAZZ    387787  Set up the job to migrate CCD data from MySQL to Oracle 
+ DB - Final MySQL Data Load to Oracle
+  
+ Installation Instructions:
+ --------------------------
+ This patch is only for information.  
+   
+  Documentation Retrieval Instructions:
+ ------------------------------------- 
+  MHV Documentation can be found on the VA Software Documentation Library 
+  at: http://www4.domain.ext/vdl/
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 13, 2016
+Completed By:                               Date Completed: DEC 14, 2016
+Released By :                               Date Released : DEC 15, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

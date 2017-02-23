@@ -1,0 +1,492 @@
+$TXT Created by              at CINP.FO-BIRM.DOMAIN.EXT  (KIDS) on Thursday, 09/29/16 at 08:44
+=============================================================================
+Run Date: NOV 15, 2016                     Designation: PX*1*216
+Package : PX - PCE PATIENT CARE ENCOUNTER     Priority: Mandatory
+Version : 1       SEQ #164                      Status: Released
+                  Compliance Date: DEC 16, 2016
+=============================================================================
+
+Associated patches: (v)PX*1*197    <<= must be installed BEFORE `PX*1*216'
+                    (v)PX*1*215    <<= must be installed BEFORE `PX*1*216'
+
+Subject: PCE IMMUNIZATION ENHANCEMENTS - INCREMENT 4
+
+Category: 
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+  - Routine
+
+Description:
+============
+
+ The Veterans Health Information Systems and Technology Architecture
+ (VistA) Immunizations Enhancements (VIMM) 2.0 project, Increment 4, builds
+ upon the file structures and standardized data introduced in Increments 1,
+ 2 and 3 by adding functional enhancements to the existing VistA Patient
+ Care Encounter (PCE) package.
+  
+ This patch provides the following new features:
+  
+ 1) Introduces a new file, V IMMUNIZATION DELETED (#9000080.11), that will
+    contain entries that were deleted out of the V IMMUNIZATION file
+    (#9000010.11). Immediately prior to deleting an entry from the V
+    IMMUNIZATION file, a copy of the record will be made and filed to the V
+    IMMUNIZATION DELETED file. The date/time of deletion and the user that
+    deleted the record will be recorded.
+  
+ 2) Creates Remote Procedure Calls (RPCs) for use by the Enterprise Health
+    Management Platform (eHMP) project, the Computerized Patient Record
+    System (CPRS) software and others. These RPCs retrieve skin test
+    information from the following files:
+     - V SKIN TEST (#9000010.12)
+     - SKIN TEST (#9999999.28) 
+     - IMM ADMINISTRATION SITE (BODY) (#920.3)
+  
+ 3) Creates a RPC to retrieve immunization data from the V IMMUNIZATION
+    (#9000010.11) file. This data will be used in the future to retrieve
+    patient immunization data and transmit it, using the Health Level 7
+    (HL7) standard protocol, to external agencies (e.g., State Immunization
+    Information Registries). As part of this effort, a new option will be
+    introduced with this patch, Accounting Of Immunization Disclosures
+    Report [PXV IMM DISCLOSURE REPORT], that can be run from the PCE
+    Coordinator Menu [PX PCE COORDINATOR MENU]. This option can be used to
+    generate a list of immunization records transmitted to external
+    agencies. This option allows for a date range selection as well as one,
+    multiple or all agencies and one, multiple or all patients.
+  
+ 4) Previously, auditing has been turned on for all fields of the V 
+    IMMUNIZATION (#9000010.11) file. Additional safe guards are added to
+    ensure auditing is not turned off and the data audits cannot be purged
+    for the V IMMUNIZATION file.
+  
+ 5) The existing immunization inventory functionality is updated to 
+    include multi-divisional features:
+     - Inventory items may be linked to an associated facility.
+     - Inventory reports are facility specific.
+    
+ 6) The immunization entry process is updated to require the entry of 
+    Dose, Dose Units, Route of Administration and Site of Administration 
+    (Note: If route is ORAL, site is not required.).
+    
+ 7) The PX SAVE DATA remote procedure call (RPC) has been modified to 
+    provide support for the following fields in the V SKIN TEST file
+    (#9000010.12):
+     - READER (#.07)
+     - ORDERING PROVIDER (#1202)
+     - ANATOMIC LOCATION OF PLACEMENT (#1212)
+     - READING COMMENTS (#1301)
+    
+ 8) The functionality for the Health Summary component PCE IMMUNIZATIONS
+    (IM) is modified to ignore time and occurrence limits, basically
+    restoring pre-patch PX*1*210 behavior.
+  
+ 9) Provides an alert whenever specific allergy-type contraindications are
+    recorded, as a reason for not giving an immunization, in the V IMM
+    CONTRA/REFUSAL EVENTS file (#9000010.707). The alert text reads: "You
+    have recorded an allergy/adverse reaction contraindication reason. This
+    information should also be recorded in the Adverse Reaction Tracking
+    package if it is not already present there."
+  
+  
+ Patch Components:
+ -----------------
+  
+ APIs Associated:
+  
+ API                                   New/Modified/Deleted
+ -----------                           --------------------
+ VSKIN^PXPXRM (ICR #4250)              Modified              
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)           New/Modified/Deleted
+ ------------------      -------------------           --------------------
+ IMM EXTERNAL AGENCY     AGENCY NAME (#.01)                   New
+ (#920.71)
+  
+ V IMMUNIZATION          IMMUNIZATION (#.01)                Modified
+ (#9000010.11)           EVENT DATE AND TIME                Modified
+                            (#1201)
+                         DATE/TIME RECORDED                 Modified
+                            (#1205)
+                         TIMESTAMP (#1221)                    New
+                         EVENT INFORMATION                  Modified
+                            SOURCE (#1301)
+                         DISCLOSED TO (multiple               New
+                            (field #820, sub-file
+                            #9000010.1182)
+                         AGENCY (#.01) of the                 New
+                            DISCLOSED TO sub-file
+                            (#9000010.1182)
+                         DISCLOSURE DATE/TIME                 New
+                            (#.02) of the       
+                            DISCLOSED TO sub-file 
+                            (#9000010.1182)
+  
+ IMMUNIZATION LOT        LOT NUMBER (#.01)                  Modified
+ (#9999999.41)           MANUFACTURER (#.02)                Modified
+                         VACCINE (#.04)                     Modified
+                         ASSOCIATED VA FACILITY               New
+                            (#.1)
+  
+ V IMMUNIZATION
+ DELETED (#9000080.11)   IMMUNIZATION (#.01)                  New
+                         PATIENT NAME (#.02)                  New
+                         VISIT (#.03)                         New
+                         SERIES (#.04)                        New
+                         LOT (#.05) )                         New
+                         REACTION (#.06)                      New
+                         CONTRAINDICATED (#.07)               New
+                         DOSE OVERRIDE (#.08)                 New
+                         INJECTION SITE (#.09)                New
+                         VOLUME (#.11)                        New
+                         DATE OF VAC INFO STATEMENT (#.12)    New
+                         CREATED BY V CPT ENTRY (#.13)        New
+                         VAC ELIGIBILITY (#.14)               New
+                         IMPORT FROM OUTSIDE REGISTRY         New
+                            (#.15)
+                         NDC (#.16)                           New
+                         ADMINISTRATIVE NOTES (#1)            New
+                         VIS OFFERED/GIVEN TO PATIENT
+                            (multiple field #2, sub-file 
+                            #9000080.112)                     New
+                         VIS OFFERED/GIVEN TO PATIENT 
+                            (#.01) of the VIS OFFERED/GIVEN 
+                            TO PATIENT sub-file 
+                            (#9000080.112)                    New
+                         DATE VIS OFFERED/GIVEN (#.02) of 
+                            the VIS OFFERED/GIVEN TO PATIENT
+                            sub-file (#9000080.112)           New
+                         OTHER DIAGNOSIS (multiple field #3,
+                            sub-file #9000080.113)            New
+                         OTHER DIAGNOSIS (#.01) of the
+                            OTHER DIAGNOSIS sub-file 
+                            (#9000080.113)                    New
+                         REMARKS (#1101)                      New
+                         EVENT DATE AND TIME (#1201)          New
+                         ORDERING PROVIDER (#1202)            New
+                         CLINIC (#1203)                       New
+                         ENCOUNTER PROVIDER (#1204)           New
+                         DATE/TIME RECORDED (#1205)           New
+                         IMMUNIZATION DOCUMENTER (#1206)      New
+                         LOT NUMBER (#1207)                   New
+                         PARENT (#1208)                       New
+                         EXTERNAL KEY (#1209)                 New
+                         OUTSIDE PROVIDER NAME (#1210)        New
+                         ANCILLARY POV (#1213)                New
+                         USER LAST UPDATE (#1214)             New
+                         ORDERING LOCATION (#1215)            New
+                         DATE/TIME ENTERED (#1216)            New
+                         ENTERED BY (#1217)                   New
+                         DATE/TIME LAST MODIFIED (#1218)      New
+                         LAST MODIFIED BY (#1219)             New
+                         WARNING ACKNOWLEDGED (#1220)         New
+                         EVENT INFORMATION SOURCE (#1301)     New
+                         ROUTE OF ADMINISTRATION (#1302)      New
+                         SITE OF ADMINISTRATION (BODY) 
+                            (#1303)                           New
+                         PRIMARY DIAGNOSIS (#1304)            New
+                         DOSE (#1312)                         New
+                         DOSAGE (#1312.5)                     New
+                         DOSE UNITS (#1313)                   New
+                         SNOMED CT (multiple field #2601,
+                            sub-file #9000080.1126)           New
+                         SNOMED CT (#.01) of the SNOMED CT
+                            sub-file (#9000080.1126)          New
+                         SNOMED PREFERRED TERM (#.019) of
+                            the SNOMED CT sub-file 
+                            (#9000080.1126)                   New
+                         LOINC CODES (multiple field #2701,
+                            sub-file #9000080.1127)           New
+                         LOINC CODES (#.01) of the LOINC
+                            CODES sub-file (#9000080.1127)    New
+                         LOINC TEXT (#.019) of the LOINC 
+                            CODES sub-file (#9000080.1127)    New 
+                         RESULTS (#1401)                      New
+                         READING (#1402)                      New
+                         DATE/TIME READ (#1403)               New
+                         READER (#1404)                       New
+                         READING RECORDED (#1405)             New
+                         HOURS READ POST-INOCULATION
+                            (#1406)                           New
+                         READING COMMENT (#1501)              New
+                         WARNING OVERRIDE REASON
+                            (#1601)                           New
+                         EDITED FLAG (#80101)                 New
+                         AUDIT TRAIL (#80102)                 New
+                         COMMENTS (#81101)                    New
+                         VERIFIED (#81201)                    New
+                         PACKAGE (#81202)                     New
+                         DATA SOURCE (#81203)                 New
+                         DISCLOSED TO (multiple               New
+                            (field #820, sub-file
+                            #9000080.1182)
+                         AGENCY (#.01) of the                 New
+                            DISCLOSED TO sub-file
+                            (#9000080.1182)
+                         DISCLOSURE DATE/TIME                 New
+                            (#.02) of the       
+                            DISCLOSED TO sub-file 
+                            (#9000080.1182)
+                         DELETED BY (#88001)                  New
+                         DATE/TIME DELETED (#88002)           New
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                      Type            New/Modified/Deleted
+ -----------                      ----            -------------------- 
+ PXV IMM DISCLOSURE REPORT        Run Routine     New
+  
+  
+ Parameters Associated:
+  
+ Parameter Definition Name        New/Modified/Deleted
+ -------------------------        --------------------
+ PXV SK DAYS BACK                 New
+  
+  
+ Protocols Associated:
+  
+ Protocol Name        New/Modified/Deleted
+ -------------        --------------------
+  
+  
+ RPCs Associated:
+  
+ RPC                      New/Modified/Deleted
+ -------------            --------------------
+ PXVIMM ICR LIST          Modified
+ PXVIMM IMM DETAILED      Modified
+ PXVIMM IMM DISCLOSURE    New
+ PXVIMM IMM LOT           Modified
+ PXVIMM VIMM DATA         New
+ PXVSK DEF SITES          New
+ PXVSK SKIN SHORT LIST    New
+ PXVSK V SKIN TEST LIST   New
+ PX SAVE DATA             Modified
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------  
+ N/A 
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Cleveland, OH
+ Heartland-East HCS, MO
+ San Antonio, TX
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                          File Name                FTP Mode
+ ------------------------------------------------------------------
+ Patient Care Encounter (PCE)   PX_1_UM_R1016.PDF        (binary)
+    V. 1.0 User Manual
+ Patient Care Encounter (PCE)   PX_1_TM_R1016.PDF        (binary)
+    V.1.0 Technical Manual
+ VIMM Patch PX*1*216            PX_1_P216_IG.PDF         (binary)
+    Installation Guide 
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The pre-installation process deletes the trigger cross-reference from the
+ EVENT DATE AND TIME (#1201) field of the V IMMUNIZATION (#9000010.11)
+ file. The trigger will be moved to the IMMUNIZATION (#.01) field. The
+ trigger sets the DATE/TIME RECORDED (#1205) field.
+  
+ The post-installation process sets a node in the V IMMUNIZATION data
+ dictionary (DD) that prevents a user from being able to purge data audits
+ for the V IMMUNIZATION file.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ Patch PX*1*215 must be installed before installing patch PX*1*216.
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch should be installed during a period of minimal system activity,
+ preferably with users off the system. Installation time is expected to be
+ less than 10 minutes.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     # (PX*1.0*216):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     d. Print Transport Global - This option will allow you to view the
+        components of the KIDS build.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter PX*1.0*216.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+     Install? YES//'
+     Answer NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+     Answer NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+     Answer NO.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**[Patch List]**;Aug 12, 1996;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXAPIDEL
+    Before: B56745766   After: B57912132  **1,9,22,130,168,197,216**
+Routine Name: PXCEVFI1
+    Before: B33198888   After: B71666657  **23,73,112,136,143,124,184,
+                                           185,210,215,216**
+Routine Name: PXKFIMM
+    Before:  B5142444   After:  B5574555  **22,124,201,209,210,215,216**
+Routine Name: PXKMAIN
+    Before: B55424847   After: B56711884  **22,59,73,88,69,117,130,124,
+                                           174,164,210,215,216**
+Routine Name: PXKMAIN1
+    Before: B41644781   After: B56560479  **22,73,124,178,210,216**
+Routine Name: PXPXRM
+    Before:B125590932   After:B156738878  **119,199,210,215,216**
+Routine Name: PXRHS03
+    Before: B56157465   After: B59630785  **13,210,216**
+Routine Name: PXRPC
+    Before:B156917264   After:B167038742  **200,209,210,215,216**
+Routine Name: PXVDIS
+    Before:       n/a   After: B48092848  **216**
+Routine Name: PXVEDIT
+    Before:  B3872063   After: B16872011  **210,216**
+Routine Name: PXVINV
+    Before: B25607408   After: B28479638  **210,216**
+Routine Name: PXVP216
+    Before:       n/a   After:  B1234583  **216**
+Routine Name: PXVRPC1
+    Before: B70359613   After: B78134304  **215,216**
+Routine Name: PXVRPC4
+    Before:B131321819   After:B138502412  **215,216**
+Routine Name: PXVRPC5
+    Before: B35105697   After: B35949423  **215,216**
+Routine Name: PXVRPC7
+    Before:       n/a   After:B131688794  **216**
+Routine Name: PXVRPC7A
+    Before:       n/a   After: B60762590  **216**
+Routine Name: PXVRPC8
+    Before:       n/a   After: B30970984  **216**
+Routine Name: PXVRPC9
+    Before:       n/a   After:  B7189011  **216**
+Routine Name: PXVUTIL
+    Before: B13284181   After: B20844823  **201,210,215,216**
+Routine Name: PXVXR
+    Before: B13167191   After: B24761557  **210,216**
+Routine Name: PXVZRT
+    Before: B82546869   After: B84727294  **206,215,216**
+ 
+Routine list of preceding patches: 197, 215
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 21, 2016
+Completed By:                               Date Completed: NOV 15, 2016
+Released By :                               Date Released : NOV 15, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

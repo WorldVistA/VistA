@@ -1,0 +1,129 @@
+$TXT Created by                 K at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 08/18/16 at 10:25
+=============================================================================
+Run Date: NOV 28, 2016                     Designation: EAS*1*122
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #115                      Status: Released
+                  Compliance Date: DEC 29, 2016
+=============================================================================
+
+
+Subject: UNDEFINED ERROR WHEN USING LTC BILLING CLOCK MAINTENANCE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses an issue with an Enrollment routine that is called 
+ when using the Integrated Billing (IB) option LTC Billing Clock
+ Maintenance [IBAEC LTC CLOCK EDIT].
+               
+ ASSOCIATED TICKET: 
+ ==================
+ 1) I6275652FY16 - While working on an issue with LTC Billing Clock an 
+                   error occurred
+  
+ ASSOCIATED NSR: 
+ ===============
+ N/A
+   
+ PARTICIPATING TEST SITES: 
+ =========================
+ Asheville VA Medical Center
+ VA Maine Healthcare Systems (Togus)
+  
+ TICKET OVERVIEW:
+ ================
+ 1) I6275652FY16 - While working on an issue with LTC Billing Clock an 
+                   error occurred 
+  
+    Problem:
+    --------
+    While using the LTC Billing Clock Maintenance [IBAEC LTC CLOCK EDIT] 
+    option a user entered "?" at the "Select PATIENT NAME:" prompt and
+    received an undefined error.
+  
+    Resolution:
+    -----------
+    Modified routine EASECU2 to allow users to perform a search 
+    using a single "?" or a double "??" as FileMan allows and not receive
+    an undefined error. Per current SAC Requirements, we have also updated
+    the routine in regards to DILOCKTM.
+  
+  
+ INSTALLATION INSTRUCTIONS: 
+ ==========================
+ This patch may be installed with users on the system, but it is
+ recommended that it be queued to run after normal business hours.
+   
+ Installation will take less than 2 minutes.
+  
+   Note: Routine EASECU2 was previously updated by patch EAS*1*5.  This 
+   was before patch installs were recorded in the INSTALL (#9.7) file.
+   Therefore, this patch description does not include the "Associated
+   Patches" line.
+  
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter EAS*1.0*122).      
+  
+         a. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         b. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+         c. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch 
+            is installed.
+         d. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates. 
+      
+      4. Use the Install Package(s) option and select the package 
+         EAS*1.0*122.
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install? NO//",
+         respond NO.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//", respond Yes.
+  
+         When prompted, 'Enter options you wish to mark as 'Out Of 
+         Order':', enter:
+              
+             LTC Billing Clock Maintenance [IBAEC LTC CLOCK EDIT]
+             
+  
+         When prompted, 'Enter protocols you wish to mark as 'Out Of
+         Order':', press Enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;ENROLLMENT APPLICATION SYSTEM;**[Patch List]**;Mar 15, 2001;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EASECU2
+    Before:  B4688841   After:  B5475515  **5,122**
+ 
+Routine list of preceding patches: 5
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 04, 2014
+Completed By:                               Date Completed: NOV 28, 2016
+Released By :                               Date Released : NOV 28, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

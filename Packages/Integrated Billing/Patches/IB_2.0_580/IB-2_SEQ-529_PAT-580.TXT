@@ -1,0 +1,152 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 11/15/16 at 09:51
+=============================================================================
+Run Date: NOV 21, 2016                     Designation: IB*2*580
+Package : IB - INTEGRATED BILLING             Priority: EMERGENCY
+Version : 2       SEQ #529                      Status: Released
+                  Compliance Date: NOV 25, 2016
+=============================================================================
+
+
+Subject: COST-BASED & INTER-AGENCY CHARGE RATES FOR POLYTRAUMA FIX
+
+Category: 
+  - Routine
+  - PATCH FOR A PATCH
+
+Description:
+============
+
+ This patch will correct the cost-based and inter-agency charge rates for
+ Polytrauma and PM&RS (Physical Medicine & Rehabilitation Services), which
+ were inadvertently reversed with the release of IB*2.0*570.
+  
+  
+ ASSOCIATED TICKET:
+ ==================
+ 1. I11242719FY17 Rates in Vista appear to be reversed for certain 
+                  categories
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+    
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Pittsburgh HCS
+ VA Caribbean HCS (San Juan)
+ VA Nebraska Western Iowa HCS AKA VA Central Plains HCS
+  
+    
+ TICKET OVERVIEW:
+ ================
+ 1. I11242719FY17 Rates in Vista appear to be reversed for certain 
+                  categories
+  
+ Problem:
+ --------
+ The cost-based and inter-agency charge rates for Polytrauma and 
+ PM&RS appear to be reversed in the Enter/Edit Billing Information 
+ [IB EDIT BILLING INFO] option.
+  
+  
+ Resolution:
+ -----------
+ The post-init routine IB20P580 will correct the cost-based and 
+ inter-agency charge rates for Polytrauma and PM&RS with an effective  
+ date of 07/07/2016 in the CHARGE ITEM file (#363.2).
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes. 
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+   
+ 2.   START UP KIDS 
+      -------------
+      Start up the Kernel Installation and Distribution System Menu 
+      [XPD MAIN]: 
+    
+              Edits and Distribution ...  
+              Utilities ... 
+              Installation ...
+  
+     Select Kernel Installation & Distribution System Option: Installation 
+                                                              ------------
+              Load a Distribution 
+              Print Transport Global 
+              Compare Transport Global to Current System 
+              Verify Checksums in Transport Global
+              Install Package(s) 
+              Restart Install of Package(s) 
+              Unload a Distribution
+              Backup a Transport Global 
+    
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*580):
+     
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+    
+ 4.   Select Installation Option: Install Package(s)
+     
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+    
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P580.
+  
+ 6.   Example of successful installation.
+  
+    IB*2.0*580 Post-Install .....
+   
+ >> 4 Cost Based/Interagency for Polytrauma/PM&RS charge items updated (#363.2).
+    
+    IB*2.0*580 Post-Install Complete
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 38
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P580
+    Before:       n/a   After: B10668907  **580**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 27, 2016
+Completed By:                               Date Completed: NOV 21, 2016
+Released By :                               Date Released : NOV 21, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

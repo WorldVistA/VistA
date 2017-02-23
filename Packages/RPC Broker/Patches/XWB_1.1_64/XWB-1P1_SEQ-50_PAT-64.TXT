@@ -1,0 +1,284 @@
+$TXT Created by                  KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Friday, 08/19/16 at 11:15
+=============================================================================
+Run Date: NOV 18, 2016                     Designation: XWB*1.1*64
+Package : XWB - RPC BROKER                    Priority: Mandatory
+Version : 1.1        SEQ #50                    Status: Released
+                  Compliance Date: DEC 19, 2016
+=============================================================================
+
+Associated patches: (v)XWB*1.1*34  <<= must be installed BEFORE `XWB*1.1*64'
+                    (v)XWB*1.1*53  <<= must be installed BEFORE `XWB*1.1*64'
+                    (v)XWB*1.1*57  <<= must be installed BEFORE `XWB*1.1*64'
+                    (v)XWB*1.1*62  <<= must be installed BEFORE `XWB*1.1*64'
+                    (v)XU*8*638    <<= must be installed BEFORE `XWB*1.1*64'
+                    (v)XU*8*655    <<= must be installed BEFORE `XWB*1.1*64'
+
+Subject: RPC BROKER IPv6 AND SECURITY UPDATES
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch makes changes in Remote Procedure Call (RPC) Broker listener 
+ processes to support emerging technologies and make bug fixes. These 
+ changes include:
+  
+   1. IPv4/IPv6 Dual-Stack Implementation: This patch is one in a series of
+      patches to support the VA's transition from IPv4 to IPv6. This patch
+      updates one test routine where an IPv4 address format was 
+      hard-coded. This has been replaced with a call to an IPv4/IPv6 
+      dual-stack Application Programmer Interface (API). The modified
+      routine is not used in production, but can be used by developers to
+      test the RPC Broker listener.
+   2. 2-Factor Authentication: VAIQ# 7613595 "Mandatory Use of PIV 
+      Multifactor Authentication to VA Information System" dated June 30,
+      2015, requires all VA IT systems to be PIV-enabled and requires the
+      use of multifactor authentication when using a local, network, or
+      remote account to log into a VA information system. This patch makes
+      the "XUS IAM BIND USER" RPC available to all uses in any context to
+      implement binding of the VistA user account to the user's Active
+      Directory account using the Identity and Access Management (IAM)
+      Binding application.
+   3. RPC Availability and Documentation: The availability of Remote 
+      Procedure Calls (RPCs) "XWB ARE RPCS AVAILABLE" (ICR #3012) and "XWB
+      GET VARIABLE VALUE" (ICR #1629) have been changed from 'PUBLIC' to
+      'SUBSCRIPTION' due to security concerns. Kernel RPC Broker developers
+      need to know which external packages are using these RPCs as
+      additional security is added in future patches. Future testing will
+      be conducted with all subscribed external packages whenever changes
+      are made to the RPCs. Also, RPCs "XWB CREATE CONTEXT" (ICR #1751) and
+      "XWB IS RPC AVAILABLE" (ICR #3011) have had their descriptions
+      updated to match current documentation practices.
+   4. Routine Documentation: Several routines have had comment line #3 
+      added or updated to reflect VA policy for routines that should not be
+      modified.
+   5. Use of XTMP Global: The ^XTMP global was specifically designed to 
+      persist data from one process to another, but was being killed when
+      RPC Broker transmitted the return data array. This patch changes the
+      SNDDATA^XWBRW API to not kill the ^XTMP global according to current
+      VA software design policy.
+  
+  
+ Blood Bank Team Coordination
+ ============================
+   
+ Clearance - 06/16/16
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XWB*1.1*64 contains 
+ changes to a package referenced in ProPath standard titled BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA
+ Blood Bank software design safeguards or safety critical elements
+ functions.
+   
+ RISK ANALYSIS: Changes made by patch XWB*1.1*64 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)  Field Name (Number)              New/Modified/Deleted
+ ------------------  -------------------              --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                Type                      New/Modified/Deleted
+ ---------                ----                      -------------------- 
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type                      New/Modified/Deleted
+ -----------            ----                      -------------------- 
+ N/A
+  
+ Protocols Associated:
+ --------------------
+ N/A
+  
+ Security Keys Associated:
+ ------------------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name       Type    File Name (Number)   New/Modified/Deleted 
+ -------------       ----    ------------------   --------------------
+ N/A
+  
+ Remote Procedure Calls Associated:
+  
+ RPC Name                 Type             New/Modified/Deleted
+ --------                 ----             --------------------
+ XWB ARE RPCS AVAILABLE   ARRAY            MODIFIED
+ XWB CREATE CONTEXT       SINGLE VALUE     MODIFIED
+ XWB GET VARIABLE VALUE   SINGLE VALUE     MODIFIED
+ XWB IS RPC AVAILABLE     SINGLE VALUE     MODIFIED
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ SDM Ticket(s) & Overview
+ ---------------------------
+  I5511189FY15 INC000000758490 RPC Broker Support for IPv6
+  I5560725FY15 INC000000469478 XTMP Global entry killed in error
+  
+ 1. I5511189FY15 INC000000758490 RPC Broker Support for IPv6
+  
+ Problem:
+ -------
+ Currently, all of VA's internal and external infrastructure and 
+ applications are set to IPv4 as the default transport mode.  The format 
+ is different between IPv4 and IPv6.  Kernel and several other 
+ applications process IP addresses in routines and need to store the IP 
+ addresses in files.  Each of these fields will need to change their field 
+ definition (data dictionary) to handle the longer IPv6 format.
+  
+ Resolution:
+ ----------
+ This patch uses Kernel APIs introduced in XU*8.0*605 to replace 
+ hard-coded IPv4 address handling in one routine.
+  
+  
+ 2. I5560725FY15 INC000000469478 XTMP Global entry killed in error
+  
+ Problem:
+ -------
+ The ^XTMP global was specifically designed to persist data from one 
+ process to another, but it is being killed when RPC Broker transmits the 
+ return array and must be rebuilt if the data is to be used by subsequent 
+ RPC calls.
+  
+ Resolution:
+ ----------
+ This patch changes the SNDDATA^XWBRW API to not kill the ^XTMP global 
+ when the return array is transmitted.
+  
+  
+ Test Sites: (Patch Tracking Message #N/A)
+ ----------
+ Field test waiver: No field testable components included in patch.
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ The most up-to-date VA RPC Broker end-user documentation is available on 
+ the VHA Software Document Library (VDL) at the following Internet Website:
+      https://www.domain.ext/vdl/application.asp?appid=23
+   
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+  
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch can be queued for installation.  TaskMan does not have to be 
+ stopped, HL7 filers do not need to be stopped, and users may be on the
+ system.  There are no menu options or protocols that need to be disabled.
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system.  This patch should 
+ take less than 1 minute to install.  It may be queued for installation.
+  
+ There are no options that need to be disabled.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XWB*1.1*64):
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer "NO".   
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer "NO".
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer "NO".
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' answer "0" to 
+     "60" or "Q" (to queue the output to a printer).
+  
+  
+ Post-Installation Instructions
+ -----------------------------
+ There are no post-installation tasks to complete.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.1;RPC BROKER;**[Patch List]**;Mar 28, 1997;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XWBLIB
+    Before: B10132147   After: B12517102  **6,10,26,35,64**
+Routine Name: XWBM2MC
+    Before: B58578138   After: B58791461  **28,34,64**
+Routine Name: XWBPRS
+    Before: B75006565   After: B75191540  **35,43,46,57,64**
+Routine Name: XWBRM
+    Before: B16862663   After: B17663584  **28,45,62,64**
+Routine Name: XWBRW
+    Before:  B9161692   After:  B9339344  **35,49,64**
+Routine Name: XWBSEC
+    Before:  B5680874   After:  B7994154  **3,6,10,35,53,64**
+Routine Name: XWBTCP
+    Before: B48888024   After: B52455677  **1,9,35,64**
+Routine Name: XWBTCPM
+    Before: B56306340   After: B57009144  **35,43,49,53,64**
+Routine Name: XWBTCPM1
+    Before:  B7265734   After:  B7816209  **35,64**
+Routine Name: XWBTCPMT
+    Before: B11304181   After: B11606585  **43,49,53,64**
+ 
+Routine list of preceding patches: 34, 53, 57, 62
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 20, 2014
+Completed By:                               Date Completed: NOV 16, 2016
+Released By :                               Date Released : NOV 18, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

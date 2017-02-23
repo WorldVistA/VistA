@@ -1,0 +1,421 @@
+
+=============================================================================
+Run Date: DEC 12, 2016                     Designation: PSB*3*87
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #76                      Status: Released
+                  Compliance Date: JAN 12, 2017
+=============================================================================
+
+Associated patches: (v)PSB*3*73    <<= must be installed BEFORE `PSB*3*87'
+
+Subject: CASDDPE MRR ENHANCEMENTS FOR BCBU
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ ******************************* ATTENTION ********************************
+   
+  Clinical Ancillary Services (CAS) Development-Delivery of Pharmacy 
+  Enhancements (DDPE) VA Inpatient Medication Administration - Transdermal
+  enhancement includes 5 patches which must be installed in the following
+  order:
+  
+   1.      PSS*1*191   Released March 2016
+   2.      PSJ*5*315   Released August 2016
+   3.      PSB*3*83    Main BCMA patch  
+   4.      OR*3*417    BCMA support patch
+   5.      PSB*3*87    BCBU
+  
+  This enhancement also includes a new Graphical User Interface (GUI)
+  executable, BCMA GUI PSB3_P083.EXE. Installation of this GUI is required
+  immediately after the KIDS install for the Patch to function.
+  
+  
+            ***  WARNING FOR ALL SITES CURRENTLY USING WMA  ***
+                   (Wireless Medication Administration)
+                             From CareFusion
+  
+    The below 15 VAMC sites should not install patch PSB*3*83 until the
+    site has confirmed they have received CareFusion's software update:
+    Pyxis Med Administration Verification VA v. 5.1
+   
+                     Bay Pines, FL
+                     Boise, ID
+                     Bonham, TX
+                     Brockton, MA
+                     Dallas, TX
+                     Danville, IL
+                     Kerrville, TX
+                     Little Rock, AR
+                     Loma Linda, CA
+                     Marion, IN
+                     Pittsburgh, PA
+                     Pittsburgh, PA-Heinz
+                     San Antonio, TX
+                     Topeka, KS
+                     West Roxbury, MA
+  
+   
+  Installation of BCMA Patch PSB*3.0*83 may cause your WMA application to
+  stop functioning as you would expect it to. In order for the WMA devices
+  to work properly with PSB*3.0*83 installed, you must contact CareFusion,
+  the WMA vendor, to obtain the most current version of the WMA software.
+  
+  Please test this patch thoroughly in your TEST environment before 
+  installing into PRODUCTION. If you encounter any issues with the WMA
+  application, please report them to CareFusion.
+  
+  
+  For retrieval and installation instructions for BCMA GUI, please see the
+  Client Installation Instructions section in patch PSB*3*83.
+  
+ **************************************************************************
+  
+ PSB*3*87 will enhance the BAR CODE MEDICATION ADMINISTRATION (BCMA) Backup
+ System (BCBU) to support Medications Requiring Removal (MRR). The Backup
+ System will be able to store the Removal times and duration of
+ administration associated with each medication order.
+  
+ This patch will add two new fields to the ORDER NUMBER (#53.702) 
+ sub-file  under the BCMA BACKUP DATA (#53.7) file.  The two new fields 
+ are the REMOVE TIMING (#7.4) field and DURATION OF ADMINISTRATION (#7.5) 
+ field. These fields implement changes that will support enhancements to 
+ Medical Administration Record(s) MAR reports in the BCBU application.
+  
+ The MAR reports will print each Scheduled Removal times for MRR 
+ medications in the Grid in the same manner as Admin times.  The Remove
+ times will appear below the current scheduled Administration time in the
+ Grid and will be separated by the Label "Remove" in the times column.  
+ Asterisks will print in the body of the Grid in each Removal action box
+ for removal times that are not valid per the Date in that column heading.
+  
+ In the BCMA BACKUP DATA (#53.7) file, under the ORDER NUMBER (#53.702) 
+ sub-file, there are three new fields that have been added to the MED LOG 
+ DATE/TIME (#53.70213) multiple.  These new fields are ASSOC. MED LOG GIVE 
+ DATE/TIME (#4), ASSOC. MED LOG GIVE ENTERED BY (#5) and ASSOC. MED LOG 
+ GIVE STATUS MSG (#6). These fields are being added for saving associated 
+ Give information when a Remove action has occurred.  This allows the MAR 
+ reports and also the Display Order reports to print the Med Log history 
+ and show both the Removals and their associated Gives.
+  
+ The MAR reports will also no longer display the Order number of the
+ medications being administered.
+  
+ Please refer to the BCMA Backup System (BCBU) Installation Guide for 
+ PSB*3*87 for installation details.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+                                                                
+                                                               New/Modified
+ File Name (Number)          Field Name (Number)               /Deleted
+ --------------------------- -------------------------------   ------------
+ BCMA BACKUP DATA (#53.7)    ORDER NUMBER (#9)                   Modified
+   ORDER NUMBER (#53.702)    REMOVE TIMING (#7.4)                  New
+                             DURATION OF ADMINISTRATION (#7.5)     New
+     MED LOG DATE/TIME       ASSOC. MED LOG GIVE DATE/TIME (#4)    New
+              (#53.70213)    ASSOC. MED LOG GIVE ENTERED BY (#5)   New
+                             ASSOC. MED LOG GIVE STATUS MSG (#6)   New
+  
+  
+ Forms Associated:
+                                                                  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+     
+ Option Name                          Type          New/Modified/Deleted
+ ------------------------------     -----------     --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name            New/Modified/Deleted
+ ----------------         -------------------- 
+ N/A
+  
+  
+ Remote Procedure Calls Associated:
+  
+ RPC Name                 New/Modified/Deleted
+ -------------------      --------------------      
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)             New/Mod/Del
+ -------------      ----      ------------------             -----------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR 20141012: Pharmacy Safety Enhancements
+ NSR 20120312: Create Reminder Mechanism to Remove Transdermal 
+               Medications
+  
+   
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ PSPO00002876: National BCMA contingency (BCBU) shows order number that is 
+               confused with units to be administered.
+ PSPO00003142: Contingency data remains inaccurate - missing medications on
+               all Clinic patients.
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ 1. INC000001275373 - BCMA Contingency Plan - Other BCBU Issue:
+                      remove 'Order:' section from MAR
+       I9846294FY16(d) 
+  
+ 2. I6768353FY16    - BCBU - One contingency computer incorrectly reporting
+                      Missed Meds.
+  
+  
+ REMEDY OVERVIEW
+ ---------------
+ 1. INC000001275373 - BCMA Contingency Plan - Other BCBU Issue: remove
+                      'Order:' section from MAR.
+  
+ Problem:
+ --------  
+ The BCBU MAR currently displays the order number for the 
+ medication being administered in the 'Order:' section of the
+ report.  At times the order number contains the letter 'U' which
+ has caused confusion regarding the amount of units to give to a
+ patient. 
+   
+ Resolution:
+ -----------
+ Routine ALPBFRM1 has been modified to remove the 'Order:'
+ section from the BCBU MAR.  The medication type will remain on
+ the same line.  This change will only correct future medication
+ orders on the BCBU MAR that are done after the installation of
+ this patch.
+  
+  
+ 2. I6768353FY16 - BCBU - One contingency computer incorrectly reporting 
+                   Missed Meds.
+  
+ Problem:
+ --------  
+ The BCBU divisional initialization option [PSB BCBU INIT WRKSTN DIV] has a
+ defect which is only affecting clinic orders in BCBU.  A site found that
+ the data that is reflected in BCBU was determined to be incorrect for all
+ patients listed in the clinic at the time.  It took sending single patient
+ updates using the [PSB BCBU INIT SINGLE PT] option in BCBU, some of which
+ required multiple single patient initializations, to bring the data
+ current.  
+  
+ Resolution:
+ -----------
+ The BCBU routines ALPBIN and ALPBIND were updated to verify if a clinic 
+ is within a particular division.
+  
+  
+ Test Sites:
+ -----------
+ HC NETWORK UPSTATE NY
+ ST. CLOUD, MN -VAMC
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Files can be obtained from the ANONYMOUS.SOFTWARE directory at one of the
+ OI Field Offices. The preferred method is to retrieve the file using
+ Secure File Transfer Protocol (SFTP) from DOWNLOAD.VISTA.DOMAIN.EXT, which
+ will transmit the file from the first available server. Alternatively,
+ sites may elect to retrieve the file from a specific OI Field Office.
+  
+     OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+     Albany              DOMAIN.EXT        
+     Hines               DOMAIN.EXT         
+     Salt Lake City      DOMAIN.EXT          
+  
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:   http://www4.domain.ext/vdl/
+  
+ File Description            File Name                             FTP Mode
+ --------------------------------------------------------------------------
+ Installation Guide - BCMA Backup System VistA
+                             PSB_3_P87_BCBU_IG.PDF                  binary
+  
+  
+ Patch Installation: 
+  
+ Pre-Installation Overview
+ ------------------------------
+ None. 
+  
+  
+ Patch retrieval Instructions: 
+ =============================
+ 1. Retrieve the KIDS distribution host file. This patch will be
+    distributed in a host file. The name of the host file is:
+  
+         PSB_3_87.KID
+     
+     Files can be obtained from the ANONYMOUS.SOFTWARE directory at one of
+     the OI Field Offices. The preferred method is to retrieve the file
+     using Secure File Transfer Protocol (SFTP) from
+     DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first
+     available server. Alternatively, sites may elect to retrieve the file
+     from a specific OI Field Office.
+   
+     OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+     Albany              DOMAIN.EXT        
+     Hines               DOMAIN.EXT         
+     Salt Lake City      DOMAIN.EXT          
+  
+  
+ Installation Instructions:
+ ========================== 
+  
+ *** Install must be performed on the Vista Server and PC Workstations ***
+  
+ Do not queue this patch to install at a later time nor install this patch
+ while BCMA users are on the system. Installation will take no longer than
+ 5 minutes.
+  
+ Suggested time to install: non-peak requirement hours.
+  
+   1. From the Kernel Installation & Distribution System menu, select
+      the LOAD DISTRIBUTION option and load the host file PSB_3_87.KID  
+   
+   2. From the Kernel Installation & Distribution System Menu, select the 
+      INSTALLATION Menu. From this menu, you may elect to use the following
+      options. When prompted for the INSTALL NAME enter PSB*3*87.
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSB*3.0*87.
+  
+    5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion 
+       of Install? NO//', respond NO.
+  
+    6. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+  
+    7. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ It is required that the Backup system Workstations be re-initialized
+ after the install of this patch.  It is also recommended to limit the 
+ number of Workstations being initialized to no more than 4 at a time, so
+ as to limit the impact to your Networks speed.
+  
+ Follow the instructions in the BCMA Backup System (BCBU) Installation
+ Guide and use one of the below VistA menu options, depending on your
+ sites configuration for the BCMA Backup System.
+  
+  
+ Select OPTION NAME:    PSB BCBU VISTA MAIN     BCMA Backup System (VISTA) 
+  
+ PSB BCBU VISTA MAIN BCMA Backup System (VISTA)
+  
+     DFT    Default Workstation Initialize
+     DIV    Divisional Workstation Initialize
+     USR    Initialize a Backup Workstation with BCMA Users
+  
+  
+  
+ Uninstall Instructions
+ ----------------------
+ This procedure assumes that a backup copy of the routines was done during 
+ the installation process.
+ Only routines are backed-up; other components such as DDs, templates, 
+ protocols, options or HL7 components are not backed up. 
+  
+ To back out the patch, restore the backup copy saved in the MailMan 
+ message. This action will restore the routines to the state before 
+ installing the PSB*3*87 patch.
+  
+ Note: In order to completely back out all components, development will 
+ make a patch available that will restore non-routine components to 
+ pre-PSB*3*87 state.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 22
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ALPBFRM1
+    Before: B66421112   After: B93953970  **8,48,69,59,73,87**
+Routine Name: ALPBFRM2
+    Before: B28811819   After: B35366898  **8,87**
+Routine Name: ALPBFRMU
+    Before: B15157089   After: B13574860  **8,87**
+Routine Name: ALPBHL1U
+    Before: B69918866   After: B87587116  **7,69,59,73,87**
+Routine Name: ALPBIN
+    Before: B15950829   After: B18076656  **8,73,87**
+Routine Name: ALPBIND
+    Before: B42568406   After: B60295081  **8,73,87**
+Routine Name: ALPBINP
+    Before: B74330876   After: B99838805  **8,37,73,87**
+ 
+Routine list of preceding patches: 73
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 19, 2015
+Completed By:                               Date Completed: DEC 08, 2016
+Released By :                               Date Released : DEC 12, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included
