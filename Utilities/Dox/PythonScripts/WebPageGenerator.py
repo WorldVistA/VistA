@@ -827,13 +827,15 @@ class WebPageGenerator:
             fieldNoTxt = "<a name=\"%s\">%s</a>" % (fieldNo, fieldNo)
             fieldRow = [fieldNoTxt, value.getName(), location, value.getTypeName()]
             fieldDetails = ""
+            if value.__getattribute__("_isRequired"):
+                fieldDetails += "<div style='text-align: center'><b>************************REQUIRED FIELD************************</b></div>"
             if value.isSetType():
                 # nice display of set members
                 setIter = value.getSetMembers()
-                fieldDetails = generateHtmlListData(setIter)
+                fieldDetails += generateHtmlListData(setIter)
             elif value.isFilePointerType():
                 if value.getPointedToFile():
-                    fieldDetails = (getFileManFileHypeLink(value.getPointedToFile()))
+                    fieldDetails += (getFileManFileHypeLink(value.getPointedToFile()))
             elif value.isVariablePointerType():
                 fileManFiles = value.getPointedToFiles()
                 for pointedToFile in fileManFiles:
@@ -841,7 +843,7 @@ class WebPageGenerator:
             elif value.isSubFilePointerType():
                 filePointer = value.getPointedToSubFile()
                 if filePointer:
-                    fieldDetails = getFileManSubFileHypeLinkByName(filePointer.getFileNo())
+                    fieldDetails += getFileManSubFileHypeLinkByName(filePointer.getFileNo())
             # logic to append field extra details here
             fieldDetails += self.__generateFileManFieldPropsDetailsList__(value)
             fieldRow.append(fieldDetails)
