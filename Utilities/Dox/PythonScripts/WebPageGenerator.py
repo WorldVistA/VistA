@@ -217,6 +217,8 @@ find the routine/global via
 def getGlobalHtmlFileNameByName(globalName):
     return ("Global_%s.html" %
                         normalizeGlobalName(globalName))
+def getICRHtmlFileName(icrEntry):
+    return ("http://code.osehra.org/vivian/files/ICR/ICR-%s.html" % icrEntry["NUMBER"])
 def getGlobalHtmlFileName(globalVar):
     if globalVar.isSubFile():
         return getFileManSubFileHtmlFileNameByName(globalVar.getFileNo())
@@ -225,6 +227,21 @@ def getGlobalDisplayName(globalVar):
     if globalVar.isFileManFile():
         return "%s(#%s)" % ( globalVar.getFileManName(), globalVar.getFileNo() )
     return globalVar.getName()
+def getICRDisplayName(icrEntry):
+    outString = "ICR Entry: %s <br><ul>" % (icrEntry["NUMBER"])
+    if "TYPE" in icrEntry:
+      outString +="<li>TYPE: %s</li>" % (icrEntry["TYPE"])
+      if icrEntry["TYPE"] == "Routine":
+        if "ROUTINE" in icrEntry:
+          outString += "<li>Routine Called: %s</li>" % (icrEntry['ROUTINE'])
+      if icrEntry["TYPE"] == "File":
+        if "GLOBAL ROOT" in icrEntry:
+          outString += "<li>Global Ref Called: %s</li>" % (icrEntry["GLOBAL ROOT"])
+    if "STATUS" in icrEntry:
+      outString +="<li>Status: %s</li>" % (icrEntry["STATUS"])
+    if "USAGE" in icrEntry:
+      outString +="<li>Usage: %s</li></ul>" % (icrEntry["USAGE"])
+    return outString
 # FileMan File (Global) related Functions
 def getFileManFileHypeLink(GlobalVar):
     if not GlobalVar.isFileManFile():
@@ -468,6 +485,22 @@ class WebPageGenerator:
         for line in self._source_header:
             outputFile.write(line)
 
+
+    def queryICRInfo(self, type , field, val):
+      icrList = []
+      #  Find entries that have a certain top-level parameter
+      #
+      #  example call queryICRInfo("ROUTINE","ROUTINE","SDAM1")
+      #  Would return all "ROUTINE" types where the "ROUTINE" field equals 'SDAM1'
+      #
+      for icrEntry in self._crossRef._icrJson:
+        if "TYPE" in icrEntry.keys():
+          if (icrEntry["TYPE"] == type) or (type == "*"):
+            if field in icrEntry.keys():
+              if re.match(re.escape(val),icrEntry[field], re.IGNORECASE):
+                icrList.append(icrEntry)
+      return icrList
+
 #===============================================================================
 # Template method to generate the web pages
 #===============================================================================
@@ -705,9 +738,11 @@ class WebPageGenerator:
                     writeGenericTablizedData(infoHeader, itemList, outputFile)
                     writeSectionHeader("Description", "Desc", outputFile)
                     writeListData(globalVar.getDescription(), outputFile)
-                if globalName in self._crossRef._icrJson:
+
+                icrList = self.queryICRInfo("File", "GLOBAL ROOT", globalName[1:])
+                if icrList:
                    writeSectionHeader("DBIA/ICR Connections","DBIA/ICR Connections",outputFile)
-                   self.generateGlobalICRSection(self._crossRef._icrJson[globalName],outputFile)
+                   self.generateGlobalICRSection(icrList,outputFile)
                 writeSectionHeader("Directly Accessed By Routines, Total: %d" %
                                     globalVar.getTotalNumberOfReferencedRoutines(),
                                     "Directly Accessed By Routines", outputFile)
@@ -966,12 +1001,12 @@ class WebPageGenerator:
       icrString = "<table style='max-width:80%;'><tbody>"
       icrString += "<tr><th class='IndexKey'>ICR LINK</th><th class='IndexKey'>Subscribing Package(s)</th><th class='IndexKey'>Fields Referenced</th><th class='IndexKey'>Description</th></th></tr>"
       for entry in icrInfo:
-        icrString += "<tr><td class='IndexValue'><a href='http://code.osehra.org/vivian/files/ICR-%s.html'>ICR #%s</a></td>" % (entry["NUMBER"],entry["NUMBER"])
+        icrString += "<tr><td class='IndexValue'><a href='%s'>ICR #%s</a></td>" % (getICRHtmlFileName(entry),entry["NUMBER"])
+        icrString += "<td class='IndexValue'>"
         if "SUBSCRIBING PACKAGE" in entry:
-          icrString += "<td class='IndexValue'>"
           for value in entry["SUBSCRIBING PACKAGE"]:
             icrString += "<li>"+getPackageHyperLinkByName(value["SUBSCRIBING PACKAGE"])+"</li>"
-          icrString += "</td>"
+        icrString += "</td>"
 
         icrString += "<td class='IndexValue'>"
         if ("GLOBAL REFERENCE" in entry):
@@ -1182,8 +1217,7 @@ class WebPageGenerator:
               (entry, extra) = line.replace("\t"," ").split(" ",1)
               if not extra[0]==";":
                 extra=''
-              if routineName in self._crossRef._icrJson:
-                icrJson = self._crossRef._icrJson[routineName]
+              icrJson = self.queryICRInfo("Routine", "ROUTINE", routineName)
               routine.addEntryPoint(entry, extra, icrJson)
             if justComment and lineNo > 1:
                continue
@@ -1733,7 +1767,7 @@ class WebPageGenerator:
     def generateIndividualPackagePage(self):
         indexList = ["Namespace", "Doc", "Dependency Graph",
                      "Package Dependency List", "Dependent Graph",
-                     "Package Dependent List", "FileMan Files",
+                     "Package Dependent List", "ICR Entries","FileMan Files",
                      "Non-FileMan Globals", "All Routines"]
         for packageName in self._allPackages.iterkeys():
             package = self._allPackages[packageName]
@@ -1765,7 +1799,16 @@ class WebPageGenerator:
                 outputFile.write("<p><h4><a href=\"http://www.va.gov/vdl/\">VA documentation in the VistA Documentation Library</a></h4>\n")
             self.generatePackageDependencySection(packageName, outputFile, True)
             self.generatePackageDependencySection(packageName, outputFile, False)
-            # seperate fileman files and non-fileman globals
+
+            # Find all ICR entries that have the package as a "CUSTODIAL Package"
+            icrList = self.queryICRInfo("*","CUSTODIAL PACKAGE", packageName)
+            writeSectionHeader("All ICR Entries: %d" % len(icrList),
+                               "ICR Entries",
+                               outputFile)
+            self.generateTablizedItemList(icrList, outputFile,
+                                          getICRHtmlFileName,
+                                          getICRDisplayName)
+            # separate fileman files and non-fileman globals
             fileManList, globalList = [], []
             allGlobals = package.getAllGlobals()
             for globalVar in allGlobals.itervalues():
@@ -1838,7 +1881,7 @@ class WebPageGenerator:
         outputList = converFunc(variables)
         writeGenericTablizedData(headerList, outputList, outputFile)
     def __getDataEntryDetailHtmlLink__(self, fileNo, ien):
-      return ("http://code.osehra.org/vivian/files/%s-%s.html" % (fileNo,
+      return ("http://code.osehra.org/vivian/files/%s/%s-%s.html" % (fileNo.replace('.','_'),fileNo,
             ien))
     def __convertRPCDataReference__(self, variables):
         return self.__convertRtnDataReference__(variables, '8994')
@@ -1948,8 +1991,12 @@ class WebPageGenerator:
     """ Read through all available ICR information and generate links for each found within it"""
     def __writeICRInformation__(self, icrVals):
       icrString = "<td class='indexvalue'>"
-      for val in icrVals:
-         icrString += "<li><a href='http://code.osehra.org/vivian/files/ICR-%s.html'>ICR #%s</a></li>" % (val,val)
+      for icrEntry in icrVals:
+        icrString += "<li><a href='%s'>ICR #%s</a></li>" % (getICRHtmlFileName(icrEntry),icrEntry["NUMBER"])
+        if "STATUS" in icrEntry:
+          icrString +="<ul><li>Status: %s</li></ul>" % (icrEntry["STATUS"])
+        if "USAGE" in icrEntry:
+          icrString +="<ul><li>Usage: %s</li></ul>" % (icrEntry["USAGE"])
       icrString += "</td>"
       return icrString
     """ Write the HTML for the Entry Point section"""
@@ -2363,20 +2410,8 @@ if __name__ == '__main__':
       icrJson = os.path.abspath(result.icrJson)
     parsedICRJSON = {}
     with open(icrJson, 'r') as icrFile:
-      for entry in json.load(icrFile):
-        if "TYPE" in entry.keys():
-          if entry["TYPE"] == "Routine":
-            if "ROUTINE" in entry.keys():
-              if not (entry["ROUTINE"] in parsedICRJSON):
-                parsedICRJSON[entry["ROUTINE"]]=[]
-              parsedICRJSON[entry["ROUTINE"]].append(entry)
-          if entry["TYPE"] == "File":
-            if "GLOBAL ROOT" in entry.keys():
-              entryName = "^"+entry["GLOBAL ROOT"][:-1] if entry["GLOBAL ROOT"][-1] == "(" else "^"+entry["GLOBAL ROOT"]
-              if not (entryName in parsedICRJSON):
-                parsedICRJSON[entryName]=[]
-              parsedICRJSON[entryName].append(entry)
-    crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(result,pkgDepJson,parsedICRJSON)
+      icrEntries =  json.load(icrFile)
+    crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(result,pkgDepJson,icrEntries)
     logger.info ("Starting generating web pages....")
     doxDir = os.path.join(result.patchRepositDir, 'Utilities/Dox')
     webPageGen = WebPageGenerator(crossRef,

@@ -216,7 +216,7 @@ class Routine(object):
     that match the current entry point"""
     def __checkForICR__(self, entryPt, rtnJson):
       entryPtList=[]
-      icrVals=[]
+      icrEntries=[]
       for icrEntry in rtnJson:
         if 'COMPONENT/ENTRY POINT' in icrEntry:
           for entry in icrEntry['COMPONENT/ENTRY POINT']:
@@ -224,15 +224,15 @@ class Routine(object):
               entryPtList = self.__generateEntryList__(entry['COMPONENT/ENTRY POINT'],entryPtList)
               if entryPt in entryPtList:
                 entryPtList.pop(entryPtList.index(entryPt))
-                icrVals.append(icrEntry['NUMBER'])
-      return icrVals
+                icrEntries.append(icrEntry)
+      return icrEntries
     """  Add an EntryPoint value to a routine, after checking for ICR values"""
     def addEntryPoint(self, entryPt, comm, icrJSON):
-        icrVals=[]
+        icrEntries=[]
         if entryPt not in self._entryPoints:
             if icrJSON:
-              icrVals = self.__checkForICR__(entryPt.split("(")[0], icrJSON)
-            self._entryPoints[entryPt] = { "comments": comm, "icr": icrVals}
+              icrEntries = self.__checkForICR__(entryPt.split("(")[0], icrJSON)
+            self._entryPoints[entryPt] = { "comments": comm, "icr": icrEntries}
     def getEntryPoints(self):
         return self._entryPoints
 
