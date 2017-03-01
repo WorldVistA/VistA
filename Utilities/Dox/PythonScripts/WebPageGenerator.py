@@ -486,19 +486,24 @@ class WebPageGenerator:
             outputFile.write(line)
 
 
-    def queryICRInfo(self, type , field, val):
+    def queryICRInfo(self, package, type, val):
       icrList = []
       #  Find entries that have a certain top-level parameter
       #
       #  example call queryICRInfo("ROUTINE","ROUTINE","SDAM1")
       #  Would return all "ROUTINE" types where the "ROUTINE" field equals 'SDAM1'
       #
-      for icrEntry in self._crossRef._icrJson:
-        if "TYPE" in icrEntry.keys():
-          if (icrEntry["TYPE"] == type) or (type == "*"):
-            if field in icrEntry.keys():
-              if re.match(re.escape(val),icrEntry[field], re.IGNORECASE):
-                icrList.append(icrEntry)
+      if package in self._crossRef._icrJson.keys():
+        for keyVal in self._crossRef._icrJson[package].keys():
+          if type == "*":
+              for keyEntry in self._crossRef._icrJson[package][keyVal].keys():
+                for entry in self._crossRef._icrJson[package][keyVal][keyEntry]:
+                  icrList.append(entry)
+          else:
+            if val in self._crossRef._icrJson[package][keyVal].keys():
+              print self._crossRef._icrJson[package][keyVal][val]
+              for entry in self._crossRef._icrJson[package][keyVal][val]:
+                icrList.append(entry)
       return icrList
 
 #===============================================================================
@@ -739,7 +744,7 @@ class WebPageGenerator:
                     writeSectionHeader("Description", "Desc", outputFile)
                     writeListData(globalVar.getDescription(), outputFile)
 
-                icrList = self.queryICRInfo("File", "GLOBAL ROOT", globalName[1:])
+                icrList = self.queryICRInfo(package.getName().upper(),"GLOBAL", globalName[1:])
                 if icrList:
                    writeSectionHeader("DBIA/ICR Connections","DBIA/ICR Connections",outputFile)
                    self.generateGlobalICRSection(icrList,outputFile)
@@ -1005,7 +1010,8 @@ class WebPageGenerator:
         icrString += "<td class='IndexValue'>"
         if "SUBSCRIBING PACKAGE" in entry:
           for value in entry["SUBSCRIBING PACKAGE"]:
-            icrString += "<li>"+getPackageHyperLinkByName(value["SUBSCRIBING PACKAGE"])+"</li>"
+            pkgName = value["SUBSCRIBING PACKAGE"][0] if type(value["SUBSCRIBING PACKAGE"]) is list else value["SUBSCRIBING PACKAGE"]
+            icrString += "<li>"+getPackageHyperLinkByName(pkgName)+"</li>"
         icrString += "</td>"
 
         icrString += "<td class='IndexValue'>"
@@ -1217,7 +1223,7 @@ class WebPageGenerator:
               (entry, extra) = line.replace("\t"," ").split(" ",1)
               if not extra[0]==";":
                 extra=''
-              icrJson = self.queryICRInfo("Routine", "ROUTINE", routineName)
+              icrJson = self.queryICRInfo(packageName.upper(),"ROUTINE", routineName)
               routine.addEntryPoint(entry, extra, icrJson)
             if justComment and lineNo > 1:
                continue
@@ -1516,7 +1522,7 @@ class WebPageGenerator:
 #
 #===============================================================================
     def generateRoutineCallGraph(self, isCalled=True):
-        logger.info("Start generating call graph......")
+        logger.info("Start Routine generating call graph......")
         for package in self._allPackages.itervalues():
             routines = package.getAllRoutines()
             for routine in routines.itervalues():
@@ -1801,7 +1807,7 @@ class WebPageGenerator:
             self.generatePackageDependencySection(packageName, outputFile, False)
 
             # Find all ICR entries that have the package as a "CUSTODIAL Package"
-            icrList = self.queryICRInfo("*","CUSTODIAL PACKAGE", packageName)
+            icrList = self.queryICRInfo(packageName.upper(),"*","*")
             writeSectionHeader("All ICR Entries: %d" % len(icrList),
                                "ICR Entries",
                                outputFile)
@@ -2408,10 +2414,34 @@ if __name__ == '__main__':
     """
     if result.icrJson:
       icrJson = os.path.abspath(result.icrJson)
-    parsedICRJSON = {}
+    parsedICRJSON= {}
     with open(icrJson, 'r') as icrFile:
       icrEntries =  json.load(icrFile)
-    crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(result,pkgDepJson,icrEntries)
+      for entry in icrEntries:
+        if 'CUSTODIAL PACKAGE' in entry:
+          ''' Finding a Custodial Package means the entry should belong somewhere, for now
+          we ignore those that don't have one
+          '''
+          if not (entry['CUSTODIAL PACKAGE'] in parsedICRJSON):
+            # First time we come across a package, add dictionaries for the used types
+            parsedICRJSON[entry['CUSTODIAL PACKAGE']] = {}
+            parsedICRJSON[entry['CUSTODIAL PACKAGE']]["ROUTINE"] = {}
+            parsedICRJSON[entry['CUSTODIAL PACKAGE']]["GLOBAL"] = {}
+            parsedICRJSON[entry['CUSTODIAL PACKAGE']]["OTHER"] = {}
+            parsedICRJSON[entry['CUSTODIAL PACKAGE']]["OTHER"]["ENTRIES"] = []
+          if "ROUTINE" in entry:
+            if not (entry["ROUTINE"] in parsedICRJSON[entry['CUSTODIAL PACKAGE']]["ROUTINE"]):
+              parsedICRJSON[entry['CUSTODIAL PACKAGE']]["ROUTINE"][entry["ROUTINE"]] = []
+            parsedICRJSON[entry['CUSTODIAL PACKAGE']]["ROUTINE"][entry["ROUTINE"]].append(entry)
+          elif "GLOBAL ROOT" in entry:
+            globalRoot = entry['GLOBAL ROOT'].replace(',','')
+            if not (globalRoot in parsedICRJSON[entry['CUSTODIAL PACKAGE']]["GLOBAL"]):
+              parsedICRJSON[entry['CUSTODIAL PACKAGE']]["GLOBAL"][globalRoot] = []
+            parsedICRJSON[entry['CUSTODIAL PACKAGE']]["GLOBAL"][globalRoot].append(entry)
+          else:
+            # Take all other entries into "OTHER", so that they can be shown on the package page
+            parsedICRJSON[entry['CUSTODIAL PACKAGE']]["OTHER"]["ENTRIES"].append(entry)
+    crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(result,pkgDepJson,parsedICRJSON)
     logger.info ("Starting generating web pages....")
     doxDir = os.path.join(result.patchRepositDir, 'Utilities/Dox')
     webPageGen = WebPageGenerator(crossRef,
