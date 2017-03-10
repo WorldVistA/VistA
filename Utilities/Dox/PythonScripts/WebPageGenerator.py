@@ -501,7 +501,6 @@ class WebPageGenerator:
                   icrList.append(entry)
           else:
             if val in self._crossRef._icrJson[package][keyVal].keys():
-              print self._crossRef._icrJson[package][keyVal][val]
               for entry in self._crossRef._icrJson[package][keyVal][val]:
                 icrList.append(entry)
       return icrList
