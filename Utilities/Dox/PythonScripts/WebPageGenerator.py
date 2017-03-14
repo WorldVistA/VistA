@@ -1812,7 +1812,8 @@ class WebPageGenerator:
             writeSectionHeader("All ICR Entries: %d" % len(icrList),
                                "ICR Entries",
                                outputFile)
-            self.generateTablizedItemList(icrList, outputFile,
+            sortedICRList = sorted(icrList, key=lambda item: float(item["NUMBER"]))
+            self.generateTablizedItemList(sortedICRList, outputFile,
                                           getICRHtmlFileName,
                                           getICRDisplayName)
             # separate fileman files and non-fileman globals
