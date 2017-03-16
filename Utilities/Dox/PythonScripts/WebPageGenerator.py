@@ -1190,6 +1190,7 @@ class WebPageGenerator:
 #===============================================================================
     def __generateSourceCodePageByName__(self, sourceCodeName, routine, justComment):
         ENTRY_POINT = re.compile("^[A-Z0-9]+[(]?")
+        COMMENT  = re.compile("^ ; ")
         if not routine:
             logger.error("Routine can not be None")
             return
@@ -1215,23 +1216,40 @@ class WebPageGenerator:
             outputFile.write("<a href=\"%s\">Go to the documentation of this file.</a>" %
                              getRoutineHtmlFileName(routineName))
             outputFile.write("<xmp class=\"prettyprint lang-mumps linenums:1\">")
+        # Inititalize the new variables
         lineNo = 0
+        entry= ''
+        comment=[]
+        icrJson=[]
+        inComment=False
         for line in sourceFile:
             if lineNo <= 1:
                 routine.addComment(line)
-            if ENTRY_POINT.search(line):
-              icrJson=[]
-              (entry, extra) = line.replace("\t"," ").split(" ",1)
-              if not extra[0]==";":
-                extra=''
+            if ENTRY_POINT.search(line) and lineNo > 1:
+              if entry:
+                routine.addEntryPoint(entry, comment, icrJson)
+                comment=[]
+              inComment=True
+              (entry, commentString) = line.replace("\t"," ").split(" ",1)
+              comment.append(commentString)
+              if not commentString[0]==";":
+                comment=[]
+                # if No comment on the first line, assume no other comments will follow it
+                inComment= False
               icrJson = self.queryICRInfo(packageName.upper(),"ROUTINE", routineName)
-              routine.addEntryPoint(entry, extra, icrJson)
+            # Check for more comments that are 1 space in from the beginning of the line
+            elif COMMENT.search(line) and inComment:
+              comment.append(line)
+            else:
+              # If here, assume we have reached the code part of the entry point and stop checking for comments
+              inComment=False
             if justComment and lineNo > 1:
                continue
             if not justComment:
                 outputFile.write(line)
             lineNo += 1
         sourceFile.close()
+        routine.addEntryPoint(entry, comment, icrJson)
         if not justComment:
             outputFile.write("</xmp>\n")
             self.__includeFooter__(outputFile)
@@ -2019,7 +2037,10 @@ class WebPageGenerator:
           icrNum = entryPoints[entry]["icr"] if entryPoints[entry]["icr"] else ""
           """ Build table string"""
           outString = "<tr><td class='indexkey'>"+entry +"</td>"
-          outString += "<td class='indexvalue'>%s</td>" % comments
+          outString += "<td class='indexvalue'>"
+          for line in comments:
+            outString += line+'<br/>'
+          outString += "</td>"
           outString += self.__writeICRInformation__(entryPoints[entry]["icr"])
           outString += "</tr>\n"
           outputFile.write(outString)
