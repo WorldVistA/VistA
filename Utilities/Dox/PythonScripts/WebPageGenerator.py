@@ -168,6 +168,28 @@ INDEX_HTML_PAGE_HEADER = """
  <h1>VistA Cross Reference Documentation</h1>
 </div>
 """
+
+XINDEXLegend = """
+  <h3>Legend:</h3>
+  <table>
+    <tbody>
+      <tr>
+        <td class="IndexKey"> >> </td>
+        <td class="IndexValue"> Not killed explicitly</td>
+        </tr><tr>
+        <td class="IndexKey"> * </td>
+        <td class="IndexValue">Changed</td>
+        </tr><tr>
+        <td class="IndexKey"> ! </td>
+        <td class="IndexValue">Killed</td>
+        </tr><tr>
+        <td class="IndexKey">~</td>
+        <td class="IndexValue">Newed</td>
+      </tr>
+    </tbody>
+  </table>
+  <br/>
+"""
 INDEX_HTML_PAGE_OSEHRA_IMAGE_PART = """
 <br/>
 <left>
@@ -438,6 +460,8 @@ def listDataToCommaSeperatorString(listData):
 def writeSectionHeader(headerName, archName, outputFile):
     outputFile.write("<h2 align=\"left\"><a name=\"%s\">%s</a></h2>\n" % (archName,
                                                                        headerName))
+    if headerName == "Local Variables":
+      outputFile.write(XINDEXLegend)
 def writeSubSectionHeader(headerName, outputFile):
     outputFile.write("<h3 align=\"left\">%s</h3>\n" % (headerName))
 # class to generate the web page based on input
