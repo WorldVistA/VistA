@@ -8,7 +8,6 @@ from string import Template
 """
 
 table_sorter_header="""
-<link rel="stylesheet" href="http://tablesorter.com/themes/blue/style.css" type="text/css" id=""/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="http://tablesorter.com/__jquery.tablesorter.js"></script>
 <script type="text/javascript" id="js">
@@ -26,11 +25,13 @@ table_sorter_header="""
   https://datatables.net/
 """
 data_table_reference = """
-<link rel="stylesheet" href="../../datatable/css/demo_page.css" type="text/css" id=""/>
-<link rel="stylesheet" href="../../datatable/css/demo_table.css" type="text/css" id=""/>
-<link rel="stylesheet" href="../../style.css" type="text/css" id=""/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/jquery.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/buttons.dataTables.css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="../../datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/buttons.colVis.min.js"></script>
+
 <!-- Google Analytics -->
 <script>
  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -46,12 +47,12 @@ data_table_reference = """
 data_table_list_init_setup = Template("""
 <script type="text/javascript" id="js">
   $$(document).ready(function() {
-      $$("#${tableName}").dataTable({
-        "bInfo": true,
-        "iDisplayLength": 25,
-        "sPaginationType": "full_numbers",
-        "bStateSave": true,
-        "bAutoWidth": true
+      $$("#${tableName}").DataTable({
+        bInfo: true,
+        iDisplayLength: 25,
+        pagingType: "full_numbers",
+        bStateSave: true,
+        bAutoWidth: true
       });
 }); </script>
 """)
@@ -59,20 +60,35 @@ data_table_list_init_setup = Template("""
 data_table_list_with_columns_init_setup = Template("""
 <script type="text/javascript" id="js">
   $(document).ready(function() {
-    $("#${tableName}").dataTable({
-        "bInfo": true,
-        "dom": 'f<"toolbar">rtilp',
-        "iDisplayLength": 25,
-        "sPaginationType": "full_numbers",
-        "bStateSave": true,
-        "bAutoWidth": true,
-        "columns": [${columnNames}]});
+    var table = $("#${tableName}").DataTable({
+        bInfo: true,
+        dom: '<Bfr<t>ilp>',
+        iDisplayLength: 25,
+        pagingType: "full_numbers",
+        bStateSave: true,
+        bAutoWidth: true,
+        columns: [${columnNames}],
+        buttons: [
+          {
+            text: 'Toggle Columns',
+            extend: 'colvis',
+          },
+          {
+            text: 'Clear Search',
+            action: function ( e, dt, node, conf ) {
+              clearFilters();
+            }
+          }
+        ]
+    });
 
-    var table = $("#${tableName}").DataTable();
     var columns = table.settings().init().columns;
     table.columns().every(function(index) {
       var column = this;
       var name = columns[index].name;
+      if (${hideColumns}) {
+        column.visible(false);
+      }
       if (${searchColumns}) {
         var select = $('<input type="text" name="' + name + '" placeholder="Search ' + name + '" />')
           .appendTo( $(column.footer()).empty() )
@@ -101,7 +117,6 @@ data_table_list_with_columns_init_setup = Template("""
       }
     });
 
-    $$("div.toolbar").html('<button onclick="clearFilters()">Clear Search</button>');
 
     table
      .search('')
@@ -114,13 +129,13 @@ data_table_list_with_columns_init_setup = Template("""
 data_table_large_list_init_setup = Template("""
 <script type="text/javascript" id="js">
   $$(document).ready(function() {
-      $$("#${tableName}").dataTable({
-        "bProcessing": true,
-        "bStateSave": true,
-        "iDisplayLength": 10,
-        "sPaginationType": "full_numbers",
-        "bDeferRender": true,
-        "sAjaxSource": "${ajaxSrc}"
+      $$("#${tableName}").DataTable({
+        bProcessing: true,
+        bStateSave: true,
+        iDisplayLength: 10,
+        pagingType: "full_numbers",
+        bDeferRender: true,
+        sAjaxSource: "${ajaxSrc}"
       });
 }); </script>
 """)
@@ -128,21 +143,36 @@ data_table_large_list_init_setup = Template("""
 data_table_large_list_with_columns_init_setup = Template("""
 <script type="text/javascript" id="js">
   $$(document).ready(function() {
-      $$("#${tableName}").dataTable({
-        "bProcessing": true,
-        "bStateSave": true,
-        "dom": 'f<"toolbar">rtilp',
-        "iDisplayLength": 10,
-        "sPaginationType": "full_numbers",
-        "bDeferRender": true,
-        "sAjaxSource": "${ajaxSrc}",
-        "columns": [${columnNames}],
-        "fnInitComplete": function(oSettings, json) {
+      var table = $("#${tableName}").DataTable({
+        bProcessing: true,
+        bStateSave: true,
+        dom: '<Bfr<t>ilp>',
+        iDisplayLength: 10,
+        pagingType: "full_numbers",
+        bDeferRender: true,
+        sAjaxSource: "${ajaxSrc}",
+        columns: [${columnNames}],
+        buttons: [
+          {
+            text: 'Toggle Columns',
+            extend: 'colvis',
+          },
+          {
+            text: 'Clear Search',
+            action: function ( e, dt, node, conf ) {
+              clearFilters();
+            }
+          }
+        ],
+        fnInitComplete: function(oSettings, json) {
           var table = $("#${tableName}").DataTable();
           var columns = table.settings().init().columns;
           table.columns().every( function (index) {
             var column = this;
             var name = columns[index].name;
+            if (${hideColumns}) {
+              column.visible(false);
+            }
             if (${searchColumns}) {
               var select = $('<input type="text" name="' + name + '" placeholder="Search '+name+'" />')
                 .appendTo( $(column.footer()).empty() )
@@ -172,9 +202,6 @@ data_table_large_list_with_columns_init_setup = Template("""
         }
       });
 
-    $$("div.toolbar").html('<button onclick="clearFilters()">Clear Search</button>');
-
-    var table = $('#${tableName}').DataTable();
     table
       .search( '' )
       .columns().search( '' )
@@ -212,28 +239,39 @@ data_table_record_init_setup = Template("""
 
 """ Some Utilitity functions for some TablelizedData
 """
-def outputDataListTableHeader(output, tName, columns=None, searchColumnNames=None):
+def outputDataListTableHeader(output, tName, columns=None,
+                              searchColumnNames=None, hideColumnNames=None):
   output.write("%s\n" % data_table_reference)
-  if columns is None and searchColumnNames is None:
+  if columns is None:
     initSet = data_table_list_init_setup.substitute(tableName=tName)
   else:
     columnNames = []
     for col in columns:
       columnNames.append("{ name : '" + col + "'}")
     searchColumns = []
-    for name in searchColumnNames:
-      searchColumns.append("name == '" + name +"'")
+    if searchColumnNames:
+      for name in searchColumnNames:
+        searchColumns.append("name == '" + name +"'")
+    hideColumns = []
+    if hideColumnNames:
+      for name in hideColumnNames:
+        hideColumns.append("name == '" + name +"'")
+      hideColumnsStr = "||".join(hideColumns)
+    else:
+      hideColumnsStr = "false"
     initSet = data_table_list_with_columns_init_setup.safe_substitute(tableName=tName,
                                                                       columnNames=",".join(columnNames),
-                                                                      searchColumns="||".join(searchColumns))
+                                                                      searchColumns="||".join(searchColumns),
+                                                                      hideColumns=hideColumnsStr)
   output.write("%s\n" % initSet)
 
   clear_filters = data_table_clear_filters.safe_substitute(tableName=tName)
   output.write("%s\n" % clear_filters)
 
-def outputLargeDataListTableHeader(output, src, tName, columns=None, searchColumnNames=None):
+def outputLargeDataListTableHeader(output, src, tName, columns=None,
+                                   searchColumnNames=None, hideColumnNames=None):
   output.write("%s\n" % data_table_reference)
-  if columns is None and searchColumnNames is None:
+  if columns is None and searchColumnNames is None and hideColumnNames is None:
     initSet = data_table_large_list_init_setup.substitute(ajaxSrc=src,
                                                           tableName=tName)
   else:
@@ -243,10 +281,14 @@ def outputLargeDataListTableHeader(output, src, tName, columns=None, searchColum
     searchColumns = []
     for name in searchColumnNames:
       searchColumns.append("name == '" + name +"'")
+    hideColumns = []
+    for name in hideColumnNames:
+      hideColumns.append("name == '" + name +"'")
     initSet = data_table_large_list_with_columns_init_setup.safe_substitute(ajaxSrc=src,
                                                                             tableName=tName,
                                                                             columnNames=",".join(columnNames),
-                                                                            searchColumns="||".join(searchColumns))
+                                                                            searchColumns="||".join(searchColumns),
+                                                                            hideColumns="||".join(hideColumns))
   output.write("%s\n" % initSet)
 
   clear_filters = data_table_clear_filters.safe_substitute(tableName=tName)

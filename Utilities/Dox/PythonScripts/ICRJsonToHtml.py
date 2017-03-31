@@ -51,8 +51,21 @@ def getICRIndividualHtmlFileLinkByIen(value, icrEntry, **kargs):
     ienDescription = ''
     if "GENERAL DESCRIPTION" in icrEntry:
       for line in icrEntry["GENERAL DESCRIPTION"]:
-        ienDescription += ' ' + cgi.escape(line).replace('"', r"&quot;").replace("'", r"&quot;")
+        if not line:  # Empty string
+          ienDescription += '\n'
+        else:
+          ienDescription += ' ' + cgi.escape(line).replace('"', r"&quot;").replace("'", r"&quot;")
     return '<a title=\"%s\" href=\"%s\">%s</a>' % (ienDescription,'ICR-' + ien + '.html', value)
+
+def getGeneralDescription(value, icrEntry, **kargs):
+    description = ""
+    if "GENERAL DESCRIPTION" in icrEntry:
+      for line in icrEntry["GENERAL DESCRIPTION"]:
+        if not line:  # Empty string
+          description += '\n'
+        else:
+          description += '<br>' + cgi.escape(line).replace('"', r"&quot;").replace("'", r"&quot;")
+    return description
 
 def getPackageHRefLink(pkgName, icrEntry, **kargs):
     if pkgName in pkgMap:
@@ -133,6 +146,7 @@ summary_list_fields = [
     ('Status', None, None),
     ('Usage', None, None),
     ('File #', 'FILE NUMBER', getFileManFileHRefLink),
+    ('General Description', None, getGeneralDescription),
     # ('Global root', None, None),
     ('Remote Procedure', None, getRPCHRefLink),
     ('Routine', None, getRoutineHRefLink),
@@ -141,6 +155,7 @@ summary_list_fields = [
 
 field_convert_map = {
     'FILE NUMBER': getFileManFileHRefLink,
+    'GENERAL DESCRIPTION': getGeneralDescription,
     'ROUTINE': getRoutineHRefLink,
     'CUSTODIAL PACKAGE': getPackageHRefLink,
     'SUBSCRIBING PACKAGE': getPackageHRefLink,
@@ -280,13 +295,16 @@ class ICRJsonToHtml(object):
             columnNames = [x[0] for x in summary_list_fields]
             searchColumns = ['IA #', 'Name', 'Custodial Package',
                              'Date Created', 'File #', 'Remote Procedure',
-                             'Routine', 'Date Activated']
+                             'Routine', 'Date Activated', 'General Description']
+            hideColumns = ['General Description']
             if useAjax:
                 ajaxSrc = '%s_array.txt' % pkgName
                 outputLargeDataListTableHeader(output, ajaxSrc, tName,
-                                                columnNames, searchColumns)
+                                               columnNames, searchColumns,
+                                               hideColumns)
             else:
-                outputDataListTableHeader(output, tName, columnNames, searchColumns)
+                outputDataListTableHeader(output, tName, columnNames,
+                                          searchColumns, hideColumns)
             output.write("<body id=\"dt_example\">")
             output.write("""<div id="container" style="width:80%">""")
 
