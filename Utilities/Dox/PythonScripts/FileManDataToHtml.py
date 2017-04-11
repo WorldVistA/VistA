@@ -561,7 +561,7 @@ class FileManDataToHtml(object):
       if item in menuDepDict:
         self._addChildMenusToJson(menuDepDict[item], menuDepDict, childDict, item)
       logging.debug("Adding child %s to parent %s" % (childDict['name'], outJson['name']))
-      outJson.setdefault('children',[]).append(childDict)
+      outJson.setdefault('_children',[]).append(childDict)
 
   def _generateRPCListHtml(self, dataEntryLst, pkgName, fileNo):
     """
