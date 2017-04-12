@@ -122,6 +122,8 @@ data_table_list_with_columns_init_setup = Template("""
      .search('')
      .columns().search('')
      .draw();
+
+    $('.dataTables_filter input').attr('title', 'Search includes ALL columns. Use `Toggle Columns` to display hidden columns.');
 }); </script>
 """)
 
@@ -206,6 +208,8 @@ data_table_large_list_with_columns_init_setup = Template("""
       .search( '' )
       .columns().search( '' )
       .draw();
+
+    $('.dataTables_filter input').attr('title', 'Search includes ALL columns. Use `Toggle Columns` to display hidden columns.');
 }); </script>
 """)
 
@@ -226,13 +230,13 @@ data_table_clear_filters = Template("""
 data_table_record_init_setup = Template("""
 <script type="text/javascript" id="js">
   $$(document).ready(function() {
-  // call the tablesorter plugin
       $$("#${tableName}").dataTable({
         "bPaginate": false,
         "bLengthChange": false,
         "bInfo": false,
         "bStateSave": true,
-        "bSort": false
+        "bSort": false,
+        "bFilter": false
       });
 }); </script>
 """)
