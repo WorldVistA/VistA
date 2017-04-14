@@ -1208,13 +1208,50 @@ class WebPageGenerator:
         generateIndexBar(outputFile, inputList, archList)
         self.__includeFooter__(outputFile)
         outputFile.close()
-
+    def __parseReadCmd__(self,matchArray, routine,lineNo):
+      for matchObj in matchArray:
+        setup = matchObj[0].split(",")
+        interaction = {}
+        interaction["type"]= "READ"
+        interaction["line"]= str(lineNo)
+        interaction['timeout'] = matchObj[1]
+        # Read directly into a variable
+        if len(setup) == 1:
+          interaction['variable'] = setup[0]
+        # Read into a variable with some prompt
+        elif len(setup) == 2:
+          (interaction['string'], interaction['variable']) = tuple(setup)
+        # Read into a variable with a prompt and some extra parameters/formatting
+        elif len(setup) == 3:
+          (interaction['formatting'], interaction['string'], interaction['variable']) = tuple(setup)
+        routine.addInteractionEntry(interaction)
+    def __parseWriteCmd__(self,line, routine,lineNo):
+      # splits the line into a space separated list which ignores spaces found within quotes
+      lineList =  re.split(''' (?=(?:[^'"]|'[^']*'|"[^"]*")*$)''', line)
+      lastIndex = 0
+      for i in lineList:
+        # Captures the conditional value of the write, while trying to remove false matches like "WRITE" as an entry point
+        match = re.search("^W(?!\w)($|(?P<conditional>\:.+)?)",i)
+        if match:
+          interaction = {}
+          # Make sure we aren't going to look past the end
+          if lineList[lastIndex:].index(i) + 1+lastIndex  >= len(lineList):
+            continue
+          interaction["string"] = lineList[lineList[lastIndex:].index(i) + 1+lastIndex]
+          lastIndex=lineList.index(i) + 1
+          interaction["type"]= "WRITE"
+          interaction["line"]= str(lineNo)
+          if match.group('conditional'):
+            interaction["conditional"]= match.group('conditional')[1:]
+          routine.addInteractionEntry(interaction)
 #===============================================================================
 # Method to parse the source code and generate source code page or just extract comments
 #===============================================================================
     def __generateSourceCodePageByName__(self, sourceCodeName, routine, justComment):
         ENTRY_POINT = re.compile("^[A-Z0-9]+[(]?")
         COMMENT  = re.compile("^ ; ")
+        READ_CMD = re.compile(" R (?P<params>.+?):(?! )(?P<timeout>.+?) ")
+        WRITE_CMD = re.compile(" W (?P<string>.+?)\s")
         if not routine:
             logger.error("Routine can not be None")
             return
@@ -1242,7 +1279,9 @@ class WebPageGenerator:
             outputFile.write("<xmp class=\"prettyprint lang-mumps linenums:1\">")
         # Inititalize the new variables
         lineNo = 0
-        entry= ''
+        entry = ""
+        entryOffset = 0
+        currentEntryPoint = routineName
         comment=[]
         icrJson=[]
         inComment=False
@@ -1255,6 +1294,8 @@ class WebPageGenerator:
                 comment=[]
               inComment=True
               (entry, commentString) = line.replace("\t"," ").split(" ",1)
+              currentEntryPoint= entry
+              entryOffset= 0
               comment.append(commentString)
               if not commentString[0]==";":
                 comment=[]
@@ -1267,11 +1308,16 @@ class WebPageGenerator:
             else:
               # If here, assume we have reached the code part of the entry point and stop checking for comments
               inComment=False
+            if READ_CMD.search(line):
+                self.__parseReadCmd__(READ_CMD.findall(line), routine, currentEntryPoint+"+"+str(entryOffset))
+            if WRITE_CMD.search(line):
+                self.__parseWriteCmd__(line, routine, currentEntryPoint+"+"+str(entryOffset))
             if justComment and lineNo > 1:
                continue
             if not justComment:
                 outputFile.write(line)
             lineNo += 1
+            entryOffset += 1
         sourceFile.close()
         routine.addEntryPoint(entry, comment, icrJson)
         if not justComment:
@@ -2049,6 +2095,22 @@ class WebPageGenerator:
           icrString +="<ul><li>Usage: %s</li></ul>" % (icrEntry["USAGE"])
       icrString += "</td>"
       return icrString
+
+    def __writeInteractionCommandHTML__(self, entry):
+      outstring = "<td class='indexvalue'><ul>"
+      entryDict = {
+                  "formatting": "Formatting:",
+                  "string": "Prompt:",
+                  "variable": "Variable:",
+                  "timeout": "Timeout:",
+                  "conditional": "Condition for execution:",
+                  "line": "Line Location:"
+                 }
+      for key in entryDict:
+        if key in entry:
+          outstring += "<li>%s %s</li>" % (entryDict[key],entry[key])
+      outstring +=  "</td></ul>"
+      return outstring
     """ Write the HTML for the Entry Point section"""
     def __writeEntryPointSection__ (self, routine,data,header,link,outputFile, tableHeader):
         writeSectionHeader("Entry Points", "Routine Entry Points", outputFile)
@@ -2068,6 +2130,35 @@ class WebPageGenerator:
           outString += "</td>"
           outString += self.__writeICRInformation__(entryPoints[entry]["icr"])
           outString += "</tr>\n"
+          outputFile.write(outString)
+        outputFile.write("</table>\n")
+    def __writeInteractionSection__ (self, routine,data,header,link,outputFile, tableHeader):
+        writeSectionHeader("Interaction Calls", "Interaction Calls", outputFile)
+        routineName = routine.getName()
+        packageName = routine.getPackage().getName()
+        outputFile.write("<table>\n")
+        writeTableHeader(tableHeader, outputFile)
+        calledRtns = routine.getFilteredExternalReference(['DIR','VALM','DDS','DIE','DIC','%ZIS'])
+        for entry in data:  # R and W commands
+          outString = "<tr><td class='indexkey'>Function Call: %s</td>" % entry['type']
+          outString += self.__writeInteractionCommandHTML__(entry)
+          outString += "</tr>\n"
+          outputFile.write(outString)
+        # Write out the entries that are "interaction" routines
+        for entry in calledRtns:
+          outString = "<tr><td class='indexkey'>Routine Call</td>"
+          outString += "<td class='indexvalue'><ul>"
+          outString += "<li>"+entry[0]+"</li>"
+          # Nicely show the ENTRYPOINT+OFFSET values for location
+          if type(calledRtns[entry]) is list:
+            outString += "<li>Line Location:</li>"
+            outString += "<ul>"
+            for location in calledRtns[entry]:
+              outString += "<li>"+location+"</li>"
+            outString += "</ul>"
+          else:
+            outString += "<li>"+str(calledRtns[entry])+"</li>"
+          outString += "</ul></td></tr>\n"
           outputFile.write(outString)
         outputFile.write("</table>\n")
     def __writeRoutineDepGraphSection__(self, routine, data, header, link,
@@ -2202,6 +2293,13 @@ class WebPageGenerator:
              "generator" : self.__writeRoutineVariableSection__, # section generator
              "geneargs" : [DEFAULT_VARIABLE_SECTION_HEADER_LIST,
                            self.__convertExternalReferenceToTableData__], # extra argument
+           },
+           # Interaction Code section
+           {
+             "name": "Interaction Calls", # this is also the link name
+             "data" : routine.getInteractionEntries, # the data source
+             "generator" : self.__writeInteractionSection__, # section generator
+             "geneargs" : [DEFAULT_VARIABLE_SECTION_HEADER_LIST], # extra argument
            },
            # Used in RPC section
            {

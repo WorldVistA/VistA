@@ -84,6 +84,7 @@ class Routine(object):
         self._markedItems = dict()
         self._labelReference = dict()
         self._entryPoints    = dict()
+        self._interactionPoints = []
         self._calledRoutines = RoutineDepDict()
         self._callerRoutines = RoutineDepDict()
         self._refGlobals = dict()
@@ -174,6 +175,18 @@ class Routine(object):
                 for (callTag, lineOffsets) in callTagDict.iteritems():
                     output[(routineName, callTag)] = lineOffsets
         return output
+    def getFilteredExternalReference(self,filterList=None):
+        if filterList:
+          output = dict()
+          for routineDict in self._calledRoutines.itervalues():
+              for (routine, callTagDict) in routineDict.iteritems():
+                  if routine.getName() in filterList:
+                    routineName = routine.getName()
+                    for (callTag, lineOffsets) in callTagDict.iteritems():
+                        output[(routineName, callTag)] = lineOffsets
+                  else:
+                    continue
+          return output
     def addCallDepRoutines(self, depRoutine, callTag, lineOccurences, isCalled=True):
         if isCalled:
             depRoutines = self._calledRoutines
@@ -235,7 +248,11 @@ class Routine(object):
             self._entryPoints[entryPt] = { "comments": comm, "icr": icrEntries}
     def getEntryPoints(self):
         return self._entryPoints
-
+    """  Add an EntryPoint value to a routine, after checking for ICR values"""
+    def addInteractionEntry(self, interactionDict):
+        self._interactionPoints.append(interactionDict)
+    def getInteractionEntries(self):
+        return self._interactionPoints
     def addCallerRoutines(self, depRoutine, callTag, lineOccurences):
         self.addCallDepRoutines(depRoutine, callTag, lineOccurences, False)
     def getCallerRoutines(self):
