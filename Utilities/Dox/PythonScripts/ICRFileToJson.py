@@ -32,9 +32,9 @@ def convertDateTimeField(inputDt):
         return inputDt
 
 """
-This is the class to parse the VA ICR Text file and convert to JSON format.
+This is the class to parse the VA ICR file and convert to JSON format.
 """
-class ICRParser(object):
+class ICRFileToJson(object):
     def __init__(self):
         self._totalRecord = 0 # total number of record
         self._curRecord = None # current record object
@@ -249,12 +249,12 @@ class ICRParser(object):
         return False
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='VistA ICR File Parser')
+    parser = argparse.ArgumentParser(description='VistA ICR File to JSON Parser')
     parser.add_argument('icrfile', help='path to the VistA ICR file')
     parser.add_argument('outJson', help='path to the output JSON file')
     result = parser.parse_args()
     initConsoleLogging()
     # initConsoleLogging(logging.DEBUG)
     if result.icrfile:
-        icrParser = ICRParser()
-        icrParser.parse(result.icrfile, result.outJson)
+        icrFileToJson = ICRFileToJson()
+        icrFileToJson.parse(result.icrfile, result.outJson)

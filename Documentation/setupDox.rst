@@ -89,7 +89,7 @@ ICR Information
 
 A recent addition to the WebPageGenerator will add a list of entry points for
 each routine and and any ICR entries that correspond with that entry point
-for each routine page. This requires a JSON formatted file  of ICR information
+for each routine page. This requires a JSON formatted file of ICR information
 to be supplied to the web page generator. The source file of ICR information
 can be found on the following website:
 
@@ -97,15 +97,15 @@ can be found on the following website:
 
 Once you have downloaded the file, we will use a Python script to parse and
 save the output in a JSON format.  The file to use is found in the
-``Utilities/Dox/PythonScripts`` directory and is named ``ICRParser.py``.
+``Utilities/Dox/PythonScripts`` directory and is named ``ICRFileToJson.py``.
 The signature of the script is simple:
 
 .. parsed-literal::
 
-  $ python  ICRParser.py -h
-  usage: ICRParser.py [-h] icrfile outJson
+  $ python  ICRFileToJson.py -h
+  usage: ICRFileToJson.py [-h] icrfile outJson
 
-  VistA ICR File Parser
+  VistA ICR File to JSON Parser
 
   positional arguments:
     icrfile     path to the VistA ICR file
@@ -121,7 +121,7 @@ An example run will look like this:
 
 .. parsed-literal::
 
-  $ python  ICRParser.py ~/Desktop/October_11_2016_IA_Listing_Descriptions.TXT VA-ICR-10-16.json
+  $ python  ICRFileToJson.py ~/Desktop/October_11_2016_IA_Listing_Descriptions.TXT VA-ICR-10-16.json
   2017-01-18 10:02:34,928 WARNING Ignore line INTEGRATION REFERENCES LIST                    OCT 11,2016  16:13    PAGE 1
   2017-01-18 10:02:34,928 WARNING Ignore line --------------------------------------------------------------------------------
   2017-01-18 10:02:34,928 INFO Starting of new item: NUMBER: 1                               IA #: 1
