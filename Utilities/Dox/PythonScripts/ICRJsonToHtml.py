@@ -18,7 +18,7 @@ from DataTableHtml import writeTableListInfo, outputDataListTableHeader
 from DataTableHtml import outputLargeDataListTableHeader, outputDataRecordTableHeader
 from DataTableHtml import outputFileEntryTableList, safeElementId
 from InitCrossReferenceGenerator import createInitialCrossRefGenArgParser
-from InitCrossReferenceGenerator import parseCrossRefGeneratorWithArgs
+from InitCrossReferenceGenerator import parseCrossReferenceGeneratorArgs
 from FileManGlobalDataParser import generateSingleFileFieldToIenMappingBySchema
 
 dox_url = "http://code.osehra.org/dox/"
@@ -439,20 +439,22 @@ def createArgParser():
     parser.add_argument('outDir', help='path to the output web page directory')
     return parser
 
-def createRemoteProcedureMapping(result, crossRef):
-    return generateSingleFileFieldToIenMappingBySchema(result.MRepositDir,
+def createRemoteProcedureMapping(MRepositDir, crossRef):
+    return generateSingleFileFieldToIenMappingBySchema(MRepositDir,
                                                        crossRef,
                                                        RPC_FILE_NO,
                                                        RPC_NAME_FIELD_NO)
+
+def run(args):
+    crossRef = parseCrossReferenceGeneratorArgs(args.MRepositDir,
+                                                args.patchRepositDir)
+    rpcNameToIenMapping = createRemoteProcedureMapping(args.MRepositDir, crossRef)
+    icrJsonToHtml = ICRJsonToHtml(crossRef, args.outDir)
+    icrJsonToHtml.converJsonToHtml(args.icrJsonFile)
+
 
 if __name__ == '__main__':
     parser = createArgParser()
     result = parser.parse_args()
     initConsoleLogging()
-    crossRef = parseCrossRefGeneratorWithArgs(result)
-    # pprint.pprint(set(crossRef.getAllPackages().keys()))
-    # initConsoleLogging(logging.DEBUG)
-    if result.icrJsonFile:
-        rpcNameToIenMapping = createRemoteProcedureMapping(result, crossRef)
-        icrJsonToHtml = ICRJsonToHtml(crossRef, result.outDir)
-        icrJsonToHtml.converJsonToHtml(result.icrJsonFile)
+    run(result)
