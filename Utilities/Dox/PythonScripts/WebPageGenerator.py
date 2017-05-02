@@ -147,6 +147,22 @@ COMMON_HEADER_PART = """
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
 <link href="DoxygenStyle.css" rel="stylesheet" type="text/css">
 """
+
+SWAP_VIEW_HTML = """
+<button id="swapDisplay">Switch Display Mode</button>
+<script type="text/javascript\">
+  $("#swapDisplay").click( function(event) {
+    if ($("#terseDisplay").is(':visible')) {
+      $("#terseDisplay").hide()
+      $("#expandedDisplay").show()
+    }
+    else {
+      $("#terseDisplay").show()
+      $("#expandedDisplay").hide()
+    }
+  });
+</script>
+"""
 HEADER_END = """
 </head>
 """
@@ -160,6 +176,7 @@ CODE_PRETTY_JS_CODE = """
 <link href="code_pretty_scripts/prettify.css" type="text/css" rel="stylesheet"/>
 <script type="text/javascript" src="code_pretty_scripts/prettify.js"></script>
 <script type="text/javascript" src="code_pretty_scripts/lang-mumps.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 """
 INDEX_HTML_PAGE_HEADER = """
 <div class="header">
@@ -1276,7 +1293,9 @@ class WebPageGenerator:
             outputFile.write("<div><h1>%s.m</h1></div>\n" % sourceCodeName)
             outputFile.write("<a href=\"%s\">Go to the documentation of this file.</a>" %
                              getRoutineHtmlFileName(routineName))
-            outputFile.write("<xmp class=\"prettyprint lang-mumps linenums:1\">")
+            if routine._structuredCode:
+              outputFile.write(SWAP_VIEW_HTML)
+            outputFile.write("<xmp id=\"terseDisplay\" class=\"prettyprint lang-mumps linenums:1\">")
         # Inititalize the new variables
         lineNo = 0
         entry = ""
@@ -1322,6 +1341,11 @@ class WebPageGenerator:
         routine.addEntryPoint(entry, comment, icrJson)
         if not justComment:
             outputFile.write("</xmp>\n")
+            if routine._structuredCode:
+              outputFile.write("<xmp id=\"expandedDisplay\" class=\"prettyprint lang-mumps linenums:1\" style='display:none;'>")
+              for line in routine._structuredCode:
+                outputFile.write("%s \n" % line)
+              outputFile.write("</xmp>\n")
             self.__includeFooter__(outputFile)
             outputFile.close()
 #===============================================================================

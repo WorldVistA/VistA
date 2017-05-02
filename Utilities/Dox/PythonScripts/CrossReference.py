@@ -95,6 +95,7 @@ class Routine(object):
         self._comments = []
         self._originalName = routineName
         self._hasSourceCode = True
+        self._structuredCode = []
     def setName(self, routineName):
         self._name = routineName
     def getName(self):

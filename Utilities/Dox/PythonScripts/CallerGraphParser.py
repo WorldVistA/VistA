@@ -49,6 +49,7 @@ labelReferencesStart = re.compile("^Label References$")
 externalReferencesStart = re.compile("^External References$")
 routineInvokesStart = re.compile('Routine +Invokes')
 calledRoutineStart = re.compile("^Routine +is Invoked by:")
+routineDetailStart = re.compile("-+ Routine Detail[ ]+-+")
 RoutineEnd = re.compile("-+ END -+")
 pressReturn = re.compile("Press return to continue:")
 crossRef = re.compile("\*\*\*\*\*   Cross Reference of all Routines")
@@ -66,6 +67,7 @@ packageNameMismatchDict = {"NOIS TRACKING":"NATIONAL ONLINE INFORMATION SHARING"
                          "VISTA DATA EXTRACTION":"VDEF",
                          "VISTA LINK":"VISTALINK",
                          "BLOOD BANK":"VBECS"}
+structuredSource=[]
 #===============================================================================
 # Interface to parse a section of the XINDEX log file
 #===============================================================================
@@ -304,7 +306,18 @@ class ExternalReferenceSectionParser (AbstractSectionParser):
                 CrossReference.addRoutineToPackageByName(routineName, defaultPackageName, False)
             routine = CrossReference.getRoutineByName(routineName)
             Routine.addCalledRoutines(routine, tag, self._varValue)
-
+#===============================================================================
+# Implementation of a Structured Routine Print section
+#===============================================================================
+class RoutinePrintSectionParser (AbstractSectionParser):
+  def __init__(self):
+    AbstractSectionParser.__init__(self, IXindexLogFileParser.ROUTINE_PRINT)
+  def onSectionStart(self, curLine, sectionHeader):
+    global structuredSource
+    structuredSource=[]
+  def parseLine(self, line, Routine, CrossReference):
+    global structuredSource
+    structuredSource.append(line);
 #===============================================================================
 # Interface for a Xindex Log File Parser
 #===============================================================================
@@ -319,6 +332,7 @@ class IXindexLogFileParser:
     LABEL_REFERENCE=7
     EXTERNEL_REFERENCE=8
     ROUTINE=9
+    ROUTINE_PRINT=10
     # format constant
 
     def __init__(self, crossReference):
@@ -355,6 +369,7 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
         self._curHandler = None
         self._sectHandleDict = dict()
         self._sectionStack = []
+        self.curStructuredCode=[]
         self._sectionHeaderRegex = dict()
         self.__initSectionHeaderRegex__()
         self.__initDefaultSectionHandler__()
@@ -367,6 +382,7 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
         self._sectionHeaderRegex[markedItemStart] = IXindexLogFileParser.MARKED_ITEMS
         self._sectionHeaderRegex[labelReferencesStart] = IXindexLogFileParser.LABEL_REFERENCE
         self._sectionHeaderRegex[externalReferencesStart] = IXindexLogFileParser.EXTERNEL_REFERENCE
+        self._sectionHeaderRegex[routineDetailStart] = IXindexLogFileParser.ROUTINE_PRINT
     def __initDefaultSectionHandler__(self):
         self._sectHandleDict[IXindexLogFileParser.ROUTINE] = self
         self._sectHandleDict[IXindexLogFileParser.LOCAL_VARIABLE] = LocalVarSectionParser()
@@ -375,6 +391,7 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
         self._sectHandleDict[IXindexLogFileParser.MARKED_ITEMS] = MarkedItemsSectionParser()
         self._sectHandleDict[IXindexLogFileParser.LABEL_REFERENCE] = LabelReferenceSectionParser()
         self._sectHandleDict[IXindexLogFileParser.EXTERNEL_REFERENCE] = ExternalReferenceSectionParser()
+        self._sectHandleDict[IXindexLogFileParser.ROUTINE_PRINT] = RoutinePrintSectionParser()
     # implementation of section parser interface for Routine Section
     def onSectionStart(self, line, section):
         if section != IXindexLogFileParser.ROUTINE:
@@ -393,6 +410,7 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
                          (routineName, renamedRoutineName))
             return False
         self._curRoutine = self._crossRef.getRoutineByName(renamedRoutineName)
+        self._curRoutine._structuredCode = structuredSource
         return True
     def onSectionEnd(self, line, section, Routine, CrossReference):
         if section != IXindexLogFileParser.ROUTINE:
@@ -446,7 +464,12 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
         if section == IXindexLogFileParser.ROUTINE:
             return RoutineEnd.search(curLine)
         else:
-            return curLine.strip() == ''
+            # Check to see if we have gone through the whole strucutured source yet
+            # A blank line after the section header but before the code makes this check necessary
+            if len(structuredSource) > 1:
+              return curLine.strip() == ''
+            else:
+              return False
 
 #===============================================================================
 # A class to parse XINDEX log file output and convert to Routine/Package
@@ -521,7 +544,7 @@ class CallerGraphLogFileParser(object):
         allFiles = glob.glob(callerGraphLogFile)
         XindexParser = XINDEXLogFileParser(self._crossRef)
         for logFileName in allFiles:
-            logger.info("Start paring log file [%s]" % logFileName)
+            logger.info("Start parsing log file [%s]" % logFileName)
             XindexParser.parseXindexLogFile(logFileName)
     def printAllNamespaces(self):
         crossRef = self._crossRef

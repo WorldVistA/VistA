@@ -45,13 +45,15 @@ def runXindexForRoutine(connection, routineName):
   connection.wait("Print summary only?")
   connection.write("NO")
   connection.wait("Print routines?")
-  connection.write("NO")
+  connection.write("YES")
+  connection.wait("Print")
+  connection.write("Structured")
   connection.wait("Print errors and warnings with each routine?")
   connection.write("YES")
   connection.wait("Index all called routines?")
   connection.write("NO")
   connection.wait("DEVICE")
-  connection.write(";132;99999")
+  connection.write(";99999;99999")
   while True:
     try:
       index = connection.multiwait(["Press return to continue:",
