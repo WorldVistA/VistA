@@ -16,9 +16,9 @@ START_OF_RECORD = re.compile('^(?P<name>NUMBER): ')
 GENERIC_START_OF_RECORD = re.compile('^( *)?(?P<name>[A-Z^/]+( [A-Z/#^]+)*): ') # max of 2 spaces
 DBA_COMMENTS = re.compile('^( +)?(?P<name>DBA Comments): ')
 GENERIC_FIELD_RECORD = re.compile('( )(?P<name>[A-Z^/]+( [A-Z/^#]+)*): ')
-# This is dictories of all possible sub-files in the schema
+INTEGRATION_REFERENCES_LIST = re.compile('^[\r\f]?INTEGRATION REFERENCES LIST *(.*)(([01]\d|2[0-3]):([0-5]\d)|24:00) *PAGE')
+
 LINES_TO_IGNORE = [
-    re.compile('^[\r\f]?INTEGRATION REFERENCES LIST'),
     re.compile('^-+$')
 ]
 
@@ -30,6 +30,8 @@ def convertDateTimeField(inputDt):
             return datetime.strptime(inputDt, '%b %d, %Y@%H:%M').strftime('%Y/%m/%d %H:%M')
     except ValueError:
         return inputDt
+
+date = None
 
 """
 This is the class to parse the VA ICR file and convert to JSON format.
@@ -45,12 +47,17 @@ class ICRFileToJson(object):
         self._DBAComments = False
 
     def parse(self, inputFilename, outputFilename):
+        global date
         with open(inputFilename,'r') as ICRFile:
             for line in ICRFile:
                 line = line.rstrip("\r\n")
                 self._curLineNo +=1
                 """ get rid of lines that are ignored """
                 if self.isIgnoredLine(line):
+                    continue
+                match = INTEGRATION_REFERENCES_LIST.match(line)
+                if match:
+                    date = match.group(1).strip()
                     continue
                 match = START_OF_RECORD.match(line)
                 if match and not self._DBAComments:

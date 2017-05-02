@@ -12,6 +12,18 @@ def run(args):
     args.outJson = tmpJson
     ICRFileToJson.run(args)
 
+    args.date = ICRFileToJson.date
+    if args.date is None:
+        # No date specified in the file, try to parse the filename
+        # Expected format: <month>_<day>_<year>_IA_Listing_Descriptions.TXT
+        filename = args.icrfile
+        s = filename.find("_IA_Listing_Descriptions")
+        if s > 0:
+            date_str = filename[:s]
+            vals = date_str.split("_")
+            if len(vals) == 3:
+                args.date = vals[0] + " " + vals[1] + "," + vals[2]
+
     args.icrJsonFile = tmpJson
     ICRJsonToHtml.run(args)
 

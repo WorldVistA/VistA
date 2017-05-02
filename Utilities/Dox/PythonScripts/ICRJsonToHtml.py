@@ -174,10 +174,10 @@ class ICRJsonToHtml(object):
     It will also generate the pages for each individual ICR details
 
     """
-    def converJsonToHtml(self, inputJsonFile):
+    def convertJsonToHtml(self, inputJsonFile, date):
         with open(inputJsonFile, 'r') as inputFile:
             inputJson = json.load(inputFile)
-            self._generateICRSummaryPage(inputJson)
+            self._generateICRSummaryPage(inputJson, date)
 
     """ Utility function to convert icrEntry to summary info """
     def _convertICREntryToSummaryInfo(self, icrEntry):
@@ -193,26 +193,26 @@ class ICRJsonToHtml(object):
 
     """ Summary page will contain summary information
     """
-    def _generateICRSummaryPage(self, inputJson):
+    def _generateICRSummaryPage(self, inputJson, date):
         pkgJson = {} # group by package
         allpgkJson = []
         for icrEntry in inputJson:
-            self._generateICRIndividualPage(icrEntry)
+            self._generateICRIndividualPage(icrEntry, date)
             summaryInfo = self._convertICREntryToSummaryInfo(icrEntry)
             allpgkJson.append(summaryInfo)
             if 'CUSTODIAL PACKAGE' in icrEntry:
                 pkgJson.setdefault(icrEntry['CUSTODIAL PACKAGE'],[]).append(summaryInfo)
-        self._generateICRSummaryPageImpl(allpgkJson, 'ICR List', 'All', True)
+        self._generateICRSummaryPageImpl(allpgkJson, 'ICR List', 'All', date, True)
         for pkgName, outJson in pkgJson.iteritems():
-            self._generateICRSummaryPageImpl(outJson, 'ICR List', pkgName)
+            self._generateICRSummaryPageImpl(outJson, 'ICR List', pkgName, date)
         logger.warn('Total # entry in pkgMap is [%s]', len(pkgMap))
         logger.warn('Total # entry in pkgJson is [%s]', len(pkgJson))
         pprint.pprint(set(pkgJson.keys()) - set(pkgMap.keys()))
         pprint.pprint(set(pgkUpperCaseNameDict.values()) - set(pkgMap.values()))
         # pprint.pprint(pkgMap)
-        self._generatePkgDepSummaryPage(inputJson)
+        self._generatePkgDepSummaryPage(inputJson, date)
 
-    def _generatePkgDepSummaryPage(self, inputJson):
+    def _generatePkgDepSummaryPage(self, inputJson, date):
         outDep = {}
         for icrItem in inputJson:
             curIaNum = icrItem['IA #']
@@ -273,11 +273,14 @@ class ICRJsonToHtml(object):
                 output.write ("</tr>\n")
             output.write("</tbody>\n")
             output.write("</table>\n")
+            if date is not None:
+                link = "http://foia-vista.osehra.org/VistA_Integration_Agreement/"
+                output.write("<a href=\"%s\">Generated from %s IA Listing Descriptions</a>" % (link, date))
             output.write("</div>\n")
             output.write("</div>\n")
             output.write ("</body></html>\n")
 
-    def _generateICRSummaryPageImpl(self, inputJson, listName, pkgName, isForAll=False):
+    def _generateICRSummaryPageImpl(self, inputJson, listName, pkgName, date, isForAll=False):
         outDir = self._outDir
         listName = listName.strip()
         pkgName = pkgName.strip()
@@ -338,12 +341,15 @@ class ICRJsonToHtml(object):
                     json.dump(outJson, ajaxOut)
             output.write("</tbody>\n")
             output.write("</table>\n")
+            if date is not None:
+                link = "http://foia-vista.osehra.org/VistA_Integration_Agreement/"
+                output.write("<a href=\"%s\">Generated from %s IA Listing Descriptions</a>" % (link, date))
             output.write("</div>\n")
             output.write("</div>\n")
             output.write ("</body></html>\n")
 
     """ This is to generate a web page for each individual ICR entry """
-    def _generateICRIndividualPage(self, icrJson):
+    def _generateICRIndividualPage(self, icrJson, date):
         ien = icrJson['NUMBER']
         outIcrFile = os.path.join(self._outDir, 'ICR-' + ien + '.html')
         tName = safeElementId("%s-%s" % ('ICR', ien))
@@ -360,6 +366,9 @@ class ICRJsonToHtml(object):
             self._icrDataEntryToHtml(output, icrJson)
             output.write("</tbody>\n")
             output.write("</table>\n")
+            if date is not None:
+                link = "http://foia-vista.osehra.org/VistA_Integration_Agreement/"
+                output.write("<a href=\"%s\">Generated from %s IA Listing Descriptions</a>" % (link, date))
             output.write("</div>\n")
             output.write("</div>\n")
             output.write ("</body></html>")
@@ -450,7 +459,11 @@ def run(args):
                                                 args.patchRepositDir)
     rpcNameToIenMapping = createRemoteProcedureMapping(args.MRepositDir, crossRef)
     icrJsonToHtml = ICRJsonToHtml(crossRef, args.outDir)
-    icrJsonToHtml.converJsonToHtml(args.icrJsonFile)
+    if hasattr(args, 'date'):
+        date = args.date
+    else:
+        date = None
+    icrJsonToHtml.convertJsonToHtml(args.icrJsonFile, date)
 
 
 if __name__ == '__main__':
