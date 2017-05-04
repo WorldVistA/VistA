@@ -1,0 +1,778 @@
+
+=============================================================================
+Run Date: JAN 18, 2017                     Designation: HMP*2*2
+Package : HMP - HEALTH MANAGEMENT PLATFORM    Priority: Mandatory
+Version : 2         SEQ #6                      Status: Released
+                  Compliance Date: MAR 04, 2017
+=============================================================================
+
+Associated patches: (v)OR*3*421    <<= must be installed BEFORE `HMP*2*2'
+                    (v)DG*5.3*921  <<= must be installed BEFORE `HMP*2*2'
+                    (v)PSS*1*197   <<= must be installed BEFORE `HMP*2*2'
+                    (v)HMP*2*1     <<= must be installed BEFORE `HMP*2*2'
+                    (v)PSB*3*95    <<= must be installed BEFORE `HMP*2*2'
+                    (v)GMRV*5*32   <<= must be installed BEFORE `HMP*2*2'
+                    (v)MC*2.3*47   <<= must be installed BEFORE `HMP*2*2'
+
+Subject: eHMP WRITEBACK VERSION 1
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch introduces the new functionality of WriteBack which gives the 
+ users the ability to enter orders, vitals, and other medical data into 
+ VistA from the Enterprise Health Management Platform (eHMP) User Interface
+ (UI). It also addresses several defects that have been identified outside
+ of the HMP namespace. This patch is being released in conjunction with six
+ (6) pre-requisite patches that add necessary triggers and functionality to
+ the MC, OR, PSB, GMRV, PSS, and DG namespaces. HMP*2.0*2 also enhances
+ several tools within VistA. The HMP Monitor has been enhanced to show more
+ data in a clearer format and Error Trapping for the VistA-Sync process is
+ more informative of the nature of problems that occur regarding patient
+ sync and freshness updates. Enhancing the freshness stream updates will
+ provide information for the support staff to assist the VA Medical Centers
+ when necessary.
+  
+ **NOTE**
+ HMP*2.0*2 is being released in a bundle with 6 supporting patches. It is 
+ recommended that this bundle be installed during non-peak hours
+ with no CPRS users on the system. This bundle should take less than 5
+ minutes to install.
+  
+ The patches will be installed in the following order:
+ 1. DG*5.3*921
+ 2. MC*2.3*47
+ 3. GMRV*5*32
+ 4. PSB*3*95
+ 5. PSS*1*197
+ 6. OR*3*421
+ 7. HMP*2.0*2
+  
+ Following the installation of HMP*2.0*2, IRM staff should review the Error
+ trap for any <NOROUTINE> errors and work with the assistance of the
+ Clinical Application Coordinators (CACs) to validate the patient's orders
+ placed during the install time.
+  
+ Patch Components:
+ -----------------
+  
+ Files and Fields Associated:
+ ----------------------------
+ File Name (#)               Field Name (#)        New/Modified/Deleted
+ -------------               --------------        --------------------
+ HMP SUBSCRIPTION (#800000)                            Modified
+                             DEFAULT? (#.07)              New
+  
+ HMP EVENT (#800003)                                      New
+                            LOG NUMBER (#.01)
+                            EVENT DATE/TIME (#.02)
+                            TYPE OF EVENT (#.03)
+                            DESCRIPTIVE TEXT (#1)
+  
+ Forms Associated:
+ -----------------
+ There are no new or modified forms in this patch.
+  
+ Mail Groups Associated:
+ -----------------------
+ There are no new or modified mail groups in this patch
+  
+ Options Associated:
+ -------------------
+ Options Name                               New/Modified/Deleted
+ ------------                               --------------------
+ HMP UI CONTEXT version 20160108-01.US12         Modified
+   [HMP UI CONTEXT] 
+ HMP Technical Management [HMPMGR]               Modified
+ HMP Dashboard [HMPMON DASHBOARD]                New
+ Set Package's Dashboard Auto-update Rate        New
+    [HMPMON SET PKG DASHBOARD RATE]
+ Set System's Dashboard Auto-update Rate         New
+    [HMPMON SET SYS DASHBOARD RATE]
+ HMP Purge HMP EVENT file (#800003)              New
+    [HMP EVENT PURGE]
+ Synchronize the HMP                             Modified
+    [HMP SYNCHRONIZATION CONTEXT]
+  
+ Protocols Associated:
+ ---------------------
+ Protocol Name                            New/Modified/Deleted
+ -------------                            --------------------
+ HMP DGPF ASSIGN FLAG                         Modified
+  
+ Remote Procedure Calls (RPCs) Name        New/Modified/Deleted
+ ----------------------------------        --------------------
+ HMP CHKXTMP                                   Modified
+ HMP DELETE TIU NOTE                           New
+ HMP GET RELEATED ORDERS                       New
+ HMP GLOBAL SIZE                               Modified
+ HMP LOCAL GETCORRESPONDINGIDS                 Deleted
+ HMP MED ORDER CHECKS                          New
+ HMP SAVE NOTE STUB                            New
+ HMP SUBSCRIPTION STATUS                       New
+ HMP TIU LONG LIST OF TITLES                   New
+ HMP WRITEBACK ALLERGY                         New
+ HMP WRITEBACK ALLERGY EIE                     New
+ HMP WRITEBACK ENCOUNTERS                      New
+ HMP WRITEBACK VITAL                           New
+ HMP WRITEBACK VITAL EIE                       New
+  
+ Security Keys Associated:
+ -------------------------
+ There are no new or modified security keys in this patch.
+  
+ Templates Associated:
+ ---------------------
+ Template Name - Parameter       New/Modified/Deleted
+ -------------------------       -------------------- 
+ HMPMON DASHBOARD PKG                New
+ HMPMON DASHBOARD SYS                New
+ HMPMON DASHBOARD USR                New
+  
+ Additional Information:
+ -----------------------
+ User Story              Description
+ ----------              -----------
+ US6268                  Writeback of Outpatient Meds to VistA Create 
+                           Wrapper
+ US7825                  Writeback Wrapper Utility
+ US7840                  Writeback of Outpatient Meds - Sign Order (Coding)
+ US11895                 Create a new RPC to give back an unfiltered list
+                           of TIU LONG LIST OF TITLES
+ US12358                 F414 - Sync treatment factors to JDS
+ US14078                 F810: Add Fields to JDS User Endpoint
+ US15659                 Review Writeback Wrappers
+  
+ Defect Number           Routine         Description
+ -------------           -------         -----------
+ DE3184                  HMPDJ08         Chief, MIS user class cannot view
+                                           the text of unsigned addenda
+ DE3327                  HMPEVNT         VX Instance name hardcoded 
+                                           in HMP package
+ DE3996                                  HMP_2-0_Data Dictionary approval 
+                                           for HMP Subscription 
+                                           File (#800000)
+ DE4487                  HMPDMC          Procedures (Clinical Procedures) 
+                         HMPEVNT           and their result
+                         MC*2.3*47 PATCH   documents do not trigger a 
+                                           freshness update
+ DE4763                  HMPWB1          ALLERGIES write-back: 
+                                           throws MUMPS error when
+                                           attempting to view record 
+                                           in VistA
+ DE4778                  HMPEF1          Internal Entry Number in NEW 
+                                           PERSON file (#200) can cause
+                                           ODS to skip the user domain
+ DE4833                                  depreciating HMP LOCAL 
+                                           GETCORRESPONDINGIDS
+ DE4859                  HMPDJ0          Canceling an Appointment will 
+                         HMPDJ04           not update the "stampTime"
+                         HMPSTMP           and there is no flag that
+                                           indicates this appointment 
+                                           has been canceled.
+ DE4983                  HMPDJ00         error during freshness stream 
+                                           update, undefined entry in the
+                                           PATIENT file:  LKUP+3^HMPDJ00
+ DE5016                  HMPDJ           invalid date returned for 
+                         HMPDJ1            positive time zone offset
+                         HMPDJ2            (Manila Pre-Prod)
+                         HMPDJFSM
+                         HMPEF
+                         HMPSTMP
+                         HMPUPD
+                         HMPUTILS
+ DE5048                                  SQA Findings remaining from 
+                                           HMP 2.0
+ DE5096                  HMPDJ02         Add additional problem fields 
+                                           in JDS (VistA part)
+ DE5156                  HMPDJ0          Meds Review data integrity 
+                         HMPDJ05           issue (VX-Sync defect)
+                                           VA-382 - Meds Review data 
+                                           integrity issue (VX-Sync Defect)
+ DE5181                  HMPDJFS         Requesting ODS sync after 
+                                           ODS sync has already been
+                                           done - should be ignored by
+                                           VistA
+ DE5300                  HMPDJ04         Sync process for pulling visit 
+                                           data is not getting the
+                                           correct stop code data
+ DE5361                  HMPEF1          Incomplete Note Addendum 
+                                           Signature on All CPRS Addenda
+ DE5692                  HMPUTILS        efficiency issues in the eHMP
+                                           monitor (aka eHMP dashboard).
+ DE5723                  HMPDJ05         Medication activation Stamptime 
+                         HMPSTMP           not updating
+ DE6485                  HMPEVNT         modified HMPEVNT to deal with
+                                           bug found in Lab
+ DE6573                  HMPTIUL         Added routine to the patch. This
+                                           was needed for the RPC
+                                           HMP TIU LONG LIST OF TITLES
+ DE6747                  HMPMETA         Modified the routine
+                                         
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR #20150408 - VistA Evolution Enterprise Health Management Platform 
+ (eHMP)
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ There are no PSIs associated with this patch.
+  
+ Remedy Tickets(s) & Overview
+ ----------------------------
+ There are no Remedy tickets associated with this patch.
+  
+ Test Sites:
+ -----------
+ Hampton, VA
+ Indianapolis, IN
+ Loma Linda, CA
+ Portland, OR
+ San Antonio, TX
+ San Diego, CA
+  
+ SFTP SOFTWARE RETRIEVAL:
+ =======================
+  
+ File Name                               FTP Mode
+ ------------------------------------------------
+ HMP_MULTIBUILD_2-0_P02.KID              ASCII
+   
+           
+    The preferred method is to retrieve the file from:
+        
+        download.vista.domain.ext.
+        
+    This transmits the files from the first available server. Sites may 
+    also elect to retrieve files directly from a specific server. 
+        
+    Sites may retrieve the software directly using Secure File Transfer
+    Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following
+    OI Field Offices:
+        
+        Albany            domain.ext
+        Hines             domain.ext
+        Salt Lake City    domain.ext
+  
+ Pre-Installation Instructions:
+ -----------------------------
+  
+ Patch Installation:
+ -------------------
+ HMP*2.0*2 is being released in a bundle with 6 supporting patches. It is 
+ recommended that this bundle be installed during non-peak hours with no
+ CPRS users on the system. This bundle should take less than 5 minutes to
+ install.
+  
+ The patches will be installed in the following order:
+ 1. DG*5.3*921
+ 2. MC*2.3*47
+ 3. GMRV*5*32
+ 4. PSB*3*95
+ 5. PSS*1*197
+ 6. OR*3*421
+ 7. HMP*2.0*2
+  
+ Following the installation of HMP*2.0*2, IRM staff should review the Error
+ trap for any <NOROUTINE> errors and work with the assistance of the
+ Clinical Application Coordinators (CACs) to validate the patient's orders
+ placed during the install time.
+  
+  
+ Installation Instructions:
+  
+ 1.Download the HMP_MULTIBUILD_2-0_P02.KID file from the appropriate 
+ Server to a directory on your system
+  
+ 2. From the Kernel Installation and Distribution System [XPD MENU] menu, 
+ select the Installation Menu [XPD INSTALLATION MENU]. 
+  
+ 3. Select Load a Distribution [XPD LOAD DISTRIBUTION]. Enter the Host 
+ file location and HMP_MULTIBUILD_2-0_P02.KID
+ From this menu, you may elect to use the following options. When prompted 
+ for the INSTALL enter the patch HMP_MULTIBUILD*2.0*2.
+  
+ a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM]- 
+ This option will allow you to ensure the integrity of the routines that 
+ are in the backup any other changes such as DD's or templates.
+  
+ b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM]- 
+ This option will allow you to view all changes that will be made when 
+ this patch is installed. It compares all components of this patch 
+ (routines, DD's, templates, etc.).
+  
+ c. Backup a Transport Global [XPD BACKUP] - 
+ This option will create a backup message of any routines exported with 
+ this patch. It will not backup any other changes such as DD's or 
+ templates.
+  
+ 4.  Select Install Package(s) [XPD INSTALL BUILD] to begin the 
+ installation process.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+ respond YES.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+ Protocols? NO//', respond NO.
+  
+ 7. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+ Install? NO//'  respond No.
+  
+ Sample Installation
+ -------------------
+ Select Installation <TEST ACCOUNT> Option: INstall Package(s)
+ Select INSTALL NAME:    HMP_MULTIBUILD*2.0*2    11/22/16@08:07:28
+      => EHMP PATCH 2v13 AND SUPPORTING PATCHES  ;Created on Nov 21, 
+ 2016@12:08
+  
+ This Distribution was loaded on Nov 22, 2016@08:07:28 with header of 
+    EHMP PATCH 2v13 AND SUPPORTING PATCHES  ;Created on Nov 21, 
+ 2016@12:08:51
+    It consisted of the following Install(s):
+ HMP_MULTIBUILD*2.0*2     DG*5.3*921      MC*2.3*47    GMRV*5.0*32
+      PSB*3.0*95    PSS*1.0*197     OR*3.0*421      HMP*2.0*2
+ Checking Install for Package HMP_MULTIBUILD*2.0*2
+  
+ Install Questions for HMP_MULTIBUILD*2.0*2
+  
+  
+ Checking Install for Package DG*5.3*921
+  
+ Install Questions for DG*5.3*921
+  
+  
+ Checking Install for Package MC*2.3*47
+  
+ Install Questions for MC*2.3*47
+  
+  
+ Checking Install for Package GMRV*5.0*32
+  
+ Install Questions for GMRV*5.0*32
+  
+ Incoming Files:
+  
+  
+    120.5     GMRV VITAL MEASUREMENT
+ Note:  You already have the 'GMRV VITAL MEASUREMENT' File.
+  
+ Checking Install for Package PSB*3.0*95
+  
+ Install Questions for PSB*3.0*95
+  
+  
+ Checking Install for Package PSS*1.0*197
+  
+ Install Questions for PSS*1.0*197
+  
+  
+ Checking Install for Package OR*3.0*421
+  
+ Install Questions for OR*3.0*421
+  
+  
+ Checking Install for Package HMP*2.0*2
+  
+ Install Questions for HMP*2.0*2
+  
+ Incoming Files:
+  
+  
+    800000    HMP SUBSCRIPTION
+ Note:  You already have the 'HMP SUBSCRIPTION' File.
+  
+  
+    800003    HMP EVENT
+ Note:  You already have the 'HMP EVENT' File.
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   Linux Telnet/SSH
+ --------------------------------------------------------------------------
+  
+  Install Started for HMP_MULTIBUILD*2.0*2 : 
+                Nov 22, 2016@09:19:38
+  
+ Build Distribution Date: Nov 21, 2016
+  
+  Installing Routines:
+                Nov 22, 2016@09:19:38
+  
+  Install Started for DG*5.3*921 : 
+                Nov 22, 2016@09:19:39
+  
+ Build Distribution Date: Nov 21, 2016
+  
+  Installing Routines:
+                Nov 22, 2016@09:19:39
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing PROTOCOL
+                Nov 22, 2016@09:19:39
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  DG*5.3*921 Installed. 
+                Nov 22, 2016@09:19:39
+  
+  Install Message sent 
+  
+  Install Started for MC*2.3*47 : 
+                Nov 22, 2016@09:19:39
+  
+ Build Distribution Date: Nov 21, 2016
+  
+  Installing Routines:
+                Nov 22, 2016@09:19:39
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MC*2.3*47 Installed. 
+                Nov 22, 2016@09:19:39
+  
+  Install Message sent 
+  
+  Install Started for GMRV*5.0*32 : 
+                Nov 22, 2016@09:19:39
+  
+ Build Distribution Date: Nov 21, 2016
+  
+  Installing Routines:
+                Nov 22, 2016@09:19:39
+  
+  Installing Data Dictionaries: 
+                Nov 22, 2016@09:19:39
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  GMRV*5.0*32 Installed. 
+                Nov 22, 2016@09:19:39
+  
+  Install Message sent 
+  
+  Install Started for PSB*3.0*95 : 
+                Nov 22, 2016@09:19:39
+  
+ Build Distribution Date: Nov 21, 2016
+  
+  Installing Routines:
+                Nov 22, 2016@09:19:39
+  
+  Running Post-Install Routine: EN^PSB95P
+  
+  updating PS EVSEND OR protocol
+  
+  PSB95P post-init completed Nov 22, 2016@09:19:39
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  PSB*3.0*95 Installed. 
+                Nov 22, 2016@09:19:39
+  
+  Install Message sent 
+  
+  Install Started for PSS*1.0*197 : 
+                Nov 22, 2016@09:19:39
+  
+ Build Distribution Date: Nov 21, 2016
+  
+  Installing Routines:
+                Nov 22, 2016@09:19:39
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  PSS*1.0*197 Installed. 
+                Nov 22, 2016@09:19:40
+  
+  Install Message sent 
+  
+  Install Started for OR*3.0*421 : 
+                Nov 22, 2016@09:19:40
+  
+ Build Distribution Date: Nov 21, 2016
+  
+  Installing Routines:
+                Nov 22, 2016@09:19:40
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  OR*3.0*421 Installed. 
+                Nov 22, 2016@09:19:40
+  
+  Install Message sent 
+  
+  Install Started for HMP*2.0*2 : 
+                Nov 22, 2016@09:19:40
+  
+ Build Distribution Date: Nov 21, 2016
+  
+  Installing Routines:
+                Nov 22, 2016@09:19:40
+  
+  Installing Data Dictionaries: 
+                Nov 22, 2016@09:19:40
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing PROTOCOL
+  
+  Installing REMOTE PROCEDURE
+  
+  Installing OPTION
+  
+  Installing PARAMETER DEFINITION
+  
+  Installing PARAMETER TEMPLATE
+                Nov 22, 2016@09:19:41
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  HMP*2.0*2 Installed. 
+                Nov 22, 2016@09:19:41
+  
+  Install Message sent 
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  HMP_MULTIBUILD*2.0*2 Installed. 
+                Nov 22, 2016@09:19:41
+  
+  No link to PACKAGE file
+  
+ Install Completed
+  
+ Installation Verification
+ =========================
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+ ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**[Patch List]**;Sep 01, 
+ 2011;Build 26
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+ Back-out Procedures
+ ===================
+ Back-out will be done only with the concurrence and participation of ASM
+ and appropriate VA site/region personnel. The decision to back-out or
+ rollback software will be a joint decision between ASM, VA site/region
+ personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install).  The message containing the backed up routines can be loaded
+ with the "Xtract PackMan" function at the Message Action prompt. The
+ Packman function "INSTALL/CHECK MESSAGE" is then used to install the
+ backed up routines onto the VistA System.
+  
+ Validation of Roll Back Procedure
+ =================================
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the HMP Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the
+ HMP*2.0*2 patch have been rolled back the first two lines of the routines
+ will no longer contain the designation of patch 2 in the patch list 
+ section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**[Patch List]**;Sep 01, 2011;Build 29
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HMPCRPC
+    Before: B13274810   After: B13274810  **2**
+Routine Name: HMPDJ
+    Before: B36223990   After: B36566294  **1,2**
+Routine Name: HMPDJ0
+    Before:B118417079   After:B123520924  **2**
+Routine Name: HMPDJ00
+    Before:B150294972   After:B165368982  **2**
+Routine Name: HMPDJ01
+    Before: B49806712   After: B96911634  **2**
+Routine Name: HMPDJ02
+    Before:B178097048   After:B212781835  **1,2**
+Routine Name: HMPDJ03
+    Before:B113601878   After:B113601878  **1,2**
+Routine Name: HMPDJ04
+    Before: B86219849   After: B91911154  **2**
+Routine Name: HMPDJ04A
+    Before: B59768993   After: B59768993  **2**
+Routine Name: HMPDJ04E
+    Before: B18074806   After: B17743110  **2**
+Routine Name: HMPDJ05
+    Before: B85682186   After: B94650196  **2**
+Routine Name: HMPDJ06
+    Before: B64037338   After: B65685348  **2**
+Routine Name: HMPDJ07
+    Before: B26955013   After: B31184394  **2**
+Routine Name: HMPDJ08
+    Before: B76812256   After: B80070149  **1,2**
+Routine Name: HMPDJ09
+    Before: B58540657   After:B140504631  **1,2**
+Routine Name: HMPDJ1
+    Before: B18382483   After: B18436618  **1,2**
+Routine Name: HMPDJ2
+    Before: B21292359   After: B21343271  **1,2**
+Routine Name: HMPDJFS
+    Before: B72336462   After: B75039687  **1,2**
+Routine Name: HMPDJFSD
+    Before:  B6635230   After:  B6635230  **2**
+Routine Name: HMPDJFSG
+    Before:B236965209   After:B239094228  **1,2**
+Routine Name: HMPDJFSM
+    Before: B91843339   After: B83803111  **1,2**
+Routine Name: HMPDJFSP
+    Before:B228347668   After:B224332595  **1,2**
+Routine Name: HMPDJFSQ
+    Before:       n/a   After:B141457837  **2**
+Routine Name: HMPDMC
+    Before: B58181283   After: B58301952  **2**
+Routine Name: HMPDPSOR
+    Before:  B2311665   After:  B2353345  **2**
+Routine Name: HMPEF
+    Before: B86180151   After: B86301720  **1,2**
+Routine Name: HMPEF1
+    Before: B36268404   After: B41995874  **2**
+Routine Name: HMPEVNT
+    Before:B135046428   After:B181881949  **1,2**
+Routine Name: HMPFPTC
+    Before: B15382684   After: B13917826  **2**
+Routine Name: HMPLOG
+    Before:       n/a   After: B18006538  **2**
+Routine Name: HMPMETA
+    Before:B127426606   After:B192449640  **1,2**
+Routine Name: HMPMON
+    Before:       n/a   After: B33479508  **2**
+Routine Name: HMPMONA
+    Before:       n/a   After: B32852666  **2**
+Routine Name: HMPMONC
+    Before:       n/a   After: B19385564  **2**
+Routine Name: HMPMOND
+    Before:       n/a   After: B73551310  **2**
+Routine Name: HMPMONDH
+    Before:       n/a   After:  B9552546  **2**
+Routine Name: HMPMONE
+    Before:       n/a   After: B15446586  **2**
+Routine Name: HMPMONEH
+    Before:       n/a   After:  B7976382  **2**
+Routine Name: HMPMONH
+    Before:       n/a   After:  B3366095  **2**
+Routine Name: HMPMONHH
+    Before:       n/a   After:  B6882140  **2**
+Routine Name: HMPMONJ
+    Before:       n/a   After: B21225316  **2**
+Routine Name: HMPMONL
+    Before:       n/a   After: B48690614  **2**
+Routine Name: HMPMONM
+    Before:       n/a   After: B24792706  **2**
+Routine Name: HMPMONR
+    Before:       n/a   After:     B2756  **2**
+Routine Name: HMPMONS
+    Before:       n/a   After:  B5634204  **2**
+Routine Name: HMPMONSH
+    Before:       n/a   After:  B8092582  **2**
+Routine Name: HMPMONV
+    Before:       n/a   After: B42629686  **2**
+Routine Name: HMPMONX
+    Before:       n/a   After: B51029601  **2**
+Routine Name: HMPOR
+    Before:       n/a   After: B51019081  **2**
+Routine Name: HMPORRPC
+    Before:       n/a   After:  B2194584  **2**
+Routine Name: HMPPTRPC
+    Before: B10929781   After: B11913363  **1,2**
+Routine Name: HMPSTMP
+    Before: B79306076   After:B101713428  **1,2**
+Routine Name: HMPTFU2
+    Before: B39725294   After: B40570794  **1,2**
+Routine Name: HMPTIUL
+    Before:       n/a   After:  B4400616  **2**
+Routine Name: HMPTOOLS
+    Before: B11387818   After: B13771837  **2**
+Routine Name: HMPUPD
+    Before: B25062781   After: B25103187  **1,2**
+Routine Name: HMPUTIL2
+    Before:       n/a   After: B22837890  **2**
+Routine Name: HMPUTILS
+    Before: B41539926   After: B55237151  **1,2**
+Routine Name: HMPWB
+    Before:       n/a   After:  B1427046  **2**
+Routine Name: HMPWB1
+    Before:       n/a   After: B43200310  **2**
+Routine Name: HMPWB2
+    Before:       n/a   After: B43784847  **2**
+Routine Name: HMPWB5
+    Before:       n/a   After: B28193400  **2**
+Routine Name: HMPWB5A
+    Before:       n/a   After: B30522775  **2**
+Routine Name: HMPWBIM1
+    Before:       n/a   After: B55295368  **2**
+Routine Name: HMPWBM1
+    Before:       n/a   After:  B2139238  **2**
+Routine Name: HMPWBM2
+    Before:       n/a   After:  B8891114  **2**
+Routine Name: HMPWBPL
+    Before:       n/a   After:  B2694501  **2**
+Routine Name: HMPWBSO
+    Before:       n/a   After:  B3162958  **2**
+Routine Name: HMPXGDPT
+    Before:  B2019789   After:  B2019789  **2**
+Routine Name: HMPXGLAB
+    Before:  B1064430   After:  B1064430  **2**
+Routine Name: HMPXGNP
+    Before:  B1299808   After:  B1299808  **2**
+Routine Name: HMPXGORD
+    Before:  B2568884   After:  B2568884  **2**
+Routine Name: HMPXGSD
+    Before:  B2602100   After:  B2602100  **2**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 18, 2016
+Completed By:                               Date Completed: DEC 22, 2016
+Released By :                               Date Released : JAN 18, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,264 @@
+$TXT Created by                   at VIALAB1.AAC.DOMAIN.EXT  (KIDS) on Thursday, 12/08/16 at 15:04
+=============================================================================
+Run Date: JAN 30, 2017                     Designation: VIAB*1*8
+Package : VIAB - VISTA INTEGRATION ADAPTOR    Priority: Mandatory
+Version : 1         SEQ #8                      Status: Released
+                  Compliance Date: MAR 01, 2017
+=============================================================================
+
+Associated patches: (v)VIAB*1*7    <<= must be installed BEFORE `VIAB*1*8'
+
+Subject: VIA INCREMENT 3-B UPDATES
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ The VistA integration Adaptor (VIA) system is a middleware used to transport
+ clinical and non-clinical electronic information between producing and
+ consuming applications in VA systems.  VIA utilizes remote procedure calls
+ (RPCs) for data requested by consuming applications.
+  
+ The purpose of this patch is to publish RPCs that were added to the VIAB WEB
+ SERVICES OPTION in the OPTION file (#19), RPC field (#320). 
+  
+ These new RPCs were created to meet the needs of consuming applications.
+   VIAB ACTPROB   This RPC returns a list of active problems for a patient. 
+   VIAB BMS       This RPC supports request for data from the Bed Management 
+                  System (BMS). The input parameter 'PATH' determines the data
+                  returned.
+   VIAB CPTMODS   This RPC returns a list of CPT modifiers for a given CPT Code.
+   VIAB CURSPE    This RPC returns the current observation status for a patient
+                  based on the treating specialty.
+   VIAB DEFAULT REQUEST REASON
+                  This RPC returns a default reason for a consult service in 
+                  the REQUEST SERVICES File #123.5.
+   VIAB EDIT DEFAULT REASON
+                  This RPC returns the value of RESTRICT DEFAULT REASON EDIT 
+                  field.
+   VIAB NOTEVSTR  This RPC returns VISIT LOCATION;EPISODE BEGIN DATE;VISIT TYPE
+                  from the TIU DOCUMENT file.
+   VIAB RADSRC    This RPC returns a list of active contract/sharing agreement
+                  type.
+ 
+ These 12 existing RPCs were added to VIAB WEB SERVICES OPTION.
+    MBAA APPOINTMENT LIST BY NAME  
+    MBAA APPOINTMENT MAKE  
+    MBAA CANCEL APPOINTMENT  
+    MBAA FACILITY WAIT LIST  
+    MBAA GET CLINIC AVAILABILITY  
+    MBAA GET CLINIC DETAILS  
+    MBAA LIST CANCELLATION REASONS 
+    MBAA PATIENT PENDING APPT  
+    MBAA PROVIDERS BY CLINIC  
+    MBAA REMOVE FROM EWL  
+    MBAA VERIFY CLINIC ACCESS  
+    MBAA WAIT LIST BY DFN   
+    
+   
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+   
+  File Name (Number)         Field Name (Number)     New/Modified/Deleted
+  ------------------         -------------------     --------------------
+  N/A
+   
+  Forms Associated:
+   
+  Form Name                    File #               New/Modified/Deleted
+  ---------                    ------               --------------------
+  N/A
+   
+  Mail Groups Associated:
+   
+  Mail Group Name          New/Modified/Deleted
+  ---------------          --------------------
+  N/A
+  
+  Options Associated:
+    
+  Option Name               Type                    New/Modified/Deleted
+  -----------               ----                    --------------------
+   VIAB WEB SERVICES OPTION  Broker (Client/Server)  Modified
+  
+   RPCs added to VIAB WEB SERVICES option by this patch:
+       MBAA APPOINTMENT LIST BY NAME  
+       MBAA APPOINTMENT MAKE  
+       MBAA CANCEL APPOINTMENT  
+       MBAA FACILITY WAIT LIST  
+       MBAA GET CLINIC AVAILABILITY  
+       MBAA GET CLINIC DETAILS  
+       MBAA LIST CANCELLATION REASONS 
+       MBAA PATIENT PENDING APPT  
+       MBAA PROVIDERS BY CLINIC  
+       MBAA REMOVE FROM EWL  
+       MBAA VERIFY CLINIC ACCESS  
+       MBAA WAIT LIST BY DFN   
+       VIAB ACTPROB                                   SEND TO SITE
+       VIAB BMS                                       SEND TO SITE
+       VIAB CPTMODS                                   SEND TO SITE
+       VIAB CURSPE                                    SEND TO SITE
+       VIAB DEFAULT REQUEST REASON                    SEND TO SITE
+       VIAB EDIT DEFAULT REASON                       SEND TO SITE
+       VIAB NOTEVSTR                                  SEND TO SITE
+       VIAB RADSRC                                    SEND TO SITE
+ 
+  
+   Option Details:
+       Field                Value
+       -----                -----
+       NAME (#.01):         VIAB WEB SERVICES OPTION
+       MENU TEXT (#1):      VIAB Web Services Option
+       DESCRIPTION (#3.5):  This option is required by the Kernel Broker 
+                            to give access to the RPCs used by the Vista
+                            Integration Adapter (VIA) team. 
+  
+  
+  New Remote Procedure Calls:
+  --------------------------
+  VIAB ACTPROB                                   SEND TO SITE
+  VIAB BMS                                       SEND TO SITE
+  VIAB CPTMODS                                   SEND TO SITE
+  VIAB CURSPE                                    SEND TO SITE
+  VIAB DEFAULT REQUEST REASON                    SEND TO SITE
+  VIAB EDIT DEFAULT REASON                       SEND TO SITE
+  VIAB NOTEVSTR                                  SEND TO SITE
+  VIAB RADSRC                                    SEND TO SITE
+  
+  New Service Requests (NSRs):
+  ----------------------------  
+  N/A
+    
+    
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+    
+    
+  Remedy Ticket(s) & Overview:
+  ----------------------------
+  N/A
+    
+    
+ Test Sites:
+ -----------
+ Central Alabama Veterans Health Care System
+ Lebanon VA Medical Center
+ VA Gulf Coast Veterans Health Care System
+  
+ 
+ SFTP SOFTWARE RETRIEVAL:
+ =======================
+ File Name                     File Description      FTP Mode
+ -------------------------------------------------------------
+ VIAB_1_8_Release_notes.doc    Release Note          binary
+ 
+ 
+ The preferred method is to retrieve the file from: download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server.
+ 
+ Sites may retrieve the software directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following
+ OI Field Offices:
+ 
+ Albany domain.ext
+ Hines domain.ext
+ Salt Lake City domain.ext
+ 
+  
+ Patch Installation:
+ ------------------- 
+    
+ Pre/Post Installation Overview:
+ -------------------------------
+ Patch VIAB*1*7 must be installed prior to installation of VIAB*1*8
+ 
+  
+ Pre-Installation Instructions:
+ -----------------------------
+ This patch may be installed with users on the system. This patch should 
+ take less than 5 minutes to install. 
+   
+ No menu options need to be disabled.
+   
+   
+ Installation Instructions:
+ --------------------------
+ This installation will install modified Remote Procedure Calls (RPCs).
+   
+  1.  Choose the PackMan message containing this patch.
+   
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME enter the 
+      patch VIAB*1.0*8:
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+   
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch (VIAB*1*8) to install.
+   
+  5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+      Install? NO//', press <ENTER>. 
+  
+  6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//', press <ENTER>.
+   
+  7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? NO//', press <ENTER>.
+   
+  8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+    
+    
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VISTA INTEGRATION ADAPTER;**[Patch List]**;06-FEB-2014;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VIABMS
+    Before:       n/a   After:B138505639  **8**
+Routine Name: VIABMS1
+    Before:       n/a   After:B138039577  **8**
+Routine Name: VIABRPC
+    Before:  B2945933   After: B22947290  **7,8**
+ 
+Routine list of preceding patches: 7
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 05, 2016
+Completed By:                               Date Completed: JAN 27, 2017
+Released By :                               Date Released : JAN 30, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

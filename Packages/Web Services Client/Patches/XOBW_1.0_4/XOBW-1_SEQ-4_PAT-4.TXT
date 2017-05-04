@@ -1,0 +1,253 @@
+$TXT Created by             KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Wednesday, 09/14/16 at 13:59
+=============================================================================
+Run Date: DEC 07, 2016                     Designation: XOBW*1*4
+Package : XOBW - WEB SERVICES CLIENT          Priority: Mandatory
+Version : 1         SEQ #4                      Status: Released
+                  Compliance Date: JAN 07, 2017
+=============================================================================
+
+Associated patches: (v)XOBW 1.0    <<= must be installed BEFORE `XOBW*1*4'
+
+Subject: ENABLE TLS/SSL FOR OPENVMS
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+                        XOBW*1*4
+  
+ ** 
+    This patch is a very different patch to install, as it involves
+    multiple people with different privileges and must be installed on
+    multiple nodes/servers. The patch must also be installed even if
+    your site is all-Linux.
+ **
+  
+ VistA packages using HWSC are now being mandated to secure their 
+ connections.
+  
+ VistA packages currently using HWSC as their web service client to remote 
+ web services are not securing their connections with TLS/SSL.  This is 
+ due to a potential risk of using TLS/SSL on VistA sites running on 
+ OpenVMS.  When the HWSC package was released about 7 years ago, the use 
+ of TLS/SSL was disabled for VistA sites running on OpenVMS due to a 
+ memory leak that accumulates when sending requests. 
+  
+ Hewlett Packard was to release a fix to the problem but we haven't 
+ confirmed if, or when, the fix was issued. The VistA Infrastructure (VI) 
+ ran a new performance test to verify if the issue was still there.  The 
+ memory leak did not appear, and it may be due to a fix released by Hewlett
+ Packard when updating OpenVMS since 7 years ago, or were due to the 
+ updates to Cache made by InterSystems.
+  
+  
+ Since the recent tests indicate that there is no potential of 
+ a memory leak, the HWSC package will now enable the use of TLS/SSL on 
+ OpenVMS.
+  
+ This patch will create the "encrypt_only" Transport Layer Security 
+ (TLS/SSL) configuration if it does not exist in the system, and also
+ update the class xobw.WebServiceProxyFactory.
+  
+ This patch will update and create the following:
+  1. routines
+  2. update the class xobw.WebServiceProxyFactory
+  3. update the class xobw.WebServer 
+  4. create the "encrypt_only" Transport Layer Security 
+     (TLS/SSL) configuration if it does not exist in the system
+  
+ Note: The TLS/SSL configuration must be installed in all nodes, both 
+ front-end server nodes and database server nodes. See Post-Installation
+ section.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)  New/Modified/Deleted
+ ------------------      -------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ ObjectScript classes:
+ ---------------------
+   Classes: xobw.WebServiceProxyFactory
+   Classes: xobw.WebServer
+  
+ TLS/SSL Configurations:
+ -----------------------
+ Configuration name: encrypt_only
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ NSD Incident I9175972FY16, Enable SSL for VMS system 
+  
+ Problem:
+ --------
+ VistA packages currently using HWSC as their web service client to remote 
+ web services are not securing their connections with TLS/SSL.  This is 
+ due to a potential risk of using TLS/SSL on VistA sites running on 
+ OpenVMS.
+  
+ Resolution:
+ -----------
+ Since the recent tests indicate that there is no potential of a memory 
+ leak, the HWSC package will now enable the use of TLS/SSL on OpenVMS by 
+ making the following changes:
+  
+ 1) Disable the flag that prevents the configuration and execution of 
+     TLS/SSL enabled HWSC web service clients, specifically for OpenVMS; 
+     and 
+  2) Disable verification of remote server's host name.  New versions of 
+     InterSystems Cache enable by default the property     
+     SSLCheckServerIdentity, which did not exist when HWSC was released
+     with Cache 5.2.3.  This is something that is enabled in web browsers 
+     where a user is interacting with a browser, but HWSC is a web client
+     with no user interaction.  Also RFC 2818, allows for disabling this 
+     verification when "the client has external information as to the 
+     expected identity of the server" which HWSC applications have when 
+     they configure their applications.
+  
+ Test Sites:
+ ----------
+ BAY PINES, HCS
+ NORTH FLORIDA/SOUTH GEORGIASEP HSC
+ WEST PALM BEACH VAMC 
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------ 
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Documentation describing the new functionality introduced by this patch
+ is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Albany: domain.ext
+ Hines:  domain.ext 
+ Salt Lake City: domain.ext
+  
+ Host File:
+ ----------
+ There is no host file in this release.
+  
+ Documentation:
+ --------------
+  
+ Title                                File Name                 FTP Mode
+ ----------------------------------------------------------------------
+ Patch XOBW*1.0*4 Installation Guide    xobw_1_0_p4_ig.pdf      Binary
+ Patch XOBW*1.0*4 Release Notes         xobw_1_0_p4_rn.pdf      Binary
+ Patch XOBW*1.0*4 Security Configuration Guide 
+                                        xobw_1_0_p4_scg.pdf     Binary
+ HWSC Developer's Guide                 xobw1_0dg.pdf           Binary
+ HWSC Systems Management Guide          xobw1_0sg.pdf           Binary
+  
+  
+ Blood Bank Team Coordination
+ ============================
+ Blood Bank Clearance:
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XOBW*1*4 contains 
+ changes to a package referenced in ProPath standard titled: BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA 
+ Blood Bank software design safeguards or safety critical elements 
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch XOBW*1*4 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Installation Instructions:
+ ------------------------------
+  
+ See The HealtheVet Web Services Client (HWSC): Patch XOBW*1.0*4
+ Installation Guide, xobw_1_0_p4_ig.pdf.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;HwscWebServiceClient;**[Patch List]**;September 13, 2010;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XOBWENV
+    Before:  B7338181   After:  B7751417  **4**
+Routine Name: XOBWP004
+    Before:       n/a   After: B25831266  **4**
+Routine Name: XOBWPA04
+    Before:       n/a   After: B90514000  **4**
+Routine Name: XOBWPB04
+    Before:       n/a   After:B190407811  **4**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 08, 2016
+Completed By:                               Date Completed: NOV 30, 2016
+Released By :                               Date Released : DEC 07, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

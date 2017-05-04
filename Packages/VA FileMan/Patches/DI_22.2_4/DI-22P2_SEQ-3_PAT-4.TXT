@@ -1,0 +1,334 @@
+$TXT Created by                FM10S1.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 11/22/16 at 11:33
+=============================================================================
+Run Date: JAN 11, 2017                     Designation: DI*22.2*4
+Package : DI - VA FILEMAN                     Priority: Mandatory
+Version : 22.2         SEQ #3                   Status: Released
+                  Compliance Date: FEB 12, 2017
+=============================================================================
+
+Subject: FIXES FOR FIVE DEFECTS IN VA FILEMAN 22.2
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DI*22.2*4 will repair five(5) VA FileMan 22.2 defects:
+   1. FIND^DIC does not return internal values.
+   2. Issues with Header on report.
+   3. <SYNTAX> error when sorting and printing date field multiples.
+   4. System kicking users out or failing to start due to resource issues.
+   5. Word Processing multi line paste vs. two CR exit.
+  
+   
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+                                                              New/Modified/
+ File Name (#)              Field Name (#)                       Deleted
+ -------------              --------------                    -------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                     File #               New/Modified/Deleted
+ ---------                     ------               --------------------
+ N/A 
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A                       
+  
+  
+ Options Associated:
+  
+ Option Name                    Type               New/Modified/Deleted
+ -----------                    ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type      File Name        (Number)  New/Modified/Deleted
+ -------------   ----      -------------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. Ticket #I10947879FY17
+  
+ Problem:
+ --------
+ For computed date fields, FIND^DIC is not returning the field data in
+ internal format when internal format is specified in the fields parameter.
+  
+ Resolution:
+ ----------
+ Modified DICU2 to not return output to validate the field parameter for
+ each fields before converting to external format.
+  
+  
+ 2. Ticket #I11319884FY17
+           #I11291265FY17
+           #I11300981FY17
+   
+ Problem:
+ --------
+ Some applications were calling ^DIR without an actual read device being 
+ attached. This causes the logic to go into an endless loop attempting to
+ communicate with the NULL device.
+  
+ Resolution:
+ ----------
+ Logic was added to ^DIR to prevent an infinite loop by exiting the loop
+ after 50 attempted reads from the input device.
+  
+  
+ 3. Ticket #I9739142FY16
+           #I11296855FY17
+           #I11296789FY17
+           #I11338500FY17
+           #I11298126FY17
+           #R11267782FY17
+           #R11315035FY17
+           #R11352157FY17
+  
+ Problem:
+ --------
+ VA FileMan 22.2 introduced the feature of being able to exit a Word 
+ Processing field by pressing Enter twice at the end of the field. This 
+ has caused problems when pasting lines of text that contain multiple 
+ blank lines.
+  
+ Resolution:
+ ----------
+ The code in BRK^DDWT1 has been commented out to revert this feature back 
+ to the behavior prior to VA FileMan 22.2.
+  
+  
+ 4. Ticket #I11340811FY17
+  
+ Problem:
+ --------
+ <SYNTAX> error when sorting and printing date field multiples.
+  
+ Resolution:
+ ----------
+ Changed logic in DIL11 so that extraneous space character would not be
+ inserted into executable code.
+  
+  
+ 5. Ticket #I11236535FY17
+  
+ Problem:
+ --------
+ Issues with header on report.
+  
+ Resolution:
+ ----------
+ Changed ^DIL0 so that a PRINT FIELD COMPUTED EXPRESSION which begins
+ with a quotation mark will not show as a sub-header.
+  
+  
+ Blood Bank Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch DI*22.2*4 contains
+ changes to a package referenced in ProPath standard titled: BBM Team
+ Review of VistA Patches. This patch does not alter or modify any VistA
+ Blood Bank software design safeguards or safety critical elements 
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch DI*22.2*4 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Test Sites:
+ -----------
+ Lebanon, PA
+ West Palm Beach, FL 
+ Ann Arbor, MI
+ Charleston, SC
+ North Florida/South Georgia
+ Tennessee Valley, TN
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Documentation describing the new functionality introduced by this patch
+ is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+ Sites may retrieve the software and/or documentation directly using 
+ Secure Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory 
+ at the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/ 
+  
+ Title                                File Name          SFTP Mode
+ -----------------------------------------------------------------
+ FileMan 22.2 Advanced User Manual   FM22_2UM2.PDF       Binary
+ FileMan 22.2 User Manual            FM22_2UM1.PDF       Binary
+ FileMan 22.2 Developer Guide        FM22_2DG.PDF        Binary
+  
+  
+ Backout and Rollback Procedure:
+ -------------------------------
+ This patch only consists of routines. During the VistA Installation
+ Procedure of the KIDS build, the installer should back up the modified
+ routines by the use of the 'Backup a Transport Global' action (step 3a in
+ the Installations Instructions below).
+  
+ If rollback/backout is required, the installer can restore the routines
+ using the MailMan message that were saved prior to installing the
+ patch.
+  
+  
+ Patch Installation:
+  
+   
+ Pre-Installation Instructions:
+ ------------------------------
+ It is HIGHLY RECOMMENDED that ALL Users be off the system and VISTA
+ Background jobs be STOPPED before this patch is installed. TaskMan
+ should be stopped or placed in a wait state. 
+  
+ Failure to do so may result in 'source routine edited' errors during
+ a database update. Edits may be lost and records may be left in an
+ inconsistent state. An error that occurs before a cross-reference
+ is executed, for example, may lead to corrupted data or hard errors
+ in the future.
+  
+ Also, please make sure that no other patches are installed until
+ installation for this patch has completed.
+  
+ Installation will take approximately 5 minutes.
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter DI*22.2*4.
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as Data Dictionaries (DDs) or
+         templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  In accordance with the warning at the beginning of the installation
+     instructions, make sure ALL interactive processes, and ALL
+     non-interactive background jobs are stopped following your site 
+     specific procedures. TaskMan should be stopped or placed in a wait 
+     state. All users should be off the system. NOT performing this step
+     could result in 'source routine edited' errors during database 
+     updates, and records may be left in an inconsistent state.
+  
+ 5.  From the Installation Menu, select the Install Package(s) option and
+     When prompted for the INSTALL NAME, enter DI*22.2*4.
+  
+ 6.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' respond NO.
+  
+ 7.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+     NO//" respond YES (unless logons have been inhibited via other
+     functionality).
+  
+ 8.  If prompted "Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//" respond NO. 
+  
+ 9.  If prompted "Delay Install (Minutes):  (0 - 60): 0//" respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Re-enable all processes stopped in step 4 of the Installation 
+ Instructions.
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;22.2;VA FileMan;**[Patch List]**;Jan 05, 2016;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DDWT1
+    Before: B53373348   After: B55752080  **4**
+Routine Name: DICU2
+    Before: B33741056   After: B34361274  **4**
+Routine Name: DIL0
+    Before: B12098388   After: B13217829  **4**
+Routine Name: DIL11
+    Before: B11509462   After: B12038687  **4**
+Routine Name: DIR
+    Before: B37985105   After: B39110200  **4**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 26, 2016
+Completed By:                               Date Completed: JAN 11, 2017
+Released By :                               Date Released : JAN 11, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

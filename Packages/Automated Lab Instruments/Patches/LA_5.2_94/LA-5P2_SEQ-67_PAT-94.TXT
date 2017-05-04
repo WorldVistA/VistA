@@ -1,0 +1,169 @@
+$TXT Created by               MHCVSS.DOMAIN.EXT  (KIDS) on Monday, 09/26/16 at 13:54
+=============================================================================
+Run Date: DEC 28, 2016                     Designation: LA*5.2*94
+Package : LA - AUTOMATED LAB INSTRUMENTS      Priority: Mandatory
+Version : 5.2        SEQ #67                    Status: Released
+                  Compliance Date: JAN 28, 2017
+=============================================================================
+
+Associated patches: (v)LA*5.2*88   <<= must be installed BEFORE `LA*5.2*94'
+
+Subject: NO RESULTS WHEN QUEUEING 'HOLDERS OF LAB KEYS' REPORT.
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch corrects an issue with 'Holders of Lab keys' report.  If 
+ selecting particular keys or holders and then queueing the report, no 
+ results would appear on the report.
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*94 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LA*5.2*94 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Associated Remedy Tickets:
+ ==========================
+ N/A
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Kansas City VAMC (Alpha) 
+ Iowa City (Beta) 
+  
+ Remedy Ticket Overview:
+ =======================
+ N/A
+   
+ Problem:
+ --------
+ The LRKEY and LRUSER arrays weren't being passed to Taskman properly.
+   
+ Resolution:
+ -----------
+ The patch modifies LA7UCFG at ENKEY+14 to add '*' to the variables being 
+ passed to Taskman:
+  
+         S ZTSAVE("LRKEY*")="",ZTSAVE("LRUSER*")=""
+  
+  
+       Routine: LA7UCFG
+  
+  
+ Software and Documentation Retrieval Information
+ ------------------------------------------------ 
+ VistA Laboratory patch LA*5.2*94 software is distributed by a Forum Kids 
+ distribution.
+ Documentation is available on the SOFTWARE.DIR directory at one of the
+ following Office of Information (OI) Field Offices.  The preferred method
+ is to retrieve the file using Secure File Transfer Protocol (SFTP) from
+ download.vista.domain.ext, which transmits files from the first available
+ SFTP server.
+         Albany                     ftp.domain.ext 
+         Hines                      ftp.domain.ext 
+         Salt Lake City             ftp.domain.ext 
+                                    
+ File Name                   Contents               Retrieval Format 
+ ------------------          --------------------   ----------------
+ LAB AUTORELEASE WARRANTY DOCS.zip                  binary
+  
+ This zip file contains the following documents in both .docx and .pdf
+  
+ Laboratory AutoRelease 1.0 Installation Backout and Rollback Guide 
+ Warranty
+ Laboratory AutoRelease 1.0 Technical Manual (Updated)
+ Laboratory AutoRelease 1.0 User Guide (Updated)
+  
+ The VistA Documentation Library (VDL) web site will also contain the 
+ above referenced documents. This website is usually updated within 1-3
+ days of the patch release date. The VDL web address for Laboratory
+ Universal Interface user documentation is:
+ http://www.domain.ext/vdl/application.asp?appid=120
+  
+   
+    ==================== Installation Instructions ====================
+  
+    This patch may be loaded with users on the system. You may wish to 
+    install it during non-peak hours.  Installation will take less than 1 
+    minute.
+  
+    NOTE: Kernel patches must be current on the target system to avoid 
+    problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'LA*5.2*94.
+  
+       When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+  
+       When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+  
+ Post-Installation Instructions
+ ------------------------------
+ There are no post-installation tasks.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;AUTOMATED LAB INSTRUMENTS;**[Patch List]**;Sep 27, 1994;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LA7UCFG
+    Before:B137316017   After:B137340339  **66,88,94**
+ 
+Routine list of preceding patches: 88
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 26, 2016
+Completed By:                               Date Completed: DEC 27, 2016
+Released By :                               Date Released : DEC 28, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

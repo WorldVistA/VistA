@@ -1,0 +1,487 @@
+
+=============================================================================
+Run Date: DEC 15, 2016                     Designation: PSN*4*492
+Package : PSN - NATIONAL DRUG FILE            Priority: Mandatory
+Version : 4       SEQ #488                      Status: Released
+                  Compliance Date: JAN 14, 2017
+=============================================================================
+
+Associated patches: (v)PSN*4*92        install with patch       `PSN*4*492'
+                    (v)PSN*4*429   <<= must be installed BEFORE `PSN*4*492'
+                    (v)PSN*4*448   <<= must be installed BEFORE `PSN*4*492'
+                    (v)PSN*4*476   <<= must be installed BEFORE `PSN*4*492'
+
+Subject: FIXED MEDICATION COPAYMENT TIER (FMCT) #2
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch will provide enhancements to the National Drug File (NDF)
+ package for Fixed Medication Copayment Tiers (FMCT) project. It supports
+ the redesign and/or enhancement of the current structure of charges for
+ first-party outpatient medication copayments to treat non-service
+ connected conditions.  This project brings the Department of Veterans
+ Affairs (VA) into compliance with the Proposed Rule 38 Code of Federal
+ Regulations (CFR) Part 17 Copayments for Medications.
+  
+ Below is a list of all the applications involved in this project along
+ with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    To be released as a host file:
+    National Drug File (NDF) V. 4.0                    PSN*4*492
+    Pharmacy Data Management (PDM) V. 1.0              PSS*1*200
+  
+    To be released as a host file:
+    Outpatient Pharmacy (OP) V. 7.0                    PSO*7*460
+    Integrated Billing (IB) V. 2.0                     IB*2*563
+  
+    To be released as a standalone forum patch on or about 1/6/2017:
+    Accounts Receivable (AR) V. 4.5                    PRCA*4.5*312
+  
+ This rulemaking eliminates the Medical Consumer Price Index (CPI-P) 
+ formula used to calculate future rate increases and establishes the 
+ following three classes of medications, identified as Tier 1, Tier 2, and 
+ Tier 3, beginning February 27, 2017:
+  
+         Tier 1 = $5 for a 30-day or less supply of a medication; 
+         Tier 2 = $8 for a 30-day or less supply of a medication; and 
+         Tier 3 = $11 for a 30-day or less supply of a medication.  
+  
+ In addition to the rule, Pharmacy Benefits Management (PBM) made the 
+ addition of Tier 0 for excluded and exempt products with no copayment.
+  
+ In order to comply with the Federal regulations, modifications are 
+ included in these patches to support fixed copayment amounts depending on 
+ the class of the medication (Tier 0, Tier 1, Tier 2, or Tier 3).
+  
+ The VA wide Outpatient Medication Copayment Cap per calendar year which 
+ was for only Priority Groups 2-6 is being extended to include Priority 
+ Groups 7-8.  The new Outpatient Medication Copayment Cap effective 
+ January 1, 2017 will be $700 for all Priority Groups subject to 
+ Outpatient Medication Copayments (2-6).
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+  
+ 1. The Inquire to National Files [PSNACT] option contains modifications 
+ to display the copay tier information for the product after the National 
+ Formulary Restriction field.
+  
+ 2. The Inquire to VA Product Info For Local Drug [PSNLOOK] option has 
+ been modified to display the copay tier information.
+  
+               DRUG Generic Name:  WARFARIN NA (EXELAN) 10MG TAB
+      VA Product Name: WARFARIN NA (EXELAN) 10MG TAB
+      VA Generic Name: WARFARIN
+ Dosage Form: TAB
+ Strength: 10 Units: MG
+ National Formulary Name: WARFARIN TAB
+ VA Print Name: WARFARIN NA (EXELAN) 10MG TAB
+ VA Product Identifier: W0058                      Transmit To CMOP: YES
+ VA Dispense Unit: TAB
+ PMIS: WARFARIN - ORAL
+ Active Ingredients: 
+    WARFARIN                                       Str: 10        Unt: MG
+  
+ Press Return to Continue: 
+  
+ Primary Drug Class: BL110
+ CS Federal Schedule: 0  Unscheduled
+ Single/Multi Source Product: Multi
+ Max Single Dose:                             Min Single Dose: 
+ Max Daily Dose:                              Min Daily Dose: 
+ Max Cumulative Dose: 
+ National Formulary Indicator: No
+ Copay Tier: 2
+ Copay Effective Date: JUN 20, 2016
+  
+ Override DF Exclude from Dosage Checks: No
+  
+ Auto-Create Default Possible Dosage? No
+     Possible Dosages To Auto-Create: 1x Possible Dosage
+                             Package: Both Inpatient and Outpatient
+ Maximum Days Supply: 
+  
+  
+ Press Return to Continue: 
+  
+ Select DRUG GENERIC NAME:
+  
+ Patch Components:
+ ----------------
+  
+ Files & Fields Associated:
+ --------------------------
+  
+ File Name (Number)        Field Name (Number)         New/Modified/Delete
+ ------------------        --------------------------  -------------------
+ N/A
+                             
+ Forms Associated:
+  
+ Form Name                   File #               New/Modified/Deleted
+ ---------                   ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          -------------------- 
+ N/A
+  
+ Options Associated: 
+  
+ Option Name                Type                  New/Modified/Deleted
+ -----------                ----                  --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name             New/Modified/Deleted
+ -------------             -------------------- 
+ N/A 
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name     Type        File Name (Number)  New/Modified/Deleted
+ -------------     ----        ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ Tiered Modification Copayment Structure (#20150208)
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ AMARILLO, TX
+ MARYLAND HCS
+ SHREVEPORT, LA
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by these patches are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Albany:                domain.ext
+ Hines:                 domain.ext  
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                          File Name                        FTP Mode
+ ------------------------------------------------------------------------
+ National Drug File User Manual psn_4_um_r1216                   BINARY 
+ Pharmacy Reengineering (PRE)
+    Application Program Interface
+    (API) Manual                phar_1_api_r1216.doc             BINARY
+  
+ Installation Instructions:
+ ==========================
+ This patch may be installed with users on the system although it should be
+ installed during non-peak hours to minimize potential disruption to
+ users. This patch should take less than 5 minutes to install.
+  
+ Pre-Installation Instructions
+ -----------------------------
+ Please note that this patch is released in conjunction with the following 
+ patches and they should be installed in the following order:
+  
+    File Name                      Contents           Retrieval Format
+    ----------------------------   --------           ---------------- 
+     FMCT_PSS200_PSN492.KID        PSS*1.0*200        ASCII
+                                   PSN*4.0*492 
+                   
+     FMCT_PSO_7_460_IB.KID         IB*2.0*563         ASCII
+                                   PSO*7.0*460
+  
+     PRCA*4.5*312                  KIDS BUILD         FORUM
+  ****** PRCA*4.5*312 TO BE RELEASED ON OR ABOUT 1/6/2017 ********
+  
+  
+ I.  OBTAIN PATCHES
+     --------------
+     A. Obtain the host files:
+           FMCT_PSS200_PSN492.KID which contains the following patches:
+     
+              PSS*1.0*200
+              PSN*4.0*492 
+           
+           FMCT_PSO_7_460_IB.KID which contains the following patches:
+  
+              IB*2.0*563
+              PSO*7.0*460
+  
+        This patch can be obtained from the ANONYMOUS.SOFTWARE directory at
+        one of the OI Field Offices. The preferred method is to retrieve
+        the file using Secure File Transfer Protocol (SFTP) from
+        DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the 
+        first available server. Alternatively, sites may elect to retrieve
+        the file from a specific OI Field Office.
+   
+        OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+        ---------------     --------------------       ------------------
+        Albany              DOMAIN.EXT        
+        Hines               DOMAIN.EXT         
+        Salt Lake City      DOMAIN.EXT           
+  
+        Both host files are located in the  directory.
+        Use ASCII Mode when downloading the file.
+  
+     B. Obtain the Accounts Receivable patch PRCA*4.5*312 from FORUM.
+  
+ II. START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+     Select Installation Option:
+  
+ III. LOAD TRANSPORT GLOBAL FOR MULTI-BUILD FMCT_PSS200_PSN492.KID
+     -------------------------------------------------------------
+     From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file FMCT_PSS200_PSN492.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]FMCT_PSS200_PSN492.KID).
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       Loading Distribution...
+  
+         FCMT PSS PSN BUNDLE 1.0
+         PSS*1.0*200
+         PSN*4.0*492
+  
+       Use INSTALL NAME: FMCT PSS PSN BUNDLE 1.0 to install this
+       Distribution.
+  
+ IV. RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD
+     -------------------------------------------------
+     From the Installation menu, you may select to use the following
+     options (when prompted for the INSTALL NAME, enter
+     FMCT PSS PSN BUNDLE 1.0):
+  
+     A.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as data dictionaries or templates.
+     B.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, data dictionaries, templates, etc.).
+     C.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ V. INSTALL MULTI-BUILD
+      -------------------
+      This is the step to start the installation of this KIDS patch.  This
+      will need to be run for the FMCT PSS PSN BUNDLE 1.0.
+  
+      A.  Choose the Install Package(s) option to start the patch
+          install.
+      B.  When prompted for the "Select INSTALL NAME:", enter 
+          FMCT PSS PSN BUNDLE 1.0.
+      C.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+          Install? YES//", enter YES unless your system does this in a 
+          TaskMan process.
+      D.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+          YES//", enter NO.
+      E.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? NO//", enter NO.
+      F.  When prompted "Device: HOME//", respond with the correct device 
+          but do not queue this install.
+  
+ VI.  LOAD TRANSPORT GLOBAL FOR MULTI-BUILD FMCT_PSO_7_460_IB.KID
+     ------------------------------------------------------------
+     From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file FMCT_PSO_7_460_IB.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]FMCT_PSO_7_460_IB.KID).
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       Loading Distribution...
+  
+         FMCT PSO IB BUNDLE 1.0
+         IB*2.0*563
+         PSO*7.0*460
+  
+       Use INSTALL NAME: FMCT PSO IB BUNDLE 1.0 to install this
+       Distribution.
+  
+ VII. RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD
+     -------------------------------------------------
+     From the Installation menu, you may select to use the following
+     options (when prompted for the INSTALL NAME, enter
+     FMCT PSO IB BUNDLE 1.0):
+  
+     A.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as data dictionaries or templates.
+     B.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, data dictionaries, templates, etc.).
+     C.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ VIII. INSTALL MULTI-BUILD
+      -------------------
+      This is the step to start the installation of this KIDS patch.  This
+      will need to be run for the FMCT PSO IB BUNDLE 1.0.
+  
+      A.  Choose the Install Package(s) option to start the patch
+          install.
+      B.  When prompted for the "Select INSTALL NAME:", enter 
+          FMCT PSO IB BUNDLE 1.0.
+      C.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+          Install? YES//", enter YES unless your system does this in a 
+          TaskMan process.
+      D.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+          YES//", enter NO.
+      E.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? NO//", enter NO.
+      F.  When prompted "Device: HOME//", respond with the correct device 
+          but do not queue this install.
+  
+ VIX. INSTALL FORUM PATCH PRCA*4.5*312
+      --------------------------------
+      This is the step to start the installation of this KIDS patch.  This
+      will need to be run for the PRCA*4.5*312.
+  
+      From the Installation menu, you may select to use the following
+      options (when prompted for the INSTALL NAME, enter
+      PRCA*4.5*312):
+  
+      A. Use the INSTALL/CHECK MESSAGE option on the PackMan menu. [Note:
+         TEXT PRINT/DISPLAY option in the PackMan menu will display the
+         patch text only].
+     
+      B. From the Kernel Installation and Distribution System (KIDS)
+         menu, select the Installation menu.
+  
+      C. From this menu, you may elect to use the following options:
+         (when prompted for INSTALL NAME, enter PRCA*4.5*312)
+     
+        1.  Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch.  It will
+            NOT backup any other changes such as DDs or templates.
+        2.  Compare Transport Global to Current System - this option
+            will allow you to view all changes that will be made when
+            the patch is installed.  It compares all components of the
+            patch (routines, DDs, templates, etc.).
+        3.  Verify Checksums in Transport Global - this option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+        4.  Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+     
+     D. Use the Install Package(s) option and select the package
+        PRCA*4.5*312
+     
+     E. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+        NO//', respond NO.
+     
+     F. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//', respond NO.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;4.0;NATIONAL DRUG FILE;**[Patch List]**; 30 Oct 98;Build 26
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSNACT
+    Before:B106329201   After:B121966674  **22,35,47,62,65,70,160,169,
+                                           262,296,429,492**
+Routine Name: PSNAPIS
+    Before: B59524567   After: B93408219  **2,3,47,70,169,108,262,296,448,492**
+Routine Name: PSNHIT
+    Before: B27498327   After: B26995302  **22,47,65,492**
+Routine Name: PSNLOOK
+    Before: B48493462   After: B55919915  **2,3,5,11,22,27,62,70,169,262,
+                                           296,429,492**
+Routine Name: PSNOUT
+    Before: B10216650   After:  B9659319  **2,82,92,492**
+Routine Name: PSNVFY
+    Before: B15646672   After: B17319517  **3,22,65,492**
+ 
+Routine list of preceding patches: 92, 429, 448
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 27, 2016
+Completed By:                               Date Completed: DEC 15, 2016
+Released By :                               Date Released : DEC 15, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

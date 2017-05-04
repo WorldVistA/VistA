@@ -1,0 +1,231 @@
+$TXT Created by                at VIPDEV31.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 12/13/16 at 18:19
+=============================================================================
+Run Date: JAN 09, 2017                     Designation: PSO*7*475
+Package : PSO - OUTPATIENT PHARMACY           Priority: EMERGENCY
+Version : 7       SEQ #390                      Status: Released
+                  Compliance Date: JAN 19, 2017
+=============================================================================
+
+Associated patches: (v)PSO*7*454   <<= must be installed BEFORE `PSO*7*475'
+
+Subject: <SYNTAX>BLDACK+23 PSORWRAP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ When utilizing OneVA to process a refill or partial for a renewed 
+ prescription the Remote prescription label will not print. At the host 
+ facility, a syntax error is generated within the PSORWRAP routine.
+  
+ <SYNTAX>BLDACK+23^PSORWRAP
+  
+ This is due to the renewed prescriptions containing an alpha numeric value
+ at the end of the prescription number. The prescription number is used as
+ a subscript in an XTMP global for processing purposes.
+  
+ This patch will modify routines PSORRPA1, PSORREF, and PSORWRAP to do the
+ following:
+  
+ 1.) Modify the XTMP global storage and references using RXNUM to now  use
+     +RXNUM, forcing the value to be numeric.
+  
+ 2.) Modify PSORWRAP to decouple the label prompt from the if statement 
+     that checks for the 'host' site label data. These are not dependent on
+     one another and that dependency will be removed.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Routines Associated:
+ --------------------
+ PSORREF
+ PSORRPA1
+ PSORWRAP
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ 1. R11791420FY17 - OneVA Pharmacy Label Not Printing 
+  
+  
+ Problem:
+ -------
+ <SYNTAX>BLDACK+23^PSORWRAP
+ During the processing of a remote prescription, errors can occur in the 
+ queued label printing process. This causes the host site label data from
+ returning to the dispensing site. When this happens, the dispensing site
+ is not provided a device prompt to print a label. The error is related to
+ prescription numbers that have alpha numerics in them (specifically
+ renewals).
+  
+ Resolution:
+ ----------
+ Modifications to PSORRPA1 and PSORREF have been modified to remove any 
+ alpha numeric values from the storage of a prescription number in the XTMP
+ globals. The logic in these routines now uses +RXNUM to prevent the 
+ storing of prescription number with the alpha numeric values.
+  
+ PSORWRAP has been modified to de-couple the laser label logic from the 
+ storage of the host generated label. This will prevent the software from
+ bypassing the label device prompt and printing logic at the dispensing
+ site.
+  
+ Test Sites:
+ ----------
+ Denver, Colorado
+ Salt Lake City, Utah
+ Grand Junction
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ N/A
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes 
+ to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(ex. PSO*7.0*475):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch (PSO*7.0*475) to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSORREF
+    Before: B44063843   After: B44094138  **454,475**
+Routine Name: PSORRPA1
+    Before: B75304679   After: B75343267  **454,475**
+Routine Name: PSORWRAP
+    Before:B112263517   After:B105667697  **454,475**
+ 
+Routine list of preceding patches: 454
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 12, 2016
+Completed By:                               Date Completed: DEC 22, 2016
+Released By :                               Date Released : JAN 09, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

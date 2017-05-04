@@ -1,0 +1,136 @@
+The Bed Management Solution (BMS) v2 software enhancement
+=============================================================================
+Run Date: NOV 15, 2016                     Designation: WEBB*2*2
+Package : WEBB - BED MANAGEMENT SOLUTION      Priority: Mandatory
+Version : 2         SEQ #2                      Status: Released
+                  Compliance Date: DEC 16, 2016
+=============================================================================
+
+
+Subject: BMS Version 2.0.1.1
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Bed Management Solution (BMS) v2 software enhancement
+ project is to improve usability of the BMS v2 system, which improves
+ the data accessibility and usability for BMS v2 users, and
+ increase the integration of BMS v2 and VA systems.
+  
+ The following enhancements are included in this release:
+  
+ 1. Reduce Number of calls and threads used in common functions:
+         Removed locking from caches where concurrent dictionaries
+         are in use.
+ 2. Single Sign-On (SSO) PIV Integration:
+         Final tweaks to remove logging and move mock headers for
+         full PIV Integration. For SSO to be turned on, it will
+         require a final configuration update in a future release.
+         These changes do not enable PIV authentication.
+ 3. Ward Whiteboard Sorting Patch:
+         Restored the original sort method from tablesorter 2.0.3
+         for specific bed column. This prevents ward names like
+         "3E-123" from being evaluated as an exponential expression.
+ 4. Orderable Item Deletion Failures:
+         Removed a Fortify fix from Increment 1 (later identified as
+         a false positive) that was causing Orderable Item
+         deletion to fail.
+ 5. VISN Waiting List switches to users VISN when customized:
+         When navigating to a VISN that is not the user's default,
+         the app initially shows the correct data.  If the grid is
+         customized, it refreshes and shows the user's default VISN data
+         instead of the current VISN's data. The fix will cause the
+         selected VISN data to be displayed after customizing the grid.
+ 6. EMS Batch Assignment:
+         "Select All" was broken due to a TRM mandated jQuery library
+         update. The JavaScript in question was located where it should
+         not have been. The previous jQuery library did not enforce a
+         location rule while the new jQuery library does. The fix was
+         to move the JavaScript to the correct location to be
+         loaded/executed.
+ 7. Waiting List - Edit Patient missing comment box:
+         The new comment text box was missing from the "Waiting List -
+         Add Patient" page. Comment box is now visible.
+ 8. Patient Flow View Issue:
+         The Patient Flow view of the facility waiting list isn't saving
+         between user sessions.
+  
+ Patch Components:
+ N/A
+  
+ Files & Fields Associated:
+ N/A
+  
+ Forms Associated:
+ N/A
+  
+ Mail Groups Associated:
+ N/A
+  
+ Options Associated:
+ N/A
+  
+ Protocols Associated:
+ N/A
+  
+ Security Keys Associated:
+ N/A
+  
+ Templates Associated:
+ N/A
+  
+ New Service Requests (NSRs):
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ N/A
+  
+ Test Sites:
+ N/A
+  
+ Software and Documentation Retrieval Instructions:
+ N/A
+  
+ Pre/Post Installation Overview:
+ N/A
+  
+ Pre-Installation Instructions:
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ The BMS application is a centrally managed web-based application
+ hosted at AITC.
+ This patch will be loaded into BMS Production account
+ by AITC staff.
+  
+ No software will be installed at the facilities.
+  
+ Reporting Problems:
+ -------------------
+ If there are problems associated with the BMS application they should be
+ reported via CA Service Desk by contacting the National Service Desk (NSD)
+ at 1-855-673-4357 for assistance.
+  
+ Routine Information:
+ -------------------
+ No routines included.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 09, 2016
+Completed By:                               Date Completed: NOV 15, 2016
+Released By :                               Date Released : NOV 15, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+

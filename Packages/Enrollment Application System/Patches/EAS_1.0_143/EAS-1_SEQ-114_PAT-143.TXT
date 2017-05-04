@@ -1,0 +1,201 @@
+
+=============================================================================
+Run Date: NOV 21, 2016                     Designation: EAS*1*143
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #114                      Status: Released
+                  Compliance Date: DEC 22, 2016
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) APPLICATION, VERSION 4.4.1
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this informational patch is to announce the release of the
+ Enrollment System (ES) 4.4.1 application version software. 
+  
+ ES 4.4.1 requires deployment of Java software to dedicated servers at the
+ Austin Information Technology Center (AITC).  No action is required by 
+ VistA sites.
+  
+ ES 4.4.1 is a maintenance release of the Enrollment System Core (ESC)
+ application. This version applies 40 updates to correct design, code and
+ security related defects introduced in previous ES releases.
+  
+ The following changes are associated with ES 4.4.1:
+  
+ 1.  Always override person table preferred site with Z07 HL7 message 
+     containing ZEN segment provided preferred site (WI 329438).
+  
+ 2.  Updated ESR code to resolve Fortify Findings with Critical and High
+     priorities (WI 329495).
+  
+ 3.  Updated ESR code to resolve ESR Fortify Critical and High priority 
+     Findings (WI 334193).
+  
+     Category of Findings:
+     - Log Forging
+     - Mass Assignment
+     - Null Dereference
+     - Portability Flaw
+     - Race Condition
+     - SQL Injection
+     - Struts: Erroneous validate() Method
+     - System Information Leak: External
+     - Unreleased Resource: Database
+     - Resource: Streams
+  
+ 4.  Allow user to continue with registration under AAP screen with 
+     imprecise DOB instead of displaying error (WI 362663).
+  
+ 5.  Fix defects in VOA submission provider service in ESR (WI 371172).
+     - Update rules when to query VBA and MSDS for online applications 
+       submitted via the Health Care Application.
+     - Updated rules create work items for eligibility factors identified 
+       by the Veteran on the Health Care Application.
+     - Allow users to see the online Health Care Application information 
+       from the Enrollment screen for the last submitted application.
+     - Add parameter to Control Health Care Application processing in ES by
+       VistA site.
+     - Update code to fix adding the preferred facility correlation for 
+       Veterans submitting first time applications or applications to a new
+       site.
+     - Update ES to send HL7 messages as soon as application is processed 
+       instead of waiting for queries to be complete.
+     - Remove submission id from confirmation email.
+     - Do not process online HCA applications for Veterans with an 
+       enrollment status of deceased; create a work item for these
+       applications.
+     - Treat Health Care Applications for Veterans currently in a
+       Cancelled/Declined enrollment status as a new application for a new
+       applicant.
+     - Wait 72 hours before creating a work item for pending VBA and MSDS 
+       query responses.
+  
+ 6.  Deactivate Unnecessary Creations of MSDS (WI 375280).
+  
+ 7.  ES 4.4.1 Add Functionality to View online application data (WI 
+     385176).
+  
+  
+ What to Expect:
+ ===============
+ The ES 4.4.1 implementation is expected to take less than eight hours.  
+ During the ES 4.4.1 implementation, HL7 messaging to and from the ES will
+ be disabled by the VistA Interface Engine (VIE) team. After the ES 4.4.1
+ implementation, there will be no change in VistA.
+  
+  
+ Implementation:
+ ===============
+ The implementation of ES 4.4.1 requires deployment of Java software to
+ dedicated servers at the Austin Information Technology Center (AITC). The
+ AITC staff will perform the installation with support from the development
+ team. Support from the sites is not required. 
+  
+ The ES application will be unavailable and Veteran enrollment 
+ determinations will be delayed until the deployment is complete. Person
+ Service Identity Management/Master Veteran Index (PSIM/MVI) and messaging
+ to/from the sites will be unavailable during the deployment. An Automated
+ Notification Reporting (ANR) will be created to announce the deployment
+ that will list all impacted systems and to track the outage.
+  
+  
+ Implementation Date:
+ ====================
+ 11/19/2016
+  
+  
+ Implementation Files:
+ =====================
+ N/A
+  
+  
+ Documentation Retrieval:
+ ========================
+ The user documentation is available on the Office of Information Field 
+ Office (OIFO) ANONYMOUS.SOFTWARE directories listed below:
+  
+      OIFO                  Address                      Directory
+     ------                ---------                    -----------
+   Albany               domain.ext        
+   Hines                domain.ext         
+   Salt Lake City       domain.ext           
+  
+ The user documentation files listed below may be obtained via Secure Shell
+ File Transfer Protocol (SFTP). 
+  
+ Sites may also select to retrieve documentation from a specific server as
+ shown in the above table.
+  
+ The following files should be downloaded in the binary file transfer 
+ method. 
+  
+  Filename                                       Description
+  --------                                       -----------
+  ES_4_4_1_Deployment_Installation_Back-Out_     Deployment, Installation,
+  Rollback_Guide                                 Back-Out and Rollback 
+                                                 Guide 
+  
+  
+ Mandate:
+ ========
+ N/A
+  
+  
+ CA Service Manager Ticket(s) & Overview:
+ ========================================
+  
+  - SDM # I7276837FY16  Preferred Facility Mismatch
+  
+ Problem:
+ -------- 
+ On Z07 messages, ESR defaults the Preferred Facility on new veteran 
+ records to the sending facility in the PID segment. Preferred Facility is
+ sent in the ZEN segment of the Z07 which is currently ignored on inbound
+ message processing in ESR.
+  
+ Always override person table preferred site with Z07 HL7 message 
+ containing ZEN segment provided preferred site:
+   - In case of new person record
+   - In case of update person record if person table value is different 
+     than ZEN segment value
+  
+ Resolution:
+ ----------- 
+ Updated ESR code to override person's preferred facility from Z07 HL7 
+ message containing ZEN segment provided preferred site.
+  
+ Files Updated: 
+ HECMS_common/src/gov/va/med/esr/service/impl/MessagingServiceImpl.java
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Reporting Problems:
+ ===================
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 24, 2016
+Completed By:                               Date Completed: NOV 21, 2016
+Released By :                               Date Released : NOV 21, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

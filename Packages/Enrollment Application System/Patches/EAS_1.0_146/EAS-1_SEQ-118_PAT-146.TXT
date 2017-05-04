@@ -1,0 +1,230 @@
+
+=============================================================================
+Run Date: JAN 31, 2017                     Designation: EAS*1*146
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: EMERGENCY
+Version : 1       SEQ #118                      Status: Released
+                  Compliance Date: FEB 01, 2017
+=============================================================================
+
+Associated patches: (v)EAS*1*144   <<= must be installed BEFORE `EAS*1*146'
+
+Subject: CORRECT 2017 INCOME LIMITS
+
+Category: 
+  - Routine
+  - PATCH FOR A PATCH
+  - Other
+
+Description:
+============
+
+ **************************************************************************
+ *  This patch MUST be installed immediately after DG*5.3*930.            *
+ *  It is being released as an Emergency patch.                           *
+ **************************************************************************
+   
+ The Geographic-Based Means Test thresholds for Calendar Year 2017 are
+ distributed with this patch. The updated values for the GMT THRESHOLDS
+ file (#712.5) are used in the determination of a veteran's GMT Threshold
+ for a given income year, based on locality and number of dependents.
+   
+ Geographical income level thresholds are set yearly by the U.S. Department
+ of Housing and Urban Development (HUD). This large set of income
+ thresholds is usually referred to as the HUD index. The geographic based
+ income limits for Income Year (IY) 2016 can be found January 1, 2017 at:
+ https://www.huduser.gov/portal/datasets/il.html#2016
+  
+ This patch addresses the annual updates for the GMT Thresholds. 
+ Patch DG*5.3*930 will update the thresholds for the Means Tests and 
+ the Maximum Annual Pension Rate. Patch IB*2.0*583 will address the 
+ annual updates for the Pharmacy Copay Thresholds.
+  
+  
+ Associated NSR(S):
+ ==================
+ N/A
+  
+  
+ Associated Ticket(s):
+ =====================
+ R12439007FY17 - Correction needed to Income Limits for 2017 GMT Thresholds
+  
+  
+ Participating Test Sites:
+ =========================
+ Altoona - James E. Van Zandt VAMC
+ Wilmington VAMC
+ VISN 2 - Upstate New York HCS 
+  
+  
+ Ticket Overview:
+ ================
+ R12439007FY17 - Correction needed to Income Limits for 2017 GMT Thresholds
+  
+  
+ Problem:
+ ========
+ The GMT THRESHOLDS (#712.5) file updates for the 2017 calendar year in patch
+ EAS*1.0*144 were incorrect. 
+  
+  
+ Resolution:
+ ===========
+ The GMT THRESHOLDS (#712.5) file is updated and transported via this 
+ patch.
+  
+  
+ DATA DICTIONARY:  
+ ================
+   
+   
+                                        UP    SEND  DATA               USER
+                                        DATE  SEC.  COMES  SITE  RSLV  OVER
+ FILE #      NAME                       DD    CODE  W/FILE DATA  PTS   RIDE
+ --------------------------------------------------------------------------
+ 712.5       GMT THRESHOLDS (#712.5)    NO    NO    YES    OVER  YES   NO
+   
+  
+ SOFTWARE RETRIEVAL:
+ ===================
+ The software for this patch is not being distributed through the National 
+ Patch Module. This patch is being distributed as a host file. The host 
+ file will contain the following KIDS build:
+   
+              Host file name:    EAS_1_P146.KID
+   
+                       Build:    EAS*1.0*146
+   
+ Sites may retrieve the software directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+   
+                      Albany   : domain.ext
+                      Hines    : domain.ext
+                Salt Lake City : domain.ext
+        First Available Server : download.vista.domain.ext
+   
+ The following file will be available:
+      File Name            Description
+      ---------            -----------
+      EAS_1_P146.KID       Host File containing KIDS software distribution
+   
+  Note:  Use ASCII mode when transferring the .KID file.
+   
+  
+ Installation Instructions:
+ ==========================
+ This host file can be installed with users on the system.  The installation 
+ should not be queued to run.  Installation will take approximately 20 minutes.
+ The updates to the GMT THRESHOLDS file (#712.5) are extensive. Due to the 
+ volume of updates, the installation process will appear to stall and/or stop.
+ This is normal, as the file updates may take up to 20 minutes to complete.
+  
+        *****Please be patient and allow the process to complete.*****
+  
+ Also, when comparing the transport global to the current system, entries 
+ will scroll by on the screen.  This is normal as there are approximately
+ 52,120 entries included in the GMT THRESHOLDS file (#712.5) distributed
+ with this patch and a comparison is done on each of these entries. It is
+ possible your session may time out before the compare has completed. If
+ so, you may not be able to get a complete screen capture of the compare.
+ This will not, however, mean that there is any problem with the software.
+ To avoid a session time-out, you can designate a printer (non-queued) as
+ the device for the compare.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+   1.   DOWNLOAD HOST KIDS FILE
+        -----------------------
+        Download the KIDS file EAS_1_P146.KID from the ANONYMOUS.SOFTWARE
+        directory of any of the following three Office of Information Field
+        Offices (OIFOs):  Albany, Hines, or Salt Lake to the appropriate
+        directory on your system.
+  
+  
+   2.   START UP KIDS
+        -------------
+        Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]:
+  
+             Edits and Distribution ...
+             Utilities ...
+             Installation ...
+  
+   Select Kernel Installation & Distribution System Option: INStallation
+                                                            ---
+             Load a Distribution
+             Print Transport Global
+             Compare Transport Global to Current System
+             Verify Checksums in Transport Global
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution
+             Backup a Transport Global
+  
+   Select Installation Option:
+  
+   3.   Select Installation Option:
+        --------------------------
+  
+        a.  Use the 'Load a Distribution' option and enter the directory
+            into which you downloaded the host file, followed by the host
+            file name:
+  
+            [directory]EAS_1_P146.KID
+  
+        NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+               NAME, enter EAS*1.0*146):
+  
+        b.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+        c.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed. It compares all components of this patch
+            (routines, DD's, templates, etc.).
+        d.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+  
+   4.   Select Installation Option: Install Package(s)
+                                    ------------------
+        **This is the step to start the installation of this KIDS patch:
+  
+       a.  Choose the Install Package(s) option to start the patch install.
+  
+       b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+           NO//' answer NO.
+       c.  When prompted 'Want to DISABLE Scheduled Options, Menu
+           Options, and Protocols? NO//' answer NO.
+  
+  
+ Post Installation Overview:
+ ===========================
+ The EAS1146P pre-install routine will display an informational message and
+ may be deleted after install.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;ENROLLMENT APPLICATION SYSTEM;**[Patch List]**;MAR 15,2001;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EAS1146P
+    Before:       n/a   After:  B1092392  **146**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 24, 2017
+Completed By:                               Date Completed: JAN 31, 2017
+Released By :                               Date Released : JAN 31, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

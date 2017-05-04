@@ -1,0 +1,214 @@
+$TXT Created by                    R at CMAI.FO-BIRM.DOMAIN.EXT  (KIDS) on Monday, 10/03/16 at 14:18
+=============================================================================
+Run Date: NOV 07, 2016                     Designation: PSJ*5*334
+Package : PSJ - INPATIENT MEDICATIONS         Priority: EMERGENCY
+Version : 5       SEQ #284                      Status: Released
+                  Compliance Date: DEC 07, 2016
+=============================================================================
+
+Associated patches: (v)PSJ*5*315   <<= must be installed BEFORE `PSJ*5*334'
+
+Subject: TRANSDERMAL EMERGENCY PATCH
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch PSJ*5.0*334 will correct the exception handling for Duration of
+ Administration to enforce integer only values. Patch PSJ*5.0*315
+ introduced code into three routines that prompt for Duration of
+ Administration.  The code originally blocked the use of non-integer
+ entries, but other changes to code caused this to stop working, so that
+ Decimal values can be entered (such as 23.5).  This will not compute
+ correctly.  Patch PSJ*5.0*334 corrects this by making changes to allow the
+ code to enforce the integer only requirement.
+  
+ *NOTE*: This patch is a follow-up for patch PSJ*5.0*315 to fix the noted
+ issue.  However, there is an issue for BCMA which is part of this 
+ enhancement that needs to be noted.  
+  
+      For non-standard schedules such as DAY@HHMM, HHMM or other odd 
+ schedules, Removal Times cannot be calculated due to the lack of a 
+ Frequency. Regardless of the Prompt for Removal in BCMA code value for 
+ the orderable item, no Removal Times will display in BCMA for these 
+ non-standard schedules. These types of schedules must be avoided for 
+ Medications Requiring Removal (MRR) orders.
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ R10757134FY16: Entry of 23.5 at Duration of Administration Prompt 
+ produces bad calculation for time.
+  
+ Problem:
+ -------
+ Problem occurred when a site decided to enter 23.5 hours in at the 
+ Duration of Administration prompt.  This resulted in an incorrect removal 
+ time. Only Integer values are permitted.
+  
+ Resolution:
+ ----------
+ Routines PSGOE41, PSGOE81 and PSGOE91 had a change to conditional logic 
+ that allows pattern match code to enforce the integer requirement.  
+ Previously this code had become isolated and was not being executed when 
+ needed.
+  
+ Test Sites:
+ ----------
+ PITTSBURGH HCS
+ VISN2/UPSTATE NY
+ ST. CLOUD, MN -VAMC 
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ N/A
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch only installs three routines, There are no install routines 
+ to delete.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install. 
+  
+ Installation Instructions:
+ --------------------------
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+ the Installation Menu.  From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME enter the patch 
+ PSJ*5.0*334:
+  
+      a.      Backup a Transport Global - This option will create a backup 
+ message of any routines exported with this patch. It will not backup any 
+ other changes such as DDs or templates. 
+      b. Compare Transport Global to Current System - This option will
+ (allow you to view all changes that will be made when this patch        is
+ installed.  It compares all components of this patch routines, DDs,
+ templates, etc.). 
+      c. Verify Checksums in Transport Global - This option will allow you
+ to ensure the integrity of the routines that are in the transport global.
+  
+ 4.       From the Installation Menu, select the Install Package(s) option
+ and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+ Install? NO// Respond, No 
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+ NO// Respond, No
+ <Provide the installer with guidance on whether or not to inhibit logons.>
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+ and Protocols? NO// Respond, No
+  
+ 8.      If prompted 'Delay Install (Minutes):  (0 - 60): 0// Respond, 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ None 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOE41
+    Before: B97415312   After: B97532648  **50,63,64,69,58,111,136,113,
+                                           267,315,334**
+Routine Name: PSGOE81
+    Before:B107835999   After:B107958906  **26,50,64,58,82,110,111,136,
+                                           113,267,315,334**
+Routine Name: PSGOE91
+    Before:B114506960   After:B114633409  **50,64,58,110,111,136,113,179,
+                                           265,267,285,315,334**
+ 
+Routine list of preceding patches: 315
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 19, 2016
+Completed By:                               Date Completed: NOV 03, 2016
+Released By :                               Date Released : NOV 07, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

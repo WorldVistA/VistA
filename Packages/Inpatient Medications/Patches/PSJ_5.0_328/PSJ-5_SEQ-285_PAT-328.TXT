@@ -1,0 +1,173 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 05/02/16 at 08:05
+=============================================================================
+Run Date: DEC 16, 2016                     Designation: PSJ*5*328
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #285                      Status: Released
+                  Compliance Date: JAN 15, 2017
+=============================================================================
+
+Associated patches: (v)PSJ*5*104   <<= must be installed BEFORE `PSJ*5*328'
+                    (v)PSJ*5*264   <<= must be installed BEFORE `PSJ*5*328'
+
+Subject: ONE-TIME ORDER ISSUE/OPTION PSJ EXP/DOSAGE WARNING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+ 1.  One time order appears as active after discharge
+ 2.  Option PSJ EXP gets an error with clinic orders
+ 3.  Mismatch Dosage Warning inconsistent
+  
+  
+ Associated Ticket(s):
+ =====================
+ 1. INC000000775082 - One time order appears as active after discharge
+    I9853546FY16(d)
+ 2. INC000000849604 - Option PSJ EXP gets an error with clinic orders
+    I9854178FY16(d)
+ 3. I5683562FY15 - Mismatch Dosage Warning inconsistent
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Test Sites:
+ ===========
+ Oklahoma City
+ Las Vegas
+ Boston
+  
+  
+ Overview:
+ =========
+ 1. INC000000775082 - One time order appears as active after discharge
+   
+    Problem: 
+    ========
+    An inpatient was ordered a one-time dose of an Intravenous Piggy Back
+    (IVPB) Antibiotic. The order was finished by a pharmacist in the 
+    Intravenous (IV) package and the nurse marked it as given in Bar Code 
+    Medication Administration (BCMA). Before the nurse could give the
+    medication the patient was discharged and transferred to another
+    hospital.
+  
+    After the patient was discharged the floor nurse went into BCMA and
+    marked the medication as NOT GIVEN. This resulted in the inpatient
+    medication being reinstated and showing as active in the patients
+    Inpatient Medication Profile even though he was discharged. The order
+    no longer displayed in BCMA.
+  
+    Resolution:
+    ===========
+    Modifications were made to the PSJBCMA4 routine to check to see if the
+    patient is still an inpatient patient.
+  
+  
+ 2. INC000000849604 - Option PSJ EXP gets an error with clinic orders
+   
+    Problem: 
+    ========
+    Inpatient Stop Order Notices option [PSJ EXP] generates a subscript
+    error when attempting to use it to search for orders in a specific
+    Clinic or Clinic Group.
+  
+    Resolution:
+    ===========
+    Modifications were made to routines PSJEXP & PSJEXP0 to handle the
+    presence of Clinic Orders.
+  
+  
+ 3. I5683562FY15 - Mismatch Dosage Warning inconsistent
+   
+    Problem: 
+    ========
+    An order was entered for a drug with dosage of 850MG. While finishing
+    the order, the dosage was modified to 3400mg. The user received the
+    appropriate dosage warning message and proceeded to update the Dispense
+    Drug for the correct U/D (unit dose). When the user went to verify the
+    order they still received the dosage warning message.
+  
+    The problem was when the dosage was modified the unit of measure was
+    entered in lower case. This caused the process to display the message
+    again.
+  
+    Resolution:
+    ===========
+    A modification was made to routine PSJDOSE to make sure the unit of
+    measure for the dosage is converted to upper case.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  
+ Users may be on the system, but this patch should be installed during
+ non-peak hours.
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSJ*5.0*328)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSJ*5.0*328.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJBCMA4
+    Before: B16569271   After: B17522751  **63,66,58,104,328**
+Routine Name: PSJDOSE
+    Before: B62380893   After: B62450032  **50,65,106,111,216,264,328**
+Routine Name: PSJEXP
+    Before: B44592127   After: B46163170  **111,328**
+Routine Name: PSJEXP0
+    Before: B27798195   After: B28342698  **50,58,328**
+ 
+Routine list of preceding patches: 104, 264
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 13, 2016
+Completed By:                               Date Completed: DEC 07, 2016
+Released By :                               Date Released : DEC 16, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

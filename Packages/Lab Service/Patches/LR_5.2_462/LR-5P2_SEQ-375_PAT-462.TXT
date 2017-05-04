@@ -1,0 +1,375 @@
+$TXT Created by                     CPRS32.DOMAIN.EXT  (KIDS) on Tuesday, 11/29/16 at 13:45
+=============================================================================
+Run Date: DEC 22, 2016                     Designation: LR*5.2*462
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #375                    Status: Released
+                  Compliance Date: FEB 05, 2017
+=============================================================================
+
+Associated patches: (v)LR*5.2*259  <<= must be installed BEFORE `LR*5.2*462'
+                    (v)LR*5.2*291  <<= must be installed BEFORE `LR*5.2*462'
+                    (v)LR*5.2*350  <<= must be installed BEFORE `LR*5.2*462'
+                    (v)LR*5.2*422  <<= must be installed BEFORE `LR*5.2*462'
+                    (v)LR*5.2*433  <<= must be installed BEFORE `LR*5.2*462'
+                    (v)LR*5.2*450  <<= must be installed BEFORE `LR*5.2*462'
+
+Subject: ANATOMIC PATHOLOGY ORDER DIALOG ENHANCEMENT
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ Associated Patches: LR*5.2*469
+  
+  
+ The build for this patch is distributed in support of the VistA Lab 
+ Enhancement (VLE) Anatomic Pathology order dialog enhancements. It
+ contains a modification to the LABORATORY TEST (#60), LAB ORDER ENTRY
+ (#69), LABORATORY SITE (#69.9) and adds the new file LR CPRS PARAMETERS
+ (#69.71).
+  
+ 1- Anatomic Pathology specimen log-in option has been modified to 
+ prompt the user for an order number. This order number will be created 
+ by CPRS when the new Anatomic Pathology ordering functionality is 
+ available and enabled.
+ 2- If a user enters an order number, the process deviates from the 
+ current Log-in,anat path option in that it displays any data entered via
+ CPRS AP order dialog. The fields presented could include any of the
+ following:
+    a.      SURGEON/PHYSICIAN
+    b.      SPECIMEN SUBMITTED BY
+    c.      SPECIMEN DESCRIPTION/SPECIMEN (multiple)
+    d.      BRIEF CLINICAL DESCRIPTION
+    e.      PREOPERATIVE DIAGNOSIS
+    f.      OPERATIVE FINDINGS
+    g.      POSTOPERATIVE DIAGNOSIS
+ 3- If Surgical Case(s) are found for this patient in the last 7 days 
+ they will be presented to the user for selection. If a case is selected 
+ the data from the Surgical Case will be displayed and the user will be 
+ asked if they wish to include this in the appropriate field in the 
+ Anatomic Pathology accession.
+ 4- If Surgical Case information is added to Anatomic Pathology 
+ fields it will display first and followed by the information obtained 
+ from the CPRS order.
+ 5- All other data entry/edit actions will be done via existing 
+ Anatomic Pathology options.
+  
+  
+ Blood Bank Review:
+ ==================
+ All of the above changes have been reviewed by the VISTA Blood Bank 
+ Developer and found to have no impact on the VISTA BLOOD BANK SOFTWARE 
+ control functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*462 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*462 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ POTENTIAL IMPACT ON SITES: This patch contains changes to routines and 
+ files identified in ProPath standard titled: BBM Team Review of VistA 
+ Patches, group B listing. The changes have no effect on Blood Bank 
+ functionality or medical device control functions. There is no adverse 
+ potential to sites.
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+  
+ File Name (Number)      Field Name (Number)  New/Modified/Deleted
+ ------------------      -------------------  --------------------
+ LABORATORY TEST         CPRS SCREEN           New
+  (#60)                     (#21661)
+ LABORATORY SITE         CPRS AP DIALOG ON     New
+  (#69.9)                   (#21661)
+ LAB ORDER ENTRY         SUBSCRIPT             New
+  (#69)                     (#21661.71)
+                         CPRS AP SCREEN        New
+                            (#21661.72)
+                         SURGEON/PHYSICIAN     New
+                            (#21661.73)
+                         SPECIMEN SUBMITTED    New
+                            BY (#21661.811)
+                         BREIF CLINICAL        New
+                            HISTORY 
+                             (#21661.813)
+                         PREOPERATIVE          New
+                            DIAGNOSIS 
+                             (#21661.814)
+                         OPERATIVE FINDINGS    New
+                             (#21661.815)      
+                         POST OPERATIVE        New
+                             FINDINGS 
+                              (#21661.816)
+  
+ LR CPRS PARAMETERS                            New
+  (#69.71)
+                            
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                 Type         New/Modified/Deleted
+ -----------                 ----         -------------------- 
+ LRXOSX                      menu          Modified
+ LR7OAP CPRS 60 EDIT         edit          New
+ LR7OAP CPRS 60 PRINT        run routine   New
+ LR7OAP CPRS DIALOG MENU     menu          New
+ LR7OAP CPRS DIALOG PRINT    print         New
+  
+  
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ LR7OAP DIALOG      PRINT     LR CPRS PARAMETERS   New
+    SCREENS                     (#69.71)
+                    
+ LR7OAP CPRS 60     INPUT     LABORATORY TEST      New
+    EDIT                        (#60)
+  
+  
+ Additional Information:
+  
+ N/A 
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------   
+ #20140511
+ The Anatomic Pathology (AP) laboratory service needs a mechanism for 
+ clinicians to provide required patient-specific, procedure-specific, and 
+ specimen-specific information to facilitate specimen processing by 
+ pathologists. This mechanism must be in place for use by the specimen 
+ labeling application in order to generate a primary specimen label that 
+ positively identifies the specimen and accurately associates it with the 
+ patient.
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+  
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+   North Florida/South Georgia Veterans Health System (Gainesville, FL)
+   Central California VA Health Care System (Fresno, CA)
+   VA Northern  California Health Care System
+   Edward Hines Jr. VA Hospital
+   Philadelphia VA Medical Center
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                         File Name                           FTP Mode
+ --------------------------------------------------------------------------
+ LAB_AP_ORDER DIAGLOG_DOCS.ZIP, which contains both .pdf and 
+ .docx formatted files of the following documents. Retrieval format is 
+ BINARY:
+  
+        VLE AP_Deployment_Installation_Roll Back_Back Out_Guide 
+  
+       
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch will install new fields to the LABORATORY TEST (#60), LAB 
+ ORDER ENTRY (#69) and LABORATORY SITE PARAMETERS (#69.9) files. It will 
+ also install a new file, LR CPRS SCREEN (#69.71), four new "LR7OAP" 
+ options, a print template for the LR CPRS SCREEN file and an edit 
+ template for the LABORATORY TEST (#60) file.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ strongly recommended that it be installed during non-peak hours when 
+ LAB usage is at a minimum.
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it is 
+  recommended that it be installed during non-peak hours to minimize 
+  potential disruption to users.  This patch should take less than 5 
+  minutes to install.
+  
+ This installation will install the components necessary to support the 
+ CPRS AP Order Dialog functionality.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     LR*5.2*462:
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+     Respond: NO
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+     Respond: NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+     Respond: NO
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 44
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR462A
+    Before:       n/a   After:  B5945552  **462**
+Routine Name: LR7OAPKM
+    Before:       n/a   After: B69415435  **462**
+Routine Name: LR7OAPMG
+    Before:       n/a   After: B59502319  **462**
+Routine Name: LR7OB3
+    Before: B24033857   After: B27184019  **121,187,272,291,462**
+Routine Name: LR7OF0
+    Before: B40209802   After: B41838489  **121,187,223,230,256,291,462**
+Routine Name: LR7OFAO
+    Before: B37973467   After: B54432906  **121,350,450,462**
+Routine Name: LRAP
+    Before: B24889097   After: B25886264  **72,248,259,350,462**
+Routine Name: LRAPDA
+    Before: B92935176   After: B95028265  **72,73,91,121,248,259,295,317,
+                                           365,350,422,462**
+Routine Name: LRAPKLG
+    Before:       n/a   After: B46698322  **462**
+Routine Name: LRAPKLG1
+    Before:       n/a   After:  B8921740  **462**
+Routine Name: LRAPKOE
+    Before:       n/a   After:B164456408  **462**
+Routine Name: LRAPKOE1
+    Before:       n/a   After:  B1258642  **462**
+Routine Name: LRAPKOEU
+    Before:       n/a   After:  B7473474  **462**
+Routine Name: LRAPLG
+    Before:  B7969847   After: B12374267  **72,201,259,462,**
+Routine Name: LRAPLG1
+    Before:B169348471   After:B181234041  **72,121,248,308,350,427,433,462**
+Routine Name: LRAPRES1
+    Before: B66194684   After: B70400068  **259,336,369,365,397,413,350,462**
+Routine Name: LROS
+    Before: B33110400   After: B42665920  **121,153,202,210,221,263,450,462**
+Routine Name: LRUDEL
+    Before: B25312700   After: B28725080  **1,72,121,201,350,427,433,450,462**
+Routine Name: LRUWLF
+    Before: B10175468   After: B10789696  **72,350,462**
+ 
+Routine list of preceding patches: 291, 422, 450
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 06, 2015
+Completed By:                               Date Completed: DEC 20, 2016
+Released By :                               Date Released : DEC 22, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

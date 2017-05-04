@@ -1,0 +1,471 @@
+
+=============================================================================
+Run Date: JAN 12, 2017                     Designation: LA*5.2*90
+Package : LA - AUTOMATED LAB INSTRUMENTS      Priority: Mandatory
+Version : 5.2        SEQ #68                    Status: Released
+                  Compliance Date: FEB 12, 2017
+=============================================================================
+
+Associated patches: (v)LA*5.2*74   <<= must be installed BEFORE `LA*5.2*90'
+                    (v)LA*5.2*88   <<= must be installed BEFORE `LA*5.2*90'
+
+Subject: MICROBIOLOGY ENHANCEMENTS
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+  
+ The build for this patch is distributed as part of a multi-package build 
+ that contains LR*5.2*474 and LA*5.2*90 and contains functionality that 
+ will allow Microbiology instrumentation to utilize the Lab Universal
+ Interface. 
+  
+ By utilizing the Universal interface and middleware sites will be able to 
+ interface microbiology devices to a UI standard interface. New
+ functionality will be applied that will allow for a "MI" subscripted test
+ to be added to the Auto Instrument file. There will also be enhanced
+ result processing and verify/release functions (see LR*5.2*474 patch
+ descriptions for additional details).
+  
+ This patch is distributed in support of the VistA Laboratory Enhancement
+ (VLE) Microbiology/Data Innovations interface utilizing the Laboratory
+ Universal Interface.
+  
+ The patch contains a modification to the AUTO INSTRUMENT (#62.4) file 
+ that will change the name of the "CHEM TESTS" (#30) field to "LABORATORY
+ TESTS" and modify the input screen to allow "MI" subscripted tests to be
+ added to an Auto Instrument entry. The trigger on the TEST (#.01) field
+ was also modified so that only tests with a value in the LOCATION (DATA
+ NAME) (#5) will set the ROUTINE STORAGE (#11) field.
+  
+ Additional Information:
+ -----------------------
+ This patch contains an enhancement to the antibiotic susceptibility 
+ result processing to accommodate the need for laboratories to 
+ report/document variations in susceptibility testing related to 
+ differences between in vitro susceptibility testing and in vivo action. 
+ An example is extended-spectrum_Beta-lactamases (ESBL).
+  
+ Susceptibility results received as coded entries can be from the SNOMED 
+ CT code system or a site-designated local code (L).
+  
+ The interface supports the following SNOMED CT codes to report 
+ susceptibility to antimicrobial agents.
+  
+ 131196009    susceptible
+ 260357007    moderately susceptible
+ 264841006    intermediately susceptible
+ 30714006     resistant
+ 10828004     positive
+ 260385009    negative
+  
+ Local codes in the role of answers can be entered on an interface 
+ specific basis using the option Add/Edit Local Identifier [LA7V 62.47 
+ LOCAL IDENTIFIER]
+  
+ An example of reporting ESBL status is the following HL7 OBX segment 
+ fragment.
+  
+ OBX|1|CWE|6984-9^ESBL:SUSC:PT:ISLT:ORDQN:AGAR 
+ DIFFUSION^LN^^^^2.19^^ESBL||ESBL^ESBL^L^^^^20160721^^+|||+
+  
+ Routines related to this enhancement are:
+ LA7VIN2A
+ LA7VIN7
+ LA7VIN7A
+ LA7VIN7B
+ LA7VHLU6
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*90 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by ProPath
+ standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*90 does not 
+ alter or modify any software design safeguards or safety critical elements
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch LA*5.2*90 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of
+ installation of this patch.
+  
+  
+ Patch Components:
+ -----------------
+ None
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ AUTO INSTRUMENT (#62.4)    LABORATORY TESTS (#30   Modified
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+  
+ Below shows the Data Dictionary as modified with the installation of this
+ Patch for the Auto Instrument File. 
+  
+ STANDARD DATA DICTIONARY #62.41 -- LABORATORY TESTS SUB-FILE   
+                                                JUN 8,2016@12:37:17  PAGE 1
+ STORED IN ^LAB(62.4,D0,3,   SITE: TEST.CHEYENNE.DOMAIN.EXT   UCI: 
+ VISTA,ROU
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+  
+ 62.41,.01     TEST                   0;1 POINTER TO LABORATORY TEST FILE (
+                                 #60) (Required) (Multiply asked)
+  
+               INPUT TRANSFORM:  S DIC("S")="I $D(^LAB(60,Y,.2))!(""MI""[$P
+                                 (^LAB(60,Y,0),U,4))" D ^DIC K DIC S DIC=DI
+                                 E,X=+Y K:Y<0 X
+               LAST EDITED:      JUN 07, 2016 
+               HELP-PROMPT:      Enter the name of a test for which the 
+                                 instrument will send data. 
+               DESCRIPTION:      This contains the test names for this
+                                 instrument.  
+  
+               SCREEN:           S DIC("S")="I $D(^LAB(60,Y,.2))!(""MI""[$P
+                                 (^LAB(60,Y,0),U,4))"
+               EXPLANATION:      Allow CH atomic test or Microbiology subsc
+                                 ript test
+               FIELD INDEX:      AD (#867)    MUMPS    IR    ACTION
+                   Short Descr:  Set "ROUTINE STORAGE" field with CH
+                                 subscripted test data name number
+                   Description:  This trigger cross reference will only
+                                 populate the "ROUTINE STORAGE" field with
+                                 63.04 data location file number for CH
+                                 (Chemistry) atomic subscripted test having
+                                 data name field populated. See example
+                                 below.  MI (Microbiology) subscripted test
+                                 have no data name, therefore the "AUTO 
+                                 INSTRUMENT" file # 62.4, "TEST" field #30,
+                                 (#62.41), subfile #62.41, "ROUTINE
+                                 STORAGE" file #11 will NOT be set.  
+                                  
+                                 EXAMPLE: CH subscripted test having DATA
+                                 NAME will populate the ROUTINE STORAGE 
+                                 field with: TV(#,1) MI subscripted test
+                                 will NOT set the ROUTINE STORAGE field.  
+                     Set Logic:  S $P(^LAB(62.4,DA(1),3,DA,1),U)="TV("_X2(3
+                                 )_",1)"
+                      Set Cond:  S X=(X2(2)="CH")&(X2(3)'="")
+                    Kill Logic:  S $P(^LAB(62.4,DA(1),3,DA,1),U)=""
+                          X(1):  TEST  (62.41,.01)  (Subscr 1)  (Len 10)
+                                 (forwards)
+                                   Transform (Display):   
+                          X(2):  Computed Code: S X=$P($G(^LAB(60,X(1),0)),
+                                 U,4)
+                                   (Subscr 2)
+                          X(3):  Computed Code: S X=$P($G(^LAB(60,X(1),.2))
+                                 ,U)
+                                   (Subscr 3)
+  
+  
+  
+       FILES POINTED TO                      FIELDS
+  
+ LABORATORY TEST (#60)             TEST (#.01)
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR #20131213
+ Carbapenem Resistant Enterobacteriaceae (CRE) Naming Conventions
+ Electronic Interfacing of Automated Identification and Susceptibility 
+ Testing Instruments
+  
+ NSR #20140801
+ Tracking Multi-Drug Resistant Organisms
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+  
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ James A. Haley Veterans Hospital
+ Iowa City VA Healthcare System
+ Lexington VA Medical Center
+  
+ Software and Documentation Retrieval Information 
+ ================================================
+ VistA Laboratory patch LR*5.2*474 software is distributed by Host File,
+ along with LA*5.2*90.  Software is available on the SOFTWARE.DIR directory
+ at one of the following Office of Information (OI) Field Offices.  The
+ preferred method is to retrieve the file using Secure File Transfer
+ Protocol (SFTP) from download.vista.domain.ext, which transmits files from
+ the first available SFTP server.
+         Albany                     ftp.domain.ext 
+         Hines                      ftp.domain.ext 
+         Salt Lake City             ftp.domain.ext 
+                                    
+ File Name                   Contents               Retrieval Format 
+ ------------------          --------------------   ----------------
+ LAB_MICRO_INTERFACE_        Host File containing   ASCII
+ RELEASE_1_0.KID             KIDS software distribution 
+  
+ LAB_MICRO_INTERFACE_RELEASE_1_0_DOCS.ZIP, which contains both .pdf and 
+ .docx formatted files of the following documents. Retrieval format is 
+ BINARY:
+  
+        VLE Micro_Lab_Micro_Interface_Release_1.0_Technical_Manual
+        VLE Micro_Lab_Micro_Interface_Release_1.0_User_Guide
+        VLE Micro_Deployment_Installation_Roll Back_Back Out_Guide
+  
+  
+ The VistA Documentation Library (VDL) web site will also contain the 
+ above referenced documents. This website is usually updated within 1-3
+ days of the patch release date. The VDL web address for Laboratory
+ Universal Interface user documentation is:
+ http://www.domain.ext/vdl/application.asp?appid=120
+  
+ Note: These previously released documents contain configuration and
+ mapping information that is useful to the implementation of the Universal
+ Interface for Microbiology tests.
+ ------------------------------------------------------------------------
+ LEDI IV Installation Guide     LAB_LEDI_IV_IG.PDF            binary
+ LEDI IV User Manual            LAB_LEDI_IV_UM.PDF            binary
+ LEDI IV Update AP/MICRO        LEDI_IV__AP__MICRO_           binary
+ Configuration Guide            CONFIGURATION_GUIDE.PDF       binary
+      
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch install must be coordinated with the Laboratory ADPAC to 
+ ensure that all Lab Interface related activities are halted.
+  
+ Pre-Installation Instructions:  
+ ------------------------------
+ Ensure that all Lab Interface activity has been halted !!
+  
+ This would include:
+ -Editing of an Auto Instrument file entry, 
+ -Turn off the Auto Downloading process to prevent the building and 
+ downloading of a Load/Worklist to the Instrument Manager.
+ -Shut down all LA7UI logical links and any other HL7 process (HLZTCP or 
+ HLLP processes) to prevent the processing of result messages from the IM.
+  
+ This patch may be installed with users on the system as long as the above 
+ process controls have been followed.
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ This installation will modify the CHEM TESTS field (#30) in the AUTO 
+ INSTRUMENT file (#62.4) by changing the following:
+  
+   The name of the field will be changed to LABORATORY TESTS
+   The screen on the field will now allow "MI" subscripted tests
+   The ROUTINE STORAGE (#11) value set by the trigger on the TESTS 
+   (#.01) field will not happen for "MI" subscripted tests
+   The original ROUTINE STORAGE trigger code has been replace with a new 
+   style AD cross-reference.
+    
+ 1.      DOWNLOAD HOST KIDS FILE 
+         ----------------------
+         Download the KIDS file LAB_MICRO_INTERFACE_RELEASE_1_0.KID from 
+         the ANONYMOUS.SOFTWARE directory of Albany, Hines, or the Salt
+         Lake OIFO to the appropriate directory on your system.
+  
+ 2.      LOAD DISTRIBUTION 
+         -----------------
+         Use the 'LOAD A DISTRIBUTION' option on the KIDS 
+         INSTALLATION menu, and enter:  the directory onto which you 
+         have downloaded the host file, followed by 
+         LAB_MICRO_INTERFACE_RELEASE_1_0.KID, the host file name. 
+  
+ 3.      START UP KIDS 
+         -------------
+         Start up the Kernel Installation and Distribution System Menu 
+         [XPD MAIN]:
+         Edits and Distribution ...  
+         Utilities ...  
+         Installation ...  
+  
+         Select Kernel Installation & Distribution System Option: 
+         Installation 
+         -------------
+  
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s) 
+             Restart Install of Package(s) 
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 4.      Select Installation Menu Option: 
+          ------------------------------------------
+    
+    a.   Use the Load a Distribution and select Host File: 
+         LAB_MICRO_INTERFACE_RELEASE_1_0.KID
+  
+    b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+  
+    c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+  
+    d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+  
+ 5.  From the KIDS Installation menu:  
+  
+ Select option #6:  Install Package(s)
+           
+ At the Select INSTALL NAME: Respond:  LA*5.2*90
+  
+ When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+     Respond: NO
+  
+ When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+     Respond: NO
+  
+ When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+     Respond: NO
+  
+ If prompted 'Delay Install (Minutes): (0 - 60): 0//'
+     Respond: 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Below is an example of how an micro instrument might be defined in the 
+ Auto Instrument file. Refer to the Install. We recommend that the Install 
+ and User manuals be followed for more completely documented 
+ instructions. 
+  
+ AUTO INSTRUMENT (#62.4:
+  
+ NUMBER: 3                               NAME: BAC-TEC
+   LOAD/WORK LIST: BAC-TEC
+   ENTRY for LAGEN ROUTINE: Accession cross-reference
+   CROSS LINKED BY: IDE                  MESSAGE CONFIGURATION: LA7UI2
+   METHOD: BACTEC                        DEFAULT ACCESSION AREA: BLOOD 
+ CULTURE
+   OVERLAY DATA: YES                     STORE REMARKS: YES
+ NUMBER: 1                               TEST: BLOOD CULTURE
+   UI TEST CODE: BLD CX                  ACCESSION AREA: MICROBIOLOGY
+   FILE BUILD ENTRY: EN                  FILE BUILD ROUTINE: LA7UID
+   AUTO DOWNLOAD: NO                     WKLD METHOD: BACT/ALERT
+   WKLD CODE METHOD NAME: BACT/ALERT     WKLD CODE SUFFIX: .7086
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.2;AUTOMATED LAB INSTRUMENTS;**[Patch List]**;Sep 27, 1994;Build 17
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LA7VHLU6
+    Before: B56093217   After: B58736241  **74,90**
+Routine Name: LA7VIN2A
+    Before: B34119950   After: B34485992  **74,88,90**
+Routine Name: LA7VIN7
+    Before: B81438195   After: B83943151  **74,90**
+Routine Name: LA7VIN7A
+    Before: B55259468   After: B61187996  **74,90**
+Routine Name: LA7VIN7B
+    Before: B59079752   After: B65792075  **74,90**
+Routine Name: LA90A
+    Before:       n/a   After:  B5670536  **90**
+ 
+Routine list of preceding patches: 88
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 06, 2015
+Completed By:                               Date Completed: JAN 11, 2017
+Released By :                               Date Released : JAN 12, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

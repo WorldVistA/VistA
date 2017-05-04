@@ -1,0 +1,151 @@
+
+=============================================================================
+Run Date: JAN 24, 2017                     Designation: PREN*1.1*5
+Package : PREN - PHARMACY PRODUCT SYS-NATL    Priority: Mandatory
+Version : 1.1         SEQ #5                    Status: Released
+                  Compliance Date: FEB 24, 2017
+=============================================================================
+
+
+Subject: PPSN 1.2.02 INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Pharmacy Product System-National (PPS-N) is a Web-based application
+ that provides the ability to manage pharmacy-specific data across the VA
+ enterprise, ensuring that all facilities are using the same base data
+ for their operations. It allows approved national VA personnel to easily,
+ quickly, and safely manage the VA National Formulary which directs which
+ products (such as medications and supplies) are to be purchased and used
+ by the VA hospital system.
+  
+ This patch corrects the following defects in the PPS-N application:
+  
+ Defect 439843 - IOC Issue #13 - PPSN User Role Page is not loading
+  
+ Description:
+ There were serious error messages reported by Todd Schippers happening in 
+ production when attempting to access the User Roles page.
+  
+ Resolution Description:
+ Modified the code to ensure user roles pages loads its model data in the 
+ correct order.
+  
+  
+ Defect 440736 - Multiple pages in PPS-N are displaying errors in 
+ production.
+  
+ Description:
+ The following pages in PPS-N Production are inaccessible and displaying 
+ errors:
+  
+ Manage PPS
+ - Enter /Edit Items
+ - PPS Data Elements
+ - PPS Data Requests
+  
+ User Preferences
+ - Search Preferences
+  
+ Resolution Description:
+ Modified the code to ensure model attributes are always populated in the 
+ correct order for these pages.
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+  
+ Options Associated:
+ --------------------
+ N/A
+  
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ----------------------------
+ N/A
+  
+ Associated Change Requests: 
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ N/A
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ There are no document changes needed.
+  
+ Installation Instructions:
+ --------------------------
+ This is a Web Application JAVA Build. This is a Centralized Server
+ promotion. NO installation is required at Local sites.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 05, 2017
+Completed By:                               Date Completed: JAN 24, 2017
+Released By :                               Date Released : JAN 24, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

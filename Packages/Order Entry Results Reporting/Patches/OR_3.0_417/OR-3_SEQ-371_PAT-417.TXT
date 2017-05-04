@@ -1,0 +1,284 @@
+$TXT Created by                    R at CMAI.FO-BIRM.DOMAIN.EXT  (KIDS) on Thursday, 05/19/16 at 14:20
+=============================================================================
+Run Date: DEC 12, 2016                     Designation: OR*3*417
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #371                      Status: Released
+                  Compliance Date: JAN 12, 2017
+=============================================================================
+
+Associated patches: (v)OR*3*350    <<= must be installed BEFORE `OR*3*417'
+                    (v)OR*3*361    <<= must be installed BEFORE `OR*3*417'
+                    (v)PSB*3*83    <<= must be installed BEFORE `OR*3*417'
+                    (v)PSJ*5*315   <<= must be installed BEFORE `OR*3*417'
+
+Subject: TRANSDERMAL MEDICATIONS ENHANCEMENTS (CASDDPE)
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ OR*3.0*417 makes changes to order details in support of Bar Code
+ Medications Administration (BCMA) and Inpatient Medications enhancements
+ for Transdermal Administrations.
+  
+ ******************************* ATTENTION ********************************
+   
+ Clinical Ancillary Services (CAS) Development-Delivery of Pharmacy 
+ Enhancements (DDPE) VA Inpatient Medication Administration - Transdermal
+ enhancement includes 5 patches which must be installed in the following
+ order:
+  
+ 1.      PSS*1*191 Released March 2016
+ 2.      PSJ*5*315 Released August 2016
+ 3.      PSB*3*83  Main BCMA patch
+ 4.      OR*3*417  BCMA support patch
+ 5.      PSB*3*87  BCBU
+  
+ ATTENTION: This enhancement also includes a new Graphical User Interface
+ (GUI) executable, BCMA GUI PSB3_P083.EXE. Installation of this GUI is
+ required immediately after the PSB*3*83 KIDS install for the enhancement
+ to function.
+  
+            ***  WARNING FOR ALL SITES CURRENTLY USING WMA  ***
+                   (Wireless Medication Administration)
+                             From CareFusion
+  
+    The below 15 VAMC sites should not install patch PSB*3*83 until the
+    site has confirmed they have received CareFusion's software update:
+    Pyxis Med Administration Verification VA v. 5.1
+   
+                     Bay Pines, FL
+                     Boise, ID
+                     Bonham, TX
+                     Brockton, MA
+                     Dallas, TX
+                     Danville, IL
+                     Kerrville, TX
+                     Little Rock, AR
+                     Loma Linda, CA
+                     Marion, IN
+                     Pittsburgh, PA
+                     Pittsburgh, PA-Heinz
+                     San Antonio, TX
+                     Topeka, KS
+                     West Roxbury, MA
+  
+ Installation of BCMA Patch PSB*3.0*83 may cause your WMA application to
+ stop functioning as you would expect it to. In order for the WMA devices
+ to work properly with PSB*3.0*83 installed, you must contact CareFusion,
+ the WMA vendor, to obtain the most current version of the WMA software.
+  
+ Please test this patch thoroughly in your TEST environment before 
+ installing into PRODUCTION. If you encounter any issues with the WMA
+ application, please report them to CareFusion.
+  
+ For retrieval and installation instructions for BCMA GUI, please see the
+ Client Installation Instructions section in patch PSB*3*83.
+  
+ **************************************************************************
+  
+ The change made by OR*3*417 is in support of requirements for patch
+ PSB*3.0*83.  All the patches in this group should be installed  prior to 
+ patch OR*3.0*417.
+  
+ The change will add a line to the Order Details report and the Medication
+ Administration History Report in the Computerized Patient Record System
+ (CPRS). These reports will display the Removal times for Medications
+ that Require Removal (MRRs).
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR 20141012: Pharmacy Safety Enhancements: The Veterans Health 
+ Administration (VHA) Pharmacy Benefits Management (PBM) supports 
+ enhancing functionality of  the VistA Pharmacy package and Bar Code 
+ Medication Administration (BCMA) software packages.  This request 
+ identifies, consolidates, and combines requirements needed for near-term 
+ enhancements to VistA Pharmacy and/or BCMA.
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Problem:
+ -------
+  
+ Resolution:
+ ----------
+  
+ Test Sites:
+ ----------
+ PITTSBURGH HCS
+ HC NETWORK UPSTATE NY
+ CHARLESTON, SC -VAMC
+ ST. CLOUD, MN -VAMC
+ MINNEAPOLIS, MN -VAMC
+  
+  
+ Documentation and Software Retrieval Instructions:
+ ----------------------------------------------------------------------- 
+ Updated documentation describing the new functionality and installation 
+ instructions introduced by this patch are available.
+  
+ Files can be obtained from the ANONYMOUS.SOFTWARE directory at one of the
+ OI Field Offices. The preferred method is to retrieve the file using
+ Secure File Transfer Protocol (SFTP) from DOWNLOAD.VISTA.DOMAIN.EXT, which
+ will transmit the file from the first available server. Alternatively,
+ sites may elect to retrieve the file from a specific OI Field Office.
+  
+ OI FIELD OFFICE   FTP ADDRESS             DIRECTORY
+ Albany:           domain.ext     
+ Hines:            domain.ext      
+ Salt Lake City:   domain.ext        
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Release Notes - BCMA V.3.0  (PSB*3*83/OR*3*417)
+                       PSB_3_P83_RN.PDF                         Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install. Patches PSS*1.0*191, PSJ*5.0*315 and PSB*3.0*83 should all be
+ installed in listed order prior to install of OR*3.0*417. Patch 
+ PSB*3.0*87 is an optional patch for Barcode Medication Administration 
+ Backup sites.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     OR*3.0*417:
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+  
+ 5.  If prompted "Want KIDS to INHIBIT LOGONs during the install?
+     NO//", Respond "No"
+  
+ 6.  If prompted "Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//", Respond "No" 
+  
+ 7.  If prompted "Delay Install (Minutes):  (0 - 60): 0//", Respond "0"
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ There are no installation routines with this patch.  No further action 
+ required.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORQ21
+    Before: B35534512   After: B37800373  **141,190,195,215,243,361,350,417**
+ 
+Routine list of preceding patches: 350
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 04, 2015
+Completed By:                               Date Completed: DEC 08, 2016
+Released By :                               Date Released : DEC 12, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

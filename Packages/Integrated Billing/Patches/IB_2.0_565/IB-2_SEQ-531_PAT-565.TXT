@@ -1,0 +1,174 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 09/20/16 at 17:03
+=============================================================================
+Run Date: DEC 12, 2016                     Designation: IB*2*565
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #531                      Status: Released
+                  Compliance Date: JAN 11, 2017
+=============================================================================
+
+Associated patches: (v)IB*2*528    <<= must be installed BEFORE `IB*2*565'
+                    (v)IB*2*547    <<= must be installed BEFORE `IB*2*565'
+
+Subject: PARAMETER ERROR FIX; VISIT FIELD POP FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses two issues in the Integrated Billing package:
+ 1. The first issue contains a PARAMETER error related to a group plan's
+    comment in the Move Subscribers to a Different Plan [IBCN MOVE SUBSCRIB
+    TO PLAN] option.
+ 2. The second issue is regarding numerous claim tracking entries
+    incorrectly filled with the visit date/time for inpatient events in the
+    Admit a Patient [DG ADMIT PATIENT] option.
+  
+ ASSOCIATED TICKET(S):
+ =====================
+ 1. I9571014FY16 ID patch 528 causing fatal error
+ 2. I10021020FY16 Problem with Visit Format in global entries
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+     
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Tennessee Valley Health Care System (Nashville, Murfreesboro)
+ Northport VA Medical Center
+ VA New York Harbor Health Care System (Brooklyn, Manhattan)
+  
+ TICKET OVERVIEW:
+ ================
+ 1. I9571014FY16 ID patch 528 causing fatal error
+  
+ Problem:
+ --------
+ Site user receives a PARAMETER error related to a group plan's comment when
+ selecting a subscriber to a different plan.
+  
+ Resolution:
+ -----------
+ Routine IBCN118 was modified to correct the 3rd parameter and also remove 
+ the extra 4th parameter which passes to call the FILEMAN's utility -
+ FILE^DIE and results in a PARAMETER error.
+  
+ 2. I10021020FY16 Problem with Visit Format in global entries
+  
+ Problem:
+ --------
+ Numerous entries have the VISIT field (#.03) of the CLAIMS TRACKING file
+ (#356) populated with the date/time data instead of pointers to the VISIT
+ file (#9000010).
+  
+ Resolution:
+ -----------
+ Routine IBTRKR was modified to remove the visit date/time which is falsely
+ filed in the VISIT field (#.03) of the CLAIMS TRACKING file (#356) for
+ inpatient events.
+  
+ Routine IB20P565 was created to remove the visit date/time for inpatient
+ claims tracking entries in the associated field (#.03) of the file (#356).
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 5 minutes - but will vary from site to site
+ depending on the size of the CLAIMS TRACKING file (#356) which is searched
+ for inpatient events to update by the Post-Init routine.
+     
+ 1.   LOAD TRANSPORT GLOBAL
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+      
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+      
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*565):
+   
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+   
+ 4.   Select Installation Option: Install Package(s)
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO.
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//', answer NO.
+     
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P565.
+   
+ 6.   Example of successful installation. The number of inpatient claims
+      tracking entries updated will vary from site to site depending on
+      the size of the CLAIMS TRACKING file (#356).
+  
+   IB*2.0*565 Post-Install .....
+  
+      >> Removing Existing Visit Date/Time for Inpatient Events, Please Wait...
+         Done.  234 existing inpatient claims tracking entries updated (#356)
+  
+   IB*2.0*565 Post-Install Complete
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 41
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P565
+    Before:       n/a   After:  B2952681  **565**
+Routine Name: IBCN118
+    Before:  B9899730   After:  B9889225  **528,565**
+Routine Name: IBTRKR
+    Before: B38263485   After: B37890721  **23,43,45,56,214,547,565**
+ 
+Routine list of preceding patches: 528, 547
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 13, 2016
+Completed By:                               Date Completed: DEC 07, 2016
+Released By :                               Date Released : DEC 12, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

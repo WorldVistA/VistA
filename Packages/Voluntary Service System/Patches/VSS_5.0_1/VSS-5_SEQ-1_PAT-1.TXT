@@ -1,0 +1,143 @@
+
+=============================================================================
+Run Date: JAN 23, 2017                     Designation: VSS*5*1
+Package : VSS - VOLUNTARY SERVICE SYSTEM      Priority: Mandatory
+Version : 5         SEQ #1                      Status: Released
+                  Compliance Date: FEB 23, 2017
+=============================================================================
+
+
+Subject: VSS*5*1 Enhancement Release
+
+Category: 
+  - Informational
+  - Other
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This is the informational patch for the release of the new 
+ Voluntary Service System (VSS) Web application.
+  
+ RELEASE INFORMATION:
+ VSS is a web-based application that provides a central interface for 
+ Voluntary Service staff to manage, track, and report on volunteers and 
+ donations.
+  
+ There are no VistA patches required to deploy VSS 5.1
+   
+ SOFTWARE CHANGES:
+ ================
+ VSS is a web-based application. Changes will be applied to the 
+ production servers and will be immediately available to the users. No 
+ changes at the local site are required for this release.
+  
+ Enhancements & New features
+ ============================
+ -The 5.1 release has transformed VSS into a Java/Linux application on the 
+  front end.  It has been upgraded from SQL Server 2008R2 to SQL Server 
+  2012 as the database server.
+  
+ -VSS 5.1 now uses SQL Server Reporting Server for reporting needs.  
+  Crystal Reports has been removed and Reporting is processed on a 
+  replicated reporting server that separates transactions from reports.
+  This will remove transaction performance problems during heavy reporting
+  cycles at month and year end.
+  
+ -SQL Server Reporting Server supports Ad Hoc reporting by high level users
+  through Active Directory groups controlled by the Business Owner.  Ad Hoc
+  reporting allows custom reporting to meet business needs not possible in 
+  the previous system.
+  
+ -The VSS Kiosk printing is no longer controlled by IE.  A local console 
+  application now runs on each Kiosk that controls printing.  This should 
+  greatly reduce Kiosk printing problems related to IE version upgrades and
+  VA IE security policies and settings.
+  
+ -Several Access databases that supplemented the previous system have been 
+  integrated into VSS. This includes tracking for National Officials and 
+  Program Manager.
+  
+ -Volunteers & Donors are now shared across facilities.
+  Organizations now support branches, and branches can have both time and 
+  donations tracked against them.
+  
+ -Services now support roles for volunteers.  Volunteer time is tracked 
+  against the role and can be reported on with finer granularity.
+  
+  
+ SYSTEM REQUIREMENTS:
+ ====================
+  
+ SOFTWARE RETRIEVAL:
+ ==================
+ The VSS Web application can be accessed directly from Internet Explorer 11
+ (IE) at https://vaww.vss.va.med.gov/vss.  All installations will occur on 
+ the single national enterprise web server.
+  
+  
+ Test Sites:
+ 516 - BayPines
+ 630 - Upstate New York
+ 678 - San Antonio
+ 583 - Indianapolis                                              
+  
+  
+ Documentation:
+ -------------- 
+  
+ Title                            File Name                  Access Type
+ -----------------------------------------------------------------------
+ Technical Manual                 VSS_51_tm.doc               Web
+ User Guide                       VSS_51_ug.doc               Web
+ Release Notes                    VSS_51_rn.doc               Web
+  
+ Kiosk Baseline                   ESE VSS Kiosk               Web
+ Document                         Baseline Resource
+                                  Document.pdf
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ The files listed above will be obtainable via VDL at
+ http://www.domain.ext/vdl/application.asp?appid=135 
+  
+  
+ Patch Installation:
+ There is no local VistA installation for VSS. All installations will 
+ be done on the national web server.
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ If you have any questions concerning the implementation of this 
+ application, please contact the VA Service Desk at 1-888-596-4357.
+  
+ Any changes or impacts to this package/installation will be reported on 
+ this message.
+  
+  
+ Routine Information:
+ ====================
+  
+  
+ No routines included.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 26, 2016
+Completed By:                               Date Completed: JAN 22, 2017
+Released By :                               Date Released : JAN 23, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

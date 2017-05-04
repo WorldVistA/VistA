@@ -1,0 +1,236 @@
+$TXT Created by                VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Thursday, 12/01/16 at 15:23
+=============================================================================
+Run Date: DEC 08, 2016                     Designation: OR*3*425
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #370                      Status: Released
+                  Compliance Date: JAN 08, 2017
+=============================================================================
+
+Associated patches: (v)OR*3*350    <<= must be installed BEFORE `OR*3*425'
+
+Subject: Provider Orders Management-Delayed Order Release
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This enhancement allows for inpatient delayed orders (with the exception 
+ of Unit-Dose Meds orders and Diet orders) to be manually released to 
+ outpatient locations. Without this modification, care to patients can be 
+ delayed while providers re-enter orders previously entered as inpatient 
+ orders.  
+  
+  
+ This solution is designed to address the specific scenario in which 
+ inpatient delayed orders are written for an admission event, but then the 
+ patient is not admitted (post treatment/post-procedure the patient remains
+ an outpatient) and the orders are required at an outpatient location such 
+ as a Post Anesthesia Care Unit. Under the current functionality In the 
+ current VistA system, these inpatient delayed orders cannot be released 
+ to the outpatient location because the admission event never occurred. 
+ After implementation of this patch, the delayed orders (with the exception
+ of Unit-Dose Meds orders and Diet orders) can be successfully released to
+ an outpatient location.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                File #       New/Modified/Deleted
+ ---------                ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------
+ 20140205   Manual Release of Delayed Orders for Non-inpatient Ward
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+ Problem:
+ --------
+  
+ Resolution:
+ -----------
+  
+  
+ Test Sites:
+ ----------
+ Milwaukee VA Medical Center, Milwaukee, Wisconsin (VAMC)
+ VA Puget Sound Health Care System, Washington (VAHCS)
+ Washington DC VA Medical Center, Washington, District of Columbia, (VAMC)
+  
+  
+ Software and Documentation Retrieval Instructions
+ -------------------------------------------------
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Albany:                 domain.ext
+ Hines:                  domain.ext  
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found in the VA Software Document Library at
+ http://www4.domain.ext/vdl/
+  
+ Title                                 File Name            FTP Mode
+ -------------------------------------------------------------------
+ CPRS Patch OR*3.0*425 Release Notes   OR_30_425_RN.DOC     Binary
+                                       OR_30_425_RN.PDF     Binary 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre/Post installation routines associated with this patch.
+  
+  
+ Pre-Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ Installation Instructions
+ -----------------------------
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+         the Installation Menu.  From this menu, you may elect to use the 
+         following options. When prompted for the INSTALL NAME enter
+         OR*3.0*425.
+  
+         a.  Verify Checksums in Transport Global - This option will 
+             allow you to ensure the integrity of the routines that are in
+             the transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+         and choose the patch to install.
+  
+ 5.      If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+         Install? NO//' press <Enter>.
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO// Press <Enter>
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO// Press <Enter>
+  
+ 8.      If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 9.      If prompted 'Enter the Device you want to print the Install 
+         messages. You can queue the install by enter a 'Q' at the device
+         prompt. Enter a '^' to abort the install. DEVICE: HOME//   HOME  
+         (CRT)', press <Enter>.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCACT0
+    Before: B64590852   After: B63963642  **7,27,48,72,86,92,94,141,165,
+                                           177,173,190,215,243,289,204,
+                                           306,350,425**
+ 
+Routine list of preceding patches: 350
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 16, 2015
+Completed By:                               Date Completed: DEC 08, 2016
+Released By :                               Date Released : DEC 08, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

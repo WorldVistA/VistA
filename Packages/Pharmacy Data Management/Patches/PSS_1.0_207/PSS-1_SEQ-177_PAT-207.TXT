@@ -1,0 +1,199 @@
+$TXT Created by                    CDMS.FO-BIRM.DOMAIN.EXT  (KIDS) on Monday, 12/12/16 at 09:54
+=============================================================================
+Run Date: JAN 17, 2017                     Designation: PSS*1*207
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #177                      Status: Released
+                  Compliance Date: FEB 17, 2017
+=============================================================================
+
+Associated patches: (v)PSS*1*200   <<= must be installed BEFORE `PSS*1*207'
+
+Subject: FIXED MEDICATION COPAYMENT TIER (FMCT) FOLLOW-UP PATCH
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This is a follow-up patch for Fixed Medication Copayment Tier (FMCT) 
+ patch PSS*1*200. After installation of PSS*1*200, the drug selection list 
+ for the Drug Enter/Edit [PSS DRUG ENTER/EDIT] and Lookup into Dispensed
+ Drug File [PSS LOOK] options did not display the drug identifiers for all
+ drugs that are not matched to NDF. Choosing an unmatched drug from the 
+ list still displayed all pertinent information in the body of the 
+ lookup screen.
+  
+ Unmatched products are only a small fraction of overall prescriptions
+ filled in the VA, and most of the unmatched products are either inactive,
+ supplies, or very low use items. This defect will not affect order entry
+ screens. 
+  
+ The following example of the Drug Enter/Edit [PSS DRUG ENTER/EDIT] screen
+ shows WARFARIN 2MG TAB which is matched to NDF and WARFARIN 4MG TAB which
+ is not matched to NDF. Both drugs have the same identifiers. They show for
+ the 2MG but not the 4MG. Also please note that this example was taken from
+ a development account with canned messages that we defined for testing
+ purposes. The identifiers still show for unmatched drugs in the body of
+ the lookup screen after installation of PSS*1*200. This follow-up patch
+ will correct the drug listing to display the defined identifiers for all
+ drugs (matched, unmatched).
+  
+ Select Pharmacy Data Management <DMS DDEV> Option: DRUG ENTER/EDIT
+  
+ Select DRUG GENERIC NAME: WAR
+   Lookup: GENERIC NAME
+      1   WARFARIN 2MG TAB   BL110  1234560  N/F  11/15/2016  THIS IS A 
+ MESSAGE FOR TESTING THE MESSAGE IDENTIFIER  RESTRICTED TO
+      2   WARFARIN 4MG TAB   BL110    
+      3   WARFARIN NA (EXELAN) 10MG TAB   BL110    
+      4   WARFARIN NA (EXELAN) 2.5MG TAB   BL110    
+      5   WARFARIN NA 5MG/VIL INJ       
+ Press <RETURN> to see more, '^' to exit this list, '^^' to exit all 
+ lists, OR
+ CHOOSE 1-5: 
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)       Field Name (Number)          New/Modified/Deleted
+ ------------------       -------------------          --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                File #                      New/Modified/Deleted
+ ---------                ------                      --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          -------------------- 
+ N/A
+  
+ Options Associated: 
+  
+ Option Name                  Type       New/Modified/Deleted
+ -----------                  ----       --------------------
+ N/A
+  
+ Protocols Associated:
+ ---------------------
+  
+ Protocol Name             New/Modified/Deleted
+ -------------             --------------------- 
+ N/A  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name     Type        File Name (Number)  New/Modified/Deleted
+ -------------     ----        ------------------  --------------------
+ N/A 
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs)
+ --------------------------- 
+ Tiered Modification Copayment Structure (#20150208)
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+ Test Sites:
+ -----------
+ AMARILLO, TX
+ MARYLAND HCS
+ SHREVEPORT, LA
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ There is no new documentation for this patch.
+  
+  
+ Title                             File Name                      FTP Mode
+ --------------------------------------------------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch may be installed with users on the system although it should be
+ installed during non-peak hours to minimize potential disruption to
+ users. This patch should take less than 5 minutes to install.
+  
+  1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+  2. From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+    
+  3. From this menu, you may select to use the following options
+     (when prompted for INSTALL NAME, enter PSS*1.0*207)
+    
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+    
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+    
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+    
+   4. Use the Install Package(s) option and select the package PSS*1.0*207.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.
+     
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//", respond NO.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 31
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSDEE
+    Before:B142621269   After:B142583898  **3,5,15,16,20,22,28,32,34,33,
+                                           38,57,47,68,61,82,90,110,155,
+                                           156,180,193,200,207**
+ 
+Routine list of preceding patches: 200
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 09, 2016
+Completed By:                               Date Completed: JAN 17, 2017
+Released By :                               Date Released : JAN 17, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

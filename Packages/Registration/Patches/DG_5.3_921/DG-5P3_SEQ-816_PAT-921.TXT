@@ -1,0 +1,182 @@
+
+=============================================================================
+Run Date: JAN 18, 2017                     Designation: DG*5.3*921
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #816                    Status: Released
+                  Compliance Date: MAR 04, 2017
+=============================================================================
+
+Associated patches: (v)DG*5.3*425  <<= must be installed BEFORE `DG*5.3*921'
+                    (v)DG*5.3*864  <<= must be installed BEFORE `DG*5.3*921'
+                    (v)HMP*2*1     <<= must be installed BEFORE `DG*5.3*921'
+
+Subject: eHMP ADDING UNSOLICITED UPDATES FOR REGISTRATION FIELDS
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ The eHMP user interface (UI) retrieves data from the JDS (JSON data 
+ store).  Edits to specific PATIENT file (#2) fields trigger updates to 
+ the JDS.  These triggers are made from within the DG10 routine.  
+ Additional fields are needed to be in the list of fields in DG10 to obtain
+ updates that are used in the eHMP UI.
+  
+ The DGPF EDIT ASSIGNMENT and DGPF CHANGE ASSIGNMENT OWNERSHIP protocols 
+ were modified to make them extended action protocols and the HMP DGPF 
+ ASSIGN FLAG protocol was added as an ITEM to each of the DGPF protocols. 
+ These modifications trigger updates to the JDS to capture any edits to a 
+ patient flag assignment.
+  
+ **NOTE**
+ HMP*2.0*2 is being released in a bundle with 6 supporting patches. It is 
+ recommended that this bundle be installed during non-peak hours with no
+ CPRS users on the system. This bundle should take less than 5 minutes to
+ install.
+  
+ The patches will be installed in the following order:
+ 1. DG*5.3*921
+ 2. MC*2.3*47
+ 3. GMRV*5*32
+ 4. PSB*3*95
+ 5. PSS*1*197
+ 6. OR*3*421
+ 7. HMP*2.0*2
+  
+ Following the installation of HMP*2.0*2, IRM staff should review the Error
+ trap for any <NOROUTINE> errors and work with the assistance of the
+ Clinical Application Coordinators (CACs) to validate the patient's orders
+ placed during the install time.
+  
+ Patch Components:
+ -----------------
+  
+ Files and Fields Associated:
+ ----------------------------
+ There are no new or modified files in this patch.
+  
+ Forms Associated:
+ -----------------
+ There are no new or modified forms in this patch.
+  
+ Mail Groups Associated:
+ -----------------------
+ There are no new or modified mail groups in this patch.
+  
+ Options Associated:
+ -------------------
+ There are no new or modified options in this patch.
+  
+ Protocols Associated:
+ ---------------------
+ The following modified Protocols are included in this KID build.
+  
+ Protocol Name                               New/Modified/Deleted
+ --------------                              --------------------
+ DGPF ASSIGN FLAG                                Modified
+ DGPF CHANGE ASSIGNMENT OWNERSHIP                Modified
+ DGPF EDIT ASSIGNMENT                            Modified
+ HMP DGPF ASSIGN FLAG                            Modified
+  
+ Security Keys Associated:
+ -------------------------
+ There are no new or modified security keys in this patch.
+  
+ Templates Associated:
+ ---------------------
+ There are no new or modified templates in this patch.
+  
+ Additional Information:
+ -----------------------
+ Defect        Description
+ ------        -----------
+ DE2369        Missing freshness update for demographic information
+ DE2813        Patient record flags not correctly displayed
+ DE3883        R1.2/R2.0: Narrative Text modified in Vista on Patient Flags
+                not appearing in eHMP-UI
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR #20150408 - VistA Evolution Enterprise Health Management Platform 
+ (eHMP)
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ There are no Patient Safety Issues associated with this patch.
+  
+ Remedy Tickets(s) & Overview:
+ -----------------------------
+ There are no Remedy tickets associated with this patch.
+  
+ Test Sites:
+ ----------
+ Hampton, VA 
+ Indianapolis, IN
+ Loma Linda, CA
+ Portland, OR
+ San Antonio, TX
+ San Diego, CA
+  
+ Patch Installation:
+ -------------------
+  
+ This patch will be installed from HMP*2.0*2 patch
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ HMP*2.0*2 is being released in a bundle with 6 supporting patches. It is 
+ recommended that this bundle be installed during non-peak hours with no
+ CPRS users on the system. This bundle should take less than 5 minutes to
+ install.
+  
+ The patches will be installed in the following order:
+ 1. DG*5.3*921
+ 2. MC*2.3*47
+ 3. GMRV*5*32
+ 4. PSB*3*95
+ 5. PSS*1*197
+ 6. OR*3*421
+ 7. HMP*2.0*2
+  
+ Following the installation of HMP*2.0*2, IRM staff should review the Error
+ trap for any <NOROUTINE> errors and work with the assistance of the
+ Clinical Application Coordinators (CACs) to validate the patient's orders
+ placed during the install time.
+  
+ Installation Instructions:
+  
+ Patch DG*5.3*921 is part of a multi-build:  HMP_MULTIBUILD_2-0_P02.KID
+ See the HMP*2.0*2 patch description for the installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG10
+    Before: B19615369   After: B29845134  **32,109,139,149,182,326,513,
+                                           425,574,642,658,773,864,921**
+Routine Name: DGPFAA
+    Before: B35630618   After: B41515033  **425,921**
+ 
+Routine list of preceding patches: 864
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 28, 2015
+Completed By:                               Date Completed: DEC 22, 2016
+Released By :                               Date Released : JAN 18, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

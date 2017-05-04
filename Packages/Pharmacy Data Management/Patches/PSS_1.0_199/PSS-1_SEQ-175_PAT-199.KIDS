@@ -1,0 +1,1165 @@
+Released PSS*1*199 SEQ #175
+Extracted from mail message
+**KIDS**:PSS*1.0*199^
+
+**INSTALL NAME**
+PSS*1.0*199
+"BLD",10290,0)
+PSS*1.0*199^PHARMACY DATA MANAGEMENT^0^3160627^y
+"BLD",10290,1,0)
+^^13^13^3160620^
+"BLD",10290,1,1,0)
+This patch will correct the following issues:
+"BLD",10290,1,2,0)
+ 
+"BLD",10290,1,3,0)
+1) The API DRGIEN^PSS50P7 that returns the Dispense Drugs in the DRUG 
+"BLD",10290,1,4,0)
+   file (#50) matched to a PHARMACY ORDERABLE ITEM file (#50.7) is not 
+"BLD",10290,1,5,0)
+   returning all matches if a Dispense Drug happens to have the same 
+"BLD",10290,1,6,0)
+   internal entry number in the DRUG (#50) file as the PHARMACY ORDERABLE 
+"BLD",10290,1,7,0)
+   ITEM (#50.7) file entry it points to.  
+"BLD",10290,1,8,0)
+ 
+"BLD",10290,1,9,0)
+2) Lines may scroll off the screen when checking drug interactions.  The 
+"BLD",10290,1,10,0)
+   user may not be aware that not all lines are displaying on the screen.
+"BLD",10290,1,11,0)
+ 
+"BLD",10290,1,12,0)
+3) Outpatient Pharmacy CK Action not working after Check Drug 
+"BLD",10290,1,13,0)
+   Interactions option is invoked if user enters "^" to exit out.
+"BLD",10290,4,0)
+^9.64PA^^
+"BLD",10290,6.3)
+2
+"BLD",10290,"ABPKG")
+n
+"BLD",10290,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10290,"KRN",.4,0)
+.4
+"BLD",10290,"KRN",.401,0)
+.401
+"BLD",10290,"KRN",.402,0)
+.402
+"BLD",10290,"KRN",.403,0)
+.403
+"BLD",10290,"KRN",.5,0)
+.5
+"BLD",10290,"KRN",.84,0)
+.84
+"BLD",10290,"KRN",3.6,0)
+3.6
+"BLD",10290,"KRN",3.8,0)
+3.8
+"BLD",10290,"KRN",9.2,0)
+9.2
+"BLD",10290,"KRN",9.8,0)
+9.8
+"BLD",10290,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",10290,"KRN",9.8,"NM",1,0)
+PSS50P7^^0^B43180168
+"BLD",10290,"KRN",9.8,"NM",2,0)
+PSSDIUTL^^0^B168125887
+"BLD",10290,"KRN",9.8,"NM","B","PSS50P7",1)
+
+"BLD",10290,"KRN",9.8,"NM","B","PSSDIUTL",2)
+
+"BLD",10290,"KRN",19,0)
+19
+"BLD",10290,"KRN",19.1,0)
+19.1
+"BLD",10290,"KRN",101,0)
+101
+"BLD",10290,"KRN",409.61,0)
+409.61
+"BLD",10290,"KRN",771,0)
+771
+"BLD",10290,"KRN",779.2,0)
+779.2
+"BLD",10290,"KRN",870,0)
+870
+"BLD",10290,"KRN",8989.51,0)
+8989.51
+"BLD",10290,"KRN",8989.52,0)
+8989.52
+"BLD",10290,"KRN",8994,0)
+8994
+"BLD",10290,"KRN","B",.4,.4)
+
+"BLD",10290,"KRN","B",.401,.401)
+
+"BLD",10290,"KRN","B",.402,.402)
+
+"BLD",10290,"KRN","B",.403,.403)
+
+"BLD",10290,"KRN","B",.5,.5)
+
+"BLD",10290,"KRN","B",.84,.84)
+
+"BLD",10290,"KRN","B",3.6,3.6)
+
+"BLD",10290,"KRN","B",3.8,3.8)
+
+"BLD",10290,"KRN","B",9.2,9.2)
+
+"BLD",10290,"KRN","B",9.8,9.8)
+
+"BLD",10290,"KRN","B",19,19)
+
+"BLD",10290,"KRN","B",19.1,19.1)
+
+"BLD",10290,"KRN","B",101,101)
+
+"BLD",10290,"KRN","B",409.61,409.61)
+
+"BLD",10290,"KRN","B",771,771)
+
+"BLD",10290,"KRN","B",779.2,779.2)
+
+"BLD",10290,"KRN","B",870,870)
+
+"BLD",10290,"KRN","B",8989.51,8989.51)
+
+"BLD",10290,"KRN","B",8989.52,8989.52)
+
+"BLD",10290,"KRN","B",8994,8994)
+
+"BLD",10290,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",10290,"QUES",0)
+^9.62^^
+"BLD",10290,"REQB",0)
+^9.611^2^2
+"BLD",10290,"REQB",1,0)
+PSS*1.0*91^2
+"BLD",10290,"REQB",2,0)
+PSS*1.0*175^2
+"BLD",10290,"REQB","B","PSS*1.0*175",2)
+
+"BLD",10290,"REQB","B","PSS*1.0*91",1)
+
+"MBREQ")
+0
+"PKG",488,-1)
+1^1
+"PKG",488,0)
+PHARMACY DATA MANAGEMENT^PSS^Maintenance of Pharmacy files.
+"PKG",488,20,0)
+^9.402P^^
+"PKG",488,22,0)
+^9.49I^1^1
+"PKG",488,22,1,0)
+1.0^2970930^3000316^66481
+"PKG",488,22,1,"PAH",1,0)
+199^3160627
+"PKG",488,22,1,"PAH",1,1,0)
+^^13^13^3160627
+"PKG",488,22,1,"PAH",1,1,1,0)
+This patch will correct the following issues:
+"PKG",488,22,1,"PAH",1,1,2,0)
+ 
+"PKG",488,22,1,"PAH",1,1,3,0)
+1) The API DRGIEN^PSS50P7 that returns the Dispense Drugs in the DRUG 
+"PKG",488,22,1,"PAH",1,1,4,0)
+   file (#50) matched to a PHARMACY ORDERABLE ITEM file (#50.7) is not 
+"PKG",488,22,1,"PAH",1,1,5,0)
+   returning all matches if a Dispense Drug happens to have the same 
+"PKG",488,22,1,"PAH",1,1,6,0)
+   internal entry number in the DRUG (#50) file as the PHARMACY ORDERABLE 
+"PKG",488,22,1,"PAH",1,1,7,0)
+   ITEM (#50.7) file entry it points to.  
+"PKG",488,22,1,"PAH",1,1,8,0)
+ 
+"PKG",488,22,1,"PAH",1,1,9,0)
+2) Lines may scroll off the screen when checking drug interactions.  The 
+"PKG",488,22,1,"PAH",1,1,10,0)
+   user may not be aware that not all lines are displaying on the screen.
+"PKG",488,22,1,"PAH",1,1,11,0)
+ 
+"PKG",488,22,1,"PAH",1,1,12,0)
+3) Outpatient Pharmacy CK Action not working after Check Drug 
+"PKG",488,22,1,"PAH",1,1,13,0)
+   Interactions option is invoked if user enters "^" to exit out.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PSS50P7")
+0^1^B43180168^B42625601
+"RTN","PSS50P7",1,0)
+PSS50P7 ;BIR/LDT - API FOR INFORMATION FROM FILE 50.7; 5 Sep 03
+"RTN","PSS50P7",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**85,91,199**;9/30/97;Build 2
+"RTN","PSS50P7",3,0)
+ ;
+"RTN","PSS50P7",4,0)
+ZERO(PSSIEN,PSSFT,PSSFL,LIST) ;
+"RTN","PSS50P7",5,0)
+ ;PSSIEN - IEN of entry in PHARMACY ORDERABLE ITEM file (#50.7).
+"RTN","PSS50P7",6,0)
+ ;PSSFT - Free Text name in PHARMACY ORDERABLE ITEM file (#50.7).
+"RTN","PSS50P7",7,0)
+ ;PSSFL - Inactive flag - "" - All entries.
+"RTN","PSS50P7",8,0)
+ ;        FileMan Date - Only entries with no Inactive Date or an Inactive Date greater than this date.
+"RTN","PSS50P7",9,0)
+ ;LIST - Subscript of ^TMP array in the form ^TMP($J,LIST,Field Number where Field Number is the
+"RTN","PSS50P7",10,0)
+ ;Field Number of the data piece being returned.
+"RTN","PSS50P7",11,0)
+ ;Returns NAME field (#.01), DOSAGE FORM field (#.02), IV FLAG field (#.03), INACTIVE DATE field (#.04),
+"RTN","PSS50P7",12,0)
+ ;DAY (nD) OR DOSE (nL) LIMIT field (#.05), MED ROUTE field (#.06), SCHEDULE TYPE fiedl (#.07),
+"RTN","PSS50P7",13,0)
+ ;SCHEDULE field (#.08), SUPPLY field (#.09), FORMULARY STATUS field (#5), and NON-VA MED field (#8) of
+"RTN","PSS50P7",14,0)
+ ;PHARMACY ORDERABLE ITEM file (#50.7).
+"RTN","PSS50P7",15,0)
+ N DIERR,ZZERR,PSS50P7,SCR,PSS
+"RTN","PSS50P7",16,0)
+ I $G(LIST)']"" Q
+"RTN","PSS50P7",17,0)
+ K ^TMP($J,LIST)
+"RTN","PSS50P7",18,0)
+ I +$G(PSSIEN)'>0,($G(PSSFT)']"") S ^TMP($J,LIST,0)=-1_"^"_"NO DATA FOUND" Q
+"RTN","PSS50P7",19,0)
+ I $G(PSSIEN)]"",+$G(PSSIEN)'>0 S ^TMP($J,LIST,0)=-1_"^"_"NO DATA FOUND" Q
+"RTN","PSS50P7",20,0)
+ S SCR("S")=""
+"RTN","PSS50P7",21,0)
+ I +$G(PSSFL)>0 N ND D SETSCRN
+"RTN","PSS50P7",22,0)
+ I +$G(PSSIEN)>0 N PSSIEN2 S PSSIEN2=$$FIND1^DIC(50.7,"","A","`"_PSSIEN,,SCR("S"),"") D
+"RTN","PSS50P7",23,0)
+ .I +PSSIEN2'>0 S ^TMP($J,LIST,0)=-1_"^"_"NO DATA FOUND" Q
+"RTN","PSS50P7",24,0)
+ .S ^TMP($J,LIST,0)=1
+"RTN","PSS50P7",25,0)
+ .D GETS^DIQ(50.7,+PSSIEN2,".01;.02;.03;.04;.05;.06;.07;.08;.09;8;5","IE","PSS50P7") S PSS(1)=0
+"RTN","PSS50P7",26,0)
+ .F  S PSS(1)=$O(PSS50P7(50.7,PSS(1))) Q:'PSS(1)  D SETZRO^PSS50P7A
+"RTN","PSS50P7",27,0)
+ I +$G(PSSIEN)'>0,$G(PSSFT)]"" D
+"RTN","PSS50P7",28,0)
+ .I PSSFT["??" D LOOP^PSS50P7A(1) Q
+"RTN","PSS50P7",29,0)
+ .D FIND^DIC(50.7,,"@;.01;.02","QP",PSSFT,,"B",SCR("S"),,"")
+"RTN","PSS50P7",30,0)
+ .I +$G(^TMP("DILIST",$J,0))=0 S ^TMP($J,LIST,0)=-1_"^"_"NO DATA FOUND" Q
+"RTN","PSS50P7",31,0)
+ .I +^TMP("DILIST",$J,0)>0 S ^TMP($J,LIST,0)=+^TMP("DILIST",$J,0) N PSSXX S PSSXX=0 F  S PSSXX=$O(^TMP("DILIST",$J,PSSXX)) Q:'PSSXX  D
+"RTN","PSS50P7",32,0)
+ ..S PSSIEN=+^TMP("DILIST",$J,PSSXX,0) K PSS50P7 D GETS^DIQ(50.7,+PSSIEN,".01;.02;.03;.04;.05;.06;.07;.08;.09;8;5","IE","PSS50P7") S PSS(1)=0
+"RTN","PSS50P7",33,0)
+ ..F  S PSS(1)=$O(PSS50P7(50.7,PSS(1))) Q:'PSS(1)  D SETZRO^PSS50P7A
+"RTN","PSS50P7",34,0)
+ K ^TMP("DILIST",$J)
+"RTN","PSS50P7",35,0)
+ Q
+"RTN","PSS50P7",36,0)
+ ;
+"RTN","PSS50P7",37,0)
+SYNONYM(PSSIEN,PSSFT,PSSFL,LIST) ;
+"RTN","PSS50P7",38,0)
+ ;PSSIEN - IEN of entry in PHARMACY ORDERABLE ITEM file (#50.7).
+"RTN","PSS50P7",39,0)
+ ;PSSFT - Free Text name in PHARMACY ORDERABLE ITEM file (#50.7).
+"RTN","PSS50P7",40,0)
+ ;PSSFL - Inactive flag - 0 or "" - All entries.
+"RTN","PSS50P7",41,0)
+ ;        FileMan Date - Only entries with no Inactive Date or an Inactive Date greater than this date.
+"RTN","PSS50P7",42,0)
+ ;LIST - Subscript of ^TMP array in the form ^TMP($J,LIST,Field Number where Field Number is the
+"RTN","PSS50P7",43,0)
+ ;Field Number of the data piece being returned.
+"RTN","PSS50P7",44,0)
+ ;Returns NAME field (#.01), DOSAGE FORM field (#.02), SYNONYM subfile (#50.72), and SYNONYM field (#.01)
+"RTN","PSS50P7",45,0)
+ ;of PHARMACY ORDERABLE ITEM file (#50.7).
+"RTN","PSS50P7",46,0)
+ N DIERR,ZZERR,PSS50P7,SCR,PSS,CNT
+"RTN","PSS50P7",47,0)
+ I $G(LIST)']"" Q
+"RTN","PSS50P7",48,0)
+ K ^TMP($J,LIST)
+"RTN","PSS50P7",49,0)
+ I +$G(PSSIEN)'>0,($G(PSSFT)']"") S ^TMP($J,LIST,0)=-1_"^"_"NO DATA FOUND" Q
+"RTN","PSS50P7",50,0)
+ I $G(PSSIEN)]"",+$G(PSSIEN)'>0 S ^TMP($J,LIST,0)=-1_"^"_"NO DATA FOUND" Q
+"RTN","PSS50P7",51,0)
+ S SCR("S")=""
+"RTN","PSS50P7",52,0)
+ I +$G(PSSFL)>0 N ND D SETSCRN
+"RTN","PSS50P7",53,0)
+ I +$G(PSSIEN)>0 N PSSIEN2 S PSSIEN2=$$FIND1^DIC(50.7,"","A","`"_PSSIEN,,SCR("S"),"") D
+"RTN","PSS50P7",54,0)
+ .I +PSSIEN2'>0 S ^TMP($J,LIST,0)=-1_"^"_"NO DATA FOUND" Q
+"RTN","PSS50P7",55,0)
+ .S ^TMP($J,LIST,0)=1
+"RTN","PSS50P7",56,0)
+ .D GETS^DIQ(50.7,+PSSIEN2,".01;.02;2*","IE","PSS50P7") S PSS(1)=0
+"RTN","PSS50P7",57,0)
+ .S CNT=0 F  S PSS(1)=$O(PSS50P7(50.72,PSS(1))) Q:'PSS(1)  D SETSYN^PSS50P7A S CNT=CNT+1
+"RTN","PSS50P7",58,0)
+ .S ^TMP($J,LIST,+PSSIEN2,"SYN",0)=$S(CNT>0:CNT,1:"-1^NO DATA FOUND")
+"RTN","PSS50P7",59,0)
+ .S PSS(2)=0 F  S PSS(2)=$O(PSS50P7(50.7,PSS(2))) Q:'PSS(2)  D SETZR2^PSS50P7A
+"RTN","PSS50P7",60,0)
+ I +$G(PSSIEN)'>0,$G(PSSFT)]"" D
+"RTN","PSS50P7",61,0)
+ .I PSSFT["??" D LOOP^PSS50P7A(2) Q
+"RTN","PSS50P7",62,0)
+ .D FIND^DIC(50.7,,"@;.01","QP",PSSFT,,"B",SCR("S"),,"")
+"RTN","PSS50P7",63,0)
+ .I +$G(^TMP("DILIST",$J,0))=0 S ^TMP($J,LIST,0)=-1_"^"_"NO DATA FOUND" Q
+"RTN","PSS50P7",64,0)
+ .I +^TMP("DILIST",$J,0)>0 S ^TMP($J,LIST,0)=+^TMP("DILIST",$J,0) N PSSXX S PSSXX=0 F  S PSSXX=$O(^TMP("DILIST",$J,PSSXX)) Q:'PSSXX  D
+"RTN","PSS50P7",65,0)
+ ..S PSSIEN=+^TMP("DILIST",$J,PSSXX,0) K PSS50P7(50.72) K PSS50P7 D GETS^DIQ(50.7,+PSSIEN,".01;.02;2*","IE","PSS50P7") S PSS(1)=0
+"RTN","PSS50P7",66,0)
+ ..S CNT=0 F  S PSS(1)=$O(PSS50P7(50.72,PSS(1))) Q:'PSS(1)  D SETSYN^PSS50P7A  S CNT=CNT+1
+"RTN","PSS50P7",67,0)
+ ..S ^TMP($J,LIST,+PSSIEN,"SYN",0)=$S(CNT>0:CNT,1:"-1^NO DATA FOUND")
+"RTN","PSS50P7",68,0)
+ ..S PSS(2)=0 F  S PSS(2)=$O(PSS50P7(50.7,PSS(2))) Q:'PSS(2)  D SETZR2^PSS50P7A
+"RTN","PSS50P7",69,0)
+ K ^TMP("DILIST",$J)
+"RTN","PSS50P7",70,0)
+ Q
+"RTN","PSS50P7",71,0)
+ ;
+"RTN","PSS50P7",72,0)
+NAME(PSSIEN) ;
+"RTN","PSS50P7",73,0)
+ ;PSSIEN - IEN of entry in PHARMACY ORDERABLE ITEM file (#50.7).
+"RTN","PSS50P7",74,0)
+ ;Returns NAME field (#.01) of PHARMACY ORDERABLE ITEM file (#50.7) and DOSAGE FORM name in external form.
+"RTN","PSS50P7",75,0)
+ N DIERR,ZZERR,PSS50P7,PSS
+"RTN","PSS50P7",76,0)
+ I +$G(PSSIEN)'>0 Q ""
+"RTN","PSS50P7",77,0)
+ D GETS^DIQ(50.7,+PSSIEN,".01;.02","E","PSS50P7")
+"RTN","PSS50P7",78,0)
+ I '$D(PSS50P7) Q ""
+"RTN","PSS50P7",79,0)
+ Q $G(PSS50P7(50.7,PSSIEN_",",.01,"E"))_" "_$G(PSS50P7(50.7,PSSIEN_",",.02,"E"))
+"RTN","PSS50P7",80,0)
+ ;
+"RTN","PSS50P7",81,0)
+INSTR(PSSIEN,PSSFT,PSSFL,LIST) ;
+"RTN","PSS50P7",82,0)
+ ;PSSIEN - IEN of entry in PHARMACY ORDERABLE ITEM file (#50.7).
+"RTN","PSS50P7",83,0)
+ ;PSSFT - Free Text name in PHARMACY ORDERABLE ITEM file (#50.7).
+"RTN","PSS50P7",84,0)
+ ;PSSFL - Inactive flag - "" - All entries.
+"RTN","PSS50P7",85,0)
+ ;        FileMan Date - Only entries with no Inactive Date or an Inactive Date greater than this date.
+"RTN","PSS50P7",86,0)
+ ;LIST - Subscript of ^TMP array in the form ^TMP($J,LIST,Field Number where Field Number is the
+"RTN","PSS50P7",87,0)
+ ;Field Number of the data piece being returned.
+"RTN","PSS50P7",88,0)
+ ;Returns INS and INS1 nodes of PHARMACY ORDERABLE ITEM file (#50.7).
+"RTN","PSS50P7",89,0)
+ N DIERR,ZZERR,PSS50P7,SCR,PSS
+"RTN","PSS50P7",90,0)
+ I $G(LIST)']"" Q
+"RTN","PSS50P7",91,0)
+ K ^TMP($J,LIST)
+"RTN","PSS50P7",92,0)
+ I +$G(PSSIEN)'>0,($G(PSSFT)']"") S ^TMP($J,LIST,0)=-1_"^"_"NO DATA FOUND" Q
+"RTN","PSS50P7",93,0)
+ I $G(PSSIEN)]"",+$G(PSSIEN)'>0 S ^TMP($J,LIST,0)=-1_"^"_"NO DATA FOUND" Q
+"RTN","PSS50P7",94,0)
+ S SCR("S")=""
+"RTN","PSS50P7",95,0)
+ I +$G(PSSFL)>0 N ND D SETSCRN
+"RTN","PSS50P7",96,0)
+ I +$G(PSSIEN)>0 N PSSIEN2 S PSSIEN2=$$FIND1^DIC(50.7,"","A","`"_PSSIEN,,SCR("S"),"") D
+"RTN","PSS50P7",97,0)
+ .I +PSSIEN2'>0 S ^TMP($J,LIST,0)=-1_"^"_"NO DATA FOUND" Q
+"RTN","PSS50P7",98,0)
+ .S ^TMP($J,LIST,0)=1
+"RTN","PSS50P7",99,0)
+ .D GETS^DIQ(50.7,+PSSIEN2,".01;.02;7;7.1","IE","PSS50P7") S PSS(1)=0
+"RTN","PSS50P7",100,0)
+ .F  S PSS(1)=$O(PSS50P7(50.7,PSS(1))) Q:'PSS(1)  D SETPTI^PSS50P7A
+"RTN","PSS50P7",101,0)
+ I +$G(PSSIEN)'>0,$G(PSSFT)]"" D
+"RTN","PSS50P7",102,0)
+ .I PSSFT["??" D LOOP^PSS50P7A(3) Q
+"RTN","PSS50P7",103,0)
+ .D FIND^DIC(50.7,,"@;.01","QP",PSSFT,,"B",SCR("S"),,"")
+"RTN","PSS50P7",104,0)
+ .I +$G(^TMP("DILIST",$J,0))=0 S ^TMP($J,LIST,0)=-1_"^"_"NO DATA FOUND" Q
+"RTN","PSS50P7",105,0)
+ .I +^TMP("DILIST",$J,0)>0 S ^TMP($J,LIST,0)=+^TMP("DILIST",$J,0) N PSSXX S PSSXX=0 F  S PSSXX=$O(^TMP("DILIST",$J,PSSXX)) Q:'PSSXX  D
+"RTN","PSS50P7",106,0)
+ ..S PSSIEN=+^TMP("DILIST",$J,PSSXX,0) K PSS50P7 D GETS^DIQ(50.7,+PSSIEN,".01;.02;7;7.1","IE","PSS50P7") S PSS(1)=0
+"RTN","PSS50P7",107,0)
+ ..F  S PSS(1)=$O(PSS50P7(50.7,PSS(1))) Q:'PSS(1)  D SETPTI^PSS50P7A
+"RTN","PSS50P7",108,0)
+ K ^TMP("DILIST",$J)
+"RTN","PSS50P7",109,0)
+ Q
+"RTN","PSS50P7",110,0)
+ ;
+"RTN","PSS50P7",111,0)
+DRGIEN(PSSIEN,PSSFL,LIST) ;
+"RTN","PSS50P7",112,0)
+ ;PSSIEN - IEN of entry in PHARMACY ORDERABLE ITEM file (#50.7).
+"RTN","PSS50P7",113,0)
+ ;PSSFL - Inactive flag - "" - All entries.
+"RTN","PSS50P7",114,0)
+ ;        FileMan Date - Only entries with no Inactive Date or an Inactive Date greater than this date.
+"RTN","PSS50P7",115,0)
+ ;LIST - Subscript of ^TMP array in the form ^TMP($J,LIST,Field Number where Field Number is the
+"RTN","PSS50P7",116,0)
+ ;Field Number of the data piece being returned.
+"RTN","PSS50P7",117,0)
+ ;Returns entries from DRUG file (#50) linked to the Pharmacy Orderable Item IEN passed, GENERIC NAME field (#.01),
+"RTN","PSS50P7",118,0)
+ ;DEA, SPECIAL HDLG field (#3), APPLICATION PACKAGES' USE field (#63), and the INACTIVE DATE field (#100)
+"RTN","PSS50P7",119,0)
+ ;of DRUG file (#50).
+"RTN","PSS50P7",120,0)
+ N DIERR,ZZERR,PSS50P7,SCR,PSS
+"RTN","PSS50P7",121,0)
+ I $G(LIST)']"" Q
+"RTN","PSS50P7",122,0)
+ K ^TMP($J,LIST)
+"RTN","PSS50P7",123,0)
+ I +$G(PSSIEN)'>0 S ^TMP($J,LIST,0)=-1_"^"_"NO DATA FOUND" Q
+"RTN","PSS50P7",124,0)
+ S SCR("S")="I $D(^PS(50.7,""A50"",PSSIEN,Y))"
+"RTN","PSS50P7",125,0)
+ ;Naked reference below refers to ^PSDRUG(Y,"I")
+"RTN","PSS50P7",126,0)
+ I +$G(PSSFL)>0 S SCR("S")="S ND=$G(^(""I"")) I ((ND="""")&($D(^PS(50.7,""A50"",PSSIEN,Y))))!((ND>PSSFL)&($D(^PS(50.7,""A50"",PSSIEN,Y))))"
+"RTN","PSS50P7",127,0)
+ I +$G(PSSIEN)>0 D FIND^DIC(50,,"@;.01","QX",PSSIEN,,"ASP",SCR("S"),,"PSS50P7")
+"RTN","PSS50P7",128,0)
+ I +PSS50P7("DILIST",0)'>0 S ^TMP($J,LIST,0)=-1_"^"_"NO DATA FOUND" Q
+"RTN","PSS50P7",129,0)
+ S ^TMP($J,LIST,0)=+PSS50P7("DILIST",0) S PSS(1)=0 D
+"RTN","PSS50P7",130,0)
+ .F  S PSS(1)=$O(PSS50P7("DILIST",PSS(1))) Q:'PSS(1)  S PSS(2)=0 F  S PSS(2)=$O(PSS50P7("DILIST",PSS(1),PSS(2))) Q:'PSS(2)  S ^TMP($J,LIST,+PSS50P7("DILIST",PSS(1),PSS(2)))=""
+"RTN","PSS50P7",131,0)
+ Q
+"RTN","PSS50P7",132,0)
+ ;
+"RTN","PSS50P7",133,0)
+IEN(PSSFT,PSSFL,LIST) ;
+"RTN","PSS50P7",134,0)
+ ;PSSFT - Free Text name in PHARMACY ORDERABLE ITEM file (#50.7).
+"RTN","PSS50P7",135,0)
+ ;PSSFL - Inactive flag - "" - All entries.
+"RTN","PSS50P7",136,0)
+ ;        FileMan Date - Only entries with no Inactive Date or an Inactive Date greater than this date.
+"RTN","PSS50P7",137,0)
+ ;LIST - Subscript of ^TMP array in the form ^TMP($J,LIST,Field Number where Field Number is the
+"RTN","PSS50P7",138,0)
+ ;Field Number of the data piece being returned.
+"RTN","PSS50P7",139,0)
+ ;Returns NAME field (#.01), and DOSAGE FORM field (#.02) of PHARMACY ORDERABLE ITEM file (#50.7).
+"RTN","PSS50P7",140,0)
+ N DIERR,ZZERR,PSS50P7,SCR,PSS
+"RTN","PSS50P7",141,0)
+ I $G(LIST)']"" Q
+"RTN","PSS50P7",142,0)
+ K ^TMP($J,LIST)
+"RTN","PSS50P7",143,0)
+ I $G(PSSFT)']"" S ^TMP($J,LIST,0)=-1_"^"_"NO DATA FOUND" Q
+"RTN","PSS50P7",144,0)
+ S SCR("S")=""
+"RTN","PSS50P7",145,0)
+ I +$G(PSSFL)>0 D SETSCRN
+"RTN","PSS50P7",146,0)
+ I PSSFT["??" D LOOP^PSS50P7A(4) Q
+"RTN","PSS50P7",147,0)
+ I $G(PSSFT)]"" D FIND^DIC(50.7,,"@;.01;.02IE","QP",PSSFT,,"B",SCR("S"),,"")
+"RTN","PSS50P7",148,0)
+ I +$G(^TMP("DILIST",$J,0))'>0 S ^TMP($J,LIST,0)=-1_"^"_"NO DATA FOUND" Q
+"RTN","PSS50P7",149,0)
+ S ^TMP($J,LIST,0)=+^TMP("DILIST",$J,0) S PSS(2)=0 D
+"RTN","PSS50P7",150,0)
+ .F  S PSS(2)=$O(^TMP("DILIST",$J,PSS(2))) Q:'PSS(2)  D
+"RTN","PSS50P7",151,0)
+ ..S ^TMP($J,LIST,+^TMP("DILIST",$J,PSS(2),0),.01)=$P(^TMP("DILIST",$J,PSS(2),0),"^",2)
+"RTN","PSS50P7",152,0)
+ ..S ^TMP($J,LIST,"B",$P(^TMP("DILIST",$J,PSS(2),0),"^",2),+^TMP("DILIST",$J,PSS(2),0))=""
+"RTN","PSS50P7",153,0)
+ ..S ^TMP($J,LIST,+^TMP("DILIST",$J,PSS(2),0),.02)=$S($P($G(^TMP("DILIST",$J,PSS(2),0)),"^",3)]"":$P(^TMP("DILIST",$J,PSS(2),0),"^",3,4),1:"")
+"RTN","PSS50P7",154,0)
+ K ^TMP("DILIST",$J)
+"RTN","PSS50P7",155,0)
+ Q
+"RTN","PSS50P7",156,0)
+ ;
+"RTN","PSS50P7",157,0)
+LOOKUP(PSSFT,PSSD,PSSS,LIST) ;
+"RTN","PSS50P7",158,0)
+ ;PSSFT - Free Text name in PHARMACY ORDERABLE ITEM file (#50.7)
+"RTN","PSS50P7",159,0)
+ ;PSSD - Index being traversed.
+"RTN","PSS50P7",160,0)
+ ;PSSS - Screening information as defined in DIC("S").
+"RTN","PSS50P7",161,0)
+ ;LIST - Subscript of ^TMP array in the form ^TMP($J,LIST,Field Number where Field Number is the
+"RTN","PSS50P7",162,0)
+ ;Field Number of the data piece being returned.
+"RTN","PSS50P7",163,0)
+ ;Returns NAME field (#.01), DOSAGE FORM field (#.02), and INACTIVE DATE field (#.04) of
+"RTN","PSS50P7",164,0)
+ ;PHARMACY ORDERABLE ITEM file (#50.7).
+"RTN","PSS50P7",165,0)
+ N DIERR,ZZERR,PSS50P7,SCR,PSS
+"RTN","PSS50P7",166,0)
+ I $G(LIST)']"" Q
+"RTN","PSS50P7",167,0)
+ K ^TMP($J,LIST)
+"RTN","PSS50P7",168,0)
+ I $G(PSSFT)']"" S ^TMP($J,LIST,0)=-1_"^"_"NO DATA FOUND" Q
+"RTN","PSS50P7",169,0)
+ D LOOKUP^PSS50P7A
+"RTN","PSS50P7",170,0)
+ Q
+"RTN","PSS50P7",171,0)
+ ;
+"RTN","PSS50P7",172,0)
+SETSCRN ;Set Screen for inactive entries in PHARMACY ORDERABLE ITEM file (#50.7).
+"RTN","PSS50P7",173,0)
+ ;Naked reference below refers to ^PS(50.7,+Y,0)
+"RTN","PSS50P7",174,0)
+ S SCR("S")="S ND=$P($G(^(0)),U,4) I ND=""""!(ND>PSSFL)"
+"RTN","PSS50P7",175,0)
+ Q
+"RTN","PSSDIUTL")
+0^2^B168125887^B168823037
+"RTN","PSSDIUTL",1,0)
+PSSDIUTL ;HP/MJE - Drug Interaction Utility ;09/22/11 5:00pm
+"RTN","PSSDIUTL",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**169,175,199**;9/30/97;Build 2
+"RTN","PSSDIUTL",3,0)
+ ;Reference ^PSDRUG supported by DBIA 221
+"RTN","PSSDIUTL",4,0)
+ ;Reference to XTID is supported DBIS 4631
+"RTN","PSSDIUTL",5,0)
+ ;Reference to IN^PSSHRQ2 supported by DBIA 5369
+"RTN","PSSDIUTL",6,0)
+CHKFDB ;ping FDB
+"RTN","PSSDIUTL",7,0)
+ N BASE
+"RTN","PSSDIUTL",8,0)
+ S BASE="PINGTST^"_$T(+0)
+"RTN","PSSDIUTL",9,0)
+ K ^TMP($J,BASE),DRGLST
+"RTN","PSSDIUTL",10,0)
+ S ^TMP($J,BASE,"IN","PING")=""
+"RTN","PSSDIUTL",11,0)
+ D IN^PSSHRQ2(BASE)
+"RTN","PSSDIUTL",12,0)
+ D:$G(^TMP($J,BASE,"OUT",0))'=0  Q:$G(^TMP($J,BASE,"OUT",0))'=0
+"RTN","PSSDIUTL",13,0)
+ .S DIR(0)="E",DIR("A",1)="The FDB database is not available at this time!"
+"RTN","PSSDIUTL",14,0)
+ .S DIR("A",2)="Reason: "_$P($G(^TMP($J,BASE,"OUT",0)),"^",2)
+"RTN","PSSDIUTL",15,0)
+ .S DIR("A",4)="Please contact the National Service Desk."
+"RTN","PSSDIUTL",16,0)
+ .S DIR("A",5)=""
+"RTN","PSSDIUTL",17,0)
+ .S DIR("A")="Press Return to continue...",DIR("?")="Press Return to continue"
+"RTN","PSSDIUTL",18,0)
+ .W ! D ^DIR K DIRUT,DUOUT,DIR,X,Y  W @IOF
+"RTN","PSSDIUTL",19,0)
+ K ^TMP($J,BASE),BASE
+"RTN","PSSDIUTL",20,0)
+ N NUM,MON,TEXTSTR S DRGLST=0,NUM=1,TEXTSTR="",PSSDGCK=1 N ID,ORTYP,NDF,DRUG,ON,PSONULN,PSONULN2 S $P(PSONULN,"-",60)="-",$P(PSONULN2,"=",60)="="
+"RTN","PSSDIUTL",21,0)
+ K ^TMP($J)
+"RTN","PSSDIUTL",22,0)
+SELECT ;
+"RTN","PSSDIUTL",23,0)
+ K:'$G(PSORXED) CLOZPAT
+"RTN","PSSDIUTL",24,0)
+ K IT,DIC,X,Y,PSODRUG("TRADE NAME"),PSODRUG("NDC"),PSODRUG("DAW"),PSODRUG("BAD") S:$G(POERR)&($P($G(OR0),"^",9)) Y=$P(^PSDRUG($P(OR0,"^",9),0),"^")
+"RTN","PSSDIUTL",25,0)
+ I $G(PSODRUG("IEN"))]"" S Y=PSODRUG("NAME"),PSONEW("OLD VAL")=PSODRUG("IEN")
+"RTN","PSSDIUTL",26,0)
+ W !,"Drug "_NUM_": "_$S($G(Y)]"":Y_"// ",1:"") R X:$S($D(DTIME):DTIME,1:300) I '$T S DTOUT=1
+"RTN","PSSDIUTL",27,0)
+ I X="",$G(Y)]"" S:Y X=Y S:'X X=$G(PSODRUG("IEN")) S:X X="`"_X
+"RTN","PSSDIUTL",28,0)
+ I X="",DRGLST>1 W !!,"Now Processing Enhanced Order Checks!  Please wait...",! H 1 G FDBCALL
+"RTN","PSSDIUTL",29,0)
+ I X="",DRGLST<2 W !!,"A minimum of 2 Drugs are required!",! G SELECT
+"RTN","PSSDIUTL",30,0)
+ I X?1."?" W !!,"Answer with DRUG NUMBER, or GENERIC NAME, or VA PRODUCT NAME, or",!,"NATIONAL DRUG CLASS, or SYNONYM" G SELECT
+"RTN","PSSDIUTL",31,0)
+ I $G(PSORXED),X["^" S PSORXED("DFLG")=1 W ! G SELECTX
+"RTN","PSSDIUTL",32,0)
+ I X="^"!(X["^^")!($D(DTOUT)) W ! G SELECTX
+"RTN","PSSDIUTL",33,0)
+ S DIC=50,DIC(0)="EMQZVT",DIC("T")="",D="B^C^VAPN^VAC"
+"RTN","PSSDIUTL",34,0)
+ S DIC("S")="I $S('$D(^PSDRUG(+Y,""I"")):1,'^(""I""):1,DT'>^(""I""):1,1:0),$$GCN^PSSDIUTL(+Y),$$PKGFLG^PSSDIUTL($P($G(^PSDRUG(+Y,2)),""^"",3)),$D(^PSDRUG(""ASP"",+$G(^(2)),+Y))"
+"RTN","PSSDIUTL",35,0)
+ D MIX^DIC1 K DIC,PKF2,D
+"RTN","PSSDIUTL",36,0)
+ I $D(DTOUT) G SELECTX
+"RTN","PSSDIUTL",37,0)
+ I $D(DUOUT) K DUOUT G SELECT
+"RTN","PSSDIUTL",38,0)
+ I Y<0 G SELECT
+"RTN","PSSDIUTL",39,0)
+ S:$G(PSONEW("OLD VAL"))=+Y&('$G(PSOEDIT)) PSODRG("QFLG")=1
+"RTN","PSSDIUTL",40,0)
+ K PSOY S PSOY=Y,PSOY(0)=Y(0)
+"RTN","PSSDIUTL",41,0)
+ I $P(PSOY(0),"^")="OTHER DRUG"!($P(PSOY(0),"^")="OUTSIDE DRUG") D TRADE
+"RTN","PSSDIUTL",42,0)
+ G:Y<0 SELECT
+"RTN","PSSDIUTL",43,0)
+ F DRGLSTI=0:0 S DRGLSTI=$O(DRGLST(DRGLSTI)) Q:'DRGLSTI  D
+"RTN","PSSDIUTL",44,0)
+ .I DRGLSTI=+Y S DRGLSTF=1
+"RTN","PSSDIUTL",45,0)
+ I $D(DRGLSTF) S NUM=DRGLST+1 K DRGLSTF W !!,"You have selected a duplicate drug please enter a different drug.." K DIR,DRGLSTI,Y S DIR(0)="E",DIR("A")="Press Return to Continue..." W ! D ^DIR K DIR G SELECT
+"RTN","PSSDIUTL",46,0)
+ S DRGLST=$G(DRGLST)+1,DRGLST(+Y)=Y_"^"_DRGLST,NUM=NUM+1 G SELECT
+"RTN","PSSDIUTL",47,0)
+SELECTX K DIC,X,Y,DTOUT,DUOUT,PSONEW("OLD VAL"),DRGLST
+"RTN","PSSDIUTL",48,0)
+ Q
+"RTN","PSSDIUTL",49,0)
+GCN(PSSIENID) ;Return 0 for not matched, 1 for matched with no GCNSEQNO, 1^1 for matched with a GCNSEQNO
+"RTN","PSSDIUTL",50,0)
+ N PSSNDFID,PSSGCNPT,PSSGCNID
+"RTN","PSSDIUTL",51,0)
+ S PSSNDFID=$P($G(^PSDRUG(PSSIENID,"ND")),"^"),PSSGCNPT=$P($G(^PSDRUG(PSSIENID,"ND")),"^",3)
+"RTN","PSSDIUTL",52,0)
+ I 'PSSNDFID!('PSSGCNPT) Q 0
+"RTN","PSSDIUTL",53,0)
+ S PSSGCNID=$$PROD0^PSNAPIS(PSSNDFID,PSSGCNPT)
+"RTN","PSSDIUTL",54,0)
+ I $P(PSSGCNID,"^",7) Q PSSIENID_";"_PSSNDFID_";"_$P(PSSGCNID,"^",7)
+"RTN","PSSDIUTL",55,0)
+ Q PSSIENID_";"_PSSNDFID
+"RTN","PSSDIUTL",56,0)
+PKGFLG(PKF2) ;
+"RTN","PSSDIUTL",57,0)
+ I $S(PKF2["O":1,1:0) Q 1
+"RTN","PSSDIUTL",58,0)
+ I $S(PKF2["X":1,1:0) Q 1
+"RTN","PSSDIUTL",59,0)
+ I $S(PKF2["U":1,1:0) Q 1
+"RTN","PSSDIUTL",60,0)
+ I $S(PKF2["I":1,1:0) Q 1
+"RTN","PSSDIUTL",61,0)
+ Q 0
+"RTN","PSSDIUTL",62,0)
+TRADE ;
+"RTN","PSSDIUTL",63,0)
+ K DIR,DIC,DA,X,Y
+"RTN","PSSDIUTL",64,0)
+ S DIR(0)="52,6.5" S:$G(PSOTRN)]"" DIR("B")=$G(PSOTRN) D ^DIR K DIR,DIC
+"RTN","PSSDIUTL",65,0)
+ I X="@" S Y=X K DIRUT
+"RTN","PSSDIUTL",66,0)
+ I $D(DIRUT) S:$D(DUOUT)!$D(DTOUT)&('$D(PSORX("EDIT"))) PSONEW("DFLG")=1 G TRADEX
+"RTN","PSSDIUTL",67,0)
+ S PSODRUG("TRADE NAME")=Y
+"RTN","PSSDIUTL",68,0)
+TRADEX I $G(PSORXED("DFLG")),$D(DIRUT) S PSORXED("DFLG")=1
+"RTN","PSSDIUTL",69,0)
+ K DIRUT,DTOUT,DUOUT,X,Y,DA,DR,DIE Q
+"RTN","PSSDIUTL",70,0)
+FDBCALL S LIST="PSOPEPS",^TMP($J,LIST,"IN","DRUGDRUG")=""
+"RTN","PSSDIUTL",71,0)
+ F I=0:0 S I=$O(DRGLST(I)) Q:'I  D
+"RTN","PSSDIUTL",72,0)
+ .S DIEN=$P(DRGLST(I),"^"),DNM=$P(DRGLST(I),"^",2),ON="Z;"_$P(DRGLST(I),"^",3)_";PROSPECTIVE;"_$P(DRGLST(I),"^",3)
+"RTN","PSSDIUTL",73,0)
+ .K ID,P1,P2 S ID=+$$GETVUID^XTID(50.68,,+$P($G(^PSDRUG(DIEN,"ND")),"^",3)_",")
+"RTN","PSSDIUTL",74,0)
+ .S:ID=0 PSODRUG("IEN")=DIEN
+"RTN","PSSDIUTL",75,0)
+ .S P1=$P($G(^PSDRUG(DIEN,"ND")),"^"),P2=$P($G(^("ND")),"^",3),X=$$PROD0^PSNAPIS(P1,P2)
+"RTN","PSSDIUTL",76,0)
+ .S SEQN=$P(X,"^",7)
+"RTN","PSSDIUTL",77,0)
+ .S ^TMP($J,LIST,"IN","PROSPECTIVE",ON)=SEQN_"^"_ID_"^"_DIEN_"^"_DNM K ID
+"RTN","PSSDIUTL",78,0)
+ S ^TMP($J,LIST,"IN","THERAPY")=""
+"RTN","PSSDIUTL",79,0)
+ D IN^PSSHRQ2(LIST)
+"RTN","PSSDIUTL",80,0)
+ S THSW2=0
+"RTN","PSSDIUTL",81,0)
+ I +$G(^TMP($J,LIST,"OUT",0))=1 D PROC
+"RTN","PSSDIUTL",82,0)
+ I '$G(^TMP($J,LIST,"OUT",0)) W !,"No drug interactions or therapeutic duplication occurred." W ! K DIR S DIR(0)="E",DIR("A")="Press Return to Continue..." D ^DIR K DIR G EXIT
+"RTN","PSSDIUTL",83,0)
+ I +$G(^TMP($J,LIST,"OUT",0))=-1 W !,"Error: "_$P(^TMP($J,"PSOPEPS","OUT",0),"^",2),! G EXIT
+"RTN","PSSDIUTL",84,0)
+ G:'$D(^TMP($J,"PSOPEPS","OUT","THERAPY")) RMON
+"RTN","PSSDIUTL",85,0)
+ W !,PSONULN2 K DIR S DIR(0)="E",DIR("A")="Press Return to Continue..." D ^DIR K DIR W @IOF
+"RTN","PSSDIUTL",86,0)
+RMON I $G(MON) D MON I $G(X)="" W ! D RMON
+"RTN","PSSDIUTL",87,0)
+EXIT ;
+"RTN","PSSDIUTL",88,0)
+ K DRGLST,DIC,X,Y,ID,ORTYP,DIEN,DNM,PSONULN,PSSDGCK,MON,^TMP($J),LIST,PSODRUG("IEN") Q
+"RTN","PSSDIUTL",89,0)
+PROC ;
+"RTN","PSSDIUTL",90,0)
+ I $D(PSODGCK) N PSONULN,PSONULN2,THSW2 S $P(PSONULN,"-",60)="-",$P(PSONULN2,"=",60)="=",THSW2=0
+"RTN","PSSDIUTL",91,0)
+ W @IOF K ^UTILITY($J) I $O(^TMP($J,LIST,"OUT","EXCEPTIONS",""))]"" D EXC^PSODDPR5
+"RTN","PSSDIUTL",92,0)
+ I '$D(^TMP($J,LIST,"OUT","DRUGDRUG"))&'$D(^TMP($J,LIST,"OUT","THERAPY",1)) W !,"No Order Check Warnings Found",! K DIR S DIR(0)="E",DIR("A")="Press Return to Continue..." D ^DIR K DIR W @IOF
+"RTN","PSSDIUTL",93,0)
+ I $D(PSODGCK),'$D(^TMP($J,LIST,"OUT","DRUGDRUG")),$D(^TMP($J,"PSOPEPS","OUT","THERAPY")) G DGCKTHER
+"RTN","PSSDIUTL",94,0)
+ D DELDISC^PSSDIUTX I $D(^TMP($J,LIST,"OUT","DRUGDRUG")) W !,"*** DRUG INTERACTION(S) ***",!,PSONULN2,!
+"RTN","PSSDIUTL",95,0)
+ N DRG,ON,CT,DRGI,PDRG,SEV,SEVH,STX,INT,CLI,PDRG S (ON,DRG,SV)="",CT=0,SEVH="Critical"
+"RTN","PSSDIUTL",96,0)
+ F  S SV=$O(^TMP($J,LIST,"OUT","DRUGDRUG",SV)) Q:SV=""  F  S DRG=$O(^TMP($J,LIST,"OUT","DRUGDRUG",SV,DRG)) Q:DRG=""  D
+"RTN","PSSDIUTL",97,0)
+ .F  S ON=$O(^TMP($J,LIST,"OUT","DRUGDRUG",SV,DRG,ON)) Q:ON=""  F  S CT=$O(^TMP($J,LIST,"OUT","DRUGDRUG",SV,DRG,ON,CT)) Q:'CT  D DUP
+"RTN","PSSDIUTL",98,0)
+ I $D(^TMP($J,LIST,"OUT","DRUGDRUG")) W !,PSONULN2 K DIR S DIR(0)="E",DIR("A")="Press Return to Continue..." D ^DIR K DIR ;(end of inter data)
+"RTN","PSSDIUTL",99,0)
+DGCKTHER I $D(^TMP($J,"PSOPEPS","OUT","THERAPY")) W @IOF W PSONULN2,!,"*** THERAPEUTIC DUPLICATION(S) ***",! D THER
+"RTN","PSSDIUTL",100,0)
+ I $D(PSODGCK),'$D(^TMP($J,LIST,"OUT","DRUGDRUG")),$D(^TMP($J,"PSOPEPS","OUT","THERAPY")) K DIR S DIR(0)="E",DIR("A")="Press Return to Continue..." W ! D ^DIR K DIR W @IOF Q
+"RTN","PSSDIUTL",101,0)
+DGCKMON I $D(PSODGCK),$D(^TMP($J,LIST,"OUT","DRUGDRUG")),$G(MON) D MON I $G(X)="" W ! D DGCKMON
+"RTN","PSSDIUTL",102,0)
+ Q
+"RTN","PSSDIUTL",103,0)
+THER ;
+"RTN","PSSDIUTL",104,0)
+ S (THR,THR1,THR2,TCTR,TCLSTR)="" S TALWNUM=0 N TLN,TLN2 S $P(TLN,"=",60)="",$P(TLN2,"-",60)="" S THSW=0
+"RTN","PSSDIUTL",105,0)
+ F  S THR=$O(^TMP($J,LIST,"OUT","THERAPY",THR)) Q:THR=""  D
+"RTN","PSSDIUTL",106,0)
+ .S THR1="",TCLSTR=""
+"RTN","PSSDIUTL",107,0)
+ .F  S THR1=$O(^TMP($J,LIST,"OUT","THERAPY",THR,THR1)) Q:THR1=""  D
+"RTN","PSSDIUTL",108,0)
+ ..S TALWNUM=TALWNUM+$G(^TMP($J,LIST,"OUT","THERAPY",THR,THR1,"ALLOW"))
+"RTN","PSSDIUTL",109,0)
+ ..S TCLSTR=TCLSTR_$G(^TMP($J,LIST,"OUT","THERAPY",THR,THR1,"CLASS"))
+"RTN","PSSDIUTL",110,0)
+ ..S:+$O(^TMP($J,LIST,"OUT","THERAPY",THR,THR1))'=0 TCLSTR=TCLSTR_", "
+"RTN","PSSDIUTL",111,0)
+ .I TALWNUM=0 I ($Y+8)>IOSL,$E(IOST)="C" D
+"RTN","PSSDIUTL",112,0)
+ ..K DIR S DIR(0)="E",DIR("A")="Press Return to Continue..." D ^DIR K DIR W @IOF
+"RTN","PSSDIUTL",113,0)
+ .W:THSW !,TLN2 S THSW=1
+"RTN","PSSDIUTL",114,0)
+ .I TALWNUM=0 D
+"RTN","PSSDIUTL",115,0)
+ ..F  S TCTR=$O(^TMP($J,LIST,"OUT","THERAPY",THR,"DRUGS",TCTR)) Q:TCTR=""  D
+"RTN","PSSDIUTL",116,0)
+ ...W !,?12,"Drug Name: ",$$THOSTAT^PSSCKOS($P($G(^TMP($J,LIST,"OUT","THERAPY",THR,"DRUGS",TCTR)),U,3),THR,TCTR)
+"RTN","PSSDIUTL",117,0)
+ ..W !,!,"Duplication Allowance: 0",!,?11,"Drug Class: "
+"RTN","PSSDIUTL",118,0)
+ ..I $L(TCLSTR)>50 D
+"RTN","PSSDIUTL",119,0)
+ ...K BSIG N BBSIG,BVAR,BVAR1,III,ZNT,NNN,BLIM
+"RTN","PSSDIUTL",120,0)
+ ...S BBSIG=TCLSTR,(BVAR,BVAR1)="",III=1
+"RTN","PSSDIUTL",121,0)
+ ...S ZNT=0 F NNN=1:1:$L(BBSIG) I $E(BBSIG,NNN)=" "!($L(BBSIG)=NNN) S ZNT=ZNT+1 D  I $L(BVAR)>50 S BSIG(III)=BLIM_" ",III=III+1,BVAR=BVAR1
+"RTN","PSSDIUTL",122,0)
+ ....S BVAR1=$P(BBSIG," ",(ZNT)),BLIM=BVAR,BVAR=$S(BVAR="":BVAR1,1:BVAR_" "_BVAR1)
+"RTN","PSSDIUTL",123,0)
+ ...I $G(BVAR)'="" S BSIG(III)=BVAR
+"RTN","PSSDIUTL",124,0)
+ ...I $G(BSIG(1))=""!($G(BSIG(1))=" ") S BSIG(1)=$G(BSIG(2)) K BSIG(2)
+"RTN","PSSDIUTL",125,0)
+ ..I $L(TCLSTR)>50 D
+"RTN","PSSDIUTL",126,0)
+ ...S I=""
+"RTN","PSSDIUTL",127,0)
+ ...F  S I=$O(BSIG(I)) Q:'I  D
+"RTN","PSSDIUTL",128,0)
+ ....W:I=1 BSIG(I),! W:I>1 ?23,BSIG(I)
+"RTN","PSSDIUTL",129,0)
+ ..E  D
+"RTN","PSSDIUTL",130,0)
+ ...W TCLSTR
+"RTN","PSSDIUTL",131,0)
+ .I TALWNUM>0 D
+"RTN","PSSDIUTL",132,0)
+ ..S THR2="",TCLSTR=""
+"RTN","PSSDIUTL",133,0)
+ ..F  S THR2=$O(^TMP($J,LIST,"OUT","THERAPY",THR,THR2)) Q:+THR2=0  D
+"RTN","PSSDIUTL",134,0)
+ ...F  S TCTR=$O(^TMP($J,LIST,"OUT","THERAPY",THR,"DRUGS",TCTR)) Q:TCTR=""  D
+"RTN","PSSDIUTL",135,0)
+ ....W !,?12,"Drug Name: ",$$THOSTAT^PSSCKOS($P($G(^TMP($J,LIST,"OUT","THERAPY",THR,"DRUGS",TCTR)),U,3),THR,TCTR)
+"RTN","PSSDIUTL",136,0)
+ ...W !,!,"Duplication Allowance: ",$G(^TMP($J,LIST,"OUT","THERAPY",THR,THR2,"ALLOW"))
+"RTN","PSSDIUTL",137,0)
+ ...K TCLSTR S TCLSTR=^TMP($J,LIST,"OUT","THERAPY",THR,THR2,"CLASS")
+"RTN","PSSDIUTL",138,0)
+ ...W !,?11,"Drug Class: "
+"RTN","PSSDIUTL",139,0)
+ ...I $L(TCLSTR)>50 D
+"RTN","PSSDIUTL",140,0)
+ ....K BSIG N BBSIG,BVAR,BVAR1,III,ZNT,NNN,BLIM
+"RTN","PSSDIUTL",141,0)
+ ....S BBSIG=TCLSTR,(BVAR,BVAR1)="",III=1
+"RTN","PSSDIUTL",142,0)
+ ....S ZNT=0 F NNN=1:1:$L(BBSIG) I $E(BBSIG,NNN)=" "!($L(BBSIG)=NNN) S ZNT=ZNT+1 D  I $L(BVAR)>50 S BSIG(III)=BLIM_" ",III=III+1,BVAR=BVAR1
+"RTN","PSSDIUTL",143,0)
+ .....S BVAR1=$P(BBSIG," ",(ZNT)),BLIM=BVAR,BVAR=$S(BVAR="":BVAR1,1:BVAR_" "_BVAR1)
+"RTN","PSSDIUTL",144,0)
+ ....I $G(BVAR)'="" S BSIG(III)=BVAR
+"RTN","PSSDIUTL",145,0)
+ ....I $G(BSIG(1))=""!($G(BSIG(1))=" ") S BSIG(1)=$G(BSIG(2)) K BSIG(2)
+"RTN","PSSDIUTL",146,0)
+ ...I $L(TCLSTR)>50 D
+"RTN","PSSDIUTL",147,0)
+ ....S I=""
+"RTN","PSSDIUTL",148,0)
+ ....F  S I=$O(BSIG(I)) Q:'I  D
+"RTN","PSSDIUTL",149,0)
+ .....I ($Y+6)>IOSL,$E(IOST)="C" D
+"RTN","PSSDIUTL",150,0)
+ ......K DIR S DIR(0)="E",DIR("A")="Press Return to Continue..." D ^DIR K DIR W @IOF
+"RTN","PSSDIUTL",151,0)
+ .....W:I=1 BSIG(I),! W:I>1 ?23,BSIG(I),!
+"RTN","PSSDIUTL",152,0)
+ ...E  D
+"RTN","PSSDIUTL",153,0)
+ ....W TCLSTR,!
+"RTN","PSSDIUTL",154,0)
+ ...I ($Y+6)>IOSL,$E(IOST)="C" D
+"RTN","PSSDIUTL",155,0)
+ ....K DIR S DIR(0)="E",DIR("A")="Press Return to Continue..." D ^DIR K DIR
+"RTN","PSSDIUTL",156,0)
+ Q
+"RTN","PSSDIUTL",157,0)
+DUP ;
+"RTN","PSSDIUTL",158,0)
+ N PDRGN,DRGN S PDRGN="",DRGN=""
+"RTN","PSSDIUTL",159,0)
+ I ($Y+8)>IOSL,$E(IOST)="C" D
+"RTN","PSSDIUTL",160,0)
+ .K DIR S DIR(0)="E",DIR("A")="Press Return to Continue..." D ^DIR K DIR W @IOF
+"RTN","PSSDIUTL",161,0)
+ I $O(^TMP($J,LIST,"OUT","DRUGDRUG",SV,DRG,ON,CT,"PMON",0)) S MON=1
+"RTN","PSSDIUTL",162,0)
+ S PDRG=$P(^TMP($J,LIST,"OUT","DRUGDRUG",SV,DRG,ON,CT),"^",4)
+"RTN","PSSDIUTL",163,0)
+ S CLI=$G(^TMP($J,LIST,"OUT","DRUGDRUG",SV,DRG,ON,CT,"CLIN"))
+"RTN","PSSDIUTL",164,0)
+ S SEV=$G(^TMP($J,LIST,"OUT","DRUGDRUG",SV,DRG,ON,CT,"SEV"))
+"RTN","PSSDIUTL",165,0)
+ S:SEVH'=SEV PSONULN="",$P(PSONULN,"=",60)="="
+"RTN","PSSDIUTL",166,0)
+ I ($Y+6)>IOSL,$E(IOST)="C" D
+"RTN","PSSDIUTL",167,0)
+ .K DIR S DIR(0)="E",DIR("A")="Press Return to Continue..." D ^DIR K DIR
+"RTN","PSSDIUTL",168,0)
+ W:THSW2 PSONULN,! S THSW2=1
+"RTN","PSSDIUTL",169,0)
+ SET PDRGN=$$POSTAT^PSSCKOS(DRG,PDRG,SV,ON,CT),DRGN=$$OSTAT^PSSCKOS(DRG,ON)
+"RTN","PSSDIUTL",170,0)
+ W "***"_SEV_"*** Drug Interaction with ",!,DRGN_" and" W:SEV="Critical" !,PDRGN,!! W:SEV="Significant" !,PDRGN,!!
+"RTN","PSSDIUTL",171,0)
+ S:SEVH'=SEV PSONULN="",$P(PSONULN,"-",60)="-"
+"RTN","PSSDIUTL",172,0)
+ S SEVH=SEV
+"RTN","PSSDIUTL",173,0)
+ I $L(CLI)>70 D
+"RTN","PSSDIUTL",174,0)
+ .K BSIG N BBSIG,BVAR,BVAR1,III,ZNT,NNN,BLIM
+"RTN","PSSDIUTL",175,0)
+ .S BBSIG=CLI,(BVAR,BVAR1)="",III=1
+"RTN","PSSDIUTL",176,0)
+ .S ZNT=0 F NNN=1:1:$L(BBSIG) I $E(BBSIG,NNN)=" "!($L(BBSIG)=NNN) S ZNT=ZNT+1 D  I $L(BVAR)>70 S BSIG(III)=BLIM_" ",III=III+1,BVAR=BVAR1
+"RTN","PSSDIUTL",177,0)
+ ..S BVAR1=$P(BBSIG," ",(ZNT)),BLIM=BVAR,BVAR=$S(BVAR="":BVAR1,1:BVAR_" "_BVAR1)
+"RTN","PSSDIUTL",178,0)
+ .I $G(BVAR)'="" S BSIG(III)=BVAR
+"RTN","PSSDIUTL",179,0)
+ .I $G(BSIG(1))=""!($G(BSIG(1))=" ") S BSIG(1)=$G(BSIG(2)) K BSIG(2)
+"RTN","PSSDIUTL",180,0)
+ I $L(CLI)>70 D
+"RTN","PSSDIUTL",181,0)
+ .S I=""
+"RTN","PSSDIUTL",182,0)
+ .F  S I=$O(BSIG(I)) Q:'I  D
+"RTN","PSSDIUTL",183,0)
+ ..W BSIG(I),!
+"RTN","PSSDIUTL",184,0)
+ E  D
+"RTN","PSSDIUTL",185,0)
+ .W CLI,!
+"RTN","PSSDIUTL",186,0)
+ K BSIG,BBSIG,BVAR,BVAR1,III,ZNT,NNN,BLIM
+"RTN","PSSDIUTL",187,0)
+ Q
+"RTN","PSSDIUTL",188,0)
+MON ;
+"RTN","PSSDIUTL",189,0)
+ I '$G(DUOUT) W ! K DIR S DIR("A")="Display Professional Interaction Monograph",DIR("B")="NO",DIR(0)="Y",DIR("?")="Enter Y if you would like to see the Monograph." D ^DIR W !
+"RTN","PSSDIUTL",190,0)
+ I X="^"!(X["^^")!($D(DTOUT)) Q
+"RTN","PSSDIUTL",191,0)
+ K SEL,DIR,DTOUT,DUOUT,DIRUT Q:Y=0
+"RTN","PSSDIUTL",192,0)
+ S MONT=1,SEL=1 K Y D BLD Q:$G(SEL)=0
+"RTN","PSSDIUTL",193,0)
+ K IOP,%ZIS,POP S %ZIS="QM" W ! D ^%ZIS
+"RTN","PSSDIUTL",194,0)
+ I POP K SEL,DIR,DTOUT,DUOUT,DIRUT,MONT W !,"NOTHING PRINTED" G MON
+"RTN","PSSDIUTL",195,0)
+ I $D(IO("Q")) D  Q
+"RTN","PSSDIUTL",196,0)
+ .S ZTRTN="OUT^PSOIDPRE",ZTDESC="Monograph Report of Drug Interactions",ZTSAVE("MONT")=""
+"RTN","PSSDIUTL",197,0)
+ .S ZTSAVE("PSONULN")="",ZTSAVE("LIST")="",ZTSAVE("^TMP($J,LIST,""OUT"",""DRUGDRUG"",")="",ZTSAVE("^TMP($J,""PSOMONP"",")=""
+"RTN","PSSDIUTL",198,0)
+ .D ^%ZTLOAD,^%ZISC W !,"Monograph Queued to Print!",! S:$D(ZTQUEUED) ZTREQ="Q"
+"RTN","PSSDIUTL",199,0)
+ D OUT,^%ZISC
+"RTN","PSSDIUTL",200,0)
+ W ! G:Y'=0 MON
+"RTN","PSSDIUTL",201,0)
+ Q
+"RTN","PSSDIUTL",202,0)
+OUT ;print monograph
+"RTN","PSSDIUTL",203,0)
+ N DRG,ON,CT,DRGI,PDRG,SEV,STX,INT,CLI,PDRG,RNG,QX
+"RTN","PSSDIUTL",204,0)
+ D:MONT=1 PROF D:MONT=2 CON D:MONT=3 PROF
+"RTN","PSSDIUTL",205,0)
+ Q
+"RTN","PSSDIUTL",206,0)
+BLD ;
+"RTN","PSSDIUTL",207,0)
+ K SEL,X,Y,DRG,ON,CT,RNG,^TMP($J,"PSOMON"),^TMP($J,"PSOMONP") S (DRG,ON,SV)="",CT=0
+"RTN","PSSDIUTL",208,0)
+ F  S SV=$O(^TMP($J,LIST,"OUT","DRUGDRUG",SV)) Q:SV=""  F  S DRG=$O(^TMP($J,LIST,"OUT","DRUGDRUG",SV,DRG)) Q:DRG=""  F  S ON=$O(^TMP($J,LIST,"OUT","DRUGDRUG",SV,DRG,ON)) Q:ON=""  D
+"RTN","PSSDIUTL",209,0)
+ .F  S CT=$O(^TMP($J,LIST,"OUT","DRUGDRUG",SV,DRG,ON,CT)) Q:'CT  I $O(^TMP($J,LIST,"OUT","DRUGDRUG",SV,DRG,ON,CT,"PMON",0)) D
+"RTN","PSSDIUTL",210,0)
+ ..S RNG=$G(RNG)+1
+"RTN","PSSDIUTL",211,0)
+ ..S ^TMP($J,"PSOMON",RNG,DRG)=DRG_"^"_ON_"^"_CT_"^"_$P(^TMP($J,LIST,"OUT","DRUGDRUG",SV,DRG,ON,CT),"^",4)_"^"_$G(^TMP($J,LIST,"OUT","DRUGDRUG",SV,DRG,ON,CT,"SEV"))
+"RTN","PSSDIUTL",212,0)
+ I '$D(^TMP($J,"PSOMON",2)) S Y=1 G ONEMONO
+"RTN","PSSDIUTL",213,0)
+ K DIR S IND=0,DRG=""
+"RTN","PSSDIUTL",214,0)
+ ;F  S IND=$O(^TMP($J,"PSOMON",IND)) Q:'IND  F  S DRG=$O(^TMP($J,"PSOMON",IND,DRG)) Q:DRG=""  S DIR("A",IND)=IND_". "_DRG_" and "_$P(^TMP($J,"PSOMON",IND,DRG),"^",4) S DIR("A",IND+1)=""
+"RTN","PSSDIUTL",215,0)
+ F  S IND=$O(^TMP($J,"PSOMON",IND)) Q:'IND  F  S DRG=$O(^TMP($J,"PSOMON",IND,DRG)) Q:DRG=""  D
+"RTN","PSSDIUTL",216,0)
+ .I ($Y+6)>IOSL,$E(IOST)="C" D
+"RTN","PSSDIUTL",217,0)
+ ..W ! K DIR S DIR(0)="E",DIR("A")="Press Return to Continue..." D ^DIR K DIR W @IOF
+"RTN","PSSDIUTL",218,0)
+ .W !,IND_". "_DRG_" and "_$P(^TMP($J,"PSOMON",IND,DRG),"^",4)
+"RTN","PSSDIUTL",219,0)
+ W ! S DIR("A")="Select Monograph for printing by number",DIR(0)="LO^1:"_RNG D ^DIR K DIR
+"RTN","PSSDIUTL",220,0)
+ I $D(DUOUT)!($D(DTOUT))!(X="^")!(X="") S SEL=0 Q
+"RTN","PSSDIUTL",221,0)
+ONEMONO F G=1:1:$L(Y) Q:$P(Y,",",G)=""  S DRG=$O(^TMP($J,"PSOMON",$P(Y,",",G),"")),^TMP($J,"PSOMONP",$P(Y,",",G),0)=^TMP($J,"PSOMON",$P(Y,",",G),DRG)
+"RTN","PSSDIUTL",222,0)
+ K ^TMP($J,"PSOMON")
+"RTN","PSSDIUTL",223,0)
+ Q
+"RTN","PSSDIUTL",224,0)
+ ;
+"RTN","PSSDIUTL",225,0)
+NEWPG ;new page form feed
+"RTN","PSSDIUTL",226,0)
+ N DIR
+"RTN","PSSDIUTL",227,0)
+ S DIR(0)="E",DIR("A")="Press Return to Continue or ""^"" to Exit"
+"RTN","PSSDIUTL",228,0)
+ D ^DIR Q:($D(DUOUT)!($D(DTOUT)))
+"RTN","PSSDIUTL",229,0)
+ W @IOF,$S($G(MONT)=2:"Consumer",1:"Professional")_" Monograph",!!,"Drug Interaction with ",!,DRG_" and "_PDRG,!!
+"RTN","PSSDIUTL",230,0)
+ Q
+"RTN","PSSDIUTL",231,0)
+ ;
+"RTN","PSSDIUTL",232,0)
+FORMAT ; WATCH OUT WITH CHANGES HERE!!!
+"RTN","PSSDIUTL",233,0)
+ K BSIG,XX N BBSIG,BVAR,BVAR1,III,ZNT,NNN,BLIM
+"RTN","PSSDIUTL",234,0)
+ I $L(TEXTSTR)'>70 D
+"RTN","PSSDIUTL",235,0)
+ . W ?5,TEXTSTR,!
+"RTN","PSSDIUTL",236,0)
+ I $L(TEXTSTR)>70 D
+"RTN","PSSDIUTL",237,0)
+ .S BBSIG=TEXTSTR,(BVAR,BVAR1)="",III=1
+"RTN","PSSDIUTL",238,0)
+ .S ZNT=0 F NNN=1:1:$L(BBSIG) I $E(BBSIG,NNN)=" "!($L(BBSIG)=NNN) S ZNT=ZNT+1 D  I $L(BVAR)>70 S BSIG(III)=BLIM_" ",III=III+1,BVAR=BVAR1
+"RTN","PSSDIUTL",239,0)
+ ..S BVAR1=$P(BBSIG," ",(ZNT)),BLIM=BVAR,BVAR=$S(BVAR="":BVAR1,1:BVAR_" "_BVAR1)
+"RTN","PSSDIUTL",240,0)
+ .I $G(BVAR)'="" S BSIG(III)=BVAR
+"RTN","PSSDIUTL",241,0)
+ .I $G(BSIG(1))=""!($G(BSIG(1))=" ") S BSIG(1)=$G(BSIG(2)) K BSIG(2)
+"RTN","PSSDIUTL",242,0)
+ F XX=0:0 S XX=$O(BSIG(XX)) Q:'XX  D  Q:($D(DUOUT)!($D(DTOUT)))
+"RTN","PSSDIUTL",243,0)
+ . I $Y+6>IOSL,$E(IOST)="C" D NEWPG Q:($D(DUOUT)!($D(DTOUT)))
+"RTN","PSSDIUTL",244,0)
+ . W ?5,BSIG(XX),!
+"RTN","PSSDIUTL",245,0)
+ K BSIG,BBSIG,BVAR,BVAR1,III,ZNT,NNN,BLIM S TEXTSTR=""
+"RTN","PSSDIUTL",246,0)
+ Q
+"RTN","PSSDIUTL",247,0)
+PROF ;
+"RTN","PSSDIUTL",248,0)
+ F I=0:0 S I=$O(^TMP($J,"PSOMONP",I)) Q:'I  S DRG=$P(^TMP($J,"PSOMONP",I,0),"^"),ON=$P(^(0),"^",2),CT=$P(^(0),"^",3),PDRG=$P(^(0),"^",4),SEV=$E($P(^(0),"^",5),1,1) D  Q:$D(DUOUT)!($D(DTOUT))
+"RTN","PSSDIUTL",249,0)
+ .U IO W @IOF,!,PSONULN,!,"Professional Monograph",!!,"Drug Interaction with ",!,DRG_" and "_PDRG,!!
+"RTN","PSSDIUTL",250,0)
+ .F QX=0:0 S QX=$O(^TMP($J,LIST,"OUT","DRUGDRUG",SEV,DRG,ON,CT,"PMON",QX)) Q:'QX  D  Q:($D(DUOUT)!($D(DTOUT)))
+"RTN","PSSDIUTL",251,0)
+ ..I $Y+6>IOSL,$E(IOST)="C" D NEWPG Q:($D(DUOUT)!($D(DTOUT)))
+"RTN","PSSDIUTL",252,0)
+ ..S TEXTSTR=^TMP($J,LIST,"OUT","DRUGDRUG",SEV,DRG,ON,CT,"PMON",QX,0) D FORMAT
+"RTN","PSSDIUTL",253,0)
+ ..I ($Y+6)>IOSL,$E(IOST)="C" W !
+"RTN","PSSDIUTL",254,0)
+ Q:($D(DUOUT)!($D(DTOUT)))
+"RTN","PSSDIUTL",255,0)
+ K DTOUT,DUOUT
+"RTN","PSSDIUTL",256,0)
+ D:MONT=3
+"RTN","PSSDIUTL",257,0)
+ .U IO W @IOF,!,PSONULN,!,"Consumer Monograph",!!,"Drug Interaction with ",!,DRG_" and "_PDRG,!
+"RTN","PSSDIUTL",258,0)
+ .F QX=0:0 S QX=$O(^TMP($J,LIST,"OUT","DRUGDRUG",SEV,DRG,ON,CT,"CMON",QX)) Q:'QX  D  Q:($D(DUOUT)!($D(DTOUT)))
+"RTN","PSSDIUTL",259,0)
+ ..I $Y+6>IOSL,$E(IOST)="C" D NEWPG Q:($D(DUOUT)!($D(DTOUT)))
+"RTN","PSSDIUTL",260,0)
+ ..W !?5,^TMP($J,LIST,"OUT","DRUGDRUG",SEV,DRG,ON,CT,"CMON",QX,0)
+"RTN","PSSDIUTL",261,0)
+ W !,PSONULN,!
+"RTN","PSSDIUTL",262,0)
+ K DTOUT,DUOUT I $E(IOST)="C" K DIR S DIR(0)="E" D ^DIR K DIR,DTOUT,DUOUT
+"RTN","PSSDIUTL",263,0)
+ Q
+"RTN","PSSDIUTL",264,0)
+CON F I=0:0 S I=$O(^TMP($J,"PSOMONP",I)) Q:'I  S DRG=$P(^TMP($J,"PSOMONP",I,0),"^"),ON=$P(^(0),"^",2),CT=$P(^(0),"^",3),PDRG=$P(^(0),"^",4),SEV=$P(^(0),"^",5) D  Q:$D(DUOUT)!($D(DTOUT))
+"RTN","PSSDIUTL",265,0)
+ .U IO W @IOF,!,"Consumer Monograph",!,PSONULN,!!,"Drug Interaction with ",!,DRG_" and "_PDRG,!!
+"RTN","PSSDIUTL",266,0)
+ .F QX=0:0 S QX=$O(^TMP($J,LIST,"OUT","DRUGDRUG",SEV,DRG,ON,CT,"CMON",QX)) Q:'QX  D  Q:($D(DUOUT)!($D(DTOUT)))
+"RTN","PSSDIUTL",267,0)
+ ..I $Y+6>IOSL,$E(IOST)="C" D NEWPG Q:($D(DUOUT)!($D(DTOUT)))
+"RTN","PSSDIUTL",268,0)
+ ..W !?5,^TMP($J,LIST,"OUT","DRUGDRUG",DRG,ON,CT,"CMON",QX,0)
+"RTN","PSSDIUTL",269,0)
+ I '$G(DUOUT) W !,PSONULN,!
+"RTN","PSSDIUTL",270,0)
+ K DTOUT,DUOUT I $E(IOST)="C" K DIR S DIR(0)="E",DIR("A")="Press Return to Continue..." D ^DIR K DIR,DTOUT,DUOUT
+"RTN","PSSDIUTL",271,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",10290,6)
+^175
+**END**
+**END**
+

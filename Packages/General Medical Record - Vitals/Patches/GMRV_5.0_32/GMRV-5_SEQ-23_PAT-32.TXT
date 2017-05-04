@@ -1,0 +1,163 @@
+
+=============================================================================
+Run Date: JAN 18, 2017                     Designation: GMRV*5*32
+Package : GMRV - GEN. MED. REC. - VITALS      Priority: Mandatory
+Version : 5        SEQ #23                      Status: Released
+                  Compliance Date: MAR 04, 2017
+=============================================================================
+
+Associated patches: (v)GMRV*5*3    <<= must be installed BEFORE `GMRV*5*32'
+                    (v)HMP*2*1     <<= must be installed BEFORE `GMRV*5*32'
+
+Subject: ENTERED IN ERROR (EIE) DATE ADDITION
+
+Category: 
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ The eHMP system uses a Stamptime to ensure the latest data takes 
+ precedence in the JSON Data Store (JDS). This GMRV patch adds a datetime 
+ field to the Entered In Error data field in the GMRV VITAL MEASUREMENT 
+ (#120.5) file. This ensures that when a vital is entered in error the data
+ will update the eHMP system properly and the current status of the vital
+ sign will be reflected properly in eHMP. There is also an update to the
+ GMVUTL1 routine used to populate the new datetime field. 
+  
+ **NOTE**
+ HMP*2.0*2 is being released in a bundle with 6 supporting patches. It is 
+ recommended that this bundle be installed during non-peak hours
+ with no CPRS users on the system. This bundle should take less than 5
+ minutes to install.
+  
+ The patches will be installed in the following order:
+ 1. DG*5.3*921
+ 2. MC*2.3*47
+ 3. GMRV*5*32
+ 4. PSB*3*95
+ 5. PSS*1*197
+ 6. OR*3*421
+ 7. HMP*2.0*2
+  
+ Following the installation of HMP*2.0*2, IRM staff should review the Error
+ trap for any <NOROUTINE> errors and work with the assistance of the
+ Clinical Application Coordinators (CACs) to validate the patient's orders
+ placed during the install time.
+  
+ Patch Components:
+ -----------------
+  
+ Files and Fields Associated:
+ ----------------------------
+ File (#)            Field (#)                        New/Modified/Deleted
+ ---------           ---------                        --------------------
+ GMRV VITAL MEASUREMENT (#120.5)
+                     REASON ENTERED IN ERROR (#4) (Multiple)
+                        DATE REASON ENTERED IN ERROR (#.02)      New
+  
+ Forms Associated:
+ -----------------
+ There are no new or modified forms in this patch.
+  
+ Mail Groups Associated:
+ -----------------------
+ There are no new or modified mail groups in this patch.
+  
+ Options Associated:
+ -------------------
+ There are no new or modified options in this patch.
+  
+ Protocols Associated:
+ ---------------------
+ There are no new or modified protocols in the patch.
+  
+ Security Keys Associated:
+ -------------------------
+ There are no new or modified security keys in this patch.
+  
+ Templates Associated:
+ ---------------------
+ There are no new or modified templates in this patch.
+  
+ Additional Information:
+ -----------------------
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR #20150408 - VistA Evolution Enterprise Health Management Platform 
+ (eHMP)
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ There are no Patient Safety Issues associated with this patch.
+  
+ Remedy Tickets(s) & Overview:
+ -----------------------------
+ There are no Remedy tickets associated with this patch.
+  
+ Test Sites:
+ -----------
+ Hampton, VA 
+ Indianapolis, IN
+ Loma Linda, CA
+ Portland, OR
+ San Antonio, TX
+ San Diego, CA
+  
+ Patch Installation:
+ -------------------
+ This patch will be installed from HMP*2.0*2 patch
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ HMP*2.0*2 is being released in a bundle with 6 supporting patches. It is 
+ recommended that this bundle be installed during non-peak hours
+ with no CPRS users on the system. This bundle should take less than 5
+ minutes to install.
+  
+ The patches will be installed in the following order:
+ 1. DG*5.3*921
+ 2. MC*2.3*47
+ 3. GMRV*5*32
+ 4. PSB*3*95
+ 5. PSS*1*197
+ 6. OR*3*421
+ 7. HMP*2.0*2
+  
+ Following the installation of HMP*2.0*2, IRM staff should review the Error
+ trap for any <NOROUTINE> errors and work with the assistance of the
+ Clinical Application Coordinators (CACs) to validate the patient's orders
+ placed during the install time.
+  
+ Installation Instructions:
+  
+ Patch GMRV*5.0*32 is part of a multi-build:  HMP_MULTIBUILD_2-0_P02.KID
+ See the HMP*2.0*2 patch description for the installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;GEN. MED. REC. - VITALS;**[Patch List]**;Oct 31, 2002;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMVUTL1
+    Before:  B5125108   After:  B5331889  **1,3,32**
+ 
+Routine list of preceding patches: 3
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 27, 2016
+Completed By:                               Date Completed: DEC 22, 2016
+Released By :                               Date Released : JAN 18, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

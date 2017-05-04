@@ -1,0 +1,392 @@
+$TXT Created by                  VIPDEV31.AAC.DOMAIN.EXT  (KIDS) on Thursday, 11/10/16 at 15:30
+=============================================================================
+Run Date: NOV 30, 2016                     Designation: PSO*7*454
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #388                      Status: Released
+                  Compliance Date: DEC 15, 2016
+=============================================================================
+
+Associated patches: (v)PSO*7*427   <<= must be installed BEFORE `PSO*7*454'
+                    (v)PSO*7*444   <<= must be installed BEFORE `PSO*7*454'
+
+Subject: ONEVA PHARMACY - REMOTE REFILLS/PARTIAL FILLS
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ PSO*7.0*454 introduces new functionality that allows for a pharmacist to
+ remotely refill a prescription from another Veterans Affairs (VA) Medical
+ Center. This patch utilizes Health Level 7 (HL7) messaging to send and
+ receive remote prescription details from another VA Medical Center. This
+ allows a 'dispensing', or 'non-custodial' Pharmacy to refill a
+ prescription that originated from another VA facility. The VA facility
+ where the prescription exists is considered the 'host' Facility.
+  
+ VistA utilizes HL7 to send a query message to Enterprise Messaging
+ Services (eMI). eMI is used to query the Health Data Repository/Clincal 
+ Data Service (HDR/CDS) Repository for all active medications from all
+ sites. The medications are returned to the querying site. Once the
+ prescriptions are received, they are displayed below any 'local'
+ prescriptions within the Patient Prescription Processing [PSO LM BACKDOOR
+ ORDERS] option sorted by facility. The pharmacist can then view the remote
+ prescriptions, and will be able to refill or partially fill any active
+ prescriptions that are not considered controlled substances at either
+ facility.
+  
+ All remote refills are logged in a new file REMOTE PRESCRIPTION LOG file 
+ (#52.09).
+  
+ A new option has been created to allow reporting regarding what 'remote'
+ prescriptions have been filled by a particular facility, and what 
+ facilities have refilled prescriptions that belong to a target facility. 
+ This report is OneVA Pharmacy Prescription Report [PSO REMOTE RX REPORT].
+  
+ A new HL7 logical link, PSORRXSEND will facilitate the sending of the HL7
+ messages to EMI. The PSO VISTA PHARM and PSO EMI PHARM application 
+ parameters will control the message processing within VistA. The existing
+ multi-threaded listener will be leveraged at each facility for receiving
+ the HL7 messages into VistA.
+  
+ A new field 'OneVA Pharmacy Flag' (#3001) has been added to the Outpatient
+ Site file (#59). This field will allow each division to toggle the OneVA 
+ Pharmacy logic 'on' or 'off' depending on current needs. The field can be 
+ changed by using VA FileMan and editing the 'OneVA Pharmacy Flag' field.
+ The OneVA Pharmacy flag will be delivered to each division in the 'off'
+ state.
+  
+ When this flag is in the 'off' state, the HDR will not be queried for 
+ external prescriptions, and other facilities will not be able to refill 
+ prescriptions that belong to the Outpatient site with the flag set to the 
+ 'off' state. When in the 'on' state, all prescription queries and actions 
+ may be taken for remote queries, refills, and partial fills. In order to 
+ process prescriptions from another site, that site will also need to have 
+ their OneVA Pharmacy flag set to the 'on' state.
+  
+ DO NOT turn on the OneVA Pharmacy Flag until directed to do so. Please 
+ know, OneVA Pharmacy will be rolled out nationally in in accordance to 
+ the schedule as outlined in the 'Deployment/Installation' table of the
+ OneVA Pharmacy Release guide or the OneVA Pharmacy Deployment,
+ Installation, Back-Out, and Rollback Guide. The software will be released,
+ deployed, and installed with the activation flag set to the "off"
+ position.  The Existing Product Intake Program (EPIP) Implementation Team
+ will coordinate with the sites' Pharmacy Automatic Data Processing
+ Application Coordinator (ADPAC) on the specific date in which to activate
+ the software.
+  
+ Patch Components:
+ -----------------
+  
+ List Templates:
+  
+ Template Name                     Type               
+ ------------------                -------
+ PSO LM REMOTE ORDER SELECTION     Protocol
+ PSO LM REMOTE REPORT DETAILS      Display
+ PSO LM REMOTE RX REPORT           Protocol
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ PRESCRIPTION (#52)         
+       REFILL (#52.1)       REMOTE FILL SITE        New
+                            (#52.1,91)
+                            REMOTE PHARMACMIST      New
+                            (#52.1,92)
+                            REMOTE PHARMACIST       New
+                            PHONE (#52.1,93)
+                            
+   PARTIAL DATE (#52.2)     REMOTE FILL SITE        New
+                            (#52.2,91)
+                            REMOTE PHARMACMIST      New
+                            (#52.2,92)
+                            REMOTE PHARMACIST       New
+                            PHONE (#52.2,93)
+  
+ OUTPATIENT SITE (#59)      ONEVA PHARMACY FLAG     New
+  
+ REMOTE PRESCRIPTION        LOG DATE/TIME (.01)     New
+ LOG (#52.09)               PATIENT (.02)           New
+                            RX NUMBER (.03)         New
+                            SITE NUMBER (.04)       New
+                            REQUEST TYPE (.05)      New
+                            OUTGOING REQUEST
+                            PHARMACIST (.06)        New
+                            REMOTE FILLING
+                            PHARMACIST (.061)       New
+                            QUANTITY (.07)          New
+                            DAYS SUPPLY (.08)       New
+                            REFILL/PARTIAL
+                            DATE (.09)              New
+                            DISPENSED DATE (.1)     New
+                            REMOTE DRUG NAME (1)    New
+                            LOCAL (MATCHED) 
+                            DRUG (1.1)              New
+                            TOTAL REFILL/PARTIAL
+                            FILL COST (1.2)         New
+                            VA PRODUCT ID (1.3)     New
+                            MESSAGE DETAILS (2)     New
+                            LABEL DATA (3)          New
+  
+  
+  
+  
+ Forms Associated:
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ HL7 Application Parameter:            New/Modified/Deleted
+ --------------------------            --------------------
+ PSO EMI PHARM                         New
+ PSO VISTA PHARM                       New
+  
+ HL7 Logical Link:                     New/Modified/Deleted
+ ------------------                    --------------------
+ PSORRXSEND                            New
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ Rx (Prescriptions)
+  [PSO RX]               Menu              Modified
+  
+ OneVA Pharmacy Prescription Report
+  [PSO REMOTE RX REPORT] Action            New
+  
+ Protocols Associated:
+  
+ Protocol Name                  New/Modified/Deleted
+ -------------                  --------------------
+ PSO LM MEDICATION PROFILE          Modified
+ PSO LM REFILL REMOTE ORDER         New
+ PSO LM REMOTE ORDER MENU           New
+ PSO LM REMOTE PARTIAL              New
+ PSO LM REMOTE RX REPORT MENU       New
+ PSO LM SELECT REPORT ITEM          New
+ PSO REMOTE RX QBP-Q13 ESUBS        New
+ PSO REMOTE RX QBP-Q13 EVENT        New
+ PSO REMOTE RX RDS-O13 ESUIBS       New
+ PSO REMOTE RX RDS-O13 EVENT        New
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ Denver, Colorado
+ Salt Lake City, Utah
+ Grand Junction
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the documentation
+  
+ Installation  pso_7_p454_ig.pdf  
+ Release       pso_7_p454_rn.pdf 
+ User          pso_7_p454_um.pdf
+  
+ directly using Secure File Transfer Protocol (SFTP) from the
+ ANONYMOUS.SOFTWARE directory at the following OI Field Offices:
+    
+    Albany:                 domain.ext
+    Hines:                  domain.ext    
+    Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: 
+ http://www.domain.ext/vdl/
+  
+ Title                             File Name                       FTP Mode
+ --------------------------------------------------------------------------
+ OneVA Pharmacy Installation       pso_7_p454_ig.pdf               binary
+    Guide
+ OneVA Pharmacy Release            pso_7_p454_rn.pdf               binary
+    Notes
+ OneVA Pharmacy User               pso_7_454_um.pdf                binary
+    Manual
+  
+  
+ **Note: The VDL Outpatient Pharmacy user and technical manuals are to be 
+ updated in early December 2016 to reflect changes made by OneVA.
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There is no pre-init functionality for the OneVA Pharmacy patch.
+  
+ A post-init function has been included to turn the OneVA Pharmacy flag to 
+ the 'OFF' state at each Outpatient Site residing in the Outpatient Site 
+ file (#59). This function will also configure the PSORRXSEND HL7 logical 
+ link to be associated with each sites' domain, and will configure the 
+ connection point Fully Qualified Domain Name (FQDN) 
+ vaaussoalebp2.aac.domain.ext for EMI.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(ex. PSO*7.0*454):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates. The backup 
+         transport global will allow a rollback to the prior version of
+         the routines released in this patch in the event a rollback is
+         required.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+     and Protocols? YES//'
+  
+ 8.  When prompted for which Menu Options to disable, enter:
+     'PSO LM BACKDOOR ORDERS'.
+  
+ 9.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 349
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOORAL2
+    Before: B19100790   After: B25020405  **258,260,386,427,454**
+Routine Name: PSOORNE2
+    Before: B68332016   After:B107800723  **11,21,23,27,32,37,46,84,103,
+                                           117,131,146,156,210,148,222,
+                                           238,264,281,289,251,379,391,
+                                           313,282,427,454**
+Routine Name: PSOORUT1
+    Before: B83321658   After:B124954661  **1,14,30,46,132,148,233,274,
+                                           225,305,289,251,387,385,313,
+                                           427,444,454**
+Routine Name: PSORLLL1
+    Before:       n/a   After: B70716253  **454**
+Routine Name: PSORLLL2
+    Before:       n/a   After: B16763889  **454**
+Routine Name: PSORLLL3
+    Before:       n/a   After:  B8122377  **454**
+Routine Name: PSORLLL4
+    Before:       n/a   After: B11420707  **454**
+Routine Name: PSORLLL5
+    Before:       n/a   After: B32390251  **454**
+Routine Name: PSORLLLH
+    Before:       n/a   After: B10351529  **454**
+Routine Name: PSORLLLI
+    Before:       n/a   After: B70303116  **454**
+Routine Name: PSOROS
+    Before:       n/a   After:   B917829  **454**
+Routine Name: PSORRD
+    Before:       n/a   After:  B2373596  **454**
+Routine Name: PSORREF
+    Before:       n/a   After: B44063843  **454**
+Routine Name: PSORREF0
+    Before:       n/a   After: B46515290  **454**
+Routine Name: PSORREF1
+    Before:       n/a   After:  B3242931  **454**
+Routine Name: PSORRP
+    Before:       n/a   After: B74346330  **454**
+Routine Name: PSORRPA1
+    Before:       n/a   After: B75304679  **454**
+Routine Name: PSORRX1
+    Before:       n/a   After:B139750868  **454**
+Routine Name: PSORRX2
+    Before:       n/a   After: B32510176  **454**
+Routine Name: PSORWRAP
+    Before:       n/a   After:B112263517  **454**
+Routine Name: PSORX1
+    Before: B66023082   After: B82763052  **7,22,23,57,62,46,74,71,90,
+                                           95,115,117,146,139,135,182,195,
+                                           233,268,300,170,320,326,324,
+                                           334,251,454**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 16, 2015
+Completed By:                               Date Completed: NOV 28, 2016
+Released By :                               Date Released : NOV 30, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

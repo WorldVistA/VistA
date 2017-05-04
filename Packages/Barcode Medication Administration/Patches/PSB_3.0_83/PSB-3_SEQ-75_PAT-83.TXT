@@ -1,0 +1,710 @@
+$TXT Created by                 at CMAI.FO-BIRM.DOMAIN.EXT  (KIDS) on Thursday, 10/20/16 at 12:17
+=============================================================================
+Run Date: DEC 12, 2016                     Designation: PSB*3*83
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #75                      Status: Released
+                  Compliance Date: JAN 12, 2017
+=============================================================================
+
+Associated patches: (v)PSB*3*70    <<= must be installed BEFORE `PSB*3*83'
+                    (v)PSB*3*76    <<= must be installed BEFORE `PSB*3*83'
+                    (v)PSB*3*80    <<= must be installed BEFORE `PSB*3*83'
+                    (v)PSB*3*81    <<= must be installed BEFORE `PSB*3*83'
+                    (v)PSJ*5*315   <<= must be installed BEFORE `PSB*3*83'
+                    (v)PSB*3*86    <<= must be installed BEFORE `PSB*3*83'
+                    (v)PSB*3*94    <<= must be installed BEFORE `PSB*3*83'
+
+Subject: CASDDPE TRANSDERMAL ENHANCEMENTS BCMA 
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+  
+ ******************************* ATTENTION ********************************
+  Clinical Ancillary Services (CAS) Development-Delivery of Pharmacy 
+  Enhancements (DDPE) VA Inpatient Medication Administration - Transdermal
+  enhancement includes 5 patches which must be installed in the following
+  order:
+   
+   1.      PSS*1*191   Released March 2016
+   2.      PSJ*5*315   Released August 2016
+   3.      PSB*3*83    Main BCMA patch  
+   4.      OR*3*417    BCMA support patch
+   5.      PSB*3*87    BCBU
+  
+  This enhancement also includes a new Graphical User Interface (GUI)
+  executable, BCMA GUI PSB3_P083.EXE. Installation of this GUI is required
+  immediately after the KIDS install for the Patch to function.
+  
+  
+            ***  WARNING FOR ALL SITES CURRENTLY USING WMA  ***
+                   (Wireless Medication Administration)
+                             From CareFusion
+  
+    The below 15 VAMC sites should not install patch PSB*3*83 until the
+    site has confirmed they have received CareFusion's software update:
+    Pyxis Med Administration Verification VA v. 5.1
+   
+                     Bay Pines, FL
+                     Boise, ID
+                     Bonham, TX
+                     Brockton, MA
+                     Dallas, TX
+                     Danville, IL
+                     Kerrville, TX
+                     Little Rock, AR
+                     Loma Linda, CA
+                     Marion, IN
+                     Pittsburgh, PA
+                     Pittsburgh, PA-Heinz
+                     San Antonio, TX
+                     Topeka, KS
+                     West Roxbury, MA
+  
+   
+  Installation of BCMA Patch PSB*3.0*83 may cause your WMA application to
+  stop functioning as you would expect it to. In order for the WMA devices
+  to work properly with PSB*3.0*83 installed, you must contact CareFusion,
+  the WMA vendor, to obtain the most current version of the WMA software.
+  
+  Please test this patch thoroughly in your TEST environment before 
+  installing into PRODUCTION. If you encounter any issues with the WMA
+  application, please report them to CareFusion.
+  
+  
+  For retrieval and installation instructions for BCMA GUI, please see the
+  Client Installation Instructions section.
+  
+ **************************************************************************
+  
+ The Clinical Ancillary Services Development-Delivery of Pharmacy 
+ Enhancements (CAS DDPE) project addresses several NSRs, which center 
+ around providing a means for properly handling Transdermal Medications 
+ Requiring Removal (MRR) beyond the current medications of dosage form 
+ Patch.  These enhancements interface with Inpatient Pharmacy package, 
+ which will be storing Scheduled Removal Times, for inpatient orders that 
+ are designated as MRR type medications.  See associated patches PSS*1*191 
+ and PSJ*5*315 for details on how MRR medications are designated.
+  
+ Features of the BCMA GUI provided by this project are listed below.
+  
+  1. Change the current GUI Unit Dose tab column labeled "Admin Time" to 
+     "Next Dose Action".
+  
+  2. The "Next Dose Action" column will now contain both the next admin
+     times for scheduled administrations as well as the next Removal time
+     for MRR type medications. The initial login to BCMA will sort the
+     Unit Dose tab in ascending order by this column, so older actions for
+     medications will be at the top of the VDL display.
+  
+       a. The Next Action of an administration will contain the word "DUE,"
+          followed by the scheduled admin time in the standard date@admin
+          time format currently in use.
+       b. The Next Action of a removal will contain the word "REMOVE,"
+          followed by the scheduled removal time in the standard
+          date@time format.
+       c. The Next Action of an administration that is past due to be
+          given will contain the word "LATE," followed by the scheduled
+          admin time in the standard date@admin time format currently in
+          use.                
+       d. The Next Action of a removal that is past due to be removed will
+          contain the words "LATE-RM," followed by the scheduled removal 
+          time in the standard date@time format.
+  
+  3. Change the current GUI column labeled "Wit" to "Alert".
+  
+  4. The Alert column will still have the ability to display the Witness 
+     required icon and will also be able to display a new Remove icon.  
+       a. The icon is displayed only for MRR type meds that were Given and
+          whose next Action is for Removal.
+  
+  5. Early/Late warnings will also be associated with medications being 
+     removed early or late using the same early/late time range that is
+     used for early or late medication admins.
+       a. User comments are prompted for and stored upon continuing with
+          the Early/Late removal action.
+  
+  6. Variances will also be tracked for Early/Late Removals in the same 
+     manner as they are currently for Early/Late medication
+     administrations and will appear on the Medication Variance Log report.
+  
+  7. BCMA Medication Administration History (MAH) report will now print
+     the associated Give, which was previously overwritten by the Remove
+     action, chronologically after the Remove for the Print by Patient 
+     report. The Print by Ward report will now include the count of
+     Removals scheduled for the report time period.
+  
+  8. BMCA Medication Log will now show the historical Give date/time below 
+     the current status of the medication, which shows the Remove
+     date/time.
+  
+  9. BCMA Missed Medications report will also show Removals that were
+     missed or up and coming, similar to how missed Gives are currently
+     notated.  The column heading has been changed from "Admin Date/Time"
+     to "Missed Date/Time".
+  
+ 10. BCMA Display Order report now includes the Removal Times for this
+     order directly below the current Admin Times.
+  
+ 11. BCMA Medication History report now includes a prior Give line item
+     directly below the current status line item of Remove (RM). The Remove
+     last action on this administration overwrites the Give information and
+     was no longer printing on this report.  This information is now being
+     retrieved from the Audit log and printed on this report.
+  
+ 12. BCMA Due List report now includes Remove Times on the report below 
+     the admin times that are due per Medication.
+  
+ 13. BCMA Coversheet Medication Overview report and the Coversheet 
+     Expired/DC'd/Expiring Orders report will now include Missed-Removals 
+     and Removals on the reports.
+  
+ 14. BCMA Medication Log report changed the heading from "Inj Site" to 
+     "Body Site".  The  Medication detail body text will display the proper
+     label of "Inj Site:" or "Derm Site:" just prior to the name of the
+     Body site for that medication.
+  
+ 15. BCMA Medication History Heading line changed from "Injection Site" to
+     "Body Site".
+  
+ 16. A body site diagram will be added to the BCMA Parameter GUI client 
+     application for the purpose of showing a dot on the body diagram that
+     is associated with the text representation of that site location on
+     the body.
+  
+ 17. The BCMA Parameter GUI client application has access to a new kernel 
+     parameter titled in GUI application as "Dermal Site History Max
+     Days:".  This allows the BCMA coordinator the ability to control how
+     many days of prior dermal body site location history will appear, when
+     a clinician is giving a new dermal medication that is prompting for a
+     body site location.
+  
+ 18. The Orders for MRRs With Removal Properties [PSS MRR ORDERS DIAGNOSTIC
+     RPT] option, found on the Pharmacy Data Management [PSS MGR] menu, 
+     will also be placed on the Bar Code Medication Administration Manager
+     [PSB MGR] menu.
+  
+  
+ NOTE: Non-standard schedules such as DAY@HHMM, HHMM, or other Odd
+       schedules, are not capable of calculating removal times due to a
+       lack of a Frequency.  Regardless of the Prompt for Removal in BCMA
+       code value they will not prompt for removal in BCMA and must be
+       avoided.
+  
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+                                                                    New/Mod
+ File Name (Number)             Field Name (Number)                  /Del
+ ----------------------------  ------------------------------------ -------
+                             
+ BCMA MEDICATION LOG (#53.79)  SCHEDULED REMOVAL TIME (#.17)          New
+                               DERMAL SITE (#.18)                     New
+                               ACTION DATE/TIME (#.06)                Mod
+                               SCHEDULED ADMINISTRATION TIME (#.13)   Mod
+    Subfile:
+    DISPENSE DRUG (#53.795)    PROMPT FOR REMOVAL IN BCMA (#.06)      New
+  
+  
+ BCMA MEDICATION VARIANCE LOG  EVENT(#.05)                            Mod
+ (#53.78)
+    Add a new code to the set 
+    of codes for the EVENT field: 4:EARLY/LATE REMOVE                 New
+  
+  
+ Forms Associated:
+  
+ Form Name                   File #            New/Modified/Deleted
+ ----------------            ------            --------------------
+ PSB MED LOG EDIT            #53.79                 Modified
+ PSB NEW UD ENTRY            #53.79                 Modified
+  
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A 
+  
+  
+ Options Associated:
+  
+ Option Name                   Type         New/Modified/Deleted
+ ----------------------        ----         -------------------- 
+ PSB MGR                       menu              Modified  
+ PSB GUI CONTEXT - USER        Broker            Modified 
+  
+  
+ Remote Procedure Calls (RPC) Associated:
+  
+ RPC Name                     New/Modified/Deleted
+ -------------------          ------------------- 
+ PSB COVERSHEET1                   Modified
+ PSB GETINJECTIONSITE              Modified
+ PSB GETORDERTAB                   Modified
+ PSB GETSETWP                        New
+ PSB MED LOG LOOKUP                Modified
+ PSB TRANSACTION                   Modified
+ PSB VALIDATE ORDER                Modified
+  
+  
+ Kernel Parameters Associated:
+  
+ Parameter Name                New/Modified/Deleted
+ ---------------------         -------------------- 
+ PSB AL GROUPS                        New
+ PSB AL IMAGE GENERAL                 New
+ PSB AL IMAGES                        New
+ PSB AL MASTER LIST                   New
+ PSB LIST ANATOMIC LOCATIONS          New
+ PSB LIST BODY SITES                  New
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A 
+  
+  
+ Security
+ Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A 
+  
+  
+ Templates Associated:
+  
+ Template Name    Type       File Name (Number)     New/Modified/Deleted
+ -------------    ------     ------------------     --------------------
+ PSB DIVISION     Kernel     PARAMETER TEMPLATE          Modified
+                             (8989.52)            
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR 20141012: Pharmacy Safety Enhancements
+ NSR 20120312: Create Reminder Mechanism to Remove Transdermal 
+               Medications
+ NSR 20101105: Add Transdermal Patch Removal to BCMA Missed Med 
+               Report
+ NSR 20110810: Transdermal Patch Documentation Disappears in BCMA
+ NSR 20071011: Change Terminology for Injection Site
+ NSR 20071004: Patch PSB*3*32 Pop Up Alert
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO00000885: BCMA reports are misleading when patches are Removed
+               depending on dates chosen to run the report 
+ PSPO00001978: BCMA does not prompt user to remove a transdermal patch when
+               the removal time differs from the next administration time. 
+ PSPO00002222: IV bag that should have been invalid due to provider comment
+               changes was inadvertently made available for infusion.
+ PSPO00002333: BCMA Missed Medications report does not include orders with
+               a status of "Renewed".
+ PSPO00002803: Scanning of barcode on medication package focuses the default
+               to the "OK" button and removes warning screen from view
+ PSPO00003011: Clinic order medication does not appear on the VDL until the
+               exact time of the medication start date/time
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ INC000000216580 - No "G" for a given patch dose.
+    INC000000218095(d) - Patch removal deletes
+                  original administration.
+ INC000000960057 - Provider Comments IV Bag Parameter has no
+                   effect on IV Bag Administration
+    I9879098FY16(d)
+ INC000000984066 - Orders with a Status of Renewed don't display on
+                   the Coversheet
+    I9890583FY16(d)
+ INC000001224198 - The "Invalid Medication Lookup" and "Scanned
+                   Drug Not Found" pop-ups have the focus set to
+                   "OK"
+    I9891800FY16(d)
+  
+ 1. INC000000216580 - No "G" for a given patch dose.
+        INC000000218095(d)
+  
+    Problem:
+    --------
+    In BCMA, when a patch is marked as removed using the right mouse click
+    pop-up menu, the original administration disappears from the medication
+    log. The only way to tell when the patch was originally placed is to look
+    at the medication log for the date the patch was removed.
+  
+    Resolution:
+    -----------
+    This patch will enhance the BCMA reports to show both Give and Remove 
+    date/times that occurred after a Remove action was performed on an 
+    administration time.
+  
+ 2. INC000000960057 - Provider Comments IV Bag Parameter has no
+                      effect on IV Bag Administration
+       I9879098FY16(d)
+  
+    Problem:
+    --------
+    Provider Comments IV Bag Parameter has no effect on IV Bag
+    Administration.  Regardless of the setting of the parameter,
+    a warning message will never display, and the bag will be
+    allowed to be given. 
+  
+    Solution:
+    ---------
+    Files BCMAParameters.pas and BCMAParameters.dfm of the BCMA
+    Parameters GUI were modified to remove the Provider Comments
+    parameter.  Because provider comments do not display in BCMA,
+    there is no need for this parameter.  Provider Comments can be
+    copied into Other Print Info/Special Instructions when finishing
+    an order in Inpatient Meds.
+  
+ 3. INC00000984066 - Orders with a Status of Renewed don't display on
+                     the Coversheet
+       I9890583FY16(d)
+  
+    Problem:
+    --------
+    Orders with the STATUS (#28) field defined as "Renewed" in the UNIT
+    DOSE (#55.06) sub-file, or a STATUS (#100) field defined as "Renewed"
+    in the IV (#55.01) sub-file of the PHARMACY PATIENT (#55) file, don't
+    display on the BCMA Coversheet.
+  
+    Solution:
+    ---------
+    File oCoverSheet.pas of the BCMA GUI was modified to display
+    orders with a Status of "Renewed"
+  
+  
+ 4. INC0000001224198 - The "Invalid Medication Lookup" and "Scanned
+                       Drug Not Found" pop-ups have the focus set to
+                       "OK"
+      I9891800FY16(d)
+  
+    Problem:
+    --------
+    The "Invalid Medication Lookup" and "Scanned Drug Not Found"
+    pop-ups have the focus set to the "OK" button.  If the users
+    scan an invalid medication, and then scan another medication,
+    the 2nd scanning will close the pop-up window.
+  
+    Solution:
+    ---------
+    Files BCMA_Main.pas, BCMA_Objects.pas, BCMA_Util.pas, MultipleDrugs.pas
+    and uFiveRights.pas of the BCMA  GUI were modified to no
+    longer default the focus to the OK button.  The button can either be
+    clicked on or tabbed to.
+  
+ Test Sites:
+ -----------
+ HC NETWORK UPSTATE NY
+ ST. CLOUD, MN -VAMC
+ MINNEAPOLIS, MN -VAMC
+  
+  
+ Software and Documenation Retrieval Instructions:
+ ================================================== 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ Files can be obtained from the ANONYMOUS.SOFTWARE directory at one of
+ the OI Field Offices. The preferred method is to retrieve the file using
+ Secure File Transfer Protocol (SFTP) from DOWNLOAD.VISTA.DOMAIN.EXT, which
+ will transmit the file from the first available server. Alternatively,
+ sites may elect to retrieve the file from a specific OI Field Office.
+   
+     OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+     Albany              DOMAIN.EXT        
+     Hines               DOMAIN.EXT         
+     Salt Lake City      DOMAIN.EXT          
+  
+  
+  ---------------------------------
+  Client Installation Instructions:
+  ---------------------------------
+  Retrieve one of the below installation files from the ANONYMOUS.SOFTWARE 
+  directory mentioned above:
+  
+      FILE NAME           BYTES        SFTP MODE
+      -------------       --------     ---------
+      PSB3_0P83.MSI       5,785 KB      binary
+      PSB3_0P83.EXE       6,685 KB      binary
+  
+  The software installation distribution includes these modified files:
+  
+  FILE NAME     DESCRIPTION            FILE VERSION   BYTES    FTP MODE
+  -----------   ---------------------- ------------  --------  --------
+  BCMA.CHM      Client help file                     1,192 KB   binary
+  BCMA.EXE      Client                  3.0.83.42    3,112 KB   binary
+  BCMAPar.CHM   Parameters Client help                 376 KB   binary
+  BCMApar.EXE   Parameters Client       3.0.83.13    1,676 KB   binary
+  
+  
+   1. Prior client compatible with patch:  NO
+   2. Client can be copied instead of installed:  YES
+   3. Is your site running the CareFusion Wireless Medication
+      Administration (WMA) software? If YES, please contact Carefusion to
+      ensure your site has the latest compatible WMA patch.
+   
+    If BCMA is currently running, please exit BCMA. This client
+    installation patch file can be used to upgrade an existing version of
+    BCMA, or can be used for a brand new installation.
+  
+     1. Double Click on PSB3_0P83.EXE or PSB3_0P83.MSI, which will launch
+        the InstallShield Wizard.
+  
+     2. When the InstallShield Wizard Welcome screen is displayed, click
+        "Next".
+  
+     3. On the Choose Destination Location screen, simply click "Next"
+        If you would like to change the destination folder to one other
+        than default, click "Browse" to navigate to the folder of your
+        choice. Click "Next".
+  
+     4. On the "Setup Type" screen select one of the following options:
+              a. Typical - installs only the BCMA client program,
+                 which is necessary for medication administration.
+              b. Complete - installs the BCMA client and the
+                 GUI BCMA site parameters definition program.
+              c. Custom - allows you to select which programs to install.
+                 Typical is selected by default. Click "Next".
+  
+     5. The InstallShield Wizard Ready to Install the Program screen
+        will display. Click "Install" to proceed with the installation.
+  
+     6. The InstallShield Wizard Complete screen will be displayed.
+        Click "Finish" and the BCMA installation is now complete.
+  
+  
+  -------------------------------------
+  Documentation Retrieval Instructions:
+  ------------------------------------ 
+  Updated documentation describing the new functionality introduced by 
+  this patch is available.
+  
+  
+  The documentation will be in the form of Adobe Acrobat files.
+  
+  Documentation can also be found on the VA Software Documentation 
+  Library at:
+      http://www4.domain.ext/vdl/
+  
+  Title               File Name                               FTP Mode
+  ---------------------------------------------------------------------
+  Release Notes - BCMA V.3.0  (PSB*3*83)
+                      PSB_3_P83_RN.PDF                         binary
+  
+  BCMA V.3.0 Installation Guide (PSB*3*83)
+                      PSB_3_P83_IG.PDF                         binary
+  
+  BCMA V.3.0 GUI User Manual - Chapters 1 through 6
+                      PSB_3_UM_CHAPTERS_1_THRU_6_R1216.PDF     binary
+  
+  BCMA V.3.0 GUI User Manual - Chapters 7 through 13
+                      PSB_3_UM_CHAPTERS_7_THRU_13_R1216.PDF    binary
+  
+  BCMA V.3.0 Manager's User Manual
+                      PSB_3_MAN_UM_R1216.PDF                   binary
+  
+  BCMA V.3.0 Technical Manual
+                      PSB_3_TM_R1216.PDF                       binary
+  
+  BCMA V.3.0 Nursing CHUI User Manual
+                      PSB_3_UM_NURSE_CHUI_R1216.PDF            binary
+  
+  BCMA V.3.0 Pharmacy CHUI User Manual
+                      PSB_3_PHARM_CHUI_UM_R1216.PDF            binary
+  
+  
+ Patch Installation Overview:
+ ----------------------------
+  
+  Pre-Installation Instructions:
+  ------------------------------
+  **IMPORTANT**  Inpatient menu options listed in the Installation 
+  Instructions section should be exited by all users prior to the install 
+  of the patches listed at the top of this Patch Description.  Also, these 
+  menu options should be disabled during these installs.
+  
+  This patch may be installed with users on the system, although it is 
+  recommended that it be installed during non-peak hours to minimize
+  potential disruption to users.  This patch should take less than 5
+  minutes to install.
+  
+  
+  Installation Instructions:
+  --------------------------
+  
+  1.  Choose the PackMan message containing this patch.
+  
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME, enter 
+      PSB*3.0*83.
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+      
+  4.  From the Installation Menu, select the Install Package(s) option and
+      enter the patch PSB*3.0*83.
+  
+  5.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//," respond NO.
+     
+  6.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+      NO//," respond NO.
+            
+  7.  When prompted "Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? YES//," respond YES.
+  
+      a. When prompted "Enter options you wish to mark as 'Out Of Order':,"
+         respond with option below.
+  
+            PSJ OE.
+  
+      b. When prompted for additional options, press Enter.
+  
+      c. When prompted "Enter protocols you wish to mark as 'Out Of
+         Order':," press Enter.
+  
+  8.  If prompted "Delay Install (Minutes):  (0 - 60): 0//," respond 0.
+  
+  
+  Post-Installation Instructions:
+  -------------------------------
+  A post install routine, which is included in this patch, will execute
+  after the install is completed.  It will copy all the current injection
+  sites, per each Division that uses BCMA, from the existing BCMA parameter
+  Injection Sites list into the new Body Sites list and mark them as
+  Injection sites.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 89
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSB3P83
+    Before:       n/a   After:  B1833541  **83**
+Routine Name: PSBAPIPM
+    Before: B17284583   After: B19077175  **6,15,83**
+Routine Name: PSBCSUTL
+    Before:B184801061   After:B188607274  **16,13,38,32,50,60,58,68,70,80,83**
+Routine Name: PSBINJEC
+    Before: B24162182   After: B34498622  **68,83**
+Routine Name: PSBML
+    Before:B133370450   After:B154439138  **6,3,4,9,11,13,25,45,33,52,
+                                           70,72,79,94,83**
+Routine Name: PSBML2
+    Before:B103484155   After:B112891914  **3,18,22,23,13,45,42,70,72,83**
+Routine Name: PSBML3
+    Before: B46997085   After: B60270297  **3,13,39,41,70,83**
+Routine Name: PSBMLEN
+    Before: B73011702   After: B87414949  **4,9,19,75,83**
+Routine Name: PSBMLEN1
+    Before: B53149065   After: B79293217  **3,4,9,11,13,28,50,83**
+Routine Name: PSBMLLKU
+    Before:B106582479   After:B129280348  **3,9,11,20,13,38,32,56,42,70,72,83**
+Routine Name: PSBO
+    Before:B150383689   After:B151900233  **13,32,2,25,28,51,50,42,58,
+                                           68,70,83**
+Routine Name: PSBO1
+    Before: B19597423   After: B35906614  **4,13,32,2,43,28,70,83**
+Routine Name: PSBOCE
+    Before:B101068370   After:B126384546  **32,50,68,70,83**
+Routine Name: PSBOCM
+    Before:B102788691   After:B128362247  **32,50,68,70,83**
+Routine Name: PSBODL
+    Before:B104826569   After:B108404103  **5,9,38,32,25,63,68,70,83**
+Routine Name: PSBODL1
+    Before: B44703020   After: B83787134  **5,9,32,28,68,70,83**
+Routine Name: PSBODO
+    Before: B38012086   After: B42287720  **5,21,24,38,58,68,70,83**
+Routine Name: PSBOMH
+    Before: B93146324   After:B103792484  **5,9,38,57,67,68,70,76,83**
+Routine Name: PSBOMH1
+    Before: B84411239   After: B93853760  **6,3,9,11,26,38,45,51,50,57,
+                                           67,64,72,83**
+Routine Name: PSBOML
+    Before: B64746915   After: B88385252  **3,11,50,54,70,72,83**
+Routine Name: PSBOMM
+    Before:B145771681   After:B187931933  **26,32,56,52,58,70,76,83**
+Routine Name: PSBOMT
+    Before: B93970205   After:B104162476  **32,50,70,72,83**
+Routine Name: PSBOMV
+    Before: B58207995   After: B64401243  **60,78,72,86,83**
+Routine Name: PSBOPM
+    Before: B93804999   After:B106114461  **3,9,13,17,40,70,72,83**
+Routine Name: PSBOWA
+    Before:B133947862   After:B170448047  **9,32,56,70,80,83**
+Routine Name: PSBPAR
+    Before: B22807367   After: B31414192  **13,28,83**
+Routine Name: PSBRPC3
+    Before:   B291796   After:   B291911  **6,3,4,16,13,10,32,28,42,58,
+                                           68,70,83**
+Routine Name: PSBUTL
+    Before: B87531522   After:B243063193  **3,9,13,38,45,46,63,83**
+Routine Name: PSBVAR
+    Before: B15546139   After: B16360454  *31,70,80,83*
+Routine Name: PSBVDLIV
+    Before: B81051093   After: B82920936  **6,38,32,58,70,83**
+Routine Name: PSBVDLPA
+    Before: B22291163   After: B24345187  **5,16,13,38,32,58,70,83**
+Routine Name: PSBVDLPB
+    Before:B106147258   After:B108251396  **11,13,38,32,58,68,70,83**
+Routine Name: PSBVDLRM
+    Before:       n/a   After: B23619193  **83**
+Routine Name: PSBVDLTB
+    Before: B34445687   After: B35153765  **3,4,16,68,70,78,83**
+Routine Name: PSBVDLU1
+    Before:B171179505   After:B192703576  **13,32,68,70,83**
+Routine Name: PSBVDLUD
+    Before: B91521932   After:B102373199  **11,13,38,32,58,68,70,83**
+Routine Name: PSBVDLVL
+    Before: B74523979   After:B151829804  **6,3,12,11,13,32,25,61,70,83**
+Routine Name: PSBVT
+    Before: B98717272   After:B117105095  **6,3,38,68,74,70,83**
+ 
+Routine list of preceding patches: 15, 75, 76, 80, 86, 94
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 04, 2015
+Completed By:                               Date Completed: DEC 08, 2016
+Released By :                               Date Released : DEC 12, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

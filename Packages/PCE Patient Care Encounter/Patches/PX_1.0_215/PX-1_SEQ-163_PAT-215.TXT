@@ -1,0 +1,505 @@
+$TXT Created by                    CTST.FO-BIRM.DOMAIN.EXT  (KIDS) on Thursday, 04/28/16 at 12:53
+=============================================================================
+Run Date: NOV 15, 2016                     Designation: PX*1*215
+Package : PX - PCE PATIENT CARE ENCOUNTER     Priority: Mandatory
+Version : 1       SEQ #163                      Status: Released
+                  Compliance Date: DEC 16, 2016
+=============================================================================
+
+Associated patches: (v)PX*1*186    <<= must be installed BEFORE `PX*1*215'
+                    (v)PX*1*195    <<= must be installed BEFORE `PX*1*215'
+                    (v)PX*1*210    <<= must be installed BEFORE `PX*1*215'
+                    (v)PSN*4*448   <<= must be installed BEFORE `PX*1*215'
+
+Subject: PCE IMMUNIZATION ENHANCEMENTS - INCREMENT 3
+
+Category: 
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+  - Routine
+
+Description:
+============
+
+ Note: Patch PSN*4*448 must be installed before installing patch PX*1*215.
+  
+ The Veterans Health Information Systems and Technology Architecture
+ (VistA) Immunizations Enhancements (VIMM) 2.0 project, Increment 3, builds
+ upon the file structures and standardized data introduced in Increments 1
+ and 2 by adding functional enhancements to the existing VistA Patient Care
+ Encounter (PCE) package.
+  
+ This patch provides the following new features:
+  
+ 1) Creates Remote Procedure Calls (RPCs) for use by the Enterprise Health
+    Management Platform (eHMP) project, the Computerized Patient Record
+    System (CPRS) software, Data Access Service (DAS) and others. These
+    RPCs retrieve immunization information from the following files:
+    - VACCINE INFORMATION STATEMENT (#920)
+    - IMMUNIZATION INFO SOURCE (#920.1)
+    - IMM ADMINISTRATION ROUTE (#920.2)
+    - IMM ADMINISTRATION SITE (BODY) (#920.3)
+    - IMM CONTRAINDICATION REASONS (#920.4)
+    - IMM REFUSAL REASONS (#920.5)
+    - V IMM CONTRA/REFUSAL EVENTS (#9000010.707)
+    - IMM MANUFACTURER (#9999999.04)
+    - IMMUNIZATION (#9999999.14)
+    - IMMUNIZATION LOT (#9999999.41)
+    - IMM DEFAULT RESPONSES (#920.05)
+  
+ 2) Introduces functionality for capturing the reason(s) an immunization
+    was not given by documenting immunization contraindications and/or
+    refusal events. This functionality includes the following:
+    - Creation of the V IMM CONTRA/REFUSAL EVENTS file (#9000010.707)
+    - A WARNING UNTIL DATE may be stored for temporary 
+    contraindications/refusals. This is the date until which the 
+    contraindication/refusal is valid.
+    - When an immunization for a patient is associated with valid 
+    contraindications/refusals (WARNING UNTIL DATE is not a past date), 
+    the software will display a warning and the user will be required to 
+    acknowledge the warning and enter a justification reason before 
+    continuing with administration.
+  
+ 3) Inactivates the functionality of the PCE CODE MAPPING file (#811.1).
+    The file will still exist, but the mappings in the file will no longer
+    be used to determine which related entries in the V IMMUNIZATION
+    (#9000010.11), V SKIN TEST (#9000010.12), and V CPT (#9000010.18) files
+    need to automatically be recorded. From now on, the mappings in the
+    CODING SYSTEM multiple of the IMMUNIZATION (#9999999.14) and SKIN TEST
+    (#9999999.28) files will be used for this purpose. There are a few
+    differences with this new approach:
+      a) The PCE CODE MAPPING file was managed locally, while the CODING
+         SYSTEM multiple of the IMMUNIZATION and SKIN TEST files are
+         standardized and managed nationally.
+      b) Mappings to ICD-10 codes will now be supported. If an immunization
+         or skin test is mapped to an ICD-10 code, when that immunization
+         or skin test is documented, it will automatically file the mapped
+         ICD-10 code to the V POV file (#9000010.07).
+      c) Stop the practice of automatically recording an immunization or
+         skin test when a corresponding CPT code is filed. The mappings
+         will only be used to automatically file the corresponding codes
+         (CPT and ICD-10) when an immunization or skin test is documented.
+         However, in the reverse scenario, when a CPT code is documented,
+         it will not automatically record the corresponding immunization or
+         skin test.
+      d) Codes will only automatically be filed when a VA-administered
+         (non-historical) immunization or skin test is documented.
+  
+ 4) Functionality to enable a documenting provider to view some
+    immunization prompts with default values to accept and edit the
+    responses if needed. This functionality includes: 
+    - Creation of the IMM DEFAULT RESPONSES file (#920.05) to store
+    facility specific default values by immunization type for ROUTE OF
+    ADMINISTRATION, SITE OF ADMINISTRATION, DOSE, DOSE UNITS, and COMMENTS.
+    - Creation of the Immunization Default Responses Enter/Edit menu option
+    [PXV EDIT DEFAULT RESPONSES] gives authorized users the ability to
+    enter or update information in the IMM DEFAULT RESPONSES file
+    (#920.05).
+  
+ 5) Updates the NDC CODE (VA) field (#.18) in the IMMUNIZATION LOT file
+    (#9999999.41) so access to information in the NDC/UPN file (#50.67) is
+    controlled by application programmer interfaces (APIs).
+    
+  
+ Patch Components:
+ -----------------
+  
+  
+ APIs Associated:
+  
+ API                                   New/Modified/Deleted
+ -----------                           --------------------
+ DATA2PCE^PXAPI (ICR #1889)            Modified
+ GETENC^PXAPI (ICR #1894)              Modified
+ ENCEVENT^PXKENC (ICR #1894)           Modified
+ VICR^PXPXRM (ICR #4250)               New
+ VICR^PXPXRMI1 (ICR #4519)             New
+ DQSAVE^PXRPC (ICR #6386)              New
+ IMMSTAT^PXAPIIM (ICR #6387)           New
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)        Field Name (Number)        New/Modified/Deleted
+ ------------------        -------------------        --------------------
+ IMM DEFAULT RESPONSES
+    (#920.05)              FACILITY (#.01)                   New
+                           IMMUNIZATION (multiple 
+                              field #1, sub-file  
+                              #920.051)                      New
+                             IMMUNIZATION (#.01) of 
+                               the IMMUNIZATION 
+                               sub-file (#920.051)           New
+                             ROUTE OF ADMINISTRATION
+                               (#1302) of the
+                               IMMUNIZATION sub-file
+                               (#920.051)                    New
+                             SITE OF ADMINISTRATION
+                               (#1303) of the
+                               IMMUNIZATION sub-file
+                               (#920.051)                    New
+                             DOSE (#1312) of the
+                               IMMUNIZATION sub-file
+                               (#920.051)                    New
+                             DOSE UNITS (#1313) of the
+                               IMMUNIZATION sub-file
+                               (#920.051)                    New
+                             COMMENTS (#81101) of the 
+                               IMMUNIZATION sub-file
+                               (#920.051)                    New
+  
+ IMM CONTRAINDICATION
+    REASONS (#920.4)       CONCEPT CODING SYSTEM (#.05)    Modified
+  
+ IMM ROUTES TO SITES
+    (#920.6)               ROUTE (#.01)                      New
+                           SITES (multiple field #1, 
+                              sub-file #920.61)              New
+                             SITES (#.01) of the SITES 
+                              sub-file (#920.61)             New
+  
+ V IMMUNIZATION 
+    (#9000010.11)          WARNING ACKNOWLEDGED (#1220)      New
+                           WARNING OVERRIDE REASON
+                              (#1601)                        New
+  
+ V SKIN TEST          
+    (#9000010.12)          CODING SYSTEM (multiple field
+                              #3, sub-file #9000010.123)   Deleted
+                           CODING SYSTEM (#.01) of the
+                              CODING SYSTEM sub-file 
+                              (#9000010.123)               Deleted
+                           CODE (multiple field #.02,
+                              sub-file #9000010.1231
+                              of the CODING SYSTEM 
+                              sub-file (#9000010.123)      Deleted
+                           CODE (#.01) of the CODE         
+                              sub-file (#9000010.1231)     Deleted
+  
+ V IMM CONTRA/REFUSAL 
+    EVENTS (#9000010.707)  CONTRAINDICATION/REFUSAL
+                              (#.01)                         New
+                           PATIENT NAME (#.02)               New
+                           VISIT (#.03)                      New
+                           IMMUNIZATION (#.04)               New
+                           WARN UNTIL DATE (#.05)            New
+                           DATE/TIME RECORDED (#.06)         New
+                           EVENT DATE AND TIME (#1201)       New
+                           ENCOUNTER PROVIDER (#1204)        New
+                           EDITED FLAG (#80101)              New
+                           AUDIT TRAIL (#80102)              New
+                           COMMENTS (#81101)                 New
+                           VERIFIED (#81201)                 New
+                           PACKAGE (#81202)                  New
+                           DATA SOURCE (#81203)              New
+  
+ IMMUNIZATION LOT 
+    (#9999999.41)          NDC CODE (VA) (#.18)            Modified
+  
+ PCE CODE MAPPING          N/A                             Modified
+    (#811.1)
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                      Type        New/Modified/Deleted
+ -----------                      ----        -------------------- 
+ PXV EDIT DEFAULT RESPONSES    Run Routine           New
+ PX PCE CODE MAPPING LIST      Print               Modified
+  
+  
+ Protocols Associated:
+  
+ Protocol Name        New/Modified/Deleted
+ -------------        -------------------- 
+ PXCE ADD/EDIT MENU       Modified
+ PXCE ICR ADD               New
+  
+  
+ RPCs Associated:
+  
+ RPC                 New/Modified/Deleted
+ -------------       --------------------
+ PX SAVE DATA             Modified
+ PXVIMM ADMIN CODES          New
+ PXVIMM ADMIN ROUTE          New
+ PXVIMM ADMIN SITE           New
+ PXVIMM ICR LIST             New
+ PXVIMM IMM DETAILED         New
+ PXVIMM IMM FORMAT           New
+ PXVIMM IMM LOT              New
+ PXVIMM IMM MAN              New
+ PXVIMM IMM SHORT LIST       New
+ PXVIMM IMMDATA              New
+ PXVIMM INFO SOURCE          New
+ PXVIMM VICR EVENTS          New
+ PXVIMM VIS                  New
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------  
+ N/A 
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO #2995
+ PSPO #3069
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC000001294271
+    R4956462FY15
+    R6300645FY16
+    
+    Related Patient Safety Issues:
+    ------------------------------
+    PSPO #2995
+    PSPO #3069
+  
+    Problem:
+    --------
+    PCE CODE MAPPING issues are causing duplicate or incorrect entries to 
+    be documented to the V IMMUNIZATION file. 
+   
+    Resolution:
+    -----------
+    The PCE CODE MAPPING file will be deprecated. Instead we will use the 
+    CODING SYSTEM multiple of the IMMUNIZATION and SKIN TEST files.
+  
+  
+ Test Sites:
+ ----------
+ Cleveland, OH
+ Heartland-East HCS, MO
+ San Antonio, TX
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                          File Name                FTP Mode
+ ------------------------------------------------------------------
+ Patient Care Encounter (PCE)   PX_1_UM_R1016.PDF        (binary)
+    V. 1.0 User Manual
+ Patient Care Encounter (PCE)   PX_1_TM_R1016.PDF        (binary)
+    V.1.0 Technical Manual
+ Clinical Reminders (PXRM)      PXRM_INDEX_TM.PDF        (binary)
+    Index Technical Manual
+ VIMM Patch PX*1*215            PX_1_P215_IG.PDF         (binary)   
+    Installation Guide 
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The post-installation process will generate a report from the PCE CODE 
+ MAPPING file (#811.1) for review. The report will contain all active
+ mappings where either a) an inactive immunization was mapped to a CPT
+ code; or b) a CPT code was mapped to an immunization or skin test. The
+ report will be emailed to the user who installed the patch and to the mail
+ group specified in the REMINDER MANAGEMENT MAILGROUP field (#3) of the 
+ CLINICAL REMINDER PARAMETERS file (#800). The report will also be sent to
+ the VHA National Center for Health Promotion and Disease Prevention (NCP)
+ for review. If it is determined that patient charts may have been affected
+ with erroneous data prior to the inactivating of the PCE CODE MAPPING file
+ with this patch, the site will be contacted and instructed to submit a
+ help desk ticket for resolution.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ Patch PSN*4*448 must be installed before installing patch PX*1*215.
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch should be installed during a period of minimal system activity,
+ preferably with users off the system. Installation time is expected to be
+ approximately 10 minutes.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     # (PX*1.0*215):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     d. Print Transport Global - This option will allow you to view the
+        components of the KIDS build.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter PX*1.0*215.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+     Install? YES//'
+     Answer YES.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+     Answer NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+     Answer NO.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**[Patch List]**;Aug 12, 1996;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXAI
+    Before: B40979532   After: B42819168  **15,74,69,102,111,112,130,164,
+                                           168,215**
+Routine Name: PXAIICR
+    Before:       n/a   After:  B5253575  **215**
+Routine Name: PXAIICRV
+    Before:       n/a   After: B12775865  **215**
+Routine Name: PXAIIMM
+    Before: B14255138   After: B16045767  **45,124,209,210,215**
+Routine Name: PXAPIIM
+    Before:  B2741056   After: B80558091  **210,215**
+Routine Name: PXCEAE
+    Before: B32867509   After: B33109650  **37,67,99,147,156,172,195,215**
+Routine Name: PXCEAE1
+    Before: B29168014   After: B29262597  **22,73,199,201,210,215**
+Routine Name: PXCEICR
+    Before:       n/a   After: B18593217  **215**
+Routine Name: PXCEVFI1
+    Before: B23924796   After: B33198888  **23,73,112,136,143,124,184,
+                                           185,210,215**
+Routine Name: PXCEVFI2
+    Before: B34344095   After: B37818294  **22,73,95,96,124,158,184,215**
+Routine Name: PXCEVFIL
+    Before: B43615497   After: B44185519  **9,30,22,73,88,89,104,147,124,
+                                           169,210,215**
+Routine Name: PXCEVIMM
+    Before: B83423957   After: B86101677  **27,124,199,201,210,215**
+Routine Name: PXKENC
+    Before: B29230371   After: B29334197  **15,22,73,108,143,183,210,215**
+Routine Name: PXKFCPT1
+    Before: B23838795   After: B24656697  **11,73,124,194,209,215**
+Routine Name: PXKFICR
+    Before:       n/a   After:  B1725753  **215**
+Routine Name: PXKFIMM
+    Before:  B4427968   After:  B5142444  **22,124,201,209,210,215**
+Routine Name: PXKFPOV1
+    Before:       n/a   After:  B9458058  **215**
+Routine Name: PXKMAIN
+    Before: B55417967   After: B55424847  **22,59,73,88,69,117,130,124,
+                                           174,164,210,215**
+Routine Name: PXKMAIN2
+    Before: B10938982   After: B25829818  **69,186,215**
+Routine Name: PXPXRM
+    Before: B88904295   After:B125590932  **119,199,210,215**
+Routine Name: PXPXRMI1
+    Before: B55159505   After:B104225670  **119,194,210,215**
+Routine Name: PXRPC
+    Before:B109684381   After:B156917264  **200,209,210,215**
+Routine Name: PXVNDC
+    Before:       n/a   After:  B1736379  **215**
+Routine Name: PXVP215
+    Before:       n/a   After: B34039279  **215**
+Routine Name: PXVRESP
+    Before:       n/a   After:  B3810590  **215**
+Routine Name: PXVRPC1
+    Before:       n/a   After: B70359613  **215**
+Routine Name: PXVRPC2
+    Before:       n/a   After: B29476719  **215**
+Routine Name: PXVRPC3
+    Before:       n/a   After: B28618741  **215**
+Routine Name: PXVRPC4
+    Before:       n/a   After:B131321819  **215**
+Routine Name: PXVRPC5
+    Before:       n/a   After: B35105697  **215**
+Routine Name: PXVRPC6
+    Before:       n/a   After: B16158307  **215**
+Routine Name: PXVUTIL
+    Before: B10006565   After: B13284181  **201,210,215**
+Routine Name: PXVZRT
+    Before: B71159926   After: B82546869  **206,215**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 26, 2015
+Completed By:                               Date Completed: NOV 15, 2016
+Released By :                               Date Released : NOV 15, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

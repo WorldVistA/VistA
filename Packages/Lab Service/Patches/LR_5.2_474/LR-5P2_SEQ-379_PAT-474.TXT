@@ -1,0 +1,493 @@
+
+=============================================================================
+Run Date: JAN 12, 2017                     Designation: LR*5.2*474
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #379                    Status: Released
+                  Compliance Date: FEB 12, 2017
+=============================================================================
+
+Associated patches: (v)LR*5.2*221  <<= must be installed BEFORE `LR*5.2*474'
+                    (v)LR*5.2*291  <<= must be installed BEFORE `LR*5.2*474'
+                    (v)LR*5.2*416  <<= must be installed BEFORE `LR*5.2*474'
+                    (v)LR*5.2*422  <<= must be installed BEFORE `LR*5.2*474'
+                    (v)LR*5.2*433  <<= must be installed BEFORE `LR*5.2*474'
+                    (v)LR*5.2*453  <<= must be installed BEFORE `LR*5.2*474'
+
+Subject: LAB UI MICRO ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The build for this patch is distributed as part of a multi-package build 
+ that contains LA*5.2*90 and LR*5.2*474. The build contains functionality 
+ that will allow Microbiology instrumentation to utilize the Lab Universal
+ Interface. 
+  
+ By utilizing the Universal Interface and Instrument Manager (IM)
+ middleware, sites will be able to switch from using class III interfaces
+ to a UI standard interface. New functionality will be applied that will
+ allow for an "MI" subscripted test to be added to the VistA Auto
+ Instrument file (#64.2). There will also be enhanced result processing and
+ verify/release functions (see LA*5.2*90 patch descriptions for additional
+ details).
+  
+ The build for this patch is distributed in support of the VistA 
+ Laboratory Enhancement (VLE) Microbiology/Data Innovations interface 
+ utilizing the Laboratory Universal Interface.
+  
+ The patch provide new functionality provides for the Enter/Verify data 
+ (Auto Instrument) option which will allow the technologist with the 
+ authority to release three release actions.
+  
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*474 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by ProPath
+ standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*474 does not 
+ alter or modify any software design safeguards or safety critical elements
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*474 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of
+ installation of this patch.
+  
+  
+ Patch Components:
+ -----------------
+ None
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ LR USER                      PARAMETER TEMPLATE  NEW
+                               FILE (8989.52)
+ LR PKG                       PARAMETER TEMPLATE  NEW
+                               FILE (8989.52)
+  
+ Parameters Associated:
+  
+ Parameter Name            New/Modified/Deleted
+ --------------            --------------------
+ LR MI UI RELEASE DEFAULT   NEW
+  
+ Additional Information:
+  
+ N/A 
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR #20131213 
+ Carbapenem Resistant Enterobacteriaceae (CRE) Naming Conventions
+ Electronic Interfacing of Automated Identification and Susceptibility 
+ Testing Instruments
+  
+ NSR #20140801
+ Tracking Multi-Drug Resistant Organisms 
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+  
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ James A. Haley Veterans Hospital
+ Iowa City VA Healthcare System
+ Lexington VA Medical Center
+  
+ Software and Documentation Retrieval Information 
+ ==============================
+ VistA Laboratory patch LR*5.2*474 software is distributed by Host File,
+ along with LA*5.2*90.  
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+                                    
+ File Name                   Contents               Retrieval Format 
+ ------------------          --------------------   ----------------
+ LAB_MICRO_INTERFACE_        Host File containing   ASCII
+ RELEASE_1_0.KID             KIDS software distribution 
+  
+ LAB_MICRO_INTERFACE_RELEASE_1_0_DOCS.ZIP, which contains both .pdf and 
+ .docx formatted files of the following documents. Retrieval format is 
+ BINARY:
+  
+        VLE Micro_Lab_Micro_Interface_Release_1.0_Technical_Manual
+        VLE Micro_Lab_Micro_Interface_Release_1.0_User_Guide
+        VLE Micro_Deployment_Installation_Roll Back_Back Out_Guide
+  
+ The VistA Documentation Library (VDL) web site will also contain the 
+ above referenced documents. This website is usually updated within 1-3
+ days of the patch release date. The VDL web address for Laboratory
+ Universal Interface user documentation is:
+ http://www.domain.ext/vdl/application.asp?appid=120
+  
+ Note: These previously released documents contain configuration and
+ mapping information that is useful to the implementation of the Universal
+ Interface for Microbiology tests.
+ ------------------------------------------------------------------------
+ LEDI IV Installation Guide     LAB_LEDI_IV_IG.PDF            binary
+ LEDI IV User Manual            LAB_LEDI_IV_UM.PDF            binary
+ LEDI IV Update AP/MICRO        LEDI_IV__AP__MICRO_           binary
+ Configuration Guide            CONFIGURATION_GUIDE.PDF       binary
+  
+      
+ Patch Installation:
+ -------------------
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch, LR*5.2*474 is part of a combined build for the Laboratory 
+ Microbiology Interface Enhancement patch.
+  
+ This patch install must be coordinated with the Laboratory ADPAC to 
+ ensure that all Lab Interface related activities are halted.
+  
+ This installation will modify the Enter/verify data (auto instrument)
+ option for the Microbiology Universal Interface process by providing the
+ following release options:
+  
+ Select RELEASE action: Edit (full)// ?
+  
+ Entering 0 will abort review/release.
+ Entering 1 will allow release 'as is' with no editing.
+ Entering 2 will allow you to enter/edit comments then release.
+ Entering 3 will allow you to enter full edit, similar to 'Results entry' 
+ option.
+  
+ Selections 1-3 will allow editing of status and approved date/time.
+  
+      Select one of the following:
+  
+           0         Quit
+           1         Release
+           2         Comments/Release
+           3         Edit (full)
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ Ensure that all Lab Interface activity has been halted !!
+  
+ This would include:
+ -Editing of an Auto Instrument file entry, 
+ -Turn off the Auto Downloading process to prevent the building and 
+ downloading 
+ of a Load/Worklist to the Instrument Manager. 
+ -Shut down all LA7UI logical links and any other HL7 process (HLZTCP or 
+ HLLP processes) 
+ to prevent the processing of result messages from the IM.
+  
+ This patch may be installed with users on the system as long as the above 
+ process controls have been followed.
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it is 
+  recommended that it be installed during non-peak hours to minimize 
+  potential disruption to users.  This patch should take less than 5 
+  minutes to install.
+  
+ 1-  Refer to the Installation Instructions section of patch LA*5.2*90
+     for details.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ ADPAC and Microbiology Tech instructions:
+  
+ 1.      After data has been received from the Data Innovations for an 
+ automated Microbiology instrument, the releasing Microbiology Technologist
+ will be presented with the following options:
+  
+ Select RELEASE action: Edit (full)// ?
+  
+ Entering 0 will abort review/release.
+ Entering 1 will allow release 'as is' with no editing.
+ Entering 2 will allow you to enter/edit comments then release.
+ Entering 3 will allow you to enter full edit, similar to 'Results entry' 
+ option.
+ Selections 1-3 will allow editing of status and approved date/time.
+  
+      Select one of the following:
+  
+           0         Quit
+           1         Release
+           2         Comments/Release
+           3         Edit (full)
+  
+ Select RELEASE action: Edit (full)// 0  Quit
+  
+ Do you want to PURGE these results? NO//
+  
+  
+ 2.       A new parameter LR MI UI RELEASE DEFAULT is included with this 
+ patch and it provides the VAMC site the ability to set the release default
+ at the package and user levels.
+  
+ Example configuration:
+  
+ Select OE/RR interface parameters <TEST ACCOUNT> Option: Select Lab
+  liaison menu <TEST ACCOUNT> Option: OE/RR interface parameters
+  
+  
+    EH     Edit HOSPITAL SITE parameters
+    AS     Edit a lab administration schedule
+    IL     Inquire to a Lab administration schedule
+    CC     Update CPRS Parameters ...
+  
+ Select OE/RR interface parameters <TEST ACCOUNT> Option: CC Update CPRS
+ Parameters
+  
+  
+    PA     Update CPRS with Lab order parameters
+    SI     Update CPRS with Single Lab test
+    UP     Update CPRS with all Lab test parameters
+    DO     Domain Level Parameter Edit
+    LO     Location Level Parameter Edit
+    PP     Package Level Parameter Edit
+    UL     Display Lab User Parameters
+  
+ Select Update CPRS Parameters <TEST ACCOUNT> Option: PP Package Level 
+ Parameter Edit
+  
+ Lab Package Level Parameters for Package: LAB SERVICE
+ --------------------------------------------------------------------------
+ Collect on Monday                                 YES
+ Collect on Tuesday                                YES
+ Collect on Wednesday                              YES
+ Collect on Thursday                               YES
+ Collect on Friday                                 YES
+ Collect on Saturday                               YES
+ Collect on Sunday                                 YES
+ Lab Collects on Holidays                          YES
+ Lab Collect Days Allowed in Future                7
+ Maximum Days for Continuous Orders                
+ Default manual verify method                      
+ Default load/work list verify method
+ Display Provider in Micro Result Entry            
+ Default Micro Instrument Release Action VITEK     Edit (full)
+ Prompt CPRS Alert in Micro Result Entry           Don't Ask
+ Prompt CPRS Alert in CH Result Entry              
+ EGFR Creatinine IDMS-traceable Method             
+ EGFR Patient's Age Cutoff                         
+ EGFR Result Cutoff                                
+ Send an alert after AP release                    
+ Default AP Report Selection Prompt                
+ Ask Performing Lab AP                             YES
+ Ask Performing Lab Micro                          YES
+ Print SNOMED Code System                          SNOMED I
+ Document Surgery Package Case Info                NO
+ Chemistry GUI Report Right Margin                 
+ Microbiology GUI Report Right Margin              
+ AP GUI Report Right Margin                        
+ Method of Assigning AP Accession Number
+ Default Accessioning Specimen
+ Default Accessioning Collection Sample
+ Default Accessioning Lab Test
+ Exclude removed tests from building
+ Use default accession dates
+ Print Reporting/Printing Facility                 None
+ Days to keep of instrument data 1                 2
+ Lab STS Default Mapping Files Directory           
+ Lab STS Default Mapping Filespec                  *.TXT
+ --------------------------------------------------------------------------
+ COLLECT MONDAY: YES// 
+ COLLECT TUESDAY: YES// 
+ COLLECT WEDNESDAY: YES// 
+ COLLECT THURSDAY: YES// 
+ COLLECT FRIDAY: YES// 
+ COLLECT SATURDAY: YES// 
+ COLLECT SUNDAY: YES// 
+ IGNORE HOLIDAYS: YES// 
+ LAB COLLECT DAYS ALLOWED IN FUTURE: 7// 
+ MAXIMUM DAYS FOR CONTINUOUS ORDERS: 
+ Default manual verify method: 
+  
+ For Default load/work list verify method -
+ Select Accession Area: 
+ Display Provider in Micro Result Entry: 
+  
+ For Default Micro Instrument Release Action -
+ Select Load/Work List: VITEK  
+  
+ Load/Work List: VITEK//   VITEK   VITEK
+ Default load/work list verify method: Edit (full)// 
+  
+ For Default Micro Instrument Release Action -
+ Select Load/Work List: 
+    NOTE: This parameter will allow the default release action to be
+    Load/Work List specific.
+  
+  
+ 3.       Setting the default release action for a user:
+  
+ Select Information-help menu <TEST ACCOUNT> Option: PP  General Lab User 
+ Parameters
+  
+ Lab User Level Parameters for User: TECH,MICRO
+ --------------------------------------------------------------------------
+ Default lab label printer
+ Display previous comments for test
+ Default Performing Laboratory                     
+ Ask Performing Lab AP                             
+ Ask Performing Lab Micro                          
+ Display Provider in Micro Result Entry            
+ Prompt CPRS Alert in CH Result Entry              
+ Prompt CPRS Alert in Micro Result Entry           
+ Default Micro Instrument Release Action VITEK     Release
+ Default AP Report Selection Prompt                
+ Send an alert after AP release                    
+ Default Accessioning Specimen
+ Default Accessioning Collection Sample
+ Default Accessioning Lab Test
+ Exclude removed tests from building
+ Use default accession dates
+ Lab Messaging - Parse HL7 Messages                
+ Lab Messaging - Display using Browser             
+ Lab Messaging - Show Identifiers                  
+ Chemistry GUI Report Right Margin                 
+ Microbiology GUI Report Right Margin              132
+ AP GUI Report Right Margin                        240
+ Lab STS Default Mapping Files Directory           
+ Lab STS Default Mapping Filespec                  
+ --------------------------------------------------------------------------
+  
+ For Default lab label printer -
+ Select Division:  
+  
+ For Display previous comments for test -
+ Select Laboratory Test: 
+ Default Performing Laboratory: 
+ Ask Performing Lab AP: 
+ Ask Performing Lab for MICRO: 
+ Display Provider in Micro Result Entry: 
+ Send CPRS Alert in CH Result Entry: 
+ Send CPRS Alert in Micro Result Entry: 
+  
+ For Default Micro Instrument Release Action -
+ Select Load/Work List: VITEK  
+ Are you adding VITEK as a new Load/Work List? Yes//   YES
+  
+ Load/Work List: VITEK//   VITEK   VITEK
+ Default load/work list verify method: Release
+  
+ For Default Micro Instrument Release Action -
+ Select Load/Work List:   
+    NOTE: This parameter will allow the default release action to be
+    Load/Work List specific.
+ AP Report Selection Default: ^
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRMIEDZ2
+    Before: B69802337   After: B72283385  **23,104,242,295,350,427,474**
+Routine Name: LRVR0
+    Before:B127185317   After:B154172378  **350,427,474**
+Routine Name: LRVRMI2
+    Before: B35719383   After: B36282264  **350,427,474**
+Routine Name: LRVRMI2A
+    Before: B78174930   After: B78602425  **350,427,474**
+Routine Name: LRVRMI3
+    Before: B26582667   After: B26756120  **350,427,453,474**
+Routine Name: LRVRMI4
+    Before: B38736850   After: B39771458  **350,427,474**
+Routine Name: LRVRMI4A
+    Before: B96274363   After: B96471289  **350,427,474**
+ 
+Routine list of preceding patches: 453
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 06, 2016
+Completed By:                               Date Completed: JAN 11, 2017
+Released By :                               Date Released : JAN 12, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

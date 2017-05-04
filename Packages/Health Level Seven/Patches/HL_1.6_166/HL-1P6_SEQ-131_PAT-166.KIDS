@@ -1,0 +1,1709 @@
+Released HL*1.6*166 SEQ #131
+Extracted from mail message
+**KIDS**:HL*1.6*166^
+
+**INSTALL NAME**
+HL*1.6*166
+"BLD",10183,0)
+HL*1.6*166^HEALTH LEVEL SEVEN^0^3160512^y
+"BLD",10183,1,0)
+^^3^3^3160512^
+"BLD",10183,1,1,0)
+This patch addresses issues when editing HL LOGICAL LINKS, <STORE> errors
+"BLD",10183,1,2,0)
+caused by excessive out queue arrays and potential issues with router
+"BLD",10183,1,3,0)
+protocols where additional, unwanted data is processed.
+"BLD",10183,4,0)
+^9.64PA^870^1
+"BLD",10183,4,870,0)
+870
+"BLD",10183,4,870,2,0)
+^9.641^870^1
+"BLD",10183,4,870,2,870,0)
+HL LOGICAL LINK  (File-top level)
+"BLD",10183,4,870,2,870,1,0)
+^9.6411^.08^1
+"BLD",10183,4,870,2,870,1,.08,0)
+DNS DOMAIN
+"BLD",10183,4,870,222)
+y^n^p^^^^n^^n
+"BLD",10183,4,870,224)
+
+"BLD",10183,4,"APDD",870,870)
+
+"BLD",10183,4,"APDD",870,870,.08)
+
+"BLD",10183,4,"B",870,870)
+
+"BLD",10183,6.3)
+1
+"BLD",10183,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10183,"KRN",.4,0)
+.4
+"BLD",10183,"KRN",.401,0)
+.401
+"BLD",10183,"KRN",.402,0)
+.402
+"BLD",10183,"KRN",.403,0)
+.403
+"BLD",10183,"KRN",.5,0)
+.5
+"BLD",10183,"KRN",.84,0)
+.84
+"BLD",10183,"KRN",3.6,0)
+3.6
+"BLD",10183,"KRN",3.8,0)
+3.8
+"BLD",10183,"KRN",9.2,0)
+9.2
+"BLD",10183,"KRN",9.8,0)
+9.8
+"BLD",10183,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",10183,"KRN",9.8,"NM",1,0)
+HLOQUE^^0^B157549548
+"BLD",10183,"KRN",9.8,"NM",2,0)
+HLCS^^0^B37118785
+"BLD",10183,"KRN",9.8,"NM","B","HLCS",2)
+
+"BLD",10183,"KRN",9.8,"NM","B","HLOQUE",1)
+
+"BLD",10183,"KRN",19,0)
+19
+"BLD",10183,"KRN",19.1,0)
+19.1
+"BLD",10183,"KRN",101,0)
+101
+"BLD",10183,"KRN",409.61,0)
+409.61
+"BLD",10183,"KRN",771,0)
+771
+"BLD",10183,"KRN",779.2,0)
+779.2
+"BLD",10183,"KRN",870,0)
+870
+"BLD",10183,"KRN",8989.51,0)
+8989.51
+"BLD",10183,"KRN",8989.52,0)
+8989.52
+"BLD",10183,"KRN",8994,0)
+8994
+"BLD",10183,"KRN","B",.4,.4)
+
+"BLD",10183,"KRN","B",.401,.401)
+
+"BLD",10183,"KRN","B",.402,.402)
+
+"BLD",10183,"KRN","B",.403,.403)
+
+"BLD",10183,"KRN","B",.5,.5)
+
+"BLD",10183,"KRN","B",.84,.84)
+
+"BLD",10183,"KRN","B",3.6,3.6)
+
+"BLD",10183,"KRN","B",3.8,3.8)
+
+"BLD",10183,"KRN","B",9.2,9.2)
+
+"BLD",10183,"KRN","B",9.8,9.8)
+
+"BLD",10183,"KRN","B",19,19)
+
+"BLD",10183,"KRN","B",19.1,19.1)
+
+"BLD",10183,"KRN","B",101,101)
+
+"BLD",10183,"KRN","B",409.61,409.61)
+
+"BLD",10183,"KRN","B",771,771)
+
+"BLD",10183,"KRN","B",779.2,779.2)
+
+"BLD",10183,"KRN","B",870,870)
+
+"BLD",10183,"KRN","B",8989.51,8989.51)
+
+"BLD",10183,"KRN","B",8989.52,8989.52)
+
+"BLD",10183,"KRN","B",8994,8994)
+
+"BLD",10183,"QDEF")
+^^^^^^^^^^YES
+"BLD",10183,"QUES",0)
+^9.62^^
+"BLD",10183,"REQB",0)
+^9.611^2^2
+"BLD",10183,"REQB",1,0)
+HL*1.6*122^1
+"BLD",10183,"REQB",2,0)
+HL*1.6*158^1
+"BLD",10183,"REQB","B","HL*1.6*122",1)
+
+"BLD",10183,"REQB","B","HL*1.6*158",2)
+
+"FIA",870)
+HL LOGICAL LINK
+"FIA",870,0)
+^HLCS(870,
+"FIA",870,0,0)
+870
+"FIA",870,0,1)
+y^n^p^^^^n^^n
+"FIA",870,0,10)
+
+"FIA",870,0,11)
+
+"FIA",870,0,"RLRO")
+
+"FIA",870,0,"VR")
+1.6^HL
+"FIA",870,870)
+1
+"FIA",870,870,.08)
+
+"IX",870,870,"AD1",0)
+870^AD1^Used to find the link overwhich to send the application acknowledgment.^MU^^R^IR^I^870^^^^^A
+"IX",870,870,"AD1",1)
+D SET2^HLOTLNK(X(1),X(3))
+"IX",870,870,"AD1",1.4)
+S X=0 I X(4)="C",X(2),$P($G(^HLCS(869.1,X(2),0)),"^")="TCP" S X=1
+"IX",870,870,"AD1",2)
+D KILL2^HLOTLNK(X(1),X(3))
+"IX",870,870,"AD1",2.4)
+S X=0 I X(4)="C",X(2),$P($G(^HLCS(869.1,X(2),0)),"^")="TCP" S X=1
+"IX",870,870,"AD1",2.5)
+
+"IX",870,870,"AD1",11.1,0)
+^.114IA^4^4
+"IX",870,870,"AD1",11.1,1,0)
+1^F^870^.01^^1^F
+"IX",870,870,"AD1",11.1,2,0)
+2^F^870^2^^2^F
+"IX",870,870,"AD1",11.1,3,0)
+3^F^870^.08^^3^F
+"IX",870,870,"AD1",11.1,4,0)
+4^F^870^400.03^^4^F
+"IX",870,870,"DNS",0)
+870^DNS^This is a regular index of new-style cross-reference on the DNS Domain field^R^^F^IR^I^870^^^^^LS
+"IX",870,870,"DNS",1)
+S ^HLCS(870,"DNS",$E(X,1,70),DA)=""
+"IX",870,870,"DNS",2)
+K ^HLCS(870,"DNS",$E(X,1,70),DA)
+"IX",870,870,"DNS",2.5)
+K ^HLCS(870,"DNS")
+"IX",870,870,"DNS",11.1,0)
+^.114IA^1^1
+"IX",870,870,"DNS",11.1,1,0)
+1^F^870^.08^70^1^F
+"IX",870,870,"DNS",11.1,1,3)
+
+"IX",870,870,"DNS2",0)
+870^DNS2^Regular index of new-style x-ref on the DNS Domain and Node fields^R^^R^IR^I^870^^^^^LS
+"IX",870,870,"DNS2",1)
+S ^HLCS(870,"DNS2",$E(X(1),1,70),$E(X(2),1,30),DA)=""
+"IX",870,870,"DNS2",2)
+K ^HLCS(870,"DNS2",$E(X(1),1,70),$E(X(2),1,30),DA)
+"IX",870,870,"DNS2",2.5)
+K ^HLCS(870,"DNS2")
+"IX",870,870,"DNS2",11.1,0)
+^.114IA^2^2
+"IX",870,870,"DNS2",11.1,1,0)
+1^F^870^.08^70^1^F
+"IX",870,870,"DNS2",11.1,1,3)
+
+"IX",870,870,"DNS2",11.1,2,0)
+2^F^870^.01^30^2^F
+"IX",870,870,"DNS2",11.1,2,3)
+
+"MBREQ")
+0
+"PKG",243,-1)
+1^1
+"PKG",243,0)
+HEALTH LEVEL SEVEN^HL^DHCP IMPLEMENTATION OF HEALTH LEVEL SEVEN
+"PKG",243,20,0)
+^9.402P^^
+"PKG",243,22,0)
+^9.49I^1^1
+"PKG",243,22,1,0)
+1.6^2951013^2981102^66481
+"PKG",243,22,1,"PAH",1,0)
+166^3160512
+"PKG",243,22,1,"PAH",1,1,0)
+^^3^3^3160512
+"PKG",243,22,1,"PAH",1,1,1,0)
+This patch addresses issues when editing HL LOGICAL LINKS, <STORE> errors
+"PKG",243,22,1,"PAH",1,1,2,0)
+caused by excessive out queue arrays and potential issues with router
+"PKG",243,22,1,"PAH",1,1,3,0)
+protocols where additional, unwanted data is processed.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","HLCS")
+0^2^B37118785^B35933605
+"RTN","HLCS",1,0)
+HLCS ;ALB/RJS,MTC,JRP - COMMUNICATIONS SERVER - ;10/04/2007  14:34
+"RTN","HLCS",2,0)
+ ;;1.6;HEALTH LEVEL SEVEN;**2,9,14,19,43,57,109,132,122,166**;Oct 13, 1995;Build 1
+"RTN","HLCS",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","HLCS",4,0)
+ ;
+"RTN","HLCS",5,0)
+ ;The SEND function is invoked by the transaction processor.
+"RTN","HLCS",6,0)
+ ;It's function is to $O through the ITEM multiple of the Event Driver
+"RTN","HLCS",7,0)
+ ;Protocol and create child entries in the Message Text file (#772)
+"RTN","HLCS",8,0)
+ ;for the message at HLMTIEN.  These child messages point back
+"RTN","HLCS",9,0)
+ ;to the parent message so that message text does not need to
+"RTN","HLCS",10,0)
+ ;be duplicated when a message is sent to multiple applications.
+"RTN","HLCS",11,0)
+ ;
+"RTN","HLCS",12,0)
+ ;The SENDACK function is also invoked by the transaction processor.
+"RTN","HLCS",13,0)
+ ;It's function is to create a child entry in the Message Text file
+"RTN","HLCS",14,0)
+ ;for the message at HLMTIENA and deliver the message to the
+"RTN","HLCS",15,0)
+ ;application the requested/sent information.
+"RTN","HLCS",16,0)
+ ;
+"RTN","HLCS",17,0)
+ ;For DHCP to DHCP messaging (i.e. internal to internal), an incoming
+"RTN","HLCS",18,0)
+ ;message is created in the Message Text file which is a duplication
+"RTN","HLCS",19,0)
+ ;of the outgoing message.  The incoming message is then processed by
+"RTN","HLCS",20,0)
+ ;calling the transaction processor.
+"RTN","HLCS",21,0)
+ ;
+"RTN","HLCS",22,0)
+ ;For DHCP to COTS messaging (i.e. internal to external), the message
+"RTN","HLCS",23,0)
+ ;is filed in the Message Text file with the Logical Link defined and
+"RTN","HLCS",24,0)
+ ;a status of PENDING TRANSMISSION.  These entries are picked up by
+"RTN","HLCS",25,0)
+ ;the background filer and transmitted to the appropriate COTS system.
+"RTN","HLCS",26,0)
+ ;
+"RTN","HLCS",27,0)
+SEND(HLMTIEN,HLEID,HLRESULT) ;Send an HL7 message
+"RTN","HLCS",28,0)
+ ;HLMTIEN=The IEN of the parent message in file # 772
+"RTN","HLCS",29,0)
+ ;HLEID=The IEN of the Event Driver protocol in file #101
+"RTN","HLCS",30,0)
+ ;HLRESULT=Variable for any error text (pass by reference)
+"RTN","HLCS",31,0)
+ ;
+"RTN","HLCS",32,0)
+ ;Declare variables
+"RTN","HLCS",33,0)
+ N HLARY,HLERROR,HLEIDS,HLCLIENT,HLOGLINK,HLMTIENS,HLMSGPTR
+"RTN","HLCS",34,0)
+ S HLERROR=""
+"RTN","HLCS",35,0)
+ ;Direct connect
+"RTN","HLCS",36,0)
+ I HLPRIO="I" D  Q
+"RTN","HLCS",37,0)
+ . D DC^HLMA2
+"RTN","HLCS",38,0)
+ . S HLRESULT=HLERROR
+"RTN","HLCS",39,0)
+ ;Get all subscribers to the message
+"RTN","HLCS",40,0)
+ D ITEM^HLUTIL2(HLEID,"PTR")
+"RTN","HLCS",41,0)
+ ;Quit if no subscribers (considered successful delivery)
+"RTN","HLCS",42,0)
+ G:($G(HLARY(0))'>0) EXIT
+"RTN","HLCS",43,0)
+ ;Deliver message to each subscriber
+"RTN","HLCS",44,0)
+ S HLEIDS=0
+"RTN","HLCS",45,0)
+ F  S HLEIDS=$O(HLARY(HLEIDS)) Q:(HLEIDS'>0)  D
+"RTN","HLCS",46,0)
+ .;
+"RTN","HLCS",47,0)
+ .;**132 excluded subscribers **
+"RTN","HLCS",48,0)
+ .N I,EXCLUDE
+"RTN","HLCS",49,0)
+ .S (EXCLUDE,I)=0
+"RTN","HLCS",50,0)
+ . ;
+"RTN","HLCS",51,0)
+ . ; patch HL*1.6*122
+"RTN","HLCS",52,0)
+ . ; F  S I=$O(HLP("EXCLUDE SUBSCRIBER",I)) Q:'I  I $G(HLP("EXCLUDE SUBSCRIBER",I))=HLEIDS S EXCLUDE=1 Q
+"RTN","HLCS",53,0)
+ . F  S I=$O(HLP("EXCLUDE SUBSCRIBER",I)) Q:'I  D  Q:EXCLUDE
+"RTN","HLCS",54,0)
+ .. N TEMP
+"RTN","HLCS",55,0)
+ .. S TEMP=HLP("EXCLUDE SUBSCRIBER",I)
+"RTN","HLCS",56,0)
+ .. I 'TEMP,TEMP]"" S TEMP=$O(^ORD(101,"B",TEMP,0))
+"RTN","HLCS",57,0)
+ .. I TEMP=HLEIDS S EXCLUDE=1
+"RTN","HLCS",58,0)
+ . ; patch HL*1.6*122
+"RTN","HLCS",59,0)
+ . ;
+"RTN","HLCS",60,0)
+ .Q:EXCLUDE
+"RTN","HLCS",61,0)
+ .;** 132 end **
+"RTN","HLCS",62,0)
+ .;
+"RTN","HLCS",63,0)
+ .;Get pointer to receiving application
+"RTN","HLCS",64,0)
+ .S HLCLIENT=+HLARY(HLEIDS),HL("EIDS")=HLEIDS,HLERROR=""
+"RTN","HLCS",65,0)
+ .Q:(HLCLIENT'>0)
+"RTN","HLCS",66,0)
+ .;Check and execute ROUTING LOGIC **CIRN**
+"RTN","HLCS",67,0)
+ .S HLX=$G(^ORD(101,HLEIDS,774))
+"RTN","HLCS",68,0)
+ .I HLX]"" D  Q
+"RTN","HLCS",69,0)
+ ..;HL*1.6*166 RESET HLDONE1 SO THAT HLNEXT DOES NOT EVALUATE THE HL7 MESS. ADMIN. file
+"RTN","HLCS",70,0)
+ ..N HLQUIT,HLNODE,HLNEXT,HLDONE1
+"RTN","HLCS",71,0)
+ ..S (HLQUIT,HLDONE1)=0,HLNODE="",HLNEXT="D HLNEXT^HLCSUTL"
+"RTN","HLCS",72,0)
+ ..X HLX I $D(HLL("LINKS")) D FWD^HLCS2 K HLL ;**CIRN**
+"RTN","HLCS",73,0)
+ .;Get pointer to logical link
+"RTN","HLCS",74,0)
+ .S HLOGLINK=$P(HLARY(HLEIDS),"^",2)
+"RTN","HLCS",75,0)
+ .;Determine if receiving application is internal or external
+"RTN","HLCS",76,0)
+ .;  Logical link has a value for external applications
+"RTN","HLCS",77,0)
+ .;  Logical link is NULL for internal applications
+"RTN","HLCS",78,0)
+ .I (HLOGLINK) D COTS Q
+"RTN","HLCS",79,0)
+ .;Create 'incoming' message based on 'outgoing' message (internal)
+"RTN","HLCS",80,0)
+ .D DHCP(HLMTIEN,HLEIDS,HLCLIENT)
+"RTN","HLCS",81,0)
+ .Q:(HLERROR)
+"RTN","HLCS",82,0)
+ .;Process the 'incoming' message
+"RTN","HLCS",83,0)
+ .S HLERROR=""
+"RTN","HLCS",84,0)
+ .D PROCESS^HLTP0(HLMSGPTR,"DHCP","",.HLERROR)
+"RTN","HLCS",85,0)
+ .;Update Status of 'incoming' message to SUCCESSFULLY COMPLETED
+"RTN","HLCS",86,0)
+ .; or ERROR DURING TRANSMISSION
+"RTN","HLCS",87,0)
+ .D STATUS^HLTF0(HLMSGPTR,$S(HLERROR:4,1:3),$S(HLERROR:+HLERROR,1:""),$S(HLERROR:$P(HLERROR,"^",2),1:""),,$S($G(HLERR("SKIP_EVENT"))=1:1,1:0))
+"RTN","HLCS",88,0)
+ .I $D(HLL("LINKS")) D FWD^HLCS2 K HLL ;**CIRN**
+"RTN","HLCS",89,0)
+ D ADD^HLCS2 ;**CIRN**
+"RTN","HLCS",90,0)
+EXIT S HLRESULT=HLERROR
+"RTN","HLCS",91,0)
+ Q
+"RTN","HLCS",92,0)
+COTS ;Internal to external communication
+"RTN","HLCS",93,0)
+ ;Create child entry in Message Text file
+"RTN","HLCS",94,0)
+ N HLTCP,HLTCPI,HLTCPO
+"RTN","HLCS",95,0)
+ D SEND^HLMA2(HLEIDS,HLMTIEN,HLCLIENT,"D",.HLMTIENS,HLOGLINK)
+"RTN","HLCS",96,0)
+ I ((+HLMTIENS)'>0) S HLERROR=HLMTIENS Q
+"RTN","HLCS",97,0)
+ ;'Pass' message to background filer by setting status of child
+"RTN","HLCS",98,0)
+ ;  to PENDING TRANSMISSION
+"RTN","HLCS",99,0)
+ D STATUS^HLTF0(HLMTIENS,1)
+"RTN","HLCS",100,0)
+ Q
+"RTN","HLCS",101,0)
+DHCP(HLMTIEN,HLEIDS,HLCLIENT) ;Internal to internal communication
+"RTN","HLCS",102,0)
+ ;
+"RTN","HLCS",103,0)
+ ;Input  : HLMTIEN - Pointer to parent outgoing message (file #772)
+"RTN","HLCS",104,0)
+ ;         HLEIDS - Pointer to subscribing protocol (file #101)
+"RTN","HLCS",105,0)
+ ;         HLCLIENT - Pointer to receiving application (file # 771)
+"RTN","HLCS",106,0)
+ ;
+"RTN","HLCS",107,0)
+ ;Output : HLMTIENS - Pointer to child outgoing message (file #772)
+"RTN","HLCS",108,0)
+ ;         HLMSGPTR - Pointer to [parent] incoming message (file #772)
+"RTN","HLCS",109,0)
+ ;         HLERROR - ErrorCode ^ ErrorText
+"RTN","HLCS",110,0)
+ ;
+"RTN","HLCS",111,0)
+ ;Notes  : This module only copies the outgoing message into an incoming
+"RTN","HLCS",112,0)
+ ;         message.  Delivery of the message (i.e. processing of it)
+"RTN","HLCS",113,0)
+ ;         must be done by the calling application.
+"RTN","HLCS",114,0)
+ ;       : Message/batch header (MSH/BSH) is built and placed in the
+"RTN","HLCS",115,0)
+ ;         incoming message
+"RTN","HLCS",116,0)
+ ;       : HLMTIENS, HLMSGPTR, and HLERROR will be initialized
+"RTN","HLCS",117,0)
+ ;       : Existance and validity of input is assumed
+"RTN","HLCS",118,0)
+ ;
+"RTN","HLCS",119,0)
+ ;Declare variables
+"RTN","HLCS",120,0)
+ N MSGID,MSGDT,MSGDTH,HDR2BLD,TMP,HLHDR,BHSHDR
+"RTN","HLCS",121,0)
+ S HLERROR=""
+"RTN","HLCS",122,0)
+ S HLMTIENS=0
+"RTN","HLCS",123,0)
+ S HLMSGPTR=0
+"RTN","HLCS",124,0)
+ ;Create child entry in Message Text file
+"RTN","HLCS",125,0)
+ D SEND^HLMA2(HLEIDS,HLMTIEN,HLCLIENT,"D",.HLMTIENS)
+"RTN","HLCS",126,0)
+ I ((+HLMTIENS)'>0) S HLERROR=HLMTIENS Q
+"RTN","HLCS",127,0)
+ ;'Receive' message by making an incoming message
+"RTN","HLCS",128,0)
+ ;Determine type of header to build
+"RTN","HLCS",129,0)
+ S TMP=$G(^HL(772,HLMTIEN,0))
+"RTN","HLCS",130,0)
+ S HDR2BLD=$P(TMP,"^",14)
+"RTN","HLCS",131,0)
+ ;Build message header (MSH)
+"RTN","HLCS",132,0)
+ I (HDR2BLD="M") D  Q:(HLERROR)
+"RTN","HLCS",133,0)
+ .S TMP=""
+"RTN","HLCS",134,0)
+ .D HEADER^HLCSHDR(HLMTIENS,.TMP)
+"RTN","HLCS",135,0)
+ .Q:(TMP="")
+"RTN","HLCS",136,0)
+ .;Error building header
+"RTN","HLCS",137,0)
+ .S HLERROR="4^Unable to build message header => "_TMP
+"RTN","HLCS",138,0)
+ .D STATUS^HLTF0(HLMTIENS,4,0,$P(HLERROR,"^",2))
+"RTN","HLCS",139,0)
+ ;Build batch header (BHS or FHS)
+"RTN","HLCS",140,0)
+ I (HDR2BLD'="M") D  Q:(HLERROR)
+"RTN","HLCS",141,0)
+ .S TMP=""
+"RTN","HLCS",142,0)
+ .D BHSHDR^HLCSHDR(HLMTIENS)
+"RTN","HLCS",143,0)
+ .S:($E(HLHDR(1),1)="-") TMP=$P(HLHDR(1),"^",2)
+"RTN","HLCS",144,0)
+ .Q:(TMP="")
+"RTN","HLCS",145,0)
+ .;Error building header
+"RTN","HLCS",146,0)
+ .S HLERROR="4^Unable to build batch header => "_TMP
+"RTN","HLCS",147,0)
+ .D STATUS^HLTF0(HLMTIENS,4,0,$P(HLERROR,"^",2))
+"RTN","HLCS",148,0)
+ ;Create entry for 'incoming' message
+"RTN","HLCS",149,0)
+ D CREATE^HLTF(.MSGID,.HLMSGPTR,.MSGDT,.MSGDTH)
+"RTN","HLCS",150,0)
+ ;Move header and rest of message into 'incoming' message
+"RTN","HLCS",151,0)
+ I (HDR2BLD="M") D
+"RTN","HLCS",152,0)
+ .;Use MSH as header
+"RTN","HLCS",153,0)
+ .D MRGINT^HLTF1(HLMTIEN,HLMSGPTR,"HLHDR")
+"RTN","HLCS",154,0)
+ I (HDR2BLD'="M") D
+"RTN","HLCS",155,0)
+ .;Use BHS or FHS as header
+"RTN","HLCS",156,0)
+ .D MRGINT^HLTF1(HLMTIEN,HLMSGPTR,"BHSHDR")
+"RTN","HLCS",157,0)
+ ;Set status of outgoing message to AWAITING ACKNOWLEDGEMENT
+"RTN","HLCS",158,0)
+ D STATUS^HLTF0(HLMTIENS,$S($P(^HL(772,HLMTIEN,0),U,7):3,1:2))
+"RTN","HLCS",159,0)
+ ;Set status of 'incoming' message to AWAITING PROCESSING
+"RTN","HLCS",160,0)
+ D STATUS^HLTF0(HLMSGPTR,9)
+"RTN","HLCS",161,0)
+ Q
+"RTN","HLCS",162,0)
+SENDACK(HLMTIENA,HLEID,HLEIDS,HLRESULT) ;Send an HL7 acknowledgement/response
+"RTN","HLCS",163,0)
+ ;HLMTIENA=The IEN of the parent acknowledgment/response message in
+"RTN","HLCS",164,0)
+ ;         file # 772
+"RTN","HLCS",165,0)
+ ;HLEIDS=The IEN of the Subscribing protocol in file # 101
+"RTN","HLCS",166,0)
+ ;HLEID=The IEN of the Event Driver protocol in file #101
+"RTN","HLCS",167,0)
+ ;HLRESULT=Variable for any error text (pass by reference)
+"RTN","HLCS",168,0)
+ ;
+"RTN","HLCS",169,0)
+ N HLERROR,HLOGLINK,HLCLIENT,HLMTIENS,HLMSGPTR,HLCLNODE
+"RTN","HLCS",170,0)
+ I $G(HLMTIENA)=""!($G(HLEID)="")!($G(HLEIDS)="") S HLERROR="0^7^"_$G(^HL(771.7,7,0))_"at SENDACK^HLCS entry point" G EXIT2
+"RTN","HLCS",171,0)
+ S HLCLNODE=$G(^ORD(101,HLEID,770))
+"RTN","HLCS",172,0)
+ ;Get pointers to Logical Link & receiving application
+"RTN","HLCS",173,0)
+ S HLOGLINK=$P($G(^ORD(101,HLEIDS,770)),U,7)
+"RTN","HLCS",174,0)
+ ;Application needed to dynamically address the ACK (tcp/ip)
+"RTN","HLCS",175,0)
+ ;(set HLL("LINKS") array before calling GENACK)
+"RTN","HLCS",176,0)
+ I $D(HLL("LINKS")) D  Q:'HLOGLINK
+"RTN","HLCS",177,0)
+ .S HLOGLINK=$P(HLL("LINKS",1),"^",2) Q:HLOGLINK=""
+"RTN","HLCS",178,0)
+ .K HLL("LINKS")
+"RTN","HLCS",179,0)
+ .I +HLOGLINK'=HLOGLINK S HLOGLINK=$O(^HLCS(870,"B",HLOGLINK,0))
+"RTN","HLCS",180,0)
+ S HLCLIENT=$P(HLCLNODE,U,1)
+"RTN","HLCS",181,0)
+ Q:('HLCLIENT)
+"RTN","HLCS",182,0)
+ ;Determine if receiving application is internal or external
+"RTN","HLCS",183,0)
+ ;  Logical link has a value for external applications
+"RTN","HLCS",184,0)
+ ;  Logical link is NULL for internal applications
+"RTN","HLCS",185,0)
+ I (HLOGLINK) D COTSACK Q
+"RTN","HLCS",186,0)
+ ;Create 'incoming' message based on 'outgoing' message (internal)
+"RTN","HLCS",187,0)
+ D DHCP(HLMTIENA,HLEID,HLCLIENT)
+"RTN","HLCS",188,0)
+ ;Process the 'incoming' message
+"RTN","HLCS",189,0)
+ I (HLMSGPTR) D
+"RTN","HLCS",190,0)
+ .S HLERROR=""
+"RTN","HLCS",191,0)
+ .D PROCESS^HLTP0(HLMSGPTR,"DHCP","",.HLERROR)
+"RTN","HLCS",192,0)
+ ;Update Status of 'incoming' message to SUCCESSFULLY COMPLETED
+"RTN","HLCS",193,0)
+ ; or ERROR DURING TRANSMISSION
+"RTN","HLCS",194,0)
+ D STATUS^HLTF0(HLMSGPTR,$S(HLERROR:4,1:3),$S(HLERROR:+HLERROR,1:""),$S(HLERROR:$P(HLERROR,"^",2),1:""))
+"RTN","HLCS",195,0)
+EXIT2 ;
+"RTN","HLCS",196,0)
+ S HLRESULT=$G(HLERROR)
+"RTN","HLCS",197,0)
+ Q
+"RTN","HLCS",198,0)
+COTSACK ;Internal to external communication of acknowledgements/responses
+"RTN","HLCS",199,0)
+ ;Create child entry in Message Text file
+"RTN","HLCS",200,0)
+ D SEND^HLMA2(HLEID,HLMTIENA,HLCLIENT,"D",.HLMTIENS,HLOGLINK)
+"RTN","HLCS",201,0)
+ ;'Pass' message to background filer by setting status of child
+"RTN","HLCS",202,0)
+ ;  to PENDING TRANSMISSION
+"RTN","HLCS",203,0)
+ D STATUS^HLTF0(HLMTIENS,1)
+"RTN","HLCS",204,0)
+ Q
+"RTN","HLOQUE")
+0^1^B157549548^B154240206
+"RTN","HLOQUE",1,0)
+HLOQUE ;ALB/CJM/OAK/PIJ/RBN- HL7 QUEUE MANAGEMENT - 10/4/94 1pm ;03/07/2012
+"RTN","HLOQUE",2,0)
+ ;;1.6;HEALTH LEVEL SEVEN;**126,132,134,137,138,143,147,153,158,166**;Oct 13, 1995;Build 1
+"RTN","HLOQUE",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","HLOQUE",4,0)
+ ;
+"RTN","HLOQUE",5,0)
+INQUE(FROM,QNAME,IEN778,ACTION,PURGE,ORIG) ;
+"RTN","HLOQUE",6,0)
+ ;Will place the message=IEN778 on the IN queue, incoming
+"RTN","HLOQUE",7,0)
+ ;Input:
+"RTN","HLOQUE",8,0)
+ ;  FROM - sending facility from message header.
+"RTN","HLOQUE",9,0)
+ ;         For actions other than incoming messages, its the specified link.
+"RTN","HLOQUE",10,0)
+ ;  QNAME - queue named by the application
+"RTN","HLOQUE",11,0)
+ ;  IEN778 = ien of the message in file 778
+"RTN","HLOQUE",12,0)
+ ;  ACTION - <tag^routine> that should be executed for the application
+"RTN","HLOQUE",13,0)
+ ;  PURGE (optional) - +PURGE>0 indicates that the purge dt/tm needs to be set by the infiler. 
+"RTN","HLOQUE",14,0)
+ ;  ORIG - (optional, pass by reference)
+"RTN","HLOQUE",15,0)
+ ;     If ORIG("IEN") is set, it indicates that the the incomming message was an app ack, and the original message needs to be updated with the purge dtate, status (ORIG("STATUS")), and the msgid of the original (ORIG("ACK BY"))
+"RTN","HLOQUE",16,0)
+ ;Output: none
+"RTN","HLOQUE",17,0)
+ ;
+"RTN","HLOQUE",18,0)
+ N FLG
+"RTN","HLOQUE",19,0)
+ZB36 I $G(FROM)="" S FROM="UNKNOWN"
+"RTN","HLOQUE",20,0)
+ I $$RCNT^HLOSITE L +RECOUNT("IN",FROM,QNAME):20 S:$T FLG=1
+"RTN","HLOQUE",21,0)
+ I '$L($G(QNAME)) S QNAME="DEFAULT"
+"RTN","HLOQUE",22,0)
+ S ^HLB("QUEUE","IN",FROM,QNAME,IEN778)=ACTION_"^"_$G(PURGE)_"^"_$G(ORIG("IEN"))_"^"_$G(ORIG("ACK BY"))_"^"_$G(ORIG("STATUS"))
+"RTN","HLOQUE",23,0)
+ I $$INC^HLOSITE($NA(^HLC("QUEUECOUNT","IN",FROM,QNAME)))
+"RTN","HLOQUE",24,0)
+ L:$G(FLG) -RECOUNT("IN",FROM,QNAME)
+"RTN","HLOQUE",25,0)
+ Q
+"RTN","HLOQUE",26,0)
+ ;
+"RTN","HLOQUE",27,0)
+OUTQUE(LINKNAME,PORT,QNAME,IEN778) ;
+"RTN","HLOQUE",28,0)
+ ;Will place the message=IEN778 on the out-going queue
+"RTN","HLOQUE",29,0)
+ ;Input:
+"RTN","HLOQUE",30,0)
+ ;  LINKNAME = name of (.01) the logical link
+"RTN","HLOQUE",31,0)
+ ;  PORT (optional) the port to connect to
+"RTN","HLOQUE",32,0)
+ ;  QNAME - queue named by the application
+"RTN","HLOQUE",33,0)
+ ;  IEN778 = ien of the message in file 778
+"RTN","HLOQUE",34,0)
+ ;Output: none
+"RTN","HLOQUE",35,0)
+ ;
+"RTN","HLOQUE",36,0)
+ ;
+"RTN","HLOQUE",37,0)
+ N SUB,FLG
+"RTN","HLOQUE",38,0)
+ S SUB=LINKNAME
+"RTN","HLOQUE",39,0)
+ I PORT S SUB=SUB_":"_PORT
+"RTN","HLOQUE",40,0)
+ I '$L($G(QNAME)) S QNAME="DEFAULT"
+"RTN","HLOQUE",41,0)
+ ;***Start HL*1.6*138 PIJ
+"RTN","HLOQUE",42,0)
+ ;if recount in progress, give it up to 20 seconds to finish - if it takes longer than that the recount won't be exact, but a longer delay is unreasonable
+"RTN","HLOQUE",43,0)
+ I $$RCNT^HLOSITE L +RECOUNT("OUT",SUB,QNAME):20 S:$T FLG=1
+"RTN","HLOQUE",44,0)
+ ;***End HL*1.6*138 PIJ"
+"RTN","HLOQUE",45,0)
+ S ^HLB("QUEUE","OUT",SUB,QNAME,IEN778)=""
+"RTN","HLOQUE",46,0)
+ I $$INC^HLOSITE($NA(^HLC("QUEUECOUNT","OUT",SUB,QNAME)))
+"RTN","HLOQUE",47,0)
+ L:$G(FLG) -RECOUNT("OUT",SUB,QNAME)
+"RTN","HLOQUE",48,0)
+ Q
+"RTN","HLOQUE",49,0)
+ ;
+"RTN","HLOQUE",50,0)
+DEQUE(FROMORTO,QNAME,DIR,IEN778) ;
+"RTN","HLOQUE",51,0)
+ ;This routine will remove the message=IEN778 from its queue
+"RTN","HLOQUE",52,0)
+ ;Input:
+"RTN","HLOQUE",53,0)
+ ;  DIR = "IN" or "OUT", denoting the direction that the message is going in
+"RTN","HLOQUE",54,0)
+ ;  FROMORTO = for outgoing: the .01 field of the logical link
+"RTN","HLOQUE",55,0)
+ ;         for incoming: sending facility
+"RTN","HLOQUE",56,0)
+ ;  IEN778 = ien of the message in file 778
+"RTN","HLOQUE",57,0)
+ ;Output: none
+"RTN","HLOQUE",58,0)
+ ;
+"RTN","HLOQUE",59,0)
+ Q:(FROMORTO="")
+"RTN","HLOQUE",60,0)
+ I ($G(QNAME)="") S QNAME="DEFAULT"
+"RTN","HLOQUE",61,0)
+ D
+"RTN","HLOQUE",62,0)
+ .I $E(DIR)="I" S DIR="IN" Q
+"RTN","HLOQUE",63,0)
+ .I $E(DIR)="O" S DIR="OUT" Q
+"RTN","HLOQUE",64,0)
+ I DIR'="IN",DIR'="OUT" Q
+"RTN","HLOQUE",65,0)
+ Q:'$G(IEN778)
+"RTN","HLOQUE",66,0)
+ D:$D(^HLB("QUEUE",DIR,FROMORTO,QNAME,IEN778))
+"RTN","HLOQUE",67,0)
+ .N FLG
+"RTN","HLOQUE",68,0)
+ .I $$RCNT^HLOSITE L +RECOUNT(DIR,FROMORTO,QNAME):20 S:$T FLG=1
+"RTN","HLOQUE",69,0)
+ .K ^HLB("QUEUE",DIR,FROMORTO,QNAME,IEN778)
+"RTN","HLOQUE",70,0)
+ .;don't let the count become negative
+"RTN","HLOQUE",71,0)
+ .I $$INC^HLOSITE($NA(^HLC("QUEUECOUNT",DIR,FROMORTO,QNAME)),-1)<0,$$INC^HLOSITE($NA(^HLC("QUEUECOUNT",DIR,FROMORTO,QNAME)))
+"RTN","HLOQUE",72,0)
+ .L:$G(FLG) -RECOUNT(DIR,FROMORTO,QNAME)
+"RTN","HLOQUE",73,0)
+ Q
+"RTN","HLOQUE",74,0)
+ ;
+"RTN","HLOQUE",75,0)
+STOPQUE(DIR,QUEUE) ;
+"RTN","HLOQUE",76,0)
+ ;This API is used to set a stop flag on a named queue.
+"RTN","HLOQUE",77,0)
+ ;DIR=<"IN" or "OUT">
+"RTN","HLOQUE",78,0)
+ ;QUEUE - the name of the queue to be stopped
+"RTN","HLOQUE",79,0)
+ ;
+"RTN","HLOQUE",80,0)
+ Q:$G(DIR)=""
+"RTN","HLOQUE",81,0)
+ Q:$G(QUEUE)=""
+"RTN","HLOQUE",82,0)
+ S ^HLTMP("STOPPED QUEUES",DIR,QUEUE)=1
+"RTN","HLOQUE",83,0)
+ Q
+"RTN","HLOQUE",84,0)
+STARTQUE(DIR,QUEUE) ;
+"RTN","HLOQUE",85,0)
+ ;This API is used to REMOVE the stop flag on a named queue.
+"RTN","HLOQUE",86,0)
+ ;DIR=<"IN" or "OUT">
+"RTN","HLOQUE",87,0)
+ ;QUEUE - the name of the queue to be stopped
+"RTN","HLOQUE",88,0)
+ ;
+"RTN","HLOQUE",89,0)
+ Q:$G(DIR)=""
+"RTN","HLOQUE",90,0)
+ Q:$G(QUEUE)=""
+"RTN","HLOQUE",91,0)
+ K ^HLTMP("STOPPED QUEUES",DIR,QUEUE)
+"RTN","HLOQUE",92,0)
+ Q
+"RTN","HLOQUE",93,0)
+STOPPED(DIR,QUEUE) ;
+"RTN","HLOQUE",94,0)
+ ;This API is used to DETERMINE if the stop flag on a named queue is set.
+"RTN","HLOQUE",95,0)
+ ;Input:
+"RTN","HLOQUE",96,0)
+ ;  DIR=<"IN" or "OUT">
+"RTN","HLOQUE",97,0)
+ ;  QUEUE - the name of the queue to be checked
+"RTN","HLOQUE",98,0)
+ ;Output:
+"RTN","HLOQUE",99,0)
+ ;  Function returns 1 if the queue is stopped, 0 otherwise
+"RTN","HLOQUE",100,0)
+ N RET
+"RTN","HLOQUE",101,0)
+ S RET=0
+"RTN","HLOQUE",102,0)
+ Q:$G(DIR)="" 0
+"RTN","HLOQUE",103,0)
+ Q:$G(QUEUE)="" 0
+"RTN","HLOQUE",104,0)
+ S:$G(^HLTMP("STOPPED QUEUES",DIR,QUEUE)) RET=1
+"RTN","HLOQUE",105,0)
+ZB0 Q RET
+"RTN","HLOQUE",106,0)
+ ;
+"RTN","HLOQUE",107,0)
+SQUE(SQUE,LINKNAME,PORT,QNAME,IEN778) ;
+"RTN","HLOQUE",108,0)
+ ;Will place the message=IEN778 on the sequencing queue. This is always done in the context of the application calling an HLO API to send a message.
+"RTN","HLOQUE",109,0)
+ ;Input:
+"RTN","HLOQUE",110,0)
+ ;  SQUE - name of the sequencing queue
+"RTN","HLOQUE",111,0)
+ ;  LINKNAME = name of (.01) the logical link
+"RTN","HLOQUE",112,0)
+ ;  PORT (optional) the port to connect to
+"RTN","HLOQUE",113,0)
+ ;  QNAME (optional) outgoing queue
+"RTN","HLOQUE",114,0)
+ ;  IEN778 = ien of the message in file 778
+"RTN","HLOQUE",115,0)
+ ;Output: 1 if placed on the outgoing queue, 0 if placed on the sequence queue
+"RTN","HLOQUE",116,0)
+ ;
+"RTN","HLOQUE",117,0)
+ N NEXT,MOVED,FLG
+"RTN","HLOQUE",118,0)
+ S MOVED=0
+"RTN","HLOQUE",119,0)
+ ;
+"RTN","HLOQUE",120,0)
+ ;keep a count of messages pending on sequence queues for the HLO System Monitor
+"RTN","HLOQUE",121,0)
+ ;
+"RTN","HLOQUE",122,0)
+ ;***Start HL*1.6*138 PIJ
+"RTN","HLOQUE",123,0)
+ ;if recount in progress, pause up to 20 seconds to finish - if it takes longer than that the recount won't be exact, but a longer delay is unreasonable
+"RTN","HLOQUE",124,0)
+ I $$RCNT^HLOSITE L +RECOUNT("SEQUENCE",SQUE):20 S:$T FLG=1
+"RTN","HLOQUE",125,0)
+ ;***End HL*1.6*138 PIJ
+"RTN","HLOQUE",126,0)
+ ;
+"RTN","HLOQUE",127,0)
+ ;** START 143 CJM
+"RTN","HLOQUE",128,0)
+ L +^HLB("QUEUE","SEQUENCE",SQUE):200
+"RTN","HLOQUE",129,0)
+ ;** END 143 CJM
+"RTN","HLOQUE",130,0)
+ ;
+"RTN","HLOQUE",131,0)
+ S NEXT=+$G(^HLB("QUEUE","SEQUENCE",SQUE))
+"RTN","HLOQUE",132,0)
+ I NEXT=IEN778 L -^HLB("QUEUE","SEQUENCE",SQUE) Q 0  ;already queued!
+"RTN","HLOQUE",133,0)
+ ;
+"RTN","HLOQUE",134,0)
+ ;increment the counter for all sequence queues
+"RTN","HLOQUE",135,0)
+ I $$INC^HLOSITE($NA(^HLC("QUEUECOUNT","SEQUENCE")))
+"RTN","HLOQUE",136,0)
+ ;
+"RTN","HLOQUE",137,0)
+ ;*** Start HL*1.6*138 CJM
+"RTN","HLOQUE",138,0)
+ ;also keep counter for the individual queue
+"RTN","HLOQUE",139,0)
+ I $$INC^HLOSITE($NA(^HLC("QUEUECOUNT","SEQUENCE",SQUE)))
+"RTN","HLOQUE",140,0)
+ ;*** End HL*1.6*138 CJM
+"RTN","HLOQUE",141,0)
+ ;
+"RTN","HLOQUE",142,0)
+ ;** START 143 CJM
+"RTN","HLOQUE",143,0)
+ ;L +^HLB("QUEUE","SEQUENCE",SQUE):200
+"RTN","HLOQUE",144,0)
+ ;** END 143 CJM
+"RTN","HLOQUE",145,0)
+ ;
+"RTN","HLOQUE",146,0)
+ ;if the sequence queue is empty and not waiting on a message, then the message can be put directly on the outgoing queue, bypassing the sequence queue
+"RTN","HLOQUE",147,0)
+ I '$O(^HLB("QUEUE","SEQUENCE",SQUE,0)),'NEXT D
+"RTN","HLOQUE",148,0)
+ .S ^HLB("QUEUE","SEQUENCE",SQUE)=IEN778 ;to mean something moved to outgoing but not yet transmitted
+"RTN","HLOQUE",149,0)
+ .D OUTQUE(.LINKNAME,.PORT,.QNAME,IEN778)
+"RTN","HLOQUE",150,0)
+ .S MOVED=1
+"RTN","HLOQUE",151,0)
+ E  D
+"RTN","HLOQUE",152,0)
+ .;Put the message on the sequence queue.
+"RTN","HLOQUE",153,0)
+ .S ^HLB("QUEUE","SEQUENCE",SQUE,IEN778)=""
+"RTN","HLOQUE",154,0)
+ .;
+"RTN","HLOQUE",155,0)
+ .;**P143 START CJM
+"RTN","HLOQUE",156,0)
+ .I 'NEXT,$$ADVANCE(SQUE,"")
+"RTN","HLOQUE",157,0)
+ .;**P143 END CJM
+"RTN","HLOQUE",158,0)
+ .;
+"RTN","HLOQUE",159,0)
+ .;**P147 START CJM
+"RTN","HLOQUE",160,0)
+ .I NEXT,$L($P($G(^HLB(NEXT,0)),"^",7)) D ADVANCE(SQUE,NEXT)
+"RTN","HLOQUE",161,0)
+ .;**P147 END CJM
+"RTN","HLOQUE",162,0)
+ .;
+"RTN","HLOQUE",163,0)
+ L -^HLB("QUEUE","SEQUENCE",SQUE)
+"RTN","HLOQUE",164,0)
+ L:$G(FLG) -RECOUNT("SEQUENCE",SQUE)
+"RTN","HLOQUE",165,0)
+ Q MOVED
+"RTN","HLOQUE",166,0)
+ ;
+"RTN","HLOQUE",167,0)
+ADVANCE(SQUE,MSGIEN) ;
+"RTN","HLOQUE",168,0)
+ ;Will move the specified sequencing queue to the next message. 
+"RTN","HLOQUE",169,0)
+ ;Input:
+"RTN","HLOQUE",170,0)
+ ;  SQUE - name of the sequencing queue
+"RTN","HLOQUE",171,0)
+ ;  MSGIEN - the ien of the message upon which the sequence queue was waiting.  If it is NOT the correct ien, then the sequence queue will NOT be advance.
+"RTN","HLOQUE",172,0)
+ ;Output:
+"RTN","HLOQUE",173,0)
+ ;  Function - 1 if advanced, 0 if not
+"RTN","HLOQUE",174,0)
+ ;
+"RTN","HLOQUE",175,0)
+ N NODE,IEN778,LINKNAME,PORT,QNAME
+"RTN","HLOQUE",176,0)
+ Q:'$L($G(SQUE)) 0
+"RTN","HLOQUE",177,0)
+ ;
+"RTN","HLOQUE",178,0)
+ ;**P143 START CJM
+"RTN","HLOQUE",179,0)
+ ;Q:'$G(MSGIEN) 0
+"RTN","HLOQUE",180,0)
+ Q:'$D(MSGIEN) 0
+"RTN","HLOQUE",181,0)
+ ;**P143 END CJM
+"RTN","HLOQUE",182,0)
+ ;
+"RTN","HLOQUE",183,0)
+ L +^HLB("QUEUE","SEQUENCE",SQUE):200
+"RTN","HLOQUE",184,0)
+ ;
+"RTN","HLOQUE",185,0)
+ ;do not advance if the queue wasn't pending the message=MSGIEN
+"RTN","HLOQUE",186,0)
+ ;**P143 START CJM
+"RTN","HLOQUE",187,0)
+ ;I (MSGIEN'=$P($G(^HLB("QUEUE","SEQUENCE",SQUE)),"^")) L -^HLB("QUEUE","SEQUENCE",SQUE) Q 0
+"RTN","HLOQUE",188,0)
+ I ($G(MSGIEN)'=$P($G(^HLB("QUEUE","SEQUENCE",SQUE)),"^")) L -^HLB("QUEUE","SEQUENCE",SQUE) Q 0
+"RTN","HLOQUE",189,0)
+ ;**P143 END CJM
+"RTN","HLOQUE",190,0)
+ ;
+"RTN","HLOQUE",191,0)
+ ;decrement the count of messages pending on all sequence queues
+"RTN","HLOQUE",192,0)
+ I $$INC^HLOSITE($NA(^HLC("QUEUECOUNT","SEQUENCE")),-1)<0,$$INC^HLOSITE($NA(^HLC("QUEUECOUNT","SEQUENCE")))
+"RTN","HLOQUE",193,0)
+ ;
+"RTN","HLOQUE",194,0)
+ ;**Start HL*1.6*138 CJM
+"RTN","HLOQUE",195,0)
+ ;decrement the count of messages pending on this individual queue
+"RTN","HLOQUE",196,0)
+ I $$INC^HLOSITE($NA(^HLC("QUEUECOUNT","SEQUENCE",SQUE)),-1)<0,$$INC^HLOSITE($NA(^HLC("QUEUECOUNT","SEQUENCE",SQUE)))
+"RTN","HLOQUE",197,0)
+ ;**End HL*1.6*138 CJM
+"RTN","HLOQUE",198,0)
+ ;
+"RTN","HLOQUE",199,0)
+ S IEN778=0
+"RTN","HLOQUE",200,0)
+ ;look for the first message on the sequence que.  Make sure its valid, if not remove the invalid entry and keep looking.
+"RTN","HLOQUE",201,0)
+ F  S IEN778=$O(^HLB("QUEUE","SEQUENCE",SQUE,0)) Q:'IEN778  S NODE=$G(^HLB(IEN778,0)) Q:$L(NODE)  D
+"RTN","HLOQUE",202,0)
+ .;message does not exist! Remove from queue and try again.
+"RTN","HLOQUE",203,0)
+ .K ^HLB("QUEUE","SEQUENCE",SQUE,IEN778)
+"RTN","HLOQUE",204,0)
+ .I $$INC^HLOSITE($NA(^HLC("QUEUECOUNT","SEQUENCE")),-1)<0,$$INC^HLOSITE($NA(^HLC("QUEUECOUNT","SEQUENCE"))) ;decrement the count of messages pending sequence queues
+"RTN","HLOQUE",205,0)
+ .;**Start HL*1.6*138 CJM
+"RTN","HLOQUE",206,0)
+ .; also decrement the count of messages pending on this individual queue
+"RTN","HLOQUE",207,0)
+ .I $$INC^HLOSITE($NA(^HLC("QUEUECOUNT","SEQUENCE",SQUE)),-1)<0,$$INC^HLOSITE($NA(^HLC("QUEUECOUNT","SEQUENCE",SQUE)))
+"RTN","HLOQUE",208,0)
+ .;**End HL*1.6*138 CJM
+"RTN","HLOQUE",209,0)
+ ;
+"RTN","HLOQUE",210,0)
+ ;IEN778 is the next pending msg on this sequence queue
+"RTN","HLOQUE",211,0)
+ I IEN778 D
+"RTN","HLOQUE",212,0)
+ .;
+"RTN","HLOQUE",213,0)
+ .;parse out info needed to move to outgoing queue
+"RTN","HLOQUE",214,0)
+ .S LINKNAME=$P(NODE,"^",5),PORT=$P(NODE,"^",8),QNAME=$P(NODE,"^",6)
+"RTN","HLOQUE",215,0)
+ .;
+"RTN","HLOQUE",216,0)
+ .S ^HLB("QUEUE","SEQUENCE",SQUE)=IEN778 ;indicates this sequence queue is now waiting for msg=IEN778 before advancing.  The second pieces is the timer, but will not be set until the message=IEN778 is actually transmitted.
+"RTN","HLOQUE",217,0)
+ .K ^HLB("QUEUE","SEQUENCE",SQUE,IEN778) ;remove from sequence queue
+"RTN","HLOQUE",218,0)
+ .L -^HLB("QUEUE","SEQUENCE",SQUE)
+"RTN","HLOQUE",219,0)
+ .S $P(^HLB(IEN778,5),"^",2)=1
+"RTN","HLOQUE",220,0)
+ .D OUTQUE(.LINKNAME,$G(PORT),$G(QNAME),IEN778) ;move to outgoing queue
+"RTN","HLOQUE",221,0)
+ E  D
+"RTN","HLOQUE",222,0)
+ .K ^HLB("QUEUE","SEQUENCE",SQUE) ;this sequence queue is currently empty and not needed
+"RTN","HLOQUE",223,0)
+ .L -^HLB("QUEUE","SEQUENCE",SQUE)
+"RTN","HLOQUE",224,0)
+ Q 1
+"RTN","HLOQUE",225,0)
+ ;
+"RTN","HLOQUE",226,0)
+SEQCHK(WORK) ;functions under the HLO Process Manager
+"RTN","HLOQUE",227,0)
+ ;check sequence queues for timeout
+"RTN","HLOQUE",228,0)
+ N QUE,NOW
+"RTN","HLOQUE",229,0)
+ S NOW=$$NOW^XLFDT
+"RTN","HLOQUE",230,0)
+ S QUE=""
+"RTN","HLOQUE",231,0)
+ F  S QUE=$O(^HLB("QUEUE","SEQUENCE",QUE)) Q:QUE=""  D
+"RTN","HLOQUE",232,0)
+ .N NODE,MSGIEN,ACTION,NODE
+"RTN","HLOQUE",233,0)
+ .S NODE=$G(^HLB("QUEUE","SEQUENCE",QUE))
+"RTN","HLOQUE",234,0)
+ .Q:'$P(NODE,"^",2)
+"RTN","HLOQUE",235,0)
+ .Q:$P(NODE,"^",2)>NOW
+"RTN","HLOQUE",236,0)
+ .Q:$P(NODE,"^",3)
+"RTN","HLOQUE",237,0)
+ .L +^HLB("QUEUE","SEQUENCE",QUE):2
+"RTN","HLOQUE",238,0)
+ .;don't report if a lock wasn't obtained
+"RTN","HLOQUE",239,0)
+ .Q:'$T
+"RTN","HLOQUE",240,0)
+ .S NODE=$G(^HLB("QUEUE","SEQUENCE",QUE))
+"RTN","HLOQUE",241,0)
+ .I '$P(NODE,"^",2) L -^HLB("QUEUE","SEQUENCE",QUE) Q
+"RTN","HLOQUE",242,0)
+ .I ($P(NODE,"^",2)>NOW) L -^HLB("QUEUE","SEQUENCE",QUE) Q
+"RTN","HLOQUE",243,0)
+ .I $P(NODE,"^",3) L -^HLB("QUEUE","SEQUENCE",QUE) Q  ;exception already raised
+"RTN","HLOQUE",244,0)
+ .S MSGIEN=$P(NODE,"^")
+"RTN","HLOQUE",245,0)
+ .I 'MSGIEN L -^HLB("QUEUE","SEQUENCE",QUE) Q
+"RTN","HLOQUE",246,0)
+ .S ACTION=$$EXCEPT^HLOAPP($$GETSAP^HLOCLNT2(MSGIEN))
+"RTN","HLOQUE",247,0)
+ .S $P(^HLB(MSGIEN,5),"^",3)=1
+"RTN","HLOQUE",248,0)
+ .S $P(^HLB("QUEUE","SEQUENCE",QUE),"^",3)=1 ;indicates exception raised
+"RTN","HLOQUE",249,0)
+ .L -^HLB("QUEUE","SEQUENCE",QUE)
+"RTN","HLOQUE",250,0)
+ .D  ;call the application to take action
+"RTN","HLOQUE",251,0)
+ ..N HLMSGIEN,MCODE,DUZ,QUE,NOW
+"RTN","HLOQUE",252,0)
+ ..N $ETRAP,$ESTACK S $ETRAP="G ERROR^HLOQUE"
+"RTN","HLOQUE",253,0)
+ ..S HLMSGIEN=MSGIEN
+"RTN","HLOQUE",254,0)
+ ..S MCODE="D "_ACTION
+"RTN","HLOQUE",255,0)
+ ..N MSGIEN,X
+"RTN","HLOQUE",256,0)
+ ..D DUZ^XUP(.5)
+"RTN","HLOQUE",257,0)
+ ..X MCODE
+"RTN","HLOQUE",258,0)
+ ..;kill the apps variables
+"RTN","HLOQUE",259,0)
+ ..D
+"RTN","HLOQUE",260,0)
+ ...N ZTSK
+"RTN","HLOQUE",261,0)
+ ...D KILL^XUSCLEAN
+"RTN","HLOQUE",262,0)
+ Q
+"RTN","HLOQUE",263,0)
+ERROR ;error trap for application context
+"RTN","HLOQUE",264,0)
+ S $ETRAP="D UNWIND^%ZTER"
+"RTN","HLOQUE",265,0)
+ D ^%ZTER
+"RTN","HLOQUE",266,0)
+ S $ECODE=",UAPPLICATION ERROR,"
+"RTN","HLOQUE",267,0)
+ ;
+"RTN","HLOQUE",268,0)
+ ;kill the apps variables
+"RTN","HLOQUE",269,0)
+ D
+"RTN","HLOQUE",270,0)
+ .N ZTSK,MSGIEN,QUEUE
+"RTN","HLOQUE",271,0)
+ .D KILL^XUSCLEAN
+"RTN","HLOQUE",272,0)
+ ;
+"RTN","HLOQUE",273,0)
+ ;release all the locks the app may have set, except Taskman lock
+"RTN","HLOQUE",274,0)
+ L:$D(ZTSK) +^%ZTSCH("TASK",ZTSK):$G(DILOCKTM,3)
+"RTN","HLOQUE",275,0)
+ L:'$D(ZTSK)
+"RTN","HLOQUE",276,0)
+ ;reset HLO's lock
+"RTN","HLOQUE",277,0)
+ L +^HLTMP("HL7 RUNNING PROCESSES",$J):0
+"RTN","HLOQUE",278,0)
+ ;return to processing the next message on the queue
+"RTN","HLOQUE",279,0)
+ D UNWIND^%ZTER
+"RTN","HLOQUE",280,0)
+ Q
+"RTN","HLOQUE",281,0)
+ ;
+"RTN","HLOQUE",282,0)
+ ; *** start HL*1.6*143 -  RBN ***
+"RTN","HLOQUE",283,0)
+ ;
+"RTN","HLOQUE",284,0)
+ ; IMPLEMENTATION OF HL0 QUEUE COUNT SUMMARY
+"RTN","HLOQUE",285,0)
+ ;
+"RTN","HLOQUE",286,0)
+QUECNT(QUEARRAY) ;
+"RTN","HLOQUE",287,0)
+ ; 
+"RTN","HLOQUE",288,0)
+ ; DESC  : Functions eturns the total number of messages on all the queues and an the QUEARRAY
+"RTN","HLOQUE",289,0)
+ ;        
+"RTN","HLOQUE",290,0)
+ ; INPUT : QUEARRAY - the array, passed by reference, to contain the queue counts. 
+"RTN","HLOQUE",291,0)
+ ;               
+"RTN","HLOQUE",292,0)
+ ; OUTPUT : Filled array
+"RTN","HLOQUE",293,0)
+ ;               
+"RTN","HLOQUE",294,0)
+ ;               Format:
+"RTN","HLOQUE",295,0)
+ ;             
+"RTN","HLOQUE",296,0)
+ ;               QUE("TOTAL") = Total number of messages on all queues.
+"RTN","HLOQUE",297,0)
+ ;               QUE("OUT")   = Total number of outgoing messages.
+"RTN","HLOQUE",298,0)
+ ;               QUE("IN")    = Total number of incoming messages.
+"RTN","HLOQUE",299,0)
+ ;               QUE("SEQ")   = Total number of messages on sequence queues.
+"RTN","HLOQUE",300,0)
+ ;               QUE("IN",link_name,queue_name) = Number of messages on given link and queue.
+"RTN","HLOQUE",301,0)
+ ;               QUE("OUT",link_name,queue_name) = Number of messages on given link and queue.
+"RTN","HLOQUE",302,0)
+ ;               QUE("SEQ",queue_name) = Number of messages on given sequence queue.
+"RTN","HLOQUE",303,0)
+ ; 
+"RTN","HLOQUE",304,0)
+ ; There are four possible calls ("entry points") to this API:
+"RTN","HLOQUE",305,0)
+ ;   1. QUECNT - returns the referenced array with all of the above data.
+"RTN","HLOQUE",306,0)
+ ;   2. IN     - returns only the data related to the IN queues.
+"RTN","HLOQUE",307,0)
+ ;   3. OUT    - returns only the data related to the OUT queues.
+"RTN","HLOQUE",308,0)
+ ;   4. SEQ    - returns only the data related to the SEQUENCE queues.
+"RTN","HLOQUE",309,0)
+ ;   
+"RTN","HLOQUE",310,0)
+ N TOTAL,INCNT,OUTCNT,SEQCNT,LINK,QUE,FLG
+"RTN","HLOQUE",311,0)
+ S FLG=1
+"RTN","HLOQUE",312,0)
+ ; Get incomming counts
+"RTN","HLOQUE",313,0)
+ D IN(.QUEARRAY)
+"RTN","HLOQUE",314,0)
+ ; Get outgoing counts
+"RTN","HLOQUE",315,0)
+ D OUT(.QUEARRAY)
+"RTN","HLOQUE",316,0)
+ ; Get sequence counts
+"RTN","HLOQUE",317,0)
+ D SEQ(.QUEARRAY)
+"RTN","HLOQUE",318,0)
+ ;
+"RTN","HLOQUE",319,0)
+ ; Total messages on all queues
+"RTN","HLOQUE",320,0)
+ ; 
+"RTN","HLOQUE",321,0)
+ S QUEARRAY("TOTAL")=INCNT+OUTCNT+SEQCNT
+"RTN","HLOQUE",322,0)
+ Q QUEARRAY("TOTAL")
+"RTN","HLOQUE",323,0)
+ ;
+"RTN","HLOQUE",324,0)
+IN(QUEARRAY) ;
+"RTN","HLOQUE",325,0)
+ ; Count messages on incoming queues
+"RTN","HLOQUE",326,0)
+ ;
+"RTN","HLOQUE",327,0)
+ I '$G(FLG) N TOTAL,INCNT,OUTCNT,SEQCNT,LINK,QUE,FLG
+"RTN","HLOQUE",328,0)
+ S (LINK,QUE)=""
+"RTN","HLOQUE",329,0)
+ S INCNT=0
+"RTN","HLOQUE",330,0)
+ F  S LINK=$O(^HLC("QUEUECOUNT","IN",LINK)) Q:LINK=""  D
+"RTN","HLOQUE",331,0)
+ .  F  S QUE=$O(^HLC("QUEUECOUNT","IN",LINK,QUE)) Q:QUE=""  D
+"RTN","HLOQUE",332,0)
+ .  .  S INCNT=INCNT+^HLC("QUEUECOUNT","IN",LINK,QUE)
+"RTN","HLOQUE",333,0)
+ .  .  S QUEARRAY("IN",LINK,QUE)=^HLC("QUEUECOUNT","IN",LINK,QUE)
+"RTN","HLOQUE",334,0)
+ S QUEARRAY("IN")=INCNT
+"RTN","HLOQUE",335,0)
+ I '$G(FLG) Q INCNT
+"RTN","HLOQUE",336,0)
+ Q
+"RTN","HLOQUE",337,0)
+ ;
+"RTN","HLOQUE",338,0)
+OUT(QUEARRAY) ;
+"RTN","HLOQUE",339,0)
+ ; Count messages on outgoing queues
+"RTN","HLOQUE",340,0)
+ ;
+"RTN","HLOQUE",341,0)
+ I '$G(FLG) N TOTAL,INCNT,OUTCNT,SEQCNT,LINK,QUE,FLG
+"RTN","HLOQUE",342,0)
+ S (LINK,QUE)=""
+"RTN","HLOQUE",343,0)
+ S OUTCNT=0
+"RTN","HLOQUE",344,0)
+ F  S LINK=$O(^HLC("QUEUECOUNT","OUT",LINK)) Q:LINK=""  D
+"RTN","HLOQUE",345,0)
+ .  F  S QUE=$O(^HLC("QUEUECOUNT","OUT",LINK,QUE)) Q:QUE=""  D
+"RTN","HLOQUE",346,0)
+ .  .  ;HL*1.6*166 QUIT IF QUE DOES NOT HAVE ANY MESSAGES TO COUNT
+"RTN","HLOQUE",347,0)
+ .  .  Q:'^HLC("QUEUECOUNT","OUT",LINK,QUE)
+"RTN","HLOQUE",348,0)
+ .  .  S OUTCNT=OUTCNT+^HLC("QUEUECOUNT","OUT",LINK,QUE)
+"RTN","HLOQUE",349,0)
+ .  .  S QUEARRAY("OUT",LINK,QUE)=^HLC("QUEUECOUNT","OUT",LINK,QUE)
+"RTN","HLOQUE",350,0)
+ S QUEARRAY("OUT")=OUTCNT
+"RTN","HLOQUE",351,0)
+ I '$G(FLG) Q OUTCNT
+"RTN","HLOQUE",352,0)
+ Q
+"RTN","HLOQUE",353,0)
+ ;
+"RTN","HLOQUE",354,0)
+SEQ(QUEARRAY) ;
+"RTN","HLOQUE",355,0)
+ ; Count messages on sequence queues
+"RTN","HLOQUE",356,0)
+ ;
+"RTN","HLOQUE",357,0)
+ I '$G(FLG) N TOTAL,INCNT,OUTCNT,SEQCNT,LINK,QUE,FLG
+"RTN","HLOQUE",358,0)
+ S QUE=""
+"RTN","HLOQUE",359,0)
+ S SEQCNT=0
+"RTN","HLOQUE",360,0)
+ F  S QUE=$O(^HLC("QUEUECOUNT","SEQUENCE",QUE)) Q:QUE=""  D
+"RTN","HLOQUE",361,0)
+ .  S SEQCNT=SEQCNT+^HLC("QUEUECOUNT","SEQUENCE",QUE)
+"RTN","HLOQUE",362,0)
+ .  S QUEARRAY("SEQ",QUE)=^HLC("QUEUECOUNT","SEQUENCE",QUE)
+"RTN","HLOQUE",363,0)
+ S QUEARRAY("SEQ")=^HLC("QUEUECOUNT","SEQUENCE")
+"RTN","HLOQUE",364,0)
+ I '$G(FLG) Q QUEARRAY("SEQ")
+"RTN","HLOQUE",365,0)
+ Q
+"RTN","HLOQUE",366,0)
+ ;
+"RTN","HLOQUE",367,0)
+ ; *** End HL*1.6*143 -  RBN ***
+"RTN","HLOQUE",368,0)
+ ;
+"RTN","HLOQUE",369,0)
+ ;** P147 START CJM
+"RTN","HLOQUE",370,0)
+RESETF(IEN) ;
+"RTN","HLOQUE",371,0)
+ ;resets the "F" index on the HLO Priority Queues file (#779.9) for
+"RTN","HLOQUE",372,0)
+ ;for record IEN
+"RTN","HLOQUE",373,0)
+ ;
+"RTN","HLOQUE",374,0)
+ N DA
+"RTN","HLOQUE",375,0)
+ S DA(1)=IEN
+"RTN","HLOQUE",376,0)
+ S DA=0
+"RTN","HLOQUE",377,0)
+ F  S DA=$O(^HLD(779.9,DA(1),1,DA)) Q:'DA  D
+"RTN","HLOQUE",378,0)
+ .N DATA
+"RTN","HLOQUE",379,0)
+ .S DATA(.01)=$P($G(^HLD(779.9,DA(1),1,DA,0)),"^")
+"RTN","HLOQUE",380,0)
+ .Q:DATA(.01)=""
+"RTN","HLOQUE",381,0)
+ .D UPD^HLOASUB1(779.91,.DA,.DATA)
+"RTN","HLOQUE",382,0)
+ Q
+"RTN","HLOQUE",383,0)
+ ;
+"RTN","HLOQUE",384,0)
+GETPRTY(QUEUE,LINK) ;
+"RTN","HLOQUE",385,0)
+ ;Inputs:
+"RTN","HLOQUE",386,0)
+ ;    QUEUE (required)
+"RTN","HLOQUE",387,0)
+ ;    LINK (required) the name of hte link, possibly with the port # appeded
+"RTN","HLOQUE",388,0)
+ ;
+"RTN","HLOQUE",389,0)
+ ;
+"RTN","HLOQUE",390,0)
+ N PRTY,LNK
+"RTN","HLOQUE",391,0)
+ S PRTY=0
+"RTN","HLOQUE",392,0)
+ S LNK=$P(LINK,":")
+"RTN","HLOQUE",393,0)
+ I $L(LNK) S PRTY=$G(^HLD(779.9,"F",QUEUE,"OUT",LNK))
+"RTN","HLOQUE",394,0)
+ I PRTY Q PRTY
+"RTN","HLOQUE",395,0)
+ S PRTY=$G(^HLD(779.9,"E",QUEUE,"OUT"))
+"RTN","HLOQUE",396,0)
+ Q:'PRTY 50
+"RTN","HLOQUE",397,0)
+ Q PRTY
+"RTN","HLOQUE",398,0)
+ ; 
+"RTN","HLOQUE",399,0)
+SETPRTY ;  User interface to set queue priority
+"RTN","HLOQUE",400,0)
+ ; 
+"RTN","HLOQUE",401,0)
+ N DIC,DA,DR,Y,DIE,QUEUE
+"RTN","HLOQUE",402,0)
+ S DIC="^HLD(779.9,"
+"RTN","HLOQUE",403,0)
+ S DIC(0)="QEAL"
+"RTN","HLOQUE",404,0)
+ S DIC("A")="Enter the name of an outgoing queue: "
+"RTN","HLOQUE",405,0)
+ S DIC("DR")=".01"
+"RTN","HLOQUE",406,0)
+ D ^DIC
+"RTN","HLOQUE",407,0)
+ I $G(DTOUT)!($G(DUOUT))!(Y=-1) D  Q
+"RTN","HLOQUE",408,0)
+ . K DIC,DA,DR,Y,DIE
+"RTN","HLOQUE",409,0)
+ S DA=+Y,QUEUE=$P(Y,"^",2)
+"RTN","HLOQUE",410,0)
+ I $$ASKYESNO^HLOUSR2("Do you want to set "_QUEUE_"'s priority for just one specific logical link","YES") D
+"RTN","HLOQUE",411,0)
+ .N DATA
+"RTN","HLOQUE",412,0)
+ .S DATA(.02)="OUT"
+"RTN","HLOQUE",413,0)
+ .D UPD^HLOASUB1(779.9,DA,.DATA)
+"RTN","HLOQUE",414,0)
+ .S DIC="^HLD(779.9,"_DA_",1,"
+"RTN","HLOQUE",415,0)
+ .S DA(1)=DA,DA=""
+"RTN","HLOQUE",416,0)
+ .;S DIC("DR")=.02
+"RTN","HLOQUE",417,0)
+ .S DIC(0)="QEAL"
+"RTN","HLOQUE",418,0)
+ .S DIC("A")="Select the specific link: "
+"RTN","HLOQUE",419,0)
+ .D ^DIC
+"RTN","HLOQUE",420,0)
+ .I Y>0 D
+"RTN","HLOQUE",421,0)
+ ..S DA=+Y
+"RTN","HLOQUE",422,0)
+ ..S DIE="^HLD(779.9,"_DA(1)_",1,"
+"RTN","HLOQUE",423,0)
+ ..S DR=.02
+"RTN","HLOQUE",424,0)
+ ..D ^DIE
+"RTN","HLOQUE",425,0)
+ E  D
+"RTN","HLOQUE",426,0)
+ .N DATA
+"RTN","HLOQUE",427,0)
+ .S DATA(.02)="OUT"
+"RTN","HLOQUE",428,0)
+ .S DATA(.03)=1
+"RTN","HLOQUE",429,0)
+ .D UPD^HLOASUB1(779.9,DA,.DATA)
+"RTN","HLOQUE",430,0)
+ .S DIE="^HLD(779.9,"
+"RTN","HLOQUE",431,0)
+ .S DR=.04
+"RTN","HLOQUE",432,0)
+ .D ^DIE
+"RTN","HLOQUE",433,0)
+ Q
+"RTN","HLOQUE",434,0)
+SETP(QUEUE,PRIORITY,LINK) ;
+"RTN","HLOQUE",435,0)
+ ;Description: API for setting an outgoing queue's priority
+"RTN","HLOQUE",436,0)
+ ;Input:
+"RTN","HLOQUE",437,0)
+ ;   QUEUE (required) the name of the queue
+"RTN","HLOQUE",438,0)
+ ;   PRIORITY (required) the priority, 20-100
+"RTN","HLOQUE",439,0)
+ ;   LINK (optional) name or IEN of an HL Logical Link. If specified, 
+"RTN","HLOQUE",440,0)
+ ;                   the priority will be applied only to the specific
+"RTN","HLOQUE",441,0)
+ ;                   link, otherwise the priority will be applied to all
+"RTN","HLOQUE",442,0)
+ ;                   queues named QUEUE
+"RTN","HLOQUE",443,0)
+ ;Output:
+"RTN","HLOQUE",444,0)
+ ;     function returns 1 on success, 0 on failure
+"RTN","HLOQUE",445,0)
+ ;
+"RTN","HLOQUE",446,0)
+ N LINKIEN,DA,DATA
+"RTN","HLOQUE",447,0)
+ S LINKIEN=0
+"RTN","HLOQUE",448,0)
+ S PRIORITY=+$G(PRIORITY)
+"RTN","HLOQUE",449,0)
+ I $G(PRIORITY)<20 Q 0
+"RTN","HLOQUE",450,0)
+ I PRIORITY>100 Q 0
+"RTN","HLOQUE",451,0)
+ I '$L($G(QUEUE)) Q 0
+"RTN","HLOQUE",452,0)
+ I $L(QUEUE)>20 Q 0
+"RTN","HLOQUE",453,0)
+ I $L($G(LINK)) D  Q:'LINKIEN 0
+"RTN","HLOQUE",454,0)
+ .S LINKIEN=0
+"RTN","HLOQUE",455,0)
+ .I LINK,$D(^HLCS(870,LINK,0)) S LINKIEN=LINK Q
+"RTN","HLOQUE",456,0)
+ .S LINKIEN=$O(^HLCS(870,"B",LINK,0))
+"RTN","HLOQUE",457,0)
+ S DA=$O(^HLD(779.9,"B",QUEUE,0))
+"RTN","HLOQUE",458,0)
+ I 'DA D
+"RTN","HLOQUE",459,0)
+ .S DATA(.02)="OUT"
+"RTN","HLOQUE",460,0)
+ .S DATA(.01)=QUEUE
+"RTN","HLOQUE",461,0)
+ .I 'LINKIEN S DATA(.03)=1,DATA(.04)=PRIORITY
+"RTN","HLOQUE",462,0)
+ .S DA=$$ADD^HLOASUB1(779.9,,.DATA)
+"RTN","HLOQUE",463,0)
+ E  I 'LINKIEN D  Q $$UPD^HLOASUB1(779.9,DA,.DATA)
+"RTN","HLOQUE",464,0)
+ .S DATA(.02)="OUT"
+"RTN","HLOQUE",465,0)
+ .S DATA(.03)=1
+"RTN","HLOQUE",466,0)
+ .S DATA(.04)=PRIORITY
+"RTN","HLOQUE",467,0)
+ Q:'DA 0
+"RTN","HLOQUE",468,0)
+ Q:'LINKIEN 1
+"RTN","HLOQUE",469,0)
+ S DA(1)=DA
+"RTN","HLOQUE",470,0)
+ S DA=$O(^HLD(779.9,DA(1),1,"B",LINKIEN,0))
+"RTN","HLOQUE",471,0)
+ K DATA
+"RTN","HLOQUE",472,0)
+ S DATA(.01)=LINKIEN
+"RTN","HLOQUE",473,0)
+ S DATA(.02)=PRIORITY
+"RTN","HLOQUE",474,0)
+ I DA Q $$UPD^HLOASUB1(779.91,.DA,.DATA)
+"RTN","HLOQUE",475,0)
+ I $$ADD^HLOASUB1(779.91,.DA,.DATA,.ERROR) Q 1
+"RTN","HLOQUE",476,0)
+ Q 0
+"RTN","HLOQUE",477,0)
+ ;**P147 END CJM
+"RTN","HLOQUE",478,0)
+ ;
+"RTN","HLOQUE",479,0)
+ ;
+"RTN","HLOQUE",480,0)
+ ;
+"RTN","HLOQUE",481,0)
+ ;
+"RTN","HLOQUE",482,0)
+ ;
+"RTN","HLOQUE",483,0)
+ ;
+"VER")
+8.0^22.0
+"^DD",870,870,.08,0)
+DNS DOMAIN^FX^^0;8^K:$L(X)>70!($L(X)<4) X I $D(X) S HLIP=$$ADDRESS^XLFNSLK(X) K:('HLIP)&($P($G(^HLCS(869.3,1,0)),"^",3)="P")&($P($$SITE^VASITE,"^",3)) X I HLIP S HLIP=$$IP^HLMA3(DA,HLIP)
+"^DD",870,870,.08,3)
+Enter the full domain name as registered with DNS.
+"^DD",870,870,.08,21,0)
+^.001^1^1^3160511^^^^
+"^DD",870,870,.08,21,1,0)
+The domain name as registered with DNS.
+"^DD",870,870,.08,"DT")
+3160511
+"BLD",10183,6)
+^131
+**END**
+**END**
+

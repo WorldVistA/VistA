@@ -1,0 +1,171 @@
+$TXT Created by                 DEV.DEV.DOMAIN.EXT  (KIDS) on Tuesday, 01/10/17 at 08:14
+=============================================================================
+Run Date: JAN 31, 2017                     Designation: ONC*2.2*8
+Package : ONC - ONCOLOGY                      Priority: EMERGENCY
+Version : 2.2         SEQ #5                    Status: Released
+                  Compliance Date: FEB 02, 2017
+=============================================================================
+
+Associated patches: (v)ONC*2.2*5   <<= must be installed BEFORE `ONC*2.2*8'
+
+Subject: Oncology RQRS Data Pull Issue
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The Commission on Cancer's Rapid Quality Response System's (RQRS) utility
+ under the Create RQRS Extract [ONCO RQRS EXTRACT] option is not functioning 
+ properly and is jeopardizing the Commission on Cancer's (CoC) compliance
+ standards.  This patch corrects the issue and needs to be installed within
+ 30 days to meet CoC Standards timeframe.  
+  
+ Solution:
+ ---------
+ Allow a BLANK Clinical and Pathologic TNM data fields for primaries with 
+ a DATE DX (#165.5, #3) of 2016 and later in option Create RQRS Extract
+ [ONCO RQRS EXTRACT].  The TNM data fields associated with these changes 
+ are:
+  
+         CLINICAL T (#165.5, #37.1)
+         CLINICAL N (#165.5, #37.2)
+         CLINICAL M (#165.5, #37.3)
+         PATHOLOGIC T (#165.5, #85)
+         PATHOLOGIC N (#165.5, #86)
+         PATHOLOGIC M (#165.5, #87) 
+  
+  
+ Test Sites: 
+ -----------
+ Hines VAMC
+ Washington, DC VAMC  
+ West Haven, Ct  
+  
+ PATCH COMPONENTS:
+ =================
+  
+ Routines:
+ ---------
+ ONCACD0
+ ONCACD1
+ ONCODIS
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+ Documentation Retrieval:
+ ========================
+ There are no documentation changes with this patch but the existing 
+ Oncology documentation is available on the ANONYMOUS.SOFTWARE directory
+ at one of the following Office of Information (OI) Field Offices:
+    Albany
+    Hines
+    Salt Lake City
+  
+ Sites may retrieve Oncology documentation in one of the following ways: 
+   (1) The preferred method is to SFTP the files from     
+       download.vista.domain.ext, which will transmit the files from 
+       the first available FTP server.
+   (2) Sites may also elect to retrieve documentation directly from a
+       specific server listed below:
+         Albany         ftp.domain.ext
+         Hines          ftp.domain.ext
+         Salt Lake City ftp.domain.ext
+  
+ (3) Documentation can also be retrieved from the VistA Documentation  
+     Library (VDL) on the Internet at the following address, 
+     http://www.domain.ext/vdl.  
+  
+ Patch Installation:
+ =================== 
+ Pre/Post Installation Overview: 
+ -------------------------------
+ There is no pre- or post-installation routine for this patch.   
+  
+ Installation instructions:
+ -------------------------- 
+ This patch should be loaded with Oncology users off the system.
+ Installation will take less than 5 minutes.  
+  
+  1. Load the distribution. Choose the PackMan message containing this 
+     patch and invoke the  INSTALL/CHECK MESSAGE PackMan option.
+  
+  2. Prior to installing the patch you may want to make use of the 
+     following optional installation options located on the
+     KIDS Installation menu:
+   
+     a. Verify Checksums in Transport Global - This option will 
+        allow you to ensure the integrity of the routines that are in the
+        transport global. 
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this 
+        patch is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).  
+     c. Backup a Transport Global - This option will create a 
+        backup message of any routines exported with this patch. It will 
+        not backup any other changes such as DD's or templates.  
+  
+  3. Install the KIDS distribution via the 'Install Package(s)'  
+       option on the KIDS Installation menu.
+  
+       a. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion 
+          of Install? NO//' Answer NO.      
+       b. When prompted 'Want KIDS to INHIBIT LOGONS during the install'
+          NO//' Answer NO.   
+       c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+          and Protocols? NO//' Answer NO. 
+  
+ Back out/Rollback Plan
+ ----------------------
+ This patch only contains 3 routines and no templates, data, ^DD changes, or
+ other VistA components.  If the patch needs to be backed out, the original
+ routines can be re-installed if they were Backed Up in item #2c above. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.2;ONCOLOGY;**[Patch List]**;Jul 31, 2013;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ONCACD0
+    Before:B184758090   After:B183791801  **1,4,5,8**
+Routine Name: ONCACD1
+    Before: B71259107   After: B68896487  **1,4,5,8**
+Routine Name: ONCODIS
+    Before:   B774104   After:   B774218  **1,4,7,5,8**
+ 
+Routine list of preceding patches: 5
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 09, 2016
+Completed By:                               Date Completed: JAN 31, 2017
+Released By :                               Date Released : JAN 31, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

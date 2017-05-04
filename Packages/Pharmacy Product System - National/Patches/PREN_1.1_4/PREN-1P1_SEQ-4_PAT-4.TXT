@@ -1,0 +1,182 @@
+
+=============================================================================
+Run Date: DEC 22, 2016                     Designation: PREN*1.1*4
+Package : PREN - PHARMACY PRODUCT SYS-NATL    Priority: Mandatory
+Version : 1.1         SEQ #4                    Status: Released
+                  Compliance Date: JAN 22, 2017
+=============================================================================
+
+
+Subject: PPSN 1.2.01 INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Pharmacy Product System-National (PPS-N) is a Web-based application
+ that provides the ability to manage pharmacy-specific data across the VA
+ enterprise, ensuring that all facilities are using the same base data
+ for their operations. It allows approved national VA personnel to easily,
+ quickly, and safely manage the VA National Formulary which directs which
+ products (such as medications and supplies) are to be purchased and used
+ by the VA hospital system.
+  
+ This patch adds the following new functionality to the PPS-N application:
+  
+  - Add new copay tier levels, and manage the data associated with a 
+      copay tier level.
+  - Add copay tier information to the A-Z tab.
+  - Assign and edit copay tier data to existing products.
+  - Assign and edit copay tier data to new products.
+  - Assign and edit the copay tier levels of multiple VA products at once.
+  - Apply business rules and validations when a product's copay tier 
+       information is assigned or edited.
+  - Validate that current Effective date is one day later than the previous
+      end date when additional copay tiers are added.
+  - Validate that effective date is at least 30 days after than current
+      when adding or updating a copay tier.
+  - Add Copay Tier data to Product History tab.
+  - Send Copay Tier data to the National Drug File Management System
+       (NDFMS).
+  - Search for products by Tier level.
+  - Sort Product Search results by Tier level.
+  - Create report that displays products that had changes made to their
+      copay tier data.
+  - Using Fortify Security Vulnerability Scanning, address issues
+      introduced by FMCT code changes.
+  - One-time copay tier data migration.
+  - Removal of Notification Status code and database table.
+  - Removal of Reduced Copay code and database table.
+  - Modify FDB Changes to Products report to include modifications that may
+       necessitate an update to the product's copay tier level.
+  - Modify FMCT help files.
+  
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+  
+ Options Associated:
+ --------------------
+ N/A
+  
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ----------------------------
+ N/A
+  
+ Associated Change Requests: 
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ N/A
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+  
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.domain.ext.
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+ Albany          ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines           ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City  ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library
+ at:  http://www.domain.ext/vdl/ 
+  
+  
+  
+ FILE NAME                         DESCRIPTION
+ =========                         ===========
+ PREN_1_1P2_V1_2_00_IG.PDF         PPS-N v1.2.00 Installation Guide
+ PREN_1_1P2_V1_2_00_UM.PDF         PPS-N v1.2.00 User Guide
+  
+  
+ Installation Instructions:
+ --------------------------
+ This is a Web Application JAVA Build. This is a Centralized Server
+ promotion. NO installation is required at Local sites.
+  
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+  
+  
+ Routine Information:
+ ====================
+  
+  
+ No routines included.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 19, 2016
+Completed By:                               Date Completed: DEC 22, 2016
+Released By :                               Date Released : DEC 22, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,258 @@
+$TXT Created by              P at CHEY04.VACO.DOMAIN.EXT  (KIDS) on Wednesday, 08/31/16 at 16:09
+=============================================================================
+Run Date: NOV 28, 2016                     Designation: GMRA*4*50
+Package : GMRA - ADVERSE REACTION TRACKING    Priority: Mandatory
+Version : 4        SEQ #49                      Status: Released
+                  Compliance Date: DEC 29, 2016
+=============================================================================
+
+Associated patches: (v)GMRA*4*36   <<= must be installed BEFORE `GMRA*4*50'
+                    (v)GMRA*4*42   <<= must be installed BEFORE `GMRA*4*50'
+
+Subject: SEND MAIL MESSAGE WHEN VA DRUG CLASS FIELD IS EMPTY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ **************************  WARNING  ***************************
+ ****************************************************************
+ If your facility has the Pyxis/Omnicell/Aesynt (McKesson) interface from 
+ ILC/Document Storage Systems, this patch will overwrite a "local" 
+ modification in routine GMRAPEM0. This could affect allergy data being 
+ sent across this interface. The modification will have to be reintroduced 
+ following installation of this patch IF YOUR SITE HAS NOT BEEN CONFIGURED 
+ TO USE RX-FRAMEWORK.
+  
+ Please get the appropriate file from the Document Storage Systems FTP 
+ online directory:
+  
+      o  Pyxis sites, please retrieve the file PPU_1_0_P28.KID
+      o  Omnicell sites, please retrieve the file OPU_1_0_P28.KID
+      o  Aesynt (McKesson) sites, please retrieve the file MPU_1_0_P28.KID
+  
+ If you have questions about accessing the FTP directory, contact DSS 
+ support directly at 561-284-7200.
+ ****************************************************************
+ ****************************************************************
+  
+ Patch GMRA*4*50 generates an email message through the VistA MailMan 
+ application when a new causative agent is added to a Patient Allergies 
+ File (#120.8) and the VA Drug Class is not specified in the VA Drug 
+ Class field (#3). Causative agents are medications and substances to 
+ which the patient exhibits an adverse reaction or allergy, and are 
+ tracked for each patient in the Patient Allergies File (#120.8) using 
+ the VistA Adverse Reaction Tracking package. The email message is sent 
+ the first time a new causative agent without a designated VA Drug Class 
+ is added for a patient. Subsequent observations associated with the same 
+ causative agent do not trigger an email. The email is sent only once 
+ for each causative agent without a designated VA Drug Class added to a 
+ Patient Allergies File (#120.8).
+  
+ The email message is directed to members of a predefined email group. 
+ This email group, "ADVERSE_ALLERGY_WARNING," is created by a 
+ post-installation routine if it is not present upon installation of the 
+ patch. The email group must be populated with the email addresses of 
+ individuals to be notified when a new causative agent is added to a 
+ Patient Allergies File (#120.8) without a designated VA Drug Class in 
+ the VA Drug Class field (#3).
+  
+ This intake has been implemented locally at the Indianapolis, IN VAMC.
+  
+ This patch addresses the following requirement:
+  
+         VHBAO: NEED496665: Provide the ability to notify a provider 
+                            when a drug class is missing from allergy 
+                            information coded with a drug ingredient so 
+                            that patient safety issues will not occur due 
+                            to missed cross-interaction order checks.
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)       Field Name (Number)       New/Modified/Deleted
+ -----------------------  ------------------------  --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                File #       New/Modified/Deleted
+ ---------                ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ ADVERSE_ALLERGY_WARNING  New
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------
+ 20140712   SEND MAIL MESSAGE WHEN VA DRUG CLASS FIELD IS EMPTY
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+ Problem:
+ --------
+  
+ Resolution:
+ -----------
+  
+  
+ Test Sites:
+ ----------
+ Richard L. Roudebush VA Medical Center (Indianapolis), IN
+ VA St. Louis Health Care System (St. Louis, Poplar Bluff, Marion)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The followng documentation can also be found on the VA Software
+ Documentation Library (VDL) at: http://www4.domain.ext/vdl/.
+  
+ Title                                           File Name
+ -----------------------------------------------------------------
+ GMRA*4.0*50 Release Notes                       gmra_4_50_rn.pdf
+ Adverse Reaction Tracking Technical Manual      gmra_4_tm.pdf
+ Adverse Reaction Tracking User Manual           gmra_4_um.pdf
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There is a post installation routine that adds the mail group: 
+ ADVERSE_ALLERGY_WARNING.
+  
+  
+ Pre-Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ Installation Instructions
+ -----------------------------
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+         the Installation Menu.  From this menu, you may elect to use the 
+         following options. When prompted for the INSTALL NAME enter
+         GMRA*4.0*50.
+  
+         a.  Verify Checksums in Transport Global - This option will 
+             allow you to ensure the integrity of the routines that are in
+             the transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+         and choose the patch to install.
+  
+ 5.      If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+         Install? NO//' press <Enter>.
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO// Press <Enter>
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO// Press <Enter>
+  
+ 8.      If prompted 'Delay Install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 9.      If prompted 'Enter the Device you want to print the Install 
+         messages. You can queue the install by enter a 'Q' at the device
+         prompt. Enter a '^' to abort the install. DEVICE: HOME//   HOME  
+         (CRT)', press <Enter>.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ The mail group: ADVERSE_ALLERGY_WARNING was added with this patch.
+ Appropriate persons will need to be added to this mail group that should
+ receive the email when the VA Drug Class field is empty.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;Adverse Reaction Tracking;**[Patch List]**;Oct 19, 2015;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRA50P1
+    Before:       n/a   After:  B2416014  **50**
+Routine Name: GMRAGUI1
+    Before: B59206501   After: B59594462  **21,25,36,38,42,50**
+Routine Name: GMRAPEM0
+    Before: B43826251   After: B67572191  **2,5,17,21,36,50**
+ 
+Routine list of preceding patches: 42
+
+=============================================================================
+User Information:                          Hold Date     : NOV 28, 2016
+Entered By  :                               Date Entered  : SEP 24, 2015
+Completed By:                               Date Completed: NOV 22, 2016
+Released By :                               Date Released : NOV 28, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

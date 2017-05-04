@@ -1,0 +1,403 @@
+
+=============================================================================
+Run Date: NOV 16, 2016                     Designation: WEBN*1.1*4
+Package : WEBN - NAT'L UTILIZATION MGMT INTEG Priority: Mandatory
+Version : 1.1         SEQ #4                    Status: Released
+                  Compliance Date: DEC 17, 2016
+=============================================================================
+
+
+Subject: NUMI Application 14.4
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  
+   Patch WEBN*1.1*4 addresses issues in Remedy and CA SDM tickets 
+ described below:
+  
+ ASSOCIATED NSR:                                    
+ ===============
+    N/A   
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+    Bay Pines VAMC
+    Gainesville (NFSG)
+    Omaha
+  
+ Description:
+ ------------
+ This patch addresses the following one Remedy and fifteen CA SDM tickets.
+  
+  
+ 1.      1010901: In the Primary Review screen, when the user selects the 
+ checkbox for criteria is NOT MET and formal hospital policy does NOT 
+ require physician review, NUMI should not allow them to enter a Physician 
+ Utilization Management Advisor (PUMA) name. A red text warning upon 
+ attempting to save the review should appear: "A PUMA name and the box 
+ indicating no PUMA review needed cannot be selected at the same time."
+  
+ 2.      I5944578FY16: Criteria Not Met Elaboration (CNME) comments to be 
+ added to Summary Review display/print options screen. 
+  
+ 3.      R8151236fY16: Replace NUMI reports menu options with a single 
+ pointer to Enhanced Reports web page.
+  
+ 4.      R7183316FY16: Veterans Integrated Service Network (VISN)/ 
+ Veterans Health Administration (VHA) Facility Realignment changes.
+  
+ 5.      R8785603FY16: NUMI code changes to accommodate CERME Interqual 
+ 2016 Product changes for Review Manager upgrade 15.1
+  
+ 6.      I8480936FY16: A method in rm_javascripthost.js exposes sensitive 
+ data, thereby causing a privacy violation.
+  
+ 7.      I8454075FY16: A method in the DetailedPatient.aspx.cs can 
+ dereference a null pointer, thereby raising a NullException.
+  
+ 8.      I8480905FY16: A method in the PatientLevelMetNotMet.aspx.cs can 
+ dereference a null pointer, thereby raising a NullException.
+  
+ 9.      I8480902FY16: A method in the PatientLevelMetNotMetCustom.aspx.cs 
+ can dereference a null pointer, thereby raising a NullException.
+  
+ 10.     I8480911FY16: A method in the PAReview.aspx.cs can dereference a 
+ null pointer, thereby raising a NullException.
+  
+ 11.     I8480898FY16: A method in the PatientStayManager.cs can 
+ dereference a null pointer, thereby raising a NullException.
+  
+ 12.     I8480893FY16: A method in the ReasonsCSReviews.aspx.cs can 
+ dereference a null pointer, thereby raising a NullException.
+  
+ 13.     I8480891FY16: A method in the ReasonsforAdmReviews.aspx.cs can 
+ dereference a null pointer, thereby raising a NullException.
+  
+ 14.     I8480860FY16: A method in the ReviewsbyDate.aspx.cs can 
+ dereference a null pointer, thereby raising a NullException.
+  
+ 15.     I8480853FY16: A method in the RLOC.aspx.cs can dereference a null 
+ pointer, thereby raising a NullException.
+  
+ 16.     I8480837FY16: A method in the SummaryMetNotMet.aspx.cs can 
+ dereference a null pointer, thereby raising a NullException.
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ None
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1.      1010901
+  
+ Problem:
+ -------
+ In the Primary Review screen, when the user selects the checkbox for 
+ criteria is NOT MET and formal hospital policy does NOT require physician 
+ review, NUMI should not allow them to enter a Physician Utilization 
+ Management Advisor (PUMA) name. A red text warning upon attempting to 
+ save the review should appear: "A PUMA name and the box indicating no 
+ PUMA review needed cannot be selected at the same time."
+  
+ Resolution:
+ ----------
+ The PrimaryReview.aspx.cs file was changed to include the logic which 
+ checks for the condition where the checkbox is checked and the drop down 
+ list is populated.If both conditions are true, a warning message will be 
+ displayed.
+  
+ 2.      I5944578FY16
+ Problem:
+ -------
+ Criteria Not Met Elaboration (CNME) comments to be added to Summary 
+ Review display/print options screen. 
+  
+ Resolution:
+ ----------
+ Changed the code in the following two files so that CNME is now displayed 
+ with the review: Review.aspx and Review.aspx.cs
+  
+ 3.      R8151236FY16
+ Problem:
+ -------
+ Replace NUMI reports menu options with a single pointer to Enhanced 
+ Reports web page
+  
+ Resolution:
+ ----------
+ Changed the hyperlinks for all the reports to point to the Enhanced 
+ reports link in the NumiWebApp/Inpatient/Controls/Menu.ascx file
+  
+ 4.      R7183316FY16
+ Duplicates:  R6856065FY16
+  
+ Problem:
+ -------
+ Veterans Integrated Service Network (VISN)/ Veterans Health 
+ Administration (VHA) Facility Realignment changes
+  
+ Resolution:
+ ----------
+ Changed the vhasites.xml file in the Medical Domain Web Services (MDWS) 
+ installed directory. Created SQL scripts to remove the VISN IDs that were 
+ not required. The login screens will now reflect the VISN/Site selection 
+ changes.
+  
+ 5.      R8785603FY16
+  
+ Problem:
+ -------
+ NUMI code changes to accommodate CERME Interqual 2016 Product changes for 
+ Review Manager upgrade 15.1
+  
+ Resolution:
+ ----------
+ Modified NumiWebApp/Inpatient/CERME.aspx.cs file to upgrade to 
+ CERMe 15.1 and InterQUAL 16.1: Changed the product CID by replacing the 
+ old ones with the new ones for InterQual 16.1.
+ Behavioral Health (BH) products have been replaced with new ones in 16.1.
+  
+ 6.      I8480936FY16
+  
+ Problem:
+ -------
+ A method in rm_javascripthost.js exposes sensitive data, thereby causing 
+ a privacy violation
+  
+ Resolution:
+ ----------
+ Removed sensitive data from the javascript method
+  
+ 7.      I8454075FY16
+  
+ Problem:
+ -------
+ A method in the DetailedPatient.aspx.cs can dereference a null pointer, 
+ thereby raising a NullException.
+  
+ Resolution:
+ ----------
+ Added null check
+  
+ 8.      I8480905FY16
+  
+ Problem:
+ -------
+ A method in the PatientLevelMetNotMet.aspx.cs can dereference a null 
+ pointer, thereby raising a NullException.
+  
+ Resolution:
+ ----------
+ Added null check
+  
+ 9.      I8480902FY16
+  
+ Problem:
+ -------
+ A method in the PatientLevelMetNotMetCustom.aspx.cs can dereference a 
+ null pointer, thereby raising a NullException
+  
+ Resolution:
+ ----------
+ Added null check
+  
+ 10.     I8480911FY16
+  
+ Problem:
+ -------
+ A method in the PAReview.aspx.cs can dereference a null pointer, thereby 
+ raising a NullException
+  
+ Resolution:
+ ----------
+ Added null check
+  
+ 11.     I8480898FY16
+  
+ Problem:
+ -------
+ A method in the PatientStayManager.cs can dereference a null pointer, 
+ thereby raising a NullException.
+  
+ Resolution:
+ ----------
+ Added null check
+  
+ 12.     I8480893FY16
+  
+ Problem:
+ -------
+ A method in the ReasonsCSReviews.aspx.cs can dereference a null pointer, 
+ thereby raising a NullException.
+  
+ Resolution:
+ ----------
+ Added null check
+  
+ 13.     I8480891FY16
+  
+ Problem:
+ -------
+ A method in the ReasonsforAdmReviews.aspx.cs can dereference a null 
+ pointer, thereby raising a NullException.
+  
+ Resolution:
+ ----------
+ Added null check
+  
+ 14.     I8480860FY16
+  
+ Problem:
+ -------
+ A method in the ReviewsbyDate.aspx.cs can dereference a null pointer, 
+ thereby raising a NullException
+  
+ Resolution:
+ ----------
+ Added null check
+  
+ 15.     I8480853FY16
+  
+ Problem:
+ -------
+ A method in the RLOC.aspx.cs can dereference a null pointer, thereby 
+ raising a NullException.
+  
+ Resolution:
+ ----------
+ Added null check
+  
+ 16.     I8480837FY16
+  
+ Problem:
+ -------
+ A method in the SummaryMetNotMet.aspx.cs can dereference a null pointer, 
+ thereby raising a NullException.
+  
+ Resolution:
+ ----------
+ Added null check
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Documentation is available for this patch.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Albany: domain.ext
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+  
+ FILE NAME                          DESCRIPTION
+ ---------                          -----------
+ numi_14_4_ug.pdf                   NUMI User Guide v14.4.
+ numi_14_4_serversetupguide.pdf     NUMI Server Setup Guide v14.4.
+ numi_14_4_sysmgmtguide.pdf         NUMI System Management Guide v14.4.
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ This is a .NET based web application build. This is a centralized server 
+ promotion. No installation is required at local sites. 
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Routine Information:
+ --------------------
+ No routines included.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:                          Hold Date     : OCT 11, 2016
+Entered By  :                               Date Entered  : APR 21, 2016
+Completed By:                               Date Completed: NOV 08, 2016
+Released By :                               Date Released : NOV 16, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

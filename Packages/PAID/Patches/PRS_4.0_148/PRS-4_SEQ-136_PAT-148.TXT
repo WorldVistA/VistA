@@ -1,0 +1,233 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 10/18/16 at 13:55
+=============================================================================
+Run Date: JAN 24, 2017                     Designation: PRS*4*148
+Package : PRS - PAID                          Priority: Mandatory
+Version : 4       SEQ #136                      Status: Released
+                  Compliance Date: FEB 24, 2017
+=============================================================================
+
+Associated patches: (v)PRS*4*147   <<= must be installed BEFORE `PRS*4*148'
+
+Subject: PAID HYBRID ADDITIONS 1Q17
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains updates to the Hybrid table for Occupation
+ Series/Title Codes converting to Hybrid status.
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED TICKET(S):
+ =====================
+ 1. I10212521FY16 - PAID - Hybrid Code Additions
+ 2. I10732907FY16 - PAID - HYBRID CODE ADDITIONS
+ 3. I10735860FY16 - PAID-Hybrid Code Additions
+ 4. I10740121FY16 - PAID - Hybrid Code Additions
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ LEBANON, PA                         
+ NORTH FLORIDA/SOUTH GEORGIA           
+ ST CLOUD, MN
+  
+  
+ Ticket Overview:
+ ================
+  
+ 1. I10212521FY16 - PAID - Hybrid Code Additions
+  
+ Problem:
+ --------
+ New occupation series/title codes were converted to a hybrid status.
+  
+ Below is the occupation that was added in PAID for the 0188
+ hybrid conversion:
+  
+        018802  RECREATION/CREATIVE ARTS THERAPIST
+  
+ Below is the occupation that was added in PAID for the 0601 
+ hybrid conversion:
+  
+        060196  RADIOLOGIST ASSISTANT
+  
+ Below are the occupations that were added in PAID for the 0640 
+ hybrid conversion:
+  
+        064079  HEALTH TECHNICIAN (OPHTHALMOLOGY)
+        064080  HEALTH TECHNICIAN (EYE CARE)
+        064035  HEALTH TECH (CERT MASTECT FITTER)
+        064027  HEALTH TECHNICIAN (ACUPUNCTURIST)
+  
+ Below is the occupation that was added in PAID for the 0996 
+ hybrid conversion:
+  
+        099606  VETERANS CRISIS LINE RESPONDER(VCLR)
+  
+  
+ Resolution:
+ -----------
+ The occupation series/title codes have been added to the hybrid table 
+ in routine PRSAENT1.
+  
+  
+  
+ 2. I10732907FY16 - PAID - HYBRID CODE ADDITIONS
+  
+ Problem:
+ --------
+ New occupation series/title codes were converted to a hybrid status.
+  
+ Below are the occupations that were added in PAID for the 0667
+ hybrid conversion:
+  
+        066724  ORTHOSTIST/PROSTHETIST
+        066725  ORTHOSTIST/PROSTHETIST
+        066726  ORTHOTIST/PROSTHETIST
+        066727  ORTHOTIST/PROSTHETIST
+        066728  SUPERVISORY ORTHOTIST/PROSTHETIST
+        066729  ORTHOSTIST/PROSTHETIST (ADVANCED PRAC)
+        066731  SUPERVISORY ORTHOTIST/PROSTHETIST
+        066732  ORTHOTIST/PROSTHETIST (ADVANCED PRAC)
+        066733  ORTHO/PROST NAT CLIC MANG
+        066734  ORTHO/PROST(NATIONAL DIR)
+  
+ Resolution:
+ -----------
+ The occupation series/title codes have been added to the hybrid table 
+ in routine PRSAENT1.
+  
+  
+  
+ 3. I10735860FY16 - PAID-Hybrid Code Additions
+  
+ Problem:
+ --------
+ New occupation series/title codes were converted to a hybrid status.
+  
+ Below are the occupations that were added in PAID for the 0640
+ hybrid conversion:
+  
+        064081  HEALTH TECHNICIAN (OPHTHALMOLOGY)
+        064082  HEALTH TECHNICIAN (OPHTHALMOLOGY)
+        064083  HEALTH TECHNICIAN (OPHTHALMOLOGY)
+        064084  HEALTH TECHNICIAN (OPHTHALMOLOGY)
+        064085  HEALTH TECHNICIAN (OPHTHALMOLOGY)
+        064086  LEAD HEALTH TECHNICIAN OPHTHALMOLOGY 
+        064087  SUPERVISORY HEALTH TECH (OPHTHALMOLOGY)
+        064088  SUPERVISORY HEALTH TECH (OPHTHALMOLOGY)
+        064089  HLTH TECH PGRM COORD OPHT
+  
+  
+ Resolution:
+ -----------
+ The occupation series/title codes have been added to the hybrid table 
+ in routine PRSAENT1.
+  
+  
+  
+ 4. I10740121FY16 - PAID - Hybrid Code Additions
+  
+ Problem:
+ --------
+ New occupation series/title codes were converted to a hybrid status.
+  
+ Below are the occupations that were added in PAID for the 0180
+ hybrid conversion:
+  
+        018018  STAFF PSYCHOLOGIST
+        018019  PSYCHOLOGIST CLINICIAN INVESTIGATOR
+        018020  PSYCHOLOGY PROGRAM MANAGER
+        018021  PSYCHOLOGIST (ASSISTANT CHIEF)
+        018022  PSYCHOLOGIST (SERVICE CHIEF)
+        018023  PSYCHOLOGIST (VISN MANAGER)
+        018025  PSYCHOLOGIST (NATIONAL MANAGER)
+        018028  SENIOR PSYCHOLOGIST PROGRAM MANAGER
+        018029  SR PSYCHOLOGIST CL INVEST
+        018031  SENIOR PSYCHOLOGIST (SERVICE CHIEF)
+        018032  SENIOR PSYCHOLOGIST (VISN MANAGER)
+        018033  SENIOR PSYCHOLOGIST NATIONAL MANAGER
+  
+  
+ Resolution:
+ -----------
+ The occupation series/title codes have been added to the hybrid table 
+ in routine PRSAENT1.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ If installed during the normal workday, it is recommended that the PAID
+ users are off the system. 
+  
+ Install Time - less than 2 minutes.
+  
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options: 
+         (when prompted for INSTALL NAME, enter PRS*4.0*148)
+     
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this patch
+               is installed.  It compares all components of this patch
+               (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package PRS*4.0*148.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//" respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+         Protocols? YES//" respond YES.
+  
+          When prompted 'Enter options you wish to mark as 'Out Of
+          Order':', enter the following:
+   
+             Decompose Time      [PRSA PAY DECOMP]
+  
+      7. Review the installation message for errors.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRSAENT1
+    Before: B81873060   After: B87554284  **96,130,135,138,141,143,147,148**
+ 
+Routine list of preceding patches: 147
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 15, 2016
+Completed By:                               Date Completed: JAN 20, 2017
+Released By :                               Date Released : JAN 24, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

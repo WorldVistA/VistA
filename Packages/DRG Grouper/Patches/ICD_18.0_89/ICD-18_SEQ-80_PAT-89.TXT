@@ -1,0 +1,374 @@
+
+=============================================================================
+Run Date: DEC 20, 2016                     Designation: ICD*18*89
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #80                     Status: Released
+                  Compliance Date: JAN 19, 2017
+=============================================================================
+
+Associated patches: (v)ICD*18*82   <<= must be installed BEFORE `ICD*18*89'
+
+Subject: DRG RE-DESIGN
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch, the DRG Re-Design Project, creates new data files and 
+ routines to calculate a Diagnostic Related Group (DRG) value for a 
+ patient record coded with International Classification of Diseases, Tenth 
+ Revision (ICD-10) diagnostic and procedure codes.
+  
+  
+ NOTE:  Sites will encounter a LEX10CS subscript error when executing the
+ DRG Calculation [DG DRG Calculation] option using an effective date prior
+ to October 1, 2016. This is a known issue within the Lexicon package and
+ will be addressed with a future Lexicon patch (LEX*2.0*110). 
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields:
+  
+ This patch creates and populates eleven new data files. All data is stored
+ in the new ICDD global.
+  
+ DRG MDC CATEGORY (#83)
+ FIELD     FIELD
+ NUMBER    NAME
+ .01       MDC-CAT ID (RF), [0;1]
+ .02       MDC ID (F), [0;2]
+ .03       CATEGORY ID (NJ4,0), [0;3]
+ .04       CATEGORY TYPE (S), [0;4]
+ .05       MDC NAME (F), [0;5]
+ .06       CATEGORY NAME (F), [0;6]
+  
+ DRG MDC CATEGORY DRG (#83.1)
+ .01       DRG (RP80.2'), [0;1]
+ .02       MDC-CAT (RP83'), [0;2]
+ .03       UNIT (RNJ4,0), [0;3]
+ .04       CATEGORY TYPE (S), [0;4]
+ .05       AGE (NJ3,0), [0;5]
+ .06       SEX (S), [0;6]
+ .07       MCC REQUIRED (S), [0;7]
+ .08       CC REQUIRED (S), [0;8]
+ .09       SPECIAL (S), [0;9]
+ .1        CASE/SET NAME (F), [0;10]
+ 10        MDC CASE (Multiple-83.1001), [10;0]
+           .01  EFFECTIVE (MRD), [0;1]
+           .02  INACTIVE (D), [0;2]
+           .03  MDC CASE (RP83.2'), [0;3]
+  
+ DRG MDC CATEGORY DRG ORDER FILE (#83.11)
+ .01       EFFECTIVE (RD), [0;1]
+ .02       INACTIVE (D), [0;2]
+ 10        MDC DRG LIST (Multiple-83.1101), [10;0]
+           .01  MDC DRG (MRP83.1'), [0;1]
+  
+ DRG MDC CATEGORY CASE (#83.2)
+ .01       MDC CASE ID (RNJ7,0), [0;1]
+ 10        MDC CODE SET (Multiple-83.2001), [10;0]
+           .01  MDC CODE SET (MP83.3'), [0;1]
+           .02  SPECIAL (S), [0;2]
+  
+ DRG MDC CATEGORY CODE SETS (#83.3)
+ .01       MDC CODE SET ID (RNJ6,0), [0;1]
+ .02       MDC-CAT (P83'), [0;2]
+ .03       CODE TYPE (RS), [0;3]
+ .04       SET TYPE (S), [0;4]
+ .05       SPECIAL (S), [0;5]
+ .06       COMPUTED (S), [0;6]
+ .07       LINKED SETS (F), [0;7]
+ .08       CODE SET NAME (F), [0;8]
+  
+ DRG DIAGNOSIS (#83.5)
+ .01       DIAGNOSIS (RP80'), [0;1]
+ 10        ATTRIBUTES (Multiple-83.5001), [10;0]
+           .01  EFFECTIVE (MRD), [0;1]
+           .02  INACTIVE (D), [0;2]
+           .03  PDX EXCLUSION (F), [0;3]
+           .04  MCC OF ITS OWN (S), [0;4]
+           .05  CC OF ITS OWN (S), [0;5]
+           .06  MCC IF ALIVE (S), [0;6]
+           .07  MCC (S), [0;7]
+           .08  CC (S), [0;8]
+ 20        MDC CODE SET (Multiple-83.5002), [20;0]
+           .01  EFFECTIVE (MD), [0;1]
+           .02  INACTIVE (D), [0;2]
+           .03  MDC CODE SET (P83.3'), [0;3]
+ 30        HAC CODE SET (Multiple-83.5003), [30;0]
+           .01  EFFECTIVE (MD), [0;1]
+           .02  INACTIVE (D), [0;2]
+           .03  HAC CODE SET (RP83.71'), [0;3]
+  
+ DRG PDX EXCLUSION GROUPS (#83.51)
+ .01       PDX EXCLUSION ID (RF), [0;1]
+ .02       PRINCIPAL DIAGNOSIS (RP80'), [0;2]
+ .03       EFFECTIVE (RD), [0;3]
+ .04       INACTIVE (D), [0;4]
+  
+ DRG PROCEDURE (#83.6)
+ .01       PROCEDURE (RP80.1'), [0;1]
+ 10        ATTRIBUTES (Multiple-83.6001), [10;0]
+           .01  EFFECTIVE (MD), [0;1]
+           .02  INACTIVE (D), [0;2]
+           .03  PROCEDURE TYPE (S), [0;3]
+ 20        MDC CODE SETS (Multiple-83.6002), [20;0]
+           .01  EFFECTIVE (MD), [0;1]
+           .02  INACTIVE (D), [0;2]
+           .03  MDC CODE SET (P83.3'), [0;3]
+           .04  CLUSTER (P83.61'), [0;4]
+ 30        HAC CODE SET (Multiple-83.6003), [30;0]
+           .01  EFFECTIVE (MD), [0;1]
+           .02  INACTIVE (D), [0;2]
+           .03  HAC CODE SET (RP83.71'), [0;3]
+  
+ DRG PROCEDURE GROUPS (#83.61)
+ .01       PROCEDURE CLUSTER ID (RF), [0;1]
+ .02       PROCEDURE TYPE (S), [0;2]
+ .03       CLUSTER TYPE (S), [0;3]
+ 10        PROCEDURES (Multiple-83.6101), [10;0]
+           .01  PROCEDURE (MP80.1'), [0;1]
+  
+ DRG HAC GROUPS (#83.7)
+ .01       HAC ID (RF), [0;1]
+ .02       HAC NAME (F), [0;2]
+  
+ DRG HAC CODE SETS (#83.71)
+ .01       HAC CODE SET ID (RNJ4,0), [0;1]
+ .02       HAC GROUP (RP83.7'), [0;2]
+ .03       CODE TYPE (RS), [0;3]
+ .04       SET TYPE (S), [0;4]
+ .05       HAC CASE (NJ3,0), [0;5]
+  
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)         New/Modified/Deleted
+ -------------      ----      ------------------    --------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ============================
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ N/A
+  
+ Remedy Ticket(s) & Overviews:
+ =============================
+ N/A
+  
+  
+ Test Sites:
+ ===========
+ Salt Lake City HCS
+ Montana HCS
+ N. Florida/S. Georgia HCS
+ VISN2 
+  
+  
+ Documentation and Software Retrieval:
+ =====================================
+  
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+    
+ Albany:                  domain.ext
+ Hines:                   domain.ext    
+ Salt Lake City:          domain.ext
+  
+ File Name                Content                    FTP Protocol
+ -------------------      ----------------           ------------
+ ICD_18_89.ZIP            KIDS build and             Binary 
+                          documentation
+  
+ ------------------------------------------------------------------
+  
+ Files included in ICD_18_89.ZIP: 
+  
+ ICD_18_89.KID            KIDS file                  ASCII
+ DRG_18_TM.PDF            Technical Manual/       
+                          Security Guide             Binary
+ DRG_Re-Design_VDD        Version Description
+                          Document                   Binary
+  
+ Documentation can also be found on the VA Software Documentation Library: 
+ http://www4.domain.ext/vdl/
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ Before installing this patch, you should save a copy of the existing 
+ ICDDRG routine.
+  
+ The general strategy for back-out and rollback procedures for the DRG 
+ Re-Design project is to first contact the VA Help Desk at 1-888-596-4357 
+ for support or assistance. Based on the severity of the issue reported, 
+ it may be necessary for both the application sustainment team and the DRG 
+ Re-Design project team to be involved in providing direct support and 
+ technical solutions for a site's unique problem. This may also include 
+ issuance of an emergency patch to correct or remove software components 
+ and to perform restoration of data with a database clean-up process. If 
+ it becomes necessary to roll back the patch, you will re-install the 
+ pre-ICD*18*89 copy of the ICDDRG routine in order to go back to the 
+ pre-patch approach to calculating DRGs.
+  
+ Here is an example of saving the ICDDRG routine using the OUTPUT ROUTINES
+ [XUROUTINE OUT] option which is located on the Routine Tools
+ [XUPR-ROUTINE-TOOLS] menu.
+  
+  Select Routine Tools  <TEST ACCOUNT> Option: OUTPUT ROUTINES 
+  Routine output (please use %ROMF for object code output) 
+  Routine(s): ICDDRG 
+  Routine(s): <enter>
+  Description: Backup of ICDDRG for ICD*18*89 
+  Output routines to 
+  Device: <enter a directory and file name>
+  Parameters? "WNS" => <enter>
+  Printer Format? No => No 
+  
+  
+ Installation Instructions
+ -------------------------
+  
+ Users may remain on the system, but installation should be done during 
+ off-peak hours.
+   
+ Installation will take from 75 - 100 minutes.
+  
+ 1. Use the 'LOAD A DISTRIBUTION' option. 
+    The Host File name is ICD_18_89.KID.  
+    Answer YES to the question: "Want to Continue with Load? YES//" 
+   
+ 2. The patch has now been loaded into a Transport global on your system. 
+    You now need to install the Transport global. 
+    [Optional] On the KIDS menu, under the 'Installation' menu, use the 
+    following options: 
+   
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Backup a Transport Global 
+   
+ 3. From the 'Installation Menu' of the KIDS menu, run the option 
+    'Install Package(s)' Select the package 'ICD*18.0*89' and proceed with 
+    install.  
+   
+ 4. When prompted 'Want KIDS to INHIBIT LOGONs during the install
+    No//', respond NO.
+   
+    When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? YES//', respond YES 
+   
+      Place the following options out of order: 
+   
+      Enter options you wish to mark as 'Out Of Order': ICD DRG GROUPER
+      Enter options you wish to mark as 'Out Of Order': DG DRG CALCULATION
+      Enter options you wish to mark as 'Out Of Order': LOAD/EDIT PTF DATA
+      Enter options you wish to mark as 'Out Of Order': IBT EDIT TRACKING
+      ENTRY
+      Enter options you wish to mark as 'Out Of Order': IB EDIT BILLING
+      INFO
+      Enter options you wish to mark as 'Out Of Order': DG PTF MENU
+      Enter options you wish to mark as 'Out Of Order': <enter>
+  
+      Enter protocols you wish to mark as 'Out Of Order': <enter> 
+      (NOTE: There are no protocols to mark as "Out of Order".) 
+  
+  5.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+               
+  
+ Post-Installation Instructions
+ ------------------------------
+ 1. Following installation of this patch, it is necessary to run the
+    Update Transfer DRGs for Current FY [DG PTF UPDATE TRANSFER DRGs]
+    option in order to make the transfer DRGs correspond to the appropriate
+    grouper.  This option updates/recalculates the transfer DRGs for PTF
+    records opened during the current fiscal year. The option is locked
+    with the DG PTFSUP security key.  The Menu path is PTF Menu/Update DRG
+    Information Menu/Update Transfer DRGs for current FY.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;18.0;DRG Grouper;**[Patch List]**;Oct 20, 2000;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ICD1889P
+    Before:       n/a   After:  B6543207  **89**
+Routine Name: ICDDRG
+    Before: B61462104   After: B63337295  **2,7,10,14,20,31,37,57,64,89**
+Routine Name: ICDJC
+    Before:       n/a   After: B14003979  **89**
+Routine Name: ICDJC1
+    Before:       n/a   After: B56485540  **89**
+Routine Name: ICDJC2
+    Before:       n/a   After: B50437415  **89**
+Routine Name: ICDJC3
+    Before:       n/a   After: B51705763  **89**
+ 
+Routine list of preceding patches: 64
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 01, 2016
+Completed By:                               Date Completed: DEC 20, 2016
+Released By :                               Date Released : DEC 20, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

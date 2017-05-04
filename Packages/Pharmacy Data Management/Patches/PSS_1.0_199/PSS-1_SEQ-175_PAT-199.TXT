@@ -1,0 +1,188 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 06/27/16 at 16:27
+=============================================================================
+Run Date: DEC 02, 2016                     Designation: PSS*1*199
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #175                      Status: Released
+                  Compliance Date: JAN 01, 2017
+=============================================================================
+
+Associated patches: (v)PSS*1*91    <<= must be installed BEFORE `PSS*1*199'
+                    (v)PSS*1*175   <<= must be installed BEFORE `PSS*1*199'
+
+Subject: ORDERABLE LIST, DRUG INTERACTION CHECK SCROLLING AND VARIABLE CLEANUP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issues:
+  
+ 1) The API DRGIEN^PSS50P7 that returns the Dispense Drugs in the DRUG 
+    file (#50) matched to a PHARMACY ORDERABLE ITEM file (#50.7) is not 
+    returning all matches if a Dispense Drug happens to have the same 
+    internal entry number in the DRUG (#50) file as the PHARMACY ORDERABLE 
+    ITEM (#50.7) file entry it points to.  
+  
+ 2) Lines may scroll off the screen when checking drug interactions.  The 
+    user may not be aware that not all lines are displaying on the screen.
+  
+ 3) Outpatient Pharmacy CK Action not working after Check Drug 
+    Interactions option if user enters "^" to exit.
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A 
+  
+  
+ ASSOCIATED CA TICKETS:
+ ==========================
+  
+ 1) I9845797FY16 - Dispense Drug and Ordering Item Same IEN Issue
+    INC000000937281 (d)
+  
+ 2) I9845950FY16 - Check Drug Interaction Option Scrolling Issue
+    INC000001055336 (d)
+  
+ 3) I9169866FY16 - Check Drug Interaction Variable Clean-Up
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Northport VA Medical Center
+ Maryland Health Care System
+ Louis Stokes Cleveland VAMC
+  
+  
+ TICKET OVERVIEW:
+ ================
+  
+ 1) I9845797FY16 - Dispense Drug and Ordering Item Same IEN Issue
+  
+    Problem:
+    --------
+  
+    The application programming interface (API) DRGIEN^PSS50P7 that returns
+    the Dispense Drugs in the DRUG file (#50) matched to a PHARMACY
+    ORDERABLE ITEM file (#50.7) is not returning all matches if a Dispense
+    Drug happens to have the same internal entry number in the DRUG file
+    (#50) as the PHARMACY ORDERABLE ITEM file (#50.7) entry it points to. 
+    This issue will cause not all dispense drugs tied to an orderable item 
+    being displayed to a user when that user invokes menu options which 
+    depend on this API.
+  
+    Resolution:
+    -----------
+  
+    A change was made at DRGIEN+13^PSS50P7 so that a cross-reference is
+    used for look-up and removing the logic that prevents drugs from being 
+    viewed if those drugs happen to have the same internal entry number
+    (IEN) as the Pharmacy Orderable Item.
+  
+    Routine: PSS50P7
+    
+ 2) I9845950FY16 - Check Drug Interaction Option Scrolling Issue
+  
+    Problem:
+    --------
+    
+    When using the Check Drug Interaction option [PSS CHECK DRUG 
+    INTERACTION], when the monograph is displayed, the first several lines 
+    scroll off the screen. the user may not realize that there is
+    additional information, and if they do, they have to scroll back to see
+    it. 
+  
+    This also happens when the CK Hidden Action (Check Interactions) is
+    used in Outpatient Pharmacy and Inpatient Medications.
+  
+    Resolution:
+    -----------
+  
+    Change routine PSSDIUTL so that text will not scroll off the screen.  
+    Instead, the user is prompted to press "enter" to continue or enter "^"
+    to exit if not enough room is left on the screen.
+  
+    Routine: PSSDIUTL
+  
+ 3) I9169866FY16 - Check Drug Interaction Variable Clean-Up
+  
+    Problem:
+    --------
+  
+    If a user invokes the PSS CHECK DRUG INTERACTION OPTION but immediately
+    exits out, and then invokes Patient Prescription Processing, the CK 
+    action will not be functional.
+    
+    Resolution:
+    -----------
+  
+    Modify routine PSSDIUTL so that variables are properly cleaned up when 
+    the user exits the option.
+  
+    Routine: PSSDIUTL
+  
+  
+ INSTALLATION INSTRUCTIONS
+ ========================== 
+ It is not necessary to disable any options.  PSS users should not be
+ on the system when this patch is installed.  It should take less 
+ than 5 minutes to install this patch.
+  
+   1. Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.  
+   
+   2. From the Kernel Installation & Distribution System menu, select 
+      the Installation menu.  
+   
+   3. From this menu, you may select to use the following options: 
+      (when prompted for INSTALL NAME, enter PSS*1.0*199)
+      a.  Verify Checksums in Transport Global - This option will 
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+      b.  Print Transport Global - This option will allow you to view
+          the components of the KIDS build.
+      c.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this 
+          patch is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      d.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+   
+   4. Use the Install Package(s) option and select the package 
+      PSS*1.0*199.
+  
+   5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+   6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+      Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSS50P7
+    Before: B42625601   After: B43180168  **85,91,199**
+Routine Name: PSSDIUTL
+    Before:B168823037   After:B168125887  **169,175,199**
+ 
+Routine list of preceding patches: 91, 175
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 10, 2016
+Completed By:                               Date Completed: NOV 28, 2016
+Released By :                               Date Released : DEC 02, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

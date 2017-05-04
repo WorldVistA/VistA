@@ -1,0 +1,206 @@
+$TXT Created by                    CDMS.FO-BIRM.DOMAIN.EXT  (KIDS) on Wednesday, 01/11/17 at 13:40
+=============================================================================
+Run Date: JAN 24, 2017                     Designation: PSO*7*476
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #391                      Status: Released
+                  Compliance Date: FEB 24, 2017
+=============================================================================
+
+Associated patches: (v)PSO*7*431   <<= must be installed BEFORE `PSO*7*476'
+                    (v)PSO*7*460   <<= must be installed BEFORE `PSO*7*476'
+
+Subject: FIXED MEDICATION COPAYMENT TIER PSO FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This is a follow-up patch for Fixed Medication Copayment Tier (FMCT) 
+ patch PSO*7*460. It was found during SQA testing. When an outpatient drug
+ is ordered that has a copay tier of zero and is not a supply item, a $
+ display is being shown in the prescription listing under PATIENT
+ PRESCRIPTION PROCESSING indicating a copay is needed for the prescription.
+  
+ With patch PSO*7*460, copay charges are recalculated upon release of the
+ prescription, therefore the $ display will be removed because it is
+ determined that a copay should not be charged.
+  
+ No charges will be billed to the Veteran for copay tier zero drugs, but it
+ could create a display issue for the user thus the Veteran might be told
+ they have a copay when there really isn't one to be charged.
+  
+ Example below where the $ is displaying for the drug SIMVASTATIN 
+ 10MG, which has copay tier of zero.
+  
+ Medication Profile            Jan 05, 2017@13:25:20   Page:   1 of    2
+ FMCT,TESTONE                                                         <A> 
+   PID: 666-52-9832                        Ht(cm): _______ (______)
+   DOB: FEB 28,1949 (67)                   Wt(kg): _______ (______)
+   SEX: FEMALE                            
+  CrCL: <Not Found>                      BSA (m2): _______ 
+                                                     ISSUE  LAST REF DAY
+  #  RX #         DRUG                        QTY ST  DATE  FILL REM SUP
+ ---------------------------------------------------------------- ------
+ -------------------------------ACTIVE----------------------------------
+  1 100002262A$   AMOXAPINE 100MG TAB         30 A  08-23 08-23   5  30
+  2 100002264$    BACLOFEN 10MG TABS           7 A  08-23 08-23   1  30
+  3 100002335     BANDAGE ADHESIVE 1 INCH      1 A> 01-03 01-03   5  30
+  4 100002302$    CAPTOPRIL 25MG TAB TEST     60 A  09-12 09-13   1  60
+  5 100002276$    HYDRALAZINE 10MG TAB         1 A> 08-23 08-23   5  30
+  6 100002329$    NIFEDIPINE 10MG CAPS        60 A  01-03 01-03   5  60
+  7 100002258$    PROGESTERONE 100MG CAP      30 A> 08-22 08-22   5  30
+  8 100002301$    SIMETHICONE 40MG CHEW TAB  180 A  09-12 09-13   1  90
+  9 100002349$    SIMVASTATIN 10MG TAB         1 A> 01-04 01-04   2   1
+ +---------Enter ?? for more actions----------------------------------
+ PU  Patient Record Update               NO  New Order
+ PI  Patient Information                 SO  Select Order
+ Select Action: Next Screen//      
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)       Field Name (Number)          New/Modified/Deleted
+ ------------------       -------------------          --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                File #                      New/Modified/Deleted
+ ---------                ------                      --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          -------------------- 
+ N/A
+  
+ Options Associated: 
+  
+ Option Name                  Type       New/Modified/Deleted
+ -----------                  ----       --------------------
+ N/A
+  
+ Protocols Associated:
+ ---------------------
+  
+ Protocol Name             New/Modified/Deleted
+ -------------             --------------------- 
+ N/A  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name     Type        File Name (Number)  New/Modified/Deleted
+ -------------     ----        ------------------  --------------------
+ N/A 
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs)
+ --------------------------- 
+ Tiered Modification Copayment Structure (#20150208)
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+ Test Sites:
+ -----------
+ AMARILLO, TX
+ MARYLAND HCS
+ SHREVEPORT, LA
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Title                             File Name                      FTP Mode
+ --------------------------------------------------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch may be installed with users on the system although it should be
+ installed during non-peak hours to minimize potential disruption to
+ users. This patch should take less than 5 minutes to install.
+  
+  1. Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+    
+  2. From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+    
+  3. From this menu, you may select to use the following options
+     (when prompted for INSTALL NAME, enter PSO*7*476).
+    
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+    
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+    
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+    
+   4. Use the Install Package(s) option and select patch PSO*7*476 to 
+      install.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.
+     
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//", respond NO.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 35
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCPB
+    Before: B84573403   After: B94005590  **72,71,85,185,143,219,239,201,
+                                           263,303,431,476**
+Routine Name: PSOHLNE3
+    Before: B69950706   After: B70373128  **143,239,201,225,303,460,476**
+ 
+Routine list of preceding patches: 431, 460
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 03, 2017
+Completed By:                               Date Completed: JAN 24, 2017
+Released By :                               Date Released : JAN 24, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

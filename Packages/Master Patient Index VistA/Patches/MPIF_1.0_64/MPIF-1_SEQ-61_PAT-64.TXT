@@ -1,0 +1,295 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Tuesday, 07/26/16 at 11:41
+=============================================================================
+Run Date: DEC 19, 2016                     Designation: MPIF*1*64
+Package : MPIF - MASTER PATIENT INDEX VISTA   Priority: Mandatory
+Version : 1        SEQ #61                      Status: Released
+                  Compliance Date: DEC 28, 2016
+=============================================================================
+
+Associated patches: (v)MPIF*1*60   <<= must be installed BEFORE `MPIF*1*64'
+                    (v)DG*5.3*926  <<= must be installed BEFORE `MPIF*1*64'
+                    (v)FB*3.5*173  <<= must be installed BEFORE `MPIF*1*64'
+
+Subject: MASTER VETERAN INDEX VISTA ENHANCEMENTS - ITERATION 16 RELEASE 2
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ *************************************************************************
+ * This patch may be installed with users on the system, however we      *
+ * strongly advise it be installed after business hours.                 *
+ ************************************************************************* 
+  
+ NOTE: To prevent legacy systems ending up as Treating Facilities,
+       RG* and MPIF* patches should NOT be installed on legacy 
+       systems.
+  
+ MPIF*1.0*60, DG*5.3*926 and FB*3.5*173 are the required builds for patch 
+ MPIF*1.0*64.
+   
+ NOTE: Master Patient Index (MPI) enhancements are being distributed in
+       four VistA namespaces: DG, MPIF, RG and FB.
+       The only build enforced requirements are that:
+         - FB*3.5*173 and DG*5.3*926 be installed prior to MPIF*1.0*64 
+         - DG*5.3*926 be installed prior to RG*1.0*65
+       Therefore non-legacy sites can install FB*3.5*173 and DG*5.3*926
+       in any order, then install MPIF*1.0*64 and RG*1.0*65 patches in any
+       order (Do NOT install MPIF*1.0*64 or RG*1.0*65 on legacy sites). 
+  
+ NOTE: Legacy sites can install just the DG*5.3*926 and FB*3.5*173 patches.
+       MPIF*1.0*64 and RG*1.0*65 should NOT be installed on legacy sites.
+   
+ Enhancement
+ This enhancement patch provides additional support to allow the Master
+ Veteran Index (MVI) to support the Date of Death of patients at the 
+ medical facilities. 
+  
+ Enhancement #1
+ A new remote procedure (RPC) [MPIF DOD ACTIVITY CHECK] was created to
+ search through various packages: FEE BASIS, OUTPATIENT PHARMACY, PCE 
+ PATIENT CARE ENCOUNTER, REGISTRAION and SCHEDULING, to find any activity
+ that might indicate that a patient is not actually deceased. The validity
+ of the reported Date of Death will be confirmed if no activity is found.
+ Routine MPIFDODC was created to support the functionality in this RPC.
+  
+ Enhancement #2
+ Routine MPIFA31B was updated to build and retrieve the parsed OBX A31
+ Health Level Seven (HL7) Patient update message segments for the
+ following additional Date of Death fields in the PATIENT (#2) file:
+      - DATE OF DEATH LAST UPDATED (#.354)
+      - SUPPORTING DOCUMENT TYPE (#.357)
+      - DATE OF DEATH OPTION USED (#.358)
+  
+     
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name             New/Modified/Deleted
+ ---------------------------       --------------------
+ MPIF DOD ACTIVITY CHECK           NEW
+  
+    
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Central Alabama HCS
+ Indianapolis VAMC
+ Louisville VAMC
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ PIMS ADT Documentation can also be found on the VA Software Documentation
+ Library at: http://www4.domain.ext/vdl/application.asp?appid=55
+   
+ Title                                       File Name              FTP Mode
+ ---------------------------------------------------------------------------
+ PIMS ADT User Manual - Bed Control Menu     DG_5_3_P926_BC_UM.PDF  (binary)
+ PIMS ADT User Manual - Registration Menu    DG_5_3_P926_REG_UM.PDF (binary)
+  
+ MPI/PD VistA Documentation can also be found on the VA Software 
+ Documentation Library at: http://www.domain.ext/vdl/application.asp?appid=16
+   
+ Title                                       File Name              FTP Mode
+ ---------------------------------------------------------------------------
+ MPI/PD VISTA User Manual                    RG_1_0_P65_UM.PDF      (binary)
+ MPI/PD VISTA Programmer Manual              RG_1_0_P65_PM.PDF      (binary)
+ MPI/PD VISTA Technical Manual               RG_1_0_P65_TM.PDF      (binary)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre/Post installation routine processes.    
+   
+   
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than 2 minutes to install. This patch may be 
+ installed with users on the system, however we strongly advise that it be
+ installed after business hours. 
+  
+ The following OPTIONs should be disabled during installation:
+      Load/Edit Patient Data                      [DG LOAD PATIENT DATA]
+      Register a Patient                          [DG REGISTER PATIENT]
+      Preregister a Patient                       [DGPRE PRE-REGISTER OPTION]
+      Electronic 10-10EZ Processing               [EAS EZ 1010EZ PROCESSING] 
+      Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN RES]
+  
+ The HL7 incoming filers should be stopped.  Use the Monitor, Start, Stop
+ Filers [HL FILER MONITOR] option on the Filer and Link Management Options
+ [HL MENU FILER LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+   
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch
+     number (i.e. MPIF*1.0*64):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond as per your facility's policy.  If you
+     choose to answer YES, then at the end of the patch installation,
+     KIDS will rebuild the menus which may take several hours and could
+     disrupt Computerized Patient Record System (CPRS) users.  If your
+     facility has the XQBUILDTREEQUE nightly batch job tasked to run, 
+     answer NO to this question. The nightly job will rebuild the menus
+     as scheduled.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// respond YES. The following OPTIONS should be
+     disabled during the installation.
+  
+      Load/Edit Patient Data                      [DG LOAD PATIENT DATA]
+      Register a Patient                          [DG REGISTER PATIENT]
+      Preregister a Patient                       [DGPRE PRE-REGISTER OPTION]
+      Electronic 10-10EZ Processing               [EAS EZ 1010EZ PROCESSING] 
+      Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN RES]
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After patch installation has completed, restart the HL7 incoming filers.
+ Use the Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+ and Link Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+ Menu [HL MAIN MENU].
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;MASTER PATIENT INDEX VISTA;**[Patch List]**;30 Apr 99;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MPIFA31B
+    Before: B23651277   After: B26688072  **22,24,27,28,31,25,44,46,54,
+                                           59,60,64**
+Routine Name: MPIFDODC
+    Before:       n/a   After: B35314779  **64**
+ 
+Routine list of preceding patches: 60
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 03, 2016
+Completed By:                               Date Completed: DEC 07, 2016
+Released By :                               Date Released : DEC 19, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

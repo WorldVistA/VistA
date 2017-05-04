@@ -1,0 +1,185 @@
+$TXT Created by                 DEVCUR.DOMAIN.EXT  (KIDS) on Tuesday, 12/13/16 at 08:30
+=============================================================================
+Run Date: DEC 21, 2016                     Designation: LEX*2*110
+Package : LEX - LEXICON UTILITY               Priority: EMERGENCY
+Version : 2        SEQ #99                      Status: Released
+                  Compliance Date: JAN 06, 2017
+=============================================================================
+
+Associated patches: (v)LEX*2*80    <<= must be installed BEFORE `LEX*2*110'
+
+Subject: FIX SUBSCRIPT/COMMAND ERRORS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch fixes two hard MUMPS errors and a problem with preferred
+  and inactive terms.  
+ 
+    $$INIT^LEXSRC2(x,dt)
+  
+      This is an internal API called by the supported API 
+      $$STATCHK^LEXSRC2 to retrieve the status for a code.
+      $$INIT returns the initial activation date for a code
+      based on a code and a date passed in.  This API has been
+      modified to prevent the <COMMAND> error that occurs when
+      the initial activation date of a code is before the date
+      passed. This problem was exposed when a site had to
+      re-index the CODES file 757.02.  It was later discovered 
+      that it could occur anytime $$STATCHK^LEXSRC2 was called
+      for a code that was pending activation.
+ 
+      Tickets
+      I7763758FY16  - Fix <COMMAND> error in $$INIT^LEXSRC2
+  
+    $$PCSOK^LEX10CS(x,dt)
+    ---------------------
+ 
+      This is an internal API called by the supported API 
+      $$PCSDIG^LEXSRC2 to ICD-10 PCS procedure codes.  $$PCSOK
+      returns a Boolean value indicating if an ICD-10-PCS code
+      is ok to use based on a date.  It is being fixed to prevent
+      a <SUBSCRIPT> error that occurs when the date passed is 
+      before the activation date of the code. This problem was 
+      exposed when ICD-10 procedure codes were inactivated for 
+      the first time on Oct 1, 2016.
+ 
+      Tickets
+      I11104175FY17 - Fix <SUBSCRIPT> error in $$PCSOK^LEX10CS
+      R11123232FY17 - Fix <SUBSCRIPT> error in $$PCSOK^LEX10CS (Dupe)
+      I11267297FY17 - Fix <SUBSCRIPT> error in $$PCSOK^LEX10CS (dupe)
+      I11428571FY17 - Fix <SUBSCRIPT> error in $$PCSOK^LEX10CS (dupe)
+      R11471464FY17 - Fix <SUBSCRIPT> error in $$PCSOK^LEX10CS (dupe)
+      I11492255FY17 - Fix <SUBSCRIPT> error in $$PCSOK^LEX10CS (dupe)
+      I11509772FY17 - Fix <SUBSCRIPT> error in $$PCSOK^LEX10CS (dupe)
+      R11527496FY17 - Fix <SUBSCRIPT> error in $$PCSOK^LEX10CS (dupe)
+      I11630953FY17 - Fix <SUBSCRIPT> error in $$PCSOK^LEX10CS (dupe)
+      R11812947FY17 - Fix <SUBSCRIPT> error in $$PCSOK^LEX10CS (dupe)
+      I11335492FY17 - Fix <SUBSCRIPT> error in $$PCSOK^LEX10CS (dupe)
+      R11799241FY17 - Fix <SUBSCRIPT> error in $$PCSOK^LEX10CS (dupe)
+      I11907134FY17 - Fix <SUBSCRIPT> error in $$PCSOK^LEX10CS (dupe)
+      I11918272FY17 - Fix <SUBSCRIPT> error in $$PCSOK^LEX10CS (dupe)
+ 
+    $$DIAGSRCH^LEX10CS(x,ary,dt,ln,fl)
+    ----------------------------------
+   
+      Lookup by code does not return the preferred term, 
+      instead it incorrectly returns the first code it finds
+      which may or may not be the preferred term.  A check 
+      was added to the lookup by code search in I10C^LEX10DBC
+      to restrict the return to only the preferred term.
+      Additionally, the lookup fails if the search date 
+      includes both a date and a time.  Time will now be
+      stripped from the search date before the search starts.
+      This problem was exposed when term, other that the 
+      preferred term were added and linked to an ICD-10 code.
+ 
+      Tickets:  JAZZ 336002
+ 
+    Lookup by Code Returns Inactive Code 
+    ------------------------------------
+ 
+      $$DIAGSRCH^LEX10CS(x,ary,dt,ln,fl) ICR 5681
+      I10C^LEX10DBC(x,.ary,dt,ln,fl)
+      $$FIND^LEX10DBC(x,dt,fl)
+ 
+      The lookup by code search function returns inactive code.
+      This only occurs when a term is linked to an ICD-10 code
+      that is inactive, and a newer active ICD-10 code is added
+      to the same term.  These APIs now screen on the term then
+      the code preventing the inactive code from being placed on
+      the selection list for a user to make a selection.
+ 
+      Ticket:  None
+ 
+  INSTALLATION:
+  ============
+  
+    1)  Users may be on the system during the install of LEX*2.0*110.
+        It is recommended that this patch be installed during non-peak
+        hours.  This patch should take less than a minute to install.
+  
+    2)  Set up user and IO variables (D ^XUP) for programmer access.
+       
+    3)  Distribution Load:
+       
+        Load the KIDS Distribution from the Packman Message using the
+        Packman function "Install/Check Message."
+  
+    4)  KIDS Installation:
+              
+        Use the KIDS Installation Menu.
+                 
+        a)  Pre-Install Options:
+  
+            From the KIDS Installation Menu, you may choose the following 
+            options prior to installing this patch:
+                 
+                 2    Verify Checksums in Transport Global
+                 3    Print Transport Global
+                 4    Compare Transport Global to Current System
+                 5    Backup a Transport Global
+                 
+              For each of the above options, respond "LEX*2.0*110" at the
+              "Select INSTALL NAME:   prompt.
+                 
+        b)  Install Option:
+  
+            From the KIDS Installation Menu, use the following option to
+            install the contents this patch:
+                 
+                 6   Install Package(s)
+                  
+                 Respond "LEX*2.0*110" at the "Select INSTALL NAME:" prompt.
+                  
+                 At the "INHIBIT LOGONs during the install" prompt accept the
+                 default "NO"
+  
+                 At the "DISABLE Scheduled Options, Menu Options, and Protocols"
+                 prompt accept the default "NO             
+  
+            The KIDS installation should take less than a minute. 
+ 
+      5)  Cleanup
+   
+          The Post-Install routine LEX2110P should be deleted using the 
+          KERNEL option 'Delete Routines' [XTRDEL] upon completion of the
+          installation.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;LEXICON UTILITY;**[Patch List]**;Sep 23, 1996;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LEX10CS
+    Before: B72383021   After: B73860312  **80,110**
+Routine Name: LEX10DBC
+    Before:  B9636063   After: B10828160  **80,110**
+Routine Name: LEX10DBT
+    Before:  B9014801   After:  B9864492  **80,110**
+Routine Name: LEX2110P
+    Before:       n/a   After:   B756041  **110**
+Routine Name: LEXSRC2
+    Before: B52534156   After: B52722809  **25,28,73,80,110**
+ 
+Routine list of preceding patches: 80
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 17, 2016
+Completed By:                               Date Completed: DEC 21, 2016
+Released By :                               Date Released : DEC 21, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

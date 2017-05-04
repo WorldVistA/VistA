@@ -1,0 +1,277 @@
+$TXT Created by                    at DEV.DEV.DOMAIN.EXT  (KIDS) on Tuesday, 08/09/16 at 14:38
+=============================================================================
+Run Date: DEC 13, 2016                     Designation: RA*5*129
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: EMERGENCY
+Version : 5       SEQ #114                      Status: Released
+                  Compliance Date: DEC 16, 2016
+=============================================================================
+
+Associated patches: (v)RA*5*98     <<= must be installed BEFORE `RA*5*129'
+                    (v)RA*5*114    <<= must be installed BEFORE `RA*5*129'
+                    (v)RA*5*125    <<= must be installed BEFORE `RA*5*129'
+
+Subject: HL7: UNPRINTABLE CONTROL CHARS, RESEND WHEN STUDIES SPAN HL7 VERSIONS & MISC
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ RA*5.0*129 will cover 3 issues:
+  
+ 1. Embedded unprintable control characters (ASCII 0 - 31) in the VistA 
+    Radiology/Nuclear Medicine ('RIS') database is creating unexpected 
+    results with VistA HL7. Note: This patch addresses front door ordering.
+  
+ 2. The HL7 Resend options have issues broadcasting studies created
+    before the existence of the site specific accession number (SSAN) in 
+    accounts now broadcasting radiology studies with the SSAN. The M Server
+    side has been updated to accept a SSAN and determine correctly if the 
+    SSAN cross reference ("ADC1") or the legacy accession number cross 
+    reference ("ADC") should be used to break down the radiology
+    examinations multiple in order to determine the correct study and/or
+    report for this VistA study.
+  
+ 3. The undefined variable PAR(26) in Routine RAHLTCPX causes a hard error.
+  
+ Associated Ticket(s):
+ =====================
+ 1. I9349322FY16 - Control Characters embedded in CPRS and RIS orders
+                   I9624888FY16 (d)
+                   I9853791FY16 (d)
+                   I9913750FY16 (d)
+                   I9954772FY16 (d)
+  
+ 2. I9335483FY16 - Resend (by case or date) use the legacy accession 
+                   when the SSAN should be used.
+  
+ 3. R9397618FY16 - HL7 failing daily <UNDEFINED>OBR+29^RAHLTCPX *PAR(26)
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Boston, MA
+ North Chicago
+ Orlando, FL
+  
+ Ticket Overview:
+ ================
+ 1. I9349322FY16 - Control Characters embedded in CPRS and RIS orders
+  
+    Problem:
+    --------
+    Control characters (ASCII table the first 32 characters from 0 - 31)
+    are introduced into the REASON FOR STUDY and CLINICAL HISTORY fields 
+    of a radiology order when the order is entered through CPRS. A subset
+    of these control characters are used as 'reserve characters' and have
+    special meaning when building HL7 messages. The inclusion of these
+    reserve characters in our REASON FOR STUDY and/or CLINICAL HISTORY data
+    causes the HL7 broadcast to fail.
+  
+    Resolution:
+    -----------
+    REASON FOR STUDY and CLINICAL HISTORY data is checked for control 
+    characters. All control characters are stripped from the data string 
+    when found and replaced by the null string ("").
+  
+    Routine: RAO7RON1
+  
+ 2. I9335483FY16 - Resend (by case or date) use the legacy accession 
+                   when the SSAN should be used.
+  
+    Problem A:
+    ----------
+    A bug in Routine RAHLR1 sets the accession number value to the value
+    stored in the SITE ACCESSION NUMBER field (file #70.03; field #31).
+    This logic is in error because an older study created before the RIS
+    used v2.4 of the VistA Health Level Seven (HL7) application will not
+    have a value in the SITE ACCESSION NUMBER. When in a v2.4 HL7
+    environment these older studies pass the legacy accession number. Voice
+    Recognition systems are looking for the Site Specific Accession Number
+    ('SSAN') and reject the inbound RIS HL7 message.
+  
+    Resolution A:
+    -------------
+    Routine RAHLR1 has been updated to check the RIS specific HL7
+    environment the production account is running under. If the environment
+    is pre v2.4 the legacy accession number is used. If the environment is
+    v2.4 the SSAN is used.
+  
+    Problem B:
+    ----------
+    Routine RAHLTCPX determined the type of accession number, legacy or
+    SSAN, based on the number of dash ('-') delimited pieces. If the number
+    of pieces was two the software used the "ADC" cross reference. If the
+    number of pieces was three the software used the "ADC1" cross
+    reference. Note: Both the "ADC" and the "ADC1" cross references are
+    file-wide cross references on the  RAD/NUC MED PATIENT (#70) file.
+  
+    Resolution B:
+    -------------
+    Routine RAHLTCPX has been updated to check the number of pieces of the
+    accession number delimited by a dash. If the number of pieces is two,
+    the "ADC" cross reference is used. If the number of pieces is three and
+    the "ADC1" cross reference exists the "ADC1" cross reference is used.
+    If the number of pieces is three and the "ADC1" cross reference does
+    not exist the "ADC" cross reference is used.
+  
+    Routines: RAHLTCPX, RAHLR1
+  
+ 3. R9397618FY16 - HL7 failing daily <UNDEFINED>OBR+29^RAHLTCPX *PAR(26)
+  
+    Problem:
+    --------
+    When a v2.4 HL7 report is broadcast to the VistA M server, the segments
+    and fields from that message are de-constructed and processed. It is 
+    assumed that the RESULT STATUS (OBR-25) will have a value. A value
+    may not always be assigned. Before this patch, the software lapsed into
+    an error condition because it does not have a result status. After this
+    patch the software will identify the missing Result Status value and
+    exit without error.
+  
+    Resolution:
+    -----------
+    RAHLTCPX will be updated to check for the array element PAR(26) and if
+    it is undefined, the software will negatively acknowledge ('NAK') the
+    inbound HL7 v2.4 ORU message.
+  
+    Routine: RAHLTCPX
+  
+       ==================== Installation Instructions ====================
+  This patch cannot be installed with Radiology/Nuclear Medicine users on
+  the system. This patch should take less than five minutes to install.
+   
+  All VistA Radiology users are to be off the system. Voice Recognition 
+  and Radiology based PACS activities are to be paused while RA*5.0*129 is
+  installed.
+   
+  1. Stop entering radiology orders through CPRS and the Radiology/Nuclear 
+     Medicine application.
+  
+  2. Shutdown HL7 messaging between the VistA RIS and non-VistA RIS 
+     applications, by using the "Filer and Link Management Options [menu]".
+  
+  3. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+     option will load the KIDS patch onto your system.
+   
+  4. The patch has now been loaded into a Transport global on your
+     system. You now need to use KIDS to install the transport global.
+   
+  5. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+     select the 'Installation' menu.
+   
+  6. Use the 'Verify Checksum in Transport Global' option and verify
+     that all routines have the correct checksums.
+   
+  7. On the KIDS menu, under the 'Installation' menu, use the following
+     options:
+             Print Transport Global
+             Compare Transport Global to Current System
+             Backup a Transport Global
+   
+        Preserve a copy of the routines exported in this patch prior to
+        installation, you should use the 'Backup a Transport Global' option
+        at this time. You may also compare the routines in your production
+        account to the routines in the patch by using the 'Compare a
+        Transport Global to Current System' option.
+  
+  8. Use the 'Install Package(s)' option under the 'Installation' menu 
+     and select the package 'RA*5.0*129.
+   
+     When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//, 
+     choose 'NO'.
+   
+     When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO//', choose YES.
+      
+     When prompted, 'Enter options you wish to mark as 'Out Of order':', 
+     enter the following options:
+      
+     Disable the following VistA RIS options:
+     ----------------------------------------
+     Request an Exam                             [RA ORDEREXAM]
+     Resend Radiology HL7 Message                [RA HL7 MESSAGE RESEND]
+     Resend Radiology HL7 Messages By Date Range [RA HL7 RESEND BY 
+                                                 DATE RANGE]
+      
+  9. If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+   ==================== Post-Installation Instructions ====================
+     Restart HL7 messaging between the VistA RIS and non-VistA RIS
+     applications, by using the "Filer and Link Management Options [menu]".
+     
+     Resume entering radiology order through CPRS and the 
+     Radiology/Nuclear Medicine application.
+  
+     The installation of RA*5.0*129 is complete.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RAHLR1
+    Before: B25001746   After: B26243078  **47,125,129**
+ Description of Changes:
+  Some sites may rebroadcast old studies built around the legacy accession 
+  number format while running under v2.4 of HL7 messaging for the VistA 
+  RIS. Commercial off the Shelf (COTS) products are expecting a site 
+  specific accession number (SSAN). We build the SSAN in this case and 
+  broadcast the order to COTS. 
+   
+  This new logic resides in INIT^RAHLR1.
+
+Routine Name: RAHLTCPX
+    Before: B94012646   After:B100969954  **47,114,129**
+ Description of Changes:
+  Some sites may rebroadcast old studies built around the legacy accession 
+  number format while running under v2.4 of HL7 messaging for the VistA 
+  RIS. Commercial off the Shelf (COTS) products are expecting a site 
+  specific accession number (SSAN). We build the SSAN in this case and 
+  broadcast the order to COTS. COTS results the report and broadcasts the 
+  report back to VistA with the SSAN. Our server side software has to check 
+  for the possibility that the SSAN in the report was for a pre-v2.4 
+  Radiology placed order.
+   
+  In this case if the SSAN cannot be found having a specific cross 
+  reference ("ADC1") the software looks for a match on the "ADC" cross
+  reference.
+   
+  RAHLTCPX will be updated to check for the array element PAR(26) and if
+  it is undefined the software will negatively acknowledge ('NAK') the
+  inbound HL7 v2.4 ORU message.
+
+Routine Name: RAO7RON1
+    Before: B29535548   After: B30720358  **69,75,98,129**
+ Description of Changes:
+  RAO7RON1 has added code to strip all unprintable ASCII characters (ASCII 
+  0 - 31) from the CLINICAL HISTORY and REASON FOR STUDY data associated 
+  with a radiology order.
+   
+  Some control characters are 'reserve' characters used with the Minimal
+  Lower-Layer Protocol (MLLP). The MLLP defines how a HL7 message is 
+  structured to ensure you know where a message starts, where a message
+  stops, and where the next message starts.
+
+ 
+Routine list of preceding patches: 98, 114, 125
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 21, 2016
+Completed By:                               Date Completed: DEC 12, 2016
+Released By :                               Date Released : DEC 13, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,1237 @@
+EMERGENCY Released IB*2*579 SEQ #534
+Extracted from mail message
+**KIDS**:IB*2.0*579^
+
+**INSTALL NAME**
+IB*2.0*579
+"BLD",9887,0)
+IB*2.0*579^INTEGRATED BILLING^0^3161103^y
+"BLD",9887,1,0)
+^^8^8^3161027^
+"BLD",9887,1,1,0)
+This is a patch for build IB*2.0*549 containing two routines.  Routine 
+"BLD",9887,1,2,0)
+IBCNEUT7 is being modified in the DEATH2 subroutine to also set the 
+"BLD",9887,1,3,0)
+COVERED BY HEALTH INSURANCE field (file 2, field .3192) to 'N' when 
+"BLD",9887,1,4,0)
+terminating all active policies for a deceased patient.  It also contains 
+"BLD",9887,1,5,0)
+a post-installation routine which will change the COVERED BY HEALTH 
+"BLD",9887,1,6,0)
+INSURANCE field for all deceased patients who don't have active patient 
+"BLD",9887,1,7,0)
+policies and the current value of the COVERED BY HEALTH INSURANCE field 
+"BLD",9887,1,8,0)
+IS 'Y'.
+"BLD",9887,4,0)
+^9.64PA^^
+"BLD",9887,6.3)
+2
+"BLD",9887,"ABPKG")
+n
+"BLD",9887,"INID")
+^n
+"BLD",9887,"INIT")
+IBY579PO
+"BLD",9887,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9887,"KRN",.4,0)
+.4
+"BLD",9887,"KRN",.401,0)
+.401
+"BLD",9887,"KRN",.402,0)
+.402
+"BLD",9887,"KRN",.403,0)
+.403
+"BLD",9887,"KRN",.5,0)
+.5
+"BLD",9887,"KRN",.84,0)
+.84
+"BLD",9887,"KRN",3.6,0)
+3.6
+"BLD",9887,"KRN",3.8,0)
+3.8
+"BLD",9887,"KRN",9.2,0)
+9.2
+"BLD",9887,"KRN",9.8,0)
+9.8
+"BLD",9887,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",9887,"KRN",9.8,"NM",1,0)
+IBCNEUT7^^0^B79064178
+"BLD",9887,"KRN",9.8,"NM",2,0)
+IBY579PO^^0^B36838238
+"BLD",9887,"KRN",9.8,"NM","B","IBCNEUT7",1)
+
+"BLD",9887,"KRN",9.8,"NM","B","IBY579PO",2)
+
+"BLD",9887,"KRN",19,0)
+19
+"BLD",9887,"KRN",19.1,0)
+19.1
+"BLD",9887,"KRN",101,0)
+101
+"BLD",9887,"KRN",409.61,0)
+409.61
+"BLD",9887,"KRN",771,0)
+771
+"BLD",9887,"KRN",779.2,0)
+779.2
+"BLD",9887,"KRN",870,0)
+870
+"BLD",9887,"KRN",8989.51,0)
+8989.51
+"BLD",9887,"KRN",8989.52,0)
+8989.52
+"BLD",9887,"KRN",8994,0)
+8994
+"BLD",9887,"KRN","B",.4,.4)
+
+"BLD",9887,"KRN","B",.401,.401)
+
+"BLD",9887,"KRN","B",.402,.402)
+
+"BLD",9887,"KRN","B",.403,.403)
+
+"BLD",9887,"KRN","B",.5,.5)
+
+"BLD",9887,"KRN","B",.84,.84)
+
+"BLD",9887,"KRN","B",3.6,3.6)
+
+"BLD",9887,"KRN","B",3.8,3.8)
+
+"BLD",9887,"KRN","B",9.2,9.2)
+
+"BLD",9887,"KRN","B",9.8,9.8)
+
+"BLD",9887,"KRN","B",19,19)
+
+"BLD",9887,"KRN","B",19.1,19.1)
+
+"BLD",9887,"KRN","B",101,101)
+
+"BLD",9887,"KRN","B",409.61,409.61)
+
+"BLD",9887,"KRN","B",771,771)
+
+"BLD",9887,"KRN","B",779.2,779.2)
+
+"BLD",9887,"KRN","B",870,870)
+
+"BLD",9887,"KRN","B",8989.51,8989.51)
+
+"BLD",9887,"KRN","B",8989.52,8989.52)
+
+"BLD",9887,"KRN","B",8994,8994)
+
+"BLD",9887,"QUES",0)
+^9.62^^
+"BLD",9887,"REQB",0)
+^9.611^1^1
+"BLD",9887,"REQB",1,0)
+IB*2.0*549^1
+"BLD",9887,"REQB","B","IB*2.0*549",1)
+
+"INIT")
+IBY579PO
+"MBREQ")
+0
+"PKG",200,-1)
+1^1
+"PKG",200,0)
+INTEGRATED BILLING^IB^INTEGRATED BILLING
+"PKG",200,20,0)
+^9.402P^1^1
+"PKG",200,20,1,0)
+2^^IBAXDR
+"PKG",200,20,1,1)
+
+"PKG",200,20,"B",2,1)
+
+"PKG",200,22,0)
+^9.49I^1^1
+"PKG",200,22,1,0)
+2.0^2940321^2990406^2447
+"PKG",200,22,1,"PAH",1,0)
+579^3161103
+"PKG",200,22,1,"PAH",1,1,0)
+^^8^8^3161103
+"PKG",200,22,1,"PAH",1,1,1,0)
+This is a patch for build IB*2.0*549 containing two routines.  Routine 
+"PKG",200,22,1,"PAH",1,1,2,0)
+IBCNEUT7 is being modified in the DEATH2 subroutine to also set the 
+"PKG",200,22,1,"PAH",1,1,3,0)
+COVERED BY HEALTH INSURANCE field (file 2, field .3192) to 'N' when 
+"PKG",200,22,1,"PAH",1,1,4,0)
+terminating all active policies for a deceased patient.  It also contains 
+"PKG",200,22,1,"PAH",1,1,5,0)
+a post-installation routine which will change the COVERED BY HEALTH 
+"PKG",200,22,1,"PAH",1,1,6,0)
+INSURANCE field for all deceased patients who don't have active patient 
+"PKG",200,22,1,"PAH",1,1,7,0)
+policies and the current value of the COVERED BY HEALTH INSURANCE field 
+"PKG",200,22,1,"PAH",1,1,8,0)
+IS 'Y'.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","IBCNEUT7")
+0^1^B79064178^B72027534
+"RTN","IBCNEUT7",1,0)
+IBCNEUT7 ;DAOU/ALA - IIV MISC. UTILITIES ;14-OCT-2015
+"RTN","IBCNEUT7",2,0)
+ ;;2.0;INTEGRATED BILLING;**184,549,579**;21-MAR-94;Build 2
+"RTN","IBCNEUT7",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IBCNEUT7",4,0)
+ ;
+"RTN","IBCNEUT7",5,0)
+ ;**Program Description**
+"RTN","IBCNEUT7",6,0)
+ ;  This program contains some general utilities or functions
+"RTN","IBCNEUT7",7,0)
+ ;
+"RTN","IBCNEUT7",8,0)
+ Q
+"RTN","IBCNEUT7",9,0)
+ ;
+"RTN","IBCNEUT7",10,0)
+DEATH(DFN,DOD)   ;EP
+"RTN","IBCNEUT7",11,0)
+ ; IB*2.0*549 added method
+"RTN","IBCNEUT7",12,0)
+ ; Sets the INSURANCE EXPIRATION DATE (file 2.3121, field ) for all active
+"RTN","IBCNEUT7",13,0)
+ ; insurances of the selected patient to be the date of death +1
+"RTN","IBCNEUT7",14,0)
+ ; Input:   DFN     - IEN of the patient to term insurances for
+"RTN","IBCNEUT7",15,0)
+ ;          DOD     - Internal date of death (file 2, field .351) of the patient
+"RTN","IBCNEUT7",16,0)
+ N MTIME,ZTRTN,ZTDESC,ZTDTH,ZTIO,ZTUCI,ZTCPU,ZTPRI,ZTSAVE,ZTKIL,ZTSYNC,ZTSK
+"RTN","IBCNEUT7",17,0)
+ S MTIME=$$NOW^XLFDT()                      ; Fileman date/time
+"RTN","IBCNEUT7",18,0)
+ S ZTDTH=$$FMTH^XLFDT(MTIME)                ; Convert to $H format
+"RTN","IBCNEUT7",19,0)
+ ;
+"RTN","IBCNEUT7",20,0)
+ ; Set up the other TaskManager variables
+"RTN","IBCNEUT7",21,0)
+ S ZTRTN="DEATH2^IBCNEUT7"
+"RTN","IBCNEUT7",22,0)
+ S ZTDESC="eIV Auto Termination of Policies for deceased patients"
+"RTN","IBCNEUT7",23,0)
+ S ZTIO=""
+"RTN","IBCNEUT7",24,0)
+ S ZTSAVE("DFN")="",ZTSAVE("DOD")=""
+"RTN","IBCNEUT7",25,0)
+ D ^%ZTLOAD ; Call TaskManager
+"RTN","IBCNEUT7",26,0)
+ Q
+"RTN","IBCNEUT7",27,0)
+ ;
+"RTN","IBCNEUT7",28,0)
+DEATH2 ;EP from TaskMan
+"RTN","IBCNEUT7",29,0)
+ ; IB*2.0*549 added method
+"RTN","IBCNEUT7",30,0)
+ ; Sets the INSURANCE EXPIRATION DATE (file 2.3121, field ) for all active
+"RTN","IBCNEUT7",31,0)
+ ; insurances of the selected patient to be the date of death +1
+"RTN","IBCNEUT7",32,0)
+ ; IB*2.0*579 - Also sets the 'COVERED BY HEALTH INSURANCE' to 'N' (file 2, field .3192)
+"RTN","IBCNEUT7",33,0)
+ ;              if it's not already set to 'N'
+"RTN","IBCNEUT7",34,0)
+ ; Input:   DFN     - IEN of the patient to term insurances for
+"RTN","IBCNEUT7",35,0)
+ ;          DOD     - Internal date of death (file 2, field .351) of the patient
+"RTN","IBCNEUT7",36,0)
+ N EXPDT,DA,DEACT,DODX,FDA,HCOV,IBIEN                ; IB*2.0*579 - added DEACT,HCOV
+"RTN","IBCNEUT7",37,0)
+ S DEACT=0                                           ; IB*2.0*579 - added line
+"RTN","IBCNEUT7",38,0)
+ S DODX=$P($$FMADD^XLFDT(DOD,1),".",1)               ; Date of Death +1
+"RTN","IBCNEUT7",39,0)
+ S IBIEN=0
+"RTN","IBCNEUT7",40,0)
+ F  S IBIEN=$O(^DPT(DFN,.312,IBIEN)) Q:+IBIEN=0  D
+"RTN","IBCNEUT7",41,0)
+ . S EXPDT=$$GET1^DIQ(2.312,IBIEN_","_DFN_",",3,"I") ; Policy Expiration Date
+"RTN","IBCNEUT7",42,0)
+ . Q:EXPDT'=""                                       ; Policy has an expiration date
+"RTN","IBCNEUT7",43,0)
+ . L +^DPT(DFN,.312,IBIEN):5
+"RTN","IBCNEUT7",44,0)
+ . I '$T D  Q                                        ; Send email IB SUPERVISOR users
+"RTN","IBCNEUT7",45,0)
+ . . N EDT,MLGRP,MSG,PNM,SSN,SUBJECT,XMY
+"RTN","IBCNEUT7",46,0)
+ . . S SUBJECT="eIV: Policy Expiration for deceased patient"
+"RTN","IBCNEUT7",47,0)
+ . . S MLGRP=$$MGRP^IBCNEUT5
+"RTN","IBCNEUT7",48,0)
+ . . S PNM=$$GET1^DIQ(2,DFN,.01)
+"RTN","IBCNEUT7",49,0)
+ . . S EDT=$$FMTE^XLFDT(DODX,"2DZ")
+"RTN","IBCNEUT7",50,0)
+ . . S SSN=$$GET1^DIQ(2,DFN,.09),SSN=$E(SSN,6,9)
+"RTN","IBCNEUT7",51,0)
+ . . S MSG(1)=PNM_" "_SSN_" was just marked as deceased. Action Needed:"
+"RTN","IBCNEUT7",52,0)
+ . . S MSG(2)=" Update the patient's active policies and enter and expiration date of "_EDT_"."
+"RTN","IBCNEUT7",53,0)
+ . . D GETPER("IB SUPERVISOR",.XMY)
+"RTN","IBCNEUT7",54,0)
+ . . D MSG^IBCNEUT5(MLGRP,SUBJECT,"MSG(",,.XMY)
+"RTN","IBCNEUT7",55,0)
+ . ;
+"RTN","IBCNEUT7",56,0)
+ . ; Set Policy expiration date to be date of death +1
+"RTN","IBCNEUT7",57,0)
+ . S DEACT=1                                        ; IB*2.0*579 - added line
+"RTN","IBCNEUT7",58,0)
+ . K DA,FDA
+"RTN","IBCNEUT7",59,0)
+ . S DA=IBIEN,DA(1)=DFN
+"RTN","IBCNEUT7",60,0)
+ . S FDA(2.312,DA_","_DA(1)_",",1.05)=$$NOW^XLFDT() ; Date Last Edited
+"RTN","IBCNEUT7",61,0)
+ . S FDA(2.312,DA_","_DA(1)_",",1.06)=.5            ; Last Edited By
+"RTN","IBCNEUT7",62,0)
+ . S FDA(2.312,DA_","_DA(1)_",",3)=DODX             ; Date of Death +1
+"RTN","IBCNEUT7",63,0)
+ . D FILE^DIE("","FDA")
+"RTN","IBCNEUT7",64,0)
+ . L -^DPT(DFN,.312,IBIEN)
+"RTN","IBCNEUT7",65,0)
+ ;
+"RTN","IBCNEUT7",66,0)
+ ; IB*2.0*579 - added if statement below
+"RTN","IBCNEUT7",67,0)
+ ; If any policies were expired and the Covered by Health Insurance flag is set to 'Y'.
+"RTN","IBCNEUT7",68,0)
+ ; change it to 'N'
+"RTN","IBCNEUT7",69,0)
+ I DEACT D
+"RTN","IBCNEUT7",70,0)
+ . S HCOV=$$GET1^DIQ(2,DFN_",",.3192,"I")
+"RTN","IBCNEUT7",71,0)
+ . Q:HCOV'="Y"                              ; Already set to 'N'
+"RTN","IBCNEUT7",72,0)
+ . N IBSUPRES
+"RTN","IBCNEUT7",73,0)
+ . S IBSUPRES=1
+"RTN","IBCNEUT7",74,0)
+ . D COVERED^IBCNSM31(DFN,HCOV)             ; Set the Health Coverage flag to 'N'
+"RTN","IBCNEUT7",75,0)
+ Q
+"RTN","IBCNEUT7",76,0)
+ ;
+"RTN","IBCNEUT7",77,0)
+GETPER(SECKEY,XMY) ;EP
+"RTN","IBCNEUT7",78,0)
+ ; IB*2.0*549 Added method
+"RTN","IBCNEUT7",79,0)
+ ; Returns a list of users with the specified security key
+"RTN","IBCNEUT7",80,0)
+ ; Input: SECKEY - Security key to search for
+"RTN","IBCNEUT7",81,0)
+ ; Output: XMY() - Array email addresses for users who have the specified key
+"RTN","IBCNEUT7",82,0)
+ N XUSIEN,X
+"RTN","IBCNEUT7",83,0)
+ S XUSIEN=0
+"RTN","IBCNEUT7",84,0)
+ F  S XUSIEN=$O(^XUSEC(SECKEY,XUSIEN)) Q:'XUSIEN  D
+"RTN","IBCNEUT7",85,0)
+ . ;
+"RTN","IBCNEUT7",86,0)
+ . ; Don't return TERMINATED or DISUSERed users
+"RTN","IBCNEUT7",87,0)
+ . S X=$$ACTIVE^XUSER(XUSIEN)
+"RTN","IBCNEUT7",88,0)
+ . I X=""!($P(X,"^",1)=0) Q
+"RTN","IBCNEUT7",89,0)
+ . ;
+"RTN","IBCNEUT7",90,0)
+ . ; Put users emails into output array
+"RTN","IBCNEUT7",91,0)
+ . S XMY(XUSIEN)=""
+"RTN","IBCNEUT7",92,0)
+ Q
+"RTN","IBCNEUT7",93,0)
+ ;
+"RTN","IBCNEUT7",94,0)
+FTFIC(IBIEN,MDCALL) ;EP
+"RTN","IBCNEUT7",95,0)
+ ; IB*2.0*549 added function
+"RTN","IBCNEUT7",96,0)
+ ; Returns Timely Filing Timeframe text for a specified Insurance Company
+"RTN","IBCNEUT7",97,0)
+ ; translate fields 36,.18 and 36,.19 to agreed upon displayed text for
+"RTN","IBCNEUT7",98,0)
+ ; Insurance company Reports
+"RTN","IBCNEUT7",99,0)
+ ; Input:   IBIEN   - IEN of the insurance company to get data from
+"RTN","IBCNEUT7",100,0)
+ ;          MDCALL - 1 if being called from the Missing Data Report
+"RTN","IBCNEUT7",101,0)
+ ;                   0 otherwise. Optional, defaults to 0
+"RTN","IBCNEUT7",102,0)
+ ; Returns: Timely Filing Timeframe text for the specified Insurance Company
+"RTN","IBCNEUT7",103,0)
+ ;          NOTE: If MDCALL=1 null Standard FTF Values and Qualifiers are 
+"RTN","IBCNEUT7",104,0)
+ ;                as '###' instead of null or 'UNKNOWN' respectively
+"RTN","IBCNEUT7",105,0)
+ N FTF,FTFV
+"RTN","IBCNEUT7",106,0)
+ S:'$D(MDCALL) MDCALL=0
+"RTN","IBCNEUT7",107,0)
+ Q:'$D(IBIEN) ""
+"RTN","IBCNEUT7",108,0)
+ S FTF=$$GET1^DIQ(36,IBIEN_",",.18,"I")     ; Standard FTF IEN (file 355.13)
+"RTN","IBCNEUT7",109,0)
+ S FTFV=$$GET1^DIQ(36,IBIEN_",",.19,"I")    ; Standard FTF Value
+"RTN","IBCNEUT7",110,0)
+ Q $$FTFMAP(FTF,FTFV,MDCALL)
+"RTN","IBCNEUT7",111,0)
+ ;
+"RTN","IBCNEUT7",112,0)
+FTFGP(GIEN,MDCALL) ;EP
+"RTN","IBCNEUT7",113,0)
+ ; IB*2.0*549 added function
+"RTN","IBCNEUT7",114,0)
+ ; Returns Timely Filing Timeframe text for a specified Group Insurance Plan
+"RTN","IBCNEUT7",115,0)
+ ; translate fields 355.3,.16 and 355.3,.17 to agreed upon displayed text for
+"RTN","IBCNEUT7",116,0)
+ ; Insurance company Reports
+"RTN","IBCNEUT7",117,0)
+ ; Input:   GIEN   - IEN of the group insurance plan to get data from
+"RTN","IBCNEUT7",118,0)
+ ;          MDCALL - 1 if being called from the Missing Data Report
+"RTN","IBCNEUT7",119,0)
+ ;                   0 otherwise. Optional, defaults to 0
+"RTN","IBCNEUT7",120,0)
+ ; Returns: Timely Filing Timeframe text for the specified Group Insurance Plan
+"RTN","IBCNEUT7",121,0)
+ ;          NOTE: If MDCALL=1 null Standard FTF Values and Qualifiers are 
+"RTN","IBCNEUT7",122,0)
+ ;                as '###' instead of null or 'UNKNOWN' respectively
+"RTN","IBCNEUT7",123,0)
+ N FTF,FTFV,XX,ZZ
+"RTN","IBCNEUT7",124,0)
+ S:'$D(MDCALL) MDCALL=0
+"RTN","IBCNEUT7",125,0)
+ Q:'$D(GIEN) ""
+"RTN","IBCNEUT7",126,0)
+ S FTF=$$GET1^DIQ(355.3,GIEN_",",.16,"I")   ; Standard FTF IEN (file 355.13)
+"RTN","IBCNEUT7",127,0)
+ S FTFV=$$GET1^DIQ(355.3,GIEN_",",.17,"I")  ; Standard FTF Value
+"RTN","IBCNEUT7",128,0)
+ Q $$FTFMAP(FTF,FTFV,MDCALL)
+"RTN","IBCNEUT7",129,0)
+ ;
+"RTN","IBCNEUT7",130,0)
+FTFMAP(FIEN,FTFV,MDCALL) ; Returns Timely Filing Text for the specified Standard FTF
+"RTN","IBCNEUT7",131,0)
+ ; and Standard FTF Value
+"RTN","IBCNEUT7",132,0)
+ ;IB*2.0*549 added function
+"RTN","IBCNEUT7",133,0)
+ ; Input:   FIEN   - IEN of the Standard FTF (filer 355.13)
+"RTN","IBCNEUT7",134,0)
+ ;          MDCALL - 1 if being called from the Missing Data Report
+"RTN","IBCNEUT7",135,0)
+ ;                   0 otherwise. Optional, defaults to 0
+"RTN","IBCNEUT7",136,0)
+ ; Output:  FTFV    - Standard FTF Value
+"RTN","IBCNEUT7",137,0)
+ ; Returns: Timely Filing Timeframe text
+"RTN","IBCNEUT7",138,0)
+ N FTF
+"RTN","IBCNEUT7",139,0)
+ S:'$D(MDCALL) MDCALL=0
+"RTN","IBCNEUT7",140,0)
+ I MDCALL,FTFV="" S FTFV="###"
+"RTN","IBCNEUT7",141,0)
+ S FTF=$$GET1^DIQ(355.13,FIEN_",",.01)       ; Standard FTF name
+"RTN","IBCNEUT7",142,0)
+ Q:FTF="" FTFV_" ("_$S(MDCALL:"###",1:"UNKNOWN")_")"
+"RTN","IBCNEUT7",143,0)
+ Q:FTF="DAYS" FTFV_" (DYS)"
+"RTN","IBCNEUT7",144,0)
+ Q:FTF="DAYS OF FOLLOWING YEAR" FTFV_" (DYS OF NEXT YR)"
+"RTN","IBCNEUT7",145,0)
+ Q:FTF="DAYS PLUS ONE YEAR" FTFV_" (DYS_1 YR)"
+"RTN","IBCNEUT7",146,0)
+ Q:FTF="END OF FOLLOWING YEAR" FTFV_" (END OF NEXT YR)"
+"RTN","IBCNEUT7",147,0)
+ Q:FTF="MONTH(S)" FTFV_" (MOS)"
+"RTN","IBCNEUT7",148,0)
+ Q:FTF="MONTHS OF FOLLOWING YEAR" FTFV_" (MOS OF NEXT YR)"
+"RTN","IBCNEUT7",149,0)
+ Q:FTF="NO FILING TIME FRAME LIMIT" FTFV_" (N/A)"
+"RTN","IBCNEUT7",150,0)
+ Q:FTF="YEAR(S)" FTFV_" (YRS)"
+"RTN","IBCNEUT7",151,0)
+ Q FTFV_" ("_$S(MDCALL:"###",1:"UNKNOWN")_")"
+"RTN","IBCNEUT7",152,0)
+ ;
+"RTN","IBCNEUT7",153,0)
+XMITOK(TQIEN) ;EP
+"RTN","IBCNEUT7",154,0)
+ ; IB*2.0*549 added function
+"RTN","IBCNEUT7",155,0)
+ ; Checks if the site is a test site (not a production site) and if so
+"RTN","IBCNEUT7",156,0)
+ ; only allows transactions in the eIV queue that meet specific criteria
+"RTN","IBCNEUT7",157,0)
+ ; to be transmitted to FSC. Prevents invalid transmissions from a test
+"RTN","IBCNEUT7",158,0)
+ ; site to FSC which blocks the interface and need to be manually resolved
+"RTN","IBCNEUT7",159,0)
+ ; at FSC.
+"RTN","IBCNEUT7",160,0)
+ ; Input:   TQIEN   - IEN of the IIV Transmission Queue entry
+"RTN","IBCNEUT7",161,0)
+ ; Returns: 1       - Ok to add item to the eIV queue
+"RTN","IBCNEUT7",162,0)
+ ;          0       - Not ok to add item to the eIV queue
+"RTN","IBCNEUT7",163,0)
+ N GOOD,GRPNUM,IBIEN,IBCNMPI,IENS,IVPIEN,MCARE,PATDOB,PATID,PATNM,PATSEX,PAYRNM,PIEN
+"RTN","IBCNEUT7",164,0)
+ N SUBID,SUBNM,TSITE,XX
+"RTN","IBCNEUT7",165,0)
+ S MCARE=$$GET1^DIQ(350.9,"1,",51.25,"E")    ; Medicare Payer Name
+"RTN","IBCNEUT7",166,0)
+ S XX=$G(^IBCN(365.1,TQIEN,0))
+"RTN","IBCNEUT7",167,0)
+ S (GRPNUM,PATID,SUBID,SUBNM)=""
+"RTN","IBCNEUT7",168,0)
+ S DFN=$$GET1^DIQ(365.1,TQIEN_",",.02,"I")   ; Patient IEN                   
+"RTN","IBCNEUT7",169,0)
+ S IBCNMPI=$$GET1^DIQ(2,DFN_",",991.01,"I")  ; Integration Control Number MPI
+"RTN","IBCNEUT7",170,0)
+ S PIEN=$$GET1^DIQ(365.1,TQIEN_",",.03,"I")  ; Payer IEN
+"RTN","IBCNEUT7",171,0)
+ S IBIEN=$$GET1^DIQ(365.1,TQIEN_",",.13,"I") ; Insurance multiple number
+"RTN","IBCNEUT7",172,0)
+ ;
+"RTN","IBCNEUT7",173,0)
+ ; If the insurance multiple is not in the transmission queue, get the
+"RTN","IBCNEUT7",174,0)
+ ; following fields from the Insurance Verification Processor file
+"RTN","IBCNEUT7",175,0)
+ I IBIEN="" D
+"RTN","IBCNEUT7",176,0)
+ . S IVPIEN=$$GET1^DIQ(365.1,TQIEN_",",.05,"I") ; IVP file IEN
+"RTN","IBCNEUT7",177,0)
+ . S GRPNUM=$$GET1^DIQ(355.33,IVPIEN_",",90.02) ; Group Plan Number
+"RTN","IBCNEUT7",178,0)
+ . S PATID=$$GET1^DIQ(355.33,IVPIEN_",",62.01)  ; Group Plan Number
+"RTN","IBCNEUT7",179,0)
+ . S SUBID=$$GET1^DIQ(355.33,IVPIEN_",",90.03)  ; Subscriber ID
+"RTN","IBCNEUT7",180,0)
+ . S SUBNM=$$GET1^DIQ(355.33,IVPIEN_",",91.01)  ; Subscriber Name
+"RTN","IBCNEUT7",181,0)
+ E  D
+"RTN","IBCNEUT7",182,0)
+ . S IENS=IBIEN_","_DFN_","
+"RTN","IBCNEUT7",183,0)
+ . S XX=$$GET1^DIQ(2.312,IENS,.18,"I")       ; IEN of the Group Plan
+"RTN","IBCNEUT7",184,0)
+ . S GRPNUM=$$GET1^DIQ(355.3,XX_",",2.02)    ; Group Plan Number
+"RTN","IBCNEUT7",185,0)
+ . S PATID=$$GET1^DIQ(2.312,IENS,5.01)       ; Patient ID
+"RTN","IBCNEUT7",186,0)
+ . S SUBID=$$GET1^DIQ(2.312,IENS,1)          ; Subscriber ID
+"RTN","IBCNEUT7",187,0)
+ . S SUBNM=$$GET1^DIQ(2.312,IENS,7.01)       ; Subscriber NM
+"RTN","IBCNEUT7",188,0)
+ ;
+"RTN","IBCNEUT7",189,0)
+ ; First check to see if the site is a test or a production site
+"RTN","IBCNEUT7",190,0)
+ S TSITE=$S($$PROD^XUPROD(1):0,1:1)
+"RTN","IBCNEUT7",191,0)
+ Q:'TSITE 1                                  ; Production site no checks done
+"RTN","IBCNEUT7",192,0)
+ ;
+"RTN","IBCNEUT7",193,0)
+ ; Quit if the Integration Control Number MPI is null - MUST be present
+"RTN","IBCNEUT7",194,0)
+ Q:IBCNMPI="" 0
+"RTN","IBCNEUT7",195,0)
+ ;
+"RTN","IBCNEUT7",196,0)
+ I (SUBID="")!(SUBNM="") Q 0                 ; Key elements not defined
+"RTN","IBCNEUT7",197,0)
+ S XX=$$GET1^DIQ(2,DFN_",",.03,"I")          ; Internal Patient DOB
+"RTN","IBCNEUT7",198,0)
+ S PATDOB=$TR($$FMTE^XLFDT(XX,"7DZ"),"/","") ; YYYYMMDD format
+"RTN","IBCNEUT7",199,0)
+ S PATSEX=$$GET1^DIQ(2,DFN_",",.02,"I")      ; Patient Sex
+"RTN","IBCNEUT7",200,0)
+ S PATNM=$$GET1^DIQ(2,DFN_",",.01,"I")       ; Patient Name
+"RTN","IBCNEUT7",201,0)
+ S PAYRNM=$$GET1^DIQ(365.12,PIEN_",",.01)    ; Payer Name
+"RTN","IBCNEUT7",202,0)
+ S PAYRNM=$$UP^XLFSTR(PAYRNM)
+"RTN","IBCNEUT7",203,0)
+ S GOOD=0
+"RTN","IBCNEUT7",204,0)
+ ; 
+"RTN","IBCNEUT7",205,0)
+ ; Profile P1 Test
+"RTN","IBCNEUT7",206,0)
+ I PAYRNM="AETNA",GRPNUM="GRP NUM 13805",SUBID="111111AE" D  Q:GOOD 1
+"RTN","IBCNEUT7",207,0)
+ . Q:SUBNM'="IBSUB,ACTIVE"
+"RTN","IBCNEUT7",208,0)
+ . Q:PATDOB'="19220202"
+"RTN","IBCNEUT7",209,0)
+ . Q:PATSEX'="M"
+"RTN","IBCNEUT7",210,0)
+ . S GOOD=1
+"RTN","IBCNEUT7",211,0)
+ ;
+"RTN","IBCNEUT7",212,0)
+ ; Profile P2 Test
+"RTN","IBCNEUT7",213,0)
+ I PAYRNM="AETNA",GRPNUM="GRP NUM 13188",SUBID="111111FG" D  Q:GOOD 1
+"RTN","IBCNEUT7",214,0)
+ . Q:SUBNM'="IBSUB,INACTIVE"
+"RTN","IBCNEUT7",215,0)
+ . Q:PATDOB'="19480101"
+"RTN","IBCNEUT7",216,0)
+ . Q:PATSEX'="F"
+"RTN","IBCNEUT7",217,0)
+ . S GOOD=1
+"RTN","IBCNEUT7",218,0)
+ ;
+"RTN","IBCNEUT7",219,0)
+ ; Profile P3 Test
+"RTN","IBCNEUT7",220,0)
+ I PAYRNM="CIGNA",GRPNUM="GRP NUM 5442",SUBID="012345678" D  Q:GOOD 1
+"RTN","IBCNEUT7",221,0)
+ . Q:SUBNM'="IBSUB,AAAERROR"
+"RTN","IBCNEUT7",222,0)
+ . Q:PATDOB'="19470211"
+"RTN","IBCNEUT7",223,0)
+ . Q:PATSEX'="M"
+"RTN","IBCNEUT7",224,0)
+ . S GOOD=1
+"RTN","IBCNEUT7",225,0)
+ ;
+"RTN","IBCNEUT7",226,0)
+ ; Profile P4 Test
+"RTN","IBCNEUT7",227,0)
+ I PAYRNM="AETNA",GRPNUM="AET1234",SUBID="W1234561111" D  Q:GOOD 1
+"RTN","IBCNEUT7",228,0)
+ . Q:SUBNM'="IBINS,ACTIVE"                  ; Note this patient is male
+"RTN","IBCNEUT7",229,0)
+ . Q:PATID'="W123452222"
+"RTN","IBCNEUT7",230,0)
+ . Q:PATNM'="IBDEP,ACTIVE"
+"RTN","IBCNEUT7",231,0)
+ . Q:PATDOB'="19900304"
+"RTN","IBCNEUT7",232,0)
+ . Q:PATSEX'="F"                            ; Note this is subscriber's spouse
+"RTN","IBCNEUT7",233,0)
+ . S GOOD=1
+"RTN","IBCNEUT7",234,0)
+ ;
+"RTN","IBCNEUT7",235,0)
+ ; Profile P5 Test
+"RTN","IBCNEUT7",236,0)
+ I MCARE'="",PAYRNM=MCARE,SUBID="333113333A",SUBNM="IB,PATIENT" D  Q:GOOD 1
+"RTN","IBCNEUT7",237,0)
+ . Q:PATDOB'="19350309"
+"RTN","IBCNEUT7",238,0)
+ . Q:PATSEX'="M"
+"RTN","IBCNEUT7",239,0)
+ . S GOOD=1
+"RTN","IBCNEUT7",240,0)
+ ;
+"RTN","IBCNEUT7",241,0)
+ ; Profile P6 Test
+"RTN","IBCNEUT7",242,0)
+ I MCARE'="",PAYRNM=MCARE,SUBID="111223333A",SUBNM="IBSUB,TWOTRLRS" D  Q:GOOD 1
+"RTN","IBCNEUT7",243,0)
+ . Q:PATDOB'="19550505"
+"RTN","IBCNEUT7",244,0)
+ . Q:PATSEX'="M"
+"RTN","IBCNEUT7",245,0)
+ . S GOOD=1
+"RTN","IBCNEUT7",246,0)
+ Q 0
+"RTN","IBCNEUT7",247,0)
+ ;
+"RTN","IBCNEUT7",248,0)
+RSTA(REC) ; Update status in Response File from Transmission Queue to
+"RTN","IBCNEUT7",249,0)
+ ;         Communication Timeout
+"RTN","IBCNEUT7",250,0)
+ ;  Input Parameters
+"RTN","IBCNEUT7",251,0)
+ ;    REC = IEN from TQ file
+"RTN","IBCNEUT7",252,0)
+ ;    -- Removed 10/29/02 --WCH = Which Record 'P'=Previous, 'C'=Current
+"RTN","IBCNEUT7",253,0)
+ ;    -- if no Which Record passed, it will assume the current one
+"RTN","IBCNEUT7",254,0)
+ ;
+"RTN","IBCNEUT7",255,0)
+ N HIEN,RIEN
+"RTN","IBCNEUT7",256,0)
+ S HIEN=0
+"RTN","IBCNEUT7",257,0)
+ ; Loop thru HL7 messages associated with the IIV Inquiry
+"RTN","IBCNEUT7",258,0)
+ F  S HIEN=$O(^IBCN(365.1,REC,2,HIEN)) Q:'HIEN  D
+"RTN","IBCNEUT7",259,0)
+ .  ; Determine IIV Response associated with the HL7 message
+"RTN","IBCNEUT7",260,0)
+ .  S RIEN=$P($G(^IBCN(365.1,REC,2,HIEN,0)),U,3) Q:'RIEN
+"RTN","IBCNEUT7",261,0)
+ .  ; If IIV Response status is 'Response Received', don't update it
+"RTN","IBCNEUT7",262,0)
+ .  I $P($G(^IBCN(365,RIEN,0)),U,6)=3 Q
+"RTN","IBCNEUT7",263,0)
+ .  ; Update IIV Response status to 'Communication Timeout'
+"RTN","IBCNEUT7",264,0)
+ .  D RSP^IBCNEUT2(RIEN,5)
+"RTN","IBCNEUT7",265,0)
+ .  Q
+"RTN","IBCNEUT7",266,0)
+ ;
+"RTN","IBCNEUT7",267,0)
+ Q
+"RTN","IBCNEUT7",268,0)
+ ;
+"RTN","IBCNEUT7",269,0)
+TXT(TXT) ;Parse text for wrapping
+"RTN","IBCNEUT7",270,0)
+ ;  Input Parameter
+"RTN","IBCNEUT7",271,0)
+ ;   TXT = The array name
+"RTN","IBCNEUT7",272,0)
+ ;
+"RTN","IBCNEUT7",273,0)
+ I '$D(@(TXT)) Q
+"RTN","IBCNEUT7",274,0)
+ ;
+"RTN","IBCNEUT7",275,0)
+ K ^UTILITY($J,"W")
+"RTN","IBCNEUT7",276,0)
+ ;
+"RTN","IBCNEUT7",277,0)
+ ;  Define length of text string; left is 1 and right is 78
+"RTN","IBCNEUT7",278,0)
+ S DIWF="",DIWL=1,DIWR=78
+"RTN","IBCNEUT7",279,0)
+ ;
+"RTN","IBCNEUT7",280,0)
+ ;  Format text into scratch file
+"RTN","IBCNEUT7",281,0)
+ S CT=0
+"RTN","IBCNEUT7",282,0)
+ F  S CT=$O(@(TXT)@(CT)) Q:'CT  D
+"RTN","IBCNEUT7",283,0)
+ . S X=@TXT@(CT) D ^DIWP
+"RTN","IBCNEUT7",284,0)
+ ;
+"RTN","IBCNEUT7",285,0)
+ K @(TXT)
+"RTN","IBCNEUT7",286,0)
+ ;
+"RTN","IBCNEUT7",287,0)
+ ;  Reset formatted text back to array
+"RTN","IBCNEUT7",288,0)
+ S CT=0
+"RTN","IBCNEUT7",289,0)
+ F  S CT=$O(^UTILITY($J,"W",1,CT)) Q:'CT  D
+"RTN","IBCNEUT7",290,0)
+ . S @(TXT)@(CT)=^UTILITY($J,"W",1,CT,0)
+"RTN","IBCNEUT7",291,0)
+ ;
+"RTN","IBCNEUT7",292,0)
+ K ^UTILITY($J,"W"),CT,DIWF,DIWL,DIWR,X,Z,DIW,DIWI,DIWT,DIWTC,DIWX,DN,I
+"RTN","IBCNEUT7",293,0)
+ Q
+"RTN","IBCNEUT7",294,0)
+ ;
+"RTN","IBCNEUT7",295,0)
+ERRN(ARRAY) ;  Get the next FileMan error number from the array
+"RTN","IBCNEUT7",296,0)
+ ;  Input
+"RTN","IBCNEUT7",297,0)
+ ;    ARRAY = the array name, include "DIERR"
+"RTN","IBCNEUT7",298,0)
+ ;  Output
+"RTN","IBCNEUT7",299,0)
+ ;    IBEY = the next error number
+"RTN","IBCNEUT7",300,0)
+ ;
+"RTN","IBCNEUT7",301,0)
+ ;  Example call
+"RTN","IBCNEUT7",302,0)
+ ;    S IERN=$$ERRN^IBCNEUT7("ERROR(""DIERR"")")
+"RTN","IBCNEUT7",303,0)
+ ;
+"RTN","IBCNEUT7",304,0)
+ NEW IBEY
+"RTN","IBCNEUT7",305,0)
+ ;
+"RTN","IBCNEUT7",306,0)
+ I '$D(@(ARRAY)) S @(ARRAY)=1 Q 1
+"RTN","IBCNEUT7",307,0)
+ ;
+"RTN","IBCNEUT7",308,0)
+ S IBEY=$P(@(ARRAY),U,1)
+"RTN","IBCNEUT7",309,0)
+ S IBEY=IBEY+1,$P(@(ARRAY),U,1)=IBEY
+"RTN","IBCNEUT7",310,0)
+ Q IBEY
+"RTN","IBCNEUT7",311,0)
+ ;
+"RTN","IBY579PO")
+0^2^B36838238^n/a
+"RTN","IBY579PO",1,0)
+IBY579PO ;ALB/FA - IB*2.0*579 POST-INSTALL ;27-OCT-2016
+"RTN","IBY579PO",2,0)
+ ;;2.0;INTEGRATED BILLING;**579**;21-MAR-94;Build 2
+"RTN","IBY579PO",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IBY579PO",4,0)
+ ;
+"RTN","IBY579PO",5,0)
+EN ;Entry point
+"RTN","IBY579PO",6,0)
+ N IBXPD,XPDIDTOT
+"RTN","IBY579PO",7,0)
+ S XPDIDTOT=1
+"RTN","IBY579PO",8,0)
+ ;
+"RTN","IBY579PO",9,0)
+ ; Update Covered by Health Insurance field (file 2, field .3192) for deceased patients
+"RTN","IBY579PO",10,0)
+ S IBXPD=1
+"RTN","IBY579PO",11,0)
+ D HCOV(IBXPD,XPDIDTOT)
+"RTN","IBY579PO",12,0)
+ D DONE
+"RTN","IBY579PO",13,0)
+ Q
+"RTN","IBY579PO",14,0)
+ ;
+"RTN","IBY579PO",15,0)
+HCOV(IBXPD,XPDIDTOT) ; Update Covered by Health Insurance field for deceased patients
+"RTN","IBY579PO",16,0)
+ ; Input:   XBXPD       - Post Installation Step
+"RTN","IBY579PO",17,0)
+ ;          XPDIDTOT    - Total # of Post Installation steps
+"RTN","IBY579PO",18,0)
+ D BMES^XPDUTL(" STEP "_IBXPD_" of "_XPDIDTOT)
+"RTN","IBY579PO",19,0)
+ D MES^XPDUTL("-------------")
+"RTN","IBY579PO",20,0)
+ D MES^XPDUTL("Update Covered By Health Insurance field for deceased patients.")
+"RTN","IBY579PO",21,0)
+ ; 1 - For every patient in the patient file check if the patient is deceased field
+"RTN","IBY579PO",22,0)
+ ;    (file 2, field .351)
+"RTN","IBY579PO",23,0)
+ ; 2 - Quit if the patient is not deceased
+"RTN","IBY579PO",24,0)
+ ; 3 - Quit if the Covered By Health Insurance field is already set to 'N'
+"RTN","IBY579PO",25,0)
+ ; 3 - Quit if all of the patient's policies are not expired
+"RTN","IBY579PO",26,0)
+ ; 4 - Change the Covered By Health Insurance field to 'N'
+"RTN","IBY579PO",27,0)
+ ; 5 - Add this patient to a list of patients being modified
+"RTN","IBY579PO",28,0)
+ ; 6 - Email the list of patients modified to xxx
+"RTN","IBY579PO",29,0)
+ ;
+"RTN","IBY579PO",30,0)
+ N MTIME,ZTRTN,ZTDESC,ZTDTH,ZTIO,ZTUCI,ZTCPU,ZTPRI,ZTSAVE,ZTKIL,ZTSYNC,ZTSK
+"RTN","IBY579PO",31,0)
+ S MTIME=$$NOW^XLFDT()                      ; Fileman date/time
+"RTN","IBY579PO",32,0)
+ S MTIME=$$FMADD^XLFDT(MTIME,0,4)           ; Set to queue 4 hours later
+"RTN","IBY579PO",33,0)
+ S ZTDTH=$$FMTH^XLFDT(MTIME)                ; Convert to $H format
+"RTN","IBY579PO",34,0)
+ ;
+"RTN","IBY579PO",35,0)
+ ; Set up the other TaskManager variables
+"RTN","IBY579PO",36,0)
+ S ZTRTN="HCOV2^IBY579PO"
+"RTN","IBY579PO",37,0)
+ S ZTDESC="IB*2.0*579 Change 'Covered By Health Insurance' field for deceased patients"
+"RTN","IBY579PO",38,0)
+ S ZTIO=""
+"RTN","IBY579PO",39,0)
+ D ^%ZTLOAD ; Call TaskManager
+"RTN","IBY579PO",40,0)
+ Q
+"RTN","IBY579PO",41,0)
+ ;
+"RTN","IBY579PO",42,0)
+HCOV2 ;EP
+"RTN","IBY579PO",43,0)
+ ; Called from Task Manager
+"RTN","IBY579PO",44,0)
+ N CURSIZE,DFN,DOD,EMAIL,EXPDT,HCOV,HCOVN,IIEN,LNCTR,MAXSIZE,MLGRP,MSG,NPAT,NOTEXP
+"RTN","IBY579PO",45,0)
+ N PNM,SSN,SUBJECT,XMY,XX,YY
+"RTN","IBY579PO",46,0)
+ K ^TMP($J,"PATLIST"),^TMP($J,"ERRLIST")
+"RTN","IBY579PO",47,0)
+ S DFN=0
+"RTN","IBY579PO",48,0)
+ F  D  Q:'+DFN
+"RTN","IBY579PO",49,0)
+ . S DFN=$O(^DPT(DFN))
+"RTN","IBY579PO",50,0)
+ . Q:'+DFN
+"RTN","IBY579PO",51,0)
+ . S DOD=$$GET1^DIQ(2,DFN_",",.351,"I")     ; Date of Death
+"RTN","IBY579PO",52,0)
+ . Q:DOD=""                                 ; Patient is not Deceased
+"RTN","IBY579PO",53,0)
+ . S HCOV=$$GET1^DIQ(2,DFN_",",.3192,"I")   ; Covered By Health Insurance flag
+"RTN","IBY579PO",54,0)
+ . Q:HCOV=""!(HCOV="N")!(HCOV="U")          ; Covered By Health Insurance already 'N' or "U"
+"RTN","IBY579PO",55,0)
+ . S IIEN=0,NOTEXP=0
+"RTN","IBY579PO",56,0)
+ . F  D  Q:'+IIEN  Q:NOTEXP
+"RTN","IBY579PO",57,0)
+ . . S IIEN=$O(^DPT(DFN,.312,IIEN))
+"RTN","IBY579PO",58,0)
+ . . Q:'+IIEN
+"RTN","IBY579PO",59,0)
+ . . S EXPDT=$$GET1^DIQ(2.312,IIEN_","_DFN_",",3,"I")   ; Policy Expiration Date
+"RTN","IBY579PO",60,0)
+ . . Q:EXPDT'=""                                        ; Policy has an expiration date
+"RTN","IBY579PO",61,0)
+ . . S NOTEXP=1
+"RTN","IBY579PO",62,0)
+ . Q:NOTEXP                                 ; Not all plans are expired
+"RTN","IBY579PO",63,0)
+ . D CHGCOV(DFN,HCOV)                       ; Set the Health Coverage flag to 'N'
+"RTN","IBY579PO",64,0)
+ . Q:$D(^TMP($J,"ERRLIST",DFN))             ; On error list
+"RTN","IBY579PO",65,0)
+ . S HCOVN=$$GET1^DIQ(2,DFN_",",.3192,"I")  ; New Covered By Health Insurance flag
+"RTN","IBY579PO",66,0)
+ . Q:HCOVN="Y"                              ; Deceased patient with coverage, skip
+"RTN","IBY579PO",67,0)
+ . S ^TMP($J,"PATLIST",DFN)=""              ; Add Patient to list
+"RTN","IBY579PO",68,0)
+ ;
+"RTN","IBY579PO",69,0)
+ I '$D(^TMP($J,"PATLIST")),'$D(^TMP($J,"ERRLIST")) Q  ; No patients to update
+"RTN","IBY579PO",70,0)
+ ;
+"RTN","IBY579PO",71,0)
+ ; Get array of users with the 'IB SUPERVISOR' security key
+"RTN","IBY579PO",72,0)
+ D GETPER^IBCNEUT7("IB SUPERVISOR",.XMY)
+"RTN","IBY579PO",73,0)
+ ;
+"RTN","IBY579PO",74,0)
+ ; Begin email set up
+"RTN","IBY579PO",75,0)
+ S MAXSIZE=300000,CURSIZE=0,LNCTR=0
+"RTN","IBY579PO",76,0)
+ S MLGRP=$$MGRP^IBCNEUT5
+"RTN","IBY579PO",77,0)
+ S SUBJECT="eIV: Change Covered By Health Insurance field for deceased patient - Post Install Task"
+"RTN","IBY579PO",78,0)
+ ;
+"RTN","IBY579PO",79,0)
+ ; First add any patients that had filing errors
+"RTN","IBY579PO",80,0)
+ I $D(^TMP($J,"ERRLIST")) D
+"RTN","IBY579PO",81,0)
+ . S LNCTR=LNCTR+1
+"RTN","IBY579PO",82,0)
+ . S XX(1)="The following patients will need to be manually updated by removing and "
+"RTN","IBY579PO",83,0)
+ . S XX(2)="re-entering the policy expiration date for one of the patient's policies "
+"RTN","IBY579PO",84,0)
+ . S XX(3)="so that the 'Covered By Health Insurance' field will be corrected:"
+"RTN","IBY579PO",85,0)
+ . S YY=$L(XX(1))+$L(XX(2))+$L(XX(3))
+"RTN","IBY579PO",86,0)
+ . ;
+"RTN","IBY579PO",87,0)
+ . ; Is the mail message getting too big?
+"RTN","IBY579PO",88,0)
+ . I (CURSIZE+YY)>MAXSIZE D
+"RTN","IBY579PO",89,0)
+ . . D MSG^IBCNEUT5(MLGRP,SUBJECT,"MSG(",,.XMY)
+"RTN","IBY579PO",90,0)
+ . . K MSG
+"RTN","IBY579PO",91,0)
+ . . S CURSIZE=0,LNCTR=1
+"RTN","IBY579PO",92,0)
+ . ;
+"RTN","IBY579PO",93,0)
+ . S MSG(LNCTR)=XX(1),CURSIZE=CURSIZE+$L(XX(1)),LNCTR=LNCTR+1
+"RTN","IBY579PO",94,0)
+ . S MSG(LNCTR)=XX(2),CURSIZE=CURSIZE+$L(XX(2)),LNCTR=LNCTR+1
+"RTN","IBY579PO",95,0)
+ . S MSG(LNCTR)=XX(3),CURSIZE=CURSIZE+$L(XX(3))
+"RTN","IBY579PO",96,0)
+ . S DFN=""
+"RTN","IBY579PO",97,0)
+ . F  D  Q:DFN=""
+"RTN","IBY579PO",98,0)
+ . . S DFN=$O(^TMP($J,"ERRLIST",DFN))
+"RTN","IBY579PO",99,0)
+ . . Q:DFN=""
+"RTN","IBY579PO",100,0)
+ . . S PNM=$$GET1^DIQ(2,DFN,.01)
+"RTN","IBY579PO",101,0)
+ . . S SSN=$$GET1^DIQ(2,DFN,.09),SSN=$E(SSN,6,9)
+"RTN","IBY579PO",102,0)
+ . . S NPAT="      "_PNM_"  "_SSN
+"RTN","IBY579PO",103,0)
+ . . ;
+"RTN","IBY579PO",104,0)
+ . . ; Is the mail message getting too big?
+"RTN","IBY579PO",105,0)
+ . . I CURSIZE+$L(NPAT)>MAXSIZE D
+"RTN","IBY579PO",106,0)
+ . . . D MSG^IBCNEUT5(MLGRP,SUBJECT,"MSG(",,.XMY)
+"RTN","IBY579PO",107,0)
+ . . . K MSG
+"RTN","IBY579PO",108,0)
+ . . . S LNCTR=3,MSG(1)=XX(1),MSG(2)=XX(2),MSG(3)=XX(3),CURSIZE=YY
+"RTN","IBY579PO",109,0)
+ . . S LNCTR=LNCTR+1
+"RTN","IBY579PO",110,0)
+ . . S MSG(LNCTR)=NPAT
+"RTN","IBY579PO",111,0)
+ . . S CURSIZE=CURSIZE+$L(NPAT)
+"RTN","IBY579PO",112,0)
+ . S LNCTR=LNCTR+1,MSG(LNCTR)="",LNCTR=LNCTR+1,MSG(LNCTR)=""
+"RTN","IBY579PO",113,0)
+ ;
+"RTN","IBY579PO",114,0)
+ ; Next add the patients whose Covered By Health Insurance flag was set to 'N'
+"RTN","IBY579PO",115,0)
+ S LNCTR=LNCTR+1
+"RTN","IBY579PO",116,0)
+ S MSG(LNCTR)="The 'Covered By Health Insurance' field for the following deceased"
+"RTN","IBY579PO",117,0)
+ S CURSIZE=CURSIZE+$L(MSG(LNCTR))
+"RTN","IBY579PO",118,0)
+ S LNCTR=LNCTR+1
+"RTN","IBY579PO",119,0)
+ S MSG(LNCTR)="patients was automatically set to 'NO':"
+"RTN","IBY579PO",120,0)
+ S CURSIZE=CURSIZE+$L(MSG(LNCTR))
+"RTN","IBY579PO",121,0)
+ S DFN=""
+"RTN","IBY579PO",122,0)
+ F  D  Q:DFN=""
+"RTN","IBY579PO",123,0)
+ . S DFN=$O(^TMP($J,"PATLIST",DFN))
+"RTN","IBY579PO",124,0)
+ . Q:DFN=""
+"RTN","IBY579PO",125,0)
+ . S PNM=$$GET1^DIQ(2,DFN,.01)
+"RTN","IBY579PO",126,0)
+ . S SSN=$$GET1^DIQ(2,DFN,.09),SSN=$E(SSN,6,9)
+"RTN","IBY579PO",127,0)
+ . S NPAT="      "_PNM_"  "_SSN
+"RTN","IBY579PO",128,0)
+ . ;
+"RTN","IBY579PO",129,0)
+ . ; Is the mail message getting too big?
+"RTN","IBY579PO",130,0)
+ . I CURSIZE+$L(NPAT)>MAXSIZE D
+"RTN","IBY579PO",131,0)
+ . . D MSG^IBCNEUT5(MLGRP,SUBJECT,"MSG(",,.XMY)
+"RTN","IBY579PO",132,0)
+ . . K MSG
+"RTN","IBY579PO",133,0)
+ . . S CURSIZE=0,LNCTR=2
+"RTN","IBY579PO",134,0)
+ . . S MSG(1)="The Covered By Health Insurance field for the following deceased"
+"RTN","IBY579PO",135,0)
+ . . S CURSIZE=CURSIZE+$L(MSG(1))
+"RTN","IBY579PO",136,0)
+ . . S MSG(2)="was automatically set to 'N'"
+"RTN","IBY579PO",137,0)
+ . . S CURSIZE=CURSIZE+$L(MSG(2))
+"RTN","IBY579PO",138,0)
+ . S LNCTR=LNCTR+1
+"RTN","IBY579PO",139,0)
+ . S MSG(LNCTR)=NPAT
+"RTN","IBY579PO",140,0)
+ . S CURSIZE=CURSIZE+$L(NPAT)
+"RTN","IBY579PO",141,0)
+ ;
+"RTN","IBY579PO",142,0)
+ D MSG^IBCNEUT5(MLGRP,SUBJECT,"MSG(",,.XMY)
+"RTN","IBY579PO",143,0)
+ K ^TMP($J,"PATLIST"),^TMP($J,"ERRLIST")
+"RTN","IBY579PO",144,0)
+ Q
+"RTN","IBY579PO",145,0)
+ ;
+"RTN","IBY579PO",146,0)
+CHGCOV(DFN,HCOV) ; Update the Covered By Health Insurance field
+"RTN","IBY579PO",147,0)
+ ; Input:   DFN                 - IEN of the patient being updated
+"RTN","IBY579PO",148,0)
+ ;          HCOV                - Current value of Covered By Health Insurance field
+"RTN","IBY579PO",149,0)
+ ;          ^TMP($J,"ERRLIST")  - Current array of update errors
+"RTN","IBY579PO",150,0)
+ ; Output:  ^TMP($J,"ERRLIST")  - Updated array of update errors
+"RTN","IBY579PO",151,0)
+ N DA,FDA,IBERR,IBSUPRES
+"RTN","IBY579PO",152,0)
+ N $ESTACK,$ETRAP
+"RTN","IBY579PO",153,0)
+ S $ETRAP="D COVERR^IBY579PO"
+"RTN","IBY579PO",154,0)
+ S IBSUPRES=1
+"RTN","IBY579PO",155,0)
+ D COVERED^IBCNSM31(DFN,HCOV)             ; Set the Health Coverage flag to 'N'
+"RTN","IBY579PO",156,0)
+ Q
+"RTN","IBY579PO",157,0)
+ ;
+"RTN","IBY579PO",158,0)
+COVERR ; Called when an error occurs changing the Covered By Health Insurance field
+"RTN","IBY579PO",159,0)
+ ; deceased patients.  Note:  This usually occurs because of a known FileMan error and a
+"RTN","IBY579PO",160,0)
+ ; collision of a post-filing routine updating file 2.312 with a nightly KPAS
+"RTN","IBY579PO",161,0)
+ ; extract doing inquiries into the 2.312 file at the same time.
+"RTN","IBY579PO",162,0)
+ ;
+"RTN","IBY579PO",163,0)
+ ; If an error occurs, this method will add the patient where the error occurred
+"RTN","IBY579PO",164,0)
+ ; onto the error list for manual processing and move on to the next patient.
+"RTN","IBY579PO",165,0)
+ ; Input:   DFN                 - IIEN of the patient that was being worked 
+"RTN","IBY579PO",166,0)
+ ;                                when the error occurred
+"RTN","IBY579PO",167,0)
+ ;          ^TMP($J,"ERRLIST")  - Current array of patients that had filing 
+"RTN","IBY579PO",168,0)
+ ;                                errors
+"RTN","IBY579PO",169,0)
+ ; Output:  ^TMP($J,"ERRLIST") - Updated array of patients that had filing errors
+"RTN","IBY579PO",170,0)
+ S ^TMP($J,"ERRLIST",DFN)=""                ; Log collision error
+"RTN","IBY579PO",171,0)
+ S $ECODE=""                                ; Ignore error and continue
+"RTN","IBY579PO",172,0)
+ Q
+"RTN","IBY579PO",173,0)
+ ;
+"RTN","IBY579PO",174,0)
+DONE ; Displays the 'Done' message and finishes the progress bar
+"RTN","IBY579PO",175,0)
+ ; Input: IBXPD - Post-Installation step being performed
+"RTN","IBY579PO",176,0)
+ D MES^XPDUTL(" Done.")
+"RTN","IBY579PO",177,0)
+ Q
+"RTN","IBY579PO",178,0)
+ ;
+"VER")
+8.0^22.0
+"BLD",9887,6)
+^534
+**END**
+**END**
+

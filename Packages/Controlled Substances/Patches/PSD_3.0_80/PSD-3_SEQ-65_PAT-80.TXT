@@ -1,0 +1,141 @@
+$TXT Created by               MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 06/22/16 at 11:04
+=============================================================================
+Run Date: NOV 18, 2016                     Designation: PSD*3*80
+Package : PSD - CONTROLLED SUBSTANCES         Priority: Mandatory
+Version : 3        SEQ #65                      Status: Released
+                  Compliance Date: DEC 18, 2016
+=============================================================================
+
+Associated patches: (v)PSD*3*55    <<= must be installed BEFORE `PSD*3*80'
+                    (v)PSD*3*66    <<= must be installed BEFORE `PSD*3*80'
+
+Subject: RX TRANSACTION, 'ORDERED BY' UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues in the Controlled Substance 
+ package:
+  
+ 1.  Multiple RX not showing up in the Rx (Prescription) Outpatient
+     Dispensing Report [PSD RX DISPENSING REPORT] option.
+  
+ 2.  The CS WORKSHEET (#58.85) file ORDERED BY (#12) field is not being
+     updated correctly when someone edits a controlled substance order for
+     an NAOU using the CS Order Entry for Ward [PSD ORDER ENTRY] option.
+  
+ Associated Ticket(s):
+ =====================
+ 1. INC000000997119 - PRESCRIPTION TRANSACTION
+    I10170538FY16 (d)
+  
+ 2. INC000001234782 - "ORDERED BY" FIELD NOT UPDATING
+    I10169755FY16 (d)
+  
+ Associated NSR(s) 
+ ================= 
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Oklahoma City VA Medical Center
+ Ralph H. Johnson VA Medical Center (Charleston)
+  
+ Ticket Overview:
+ ================
+ 1. INC000000997119 - PRESCRIPTION TRANSACTION
+  
+    Problem:
+    --------
+    In the unlikely case where outpatient prescription transactions are
+    created at the same exact date/time for the same pharmacy location 
+    the option Rx (Prescription) Outpatient Dispensing Report [PSD RX
+    DISPENSING REPORT] only displays one and not both or all of them.
+  
+    Resolution:
+    -----------
+    Modified code in routine PSDOPTS to allow for multiple RX with
+    the same pharmacy location and date and time of creation to be shown.
+  
+  
+ 2. INC000001234782 - "ORDERED BY" FIELD NOT UPDATING
+  
+    Problem:
+    --------
+    The CS WORKSHEET (#58.85) file ORDERED BY (#12) field is not being
+    updated correctly when someone edits a controlled substance order for
+    an NAOU using the CS Order Entry for Ward [PSD ORDER ENTRY] option.
+  
+    Resolution:
+    -----------
+    Modify routine PSDORP1 to use the correct data for the CS WORKSHEET
+    (#58.85) file ORDERED BY (#12) field.
+  
+  
+ Installation Instructions:
+ ==========================
+ Pharmacy users should not be processing prescriptions while patch is 
+ being installed. You may queue the install if you wish. It should take
+ less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSD*3.0*80)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSD*3.0*80.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONTROLLED SUBSTANCES;**[Patch List]**;13 Feb 97;Build 20
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSDOPTS
+    Before: B25017679   After: B23723637  **18,26,55,80**
+Routine Name: PSDORP1
+    Before: B15402116   After: B15832867  **66,80**
+ 
+Routine list of preceding patches: 55, 66
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 12, 2016
+Completed By:                               Date Completed: NOV 09, 2016
+Released By :                               Date Released : NOV 18, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
