@@ -74,6 +74,10 @@ data_table_list_with_columns_init_setup = Template("""
             extend: 'colvis',
           },
           {
+            text: 'Reset Columns',
+            extend: 'colvisRestore',
+          },
+          {
             text: 'Clear Search',
             action: function ( e, dt, node, conf ) {
               clearFilters();
@@ -158,6 +162,10 @@ data_table_large_list_with_columns_init_setup = Template("""
           {
             text: 'Toggle Columns',
             extend: 'colvis',
+          },
+          {
+            text: 'Reset Columns',
+            extend: 'colvisRestore',
           },
           {
             text: 'Clear Search',
