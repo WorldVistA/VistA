@@ -2162,7 +2162,7 @@ class WebPageGenerator:
         packageName = routine.getPackage().getName()
         outputFile.write("<table>\n")
         writeTableHeader(tableHeader, outputFile)
-        calledRtns = routine.getFilteredExternalReference(['DIR','VALM','DDS','DIE','DIC','%ZIS'])
+        calledRtns = routine.getFilteredExternalReference(['DIR','VALM','DDS','DIE','DIC','%ZIS','DIALOG','DIALOGU'])
         for entry in data:  # R and W commands
           outString = "<tr><td class='indexkey'>Function Call: %s</td>" % entry['type']
           outString += self.__writeInteractionCommandHTML__(entry)
