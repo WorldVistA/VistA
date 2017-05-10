@@ -642,8 +642,14 @@ class FileManGlobalDataParser(object):
             rpcInfo['tag'] = rpcTag
           self._rtnRefDict.setdefault(rpcRoutine,{}).setdefault('8994',[]).append(rpcInfo)
 
-  def _findInstallPackage(self,packageList, installEntryName):
-    namespace, package = self._crossRef.__categorizeVariableNameByNamespace__(installEntryName)
+  def _findInstallPackage(self,packageList, installEntryName,checkNamespace=True):
+    package=None
+    """
+      checkNamespace is used by the "version change" check to match the package name in the install name but
+        not the namespace in the install name, which should help eliminate multibuilds from being found as package changes
+    """
+    if checkNamespace:
+      namespace, package = self._crossRef.__categorizeVariableNameByNamespace__(installEntryName)
     # A check to remove the mis-categorized installs which happen to fall in a namespace
     if installEntryName in INSTALL_PACKAGE_FIX:
       package = INSTALL_PACKAGE_FIX[installEntryName]
@@ -704,10 +710,16 @@ class FileManGlobalDataParser(object):
             installItem['numRoutines'] = len(installEntry.fields['40'].value.dataEntries)
           if '14' in installEntry.fields:
             installItem['numFiles'] = len(installEntry.fields['14'].value.dataEntries)
-          # Checks for the absence of asterisks which usually denotes a package change.
+          # Checks for the absence of asterisks which usually denotes a package change, also make it more specific to
+          # eliminate the multibuilds that are being marked as package changes
           testMatch = re.search("\*+",installEntry.name)
           if testMatch is None:
-            installItem['packageSwitch'] = True
+            # Assume a package switch name will be just a package name and a version
+            capture = re.match("(?P<packageName>[A-Z./ \&\-\']+) (?P<packageVal>[.0-9]+)",installEntry.name)
+            if capture:
+                  checkPackage = self._findInstallPackage(packageList, capture.groups()[0],False)
+                  if (not (checkPackage == "Unknown") or (len(capture.groups()[0]) <= 4 )):
+                    installItem['packageSwitch'] = True
           installJSONData[package][installEntry.name] = installItem
       installJSONData['MultiBuild']={}
       for multiBuildFile in patchOrderGen._multiBuildDict:
