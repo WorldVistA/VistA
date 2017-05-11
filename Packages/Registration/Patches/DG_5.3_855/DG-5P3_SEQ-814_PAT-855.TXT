@@ -1,0 +1,275 @@
+
+=============================================================================
+Run Date: OCT 11, 2016                     Designation: DG*5.3*855
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #814                    Status: Released
+                  Compliance Date: NOV 11, 2016
+=============================================================================
+
+Associated patches: (v)DG*5.3*797  <<= must be installed BEFORE `DG*5.3*855'
+
+Subject: FIX INCORRECT MSE PROMPTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ **************************************************************************
+  Note:  DG*5.3*855 is being released along with IVM*2*153 (Income
+         Verification Match) in host file: DG_53_P855.KID.
+  
+         It is imperative that these patches be installed no later than the
+         compliance date.  Your understanding and support is appreciated.
+  
+ **************************************************************************
+  
+  
+  Patch DG*5.3*797 added the new MILITARY SERVICE EPISODE sub-file #2.3216 
+  in the PATIENT (#2) file to store Military Service Episode (MSE) data.
+  Changes in that patch included modifications to several consistency 
+  checks that used MSE data.  The consistency checks that are listed in 
+  the DG*5.3*797 patch description are correctly using the new MILITARY
+  SERVICE EPISODE sub-file #2.3216 and the new Screen 6.1 to edit the data.
+  
+  However, there is a set of consistency checks in the INCONSISTENT DATA 
+  ELEMENTS (#38.6) file that are considered related to Eligibility.   If 
+  any of those inconsistencies are edited; the user is prompted with a set
+  of eligibility-related fields that include the Last Service Episode 
+  fields.  Since these inconsistencies were not modified for DG*5.3*797, 
+  the user is being prompted with the old MSE fields for SERVICE EPISODE 
+  [LAST].  These are the inconsistencies that are considered related to 
+  Eligibility:
+  
+    9            VETERAN STATUS UNSPECIFIED
+    10           SC PROMPT UNANSWERED
+    11           SC PROMPT INCONSISTENT
+    12           SC% UNSPECIFIED FOR SC VET
+    13           POS UNSPECIFIED
+    14           ELIG CODE UNSPECIFIED
+    18           ELIG/VET STATUS INCONSISTENT
+    19           ELIG/NONVET STAT INCONSISTENT
+    20           ELIG/SC% INCONSISTENT
+    22           ELIG CODE INCONSISTENT
+    24           POS/ELIG CODE INCONSISTENT
+    36           PATIENT TYPE UNDEFINED
+    
+  
+  This patch is being released with patch IVM*2.0*153 in host file 
+  DG_53_P855.KID.
+  
+  
+  ASSOCIATED TICKETS:
+  ===================
+  1.) INC000000623739 -DG*5.3*797 - MSDS MSE inappropriate prompts
+      I9915503FY16(d) 
+      INC000000759547(d)
+      I9914518FY16(d)
+  
+  ASSOCIATED NSR:
+  ===============
+  N/A
+  
+  
+  PARTICIPATING TEST SITES:
+  =========================
+  Tuscaloosa VA Medical Center
+  Upstate New York Health Care System 
+  West Palm Beach VA Medical Center
+   
+   
+  Ticket Overview:
+  =================
+  1.)INC000000623739 - DG*5.3*797 - MSDS MSE inappropriate prompts
+     I9915503FY16(d)
+     INC000000759547(d)
+     I9914518FY16(d)
+   
+  Problem:
+  --------
+  There is a set of consistency checks in the INCONSISTENT DATA ELEMENTS 
+  (#38.6) file that are considered related to Eligibility.   If any of 
+  those inconsistencies are edited; the user is prompted with a set of
+  eligibility-related fields that include the Last Service Episode
+  fields.  Since these inconsistencies were not modified for DG*5.3*797,
+  the user is being prompted with the old MSE fields for SERVICE EPISODE
+  [LAST].  These are the inconsistencies that are considered related to
+  Eligibility:
+   
+     9            VETERAN STATUS UNSPECIFIED
+     10           SC PROMPT UNANSWERED
+     11           SC PROMPT INCONSISTENT
+     12           SC% UNSPECIFIED FOR SC VET
+     13           POS UNSPECIFIED
+     14           ELIG CODE UNSPECIFIED
+     18           ELIG/VET STATUS INCONSISTENT
+     19           ELIG/NONVET STAT INCONSISTENT
+     20           ELIG/SC% INCONSISTENT
+     22           ELIG CODE INCONSISTENT
+     24           POS/ELIG CODE INCONSISTENT
+     36           PATIENT TYPE UNDEFINED
+  
+  
+  
+  
+  Resolution:
+  -----------
+  Routines DGRPCE and DGRPCE1 are being edited to allow users to edit the
+  new MSE data in sub-file #2.3216 on the new screen 6.1, with any of the 
+  eligibility-related inconsistencies.
+  
+   
+  Installation Instructions:
+  ==========================
+  
+  IVM*2*153 is being released along with DG*5.3*855 in host file: 
+  DG_53_P855.KID.  Installing DG*5.3*855 will also install IVM*2*153.
+  
+  
+  This patch may be run with users on the system, however because the
+  Registration options need to be placed out of order, we suggest it
+  be installed after business hours.
+   
+  Installation will take less than 2 minutes.
+  
+  ********************* PRE-INSTALLATION INSTRUCTIONS ********************
+  
+  The IVM BACKGROUND JOB [IVM BACKGROUND JOB] option should be unscheduled.
+  Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the 
+  Taskman Management [XUTM MGR] option.
+   
+  ************************************************************************ 
+   
+  1.  Software Retrieval Instructions:
+      -------------------------------------------------- 
+      Software is being released as a host file.
+  
+      The preferred method is to retrieve files from 
+      download.vista.domain.ext.
+  
+      This transmits the files from the first available server. Sites may 
+      also elect to retrieve files directly from a specific server. 
+  
+      Sites may retrieve the software and/or documentation directly using 
+      Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+      directory at the following OI Field Offices:
+    
+       Albany:                                domain.ext
+       Hines:                                 domain.ext    
+       Salt Lake City:                        domain.ext
+  
+       Host File                File Name                  SFTP Protocol
+       -------------------      ----------------           ------------
+       Data Host File           DG_53_P855.KID              ASCII
+  
+  
+  
+  2.   START UP KIDS
+        -------------
+        Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]:
+  
+             Edits and Distribution ...
+             Utilities ...
+             Installation ...
+  
+        Select Kernel Installation & Distribution System Option: 
+                                                            INStallation
+                                                            ---
+             Load a Distribution
+             Print Transport Global
+             Compare Transport Global to Current System
+             Verify Checksums in Transport Global
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution
+             Backup a Transport Global
+  
+       
+  3.   Select Installation Option:
+       ----------------------------
+        a.  Use the 'Load a Distribution' option and enter the directory
+            into which you downloaded the host file, followed by the host
+            file name:
+  
+            [directory]DG_53_P855.KID
+  
+        NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+               NAME, enter DG*5.3*855):
+        b.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+        c.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed. It compares all components of this patch
+            (routines, DD's, templates, etc.).
+        d.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+  
+    
+  4.  Select Installation Option: Install Package(s)
+       ------------------
+      a.  Choose the Install Package(s) option to start the patch install.
+      b.  When prompted for the "Select INSTALL NAME:", enter DG*5.3*855.
+      c.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion
+          of Install? NO//"  enter NO.
+      d.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? YES//"  enter NO.
+      e.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? YES//"  enter YES.
+      f.  When prompted "Enter options you wish to mark as 'Out Of
+          Order':"  enter the following options:
+   
+          Register a Patient                   [DG REGISTER PATIENT]
+          Load/Edit Patient Data               [DG LOAD PATIENT DATA]
+          Z07 Consistency Check                [DG Z07 CONSISTENCY CHECK]
+   
+      g.  When prompted "Enter protocols you wish to mark as 'Out Of
+          Order':"  enter <return>.
+      h.  When prompted "Delay Install (Minutes):  (0-60): 0//"  enter an
+          appropriate number of minutes to delay the installation in 
+          order to give users enough time to exit the disabled options
+          before the installation starts.
+      i.  When prompted "Device: Home//"  respond with the correct device.
+   
+   
+  ******************** POST-INSTALLATION INSTRUCTIONS *********************
+    
+  Reschedule the IVM Background Job [IVM BACKGROUND JOB] option.  Use the
+  Schedule/Unschedule Options [XUTM SCHEDULE] option on the Taskman
+  Management [XUTM MGR] option.
+  
+  *************************************************************************
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGRPCE
+    Before: B37126023   After: B37825187  **121,122,175,297,342,451,626,
+                                           689,653,754,797,855**
+Routine Name: DGRPCE1
+    Before: B64356482   After: B65500857  **108,226,470,454,489,505,522,
+                                           451,632,689,657,688,804,754,
+                                           797,855**
+ 
+Routine list of preceding patches: 797
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 30, 2012
+Completed By:                               Date Completed: OCT 06, 2016
+Released By :                               Date Released : OCT 11, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

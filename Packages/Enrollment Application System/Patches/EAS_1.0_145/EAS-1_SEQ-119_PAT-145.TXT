@@ -1,0 +1,240 @@
+
+=============================================================================
+Run Date: FEB 21, 2017                     Designation: EAS*1*145
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #119                      Status: Released
+                  Compliance Date: MAR 24, 2017
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEMS (ES) 4.5.1 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this Informational Patch is to announce the release of the
+ Enrollment System (ES) 4.5.1.
+  
+ The Enrollment Health Benefits Determination (EHBD) Program provides
+ enhancements to the Enrollment System.
+  
+ This ES 4.5.1 release, developed in Java technology, will have Enrollment
+ System Modernization (ESM) development efforts, including enhancements to
+ support Community Care and ES Sustainment:
+  
+ Add or Edit Residential Addresses in ES:
+ - Changes to Demographics Overview screen:
+  - Display all address types in top-most pane on screen, including new
+    Residential Address
+  
+ NOTE: Residential Address will not be shared with the medical centers in
+ this release.
+  
+ - Changes to Add/Edit Address screen:
+  - User may View, Add, or Edit a Residential Address
+  
+ Community Care (CC) Viewer page:
+  - User may view current Community Care Determination information on the
+    new Community Care Determination page
+  
+ ES Sustainment:
+  - ES user cannot access Veteran's On-Line Application (VOA) Re-Submit
+    function.
+  - Transmissions to IRS are rejected.
+  - Access Services (AcS) changes the value of the UNIVERSALID user
+    header.
+  
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type     New/Modified/Deleted
+ -----------     ----     -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------     -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number) New/Modified/Deleted 
+ -------------     ----     ------------------ --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ Service Desk Manager (SDM):
+ Ticket #     Overview
+ -------------     -------------------
+ N/A
+  
+ Rational Team Concert (RTC):
+ RTC #     Overview
+ -------------     -------------------
+ 437483     ES user cannot access VOA Re-Submit function.
+ 447564     Transmissions to IRS are rejected.
+ 453590     AcS changes the value of the UNIVERSALID user header.
+  
+ Problem:
+ ----------
+ - 437483 - Users were unable to access the VOA Re-Submit functionality in
+            ES where there is no Date of Birth on file for the applicant
+            in Identity Management (IdM).
+ - 447564 - Transmissions to IRS are rejecting in cases where the persons
+            first or last name contains punctuation. Such as O'Connor,
+            O'Brien, etc.
+ Also rejections are occurring due to address line one being more than 30
+ characters long after the escape sequence is added for invalid characters.
+ - 453590 - AcS is changing the value of the field they currently send in
+            the UNIVERSALID header where ESR currently gets the
+            authenticated user network ID.
+  
+ Resolution:
+ ----------
+ - 437483 - The ES capability (permission) was not implemented properly.
+            Updated ES to use the proper capability.
+ - 447564 - Updated the regex to include stripping of punctuation and spaces
+            from the name fields. Truncated address lines after escaping
+            special characters.
+ - 453590 - Updated user header to ADSAMACCOUNTNAME, per direction from AcS
+  
+ Test Sites:
+ ----------
+ Health Eligibility Center (HEC)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing the
+ new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Albany:             domain.ext
+ Hines:             domain.ext 
+ Salt Lake City:     domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Title                          File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ ES 4.5.1 User Guide           ES_4_5_1_User_Guide.pdf         binary
+ ES 4.5.1 Release Notes        ES_4_5_1_Release_Notes.pdf      binary
+  
+ The documentation will be in the form of Adobe Acrobat file.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Routine Information:
+ --------------------
+ No routines included.
+  
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 12, 2017
+Completed By:                               Date Completed: FEB 21, 2017
+Released By :                               Date Released : FEB 21, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

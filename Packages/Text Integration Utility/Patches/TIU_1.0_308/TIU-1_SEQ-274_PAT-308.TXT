@@ -1,0 +1,127 @@
+
+=============================================================================
+Run Date: MAR 22, 2017                     Designation: TIU*1*308
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #274                      Status: Released
+                  Compliance Date: APR 21, 2017
+=============================================================================
+
+
+Subject: PII DOCUMENTATION UPDATES
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch will resolve the following 2 issues in the Text Integration
+ Utilities (TIU) package:
+  
+ 1. There are some examples in several TIU documentation manuals in the 
+    VA Software Document Library (VDL) that contain examples that could 
+    be mistaken for Patient Identifiable Information (PII).
+ 2. The TIU Technical Manual contains a typo referring to file #8625
+    instead of file #8925.
+  
+ ASSOCIATED TICKETS:
+ ===================
+  
+ 1. I5510377FY15 - Need text removed from a TIU reference document 
+                   posted in the VDL.
+  
+ 2. I9983833FY16 - TIU Technical Manual typo 
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+       
+       
+ PARTICIPATING TEST SITES:
+ =========================
+ N/A
+       
+  
+ TICKET OVERVIEW:
+ ================
+ 1. I5510377FY15 - Need text removed from a TIU reference document 
+                   posted in the VDL.
+  
+   Problem 1:
+   ---------
+   The National Service Desk (NSD) ticket reported that the Text
+   Integration Utilities (TIU) Clinical Coordinator and User Manual
+   contains examples that could be mistaken for Patient Identifiable
+   Information (PII).
+  
+   Resolution 1:
+   ------------
+   A review of all the TIU documents on the VDL was performed.  This patch 
+   replaces all potential PII with generic names and meaningless numbers, 
+   such as TESTPROVIDER,ONE, TESTPATIENT,TWO, & (T1234).  
+  
+   See separate documents: 
+   TIU Clinical Coordinator and User Manual changes: 
+      pages 132,138
+   TIU ASU Implementation Guide changes: 
+      page 122
+   TIU Technical Manual changes:
+      page 84
+  
+  
+ 2. I9983833FY16 - TIU Technical Manual typo 
+  
+   Problem 2:
+   ---------
+   TIU Technical Manual references file #8625 when it should be file #8925.
+  
+   Resolution 2:
+   ------------
+   The reference to file #8625 is changed to file #8925.
+  
+   TIU Technical Manual changes:
+      page 25
+  
+ DOCUMENTATION RETRIEVAL INSTRUCTIONS:
+ =====================================
+ The updated documentation described above are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+  
+    http://www.domain.ext/vdl/
+  
+ Title                                  File Name            SFTP Mode
+ -----------------------------------------------------------------------
+ Clinical Coordinator and User Manual   tiuum.pdf             Binary
+ Implementation Guide                   tiuim.pdf             Binary
+ Technical Manual                       tiutm.pdf             Binary
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 25, 2016
+Completed By:                               Date Completed: MAR 15, 2017
+Released By :                               Date Released : MAR 22, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

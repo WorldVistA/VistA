@@ -1,0 +1,867 @@
+Released HL*1.6*165 SEQ #132
+Extracted from mail message
+**KIDS**:HL*1.6*165^
+
+**INSTALL NAME**
+HL*1.6*165
+"BLD",10163,0)
+HL*1.6*165^HEALTH LEVEL SEVEN^0^3160421^y
+"BLD",10163,1,0)
+^^2^2^3160421^
+"BLD",10163,1,1,0)
+Resolve issues with the HL7 receiving process that could lead to the 
+"BLD",10163,1,2,0)
+process getting stuck in an endless loop.
+"BLD",10163,4,0)
+^9.64PA^^
+"BLD",10163,6.3)
+2
+"BLD",10163,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10163,"KRN",.4,0)
+.4
+"BLD",10163,"KRN",.401,0)
+.401
+"BLD",10163,"KRN",.402,0)
+.402
+"BLD",10163,"KRN",.403,0)
+.403
+"BLD",10163,"KRN",.5,0)
+.5
+"BLD",10163,"KRN",.84,0)
+.84
+"BLD",10163,"KRN",3.6,0)
+3.6
+"BLD",10163,"KRN",3.8,0)
+3.8
+"BLD",10163,"KRN",9.2,0)
+9.2
+"BLD",10163,"KRN",9.8,0)
+9.8
+"BLD",10163,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",10163,"KRN",9.8,"NM",1,0)
+HLCSTCP1^^0^B82091479
+"BLD",10163,"KRN",9.8,"NM","B","HLCSTCP1",1)
+
+"BLD",10163,"KRN",19,0)
+19
+"BLD",10163,"KRN",19.1,0)
+19.1
+"BLD",10163,"KRN",101,0)
+101
+"BLD",10163,"KRN",409.61,0)
+409.61
+"BLD",10163,"KRN",771,0)
+771
+"BLD",10163,"KRN",779.2,0)
+779.2
+"BLD",10163,"KRN",870,0)
+870
+"BLD",10163,"KRN",8989.51,0)
+8989.51
+"BLD",10163,"KRN",8989.52,0)
+8989.52
+"BLD",10163,"KRN",8994,0)
+8994
+"BLD",10163,"KRN","B",.4,.4)
+
+"BLD",10163,"KRN","B",.401,.401)
+
+"BLD",10163,"KRN","B",.402,.402)
+
+"BLD",10163,"KRN","B",.403,.403)
+
+"BLD",10163,"KRN","B",.5,.5)
+
+"BLD",10163,"KRN","B",.84,.84)
+
+"BLD",10163,"KRN","B",3.6,3.6)
+
+"BLD",10163,"KRN","B",3.8,3.8)
+
+"BLD",10163,"KRN","B",9.2,9.2)
+
+"BLD",10163,"KRN","B",9.8,9.8)
+
+"BLD",10163,"KRN","B",19,19)
+
+"BLD",10163,"KRN","B",19.1,19.1)
+
+"BLD",10163,"KRN","B",101,101)
+
+"BLD",10163,"KRN","B",409.61,409.61)
+
+"BLD",10163,"KRN","B",771,771)
+
+"BLD",10163,"KRN","B",779.2,779.2)
+
+"BLD",10163,"KRN","B",870,870)
+
+"BLD",10163,"KRN","B",8989.51,8989.51)
+
+"BLD",10163,"KRN","B",8989.52,8989.52)
+
+"BLD",10163,"KRN","B",8994,8994)
+
+"BLD",10163,"QUES",0)
+^9.62^^
+"BLD",10163,"REQB",0)
+^9.611^1^1
+"BLD",10163,"REQB",1,0)
+HL*1.6*145^1
+"BLD",10163,"REQB","B","HL*1.6*145",1)
+
+"MBREQ")
+0
+"PKG",243,-1)
+1^1
+"PKG",243,0)
+HEALTH LEVEL SEVEN^HL^DHCP IMPLEMENTATION OF HEALTH LEVEL SEVEN
+"PKG",243,20,0)
+^9.402P^^
+"PKG",243,22,0)
+^9.49I^1^1
+"PKG",243,22,1,0)
+1.6^2951013^2981102^66481
+"PKG",243,22,1,"PAH",1,0)
+165^3160421
+"PKG",243,22,1,"PAH",1,1,0)
+^^2^2^3160421
+"PKG",243,22,1,"PAH",1,1,1,0)
+Resolve issues with the HL7 receiving process that could lead to the 
+"PKG",243,22,1,"PAH",1,1,2,0)
+process getting stuck in an endless loop.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","HLCSTCP1")
+0^1^B82091479^B81193745
+"RTN","HLCSTCP1",1,0)
+HLCSTCP1 ;SFIRMFO/RSD - BI-DIRECTIONAL TCP ;07/08/2009  15:27
+"RTN","HLCSTCP1",2,0)
+ ;;1.6;HEALTH LEVEL SEVEN;**19,43,57,64,71,133,132,122,140,142,145,165**;OCT 13,1995;Build 2
+"RTN","HLCSTCP1",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","HLCSTCP1",4,0)
+ ;Receiver
+"RTN","HLCSTCP1",5,0)
+ ;connection is initiated by sender and listener accepts connection
+"RTN","HLCSTCP1",6,0)
+ ;and calls this routine
+"RTN","HLCSTCP1",7,0)
+ ;
+"RTN","HLCSTCP1",8,0)
+ N $ETRAP,$ESTACK S $ETRAP="D ERROR^HLCSTCP1"
+"RTN","HLCSTCP1",9,0)
+ N HLMIEN,HLASTMSG
+"RTN","HLCSTCP1",10,0)
+ ;
+"RTN","HLCSTCP1",11,0)
+ ; patch HL*1.6*140, save IO
+"RTN","HLCSTCP1",12,0)
+ S HLTCPORT("IO")=IO ;RWF
+"RTN","HLCSTCP1",13,0)
+ ; patch HL*1.6*122 start
+"RTN","HLCSTCP1",14,0)
+ ; variable to replace ^TMP
+"RTN","HLCSTCP1",15,0)
+ N HLTMBUF
+"RTN","HLCSTCP1",16,0)
+ ;
+"RTN","HLCSTCP1",17,0)
+ ; for HL7 application proxy user
+"RTN","HLCSTCP1",18,0)
+ ;; N HLDUZ,DUZ  ; patch HL*1.6*122 TEST v2: DUZ code removed
+"RTN","HLCSTCP1",19,0)
+ N HLDUZ
+"RTN","HLCSTCP1",20,0)
+ S HLDUZ=+$G(DUZ)
+"RTN","HLCSTCP1",21,0)
+ ;
+"RTN","HLCSTCP1",22,0)
+ D MON^HLCSTCP("Open")
+"RTN","HLCSTCP1",23,0)
+ ; K ^TMP("HLCSTCP",$J,0)
+"RTN","HLCSTCP1",24,0)
+ S HLMIEN=0,HLASTMSG=""
+"RTN","HLCSTCP1",25,0)
+ ;
+"RTN","HLCSTCP1",26,0)
+ ; patch HL*1.6*122 TEST v2: DUZ code removed
+"RTN","HLCSTCP1",27,0)
+ ; set DUZ for application proxy user
+"RTN","HLCSTCP1",28,0)
+ ;; D PROXY^HLCSTCP4
+"RTN","HLCSTCP1",29,0)
+ ;
+"RTN","HLCSTCP1",30,0)
+ F  D  Q:$$STOP^HLCSTCP  I 'HLMIEN D MON^HLCSTCP("Idle") H 3
+"RTN","HLCSTCP1",31,0)
+ . ; clean variables
+"RTN","HLCSTCP1",32,0)
+ . D CLEANVAR^HLCSTCP4
+"RTN","HLCSTCP1",33,0)
+ . ; patch HL*1.6*140, restore the saved IO
+"RTN","HLCSTCP1",34,0)
+ . S IO=HLTCPORT("IO") ;RWF
+"RTN","HLCSTCP1",35,0)
+ . S HLMIEN=$$READ
+"RTN","HLCSTCP1",36,0)
+ . Q:'HLMIEN
+"RTN","HLCSTCP1",37,0)
+ . ;
+"RTN","HLCSTCP1",38,0)
+ . ; patch HL*1.6*122 TEST v2: DUZ code removed
+"RTN","HLCSTCP1",39,0)
+ . ; DUZ comparison/reset for application proxy user
+"RTN","HLCSTCP1",40,0)
+ . ;; D HLDUZ^HLCSTCP4
+"RTN","HLCSTCP1",41,0)
+ . D HLDUZ2^HLCSTCP4
+"RTN","HLCSTCP1",42,0)
+ . ; protect HLDUZ
+"RTN","HLCSTCP1",43,0)
+ . N HLDUZ
+"RTN","HLCSTCP1",44,0)
+ . D PROCESS
+"RTN","HLCSTCP1",45,0)
+ ; patch HL*1.6*122 end
+"RTN","HLCSTCP1",46,0)
+ Q
+"RTN","HLCSTCP1",47,0)
+ ;
+"RTN","HLCSTCP1",48,0)
+PROCESS ;check message and reply
+"RTN","HLCSTCP1",49,0)
+ ;HLDP=LL in 870
+"RTN","HLCSTCP1",50,0)
+ N HLTCP,HLTCPI,HLTCPO
+"RTN","HLCSTCP1",51,0)
+ S HLTCP="",HLTCPO=HLDP,HLTCPI=+HLMIEN
+"RTN","HLCSTCP1",52,0)
+ ; patch HL*1.6*145 start
+"RTN","HLCSTCP1",53,0)
+ ; variable HLDP("HLLINK") will be used as the client link ien,
+"RTN","HLCSTCP1",54,0)
+ ; in which the incoming original messages received by listener
+"RTN","HLCSTCP1",55,0)
+ ; will be stored and the messages in the client link queue will
+"RTN","HLCSTCP1",56,0)
+ ; be processed by incoming filer.
+"RTN","HLCSTCP1",57,0)
+ ; variable HLDP("SETINQUE")=1 to indicate the x-ref
+"RTN","HLCSTCP1",58,0)
+ ; ^HLMA("AC","I",<ien of link>,<ien of message>) is set.
+"RTN","HLCSTCP1",59,0)
+ ; initilizes to 0.
+"RTN","HLCSTCP1",60,0)
+ S HLDP("HLLINK")=0
+"RTN","HLCSTCP1",61,0)
+ S HLDP("SETINQUE")=0
+"RTN","HLCSTCP1",62,0)
+ ; patch HL*1.6*145 end
+"RTN","HLCSTCP1",63,0)
+ ;
+"RTN","HLCSTCP1",64,0)
+ ;update monitor, msg. received
+"RTN","HLCSTCP1",65,0)
+ D LLCNT^HLCSTCP(HLDP,1)
+"RTN","HLCSTCP1",66,0)
+ D NEW^HLTP3(HLMIEN)
+"RTN","HLCSTCP1",67,0)
+ ;
+"RTN","HLCSTCP1",68,0)
+ ; patch HL*1.6*145 start
+"RTN","HLCSTCP1",69,0)
+ ; quit if x-ref ^HLMA("AC","I",<ien of link>,<ien of message>)
+"RTN","HLCSTCP1",70,0)
+ ; was set, and counter will be incrmented later after message
+"RTN","HLCSTCP1",71,0)
+ ; being processed.
+"RTN","HLCSTCP1",72,0)
+ Q:HLDP("SETINQUE")
+"RTN","HLCSTCP1",73,0)
+ ;update monitor, msg. processed
+"RTN","HLCSTCP1",74,0)
+ I HLDP("HLLINK") D LLCNT^HLCSTCP(HLDP("HLLINK"),2) Q
+"RTN","HLCSTCP1",75,0)
+ D LLCNT^HLCSTCP(HLDP,2)
+"RTN","HLCSTCP1",76,0)
+ ; patch HL*1.6*145 end
+"RTN","HLCSTCP1",77,0)
+ Q
+"RTN","HLCSTCP1",78,0)
+ ;
+"RTN","HLCSTCP1",79,0)
+READ() ;read 1 message, returns ien in 773^ien in 772 for message
+"RTN","HLCSTCP1",80,0)
+ D MON^HLCSTCP("Reading")
+"RTN","HLCSTCP1",81,0)
+ N HLDB,HLDT,HLDEND,HLACKWT,HLDSTRT,HLHDR,HLIND1,HLINE,HLMSG,HLRDOUT,HLRS,HLX,X
+"RTN","HLCSTCP1",82,0)
+ ;HLDSTRT=start char., HLDEND=end char., HLRS=record separator
+"RTN","HLCSTCP1",83,0)
+ S HLDSTRT=$C(11),HLDEND=$C(28),HLRS=$C(13)
+"RTN","HLCSTCP1",84,0)
+ ;HLRDOUT=exit read loop, HLINE=line count, HLIND1=ien 773^ien 772
+"RTN","HLCSTCP1",85,0)
+ ;HLHDR=have a header, HLTMBUF()=excess from last read, HLACKWT=wait for ack
+"RTN","HLCSTCP1",86,0)
+ ; HL*1.6*122 start
+"RTN","HLCSTCP1",87,0)
+ ; S (HLRDOUT,HLINE,HLIND1,HLHDR)=0,HLX=$G(^TMP("HLCSTCP",$J,0)),HLACKWT=HLDBACK
+"RTN","HLCSTCP1",88,0)
+ S (HLRDOUT,HLINE,HLIND1,HLHDR)=0,HLX=$G(HLTMBUF(0)),HLACKWT=HLDBACK
+"RTN","HLCSTCP1",89,0)
+ N HLBUFF,HLXX,MAXWAIT
+"RTN","HLCSTCP1",90,0)
+ ; based on patch 132 for readtime
+"RTN","HLCSTCP1",91,0)
+ S MAXWAIT=$S((HLACKWT>HLDREAD):HLACKWT,1:HLDREAD)
+"RTN","HLCSTCP1",92,0)
+ S HLRS("START-FLAG")=0
+"RTN","HLCSTCP1",93,0)
+ S HLTMBUF(0)=""
+"RTN","HLCSTCP1",94,0)
+ ; variable used to store data in HLBUFF
+"RTN","HLCSTCP1",95,0)
+ S HLX(1)=$G(HLTMBUF(1))
+"RTN","HLCSTCP1",96,0)
+ S HLTMBUF(1)=""
+"RTN","HLCSTCP1",97,0)
+ S HLBUFF("START")=0
+"RTN","HLCSTCP1",98,0)
+ S HLBUFF("END")=0
+"RTN","HLCSTCP1",99,0)
+ I (HLX]"")!(HLX(1)]"") D
+"RTN","HLCSTCP1",100,0)
+ . I (HLX[HLDSTRT)!(HLX(1)[HLDSTRT) D
+"RTN","HLCSTCP1",101,0)
+ .. S HLBUFF("START")=1
+"RTN","HLCSTCP1",102,0)
+ . I (HLX[HLDEND)!(HLX(1)[HLDEND) D
+"RTN","HLCSTCP1",103,0)
+ .. S HLBUFF("END")=1
+"RTN","HLCSTCP1",104,0)
+ F  D RDBLK Q:HLRDOUT
+"RTN","HLCSTCP1",105,0)
+ ;**132**
+"RTN","HLCSTCP1",106,0)
+ ;switch to null device if opened to prevent 'leakage'
+"RTN","HLCSTCP1",107,0)
+ I $G(IO(0))]"",IO(0)'=IO U IO(0)
+"RTN","HLCSTCP1",108,0)
+ ;
+"RTN","HLCSTCP1",109,0)
+ ;save any excess for next time
+"RTN","HLCSTCP1",110,0)
+ S:HLX]"" HLTMBUF(0)=HLX
+"RTN","HLCSTCP1",111,0)
+ S:HLX(1)]"" HLTMBUF(1)=HLX(1)
+"RTN","HLCSTCP1",112,0)
+ I +HLIND1,'$P(HLIND1,U,3) D DELMSG(HLIND1) S HLIND1=0
+"RTN","HLCSTCP1",113,0)
+ Q HLIND1
+"RTN","HLCSTCP1",114,0)
+ ;
+"RTN","HLCSTCP1",115,0)
+RDBLK ;
+"RTN","HLCSTCP1",116,0)
+ ; initialize
+"RTN","HLCSTCP1",117,0)
+ S HLBUFF=""
+"RTN","HLCSTCP1",118,0)
+ ;
+"RTN","HLCSTCP1",119,0)
+ ;S HLDB=HLDBSIZE-$L(HLX)
+"RTN","HLCSTCP1",120,0)
+ ; store the total length of HLX and HLX(1) in HLDB(1)
+"RTN","HLCSTCP1",121,0)
+ S HLDB(1)=$L(HLX)+$L(HLX(1))
+"RTN","HLCSTCP1",122,0)
+ ;
+"RTN","HLCSTCP1",123,0)
+ ;**132 **
+"RTN","HLCSTCP1",124,0)
+ ;U IO R X#HLDB:HLDREAD
+"RTN","HLCSTCP1",125,0)
+ ; U IO R X#HLDB:MAXWAIT
+"RTN","HLCSTCP1",126,0)
+ ;
+"RTN","HLCSTCP1",127,0)
+ ; remove the readcount to speedup GT.M
+"RTN","HLCSTCP1",128,0)
+ U IO
+"RTN","HLCSTCP1",129,0)
+ R:(HLDB(1)<HLDBSIZE) HLBUFF:MAXWAIT
+"RTN","HLCSTCP1",130,0)
+ ;
+"RTN","HLCSTCP1",131,0)
+ I HLBUFF]"" D
+"RTN","HLCSTCP1",132,0)
+ . I HLBUFF[HLDSTRT,(HLBUFF("START")=0) D
+"RTN","HLCSTCP1",133,0)
+ .. ; remove the extraneous text prefixing the "START" char
+"RTN","HLCSTCP1",134,0)
+ .. I $P(HLBUFF,HLDSTRT)]"" S HLBUFF=HLDSTRT_$P(HLBUFF,HLDSTRT,2,99)
+"RTN","HLCSTCP1",135,0)
+ .. S HLBUFF("START")=1
+"RTN","HLCSTCP1",136,0)
+ . ;
+"RTN","HLCSTCP1",137,0)
+ . I HLBUFF[HLDEND,(HLBUFF("END")=0) S HLBUFF("END")=1
+"RTN","HLCSTCP1",138,0)
+ ; detect disconnect for GT.M
+"RTN","HLCSTCP1",139,0)
+ I $G(^%ZOSF("OS"))["GT.M",$DEVICE S $ECODE=",UREAD,"
+"RTN","HLCSTCP1",140,0)
+ ; timedout, <clean up>, quit
+"RTN","HLCSTCP1",141,0)
+ ;I '$T,X="",HLX="" S HLACKWT=HLACKWT-HLDREAD D:HLACKWT<0&'HLHDR CLEAN Q
+"RTN","HLCSTCP1",142,0)
+ ;I '$T,X="",HLX="" D:'HLHDR CLEAN Q
+"RTN","HLCSTCP1",143,0)
+ ; patch HL*1.6*140
+"RTN","HLCSTCP1",144,0)
+ ; I '$T,HLBUFF="",HLX="",HLX(1)="" D  Q
+"RTN","HLCSTCP1",145,0)
+ I HLBUFF="",HLX="",HLX(1)="" D  Q
+"RTN","HLCSTCP1",146,0)
+ . D:('HLHDR)&('HLIND1) CLEAN
+"RTN","HLCSTCP1",147,0)
+ ;add incoming line to what wasn't processed in last read
+"RTN","HLCSTCP1",148,0)
+ ;S HLX=$G(HLX)_X
+"RTN","HLCSTCP1",149,0)
+ ; get block of characters from read buffer HLBUFF
+"RTN","HLCSTCP1",150,0)
+ ; every 'for-loop' deal with one read at most, and one message at most
+"RTN","HLCSTCP1",151,0)
+ ; if HLX is not empty, loop continues even no data is read
+"RTN","HLCSTCP1",152,0)
+ ; quit, if both HLDBUFF and HLX(1) are empty, means one read is done
+"RTN","HLCSTCP1",153,0)
+ ; quit, when HLRDOUT is set to 1, means one message is encountered
+"RTN","HLCSTCP1",154,0)
+ ; an "end"
+"RTN","HLCSTCP1",155,0)
+ ; F  D  Q:HLXX=""!(HLRDOUT)
+"RTN","HLCSTCP1",156,0)
+ F  D  Q:(HLRDOUT)!(HLBUFF=""&(HLX(1)=""))
+"RTN","HLCSTCP1",157,0)
+ . ;
+"RTN","HLCSTCP1",158,0)
+ . ; if HLX(1) is not empty
+"RTN","HLCSTCP1",159,0)
+ . I HLX(1)]"" D
+"RTN","HLCSTCP1",160,0)
+ .. ; hldb(2) is the number of characters extracted from hlx(1)
+"RTN","HLCSTCP1",161,0)
+ .. ; to be concatenated with hlx
+"RTN","HLCSTCP1",162,0)
+ .. S HLDB(2)=HLDBSIZE-$L(HLX)
+"RTN","HLCSTCP1",163,0)
+ .. ; hlx(2) stores the first hldb(2) characters extracted
+"RTN","HLCSTCP1",164,0)
+ .. ; from hlx(1)
+"RTN","HLCSTCP1",165,0)
+ .. S HLX(2)=$E(HLX(1),1,HLDB(2))
+"RTN","HLCSTCP1",166,0)
+ .. S HLX(1)=$E(HLX(1),HLDB(2)+1,$L(HLX(1)))
+"RTN","HLCSTCP1",167,0)
+ .. S HLX=$G(HLX)_HLX(2)
+"RTN","HLCSTCP1",168,0)
+ . ;
+"RTN","HLCSTCP1",169,0)
+ . ; if HLX(1) is empty, and HLBUFF contains data
+"RTN","HLCSTCP1",170,0)
+ . ; all the data in hlx(1) need to be extracted first
+"RTN","HLCSTCP1",171,0)
+ . I HLX(1)="",HLBUFF]"" D
+"RTN","HLCSTCP1",172,0)
+ .. S HLDB=HLDBSIZE-$L(HLX)
+"RTN","HLCSTCP1",173,0)
+ .. S HLXX=$E(HLBUFF,1,HLDB)
+"RTN","HLCSTCP1",174,0)
+ .. S HLBUFF=$E(HLBUFF,HLDB+1,$L(HLBUFF))
+"RTN","HLCSTCP1",175,0)
+ .. S HLX=$G(HLX)_HLXX
+"RTN","HLCSTCP1",176,0)
+ . ; quit when HLX is empty
+"RTN","HLCSTCP1",177,0)
+ . Q:(HLX="")
+"RTN","HLCSTCP1",178,0)
+ . ; ** 132 **
+"RTN","HLCSTCP1",179,0)
+ . ; if no segment end, HLX not full, go back for more
+"RTN","HLCSTCP1",180,0)
+ . I $L(HLX)<HLDBSIZE,HLX'[HLRS,HLX'[HLDEND Q
+"RTN","HLCSTCP1",181,0)
+ . ;add incoming line to what wasn't processed
+"RTN","HLCSTCP1",182,0)
+ . D RDBLK2
+"RTN","HLCSTCP1",183,0)
+ ;
+"RTN","HLCSTCP1",184,0)
+ ; it is possible one message is encountered an "end" and other
+"RTN","HLCSTCP1",185,0)
+ ; messages left in buffer,HLBUFF, save it in HLX for next run
+"RTN","HLCSTCP1",186,0)
+ I HLBUFF]"" D
+"RTN","HLCSTCP1",187,0)
+ . ; variable HLBUFF may remain data with size more than HLDBSIZE
+"RTN","HLCSTCP1",188,0)
+ . ; variable HLBUFF is not empty, only if the total length of
+"RTN","HLCSTCP1",189,0)
+ . ; HLX and HLX(1) is less than HLDBSIZE and HLX(1) should be
+"RTN","HLCSTCP1",190,0)
+ . ; empty when the command s hlx(1)=$g(hlx(1))_hlbuff is executed
+"RTN","HLCSTCP1",191,0)
+ . ; use hlx(1) to store the data of hlbuff to avoid "MAXTRING" error
+"RTN","HLCSTCP1",192,0)
+ . S HLX(1)=$G(HLX(1))_HLBUFF
+"RTN","HLCSTCP1",193,0)
+ . S HLBUFF=""
+"RTN","HLCSTCP1",194,0)
+ Q
+"RTN","HLCSTCP1",195,0)
+ ;
+"RTN","HLCSTCP1",196,0)
+RDBLK2 ;data stream: <sb>dddd<cr><eb><cr>
+"RTN","HLCSTCP1",197,0)
+ ; HL*1.6*122 end
+"RTN","HLCSTCP1",198,0)
+ ; look for segment= <CR>
+"RTN","HLCSTCP1",199,0)
+ F  Q:HLX'[HLRS  D  Q:HLRDOUT
+"RTN","HLCSTCP1",200,0)
+ . ; Get the first piece, save the rest of the line
+"RTN","HLCSTCP1",201,0)
+ . S HLINE=HLINE+1,HLMSG(HLINE,0)=$P(HLX,HLRS),HLX=$P(HLX,HLRS,2,999)
+"RTN","HLCSTCP1",202,0)
+ . ; check for start block, Quit if no ien
+"RTN","HLCSTCP1",203,0)
+ . I HLMSG(HLINE,0)[HLDSTRT!HLHDR D  Q
+"RTN","HLCSTCP1",204,0)
+ .. S HLRS("START-FLAG")=1 ; HL*1.6*122
+"RTN","HLCSTCP1",205,0)
+ .. D:HLMSG(HLINE,0)[HLDSTRT
+"RTN","HLCSTCP1",206,0)
+ ... S X=$L(HLMSG(HLINE,0),HLDSTRT)
+"RTN","HLCSTCP1",207,0)
+ ... S:X>2 HLMSG(HLINE,0)=HLDSTRT_$P(HLMSG(HLINE,0),HLDSTRT,X)
+"RTN","HLCSTCP1",208,0)
+ ... S HLMSG(HLINE,0)=$P(HLMSG(HLINE,0),HLDSTRT,2)
+"RTN","HLCSTCP1",209,0)
+ ... D RESET:(HLINE>1)
+"RTN","HLCSTCP1",210,0)
+ .. ;
+"RTN","HLCSTCP1",211,0)
+ .. ; patch HL*1.6*122
+"RTN","HLCSTCP1",212,0)
+ .. ; if the first line less than 10 characters
+"RTN","HLCSTCP1",213,0)
+ .. I HLHDR,$L(HLMSG(1,0))<10,$D(HLMSG(2,0)) D
+"RTN","HLCSTCP1",214,0)
+ ... S HLMSG(1,0)=HLMSG(1,0)_$E(HLMSG(2,0),1,10)
+"RTN","HLCSTCP1",215,0)
+ ... S HLMSG(2,0)=$E(HLMSG(2,0),11,9999999)
+"RTN","HLCSTCP1",216,0)
+ .. ;
+"RTN","HLCSTCP1",217,0)
+ .. ;ping message
+"RTN","HLCSTCP1",218,0)
+ .. I $E(HLMSG(1,0),1,9)="MSH^PING^" D PING Q
+"RTN","HLCSTCP1",219,0)
+ .. ; get next ien to store
+"RTN","HLCSTCP1",220,0)
+ .. D MIEN^HLCSTCP4
+"RTN","HLCSTCP1",221,0)
+ .. K HLMSG
+"RTN","HLCSTCP1",222,0)
+ .. S (HLINE,HLHDR)=0
+"RTN","HLCSTCP1",223,0)
+ . ; check for end block; <eb><cr>
+"RTN","HLCSTCP1",224,0)
+ . I HLMSG(HLINE,0)[HLDEND D
+"RTN","HLCSTCP1",225,0)
+ .. ; patch HL*1.6*122 start
+"RTN","HLCSTCP1",226,0)
+ .. ;no msg. ien
+"RTN","HLCSTCP1",227,0)
+ .. ; Q:'HLIND1
+"RTN","HLCSTCP1",228,0)
+ .. I 'HLIND1 D CLEAN Q
+"RTN","HLCSTCP1",229,0)
+ .. ; Kill just the last line if no data before HLDEND
+"RTN","HLCSTCP1",230,0)
+ .. I $P(HLMSG(HLINE,0),HLDEND)']"" D
+"RTN","HLCSTCP1",231,0)
+ ... K HLMSG(HLINE,0) S HLINE=HLINE-1
+"RTN","HLCSTCP1",232,0)
+ .. E  S HLMSG(HLINE,0)=$P(HLMSG(HLINE,0),HLDEND)
+"RTN","HLCSTCP1",233,0)
+ .. ; patch HL*1.6*122 end
+"RTN","HLCSTCP1",234,0)
+ .. ;
+"RTN","HLCSTCP1",235,0)
+ .. ; move into 772
+"RTN","HLCSTCP1",236,0)
+ .. D SAVE(.HLMSG,"^HL(772,"_+$P(HLIND1,U,2)_",""IN"")")
+"RTN","HLCSTCP1",237,0)
+ .. ;mark that end block has been received
+"RTN","HLCSTCP1",238,0)
+ .. ;HLIND1=ien in 773^ien in 772^1 if end block was received
+"RTN","HLCSTCP1",239,0)
+ .. S $P(HLIND1,U,3)=1
+"RTN","HLCSTCP1",240,0)
+ .. S HLBUFF("HLIND1")=HLIND1
+"RTN","HLCSTCP1",241,0)
+ .. ;reset variables for next message
+"RTN","HLCSTCP1",242,0)
+ .. D CLEAN
+"RTN","HLCSTCP1",243,0)
+ . ;add blank line for carriage return
+"RTN","HLCSTCP1",244,0)
+ . I HLINE'=0,HLMSG(HLINE,0)]"" S HLINE=HLINE+1,HLMSG(HLINE,0)=""
+"RTN","HLCSTCP1",245,0)
+ Q:HLRDOUT
+"RTN","HLCSTCP1",246,0)
+ ;If the line is long and no <CR> move it into the array.
+"RTN","HLCSTCP1",247,0)
+ I ($L(HLX)=HLDBSIZE),(HLX'[HLRS),(HLX'[HLDEND),(HLX'[HLDSTRT) D  Q
+"RTN","HLCSTCP1",248,0)
+ . S HLINE=HLINE+1,HLMSG(HLINE,0)=HLX,HLX=""
+"RTN","HLCSTCP1",249,0)
+ ;have start block but no record separator
+"RTN","HLCSTCP1",250,0)
+ I HLX[HLDSTRT D  Q
+"RTN","HLCSTCP1",251,0)
+ . ;check for more than 1 start block
+"RTN","HLCSTCP1",252,0)
+ . S X=$L(HLX,HLDSTRT) S:X>2 HLX=HLDSTRT_$P(HLX,HLDSTRT,X)
+"RTN","HLCSTCP1",253,0)
+ . ;
+"RTN","HLCSTCP1",254,0)
+ . ; patch HL*1.6*122
+"RTN","HLCSTCP1",255,0)
+ . ; S:$L($P(HLX,HLDSTRT,2))>8 HLINE=HLINE+1,HLMSG(HLINE,0)=$P(HLX,HLDSTRT,2),HLX="",HLHDR=1
+"RTN","HLCSTCP1",256,0)
+ . S HLINE=HLINE+1,HLMSG(HLINE,0)=$P(HLX,HLDSTRT,2),HLX="",HLHDR=1
+"RTN","HLCSTCP1",257,0)
+ . ;
+"RTN","HLCSTCP1",258,0)
+ . D RESET:(HLHDR&(HLINE>1))
+"RTN","HLCSTCP1",259,0)
+ ;if no ien, reset
+"RTN","HLCSTCP1",260,0)
+ ; patch HL*1.6*122
+"RTN","HLCSTCP1",261,0)
+ ; I 'HLIND1 D CLEAN Q
+"RTN","HLCSTCP1",262,0)
+ I (HLRS("START-FLAG")=1),'HLIND1 D CLEAN Q
+"RTN","HLCSTCP1",263,0)
+ ;HL*1.6*165
+"RTN","HLCSTCP1",264,0)
+ ;if ENDBLOCK without ien reset
+"RTN","HLCSTCP1",265,0)
+ I HLX[HLDEND,'HLIND1 D CLEAN Q
+"RTN","HLCSTCP1",266,0)
+ ; big message-merge from local to global every 100 lines
+"RTN","HLCSTCP1",267,0)
+ I (HLINE-$O(HLMSG(0)))>100 D
+"RTN","HLCSTCP1",268,0)
+ . M ^HL(772,+$P(HLIND1,U,2),"IN")=HLMSG
+"RTN","HLCSTCP1",269,0)
+ . ; reset working array
+"RTN","HLCSTCP1",270,0)
+ . K HLMSG
+"RTN","HLCSTCP1",271,0)
+ Q
+"RTN","HLCSTCP1",272,0)
+ ;
+"RTN","HLCSTCP1",273,0)
+SAVE(SRC,DEST) ;save into global & set top node
+"RTN","HLCSTCP1",274,0)
+ ;SRC=source array (passed by ref.), DEST=destination global
+"RTN","HLCSTCP1",275,0)
+ ;
+"RTN","HLCSTCP1",276,0)
+ ; patch HL*1.6*122: MPI-client/server
+"RTN","HLCSTCP1",277,0)
+ I DEST["HLMA" D
+"RTN","HLCSTCP1",278,0)
+ . F  L +^HLMA(+HLIND1):10 Q:$T  H 1
+"RTN","HLCSTCP1",279,0)
+ E  D
+"RTN","HLCSTCP1",280,0)
+ . F  L +^HL(772,+$P(HLIND1,U,2)):10 Q:$T  H 1
+"RTN","HLCSTCP1",281,0)
+ ;
+"RTN","HLCSTCP1",282,0)
+ M @DEST=SRC
+"RTN","HLCSTCP1",283,0)
+ S @DEST@(0)="^^"_HLINE_"^"_HLINE_"^"_DT_"^"
+"RTN","HLCSTCP1",284,0)
+ ;
+"RTN","HLCSTCP1",285,0)
+ I DEST["HLMA" L -^HLMA(+HLIND1)
+"RTN","HLCSTCP1",286,0)
+ E  L -^HL(772,+$P(HLIND1,U,2))
+"RTN","HLCSTCP1",287,0)
+ ;
+"RTN","HLCSTCP1",288,0)
+ Q
+"RTN","HLCSTCP1",289,0)
+ ;
+"RTN","HLCSTCP1",290,0)
+DELMSG(HLMAMT) ;delete message from Message Administration/Message Text files.
+"RTN","HLCSTCP1",291,0)
+ N DIK,DA
+"RTN","HLCSTCP1",292,0)
+ S DA=+HLMAMT,DIK="^HLMA("
+"RTN","HLCSTCP1",293,0)
+ D ^DIK
+"RTN","HLCSTCP1",294,0)
+ S DA=$P(HLMAMT,U,2),DIK="^HL(772,"
+"RTN","HLCSTCP1",295,0)
+ D ^DIK
+"RTN","HLCSTCP1",296,0)
+ Q
+"RTN","HLCSTCP1",297,0)
+PING ;process PING message
+"RTN","HLCSTCP1",298,0)
+ S X=HLMSG(1,0)
+"RTN","HLCSTCP1",299,0)
+ ; patch HL*1.6*140, flush character- HLTCPLNK("IOF")
+"RTN","HLCSTCP1",300,0)
+ ; I X[HLDEND U IO W X,! D
+"RTN","HLCSTCP1",301,0)
+ ; I X[HLDEND U IO W X,HLTCPLNK("IOF") D
+"RTN","HLCSTCP1",302,0)
+ ; patch HL*1.6*142
+"RTN","HLCSTCP1",303,0)
+ I X[HLDEND U IO W X,@HLTCPLNK("IOF") D
+"RTN","HLCSTCP1",304,0)
+ . ; switch to null device if opened to prevent 'leakage'
+"RTN","HLCSTCP1",305,0)
+ . I $G(IO(0))]"",$G(IO(0))'=IO U IO(0)
+"RTN","HLCSTCP1",306,0)
+CLEAN ;reset var. for next message
+"RTN","HLCSTCP1",307,0)
+ K HLMSG
+"RTN","HLCSTCP1",308,0)
+ S HLINE=0,HLRDOUT=1
+"RTN","HLCSTCP1",309,0)
+ Q
+"RTN","HLCSTCP1",310,0)
+ ;
+"RTN","HLCSTCP1",311,0)
+ERROR ; Error trap for disconnect error and return back to the read loop.
+"RTN","HLCSTCP1",312,0)
+ ; patch HL*1.6*122
+"RTN","HLCSTCP1",313,0)
+ ; move to routine HLCSTCP4 (splitted-size over 10000)
+"RTN","HLCSTCP1",314,0)
+ D ERROR1^HLCSTCP4
+"RTN","HLCSTCP1",315,0)
+ Q
+"RTN","HLCSTCP1",316,0)
+ ;
+"RTN","HLCSTCP1",317,0)
+CC(X) ;cleanup and close
+"RTN","HLCSTCP1",318,0)
+ D MON^HLCSTCP(X)
+"RTN","HLCSTCP1",319,0)
+ H 2
+"RTN","HLCSTCP1",320,0)
+ Q
+"RTN","HLCSTCP1",321,0)
+RESET ;reset info as a result of no end block
+"RTN","HLCSTCP1",322,0)
+ N %
+"RTN","HLCSTCP1",323,0)
+ S HLMSG(1,0)=HLMSG(HLINE,0)
+"RTN","HLCSTCP1",324,0)
+ F %=2:1:HLINE K HLMSG(%,0)
+"RTN","HLCSTCP1",325,0)
+ S HLINE=1
+"RTN","HLCSTCP1",326,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",10163,6)
+^132
+**END**
+**END**
+

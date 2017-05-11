@@ -1,0 +1,16 @@
+LR*5.2*479 defect  16 Mar 2017 
+-----------------------------------------------------------------------------
+The second line of routine LRAPKOE included with patch LR*5.2*479 
+includes an erroneous reference to LR*5.2*469, see example below. A new 
+patch correcting this routine, LR*5.2*483, is developed and will be 
+released through the established release procedures. There is no 
+functional impact resulting from this issue to any LR*5.2*479 routine, 
+and LR*5.2*479 should be installed as scheduled and as per normal local 
+procedures.
+ 
+Example: 
+Second line as released with LR*5.2*479:     
+;;5.2;LAB SERVICE;**462,469,479**;Sep 27, 1994;Build 8
+ 
+Second line after the install of LR*5.2*483:    
+ ;;5.2;LAB SERVICE;**462,479,483**;Sep 27, 1994;Build nn

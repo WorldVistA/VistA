@@ -1,0 +1,114 @@
+
+=============================================================================
+Run Date: APR 11, 2017                     Designation: RA*5*140
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: EMERGENCY
+Version : 5       SEQ #120                      Status: Released
+                  Compliance Date: MAY 30, 2017
+=============================================================================
+
+
+Subject: INFORMATIONAL PATCH FOR RA*5.0*127 SUPPLEMENT
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ ****  This Patch Only Applies to Facilities that have ****
+ ****  Installed Patch RA*5.0*127.                     ****
+  
+ This patch describes supplemental actions that the Radiology 
+ ADPAC's may take while using the Radiology Procedure Enter/Edit
+ option post the RA*5.0*127 install.
+  
+ With the release of RA*5.0*127 certain functionality in the selection
+ and creation of Procedures was changed. This Informational Patch is
+ notating the changes that have been reported and work arounds for
+ those changes where appropriate.
+ These items are also addressed in the 'ADPAC Supplement RA 5.0' file
+ name: ra_5_aa_s_1.PDF.
+  
+ 1.  Use of double question marks ('??'). 
+      The ADPAC will not have the ability to use '??' for a Procedure List.
+      The work around is: The ADPAC will need to enter at least the first 3 
+      characters of the Procedure Name. This will list those Procedures
+      whose name starts with the characters entered.
+  
+ 2. VistA error when selecting a direct match on a Procedure Name.
+     This error is generated as the result of multiple procedures having 
+     the same name.
+     The work around is: If the ADPAC encounters this error when entering
+     an exact match on the Procedure Name the ADPAC should re-enter the
+     Procedure Name omitting the last few characters.
+     Example:
+     RAD NUC/MED PROCEDURES NAME: "WRIST 2 VIEWS" 
+                        Enter as: "WRIST 2 VIEW" 
+  
+ 3. Procedure Names that contain forward slashes ('/').
+     The ADPAC should refrain from creating Procedures with forward
+      slashes ('/') in the Procedure name.
+     ******************************************************
+     The ADPAC may not edit Procedures with a forward slash ('/') in
+      the Procedure Name.
+     ******************************************************
+  
+ 4. Radiology/Nuclear Medicine Code Change Process
+    *******************************************************
+    Detailed instructions are in section 2 of the:
+    ADPAC Supplement RA 5.0 (ra_5_aa_s_1.pdf)
+    *******************************************************
+     When the annual VAMC code changes are distributed to the VA
+     facilities, the ADPAC will need to update each individual procedure
+     impacted by the new CPT codes provided to the medical centers.
+     After the NDS Radiology Patch RA*5*127 is installed the ADPAC will
+     not have visibility to the Type of Imaging, Detailed nor the CPT Code.
+     As a result of the new patch, the Radiology Procedure List display will
+     have a different appearance.
+     The ADPAC will only be able to look up Procedures based on a partial
+     match To the Procedure Name.
+     When working with the Procedure the ADPAC would include the Imaging
+     Type in the Procedure Name.
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory at the following OI Field Offices:
+  
+ Albany:     domain.ext
+ Hines:     domain.ext  
+ Salt Lake City:     domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+  
+ Title                            File Name                   FTP Mode
+ -----------------------------------------------------------------------
+ ADPAC Supplement RA 5.0          ra_5_aa_s_1.PDF             Binary
+  
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 11, 2017
+Completed By:                               Date Completed: APR 11, 2017
+Released By :                               Date Released : APR 11, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

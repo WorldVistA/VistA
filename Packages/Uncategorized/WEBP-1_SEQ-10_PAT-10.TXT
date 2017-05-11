@@ -1,0 +1,420 @@
+
+=============================================================================
+Run Date: FEB 23, 2017                     Designation: WEBP*1*10
+Package : WEBP - PATIENT CENTERED MANAGEMENT  Priority: Mandatory
+Version : 1        SEQ #10                      Status: Released
+                  Compliance Date: FEB 23, 2017
+=============================================================================
+
+
+Subject: PCMM WEB V1.10 CONFIGURATION UPDATES
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Patient-Centered Management Module (PCMM) Web application version 
+ WEBP*1*10 will implement the following configuration changes to correct 
+ defects reported by the field.
+  
+  
+ Configuration and Software Changes:
+ ===================================
+ 1.      RTC 337859 - The CPRS header does not update after a team name 
+ change occurs. Added Java code to set all patients assigned to a team for 
+ resynchronization of the CPRS header when the team name is changed.
+ CA-SDM Ticket: I9271627FY16
+  
+  
+ 2.      RTC 348416 - The History of Team Attributes Changes are not 
+ consistently displaying team name or Focus changes correctly. Updated the 
+ DB view/query that is used for attribute changes functionality to 
+ correctly display the Team Attributes Changes consistently in the History 
+ of Team Attributes section on the Team Profile screen.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ 3.      RTC 358647 - The Mental Health Team Capacity changes from 1000 to 
+ 1200 when Team name is changed or Patient is assigned to the Team. 
+ Updated the Java code that saves team changes to the DB to correctly 
+ re-calculate capacity and display the default of 1000 team capacity for 
+ Mental Health teams when any change occurs to team. 
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ 4.      RTC 373862 - The CPRS Header does not display the Nurse 
+ Practitioner Associate Provider (NPAP) team role or the Physician 
+ Assistant Associate Provider (PAAP) team role when a patient is 
+ explicitly assigned to one of these team roles using the 'AP' tag. NPAP 
+ and PAAP team roles were added to the Java code that builds the CPRS 
+ header so that these 2 team roles will display in the CPRS Header when 
+ patients are explicitly assigned to them with the 'AP' tag.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ 5.      RTC 428868 - The CPRS Window does not display the Nurse 
+ Practitioner Associate Provider (NPAP) team role or the Physician 
+ Assistant Associate Provider (PAAP) team role when a patient is 
+ explicitly assigned to one of these team roles with the 'Associate 
+ Provider' tag. NPAP and PAAP team roles were added to the code that 
+ builds the data for velocity template so that these 2 team roles will 
+ display in the CPRS Window when patients are explicitly assigned to them 
+ with the 'Associate Provider' tag.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ 6.      RTC 428872 - The staff roles of "Physician Assistant Trainee" and 
+ "Nurse Practitioner Trainee" display in PCMM Web and these 2 staff roles 
+ are not considered trainee staff roles. In the DB, we changed the staff 
+ role of "Physician Assistant Trainee" to "Physician Assistant" and "Nurse 
+ Practitioner Trainee" to "Nurse Practitioner" so they will now display 
+ correctly in PCMM Web during the staff assignment process.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ 7.      RTC 372084 - The Nurse Practitioner Associate Provider and 
+ Physician Assistant Associate Provider team roles do not display in the 
+ Direct Care Provider (DCP) column when the patient is explicitly 
+ assigned. The DB mapping was updated to set the Direct Care Provider 
+ indicator to "Y" to allow the display of these 2 team roles in the DCP 
+ column when a patient is explicitly assigned to one of these team roles.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ 8.      RTC 260168 - The CPRS PC Header displays "/HBPC" in the tag "No 
+ Local PACT/HBPC Assigned" when the patient is not assigned to a local 
+ PACT team which is redundant because HBPC is a Primary Care care type. 
+ Updated the Java code that displays the header information and removed 
+ "/HBPC" from the 'No Local PACT Assigned' tag.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ 9.      RTC 228845 - The search feature for the phone number field does 
+ not have a dash format on the NON-VA Provider search and the NON-VA 
+ Practice search which results in the NON-VA provider or practice from 
+ being found. Added a mask to the phone number field to limit the phone 
+ number to the correct format which then allows the phone number search 
+ for the NON-VA Provider and NON-VA Practice to return and display.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ 10.     RTC 366656 - The Preceptor relationship does not generate when 
+ reassigning the team role of PCP/Clinical Nurse Specialist (CNS) to team 
+ role PCP/Physician with an Associate Provider (AP) staffed. There was 
+ obsolete code that prevented the preceptor relationship to complete when 
+ the team role PCP/CNS was reassigned to the PCP/Physician team role. 
+ Removed the old code and the preceptor relationship generates when the 
+ team role PCP/CNS is reassigned to the PCP/Physician team role.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ 11.     RTC 160997 - WASA security assessment group found problem with 
+ Patient and Staff VistA searches that can be hacked by viewing the 
+ browser console which would allow someone unauthorized at that station to 
+ view patient or staff information. Added a station check for the user 
+ that validates the users access to the accessed patient/staff station. 
+ This limits data displayed to the user based on the permissions granted 
+ to the user in PCMM Web.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ 12.     RTC 441575 - The Intensity score is reported at the patient level 
+ and all patients are currently reporting 1.0 instead of the actual 
+ intensity score from the quarterly file loaded in PCMM Web. The intensity 
+ score is fetched by joining fields in the DB and the wrong field was 
+ being used. Changed the DB field "to join" from ICN to BASE_ICN table so 
+ the actual patient intensity score is displayed on the patient profile. 
+ CA-SDM Ticket: I10235977FY16
+  
+  
+ 13.     RTC 229689 - PC-HBPC team assignments allow the patient to be 
+ assigned to both PCP and AP during the patient assignment process and 
+ then both appear in the DCP column. HBPC has an implied preceptor 
+ relationship and the patient can only be assigned to the PCP or the AP, 
+ not both. Added a toggle to the PCP and AP checkboxes during the patient 
+ assignment process so the user must select one or the other but cannot 
+ select both of these team roles at the same time. 
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ 14.     RTC 340069 - When searching for a team in the Search for Team 
+ screen, a single quote in a team name will not allow the user to click on 
+ the team to open its profile. Users use the single quote under the double 
+ quote key instead of the apostrophe which is under the tilde key. Changed 
+ the single quote to a HTML single quote entity so it would not interfere 
+ with the Javascript and this allows the user to continue using the single 
+ quote.
+ CA-SDM Ticket: I9023114FY16
+  
+  
+ 15.     RTC 363522 - During a batch operation for a PC-HBPC team, the 
+ assignment window allows the selection of both the PCP and AP team roles 
+ which violates business rules. Assignment to AP is allowed even if the 
+ PCP team role is unstaffed. PC-HBPC teams have an implied preceptor 
+ relationship so the PCP team role cannot be unstaffed when there is a 
+ staffed AP team role on the team. Changed the Javascript that manages 
+ this logic to prevent selections of both team roles of PCP and AP during 
+ the batch operation and not display an AP position if it is staffed when 
+ the PCP team role is not staffed.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ 16.     RTC 366123 - During a patient assignment to a PACT team, the 
+ 'Search for Team' screen  should only display 'Entire Team' when the PCP 
+ team role is unstaffed but it displays Entire Team and staffed AP(s) team 
+ roles(s) if the AP(s) had a previous preceptor relationship. There must 
+ be a preceptor relationship between the PCP team role and the AP team 
+ role(s). Changed the query that populates positions for this screen to 
+ pull correct positions in during the assignment process; to use 
+ preceptorship dates correctly; and to remove the AP team role(s) from 
+ displaying since the PCP team role must be staffed for the preceptor 
+ relationship to exist and AP's cannot be assigned to patients if the PCP 
+ team role is unstaffed.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ 17.     RTC 312799 - The CPRS window displays the staff member name for 
+ an INACTIVE core teamlet position(s) that is staffed but is not current 
+ team assignment information. Core teamlet roles are Primary Care Provider 
+ (PCP), Care Manager (CM), Clinical Associate (CA) and Administrative 
+ Associate (AA). Changed the Java code to filter out all inactive core 
+ teamlet positions even if it is staffed so the staff member's name does 
+ not display. CPRS window will continue to display the tags for the active 
+ core teamlet roles of 'Primary Care Provider:', 'Care Manager:', 
+ 'Clinical Associate:' and 'Administrative Associate:' but the inactive 
+ teamlet role(s) that are still staffed will not display the staff name.
+ CA-SDM Ticket: I8514178FY16
+  
+  
+ 18.     RTC 264786 - A patient assigned to PC-HBPC team that has an 
+ unstaffed PCP team role can be reassigned using the Pencil icon on the 
+ patient profile to only a staffed AP position which causes Team 
+ inconsistencies. Added Java code that disables the staffed AP position 
+ when the PCP position is unstaffed at the time of the position 
+ reassignment when using the pencil icon on the patient profile.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ Implementation:
+ ===============
+ The PCMM Web WEBP*1*10 is a centrally managed web-based application and 
+ will be implemented and deployed to a central web server.  No installation
+ is required by sites.
+  
+  
+ Implementation Files:
+ =====================
+ None
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated: N/A
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A
+  
+ Options Associated: N/A
+  
+ Protocols Associated: N/A
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20070415 - Rehost/Reengineer PCMM
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ CA-SDM Ticket(s):
+ -----------------
+ 1.      I9271627FY16 - CPRS Header does not update with Team Name change
+ Problem:
+ The CPRS header does not update after a team name change occurs. 
+  
+ Resolution:
+ Added Java code to set all patients assigned to a team for 
+ resynchronization of the CPRS header when the team name is changed.
+  
+ 2.      I10235977FY16 - Intensity score reporting incorrectly
+ Problem:
+ The Intensity score is reported at the patient level and all patients are 
+ currently reporting 1.0 instead of the actual intensity score from the 
+ quarterly file loaded in PCMM Web. 
+  
+ Resolution:
+ The intensity score is fetched by joining fields in the DB and the wrong 
+ field was being used. Changed the DB field "to join" from ICN to BASE_ICN 
+ table so the actual patient intensity score is displayed on the patient 
+ profile.
+  
+ 3.      I9023114FY16 - Single quote in team name prevents user from 
+ opening
+ Problem:
+ When searching for a team in the Search for Team screen, a single quote 
+ in a team name will not allow the user to click on the team to open its 
+ profile.
+  
+ Resolution:
+ Users use the single quote under the double quote key instead of the 
+ apostrophe which is under the tilde key. Changed the single quote to a 
+ HTML single quote entity so it would not interfere with the Javascript 
+ and this allows the user to continue using the single quote.
+  
+ 4.      I8514178FY16 - CPRS Window displays inactive core teamlet 
+ position(S)
+ Problem:
+ The CPRS window displays the staff member name for an INACTIVE core 
+ teamlet position(s) that is staffed but is not current team assignment 
+ information. 
+  
+ Resolution:
+ Core teamlet roles are Primary Care Provider (PCP), Care Manager (CM), 
+ Clinical Associate (CA) and Administrative Associate (AA). Changed the 
+ Java code to filter out all inactive core teamlet positions even if it is 
+ staffed so the staff member's name does not display. CPRS window will 
+ continue to display the tags for the active core teamlet roles of 
+ 'Primary Care Provider:', 'Care Manager:', 'Clinical Associate:' and 
+ 'Administrative Associate:' but the inactive teamlet role(s) that are 
+ still staffed will not display the staff name.
+  
+ 5.      I10235977FY16 - PCMM Web - Intensity Score
+ Problem:
+ The Intensity score is reporting 1.0 instead of the actual intensity 
+ score from the quarterly file loaded in PCMM Web. The intensity score is 
+ fetched by joining fields in the DB and the wrong field was being used. 
+  
+ Resolution:
+ Changed the DB field "to join" from ICN to BASE_ICN table so the actual 
+ patient intensity score is displayed on the patient profile. 
+  
+ 6.      I9023114FY16 - Unable open a Team in PCMM
+ Problem:
+ When searching for a team in the Search for Team screen, a single quote 
+ in a team name will not allow the user to click on the team to open its 
+ profile. Users use the single quote under the double quote key instead of 
+ the apostrophe which is under the tilde key. 
+  
+ Resolution:
+ Changed the single quote to a HTML single quote entity so it would not 
+ interfere with the Javascript and this allows the user to continue using 
+ the single quote.
+  
+ 7.      I8514178FY16 - An inactive employee/position is displayed within 
+ CPRS Heading
+ Problem:
+ The CPRS window displays the staff member name for an INACTIVE core 
+ teamlet position(s) that is staffed but is not current team assignment 
+ information. Core teamlet roles are Primary Care Provider (PCP), Care 
+ Manager (CM), Clinical Associate (CA) and Administrative Associate (AA). 
+  
+ Resolution:
+ Changed the Java code to filter out all inactive core teamlet positions 
+ even if it is staffed so the staff member's name does not display. CPRS 
+ window will continue to display the tags for the active core teamlet 
+ roles of 'Primary Care Provider:', 'Care Manager:', 'Clinical Associate:' 
+ and 'Administrative Associate:' but the inactive teamlet role(s) that are 
+ still staffed will not display the staff name.
+  
+  
+ Test Sites:
+ -----------
+ 691 - West LA VAMC
+ 618 - Minneapolis VA HCS
+ 662 - San Francisco VAMC
+  
+  
+ Documentation:
+ ==============
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be retrieved from the VA Software Documentation
+ Library (VDL) on the Internet at the following address:
+ http://www4.domain.ext/vdl.
+  
+ Title                           File Name                    SFTP Mode
+ --------------------------------------------------------------------------
+ Patient-Centered Management   PCMM WEB VDD WEBP_1_10.DOCX    Binary
+ Module(PCMM) Web Version 
+ Description Document
+  
+ Patient-Centered Management     PCMM_WEB_USER_GUIDE.DOCX     Binary
+ Module(PCMM) Web User Guide              
+  
+ Patient-Centered Management     PCMMR_POM.DOCX               Binary
+ Module (PCMM) Web Project
+ Operations Manual 
+  
+ Patch Installation:
+ ===================
+  
+ There is no local VistA installation for PCMM Web. All installations will 
+ be done on the national web server.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ If you have any questions concerning the implementation of this 
+ application, please contact the VA Service Desk at 1-888-596-4357 or 
+ directly log a CA SDM ticket using the category: 
+ NTL.APP.HealtheVet VistA.PCMM Web.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 19, 2017
+Completed By:                               Date Completed: FEB 22, 2017
+Released By :                               Date Released : FEB 23, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

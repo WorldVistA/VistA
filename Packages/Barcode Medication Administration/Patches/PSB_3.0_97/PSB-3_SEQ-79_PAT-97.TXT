@@ -1,0 +1,370 @@
+$TXT Created by                    CMAI.FO-BIRM.DOMAIN.EXT  (KIDS) on Friday, 12/30/16 at 16:49
+=============================================================================
+Run Date: FEB 06, 2017                     Designation: PSB*3*97
+Package : PSB - BAR CODE MED ADMIN            Priority: EMERGENCY
+Version : 3        SEQ #79                      Status: Released
+                  Compliance Date: MAR 08, 2017
+=============================================================================
+
+Associated patches: (v)PSB*3*83    <<= must be installed BEFORE `PSB*3*97'
+
+Subject: BCMA TRANSDERMAL PATCH FOR NEW GUI
+
+Category: 
+  - Routine
+  - PATCH FOR A PATCH
+
+Description:
+============
+
+ Patch PSB*3*97 will correct issues discovered during the warranty period
+ following National release of patch PSB*3*83.
+  
+            ***  WARNING FOR ALL SITES CURRENTLY USING WMA  ***
+                   (Wireless Medication Administration)
+                             From CareFusion
+  
+    The below 15 VAMC sites should not install patch PSB*3.0*97 until
+    the site has confirmed they have received CareFusion's software update:
+    Pyxis Med Administration Verification VA v. 5.1
+   
+                     Bay Pines, FL
+                     Boise, ID
+                     Bonham, TX
+                     Brockton, MA
+                     Dallas, TX
+                     Danville, IL
+                     Kerrville, TX
+                     Little Rock, AR
+                     Loma Linda, CA
+                     Marion, IN
+                     Pittsburgh, PA
+                     Pittsburgh, PA-Heinz
+                     San Antonio, TX
+                     Topeka, KS
+                     West Roxbury, MA
+  
+   
+  Installation of BCMA Patch PSB*3.0*97 may cause your WMA application to
+  stop functioning as you would expect it to. In order for the WMA devices
+  to work properly with PSB*3.0*83/97 installed, you must contact 
+  CareFusion, the WMA vendor, to obtain the most current version of the WMA
+  software.
+  
+  Please test this patch thoroughly in your TEST environment before 
+  installing into PRODUCTION. If you encounter any issues with the WMA
+  application, please report them to CareFusion.
+  
+ A hard error can occur in the BCMA client, while using the new Select from
+ Body Diagram button, due to passing the Division's IEN instead of the 
+ expected Station Number the user logged into.
+  
+ A hard error can occur in the BCMA client application with a new button
+ provided that displays a Body Site Image for selecting body location of
+ transdermal type medications.
+  
+ A hard error can occur in the BCMA Parameters client application, when
+ trying to save the list and body diagram, after placing a green dot on the
+ feet that is near the bottom of the diagram.
+  
+ The Legend area in two BCMA reports were reporting the wrong initials for
+ nurses that provided care to the patient.  See below ticket I12215629FY17
+ for detailed reports affected and resolutions.
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A 
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+  
+ CA Defect Tracking System Ticket(s) & Overview:
+ -----------------------------------------------
+ I11918189FY17 - R2 V23 CP- Central Plains BCMA Coordinator reporting 
+                 some issues with the PSB*3*83 Patch/GUI. 
+  
+  Problem:
+  ========
+  BCMA was passing the IEN instead of the Station Number of the division.
+  VistA found a valid station number matching that IEN and returned a blank
+  Body Chart with no locations, as the Division was not a valid Division at
+  this site and therefore was not configured with a body site list.
+  
+  Subsequently clicking OK on this display caused a hard error and shut
+  down the BCMA client.
+  
+  Resolution:
+  ===========
+  The fix to this issue is made via a new BCMA client GUI being released
+  along with this patch and will correct both issues observed.  The issues 
+  are corrected by passing of the station number instead of the IEN, and  
+  in the event a valid division has an empty body site list, the OK button
+  will be disabled.
+  
+  
+ R12172061FY17  - Priority - BCMA Exception Error with new patch install
+  
+  Problem:
+  ========
+  BCMA Parameters GUI can issue error and shutdown if a Green Dot is down
+  near the bottom edge of the body diagram on the feet and the user selects
+  the Save List button.
+  
+  Resolution:
+  ===========
+  This fix to this issue is made via the new BCMA Parameters GUI being
+  released along with this patch and corrects some internal coordinate 
+  values when saving the location of the green dot on the body image.
+  
+  
+ I12215629FY17 - User states that they are experiencing a bug in version 
+                 3.3.83 of the BCMA application which is resulting in
+                 nurses initials being incorrectly "changed" in the system.
+  
+  Problem:
+  ========
+  1. BCMA Medication Administration History report was printing an extra
+  user line in the Legend of the report, which had mismatched name and
+  initials.
+  
+  2. BCMA Medication Therapy report was not printing the User name and 
+  Initials, in the Legend, for the associated administrations to
+  medications that have been Removed.
+  
+  
+  Resolution:
+  ===========
+  1. Corrected a new call when finding associated administrations to
+  medications that have been Removed, to not print twice, once with correct
+  information and again with incorrect information.
+  
+  2. Corrected by retrieving the user's IEN during the finding of the
+  associated administration to a medication that has been Removed call.  
+  Followed by getting the user's initials and name for printing in the
+  Legend.     
+  
+  
+ Test Sites:
+ ----------
+ ST. CLOUD, MN - VAMC 
+ MINNEAPOLIS, MN - VAMC
+ IOWA CITY, IA - VAMC 
+  
+  
+ Software Retrieval Instructions:
+ ================================ 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ Files can be obtained from the ANONYMOUS.SOFTWARE directory at one of
+ the OI Field Offices. The preferred method is to retrieve the file using
+ Secure File Transfer Protocol (SFTP) from DOWNLOAD.VISTA.DOMAIN.EXT, which
+ will transmit the file from the first available server. Alternatively,
+ sites may elect to retrieve the file from a specific OI Field Office.
+   
+     OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+     Albany              DOMAIN.EXT        
+     Hines               DOMAIN.EXT         
+     Salt Lake City      DOMAIN.EXT          
+  
+  
+  ---------------------------------
+  Client Installation Instructions:
+  ---------------------------------
+  Retrieve one of the below installation files from the ANONYMOUS.SOFTWARE 
+  directory mentioned above:
+  
+      FILE NAME           BYTES        SFTP MODE
+      -------------       --------     ---------
+      PSB3_0P97.MSI       5,785 KB      binary
+      PSB3_0P97.EXE       6,685 KB      binary
+  
+  The software installation distribution includes these modified files:
+  
+  FILE NAME     DESCRIPTION            FILE VERSION   BYTES    FTP MODE
+  -----------   ---------------------- ------------  --------  --------
+  BCMA.EXE      Client                  3.0.97.2     3,113 KB   binary 
+  BCMApar.EXE   Parameters Client       3.0.97.2     1,677 KB   binary
+  
+   1. Prior client compatible with patch:  NO
+   2. Client can be copied instead of installed:  YES
+   3. Is your site running the CareFusion Wireless Medication
+      Administration (WMA) software? If YES, please contact Carefusion to
+      ensure your site has the latest compatible WMA patch.
+   
+    If BCMA is currently running, please exit BCMA. This client
+    installation patch file can be used to upgrade an existing version of
+    BCMA, or can be used for a brand new installation.
+  
+     1. Double Click on PSB3_0P97.EXE or PSB3_0P97.MSI, which will launch
+        the InstallShield Wizard.
+  
+     2. When the InstallShield Wizard Welcome screen is displayed, click
+        "Next".
+  
+     3. On the Choose Destination Location screen, simply click "Next"
+        If you would like to change the destination folder to one other
+        than default, click "Browse" to navigate to the folder of your
+        choice. Click "Next".
+  
+     4. On the "Setup Type" screen select one of the following options:
+              a. Typical - installs only the BCMA client program,
+                 which is necessary for medication administration.
+              b. Complete - installs the BCMA client and the
+                 GUI BCMA site parameters definition program.
+              c. Custom - allows you to select which programs to install.
+                 Typical is selected by default. Click "Next".
+  
+     5. The InstallShield Wizard Ready to Install the Program screen
+        will display. Click "Install" to proceed with the installation.
+  
+     6. The InstallShield Wizard Complete screen will be displayed.
+        Click "Finish" and the BCMA installation is now complete.
+  
+  
+ Patch Installation Overview:
+ ----------------------------
+  
+  Pre/Post Installation Overview:
+  -------------------------------
+  There are no Pre/Post install routines to be deleted.
+  
+  
+  Pre-Installation Instructions:
+  ------------------------------
+  This patch may be installed with users on the system although it is 
+  recommended that it be installed during non-peak hours to minimize
+  potential disruption to users.  This patch should take less than 5 
+  minutes to install. 
+  
+  
+  Installation Instructions:
+  --------------------------
+  
+  1.  Choose the PackMan message containing this patch.
+  
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME, enter 
+      PSB*3.0*97.
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+      
+  4.  From the Installation Menu, select the Install Package(s) option and
+      enter the patch PSB*3.0*97.
+  
+  5.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+      NO//," respond NO.
+            
+  6.  When prompted "Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? NO//," respond NO.
+  
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ None 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBOMH1
+    Before: B93853760   After: B93225080  **6,3,9,11,26,38,45,51,50,57,
+                                           67,64,72,83,97**
+Routine Name: PSBOMT
+    Before:B104162476   After:B105395791  **32,50,70,72,83,97**
+Routine Name: PSBRPC3
+    Before:   B291911   After:   B292055  **6,3,4,16,13,10,32,28,42,58,
+                                           68,70,83,97**
+Routine Name: PSBUTL
+    Before:B243063193   After:B245001483  **3,9,13,38,45,46,63,83,97**
+ 
+Routine list of preceding patches: 83
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 16, 2016
+Completed By:                               Date Completed: FEB 02, 2017
+Released By :                               Date Released : FEB 06, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

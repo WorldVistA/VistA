@@ -1,0 +1,281 @@
+$TXT Created by                    CDMS.FO-BIRM.DOMAIN.EXT  (KIDS) on Monday, 03/13/17 at 12:57
+=============================================================================
+Run Date: MAR 29, 2017                     Designation: PSO*7*480
+Package : PSO - OUTPATIENT PHARMACY           Priority: EMERGENCY
+Version : 7       SEQ #393                      Status: Released
+                  Compliance Date: MAR 30, 2017
+=============================================================================
+
+Associated patches: (v)PSO*7*215   <<= must be installed BEFORE `PSO*7*480'
+                    (v)PSO*7*268   <<= must be installed BEFORE `PSO*7*480'
+                    (v)PSO*7*460   <<= must be installed BEFORE `PSO*7*480'
+
+Subject: CORRECT FMCT INPATIENT BILLING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This is a follow-up patch for Fixed Medication Copayment Tier (FMCT) 
+ patch PSO*7*460. It was found after release to the field that if an 
+ Inpatient exempt veteran on the domiciliary ward has an outpatient drug
+ ordered, that a copay charge was being billed to the veteran. This
+ patch will correct this issue.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)       Field Name (Number)          New/Modified/Deleted
+ ------------------       -------------------          --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                File #                      New/Modified/Deleted
+ ---------                ------                      --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          -------------------- 
+ N/A
+  
+ Options Associated: 
+  
+ Option Name                  Type       New/Modified/Deleted
+ -----------                  ----       --------------------
+ N/A
+  
+ Protocols Associated:
+ ---------------------
+  
+ Protocol Name             New/Modified/Deleted
+ -------------             --------------------- 
+ N/A  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name     Type        File Name (Number)  New/Modified/Deleted
+ -------------     ----        ------------------  --------------------
+ N/A 
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs)
+ --------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ R12956047FY17
+ R12957465FY17
+  
+ Test Sites:
+ -----------
+ VA BUTLER HEALTHCARE
+ MARYLAND HCS
+ SHREVEPORT, LA
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch may be installed with users on the system although it should be
+ installed during non-peak hours to minimize potential disruption to
+ users. This patch should take less than 5 minutes to install.
+  
+  1. Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+    
+  2. From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+    
+  3. From this menu, you may select to use the following options
+     (when prompted for INSTALL NAME, enter PSO*7*480).
+    
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+    
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+    
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+    
+   4. Use the Install Package(s) option and select patch PSO*7*480 to
+      install.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.
+     
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//", respond NO.
+  
+ Post-Installation Instructions
+ ------------------------------
+ A post install routine PSO480P will run after PSO*7*480 installs.  This 
+ routine will run through the Outpatient Pharmacy file #52 by install date 
+ of patch PSO*7*460, which introduced this problem, and check every fill 
+ for a veteran to determine if they are on a domiciliary ward and were 
+ charged a copay. If they were charged a copay, then a cancel charge will 
+ be sent to the Integrated Billing package for this copay charge. Several 
+ reports will be printed with information for each copay that was
+ cancelled.
+  
+ The detailed report will contain the following information and will be 
+ sent to the mailman message of the person installing the patch along with
+ the developers of the patch as well as a couple of Pharmacy Benefits 
+ Management team members:
+   Release Date
+   Patient DFN
+   RX #
+   Fill #
+   IB Action Type
+   Total AMT
+   AR Bill #    
+   Institution
+  
+ The delimited report will contain the same information as the detailed 
+ report and will be separated by a carat '^' between data so it can be 
+ pulled into an excel spreadsheet if so desired.  This report will be sent 
+ to the same people as the detailed report.
+  
+ The summary report will be sent to the same group as the other two 
+ reports as well as the billing group PRCA ADJUSTMENT TRANS. This report
+ contains the following summary information:
+    Total Amount of Prescriptions
+    Total of Prescriptions that need Manual Intervention
+    Total Number of Patients
+    Total Dollars for Cancelled Copays
+  
+  
+ After the post install runs, the Outpatient Pharmacy activity log will 
+ post a comment as in the example below to indicate a copay reset has
+ occurred:
+  
+ PATIENT,DOM                                      <NO ALLERGY ASSESSMENT> 
+   PID: 666-23-8877                                 Ht(cm): _______ 
+ (______)   
+   DOB: MAR 15,1955 (61)                            Wt(kg): _______ 
+ (______)   
+ --------------------------------------------------------------------------
+ ------
+ Rx #: 100002417   Original Fill Released: 
+ 03/08/17                              
+ Routing: Window      Finished by: CROSSMAN,PAMELA
+                                                                                 
+ Copay Activity Log:
+ #   Date        Reason               Rx Ref         Initiator Of Activity
+ =====================================================================
+ 1   03/08/17    COPAY RESET          ORIGINAL       CROSSMAN,PAMELA
+ Comment: Copay Tier 1  Old value=No Copay   New value=Copay
+ 2   03/08/17    COPAY RESET          REFILL 1       CROSSMAN,PAMELA
+ Comment: Copay Tier 1  Old value=No Copay   New value=Copay
+ 3   03/08/17    COPAY RESET          ORIGINAL       CROSSMAN,PAMELA
+ Comment: RX EDITED - FMCT DOM COPAY CANCEL  Old value=Copay   New value=
+ 4   03/08/17    REMOVE COPAY CHARGE  ORIGINAL       CROSSMAN,PAMELA
+ Comment: RX EDITED - FMCT DOM COPAY CANCEL
+ 5   03/10/17    REMOVE COPAY CHARGE  REFILL 1       CROSSMAN,PAMELA
+ Comment: RX EDITED - FMCT DOM COPAY CANCEL
+  
+  
+  
+ ----------Enter ?? for more actions--------------------------------------
+  
+ Select Action:Quit//
+  
+  
+ The patient billing summary will show the cancelled charges that were
+ billed while a veteran was assigned to a Domiciliary Ward.
+  
+ PATIENT,DOM  666-23-8877            500-K70002N    MAR 08, 2017@20:02   
+ PAGE: 1
+ Medication Copayment Exemption Status: NON-EXEMPT
+ There is insufficient income data on file for the prior year.
+  
+ DATE           CHARGE TYPE           BRIEF DESCRIPTION    UNITS   CHARGE
+ ========================================================================
+ =====
+ MAR 07, 2017   NSC RX COPAY NEW      100002385-CAPTOPRI-1     1     $8.00
+ MAR 07, 2017   NSC RX COPAY NEW      100002367-CAPTOPRI-1     1     $8.00
+ MAR 07, 2017   NSC RX COPAY NEW      100002384-NIFEDIPI-1     1     $8.00
+ MAR 07, 2017   NSC RX COPAY NEW      100002386-WARFARIN-3     3    $15.00
+ MAR 08, 2017   NSC RX COPAY NEW      100002417-DANTROLE-1     1     $5.00
+ MAR 08, 2017   NSC RX COPAY NEW      100002417-DANTROLE-1     1     $5.00
+ MAR 08, 2017   NSC RX COPAY CANCEL   100002385-CAPTOPRI-1     1    ($8.00)
+      Charge Removal Reason: RX EDITED
+ MAR 08, 2017   NSC RX COPAY CANCEL   100002367-CAPTOPRI-1     1    ($8.00)
+      Charge Removal Reason: RX EDITED
+ MAR 08, 2017   NSC RX COPAY CANCEL   100002384-NIFEDIPI-1     1    ($8.00)
+      Charge Removal Reason: RX EDITED
+ MAR 08, 2017   NSC RX COPAY CANCEL   100002386-WARFARIN-3     3   ($15.00)
+      Charge Removal Reason: RX EDITED
+ MAR 08, 2017   NSC RX COPAY CANCEL   100002417-DANTROLE-1     1    ($5.00)
+      Charge Removal Reason: RX EDITED
+ MAR 08, 2017   NSC RX COPAY CANCEL   100002417-DANTROLE-1     1    ($5.00)
+      Charge Removal Reason: RX EDITED
+                                                               ------------
+                                                                     $0.00
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 35
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSO480P
+    Before:       n/a   After:B127919865  **480**
+Routine Name: PSOCP
+    Before: B81558217   After: B81967302  **20,46,71,85,137,157,143,219,
+                                           239,201,225,303,460,480**
+Routine Name: PSOCP1
+    Before:  B5367762   After:  B5455566  **137,239,225,480**
+Routine Name: PSOCPBAK
+    Before: B43547187   After: B43718412  **137,268,480**
+Routine Name: PSOCPBK1
+    Before: B89371510   After: B89608216  **215,480**
+Routine Name: PSOCPBK4
+    Before: B92981238   After: B93078909  **217,303,460,480**
+Routine Name: PSOCPIBC
+    Before: B49680609   After: B49888146  **93,303,460,480**
+ 
+Routine list of preceding patches: 215, 268, 460
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 28, 2017
+Completed By:                               Date Completed: MAR 29, 2017
+Released By :                               Date Released : MAR 29, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

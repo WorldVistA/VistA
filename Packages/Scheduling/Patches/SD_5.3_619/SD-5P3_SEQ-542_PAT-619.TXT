@@ -1,0 +1,295 @@
+
+=============================================================================
+Run Date: MAR 10, 2017                     Designation: SD*5.3*619
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #542                    Status: Released
+                  Compliance Date: APR 10, 2017
+=============================================================================
+
+Associated patches: (v)SD*5.3*441  <<= must be installed BEFORE `SD*5.3*619'
+                    (v)DI*22.2*0   <<= must be installed BEFORE `SD*5.3*619'
+
+Subject: SCHEDULING CHANGES FOR MEANINGFUL USE PREFERRED LANGUAGE CAPTURE
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch is part of a combined build that contains DG*5.3*887 and
+ SD*5.3*619. 
+  
+ The Preferred Language build components are an enhancement to the VistA
+ Registration and Scheduling packages in support of 2014 EHR Certification
+ of VistA for Meaningful Use. These components will be used to capture the
+ preferred language preferences of the patient, which consist of the
+ date/time that the patient identified his or her preferred language and
+ the language that he or she prefers to use during a healthcare visit.
+  
+ This data will facilitate better treatment for the patient by allowing
+ precise verbal communication through the use of interpreters, if
+ necessary.
+  
+ This patch will modify the Make Appointment [SDM] option to request input 
+ of the patient's preferred language and the date/time the preferred
+ language was added to the system. When making an appointment, a protocol
+ will check for the patient's preferred language and if it is not present,
+ the system will prompt the user to enter the Language Date/Time and the
+ Preferred Language before continuing with scheduling the appointment.
+  
+ The LANGUAGE file (#.85) is updated by VA FileMan release 22.2 (DI*22.2*0)
+ to contain the complete set of International Organization for 
+ Standardization (ISO) standard languages. These languages are used for
+ selection at the Preferred Language prompt during registration, in the
+ ADDITIONAL PATIENT DEMOGRAPHIC DATA, SCREEN <1.1>, during the making of an
+ appointment, and for display within the patient inquiry.
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)                Field Name (#)      New/Modified/Deleted
+ --------------------         --------------      --------------------
+ N/A 
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Functions Associated:
+  
+ Function Name                    New/Modified/Deleted
+ -------------                    --------------------
+ N/A
+  
+ HL Logical Link:
+  
+ HL Logical Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ HL7 Application Parameters:
+  
+ HL7 Parameter Name               New/Modified/Deleted
+ ------------------               --------------------
+ N/A
+  
+ HLO Application Registry:
+  
+ HLO Registry Name                New/Modified/Deleted
+ ------------------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ N/A
+  
+ Parameter Definitions:
+  
+ Parameter Name                                  New/Modified/Deleted
+ --------------                                  --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Remote Procedure Calls (RPCs):
+  
+ RPC Name                                        New/Modified/Deleted
+ --------                                        --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)        New/Modified/Deleted
+ -------------      ----      ------------------   --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20110408-Certification of VistA for Meaningful Use
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ NORTH CHICAGO, IL -VAMC
+ WEST PALM BEACH, FL
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+  Updated documentation describing the new functionality introduced by 
+  this patch is available.
+   
+  The preferred method is to retrieve files from download.vista.domain.ext.
+  This transmits the files from the first available server. Sites may also
+  elect to retrieve files directly from a specific server. 
+   
+  Sites may retrieve the software and/or documentation directly using 
+  Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+  directory at the following OI Field Offices:
+   
+    Albany           domain.ext
+    Hines            domain.ext
+    Salt Lake City   domain.ext
+   
+   
+  The documentation will be in the form of Adobe Acrobat files.
+   
+  Documentation can also be found on the VA Software Documentation Library 
+  at: http://www4.domain.ext/vdl/
+  
+ File Description       File Name                                SFTP Mode
+ --------------------------------------------------------------------------
+ MUNVDE Preferred Language  DG_5_3_887_Install_Guide.pdf         (binary)
+ Installation Guide
+ MUNVDE Preferred Language  DG_5_3_887_Rel_Notes.pdf             (binary)
+ Release Notes
+ MUNVDE Preferred Language  DG_5_3_887_Implement_Guide.pdf  (binary)
+ Implementation Guide 
+ ADT Module/Registration    DG_5_3_p887_reg_um.pdf               (binary)
+ Menu User Manual 
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ This multi-package build is distributed as a host file: 
+ PATIENT_PREFERRED_LANG.KID; this file can be obtained from one of the
+ anonymous SFTP directories.
+  
+  
+    File Name                         Contents           Retrieval Format
+    ----------------------------      --------           ----------------
+    PATIENT_PREFERRED_LANG.KID        SD*5.3*619         ASCII
+                                      DG*5.3*887       
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ N/A 
+  
+ Installation Instructions
+ -------------------------
+ This build may be installed with users on the system, but it is 
+ recommended that it be installed during non-peak hours when no
+ registration or scheduling users are on the system to minimize potential
+ disruption to those users. This build should take less than 5 minutes to
+ install.
+  
+ 1. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu. From this menu, select the 'Load a Distribution'
+    option. When prompted to enter a host file, type in:
+    [DIR]:PATIENT_PREFERRED_LANG.KID, where [DIR] is the local directory
+    where the host file is stored.
+  
+ 2. From the Installation menu, you may elect to use the following 
+    options:
+    a. Verify Checksums in Transport Global - This option will allow
+       you to ensure the integrity of the routines that are in the
+       transport global.
+  
+    b. Print Transport Global - This option will allow you to print a
+       summary report of the Transport Global. This includes an 
+       exported routine list, install questions, and required builds. 
+  
+    c. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed.  It compares all components of this patch
+       (routines, data dictionaries (DD's), templates, etc.).
+  
+    d. Backup a Transport Global - This option will create a backup
+       message of any routines exported with this patch. It will not
+       backup any other changes such as DD's or templates.
+  
+ 3. From the Installation menu, select the Install Package(s) option and
+    choose the build to install. Enter DG*5.3*887
+  
+ 4. When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+    Install? NO//", respond NO.
+  
+ 5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+    , respond NO.
+  
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//", respond YES.  When prompted to select the options
+    you would like to place out of order, enter:  
+        - SDM   
+        - SDAM APPT MGT
+    
+    (This will place the Make Appointment options out of order during
+     the installation.)
+  
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 34
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDM
+    Before: B33704414   After: B36241723  **15,32,38,41,44,79,94,167,168,
+                                           218,223,250,254,296,380,478,
+                                           441,619**
+ 
+Routine list of preceding patches: 441
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 09, 2014
+Completed By:                               Date Completed: MAR 10, 2017
+Released By :                               Date Released : MAR 10, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

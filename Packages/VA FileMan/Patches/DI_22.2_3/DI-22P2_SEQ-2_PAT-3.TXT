@@ -1,0 +1,414 @@
+$TXT Created by                FM11S1.AAC.DOMAIN.EXT  (KIDS) on Friday, 09/09/16 at 19:59
+=============================================================================
+Run Date: OCT 11, 2016                     Designation: DI*22.2*3
+Package : DI - VA FILEMAN                     Priority: Mandatory
+Version : 22.2         SEQ #2                   Status: Released
+                  Compliance Date: NOV 13, 2016
+=============================================================================
+
+
+Subject: FILEMAN 22.2 DEFECTS
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ Patch DI*22.2*3 will repair ten (10) VA FileMan 22.2 defects: 
+   1. Computed expression not cleared properly in MODIFY FILE ATTRIBUTES.
+   2. Removal of a Data Dictionary (DD) screen via Kernel Installation & 
+      Distribution System (KIDS).
+   3. ScreenMan menu options incorrect after navigating "down".
+   4. ScreenMan form editor - Field remains visible after deletion.
+   5. When printing text from BROWSER device, user receives an undefined 
+      error after clicking PF1-Q to exit.
+   6. M <SYNTAX> error when using ScreenMan to add to the STATE (#5) file.
+   7. Verify Fields [DIVERIFY] option is not 508 compliant.
+   8. Reverse video and underline don't function correctly in the FileMan 
+      Browser for 22.2.
+   9. Subtotals not working in FileMan 22.2, worked in FM 22.0.
+  10. Database Definition not loading correctly in Kernel Installation and
+      Distribution System (KIDS).
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)     Field Name (#)                     New/Modified/Deleted
+ -------------     --------------                     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                  New/Modified/Deleted
+ ---------------                                  --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               --------------------
+ Verify Fields [DIVERIFY]     ACTION             Modified
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                                    New/Modified/Deleted
+ -------------                                    --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name  Type  File Name (#)   New/Modified/Deleted
+ -------------  ----  -------------   --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. Ticket #I6255225FY16
+  
+ Problem:
+ --------
+ Computed expression not cleared properly in MODIFY FILE ATTRIBUTES.
+  
+ Resolution:
+ ----------
+ Modify routines DICATT3 and DICATTDE so that existing nodes are removed
+ before the new computed-field logic is saved.
+  
+  
+ 2. Ticket #I6269079FY16
+  
+ Problem:
+ --------
+ Problem with removal of a Data Dictionary (DD) screen via KIDS.
+  
+ Resolution:
+ ----------
+ Modified routine DIFROMS2 to remove the 12 and 12.1 nodes of existing data
+ definitions, since they may not be coming in via KIDS.
+  
+  
+ 3. Ticket #I7376627FY16
+  
+ Problem:
+ --------
+ ScreenMan menu options incorrect after navigating "down".
+  
+ Resolution:
+ ----------
+ Modified routines DDS and DDSSTK to keep the "Close" choice from showing
+ on a non-popup page.  Now "Exit" or "Next Page" will show instead.
+  
+  
+ 4. Ticket #I7378770FY16
+  
+ Problem:
+ --------
+ Field remains visible after deletion in the ScreenMan form editor.
+  
+ Resolution:
+ ----------
+ Modified routines DDGFFLDA and DDGFFLD so that when fields on a Block are
+ deleted or added or changed, the temporary image of the other page
+ holding that Block is killed. If user jumps back to that page, its image
+ is recreated. Moving a field causes an error and does not update the other
+ page so this incident has been left open to be further addressed in a
+ future patch.
+  
+  
+ 5. Ticket #I7739521FY16
+  
+ Problem:
+ --------
+ When printing text from BROWSER device, user receives an undefined error 
+ after clicking PF1-Q to exit.
+  
+ Resolution:
+ ----------
+ Modified routine DDGLIBP to keep the CLOSEing of the printer device from
+ re-executing the BROWSER's post-close logic.
+  
+  
+ 6. Ticket #I7957507FY16
+  
+ Problem:
+ --------
+ M <SYNTAX> error when using ScreenMan to add to the STATE (#5) file.
+  
+ Resolution:
+ ----------
+ Modified routine DDSMSG so that the syntax for a TAB output (?n) would
+ always be correct.
+  
+  
+ 7. Ticket #I8089470FY16
+  
+ Problem:
+ --------
+ Verify Fields [DIVERIFY] option is not 508 compliant.
+  
+ Resolution:
+ ----------
+ Added a "YES" value to the "DISPLAY OPTION?" field of the Verify Fields
+ [DIVERIFY] option. There are still times in which the output overflows
+ the screen length, and this incident has been left open to be further
+ addressed in a future patch.
+  
+  
+ 8. Ticket #I9259370FY16
+  
+ Problem:
+ --------
+ Reverse video and underline don't function correctly in the FileMan 
+ Browser for 22.2.
+  
+ Resolution:
+ ----------
+ Modified browser routines DDBR and DDGLIB0. The call INIT^DDGLIB0 is now
+ parameterized, so that DDGLIB0 knows if is being called by the Browser,
+ rather than by ScreenMan. This problem is only partially resolved by this
+ patch. A future patch by HL7 package is required to for complete
+ resolution. 
+  
+  
+ 9. Ticket #I9394443FY16
+  
+ Problem:
+ --------
+ Subtotals not working in FileMan 22.2, worked in FileMan 22.0. 
+  
+ Resolution:
+ ----------
+ Modified routine DIO3 so that the X array, which holds the totals
+ (subtotals, maximums, minimums, etc.), is displayed.
+  
+  
+ 10. Ticket #I10492282FY16
+  
+ Problem:
+ --------
+ Database Definition not loading correctly in Kernel Installation and
+ Distribution System (KIDS).
+  
+ Resolution:
+ -----------
+ Changed DIFROMS2 to only not kill the screens when multiple field screens
+ exist.
+  
+  
+ Known Anomalies
+ ---------------
+ 1. For ticket #I7378770FY16, moving a field causes an error and does not
+    update the other ScreenMan pages.  This incident has been left open to
+    be addressed in a future patch.
+  
+ 2. For ticket #I8089470FY16, there are still some situations where the
+    output overflows the page length.  This incident has been left open
+    to be further addressed in a future patch. 
+  
+  
+ Blood Bank Clearance
+ --------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch DI*22.2*3 contains 
+ changes to a package referenced in ProPath standard titled: BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA 
+ Blood Bank software design safeguards or safety critical elements 
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch DI*22.2*3 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Test Sites:
+ -----------
+ West Palm Beach, FL
+ Lebanon, PA
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Documentation describing the new functionality introduced by this patch
+ is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+ Sites may retrieve the software and/or documentation directly using 
+ Secure Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory 
+ at the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+  Documentation can also be found on the VA Software Documentation Library 
+  at: http://www.domain.ext/vdl/
+  
+ Title                               File Name           SFTP Mode
+ -----------------------------------------------------------------
+ FileMan 22.2 Advanced User Manual   FM22_2UM2.PDF       Binary
+  
+  
+ Backout and Rollback Procedure:
+ -------------------------------
+ This patch consists of routines and one option. During the VistA
+ Installation Procedure of the KIDS build, the installer should back
+ up the modified routines by the use of the 'Backup a Transport Global'
+ action (step 3a in the Installations Instructions below).
+  
+ If rollback/backout is required, the installer can restore the routines
+ using the MailMan message that were saved prior to installing the
+ patch. The Verify Fields [DIVERIFY] option can be restored to its previous
+ version by deleting the 'YES' value set into the DISPLAY OPTION?: (#11)
+ field using the Enter or Edit File Entries [DIEDIT] option of FileMan.
+  
+  
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ It is HIGHLY RECOMMENDED that ALL Users be off the system and VISTA
+ Background jobs be STOPPED before this patch is installed. TaskMan
+ should be stopped or placed in a wait state. 
+  
+ Failure to do so may result in 'source routine edited' errors during
+ a database update. Edits may be lost and records may be left in an
+ inconsistent state. An error that occurs before a cross-reference
+ is executed, for example, may lead to corrupted data or hard errors
+ in the future.
+  
+ Also, please make sure that no other patches are installed until
+ installation for this patch has completed.
+  
+ Installation will take approximately 5 minutes.
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter DI*22.2*3.
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as Data Dictionaries (DDs) or
+         templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  In accordance with the warning at the beginning of the installation
+     instructions, make sure ALL interactive processes, and ALL
+     non-interactive background jobs are stopped following your site 
+     specific procedures. TaskMan should be stopped or placed in a wait 
+     state. All users should be off the system. NOT performing this step
+     could result in 'source routine edited' error during database updates,
+     and records may be left in an inconsistent state.
+  
+ 5.  From the Installation Menu, select the Install Package(s) option and
+     When prompted for the INSTALL NAME, enter DI*22.2*3.
+  
+ 6.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' respond NO.
+  
+ 7.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+     NO//" respond YES.
+  
+ 8.  When prompted "Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//" respond NO. 
+  
+ 9.  If prompted "Delay Install (Minutes):  (0 - 60): 0//" respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Re-enable all processes stopped in step 4 of the Installation 
+ Instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;22.2;VA FileMan;**[Patch List]**;Jan 05, 2016;Build 17
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DDBR
+    Before: B27928380   After: B28946498  **3**
+Routine Name: DDGF2
+    Before: B28408555   After: B31932302  **3**
+Routine Name: DDGFFLD
+    Before:  B9993556   After: B11526097  **3**
+Routine Name: DDGFFLDA
+    Before: B18284414   After: B21253213  **3**
+Routine Name: DDGLIB0
+    Before: B29674136   After: B30266676  **3**
+Routine Name: DDGLIBP
+    Before: B26667130   After: B27768637  **3**
+Routine Name: DDS
+    Before: B41055756   After: B40296142  **3**
+Routine Name: DDSMSG
+    Before: B11858691   After: B12020877  **3**
+Routine Name: DDSSTK
+    Before:  B3056649   After:  B4128442  **3**
+Routine Name: DICATT3
+    Before: B15287897   After: B15947104  **3**
+Routine Name: DICATTDE
+    Before: B31229801   After: B32549326  **3**
+Routine Name: DIFROMS2
+    Before: B31819880   After: B45455117  **3**
+Routine Name: DIO3
+    Before:  B8830579   After:  B9326244  **3**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 06, 2016
+Completed By:                               Date Completed: OCT 06, 2016
+Released By :                               Date Released : OCT 11, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

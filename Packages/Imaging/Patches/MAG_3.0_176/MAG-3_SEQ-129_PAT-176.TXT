@@ -1,0 +1,183 @@
+
+=============================================================================
+Run Date: APR 25, 2017                     Designation: MAG*3*176
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #129                      Status: Released
+                  Compliance Date: MAY 26, 2017
+=============================================================================
+
+
+Subject: Telnet to SSH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  
+  
+ Description:
+ ============
+ MAG*3.0*176 replaces the Telnet connection to the Digital Imaging and 
+ Communications in Medicine (DICOM) Gateway with a Secure Shell (SSH) 
+ connection using Micro Focus Reflection.
+  
+ This SSH implementation of Attachmate (Micro Focus) Reflection will not 
+ be used for direct user access to the Legacy DICOM Gateway.  If it is 
+ necessary to move images, sites may use the following methods: 
+ a. On demand routing using VistARad for Radiology images
+ b. The ROI capability in Clinical Display
+ c. Remote Desktop to the Gateway to use the option locally
+  
+ Patch Components:
+ =================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P 176_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch.  
+ MAG3_0P176_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software:
+ File Name               Description
+ MAG3_0P176_DICOM_SSH_INSTALL.ZIP   Installation batch scripts
+  
+ Documentation:
+ ==============
+ This document, MAG3_0176_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.  Also 
+ included is the Secure Shell Implementation Instructions for DICOM 
+ Gateway document.
+  
+ Files & Fields Associated:
+ ==========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ ================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ ======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ ====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ ========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ =====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ =======================
+ New Service Requests (NSRs):
+ ===========================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ 1. Telnet Prohibited
+ Problem: 
+ ======== 
+ The use of Telnet is prohibited as detailed in Memorandum VAIQ 7615193, 
+ Prohibited Use of File Transfer Protocol (FTP) and Telnet Services, dated 
+ July 1, 2015.
+  
+ Resolution: 
+ ===========
+ Each site must replace Telnet on every Legacy DICOM Gateway with Secure 
+ Shell via Attachmate Reflection Workspace and Reflection for Secure IT 
+ server.  See the installation directions below.
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+         Cheyenne VAMC
+         Fayetteville VAMC
+         Boise VAMC
+  
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from 
+ anonymous@download.vista.domain.ext from the COMMAND prompt (example:  
+ sftp anonymous@download.vista.domain.ext). This transmits the files from 
+ the first available server. 
+  
+ Sites may also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ When using Attachmate Reflection (Secure Shell):
+ Albany:         domain.ext
+ Hines:          domain.ext
+ Salt Lake City: domain.ext
+  
+ When using the COMMAND prompt (example: sftp 
+ anonymous@domain.ext): 
+ Albany:         anonymous@domain.ext
+ Hines:          anonymous@domain.ext
+ Salt Lake City: anonymous@domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/.
+  
+ The following files should be downloaded in the binary file transfer 
+ method.
+  
+ File Name                              Description
+ MAG3_0P176_SSH_II_DG.docx              Installation Guide
+ MAG3_0P176_DICOM_SSH_INSTALL.ZIP       Installation batch scripts
+  
+ In addition to the files on the SFTP site, the Reflection Workspace and 
+ Relection for Secure IT Server software that is referenced needs be be 
+ downloaded as detailed in the Installation Guide. 
+  
+ Patch Installation:
+ ==================
+ Pre/Post Installation Overview:
+ ==============================
+ There is no KIDS patch to install.
+ The installation scripts are detailed in the Secure Shell Implementation 
+ Instructions for DICOM Gateway instructions and must be run on the DICOM 
+ Gateway
+  
+ Installation Instructions:
+ =========================
+ Follow the instructions for installation in the Secure Shell
+ Implementation Instructions for DICOM Gateway document.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 21, 2016
+Completed By:                               Date Completed: APR 25, 2017
+Released By :                               Date Released : APR 25, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

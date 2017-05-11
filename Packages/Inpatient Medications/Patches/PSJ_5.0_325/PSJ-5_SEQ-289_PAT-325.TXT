@@ -1,0 +1,389 @@
+$TXT Created by                DEV.DEV.DOMAIN.EXT  (KIDS) on Wednesday, 11/30/16 at 10:35
+=============================================================================
+Run Date: FEB 21, 2017                     Designation: PSJ*5*325
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #289                      Status: Released
+                  Compliance Date: MAR 23, 2017
+=============================================================================
+
+Associated patches: (v)PSJ*5*304   <<= must be installed BEFORE `PSJ*5*325'
+
+Subject: Display Recently Discontinued IV Orders
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Input Template
+
+Description:
+============
+
+  Patch PSJ*5.0*325 adds a display of discontinued or edited IV orders from
+  the Computerized Patient Record System (CPRS) to a pharmacist when
+  processing an e-signed CPRS IV order using the following VistA option:
+  
+      "Non-Verified/Pending Orders" [PSJU VBW].
+  
+  This new feature applies only to wards or ward groups. The discontinued
+  or edited IV orders will display prior to taking action to finish
+  or edit the pending order.  This allows the pharmacist to pull IVs that
+  are discontinued and prevent them from being sent to the patient ward
+  and potentially be given in error.  It also allows the pharmacist to 
+  perform a drug-drug interaction check, since recently discontinued 
+  medications can still cause a drug interaction.  The pharmacist can delete
+  the discontinued IV orders from the new IV MEDICATION ORDERS DC'D (#52.75)
+  file when deemed appropriate.
+  
+  Note: This new feature is being distributed in the disabled mode.  Sites
+  must decide whether to use the new feature for each IV room. Use the
+  PSJI SITE PARAMETERS option to turn the report "ON" by setting the new
+  parameter DC'D IV ORDERS HOURS FILTER (#21) to a positive number of
+  hours for each IV room.
+  
+  The discontinued and edited records which are viewed in the update with 
+  this patch are temporary and are stored in the new IV MEDICATION ORDERS
+  DC'D (#52.75) file.  These records are only intended to help identify 
+  discontinued IV orders for a particular ward or a ward group.  The records
+  act as alerts and taking action on these records does not impact the actual
+  order. Setting the parameter to zero will disable the new reporting
+  feature and remove any existing records from file 52.75 that are associated
+  with the IV room being edited.  Records for this new feature are
+  captured and stored only after the feature is turned on.  For example, when
+  a value of 24 hours is initially entered in the DC'D IV ORDERS HOURS
+  FILTER (#21), the new report will start capturing DCed and edited orders from
+  that point on.
+  
+  The following actions are available for records being viewed in the updated
+  option:  
+  
+  (P)rint, (R)efresh, (D)elete, or (I)gnore
+  
+  --The (Print) action allows the viewed orders to be printed to a device and
+    optionally those records can be deleted, once printed.
+  --The (Refresh) action, simply re-displays the records.
+  --The (Delete) action removes the currently viewed records from the file so
+    they will no longer be displayed.
+  --The (Ignore) action will continue with the usual next prompt and take no
+    action on the records.
+  
+  Aside from helping to prevent medication errors, this modification also
+  allows labels to be pulled for IVs that are not yet prepared. This saves
+  resources, including the drug (especially helpful when drug shortages
+  occur), and time spent managing pharmacy orders. For IVs that are already
+  prepared, the modification allows reuse of the prepared bag on another
+  patient while it is still within the expiration date.
+  
+  
+  
+  EXAMPLE OF NEW FEATURE :
+  =======================
+  Note: the new functionality is enclosed in asterisks in order to
+        highlight the updates, but the actual report will not include
+           the asterisks.
+           
+           
+    Select OPTION NAME: PSJU VBW       Non-Verified/Pending Orders
+    Select IV ROOM NAME:    CHEYENNE RM#272
+    Display an Order Summary? NO// 
+    
+    1) Non-Verified Orders
+    2) Pending Orders
+    
+    Select Order Type(s) (1-2): 1-2
+    
+    1) Unit Dose Orders
+    2) IV Orders
+    
+    Select Package(s) (1-2): 1-2
+    
+    Select by GROUP (G), WARD (W), CLINIC (C), PATIENT (P) or PRIORITY (PR):
+  GROUP
+    
+    Select by WARD GROUP (W) or CLINIC GROUP (C): WARD
+    
+    Select WARD GROUP: C WARD EAST WINGS    
+  
+   **************************************************************************
+ 
+      IV ORDER D/Cs and EDITS Thru CPRS Since 6/1/2016@14:21 (past 840 hrs)
+             IV ROOM:  CHEYENNE RM#272     GROUP:  C WARD EAST WINGS       
+ 
+  WARD  -  ROOM/BED    DRUG                PATIENT          PID   DT/TM    
+ 
+  -------------------------------------------------------------------------
+                                                                          
+ 
+  C MEDICIN  9999     ABCIXIMAB            AAADTSXY,QLYJH  4507 06/06/2016 
+ 
+    Edited             Give: IV 30 ml/hr                         @1:15 pm
+ 
+  C MEDICIN  9999     ABCIXIMAB            AAADTSXY,QLYJH  4507 06/07/2016 
+ 
+    Edited             Give: IV 30 ml/hr                         @1:56 pm  
+ 
+   *************************************************************************
+ 
+    
+    (P)rint, (R)efresh, (D)elete, or (I)gnore?:  (P/R/D/I): I// gnore
+    
+    ORDERS NOT VERIFIED BY A NURSE - C MEDICINE
+    
+     No.   TEAM              PRIORITY     PATIENT
+   
+  ----------------------------------------------------------------------------
+       1  Not Found          ROUTINE      AAAFLDHU,QLYJH X (8126)
+       2  Not Found          ROUTINE      DLKHU,CXLVRDY ANY (1652)
+       3  Not Found          ROUTINE      MXKKT,TLRA HAADT (0863)
+       4  Not Found          ROUTINE      ZZDHCBX,CLY J CU (3329)
+    Select 1 - 4: 
+  
+  
+  PATCH COMPONENTS:
+  =================
+  
+  Files & Fields Associated:
+  ==========================
+  
+  New Files
+  ---------
+                                            UP    SEND  DATA                USER
+                                            DATE  SEC.  COMES   SITE  RSLV  OVER
+  FILE #      FILE NAME                     DD    CODE  W/FILE  DATA  PTRS  RIDE
+  --------------------------------------------------------------------------
+  
+  52.75       IV MEDICATION ORDERS DC'D     YES   YES   NO
+  
+       FIELD     FIELD
+       NUMBER    NAME
+  
+       .01       DATE/TIME D/C (RD), [0;1]
+       .662      SIG (F), [.662;1]
+       2         PATIENT (RP2'), [0;2]
+       3         DRUG (P50.7'), [0;3]
+       4         ROOM-BED (F), [0;4]
+       5         WARD (F), [0;5]
+       6         READ? (S), [0;6]
+       7         WARD IEN (P44'), [0;7]
+       8         PS ORDER IEN (F), [0;8]
+       9         WARD GROUP (P57.5'), [0;9]                  
+       10        STATUS (F), [0;10]
+          
+  Modified Files
+  --------------
+  59.5        IV ROOM                       YES   YES   NO                  NO
+       Partial DD: subDD: 59.5       fld: 21
+       FIELD     FIELD
+       NUMBER    NAME
+       21        DC'D IV ORDERS HOURS FILTER (NJ4,0), [6;1]
+  
+   This new field (#21) provides a filter for the D/C'd orders report. 
+   Discontinued IV orders older than the entered number of hours will not
+   be included in the report.  Entering a zero in this field or deleting
+   the field value will turn this feature off.  DC'd or edited IV orders
+   for this IV room will no longer be stored and previously stored orders
+   will be removed. The default value for this field is null.  If sites
+   wish to use the new feature, they must use the PSJI SITE PARAMETERS
+   option to update this new parameter to a positive number. 
+  
+    
+  Options Associated:
+  ===================
+  The existing option, Non-Verified/Pending Orders [PSJU VBW], is updated to
+  provide the new feature to review, print and delete the items in the new
+  file IV MEDICATION ORDERS DC'D (52.75).
+  
+  The existing option, SIte Parameters (IV) [PSJI SITE PARAMETERS], is updated
+  to allow the entry of the new parameter, DC'D IV ORDERS HOURS FILTER (#21).
+  This new parameter provides a filter for the D/C'd orders report.  
+  Discontinued IV orders older than the entered number of hours will not be 
+  included in the report.  By entering a zero in this field, no D/C'd or
+  edited orders will appear in the report. (See Post Install Instructions).
+                 
+  Protocols Associated:
+  =====================
+  PROTOCOL:                              ACTION:
+     OR EVSEND PS                          USE AS LINK FOR MENU/ITEM/SUBSCRIBERS
+     PSIVARH PHARMACY                      SEND TO SITE
+  
+  The OR EVSEND PS protocol is modified by adding the PSIVARH PHARMACY
+  extended action protocol to it.  The new PSIVARH PHARMACY protocol processes
+  the HL7 message with the inpatient pharmacy order and stores relevant
+  information in the new file 52.75.
+     
+  Templates Associated:
+  =====================
+  INPUT TEMPLATE:                               ACTION:
+     PSJI SITE PARAMETERS    FILE #59.5            SEND TO SITE
+  
+  This input template is modified to provide the ability to edit the
+  new field--DC'D IV ORDERS HOURS FILTER (#21) of the IV ROOM (#59.5) file.
+  When the template is used to set the value of this new field (#21) to zero
+  or null, then all entries in the new file IV MEDICATION ORDERS DC'D (52.75)
+  associated with the current IV room, will be removed.
+  
+  Additional Information:
+  =======================
+  N/A
+  
+  New Service Requests (NSRs):
+  ============================
+  NSR20141208 Display Recently Discontinued IV Orders 
+  The NSR for this intake addresses the following requirement:
+  VHBAO: NEED 497817: View Discontinued Intravenous (IV) Orders: As a 
+  pharmacist, I want to view recently discontinued intravenous (IV) orders
+  when I am processing pending orders, so that I save time and medication by
+  not preparing an IV unnecessarily; and can perform drug-drug cross checks
+  against discontinued medication.
+  
+  Patient Safety Issues (PSIs):
+  =============================
+  N/A
+  
+  Remedy Ticket(s) & Overview:
+  ============================
+  N/A
+  
+  
+  Test Sites:
+  ===========
+  Information regarding the IOC test sites for NSR20141208 is available in
+  the PSJ*5.0*325 Initial Operating Capability Entry Request and Exit Summary
+  document.
+ 
+      NY-HARBOR
+      SAN FRANCISCO
+ 
+  
+  Software and Documentation Retrieval Instructions:
+  ==================================================
+  The software being released with this patch is a PackMan message in the
+  Forum patch module.
+  
+  The following documents apply to this release:
+ 
+        Nurse's User Manual, psj_5_nurse_um_r0217.pdf
+        Pharmacist's User Manual, psj_5_phar_um_r0217.pdf
+        Technical Manual/Security Guide, psj_5_tm_r0217.pdf
+        Release Notes, psj_5_p325_rn.pdf
+ 
+  User documentation for Inpatient Medications V.5.0 provides detailed
+  information on the functionality and can be found on the 
+  VistA Document Library (VDL). 
+  
+  
+  Pre-Installation Instructions:
+  ==============================
+  This patch may be installed with users on the system, although it is
+  strongly recommended that it be installed during non-peak hours to minimize
+  potential disruption to users. This patch should take less than 5 minutes to
+  install.
+  
+  Installation Instructions:
+  ==========================
+  1.  Choose the PackMan message containing this patch.
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  3.  From the Kernel Installation and Distribution System Menu, select 
+      the Installation Menu.  From this menu, you may elect to use the 
+      following options. When prompted for the INSTALL NAME enter PSJ*5.0*325.
+          a.  Verify Checksums in Transport Global - This option will 
+               allow you to ensure the integrity of the routines that are in
+               the transport global.
+          b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this 
+               patch is installed.  It compares all components of this patch
+               (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  4.  From the Installation Menu, select the Install Package(s) option 
+      and choose the patch to install.
+  5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO// Press <Enter>
+  6.  When prompted 'Want KIDS to INHIBIT LOGONs during the
+      install? NO// Press <Enter>
+  7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? YES// Press <Enter>
+  8.  When prompted 'Enter options you wish to mark as 'Out Of Order':' 
+      enter the following options:
+                 
+         SIte Parameters (IV) [PSJI SITE PARAMETERS]
+         Non-Verified/Pending Orders [PSJU VBW]
+                    
+  9.  When prompted,
+      'Enter protocols you wish to mark as 'Out Of Order':' Press <Enter>
+                    
+  10. If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  Post-Installation Instructions:
+  ===============================
+  The new parameter to control how far back to display edited or discontinued
+  IV orders should be set after pharmacy decides whether or not to use the
+  updated features in the option PSJU VBW.  The default for the new features 
+  is off and the hours setting will be null. It can be set in increments of
+  one (1) hour.  Setting the parameter to zero, effectively turns off the new
+  report.
+  
+    Follow the dialogue below to set the DC'D IV ORDERS HOURS FILTER
+  parameter.
+    
+    Select OPTION NAME: PSJI SITE PARAMETERS         <==run parameter option
+    Select IV ROOM NAME:    CHEYENNE RM#272          <==select IV room
+    NAME: CHEYENNE RM#272//                          <==type <Enter>
+    LENGTH OF LABEL: 13// ^21  DC'D IV ORDERS HOURS FILTER  <==type "^21" to
+                                                             jump to the hours
+                                                             filter parameter
+    DC'D IV ORDERS HOURS FILTER: 600//               <==enter number of hours
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;DEC 16, 1997;Build 37
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGVBW
+    Before: B97694806   After: B98265649  **5,16,39,59,62,67,58,81,80,
+                                           110,111,133,139,155,241,243,
+                                           265,275,304,325**
+ Description of Changes:
+  Updated to call feature to display recently discontinued or edited IV orders.
+  
+
+Routine Name: PSIVARH
+    Before:       n/a   After:B255270199  **325**
+ Description of Changes:
+  Displays recently discontinued or edited IV orders.
+  
+
+Routine Name: PSIVARH1
+    Before:       n/a   After: B47377600  **325**
+ Description of Changes:
+  Supports display of recently discontinued or edited IV orders in calls from
+  PRSVARH.
+  
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 23, 2015
+Completed By:                               Date Completed: FEB 14, 2017
+Released By :                               Date Released : FEB 21, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

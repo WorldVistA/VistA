@@ -1,0 +1,637 @@
+$TXT Created by                A at DEVVVV.DOMAIN.EXT  (KIDS) on Tuesday, 07/19/16 at 15:00
+=============================================================================
+Run Date: APR 18, 2017                     Designation: SD*5.3*651
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #544                    Status: Released
+                  Compliance Date: MAY 05, 2017
+=============================================================================
+
+Associated patches: (v)SD*5.3*627  <<= must be installed BEFORE `SD*5.3*651'
+                    (v)SD*5.3*642  <<= must be installed BEFORE `SD*5.3*651'
+                    (v)GMRC*3*86   <<= must be installed BEFORE `SD*5.3*651'
+
+Subject: VISTA SCHEDULING (VS) GRAPHICAL USER INTERFACE (GUI) Sustainment Fixes
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  The purpose of this patch is to correct Severity 1 and 2 defects that were
+  reported in VS GUI v2.0.0.5 which was released to site Mirror accounts on 
+  5/3/2016.
+   
+  This patch addresses the following issues:
+   
+ 1. REQUEST/CONSULTATION entries that are linked to appointments which are in
+    a cancelled or no-show state are not displaying in VS GUI.
+ 2. REQUEST/CONSULTATION entries that have a FILE ENTRY DATE that is older 
+    Than 365 days should not be displaying in VS GUI.
+ 3. The last clinic availability time for a given day is not displaying in 
+    The VS GUI Request Management grid.
+ 4. The VS GUI Clinic Schedule does not update slot counts correctly when
+    appointments are booked on a day that has a partial clinic availability
+    cancellation.
+ 5. Walk-in appointments turn green when checked in when they should stay 
+    Blue to indicate it is a walk-in.
+ 6. Users can't overbook appointments between clinic start time and first
+    available appointment in the VS GUI.
+ 7. VS GUI is displaying the wrong patient when using the Clinic Group 
+    feature.
+ 8. The VS GUI Clinic report is displaying Stop Code Internal Entry Number 
+    (IEN) instead of Stop Code number.
+ 9. VS GUI does not display a consult in scheduled status in the Request 
+    Management grid when there has never been an appointment scheduled into 
+    the same stop code between yesterday Today (T-1) or into the future. 
+ 10. Availability display in VS GUI does not match VistA when appointments are
+     cancelled in VistA.
+ 11. The initial Request Management grid does not display all consults for a 
+     patient, but when you search by patient it shows them all.
+ 12. In VS GUI, the appointment remained PINK when user performed the UNDO No
+     Show action in VistA.
+ 13. When making an appointment against a consult in VS GUI, the LAST ACTION
+     TAKEN field (#9) in the REQUEST CONSULTATION file was not updated in the
+     same way that it is from VistA.
+ 14. When cancelling a consult appointment in VS GUI, the New Activity Text 
+     in the COMMENT is not complete when compared to a consult appointment 
+     that was cancelled via VistA.
+ 15. A consult that is <365 days old with Wait Time of >= 90 days does not 
+     get included in the initial Request Management grid when the appointment 
+     linked to it is cancelled or no-showed.
+ 16. When a partial clinic availability cancellation is performed on a day 
+     that has appointments scheduled and has an overbook outside the available
+     slots, the VS GUI displays grey with hash outside the range that was
+     cancelled.  
+ 17. There is an issue with the 90 minute clinic partial cancellation, clinic 
+     is partially cancelled from 0900-1030.  VS GUI shows cancellation for 
+     0900-0930 only (grey with hash) and greyed out the rest 0930-1030. 0930-
+     1030 should be displaying in grey with hash.
+ 18. When performing a Recall query for specific clinic(s), the results
+     include recalls that have no clinic attached to it.
+ 19. A flag was added on the appointment conflict to handle Telehealth and 
+     Chart Check appointments
+ 20. Appointment color indication does not get updated when performing Undo
+     functionality in Clinic Group  (e.g. Undo Check in, Undo Check Out, 
+     etc). Also, unable to select Undo Check-in once the Walk-in appointment 
+     has been checked-in.
+ 21. VS GUI hangs when selecting an unscheduled appointment that was placed 
+     in VistA
+ 22. VS GUI does not display availability if it starts at 805am.
+ 23. The VSE Veteran Appointment Request (VAR) Application Certificate Expired
+ 24. Move VS GUI trace.log from Program Files (x86) to Program Data and 
+     update the VS GUI shortcut icon permissions.
+ 25. The blue color that is being used to annotate a Walk-In appointment is 
+     so dark that the users can't see the information.
+   
+   
+  Patch Components:
+  -----------------
+   
+  Files & Fields Associated:
+   
+  File Name (#)               Field Name (#)           New/Modified/Deleted
+  -------------               --------------           --------------------
+  N/A
+   
+   
+  Forms Associated:
+   
+  Form Name                   File #                   New/Modified/Deleted
+  ---------                   ------                   --------------------
+  N/A
+   
+   
+  Mail Groups Associated:
+  
+  
+  Mail Group Name                                      New/Modified/Deleted
+  ---------------                                      --------------------
+  N/A
+   
+   
+  Options Associated:
+   
+  Option Name                  Type                    New/Modified/Deleted
+  -----------                  ----                    --------------------
+  N/A
+   
+   
+  Protocols Associated:
+   
+  Protocol Name                                        New/Modified/Deleted
+  -------------                                        --------------------
+  N/A
+   
+ Security Keys Associated:
+   
+  Security Key Name
+  -----------------
+  N/A
+   
+   
+  Templates Associated:
+   
+  Template Name           Type     File Name (Number)  New/Modified/Deleted
+  -------------           ----     ------------------  --------------------
+  N/A
+   
+   
+  New Service Requests (NSRs):
+  ----------------------------  
+  N/A
+   
+   
+  Additional Information:
+  
+  N/A
+   
+   
+  New Service Requests (NSRs):
+  ----------------------------  
+  N/A
+   
+   
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+   
+   
+  Defect Tracking System Ticket(s) & Overview:
+  --------------------------------------------
+   
+ 1. I8720696FY16 - In the VS GUI, consults that have been cancelled by clinic
+                   or no-showed are not displaying in the VS GUI Request
+                   Management grid.
+   
+   Problem:   
+   ----------
+   REQUEST/CONSULTATION entries that are linked to appointments in a cancelled
+   or no-show state are occasionally not displaying in VS GUI Request
+   Management grid.
+   
+   Resolution:
+   ----------
+   In order to resemble VistA processing, the Request Management Grid has been
+   corrected to look in the COMMENT field (#5) of the REQUEST PROCESSING
+   ACTIVITY multiple field (#40) of the REQUEST/CONSULTATION file (#123) for
+   the expected keyword of 'no-show' for No-shows and 'cancel' for cancelled
+   appointments. This is also implemented for the 'AG' cross-reference of the
+   REQUEST/CONSULTATION file (#123) in patch GMRC*3.0*86.
+   
+ 2. I8754980FY16 - Consults greater than 365 days old should not show up in the
+                   VS GUI Request Management grid.
+    
+   Problem:
+   -------
+   Entries from the REQUEST/CONSULTATION file (#123) are being displayed in
+   VS GUI even if the FILE ENTRY DATE field (#.01) of the
+   REQUEST/CONSULTATION file (#123) is older than 365 days.
+   
+   Resolution:
+   ----------
+   a. The Request Management grid has been modified to NOT display Consult 
+      Requests that are greater than 365 days old at application startup.
+  
+   b. The Query Tool has been updated to not return Consults > 365 days, even
+      if they are requested.
+   
+ 3. I9206435FY16 - The last clinic availability time for a given day is not
+                   displaying in the VS GUI Request Management grid.
+    
+   Problem:
+   -------
+   The last available time for a clinic for a given day is not displaying in
+   the VS GUI Request Management grid due to a fix for partial clinic
+   availability cancellations.
+   
+   Resolution:
+   ----------
+   This has been corrected by updating the SDEC APPSLOTS Remote Procedure Call
+   (RPC) to better distinguish between a clinic that has a partial clinic
+   availability cancellation and a clinic that does NOT have any partial clinic
+   availability cancellations.
+   
+ 4. I9314124FY16 - The VS GUI clinic schedule does not update slot counts
+                   correctly when appointments are booked on a day that has
+                   partial clinic availability cancellation.
+    
+   Problem:
+   -------
+   The VS GUI clinic schedule does not update slot counts correctly when
+   appointments are booked on a day that has partial clinic availability
+   cancellation.
+   
+   Resolution:
+   ----------
+   This issue was found to also be related to partial clinic cancellation. The
+   times that were being scheduled were valid and not part of the partial
+   clinic cancelled time. The SDEC APPSLOTS RPC was using the CAN node
+   (previous pattern) instead of the current pattern from the HOSPITAL LOCATION
+   file (#44). This has been corrected.
+  
+ 5. I8674527FY16 - Walk-in appointments turn green when checked in when it
+                   should stay blue to indicate it is a walk-in.
+   
+   Problem:
+   -------
+   When creating a walk-in appointments in VS GUI, the appointment turns green
+   if the appointment is checked-in. The appointment needs to remain blue to
+   indicate it is a walk-in. 
+   
+   Resolution:
+   ----------
+   Corrected the display logic for checked-in walk-in appointments.
+   
+ 6. I8674132FY16 - Users can't overbook appointments between clinic start time
+                   and first available appointment in the VS GUI.
+   
+   Problem:
+   -------
+   Users cannot overbook appointments between clinic set hour start time and
+   the first availability defined in VS GUI.
+   
+   Resolution:
+   ----------
+   Modified overbook logic to test the target appointment time is after the
+   clinic start time for the day.
+   
+ 7. I9609508FY16 - VS GUI is displaying the wrong patient when using the Clinic
+                   Group feature.
+   
+   Problem:
+   -------
+   When using the clinic group feature in VS GUI a patient will become stuck in
+   the cache. The user can change the patients but the patient in the cache
+   will override the entry. Users think they are scheduling an appointment for
+   Patient A but the appointment will be scheduled for Patient B (cache).
+   
+   Resolution:
+   ----------
+   Disabled TimeSlotViewer event handling for Clinic Group/Provider Schedule.
+   
+ 8. R9460435FY16 - The VS GUI Clinic Report is displaying stop code IEN instead
+                   of stop code.
+   
+   Problem:
+   -------
+   VS GUI is returning the ID pointer to the CLINIC STOP file (#40.7) instead
+   of the stop code number.
+   
+   Resolution:
+   ----------
+   This has been corrected by changing the SDEC REP1GET RPC to return the stop
+   code number instead of the stop code id in the 8th return piece.
+   
+ 9. I8722975FY16 - VS GUI does not display a consult in the Request Management
+                   grid when there has never been an appointment scheduled into
+                   the same stop code between yesterday (T-1) or into the
+                   future.
+   
+   Problem:
+   -------
+   If the consult status is "Scheduled", the consult should not display in the
+   Request Management Grid if there is an appointment scheduled into a clinic
+   that has the same stop code between yesterday (T-1) or into the future.
+   If that appointment has been cancelled or no showed then the consult needs
+   to display in the Request Management grid if it is less than 365 days old.
+   
+   Resolution:
+   ----------
+   The issue was caused by the consult check routine which does not check to
+   see if the appointment has been cancelled/no-showed. This has been
+   corrected.
+   
+ 10. I8915952FY16 - Availability display in VS GUI does not match VistA when
+                    appointments are cancelled in VistA.
+   
+   Problem:
+   -------
+   When a partial day cancellation is performed on a clinic that is set up to
+   display in 30 minute increment, the clinic schedule switches to a 15 minute
+   increment and the hours of cancellation are over the specified range of
+   hours that have been cancelled.
+   
+   Resolution:
+   ----------
+   The SDEC APPSLOTS has been modified to look for the "CAN" node which will
+   contain the previous pattern before the cancel.
+   
+ 11.  R9839712FY16 - VSE VAR Application Certificate Expired
+   
+   Problem:
+   -------
+   The VSE VAR application certificate was issued for 1 year
+   (6/30/2015-6/29/2016).
+   
+   Resolution:
+   ---------
+   The same certificate has been reactivated.
+   
+ The following defects were encountered and corrected during internal SQA
+ testing or User Acceptance Testing (UAT):
+   
+ PW_025 - The initial Request Management grid does not display all consults for
+          a patient, but when you search by patient it shows them all.
+   
+   Problem:
+   -------
+   There were consults that did not get included in the initial load of data in
+   the Request Management grid. The consults are in the correct statuses thus
+   were expected to be included in the initial sets of data.
+   
+   Resolution:
+   ----------
+   The SDECRMG RMG RPC and the SDEC IDX Refresh option have been modified to
+   only allow consults that are not older than 365 days old.
+   
+ PW_052 - In VS GUI, the appointment remained PINK when user performed the UNDO
+          No Show action in VistA.
+   
+   Problem: 
+   -------
+   When UNDO No show is performed in VistA, the appointment in VS GUI still
+   displays in pink.
+   
+   Resolution:
+   ----------
+   The SDAM routine for VistA that supports reversing a No-show appointment has
+   been modified to update the SDEC APPOINTMENT file to indicate the No-show.
+   
+ PW_004 - When making an appointment against a consult in VS GUI, the LAST
+          ACTION TAKEN field (#9) in the REQUEST CONSULTATION file was not
+          updated in the same way that it is from VistA.
+   
+   Problem:
+   -------
+   When an appointment is booked via VS GUI, the Last Action field in the
+   Computerized Patient Record System (CPRS) Consult does not reflect the
+   correct status.  It still says "CPRS RELEASE ORDER" when it should say
+   "Scheduled".
+  
+   Resolution:
+   ----------
+   The LAST ACTION TAKEN field in the REQUEST/CONSULTATION field (#123) was not
+   being updated by the SDEC APPADD RPC. This has been corrected.
+   
+ PW_005 - When cancelling a consult appointment in VS GUI, the New Activity
+          text in the COMMENT is not complete when compared to a consult
+          appointment that was cancelled via VistA.
+   
+   Problem:
+   -------
+   When an appointment is cancelled either by Clinic or Patient in VS GUI, in
+   the Activity of the Consult, the clinic information and date/time of
+   appointment is getting deleted.
+   
+   Resolution:
+   ----------
+   The SDEC APPDEL RPC has been updated to properly include the clinic
+   information and the date/time of appointment.
+   
+ PW_027 - A consult that is <365 days old with Wait Time of >= 90 days does not
+          get included in the initial Request Management grid when the
+          appointment linked to it is cancelled or no-showed.
+   
+   Problem:
+   -------
+   There were consults that did not get included in the initial load of data in
+   the Request Management grid. The consults are in the correct statuses thus
+   were expected to be included in the initial sets of data.
+   
+   Resolution:
+   ----------
+   The SDECRMG RMG RPC and the SDEC IDX Refresh option have been modified to
+   only allow consults that are not older than 365 days old.
+   
+ PW_039 - When a partial clinic availability cancellation is performed on a day
+          that has appointments scheduled and has an overbook outside the
+          available slots, the VS GUI displays grey with hash marks outside the
+          range that was cancelled.
+   
+   Problem:
+   -------
+   When a partial clinic availability cancellation is performed on a day that
+   has appointments scheduled and has an overbook outside the available slots,
+   the VS GUI displays grey with hash marks outside the range that was cancelled.
+   
+   Resolution:
+   ----------
+   SDEC APPSLOTS will now look for the "CAN" node which will contain the
+   previous PATTERN before the Cancel. That "CAN" node will be used to
+   determine where the X's should be to represent the time slots that had been
+   cancelled. The results returned from SDEC APPSLOTS will match what it
+   had previously done, however the slot counts will be replaced with an X.
+   This resolves the issue with the Cancelled blocks going beyond the Cancelled
+   time range. In the event that there is not a "CAN" node, an additional check
+   has been added to the logic in SDEC APPSLOTS to not include cancelled blocks
+   that go beyond the end of the cancelled time range. If cancelled blocks go
+   beyond the end of the cancelled time, the display increment could still
+   change from 30 to 15 minutes in GUI.
+   
+ PW_040 - There is an issue with the 90 minute clinic partial cancellation,
+          clinic is partially cancelled from 0900-1030.  VS GUI shows
+          cancellation for 0900-0930 only (grey with hash marks) and greyed out
+          the rest 0930-1030. 0930-1030 should be displaying in grey with hash
+          marks.
+   
+   Problem:
+   -------
+   There is an issue with the 90 minute clinic partial cancellation, clinic is
+   partially cancelled from 0900-1030.  VS GUI shows cancellation for 0900-0930
+   only (grey with hash marks) and greyed out the rest 0930-1030. 0930-1030
+   should be displaying in grey with hash marks.
+   
+   Resolution:
+   ----------
+   SDEC APPSLOTS returns the "CAN" node that contains the previous PATTERN
+   before the Cancel. The slot counts will be replaced with an X to match the
+   previous pattern used.
+   
+ PW_044 - When performing a Recall query for specific clinic(s), the results
+          includes recalls that have no clinic attached to it.
+   
+   Problem:
+   -------
+   The SDECRMG RMG RPC is incorrectly attempting to return Recall entries that
+   do not have a Clinic defined.
+   
+   Resolution:
+   ----------
+   This has been corrected by limiting the returns from the SDEC RECGET and
+   SDECRMG RMG RPCs to only those entries that have a clinic defined.
+   
+ PW_060 - Added flag on appointment conflict to handle Telehealth and Chart
+          Check appointments.
+   
+   Problem:
+   -------
+   VS GUI needs to allow to book a Telehealth appointment even though a patient
+   already has an existing appointment at the same time in a different clinic.
+   
+   Resolution:
+   ----------
+   Added the "Is this appointment part of a Telehealth or Chart Check
+   appointment pair?" question to the Conflicting Appointment dialog and
+   converted it to a Yes\No confirmation.
+   
+ PW_055 - Appointment color indication does not get updated when performing
+          Undo functionality in Clinic Group (e.g. Undo Check in, Undo Check
+          Out, etc.).
+   
+   Problem:
+   -------
+   Walk-in Appointment color indication does not get updated when performing
+   Undo functionality in Clinic Group (e.g. Undo Check in, Undo Check Out,
+   etc.). Also, unable to select Undo Check-in once the walk-in appointment has
+   been checked-in.
+   
+   Resolution:
+   ----------
+   Updated appointment context menu enabling logic to allow editing of walk-In
+   appointment. Fix also ensures the correct color is displayed on the screen
+   based on appointment status.
+   
+ PW_058 - VS GUI hangs when selecting an unscheduled appointment that is made
+          in VistA.
+   
+   Problem:
+   -------
+   In the SDEC APPOINTMENT file, the appointment end time is getting stored
+   with the same value as the appointment begin time.
+   
+   Resolution:
+   ----------
+   This has been corrected in SDAMWI1 where the call to define the SDEC
+   APPOINTMENT entry is made.
+   
+ PW_059 - VS GUI does not display availability if it starts at 0805am.
+   
+   Problem:
+   -------
+   The 60 and 30 minute display increments are only looking for availability
+   starting on the 1/4 hour.
+   
+   Resolution:
+   ----------
+   This has been corrected by changing the SDEC APPSLOTS RPC to look at 5
+   minute increments.
+   
+   
+  Test Sites:
+  ----------
+  Hudson Valley
+  Chillicothe
+  Asheville
+  Cleveland
+  Tuscon
+   
+  Patch Installation:
+   
+   
+  Pre/Post Installation Overview:
+  -------------------------------
+  This patch contains no PRE or POST Installation processing.
+    
+   
+  Installation Instructions:
+  --------------------------
+  This patch should not be installed with VistA Scheduling GUI users on the
+  system and it is recommended that it be installed during non-peak hours to
+  minimize potential disruption to other users.  This patch should take less
+  than 5 minutes to install.
+   
+  The SDECRPC option should be disabled to ensure that no processing takes
+  place from VistA Scheduling GUI.
+   
+  This installation will update routines that support VistA Scheduling GUI
+  API's.
+  
+  
+   
+  1. Choose the PackMan message containing this patch.
+   
+  2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+   
+  3. From the Kernel Installation and Distribution System Menu, select the
+      Installation Menu.  From this menu, you may elect to use the following
+      options. When prompted for the INSTALL NAME enter the patch #SD*5.3*651:
+    a. Backup a Transport Global - This option will create a backup message
+          of any routines exported with this patch. It will not backup any other
+          changes such as DDs or templates.
+    b. Compare Transport Global to Current System - This option will (allow
+          you to view all changes that will be made when this patch is
+          installed.  It compares all components of this patch routines, DDs,
+          templates, etc.).
+    c. Verify Checksums in Transport Global - This option will allow you to
+          ensure the integrity of the routines that are in the transport global.
+   
+  4. From the Installation Menu, select the Install Package(s) option and
+   
+  5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of Install?
+      NO//' 
+        Respond with 'NO'
+   
+  6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+        Respond with 'NO'
+   
+  7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//' 
+        Respond with 'YES'
+        Option to mark as out of order:
+           Clinical Scheduling Procedure Calls [SDECRPC]
+   
+  8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+   
+   
+  Post-Installation Instructions:
+  -------------------------------
+  N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDAMWI1
+    Before: B14489968   After: B15911901  **94,167,206,168,544,627,651**
+Routine Name: SDEC
+    Before:B123628700   After:B124015151  **627,643,642,651**
+Routine Name: SDEC07
+    Before:B225769196   After:B229461706  **627,642,651**
+Routine Name: SDEC07A
+    Before: B75289640   After: B82467094  **627,642,651**
+Routine Name: SDEC08
+    Before:B196754600   After:B200693919  **627,651**
+Routine Name: SDEC51
+    Before:B122637073   After:B148461955  **627,642,651**
+Routine Name: SDEC52
+    Before:B135366085   After:B144746730  **627,642,651**
+Routine Name: SDEC56
+    Before: B36315965   After: B36808383  **627,642,651**
+Routine Name: SDEC57A
+    Before:B104060307   After:B120731427  **627,643,642,651**
+Routine Name: SDECRMG1
+    Before:B133141523   After:B133859295  **627,642,651**
+Routine Name: SDECRMG2
+    Before: B65998765   After: B68379335  **627,642,651**
+Routine Name: SDN
+    Before: B32745405   After: B34257653  **32,79,398,478,627,651**
+ 
+Routine list of preceding patches: 642
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 29, 2016
+Completed By:                               Date Completed: APR 18, 2017
+Released By :                               Date Released : APR 18, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

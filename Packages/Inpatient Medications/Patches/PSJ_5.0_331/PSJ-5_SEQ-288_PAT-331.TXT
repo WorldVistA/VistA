@@ -1,0 +1,194 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 09/22/16 at 12:27
+=============================================================================
+Run Date: FEB 02, 2017                     Designation: PSJ*5*331
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #288                      Status: Released
+                  Compliance Date: MAR 06, 2017
+=============================================================================
+
+Associated patches: (v)PSJ*5*305   <<= must be installed BEFORE `PSJ*5*331'
+                    (v)PSJ*5*313   <<= must be installed BEFORE `PSJ*5*331'
+
+Subject: CLINIC LABEL/IV ORDER ISSUE/METRIC CONVERSION/INFUSION RATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+ 1) Label for Clinic infusion for Inpatient is printing the ward and 
+    not the clinic name.
+ 2) Metric Conversion for Patients Weight consistency
+ 3) Leading zero dropped between CPRS and VistA for IV solution
+ 4) Appending to infusion rate incorrectly
+  
+ Associated Ticket(s):
+ ============================
+ 1) I9857169FY16 - Label for Clinic infusion for Inpatient is printing the
+                ward and not the clinic name (formerly remedy 1303613)
+    R10344535FY16(d) Label for clinic order prints ward location and not
+                     clinic
+  
+ 2) I5600103FY15 - Make Metric Conversions for Patient Weight consistent
+                across VistA Packages
+  
+ 3) R8636432FY16 - The leading zero on IV Solution volume is dropped when
+                it crosses over from CPRS to Inpatient Medications
+  
+ 4) I9785109FY16 - Free text Infusion rate is being appended incorrectly.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ ========================
+ Pittsburgh
+ Louisville
+  
+   
+ Ticket Overview:
+  
+ Patient Safety Issue:
+ ====================
+ PSPO 3299
+  
+ 1) I9857169FY16 - Label for Clinic infusion for Inpatient is printing the
+                ward and not the clinic name
+  
+ Problem:
+ ========
+ The label for a Clinic Infusion order for an Inpatient patient is showing
+ the ward location and not the clinic location.
+  
+ Resolution:
+ ===========
+ Modified two routines, PSIVLABL and PSIVLABR to remove the plus (+) from
+ the line of code that pulls in the clinic information.  This will ensure
+ that both the clinic id and the date/time is pulled from the Pharmacy
+ Patient File (#55).
+  
+  
+ 2) I5600103FY15 - Make Metric Conversions for Patient Weight consistent
+                across VistA Packages
+  
+ Problem: 
+ ========
+ The conversion from lbs to kgs is being changed from 2.2 lbs/kg to 2.2046226
+ lbs/kg to make BCMA consistent with CPRS. Other pharmacy packages needed
+ to make this change as well.  Inpatient Medications is one of these packages 
+ where this conversion needs to be updated. 
+  
+ Resolution:
+ ===========
+ A modification was made to two routines, PSJAC and PSJLMHED to expand the
+ metric conversion from 2.2 to 2.2046226.
+  
+  
+ 3) R8636432FY16 - The leading zero on IV Solution volume is dropped when
+                it crosses over from CPRS to IV Medications
+  
+ Problem: 
+ ========
+ When an IV order is entered in CPRS, where the volume of the solution has a
+ leading zero, such as 0.9mg, when the order comes over to Vista, the 
+ leading zero is dropped.  
+  
+  
+ Resolution:
+ ===========
+ A modification was made to routine PSJHL4A to not plus the volume, which 
+ strips the leading zero(s) when moving this value to another variable 
+ for subsequent processing in VistA.
+  
+ 4) I9785109FY16 - Free text Infusion rate is being appended incorrectly
+  
+ Problem: 
+ ========
+ A free text infusion rate for a continuous IV order that is entered in Vista,
+ is having the ml/hr appended to the infusion rate incorrectly. 
+   
+  
+ Resolution:
+ ===========
+ A modification was made to routine PSIVSP to check the infusion rate to 
+ see if it needs the rate appended to the dosage.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  User's should not be on the system
+ when this patch is installed.
+  
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSJ*5.0*331)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSJ*5.0*331.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSIVLABL
+    Before: B43882246   After: B43876425  **58,82,104,127,178,184,273,279,331**
+Routine Name: PSIVLABR
+    Before: B39932964   After: B40125605  **58,82,178,184,279,331**
+Routine Name: PSIVSP
+    Before: B42459538   After: B42970489  **30,37,41,50,56,74,83,111,133,
+                                           138,134,213,229,279,305,331**
+Routine Name: PSJAC
+    Before: B18623217   After: B18714704  **8,10,50,127,181,275,279,331**
+Routine Name: PSJHL4A
+    Before: B64745608   After: B64737750  **105,111,154,170,159,134,197,
+                                           226,263,313,331**
+Routine Name: PSJLMHED
+    Before: B56770438   After: B56836733  **4,58,85,110,148,181,260,275,331**
+ 
+Routine list of preceding patches: 305, 313
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 11, 2016
+Completed By:                               Date Completed: JAN 27, 2017
+Released By :                               Date Released : FEB 02, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

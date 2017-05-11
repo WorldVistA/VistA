@@ -1,0 +1,430 @@
+$TXT Created by                     VLELAB1.AAC.DOMAIN.EXT  (KIDS) on Friday, 02/24/17 at 14:36
+=============================================================================
+Run Date: MAR 22, 2017                     Designation: LR*5.2*480
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #386                    Status: Released
+                  Compliance Date: APR 22, 2017
+=============================================================================
+
+Associated patches: (v)LR*5.2*474  <<= must be installed BEFORE `LR*5.2*480'
+
+Subject: MICRO FIXES FOR CLASS I INTERFACE TO MICROBIOLOGY INSTRUMENTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+  This patch addresses the following issues:
+  - Microbiology accession is being removed from the 'Incomplete 
+  test status report (LRWRKINC)' option when a PRELIMINARY result is
+  released when using the Universal Interface Microbiology release options.
+  - When processing result messages received from the Universal Interface  
+  all data will be added and it will be up to the Microbiology 
+  Technologists to determine what values will go out with preliminary and 
+  final reports.
+  
+    
+   Blood Bank Review:
+   ==================
+   EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*480 does not 
+   alter or modify any software design safeguards or safety critical 
+   elements functions.
+    
+   RISK ANALYSIS: Changes made by patch LR*5.2*480 have no effect on Blood 
+   Bank software functionality, therefore RISK is none.
+    
+   VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+   made, no specific validation requirements exist as a result of 
+   installation of this patch.
+    
+ Remedy Ticket Overview:
+   ==========================
+   N/A
+    
+ New Service Requests (NSR)s):
+   ==================
+   N/A
+    
+   Participating Test Sites:
+   =========================
+  James A. Haley Veterans Hospital
+  Iowa City VA Healthcare System
+  Lexington VA Medical Center
+    
+  Problem:
+  --------
+  When releasing a microbiology preliminary report using the new 
+  Universal Interface release options the status of the accession was being
+  set to complete and was then no longer available on the Incomplete Test
+  Status list report.
+     
+  Resolution:
+  -----------
+  The patch modifies LRVR0 at ACCEPT+68 and adds the following three lines
+  of code:
+          ;
+          ; If Lab UI interface then prompt user for accession test 
+  complete date /time in EC3^LRMIEDZ2 call.
+          I LRINTYPE=1 S LRFIFO=0
+   
+         Routine: LRVR0
+  
+  
+  Problem: 
+  --------
+  When a retransmission of microbiology results are received the accepting 
+  of the retransmission values was causing the existing
+  organism, comments and susceptibilities to be deleted. This is expected 
+  functionality when handling verified microbiology reports
+  from external reference laboratories.  
+  
+  However when handling result transmission from a Universal Interface 
+  microbiology instrument the user can add additional information that
+  needs to be preserved before the report is verified.
+  
+  Resolution: 
+  -----------
+  The patch modifies the handling of existing results based on the type of 
+  interface. LEDI types of interfaces will continue to
+  remove previous information prior to storing new information from the 
+  reference laboratory. Universal Interfaces type interfaces
+  will maintain existing information entered by Laboratory or received via 
+  prior transmissions and merge the new transmission with
+  the existing data before presenting to lab user for review.  
+  
+         Routine: LRVRMI2A modified labels N9A, N12A, N17 
+  
+         Routine: LRVRMI4A modified labels N3A, N6A, N6B
+  
+   
+ Software Retrieval Instructions:
+ ---------------------------------------------------- 
+  Software for this patch is being released as a Packman message.
+  
+  There are no additional documents for this warranty patch.
+  All installation, deployment, and back out instructions are contained in 
+  this patch description.
+  
+  The VistA Documentation Library (VDL) web site contains the Micro Class 1
+  Interface User and Technical Guide documents which has been previously 
+  released. 
+  
+  The VDL web address for Laboratory Universal Interface user documentation
+  is:
+     http://www.domain.ext/vdl/application.asp?appid=120
+  
+  
+   Pre/Post Installation Overview
+   ------------------------------
+   There are no Pre/Post installation routines associated with this 
+   patch.  
+   
+   Pre-Installation Instructions
+   -----------------------------
+   This patch may be installed with users on the system although it is
+   recommended that it be installed during non-peak hours to minimize 
+   potential disruption to users.  This patch should take less than one  
+   minute to install.
+   
+   NOTE: Kernel patches must be current on the target system to avoid 
+       problems loading and/or installing this patch.
+   
+     
+      ==================== Installation Instructions ====================
+    
+    
+      1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+         option will load the KIDS patch onto your system.
+    
+      2. The patch has now been loaded into a Transport global on your
+         system. You now need to use KIDS to install the transport global.
+    
+      3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+         select the 'Installation' menu.
+    
+      4. Use the 'Verify Checksum in Transport Global' option and verify
+         that all routines have the correct checksums.
+       
+      5. On the KIDS menu, under the 'Installation' menu, use the following
+         options:
+                 Print Transport Global
+                 Compare Transport Global to Current System
+                 Backup a Transport Global
+    
+         If you wish to preserve a copy of the routines exported in this 
+         patch prior to installation, you should use the 'Backup a 
+         Transport Global' option at this time. You may also compare the
+         routines in your production account to the routines in the patch
+         by using the 'Compare a Transport Global to Current System'
+         option.
+    
+      6. Use the 'Install Package(s)' option under the 'Installation' menu 
+         and select the package 'LR*5.2*480.
+    
+         When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO.  
+    
+         When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//", respond NO.
+    
+   Post-Installation Instructions
+   ------------------------------
+ Back-Out Procedure:
+  
+  During installation, if the option to back up routines was run as 
+  directed, 'Backup a Transport Global', then routines have the ability to 
+  be restored from the "backup" MailMan message that was generated.  
+  However, the KIDS installation process does not perform a restore of 
+  other VistA components, such as data dictionary, cross-reference, and 
+  template changes, etc. 
+  Prior to attempting a back-out of the software, contact the VA Help Desk 
+  at 1-855-673-4357 for support or assistance.
+  Restore the backup message of any routines exported with the patches and 
+  reload the transport global. 
+  Verify the back-out procedure by comparing the transport global to the 
+  current system state.
+  
+ Rollback Procedure:
+  
+  Patch LR*5.2*480 and any installed dependent patches need to be taken out
+  in reverse of the order in which these patches were installed; routines 
+  and data dictionary modifications and populated data must also be rolled 
+  back in reverse order.
+  Contact the VA Help Desk at 1-855-673-4357 for support or assistance 
+  regarding roll-back procedures.  
+  The need for a rollback is highly unlikely, however if it is required, 
+  contact the product development team for assistance if needed.  The 
+  rollback procedure may require Lab downtime and a reinstall of any 
+  previous KIDS versions.  
+  No specific rollback verification procedures are required after the 
+  installations of patch LR*5.2*480. 
+  
+  
+  Example of Captured Installation:
+  ==================================
+  
+ Upack the Packman
+ -----------------
+  
+  
+ Subject: MICRO FIXES FOR CLASS I INTERFACE TO MICROBIOLOGY INSTRUMENTS
+  
+ Category: 
+   - Routine
+  
+ Description:
+ ============
+  
+  
+ Type <Enter> to continue or '^' to exit: ^
+  
+ Enter message action (in IN basket): Ignore// x  Xtract KIDS
+ Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Line 233  Message #628932    Unloading KIDS Distribution   LR*5.2*480
+    LR*5.2*480
+  
+ Want to Continue with Load? YES// 
+ Loading Distribution...
+  
+    LR*5.2*480
+  
+ Select PackMan function: 
+  
+  
+  
+ Enter message action (in IN basket): Ignore// 
+  
+  
+ KIDS OPTIONS
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Verify the Check Sums
+ ----------------------
+  
+ Select Installation <TEST ACCOUNT> Option: 2  Verify Checksums in 
+ Transport Global
+  
+ Select INSTALL NAME:    LR*5.2*480    3/22/17@05:30:07
+      => Completed/NotReleased LR*5.2*480
+  
+ This Distribution was loaded on Mar 22, 2017@05:30:07 with header of 
+    Completed/NotReleased LR*5.2*480
+    It consisted of the following Install(s):
+      LR*5.2*480
+  
+ Want each Routine Listed with Checksums: Yes//   YES
+ DEVICE: HOME//   TELNET PORT
+  
+  
+  
+ PACKAGE: LR*5.2*480     Mar 22, 2017 5:31 am                          
+ PAGE 1
+ --------------------------------------------------------------------------
+  
+  
+  
+ LRVR0     Calculated  159091512
+ LRVRMI2A  Calculated   92413748
+ LRVRMI4A  Calculated  108857214
+  
+    3 Routines checked, 0 failed.
+  
+  
+ Print the Transport Global
+ ---------------------------
+  
+ Select Installation <TEST ACCOUNT> Option:  Print Transport Global
+ Select INSTALL NAME:    LR*5.2*480    3/22/17@05:30:07
+      => Completed/NotReleased LR*5.2*480
+  
+ This Distribution was loaded on Mar 22, 2017@05:30:07 with header of 
+    Completed/NotReleased LR*5.2*480
+    It consisted of the following Install(s):
+      LR*5.2*480
+  
+      Select one of the following:
+  
+           1         Print Summary
+           2         Print Summary and Routines
+           3         Print Routines
+  
+ What to Print: 1  Print Summary  << Installer Preference
+ DEVICE: HOME//   
+  
+ Compare the Transport Global
+ -----------------------------
+  
+ Select Installation <TEST ACCOUNT> Option: 4  Compare Transport Global to 
+ Curren
+ t System
+ Select INSTALL NAME:    LR*5.2*480    3/22/17@05:30:07
+      => Completed/NotReleased LR*5.2*480
+  
+ This Distribution was loaded on Mar 22, 2017@05:30:07 with header of 
+    Completed/NotReleased LR*5.2*480
+    It consisted of the following Install(s):
+      LR*5.2*480
+  
+      Select one of the following:
+  
+           1         Full Comparison
+           2         Second line of Routines only
+           3         Routines only
+           4         Old style Routine compare
+  
+ Type of Compare: 2  Second line of Routines only  << Installer preference
+  
+  
+ Backup the Transport Global 
+ ---------------------------
+  
+ Select Installation <TEST ACCOUNT> Option: 5  Backup a Transport Global
+ Select INSTALL NAME:    LR*5.2*480    3/22/17@05:30:07
+      => Completed/NotReleased LR*5.2*480
+  
+ This Distribution was loaded on Mar 22, 2017@05:30:07 with header of 
+    Completed/NotReleased LR*5.2*480
+    It consisted of the following Install(s):
+      LR*5.2*480
+ Subject: Backup of LR*5.2*480 install on Mar 22, 2017
+   Replace 
+ Loading Routines for LR*5.2*480...
+ Send mail to: <Your name appears here//
+ Select basket to send to: IN//   
+ And Send to: << add your PATCH User account too >>
+  
+ Install the patch:
+ ------------------
+  
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME:    LR*5.2*480    3/22/17@05:30:07
+      => Completed/NotReleased LR*5.2*480
+  
+ This Distribution was loaded on Mar 22, 2017@05:30:07 with header of 
+    Completed/NotReleased LR*5.2*480
+    It consisted of the following Install(s):
+      LR*5.2*480
+ Checking Install for Package LR*5.2*480
+  
+ Install Questions for LR*5.2*480
+  
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME// 
+  
+  
+ -------------------------------------------------------------------------
+  
+  
+  Install Started for LR*5.2*480 : 
+                Mar 22, 2017@05:41:34
+  
+ Build Distribution Date: Feb 24, 2017
+  
+  Installing Routines:
+                Mar 22, 2017@05:41:35
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  LR*5.2*480 Installed. 
+                Mar 22, 2017@05:41:35
+  
+  Not a production UCI
+  
+                                    
+ LR*5.2*480                                   
+  
+  
+ Install Completed
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRVR0
+    Before:B154172378   After:B159091512  **350,427,474,480**
+Routine Name: LRVRMI2A
+    Before: B78602425   After: B92413748  **350,427,474,480**
+Routine Name: LRVRMI4A
+    Before: B96471289   After:B108857214  **350,427,474,480**
+ 
+Routine list of preceding patches: 474
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 22, 2016
+Completed By:                               Date Completed: MAR 22, 2017
+Released By :                               Date Released : MAR 22, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

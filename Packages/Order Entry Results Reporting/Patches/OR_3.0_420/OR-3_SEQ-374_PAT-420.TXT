@@ -1,0 +1,338 @@
+$TXT Created by               VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Thursday, 01/19/17 at 10:41
+=============================================================================
+Run Date: MAR 16, 2017                     Designation: OR*3*420
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #374                      Status: Released
+                  Compliance Date: APR 16, 2017
+=============================================================================
+
+Associated patches: (v)OR*3*424    <<= must be installed BEFORE `OR*3*420'
+
+Subject: CPRS LAB MONITORING
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ **************************************************************************
+ ATTENTION (ESPECIALLY MULTI-DIVISIONAL FACILITIES):
+ This enhancement will not work properly for multi-divisional facilities or
+ any sites that use different lab test names at different sites, as only
+ one lab test name can be associated with each drug. To successfully
+ implement this solution, all facilities/divisions that share a VistA
+ system must use the same name for each monitored lab test. If this is not
+ feasible or desired, then do not populate lab tests in the LAB TEST
+ MONITOR field after installing this patch.
+  
+ Example: If all divisions of your facility use a single laboratory test
+ named CREATININE, then the software will work as intended. If individual
+ divisions use specifically named lab tests such as KAN-CREATININE and
+ WIC-CREATININE, then do not use those lab tests with this software
+ enhancement.
+ *************************************************************************
+  
+ Patch OR*3.0*420 will modify the existing Pharmacy package in VistA to
+ display the most recent associated lab results when a clinician is
+ ordering medication using the Computerized Patient Record System (CPRS)
+ Inpatient or Outpatient Medication Order dialogs. Without this
+ modification, the clinician must look in numerous locations for this
+ information. The information is important for safe and effective
+ medication management. 
+  
+ The lab results for the most recent lab test associated with an Orderable 
+ Item will be displayed in the Information field in the Medication Order 
+ dialog once an Orderable Item is selected. Once a dispense drug is chosen 
+ (by selecting a dosage in the order dialog), the lab test information 
+ will be replaced by the National Standard Drug Information found in the
+ MESSAGE (#101) field of the DRUG (#50) file. This message currently
+ shows in CPRS when ordering a dispense drug and is not changed by this
+ modification.  Note:  Follow-on work to allow persisitence of the lab 
+ test information in the Medication Order dialog is expected to be 
+ addressed in CPRS v32.
+  
+ In order to monitor lab results, lab tests are associated with an 
+ Orderable Item using the PSS DRUG ENTER/EDIT option in VistA by entering 
+ a lab test in the LAB TEST MONITOR (#17.2) field of the DRUG (#50) file. 
+  
+ To apply this functionality to Quick Orders, routine ORWDPLM2 can be used 
+ as a TIU OBJECT that can be added to a Quick Order. A site may use this 
+ optionally to add to a Quick Order to allow the functionality to be added 
+ to the comment section of the order. This is done by creating the OBJECT 
+ using the TIU Document Definitions option and inserting it into the 
+ comments field of the Quick Order. Upon selection of the Quick Order in 
+ CPRS, the monitored LAB results will appear on the Ordering screen. 
+  
+ A KERNEL system parameter (OR CPRS LAB DISPLAY ENABLED) is added by this
+ patch to turn the functionality On/OFF.  Initially, this parameter is set
+ to OFF (No).  A Clinical Application Coordinator (CAC) or Pharmacy 
+ Automated Data Processing Application Coordinator (ADPAC) at each site
+ will need to set this parameter to the ON value (Yes) in order for this
+ functionality to be turned on at the site.
+  
+ This modification has been implemented locally at the VA centers in 
+ Clarksburg, WV; Hines, IL; Iron Mountain, MI; and Chicago, IL.
+  
+ The NSR for this intake addresses the following requirement: 
+  
+ * VHBAO:NEED126: Ability to display laboratory test results, in a single 
+                  view, for ordering inpatient and outpatient medications
+                  while viewing the Medication Order dialog in CPRS.
+  
+  
+ This build contains the components for the CPRS Graphical User Interface 
+ (GUI) to display relevant laboratory results in the Medication Ordering 
+ dialog.
+  
+ To use the features, the following setup steps are advised:
+  
+  * Establish drug-to-lab mapping relationship using the PSS DRUG 
+    ENTER/EDIT option.  Follow the OUTPATIENT marking pathway to set up a
+    LAB MONITOR drug.  Lab name, specimen type and number of days to look
+    back are required fields for the program to work.
+  
+  * If not already set correctly, review the site local terms for SERUM 
+    CREATININE and SERUM SPECIMEN in the CPRS Order Check menus.  This is 
+    required for calculation of Creatinine Clearance.
+  
+  * When the lab requested is "Creatinine", a second line for CrCl will be 
+    returned.
+  
+ The routine ORWDPLM2 is included.  This is a version of the display that
+ will work as a TIU OBJECT.  A site may use this optionally to add to a 
+ Quick Order to allow the functionality to be added to the comment 
+ section of the order.  This is done by creating the OBJECT using the TIU 
+ Document Definitions option and inserting it into the comments field of
+ the Quick Order.  Upon selection of the Quick Order in CPRS, the monitored
+ LAB results will appear on the Ordering screen.  The object method to
+ insert into the TIU Object is:
+  
+ S X=$$SL^ORWDLPM2(DFN,
+ $S($G(X0)]"":$P(X0,U),$G(NODE0)]"":$P(NODE0,U),1:""),"^TMP($J,""ORWDPLM2""
+ )")
+  
+ The display is wrapped for ease of reading, but the object method must be 
+ entered as part of one single line.
+  
+ Note:  The TIU OBJECT method will work for generalized Quick Orders only 
+ (orders assigned to Order Menus).  It is not currently implemented for 
+ personal Quick Orders.
+  
+ If assistance is needed in setting up TIU Objects inside Quick Orders,
+ contact your Clinical Application Coordinator (CAC) or refer to the TIU
+ User Manual for instructions.
+  
+ Patch Components
+ ================                                               
+  
+ Files & Fields Associated:
+  
+ File Name (Number)       Field Name (Number)       New/Modified/Deleted
+ -----------------------  ------------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                File #       New/Modified/Deleted
+ ---------                ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------
+ 20100311  CPRS LAB MONITORING
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+ Problem:
+ --------
+  
+ Resolution:
+ -----------
+  
+  
+ Test Sites:
+ ----------
+ James H. Quillen VA Medical Center (Mountain Home)      
+ VA Maryland Healthcare (Baltimore, Loch Raven & Perry Point)        
+ Tomah VA Medical Center
+ Edward Hines Jr., VA Hospital
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing the
+ new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                                   File Name            FTP Mode
+ ------------------------------------------------------------------------
+ CPRS Lab Monitoring Release Notes       or_3_0_420_rn.pdf    Binary
+ CPRS Lab Monitoring Release Notes       or_3_0_420_rn.doc    Binary
+ Pharmacy Data Management User Manual    pss_1_um_r0317.pdf   Binary
+ Pharmacy Data Management User Manual    pss_1_um_r9317.doc   Binary
+ CPRS User Guide: GUI Version            cprsguium.pdf        Binary
+ CPRS User Guide: GUI Version            cprsguium.doc        Binary
+ CPRS Technical Manual: GUI Version      cprsguitm.pdf        Binary
+ CPRS Technical Manual: GUI Version      cprsguitm.doc        Binary
+ TIU Clinical Coordinator & User Manual  tiuum.pdf            Binary
+ TIU Clinical Coordinator & User Manual  tiuum.doc            Binary
+ CPRS Lab Monitoring Documents           OR_3_0_420_DOCS.zip  Binary
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre-installation instructions associated with this patch.
+  
+  
+ Pre-Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ Installation Instructions
+ -----------------------------
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+         the Installation Menu.  From this menu, you may elect to use the 
+         following options. When prompted for the INSTALL NAME enter
+         OR*3.0*420.
+  
+         a.  Verify Checksums in Transport Global - This option will 
+             allow you to ensure the integrity of the routines that are in
+             the transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+         and choose the patch to install.
+  
+ 5.      If prompted "Want KIDS to Rebuild Menu Trees Upon Completion of 
+         Install? NO//," press <Enter>.
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO// Press <Enter>
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO// Press <Enter>
+  
+ 8.      If prompted "Delay Install (Minutes):  (0 - 60): 0// enter 0.
+  
+ 9.      If prompted "Enter the Device you want to print the Install 
+         messages.  You can queue the install by enter a 'Q' at the device 
+         prompt. Enter a "^" to abort the install.  DEVICE:  HOME//  HOME
+         (CRT)", press <Enter>.
+  
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+ A site Pharmacy CAC/ADPAC will have to set the OR CPRS LAB DISPLAY ENABLED
+ parameter to a value of "Yes" using the XPAR MENU TOOLS option in order
+ for this functionality to be accessed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORWDPLM1
+    Before:       n/a   After: B14332361  **420**
+Routine Name: ORWDPLM2
+    Before:       n/a   After:  B6515628  ***420***
+Routine Name: ORWDPS2
+    Before: B63130016   After: B68354052  **85,116,125,131,132,148,141,
+                                           195,215,258,243,424,420**
+ 
+Routine list of preceding patches: 424
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 24, 2015
+Completed By:                               Date Completed: MAR 13, 2017
+Released By :                               Date Released : MAR 16, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

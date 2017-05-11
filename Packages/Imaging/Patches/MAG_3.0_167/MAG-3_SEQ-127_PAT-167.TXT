@@ -1,0 +1,695 @@
+
+=============================================================================
+Run Date: FEB 07, 2017                     Designation: MAG*3*167
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #127                      Status: Released
+                  Compliance Date: MAR 10, 2017
+=============================================================================
+
+
+Subject: IMAGING DISPLAY
+
+Category: 
+  - Other
+
+Description:
+============
+
+ Associated Patches:  This patch must be installed after MAG*3.0*162.
+ ==================
+  
+ Subject:  VISTA IMAGING CLINICAL DISPLAY
+ =======
+  
+ Category:  OTHER
+ ========
+  
+ Description:
+ ===========
+ This document describes MAG*3.0*167, a patch that includes a new MUSE 
+ Patient Study Viewer. This version of the MUSE Patient Study Viewer will 
+ connect to MUSE Systems that are running MUSE v8 SP2 and later.  The 
+ electrocardiograms (EKGs) and other data types displayed in this viewer 
+ are MUSE generated Portable Document Format (PDF) images of the patient 
+ tests.  Additionally, MAG*3.0*167 will have communication with Clinical 
+ Capture for Annotation of Patient Images.  In MAG*3.0*151, the Annotation 
+ components were taken out of Clinical Capture.  Users of Clinical Capture 
+ 151 have the option to open newly captured images in Clinical Display 
+ patch MAG*3.0*167.  Images are opened in a separate window, so the user 
+ can annotate the image using the Annotation components of Clinical 
+ Display. 
+  
+ Patch Components:
+ ================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P 167_Patch_Description, provides an overview, explains the 
+ changes, and outlines the installation for this patch.  
+ MAG3_0P167_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software:
+ ========
+ File Name                                       Description
+ MAG3_0P167.KID - Kernel Installation            KIDS build for Patch 167
+ and Distribution System (KIDS)
+ MAG3_0P167_CLINICAL_DISPLAY_SETUP.EXE           Clinical Display 
+ Installation File
+ MAG3_0P167_CLINICAL_DISPLAY_INSTALL.MSI         Clinical Display 
+ Installation File
+  
+ Documentation:
+ =============
+ This document, MAG3_0167_Patch_Description, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Fields Associated:
+ =========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ ================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ ======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ==================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ ====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ ========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ ====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ ======================
+ New Service Requests (NSRs):
+ ===========================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+  
+  
+ 1. Defect 194658 (Trouble Ticket (Remedy) INC000000995412) Cannot Add
+ ===================================================================== 
+ Annotations to Images 
+ =====================
+  
+ Problem:
+ In the current version of the Clinical Display application, it is not 
+ possible to add Annotations to images that have a status of Quality 
+ Assurance (QA) Reviewed.  This needs to be changed so that Annotations 
+ can be added to images that have a status of QA Reviewed.
+  
+ Resolution:
+ The function that determines if an Image can be annotated was incorrect.  
+ This function has been fixed to allow annotations to images with a status 
+ of QA Reviewed. 
+  
+ 2. Defect 359102 (Trouble Ticket INC000001219914) Enable Communication
+ ====================================================================== 
+ from Clinical Capture to Allow Users to Annotate Images
+ =======================================================
+  
+ Problem:
+ In Clinical Capture MAG*3.0*151, the annotation functionality was removed 
+ due to issues it was causing in the capture process.
+  
+ Resolution:
+ This patch enables communication between Clinical Capture and Clinical 
+ Display.  Users of Clinical Capture MAG*3.0*151 can select a newly 
+ captured image and have it open in a separate window of Clinical Display 
+ MAG*3.0*167 for annotation. 
+  
+ 3. Defect 291827 MUSE API Update 
+ ================================
+ Problem:
+ General Electric (GE) has developed a new Application Programming 
+ Interface (MUSE API 3).  The use of the new API will be mandatory for the 
+ upcoming MUSE Version 9.  Clinical Display Electrocardiogram Viewer 
+ currently uses an older MUSE API that will not communicate with MUSE 9. 
+  
+ Resolution:
+ The VistA Imaging Clinical Display application has been modified to use 
+ the new MUSE API 3 to interface with GE MUSE Systems.  This change will 
+ enable VistA Imaging Display to interface with MUSE Systems starting with 
+ MUSE v8 SP2 and later.  MUSE Systems older than MUSE v8 SP2 will no 
+ longer be supported. 
+  
+ 4. Defect 359130 (Trouble Ticket (NSD)  R6629905FY16) Help Menu Items
+ ===================================================================== 
+ (continued from Patch 151)
+ ==========================
+ Problem:
+ Users do not have access to the latest Display User Manual.  The Help 
+ menu option needs to link to the current user manual on the VistA Imaging 
+ SharePoint site.
+  
+ Resolution:
+ A new menu item has been added to the Help menu on the Clinical Display 
+ main window:  VistA Imaging Display User Guide.  This is a link to the 
+ VistA Imaging SharePoint site. 
+ Click this menu option to open the latest Clinical Display User Manual in 
+ your browser.
+  
+ 5.   Defect 291819 (Trouble Tickets INC000000947908,
+ ==================================================== 
+ INC000001006100, and INC000001067134) Image Goes Black
+ ======================================================
+ Problem:
+ When scrolling through the images on the Radiologic viewer with the 
+ Telereader for Teleretinal Imaging, the images go black.  Users have to 
+ logout of the VistA Imaging Display client and log back in to make them 
+ viewable again.
+  
+ Resolution:
+ In the current design of Clinical Display, whenever a 24 bit color image 
+ is viewed, it is automatically separated into Red, Green and Blue (RGB) 
+ color channels.  The memory used to store these images was not being 
+ cleared when the image was cleared, so continually viewing 24-bit color 
+ images would eventually lead to the application running out of memory. 
+ There is a two part resolution for this issue:
+ 1) The memory used for the separate color channels is now being cleared 
+ when the image is cleared.
+ 2) Users can choose to disable the automatic separation of color channels 
+ for 24-bit color images.  By disabling the automatic separation, color 
+ images will load and display faster.  When disabled, the user can choose 
+ to show color channels on an image by image basis. 
+ To disable atomatic color channels, from the Main window or from the 
+ Image List Window, check the Options | Disable Automatic Color Channel 
+ menu option .
+ To view color channels when automatic color channel is disabled, select 
+ the Image | Enable Color Channel for Current Image menu option.  Then use 
+ the RGB toolbutton as you normally would. 
+  
+ 6. Defect 377985 (Trouble Ticket I7668256FY16) Typos on VistA Imaging 
+ =====================================================================
+ Banner
+ =====
+ Problem:
+ The box that displays after the user enters an electronic signature for 
+ printing or copying images (titled: "VistA Imaging: Physcian Agreement 
+ for Downloaded Images.") has two misspellings. The word "physician" was 
+ misspelled and there should not be a period at the end of the title bar. 
+ Also, the word "capability" in the second line is also misspelled.
+  
+ Resolution:
+ The two spelling errors were fixed and the extra period was removed.
+  
+ 7. Defect 291820 (Trouble Tickets INC000001057750 and INC000001248569) 
+ ======================================================================
+ Image Displaying as Black Vertical Strip
+ ========================================
+ Problem:
+ Ophthalmic images are coming across distorted.  The images come up in 
+ Clinical Display as a black vertical strip.  To view full size, clear 
+ images, users need to click on the 1:1 option.
+ Resolution:
+ During the display of DICOM images, a secondary calculation is performed 
+ to compute the image resolution based on pixel spacing data contained in 
+ the DICOM header.  Sometimes the data is incomplete.  When the data for 
+ the vertical pixel spacing is incomplete, the secondary calculation 
+ results in an image that is dramatically skewed vertical.  The image 
+ displays as a vertical line.
+ The application function that calculates the image height and width has 
+ been modified.  When data for pixel spacing is incomplete, the secondary 
+ calculation will not be executed.
+ The verical line issue was noticed when viewing images from the vendor 
+ TopCon.  The user can optionally stop resolution calculations for all 
+ TopCon images.
+ From the System Manager menu, select "Workstation Configuration 
+ window.".  In the Workstation Configuration window, select the Demo 
+ Options section.  Under "Demo Options" set the value for 
+ SkipTopConResolution to "TRUE".
+  
+ 8. Defect 291822 (Trouble Tickets I6260205FY16 and I10071786FY16) RGB 
+ =====================================================================
+ Button
+ ======
+ Problem:
+ In VistA Imaging Clinical Display, the Red/Green/Blue (RGB) button 
+ becomes inactive while viewing patient images.  This issue was not 
+ limited to a specific patient, workstation, or user.  The user has to 
+ stop Clinical Display and restart the application and then the RGB button 
+ works again.
+  
+ Resolution:
+ The issue of application memory leak in Issue 6 above happens during the 
+ separation of the color channels for 24-bit color images.  This symptom 
+ of the RGB button (the color channel button) becoming inactive is related 
+ to Issue 6 above (Defect 291819) and is also fixed by the modification 
+ for  Issue 6. 
+  
+ 9. Defect 410457 (Trouble Ticket R6752847FY16) Cannot Reassign Images 
+ =====================================================================
+ Captured to Wrong Record
+ ========================
+ Problem:
+ This change is intended to alleviate the cumbersome process that is 
+ needed now when an image is attached to the incorrect patient or 
+ incorrect TIU note.
+ Sites will no longer have to Print the Image, take it to the scanning 
+ clerks, have the image scanned and attached to the correct patient and/or 
+ correct TIU Note. 
+  
+ Resolution:
+ A new menu item, Options | Copy Image (before Delete) for Re-Association 
+ in Clinical Capture, enables users to copy an image to a local user 
+ directory before the image is deleted.
+  
+ HIMs personnel can then use Clinical Capture to import the image from the 
+ local user directory to a new patient or to the same patient and with 
+ different index values.
+  
+ Note:  Image Groups and DICOM Study Groups cannot be copied as a Group.  
+ For Image Groups (Non-DICOM), select each image for deletion from the 
+ Group Abstract window, then copy each image before deletion.
+  
+ DICOM Study Groups need to be re-associated through the DICOM Gateway. 
+  
+ MUSE Interface Changes
+ ======================
+ Overview:  The new MUSEAPI 3 is a Service-Oriented Architecture (SOA) 
+ based on Windows Communication Foundation (WCF). Clinical Display acts as 
+ a client and 'consumes' services from the MUSE System.  The client 
+ submits an Hypertext Transfer Protocol (HTTP) request to the server; the 
+ server returns a response to the client.
+ The EKGs and other data types displayed in this viewer are MUSE generated 
+ PDF images of the patient tests.  Because of these changes, the VistA 
+ Imaging MUSE configuration has changed.
+  
+ \VistA\Imaging\MUSE Folder 
+ =========================
+ Previous versions of Clinical Display made use of MUSE Dyamic Link 
+ Libraries (DLLs).  When Clinical Display was installed on a workstation a 
+ '\Vista\Imaging\Muse' folder was created and several DLLs were installed 
+ in that folder. 
+ The \Vista\Imaging\Muse folder and the DLLs contained in that folder are 
+ no longer used.  That folder and DLLs will be deleted in a future patch. 
+  
+ Network Location File (#2005.02)
+ ===============================
+ Physical Reference:  Previously the physical reference was the server 
+ name, and 'vol000'
+ Example:  \\VHAxxxMUS1\vol000\
+ The interface to MUSE Systems no longer requires server name and volume.
+ A Server Address and Port number are needed now.  Server address should be
+ a Fully Qualified Domain Name (FQDN).  See FQDN          
+ section for examples.
+ The Port should be 8100 unless your site needs to use a different port.
+ Example \\server address\port\
+ VistA Imaging will use Port 8100 if 'vol000' is part of the Physical
+ Reference.  By defaulting to 8100 this way, the current
+ entries in the Network Location File should continue to work when
+ MAG*3.0*167 client is installed.
+ The server address should be entered in FQDN 
+ notation.  The Port is configured on MUSE Systems as 8100.
+  
+ The Display Client will default the Port to 8100.  If your site needs to
+ use a different port to communicate with the MUSE Systems.  Then you need
+ to put the Port number as the Volumn.
+ Example   \\ vhahunclu2a.v09.domain.ext \<port number>\
+  
+ Muse Version #:        
+ Example current value : v7//
+ This value is an entry in the MUSE VERSIONS File. 
+ It was necessary in previous versions to distinguish between different
+ versions of MUSE systems that will be accessed.
+ Starting with MAG*3.0*167, it is no longer required to select a MUSE
+ version. This field is now ignored and will be 
+ deleted in a future patch.
+ Note: This field is no longer used when connecting to MUSE Servers and
+ will be deleted in a future patch.
+  
+ Fully Qualified Domain Name (FQDN)
+ ==================================
+ Example:  VHAHUNCLU2A.V09.DOMAIN.EXT
+  
+ Host Name       + Domain Name   = FQDN
+ VHAxxxCLU4      Vyy.domain.ext  VHAxxxCLU4.Vyy.domain.ext
+ VHAxxxIMMJB1    Vyy.domain.ext  VHAxxxIMMJB1.Vyy.domain.ext
+ xxx = 3 character site code, and yy=VISN number
+  
+ MAG.INI Changes
+ ===============
+ The VistA Imaging Configuration file has changed to reflect the new VistA 
+ Imaging MUSE EKG Viewer.
+  
+ Users with the MAG SYSTEM key can change these entries as always from the 
+ System Manager menu on the Clinical Display Main window. 
+  
+ [VISTAMUSE] Section Entries
+ ===========================
+ DEBUG (FALSE)
+ New entry for MAG*3.0*167.
+ When TRUE, more messages are displayed in the message panel of the 
+ MUSE EKG Viewer window. Also an optional Debug Window can be 
+ displayed.  The Debug window will show the details of the HTTP 
+ Requests and the HTTP Responses that were used in the 4 previous 
+ communications with the MUSE Server.  The Debug window is primarily 
+ for support personnel
+  
+ GRIDON (TRUE)
+ This entry is no longer used; it will be removed in a future version.
+ Controls if gridlines are added as a background to displayed EKGs.
+  
+ TEXT OVERLAYON (TRUE)
+ This entry is no longer used; it will be removed in a future version.
+ Determines if text overlay information is displayed.
+  
+ ShowDotted GridDlg (TRUE)
+ This entry is no longer used; it will be removed in a future version.
+ If GRIDON is TRUE, determines if gridlines are shown as solid or 
+ dotted lines.
+  
+ PrintDottedGrid (TRUE)
+ This entry is no longer used; it will be removed in a future version.
+ Determines if dotted or solid gridlines are included in a printed EKG.
+  
+ SiteNumber (0)
+ This entry is no longer used; it will be removed in a future version.
+ When set to 0, the workstation will use the MUSE Site Number stored 
+ in the Imaging Site Parameters File (#2006.1).
+ If an individual workstation must use a site number other than the 
+ one stored in #2006.1, this value can be changed as directed by 
+ Customer Support.
+ Background - MUSE site numbers are assigned to each facility that 
+ uses the EKG database. Where multiple facilities use the same 
+ database, more than one site number will be present. Each site number 
+ is stored in a separate folder on the MUSE Server under the VOL000 
+ share. Folders are given names starting with "Site" (i.e., Site01, 
+ Site02, Site03).                      
+  
+ MUSE EKG Display
+ ================
+ The new window is a copy of the Full resolution window modified to work 
+ with images that are not referenced in the IMAGE File (#2005). The 
+ functionality of the toolbar buttons and the image viewer is the same as 
+ in the Full Resolution Viewer.  The Images displayed in this viewer are 
+ MUSE generated PDF images of the patient tests.
+  
+ Changes between previous EKG Display (prior to Patch 167) and the new 
+ Display window:
+ 1.  If you are connecting to multiple MUSE Systems, the number of studies 
+ from each MUSE System is displayed in this panel.  Clicking on the panel 
+ will display connection information about each system. 
+ 2.  Click "Size" to increase/decrease the height of the list.  Click 
+ "List" to show/hide the list of studies. 
+ 3.  The MUSE study data is displayed on the header panel of each image.  
+ The overlay function is no longer available.
+ 4.  If the study is not confirmed, then "UNCONFIRMED" is displayed in a 
+ second header panel.  The overlay of "UNCONFIRMED" is no longer available.
+  
+ Menus
+ =====
+  
+ File: Open in alternate viewer  All Images are PDFs; this option will 
+ open the PDF image in the alternate viewer for PDF files. 
+  
+ Options:
+ Show messages: If checked, a text panel will be displayed at the bottom 
+ of the window.  Users can scroll through the history of messages.
+ Show List:  Check or uncheck this option to show or hide the list of EKG 
+ Studies.
+ Debug:  If the DEBUG setting in the MAG.INI file is True, this menu 
+ option, and sub-menu options will be visible. 
+ Close all Connections:  Closes all connections to MUSE Systems.
+ Open all Connections:  Opens all connections to MUSE Systems.
+ Get Patient Tests:  Gets all tests for selected patient
+ Show Debug Window:  Displays the Debug window.
+ Image, View, Layout, Page and Help menu items have the same sub-menu 
+ options as the Full Resolution window.
+  
+ MUSE Debug Window
+ =================
+ If the Debug setting in the MAG.INI file is True, support personnel will 
+ be able to view this window.  Note:  Debug is always set to False when 
+ Clinical Display opens.  A user with the MAG SYSTEM Key can set this 
+ value to True from the System Manager menu.
+ If a site is reporting issues with the MUSE EKG Display window, support 
+ personnel and the Imaging Site manager can use the Debug window to 
+ display the full HTTP Request and Response for the last five items.  
+ Repeating the steps to reproduce the issue with the Debug window open 
+ will help support personnel to find the issue.
+ The top two panels are the request and response in Extensible Markup 
+ Language (XML) format.
+  
+  
+ Test Sites:
+ ==========
+ The following sites are test sites for this patch:
+   Veteran's Administration (VA) Heartland (Eastern Kansas:  Topeka and 
+   Leavenworth)
+   Ralph H. Johnson VA Medical Center (VAMC) - Charleston, SC 
+   VA Pittsburgh Healthcare System
+   Cheyenne VA Medical Center
+  
+ Software and Documentation Retrieval Instructions:
+ =================================================
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Albany:                 domain.ext
+ Hines:                  domain.ext
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Note:  Information about last-minute changes to this patch will be 
+ provided in a readme file. If present, this file will also be located in 
+ the MAG3_0P167 directory.
+  
+ Title                           File Name                       SFTP Mode
+ _______________________________________________________________________
+ VistA Imaging Clinical Display  mag_display_user_manual.pdf     (binary)
+ Workstation User Manual
+ VistA Imaging System 
+ Installation Guide              imginstallgd_f.pdf              (binary)
+  
+ Patch Installation:
+ ==================
+ Pre/Post Installation Overview:
+ ==============================
+ MAG*3.0*167 must be installed on the VistA System and on 64-bit 
+ workstations on which the VistA Imaging Applications will be used.  This 
+ patch must be installed by the compliance date.
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.  
+  
+ Pre-Installation Instructions:
+ =============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+  
+ Note:  All released VistA Imaging patches must be installed on the VistA 
+ system before installing MAG*3.0*167.
+  
+ VistA System (KIDS) Installation Instructions
+ =============================================
+ Installation Steps 
+ =================
+ KIDS installation will take less than one minute.
+ 1. On the VistA system, access the Kernel Installation and Distribution 
+ System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+  a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load 
+ the KIDS distribution.
+  b. When prompted, enter the path and file name (MAG3_0P167.KID) of the 
+ Patch 167 KIDS file.
+  c. When prompted to continue with the load, enter "YES". A Distribution 
+ OK! message will be displayed when the load is complete.
+ 4. After loading the KIDS file, use the following options to verify the 
+ contents of the patch and to back up any affected routines.
+  a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this 
+ option if you want to ensure the integrity of the routines in the patch. 
+  b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] - 
+ Run this option if you want to view all changes that will be made when 
+ the patch is installed.  All components (routines, options, and so on) in 
+ the patch will be compared.
+  c. Backup a Transport Global [XPD BACKUP] - Run this option if you want 
+ to create a backup message of any routines exported with the patch.  It 
+ will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+  a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+  b. When prompted for the install name, enter "MAG*3.0*167".
+  c. Answer "NO" to the following prompts:
+  
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6. When installation is finished, an Install Complete message will be 
+ displayed.
+  
+ KIDS Installation Example
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing 
+ the KIDS file in a namespace on which it has previously been installed, 
+ your output may be different.
+ Select INSTALL NAME:    MAG*3.0*167    8/2/16@20:08:36
+      => VistA Imaging V3 - Patch 167 - MUSE Update MUSE API 3  ;Created 
+ on Aug
+  This Distribution was loaded on Aug 02, 2016@20:08:36 with header of
+    VistA Imaging V3 - Patch 167 - MUSE Update MUSE API 3  ;Created on Aug 
+ 02, 20
+ 16@19:27:12
+    It consisted of the following Install(s):
+     MAG*3.0*167
+ Checking Install for Package MAG*3.0*167
+ Install Questions for MAG*3.0*167
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+                Aug 02, 2016@20:08:46
+  Running Pre-Install Routine: PRE^MAGIP167
+  Running Post-Install Routine: POS^MAGIP167
+ Post Install Mail Message: Aug 02, 2016@20:08:46
+  Updating Routine file...
+  Updating KIDS files...
+  MAG*3.0*167 Installed.
+                Aug 02, 2016@20:08:46
+  Not a production UCI
+  NO Install Message sent
+   100%    
+ Install Completed
+  
+ Vista Imaging Clinical Display Client Installation Instructions
+ ===============================================================
+ The Clinical Imaging Display client software can be updated using one of 
+ the methods outlined below:
+   Manual installation
+   Automatic installation using other methods (SMS, PSexec, etc.).
+ Note: The Clinical Display Application is only supported on a Windows 7 
+ operating system; other operating systems are not officially supported.
+ Clinical Display is distributed as an MSI and EXE installation.  The MSI 
+ is intended for sites that want to do a push installation (using SCCM or 
+ another tool).  The EXE is intended for use to install on a single 
+ workstation. 
+ After client installation is complete, log in to an updated workstation 
+ and use the Help | About menu option to verify that the version number is 
+ 3.0.167.8.
+  
+ Manual Installation
+ ===================
+ The MAG3_0P167_Clinical_Display_Setup.exe file can be installed manually 
+ on workstations as described in Section "Single Workstation Installation" 
+ in the VistA Imaging System Installation Guide.
+  
+ Auto-update Installation
+ ========================
+ VistA Imaging Auto-update functionality is no longer supported.
+  
+ Add VA Facility Subnet to MUSE ACL to Allow Communication on Port 8100
+ ======================================================================
+ To ensure that all the proper ports are open and that the MUSEAPI service 
+ is running, users may have to add their VA facility subnet to the MUSE 
+ ACL.
+  
+ 1. Log on to the MUSE server and open services.msc. Verify that the 
+ MUSEAPI3 service is installed and running. If the MUSEAPI3 service is not 
+ installed GE can assist the MUSE POC.
+  
+ 2. Log on to the MUSE server and open a cmd prompt and run netstat -a.  
+ One of the returned entries should show 8100 in the local address list 
+ with the state "Listening".
+  
+ 3. Submit a ticket to have the MUSE ACL modified to allow all 
+ 10.xxx.xxx.xxx (i.e., 10.152.0.0 0.0.255.255) traffic on port 8100.  Each 
+ site will have to have their subnet added to the MUSE ACL.
+  
+ Add MUSE Service Account
+ ========================
+ This new interface does not require or use the share.  The user 
+ credentials being passed into MUSEAPI3 need to have a matching MUSE user 
+ account.
+   Users will need to set up a MUSEIU account on the MUSE server.  Use the 
+ MUSEIU account; not the VA Service Account.
+   Change the account designated in your BP Queue Processor > Network 
+ Location Manager > EKG >User Name column to the new MUSEIU account user 
+ name and password (i.e., MUSEIU\[MUSEIU password]).
+ For more information, please see the MUSET v9 Cardiology Information 
+ System Operator's Manual 2059568-009.  There is a sub-section (under
+ System Settings section) on adding users to MUSE.
+  
+ Contact the VA Bio Medical team for help installing.  For any other 
+ questions, please contact your GE representative.
+  
+ Uninstalling Clinical Display Client MAG*3.0*167
+ ================================================
+ If it is necessary to uninstall the MAG*3.0*167 client, use the Uninstall 
+ option from Windows Control Panel to Uninstall: "VistA Imaging Clinical 
+ Display".
+ Then install the previous version of Clinical Display which was included 
+ in MAG*3.0*161.
+  
+ Routine Information:
+ ===================
+ This section lists modified routines for the VistA KIDS build.  For each 
+ routine, the second line will contain the following information: 
+  
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 3;Aug 2, 2016
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine         Checksum  Checksum      Patch List
+                 Before    After
+ MAGGTU4D        5312177   5313965       93, 94, 106, 117, 122, 131, 149, 
+                                         138, 156, 161, 167 
+ MAGIP167        NA        11436109      167
+ MAGGTID         83741782  85911502      8, 59, 93, 118, 150, 138, 167
+ MAGSIXG3        81619873  84985360      93, 117, 150, 138, 16
+  
+ Routine MAGIP167 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 24, 2015
+Completed By:                               Date Completed: JAN 30, 2017
+Released By :                               Date Released : FEB 07, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,285 @@
+$TXT Created by                 JR at CHEY59.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 10/04/16 at 16:08
+=============================================================================
+Run Date: MAR 07, 2017                     Designation: LA*5.2*92
+Package : LA - AUTOMATED LAB INSTRUMENTS      Priority: Mandatory
+Version : 5.2        SEQ #69                    Status: Released
+                  Compliance Date: APR 07, 2017
+=============================================================================
+
+Associated patches: (v)LR*5.2*468  <<= must be installed BEFORE `LA*5.2*92'
+                    (v)HDI*1*15    <<= must be installed BEFORE `LA*5.2*92'
+                    (v)XU*8*665    <<= must be installed BEFORE `LA*5.2*92'
+
+Subject: NATIVE DOMAIN SERVICE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The Department of Veterans Affairs (VA) Interagency Program Office 
+ (IPO) and the Department of Defense (DoD) is tasked by its charter with
+ leading the Departments' efforts "to implement national health data
+ standards for interoperability and [be] responsible for establishing,
+ monitoring, and approving the clinical and technical standards profile
+ and processes to ensure a seamless [exchange] of health data." This 
+ task of Native Domain standardization is aligned with achieving the 
+ goals outlined in the 2014 National Defense Authorization Act (NDAA) 
+ requiring that the Departments' "healthcare data [are] computable in 
+ real-time and [comply] with existing national data standards" and that 
+ the "data [are] standardized as national standards continue to evolve."
+  
+ VA clinicians historically used non-standardized clinical terminologies
+ which are inconsistent within the VA user community as well as within 
+ the currently accepted data standards as established by Office of the
+ National Coordinator for Health Information Technology (ONC).
+ Implementation of Native Standardization will allow a streamlined 
+ method for data sharing, performing clinical decision support and 
+ engaging in national data reporting and analysis.  The VA has recently 
+ established a process for implementing standard 
+ terminology/terminologies within individual clinical domains for the
+ exchange of data. The intent of this effort is to provide the detailed
+ groundwork necessary for industry-wide interoperability. By providing a
+ detailed analysis of the current state of the applicable domains and 
+ recommendations regarding the path forward, the Native Domain 
+ Standardization supports VA's efforts to remain at the forefront of 
+ healthcare data exchange.
+  
+ In order for the LOINC Code supported by the new MASTER LABORATORY TEST
+ FILE (#6.3) created in Laboratory patch LR*5.2*486 the AUTOMATED LAB 
+ INSTRUMENTS routine LA7VHLU5 had to be modified. The standing call 
+ from LA7VHLU5 to Lab Services routine LRVER1 is modified to include the
+ Laboratory test File (#60) Test IEN. 
+  
+ Blood Bank Review:
+ ==================
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*92 does not
+ contain any changes to the VISTA BLOOD BANK Software as defined by
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*92 does not
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LA*5.2*92 have no effect on Blood
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ Patch Components:
+ Bulletins
+ Fields
+ Files
+ Input Templates
+ Mailman Group
+ Options
+ Routines
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number      Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+  
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                Type                   New/Modified/Deleted
+ -----------                ----                   -------------------- 
+ N/A
+  
+  
+ Routines Associated:
+  
+ Routine Name:
+ -------------
+  
+ LA7VHLU5      Modified
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------     -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name  Type  File Name (Number)      New/Modified/Deleted 
+ -------------  ----  ------------------      --------------------
+ N/A
+  
+  
+ Additional Information: None
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ None
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ Upstate NY (Station 640)
+ Boston     (Station 523)
+ Tampa      (Station 673)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from 
+ download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory at the following OI Field Offices:
+  
+ Albany:     domain.ext
+ Hines:     domain.ext  
+ Salt Lake City:     domain.ext
+  
+ Documentation can also be found on the VA Software Documentation 
+ Library at: http://www4.domain.ext/vdl/
+  
+  
+ Title     File Name              FTP Mode
+ -----------------------------------------------------------------------
+ LAB_NDS_VERSION_1_1_DOCS.zip     BINARY 
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+  
+ Pre Installation Actions:
+ =========================
+ The following patches must be installed in the following order before 
+ this patch may be installed.
+ XU*8.0*665
+ HDI*1.0*15
+ LR*5.2*468
+  
+ It is recommended that a PACMAN Routine message be created for the 
+ following routine:
+ LA7VHLU5
+  
+ Pre-Installation Instructions:
+ ==============================
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than
+ 5 minutes to install.  It is not necessary to disable any options.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, 
+         select the Installation Menu.  From this menu, you may elect to
+         use the following options. When prompted for the INSTALL NAME
+         enter thepatch #(ex. lr*5.2*468):
+  
+ a.      Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DDs or templates.
+  
+ b.      Compare Transport Global to Current System - This option will
+         (allow you to view all changes that will be made when this 
+         patch is installed.  It compares all components of this patch 
+         routines, DDs, templates, etc.).
+  
+ c.      Verify Checksums in Transport Global - This option will allow 
+         you to ensure the integrity of the routines that are in the 
+         transport global.
+  
+ 4.      From the Installation Menu, select the Install Package(s) 
+         option and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion 
+         of Install? YES//' 
+         Rebuild the menu trees as one option has been modified and one
+         option added.
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         NO//'
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' 
+  
+ 8.      If prompted 'Delay Install (Minutes):  (0 - 60): 0//'
+         respond 0.
+  
+  
+ Post-Installation Instructions:
+ ===============================
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;AUTOMATED LAB INSTRUMENTS;**[Patch List]**;Sep 27, 1994;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LA7VHLU5
+    Before: B59941403   After: B71334111  **46,64,68,74,92**
+ 
+Routine list of preceding patches: 74
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 28, 2016
+Completed By:                               Date Completed: MAR 06, 2017
+Released By :                               Date Released : MAR 07, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

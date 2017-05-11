@@ -1,0 +1,173 @@
+$TXT Created by                 at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 01/23/17 at 10:24
+=============================================================================
+Run Date: MAR 30, 2017                     Designation: RMIM*1*8
+Package : RMIM - FUNCTIONAL INDEPENDENCE      Priority: Mandatory
+Version : 1         SEQ #8                      Status: Released
+                  Compliance Date: APR 29, 2017
+=============================================================================
+
+
+Subject: Transition to become two factor authentication compliant. 
+
+Category: 
+  - Other
+
+Description:
+============
+
+ This patch will update the log in procedure to the Functional Independence
+ Measurement (FIM) GUI to use Two Factor Authentication (2FA) which will
+ require the use of a Personal Identity Verification (PIV) card.
+  
+ In order to make the transition to 2FA, it was also necessary to upgrade 
+ the Functional Independence Measurement (FIM) GUI to Delphi version XE8 to
+ implement the new Remote Procedure Call (RPC) Broker allowing compliance.
+  
+ RMIM*1.0*8 does not update any VistA routines but does update the 
+ Functional Independence Measurement (FIM) GUI.
+  
+   
+  ASSOCIATED TICKET:
+  ==================
+  N/A
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ Clement Zablocki VAMC - Milwaukee 
+ Maryland HCS
+ Aleda Lutz VAMC - Saginaw  
+  
+  TICKET OVERVIEW:
+  ================
+   
+  Problem: 
+  --------
+  The Department of Veterans Affairs Cybersecurity Task Force has been tasked 
+  by the Chief Information Officer (CIO) and the Inspector General (IG) to 
+  address identified material weaknesses. This task force has mandated that 
+  all internal, user facing VA applications become two factor authentication
+  (2FA) compliant by April 30, 2017. 
+   
+  In order to be compliant, applications are required to authenticate users 
+  via Personal Identity Verification (PIV) cards.  
+   
+  Note: Usernames and password will no longer be permitted for employees and
+  contractors to access VA applications.  
+    
+  Resolution:
+  -----------
+  The Functional Independence Measurement (FIM) GUI has been upgraded to
+  Delphi XE8 to allow access to the latest version of the RPC Broker,
+  implementing 2FA.
+  
+   
+     ========== Software Retrieval and Installation ==========
+  
+ Please refer to the "Functional Independence Measurement Installation 
+ Guide" located on the VDL website.  
+ https://www.domain.ext/vdl/application.asp?appid=134
+  
+  Sites may retrieve the new RMIM executable directly using Secure File
+  Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+  following OI Field Offices:
+  
+  Albany:              domain.ext
+  Hines:               domain.ext  
+  Salt Lake City:      domain.ext
+   
+ File Name               Title                   SFTP Mode
+ =========               =====                   =========
+ RMIM_1_8.ZIP            Contents below          BINARY
+  
+  
+ ZIP file contents          Description
+ =================          ===========
+ RMIM.hlp                   RMIM Help file 
+ FIM.exe                    FIM Executable
+  
+  
+ The documentation distribution includes:
+  
+ File Name                   Description             Format
+ =========                   ===========             ======   
+ fim_user_manual.pdf         FIM User Manual         BINARY
+  
+   
+  NOTE: These files must be transferred using the binary (BIN) file 
+        transfer mode.  The size of the file (FIM.exe) once downloaded will
+        be 3.08 MB
+   
+  The RMIM_1_8.ZIP file is located in the  directory. Use
+  BINARY Mode when downloading the file. 
+    
+     ================== CLIENT Installation Instructions ==================
+   
+  1. Extract all the files in the zip file to the folder where the
+     existing FIM executable is installed. At your medical center the
+     location of the FIM  executable may be on a network drive or installed
+     on each workstation under a program files folder like this example:
+   
+     C:\Program Files (x86)\Vista\FIM 
+   
+  2. When asked to overwrite the existing file, answer Yes.  
+   
+  3. Following successful extraction of the executable, you can delete 
+     the RMIM_1_8.ZIP file.
+   
+  4. When this version of FIM.exe is launched it will show the version 
+     as "FIM 1.0.8.7" in the about section.
+  
+  
+ ========================== Installation Instructions ====================
+  
+   Functional Independent Measurement (FIM) users should be off the system
+   when this patch is installed. Installation will take less than 5 minutes.
+   This patch should be installed during non-peak requirement hours.
+   
+       1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+       2. From the Kernel Installation & Distribution System menu, select
+          the Installation menu.
+    
+       3. From this menu, you may select to use the following options (when
+          prompted for INSTALL NAME, enter RMIM*1.0*8).      
+   
+          a. Backup a Transport Global - this option will create a backup
+             message of any routines exported with the patch. It will NOT
+             backup any other changes such as DDs or templates.
+          b. Compare Transport Global to Current System - this option will
+             allow you to view all changes that will be made when the patch 
+             is installed
+          c. Verify Checksums in Transport Global - this option will ensure
+             the integrity of the routines that are in the transport global.
+          d. Print Transport Global - this option will allow you to view
+             the components of the KIDS build.
+       
+       4. Use the Install Package(s) option and select the package 
+          RMIM*1.0*8                                 
+    
+       5. Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//,
+          respond NO. 
+   
+       6. When prompted "Want KIDS to INHIBIT LOGONS during install? 
+          NO//", respond NO.
+    
+       7. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 18, 2017
+Completed By:                               Date Completed: MAR 29, 2017
+Released By :                               Date Released : MAR 30, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

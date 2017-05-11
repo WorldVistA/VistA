@@ -1,0 +1,144 @@
+$TXT Created by                    A at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 01/31/17 at 14:04
+=============================================================================
+Run Date: APR 03, 2017                     Designation: PSO*7*468
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #394                      Status: Released
+                  Compliance Date: MAY 04, 2017
+=============================================================================
+
+Associated patches: (v)PSO*7*268   <<= must be installed BEFORE `PSO*7*468'
+                    (v)PSO*7*444   <<= must be installed BEFORE `PSO*7*468'
+
+Subject: DUPLICATE OUTPATIENT ORDERS ERRONEOUSLY CREATED
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ This patch addresses the following two issues:
+  
+ 1. Duplicate orders erroneously allowed.
+  
+ 2. Warning messages absent when copying an order
+  
+  
+ Associated CA SDM Ticket(s):
+ ============================
+ 1. I6038140FY16 - Duplicate orders erroneously allowed 
+  
+ 2. I7092133FY16 - Warning messages absent when copying an order
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+ Participating Test Sites:
+ ========================
+ Boston HCS
+ Fayetteville VAMC
+  
+ CA SDM Overview:
+ ================
+ 1. I6038140FY16 - Duplicate orders erroneously allowed
+  
+ Problem:
+ --------
+ If the patient status is updated from "authorized absence" to another   
+ status using the "Patient Update" action within the Patient Prescription 
+ Processing [PSO LM BACKDOOR ORDERS] option, and if a drug is then 
+ selected which is a duplicate to another drug on the patient's profile, 
+ a duplicate order is allowed.
+  
+  
+ Resolution:
+ -----------
+ Correct routine PSOLMPAT to reflect the proper status of the patient
+ if the patient status is changed using the "Patient Update" action within
+ the Patient Prescription Processing [PSO LM BACKDOOR ORDERS] option.
+  
+  Routine: PSOLMPAT
+  
+  2. I7092133FY16 - Warning messages absent when copying an order 
+  
+ Problem:
+ --------
+ During the entry of a new order in the Patient Prescription Processing
+ [PSO LM BACKDOOR ORDERS] option,  if a user enters a new order with a
+ lower case schedule;  then enters a "conjunction"; then terminates the
+ entry of the new order after receiving a warning message and then copies
+ an order on the patient's profile a duplicate order can be created.
+  
+  
+ Resolution:
+ -----------
+ Correct routine PSOORCPY to remove the value of variable PSOSIGFL that
+ should be defined for a copy function on the Patient Prescription 
+ Processing [PSO LM BACKDOOR ORDERS] option.
+  
+  Routine: PSOORCPY
+  
+ ================INSTALLATION INSTRUCTIONS =================
+ Pharmacy users should not be processing prescriptions while the patch is 
+ being installed. It should take less than 5 minutes to install this
+ patch.
+  
+ 1. Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 2. From the Kernel Installation & Distribution System menu, select 
+    the Installation menu.  
+  
+ 3. From this menu, you may select to use the following options: 
+    (when prompted for INSTALL NAME, enter PSO*7.0*468)
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+    b.  Print Transport Global - This option will allow you to view
+        the components of the KIDS build.
+    c.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this 
+        patch is installed. It compares all components of this patch
+        (routines, DD's, templates, etc.).  
+    d.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+  
+ 4. Use the Install Package(s) option and select the package PSO*7.0*468.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//", respond NO.  
+  
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 48
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOLMPAT
+    Before:  B3240520   After:  B4239253  **15,117,149,233,268,468**
+Routine Name: PSOORCPY
+    Before: B35592105   After: B35980463  **10,21,27,32,46,100,117,148,
+                                           313,411,444,468**
+ 
+Routine list of preceding patches: 268, 444
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 04, 2016
+Completed By:                               Date Completed: APR 03, 2017
+Released By :                               Date Released : APR 03, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,266 @@
+$TXT Created by             KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Thursday, 04/21/16 at 18:03
+=============================================================================
+Run Date: MAR 01, 2017                     Designation: XU*8*666
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #527                      Status: Released
+                  Compliance Date: APR 01, 2017
+=============================================================================
+
+
+Subject: MFS PARAMETERS FOR RADIOLOGY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+                 XU*8*666
+  
+ This patch distributes the parameters required by Master File
+ Server (MFS) to support data standardization messaging.
+  
+ 1) Update the entry Radiology Procedures on the MASTER FILE PARAMETERS
+ file (#4.001):
+ NUMBER: 71.99                           MASTER FILE: Radiology Procedures
+   MFI CODE: Radiology Procedures
+   MASTER FILE IDENTIFIER: Radiology Procedures
+ COLUMN DESCRIPTION: Term                FIELD NUMBER: .01
+   COLUMN LENGTH: 60                     SEQUENCE: 1
+ COLUMN DESCRIPTION: VistA_CPT_Code      FIELD NUMBER: 1
+   COLUMN LENGTH: 15                     SEQUENCE: 2
+ COLUMN DESCRIPTION: VistA_LOINC_Code    FIELD NUMBER: 2
+   COLUMN LENGTH: 15                     SEQUENCE: 3
+ COLUMN DESCRIPTION: VistA_Long_Description
+   FIELD NUMBER: 2.3                     SEQUENCE: 4
+   WP FIELD: YES
+ COLUMN DESCRIPTION: VistA_Long_Name     FIELD NUMBER: 3
+   SEQUENCE: 5                           WP FIELD: YES
+ COLUMN DESCRIPTION: VistA_Short_Description
+   FIELD NUMBER: 2.2                     COLUMN LENGTH: 80
+   SEQUENCE: 6
+ COLUMN DESCRIPTION: vista_replaced_by   FIELD NUMBER: 99.97
+   VUID PREFIX: VUID                     SEQUENCE: 7
+ COLUMN DESCRIPTION: Status              FIELD NUMBER: .02
+   SUBFILE NUMBER: 71.9999               COLUMN LENGTH: 1
+   SEQUENCE: 8
+  
+ 2) Update the entry Radiology Procedures on the MD5 Signature file
+ (#4.005):
+  
+ NUMBER: 71.99                           MD5 CODE SYSTEM: Radiology 
+ Procedures
+ FILE/SUBFILE NUMBER: 71.99
+ FIELD NUMBER: .01                       SEQUENCE: 20
+ FIELD NUMBER: 1                         SEQUENCE: 30
+ FIELD NUMBER: 2                         SEQUENCE: 40
+ FIELD NUMBER: 2.2                       SEQUENCE: 70
+ FIELD NUMBER: 2.3                       SEQUENCE: 50
+ FIELD NUMBER: 3                         SEQUENCE: 60
+ FIELD NUMBER: 99.97                     SEQUENCE: 80
+   VUID FROM FILE: 71.99
+ FIELD NUMBER: 99.99                     SEQUENCE: 10
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)  New/Modified/Deleted
+ ------------------      -------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ ----------
+ - CHICAGO HCS
+ - HEARTLAND-EAST HCS 
+ - WHITE CITY, OR (DOM) 
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------ 
+ N/A
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ N/A
+  
+ Title           File Name                 FTP Mode
+ ----------------------------------------------------------------------
+ N/A
+  
+  
+ Blood Bank Team Coordination
+ ============================
+ Blood Bank Clearance: 06/14/2016 
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*666 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*666 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The routines XUMF666, and XUMF666P will be deleted at the end of this
+ patch installation. If you wish to get the checksum values, you can
+ 'Verify Checksums in Transport Global' prior to patch install:
+  
+ Select Kernel Installation & Distribution System Option: INstallation
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 2  Verify Checksums in Transport Global
+ Select INSTALL NAME:    XU*8.0*666     Loaded from Distribution    
+ 3/5/16@06:52: 51
+      => XU*8.0*665 3/5/16
+  
+ This Distribution was loaded on Mar 05, 2016@06:52:51 with header of 
+    XU*8.0*665 3/5/16
+    It consisted of the following Install(s):
+      XU*8.0*666
+  
+ Want each Routine Listed with Checksums: Yes//   YES
+ DEVICE: HOME//   Network
+  
+ PACKAGE: XU*8.0*666     Mar 25 2016 7:26 pm                          
+ PAGE 1                                   
+ --------------------------------------------------------------------------
+  
+ XUMF666   value = 20301933
+ XUMF666P  value = 2870647
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+    3. From the Kernel Installation and Distribution System Menu, select 
+       the Installation Menu. From this menu, you may elect to use the
+       following options. When prompted for the INSTALL NAME enter the
+       patch #XU*8*666:
+           a. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DDs or templates.
+           b. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this
+              patch is installed. It compares all components of this patch
+              routines, DDs, templates, etc.).
+           c. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+  
+     4. From the Installation Menu, select the Install Package(s) option 
+        and choose the patch to install.
+  
+     5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+        Install? NO//N
+     6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//N
+  
+     7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//N/A
+     8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUMF666
+    Before:       n/a   After: B20301933  **666**
+Routine Name: XUMF666P
+    Before:       n/a   After:  B2870647  **666**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 12, 2016
+Completed By:                               Date Completed: FEB 28, 2017
+Released By :                               Date Released : MAR 01, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

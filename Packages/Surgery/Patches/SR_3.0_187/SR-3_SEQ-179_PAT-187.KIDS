@@ -1,0 +1,1221 @@
+Released SR*3*187 SEQ #179
+Extracted from mail message
+**KIDS**:SR*3.0*187^
+
+**INSTALL NAME**
+SR*3.0*187
+"BLD",10173,0)
+SR*3.0*187^SURGERY^0^3160621^y
+"BLD",10173,1,0)
+^^13^13^3160427^
+"BLD",10173,1,1,0)
+The patch addresses four (4) issues:
+"BLD",10173,1,2,0)
+ 
+"BLD",10173,1,3,0)
+1. When Surgery sends HL7 (Health Level-7) DG1 (Diagnosis) Segments to
+"BLD",10173,1,4,0)
+   Ancillary systems, messages with other preoperative diagnoses have
+"BLD",10173,1,5,0)
+   an incorrect value for the ICD diagnosis code.
+"BLD",10173,1,6,0)
+2. When a Wound Classification Report is generated at an institution 
+"BLD",10173,1,7,0)
+   that has only one (1) Active surgery site and the Active site isn't 
+"BLD",10173,1,8,0)
+   the installation's default institution, the report displays no data 
+"BLD",10173,1,9,0)
+   regardless of the date range selected.
+"BLD",10173,1,10,0)
+3. Surgery Post Operation and CPT/ICD Update/Verify options incorrectly
+"BLD",10173,1,11,0)
+   allow CPT Modifier 51 to be entered on the Principle Procedure.
+"BLD",10173,1,12,0)
+4. The Surgery Schedule of Operations report truncates the patient 
+"BLD",10173,1,13,0)
+   name inappropriately when its length is great than 23 characters.
+"BLD",10173,4,0)
+^9.64PA^^
+"BLD",10173,6.3)
+4
+"BLD",10173,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10173,"KRN",.4,0)
+.4
+"BLD",10173,"KRN",.401,0)
+.401
+"BLD",10173,"KRN",.402,0)
+.402
+"BLD",10173,"KRN",.403,0)
+.403
+"BLD",10173,"KRN",.5,0)
+.5
+"BLD",10173,"KRN",.84,0)
+.84
+"BLD",10173,"KRN",3.6,0)
+3.6
+"BLD",10173,"KRN",3.8,0)
+3.8
+"BLD",10173,"KRN",9.2,0)
+9.2
+"BLD",10173,"KRN",9.8,0)
+9.8
+"BLD",10173,"KRN",9.8,"NM",0)
+^9.68A^5^5
+"BLD",10173,"KRN",9.8,"NM",1,0)
+SRHLUO^^0^B28574288
+"BLD",10173,"KRN",9.8,"NM",2,0)
+SROMOD^^0^B38901306
+"BLD",10173,"KRN",9.8,"NM",3,0)
+SROMOD0^^0^B42799615
+"BLD",10173,"KRN",9.8,"NM",4,0)
+SROSCH^^0^B16419281
+"BLD",10173,"KRN",9.8,"NM",5,0)
+SROVAR^^0^B36366627
+"BLD",10173,"KRN",9.8,"NM","B","SRHLUO",1)
+
+"BLD",10173,"KRN",9.8,"NM","B","SROMOD",2)
+
+"BLD",10173,"KRN",9.8,"NM","B","SROMOD0",3)
+
+"BLD",10173,"KRN",9.8,"NM","B","SROSCH",4)
+
+"BLD",10173,"KRN",9.8,"NM","B","SROVAR",5)
+
+"BLD",10173,"KRN",19,0)
+19
+"BLD",10173,"KRN",19.1,0)
+19.1
+"BLD",10173,"KRN",101,0)
+101
+"BLD",10173,"KRN",409.61,0)
+409.61
+"BLD",10173,"KRN",771,0)
+771
+"BLD",10173,"KRN",779.2,0)
+779.2
+"BLD",10173,"KRN",870,0)
+870
+"BLD",10173,"KRN",8989.51,0)
+8989.51
+"BLD",10173,"KRN",8989.52,0)
+8989.52
+"BLD",10173,"KRN",8994,0)
+8994
+"BLD",10173,"KRN","B",.4,.4)
+
+"BLD",10173,"KRN","B",.401,.401)
+
+"BLD",10173,"KRN","B",.402,.402)
+
+"BLD",10173,"KRN","B",.403,.403)
+
+"BLD",10173,"KRN","B",.5,.5)
+
+"BLD",10173,"KRN","B",.84,.84)
+
+"BLD",10173,"KRN","B",3.6,3.6)
+
+"BLD",10173,"KRN","B",3.8,3.8)
+
+"BLD",10173,"KRN","B",9.2,9.2)
+
+"BLD",10173,"KRN","B",9.8,9.8)
+
+"BLD",10173,"KRN","B",19,19)
+
+"BLD",10173,"KRN","B",19.1,19.1)
+
+"BLD",10173,"KRN","B",101,101)
+
+"BLD",10173,"KRN","B",409.61,409.61)
+
+"BLD",10173,"KRN","B",771,771)
+
+"BLD",10173,"KRN","B",779.2,779.2)
+
+"BLD",10173,"KRN","B",870,870)
+
+"BLD",10173,"KRN","B",8989.51,8989.51)
+
+"BLD",10173,"KRN","B",8989.52,8989.52)
+
+"BLD",10173,"KRN","B",8994,8994)
+
+"BLD",10173,"QDEF")
+^^^^NO^^^^^^NO
+"BLD",10173,"QUES",0)
+^9.62^^
+"BLD",10173,"REQB",0)
+^9.611^4^4
+"BLD",10173,"REQB",1,0)
+SR*3.0*165^2
+"BLD",10173,"REQB",2,0)
+SR*3.0*171^2
+"BLD",10173,"REQB",3,0)
+SR*3.0*177^2
+"BLD",10173,"REQB",4,0)
+SR*3.0*182^2
+"BLD",10173,"REQB","B","SR*3.0*165",1)
+
+"BLD",10173,"REQB","B","SR*3.0*171",2)
+
+"BLD",10173,"REQB","B","SR*3.0*177",3)
+
+"BLD",10173,"REQB","B","SR*3.0*182",4)
+
+"MBREQ")
+0
+"PKG",308,-1)
+1^1
+"PKG",308,0)
+SURGERY^SR^SURGICAL DATA COLLECTION AND OPERATIONS SCHEDULING
+"PKG",308,20,0)
+^9.402P^^
+"PKG",308,22,0)
+^9.49I^1^1
+"PKG",308,22,1,0)
+3.0^2930624^2940818
+"PKG",308,22,1,"PAH",1,0)
+187^3160621
+"PKG",308,22,1,"PAH",1,1,0)
+^^13^13^3160621
+"PKG",308,22,1,"PAH",1,1,1,0)
+The patch addresses four (4) issues:
+"PKG",308,22,1,"PAH",1,1,2,0)
+ 
+"PKG",308,22,1,"PAH",1,1,3,0)
+1. When Surgery sends HL7 (Health Level-7) DG1 (Diagnosis) Segments to
+"PKG",308,22,1,"PAH",1,1,4,0)
+   Ancillary systems, messages with other preoperative diagnoses have
+"PKG",308,22,1,"PAH",1,1,5,0)
+   an incorrect value for the ICD diagnosis code.
+"PKG",308,22,1,"PAH",1,1,6,0)
+2. When a Wound Classification Report is generated at an institution 
+"PKG",308,22,1,"PAH",1,1,7,0)
+   that has only one (1) Active surgery site and the Active site isn't 
+"PKG",308,22,1,"PAH",1,1,8,0)
+   the installation's default institution, the report displays no data 
+"PKG",308,22,1,"PAH",1,1,9,0)
+   regardless of the date range selected.
+"PKG",308,22,1,"PAH",1,1,10,0)
+3. Surgery Post Operation and CPT/ICD Update/Verify options incorrectly
+"PKG",308,22,1,"PAH",1,1,11,0)
+   allow CPT Modifier 51 to be entered on the Principle Procedure.
+"PKG",308,22,1,"PAH",1,1,12,0)
+4. The Surgery Schedule of Operations report truncates the patient 
+"PKG",308,22,1,"PAH",1,1,13,0)
+   name inappropriately when its length is great than 23 characters.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+5
+"RTN","SRHLUO")
+0^1^B28574288^B28555904
+"RTN","SRHLUO",1,0)
+SRHLUO ;B'HAM ISC/DLR - Surgery Interface Utilities for building Outgoing HL7 Segment ; [ 05/06/98   7:14 AM ]
+"RTN","SRHLUO",2,0)
+ ;;3.0;Surgery;**41,127,177,187**;24 Jun 93;Build 4
+"RTN","SRHLUO",3,0)
+ ;
+"RTN","SRHLUO",4,0)
+ ; Reference to $$ICDDATA^ICDXCODE supported by DBIA #5699
+"RTN","SRHLUO",5,0)
+ ; 
+"RTN","SRHLUO",6,0)
+ ; ** ASSUMMED variable list
+"RTN","SRHLUO",7,0)
+ ; all - INIT^HLTRANS
+"RTN","SRHLUO",8,0)
+ ; DFN - IEN file #2
+"RTN","SRHLUO",9,0)
+ ; SRI - incremental variable ^TMP("HLS",$J,SRI) 
+"RTN","SRHLUO",10,0)
+ ;     - returns the next #
+"RTN","SRHLUO",11,0)
+ ; CASE- IEN (file 130) case number must be set before the call
+"RTN","SRHLUO",12,0)
+ ;
+"RTN","SRHLUO",13,0)
+AL1(SRI,SRENT) ;AL1 segment(s) - allergy information from the generic call to (GMRADPT)
+"RTN","SRHLUO",14,0)
+ Q:'$D(DFN)
+"RTN","SRHLUO",15,0)
+ S X="GMRADPT" X ^%ZOSF("TEST") Q:'$T
+"RTN","SRHLUO",16,0)
+ N TYPE,X,AL1,CNT
+"RTN","SRHLUO",17,0)
+ ;Allergy package valid entry point returns GMRAL(x)
+"RTN","SRHLUO",18,0)
+ D ^GMRADPT
+"RTN","SRHLUO",19,0)
+ S CNT=1
+"RTN","SRHLUO",20,0)
+ F X=0:0 S X=$O(GMRAL(X)) Q:X'>0  D
+"RTN","SRHLUO",21,0)
+ .S TYPE=$P(GMRAL(X),"^",3),AL1(X)="AL1"_HL("FS")_$E("0000",$L(CNT)+1,4)_CNT_HL("FS")_$S(TYPE="D":"DA",TYPE="F":"FA",TYPE="O":"MA",1:"")_HL("FS")_HLCOMP_$P(GMRAL(X),"^",2)
+"RTN","SRHLUO",22,0)
+ .S ^TMP(SRENT,$J,SRI)=AL1(X),SRI=SRI+1,CNT=CNT+1
+"RTN","SRHLUO",23,0)
+ K GMRAL
+"RTN","SRHLUO",24,0)
+ Q
+"RTN","SRHLUO",25,0)
+DG1(SRI,SRENT) ;DG1 segment(s) - surgery diagnosis information
+"RTN","SRHLUO",26,0)
+ Q:'$D(CASE)
+"RTN","SRHLUO",27,0)
+ N DG1,I9,SRS,X,X1
+"RTN","SRHLUO",28,0)
+ S SRS=$$ICDSYS^SROICD($P($G(^SRF(CASE,0)),"^",9))
+"RTN","SRHLUO",29,0)
+ ;
+"RTN","SRHLUO",30,0)
+ I $D(^SRF(CASE,34)) I $P(^SRF(CASE,34),U,2)'="" D  ; if#66 Planned Principal Diag Code exists
+"RTN","SRHLUO",31,0)
+ .S I9=$$ICD^SROICD(CASE,$P(^SRF(CASE,34),U,2))     ; get $$icddata
+"RTN","SRHLUO",32,0)
+ .S DG1="DG1"_HL("FS")_"0001"_HL("FS")_$S($G(SRS)="10D":"I0",$G(SRS)[9:"I9",1:"")_HL("FS")_$P(I9,U,2)_HL("FS")_$E($P(I9,U,4),1,40)_HL("FS")_HL("FS")_"P" D
+"RTN","SRHLUO",33,0)
+ ..S ^TMP("HLS",$J,SRI)=DG1,SRI=SRI+1,DG1=""
+"RTN","SRHLUO",34,0)
+ ;
+"RTN","SRHLUO",35,0)
+ I $D(^SRF(CASE,33)) I $P(^SRF(CASE,33),U)'="" S DG1="DG1"_HL("FS")_"0001"_HL("FS")_$S($G(SRS)="10D":"I0",$G(SRS)[9:"I9",1:"")_HL("FS")_HL("FS")_$P(^SRF(CASE,33),U)_HL("FS")_HL("FS")_"PR" D
+"RTN","SRHLUO",36,0)
+ .S ^TMP("HLS",$J,SRI)=DG1,SRI=SRI+1,DG1=""
+"RTN","SRHLUO",37,0)
+ I $D(^SRF(CASE,14,0)) S X1=2 F X=0:0 S X=$O(^SRF(CASE,14,X)) Q:X'>0  D
+"RTN","SRHLUO",38,0)
+ .I $P(^(0),U,3) S I9=$$ICDDATA^ICDXCODE("DIAG",$P(^SRF(CASE,14,X,0),U,3),$P($P($G(^SRF(CASE,0)),"^",9),".")) D
+"RTN","SRHLUO",39,0)
+ ..S ^TMP("HLS",$J,SRI)="DG1"_HL("FS")_$E("0000",$L(X1)+1,4)_X1_HL("FS")_$S(SRS="10D":"I0",SRS[9:"I9",1:"")_HL("FS")_$P(I9,U,2)_HL("FS")_$E($P(I9,U,4),1,40)_HL("FS")_HL("FS")_"PR",X1=X1+1,SRI=SRI+1
+"RTN","SRHLUO",40,0)
+ Q
+"RTN","SRHLUO",41,0)
+ERR(SRI,SRERR)     ;ERR segment
+"RTN","SRHLUO",42,0)
+ ; SRERR = AE error code and location (segment^sequence #^field^error) 
+"RTN","SRHLUO",43,0)
+ S ^TMP("HLA",$J,SRI)="ERR"_HL("FS")_$G(SRERR(1))_HLCOMP_$G(SRERR(2))_HLCOMP_$G(SRERR),SRI=SRI+1
+"RTN","SRHLUO",44,0)
+ Q
+"RTN","SRHLUO",45,0)
+MSA(SRI,SRAC) ;MSA segment
+"RTN","SRHLUO",46,0)
+ ; SRAC = Acknowledgement code (ID)
+"RTN","SRHLUO",47,0)
+ ;  AA = Application Accepted (responsed with information)
+"RTN","SRHLUO",48,0)
+ ;  AE = Application Error (bad data send error response)
+"RTN","SRHLUO",49,0)
+ ;  AR = Application Reject (no data in date range ... )
+"RTN","SRHLUO",50,0)
+ ;
+"RTN","SRHLUO",51,0)
+ N MSA
+"RTN","SRHLUO",52,0)
+ S MSA(1)=$G(SRAC),MSA(2)=$G(HL("MID")),MSA(3)=$G(SRERR)
+"RTN","SRHLUO",53,0)
+ S ^TMP("HLA",$J,SRI)="MSA"_HL("FS") F XX=1:1:3 S ^TMP("HLA",$J,SRI)=$G(^TMP("HLA",$J,SRI))_$G(MSA(XX))_$S(XX=3:"",1:HL("FS"))
+"RTN","SRHLUO",54,0)
+ S SRI=SRI+1
+"RTN","SRHLUO",55,0)
+ Q
+"RTN","SRHLUO",56,0)
+OBX(SRI,SRENT) ;OBX segment(s)
+"RTN","SRHLUO",57,0)
+ ; This segment builds OBX segments for the following Preoperative data
+"RTN","SRHLUO",58,0)
+ ;  - vitals\measurements ^GMRVUTL routine:   
+"RTN","SRHLUO",59,0)
+ ;     height, weight, blood pressure, pulse rate, and temperature
+"RTN","SRHLUO",60,0)
+ ;  - IN\OUT-PATIENT STATUS field in File #130
+"RTN","SRHLUO",61,0)
+ ;  - CANCEL DATE and CANCEL REASON for cancelled and aborted cases
+"RTN","SRHLUO",62,0)
+ ;  - SURGICAL SPECIALTY (OR) or MEDICAL SPECIALTY (NON OR)
+"RTN","SRHLUO",63,0)
+ ;  - SURGEON PGY and ANES SUPERVISE CODE
+"RTN","SRHLUO",64,0)
+ Q:'$D(CASE)
+"RTN","SRHLUO",65,0)
+ N OBX,CNT,TYPE,X,Y
+"RTN","SRHLUO",66,0)
+ S CNT=1
+"RTN","SRHLUO",67,0)
+ I $D(^SRF(CASE,"NON")) S OBX(2)="CE",OBX(3)=HLCOMP_"MEDICAL SPECIALTY"_HLCOMP,OBX(5)=$P(^("NON"),U,8) I OBX(5)'="" S OBX(5)=HLCOMP_$P(^ECC(723,OBX(5),0),U)_HLCOMP_"99VA723" D SOBX
+"RTN","SRHLUO",68,0)
+ I $P(^SRF(CASE,0),U,4)'="" S OBX(2)="CE",OBX(3)=HLCOMP_"SURGICAL SPECIALTY"_HLCOMP,OBX(5)=$P(^(0),U,4) I OBX(5)'="" S OBX(5)=HLCOMP_$P(^SRO(137.45,OBX(5),0),U)_HLCOMP_"99VA137.45" D SOBX
+"RTN","SRHLUO",69,0)
+ I $D(^SRF(CASE,200)) I $P(^SRF(CASE,200),U,52)'="" S OBX(2)="NM",OBX(3)=HLCOMP_"SURGEON PGY"_HLCOMP_"L",OBX(5)=$P(^(200),U,52) D SOBX
+"RTN","SRHLUO",70,0)
+ I $D(^SRF(CASE,.3)) I $P(^SRF(CASE,.3),U,6)'="" S OBX(2)="CE",OBX(3)=HLCOMP_"ANES SUPERVISE CODE"_HLCOMP_"L",OBX(5)=$P(^(.3),U,6) D SOBX
+"RTN","SRHLUO",71,0)
+ I $P(^SRF(CASE,0),U,12)'="" S OBX(2)="CE",OBX(3)=HLCOMP_"PATIENT CLASS"_HLCOMP,OBX(5)=$P(^(0),U,12) S C=$P(^DD(130,.011,0),U,2),Y=OBX(5) D Y^DIQ S OBX(5)=HLCOMP_Y_HLCOMP_"L" D SOBX
+"RTN","SRHLUO",72,0)
+ S X="GMRVUTL" X ^%ZOSF("TEST") I $T F TYPE="BP","HT","WT","T","P" S GMRVSTR=TYPE D EN6^GMRVUTL I $G(X)'="" S X1=$P(X,"^"),X2=60,SRX=X D C^%DTC I X'<DT D
+"RTN","SRHLUO",73,0)
+ .S OBX(2)="CE",OBX(5)=$P(SRX,"^",8),OBX(11)="S",OBX(14)=$$HLDATE^HLFNC($P(SRX,"^")),OBX(16)=$$HNAME^SRHLU($P(SRX,U,6))
+"RTN","SRHLUO",74,0)
+ .I TYPE="BP" S OBX(3)="1002"_HLCOMP_"BP",OBX(5)=$P(SRX,"^",8) D SOBX
+"RTN","SRHLUO",75,0)
+ .I TYPE="HT" S OBX(3)="1010.3"_HLCOMP_"Height",OBX(5)=$J(2.54*OBX(5),0,2),OBX(6)="cm" D SOBX
+"RTN","SRHLUO",76,0)
+ .I TYPE="WT" S OBX(3)="1010.1"_HLCOMP_"Body Weight",OBX(5)=$J(OBX(5)/2.2,0,2),OBX(6)="kg" D SOBX
+"RTN","SRHLUO",77,0)
+ .I TYPE="T" S OBX(3)="1000"_HLCOMP_"Temperature" S OBX(5)=$J(OBX(5)-32*5/9,0,2),OBX(6)="cel" D SOBX
+"RTN","SRHLUO",78,0)
+ .I TYPE="P" S OBX(3)="1006.2"_HLCOMP_"HR",OBX(6)="min" D SOBX
+"RTN","SRHLUO",79,0)
+ I $D(^SRF(CASE,30)),$P($G(^SRF(CASE,31)),U,8)'="" D
+"RTN","SRHLUO",80,0)
+ .S OBX(2)="CE",OBX(3)=HLCOMP_"CANCEL REASON"_HLCOMP_"L",OBX(5)=HLCOMP_$P(^SRO(135,$P(^SRF(CASE,31),U,8),0),U)_HLCOMP_"L",OBX(14)=$$HLDATE^HLFNC($P(^SRF(CASE,30),U)),OBX(16)=$$HNAME^SRHLU($P(^SRF(CASE,30),U,3)) D SOBX
+"RTN","SRHLUO",81,0)
+ Q
+"RTN","SRHLUO",82,0)
+SOBX ;sets the OBX segment
+"RTN","SRHLUO",83,0)
+ S OBX(11)="S"
+"RTN","SRHLUO",84,0)
+ S OBX(1)=CNT
+"RTN","SRHLUO",85,0)
+ S ^TMP(SRENT,$J,SRI)="OBX"_HL("FS") F XX=1:1:16 S ^TMP(SRENT,$J,SRI)=$G(^TMP(SRENT,$J,SRI))_$G(OBX(XX))_$S(XX=16:"",1:HL("FS")),OBX(XX)=""
+"RTN","SRHLUO",86,0)
+ S SRI=SRI+1,CNT=$G(CNT)+1
+"RTN","SRHLUO",87,0)
+ Q
+"RTN","SRHLUO",88,0)
+PID(SRI,SRENT) ;PID segment builder returns patient information
+"RTN","SRHLUO",89,0)
+ Q:'$D(DFN)
+"RTN","SRHLUO",90,0)
+ N PID
+"RTN","SRHLUO",91,0)
+ S ^TMP(SRENT,$J,SRI)=$$EN^VAFHLPID(DFN,"1,2,3,4,5,6,7,8,10,11,13,16,17,19",1)
+"RTN","SRHLUO",92,0)
+ S SRI=SRI+1
+"RTN","SRHLUO",93,0)
+ Q
+"RTN","SROMOD")
+0^2^B38901306^B38394892
+"RTN","SROMOD",1,0)
+SROMOD ;BIR/ADM - CPT Modifier Input ; [ 02/27/01  6:32 AM ]
+"RTN","SROMOD",2,0)
+ ;;3.0;Surgery;**88,100,127,165,187**;24 Jun 93;Build 4
+"RTN","SROMOD",3,0)
+ Q
+"RTN","SROMOD",4,0)
+DISPLAY ; display name with modifier
+"RTN","SROMOD",5,0)
+ N SRY,SRDA,SRDATE S SRDATE=DT
+"RTN","SROMOD",6,0)
+ S SRDA=$S($G(SRTN):SRTN,$D(DA(1)):DA(1),$D(DA):DA,1:"")
+"RTN","SROMOD",7,0)
+ I $G(SRDA) S SRDATE=$P($G(^SRF(SRDA,0)),"^",9)
+"RTN","SROMOD",8,0)
+ S SRY=$$MOD^ICPTMOD(Y,"I",SRDATE) Q:$P(SRY,"^")=-1
+"RTN","SROMOD",9,0)
+ S Y=$P(SRY,"^",2)_"  "_$P(SRY,"^",3)
+"RTN","SROMOD",10,0)
+ Q
+"RTN","SROMOD",11,0)
+SCR27() ; screen for acceptable CPT code/modifier pair for principal procedure
+"RTN","SROMOD",12,0)
+ N SRCODE,SRDA,SRCMOD,SROK,SRSDATE,SRZ D PCHK K SRM
+"RTN","SROMOD",13,0)
+ Q SROK
+"RTN","SROMOD",14,0)
+PCHK ; return value of modifier if acceptable for principal procedure
+"RTN","SROMOD",15,0)
+ N SRSDATE S SRSDATE=DT K ICPTVDT
+"RTN","SROMOD",16,0)
+ S SROK=0,SRCODE="",SRDA=$S($G(SRTN):SRTN,$D(DA(1)):DA(1),$D(DA):DA,1:""),SRM=$S($D(SRM):SRM,1:+Y)
+"RTN","SROMOD",17,0)
+ I SRDA S SRSDATE=$P(^SRF(SRDA,0),"^",9),SRCODE=$P($G(^SRF(SRDA,"OP")),"^",2)
+"RTN","SROMOD",18,0)
+ ;;Begin *165 - RJS
+"RTN","SROMOD",19,0)
+ I 'SRCODE!($G(X)=51) Q
+"RTN","SROMOD",20,0)
+ ;; End *165 - RJS
+"RTN","SROMOD",21,0)
+ S SRZ=$P($$MODP^ICPTMOD(SRCODE,SRM,"I",SRSDATE),"^") I SRZ>0 S SROK=SRZ
+"RTN","SROMOD",22,0)
+ I SROK,$D(^DIC(81.3,SROK,0)),$P(^(0),U)=51 S (SROK,SRZ)=0
+"RTN","SROMOD",23,0)
+ S ICPTVDT=SRSDATE
+"RTN","SROMOD",24,0)
+ Q
+"RTN","SROMOD",25,0)
+OTH() ; screen for acceptable CPT code/modifier pair for other procedure
+"RTN","SROMOD",26,0)
+ N SRCODE,SRDA,SRCMOD,SROK,SROTH,SRSDATE,SRZ D OCHK K SRM
+"RTN","SROMOD",27,0)
+ Q SROK
+"RTN","SROMOD",28,0)
+OCHK ; return value of modifier if acceptable for other procedure
+"RTN","SROMOD",29,0)
+ N SRSDATE S SRSDATE=DT K ICPTVDT
+"RTN","SROMOD",30,0)
+ S SROK=0,SRCODE="",SRDA=$S($G(SRTN):SRTN,$D(DA(2)):DA(2),$D(DA(1)):DA(1),$D(D0):D0,1:""),SROTH=$S($D(DA):DA,$D(D1):D1,1:""),SRM=$S($D(SRM):SRM,1:+Y)
+"RTN","SROMOD",31,0)
+ I SRDA&SROTH S SRSDATE=$P(^SRF(SRDA,0),"^",9),SRCODE=$P($G(^SRF(SRDA,13,SROTH,2)),"^")
+"RTN","SROMOD",32,0)
+ I 'SRCODE Q
+"RTN","SROMOD",33,0)
+ S SRZ=$P($$MODP^ICPTMOD(SRCODE,SRM,"I",SRSDATE),"^") I SRZ>0 S SROK=SRZ
+"RTN","SROMOD",34,0)
+ S ICPTVDT=SRSDATE
+"RTN","SROMOD",35,0)
+ Q
+"RTN","SROMOD",36,0)
+SPRIN ; set logic for ACPT x-ref
+"RTN","SROMOD",37,0)
+ Q:$E($G(IOST))'="C"!($G(DIK)'="")
+"RTN","SROMOD",38,0)
+ N SRCODE,SRDA,SRDEF,SRIEN,SRJ,SRQ,SRSDATE,SRSEL,SRSOUT,SRX,SRY,Z S (SRQ,SRSOUT)=0,SRCODE=X N X I $D(SRCMOD) D HYPH27
+"RTN","SROMOD",39,0)
+ S SRDA=DA,SRIEN=$O(^SRF(SRDA,"OPMOD","AAA"),-1) I SRIEN S SRX=$P(^SRF(SRDA,"OPMOD",SRIEN,0),"^"),SRCMOD=$P($$MOD^ICPTMOD(SRX,"I"),"^",2)
+"RTN","SROMOD",40,0)
+ K DIR F  D  K SRM,SRCMOD Q:SRSOUT  S SRQ=0
+"RTN","SROMOD",41,0)
+ .S DIR("A")=" Modifier: ",DIR(0)="130.028,.01AO" S:$G(SRCMOD)'="" DIR("B")=SRCMOD D:$O(^SRF(SRDA,"OPMOD",0)) QUES
+"RTN","SROMOD",42,0)
+ .D ^DIR K DIR S DA=SRDA I $D(DTOUT)!$D(DUOUT)!(X="") S SRSOUT=1 Q
+"RTN","SROMOD",43,0)
+ .I +Y S SRJ=0 F  S SRJ=$O(^SRF(SRDA,"OPMOD",SRJ)) Q:'SRJ  I $P(^SRF(SRDA,"OPMOD",SRJ,0),"^")=+Y N DIR D  Q
+"RTN","SROMOD",44,0)
+ ..S SRSEL=Y(0),DIR(0)="130.028,.01AO",DIR("A")="   Modifier: ",DIR("B")=$P(Y(0),"^")
+"RTN","SROMOD",45,0)
+ ..D ^DIR S DA=SRDA I $D(DTOUT)!$D(DUOUT)!(X="") S SRSOUT=1 Q
+"RTN","SROMOD",46,0)
+ ..I +Y S SRK=0 F  S SRK=$O(^SRF(SRDA,"OPMOD",SRK)) Q:'SRK  I $P(^SRF(SRDA,"OPMOD",SRK,0),"^")=+Y S SRQ=1 Q
+"RTN","SROMOD",47,0)
+ ..Q:SRQ  I +Y S $P(^SRF(SRDA,"OPMOD",SRJ,0),"^")=+Y,SRQ=1 Q
+"RTN","SROMOD",48,0)
+ ..I X="@" S SRY(130.028,SRJ_","_SRDA_",",.01)="@" D FILE^DIE("","SRY"),EN^DDIOL(" ... Modifier deleted","","?20") S SRQ=1
+"RTN","SROMOD",49,0)
+ .Q:SRQ!SRSOUT
+"RTN","SROMOD",50,0)
+ .I +Y S SRY(130.028,"+1,"_DA_",",.01)=+Y D UPDATE^DIE("","SRY") Q
+"RTN","SROMOD",51,0)
+ .I X="@",$D(SRCMOD) S SRY(130.028,SRIEN_","_SRDA_",",.01)="@" D FILE^DIE("","SRY"),EN^DDIOL(" ... Modifier deleted","","?20")
+"RTN","SROMOD",52,0)
+ Q
+"RTN","SROMOD",53,0)
+KPRIN ; kill logic for ACPT x-ref
+"RTN","SROMOD",54,0)
+ Q:$E($G(IOST))'="C"!($G(DIK)'="")  K ^SRF(DA,"OPMOD")
+"RTN","SROMOD",55,0)
+ Q
+"RTN","SROMOD",56,0)
+SOTH ; set logic for ACPT1 x-ref
+"RTN","SROMOD",57,0)
+ Q:$E($G(IOST))'="C"!($G(DIK)'="")
+"RTN","SROMOD",58,0)
+ N SRCODE,SRDA,SRDEF,SRIEN,SRJ,SRQ,SRSDATE,SRSEL,SRSOUT,SRX,SRY,Z S (SRQ,SRSOUT)=0,SRCODE=X N X I $D(SRCMOD) D HYPHOTH
+"RTN","SROMOD",59,0)
+ S SRDA=DA,SRDA(1)=DA(1),SRIEN=$O(^SRF(SRDA(1),13,SRDA,"MOD","A"),-1) I SRIEN S SRX=$P(^SRF(SRDA(1),13,SRDA,"MOD",SRIEN,0),"^"),SRCMOD=$P($$MOD^ICPTMOD(SRX,"I"),"^",2)
+"RTN","SROMOD",60,0)
+ K DIR F  D  K SRM,SRCMOD Q:SRSOUT  S SRQ=0
+"RTN","SROMOD",61,0)
+ .S DIR("A")=" Modifier: ",DIR(0)="130.164,.01AO" S:$G(SRCMOD)'="" DIR("B")=SRCMOD D:$O(^SRF(SRDA(1),13,SRDA,"MOD",0)) QUES1
+"RTN","SROMOD",62,0)
+ .D ^DIR K DIR S DA=SRDA,DA(1)=SRDA(1) I $D(DTOUT)!$D(DUOUT)!(X="") S SRSOUT=1 Q
+"RTN","SROMOD",63,0)
+ .I +Y S SRJ=0 F  S SRJ=$O(^SRF(SRDA(1),13,SRDA,"MOD",SRJ)) Q:'SRJ  I $P(^SRF(SRDA(1),13,SRDA,"MOD",SRJ,0),"^")=+Y N DIR D  Q
+"RTN","SROMOD",64,0)
+ ..S SRSEL=Y(0),DIR(0)="130.164,.01AO",DIR("A")="   Modifier: ",DIR("B")=$P(Y(0),"^")
+"RTN","SROMOD",65,0)
+ ..D ^DIR S DA=SRDA I $D(DTOUT)!$D(DUOUT)!(X="") S SRSOUT=1 Q
+"RTN","SROMOD",66,0)
+ ..I +Y S SRK=0 F  S SRK=$O(^SRF(SRDA(1),13,SRDA,"MOD",SRK)) Q:'SRK  I $P(^SRF(SRDA(1),13,SRDA,"MOD",SRK,0),"^")=+Y S Y="" Q
+"RTN","SROMOD",67,0)
+ ..I X="@" S SRY(130.164,SRJ_","_SRDA_","_SRDA(1)_",",.01)="@" D FILE^DIE("","SRY"),EN^DDIOL(" ... Modifier deleted","","?20") S SRQ=1
+"RTN","SROMOD",68,0)
+ .Q:SRQ!SRSOUT
+"RTN","SROMOD",69,0)
+ .I +Y S SRY(130.164,"+1,"_DA_","_DA(1)_",",.01)=+Y D UPDATE^DIE("","SRY") Q
+"RTN","SROMOD",70,0)
+ .I X="@",$D(SRCMOD) S SRY(130.164,SRIEN_","_SRDA_",",SRDA(1)_",",.01)="@" D FILE^DIE("","SRY"),EN^DDIOL(" ... Modifier deleted","","?20")
+"RTN","SROMOD",71,0)
+ Q
+"RTN","SROMOD",72,0)
+KOTH ; kill logic for ACPT1 x-ref
+"RTN","SROMOD",73,0)
+ Q:$E($G(IOST))'="C"!($G(DIK)'="")  K ^SRF(DA(1),13,DA,"MOD")
+"RTN","SROMOD",74,0)
+ Q
+"RTN","SROMOD",75,0)
+HYPH27 ; input CPT hyphenated modifier for principal procedure
+"RTN","SROMOD",76,0)
+ N SRCODE,SRDA,SRDUP,SRLIST,SRN,SROK,SRY S SRLIST=SRCMOD
+"RTN","SROMOD",77,0)
+ F SRN=1:1 S SRCMOD=$P(SRLIST,",",SRN) Q:SRCMOD=""  D
+"RTN","SROMOD",78,0)
+ .S (SRDUP,SROK)=0
+"RTN","SROMOD",79,0)
+ .S SRM=$P($$MOD^ICPTMOD(SRCMOD),"^") K:SRM<0 SRM I $D(SRM) D PCHK K SRM
+"RTN","SROMOD",80,0)
+ .I 'SROK D EN^DDIOL("CPT Modifier '"_SRCMOD_"' is not acceptable with this CPT code.","","!") K SRCMOD Q
+"RTN","SROMOD",81,0)
+ .S SRJ=0 F  S SRJ=$O(^SRF(SRDA,"OPMOD",SRJ)) Q:'SRJ  I $P(^SRF(SRDA,"OPMOD",SRJ,0),"^")=SROK S SRDUP=1 Q
+"RTN","SROMOD",82,0)
+ .I 'SRDUP S SRY(130.028,"+1,"_DA_",",.01)=SROK D UPDATE^DIE("","SRY")
+"RTN","SROMOD",83,0)
+ Q
+"RTN","SROMOD",84,0)
+HYPHOTH ; input CPT hyphenated modifier for other procedure
+"RTN","SROMOD",85,0)
+ N SRCODE,SRDA,SRDUP,SRLIST,SRN,SROK,SROTH,SRY S SRLIST=SRCMOD
+"RTN","SROMOD",86,0)
+ F SRN=1:1 S SRCMOD=$P(SRLIST,",",SRN) Q:SRCMOD=""  D
+"RTN","SROMOD",87,0)
+ .S (SRDUP,SROK)=0
+"RTN","SROMOD",88,0)
+ .S SRM=$P($$MOD^ICPTMOD(SRCMOD),"^") K:SRM<0 SRM I $D(SRM) D OCHK K SRM
+"RTN","SROMOD",89,0)
+ .I 'SROK D EN^DDIOL("CPT Modifier '"_SRCMOD_"' is not acceptable with this CPT code.","","!") K SRCMOD Q
+"RTN","SROMOD",90,0)
+ .S SRJ=0 F  S SRJ=$O(^SRF(SRDA,13,SROTH,"MOD",SRJ)) Q:'SRJ  I $P(^SRF(SRDA,13,SROTH,"MOD",SRJ,0),"^")=SROK S SRDUP=1 Q
+"RTN","SROMOD",91,0)
+ .I 'SRDUP S SRY(130.164,"+1,"_DA_","_DA(1)_",",.01)=SROK D UPDATE^DIE("","SRY")
+"RTN","SROMOD",92,0)
+ Q
+"RTN","SROMOD",93,0)
+QUES N SRI,SRMD,SRX,SRY,SRZ S DIR("?",1)=" Answer with PRIN. PROCEDURE CPT MODIFIER",DIR("?",2)="Choose from:"
+"RTN","SROMOD",94,0)
+ S SRI=0,SRCT=3 F  S SRI=$O(^SRF(SRDA,"OPMOD",SRI)) Q:'SRI  S SRMD=$P(^SRF(SRDA,"OPMOD",SRI,0),"^") D
+"RTN","SROMOD",95,0)
+ .S SRX=$$MOD^ICPTMOD(SRMD,"I",$P($G(^SRF(SRDA,0)),"^",9)),SRY=$P(SRX,"^",2),SRZ=$P(SRX,"^",3)
+"RTN","SROMOD",96,0)
+ .S DIR("?",SRCT)="   "_SRY_"   "_SRZ,SRCT=SRCT+1
+"RTN","SROMOD",97,0)
+ S DIR("?",SRCT)="",DIR("?")="     You may enter a new PRIN. PROCEDURE CPT MODIFIER, if you wish."
+"RTN","SROMOD",98,0)
+ Q
+"RTN","SROMOD",99,0)
+QUES1 N SRI,SRMD,SRX,SRY,SRZ S DIR("?",1)=" Answer with OTHER PROCEDURE CPT MODIFIER",DIR("?",2)="Choose from:"
+"RTN","SROMOD",100,0)
+ S SRI=0,SRCT=3 F  S SRI=$O(^SRF(SRDA(1),13,SRDA,"MOD",SRI)) Q:'SRI  S SRMD=$P(^SRF(SRDA(1),13,SRDA,"MOD",SRI,0),"^") D
+"RTN","SROMOD",101,0)
+ .S SRX=$$MOD^ICPTMOD(SRMD,"I",$P($G(^SRF(SRDA,0)),"^",9)),SRY=$P(SRX,"^",2),SRZ=$P(SRX,"^",3)
+"RTN","SROMOD",102,0)
+ .S DIR("?",SRCT)="   "_SRY_"   "_SRZ,SRCT=SRCT+1
+"RTN","SROMOD",103,0)
+ S DIR("?",SRCT)="",DIR("?")="     You may enter a new OTHER PROCEDURE CPT MODIFIER, if you wish."
+"RTN","SROMOD",104,0)
+ Q
+"RTN","SROMOD",105,0)
+  
+"RTN","SROMOD0")
+0^3^B42799615^B42153492
+"RTN","SROMOD0",1,0)
+SROMOD0 ;BIR/ADM - CPT MODIFIER INPUT ;08/01/05
+"RTN","SROMOD0",2,0)
+ ;;3.0;Surgery;**142,165,187**;24 Jun 93;Build 4
+"RTN","SROMOD0",3,0)
+ Q
+"RTN","SROMOD0",4,0)
+DISPLAY ; display name with modifier
+"RTN","SROMOD0",5,0)
+ N SRY,SRDA,SRDATE S SRDATE=DT
+"RTN","SROMOD0",6,0)
+ S SRDA=$S($G(SRTN):SRTN,$D(DA(1)):DA(1),$D(DA):DA,1:"")
+"RTN","SROMOD0",7,0)
+ I $G(SRDA) S SRDATE=$P($G(^SRF(SRDA,0)),"^",9)
+"RTN","SROMOD0",8,0)
+ S SRY=$$MOD^ICPTMOD(Y,"I",SRDATE) Q:$P(SRY,"^")=-1
+"RTN","SROMOD0",9,0)
+ S Y=$P(SRY,"^",2)_"  "_$P(SRY,"^",3)
+"RTN","SROMOD0",10,0)
+ Q
+"RTN","SROMOD0",11,0)
+SCR27() ; screen for acceptable CPT code/modifier pair for principal procedure
+"RTN","SROMOD0",12,0)
+ N SRCODE,SRDA,SRCMOD,SROK,SRSDATE,SRZ D PCHK K SRM
+"RTN","SROMOD0",13,0)
+ Q SROK
+"RTN","SROMOD0",14,0)
+PCHK ; return value of modifier if acceptable for principal procedure
+"RTN","SROMOD0",15,0)
+ N SRSDATE S SRSDATE=DT
+"RTN","SROMOD0",16,0)
+ S SROK=0,SRCODE="",SRDA=$S($G(SRTN):SRTN,$D(DA(1)):DA(1),$D(DA):DA,1:""),SRM=$S($D(SRM):SRM,1:+Y)
+"RTN","SROMOD0",17,0)
+ I SRDA S SRSDATE=$P(^SRF(SRDA,0),"^",9),SRCODE=$P($G(^SRO(136,SRDA,0)),"^",2)
+"RTN","SROMOD0",18,0)
+ ;; Begin *165 - RJS
+"RTN","SROMOD0",19,0)
+ I 'SRCODE!($G(X)=51) Q
+"RTN","SROMOD0",20,0)
+ ;;End *165 - RJS
+"RTN","SROMOD0",21,0)
+ S SRZ=$P($$MODP^ICPTMOD(SRCODE,SRM,"I",SRSDATE),"^") I SRZ>0 S SROK=SRZ
+"RTN","SROMOD0",22,0)
+ I SROK,$D(^DIC(81.3,SROK,0)),$P(^(0),U)=51 S (SROK,SRZ)=0
+"RTN","SROMOD0",23,0)
+ Q
+"RTN","SROMOD0",24,0)
+OTH() ; screen for acceptable CPT code/modifier pair for other procedure
+"RTN","SROMOD0",25,0)
+ N SRCODE,SRDA,SRCMOD,SROK,SROTH,SRSDATE,SRZ D OCHK K SRM
+"RTN","SROMOD0",26,0)
+ Q SROK
+"RTN","SROMOD0",27,0)
+OCHK ; return value of modifier if acceptable for other procedure
+"RTN","SROMOD0",28,0)
+ N SRSDATE S SRSDATE=DT
+"RTN","SROMOD0",29,0)
+ S SROK=0,SRCODE="",SRDA=$S($G(SRTN):SRTN,$D(DA(2)):DA(2),$D(DA(1)):DA(1),$D(D0):D0,1:""),SROTH=$S($D(DA):DA,$D(D1):D1,1:""),SRM=$S($D(SRM):SRM,1:+Y)
+"RTN","SROMOD0",30,0)
+ I SRDA&SROTH S SRSDATE=$P(^SRF(SRDA,0),"^",9),SRCODE=$P($G(^SRO(136,SRDA,3,SROTH,0)),"^")
+"RTN","SROMOD0",31,0)
+ I 'SRCODE Q
+"RTN","SROMOD0",32,0)
+ S SRZ=$P($$MODP^ICPTMOD(SRCODE,SRM,"I",SRSDATE),"^") I SRZ>0 S SROK=SRZ
+"RTN","SROMOD0",33,0)
+ Q
+"RTN","SROMOD0",34,0)
+PRIN ; enter CPT modifiers for principal CPT code
+"RTN","SROMOD0",35,0)
+ Q:$E($G(IOST),1,2)'="C-"!($G(DIK)'="")
+"RTN","SROMOD0",36,0)
+ N SRCODE,SRDA,SRDEF,SRIEN,SRJ,SRQ,SRSDATE,SRSEL,SRSOUT,SRX,SRY,Z
+"RTN","SROMOD0",37,0)
+ S (SRQ,SRSOUT)=0,SRDA=DA,SRCODE=$P(^SRO(136,SRDA,0),"^",2),SRIEN=$O(^SRO(136,SRDA,1,"AAA"),-1)
+"RTN","SROMOD0",38,0)
+ I SRIEN S SRX=$P(^SRO(136,SRDA,1,SRIEN,0),"^"),SRCMOD=$P($$MOD^ICPTMOD(SRX,"I"),"^",2)
+"RTN","SROMOD0",39,0)
+ K DIR F  D  K SRM,SRCMOD Q:SRSOUT  S SRQ=0
+"RTN","SROMOD0",40,0)
+ .S DIR("A")=" Modifier: ",DIR(0)="136.01,.01AO" S:$G(SRCMOD)'="" DIR("B")=SRCMOD D:$O(^SRO(136,SRDA,1,0)) QUES
+"RTN","SROMOD0",41,0)
+ .D ^DIR K DIR S DA=SRDA I $D(DTOUT)!$D(DUOUT)!(X="") S SRSOUT=1 Q
+"RTN","SROMOD0",42,0)
+ .I +Y S SRJ=0 F  S SRJ=$O(^SRO(136,SRDA,1,SRJ)) Q:'SRJ  I $P(^SRO(136,SRDA,1,SRJ,0),"^")=+Y N DIR D  Q
+"RTN","SROMOD0",43,0)
+ ..S SRSEL=Y(0),DIR(0)="136.01,.01AO",DIR("A")="   Modifier: ",DIR("B")=$P(Y(0),"^")
+"RTN","SROMOD0",44,0)
+ ..D ^DIR S DA=SRDA I $D(DTOUT)!$D(DUOUT)!(X="") S SRSOUT=1 Q
+"RTN","SROMOD0",45,0)
+ ..I +Y S SRK=0 F  S SRK=$O(^SRO(136,SRDA,1,SRK)) Q:'SRK  I $P(^SRO(136,SRDA,1,SRK,0),"^")=+Y S SRQ=1 Q
+"RTN","SROMOD0",46,0)
+ ..Q:SRQ  I +Y S $P(^SRO(136,SRDA,1,SRJ,0),"^")=+Y,SRQ=1 Q
+"RTN","SROMOD0",47,0)
+ ..I X="@" S SRY(136.01,SRJ_","_SRDA_",",.01)="@" D FILE^DIE("","SRY"),EN^DDIOL(" ... Modifier deleted","","?20") S SRQ=1
+"RTN","SROMOD0",48,0)
+ .Q:SRQ!SRSOUT
+"RTN","SROMOD0",49,0)
+ .I +Y S SRY(136.01,"+1,"_DA_",",.01)=+Y D UPDATE^DIE("","SRY") Q
+"RTN","SROMOD0",50,0)
+ .I X="@",$D(SRCMOD) S SRY(136.01,SRIEN_","_SRDA_",",.01)="@" D FILE^DIE("","SRY"),EN^DDIOL(" ... Modifier deleted","","?20")
+"RTN","SROMOD0",51,0)
+ Q
+"RTN","SROMOD0",52,0)
+OPROC ; enter CPT modifiers for other CPT code
+"RTN","SROMOD0",53,0)
+ N SRCODE,SRDA,SRDEF,SRIEN,SRJ,SRQ,SRSDATE,SRSEL,SRSOUT,SRX,SRY,Z S (SRQ,SRSOUT)=0,SRCODE=X N X I $D(SRCMOD) D OHYPH
+"RTN","SROMOD0",54,0)
+ S SRDA=DA,SRDA(1)=DA(1),SRIEN=$O(^SRO(136,SRDA(1),3,SRDA,1,"A"),-1) I SRIEN S SRX=$P(^SRO(136,SRDA(1),3,SRDA,1,SRIEN,0),"^"),SRCMOD=$P($$MOD^ICPTMOD(SRX,"I"),"^",2)
+"RTN","SROMOD0",55,0)
+ K DIR F  D  K SRM,SRCMOD Q:SRSOUT  S SRQ=0
+"RTN","SROMOD0",56,0)
+ .S DIR("A")=" Modifier: ",DIR(0)="136.31,.01AO" S:$G(SRCMOD)'="" DIR("B")=SRCMOD D:$O(^SRO(136,SRDA(1),3,SRDA,1,0)) QUES1
+"RTN","SROMOD0",57,0)
+ .D ^DIR K DIR S DA=SRDA,DA(1)=SRDA(1) I $D(DTOUT)!$D(DUOUT)!(X="") S SRSOUT=1 Q
+"RTN","SROMOD0",58,0)
+ .I +Y S SRJ=0 F  S SRJ=$O(^SRO(136,SRDA(1),3,SRDA,1,SRJ)) Q:'SRJ  I $P(^SRO(136,SRDA(1),3,SRDA,1,SRJ,0),"^")=+Y N DIR D  Q
+"RTN","SROMOD0",59,0)
+ ..S SRSEL=Y(0),DIR(0)="136.31,.01AO",DIR("A")="   Modifier: ",DIR("B")=$P(Y(0),"^")
+"RTN","SROMOD0",60,0)
+ ..D ^DIR S DA=SRDA I $D(DTOUT)!$D(DUOUT)!(X="") S SRSOUT=1 Q
+"RTN","SROMOD0",61,0)
+ ..I +Y S SRK=0 F  S SRK=$O(^SRO(136,SRDA(1),3,SRDA,1,SRK)) Q:'SRK  I $P(^SRO(136,SRDA(1),3,SRDA,1,SRK,0),"^")=+Y S Y="" Q
+"RTN","SROMOD0",62,0)
+ ..I X="@" S SRY(136.31,SRJ_","_SRDA_","_SRDA(1)_",",.01)="@" D FILE^DIE("","SRY"),EN^DDIOL(" ... Modifier deleted","","?20") S SRQ=1
+"RTN","SROMOD0",63,0)
+ .Q:SRQ!SRSOUT
+"RTN","SROMOD0",64,0)
+ .I +Y S SRY(136.31,"+1,"_DA_","_DA(1)_",",.01)=+Y D UPDATE^DIE("","SRY") Q
+"RTN","SROMOD0",65,0)
+ .I X="@",$D(SRCMOD) S SRY(136.31,SRIEN_","_SRDA_",",SRDA(1)_",",.01)="@" D FILE^DIE("","SRY"),EN^DDIOL(" ... Modifier deleted","","?20")
+"RTN","SROMOD0",66,0)
+ Q
+"RTN","SROMOD0",67,0)
+KOMOD ; delete other CPT modifiers when CPT code is edited
+"RTN","SROMOD0",68,0)
+ I $D(SRDIRED) S SRDIRED=1 Q:'$D(DA)
+"RTN","SROMOD0",69,0)
+ N SRCODE,SRDA,SRJ,SRY S SRDA=$G(DA),SRDA(1)=$G(DA(1)) Q:'SRDA!'SRDA(1)
+"RTN","SROMOD0",70,0)
+ S SRCODE=X,SRJ=0 F  S SRJ=$O(^SRO(136,SRDA(1),3,SRDA,1,SRJ)) Q:'SRJ  D
+"RTN","SROMOD0",71,0)
+ .S SRY(136.31,SRJ_","_SRDA_","_SRDA(1)_",",.01)="@" D FILE^DIE("","SRY")
+"RTN","SROMOD0",72,0)
+ S X=SRCODE
+"RTN","SROMOD0",73,0)
+ Q
+"RTN","SROMOD0",74,0)
+PHYPH ; called from input transform to process hyphenated modifier list
+"RTN","SROMOD0",75,0)
+ Q:$E($G(IOST),1,2)'="C-"!($G(DIK)'="")
+"RTN","SROMOD0",76,0)
+ N SRSDATE,SRDA,SRDUP,SRJ,SRLIST,SRM,SRN,SROK,SRY,SRZ S SRCODE=X D KPMOD S X=SRCODE Q:'$D(SRCMOD)
+"RTN","SROMOD0",77,0)
+ S SRLIST=SRCMOD,SRSDATE=DT,SRDA=$S($G(SRTN):SRTN,$D(DA(1)):DA(1),$D(DA):DA,1:"")
+"RTN","SROMOD0",78,0)
+ S:SRDA SRSDATE=$P(^SRF(SRDA,0),"^",9)
+"RTN","SROMOD0",79,0)
+ F SRN=1:1 S SRCMOD=$P(SRLIST,",",SRN) Q:SRCMOD=""  D
+"RTN","SROMOD0",80,0)
+ .S (SRDUP,SROK)=0
+"RTN","SROMOD0",81,0)
+ .S SRM=$P($$MOD^ICPTMOD(SRCMOD),"^") K:SRM<0 SRM I $D(SRM) D:SRCMOD'=51  K SRM
+"RTN","SROMOD0",82,0)
+ ..S SROK=0,SRM=$S($D(SRM):SRM,1:+Y)
+"RTN","SROMOD0",83,0)
+ ..S SRZ=$P($$MODP^ICPTMOD(SRCODE,SRM,"I",SRSDATE),"^") I SRZ>0 S SROK=SRZ
+"RTN","SROMOD0",84,0)
+ .I 'SROK&($E($G(IOST),1,2)="C-") D EN^DDIOL("CPT Modifier '"_SRCMOD_"' is not acceptable with this CPT code.","","!") K SRCMOD Q
+"RTN","SROMOD0",85,0)
+ .S SRJ=0 F  S SRJ=$O(^SRO(136,SRDA,1,SRJ)) Q:'SRJ  I $P(^SRO(136,SRDA,1,SRJ,0),"^")=SROK S SRDUP=1 Q
+"RTN","SROMOD0",86,0)
+ .I 'SRDUP S SRY(136.01,"+1,"_DA_",",.01)=SROK D UPDATE^DIE("","SRY")
+"RTN","SROMOD0",87,0)
+ S X=SRCODE
+"RTN","SROMOD0",88,0)
+ Q
+"RTN","SROMOD0",89,0)
+KPMOD ; delete principal CPT modifiers when CPT code is edited
+"RTN","SROMOD0",90,0)
+ N SRDA,SRJ,SRY
+"RTN","SROMOD0",91,0)
+ S SRDA=DA,SRJ=0 F  S SRJ=$O(^SRO(136,SRDA,1,SRJ)) Q:'SRJ  D
+"RTN","SROMOD0",92,0)
+ .S SRY(136.01,SRJ_","_SRDA_",",.01)="@" D FILE^DIE("","SRY")
+"RTN","SROMOD0",93,0)
+ Q
+"RTN","SROMOD0",94,0)
+OHYPH ; input CPT hyphenated modifier for other procedure
+"RTN","SROMOD0",95,0)
+ N SRCODE,SRDA,SRDUP,SRLIST,SRN,SROK,SROTH,SRY S SRLIST=SRCMOD
+"RTN","SROMOD0",96,0)
+ F SRN=1:1 S SRCMOD=$P(SRLIST,",",SRN) Q:SRCMOD=""  D
+"RTN","SROMOD0",97,0)
+ .S (SRDUP,SROK)=0
+"RTN","SROMOD0",98,0)
+ .S SRM=$P($$MOD^ICPTMOD(SRCMOD),"^") K:SRM<0 SRM I $D(SRM) D OCHK K SRM
+"RTN","SROMOD0",99,0)
+ .I 'SROK D EN^DDIOL("CPT Modifier '"_SRCMOD_"' is not acceptable with this CPT code.","","!") K SRCMOD Q
+"RTN","SROMOD0",100,0)
+ .S SRJ=0 F  S SRJ=$O(^SRO(136,SRDA,3,SROTH,1,SRJ)) Q:'SRJ  I $P(^SRO(136,SRDA,3,SROTH,1,SRJ,0),"^")=SROK S SRDUP=1 Q
+"RTN","SROMOD0",101,0)
+ .I 'SRDUP S SRY(136.31,"+1,"_DA_","_DA(1)_",",.01)=SROK D UPDATE^DIE("","SRY")
+"RTN","SROMOD0",102,0)
+ Q
+"RTN","SROMOD0",103,0)
+QUES N SRI,SRMD,SRX,SRY,SRZ S DIR("?",1)=" Answer with PRIN PROCEDURE CPT MODIFIER",DIR("?",2)="Choose from:"
+"RTN","SROMOD0",104,0)
+ S SRI=0,SRCT=3 F  S SRI=$O(^SRO(136,SRDA,1,SRI)) Q:'SRI  S SRMD=$P(^SRO(136,SRDA,1,SRI,0),"^") D
+"RTN","SROMOD0",105,0)
+ .S SRX=$$MOD^ICPTMOD(SRMD,"I",$P($G(^SRF(SRDA,0)),"^",9)),SRY=$P(SRX,"^",2),SRZ=$P(SRX,"^",3)
+"RTN","SROMOD0",106,0)
+ .S DIR("?",SRCT)="   "_SRY_"   "_SRZ,SRCT=SRCT+1
+"RTN","SROMOD0",107,0)
+ S DIR("?",SRCT)="",DIR("?")="     You may enter a new PRIN PROCEDURE CPT MODIFIER, if you wish."
+"RTN","SROMOD0",108,0)
+ Q
+"RTN","SROMOD0",109,0)
+QUES1 N SRI,SRMD,SRX,SRY,SRZ S DIR("?",1)=" Answer with OTHER PROCEDURE CPT MODIFIER",DIR("?",2)="Choose from:"
+"RTN","SROMOD0",110,0)
+ S SRI=0,SRCT=3 F  S SRI=$O(^SRO(136,SRDA(1),3,SRDA,1,SRI)) Q:'SRI  S SRMD=$P(^SRO(136,SRDA(1),3,SRDA,1,SRI,0),"^") D
+"RTN","SROMOD0",111,0)
+ .S SRX=$$MOD^ICPTMOD(SRMD,"I",$P($G(^SRF(SRDA,0)),"^",9)),SRY=$P(SRX,"^",2),SRZ=$P(SRX,"^",3)
+"RTN","SROMOD0",112,0)
+ .S DIR("?",SRCT)="   "_SRY_"   "_SRZ,SRCT=SRCT+1
+"RTN","SROMOD0",113,0)
+ S DIR("?",SRCT)="",DIR("?")="     You may enter a new OTHER PROCEDURE CPT MODIFIER, if you wish."
+"RTN","SROMOD0",114,0)
+ Q
+"RTN","SROMOD0",115,0)
+  
+"RTN","SROSCH")
+0^4^B16419281^B16320304
+"RTN","SROSCH",1,0)
+SROSCH ;B'HAM ISC/MAM - SCHEDULE OF OPERATIONS ; [ 09/22/98  11:48 AM ]
+"RTN","SROSCH",2,0)
+ ;;3.0;Surgery;**19,48,63,50,182,187**;24 Jun 93;Build 4
+"RTN","SROSCH",3,0)
+ U IO S (SRQ,TOTAL)=0,(SRFLG,SRPAGE)=1,SRINST=SRSITE("SITE"),SRCHF=$P(^SRO(133,SRSITE,0),"^",10) D HDR^SROSCH1
+"RTN","SROSCH",4,0)
+ S SROR=0 F  S SROR=$O(^SRF("AMM",SROR)) Q:'SROR!(SRQ)  I $$ORDIV^SROUTL0(SROR,$G(SRSITE("DIV"))) S SX=0,SRDTS=SRDT-.0001 F  S SRDTS=$O(^SRF("AMM",SROR,SRDTS)) Q:SRDTS=""!(SRDTS>(SRDT+.9999))!(SRDTS<(SRDT-.0001))!SRQ  D MORE
+"RTN","SROSCH",5,0)
+ I 'SRFLG D
+"RTN","SROSCH",6,0)
+ .I $Y+5>IOSL S SX=1 D ASK^SROSCH1
+"RTN","SROSCH",7,0)
+ .W !,"TOTAL CASES SCHEDULED: "_TOTAL
+"RTN","SROSCH",8,0)
+ I SRFLG W !!,"No operations scheduled for this date."
+"RTN","SROSCH",9,0)
+ I $E(IOST)'="P",'SRQ W !!,"Press RETURN to continue  " R X:DTIME
+"RTN","SROSCH",10,0)
+ G END
+"RTN","SROSCH",11,0)
+MORE ; continue looping on SC cross reference
+"RTN","SROSCH",12,0)
+ S (SRFLG,SRTN)=0 F  S SRTN=$O(^SRF("AMM",SROR,SRDTS,SRTN)) Q:'SRTN!(SRQ)  I $$DIV^SROUTL0(SRTN) S SX=SX+1,TOTAL=TOTAL+1 D SET
+"RTN","SROSCH",13,0)
+ Q
+"RTN","SROSCH",14,0)
+SET ; set variables
+"RTN","SROSCH",15,0)
+ S S(0)=^SRF(SRTN,0),DFN=$P(S(0),"^") D DEM^VADPT S SRNM=VADM(1),SRSSN=VA("PID"),AGE=VADM(4)
+"RTN","SROSCH",16,0)
+ S S(.1)=$G(^SRF(SRTN,.1)),S(.3)=$G(^SRF(SRTN,.3)),S("1.0")=$G(^SRF(SRTN,"1.0")),SRPX=$P(S("1.0"),"^",2)
+"RTN","SROSCH",17,0)
+ I $L(SRNM)>23 S SRNM=$P(SRNM,",")_", "_$E($P(SRNM,",",2),1,21-$L($P(SRNM,",")))
+"RTN","SROSCH",18,0)
+ S SROOM=$P(^SRS(SROR,0),"^"),SROOM=$P(^SC(SROOM,0),"^")
+"RTN","SROSCH",19,0)
+ S SRIX=$P(S("1.0"),"^",5),Y=$P(S("1.0"),"^"),C=$P(^DD(130,1.01,0),"^",2) D:Y'="" Y^DIQ  S SRANES=Y I Y["MONITORED ANES" S SRANES="MONITORED ANES CARE"
+"RTN","SROSCH",20,0)
+ K SRSLOC I $D(^DPT(DFN,.1)) S SRSLOC=$P(^(.1),"^") I $D(^DPT(DFN,.101)) S SRSLOC=SRSLOC_"  "_$P(^(.101),"^")
+"RTN","SROSCH",21,0)
+ I '$D(SRSLOC) S X=$P(^SRF(SRTN,0),"^",12),SRSLOC=$S(X="I"!(X=2):"TO BE ADMITTED",X=3:"HOSPITALIZED",X="O"!(X=1):"OUTPATIENT",1:"")
+"RTN","SROSCH",22,0)
+ S (SRSUR,SRFST,SRATT,SRAN1,SRAN2)=""
+"RTN","SROSCH",23,0)
+ S SRSUR=$P(S(.1),"^",4),SRATT=$P(S(.1),"^",13),SRFST=$P(S(.1),"^",5),SRAN1=$P(S(.3),"^",4),SRAN2=$P(S(.3),"^") S:SRSUR'="" SRSUR=$P(^VA(200,SRSUR,0),"^") S:SRATT'="" SRATT=$P(^VA(200,SRATT,0),"^") S:SRFST'="" SRFST=$P(^VA(200,SRFST,0),"^")
+"RTN","SROSCH",24,0)
+ S:SRAN1'="" SRAN1=$P(^VA(200,SRAN1,0),"^") S:SRAN2'="" SRAN2=$P(^VA(200,SRAN2,0),"^")
+"RTN","SROSCH",25,0)
+ S SRDIAG=$S($D(^SRF(SRTN,33)):$P(^(33),"^"),1:"")
+"RTN","SROSCH",26,0)
+OPS S SROPER=$P(^SRF(SRTN,"OP"),"^"),OPER=0 F I=0:0 S OPER=$O(^SRF(SRTN,13,OPER)) Q:OPER=""  D OTHER
+"RTN","SROSCH",27,0)
+ K SROPS,MM,MMM S:$L(SROPER)<50 SROPS(1)=SROPER I $L(SROPER)>49 S SROPER=SROPER_"  " F M=1:1 D LOOP Q:MMM=""
+"RTN","SROSCH",28,0)
+ D TIME^SROSCH1
+"RTN","SROSCH",29,0)
+ F SRUSER="SRSUR","SRFST","SRATT","SRAN1","SRAN2" S:'$D(@SRUSER) @SRUSER="" I @SRUSER]"" S @SRUSER=$P(@SRUSER,",",1)_", "_$E($P(@SRUSER,",",2),1)
+"RTN","SROSCH",30,0)
+ S Y=$P($G(^SRF(SRTN,.4)),"^",3),C=$P(^DD(130,.43,0),"^",2) D:Y'="" Y^DIQ S SROPD=$E(Y,1,14)
+"RTN","SROSCH",31,0)
+ S X=$P($G(^SRF(SRTN,35)),"^",2),SRPREAD=$S(X="Y":" (P.A.T.)",1:"")
+"RTN","SROSCH",32,0)
+PRINT ; print variables
+"RTN","SROSCH",33,0)
+ D PRINT^SROSCH2
+"RTN","SROSCH",34,0)
+ Q
+"RTN","SROSCH",35,0)
+END ;
+"RTN","SROSCH",36,0)
+ W:$E(IOST)="P" @IOF I $D(ZTQUEUED) Q:$G(ZTSTOP)  S ZTREQ="@" Q
+"RTN","SROSCH",37,0)
+ D ^SRSKILL K SRTN D ^%ZISC W @IOF
+"RTN","SROSCH",38,0)
+ Q
+"RTN","SROSCH",39,0)
+OTHER ; other operations
+"RTN","SROSCH",40,0)
+ S SRLONG=1 I $L(SROPER)+$L($P(^SRF(SRTN,13,OPER,0),"^"))>250 S SRLONG=0,OPER=999,SROPERS=" ..."
+"RTN","SROSCH",41,0)
+ I SRLONG S SROPERS=$P(^SRF(SRTN,13,OPER,0),"^")
+"RTN","SROSCH",42,0)
+ S SROPER=SROPER_$S(SROPERS=" ...":SROPERS,1:", "_SROPERS)
+"RTN","SROSCH",43,0)
+ Q
+"RTN","SROSCH",44,0)
+LOOP ; break procedure if greater than 50 characters
+"RTN","SROSCH",45,0)
+ S SROPS(M)="" F LOOP=1:1 S MM=$P(SROPER," "),MMM=$P(SROPER," ",2,200) Q:MMM=""  Q:$L(SROPS(M))+$L(MM)'<50  S SROPS(M)=SROPS(M)_MM_" ",SROPER=MMM
+"RTN","SROSCH",46,0)
+ Q
+"RTN","SROSCH",47,0)
+BLOOD S SRBU=$P(^SRF(SRTN,11,SRB,0),"^",2),SRB(SRB)=SRB(SRB)_" - "_SRBU_$S(SRBU>1:" UNITS",SRBU>0:" UNIT",1:" UNITS NOT ENTERED")
+"RTN","SROSCH",48,0)
+ S SRBX=$P(^SRF(SRTN,11,SRB,0),"^",3),SRBX=$S(SRBX="S":"SCREEN",SRBX="C":"CROSSMATCH",SRBX="A":"AUTOLOGOUS",1:"") I SRBX'="" S SRB(SRB)=SRB(SRB)_" ("_SRBX_")"
+"RTN","SROSCH",49,0)
+ Q
+"RTN","SROVAR")
+0^5^B36366627^B34682815
+"RTN","SROVAR",1,0)
+SROVAR ;BIR/MAM,ADM - SITE PARAMETERS ; 7/21/09 1:37pm
+"RTN","SROVAR",2,0)
+ ;;3.0;Surgery;**17,38,48,67,77,50,87,88,102,107,100,134,144,157,171,187**;24 Jun 93;Build 4
+"RTN","SROVAR",3,0)
+ ;
+"RTN","SROVAR",4,0)
+ ; Reference to ^TMP("CSLSUR1" supported by DBIA #3498
+"RTN","SROVAR",5,0)
+ ;
+"RTN","SROVAR",6,0)
+ K ^TMP("CSLSUR1",$J),^TMP("SRPFSS",$J) D CLEAR
+"RTN","SROVAR",7,0)
+ I $D(SRSITE) Q
+"RTN","SROVAR",8,0)
+ D CPT
+"RTN","SROVAR",9,0)
+ K SRL S (SRCNT,X)=0 F  S X=$O(^SRO(133,X)) Q:'X  I '$P($G(^SRO(133,X,0)),"^",21) S SRCNT=SRCNT+1,SRL(SRCNT)=X
+"RTN","SROVAR",10,0)
+ I SRCNT=1 S SRSITE=SRL(1) G SET
+"RTN","SROVAR",11,0)
+ K XQUIT,DIR W ! I SRCNT>1 S DIR("?",1)="  Because there is more than one division in the SURGERY SITE PARAMETERS",DIR("?")="  file, a division must be selected."
+"RTN","SROVAR",12,0)
+ S DIR(0)="P^133:EM",DIR("A")="Select Division",DIR("S")="I '$P(^SRO(133,+Y,0),U,21)" D ^DIR K DIR I $D(DTOUT)!$D(DUOUT) D ^SRSKILL S XQUIT="" Q
+"RTN","SROVAR",13,0)
+ S SRSITE=+Y
+"RTN","SROVAR",14,0)
+SET ; set site parameters
+"RTN","SROVAR",15,0)
+ S S(0)=^SRO(133,SRSITE,0),SRSITE("AML")=$P(S(0),"^",4),SRSITE("REQ")=$P(S(0),"^",2) K:SRSITE("REQ")="" SRSITE("REQ")
+"RTN","SROVAR",16,0)
+ S SRSITE("IV")=$P(S(0),"^",7) K:SRSITE("IV")="" SRSITE("IV")
+"RTN","SROVAR",17,0)
+ S SRSITE("DIV")=$P(S(0),"^"),SRSITE("SITE")=$$GET1^DIQ(4,SRSITE("DIV"),.01)
+"RTN","SROVAR",18,0)
+ S SRSITE("NRPT")=$P(S(0),"^",6) I SRSITE("NRPT")="" S SRSITE("NRPT")=1
+"RTN","SROVAR",19,0)
+ I '$D(SRSITE("OPTION")),$D(XQY) S SRSITE("OPTION")=XQY
+"RTN","SROVAR",20,0)
+ K S
+"RTN","SROVAR",21,0)
+ Q
+"RTN","SROVAR",22,0)
+CPT ; display CPT copyright notice
+"RTN","SROVAR",23,0)
+ N SRCPT,SRDIV S (SRCPT,SRDIV)=0 F  S SRDIV=$O(^SRO(133,SRDIV)) Q:'SRDIV  I $D(^SRO(133,SRDIV,6,DT,1,DUZ)) S SRCPT=1 Q
+"RTN","SROVAR",24,0)
+ Q:SRCPT  D COPY^ICPTAPIU I $G(IOST)'["P-" W ! K DIR S DIR("A")="Press the 'Return' key to continue",DIR(0)="FOA" D ^DIR K DIR
+"RTN","SROVAR",25,0)
+ K DD,DO,DA,DIC S SRDIV=$O(^SRO(133,0))
+"RTN","SROVAR",26,0)
+ I '$D(^SRO(133,SRDIV,6,DT,0)) S X=DT,DA(1)=SRDIV,DIC="^SRO(133,SRDIV,6,",DIC("P")=$P(^DD(133,36,0),"^",2),DIC(0)="L",DINUM=X D FILE^DICN K DD,DO,DA,DIC I Y=-1 Q
+"RTN","SROVAR",27,0)
+ S X=DUZ,DA(2)=SRDIV,DA(1)=DT,DIC="^SRO(133,SRDIV,6,DT,1,",DIC("P")=$P(^DD(133.036,1,0),"^",2),DIC(0)="L",DINUM=X D FILE^DICN K DA,DD,DIC,DO
+"RTN","SROVAR",28,0)
+ Q
+"RTN","SROVAR",29,0)
+EN2 ; set view only and titles for screens
+"RTN","SROVAR",30,0)
+ I '$D(^XUSEC("SROEDIT",DUZ)) S Q3("VIEW")=""
+"RTN","SROVAR",31,0)
+ Q:'$D(SRTN)  Q:SRTN<1  S:'$D(ST) ST="SCHEDULING" S DFN=$P(^SRF(SRTN,0),"^") D DEM^VADPT S SRN=$E(VADM(1),1,20),Q3(1)="** "_ST_" **   CASE #"_SRTN_"  "_SRN_" "
+"RTN","SROVAR",32,0)
+ Q
+"RTN","SROVAR",33,0)
+DEV S SRION=$S($D(ION):ION,1:"HOME") K %ZIS S %ZIS="QN",IOP=X D ^%ZIS I POP S IOP=SRION D ^%ZIS K %ZIS,IOP,SRION,X Q
+"RTN","SROVAR",34,0)
+ W $S(X=$E(ION,1,$L(X)):$E(ION,$L(X)+1,$L(ION)),1:"  "_ION) S X=ION D ^%ZISC K %ZIS,SRION,IOP Q
+"RTN","SROVAR",35,0)
+ Q
+"RTN","SROVAR",36,0)
+TIME ; transform time to date of operation at that time
+"RTN","SROVAR",37,0)
+ I $D(SRSMED) S DA=SRTN
+"RTN","SROVAR",38,0)
+ S:$D(SRTN) SRTDA=DA,DA=SRTN S X=$S(X?1.4N.A!(X?1.2N1":"2N.A):Z_"@"_X,1:X)
+"RTN","SROVAR",39,0)
+ S %DT="EPTXR" D ^%DT S X=Y G:'$D(^SRF(DA,.2)) RESET I X>0 S SRSTART=$P(^SRF($S($D(SRTN):SRTN,1:DA),.2),"^",15) I SRSTART'="" D BEFORE
+"RTN","SROVAR",40,0)
+ S:$D(SRTDA) DA=SRTDA Q
+"RTN","SROVAR",41,0)
+BEFORE W:X<SRSTART !!,"The time entered is before the 'TIME PAT IN HOLD AREA'.  Please check the",!,"DATE/TIME entered for this field." H 2
+"RTN","SROVAR",42,0)
+ Q
+"RTN","SROVAR",43,0)
+RESET S:$D(SRTDA) DA=SRTDA Q
+"RTN","SROVAR",44,0)
+INPUT ; input transfor for ASA CLASS
+"RTN","SROVAR",45,0)
+ S:'$D(DA) DA=SRTN S SRFLD=1.13 I $D(^SRF(DA,"CON")),$P(^("CON"),"^") D ^SROCON Q
+"RTN","SROVAR",46,0)
+ Q
+"RTN","SROVAR",47,0)
+PARAM ; enter/edit site parameters
+"RTN","SROVAR",48,0)
+ W @IOF K DIC,DINUM S DIC=133,DIC(0)="QEAMZL",DLAYGO=133,DIC("A")="Edit Parameters for which Surgery Site: " D ^DIC K DIC I Y<0 W @IOF Q
+"RTN","SROVAR",49,0)
+ N SRDIV,SRN,SRNAME,SRNUM S SRDIV=+Y,SRN=+Y(0),SRNAME=Y(0,0),SRNUM=$$GET1^DIQ(4,SRN,99),Q3(1)=" "_SRNAME_"  ("_SRNUM_") "
+"RTN","SROVAR",50,0)
+ K DIE,DR,DA,Y S DA=SRDIV,DR="[SRPARAM]",DIE=133 D ^SRCUSS K DR,DIE,DA,ST W @IOF I $D(SRSITE) D SET
+"RTN","SROVAR",51,0)
+ Q
+"RTN","SROVAR",52,0)
+EXIT ; exit action for all Surgery options
+"RTN","SROVAR",53,0)
+ I $D(XQY),$G(SRSITE("OPTION"))=XQY K SRSITE,SRTN,^TMP("SRCUSS",$J)
+"RTN","SROVAR",54,0)
+ D CLEAR
+"RTN","SROVAR",55,0)
+ Q
+"RTN","SROVAR",56,0)
+SITE() ; extrinsic call to output Institution file pointer (from Default Institution field in file 4.3)^Institution name^Station number
+"RTN","SROVAR",57,0)
+ N SITE,SRI,SRX,SRY
+"RTN","SROVAR",58,0)
+ S SITE=$$KSP^XUPARAM("INST") I 'SITE Q SITE
+"RTN","SROVAR",59,0)
+ S X=SITE,DIC="^SRO(133,",DIC(0)="UBZ" D ^DIC Q:Y<0 ""
+"RTN","SROVAR",60,0)
+ S SRX=+Y I $P($G(^SRO(133,SRX,0)),U,21) S SITE="" D  I 'SITE Q SITE
+"RTN","SROVAR",61,0)
+ .S SRX=0 F  S SRX=$O(^SRO(133,SRX)) Q:SRX'>0  I $D(^(SRX,0)),'$P(^(0),U,21) S SITE=$P(^(0),U) Q
+"RTN","SROVAR",62,0)
+ S SRX=SITE F SRI=.01,99 S SRY=$$GET1^DIQ(4,SRX,SRI),SITE=SITE_"^"_SRY
+"RTN","SROVAR",63,0)
+ Q SITE
+"RTN","SROVAR",64,0)
+OFF1 ; compare time off with time on
+"RTN","SROVAR",65,0)
+ S Z=$E($P(^SRF($S($D(SRTN):SRTN,1:DA(1)),0),"^",9),1,7),X=$S(X?1.4N.A!(X?1.2N1":"2N.A):Z_"@"_X,1:X) K %DT,Z S %DT="PTXR" D ^%DT S X=Y I Y<1 D OUT Q
+"RTN","SROVAR",66,0)
+ S SRSTART=$P(^SRF(DA(1),SRSUB,DA,0),"^",SRP) D COMP
+"RTN","SROVAR",67,0)
+ Q
+"RTN","SROVAR",68,0)
+OFF2 ; compare time off with time on
+"RTN","SROVAR",69,0)
+ S Z=$E($P(^SRF($S($D(SRTN):SRTN,1:DA(2)),0),"^",9),1,7),X=$S(X?1.4N.A!(X?1.2N1":"2N.A):Z_"@"_X,1:X) K %DT,Z S %DT="PTXR" D ^%DT S X=Y I Y<1 D OUT Q
+"RTN","SROVAR",70,0)
+ S SRSTART=$P(^SRF(DA(2),SRSUB,DA(1),1,DA,0),"^",SRP)
+"RTN","SROVAR",71,0)
+COMP I X<SRSTART W !!,"Time Off should be later than Time On.",! S X=-1
+"RTN","SROVAR",72,0)
+OUT K %DT,SR130,SRN,SRP,SRSTART,SRSUB
+"RTN","SROVAR",73,0)
+ Q
+"RTN","SROVAR",74,0)
+TERM ; compare stop time with start time
+"RTN","SROVAR",75,0)
+ N SRINOR,SRSTART,SRV,SRY,T,Z
+"RTN","SROVAR",76,0)
+ I $D(DA) S SRINOR=$S($P($G(^SRF(DA,"NON")),"^")="Y":$P($G(^SRF(DA,"NON")),"^",4),1:$P($G(^SRF(DA,.2)),"^",10)) I 'SRINOR D  K X D OUT Q
+"RTN","SROVAR",77,0)
+ .D EN^DDIOL(">>> Please enter 'TIME "_$S($P($G(^SRF(DA,"NON")),"^")="Y":"PROCEDURE BEGAN",1:"PAT IN OR")_"' first !! <<<","","!!?5")
+"RTN","SROVAR",78,0)
+ .D EN^DDIOL("","","!")
+"RTN","SROVAR",79,0)
+ S Z=$E(SRINOR,1,7),X=$S(X?1.4N.A!(X?1.2N1":"2N.A):Z_"@"_X,1:X)
+"RTN","SROVAR",80,0)
+ K %DT,Z S %DT="PTXR" D ^%DT S X=Y I Y<1 D OUT Q
+"RTN","SROVAR",81,0)
+ I $D(DA) S Z=$P($G(^SRF(DA,SRN)),"^",SRP),SRSTART=$S(Z:Z,1:SRINOR),SRNULL=$S(Z:0,1:1) I X<SRSTART S Z=$P(SRINOR,"."),T=$P(X,".",2),X1=Z_"."_T,X2=1 D C^%DTC D PLUS24 I '$D(X) D OUT Q
+"RTN","SROVAR",82,0)
+ K %DT S %DT="EPTXR" D ^%DT S X=Y D OUT
+"RTN","SROVAR",83,0)
+ Q
+"RTN","SROVAR",84,0)
+PLUS24 S:SRNULL SR130="TIME PAT IN OR" S (SRV,Y)=X X ^DD("DD") S SRY=Y
+"RTN","SROVAR",85,0)
+ N DIR S DIR("A",1)="",DIR("A",2)="The time you have entered is earlier than "_SR130_".",DIR("A")="Do you mean "_SRY_" (Y/N) ? ",DIR(0)="YA" D ^DIR K DIR I 'Y!$D(DTOUT)!$D(DUOUT) K X Q
+"RTN","SROVAR",86,0)
+ S X=SRV
+"RTN","SROVAR",87,0)
+ Q
+"RTN","SROVAR",88,0)
+CLEAR ; clean-up case edit/lock flags in ^XTMP
+"RTN","SROVAR",89,0)
+ N SRC,SRJ,SRL,SRNOW,SRNOW1,SRZ S SRNOW=$$NOW^XLFDT
+"RTN","SROVAR",90,0)
+ S SRC="SRLOCK-0" F  S SRC=$O(^XTMP(SRC)) Q:SRC'["SRLOCK-"  D
+"RTN","SROVAR",91,0)
+ .S SRJ=0 F  S SRJ=$O(^XTMP(SRC,DUZ,SRJ)) Q:'SRJ  D
+"RTN","SROVAR",92,0)
+ ..I SRJ=$J L -^XTMP(SRC,DUZ,SRJ) K ^XTMP(SRC,DUZ,SRJ) I '$O(^XTMP(SRC,0)) L -^XTMP(SRC) K ^XTMP(SRC) Q
+"RTN","SROVAR",93,0)
+ ..S SRNOW1=$P($G(^XTMP(SRC,0)),"^") I SRNOW>SRNOW1 L -^XTMP(SRC) K ^XTMP(SRC)
+"RTN","SROVAR",94,0)
+ Q
+"RTN","SROVAR",95,0)
+EN3 ; the Sterility Expiration Date should be after the Date of Operation
+"RTN","SROVAR",96,0)
+ S:$D(SRTN) SRTDA=DA,DA=SRTN S X=$S(X?1.4N.A!(X?1.2N1":"2N.A):Z_"@"_X,1:X)
+"RTN","SROVAR",97,0)
+ S %DT="E" D ^%DT S X=Y I X>0 S SRSTART=$E($P(^SRF($S($D(SRTN):SRTN,1:D0),0),U,9),1,7) I SRSTART'="" D BEF
+"RTN","SROVAR",98,0)
+ S:$D(SRTDA) DA=SRTDA Q
+"RTN","SROVAR",99,0)
+BEF I X<SRSTART W !!,"The date entered is before the 'DATE OF OPERATION'.  Please check the",!,"DATE entered for this field." K X H 2
+"RTN","SROVAR",100,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",10173,6)
+^179
+**END**
+**END**
+

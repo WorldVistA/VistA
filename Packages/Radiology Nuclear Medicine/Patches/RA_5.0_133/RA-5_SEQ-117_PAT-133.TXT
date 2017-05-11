@@ -1,0 +1,286 @@
+$TXT Created by                at DEV.DEV.DOMAIN.EXT  (KIDS) on Friday, 02/10/17 at 12:15
+=============================================================================
+Run Date: MAR 21, 2017                     Designation: RA*5*133
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #117                      Status: Released
+                  Compliance Date: APR 21, 2017
+=============================================================================
+
+Associated patches: (v)RA*5*15     <<= must be installed BEFORE `RA*5*133'
+                    (v)RA*5*57     <<= must be installed BEFORE `RA*5*133'
+                    (v)RA*5*87     <<= must be installed BEFORE `RA*5*133'
+
+Subject: TRACK MULTIPLE HOLD REASONS FOR A REQUEST
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Input Template
+
+Description:
+============
+
+ RA*5.0*133 addresses the new VHA Outpatient Radiology Scheduling Policy 
+ which states that Radiology will make two documented attempts to contact 
+ the patient. 
+  
+ There is currently no method in the radiology package to track 
+ personnel's attempt to contact a Veteran for scheduling. The order can 
+ be scheduled or held, but once in a HOLD status, the HOLD reason cannot 
+ be updated.
+  
+ Associated Ticket(s):
+ =====================
+ N/A
+  
+ Associated NSR(s):
+ ==================
+ N/A 
+   
+ Participating Test Sites:
+ =========================
+ VA Northern California Health Care System (Mather)
+ W.G. (Bill) Hefner VA Medical Center (Salisbury)
+ VA Boston Healthcare System (West Roxbury) 
+  
+ Overview:
+ =========
+ Problem A:
+ ----------
+ A radiology request can be placed in a HOLD status while the service 
+ attempts to schedule the procedure, but only one HOLD reason can be 
+ associated with a request. If multiple attempts are made to contact the 
+ Veteran, there is no method to track them.
+  
+ Resolution A:
+ -------------
+ Create a new menu option Update a Hold Request [RA ORDERREASON UPDATE] 
+ which will update the hold reason for a request that is already in a HOLD
+ status. When a new hold reason is entered, it will be tracked in the
+ REQUEST STATUS TIMES (#75.12) field of the RAD/NUC MED REQUEST 
+ (#75.2) file and also the ORDER ACTIONS (#100.008) field multiple of the
+ ORDER (#100) file. The new menu option Update a Hold Request 
+ [RA ORDERREASON UPDATE] option will be placed on the Radiology/Nuclear
+ Med Order Entry Menu [RA ORDER].
+  
+ Problem B:
+ ----------
+ Hold/Cancel Reasons are locally maintained and therefore it is difficult 
+ to track national data statistics. The Radiology Program Office and 
+ Radiology Informatics Committee approved the use of ten new nationally 
+ standardized HOLD reasons for the radiology scheduling directive. These 
+ new standardized entries will not be editable at the local site level.
+  
+ Resolution B:
+ -------------
+ A post-init routine "RAI13PO" will load ten new standardized HOLD
+ reasons to the RAD/NUC MED REASON (#75.2) file. These reasons have the
+ "Nature of Order Activity" set to POLICY. This is used by Computerized
+ Patient Record System (CPRS) to determine if the action is logged in the
+ ORDER ACTIONS multiple. A new flag will be added to the RAD/NUC MED REASON
+ (#75.2) file. The ten new HOLD reasons will have the NATIONAL flag set to
+ "YES" preventing local modifications. The Reason Edit [RA REASON EDIT]
+ option will also be modified to skip editing of the REASON (.01) field to
+ protect historical data from local modifications to this field.
+  
+ 1.  CALLED VETERAN FOR APPT
+ 2.  MYHEALTHYVET CONTACT
+ 3.  LETTER SENT TO CALL VA
+ 4.  RESCHED CALL BY VETERAN
+ 5.  MRI SAFETY REVIEW
+ 6.  RADIOLOGIST REVIEW
+ 7.  COMMUNITY CARE APPT
+ 8.  WAITING ON OUTSIDE IMAGES
+ 9.  FUTURE APPOINTMENT
+ 10. NON RADIOLOGY CONSULT
+  
+ *** NOTE *** 
+ The Reason Edit [RA REASON EDIT] option has been modified from an edit
+ option to a run routine type. KIDS does not clean up fields used by the
+ edit, but the stray fields do not cause any ill effect on the
+ functionality of the option.
+  
+ Problem C:
+ ----------
+ If a request has been updated with a new hold reason, the activity will 
+ only be logged if the TRACK REQUEST STATUS CHANGES (#.119) field in the 
+ Rad/Nuc Med Division (#79) file is set to YES. If Exam Status Tracking is
+ not enabled, exam status activities are not logged.
+  
+ Resolution C:
+ -------------
+ The Division Parameter Set-up [RA SYSDIV] option input template will be   
+ modified to stuff a YES in the TRACK REQUEST STATUS CHANGES (#.119) 
+ field and TRACK EXAM STATUS CHANGES (.11) field. These prompts will no 
+ longer be visible to the user for input. A post-init routine RAI133PO
+ will loop through the RAD/NUC MED DIVISION (#79) file to check/update
+ existing divisions.
+  
+ Problem D:
+ ----------
+ The Pending/Hold Rad/Nuc Med Request Log no longer displays the data 
+ needed for current business needs or in a format that can be easily 
+ manipulated into other formats such as Excel.
+  
+ Resolution D:
+ -------------
+ The Pending/Hold Rad/Nuc Med Request Log  [RA ORDERPENDING] option will be
+ modified to display the hold reason for held requests and the requesting 
+ provider for pending requests. The ordering location is no longer 
+ displayed. The Date Desired will be moved to the data display line
+ instead of sorting the requests under each Date Desired header.
+  
+ OPTIONS AFFECTED:
+ -----------------
+ Reason Edit   [RA REASON EDIT]
+ Radiology/Nuclear Med Order Entry Menu [RA ORDER]
+ Update a Hold Request   [RA ORDERREASON UPDATE]
+ Division Parameter Set-up [RA SYSDIV]
+  
+ DOCUMENTATION RETRIEVAL:
+ ========================
+ These are the documentation changes associated with this patch:
+ RA Nuclear Medicine User Manual       
+ RA Nuclear Medicine Tech Manual  
+ RA Nuclear Medicine ADPAC Guide
+   
+ These manuals are available on the ANONYMOUS.SOFTWARE directory at one of 
+ the following Office of Information (OI) Field Offices. These files 
+ should be retrieved in binary format.
+     
+ Sites may retrieve documentation in one of the following ways:
+    
+ (1) The preferred method is to SFTP the files from 
+     download.vista.domain.ext, which will transmit the files from the
+     first available FTP server.
+     
+ (2) Sites may also elect to retrieve documentation directly from a
+     specific server as follows:
+     
+     Albany                ftp.domain.ext
+     Hines                 ftp.domain.ext
+     Salt Lake City        ftp.domain.ext
+     
+ The documentation distribution includes:
+  
+ File Name               Description                        Protocol
+ ---------               -----------                        --------
+ ra5_0_um_p133.doc       RA Nuclear Medicine User Manual    BINARY
+ ra6_0tm_rev_v5.doc      RA Nuclear Medicine Tech Manual    BINARY
+ ra5_oag.doc             RA Nuclear Medicine ADPAC Guide    BINARY
+  
+    ===================  Installation Instructions ====================
+   If installed during the normal workday, it is recommended that the
+   Radiology users be off the system. Other VISTA users will not be
+   affected.
+  
+   Install Time - less than 2 minutes
+  
+   1. Load Transport Global:
+      ----------------------
+    Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+   2. Start Up KIDS:
+      --------------
+    Start up the Kernel Installation and Distribution System Menu [XPD 
+    MAIN]:
+  
+            Edits and Distribution ...
+            Utilities ...
+            Installation ...
+  
+   Select Kernel Installation & Distribution System Option: INStallation
+  
+            Load a Distribution
+            Print Transport Global
+            Compare Transport Global to Current System
+            Verify Checksums in Transport Global
+            Install Package(s)
+            Restart Install of Package(s)
+            Unload a Distribution
+            Backup a Transport Global
+  
+   Select Installation Option:
+  
+   3. Select Installation Option:
+      ---------------------------
+       NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter RA*5.0*133):
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+  
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch 
+          (routines, DD's, templates, etc.).
+  
+       c. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+   4. Select Installation Option: Install Package(s):
+      -----------------------------------------------
+       **This is the step to start the installation of this KIDS patch:
+    a. Choose the Install Package(s) option to start the patch install.
+  
+    b. Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//, 
+       answer NO.
+  
+    c. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', answer NO.
+  
+    d. When prompted 'Want to DISABLE Scheduled Options, Menu
+       Options, and Protocols? NO//', answer YES.
+  
+       When prompted, 'Enter options you wish to mark as 'Out Of order':',
+       enter the following options:
+  
+       Disable the following VistA RIS options:
+       ----------------------------------------
+       Radiology/Nuclear Med Order Entry Menu      [RA ORDER]
+       Utility Files Maintenance Menu              [RA MAINTENANCE] 
+  
+       When prompted, 'Enter protocols you wish to mark as 'Out Of 
+       order':', answer NO.
+  
+   5. If prompted 'Delay Install (Minutes): (0 - 60): 0//', respond 0. 
+   
+   6. POST Install Routine, RAI133PO, may be deleted after the 
+      installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;November 3, 2016;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RAI133PO
+    Before:       n/a   After:  B7168541  **133**
+Routine Name: RAMAIN
+    Before: B33760656   After: B36625128  **31,43,50,54,87,133**
+Routine Name: RAORD
+    Before: B51748830   After: B65150624  **133**
+Routine Name: RAORDP
+    Before: B27179434   After: B32264519  **15,133**
+Routine Name: RAORDU
+    Before: B27668360   After: B27367921  **18,41,57,133**
+ 
+Routine list of preceding patches: 15, 57, 87
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 15, 2016
+Completed By:                               Date Completed: MAR 17, 2017
+Released By :                               Date Released : MAR 21, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

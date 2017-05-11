@@ -1,0 +1,605 @@
+$TXT Created by                 JR at CHEY59.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Monday, 12/19/16 at 12:28
+=============================================================================
+Run Date: MAR 07, 2017                     Designation: LR*5.2*468
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #383                    Status: Released
+                  Compliance Date: APR 07, 2017
+=============================================================================
+
+Associated patches: (v)HDI*1*15    <<= must be installed BEFORE `LR*5.2*468'
+                    (v)XU*8*665    <<= must be installed BEFORE `LR*5.2*468'
+
+Subject: NATIVE DOMAIN SERVICE
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Data Dictionary
+  - Input Template
+
+Description:
+============
+
+ The Department of Veterans Affairs (VA) Interagency Program Office 
+ (IPO) and the Department of Defense (DoD) is tasked by its charter with
+ leading the Departments efforts "to implement national health data
+ standards for interoperability and be responsible for establishing,
+ monitoring, and approving the clinical and technical standards profile
+ and processes to ensure a seamless exchange of health data." This task
+ of Native Domain standardization is aligned with achieving the goals
+ outlined in the 2014 National Defense Authorization Act (NDAA) 
+ requiring that the Departments' "healthcare data are computable in 
+ real-time and comply with existing national data standards" and that 
+ the "data are standardized as national standards continue to evolve."
+  
+ VA clinicians historically used non-standardized clinical terminologies
+ which are inconsistent within the VA user community as well as within 
+ the currently accepted data standards as established by Office of the
+ National Coordinator for Health Information Technology (ONC).
+ Implementation of Native Standardization will allow a streamlined 
+ method for data sharing, performing clinical decision support and 
+ engaging in national data reporting and analysis.  The VA has recently 
+ established a process for implementing standard terminology/terminologies 
+ within individual clinical domains for the 
+ exchange of data. The intent of this effort is to provide the detailed 
+ groundwork necessary for industry-wide interoperability. By providing a 
+ detailed analysis of the current state of the applicable domains and 
+ recommendations regarding the path forward, the Native Domain 
+ Standardization supports VA's efforts to remain at the forefront of 
+ healthcare data exchange.
+  
+ The system will include the addition of new fields to the LABORATORY 
+ TEST file (#60) and creation of the MASTER LABORATORY TEST file (#66.3)
+ (MLTF).
+  
+ The local facility Laboratory Information Manager(LIM) will need to 
+ associate the local tests/specimen in LABORATORY TEST file (#60)
+ to Gold Names in MASTER LABORATORY TEST file (#66.3).
+  
+ It will be necessary to develop a national standard of Laboratory Tests 
+ and map them to their respective Logical Observation Identifiers Names 
+ and Codes (LOINC Code). The MASTER LABORATORY TEST file will be 
+ populated under the direction of the VHA Laboratory Program Office
+ prior to implementation of any of the data within these files.  The 
+ objective of this process is to enable the most user friendly interface
+ possible in the implementation of the native standardization along with 
+ the activities required to operationalize the change within the VistA 
+ environment and the associated terminology consuming applications. The 
+ Laboratory LIM will match each active test/specimen entry in the
+ LABORATORY TEST file (#60) to an entry in the MASTER LABORATORY
+ TEST file (#66.3) (MLTF).
+ This is all that is required outside the normal day-to-day operations. 
+  
+ When a specimen is processed the Laboratory system does a LOINC
+ Code lookup. This enhancement has added logic to the lookup,
+ that if the (#60) file specimen and test is identified and
+ if the (#60) file test/specimen are associated to the MLTF
+ (#66.3) then the MLTF LOINC Code is used.
+ If the (#60) file specimen and test are not identified or if
+ the (#60) file test/specimen is not associated to the MLTF,
+ then the LOINC Code determining logic that is currently in place
+ will be used.
+  
+ The impact of this enhancement will be on the LIM, who has to
+ associate LABORATORY TEST (#60) test/specimens to the MLTF.
+  
+ When a new Test/Specimen is entered into the LABORATORY TEST file (#60)
+ an email is automatically sent to the NEW TERMINOLOGY RAPID
+ TURNAROUND (NTRT) team for the creation of a new entry in the MLTF.
+ The results of the NTRT process will be one of three possible results.
+ 1) A new entry will be created in the MLTF and will be included in the 
+ next file release.
+ 2) A match was found in the MLTF and the facility should use that entry
+ for a match.
+ 3) There is no LOINC Code that matches this test/specimen and a
+ request for a new LOINC Code has been submitted. 
+ An On Demand report is available to the VHA Laboratory Program Office 
+ that will allow them to monitor new Tests/Specimens creation activity. 
+ The report request subject line will be 'MLTF'.
+  
+ ********************************************
+  
+ After installing this patch and after the MASTER LABORATORY TEST file
+ (#66.3) is deployed to your facility there is an associated follow on
+ informational patch (LR*5.2*481) that should be installed. The
+ informational patch LR*5.2*481 provides instructions for turning on the
+ sending of NTRT messages to the NTRT group.
+  
+  
+ Related Patches
+ ---------------
+ XU*8*665, HDI*1.0*15, LR*5.2*468, LA*5.2*82, LR*5.2*481
+  
+  
+ Until all of the patches listed in the Related Patches section are
+ installed and the MASTER LABORATORY TEST file (#66.3) (MLTF) content
+ has been deployed to your facility the LIM will not have the ability
+ to interact with the MLTF.
+  
+ The MASTER LABORATORY TEST file (#66.3), distributed with the patch is
+ not populated.  Therefore, the options in the LIM NDS MENU should not
+ be used at this time.  In the future, the NTRT team will populate and
+ deploy the MLTF file for all sites.
+ Prior to the population of the MLTF file, creation of a new test in
+ the LABORATORY TEST file(#60) will generate a mailman message to the
+ LIM entering the new site/specimen and members of the facilities G.LMI
+ mail group.  Because the functionality to forward that message on to the
+ NTRT team has not yet been turned on, sites should ignore these messages.
+  
+ When the content of the MASTER LABORATORY TEST file (#66.3) has
+ been deployed the NTRT group sends a message to the
+ NTRT_NOTIFICATION-L listserv.
+  
+ The LIM for the facility shall subscribe to this list using the
+ following web site: http://vaww.listserv.domain.ext/scripts/wa.exe. The 
+ NTRT group does not own the List Serve application. The List Serve
+ is a VA service. The user will need to create an account using a
+ username and password that does NOT synchronize with the user's VA
+ network account.
+  
+ ********************************************
+  
+ Blood Bank Review:
+ ==================
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*468 does not
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*468 does not
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*468 have no effect on Blood
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Patch Components:
+ Bulletins
+ Files and Fields
+ Input Templates
+ Mailman Group
+ Options
+ Routines
+ Backout Plan
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)   Field Name (Number)         New/Modified/Deleted
+ ------------------   -------------------         --------------------
+ LABORATORY TEST (#60)                                       Modified 
+                      TYPE (# 3)                                  Modified
+                      CREATION DATE (# 131)                       New
+                      TEST INACTIVE (# 132)                       New
+                      TEST INACTIVE DATE (# 133)                  New
+                      MLTF NUMBER (# 60.01,30)                    New
+                      MLTF NAME (# 60.01,31)                      New
+                      RESULT/SPECIMEN INACTIVE (# 60.01,32)       New
+                      RESULT/SPECIMEN INACTIVE DATE (# 60.01,33)  New
+                      EXCEPTION FLAG (# 60.01,34)                 New
+                      SPECIMEN CREATE DATE (# 60.01,35)           New
+                      AUDIT DATE/TIME multiple (# 140)            New
+                      AUDIT DATE/TIME (# 60.28,.01)               New
+                      EDIT USER (# 60.28,.02)                     New
+                      EDIT FIELD (# 60.28,.03)                    New
+                      EDIT OLD VALUE (# 60.28,.04)                New
+                      EDIT NEW VALUE (# 60.28,.05)                New
+                      SPECIMEN NUMBER (# 60.28,.06)               New
+  
+  
+ LAB MLTF MANAGED ITEMS (#66.4)                                   New
+                      INSTITUTION POINTER (# .01)                 New
+                      NTRT SEND METHOD (# .02)                    New
+                      AUTO REMINDERS PARAMETER (# .03)            New
+                      AUDIT PURGE DAYS  (# .04)                   New
+                      ISAAC ACTIVE (# .05)                        New
+                      LAB IEN (# .06)                             New
+                      SUBSCRIPT FOR NTRT (# .07)                  New
+                      LAST AUTO TEST ID (# .08)                   New
+                      SEND NTRT MESSAGES (# .1)                   New
+                      DEFAULT NTRT MAIL GROUP (# 1)               New
+                      DEFAULT SITE LAB MAIL GROUP (# 2)           New
+                      SITE LAB SERVER (# 3)                       New
+                      ISAAC WEB ADDRESS (# 4)                     New
+                      ISAAC PORT NUMBER (# 5)                     New
+                      ISAAC NTRT PATH (# 6)                       New
+                      ISAAC SCHEMA NAME (# 7)                     New
+                      ISAAC SCHEMA PATH (# 8)                     New
+  
+ MASTER LABORATORY TEST (#66.3)                              New
+                      LAB TEST NAME (#.01)                        New
+                      ALTERNATE TEST NAME (#.02)                  New
+                      LOINC CODE (# .04)                          New
+                      COMPONENT (# .05)                           New
+                      PROPERTY (# .06)                            New
+                      TIME ASPECT (# .07)                         New
+                      SPECIMEN (# .08)                            New
+                      SCALE (# .09)                               New
+                      METHOD (# 1)                                New
+                      REPLACED BY VHA STANDARD TERM (# 99.97)     New
+                      MASTER ENTRY FOR VUID (# 99.98)             New
+                      VUID (9# 99.99)                             New
+                      EFFECTIVE DATE/TIME multiple (# 99.991)     New
+                      EFFECTIVE DATE/TIME (# 66.399,.01)          New
+                      STATUS (# 66.399,.02)                       New
+  
+  
+ Forms Associated:
+  
+ Form Name       File #   New/Modified/Deleted
+ ---------       ------   --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name  New/Modified/Deleted
+ ---------------  --------------------
+ LMI                Modified
+  
+  
+  
+ Options Associated:
+  
+ Option Name                                               Type     N/M/D
+ -----------                                               ----       --- 
+ Managed Items Edit[LR NDS MANAGED ITEMS EDIT]             INPUT      New
+ Associate Test to NDS MLTF[LR NDS ASSOCIATE TEST TO MLTF] INPUT      New
+ Walk Associate Test to MLTF[LR NDS WALK ASSOCIATE]        INPUT      New
+ Lab to MLTF Extract[LR NDS MLTF EXTRACT]                  OUTPUT     New
+ Purge NDS File 60 Audits[LR NDS AUDIT PURGE]           MAINTENANCE New
+ Print NDS Audits in File 60[LR NDS FILE 60 AUDIT PRINT]   OUTPUT     New
+ Print Specimens Without VUIDS[LR NDS SPECIMENS W/O VUIDS] OUTPUT     New
+ LIM NDS MENU[LR NDS LIM MENU]                             MENU       New
+ Print Specimens with Inactive VUIDS[LR NDS TESTS W/INACTIVE VUIDS]OUTPUT New
+ Lab liaison menu[LRLIAISON]                               MENU      Modified
+  
+  
+ Routines Associated:
+  
+ Routine Name:
+ --------------
+  
+ LR664L              New
+ LRLNCV              Modified
+ LRMLACM             New
+ LRMLED              New
+ LRMLEDA             New
+ LRMLPRG             New
+ LRMLRCP             New
+ LRMLREI             New
+ LRMLRIV             New
+ LRMLWT              New
+ LRSRVR              Modified
+ LRSRVR9             New
+ LRSRVR9A            New
+ LRVER1              Modified
+ LRVRPOC             Modified
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name       Type   File Name (Number)      New/Modified/Deleted 
+ --------------      -----  -----------------       --------------------
+ MANAGED ITEMS EDIT  EDIT   LAB MLTF MANAGED ITEMS (#66.4)     New
+ LAB ENTRY NTRT      EDIT   LABORATORY TEST (#60)              New
+ LAB NTRT ASSOCIATE  EDIT   LABORATORY TEST (#60)              New
+  
+  
+ Additional Information: None
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ None
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+  
+ Upstate NY (Station 640)
+ Boston     (Station 523)
+ Tampa      (Station 673)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from 
+ download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory at the following OI Field Offices:
+  
+ Albany:          domain.ext
+ Hines:           domain.ext  
+ Salt Lake City:  domain.ext
+  
+ Documentation can also be found on the VA Software Documentation 
+ Library at: http://www4.domain.ext/vdl/
+  
+  
+ Title    File Name                FTP Mode
+ -----------------------------------------------------------------------
+ LAB_NDS_VERSION_1_1_DOCS.zip      BINARY
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+  
+ Pre Installation Actions:
+ =========================
+ It is recommended that the Facility perform a VistA system backup prior
+ to installing the patch.
+  
+ It is recommended that a 'Scratch Patch'(SP) be created containing the 
+ following items:
+ Data Definition for the LABORATORY TEST (#60)   'No Data'
+ OPTION: LRLIAISON,
+ and ROUTINES: 
+ LRSRVR, LRVER1, LRLNCV, LRVRPOC, and routine from patch
+ LA*5.2*92 LA7VHLU5.
+ This last is for consistency of usage.  It is recommended that the 
+ LAB Backout Plan (further down in this document)be reviewed.
+  
+ It is recommended that the LIM's Name be recorded for inclusion with 
+ the LMI lab group.
+  
+  
+ Pre-Installation Instructions:
+ ==============================
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than
+ 5 minutes to install.  It is not necessary to disable any options.
+  
+ Prior to the Patch being installed follow steps 1 - 52 in the Backout 
+ Plan section titled: Pre-Implementation work that will be required for 
+ the Backout Plan.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.      From the Kernel Installation and Distribution System Menu, 
+         select the Installation Menu.  From this menu, you may elect to
+         use the following options. When prompted for the INSTALL NAME 
+         enter the patch Build (ex. LR*5.2*468):
+  
+ a.      Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DDs or templates.
+  
+ b.      Compare Transport Global to Current System - This option will
+         (allow you to view all changes that will be made when this 
+         patch is installed.  It compares all components of this patch 
+         routines, DDs, templates, etc.).
+  
+ c.      Verify Checksums in Transport Global - This option will allow 
+         you to ensure the integrity of the routines that are in the 
+         transport global.
+  
+ 4.      From the Installation Menu, select the Install Package(s) 
+         option and choose the patch to install.
+  
+ 5.     When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion 
+         of Install? NO//' 
+  
+  
+ 6.     When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         NO//'
+  
+ 7.     When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' 
+  
+ 8.     If prompted 'Delay Install (Minutes):  (0 - 60): 0//'
+         respond 0.
+  
+  
+ Post-Installation Instructions:
+ ===============================
+  
+ Routine EN^LR664L will be executed to seed the LAB MANAGED ITEMS file
+ (#66.4).
+  
+  
+ Backout Plan:
+ =====================
+  
+ Pre-Implementation work that will be required for the Backout Plan
+ ------------------------------------------------------------------
+ ------------------------------------------------------------------
+  
+ Perform the following procedure to create a Saved Local Patch File.
+ 1.      Create a local KIDS patch.
+ 2.      From the KIDS (Kernel Installation & Distribution System) menu.
+ 3.      Select 'Edits and Distribution'.
+ 4.      Select 'Create a Build Using Namespace'. 
+ 5.      Enter a local patch name and identifier;
+         (for example: ZZZ*1.0*004).
+ 6.      At 'BUILD PACKAGE FILE LINK:' press <enter>.
+ 7.      At 'BUILD TYPE: SINGLE PACKAGE//' press <enter>.
+ 8.      At 'BUILD TRACK PACKAGE NATIONALLY: YES//' enter NO.
+ 9.      At 'Namespace:' press <enter>.
+ 10.     At the menu select 'Edit a Build'.
+ 11.     Enter the 'local package name and identifier' that was 
+         created in Step 5.
+ 12.     For the 'Description:' enter the following: "this is a
+         local patch save for DD file (#60), routines: LA7VHLU5, LRSRVR,
+         LRVER1, LRLNCV. This patch is only to be re-loaded in the event
+         that the LR*5.2*468 and LA*5.2*92 patches need to be backed-
+         out.
+ 13.     Select 'Next Page'.
+ 14.     For 'file List' enter 60 for LABORATORY TEST File.
+ 15.     Send Full or Partial DD...: FULL.
+ 16.     Update the Data Dictionary: YES.
+ 17.     Send Security Code: YES.
+ 18.     Data Comes With File...: NO
+ 19.     At 'COMMAND:' enter 'Close'
+ 20.     Up arrow to the 'COMMAND:' prompt
+ 21.     Enter 'Next Page'.
+ 22.     Down arrow to 'ROUTINE' and press <enter>.
+ 23.     Enter LA7VHLU5   'Send To Site'.
+ 24.     Enter LRSRVR       'Send To Site'.
+ 25.     Enter LRLNCV      'Send To Site'.
+ 26.     Enter LRVER1      'Send To Site'.
+ 27.     Enter LRVRPOC     'Send To Site'
+ 28.     Down arrow to 'OPTION' and press <enter>.
+ 29.     Enter LRLIAISON  and   'Send to Site'. 
+ 30.     Down arrow to the 'COMMAND:' prompt.
+ 31.     Enter 'Close'.
+ 32.     Down arrow to the 'COMMAND:' prompt.
+ 33.     Enter 'Save'.
+ 43.     Enter 'Exit' .
+ 35.     On the menu select 'Transport a Distribution'.
+ 36.     Enter the 'local package name and identifier' that was
+         created in Step 5.
+ 37.     At the 'Another Package Name:' press <enter>.
+ 38.     At the 'OK to continue? YES//' press <enter>.
+  
+ THESE NEXT STEPS ARE FOR A 'HF' TRANSPORT.
+ ------------------------------------------
+  
+ 39.    At the 'Transport through (HF)Host File or (PM)PackMan:' enter 
+        HF
+ 40.    At the 'Enter a Host File:' enter the system file name that will
+         hold the scratch patch. (ex: ZZZ_1-0_004.KID)
+ 41.    At the 'Header Comment:' enter Scratch patch for Lab
+ 42.    At the menu press <enter>
+ 43.    At the KIDS menu press <enter>
+  
+ THESE NEXT STEPS ARE FOR CREATING A 'PM' TRANSPORT.
+ ---------------------------------------------------
+  
+ 44.    At the 'Transport through (HF)Host File or (PM)PackMan:' enter 
+        PM
+ 54.    At the 'Header Comment:' enter Scratch patch for Lab
+ 46.    For the description of Packman Message enter:
+         'This is a saved backup for the lab patch install for 
+          LR*5.2*468 and LA*5.2*92. This scratch build will be used in 
+          the event that the above mentioned installs need to be backed 
+          off.'
+ 47.    At 'EDIT Option:' press <enter>
+ 48.    At the 'Do you wish to secure this message? NO//' enter 'NO'
+ 49.    At the 'Send mail to:' enter your name
+ 50.    At the 'Select basket to send to: IN//' press <enter>
+ 51.    At the 'And Send to:' enter any additional persons that may need
+         to have the scratch patch.
+ 52.    At The 'Select Edits and Distribution <TEST ACCOUNT> Option:' 
+        press <enter>
+  
+ Backout Plan guidance to restore service to the pre-change state
+ ----------------------------------------------------------------
+ ----------------------------------------------------------------
+  
+ Authority for Back-Out
+ ----------------------
+ The local facility management in concurrence with the VHA Pathology and
+ Laboratory Medicine Program Office.
+  
+ Back-Out Risks
+ --------------
+  
+ By backing out LR*5.2*468 and LA*5.2*92, the local facility will have
+ to maintain the local test to LOINC Code mappings.
+  
+ Back-Out Instructions
+ ---------------------
+  
+ Please contact the product development team for assistance if the 
+ installed LR*5.2*468 and LA*5.2*92 patches that needs to be backed out 
+ contains anything at all besides routines before trying backout the 
+ patch.
+  
+ This concludes the Backout Plan
+ ===============================
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;FEB 10 2016;Build 64
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR664L
+    Before:       n/a   After: B96398079  **468**
+Routine Name: LRLNCV
+    Before:  B8183772   After:  B8729767  **232,278,468**
+Routine Name: LRMLACM
+    Before:       n/a   After: B18901427  **468**
+Routine Name: LRMLED
+    Before:       n/a   After:B152483182  **468**
+Routine Name: LRMLEDA
+    Before:       n/a   After:B133294860  **468**
+Routine Name: LRMLPRG
+    Before:       n/a   After:  B3125134  **468**
+Routine Name: LRMLRCP
+    Before:       n/a   After: B20138748  **468**
+Routine Name: LRMLREI
+    Before:       n/a   After: B21744522  **468**
+Routine Name: LRMLRIV
+    Before:       n/a   After: B17383350  **468**
+Routine Name: LRMLWT
+    Before:       n/a   After: B37343726  **468**
+Routine Name: LRSRVR
+    Before: B18215977   After: B19202402  **232,303,346,350,468**
+Routine Name: LRSRVR9
+    Before:       n/a   After:B122473152  **468**
+Routine Name: LRSRVR9A
+    Before:       n/a   After: B42448804  **468**
+Routine Name: LRVER1
+    Before: B33061562   After: B40561385  **42,153,201,215,239,240,263,
+                                           232,286,291,350,468**
+Routine Name: LRVRPOC
+    Before: B82812080   After: B85608617  **290,350,468**
+ 
+Routine list of preceding patches: 278, 350
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 08, 2016
+Completed By:                               Date Completed: MAR 06, 2017
+Released By :                               Date Released : MAR 07, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

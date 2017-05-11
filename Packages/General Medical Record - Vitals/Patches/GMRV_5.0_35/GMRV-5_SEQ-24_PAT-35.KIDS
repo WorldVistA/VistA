@@ -1,0 +1,711 @@
+Released GMRV*5*35 SEQ #24
+Extracted from mail message
+**KIDS**:GMRV*5.0*35^
+
+**INSTALL NAME**
+GMRV*5.0*35
+"BLD",10174,0)
+GMRV*5.0*35^GEN. MED. REC. - VITALS^0^3170127^y
+"BLD",10174,4,0)
+^9.64PA^120.5^1
+"BLD",10174,4,120.5,0)
+120.5
+"BLD",10174,4,120.5,222)
+y^y^f^^^^n
+"BLD",10174,4,"B",120.5,120.5)
+
+"BLD",10174,6.3)
+8
+"BLD",10174,"ABPKG")
+n
+"BLD",10174,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10174,"KRN",.4,0)
+.4
+"BLD",10174,"KRN",.401,0)
+.401
+"BLD",10174,"KRN",.402,0)
+.402
+"BLD",10174,"KRN",.403,0)
+.403
+"BLD",10174,"KRN",.5,0)
+.5
+"BLD",10174,"KRN",.84,0)
+.84
+"BLD",10174,"KRN",3.6,0)
+3.6
+"BLD",10174,"KRN",3.8,0)
+3.8
+"BLD",10174,"KRN",9.2,0)
+9.2
+"BLD",10174,"KRN",9.8,0)
+9.8
+"BLD",10174,"KRN",9.8,"NM",0)
+^9.68A^^0
+"BLD",10174,"KRN",19,0)
+19
+"BLD",10174,"KRN",19.1,0)
+19.1
+"BLD",10174,"KRN",101,0)
+101
+"BLD",10174,"KRN",409.61,0)
+409.61
+"BLD",10174,"KRN",771,0)
+771
+"BLD",10174,"KRN",779.2,0)
+779.2
+"BLD",10174,"KRN",870,0)
+870
+"BLD",10174,"KRN",8989.51,0)
+8989.51
+"BLD",10174,"KRN",8989.52,0)
+8989.52
+"BLD",10174,"KRN",8994,0)
+8994
+"BLD",10174,"KRN","B",.4,.4)
+
+"BLD",10174,"KRN","B",.401,.401)
+
+"BLD",10174,"KRN","B",.402,.402)
+
+"BLD",10174,"KRN","B",.403,.403)
+
+"BLD",10174,"KRN","B",.5,.5)
+
+"BLD",10174,"KRN","B",.84,.84)
+
+"BLD",10174,"KRN","B",3.6,3.6)
+
+"BLD",10174,"KRN","B",3.8,3.8)
+
+"BLD",10174,"KRN","B",9.2,9.2)
+
+"BLD",10174,"KRN","B",9.8,9.8)
+
+"BLD",10174,"KRN","B",19,19)
+
+"BLD",10174,"KRN","B",19.1,19.1)
+
+"BLD",10174,"KRN","B",101,101)
+
+"BLD",10174,"KRN","B",409.61,409.61)
+
+"BLD",10174,"KRN","B",771,771)
+
+"BLD",10174,"KRN","B",779.2,779.2)
+
+"BLD",10174,"KRN","B",870,870)
+
+"BLD",10174,"KRN","B",8989.51,8989.51)
+
+"BLD",10174,"KRN","B",8989.52,8989.52)
+
+"BLD",10174,"KRN","B",8994,8994)
+
+"BLD",10174,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",10174,"QUES",0)
+^9.62^^
+"BLD",10174,"REQB",0)
+^9.611^1^1
+"BLD",10174,"REQB",1,0)
+GMRV*5.0*32^1
+"BLD",10174,"REQB","B","GMRV*5.0*32",1)
+
+"FIA",120.5)
+GMRV VITAL MEASUREMENT
+"FIA",120.5,0)
+^GMR(120.5,
+"FIA",120.5,0,0)
+120.5ID
+"FIA",120.5,0,1)
+y^y^f^^^^n
+"FIA",120.5,0,10)
+
+"FIA",120.5,0,11)
+
+"FIA",120.5,0,"RLRO")
+
+"FIA",120.5,0,"VR")
+5.0^GMRV
+"FIA",120.5,120.5)
+0
+"FIA",120.5,120.505)
+0
+"FIA",120.5,120.506)
+0
+"IX",120.5,120.5,"ACR",0)
+120.5^ACR^Clinical Reminders cross-reference.^MU^^R^IR^I^120.5^^^^^A
+"IX",120.5,120.5,"ACR",.1,0)
+^^9^9^3041209
+"IX",120.5,120.5,"ACR",.1,1,0)
+This cross-reference builds two indexes, one for finding
+"IX",120.5,120.5,"ACR",.1,2,0)
+all patients with a particular vital measurement and one for finding all
+"IX",120.5,120.5,"ACR",.1,3,0)
+the vital measurements a patient has.
+"IX",120.5,120.5,"ACR",.1,4,0)
+The index is stored in the Clinical Reminders index global as:
+"IX",120.5,120.5,"ACR",.1,5,0)
+ ^PXRMINDX(120.5,"IP",MEASUREMENT,DFN,DATE/TIME TAKEN,DAS)
+"IX",120.5,120.5,"ACR",.1,6,0)
+ ^PXRMINDX(120.5,"PI",DFN,MEASUREMENT,DATE/TIME TAKEN,DAS)
+"IX",120.5,120.5,"ACR",.1,7,0)
+Entries that are marked as entered-in-error are not indexed.
+"IX",120.5,120.5,"ACR",.1,8,0)
+Permission to use the PXRM namespace is documented in IAs 3736 and 4114.
+"IX",120.5,120.5,"ACR",.1,9,0)
+For all the details, see the Clinical Reminders Index Technical Guide/Programmer's Manual.
+"IX",120.5,120.5,"ACR",1)
+D SVITAL^GMVPXRM(.X,.DA)
+"IX",120.5,120.5,"ACR",2)
+D KVITAL^GMVPXRM(.X,.DA)
+"IX",120.5,120.5,"ACR",2.5)
+K ^PXRMINDX(120.5)
+"IX",120.5,120.5,"ACR",11.1,0)
+^.114IA^4^4
+"IX",120.5,120.5,"ACR",11.1,1,0)
+1^F^120.5^.01^^1^F
+"IX",120.5,120.5,"ACR",11.1,2,0)
+2^F^120.5^.02^^2^F
+"IX",120.5,120.5,"ACR",11.1,3,0)
+3^F^120.5^.03^^3^F
+"IX",120.5,120.5,"ACR",11.1,4,0)
+4^F^120.5^2
+"IX",120.5,120.5,"AHDRERR",0)
+120.5^AHDRERR^INDEX for HDR^MU^^F^^I^120.5^^^^^A
+"IX",120.5,120.5,"AHDRERR",.1,0)
+^^8^8^3070515
+"IX",120.5,120.5,"AHDRERR",.1,1,0)
+This cross-reference calls a Health Data Repository (HDR) API whenever a
+"IX",120.5,120.5,"AHDRERR",.1,2,0)
+FILE 120.5 entry is marked as entered-in-error.
+"IX",120.5,120.5,"AHDRERR",.1,3,0)
+ 
+"IX",120.5,120.5,"AHDRERR",.1,4,0)
+No actual cross-reference nodes are set or killed.
+"IX",120.5,120.5,"AHDRERR",.1,5,0)
+ 
+"IX",120.5,120.5,"AHDRERR",.1,6,0)
+Calls to the VDEFQM routine are covered by Integration Agreement 4253.
+"IX",120.5,120.5,"AHDRERR",.1,7,0)
+Calls to the VADPT routine are covered by Integration Agreement 3744.
+"IX",120.5,120.5,"AHDRERR",.1,8,0)
+Use of the XDRDVALF variable is covered by Integration Agreement 4690.
+"IX",120.5,120.5,"AHDRERR",1)
+Q:$D(DIU(0))!($$TESTPAT^VADPT($P(^GMR(120.5,DA,0),U,2)))!($G(XDRDVALF)=1)  N ERR,GMVFLAG I $T(QUEUE^VDEFQM)]"" S GMVFLAG=$$QUEUE^VDEFQM("ORU^R01","SUBTYPE=VTLS^IEN="_DA,.ERR)
+"IX",120.5,120.5,"AHDRERR",1.4)
+I X1(1)="",X2(1)]"" S X=1
+"IX",120.5,120.5,"AHDRERR",2)
+Q
+"IX",120.5,120.5,"AHDRERR",2.5)
+Q
+"IX",120.5,120.5,"AHDRERR",11.1,0)
+^.114IA^1^1
+"IX",120.5,120.5,"AHDRERR",11.1,1,0)
+1^F^120.5^2
+"IX",120.5,120.5,"AHDRNEW",0)
+120.5^AHDRNEW^INDEX for HDR^MU^^F^^I^120.5^^^^^A
+"IX",120.5,120.5,"AHDRNEW",.1,0)
+^^8^8^3070515
+"IX",120.5,120.5,"AHDRNEW",.1,1,0)
+This cross-reference calls a Health Data Repository (HDR) API whenever a
+"IX",120.5,120.5,"AHDRNEW",.1,2,0)
+new entry is created.
+"IX",120.5,120.5,"AHDRNEW",.1,3,0)
+ 
+"IX",120.5,120.5,"AHDRNEW",.1,4,0)
+No actual cross-reference nodes are set or killed.
+"IX",120.5,120.5,"AHDRNEW",.1,5,0)
+ 
+"IX",120.5,120.5,"AHDRNEW",.1,6,0)
+Calls to the VDEFQM routine are covered by Integration Agreement 4253.
+"IX",120.5,120.5,"AHDRNEW",.1,7,0)
+Calls to the VADPT routine are covered by Integration Agreement 3744.
+"IX",120.5,120.5,"AHDRNEW",.1,8,0)
+Use of the XDRDVALF variable is covered by Integration Agreement 4690.
+"IX",120.5,120.5,"AHDRNEW",1)
+Q:$D(DIU(0))!($$TESTPAT^VADPT($P(^GMR(120.5,DA,0),U,2)))!($G(XDRDVALF)=1)  N ERR,GMVFLAG I $T(QUEUE^VDEFQM)]"" S GMVFLAG=$$QUEUE^VDEFQM("ORU^R01","SUBTYPE=VTLS^IEN="_DA,.ERR)
+"IX",120.5,120.5,"AHDRNEW",1.4)
+I X1(1)="",X2(1)'="" S X=1
+"IX",120.5,120.5,"AHDRNEW",2)
+Q
+"IX",120.5,120.5,"AHDRNEW",2.5)
+Q
+"IX",120.5,120.5,"AHDRNEW",11.1,0)
+^.114IA^1^1
+"IX",120.5,120.5,"AHDRNEW",11.1,1,0)
+1^F^120.5^.02
+"IX",120.5,120.5,"AHMP",0)
+120.5^AHMP^Event for HMP^MU^^R^^I^120.5^^^^^A
+"IX",120.5,120.5,"AHMP",.1,0)
+^^2^2^3150902
+"IX",120.5,120.5,"AHMP",.1,1,0)
+This index invokes a HMP event point when vitals are modified.
+"IX",120.5,120.5,"AHMP",.1,2,0)
+No actual cross-reference nodes are set or killed.
+"IX",120.5,120.5,"AHMP",1)
+Q:$D(DIU(0))!($G(XDRDVALF)=1)  D GMRV^HMPEVNT(X,DA,$G(X(3)))
+"IX",120.5,120.5,"AHMP",2)
+Q
+"IX",120.5,120.5,"AHMP",2.5)
+Q
+"IX",120.5,120.5,"AHMP",11.1,0)
+^.114IA^3^3
+"IX",120.5,120.5,"AHMP",11.1,1,0)
+1^F^120.5^.02
+"IX",120.5,120.5,"AHMP",11.1,2,0)
+2^F^120.5^1.2
+"IX",120.5,120.5,"AHMP",11.1,3,0)
+3^F^120.5^2
+"MBREQ")
+0
+"PKG",178,-1)
+1^1
+"PKG",178,0)
+GEN. MED. REC. - VITALS^GMRV^Vitals/Measurements Module of General Medical Record.
+"PKG",178,22,0)
+^9.49I^1^1
+"PKG",178,22,1,0)
+5.0^3021028^3021219^432
+"PKG",178,22,1,"PAH",1,0)
+35^3170127^100904
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"SEC","^DIC",120.5,120.5,0,"DD")
+@
+"SEC","^DIC",120.5,120.5,0,"DEL")
+@
+"SEC","^DIC",120.5,120.5,0,"LAYGO")
+@
+"SEC","^DIC",120.5,120.5,0,"RD")
+
+"SEC","^DIC",120.5,120.5,0,"WR")
+@
+"VER")
+8.0^22.0
+"^DD",120.5,120.5,0)
+FIELD^^4^12
+"^DD",120.5,120.5,0,"DDA")
+N
+"^DD",120.5,120.5,0,"DT")
+3170126
+"^DD",120.5,120.5,0,"ID",.02)
+S %I=Y,Y=$S('$D(^(0)):"",$D(^DPT(+$P(^(0),U,2),0))#2:$P(^(0),U,1),1:""),C=$P(^DD(2,.01,0),U,2) D Y^DIQ:Y]"" W "   ",Y,@("$E("_DIC_"%I,0),0)") S Y=%I K %I
+"^DD",120.5,120.5,0,"ID",.03)
+S %I=Y,Y=$S('$D(^(0)):"",$D(^GMRD(120.51,+$P(^(0),U,3),0))#2:$P(^(0),U,1),1:""),C=$P(^DD(120.51,.01,0),U,2) D Y^DIQ:Y]"" W "   ",Y,@("$E("_DIC_"%I,0),0)") S Y=%I K %I
+"^DD",120.5,120.5,0,"IX","AA01",120.5,.01)
+
+"^DD",120.5,120.5,0,"IX","AA02",120.5,.02)
+
+"^DD",120.5,120.5,0,"IX","AA03",120.5,.03)
+
+"^DD",120.5,120.5,0,"IX","B",120.5,.01)
+
+"^DD",120.5,120.5,0,"IX","C",120.5,.02)
+
+"^DD",120.5,120.5,0,"IX","T",120.5,.03)
+
+"^DD",120.5,120.5,0,"NM","GMRV VITAL MEASUREMENT")
+
+"^DD",120.5,120.5,0,"VRPK")
+GMRV
+"^DD",120.5,120.5,.01,0)
+DATE/TIME VITALS TAKEN^RDX^^0;1^S %DT="ETXR" D ^%DT S X=Y K:Y<1 X
+"^DD",120.5,120.5,.01,1,0)
+^.1
+"^DD",120.5,120.5,.01,1,1,0)
+120.5^B
+"^DD",120.5,120.5,.01,1,1,1)
+S ^GMR(120.5,"B",$E(X,1,30),DA)=""
+"^DD",120.5,120.5,.01,1,1,2)
+K ^GMR(120.5,"B",$E(X,1,30),DA)
+"^DD",120.5,120.5,.01,1,1,"%D",0)
+^^1^1^2970203^^^^
+"^DD",120.5,120.5,.01,1,1,"%D",1,0)
+This cross-reference is automatically created on .01 field.
+"^DD",120.5,120.5,.01,1,2,0)
+120.5^AA01^MUMPS
+"^DD",120.5,120.5,.01,1,2,1)
+D AA^GMVFUT0(.01,1,DA,X)
+"^DD",120.5,120.5,.01,1,2,2)
+D AA^GMVFUT0(.01,2,DA,X)
+"^DD",120.5,120.5,.01,1,2,"%D",0)
+^^6^6^3010523^^^^
+"^DD",120.5,120.5,.01,1,2,"%D",1,0)
+This cross-reference sets the "AA" index for the GMRV Vital Measurement
+"^DD",120.5,120.5,.01,1,2,"%D",2,0)
+(120.5) file.  This index is over the Date/Time Vitals Taken (.01),
+"^DD",120.5,120.5,.01,1,2,"%D",3,0)
+Patient (.02) and Vital Type (.03) fields.  The index has the format:
+"^DD",120.5,120.5,.01,1,2,"%D",4,0)
+^GMR(120.5,"AA",GMRVDFN,GMRVTYP,9999999-GMRVDT,DA)="", where GMRVDFN
+"^DD",120.5,120.5,.01,1,2,"%D",5,0)
+is data from .02 field, GMRVTYP is data from .03 field, and GMRVDT is
+"^DD",120.5,120.5,.01,1,2,"%D",6,0)
+data from .01 field.
+"^DD",120.5,120.5,.01,1,2,"DT")
+3010523
+"^DD",120.5,120.5,.01,3)
+
+"^DD",120.5,120.5,.01,8.5)
+^
+"^DD",120.5,120.5,.01,21,0)
+^.001^2^2^3150902^^^^
+"^DD",120.5,120.5,.01,21,1,0)
+This field contains the date/time this vital/measurement was taken by the
+"^DD",120.5,120.5,.01,21,2,0)
+care provider.
+"^DD",120.5,120.5,.01,"DT")
+3010523
+"^DD",120.5,120.5,.02,0)
+PATIENT^RP2'^DPT(^0;2^Q
+"^DD",120.5,120.5,.02,1,0)
+^.1
+"^DD",120.5,120.5,.02,1,1,0)
+120.5^C
+"^DD",120.5,120.5,.02,1,1,1)
+S ^GMR(120.5,"C",$E(X,1,30),DA)=""
+"^DD",120.5,120.5,.02,1,1,2)
+K ^GMR(120.5,"C",$E(X,1,30),DA)
+"^DD",120.5,120.5,.02,1,1,"%D",0)
+^^2^2^2950926^^^
+"^DD",120.5,120.5,.02,1,1,"%D",1,0)
+This regular cross-reference is used to sort the vital/measurement
+"^DD",120.5,120.5,.02,1,1,"%D",2,0)
+records by patient.
+"^DD",120.5,120.5,.02,1,2,0)
+120.5^AA02^MUMPS
+"^DD",120.5,120.5,.02,1,2,1)
+D AA^GMVFUT0(.02,1,DA,X)
+"^DD",120.5,120.5,.02,1,2,2)
+D AA^GMVFUT0(.02,2,DA,X)
+"^DD",120.5,120.5,.02,1,2,"%D",0)
+^^6^6^3010523^^^^
+"^DD",120.5,120.5,.02,1,2,"%D",1,0)
+This cross-reference sets the "AA" index for the GMRV Vital Measurement
+"^DD",120.5,120.5,.02,1,2,"%D",2,0)
+(120.5) file.  This index is over the Date/Time Vitals Taken (.01),
+"^DD",120.5,120.5,.02,1,2,"%D",3,0)
+Patient (.02) and Vital Type (.03) fields.  The index has the format:
+"^DD",120.5,120.5,.02,1,2,"%D",4,0)
+^GMR(120.5,"AA",GMRVDFN,GMRVTYP,9999999-GMRVDT,DA)="", where GMRVDFN
+"^DD",120.5,120.5,.02,1,2,"%D",5,0)
+is data from .02 field, GMRVTYP is data from .03 field, and GMRVDT is
+"^DD",120.5,120.5,.02,1,2,"%D",6,0)
+data from .01 field.
+"^DD",120.5,120.5,.02,1,2,"DT")
+3010523
+"^DD",120.5,120.5,.02,21,0)
+^^2^2^2940207^^^^
+"^DD",120.5,120.5,.02,21,1,0)
+This field contains the name of the patient for whom this vital measurement
+"^DD",120.5,120.5,.02,21,2,0)
+data was entered.  Pointer to the PATIENT (#2) file.
+"^DD",120.5,120.5,.02,"DT")
+3160721
+"^DD",120.5,120.5,.03,0)
+VITAL TYPE^RP120.51'^GMRD(120.51,^0;3^Q
+"^DD",120.5,120.5,.03,1,0)
+^.1
+"^DD",120.5,120.5,.03,1,1,0)
+120.5^T
+"^DD",120.5,120.5,.03,1,1,1)
+S ^GMR(120.5,"T",$E(X,1,30),DA)=""
+"^DD",120.5,120.5,.03,1,1,2)
+K ^GMR(120.5,"T",$E(X,1,30),DA)
+"^DD",120.5,120.5,.03,1,1,"%D",0)
+^^2^2^2950926^^^
+"^DD",120.5,120.5,.03,1,1,"%D",1,0)
+This regular cross-reference is created to sort the file by the type of
+"^DD",120.5,120.5,.03,1,1,"%D",2,0)
+measurement.
+"^DD",120.5,120.5,.03,1,2,0)
+120.5^AA03^MUMPS
+"^DD",120.5,120.5,.03,1,2,1)
+D AA^GMVFUT0(.03,1,DA,X)
+"^DD",120.5,120.5,.03,1,2,2)
+D AA^GMVFUT0(.03,2,DA,X)
+"^DD",120.5,120.5,.03,1,2,"%D",0)
+^^6^6^3010523^^^^
+"^DD",120.5,120.5,.03,1,2,"%D",1,0)
+This cross-reference sets the "AA" index for the GMRV Vital Measurement
+"^DD",120.5,120.5,.03,1,2,"%D",2,0)
+(120.5) file.  This index is over the Date/Time Vitals Taken (.01),
+"^DD",120.5,120.5,.03,1,2,"%D",3,0)
+Patient (.02) and Vital Type (.03) fields.  The index has the format:
+"^DD",120.5,120.5,.03,1,2,"%D",4,0)
+^GMR(120.5,"AA",GMRVDFN,GMRVTYP,9999999-GMRVDT,DA)="", where GMRVDFN
+"^DD",120.5,120.5,.03,1,2,"%D",5,0)
+is data from .02 field, GMRVTYP is data from .03 field, and GMRVDT is
+"^DD",120.5,120.5,.03,1,2,"%D",6,0)
+data from .01 field.
+"^DD",120.5,120.5,.03,1,2,"DT")
+3010523
+"^DD",120.5,120.5,.03,21,0)
+^^2^2^2931222^^^^
+"^DD",120.5,120.5,.03,21,1,0)
+This field denotes the type of measurement for this record.  Pointer to
+"^DD",120.5,120.5,.03,21,2,0)
+the GMRV VITAL TYPE (#120.51) file.
+"^DD",120.5,120.5,.03,"DT")
+3010523
+"^DD",120.5,120.5,.04,0)
+DATE/TIME VITALS ENTERED^RD^^0;4^S %DT="ESTXR" D ^%DT S X=Y K:Y<1 X
+"^DD",120.5,120.5,.04,1,0)
+^.1^^0
+"^DD",120.5,120.5,.04,21,0)
+^^1^1^2931229^^^^
+"^DD",120.5,120.5,.04,21,1,0)
+This field contains the date/time that this record was entered.
+"^DD",120.5,120.5,.04,"DT")
+2960618
+"^DD",120.5,120.5,.05,0)
+HOSPITAL LOCATION^R*P44'^SC(^0;5^S DIC("S")="I $P(^(0),U,3)'=""Z""" D ^DIC K DIC S DIC=DIE,X=+Y K:Y<0 X
+"^DD",120.5,120.5,.05,12)
+Select valid Hospital Location.
+"^DD",120.5,120.5,.05,12.1)
+S DIC("S")="I $P(^(0),U,3)'=""Z"""
+"^DD",120.5,120.5,.05,21,0)
+^^2^2^2931222^^^
+"^DD",120.5,120.5,.05,21,1,0)
+This field contains the location where this measurement was taken.  Pointer 
+"^DD",120.5,120.5,.05,21,2,0)
+to the HOSPITAL LOCATION (#44) file.
+"^DD",120.5,120.5,.05,"DT")
+2890728
+"^DD",120.5,120.5,.06,0)
+ENTERED BY^RP200'^VA(200,^0;6^Q
+"^DD",120.5,120.5,.06,21,0)
+^^2^2^2931229^^^
+"^DD",120.5,120.5,.06,21,1,0)
+This field contains the name of the person who edited the file entry.  
+"^DD",120.5,120.5,.06,21,2,0)
+Pointer to the NEW PERSON (#200) file.
+"^DD",120.5,120.5,.06,"DT")
+2931222
+"^DD",120.5,120.5,1.2,0)
+RATE^FX^^0;8^K:'$$EN2^GMVFUT0(DA,.X) X
+"^DD",120.5,120.5,1.2,3)
+
+"^DD",120.5,120.5,1.2,4)
+D RATEHLP^GMVFUT0(DA)
+"^DD",120.5,120.5,1.2,21,0)
+^^2^2^2970123^
+"^DD",120.5,120.5,1.2,21,1,0)
+This field contains the numeric value associated with this vital
+"^DD",120.5,120.5,1.2,21,2,0)
+measurement.
+"^DD",120.5,120.5,1.2,"DT")
+3160721
+"^DD",120.5,120.5,1.4,0)
+SUPPLEMENTAL O2^F^^0;10^K:$L(X)>30!($L(X)<1) X
+"^DD",120.5,120.5,1.4,3)
+Answer must be 1-30 characters in length.
+"^DD",120.5,120.5,1.4,21,0)
+^^6^6^2970121^
+"^DD",120.5,120.5,1.4,21,1,0)
+This field stores the information of the supplemental oxygen as follows:
+"^DD",120.5,120.5,1.4,21,2,0)
+  .5-20 l/min (liters/minute)   and/or
+"^DD",120.5,120.5,1.4,21,3,0)
+  21-100 % of oxygen concentration
+"^DD",120.5,120.5,1.4,21,4,0)
+For example: 4.5 l/min 40%
+"^DD",120.5,120.5,1.4,21,5,0)
+             4.5 l/min
+"^DD",120.5,120.5,1.4,21,6,0)
+             40 %
+"^DD",120.5,120.5,1.4,"DT")
+2970110
+"^DD",120.5,120.5,2,0)
+ENTERED IN ERROR^SI^1:YES;^2;1^Q
+"^DD",120.5,120.5,2,1,0)
+^.1^^0
+"^DD",120.5,120.5,2,21,0)
+^^1^1^2931229^^
+"^DD",120.5,120.5,2,21,1,0)
+This field indicates that this record was flagged as entered in error.
+"^DD",120.5,120.5,2,"DEL",1,0)
+I 1
+"^DD",120.5,120.5,2,"DT")
+3160721
+"^DD",120.5,120.5,3,0)
+ERROR ENTERED BY^P200'I^VA(200,^2;2^Q
+"^DD",120.5,120.5,3,21,0)
+^^2^2^2931229^^^^
+"^DD",120.5,120.5,3,21,1,0)
+This field indicates the name of the person responsible for entering the 
+"^DD",120.5,120.5,3,21,2,0)
+record in error.  Pointer to the NEW PERSON (#200) file.
+"^DD",120.5,120.5,3,"DEL",1,0)
+I 1
+"^DD",120.5,120.5,3,"DT")
+2920113
+"^DD",120.5,120.5,4,0)
+REASON ENTERED IN ERROR^120.506S^^2.1;0
+"^DD",120.5,120.5,4,21,0)
+^^2^2^2931229^^^^
+"^DD",120.5,120.5,4,21,1,0)
+This multiple contains a list of reasons for entering a vital measurement 
+"^DD",120.5,120.5,4,21,2,0)
+in error.
+"^DD",120.5,120.5,5,0)
+QUALIFIER^120.505P^^5;0
+"^DD",120.5,120.5,5,21,0)
+^^1^1^2970121^
+"^DD",120.5,120.5,5,21,1,0)
+A list of qualifiers associated with this measurement.
+"^DD",120.5,120.5,5,"DT")
+2970121
+"^DD",120.5,120.505,0)
+QUALIFIER SUB-FIELD^^.01^1
+"^DD",120.5,120.505,0,"DT")
+2960719
+"^DD",120.5,120.505,0,"IX","B",120.505,.01)
+
+"^DD",120.5,120.505,0,"NM","QUALIFIER")
+
+"^DD",120.5,120.505,0,"UP")
+120.5
+"^DD",120.5,120.505,.01,0)
+QUALIFIER^M*P120.52'X^GMRD(120.52,^0;1^S DIC("S")="I $$EN1^GMVFUT0(Y,DA)" D ^DIC K DIC S DIC=DIE,X=+Y K:Y<0 X
+"^DD",120.5,120.505,.01,1,0)
+^.1
+"^DD",120.5,120.505,.01,1,1,0)
+120.505^B
+"^DD",120.5,120.505,.01,1,1,1)
+S ^GMR(120.5,DA(1),5,"B",$E(X,1,30),DA)=""
+"^DD",120.5,120.505,.01,1,1,2)
+K ^GMR(120.5,DA(1),5,"B",$E(X,1,30),DA)
+"^DD",120.5,120.505,.01,1,1,"%D",0)
+^^1^1^3010523^^
+"^DD",120.5,120.505,.01,1,1,"%D",1,0)
+This cross-reference is automatically created on .01 field.
+"^DD",120.5,120.505,.01,3)
+
+"^DD",120.5,120.505,.01,12)
+Select qualifier associated with the Vital Type of this measurement.
+"^DD",120.5,120.505,.01,12.1)
+S DIC("S")="I $$EN1^GMVFUT0(Y,DA)"
+"^DD",120.5,120.505,.01,21,0)
+^^2^2^2970121^^
+"^DD",120.5,120.505,.01,21,1,0)
+This field contains the name of the qualifier associated with
+"^DD",120.5,120.505,.01,21,2,0)
+this measurement.
+"^DD",120.5,120.505,.01,"DT")
+3010523
+"^DD",120.5,120.506,0)
+REASON ENTERED IN ERROR SUB-FIELD^^.02^2
+"^DD",120.5,120.506,0,"DT")
+3170126
+"^DD",120.5,120.506,0,"NM","REASON ENTERED IN ERROR")
+
+"^DD",120.5,120.506,0,"UP")
+120.5
+"^DD",120.5,120.506,.01,0)
+REASON ENTERED IN ERROR^MS^1:INCORRECT DATE/TIME;2:INCORRECT READING;3:INCORRECT PATIENT;4:INVALID RECORD;^0;1^Q
+"^DD",120.5,120.506,.01,21,0)
+^^1^1^2931229^^^
+"^DD",120.5,120.506,.01,21,1,0)
+This field records the reason for entering the data in error.
+"^DD",120.5,120.506,.01,"DT")
+2880831
+"^DD",120.5,120.506,.02,0)
+DATE REASON ENTERED IN ERROR^D^^0;2^S %DT="ESTX" D ^%DT S X=Y K:Y<1 X
+"^DD",120.5,120.506,.02,3)
+Enter the date and time the reason entered in error is entered.
+"^DD",120.5,120.506,.02,21,0)
+^^1^1^3170126^
+"^DD",120.5,120.506,.02,21,1,0)
+This is the date and time the reason entered in error was entered.
+"^DD",120.5,120.506,.02,"DT")
+3170126
+"^DIC",120.5,120.5,0)
+GMRV VITAL MEASUREMENT^120.5ID
+"^DIC",120.5,120.5,0,"GL")
+^GMR(120.5,
+"^DIC",120.5,120.5,"%",0)
+^1.005^^0
+"^DIC",120.5,120.5,"%D",0)
+^^2^2^2970207^^^^
+"^DIC",120.5,120.5,"%D",1,0)
+This file contains vital sign information and other measurement data for a 
+"^DIC",120.5,120.5,"%D",2,0)
+patient.
+"^DIC",120.5,"B","GMRV VITAL MEASUREMENT",120.5)
+
+"BLD",10174,6)
+^24
+**END**
+**END**
+

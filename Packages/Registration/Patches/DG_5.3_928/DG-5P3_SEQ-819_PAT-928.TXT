@@ -1,0 +1,123 @@
+$TXT Created by                 K at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 08/25/16 at 11:49
+=============================================================================
+Run Date: APR 06, 2017                     Designation: DG*5.3*928
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #819                    Status: Released
+                  Compliance Date: MAY 07, 2017
+=============================================================================
+
+Associated patches: (v)DG*5.3*841  <<= must be installed BEFORE `DG*5.3*928'
+
+Subject: DISCONTINUE REMOTE ELIGIBILITY EMAIL NOTIFICATIONS TO LEGACY HEC
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The Registration/Enrollment system is sending notification emails to a 
+ remote email address that has been decommissioned. 
+  
+                      
+ ASSOCIATED TICKETS: 
+ ===================
+ 1.)  I6407207FY16 - Did the 'HEC Alert Process' replace the need for 
+                     messages
+   
+  
+ ASSOCIATED NSR: 
+ ===============
+ N/A
+  
+   
+ PARTICIPATING TEST SITES: 
+ =========================
+ VA Maryland HCS
+ VISN 2 - Upstate New York HCS
+   
+  
+ TICKET OVERVIEW:
+ ================
+ 1.)    I6407207FY16 - Did the 'HEC Alert Process' replace the need for 
+                       messages
+  
+  Problem:
+  --------
+  When there is an issue regarding the upload of enrollment or 
+  eligibility data, the Registration/Enrollment system is sending 
+  notification emails to a remote email address (IVM.DOMAIN.EXT)
+  that has been decommissioned. 
+  
+  
+  Resolution:
+  -----------
+  Routine DGENUPL3 has been modified to not send notification emails to 
+  the remote email address but continue to send notification emails to the
+  internal mail group.
+   
+  
+  
+  INSTALLATION INSTRUCTIONS:
+  --------------------------
+  This patch may be run with users on the system, but it is recommended
+  that it be queued to run after normal business hours.
+   
+  Installation will take less than 5 minutes.
+  Suggested time to install: non-peak requirement hours.
+   
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter DG*5.3*928).      
+  
+         a. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         b. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+         c. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch 
+            is installed.
+         d. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+  
+      
+      4. Use the Install Package(s) option and select the package 
+         DG*5.3*928.
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONs during install? NO//"
+         respond No.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//" respond No.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;REGISTRATION;**[Patch List]**;Aug 13,1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGENUPL3
+    Before: B75053019   After: B74443455  **147,230,232,377,404,451,653,
+                                           688,793,797,841,928**
+ 
+Routine list of preceding patches: 841
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 21, 2016
+Completed By:                               Date Completed: APR 04, 2017
+Released By :                               Date Released : APR 06, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,93 @@
+$TXT Created by                    at CHEY59.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 07/12/16 at 10:50
+=============================================================================
+Run Date: MAR 01, 2017                     Designation: HDI*1*16
+Package : HDI - HEALTH DATA & INFORMATICS     Priority: Mandatory
+Version : 1        SEQ #12                      Status: Released
+                  Compliance Date: APR 01, 2017
+=============================================================================
+
+Associated patches: (v)HDI*1*6     <<= must be installed BEFORE `HDI*1*16'
+                    (v)XU*8*666    <<= must be installed BEFORE `HDI*1*16'
+
+Subject: Radiology Native Domain Standardization
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Other
+
+Description:
+============
+
+ In the post-init routine this patch will add data for the RADIOLOGY (RA)
+ Domain to the HDIS Domain file (#7115.1). 
+  
+ It will also add data for the File/Fields being standardized for RA to the 
+ HDIS File/Field file (#7115.6). These entries are being added to the files 
+ for VHA Unique Identifier (VUID) Seeding which is part of standardizing the 
+ RADIOLOGY MASTER PROCEDURE file.
+  
+ Remedy Tickets addressed by this patch:
+ ======================================
+ NA
+  
+ Installation Instructions:
+ =========================
+ This patch can be installed with users on the system with installation
+ taking less than 1 minute.
+  
+  Note: The following is a list of REQUIRED builds for HDI*1.0*16.
+        KIDS will not allow the installation of this patch
+        without the prior installation of them.
+  
+            HDI*1.0*6
+            
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu. [Note:
+      TEXT PRINT/DISPLAY option in the PackMan menu will display the
+      patch text only.]
+   
+   2. From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+  
+   3. From this menu, you may elect to use the following options
+      (when prompted for INSTALL NAME, enter HDI*1.0*16):
+  
+        a.  Backup a Transport Global
+        b.  Compare Transport Global to Current System
+        c.  Verify Checksums in Transport Global
+        d.  Print Transport Global
+  
+   4. Use the Install Package(s) option and select the package HDI*1.0*16.
+  
+   5. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      YES//', respond NO.
+  
+   6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? YES//', respond NO.
+    
+   7. Routine HDI1016A may be deleted after successful 
+      installation of this patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;HEALTH DATA & INFORMATICS;**[Patch List]**;Feb 22, 2005;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HDI1016A
+    Before:       n/a   After:  B5370925  **16**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 29, 2016
+Completed By:                               Date Completed: FEB 23, 2017
+Released By :                               Date Released : MAR 01, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

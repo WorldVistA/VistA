@@ -1,0 +1,1807 @@
+Released OR*3*420 SEQ #374
+Extracted from mail message
+**KIDS**:OR*3.0*420^
+
+**INSTALL NAME**
+OR*3.0*420
+"BLD",9448,0)
+OR*3.0*420^ORDER ENTRY/RESULTS REPORTING^0^3170119^y
+"BLD",9448,1,0)
+^^216^216^3161222^
+"BLD",9448,1,1,0)
+Patch OR*3.0*420 modifies the existing Pharmacy package in VistA to
+"BLD",9448,1,2,0)
+display the most recent associated lab results when a clinician is
+"BLD",9448,1,3,0)
+ordering medication using the Computerized Patient Record System (CPRS)
+"BLD",9448,1,4,0)
+Inpatient or Outpatient Medication Order dialogs. Without this
+"BLD",9448,1,5,0)
+modification, the clinician must look in numerous locations for this
+"BLD",9448,1,6,0)
+information. The information is important for safe and effective
+"BLD",9448,1,7,0)
+medication management. 
+"BLD",9448,1,8,0)
+ 
+"BLD",9448,1,9,0)
+The lab results for the most recent lab test associated with an Orderable 
+"BLD",9448,1,10,0)
+Item will be displayed in the Information field in the Medication Order 
+"BLD",9448,1,11,0)
+dialog once an Orderable Item is selected. Once a dispense drug is chosen 
+"BLD",9448,1,12,0)
+(by selecting a dosage in the order dialog), the lab test information 
+"BLD",9448,1,13,0)
+will be replaced by the National Standard Drug Information found in the
+"BLD",9448,1,14,0)
+MESSAGE (#101) field of the DRUG (#50) file. This message currently
+"BLD",9448,1,15,0)
+shows in CPRS when ordering a dispense drug and is not changed by this
+"BLD",9448,1,16,0)
+modification.
+"BLD",9448,1,17,0)
+ 
+"BLD",9448,1,18,0)
+Note: Follow-on work to allow persistence of the lab test information in 
+"BLD",9448,1,19,0)
+the Medication Order dialog is expected to be addressed in CPRS v32.
+"BLD",9448,1,20,0)
+ 
+"BLD",9448,1,21,0)
+In order to monitor lab results, lab tests are associated with an 
+"BLD",9448,1,22,0)
+Orderable Item using the PSS DRUG ENTER/EDIT option in VistA by entering 
+"BLD",9448,1,23,0)
+a lab test in the LAB TEST MONITOR (#17.2) field of the DRUG (#50) file. 
+"BLD",9448,1,24,0)
+ 
+"BLD",9448,1,25,0)
+The NSR for this intake addresses the following requirement: 
+"BLD",9448,1,26,0)
+ 
+"BLD",9448,1,27,0)
+* VHBAO:NEED126: Ability to display laboratory test results, in a single 
+"BLD",9448,1,28,0)
+                 view, for ordering inpatient and outpatient medications
+"BLD",9448,1,29,0)
+                 while viewing the Medication Order dialog in CPRS.
+"BLD",9448,1,30,0)
+ 
+"BLD",9448,1,31,0)
+This modification has been implemented locally at the VA centers in 
+"BLD",9448,1,32,0)
+Clarksburg, WV; Hines, IL; Iron Mountain, MI; and Chicago, IL.
+"BLD",9448,1,33,0)
+ 
+"BLD",9448,1,34,0)
+This build contains the components for the CPRS Graphical User Interface 
+"BLD",9448,1,35,0)
+(GUI) to display relevant laboratory results in the Medication Ordering 
+"BLD",9448,1,36,0)
+dialog.
+"BLD",9448,1,37,0)
+ 
+"BLD",9448,1,38,0)
+To use the features, the following setup steps are advised:
+"BLD",9448,1,39,0)
+ * Establish drug-to-lab mapping relationship using the PSS DRUG 
+"BLD",9448,1,40,0)
+   ENTER/EDIT option.  Follow the OUTPATIENT marking pathway to set up a
+"BLD",9448,1,41,0)
+   LAB MONITOR drug.  Lab name, specimen type and number of days to look
+"BLD",9448,1,42,0)
+   back are required fields for the program to work.
+"BLD",9448,1,43,0)
+ 
+"BLD",9448,1,44,0)
+ * If not already set correctly, review the site local terms for SERUM 
+"BLD",9448,1,45,0)
+   CREATININE and SERUM SPECIMEN in the CPRS Order Check menus.  This is 
+"BLD",9448,1,46,0)
+   required for calculation of Creatinine Clearance.
+"BLD",9448,1,47,0)
+ 
+"BLD",9448,1,48,0)
+ * When the lab requested is "Creatinine", a second line for CrCl will be 
+"BLD",9448,1,49,0)
+   returned.
+"BLD",9448,1,50,0)
+ 
+"BLD",9448,1,51,0)
+The routine ORWDPLM2 is included.  This is a version of the display that
+"BLD",9448,1,52,0)
+will work as a TIU OBJECT.  The object method is:
+"BLD",9448,1,53,0)
+ 
+"BLD",9448,1,54,0)
+S X=$$SL^ORWDLPM2(DFN,
+"BLD",9448,1,55,0)
+$S($G(X0)]"":$P(X0,U),$G(NODE0)]"":$P(NODE0,U),1:""),"^TMP($J,""ORWDPLM2""
+"BLD",9448,1,56,0)
+)")
+"BLD",9448,1,57,0)
+ 
+"BLD",9448,1,58,0)
+The display is wrapped for ease of reading, but the object method must be 
+"BLD",9448,1,59,0)
+entered as part of one single line.
+"BLD",9448,1,60,0)
+ 
+"BLD",9448,1,61,0)
+Patch Components
+"BLD",9448,1,62,0)
+================
+"BLD",9448,1,63,0)
+ 
+"BLD",9448,1,64,0)
+Files & Fields Associated:
+"BLD",9448,1,65,0)
+ 
+"BLD",9448,1,66,0)
+File Name (Number)       Field Name (Number)       New/Modified/Deleted
+"BLD",9448,1,67,0)
+-----------------------  ------------------------  --------------------
+"BLD",9448,1,68,0)
+N/A
+"BLD",9448,1,69,0)
+ 
+"BLD",9448,1,70,0)
+Forms Associated:
+"BLD",9448,1,71,0)
+ 
+"BLD",9448,1,72,0)
+Form Name                File #       New/Modified/Deleted
+"BLD",9448,1,73,0)
+---------                ------       --------------------
+"BLD",9448,1,74,0)
+N/A
+"BLD",9448,1,75,0)
+ 
+"BLD",9448,1,76,0)
+ 
+"BLD",9448,1,77,0)
+Mail Groups Associated:
+"BLD",9448,1,78,0)
+ 
+"BLD",9448,1,79,0)
+Mail Group Name          New/Modified/Deleted
+"BLD",9448,1,80,0)
+---------------          --------------------
+"BLD",9448,1,81,0)
+N/A
+"BLD",9448,1,82,0)
+ 
+"BLD",9448,1,83,0)
+ 
+"BLD",9448,1,84,0)
+Options Associated:
+"BLD",9448,1,85,0)
+ 
+"BLD",9448,1,86,0)
+Option Name            Type               New/Modified/Deleted
+"BLD",9448,1,87,0)
+-----------            ----               --------------------
+"BLD",9448,1,88,0)
+N/A
+"BLD",9448,1,89,0)
+ 
+"BLD",9448,1,90,0)
+ 
+"BLD",9448,1,91,0)
+Protocols Associated:
+"BLD",9448,1,92,0)
+ 
+"BLD",9448,1,93,0)
+Protocol Name       New/Modified/Deleted
+"BLD",9448,1,94,0)
+-------------       --------------------
+"BLD",9448,1,95,0)
+N/A
+"BLD",9448,1,96,0)
+ 
+"BLD",9448,1,97,0)
+Security Keys Associated:
+"BLD",9448,1,98,0)
+ 
+"BLD",9448,1,99,0)
+Security Key Name
+"BLD",9448,1,100,0)
+-----------------
+"BLD",9448,1,101,0)
+N/A
+"BLD",9448,1,102,0)
+ 
+"BLD",9448,1,103,0)
+ 
+"BLD",9448,1,104,0)
+Templates Associated:
+"BLD",9448,1,105,0)
+ 
+"BLD",9448,1,106,0)
+Template Name      Type      File Name (Number)  New/Modified/Deleted 
+"BLD",9448,1,107,0)
+-------------      ----      ------------------  --------------------
+"BLD",9448,1,108,0)
+N/A
+"BLD",9448,1,109,0)
+ 
+"BLD",9448,1,110,0)
+ 
+"BLD",9448,1,111,0)
+Additional Information:
+"BLD",9448,1,112,0)
+N/A
+"BLD",9448,1,113,0)
+ 
+"BLD",9448,1,114,0)
+ 
+"BLD",9448,1,115,0)
+New Service Requests (NSRs)
+"BLD",9448,1,116,0)
+----------------------------
+"BLD",9448,1,117,0)
+20100311  CPRS LAB MONITORING
+"BLD",9448,1,118,0)
+ 
+"BLD",9448,1,119,0)
+ 
+"BLD",9448,1,120,0)
+Patient Safety Issues (PSIs)
+"BLD",9448,1,121,0)
+-----------------------------
+"BLD",9448,1,122,0)
+N/A
+"BLD",9448,1,123,0)
+ 
+"BLD",9448,1,124,0)
+ 
+"BLD",9448,1,125,0)
+Remedy Ticket(s) & Overview
+"BLD",9448,1,126,0)
+---------------------------
+"BLD",9448,1,127,0)
+N/A
+"BLD",9448,1,128,0)
+ 
+"BLD",9448,1,129,0)
+Problem:
+"BLD",9448,1,130,0)
+--------
+"BLD",9448,1,131,0)
+ 
+"BLD",9448,1,132,0)
+Resolution:
+"BLD",9448,1,133,0)
+-----------
+"BLD",9448,1,134,0)
+ 
+"BLD",9448,1,135,0)
+ 
+"BLD",9448,1,136,0)
+Test Sites:
+"BLD",9448,1,137,0)
+----------
+"BLD",9448,1,138,0)
+James H. Quillen VA Medical Center (Mountain Home)      
+"BLD",9448,1,139,0)
+VA Maryland Healthcare (Baltimore, Loch Raven & Perry Point)        
+"BLD",9448,1,140,0)
+Tomah VA Medical Center
+"BLD",9448,1,141,0)
+Edward Hines Jr., VA Hospital
+"BLD",9448,1,142,0)
+ 
+"BLD",9448,1,143,0)
+Software and Documentation Retrieval Instructions:
+"BLD",9448,1,144,0)
+---------------------------------------------------- 
+"BLD",9448,1,145,0)
+Software being released as a host file and/or documentation describing the
+"BLD",9448,1,146,0)
+new functionality introduced by this patch are available.
+"BLD",9448,1,147,0)
+ 
+"BLD",9448,1,148,0)
+The preferred method is to retrieve files from download.vista.domain.ext.
+"BLD",9448,1,149,0)
+This transmits the files from the first available server. Sites may also
+"BLD",9448,1,150,0)
+elect to retrieve files directly from a specific server. 
+"BLD",9448,1,151,0)
+ 
+"BLD",9448,1,152,0)
+Sites may retrieve the software and/or documentation directly using Secure
+"BLD",9448,1,153,0)
+File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+"BLD",9448,1,154,0)
+following OI Field Offices:
+"BLD",9448,1,155,0)
+   
+"BLD",9448,1,156,0)
+Albany:                 domain.ext
+"BLD",9448,1,157,0)
+Hines:                  domain.ext    
+"BLD",9448,1,158,0)
+Salt Lake City:         domain.ext
+"BLD",9448,1,159,0)
+   
+"BLD",9448,1,160,0)
+Documentation can also be found on the VA Software Documentation Library 
+"BLD",9448,1,161,0)
+at: http://www4.domain.ext/vdl/
+"BLD",9448,1,162,0)
+ 
+"BLD",9448,1,163,0)
+Pre/Post Installation Overview
+"BLD",9448,1,164,0)
+------------------------------
+"BLD",9448,1,165,0)
+There are no Pre-installation routines associated with this patch.
+"BLD",9448,1,166,0)
+ 
+"BLD",9448,1,167,0)
+ 
+"BLD",9448,1,168,0)
+Pre-Installation Instructions
+"BLD",9448,1,169,0)
+-------------------------
+"BLD",9448,1,170,0)
+This patch may be installed with users on the system although it is
+"BLD",9448,1,171,0)
+recommended that it be installed during non-peak hours to minimize 
+"BLD",9448,1,172,0)
+potential disruption to users.  This patch should take less than 5 
+"BLD",9448,1,173,0)
+minutes to install.
+"BLD",9448,1,174,0)
+ 
+"BLD",9448,1,175,0)
+ 
+"BLD",9448,1,176,0)
+Installation Instructions
+"BLD",9448,1,177,0)
+-----------------------------
+"BLD",9448,1,178,0)
+1.      Choose the PackMan message containing this patch.
+"BLD",9448,1,179,0)
+ 
+"BLD",9448,1,180,0)
+2.      Choose the INSTALL/CHECK MESSAGE PackMan option.  
+"BLD",9448,1,181,0)
+ 
+"BLD",9448,1,182,0)
+3.      From the Kernel Installation and Distribution System Menu, select 
+"BLD",9448,1,183,0)
+        the Installation Menu.  From this menu, you may elect to use the 
+"BLD",9448,1,184,0)
+        following options. When prompted for the INSTALL NAME enter
+"BLD",9448,1,185,0)
+        OR*3.0*420.
+"BLD",9448,1,186,0)
+ 
+"BLD",9448,1,187,0)
+        a.  Verify Checksums in Transport Global - This option will 
+"BLD",9448,1,188,0)
+            allow you to ensure the integrity of the routines that are in
+"BLD",9448,1,189,0)
+            the transport global.
+"BLD",9448,1,190,0)
+        b.  Print Transport Global - This option will allow you to view
+"BLD",9448,1,191,0)
+            the components of the KIDS build.
+"BLD",9448,1,192,0)
+        c.  Compare Transport Global to Current System - This option will
+"BLD",9448,1,193,0)
+            allow you to view all changes that will be made when this 
+"BLD",9448,1,194,0)
+            patch is installed.  It compares all components of this patch
+"BLD",9448,1,195,0)
+            (routines, DD's, templates, etc.).
+"BLD",9448,1,196,0)
+        d.  Backup a Transport Global - This option will create a backup
+"BLD",9448,1,197,0)
+            message of any routines exported with this patch. It will not
+"BLD",9448,1,198,0)
+            backup any other changes such as DD's or templates.
+"BLD",9448,1,199,0)
+ 
+"BLD",9448,1,200,0)
+4.      From the Installation Menu, select the Install Package(s) option 
+"BLD",9448,1,201,0)
+        and choose the patch to install.
+"BLD",9448,1,202,0)
+ 
+"BLD",9448,1,203,0)
+5.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+"BLD",9448,1,204,0)
+        NO// Press <Enter>
+"BLD",9448,1,205,0)
+ 
+"BLD",9448,1,206,0)
+6.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+"BLD",9448,1,207,0)
+        and Protocols? NO// Press <Enter>
+"BLD",9448,1,208,0)
+ 
+"BLD",9448,1,209,0)
+7.      If prompted "Delay Install (Minutes):  (0 - 60): 0// enter 0.
+"BLD",9448,1,210,0)
+ 
+"BLD",9448,1,211,0)
+ 
+"BLD",9448,1,212,0)
+Post-Installation Instructions
+"BLD",9448,1,213,0)
+------------------------------
+"BLD",9448,1,214,0)
+A site Pharmacy CAC/ADPAC will have to set the OR CPRS LAB DISPLAY 
+"BLD",9448,1,215,0)
+ENABLEd parameter to a value of "Yes" using he XPAR MENU TOOLS option 
+"BLD",9448,1,216,0)
+in order for this functionality to be accessed.
+"BLD",9448,4,0)
+^9.64PA^^
+"BLD",9448,6.3)
+7
+"BLD",9448,"ABPKG")
+n
+"BLD",9448,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9448,"KRN",.4,0)
+.4
+"BLD",9448,"KRN",.401,0)
+.401
+"BLD",9448,"KRN",.402,0)
+.402
+"BLD",9448,"KRN",.403,0)
+.403
+"BLD",9448,"KRN",.5,0)
+.5
+"BLD",9448,"KRN",.84,0)
+.84
+"BLD",9448,"KRN",3.6,0)
+3.6
+"BLD",9448,"KRN",3.8,0)
+3.8
+"BLD",9448,"KRN",9.2,0)
+9.2
+"BLD",9448,"KRN",9.8,0)
+9.8
+"BLD",9448,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",9448,"KRN",9.8,"NM",1,0)
+ORWDPS2^^0^B68354052
+"BLD",9448,"KRN",9.8,"NM",2,0)
+ORWDPLM1^^0^B14332361
+"BLD",9448,"KRN",9.8,"NM",3,0)
+ORWDPLM2^^0^B6515628
+"BLD",9448,"KRN",9.8,"NM","B","ORWDPLM1",2)
+
+"BLD",9448,"KRN",9.8,"NM","B","ORWDPLM2",3)
+
+"BLD",9448,"KRN",9.8,"NM","B","ORWDPS2",1)
+
+"BLD",9448,"KRN",19,0)
+19
+"BLD",9448,"KRN",19,"NM",0)
+^9.68A^^0
+"BLD",9448,"KRN",19.1,0)
+19.1
+"BLD",9448,"KRN",101,0)
+101
+"BLD",9448,"KRN",409.61,0)
+409.61
+"BLD",9448,"KRN",771,0)
+771
+"BLD",9448,"KRN",779.2,0)
+779.2
+"BLD",9448,"KRN",870,0)
+870
+"BLD",9448,"KRN",8989.51,0)
+8989.51
+"BLD",9448,"KRN",8989.51,"NM",0)
+^9.68A^1^1
+"BLD",9448,"KRN",8989.51,"NM",1,0)
+OR CPRS LAB DISPLAY ENABLED^^0
+"BLD",9448,"KRN",8989.51,"NM","B","OR CPRS LAB DISPLAY ENABLED",1)
+
+"BLD",9448,"KRN",8989.52,0)
+8989.52
+"BLD",9448,"KRN",8994,0)
+8994
+"BLD",9448,"KRN","B",.4,.4)
+
+"BLD",9448,"KRN","B",.401,.401)
+
+"BLD",9448,"KRN","B",.402,.402)
+
+"BLD",9448,"KRN","B",.403,.403)
+
+"BLD",9448,"KRN","B",.5,.5)
+
+"BLD",9448,"KRN","B",.84,.84)
+
+"BLD",9448,"KRN","B",3.6,3.6)
+
+"BLD",9448,"KRN","B",3.8,3.8)
+
+"BLD",9448,"KRN","B",9.2,9.2)
+
+"BLD",9448,"KRN","B",9.8,9.8)
+
+"BLD",9448,"KRN","B",19,19)
+
+"BLD",9448,"KRN","B",19.1,19.1)
+
+"BLD",9448,"KRN","B",101,101)
+
+"BLD",9448,"KRN","B",409.61,409.61)
+
+"BLD",9448,"KRN","B",771,771)
+
+"BLD",9448,"KRN","B",779.2,779.2)
+
+"BLD",9448,"KRN","B",870,870)
+
+"BLD",9448,"KRN","B",8989.51,8989.51)
+
+"BLD",9448,"KRN","B",8989.52,8989.52)
+
+"BLD",9448,"KRN","B",8994,8994)
+
+"BLD",9448,"QUES",0)
+^9.62^^
+"BLD",9448,"REQB",0)
+^9.611^1^1
+"BLD",9448,"REQB",1,0)
+OR*3.0*350^1
+"BLD",9448,"REQB","B","OR*3.0*350",1)
+
+"KRN",8989.51,866,-1)
+0^1
+"KRN",8989.51,866,0)
+OR CPRS LAB DISPLAY ENABLED^Enable CPRS Lab Monitor display^0^^CPRS Lab Monitor
+"KRN",8989.51,866,1)
+S^0:NO;1:YES^Enter a 1 to turn the lab monitor tests ON, or a '0" to turn it off.
+"KRN",8989.51,866,6)
+
+"KRN",8989.51,866,20,0)
+^8989.512^4^4^3170113^^^^
+"KRN",8989.51,866,20,1,0)
+This parameter is used to turn on the functionality delivered in 
+"KRN",8989.51,866,20,2,0)
+OR*3.0*420.  The functionality will display the most recent LAB order 
+"KRN",8989.51,866,20,3,0)
+results associated with a drug orderable item when selected in the 
+"KRN",8989.51,866,20,4,0)
+Pharmacy Ordering Dialog.
+"KRN",8989.51,866,30,0)
+^8989.513I^1^1
+"KRN",8989.51,866,30,1,0)
+1^4.2
+"MBREQ")
+0
+"ORD",20,8989.51)
+8989.51;20;;;PAR1E1^XPDTA2;PAR1F1^XPDIA3;PAR1E1^XPDIA3;PAR1F2^XPDIA3;;PAR1DEL^XPDIA3(%)
+"ORD",20,8989.51,0)
+PARAMETER DEFINITION
+"PKG",188,-1)
+1^1
+"PKG",188,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",188,20,0)
+^9.402P^^
+"PKG",188,22,0)
+^9.49I^1^1
+"PKG",188,22,1,0)
+3.0^2971217^2981113^1
+"PKG",188,22,1,"PAH",1,0)
+420^3170119
+"PKG",188,22,1,"PAH",1,1,0)
+^^216^216^3170119
+"PKG",188,22,1,"PAH",1,1,1,0)
+Patch OR*3.0*420 modifies the existing Pharmacy package in VistA to
+"PKG",188,22,1,"PAH",1,1,2,0)
+display the most recent associated lab results when a clinician is
+"PKG",188,22,1,"PAH",1,1,3,0)
+ordering medication using the Computerized Patient Record System (CPRS)
+"PKG",188,22,1,"PAH",1,1,4,0)
+Inpatient or Outpatient Medication Order dialogs. Without this
+"PKG",188,22,1,"PAH",1,1,5,0)
+modification, the clinician must look in numerous locations for this
+"PKG",188,22,1,"PAH",1,1,6,0)
+information. The information is important for safe and effective
+"PKG",188,22,1,"PAH",1,1,7,0)
+medication management. 
+"PKG",188,22,1,"PAH",1,1,8,0)
+ 
+"PKG",188,22,1,"PAH",1,1,9,0)
+The lab results for the most recent lab test associated with an Orderable 
+"PKG",188,22,1,"PAH",1,1,10,0)
+Item will be displayed in the Information field in the Medication Order 
+"PKG",188,22,1,"PAH",1,1,11,0)
+dialog once an Orderable Item is selected. Once a dispense drug is chosen 
+"PKG",188,22,1,"PAH",1,1,12,0)
+(by selecting a dosage in the order dialog), the lab test information 
+"PKG",188,22,1,"PAH",1,1,13,0)
+will be replaced by the National Standard Drug Information found in the
+"PKG",188,22,1,"PAH",1,1,14,0)
+MESSAGE (#101) field of the DRUG (#50) file. This message currently
+"PKG",188,22,1,"PAH",1,1,15,0)
+shows in CPRS when ordering a dispense drug and is not changed by this
+"PKG",188,22,1,"PAH",1,1,16,0)
+modification.
+"PKG",188,22,1,"PAH",1,1,17,0)
+ 
+"PKG",188,22,1,"PAH",1,1,18,0)
+Note: Follow-on work to allow persistence of the lab test information in 
+"PKG",188,22,1,"PAH",1,1,19,0)
+the Medication Order dialog is expected to be addressed in CPRS v32.
+"PKG",188,22,1,"PAH",1,1,20,0)
+ 
+"PKG",188,22,1,"PAH",1,1,21,0)
+In order to monitor lab results, lab tests are associated with an 
+"PKG",188,22,1,"PAH",1,1,22,0)
+Orderable Item using the PSS DRUG ENTER/EDIT option in VistA by entering 
+"PKG",188,22,1,"PAH",1,1,23,0)
+a lab test in the LAB TEST MONITOR (#17.2) field of the DRUG (#50) file. 
+"PKG",188,22,1,"PAH",1,1,24,0)
+ 
+"PKG",188,22,1,"PAH",1,1,25,0)
+The NSR for this intake addresses the following requirement: 
+"PKG",188,22,1,"PAH",1,1,26,0)
+ 
+"PKG",188,22,1,"PAH",1,1,27,0)
+* VHBAO:NEED126: Ability to display laboratory test results, in a single 
+"PKG",188,22,1,"PAH",1,1,28,0)
+                 view, for ordering inpatient and outpatient medications
+"PKG",188,22,1,"PAH",1,1,29,0)
+                 while viewing the Medication Order dialog in CPRS.
+"PKG",188,22,1,"PAH",1,1,30,0)
+ 
+"PKG",188,22,1,"PAH",1,1,31,0)
+This modification has been implemented locally at the VA centers in 
+"PKG",188,22,1,"PAH",1,1,32,0)
+Clarksburg, WV; Hines, IL; Iron Mountain, MI; and Chicago, IL.
+"PKG",188,22,1,"PAH",1,1,33,0)
+ 
+"PKG",188,22,1,"PAH",1,1,34,0)
+This build contains the components for the CPRS Graphical User Interface 
+"PKG",188,22,1,"PAH",1,1,35,0)
+(GUI) to display relevant laboratory results in the Medication Ordering 
+"PKG",188,22,1,"PAH",1,1,36,0)
+dialog.
+"PKG",188,22,1,"PAH",1,1,37,0)
+ 
+"PKG",188,22,1,"PAH",1,1,38,0)
+To use the features, the following setup steps are advised:
+"PKG",188,22,1,"PAH",1,1,39,0)
+ * Establish drug-to-lab mapping relationship using the PSS DRUG 
+"PKG",188,22,1,"PAH",1,1,40,0)
+   ENTER/EDIT option.  Follow the OUTPATIENT marking pathway to set up a
+"PKG",188,22,1,"PAH",1,1,41,0)
+   LAB MONITOR drug.  Lab name, specimen type and number of days to look
+"PKG",188,22,1,"PAH",1,1,42,0)
+   back are required fields for the program to work.
+"PKG",188,22,1,"PAH",1,1,43,0)
+ 
+"PKG",188,22,1,"PAH",1,1,44,0)
+ * If not already set correctly, review the site local terms for SERUM 
+"PKG",188,22,1,"PAH",1,1,45,0)
+   CREATININE and SERUM SPECIMEN in the CPRS Order Check menus.  This is 
+"PKG",188,22,1,"PAH",1,1,46,0)
+   required for calculation of Creatinine Clearance.
+"PKG",188,22,1,"PAH",1,1,47,0)
+ 
+"PKG",188,22,1,"PAH",1,1,48,0)
+ * When the lab requested is "Creatinine", a second line for CrCl will be 
+"PKG",188,22,1,"PAH",1,1,49,0)
+   returned.
+"PKG",188,22,1,"PAH",1,1,50,0)
+ 
+"PKG",188,22,1,"PAH",1,1,51,0)
+The routine ORWDPLM2 is included.  This is a version of the display that
+"PKG",188,22,1,"PAH",1,1,52,0)
+will work as a TIU OBJECT.  The object method is:
+"PKG",188,22,1,"PAH",1,1,53,0)
+ 
+"PKG",188,22,1,"PAH",1,1,54,0)
+S X=$$SL^ORWDLPM2(DFN,
+"PKG",188,22,1,"PAH",1,1,55,0)
+$S($G(X0)]"":$P(X0,U),$G(NODE0)]"":$P(NODE0,U),1:""),"^TMP($J,""ORWDPLM2""
+"PKG",188,22,1,"PAH",1,1,56,0)
+)")
+"PKG",188,22,1,"PAH",1,1,57,0)
+ 
+"PKG",188,22,1,"PAH",1,1,58,0)
+The display is wrapped for ease of reading, but the object method must be 
+"PKG",188,22,1,"PAH",1,1,59,0)
+entered as part of one single line.
+"PKG",188,22,1,"PAH",1,1,60,0)
+ 
+"PKG",188,22,1,"PAH",1,1,61,0)
+Patch Components
+"PKG",188,22,1,"PAH",1,1,62,0)
+================
+"PKG",188,22,1,"PAH",1,1,63,0)
+ 
+"PKG",188,22,1,"PAH",1,1,64,0)
+Files & Fields Associated:
+"PKG",188,22,1,"PAH",1,1,65,0)
+ 
+"PKG",188,22,1,"PAH",1,1,66,0)
+File Name (Number)       Field Name (Number)       New/Modified/Deleted
+"PKG",188,22,1,"PAH",1,1,67,0)
+-----------------------  ------------------------  --------------------
+"PKG",188,22,1,"PAH",1,1,68,0)
+N/A
+"PKG",188,22,1,"PAH",1,1,69,0)
+ 
+"PKG",188,22,1,"PAH",1,1,70,0)
+Forms Associated:
+"PKG",188,22,1,"PAH",1,1,71,0)
+ 
+"PKG",188,22,1,"PAH",1,1,72,0)
+Form Name                File #       New/Modified/Deleted
+"PKG",188,22,1,"PAH",1,1,73,0)
+---------                ------       --------------------
+"PKG",188,22,1,"PAH",1,1,74,0)
+N/A
+"PKG",188,22,1,"PAH",1,1,75,0)
+ 
+"PKG",188,22,1,"PAH",1,1,76,0)
+ 
+"PKG",188,22,1,"PAH",1,1,77,0)
+Mail Groups Associated:
+"PKG",188,22,1,"PAH",1,1,78,0)
+ 
+"PKG",188,22,1,"PAH",1,1,79,0)
+Mail Group Name          New/Modified/Deleted
+"PKG",188,22,1,"PAH",1,1,80,0)
+---------------          --------------------
+"PKG",188,22,1,"PAH",1,1,81,0)
+N/A
+"PKG",188,22,1,"PAH",1,1,82,0)
+ 
+"PKG",188,22,1,"PAH",1,1,83,0)
+ 
+"PKG",188,22,1,"PAH",1,1,84,0)
+Options Associated:
+"PKG",188,22,1,"PAH",1,1,85,0)
+ 
+"PKG",188,22,1,"PAH",1,1,86,0)
+Option Name            Type               New/Modified/Deleted
+"PKG",188,22,1,"PAH",1,1,87,0)
+-----------            ----               --------------------
+"PKG",188,22,1,"PAH",1,1,88,0)
+N/A
+"PKG",188,22,1,"PAH",1,1,89,0)
+ 
+"PKG",188,22,1,"PAH",1,1,90,0)
+ 
+"PKG",188,22,1,"PAH",1,1,91,0)
+Protocols Associated:
+"PKG",188,22,1,"PAH",1,1,92,0)
+ 
+"PKG",188,22,1,"PAH",1,1,93,0)
+Protocol Name       New/Modified/Deleted
+"PKG",188,22,1,"PAH",1,1,94,0)
+-------------       --------------------
+"PKG",188,22,1,"PAH",1,1,95,0)
+N/A
+"PKG",188,22,1,"PAH",1,1,96,0)
+ 
+"PKG",188,22,1,"PAH",1,1,97,0)
+Security Keys Associated:
+"PKG",188,22,1,"PAH",1,1,98,0)
+ 
+"PKG",188,22,1,"PAH",1,1,99,0)
+Security Key Name
+"PKG",188,22,1,"PAH",1,1,100,0)
+-----------------
+"PKG",188,22,1,"PAH",1,1,101,0)
+N/A
+"PKG",188,22,1,"PAH",1,1,102,0)
+ 
+"PKG",188,22,1,"PAH",1,1,103,0)
+ 
+"PKG",188,22,1,"PAH",1,1,104,0)
+Templates Associated:
+"PKG",188,22,1,"PAH",1,1,105,0)
+ 
+"PKG",188,22,1,"PAH",1,1,106,0)
+Template Name      Type      File Name (Number)  New/Modified/Deleted 
+"PKG",188,22,1,"PAH",1,1,107,0)
+-------------      ----      ------------------  --------------------
+"PKG",188,22,1,"PAH",1,1,108,0)
+N/A
+"PKG",188,22,1,"PAH",1,1,109,0)
+ 
+"PKG",188,22,1,"PAH",1,1,110,0)
+ 
+"PKG",188,22,1,"PAH",1,1,111,0)
+Additional Information:
+"PKG",188,22,1,"PAH",1,1,112,0)
+N/A
+"PKG",188,22,1,"PAH",1,1,113,0)
+ 
+"PKG",188,22,1,"PAH",1,1,114,0)
+ 
+"PKG",188,22,1,"PAH",1,1,115,0)
+New Service Requests (NSRs)
+"PKG",188,22,1,"PAH",1,1,116,0)
+----------------------------
+"PKG",188,22,1,"PAH",1,1,117,0)
+20100311  CPRS LAB MONITORING
+"PKG",188,22,1,"PAH",1,1,118,0)
+ 
+"PKG",188,22,1,"PAH",1,1,119,0)
+ 
+"PKG",188,22,1,"PAH",1,1,120,0)
+Patient Safety Issues (PSIs)
+"PKG",188,22,1,"PAH",1,1,121,0)
+-----------------------------
+"PKG",188,22,1,"PAH",1,1,122,0)
+N/A
+"PKG",188,22,1,"PAH",1,1,123,0)
+ 
+"PKG",188,22,1,"PAH",1,1,124,0)
+ 
+"PKG",188,22,1,"PAH",1,1,125,0)
+Remedy Ticket(s) & Overview
+"PKG",188,22,1,"PAH",1,1,126,0)
+---------------------------
+"PKG",188,22,1,"PAH",1,1,127,0)
+N/A
+"PKG",188,22,1,"PAH",1,1,128,0)
+ 
+"PKG",188,22,1,"PAH",1,1,129,0)
+Problem:
+"PKG",188,22,1,"PAH",1,1,130,0)
+--------
+"PKG",188,22,1,"PAH",1,1,131,0)
+ 
+"PKG",188,22,1,"PAH",1,1,132,0)
+Resolution:
+"PKG",188,22,1,"PAH",1,1,133,0)
+-----------
+"PKG",188,22,1,"PAH",1,1,134,0)
+ 
+"PKG",188,22,1,"PAH",1,1,135,0)
+ 
+"PKG",188,22,1,"PAH",1,1,136,0)
+Test Sites:
+"PKG",188,22,1,"PAH",1,1,137,0)
+----------
+"PKG",188,22,1,"PAH",1,1,138,0)
+James H. Quillen VA Medical Center (Mountain Home)      
+"PKG",188,22,1,"PAH",1,1,139,0)
+VA Maryland Healthcare (Baltimore, Loch Raven & Perry Point)        
+"PKG",188,22,1,"PAH",1,1,140,0)
+Tomah VA Medical Center
+"PKG",188,22,1,"PAH",1,1,141,0)
+Edward Hines Jr., VA Hospital
+"PKG",188,22,1,"PAH",1,1,142,0)
+ 
+"PKG",188,22,1,"PAH",1,1,143,0)
+Software and Documentation Retrieval Instructions:
+"PKG",188,22,1,"PAH",1,1,144,0)
+---------------------------------------------------- 
+"PKG",188,22,1,"PAH",1,1,145,0)
+Software being released as a host file and/or documentation describing the
+"PKG",188,22,1,"PAH",1,1,146,0)
+new functionality introduced by this patch are available.
+"PKG",188,22,1,"PAH",1,1,147,0)
+ 
+"PKG",188,22,1,"PAH",1,1,148,0)
+The preferred method is to retrieve files from download.vista.domain.ext.
+"PKG",188,22,1,"PAH",1,1,149,0)
+This transmits the files from the first available server. Sites may also
+"PKG",188,22,1,"PAH",1,1,150,0)
+elect to retrieve files directly from a specific server. 
+"PKG",188,22,1,"PAH",1,1,151,0)
+ 
+"PKG",188,22,1,"PAH",1,1,152,0)
+Sites may retrieve the software and/or documentation directly using Secure
+"PKG",188,22,1,"PAH",1,1,153,0)
+File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+"PKG",188,22,1,"PAH",1,1,154,0)
+following OI Field Offices:
+"PKG",188,22,1,"PAH",1,1,155,0)
+   
+"PKG",188,22,1,"PAH",1,1,156,0)
+Albany:                 domain.ext
+"PKG",188,22,1,"PAH",1,1,157,0)
+Hines:                  domain.ext    
+"PKG",188,22,1,"PAH",1,1,158,0)
+Salt Lake City:         domain.ext
+"PKG",188,22,1,"PAH",1,1,159,0)
+   
+"PKG",188,22,1,"PAH",1,1,160,0)
+Documentation can also be found on the VA Software Documentation Library 
+"PKG",188,22,1,"PAH",1,1,161,0)
+at: http://www4.domain.ext/vdl/
+"PKG",188,22,1,"PAH",1,1,162,0)
+ 
+"PKG",188,22,1,"PAH",1,1,163,0)
+Pre/Post Installation Overview
+"PKG",188,22,1,"PAH",1,1,164,0)
+------------------------------
+"PKG",188,22,1,"PAH",1,1,165,0)
+There are no Pre-installation routines associated with this patch.
+"PKG",188,22,1,"PAH",1,1,166,0)
+ 
+"PKG",188,22,1,"PAH",1,1,167,0)
+ 
+"PKG",188,22,1,"PAH",1,1,168,0)
+Pre-Installation Instructions
+"PKG",188,22,1,"PAH",1,1,169,0)
+-------------------------
+"PKG",188,22,1,"PAH",1,1,170,0)
+This patch may be installed with users on the system although it is
+"PKG",188,22,1,"PAH",1,1,171,0)
+recommended that it be installed during non-peak hours to minimize 
+"PKG",188,22,1,"PAH",1,1,172,0)
+potential disruption to users.  This patch should take less than 5 
+"PKG",188,22,1,"PAH",1,1,173,0)
+minutes to install.
+"PKG",188,22,1,"PAH",1,1,174,0)
+ 
+"PKG",188,22,1,"PAH",1,1,175,0)
+ 
+"PKG",188,22,1,"PAH",1,1,176,0)
+Installation Instructions
+"PKG",188,22,1,"PAH",1,1,177,0)
+-----------------------------
+"PKG",188,22,1,"PAH",1,1,178,0)
+1.      Choose the PackMan message containing this patch.
+"PKG",188,22,1,"PAH",1,1,179,0)
+ 
+"PKG",188,22,1,"PAH",1,1,180,0)
+2.      Choose the INSTALL/CHECK MESSAGE PackMan option.  
+"PKG",188,22,1,"PAH",1,1,181,0)
+ 
+"PKG",188,22,1,"PAH",1,1,182,0)
+3.      From the Kernel Installation and Distribution System Menu, select 
+"PKG",188,22,1,"PAH",1,1,183,0)
+        the Installation Menu.  From this menu, you may elect to use the 
+"PKG",188,22,1,"PAH",1,1,184,0)
+        following options. When prompted for the INSTALL NAME enter
+"PKG",188,22,1,"PAH",1,1,185,0)
+        OR*3.0*420.
+"PKG",188,22,1,"PAH",1,1,186,0)
+ 
+"PKG",188,22,1,"PAH",1,1,187,0)
+        a.  Verify Checksums in Transport Global - This option will 
+"PKG",188,22,1,"PAH",1,1,188,0)
+            allow you to ensure the integrity of the routines that are in
+"PKG",188,22,1,"PAH",1,1,189,0)
+            the transport global.
+"PKG",188,22,1,"PAH",1,1,190,0)
+        b.  Print Transport Global - This option will allow you to view
+"PKG",188,22,1,"PAH",1,1,191,0)
+            the components of the KIDS build.
+"PKG",188,22,1,"PAH",1,1,192,0)
+        c.  Compare Transport Global to Current System - This option will
+"PKG",188,22,1,"PAH",1,1,193,0)
+            allow you to view all changes that will be made when this 
+"PKG",188,22,1,"PAH",1,1,194,0)
+            patch is installed.  It compares all components of this patch
+"PKG",188,22,1,"PAH",1,1,195,0)
+            (routines, DD's, templates, etc.).
+"PKG",188,22,1,"PAH",1,1,196,0)
+        d.  Backup a Transport Global - This option will create a backup
+"PKG",188,22,1,"PAH",1,1,197,0)
+            message of any routines exported with this patch. It will not
+"PKG",188,22,1,"PAH",1,1,198,0)
+            backup any other changes such as DD's or templates.
+"PKG",188,22,1,"PAH",1,1,199,0)
+ 
+"PKG",188,22,1,"PAH",1,1,200,0)
+4.      From the Installation Menu, select the Install Package(s) option 
+"PKG",188,22,1,"PAH",1,1,201,0)
+        and choose the patch to install.
+"PKG",188,22,1,"PAH",1,1,202,0)
+ 
+"PKG",188,22,1,"PAH",1,1,203,0)
+5.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+"PKG",188,22,1,"PAH",1,1,204,0)
+        NO// Press <Enter>
+"PKG",188,22,1,"PAH",1,1,205,0)
+ 
+"PKG",188,22,1,"PAH",1,1,206,0)
+6.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+"PKG",188,22,1,"PAH",1,1,207,0)
+        and Protocols? NO// Press <Enter>
+"PKG",188,22,1,"PAH",1,1,208,0)
+ 
+"PKG",188,22,1,"PAH",1,1,209,0)
+7.      If prompted "Delay Install (Minutes):  (0 - 60): 0// enter 0.
+"PKG",188,22,1,"PAH",1,1,210,0)
+ 
+"PKG",188,22,1,"PAH",1,1,211,0)
+ 
+"PKG",188,22,1,"PAH",1,1,212,0)
+Post-Installation Instructions
+"PKG",188,22,1,"PAH",1,1,213,0)
+------------------------------
+"PKG",188,22,1,"PAH",1,1,214,0)
+A site Pharmacy CAC/ADPAC will have to set the OR CPRS LAB DISPLAY 
+"PKG",188,22,1,"PAH",1,1,215,0)
+ENABLEd parameter to a value of "Yes" using he XPAR MENU TOOLS option 
+"PKG",188,22,1,"PAH",1,1,216,0)
+in order for this functionality to be accessed.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","ORWDPLM1")
+0^2^B14332361^n/a
+"RTN","ORWDPLM1",1,0)
+ORWDPLM1 ;PBM/HINES/RMS - DISPLAY LAB DATA IN CPRS ORDERING DIALOG ; 21 Dec 2016  4:46 PM
+"RTN","ORWDPLM1",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**420**;;Build 7
+"RTN","ORWDPLM1",3,0)
+SL Q:'$$GET^XPAR("ALL","OR CPRS LAB DISPLAY ENABLED")  ; param off? - skip
+"RTN","ORWDPLM1",4,0)
+ N DIC,X,Y,ORL50,ORL507,ORL2,ORLNODE,ORLRSLT,FOUND,ORLCRCL,REFRANGE
+"RTN","ORWDPLM1",5,0)
+ S ORL2=+$G(ORVP) I ORL2 G SL2
+"RTN","ORWDPLM1",6,0)
+ S X=$TR($G(VA("PID")),"-"),DIC=2,DIC(0)="M"
+"RTN","ORWDPLM1",7,0)
+ D ^DIC
+"RTN","ORWDPLM1",8,0)
+ Q:Y=-1
+"RTN","ORWDPLM1",9,0)
+ S ORL2=+Y
+"RTN","ORWDPLM1",10,0)
+SL2 S ORL507=+$P($G(^ORD(101.43,OI,0)),U,2) Q:'+ORL507
+"RTN","ORWDPLM1",11,0)
+ S ORL50=0 F  S ORL50=$O(^PSDRUG("ASP",ORL507,ORL50)) Q:'+ORL50!($G(FOUND))  D
+"RTN","ORWDPLM1",12,0)
+ . S ORLNODE=$G(^PSDRUG(ORL50,"CLOZ")) Q:'+ORLNODE
+"RTN","ORWDPLM1",13,0)
+ . I +ORLNODE,$$SCRTEST(+ORLNODE) S ORLRSLT=$$GETSCR(ORL2) S ILST=ILST+1,LST(ILST)="tLAST "_$$GET1^DIQ(60,+ORLNODE,.01)_": "_$P(ORLRSLT,U)
+"RTN","ORWDPLM1",14,0)
+ . I +ORLNODE,'$$SCRTEST(+ORLNODE) S ORLRSLT=$$GETLAB(ORL2,+ORLNODE,+$P(ORLNODE,U,3),$P(ORLNODE,U,2)) S ILST=ILST+1,LST(ILST)="tLAST "_$$GET1^DIQ(60,+ORLNODE,.01)_": "_$P(ORLRSLT,U)
+"RTN","ORWDPLM1",15,0)
+ . I +$P(ORLRSLT,U,2) S LST(ILST)=LST(ILST)_" "_$P(ORLRSLT,U,4)_" ("_$$FMTE^XLFDT($P(ORLRSLT,U,2))_")"
+"RTN","ORWDPLM1",16,0)
+ . I $P(ORLRSLT,U,5)]"" S ILST=ILST+1,LST(ILST)="tREFERENCE RANGE: "_$P(ORLRSLT,U,5)_" "_$P(ORLRSLT,U,4)
+"RTN","ORWDPLM1",17,0)
+ . I +$P(ORLRSLT,U,2) I $$SCRTEST(+ORLNODE) S ORLCRCL=$$CRCL^PSOORUT2(ORL2) I +$P(ORLCRCL,U,2) S ILST=ILST+1,LST(ILST)="tEstimated Creatinine Clearance: "_$P(ORLCRCL,U,2)_" mL/min"
+"RTN","ORWDPLM1",18,0)
+ . S FOUND=1
+"RTN","ORWDPLM1",19,0)
+ Q
+"RTN","ORWDPLM1",20,0)
+ ;
+"RTN","ORWDPLM1",21,0)
+GETSCR(DFN) ;New PBM/RMS 1-29-2016
+"RTN","ORWDPLM1",22,0)
+ ;If lab test is CREATININE, get results using national term
+"RTN","ORWDPLM1",23,0)
+ N OCXTL,OCXTLS,SCR,OCXT,OCXTS,SCRD,PSCR,SCRV
+"RTN","ORWDPLM1",24,0)
+ S OCXTL="" Q:'$$TERMLKUP^ORB31(.OCXTL,"SERUM CREATININE") "No mapped creatinine lab test available"
+"RTN","ORWDPLM1",25,0)
+ S OCXTLS="" Q:'$$TERMLKUP^ORB31(.OCXTLS,"SERUM SPECIMEN") "No mapped serum specimen found"
+"RTN","ORWDPLM1",26,0)
+ S PSCR="^^^^^^0"
+"RTN","ORWDPLM1",27,0)
+ S SCR="",OCXT=0 F  S OCXT=$O(OCXTL(OCXT)) Q:'OCXT  D
+"RTN","ORWDPLM1",28,0)
+ .S OCXTS=0 F  S OCXTS=$O(OCXTLS(OCXTS)) Q:'OCXTS  D
+"RTN","ORWDPLM1",29,0)
+ ..S SCR=$$LOCL^ORQQLR1(DFN,$P(OCXTL(OCXT),U),$P(OCXTLS(OCXTS),U))
+"RTN","ORWDPLM1",30,0)
+ ..I $P(SCR,U,7)>$P(PSCR,U,7) S PSCR=SCR
+"RTN","ORWDPLM1",31,0)
+ S SCR=PSCR,SCRV=$P(SCR,U,3) Q:+$G(SCRV)<.01 "NONE FOUND IN LAST "_$S(+$P(ORLNODE,U,2):$P(ORLNODE,U,2),1:365)_" DAYS"
+"RTN","ORWDPLM1",32,0)
+ S SCRD=$P(SCR,U,7) Q:'$L(SCRD) "NONE FOUND IN LAST "_$S(+$P(ORLNODE,U,2):$P(ORLNODE,U,2),1:365)_" DAYS"
+"RTN","ORWDPLM1",33,0)
+ I $$FMADD^XLFDT(DT,-$P(ORLNODE,U,2))>SCRD Q "NONE FOUND IN LAST "_$S(+$P(ORLNODE,U,2):$P(ORLNODE,U,2),1:365)_" DAYS"  ;Result Before Max Days
+"RTN","ORWDPLM1",34,0)
+ Q $P(SCR,U,3)_U_$P(SCR,U,7)_U_$P(SCR,U,2)_U_$P(SCR,U,4)_U_$P(SCR,U,6)
+"RTN","ORWDPLM1",35,0)
+ ;
+"RTN","ORWDPLM1",36,0)
+SCRTEST(LAB60) ;New PBM/RMS 1-29-2016
+"RTN","ORWDPLM1",37,0)
+ ;Function to check if drug-associated lab test is CREATININE
+"RTN","ORWDPLM1",38,0)
+ N TERM,IEN,OCXTL,ORLSCR
+"RTN","ORWDPLM1",39,0)
+ S TERM=$$TERMLKUP^ORB31(.OCXTL,"SERUM CREATININE")
+"RTN","ORWDPLM1",40,0)
+ S IEN=0
+"RTN","ORWDPLM1",41,0)
+ F  S IEN=$O(OCXTL(IEN)) Q:'+IEN  S ORLSCR(+$G(OCXTL(IEN)))=""
+"RTN","ORWDPLM1",42,0)
+ Q $D(ORLSCR(LAB60))
+"RTN","ORWDPLM1",43,0)
+ ;
+"RTN","ORWDPLM1",44,0)
+GETLAB(DFN,TEST,SPEC,MDAYS) ;CUSTOM LAB LOOKUP API
+"RTN","ORWDPLM1",45,0)
+ N ORLBDT,TESTNAME,RESULT,LNAME,LDATE,UNITS
+"RTN","ORWDPLM1",46,0)
+ N X,X1,X2
+"RTN","ORWDPLM1",47,0)
+ Q:'+$G(TEST) ""
+"RTN","ORWDPLM1",48,0)
+ Q:'+$G(DFN) ""
+"RTN","ORWDPLM1",49,0)
+ S TESTNAME=$P($G(^LAB(60,TEST,0)),U)
+"RTN","ORWDPLM1",50,0)
+ S MDAYS=$G(MDAYS,365)
+"RTN","ORWDPLM1",51,0)
+ S X1=DT,X2=-$G(MDAYS) D C^%DTC
+"RTN","ORWDPLM1",52,0)
+ S ORLBDT=$S(X<DT:X,1:0)
+"RTN","ORWDPLM1",53,0)
+ D RR^LR7OR1(DFN,,ORLBDT,DT,,TEST,,1,$G(SPEC))
+"RTN","ORWDPLM1",54,0)
+ D FORMAT
+"RTN","ORWDPLM1",55,0)
+ I $G(RESULT)']"" Q "NONE FOUND IN LAST "_+$S(+MDAYS:MDAYS,1:365)_" DAYS"_U_U_TESTNAME
+"RTN","ORWDPLM1",56,0)
+ Q RESULT_U_LDATE_U_LNAME_U_UNITS_U_REFRANGE
+"RTN","ORWDPLM1",57,0)
+FORMAT N IDT,LOC,NODE
+"RTN","ORWDPLM1",58,0)
+ S IDT=0 F  S IDT=$O(^TMP("LRRR",$J,DFN,"CH",IDT)) Q:'+IDT  D
+"RTN","ORWDPLM1",59,0)
+ . S LOC=0 F  S LOC=$O(^TMP("LRRR",$J,DFN,"CH",IDT,LOC)) Q:'+LOC  D
+"RTN","ORWDPLM1",60,0)
+ .. S NODE=$G(^TMP("LRRR",$J,DFN,"CH",IDT,LOC))
+"RTN","ORWDPLM1",61,0)
+ .. S RESULT=$P(NODE,U,2)
+"RTN","ORWDPLM1",62,0)
+ .. S UNITS=$P(NODE,U,4)
+"RTN","ORWDPLM1",63,0)
+ .. S LNAME=$P(NODE,U,10)
+"RTN","ORWDPLM1",64,0)
+ .. S REFRANGE=$P(NODE,U,5)
+"RTN","ORWDPLM1",65,0)
+ .. I LNAME']"" S LNAME=$P(NODE,U,15)
+"RTN","ORWDPLM1",66,0)
+ .. S LDATE=9999999-IDT
+"RTN","ORWDPLM1",67,0)
+ Q
+"RTN","ORWDPLM2")
+0^3^B6515628^n/a
+"RTN","ORWDPLM2",1,0)
+ORWDPLM2 ;PBM/RMS - OBJECT FOR DRUG-SPECIFIC LAB RESULTS ; 23 Dec 2016  1:35 PM
+"RTN","ORWDPLM2",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;***420***;;Build 7
+"RTN","ORWDPLM2",3,0)
+SL(DFN,ORQO,TARGET) ;
+"RTN","ORWDPLM2",4,0)
+ N ORDDLG,ORGTX,ORSEQ,ORIEN
+"RTN","ORWDPLM2",5,0)
+ N OR50,OR507,ORNODE,ORRSLT,ORCRCL,FOUND,ILST,REFRANGE
+"RTN","ORWDPLM2",6,0)
+ Q:'+DFN ""
+"RTN","ORWDPLM2",7,0)
+ Q:ORQO']"" ""
+"RTN","ORWDPLM2",8,0)
+ S ORDDLG=$O(^ORD(101.41,"B",ORQO,0)) Q:'+ORDDLG ""
+"RTN","ORWDPLM2",9,0)
+ K @TARGET
+"RTN","ORWDPLM2",10,0)
+ I '$$GET^XPAR("ALL","OR CPRS LAB DISPLAY ENABLED") Q " "
+"RTN","ORWDPLM2",11,0)
+ S ILST=0
+"RTN","ORWDPLM2",12,0)
+ S ORGTX=$O(^ORD(101.41,"B","OR GTX ORDERABLE ITEM",0))
+"RTN","ORWDPLM2",13,0)
+ S ORSEQ=$O(^ORD(101.41,ORDDLG,6,"D",+ORGTX,0)) Q:'+ORSEQ ""
+"RTN","ORWDPLM2",14,0)
+ S ORIEN=$G(^ORD(101.41,ORDDLG,6,ORSEQ,1)) Q:'+ORIEN ""
+"RTN","ORWDPLM2",15,0)
+ S OR507=+$P($G(^ORD(101.43,ORIEN,0)),U,2) Q:'+OR507 ""
+"RTN","ORWDPLM2",16,0)
+ S OR50=0 F  S OR50=$O(^PSDRUG("ASP",OR507,OR50)) Q:'+OR50!($G(FOUND))  D
+"RTN","ORWDPLM2",17,0)
+ . S ORNODE=$G(^PSDRUG(OR50,"CLOZ")) Q:'+ORNODE
+"RTN","ORWDPLM2",18,0)
+ . I +ORNODE,$$SCRTEST^ORWDPLM1(+ORNODE) S ORRSLT=$$GETSCR^ORWDPLM1(DFN) S ILST=ILST+1,@TARGET@(ILST,0)="LAST "_$$GET1^DIQ(60,+ORNODE,.01)_": "_$P(ORRSLT,U)
+"RTN","ORWDPLM2",19,0)
+ . I +ORNODE,'$$SCRTEST^ORWDPLM1(+ORNODE) S ORRSLT=$$GETLAB^ORWDPLM1(DFN,+ORNODE,+$P(ORNODE,U,3),$P(ORNODE,U,2)) S ILST=ILST+1,@TARGET@(ILST,0)="LAST "_$$GET1^DIQ(60,+ORNODE,.01)_":"_$P(ORRSLT,U)
+"RTN","ORWDPLM2",20,0)
+ . I +$P(ORRSLT,U,2) S @TARGET@(ILST,0)=@TARGET@(ILST,0)_" "_$P(ORRSLT,U,4)_" ("_$$FMTE^XLFDT($P(ORRSLT,U,2))_")"
+"RTN","ORWDPLM2",21,0)
+ . I $P(ORRSLT,U,5)]"" S ILST=ILST+1,@TARGET@(ILST,0)="REFERENCE RANGE: "_$P(ORRSLT,U,5)_" "_$P(ORRSLT,U,4)
+"RTN","ORWDPLM2",22,0)
+ . I +$P(ORRSLT,U,2) I $$SCRTEST^ORWDPLM1(+ORNODE) S ORCRCL=$$CRCL^PSOORUT2(DFN) I +$P(ORCRCL,U,2) S ILST=ILST+1,@TARGET@(ILST,0)="Estimated Creatinine Clearance: "_$P(ORCRCL,U,2)_" mL/min"
+"RTN","ORWDPLM2",23,0)
+ . S FOUND=1
+"RTN","ORWDPLM2",24,0)
+ Q "~@"_$NA(@TARGET)
+"RTN","ORWDPS2")
+0^1^B68354052^B63130016
+"RTN","ORWDPS2",1,0)
+ORWDPS2 ; SLC/KCM/JLI - Pharmacy Calls for Windows Dialog;05/09/2007 ; 21 Dec 2016  4:46 PM
+"RTN","ORWDPS2",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**85,116,125,131,132,148,141,195,215,258,243,424,420**;Dec 17, 1997;Build 7
+"RTN","ORWDPS2",3,0)
+ ;
+"RTN","ORWDPS2",4,0)
+OISLCT(LST,OI,PSTYPE,ORVP,NEEDPI,PKIACTIV) ; return for defaults for pharmacy orderable item
+"RTN","ORWDPS2",5,0)
+ ;begin patch OR*3*420 MOD this supports the nation drug message and lab test display in CPRS RTW
+"RTN","ORWDPS2",6,0)
+ K ^TMP("OI",$J)
+"RTN","ORWDPS2",7,0)
+ S ^TMP("OI",$J,0)=OI_"^"_PSTYPE_"^"_ORVP_"^"_NEEDPI_"^"_PKIACTIV ;RTW
+"RTN","ORWDPS2",8,0)
+ ;end patch OR*3*420 MOD RTW
+"RTN","ORWDPS2",9,0)
+ I $D(NEEDPI),(NEEDPI="Y"),$G(^TMP($J,"ORWDX LOADRSP","QO SAVE")) D  ;check if bug for Supply, Clin Med/IV for NEEDPI
+"RTN","ORWDPS2",10,0)
+ .N ORQOIEN S ORQOIEN=$O(^ORD(101.41,"B","OR GTX ORDERABLE ITEM",0))
+"RTN","ORWDPS2",11,0)
+ .N ORQOI S ORQOI=$O(^ORD(101.41,$G(^TMP($J,"ORWDX LOADRSP","QO SAVE")),6,"D",ORQOIEN,0)) Q:'ORQOI
+"RTN","ORWDPS2",12,0)
+ .N ORQOOI S ORQOOI=$G(^ORD(101.41,$G(^TMP($J,"ORWDX LOADRSP","QO SAVE")),6,ORQOI,1)) Q:'ORQOOI
+"RTN","ORWDPS2",13,0)
+ .I +OI=+ORQOOI D  ;make sure QO orderable is the same as the orderable here
+"RTN","ORWDPS2",14,0)
+ ..N ORQOPIDA S ORQOPIDA=$O(^ORD(101.41,"B","OR GTX PATIENT INSTRUCTIONS",0))
+"RTN","ORWDPS2",15,0)
+ ..I '$D(^ORD(101.41,$G(^TMP($J,"ORWDX LOADRSP","QO SAVE")),6,"D",ORQOPIDA)) S NEEDPI="N"
+"RTN","ORWDPS2",16,0)
+ K ^TMP($J,"ORWDX LOADRSP","QO SAVE")
+"RTN","ORWDPS2",17,0)
+ N ILST,ORDOSE,ORWPSOI,ORWDOSES,X1,X2
+"RTN","ORWDPS2",18,0)
+ K ^TMP("PSJINS",$J),^TMP("PSJMR",$J),^TMP("PSJNOUN",$J),^TMP("PSJSCH",$J),^TMP("PSSDIN",$J)
+"RTN","ORWDPS2",19,0)
+ S ILST=0
+"RTN","ORWDPS2",20,0)
+ S ORWPSOI=0
+"RTN","ORWDPS2",21,0)
+ S:+OI ORWPSOI=+$P($G(^ORD(101.43,+OI,0)),U,2)
+"RTN","ORWDPS2",22,0)
+ D START^PSSJORDF(ORWPSOI,$S(PSTYPE="U":"I",1:"O")) ; dflt route, schedule, etc.
+"RTN","ORWDPS2",23,0)
+ I '$L($T(DOSE^PSSOPKI1)) D DOSE^PSSORUTL(.ORDOSE,ORWPSOI,PSTYPE,ORVP)       ; dflt doses
+"RTN","ORWDPS2",24,0)
+ I $L($T(DOSE^PSSOPKI1)) D DOSE^PSSOPKI1(.ORDOSE,ORWPSOI,PSTYPE,ORVP)       ; dflt doses NEW PKI CODE from pharmacy
+"RTN","ORWDPS2",25,0)
+ D EN^PSSDIN(ORWPSOI)                               ; nfi text
+"RTN","ORWDPS2",26,0)
+ S ILST=ILST+1,LST(ILST)="~Medication"
+"RTN","ORWDPS2",27,0)
+ S ILST=ILST+1,LST(ILST)="d"_OI_U_$S(+OI:$P(^ORD(101.43,OI,0),U),1:"")
+"RTN","ORWDPS2",28,0)
+ S ILST=ILST+1,LST(ILST)="~Verb"
+"RTN","ORWDPS2",29,0)
+ S ILST=ILST+1,LST(ILST)="d"_$P($G(ORDOSE("MISC")),U)
+"RTN","ORWDPS2",30,0)
+ S ILST=ILST+1,LST(ILST)="~Preposition"
+"RTN","ORWDPS2",31,0)
+ S ILST=ILST+1,LST(ILST)="d"_$P($G(ORDOSE("MISC")),U,2)
+"RTN","ORWDPS2",32,0)
+ I $D(NEEDPI),(NEEDPI="Y") S ILST=ILST+1,LST(ILST)="~PtInstr" D PTINSTR
+"RTN","ORWDPS2",33,0)
+ ;S:NEEDPI="Y" ILST=ILST+1,LST(ILST)="~PtInstr"   D PTINSTR
+"RTN","ORWDPS2",34,0)
+ S ILST=ILST+1,LST(ILST)="~AllDoses"  D ALLDOSE ; must do before DOSAGE
+"RTN","ORWDPS2",35,0)
+ S ILST=ILST+1,LST(ILST)="~Dosage"    D DOSAGE
+"RTN","ORWDPS2",36,0)
+ S ILST=ILST+1,LST(ILST)="~Dispense"  D DISPLST
+"RTN","ORWDPS2",37,0)
+ S ILST=ILST+1,LST(ILST)="~Route"     D ROUTE
+"RTN","ORWDPS2",38,0)
+ S ILST=ILST+1,LST(ILST)="~Schedule"  D SCHED
+"RTN","ORWDPS2",39,0)
+ S ILST=ILST+1,LST(ILST)="~Guideline" D GUIDE
+"RTN","ORWDPS2",40,0)
+ S ILST=ILST+1,LST(ILST)="~Message"   D OIMSG
+"RTN","ORWDPS2",41,0)
+ S ILST=ILST+1,LST(ILST)="~DEASchedule" ;PKI
+"RTN","ORWDPS2",42,0)
+ ;S ILST=ILST+1,LST(ILST)="d"_$P($G(ORDOSE("DEA")),U) ;PKI
+"RTN","ORWDPS2",43,0)
+ S ILST=ILST+1,LST(ILST)="d" ;PKI
+"RTN","ORWDPS2",44,0)
+ I $D(ORDOSE("DEA")) S X="",X1=$P(ORDOSE("DEA"),";"),X2=$P(ORDOSE("DEA"),";",2) D
+"RTN","ORWDPS2",45,0)
+ . I '$L(X2) Q
+"RTN","ORWDPS2",46,0)
+ . I $G(PKIACTIV)="Y" S X=X2
+"RTN","ORWDPS2",47,0)
+ S LST(ILST)=LST(ILST)_X
+"RTN","ORWDPS2",48,0)
+ I PSTYPE="U" D
+"RTN","ORWDPS2",49,0)
+ . ; start, expires, next admin
+"RTN","ORWDPS2",50,0)
+ I PSTYPE="O" D
+"RTN","ORWDPS2",51,0)
+ . ; days supply, quantity, refills
+"RTN","ORWDPS2",52,0)
+ K ^TMP("PSJINS",$J),^TMP("PSJMR",$J),^TMP("PSJNOUN",$J),^TMP("PSJSCH",$J),^TMP("PSSDIN",$J)
+"RTN","ORWDPS2",53,0)
+ ;begin patch OR*3*420 MOD this supports the national drug message and lab test display in CPRS RTW
+"RTN","ORWDPS2",54,0)
+ N CREATLST
+"RTN","ORWDPS2",55,0)
+ S CREATLST=0 F  S CREATLST=$O(LST(CREATLST)) Q:'CREATLST  D
+"RTN","ORWDPS2",56,0)
+ . I $G(LST(CREATLST))?1"t".E S ^TMP("OI",$J,CREATLST)=$G(LST(CREATLST))
+"RTN","ORWDPS2",57,0)
+ ;end patch OR*3*420 MOD ; RTW
+"RTN","ORWDPS2",58,0)
+ Q
+"RTN","ORWDPS2",59,0)
+ ;
+"RTN","ORWDPS2",60,0)
+PTINSTR ; from OISLCT, set up patient instructions
+"RTN","ORWDPS2",61,0)
+ N I
+"RTN","ORWDPS2",62,0)
+ S I=0 F  S I=$O(ORDOSE("PI",I)) Q:I'>0  S ILST=ILST+1,LST(ILST)="t"_ORDOSE("PI",I)
+"RTN","ORWDPS2",63,0)
+ Q
+"RTN","ORWDPS2",64,0)
+DOSAGE ; from OISLCT, set up the list of dosages
+"RTN","ORWDPS2",65,0)
+ ; LST(n)=iDrugName^Strength^NF^... (see BLDDOSE)
+"RTN","ORWDPS2",66,0)
+ ; must be called after ALLDOSE so ORWDOSES is set up
+"RTN","ORWDPS2",67,0)
+ N I
+"RTN","ORWDPS2",68,0)
+ S I=0 F  S I=$O(ORWDOSES(I)) Q:I'>0  S ILST=ILST+1,LST(ILST)=ORWDOSES(I)
+"RTN","ORWDPS2",69,0)
+ Q
+"RTN","ORWDPS2",70,0)
+DISPLST ; from OISLCT, set up list of dispense drugs
+"RTN","ORWDPS2",71,0)
+ ; DrugIEN^Strength^Units^Name^Split
+"RTN","ORWDPS2",72,0)
+ N DD
+"RTN","ORWDPS2",73,0)
+ S DD=0 F  S DD=$O(ORDOSE("DD",DD)) Q:'DD  D
+"RTN","ORWDPS2",74,0)
+ . S ILST=ILST+1
+"RTN","ORWDPS2",75,0)
+ . S LST(ILST)="i"_DD_U_$P(ORDOSE("DD",DD),U,5,6)_U_$P(ORDOSE("DD",DD),U)_U_$P(ORDOSE("DD",DD),U,11)
+"RTN","ORWDPS2",76,0)
+ Q
+"RTN","ORWDPS2",77,0)
+ALLDOSE ; from OISLCT, set up a list of all possible doses
+"RTN","ORWDPS2",78,0)
+ ; LST(n)=iDrugName^Strength^NF^... (see BLDDOSE)
+"RTN","ORWDPS2",79,0)
+ N I,J,CONJ,DD,DRUG,DDNM,LDOSE,TEXT,STREN,UD,COST,NF,ID,X
+"RTN","ORWDPS2",80,0)
+ S CONJ=$P($G(ORDOSE("MISC")),U,3),ORWDOSES=0
+"RTN","ORWDPS2",81,0)
+ S:$L(CONJ) CONJ=" "_CONJ_" " S:'$L(CONJ) CONJ=" "
+"RTN","ORWDPS2",82,0)
+ S I=0 F  S I=$O(ORDOSE(I)) Q:I'>0  D
+"RTN","ORWDPS2",83,0)
+ . S X=$$BLDDOSE(ORDOSE(I))
+"RTN","ORWDPS2",84,0)
+ . S ORWDOSES=ORWDOSES+1,ORWDOSES(ORWDOSES)=X
+"RTN","ORWDPS2",85,0)
+ . S ILST=ILST+1
+"RTN","ORWDPS2",86,0)
+ . S LST(ILST)="i"_$P(X,U,5)_U_$P($P(X,U,4),"&",6)_U_$P(X,U,4)
+"RTN","ORWDPS2",87,0)
+ . S J=0 F  S J=$O(ORDOSE(I,J)) Q:J'>0  D
+"RTN","ORWDPS2",88,0)
+ . . S X=$$BLDDOSE(ORDOSE(I,J))
+"RTN","ORWDPS2",89,0)
+ . . S ILST=ILST+1
+"RTN","ORWDPS2",90,0)
+ . . S LST(ILST)="i"_$P(X,U,5)_U_$P($P(X,U,4),"&",6)_U_$P(X,U,4)
+"RTN","ORWDPS2",91,0)
+ Q
+"RTN","ORWDPS2",92,0)
+BLDDOSE(X) ; build dose info where X is ORDOSE node
+"RTN","ORWDPS2",93,0)
+ ; from ALLDOSE
+"RTN","ORWDPS2",94,0)
+ ;    X=TotalDose^Units^U/D^Noun^LocalDose^DispDrugIEN
+"RTN","ORWDPS2",95,0)
+ ;    Y=iDrugName^Strength^NF^TDose&Units&U/D&Noun&LDose&Drug&Stren&Units^
+"RTN","ORWDPS2",96,0)
+ ;      DoseText^CostText^MaxRefills^DispUnits^CanSplit
+"RTN","ORWDPS2",97,0)
+ ; DRUG=Name^Cost^NF^DispUnit^Strength^Units^DoseForm^MaxRefills^
+"RTN","ORWDPS2",98,0)
+ ; No TotalDose,           use LocalDose
+"RTN","ORWDPS2",99,0)
+ ; TotalDose & Strength,   use LocalDose+Conjunction+Strength+Units
+"RTN","ORWDPS2",100,0)
+ ; TotalDose, No Strength, use LocalDose+Conjunction+DispenseName
+"RTN","ORWDPS2",101,0)
+ N Y
+"RTN","ORWDPS2",102,0)
+ S DD=+$P(X,U,6),DRUG=ORDOSE("DD",DD),DDNM=$P(DRUG,U),ID=$P(X,U,1,6)
+"RTN","ORWDPS2",103,0)
+ S LDOSE=$P(X,U,5),TEXT=LDOSE,STREN=$P(DRUG,U,5)_$P(DRUG,U,6)
+"RTN","ORWDPS2",104,0)
+ S $P(ID,U,7)=$P(DRUG,U,5) S $P(ID,U,8)=$P(DRUG,U,6) ; add strength
+"RTN","ORWDPS2",105,0)
+ I '$L($P(X,U)),$L($P(DRUG,U,5))  S TEXT=TEXT_CONJ_STREN
+"RTN","ORWDPS2",106,0)
+ I '$L($P(X,U)),'$L($P(DRUG,U,5)) S TEXT=TEXT_CONJ_$P(DRUG,U)
+"RTN","ORWDPS2",107,0)
+ S UD=$P(X,U,3),COST=$P(X,U,7),NF=$S($P(DRUG,U,3):"NF",1:"")
+"RTN","ORWDPS2",108,0)
+ ;I UD S COST="$"_$J(UD*$P(DRUG,U,2),1,3) ;_" per "_UD_" "_$P(X,U,4)
+"RTN","ORWDPS2",109,0)
+ S Y="i"_DDNM_U_STREN_U_NF_U_$TR(ID,U,"&")_U_TEXT_U_COST_U_$P(DRUG,U,8)_U_$P(DRUG,U,4)
+"RTN","ORWDPS2",110,0)
+ Q Y
+"RTN","ORWDPS2",111,0)
+ROUTE ; from OISLCT, get list of routes for the drug form
+"RTN","ORWDPS2",112,0)
+ ; ** NEED BOTH ABBREVIATION & NAME IN LIST BOX
+"RTN","ORWDPS2",113,0)
+ N I,CNT,ABBR,IEN,ROUT,EXP,X
+"RTN","ORWDPS2",114,0)
+ S I="" F  S I=$O(^TMP("PSJMR",$J,I)) Q:I=""  D
+"RTN","ORWDPS2",115,0)
+ . S X=^TMP("PSJMR",$J,I)
+"RTN","ORWDPS2",116,0)
+ . S ROUT=$P(X,U),ABBR=$P(X,U,2),IEN=$P(X,U,3),EXP=$P(X,U,4)
+"RTN","ORWDPS2",117,0)
+ . S ILST=ILST+1,LST(ILST)="i"_IEN_U_ROUT_U_ABBR_U_EXP_U_$P(X,U,5)
+"RTN","ORWDPS2",118,0)
+ . I $P(X,U,6)="D",IEN S ILST=ILST+1,LST(ILST)="d"_IEN_U_ROUT ;_U_ABBR ; assume first always default
+"RTN","ORWDPS2",119,0)
+ ; add abbreviations to list of routes, commented out for 15.5 on
+"RTN","ORWDPS2",120,0)
+ ; S I="" F  S I=$O(^TMP("PSJMR",$J,I)) Q:I=""  D
+"RTN","ORWDPS2",121,0)
+ ; . S X=^TMP("PSJMR",$J,I)
+"RTN","ORWDPS2",122,0)
+ ; . S ROUT=$P(X,U),ABBR=$P(X,U,2),IEN=$P(X,U,3),EXP=$P(X,U,4)
+"RTN","ORWDPS2",123,0)
+ ; . I $L(ABBR),(ABBR'=ROUT) S ILST=ILST+1,LST(ILST)="i"_IEN_U_ABBR_" ("_ROUT_")"_U_ABBR_U_EXP
+"RTN","ORWDPS2",124,0)
+ Q
+"RTN","ORWDPS2",125,0)
+SCHED ; from OISLCT, get default schedule for this medication
+"RTN","ORWDPS2",126,0)
+ I $L($G(^TMP("PSJSCH",$J))) S ILST=ILST+1,LST(ILST)="d"_^($J)
+"RTN","ORWDPS2",127,0)
+ Q
+"RTN","ORWDPS2",128,0)
+GUIDE ; from OISLCT, get guidelines associated with this medication
+"RTN","ORWDPS2",129,0)
+ N IEN,I
+"RTN","ORWDPS2",130,0)
+ S IEN=0 F  S IEN=$O(^TMP("PSSDIN",$J,"OI",ORWPSOI,IEN)) Q:'IEN  D
+"RTN","ORWDPS2",131,0)
+ . S I=0 F  S I=$O(^TMP("PSSDIN",$J,"OI",ORWPSOI,IEN,I)) Q:'I  D
+"RTN","ORWDPS2",132,0)
+ . . S ILST=ILST+1,LST(ILST)="t"_^TMP("PSSDIN",$J,"OI",ORWPSOI,IEN,I)
+"RTN","ORWDPS2",133,0)
+ Q
+"RTN","ORWDPS2",134,0)
+OIMSG ; from OISLCT, get the orderable item message for this medication
+"RTN","ORWDPS2",135,0)
+ S I=0 F  S I=$O(^ORD(101.43,OI,8,I)) Q:I'>0  S ILST=ILST+1,LST(ILST)="t"_^(I,0)
+"RTN","ORWDPS2",136,0)
+ I $L($T(SL^ORWDPLM1)) D SL^ORWDPLM1 ;LAB monitor
+"RTN","ORWDPS2",137,0)
+ Q
+"RTN","ORWDPS2",138,0)
+ADMIN(REC,DFN,SCH,OI,LOC,ADMIN) ; return administration time info
+"RTN","ORWDPS2",139,0)
+ ; REC: StartText^StartTime^Duration^FirstAdmin
+"RTN","ORWDPS2",140,0)
+ S OI=+$P($G(^ORD(101.43,+OI,0)),U,2)
+"RTN","ORWDPS2",141,0)
+ S LOC=+$G(^SC(LOC,42)),REC=""
+"RTN","ORWDPS2",142,0)
+ I $L($G(^DPT(DFN,.1))) S REC=$$FIRST^ORCDPS3(DFN,LOC,OI,SCH,"",$G(ADMIN))
+"RTN","ORWDPS2",143,0)
+ Q
+"RTN","ORWDPS2",144,0)
+REQST(VAL,DFN,SCH,OI,LOC,TXT) ; return requested start time
+"RTN","ORWDPS2",145,0)
+ ; VAL: FirstAdmin time
+"RTN","ORWDPS2",146,0)
+ S VAL=""
+"RTN","ORWDPS2",147,0)
+ Q:'$L($G(SCH))  Q:'$G(OI)
+"RTN","ORWDPS2",148,0)
+ S OI=+$P($G(^ORD(101.43,+OI,0)),U,2)
+"RTN","ORWDPS2",149,0)
+ S LOC=+$G(^SC(LOC,42))
+"RTN","ORWDPS2",150,0)
+ S VAL=$P($$RESOLVE^PSJORPOE(DFN,SCH,OI,TXT,LOC),U,2)
+"RTN","ORWDPS2",151,0)
+ Q
+"RTN","ORWDPS2",152,0)
+DAY2QTY(VAL,DAY,UPD,SCH,DUR,PAT,DRG) ; return qty for days supply
+"RTN","ORWDPS2",153,0)
+ ; VAL: quantity
+"RTN","ORWDPS2",154,0)
+ N ORWX,I,X,ADUR,ADURNM
+"RTN","ORWDPS2",155,0)
+ S ORWX("DAYS SUPPLY")=DAY
+"RTN","ORWDPS2",156,0)
+ S ORWX("PATIENT")=PAT
+"RTN","ORWDPS2",157,0)
+ I DRG S ORWX("DRUG")=DRG
+"RTN","ORWDPS2",158,0)
+ F I=1:1:$L(UPD,U)-1 D
+"RTN","ORWDPS2",159,0)
+ . S ORWX("DOSE ORDERED",I)=$P(UPD,U,I)
+"RTN","ORWDPS2",160,0)
+ . S ORWX("SCHEDULE",I)=$P(SCH,U,I)
+"RTN","ORWDPS2",161,0)
+ . S ADUR=$P(DUR,U,I),ADURNM=$P($P(ADUR," ",2),"~")
+"RTN","ORWDPS2",162,0)
+ . S:ADURNM="MONTHS" X=+ADUR_"L"
+"RTN","ORWDPS2",163,0)
+ . S:ADURNM'="MONTHS" X=+ADUR_$E($P(ADUR," ",2))
+"RTN","ORWDPS2",164,0)
+ . I $L(X) S ORWX("DURATION",I)=X
+"RTN","ORWDPS2",165,0)
+ . S X=$E($P(ADUR,"~",2))
+"RTN","ORWDPS2",166,0)
+ . I $L(X) S ORWX("CONJUNCTION",I)=X
+"RTN","ORWDPS2",167,0)
+ D QTYX^PSOSIG(.ORWX)
+"RTN","ORWDPS2",168,0)
+ S VAL=$G(ORWX("QTY"))
+"RTN","ORWDPS2",169,0)
+ Q
+"RTN","ORWDPS2",170,0)
+QTY2DAY(VAL,QTY,UPD,SCH,DUR,PAT,DRG) ; return days supply given quantity
+"RTN","ORWDPS2",171,0)
+ ; VAL: days supply
+"RTN","ORWDPS2",172,0)
+ N ORWX,I,X,ADUR
+"RTN","ORWDPS2",173,0)
+ S ORWX("QTY")=QTY
+"RTN","ORWDPS2",174,0)
+ S ORWX("PATIENT")=PAT
+"RTN","ORWDPS2",175,0)
+ I DRG S ORWX("DRUG")=DRG
+"RTN","ORWDPS2",176,0)
+ F I=1:1:$L(UPD,U)-1 D
+"RTN","ORWDPS2",177,0)
+ . S ORWX("DOSE ORDERED",I)=$P(UPD,U,I)
+"RTN","ORWDPS2",178,0)
+ . S ORWX("SCHEDULE",I)=$P(SCH,U,I)
+"RTN","ORWDPS2",179,0)
+ . S ADUR=$P(DUR,U,I),X=+ADUR_$E($P(ADUR," ",2))
+"RTN","ORWDPS2",180,0)
+ . I $L(X) S ORWX("DURATION",I)=X
+"RTN","ORWDPS2",181,0)
+ . S X=$E($P(ADUR,"~",2))
+"RTN","ORWDPS2",182,0)
+ . I $L(X) S ORWX("CONJUNCTION",I)=X
+"RTN","ORWDPS2",183,0)
+ D QTYX^PSOSIG(.ORWX)
+"RTN","ORWDPS2",184,0)
+ S VAL=$G(ORWX("DAYS SUPPLY"))
+"RTN","ORWDPS2",185,0)
+ Q
+"RTN","ORWDPS2",186,0)
+MAXREF(VAL,PAT,DRG,SUP,OI,OUT) ; return the maximum number of refills
+"RTN","ORWDPS2",187,0)
+ ; PAT=Patient DFN, DRG=ptr50, SUP=days supply, OI=orderable item
+"RTN","ORWDPS2",188,0)
+ ; VAL: maximum refills allowed
+"RTN","ORWDPS2",189,0)
+ N ORWX
+"RTN","ORWDPS2",190,0)
+ S ORWX("PATIENT")=PAT
+"RTN","ORWDPS2",191,0)
+ I $G(DRG) S ORWX("DRUG")=+DRG
+"RTN","ORWDPS2",192,0)
+ I $G(SUP) S ORWX("DAYS SUPPLY")=SUP
+"RTN","ORWDPS2",193,0)
+ I $G(OI)  S ORWX("ITEM")=+$P(^ORD(101.43,+OI,0),U,2)
+"RTN","ORWDPS2",194,0)
+ I $G(OUT) S ORWX("DISCHARGE")=1
+"RTN","ORWDPS2",195,0)
+ D MAX^PSOSIGDS(.ORWX)
+"RTN","ORWDPS2",196,0)
+ S VAL=$G(ORWX("MAX"))
+"RTN","ORWDPS2",197,0)
+ Q
+"RTN","ORWDPS2",198,0)
+SCHREQ(VAL,OI,RTE,DRG) ; return 1 if schedule is required
+"RTN","ORWDPS2",199,0)
+ ; OI=orderable item, RTE=ptr route, DRG=ptr dispense drug
+"RTN","ORWDPS2",200,0)
+ S VAL=1
+"RTN","ORWDPS2",201,0)
+ Q:'$G(OI)  Q:'$G(RTE)
+"RTN","ORWDPS2",202,0)
+ S VAL=$$SCHREQ^PSJORPOE(RTE,OI,+$G(DRG))
+"RTN","ORWDPS2",203,0)
+ Q
+"RTN","ORWDPS2",204,0)
+CHKPI(VAL,ODIFN) ; return pre-existing patient instruct
+"RTN","ORWDPS2",205,0)
+ N IDNUM,IDPI
+"RTN","ORWDPS2",206,0)
+ S (IDNUM,IDPI)=0,VAL=""
+"RTN","ORWDPS2",207,0)
+ I '$D(^OR(100,ODIFN,4.5,"ID","PI")) S VAL="" Q
+"RTN","ORWDPS2",208,0)
+ F  S IDNUM=$O(^OR(100,ODIFN,4.5,"ID","PI",IDNUM)) Q:'IDNUM  D
+"RTN","ORWDPS2",209,0)
+ . F  S IDPI=$O(^OR(100,ODIFN,4.5,IDNUM,2,IDPI)) Q:'IDPI  D
+"RTN","ORWDPS2",210,0)
+ .. S VAL=VAL_^OR(100,ODIFN,4.5,IDNUM,2,IDPI,0)
+"RTN","ORWDPS2",211,0)
+ K IDNUM,IDPI
+"RTN","ORWDPS2",212,0)
+ Q
+"RTN","ORWDPS2",213,0)
+CHKGRP(VAL,ORIFN) ;
+"RTN","ORWDPS2",214,0)
+ ;Inpatient Med Order Group or Clin Meds Group: return 1
+"RTN","ORWDPS2",215,0)
+ ;If order belong to Outpatient Med Order Grpoup: return 2
+"RTN","ORWDPS2",216,0)
+ ;Otherwise, return 0
+"RTN","ORWDPS2",217,0)
+ S VAL=0
+"RTN","ORWDPS2",218,0)
+ I '$L(ORIFN) Q
+"RTN","ORWDPS2",219,0)
+ N UDGRP,IPGRP,OPGRP,ODGRP,ODID,CLMED
+"RTN","ORWDPS2",220,0)
+ S ODID=+ORIFN
+"RTN","ORWDPS2",221,0)
+ Q:ODID<1
+"RTN","ORWDPS2",222,0)
+ S (UDGRP,IPGRP,OPGRP,ODGRP,CLMED)=0
+"RTN","ORWDPS2",223,0)
+ S UDGRP=$O(^ORD(100.98,"B","UD RX",UDGRP))
+"RTN","ORWDPS2",224,0)
+ S OPGRP=$O(^ORD(100.98,"B","OUTPATIENT MEDICATIONS",OPGRP))
+"RTN","ORWDPS2",225,0)
+ S IPGRP=$O(^ORD(100.98,"B","INPATIENT MEDICATIONS",IPGRP))
+"RTN","ORWDPS2",226,0)
+ S CLMED=$O(^ORD(100.98,"B","CLINIC ORDERS",CLMED))
+"RTN","ORWDPS2",227,0)
+ S:IPGRP=0 IPGRP=$O(^ORD(100.98,"B","I RX",IPGRP))
+"RTN","ORWDPS2",228,0)
+ I $L($G(^OR(100,ODID,0)))<1 Q
+"RTN","ORWDPS2",229,0)
+ S ODGRP=$P(^OR(100,ODID,0),U,11)
+"RTN","ORWDPS2",230,0)
+ I (UDGRP=ODGRP)!(CLMED=ODGRP) S VAL=1
+"RTN","ORWDPS2",231,0)
+ I IPGRP=ODGRP S VAL=1
+"RTN","ORWDPS2",232,0)
+ I OPGRP=ODGRP S VAL=2
+"RTN","ORWDPS2",233,0)
+ K UDGRP,ODGRP,OPGRP,IPGRP,ODID,CLMED
+"RTN","ORWDPS2",234,0)
+ Q
+"RTN","ORWDPS2",235,0)
+QOGRP(VAL,QOIFN) ;
+"RTN","ORWDPS2",236,0)
+ ;If quick order belong to Inpatient Med Order Group: return 1
+"RTN","ORWDPS2",237,0)
+ ;Otherwise, return 0
+"RTN","ORWDPS2",238,0)
+ S VAL=0
+"RTN","ORWDPS2",239,0)
+ I '$L(QOIFN) Q
+"RTN","ORWDPS2",240,0)
+ N UDGRP,IPGRP,QOGRP,QOID,CLMED
+"RTN","ORWDPS2",241,0)
+ S QOID=+QOIFN
+"RTN","ORWDPS2",242,0)
+ Q:QOID<1
+"RTN","ORWDPS2",243,0)
+ S (UDGRP,IPGRP,QOGRP,CLMED)=0
+"RTN","ORWDPS2",244,0)
+ S UDGRP=$O(^ORD(100.98,"B","UD RX",UDGRP))
+"RTN","ORWDPS2",245,0)
+ S IPGRP=$O(^ORD(100.98,"B","INPATIENT MEDICATIONS",IPGRP))
+"RTN","ORWDPS2",246,0)
+ S CLMED=$O(^ORD(100.98,"B","CLINIC ORDERS",CLMED))
+"RTN","ORWDPS2",247,0)
+ S:IPGRP=0 IPGRP=$O(^ORD(100.98,"B","I RX",IPGRP))
+"RTN","ORWDPS2",248,0)
+ I $L($G(^ORD(101.41,QOID,0)))<1 Q
+"RTN","ORWDPS2",249,0)
+ S QOGRP=$P(^ORD(101.41,QOID,0),U,5)
+"RTN","ORWDPS2",250,0)
+ I UDGRP=QOGRP S VAL=1
+"RTN","ORWDPS2",251,0)
+ I (IPGRP=QOGRP)!(CLMED=QOGRP) S VAL=1
+"RTN","ORWDPS2",252,0)
+ K UDGRP,QOGRP,QOID,IPGRP,CLMED
+"RTN","ORWDPS2",253,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",9448,6)
+^374
+**END**
+**END**
+

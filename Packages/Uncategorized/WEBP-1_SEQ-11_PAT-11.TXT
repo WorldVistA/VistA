@@ -1,0 +1,178 @@
+
+=============================================================================
+Run Date: MAR 30, 2017                     Designation: WEBP*1*11
+Package : WEBP - PATIENT CENTERED MANAGEMENT  Priority: Mandatory
+Version : 1        SEQ #11                      Status: Released
+                  Compliance Date: APR 29, 2017
+=============================================================================
+
+
+Subject: PCMM WEB V1.11 ADDED SSOi REQUIREMENTS FOR PIV ACCESS TO PCMM WEB APPLICATION
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Patient-Centered Management Module (PCMM) Web application version 
+ WEBP*1*11 will implement the software changes necessary to meet VA 
+ enterprise requirements for use of Personal Identification Verification 
+ (PIV) cards and 2 factor authentication.  PCMM Web users will now be able 
+ to use PIV cards to authenticate and log into PCMM Web.
+  
+  
+ Configuration and Software Changes:
+ ===================================
+  
+ 1.      RTC 426795 - PCMM Web Implemented the Single Sign On Internal 
+ (SSOi) in order to meet VA enterprise requirements and federal mandates 
+ which require users to log into the application using their Personal 
+ Identification Verification (PIV) card.
+ PCMM Web users will now authenticate via SSOi; which is an authentication 
+ service provided by Identity Access Management (IAM) and designated for 
+ operations-based applications such as PCMM Web. This service provides an 
+ extra layer of security when accessing the application, while reducing 
+ time associated with multiple logon/logoff activities.  PCMM Web users 
+ now are required to use a PIV card to log in unless an exception to use 
+ VA User Credentials is allowed.
+ More information on how to log in using PIV can be found at the following 
+ location
+ http://tspr.vista.domain.ext/warboard/ProjectDocs/Access_Services_Phase_2/
+ VA_AcS_2.0_i7_SSOi_End_User_Training.pdf
+  
+  
+  
+ Implementation:
+ ===============
+ The PCMM Web WEBP*1*11 is a centrally managed web-based application and 
+ will be implemented and deployed to a central web server.  No installation
+ is required by sites.
+  
+  
+ Implementation Files:
+ =====================
+ None
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated: N/A
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A
+  
+ Options Associated: N/A
+  
+ Protocols Associated: N/A
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20070415 - Rehost/Reengineer PCMM
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ CA-SDM Ticket(s):
+ -----------------
+ N/A
+  
+ Test Sites:
+ -----------
+ 691 - West LA VAMC
+ 618 - Minneapolis VA HCS
+ 662 - San Francisco VAMC
+  
+  
+ Documentation:
+ ==============
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be retrieved from the VA Software Documentation
+ Library (VDL) on the Internet at the following address:
+ http://www4.domain.ext/vdl.
+  
+ File Description              File Name                      SFTP Mode
+ --------------------------------------------------------------------------
+ Patient-Centered Management   PCMM WEB VDD WEBP_1_11.DOCX     BINARY
+ Module(PCMM) Web
+  
+ Patient-Centered Management   PCMM_WEB_USER_GUIDE.docx        BINARY
+ Module (PCMM) Web User Guide             
+  
+ Patient-Centered Management   PCMMR_POM.DOCX                  BINARY
+ Module (PCMM) Web Project
+ Operations Manual
+  
+ Patch Installation:
+ ===================
+  
+ There is no local VistA installation for PCMM Web. All installations will 
+ be done on the national web server.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ If you have any questions concerning the implementation of this 
+ application, please contact the VA Service Desk at 1-888-596-4357 or 
+ directly log a CA SDM ticket using the category: 
+ NTL.APP.HealtheVet VistA.PCMM Web.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 27, 2017
+Completed By:                               Date Completed: MAR 28, 2017
+Released By :                               Date Released : MAR 30, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,300 @@
+$TXT Created by              VLELAB1.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 12/20/16 at 11:23
+=============================================================================
+Run Date: FEB 02, 2017                     Designation: MMRS*1*4
+Package : MMRS - MRSA INITIATIVE REPORTS      Priority: Mandatory
+Version : 1         SEQ #4                      Status: Released
+                  Compliance Date: MAR 05, 2017
+=============================================================================
+
+Associated patches: (v)MMRS*1*3    <<= must be installed BEFORE `MMRS*1*4'
+                    (v)LR*5.2*463  <<= must be installed BEFORE `MMRS*1*4'
+
+Subject: MULTI-DRUG RESISTANT ORGANISMS (MDRO) ENHANCED REPORTING
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ The scope of NSR #20140801 (Tracking Drug-Resistant Organisms) includes
+ requests and other enhancements covered by one other NSR (#20140804
+ Clostridium difficile Program Tools). The VistA Lab Enhancement (VLE)
+ scope encompasses the need for the following: 
+  
+ - Timely Identification: Updating the Methicillin-Resistant Staphylococcus
+   aureus Program Tools (MRSA-PT) observation status to align with VHA
+   policy (VHA Directive 1036) and to ensure the timely identification of
+   MDROs (including C. difficile and related infections) in VA facilities.
+  
+ - Automated Data Collection: Improving the MRSA-PT functionality to
+   provide MDRO Prevention Coordinators (MPCs) and Infection
+   Preventionists (IPs) with an automated data extraction program for
+   MDROs (including C. difficile and related infections) to eliminate the
+   use of labor hours for manual data collection, and ensure the accuracy
+   of data.
+  
+ - Enhanced Reporting: Expanded reporting and report data functionality
+   of the Methicillin-Resistant Staphylococcus aureus Program Tools
+   (MRSA-PT).
+  
+ - Renaming the current Methicillin-Resistant Staphylococcus aureus
+   Program Tools (MRSA-PT) to: Multiple Drug Resistant Organism Program
+   Tools (MDRO-PT) for MDROs including MRSA and Clostridium difficile
+   (C. difficile) and Carbapenem-resistant Enterobacteriaceae (CRE). 
+  
+ - Two new reporting capabilities.  A Clostridium difficile Infection
+   CDI report that will allow the MPCs and IPs to monitor problematic 
+   C. difficile infections within the wards of a facility and a CRE report 
+   that will allow the MPCs and IPs to monitor problematic CRE infections 
+   within a facility.
+  
+  
+ Blood Bank Review
+ ==================
+ N/A
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)       New/Modified/Deleted
+ --------------------------  ----------------------------------------------
+ MDRO SITE PARAMETERS (104)           SPECIMEN (104.0216061) New
+ MDRO TYPES (104.2)                   N/A                    Modified 
+ MDRO WARD MAPPINGS (104.3)           N/A                    Modified
+ MDRO TOOLS LAB SEARCH/EXTRACT(104.1) N/A                    Modified
+  
+  
+ Forms Associated:
+  
+ Form Name                File #       New/Modified/Deleted
+ ---------                ------       --------------------
+ MMRSISLTORD              104          Modified
+ MMRSLABPARAM             104.1        Modified
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                    Type         New/Modified/Deleted
+ -----------------------------  -----------  --------------------
+ MMRS CDI REPORT                run routine  New
+ MMRS CRE REPORT                run routine  New
+ MMRS CDI REPORT (TASKED)       run routine  New
+ MMRS CRE SITE PARAMETER SETUP  menu         New
+ MMRS ISLT ORD EDIT             edit         Modified
+ MMRS ISOLATION REPORT          run routine  Modified
+ MMRS MDRO HIST DAYS EDIT       edit         New
+ MMRS MDRO LAB PARAMETER SETUP  edit         New
+ MMRS MRSA SITE PARAMETER SETUP edit         Modified
+ MMRS MDRO SITE PARAMETER SETUP edit         Deleted
+ MMRS MDRO TOOLS SETUP MENU     menu         Modified
+ MMRS MRSA MDRO HIST DAYS EDIT  edit         Deleted
+ MMRS MDRO WARD MAPPING SETUP   edit         Deleted
+ MMRS MRSA LAB PARAMETER SETUP  edit         Deleted
+ MMRS MRSA HIST DAYS EDIT                    Deleted 
+ MMRS MRSA PARAMETER SETUP                   Deleted
+ MMRS MRSA TOOLS SETUP MENU                  Deleted
+ MMRS MRSA WARD MAPPING SETUP                New
+ MMRS MRSA IPEC REPORT                       Modified
+ MMRS NARES SWAB LIST                        Modified
+ MMRS REPORTS MENU              menu         Modified
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ MMRS SETUP
+  
+ Note:  The security key is needed to access the MDRO Tools Setup Menu
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR 20140801 Tracking Drug-Resistant Organisms
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+ Problem:
+ --------
+ N/A
+  
+  
+ Resolution:
+ -----------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ James A. Haley Veterans Hospital
+ Iowa City VA Healthcare System
+ Lexington VA Medical Center
+  
+  
+ Software and Documentation Retrieval Instructions: 
+ -------------------------------------------------- 
+ Software will be released via a PackMan message. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following 
+ OI Field Offices:
+     
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation will be distributed via a VLE MMRS MDRO Enhancement.ZIP 
+ file, which contains both .pdf and .docx formatted file of the following 
+ documents. Retrieval format is BINARY.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title
+ =====
+ VLE Micro_MMRS_1_0_4__Deployment_Installation_Roll Back_Back Out_Guide
+ VLE Micro_MMRS_1_0_4_Technical_Manual
+ VLE Micro_MMRS_1_0_4_User_Guide
+  
+  
+ Patch Installation:
+ -------------------
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 5 
+ minutes to install.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu. From this menu, you may elect to use the 
+    following options. When prompted for the INSTALL NAME enter
+    MMRS*1.0*4.
+  
+    a. Backup a Transport Global - This option will create a backup 
+       message of any routines exported with this patch. It will not 
+       backup any other changes such as DD's or templates.
+  
+    b. Compare Transport Global to Current System - This option will 
+       allow you to view all changes that will be made when this patch
+       is installed. It compares all components of this patch
+       (routines, DD's, templates, etc.).
+  
+    c.  Verify Checksums in Transport Global - This option will allow 
+        you to ensure the integrity of the routines that are in the 
+        transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option 
+    and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+    Install? YES// Press <Enter>.
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+    NO// Press <Enter>.
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO// Press <Enter>.
+  
+ 8. If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;MRSA TOOLS REPORTS MENU;**[Patch List]**;Mar 22, 2009;Build 130
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MMRSCDI
+    Before:       n/a   After:B219284495  **4**
+Routine Name: MMRSCDI1
+    Before:       n/a   After: B47343212  **4**
+Routine Name: MMRSCDI2
+    Before:       n/a   After:B162714137  **4**
+Routine Name: MMRSCRE
+    Before:       n/a   After: B90369826  **4**
+Routine Name: MMRSCRE2
+    Before:       n/a   After: B12793206  **4**
+Routine Name: MMRSCRE3
+    Before:       n/a   After:B160454267  **4**
+Routine Name: MMRSCRE4
+    Before:       n/a   After: B34859922  **4**
+Routine Name: MMRSIPCP
+    Before: B27513898   After: B45727414  **1,3,4**
+Routine Name: MMRSP4
+    Before:       n/a   After:   B634304  **4**
+ 
+Routine list of preceding patches: 3
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 12, 2016
+Completed By:                               Date Completed: JAN 30, 2017
+Released By :                               Date Released : FEB 02, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,131 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 03/06/17 at 14:49
+=============================================================================
+Run Date: APR 11, 2017                     Designation: PRCA*4.5*323
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: EMERGENCY
+Version : 4.5       SEQ #281                    Status: Released
+                  Compliance Date: APR 13, 2017
+=============================================================================
+
+
+Subject: FIX REJECT TRANSMISSION HANDLING
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ 1) Reject transmission processing:  Clear CS flag for '3E' reject code, 
+    absolute value check that is causing reject batches being tossed 
+    aside and adding new reject reasons to the TCS IAI ERROR CODES (#348.5)
+    file.
+  
+ Associated Tickets:
+ =========================
+ 1) I12608411FY17 - 3E reject codes are not clearing the cross-service (CS)
+                    flag from bill, entire reject batches are not
+                    processing and new reject error codes used by Treasury.
+    Duplicate:  I12652672FY17 - Cross Servicing Rejects issue
+                I12711345FY17 - No rejects showing on reports
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Maryland HCS
+ Wilmington, DE
+  
+ Ticket Overview:
+ ================ 
+ 1) I12608411FY17 - 3E reject codes are not clearing the cross-service (CS)
+                    flag from bill, entire reject batches are not
+                    processing and new reject error codes used by Treasury.
+  
+  
+ Problem:
+ --------
+ Site reports that bills rejected by Treasury with 3E code are not 
+ clearing the CS flag from bill. Also, entire reject transmissions from 
+ Treasury are being rejected for unmatched total controls. Finally, 
+ Treasury is using reject error codes not in the original TCS IAI ERROR 
+ CODES (#348.5) file.
+  
+ Resolution:
+ -----------
+ Modification made to reject transmission handler to ensure 3E codes clear
+ the CS flag from bill. Also, incorporated absolute total calculations to
+ ensure entire batches are not cast aside due to negative amounts. Lastly,
+ updated the TCS IAI ERROR CODES (#348.5) file with new reject error codes.
+  
+ Routines: RCTCSJS
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ You may install this patch at any time without interruption to users. It
+ should take less than two minutes to install this patch.
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+  
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+  
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRCA*4.5*323)
+  
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+  
+    4. Use the Install Package(s) option and select the package
+       PRCA*4.5*323.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.  
+  
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCTCSJS
+    Before:B200131768   After:B204961410  **301,323**
+ 
+Routine list of preceding patches: 301
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 28, 2017
+Completed By:                               Date Completed: APR 11, 2017
+Released By :                               Date Released : APR 11, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,169 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 01/25/17 at 07:59
+=============================================================================
+Run Date: MAR 31, 2017                     Designation: OOPS*2*29
+Package : OOPS - ASISTS                       Priority: Mandatory
+Version : 2        SEQ #28                      Status: Released
+                  Compliance Date: MAY 01, 2017
+=============================================================================
+
+Associated patches: (v)OOPS*2*28   <<= must be installed BEFORE `OOPS*2*29'
+
+Subject: ASISTS GUI 2FA IMPLEMENTATION
+
+Category: 
+  - Other
+
+Description:
+============
+
+ This patch will update the log in procedure to the ASISTS Graphical User 
+ Interface (GUI) to use Two Factor Authentication (2FA) which will require 
+ the use of a Personal Identity Verification (PIV) card.
+  
+ In order to make the transition to 2FA, it was also necessary to upgrade 
+ the ASISTS Graphical User Interface (GUI) to Delphi version XE8 to 
+ implement the new Remote Procedure Call (RPC) Broker allowing compliance.
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Carl Vinson VA Medical Center (Dublin)
+ Pittsburgh HCS
+   
+  
+ ASSOCIATED TICKET:
+ ==================
+ 2FA
+  
+  
+ TICKET OVERVIEW:
+ ================
+  
+ Problem: 
+ --------
+ The Department of Veterans Affairs Cybersecurity Task Force has been 
+ tasked by the Chief Information Officer (CIO) and the Inspector General
+ (IG) to address identified material weaknesses. This task force has
+ mandated that all internal, user facing VA applications become two factor
+ authentication (2FA) compliant by April 30, 2017.
+  
+ In order to be compliant, applications are required to authenticate users 
+ via Personal Identity Verification (PIV) cards.  
+  
+ Note: Usernames and password will no longer be permitted for employees and
+ contractors to access VA applications.  
+   
+ Resolution:
+ -----------
+ The ASISTS GUI has been upgraded to Delphi XE8 to allow access to the
+ latest version of the RPC Broker, implementing 2FA.
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ================================================== 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Albany: domain.ext
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+  
+ FILE NAMES         DESCRIPTION             ADDITIONAL INFO      SIZE(kb)
+ ----------         -----------             ----------------     --------
+ oops2_p29.msi      ASISTS executable       BINARY                9443
+ oops2_0um.pdf      ASISTS User Manual      BINARY                5232
+ oops2_0ig.pdf      ASISTS Install Guide    BINARY                 400
+  
+          
+   
+ ==================== CLIENT Installation Instructions ===================
+  
+ 1. After downloading the MSI file from one of the servers above, open the 
+    file on desktop/workstation/server.
+  
+ 2. InstallShield Wizard pop-up displays - select 'Next'.
+  
+ 3. Select default install directory, or browse for another - select 
+ 'Next'.
+  
+ 4. Select 'Install' to begin installation.
+  
+ 5. If install successful, pop-up displays "InstallShield Wizard 
+ Completed" - 
+    select 'Finish'. 
+  
+  
+ ==================== INSTALLATION INSTRUCTIONS =====================
+  
+ It is not necessary to disable any options.  You may install 
+ these routines at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter OOPS*2.0*29)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       OOPS*2.0*29.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;ASISTS;**[Patch List]**;Jun 03, 2002;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: OOPSGUI1
+    Before: B34497535   After: B34497641  **4,8,7,11,15,18,20,21,23,28,29**
+ 
+Routine list of preceding patches: 28
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 02, 2016
+Completed By:                               Date Completed: MAR 30, 2017
+Released By :                               Date Released : MAR 31, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

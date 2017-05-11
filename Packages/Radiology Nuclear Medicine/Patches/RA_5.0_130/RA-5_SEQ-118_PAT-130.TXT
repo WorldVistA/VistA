@@ -1,0 +1,134 @@
+$TXT Created by            at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 09/22/16 at 09:50
+=============================================================================
+Run Date: MAR 28, 2017                     Designation: RA*5*130
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #118                      Status: Released
+                  Compliance Date: APR 28, 2017
+=============================================================================
+
+
+Subject: CORRECT AP AND AS INDEXES FOR PATIENT MERGE
+
+Category: 
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ 1. The RAD/NUC MED ORDERS file (#75.1) AS and AP cross references do not merge
+    during a patient merge. 
+  
+ Associated Ticket(s): 
+ =====================
+ 1. I9328296FY16 - PT merge_"AS" cross reference left over during merge
+                   process/Pt merge and RAD order problem 
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ UpState New York
+ Boston HCS
+  
+ Ticket Overview:
+ ================
+ 1. I9328296FY16 - PT merge_"AS" cross reference left over during merge
+                   process/Pt merge and RAD order problem
+  
+ Patient Safety Issues:
+ ----------------------
+ PSPO 3176
+  
+ Problem:
+ --------
+ The RAD/NUC MED ORDERS file (#75.1) AS and AP cross references do not merge
+ during a patient merge. These cross references have a non-standard PATIENT file
+ (#2) pointer. The merging of Non-standard PATIENT file (#2) pointers during a
+ patient merge should have been handled by the file developers but were not.
+   
+ Resolution:
+ -----------
+ The RAD/NUC MED ORDERS file (#75.1) Data Dictionary was modified to delete
+ the old Traditional style "AP" and "AS" xrefs and create New style "AP"
+ and "AS" indexes. The "AP" index will be updated any time the NAME (#.01),
+ PROCEDURE (#2) or DATE DESIRED (#21) fields are modified in the RAD/NUC
+ MED ORDERS (#75.1) file.  The "AS" index will be updated any time the NAME
+ (#.01) or REQUEST STATUS (#5) fields are modified in the RAD/NUC MED
+ ORDERS (#75.1) file. Post install routine RA5130P will deleted the old
+ cross references.
+  
+ Files & Fields Associated:
+  
+ File Name (Number)             Field Name (Number)       New/Mod/Del
+ ----------------------------  ------------------------   -----------
+ RAD/NUC MED ORDERS (#75.1)    NAME (#.01)                Modify
+ RAD/NUC MED ORDERS (#75.1)    PROCEDURE (#2)             Modify
+ RAD/NUC MED ORDERS (#75.1)    DATE DESIRED (#21)         Modify
+ RAD/NUC MED ORDERS (#75.1)    REQUEST STATUS (#5)        Modify
+                                             
+    ==================== Installation Instructions ====================
+   This patch may be installed during normal working hours with all users
+   on the system. However, as it is necessary to disable some menu options
+   when installing this patch it is recommended that the install be done 
+   during non-peak hours.  
+  
+   Install Time - less than 2 minutes (unless otherwise indicated)
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+   2. From the Kernel Installation & Distribution System menu, select the
+      Installation menu.
+   
+   3. From this menu, you may select to use the following options (when
+      prompted for INSTALL NAME, enter RA*5.0*130).      
+  
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch is
+         installed.
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - this option will allow you to view
+         the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package RA*5.0*130
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//",
+         respond No.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", respond No.
+  
+      7. Post Install routine RA5130P may be deleted after install using
+         Delete Routines [XTRDEL] option.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RA5130P
+    Before:       n/a   After:  B2602175  **130**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 24, 2016
+Completed By:                               Date Completed: MAR 28, 2017
+Released By :                               Date Released : MAR 28, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

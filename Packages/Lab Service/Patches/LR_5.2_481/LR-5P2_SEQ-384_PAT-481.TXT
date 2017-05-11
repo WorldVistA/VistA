@@ -1,0 +1,96 @@
+
+=============================================================================
+Run Date: MAR 08, 2017                     Designation: LR*5.2*481
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #384                    Status: Released
+                  Compliance Date: APR 08, 2017
+=============================================================================
+
+Associated patches: (v)LR*5.2*468  <<= must be installed BEFORE `LR*5.2*481'
+
+Subject: INFORMATIONAL UPDATE PATCH FOR NTRT
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This is an INFORMATIONAL patch that is a follow on to patch
+ LR*5.2*468. This patch includes instructions to manually change
+ field #.1 SEND NTRT MESSAGES in the LAB MLTF MANAGED ITEMS File
+ (66.4) from N to Y.
+  
+ This patch should not be exercised until the content of the
+ MASTER LABORATORY TEST file (#66.3) has been deployed.
+  
+ When the content of the MASTER LABORATORY TEST file (#66.3) has
+ been deployed the NTRT group sends a message to the
+ NTRT_NOTIFICATION-L listserv.
+  
+ The LIM for the facility shall subscribe to this list using the
+ following web site: http://vaww.listserv.domain.ext/scripts/wa.exe. The 
+ NTRT group does not own the List Serve application. The List Serve
+ is a VA service. The LIM will need to create an account using a
+ username and password that does NOT synchronize with the LIM's VA
+ network account.
+  
+ *****************
+ DO NOT CHANGE ANY VALUES EXCEPT FOR field #.1 SEND NTRT MESSAGES
+ *****************
+  
+ CHANGE INSTRUCTIONS:
+ ==========================
+ Systems Installer (OI&T):
+ Verify that the MASTER LABORATORY TEST file (#66.3) has been
+ populated with data. The pre content deployment 66.3 will
+ contain 23 entries.
+  
+ Navigate to the LIM NDS MENU option.
+ Select MIE Managed Items Edit from the menu.
+ Enter your facilities Institution or '?' if you are not sure.
+ Press <ENTER> for the following prompts and accept the default values.
+ INSTITUTION POINTER: CHEYENNE VAMC// 
+ NTRT SEND METHOD: MAILMAN// 
+ AUTO REMINDERS PARAMETER: 30// 
+ AUDIT PURGE DAYS: 220// 
+ ISAAC ACTIVE: NO// 
+ SUBSCRIPT FOR NTRT: CH// 
+ LAST AUTO TEST ID: //
+  
+ At the prompt SEND NTRT MESSAGES: NO// enter 'Y' to change
+ the value from NO to YES.
+ This will allow request messages to be sent when a new
+ Lab Site/Specimen is created and has not been associated to
+ the MASTER LABORATORY TEST File #66.3 (MLTF).
+  
+ Press <ENTER> for the following prompts and accept the default values.
+  
+ DEFAULT NTRT MAIL GROUP: G.LABORATORY NTRT@FORUM.DOMAIN.EXT
+ DEFAULT SITE LAB MAIL GROUP: G.LMI@CHEYENNE.DOMAIN.EXT
+ ISAAC WEB ADDRESS: vaauscttweb80.aac.domain.ext
+ ISAAC PORT NUMBER: 8080//
+ ISAAC NTRT PATH: isaac-rest~rest~1~request~termRequest
+ ISAAC SCHEMA NAME: MASTER-NTRT-RECEIVE_1.XSD
+ ISAAC SCHEMA PATH:
+  
+ Press <ENTER> to return to the LIM NDS MENU
+ You may exit the LIM NDS MENU at this time.
+  
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 12, 2017
+Completed By:                               Date Completed: MAR 03, 2017
+Released By :                               Date Released : MAR 08, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

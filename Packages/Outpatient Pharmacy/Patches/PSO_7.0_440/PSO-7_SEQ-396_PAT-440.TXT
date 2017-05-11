@@ -1,0 +1,171 @@
+$TXT Created by                 at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 07/20/16 at 08:18
+=============================================================================
+Run Date: APR 27, 2017                     Designation: PSO*7*440
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #396                      Status: Released
+                  Compliance Date: MAY 28, 2017
+=============================================================================
+
+Associated patches: (v)PSO*7*405   <<= must be installed BEFORE `PSO*7*440'
+                    (v)PSO*7*408   <<= must be installed BEFORE `PSO*7*440'
+                    (v)PSO*7*444   <<= must be installed BEFORE `PSO*7*440'
+
+Subject: UNHOLD RELEASE,ISSUE DATE,DIVISION RESET
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues in the Outpatient Pharmacy 
+ package:
+  
+ 1.  A prescription on suspense that is placed on hold is restored to 
+     active status when the hold is removed.
+  
+ 2.  Renewed script date becomes "ISSUE" date when finished by a
+     pharmacist.
+  
+ 3.  The Unprinted/Non-Transmitted RX's Re-Suspend option [PSO SUCMOP
+     RESUSPENDNOTPRI] changes the division on the retransmission from the
+     correct division to the division the user is signed on to at the time
+     the option is run.
+  
+  
+ Associated CA SDM ticket(s):
+ ==========================
+ 1. I10128508FY16 (INC000000954036) - SUSPEND HOLD ISSUE
+                       PSPO #2523
+  
+ 2. I10131840FY16 (INC000000736122) - RX RENEWAL DATE
+  
+ 3. I10168487FY16 (INC000001180597) - DIVISION CHANGE WITH TRANSMISSION
+    
+  
+ Associated NSR(s) 
+ ================== 
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Erie VAMC
+ Oklahoma City VAMC
+  
+  
+ CA SDM Overview:
+ ================
+ 1.  I10128508FY16 - SUSPEND HOLD ISSUE
+  
+     Patient Safety Issue:
+     ---------------------
+     PSPO #2523
+  
+     Problem:
+     --------
+     A prescription on suspense that is placed on hold is restored to 
+     active status when the hold is removed.
+  
+     Resolution:
+     -----------
+     Modify routine LOOP+39^PSOCMOP to put the prescription back into
+     suspense after hold is removed.
+  
+  
+ 2.  I10131840FY16 - RX RENEWAL DATE
+  
+     Problem:
+     --------
+     When a prescription is Renewed then finished, the original issue date
+     is being changed to the date of the renewal.
+  
+     Resolution:
+     -----------
+     Modify routines ^PSOORRNW+34 and INIT+5^PSORENW3 so the issue date
+     does not get changed to the date of the renewal.
+  
+  
+ 3.  I10168487FY16 - DIVISION CHANGE WITH TRANSMISSION 
+  
+     Problem:
+     --------
+     The Unprinted/Non-Transmitted RX's Re-Suspend option [PSO SUCMOP
+     RESUSPENDNOTPRI] changes the division on the retransmission from the
+     correct division to the division the user is signed on to at the time
+     the option is run.
+  
+     Resolution:
+     -----------
+     Modify routine LOCK^PSOCMOP AND LOCK+2^PSOCMOP to check for the
+     Division that the prescription was set to and do not allow it to be
+     changed when users log into a different Division.
+  
+  
+                      Installation Instructions:
+                      ==========================
+ Pharmacy users should not be processing prescriptions while patch is 
+ being installed. It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*440)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSO*7.0*440.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 29
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCMOP
+    Before: B38920299   After: B40188133  **2,16,21,27,43,61,126,148,274,
+                                           347,251,405,440**
+Routine Name: PSOORRNW
+    Before: B21253948   After: B21885182  **11,27,51,46,71,94,130,131,
+                                           146,206,225,384,386,408,440**
+Routine Name: PSORENW3
+    Before: B40697440   After: B41233677  **11,20,46,100,117,444,440**
+ 
+Routine list of preceding patches: 405, 408, 444
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 09, 2014
+Completed By:                               Date Completed: APR 21, 2017
+Released By :                               Date Released : APR 27, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

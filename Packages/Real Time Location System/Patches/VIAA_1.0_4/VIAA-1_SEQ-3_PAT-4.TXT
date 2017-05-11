@@ -1,0 +1,367 @@
+$TXT Created by                 at DEVVFF.DOMAIN.EXT  (KIDS) on Thursday, 05/26/16 at 16:12
+=============================================================================
+Run Date: MAR 13, 2017                     Designation: VIAA*1*4
+Package : VIAA - REAL TIME LOCATION SYSTEM    Priority: Mandatory
+Version : 1         SEQ #3                      Status: Released
+                  Compliance Date: APR 13, 2017
+=============================================================================
+
+Associated patches: (v)VIAA*1*1    <<= must be installed BEFORE `VIAA*1*4'
+
+Subject: RTLS SUPPORT FOR CATHETERIZATION LAB
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ The purpose of this patch is to provide an integration between the
+ WaveMark Real Time Location System (RTLS) and VA legacy VistA packages to
+ support important Cardiac Catheterization Lab processes involving 
+ automated supply inventory, patients, and staff identification.
+  
+ This patch implements interfaces for queries to the following VistA
+ packages and files:
+  
+ o  Generic Inventory Package (GIP), a module of IFCAP used in VistA
+ o  New Person file (#200)
+ o  Patient file (#2)
+  
+ This patch also populates the new option RTLS Interface Menu [VIAA01 RTLS
+ RPC MENU] with multiple Remote Procedure Calls (RPC). The new menu will
+ be used by the application proxy that was created by Patch VIAA*1.0*1.
+  
+  
+ New Functionality Exported by This Patch: 
+ -----------------------------------------
+ During installation of the patch, the following RPC menu will be populated
+ in VistA:
+  
+ RTLS Interface Menu    [VIAA01 RTLS RPC MENU]
+ This is the RTLS interface menu which includes Remote Procedure Calls for 
+ multiple packages and files in VistA.
+  
+  
+ Patch Components:
+ ---------------- 
+ Files Fields Associated:
+  
+ File Name (Number)           Field Number       New/Modified/Deleted
+ --------------------------   ------------       --------------------
+ None
+  
+ Forms Associated:
+  
+ Form Name                    File #             New/Modified/Deleted
+ ---------                    ------             --------------------
+ None
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                 New/Modified/Deleted
+ ---------------                                 --------------------
+ None
+  
+ Options Associated:
+  
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               -------------------- 
+ None
+  
+ Protocols Associated:
+  
+ Protocol Name                                   New/Modified/Deleted
+ -------------                                   -------------------- 
+ None
+  
+ Remote Procedure Calls Associated:
+  
+ Remote Procedure Calls (RPC) Name               New/Modified/Deleted
+ ---------------------------------               --------------------
+ VIAA GET EMPLOYEE DATA                          New
+ VIAA GET INVENTORY POINT ITEMS                  New
+ VIAA GET ITEM MASTER UPDATE                     New
+ VIAA GET PATIENT DATA                           New
+ VIAA SET PAR LEVELS IN GIP                      New
+ VIAA SET QUANTITY ON HAND                       New
+ VIAA GET CATHLAB PATCH STATUS                   New
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ None
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ None
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ None
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ None
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ None
+  
+ Test Sites:
+ -----------
+ Denver
+ Oklahoma City
+ Salt Lake City
+ Houston
+ Jackon
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+   
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+   
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+   
+ Albany:          domain.ext
+ Hines:           domain.ext 
+ Salt Lake City:  domain.ext
+   
+ The documentation will be in the form of Adobe Acrobat files.
+   
+ Documentation can also be found on the VA Software Documentation Library.
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ During the post-installation phase the application proxy user 
+ secondary menu option will be updated to include all the Remote Procedure
+ Calls (RPC) exported with this patch. No other menu, either primary or
+ secondary, may be assigned to this user. 
+  
+ After installation of this patch, every site will need to add the 
+ application proxy user to the GIP inventory point that handles the Cath
+ Lab supplies. This is a one-time set up and is not required if the patch
+ is re-installed.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ 1. This patch assumes that sites manually created the user
+ 'VIAASERVICE,RTLS CONNECTOR PROXY' before installation of the patch
+ VIAA*1.0*1.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(VIAA*1.0*4):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' press 'Enter'    
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' press 'Enter'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' press 'Enter'
+     
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ 1. Add the user 'VIAASERVICE,RTLS APPLICATION PROXY' to the inventory
+    point in GIP that handles the Cath lab supplies. The following example
+    assumes only one inventory point name exists at the facility. The 
+    inventory name is ficticious. Verify the inventory point name(s) before
+    proceeding.
+  
+    D ^XUP
+  
+    Setting up programmer environment
+    This is a TEST account.
+  
+    Terminal Type set to: C-VT100
+  
+    Select OPTION NAME: PRCP MAIN MENU   Primary Inventory Point Main Menu
+  
+    Select STATION NUMBER ('^' TO EXIT): 500// <press enter> CAMP MASTER
+    Select Primary Inventory Point: SPD  500-SPD  PRIMARY
+                             I N V E N T O R Y  version 5.1
+    (500) Primary Inventory Point: SPD INDIGO MONTOYA
+          --> USAGE/DISTRIBUTION TOTALS NEEDS TO BE PURGED.
+          --> RECEIPTS HISTORY BY ITEM NEEDS TO BE PURGED.
+          --> DISTRIBUTION HISTORY NEEDS TO BE PURGED.
+          --> TRANSACTION REGISTER NEEDS TO BE PURGED.
+          --> OPENING MONTHLY INVENTORY BALANCES NEED TO BE SET.
+  
+           Auto-generate Orders
+           Barcode Manager Menu ...
+           Inventory File Maintenance Menu ...
+           Manager For Primary Inventory Point Menu ...
+           Receiving And Distribution Menu ...
+           Reports Menu ...
+  
+     Select Primary Inventory Point Main Menu Option: manager For Primary 
+      Inventory Point Menu <press enter>
+                             I N V E N T O R Y  version 5.1
+    (500) Primary Inventory Point: SPD  <press enter> INDIGO MONTOYA
+          --> USAGE/DISTRIBUTION TOTALS NEEDS TO BE PURGED.
+          --> RECEIPTS HISTORY BY ITEM NEEDS TO BE PURGED.
+          --> DISTRIBUTION HISTORY NEEDS TO BE PURGED.
+          --> TRANSACTION REGISTER NEEDS TO BE PURGED.
+          --> OPENING MONTHLY INVENTORY BALANCES NEED TO BE SET.
+  
+           Date Received Delete (for Issue Book Requests)
+           Distribution Costs Enter/Edit
+           Enter/Edit Inventory And Distribution Points
+           Group Category Enter/Edit
+           Inventory Control Parameters Print
+           On-Demand Audit Activity Report
+           Purge History Files Menu ...
+           Remove Supply Station From Dist Order
+           Storage Location Enter/Edit
+           Supply Station Item Update
+           Undo a Secondary to Primary Conversion
+           Update Calculated Due-Ins/Outstanding Transaction
+  
+    Select Manager For Primary Inventory Point Menu Option: enter/edit 
+     Inventory And Distribution Points
+                             I N V E N T O R Y  version 5.1
+    (500) Primary Inventory Point: SPD  <press enter> INDIGO MONTOYA
+          --> USAGE/DISTRIBUTION TOTALS NEEDS TO BE PURGED.
+          --> RECEIPTS HISTORY BY ITEM NEEDS TO BE PURGED.
+          --> DISTRIBUTION HISTORY NEEDS TO BE PURGED.
+          --> TRANSACTION REGISTER NEEDS TO BE PURGED.
+          --> OPENING MONTHLY INVENTORY BALANCES NEED TO BE SET.
+  
+     +-------------------------------------+
+     |You have the option to edit ALL      |
+     |PRIMARY inventory points you have    |
+     |access to.                           |
+     +-------------------------------------+
+  
+    Select a 'Primary' Type Inventory Point: SPD <press enter>  500-SPD  
+     PRIMARY
+    Edit Inventory Parameters     Jun 17, 2013@10:58:58       Page: 1 of 4
+    INVENTORY POINT: 500-SPD    TOTAL NUMBER OF ITEMS: 6
+  
+    Description
+    Type of Inventory Point   : PRIMARY
+    Abbreviated Name          : SPD
+    Keep Perpetual Inventory  : YES
+    Keep Transaction Register : YES
+  
+    Special Parameters
+    Months Inactive Before Item Deletion: 1
+    Primary Updated By Warehouse        :
+    Special Inventory Point Type        : SPD
+    Department Number                   : 421
+    Issue Book Sort                     : ALPHA SORT
+    Regular Whse Issues Schedule        : WEEKLY
+    SPD Picking Ticket Printer          :
+  
+    +         Enter ?? for more actions
+    AF   All Fields          FC   Fund Control Points  FL  Flags
+    DE   Descriptive         DP   Distribution Points  AU  Authorized Users
+    SP   Special Parameters  SB   Stocked By           MC  MIS Costing
+    Select Item(s): Next Screen//AU  <press enter>  Authorized Users
+    Select INVENTORY USER: MONTOYA,INDIGO// VIAASERVICE,RTLS APPLICATION 
+    PROXY <press enter>
+  
+      Are you adding 'VIAASERVICE,RTLS APPLICATION PROXY' as
+      a new INVENTORY USER (the 6TH for this GENERIC INVENTORY)? No//YES 
+      (press enter>
+  
+    Select INVENTORY USER: ^ enter '^' and press enter
+                                           
+                                 +--------------------------------------+
+                                 |You have the option to add or delete  |
+                                 |users from inventory points stocked by|
+                                 |500-SPD                               |
+                                 +--------------------------------------+
+     +-------------------------------------+
+     |Do you want to ADD or DELETE users   |
+     |from inventory points?               |
+     +-------------------------------------+
+  
+         Select one of the following:
+  
+              1         Add Users
+              2         Delete Users
+  
+    Select ACTION Type: ^   <<== enter '^' and press enter until you get
+    out of the option. This completes the addition of the user to the
+    inventory point in GIP.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;RTLS;**[Patch List]**;April 22, 2013;Build 21
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VIAA4PST
+    Before:       n/a   After:  B2368045  **4**
+Routine Name: VIAAIMUP
+    Before:       n/a   After: B24085659  **4**
+Routine Name: VIAAIPDE
+    Before:       n/a   After:  B4886134  **4**
+Routine Name: VIAAMB2
+    Before:       n/a   After:   B545515  **4**
+Routine Name: VIAANPR
+    Before:       n/a   After: B14062644  **4**
+Routine Name: VIAAPAR
+    Before:       n/a   After: B16772010  **4**
+Routine Name: VIAAPTR
+    Before:       n/a   After:  B6219393  **4**
+Routine Name: VIAASQH
+    Before:       n/a   After: B26846143  **4**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 20, 2016
+Completed By:                               Date Completed: MAR 07, 2017
+Released By :                               Date Released : MAR 13, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

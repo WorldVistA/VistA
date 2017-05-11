@@ -1,0 +1,551 @@
+Released PSO*7*468 SEQ #394
+Extracted from mail message
+**KIDS**:PSO*7.0*468^
+
+**INSTALL NAME**
+PSO*7.0*468
+"BLD",10319,0)
+PSO*7.0*468^OUTPATIENT PHARMACY^0^3170131^y
+"BLD",10319,1,0)
+^^6^6^3161107^
+"BLD",10319,1,1,0)
+ The patch addresses (2) issues:
+"BLD",10319,1,2,0)
+ 1. Duplicate orders are erroneously allowed and duplicate warning 
+"BLD",10319,1,3,0)
+    messages do not appear after patient status is updated from 
+"BLD",10319,1,4,0)
+    "authorized absence" to another status.
+"BLD",10319,1,5,0)
+ 2. Duplicate warning messages are absent when copying an order if the 
+"BLD",10319,1,6,0)
+    previous order attempt was terminated in the same session.
+"BLD",10319,4,0)
+^9.64PA^^
+"BLD",10319,6.3)
+48
+"BLD",10319,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10319,"KRN",.4,0)
+.4
+"BLD",10319,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",10319,"KRN",.401,0)
+.401
+"BLD",10319,"KRN",.402,0)
+.402
+"BLD",10319,"KRN",.403,0)
+.403
+"BLD",10319,"KRN",.5,0)
+.5
+"BLD",10319,"KRN",.84,0)
+.84
+"BLD",10319,"KRN",3.6,0)
+3.6
+"BLD",10319,"KRN",3.8,0)
+3.8
+"BLD",10319,"KRN",9.2,0)
+9.2
+"BLD",10319,"KRN",9.8,0)
+9.8
+"BLD",10319,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",10319,"KRN",9.8,"NM",1,0)
+PSOLMPAT^^0^B4239253
+"BLD",10319,"KRN",9.8,"NM",2,0)
+PSOORCPY^^0^B35980463
+"BLD",10319,"KRN",9.8,"NM","B","PSOLMPAT",1)
+
+"BLD",10319,"KRN",9.8,"NM","B","PSOORCPY",2)
+
+"BLD",10319,"KRN",19,0)
+19
+"BLD",10319,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",10319,"KRN",19.1,0)
+19.1
+"BLD",10319,"KRN",19.1,"NM",0)
+^9.68A^^
+"BLD",10319,"KRN",101,0)
+101
+"BLD",10319,"KRN",101,"NM",0)
+^9.68A^^
+"BLD",10319,"KRN",409.61,0)
+409.61
+"BLD",10319,"KRN",409.61,"NM",0)
+^9.68A^^
+"BLD",10319,"KRN",771,0)
+771
+"BLD",10319,"KRN",771,"NM",0)
+^9.68A^^
+"BLD",10319,"KRN",779.2,0)
+779.2
+"BLD",10319,"KRN",779.2,"NM",0)
+^9.68A^^
+"BLD",10319,"KRN",870,0)
+870
+"BLD",10319,"KRN",8989.51,0)
+8989.51
+"BLD",10319,"KRN",8989.52,0)
+8989.52
+"BLD",10319,"KRN",8994,0)
+8994
+"BLD",10319,"KRN","B",.4,.4)
+
+"BLD",10319,"KRN","B",.401,.401)
+
+"BLD",10319,"KRN","B",.402,.402)
+
+"BLD",10319,"KRN","B",.403,.403)
+
+"BLD",10319,"KRN","B",.5,.5)
+
+"BLD",10319,"KRN","B",.84,.84)
+
+"BLD",10319,"KRN","B",3.6,3.6)
+
+"BLD",10319,"KRN","B",3.8,3.8)
+
+"BLD",10319,"KRN","B",9.2,9.2)
+
+"BLD",10319,"KRN","B",9.8,9.8)
+
+"BLD",10319,"KRN","B",19,19)
+
+"BLD",10319,"KRN","B",19.1,19.1)
+
+"BLD",10319,"KRN","B",101,101)
+
+"BLD",10319,"KRN","B",409.61,409.61)
+
+"BLD",10319,"KRN","B",771,771)
+
+"BLD",10319,"KRN","B",779.2,779.2)
+
+"BLD",10319,"KRN","B",870,870)
+
+"BLD",10319,"KRN","B",8989.51,8989.51)
+
+"BLD",10319,"KRN","B",8989.52,8989.52)
+
+"BLD",10319,"KRN","B",8994,8994)
+
+"BLD",10319,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",10319,"QUES",0)
+^9.62^^
+"BLD",10319,"REQB",0)
+^9.611^2^1
+"BLD",10319,"REQB",1,0)
+PSO*7.0*268^2
+"BLD",10319,"REQB",2,0)
+PSO*7.0*444^2
+"BLD",10319,"REQB","B","PSO*7.0*268",1)
+
+"BLD",10319,"REQB","B","PSO*7.0*444",2)
+
+"MBREQ")
+0
+"PKG",206,-1)
+1^1
+"PKG",206,0)
+OUTPATIENT PHARMACY^PSO^OUTPATIENT LABELS, PROFILE, INVENTORY, PRESCRIPTIONS
+"PKG",206,20,0)
+^9.402P^^
+"PKG",206,22,0)
+^9.49I^1^1
+"PKG",206,22,1,0)
+7.0^3021122^3021202^66481
+"PKG",206,22,1,"PAH",1,0)
+468^3170131
+"PKG",206,22,1,"PAH",1,1,0)
+^^6^6^3170131
+"PKG",206,22,1,"PAH",1,1,1,0)
+ The patch addresses (2) issues:
+"PKG",206,22,1,"PAH",1,1,2,0)
+ 1. Duplicate orders are erroneously allowed and duplicate warning 
+"PKG",206,22,1,"PAH",1,1,3,0)
+    messages do not appear after patient status is updated from 
+"PKG",206,22,1,"PAH",1,1,4,0)
+    "authorized absence" to another status.
+"PKG",206,22,1,"PAH",1,1,5,0)
+ 2. Duplicate warning messages are absent when copying an order if the 
+"PKG",206,22,1,"PAH",1,1,6,0)
+    previous order attempt was terminated in the same session.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PSOLMPAT")
+0^1^B4239253^B3240520
+"RTN","PSOLMPAT",1,0)
+PSOLMPAT ;BHAM ISC/SAB - update pharmacy patient data using listman ;03/08/93 8:35
+"RTN","PSOLMPAT",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**15,117,149,233,268,468**;DEC 1997;Build 48
+"RTN","PSOLMPAT",3,0)
+ ;External reference ^PS(55 supported by DBIA 2228
+"RTN","PSOLMPAT",4,0)
+ ;
+"RTN","PSOLMPAT",5,0)
+EN I '$D(PSOPAR) D ^PSOLSET I '$D(PSOPAR) S VALMSG="Site Parameters must be Defined!" G EX
+"RTN","PSOLMPAT",6,0)
+ D HLDHDR^PSOLMUTL S DA=DFN,PI=""
+"RTN","PSOLMPAT",7,0)
+ I '$P($G(PSOPAR),"^",22),'$D(^XUSEC("PSO ADDRESS UPDATE",+$G(DUZ))) G P55
+"RTN","PSOLMPAT",8,0)
+ L +^PS(55,DA):$S(+$G(^DD("DILOCKTM"))>0:+^DD("DILOCKTM"),1:3) I '$T D MSG G EX
+"RTN","PSOLMPAT",9,0)
+ S PSODFN=DA D UPDATE^PSOBAI S DA=PSODFN
+"RTN","PSOLMPAT",10,0)
+ W !
+"RTN","PSOLMPAT",11,0)
+ L +^DPT(DA):$S(+$G(^DD("DILOCKTM"))>0:+^DD("DILOCKTM"),1:3) I '$T D MSG G EX
+"RTN","PSOLMPAT",12,0)
+ S DIE="^DPT(",DR="[PSO OUTPT]"
+"RTN","PSOLMPAT",13,0)
+ D FULL^VALM1,^DIE L -^DPT(DA)
+"RTN","PSOLMPAT",14,0)
+P55 I '$D(^PS(55,DFN)) K DIC S DIC="^PS(55,",DIC(0)="LZ",(X,DINUM)=DFN K DD,DO D FILE^DICN K DIC
+"RTN","PSOLMPAT",15,0)
+ I $G(DFN),$P($G(^PS(55,DFN,0)),"^")="" S $P(^PS(55,DFN,0),"^")=DFN K DIK S DA=DFN,DIK="^PS(55,",DIK(1)=.01 D EN^DIK K DIK S DA=DFN
+"RTN","PSOLMPAT",16,0)
+ S DIE="^PS(55,",DR=".02;.03;.05;.04;1;3;40:41.1;106;106.1" W !!?5,">>PHARMACY PATIENT DATA<<",! D ^DIE
+"RTN","PSOLMPAT",17,0)
+ I $D(PSORX("PATIENT STATUS")) D   ;468 Update PSORX with the current status
+"RTN","PSOLMPAT",18,0)
+ . S PSORX("PATIENT STATUS")=$P($G(^PS(55,DA,"PS")),"^")
+"RTN","PSOLMPAT",19,0)
+ . I PSORX("PATIENT STATUS")]"" S PSORX("PATIENT STATUS")=$P($G(^PS(53,PSORX("PATIENT STATUS"),0)),"^")
+"RTN","PSOLMPAT",20,0)
+EX L -^PS(55,DA),-^DPT(DA) D ^PSOORUT2 S VALMBCK="R"
+"RTN","PSOLMPAT",21,0)
+ K DIC,X,Y,DIE,D0,DA,DFN,PI,DR,%,%Y,%X,C,DI,DIPGM,DQ,PSOFROM
+"RTN","PSOLMPAT",22,0)
+ Q
+"RTN","PSOLMPAT",23,0)
+MSG S VALMSG="Patient Data is Being Edited by Another User!" Q
+"RTN","PSOORCPY")
+0^2^B35980463^B35592105
+"RTN","PSOORCPY",1,0)
+PSOORCPY ;BIR/SAB-copy orders from backdoor ;10/17/96
+"RTN","PSOORCPY",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**10,21,27,32,46,100,117,148,313,411,444,468**;DEC 1997;Build 48
+"RTN","PSOORCPY",3,0)
+ ;External reference to LK^ORX2 supported by DBIA 867
+"RTN","PSOORCPY",4,0)
+ ;External reference to ULK^ORX2 supported by DBIA 867
+"RTN","PSOORCPY",5,0)
+ ;External reference to ^PSDRUG( supported by DBIA 221
+"RTN","PSOORCPY",6,0)
+ ;External reference to L^PSSLOCK supported by DBIA 2789
+"RTN","PSOORCPY",7,0)
+ ;External reference to UL^PSSLOCK supported by DBIA 2789
+"RTN","PSOORCPY",8,0)
+ ;External reference to PSOL^PSSLOCK supported by DBIA 2789
+"RTN","PSOORCPY",9,0)
+ ;External reference to PSOUL^PSSLOCK supported by DBIA 2789
+"RTN","PSOORCPY",10,0)
+ ;I '$D(^XUSEC("PSORPH",DUZ)) S VALMSG="Invalid Action Selection!",VALMBCK="" Q
+"RTN","PSOORCPY",11,0)
+ ;
+"RTN","PSOORCPY",12,0)
+ ; Cleaning up Titration/Maintenance variables (they shouldn't be defined - just to be safe)
+"RTN","PSOORCPY",13,0)
+ ;K PSOMTFLG,PSOTITRX  ;468
+"RTN","PSOORCPY",14,0)
+ K PSOMTFLG,PSOTITRX,PSOSIGFL   ;468
+"RTN","PSOORCPY",15,0)
+COPY ; Rx Copy Functionality 
+"RTN","PSOORCPY",16,0)
+ I $$LMREJ^PSOREJU1($P(PSOLST(ORN),"^",2),,.VALMSG,.VALMBCK) Q
+"RTN","PSOORCPY",17,0)
+ I '$G(PSOMTFLG),$$TITRX^PSOUTL($P(PSOLST(ORN),"^",2))="t" S VALMSG="Cannot Copy a 'Titration Rx'.",VALMBCK="" W $C(7) Q
+"RTN","PSOORCPY",18,0)
+ I $G(PSOBEDT) W $C(7),$C(7) S VALMSG="Invalid Action at this time !",VALMBCK="" Q
+"RTN","PSOORCPY",19,0)
+ I $G(PSONACT) W $C(7),$C(7) S VALMSG="No Pharmacy Orderable Item !",VALMBCK="" K PSOCOPY D ^PSOBUILD Q
+"RTN","PSOORCPY",20,0)
+ S PSOPLCK=$$L^PSSLOCK(PSODFN,0) I '$G(PSOPLCK) D LOCK S VALMSG=$S($P($G(PSOPLCK),"^",2)'="":$P($G(PSOPLCK),"^",2)_" is working on this patient.",1:"Another person is entering orders for this patient.") K PSOPLCK S VALMBCK="" Q
+"RTN","PSOORCPY",21,0)
+ K PSOPLCK S X=PSODFN_";DPT(" D LK^ORX2 I 'Y S VALMSG="Another person is entering orders for this patient.",VALMBCK="" D UL^PSSLOCK(PSODFN) Q
+"RTN","PSOORCPY",22,0)
+ D PSOL^PSSLOCK($P(PSOLST(ORN),"^",2)) I '$G(PSOMSG) S VALMSG=$S($P($G(PSOMSG),"^",2)'="":$P($G(PSOMSG),"^",2),1:"Another person is editing this order."),VALMBCK="" K PSOMSG G EX
+"RTN","PSOORCPY",23,0)
+ N VALMCNT K PSOEDIT S (PSOCOPY,COPY,PSORXED,ZZCOPY)=1 D FULL^VALM1
+"RTN","PSOORCPY",24,0)
+ S PSORXED("DFLG")=0,(RXN,DA,PSORXED("IRXN"))=$P(PSOLST(ORN),"^",2),PSORXED("RX0")=^PSRX(PSORXED("IRXN"),0),PSORXED("RX2")=$G(^(2)),PSORXED("RX3")=$G(^(3)),PSOI=$P($G(^("OR1")),"^"),PSOSIG=$P($G(^("SIG")),"^"),STAT=+^("STA")
+"RTN","PSOORCPY",25,0)
+ S PSORXED("INS")=$G(^PSRX(PSORXED("IRXN"),"INS"))
+"RTN","PSOORCPY",26,0)
+ S:$G(^PSRX(PSORXED("IRXN"),"INSS"))]"" PSORXED("SINS")=^PSRX(PSORXED("IRXN"),"INSS")
+"RTN","PSOORCPY",27,0)
+ S D=0 F  S D=$O(^PSRX(PSORXED("IRXN"),"INS1",D)) Q:'D  S PSORXED("SIG",D)=^PSRX(PSORXED("IRXN"),"INS1",D,0)
+"RTN","PSOORCPY",28,0)
+ I '$O(PSORXED("SIG",0)),$G(PSORXED("INS"))]"" S PSORXED("SIG",1)=PSORXED("INS")
+"RTN","PSOORCPY",29,0)
+ I $G(^PSRX(PSORXED("IRXN"),"TN"))]"" S PSODRUG("TRADE NAME")=^PSRX(PSORXED("IRXN"),"TN")
+"RTN","PSOORCPY",30,0)
+ ;
+"RTN","PSOORCPY",31,0)
+ ; - This call copies the dosage into the new order and also split the Maintenance dose (if the case)
+"RTN","PSOORCPY",32,0)
+ D BLDDOSE(.PSORXED,$G(PSOMTFLG))
+"RTN","PSOORCPY",33,0)
+ ;
+"RTN","PSOORCPY",34,0)
+ I $G(^PSDRUG($P(PSORXED("RX0"),"^",6),"I"))]"",^("I")<DT S VALMSG=$S('$G(PSOMTFLG):"Cannot COPY. ",1:"")_"This drug has been inactivated!" S VALMBCK="R" G OUT
+"RTN","PSOORCPY",35,0)
+ I $P(^PSDRUG($P(PSORXED("RX0"),"^",6),2),"^",3)'["O" S VALMSG=$S('$G(PSOMTFLG):"Cannot COPY. ",1:"")_"Drug no longer used by Outpatient!",VALMBCK="R" G OUT
+"RTN","PSOORCPY",36,0)
+ ;Check for invalid Dosage
+"RTN","PSOORCPY",37,0)
+ N PSOOCPRX,PSOOLPF,PSOOLPD,PSONOSIG S PSOOCPRX=PSORXED("IRXN") D CDOSE^PSORENW0
+"RTN","PSOORCPY",38,0)
+ I PSOOLPF D  S VALMBCK="R" G OUT
+"RTN","PSOORCPY",39,0)
+ .S VALMSG=$S('$G(PSOMTFLG):"Cannot COPY. ",1:"")_"Invalid Dosage of "_$G(PSOOLPD)
+"RTN","PSOORCPY",40,0)
+ I PSONOSIG D  S VALMBCK="R" G OUT
+"RTN","PSOORCPY",41,0)
+ .S VALMSG=$S('$G(PSOMTFLG):"Cannot COPY. ",1:"")_"Missing Sig"
+"RTN","PSOORCPY",42,0)
+ I '$P($G(^PSDRUG($P(PSORXED("RX0"),"^",6),2)),"^") S VALMBCK="R" G OUT
+"RTN","PSOORCPY",43,0)
+ S DREN=$P(PSORXED("RX0"),"^",6),PSODAYS=$P(PSORXED("RX0"),"^",8)
+"RTN","PSOORCPY",44,0)
+ ; Checks if the current Days Supply value is greater than the Maximum Days Supply for the Drug
+"RTN","PSOORCPY",45,0)
+ I '$G(PSOMTFLG) D
+"RTN","PSOORCPY",46,0)
+ . S PSORXED("DAYS SUPPLY")=$P(PSORXED("RX0"),"^",8),PSORXED("QTY")=$P(PSORXED("RX0"),"^",7)
+"RTN","PSOORCPY",47,0)
+ . D DAYSUP^PSOUTIL(DREN,.PSORXED,1)
+"RTN","PSOORCPY",48,0)
+ S PSORXST=+$P($G(^PS(53,$P(PSORXED("RX0"),"^",3),0)),"^",7)
+"RTN","PSOORCPY",49,0)
+ S POERR=1 D DRG^PSOORDRG K POERR
+"RTN","PSOORCPY",50,0)
+ I $G(PSORX("DFLG")) S VALMBCK="R"
+"RTN","PSOORCPY",51,0)
+ ;
+"RTN","PSOORCPY",52,0)
+ I $G(PSOMTFLG) D  I $G(PSORXED("DFLG")) S VALMBCK="R" G OUT
+"RTN","PSOORCPY",53,0)
+ . S PSORXED("DAYS SUPPLY")=PSODAYS,PSORXED("QTY")=+$$GET1^DIQ(52,PSORXED("IRXN"),7)
+"RTN","PSOORCPY",54,0)
+ . W !!,"New Maintenance Rx (Review Quantity):",!,"Drug: ",$$GET1^DIQ(52,PSORXED("IRXN"),6)
+"RTN","PSOORCPY",55,0)
+ . D EN^PSOFSIG(.PSORXED,1) W !,"Days Supply: ",PSODAYS
+"RTN","PSOORCPY",56,0)
+ . N PSOQTY S PSORXED("FLD")=5 D QTY^PSODIR1(.PSORXED) W !
+"RTN","PSOORCPY",57,0)
+ ;
+"RTN","PSOORCPY",58,0)
+ D EN^PSOORED1(.PSORXED) I $G(PSORX("FN")) S VALMBCK="Q",PSOFROM="NEW" D DCORD^PSONEW2
+"RTN","PSOORCPY",59,0)
+ E  S VALMBCK="R"
+"RTN","PSOORCPY",60,0)
+OUT ;
+"RTN","PSOORCPY",61,0)
+ D PSOUL^PSSLOCK($P(PSOLST(ORN),"^",2))
+"RTN","PSOORCPY",62,0)
+ K PSOCOPY D ^PSOBUILD,ACT^PSOORNE2
+"RTN","PSOORCPY",63,0)
+EX S X=PSODFN_";DPT(" D ULK^ORX2
+"RTN","PSOORCPY",64,0)
+ D UL^PSSLOCK(PSODFN)
+"RTN","PSOORCPY",65,0)
+ K PSOMSG,PSONEW,PSOSIG,STA,DREN,PSODAYS,PSORXST,PSOCOPY,PSORXED,FST,FLD,IEN,FLN,INCOM,PSOI,COPY,SIG,SIGOK
+"RTN","PSOORCPY",66,0)
+ K PSODRUG,^TMP("PSOPO",$J),PSOMTFLG
+"RTN","PSOORCPY",67,0)
+ D CLEAN^PSOVER1,EOJ^PSONEW K ZZCOPY
+"RTN","PSOORCPY",68,0)
+ Q
+"RTN","PSOORCPY",69,0)
+LOCK ;
+"RTN","PSOORCPY",70,0)
+ I $P($G(PSOPLCK),"^")'=0 Q
+"RTN","PSOORCPY",71,0)
+ W !!,$S($P($G(PSOPLCK),"^",2)'="":$P($G(PSOPLCK),"^",2),1:"Another person")_" is working on this patient."
+"RTN","PSOORCPY",72,0)
+ K DIR S DIR(0)="E",DIR("A")="     Press Return to Continue" D ^DIR K DIR
+"RTN","PSOORCPY",73,0)
+ Q
+"RTN","PSOORCPY",74,0)
+ ;
+"RTN","PSOORCPY",75,0)
+BLDDOSE(PSORXED,MAINTRXF) ; Copies the Dose from Original Rx into Copied/Maintenance Dose Rx
+"RTN","PSOORCPY",76,0)
+ N DOSEIEN,DOSE
+"RTN","PSOORCPY",77,0)
+ ; - Copying from the last THEN conjunction (Maintenance Dose Rx)
+"RTN","PSOORCPY",78,0)
+ ; - For Titration/Maintenance, DOSEIEN = the IEN in the prescription of the last THEN conjunction.
+"RTN","PSOORCPY",79,0)
+ ; - This value is used as a "seed" for the FOR loop starting point.
+"RTN","PSOORCPY",80,0)
+ I $G(MAINTRXF) D  Q
+"RTN","PSOORCPY",81,0)
+ . D LASTTHEN
+"RTN","PSOORCPY",82,0)
+ . S PSORXED("ENT")=0
+"RTN","PSOORCPY",83,0)
+ . F  S DOSEIEN=$O(^PSRX(PSORXED("IRXN"),6,DOSEIEN))  Q:'DOSEIEN  D
+"RTN","PSOORCPY",84,0)
+ . . S DOSE=^PSRX(PSORXED("IRXN"),6,DOSEIEN,0) D
+"RTN","PSOORCPY",85,0)
+ . . Q:$P(DOSE,"^")']""!($P(DOSE,"^",8)']"")
+"RTN","PSOORCPY",86,0)
+ . . S PSORXED("ENT")=PSORXED("ENT")+1
+"RTN","PSOORCPY",87,0)
+ . . D SETDOSE(.PSORXED,DOSEIEN,PSORXED("ENT"))
+"RTN","PSOORCPY",88,0)
+ . . D EN^PSOFSIG(.PSORXED)
+"RTN","PSOORCPY",89,0)
+ ;
+"RTN","PSOORCPY",90,0)
+ ; - Copying dose for Regular Rx Copy
+"RTN","PSOORCPY",91,0)
+ S PSORXED("ENT")=0
+"RTN","PSOORCPY",92,0)
+ F DOSEIEN=0:0 S DOSEIEN=$O(^PSRX(PSORXED("IRXN"),6,DOSEIEN)) Q:'DOSEIEN  D
+"RTN","PSOORCPY",93,0)
+ . S DOSE=^PSRX(PSORXED("IRXN"),6,DOSEIEN,0) D
+"RTN","PSOORCPY",94,0)
+ . Q:$P(DOSE,"^")']""!($P(DOSE,"^",8)']"")
+"RTN","PSOORCPY",95,0)
+ . S PSORXED("ENT")=PSORXED("ENT")+1
+"RTN","PSOORCPY",96,0)
+ . D SETDOSE(.PSORXED,DOSEIEN,PSORXED("ENT"))
+"RTN","PSOORCPY",97,0)
+ Q
+"RTN","PSOORCPY",98,0)
+ ;
+"RTN","PSOORCPY",99,0)
+SETDOSE(PSORXED,DOSEIEN,DOSESEQ) ; Sets the Dose in the PSORXED array
+"RTN","PSOORCPY",100,0)
+ N DOSE
+"RTN","PSOORCPY",101,0)
+ S DOSE=^PSRX(PSORXED("IRXN"),6,DOSEIEN,0)
+"RTN","PSOORCPY",102,0)
+ S PSORXED("DOSE",DOSESEQ)=$P(DOSE,"^")
+"RTN","PSOORCPY",103,0)
+ S PSORXED("UNITS",DOSESEQ)=$P(DOSE,"^",3)
+"RTN","PSOORCPY",104,0)
+ S PSORXED("DOSE ORDERED",DOSESEQ)=$P(DOSE,"^",2)
+"RTN","PSOORCPY",105,0)
+ S PSORXED("ROUTE",DOSESEQ)=$P(DOSE,"^",7)
+"RTN","PSOORCPY",106,0)
+ S PSORXED("SCHEDULE",DOSESEQ)=$P(DOSE,"^",8)
+"RTN","PSOORCPY",107,0)
+ S PSORXED("DURATION",DOSESEQ)=$P(DOSE,"^",5)
+"RTN","PSOORCPY",108,0)
+ S PSORXED("CONJUNCTION",DOSESEQ)=$P(DOSE,"^",6)
+"RTN","PSOORCPY",109,0)
+ S PSORXED("VERB",DOSESEQ)=$P(DOSE,"^",9)
+"RTN","PSOORCPY",110,0)
+ I $G(^PSRX(PSORXED("IRXN"),6,DOSEIEN,1))]"" D
+"RTN","PSOORCPY",111,0)
+ . S PSORXED("ODOSE",DOSESEQ)=^PSRX(PSORXED("IRXN"),6,DOSEIEN,1)
+"RTN","PSOORCPY",112,0)
+ I $G(PSORXED("DURATION",DOSESEQ))]"" D  K DR,DUR1
+"RTN","PSOORCPY",113,0)
+ . S DUR1=PSORXED("DURATION",DOSESEQ)
+"RTN","PSOORCPY",114,0)
+ . S PSORXED("DURATION",DOSESEQ)=$S($E(DUR1,1)'?.N:$E(DUR1,2,99)_$E(DUR1,1),1:DUR1)
+"RTN","PSOORCPY",115,0)
+ S PSORXED("NOUN",DOSESEQ)=$P(DOSE,"^",4)
+"RTN","PSOORCPY",116,0)
+ Q
+"RTN","PSOORCPY",117,0)
+ ;
+"RTN","PSOORCPY",118,0)
+LASTTHEN ; Determine the IEN of the last THEN conjunction on this prescription and set DOSEIEN to its value.
+"RTN","PSOORCPY",119,0)
+ N LASTTHEN,LAST
+"RTN","PSOORCPY",120,0)
+ S LASTTHEN="" F  S LASTTHEN=$O(^PSRX(PSORXED("IRXN"),6,LASTTHEN),-1) Q:LASTTHEN=""!($G(DOSEIEN)'="")  D
+"RTN","PSOORCPY",121,0)
+ . S DOSEIEN=""
+"RTN","PSOORCPY",122,0)
+ . S LAST=^PSRX(PSORXED("IRXN"),6,LASTTHEN,0)
+"RTN","PSOORCPY",123,0)
+ . I $P(LAST,"^",6)="T" S DOSEIEN=LASTTHEN Q
+"RTN","PSOORCPY",124,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",10319,6)
+^394
+**END**
+**END**
+

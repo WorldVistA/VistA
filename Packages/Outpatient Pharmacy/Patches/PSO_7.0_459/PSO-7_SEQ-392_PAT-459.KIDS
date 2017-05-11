@@ -1,0 +1,737 @@
+Released PSO*7*459 SEQ #392
+Extracted from mail message
+**KIDS**:PSO*7.0*459^
+
+**INSTALL NAME**
+PSO*7.0*459
+"BLD",10125,0)
+PSO*7.0*459^OUTPATIENT PHARMACY^0^3160302^y
+"BLD",10125,1,0)
+^^2^2^3160302^
+"BLD",10125,1,1,0)
+This patch will fix the issue where a suspended prescription
+"BLD",10125,1,2,0)
+is being transmitted to CMOP too soon.
+"BLD",10125,4,0)
+^9.64PA^^
+"BLD",10125,6.3)
+1
+"BLD",10125,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10125,"KRN",.4,0)
+.4
+"BLD",10125,"KRN",.401,0)
+.401
+"BLD",10125,"KRN",.402,0)
+.402
+"BLD",10125,"KRN",.403,0)
+.403
+"BLD",10125,"KRN",.5,0)
+.5
+"BLD",10125,"KRN",.84,0)
+.84
+"BLD",10125,"KRN",3.6,0)
+3.6
+"BLD",10125,"KRN",3.8,0)
+3.8
+"BLD",10125,"KRN",9.2,0)
+9.2
+"BLD",10125,"KRN",9.8,0)
+9.8
+"BLD",10125,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",10125,"KRN",9.8,"NM",1,0)
+PSOBPSU2^^0^B59468645
+"BLD",10125,"KRN",9.8,"NM","B","PSOBPSU2",1)
+
+"BLD",10125,"KRN",19,0)
+19
+"BLD",10125,"KRN",19.1,0)
+19.1
+"BLD",10125,"KRN",101,0)
+101
+"BLD",10125,"KRN",409.61,0)
+409.61
+"BLD",10125,"KRN",771,0)
+771
+"BLD",10125,"KRN",779.2,0)
+779.2
+"BLD",10125,"KRN",870,0)
+870
+"BLD",10125,"KRN",8989.51,0)
+8989.51
+"BLD",10125,"KRN",8989.52,0)
+8989.52
+"BLD",10125,"KRN",8994,0)
+8994
+"BLD",10125,"KRN","B",.4,.4)
+
+"BLD",10125,"KRN","B",.401,.401)
+
+"BLD",10125,"KRN","B",.402,.402)
+
+"BLD",10125,"KRN","B",.403,.403)
+
+"BLD",10125,"KRN","B",.5,.5)
+
+"BLD",10125,"KRN","B",.84,.84)
+
+"BLD",10125,"KRN","B",3.6,3.6)
+
+"BLD",10125,"KRN","B",3.8,3.8)
+
+"BLD",10125,"KRN","B",9.2,9.2)
+
+"BLD",10125,"KRN","B",9.8,9.8)
+
+"BLD",10125,"KRN","B",19,19)
+
+"BLD",10125,"KRN","B",19.1,19.1)
+
+"BLD",10125,"KRN","B",101,101)
+
+"BLD",10125,"KRN","B",409.61,409.61)
+
+"BLD",10125,"KRN","B",771,771)
+
+"BLD",10125,"KRN","B",779.2,779.2)
+
+"BLD",10125,"KRN","B",870,870)
+
+"BLD",10125,"KRN","B",8989.51,8989.51)
+
+"BLD",10125,"KRN","B",8989.52,8989.52)
+
+"BLD",10125,"KRN","B",8994,8994)
+
+"BLD",10125,"QDEF")
+^^^^NO^^^^^^NO
+"BLD",10125,"QUES",0)
+^9.62^^
+"BLD",10125,"REQB",0)
+^9.611^1^1
+"BLD",10125,"REQB",1,0)
+PSO*7.0*421^2
+"BLD",10125,"REQB","B","PSO*7.0*421",1)
+
+"MBREQ")
+0
+"PKG",206,-1)
+1^1
+"PKG",206,0)
+OUTPATIENT PHARMACY^PSO^OUTPATIENT LABELS, PROFILE, INVENTORY, PRESCRIPTIONS
+"PKG",206,20,0)
+^9.402P^^
+"PKG",206,22,0)
+^9.49I^1^1
+"PKG",206,22,1,0)
+7.0^3021122^3021202^66481
+"PKG",206,22,1,"PAH",1,0)
+459^3160302
+"PKG",206,22,1,"PAH",1,1,0)
+^^2^2^3160302
+"PKG",206,22,1,"PAH",1,1,1,0)
+This patch will fix the issue where a suspended prescription
+"PKG",206,22,1,"PAH",1,1,2,0)
+is being transmitted to CMOP too soon.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSOBPSU2")
+0^1^B59468645^B59152691
+"RTN","PSOBPSU2",1,0)
+PSOBPSU2 ;BIRM/MFR - BPS (ECME) Utilities 2 ;10/15/04
+"RTN","PSOBPSU2",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**260,287,289,341,290,358,359,385,421,459**;DEC 1997;Build 1
+"RTN","PSOBPSU2",3,0)
+ ;Reference to File 200 - NEW PERSON supported by IA 10060
+"RTN","PSOBPSU2",4,0)
+ ;Reference to DUR1^BPSNCPD3 supported by IA 4560
+"RTN","PSOBPSU2",5,0)
+ ;Reference to $$NCPDPQTY^PSSBPSUT supported by IA 4992
+"RTN","PSOBPSU2",6,0)
+ ;Reference to $$CLAIM^BPSBUTL supported by IA 4719
+"RTN","PSOBPSU2",7,0)
+ ; 
+"RTN","PSOBPSU2",8,0)
+MWC(RX,RFL) ; Returns whether a prescription is (M)ail, (W)indow or (C)MOP
+"RTN","PSOBPSU2",9,0)
+ ;Input: (r) RX   - Rx IEN (#52)
+"RTN","PSOBPSU2",10,0)
+ ;       (o) RFL  - Refill #  (Default: most recent)
+"RTN","PSOBPSU2",11,0)
+ ;Output: "M": MAIL / "W": WINDOW / "C": CMOP
+"RTN","PSOBPSU2",12,0)
+ ;
+"RTN","PSOBPSU2",13,0)
+ N MWC
+"RTN","PSOBPSU2",14,0)
+ ;
+"RTN","PSOBPSU2",15,0)
+ I '$D(RFL) S RFL=$$LSTRFL^PSOBPSU1(RX)
+"RTN","PSOBPSU2",16,0)
+ ;
+"RTN","PSOBPSU2",17,0)
+ ; - MAIL/WINDOW fields (Original and Refill)
+"RTN","PSOBPSU2",18,0)
+ I RFL S MWC=$$GET1^DIQ(52.1,RFL_","_RX,2,"I")
+"RTN","PSOBPSU2",19,0)
+ E  S MWC=$$GET1^DIQ(52,RX,11,"I")
+"RTN","PSOBPSU2",20,0)
+ S:MWC="" MWC="W"
+"RTN","PSOBPSU2",21,0)
+ ;
+"RTN","PSOBPSU2",22,0)
+ ; - Checking the RX SUSPENSE file (#52.5)
+"RTN","PSOBPSU2",23,0)
+ I $$GET1^DIQ(52,RX,100,"I")=5 D
+"RTN","PSOBPSU2",24,0)
+ . N RXS S RXS=+$O(^PS(52.5,"B",RX,0)) Q:'RXS
+"RTN","PSOBPSU2",25,0)
+ . I $$GET1^DIQ(52.5,RXS,3,"I")'="" S MWC="C" Q
+"RTN","PSOBPSU2",26,0)
+ . S MWC="M"
+"RTN","PSOBPSU2",27,0)
+ ;
+"RTN","PSOBPSU2",28,0)
+ ; - Checking the CMOP EVENT sub-file (#52.01)
+"RTN","PSOBPSU2",29,0)
+ I MWC'="C" D
+"RTN","PSOBPSU2",30,0)
+ . N CMP S CMP=0
+"RTN","PSOBPSU2",31,0)
+ . F  S CMP=$O(^PSRX(RX,4,CMP)) Q:'CMP  D  I MWC="C" Q
+"RTN","PSOBPSU2",32,0)
+ . . I $$GET1^DIQ(52.01,CMP_","_RX,2,"I")=RFL S MWC="C"
+"RTN","PSOBPSU2",33,0)
+ ;
+"RTN","PSOBPSU2",34,0)
+ Q MWC
+"RTN","PSOBPSU2",35,0)
+ ;
+"RTN","PSOBPSU2",36,0)
+RXACT(RX,RFL,COMM,TYPE,USR) ; - Add an Activity to the ECME Activity Log (PRESCRIPTION file)
+"RTN","PSOBPSU2",37,0)
+ ;Input: (r) RX   - Rx IEN (#52)
+"RTN","PSOBPSU2",38,0)
+ ;       (o) RFL  - Refill #  (Default: most recent)
+"RTN","PSOBPSU2",39,0)
+ ;       (r) COMM - Comments (up to 75 characters)
+"RTN","PSOBPSU2",40,0)
+ ;       (r) TYPE - Comments type: (M-ECME,E-Edit, etc...) See file #52 DD for all values
+"RTN","PSOBPSU2",41,0)
+ ;       (o) USR  - User logging the comments (Default: DUZ)
+"RTN","PSOBPSU2",42,0)
+ ;
+"RTN","PSOBPSU2",43,0)
+ S:'$D(RFL) RFL=$$LSTRFL^PSOBPSU1(RX) S:'$D(USR) USR=DUZ
+"RTN","PSOBPSU2",44,0)
+ S:'$D(^VA(200,+USR,0)) USR=DUZ S COMM=$E($G(COMM),1,75)
+"RTN","PSOBPSU2",45,0)
+ ;
+"RTN","PSOBPSU2",46,0)
+ I COMM="" Q
+"RTN","PSOBPSU2",47,0)
+ I '$D(^PSRX(RX)) Q
+"RTN","PSOBPSU2",48,0)
+ ;
+"RTN","PSOBPSU2",49,0)
+ N PSOTRIC S PSOTRIC="",PSOTRIC=$$TRIC^PSOREJP1(RX,RFL,PSOTRIC)
+"RTN","PSOBPSU2",50,0)
+ I PSOTRIC=1,$E(COMM,1,7)'="TRICARE" S COMM=$E("TRICARE-"_COMM,1,75)
+"RTN","PSOBPSU2",51,0)
+ I PSOTRIC=2,$E(COMM,1,7)'="CHAMPVA" S COMM=$E("CHAMPVA-"_COMM,1,75)
+"RTN","PSOBPSU2",52,0)
+ N X,DIC,DA,DD,DO,DR,DINUM,Y,DLAYGO
+"RTN","PSOBPSU2",53,0)
+ S DA(1)=RX,DIC="^PSRX("_RX_",""A"",",DLAYGO=52.3,DIC(0)="L"
+"RTN","PSOBPSU2",54,0)
+ S DIC("DR")=".02///"_TYPE_";.03////"_USR_";.04///"_$S(TYPE'="M"&(RFL>5):RFL+1,1:RFL)_";.05///"_COMM
+"RTN","PSOBPSU2",55,0)
+ S X=$$NOW^XLFDT() D FILE^DICN
+"RTN","PSOBPSU2",56,0)
+ Q
+"RTN","PSOBPSU2",57,0)
+ ;
+"RTN","PSOBPSU2",58,0)
+ECMENUM(RX,RFL) ; Returns the ECME number for a specific prescription and fill
+"RTN","PSOBPSU2",59,0)
+ N ECMENUM
+"RTN","PSOBPSU2",60,0)
+ I $G(RX)="" Q ""
+"RTN","PSOBPSU2",61,0)
+ ; Check ECME # for Refill passed in
+"RTN","PSOBPSU2",62,0)
+ I $G(RFL)'="" S ECMENUM=$$GETECME(RX,RFL) Q ECMENUM
+"RTN","PSOBPSU2",63,0)
+ ; If Refill is null, check last refill
+"RTN","PSOBPSU2",64,0)
+ S RFL=$$LSTRFL^PSOBPSU1(RX),ECMENUM=$$GETECME(RX,RFL) I ECMENUM'="" Q ECMENUM
+"RTN","PSOBPSU2",65,0)
+ ; If no ECME # for last refill, step back through refills in reverse order
+"RTN","PSOBPSU2",66,0)
+ F  S RFL=RFL-1 Q:(RFL<0)!(ECMENUM'="")  S ECMENUM=$$GETECME(RX,RFL)
+"RTN","PSOBPSU2",67,0)
+ Q ECMENUM
+"RTN","PSOBPSU2",68,0)
+ ;
+"RTN","PSOBPSU2",69,0)
+GETECME(RX,RFL) ;
+"RTN","PSOBPSU2",70,0)
+ ;Internal function used by ECMENUM to get the ECME # from BPS
+"RTN","PSOBPSU2",71,0)
+ N ECMENUM
+"RTN","PSOBPSU2",72,0)
+ I $G(RX)="" Q ""
+"RTN","PSOBPSU2",73,0)
+ I $G(RFL)="" Q ""
+"RTN","PSOBPSU2",74,0)
+ S ECMENUM=$P($$CLAIM^BPSBUTL(RX,RFL),U,6)
+"RTN","PSOBPSU2",75,0)
+ Q ECMENUM
+"RTN","PSOBPSU2",76,0)
+ ;
+"RTN","PSOBPSU2",77,0)
+RXNUM(ECME) ; Returns the Rx number for a specific ECME number
+"RTN","PSOBPSU2",78,0)
+ ;
+"RTN","PSOBPSU2",79,0)
+ N FOUND,MAX,LFT,RAD,I,DIR,RX,X,Y,DIRUT
+"RTN","PSOBPSU2",80,0)
+ S ECME=+ECME,LFT=0,FOUND=0
+"RTN","PSOBPSU2",81,0)
+ S MAX=$O(^PSRX(9999999999999),-1)  ; MAX = largest Rx ien on file
+"RTN","PSOBPSU2",82,0)
+ ;
+"RTN","PSOBPSU2",83,0)
+ ; Attempt left digit matching logic in this case only
+"RTN","PSOBPSU2",84,0)
+ I $L(MAX)>7,$L(ECME)'>7 D
+"RTN","PSOBPSU2",85,0)
+ . S LFT=$E(MAX,1,$L(MAX)-7)  ; LFT = left most digits
+"RTN","PSOBPSU2",86,0)
+ . F RAD=LFT:-1:0 S RX=RAD*10000000+ECME I $D(^PSRX(RX,0)),$$ECMENUM(RX)'="" S FOUND=FOUND+1,FOUND(FOUND)=RX
+"RTN","PSOBPSU2",87,0)
+ . Q
+"RTN","PSOBPSU2",88,0)
+ ;
+"RTN","PSOBPSU2",89,0)
+ ; Otherwise attempt a normal lookup
+"RTN","PSOBPSU2",90,0)
+ E  S RX=ECME I $D(^PSRX(RX,0)),$$ECMENUM(RX)'="" S FOUND=FOUND+1,FOUND(FOUND)=RX
+"RTN","PSOBPSU2",91,0)
+ ;
+"RTN","PSOBPSU2",92,0)
+ I 'FOUND S FOUND=-1 G RXNUMX            ; Rx not found
+"RTN","PSOBPSU2",93,0)
+ I FOUND=1 S FOUND=FOUND(1) G RXNUMX     ; exactly 1 found
+"RTN","PSOBPSU2",94,0)
+ ;
+"RTN","PSOBPSU2",95,0)
+ ; More than 1 found so build a list and ask
+"RTN","PSOBPSU2",96,0)
+ W ! F I=1:1:FOUND W !?5,I,". ",$$GET1^DIQ(52,FOUND(I),.01),?25,$$GET1^DIQ(52,FOUND(I),6)
+"RTN","PSOBPSU2",97,0)
+ W ! S DIR(0)="NA^1:"_FOUND,DIR("A")="Select one: ",DIR("B")=1
+"RTN","PSOBPSU2",98,0)
+ D ^DIR I $D(DIRUT) S FOUND=-1 G RXNUMX
+"RTN","PSOBPSU2",99,0)
+ S FOUND=FOUND(Y)
+"RTN","PSOBPSU2",100,0)
+ ;
+"RTN","PSOBPSU2",101,0)
+RXNUMX ;
+"RTN","PSOBPSU2",102,0)
+ Q FOUND
+"RTN","PSOBPSU2",103,0)
+ ;
+"RTN","PSOBPSU2",104,0)
+ELIG(RX,RFL,PSOELIG) ;Stores eligibility flag
+"RTN","PSOBPSU2",105,0)
+ I RFL>0,'$D(^PSRX(RX,1,RFL,0)) QUIT
+"RTN","PSOBPSU2",106,0)
+ N DA,DIE,X,Y,PSOTRIC
+"RTN","PSOBPSU2",107,0)
+ I 'RFL S DA=RX,DIE="^PSRX(",DR="85///"_PSOELIG D ^DIE
+"RTN","PSOBPSU2",108,0)
+ I RFL S DA=RFL,DA(1)=RX,DIE="^PSRX("_DA(1)_",1,",DR="85///"_PSOELIG D ^DIE
+"RTN","PSOBPSU2",109,0)
+ Q
+"RTN","PSOBPSU2",110,0)
+ ;
+"RTN","PSOBPSU2",111,0)
+ECMESTAT(RX,RFL) ;called from local mail
+"RTN","PSOBPSU2",112,0)
+ ;Input: 
+"RTN","PSOBPSU2",113,0)
+ ; RX = Prescription File IEN
+"RTN","PSOBPSU2",114,0)
+ ; RFL = Refill
+"RTN","PSOBPSU2",115,0)
+ ;Output:
+"RTN","PSOBPSU2",116,0)
+ ; 0 for not allowed to print from suspense
+"RTN","PSOBPSU2",117,0)
+ ; 1 for allowed to print from suspense
+"RTN","PSOBPSU2",118,0)
+ ;
+"RTN","PSOBPSU2",119,0)
+ N STATUS,PSOTRIC
+"RTN","PSOBPSU2",120,0)
+ S STATUS=$$STATUS^PSOBPSUT(RX,RFL)
+"RTN","PSOBPSU2",121,0)
+ ;IN PROGRESS claims - try again.  If still IN PROGRESS, do not allow to print
+"RTN","PSOBPSU2",122,0)
+ I STATUS["IN PROGRESS" H 5 S STATUS=$$STATUS^PSOBPSUT(RX,RFL) I STATUS["IN PROGRESS" Q 0
+"RTN","PSOBPSU2",123,0)
+ ;
+"RTN","PSOBPSU2",124,0)
+ ;no ECME status, allow to print.  This will eliminate 90% of the cases
+"RTN","PSOBPSU2",125,0)
+ I STATUS="" Q 1
+"RTN","PSOBPSU2",126,0)
+ ;
+"RTN","PSOBPSU2",127,0)
+ ;check for suspense hold date/host reject errors
+"RTN","PSOBPSU2",128,0)
+ I $$DUR(RX,RFL)=0 Q 0
+"RTN","PSOBPSU2",129,0)
+ ;
+"RTN","PSOBPSU2",130,0)
+ ;check for any TRICARE/CHAMPVA rejects, not allowed to go to print until resolved.
+"RTN","PSOBPSU2",131,0)
+ ;But allow to print if RX/RFL is in the TRI/CVA Audit Log with no unresolved rejects
+"RTN","PSOBPSU2",132,0)
+ S PSOTRIC="",PSOTRIC=$$TRIC^PSOREJP1(RX,RFL,.PSOTRIC)
+"RTN","PSOBPSU2",133,0)
+ I PSOTRIC,STATUS'["PAYABLE",$$FIND^PSOREJUT(RX,RFL,,,1) Q 0  ; unresolved TRI/CVA rejects - no print  *421
+"RTN","PSOBPSU2",134,0)
+ I PSOTRIC,STATUS'["PAYABLE",$$TRIAUD^PSOREJU3(RX,RFL) Q 1    ; allow to print - on TRI/CVA Audit log  *421
+"RTN","PSOBPSU2",135,0)
+ ;
+"RTN","PSOBPSU2",136,0)
+ ;DUR (88)/RTS (79)/RRR reject codes are not allowed to print until resolved.
+"RTN","PSOBPSU2",137,0)
+ I $$FIND^PSOREJUT(RX,RFL,,"79,88",,1) Q 0
+"RTN","PSOBPSU2",138,0)
+ ;
+"RTN","PSOBPSU2",139,0)
+ Q 1
+"RTN","PSOBPSU2",140,0)
+ ;
+"RTN","PSOBPSU2",141,0)
+ ;Description:
+"RTN","PSOBPSU2",142,0)
+ ;This function checks to see if a RX should be submitted to ECME
+"RTN","PSOBPSU2",143,0)
+ ;Submit when:
+"RTN","PSOBPSU2",144,0)
+ ;  RX/Fill was not submitted before (STATUS="")
+"RTN","PSOBPSU2",145,0)
+ ;  Previous submission had Host Reject Error Code(s)
+"RTN","PSOBPSU2",146,0)
+ ;Input:
+"RTN","PSOBPSU2",147,0)
+ ;  RX = Prescription file #52 IEN
+"RTN","PSOBPSU2",148,0)
+ ;  RFL = Refill number
+"RTN","PSOBPSU2",149,0)
+ ;Returns:
+"RTN","PSOBPSU2",150,0)
+ ;  1 = OK to resubmit
+"RTN","PSOBPSU2",151,0)
+ ;  0 = Don't resubmit
+"RTN","PSOBPSU2",152,0)
+ECMEST2(RX,RFL) ;
+"RTN","PSOBPSU2",153,0)
+ N STATUS
+"RTN","PSOBPSU2",154,0)
+ S STATUS=$$STATUS^PSOBPSUT(RX,RFL)
+"RTN","PSOBPSU2",155,0)
+ ; Never submitted before, OK to submit
+"RTN","PSOBPSU2",156,0)
+ I STATUS="" Q 1
+"RTN","PSOBPSU2",157,0)
+ ; If status other than E REJECTED, don't resubmit
+"RTN","PSOBPSU2",158,0)
+ I STATUS'="E REJECTED" Q 0
+"RTN","PSOBPSU2",159,0)
+ ; Check for host reject codes(s)
+"RTN","PSOBPSU2",160,0)
+ Q $$HOSTREJ(RX,RFL,1)
+"RTN","PSOBPSU2",161,0)
+ ;
+"RTN","PSOBPSU2",162,0)
+ ;Description: ePharmacy
+"RTN","PSOBPSU2",163,0)
+ ;This subroutine checks an RX/FILL for Host Reject Errors returned
+"RTN","PSOBPSU2",164,0)
+ ;from previous ECME submissions. The host reject errors checked are M6, M8, NN, and 99.
+"RTN","PSOBPSU2",165,0)
+ ;Note that host reject errors do not pass to the pharmacy reject worklist so it's necessary
+"RTN","PSOBPSU2",166,0)
+ ;to check ECME for these type errors.
+"RTN","PSOBPSU2",167,0)
+ ;Input: 
+"RTN","PSOBPSU2",168,0)
+ ; RX = Prescription File IEN
+"RTN","PSOBPSU2",169,0)
+ ; RFL = Refill
+"RTN","PSOBPSU2",170,0)
+ ; ONE = Either 1 or 0 - Defaults to 1
+"RTN","PSOBPSU2",171,0)
+ ; If 1, At least ONE reject code associated with the RX/FILL must 
+"RTN","PSOBPSU2",172,0)
+ ;   match either M6, M8, NN, or 99.
+"RTN","PSOBPSU2",173,0)
+ ; If 0, ALL reject codes must match either M6, M8, NN, or 99
+"RTN","PSOBPSU2",174,0)
+ ; REJ = (o) reject information from called from routine to be passed back. (contains data returned from DUR1^BPSNCPD3)
+"RTN","PSOBPSU2",175,0)
+ ;Return:
+"RTN","PSOBPSU2",176,0)
+ ; 0 = no host rejects exists based on ONE parameter
+"RTN","PSOBPSU2",177,0)
+ ; 1 = host reject exists based on ONE parameter
+"RTN","PSOBPSU2",178,0)
+HOSTREJ(RX,RFL,ONE) ; called from PSXRPPL2 and this routine
+"RTN","PSOBPSU2",179,0)
+ N IDX,TXT,CODE,HRCODE,HRQUIT,RETV,REJ,I
+"RTN","PSOBPSU2",180,0)
+ S IDX="",(RETV,HRQUIT)=0
+"RTN","PSOBPSU2",181,0)
+ I '$D(ONE) S ONE=1
+"RTN","PSOBPSU2",182,0)
+ ;for print from suspense there will only be primary insurance or an index of 1 in REJ array
+"RTN","PSOBPSU2",183,0)
+ D DUR1^BPSNCPD3(RX,RFL,.REJ) ; Get reject list from last submission if not present
+"RTN","PSOBPSU2",184,0)
+ S TXT=$G(REJ(1,"REJ CODE LST"))
+"RTN","PSOBPSU2",185,0)
+ Q:TXT="" 0
+"RTN","PSOBPSU2",186,0)
+ I ONE=0,TXT'["," S ONE=1
+"RTN","PSOBPSU2",187,0)
+ F I=1:1:$L(TXT,",") S CODE=$P(TXT,",",I) D  Q:HRQUIT
+"RTN","PSOBPSU2",188,0)
+ . F HRCODE=99,"M6","M8","NN" D  Q:HRQUIT
+"RTN","PSOBPSU2",189,0)
+ . . I CODE=HRCODE S RETV=1 I ONE S HRQUIT=1 Q
+"RTN","PSOBPSU2",190,0)
+ . . I CODE'=HRCODE,RETV=1 S RETV=0,HRQUIT=1 Q
+"RTN","PSOBPSU2",191,0)
+ Q RETV
+"RTN","PSOBPSU2",192,0)
+ ;
+"RTN","PSOBPSU2",193,0)
+ ;Description: 
+"RTN","PSOBPSU2",194,0)
+ ;Input: RX = Prescription file #52 IEN
+"RTN","PSOBPSU2",195,0)
+ ; RFL = Refill number
+"RTN","PSOBPSU2",196,0)
+ ;Returns: A value of 0 (zero) will be returned when reject codes M6, M8,
+"RTN","PSOBPSU2",197,0)
+ ;NN, and 99 are present OR if on susp hold which means the prescription should not 
+"RTN","PSOBPSU2",198,0)
+ ;be printed from suspense. Otherwise, a value of 1(one) will be returned.
+"RTN","PSOBPSU2",199,0)
+DUR(RX,RFL) ;
+"RTN","PSOBPSU2",200,0)
+ N REJ,IDX,TXT,CODE,SHOLD,SHCODE,ESTAT,SHDT
+"RTN","PSOBPSU2",201,0)
+ S SHOLD=1,IDX=""
+"RTN","PSOBPSU2",202,0)
+ I '$D(RFL) S RFL=$$LSTRFL^PSOBPSU1(RX)
+"RTN","PSOBPSU2",203,0)
+ S SHDT=$$SHDT(RX,RFL) ; Get suspense hold date for rx/refill
+"RTN","PSOBPSU2",204,0)
+ I SHDT'="",SHDT'<$$FMADD^XLFDT(DT,1) Q 0
+"RTN","PSOBPSU2",205,0)
+ I $$HOSTREJ^PSOBPSU2(RX,RFL,1) I SHDT="" S SHOLD=0 D SHDTLOG(RX,RFL)
+"RTN","PSOBPSU2",206,0)
+ Q SHOLD
+"RTN","PSOBPSU2",207,0)
+ ;
+"RTN","PSOBPSU2",208,0)
+ ;Description: This subroutine sets the EPHARMACY SUSPENSE HOLD DATE field
+"RTN","PSOBPSU2",209,0)
+ ;for the rx or refill to tomorrow and adds an entry to the SUSPENSE Activity Log.
+"RTN","PSOBPSU2",210,0)
+ ;Input: RX = Prescription File IEN
+"RTN","PSOBPSU2",211,0)
+ ; RFL = Refill
+"RTN","PSOBPSU2",212,0)
+SHDTLOG(RX,RFL) ;
+"RTN","PSOBPSU2",213,0)
+ N DA,DIE,DR,COMM,SHDT
+"RTN","PSOBPSU2",214,0)
+ I '$D(RFL) S RFL=$$LSTRFL^PSOBPSU1(RX)
+"RTN","PSOBPSU2",215,0)
+ S SHDT=$$FMADD^XLFDT(DT,1)
+"RTN","PSOBPSU2",216,0)
+ S COMM="SUSPENSE HOLD until "_$$FMTE^XLFDT(SHDT,"2D")_" due to host reject error."
+"RTN","PSOBPSU2",217,0)
+ I RFL=0 S DA=RX,DIE="^PSRX(",DR="86///"_SHDT D ^DIE
+"RTN","PSOBPSU2",218,0)
+ E  S DA=RFL,DA(1)=RX,DIE="^PSRX("_DA(1)_",1,",DR="86///"_SHDT D ^DIE
+"RTN","PSOBPSU2",219,0)
+ D RXACT(RX,RFL,COMM,"S",+$G(DUZ)) ; Create Activity Log entry
+"RTN","PSOBPSU2",220,0)
+ Q
+"RTN","PSOBPSU2",221,0)
+ ;
+"RTN","PSOBPSU2",222,0)
+ ;Description: This function returns the EPHARMACY SUSPENSE HOLD DATE field
+"RTN","PSOBPSU2",223,0)
+ ;for the rx or refill
+"RTN","PSOBPSU2",224,0)
+ ;Input: RX = Prescription File IEN
+"RTN","PSOBPSU2",225,0)
+ ; RFL = Refill
+"RTN","PSOBPSU2",226,0)
+SHDT(RX,RFL) ;
+"RTN","PSOBPSU2",227,0)
+ N FILE,IENS
+"RTN","PSOBPSU2",228,0)
+ I '$D(RFL) S RFL=$$LSTRFL^PSOBPSU1(RX)
+"RTN","PSOBPSU2",229,0)
+ S FILE=$S(RFL=0:52,1:52.1),IENS=$S(RFL=0:RX_",",1:RFL_","_RX_",")
+"RTN","PSOBPSU2",230,0)
+ Q $$GET1^DIQ(FILE,IENS,86,"I")
+"RTN","PSOBPSU2",231,0)
+ ;
+"RTN","PSOBPSU2",232,0)
+ELOG(RESP) ; - due to size of PSOBPSU1 exceeding limit 
+"RTN","PSOBPSU2",233,0)
+ ; -Logs an ECME Activity Log if Rx Qty is different than Billing Qty
+"RTN","PSOBPSU2",234,0)
+ I '$G(RESP),$T(NCPDPQTY^PSSBPSUT)'="" D
+"RTN","PSOBPSU2",235,0)
+ . N DRUG,RXQTY,BLQTY,BLDU,Z
+"RTN","PSOBPSU2",236,0)
+ . S DRUG=$$GET1^DIQ(52,RX,6,"I")
+"RTN","PSOBPSU2",237,0)
+ . S RXQTY=$S('RFL:$$GET1^DIQ(52,RX,7,"I"),1:$$GET1^DIQ(52.1,RFL_","_RX,1))/1
+"RTN","PSOBPSU2",238,0)
+ . S Z=$$NCPDPQTY^PSSBPSUT(DRUG,RXQTY),BLQTY=Z/1,BLDU=$P(Z,"^",2)
+"RTN","PSOBPSU2",239,0)
+ . I RXQTY'=BLQTY D
+"RTN","PSOBPSU2",240,0)
+ . . D RXACT(RX,RFL,"BILLING QUANTITY submitted: "_$J(BLQTY,0,$L($P(BLQTY,".",2)))_" ("_BLDU_")","M",DUZ)
+"RTN","PSOBPSU2",241,0)
+ Q
+"RTN","PSOBPSU2",242,0)
+ ;
+"RTN","PSOBPSU2",243,0)
+UPDFL(RXREC,SUB,INDT) ;update fill date with release date when NDC changes at CMOP and OPAI auto-release
+"RTN","PSOBPSU2",244,0)
+ ;Input: RXREC = Prescription File IEN
+"RTN","PSOBPSU2",245,0)
+ ;         SUB = Refill
+"RTN","PSOBPSU2",246,0)
+ ;        INDT = Release date
+"RTN","PSOBPSU2",247,0)
+ N DA,DIE,DR,PSOX,SFN,DEAD,XOK,OLD,X,II,EXDAT,OFILLD,COM,CNT,RFCNT,RF  ;*459 - REMOVED SUB
+"RTN","PSOBPSU2",248,0)
+ S DEAD=0,SFN=""
+"RTN","PSOBPSU2",249,0)
+ S EXDAT=INDT I EXDAT["." S EXDAT=$P(EXDAT,".")
+"RTN","PSOBPSU2",250,0)
+ I '$D(SUB) S SUB=0 F II=0:0 S II=$O(^PSRX(RXREC,1,II)) Q:'II  S SUB=+II
+"RTN","PSOBPSU2",251,0)
+ I 'SUB S OFILLD=$$GET1^DIQ(52,RXREC,22,"I") Q:OFILLD=EXDAT  D
+"RTN","PSOBPSU2",252,0)
+ .S (X,OLD)=$P(^PSRX(RXREC,2),"^",2),DA=RXREC,DR="22///"_EXDAT_";101///"_EXDAT,DIE=52
+"RTN","PSOBPSU2",253,0)
+ .D ^DIE K DIE,DA
+"RTN","PSOBPSU2",254,0)
+ I SUB S (OLD,X)=+$P($G(^PSRX(RXREC,1,SUB,0)),"^"),DA(1)=RXREC,DA=SUB,OFILLD=$$GET1^DIQ(52.1,DA_","_RXREC,.01,"I") Q:OFILLD=EXDAT  D
+"RTN","PSOBPSU2",255,0)
+ . S DIE="^PSRX("_DA(1)_",1,",DR=".01///"_EXDAT D ^DIE K DIE S $P(^PSRX(RXREC,3),"^")=EXDAT
+"RTN","PSOBPSU2",256,0)
+ Q:$D(DTOUT)!($D(DUOUT))
+"RTN","PSOBPSU2",257,0)
+ S DA=RXREC
+"RTN","PSOBPSU2",258,0)
+ D AREC^PSOSUCH1
+"RTN","PSOBPSU2",259,0)
+FIN ;
+"RTN","PSOBPSU2",260,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",10125,6)
+^392
+**END**
+**END**
+

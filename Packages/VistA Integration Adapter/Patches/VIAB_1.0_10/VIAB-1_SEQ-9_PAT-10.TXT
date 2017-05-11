@@ -1,0 +1,202 @@
+$TXT Created by               VIALAB1.AAC.DOMAIN.EXT  (KIDS) on Friday, 03/17/17 at 19:05
+=============================================================================
+Run Date: APR 10, 2017                     Designation: VIAB*1*10
+Package : VIAB - VISTA INTEGRATION ADAPTOR    Priority: EMERGENCY
+Version : 1         SEQ #9                      Status: Released
+                  Compliance Date: APR 12, 2017
+=============================================================================
+
+Associated patches: (v)VIAB*1*8    <<= must be installed BEFORE `VIAB*1*10'
+
+Subject: BMS RPC 'LISTPATIENT' FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects an error found by the Bed Management System (BMS) while 
+ testing the "ListPatient" service. When an invalid patient number is passed in
+ as the input parameter, an error occurs at LSTPAT+19^VIABMS *RESULT(3). 
+ Routine VIABMS was modified to prevent a hard error. If the patient number is
+ invalid then no data is returned for the patient.
+ 
+   Before the Patch Installation
+      Input Parameters
+        S VIA("PATH")="LISTPATIENT"
+        S VIA("IENS")="111477,125166,125217,7209307"
+ 
+      Output Parameters with error
+        CHEYL19>D EN^VIABMS(.RESULT,.VIA)
+        . . F Y=2:1:10 S J=$P($P(FLDS,";",Y-1),"-",2),$P(VALUE,U,J)=
+        $P($G(RESULT(Y)),U,4) I RESULT(Y)["^.105^" D
+        <UNDEFINED>LSTPAT+19^VIABMS *RESULT(3)
+        CHEYL19 7f5>ZW RESULT
+        RESULT(1)="[Data]"
+        RESULT(2)="[ERROR]"
+ 
+   After the Patch Installation
+      Input Parameters
+        S VIA("PATH")="LISTPATIENT"
+        S VIA("IENS")="111477,125166,125217,7209307"
+  
+        VISTAS1:VISTA>D EN^VIABMS(.RESULT,.VIA)
+        VISTAS1:VISTA>ZW RESULT
+        RESULT(1)="[Data]"
+        RESULT(2)="7209307^VAPATIENT,AMY^F^2531201^555444888^3150130^^^^"
+ 
+ 
+ The patch also removes the section of code from line tag TMP in routine 
+ VIABMS that sets the environmental variables when the DUZ is not defined. 
+ This is in conformance to Standards and Conventions (SAC).
+ 
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+   
+  File Name (Number)         Field Name (Number)     New/Modified/Deleted
+  ------------------         -------------------     --------------------
+  N/A
+   
+  Forms Associated:
+   
+  Form Name                    File #               New/Modified/Deleted
+  ---------                    ------               --------------------
+  N/A
+   
+  Mail Groups Associated:
+   
+  Mail Group Name          New/Modified/Deleted
+  ---------------          --------------------
+  N/A
+  
+  Options Associated:
+    
+  Option Name               Type                    New/Modified/Deleted
+  -----------               ----                    --------------------
+  N/A
+  
+  
+  Remote Procedure Calls:
+  -----------------------
+  N/A
+  
+  
+  Service Requests (NSRs):
+ -------------------------  
+  N/A
+    
+    
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+    
+    
+  Remedy Ticket(s) & Overview:
+  ----------------------------
+  N/A
+    
+    
+ Test Sites:
+ -----------
+ Biloxi, MS (C)
+ Central Alabama HCS
+ Houston, TX VAMC
+ Indianapolis, IN (C)
+ Marion, IL VAMC
+ North Texas HCS
+  
+  
+ Patch Installation:
+ -------------------  
+  
+    
+ Pre/Post Installation Overview:
+ -------------------------------
+ Patch VIAB*1*8 must be installed prior to installation of VIAB*1*10.
+ 
+  
+ Pre-Installation Instructions:
+ -----------------------------
+ This patch may be installed with users on the system. This patch should 
+ take less than 5 minutes to install. 
+   
+ No menu options need to be disabled.
+   
+   
+ Installation Instructions:
+ -------------------------- 
+  1.  Choose the PackMan message containing this patch.
+   
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME enter the 
+      patch VIAB*1.0*10:
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+   
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch (VIAB*1*10) to install.
+   
+  5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+      Install? NO//', press <ENTER>. 
+  
+  6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//', press <ENTER>.
+   
+  7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? NO//', press <ENTER>.
+   
+  8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+    
+    
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VISTA INTEGRATION ADAPTER;**[Patch List]**;06-FEB-2014;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VIABMS
+    Before:B138505639   After:B134965720  **8,10**
+ 
+Routine list of preceding patches: 8
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 17, 2017
+Completed By:                               Date Completed: APR 10, 2017
+Released By :                               Date Released : APR 10, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
