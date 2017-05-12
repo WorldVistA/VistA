@@ -178,6 +178,25 @@ class AbstractSectionParser (ISectionParser):
             return
         result = self.__isLongNameLine__(line)
         if result:
+            ''' Check that Global information doesn't happen to touch the rest of the info
+              Global Variables  ( * Changed  ! Killed)
+
+                 ^AUTTHF("B"         ISDUE+13
+
+                 ^PXRMINDX(9000010.23ISDUE+14,ISDUE+16                                  <<<< What we are trying to capture
+
+                 ^TMP($J             LIST+6,LIST+10*,LIST+12,LIST+14,LIST+15*,LIST+16!
+            '''
+            match = re.search("(?P<globalName>^ +\^[A-Z]+[(][0-9.]+)+(?P<locationInfo>.+$)", line)
+            if match:
+              self._varPrefix = line[0:DEFAULT_NAME_FIELD_START_INDEX]
+              self._varValue = match.groups()[1]
+              self._varName = match.groups()[0].strip()
+              if self._addVarToRoutine:
+                  self._addVarToRoutine(Routine, CrossReference)
+              if self._postParsingRoutine:
+                  self._postParsingRoutine(Routine, CrossReference)
+              return
             if self._suspiousLine:
                 self.__handleSuspiousCases__(Routine, CrossReference)
             self._varName = line[DEFAULT_NAME_FIELD_START_INDEX:].strip()
