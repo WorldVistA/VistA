@@ -120,7 +120,12 @@ class SCActions (Actions):
         self.VistA.write('')
         self.VistA.wait('RACE:')
         self.VistA.write('')
-        self.VistA.wait('COUNTRY:')
+        index = self.VistA.multiwait(['LANGUAGE DATE','COUNTRY:'])
+        if index==0:
+          self.VistA.write("N")
+          self.VistA.wait("PREFERRED LANGUAGE")
+          self.VistA.write("")
+          self.VistA.wait('COUNTRY')
         self.VistA.write('')
         self.VistA.wait('STREET ADDRESS')
         self.VistA.write('')
@@ -204,7 +209,12 @@ class SCActions (Actions):
             self.VistA.write('')
             self.VistA.wait('RACE:')
             self.VistA.write('')
-            self.VistA.wait('COUNTRY:')
+            index = self.VistA.multiwait(['LANGUAGE DATE','COUNTRY:'])
+            if index==0:
+              self.VistA.write("N")
+              self.VistA.wait("PREFERRED LANGUAGE")
+              self.VistA.write("")
+              self.VistA.wait('COUNTRY')
             self.VistA.write('')
             self.VistA.wait('STREET ADDRESS')
             self.VistA.write('')
@@ -276,7 +286,12 @@ class SCActions (Actions):
         self.VistA.write('')
         self.VistA.wait('RACE:')
         self.VistA.write('')
-        self.VistA.wait('COUNTRY:')
+        index = self.VistA.multiwait(['LANGUAGE DATE','COUNTRY:'])
+        if index==0:
+          self.VistA.write("N")
+          self.VistA.wait("PREFERRED LANGUAGE")
+          self.VistA.write("")
+          self.VistA.wait('COUNTRY')
         self.VistA.write('')
         self.VistA.wait('STREET ADDRESS')
         self.VistA.write('')
@@ -408,8 +423,12 @@ class SCActions (Actions):
             self.VistA.wait('Select Action:')
             self.VistA.write('PD')
         for wwset in dgrph:
-            self.VistA.wait(wwset[0])
-            self.VistA.write(wwset[1])
+            if type(wwset[0]) is list:
+              index = self.VistA.multiwait(wwset[0])
+              self.VistA.write(wwset[1][index])
+            else:
+              self.VistA.wait(wwset[0])
+              self.VistA.write(wwset[1])
         index = self.VistA.multiwait(['DOES THE PATIENT','EMAIL ADDRESS'])
         if index == 0:
           if emailAddress != None :
@@ -436,8 +455,12 @@ class SCActions (Actions):
         self.VistA.wait('Select Action:')
         self.VistA.write('PD')
         for wwset in vlist:
-            self.VistA.wait(wwset[0])
-            self.VistA.write(wwset[1])
+            if type(wwset[0]) is list:
+              index = self.VistA.multiwait(wwset[0])
+              self.VistA.write(wwset[1][index])
+            else:
+              self.VistA.wait(wwset[0])
+              self.VistA.write(wwset[1])
         index = self.VistA.multiwait(['DOES THE PATIENT','EMAIL ADDRESS'])
         if index == 0:
           if emailAddress != None:
@@ -657,7 +680,12 @@ class SCActions (Actions):
         self.VistA.write('')
         self.VistA.wait('RACE:')
         self.VistA.write('')
-        self.VistA.wait('COUNTRY:')
+        index = self.VistA.multiwait(['LANGUAGE DATE','COUNTRY:'])
+        if index==0:
+          self.VistA.write("N")
+          self.VistA.wait("PREFERRED LANGUAGE")
+          self.VistA.write("")
+          self.VistA.wait('COUNTRY')
         self.VistA.write('')
         self.VistA.wait('STREET ADDRESS')
         self.VistA.write('')
@@ -1089,7 +1117,15 @@ class SCActions (Actions):
         self.VistA.write('')
         self.VistA.wait('SEX:')
         self.VistA.write('')
-        self.VistA.wait('INFORMATION')
+        index = self.VistA.multiwait(['LANGUAGE DATE','INFORMATION:'])
+        if index==0:
+          self.VistA.write("N")
+          quickIndex = self.VistA.multiwait(['LANGUAGE DATE',"PREFERRED LANGUAGE"])
+          if quickIndex==0:
+            self.VistA.write("")
+            self.VistA.wait("PREFERRED LANGUAGE")
+          self.VistA.write("")
+          self.VistA.wait('INFORMATION')
         self.VistA.write('N')
         self.VistA.wait('INFORMATION:')
         self.VistA.write('W')
@@ -1127,13 +1163,15 @@ class SCActions (Actions):
         self.VistA.write('t+1')
         self.VistA.wait('Select Action:')
         self.VistA.write('TI')
-        if patient is not None:
-            self.VistA.wait('Select Patient')
-            self.VistA.write(patient)
-        self.VistA.wait('Team Information')
-        self.VistA.wait('Select Action:')
-        self.VistA.write('')
-        self.VistA.wait('Select Action:')
+        index = self.VistA.multiwait(['Select Patient','Select Action'])
+        if index == 0:
+          if patient is not None:
+              self.VistA.write(patient)
+              self.VistA.wait('Team Information')
+              self.VistA.write('')
+          else:
+              self.VistA.write("")
+          self.VistA.wait('Select Action:')
         self.VistA.write('')
 
     def enroll(self, clinic, patient):
@@ -1339,7 +1377,12 @@ class SCActions (Actions):
         self.VistA.write('')
         self.VistA.wait('RACE:')
         self.VistA.write('')
-        self.VistA.wait('COUNTRY:')
+        index = self.VistA.multiwait(['LANGUAGE DATE','COUNTRY:'])
+        if index==0:
+          self.VistA.write("N")
+          self.VistA.wait("PREFERRED LANGUAGE")
+          self.VistA.write("")
+          self.VistA.wait('COUNTRY')
         self.VistA.write('')
         self.VistA.wait('STREET ADDRESS')
         self.VistA.write('')
@@ -1415,7 +1458,12 @@ class SCActions (Actions):
         self.VistA.write('')
         self.VistA.wait('RACE:')
         self.VistA.write('')
-        self.VistA.wait('COUNTRY:')
+        index = self.VistA.multiwait(['LANGUAGE DATE','COUNTRY:'])
+        if index==0:
+          self.VistA.write("N")
+          self.VistA.wait("PREFERRED LANGUAGE")
+          self.VistA.write("")
+          self.VistA.wait('COUNTRY')
         self.VistA.write('')
         self.VistA.wait('STREET ADDRESS')
         self.VistA.write('')
