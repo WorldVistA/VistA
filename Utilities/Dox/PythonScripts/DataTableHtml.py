@@ -27,10 +27,13 @@ table_sorter_header="""
 data_table_reference = """
 <link rel="stylesheet" type="text/css" href="../../datatable/css/jquery.dataTables.css"/>
 <link rel="stylesheet" type="text/css" href="../../datatable/css/buttons.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/dataTables.searchHighlight.css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="../../datatable/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="../../datatable/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="../../datatable/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.highlight.js"></script>
+<script type="text/javascript" src="../../datatable/js/dataTables.searchHighlight.min.js"></script>
 
 <!-- Google Analytics -->
 <script>
@@ -67,6 +70,7 @@ data_table_list_with_columns_init_setup = Template("""
         pagingType: "full_numbers",
         bStateSave: true,
         bAutoWidth: true,
+        searchHighlight: true,
         columns: [${columnNames}],
         buttons: [
           {
@@ -157,6 +161,7 @@ data_table_large_list_with_columns_init_setup = Template("""
         pagingType: "full_numbers",
         bDeferRender: true,
         sAjaxSource: "${ajaxSrc}",
+        searchHighlight: true,
         columns: [${columnNames}],
         buttons: [
           {
