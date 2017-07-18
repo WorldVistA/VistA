@@ -55,7 +55,7 @@ data_table_list_init_setup = Template("""
         iDisplayLength: 25,
         pagingType: "full_numbers",
         bStateSave: true,
-        bAutoWidth: true
+        bAutoWidth: false
       });
 }); </script>
 """)
@@ -69,7 +69,7 @@ data_table_list_with_columns_init_setup = Template("""
         iDisplayLength: 25,
         pagingType: "full_numbers",
         bStateSave: true,
-        bAutoWidth: true,
+        bAutoWidth: false,
         searchHighlight: true,
         columns: [${columnNames}],
         buttons: [
