@@ -21,6 +21,7 @@ import csv
 import logging
 import json
 import re
+import sys
 
 def test_sheet(test_xls):
   book = open_workbook(test_xls)
@@ -40,6 +41,7 @@ def test_sheet(test_xls):
 
 rootNode = {}
 rootNode["None"] = []
+curDate = '1'
 
 typeDict = {
   xlrd.XL_CELL_NUMBER: "Number",
@@ -74,7 +76,6 @@ def checkEmpty(value, index):
 def parseStringVal(value, index):
   if index == 5:
     returnArray=[]
-    bffName = "None"
     for bffValue in re.split("(,[ ]+|^)[0-9]+: ",value):
       bffValue = bffValue.strip()
       if re.match(',[ ]*',bffValue) or (bffValue == ''):
@@ -83,6 +84,12 @@ def parseStringVal(value, index):
         returnArray.append(bffValue);
       if not (bffValue in rootNode):
         rootNode[bffValue] = []
+    return returnArray
+  elif index == 4:
+    returnArray=[]
+    for nsrEntry in value.split("\n"):
+      if not (nsrEntry in returnArray):
+        returnArray.append(nsrEntry);
     return returnArray
   if not (value.find(" [") == -1):
     return value[:value.find(" [")]
@@ -99,8 +106,6 @@ typeDictConvert = {
 }
 
 # convert the excel name fields to standard json output name
-
-
 RequirementsFieldsConvert = {
   "RDM RDNG ID" : 'busNeedId',
   "ID" : 'busNeedId',
@@ -116,12 +121,54 @@ RequirementsFieldsConvert = {
   "Associated BFF(s)":"BFFlink"
 }
 
+def checkReqForUpdate(curNode,pastJSONObj):
+  diffFlag=False
+  foundDate = curDate
+  BFFList = []
+  if type(curNode['BFFlink']) is list:
+    for BFFlink in curNode['BFFlink']:
+      BFFList.append(BFFlink)
+  else:
+    BFFList.append(curNode['BFFlink'])
+  # Check past information for the object and compare the two
+  # Remove all recentUpdate attributes
+  for BFFEntry in BFFList:
+    if pastJSONObj:
+      diffFlag=False;
+      if BFFEntry in pastJSONObj:
+        ret = filter(lambda x: x['name'] == curNode['name'] , pastJSONObj[BFFEntry])
+        for entry in ret:
+          diffFlag=False
+          if "dateUpdated" in entry:
+            foundDate=entry["dateUpdated"]
+          for val in curNode.keys():
+            if val in ["recentUpdate","dateUpdated"]:
+              continue
+            oldVal = entry[val] if (val in entry) else None
+            newVal = curNode[val]
+            if type(oldVal) == list:
+              oldVal.sort()
+              newVal.sort()
+            if not (oldVal == newVal):
+              diffFlag= True
+    if diffFlag:
+      curNode['recentUpdate'] = True
+      curNode['dateUpdated']  = curDate
+    else:
+      curNode['recentUpdate'] = False
+      curNode['dateUpdated']= foundDate
+    rootNode[BFFEntry].append(curNode)
+
 def RequirementsFieldsConvertFunc(x):
   if x in RequirementsFieldsConvert:
     return RequirementsFieldsConvert[x]
   return x
 
-def convertExcelToJson(input, output):
+def convertExcelToJson(input, output,pastData):
+  pastJSONObj={}
+  if pastData:
+    with open(pastData,"r") as pastJSON:
+      pastJSONObj = json.load(pastJSON)
   book = open_workbook(input)
   sheet = book.sheet_by_index(0)
   data_row = 1
@@ -134,34 +181,35 @@ def convertExcelToJson(input, output):
   for row_index in xrange(data_row, sheet.nrows):
     curNode = dict()
     curNode['isRequirement'] = True
+    curNode['isRequirement'] = True
     for col_index in xrange(sheet.ncols):
       cell = sheet.cell(row_index, col_index)
       cType = cell.ctype
       convFunc = typeDictConvert.get(cell.ctype)
       cValue = cell.value
+      if type(cValue) == unicode:
+        cValue = re.sub(r'[^\x00-\x7F]+','', cValue) #cValue.decode('unicode_escape').encode('ascii','ignore')
       if convFunc:
         cValue = convFunc(cValue,col_index)
       if not cValue:
         continue
-      if type(cValue) == unicode:
-        cValue = re.sub(r'[^\x00-\x7F]+','', cValue) #cValue.decode('unicode_escape').encode('ascii','ignore')
       curNode[fields[col_index]] = cValue
-    if type(curNode['BFFlink']) is list:
-      for BFFlink in curNode['BFFlink']:
-        rootNode[BFFlink].append(curNode)
-    else:
-      rootNode[curNode['BFFlink']].append(curNode)
+    checkReqForUpdate(curNode,pastJSONObj)
 
   with open(output, "w") as outputJson:
     json.dump(rootNode, outputJson)
 
 def main():
+  global curDate
   import argparse
   parser = argparse.ArgumentParser("Convert Requirements Excel SpreadSheet to JSON")
   parser.add_argument('input', help='input Requirements excel spreadsheet')
   parser.add_argument('output', help='output JSON file')
+  parser.add_argument('-p','--pastData',help="The Previous version of the requirements JSON", required=False)
+  parser.add_argument('-d','--curDate',help="The date to use as the information for the updated files", required=True)
   result = parser.parse_args()
-  convertExcelToJson(result.input, result.output)
+  curDate = result.curDate
+  convertExcelToJson(result.input, result.output, result.pastData)
 
 if __name__ == '__main__':
   main()

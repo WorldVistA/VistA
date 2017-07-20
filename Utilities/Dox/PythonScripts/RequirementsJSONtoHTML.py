@@ -18,7 +18,8 @@ def createArgParser():
     parser.add_argument('outDir', help='path to the output web page directory')
     return parser
 
-fieldList = ["Name",'Id','Description',"BFFLink",'New Service Request','Type']
+fieldList = ["Name",'Id','Description',"BFFLink",'New Service Request','Type', 'Date Updated', "Recently Updated"]
+searchColumnList = ["Name",'Id','Description',"BFFLink",'New Service Request']
 allReqs = []
 reqSummary=[]
 def getReqHTMLLink(reqID, reqEntry, **kargs):
@@ -45,7 +46,9 @@ summary_list_fields = [
     ('description', None, None),
     ('BFFlink', None, convertBFFLinks),
     ('NSRLink', None, convertNSRLinks),
-    ('type', None, None)
+    ('type', None, None),
+    ('dateUpdated', None, None),
+    ('recentUpdate', None, None)
 ]
 class RequirementsConverter:
     def __init__(self, outDir):
@@ -121,13 +124,13 @@ class RequirementsConverter:
             tName = "%s-%s" % (listName.replace(' ', '_'), pkgName.replace(' ', '_'))
             useAjax = False #useAjaxDataTable(len(inputJson))
             columnNames = fieldList
-            searchColumns = fieldList
+            searchColumns = searchColumnList
             if useAjax:
                 ajaxSrc = '%s_array.txt' % pkgName
                 outputLargeDataListTableHeader(output, ajaxSrc, tName,
                                                 columnNames, searchColumns)
             else:
-                outputDataListTableHeader(output, tName, columnNames, searchColumns)
+                outputDataListTableHeader(output, tName, columnNames, searchColumns, hideColumnNames=['Recently Updated'])
             output.write("<body id=\"dt_example\">")
             output.write("""<div id="container" style="width:80%">""")
 
@@ -165,7 +168,7 @@ class RequirementsConverter:
                           output.write("</ul></td>")
                         # Otherwise, write it out as is
                         else:
-                          if pkgName in reqSummary[idx]:
+                          if pkgName in str(reqSummary[idx]):
                             output.write("<td class='disabled'>%s</td>\n" %  reqSummary[idx])
                           else:
                             output.write("<td>%s</td>\n" %  reqSummary[idx])
@@ -189,7 +192,6 @@ class RequirementsConverter:
       if "NSRLink" in d:
         if type(d["NSRLink"]) is list:
           for entry in d["NSRLink"]:
-            print NSRVal
             NSRVal = entry.split(":")[0]
             if not (NSRVal in nsrSummary):
               nsrSummary[NSRVal] = []
