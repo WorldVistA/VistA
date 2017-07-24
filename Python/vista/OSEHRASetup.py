@@ -19,6 +19,27 @@ import time
 import TestHelper
 from OSEHRAHelper import PROMPT
 
+introText = """
+  **************************************************
+  *  Welcome to an OSEHRA VistA instance
+  **************************************************
+  *
+  * Use the following credentials for Robert Alexander
+  *   Access:  fakedoc1
+  *   Verify:  1Doc!@#$
+  *
+  * Use the following credentials for Mary Smith (Nurse)
+  *   Access:  fakenurse1
+  *   Verify:  1Nur!@#$
+  *
+  * Use the following credentials for Joe Clerk (Clerk)
+  *   Access:  fakeclerk1
+  *   Verify:  1Cle!@#$
+  *
+  * If you have any issue, please email your question to admin@osehra.org
+  **************************************************
+"""
+
 def startFileman(VistA):
   # Start FileMan as the programmer user and set XUMF to 1 which lets the user
   # change information in Kernel files
@@ -106,6 +127,43 @@ def setupPrimaryHFSDir(VistA,hfs_dir):
   if index == 2:
     VistA.write("")
     VistA.wait("DOMAIN NAME")
+  VistA.write('')
+  VistA.wait('Select OPTION:')
+  VistA.write('')
+
+def setupIntroText(VistA):
+  # Set up the introduction text for the VistA system
+  #
+  # Normally, is displayed on CPRS and other GUIs
+  startFileman(VistA)
+  VistA.write('1')
+  VistA.wait_re('INPUT TO WHAT FILE')
+  VistA.write('KERNEL SYSTEM PARAMETERS')
+  VistA.wait('EDIT WHICH FIELD')
+  VistA.write('INTRO MESSAGE')
+  VistA.wait('THEN EDIT FIELD')
+  VistA.write('')
+  VistA.wait('DOMAIN NAME')
+  # `1 is the notation to grab the entry with a number of 1
+  VistA.write('`1')
+  index = VistA.multiwait(['EDIT Option','1>$'])
+  if index == 0:
+    VistA.write("D")
+    VistA.wait('Delete from line')
+    VistA.write("1")
+    VistA.wait('thru')
+    VistA.write("")
+    VistA.wait('OK TO REMOVE')
+    VistA.write("Y")
+    VistA.wait('ARE YOU SURE')
+    VistA.write("Y")
+    VistA.wait('EDIT Option')
+    VistA.write("A")
+    VistA.wait('Add lines')
+  VistA.write(introText+'\r')
+  VistA.wait("EDIT Option")
+  VistA.write("")
+  VistA.wait("DOMAIN NAME")
   VistA.write('')
   VistA.wait('Select OPTION:')
   VistA.write('')
