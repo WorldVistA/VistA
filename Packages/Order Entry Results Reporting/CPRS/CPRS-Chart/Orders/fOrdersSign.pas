@@ -161,7 +161,7 @@ implementation
 {$R *.DFM}
 
 uses
-  Hash,
+  XWBHash,
   rCore,
   rOrders,
   uConst,

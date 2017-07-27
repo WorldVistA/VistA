@@ -163,7 +163,7 @@ implementation
 
 {$R *.DFM}
 
-uses ORFn, rCore, fNotes, fConsults, fOrders, rOrders, Hash, fDCSumm, fOCSession, uOrders,
+uses ORFn, rCore, fNotes, fConsults, fOrders, rOrders, XWBHash, fDCSumm, fOCSession, uOrders,
      fSignItem, fOrdersPrint, fLkUpLocation, fFrame, uSignItems, fSurgery,
      fBALocalDiagnoses, UBAConst, UBAMessages, fOrdersSign, fClinicWardMeds,
      rODLab, fRptBox, VAUtils, System.Types, System.UITypes;

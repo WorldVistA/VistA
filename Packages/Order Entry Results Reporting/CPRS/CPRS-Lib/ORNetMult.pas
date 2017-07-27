@@ -138,7 +138,18 @@ begin
       end;
     end;
 
-  fSubscripts.Values[aNode] := aValue;
+  //fSubscripts.Values[aNode] := aValue;
+  if aValue <> '' then
+    fSubscripts.Values[aNode] := aValue
+  else
+  begin
+   if fSubscripts.IndexOfName(aNode) > -1 then
+      fSubscripts.Delete(fSubscripts.IndexOfName(aNode));
+   fSubscripts.Add(aNode + '=' + aValue);
+  end;
+
+
+
 end;
 
 procedure TORNetMult.AssignToParamRecord(aParam: TParamRecord);

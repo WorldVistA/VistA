@@ -185,6 +185,7 @@ type
     procedure WMMove(var Message: TWMMove); message WM_MOVE;
     procedure WMSize(var Message: TWMSize); message WM_SIZE;
     procedure WMVScroll(var Message: TWMVScroll); message WM_VSCROLL;
+    procedure WMMouseWheel(var Message: TMSHMouseWheel); message WM_MOUSEWHEEL;
     procedure CMHintShow(var Message: TMessage); message CM_HINTSHOW;
     procedure UMShowTip(var Message: TMessage); message UM_SHOWTIP;
     function GetChecked(Index: Integer): Boolean;
@@ -1155,6 +1156,7 @@ type
   end;
 
   TSizeRatio = class // relative sizes and positions for resizing
+  public
     CLeft: Extended;
     CTop: Extended;
     CWidth: Extended;
@@ -1519,7 +1521,10 @@ begin
   FListBox := AListBox;
   FListItem := AnItem;
   FPoint := APoint;
-  FSelected := (FListBox.Perform(LB_GETSEL, FListItem, 0) > 0);
+  if FListItem > -1 then
+   FSelected := (FListBox.Perform(LB_GETSEL, FListItem, 0) > 0)
+  else
+   FSelected := false;
   UpdateText(CatchMouse);
 end;
 
@@ -2379,6 +2384,17 @@ begin
   if Message.ScrollCode = SB_ENDSCROLL then uItemTip.Hide;
 end;
 
+procedure TORListBox.WMMouseWheel(var Message: TMSHMouseWheel);
+{ makes sure the itemtip is hidden whenever the listbox is scrolled
+  *SMT*
+  This is added to keep consistent with other types of scrolling.
+  we want to hide the ItemTip when the mouse wheel is scrolled.}
+
+begin
+  inherited;
+  if Message.WheelDelta <> 0 then uItemTip.Hide;
+end;
+
 procedure TORListBox.CMHintShow(var Message: TMessage);
 { if ShowHint is used to delay showing tip, starts showing ItemTip when hint timer expires }
 var
@@ -2599,6 +2615,17 @@ var
   AnItem: Integer;
   TrueOffset: integer;
   TipPos: TPoint;
+  ComponentForm: TCustomForm;
+ TopFormHandle: HWND;
+
+ function GetTopWindow: HWND;
+ begin
+  Result := GetLastActivePopup(Application.Handle);
+  if (Result = Application.Handle) or not IsWindowVisible(Result) then
+    if Assigned(Screen.ActiveCustomForm) then
+       Result := Screen.ActiveCustomForm.Handle;
+ end;
+
 begin
   inherited MouseMove(Shift, X, Y);
 
@@ -2619,8 +2646,13 @@ begin
   if (not FItemTipActive) and (X = FLastMouseX) and (Y = FLastMouseY) then Exit;
   FLastMouseX := X;
   FLastMouseY := Y;
-  // when captured mouse moving outside listbox
-  if not PtInRect(ClientRect, Point(X, Y)) then
+
+  //Issue with popup windows and wmclosemode not being called
+  ComponentForm := GetParentForm(self);
+  TopFormHandle := GetTopWindow;
+
+  // when captured mouse moving outside listbox or form has open above above it
+  if not (PtInRect(ClientRect, Point(X, Y))) or (TopFormHandle <> ComponentForm.Handle) then
   begin
     If FParentCombo = nil then MouseCapture := False;
     uItemTip.Hide;
@@ -2855,6 +2887,10 @@ begin
   begin
     // LB_SETCARETINDEX doesn't scroll with single select so we have to do it ourselves
     // ( a LongList should always come through here - it should never be MultiSelect )
+    // DRM - I6466595FY16/529127 - 2017/6/30 - Make sure FLargeChange isn't < 0. Recalculate.
+    if FLargeChange < 0 then
+      FLargeChange := (Height div ItemHeight) - 1;
+    // DRM - I6466595FY16/529127 - 2017/6/30
     if FocusIndex < TopIndex
       then TopIndex := FocusIndex
     else if FocusIndex > (TopIndex + FLargeChange)
@@ -4176,6 +4212,7 @@ procedure TORComboBox.DropButtonUp(Sender: TObject; Button: TMouseButton; Shift:
 begin
   if FDroppedDown then FListBox.MouseCapture := True; // do here so 1st buttonup not captured
   FEditBox.SetFocus;
+  If FDroppedDown then fDropPanel.BringToFront;
 end;
 
 procedure TORComboBox.DropDownStatusChanged(opened: boolean);

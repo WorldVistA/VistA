@@ -130,6 +130,7 @@ const
   OD_GENERIC   = 152;
   OD_IMAGING   = 160;
   OD_VITALS    = 171;  // use 170 for ORWD GENERIC VITALS, 171 for GMRVOR
+  OD_RTC       = 175;
   OD_MEDIV     = 180;
   OD_TEXTONLY  = 999;
   OM_NAV       = 1001;
@@ -237,6 +238,7 @@ const
   NF_DEA_CERT_REVOKED              = 75;
   NF_RX_RENEWAL_REQUEST            = 73;
   NF_LAPSED_ORDER                  = 78;
+  NF_RTC_CANCEL_ORDERS             = 91;
   NF_DCSUMM_UNSIGNED_NOTE          = 901;
   NF_CONSULT_UNSIGNED_NOTE         = 902;
   NF_NOTES_UNSIGNED_NOTE           = 903;

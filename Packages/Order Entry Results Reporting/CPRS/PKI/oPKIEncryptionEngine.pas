@@ -356,8 +356,8 @@ begin
 end;
 
 procedure TPKIEncryptionEngine.checkSignature(aDataString, aSignatureString: string;
-  aDataTimeSigned:
-  PFileTime = nil);
+aDataTimeSigned:
+PFileTime = nil);
 var
   i: integer;
   aPKIEncryptionData: IPKIEncryptionData;
@@ -374,7 +374,7 @@ var
   aSignerCert: array of DWORD;
   aSignerCertSize: DWORD;
 
-  aNameString: String;
+  aNameString: string;
   aNameStringSize: DWORD;
 begin
   aMessageHandle := nil;
@@ -464,7 +464,7 @@ begin
       if CertGetNameString(aCert, CERT_NAME_SIMPLE_DISPLAY_TYPE, 0, 0, PWideChar(aNameString), aNameStringSize) = 0 then
         raise EPKIEncryptionError.Create(DLG_89802033) // 'Error getting name value')
       else
-        fOnLogEvent('Got the name from the cert: ' + String(aNameString) + ' <<<<<<==================');
+        fOnLogEvent('Got the name from the cert: ' + string(aNameString) + ' <<<<<<==================');
 
       // Use the CERT_INFO from the signer Cert to Verify the signature
       if CryptMsgControl(aMessageHandle, 0, CMSG_CTRL_VERIFY_SIGNATURE, aCert.pCertInfo) then
@@ -509,8 +509,8 @@ var
   aCardName: AnsiString;
   aFHCard: LongInt;
   aReaders: AnsiString;
-  aSCardContext: SCARDCONTEXT;
-  aSize: integer;
+  aSCardContext: LongInt;
+  aSize: LongInt;
 begin
   try
     fOnLogEvent('Establishing Context with the Card Reader');
@@ -530,17 +530,17 @@ begin
     // Walk the list of readers and grab the first one that is valid
     while Length(aReaders) > 1 do
       begin
-        aCardName := AnsiString(Copy(aReaders, 1, Pos(#0, String(aReaders))));
-        fOnLogEvent('Got Card Reader: ' + String(aCardName));
+        aCardName := AnsiString(Copy(aReaders, 1, Pos(#0, string(aReaders))));
+        fOnLogEvent('Got Card Reader: ' + string(aCardName));
         aReaders := Copy(aReaders, Length(aCardName) + 1, Length(aReaders));
         if SCardConnectA(aSCardContext, PAnsiChar(aCardName), SCARD_SHARE_SHARED, 3, aFHCard, @aActiveProtocol) = PKI_SCARD_S_SUCCESS then
           begin
-            fOnLogEvent('Successfully established context with Card Reader: ' + String(aCardName));
+            fOnLogEvent('Successfully established context with Card Reader: ' + string(aCardName));
             Result := True;
             Exit;
           end
         else
-          fOnLogEvent('Unable to establish context with Card Reader: ' + String(aCardName));
+          fOnLogEvent('Unable to establish context with Card Reader: ' + string(aCardName));
       end;
 
     Result := False;
@@ -607,8 +607,8 @@ begin
           fOnLogEvent('VistA Name = ' + getVistAUserName);
 
           isDisplayNameCorrect := (Pos(UpperCase(Copy(aCertDisplayName, 1, 1)), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') > 0) and // Starts with a character
-            (Pos(Copy(aCertDisplayName, Length(aCertDisplayName), 1), '0123456789)') > 0) and // Ends with a number or paren
-            (Pos(UpperCase(Copy(aVistAUserName, 1, Pos(',', aVistAUserName) - 1)), UpperCase(aCertDisplayName)) > 0); // Contains the users last name from VistA - Not the best but oh well :(
+          (Pos(Copy(aCertDisplayName, Length(aCertDisplayName) - 1, 1), '0123456789)') > 0) and // Ends with a number or paren
+          (Pos(UpperCase(Copy(aVistAUserName, 1, Pos(',', aVistAUserName) - 1)), UpperCase(aCertDisplayName)) > 0); // Contains the users last name from VistA - Not the best but oh well :(
 
           if not isDisplayNameCorrect then
             begin
@@ -670,17 +670,17 @@ begin
 
       // CERT_DIGITAL_SIGNATURE_KEY_USAGE = $80;
       fOnLogEvent(
-        Format('CERT_DIGITAL_SIGNATURE_KEY_USAGE = %s',
-        [BoolToStr(((i and CERT_DIGITAL_SIGNATURE_KEY_USAGE) = CERT_DIGITAL_SIGNATURE_KEY_USAGE), True)]));
+      Format('CERT_DIGITAL_SIGNATURE_KEY_USAGE = %s',
+      [BoolToStr(((i and CERT_DIGITAL_SIGNATURE_KEY_USAGE) = CERT_DIGITAL_SIGNATURE_KEY_USAGE), True)]));
 
       // CERT_NON_REPUDIATION_KEY_USAGE = // $40;
       fOnLogEvent(
-        Format('CERT_NON_REPUDIATION_KEY_USAGE   = %s',
-        [BoolToStr(((i and CERT_NON_REPUDIATION_KEY_USAGE) = CERT_NON_REPUDIATION_KEY_USAGE), True)]));
+      Format('CERT_NON_REPUDIATION_KEY_USAGE   = %s',
+      [BoolToStr(((i and CERT_NON_REPUDIATION_KEY_USAGE) = CERT_NON_REPUDIATION_KEY_USAGE), True)]));
 
       isCertSigning :=
-        ((i and CERT_DIGITAL_SIGNATURE_KEY_USAGE) = CERT_DIGITAL_SIGNATURE_KEY_USAGE) and
-        ((i and CERT_NON_REPUDIATION_KEY_USAGE) = CERT_NON_REPUDIATION_KEY_USAGE); // then // Official and correct
+      ((i and CERT_DIGITAL_SIGNATURE_KEY_USAGE) = CERT_DIGITAL_SIGNATURE_KEY_USAGE) and
+      ((i and CERT_NON_REPUDIATION_KEY_USAGE) = CERT_NON_REPUDIATION_KEY_USAGE); // then // Official and correct
 
       if not isCertSigning then
         begin
@@ -701,6 +701,7 @@ begin
 
         isFound := True;
         Result := aPCertContext;
+        fOnLogEvent('This is the cert!');
       except
         on E: Exception do
           fOnLogEvent(E.Message);
@@ -779,7 +780,7 @@ begin
     aCertEMailName := Copy(aCertEMailName, 1, Length(aCertEMailName) - 1);
 
   fOnLogEvent(Format('CERT_NAME_EMAIL_TYPE = %s', [aCertEMailName]));
-  Result := String(aCertEMailName);
+  Result := string(aCertEMailName);
 end;
 
 function TPKIEncryptionEngine.getSANFromVistA: string;
@@ -806,12 +807,12 @@ end;
   Any errors that we know about will be raised as an EPKIEncryptionError
 *)
 procedure TPKIEncryptionEngine.hashBuffer(aBuffer: string;
-  var
-  aHashText: AnsiString;
-  var
-  aHashValue: AnsiString;
-  var
-  aHashHex: AnsiString);
+var
+aHashText: AnsiString;
+var
+aHashValue: AnsiString;
+var
+aHashHex: AnsiString);
 var
   i: integer;
   aHashData: AnsiString;
@@ -1026,7 +1027,7 @@ begin
 
     SetLength(aSignatureStr, MimeEncodedSize(Length(aSignature)));
 
-    aSignatureStr := String(MimeEncodeString(aSignature));
+    aSignatureStr := string(MimeEncodeString(aSignature));
 
     fOnLogEvent('Signature Data: ' + aPKIEncryptionData.Buffer);
     fOnLogEvent('Signature HashText: ' + aPKIEncryptionData.HashText);
@@ -1110,7 +1111,7 @@ var
   dwName: DWORD;
   DwFlags: DWORD;
   aName: AnsiString;
-  PbData: Array [0 .. 1024] of Byte;
+  PbData: array [0 .. 1024] of Byte;
   CbData: DWORD;
   aiAlgid: ALG_ID;
   paiAlgid: ^ALG_ID;
@@ -1211,9 +1212,9 @@ begin
 end;
 
 function TPKIEncryptionEngine.getIsValidPIN(const aPKIPIN: string;
-  var
-  aMessage:
-  string): boolean;
+var
+aMessage:
+string): boolean;
 var
   aHandle: DWORD;
   aPinValue: AnsiString;
@@ -1227,7 +1228,7 @@ begin
       raise EPKIEncryptionError.Create(DLG_89802035);
 
     fOnLogEvent('Acquiring Context for ' + fCSPName);
-    if CryptAcquireContextA(@aHandle, PWideChar(''), PWideChar(aCSPName), PKI_ACTIVE_CLIENT_TYPE, 0) then
+    if CryptAcquireContextA(@aHandle, PAnsiChar(''), PAnsiChar(aCSPName), PKI_ACTIVE_CLIENT_TYPE, 0) then
       try
         // Store this internally so it can be present multiple times for multiple signing or until cleared
         fCurrentPIN := aPKIPIN;

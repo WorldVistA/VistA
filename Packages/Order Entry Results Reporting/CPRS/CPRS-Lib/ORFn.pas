@@ -5,7 +5,7 @@ unit ORFn;
 interface  // --------------------------------------------------------------------------------
 
 uses SysUtils, Windows, Messages, Classes, Controls, StdCtrls, ExtCtrls, ComCtrls, Forms,
-     Graphics, Menus, RichEdit, Buttons;
+     Graphics, Menus, RichEdit, Buttons, System.Character;
 
 const
   U = '^';
@@ -169,9 +169,6 @@ const
     ('January','February','March','April','May','June','July','August','September','October',
      'November', 'December');
 
-     // ConvertSpecialStrings arrays
-  SearchChars:  array[0..7] of String = ('Ii','Iii','Iv','Vi','Vii','Viii','Ix','-Va');
-  ReplaceChars: array[0..7] of String = ('II','III','IV','VI','VII','VIII','IX','-VA');
 
   { table for calculating CRC values (DWORD is Integer in Delphi 3, Cardinal in Delphi 4}
   CRC32_TABLE: array[0..255] of DWORD =
@@ -375,7 +372,6 @@ procedure SetListFMDateTime(AFormat: string; AList: TStringList; ADelim: Char;
 var
   i: Integer;
   s, x, x1: string;
-  
 begin
   for i := 0 to AList.Count - 1 do
   begin
@@ -385,7 +381,7 @@ begin
     begin
       x1 := FormatFMDateTime(AFormat, MakeFMDateTime(x));
       if(x1 <> '') or (not KeepBad) then
-        x := x1; 
+        x := x1;
     end;
     SetPiece(s, ADelim, PieceNum, x);
     AList[i] := s;
@@ -416,7 +412,7 @@ end;
 
 function RectContains(Rect: TRect; Point: TPoint): boolean;
 begin
-  Result := ((Point.X >= Rect.Left) and 
+  Result := ((Point.X >= Rect.Left) and
              (Point.X <= Rect.Right) and
              (Point.Y >= Rect.Top) and
              (Point.Y <= Rect.Bottom));
@@ -454,7 +450,7 @@ begin
     Result := True;
     break;
   end;
-end;   
+end;
 
 function ContainsUpCarretChar(const x: string): Boolean;
 { returns true if the string contains the ^ character }
@@ -470,66 +466,38 @@ begin
 end;
 
 function ConvertSpecialStrings(const x: string): string;
+
+const
+  // ConvertSpecialStrings arrays
+  SearchChars:  array[0..7] of String = ('Ii','Iii','Iv','Vi','Vii','Viii','Ix','-Va');
+  //Currently not used since everything was just upercase. If needed change code indicated below
+ // ReplaceChars: array[0..7] of String = ('II','III','IV','VI','VII','VIII','IX','-VA');
 var
- i, II, LastPos : Integer;
- TempStr, DummyStr: String;
- ChangeChar:Boolean;
-
+ i, LastPos : Integer;
 begin
-  //Look for each type of roman numeral
-  for i := 0 to Length(SearchChars)-1 do
+ Result := X;
+
+ //Look for the special characters
+ for I := Low(SearchChars) to High(SearchChars) do
+ begin
+  //Need to be a space before
+  LastPos := Pos(' ' + SearchChars[i], X);
+  while LastPos <> 0 do
   begin
-    TempStr := Result;
-    LastPos := Pos(SearchChars[i], TempStr);
-    While LastPos > 0 do
-    begin
-     ChangeChar := False;
-
-     //This is the end of the string
-     if ((LastPos + (Length(SearchChars[i]) - 1)) = Length(Result)) and
-      (Result[LastPos - 1] = ' ') then
-      ChangeChar := true
-     else
-
-      if not CharInSet(Result[LastPos + Length(SearchChars[i])], ['A'..'Z']) and
-      not CharInSet(Result[LastPos + Length(SearchChars[i])], ['a'..'z']) and
-      (Result[LastPos - 1] = ' ') then
-        ChangeChar := true;
-
-      if ChangeChar then
-      begin
-        //copy up to replace + replace + after replace
-        Result := Copy(Result, 1, LastPos - 1) + ReplaceChars[i] + Copy(Result, LastPos + (Length(SearchChars[i])), Length(Result));
-      end ;
-
-             DummyStr := '';
-       for II := 1 to Length(SearchChars[i]) do
-        DummyStr := DummyStr + 'X';
-
-       //copy up to replace + replace + after replace
-       TempStr := Copy(TempStr, 1, LastPos - 1) + DummyStr + Copy(TempStr, LastPos + (Length(SearchChars[i])), Length(Result));
-
-
-
-
-      //Look for the next instance
-      LastPos := Pos(SearchChars[i], TempStr);
-
-
+   //Are we at the end or if not then is the following not a letter
+   if (LastPos + (Length(SearchChars[i])) = Length(X)) or
+   (not CharInSet(X[LastPos + 1 + Length(SearchChars[i])], ['A'..'Z', 'a'..'z']))
+    then begin
+     Delete(Result, LastPos + 1, Length(SearchChars[i]));
+     Insert(UpperCase(SearchChars[i]), Result, LastPos + 1);
+     //Insert(ReplaceChars[i], Result, LastPos + 1); This line currently turned off (see above)
     end;
 
-
-  {  if Copy(Result, Length(Result) - (Length(SearchChars[i]) + 1), Length(Result)) = ' ' + SearchChars[i] then
-     //Copy up to the suffix and then append the Roman
-     Result := Copy(Result, 1, (Length(Result) - Length(SearchChars[i]))) + SearchChars[i];
-    end;   }
+   //See if there are any more instances after or last find
+   LastPos := Pos(' ' + SearchChars[i], X, LastPos + 1);
   end;
+ end;
 
-
- {  for i := 0 to Length(SearchChars)-1 do
-    begin
-       Result := StringReplace(Result,SearchChars[i], ReplaceChars[i],[rfReplaceAll]);
-    end; }
 end;
 
 function UpdateCrc32(Value: DWORD; var Buffer: array of Byte; Count: Integer): DWORD;
@@ -694,15 +662,35 @@ function MixedCase(const x: string): string;
 var
   i: integer;
 begin
+  {
+    NOTICE: IsUpper, ToLower, ToUpper, etc. have been deprecated in XE8 ONLY.
+    TCharHelper.Methods are the replacements. Merges from XE3 must be carefully
+    handled here or the XE8 code throws warnings.
+  }
   Result := x;
   for i := 2 to Length(x) do
-     if (not CharInSet(x[i-1], [' ',',','-','.','/','^','['])) and CharInSet(x[i], ['A'..'Z'])
- // save line    if (not (x[i-1] in [' ','''',',','-','.','/','^'])) and (x[i] in ['A'..'Z'])
-      then Result[i] := Chr(Ord(x[i]) + 32)
-     else if (CharInSet(x[i-1], [' ',',','-','.','/','^','['])) and CharInSet(x[i], ['a'..'z'])
-      then Result[i] := Chr(Ord(x[i]) - 32);
-  //Call added to satisfy the need for special string handling(Roman Numerals II-XI) GRE-06/02
-  Result := ConvertSpecialStrings(x);
+    if (not CharInSet(x[i - 1], [' ', ',', '-', '.', '/', '^', '[', ''''])) and x[i].IsUpper then
+      begin
+        Result[i] := x[i].ToLower;
+      end
+    else if (CharInSet(x[i - 1], [' ', ',', '-', '.', '/', '^', '[', ''''])) and x[i].IsLower then
+      begin
+        Result[i] := x[i].ToUpper;
+      end
+    else if (x[i] = 'S') and (x[i - 1] = '''') and x[i - 2].IsLetter then
+      begin
+        if (i < Length(x)) and (CharInSet(x[i + 1], [' ', ',', '-', '.', '/', '^', '[', ''''])) then
+          begin
+            Result[i] := x[i].ToLower;
+          end
+        else if (i = Length(x)) then
+          begin
+            Result[i] := x[i].ToLower;
+          end
+      end;
+
+  // Call added to satisfy the need for special string handling(Roman Numerals II-XI) GRE-06/02
+  Result := ConvertSpecialStrings(Result);
 end;
 
 procedure MixedCaseList(AList: TStrings);
@@ -2059,7 +2047,7 @@ var
       finally
         dec(Level);
         if BitMapLevelCheck = Level then
-          BitMapLevelCheck := MaxInt; 
+          BitMapLevelCheck := MaxInt;
       end;
     end;
   end;
@@ -2326,7 +2314,7 @@ end;
 { do NOT use CallWhenIdle to call RPCs.  Use CallRPCWhenIdle in ORNet. }
 procedure CallWhenIdle(CallProc: TORIdleCallProc; Msg: String);
 begin
-  if(not assigned(IdleCaller)) then              
+  if(not assigned(IdleCaller)) then
     IdleCaller := TIdleCaller.Create;
   IdleCaller.Add(CallProc, nil, Msg);
 end;
@@ -2397,7 +2385,7 @@ var
       end;
     end;
   end;
-  
+
 begin
   Delta := Amount;
   if ScrollingUp then

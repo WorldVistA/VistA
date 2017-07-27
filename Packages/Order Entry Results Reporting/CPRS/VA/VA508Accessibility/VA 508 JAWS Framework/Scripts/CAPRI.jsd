@@ -1,0 +1,33 @@
+:function CAPRI__SpeakSelectedCheckBox
+:Returns int Success
+:Synopsis speak a check box.
+
+:function Capri_ClickAddressButton
+:Param int/iButton which button to click. Constant converts integers into object names.
+
+:script AltX
+:Synopsis correct focus issues in CAPRI when alt-X is pressed.
+:Description Move the cursor to the check list box
+
+:function InClinicalTabs
+:Returns int tru or false
+:Synopsis Checkt to see if we are in controls under the diagnostics tab.
+
+:function ClinicalSectionName
+:Returns string nname to speak for  tab
+:Synopsis Return a reasonable name for the current clinical region.
+
+:function FixCheckBoxList
+:Returns int true if we should override framework / standard functionality.
+:Synopsis check if we need to override checkbox functionality.
+:Description this is used in sayLine and NewTextEvents
+
+:function CAPRIAddressOkButton
+:Synopsis Click the OK or Edit buttons.
+:Description Use mouse to click button
+
+:function getSelectedTab
+:Returns object No Return Description
+:Synopsis Find the tab control and its selected child
+:Param int/cID/ByRef Child ID of selected tab 
+
