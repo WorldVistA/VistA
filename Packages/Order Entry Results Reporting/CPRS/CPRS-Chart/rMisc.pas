@@ -3,7 +3,7 @@ unit rMisc;
 interface
 
 uses SysUtils, Windows, Classes, Forms, Controls, ComCtrls, Grids, ORFn, ORNet,
-    Menus, Contnrs, StrUtils;
+    Menus, Contnrs, StrUtils, rCore;
 
 const
   MAX_TOOLITEMS = 30;
@@ -57,6 +57,7 @@ function RelativeCommonFilesDirectory: string;
 function FindDllDir(DllName: string): string;
 function LoadDll(DllName: string): HMODULE;
 function DllVersionCheck(DllName: string; DLLVersion: string): string;
+function GetMOBDLLName(): string;
 
 procedure SaveUserBounds(AControl: TControl);
 procedure SaveUserSizes(SizingList: TStringList);
@@ -668,6 +669,12 @@ end;
 function DllVersionCheck(DllName: string; DLLVersion: string): string;
 begin
   Result := sCallV('ORUTL4 DLL', [DllName, DllVersion]);
+end;
+
+
+function GetMOBDLLName(): string;
+begin
+  Result := GetUserParam('OR MOB DLL NAME');
 end;
 
 initialization

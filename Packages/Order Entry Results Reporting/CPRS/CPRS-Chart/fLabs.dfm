@@ -454,6 +454,7 @@ inherited frmLabs: TfrmLabs
         Visible = False
         WantReturns = False
         WordWrap = False
+        Zoom = 100
         OnEnter = memLabEnter
       end
       object WebBrowser: TWebBrowser
@@ -943,7 +944,6 @@ inherited frmLabs: TfrmLabs
           Margins.Right = 4
           Margins.Bottom = 4
           AllowPanning = pmNone
-          BackWall.Brush.Color = clWhite
           BackWall.Brush.Style = bsClear
           Legend.Alignment = laTop
           Legend.Inverted = True
@@ -961,12 +961,9 @@ inherited frmLabs: TfrmLabs
           PopupMenu = popChart
           TabOrder = 1
           OnMouseDown = chtChartMouseDown
+          DefaultCanvas = 'TGDIPlusCanvas'
           ColorPaletteIndex = 13
           object serHigh: TLineSeries
-            Marks.Arrow.Visible = True
-            Marks.Callout.Brush.Color = clBlack
-            Marks.Callout.Arrow.Visible = True
-            Marks.Visible = False
             SeriesColor = clRed
             Title = 'Ref High'
             Brush.BackColor = clDefault
@@ -975,7 +972,6 @@ inherited frmLabs: TfrmLabs
             Pointer.Gradient.EndColor = clRed
             Pointer.InflateMargins = True
             Pointer.Style = psRectangle
-            Pointer.Visible = False
             XValues.DateTime = True
             XValues.Name = 'X'
             XValues.Order = loAscending
@@ -983,10 +979,6 @@ inherited frmLabs: TfrmLabs
             YValues.Order = loNone
           end
           object serLow: TLineSeries
-            Marks.Arrow.Visible = True
-            Marks.Callout.Brush.Color = clBlack
-            Marks.Callout.Arrow.Visible = True
-            Marks.Visible = False
             SeriesColor = clRed
             Title = 'Ref Low'
             Brush.BackColor = clDefault
@@ -995,7 +987,6 @@ inherited frmLabs: TfrmLabs
             Pointer.Gradient.EndColor = clRed
             Pointer.InflateMargins = True
             Pointer.Style = psRectangle
-            Pointer.Visible = False
             XValues.DateTime = True
             XValues.Name = 'X'
             XValues.Order = loAscending
@@ -1003,10 +994,6 @@ inherited frmLabs: TfrmLabs
             YValues.Order = loNone
           end
           object serTest: TLineSeries
-            Marks.Arrow.Visible = True
-            Marks.Callout.Brush.Color = clBlack
-            Marks.Callout.Arrow.Visible = True
-            Marks.Visible = False
             SeriesColor = clBlue
             Title = 'Lab Test'
             Brush.BackColor = clDefault

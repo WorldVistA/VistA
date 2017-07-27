@@ -1,8 +1,0 @@
-procedure TfrmODCslt.FormResize(Sender: TObject);
-begin
-  inherited;
-  memOrder.Top := pnlReason.Top + pnlReason.Height + 2;
-  pnlMessage.Top := memOrder.Top + 2;
-  cmdAccept.Top := pnlMessage.Top;
-  cmdQuit.Top := cmdAccept.Top;
-end;

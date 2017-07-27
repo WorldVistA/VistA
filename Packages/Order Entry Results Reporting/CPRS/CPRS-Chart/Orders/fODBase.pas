@@ -7,7 +7,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs, fAutoSz, StdCtrls,
   ORCtrls, ORFn, uConst, rOrders, rODBase, uCore, ComCtrls, ExtCtrls, Menus, Mask,
-  Buttons, UBAGlobals, UBACore, VA508AccessibilityManager;
+  Buttons, UBAGlobals, UBACore, CheckLst, VA508AccessibilityManager;
 
 type
   TCtrlInit = class
@@ -283,11 +283,14 @@ begin
   begin
     Clear;
     Text := '';
-  end;
+  end
+  else if AControl is TCheckListBox then with TCheckListBox(Acontrol) do  Clear;
 end;
 
 procedure ResetControl(AControl: TControl);
 { clears text, deselects items, does not remove listbox or combobox items }
+var
+i: integer;
 begin
   if AControl is TLabel then with TLabel(AControl) do Caption := ''
   else if AControl is TStaticText then with TStaticText(AControl) do Caption := ''
@@ -305,7 +308,16 @@ begin
   begin
     Text := '';
     ItemIndex := -1;
-  end;
+  end
+  else if AControl is TCheckListBox then with TCheckListBox(AControl) do
+    begin
+       for i := 0 to count -1 do
+         begin
+           checked[i] := false;
+         end;
+    end;
+
+
 end;
 
 { TCtrlInit methods }
@@ -425,6 +437,7 @@ procedure TCtrlInits.SetControl(AControl: TControl; const ASection: string);
 { initializes a control to the information in a section (~section from server) }
 var
   CtrlInit: TCtrlInit;
+  i: integer;
 begin
   ClearControl(AControl);
   CtrlInit := FindInitByName(ASection);
@@ -447,7 +460,15 @@ begin
     FastAssign(CtrlInit.List, TORComboBox(AControl).Items);
     if LongList then InitLongList(Text) else Text := CtrlInit.Text;
     SelectByID(CtrlInit.ListID);
-  end;
+  end
+  else if AControl is TCheckListBox then with TCheckListBox(AControl) do
+       begin
+         for i := 0 to CtrlInit.List.Count - 1 do
+           begin
+             TCheckListBox(AControl).Items.Add(Piece(CtrlInit.List[i], U, 2));
+           end;
+//         FastAssign(CtrlInit.List, TCheckListBox(AControl).Items);
+       end;
   { need to add SelectByID for combobox & listbox }
 end;
 

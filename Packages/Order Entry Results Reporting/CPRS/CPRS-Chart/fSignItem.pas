@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ORFn, rCore, Hash, ORCtrls, fBase508Form, VA508AccessibilityManager;
+  StdCtrls, ORFn, rCore, XWBHash, ORCtrls, fBase508Form, VA508AccessibilityManager;
 
 type
   TfrmSignItem = class(TfrmBase508Form)

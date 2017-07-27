@@ -1627,6 +1627,7 @@ begin
       NF_FLAGGED_OI_EXP_INPT           : NextIndex := PageIDToTab(CT_ORDERS);
       NF_FLAGGED_OI_EXP_OUTPT          : NextIndex := PageIDToTab(CT_ORDERS);
       NF_CONSULT_PROC_INTERPRETATION   : NextIndex := PageIDToTab(CT_CONSULTS);
+      NF_RTC_CANCEL_ORDERS             : NextIndex := PageIDToTab(CT_ORDERS);
       NF_IMAGING_REQUEST_CHANGED       :
         begin
           ReportBox(GetNotificationFollowUpText(Patient.DFN, Notifications.FollowUp, Notifications.AlertData), Pieces(Piece(Notifications.RecordID, U, 1), ':', 2, 3), True);
@@ -2963,7 +2964,7 @@ procedure TfrmFrame.SetUpCIRN;
 var
   i: integer;
   iNwHIN, iRDVOnly: integer;
-  aAutoQuery: string;
+  aAutoQuery,aVistaWebLabel: string;
   ASite: TRemoteSite;
   item: TVA508AccessibilityItem;
   id: integer;
@@ -2974,6 +2975,9 @@ begin
     ChangePatient(Patient.DFN);
     lblCIRN.Caption := ' Remote Data';
     lblCIRN.Alignment := taCenter;
+    aVistaWebLabel := GetVistaWeb_JLV_LabelName;
+    if aVistaWebLabel = '' then aVistaWebLabel := 'VistaWeb';
+    lblVistaWeb.Caption := aVistaWebLabel;
     pnlVistaWeb.BevelOuter := bvRaised;
     iNwHIN := 0;
     iRDVOnly := 0;
@@ -3003,7 +3007,7 @@ begin
         lblCIRN.Caption := 'Remote Data';
         pnlCIRN.Hint := 'Click to display other facilities having data for this patient.';
         lblVistaWeb.Font.Color := Get508CompliantColor(clBlue);
-        pnlVistaWeb.Hint := 'Click to go to VistaWeb to see data from other facilities for this patient.';
+        pnlVistaWeb.Hint := 'Click to go to ' + aVistaWebLabel + ' to see data from other facilities for this patient.';
         if RemoteSites.Count > 0 then
           lstCIRNLocations.Items.Add('0' + U + 'All Available Sites');
         for i := 0 to RemoteSites.Count - 1 do
@@ -3029,7 +3033,7 @@ begin
         if (iNwHIN = 1) and (iRDVOnly = 0) then
           begin
            lblVistaWeb.Font.Color := Get508CompliantColor(clBlue);
-           pnlVistaWeb.Hint := 'Click to go to VistaWeb to see data from other facilities for this patient (includes Non-VA data).';
+           pnlVistaWeb.Hint := 'Click to go to ' + aVistaWebLabel + ' to see data from other facilities for this patient (includes Non-VA data).';
           end;
       end;
     aAutoQuery := AutoRDV;        //Check to see if Remote Queries should be used for all available sites
@@ -4202,7 +4206,7 @@ var
   PtSubject: string;
 begin
   data := IContextItemCollection(aContextItemCollection) ;
-  anItem := data.Present('[hds_domain.ext]request.id.name');
+  anItem := data.Present('[hds_med_domain]request.id.name');
   // Retrieve the ContextItem name and value as strings
   if anItem <> nil then
     begin
