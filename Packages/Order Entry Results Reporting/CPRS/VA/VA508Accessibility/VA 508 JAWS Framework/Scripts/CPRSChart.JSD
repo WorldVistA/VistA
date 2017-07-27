@@ -1,0 +1,36 @@
+:function AutoStartEvent
+
+:function HandleCustomWindows
+:Returns int True means speaking was handled.
+:Synopsis process special functions for CPRS
+:Description Can this be in main file and then overriden in site?
+:Param handle/FocusWIndow Focused Window Handle
+
+:function GetHandleFromAddress
+:Returns handle The handle of the child at that adress; 0 if the address is invalid for the parent.
+:Synopsis This utility function walks down the windows hierarchy
+:Description The component ID's vary from compile to compile, so constants aren't much help for identifying the components.  Instead, we use the component's hierarchical position as an address to locate it as a descendant of the form.
+:Param handle/Parent The handle of a window we have already identified
+:Param string/Address A space-separated list of numeral integers indicating the relationships from generation to generation.  Each integer indicates which child to choose from its parent, with 1 being the first child.
+
+:function SiteCodeInitialize
+:Synopsis Placeholder for site customization.
+:Description This code will be run when the USE statement for site specific code is commented out. It is just an empty function call.
+
+:function NewTextEvent
+:Synopsis This event gets overridden when JAWS starts talking too much
+:Description The edit field of TORComboBoxes uses highlighted text to auto-complete what has been typed in so far.  We only want JAWS to say the selected list item.
+
+
+:script MoveToNewNote
+:Synopsis Find or create a note for the current patient.
+:Description This function will move to the Notes tab and either create a note by clicking on the New Note button or else SetFocus on the currently active note.
+:script MoveToNewNote
+:Synopsis Find  current note or list of notes note for the current patient.
+:Description This function will move to significant fields in the Notes tab 
+
+:function FindNotesWindow
+:Returns handle
+:Synopsis Look for a wwindow with the appropriate properties of a Note and return the handle.
+:Description Uses a global (ghLastNotesWindow )  and enumerateChild functions to search for the notes window within the notes tab and returns that window handle.
+:Param handle/hReal The handle of the window to start the search with.

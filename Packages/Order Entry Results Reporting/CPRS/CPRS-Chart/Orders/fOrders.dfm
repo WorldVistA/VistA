@@ -12,9 +12,9 @@ inherited frmOrders: TfrmOrders
   ExplicitWidth = 959
   ExplicitHeight = 785
   PixelsPerInch = 96
-  TextHeight = 16
+  TextHeight = 13
   inherited shpPageBottom: TShape
-    Top = 721
+    Top = 722
     Width = 943
     Margins.Left = 6
     Margins.Top = 6
@@ -25,7 +25,7 @@ inherited frmOrders: TfrmOrders
   end
   inherited sptHorz: TSplitter
     Left = 144
-    Height = 721
+    Height = 722
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
@@ -36,7 +36,7 @@ inherited frmOrders: TfrmOrders
   end
   inherited pnlLeft: TPanel
     Width = 144
-    Height = 721
+    Height = 722
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
@@ -101,6 +101,7 @@ inherited frmOrders: TfrmOrders
       Margins.Bottom = 4
       Align = alTop
       Constraints.MinHeight = 37
+      ItemHeight = 13
       ParentShowHint = False
       ShowHint = True
       TabOrder = 1
@@ -114,12 +115,13 @@ inherited frmOrders: TfrmOrders
       Left = 0
       Top = 143
       Width = 144
-      Height = 578
+      Height = 579
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
       Align = alClient
+      ItemHeight = 13
       ParentShowHint = False
       ShowHint = True
       TabOrder = 4
@@ -128,6 +130,7 @@ inherited frmOrders: TfrmOrders
       ItemTipColor = clWindow
       LongList = False
       Pieces = '2'
+      ExplicitHeight = 578
     end
     object btnDelayedOrder: TORAlignButton
       Left = 0
@@ -146,9 +149,9 @@ inherited frmOrders: TfrmOrders
     end
   end
   inherited pnlRight: TPanel
-    Left = 149
-    Width = 794
-    Height = 721
+    Left = 148
+    Width = 795
+    Height = 722
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5

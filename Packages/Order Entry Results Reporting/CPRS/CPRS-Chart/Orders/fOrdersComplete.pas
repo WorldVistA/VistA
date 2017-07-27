@@ -28,7 +28,7 @@ implementation
 
 {$R *.DFM}
 
-uses Hash, rCore, rOrders;
+uses XWBHash, rCore, rOrders;
 
 function ExecuteCompleteOrders(SelectedList: TList): Boolean;
 var

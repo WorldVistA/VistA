@@ -44,14 +44,18 @@ procedure THeaderControl2006BugFixer.HeaderControlMessageHandler
 var
   OnSectionClick: TSectionNotifyEvent;
 begin
-  if (Msg.Msg = CN_NOTIFY) and (PHDNotify(Msg.LParam)^.Hdr.code = HDN_ITEMCLICK) then
-  begin
-    Handled := TRUE;
-    Msg.Result := 0;
-    OnSectionClick := FHeaderControl.OnSectionClick;
-    if assigned(OnSectionClick) then
-      OnSectionClick(FHeaderControl, FHeaderControl.Sections[PHDNotify(Msg.lParam)^.Item]);
-  end;
+  // BLJ 19 Dec 2016: For some reason, Delphi's short circuit boolean evaluation
+  // wasn't short circuiting in the case where Msg.Msg <> CN_NOTIFY.  Changed
+  // to a nested IF to force the issue.
+  if (Msg.Msg = CN_NOTIFY) then
+    if(PHDNotify(Msg.LParam)^.Hdr.code = HDN_ITEMCLICK) then
+    begin
+      Handled := TRUE;
+      Msg.Result := 0;
+      OnSectionClick := FHeaderControl.OnSectionClick;
+      if assigned(OnSectionClick) then
+        OnSectionClick(FHeaderControl, FHeaderControl.Sections[PHDNotify(Msg.lParam)^.Item]);
+    end;
 end;
 
 procedure THeaderControl2006BugFixer.Notification(AComponent: TComponent;
@@ -69,7 +73,7 @@ constructor THeaderControl2006BugFixer.CreateWrapper(HeaderControl: THeaderContr
 begin
   inherited Create(nil);
   FHeaderControl := HeaderControl;
-  FHeaderControl.FreeNotification(HeaderControl);
+  FHeaderControl.FreeNotification(self);
   AddMessageHandler(HeaderControl, HeaderControlMessageHandler);
 end;
 

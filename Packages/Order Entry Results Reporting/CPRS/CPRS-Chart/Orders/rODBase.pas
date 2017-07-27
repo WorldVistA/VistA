@@ -122,6 +122,7 @@ function OIForMedIn(AnIEN: Integer): TStrings;
 function ODForIVFluids: TStrings;
 function ODForMedOut: TStrings;
 function OIForMedOut(AnIEN: Integer): TStrings;
+function ODForSD: TStrings;
 function RatedDisabilities: string;
 //function ValidIVRate(const x: string): Boolean;
 procedure ValidateIVRate(var x: string);
@@ -851,6 +852,12 @@ function OIForMedOut(AnIEN: Integer): TStrings;
 { Returns init values for outpatient meds order item.  The results must be used immediately. }
 begin
   CallV('ORWDPS32 OISLCT', [AnIEN, PST_OUTPATIENT, Patient.DFN]);
+  Result := RPCBrokerV.Results;
+end;
+
+function ODForSD: TStrings;
+begin
+  CallV('ORWDSD1 ODSLCT', [PATIENT.DFN, Encounter.Location]);
   Result := RPCBrokerV.Results;
 end;
 

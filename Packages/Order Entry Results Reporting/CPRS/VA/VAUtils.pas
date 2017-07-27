@@ -178,7 +178,9 @@ procedure VersionStringSplit(const VerStr: string; var Val1, Val2: integer); ove
 procedure VersionStringSplit(const VerStr: string; var Val1, Val2, Val3: integer); overload;
 procedure VersionStringSplit(const VerStr: string; var Val1, Val2, Val3, Val4: integer); overload;
 
-function ExecuteAndWait(FileName: string; Parameters: String = ''): integer;
+function ExecuteAndWait(FileName: string; Parameters: String = ''): integer; overload;
+function ExecuteAndWait(FileName: string; var ReturnMsg: string; Parameters: String = ''): integer; overload;
+function RunSilentCmd(const CommanLine: string; const ParameterLine: string; out ReturnMessage: String): boolean;
 
 // when called inside a DLL, returns the fully qualified name of the DLL file
 // must pass an address or a class or procedure that's been defined inside the DLL
@@ -1406,6 +1408,37 @@ begin
     try
       While exec.status = 0 do
         Sleep(100);
+     // ShowMsg(exec.StdOut);
+      Result := Exec.ExitCode;
+    finally
+      VarClear(exec);
+    end;
+  finally
+    VarClear(shell);
+  end;
+end;
+
+function ExecuteAndWait(FileName: string; var ReturnMsg: string; Parameters: String = ''): integer;
+var
+  exec, shell: OleVariant;
+  line: string;
+
+begin
+  if copy(FileName,1,1) <> '"' then
+    line := '"' + FileName + '"'
+  else
+    line := FileName;
+  if Parameters <> '' then
+    line := line + ' ' + Parameters;
+  shell := CreateOleObject('WScript.Shell');
+  try
+   exec := shell.Exec(line);
+    try
+      While exec.status = 0 do
+        Sleep(100);
+       // Get the application's StdOut stream
+       ReturnMsg := exec.StdOut.ReadAll;
+
       Result := Exec.ExitCode;
     finally
       VarClear(exec);
@@ -1438,6 +1471,74 @@ begin
   CloseHandle(SEI.hProcess);
 end;
  }
+
+function RunSilentCmd(const CommanLine: string; const ParameterLine: string; out ReturnMessage: String): boolean;
+var
+  SecAttr: TSecurityAttributes;
+  StrtUpInfo: TStartupInfo;
+  ProcessInfo: TProcessInformation;
+  StdOutPipeRead, StdOutPipeWrite: THandle;
+  Buffer: array[0..255] of AnsiChar;
+  BytesRead: Cardinal;
+  FileOK: Boolean;
+  fCmndLne, fParamLn: string;
+begin
+  ReturnMessage := '';
+  if Pos('"', CommanLine) <> 1 then
+    fCmndLne := AnsiQuotedStr(CommanLine, '"')
+  else
+   fCmndLne := CommanLine;
+  UniqueString(fCmndLne);
+
+  if Pos('"', ParameterLine) <> 1 then
+    fParamLn := AnsiQuotedStr(ParameterLine, '"')
+  else
+   fParamLn := ParameterLine;
+  UniqueString(fParamLn);
+
+  //Init Security
+  SecAttr.nLength := SizeOf(SecAttr);
+  SecAttr.lpSecurityDescriptor := nil;
+  SecAttr.bInheritHandle := True;
+
+  CreatePipe(StdOutPipeRead, StdOutPipeWrite, @SecAttr, 0);
+  try
+    FillChar(StrtUpInfo, SizeOf(StrtUpInfo), 0);
+    StrtUpInfo.cb := SizeOf(StrtUpInfo);
+    StrtUpInfo.dwFlags := STARTF_USESHOWWINDOW or STARTF_USESTDHANDLES;
+    StrtUpInfo.wShowWindow := SW_HIDE;
+    StrtUpInfo.hStdInput := GetStdHandle(STD_INPUT_HANDLE);
+    StrtUpInfo.hStdOutput := StdOutPipeWrite;
+    StrtUpInfo.hStdError := StdOutPipeWrite;
+
+    ZeroMemory(@ProcessInfo, SizeOf(TProcessInformation));
+
+    Result := CreateProcessW(nil, PWideChar(fCmndLne + ' ' + fParamLn), nil, nil, True, 0, nil, nil, StrtUpInfo, ProcessInfo);
+    CloseHandle(StdOutPipeWrite);
+    if Result then
+    begin
+      try
+        repeat
+          FileOK := ReadFile(StdOutPipeRead, Buffer, 255, BytesRead, nil);
+          if BytesRead > 0 then
+          begin
+            Buffer[BytesRead] := #0;
+            ReturnMessage := ReturnMessage + String(Buffer);
+          end;
+        until not FileOK or (BytesRead = 0);
+        WaitForSingleObject(ProcessInfo.hProcess, INFINITE);
+      finally
+        CloseHandle(ProcessInfo.hThread);
+        CloseHandle(ProcessInfo.hProcess);
+      end;
+    end else begin
+     ReturnMessage := 'CreateProcess failed with error "' + SysErrorMessage(GetLastError) + '".';
+    end;
+  finally
+    CloseHandle(StdOutPipeRead);
+  end;
+end;
+
 
 // when called inside a DLL, returns the fully qualified name of the DLL file
 // must pass an address or a class or procedure that's been defined inside the DLL
