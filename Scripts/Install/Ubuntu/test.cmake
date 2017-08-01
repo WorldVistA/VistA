@@ -2,7 +2,7 @@
 set(CTEST_SITE "$ENV{buildid}.vagrant")
 
 # Hardset buildname with {OS}-{Mversion}_{arch} convention
-set(CTEST_BUILD_NAME "Ubuntu12.04-GTM$ENV{gtmver}")
+set(CTEST_BUILD_NAME "Ubuntu16.04-GTM$ENV{gtmver}")
 
 # Set build type to experimental by default
 set(dashboard_model "Experimental")

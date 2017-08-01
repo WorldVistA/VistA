@@ -1,6 +1,6 @@
 #Client maintainer: name@email
 set(CTEST_SITE "$ENV{HOST_NAME}.vagrant")
-set(CTEST_BUILD_NAME "Ubuntu12.04-GT.M-MUnit")
+set(CTEST_BUILD_NAME "Ubuntu16.04-GT.M-MUnit")
 set(dashboard_cache "
 GTMPROFILE:PATH=$ENV{gtmprofilefile}
 VISTA_GLOBALS_DIR:PATH=$ENV{VistAGlobalsDir}
