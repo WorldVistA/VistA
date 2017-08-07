@@ -396,10 +396,12 @@ while(NOT dashboard_done)
   endif()
 
   # Look for updates.
-  if(EXISTS "${dashboard_M_dir}")
+  if(EXISTS "${dashboard_M_dir}/.git")
     dashboard_update_M()
   endif()
-  ctest_update(RETURN_VALUE count)
+  if(EXISTS "${CTEST_SOURCE_DIRECTORY}/.git")
+    ctest_update(RETURN_VALUE count)
+  endif()
 
   message("Found ${count} changed files")
   if(dashboard_fresh OR NOT dashboard_continuous OR count GREATER 0)
