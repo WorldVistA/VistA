@@ -1,0 +1,129 @@
+
+=============================================================================
+Run Date: MAY 04, 2017                     Designation: PRC*5.1*197
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #172                    Status: Released
+                  Compliance Date: JUN 15, 2017
+=============================================================================
+
+
+Subject: IFCAP GUI 2FA IMPLEMENTATION
+
+Category: 
+  - Other
+  - Informational
+
+Description:
+============
+
+ This patch will update the log in procedure to the IFCAP Logistic Data 
+ query Tool GUI to use Two Factor Authentication (2FA) which will require
+ the use of a Personal Identity Verification (PIV) card.
+  
+ In order to make the transition to 2FA, it was also necessary to upgrade 
+ the IFCAP Logistic Data query Tool GUI to Delphi version XE8 to implement 
+ the new Remote Procedure Call (RPC) Broker allowing compliance.
+  
+ PRC*5.1*197 does not update any VistA routines but does update the IFCAP 
+ Logistic Data query Tool GUI.
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ North Florida/ South Georgia HCS
+ Bronx VA HCS
+  
+  
+ ASSOCIATED TICKET:
+ ==================
+ N/A 
+  
+  
+ TICKET OVERVIEW:
+ ================
+   Problem: 
+   --------
+   The Department of Veterans Affairs Cybersecurity Task Force has been
+   tasked by the Chief Information Officer (CIO) and the Inspector General
+   (IG) to address identified material weaknesses. This task force has
+   mandated that all internal, user facing VA applications become two
+   factor authentication (2FA) compliant by April 30, 2017.
+  
+   In order to be compliant, applications are required to authenticate
+   users via Personal Identity Verification (PIV) cards.
+  
+   Note: Usernames and password will no longer be permitted 
+         for employees and contractors to access VA applications.  
+   
+   Resolution:
+   -----------
+   The IFCAP Logistic Data query Tool has been upgraded to Delphi XE8 to 
+   allow access to the latest version of the RPC Broker, implementing 2FA.
+  
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Albany: domain.ext
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+        
+   Filename                      Description
+   ========                      ===========
+   PRCLOGISTICSTOOLS_197.msi     Install File
+   ifcp5_1ldqt_user_manual.pdf   User Manual
+  
+  
+   NOTE: These files must be transferred using the binary (BIN) file 
+         transfer mode.  The size of the file (PRCLogisticsTools.msi), once
+         downloaded, will be 6219 KB
+  
+ ==================== CLIENT Installation Instructions ===================
+  
+ *Due to differences between the install shields used for the previous
+ version and this version of the IFCAP GUI, if the contents of the previous
+ distribution are not removed, either manually or with the previous install
+ file "remove" functionality - the new Install Project will not remove all
+ contents of the application when the "remove" functionality is accessed.
+  
+ 1. After downloading the MSI file from one of the servers above, open the 
+    file on desktop/workstation/server.
+  
+ 2. InstallShield Wizard pop-up displays - select 'Next'.
+  
+ 3. Select default install directory, or browse for another - select 
+    'Next'.
+  
+ 4. Select 'Install' to begin installation.
+  
+ 5. If install successful, pop-up displays "InstallShield Wizard 
+    Completed" - select 'Finish'.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 09, 2016
+Completed By:                               Date Completed: MAY 03, 2017
+Released By :                               Date Released : MAY 04, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

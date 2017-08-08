@@ -1,0 +1,556 @@
+KIDS Distribution saved on May 24, 2017@13:55:18
+VistA Imaging V3 - Patch 182 - 2 Factor Authentication
+**KIDS**:MAG*3.0*182^
+
+**INSTALL NAME**
+MAG*3.0*182
+"BLD",8352,0)
+MAG*3.0*182^IMAGING^0^3170524^y
+"BLD",8352,1,0)
+^^22^22^3170524^^^^
+"BLD",8352,1,1,0)
+VistA Imaging TeleReader with 2 factor authentication (2FA)
+"BLD",8352,1,2,0)
+This patch has 3 changes.
+"BLD",8352,1,3,0)
+  
+"BLD",8352,1,4,0)
+This patch implements 2 Factor Authorization for the Login to VistA. 
+"BLD",8352,1,5,0)
+When logging into a VA Site, the user will be prompted for their
+"BLD",8352,1,6,0)
+PIV PIN number and not their Access Verify codes.
+"BLD",8352,1,7,0)
+  
+"BLD",8352,1,8,0)
+Stopped using CAPRI Silent logon method to Remote Sites and
+"BLD",8352,1,9,0)
+now use BSE Silent logon method.
+"BLD",8352,1,10,0)
+    
+"BLD",8352,1,11,0)
+Delphi XE8 is the new developer environment used to build the application. 
+"BLD",8352,1,12,0)
+In XE8 the Character set has changed from 1 byte/character
+"BLD",8352,1,13,0)
+to 2 byte/character.  The change in character set forced a change in
+"BLD",8352,1,14,0)
+some of the functions that were used for manipulating character and 
+"BLD",8352,1,15,0)
+character strings.  But there will be no visible change to the GUI and
+"BLD",8352,1,16,0)
+the user will not see any difference in functionality.  
+"BLD",8352,1,17,0)
+  
+"BLD",8352,1,18,0)
+Routines.
+"BLD",8352,1,19,0)
+Select BUILD NAME: MAG*3.0*182       IMAGING
+"BLD",8352,1,20,0)
+MAGGTU4T  value = 4714251
+"BLD",8352,1,21,0)
+MAGIP182  value = 4214994
+"BLD",8352,1,22,0)
+done
+"BLD",8352,4,0)
+^9.64PA^^0
+"BLD",8352,6.3)
+38
+"BLD",8352,"ABNS",0)
+^9.66A^^0
+"BLD",8352,"ABPKG")
+n^n^G.IMAGING DEVELOPMENT TEAM@AADOMAIN.EXT
+"BLD",8352,"INI")
+PRE^MAGIP182
+"BLD",8352,"INID")
+n^y^n
+"BLD",8352,"INIT")
+POS^MAGIP182
+"BLD",8352,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8352,"KRN",.4,0)
+.4
+"BLD",8352,"KRN",.401,0)
+.401
+"BLD",8352,"KRN",.402,0)
+.402
+"BLD",8352,"KRN",.403,0)
+.403
+"BLD",8352,"KRN",.5,0)
+.5
+"BLD",8352,"KRN",.84,0)
+.84
+"BLD",8352,"KRN",3.6,0)
+3.6
+"BLD",8352,"KRN",3.8,0)
+3.8
+"BLD",8352,"KRN",9.2,0)
+9.2
+"BLD",8352,"KRN",9.8,0)
+9.8
+"BLD",8352,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",8352,"KRN",9.8,"NM",1,0)
+MAGIP182^^0^B4214994
+"BLD",8352,"KRN",9.8,"NM",2,0)
+MAGGTU4T^^0^B4714251
+"BLD",8352,"KRN",9.8,"NM","B","MAGGTU4T",2)
+
+"BLD",8352,"KRN",9.8,"NM","B","MAGIP182",1)
+
+"BLD",8352,"KRN",19,0)
+19
+"BLD",8352,"KRN",19.1,0)
+19.1
+"BLD",8352,"KRN",101,0)
+101
+"BLD",8352,"KRN",409.61,0)
+409.61
+"BLD",8352,"KRN",771,0)
+771
+"BLD",8352,"KRN",779.2,0)
+779.2
+"BLD",8352,"KRN",870,0)
+870
+"BLD",8352,"KRN",8989.51,0)
+8989.51
+"BLD",8352,"KRN",8989.52,0)
+8989.52
+"BLD",8352,"KRN",8994,0)
+8994
+"BLD",8352,"KRN","B",.4,.4)
+
+"BLD",8352,"KRN","B",.401,.401)
+
+"BLD",8352,"KRN","B",.402,.402)
+
+"BLD",8352,"KRN","B",.403,.403)
+
+"BLD",8352,"KRN","B",.5,.5)
+
+"BLD",8352,"KRN","B",.84,.84)
+
+"BLD",8352,"KRN","B",3.6,3.6)
+
+"BLD",8352,"KRN","B",3.8,3.8)
+
+"BLD",8352,"KRN","B",9.2,9.2)
+
+"BLD",8352,"KRN","B",9.8,9.8)
+
+"BLD",8352,"KRN","B",19,19)
+
+"BLD",8352,"KRN","B",19.1,19.1)
+
+"BLD",8352,"KRN","B",101,101)
+
+"BLD",8352,"KRN","B",409.61,409.61)
+
+"BLD",8352,"KRN","B",771,771)
+
+"BLD",8352,"KRN","B",779.2,779.2)
+
+"BLD",8352,"KRN","B",870,870)
+
+"BLD",8352,"KRN","B",8989.51,8989.51)
+
+"BLD",8352,"KRN","B",8989.52,8989.52)
+
+"BLD",8352,"KRN","B",8994,8994)
+
+"BLD",8352,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",8352,"QUES",0)
+^9.62^^
+"BLD",8352,"REQB",0)
+^9.611^2^2
+"BLD",8352,"REQB",1,0)
+MAG*3.0*127^2
+"BLD",8352,"REQB",2,0)
+MAG*3.0*110^2
+"BLD",8352,"REQB","B","MAG*3.0*110",2)
+
+"BLD",8352,"REQB","B","MAG*3.0*127",1)
+
+"INI")
+PRE^MAGIP182
+"INIT")
+POS^MAGIP182
+"MBREQ")
+0
+"PKG",454,-1)
+1^1
+"PKG",454,0)
+IMAGING^MAG^Imaging-V1 to release 
+"PKG",454,20,0)
+^9.402P^^
+"PKG",454,22,0)
+^9.49I^1^1
+"PKG",454,22,1,0)
+3.0^3020319^3020517^126
+"PKG",454,22,1,"PAH",1,0)
+182^3170524^126
+"PKG",454,22,1,"PAH",1,1,0)
+^^22^22^3170524
+"PKG",454,22,1,"PAH",1,1,1,0)
+VistA Imaging TeleReader with 2 factor authentication (2FA)
+"PKG",454,22,1,"PAH",1,1,2,0)
+This patch has 3 changes.
+"PKG",454,22,1,"PAH",1,1,3,0)
+  
+"PKG",454,22,1,"PAH",1,1,4,0)
+This patch implements 2 Factor Authorization for the Login to VistA. 
+"PKG",454,22,1,"PAH",1,1,5,0)
+When logging into a VA Site, the user will be prompted for their
+"PKG",454,22,1,"PAH",1,1,6,0)
+PIV PIN number and not their Access Verify codes.
+"PKG",454,22,1,"PAH",1,1,7,0)
+  
+"PKG",454,22,1,"PAH",1,1,8,0)
+Stopped using CAPRI Silent logon method to Remote Sites and
+"PKG",454,22,1,"PAH",1,1,9,0)
+now use BSE Silent logon method.
+"PKG",454,22,1,"PAH",1,1,10,0)
+    
+"PKG",454,22,1,"PAH",1,1,11,0)
+Delphi XE8 is the new developer environment used to build the application. 
+"PKG",454,22,1,"PAH",1,1,12,0)
+In XE8 the Character set has changed from 1 byte/character
+"PKG",454,22,1,"PAH",1,1,13,0)
+to 2 byte/character.  The change in character set forced a change in
+"PKG",454,22,1,"PAH",1,1,14,0)
+some of the functions that were used for manipulating character and 
+"PKG",454,22,1,"PAH",1,1,15,0)
+character strings.  But there will be no visible change to the GUI and
+"PKG",454,22,1,"PAH",1,1,16,0)
+the user will not see any difference in functionality.  
+"PKG",454,22,1,"PAH",1,1,17,0)
+  
+"PKG",454,22,1,"PAH",1,1,18,0)
+Routines.
+"PKG",454,22,1,"PAH",1,1,19,0)
+Select BUILD NAME: MAG*3.0*182       IMAGING
+"PKG",454,22,1,"PAH",1,1,20,0)
+MAGGTU4T  value = 4714251
+"PKG",454,22,1,"PAH",1,1,21,0)
+MAGIP182  value = 4214994
+"PKG",454,22,1,"PAH",1,1,22,0)
+done
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","MAGGTU4T")
+0^2^B4714251
+"RTN","MAGGTU4T",1,0)
+MAGGTU4T ;WOIFO/SG/NST/JSL - VERSION CONTROL (TELEREADER) ; 01 Apr 2013 10:20 AM
+"RTN","MAGGTU4T",2,0)
+ ;;3.0;IMAGING;**93,94,106,117,122,127,182**;Mar 19, 2002;Build 38;May 24, 2017
+"RTN","MAGGTU4T",3,0)
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","MAGGTU4T",4,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGGTU4T",5,0)
+ ;; | Property of the US Government.                                |
+"RTN","MAGGTU4T",6,0)
+ ;; | No permission to copy or redistribute this software is given. |
+"RTN","MAGGTU4T",7,0)
+ ;; | Use of unreleased versions of this software requires the user |
+"RTN","MAGGTU4T",8,0)
+ ;; | to execute a written test agreement with the VistA Imaging    |
+"RTN","MAGGTU4T",9,0)
+ ;; | Development Office of the Department of Veterans Affairs,     |
+"RTN","MAGGTU4T",10,0)
+ ;; | telephone (301) 734-0100.                                     |
+"RTN","MAGGTU4T",11,0)
+ ;; | The Food and Drug Administration classifies this software as  |
+"RTN","MAGGTU4T",12,0)
+ ;; | a medical device.  As such, it may not be changed in any way. |
+"RTN","MAGGTU4T",13,0)
+ ;; | Modifications to this software may result in an adulterated   |
+"RTN","MAGGTU4T",14,0)
+ ;; | medical device under 21CFR820, the use of which is considered |
+"RTN","MAGGTU4T",15,0)
+ ;; | to be a violation of US Federal Statutes.                     |
+"RTN","MAGGTU4T",16,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGGTU4T",17,0)
+ ;;
+"RTN","MAGGTU4T",18,0)
+ ; This routine contains the version control code and data specific
+"RTN","MAGGTU4T",19,0)
+ ; to the TeleReader application. DO NOT ADD ANYTHING ELSE!
+"RTN","MAGGTU4T",20,0)
+ Q
+"RTN","MAGGTU4T",21,0)
+ ;
+"RTN","MAGGTU4T",22,0)
+CLVERCT ;***** VERSION CONTROL TABLE FOR THE TELEREADER CLIENTS
+"RTN","MAGGTU4T",23,0)
+ ;;==================================================================
+"RTN","MAGGTU4T",24,0)
+ ;;| Version |Build|Seq #|                Comment                   |
+"RTN","MAGGTU4T",25,0)
+ ;;|---------+-----+------------------------------------------------|
+"RTN","MAGGTU4T",26,0)
+ ;;| 3.0.182 |   3 |  61 | May 2017                                 |
+"RTN","MAGGTU4T",27,0)
+ ;;| 3.0.127 |   9 |  60 | Apr 2013                                 |
+"RTN","MAGGTU4T",28,0)
+ ;;==================================================================
+"RTN","MAGGTU4T",29,0)
+ ;
+"RTN","MAGGTU4T",30,0)
+ ; Each row of the version control table contains the version and
+"RTN","MAGGTU4T",31,0)
+ ; build number of a supported client. Released patches must also
+"RTN","MAGGTU4T",32,0)
+ ; indicate the sequential numbers.
+"RTN","MAGGTU4T",33,0)
+ ;
+"RTN","MAGGTU4T",34,0)
+ ; Sort order of the rows does not matter. However, the reversed
+"RTN","MAGGTU4T",35,0)
+ ; order of patch sequential numbers is recommended.
+"RTN","MAGGTU4T",36,0)
+ ;
+"RTN","MAGGTU4T",37,0)
+ ; NOTE:
+"RTN","MAGGTU4T",38,0)
+ ;  Patch 182 removed support for 
+"RTN","MAGGTU4T",39,0)
+ ;        - Patch 122
+"RTN","MAGGTU4T",40,0)
+ ;        - Patch 117
+"RTN","MAGGTU4T",41,0)
+ ;        - Patch 106
+"RTN","MAGGTU4T",42,0)
+ ;        - Patch  94 
+"RTN","MAGGTU4T",43,0)
+ Q
+"RTN","MAGGTU4T",44,0)
+ ;
+"RTN","MAGGTU4T",45,0)
+ ;***** ADDS A CLIENT-SPECIFIC WARNING (IF NECESSARY)
+"RTN","MAGGTU4T",46,0)
+ ;
+"RTN","MAGGTU4T",47,0)
+ ; .MAGBUF       Reference to a local array that the warning text
+"RTN","MAGGTU4T",48,0)
+ ;               is returned to. It is appended to the RPC result
+"RTN","MAGGTU4T",49,0)
+ ;               array by the caller (WARNING^MAGGTU41).
+"RTN","MAGGTU4T",50,0)
+ ;
+"RTN","MAGGTU4T",51,0)
+ ; CLVER         Client application version (Major.Minor.Patch.Build)
+"RTN","MAGGTU4T",52,0)
+ ;
+"RTN","MAGGTU4T",53,0)
+ ; CVRC          Version check code returned by the $$CHKVER1^MAGGTU41
+"RTN","MAGGTU4T",54,0)
+ ;
+"RTN","MAGGTU4T",55,0)
+ ; Notes
+"RTN","MAGGTU4T",56,0)
+ ; =====
+"RTN","MAGGTU4T",57,0)
+ ;
+"RTN","MAGGTU4T",58,0)
+ ; If the RPC result array already contains an error message that
+"RTN","MAGGTU4T",59,0)
+ ; will terminate the client, application, this procedure is not
+"RTN","MAGGTU4T",60,0)
+ ; called.
+"RTN","MAGGTU4T",61,0)
+ ;
+"RTN","MAGGTU4T",62,0)
+WARNING(MAGBUF,CLVER,CVRC) ;
+"RTN","MAGGTU4T",63,0)
+ Q
+"RTN","MAGIP182")
+0^1^B4214994
+"RTN","MAGIP182",1,0)
+MAGIP182 ;WOIFO/GEK - INSTALL CODE FOR MAG*3.0*182 Telereader 2FA XE8 ;
+"RTN","MAGIP182",2,0)
+ ;;3.0;IMAGING;**182**;Mar 19, 2002;Build 38;May 24, 2017
+"RTN","MAGIP182",3,0)
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","MAGIP182",4,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGIP182",5,0)
+ ;; | Property of the US Government.                                |
+"RTN","MAGIP182",6,0)
+ ;; | No permission to copy or redistribute this software is given. |
+"RTN","MAGIP182",7,0)
+ ;; | Use of unreleased versions of this software requires the user |
+"RTN","MAGIP182",8,0)
+ ;; | to execute a written test agreement with the VistA Imaging    |
+"RTN","MAGIP182",9,0)
+ ;; | Development Office of the Department of Veterans Affairs,     |
+"RTN","MAGIP182",10,0)
+ ;; | telephone (301) 734-0100.                                     |
+"RTN","MAGIP182",11,0)
+ ;; | The Food and Drug Administration classifies this software as  |
+"RTN","MAGIP182",12,0)
+ ;; | a medical device.  As such, it may not be changed in any way. |
+"RTN","MAGIP182",13,0)
+ ;; | Modifications to this software may result in an adulterated   |
+"RTN","MAGIP182",14,0)
+ ;; | medical device under 21CFR820, the use of which is considered |
+"RTN","MAGIP182",15,0)
+ ;; | to be a violation of US Federal Statutes.                     |
+"RTN","MAGIP182",16,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGIP182",17,0)
+ ;;
+"RTN","MAGIP182",18,0)
+ ; There are no environment checks here but the MAGIP182 has to be
+"RTN","MAGIP182",19,0)
+ ; referenced by the "Environment Check Routine" field of the KIDS
+"RTN","MAGIP182",20,0)
+ ; build so that entry points of the routine are available to the
+"RTN","MAGIP182",21,0)
+ ; KIDS during all installation phases.
+"RTN","MAGIP182",22,0)
+ ;
+"RTN","MAGIP182",23,0)
+ Q
+"RTN","MAGIP182",24,0)
+ ;
+"RTN","MAGIP182",25,0)
+ ;+++++ INSTALLATION ERROR HANDLING
+"RTN","MAGIP182",26,0)
+ERROR ;
+"RTN","MAGIP182",27,0)
+ S:$D(XPDNM) XPDABORT=1
+"RTN","MAGIP182",28,0)
+ ;--- Display the messages and store them to the INSTALL file
+"RTN","MAGIP182",29,0)
+ D DUMP^MAGUERR1(),ABTMSG^MAGKIDS()
+"RTN","MAGIP182",30,0)
+ Q
+"RTN","MAGIP182",31,0)
+ ;
+"RTN","MAGIP182",32,0)
+ ;***** POST-INSTALL CODE
+"RTN","MAGIP182",33,0)
+POS ;
+"RTN","MAGIP182",34,0)
+ N CALLBACK
+"RTN","MAGIP182",35,0)
+ D CLEAR^MAGUERR(1)
+"RTN","MAGIP182",36,0)
+ ;
+"RTN","MAGIP182",37,0)
+ ;--- Link new remote procedures to the Broker context option
+"RTN","MAGIP182",38,0)
+ ;*** None for 182 **
+"RTN","MAGIP182",39,0)
+ ;S CALLBACK="$$ADDRPCS^"_$NA(MAGKIDS1("RPCLST^"_$T(+0),"MAG WINDOWS"))
+"RTN","MAGIP182",40,0)
+ ;I $$CP^MAGKIDS("MAG ATTACH RPCS",CALLBACK)<0  D ERROR  Q
+"RTN","MAGIP182",41,0)
+ ;
+"RTN","MAGIP182",42,0)
+ ;
+"RTN","MAGIP182",43,0)
+ ;--- Misc Updates
+"RTN","MAGIP182",44,0)
+ ;*** None for 182 **
+"RTN","MAGIP182",45,0)
+ ;I $$CP^MAGKIDS("MAG 182 MISC UPDATES ","$$UPDATE^"_$T(+0))<0 D ERROR Q
+"RTN","MAGIP182",46,0)
+ ; 
+"RTN","MAGIP182",47,0)
+ ;--- Send the notification e-mail
+"RTN","MAGIP182",48,0)
+ D BMES^XPDUTL("Post Install Mail Message: "_$$FMTE^XLFDT($$NOW^XLFDT))
+"RTN","MAGIP182",49,0)
+ D INS^MAGQBUT4(XPDNM,DUZ,$$NOW^XLFDT,XPDA)
+"RTN","MAGIP182",50,0)
+ ;
+"RTN","MAGIP182",51,0)
+ Q
+"RTN","MAGIP182",52,0)
+ ;
+"RTN","MAGIP182",53,0)
+ ;***** PRE-INSTALL CODE
+"RTN","MAGIP182",54,0)
+PRE ;
+"RTN","MAGIP182",55,0)
+ ;
+"RTN","MAGIP182",56,0)
+ Q
+"VER")
+8.0^22.2
+**END**
+**END**

@@ -1,0 +1,418 @@
+$TXT Created by                FM2G1.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 03/29/17 at 19:43
+=============================================================================
+Run Date: JUL 11, 2017                     Designation: DI*22.2*5
+Package : DI - VA FILEMAN                     Priority: Mandatory
+Version : 22.2         SEQ #6                   Status: Released
+                  Compliance Date: AUG 11, 2017
+=============================================================================
+
+Associated patches: (v)DI*22.2*7   <<= must be installed BEFORE `DI*22.2*5'
+
+Subject: FIXES TO VA FILEMAN 22.2
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ Patch DI*22.2*5 will repair ten (10) VA FileMan 22.2 defects: 
+   1. When calling ^DIR for a BOOLEAN-type field, the field LABEL appears 
+      as a prompt.
+   2. The VERIFY FIELDS option overruns the specified page length.
+   3. An error is generated when selecting and deselecting a CAPTION-ONLY
+      field in the ScreenMan Form Editor (<UNDEFINED>END+5^DDGF2 *L).
+   4. After selecting and deselecting a field, the ScreenMan Form Editor
+      may move the field when quitting without saving changes.
+   5. The help text for the UNIVERSAL TIME data type causes ScreenMan to 
+      scroll off the top of the terminal.
+   6. The response to '?' and '??' for a UNIVERSAL TIME data type field
+      repeats itself.
+   7. The help for a YEAR data type field displays the DATE/TIME help text
+      instead of the specific help for the YEAR data type.
+   8. DD changes to display messages in the Input Transform using EN^DDIOL
+      are not being displayed.
+   9. Scrolling in a repeating block stops working and causes visual
+      glitches if returned to after saving a record using a different page 
+      through branching logic.
+  10. When adding a field in the ScreenMan Form Editor, the user has to 
+      enter <PF1>E in order to proceed to the Field Properties form. The
+      current menu options of Close or Refresh do not allow the user to
+      proceed to the Field Properties form.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)     Field Name (#)                     New/Modified/Deleted
+ -------------     --------------                     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                  New/Modified/Deleted
+ ---------------                                  --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                                    New/Modified/Deleted
+ -------------                                    --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name  Type  File Name (#)   New/Modified/Deleted
+ -------------  ----  -------------   --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. Ticket N/A
+  
+ Problem:
+ --------
+ When calling ^DIR with a file and field, the default prompt is the field 
+ LABEL. This does not happen currently for the BOOLEAN data type, instead
+ it gives the prompt "Enter response:".
+  
+ Resolution:
+ ----------
+ A change to ^DIR2 fixes this problem so that a BOOLEAN data type behaves 
+ like other data types when displaying the default prompt, basing it on the
+ value of the LABEL field.
+  
+  
+ 2. Ticket #I8089470FY16
+  
+ Problem:
+ --------
+ The output from the VERIFY FIELDS option overruns the specified page 
+ length.
+  
+ Resolution:
+ ----------
+ Changes to ^DIV and ^DIVR correct this problem so that VERIFY FIELDS 
+ adheres to the specified page length (screen depth) for all its output.
+  
+  
+ 3. Ticket #I7378770FY16
+  
+ Problem:
+ --------
+ An <UNDEFINED> error is generated when selecting and deselecting a 
+ CAPTION-ONLY field in the ScreenMan Form Editor. The error occurs at
+ <UNDEFINED>END+5^DDGF2, when the variable 'L' is undefined.
+  
+ Resolution:
+ ----------
+ A change to ^DDGF2 corrects the problem, allowing a CAPTION-ONLY field to 
+ be selected and then deselected in the ScreenMan Form Editor.
+  
+  
+ 4. Ticket #I12524956FY17
+  
+ Problem:
+ --------
+ Selecting and deselecting a field in a block not aligned in Row 1 (R1),
+ Column 1 (C1) causes that field to move within the block when quitting
+ without saving changes.
+  
+ Resolution:
+ -----------
+ Changes to ^DDGF2 corrects the behavior so that selecting a field then
+ quitting without saving will not move the field.
+  
+  
+ 5. Ticket N/A
+  
+ Problem:
+ --------
+ The help prompt for the UNIVERSAL TIME data type causes ScreenMan to
+ scroll off the top of the terminal.
+  
+ Resolution:
+ -----------
+ A change to the XECUTABLE HELP for the UNIVERSAL TIME data type
+ corrects this problem.
+  
+  
+ 6. Ticket N/A
+  
+ Problem:
+ --------
+ The response to '?' and '??' for a UNIVERSAL TIME data type field
+ repeats itself.
+  
+ Resolution:
+ -----------
+ A change to ^DIEQ corrects the behavior so that the help text does not
+ repeat.
+  
+  
+ 7. Ticket N/A
+  
+ Problem:
+ --------
+ The help for a YEAR data type field displays the DATE/TIME help text
+ instead of the specific help for the YEAR data type.
+  
+ Resolution:
+ -----------
+ A change to ^DIEQ corrects the behavior so that the YEAR help text
+ is correctly displayed.
+  
+  
+ 8. Ticket  #I13081432FY17
+  
+ Problem:
+ --------
+ DD Changes to display messages in the Input Transform using EN^DDIOL
+ are not being displayed.
+  
+ Resolution:
+ -----------
+ A change to ^DICN corrects this behavior so that messages written in
+ an Input Transform are displayed correctly.
+  
+  
+ 9. Ticket N/A
+  
+ Problem:
+ --------
+ Scrolling in a repeating block stops working and causes visual
+ glitches if returned to after saving a record using a different page
+ through branching logic.
+  
+ Resolution:
+ -----------
+ Changes to ^DDS1 and ^DDS41 correct this problem.
+  
+  
+ 10. Ticket N/A
+  
+ Problem:
+ --------
+ When adding a field in the ScreenMan Form Editor, the user has to enter
+ <PF1>E in order to proceed to the Field Properties form. The current
+ menu options of Close or Refresh do not allow the user to proceed to
+ the Field Properties form.
+  
+ Resolution:
+ -----------
+ Changes to ^DDS, ^DDSCOM and ^DDSSTK correct this problem.
+  
+  
+ Blood Bank Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch DI*22.2*5 contains 
+ changes to a package referenced in ProPath standard titled: BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA 
+ Blood Bank software design safeguards or safety critical elements 
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch DI*22.2*5 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Test Sites:
+ -----------
+ West Palm Beach, FL 
+ North Florida/South Georgia
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Documentation describing the new functionality introduced by this patch
+ is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+ Sites may retrieve the software and/or documentation directly using 
+ Secure Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory 
+ at the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+  Documentation can also be found on the VA Software Documentation Library 
+  at: http://www.domain.ext/vdl/
+  
+ Title                               File Name           SFTP Mode
+ -----------------------------------------------------------------
+ FileMan 22.2 Developer's Guide      FM22_2DG.PDF        Binary
+  
+  
+ Backout and Rollback Procedure:
+ -------------------------------
+ This patch consists of routines and a file. During the VistA
+ Installation Procedure of the Kernel Installation and Distribution 
+ System (KIDS) build, the installer should back up the modified routines by
+ the use of the 'Backup a Transport Global' action (step 3a in the
+ Installations Instructions below).
+  
+ If rollback/backout is required, the installer can restore the routines
+ using the MailMan message that were saved prior to installing the patch.
+ The change to the file is backward compatible.
+  
+  
+ Patch Installation:
+  
+   
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch can be queued for installation.  TaskMan does not have to be 
+ stopped, HL7 filers do not need to be stopped, and users may be on the 
+ system.  The patch should be installed during non-peak hours to minimize
+ potential for disruption to users.  This patch should take less than 1 
+ minute to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the KIDS Menu, select the Installation Menu.  From this menu, you
+     may elect to use the following options. When prompted for the INSTALL
+     NAME, enter DI*22.2*5.
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as Data Dictionaries (DDs) or
+         templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     When prompted for the INSTALL NAME, enter DI*22.2*5.
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' respond NO.
+  
+ 6.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+     NO//" respond NO.
+  
+ 7.  If prompted "Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//" respond NO. 
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0//" respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;22.2;VA FileMan;**[Patch List]**;Jan 05, 2016;Build 28
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DDGF2
+    Before: B31932302   After: B31954979  **3,5**
+Routine Name: DDGFFLD
+    Before: B11526097   After: B12769730  **3,5**
+Routine Name: DDGFFLDA
+    Before: B21253213   After: B22703346  **3,5**
+Routine Name: DDGLIBP
+    Before: B27768637   After: B27766781  **3,5**
+Routine Name: DDS
+    Before: B40296142   After: B41736293  **3,5**
+Routine Name: DDS1
+    Before: B35932494   After: B36653455  **5**
+Routine Name: DDS41
+    Before: B38730782   After: B39822750  **5**
+Routine Name: DDSCOM
+    Before: B19472431   After: B21761308  **5**
+Routine Name: DDSMSG
+    Before: B12020877   After: B12019021  **3,5**
+Routine Name: DDSSTK
+    Before:  B4128442   After:  B3667911  **3,5**
+Routine Name: DICATT3
+    Before: B15947104   After: B15945248  **3,5**
+Routine Name: DICATTUD
+    Before: B30897711   After: B30462151  **2,5**
+Routine Name: DICN
+    Before: B20243838   After: B21489439  **2,5**
+Routine Name: DICU2
+    Before: B34361274   After: B34359418  **4,5**
+Routine Name: DIEQ
+    Before: B17086436   After: B16904404  **2,7,5**
+Routine Name: DIETLIB
+    Before: B10469878   After: B10149951  **2,5**
+Routine Name: DIETLIBF
+    Before: B29058396   After: B28622394  **2,5**
+Routine Name: DIFROMS2
+    Before: B45455117   After: B45453261  **3,5**
+Routine Name: DINIT221
+    Before: B30934674   After: B30462255  **2,5**
+Routine Name: DIR2
+    Before: B25328921   After: B25407011  **2,5**
+Routine Name: DITIME
+    Before:  B1307675   After:  B1091483  **2,5**
+Routine Name: DIV
+    Before: B17758582   After: B18251978  **5**
+Routine Name: DIVR
+    Before: B53639781   After: B54678910  **2,5**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 08, 2016
+Completed By:                               Date Completed: JUL 07, 2017
+Released By :                               Date Released : JUL 11, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

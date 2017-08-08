@@ -1,0 +1,306 @@
+$TXT Created by                   at VIALAB1.AAC.DOMAIN.EXT  (KIDS) on Friday, 04/21/17 at 10:04
+=============================================================================
+Run Date: JUN 08, 2017                     Designation: VIAB*1*9
+Package : VIAB - VISTA INTEGRATION ADAPTOR    Priority: Mandatory
+Version : 1        SEQ #10                      Status: Released
+                  Compliance Date: JUL 10, 2017
+=============================================================================
+
+Associated patches: (v)VIAB*1*8    <<= must be installed BEFORE `VIAB*1*9'
+
+Subject: VIA INCREMENT 5 UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The VistA integration Adaptor (VIA) system is a middleware used to transport
+ clinical and non-clinical electronic information between producing and
+ consuming applications in VA systems.  VIA utilizes remote procedure calls
+ (RPCs) for data requested by consuming applications.
+  
+ The purpose of this patch is to publish RPCs that were added to the VIAB WEB
+ SERVICES OPTION in the OPTION file (#19), RPC field (#320). 
+  
+ Several new RPCs were created to meet the needs of consuming applications.
+  VIAB ADMIN        This RPC returns administration time infomation: -
+                       StartText^StartTime^Duration^FirstAdmin
+  VIAB ALLSAMP      This RPC returns all collection samples in the format:
+                   n^SampIEN^SampName^SpecPtr^TubeTop^^^LabCollect^^SpecName
+  VIAB ALLSPEC      This RPC returns a list of specimens from the TOPOGRAPHY 
+                    FIELD file (#61).
+  VIAB DEA SIGINFO  This RPC returns provider/patient info that must be 
+                    displayed when signing a controlled substance order(s).
+  VIAB DEATEXT      This RPC returns the text to show on the signature 
+                    dialog mandated by DEA for when a controlled substance 
+                    order is selected to be signed.
+  VIAB DEVICE       This RPC returns a list of print devices.
+  VIAB DFLTSPLY     This RPC returns days supply given quantity.
+  VIAB DOWSCH       This RPC returns a list of schedule that have a frequency
+                    defined and the frequency is less than or equal to 1440 
+                    minutes.
+  VIAB EFR          This RPC supports request for data from the Embedded 
+                    Fragment Registry (EFR) project. Data is returned from 
+                    RESEARCH File #67.1 and LAB DATA File #63.04.
+  VIAB FUTURE LAB   This RPC returns the number of days in the future to    
+   COLLECTS         allow  lab collects.
+  VIAB GET IMMUNIZATION TYPE
+                    This RPC returns a list of active immunizations.
+  VIAB GET LAB      This RPC returns a list of lab collect times for a date 
+   TIMES            and location.
+  VIAB IC VALID     This RPC determines whether the supplied time is a valid 
+                    lab immediate collect time.
+  VIAB IMMED COLLECT This RPC returns help text showing lab immediate collect
+                     times for the user's division.
+  VIAB IMOLOC       This RPC returns - Is it an IMO order? 
+  VIAB INPLOC       This RPC returns a list of wards from the HOSPITAL 
+                    LOCATION file.
+  VIAB ISPROSVC     This RPC returns 1 or 0 if the input IEN in File #123.5 
+                    is marked as part of the Consults-Prosthetics interface.
+  VIAB LOC TYPE     This RPC returns C for a Clinic and W for a Ward or -1 
+                    if not a clinic or ward type.
+  VIAB MAXDAYS      This RPC returns the maximum number of days for a 
+                    continuous lab order.
+  VIAB PROVDX       This RPC returns provisional diagnosis prompting 
+                    information for service.
+  VIAB SCDIS        This RPC returns service connected percentage and rated
+                    disabilities for a patient.
+  VIAB SCHALL       This RPC returns a list of schedules for a location.
+  VIAB SCSEL        This RPC returns a list of the patient's service connected
+                    conditions.
+  VIAB SRGY RPTLIST This RPC returns a list of surgery data for a patient. 
+  VIAB TIU SECVST   This RPC save the secondary visit  in TIU, if inpatient.
+  VIAB VALSCH       This RPC returns 1 if valid, 0 if not for a schedule. 
+  VIAB VISIT        This RPC returns a list of visit types for a clinic.
+  VIABDXC ON        This RPC returns E if order checking enabled, otherwise D.
+  
+ The following existing RPCs were added to VIAB WEB SERVICES OPTION.
+    MD CLIO
+    PX SAVE DATA 
+    
+   
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+   
+  File Name (Number)         Field Name (Number)     New/Modified/Deleted
+  ------------------         -------------------     --------------------
+  N/A
+   
+  Forms Associated:
+   
+  Form Name                    File #               New/Modified/Deleted
+  ---------                    ------               --------------------
+  N/A
+  
+  Integration Control Agreements:
+  
+  ICR Number     ICR Name
+  __________     ________ 
+  ICR 6792       MD CLIO
+  ICR 6023       PX SAVE DATA
+  
+  Mail Groups Associated:
+   
+  Mail Group Name          New/Modified/Deleted
+  ---------------          --------------------
+  N/A
+  
+  Options Associated:
+    
+  Option Name               Type                    New/Modified/Deleted
+  -----------               ----                    --------------------
+   VIAB WEB SERVICES OPTION  Broker (Client/Server)  Modified
+  
+   RPCs added to VIAB WEB SERVICES option by this patch:
+       MD CLIO                                        SEND TO SITE
+       PX SAVE DATA                                   SEND TO SITE
+       VIAB ADMIN                                     SEND TO SITE
+       VIAB ALLSAMP                                   SEND TO SITE
+       VIAB ALLSPEC                                   SEND TO SITE
+       VIAB DEA SIGINFO                               SEND TO SITE
+       VIAB DEATEXT                                   SEND TO SITE
+       VIAB DEVICE                                    SEND TO SITE
+       VIAB DFLTSPLY                                  SEND TO SITE
+       VIAB DOWSCH                                    SEND TO SITE
+       VIAB EFR                                       SEND TO SITE
+       VIAB FUTURE LAB COLLECTS                       SEND TO SITE
+       VIAB GET IMMUNIZATION TYPE                     SEND TO SITE
+       VIAB GET LAB TIMES                             SEND TO SITE
+       VIAB IC VALID                                  SEND TO SITE
+       VIAB IMMED COLLECT                             SEND TO SITE
+       VIAB IMOLOC                                    SEND TO SITE
+       VIAB INPLOC                                    SEND TO SITE
+       VIAB ISPROSVC                                  SEND TO SITE
+       VIAB LOC TYPE                                  SEND TO SITE
+       VIAB MAXDAYS                                   SEND TO SITE
+       VIAB PROVDX                                    SEND TO SITE
+       VIAB SCDIS                                     SEND TO SITE
+       VIAB SCHALL                                    SEND TO SITE
+       VIAB SCSEL                                     SEND TO SITE
+       VIAB SRGY RPTLIST                              SEND TO SITE
+       VIAB TIU SECVST                                SEND TO SITE
+       VIAB VALSCH                                    SEND TO SITE
+       VIAB VISIT                                     SEND TO SITE
+       VIABDXC ON                                     SEND TO SITE
+  
+   Option Details:
+       Field                Value
+       -----                -----
+       NAME (#.01):         VIAB WEB SERVICES OPTION
+       MENU TEXT (#1):      VIAB Web Services Option
+       DESCRIPTION (#3.5):  This option is required by the Kernel Broker 
+                            to give access to the RPCs used by the Vista
+                            Integration Adapter (VIA) team. 
+  
+  
+  New Remote Procedure Calls:
+  --------------------------
+  VIAB ADMIN
+  VIAB ALLSAMP  
+  VIAB ALLSPEC  
+  VIAB DEA SIGINFO 
+  VIAB DEATEXT
+  VIAB DEVICE
+  VIAB DFLTSPLY  
+  VIAB DOWSCH
+  VIAB EFR
+  VIAB FUTURE LAB COLLECTS  
+  VIAB GET IMMUNIZATION TYPE
+  VIAB GET LAB TIMES  
+  VIAB IC VALID
+  VIAB IMMED COLLECT
+  VIAB IMOLOC
+  VIAB INPLOC
+  VIAB ISPROSVC 
+  VIAB LOC TYPE 
+  VIAB MAXDAYS  
+  VIAB PROVDX
+  VIAB SCDIS 
+  VIAB SCHALL
+  VIAB SCSEL 
+  VIAB SRGY RPTLIST
+  VIAB TIU SECVST
+  VIAB VALSCH
+  VIAB VISIT 
+  VIABDXC ON 
+                                                     
+  New Service Requests (NSRs):
+  ----------------------------  
+  N/A
+    
+    
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+    
+    
+  Remedy Ticket(s) & Overview:
+  ----------------------------
+  N/A
+    
+    
+ Test Sites:
+ -----------
+ Central Alabama Veterans Health Care System
+ VA Central Western Massachusetts HCS
+ VA Gulf Coast Veterans Health Care System
+  
+  
+ Patch Installation:
+ ------------------- 
+    
+ Pre/Post Installation Overview:
+ -------------------------------
+ Patch VIAB*1*8 must be installed prior to installation of VIAB*1*9.
+  
+  
+ Pre-Installation Instructions:
+ -----------------------------
+ This patch may be installed with users on the system. This patch should 
+ take less than 5 minutes to install. 
+   
+ No menu options need to be disabled.
+   
+   
+ Installation Instructions:
+ --------------------------
+ This installation will install modified Remote Procedure Calls (RPCs).
+   
+  1.  Choose the PackMan message containing this patch.
+   
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME enter the 
+      patch VIAB*1.0*9:
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+   
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch (VIAB*1*9) to install.
+   
+  5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+      Install? NO//', press <ENTER>. 
+  
+  6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//', press <ENTER>.
+   
+  7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? NO//', press <ENTER>.
+   
+  8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+    
+    
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+  
+ Routine Information:
+ ====================
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VISTA INTEGRATION ADAPTER;**[Patch List]**;06-FEB-2014;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VIABEFR
+    Before:       n/a   After: B29267172  **9**
+Routine Name: VIABRPC
+    Before: B22947290   After: B70456024  **7,8,9**
+Routine Name: VIABRPC3
+    Before:       n/a   After: B17129149  **9**
+Routine Name: VIABRPC4
+    Before:       n/a   After: B50170669  **9**
+ 
+Routine list of preceding patches: 8
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 21, 2016
+Completed By:                               Date Completed: MAY 26, 2017
+Released By :                               Date Released : JUN 08, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

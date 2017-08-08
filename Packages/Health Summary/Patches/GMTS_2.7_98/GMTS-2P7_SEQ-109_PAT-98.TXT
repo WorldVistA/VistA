@@ -1,0 +1,314 @@
+
+=============================================================================
+Run Date: JUL 17, 2017                     Designation: GMTS*2.7*98
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7       SEQ #109                    Status: Released
+                  Compliance Date: AUG 17, 2017
+=============================================================================
+
+
+Subject: HOME TELEHEALTH TEMPLATES
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ The VHA Office of Connected Care (10P8) wishes to have a comprehensive, 
+ integrated template set in use at all VA facilities caring for Home 
+ Telehealth patients.  This functionality is being released as part of a 
+ multi-package build that also includes PXRM*2.0*19 and TIU*1*258.
+  
+ Specifically, this GMTS patch will add two new Health Summary reports for 
+ display on the CPRS Reports tab. These reports will display both local 
+ and remote data.
+  
+ The post-init of this GMTS patch will install the new entries in the 
+ HEALTH SUMMARY TYPE file (#142). They are:
+  REMOTE HT CLINICAL REMINDERS
+  REMOTE HT TRACKING
+  
+ Stub entries are created in the ^GMT(142 global, and then the Reminder 
+ Exchange file, VA-HT REMOTE HEALTH SUMMARY TYPES, will be silently
+ installed via the Reminder Exchange utility.
+  
+ FileMan Inquire display of the new Health Summary Types
+  
+ NAME: REMOTE HT CLINICAL REMINDERS      LOCK: GMTSMGR
+   RESTRICT DELETION: YES                SUPPRESS COMP WITHOUT DATA: no
+ SUMMARY ORDER: 5                        COMPONENT NAME: CLINICAL 
+ REMINDERS DUE
+   HEADER NAME: Reminders Due
+ SELECTION ITEM: VA-HT CONTINUUM OF CARE (INITIAL)
+ SELECTION ITEM: VA-HT CAREGIVER RISK ASSESSMENT
+ SELECTION ITEM: VA-HT PERIODIC EVALUATION
+ SELECTION ITEM: VA-HT CONTINUUM OF CARE (FOLLOW-UP)
+ SUMMARY ORDER: 10
+   COMPONENT NAME: CLINICAL REMINDERS SUMMARY
+   HEADER NAME: Reminders Summary
+ SELECTION ITEM: VA-HT CONTINUUM OF CARE (INITIAL)
+ SELECTION ITEM: VA-HT CAREGIVER RISK ASSESSMENT
+ SELECTION ITEM: VA-HT PERIODIC EVALUATION
+ SELECTION ITEM: VA-HT CONTINUUM OF CARE (FOLLOW-UP)
+ SUMMARY ORDER: 15
+   COMPONENT NAME: CLINICAL REMINDERS MAINTENANCE
+   HEADER NAME: Reminder Maintenance
+ SELECTION ITEM: VA-HT CONTINUUM OF CARE (INITIAL)
+ SELECTION ITEM: VA-HT CAREGIVER RISK ASSESSMENT
+ SELECTION ITEM: VA-HT PERIODIC EVALUATION
+ SELECTION ITEM: VA-HT CONTINUUM OF CARE (FOLLOW-UP)
+   SUPPRESS SENSITIVE PRINT DATA: NO SSN
+   TIMESTAMP: 62482,28841               TITLE: Remote HT Clinical Reminders
+   NATIONALLY EXPORTED TYPE: Nationally Exported, Uneditable
+  
+  
+  
+ NUMBER: 5000019                         NAME: REMOTE HT TRACKING
+   LOCK: GMTSMGR                         RESTRICT DELETION: YES
+   SUPPRESS COMP WITHOUT DATA: yes
+ SUMMARY ORDER: 5
+   COMPONENT NAME: PCE HEALTH FACTORS SELECTED
+   HEADER NAME: HT Tracking
+ SELECTION ITEM: HT (HOME TELEHEALTH)
+ SELECTION ITEM: HT ASSESSMENT/TREATMENT PLAN
+ SELECTION ITEM: HT CONTINUUM OF CARE (CCF)
+ SELECTION ITEM: HT CAREGIVER RISK ASSESSMENT SCREEN
+ SELECTION ITEM: HT REFERRALS FOR VETERAN/CAREGIVER
+ SELECTION ITEM: HT TELEHEALTH DEMOGRAPHICS
+ SELECTION ITEM: HT TELEHEALTH DELIVERY/INSTALL MODE
+ SELECTION ITEM: HT DISCHARGE
+ SUMMARY ORDER: 10                       COMPONENT NAME: MHA Score
+   HEADER NAME: Zarit Burden Scale
+ SELECTION ITEM: ZBI SCREEN
+ SUMMARY ORDER: 15
+   COMPONENT NAME: CLINICAL REMINDERS FINDINGS
+   HEADER NAME: Reminders Findings
+ SELECTION ITEM: VA-HT OBJ EDUCATION TOPICS ALL
+   SUPPRESS SENSITIVE PRINT DATA: NO SSN
+   TIMESTAMP: 63147,26107                TITLE: Remote HT Tracking  
+ NATIONALLY EXPORTED TYPE: Nationally Exported, Uneditable
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ ALTOONA
+ BALTIMORE
+ BOISE
+ NEW YORK HARBOR
+ PUGET SOUND
+ VISN 2: UPSTATE NEW YORK
+  
+  
+ Software & Documentation Retrieval Instructions
+ ------------------------------------ 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available. There is a
+ multi-package build named HT TEMPLATES PROJECT 1.0 which contains the
+ following KIDS builds: PXRM*2.0*19, TIU*1.0*258, and GMTS*2.7*98.  The
+ associated host file is named HT_TEMPLATES_1_0.KID.
+  
+ Additionally, there are two TXML template files for use in CPRS GUI.  HT
+ MONTLY MONITOR.TXML, and HT PROVIDER CONSULT.TXML are bundled in the
+ HT_TXML_TEMPLATES.zip file.
+  
+ IT installers should ensure that each site for which they are installing
+ receive a copy of the zip file and the Install and Setup Guide. 
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Clinical Reminders Patch 19 Install and Setup Guide
+                               PXRM_2_19_IG.PDF                Binary
+ Home Telehealth User Manual   PXRM_2_19_UM.PDF               Binary
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ This patch contains an environment check routine, GMTSPI98, that will run 
+ when the KIDS build is first loaded.  This routine checks for the 
+ presence of any file entries at IEN 5000018 and 5000019 in the ^GMT(142 
+ global. These IENs should be undefined/empty as the 5000000+ IEN range 
+ is reserved for new National remote health summary types.  If an entry is 
+ found at either location, the install will abort.  If this occurs, the 
+ site should contact the National Help Desk for assistance with the Health 
+ Summary package and moving the existing entry(ies) to a different IEN in 
+ the ^GMT(142 global.  Once this has been corrected, the site may then 
+ re-load and re-install the bundle.
+  
+ Pre-Installation will remove any previous version of the associated 
+ Reminder Exchange entry for the GMTS patch components and create stub 
+ entries in ^GMT(142,5000018 and ^GMT(142,5000019 for two new Remote 
+ HEALTH SUMMARY TYPES.
+  
+ Post-installation will use Reminder Exchange silent install to complete 
+ the installation of the Health Summary Types.
+  
+ GMTSPI98 can safely be deleted from the system once installation is 
+ successful and all HT reminders, reminder dialogs, and associated 
+ templates have been verified to be complete and working as expected.
+  
+ Pre-Installation Instructions
+ -----------------------------
+ Please refer to the Clinical Reminders Patch 19 Install and Setup Guide 
+ for detailed pre-installation steps and information.
+  
+ Installation Instructions
+ ------------------------- 
+ The following steps are a basic overview of the install process and 
+ should not be solely relied upon for an accurate installation. The
+ Clinical Reminders Patch 19 Install and Setup Guide contains the detailed
+ steps and information necessary to successfully install this software
+ bundle.
+  
+ This installation should not be queued.
+  
+ This build can be installed with users on the system, but it should be 
+ done during non-peak hours. Estimated installation time is approximately 
+ 20 minutes.
+  
+ 1.  Download the HT_TEMPLATES_1_0.KID file from the appropriate  
+     SFTP Server to the directory on your system.
+  
+ 2.  Use LOAD A DISTRIBUTION option on the KIDS INSTALLATION menu, and 
+     enter: [DIR]:HT_TEMPLATES_1_0.KID, where [DIR] is the local
+     directory where you have stored the host file.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use any of
+     the following options. When prompted for the INSTALL enter the build 
+     HT TEMPLATES PROJECT 1.0:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this build. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this build
+         is installed. It compares all components of this build
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and 
+     choose the build to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' Answer 'NO'
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' Answer 'NO'
+  
+  
+ Post-Installation Instructions
+ ------------------------------ 
+ Please refer to the Clinical Reminders Patch 19 Install and Setup Guide
+ for specific post-install instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 86
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSP98E
+    Before:       n/a   After:  B5307666  **98**
+Routine Name: GMTSPI98
+    Before:       n/a   After: B14297806  **98**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 11, 2011
+Completed By:                               Date Completed: JUL 13, 2017
+Released By :                               Date Released : JUL 17, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

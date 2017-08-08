@@ -1,0 +1,213 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 03/21/17 at 18:51
+=============================================================================
+Run Date: JUN 16, 2017                     Designation: IB*2*587
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #542                      Status: Released
+                  Compliance Date: JUL 17, 2017
+=============================================================================
+
+
+Subject: 2017 UPDATE OF CONDITION/OCCURRENCE SPAN/VALUE/REVENUE/POS/RNB CODES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch involves updates to the MCCR UTILITY (#399.1) file, the REVENUE
+ CODE (#399.2) file, the PLACE OF SERVICE (#353.1) file and the CLAIMS
+ TRACKING NON-BILLABLE REASONS (#356.8) file for 2017.
+  
+  
+ ASSOCIATED TICKET:
+ ==================
+ 1. R11969949FY17 2017 Annual Update of Occurrence, Condition, Value, Place
+    of Service, Revenue codes
+ 2. R11645412FY17 Adding to Reasons Not Billable List in VistA
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Caribbean HCS (San Juan)
+ Maryland HCS
+  
+  
+ OVERVIEW:
+ =========
+ 1. R11969949FY17 2017 Annual Update of Occurrence, Condition, Value, Place
+    of Service, Revenue codes
+  
+    Problem:
+    --------
+    The Chief Business Office (CBO) has requested the following updates to
+    Condition/Occurrence Span/Value Codes of the MCCR UTILITY (#399.1)
+    file, the REVENUE CODE (#399.2) file and the PLACE OF SERVICE (#353.1)
+    file.
+  
+    Resolution:
+    -----------
+    A post-init routine IB20P587 was created to update the associated files
+    with codes as follows:
+  
+    Condition Codes
+    53    INIT PLCMNT MED DEV PART CLINICAL TRIAL OR A FREE SAMPLE (add)
+    55    SNF BED NOT AVAILABLE (update)
+    70    SELF ADMINISTERED ANEMIA MANAGEMENT DRUG (update)
+    84    DIALYSIS FOR ACUTE KIDNEY INJURY (AKI) (add)
+    85    DELAYED RECERTIFICATION OF HOSPICE TERMINAL ILLNESS (add)
+    86    ADDNL HEMODIALYSIS TREATMENTS WITH MEDICAL JUSTIFICATION (add)
+    87    ESRD SELF CARE RE-TRAINING (add)
+  
+    Occurrence Span Code
+    MR    RESERVED FOR DISASTER RELATED OCCURRENCE SPAN CODE (add)
+  
+    Value Code
+    84    SHORTER DURATION HEMODIALYSIS (add)
+  
+    Revenue Codes
+    815   ACQUISITION OF BODY COMPONENTS-STEM CELLS-ALLOGENIC (add)
+    826   HEMODIALYSIS OP/HOME HEMODIALYSIS SHORT DURATION (add)
+  
+    Place of Service Code
+    02    TELEHEALTH-LOCAT-HLTH SVCS/RELATED SVCS TELEC SYS (add)
+  
+ 2. R11645412FY17 Adding to Reasons Not Billable List in VistA
+  
+    Problem:
+    --------
+    The Chief Business Office (CBO) has requested two new codes added 
+    to the CLAIMS TRACKING NON-BILLABLE REASONS (#356.8) file.
+    
+    Resolution:
+    -----------
+    A post-init routine IB20P587 was created to update the associated file
+    with codes as follows.
+  
+    Reasons Not Billable
+    CV28  CHAMPVA PT SEEN AS VETERAN (add)
+    MC26  LOD NOT OBTAINED (add)
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*587):
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s)
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO.
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//', answer NO.
+  
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P587.
+  
+ 6.   Use the 'Install File Print' option to review the updates and ensure
+      that the install has been completed. For an example:
+  
+     IB*2.0*587 Post-Install starts .....
+  
+  >>>Value Code
+     #84 SHORTER DURATION HEMODIALYSIS added
+  
+  >>>Condition Code
+     #53 INIT PLCMNT MED DEV PART CLINICAL TRIAL OR A FREE SAMPLE added
+     #55 SNF BED NOT AVAILABLE updated
+     #70 SELF ADMINISTERED ANEMIA MANAGEMENT DRUG updated
+     #84 DIALYSIS FOR ACUTE KIDNEY INJURY (AKI) added
+     #85 DELAYED RECERTIFICATION OF HOSPICE TERMINAL ILLNESS added
+     #86 ADDNL HEMODIALYSIS TREATMENTS WITH MEDICAL JUSTIFICATION added
+     #87 ESRD SELF CARE RE-TRAINING added
+  
+  >>>Occurrence Span Code
+     #MR RESERVED FOR DISASTER RELATED OCCURRENCE SPAN CODE added
+ Total 9 codes updated in the MCCR Utility (#399.1) file
+  
+  >>>Revenue Code
+     #815 ACQUISITION OF BODY COMPONENTS-STEM CELLS-ALLOGENIC updated
+     #826 HEMODIALYSIS OP/HOME HEMODIALYSIS SHORT DURATION added
+ Total 2 codes updated in the Revenue (#399.2) file
+  
+ >>>Place of Service Code
+     #02 TELEHEALTH-LOCAT-HLTH SVCS/RELATED SVCS TELEC SYS added
+ Total 1 code updated in the Place of Service (#353.1) file
+  
+  >>>Reasons Not Billable
+     #CV28 CHAMPVA PT SEEN AS VETERAN added
+     #MC26 LOD NOT OBTAINED added
+ Total 2 codes updated in the Claims Tracking Non-Billable Reasons (#356.8) file
+  
+     IB*2.0*587 Post-Install is complete.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P587
+    Before:       n/a   After: B37599689  **587**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 24, 2017
+Completed By:                               Date Completed: JUN 12, 2017
+Released By :                               Date Released : JUN 16, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

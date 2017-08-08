@@ -1,0 +1,181 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 02/21/17 at 08:17
+=============================================================================
+Run Date: MAY 09, 2017                     Designation: MD*1*52
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #37                      Status: Released
+                  Compliance Date: JUN 15, 2017
+=============================================================================
+
+
+Subject: CP CONSOLE GUI 2FA IMPLEMENTATION
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ This patch will update the log in procedure to the Clinical Procedures 
+ (CP) Console Graphical User Interface (GUI) to use Two Factor 
+ Authentication (2FA) which will require the use of a Personal Identity 
+ Verification (PIV) card.
+  
+ In order to make the transition to 2FA, it was also necessary to upgrade 
+ the CP Console GUI to Delphi version XE8 in order to implement the new
+ Remote Procedure Call (RPC) Broker allowing compliance.
+  
+ NOTE: Patch MD*1.0*52 includes a new GUI executable.
+  
+ NOTE: Sites using a VistA Linux System will only require users to enter 
+       access and verify codes on initial log in and PIV PIN after that
+       (within 15 minutes). Sites using a VistA VMS System may require
+       users to enter both the PIV PIN and Access and Verify codes to
+       access the applications.
+  
+ ASSOCIATED TICKET:
+ ==================
+ N/A
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ ========================= 
+ Huntington VAMC, WV  
+ Eastern Colorado HCS (Denver)
+  
+ TICKET OVERVIEW:
+ ================
+  
+ Problem: 
+ --------
+ The Department of Veterans Affairs Cybersecurity Task Force has been tasked 
+ by the Chief Information Officer (CIO) and the Inspector General (IG) to 
+ address identified material weaknesses. This task force has mandated that 
+ all internal, user facing VA applications become two factor authentication
+ (2FA) compliant by April 30, 2017. 
+  
+ In order to be compliant, applications are required to authenticate users 
+ via Personal Identity Verification (PIV) cards.  
+  
+ Note: Usernames and password will no longer be permitted for employees and
+ contractors to access VA applications.  
+   
+ Resolution:
+ -----------
+ As part of the transition to 2FA, Clinical Procedures (CP Console) was upgraded
+ to Delphi XE8 to allow access to the latest version of the RPC Broker 
+ implementing 2FA.
+  
+    ========== Software Retrieval and Installation ==========
+  
+ The following software file is exported as part of this patch:
+  
+     File Name                 Contents                 Retrieval Format
+     ----------------------    ---------------          ----------------
+     MD_1_52_CPCONSOLE.MSI     CP Console Install       BINARY
+                               Shield
+  
+ NOTE: The file must be transferred using the binary (BIN) file transfer 
+       mode. The size of the file, once downloaded, will be 2,706 KB.
+     
+ When the MD_1_52_CPCONSOLE.MSI file is ran (needs elevated privileges),
+ the following files will be put in: C:\Program Files (x86)\Vista\CP
+ Console.
+  
+     File Name           Contents                 
+     ----------------    -------------------------------------          
+     CPConsole.cnt       CP Console Help Contents File (4 kb)
+     CPConsole.exe       CP Console Executable (5083 kb)
+     CPConsole.GID       CP Console Help general index (29 kb)
+     CPConsole.hlp       CP Console Help file (165 kb)
+  
+ The file listed above may be obtained via SFTP. The preferred method
+ is to SFTP the files from:
+  
+     download.vista.domain.ext
+  
+ This transmits the files from the first available SFTP server.  Sites may
+ retrieve the software and directly using Secure File Transfer Protocol
+ (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI Field
+ Offices:
+  
+      CIO FIELD OFFICE    FTP ADDRESS                 DIRECTORY
+      ----------------    ------------------------    --------------------
+      Albany              ftp.domain.ext    []
+      Hines               ftp.domain.ext     []
+      Salt Lake City      ftp.domain.ext       []
+  
+ ================== CLIENT Installation Instructions ==================
+  
+ 1. Download the file MD_1_52_CPCONSOLE.MSI. Check to make sure the size
+    is correct (2,706 KB).
+  
+ 2. You must run the MD_1_52_CPCONSOLE.MSI as an Administrator.
+  
+ 3. The CP Console Install Shield will walk through steps of installing
+    software, do not change any of the default values, and just click the
+    Next button on each screen.
+  
+ 4. Following successful installation of the software, you can delete the  
+    MD_1_52_CPCONSOLE.MSI file.  
+  
+    ==================== Installation Instructions ====================
+  Install this patch after the affected user base has completed the "Link
+  My Account" Process.  Clinical Procedures users should be off the system
+  when this patch is installed. Installation will take less than 5 minutes.
+  This patch should be installed during non-peak requirement hours.
+  
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter MD*1.0*52).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch 
+            is installed
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package 
+         MD*1.0*52.                               
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install? 
+         NO//", respond NO.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Apr 01, 2004;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDPOST52
+    Before:       n/a   After:   B813516  **52**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 19, 2016
+Completed By:                               Date Completed: MAY 05, 2017
+Released By :                               Date Released : MAY 09, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

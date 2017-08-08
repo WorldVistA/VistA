@@ -1,0 +1,267 @@
+$TXT Created by             at CHEYL135.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Wednesday, 06/21/17 at 18:17
+=============================================================================
+Run Date: JUN 26, 2017                     Designation: SD*5.3*669
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #550                    Status: Released
+                  Compliance Date: JUL 07, 2017
+=============================================================================
+
+Associated patches: (v)SD*5.3*665  <<= must be installed BEFORE `SD*5.3*669'
+
+Subject: VistA Scheduling Enhancements 1.3.1 Release
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The Vista Scheduling (VS) Graphical User Interface GUI v2.0.0.12 and this
+ patch provide additional enhancements to the VS GUI v2.0.0.8. The
+ enhancements included in this patch are listed as follows:
+  
+  
+     Veteran & Non-Veteran Eligibility - The GUI must prompt for the 
+     eligibility associated with the appointment when the veteran has both
+     Veteran and Non-Veteran eligibilities.
+  
+     Contact Functionality - The 'Contact' functionality must function 
+     according to the documented business needs.
+  
+     Tracking of Action - The GUI must show the 'user tracking of action' 
+     to identify the scheduler and date scheduled.
+  
+     Inpatient 'No-Show' - Inpatient Appointments must not be an automatic
+     'no-show'.
+  
+     Patient-Centered Scheduling - 'Recall' must be renamed 
+     'Patient-Centered Scheduling' in the VS GUI application.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)           Field Name (#)     New/Modified/Deleted
+ -------------           --------------     --------------------
+ SDEC CONTACT (#409.86)  PATIENT (#.01)              New
+ SDEC CONTACT (#409.86)  CLINIC (#1)                 New
+ SDEC CONTACT (#409.86)  SERVICE (#1.1)              New
+ SDEC CONTACT (#409.86)  PREFERRED DATE (#2)         New
+ SDEC CONTACT (#409.86)  REQUEST TYPE (#2.1)         New
+ SDEC CONTACT (#409.86)  MAIN SEQUENCE (#2.2)        New
+ SDEC CONTACT (#409.86)  DATE/TIME of CONTACT (#3)   New
+                         (Multiple 409.863)
+ SDEC CONTACT (#409.86)  DATE/TIME of CONTACT (#.01) New
+ SDEC CONTACT (#409.86)  CONTACT TYPE (#1)           New
+ SDEC CONTACT (#409.86)  COMMENTS (#2)               New
+ SDEC CONTACT (#409.86)  LEFT MESSAGE (#3)           New
+ SDEC CONTACT (#409.86)  SEQUENCE (#4)               New
+ SDEC CONTACT (#409.86)  USER ENTERED CONTACT (#5)   New
+ SDEC CONTACT (#409.86)  DATE/TIME ENTERED (#6)      New
+  
+ Forms Associated:
+  
+ Form Name                File #             New/Modified/Deleted
+ ---------                ------             --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                             New/Modified/Deleted
+ ---------------                             --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name               Type              New/Modified/Deleted
+ -----------               ----              --------------------
+ CLINIC SCHEDULING     Broker(client/Server)      Modified
+ PROCEDURE CALLS
+ [SDECRPC]
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name                              New/Modified/Deleted
+ --------------                              --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                               New/Modified/Deleted
+ -------------                               --------------------
+ N/A
+  
+ Remote Procedures Associated:
+  
+ RPC Name                                    New/Modified/Deleted
+ --------                                    --------------------
+ SDEC APPT STATUS                                    New
+ SDEC CONTACT DISPLAY                                New
+ SDEC CONTACT MULTI-DISPLAY                          New
+ SDEC CONTACT NEW                                    New
+ SDEC CONTACT SEQUENCE                               New
+ SDEC CONTACT STOP CODE                              New
+ SDEC CONTACT UPDATED                                New
+ SDEC ELIGIBILITY                                    New
+ SDEC EP CLASSIFICATION                              New
+ SDEC EP CPT                                         New
+ SDEC EP DEMOGRAPHICS                                New
+ SDEC EP DIAGNOSIS                                   New
+ SDEC EP EVENT LOG                                   New
+ SDEC EP PROVIDER                                    New
+ SDEC EP PT INFO                                     New
+ SDEC EP STOP CODE                                   New
+ SDEC EP WAIT TIME                                   New
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (#)     New/Modified/Deleted
+ -------------     ----     -------------     --------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA Hudson Valley Health Care System
+ Chillicothe VA Medical Center
+ Louis Stokes Cleveland VA Medical Center
+ Salt Lake City VA Medical Center
+ West Palm Beach VA Medical Center
+  
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch should not be installed with VistA Scheduling GUI users on the
+ system and it is recommended that it be installed during non-peak hours to
+ minimize potential disruption to other users. This patch should take less
+ than 5 minutes to install.
+  
+ The following options should be disabled to ensure that no processing 
+ takes place during the install:
+   Clinical Scheduling Procedure Calls [SDECRPC]
+   Scheduling Manager's Menu           [SDMGR]
+   Supervisor Menu                     [SDSUP]
+   Scheduling Menu                     [SDUSER]
+   Set up a Clinic                     [SDBUILD]
+  
+ This patch must be installed after patch SD*5.3*665, but can be installed 
+ while the POST-INSTALLATION routine of patch SD*5.3*665 is still running.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ This installation will update routines that support VistA Scheduling GUI 
+ APIs.
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the
+     Installation Menu.  From this menu, you may elect to use the following
+     options. When prompted for the INSTALL NAME enter the patch 
+     #SD*5.3*669
+  
+   a. Backup a Transport Global - This option will create a backup message
+         of any routines exported with this patch. It will not backup any 
+         other changes such as DDs or templates. 
+   b. Compare Transport Global to Current System - This option will allow
+         you to view all changes that will be made when this 
+         patch is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.). 
+   c. Verify Checksums in Transport Global - This option will allow you to
+         ensure the integrity of the routines that are in 
+         the transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+    Install? NO//' Respond with 'NO'
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+       Respond with 'NO'
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//' Respond with 'YES' Option to mark as out of order:
+         Clinical Scheduling Procedure Calls [SDECRPC] 
+         Scheduling Manager's Menu           [SDMGR] 
+         Supervisor Menu                     [SDSUP] 
+         Scheduling Menu                     [SDUSER] 
+         Set up a Clinic                     [SDBUILD]
+  
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDEC07
+    Before:B183590233   After:B186068449  **627,642,651,658,665,669**
+Routine Name: SDEC07B
+    Before: B54807714   After: B55538827  **627,658,665,669**
+Routine Name: SDECCON
+    Before:       n/a   After: B15794027  **669**
+Routine Name: SDECELG
+    Before:       n/a   After:  B1142489  **669**
+Routine Name: SDECEP
+    Before:       n/a   After: B20201129  **669**
+Routine Name: SDECEPT
+    Before:       n/a   After:B134242125  **669**
+ 
+Routine list of preceding patches: 665
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 10, 2017
+Completed By:                               Date Completed: JUN 26, 2017
+Released By :                               Date Released : JUN 26, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

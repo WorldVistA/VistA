@@ -1,0 +1,2541 @@
+Released PRS*4*142 SEQ #137
+Extracted from mail message
+**KIDS**:PRS*4.0*142^
+
+**INSTALL NAME**
+PRS*4.0*142
+"BLD",9752,0)
+PRS*4.0*142^PAID^0^3160418^y
+"BLD",9752,1,0)
+^^17^17^3160329^
+"BLD",9752,1,1,0)
+Patch PRS*4.0*142 addresses four issues:
+"BLD",9752,1,2,0)
+ 
+"BLD",9752,1,3,0)
+1. PAID options that use PRIMLOC^PRSNUT03 to return a nurses primary 
+"BLD",9752,1,4,0)
+   assignment will return an incorrect location if that location has a 
+"BLD",9752,1,5,0)
+   similar string to another.
+"BLD",9752,1,6,0)
+ 
+"BLD",9752,1,7,0)
+2. The Mismatch Report by T&L Unit [PRSNR MISMATCHES BY T&L] option will 
+"BLD",9752,1,8,0)
+   not display the first entry in a report. 
+"BLD",9752,1,9,0)
+ 
+"BLD",9752,1,10,0)
+3. The Mismatch Report by T&L Unit [PRSNR MISMATCHES BY T&L] option will 
+"BLD",9752,1,11,0)
+   produce an undefined error when an employee has work hours associated 
+"BLD",9752,1,12,0)
+   with a non-regular tour of duty. 
+"BLD",9752,1,13,0)
+ 
+"BLD",9752,1,14,0)
+4. The All Non Direct Activity at a Nurse Location [PRSNR NURLOC NONDIR -
+"BLD",9752,1,15,0)
+   COORD] option will produce a subscript error if an employee who worked 
+"BLD",9752,1,16,0)
+   as a nurse during the date range of the report is not currently a 
+"BLD",9752,1,17,0)
+   nurse.
+"BLD",9752,4,0)
+^9.64PA^^
+"BLD",9752,6.3)
+5
+"BLD",9752,"ABPKG")
+n
+"BLD",9752,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9752,"KRN",.4,0)
+.4
+"BLD",9752,"KRN",.401,0)
+.401
+"BLD",9752,"KRN",.402,0)
+.402
+"BLD",9752,"KRN",.403,0)
+.403
+"BLD",9752,"KRN",.5,0)
+.5
+"BLD",9752,"KRN",.84,0)
+.84
+"BLD",9752,"KRN",3.6,0)
+3.6
+"BLD",9752,"KRN",3.8,0)
+3.8
+"BLD",9752,"KRN",9.2,0)
+9.2
+"BLD",9752,"KRN",9.8,0)
+9.8
+"BLD",9752,"KRN",9.8,"NM",0)
+^9.68A^4^4
+"BLD",9752,"KRN",9.8,"NM",1,0)
+PRSNUT03^^0^B68166025
+"BLD",9752,"KRN",9.8,"NM",2,0)
+PRSNRMM^^0^B138017471
+"BLD",9752,"KRN",9.8,"NM",3,0)
+PRSNRMM1^^0^B27798686
+"BLD",9752,"KRN",9.8,"NM",4,0)
+PRSNRLND^^0^B36253049
+"BLD",9752,"KRN",9.8,"NM","B","PRSNRLND",4)
+
+"BLD",9752,"KRN",9.8,"NM","B","PRSNRMM",2)
+
+"BLD",9752,"KRN",9.8,"NM","B","PRSNRMM1",3)
+
+"BLD",9752,"KRN",9.8,"NM","B","PRSNUT03",1)
+
+"BLD",9752,"KRN",19,0)
+19
+"BLD",9752,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",9752,"KRN",19.1,0)
+19.1
+"BLD",9752,"KRN",101,0)
+101
+"BLD",9752,"KRN",409.61,0)
+409.61
+"BLD",9752,"KRN",771,0)
+771
+"BLD",9752,"KRN",779.2,0)
+779.2
+"BLD",9752,"KRN",870,0)
+870
+"BLD",9752,"KRN",8989.51,0)
+8989.51
+"BLD",9752,"KRN",8989.52,0)
+8989.52
+"BLD",9752,"KRN",8994,0)
+8994
+"BLD",9752,"KRN","B",.4,.4)
+
+"BLD",9752,"KRN","B",.401,.401)
+
+"BLD",9752,"KRN","B",.402,.402)
+
+"BLD",9752,"KRN","B",.403,.403)
+
+"BLD",9752,"KRN","B",.5,.5)
+
+"BLD",9752,"KRN","B",.84,.84)
+
+"BLD",9752,"KRN","B",3.6,3.6)
+
+"BLD",9752,"KRN","B",3.8,3.8)
+
+"BLD",9752,"KRN","B",9.2,9.2)
+
+"BLD",9752,"KRN","B",9.8,9.8)
+
+"BLD",9752,"KRN","B",19,19)
+
+"BLD",9752,"KRN","B",19.1,19.1)
+
+"BLD",9752,"KRN","B",101,101)
+
+"BLD",9752,"KRN","B",409.61,409.61)
+
+"BLD",9752,"KRN","B",771,771)
+
+"BLD",9752,"KRN","B",779.2,779.2)
+
+"BLD",9752,"KRN","B",870,870)
+
+"BLD",9752,"KRN","B",8989.51,8989.51)
+
+"BLD",9752,"KRN","B",8989.52,8989.52)
+
+"BLD",9752,"KRN","B",8994,8994)
+
+"BLD",9752,"QDEF")
+^^^^^^^^^^YES
+"BLD",9752,"QUES",0)
+^9.62^^
+"BLD",9752,"REQB",0)
+^9.611^1^1
+"BLD",9752,"REQB",1,0)
+PRS*4.0*126^2
+"BLD",9752,"REQB","B","PRS*4.0*126",1)
+
+"MBREQ")
+0
+"PKG",408,-1)
+1^1
+"PKG",408,0)
+PAID^PRS^PAID
+"PKG",408,20,0)
+^9.402P^^
+"PKG",408,22,0)
+^9.49I^1^1
+"PKG",408,22,1,0)
+4.0^2950912^2960130
+"PKG",408,22,1,"PAH",1,0)
+142^3160418
+"PKG",408,22,1,"PAH",1,1,0)
+^^17^17^3160418
+"PKG",408,22,1,"PAH",1,1,1,0)
+Patch PRS*4.0*142 addresses four issues:
+"PKG",408,22,1,"PAH",1,1,2,0)
+ 
+"PKG",408,22,1,"PAH",1,1,3,0)
+1. PAID options that use PRIMLOC^PRSNUT03 to return a nurses primary 
+"PKG",408,22,1,"PAH",1,1,4,0)
+   assignment will return an incorrect location if that location has a 
+"PKG",408,22,1,"PAH",1,1,5,0)
+   similar string to another.
+"PKG",408,22,1,"PAH",1,1,6,0)
+ 
+"PKG",408,22,1,"PAH",1,1,7,0)
+2. The Mismatch Report by T&L Unit [PRSNR MISMATCHES BY T&L] option will 
+"PKG",408,22,1,"PAH",1,1,8,0)
+   not display the first entry in a report. 
+"PKG",408,22,1,"PAH",1,1,9,0)
+ 
+"PKG",408,22,1,"PAH",1,1,10,0)
+3. The Mismatch Report by T&L Unit [PRSNR MISMATCHES BY T&L] option will 
+"PKG",408,22,1,"PAH",1,1,11,0)
+   produce an undefined error when an employee has work hours associated 
+"PKG",408,22,1,"PAH",1,1,12,0)
+   with a non-regular tour of duty. 
+"PKG",408,22,1,"PAH",1,1,13,0)
+ 
+"PKG",408,22,1,"PAH",1,1,14,0)
+4. The All Non Direct Activity at a Nurse Location [PRSNR NURLOC NONDIR -
+"PKG",408,22,1,"PAH",1,1,15,0)
+   COORD] option will produce a subscript error if an employee who worked 
+"PKG",408,22,1,"PAH",1,1,16,0)
+   as a nurse during the date range of the report is not currently a 
+"PKG",408,22,1,"PAH",1,1,17,0)
+   nurse.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","PRSNRLND")
+0^4^B36253049^B35575903
+"RTN","PRSNRLND",1,0)
+PRSNRLND ;WOIFO/KJS - LOCATION Non Direct Care Summary by Skill Mix II REPORT ;12-9-2011
+"RTN","PRSNRLND",2,0)
+ ;;4.0;PAID;**126,142**;Sep 21, 1995;Build 5
+"RTN","PRSNRLND",3,0)
+ ;;Per VHA Directive 6402, this routine should not be modified
+"RTN","PRSNRLND",4,0)
+ ;
+"RTN","PRSNRLND",5,0)
+ Q
+"RTN","PRSNRLND",6,0)
+ ;
+"RTN","PRSNRLND",7,0)
+COORD ;Entry point for VANOD Coordinator
+"RTN","PRSNRLND",8,0)
+ ; Coordinator has no access limits so let them pick any group
+"RTN","PRSNRLND",9,0)
+ N GROUP
+"RTN","PRSNRLND",10,0)
+ D PIKGROUP^PRSNUT04(.GROUP,"N",1)
+"RTN","PRSNRLND",11,0)
+ I $P($G(GROUP(0)),U,2)="E" D  Q
+"RTN","PRSNRLND",12,0)
+ .W !,$P(GROUP(0),U,3)
+"RTN","PRSNRLND",13,0)
+ D MAIN
+"RTN","PRSNRLND",14,0)
+ ;
+"RTN","PRSNRLND",15,0)
+ Q
+"RTN","PRSNRLND",16,0)
+ ;
+"RTN","PRSNRLND",17,0)
+MAIN ;
+"RTN","PRSNRLND",18,0)
+ N RANGE,BEG,END,EXTBEG,EXTEND,STOP,TYPE,BEG,END
+"RTN","PRSNRLND",19,0)
+ S STOP=0
+"RTN","PRSNRLND",20,0)
+ D DATE
+"RTN","PRSNRLND",21,0)
+ Q:STOP
+"RTN","PRSNRLND",22,0)
+ D QUE
+"RTN","PRSNRLND",23,0)
+ Q
+"RTN","PRSNRLND",24,0)
+ ;
+"RTN","PRSNRLND",25,0)
+REPORT ;for group of location or t&l
+"RTN","PRSNRLND",26,0)
+ ;
+"RTN","PRSNRLND",27,0)
+ N PRSIEN,PRSNG,PICK,PG,LOCIEN,PRSNVER,PRSNTS,PRSNDAY,PPIEN,ENDPP,ENDDAY,BEGPP,BEGDAY,TODAY,PG,TIMEREC
+"RTN","PRSNRLND",28,0)
+ N PRSNAME,PRSNSSN,PRSNTL,SKILMIX,PRSL,PRSNDAYS,PRSNDATE
+"RTN","PRSNRLND",29,0)
+ N PRSNST,PRSNSP,PRSNTT,PRSNWIEN,HOURS,PRSNTIEN
+"RTN","PRSNRLND",30,0)
+ N PRSNTW,PRSNTWD,PRSNM,PRSNRE,PRSNREC,PRSNRIEN,MEAL
+"RTN","PRSNRLND",31,0)
+ N PRSNLNG,IEN200,PRIMLOC,PRSNARY,LOCNAM,NUROLE
+"RTN","PRSNRLND",32,0)
+ U IO
+"RTN","PRSNRLND",33,0)
+ S PG=0,TODAY=$E(DT,4,5)_"/"_$E(DT,6,7)_"/"_$E(DT,2,3)
+"RTN","PRSNRLND",34,0)
+ S BEGPP=$G(^PRST(458,"AD",BEG)),BEGDAY=$P(BEGPP,U,2),BEGPP=+BEGPP
+"RTN","PRSNRLND",35,0)
+ S ENDPP=$G(^PRST(458,"AD",END)),ENDDAY=$P(ENDPP,U,2),ENDPP=+ENDPP
+"RTN","PRSNRLND",36,0)
+ D HDR
+"RTN","PRSNRLND",37,0)
+ S (PICK,STOP)=0
+"RTN","PRSNRLND",38,0)
+ F  S PICK=$O(GROUP(PICK)) Q:PICK=""!STOP  D
+"RTN","PRSNRLND",39,0)
+ . S PRSNG=GROUP(0)_"^"_PICK_"^"_GROUP(PICK)
+"RTN","PRSNRLND",40,0)
+ . S LOCIEN=+GROUP(PICK)
+"RTN","PRSNRLND",41,0)
+ . S LOCNAM=$P($$ISACTIVE^PRSNUT01(DT,LOCIEN),U,2)
+"RTN","PRSNRLND",42,0)
+ . S PRSIEN=0
+"RTN","PRSNRLND",43,0)
+ . F  S PRSIEN=$O(^PRSN(451,"ALN",LOCIEN,PRSIEN)) Q:'PRSIEN!STOP  D
+"RTN","PRSNRLND",44,0)
+ .. D INFO
+"RTN","PRSNRLND",45,0)
+ .. S PPIEN=BEGPP-1
+"RTN","PRSNRLND",46,0)
+ .. F  S PPIEN=$O(^PRSN(451,"ALN",LOCIEN,PRSIEN,PPIEN)) Q:'PPIEN!STOP!(PPIEN>ENDPP)  D
+"RTN","PRSNRLND",47,0)
+ ... S PRSNDAYS=$G(^PRST(458,PPIEN,1))
+"RTN","PRSNRLND",48,0)
+ ... S PRSNDAY=$S(PPIEN=BEGPP:BEGDAY-1,1:0)
+"RTN","PRSNRLND",49,0)
+ ... F  S PRSNDAY=$O(^PRSN(451,"ALN",LOCIEN,PRSIEN,PPIEN,PRSNDAY)) Q:'PRSNDAY!STOP!(PPIEN=ENDPP&(PRSNDAY>ENDDAY))  D
+"RTN","PRSNRLND",50,0)
+ .... S PRSNDATE=$P(PRSNDAYS,U,PRSNDAY),PRSNDATE=$E(PRSNDATE,4,5)_"/"_$E(PRSNDATE,6,7)_"/"_$E(PRSNDATE,2,3)
+"RTN","PRSNRLND",51,0)
+ .... S PRSNVER=$O(^PRSN(451,"ALN",LOCIEN,PRSIEN,PPIEN,PRSNDAY,""),-1)
+"RTN","PRSNRLND",52,0)
+ .... S PRSNTS=0,PRSD=1
+"RTN","PRSNRLND",53,0)
+ .... F  S PRSNTS=$O(^PRSN(451,"ALN",LOCIEN,PRSIEN,PPIEN,PRSNDAY,PRSNVER,PRSNTS)) Q:'PRSNTS!STOP  D
+"RTN","PRSNRLND",54,0)
+ ..... S TIMEREC=$G(^PRSN(451,PPIEN,"E",PRSIEN,"D",PRSNDAY,"V",PRSNVER,"T",PRSNTS,0))
+"RTN","PRSNRLND",55,0)
+ ..... D DATA
+"RTN","PRSNRLND",56,0)
+ D PRTLP
+"RTN","PRSNRLND",57,0)
+ W !!,"End of Report"
+"RTN","PRSNRLND",58,0)
+ D ^%ZISC
+"RTN","PRSNRLND",59,0)
+ Q
+"RTN","PRSNRLND",60,0)
+ ;
+"RTN","PRSNRLND",61,0)
+DATE ; User is prompted for a date range 
+"RTN","PRSNRLND",62,0)
+ ;
+"RTN","PRSNRLND",63,0)
+ S RANGE=$$POCRANGE^PRSNUT01()
+"RTN","PRSNRLND",64,0)
+ ; QUIT HERE IF RANGE=0 
+"RTN","PRSNRLND",65,0)
+ I +$G(RANGE)'>0 S STOP=1 Q
+"RTN","PRSNRLND",66,0)
+ ;
+"RTN","PRSNRLND",67,0)
+ S BEG=$P(RANGE,U)
+"RTN","PRSNRLND",68,0)
+ S END=$P(RANGE,U,2)
+"RTN","PRSNRLND",69,0)
+ S EXTBEG=$P(RANGE,U,3)
+"RTN","PRSNRLND",70,0)
+ S EXTEND=$P(RANGE,U,4)
+"RTN","PRSNRLND",71,0)
+ ;
+"RTN","PRSNRLND",72,0)
+ Q
+"RTN","PRSNRLND",73,0)
+ ;
+"RTN","PRSNRLND",74,0)
+QUE ;call to generate and display report for individual activity
+"RTN","PRSNRLND",75,0)
+ N %ZIS,POP,IOP
+"RTN","PRSNRLND",76,0)
+ S %ZIS="MQ"
+"RTN","PRSNRLND",77,0)
+ D ^%ZIS
+"RTN","PRSNRLND",78,0)
+ Q:POP
+"RTN","PRSNRLND",79,0)
+ I $D(IO("Q")) D
+"RTN","PRSNRLND",80,0)
+ . K IO("Q")
+"RTN","PRSNRLND",81,0)
+ . N ZTSK,ZTDESC,ZTDTH,ZTIO,ZTRTN,ZTSAVE,ZTUCI,ZTCPU,ZTPRI,ZTKIL,ZTSYNC
+"RTN","PRSNRLND",82,0)
+ . S ZTDESC="LOCATION NON DIRECT CARE SUMMARY BY SKILLMIX"
+"RTN","PRSNRLND",83,0)
+ . S ZTRTN="REPORT^PRSNRLND"
+"RTN","PRSNRLND",84,0)
+ . S ZTSAVE("GROUP")=""
+"RTN","PRSNRLND",85,0)
+ . S ZTSAVE("GROUP(")=""
+"RTN","PRSNRLND",86,0)
+ . S ZTSAVE("TYPE")=""
+"RTN","PRSNRLND",87,0)
+ . S ZTSAVE("BEG")=""
+"RTN","PRSNRLND",88,0)
+ . S ZTSAVE("END")=""
+"RTN","PRSNRLND",89,0)
+ . S ZTSAVE("EXTBEG")=""
+"RTN","PRSNRLND",90,0)
+ . S ZTSAVE("EXTEND")=""
+"RTN","PRSNRLND",91,0)
+ . D ^%ZTLOAD
+"RTN","PRSNRLND",92,0)
+ . I $D(ZTSK) S ZTREQ="@" W !,"Request "_ZTSK_" Queued."
+"RTN","PRSNRLND",93,0)
+ E  D
+"RTN","PRSNRLND",94,0)
+ . D REPORT
+"RTN","PRSNRLND",95,0)
+ Q
+"RTN","PRSNRLND",96,0)
+ ;
+"RTN","PRSNRLND",97,0)
+INFO ;Find nurse information to display in report
+"RTN","PRSNRLND",98,0)
+ ;
+"RTN","PRSNRLND",99,0)
+ S PRSL=1
+"RTN","PRSNRLND",100,0)
+ S PRSNARY=$G(^PRSPC(PRSIEN,0))
+"RTN","PRSNRLND",101,0)
+ S PRSNAME=$P(PRSNARY,U)              ;Nurse Name
+"RTN","PRSNRLND",102,0)
+ S PRSNSSN=$P(PRSNARY,U,9)           ;Nurse SSN
+"RTN","PRSNRLND",103,0)
+ S PRSNTL=$P(PRSNARY,U,8)             ;Nurse T&L
+"RTN","PRSNRLND",104,0)
+ S NUROLE=$P($$ISNURSE^PRSNUT01(PRSIEN),U,2) ;  Nurse skillmix
+"RTN","PRSNRLND",105,0)
+ S IEN200=$G(^PRSPC(PRSIEN,200))
+"RTN","PRSNRLND",106,0)
+ S PRIMLOC=$S(IEN200="":"",1:$$PRIMLOC^PRSNUT03(IEN200))
+"RTN","PRSNRLND",107,0)
+ Q
+"RTN","PRSNRLND",108,0)
+ ;
+"RTN","PRSNRLND",109,0)
+DATA ;Extract display data from POCD array
+"RTN","PRSNRLND",110,0)
+ ;
+"RTN","PRSNRLND",111,0)
+ ;Start Time
+"RTN","PRSNRLND",112,0)
+ S PRSNST=$P(TIMEREC,U)
+"RTN","PRSNRLND",113,0)
+ ;
+"RTN","PRSNRLND",114,0)
+ ;Stop Time 
+"RTN","PRSNRLND",115,0)
+ S PRSNSP=$P(TIMEREC,U,2)
+"RTN","PRSNRLND",116,0)
+ ;
+"RTN","PRSNRLND",117,0)
+ ;Meal Time
+"RTN","PRSNRLND",118,0)
+ S MEAL=$P(TIMEREC,U,3)
+"RTN","PRSNRLND",119,0)
+ ;
+"RTN","PRSNRLND",120,0)
+ ;Get hours worked in a given location
+"RTN","PRSNRLND",121,0)
+ S HOURS=$$AMT^PRSPSAPU(PRSNST,PRSNSP,MEAL)
+"RTN","PRSNRLND",122,0)
+ ;
+"RTN","PRSNRLND",123,0)
+ ;Type of Time code IEN
+"RTN","PRSNRLND",124,0)
+ S PRSNTT=$P(TIMEREC,U,4),PRSNLNG=" "
+"RTN","PRSNRLND",125,0)
+ I PRSNTT'="" D
+"RTN","PRSNRLND",126,0)
+ . ;
+"RTN","PRSNRLND",127,0)
+ . ;Type of Time code
+"RTN","PRSNRLND",128,0)
+ . S PRSNTIEN=$O(^PRST(457.3,"B",PRSNTT,0))
+"RTN","PRSNRLND",129,0)
+ . Q:PRSNTIEN=""
+"RTN","PRSNRLND",130,0)
+ . ;
+"RTN","PRSNRLND",131,0)
+ . ;Description for Type of Time code
+"RTN","PRSNRLND",132,0)
+ . S PRSNLNG=$P(^PRST(457.3,PRSNTIEN,0),U,2)
+"RTN","PRSNRLND",133,0)
+ . ;
+"RTN","PRSNRLND",134,0)
+ . ;Type of Work Code IEN
+"RTN","PRSNRLND",135,0)
+ S PRSNWIEN=$P(TIMEREC,U,6),PRSNTW=" ",PRSNTWD=" "
+"RTN","PRSNRLND",136,0)
+ I PRSNWIEN'="" D
+"RTN","PRSNRLND",137,0)
+ . ;
+"RTN","PRSNRLND",138,0)
+ . ;Type of Work Code
+"RTN","PRSNRLND",139,0)
+ . S PRSNTW=$P(^PRSN(451.5,PRSNWIEN,0),U)
+"RTN","PRSNRLND",140,0)
+ . ;
+"RTN","PRSNRLND",141,0)
+ . ;Description for Type of Work code
+"RTN","PRSNRLND",142,0)
+ . S PRSNTWD=$P(^PRSN(451.5,PRSNWIEN,0),U,2)
+"RTN","PRSNRLND",143,0)
+ ;
+"RTN","PRSNRLND",144,0)
+ ;OT Mandatory/Voluntary
+"RTN","PRSNRLND",145,0)
+ S PRSNM=$P(TIMEREC,U,7)
+"RTN","PRSNRLND",146,0)
+ ;
+"RTN","PRSNRLND",147,0)
+ ;save skill mix, hours and type of work into SKILMIX array
+"RTN","PRSNRLND",148,0)
+ ;
+"RTN","PRSNRLND",149,0)
+ ; Patch PRS*4.0*142 gives variables PRSNTWD and NUROLE the value of a space in the event that they are set to null.
+"RTN","PRSNRLND",150,0)
+ I $G(PRSNTW)'="DC" D
+"RTN","PRSNRLND",151,0)
+ . S:PRSNTWD="" PRSNTWD=" " S:NUROLE="" NUROLE=" "
+"RTN","PRSNRLND",152,0)
+ . S SKILMIX(LOCNAM,PRSNTWD,NUROLE)=$G(SKILMIX(LOCNAM,PRSNTWD,NUROLE))+HOURS
+"RTN","PRSNRLND",153,0)
+ Q
+"RTN","PRSNRLND",154,0)
+ ;
+"RTN","PRSNRLND",155,0)
+HDR ;
+"RTN","PRSNRLND",156,0)
+ ;
+"RTN","PRSNRLND",157,0)
+ W @IOF
+"RTN","PRSNRLND",158,0)
+ S PG=PG+1
+"RTN","PRSNRLND",159,0)
+ W ?17,"LOCATION NON DIRECT SUMMARY BY SKILL MIX REPORT"
+"RTN","PRSNRLND",160,0)
+ W !,?15,EXTBEG_" - "_EXTEND,?45,"Run Date: ",TODAY,?70,"Page: ",$J(PG,3)
+"RTN","PRSNRLND",161,0)
+ W !         ;blank line
+"RTN","PRSNRLND",162,0)
+ W !,"Location",?22,"Non Direct",?53,"# of",?60,"# of",?67,"# of",?74,"Total"
+"RTN","PRSNRLND",163,0)
+ W !,?22,"Care",?53,"Hours",?60,"Hours",?67,"Hours",?74,"Hours"
+"RTN","PRSNRLND",164,0)
+ W !,?22,"Category",?53,"RN",?60,"LPN",?67,"UAP"
+"RTN","PRSNRLND",165,0)
+ W !,"--------------------------------------------------------------------------------"
+"RTN","PRSNRLND",166,0)
+ ;
+"RTN","PRSNRLND",167,0)
+ Q
+"RTN","PRSNRLND",168,0)
+ ;
+"RTN","PRSNRLND",169,0)
+PRTLP ;Order through SKILMIX array, total data & display
+"RTN","PRSNRLND",170,0)
+ N RNDC,LNDC,UNDC,GP,TNDC,SKILL,NDCARE
+"RTN","PRSNRLND",171,0)
+ S GP=""
+"RTN","PRSNRLND",172,0)
+ F  S GP=$O(SKILMIX(GP)) Q:GP=""!STOP  D
+"RTN","PRSNRLND",173,0)
+ . S NDCARE=""
+"RTN","PRSNRLND",174,0)
+ . F  S NDCARE=$O(SKILMIX(GP,NDCARE)) Q:NDCARE=""!STOP  D
+"RTN","PRSNRLND",175,0)
+ .. S (RNDC,LNDC,UNDC,TNDC)=0
+"RTN","PRSNRLND",176,0)
+ .. S SKILL=""
+"RTN","PRSNRLND",177,0)
+ .. F  S SKILL=$O(SKILMIX(GP,NDCARE,SKILL)) Q:SKILL=""!STOP  D
+"RTN","PRSNRLND",178,0)
+ ... I SKILL["RN" S RNDC=SKILMIX(GP,NDCARE,SKILL)+$G(RNDC)
+"RTN","PRSNRLND",179,0)
+ ... I SKILL["LPN" S LNDC=SKILMIX(GP,NDCARE,SKILL)+$G(LNDC)
+"RTN","PRSNRLND",180,0)
+ ... I SKILL'["RN",SKILL'["LPN" S UNDC=SKILMIX(GP,NDCARE,SKILL)+$G(UNDC)
+"RTN","PRSNRLND",181,0)
+ .. S TNDC=$G(RNDC)+$G(LNDC)+$G(UNDC)  ;total hours
+"RTN","PRSNRLND",182,0)
+ .. D PPP
+"RTN","PRSNRLND",183,0)
+ Q
+"RTN","PRSNRLND",184,0)
+ ;
+"RTN","PRSNRLND",185,0)
+PPP ;
+"RTN","PRSNRLND",186,0)
+ W !
+"RTN","PRSNRLND",187,0)
+ W GP,?22,NDCARE,?53,RNDC,?60,LNDC,?67,UNDC,?74,TNDC
+"RTN","PRSNRLND",188,0)
+ I (IOSL-5)<$Y S STOP=$$ASK^PRSLIB00() I 'STOP D HDR
+"RTN","PRSNRLND",189,0)
+ Q
+"RTN","PRSNRMM")
+0^2^B138017471^B135301607
+"RTN","PRSNRMM",1,0)
+PRSNRMM ;WOIFO-JAH - POC Record and Timecard Mismatches;07/31/09
+"RTN","PRSNRMM",2,0)
+ ;;4.0;PAID;**126,142**;Sep 21, 1995;Build 5
+"RTN","PRSNRMM",3,0)
+ ;;Per VHA Directive 6402, this routine should not be modified.
+"RTN","PRSNRMM",4,0)
+ Q
+"RTN","PRSNRMM",5,0)
+ ;
+"RTN","PRSNRMM",6,0)
+PPMM(PRSIEN,PPI,PG,STOP) ; report mismatches for a pay period
+"RTN","PRSNRMM",7,0)
+ N PRSD,MM
+"RTN","PRSNRMM",8,0)
+ S STOP=+$G(STOP)
+"RTN","PRSNRMM",9,0)
+ S PG=+$G(PG)
+"RTN","PRSNRMM",10,0)
+ D HDR(.STOP,1,PRSIEN,PPI,.PG)
+"RTN","PRSNRMM",11,0)
+ F PRSD=1:1:14 Q:STOP  D
+"RTN","PRSNRMM",12,0)
+ .  K MM
+"RTN","PRSNRMM",13,0)
+ .  D DAILYMM(.MM,PRSIEN,PPI,PRSD)
+"RTN","PRSNRMM",14,0)
+ .  Q:MM(0)'>0
+"RTN","PRSNRMM",15,0)
+ .  W !!,$P($G(^PRST(458,PPI,2)),U,PRSD)
+"RTN","PRSNRMM",16,0)
+ .  D DISPMM(.MM,.STOP,1,PRSIEN,PPI,PRSD)
+"RTN","PRSNRMM",17,0)
+ .  I (IOSL-4)<$Y D HDR(.STOP,1,PRSIEN,PPI,.PG)
+"RTN","PRSNRMM",18,0)
+ Q
+"RTN","PRSNRMM",19,0)
+DISPMM(MM,STOP,HDR,PRSIEN,PPI,PRSD) ; Display a single day of mismatches between
+"RTN","PRSNRMM",20,0)
+ ;                  a timecard and a POC record
+"RTN","PRSNRMM",21,0)
+ ; INPUT:
+"RTN","PRSNRMM",22,0)
+ ;   MM-(array by reference) call DAILYMM to get an array of 
+"RTN","PRSNRMM",23,0)
+ ;       mismatches to pass to this display routine
+"RTN","PRSNRMM",24,0)
+ ;   PPI-(required) pay period IEN
+"RTN","PRSNRMM",25,0)
+ ;   PRSD-(required) day number in pay period referenced in PPI
+"RTN","PRSNRMM",26,0)
+ ;   HDR-(optional) set to true if you want a header included
+"RTN","PRSNRMM",27,0)
+ ;
+"RTN","PRSNRMM",28,0)
+ ; OUTPUT:
+"RTN","PRSNRMM",29,0)
+ ;   STOP-reference variable returned as true if the user was
+"RTN","PRSNRMM",30,0)
+ ;        prompted to continue and responded with an '^' to quit
+"RTN","PRSNRMM",31,0)
+ ;
+"RTN","PRSNRMM",32,0)
+ N T1,T2,TT,P1,P2,PT,PTE,TTE,MISM,DASH
+"RTN","PRSNRMM",33,0)
+ I $G(STOP)'>0 S STOP=0
+"RTN","PRSNRMM",34,0)
+ I $G(HDR)'>0 S HDR=0
+"RTN","PRSNRMM",35,0)
+ S DASH=" -"
+"RTN","PRSNRMM",36,0)
+ S J=0
+"RTN","PRSNRMM",37,0)
+ F  S J=$O(MM(J)) Q:J'>0!STOP  D
+"RTN","PRSNRMM",38,0)
+ .  I (IOSL-4)<$Y D HDR(.STOP,HDR,PRSIEN,PPI,.PG)
+"RTN","PRSNRMM",39,0)
+ .  Q:STOP
+"RTN","PRSNRMM",40,0)
+ .  S MISM=$G(MM(J))
+"RTN","PRSNRMM",41,0)
+ .  S T1=$$ETIM($P(MISM,U))
+"RTN","PRSNRMM",42,0)
+ .  S T2=$$ETIM($P(MISM,U,2))
+"RTN","PRSNRMM",43,0)
+ .  S TT=$P(MISM,U,3)
+"RTN","PRSNRMM",44,0)
+ .  S TTE=$P(MISM,U,4)
+"RTN","PRSNRMM",45,0)
+ .  S P1=$$ETIM($P(MISM,U,5))
+"RTN","PRSNRMM",46,0)
+ .  S P2=$$ETIM($P(MISM,U,6))
+"RTN","PRSNRMM",47,0)
+ .  S PT=$P(MISM,U,7)
+"RTN","PRSNRMM",48,0)
+ .  S PTE=$P(MISM,U,8)
+"RTN","PRSNRMM",49,0)
+ .  W !,$J(T1,7),DASH,$J(T2,7),?19,TT,?24,TTE,?40,$J(P1,7),DASH,$J(P2,7),?60,PT,?64,PTE
+"RTN","PRSNRMM",50,0)
+ Q
+"RTN","PRSNRMM",51,0)
+HDR(STOP,HDR,PRSIEN,PPI,PG) ;
+"RTN","PRSNRMM",52,0)
+ I PG>0 S STOP=$$ASK^PRSLIB00()
+"RTN","PRSNRMM",53,0)
+ Q:STOP
+"RTN","PRSNRMM",54,0)
+ W @IOF,! S PG=PG+1
+"RTN","PRSNRMM",55,0)
+ I HDR D
+"RTN","PRSNRMM",56,0)
+ .  N PPE,PPBEG,PPEND,TITLE,TITLE2,PGE,RUNDATE
+"RTN","PRSNRMM",57,0)
+ .  S PPE=$P($G(^PRST(458,PPI,0)),U)
+"RTN","PRSNRMM",58,0)
+ .  S PPBEG=$P($G(^PRST(458,PPI,2)),U,1)
+"RTN","PRSNRMM",59,0)
+ .  S PPEND=$P($G(^PRST(458,PPI,2)),U,14)
+"RTN","PRSNRMM",60,0)
+ .  S TITLE="Mismatch Report Between ETA Timecard & Point of Care Record"
+"RTN","PRSNRMM",61,0)
+ .  S TITLE2="for Pay Period "_PPE_" ("_PPBEG_" - "_PPEND_")"
+"RTN","PRSNRMM",62,0)
+ .  W ?((IOM-$L(TITLE))\2),TITLE
+"RTN","PRSNRMM",63,0)
+ .  W !,?((IOM-$L(TITLE2))\2),TITLE2
+"RTN","PRSNRMM",64,0)
+ .  S PGE="Page "_PG
+"RTN","PRSNRMM",65,0)
+ .  I PG>0 W ?(IOM-$L(PGE)-2),PGE
+"RTN","PRSNRMM",66,0)
+ .  S RUNDATE="Run Date: "_$E(DT,4,5)_"/"_$E(DT,6,7)_"/"_$E(DT,2,3)
+"RTN","PRSNRMM",67,0)
+ .  W !,?3,"Nurse: ",$P($G(^PRSPC(PRSIEN,0)),U)
+"RTN","PRSNRMM",68,0)
+ .  W ?(IOM-$L(RUNDATE)-3),RUNDATE
+"RTN","PRSNRMM",69,0)
+ .  W !!,?9,"ETA TIMECARD",?46,"POINT OF CARE RECORD"
+"RTN","PRSNRMM",70,0)
+ .  W !,?2,"=================================",?40,"==================================="
+"RTN","PRSNRMM",71,0)
+ Q
+"RTN","PRSNRMM",72,0)
+DAILYMM(MM,PRSIEN,PPI,PRSD) ;
+"RTN","PRSNRMM",73,0)
+ ; INPUT:
+"RTN","PRSNRMM",74,0)
+ ;   PRSIEN: 450/451 IEN
+"RTN","PRSNRMM",75,0)
+ ;   PPI: 451/458 Pay Period IEN
+"RTN","PRSNRMM",76,0)
+ ;   PRSD: day 1-14 of pay period
+"RTN","PRSNRMM",77,0)
+ ; OUTPUT:
+"RTN","PRSNRMM",78,0)
+ ;   MM - mismatch array index 1..n for each mismatch
+"RTN","PRSNRMM",79,0)
+ ;   MM(0) = number of mismatches and zero for none
+"RTN","PRSNRMM",80,0)
+ ;   MM(0+n) = TC Seg start^TC Seg Stop^TT^POC seg start^POC seg stop^TT
+"RTN","PRSNRMM",81,0)
+ ;
+"RTN","PRSNRMM",82,0)
+ ;Loop through Timecard storing types of time in TD string and TD array
+"RTN","PRSNRMM",83,0)
+ ;
+"RTN","PRSNRMM",84,0)
+ N ND,TD
+"RTN","PRSNRMM",85,0)
+ S MM(0)=0
+"RTN","PRSNRMM",86,0)
+ D BLDTC(.TD,PRSIEN,PPI,PRSD,0)
+"RTN","PRSNRMM",87,0)
+ ;
+"RTN","PRSNRMM",88,0)
+ ; Loop through POC Record storing time in ND string and ND array
+"RTN","PRSNRMM",89,0)
+ ;
+"RTN","PRSNRMM",90,0)
+ D BLDPOC(.ND,PRSIEN,PPI,PRSD,0)
+"RTN","PRSNRMM",91,0)
+ I '$D(ND) S MM="-1^NO POC RECORD" Q
+"RTN","PRSNRMM",92,0)
+ ;
+"RTN","PRSNRMM",93,0)
+ ;  Strings will look like
+"RTN","PRSNRMM",94,0)
+ ;
+"RTN","PRSNRMM",95,0)
+ ;  TD="00000000000000000AAAAAAAAAAAAAAAAAA000000000000000000000..."
+"RTN","PRSNRMM",96,0)
+ ;  ND="00000000000000000AAAAAAAAAAAAAAAAAAWWWWWWWWWWWWWWWWWWW00..."
+"RTN","PRSNRMM",97,0)
+ ;
+"RTN","PRSNRMM",98,0)
+ ;
+"RTN","PRSNRMM",99,0)
+ ;  arrays will look like:
+"RTN","PRSNRMM",100,0)
+ ;
+"RTN","PRSNRMM",101,0)
+ ;   TD(0)=code^segment start^segment stop^ETA TT
+"RTN","PRSNRMM",102,0)
+ ;   TD(1)=code^segment start^segment stop^ETA TT
+"RTN","PRSNRMM",103,0)
+ ;   TD(3)=code^segment start^segment stop^ETA TT
+"RTN","PRSNRMM",104,0)
+ ;   TD(4)=code^segment start^segment stop^ETA TT
+"RTN","PRSNRMM",105,0)
+ ;   .....
+"RTN","PRSNRMM",106,0)
+ ;   TD(188)=code^segment start^segment stop^ETA TT
+"RTN","PRSNRMM",107,0)
+ ;   TD(189)=code^segment start^segment stop^ETA TT
+"RTN","PRSNRMM",108,0)
+ ;   TD(190)=code^segment start^segment stop^ETA TT
+"RTN","PRSNRMM",109,0)
+ ;
+"RTN","PRSNRMM",110,0)
+ ;   ND(0)=code^segment start^segment stop^POC TT
+"RTN","PRSNRMM",111,0)
+ ;   ND(1)=code^segment start^segment stop^POC TT
+"RTN","PRSNRMM",112,0)
+ ;   .....
+"RTN","PRSNRMM",113,0)
+ ;   ND(191)=code^segment start^segment stop^POC TT
+"RTN","PRSNRMM",114,0)
+ ;   ND(192)=code^segment start^segment stop^POC TT
+"RTN","PRSNRMM",115,0)
+ ;
+"RTN","PRSNRMM",116,0)
+ ;  If strings match there are no mismatches and we are done.
+"RTN","PRSNRMM",117,0)
+ ;
+"RTN","PRSNRMM",118,0)
+ I ND=TD Q
+"RTN","PRSNRMM",119,0)
+ ;
+"RTN","PRSNRMM",120,0)
+ ; traverse strings until first mismatched characters are found.
+"RTN","PRSNRMM",121,0)
+ ;  Once a mismatch is found determine the segments associated with
+"RTN","PRSNRMM",122,0)
+ ; each of the corresponding characters that mismatch.
+"RTN","PRSNRMM",123,0)
+ ;  This can easily be found because the ND and TD arrays have
+"RTN","PRSNRMM",124,0)
+ ; stored the start and stop of each segment in the node where
+"RTN","PRSNRMM",125,0)
+ ; corresponding to the position in the ND and TD strings.
+"RTN","PRSNRMM",126,0)
+ ;
+"RTN","PRSNRMM",127,0)
+ N TCBEG,TCEND,TCBEGI,TCENDI,POCTT,POCBEGI,POCENDI,POCBEG,POCEND
+"RTN","PRSNRMM",128,0)
+ N I,POCTT,POCTTE,TCTT,TCTTE
+"RTN","PRSNRMM",129,0)
+ F I=1:1:192 I $E(ND,I)'=$E(TD,I) D
+"RTN","PRSNRMM",130,0)
+ .  S MM(0)=MM(0)+1
+"RTN","PRSNRMM",131,0)
+ .  S TCTT=$P(TD(I),U,5)
+"RTN","PRSNRMM",132,0)
+ .  S TCTTE=$$TTE^PRSPSAPU(TCTT)
+"RTN","PRSNRMM",133,0)
+ .  I $P(TD(I),U,2)="Z" S TCTT="",TCTTE="Unposted Tour"
+"RTN","PRSNRMM",134,0)
+ .  S TCBEGI=+$P(TD(I),U,3)
+"RTN","PRSNRMM",135,0)
+ .  S TCENDI=+$P(TD(I),U,4)
+"RTN","PRSNRMM",136,0)
+ .  S POCTT=$P(ND(I),U,5)
+"RTN","PRSNRMM",137,0)
+ .  S POCTTE=$$TTE^PRSPSAPU(POCTT)
+"RTN","PRSNRMM",138,0)
+ .  S POCBEGI=+$P(ND(I),U,3)
+"RTN","PRSNRMM",139,0)
+ .  S POCENDI=+$P(ND(I),U,4)
+"RTN","PRSNRMM",140,0)
+ .  S TCBEG=+$G(TD(TCBEGI))
+"RTN","PRSNRMM",141,0)
+ .  S TCEND=+$G(TD(TCENDI+1))
+"RTN","PRSNRMM",142,0)
+ .  S POCBEG=+$G(ND(POCBEGI))
+"RTN","PRSNRMM",143,0)
+ .  S POCEND=+$G(ND(POCENDI+1))
+"RTN","PRSNRMM",144,0)
+ .;   Adjust end points of segment for clearer reporting when 
+"RTN","PRSNRMM",145,0)
+ .;   POC or ETA has no data at the point of mismatch
+"RTN","PRSNRMM",146,0)
+ .  I $E(TD,I)=0 D
+"RTN","PRSNRMM",147,0)
+ ..   I TCENDI>POCENDI S TCEND=+$G(ND(POCENDI+1))
+"RTN","PRSNRMM",148,0)
+ ..   I TCBEGI<POCBEGI S TCBEG=+$G(ND(POCBEGI))
+"RTN","PRSNRMM",149,0)
+ ..   S TCTTE="No Data"
+"RTN","PRSNRMM",150,0)
+ .  I $E(ND,I)=0 D
+"RTN","PRSNRMM",151,0)
+ ..   I POCENDI>TCENDI S POCEND=+$G(TD(TCENDI+1))
+"RTN","PRSNRMM",152,0)
+ ..   I POCBEGI<TCBEGI S POCBEG=+$G(TD(TCBEGI))
+"RTN","PRSNRMM",153,0)
+ ..   S POCTTE="No Data"
+"RTN","PRSNRMM",154,0)
+ .  S MM(+MM(0))=TCBEG_U_TCEND_U_TCTT_U_TCTTE_U_POCBEG_U_POCEND_U_POCTT_U_POCTTE
+"RTN","PRSNRMM",155,0)
+ .;  start the search back up at the end of the shorter segment
+"RTN","PRSNRMM",156,0)
+ .;  unless there is no time in the shorter segment
+"RTN","PRSNRMM",157,0)
+ .  I POCENDI=0 S I=TCENDI Q
+"RTN","PRSNRMM",158,0)
+ .  I TCENDI=0 S I=POCENDI Q
+"RTN","PRSNRMM",159,0)
+ .  I POCENDI>TCENDI D
+"RTN","PRSNRMM",160,0)
+ ..    S I=TCENDI
+"RTN","PRSNRMM",161,0)
+ .  E  D
+"RTN","PRSNRMM",162,0)
+ ..    S I=POCENDI
+"RTN","PRSNRMM",163,0)
+ Q
+"RTN","PRSNRMM",164,0)
+BLDPOC(ND,PRSIEN,PPI,PRSD,ACTIVITY) ; Build string and array from POC day
+"RTN","PRSNRMM",165,0)
+ ; initialize ND
+"RTN","PRSNRMM",166,0)
+ ; INPUT:
+"RTN","PRSNRMM",167,0)
+ ;   PRSIEN: 450 IEN
+"RTN","PRSNRMM",168,0)
+ ;   PPI:  458/451 IEN
+"RTN","PRSNRMM",169,0)
+ ;   PRSD: Pay period day number 1-14
+"RTN","PRSNRMM",170,0)
+ ;   ACTIVITY: flag set to true if you want to have only portions
+"RTN","PRSNRMM",171,0)
+ ;             of the array with activity to be returned.
+"RTN","PRSNRMM",172,0)
+ ;   ND: activity string and array
+"RTN","PRSNRMM",173,0)
+ ;
+"RTN","PRSNRMM",174,0)
+ N I,POCD,J,CC,SET,T1,T2,TT,SEG
+"RTN","PRSNRMM",175,0)
+ F I=1:1:192 S $E(ND,I)=0
+"RTN","PRSNRMM",176,0)
+ F I=1:1:193 S ND(I)=+$$POSTIM(I,1)
+"RTN","PRSNRMM",177,0)
+ D L1^PRSNRUT1(.POCD,PPI,PRSIEN,PRSD)
+"RTN","PRSNRMM",178,0)
+ S SEG=0
+"RTN","PRSNRMM",179,0)
+ F  S SEG=$O(POCD(SEG)) Q:SEG'>0  D
+"RTN","PRSNRMM",180,0)
+ .  S T1=$$TIMEPOS($P(POCD(SEG),U,9),1)
+"RTN","PRSNRMM",181,0)
+ .  S T2=$$TIMEPOS($P(POCD(SEG),U,10),0)
+"RTN","PRSNRMM",182,0)
+ .  S TT=$P(POCD(SEG),U,4)
+"RTN","PRSNRMM",183,0)
+ .  S CC=$$CONVERT(TT)
+"RTN","PRSNRMM",184,0)
+ .  F J=T1:1:T2 Q:J>192  S $P(ND(J),U,2,5)=CC_U_T1_U_T2_U_TT,$E(ND,J)=CC
+"RTN","PRSNRMM",185,0)
+ ; loop through activity again to update all the start and stop
+"RTN","PRSNRMM",186,0)
+ ; times for each segment, this will give segment start and stops
+"RTN","PRSNRMM",187,0)
+ ; to periods where there is no data
+"RTN","PRSNRMM",188,0)
+ ;
+"RTN","PRSNRMM",189,0)
+ N LQH,NEWSTART,QH,NEWEND
+"RTN","PRSNRMM",190,0)
+ S LQH=0,NEWSTART=1
+"RTN","PRSNRMM",191,0)
+ F I=1:1:192 D
+"RTN","PRSNRMM",192,0)
+ .  S QH=$E(ND,I)
+"RTN","PRSNRMM",193,0)
+ .  I LQH'=QH S NEWSTART=I,LQH=QH
+"RTN","PRSNRMM",194,0)
+ .  S $P(ND(I),U,3)=NEWSTART
+"RTN","PRSNRMM",195,0)
+ ;
+"RTN","PRSNRMM",196,0)
+ S LQH=0,NEWEND=192
+"RTN","PRSNRMM",197,0)
+ F I=192:-1:1 D
+"RTN","PRSNRMM",198,0)
+ .  S QH=$E(ND,I)
+"RTN","PRSNRMM",199,0)
+ .  I LQH'=QH S NEWEND=I,LQH=QH
+"RTN","PRSNRMM",200,0)
+ .  S $P(ND(I),U,4)=NEWEND
+"RTN","PRSNRMM",201,0)
+ ;
+"RTN","PRSNRMM",202,0)
+ ;
+"RTN","PRSNRMM",203,0)
+ ; If activity is true remove all nodes with no activity
+"RTN","PRSNRMM",204,0)
+ ;
+"RTN","PRSNRMM",205,0)
+ I ACTIVITY D
+"RTN","PRSNRMM",206,0)
+ . F I=1:1:193 I $P($G(ND(I)),U,2)="" K ND(I)
+"RTN","PRSNRMM",207,0)
+ . S ND=0
+"RTN","PRSNRMM",208,0)
+ ;
+"RTN","PRSNRMM",209,0)
+ Q
+"RTN","PRSNRMM",210,0)
+BLDTC(TD,PRSIEN,PPI,PRSD,ACTIVITY) ; Build string and array from Time Card day
+"RTN","PRSNRMM",211,0)
+ ; initialize TD
+"RTN","PRSNRMM",212,0)
+ ;  INPUT:  standard PRSIEN, PPI, PRSD
+"RTN","PRSNRMM",213,0)
+ ;          ACTIVITY-(optional) flag set to true if return array
+"RTN","PRSNRMM",214,0)
+ ;                   should only contain nodes with activity
+"RTN","PRSNRMM",215,0)
+ ;  OUTPUT:
+"RTN","PRSNRMM",216,0)
+ ;   TD (string) with 192 characters representing each 15 minutes of
+"RTN","PRSNRMM",217,0)
+ ;      the day
+"RTN","PRSNRMM",218,0)
+ ;   if ACTIVITY parameter true then TD string will be set as follows:
+"RTN","PRSNRMM",219,0)
+ ;        TD = timecard posting status ^ tour of duty IEN
+"RTN","PRSNRMM",220,0)
+ ;
+"RTN","PRSNRMM",221,0)
+ ;   TD(1..192)--array with nodes of activity for each 15 min.
+"RTN","PRSNRMM",222,0)
+ ;
+"RTN","PRSNRMM",223,0)
+ N I,J,CC,SET,TS,TE,TOUR,T1,T2,TT,TC,TOD,TODD,TCD,X,Y,POSTED,DAYOFF,SEG,NEWSTART,NEWEND,LQH,POC,QH
+"RTN","PRSNRMM",224,0)
+ F I=1:1:193 S TD(I)=+$$POSTIM(I,1)
+"RTN","PRSNRMM",225,0)
+ D LOADTOD^PRSPLVU(PPI,PRSIEN,PRSD,.TOD,.TODD)
+"RTN","PRSNRMM",226,0)
+ D LOADTC^PRSPLVU(PPI,PRSIEN,PRSD,.TCD)
+"RTN","PRSNRMM",227,0)
+ ;
+"RTN","PRSNRMM",228,0)
+ ; Check for no time posted on the timecard
+"RTN","PRSNRMM",229,0)
+ N X0,PSTAT
+"RTN","PRSNRMM",230,0)
+ S X0=$G(^PRST(458,PPI,"E",PRSIEN,"D",PRSD,0))
+"RTN","PRSNRMM",231,0)
+ ;
+"RTN","PRSNRMM",232,0)
+ ; posting status--(T)imekeeper, (P)ayroll, (X)mitted
+"RTN","PRSNRMM",233,0)
+ S PSTAT=$P($G(^PRST(458,PPI,"E",PRSIEN,"D",PRSD,10)),U,1)
+"RTN","PRSNRMM",234,0)
+ ;
+"RTN","PRSNRMM",235,0)
+ ; tour of duty (1=day off, 3,4=intermittent)
+"RTN","PRSNRMM",236,0)
+ S TC=$P(X0,U,2)
+"RTN","PRSNRMM",237,0)
+ S POSTED=1
+"RTN","PRSNRMM",238,0)
+ I "1 3 4"'[TC,PSTAT="" S (PSTAT,POSTED)=0 ;  - no posting to tour
+"RTN","PRSNRMM",239,0)
+ ;
+"RTN","PRSNRMM",240,0)
+ F I=1:1:192 S $E(TD,I)=0
+"RTN","PRSNRMM",241,0)
+ ;
+"RTN","PRSNRMM",242,0)
+ S SEG=0
+"RTN","PRSNRMM",243,0)
+ F  S SEG=$O(TOD(SEG)) Q:SEG'>0  D
+"RTN","PRSNRMM",244,0)
+ .  S TT=$P(TOD(SEG),U,3)
+"RTN","PRSNRMM",245,0)
+ .  I TT="RG" S TT="WI"
+"RTN","PRSNRMM",246,0)
+ .  S CC=$$CONVERT(TT)
+"RTN","PRSNRMM",247,0)
+ .  S POC=$$CNVTTPOC(TT)
+"RTN","PRSNRMM",248,0)
+ .  I 'POSTED S CC="Z"
+"RTN","PRSNRMM",249,0)
+ .  S T1=$P(TOD(SEG),U,4)
+"RTN","PRSNRMM",250,0)
+ .  S X=T1,Y=0 D MIL^PRSATIM S T1=Y
+"RTN","PRSNRMM",251,0)
+ .  S T2=$P(TOD(SEG),U,5)
+"RTN","PRSNRMM",252,0)
+ .  S X=T2,Y=1 D MIL^PRSATIM S T2=Y
+"RTN","PRSNRMM",253,0)
+ .  ; if the start time is earlier than the stop time then it
+"RTN","PRSNRMM",254,0)
+ .  ; must be a time on a second day of a two day tour
+"RTN","PRSNRMM",255,0)
+ .  I T1>T2 S T2=T2+2400
+"RTN","PRSNRMM",256,0)
+ .  S TOUR(T1)=T2
+"RTN","PRSNRMM",257,0)
+ .  S T1=$$TIMEPOS(T1,1)
+"RTN","PRSNRMM",258,0)
+ .  S T2=$$TIMEPOS(T2,0)
+"RTN","PRSNRMM",259,0)
+ .  F J=T1:1:T2 Q:J>192  S $P(TD(J),U,2,6)=CC_U_T1_U_T2_U_TT_U_POC,$E(TD,J)=CC
+"RTN","PRSNRMM",260,0)
+ ;
+"RTN","PRSNRMM",261,0)
+ ; place posted exceptions
+"RTN","PRSNRMM",262,0)
+ ;
+"RTN","PRSNRMM",263,0)
+ S SEG=0
+"RTN","PRSNRMM",264,0)
+ F  S SEG=$O(TCD(SEG)) Q:SEG'>0  D
+"RTN","PRSNRMM",265,0)
+ .  S TT=$P(TCD(SEG),U,3)
+"RTN","PRSNRMM",266,0)
+ .  S T1=$P(TCD(SEG),U,4)
+"RTN","PRSNRMM",267,0)
+ .  S X=T1,Y=0 D MIL^PRSATIM S T1=Y
+"RTN","PRSNRMM",268,0)
+ .  S T2=$P(TCD(SEG),U,5)
+"RTN","PRSNRMM",269,0)
+ .  S X=T2,Y=1 D MIL^PRSATIM S T2=Y
+"RTN","PRSNRMM",270,0)
+ .  ; try to place exceptions on the correct day
+"RTN","PRSNRMM",271,0)
+ .  S T1=$$PLACEX(T1,T2,.TOUR)
+"RTN","PRSNRMM",272,0)
+ .  ; if the start time is earlier than the stop time then it
+"RTN","PRSNRMM",273,0)
+ .  ; must be a time on a second day of a two day tour
+"RTN","PRSNRMM",274,0)
+ .  I T1>T2 S T2=T2+2400
+"RTN","PRSNRMM",275,0)
+ .  S T1=$$TIMEPOS(T1,1)
+"RTN","PRSNRMM",276,0)
+ .  S T2=$$TIMEPOS(T2,0)
+"RTN","PRSNRMM",277,0)
+ .  S CC=$$CONVERT(TT)
+"RTN","PRSNRMM",278,0)
+ .  S POC=$$CNVTTPOC(TT)
+"RTN","PRSNRMM",279,0)
+ .  F J=T1:1:T2 Q:J>192  S $P(TD(J),U,2,6)=CC_U_T1_U_T2_U_TT_U_POC,$E(TD,J)=CC
+"RTN","PRSNRMM",280,0)
+ ;
+"RTN","PRSNRMM",281,0)
+ ; place meal
+"RTN","PRSNRMM",282,0)
+ ;TODD(1)="3090917^3090918.08^30^2"
+"RTN","PRSNRMM",283,0)
+ N LEN,LONGSEG,MEAL,EN,STPOS,ENPOS,MIDPOS,MLOC,ST
+"RTN","PRSNRMM",284,0)
+ I +$P($G(TODD(1)),U,3)>0 D
+"RTN","PRSNRMM",285,0)
+ .S MEAL=0
+"RTN","PRSNRMM",286,0)
+ .F  S MEAL=$O(TODD(MEAL)) Q:MEAL'>0  D
+"RTN","PRSNRMM",287,0)
+ ..   S LEN=$P(TODD(MEAL),U,3)
+"RTN","PRSNRMM",288,0)
+ ..   ; Patch PRS*4.0*142 adds a QUIT condition in the event that LONGSEG equals null.
+"RTN","PRSNRMM",289,0)
+ ..   S LONGSEG=$P(TODD(MEAL),U,4) I 'LONGSEG Q
+"RTN","PRSNRMM",290,0)
+ ..;;;;;; start of longest tour segment
+"RTN","PRSNRMM",291,0)
+ ..   S ST=$P(TOD(MEAL_"-"_LONGSEG),U,4)
+"RTN","PRSNRMM",292,0)
+ ..   S X=ST,Y=0 D MIL^PRSATIM S ST=Y
+"RTN","PRSNRMM",293,0)
+ ..;;;;;; end of longest tour segment
+"RTN","PRSNRMM",294,0)
+ ..   S EN=$P(TOD(MEAL_"-"_LONGSEG),U,5)
+"RTN","PRSNRMM",295,0)
+ ..   S X=EN,Y=1 D MIL^PRSATIM S EN=Y
+"RTN","PRSNRMM",296,0)
+ ..;
+"RTN","PRSNRMM",297,0)
+ ..   I ST>EN S EN=EN+2400
+"RTN","PRSNRMM",298,0)
+ ..;;;;;;
+"RTN","PRSNRMM",299,0)
+ ..   S STPOS=$$TIMEPOS(ST,1)
+"RTN","PRSNRMM",300,0)
+ ..   S ENPOS=$$TIMEPOS(EN,0)
+"RTN","PRSNRMM",301,0)
+ ..   S MIDPOS=STPOS+((ENPOS-STPOS)\2)
+"RTN","PRSNRMM",302,0)
+ ..;;;;;;; get starting location of the segment where this midway falls
+"RTN","PRSNRMM",303,0)
+ ..   S MLOC=$P(TD(MIDPOS),U,3)
+"RTN","PRSNRMM",304,0)
+ ..   S $P(TD(MLOC),U,7)=LEN
+"RTN","PRSNRMM",305,0)
+ ; loop through activity again to update all the start and stop
+"RTN","PRSNRMM",306,0)
+ ; times for each segment, since exceptions that overwrote the tour
+"RTN","PRSNRMM",307,0)
+ ; will change the start and stops for subsections of tour
+"RTN","PRSNRMM",308,0)
+ ;
+"RTN","PRSNRMM",309,0)
+ S LQH=0,NEWSTART=1
+"RTN","PRSNRMM",310,0)
+ F I=1:1:192 D
+"RTN","PRSNRMM",311,0)
+ .  S QH=$E(TD,I)
+"RTN","PRSNRMM",312,0)
+ .  I LQH'=QH S NEWSTART=I,LQH=QH
+"RTN","PRSNRMM",313,0)
+ .  S $P(TD(I),U,3)=NEWSTART
+"RTN","PRSNRMM",314,0)
+ ;
+"RTN","PRSNRMM",315,0)
+ S LQH=0,NEWEND=192
+"RTN","PRSNRMM",316,0)
+ F I=192:-1:1 D
+"RTN","PRSNRMM",317,0)
+ .  S QH=$E(TD,I)
+"RTN","PRSNRMM",318,0)
+ .  I LQH'=QH S NEWEND=I,LQH=QH
+"RTN","PRSNRMM",319,0)
+ .  S $P(TD(I),U,4)=NEWEND
+"RTN","PRSNRMM",320,0)
+ ;
+"RTN","PRSNRMM",321,0)
+ ; If activity is true remove all nodes with no activity
+"RTN","PRSNRMM",322,0)
+ ;
+"RTN","PRSNRMM",323,0)
+ I ACTIVITY D
+"RTN","PRSNRMM",324,0)
+ . F I=1:1:193 I $P($G(TD(I)),U,2)="" K TD(I)
+"RTN","PRSNRMM",325,0)
+ . S TD=PSTAT_U_TC
+"RTN","PRSNRMM",326,0)
+ ;
+"RTN","PRSNRMM",327,0)
+ Q
+"RTN","PRSNRMM",328,0)
+ ;
+"RTN","PRSNRMM",329,0)
+PLACEX(T1,T2,TOUR) ;
+"RTN","PRSNRMM",330,0)
+ ;
+"RTN","PRSNRMM",331,0)
+ N TS,TE,NEWT1,TEMPT1
+"RTN","PRSNRMM",332,0)
+ ;need to make two passes on the tour array as there may be more than one tour
+"RTN","PRSNRMM",333,0)
+ ;and need to make sure that the exception doesn't fit within any tour before adjusting
+"RTN","PRSNRMM",334,0)
+ S NEWT1=""
+"RTN","PRSNRMM",335,0)
+ S TS=""
+"RTN","PRSNRMM",336,0)
+ F  S TS=$O(TOUR(TS)) Q:TS=""  D  Q:NEWT1'=""
+"RTN","PRSNRMM",337,0)
+ . S TE=TOUR(TS)
+"RTN","PRSNRMM",338,0)
+ . I T1'<TS D  Q:NEWT1'=""
+"RTN","PRSNRMM",339,0)
+ .. ; this time segment falls within the tour, so fits
+"RTN","PRSNRMM",340,0)
+ .. I T1'>TE S NEWT1=T1 Q
+"RTN","PRSNRMM",341,0)
+ .. ; this time segment starts no more than 4 hours after tour, then probably fits
+"RTN","PRSNRMM",342,0)
+ .. I $$TIMEDIF(TE,T1)'>240 S NEWT1=T1 Q
+"RTN","PRSNRMM",343,0)
+ . I T1<TS D  Q:NEWT1'=""
+"RTN","PRSNRMM",344,0)
+ .. ; this time segment starts no more than 4 hours before tour, then probably fits
+"RTN","PRSNRMM",345,0)
+ .. I $$TIMEDIF(T1,TS)'>240 S NEWT1=T1 Q
+"RTN","PRSNRMM",346,0)
+ ;
+"RTN","PRSNRMM",347,0)
+ I NEWT1'="" Q NEWT1
+"RTN","PRSNRMM",348,0)
+ ;
+"RTN","PRSNRMM",349,0)
+ ; looks like we have a segment that should be starting in day two
+"RTN","PRSNRMM",350,0)
+ ; but need to see if that fits
+"RTN","PRSNRMM",351,0)
+ S TEMPT1=T1+2400
+"RTN","PRSNRMM",352,0)
+ S TS=""
+"RTN","PRSNRMM",353,0)
+ F  S TS=$O(TOUR(TS)) Q:TS=""  D  Q:NEWT1'=""
+"RTN","PRSNRMM",354,0)
+ . S TE=TOUR(TS)
+"RTN","PRSNRMM",355,0)
+ . I TEMPT1'<TS D  Q:NEWT1'=""
+"RTN","PRSNRMM",356,0)
+ .. ; this time segment falls within the tour, so fits
+"RTN","PRSNRMM",357,0)
+ .. I TEMPT1'>TE S NEWT1=TEMPT1 Q
+"RTN","PRSNRMM",358,0)
+ .. ; this time segment starts no more than 4 hours after tour, then probably fits
+"RTN","PRSNRMM",359,0)
+ .. I $$TIMEDIF(TE,TEMPT1)'>240 S NEWT1=TEMPT1 Q
+"RTN","PRSNRMM",360,0)
+ ;
+"RTN","PRSNRMM",361,0)
+ ;if we didn't find it earlier, then just leave it as the originally entered time
+"RTN","PRSNRMM",362,0)
+ ;and if that is wrong, user will need to adjust it
+"RTN","PRSNRMM",363,0)
+ I NEWT1="" S NEWT1=T1
+"RTN","PRSNRMM",364,0)
+ ;
+"RTN","PRSNRMM",365,0)
+ Q NEWT1
+"RTN","PRSNRMM",366,0)
+ ;
+"RTN","PRSNRMM",367,0)
+TIMEDIF(TIME1,TIME2) ;
+"RTN","PRSNRMM",368,0)
+ ;
+"RTN","PRSNRMM",369,0)
+ ;SUBTRACT TIME1 FROM TIME2
+"RTN","PRSNRMM",370,0)
+ ;RETURN TIME DIFFERENCE IN MINUTES
+"RTN","PRSNRMM",371,0)
+ N HOUR,MIN,DIFF,MIN1,MIN2
+"RTN","PRSNRMM",372,0)
+ S MIN=TIME1#100,HOUR=TIME1\100,MIN1=HOUR*60+MIN
+"RTN","PRSNRMM",373,0)
+ S MIN=TIME2#100,HOUR=TIME2\100,MIN2=HOUR*60+MIN
+"RTN","PRSNRMM",374,0)
+ S DIFF=MIN2-MIN1
+"RTN","PRSNRMM",375,0)
+ Q DIFF
+"RTN","PRSNRMM",376,0)
+ ;
+"RTN","PRSNRMM",377,0)
+CNVTTPOC(TT) ; convert an ETA type of time to POC time
+"RTN","PRSNRMM",378,0)
+ N TC,POC,CODEPOS
+"RTN","PRSNRMM",379,0)
+ S POC="AA^AA^AD^AL^CB^CU^DL^RL^RS^HX^ML^SL^WP^NL^NP^WI^TR^TV^WO^WO^WO^WO^HW^^^^"
+"RTN","PRSNRMM",380,0)
+ S TC="AA^CP^AD^AL^CB^CU^DL^RL^RS^HX^ML^SL^WP^NL^NP^WI^TR^TV^WO^OT^CT^RG^HW^UN^ON^SB^"
+"RTN","PRSNRMM",381,0)
+ S CODEPOS=$FIND(TC,TT)
+"RTN","PRSNRMM",382,0)
+ Q $P(POC,U,CODEPOS/3)
+"RTN","PRSNRMM",383,0)
+ ;
+"RTN","PRSNRMM",384,0)
+CONVERT(TT) ; Convert a type of time code to a comparison code
+"RTN","PRSNRMM",385,0)
+ ;                                            COMPARISON
+"RTN","PRSNRMM",386,0)
+ ; ETA                   POC                   STRINGS
+"RTN","PRSNRMM",387,0)
+ ; CODE ETA DX          CODE    POC DX         CODE
+"RTN","PRSNRMM",388,0)
+ ; ==== ===============  =====   ===========    =====
+"RTN","PRSNRMM",389,0)
+ ; AA   Auth Abs           AA    Auth Abs         A
+"RTN","PRSNRMM",390,0)
+ ; CP   Cont of Pay        AA    Auth Abs         A
+"RTN","PRSNRMM",391,0)
+ ; AD   Adoption           AD    Adoption         D
+"RTN","PRSNRMM",392,0)
+ ; AL   Annual Leave       AL    Annual Leave     L
+"RTN","PRSNRMM",393,0)
+ ; CB   Fam Care Bereav    CB    Fam Care Bereav  B
+"RTN","PRSNRMM",394,0)
+ ; CU   Comp/Cred Used     CU    Comp/Cred Used   U
+"RTN","PRSNRMM",395,0)
+ ; DL   Donor Leave        DL    Donor Leave      d
+"RTN","PRSNRMM",396,0)
+ ; RL   Restored AL        RL    Restored AL      R
+"RTN","PRSNRMM",397,0)
+ ; RS   Recess             RS    Recess           r
+"RTN","PRSNRMM",398,0)
+ ; HX   Holiday Excused    HX    Holiday Excused  h
+"RTN","PRSNRMM",399,0)
+ ; ML   Military Leave     ML    Military Leave   M
+"RTN","PRSNRMM",400,0)
+ ; SL   Sick Leave         SL    Sick Leave       S
+"RTN","PRSNRMM",401,0)
+ ; WP   Leave w/o Pay      WP    Leave w/o Pay    W
+"RTN","PRSNRMM",402,0)
+ ; NL   Non-Pay AL         NL    Non-Pay AL       n
+"RTN","PRSNRMM",403,0)
+ ; NP   Non-Pay            NP    Non-Pay          N
+"RTN","PRSNRMM",404,0)
+ ;      Tour Time (posted) WI    Work in tour     W
+"RTN","PRSNRMM",405,0)
+ ; TR   Train (in tour)    TR    Work in Tour     W
+"RTN","PRSNRMM",406,0)
+ ; TV   Travel (in tour)   TV    Work in Tour     W
+"RTN","PRSNRMM",407,0)
+ ; OT   Overtime           WO    Work out of tour w
+"RTN","PRSNRMM",408,0)
+ ; CT   Comp/Cred Earn     WO    Work out of tour w
+"RTN","PRSNRMM",409,0)
+ ; RG   Reg Sched          WO    Work out of tour w
+"RTN","PRSNRMM",410,0)
+ ; HW   Hol Work (in tour) HW                     H
+"RTN","PRSNRMM",411,0)
+ ; UN   Unavailable      Not reported          Ignored
+"RTN","PRSNRMM",412,0)
+ ; ON   On-Call          Not reported          Ignored
+"RTN","PRSNRMM",413,0)
+ ; SB   Standby          Not reported          Ignored
+"RTN","PRSNRMM",414,0)
+ ;
+"RTN","PRSNRMM",415,0)
+ N TC,CC,CODEPOS
+"RTN","PRSNRMM",416,0)
+ S CC="AADLBUdRrhMSWnNWWWwwwwH000"
+"RTN","PRSNRMM",417,0)
+ S TC="AA^CP^AD^AL^CB^CU^DL^RL^RS^HX^ML^SL^WP^NL^NP^WI^TR^TV^WO^OT^CT^RG^HW^UN^ON^SB^"
+"RTN","PRSNRMM",418,0)
+ S CODEPOS=$FIND(TC,TT)
+"RTN","PRSNRMM",419,0)
+ Q $E(CC,CODEPOS/3)
+"RTN","PRSNRMM",420,0)
+ ;
+"RTN","PRSNRMM",421,0)
+TIMEPOS(MT,SORE) ; Convert MILTIME to positional int. where 1 represents
+"RTN","PRSNRMM",422,0)
+ ; the period from Mid-12:15, 2 - 12:15-12:30, and so on, with 96 
+"RTN","PRSNRMM",423,0)
+ ; representing the period from 11:45pm to mid.
+"RTN","PRSNRMM",424,0)
+ ;
+"RTN","PRSNRMM",425,0)
+ ;  INPUT:
+"RTN","PRSNRMM",426,0)
+ ;      MT: military time from 0 to 4800 (2 day clock)
+"RTN","PRSNRMM",427,0)
+ ;      SORE-flag 0 for start time 1 for end time (required)
+"RTN","PRSNRMM",428,0)
+ ;  OUTPUT:
+"RTN","PRSNRMM",429,0)
+ ;      integer value specifying the position in a string
+"RTN","PRSNRMM",430,0)
+ ;      where each position represents a 15 minute increment of the day
+"RTN","PRSNRMM",431,0)
+ ; 0=1
+"RTN","PRSNRMM",432,0)
+ ; 15=2
+"RTN","PRSNRMM",433,0)
+ ; 30=3
+"RTN","PRSNRMM",434,0)
+ ; ...
+"RTN","PRSNRMM",435,0)
+ ; 300=13
+"RTN","PRSNRMM",436,0)
+ ; 315=14
+"RTN","PRSNRMM",437,0)
+ ; ...
+"RTN","PRSNRMM",438,0)
+ ; 1000=50
+"RTN","PRSNRMM",439,0)
+ ; ...
+"RTN","PRSNRMM",440,0)
+ ; 1100=55
+"RTN","PRSNRMM",441,0)
+ ;
+"RTN","PRSNRMM",442,0)
+ Q ((MT\100)*4)+((("."_$P(MT/100,".",2))*100)/15)+$G(SORE)
+"RTN","PRSNRMM",443,0)
+ ;
+"RTN","PRSNRMM",444,0)
+POSTIM(I,BORE) ; convert the positional integer time to military time
+"RTN","PRSNRMM",445,0)
+ ;  INPUT: BORE-0=START, 1=END, flag specifies if this is a 
+"RTN","PRSNRMM",446,0)
+ ;           start time or end time
+"RTN","PRSNRMM",447,0)
+ N MINS
+"RTN","PRSNRMM",448,0)
+ S I=I-$G(BORE)
+"RTN","PRSNRMM",449,0)
+ S MINS=I#4*15 I 'MINS S MINS="00"
+"RTN","PRSNRMM",450,0)
+ Q (I\4)_MINS
+"RTN","PRSNRMM",451,0)
+ ;
+"RTN","PRSNRMM",452,0)
+ ;
+"RTN","PRSNRMM",453,0)
+ETIM(MIL) ; Convert a military time to a standard time
+"RTN","PRSNRMM",454,0)
+ ;
+"RTN","PRSNRMM",455,0)
+ N T,H,M
+"RTN","PRSNRMM",456,0)
+ I (MIL#2400)=0 Q "MID"
+"RTN","PRSNRMM",457,0)
+ I (MIL#1200)=0 Q "NOON"
+"RTN","PRSNRMM",458,0)
+ S T=MIL/100 S H=$P(T,".",1),M=$P(T,".",2)
+"RTN","PRSNRMM",459,0)
+ I (H#12)=0 Q "12"_":"_M_$S(H=12:"PM",H=24:"AM",1:"PM")
+"RTN","PRSNRMM",460,0)
+ S M=$S($L(M)=0:"00",$L(M)=1:M_"0",1:M)
+"RTN","PRSNRMM",461,0)
+ I (MIL<1200) Q H_":"_M_"AM"
+"RTN","PRSNRMM",462,0)
+ I MIL>1200,MIL<2400 Q H-12_":"_M_"PM"
+"RTN","PRSNRMM",463,0)
+ I MIL>2400,MIL<3600 Q H-24_":"_M_"AM"
+"RTN","PRSNRMM",464,0)
+ I MIL>3600 Q H-36_":"_M_"PM"
+"RTN","PRSNRMM",465,0)
+ Q -1
+"RTN","PRSNRMM1")
+0^3^B27798686^B24342033
+"RTN","PRSNRMM1",1,0)
+PRSNRMM1 ;WOIFO-JAH - POC Record and Timecard Mismatches;07/31/09
+"RTN","PRSNRMM1",2,0)
+ ;;4.0;PAID;**126,142**;Sep 21, 1995;Build 5
+"RTN","PRSNRMM1",3,0)
+ ;;Per VHA Directive 6402, this routine should not be modified.
+"RTN","PRSNRMM1",4,0)
+ Q
+"RTN","PRSNRMM1",5,0)
+ ;
+"RTN","PRSNRMM1",6,0)
+NURSE ;Nurse view their own mismatch data entry point
+"RTN","PRSNRMM1",7,0)
+ N PRSIEN,SSN,X
+"RTN","PRSNRMM1",8,0)
+ S PRSIEN="",SSN=$P($G(^VA(200,DUZ,1)),"^",9)
+"RTN","PRSNRMM1",9,0)
+ I SSN'="" S PRSIEN=$O(^PRSPC("SSN",SSN,0))
+"RTN","PRSNRMM1",10,0)
+ I 'PRSIEN D  Q
+"RTN","PRSNRMM1",11,0)
+ .  W !!,*7
+"RTN","PRSNRMM1",12,0)
+ .  W "Your SSN was not found in both the New Person & Employee File!"
+"RTN","PRSNRMM1",13,0)
+ ;
+"RTN","PRSNRMM1",14,0)
+ ; if not in 450 as a nurse then explain and quit
+"RTN","PRSNRMM1",15,0)
+ I +$$ISNURSE^PRSNUT01(PRSIEN)'>0 D NOTNRSDX  Q
+"RTN","PRSNRMM1",16,0)
+ ;
+"RTN","PRSNRMM1",17,0)
+ ; get pay period and report mismatches
+"RTN","PRSNRMM1",18,0)
+ D MAIN(PRSIEN)
+"RTN","PRSNRMM1",19,0)
+ Q
+"RTN","PRSNRMM1",20,0)
+ ;
+"RTN","PRSNRMM1",21,0)
+NOTNRSDX ;
+"RTN","PRSNRMM1",22,0)
+ N X
+"RTN","PRSNRMM1",23,0)
+ W !!,*7
+"RTN","PRSNRMM1",24,0)
+ W ?5,"Your PAID-ETA parameters for your current log on do not reflect"
+"RTN","PRSNRMM1",25,0)
+ W !,?5,"the parameters required for Nursing Point of Care Data.",!
+"RTN","PRSNRMM1",26,0)
+ S X=$$ASK^PRSLIB00(1)
+"RTN","PRSNRMM1",27,0)
+ Q
+"RTN","PRSNRMM1",28,0)
+COORD ;VANOD Site Coordinator entry point
+"RTN","PRSNRMM1",29,0)
+ ; Coordinator has no access limits so let them pick any nurse
+"RTN","PRSNRMM1",30,0)
+ N DIC,X,Y,DUOUT,DTOUT,PRSIEN
+"RTN","PRSNRMM1",31,0)
+ S DIC="^PRSPC(",DIC(0)="AEQMZ",DIC("S")="I $$ISNURSE^PRSNUT01(Y)"
+"RTN","PRSNRMM1",32,0)
+ D ^DIC
+"RTN","PRSNRMM1",33,0)
+ Q:Y'>0!$D(DTOUT)!$D(DUOUT)
+"RTN","PRSNRMM1",34,0)
+ S PRSIEN=$P(Y,U)
+"RTN","PRSNRMM1",35,0)
+ D MAIN(PRSIEN)
+"RTN","PRSNRMM1",36,0)
+ Q
+"RTN","PRSNRMM1",37,0)
+ ;
+"RTN","PRSNRMM1",38,0)
+DAP ; POC data approval personnel entry point
+"RTN","PRSNRMM1",39,0)
+ N GROUP,VALUE,PRSIEN
+"RTN","PRSNRMM1",40,0)
+ ; prompt DEP to select a group to report on.  They must have
+"RTN","PRSNRMM1",41,0)
+ ; access to the group.
+"RTN","PRSNRMM1",42,0)
+ ;
+"RTN","PRSNRMM1",43,0)
+ D ACCESS^PRSNUT02(.GROUP,"A",DT,0)
+"RTN","PRSNRMM1",44,0)
+ ;
+"RTN","PRSNRMM1",45,0)
+ ; quit if any error during group selection
+"RTN","PRSNRMM1",46,0)
+ I $P($G(GROUP(0)),U,2)="E" W !!!,?4,$P(GROUP(0),U,3) S X=$$ASK^PRSLIB00(1) Q
+"RTN","PRSNRMM1",47,0)
+ S VALUE=+GROUP($O(GROUP(0)))
+"RTN","PRSNRMM1",48,0)
+ Q:VALUE'>0
+"RTN","PRSNRMM1",49,0)
+ S PRSIEN=+$$PICKNURS^PRSNUT03($P(GROUP(0),U,2),VALUE)
+"RTN","PRSNRMM1",50,0)
+ Q:PRSIEN'>0
+"RTN","PRSNRMM1",51,0)
+ D MAIN(PRSIEN)
+"RTN","PRSNRMM1",52,0)
+ Q
+"RTN","PRSNRMM1",53,0)
+ ;
+"RTN","PRSNRMM1",54,0)
+DEP ; Entry point for mismatches for Data Entry Personnel.
+"RTN","PRSNRMM1",55,0)
+ ;
+"RTN","PRSNRMM1",56,0)
+ N GROUP,VALUE,PRSIEN
+"RTN","PRSNRMM1",57,0)
+ ; prompt DEP to select a group to report on.  They must have
+"RTN","PRSNRMM1",58,0)
+ ; access to the group.
+"RTN","PRSNRMM1",59,0)
+ ;
+"RTN","PRSNRMM1",60,0)
+ D ACCESS^PRSNUT02(.GROUP,"E",DT,0)
+"RTN","PRSNRMM1",61,0)
+ ;
+"RTN","PRSNRMM1",62,0)
+ ; quit if any error during group selection
+"RTN","PRSNRMM1",63,0)
+ I $P($G(GROUP(0)),U,2)="E" W !!!,?4,$P(GROUP(0),U,3) S X=$$ASK^PRSLIB00(1) Q
+"RTN","PRSNRMM1",64,0)
+ S VALUE=+GROUP($O(GROUP(0)))
+"RTN","PRSNRMM1",65,0)
+ Q:VALUE'>0
+"RTN","PRSNRMM1",66,0)
+ S PRSIEN=+$$PICKNURS^PRSNUT03($P(GROUP(0),U,2),VALUE)
+"RTN","PRSNRMM1",67,0)
+ Q:PRSIEN'>0
+"RTN","PRSNRMM1",68,0)
+ D MAIN(PRSIEN)
+"RTN","PRSNRMM1",69,0)
+ Q
+"RTN","PRSNRMM1",70,0)
+ ;
+"RTN","PRSNRMM1",71,0)
+ ;= = = = = = = = = = = = = = = = = =
+"RTN","PRSNRMM1",72,0)
+ ;
+"RTN","PRSNRMM1",73,0)
+MAIN(PRSIEN) ;
+"RTN","PRSNRMM1",74,0)
+ ;
+"RTN","PRSNRMM1",75,0)
+ N DIC,X,Y,DUOUT,DTOUT,PPI
+"RTN","PRSNRMM1",76,0)
+MAIN1 ;
+"RTN","PRSNRMM1",77,0)
+ S DIC="^PRSN(451,",DIC(0)="AEQMZ"
+"RTN","PRSNRMM1",78,0)
+ S DIC("A")="Select a Pay Period: "
+"RTN","PRSNRMM1",79,0)
+ D ^DIC
+"RTN","PRSNRMM1",80,0)
+ Q:$D(DUOUT)!$D(DTOUT)
+"RTN","PRSNRMM1",81,0)
+ I $G(Y)'>0 W $C(7),"  Invalid Pay Period" G MAIN1
+"RTN","PRSNRMM1",82,0)
+ S PPI=+Y
+"RTN","PRSNRMM1",83,0)
+ N %ZIS,POP,IOP
+"RTN","PRSNRMM1",84,0)
+ S %ZIS="MQ"
+"RTN","PRSNRMM1",85,0)
+ D ^%ZIS
+"RTN","PRSNRMM1",86,0)
+ Q:POP
+"RTN","PRSNRMM1",87,0)
+ I $D(IO("Q")) D
+"RTN","PRSNRMM1",88,0)
+ . K IO("Q")
+"RTN","PRSNRMM1",89,0)
+ . N ZTSK,ZTDESC,ZTDTH,ZTIO,ZTRTN,ZTSAVE,ZTUCI,ZTCPU,ZTPRI,ZTKIL,ZTSYNC
+"RTN","PRSNRMM1",90,0)
+ . S ZTDESC="PRSN POC/ETA MISMATCH REPORT"
+"RTN","PRSNRMM1",91,0)
+ . S ZTRTN="REP^PRSNRMM1"
+"RTN","PRSNRMM1",92,0)
+ . S ZTSAVE("PRSIEN")=""
+"RTN","PRSNRMM1",93,0)
+ . S ZTSAVE("PPI")=""
+"RTN","PRSNRMM1",94,0)
+ . D ^%ZTLOAD
+"RTN","PRSNRMM1",95,0)
+ . I $D(ZTSK) S ZTREQ="@" W !,"Request "_ZTSK_" Queued."
+"RTN","PRSNRMM1",96,0)
+ E  D
+"RTN","PRSNRMM1",97,0)
+ . D REP
+"RTN","PRSNRMM1",98,0)
+ Q
+"RTN","PRSNRMM1",99,0)
+ ;
+"RTN","PRSNRMM1",100,0)
+REP ;
+"RTN","PRSNRMM1",101,0)
+ U IO
+"RTN","PRSNRMM1",102,0)
+ D PPMM^PRSNRMM(PRSIEN,PPI)
+"RTN","PRSNRMM1",103,0)
+ W !!,"End of Report"
+"RTN","PRSNRMM1",104,0)
+ D ^%ZISC
+"RTN","PRSNRMM1",105,0)
+ Q
+"RTN","PRSNRMM1",106,0)
+ ;
+"RTN","PRSNRMM1",107,0)
+TL ;Entry point for T&L Unit report
+"RTN","PRSNRMM1",108,0)
+ ; Report has no access limits so let them pick any T&L group
+"RTN","PRSNRMM1",109,0)
+ N GROUP
+"RTN","PRSNRMM1",110,0)
+ D PIKGROUP^PRSNUT04(.GROUP,"T",1)
+"RTN","PRSNRMM1",111,0)
+ ; quit if any error during group selection
+"RTN","PRSNRMM1",112,0)
+ I $P($G(GROUP(0)),U,2)="E" D  Q
+"RTN","PRSNRMM1",113,0)
+ .W !,$P(GROUP(0),U,3)
+"RTN","PRSNRMM1",114,0)
+ D TLMAIN
+"RTN","PRSNRMM1",115,0)
+ Q
+"RTN","PRSNRMM1",116,0)
+ ;
+"RTN","PRSNRMM1",117,0)
+TLMAIN ;
+"RTN","PRSNRMM1",118,0)
+ ;
+"RTN","PRSNRMM1",119,0)
+ N DIC,X,Y,DUOUT,DTOUT,PPI
+"RTN","PRSNRMM1",120,0)
+TLMAIN1 ;
+"RTN","PRSNRMM1",121,0)
+ S DIC="^PRSN(451,",DIC(0)="AEQMZ"
+"RTN","PRSNRMM1",122,0)
+ S DIC("A")="Select a Pay Period: "
+"RTN","PRSNRMM1",123,0)
+ D ^DIC
+"RTN","PRSNRMM1",124,0)
+ Q:$D(DUOUT)!$D(DTOUT)
+"RTN","PRSNRMM1",125,0)
+ I $G(Y)'>0 W $C(7),"  Invalid Pay Period" G TLMAIN1
+"RTN","PRSNRMM1",126,0)
+ S PPI=+Y
+"RTN","PRSNRMM1",127,0)
+ N %ZIS,POP,IOP
+"RTN","PRSNRMM1",128,0)
+ S %ZIS="MQ"
+"RTN","PRSNRMM1",129,0)
+ D ^%ZIS
+"RTN","PRSNRMM1",130,0)
+ Q:POP
+"RTN","PRSNRMM1",131,0)
+ I $D(IO("Q")) D
+"RTN","PRSNRMM1",132,0)
+ . K IO("Q")
+"RTN","PRSNRMM1",133,0)
+ . N ZTSK,ZTDESC,ZTDTH,ZTIO,ZTRTN,ZTSAVE,ZTUCI,ZTCPU,ZTPRI,ZTKIL,ZTSYNC
+"RTN","PRSNRMM1",134,0)
+ . S ZTDESC="PRSN POC/ETA MISMATCH REPORT"
+"RTN","PRSNRMM1",135,0)
+ . S ZTRTN="MMREP^PRSNRMM1"
+"RTN","PRSNRMM1",136,0)
+ . S ZTSAVE("GROUP(")=""
+"RTN","PRSNRMM1",137,0)
+ . S ZTSAVE("PPI")=""
+"RTN","PRSNRMM1",138,0)
+ . D ^%ZTLOAD
+"RTN","PRSNRMM1",139,0)
+ . I $D(ZTSK) S ZTREQ="@" W !,"Request "_ZTSK_" Queued."
+"RTN","PRSNRMM1",140,0)
+ E  D
+"RTN","PRSNRMM1",141,0)
+ . D MMREP
+"RTN","PRSNRMM1",142,0)
+ Q
+"RTN","PRSNRMM1",143,0)
+ ;
+"RTN","PRSNRMM1",144,0)
+MMREP ;
+"RTN","PRSNRMM1",145,0)
+ N PRSIEN,PRSNG,PRSNARY,PRSNTL,PICK,PG,STOP
+"RTN","PRSNRMM1",146,0)
+ K ^TMP($J,"PRSNRMM")
+"RTN","PRSNRMM1",147,0)
+ U IO
+"RTN","PRSNRMM1",148,0)
+ S (PICK,PG,STOP)=0
+"RTN","PRSNRMM1",149,0)
+ F  S PICK=$O(GROUP(PICK)) Q:PICK=""!STOP  D
+"RTN","PRSNRMM1",150,0)
+ . S PRSNG=GROUP(0)_"^"_PICK_"^"_GROUP(PICK)
+"RTN","PRSNRMM1",151,0)
+ . S PRSIEN=0
+"RTN","PRSNRMM1",152,0)
+ . F  S PRSIEN=$O(^PRSN(451,PPI,"E",PRSIEN)) Q:PRSIEN'>0!STOP  D
+"RTN","PRSNRMM1",153,0)
+ .. S PRSNARY=$G(^PRSPC(PRSIEN,0))
+"RTN","PRSNRMM1",154,0)
+ .. S PRSNAME=$P(PRSNARY,U)              ;Nurse Name
+"RTN","PRSNRMM1",155,0)
+ .. S PRSNTL=$P(PRSNARY,U,8)             ;Nurse T&L
+"RTN","PRSNRMM1",156,0)
+ .. Q:PRSNTL'=PICK
+"RTN","PRSNRMM1",157,0)
+ .. S ^TMP($J,"PRSNRMM",PICK,PRSNAME,PRSIEN)=""
+"RTN","PRSNRMM1",158,0)
+ ;
+"RTN","PRSNRMM1",159,0)
+ S PICK=0
+"RTN","PRSNRMM1",160,0)
+ F  S PICK=$O(^TMP($J,"PRSNRMM",PICK)) Q:PICK=""!STOP  D
+"RTN","PRSNRMM1",161,0)
+ . W !!,"T&L UNIT: ",PICK
+"RTN","PRSNRMM1",162,0)
+ . S PRSNAME=""
+"RTN","PRSNRMM1",163,0)
+ . F  S PRSNAME=$O(^TMP($J,"PRSNRMM",PICK,PRSNAME)) Q:PRSNAME=""!STOP  D
+"RTN","PRSNRMM1",164,0)
+ .. ; Patch PRS*4.0*142 uses "" instead of the PRSIEN variable in the line below. This is to prevent the first entry from being skipped if PRSIEN has a value going in.
+"RTN","PRSNRMM1",165,0)
+ .. S PRSIEN=$O(^TMP($J,"PRSNRMM",PICK,PRSNAME,"")) Q:PRSIEN=""!STOP  D
+"RTN","PRSNRMM1",166,0)
+ ... D PPMM^PRSNRMM(PRSIEN,PPI,.PG,.STOP)
+"RTN","PRSNRMM1",167,0)
+ ;
+"RTN","PRSNRMM1",168,0)
+ W !!,"End of Report"
+"RTN","PRSNRMM1",169,0)
+ D ^%ZISC
+"RTN","PRSNRMM1",170,0)
+ K ^TMP($J,"PRSNRMM")
+"RTN","PRSNRMM1",171,0)
+ Q
+"RTN","PRSNRMM1",172,0)
+ ;
+"RTN","PRSNUT03")
+0^1^B68166025^B67835037
+"RTN","PRSNUT03",1,0)
+PRSNUT03 ;;WOIFO/JAH - Nurse Activity for VANOD Utilities;6/5/2009
+"RTN","PRSNUT03",2,0)
+ ;;4.0;PAID;**126,142**;Sep 21, 1995;Build 5
+"RTN","PRSNUT03",3,0)
+ ;;Per VHA Directive 6402, this routine should not be modified.
+"RTN","PRSNUT03",4,0)
+ Q
+"RTN","PRSNUT03",5,0)
+ ;
+"RTN","PRSNUT03",6,0)
+PRIMLOC(IEN200) ; RETURN NURSES PRIMARY ASSIGMENT LOCATION
+"RTN","PRSNUT03",7,0)
+ ;
+"RTN","PRSNUT03",8,0)
+ ;FUNCTION RETURNS Nurses primary assigment from Nursing Service package
+"RTN","PRSNUT03",9,0)
+ ;  piece     value
+"RTN","PRSNUT03",10,0)
+ ;   1        ien of location from 211.4
+"RTN","PRSNUT03",11,0)
+ ;   2        .01 value which is pointer to 44
+"RTN","PRSNUT03",12,0)
+ ;   3        external value of .01 field (e.g., 4 WEST)
+"RTN","PRSNUT03",13,0)
+ ;
+"RTN","PRSNUT03",14,0)
+ ; INPUT:
+"RTN","PRSNUT03",15,0)
+ ;    PRSIEN:  IEN from New Person file (200)
+"RTN","PRSNUT03",16,0)
+ ;
+"RTN","PRSNUT03",17,0)
+ Q:IEN200'>0 "0^Nurse not found"
+"RTN","PRSNUT03",18,0)
+ ;
+"RTN","PRSNUT03",19,0)
+ N D0
+"RTN","PRSNUT03",20,0)
+ S D0=$O(^NURSF(210,"B",IEN200,0))
+"RTN","PRSNUT03",21,0)
+ Q:D0'>0 "0^Nurse not found"
+"RTN","PRSNUT03",22,0)
+ ;
+"RTN","PRSNUT03",23,0)
+ ; call returns external name of nurse location in X
+"RTN","PRSNUT03",24,0)
+ ; 
+"RTN","PRSNUT03",25,0)
+ N X,LOCI,LOCE
+"RTN","PRSNUT03",26,0)
+ D EN2^NURSUT2
+"RTN","PRSNUT03",27,0)
+ Q $$NLIEN^PRSNUT03(X)
+"RTN","PRSNUT03",28,0)
+ ;
+"RTN","PRSNUT03",29,0)
+NLIEN(NLE) ;
+"RTN","PRSNUT03",30,0)
+ ;  INPUT:
+"RTN","PRSNUT03",31,0)
+ ;    NLE - nurse location external name (without NUR prefix)
+"RTN","PRSNUT03",32,0)
+ ;  OUTPUT:
+"RTN","PRSNUT03",33,0)
+ ;    function returns 211.4 IEN ^ .01 pointer ^ external
+"RTN","PRSNUT03",34,0)
+ ;
+"RTN","PRSNUT03",35,0)
+ N LOCP,LOCI,LOCE,PL
+"RTN","PRSNUT03",36,0)
+ I NLE="" Q ""
+"RTN","PRSNUT03",37,0)
+ ;Patch PRS*4.0*142 adds the "O" flag to the FIND^DIC call to prevent incorrect lookups.
+"RTN","PRSNUT03",38,0)
+ D FIND^DIC(211.4,,".01","MO","NUR "_NLE,,,,,"PL",)
+"RTN","PRSNUT03",39,0)
+ S LOCP=$G(PL("DILIST",1,1))
+"RTN","PRSNUT03",40,0)
+ S LOCI=$G(PL("DILIST",2,1))
+"RTN","PRSNUT03",41,0)
+ S LOCE=$G(PL("DILIST","ID",1,.01))
+"RTN","PRSNUT03",42,0)
+ Q LOCI_U_LOCP_U_LOCE
+"RTN","PRSNUT03",43,0)
+ ;
+"RTN","PRSNUT03",44,0)
+LOCNOD(LOC) ; given a location in 211.4 return the node necessary to find
+"RTN","PRSNUT03",45,0)
+ ; all the nurses in 211.8 with that primary location out of the 
+"RTN","PRSNUT03",46,0)
+ ;  "D" index on the primary assignment field.
+"RTN","PRSNUT03",47,0)
+ N POINT44
+"RTN","PRSNUT03",48,0)
+ S POINT44=+$G(^NURSF(211.4,LOC,0))
+"RTN","PRSNUT03",49,0)
+ Q:POINT44'>0 -1
+"RTN","PRSNUT03",50,0)
+ Q +$O(^NURSF(211.8,"B",POINT44,0))
+"RTN","PRSNUT03",51,0)
+ ;
+"RTN","PRSNUT03",52,0)
+PICKNURS(GROUP,VALUE) ; pick a nurse from a t&l or location
+"RTN","PRSNUT03",53,0)
+ ; INPUT:
+"RTN","PRSNUT03",54,0)
+ ;     GROUP = T for T&L or N for Nurse Location
+"RTN","PRSNUT03",55,0)
+ ;     VALUE = IEN (T&L 455.5 or Nurse Location 211.4)
+"RTN","PRSNUT03",56,0)
+ ; OUTPUT:
+"RTN","PRSNUT03",57,0)
+ ;     function returns a Nurse file 450 (IEN^external Name)
+"RTN","PRSNUT03",58,0)
+ ;
+"RTN","PRSNUT03",59,0)
+ Q:"T^N^"'[(GROUP_U) 0
+"RTN","PRSNUT03",60,0)
+ Q:VALUE'>0 0
+"RTN","PRSNUT03",61,0)
+ ;
+"RTN","PRSNUT03",62,0)
+ N DIC,X,Y,TLE,D,S1,S2,REFD,S3
+"RTN","PRSNUT03",63,0)
+ S DIC("A")="Select Nurse: "
+"RTN","PRSNUT03",64,0)
+ S DIC="^PRSPC("
+"RTN","PRSNUT03",65,0)
+ S DIC(0)="AEQZ"
+"RTN","PRSNUT03",66,0)
+ I GROUP="T" D
+"RTN","PRSNUT03",67,0)
+ . S DIC("S")="I $$ISNURSE^PRSNUT01(Y)"
+"RTN","PRSNUT03",68,0)
+ . S TLE=$P($G(^PRST(455.5,VALUE,0)),U)
+"RTN","PRSNUT03",69,0)
+ . S D="ATL"_TLE
+"RTN","PRSNUT03",70,0)
+ . D MIX^DIC1
+"RTN","PRSNUT03",71,0)
+ E  D
+"RTN","PRSNUT03",72,0)
+ .  S REFD=+$G(^NURSF(211.4,VALUE,0))
+"RTN","PRSNUT03",73,0)
+ .  S S3=""
+"RTN","PRSNUT03",74,0)
+ .  ;S DIC("S")="N VA200IEN,NAME I $$ISNURSE^PRSNUT01(Y) S VA200IEN=+$G(^PRSPC(+Y,200)) I VA200IEN S NAME=$P($G(^VA(200,VA200IEN,0)),U) I NAME'="""",$D(^NURSF(211.8,""D"",REFD,NAME,VA200IEN))"
+"RTN","PRSNUT03",75,0)
+ .  S DIC("S")="N VA200IEN I $$ISNURSE^PRSNUT01(Y) S VA200IEN=+$G(^PRSPC(+Y,200)) I VA200IEN,REFD=+$$PRIMLOC^PRSNUT03(VA200IEN)"
+"RTN","PRSNUT03",76,0)
+ .  D ^DIC
+"RTN","PRSNUT03",77,0)
+ Q Y
+"RTN","PRSNUT03",78,0)
+ ;
+"RTN","PRSNUT03",79,0)
+DIV(GROUP,VALUE) ; Return the division of a location or a T&L unit
+"RTN","PRSNUT03",80,0)
+ ;
+"RTN","PRSNUT03",81,0)
+ ; INPUT:
+"RTN","PRSNUT03",82,0)
+ ;     GROUP = T for T&L or N for Nurse Location
+"RTN","PRSNUT03",83,0)
+ ;     VALUE = IEN (T&L 455.5 or Nurse Location 211.4)
+"RTN","PRSNUT03",84,0)
+ ; OUTPUT:
+"RTN","PRSNUT03",85,0)
+ ;     Function returns division of input group
+"RTN","PRSNUT03",86,0)
+ ;
+"RTN","PRSNUT03",87,0)
+ Q:"T^N^"'[(GROUP_U) 0
+"RTN","PRSNUT03",88,0)
+ N DIV,STANUM,NLP,P4
+"RTN","PRSNUT03",89,0)
+ I GROUP="N" D
+"RTN","PRSNUT03",90,0)
+ .  S NLP=+$G(^NURSF(211.4,VALUE,0))
+"RTN","PRSNUT03",91,0)
+ .  S P4=+$$GET1^DIQ(44,NLP,3,"I")
+"RTN","PRSNUT03",92,0)
+ E  D
+"RTN","PRSNUT03",93,0)
+ .  S P4=+$$GET1^DIQ(455.5,VALUE,20.5,"I")
+"RTN","PRSNUT03",94,0)
+ S DIV=$$GET1^DIQ(4,P4,.01,"I")
+"RTN","PRSNUT03",95,0)
+ S STANUM=$$GET1^DIQ(4,P4,99,"I")
+"RTN","PRSNUT03",96,0)
+ Q DIV_U_STANUM_U_P4
+"RTN","PRSNUT03",97,0)
+ ;
+"RTN","PRSNUT03",98,0)
+ENTRYPNT ;
+"RTN","PRSNUT03",99,0)
+ N DIVMAP,DIVS
+"RTN","PRSNUT03",100,0)
+ D BLDMAP(.DIVMAP)
+"RTN","PRSNUT03",101,0)
+ S DIVS=$$SELECT(.DIVMAP)
+"RTN","PRSNUT03",102,0)
+ Q:DIVS=0
+"RTN","PRSNUT03",103,0)
+ N DIR,DIRUT,SRT,Y,X,SHOW
+"RTN","PRSNUT03",104,0)
+ S DIR(0)="SB^T:T&L UNIT;N:NURSE LOCATION"
+"RTN","PRSNUT03",105,0)
+ S DIR("B")="T"
+"RTN","PRSNUT03",106,0)
+ S DIR("A")="Select Sort: "
+"RTN","PRSNUT03",107,0)
+ D ^DIR
+"RTN","PRSNUT03",108,0)
+ Q:$D(DIRUT)
+"RTN","PRSNUT03",109,0)
+ S SRT=Y
+"RTN","PRSNUT03",110,0)
+ N DIR,Y,X
+"RTN","PRSNUT03",111,0)
+ S DIR(0)="Y"
+"RTN","PRSNUT03",112,0)
+ S DIR("B")="N"
+"RTN","PRSNUT03",113,0)
+ S DIR("A")="Show Full Nurse Data"
+"RTN","PRSNUT03",114,0)
+ D ^DIR
+"RTN","PRSNUT03",115,0)
+ Q:$D(DIRUT)
+"RTN","PRSNUT03",116,0)
+ S SHOWNURS=Y
+"RTN","PRSNUT03",117,0)
+ N %ZIS,POP,IOP
+"RTN","PRSNUT03",118,0)
+ S %ZIS="MQ"
+"RTN","PRSNUT03",119,0)
+ D ^%ZIS
+"RTN","PRSNUT03",120,0)
+ Q:POP
+"RTN","PRSNUT03",121,0)
+ I $D(IO("Q")) D
+"RTN","PRSNUT03",122,0)
+ . K IO("Q")
+"RTN","PRSNUT03",123,0)
+ . N ZTSK,ZTDESC,ZTDTH,ZTIO,ZTRTN,ZTSAVE,ZTUCI,ZTCPU,ZTPRI,ZTKIL,ZTSYNC
+"RTN","PRSNUT03",124,0)
+ . S ZTDESC="PRSN SHOW ALL NURSES"
+"RTN","PRSNUT03",125,0)
+ . S ZTRTN="ALNURLST^PRSNUT03(0,SRT,SHOWNURS)"
+"RTN","PRSNUT03",126,0)
+ . S ZTSAVE("SHOWNURS")=""
+"RTN","PRSNUT03",127,0)
+ . S ZTSAVE("SRT")=""
+"RTN","PRSNUT03",128,0)
+ . S ZTSAVE("FLAG")=""
+"RTN","PRSNUT03",129,0)
+ . S ZTSAVE("DIVMAP(")=""
+"RTN","PRSNUT03",130,0)
+ . S ZTSAVE("DIVS")=""
+"RTN","PRSNUT03",131,0)
+ . D ^%ZTLOAD
+"RTN","PRSNUT03",132,0)
+ . I $D(ZTSK) S ZTREQ="@" W !,"Request "_ZTSK_" Queued."
+"RTN","PRSNUT03",133,0)
+ E  D
+"RTN","PRSNUT03",134,0)
+ . D ALNURLST(0,SRT,SHOWNURS)
+"RTN","PRSNUT03",135,0)
+ Q
+"RTN","PRSNUT03",136,0)
+ALNURLST(FLAG,SORT,SHOWNURS) ;List all Nurses in file 450
+"RTN","PRSNUT03",137,0)
+ ; INPUT:
+"RTN","PRSNUT03",138,0)
+ ;    FLAG - set to true if you want to attempt to add the Nurse
+"RTN","PRSNUT03",139,0)
+ ;           to file 200.  this will also convert any numbers in
+"RTN","PRSNUT03",140,0)
+ ;           the name from file 450 to letters
+"RTN","PRSNUT03",141,0)
+ ;    SORT - (required) If "N" will sort by Nurse location, "T"
+"RTN","PRSNUT03",142,0)
+ ;           report sorts by T&L unit.
+"RTN","PRSNUT03",143,0)
+ ;    SHOWNURS - Set to true if you want to see the full info
+"RTN","PRSNUT03",144,0)
+ ;               about a nurses role
+"RTN","PRSNUT03",145,0)
+ ;
+"RTN","PRSNUT03",146,0)
+ Q:"T^N^"'[(SORT_U) 0
+"RTN","PRSNUT03",147,0)
+ U IO
+"RTN","PRSNUT03",148,0)
+ K ^TMP($J,"PRSN")
+"RTN","PRSNUT03",149,0)
+ N N2CNT,NCNT
+"RTN","PRSNUT03",150,0)
+ S (NCNT,N2CNT)=0
+"RTN","PRSNUT03",151,0)
+ D GATHER
+"RTN","PRSNUT03",152,0)
+ N STOP
+"RTN","PRSNUT03",153,0)
+ D REPORT(.STOP)
+"RTN","PRSNUT03",154,0)
+ D TOTAL(.STOP)
+"RTN","PRSNUT03",155,0)
+ D ^%ZISC
+"RTN","PRSNUT03",156,0)
+ Q
+"RTN","PRSNUT03",157,0)
+GATHER ;
+"RTN","PRSNUT03",158,0)
+ N PRSIEN,X,IEN200,SSN,OUT,SSN200,NAME,ZNODE,TLE,NURTYP
+"RTN","PRSNUT03",159,0)
+ N SRT1,SRT2,NL,SEPFLAG,NLE,NLDIV
+"RTN","PRSNUT03",160,0)
+ S (PRSIEN)=0
+"RTN","PRSNUT03",161,0)
+ F  S PRSIEN=$O(^PRSPC(PRSIEN)) Q:PRSIEN'>0  D
+"RTN","PRSNUT03",162,0)
+ . S X=$$ISNURSE^PRSNUT01(PRSIEN)
+"RTN","PRSNUT03",163,0)
+ . Q:'X
+"RTN","PRSNUT03",164,0)
+ . S SEPFLAG=$P($G(^PRSPC(PRSIEN,1)),U,33)
+"RTN","PRSNUT03",165,0)
+ . Q:SEPFLAG="Y"
+"RTN","PRSNUT03",166,0)
+ . S NCNT=NCNT+1
+"RTN","PRSNUT03",167,0)
+ . S NURTYP=$P(X,U,2,4)
+"RTN","PRSNUT03",168,0)
+ . I $G(FLAG) W @IOF,!!!
+"RTN","PRSNUT03",169,0)
+ . S IEN200=$P($G(^PRSPC(PRSIEN,200)),U)
+"RTN","PRSNUT03",170,0)
+ . S ZNODE=$G(^PRSPC(PRSIEN,0))
+"RTN","PRSNUT03",171,0)
+ . S SSN=$P(ZNODE,U,9)
+"RTN","PRSNUT03",172,0)
+ . S NAME=$P(ZNODE,U)
+"RTN","PRSNUT03",173,0)
+ . S TLE=$P(ZNODE,U,8)
+"RTN","PRSNUT03",174,0)
+ . I TLE="" S TLE="NONE"
+"RTN","PRSNUT03",175,0)
+ . S (NL,NLE,NLDIV)="NONE"
+"RTN","PRSNUT03",176,0)
+ . I IEN200>0 D
+"RTN","PRSNUT03",177,0)
+ .. S N2CNT=N2CNT+1
+"RTN","PRSNUT03",178,0)
+ .. S SSN200=$P($G(^VA(200,IEN200,1)),U,9)
+"RTN","PRSNUT03",179,0)
+ .. S NL=$$PRIMLOC^PRSNUT03(IEN200)
+"RTN","PRSNUT03",180,0)
+ .. S NLE=$P(NL,U,3)
+"RTN","PRSNUT03",181,0)
+ .. I NLE="" S NLE="NONE"
+"RTN","PRSNUT03",182,0)
+ .. I NL>0 D
+"RTN","PRSNUT03",183,0)
+ ... S NLDIV=$P(DIVMAP("NL",+NL),U,3)
+"RTN","PRSNUT03",184,0)
+ .. E  D
+"RTN","PRSNUT03",185,0)
+ ... S (NLDIV,NLE)="NONE"
+"RTN","PRSNUT03",186,0)
+ . E  D
+"RTN","PRSNUT03",187,0)
+ .. I $G(FLAG) D ADDNRS
+"RTN","PRSNUT03",188,0)
+ . I NLDIV'="NONE",DIVS'<0,DIVS'=NLDIV Q  ;NOT ALL DIVS OR NOT THE DIV WE'RE LOOKING FOR
+"RTN","PRSNUT03",189,0)
+ . S SRT1=$S($G(SORT)="N":NLE,1:TLE)
+"RTN","PRSNUT03",190,0)
+ . S SRT2=$S($G(SORT)="N":TLE,1:NLE)
+"RTN","PRSNUT03",191,0)
+ . S ^TMP($J,"PRSN",SRT1,SRT2,PRSIEN)=SSN_U_NAME_U_IEN200_U_$G(SSN200)_U_NLE_U_TLE
+"RTN","PRSNUT03",192,0)
+ . S ^TMP($J,"PRSN",SRT1,SRT2,PRSIEN,1)=NURTYP
+"RTN","PRSNUT03",193,0)
+ Q
+"RTN","PRSNUT03",194,0)
+REPORT(STOP) ;
+"RTN","PRSNUT03",195,0)
+ ;
+"RTN","PRSNUT03",196,0)
+ ;Print the data in the tmp array by the sort parameter
+"RTN","PRSNUT03",197,0)
+ ;
+"RTN","PRSNUT03",198,0)
+ N PAGE,GIEN,PRSIEN,DAT,SD,NL,NTL,TL
+"RTN","PRSNUT03",199,0)
+ S (PAGE,STOP)=0
+"RTN","PRSNUT03",200,0)
+ S GROUP=""
+"RTN","PRSNUT03",201,0)
+ D HDR
+"RTN","PRSNUT03",202,0)
+ F  S GROUP=$O(^TMP($J,"PRSN",GROUP)) Q:GROUP=""!STOP  D
+"RTN","PRSNUT03",203,0)
+ .  W !?17,$S($G(SORT)="N":"NURSING LOCATION: ",1:"T&L UNIT: ")
+"RTN","PRSNUT03",204,0)
+ .  I SORT="N" D
+"RTN","PRSNUT03",205,0)
+ ..    S GIEN=$$NLIEN^PRSNUT03(GROUP)
+"RTN","PRSNUT03",206,0)
+ .  E  D
+"RTN","PRSNUT03",207,0)
+ ..    S GIEN=$O(^PRST(455.5,"B",GROUP,0))
+"RTN","PRSNUT03",208,0)
+ .  S SD=$$DIV^PRSNUT03(SORT,+GIEN)
+"RTN","PRSNUT03",209,0)
+ .  W GROUP,!,?17,"STATION: ",$P(SD,U)," (",$P(SD,U,2),")"
+"RTN","PRSNUT03",210,0)
+ .  W !?12,"--------------------------------------------"
+"RTN","PRSNUT03",211,0)
+ .  S SRT2=""
+"RTN","PRSNUT03",212,0)
+ .  F  S SRT2=$O(^TMP($J,"PRSN",GROUP,SRT2)) Q:SRT2=""!STOP  D
+"RTN","PRSNUT03",213,0)
+ ..   S PRSIEN=0
+"RTN","PRSNUT03",214,0)
+ ..   F  S PRSIEN=$O(^TMP($J,"PRSN",GROUP,SRT2,PRSIEN)) Q:PRSIEN'>0!STOP  D
+"RTN","PRSNUT03",215,0)
+ ...    S DAT=$G(^TMP($J,"PRSN",GROUP,SRT2,PRSIEN))
+"RTN","PRSNUT03",216,0)
+ ...    S NURTYP=$G(^TMP($J,"PRSN",GROUP,SRT2,PRSIEN,1))
+"RTN","PRSNUT03",217,0)
+ ...    S NAME=$P(DAT,U,2)
+"RTN","PRSNUT03",218,0)
+ ...    S IEN200=$P(DAT,U,3)
+"RTN","PRSNUT03",219,0)
+ ...    S NL=$P(DAT,U,5)
+"RTN","PRSNUT03",220,0)
+ ...    S TL=$P(DAT,U,6)
+"RTN","PRSNUT03",221,0)
+ ...    S SSN=$E($P(DAT,U,1),6,9)
+"RTN","PRSNUT03",222,0)
+ ...    W !,NAME,?23,SSN,?28,PRSIEN,?35,IEN200
+"RTN","PRSNUT03",223,0)
+ ...    W ?46,$S($G(SORT)="N":TL,1:NL)
+"RTN","PRSNUT03",224,0)
+ ...    I $G(SHOWNURS) D
+"RTN","PRSNUT03",225,0)
+ ....      W !,?5,$P(NURTYP,U,1),?25,$P(NURTYP,U,2),?50,$P(NURTYP,U,3),!
+"RTN","PRSNUT03",226,0)
+ ...    E  D
+"RTN","PRSNUT03",227,0)
+ ....      S X=$P(NURTYP,U)
+"RTN","PRSNUT03",228,0)
+ ....      S NTL=$L(X)
+"RTN","PRSNUT03",229,0)
+ ....      I NTL>15 D
+"RTN","PRSNUT03",230,0)
+ .....        S DIWL=64
+"RTN","PRSNUT03",231,0)
+ .....        S DIWF="WC15"
+"RTN","PRSNUT03",232,0)
+ .....        K ^UTILITY($J,"W")
+"RTN","PRSNUT03",233,0)
+ .....        D ^DIWP,^DIWW K DIWL,DIWF
+"RTN","PRSNUT03",234,0)
+ ....      E  D
+"RTN","PRSNUT03",235,0)
+ .....       I $X>62 W !
+"RTN","PRSNUT03",236,0)
+ .....       W ?63,X
+"RTN","PRSNUT03",237,0)
+ ...   I (IOSL-5)<$Y S STOP=$$ASK^PRSLIB00() D HDR
+"RTN","PRSNUT03",238,0)
+ ...   I $G(FLAG) S STOP=$$ASK^PRSLIB00()
+"RTN","PRSNUT03",239,0)
+ Q
+"RTN","PRSNUT03",240,0)
+TOTAL(STOP) ;
+"RTN","PRSNUT03",241,0)
+ W !,"ALL DONE" I STOP W ":  User Aborted"
+"RTN","PRSNUT03",242,0)
+ W !,"VA Nurse Count: ",NCNT,!,"Nurses with DUZ: ",N2CNT
+"RTN","PRSNUT03",243,0)
+ Q
+"RTN","PRSNUT03",244,0)
+ADDNRS ;
+"RTN","PRSNUT03",245,0)
+ ; edit PAID 450 Employee name replaceing digits 0..9 with A..J
+"RTN","PRSNUT03",246,0)
+ ;
+"RTN","PRSNUT03",247,0)
+ N NEWNAME
+"RTN","PRSNUT03",248,0)
+ S NEWNAME=$TR(NAME,"0123456789","ABCDEFGHIJ")
+"RTN","PRSNUT03",249,0)
+ W !,"NAME: ",NAME,!,"NEW:  ",NEWNAME,!,"Y: ",Y,!,"Y(0): ",$G(Y(0))
+"RTN","PRSNUT03",250,0)
+ N DIE,DR,DA
+"RTN","PRSNUT03",251,0)
+ S DIE="^PRSPC(",DA=PRSIEN,DR=".01///^S X=NEWNAME" D ^DIE
+"RTN","PRSNUT03",252,0)
+ ;
+"RTN","PRSNUT03",253,0)
+ ;
+"RTN","PRSNUT03",254,0)
+ ; add PAID Nurse employees to file 200
+"RTN","PRSNUT03",255,0)
+ ;
+"RTN","PRSNUT03",256,0)
+ N DIC,X,Y
+"RTN","PRSNUT03",257,0)
+ K DD,DO
+"RTN","PRSNUT03",258,0)
+ S DIC(0)="LZ",X=NEWNAME,DIC="^VA(200," D FILE^DICN
+"RTN","PRSNUT03",259,0)
+ ;
+"RTN","PRSNUT03",260,0)
+ ; edit ssn in 200
+"RTN","PRSNUT03",261,0)
+ ;
+"RTN","PRSNUT03",262,0)
+ I +Y D
+"RTN","PRSNUT03",263,0)
+ . S DIE="^VA(200,",DA=+Y,DR="9///^S X=SSN" D ^DIE
+"RTN","PRSNUT03",264,0)
+ Q
+"RTN","PRSNUT03",265,0)
+HDR ;
+"RTN","PRSNUT03",266,0)
+ W @IOF
+"RTN","PRSNUT03",267,0)
+ S PAGE=PAGE+1
+"RTN","PRSNUT03",268,0)
+ W ?68,"PAGE ",PAGE
+"RTN","PRSNUT03",269,0)
+ W !," NAME",?21,"SSN",?26,"IEN 450",?35,"IEN 200"
+"RTN","PRSNUT03",270,0)
+ W ?46,$S($G(SORT)="N":"T&L",1:"PRIM LOC")
+"RTN","PRSNUT03",271,0)
+ I $G(SHOWNURS) D
+"RTN","PRSNUT03",272,0)
+ .  W !,"     NURSE ROLE"
+"RTN","PRSNUT03",273,0)
+ E  D
+"RTN","PRSNUT03",274,0)
+ .  W ?64,"NURSE TYPE"
+"RTN","PRSNUT03",275,0)
+ W !,"======================================================================="
+"RTN","PRSNUT03",276,0)
+ Q
+"RTN","PRSNUT03",277,0)
+ ;
+"RTN","PRSNUT03",278,0)
+BLDMAP(DIVMAP) ; BUILD A DIVISION MAP OF LOCATIONS
+"RTN","PRSNUT03",279,0)
+ N DIVINFO,LIEN
+"RTN","PRSNUT03",280,0)
+ S LIEN=0
+"RTN","PRSNUT03",281,0)
+ F  S LIEN=$O(^NURSF(211.4,LIEN)) Q:LIEN'>0  D
+"RTN","PRSNUT03",282,0)
+ .  S DIVINFO=$$DIV^PRSNUT03("N",LIEN)
+"RTN","PRSNUT03",283,0)
+ .  S DIVMAP("NL",LIEN)=DIVINFO
+"RTN","PRSNUT03",284,0)
+ .  S DIVMAP("IN",$P(DIVINFO,U,3))=$P(DIVINFO,U,1,2)
+"RTN","PRSNUT03",285,0)
+ Q
+"RTN","PRSNUT03",286,0)
+ ;
+"RTN","PRSNUT03",287,0)
+SELECT(DM) ; Allow selection of one or all from division
+"RTN","PRSNUT03",288,0)
+ N DIC,DUOUT,DTOUT,X,Y
+"RTN","PRSNUT03",289,0)
+ S DIC="^DIC(4,",DIC(0)="AEQMZ"
+"RTN","PRSNUT03",290,0)
+ S DIC("S")="I $D(DM(""IN"",+Y))"
+"RTN","PRSNUT03",291,0)
+ S DIC("A")="Select Division or Return for All: "
+"RTN","PRSNUT03",292,0)
+ D ^DIC
+"RTN","PRSNUT03",293,0)
+ I $D(DUOUT)!$D(DTOUT) Q 0
+"RTN","PRSNUT03",294,0)
+ Q +Y
+"RTN","PRSNUT03",295,0)
+ ;
+"VER")
+8.0^22.0
+"BLD",9752,6)
+^137
+**END**
+**END**
+

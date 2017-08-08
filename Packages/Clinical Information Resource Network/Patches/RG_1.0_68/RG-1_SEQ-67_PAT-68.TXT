@@ -1,0 +1,270 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Thursday, 05/04/17 at 15:13
+=============================================================================
+Run Date: JUL 19, 2017                     Designation: RG*1*68
+Package : RG - CLINICAL INFO RESOURCE NETWORK Priority: Mandatory
+Version : 1        SEQ #67                      Status: Released
+                  Compliance Date: AUG 19, 2017
+=============================================================================
+
+Associated patches: (v)RG*1*65     <<= must be installed BEFORE `RG*1*68'
+                    (v)RG*1*67     <<= must be installed BEFORE `RG*1*68'
+
+Subject: MASTER VETERAN INDEX VISTA ENHANCEMENTS - DATE OF DEATH
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ NOTE: To prevent legacy systems ending up as Treating Facilities,
+       RG* and MPIF* patches should NOT be installed on legacy 
+       systems.
+  
+ RG*1.0*65 and RG*1.0*67 are the required builds for patch RG*1.0*68.
+  
+ NOTE: Master Patient Index (MPI) Date of Death enhancements are being
+       distributed in two VistA namespaces: DG and RG.
+       Patches DG*5.3*943 and RG*1.0*68 can be installed in any order
+       as there are NO dependencies between these patches. 
+  
+ NOTE: Legacy sites can install just the DG*5.3*943 patch. RG*1.0*68
+       should NOT be installed on legacy sites.
+  
+ Enhancement
+ The following Date of Death enhancements are being exported in this patch:
+  
+ Enhancement #1
+ The Observation/Result (OBX) Health Level Seven (HL7) segment parser
+ process in routine RGADTP was enhanced to extract the 'Toolkit Date of
+ Death Override' value if it was transmitted in the HL7 message to the
+ site.    
+  
+ Enhancement #2
+ Routine RGADTP3 was enhanced to now allow deletion of the following Date
+ of Death data from the PATIENT (#2) file in VistA ONLY if the 'Toolkit
+ Date of Death Override' value was transmitted in the HL7 message:
+  
+      - DATE OF DEATH             (#.351)
+      - DEATH ENTERED BY          (#.352) 
+      - SOURCE OF NOTIFICATION    (#.353)
+      - LAST EDITED BY            (#.355)
+      - SUPPORTING DOCUMENT TYPE  (#.357)
+      - DATE OF DEATH OPTION USED (#.358)
+  
+  Note: DATE OF DEATH LAST UPDATED (#.354) will NOT be deleted, but will
+        instead be updated with the Date/Time parsed from the HL7 message. 
+  Note: The 'Toolkit Date of Death Override' value will ONLY be transmitted
+        when the Date of Death deletion is performed from the ToolKit (TK)
+        graphical user interface (GUI) Override (OVR) tab.
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+   
+ File Name (Number)         Field Name (Number)    New/Modified/Deleted
+ ------------------         -------------------    --------------------
+ N/A
+   
+ Forms Associated:
+   
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+   
+ Options Associated:
+   
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+   
+   
+ Protocols Associated:
+   
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+   
+  
+ Remote Procedures Associated:
+   
+ Remote Procedure Name             New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name                    New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A 
+  
+  
+ Additional Information:
+   
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+   
+   
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+   
+  
+ Test Sites:
+ ----------
+ Central AL HCS
+ Durham NC VAMC
+    
+  
+  
+ Patch Installation:
+   
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre/Post installation routine processes.   
+   
+  
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than 2 minutes to install.  This patch may be 
+ installed with users on the system.   
+  
+ The following OPTIONs should be disabled during installation:
+      Load/Edit Patient Data                      [DG LOAD PATIENT DATA]
+      Register a Patient                          [DG REGISTER PATIENT]
+      Preregister a Patient                       [DGPRE PRE-REGISTER OPTION]
+      Electronic 10-10EZ Processing               [EAS EZ 1010EZ PROCESSING] 
+      UPDATE BATCH JOB FOR HL7 v2.3               [VAFC BATCH UPDATE]
+      MPI/PD Patient Admin Coordinator Menu       [RG ADMIN COORD MENU]
+      Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN RES]
+  
+ The HL7 incoming filers should be stopped.  Use the Monitor, Start, Stop
+ Filers [HL FILER MONITOR] option on the Filer and Link Management Options
+ [HL MENU FILER LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+   
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. RG*1.0*68):
+   
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch, such as
+         routines, DDs, templates, etc.
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+       
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+   
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? YES// respond YES.  The following OPTIONS should be
+     disabled during the installation.
+      
+     a. When prompted 'Enter options you wish to mark as 'Out Of Order':',
+        select the following options:
+     
+          Option Name                    Menu Text                       
+          -----------                    ---------
+          [DG LOAD PATIENT DATA]         Load/Edit Patient Data
+          [DG REGISTER PATIENT]          Register a Patient   
+          [DGPRE PRE-REGISTER OPTION]    Preregister a Patient
+          [EAS EZ 1010EZ PROCESSING]     Electronic 10-10EZ Processing
+          [VAFC BATCH UPDATE]            UPDATE BATCH JOB FOR HL7 v2.3
+          [RG ADMIN COORD MENU]          MPI/PD Patient Admin Coordinator
+                                          Menu
+          [MPIF LOC/MIS ICN RES]         Local/Missing ICN Resolution
+                                          Background Job 
+     
+     b. When prompted 'Enter protocols you wish to mark as 'Out Of Order':
+        press the Enter key.
+  
+     c. When prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After patch installation has completed, restart the HL7 incoming filers.
+ Use the Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+ and Link Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+ Menu [HL MAIN MENU].
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL INFO RESOURCE NETWORK;**[Patch List]**;30 Apr 99;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RGADTP
+    Before:B124087118   After:B126226198  **26,27,20,34,35,40,45,44,47,
+                                           59,60,61,62,63,65,68**
+Routine Name: RGADTP3
+    Before: B28394537   After: B29753601  **48,59,63,65,67,68**
+ 
+Routine list of preceding patches: 67
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 13, 2017
+Completed By:                               Date Completed: JUL 18, 2017
+Released By :                               Date Released : JUL 19, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

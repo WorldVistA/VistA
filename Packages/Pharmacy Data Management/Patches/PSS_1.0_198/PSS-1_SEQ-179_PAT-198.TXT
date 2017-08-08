@@ -1,0 +1,247 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 06/22/16 at 12:24
+=============================================================================
+Run Date: MAY 01, 2017                     Designation: PSS*1*198
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #179                      Status: Released
+                  Compliance Date: JUN 01, 2017
+=============================================================================
+
+Associated patches: (v)PSS*1*191   <<= must be installed BEFORE `PSS*1*198'
+
+Subject: NCPDP DISP UNIT FIELD, INACTIVE DATE, DOSE UNITS ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issues:
+  
+ 1. The NCPDP DISPENSE UNIT field (#82) of the DRUG file (#50) may equal
+    "RA" instead of the correct value "EA".
+  
+ 2. Options PSS MAINTAIN ORDERABLE ITEMS and PSS DRUG ENTER/EDIT may
+    display an incorrect default value for the "INACTIVE DATE" prompt.
+  
+ 3. The "/" character causes a problem with Dosing checks in Outpatient 
+    Pharmacy, Inpatient Medications, and Computerized Patient Record System
+    (CPRS).
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A 
+  
+  
+ ASSOCIATED CA SDM TICKETS:
+ ==========================
+ 1. I9845535FY16 - NCPDP DISPENSE UNIT Incorrectly Set to "RA"
+  
+ 2. I9845626FY16 - Orderable Item Inactive Date Issues
+    I10647418FY16  (Duplcate)
+  
+ 3. I6659751FY16 - DOSE UNITS (#51.24) file issue with "/"  
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Heartland East HCS
+ Oklahoma City VAMC 
+  
+  
+ CA SDM TICKET OVERVIEW:
+ =======================
+ 1. I9845535FY16 
+                                                        
+    Problem:
+    --------
+    Patch PSS*1*127 incorrectly populated the NCPDP DISPENSE UNIT field
+    (#82) of the DRUG file (#50) entry matched to VA PRODUCT file (#50.68)
+    entry "MEMANTINE HCL 5MG/10MG TAB TITRATION PAK,49" (internal entry
+    number 16512) as "RA" instead of "EA". "RA" is an invalid value.  "EA"
+    corresponds to "EACH".  As per CDW data, this incorrect data exists at
+    thirty-six medical centers as well as many additional test and gold
+    databases. (The root cause of the issue in PSS*1*127 was due to a typo 
+    in a temporary file entry for "MEMANTINE HCL". Drugs matched to other 
+    VA Product entries were not affected.)
+  
+    Resolution:
+    -----------
+    Post-install routine PSSP198 searches the DRUG file (#50) for drugs
+    that are associated with the corresponding VA PRODUCT file (#50.68)
+    entry "MEMANTINE HCL 5MG/10MG TAB TITRATION PAK;49" and then checks the
+    NCPDP DISPENSE UNIT field (#3) for a value of "RA".  If NCPDP DISPENSE
+    UNIT field (#3) is set to "RA", it will be reset to "EA".  Also, a 
+    MailMan message will be generated identifying which drugs were updated
+    (if any) and sent to all users who hold the PSNMGR security key as 
+    well as the user installing the patch.  See end of this section for
+    the MailMan message example.
+  
+    Routine: PSSP198
+  
+  
+ 2. I9845626FY16 
+  
+    Problem:
+    --------
+    When invoking the Dispense Drug/Orderable Item Maintenance [PSS
+    MAINTAIN ORDERABLE ITEMS] and Drug Enter/Edit [PSS DRUG ENTER/EDIT]
+    options, several issues concerning the "INACTIVE DATE:" prompt may
+    occur.  Those issues include an incorrect default INACTIVE DATE and the
+    inability to delete, add, or change the INACTIVE DATE when necessary.  
+    The user is often unaware that the deletion, addition, or change was
+    not filed.
+  
+    Resolution:
+    -----------
+    Routine PSSPOIM1 has been modified to display the correct default value
+    for the "INACTIVE DATE:" prompt and allow the user to delete, add, or 
+    change the INACTIVE DATE.  If a deletion or change should not be
+    allowed because of the corresponding inactive dates in the DRUG file
+    (#50), the user is informed with a message.  The corresponding field 
+    display in [PSS EDIT ORDERABLE ITEMS] is not resolved at this time and
+    will be addressed by a future patch.
+  
+  
+    Routine: PSSPOIM1
+  
+  
+ 3. I6659751FY16
+  
+    Problem:
+    --------
+    A problem occurs with Dosing checks in Outpatient Pharmacy, Inpatient 
+    Medications, and Computerized Patient Record System (CPRS) when the
+    Dose Unit of APPLICATORFUL(S) or SUPPOSITOR(IES) is the Dose Unit of
+    the medication order. In these cases, the FIRST DATABANK DOSE UNIT of
+    APPLICATORFUL/S or SUPPOSITORY/IES is sent into the Medication Order 
+    Check Healthcare Application (MOCHA) interface as the Dose Unit and
+    then a Dosing Error is displayed to the user.  The "/" character causes
+    this problem. 
+  
+    Resolution:
+    -----------
+    Post-install routine PSSP198 will correct the entries in the DOSE UNIT
+    (#51.24) file as described below:
+  
+    1. Modify FIRST DATABANK DOSE UNIT field value for APPLICATORFUL(S) 
+       entry from 'APPLICATORFUL/S' to 'APPLICATORFUL'.
+  
+    2. Modify FIRST DATABANK DOSE UNIT field value for SUPPOSITOR(IES) 
+       entry from 'SUPPOSITORY/IES' to 'SUPPOSITORY'.
+  
+    3. Add 'SUPPOSITORY/IES' to the list of SYNONYMS for SUPPOSITOR(IES) 
+       entry.
+  
+  
+    A MailMan message will be sent to the holders of the PSNMGR security
+    key as well as the user installing the patch, containing an 
+    informational statement regarding these updates.  See example MailMan 
+    message below.
+  
+    MailMan message example:
+    -----------------------
+    Subj: PSS*1*198 Post-Install Report  [#237992] 05/31/16@19:22  29 lines
+    From: PSS*1*198 POST INSTALL  In 'IN' basket.   Page 1  *New*
+    -------------------------------------------------------------------------
+  
+    This mail message has been sent to those holding the PSNMGR security
+    key as well as the installer of the PSS*1.0*198 patch.
+  
+    Changes made to the DOSE UNITS (#51.24) file:
+  
+    FIRST DATABANK (FDB) DOSE UNIT (#1) field
+       * Name: APPLICATORFUL(S) Old: APPLICATORFUL/S  New: APPLICATORFUL
+       * Name: SUPPOSITOR(IES)  Old: SUPPOSITORY/IES  New: SUPPOSITORY
+  
+    SYNONYM (#2) field corresponding to the NAME (#.01) field:
+       "SUPPOSITORY/IES" added as a synonym for "SUPPOSITOR(IES)".
+       ("APPLICATORFUL/S" is already a synonym for "APPLICATORFUL(S)").
+  
+  
+    PSS*1*198 NCPDP Disp Unit Corrections
+    -------------------------------------------------------------------------
+    The following drug(s) is/are associated with the VA Product
+    MEMANTINE HCL 5MG/10MG TAB TITRATION PAK and the
+    NCPDP Dispense Unit have been changed to EA (Each).
+                                 
+    =========================================================================
+                                                       NCPDP   Disp Unit
+    Drug                                                 Old   New
+    -------------------------------------------------------------------------
+    MEMANTINE HCL 10MG TAB (574)                         RA    EA
+  
+  
+    ***** End Of Report *****
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ========================== 
+ It is not necessary to disable any options.  PSS users should not be
+ on the system when this patch is installed.  
+ It should take less than 5 minutes to install this patch.
+  
+   1. Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.  
+   
+   2. From the Kernel Installation & Distribution System menu, select 
+      the Installation menu.  
+   
+   3. From this menu, you may select to use the following options: 
+      (when prompted for INSTALL NAME, enter PSS*1.0*198 )
+  
+      a.  Verify Checksums in Transport Global - This option will 
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+      b.  Print Transport Global - This option will allow you to view
+          the components of the KIDS build.
+      c.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this 
+          patch is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      d.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+   
+   4. Use the Install Package(s) option and select the package PSS*1.0*198.
+  
+   5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+      respond NO.  
+   
+   6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+      Protocols? NO//", respond NO.
+  
+   NOTE:  The post-install routine, PSSP198, is automatically deleted by
+          the system if allowed by your Kernel site parameters
+          configuration.  You may delete routine PSSP198 if the
+          installation is successful and if it is not automatically deleted
+          by KIDS.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSP198
+    Before:       n/a   After: B42032202  **198**
+Routine Name: PSSPOIM1
+    Before: B61410040   After:B131239599  **29,38,47,141,153,159,166,191,198**
+ 
+Routine list of preceding patches: 191
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 26, 2016
+Completed By:                               Date Completed: APR 28, 2017
+Released By :                               Date Released : MAY 01, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

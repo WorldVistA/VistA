@@ -1,0 +1,195 @@
+$TXT Created by            at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 02/16/17 at 15:18
+=============================================================================
+Run Date: JUN 01, 2017                     Designation: PSB*3*92
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #80                      Status: Released
+                  Compliance Date: JUL 01, 2017
+=============================================================================
+
+Associated patches: (v)PSB*3*83    <<= must be installed BEFORE `PSB*3*92'
+
+Subject: BCMA UTILITIES ROUTINE ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+  
+ 1. The Bar Code Medication Administration (BCMA) Order Mode indicator
+     light is not displaying when the only active orders have a pharmacy status
+     of renewed, on call, or provider hold.
+  
+ 2. The BCMA Active Order Indicator light is not displaying for the Unit Dose
+     tab when the only active orders have a Pharmacy Status of Renewed or
+     Provider Hold.
+  
+ 3. Medications cannot be administered in BCMA after Nurse's initials deleted.
+   
+ 4. Medications Orders requiring removal with a schedule type of "One-Time"
+    and Frequency greater than zero do not display the correct removal
+    time in the "Next Dose Action" field on the BCMA VDL.
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+   
+  
+ ASSOCIATED CA TICKET(S):
+ ========================
+ 1. I8125285FY16  - Active Order indicator issue (PSPO #3160)
+          
+ 2. I9892592FY16 - The Unit Dose tab on the VDL is not highlighted for
+                   orders in a renewed or held status. 
+  
+ 3. R12711742FY17 - Medications cannot be administered in BCMA after 
+                    Nurse's initials deleted.  (PSPO #3473)
+  
+ 4. I12876210FY17 - One Time orders with schedule, do not display the correct
+                    removal date/time after given.
+    I12495420FY17(d)
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Pittsburgh VA HCS 
+ Upstate New York
+  
+  
+ CA OVERVIEW:
+ ============
+ 1. I8125285FY16  - Active Order indicator issue
+  
+    Patient Safety Issue:
+    ---------------------
+    PSPO #3160
+  
+    Problem:
+    --------
+    The Bar Code Medication Administration (BCMA) Order Mode indicator
+    light is not displaying when the only active orders have a pharmacy status
+    of renewed, on call, or provider hold.
+  
+    Resolution:
+    -----------
+    Routine PSBVDLU1 was modified to display orders with a pharmacy status
+    of renewed, on call, or provider hold.
+  
+ 2. I9892592FY16  - The Unit Dose tab on the VDL is not highlighted for
+                    orders in a renewed or held status. 
+  
+    Problem:
+    --------
+    The Unit Dose tab on the VDL is not highlighted for orders in a renewed
+    or held status. 
+    
+    Resolution:
+    -----------
+    Routine PSBVDLTB was modified to highlight the unit dose tab for orders
+    with a renewed or held status. 
+  
+ 3. R12711742FY17 - Medications cannot be administered in BCMA after 
+                    Nurse's initials deleted.
+    
+    Patient Safety Issue:
+    ---------------------
+    PSPO #3473
+  
+    Problem:
+    --------
+    Users could not administer medications in BCMA after the user who
+    Nurse verified the orders deleted their initials in VistA. The site had
+    the Non-Nurse Verified Orders parameter set to "Prohibit Administration".
+  
+    Resolution:
+    -----------
+    Routine PSBVDLU1 was modified to send the first and last initial from the
+    NAME (#.01) field of the NEW PERSON (#200) file if the user who Nurse
+    Verified the order has no data in the INITAL (#1) field of the NEW PERSON
+    (#200) file.
+     
+ 4. I12876210FY17 - One Time orders with schedule, do not display the
+                    correct removal date/time after given.
+  
+    Problem:
+    --------
+    Medications Orders requiring removal with a schedule type of "One-Time" and
+    Frequency greater than zero do not display the correct removal time
+    in the "Next Dose Action" field on the BCMA VDL.
+  
+    Resolution:
+    -----------
+    Routine PSBVDLU1 was modified to correctly store and display the correct
+    removal time for these orders.
+  
+ Installation Instructions:
+ ==========================
+    
+     *************************** NOTE *************************
+     *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS   *
+     *  AN EDITED ERROR WILL OCCUR.                           *                 
+     *                                                        *
+     *  The patch should be installed when NO BCMA Client     *
+     *  users are on the system. Users should remain off the  *
+     *  system for a period of 10 minutes during installation.*
+     *                                                        *
+     *                                                               *
+     *  Suggested time to install: Queued for Non-peak        *
+     *  requirement hours.                                    *
+     **********************************************************
+      
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+    
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSB*3.0*92):
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this 
+               patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+    
+    4. Use the Install Package(s) option and select the package PSB*3.0*92.
+    
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//",  respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBVDLTB
+    Before: B35153765   After: B35995802  **3,4,16,68,70,78,83,92**
+Routine Name: PSBVDLU1
+    Before:B192703576   After:B203085262  **13,32,68,70,83,92**
+ 
+Routine list of preceding patches: 83
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 21, 2016
+Completed By:                               Date Completed: MAY 30, 2017
+Released By :                               Date Released : JUN 01, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

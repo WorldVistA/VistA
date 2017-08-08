@@ -1,0 +1,219 @@
+$TXT Created by                 at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 01/19/17 at 15:31
+=============================================================================
+Run Date: JUN 15, 2017                     Designation: PSO*7*479
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #400                      Status: Released
+                  Compliance Date: JUL 16, 2017
+=============================================================================
+
+Associated patches: (v)PSO*7*454   <<= must be installed BEFORE `PSO*7*479'
+
+Subject: ONEVA RX - EXIT AT 'DEVICE:' PROMPT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+  User Attempts to ^ at the Device Prompt, the fill is still processed
+  
+ Defect Tracking System Tickets:
+ ===============================
+ I11926603FY17 - CA SDM,  469972 - Rational Defect
+  
+ User Attempts to ^ at the Device Prompt, the fill is still processed
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Hines VAMC
+ Salt Lake City VAMC
+  
+ Defect Tracking System Tickets Overview:
+ ========================================
+  
+ I11926603FY17 - CA SDM,  469972 - Rational Defect
+  
+ User Attempts to ^ at the Device Prompt, the fill is still processed
+  
+ Problem:
+ --------
+ When processing a OneVA Pharmacy refill or partial and an ^ is
+ entered at the DEVICE: prompt, the user may assume that the refill
+ or partial has been aborted.  However, at this point, the refill
+ or partial has already been processed and saved. The user is exited
+ from printing a label with no warning message and there is no way to
+ request a reprint of the label.
+  
+ Resolution:
+ -----------
+ Modify routine PSORRX2 to add the following text if no error message
+ is returned when retrieving the label info from the host system.
+ This text will be displayed just prior to the 'LABEL DEVICE:' prompt.
+ (nnnn is the Prescription number)
+  
+ For a Partial fill: 
+ TRANSACTION SUCCESSFUL.  The partial for RX #nnnn has been recorded
+ on the prescription at the host system. 
+  
+ Select a printer to generate the label or '^' to bypass printing.
+  
+ For a Refill:
+ TRANSACTION SUCCESSFUL.  The refill for RX #nnnn has been recorded
+ on the prescription at the host system. 
+  
+ Select a printer to generate the label or '^' to bypass printing.
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the documentation
+  
+ User Manual-Manager         pso_7_man_um.pdf
+ User Manual-Pharmacist      pso_7_phar_um.pdf
+ User Manual-Supplemental    pso_7_supplemental_um.pdf
+ User Manual-Technician      pso_7_tech_um.pdf
+ User Manual-OneVA Pharmacy  pso_7_um.pdf
+  
+ directly using Secure File Transfer Protocol (SFTP) from the
+ ANONYMOUS.SOFTWARE directory at the following OI Field Offices:
+    
+    Albany:                 domain.ext
+    Hines:                  domain.ext    
+    Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: 
+ http://www.domain.ext/vdl/
+  
+ Title                             File Name            FTP Mode
+ ---------------------------------------------------------------
+ User Manual-Manager         pso_7_man_um.pdf            binary
+ User Manual-Pharmacist      pso_7_phar_um.pdf           binary
+ User Manual-Supplemental    pso_7_supplemental_um.pdf   binary
+ User manual-Technician      pso_7_tech_um.pdf           binary
+ User Manual-OneVA Pharmacy  pso_7_um.pdf                binary
+  
+  
+ IMPORTANT: Patch PSO*7*479 does not address all of the reasons
+ why the OneVA Pharmacy software is currently disabled at your
+ facility.  Sites are instructed to INSTALL this patch by the
+ listed compliance date.
+  
+ Do NOT turn the OneVA Pharmacy functionality on until given
+ explicit instruction to do so.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ Patients should not be processing remote prescriptions while patch
+ is being installed.  It should take less than 2 minutes to install this
+ patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*479)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DDs or templates. The backup
+             transport global will allow a rollback to the prior version of
+             the routines released in this patch in the event a rollback is
+             required.  
+    4. Use the Install Package(s) option and select the package 
+       PSO*7.0*479.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+  
+ Installation Verification
+ =========================
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+ ;;7.0;OUTPATIENT PHARMACY;**[PATCH LIST]**;DEC 1997;Build 349 
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+ Back-out Procedures
+ ===================
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System. 
+  
+ Validation of Roll Back Procedure
+ =================================
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the PSO Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the
+ PSO*7.0*479 patch have been rolled back, the first two lines of the 
+ Routines will no longer contain the designation of patch PSO*7.0*479 in
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSORRX2
+    Before: B32510176   After: B34725424  **454,479**
+ 
+Routine list of preceding patches: 454
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 10, 2017
+Completed By:                               Date Completed: JUN 15, 2017
+Released By :                               Date Released : JUN 15, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,275 @@
+
+=============================================================================
+Run Date: MAY 22, 2017                     Designation: WEBP*1*12
+Package : WEBP - PATIENT CENTERED MANAGEMENT  Priority: Mandatory
+Version : 1        SEQ #12                      Status: Released
+                  Compliance Date: JUN 21, 2017
+=============================================================================
+
+
+Subject: PCMM WEB V1.12 CONFIGURATION UPDATES
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Patient-Centered Management Module (PCMM) Web application version 
+ WEBP*1*12 will implement the following configuration changes to correct 
+ defects reported by the field.
+  
+  
+ Configuration and Software Changes:
+ ===================================
+  
+ 1.      RTC 481388 - When a team name change occurs, the CPRS Header Sync 
+ job is triggered for all patients assigned to the team which is causing 
+ an overload on the server processes and causes threads to be stuck 
+ requiring bounces of the application GUI. The CPRS Header Sync job will 
+ be optimized by adding sta3n to query parameters to speed it up and add 
+ chunking on execution to limit single IN to 1000 entries which will mark 
+ the vistapatient records to recalculate/resync when the team name changes 
+ for the assigned patient.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 2.      RTC 461933 - Encounters are dropped for new PACT assignments if 
+ there is a historical (inactive) PACT assignment with an End Date at one 
+ 3 digit station that ended after the new encounter date at the new 3 
+ digit station. PCMM Web will override a new PACT assignment Start Date 
+ that conflicts with a historical PACT assignment End Date at another 3 
+ digit station so the valid teamlet encounter will be picked up by the 
+ system and applied to the new PACT assignment and change the Status to 
+ ACTIVE. The actual encounter date will be maintained in the LAST 
+ ENCOUNTER DATE column.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 3.      RTC 461086 - If it is determined through discussion with a user 
+ or a helpdesk ticket that an individual team needs to be deleted from 
+ VistA due to duplication, then a managed operation is needed to force the 
+ deletion of an entire team tree from VistA. This utility will expose an 
+ internal testing routine that allows an administrator to run an operation 
+ in the Spring JMX console. PCMM Web will now provide the ability to 
+ perform a direct VistA deletion of an entire team tree for a team that is 
+ duplicated to assist sites with the deletion of orphan teams (teams that 
+ are not referenced from PCMM Web database and cannot be reached by 
+ VistASync) from VistA. Sites will need to identify and provide the IEN of 
+ the duplicate teams in VistA to assist in this process.
+ CA-SDM Ticket: R14343161FY17    R12336516FY17
+  
+ 4.      RTC 465276 - PCMM Web needs to add an additional Facility Type of 
+ PRRTP so PCMM Web will include sites that are defined as PRRTP in the 
+ institution file in VistA and allow users to open these teams that 
+ migrated in and process patient assignments. Facility Type of PRRTP was 
+ added and will now be displayed in PCMM Web in the Station login dropdown 
+ box and the Create a Team station dropdown box. This allows the users to 
+ log into this division and create new teams or open existing teams to 
+ continue patient assignments.
+ CA-SDM Ticket: I12367248FY17    I9964621FY16
+  
+ 5.      RTC 487256 - During staff reassignment of a PCP position that is 
+ a preceptor on a PACT team, the preception relations are created and 
+ validated 1 at a time in sequential order for all precepted positions on 
+ that team. If there is more than one precepted position with patients 
+ assigned, this causes the following validation 
+ "EnsurePatientAssignmentInsideAPPrecepteeDates" for the first created 
+ perception (AP position) to fail because validator is run in team scope 
+ and validates all preceptions, and not all of them are created at this 
+ point. PCMM Web will delay the offending validator to the very end of the 
+ staff reassignment process.
+ Example: If there are 5 AP positions on a team and the PCP staff is 
+ changing, the system will throw this validation error because it creates 
+ a preception relationship for the 1st AP and PCP but sees that the other 
+ 4 APs do not have a perception relationship and they have patients 
+ assigned so it gives the validation error.
+ CA-SDM Ticket: I13486817FY17
+  
+ 6.      RTC 502670 - The local station where the user is logged into 
+ needs to display in the CPRS header even if the patient does not have a 
+ local PACT assignment. CPRS header will list local station (3 digits) as 
+ the first tag of the header.
+ CA-SDM Ticket: I14009219FY17
+  
+  
+ Implementation:
+ ===============
+ The PCMM Web WEBP*1*12 is a centrally managed web-based application and 
+ will be implemented and deployed to a central web server.  No installation
+ is required by sites.
+  
+  
+ Implementation Files:
+ =====================
+ None
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated: N/A
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A
+  
+ Options Associated: N/A
+  
+ Protocols Associated: N/A
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20070415 - Rehost/Reengineer PCMM
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ CA-SDM Ticket(s):
+ -----------------
+ 1.      I12367248FY17 - PCMM Web - Team Missing
+         I9964621FY16 - PCMM WEB JAVA CONVERSION ISSUE
+ Problem:
+ PCMM Web needs to add an additional Facility Type of PRRTP so PCMM Web 
+ will include sites that are defined as PRRTP in the institution file in 
+ VistA and allow users to open these teams that migrated in and process 
+ patient assignments.
+  
+ Resolution:
+ Facility Type of PRRTP was added and will now be displayed in PCMM Web in 
+ the Station login dropdown box and the Create a Team station dropdown box.
+  
+ 2.      I14009219FY17 - Issue description with screen shots.  Please 
+ describe you...
+ Problem:
+ The local station where the user is logged into needs to display in the 
+ CPRS header even if the patient does not have a local PACT assignment.
+  
+ Resolution:
+ CPRS header will list local station (3 digits) as the first tag of the 
+ header.
+  
+ 3.      R14343161FY17 - Request to Delete Duplicate PCMM Team Names
+         R12336516FY17 - CPRS patient banner lists the same Primary Care 
+                         PACT team 70...
+ Problem:
+ Individual team needs to be deleted from VistA due to duplication.
+  
+ Resolution:
+ PCMM Web will now provide the ability to perform a direct VistA deletion 
+ of an entire team tree for a team that is duplicated to assist sites with 
+ the deletion of orphan teams (teams that are not referenced from PCMM Web 
+ database and cannot be reached by VistASync) from VistA. Sites will need 
+ to identify and provide the IEN of the duplicate teams in VistA to assist 
+ in this process.
+  
+ 4.    I13486817FY17 - Validation Error
+ Problem:
+ During staff reassignment of a PCP position that is a preceptor on a PACT 
+ team, the preception relations are created and validated 1 at a time in 
+ sequential order for all precepted positions on that team. If there is 
+ more than one precepted position with patients assigned, this causes the 
+ following validation "EnsurePatientAssignmentInsideAPPrecepteeDates" for 
+ the first created perception (AP position) to fail because validator is 
+ run in team scope and validates all preceptions, and not all of them are 
+ created at this 
+ point. 
+  
+ Resolution:
+ PCMM Web will delay the offending validator to the very end of the 
+ staff reassignment process.
+  
+  
+ Test Sites:
+ -----------
+ 691 - West LA VAMC
+ 618 - Minneapolis VA HCS
+ 626 - Nashville VAMC
+  
+  
+ Documentation:
+ ==============
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be retrieved from the VA Software Documentation
+ Library (VDL) on the Internet at the following address:
+ http://www4.domain.ext/vdl.
+  
+ File Description              File Name                      SFTP Mode
+ --------------------------------------------------------------------------
+ Patient-Centered Management   PCMM WEB VDD WEBP_1_12.DOCX     BINARY
+ Module(PCMM) Web
+  
+ Patient-Centered Management   PCMMR_POM.DOCX                  BINARY
+ Module (PCMM) Web Project
+ Operations Manual
+  
+  
+ Patch Installation:
+ ===================
+  
+ There is no local VistA installation for PCMM Web. All installations will 
+ be done on the national web server.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ If you have any questions concerning the implementation of this 
+ application, please contact the VA Service Desk at 1-888-596-4357 or 
+ directly log a CA SDM ticket using the category: 
+ NTL.APP.HealtheVet VistA.PCMM Web.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 28, 2017
+Completed By:                               Date Completed: MAY 17, 2017
+Released By :                               Date Released : MAY 22, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

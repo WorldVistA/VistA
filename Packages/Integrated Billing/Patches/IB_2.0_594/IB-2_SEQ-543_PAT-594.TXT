@@ -1,0 +1,198 @@
+$TXT Created by               R at DEVESR.DOMAIN.EXT  (KIDS) on Tuesday, 06/13/17 at 18:17
+=============================================================================
+Run Date: JUL 05, 2017                     Designation: IB*2*594
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #543                      Status: Released
+                  Compliance Date: JUL 12, 2017
+=============================================================================
+
+
+Subject: FIX FORCED LOCAL PRINT IN ENTER/EDIT BILLING INFO
+
+Category: 
+  - Input Template
+
+Description:
+============
+
+ This mandatory patch will restore functionality to screen 10 of the
+ Enter/Edit Billing Information option that was accidently removed with the
+ release of IB*2.0*554. This patch is being released with an abbreviated 
+ 7 day compliance period.
+  
+ When a user wants to force a local print of a bill, he/she chooses field 7
+ on screen 10. The default value for the field is NO FORCED PRINT. The user
+ can change that value to FORCED LOCAL PRINT. The error introduced by
+ IB*2.0*554 caused field 7 to be inoperative. Choosing field 7 just
+ returned the user to screen 10 without the choice to change the value in
+ field 7. With the installation of this patch, field 7 on screen 10 will
+ work as designed, allowing the forced local printing of bills.
+  
+ No routines are included in the transport global.  As part of the input
+ template installation, IB*2.0*594 will generate a list of IBX* compiled
+ routines.  Checksums are not checked on the IBX* routines.
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)       New/Modified/Deleted
+ ------------------          -------------------       --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                   File Number               New/Modified/Deleted
+ ---------                   -----------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name             New/Modified/Deleted
+ ---------------             --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                 Type                      New/Modified/Deleted
+ -----------                 ----                      --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ IB SCREEN102            I     BILL/CLAIMS (#399)      Modified
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+  
+ New Service Requests (NSRs):
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+  
+ 1. I14167020FY17 - Option to print on a UB04 - Defect IB*2.0*554
+ 2. R14038851FY17 - Forced Print Issue - Defect IB*2.0*554
+ 3. R14034929FY17 - No option to force print - Defect IB*2.0*554
+ 4. R13755100FY17 - Forced Print Issue - Defect IB*2.0*554
+  
+  
+ Test Sites:
+ -----------
+ OMAHA, NE
+ ST. CLOUD, MN
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+ -------------------
+  
+  
+ Pre/Post Installation Overview:
+ Not applicable
+  
+ Pre-Installation Instructions:
+ None
+  
+  
+ Installation Instructions:
+ This patch may be installed with users on the system as there are only
+ data file updates and no routine changes. This patch should take less 
+ than 5 minutes to install.
+  
+  
+  1. Choose the PackMan message containing this patch.
+  
+  2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+  3. From the Kernel Installation and Distribution System Menu, select the
+     Installation Menu.  From this menu, you may elect to use the 
+     following options. When prompted for the INSTALL NAME enter the patch
+     name (ex. <IB*2.0*594>):
+       a. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       b. Print Transport Global - This option will allow you to view
+          the components of the KIDS build.
+       c. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all of the components of this patch,
+          such as routines, DDs, templates, etc.
+       d. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+  
+  4. From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+  5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer No.
+  
+  6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     answer No.
+  
+  7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', answer No.
+  
+  
+  
+ Post-Installation Instructions:
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 04, 2017
+Completed By:                               Date Completed: JUN 30, 2017
+Released By :                               Date Released : JUL 05, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

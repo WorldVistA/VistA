@@ -1,0 +1,157 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 10/27/16 at 17:59
+=============================================================================
+Run Date: JUN 14, 2017                     Designation: OR*3*440
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: EMERGENCY
+Version : 3       SEQ #376                      Status: Released
+                  Compliance Date: JUN 16, 2017
+=============================================================================
+
+Associated patches: (v)OR*3*350    <<= must be installed BEFORE `OR*3*440'
+
+Subject: WRONG DOSAGE FOR ORDERS CREATED IN LIST MANAGER
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects 1 issue within the ORDER ENTRY/RESULTS REPORTING 
+ package:
+  
+ 1. Some sites have an inappropriate link to the List Manager version of 
+ CPRS. When they renew orders from this link they are generated with the 
+ wrong Dispense Drug. While ListMan CPRS is not supposed to be used, we 
+ are putting out an emergency patch to fix the issue.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ CA SDM TICKET(s):
+ =================
+ 1. R9772955FY16  - We are receiving errors when pharmacists are finishing 
+                    prescriptions that kick them out.
+    Duplicates:
+    R10837371FY16 - BIG (VISN: 18) Request to have Vista Order corrected 
+                    ** Priority ** 
+  
+    R11613346FY17 - Medication quantity discrepancy. Please see attachment
+                    for details.
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Fayetteville VAMC, NC
+ Upstate New York HCS (Syracuse)
+ West Texas VA HCS (Big Spring) 
+  
+ Patient Safety Issue:
+ =====================
+ PSPO #3335
+     
+ CA SDM OVERVIEW:
+ ================
+ 1. R9772955FY16  - We are receiving errors when pharmacists are finishing 
+                    prescriptions that kick them out.
+  
+    Problem:
+    --------
+    Some sites have the Ward Clerk Menu [OR MAIN MENU WARD CLERK] 
+    available from the HRC Pharmacy Customer Care Menu [DVBA HRC MENU 
+    PHARMACY CC]. Renewing an order from that menu can cause the wrong
+    Dispense Drug to be generated.
+  
+    Resolution:
+    -----------
+    Access to the old CPRS List Manager Menus should be turned off. 
+    However, this patch will provide a fix for the order renewal issue
+    until the sites integrate CPRS GUI into their workflow. Routine ORCDPS
+    will be modified to allow the recalculation of the Dispense Drug when
+    renewing an order.
+  
+    Technical Details:
+    ------------------
+    The CPRS Quick Order Menus should be the only code that is accessing 
+    the old CPRS List Manager routines. OR*3*350 made a change to suppress
+    Dispense Drugs from being generated for Quick Orders. This patch will 
+    modify ORCDPS so that the suppression only happens when the code is 
+    called from the Quick Order Menus.
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will be
+ less than 2 minutes.
+  
+  1.  Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter OR*3.0*440):
+      
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  4.  Use the Install Package(s) option and select the package
+      OR*3.0*440.
+  
+      a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? NO//", answer NO.
+      b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCDPS
+    Before: B41761091   After: B43486132  **4,38,62,86,94,129,350,440**
+ 
+Routine list of preceding patches: 350
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 07, 2016
+Completed By:                               Date Completed: JUN 13, 2017
+Released By :                               Date Released : JUN 14, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

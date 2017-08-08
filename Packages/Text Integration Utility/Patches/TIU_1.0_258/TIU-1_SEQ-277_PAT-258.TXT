@@ -1,0 +1,367 @@
+
+=============================================================================
+Run Date: JUL 17, 2017                     Designation: TIU*1*258
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #277                      Status: Released
+                  Compliance Date: AUG 17, 2017
+=============================================================================
+
+Associated patches: (v)TIU*1*200   <<= must be installed BEFORE `TIU*1*258'
+                    (v)PXRM*2*12   <<= must be installed BEFORE `TIU*1*258'
+
+Subject: HOME TELEHEALTH TEMPLATES
+
+Category: 
+  - Enhancement (Mandatory)
+  - Print Template
+  - Sort Template
+  - Other
+
+Description:
+============
+
+ The VHA Office of Connected Care (10P8) wishes to have a comprehensive, 
+ integrated template set in use at all VA facilities caring for Home 
+ Telehealth patients.  This functionality is being released as part of a 
+ multi-package build that also includes PXRM*2.0*19 and GMTS*2.7*98.
+  
+ Specifically, this TIU patch deploys the twelve official titles for the 
+ Home Telehealth (HT) program ensure compliance with their proposed TIU 
+ Document Definition hierarchy for HT.
+  
+ Document Hierarchy and Names after Installation
+ -----------------------------------------------
+ HOME TELEHEALTH NOTES                DOCUMENT CLASS
+   HT ASSESSMENT TREATMENT PLAN NOTE       TITLE
+   HT CAREGIVER ASSESSMENT NOTE            TITLE  
+   HT CONTINUUM OF CARE NOTE               TITLE  
+   HT DISCHARGE NOTE                       TITLE  
+   HT INTERVENTION NOTE                    TITLE
+   HT NOTE                                 TITLE  
+   HT PERIODIC EVALUATION NOTE             TITLE  
+   HT SUMMARY OF EPISODE NOTE              TITLE
+   HT TECH EDUCATION NOTE                  TITLE  
+   HT TELEPHONE CASE MANAGEMENT NOTE       TITLE  
+   HT VIDEO VISIT NOTE                     TITLE  
+ CONSULTS                             DOCUMENT CLASS
+   HT SCREENING CONSULT                    TITLE 
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name             Type               New/Modified/Deleted
+ -----------             ----               -------------------- 
+ TIU HT MENU             MENU                    NEW
+ TIU HT TITLE MAPPINGS   PRINT                   NEW
+ TIU HT VERIFY TITLES    PRINT                   NEW
+  
+ TIU HT MENU
+ This menu includes options to facilitate implementation of the TIU support
+ for Home Telehealth.
+  
+ TIU HT TITLE MAPPINGS
+ This option prints a list of all HT Titles, with their Status and VHA
+ Enterprise Standard Titles. This will allow you to verify that the
+ appropriate titles were installed, renamed, and mapped by patch TIU*1*258.
+  
+ TIU HT VERIFY TITLES
+ This option prints a list of all HT Titles, with their Status and Print
+ Names. This will allow you to verify that the appropriate titles were
+ installed, renamed, or inactivated by patch TIU*1*258.
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name        Type       File Name (Number)    New/Modified/Deleted
+  -------------        ----      ------------------    --------------------
+ TIU HT TITLE MAPPINGS
+                       PRINT     PRINT TEMPLATE (^DIPT)         NEW
+ TIU HT TITLE PRINT    PRINT     PRINT TEMPLATE (^DIPT)         NEW
+ TIU HT STATUS NAME    SORT      SORT TEMPLATE (^DIBT)          NEW
+  
+  
+ PRINT TEMPLATE:
+   TIU HT TITLE MAPPINGS
+ This Print Template, which is invoked by the TIU HT TITLE MAPPINGS option,
+ prints the NAME (.01), STATUS (.07), and VHA ENTERPRISE STANDARD TITLE
+ (1501) fields for each of the Home Telehealth (HT) titles. Its purpose is
+ to allow the CAC to confirm the mappings of each of the twelve official HT
+ Titles to the appropriate VHA Enterprise Standard Titles.
+  
+   TIU HT TITLE PRINT
+ This Print Template, which is invoked by the TIU HT VERIFY TITLES 
+ option, prints the NAME (.01), STATUS (.07), and PRINT NAME (.03) fields
+ for each of the Home Telehealth (HT) titles. Its purpose is to allow the
+ CAC to verify the results of the installation process for each of the
+ twelve official HT Titles, and the inactivation of all other HT Titles.
+  
+ SORT TEMPLATE:
+   TIU HT STATUS-NAME
+ This Sort Template, which is invoked by both the TIU HT TITLE MAPPINGS and
+ TIU HT VERIFY TITLES options, sort the HT Titles by STATUS, then by NAME,
+ thereby assuring that the active titles will appear at the top of the list
+ produced in each of the reports.
+  
+  
+  
+ Additional Information:
+  
+ Routine Overview:
+   TIUP258E
+ This is the environment check routine.
+ Check for the existence of:
+  CLINICAL COORDINATOR user class
+  CONSULTS document class
+  CARE COORDINATION HOME TELEHEALTH NOTES or HOME TELEHEALTH NOTES 
+  document class.  If neither document class is found, the post-install 
+  will create a new document class for HOME TELEHEALTH NOTES.
+  
+   TIUP258
+ This includes the pre-, and post-install code for patch TIU*1*258. Before
+ the installation, it prepares the TIU environment for installation of the
+ new titles, renaming existing titles as necessary. Following installation,
+ it will introduce the new TIU DOCUMENT DEFINITION entries to file 8925.1;
+ attaches the new HT Titles to the appropriate Document Classes; maps them
+ to their respective Enterprise Standard Titles; and activates them.
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ ALTOONA
+ BALTIMORE
+ BOISE
+ NEW YORK HARBOR
+ PUGET SOUND
+ VISN 2: UPSTATE NEW YORK 
+  
+ Software & Documentation Retrieval Instructions
+ ----------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available. There is a
+ multi-package build named HT TEMPLATES PROJECT 1.0 which contains the
+ following KIDS builds: PXRM*2.0*19, TIU*1.0*258, and GMTS*2.7*98.  The
+ associated host file is named HT_TEMPLATES_1_0.KID.
+  
+ Additionally, there are two TXML template files for use in CPRS GUI.  HT
+ MONTLY MONITOR.TXML, and HT PROVIDER CONSULT.TXML are bundled in the
+ HT_TXML_TEMPLATES.zip file. 
+  
+ IT installers should ensure that each site for which they are installing
+ receive a copy of the zip file and the Install and Setup Guide.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Clinical Reminders Patch 19 Install and Setup Guide
+                               PXRM_2_19_IG.PDF                Binary
+ Home Telehealth User Manual   PXRM_2_19_UM.PDF                Binary
+  
+  
+ Patch Installation:
+ ---------------------
+ Pre/Post Installation Overview
+ ------------------------------
+ This patch contains an environment check routine that runs once the 
+ distribution has been loaded.  This routine checks for the following 
+ conditions and will abort if any is met:
+  
+ 1. Check USR CLASS (8930) file and abort install if the CLINICAL 
+    COORDINATOR User Class is *not* found.
+  
+ 2. Check TIU DOCUMENT DEFINITION file (8925.1) and abort install if the
+    CONSULTS Document Class is *not* found.
+  
+ 3. Pre-existing local titles where the name matches an incoming national
+    title *and* that local title is *not* under the CARE COORDINATION HOME 
+    TELEHEALTH NOTES, HOME TELEHEALTH NOTES, or CONSULTS document classes.
+    Any titles matching these criteria will be displayed to the installer 
+    and the installation will abort and the transport global will be
+    unloaded.
+  
+  
+ Pre: Prepares the TIU document hierarchy for the installation of the new 
+ titles and document classes.
+ 1. Find the CARE COORDINATION HOME TELEHEALTH document class.  If found,
+    disable the document class and then rename it to HOME TELEHEALTH NOTES.
+  
+ 2. If the site has existing CCHT titles (CCHT pilot program sites) that
+    are members of the HOME TELEHEALTH NOTES document class, rename those
+    titles to the new "HT" naming convention.  Not all "CCHT" titles are
+    renamed; only those matching the list of new titles will be renamed.
+  
+ 3. Rename two titles previously released by TIU*1*200: CARE COORDINATION
+    HOME TELEHEALTH SUBSEQUENT EVAL NOTE will be renamed to HT INTERVENTION
+    NOTE CARE COORDINATION HOME TELEHEALTH SUMMARY OF EPISODE NOTE will be
+    renamed to HT SUMMARY OF EPISODE NOTE.  These titles will only be 
+    renamed if they are found to be members of the HOME TELEHEALTH NOTES
+    document class.
+  
+ Post: 
+ 1. If not previously found and renamed during the pre-install, create the
+    HOME TELEHEALTH NOTES document class as a member of the PROGRESS NOTES
+    document class.
+  
+ 3. If not previously found and renamed during the pre-install, create the
+    Home Telehealth note titles and add them as members of the HOME
+    TELEHEALTH NOTES document class.
+  
+ 4. Attempt to map the HT TIU titles to the corresponding VHA Enterprise
+    Standard Title.
+  
+ 5. Perform minor re-indexing for ^TIU(8925.1
+  
+ Post: Optional -> If you are satisfied that the installation process 
+ completed without error, and you do not need to review the code for any
+ reason, you may wish to delete routine TIUP258 using the Kernel "Delete
+ Routines" option [XTRDEL].
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ Please refer to the Clinical Reminders Patch 19 Install and Setup Guide
+ for detailed pre-installation steps and information.
+  
+ Installation Instructions
+ ------------------------- 
+ The following steps are a basic overview of the install process and 
+ should not be solely relied upon for an accurate installation. The
+ Clinical Reminders Patch 19 Install and Setup Guide contains the detailed
+ steps and information necessary to successfully install this software
+ bundle.
+  
+ This installation should not be queued.
+  
+ This build can be installed with users on the system, but it should be 
+ done during non-peak hours. Estimated installation time is approximately 
+ 20 minutes.
+  
+  
+ 1.  Download the HT_TEMPLATES_1_0.KID file from the appropriate  
+     SFTP Server to the directory on your system.
+  
+ 2.  Use LOAD A DISTRIBUTION option on the KIDS INSTALLATION menu, and 
+     enter: [DIR]:HT_TEMPLATES_1_0.KID, where [DIR] is the local
+     directory where you have stored the host file.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use any of
+     the following options. When prompted for the INSTALL enter the     
+     build HT TEMPLATES PROJECT 1.0:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this build. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this build
+         is installed. It compares all components of this build
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option   
+     and choose the build to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+     Install? NO//' Answer 'NO'
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' Answer 'NO'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' Answer 'NO' 
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ Please refer to the Clinical Reminders Patch 19 Install and Setup Guide
+ for any specific post-install instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 95
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUP258
+    Before:       n/a   After:B103966494  **258**
+Routine Name: TIUP258E
+    Before:       n/a   After: B39956358  **258**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 03, 2010
+Completed By:                               Date Completed: JUL 13, 2017
+Released By :                               Date Released : JUL 17, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

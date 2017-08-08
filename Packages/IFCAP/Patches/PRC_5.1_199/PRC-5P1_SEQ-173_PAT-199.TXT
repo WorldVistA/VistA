@@ -1,0 +1,158 @@
+$TXT Created by                at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Wednesday, 04/12/17 at 16:02
+=============================================================================
+Run Date: JUN 06, 2017                     Designation: PRC*5.1*199
+Package : PRC - IFCAP                         Priority: EMERGENCY
+Version : 5.1       SEQ #173                    Status: Released
+                  Compliance Date: JUN 08, 2017
+=============================================================================
+
+Associated patches: (v)PRC*5.1*192 <<= must be installed BEFORE `PRC*5.1*199'
+
+Subject: FMS EXCEPTION REPORT FAILURE;PROSTHETICS GUI ORDER 'HANG'
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following 2 issues:
+  
+ 1. FMS Exception Report not working due to Fileman date call  
+  
+ 2. Prosthetics GUI times out when entering order against FCP with multiple
+    Inventory Points attached.
+  
+  
+  
+ Associated Remedy Ticket(s):
+ ===========================
+ 1. I12566558FY17 - FMS Exception Report failure
+  
+ 2. R12668308FY17 - User unable to close out consults
+               
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+  
+ Participating Test Sites:
+ =========================
+ Salisbury VAMC
+ Boston HCS 
+  
+  
+ Remedy Overview:
+ ================
+ 1. I12566558FY17 - FMS Exception Report failure
+  
+  
+    Problem:
+    --------
+    The option FMS Exception Transaction Report [PRCS EXCEPTION REPORT]
+    fails due to an <undefined> error when using the Fileman date due to
+    variable % being killed in the latest Fileman version released.
+    
+    Resolution:
+    -----------                    
+    Modify the routine to use different date logic for displaying the date
+    on the report header.
+  
+    
+ Routines: PRCSREC1
+  
+  
+  
+ 2. R12668308FY17 - User unable to close out consults
+  
+  
+    Problem:
+    --------
+    The Prosthetics GUI package for ordering is hanging at point of
+    electronic signature during broker call to file order into IFCAP and
+    the Fund Control Point (FCP) linked to the order has multiple Inventory
+    Points attached.
+  
+    Resolution:
+    -----------                    
+    Modify the routine to skip the Inventory Point query for Prosthetics
+    GUI orders when filing the GUI order in IFCAP.
+  
+  
+ Routines: PRCH410
+  
+  
+  
+  
+ Installation Instructions: 
+ ==========================
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*199)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*199.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? NO//', just press <RETURN>. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following options:
+  
+          FMS Exception Transaction Report  [PRCS EXCEPTION REPORT]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":", just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCH410
+    Before: B55006523   After: B56623729  **123,171,181,186,192,199**
+Routine Name: PRCSREC1
+    Before: B13474750   After: B13923369  **199**
+ 
+Routine list of preceding patches: 192
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 07, 2017
+Completed By:                               Date Completed: JUN 02, 2017
+Released By :                               Date Released : JUN 06, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,327 @@
+ 
+=============================================================================
+Run Date: JUL 27, 2017                     Designation: MAG*3*170
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #136                      Status: Released
+                  Compliance Date: AUG 28, 2017
+=============================================================================
+
+
+Subject: JLV
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This document describes MAG*3.0*170, the VIX Image Viewer patch.
+ This patch adds a Zero footprint HTML5 based image viewer to the VIX to support 
+ viewing images in VA Web Applications such as eHMP and JLV.
+ Major changes for this patch are summarized below.  For detailed information, 
+ refer to the change summary on page 3.
+  
+ MAG*3.0*170 contains the following new features:
+ New VIX services that support image pre-processing and image viewing in a web 
+ browser.
+ A VIX configuration option that does not require a corresponding VistA instance.
+   
+ This configuration is called a relay VIX or rVIX and is co-located with  
+ the eHMP or JLV web servers to supply study metadata from a close proximity.
+ An HTML5 Zero Footprint image viewer that can be invoked by client software 
+ interacting with any VIX instance.
+  
+ Patch Components:
+ ================
+   
+ This patch includes the following files:
+  
+ File Name                             Description
+ =========                             ===========
+ MAG3_0P170.KID                        KIDS (Kernel Installation & 
+                                       Distribution System) package to 
+                                       be installed on the VistA System.
+ MAG3_0P170_VIX_Setup.msi              Installation file for the VIX software.
+ MAG3_0P170_Patch_Description.pdf      This document
+ MAG3_0P170_VIX_Installation_Guide.pdf VIX Installation Guide for this patch.
+  
+      
+  
+ Documentation:
+ =============
+ This document provides an overview, explains the changes, and outlines the
+ installation for this patch.
+  
+ Files & Fields Associated:
+ =========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ ================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ ======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ==================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ ====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ ========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ ====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ ======================
+ New Service Requests (NSRs):
+ ===========================
+ This project is initiated by Requirement BR 8.0 of the Health Information 
+ Exchange Viewer BRD #01-02-03-05-08-003.
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+ 1. 354112 Larger Studies 
+  
+ Problem:
+ -------
+ Larger study is taking a long time to load the images 
+  
+ Resolution:
+ ----------
+ Issue with larger study load time resolved in this patch. 
+  
+ 2. 437547 Pan Function
+  
+ Problem:
+ -------
+ Pan functionality exhibited extensive lag and inadequate image adjustment with 
+ each user action.
+  
+ Resolution:
+ ----------
+ Issue with pan functionality resolved in this patch. 
+  
+ 3. 437552 Hard to view PDF documents
+ Problem:
+ -------
+ The zoom button is difficult to use. The experience improves with "Fit to 
+ Window" option, but no scrolling is available to access the entire image area. 
+  
+ Resolution:
+ ----------
+ Issue with PDF documents resolved in this patch. 
+  
+ 4. 464629 FPS notation
+  
+ Problem:
+ -------
+ Users see no reason for the FPS notation to exist when the study has no purpose
+ for Cine. 
+  
+ Resolution:
+ ----------
+ Issue with FPS notation is fixed and the FPS notation no longer appears on 
+ studies where it has no purpose. 
+  
+ 5. 464632 Progress Bar
+  
+ Problem:
+ -------
+ Progress bar is not close to accurate during the image loading process. 
+ The progress bar always ends partially done. 
+  
+ Resolution:
+ ----------
+ Issue with progress bar is resolved in this patch. The progress bar is removed. 
+  
+ 6. 464651 Window/Level
+  
+ Problem:
+ -------
+ The Window/Level function does not always work properly. 
+  
+ Resolution:
+ ----------
+ Issue with Window/Level function is resolved in this patch.  
+  
+  
+ Associated Patches:
+ ==================
+ MAG*3.0*162 KIDS must be installed before installing MAG*3.0*170 KIDS.
+  
+ Software and Documentation Retrieval Instructions:
+ =================================================
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure File 
+ Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following 
+ OI Field Offices:
+   
+ Albany:                 domain.ext
+ Hines:                  domain.ext  
+ Salt Lake City:         domain.ext
+   
+ Documentation can also be found on the VA Software Documentation Library at: 
+ https://www4.domain.ext/vdl/
+  
+ Patch Installation:
+ ==================
+  
+ Pre/Post Installation Overview:
+ ==============================
+ This patch contains a VIX portion and a KIDS portion. Installation instructions
+ for the VIX portion of this patch can be found in the VIX Installation Guide.
+ The KIDS portion of this patch is to be installed on the VistA System and 
+ the VIX portion should be installed on the VIX servers.
+ This patch must be installed by the compliance date to conform with VHA 
+ Directive 2001-023.
+   
+ NOTE: All sites running VistA Imaging 3.0 must install both the KIDS portion as 
+ well as the VIX portion of this patch. 
+  
+ This patch may be loaded while VistA Imaging System is active. The KIDS portion 
+ can be installed while the VistA Imaging system is active. Installation will 
+ take less than one minute.
+ All sites must install the KIDS portion of this patch.
+ After the KIDS portion of this patch is installed, all sites will need to update
+ their VIX. For detailed information, refer to the VIX Installation Guide.
+  
+ Pre-Installation Instructions:
+ =============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+  
+  
+ VistA System (KIDS) Installation Instructions
+ =============================================
+ Installation Steps 
+ ==================
+ 1. Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+   a. Run the Load a Distribution [XPD LOAD DISTRIBUTION] option to load 
+ the KIDS distribution.
+   b. When prompted, enter the path and file name (MAG3_0P170.KID) of the 
+ Patch 170 KIDS file that was downloaded from the Download Server.
+   c. When prompted to continue with the load, enter "YES".  A 
+ Distribution OK! Message will be displayed when the load is complete.
+ 4. After loading the KIDS file, use the following options to verify the 
+ contents of the patch.  
+   a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this 
+ option if you want to ensure the integrity of the routines in the patch.
+   b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] - 
+ Run this option if you want to view all changes that will be made when 
+ the patch is installed.  All components (routines, options, and so on) in 
+ the patch will be compared.
+   c. Back up a Transport Global [XPD BACKUP] - Run this option if you 
+ want to create a backup message of any routines exported with the patch.  
+ The option will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+   a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+   b. When prompted for the install name, enter MAG*3.0*170.
+   c. Answer NO to the following prompts, if they appear:
+  
+ Want KIDS to INHIBIT LOGONs during the install? No//NO
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? No/NO
+ Want KIDS to Rebuild Menu Trees Upon completion of Install? No//NO
+  
+ 6. When the installation has finished, an Install Completed message will 
+ be displayed.
+  
+ KIDS Installation Example
+ =========================
+ This example shows the output when the KIDS file is installed for the
+ first time.  If the user has already installed the patch and is installing
+ the KIDS file in a namespace on which it has previously been installed,
+ the output will be different.
+  
+ Select INSTALL NAME:    MAG*3.0*170    
+  
+ Install Questions for MAG*3.0*170
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  
+  Running Post-Install Routine: POS^MAGIP170
+  
+ Post Install Mail Message: 
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MAG*3.0*170 Installed.
+               
+   100%
+ Complete
+  
+ Install Completed
+  
+   
+ Post-Installation Instructions:
+ ==============================
+ N/A
+  
+ Manual Installation
+ ===================
+ After the KIDS portion of this patch is installed, all sites will need to update
+ their VIX. For detailed information, refer to the VIX Installation Guide.
+  
+  
+ Auto-update Installation
+ ========================
+ N/A
+   
+
+Routine Information:
+====================
+Routine Name: MAGIP170
+    Checksum:
+  4892918 (new only)
+ Description of Changes:
+  New install code for MAG*3.0*170
+
+Routine Name: MAGNTRAI
+    Checksum:
+  76381648 (new only)
+ Description of Changes:
+  New routine - List images for Reports
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 07, 2016
+Completed By:                               Date Completed: JUL 26, 2017
+Released By :                               Date Released : JUL 27, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+

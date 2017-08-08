@@ -1,0 +1,157 @@
+$TXT Created by                     MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 04/12/17 at 15:34
+=============================================================================
+Run Date: JUN 13, 2017                     Designation: PSJ*5*339
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #290                      Status: Released
+                  Compliance Date: JUL 14, 2017
+=============================================================================
+
+Associated patches: (v)PSJ*5*259   <<= must be installed BEFORE `PSJ*5*339'
+                    (v)PSJ*5*317   <<= must be installed BEFORE `PSJ*5*339'
+
+Subject: UNEXPIRED CLINIC MED AND INFUSION ORDERS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+ 1.  Orders in the Inpatient Pharmacy package may not get their status updated
+     to expired if the order's STOP DATE/TIME value matches the start time of 
+     the ORMTIME RUN background job.  This is happening because ORMTIME RUN 
+     and the pharmacy code compare the expiration time differently.  This is 
+     happening for all inpatient pharmacy package orders, but is particularly 
+     prevalent with clinic medication and clinic infusion orders. 
+     
+     This patch doesn't retroactively fix orders that were missed by the 
+     expiration job. PSJ*5*340 is being developed to clean up the
+     non-expired orders.  Until that patch is released, if any unexpired
+     orders are identified and clean up assistance is needed, please enter
+     a ticket with national Health Product Support for assistance.
+  
+ Associated Ticket(s):
+ =====================
+ 1. I13331849FY17 - Unexpired clinic med and clinic infusion orders
+      I13759732FY17 (d) Pharmacy clinic orders did not discontinue
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ PSPO
+ ======
+ PSPO3522
+  
+  
+ Test Sites:
+ ===========
+ Martinsburg - VA Medical Center 
+ Oklahoma City - VA Medical Center 
+ Central California HCS - Fresno
+  
+  
+ Overview:
+ =========
+ 1. I13331849FY17 - Unexpired clinic med and clinic infusion orders
+   
+    Problem: 
+    ========
+    Several sites are finding clinic medication and clinic infusion orders 
+    with old stop dates that are showing as "active" instead of expired 
+    in CPRS and the Inpatient Pharmacy package.  The ORMTIME RUN background
+    job is one of the processes that is responsible for expiring these 
+    orders.  When examining these unexpired orders, they have a stop 
+    date/time value which matches the time the ORMTIME RUN background
+    job starts.  
+  
+    This will happen for all inpatient pharmacy orders, not just clinic meds
+    and clinic infusions.  But it is less noticeable for inpatient pharmacy 
+    orders since the process of accessing the patient's inpatient meds 
+    profile will expire orders (ENUNM^PSJO1) so there is less of a dependency
+    on the ORMTIME RUN job to expire them.  For clinic med and infusion 
+    orders, where the profile is less frequently accessed, it is more 
+    dependent on the ORMTIME RUN job.
+  
+    This problem was first noticed at Fresno VA which had ORMTIME RUN running
+    every 5 minutes and they had many unexpired clinic med and infusion orders 
+    - 69 from 4/2016 to 3/2017 - and as far back as 2000 but this problem may 
+    extend even beyond that.  Other sites have found unexpired orders as well, 
+    but relatively few.  Fresno has increased the frequency of ORMTIME RUN to 
+    every 15 minutes but still sees new unexpired orders weekly.
+  
+  
+    Resolution:
+    ===========
+    A modification was made to routines ^PSJHL5 and ^PSJHLU to check for an
+    expiration date that is less than or EQUAL TO the current time.  
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  
+ Users may be on the system, but this patch should be installed during
+ non-peak hours.
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSJ*5.0*339)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSJ*5.0*339.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJHL5
+    Before: B31854476   After: B31860624  **1,28,39,40,42,84,85,95,80,
+                                           173,134,181,259,339**
+Routine Name: PSJHLU
+    Before: B50964072   After: B50971784  **1,56,72,102,134,181,267,285,
+                                           317,339**
+ 
+Routine list of preceding patches: 259, 317
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 11, 2017
+Completed By:                               Date Completed: JUN 12, 2017
+Released By :                               Date Released : JUN 13, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

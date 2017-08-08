@@ -1,0 +1,79 @@
+
+=============================================================================
+Run Date: MAY 03, 2017                     Designation: RMPR*3*184
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #161                      Status: Released
+                  Compliance Date: JUN 15, 2017
+=============================================================================
+
+
+Subject: PROSTHETICS BILLING GUI 2FA IMPLEMENTATION
+
+Category: 
+  - Other
+
+Description:
+============
+
+ In preparation for the VA's transition to become two factor authentication
+ (2FA) compliant the Prosthetics Billing Graphical User Interface (GUI) 
+ requires an upgrade to Delphi version XE8 in order to implement the new Remote 
+ Procedure Call (RPC) Broker allowing compliance.
+  
+ ASSOCIATED TICKET:
+ =========================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Milwaukee VAMC
+ Philadelphia VAMC
+  
+ TICKET OVERVIEW:
+ ================
+  
+   
+ Problem: 
+ --------
+ The Department of Veterans Affairs Cybersecurity Task Force has been tasked 
+ by the Chief Information Officer (CIO) and the Inspector General (IG) to 
+ address identified material weaknesses. This task force has mandated that 
+ all internal, user facing VA applications become two factor authentication
+ (2FA) compliant by April 30, 2017. 
+  
+ In order to be compliant, applications are required to authenticate users 
+ via Personal Identry Verification (PIV) cards.  
+  
+ Note: Usernames and password will no longer be permitted 
+ for employees and contractors to access VA applications.  
+   
+ Resolution:
+ -----------
+ As part of the transition to 2FA, Prosthetics Billing was upgraded to Delphi 
+ XE8 to allow access to the latest version of the RPC Broker implementing 2FA.
+  
+ SOFTWARE AND DOCUMENTATION DISTRIBUTION:
+ ======================================== 
+  
+ The ProsBillingMenu.exe will be installed as part of the combined 
+ Prosthetics_Suite_3_183.exe self-extracting Install Shield executable.
+ Please refer to the patch description for RMPR*3.0*183 for installation
+ and distribution instructions.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 09, 2016
+Completed By:                               Date Completed: MAY 02, 2017
+Released By :                               Date Released : MAY 03, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

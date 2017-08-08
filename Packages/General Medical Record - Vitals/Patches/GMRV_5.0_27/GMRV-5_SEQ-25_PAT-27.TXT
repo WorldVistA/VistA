@@ -1,0 +1,202 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 02/14/17 at 08:25
+=============================================================================
+Run Date: MAY 01, 2017                     Designation: GMRV*5*27
+Package : GMRV - GEN. MED. REC. - VITALS      Priority: Mandatory
+Version : 5        SEQ #25                      Status: Released
+                  Compliance Date: JUN 01, 2017
+=============================================================================
+
+
+Subject: VITALS/VITALS MANAGER GUI 2FA IMPLEMENTATION
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ This patch will update the log in procedure to the Vitals User and Vitals 
+ Manager Graphical User Interface (GUI) to use Two Factor Authentication
+ (2FA) which will require the use of a Personal Identity Verification (PIV)
+ card.
+  
+ In order to make the transition to 2FA, it was also necessary to 
+ upgrade the Vitals User and Vitals Manager GUI to Delphi version XE8 in
+ order to implement the new Remote Procedure Call (RPC) Broker allowing
+ compliance.
+  
+ Note: Patch GMRV*5.0*27 includes a new GUI within the .MSI executable.
+  
+ ASSOCIATED TICKET:
+ ==================
+ N/A
+  
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VA MARYLAND HCS
+ VA Hudson Valley Health Care System, NY
+  
+ TICKET OVERVIEW:
+ ================
+  
+ Problem: 
+ --------
+ The Department of Veterans Affairs Cybersecurity Task Force has been 
+ tasked by the Chief Information Officer (CIO) and the Inspector General
+ (IG) to address identified material weaknesses. This task force has
+ mandated that all internal, user facing VA applications become two factor
+ authentication (2FA) compliant by April 30, 2017.
+  
+ In order to be compliant, applications are required to authenticate users 
+ via Personal Identity Verification (PIV) cards.  
+  
+ Note: Usernames and password will no longer be permitted for employees and
+       contractors to access VA applications.  
+   
+ Resolution:
+ -----------
+ As part of the transition to 2FA, Vitals User and Vitals Manager were 
+ upgraded to Delphi XE8 to allow access to the latest version of the RPC
+ Broker implementing 2FA.
+  
+ Software and Documentation Retrieval Instructions:
+ ================================================== 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+  
+     CIO FIELD OFFICE      FTP ADDRESS                  DIRECTORY
+     ----------------      -----------                  ---------
+     Albany                ftp.domain.ext    []
+     Hines                 ftp.domain.ext     []
+     Salt Lake City        ftp.domain.ext       []
+  
+     
+     The ZIP file contains:
+  
+     FILE NAME                 DESCRIPTION                RETRIEVAL FORMAT
+     ----------                -----------                ----------------
+     VITL5_P27.ZIP             Zipped file                   Binary
+  
+  
+     CONTENTS                  DESCRIPTION                RETRIEVAL FORMAT
+     --------                  -----------                ----------------
+     VITL5_P27.MSI             InstallShield executable      Binary
+     VITL5_P27_SRC.ZIP         Source Code, Zipped           Binary
+  
+  
+ The User Manual (all pages) can also be retrieved from the VistA
+ Documentation Library (VDL) on the VA Intranet at the following address:
+   
+         http://www.domain.ext/vdl
+  
+    File Name                 Description                 Protocol
+    ---------                     -----------                 --------
+    vitl5_um.pdf              User Manual                 Binary
+  
+  
+    ==================== INSTALLATION INSTRUCTIONS ====================
+ It is not necessary to disable any options.  You may install 
+ these routines at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+  
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+  
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter GMRV*5.0*27)
+  
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this
+             patch is installed. It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+  
+    4. Use the Install Package(s) option and select the package 
+       GMRV*5.0*27.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+  
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+  
+    7. Install the new Vitals executable files.
+        a) Double-click on the VITL5_P27.MSI file to start the 
+           InstallShield Wizard.
+        b) Follow the Wizard instructions. When prompted to "Modify, 
+           repair, or remove the program." select "Repair".
+        c) Follow the wizard instructions to completion.
+  
+    8. The installation wizard creates the following files:
+  
+     On XP:
+       C:\Program Files\vista\Vitals\Vitals.exe
+       C:\Program Files\vista\Vitals\VitalsManager.exe
+       C:\Program Files\vista\Vitals\Help\Vitals.hlp
+       C:\Program Files\vista\Vitals\Help\Vitals.cnt
+       C:\Program Files\vista\Vitals\Help\VitalsManager.hlp
+       C:\Program Files\vista\Vitals\Help\VitalsManager.cnt
+       C:\Program Files\vista\Vitals\Help\Roboex32.dll
+     On Win 7:
+       C:\Program Files (x86)\vista\Vitals\Vitals.exe
+       C:\Program Files (x86)\vista\Vitals\VitalsManager.exe
+       C:\Program Files (x86)\vista\Vitals\Help\Vitals.hlp
+       C:\Program Files (x86)\vista\Vitals\Help\Vitals.cnt
+       C:\Program Files (x86)\vista\Vitals\Help\VitalsManager.hlp
+       C:\Program Files (x86)\vista\Vitals\Help\VitalsManager.cnt
+       C:\Program Files (x86)\vista\Vitals\Help\Roboex32.dll
+  
+     If you are running the Clinician and Manager files from individual
+     workstations and you want to push the files, you should include these
+     files in your script.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;GEN. MED. REC. - VITALS;**[Patch List]**;Oct 31, 2002;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMV27PST
+    Before:       n/a   After:  B1348593  **27**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 04, 2013
+Completed By:                               Date Completed: APR 28, 2017
+Released By :                               Date Released : MAY 01, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

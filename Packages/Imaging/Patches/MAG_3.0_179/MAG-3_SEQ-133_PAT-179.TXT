@@ -1,0 +1,526 @@
+
+=============================================================================
+Run Date: JUN 23, 2017                     Designation: MAG*3*179
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #133                      Status: Released
+                  Compliance Date: AUG 20, 2017
+=============================================================================
+
+
+Subject: Importer III 2 factor authentication
+
+Category: 
+  - Other
+
+Description:
+============
+
+ Associated Patches:
+ ==================
+ This patch must be installed after MAG*3.0*162.
+  
+ Subject:  TWO-FACTOR AUTHENTICATION FOR IMPORTER/VIX
+ =======
+  
+ Category:  OTHER
+ ========
+  
+ Description:
+ ===========
+ MAG*3.0*179 provides two-factor authentication (2FA) for Importer. When 
+ the user starts the Importer application, they will be prompted for their
+ Personal Identity Verification (PIV)/Personal Identification Number (PIN)
+ to log into Veterans Health Information Systems and Technology
+ Architecture (VistA). A splash screen will be displayed during startup and
+ initialization of the Importer application.  The splash screen will close 
+ when the application is ready to be used.  There are no other changes to
+ functionality of Importer.
+  
+ Patch Components:
+ ================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P 179_Patch_Description.pdf, provides an overview, explains the
+ changes, and outlines the installation for this patch.
+ MAG3_0P179_README.txt, if present, is an informative file associated with
+ the patch.
+  
+ Software:
+ =========
+ File Name                       Description
+ =========                       ===========
+ MAG3_0P179.KID                  Kernel Installation and Distribution 
+                                 System (KIDS) build for Patch 179
+ MAG3_0P179_VIX_setup.exe        VIX installation file.
+ MAG3_0P179_Importer_setup.msi   Importer installation file.
+ MAG3_0P179_Importer_setup.exe   Importer installation file.
+  
+ Documentation:
+ =============
+ This document, MAG3_0179_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Fields Associated:
+ =========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ ================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ ======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ==================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ ====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ ========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ ====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ ======================
+ New Service Requests (NSRs):
+ ===========================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+ 1. Update Importer/VIX with 2FA
+ ===============================
+ Problem:  Per a VA mandate, all existing systems must be upgraded to use 
+ PIV credentials for authentication.
+  
+ Resolution:  The Remote Procedure Call (RPC) Broker establishes a common 
+ and consistent connection for VistA client/server applications.  The
+ kernel development team has updated the RPC Broker to accept a PIV for
+ authentication in XWB*1.1*64 and RPC Broker Development Tool Kit
+ XWB*1.1*65.  The RPC Broker client component uses the IAM SSOi Secure 
+ Token Service (STS) for Authentication.  The client authenticates to IAM
+ with PIV/PIN and obtains an SAML token; this token is associated with a
+ VistA access/verify code and is used to authenticate to VistA.
+  
+ The Importer will be updated to prompt users for PIV/PIN which, upon 
+ success, will provide the SAML token.  This SAML token will be passed over
+ to the VIX application through a restful service call which will then
+ authenticate the user in VistA.
+  
+ Test Sites:
+ ==========
+ The following sites are test sites for this patch:
+   VA Southern Nevada HCS (Las Vegas)
+  
+ *A test waiver has been approved to allow for testing to proceed with one 
+ site.
+  
+ Software and Documentation Retrieval Instructions:
+ =================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from 
+ anonymous@download.vista.domain.ext from the 
+  
+ COMMAND prompt (example:  sftp anonymous@download.vista.domain.ext). This 
+ transmits the files from the first available server.
+  
+ Sites may also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ When using Attachmate Reflection (Secure Shell):
+ Albany:         domain.ext
+ Hines:          domain.ext
+ Salt Lake City: domain.ext
+  
+ When using the COMMAND prompt (example: sftp
+ anonymous@domain.ext): 
+ Albany:         anonymous@domain.ext
+ Hines:          anonymous@domain.ext
+ Salt Lake City: anonymous@domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/.
+  
+ Patch Installation:
+ ==================
+ Supported Client Versions
+ =========================
+ When MAG*3.0*179 is released, the list of supported versions of Importer 
+ and VIX will change:
+  
+ Importer
+ ========
+ Supported Versions      No Longer Supported 
+ 3.0.179                 3.0.118
+ 3.0.136
+  
+ VIX
+ ===
+ Supported Versions      No Longer Supported 
+ 3.0.179                 3.0.157
+ 3.0.162                 3.0.119
+  
+ Pre/Post Installation Overview:
+ ==============================
+ MAG*3.0*179 must be installed on the VistA System.  This patch must be 
+ installed by the compliance date.
+  
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch.  This patch can be loaded while the VistA Imaging System is active
+ and users are on the system.
+  
+ Installing the MAG*3.0*179 KIDS only takes 2-3 minutes.
+  
+ Windows Registry
+ ================
+ With the addition of the RPC Broker as part of the 2FA effort, Importer 
+ will now rely on VistA server information available in the Windows
+ Registry for each client computer that installs the Importer
+ application.  This registry setting is a requirement of the RPC Broker and
+ some other VistA client applications; it is possible that the settings
+ already exist on a client computer, however it should be confirmed before
+ installing Importer.  As mentioned above, the following may require
+ support from local site administrators.
+  
+ Open the Registry Editor and browse to the 
+ \HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node key.  If a "Vista" key exists,
+ expand it, if not create it.  If a "Broker" key exists, expand it, if not
+ create it.  If a "Servers" key exists, expand it, if not create it so that
+ the full path is:
+  
+ \HKEY_LOCAL_MACHINE\SOFTWARE,Wow6432Node\Vista\Broker\Servers
+  
+ Within this key, one (or more) String values are required.  The name of 
+ Registry String should contain the IP address or Fully Qualified Domain
+ Name (FQDN) of the VistA server, a comma, and then the port number that
+ will accept remote connections.
+  
+ Pre-Installation Instructions:
+ =============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+  
+ Note:
+ ====
+ All released VistA Imaging patches must be installed on the VistA system 
+ before installing MAG*3.0*179.
+  
+ Prerequisite:
+ ============
+ Before installing the P179 KIDS package, all users who access the 
+ Importer application must be assigned the secondary menu option called
+ "MAGTP WORKLIST MGR" in VistA. This is required because currently the
+ REMOTE APPLICATION file has no entry available for the Importer
+ application.  This is a temporary work around until there is an entry
+ created for the Importer application via a patch release.
+  
+ VistA System (KIDS) Installation Instructions
+ =============================================
+ Installation Steps 
+ ==================
+ KIDS installation will take less than one minute.
+ 1. On the VistA system, access the Kernel Installation and Distribution 
+ System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+   a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load 
+   the KIDS distribution.
+   b. When prompted, enter the path and file name (MAG3_0P179.KID) of the 
+   MAG*3.0*179 KIDS file.
+   c. When prompted to continue with the load, enter "YES". A Distribution 
+   OK! message will be displayed when the load is complete.
+ 4. After loading the KIDS file, use the following options to verify the 
+ contents of the patch and to back up any affected routines.
+   a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this 
+ option if you want to ensure the integrity of the routines in the patch.
+   b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] - 
+ Run this option if you want to view all changes that will be made when the
+ patch is installed.  All components (routines, options, and so on) in the
+ patch will be compared.
+   c. Backup a Transport Global [XPD BACKUP] - Run this option if you want 
+ to create a backup message of any routines exported with the patch.  It
+ will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+   a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+   b. When prompted for the install name, enter "MAG*3.0*179".
+   c. Answer "NO" to the following prompts, if they appear:
+  
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6. When installation is finished, an Install Complete message will be 
+ displayed.
+  
+ KIDS Installation Example
+ =========================
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing
+ the KIDS file in a namespace on which it has previously been installed,
+ your output may be different.
+  
+ XPD INSTALLATION MENU Installation
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+ Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+ Enter a Host File: C:\KIDS FILES\MAG3_0P179.KID
+  
+ KIDS Distribution saved on Apr 05, 2017@17:21:20
+ Comment: P179 - Importer III/VIX 2 Factor Authentication
+  
+ This Distribution contains Transport Globals for the following Package(s):
+    MAG*3.0*179
+ Distribution OK!
+  
+ Want to Continue with Load? YES// 
+ Loading Distribution...
+  
+    MAG*3.0*179
+ Use INSTALL NAME: MAG*3.0*179 to install this Distribution.
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+ You've got PRIORITY mail!
+  
+ Select Installation <TEST ACCOUNT> Option: 2  Verify Checksums in 
+ Transport Global
+ Select INSTALL NAME: MAG*3.0*179      5/3/17@09:22:38
+      => P179 - Importer III/VIX 2 Factor Authentication  ;Created on Apr 
+ 05, 2017@17:2
+  
+ This Distribution was loaded on May 03, 2017@09:22:38 with header of 
+    P179 - Importer III/VIX 2 Factor Authentication  ;Created on Apr 05, 
+ 2017@17:21:20
+    It consisted of the following Install(s):
+     MAG*3.0*179
+  
+ Want each Routine Listed with Checksums: Yes//   YES
+ DEVICE: HOME//   HERE
+ PACKAGE: MAG*3.0*179     May 03, 2017 9:23 am
+  
+ MAGIP179  Calculated    4110467
+  
+    1 Routine checked, 0 failed.
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+  
+ You've got PRIORITY mail!
+  
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*179      5/3/17@09:22:38
+      => P179 - Importer III/VIX 2 Factor Authentication  ;Created on Apr 
+ 05, 2017@17:2
+  
+ This Distribution was loaded on May 03, 2017@09:22:38 with header of 
+    P179 - Importer III/VIX 2 Factor Authentication  ;Created on Apr 05, 
+ 2017@17:21:20
+    It consisted of the following Install(s):
+     MAG*3.0*179
+ Checking Install for Package MAG*3.0*179
+  
+ Install Questions for MAG*3.0*179
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  Install Started for MAG*3.0*179 : 
+                May 03, 2017@09:23:22
+  
+ Build Distribution Date: Apr 05, 2017
+  
+  Installing Routines:..
+                May 03, 2017@09:23:22
+  
+  Running Post-Install Routine: POS^MAGIP179.
+  
+ Post Install Mail Message: May 03, 2017@09:23:22
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*179 Installed. 
+                May 03, 2017@09:23:23
+  
+  Not a production UCI
+  
+  NO Install Message sent 
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+  
+ You've got PRIORITY mail!
+  
+ Select Installation <TEST ACCOUNT> Option: Do you really want to halt? 
+ YES//
+  
+ Installing and Updating Importer III
+ ====================================
+ For installing, updating, or uninstalling the Importer III, refer to the 
+ DICOM Importer III User Manual.
+  
+ Installing and Updating the VIX
+ ===============================
+ For installing, updating, or uninstalling the VIX, refer to the VIX 
+ Service Installation Guide.
+  
+ Uninstalling MAG*3.0*179
+ ========================
+ If it is necessary to uninstall the MAG*3.0*179 VistA KIDS, you needed to 
+ select the "Kernel Installation & Distribution System" menu option,
+ "Backup a Transport Global" (see installation section above, step 4c),
+ before you installed the patch.
+  
+ Administrators will need to use the PackMan function INSTALL/CHECK 
+ MESSAGE.  Check your MailMan messages for the backup message sent by the
+ "Backup a Transport Global" function.
+  
+ 1. Select the message shown below:
+  
+ Backup of MAG*3.0*179 install on <mmm dd, yyyy>    <user name>
+  
+ 2. Select the Xtract PackMan option.
+ 3. Select the Install/Check Message option.
+ 4. Enter "Yes" at the prompt.
+ 5. Enter "No" at the backup prompt.  There is no need to back up the 
+ backup.
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains. Those parts that
+ are not routines should be backed up separately if they need to be
+ preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2    Message #42925     Unloading Routine   MAGT7MA (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ Routine Information:
+ ===================
+ VistA KIDS Checksums:
+ ====================
+ This section lists modified routines for the VistA KIDS build.  For each 
+ routine, the second line will contain the following information:
+  
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 19;Mar 27, 2015
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine         Checksum        Checksum        Patch List
+                 Before          After
+ MAGIP179        New             4110467         **179**
+  
+ Routine MAGIP179 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 10, 2017
+Completed By:                               Date Completed: JUN 22, 2017
+Released By :                               Date Released : JUN 23, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

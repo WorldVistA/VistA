@@ -1,0 +1,1177 @@
+$TXT Created by                  DEVVVV.DOMAIN.EXT  (KIDS) on Wednesday, 06/21/17 at 14:02
+=============================================================================
+Run Date: JUN 26, 2017                     Designation: SD*5.3*665
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #549                    Status: Released
+                  Compliance Date: JUL 11, 2017
+=============================================================================
+
+Associated patches: (v)SD*5.3*585  <<= must be installed BEFORE `SD*5.3*665'
+                    (v)SD*5.3*658  <<= must be installed BEFORE `SD*5.3*665'
+
+Subject: VISTA SCHEDULING ENHANCEMENTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ 1. I11259063FY17 - Electronic Wait List (EWL) that is Dispositioned from
+                    within the Request Management (RM) Grid does not get
+                    removed from the RM Grid.
+  
+ 2. I11278566FY17 - User is able to select Service Connected for a Non-Service
+                    Connected patient when transferring an Appointment Request
+                    to EWL.
+  
+ 3. I12381309FY17 - The Service Connected (SC) related check box in Appointment
+                    (APPT) REQUEST/EWL is not in sync with the Appointment Type
+  
+ 4. I10731487FY16 - Remove Hovering and Make Consistent with Clinic Schedule.
+  
+ 5. I10115520FY16 - The Multiple Appts Required Box is Available for Selection
+                    when Transferring an Appointment Request to an Electronic
+                    Wait List Request. 
+  
+ 6. I10632644FY16 - When a user looks at a Clinic Group, the horizontal lines
+                    don't line up across schedules in the calendar. 
+ 7. I10658980FY16 - A Blank Line is displayed after the removal of an
+                    appointment request from the Resource Management Grid.
+ 8. I11072424FY17 - VistA Scheduling (VS) GUI does not display cancel time
+                    correctly in the calendar when a partial day clinic
+                    cancellation is done.
+ 9. I11476925FY17 - There is no way to decline access to a sensitive patient
+                    after it has been selected.
+ 10. I12166209FY17 - When selecting a request from the Resource Management (RM)
+                     Grid that has a PAST CID/PD date, the calendar grid opens
+                     to TODAY but the calendar on the left side opens to the
+                     past CID/Date.
+ 11. I12166991FY17 - User can change temporary address start date but the first
+                     entered date is captured. 
+ 12. I12168045FY17 - Clinic Group does not display providers in the group.
+ 13. I12179702FY17 - VS GUI is not notifying VistA when a user accesses a
+                     sensitive record.
+ 14. I12183008FY17 - Sensitive Patient Information is not displaying after the
+                     Security Agreement has been accepted.
+ 15. I12438637FY17 - Audit Report not allowing manager to change user
+                     selection.
+ 16. I12487253FY17 - Hovering over an appointment in the calendar does NOT
+                     display detailed patient information.
+ 17. I12487482FY17 - Unable to remove Special Needs and Preferences remarks.
+ 18. I12514894FY17 - Unable to print No-Show, Cancel by Patient, Cancel by
+                     Clinic letters.
+ 19. I12519207FY17 - The Patient's Date of Birth (DOB) is sometimes hidden in
+                     the ribbon bar.
+ 20. I12520061FY17 - Appointment Length Displayed in the New Appointment Block
+                     does NOT match VL clinic set appt length.
+ 21. I12521476FY17 - Received unhandled exception after clicking search for
+                     patient.
+ 22. I12521882FY17 - Provider or Patient No Longer Coming Up when I tab to
+                     Requested
+ 23. I12522168FY17 - Unable to enter "x" in work phone number to define
+                     extension.
+ 24. I12522371FY17 - Heavy grid lines in clinic schedule for areas no longer
+                     defined with availability. 
+ 25. I12523876FY17 - Appointment Request Comments are not updated in the
+                     Resource Management (RM) Grid after they are revised.
+ 26. I12524388FY17 - Provider Names Not Being Displayed.
+ 27. I12524663FY17 - User is not seeing any or all clinics when using the
+                     clinic abbreviation.
+ 28. I12525300FY17 - Appointment Block for unscheduled appointments is NOT
+                     displaying the time selected in the Calendar Grid.
+ 29. I12542160FY17 - Clinic Drop Down Box isn't dropping when I create a new
+                     Recall Request.
+ 30  I12558918FY17 - MRTC Find Appointment Dialog will NOT automatically
+                     display.
+ 31. I12563921FY17 - Correct Duration is not in the Dropdown Box.
+ 32. I12568776FY17 - Clinic Schedule will not automatically display for regular
+                     single requests.
+ 33. I12625138FY17 - User Preference filter using too many clinics causing VS
+                     GUI to hang (also see CA Ticket # I12657907FY17).
+ 34. I12657907FY17 - (Duplicate of I12625138FY17) After filtering to SC visits
+                     in User Preferences, only the loading patient request
+                     dialog spins, but never loads any requests.
+ 35. I12657968FY17 - When Cancel Availability for Two Separate Days, Same
+                     Clinic, Only 1 Request Displays on Report.
+ 36. I12878525FY17 - Query Tool with Criteria of EWL and Podiatry Service
+                     Produces Black Screen.
+ 37. I12878778FY17 - SVS GUI Audit Activity Report Showing Activity for Users
+                     Not Logged Into System.
+ 38. I9642568FY16 - When searching for a provider clinic a "Loading Screen"
+                    displays but does not go away when the search results are
+                    presented.
+ 39. I9790797FY16 - Comment symbol is displayed in a column that is not
+                    supposed to have a symbol.
+ 40. I15114097FY17 - Appointment request was not removed and the new appointment
+                     does not display.
+ 41. Internal SQA - The subject line of the Note Update Report Data message is incorrect.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)               Field Name (#)           New/Modified/Deleted
+ -------------               --------------           --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                   File #                   New/Modified/Deleted
+ ---------                   ------                   --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                      New/Modified/Deleted
+ ---------------                                      --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                  Type                    New/Modified/Deleted
+ -----------                  ----                    --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                                        New/Modified/Deleted
+ -------------                                        --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name           Type     File Name (Number)  New/Modified/Deleted
+ -------------           ----     ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ I11259063FY17 - Electronic Wait List (EWL) that is Dispositioned from within
+                 the Request Management (RM) Grid does not get removed from the
+                 RM Grid.
+  
+   Problem:
+   -------
+   When an EWL is selected from the initial display which comes from the
+   SDECIDX GETREC remote procedure, and that entry is dispositioned, refreshing
+   the RM Grid using the SDECIDX GETREC remote procedure does not recognize
+   that the record is now closed. This same issue could happen with an APPT
+   record.
+  
+   Resolution:
+   ----------
+   The SDECIDX GETREC remote procedure has been updated to recognize that an
+   EWL record as well as APPT record has been closed.
+  
+ I11278566FY17 - User is able to select Service Connected for a Non-Service
+                 Connected patient when transferring an Appointment Request to
+                 EWL.
+  
+   Problem:
+   -------
+   When moving a Request from an APPT REQUEST to an EWL REQUEST the VS GUI is
+   allowing editing of the Service Connected (SC) related block for an
+   eligibility that is Non Service Connected (NSC).
+  
+   Resolution:
+   ----------
+   The VS GUI has been updated to check that the patient is eligible for a
+   Service Related request before allowing the Svc Related check box to be
+   active.
+  
+ I12381309FY17 - The Service Connected (SC) related check box in Appointment
+                 (APPT) REQUEST/EWL is not in sync with the Appointment Type
+  
+   Problem:
+   -------
+   The Service Connected (SC) related check box in APPT REQUEST/EWL is to stay
+   in sync with the business rules associated with Appointment Type. In testing
+   it was found that the service connected appointment type with the Svc
+   Related box checked was not being matched with the appointment type.  The
+   process of the SC Related check box being set should be linked to the
+   Appointment Type, no matter which field (appointment type or SC related
+   check box) is selected first or second.
+  
+   Resolution:
+   ----------
+   The SDEC APPADD remote procedure has been updated to correctly update the
+   Service Related field in both the SD WAIT LIST file (#409.3) and in SDEC
+   APPOINTMENT file (#409.85).
+  
+ I10731487FY16 - Remove Hovering and Make Consistent with Clinic Schedule.
+  
+   Problem:
+   -------
+   When hovering over the Special Instructions Button and Clinic Details bar,
+   there is a pop up that doesn't make sense. When attempting other clinic
+   locations all the pop-ups have the same two items.
+  
+   Resolution:
+   ----------
+   Removed the appointment tool-tip from the Provider and Clinic Group
+   calendars.
+  
+ I10115520FY16 - The Multiple Appts Required Box is Available for Selection
+                 when Transferring an Appointment Request to an Electronic
+                 Wait List Request. 
+  
+   Problem:
+   -------
+   The Multiple Appointments Required Box is available for selection when
+   transferring an Appointment Request to an Electronic Wait List (EWL) Request
+   when it should not be.
+  
+   When transferring an appointment request to an EWL request, the Multiple
+   Appointments Required box will be available for selection. When checked, the
+   Number of Appointments Required and Interval Between Appointments are also
+   selectable. These boxes should not be available. If the user does select the
+   boxes it does not cause any negative effects.
+  
+   This issue can be easily recreated under these circumstances:
+    1. Entering an appointment request then immediately transferring it to an
+       EWL Request.
+    2. Transferring an existing appointment request to an EWL when the clinic
+       is not activated as an EWL clinic. The Clinic box will be blank allowing
+       users to choose a wait list clinic and the Multiple Return To Clinic
+       (MRTC) box will also be available. 
+  
+   Resolution:
+   ----------
+   Insured that Multiple Appointments Required is disabled for Transfer to EWL
+   operations and only enabled Number of Required Appointments \ Interval
+   Between Appointments when Multiple Appointments Required is checked.
+  
+ I10632644FY16 - When a user looks at a Clinic Group, the horizontal lines
+                 don't line up across schedules in the calendar.
+  
+   Problem:
+   -------
+   When a user looks at a clinic group, the horizontal lines don't line up
+   across schedules in the calendar.
+  
+   Resolution:
+   -----------
+   Fixed to make sure slots are lined up when viewing via clinic Group and
+   Provider Schedule. 
+  
+ I10658980FY16 - A Blank Line is displayed after the removal of an appointment
+                 request from the Resource Management Grid.
+  
+   Problem:
+   -------
+   A blank line is displayed after the removal of an appointment request from
+   the Resource management Grid.
+  
+   When the appointment request was removed from the Veterans Consolidated
+   Request list, a blank line was present in its place. The RM Grid failed to
+   fill in the space. Using the vertical scroll bar made the space fill in and
+   was no longer visible. 
+  
+   Resolution:
+   ----------
+   Fixed so that the RM grid is refreshed properly when an appointment request
+   is removed.
+  
+ I11072424FY17 - VistA Scheduling (VS) GUI does not display cancel time
+                 correctly in the calendar when a partial day clinic
+                 cancellation is done.
+  
+   Problem:
+   -------
+   VS GUI does not correctly display the cancel time in the Calendar Grid.
+   Steps - Clinic has availability starting at 8am (60 minute appointments)
+           Canceled clinic from 8:15 - 9:30.
+           VS GUI displayed the cancellation from 9-9:30 with the cancelation
+           slashes and grey only from 9:30-10.
+  
+   Resolution:
+   ----------
+   Fixed to make sure that cancelled availability matches the correct
+   cancellation times.
+  
+ I11476925FY17 - There is no way to decline access to a sensitive patient after
+                 it has been selected.
+  
+   Problem:
+   -------
+   When a patient that has been defined as a sensitive patient is selected, a
+   bulletin will be presented to the user asking if they still want to view the
+   patient information. It notes that the Information Security Officer (ISO)
+   will be notified of the user accessing the record and that there will need
+   to be justification for accessing the record. In the VS GUI the bulletin is
+   presented but the only option is to select 'OK'. Even if the user selects
+   the 'X' in the top right hand corner to close the bulletin it still allows
+   the user to proceed.
+  
+   Resolution:
+   ----------
+   Modified the sensitive record processing to adhere to the rules outlined in
+   the DG SENSITIVE RECORD ACCESS Remote Procedure Call (RPC) documentation.
+   Also added code to insure patient record is read by calling SDEC GETREGA
+   since this is cached.
+  
+ I12166209FY17 - When selecting a request from the Resource Management (RM)
+                 Grid that has a PAST Clinically Indicated Date (CID)/Preferred
+                 Date (PD), the calendar grid opens to TODAY but the calendar
+                 on the left side opens to the past CID/Date.
+  
+   Problem:
+   -------
+   When a user selects a request with Past CID/PD from the RM Grid, the
+   calendar on the left side reflects the past CID/PD date while the Calendar
+   Grid displays the CURRENT DATE.
+  
+   Resolution:
+   ----------
+   Corrected logic so that Requests not directly connected to a clinic schedule
+   will post the correct date to the calendar control. Also, modified the code
+   that determines if a schedule is opened or the date sent to the calendar.
+  
+ I12166991FY17 - User can change temporary address start date but the first
+                 entered date is captured. 
+  
+   Problem:
+   -------
+   The FIRST start date that is entered in the temporary address date range is
+   stored as the "start date" even if the user corrects the start date before
+   ever entering the end date. Example: user initially enters 03/01/2017 for
+   the start date, then patient changes it to 02/01/2017, the 03/01/2017 date
+   has already been stored as the start (02/01/2017 is displaying in the field
+   but they cannot select any dates for the date before 03/01/2017). To clear
+   the bad entry the user must uncheck the ADDRESS ACTIVE, click OK to close
+   the patient info block and start again.
+  
+   Resolution:
+   ----------
+   Modified code so that if new Start Date > End Date, then End Date is set to
+   Start Date, thus preventing entering an End Date prior to the Start Date.
+  
+ I12168045FY17 - Clinic Group does not display providers in the group.
+  
+   Problem:
+   -------
+   Pulled a clinic group that had three providers associated with the group.
+   The 'TEST CLINIC' is displaying in the clinic group but it does not have any
+   provider assigned. The clinic group was made with three providers.
+  
+   Resolution:
+   ----------
+   Implemented the correct Clinic Group Schedule such that all clinics to which
+   a provider belongs are displayed.
+  
+ I12179702FY17 - VS GUI is not notifying VistA when a user accesses a sensitive
+                 record.
+  
+   Problem:
+   -------
+   The VS GUI gives the user the bulletin that the accessing of this patient is
+   tracked, but when the user accesses the patient the tracking is not being
+   performed.
+  
+   Resolution:
+   ----------
+   DG SENSITIVE RECORD BULLETIN RPC has been added to the RPC registration of
+   the Post-Install for SD*5.3*658. Fixed the DG SENSITIVE RECORD BULLETIN RPC
+  and modified the ribbon bar to display a sensitive patient DOB after
+   the Sensitive Record warning is viewed and or accepted.
+  
+ I12183008FY17 - Sensitive Patient Information is not displaying after the
+                 Security Agreement has been accepted.
+  
+   Problem:
+   -------
+   Patient Identification Sensitive Information (SSN and DOB) is to be hidden
+   until the user accepts the alert that they understand their viewing and
+   action taken for this patient record will be tracked and the user may be
+   contacted by the ISO. After the user accepts the alert the
+   identifying data is to be displayed to the user to validate they have the
+   correct patient. The VS GUI continues to hide the patient identification
+   information even after the user accepts the security alert.
+  
+   Resolution:
+   ----------
+   Modified the Patient Prompts processes, including sensitive record, to
+   insure the current selected patient prompts are displayed only once per
+   patient selection.  Added Patient Prompts calls to the Appointment selection
+   as well as Appointment updating processes.  Insured patient sensitive data,
+   SSN and DOB, are masked as *SENSITIVE* prior to Patient Prompt processing
+   and removed masking from SSN's for Sensitive record patients after the
+   sensitive record warnings are accepted by the user.
+  
+ I12438637FY17 - Audit Report not allowing manager to change user selection. 
+  
+   Problem:
+   -------
+   When selecting a scheduler under the Audit report I could change to an
+   individual scheduler, but once I selected one it would not allow me to
+   change to another scheduler or go back to "all" schedulers. I would think I
+   could change from scheduler to scheduler pretty easily.
+  
+   Resolution:
+   ----------
+  Corrected logic preventing database calls after User=ALL was selected.
+  
+ I12487253FY17 - Hovering over an appointment in the calendar does NOT display
+                 detailed patient information.
+  
+   Problem:
+   -------
+   When a user hovers over an appointment in the calendar the user sees the 6
+   little white dots activate, but the hover to display detailed patient info
+   does not appear.
+  
+   Resolution:
+   ----------
+   Moved the code that updates the selected patient from the selected
+   appointment to a timer that waits 1/2 second before updating the patient.
+   Also fixed hover over for Time Slot Viewer.
+  
+ I12487482FY17 - Unable to to remove Special Needs and Preferences remarks.
+  
+   Problem:
+   -------
+   When the user right clicks the Special Needs & Preferences box to remove the
+   remarks, it opened the new Patient Info box. I deleted the text in the
+   remarks box, hit OK, and the Special Needs box did not update. I came out of
+   the patient and went back in and still no update. Reopened the Patient Info
+   box and the comments are still there. Tried right clicking on patient ribbon
+   bar to bring up with the same results. Tried CTRL+P,which resulted in the
+   same thing.
+  
+   Resolution:
+   ----------
+   Modified SDEC PREFSET call to send "@" in input 3, the remarks input, when
+   previous remarks are deleted in the editor.
+  
+ I12514894FY17 - Unable to print No-Show, Cancel by Patient, Cancel by Clinic
+                 letters.
+  
+   Problem:
+   -------
+   User can print using Print(Server) via a VistA device using any of our three
+   font sizes for Pre-Appointment Letters through GUI. Works great, and the
+   address lands in the correct spot for the #10 windowed envelopes.
+   HOWEVER, when the user tries to print No Shows, Cancel by Patient or Cancel
+   by Clinic letters nothing comes out. I've tried three different printers
+   on many patients.
+  
+   Resolution:
+   ----------
+   Modified the report viewer so that clicking either the Local or Server Print
+   button will result in the report dialog closing, for local print the user
+   must actually send the report to a printer (click Print\Ok on the Printer
+   selection dialog). Also, modified Cancel Appointment and Mark as No-Show
+   dialogs, removing the Print Letter button. Added the execution of the print
+   letter directly after a successful database save is returned.  The user will
+   see the "Print the patient letter ?" dialog.
+  
+ I12519207FY17 - The Patient's Date of Birth (DOB) is sometimes hidden in the
+                 ribbon bar.
+  
+   Problem:
+   -------
+   The DOB is sometimes hidden as sensitive in ribbon bar, but most of the time
+   it is not. It's not a refresh issue, because it comes and goes.
+   Step 8 - FAIL - sensitive DoB year and last four visible for sensitive
+            patient. Month and day are ** out, though.
+  
+   Resolution:
+   ----------
+   Corrected the definition of what is a Sensitive Record. Fixed the DG
+   SENSITIVE RECORD BULLETIN RPC.  Modified the ribbon bar to display a
+   sensitive patient DOB after the Sensitive Record warning is viewed and or
+   accepted.
+  
+   The DG SENSITIVE RECORD BULLETIN RPC has been added to the RPC registration
+   of the Post-Install for SD*5.3*658.
+  
+ I12520061FY17 - Appointment Length Displayed in the New Appointment Block does
+                 NOT match VL clinic set appt length.
+  
+   Problem:
+   -------
+   In the New Appointment block  the duration for appointment is blank and
+   when you hit the drop down list, it displays the wrong increments for the
+   clinic.
+   Example: clinic is set up for a 20-minute variable length appointment but
+   the drop down list is 15-minute increments.
+  
+   Resolution:
+   ----------
+   Corrected Appointment creation logic to use the Clinic duration, NOT the
+   selected slot duration. Fixed New Appointment duration for Variable Length
+   Clinics to always be incremented on the clinic display increment.
+  
+ I12521476FY17 - Received unhandled exception after clicking search for
+                 patient.
+  
+   Problem:
+   -------
+   Hewlett Packard (HP) responded saying our developer reviewed the error from
+   the trace log and determined it was a known issue found in User Acceptance
+   Testing having to do with Clinical Context Object Workgroup (CCOW).
+   It is with development and being worked on at this time.
+  
+   Resolution:
+   ----------
+   Modified the RPC handling code to account for returned arrays not containing
+   all expected values.
+  
+   Modified the " "=Search, or CCOW Patient Search, to account for an empty
+   return from the RPC.
+  
+ I12521882FY17 - Provider or Patient No Longer Coming Up when I tab to
+                 Requested By box and type PR or PA.
+  
+   Problem:
+   -------
+   I used to be able to tab to the Requested By box and start typing "PR" and
+   Provider would come up or "PA" and Patient would come up. Now nothing
+   happens at all when typing in that box. I can't remember if this is the case
+   in other epics that I've tested. So, the "fail" is the inability to type in
+   that box  and the "pass" is that I can click on the box and the drop down
+   menu shows the selections. Just another thing that slows you down when
+   having to leave the keyboard and go to the mouse.
+  
+   Resolution:
+   ----------
+   Tabbing in the Request dialog has been restructured. The drop down search
+   issues for the 'Requested By' control have been corrected as part of 508
+   compliance updates.
+  
+ I12522168FY17 - Unable to enter "x" in work phone number to define extension.
+  
+   Problem:
+   -------
+   I have one marked as fail on test case 15. Test step 9 asks to enter patient
+   work phone as "716-765-2323 x 2345." The GUI does not allow me to put a
+   letter in that box and formats the number as "+71676523232345".
+  
+   Resolution:
+   ----------
+   The SDEC PTSET has been modified to accept the 'x' character the same as
+   VistA or FileMan.
+  
+ I12522371FY17 - Heavy grid lines in clinic schedule for areas no longer
+                 defined with availability. 
+  
+   Problem:
+   -------
+   User selects a clinic that has availability M-F 1-11 & 1-5. VS GUI is
+   displaying grey lines between hours 5-6 on Monday & Tuesday.
+  
+   Resolution:
+   ----------
+   Coded slots to ignore any defined slots at the end of a day that have no
+   availability,(SLOTS in APPSLOTS is empty.) Added code to try and force
+   the Appointment Dialog to render prior to the dialog actually opening. I
+   have done what I can here.  The flash of black or white in the dialog as
+   it loads is the dialog before the Windows Presentation Foundation (WPF)
+   renders the components.
+  
+ I12523876FY17 - Appointment Request Comments are not updated in the Resource
+                 Management (RM) Grid after they are revised.
+  
+   Problem:
+   -------
+   Comments are changed in the Electronic Wait List (EWL), but not in the RM
+   Grid. When the user came out and went back into the patient the comments
+   updated
+  
+   Resolution:
+   ----------
+   Fixed post Request edit RM Grid update logic. Corrected logic to insure all
+   request type records in the RM Grid are refreshed after an edit. Corrected
+   logic preventing the update of the RM grid recall record.
+  
+ I12524388FY17 - Provider Names Not Being Displayed.
+  
+   Problem:
+   -------
+   In the Electronic Wait List (EWL) test, case 14, step 11, it states to place
+   cursor in the Provider field. User needs to type the last name, first name
+   of applicable provider (three character minimum required). Drop down list
+   displays with names of providers matching the characters entered in the
+   Provider field.
+   In this test, the drop down list does not display the names of providers
+   matching the characters entered. If you type in the whole provider name (or
+   enough characters to a unique provider) it will auto populate in the
+   provider field after hitting tab or selecting another field.
+  
+   Resolution:
+   ----------
+   Corrected the Provider drop-down load logic so that the returns from
+   additional searches will be loaded. Modified the underlying list supporting
+   the Recall Provider drop down.
+  
+ I12524663FY17 - User is not seeing any or all clinics when using the clinic
+                 abbreviation. 
+  
+   Problem:
+   -------
+   Clinic abbreviation in the clinic search box does not pull up the clinic.
+  
+   Resolution:
+   ----------
+   The SDEC RESOURCE, SDEC CLINSET, SDEC CLINALL, and SDEC REP1GET remote
+   procedures have been updated to accept and search using a clinic
+   abbreviation.
+  
+ I12525300FY17 - Appointment Block for unscheduled appointments is NOT
+                 displaying the time selected in the Calendar Grid.
+  
+   Problem:
+   -------
+   Unscheduled appointments asks the user to make an unscheduled
+   appointment after clinic hours. I right clicked at 6:00pm to make this
+   unscheduled appointment and obviously wasn't paying close enough attention
+   when the appointment request dialog box displayed because I didn't notice
+   that the time automatically populated as 4:15pm. The request closed and I
+   checked the patient in. When I noticed it changed the time on me, I
+   cancelled the appointment and went to reschedule it for 6:00pm. I noticed
+   after making and cancelling the appointment at 4:15, the grid display
+   changed.
+   I again right clicked at 6:00pm and selected create a walk in appointment
+   and the time defaulted to 5:15.
+   I changed the time to 6:00 and checked the patient in. When viewing the
+   6:00pm appointment, I noticed it changed the grid display again and added #
+   at the 4:45 slot.
+  
+   Resolution:
+   ----------
+   The incorrect time was being passed into the SDEC APPADD remote procedure.
+   This has been corrected.
+  
+ I12542160FY17 - Clinic Drop Down Box isn't dropping when I create a new Recall
+                 Request.
+  
+   Problem:
+   -------
+   When creating a new recall the clinic drop down box isn't dropping. If I
+   hit the down arrow the list is there and I can select off of it. I am
+   using clinic searches that I'm sure have recall letters attached.
+   It is reproducible and seems to be for every clinic location. I made sure
+   on my retest that I didn't backspace or re-type.
+  
+   Resolution:
+   ----------
+   Corrected the issue preventing the Recall Clinic dropdown from opening.
+   Recall Clinic search will accept a 4 character clinic abbreviation, or 6 or
+   more characters to search for a clinic.  Recall Provider is working as
+   designed.
+  
+ I12558918FY17 - MRTC Find Appointment Dialog will NOT automatically display.
+  
+   Problem:
+   -------
+   When creating a multiple appointment request for once a week for 4 weeks I
+   clicked on 'OK' to create the parent request and the multiple appointment
+   window never opened, but the parent request still appears in the request
+   management window. I clicked on the parent request and it still would not
+   open.
+  
+   Resolution:
+   ----------
+   Updated returned new request object to insure matching request can be found
+   in the refreshed RM Grid records. Corrected request automatic selection when
+   RM grid contains only 1 request so that the Schedule\Find Appointment
+   dialog opens as expected. Modified selected request handling so the schedule
+   is opened when it should be.
+  
+ I12563921FY17 - Correct Duration is not in the Dropdown Box.
+  
+   Problem:
+   -------
+   Please see the attached email string that contains Cleveland's testing in
+   their TEST account for EPIC13 Case 3 and Asheville's testing in our
+   Production account. We are able to reproduce in Production.
+  
+   Resolution:
+   ----------
+   Corrected appointment creation logic to use the Clinic duration, not the
+   selected slot duration. Fixed New Appointment duration for Variable Length
+   Clinics to always be incremented on the clinic display increment.
+  
+ I12568776FY17 - Clinic Schedule will not automatically display for regular
+                 single requests.
+  
+   Problem:
+   -------
+   When creating a single appointment request I clicked on 'OK' to move request
+   to the Resource Management (RM) Grid. The request in the RM Grid is
+   highlighted orange but the calendar window never opened.
+   Similar ticket #I12558918FY17 for MRTC Requests.
+  
+   Resolution:
+   ----------
+   Modified selected request handling so that schedule is opened when it should
+   be. Corrected request automatic selection when RM grid contains only 1
+   request so that the Schedule\Find Appointment dialog opens as expected.
+   Updated returned new request object to insure matching request can be found
+   in the refreshed RM Grid records.
+  
+ I12625138FY17 - User Preference filter using too many clinics causing VS GUI
+                 to hang (also see CA Ticket # I12657907FY17). 
+   Problem:
+   -------
+   We reported this issue in TEST when our tester caused a VistA System Process
+   Hang. We reviewed the issue with the developers. To remediate the issue I
+   killed the process via Job Exam. Then I deleted the end user's preferences
+   in the SDEC REQ MGR GRID FILTER Parameter. The end user was then able to log
+   into VistA Scheduling (VS) GUI. The guidance from HP was that they should
+   filter the clinics and choose no more than 4.
+  
+   If the clerk does not choose to filter by Clinic or Service, they will cause
+   a VistA System Process hang requiring an Office of Information and
+   Technology (OI&T) employee with programmers access to kill the process. This
+   issue was reproduced during the site visit on Friday 2/3/17.
+   I have been testing the user preferences function in production today and
+   was able to reproduce the same issue we had in test for Epic 10. I ran
+   through the script again and had the same results.
+  
+   Epic 10: I was working on Test Case 2: Validate user can set default column
+   order for Request Management Grid. I started at the beginning with logging
+   in. I followed the steps exactly. Step 6 is the first log off. I selected
+   Exit from the upper left hand corner of VS GUI. Then went on to Case 3. I
+   was able to log back in and followed all steps exactly as written. At step 8
+   I logged off by selecting exit from the upper left hand corner and was able
+   to log back in per step 9. I continued following the steps and finished the
+   script with step 12 (Select Exit, from upper left hand corner of VS GUI). I
+   then began Case 4 and was able to log in no problem and was able to complete
+   all steps as written through step 11 (Select Exit, from upper left hand
+   corner of VS GUI). I logged in successfully to start Case 5, and was able to
+   complete all steps as written through step 13 (Select Exit, from upper left
+   hand corner of VS GUI). I exited and was able to log back in and completed
+   the remainder of the steps. I logged out by selecting exit from the upper
+   left hand corner of GUI and was able to log back in to begin Case 6. I
+   completed Case 6 through step 8 (Select Exit, from upper left hand corner of
+   VS GUI). I then logged back in to start Case 7 and completed steps 1-7 as
+   written. When I Clicked the OK button on step 8, the GUI froze. At this
+   point I could not exit with the upper left menu, and I could not X out on
+   the upper right corner. The only way I could close the program was to use
+   the Task Manager. Once closed I then tried to log back in, and got the same
+   frozen spinning screen. I closed again with Task Manager and tried to log in
+   with the same result.
+   Once we determined this was the same issue that we had in test, I began
+   testing the filters in production to determine if this option can
+   realistically be used in the clinics. I used actual scenarios (filtering by
+   all Primary Care (PC)providers, all of Pain Management, and other clinics
+   grouped as they would be in the clinics) to further test this function and
+   came up with the following results:
+    30 PC clinics - white screen, had to kill it with task manager
+    29 Orthopedics clinics - white screen, had to kill it with task manager
+    18 Pain Management clinics - white screen, had to kill it with task manager
+    17 Urology clinics - white screen, had to kill it with task manager
+    16 General Surgery clinics - returned results, 2 mins
+    15 Vascular clinics - returned results, took 2 mins
+    12 PC clinics -returned results, 4 mins
+   Based on these results, there is no way that this function will be useful in
+   the clinics.
+  
+   Resolution:
+   ----------
+   The SDECRMGP PUTRMGUP RPC has been changed to accept an array of input. The
+   1st subscript INP(1) is the optional User ID. All other subscripts 2-x are
+   strings to represent pieces of the filter string. Note that this string
+   should be no longer than 80 characters and should not contain the ^ or ~
+   characters. Found and fixed where invalid saved column names cause unhandled
+   exceptions. Modified GUI to use updated User Preferences RPCs. Coded Get
+   User Preferences to handle an empty string return as well as a "NO USER
+   PREFERENCE SET" return from the RPC. Modified to use and empty user
+   preferences string when usable preference string is available. The SDECRMGP
+   GETRMGUP RPC has been slightly changed in that it returns the assembled
+   filter string. It no longer looks for or separates the return by pipe |. If
+   the string came into SDECRMGP PUTRMGUP with pipe delimiters, they will be in
+   the return for this RPC.
+  
+ I12657907FY17 - (Duplicate of I12625138FY17) After filtering to SC visits in
+                 User Preferences, only the loading patient request dialog
+                 spins, but never loads any requests.
+  
+   Problem:
+   -------
+   Epic 10 User Preferences 0 case 7 steps 8-13: After filtering to SC visits
+   only the loading patient request dialog spins, but never loads any requests.
+   User unable to exit using the exit options from the upper left hand corner
+   or the 'X' in the upper right corner. User killed the application through
+   Task Manager and attempted to log back into VS GUI, loading patient requests
+   spun again for 6 minutes before the user killed the applications through
+   Task Manager again. Restarted computer and logged back into VS GUI. Loading
+   patient requests spun for roughly 40 minutes before it displayed a box
+   stating the search yielded no results. At that time the user was able to
+   remove the filters from user preferences and continue to test the rest of
+   the epic with no issue.
+  
+   Resolution:
+   ----------
+   The new business rules have been implemented as requested. Updated User
+   Preferences and Query Form so that Wait Time, Entered Date and CID Date are
+   mutually exclusive. Removed default Wait Time filter when no wait time was
+   defined. Fixed the User Preferences Defined indicator (green rectangle) to
+   update when user preferences are saved. Updated User Preference Clinic
+   selection to remove Consult\Procedure request types if present.
+  
+ I12657968FY17 - When Cancel Availability for Two Separate Days, Same Clinic,
+                 Only 1 Request Displays on Report.
+  
+   Problem:
+   -------
+   VS GUI Requests Reopened by Cancel Availability [SDEC REQ REOPENED BY
+   SDCANCEL] - users MUST go to this option each time they cancel clinic
+   availability or it will not display.
+   When you cancel availability the first time, it works fine, but if you go
+   back and cancel another date in the same clinic location for a different
+   date, the report only shows the most recent cancellation and drops off the
+   previous patient from the list.
+  
+   Resolution:
+   ----------
+   Each appointment request was being over-written by the next one leaving only
+   the last request to be displayed. This has been corrected by adding an
+   additional counter as a subscript to the ^TMP global that is used to hold
+   the requests during the search.
+  
+ I12878525FY17 - Query Tool with Criteria of EWL and Podiatry Service Produces
+                 Black Screen.
+  
+   Problem:
+   -------
+   Created new incident from request R10436662FY16.
+   VSE OI&T Project Manager (PM<) - Updating urgency and impact to reflect what
+   is required for VSE national release or our VSE sustainment release.
+   VSE Initial Operating Capability (IOC) Testing  submitted a data request
+   through the Query tool regarding EWL entries for our Podiatry service. Both
+   screens went black and the application was unresponsive. Results came back
+   after 1-2 minutes. (also see I9381748FY16 & R10436072FY16) 
+  
+   Resolution:
+   ----------
+   Several cross-references have been added to the SD WAIT LIST file (409.3)
+   and the SDEC APPT REQUEST file (409.85) for Clinic and Service queries.
+   Spot testing several variations of the Query tool for EWL and APPT, when a
+   date (Origination or CID) is included in the Query, the return is a small
+   fraction of what it was before. On VSGUIEX, EWL queries that would take 15+
+   seconds to return now return in about 1 second.  APPT queries that would
+   take up to 20 seconds to return now return in less than 1 second.
+  
+ I12878778FY17 - VS GUI Audit Activity Report Showing Activity for Users Not
+                 Logged Into System.
+  
+   Problem:
+   -------
+   VS GUI Audit Activity Report showing activity for users not logged into
+   system.
+  
+   The RPC SDEC SUMMAGET is pulling the USERIEN and USERNAME from the Data
+   Entry Clerk field in SDEC APPOINTMENT file rather than the Canceled By User
+   field which is giving the credit for cancellation to the user that scheduled
+   the appointment and not the user that canceled the appointment.
+  
+   Resolution:
+   ----------
+   The SDEC SUMMAGET remote procedure has been corrected to return the
+   Cancelled By user.
+  
+ I9642568FY16 - When searching for a provider clinic a "Loading Screen"
+                displays but does not go away when the search results are
+                presented.
+  
+   Problem:
+   -------
+   The "Loading Screen" block does not clear when selecting a provider when
+   using the 'Provider Schedules' feature and the provider does not have any
+   clinics, even after the user selects another provider that has clinics and
+   the clinics are displayed  the "Loading Screen" stays on the screen.
+  
+   Resolution:
+   ----------
+   Fixed code that displays the "No Clinics associated . . . " message when a
+   Provider\Clinic Group has no active associated clinics.
+  
+ I9790797FY16 - Comment symbol is displayed in a column that is not supposed to
+                have a symbol.
+  
+   Problem:
+   -------
+   On occasion I have noticed the Resource Management (RM) Grid will have
+   symbols in columns that were not built to have symbols. I have seen them in
+   the Telephone and SSN columns. Sometimes it will mirror the symbols in the
+   Patient (PT) Name column and other times only a couple of the lines will
+   mirror the symbols in the PT Name column.
+  
+   Resolution:
+   ----------
+   Insured that comment symbol is retained in the Patient comment column.
+  
+ I15114097FY17 - Appointment request was not removed and the new appointment
+                 does not display.
+  
+   Problem:
+   When adding a new scheduled appointment, it does not display in pending
+   appointment window or in VistA appointment management.
+   The patient was given multiple eligibilities using the Load/Edit Patient
+   Data option in VistA.
+   While still in the Load/Edit Patient Data option, the user switched over to
+   VS GUI to add an appointment request and schedule an appointment.
+   When using the VS Clinic Schedule you can see the appointment was scheduled.
+   The cause of this is that the LOAD/EDIT PATIENT DATA option continues to
+   hold the patient lock until the user exits the option.
+  
+   Resolution:
+   ----------
+   The SDEC APPADD remote procedure has been updated to check and attempt to
+   get a patient lock before continuing to file the appointment data. If a
+   patient lock is found, processing stops and a notification message is
+   returned to VS GUI.
+  
+ =========================================================================
+  
+ The following defect was encountered and corrected during internal SQA
+ testing and UAT:
+  
+ 1. The subject line of the Note Update Report Data message is incorrect.
+  
+   Problem:
+   -------
+   Currently, the subject line of the report that gets generated for the NOTE
+   UPDATE REPORT DATA message is reading "SD*5.3*658 NOTE UPDATE REPORT DATA
+   for ....." when it should be "SD*5.3*665 NOTE UPDATE REPORT DATA for...."
+  
+   Resolution:
+   ----------
+   The text has been updated to properly read "SD*5.3*665 NOTE UPDATE REPORT DATA for....".
+  
+  
+ Test Sites:
+ ----------
+ Chillicothe VA Medical Center
+ Louis Stokes Cleveland VA Medical Center
+ VA Hudson Valley Health Care System
+ VA Salt Lake City Health Care System
+ West Palm Beach VA Medical Center
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Albany: domain.ext
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Title                       File Name                          FTP Mode
+ -----------------------------------------------------------------------
+ VistA Scheduling Enhancements GUI User Guide   VSE_VA_GUI_UG.PDF   Binary
+ VistA Scheduling Enhancements Technical Manual VSE_TM.PDF          Binary
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch contains no PRE Installation processing.
+ Post-Installation processing does the following:
+   1. Schedule a one-time Taskman job that will correctly sync the OTHER field
+      (#3) under the PATIENT multiple field (#2) for the APPOINTMENT multiple
+      field (#1900) in the HOSPITAL LOCATION file (#44) with the NOTE field
+      (#1) in the SDEC APPOINTMENT file (#409.84).
+      A report will be provided via Mailman to the person installing the patch
+      once the Taskman job finishes. This report will show the differences
+      between the 2 fields and how they were resolved. The subject of the
+      Mailman message will be: "SD*5.3*665 NOTE UPDATE REPORT DATA for <date>".
+      The time for the TaskMan job will vary significantly from site to site.
+      Depending on the number of clinics and appointments that a site might
+      have, the TaskMan job could take several hours.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch should not be installed with VistA Scheduling GUI users on the
+ system and it is recommended that it be installed during non-peak hours to
+ minimize potential disruption to other users. This patch should take less
+ than 5 minutes to install.
+  
+ The following options should be disabled to ensure that no processing takes
+ place during the install:
+   Clinical Scheduling Procedure Calls [SDECRPC]
+   Scheduling Manager's Menu           [SDMGR]
+   Supervisor Menu                     [SDSUP]
+   Scheduling Menu                     [SDUSER]
+   Set up a Clinic                     [SDBUILD]
+  
+  
+ Installation Instructions:
+ --------------------------
+ This installation will update routines that support VistA Scheduling GUI 
+ Application Programming Interfaces (APIs).
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the
+     Installation Menu.  From this menu, you may elect to use the following
+     options. When prompted for the INSTALL NAME enter the patch #
+    SD*5.3*665:
+   a. Backup a Transport Global - This option will create a backup message
+         of any routines exported with this patch. It will not backup any other
+         changes such as DDs or templates.
+   b. Compare Transport Global to Current System - This option will allow
+         you to view all changes that will be made when this patch is
+         installed.  It compares all components of this patch (routines,
+         DDs, templates, etc.).
+   c. Verify Checksums in Transport Global - This option will allow you to
+         ensure the integrity of the routines that are in the transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of Install?
+     NO//' 
+       Respond with 'NO'
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+       Respond with 'NO'
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//' 
+       Respond with 'YES'
+       Options to mark as out of order:
+          Clinical Scheduling Procedure Calls [SDECRPC]
+          Scheduling Manager's Menu           [SDMGR]
+          Supervisor Menu                     [SDSUP]
+          Scheduling Menu                     [SDUSER]
+          Set up a Clinic                     [SDBUILD]
+  
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ After the installation has completed, the TaskMan job "SD*5.3*665 NOTE UPDATE
+ REPORT DATA" may run for a few hours. The next patch, SD*5.3*669 can be
+ installed while that TaskMan job is still running.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDAMWI1
+    Before: B15911901   After: B16671818  **94,167,206,168,544,627,651,665**
+Routine Name: SDEC
+    Before:B128616683   After:B129056425  **627,643,642,651,658,665**
+Routine Name: SDEC01A
+    Before:B106852334   After:B116433919  **627,642,658,665**
+Routine Name: SDEC07
+    Before:B199096003   After:B185524828  **627,642,651,658,665**
+Routine Name: SDEC07B
+    Before: B40384018   After: B54807714  **627,658,665**
+Routine Name: SDEC08
+    Before:B207687482   After:B209647726  **627,651,658,665**
+Routine Name: SDEC25
+    Before:B107893271   After:B108318139  **627,665**
+Routine Name: SDEC32
+    Before: B77702065   After:B103453639  **627,643,642,658,665**
+Routine Name: SDEC40
+    Before: B66764561   After: B68854167  **627,665**
+Routine Name: SDEC50
+    Before: B96405128   After: B97773017  **627,658,665**
+Routine Name: SDEC54
+    Before:B193834229   After:B194101898  **627,642,658,665**
+Routine Name: SDEC54A
+    Before: B83664691   After: B83794184  **627,642,658,665**
+Routine Name: SDEC56
+    Before: B36808383   After: B59961693  **627,642,651,665**
+Routine Name: SDEC57
+    Before:B109929639   After:B110596286  **627,642,658,665**
+Routine Name: SDEC665
+    Before:       n/a   After: B24153499  **665**
+Routine Name: SDECDEV
+    Before: B76696246   After: B81564531  **627,658,665**
+Routine Name: SDECIDX
+    Before: B43422995   After: B47077475  **627,642,658,665**
+Routine Name: SDECU
+    Before: B22991058   After: B23913880  **627,665**
+Routine Name: SDECUTL
+    Before:B100019264   After:B101052538  **627,658,665**
+Routine Name: SDECUTL2
+    Before:B140702694   After:B142335116  **627,642,658,665**
+Routine Name: SDECWL
+    Before: B69248242   After: B99990256  **627,642,665**
+Routine Name: SDECWL2
+    Before:B125348916   After:B126043834  **627,642,658,665**
+Routine Name: SDECWL3
+    Before: B33650726   After: B33768778  **627,658,665**
+Routine Name: SDM1A
+    Before:B126358746   After:B130744784  **26,94,155,206,168,223,241,
+                                           263,327,478,446,544,621,622,
+                                           627,658,665**
+Routine Name: SDM4
+    Before: B43568059   After: B43938157  **263,273,327,394,417,496,585,665**
+Routine Name: SDMM1
+    Before: B21006684   After: B21571193  **28,206,168,327,622,645,658,665**
+ 
+Routine list of preceding patches: 585, 658
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 28, 2017
+Completed By:                               Date Completed: JUN 26, 2017
+Released By :                               Date Released : JUN 26, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,237 @@
+$TXT Created by                 JR at CHEY59.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Wednesday, 12/21/16 at 15:49
+=============================================================================
+Run Date: MAY 09, 2017                     Designation: PSO*7*472
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #398                      Status: Released
+                  Compliance Date: JUN 08, 2017
+=============================================================================
+
+
+Subject: MEDICATIONS LOCK DOWN AND  STANDARDIZATION
+
+Category: 
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will add a new field Coding System multiple to files
+ DRUG INGREDIENTS (#50.416), VA GENERIC (#50.6), VA PRODUCT (#50.68),
+ VA DRUG CLASS (#50.605) for the purpose of interoperability.
+  
+ DRUG INGREDIENTS (#50.416) file shall be updated to include a new
+ field multiple to store the RXNORM / UNII codes from the respective
+ Standards Development Organizations.
+  
+ VA GENERIC (#50.6) file shall be updated to include a new field multiple to
+ store the RXNORM / UNII codes from the respective Standards Development
+ Organizations.
+  
+ VA PRODUCT (#50.68) file shall be updated to include a new field multiple
+ to store the RXNORM code from the Standards Development Organization.
+  
+ VA DRUG CLASS (#50.605) file shall be updated to include a new field
+ multiple to store the RXNORM / UNII codes from the respective Standards
+ Development Organizations.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)             Field Name (Number)      New/Modified/Deleted
+ ------------------             -------------------      --------------------
+ DRUG INGREDIENTS (#50.416)     CODING SYSTEM  (#4)        New
+ VA GENERIC (#50.6)             CODING SYSTEM  (#5)        New
+ VA PRODUCT (#50.68)            CODING SYSTEM  (#43)       New
+ VA DRUG CLASS (#50.605)        CODING SYSTEM  (#5)        New
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A 
+  
+ Options Associated:
+  
+ Option Name     Type     New/Modified/Deleted
+ -----------     ----      -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------      -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+  N/A
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)  New/Modified/Deleted
+ -------------     ----     ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ ----------
+ VA CENTRAL PLAINS HEALTH NETWORK - OMAHA DIVISION - 636
+ OKLAHOMA CITY VA MEDICAL CENTER  -  635
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------ 
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation
+ describing the new functionality introduced by this patch is
+ available.
+  
+ The preferred method is to retrieve files from download.
+ vista.domain.ext. This transmits the files from the first available
+ server. Sites may also elect to retrieve files directly from
+ a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Albany:           domain.ext
+ Hines:            domain.ext 
+ Salt Lake City:   domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+ File Description                         File Name            FTP Mode
+ ----------------------------------------------------------------------
+ PSO Technical Manual                    pso_7_tm.pdf          Binary
+ PSO Technical Manual                    pso_7_tm.doc          Binary
+  
+ PSO_7_472 Deployment, Installation,     
+ Back-Out, and Rollback Guide          PSO_7_0_472_ig_0417.pdf Binary
+ PSO_7_472 Deployment, Installation,
+ Back-Out, and Rollback Guide          PSO_7_0_472_ig_0417.doc Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+ It is recommended that a Local Patch Backup is created that can
+ be re-installed in the event patch PSO*7.0*472 must be backed out.
+  
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (PSO_7_0_472_ig_0417.pdf) for complete installation instructions.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (PSO_7_0_472_ig_0417.pdf) for complete installation instructions.
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+ the Installation Menu. From this menu, you may elect to use the
+ following options. When prompted for the INSTALL NAME enter the patch
+ :PSO*7.0*472
+ a. Backup a Transport Global - This option will create a backup message
+ of any routines exported with this patch. It will not backup any other
+ changes such as DDs or templates.
+ b. Compare Transport Global to Current System - This option will allow
+ you to view all changes that will be made when this patch is installed.
+ It compares all components of this patch routines, DDs, templates,
+ etc.).
+  
+ c. Verify Checksums in Transport Global - This option will allow you to
+ ensure the integrity of the routines that are in the transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option
+ and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+ Install? NO//'
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+  
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+ Protocols? NO//'
+   
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ In the event a site determines that this patch should be backed out,
+ the site should submit a CA SDM ticket with the NSD for assistance
+ with the procedure.
+  
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (PSO_7_0_472_ig_0417.pdf) for complete installation instructions.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 08, 2016
+Completed By:                               Date Completed: APR 26, 2017
+Released By :                               Date Released : MAY 09, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

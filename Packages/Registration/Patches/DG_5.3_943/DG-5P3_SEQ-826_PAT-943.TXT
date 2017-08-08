@@ -1,0 +1,210 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Monday, 05/08/17 at 16:00
+=============================================================================
+Run Date: JUL 19, 2017                     Designation: DG*5.3*943
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #826                    Status: Released
+                  Compliance Date: AUG 19, 2017
+=============================================================================
+
+Associated patches: (v)DG*5.3*916  <<= must be installed BEFORE `DG*5.3*943'
+
+Subject: MASTER VETERAN INDEX VISTA ENHANCEMENTS - DATE OF DEATH
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ DG*5.3*916 is the only required build for patch DG*5.3*943.
+  
+ NOTE: Master Patient Index (MPI) Date of Death enhancements are being
+       distributed in two VistA namespaces: DG and RG.
+       Patches DG*5.3*943 and RG*1.0*68 can be installed in any order
+       as there are NO dependencies between these patches.       
+   
+ NOTE: Legacy sites can install just the DG*5.3*943 patch. RG*1.0*68
+       should NOT be installed on legacy sites.
+  
+ Enhancement
+ The following Date of Death enhancement is being exported in this patch:
+  
+ The Healthcare Identity Management (HC IdM) business group has requested
+ a Data Dictionary change to the 'HELP PROMPT' of the DATE OF DEATH field
+ (#.351) in the PATIENT file (#2) so that if requested, it provides more
+ meaningful information to the user when entering a Date of Death value.
+   
+   HELP PROMPT BEFORE:
+  
+   Enter the date the patient died. Date must not be before date of 
+   birth. 
+  
+   HELP PROMPT AFTER: 
+  
+   Enter the patient's DATE OF DEATH, which cannot be before the
+   patient's Date of Birth or a future date.
+   
+   
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+   
+ File Name (Number)         Field Name (Number)    New/Modified/Deleted
+ ------------------         -------------------    --------------------
+ PATIENT (#2)               DATE OF DEATH (#.351)  MODIFIED
+   
+ Forms Associated:
+   
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+   
+ Options Associated:
+   
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+   
+   
+ Protocols Associated:
+   
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+   
+  
+ Remote Procedures Associated:
+   
+ Remote Procedure Name             New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name                    New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A 
+  
+  
+ Additional Information:
+   
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+   
+   
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+   
+  
+ Test Sites:
+ ----------
+ Central AL HCS
+ Durham NC VAMC
+    
+  
+  
+ Patch Installation:
+   
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre/Post installation routine processes.   
+   
+  
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than 2 minutes to install.  This patch may be 
+ installed with users on the system.   
+  
+ No OPTIONs need to be disabled and the HL7 incoming filers/Taskman do
+ NOT need to be stopped during installation of this patch.  
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. DG*5.3*943):
+   
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch, such as
+         routines, DDs, templates, etc.
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+       
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+   
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// respond NO. 
+   
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 13, 2017
+Completed By:                               Date Completed: JUL 18, 2017
+Released By :                               Date Released : JUL 19, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

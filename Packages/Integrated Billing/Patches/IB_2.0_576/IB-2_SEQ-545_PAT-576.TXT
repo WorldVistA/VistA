@@ -1,0 +1,332 @@
+$TXT Created by              at TAS-EBIL-DEV.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 03/29/17 at 13:10
+=============================================================================
+Run Date: JUL 24, 2017                     Designation: IB*2*576
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #545                      Status: Released
+                  Compliance Date: AUG 23, 2017
+=============================================================================
+
+Associated patches: (v)IB*2*371    <<= must be installed BEFORE `IB*2*576'
+                    (v)IB*2*547    <<= must be installed BEFORE `IB*2*576'
+
+Subject: MCCF EDI TAS EBILLING BUILD 1
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+  - Input Template
+
+Description:
+============
+
+ ****Important Note: In production, there is one **MANDATORY**
+ pre-installation activity associated with this install.
+  
+ The IB Staff MUST empty the 837 extract/transmission queue
+ PRIOR to the installation of this patch. ***
+  
+ The site Information Resource Management (IRM) should coordinate with the
+ Billing Department to insure that the 837 extract/transmission queue is
+ empty. Once the Billing Department has completed the instructions, the 
+ Billing department is to inform IRM that the patch installation may 
+ proceed.
+  
+ The instructions to empty the queue are as follows:
+  
+ Select the option:   TRANSMIT EDI BILLS - MANUAL [IBCE 837 MANUAL 
+ TRANSMIT]
+  
+  
+   What is the purpose of this option?
+    This option is used to by-pass the normal daily/nightly transmission
+    queues if the need arises to get the claim to the payer quickly.
+  
+   When is this option used?
+    There are occasions when there is a need to transmit a claim(s)
+    immediately instead of waiting for the batching frequency as scheduled
+    in the MCCR Site Parameter.  This option will allow sending individual
+    claim(s) or all claims in a ready for extract status.
+  
+   Upon selecting this option you will be prompted with the following:
+     Select one of the following:
+      A  Transmit (A)LL bills in READY FOR EXTRACT status
+      S  Transmit only (S)ELECTED bills
+  
+   You should select 'A' for ALL
+  
+ There are no other mandatory pre-installation activities associated
+ with this patch.
+  
+ IB is a software module within Veterans Health Information Systems and
+ Technology Architecture (VistA) that provides the ability for billing
+ personnel to submit claims in either a paper or electronic format to
+ third-party payers.
+  
+ The following features of the IB software will be affected by this 
+ patch:
+  
+    * eBilling Set Onset Date Appropriately
+  
+      When completing professional health care claims, the eBilling system 
+      automatically defaulted the date of service as the onset date when
+      there is no Occurrence code with the correct date the current illness
+      or symptom first appeared.  There should only be a date if there is
+      an Occurrence code for onset of illness or Last Menstrual Period
+      (LMP).  The system should not automatically default the onset date to
+      the date of service. 
+  
+      In support of this logic, the following fatal error message will be
+      changed:
+      
+      **Errors**:
+      Occ. codes for accident, LMP, illness not allowed on same bill
+  
+      The new fatal error message will no longer include accident.  
+      Accident Occurrence codes are now printed in Box 15.  The new message
+      will be the following:
+  
+      **Errors**
+      Occ. codes Onset of Illness (11) and LMP (10) not allowed on same
+      bill.
+  
+    * Missing MRW Legend Indicator
+  
+      When viewing claim responses on the MRA Management WorkList [IBCE MRA
+      MANAGEMENT], staff needs the ability to see indicators that reflect
+      the current status of the entry on the list in order to assist them
+      with their workload.  There are currently several indicators that
+      appear in front and behind bill numbers, but not all are found on the
+      legend.  Staff needs the ability to also see the indicator for review
+      in process on the legend.  
+  
+      This should be displayed in the legend as follows:
+  
+      *=review in process 
+  
+    * Printing of CMS 1500
+  
+      When printing CMS 1500 claim forms locally, billing staff must be
+      able to print the bill frequency code and the original claim
+      reference number, Internal Claim Number (ICN)/Document Control Number
+      (DCN), for replacement of prior claims or void/cancel prior claims in
+      the correct field locator (FL). The bill frequency code and ICN
+      number do not currently print on the CMS 1500 form for replacement or
+      voided/canceled claims.
+  
+      By printing the following bill frequency codes and the original claim
+      reference number (ICN/DCN) on professional replacement claims for 
+      non-Medicare payers (note: Medicare claims cannot be printed locally)
+      in FL 22, payers are able to determine the correct status of the
+      claim and process it accordingly and in a timely manner.
+  
+      Bill Frequency Code           Description
+      7                             Replacement of prior claim
+      8                             Void/Cancel of prior Claim
+  
+    * Correct an issue on Screen 10 for CMS-1500s
+  
+      A problem was found on Screen 10 while testing CMS-1500s.  It had to 
+      do with the proper display of the "TERTIARY INSURANCE ICN/DCN" prompt
+      which was displayed as "FORM LOCATOR 64C".
+  
+    * Payer Zip Code Field Adjustment 
+  
+      Users can currently enter a five or nine-digit zip code in the
+      following payer address fields in the INSURANCE COMPANY (#36) file:
+         
+        * Main Mailing Address - ZIP CODE (#.116) field
+        * Inpatient Claims Office Address - CLAIMS (INPT) PROCESS ZIP 
+          (#.126) field
+        * Appeals Address - APPEALS ADDRESS ZIP (#.146) field
+        * Inquiry Address - INQUIRY ADDRESS ZIP CODE (#.156) field
+        * Outpatient Claims Office Address - CLAIMS (OPT) PROCESS ZIP 
+          (#.166) field
+        * Prescription Claims Office Address - CLAIMS (RX) ZIP (#.186)
+          field
+  
+      The fields are set up to accept the standard nine digit code, and
+      users should be required to enter the maximum standard number of
+      digits.  VistA IB should require users to enter a properly formatted
+      and valid ZIP code that is nine digits long when entering a new ZIP
+      code or editing an existing ZIP code.
+  
+      The process required to accomplish this functionality is outlined
+      below:
+  
+        * VistA IB verifies that the ZIP code is a 9 character numeric  
+          value.  
+        * VistA IB verifies the last 4 digits are not 0000 or 9999. 
+        * VistA does not make a 5 digit payer ZIP code a fatal error in 
+          billing.
+        * Payer address ZIP codes that exist at the time the software 
+          updates are installed will not be changed.
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ IB ERROR (#350.8)                                         Modified Entry
+ INSURANCE COMPANY (#36)                                   Modified
+                       ZIP CODE (#.116)                    Modified
+                       CLAIMS (INPT) PROCESS ZIP (#.126)   Modified
+                       APPEALS ADDRESS ZIP (#.146)         Modified
+                       INQUIRY ADDRESS ZIP CODE (#.156)    Modified
+                       CLAIMS (OPT) PROCESS ZIP (#.166)    Modified
+                       CLAIMS (RX) ZIP (#.186)             Modified
+ IB FORM SKELETON DEFINITION (#364.6)                      Modified Entries
+      Screen: I $$INCLUDE^IBY576PR(6,Y)
+ IB FORM FIELD CONTENT (#364.7)                            Modified Entries
+      Screen: I $$INCLUDE^IBY576PR(7,Y) 
+  
+ Templates, Input Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ IB SCREEN10H       Input     BILL/CLAIMS (#399)           Modified 
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Asheville, NC
+ Augusta, GA
+ Orlando, FL
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+    Albany:                 domain.ext
+    Hines:                  domain.ext    
+    Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  
+  
+ http://www.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Deployment, Installation,     ib_2_0_p576_ig.pdf              Binary
+  Back-out/Rollback Guide (IB*2.0*576)
+ EDI User Guide                edi_user_guide_r0717.pdf        Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The Pre-install routine (IBY576PR) will automatically do the following:
+ *     Update entries used by the Forms Output Utility [IBCE OUTPUT 
+ FORMATTER].
+    
+ The Post-install (IBY576PO) will automatically do the following:
+ *     Recompile the Billing Screen Input Templates
+ *     Modify an existing entry in IB ERROR file (#350.8) or add entry if 
+ not found.
+     
+ Routines IBY576PO and IBY576PR may be manually deleted by IT/IRM upon
+ completion of the installation.
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 2 
+ minutes 
+ to install.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XXX*X.X*XX):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+     
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// 
+  
+ 7.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 45
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCECOB
+    Before: B35210416   After: B35526743  **137,155,288,432,488,516,547,576**
+Routine Name: IBCF22
+    Before: B23925078   After: B30913378  **52,80,122,51,210,488,576**
+Routine Name: IBCNSU
+    Before: B38899795   After: B41305219  **28,103,371,576**
+Routine Name: IBY576PO
+    Before:       n/a   After:  B4730222  **576**
+Routine Name: IBY576PR
+    Before:       n/a   After:  B3123249  **576**
+ 
+Routine list of preceding patches: 371, 547
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 07, 2016
+Completed By:                               Date Completed: JUL 24, 2017
+Released By :                               Date Released : JUL 24, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

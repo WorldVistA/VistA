@@ -1,0 +1,514 @@
+$TXT Created by             at CTST.FO-BIRM.DOMAIN.EXT  (KIDS) on Monday, 05/22/17 at 16:19
+=============================================================================
+Run Date: JUL 20, 2017                     Designation: TIU*1*297
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #278                      Status: Released
+                  Compliance Date: AUG 19, 2017
+=============================================================================
+
+Associated patches: (v)TIU*1*218   <<= must be installed BEFORE `TIU*1*297'
+                    (v)TIU*1*225   <<= must be installed BEFORE `TIU*1*297'
+                    (v)TIU*1*256   <<= must be installed BEFORE `TIU*1*297'
+                    (v)TIU*1*296   <<= must be installed BEFORE `TIU*1*297'
+
+Subject: TIU UNAUTHORIZED ABBREVIATION AND DICTATION CONTROL
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+  - Input Template
+
+Description:
+============
+
+ TIU*1.0*297 modifies the Text Integration Utilities (TIU) application. 
+  
+ This patch addresses NSR # 20140809 (Prevention of Unauthorized
+ Abbreviations in the TIU Screen) and NSR # 20141003 (TIU Dictation
+ Control). Detailed descriptions for each of these NSRs are listed below. 
+  
+ This patch also addresses a minor issue identified with Patch TIU*1.0*296
+ in which the new TIU Event Edit [TIU TEXT EVENT EDIT] option only allows
+ users with at-sign (@)-Programmer access in VistA to add/update/delete
+ entries in the TIU TEXT EVENTS File (#8925.71).
+  
+ ***** Please Note the Following ******* 
+ Per management guidelines, the functionality in NSR #20140809 and
+ #20141003 is optional and upon release of the patch, it should be in an
+ inactive or disabled state. This allows facilities that choose not to use
+ this functionality, to only be required to install the patch. In other
+ words the corresponding functionality will continue to act the same
+ as it did prior to the installation of this patch with no changes. Any
+ facility that wants to use the functionality of the NSRs must activate the
+ functionality as defined in the post installation instructions.
+ **************************************
+  
+ NSR #20140809 - Prevention of Unauthorized Abbreviations in the TIU Screen
+ --------------------------------------------------------------------------
+   Problem:
+   --------
+   Currently Unauthorized Abbreviations, such as those on The Joint 
+   Commission "Do Not Use" list, can be used in the progress note within
+   the TIU application without any alert to the note author. 
+  
+   Solution:
+   ---------
+   Once the new "TIU Unauthorized Abbreviation" application is activated,
+   it will prevent a NOTE from being signed unless each unauthorized
+   abbreviation has been removed or spelled out.
+  
+   USE OF THIS FUNCTIONALITY IS OPTIONAL. Work with your facility Chief,
+   Health Information Management (HIM) and Chief of Staff to determine
+   whether this functionality should be turned on.
+  
+   A newly created "TIU Unauthorized Abbreviation" File (#8927.9) contains
+   a standard set of fourteen unauthorized abbreviations from The Joint
+   Commission. Staff may add additional abbreviation(s) to match any 
+   unauthorized abbreviations that they have identified in local policy.
+  
+   A newly created menu option "Unauthorized Abbreviations (Enter/Edit)"
+   [TIU ABBV ENTER EDIT] maintains unauthorized abbreviation data in the
+   "TIU Unauthorized Abbreviation" File (#8927.9).  Another newly created
+   menu option "List Unauthorized Abbreviations" [TIU ABBV LIST] lists all
+   the abbreviations in File (#8927.9).  These two new options are located
+   under the existing "TIU Maintenance Menu" [TIU IRM MAINTENANCE MENU].
+  
+   This patch will deploy all fourteen abbreviations with STATUS field set 
+   to "Inactive." This application can be activated by updating an
+   abbreviation to a STATUS of "Active." If any identified abbreviation
+   is found and listed in the File (#8927.9) with ACTIVE STATUS, the
+   abbreviation will be listed in the CPRS "Insufficient Authorization"
+   box. The Note cannot be signed by the staff unless each identified
+   unauthorized abbreviation has been removed or spelled out.
+  
+   Select OPTION NAME: TIU MAINTENANCE MENU      TIU IRM MAINTENANCE MENU
+      10     Unauthorized Abbreviations (Enter/Edit)
+      11     List Unauthorized Abbreviations
+  
+   The Unauthorized Abbreviations (Enter/Edit) option allows facility staff
+   to enter/edit their own unauthorized abbreviation(s) into the "TIU 
+   UNAUTHORIZED ABBREVIATION" File (#8927.9). When facility staff creates a
+   new entry, the field default settings will be as follows:
+          *  The CLASS  Field (#.02) is defaulted to "LOCAL".
+          *  The ABBREVIATION EXACT MATCH Field (#.03) is defaulted
+             to "YES".
+          *  The STATUS Field (#.04) is defaulted to "ACTIVE".
+          *  The NOTE Field (#.05) is optional.
+   Staff can only edit the entries for ABBREVIATION EXACT MATCH, STATUS and
+   NOTE if the CLASS field is set to "LOCAL." If the CLASS field is set
+   to "NATIONAL", then no entry can be edited at the facility level.
+  
+   The List Unauthorized Abbreviations option displays a list of existing
+   unauthorized abbreviations in the Unauthorized Abbreviations File
+   (#8927.9), either active abbreviations only or active and inactive
+   abbreviations.
+  
+   Requirements for the "Unauthorized Abbreviations (Enter/Edit)" are:
+  
+   1) Fourteen Unauthorized Abbreviations from the Joint Commission listing
+      are released in the "TIU UNAUTHORIZED ABBREVIATION" File (#8927.9)  
+      with CLASS Field (#.02) set to "LOCAL", "ABBREVIATION EXACT MATCH"  
+      Field (#.03) set to "YES", and the STATUS Field (#.04) set to 
+      "INACTIVE". The fourteen Unauthorized Abbreviations are:
+      "IU, MgSO4, MS, MSO4, QD, Q.D., qd, q.d., QOD, Q.O.D., qod, q.o.d.,
+      U, u".
+  
+   2) Any Unauthorized Abbreviation(s) entry with CLASS Field (#.02)
+      set to "NATIONAL" cannot be added or modified by facility staff. 
+      In this release, no entry is released with "NATIONAL" CLASS.
+  
+   3) No Unauthorized Abbreviation entry can be deleted once it is created.
+  
+   4) The UNAUTHORIZED ABBREVIATION at field (#.01) cannot be changed or
+      deleted once it is created, but STATUS Field (#.04) can be change to
+      either ACTIVE or INACTIVE.
+  
+   5) The UNAUTHORIZED ABBREVIATION Field (#.01) is prohibited from 
+      including the following punctuations: |^&~\:;,!?
+  
+   6) The UNAUTHORIZED ABBREVIATION Field (#.01) is not case sensitive.
+  
+   7) The requirement for case sensitivity check for an Unauthorized 
+      Abbreviation entry is determined by the "ABBREVIATION EXACT MATCH"
+      Field (#.03).
+  
+   8) Once a new Unauthorized Abbreviation entry is created, "ABBREVIATION
+      EXACT MATCH" Field (#.03) is defaulted to "YES". Staff can change
+      the value in this field.
+  
+   9) The CLASS (#.02), ABBREVIATION EXACT MATCH (#.03), STATUS (#.04), 
+      and NOTE (#.05) fields are audited using FileMan options.
+  
+   10) If CLASS Field (#.02) is set to "NATIONAL", Facility staff cannot
+       change any Unauthorized Abbreviation entry. On the other hand,
+       if CLASS Field (#.02) set to "LCOAL", the Facility staff can 
+       add/modify/activate/inactivate the Unauthorized Abbreviation entry
+       from field (#.03) to field (#.05) regardless of the STATUS value.
+     
+   11) An Unauthorized Abbreviation entry with CLASS field set to "LOCAL"
+       can be managed by facility staff to serve any general medical and
+       business practice need. Facility staff can inactivate these entries
+       when an unauthorized abbreviation is no longer needed. (For example,
+       MS may be an abbreviation for Multiple Sclerosis or Mitral Stenosis,
+       or an abbreviation for Mississippi to obtain discount mailing bulk
+       rate. U may be an abbreviation for U Street Corridor which is a
+       commercial and residential district in Northwest Washington DC.)
+  
+   CAUTION: Any Abbreviation which is listed with ACTIVE STATUS in the 
+   "TIU UNAUTHORIZED ABBREVIATION" File (#8927.9) will be checked against
+   an entire progress note including any credentials and street address.
+   Thus, if a progress note contains any abbreviation which is listed 
+   with ACTIVE STATUS in the File (#8927.9), the NOTE cannot be signed
+   unless each identified abbreviation is either removed or spelled out.
+  
+ NSR #20141003 - TIU Dictation Control
+ -------------------------------------
+   Problem
+   -------
+   Many medical centers have been having problems with students, residents,
+   and other providers dictating progress notes and failing to supply all
+   of the necessary information such as note title, associated visit, etc.
+   This patch addresses this issue by introducing functionality which will
+   allow a facility to control TIU dictation privileges for TIU documents
+   of any type (Op reports, DC Summaries, Consults, etc.). Dictating
+   authors should initiate a note stub and dictate a unique ID number with
+   dictation instructions. The unique ID number is generated by the 
+   system. It is normally not disclosed to the user. However, in this case,
+   it is disclosed as part of the dictation instructions, for easy 
+   identification.
+   
+   USE OF THIS FUNCTIONALITY IS OPTIONAL.  Work with your facility Chief, 
+   and Health Information Management (HIM) to discuss the functionality
+   this patch provides and whether it should be turned on.
+  
+   Dictation privileges are controlled by two new fields in the
+   "TIU PARAMETERS" File (#8925.99). The fields are:
+      1) ENABLE DICTATION CONTROL Field (#.23) can be answered YES to
+         enable the patch functionality. Entry of NO or nothing will
+         disable the functionality.
+      2) DICTATION INSTRUCTIONS Field (#6) is a word processing field. It 
+         allows sites to enter site-specific dictation instructions. Within
+         this field, sites may reference the variables TIUDA, TIUL5, and
+         TIUINST by placing them between vertical bars, Example |TIUDA|.
+         TIUDA is the internal entry number of the current document,
+         TIUL5 is the last 5 digits of TIUDA, and TIUINST is the internal
+         entry number of the INSTITUTION of the current logged-in user.
+         Kernel's software-wide variables which are defined in the
+         Kernel technical manual, and FileMan's package-wide variables
+         which are defined in the FileMan technical manual, may be used
+         as well.
+  
+   The security key, TIUDCT, must be assigned to the CPRS users
+   who are authorized to dictate TIU Documents, and transcription
+   personnel such as the Facility Chief HIM and the Transcription
+   Supervisor/Staff.
+  
+   These two new fields (#.23 and #6) in the "TIU PARAMETERS" File
+   (#8925.99) can be modified by using the "TIU BASIC PARAMETERS EDIT"
+   option. Since the "TIU PARAMETERS" File (#8925.99) is based on the
+   INSTITUTION File (#4), the "Enable Dictation Control" Field (#.23)
+   can either enabled or disabled this "Dictation Control" functionality
+   at the site's division level.
+  
+   By entering "BEGIN-DICTATION" on the first line of the progress
+   note then "Save Without Signature", the text of the note will be
+   immediately replaced with the text in the "DICTATION INSTRUCTIONS"
+   Field (#6) in the "TIU PARAMETERS" File (#8925.99).  
+  
+ Issue identified with Patch TIU*1.0*296:
+ ------------------------------------------
+   Patch TIU*1*296 modified the Text Integration Utilities (TIU) 
+   application to send a TIU alert to the appropriate service provider(s)
+   immediately after a staff member screens a patient and signs the
+   associated note. The patch added the TIU TEXT EVENTS File (#8925.71) to
+   allow the facility to define the words or phrase that will be searched
+   for in a TIU document (progress note, consult, etc.). If the words or
+   phrase are found in the TIU document, an alert is sent to the team
+   specified in the TIU TEXT EVENTS File (#8925.71).
+  
+   Problem:
+   --------
+   Patch TIU*1.0*296 exported the new TIU Event Edit [TIU TEXT EVENT EDIT]
+   option which allows file add/update/delete functionality for the TIU
+   TEXT EVENTS File (#8925.71). This option only allowed a user with
+   at-sign (@)-Programmer access in VistA to add/update/delete entries
+   in this file. Sites require Informatics staff who do not have the
+   at-sign (@)-Programmer access, have this option for file updates.
+  
+   Solution:
+   ---------
+   The TIU Event Edit [TIU TEXT EVENT EDIT] option has been updated and is 
+   being deployed to allow Informatics staff, who do not have the at-sign
+   (@)-Programmer access, to add/update/delete entries in the TIU TEXT
+   EVENTS File (#8925.71).
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated: 
+ File Name (Number)          Field Name (Number)                New/Mod/Del
+ -----------------------     -------------------------------    -----------
+ TIU UNAUTHORIZED            UNAUTHORIZED ABBREVIATION (#.01)   NEW
+ ABBREVIATION (#8927.9)      CLASS (#.02)                       NEW
+                             ABBREVIATION EXACT MATCH (#.03)    NEW
+                             STATUS (#.04)                      NEW
+                             NOTE (#.05)                        NEW
+ TIU PARAMETERS (#8925.99)   ENABLE DICTATION CONTROL (#.23)    NEW
+ TIU PARAMETERS (#8925.99)   DICTATION INSTRUCTIONS (#6)        NEW
+  
+ Forms Associated:
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+ Option Name                              Type         New/Modified/Deleted
+ ------------------------                 -----------  --------------------
+ TIU IRM MAINTENANCE MENU                 MENU         Modified
+ TIU ABBV ENTER EDIT                      RUN ROUTINE  NEW
+ TIU ABBV LIST                            RUN ROUTINE  NEW
+ TIU ACTIVE TITLE CLEANUP                 RUN ROUTINE  Modified
+ TIU MAP TITLES MENU                      MENU         Modified
+ TIU TEXT EVENT EDIT                      EDIT         Modified
+  
+  
+ Protocols Associated:
+ Protocol Name                            New/Modified/Deleted
+ -------------                            --------------------
+ N/A 
+  
+  
+ Security Keys Associated:
+ Security Key Name
+ -----------------
+ TIUDCT
+  
+  
+ Templates Associated:
+ Template Name             Type    File Name (Number)  New/Modified/Deleted
+ -------------             ----    ------------------  --------------------
+ TIU TEXT EVENT EDIT       INPUT   TIU TEXT EVENTS     Deleted
+                                   (#8925.71)
+ TIU BASIC PARAMETER EDIT  INPUT   TIU PARAMETERS      Modified
+                                   (#8925.99)
+  
+  
+ Additional Information:
+ New Service Requests (NSRs):
+ ----------------------------  
+ 20140809 - Prevention of Unauthorized Abbreviations in the TIU Screen
+ 20141003 - TIU Dictation Control
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------  
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------  
+ N/A
+  
+  
+ Test Sites:
+ ---------- 
+ Albany Upstate NY (528)
+ Cleveland (541)
+ Hines (578)
+ Milwaukee (695)
+ Omaha Nebraska (636)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a PackMan file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+  
+ Title                                      File Name             FTP Mode
+ ----------------------------------------   ---------             --------
+ TIU Clinical Coordinator and User Manual   tiuum.pdf             Binary
+ TIU Technical Manual                       tiutm.pdf             Binary
+ Deployment, Installation, Back-Out, and    
+ Rollback Guide                             tiu_1_0_297_ig.pdf    Binary
+ TIU Dictation Control Training Guide       tiu_1_0_297_tg.pdf    Binary
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ ------------------------------- 
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ Do not install this patch while CPRS users are on the Computerized 
+ Patient Record System using "CPRS - Progress Note / Sign Note Now". 
+ It is recommended to install this patch during non-peak hours to 
+ minimize potential disruption to users.  The installation of this 
+ patch should not take more than 5 minutes.
+   
+ The following options should be disabled before installing this patch:
+    TIU Maintenance Menu [TIU IRM MAINTENANCE MENU]
+    Active Title Cleanup Report [TIU ACTIVE TITLE CLEANUP]
+    Title Mapping Utilities [TIU MAP TITLES MENU]
+    TIU Parameters [TIU BASIC PARAMETER EDIT]
+    Text Event Edit [TIU TEXT EVENT EDIT]
+   
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     # (ex. TIU*1.0*297):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.  => Choose TIU*1.0*297
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//     => respond NO
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//     => respond NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//     => respond YES.
+  
+        Select the following options to disable:
+       
+       Option Name                  Menu Text
+       ------------------------     ------------------------------
+       TIU IRM MAINTENANCE MENU     TIU Maintenance Menu
+       TIU ACTIVE TITLE CLEANUP     Active Title Cleanup Report
+       TIU MAP TITLES MENU          Title Mapping Utilities
+       TIU TEXT EVENT EDIT          TIU Event Edit
+       TIU BASIC PARAMETER EDIT     Basic TIU Parameters      
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//   => respond 0
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+    1. After this TIU*1*297 patch is installed successfully, please make
+       sure that the Post-Installation routine, TIUPS297, is removed.
+  
+    2. If your site wants to use the new functionality implemented for NSR
+       # 20140809 (Prevention of Unauthorized Abbreviations in the TIU
+       Screen), the following should be done for any abbreviations decided
+       upon by the site:
+           a. Determine which of the following provided fourteen
+              Unauthorized Abbreviations from The Joint Commission listing
+              are to be required at your site: IU, MgSO4, MS, MSO4, QD,
+              Q.D., qd, q.d., QOD, Q.O.D., qod, q.o.d., U, u
+           b. Determine if your site has any additional abbreviation 
+              that it would like to be included to prevent usage by users.
+           c. Utilize the Unauthorized Abbreviations (Enter/Edit) [TIU ABBV
+              ENTER EDIT] option found on the TIU Maintenance Menu [TIU IRM
+              MAINTENANCE MENU] to do the following:
+                   1. Set the STATUS field to "Active" for each of the 
+                      Unauthorized Abbreviations, from The Joint Commission
+                      listing, that you prefer to prevent from being used
+                      at your site.
+                   2. Enter any new Unauthorized Abbreviation that you
+                      prefer to prevent at your site.
+  
+    3. If your site wants to use the new functionality implemented for 
+       NSR #20141003 (TIU Dictation Control), the following should be done:
+           a. User can use the "Basic TIU Parameters" option [TIU BASIC
+              PARAMETER EDIT] to enable/disable the "Dictation Control"
+              functionality, and create "Dictation Instruction" as 
+              appropriate for your site. Please note that the
+              "TIU PARAMETERS" File (#8925.99) is defined to have one
+              entry for each division.  It will require this step to be
+              done for each division using this functionality. This
+              facilitates usage and/or dictation instructions to be defined
+              by division as needed at multi-divisional facilities.
+           b. Assign the TIUDCT security key to anyone who will need to
+              dictate TIU documents using CPRS.
+      If your site does not want to use this functionality, no action is
+      required.
+  
+ Back Out Instructions for Patch TIU*1.0*297
+ -------------------------------------------
+  
+ In the event a site determines that this patch should be backed out, the 
+ site should submit a CA SDM ticket with the NSD for assistance with the 
+ procedure. Refer to the Deployment, Installation, Back-Out, and Rollback 
+ Guide (DIBORG), tiu_1_0_297_ig.pdf, information regarding back out
+ of the software.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;JUN 20, 1997;Build 40
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUABBV
+    Before:       n/a   After:  B7597487  **297**
+Routine Name: TIUABBV1
+    Before:       n/a   After: B58892280  **297**
+Routine Name: TIUABBVC
+    Before:       n/a   After:  B5804430  **297**
+Routine Name: TIUABBVP
+    Before:       n/a   After:  B9842666  **297**
+Routine Name: TIUDCT
+    Before:       n/a   After:  B8195446  **297**
+Routine Name: TIULP
+    Before: B55451451   After: B61391624  **98,100,116,109,138,152,175,
+                                           157,182,184,217,236,234,232,
+                                           241,256,297**
+Routine Name: TIUPS297
+    Before:       n/a   After:  B1090642  **297**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 25, 2015
+Completed By:                               Date Completed: JUL 13, 2017
+Released By :                               Date Released : JUL 20, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,123 @@
+$TXT Created by               at CDMS.FO-BIRM.DOMAIN.EXT  (KIDS) on Thursday, 04/13/17 at 16:57
+=============================================================================
+Run Date: MAY 24, 2017                     Designation: PSO*7*485
+Package : PSO - OUTPATIENT PHARMACY           Priority: EMERGENCY
+Version : 7       SEQ #399                      Status: Released
+                  Compliance Date: MAY 26, 2017
+=============================================================================
+
+Associated patches: (v)PSO*7*480   <<= must be installed BEFORE `PSO*7*485'
+
+Subject: MISSING RX QUESTIONS REVIEW MAIL MESSAGE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This is a follow-up patch for Fixed Medication Copayment Tier (FMCT) 
+ patch PSO*7*460, where the mail message, "PRESCRIPTION QUESTIONS REVIEW 
+ NEEDED" was not generating.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Defect Tracking System Ticket(s):
+ =================================
+ R13534217FY17 - CA SDM, 511265 - Rational defect
+  
+  
+ Participating Test Sites:
+ =========================
+ Central Plains HCS
+ Salem VAMC 
+  
+  
+ Defect Tracking System Ticket(s) Overview:
+ ==========================================
+ R13534217FY17 - CA SDM, 511265 - Rational defect
+  
+  
+     Problem:
+     --------
+     The copay status of a prescription is re-evaluated whenever a fill is 
+     released. Various actions can occur based on changes to the criteria
+     that determine the copay status of a prescription. If there is a
+     change in copay criteria, a MailMan message is supposed to be
+     generated at the time a prescription fill is released. After the
+     release of patch PSO*7*460, this message is no longer being generated.
+     The recipients of the message will be the provider of record, the
+     pharmacy user who finished the order, and holders of the PSO COPAY
+     key. 
+  
+     Resolution:
+     -----------
+     Modified routine PSOCP to check for the copay change criteria and 
+     accordingly generate the missing MailMan message.
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch may be installed with users on the system although it should be
+ installed during non-peak hours to minimize potential disruption to
+ users. This patch should take less than 5 minutes to install.
+  
+  1. Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+    
+  2. From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+    
+  3. From this menu, you may select to use the following options
+     (when prompted for INSTALL NAME, enter PSO*7.0*485).
+    
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+    
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+    
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+    
+   4. Use the Install Package(s) option and select patch PSO*7.0*485 to
+      install.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.
+     
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 37
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCP
+    Before: B81967302   After: B75724132  **20,46,71,85,137,157,143,219,
+                                           239,201,225,303,460,480,485**
+ 
+Routine list of preceding patches: 480
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 13, 2017
+Completed By:                               Date Completed: MAY 24, 2017
+Released By :                               Date Released : MAY 24, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

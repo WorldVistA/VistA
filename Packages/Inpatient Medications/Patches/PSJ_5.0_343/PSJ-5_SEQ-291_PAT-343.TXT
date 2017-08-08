@@ -1,0 +1,117 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 05/11/17 at 16:23
+=============================================================================
+Run Date: JUL 27, 2017                     Designation: PSJ*5*343
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #291                      Status: Released
+                  Compliance Date: AUG 26, 2017
+=============================================================================
+
+Associated patches: (v)PSJ*5*315   <<= must be installed BEFORE `PSJ*5*343'
+
+Subject: PRE-EXCHANGE DOSES ISSUE WITH SPEED FINISH
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue:
+  
+ Pre-Exchange doses are incorrect when using Speed Finish
+  
+ Defect Tracking System Ticket(s):
+ =================================
+ I13401383FY17 - CA SDM, 515383 - Rational defect
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Oklahoma City VAMC
+ Amarillo VAMC
+  
+ Defect Tracking System Ticket(s) Overview:
+ ==========================================
+ I13401383FY17 - CA SDM, 515383 - Rational defect
+  
+ Problem: 
+ --------
+ When an Inpatient unit dose order is renewed, the pre-exchange doses
+ calculation is incorrect when using Speed Finish (SF) via the Order Entry
+ [PSJU NE] option.
+  
+  
+ Resolution:
+ -----------
+ A modification was made to routine PSGOTR to set the PREVIOUS STOP
+ DATE/TIME field in the PHARMACY PATIENT FILE (55) with the correct value.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  This patch should be installed
+ during non-peak hours.
+  
+ It is preferred to have the users off the system during install.
+  
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSJ*5.0*343)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSJ*5.0*343.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOTR
+    Before: B22276864   After: B22285475  **110,127,133,129,267,257,255,
+                                           315,343**
+ 
+Routine list of preceding patches: 315
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 09, 2017
+Completed By:                               Date Completed: JUL 20, 2017
+Released By :                               Date Released : JUL 27, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
