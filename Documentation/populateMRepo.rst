@@ -11,6 +11,146 @@ version of VistA to set up, this is not always the case.  There are times when
 the structure of the VistA-M repository is needed but the content should belong
 to a more recent FOIA release or the release of a community vendor.
 
+Prepare to extract
+------------------
+
+In order to utilize the scripts to populate a directory, the VistA instance
+requires that certain settings are utilized a particular way.
+
+Telnet Device
++++++++++++++
+
+**This option will only need to be set on a Caché instance**
+
+The OSEHRA Scripts on a Caché instance connect via a TELNET protocol which
+uses the ``|TNT|`` string.  Ensure that the ``TELNET`` device in VistA has a $I
+entry with that same string.
+
+.. parsed-literal::
+
+  VISTA>:usertype:`S DUZ=1 D Q^DI`
+
+
+  MSC Fileman 22.2
+
+
+  Select OPTION: :usertype:`1`  ENTER OR EDIT FILE ENTRIES
+
+
+
+  Input to what File: KERNEL SYSTEM PARAMETERS// :usertype:`DEVICE`
+                                            (53 entries)
+  EDIT WHICH FIELD: ALL// :usertype:`$I`
+  THEN EDIT FIELD::usertype:`<ENTER>`
+
+
+  Select DEVICE NAME: :usertype:`TELNET`
+       1   TELNET      TELNET     TNA
+       2   TELNET  GTM-UNIX-TELNET    TELNET     /dev/pts/
+  CHOOSE 1-2: :usertype:`1`  TELNET    TELNET     TNA
+  $I: TNA// :usertype:`|TNT|`
+
+
+  Select DEVICE NAME:
+
+Additionally, some of the recent FOIA releases have needed the addition of a
+global value to allow a Telnet connection to be found for any namespace within
+a VistA instance.
+
+Execute the following command to find the correct IEN for the Telnet device.
+The value can be found by inquiring to the device and looking for the value in
+the "NUMBER:" field.
+
+.. parsed-literal::
+
+  VISTA> :usertype:`S DUZ=1 D Q^DI`
+
+
+  MSC Fileman 22.2
+
+
+  Select OPTION: :usertype:`5` INQUIRE TO FILE ENTRIES
+
+  Output from what File: KERNEL SYSTEM PARAMETERS// :usertype:`DEVICE`
+                                            (53 entries)
+
+  Select DEVICE NAME: :usertype:`TELNET`
+       1   TELNET      TELNET     \|TNT\|
+       2   TELNET  GTM-UNIX-TELNET    TELNET     /dev/pts/
+  CHOOSE 1-2: :usertype:`1`  TELNET    TELNET     \|TNT\|
+  Another one: :usertype:`<ENTER>`
+  Standard Captioned Output? Yes// :usertype:`Y` (Yes)
+  Include COMPUTED fields:  (N/Y/R/B): NO// :usertype:`BOTH` Computed Fields and Record Number
+   (IEN)
+
+  NUMBER: 22                              NAME: TELNET
+    $I: \|TNT\|                             ASK DEVICE: YES
+    ASK PARAMETERS: YES                   SIGN-ON/SYSTEM DEVICE: YES
+    LOCATION OF TERMINAL: TELNET          OPEN COUNT: 40568
+    SUBTYPE: C-VT100                      TYPE: VIRTUAL TERMINAL
+    LAST SIGN-ON USER (c): USER,SEVENTEEN
+
+
+  Select DEVICE NAME:
+
+Once you have the number, add it to the following line to make the connection
+to the proper device
+
+.. parsed-literal::
+
+  VISTA>S DEVNUM=22
+  VISTA>S ^%ZIS(1,"G","SYS..|TNT|",DEVNUM)=""
+
+
+Primary HFS Directory
++++++++++++++++++++++
+
+The ZGO file, which is used to pull the global files from the VistA instance,
+utilizes a file in a temporary directory.  The directory of that file is
+determined by the ``PRIMARY HFS DIRECTORY`` value for the domain's entry in the
+``KERNEL SYSTEMS PARAMETER`` file.
+
+Ensure that the value in the field points to a directory that can be accessed.
+The OSEHRA setup  scripts will remove the value using the "@" symbol,
+
+.. parsed-literal::
+
+    VISTA>:usertype:`S DUZ=1 D Q^DI`
+
+
+    VA FileMan 22.2
+
+
+    Select OPTION: :usertype:`1`  ENTER OR EDIT FILE ENTRIES
+
+
+
+    Input to what File: :usertype:`KERNEL SYSTEM PARAMETERS`    (1 entry)
+    EDIT WHICH FIELD: ALL// :usertype:`PRIMARY HFS DIRECTORY`
+    THEN EDIT FIELD: :usertype:`<ENTER>`
+
+
+    Select KERNEL SYSTEM PARAMETERS DOMAIN NAME: ?
+        Answer with KERNEL SYSTEM PARAMETERS NUMBER, or DOMAIN NAME:
+       1            FOIA.DOMAIN.EXT
+
+    Select KERNEL SYSTEM PARAMETERS DOMAIN NAME: :usertype:` \`1`  FOIA.DOMAIN.EXT
+    PRIMARY HFS DIRECTORY: USER$:[TEMP]// :usertype:`@`
+       SURE YOU WANT TO DELETE? :usertype:`Y`  (Yes)
+
+
+    Select KERNEL SYSTEM PARAMETERS DOMAIN NAME::usertype:`<ENTER>`
+
+
+
+
+    Select OPTION::usertype:`<ENTER>`
+
+
+    VISTA>
+
+
+
 Extract Routines and Globals
 ----------------------------
 

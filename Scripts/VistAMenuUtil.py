@@ -170,7 +170,10 @@ class VistAMenuUtil(object):
     connection = vistAClient.getConnection()
     self.gotoMailmanMasterMenu(vistAClient)
     connection.send("Manage Mailman\r")
-    connection.expect("Select Manage Mailman ")
+    index = connection.expect(["to continue","Select Manage Mailman "])
+    if index == 0:
+      connection.send("^\r")
+      connection.expect("Select Manage Mailman ")
 
   def exitMailmanManageMenu(self, vistAClient):
     connection = vistAClient.getConnection()
