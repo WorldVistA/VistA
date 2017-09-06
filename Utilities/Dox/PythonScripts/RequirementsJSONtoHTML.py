@@ -18,8 +18,9 @@ def createArgParser():
     parser.add_argument('outDir', help='path to the output web page directory')
     return parser
 
-fieldList = ["Name",'Id','Description',"BFFLink",'New Service Request','Type', 'Date Updated', "Recently Updated"]
+fieldList = ["Name",'Id','Description',"BFFLink",'New Service Request','Type', 'Date Updated', "Update Status"]
 searchColumnList = ["Name",'Id','Description',"BFFLink",'New Service Request']
+
 allReqs = []
 reqSummary=[]
 def getReqHTMLLink(reqID, reqEntry, **kargs):
