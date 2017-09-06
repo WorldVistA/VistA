@@ -151,6 +151,11 @@ COMMON_HEADER_PART = """
 SWAP_VIEW_HTML = """
 <button id="swapDisplay">Switch Display Mode</button>
 <script type="text/javascript\">
+  $(window).on("scroll",function(event) {
+    scrollLoc = 55 - $(this).scrollTop()
+    if(scrollLoc < 0) scrollLoc=0
+    $("#pageCommands").css('top',scrollLoc);
+  });
   $("#swapDisplay").click( function(event) {
     if ($("#terseDisplay").is(':visible')) {
       $("#terseDisplay").hide()
@@ -1291,10 +1296,12 @@ class WebPageGenerator:
             self.__inlcudeSourceHeader__(outputFile)
             outputFile.write("<title>Routine: "+sourceCodeName+"</title>")
             outputFile.write("<div><h1>%s.m</h1></div>\n" % sourceCodeName)
-            outputFile.write("<a href=\"%s\">Go to the documentation of this file.</a>" %
+            outputFile.write("<div id='pageCommands' style='position:fixed; top:55; background: white;'>")
+            outputFile.write("  <a href=\"%s\">Go to the documentation of this file.</a>" %
                              getRoutineHtmlFileName(routineName))
             if routine._structuredCode:
               outputFile.write(SWAP_VIEW_HTML)
+            outputFile.write('</div>')
             outputFile.write("<xmp id=\"terseDisplay\" class=\"prettyprint lang-mumps linenums:1\">")
         # Inititalize the new variables
         lineNo = 0
@@ -1344,7 +1351,8 @@ class WebPageGenerator:
             if routine._structuredCode:
               outputFile.write("<xmp id=\"expandedDisplay\" class=\"prettyprint lang-mumps linenums:1\" style='display:none;'>")
               for line in routine._structuredCode:
-                outputFile.write("%s \n" % line)
+                if len(line):
+                  outputFile.write("%s \n" % line)
               outputFile.write("</xmp>\n")
             self.__includeFooter__(outputFile)
             outputFile.close()
