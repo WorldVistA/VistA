@@ -25,6 +25,7 @@ table_sorter_header="""
   https://datatables.net/
 """
 data_table_reference = """
+<link rel="stylesheet" type="text/css" href="../../css/vivian.css"/>
 <link rel="stylesheet" type="text/css" href="../../datatable/css/jquery.dataTables.css"/>
 <link rel="stylesheet" type="text/css" href="../../datatable/css/buttons.dataTables.css"/>
 <link rel="stylesheet" type="text/css" href="../../datatable/css/dataTables.searchHighlight.css"/>
