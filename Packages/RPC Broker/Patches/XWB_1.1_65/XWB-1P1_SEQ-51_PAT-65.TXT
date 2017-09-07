@@ -1,0 +1,473 @@
+
+=============================================================================
+Run Date: MAR 27, 2017                     Designation: XWB*1.1*65
+Package : XWB - RPC BROKER                    Priority: Mandatory
+Version : 1.1        SEQ #51                    Status: Released
+                  Compliance Date: APR 27, 2017
+=============================================================================
+
+Associated patches: (v)XWB*1.1*64      install with patch       `XWB*1.1*65'
+                    (v)XU*8*659        install with patch       `XWB*1.1*65'
+
+Subject: RPC Broker BDK - SSO Enabled Broker
+
+Category: 
+  - Informational
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ Patch XWB*1.1*65 RPC Broker Development Kit (BDK) Single Sign-On (SSO) 
+ Enabled, with support for Delphi XE4, XE5, XE6, XE7, XE8, 10, and 10.1.
+  
+ This patch is one in a series of patches to support the VA's transition 
+ to SSO with Identity and Access Management (IAM) Secure Token Service 
+ (STS). VAIQ# 7613595 "Mandatory Use of PIV Multifactor Authentication to
+ VA Information System" dated June 30, 2015, requires all VA IT systems to
+ be PIV-enabled and requires the use of multifactor authentication when
+ using a local, network, or remote account to log into a VA information
+ system. This patch provides the Delphi BDK utilities needed to implement
+ this requirement. Delphi GUI client applications compiled with this BDK
+ will automatically make use of IAM STS tokens for user identification and
+ authentication into VistA servers. Access Codes / Verify Codes are 
+ retained as an alternative method of authentication in case of an invalid 
+ STS token, STS server unreachable, or failure to install the required 
+ VistA-side patches. 
+  
+ There is no action for VHA sites required by this patch. This patch is
+ Programmer-Only Client-Only.  There is no server side (VistA PackMan or
+ KIDS) part to the patch.  There are no client side (Windows executable)
+ programs for VHA production workstations.  The patch is intended for
+ Delphi developer client workstations only.
+  
+ RPC Broker Patch XWB*1.1*65 retains Windows client support for IPv4/IPv6
+ dual-stack environments and Secure Shell (SSH-2) connections provided in 
+ previous BDKs. It has been updated to support FIPS-mode SSH-2 tunneling
+ with support for higher levels of encryption using Micro Focus Reflection
+ APIs (the replacement for Attachmate Reflection).
+  
+ Note: The "Hash" unit has been renamed "XWBHash" to eliminate a conflict 
+ with a new Embarcadero unit in Delphi XE8. Any direct references to the 
+ "Hash" unit in existing applications will have to be resolved manually.
+  
+ CPRS Defect 329516 is fixed in this release, resolving a 508 compliance 
+ issue with RPC Broker Error Message dialog boxes (fRPCBerrMsg.pas).
+  
+ The patch is distributed as a zip file (XWB_1_1_P65.zip) on the anonymous 
+ directory sites.  The zip file contains all of the source code and 
+ instructions for compiling and installing for each version of Delphi 
+ listed above, as well as a few sample programs.
+  
+ The installation requires less than 30 Megabytes of disk space on a 
+ workstation.
+  
+ Blood Bank Clearance
+ ====================
+ Clearance - Not required for client-side only patches.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)  Field Name (Number)              New/Modified/Deleted
+ ------------------  -------------------              --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                Type                      New/Modified/Deleted
+ ---------                ----                      -------------------- 
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type                      New/Modified/Deleted
+ -----------            ----                      -------------------- 
+ N/A
+  
+ Protocols Associated:
+ --------------------
+ N/A
+  
+ Security Keys Associated:
+ ------------------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name       Type    File Name (Number)   New/Modified/Deleted 
+ -------------       ----    ------------------   --------------------
+ N/A
+  
+ Remote Procedure Calls Associated:
+  
+ RPC Name               Type               New/Modified/Deleted
+ --------               ----               --------------------
+ N/A
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  I5510592FY15 INC000000111712 Broker Error Recovery
+  I5561245FY15 BDK Support for Delphi XE8
+  
+ 1. I5510592FY15 INC000000111712 Broker Error Recovery
+  
+ Problem:
+ -------
+ If an error occurs in RPC on the M side (or a timeout), then the Broker 
+ raises an exception and returns a corresponding error message. This is 
+ expected. However, any subsequent calls will freeze the Broker for 
+ several seconds and raise an exception with the 'Application context has 
+ not been created!' message, but the Broker object indicates the correct
+ context. 
+  
+ Resolution:
+ ----------
+ Calling the 'XWB CREATE CONTEXT' RPC to reset the user context immediately
+ after an error and before making subsequent calls will resolve this
+ problem. This RPC Broker Development Kit (BDK) has included code to make 
+ this call automatically for Delphi GUI applications upon an RPC error if 
+ an application context is defined.
+  
+ 2. I5561245FY15 BDK Support for Delphi XE8
+  
+ Problem:
+ -------
+ The BDK in patch XWB*1.1*60 provided support for up to version XE7 of 
+ Embarcadero Delphi. The BDK cannot be compiled in XE8 due to the release 
+ of a new vendor Hash unit that has the same name as the Hash unit 
+ provided in the BDK.
+  
+ Resolution:
+ ----------
+ The VA Hash unit has been renamed XWBHash and all references to the unit 
+ have been updated. The new BDK has been tested with Delphi versions XE4 
+ through 10.1.
+  
+  
+ Test Sites:
+ ----------
+ Patch contains shared code that is tested during GUI development and 
+ deployment.  No production client-side or server-side software is 
+ included in this patch.
+  
+ At least eight projects using this code have tested GUIs at the following 
+ sites:
+   Aleda E. Lutz VA Medical Center, Saginaw MI (655 - Medium)
+   Carl Vinson VA Medical Center, Dublin GA (557 - Medium)
+   Clement J. Zablocki Veterans Affairs Medical Center, Milwaukee WI
+     (695 - Large)
+   Fayetteville VA Medical Center, Fayetteville NC (565 - Large)
+   James J. Peters VA Medical Center, Bronx NY (526 - Large)
+   Salem VA Medical Center, Salem VA (658 - Large)
+   Tuscaloosa VA Medical Center, Tuscaloosa AL (679 - Medium)
+   VA Heartland - East, St. Louis MO (657 - Integrated)
+   VA Heartland - West, Kansas City MO (589 - Integrated)
+   VA Maryland Health Care System, Baltimore MD (512 - Large)
+   VA North Florida / South Georgia VA Health Care System, Gainesville FL 
+     (573 - Integrated)  
+   VA Pittsburgh Health Care System, Pittsburgh PA (646 - Integrated)
+   Wilkes-Barre VA Medical Center, Wilkes-Barre PA (693 - Large)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ The most up-to-date VA Kernel Remote Procedure Call (RPC) Broker end-user
+ documentation is available on the VHA Software Document Library (VDL) at
+ the following Internet Website:
+      https://www.domain.ext/vdl/application.asp?appid=23
+   
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+ Software is contained in the XWB_1_1_P65.zip file.          
+  
+ Documentation is contained in the XWB_1_1_P65_README.txt file, which
+ contains updated instructions for installing the RPC Broker BDK.
+  
+ The preferred method for obtaining these files is to use Secure File
+ Transfer Protocol (FTP) to download them from:
+     sftp://download.vista.domain.ext/
+ This transmits the files from the first available FTP server.  The files 
+ are located in the [] directory. Sites may also elect 
+ to retrieve software directly from a specific server as follows:
+  
+  Albany      sftp.domain.ext  <sftp://ftp.domain.ext>
+  Hines       sftp.domain.ext   <sftp://ftp.domain.ext>
+  Salt Lake   sftp.domain.ext     <sftp://ftp.domain.ext>
+  
+ Title                         File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ BDK32 SSO Enabled             XWB_1_1_P65.zip                Binary
+ XWB*1.1*65 READ ME            XWB_1_1_P65_README.txt         Ascii
+  
+  
+ Routine Information:
+ ====================
+  
+   Server Side:
+   ------------
+   No M routines included
+  
+  
+ List of preceding patches:
+   XWB*1.1*13, XWB*1.1*26, XWB*1.1*47, XWB*1.1*50, XWB*1.1*60
+  
+  
+ The client-side (developer) software distribution includes:
+  
+    Date       Time            Bytes    Filename
+ ----------  --------       ----------- ---------------
+ 03/07/2017  09:46 AM         4,187,430 XWB_1_1_P65.zip 
+  
+   Client Side:
+   ------------
+  
+ The following is a list of the files included in the zip file and their 
+ CRC-32 values assuming that the zip file has been unzipped into the 
+ directory (C:\Program Files (x86)\Vista). The locations would differ if
+ the files are installed under another location.
+  
+  
+    Date       Time            Bytes    Filename
+ ----------  --------       ----------- -------------
+  Directory of C:\Program Files (x86)\Vista\BDK32
+  
+ 01/11/2017  09:30 AM    <DIR>          .
+ 01/11/2017  09:30 AM    <DIR>          ..
+ 01/11/2017  09:35 AM    <DIR>          BAPI32dll
+ 01/11/2017  09:24 AM    <DIR>          Help
+ 01/11/2017  09:28 AM    <DIR>          Samples
+ 01/11/2017  09:24 AM    <DIR>          Source
+ 01/11/2017  09:36 AM             5,939 XWB_1_1_P65_README.TXT
+                1 File(s)          5,939 bytes
+  
+  Directory of C:\Program Files (x86)\vista\BDK32\BAPI32dll
+  
+ 01/11/2017  09:35 AM    <DIR>          .
+ 01/11/2017  09:35 AM    <DIR>          ..
+ 10/14/2016  01:46 PM            14,886 BAPI32 summary readme.txt
+ 10/14/2016  01:47 PM             4,486 BAPI32.bas
+ 10/14/2016  01:51 PM             9,465 Bapi32.cpp
+ 03/07/2017  09:42 AM         2,604,032 Bapi32.dll
+ 11/21/2016  12:08 PM             4,504 Bapi32.h
+ 11/21/2016  12:11 PM             1,798 Bapi32.hpp
+ 11/21/2016  12:05 PM             4,501 Bapi32_for C.h
+ 12/28/2016  04:10 PM             4,912 Bapi32_for CSharp.h
+ 07/08/2016  02:51 PM             3,816 Open Access Functions.txt
+                9 File(s)      2,652,400 bytes
+  
+  Directory of C:\Program Files (x86)\vista\BDK32\Help
+  
+ 01/11/2017  09:24 AM    <DIR>          .
+ 01/11/2017  09:24 AM    <DIR>          ..
+ 02/15/2017  11:16 AM           873,894 Broker_1_1.chm
+                1 File(s)        873,894 bytes
+  
+  Directory of C:\Program Files (x86)\vista\BDK32\Samples
+  
+ 01/11/2017  09:28 AM    <DIR>          .
+ 01/11/2017  09:28 AM    <DIR>          ..
+ 01/11/2017  09:24 AM    <DIR>          BrokerEx
+ 01/11/2017  09:24 AM    <DIR>          BSE
+                0 File(s)              0 bytes
+  
+  Directory of C:\Program Files (x86)\vista\BDK32\Samples\BrokerEx
+  
+ 01/11/2017  09:24 AM    <DIR>          .
+ 01/11/2017  09:24 AM    <DIR>          ..
+ 03/04/2014  01:21 PM               386 BrokerExample.cfg
+ 03/04/2014  01:21 PM             1,618 BrokerExample.dof
+ 11/16/2016  01:28 PM               464 BrokerExample.dpr
+ 12/22/2016  02:36 PM            10,475 BrokerExample.dproj
+ 12/22/2016  02:36 PM                62 BrokerExample.dproj.local
+ 01/11/2017  08:53 AM         3,548,672 BrokerExample.exe
+ 01/10/2017  01:57 PM               399 BrokerExample.identcache
+ 01/10/2017  01:54 PM             2,344 BrokerExample.res
+ 01/10/2017  01:57 PM               179 BrokerExample.stat
+ 08/05/2015  09:47 AM               372 BrokerExample.VA508
+ 05/08/2014  10:19 AM               766 BrokerExample_Icon.ico
+ 01/04/2017  08:54 AM            14,668 fBrokerExample.dfm
+ 01/04/2017  08:55 AM            17,285 fBrokerExample.pas
+ 03/04/2014  01:23 PM             1,354 fOkToTerminate.dfm
+ 03/04/2014  01:23 PM               447 fOkToTerminate.pas
+ 03/04/2014  01:23 PM            83,095 frmVistAAbout.dfm
+ 03/04/2014  01:23 PM             9,165 frmVistAAbout.pas
+ 03/04/2014  01:23 PM            83,095 fVistAAbout.dfm
+ 03/04/2014  01:23 PM             9,163 fVistAAbout.pas
+               19 File(s)      3,784,009 bytes
+  
+  Directory of C:\Program Files (x86)\vista\BDK32\Samples\BSE
+  
+ 01/11/2017  09:24 AM    <DIR>          .
+ 01/11/2017  09:24 AM    <DIR>          ..
+ 04/07/2006  03:35 PM               386 BseSample1.cfg
+ 04/07/2006  03:35 PM             1,465 BseSample1.dof
+ 02/15/2006  03:09 PM               202 BseSample1.dpr
+ 12/22/2016  02:37 PM             9,723 BseSample1.dproj
+ 12/22/2016  02:37 PM                62 BseSample1.dproj.local
+ 12/22/2016  02:37 PM         2,525,696 BseSample1.exe
+ 12/22/2016  02:37 PM               133 BseSample1.identcache
+ 02/23/2006  12:19 PM               100 BseSample1.inc
+ 12/22/2016  02:37 PM             2,288 BseSample1.res
+ 12/22/2016  02:37 PM               165 BseSample1.stat
+ 05/08/2014  10:19 AM               766 BseSample1_Icon.ico
+ 12/22/2016  02:36 PM             4,211 fBseSample1.dfm
+ 05/08/2014  10:35 AM             5,672 fBseSample1.pas
+ 08/12/2015  07:59 AM               670 Pass Phrases.txt
+               14 File(s)      2,551,539 bytes
+  
+  Directory of C:\Program Files (x86)\vista\BDK32\Source
+  
+ 01/11/2017  09:24 AM    <DIR>          .
+ 01/11/2017  09:24 AM    <DIR>          ..
+ 12/09/2016  11:02 AM             3,523 AddServer.dfm
+ 07/08/2016  10:29 AM             1,537 AddServer.pas
+ 12/09/2016  11:02 AM               411 AddServer.vlb
+ 07/19/2016  07:44 AM            17,056 CCOWRPCBroker.pas
+ 08/26/2015  07:53 AM             1,480 CCOW_const.pas
+ 07/19/2016  09:55 AM             1,654 Check.bmp
+ 11/10/2016  08:11 AM               718 fDebugInfo.dfm
+ 08/26/2015  08:01 AM             1,184 fDebugInfo.pas
+ 12/22/2016  02:41 PM             2,048 fPlinkpw.dfm
+ 08/26/2015  08:24 AM             1,591 fPlinkpw.pas
+ 11/17/2016  01:22 PM             7,022 frmSignonMessage.dfm
+ 11/17/2016  01:22 PM            12,365 frmSignonMessage.pas
+ 11/21/2016  02:30 PM             1,089 fRPCBErrMsg.dfm
+ 10/19/2016  07:52 AM             2,363 fRPCBErrMsg.pas
+ 11/10/2016  08:11 AM             6,227 fSgnonDlg.dfm
+ 08/26/2015  08:55 AM             1,207 fSgnonDlg.pas
+ 12/22/2016  02:42 PM             2,033 fSSHUsername.dfm
+ 08/26/2015  09:06 AM             1,607 fSSHUsername.pas
+ 10/25/2016  09:36 AM             1,962 IAMBase.inc
+ 07/08/2016  07:32 AM             2,745 IISBase.inc
+ 10/15/2015  09:39 AM               406 Key.bmp
+ 12/09/2016  10:41 AM            25,679 Loginfrm.dfm
+ 12/09/2016  02:45 PM            17,754 Loginfrm.pas
+ 08/31/2016  12:13 PM             4,220 MFunStr.pas
+ 09/09/2015  01:22 PM             4,816 RpcbEdtr.pas
+ 11/10/2016  08:13 AM             2,585 RpcbErr.dfm
+ 06/23/2016  01:48 PM             7,896 RpcbErr.pas
+ 11/10/2016  08:13 AM            11,415 Rpcconf1.dfm
+ 11/21/2016  02:32 PM            11,557 Rpcconf1.pas
+ 11/21/2016  02:32 PM                 3 Rpcconf1.vlb
+ 08/03/2015  11:55 AM               359 Rpcnet.dfm
+ 08/26/2015  10:40 AM            11,990 Rpcnet.pas
+ 12/09/2016  12:44 PM            13,438 RpcSLogin.pas
+ 11/10/2016  08:17 AM             6,707 SelDiv.dfm
+ 11/03/2016  03:13 PM             8,013 SelDiv.pas
+ 11/10/2016  08:14 AM             7,340 SgnonCnf.dfm
+ 07/11/2016  01:41 PM            19,250 SgnonCnf.pas
+ 08/03/2015  11:55 AM           338,054 Splash.bmp
+ 07/19/2016  08:00 AM           782,768 Splvista.dfm
+ 07/19/2016  08:00 AM             2,193 Splvista.pas
+ 07/19/2016  08:00 AM               119 Splvista.vlb
+ 08/03/2015  11:55 AM               406 TCCOWRPCBroker.bmp
+ 01/11/2017  08:40 AM            93,909 Trpcb.pas
+ 12/08/2016  09:48 AM             7,813 VCEdit.dfm
+ 12/08/2016  09:50 AM             9,775 VCEdit.pas
+ 08/03/2015  11:55 AM             2,604 VERGENCECONTEXTORLib_TLB.dcr
+ 08/31/2016  12:14 PM            64,043 VERGENCECONTEXTORLib_TLB.pas
+ 07/19/2016  08:03 AM            41,529 Wsockc.pas
+ 08/26/2015  11:48 AM             4,562 XlfSid.pas
+ 10/12/2016  07:13 AM             4,785 XWBHash.pas
+ 06/23/2016  08:55 AM             1,702 XWBReg.pas
+ 10/19/2016  01:36 PM            49,234 XWBRich20.pas
+ 10/15/2015  09:43 AM               456 XWBSSOi.dcr
+ 01/04/2017  08:45 AM             1,404 XWBSSOi.dfm
+ 01/09/2017  10:50 AM            16,454 XWBSSOi.pas
+ 08/31/2016  12:13 PM            10,887 XWBut1.pas
+ 08/03/2015  11:55 AM               766 XWB_D2010_Icon2.ico
+ 08/03/2015  11:55 AM             1,832 XWB_DesignTime.dcr
+ 01/09/2017  10:51 AM               806 XWB_DesignTime.dpk
+ 01/10/2017  01:54 PM            28,082 XWB_DesignTime.dproj
+ 01/10/2017  01:54 PM             2,990 XWB_DesignTime.dproj.local
+ 07/27/2016  02:42 PM               116 XWB_DesignTime.identcache
+ 01/10/2017  01:54 PM             1,572 XWB_DesignTime.res
+ 01/10/2017  01:54 PM               169 XWB_DesignTime.stat
+ 08/07/2015  11:39 AM                72 XWB_DesignTime_project.tvsconfig
+ 08/03/2016  06:35 AM               796 XWB_DXE4.dpk
+ 10/19/2016  08:38 AM            25,301 XWB_DXE4.dproj
+ 10/19/2016  08:38 AM             3,612 XWB_DXE4.dproj.local
+ 10/19/2016  08:38 AM             1,572 XWB_DXE4.res
+ 08/03/2016  06:33 AM               796 XWB_DXE5.dpk
+ 10/19/2016  08:40 AM            25,301 XWB_DXE5.dproj
+ 10/19/2016  08:40 AM             3,766 XWB_DXE5.dproj.local
+ 10/19/2016  08:40 AM             1,572 XWB_DXE5.res
+ 01/10/2017  04:16 PM               797 XWB_DXE6.dpk
+ 01/10/2017  04:16 PM            25,460 XWB_DXE6.dproj
+ 01/10/2017  04:16 PM             3,458 XWB_DXE6.dproj.local
+ 11/17/2016  01:58 PM             1,572 XWB_DXE6.res
+ 01/10/2017  04:14 PM               797 XWB_DXE7.dpk
+ 01/10/2017  04:14 PM            26,107 XWB_DXE7.dproj
+ 01/10/2017  04:14 PM             3,304 XWB_DXE7.dproj.local
+ 11/17/2016  01:56 PM             1,572 XWB_DXE7.res
+ 01/10/2017  04:12 PM               797 XWB_DXE8.dpk
+ 01/10/2017  04:12 PM            27,811 XWB_DXE8.dproj
+ 01/10/2017  04:12 PM             3,150 XWB_DXE8.dproj.local
+ 07/27/2016  03:03 PM               116 XWB_DXE8.identcache
+ 11/17/2016  01:54 PM             1,572 XWB_DXE8.res
+ 01/10/2017  04:12 PM               164 XWB_DXE8.stat
+ 08/03/2015  11:55 AM               766 XWB_R2010_Icon7.ico
+ 07/27/2016  02:52 PM               159 XWB_RunTime - XE8.stat
+ 12/28/2016  12:48 PM             2,012 XWB_RunTime.dpk
+ 12/28/2016  12:52 PM            29,865 XWB_RunTime.dproj
+ 12/28/2016  12:52 PM            47,937 XWB_RunTime.dproj.local
+ 06/23/2016  09:10 AM               472 XWB_RunTime.dres
+ 01/10/2017  01:53 PM             1,568 XWB_RunTime.identcache
+ 01/04/2017  08:45 AM             1,508 XWB_RunTime.res
+ 01/10/2017  01:54 PM               178 XWB_RunTime.stat
+ 03/15/2016  08:16 AM             4,354 XWB_RunTime.VA508
+ 06/23/2016  09:10 AM                27 XWB_RunTimeResource.rc
+ 08/07/2015  10:48 AM                72 XWB_RunTime_project.tvsconfig
+ 10/19/2016  08:38 AM             2,054 XWB_RXE4.dpk
+ 10/19/2016  08:38 AM            27,114 XWB_RXE4.dproj
+ 10/19/2016  08:38 AM            48,267 XWB_RXE4.dproj.local
+ 10/19/2016  08:38 AM             1,508 XWB_RXE4.res
+ 10/19/2016  08:39 AM             2,054 XWB_RXE5.dpk
+ 10/19/2016  08:39 AM            27,114 XWB_RXE5.dproj
+ 10/19/2016  08:39 AM            48,421 XWB_RXE5.dproj.local
+ 10/19/2016  08:39 AM             1,508 XWB_RXE5.res
+ 01/10/2017  04:15 PM             2,009 XWB_RXE6.dpk
+ 01/10/2017  04:15 PM            27,069 XWB_RXE6.dproj
+ 01/10/2017  04:15 PM            48,019 XWB_RXE6.dproj.local
+ 11/17/2016  01:57 PM             1,508 XWB_RXE6.res
+ 01/10/2017  04:14 PM             2,009 XWB_RXE7.dpk
+ 01/10/2017  04:14 PM            27,716 XWB_RXE7.dproj
+ 01/10/2017  04:14 PM            47,865 XWB_RXE7.dproj.local
+ 11/17/2016  01:55 PM             1,508 XWB_RXE7.res
+ 01/10/2017  04:11 PM             2,009 XWB_RXE8.dpk
+ 01/10/2017  04:11 PM            29,420 XWB_RXE8.dproj
+ 01/10/2017  04:11 PM            47,865 XWB_RXE8.dproj.local
+ 12/19/2016  12:54 PM             1,508 XWB_RXE8.res
+ 01/10/2017  04:11 PM               178 XWB_RXE8.stat
+              120 File(s)      2,337,386 bytes
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 05, 2015
+Completed By:                               Date Completed: MAR 23, 2017
+Released By :                               Date Released : MAR 27, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

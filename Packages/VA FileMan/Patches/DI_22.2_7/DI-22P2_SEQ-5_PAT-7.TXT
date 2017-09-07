@@ -1,0 +1,322 @@
+$TXT Created by              at FMB.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Friday, 02/17/17 at 08:37
+=============================================================================
+Run Date: APR 12, 2017                     Designation: DI*22.2*7
+Package : DI - VA FILEMAN                     Priority: Mandatory
+Version : 22.2         SEQ #5                   Status: Released
+                  Compliance Date: MAY 13, 2017
+=============================================================================
+
+
+Subject: Bug fixes
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Description:
+ ===========
+ Patch DI*22.2*7 repairs the following defects:
+ 1.     NUMDATE function returns time and it shouldn't
+ 2.     Sort is limited to 7 levels, it use to be unlimited
+ 3.     An <NAKED> error can occur in DIALOG & DIALOGU
+ 4.     DOCLIST^DDBR clears screen and overwrites header
+ 5.     WP fields in ScreenMan begins at top of text
+ 6.     WP fields in scroll mode displays 'THERE ARE NO LINES!'
+ 7.     Check for duplicate SSN in file 200 doesn't display other user
+  
+   
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+                                                              New/Modified/
+ File Name (#)                  Field Name (#)                       Deleted
+ -------------                  --------------                  -------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                     File #               New/Modified/Deleted
+ ---------                     ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A                       
+  
+  
+ Options Associated:
+  
+ Option Name                    Type               New/Modified/Deleted
+ -----------                    ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type      File Name        (Number)  New/Modified/Deleted
+ -------------   ----      -------------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+ Function NUMDATE
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ 
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. Ticket I11421766FY17
+  
+ Problem:
+ --------
+ NUMDATE function is to return the date in MM/DD/YY format.  However, the
+ function does not honor the format and is also including the time.
+ 
+ Resolution:
+ ----------
+ Changed NUMDATE in the FUNCTION file, #.5
+  
+  
+ 2. Ticket I11767385FY17
+  
+ Problem:
+ --------
+ Sort criteria is limited to 7 levels in FM 22.2. It was unlimited in FM 22.0
+  
+ Resolution:
+ ----------
+ Modified DIP to remove the restriction
+ 
+ 
+ 3. Ticket I12218727YFY17
+   
+ Problem:
+ --------
+ An error occurs in DIALOG, <NAKED>, if the process has never made a global
+ reference and call the DIR reader.
+  
+ Resolution:
+ ----------
+ Modified DIALOG and DIALOGU to change $NA(^(0)) back to $$LGR^%ZOSV.
+  
+ 
+ 4. Ticket I12548823FY17
+  
+ Problem:
+ --------
+ The API, DOCLIST^DDBR, clears the screen before writing text, which overwrites
+ any headers or footers.
+  
+ Resolution:
+ ----------
+ Remove the clear screen from routine DDBR
+  
+  
+ 5. Ticket I12639229FY17
+  
+ Problem:
+ --------
+ A Word Processing field in ScreenMan now enters at the bottom.  In FM 22.0 it
+ would enter at the top of the text.
+  
+ Resolution:
+ ----------
+ Modify DDWT1 to remove line of code that switched
+ cursor to the bottom.
+ 
+ 6. Ticket I12670524FY17
+  
+ Problem:
+ --------
+ A Word Processing field in scroll mode displays 'THERE ARE NO LINES!', if field
+ is empty and user has PREFERRED EDITOR set to SCREEN EDITOR.  This extra line
+ doesn't allow user to see the EDIT prompt in some applications that use List
+ Manager.
+  
+ Resolution:
+ ----------
+ Modify DIWE12 to remove line of code that writes message
+ 
+ 7. Ticket I12777399FY17
+  
+ Problem:
+ --------
+ When Adding a new user, the check of the SSN no longer displays a user with a
+ duplicate SSN.
+  
+ Resolution:
+ ----------
+ Modify DIEQ to correct this issue
+ 
+ 
+ Blood Bank Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch DI*22.2*7 contains changes
+ to a package referenced in ProPath standard titled: BBM Team Review of VistA
+ Patches. This patch does not alter or modify any VistA Blood Bank software
+ design safeguards or safety critical elements functions.
+ 
+ RISK ANALYSIS: Changes made by patch DI*22.2*7 have no effect on Blood Bank
+ software functionality, therefore RISK is none.
+ 2/13/2017
+  
+ Test Sites:
+ -----------
+ Lebanon, PA
+ West Palm Beach, FL 
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ There are no changes to the current documentation for this patch.
+  
+ Current documentation is on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/ 
+  
+ Title                                File Name          SFTP Mode
+ -----------------------------------------------------------------
+ FM 22.2 Developer's Guide              fm22_2dg.PDF    Binary
+ FM 22.2 User Manual                    fm22_2um1.PDF   Binary
+ FM 22.2 Advanced User Manual           fm22_2um2.PDF   Binary
+ FM 22.2 Technical Manual               fm22_2tm.PDF    Binary
+  
+  
+ Backout and Rollback Procedure:
+ -------------------------------
+ This patch only consists of routines and a function. During the
+ VistA Installation Procedure of the KIDS build, the installer should
+ back up the modified routines by the use of the 'Backup a Transport
+ Global' action (step 3a in the Installations Instructions below).
+  
+ If rollback/backout is required, the installer can restore the routines
+ using the MailMan message that were saved prior to installing the
+ patch.  The changes to the function is backward compatible.
+  
+  
+ Patch Installation:
+  
+   
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch can be queued for installation.  TaskMan does not have to be 
+ stopped, HL7 filers do not need to be stopped, and users may be on the 
+ system.  The patch should be installed during non-peak hours to minimize
+ potential for disruption to users.  This patch should take less than 1 
+ minute to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the MailMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter DI*22.2*7.
+ a.     Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+ b.     Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as functions.
+ c.     Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+ d.     Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     When prompted for the INSTALL NAME, enter DI*22.2*7.
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' respond NO.
+  
+ 7.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+     NO//" respond NO.
+  
+ 8.  If prompted "Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//" respond NO. 
+  
+ 9.  If prompted "Delay Install (Minutes):  (0 - 60): 0//" respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ NA
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;22.2;VA FileMan;**[Patch List]**;Jan 05, 2016;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DDBR
+    Before: B28946498   After: B28263353  **3,7**
+Routine Name: DDWT1
+    Before: B55752080   After: B55477698  **4,7**
+Routine Name: DIALOG
+    Before: B27863944   After: B28460894  **7**
+Routine Name: DIALOGU
+    Before:  B4153073   After:  B4304241  **7**
+Routine Name: DIEQ
+    Before: B16717159   After: B17086436  **2,7**
+Routine Name: DIP
+    Before: B34427455   After: B34328853  **2,7**
+Routine Name: DIWE12
+    Before:  B8698127   After:  B8730891  **7**
+ 
+Routine list of preceding patches: 2, 3, 4
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 17, 2017
+Completed By:                               Date Completed: APR 06, 2017
+Released By :                               Date Released : APR 12, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

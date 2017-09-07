@@ -1,0 +1,129 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 02/14/17 at 15:28
+=============================================================================
+Run Date: APR 03, 2017                     Designation: PRCA*4.5*322
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: EMERGENCY
+Version : 4.5       SEQ #279                    Status: Released
+                  Compliance Date: APR 06, 2017
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*301<<= must be installed BEFORE `PRCA*4.5*322'
+
+Subject: RECEIPT PAYMENTS TO IMPLIED BILL NUMBER
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Description:
+ ===========
+  
+ This patch addresses the following issue:
+  
+ 1) Ensure the Implied bill# entered in Receipt Processing payment entry
+    posts to the intended implied bill first.    
+  
+  
+  
+ Associated Remedy Tickets:
+ =========================
+ 1) I12629321FY17 - Incorrect payment posting for implied bill number
+                    via Receipt Processing payment entry.
+  
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Little Rock, AR
+ Upstate New York Healthcare System (Buffalo 528) 
+  
+  
+ Remedy Overview:
+ ================ 
+ 1) I12629321FY17 - Incorrect payment posting for implied bill number
+                    via Receipt Processing payment entry.
+  
+ Problem:
+ --------
+ Site reports that when entering a new payment into the Receipt Processing
+ module with implied bill number to be paid, the processing does not post
+ to the implied number routinely.
+  
+  
+ Resolution:
+ -----------
+ Modification made to payment posting routine to ensure that implied bill
+ numbers entered for payment hit that bill first and remaining monies will 
+ slide to subsequent bills, if needed.
+  
+  
+  Routines: RCBEPAYF
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ You may install this patch at any time without interruption to users. It
+ should take less than two minutes to install this patch.
+  
+    
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRCA*4.5*322)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       PRCA*4.5*322.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//", hit ENTER.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCBEPAYF
+    Before: B49084627   After: B49142931  **153,301,322**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 14, 2017
+Completed By:                               Date Completed: MAR 31, 2017
+Released By :                               Date Released : APR 03, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

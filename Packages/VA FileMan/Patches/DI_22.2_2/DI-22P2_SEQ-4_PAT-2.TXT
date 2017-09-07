@@ -1,0 +1,609 @@
+$TXT Created by                FM1S2.AAC.DOMAIN.EXT  (KIDS) on Monday, 02/20/17 at 07:19
+=============================================================================
+Run Date: MAR 28, 2017                     Designation: DI*22.2*2
+Package : DI - VA FILEMAN                     Priority: Mandatory
+Version : 22.2         SEQ #4                   Status: Released
+                  Compliance Date: APR 28, 2017
+=============================================================================
+
+Associated patches: (v)DI*22.2*3   <<= must be installed BEFORE `DI*22.2*2'
+                    (v)DI*22.2*4   <<= must be installed BEFORE `DI*22.2*2'
+
+Subject: EXTENSIBLE DATA TYPES AND META DD EHNANCEMENTS
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+  - Input Template
+
+Description:
+============
+
+ The Veterans Information Systems and Technology Architecture (VistA)
+ Evolution program to modernize VistA includes modernizing Veterans Affairs
+ (VA's) enterprise data management capabilities.  Modernizing FileMan will
+ functionally standardize VistA's database.  This will enable structured 
+ data query and exchange across all VistA instances, creating an enterprise
+ view of VistA data in standardized, computable form.  This modernized
+ FileMan is called FileMan Enterprise for its enterprise data management
+ capabilities.
+  
+ This specific patch contains new datatypes for FileMan 22.2 as well as
+ enhancements to the FileMan Meta Data Dictionary.
+  
+ 1.  This build introduces the following new data types:
+  
+     a. BOOLEAN: A version of the SET data type with only two entry
+        choices - TRUE or FALSE.
+  
+     b. MUMPS LABEL: A version of the FREETEXT data type that allows
+        the storage of a tag and routine entry of the format, TAG^ROUTINE.
+  
+     c. TIME: Allows the input of date/time entries but will only store
+        the TIME portion of the user input.
+  
+     d. YEAR: Allows the input of date/time entries but will only store
+        the YEAR portion of the user input.
+  
+     e. FT DATE: Similar to the DATE/TIME DATA TYPE but internally stores
+        the free text that was inputted by the user to determine the date.
+  
+     f. FT POINTER: Similar to the POINTER data type but internally stores
+        the external value of the pointed to field.
+  
+     g. UNIVERSAL TIME: Allows the input of date/time entries and stores
+        the Greenwich Mean Time in normal date/time format but also 
+        includes the offset from the current timezone.
+  
+     h. RATIO: Accept two numbers with a colon (":") between the two 
+        numbers.  It is formatted and stored like a mathematical ratio.  
+        When defining a field with a DATA TYPE of RATIO the user will be
+        asked for the minimum and maximum of each number in the ratio.
+  
+ 2.  A new FileMan API (UTC^DIUTC) was created that allows the conversion
+     of an internal FileMan date/time into Greenwich Mean Time and offset.
+     The API needs to know the location, which is done by passing the 
+     Country and Timezone as input parameters, passing an Institution as 
+     a parameter (which has country and timezone fields defined), or
+     using the Institution derived by the default Institution setup for the
+     user.
+  
+ 3.  The FileMan Meta Data Dictionary provides each site's specification
+     of the FileMan files, the associated FileMan fields within each of 
+     those files, and descriptive metadata about the site data for each
+     individual VistA instance.  This patch adds functionality to do
+     partial updates (deltas) to the Meta Data Dictionary.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                                New/Modified/
+   Sub-file Name (#)        Field Name (#)                       Deleted
+ -------------------        -----------------------------     -------------
+ DATA TYPE (#.81)           NUMBER (#.001)                    New
+                            NAME (#.01)                       Modified
+                            INTERNAL REPRESENTATION (#1)      Modified
+                            STANDARD PROMPT (#2)              New
+                            SORT BY EXTERNAL (#3)             New
+                            SHORT DESCRIPTION (#11)           New
+                            DESCRIPTION (#21)                 New
+   FIELDS DEFINED BY THIS TYPE (#41)                          New
+                            FIELD DEFINED BY THIS TYPE (#.01) New
+   PROPERTY (#101)                                            New
+                            PROPERTY (#.01)                   New
+                            ORDER (#1)                        New
+                            PROMPT? (#10)                     New
+                            VALUE (#31)                       New
+                            DEFAULT VALUE PROMPTED (#33)      New
+   METHOD (#201)                                              New
+                            METHOD (#.01)                     New
+                            M CODE (#31)                      New
+                                                           
+ DATA TYPE PROPERTY (#.86)  NUMBER (#.001)                    New
+                            NAME (#.01)                       New
+                            ABBREVIATION (#1)                 New
+                            SHORT DESCRIPTION (#11)           New
+                            DESCRIPTION (#21)                 New
+                            DATA TYPE (#41)                   New
+                            DIR(0) (#42)                      New
+  
+ DATA TYPE METHODS (#.87)   NUMBER (#.001)                    New
+                            NAME (#.01)                       New
+                            SHORT DESCRIPTION (#11)           New
+                            DESCRIPTION (#21)                 New
+  
+ META DATA DICTIONARY (#.9) NAME         (#.01)               Modified
+                            OBJECT NAME  (#.06)               Modified
+                            LAST UPDATED (#.07)               New
+  
+ WORLD TIMEZONES (#1.71)    NAME (#.01)                       New
+   TIMEFRAME (#1)                                             New
+                            TIMEFRAME (#.01)                  New
+                            OFFSET (#.02)                     New
+                            CODE (#.03)                       New
+   COUNTRY (#1) (multiple under TIMEFRAME)                    New
+                            COUNTRY (#.01)                    New
+  
+ WORLD DAYLIGHT SAVINGS (#1.72)
+                            COUNTRY (#.01)                    New
+                            TIME SAME AS (#.03)               New
+   YEAR (#1)                                                  New
+                            YEAR (#.01)                       New
+                            START DATE/TIME (#.02)            New
+                            END DATE/TIME (#.03)              New
+   
+ INSTITUTION (#4)           LOCATION TIMEZONE (#800)          New
+                            COUNTRY (#801)                    New
+                            TIMEZONE EXCEPTION (#802)         New
+  
+  
+ Forms Associated:
+  
+ Form Name                     File #               New/Modified/Deleted
+ ---------                     ------               --------------------
+ DIP81S                         #.81                New
+ DIP86S                         #.86                New
+ DIP87S                         #.87                New
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A                       
+  
+  
+ Options Associated:
+  
+ Option Name                    Type               New/Modified/Deleted
+ -----------                    ----               -------------------- 
+ ENTER OR EDIT DATA TYPE FILE [DI DATA TYPE FILE]
+                                run routine        New
+ ENTER OR EDIT DATA TYPE METHOD FILE [DI DATA TYPE METHOD FILE]
+                                run routine        New
+ DATA TYPE OPTIONS [DI DATA TYPE OPTIONS]
+                                menu               New
+ ENTER OR EDIT DATA TYPE PROPERTY FILE [DI DATA TYPE PROPERTY FILE]
+                                run routine        New
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+                                                       
+ Template Name   Type      File Name        (Number)  New/Modified/Deleted
+ -------------   ----      -------------------------  --------------------
+ DIP81IT         INPUT     DATA TYPE          (#.81)  New
+ DIP86IT         INPUT     DATA TYPE PROPERTY (#.86)  New
+ DIP87IT         INPUT     DATA TYPE METHOD   (#.87)  New
+  
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. Ticket #I12659273FY17
+  
+ Problem:
+ --------
+ File attributes produce an error when retrieved by GET1^DID or FILE^DID.
+  
+ Resolution:
+ -----------
+ Made changes to DIQGDD to properly retrieve attributes of a file.
+  
+  
+ Known Anomalies
+ ---------------
+ 1. For ticket #I13081432FY17, DD Changes to display messages in the Input
+    Transform using EN^DDIOL. This incident has been left open to be
+    addressed in a future patch (DI*22.2*5).
+  
+  
+ Blood Bank Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch DI*22.2*2 contains
+ changes to a package referenced in ProPath standard titled: BBM Team
+ Review of VistA Patches. This patch does not alter or modify any VistA
+ Blood Bank software design safeguards or safety critical elements
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch DI*22.2*2 have no effect on Blood
+ Bank software functionality, therefore RISK  s none. 
+  
+  
+ Test Sites:
+ -----------
+ West Palm Beach (alpha)
+ Lebanon (alpha)
+ Charleston (beta)
+ Nashville (beta)
+ North Florida/South Georgia (beta)
+  
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Documentation describing the new functionality introduced by this patch
+ is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+ Sites may retrieve the software and/or documentation directly using 
+ Secure Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory 
+ at the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/ 
+  
+ Title                                File Name          SFTP Mode
+ -----------------------------------------------------------------
+ FileMan 22.2 Advanced User Manual   FM22_2UM2.PDF       Binary
+ FileMan 22.2 User Manual            FM22_2UM1.PDF       Binary
+ FileMan 22.2 Developer Guide        FM22_2DG.PDF        Binary
+ FileMan 22.2 Technical Manual       FM22_2TM.PDF        Binary
+  
+  
+ Backout and Rollback Procedure:
+ -------------------------------
+ The rollback plan for VistA applications is complex and not able to be
+ a 'one size fits all' solution. The general strategy for VistA rollback
+ is to repair the code with a follow-on patch. The development team
+ recommends that sites log a CA Service Desk Manager (SDM) ticket if a
+ patch needs to be backed-out.
+   
+ During the VistA Installation Procedure of the KIDS build, the installer
+ should back up the modified routines by the use of the 'Backup a
+ Transport Global' action (step 3a in the Installations Instructions
+ below). The installer can restore the routines using the MailMan message
+ that were saved prior to installing the patch. The backout procedure for
+ data dictionary, options, forms, template, and data loads is more
+ complex and may require the issuance of a follow-on patch to ensure all
+ components are properly removed. Note that all rollback of all software
+ components, including routines  must be restored to their previous state
+ at the same time and in conjunction with restoration of the data.
+   
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There is a post-install routine DINIT220 that will create the DATA TYPE
+ (#.81), DATA TYPE PROPERTY (#.86), and DATA TYPE METHODS (#.87) files.  
+ This post-install should not be deleted.
+                                                                   
+ There are two manual steps that should be run at the end of the
+ installation. Please see the Post-Installation Instructions for additional
+ information.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ There are no specific options and protocols to disable.
+  
+ This patch should not be queued for installation as there are 
+ post-installation steps that need to be taken.
+  
+ TaskMan does not have to be stopped, HL7 filers do not need to be stopped,
+ and users may be on the system.  The patch should be installed during
+ non-peak hours to minimize potential for disruption to users.
+  
+ Also, please make sure that no other patches are installed until
+ installation for this patch has completed.
+  
+ Installation will take approximately 5 minutes.
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter DI*22.2*2.
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as Data Dictionaries (DDs) or
+         templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     When prompted for the INSTALL NAME, enter DI*22.2*2.
+  
+ 5.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//" respond NO.
+  
+ 6.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+     NO//" respond NO.
+  
+ 7.  When prompted "Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//" respond NO. 
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0//" respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+  
+ 1) In order to update the META DATA DICTIONARY File, run the UPDATE THE 
+    META DATA DICTIONARY [DDU UPDATE META DD] option, which is located on
+    the DATA DICTIONARY UTILITIES [DI DDU] menu of VA FileMan [DIUSER].
+  
+    Here is an abbreviated example of what to expect when you run this 
+    option. There will be approximately 100 rows of dots, and it should
+    take less than one minute to complete.
+    
+    SINCE NO FILE IS IN APPLICATION GROUP 'DDD',
+    the entire FileMan database will be scanned, and
+    a Central Data Dictionary will now be compiled.
+    OK? No// YES...........................................................
+    .......................................................................
+    .......................................................................
+    <DONE>
+  
+   
+ 2) Update INSTITUTION file for the local sites:
+    
+    In order for the new UNIVERSAL TIME datatype to function properly, the 
+    institutions used by the current system will need to have the 
+    LOCATION TIMEZONE (#800) and COUNTRY (#801) fields and possibly the
+    TIMEZONE EXCEPTION (#802) field of the INSTITUTION (#4) file populated.
+    These fields will be populated by the Institution Master File update
+    process. The temporary local solution will be to update the 
+    INSTITUTION (#4) file, for the main local VAMC facility only, until the
+    Master File process is modified to update these fields from the Central
+    Server.
+  
+    You will need to know the timezone, country and if there is a daylight
+    saving time exception. For example Arizona is in the Mountain Timezone
+    but for most of the state it does not observe daylight saving time and
+    local time stays at UTC-7.
+   
+    Most sites will be able to skip editing the TIMEZONE EXCEPTION field
+    and will only need to edit fields LOCATION TIMEZONE (#800) and
+    COUNTRY (#801) fields.
+    
+    If the facility is in one of the TIMZONE EXCEPTION areas: Arizona
+    (outside the Navajo Nation), Hawaii, Puerto Rico, U.S. Virgin Islands,
+    American Samoa, Guam and Northern Mariana Islands, then you will also
+    edit TIMEZONE EXCEPTION (#802) field. For this field you will enter
+    a 0 (zero).
+   
+    1) Determine timezone, country and if the facility/institution is in an
+       area that has a timezone exception.
+   
+    2) From the programmer prompt get into FileMan and at the
+       "Select INSTITUTION NAME:" prompt you will put in your institution's
+       name or site number.
+   
+       D P^DI 
+   
+    Example 1: for just editing fields LOCATION TIMEZONE (#800) and
+    COUNTRY (#801) fields:
+    ---------------------i--------------------------------------
+    VA FileMan 22.2
+     
+     
+    Select OPTION: Enter OR EDIT FILE ENTRIES
+     
+    Input to what File: 4  INSTITUTION  (xxxx entries)
+    EDIT WHICH FIELD: ALL// 800  LOCATION TIMEZONE
+    THEN EDIT FIELD: 801  COUNTRY
+    THEN EDIT FIELD:
+     
+    Select INSTITUTION NAME: LEBANON VAMC    PA  VAMC  595
+    LOCATION TIMEZONE: EAST
+         1   EASTERN
+         2   EASTERN EUROPEAN
+    CHOOSE 1-2: 1  EASTERN
+    COUNTRY: USA       United States
+     
+     
+    Select INSTITUTION NAME:
+    
+    Example 2: Editing fields LOCATION TIMEZONE (#800), COUNTRY (#801)
+    and TIMEZONE EXCEPTION (#802) fields for a facility in an exception
+    area:
+    -------------------------------------------------------------------
+    Select OPTION: ENTER OR EDIT FILE ENTRIES
+     
+     
+     
+    Input to what File: INSTITUTION// 4  INSTITUTION  (xxxx entries)
+    EDIT WHICH FIELD: ALL// 800  LOCATION TIMEZONE
+    THEN EDIT FIELD: 801  COUNTRY
+    THEN EDIT FIELD: 802  TIMEZONE EXCEPTION
+    THEN EDIT FIELD:
+     
+     
+    Select INSTITUTION NAME: PHOENIX VAMC    AZ  VAMC  644
+    LOCATION TIMEZONE: MOUNTAIN
+    COUNTRY: USA       United States
+    TIMEZONE EXCEPTION: 0  SST Only
+     
+     
+    Select INSTITUTION NAME:
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;22.2;VA FileMan;**[Patch List]**;Jan 05, 2016;Build 139
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DDD
+    Before: B10838418   After: B37277699  **2**
+Routine Name: DDGFU
+    Before: B30665174   After: B19558122  **2**
+Routine Name: DDS02
+    Before: B17073915   After: B17251992  **2**
+Routine Name: DDS11
+    Before: B29500378   After: B30783133  **2**
+Routine Name: DI
+    Before:  B1429151   After:  B1411380  **2**
+Routine Name: DIALOGZ
+    Before: B31531395   After: B33930495  **2**
+Routine Name: DICATT
+    Before: B17660563   After: B17681814  **2**
+Routine Name: DICATT1
+    Before: B11875453   After: B15744567  **2**
+Routine Name: DICATT2
+    Before: B23559444   After: B24899508  **2**
+Routine Name: DICATT22
+    Before: B11464555   After: B15001986  **2**
+Routine Name: DICATT4
+    Before: B28137187   After: B28807089  **2**
+Routine Name: DICATTD
+    Before: B27978166   After: B31284098  **2**
+Routine Name: DICATTD0
+    Before:  B2307008   After:  B3051910  **2**
+Routine Name: DICATTDE
+    Before: B32549326   After: B35121776  **3,2**
+Routine Name: DICATTDM
+    Before: B12766660   After: B14727373  **2**
+Routine Name: DICATTUD
+    Before:       n/a   After: B30897711  **2**
+Routine Name: DICF2
+    Before: B31296383   After: B32547668  **2**
+Routine Name: DICM1
+    Before: B18002840   After: B19854007  **2**
+Routine Name: DICN
+    Before: B19431875   After: B20243838  **2**
+Routine Name: DICOMP0
+    Before: B23226068   After: B23489999  **2**
+Routine Name: DICQ1
+    Before: B37466935   After: B38289362  **2**
+Routine Name: DICUIX
+    Before: B22242347   After: B27430806  **2**
+Routine Name: DID1
+    Before: B28866184   After: B31885031  **2**
+Routine Name: DIDU
+    Before: B40609213   After: B42137549  **2**
+Routine Name: DIDX
+    Before: B16519592   After: B17887310  **2**
+Routine Name: DIED
+    Before: B41585163   After: B46622564  **2**
+Routine Name: DIEQ
+    Before: B14901755   After: B16717159  **2**
+Routine Name: DIETLIB
+    Before:       n/a   After: B10469878  **2**
+Routine Name: DIETLIBF
+    Before:       n/a   After: B29058396  **2**
+Routine Name: DIEZ0
+    Before: B20800523   After: B21633440  **2**
+Routine Name: DIFMEDT1
+    Before:       n/a   After:  B1665680  **2**
+Routine Name: DILL
+    Before: B11498371   After: B12021545  **2**
+Routine Name: DINIT0
+    Before: B11557024   After: B12079842  **2**
+Routine Name: DINIT0F4
+    Before: B55946103   After: B57627834  **2**
+Routine Name: DINIT11
+    Before: B18791706   After: B20730978  **2**
+Routine Name: DINIT11C
+    Before: B22387975   After: B22917372  **2**
+Routine Name: DINIT20
+    Before: B36574363   After: B30255167  **2**
+Routine Name: DINIT22
+    Before:  B5025069   After: B85231093  **2**
+Routine Name: DINIT220
+    Before:  B2043695   After: B42217569  **2**
+Routine Name: DINIT221
+    Before:       n/a   After: B30934674  **2**
+Routine Name: DINIT295
+    Before: B61001773   After: B60779583  **2**
+Routine Name: DINIT3
+    Before: B17341309   After: B18851473  **2**
+Routine Name: DIO0
+    Before: B21842242   After: B24212232  **2**
+Routine Name: DIOU
+    Before: B13380985   After: B16733665  **2**
+Routine Name: DIP
+    Before: B34639315   After: B34427455  **2**
+Routine Name: DIP12
+    Before: B17779972   After: B20018859  **2**
+Routine Name: DIQ
+    Before: B71954744   After: B72627374  **2**
+Routine Name: DIQG
+    Before: B41416251   After: B42177802  **2**
+Routine Name: DIQGDD
+    Before: B18255834   After: B36441864  **2**
+Routine Name: DIQGDDU
+    Before:  B5433403   After:  B6195883  **2**
+Routine Name: DIR
+    Before: B39110200   After: B43983355  **4,2**
+Routine Name: DIR1
+    Before: B33938437   After: B35848051  **2**
+Routine Name: DIR2
+    Before: B21976864   After: B25328921  **2**
+Routine Name: DIS
+    Before: B24614952   After: B25712783  **2**
+Routine Name: DITIME
+    Before:       n/a   After:  B1307675  **2**
+Routine Name: DIU31
+    Before: B14822365   After: B17160493  **2**
+Routine Name: DIUTC
+    Before:       n/a   After: B31448968  **2**
+Routine Name: DIVR
+    Before: B50776190   After: B53639781  **2**
+ 
+Routine list of preceding patches: 3, 4
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 24, 2016
+Completed By:                               Date Completed: MAR 28, 2017
+Released By :                               Date Released : MAR 28, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

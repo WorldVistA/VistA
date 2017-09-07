@@ -1,0 +1,2132 @@
+KIDS Distribution saved on Apr 14, 2016@15:04:28
+DG*5.3*855
+**KIDS**:DG*5.3*855^IVM*2.0*153^
+
+**INSTALL NAME**
+DG*5.3*855
+"BLD",10130,0)
+DG*5.3*855^REGISTRATION^0^3160414^y
+"BLD",10130,1,0)
+^^35^35^3160318^
+"BLD",10130,1,1,0)
+Patch DG*5.3*797 added the new MILITARY SERVICE EPISODE sub-file #2.3216 
+"BLD",10130,1,2,0)
+in the PATIENT (#2) file to store Military Service Episode (MSE) data.
+"BLD",10130,1,3,0)
+Changes in that patch included modifications to several consistency 
+"BLD",10130,1,4,0)
+checks that used MSE data.  The consistency checks that are listed in the 
+"BLD",10130,1,5,0)
+DG*5.3*797 patch description are correctly using the new MILITARY SERVICE 
+"BLD",10130,1,6,0)
+EPISODE sub-file #2.3216 and the new Screen 6.1 to edit the data.
+"BLD",10130,1,7,0)
+ 
+"BLD",10130,1,8,0)
+However, there is a set of consistency checks in the INCONSISTENT DATA 
+"BLD",10130,1,9,0)
+ELEMENTS (#38.6) file that are considered related to Eligibility.   If 
+"BLD",10130,1,10,0)
+any of those inconsistencies is edited, the user is prompted with a set 
+"BLD",10130,1,11,0)
+of eligibility-related fields that includes the Last Service Episode 
+"BLD",10130,1,12,0)
+fields.  Since these inconsistencies were not modified for DG*5.3*797, 
+"BLD",10130,1,13,0)
+the user is being prompted with the old MSE fields for SERVICE EPISODE 
+"BLD",10130,1,14,0)
+[LAST].  These are the inconsistencies that are considered related to 
+"BLD",10130,1,15,0)
+Eligibility:
+"BLD",10130,1,16,0)
+ 
+"BLD",10130,1,17,0)
+   9            VETERAN STATUS UNSPECIFIED
+"BLD",10130,1,18,0)
+   10           SC PROMPT UNANSWERED
+"BLD",10130,1,19,0)
+   11           SC PROMPT INCONSISTENT
+"BLD",10130,1,20,0)
+   12           SC% UNSPECIFIED FOR SC VET
+"BLD",10130,1,21,0)
+   13           POS UNSPECIFIED
+"BLD",10130,1,22,0)
+   14           ELIG CODE UNSPECIFIED
+"BLD",10130,1,23,0)
+   18           ELIG/VET STATUS INCONSISTENT
+"BLD",10130,1,24,0)
+   19           ELIG/NONVET STAT INCONSISTENT
+"BLD",10130,1,25,0)
+   20           ELIG/SC% INCONSISTENT
+"BLD",10130,1,26,0)
+   22           ELIG CODE INCONSISTENT
+"BLD",10130,1,27,0)
+   24           POS/ELIG CODE INCONSISTENT
+"BLD",10130,1,28,0)
+   36           PATIENT TYPE UNDEFINED
+"BLD",10130,1,29,0)
+   
+"BLD",10130,1,30,0)
+ 
+"BLD",10130,1,31,0)
+This patch fixes this problem which was reported in Remedy ticket 
+"BLD",10130,1,32,0)
+HD0000000623739 (DG*5.3*797 - MSDS MSE inappropriate prompts).  When 
+"BLD",10130,1,33,0)
+editing any of those eligibility-related inconsistencies, the user will 
+"BLD",10130,1,34,0)
+not be prompted with the old MSE fields and will now edit the MSE data in 
+"BLD",10130,1,35,0)
+sub-file #2.3216 on the new Screen 6.1.
+"BLD",10130,4,0)
+^9.64PA^^
+"BLD",10130,6.3)
+3
+"BLD",10130,"ABPKG")
+n
+"BLD",10130,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10130,"KRN",.4,0)
+.4
+"BLD",10130,"KRN",.401,0)
+.401
+"BLD",10130,"KRN",.402,0)
+.402
+"BLD",10130,"KRN",.403,0)
+.403
+"BLD",10130,"KRN",.5,0)
+.5
+"BLD",10130,"KRN",.84,0)
+.84
+"BLD",10130,"KRN",3.6,0)
+3.6
+"BLD",10130,"KRN",3.8,0)
+3.8
+"BLD",10130,"KRN",9.2,0)
+9.2
+"BLD",10130,"KRN",9.8,0)
+9.8
+"BLD",10130,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",10130,"KRN",9.8,"NM",1,0)
+DGRPCE^^0^B37825187
+"BLD",10130,"KRN",9.8,"NM",2,0)
+DGRPCE1^^0^B65500857
+"BLD",10130,"KRN",9.8,"NM","B","DGRPCE",1)
+
+"BLD",10130,"KRN",9.8,"NM","B","DGRPCE1",2)
+
+"BLD",10130,"KRN",19,0)
+19
+"BLD",10130,"KRN",19.1,0)
+19.1
+"BLD",10130,"KRN",101,0)
+101
+"BLD",10130,"KRN",409.61,0)
+409.61
+"BLD",10130,"KRN",771,0)
+771
+"BLD",10130,"KRN",779.2,0)
+779.2
+"BLD",10130,"KRN",870,0)
+870
+"BLD",10130,"KRN",8989.51,0)
+8989.51
+"BLD",10130,"KRN",8989.52,0)
+8989.52
+"BLD",10130,"KRN",8994,0)
+8994
+"BLD",10130,"KRN","B",.4,.4)
+
+"BLD",10130,"KRN","B",.401,.401)
+
+"BLD",10130,"KRN","B",.402,.402)
+
+"BLD",10130,"KRN","B",.403,.403)
+
+"BLD",10130,"KRN","B",.5,.5)
+
+"BLD",10130,"KRN","B",.84,.84)
+
+"BLD",10130,"KRN","B",3.6,3.6)
+
+"BLD",10130,"KRN","B",3.8,3.8)
+
+"BLD",10130,"KRN","B",9.2,9.2)
+
+"BLD",10130,"KRN","B",9.8,9.8)
+
+"BLD",10130,"KRN","B",19,19)
+
+"BLD",10130,"KRN","B",19.1,19.1)
+
+"BLD",10130,"KRN","B",101,101)
+
+"BLD",10130,"KRN","B",409.61,409.61)
+
+"BLD",10130,"KRN","B",771,771)
+
+"BLD",10130,"KRN","B",779.2,779.2)
+
+"BLD",10130,"KRN","B",870,870)
+
+"BLD",10130,"KRN","B",8989.51,8989.51)
+
+"BLD",10130,"KRN","B",8989.52,8989.52)
+
+"BLD",10130,"KRN","B",8994,8994)
+
+"BLD",10130,"QUES",0)
+^9.62^^
+"BLD",10130,"REQB",0)
+^9.611^1^1
+"BLD",10130,"REQB",1,0)
+DG*5.3*797^2
+"BLD",10130,"REQB","B","DG*5.3*797",1)
+
+"MBREQ")
+0
+"PKG",5,-1)
+1^1
+"PKG",5,0)
+REGISTRATION^DG^PATIENT REGISTRATION, ADMISSION, DISCHARGE, EMBOSSER 
+"PKG",5,20,0)
+^9.402P^^
+"PKG",5,22,0)
+^9.49I^1^1
+"PKG",5,22,1,0)
+5.3^2930813
+"PKG",5,22,1,"PAH",1,0)
+855^3160414
+"PKG",5,22,1,"PAH",1,1,0)
+^^35^35^3160414
+"PKG",5,22,1,"PAH",1,1,1,0)
+Patch DG*5.3*797 added the new MILITARY SERVICE EPISODE sub-file #2.3216 
+"PKG",5,22,1,"PAH",1,1,2,0)
+in the PATIENT (#2) file to store Military Service Episode (MSE) data.
+"PKG",5,22,1,"PAH",1,1,3,0)
+Changes in that patch included modifications to several consistency 
+"PKG",5,22,1,"PAH",1,1,4,0)
+checks that used MSE data.  The consistency checks that are listed in the 
+"PKG",5,22,1,"PAH",1,1,5,0)
+DG*5.3*797 patch description are correctly using the new MILITARY SERVICE 
+"PKG",5,22,1,"PAH",1,1,6,0)
+EPISODE sub-file #2.3216 and the new Screen 6.1 to edit the data.
+"PKG",5,22,1,"PAH",1,1,7,0)
+ 
+"PKG",5,22,1,"PAH",1,1,8,0)
+However, there is a set of consistency checks in the INCONSISTENT DATA 
+"PKG",5,22,1,"PAH",1,1,9,0)
+ELEMENTS (#38.6) file that are considered related to Eligibility.   If 
+"PKG",5,22,1,"PAH",1,1,10,0)
+any of those inconsistencies is edited, the user is prompted with a set 
+"PKG",5,22,1,"PAH",1,1,11,0)
+of eligibility-related fields that includes the Last Service Episode 
+"PKG",5,22,1,"PAH",1,1,12,0)
+fields.  Since these inconsistencies were not modified for DG*5.3*797, 
+"PKG",5,22,1,"PAH",1,1,13,0)
+the user is being prompted with the old MSE fields for SERVICE EPISODE 
+"PKG",5,22,1,"PAH",1,1,14,0)
+[LAST].  These are the inconsistencies that are considered related to 
+"PKG",5,22,1,"PAH",1,1,15,0)
+Eligibility:
+"PKG",5,22,1,"PAH",1,1,16,0)
+ 
+"PKG",5,22,1,"PAH",1,1,17,0)
+   9            VETERAN STATUS UNSPECIFIED
+"PKG",5,22,1,"PAH",1,1,18,0)
+   10           SC PROMPT UNANSWERED
+"PKG",5,22,1,"PAH",1,1,19,0)
+   11           SC PROMPT INCONSISTENT
+"PKG",5,22,1,"PAH",1,1,20,0)
+   12           SC% UNSPECIFIED FOR SC VET
+"PKG",5,22,1,"PAH",1,1,21,0)
+   13           POS UNSPECIFIED
+"PKG",5,22,1,"PAH",1,1,22,0)
+   14           ELIG CODE UNSPECIFIED
+"PKG",5,22,1,"PAH",1,1,23,0)
+   18           ELIG/VET STATUS INCONSISTENT
+"PKG",5,22,1,"PAH",1,1,24,0)
+   19           ELIG/NONVET STAT INCONSISTENT
+"PKG",5,22,1,"PAH",1,1,25,0)
+   20           ELIG/SC% INCONSISTENT
+"PKG",5,22,1,"PAH",1,1,26,0)
+   22           ELIG CODE INCONSISTENT
+"PKG",5,22,1,"PAH",1,1,27,0)
+   24           POS/ELIG CODE INCONSISTENT
+"PKG",5,22,1,"PAH",1,1,28,0)
+   36           PATIENT TYPE UNDEFINED
+"PKG",5,22,1,"PAH",1,1,29,0)
+   
+"PKG",5,22,1,"PAH",1,1,30,0)
+ 
+"PKG",5,22,1,"PAH",1,1,31,0)
+This patch fixes this problem which was reported in Remedy ticket 
+"PKG",5,22,1,"PAH",1,1,32,0)
+HD0000000623739 (DG*5.3*797 - MSDS MSE inappropriate prompts).  When 
+"PKG",5,22,1,"PAH",1,1,33,0)
+editing any of those eligibility-related inconsistencies, the user will 
+"PKG",5,22,1,"PAH",1,1,34,0)
+not be prompted with the old MSE fields and will now edit the MSE data in 
+"PKG",5,22,1,"PAH",1,1,35,0)
+sub-file #2.3216 on the new Screen 6.1.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","DGRPCE")
+0^1^B37825187
+"RTN","DGRPCE",1,0)
+DGRPCE ;ALB/MRL,KV,PJR,BRM,ERC,TDM,LBD - CONSISTENCY CHECKER, EDIT INCONSISTENCIES ; 10/20/10 3:52pm
+"RTN","DGRPCE",2,0)
+ ;;5.3;Registration;**121,122,175,297,342,451,626,689,653,754,797,855**;Aug 13, 1993;Build 3
+"RTN","DGRPCE",3,0)
+ ;Per VHA Directive 6402, this routine should not be modified.
+"RTN","DGRPCE",4,0)
+ ;
+"RTN","DGRPCE",5,0)
+ ;KV;11/15/00;DG*5.3*297;Disable addition of CD Elig Code in Reg. Screens
+"RTN","DGRPCE",6,0)
+ ;                      ;Adding CD Elig Codes in Load/Edit Screen used to
+"RTN","DGRPCE",7,0)
+ ;                      ;cause undefined line tag error.
+"RTN","DGRPCE",8,0)
+ ;
+"RTN","DGRPCE",9,0)
+ S DGVTYN=$P($G(^DPT(DFN,"VET")),"^",1),DGDR="DR",(DR,DGD,DGDRC,DGCCF)="",DGASK=",",DGER=","_DGER D ^DGRPCE1
+"RTN","DGRPCE",10,0)
+ S DGEK=0 F I=9,10,11,12,13,14,18,19,20,22,24,36,51 Q:DGEK  I DGER[(","_I_",") S DGEK=1 Q
+"RTN","DGRPCE",11,0)
+ I 'DGKEY(1) D:DGEK ELDR S I=15 D SASK S I=23 D SASK
+"RTN","DGRPCE",12,0)
+ F I=29,30,31,32,33,43,44,45,48,56 D SASK,MON:DGCCF S DGCCF=0
+"RTN","DGRPCE",13,0)
+ G NKEY:DGKEY(3) F I=25,26,27,28,34,35 D SASK
+"RTN","DGRPCE",14,0)
+ I DGASK'[26 F I=41,42 I DGASK'[41 D SASK
+"RTN","DGRPCE",15,0)
+ I DGASK'[27 S I=60 I DGASK'[25 D SASK
+"RTN","DGRPCE",16,0)
+ I DGASK'[34 F I=37,38 I DGASK'[37 D SASK
+"RTN","DGRPCE",17,0)
+ I DGASK'[35 F I=39,40 I DGASK'[39 D SASK
+"RTN","DGRPCE",18,0)
+NKEY D ^DGRPCE1
+"RTN","DGRPCE",19,0)
+ I $S(DGER[49:1,(DGER[",50,"):1,(DGER[52):1,1:0) D
+"RTN","DGRPCE",20,0)
+ .I $G(DGPRFLG) D PREG^IBCNBME(DFN) Q
+"RTN","DGRPCE",21,0)
+ .D REG^IBCNBME(DFN)
+"RTN","DGRPCE",22,0)
+ .Q
+"RTN","DGRPCE",23,0)
+ D Q S DIE="^DPT(",(DA,Y)=DFN D ^DIE:$D(DR)
+"RTN","DGRPCE",24,0)
+ I DGER[54 D GETREL^DGMTU11(DFN,"SD",$$LYR^DGMTSCU1(DT)) D
+"RTN","DGRPCE",25,0)
+ . I $D(DGREL("S")),($$SSN^DGMTU1(+DGREL("S"))']"") D ASKSSN(DGREL("S"))
+"RTN","DGRPCE",26,0)
+ . F DGDEP=0:0 S DGDEP=$O(DGREL("D",DGDEP)) Q:'DGDEP  I $$SSN^DGMTU1(+DGREL("D",DGDEP))']"" D ASKSSN(DGREL("D",DGDEP))
+"RTN","DGRPCE",27,0)
+ ;
+"RTN","DGRPCE",28,0)
+ I DGER[59 D CATDIB
+"RTN","DGRPCE",29,0)
+ I DGER["82" D EN2^DGRP6CL
+"RTN","DGRPCE",30,0)
+ ;
+"RTN","DGRPCE",31,0)
+ ;Use Screen 6.1 to edit inconsistencies with MSE data (DG*5.3*797)
+"RTN","DGRPCE",32,0)
+ ;DG*5.3*855 
+"RTN","DGRPCE",33,0)
+ I $$MSERR^DGRPCE1,$G(DGVTYN)="Y" D EN^DGRP61(DFN)
+"RTN","DGRPCE",34,0)
+ ;
+"RTN","DGRPCE",35,0)
+ I (DGER[301)!(DGER[303)!(DGER[304)!(DGER[307) D
+"RTN","DGRPCE",36,0)
+ . N DEPFLD
+"RTN","DGRPCE",37,0)
+ . S DEPFLD=""
+"RTN","DGRPCE",38,0)
+ . I DGER[301 S DEPFLD=".01;"
+"RTN","DGRPCE",39,0)
+ . I (DGER[303)!(DGER[304) S DEPFLD=DEPFLD_".02;"
+"RTN","DGRPCE",40,0)
+ . I DGER[307 S DEPFLD=DEPFLD_".1;"
+"RTN","DGRPCE",41,0)
+ . D GETREL^DGMTU11(DFN,"SD",$$LYR^DGMTSCU1(DT))
+"RTN","DGRPCE",42,0)
+ . I $D(DGREL("S")) D DEPEDT(DGREL("S"),DEPFLD)
+"RTN","DGRPCE",43,0)
+ . F DGDEP=0:0 S DGDEP=$O(DGREL("D",DGDEP)) Q:'DGDEP  D DEPEDT(DGREL("D",DGDEP),DEPFLD)
+"RTN","DGRPCE",44,0)
+ ;
+"RTN","DGRPCE",45,0)
+ K DGREL,DGDEP
+"RTN","DGRPCE",46,0)
+KVAR K DR,DGEDCN,DGCT,DGER,DGINC55,DGRPADI,DGRPOUT,DGVTYN
+"RTN","DGRPCE",47,0)
+Q K %,C,DA,DGASK,DGCCF,DGCT1,DGCT2,DGCT3,DGD,DGD1,DGD2,DGDR,DGDRC,DGECODE,DGEDIT,DGEK,DGKEY,DGP,DGRPADI,DGRPE,DIC,DIE,DIK,I,I1,J,X,X1,X2
+"RTN","DGRPCE",48,0)
+ K DGCOMLOC,DGCOMBR,FRDT,DGFRDT,DGCTZ7
+"RTN","DGRPCE",49,0)
+ D KVAR^VADPT
+"RTN","DGRPCE",50,0)
+ Q
+"RTN","DGRPCE",51,0)
+SASK I DGER[(","_I_","),DGASK'[(","_I_",") S DGD=$P($T(@I),";;",2,999),DGASK=DGASK_I_",",DGCCF=1 D SAVE
+"RTN","DGRPCE",52,0)
+ Q
+"RTN","DGRPCE",53,0)
+SAVE I $L(@DGDR)+$L(DGD)<241 S @DGDR=@DGDR_DGD,DGD="" Q
+"RTN","DGRPCE",54,0)
+ S DGDRC=DGDRC+1,DGDR="DR(1,2,"_DGDRC_")",@DGDR=DGD,DGD="" Q
+"RTN","DGRPCE",55,0)
+ELDR S DGASK=DGASK_"9,10,11,12,13,14,18,19,20,24,29,30,31,34,36,37,38,"
+"RTN","DGRPCE",56,0)
+ I 'DGKEY(1) S DGD="391;1901;S DGVTYN=$S($D(^DPT(DFN,""VET"")):$P(^(""VET""),""^"",1),1:"""");S:X'=""Y"" Y=""@1"";.301;S:X'=""Y"" Y=""@1"";.302;@1;" D SAVE
+"RTN","DGRPCE",57,0)
+ I 'DGKEY(2) F I=29,30,31 S DGD=$P($T(@I),";;",2,999) D SAVE
+"RTN","DGRPCE",58,0)
+ ;DG*5.3*855
+"RTN","DGRPCE",59,0)
+ D:DGD]"" SAVE I 'DGKEY(3) S DGD=$P($T(34),";;",2,999) D SAVE
+"RTN","DGRPCE",60,0)
+ I 'DGKEY(1) D ELIG^DGRPCE1
+"RTN","DGRPCE",61,0)
+ Q
+"RTN","DGRPCE",62,0)
+MON I $S(I<40:1,I=56:1,1:0) D SAVE Q
+"RTN","DGRPCE",63,0)
+ I $S(I<46:1,1:0),DGASK'[(","_(I-14)_",") D SAVE Q
+"RTN","DGRPCE",64,0)
+ I DGASK'[(","_(I-15)_",") D SAVE
+"RTN","DGRPCE",65,0)
+ Q
+"RTN","DGRPCE",66,0)
+ ;
+"RTN","DGRPCE",67,0)
+15 ;;.152;S:X']"" Y="@15";S DIE("NO^")="";.307;I X']"" W !!,*7,"But I need a reason why this applicant is ineligible!" S Y=.152;@15;K DIE("NO^");
+"RTN","DGRPCE",68,0)
+23 ;;.3611;S:X'="V" Y="@23";.3612;S DIE("NO^")="";I X']"" W !!,*7,"But I need to know the date eligibility was verifed!";@23;K DIE("NO^");
+"RTN","DGRPCE",69,0)
+25 ;;.323;.32102;S:X'="Y" Y="@25";.32107;.3211;.32109;.3213;@25;
+"RTN","DGRPCE",70,0)
+26 ;;
+"RTN","DGRPCE",71,0)
+27 ;;
+"RTN","DGRPCE",72,0)
+28 ;;
+"RTN","DGRPCE",73,0)
+29 ;;.36205;S:X'="Y" Y="@29";I DGVTYN'="Y" W !,"Patient not a veteran-can't claim A&A" S Y=.36205;.36295;@29;
+"RTN","DGRPCE",74,0)
+30 ;;.36215;S:X'="Y" Y="@30";I DGVTYN'="Y" W !,"Patient not a veteran-can't claim HOUSEBOUND" S Y=.36215;.36295;@30;
+"RTN","DGRPCE",75,0)
+31 ;;.36235;S:X'="Y" Y="@31";I DGVTYN'="Y" W !,"Patient not a veteran-can't claim VA PENSION" S Y=.36235;.36295;@31;
+"RTN","DGRPCE",76,0)
+32 ;;.36255;S:X'="Y" Y="@32";I DGVTYN'="Y" W !,"Patient not a veteran-can't claim MIL. RET." S Y=.36255;.3625;@32;
+"RTN","DGRPCE",77,0)
+33 ;;
+"RTN","DGRPCE",78,0)
+34 ;;.525;S:X'="Y" Y="@34";I DGVTYN'="Y" W !,"Patient not a veteran-can't claim POW STATUS" S Y=.525;.526:.528;@34;
+"RTN","DGRPCE",79,0)
+35 ;;
+"RTN","DGRPCE",80,0)
+37 ;;.525;S:X'="Y" Y="@37";.526:.528;@37;
+"RTN","DGRPCE",81,0)
+38 ;;.525;S:X'="Y" Y="@38";.526:.528;@38;
+"RTN","DGRPCE",82,0)
+39 ;;.5291;S:X'="Y" Y="@39";.5292:.5294;@39;
+"RTN","DGRPCE",83,0)
+40 ;;.5291;S:X'="Y" Y="@40";.5292:.5294;@40;
+"RTN","DGRPCE",84,0)
+41 ;;.32101;S:X'="Y" Y="@41";.32104;.32105;@41;
+"RTN","DGRPCE",85,0)
+42 ;;.32101;S:X'="Y" Y="@42";.32104;.32105;@42;
+"RTN","DGRPCE",86,0)
+43 ;;
+"RTN","DGRPCE",87,0)
+44 ;;
+"RTN","DGRPCE",88,0)
+45 ;;
+"RTN","DGRPCE",89,0)
+46 ;;
+"RTN","DGRPCE",90,0)
+47 ;;
+"RTN","DGRPCE",91,0)
+48 ;;.36265;S:X'="Y" Y="@48";.3626;@48;
+"RTN","DGRPCE",92,0)
+ ;DG*5.3*855
+"RTN","DGRPCE",93,0)
+51 ;;S Y="@51";I DGVTYN'="Y" S Y="@51";.324:.328;@51;
+"RTN","DGRPCE",94,0)
+56 ;;.3025;S:X'="Y" Y="@56";.36295;@56;
+"RTN","DGRPCE",95,0)
+60 ;;.32102;S:X'="Y" Y="@60";.32107;.3211;.32109;.3213;@60;
+"RTN","DGRPCE",96,0)
+ ;
+"RTN","DGRPCE",97,0)
+ ; NOTE: #46 & 47 REMOVED WITH PIMS5.3
+"RTN","DGRPCE",98,0)
+ ;
+"RTN","DGRPCE",99,0)
+ASKSSN(DEP) ;edit ssns if missing
+"RTN","DGRPCE",100,0)
+ ;
+"RTN","DGRPCE",101,0)
+ ; input:  DEP as string for dependent (from GETREL)
+"RTN","DGRPCE",102,0)
+ ;
+"RTN","DGRPCE",103,0)
+ W !,$$NAME^DGMTU1(+DEP)
+"RTN","DGRPCE",104,0)
+ S DA=+$P(DEP,"^",2),DIE="^DGPR(408.13,",DR=.09 D ^DIE
+"RTN","DGRPCE",105,0)
+PS ;
+"RTN","DGRPCE",106,0)
+ S DA=+$P(DEP,"^",2),DIE="^DGPR(408.13,",DR=.09 D ^DIE
+"RTN","DGRPCE",107,0)
+ I $$GET1^DIQ(408.13,DA_",",.09)["P" D
+"RTN","DGRPCE",108,0)
+ . S DR=.1,DA=$P(DA,";") D ^DIE
+"RTN","DGRPCE",109,0)
+ . I X']"" W !,"If SSN is a Pseudo SSN, the Pseudo SSN Reason field is required." G PS
+"RTN","DGRPCE",110,0)
+ K DA,DR,DIE
+"RTN","DGRPCE",111,0)
+ Q
+"RTN","DGRPCE",112,0)
+ ;
+"RTN","DGRPCE",113,0)
+CATDIB ;
+"RTN","DGRPCE",114,0)
+ ;Could be inconsistent because there is the catastrophic disability
+"RTN","DGRPCE",115,0)
+ ;code without supporting information, or visa versa
+"RTN","DGRPCE",116,0)
+ ;
+"RTN","DGRPCE",117,0)
+ N DGCDIS,CODE,INFO
+"RTN","DGRPCE",118,0)
+ S (INFO,CODE)=0
+"RTN","DGRPCE",119,0)
+ I $$GET^DGENCDA(DFN,.DGCDIS),DGCDIS("DATE") S INFO=1
+"RTN","DGRPCE",120,0)
+ S CODE=$$HASCAT^DGENCDA(DFN)
+"RTN","DGRPCE",121,0)
+ I CODE D  Q
+"RTN","DGRPCE",122,0)
+ .W !!,">>> Catastrophically Disabled eligibilty requires additional information <<<"
+"RTN","DGRPCE",123,0)
+ .D EDITCD^DGENCD(DFN)
+"RTN","DGRPCE",124,0)
+ I INFO D
+"RTN","DGRPCE",125,0)
+ . ;KV;11/15/00;DG*5.3*297;Start of modifications
+"RTN","DGRPCE",126,0)
+ . W !!,"The patient record indicates that a  determination was made "
+"RTN","DGRPCE",127,0)
+ . W "that the patient",!,"is catastrophically disabled."
+"RTN","DGRPCE",128,0)
+ . W !!,"To add Catastrophic Disability Eligibility Code(s), please use "
+"RTN","DGRPCE",129,0)
+ . W "the menu option",!,"DGEN PATIENT ENROLLMENT.",!!
+"RTN","DGRPCE",130,0)
+ .I $$ASKDEL() D
+"RTN","DGRPCE",131,0)
+ .. I $$DELETE^DGENCDA1(DFN) D
+"RTN","DGRPCE",132,0)
+ ...W !,">>> Determination Deleted <<<"
+"RTN","DGRPCE",133,0)
+ ..;
+"RTN","DGRPCE",134,0)
+ ..;could fail if lock could not be obtained
+"RTN","DGRPCE",135,0)
+ ..E  W !,"Catastrophic disability determination can not be deleted at this time.",!,"Please try again later."
+"RTN","DGRPCE",136,0)
+ ;KV;11/15/00;DG*5.3*297;End of modifications
+"RTN","DGRPCE",137,0)
+ Q
+"RTN","DGRPCE",138,0)
+ ;
+"RTN","DGRPCE",139,0)
+ASKDEL() ;
+"RTN","DGRPCE",140,0)
+ ;ask whether to delete catastrphic disability determination
+"RTN","DGRPCE",141,0)
+ N DIR
+"RTN","DGRPCE",142,0)
+ S DIR(0)="Y"
+"RTN","DGRPCE",143,0)
+ ;KV;11/15/00;DG*5.3*297;Cosmetic change for DIR("A")
+"RTN","DGRPCE",144,0)
+ S DIR("A")="Do you want to delete the determination showing that patient is catastrophically disabled"
+"RTN","DGRPCE",145,0)
+ S DIR("B")="YES"
+"RTN","DGRPCE",146,0)
+ D ^DIR
+"RTN","DGRPCE",147,0)
+ Q:$D(DIRUT) 0
+"RTN","DGRPCE",148,0)
+ Q $S(Y=1:1,1:0)
+"RTN","DGRPCE",149,0)
+ ;
+"RTN","DGRPCE",150,0)
+DEPEDT(DEP,FLD) ;edit dependent fields if missing or invalid
+"RTN","DGRPCE",151,0)
+ ;
+"RTN","DGRPCE",152,0)
+ ; input:  DEP as string for dependent (from GETREL)
+"RTN","DGRPCE",153,0)
+ ;         FLD as 408.13 field(s) to edit (separated by ';')
+"RTN","DGRPCE",154,0)
+ ;
+"RTN","DGRPCE",155,0)
+ Q:$G(FLD)=""
+"RTN","DGRPCE",156,0)
+ W !!,$$NAME^DGMTU1(+DEP)
+"RTN","DGRPCE",157,0)
+ S DA=+$P(DEP,"^",2),DIE="^DGPR(408.13,",DR=FLD D ^DIE
+"RTN","DGRPCE",158,0)
+ K DA,DR,DIE
+"RTN","DGRPCE",159,0)
+ Q
+"RTN","DGRPCE1")
+0^2^B65500857
+"RTN","DGRPCE1",1,0)
+DGRPCE1 ;ALB/MIR/BRM/LBD,BAJ,TDM - CONSISTENCY CHECKER EDIT ; 10/20/10 4:16pm
+"RTN","DGRPCE1",2,0)
+ ;;5.3;Registration;**108,226,470,454,489,505,522,451,632,689,657,688,804,754,797,855**;Aug 13, 1993;Build 3
+"RTN","DGRPCE1",3,0)
+ ;Per VHA Directive 6402, this routine should not be modified.
+"RTN","DGRPCE1",4,0)
+ ;DG*5.3*855
+"RTN","DGRPCE1",5,0)
+ N DGMSERR S DGMSERR=",67,72,73,79,81,83,"
+"RTN","DGRPCE1",6,0)
+ N I,J F I=1:1:8,16,53,57,58,61:1:88 D SASK
+"RTN","DGRPCE1",7,0)
+ F I=301,303,304,306:1:308,402,403,406,407,501:1:507,516,517 D SASK
+"RTN","DGRPCE1",8,0)
+ ;F I=49,50,52 D SASK ;BELOW REPLACED WITH ^IBCNSP2 CALL
+"RTN","DGRPCE1",9,0)
+ ;OLDS DR(2,2.312)="S DGRPADI="""";.01;1;2;15;8;7;3;6;S DGRPADI=X;I DGRPADI'=""v"" S Y=""@2312"";17///^S X=""`""_DFN;16///^S X=""01"";S Y=""@23121"";@2312;17;16//^S X=$S(DGRPADI=""s"":""02"",1:"""");@23121;9:14;"
+"RTN","DGRPCE1",10,0)
+ Q
+"RTN","DGRPCE1",11,0)
+SASK I DGER[(","_I_","),DGASK'[(","_I_","),DGMSERR'[(","_I_",") F J=I,I*1000:1 Q:'$T(@J)  S DGD=DGD_$P($T(@J),";;",2,999) D SAVE
+"RTN","DGRPCE1",12,0)
+ S DGASK=DGASK_I_","
+"RTN","DGRPCE1",13,0)
+ Q
+"RTN","DGRPCE1",14,0)
+SAVE I $L(@DGDR)+$L(DGD)<241 S @DGDR=@DGDR_DGD,DGD="" Q
+"RTN","DGRPCE1",15,0)
+ S DGDRC=DGDRC+1,DGDR="DR(1,2,"_DGDRC_")",@DGDR=DGD,DGD="" Q
+"RTN","DGRPCE1",16,0)
+ ;
+"RTN","DGRPCE1",17,0)
+ ;
+"RTN","DGRPCE1",18,0)
+ELIG ;eligibility code...if M11+, use compiled template, otherwise DR string
+"RTN","DGRPCE1",19,0)
+ I ^%ZOSF("OS")'["M/11+" S DGD=$P($T(14),";;",2,999) D SAVE Q
+"RTN","DGRPCE1",20,0)
+ N DA,DIE,DR S DIE="^DPT(",DA=DFN,DR="[DG CONSISTENCY CHECKER]" D ^DIE
+"RTN","DGRPCE1",21,0)
+ Q
+"RTN","DGRPCE1",22,0)
+ ;
+"RTN","DGRPCE1",23,0)
+ ;
+"RTN","DGRPCE1",24,0)
+1 ;;.01;
+"RTN","DGRPCE1",25,0)
+2 ;;1;
+"RTN","DGRPCE1",26,0)
+3 ;;.02;
+"RTN","DGRPCE1",27,0)
+4 ;;.03;
+"RTN","DGRPCE1",28,0)
+5 ;;.05;
+"RTN","DGRPCE1",29,0)
+6 ;;.08;
+"RTN","DGRPCE1",30,0)
+7 ;;.09;
+"RTN","DGRPCE1",31,0)
+8 ;;N FLG S FLG(2)=1 S:$G(DGER)[",61," FLG(1)=1 D EN^DGREGAED(DFN,.FLG);
+"RTN","DGRPCE1",32,0)
+14 ;;.361;S DGECODE=$S($D(^DIC(8,+X,0)):$P(^(0),"^",1),1:"");S:$S(DGECODE["ALLIED":0,DGECODE["FEDERAL":0,1:1) Y=.323;.309;.323;D ^DGYZODS;S:'DGODS Y="@14";11500.02;11500.03;@14;
+"RTN","DGRPCE1",33,0)
+16 ;;.351;
+"RTN","DGRPCE1",34,0)
+53 ;;.07;.31115;I $S(X']"":1,X=3:1,X=9:1,1:0) S Y="@53";.3111;S:X']"" Y="@53";.3113;S:X']"" Y=.3116;.3114;S:X']"" Y=.3116;.3115:.3117;.2205;.3119;@53;
+"RTN","DGRPCE1",35,0)
+57 ;;.381;.382///NOW;
+"RTN","DGRPCE1",36,0)
+58 ;;.322013;S:X'="Y" Y="@589";.322014;.322015;.32201;S:X'="Y" Y="@581";.322011;.322012;@581;.322016;S:X'="Y" Y="@589";.322017;.322018;@589;
+"RTN","DGRPCE1",37,0)
+61 ;;S:$G(DGER)[",8," Y="@619";.132;@619;
+"RTN","DGRPCE1",38,0)
+62 ;;.331;
+"RTN","DGRPCE1",39,0)
+63 ;;D EN^DGREGTED(DFN,"CONF");
+"RTN","DGRPCE1",40,0)
+64 ;;.092;.093;
+"RTN","DGRPCE1",41,0)
+65 ;;.2403;
+"RTN","DGRPCE1",42,0)
+66 ;;.09;
+"RTN","DGRPCE1",43,0)
+67 ;;S:$$DGERCK^DGRPCE1("73^79^80^81^82",.DGER) Y="@67";W !!,$C(7),"SERVICE SEPARATION DATE [LAST] must be a precise date to determine CV Elig",!;.325;.32911;.326;.327;@67;
+"RTN","DGRPCE1",44,0)
+68 ;;S:$$DGERCK^DGRPCE1("39^40",.DGER) Y="@68";W !!,$C(7),"COMBAT TO DATE must be a precise date to determine CV Eligibility",!;.5291;S:X'="Y" Y="@68";.5292;.5293;.5294;@68;
+"RTN","DGRPCE1",45,0)
+69 ;;S:$$DGERCK^DGRPCE1("74^75^76",.DGER) Y="@69";W !!,$C(7),"YUGOSLAVIA TO DATE must be a precise date to determine CV Eligibility",!;.322019;S:X'="Y" Y="@69";.32202;.322021;@69;
+"RTN","DGRPCE1",46,0)
+70 ;;S:$$DGERCK^DGRPCE1("74^75^76",.DGER) Y="@70";W !!,$C(7),"SOMALIA TO DATE must be a precise date to determine CV Eligibility",!;.322016;S:X'="Y" Y="@70";.322017;.322018,@70;
+"RTN","DGRPCE1",47,0)
+71 ;;S:$$DGERCK^DGRPCE1("74^75^76",.DGER) Y="@71";W !!,$C(7),"PERSIAN GULF TO DATE must be a precise date to determine CV Eligibility",!;.32201;S:X'="Y" Y="@71";.322011;.322012;@71;
+"RTN","DGRPCE1",48,0)
+72 ;;.325;.32911;.326;.327;.324;S:'$$YN^DGRPCE1(.3285) Y="@7201";.3291;.32912;.3292;.3293;.329;@7201;S:'$$YN^DGRPCE1(.32945) Y="@7202";.3296;.32913;.3297;.3298;.3295;@7202;
+"RTN","DGRPCE1",49,0)
+ ;
+"RTN","DGRPCE1",50,0)
+73 ;;S:$$DGERCK^DGRPCE1(72,.DGER) Y="@7302";.325;.32911;.326;.327;.324;S:'$$YN^DGRPCE1(.3285) Y="@7301";.3291;.32912;.3292;.3293;.329;@7301;S:'$$YN^DGRPCE1(.32945) Y="@7302";.3296;.32913;.3297;.3298;.3295;@7302;
+"RTN","DGRPCE1",51,0)
+74 ;;S:'$$YN^DGRPCE1(.32101) Y="@7401";.32101;S:X'="Y" Y="@7401";.32104;.32105;@7401;S:'$$YN^DGRPCE1(.322016) Y="@7402";.322016;S:X'="Y" Y="@7402";.322017;.322018;@7402;
+"RTN","DGRPCE1",52,0)
+74000 ;;S:'$$YN^DGRPCE1(.322019) Y="@7403";.322019;S:X'="Y" Y="@7403";.32202;.322021;@7403;S:'$$YN^DGRPCE1(.3221) Y="@7404";.3221;S:X'="Y" Y="@7404";.3222;.3223;@7404;
+"RTN","DGRPCE1",53,0)
+74001 ;;S:'$$YN^DGRPCE1(.3224) Y="@7405";.3224;S:X'="Y" Y="@7405";.3225;.3226;@7405;S:'$$YN^DGRPCE1(.3227) Y="@7406";.3227;S:X'="Y" Y="@7406";.3228;.3229;@7406;
+"RTN","DGRPCE1",54,0)
+74002 ;;S:'$$YN^DGRPCE1(.32201) Y="@7407";.32201;S:X'="Y" Y="@7407";.322011;.322012;@7407;
+"RTN","DGRPCE1",55,0)
+75 ;;S:$$DGERCK^DGRPCE1(74,.DGER) Y="@7507";S:'$$YN^DGRPCE1(.32101) Y="@7501";.32101;S:X'="Y" Y="@7501";.32104;.32105;@7501;S:'$$YN^DGRPCE1(.322016) Y="@7502";.322016;S:X'="Y" Y="@7502";.322017;.322018;@7502;
+"RTN","DGRPCE1",56,0)
+75000 ;;S:'$$YN^DGRPCE1(.322019) Y="@7503";.322019;S:X'="Y" Y="@7503";.32202;.322021;@7503;S:'$$YN^DGRPCE1(.3221) Y="@7504";.3221;S:X'="Y" Y="@7504";.3222;.3223;@7504;
+"RTN","DGRPCE1",57,0)
+75001 ;;S:'$$YN^DGRPCE1(.3224) Y="@7505";.3224;S:X'="Y" Y="@7505";.3225;.3226;@7505;S:'$$YN^DGRPCE1(.3227) Y="@7506";.3227;S:X'="Y" Y="@7506";.3228;.3229;@7506;
+"RTN","DGRPCE1",58,0)
+75002 ;;S:'$$YN^DGRPCE1(.32201) Y="@7507";.32201;S:X'="Y" Y="@7507";.322011;.322012;@7507;
+"RTN","DGRPCE1",59,0)
+76 ;;S:$$DGERCK^DGRPCE1("74^75",.DGER) Y="@7607";S:'$$YN^DGRPCE1(.32101) Y="@7601";.32101;S:X'="Y" Y="@7601";.32104;.32105;@7601;S:'$$YN^DGRPCE1(.322016) Y="@7602";.322016;S:X'="Y" Y="@7602";.322017;.322018;@7602;
+"RTN","DGRPCE1",60,0)
+76000 ;;S:'$$YN^DGRPCE1(.322019) Y="@7603";.322019;S:X'="Y" Y="@7603";.32202;.322021;@7603;S:'$$YN^DGRPCE1(.3221) Y="@7604";.3221;S:X'="Y" Y="@7604";.3222;.3223;@7604;
+"RTN","DGRPCE1",61,0)
+76001 ;;S:'$$YN^DGRPCE1(.3224) Y="@7605";.3224;S:X'="Y" Y="@7605";.3225;.3226;@7605;S:'$$YN^DGRPCE1(.3227) Y="@7606";.3227;S:X'="Y" Y="@7606";.3228;.3229;@7606;
+"RTN","DGRPCE1",62,0)
+76002 ;;S:'$$YN^DGRPCE1(.32201) Y="@7607";.32201;S:X'="Y" Y="@7607";.322011;.322012;@7607;
+"RTN","DGRPCE1",63,0)
+77 ;;S:(($$DGERCK^DGRPCE1("37^38",.DGER))!('$$YN^DGRPCE1(.525))) Y="@77";.525;S:X'="Y" Y="@77";.526;.527;.528;@77;
+"RTN","DGRPCE1",64,0)
+78 ;;S:(($$DGERCK^DGRPCE1("39^40^68",.DGER))!('$$YN^DGRPCE1(.5291))) Y="@78";.5291;S:X'="Y" Y="@78";.5292;.5293;.5294;@78;
+"RTN","DGRPCE1",65,0)
+79 ;;S:$$DGERCK^DGRPCE1("72^73",.DGER) Y="@7902";.325;.32911;.326;.327;.324;S:'$$YN^DGRPCE1(.3285) Y="@7901";.3291;.32912;.3292;.3293;.329;@7901;S:'$$YN^DGRPCE1(.32945) Y="@7902";.3296;.32913;.3297;.3298;.3295;@7902;
+"RTN","DGRPCE1",66,0)
+80 ;;S:(($$DGERCK^DGRPCE1("37^38^77",.DGER))!('$$YN^DGRPCE1(.525))) Y="@8001";.525;S:X'="Y" Y="@8001";.526;.527;.528;@8001;S:$$DGERCK^DGRPCE1("72^73^79",.DGER) Y="@8003";
+"RTN","DGRPCE1",67,0)
+80000 ;;.325;.32911;.326;.327;.324;S:'$$YN^DGRPCE1(.3285) Y="@8002";.3291;.32912;.3292;.3293;.329;@8002;S:'$$YN^DGRPCE1(.32945) Y="@8003";.3296;.32913;.3297;.3298;.3295;@8003;
+"RTN","DGRPCE1",68,0)
+81 ;;S:(($$DGERCK^DGRPCE1("39^40^78",.DGER))!('$$YN^DGRPCE1(.5291))) Y="@8101";.5291;S:X'="Y" Y="@8101";.5292;.5293;.5294;@8101;S:$$DGERCK^DGRPCE1("72^73^79^80",.DGER) Y="@8103";
+"RTN","DGRPCE1",69,0)
+81000 ;;.325;.32911;.326;.327;.324;S:'$$YN^DGRPCE1(.3285) Y="@8102";.3291;.32912;.3292;.3293;.329;@8102;S:'$$YN^DGRPCE1(.32945) Y="@8103";.3296;.32913;.3297;.3298;.3295;@8103;
+"RTN","DGRPCE1",70,0)
+82 ;;S:($$DGERCK^DGRPCE1("74^75^76",.DGER)) Y="@8207";S:'$$YN^DGRPCE1(.32101) Y="@8201";.32101;S:X'="Y" Y="@8201";.32104;.32105;@8201;S:'$$YN^DGRPCE1(.322016) Y="@8202";.322016;
+"RTN","DGRPCE1",71,0)
+82000 ;;S:X'="Y" Y="@8202";.322017;.322018;@8202;S:'$$YN^DGRPCE1(.322019) Y="@8203";.322019;S:X'="Y" Y="@8203";.32202;.322021;@8203;S:'$$YN^DGRPCE1(.3221) Y="@8204";.3221;
+"RTN","DGRPCE1",72,0)
+82001 ;;S:X'="Y" Y="@8204";.3222;.3223;@8204;S:'$$YN^DGRPCE1(.3224) Y="@8205";.3224;S:X'="Y" Y="@8205";.3225;.3226;@8205;S:'$$YN^DGRPCE1(.3227) Y="@8206";.3227;S:X'="Y" Y="@8206";
+"RTN","DGRPCE1",73,0)
+82002 ;;.3228;.3229;@8206;S:'$$YN^DGRPCE1(.32201) Y="@8207";.32201;S:X'="Y" Y="@8207";.322011;.322012;@8207;S:($$DGERCK^DGRPCE1("72^73^79^80^81",.DGER)) Y="@8209";
+"RTN","DGRPCE1",74,0)
+ ;DG*5.3*855
+"RTN","DGRPCE1",75,0)
+82003 ;;S Y="@8209";.325;.32911;.326;.327;.324;S:'$$YN^DGRPCE1(.3285) Y="@8208";.3291;.32912;.3292;.3293;.329;@8208;S:'$$YN^DGRPCE1(.32945) Y="@8209";.3296;.32913;.3297;.3298;.3295;@8209;
+"RTN","DGRPCE1",76,0)
+83 ;;S:$$DGERCK^DGRPCE1(73,.DGER) Y="@83";@8295;D SET32^DGRPE(DA,.DIPA,1);.325;S DIPA("X1")=X S:X']"" Y="@83";S:$$FV^DGRPMS(X)'=1 Y="@8296";.3214;I X']"" W !?4,$C(7),"Proof is required for Filipino Vet." S Y="@8295";
+"RTN","DGRPCE1",77,0)
+83000 ;;@8296;D:DIPA("X1")'="" WARN32^DGRPE(DIPA("X1"),.DIPA,1,.Y) S:$E(Y,1,4)="@601" Y=.326;.32911;.326;.327;
+"RTN","DGRPCE1",78,0)
+83001 ;;.3285//NO;S:X'="Y" Y="@83";D SET32^DGRPE(DA,.DIPA,2);.3291;S DIPA("X2")=X S:X']"" Y="@83";S:$$FV^DGRPMS(X)'=1 Y="@832";.3214;I X']"" W !?4,$C(7),"Proof is required for Filipino Vet." S Y=".3291";S Y=.3292;
+"RTN","DGRPCE1",79,0)
+83002 ;;@832;D:DIPA("X2")'="" WARN32^DGRPE(DIPA("X2"),.DIPA,2,.Y) S:$E(Y,1,4)="@601" Y=.3292;.32912;.3292;.3293;
+"RTN","DGRPCE1",80,0)
+83003 ;;.32945//NO;S:X'="Y" Y="@83";D SET32^DGRPE(DA,.DIPA,3);.3296;S DIPA("X3")=X S:X']"" Y="@83";S:$$FV^DGRPMS(X)'=1 Y="@833";.3214;I X']"" W !?4,$C(7),"Proof is required for Filipino Vet." S Y=".3296";S Y=.3297;@833;
+"RTN","DGRPCE1",81,0)
+83004 ;;D:DIPA("X3")'="" WARN32^DGRPE(DIPA("X3"),.DIPA,3,.Y) S:$E(Y,1,4)="@601" Y=.3297;.32913;.3297;.3298;@83;
+"RTN","DGRPCE1",82,0)
+84 ;;.3214;
+"RTN","DGRPCE1",83,0)
+85 ;;1901;
+"RTN","DGRPCE1",84,0)
+86 ;;1901;
+"RTN","DGRPCE1",85,0)
+87 ;;D VETTYPE^DGRPE1;D MSG^DGRPE1 S Y=0;@114;K DGRDCHG;D DR^DGRPE1;.302;.3721;D EFF^DGRPE1;D:$G(DGRDCHG) BULL^DGRPE1;K DGRDCHG;
+"RTN","DGRPCE1",86,0)
+88 ;;D EN^DGREGTED(DFN,"TEMP");
+"RTN","DGRPCE1",87,0)
+301 ;;.01;
+"RTN","DGRPCE1",88,0)
+303 ;;.02;
+"RTN","DGRPCE1",89,0)
+304 ;;.02;
+"RTN","DGRPCE1",90,0)
+306 ;;.09;
+"RTN","DGRPCE1",91,0)
+307 ;;.0906;
+"RTN","DGRPCE1",92,0)
+308 ;;.351;
+"RTN","DGRPCE1",93,0)
+402 ;;.381;
+"RTN","DGRPCE1",94,0)
+403 ;;.382;
+"RTN","DGRPCE1",95,0)
+406 ;;.313;
+"RTN","DGRPCE1",96,0)
+407 ;;.3611;
+"RTN","DGRPCE1",97,0)
+501 ;;.525;
+"RTN","DGRPCE1",98,0)
+502 ;;.3602;
+"RTN","DGRPCE1",99,0)
+503 ;;.3603;
+"RTN","DGRPCE1",100,0)
+504 ;;.32102;
+"RTN","DGRPCE1",101,0)
+505 ;;.32103;
+"RTN","DGRPCE1",102,0)
+506 ;;.322013;
+"RTN","DGRPCE1",103,0)
+507 ;;.32103;.3212;
+"RTN","DGRPCE1",104,0)
+516 ;;.03;
+"RTN","DGRPCE1",105,0)
+517 ;;.03;
+"RTN","DGRPCE1",106,0)
+ ;
+"RTN","DGRPCE1",107,0)
+YN(FLD,DFN,FILE) ; return binary for YES/NO flds in the Patient (#2) file
+"RTN","DGRPCE1",108,0)
+ N RTN
+"RTN","DGRPCE1",109,0)
+ Q:$G(FLD)']"" ""
+"RTN","DGRPCE1",110,0)
+ S:$G(FILE)="" FILE=2 S:$G(DFN)="" DFN=$G(DA) Q:$G(DFN)']"" ""
+"RTN","DGRPCE1",111,0)
+ S RTN=$$GET1^DIQ(FILE,DFN_",",FLD,"I")
+"RTN","DGRPCE1",112,0)
+ Q $S(RTN=1:1,RTN=0:0,RTN="Y":1,RTN="N":0,1:"")
+"RTN","DGRPCE1",113,0)
+ ;
+"RTN","DGRPCE1",114,0)
+DGERCK(STR,DGER) ;do any of the STR errors exist in DGER?
+"RTN","DGRPCE1",115,0)
+ N RTN,X
+"RTN","DGRPCE1",116,0)
+ Q:$G(STR)']"" 0  Q:$G(DGER)']"" 0
+"RTN","DGRPCE1",117,0)
+ S RTN=0 F X=1:1 Q:RTN!($P(STR,"^",X)="")  I DGER[(","_$P(STR,"^",X)_",") S RTN=1
+"RTN","DGRPCE1",118,0)
+ Q RTN
+"RTN","DGRPCE1",119,0)
+ ;
+"RTN","DGRPCE1",120,0)
+NEWMSE(DFN) ;Is there data in the new MSE sub-file #2.3216?
+"RTN","DGRPCE1",121,0)
+ I $G(DFN)="" S DFN=$G(DA)
+"RTN","DGRPCE1",122,0)
+ Q:$G(DFN)="" 0
+"RTN","DGRPCE1",123,0)
+ I $O(^DPT(DFN,.3216,0)) Q 1
+"RTN","DGRPCE1",124,0)
+ Q 0
+"RTN","DGRPCE1",125,0)
+ ;
+"RTN","DGRPCE1",126,0)
+MSERR() ;Are there MSE data inconsistencies?
+"RTN","DGRPCE1",127,0)
+ N ERR,RTN
+"RTN","DGRPCE1",128,0)
+ S RTN=0
+"RTN","DGRPCE1",129,0)
+ ;DG*5.3*855
+"RTN","DGRPCE1",130,0)
+ F ERR=9,10,11,12,13,14,18,19,20,22,24,36,51,67,72,73,79,81,82,83 I DGER[(","_ERR_",") S RTN=1 Q
+"RTN","DGRPCE1",131,0)
+ Q RTN
+"VER")
+8.0^22.0
+**INSTALL NAME**
+IVM*2.0*153
+"BLD",10134,0)
+IVM*2.0*153^INCOME VERIFICATION MATCH^0^3160414^y
+"BLD",10134,1,0)
+^^19^19^3160405^
+"BLD",10134,1,1,0)
+Patch DG*5.3*797 added the new MILITARY SERVICE EPISODE sub-file #2.3216 
+"BLD",10134,1,2,0)
+in the PATIENT (#2) file to store Military Service Episode (MSE) data.
+"BLD",10134,1,3,0)
+Changes in that patch included modifications to several consistency 
+"BLD",10134,1,4,0)
+checks that used MSE data.  The checks for data inconsistencies should 
+"BLD",10134,1,5,0)
+only be checking the MSEs in the new MILITARY SERVICE EPISODE sub-file 
+"BLD",10134,1,6,0)
+(#2.3216) in PATIENT (#2)file.  
+"BLD",10134,1,7,0)
+ 
+"BLD",10134,1,8,0)
+However, during the check for inconsistencies that would prevent the 
+"BLD",10134,1,9,0)
+transmission of a Z07 HL7 message to the Health Eligibility Center (HEC), 
+"BLD",10134,1,10,0)
+the MSE data in the old location is being checked instead of the MSEs in 
+"BLD",10134,1,11,0)
+the new location.  This is causing invalid inconsistency errors to be 
+"BLD",10134,1,12,0)
+filed in the INCONSISTENT DATA file (#38.5), and preventing the 
+"BLD",10134,1,13,0)
+transmission of the Z07 messages for those patients. 
+"BLD",10134,1,14,0)
+ 
+"BLD",10134,1,15,0)
+The wrong MSE data is being checked for the following inconsistencies:
+"BLD",10134,1,16,0)
+ 
+"BLD",10134,1,17,0)
+  83    MERCH SEA OR FILIPINO VET BOS REQUIRES SERVICE DATES DURING WWII
+"BLD",10134,1,18,0)
+  85    VERIFIED FILIPINO VETERAN SHOULD HAVE A VETERAN STATUS OF 'YES'
+"BLD",10134,1,19,0)
+  86    INELIGIBLE FILIPINO VETERAN SHOULD HAVE A VETERAN STATUS OF 'NO'
+"BLD",10134,4,0)
+^9.64PA^^
+"BLD",10134,6.3)
+2
+"BLD",10134,"ABPKG")
+n
+"BLD",10134,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10134,"KRN",.4,0)
+.4
+"BLD",10134,"KRN",.401,0)
+.401
+"BLD",10134,"KRN",.402,0)
+.402
+"BLD",10134,"KRN",.403,0)
+.403
+"BLD",10134,"KRN",.5,0)
+.5
+"BLD",10134,"KRN",.84,0)
+.84
+"BLD",10134,"KRN",3.6,0)
+3.6
+"BLD",10134,"KRN",3.8,0)
+3.8
+"BLD",10134,"KRN",9.2,0)
+9.2
+"BLD",10134,"KRN",9.8,0)
+9.8
+"BLD",10134,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",10134,"KRN",9.8,"NM",1,0)
+IVMZ07C^^0^B19513657
+"BLD",10134,"KRN",9.8,"NM",2,0)
+IVMZ7CR^^0^B83209153
+"BLD",10134,"KRN",9.8,"NM","B","IVMZ07C",1)
+
+"BLD",10134,"KRN",9.8,"NM","B","IVMZ7CR",2)
+
+"BLD",10134,"KRN",19,0)
+19
+"BLD",10134,"KRN",19.1,0)
+19.1
+"BLD",10134,"KRN",101,0)
+101
+"BLD",10134,"KRN",409.61,0)
+409.61
+"BLD",10134,"KRN",771,0)
+771
+"BLD",10134,"KRN",779.2,0)
+779.2
+"BLD",10134,"KRN",870,0)
+870
+"BLD",10134,"KRN",8989.51,0)
+8989.51
+"BLD",10134,"KRN",8989.52,0)
+8989.52
+"BLD",10134,"KRN",8994,0)
+8994
+"BLD",10134,"KRN","B",.4,.4)
+
+"BLD",10134,"KRN","B",.401,.401)
+
+"BLD",10134,"KRN","B",.402,.402)
+
+"BLD",10134,"KRN","B",.403,.403)
+
+"BLD",10134,"KRN","B",.5,.5)
+
+"BLD",10134,"KRN","B",.84,.84)
+
+"BLD",10134,"KRN","B",3.6,3.6)
+
+"BLD",10134,"KRN","B",3.8,3.8)
+
+"BLD",10134,"KRN","B",9.2,9.2)
+
+"BLD",10134,"KRN","B",9.8,9.8)
+
+"BLD",10134,"KRN","B",19,19)
+
+"BLD",10134,"KRN","B",19.1,19.1)
+
+"BLD",10134,"KRN","B",101,101)
+
+"BLD",10134,"KRN","B",409.61,409.61)
+
+"BLD",10134,"KRN","B",771,771)
+
+"BLD",10134,"KRN","B",779.2,779.2)
+
+"BLD",10134,"KRN","B",870,870)
+
+"BLD",10134,"KRN","B",8989.51,8989.51)
+
+"BLD",10134,"KRN","B",8989.52,8989.52)
+
+"BLD",10134,"KRN","B",8994,8994)
+
+"BLD",10134,"QUES",0)
+^9.62^^
+"BLD",10134,"REQB",0)
+^9.611^2^2
+"BLD",10134,"REQB",1,0)
+IVM*2.0*147^2
+"BLD",10134,"REQB",2,0)
+IVM*2.0*132^2
+"BLD",10134,"REQB","B","IVM*2.0*132",2)
+
+"BLD",10134,"REQB","B","IVM*2.0*147",1)
+
+"MBREQ")
+0
+"PKG",220,-1)
+1^1
+"PKG",220,0)
+INCOME VERIFICATION MATCH^IVM^IVM Software for interface with the IVM Center
+"PKG",220,20,0)
+^9.402P^^
+"PKG",220,22,0)
+^9.49I^1^1
+"PKG",220,22,1,0)
+2.0^2941021
+"PKG",220,22,1,"PAH",1,0)
+153^3160414
+"PKG",220,22,1,"PAH",1,1,0)
+^^19^19^3160414
+"PKG",220,22,1,"PAH",1,1,1,0)
+Patch DG*5.3*797 added the new MILITARY SERVICE EPISODE sub-file #2.3216 
+"PKG",220,22,1,"PAH",1,1,2,0)
+in the PATIENT (#2) file to store Military Service Episode (MSE) data.
+"PKG",220,22,1,"PAH",1,1,3,0)
+Changes in that patch included modifications to several consistency 
+"PKG",220,22,1,"PAH",1,1,4,0)
+checks that used MSE data.  The checks for data inconsistencies should 
+"PKG",220,22,1,"PAH",1,1,5,0)
+only be checking the MSEs in the new MILITARY SERVICE EPISODE sub-file 
+"PKG",220,22,1,"PAH",1,1,6,0)
+(#2.3216) in PATIENT (#2)file.  
+"PKG",220,22,1,"PAH",1,1,7,0)
+ 
+"PKG",220,22,1,"PAH",1,1,8,0)
+However, during the check for inconsistencies that would prevent the 
+"PKG",220,22,1,"PAH",1,1,9,0)
+transmission of a Z07 HL7 message to the Health Eligibility Center (HEC), 
+"PKG",220,22,1,"PAH",1,1,10,0)
+the MSE data in the old location is being checked instead of the MSEs in 
+"PKG",220,22,1,"PAH",1,1,11,0)
+the new location.  This is causing invalid inconsistency errors to be 
+"PKG",220,22,1,"PAH",1,1,12,0)
+filed in the INCONSISTENT DATA file (#38.5), and preventing the 
+"PKG",220,22,1,"PAH",1,1,13,0)
+transmission of the Z07 messages for those patients. 
+"PKG",220,22,1,"PAH",1,1,14,0)
+ 
+"PKG",220,22,1,"PAH",1,1,15,0)
+The wrong MSE data is being checked for the following inconsistencies:
+"PKG",220,22,1,"PAH",1,1,16,0)
+ 
+"PKG",220,22,1,"PAH",1,1,17,0)
+  83    MERCH SEA OR FILIPINO VET BOS REQUIRES SERVICE DATES DURING WWII
+"PKG",220,22,1,"PAH",1,1,18,0)
+  85    VERIFIED FILIPINO VETERAN SHOULD HAVE A VETERAN STATUS OF 'YES'
+"PKG",220,22,1,"PAH",1,1,19,0)
+  86    INELIGIBLE FILIPINO VETERAN SHOULD HAVE A VETERAN STATUS OF 'NO'
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","IVMZ07C")
+0^1^B19513657
+"RTN","IVMZ07C",1,0)
+IVMZ07C ;BAJ/PHH/LBD - HL7 Z07 CONSISTENCY CHECKER -- DRIVER ROUTINE ; 7/14/10 11:54am
+"RTN","IVMZ07C",2,0)
+ ;;2.0;INCOME VERIFICATION MATCH;**105,128,134,147,153**;JUL 8,1996;Build 2
+"RTN","IVMZ07C",3,0)
+ ;
+"RTN","IVMZ07C",4,0)
+ ; 
+"RTN","IVMZ07C",5,0)
+ ; This routine calls various checking subroutines and manages arrays and data filing
+"RTN","IVMZ07C",6,0)
+ ; for inconsistency checking prior to building a Z07 HL7 record.  This routine returns
+"RTN","IVMZ07C",7,0)
+ ; a value and must be called as an API:
+"RTN","IVMZ07C",8,0)
+ ; 
+"RTN","IVMZ07C",9,0)
+ ; I '$$EN^IVMZ07C(DFN) Q
+"RTN","IVMZ07C",10,0)
+ ;
+"RTN","IVMZ07C",11,0)
+ ; Values returned:
+"RTN","IVMZ07C",12,0)
+ ; 0 = Fail: inconsistencies found, do not build Z07 record
+"RTN","IVMZ07C",13,0)
+ ; 1 = Pass: No inconsistencies found, Ok to build Z07 record
+"RTN","IVMZ07C",14,0)
+ ;
+"RTN","IVMZ07C",15,0)
+ ; Must be called from entry point
+"RTN","IVMZ07C",16,0)
+ Q
+"RTN","IVMZ07C",17,0)
+ ;
+"RTN","IVMZ07C",18,0)
+EN(DFN) ; entry point.  Patient DFN is sent from calling routine.
+"RTN","IVMZ07C",19,0)
+ ; initialize working variables
+"RTN","IVMZ07C",20,0)
+ ;IVM*2*153 adds variable DGPMSE
+"RTN","IVMZ07C",21,0)
+ N PASS,DGP,DGSD,U,DGPMSE
+"RTN","IVMZ07C",22,0)
+ S U="^"
+"RTN","IVMZ07C",23,0)
+ ; 
+"RTN","IVMZ07C",24,0)
+ ; Input:        DFN     = ^DPT(DFN) of record to check
+"RTN","IVMZ07C",25,0)
+ ;                       BATCH   = 1     batch/background job records should be counted
+"RTN","IVMZ07C",26,0)
+ ;                                       = 0     single job, do not count records
+"RTN","IVMZ07C",27,0)
+ ; structure:
+"RTN","IVMZ07C",28,0)
+ ; 1. delete existing Z07 inconsistencies
+"RTN","IVMZ07C",29,0)
+ ; 2. load data arrays
+"RTN","IVMZ07C",30,0)
+ ; 3. call subroutines
+"RTN","IVMZ07C",31,0)
+ ; 4. check for Pass/Fail
+"RTN","IVMZ07C",32,0)
+ ; 5. update file 38.5 if necessary
+"RTN","IVMZ07C",33,0)
+ ; 6. return Pass/Fail
+"RTN","IVMZ07C",34,0)
+ ; 
+"RTN","IVMZ07C",35,0)
+ ; Set flag
+"RTN","IVMZ07C",36,0)
+ S PASS=0
+"RTN","IVMZ07C",37,0)
+ I '$D(^DPT(DFN)) Q PASS
+"RTN","IVMZ07C",38,0)
+ ; If DFN is for a merged patient, quit (IVM*2*147)
+"RTN","IVMZ07C",39,0)
+ I $D(^DPT(DFN,-9)) Q PASS
+"RTN","IVMZ07C",40,0)
+ ;
+"RTN","IVMZ07C",41,0)
+ S PASS=1
+"RTN","IVMZ07C",42,0)
+ ;
+"RTN","IVMZ07C",43,0)
+ ; Load Patient and Spouse/dependent data
+"RTN","IVMZ07C",44,0)
+ D LOADPT(DFN,.DGP),LOADSD^IVMZ072(DFN,.DGSD)
+"RTN","IVMZ07C",45,0)
+ ;
+"RTN","IVMZ07C",46,0)
+ ; Do checks and file inconsistencies
+"RTN","IVMZ07C",47,0)
+ D WORK(DFN,.DGP,.DGSD)
+"RTN","IVMZ07C",48,0)
+ ;
+"RTN","IVMZ07C",49,0)
+ ; Delete old Inconsistency info
+"RTN","IVMZ07C",50,0)
+ D DELETE(DFN)
+"RTN","IVMZ07C",51,0)
+ ;
+"RTN","IVMZ07C",52,0)
+ ; File new inconsistencies if necessary
+"RTN","IVMZ07C",53,0)
+ I $$FILE(DFN) S PASS=0
+"RTN","IVMZ07C",54,0)
+ ;
+"RTN","IVMZ07C",55,0)
+ ; update counters
+"RTN","IVMZ07C",56,0)
+ D COUNT(PASS)
+"RTN","IVMZ07C",57,0)
+ ;
+"RTN","IVMZ07C",58,0)
+ ; return pass/fail flag
+"RTN","IVMZ07C",59,0)
+ Q PASS
+"RTN","IVMZ07C",60,0)
+ ;
+"RTN","IVMZ07C",61,0)
+COUNT(PASS) ; counter for batch run
+"RTN","IVMZ07C",62,0)
+ N I
+"RTN","IVMZ07C",63,0)
+ ; Set it up the first time through
+"RTN","IVMZ07C",64,0)
+ I '$D(^TMP($J,"CC")) D
+"RTN","IVMZ07C",65,0)
+ . F I=0,1 S ^TMP($J,"CC",I)=0
+"RTN","IVMZ07C",66,0)
+ ;
+"RTN","IVMZ07C",67,0)
+ ; Increment Batch counter
+"RTN","IVMZ07C",68,0)
+ S ^TMP($J,"CC",PASS)=^TMP($J,"CC",PASS)+1
+"RTN","IVMZ07C",69,0)
+ Q
+"RTN","IVMZ07C",70,0)
+ ;
+"RTN","IVMZ07C",71,0)
+LOADPT(DFN,DGP) ; load patient data into arrays
+"RTN","IVMZ07C",72,0)
+ N NIEN,IEN,I,DTTM,NAMCOM,NAME
+"RTN","IVMZ07C",73,0)
+ ; we need to load data from the following files
+"RTN","IVMZ07C",74,0)
+ ; Patient File                          2
+"RTN","IVMZ07C",75,0)
+ ; Name Components                       20
+"RTN","IVMZ07C",76,0)
+ ; Patient Enrollment                    27.11
+"RTN","IVMZ07C",77,0)
+ ; Means test file                       408.31
+"RTN","IVMZ07C",78,0)
+ ; MST History file                      29.11
+"RTN","IVMZ07C",79,0)
+ ; Note: we also need Catastrophic data info, but that subroutine loads its own data array.
+"RTN","IVMZ07C",80,0)
+ ; 
+"RTN","IVMZ07C",81,0)
+ ; ***************************
+"RTN","IVMZ07C",82,0)
+ ; DGP("PAT") Patient file
+"RTN","IVMZ07C",83,0)
+ F I=0,.3,.15,.29,.31,.32,.321,.322,.35,.36,.361,.38,.52,"SSN","TYPE","VET" S DGP("PAT",I)=$G(^DPT(DFN,I))
+"RTN","IVMZ07C",84,0)
+ S NAME=$P($G(^DPT(DFN,0)),"^",1),NAMCOM=$P($G(^DPT(DFN,"NAME")),"^",1)'=""
+"RTN","IVMZ07C",85,0)
+ ;IVM*2*153 get mse's from mse subfile 2.3216
+"RTN","IVMZ07C",86,0)
+ I '$D(^DPT(DFN,.3216)) D MOVMSE^DGMSEUTL(DFN)
+"RTN","IVMZ07C",87,0)
+ D GETMSE^DGMSEUTL(DFN,.DGPMSE)
+"RTN","IVMZ07C",88,0)
+ ; 
+"RTN","IVMZ07C",89,0)
+ ; ***************************
+"RTN","IVMZ07C",90,0)
+ ; DGP("NAME") Name Components
+"RTN","IVMZ07C",91,0)
+ I NAMCOM S NIEN=$P(^DPT(DFN,"NAME"),U,1) I '$D(^VA(20,NIEN,1)) S NAMCOM=0
+"RTN","IVMZ07C",92,0)
+ S DGP("NAME",1)=$S(NAMCOM:$G(^VA(20,NIEN,1)),1:$P(NAME,",")_"^"_$P($P(NAME,",",2)," ",1)_"^"_$P($P(NAME,",",2)," ",2))
+"RTN","IVMZ07C",93,0)
+ ;
+"RTN","IVMZ07C",94,0)
+ ; ***************************
+"RTN","IVMZ07C",95,0)
+ ;
+"RTN","IVMZ07C",96,0)
+ ; DGP("ENR") Patient Enrollment
+"RTN","IVMZ07C",97,0)
+ S NIEN="",NIEN=$P($G(^DPT(DFN,"ENR")),U,1)
+"RTN","IVMZ07C",98,0)
+ I NIEN]"",$D(^DGEN(27.11,NIEN)) M DGP("ENR")=^DGEN(27.11,NIEN)
+"RTN","IVMZ07C",99,0)
+ ; 
+"RTN","IVMZ07C",100,0)
+ ; ***************************
+"RTN","IVMZ07C",101,0)
+ ; DGP("MEANS") Means Test
+"RTN","IVMZ07C",102,0)
+ S NIEN=+$$LST^DGMTU(DFN) I NIEN,$D(^DGMT(408.31,NIEN,0)) S DGP("MEANS",0)=^DGMT(408.31,NIEN,0)
+"RTN","IVMZ07C",103,0)
+ ;
+"RTN","IVMZ07C",104,0)
+ ; ***************************
+"RTN","IVMZ07C",105,0)
+ ; DGP("MST") MST History
+"RTN","IVMZ07C",106,0)
+ S (DTTM,NIEN)=""
+"RTN","IVMZ07C",107,0)
+ S DTTM=$O(^DGMS(29.11,"APDT",DFN,""),-1)
+"RTN","IVMZ07C",108,0)
+ I DTTM'="" D
+"RTN","IVMZ07C",109,0)
+ . S NIEN=$O(^DGMS(29.11,"APDT",DFN,DTTM,""),-1)
+"RTN","IVMZ07C",110,0)
+ . I $D(^DGMS(29.11,NIEN,0)) S DGP("MST",0)=^DGMS(29.11,NIEN,0)
+"RTN","IVMZ07C",111,0)
+ ;
+"RTN","IVMZ07C",112,0)
+ ; ***************************
+"RTN","IVMZ07C",113,0)
+ Q
+"RTN","IVMZ07C",114,0)
+ ;
+"RTN","IVMZ07C",115,0)
+WORK(DFN,DGP,DGSD) ;
+"RTN","IVMZ07C",116,0)
+ ; call subroutines to run rules and file any inconsistencies
+"RTN","IVMZ07C",117,0)
+ ;
+"RTN","IVMZ07C",118,0)
+ ; Demographics rules
+"RTN","IVMZ07C",119,0)
+ D EN^IVMZ7CD(DFN,.DGP,.DGSD)
+"RTN","IVMZ07C",120,0)
+ ;
+"RTN","IVMZ07C",121,0)
+ ; Enrollment/Eligibility rules
+"RTN","IVMZ07C",122,0)
+ D EN^IVMZ7CE(DFN,.DGP)
+"RTN","IVMZ07C",123,0)
+ ;
+"RTN","IVMZ07C",124,0)
+ ; Service rules
+"RTN","IVMZ07C",125,0)
+ D EN^IVMZ7CS(DFN,.DGP)
+"RTN","IVMZ07C",126,0)
+ ;
+"RTN","IVMZ07C",127,0)
+ ; Catastrophic Disability rules
+"RTN","IVMZ07C",128,0)
+ D EN^IVMZ7CCD(DFN)
+"RTN","IVMZ07C",129,0)
+ ;
+"RTN","IVMZ07C",130,0)
+ ; Registration Inconsistencies
+"RTN","IVMZ07C",131,0)
+ D EN^IVMZ7CR(DFN,.DGP,.DGSD)
+"RTN","IVMZ07C",132,0)
+ ;
+"RTN","IVMZ07C",133,0)
+ Q
+"RTN","IVMZ07C",134,0)
+ ;
+"RTN","IVMZ07C",135,0)
+DELETE(DFN) ; delete all Z07 inconsistencies from INCONSISTENT DATA file (#38.5).  Since we're not sure which rules
+"RTN","IVMZ07C",136,0)
+ ; will block a Z07 record, we need to loop through the INCONSISTENT DATA ELEMENTS file (#38.6) and grab only 
+"RTN","IVMZ07C",137,0)
+ ; those rules which are marked to prevent building a Z07 record:
+"RTN","IVMZ07C",138,0)
+ ; 
+"RTN","IVMZ07C",139,0)
+ ;
+"RTN","IVMZ07C",140,0)
+ N DELARRY,RULE,DIK,DA
+"RTN","IVMZ07C",141,0)
+ ; 
+"RTN","IVMZ07C",142,0)
+ ; create an array of rules which prevent Z07 records 
+"RTN","IVMZ07C",143,0)
+ S RULE=0 F  S RULE=$O(^DGIN(38.6,RULE)) Q:RULE=""  Q:$A(RULE)>$A(9)  D
+"RTN","IVMZ07C",144,0)
+ . I $P(^DGIN(38.6,RULE,0),U,6) S DELARRY(RULE)=""
+"RTN","IVMZ07C",145,0)
+ ;
+"RTN","IVMZ07C",146,0)
+ ; Now we have to check the patient INCONSISTENT DATA file (#38.5) and delete any records which have to be rechecked.
+"RTN","IVMZ07C",147,0)
+ ; 
+"RTN","IVMZ07C",148,0)
+ S DIK="^DGIN(38.5,"_DFN_","_"""I"""_","
+"RTN","IVMZ07C",149,0)
+ ;
+"RTN","IVMZ07C",150,0)
+ S DA="" F  S DA=$O(DELARRY(DA)) Q:DA=""  D ^DIK
+"RTN","IVMZ07C",151,0)
+ Q
+"RTN","IVMZ07C",152,0)
+ ;
+"RTN","IVMZ07C",153,0)
+FILE(DFN) ;
+"RTN","IVMZ07C",154,0)
+ N FILE,SUCCESS,CCS,I,DGENDA,DATA,SUBFILE,DIK,DA
+"RTN","IVMZ07C",155,0)
+ S FILE=38.5,CCS=0
+"RTN","IVMZ07C",156,0)
+ ; if no inconsistencies, return 0
+"RTN","IVMZ07C",157,0)
+ I '$D(^TMP($J,DFN)) D  Q CCS
+"RTN","IVMZ07C",158,0)
+ . ; clean up INCONSISTENT DATA file if no inconsistencies exist
+"RTN","IVMZ07C",159,0)
+ . I '$P($G(^DGIN(38.5,DFN,"I",0)),"^",4) D
+"RTN","IVMZ07C",160,0)
+ . . S DIK="^DGIN(38.5,",DA=DFN
+"RTN","IVMZ07C",161,0)
+ . . D ^DIK
+"RTN","IVMZ07C",162,0)
+ ;
+"RTN","IVMZ07C",163,0)
+ ; else process inconsistencies and return PASS=0
+"RTN","IVMZ07C",164,0)
+ S CCS=1
+"RTN","IVMZ07C",165,0)
+ ; if a new entry, create a stub
+"RTN","IVMZ07C",166,0)
+ S DATA(.01)=DFN
+"RTN","IVMZ07C",167,0)
+ I '$D(^DGIN(FILE,"B",DFN)) D
+"RTN","IVMZ07C",168,0)
+ . S DATA(2)=$$DT^XLFDT,DATA(3)=.5
+"RTN","IVMZ07C",169,0)
+ . S SUCCESS=$$ADD^DGENDBS(FILE,,.DATA,,DFN)
+"RTN","IVMZ07C",170,0)
+ ;
+"RTN","IVMZ07C",171,0)
+ ; update file header with data and user info.
+"RTN","IVMZ07C",172,0)
+ ; Last Updated field (#4) = Today's date
+"RTN","IVMZ07C",173,0)
+ ; Last Updated by field (#5) = Postmaster
+"RTN","IVMZ07C",174,0)
+ S DGENDA=DFN,DATA(4)=$$DT^XLFDT,DATA(5)=.5
+"RTN","IVMZ07C",175,0)
+ S SUCCESS=$$UPD^DGENDBS(FILE,.DGENDA,.DATA)
+"RTN","IVMZ07C",176,0)
+ ;
+"RTN","IVMZ07C",177,0)
+ ; add inconsistencies to file
+"RTN","IVMZ07C",178,0)
+ K DATA
+"RTN","IVMZ07C",179,0)
+ S SUBFILE=38.51,DGENDA(1)=DFN
+"RTN","IVMZ07C",180,0)
+ S I="" F  S I=$O(^TMP($J,DFN,I)) Q:I=""  D
+"RTN","IVMZ07C",181,0)
+ . S (DATA(.01),DATA(.001),DGENDA)=I
+"RTN","IVMZ07C",182,0)
+ . S SUCCESS=$$ADD^DGENDBS(SUBFILE,.DGENDA,.DATA)
+"RTN","IVMZ07C",183,0)
+ ;
+"RTN","IVMZ07C",184,0)
+ ; kill temp file before exit
+"RTN","IVMZ07C",185,0)
+ K ^TMP($J,DFN)
+"RTN","IVMZ07C",186,0)
+ ;
+"RTN","IVMZ07C",187,0)
+ Q CCS
+"RTN","IVMZ07C",188,0)
+ ;
+"RTN","IVMZ7CR")
+0^2^B83209153
+"RTN","IVMZ7CR",1,0)
+IVMZ7CR ;BAJ,ERC - HL7 Z07 CONSISTENCY CHECKER -- REGISTRATION SUBROUTINE ; 12/6/07 8:51am
+"RTN","IVMZ7CR",2,0)
+ ;;2.0;INCOME VERIFICATION MATCH;**105,127,132,153**;JUL 8,1996;Build 2
+"RTN","IVMZ7CR",3,0)
+ ;
+"RTN","IVMZ7CR",4,0)
+ ; Registration Consistency Checks
+"RTN","IVMZ7CR",5,0)
+ Q       ; Entry point must be specified
+"RTN","IVMZ7CR",6,0)
+EN(DFN,DGP,DGSD) ;Entry point
+"RTN","IVMZ7CR",7,0)
+ ;  input:  DFN - Patient IEN
+"RTN","IVMZ7CR",8,0)
+ ;          DGP - Patient data array
+"RTN","IVMZ7CR",9,0)
+ ;          DGSD - Spouse and Dependent data array
+"RTN","IVMZ7CR",10,0)
+ ; output: ^TMP($J,DFN,RULE) global
+"RTN","IVMZ7CR",11,0)
+ ;          DFN - Patient IEN
+"RTN","IVMZ7CR",12,0)
+ ;          RULE - Consistency rule #
+"RTN","IVMZ7CR",13,0)
+ ;initialize variables
+"RTN","IVMZ7CR",14,0)
+ N RULE,Y,X,FILERR,SPDEP
+"RTN","IVMZ7CR",15,0)
+ S SPDEP=$D(DGSD("DEP"))
+"RTN","IVMZ7CR",16,0)
+ ; we do not count through all numbers to save routine space
+"RTN","IVMZ7CR",17,0)
+ F RULE=4,7,9,11,13,15,16,19,24,29:1:31,34,60,72,74,75,76,78,81,83,85,86 I $D(^DGIN(38.6,RULE)) D
+"RTN","IVMZ7CR",18,0)
+ . I $$ON(RULE) D @RULE
+"RTN","IVMZ7CR",19,0)
+ I $D(FILERR) M ^TMP($J,DFN)=FILERR
+"RTN","IVMZ7CR",20,0)
+ Q
+"RTN","IVMZ7CR",21,0)
+4 ; DOB UNSPECIFIED
+"RTN","IVMZ7CR",22,0)
+ ; Note: RULE #302 in IVMZ7CD is a duplicate of this rule
+"RTN","IVMZ7CR",23,0)
+ N RIEN
+"RTN","IVMZ7CR",24,0)
+ I $P($G(DGP("PAT",0)),U,3)="" S FILERR(RULE)=""
+"RTN","IVMZ7CR",25,0)
+ I 'SPDEP Q
+"RTN","IVMZ7CR",26,0)
+ S RIEN=0 F  S RIEN=$O(DGSD("DEP",RIEN)) Q:RIEN=""  D
+"RTN","IVMZ7CR",27,0)
+ . I $P(DGSD("DEP",RIEN,0),U,3)="" S FILERR(RULE)=""
+"RTN","IVMZ7CR",28,0)
+ Q
+"RTN","IVMZ7CR",29,0)
+7 ; SSN UNSPECIFIED
+"RTN","IVMZ7CR",30,0)
+ ; Note: RULE #305 in IVMZ7CD is a duplicate of this rule
+"RTN","IVMZ7CR",31,0)
+ I $P($G(DGP("PAT",0)),U,9)="" S FILERR(RULE)=""
+"RTN","IVMZ7CR",32,0)
+ Q
+"RTN","IVMZ7CR",33,0)
+9 ; VETERAN STATUS UNSPECIFIED
+"RTN","IVMZ7CR",34,0)
+ I $P($G(DGP("PAT","VET")),U)="" S FILERR(RULE)=""
+"RTN","IVMZ7CR",35,0)
+ Q
+"RTN","IVMZ7CR",36,0)
+11 ; SC PROMPT INCONSISTENT
+"RTN","IVMZ7CR",37,0)
+ N VET,SC,PTYPE
+"RTN","IVMZ7CR",38,0)
+ ; If VET Status is not specified (RULE 9) no need for this test
+"RTN","IVMZ7CR",39,0)
+ Q:$P($G(DGP("PAT","VET")),U)=""
+"RTN","IVMZ7CR",40,0)
+ S VET=$P(DGP("PAT","VET"),U,1)="Y",SC=$P(DGP("PAT",.3),U,1)="Y"
+"RTN","IVMZ7CR",41,0)
+ I 'VET,SC S FILERR(RULE)=""
+"RTN","IVMZ7CR",42,0)
+ Q
+"RTN","IVMZ7CR",43,0)
+13 ; POS UNSPECIFIED
+"RTN","IVMZ7CR",44,0)
+ ; Note: Rule #413 IN IVMZ7CE is a duplicate of this rule
+"RTN","IVMZ7CR",45,0)
+ Q:$P($G(DGP("PAT","VET")),U,1)'="Y"
+"RTN","IVMZ7CR",46,0)
+ ; Make sure that the value in the field is valid -- DGRPC does this as well
+"RTN","IVMZ7CR",47,0)
+ I '$D(^DIC(21,+$P(DGP("PAT",.32),U,3),0)) S FILERR(RULE)=""
+"RTN","IVMZ7CR",48,0)
+ Q
+"RTN","IVMZ7CR",49,0)
+15 ; INEL REASON UNSPECIFIED
+"RTN","IVMZ7CR",50,0)
+ ; Note: Rule #404 IN IVMZ7CE is a duplicate of this rule
+"RTN","IVMZ7CR",51,0)
+ I $P(DGP("PAT",.15),U,2),$P($G(DGP("PAT",.3)),U,7)="" S FILERR(RULE)=""
+"RTN","IVMZ7CR",52,0)
+ Q
+"RTN","IVMZ7CR",53,0)
+16 ; DATE OF DEATH IN FUTURE
+"RTN","IVMZ7CR",54,0)
+ ; Note: Rule #308 IN IVMZ7CD is a duplicate of this rule
+"RTN","IVMZ7CR",55,0)
+ S X=$P($G(DGP("PAT",.35)),U) I X']"" Q
+"RTN","IVMZ7CR",56,0)
+ ; Compare DOD to right now
+"RTN","IVMZ7CR",57,0)
+ I X>$$NOW^XLFDT S FILERR(RULE)=""
+"RTN","IVMZ7CR",58,0)
+ Q
+"RTN","IVMZ7CR",59,0)
+19 ; ELIG/NONVET STAT INCONSISTENT
+"RTN","IVMZ7CR",60,0)
+ ; Note: Rule #405 in IVMZ7CE is a duplicate of this rule
+"RTN","IVMZ7CR",61,0)
+ N VET,ELIG,FILE8,FILE81,MPTR,MTYPE,PTYPE
+"RTN","IVMZ7CR",62,0)
+ ; Patient's VET status
+"RTN","IVMZ7CR",63,0)
+ S VET=$P($G(DGP("PAT","VET")),U,1) I VET="" S FILERR(RULE)="" Q
+"RTN","IVMZ7CR",64,0)
+ ; do this check for NON-VET status only
+"RTN","IVMZ7CR",65,0)
+ Q:VET="Y"
+"RTN","IVMZ7CR",66,0)
+ ; Check PT type to see if we skip VET checks
+"RTN","IVMZ7CR",67,0)
+ S PTYPE=$P($G(DGP("PAT","TYPE")),U,1)
+"RTN","IVMZ7CR",68,0)
+ I PTYPE]"",$P(^DG(391,PTYPE,0),U,2) Q
+"RTN","IVMZ7CR",69,0)
+ ; Eligibility Code
+"RTN","IVMZ7CR",70,0)
+ S ELIG=$P($G(DGP("PAT",.36)),U,1) I ELIG="" S FILERR(RULE)="" Q
+"RTN","IVMZ7CR",71,0)
+ ;start in File #8
+"RTN","IVMZ7CR",72,0)
+ S FILE8=$G(^DIC(8,ELIG,0)) I FILE8="" S FILERR(RULE)="" Q
+"RTN","IVMZ7CR",73,0)
+ ;using the pointer value in field #8 (node 0; piece 9)
+"RTN","IVMZ7CR",74,0)
+ S MPTR=$P(FILE8,U,9)
+"RTN","IVMZ7CR",75,0)
+ ;find the record in File #8.1
+"RTN","IVMZ7CR",76,0)
+ S FILE81=$G(^DIC(8.1,MPTR,0)) I FILE81="" S FILERR(RULE)="" Q
+"RTN","IVMZ7CR",77,0)
+ ;check the Type field #4 (node 0; piece 5). 
+"RTN","IVMZ7CR",78,0)
+ S MTYPE=$P(FILE81,U,5)
+"RTN","IVMZ7CR",79,0)
+ ; Pt's VET status must match NON-VET Status of Eligibility Code
+"RTN","IVMZ7CR",80,0)
+ I VET'=MTYPE S FILERR(RULE)=""
+"RTN","IVMZ7CR",81,0)
+ Q
+"RTN","IVMZ7CR",82,0)
+24 ; POS/ELIG CODE INCONSISTENT
+"RTN","IVMZ7CR",83,0)
+ ; Note: Rule #412 in IVMZ7CE is a duplicate of this rule
+"RTN","IVMZ7CR",84,0)
+ I '$D(^DIC(21,+$P(DGP("PAT",.32),U,3),"E",+$P(DGP("PAT",.36),U,1))) S FILERR(RULE)=""
+"RTN","IVMZ7CR",85,0)
+ Q
+"RTN","IVMZ7CR",86,0)
+29 ; A&A CLAIMED, NONVET
+"RTN","IVMZ7CR",87,0)
+ I $P(DGP("PAT","VET"),U,1)'="Y",$P($G(^DPT(DFN,.362)),U,12)="Y" S FILERR(RULE)=""
+"RTN","IVMZ7CR",88,0)
+ Q
+"RTN","IVMZ7CR",89,0)
+30 ; HOUSEBOUND CLAIMED, NONVET
+"RTN","IVMZ7CR",90,0)
+ I $P(DGP("PAT","VET"),U,1)'="Y",$P($G(^DPT(DFN,.362)),U,13)="Y" S FILERR(RULE)=""
+"RTN","IVMZ7CR",91,0)
+ Q
+"RTN","IVMZ7CR",92,0)
+31 ; VA PENSION CLAIMED, NONVET
+"RTN","IVMZ7CR",93,0)
+ I $P(DGP("PAT","VET"),U,1)'="Y",$P($G(^DPT(DFN,.362)),U,14)="Y" S FILERR(RULE)=""
+"RTN","IVMZ7CR",94,0)
+ Q
+"RTN","IVMZ7CR",95,0)
+34 ; POW CLAIMED, NONVET
+"RTN","IVMZ7CR",96,0)
+ I $P(DGP("PAT","VET"),U,1)'="Y",$P($G(^DPT(DFN,.52)),U,5)="Y" S FILERR(RULE)=""
+"RTN","IVMZ7CR",97,0)
+ Q
+"RTN","IVMZ7CR",98,0)
+60 ; AGENT ORANGE EXP LOC MISSING
+"RTN","IVMZ7CR",99,0)
+ ; Note: Rule #512 in IVMZ7CS is a duplicate of this rule.
+"RTN","IVMZ7CR",100,0)
+ I $P(DGP("PAT",.321),U,2)="Y",$P(DGP("PAT",.321),U,13)="" S FILERR(RULE)=""
+"RTN","IVMZ7CR",101,0)
+ Q
+"RTN","IVMZ7CR",102,0)
+72 ; MSE DATA MISSING/INCOMPLETE, turned off with DG*5.3*765
+"RTN","IVMZ7CR",103,0)
+ ; Note: Rule #513 in IVMZ7CS is a duplicate of this rule.
+"RTN","IVMZ7CR",104,0)
+ N I,X
+"RTN","IVMZ7CR",105,0)
+ S X=DGP("PAT",.32)
+"RTN","IVMZ7CR",106,0)
+ F I=4,5,8 I $P(X,U,I)'="",'$$YY^IVMZ7CS($P(X,U,6)) S FILERR(RULE)="" Q     ;LAST
+"RTN","IVMZ7CR",107,0)
+ F I=9,10,13 I $P(X,U,I)'="",'$$YY^IVMZ7CS($P(X,U,11)) S FILERR(RULE)="" Q  ;NTL
+"RTN","IVMZ7CR",108,0)
+ F I=14,15,18 I $P(X,U,I)'="",'$$YY^IVMZ7CS($P(X,U,11)) S FILERR(RULE)=""   ;NNTL
+"RTN","IVMZ7CR",109,0)
+ Q
+"RTN","IVMZ7CR",110,0)
+ ;
+"RTN","IVMZ7CR",111,0)
+74 ; CONFLICT DT MISSING/INCOMPLETE, turned off with DG*5.3*765 
+"RTN","IVMZ7CR",112,0)
+ ; Note:#515 IVMZ7CS is a duplicate, turned off with DG*5.3*771
+"RTN","IVMZ7CR",113,0)
+75 ; ALSO # 75 CONFLICT TO DT BEFORE FROM DT
+"RTN","IVMZ7CR",114,0)
+76 ;      # 76 INACCURATE CONFLICT DATE, turned off with DG*5.3*771
+"RTN","IVMZ7CR",115,0)
+ ; 
+"RTN","IVMZ7CR",116,0)
+ N I,T,FROM,TO,NODE,PCE,PCEFR,PCETO,CONFL,RANGE,RFR,RTO,RNGE,ERR,COM,ON74,ON75,ON76
+"RTN","IVMZ7CR",117,0)
+ S ON74=$$ON(74),ON75=$$ON(75),ON76=$$ON(76)
+"RTN","IVMZ7CR",118,0)
+ S I=$$RANGE^DGMSCK()    ; load range table
+"RTN","IVMZ7CR",119,0)
+ F I=1:1 S CONFL=$P($T(CONLIST+I),";;",3) Q:CONFL="QUIT"  D
+"RTN","IVMZ7CR",120,0)
+ . ;we have to have a flag ERR because we don't want multiple
+"RTN","IVMZ7CR",121,0)
+ . ;inconsistencies on a single conflict but we do want to
+"RTN","IVMZ7CR",122,0)
+ . ;flag a single inconsistency on multiple conflicts
+"RTN","IVMZ7CR",123,0)
+ . S ERR=0
+"RTN","IVMZ7CR",124,0)
+ . S NODE=$P(CONFL,U,1),PCE=$P(CONFL,U,2),PCEFR=$P(CONFL,U,3),PCETO=$P(CONFL,U,4)
+"RTN","IVMZ7CR",125,0)
+ . S RNGE=$P(CONFL,U,5)
+"RTN","IVMZ7CR",126,0)
+ . Q:$P(DGP("PAT",NODE),U,PCE)'="Y"
+"RTN","IVMZ7CR",127,0)
+ . S FROM=$P(DGP("PAT",NODE),U,PCEFR),TO=$P(DGP("PAT",NODE),U,PCETO)
+"RTN","IVMZ7CR",128,0)
+ . ; check rule 74 CONFLICT DT MISSING/INCOMPLETE
+"RTN","IVMZ7CR",129,0)
+ . I ON74,(RULE=74) F T=FROM,TO I '$$YM^IVMZ7CS(T) S FILERR(RULE)="",ERR=1
+"RTN","IVMZ7CR",130,0)
+ . Q:ERR
+"RTN","IVMZ7CR",131,0)
+ . ; check rule 75 CONFLICT TO DT BEFORE CONFLICT FROM DT
+"RTN","IVMZ7CR",132,0)
+ . I ON75,(RULE=75),(FROM>TO) S FILERR(RULE)="",ERR=1
+"RTN","IVMZ7CR",133,0)
+ . Q:ERR
+"RTN","IVMZ7CR",134,0)
+ . ; check rule 76 INACCURATE CONFLICT DATE
+"RTN","IVMZ7CR",135,0)
+ . Q:ERR
+"RTN","IVMZ7CR",136,0)
+ . Q:'$D(RANGE(RNGE))  ; can't calculate if range table is missing
+"RTN","IVMZ7CR",137,0)
+ . ; determine whether dates are withing conflict range
+"RTN","IVMZ7CR",138,0)
+ . S RFR=$P(RANGE(RNGE),U,1),RTO=$P(RANGE(RNGE),U,2)
+"RTN","IVMZ7CR",139,0)
+ . I ON76,(RULE=76) D
+"RTN","IVMZ7CR",140,0)
+ . . I '((RFR'>FROM)&((RTO'<TO))) S FILERR(RULE)=""
+"RTN","IVMZ7CR",141,0)
+ Q
+"RTN","IVMZ7CR",142,0)
+78 ; INACCURATE COMBAT DT/LOC, turned off with DG*5.3*771
+"RTN","IVMZ7CR",143,0)
+ N I,T,FROM,TO,RULE,NODE,PCE,PCEFR,PCETO,CONFL,RANGE,RFR,RTO,RNGE,ERR,COM,ON78,LOC
+"RTN","IVMZ7CR",144,0)
+ ; This tag checks COMBAT status and verifies that valid FROM & TO dates are found
+"RTN","IVMZ7CR",145,0)
+ S RULE=78
+"RTN","IVMZ7CR",146,0)
+ I '$$ON(RULE) Q
+"RTN","IVMZ7CR",147,0)
+ S I=$$RANGE^DGMSCK()    ; load range table
+"RTN","IVMZ7CR",148,0)
+ F I=1:1 S CONFL=$P($T(COMLIST+I),";;",3) Q:CONFL="QUIT"  D
+"RTN","IVMZ7CR",149,0)
+ . S NODE=$P(CONFL,U,1),PCE=$P(CONFL,U,2),PCEFR=$P(CONFL,U,3),PCETO=$P(CONFL,U,4)
+"RTN","IVMZ7CR",150,0)
+ . S RNGE=$P(CONFL,U,5)
+"RTN","IVMZ7CR",151,0)
+ . ; if we have COMBAT data, get Service Location info, it comes under a different rule
+"RTN","IVMZ7CR",152,0)
+ . Q:$P(DGP("PAT",NODE),U,PCE)'="Y"
+"RTN","IVMZ7CR",153,0)
+ . S RNGE=$$COMPOW^DGRPMS($P(DGP("PAT",.52),U,12)) I $G(RNGE)="" S FILERR(RULE)="" Q
+"RTN","IVMZ7CR",154,0)
+ . S FROM=$P(DGP("PAT",NODE),U,PCEFR),TO=$P(DGP("PAT",NODE),U,PCETO)
+"RTN","IVMZ7CR",155,0)
+ . ; determine whether Pt dates are within conflict range for specified location
+"RTN","IVMZ7CR",156,0)
+ . S RFR=$P(RANGE(RNGE),U,1),RTO=$P(RANGE(RNGE),U,2)
+"RTN","IVMZ7CR",157,0)
+ . I '(RFR'>FROM&((FROM'>RTO)&((RTO'<TO)&((TO'<RFR))))) S FILERR(RULE)=""
+"RTN","IVMZ7CR",158,0)
+ Q
+"RTN","IVMZ7CR",159,0)
+81 ; COMBAT DT NOT WITHIN MSE, turned off with DG*5.3*765
+"RTN","IVMZ7CR",160,0)
+ ; this code is copied from DGRP3
+"RTN","IVMZ7CR",161,0)
+ ; MSFROMTO^DGMSCK creates a block for a continual MSE
+"RTN","IVMZ7CR",162,0)
+ N MSE,MSECHK,MSESET,ANYMSE,DGP81
+"RTN","IVMZ7CR",163,0)
+ I '$P($G(DGP("PAT",.52)),U,12) Q
+"RTN","IVMZ7CR",164,0)
+ ;
+"RTN","IVMZ7CR",165,0)
+ ; we're calling into DG Legacy code so we have to modify some arrays
+"RTN","IVMZ7CR",166,0)
+ M DGP81=DGP K DGP
+"RTN","IVMZ7CR",167,0)
+ M DGP=DGP81("PAT")
+"RTN","IVMZ7CR",168,0)
+ ; set up the check
+"RTN","IVMZ7CR",169,0)
+ S:'$G(MSECHK) MSECHK=$$MSCK^DGMSCK S:'$G(MSESET) MSESET=$$MSFROMTO^DGMSCK
+"RTN","IVMZ7CR",170,0)
+ ; If COMBAT, but no MSE, then Range is NOT within MSE
+"RTN","IVMZ7CR",171,0)
+ I '$G(ANYMSE) D  Q
+"RTN","IVMZ7CR",172,0)
+ . S FILERR(RULE)=""
+"RTN","IVMZ7CR",173,0)
+ . K DGP M DGP=DGP81
+"RTN","IVMZ7CR",174,0)
+ I '$$RWITHIN^DGRPDT($P(MSESET,U,1),$P(MSESET,U,2),$P($G(DGP81("PAT",.52)),U,13),$P($G(DGP81("PAT",.52)),U,14)) S FILERR(RULE)=""
+"RTN","IVMZ7CR",175,0)
+ K DGP M DGP=DGP81
+"RTN","IVMZ7CR",176,0)
+ Q
+"RTN","IVMZ7CR",177,0)
+ ;
+"RTN","IVMZ7CR",178,0)
+83 ; BOS REQUIRES DATE W/IN WWII
+"RTN","IVMZ7CR",179,0)
+ ; this code is copied from DGRP3
+"RTN","IVMZ7CR",180,0)
+ N BOS,BOSN,MS,MSE,DGP83,OUT
+"RTN","IVMZ7CR",181,0)
+ ;IVM*2*153 uses mse data from DGPMSE array, if it exists
+"RTN","IVMZ7CR",182,0)
+ I $D(DGPMSE) D  Q
+"RTN","IVMZ7CR",183,0)
+ .S MS=0 F  S MS=$O(DGPMSE(MS)) Q:'MS!($G(OUT))  D
+"RTN","IVMZ7CR",184,0)
+ ..I $P(DGPMSE(MS),U,7) Q  ;Don't check MSE if verified by HEC
+"RTN","IVMZ7CR",185,0)
+ ..S BOS=$P(DGPMSE(MS),U,3) Q:'BOS  S BOSN=$P(^DIC(23,BOS,0),U)
+"RTN","IVMZ7CR",186,0)
+ ..S MSE=$O(DGPMSE(MS,0)) Q:'MSE  S MSE="MSE-"_MSE
+"RTN","IVMZ7CR",187,0)
+ ..I $$BRANCH^DGRPMS(BOS_U_BOSN),'$$WWII^DGRPMS(DFN,"",MSE) S FILERR(RULE)="",OUT=1 Q
+"RTN","IVMZ7CR",188,0)
+ ;Otherwise, get MSE data from DGP("PAT",.32)
+"RTN","IVMZ7CR",189,0)
+ Q:'$D(DGP("PAT",.32))
+"RTN","IVMZ7CR",190,0)
+ ; we're calling into DG Legacy code so we have to modify some arrays
+"RTN","IVMZ7CR",191,0)
+ M DGP83=DGP K DGP
+"RTN","IVMZ7CR",192,0)
+ M DGP=DGP83("PAT")
+"RTN","IVMZ7CR",193,0)
+ F MS=1:1:3 D
+"RTN","IVMZ7CR",194,0)
+ . I MS=2,$P(DGP83("PAT",.32),U,19)'="Y" Q
+"RTN","IVMZ7CR",195,0)
+ . I MS=3,$P(DGP83("PAT",.32),U,20)'="Y" Q
+"RTN","IVMZ7CR",196,0)
+ . S BOS=$P(DGP83("PAT",.32),U,(5*MS)) Q:'BOS  S BOSN=$P($G(^DIC(23,BOS,0)),U)
+"RTN","IVMZ7CR",197,0)
+ . S MSE=$P("MSL^MSNTL^MSNNTL",U,MS)
+"RTN","IVMZ7CR",198,0)
+ . I $$BRANCH^DGRPMS(BOS_U_BOSN),'$$WWII^DGRPMS(DFN,"",MSE) S FILERR(RULE)=""
+"RTN","IVMZ7CR",199,0)
+ ; fix the arrays before we leave
+"RTN","IVMZ7CR",200,0)
+ K DGP M DGP=DGP83
+"RTN","IVMZ7CR",201,0)
+ Q
+"RTN","IVMZ7CR",202,0)
+85 ; FILIPINO VET SHOULD BE VET='Y'
+"RTN","IVMZ7CR",203,0)
+ ; this code is copied from DGRP3
+"RTN","IVMZ7CR",204,0)
+ N MS,BOS,FV,FILV,NOTFV,MSE,RULE2,DGVT,DGP85
+"RTN","IVMZ7CR",205,0)
+ ;IVM*2*153 use mse data from DGPMSE array, if it exists
+"RTN","IVMZ7CR",206,0)
+ ; we're calling into DG Legacy code so we have to modify some arrays
+"RTN","IVMZ7CR",207,0)
+ S DGVT=$P($G(DGP("PAT","VET")),U)="Y"
+"RTN","IVMZ7CR",208,0)
+ S RULE2=86   ; will also check RULE #86 INEL FIL VET SHOULD BE VET='N'
+"RTN","IVMZ7CR",209,0)
+ I $D(DGPMSE) D
+"RTN","IVMZ7CR",210,0)
+ .S MS=0 F  S MS=$O(DGPMSE(MS)) Q:'MS  D
+"RTN","IVMZ7CR",211,0)
+ ..I $P(DGPMSE(MS),U,7) Q  ;Don't check MSE if verified by HEC
+"RTN","IVMZ7CR",212,0)
+ ..S BOS=$P(DGPMSE(MS),U,3),FV=$$FV^DGRPMS(BOS) I 'FV S NOTFV="" Q
+"RTN","IVMZ7CR",213,0)
+ ..S MSE=$O(DGPMSE(MS,0)) Q:'MSE  S MSE="MSE-"_MSE
+"RTN","IVMZ7CR",214,0)
+ ..I '$$WWII^DGRPMS(DFN,"",MSE) S FILV("I")="" Q
+"RTN","IVMZ7CR",215,0)
+ ..I FV=2 S FILV("E")="" Q
+"RTN","IVMZ7CR",216,0)
+ ..I $P(DGP("PAT",.321),U,14)=""!($P(DGP("PAT",.321),U,14)="NO") S FILV("I")="" Q
+"RTN","IVMZ7CR",217,0)
+ ..S FILV("E")=""
+"RTN","IVMZ7CR",218,0)
+ ;Otherwise, get MSE data from DGP(.32)
+"RTN","IVMZ7CR",219,0)
+ E  I $D(DGP("PAT",.32)) D
+"RTN","IVMZ7CR",220,0)
+ .; we're calling into DG Legacy code so we have to modify some arrays
+"RTN","IVMZ7CR",221,0)
+ .M DGP85=DGP K DGP
+"RTN","IVMZ7CR",222,0)
+ .M DGP=DGP85("PAT")
+"RTN","IVMZ7CR",223,0)
+ .F MS=1:1:3 D
+"RTN","IVMZ7CR",224,0)
+ ..I MS=2,$P(DGP85("PAT",.32),U,19)'="Y" Q
+"RTN","IVMZ7CR",225,0)
+ ..I MS=3,$P(DGP85("PAT",.32),U,20)'="Y" Q
+"RTN","IVMZ7CR",226,0)
+ ..S BOS=$P(DGP85("PAT",.32),U,(5*MS)),FV=$$FV^DGRPMS(BOS) I 'FV S NOTFV="" Q
+"RTN","IVMZ7CR",227,0)
+ ..S MSE=$P("MSL^MSNTL^MSNNTL",U,MS)
+"RTN","IVMZ7CR",228,0)
+ ..I '$$WWII^DGRPMS(DFN,"",MSE) S FILV("I")="" Q
+"RTN","IVMZ7CR",229,0)
+ ..I FV=2 S FILV("E")="" Q
+"RTN","IVMZ7CR",230,0)
+ ..I $P(DGP85("PAT",.321),U,14)=""!($P(DGP85("PAT",.321),U,14)="NO") S FILV("I")="" Q
+"RTN","IVMZ7CR",231,0)
+ ..S FILV("E")=""
+"RTN","IVMZ7CR",232,0)
+ .; fix the arrays
+"RTN","IVMZ7CR",233,0)
+ .K DGP M DGP=DGP85
+"RTN","IVMZ7CR",234,0)
+ I $D(FILV) D
+"RTN","IVMZ7CR",235,0)
+ . I DGVT'=1,$D(FILV("E")) S FILERR(RULE)=""
+"RTN","IVMZ7CR",236,0)
+ . I DGVT=1,'$D(NOTFV),'$D(FILV("E")),$D(FILV("I")) S FILERR(RULE2)=""
+"RTN","IVMZ7CR",237,0)
+ Q
+"RTN","IVMZ7CR",238,0)
+86 ; INEL FIL VET SHOULD BE VET='N'
+"RTN","IVMZ7CR",239,0)
+ ; This rule is satisfied in #85 above
+"RTN","IVMZ7CR",240,0)
+ Q
+"RTN","IVMZ7CR",241,0)
+ON(RULE) ;verify RULE is turned on
+"RTN","IVMZ7CR",242,0)
+ N ON,Y
+"RTN","IVMZ7CR",243,0)
+ S ON=0
+"RTN","IVMZ7CR",244,0)
+ S Y=^DGIN(38.6,RULE,0)
+"RTN","IVMZ7CR",245,0)
+ I $P(Y,U,6) S ON=1
+"RTN","IVMZ7CR",246,0)
+ Q ON
+"RTN","IVMZ7CR",247,0)
+CONLIST ;;CONFLICT;;NODE^PIECE^FROM^TO^RANGE  -- offset list, do not add comments
+"RTN","IVMZ7CR",248,0)
+ ;;VIETNAM;;.321^1^4^5^VIET
+"RTN","IVMZ7CR",249,0)
+ ;;LEBANON;;.322^1^2^3^LEB
+"RTN","IVMZ7CR",250,0)
+ ;;GRENADA;;.322^4^5^6^GREN
+"RTN","IVMZ7CR",251,0)
+ ;;PANAMA;;.322^7^8^9^PAN
+"RTN","IVMZ7CR",252,0)
+ ;;PERSIAN GULF;;.322^10^11^12^GULF
+"RTN","IVMZ7CR",253,0)
+ ;;SOMALIA;;.322^16^17^18^SOM
+"RTN","IVMZ7CR",254,0)
+ ;;YUGOSLAVIA;;.322^19^20^21^YUG
+"RTN","IVMZ7CR",255,0)
+ ;;QUIT;;QUIT
+"RTN","IVMZ7CR",256,0)
+COMLIST ;;COMBAT;;NODE^PIECE^FROM^TO^RANGE  -- offset list, do not add comments
+"RTN","IVMZ7CR",257,0)
+ ;;WWI;;.52^11^13^14^WWI
+"RTN","IVMZ7CR",258,0)
+ ;;WWIIE;;.52^11^13^14^WWIIE
+"RTN","IVMZ7CR",259,0)
+ ;;WWIIP;;.52^11^13^14^WWIIP
+"RTN","IVMZ7CR",260,0)
+ ;;KOREA;;.52^11^13^14^KOR
+"RTN","IVMZ7CR",261,0)
+ ;;OTHER;;.52^11^13^14^OTHER
+"RTN","IVMZ7CR",262,0)
+ ;;VIETNAM;;.52^11^13^14^VIET
+"RTN","IVMZ7CR",263,0)
+ ;;LEBANON;;.52^11^13^14^LEB
+"RTN","IVMZ7CR",264,0)
+ ;;GRENADA;;.52^11^13^14^GREN
+"RTN","IVMZ7CR",265,0)
+ ;;PANAMA;;.52^11^13^14^PAN
+"RTN","IVMZ7CR",266,0)
+ ;;PERSIAN GULF;;.52^11^13^14^GULF
+"RTN","IVMZ7CR",267,0)
+ ;;SOMALIA;;.52^11^13^14^SOM
+"RTN","IVMZ7CR",268,0)
+ ;;YUGOSLAVIA;;.52^11^13^14^YUG
+"RTN","IVMZ7CR",269,0)
+ ;;QUIT;;QUIT
+"VER")
+8.0^22.0
+**END**
+**END**

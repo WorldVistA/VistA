@@ -1,0 +1,87 @@
+
+=============================================================================
+Run Date: MAR 06, 2017                     Designation: RA*5*134
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #116                      Status: Released
+                  Compliance Date: APR 06, 2017
+=============================================================================
+
+Associated patches: (v)RA*5*127    <<= must be installed BEFORE `RA*5*134'
+
+Subject: RADIOLOGY INFORMATIONAL UPDATE PATCH FOR NTRT
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This is an INFORMATIONAL patch that is a follow on to patch
+ RA*5.0*127. This patch includes instructions to manually change
+ field #9 SEEDING COMPLETE in the Radiology MASTER RADIOLOGY SITE
+ File (71.98) from N to Y.
+  
+ This patch should not be exercised until the content of the
+ MASTER RADIOLOGY PROCEDURE file (#71.99) has been deployed.
+  
+ When the content of the MASTER RADIOLOGY PROCEDURE file (#71.99)
+ has been deployed the NTRT group sends a message to the
+ NTRT_NOTIFICATION-L listserv.
+  
+ The ADPAC for the facility shall subscribe to this list using the
+ following web site: http://vaww.listserv.domain.ext/scripts/wa.exe. The 
+ NTRT group does not own the List Serve application. The List Serve
+ is a VA service. The ADPAC will need to create an account using a
+ username and password that does NOT synchronize with the ADPAC's
+ VA network account.
+  
+ *****************
+ DO NOT CHANGE ANY VALUES EXCEPT FOR field #9 SEEDING COMPLETE.
+ *****************
+  
+ CHANGE INSTRUCTIONS:
+ ==========================
+  
+ Systems Installer (OI&T):
+ Verify that the MASTER RADIOLOGY PROCEDURE file (#71.99) (MRPF)
+ has been populated with data. The pre-deployment MASTER RADIOLOGY 
+ PROCEDURE file (#71.99) will contain nine (9) entries.
+  
+ ADPAC:
+ Do not continue until The system installer has verified that the
+ MASTER RADIOLOGY PROCEDURE file (#71.99) (MRPF) content has been
+ deployed to your facility.
+  
+ Navigate to the Radiology Supervisor menu.
+  
+ Suggested method is:
+ Menu Path: Core Applications -> Rad/Nuc Med Total System Menu
+ -> Press "Enter Key" to select a "Sign on Imaging Location"
+ -> Supervisor menu.
+  
+ Select SEED  Master Procedure file seeding Complete.
+  
+ At the prompt SEEDING COMPLETE: NO// enter 'Y' to change the
+ value from NO to YES.  This will allow request messages to
+ be sent when a new Radiology Procedure is created and has not
+ been associated to the MASTER RADIOLOGY PROCEDURE file (#71.99).
+  
+ Press <ENTER> to return to the Supervisors menu.
+ You may exit the Supervisors menu at this time.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 25, 2017
+Completed By:                               Date Completed: MAR 03, 2017
+Released By :                               Date Released : MAR 06, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

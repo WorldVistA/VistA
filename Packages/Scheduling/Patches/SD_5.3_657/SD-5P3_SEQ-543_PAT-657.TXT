@@ -1,0 +1,340 @@
+
+=============================================================================
+Run Date: MAR 15, 2017                     Designation: SD*5.3*657
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #543                    Status: Released
+                  Compliance Date: APR 01, 2017
+=============================================================================
+
+Associated patches: (v)SD*5.3*649  <<= must be installed BEFORE `SD*5.3*657'
+
+Subject: FY17 MID-YEAR STOP CODE CHANGES
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ NOTE:   SD*5.3*657 is being released along with EC*2.0*135 in host file:
+         SD53_657_EC20_135.KID.
+  
+  
+ SD*5.3*657 provides Fiscal Year 2017 Mid-Year updates to the CLINIC STOP 
+ (#40.7) file as requested by the Office of Finance, Managerial Cost 
+ Accounting Office (MCAO).
+  
+ EC*2.0*135 inactivates any DSS Units in Event Capture set to Send No 
+ Records to PCE with an associated Stop Code being inactivated by 
+ SD*5.3*657.
+  
+                          *** IMPORTANT NOTE ***
+ **************************************************************************
+ *  These patches are being released with a compliance date of April 1,   *
+ *  2017 and should be installed as close to Close of Business (COB) on   *
+ *  March 31, 2017 as possible, but not after April 1, 2017.  Early       *
+ *  installation of this patch could result in transmission of incorrect  *
+ *  Stop Codes that will result in errors from Austin.  Coordination with *
+ *  the MAS (Medical Administration Service) PAS (Program Application     *
+ *  Specialist)/ADPAC (Automated Data Processing Application Coordinator) *
+ *  is imperative as SD*5.3*657 will cause changes to the CLINIC STOP     *
+ *  (#40.7) file.  Testing can be done in a site's mirror account before  *
+ *  installation in production to verify changes.  SD*5.3*657 inactivates,*
+ *  modifies, and creates Stop Codes effective April 1, 2017; therefore,  *
+ *  installing early may modify certain Stop Codes that may currently be  *
+ *  in use at your site.  It is advised that clinics with Stop Codes      *
+ *  assigned that will incur restriction date/type changes should be      *
+ *  corrected as soon as possible after installation.  Please keep in mind*
+ *  that new Stop Code corrections should not be assigned in              *
+ *  MAS/Scheduling until April 1, 2017 as the PCE encounters bearing      *
+ *  FY17 Mid-Year Stop Codes will not be accepted in Austin until that    *
+ *  date.  All other MAS Stop Code corrections should be made as early    *
+ *  as possible on April 1, 2017.                                         *
+ **************************************************************************
+  
+ Instructions for the FY17 Mid-Year Stop Code Patch:
+  
+ SD*5.3*657 makes additions and changes to the CLINIC STOP (#40.7) file as 
+ of April 1, 2017.  Patch EC*2.0*135 inactivates any DSS Units in Event 
+ Capture set to Send No Records to PCE with an associated Stop Code being 
+ inactivated by SD*5.3*657.
+  
+ No clinic can be created using any new Stop Codes contained in the patch
+ until after this patch is implemented.  Any clinic using a Stop Code
+ inactivated by SD*5.3*657 should be replaced with a new clinic using an
+ active Stop Code.  This can be accomplished prior to patch implementation
+ if desired.
+  
+ MCA Site Teams, Scheduling and IRM should coordinate to perform the 
+ following sequence:
+  
+ 1. From the menu, Setup for DSS Clinic Information [ECX SETUP CLINIC], run
+    the DSS worksheet Option 2:  Create DSS Clinic Stop Code File 
+    [ECXSCLOAD].  Then, make any necessary adjustments before approval so 
+    all clinics on the worksheet have setups applicable for the month of
+    March 2017.
+  
+ 2. IRM installs the patch late on March 31 or early on April 1, 2017.
+  
+ 3. Run the Non-Conforming Clinics Stop Code Report [SD CLN STOP CODE REP]
+    to list those clinics that need changes in the HOSPITAL LOCATION (#44)
+    file for FY17 Mid-Year.
+  
+    Scheduling staff should make changes in the HOSPITAL LOCATION (#44) 
+    file so that the clinics will have the correct Stop Codes in place 
+    for April 1st clinic appointments.  
+  
+    MCA staff: DO NOT make changes using Option 4:  Enter/Edit Clinic
+    Parameters [ECXSCEDIT] for the CLINICS AND STOP CODES (#728.44) file 
+    at this time.
+  
+ 4. Follow normal procedures to run the DSS CLI Extract and ECS Extract
+    for March 2017.  Do not edit clinic changes for April Stop Code changes
+    with Option 4:  Enter/Edit Clinic Parameters [ECXSCEDIT] option or in
+    DSS Unit Setup Screens in Event Capture prior to running the March CLI
+    Extract.  It is the edit, not the "approve", that changes the values
+    included in the extract.  Perform normal AUDITS for the CLI Extract.
+  
+ 5. After auditing and receiving confirmation of successful deblocking of
+    the transmitted March CLI Extract, proceed with FY17 Mid-Year Stop Code
+    changes to the DSS Clinics and Stop Codes Worksheet clinics and in any
+    DSS Units set to Send No Records to PCE.
+  
+ 6. For FY17 Mid-Year:
+  
+    a. Queue Option 2:  Create DSS Clinic Stop Code File [ECXSCLOAD] to run
+       on April 1, 2017.  This option creates local entries in the CLINICS
+       AND STOP CODES (#728.44) file and compares this file to the HOSPITAL
+       LOCATION (#44) file to see if there are any differences since the
+       last time the file was reviewed.
+  
+    b. After Option 2 has completed, use the Option 3:  Clinics and DSS
+       Stop Codes Print [ECXSCLIST].  This option produces a worksheet of
+       (A) All Clinics, (C) Active, (D) Duplicate, (I) Inactive, (U)
+       Unreviewed Clinics that are awaiting approval, and (X) Export to
+       Text File for Spreadsheet.
+  
+    c. Run Option 7:  Clinic & Stop Codes Validity Report [ECX STOP CODE
+       VALIDITY].  This step will check that all Stop Codes conform.  
+       Note:  a 'blank' output indicates there are no problems with Stop
+       Code and credit stop validity.
+  
+    d. Update for FY17 Mid-Year as needed using Option 4:  Enter/Edit 
+       Clinic Parameters [ECXSCEDIT] option.
+  
+    e. Approve changes using Option 5:  Approve Reviewed DSS Clinic 
+       Worksheet [ECXSCAPPROV] option.  Finalize all Stop Code changes on
+       the worksheet to be ready to run the April DSS CLI Extract.
+  
+    f. Make needed Stop Code changes in Event Capture to DSS Units set to
+       Send No Records to PCE.
+  
+  
+ Associated CA SDM Ticket:
+ =========================
+ I10490039FY16    FY17 Mid-Year Stop Code Changes
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Charlie Norwood VAMC (Augusta)
+ Wilkes-Barre VAMC
+ Battle Creek VAMC
+  
+  
+ CA SDM Ticket Overview:
+ =======================
+ I10490039FY16    FY17 Mid-Year Stop Code Changes
+  
+ Problem:
+ --------
+ The Office of Finance, Managerial Cost Accounting Office (MCAO), has 
+ requested Fiscal Year 2017 Mid-Year updates to the CLINIC STOP (#40.7) 
+ file.
+  
+ Resolution:
+ -----------
+ The requested Fiscal Year 2017 Mid-Year updates were submitted by the 
+ MCAO to be implemented effective April 1, 2017.  Post-init routine
+ SD53MY17 updates the CLINIC STOP (#40.7) file by adding one (1) new stop
+ code, inactivating three (3) stop codes, reactivating one (1) stop code,
+ and changing the names for two (2) stop codes.
+  
+ Listed below are the applicable stop code updates:
+  
+ New Stop Code being added (will take effect when the patch is installed.)
+  
+ Stop Code     Name/Description        Restriction Type    Restriction Date
+  
+    679     NC CVT TO HOME PROVID LOC         S               4/1/2017
+  
+ Stop Code being inactivated: (Inactivation Date: 4/1/2017)
+  
+         127     TOPOGRAPHICAL BRAIN MAPPING
+         154     MEG (MAGNETOENCEPHALOGRAPHY)
+         653     STATE HOSPITAL CARE
+  
+ Stop Code being reactivated:
+  
+         139     HEALTH/WELLBEING SRVS
+  
+ Stop Code with Name Change only: 
+  
+         139     Old Name:       WEIGHT CONTROL
+                 New Name:       HEALTH/WELLBEING SRVS
+  
+         159     Old Name:       COMP INTGR HEALTH
+                 New Name:       CIH TREATMENT
+  
+ NOTE: Since this is a combined patch, for information regarding FY17 
+       Mid-Year Inactive Stop Code DSS Unit Review, please see Event 
+       Capture patch EC*2.0*135.
+  
+  
+ Software Retrieval:
+ ===================
+ SD*5.3*657 & EC*2.0*135 are combined in host file SD53_657_EC20_135.KID.
+  
+ Installation of this host file should be coordinated among the packages
+ affected since only one installation is necessary.
+  
+ Sites may retrieve the KIDS build in one of the following ways:
+  
+   1. The preferred method is to SFTP the file from 
+      download.vista.domain.ext which will transmit the file from the
+      first available SFTP server.
+  
+   2. Sites may also elect to retrieve the patch directly using Secure 
+      File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+      from the server as follows:
+  
+      Albany            domain.ext
+      Hines             domain.ext
+      Salt Lake City    domain.ext 
+  
+      Host File          File Name                 SFTP Protocol
+      --------------     ---------------------     -------------
+      Data Host File     SD53_657_EC20_135.KID         ASCII
+  
+  
+ Installation Instructions:
+ ==========================
+  
+ ***************************** IMPORTANT NOTE ****************************
+ *  SD*5.3*657 will be released in conjunction with an Event Capture     *
+ *  patch, EC*2.0*135.                                                   *
+ *                                                                       *
+ *  These patches should be installed as close to COB on 03/31/2017 as   *
+ *  as possible, but not after 04/01/2017.                               *
+ *                                                                       *
+ *  EC*2.0*135 will queue the inactivation of any DSS Units, that are    *
+ *  set to send no records and have an inactive/invalid stop code, for   *
+ *  04/01/17 at 1:00 AM.  If this patch is installed after that time,    *
+ *  the post-install will queue immediately.                             *
+ ************************************************************************* 
+  
+ The installation may be run with users on the system, but it is
+ recommended that it be queued to run after normal business hours.
+  
+ Install Time - less than 3 minutes
+ Suggested time to install: non-peak requirement hours.
+  
+ *** Routine SD53MY17 may be manually deleted after patch is installed ***
+  
+   1. Obtain the file SD53_657_EC20_135.KID.
+  
+   2. From the Kernel Installation & Distribution System menu, select the
+      Installation menu.
+  
+   3. Start Up KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]:
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+                                                               ---
+           Load a Distribution
+           Print Transport Global
+           Compare Transport Global to Current System
+           Verify Checksums in Transport Global
+           Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+           Backup a Transport Global
+  
+    4. Select Installation Option:
+       ---------------------------
+       a. Select the 'Load a Distribution' option and enter the directory
+          into which you downloaded the host file, followed by the host 
+          file name: [directory]SD53_657_EC20_135.KID
+      
+          NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+                NAME, enter SD*5.3*657):
+  
+       b. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch.  It will not
+          backup any other changes such as DD's or templates.
+   
+       c. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+  
+       d. Verify Checksums in Transport Global - This option will allow you
+          to ensure the integrity of the routines that are in the transport
+          global.
+  
+    5. Select Installation Option: Install Package(s)
+       ----------------------------------------------
+       ** This is the step to start the installation of this KIDS patch:
+  
+       a. Choose the Install Package(s) option to start the patch install.
+  
+       b. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+          NO//', answer NO.
+  
+       c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? NO//', answer NO.
+  
+ NOTE:  Details of the changes applied by this patch are provided during
+        the installation and may also be reviewed with the Install File
+        Print option on the Utilities menu on the Kernel Installation and
+        Distribution System menu.
+  
+        It is important to check the CLINIC STOP (#40.7) file post 
+        installation to make sure that all of the updates are correctly 
+        reflected in the CLINIC STOP (#40.7) file.  If any discrepancies
+        are found, you should enter a CA SDM ticket.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD53MY17
+    Before:       n/a   After: B70744439  **657**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 01, 2016
+Completed By:                               Date Completed: MAR 07, 2017
+Released By :                               Date Released : MAR 15, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,504 @@
+Associated Patches:  
+=============================================================================
+Run Date: APR 25, 2017                     Designation: MAG*3*164
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #130                      Status: Released
+                  Compliance Date: MAY 26, 2017
+=============================================================================
+
+
+Subject: Importer
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Associated Patches:  
+ ===================
+ This patch must be installed after MAG*3.0*138
+  
+ Subject:
+ ========
+ IMPORTER III UPDATE
+  
+ Category:
+ =========
+ OTHER
+  
+ Description:
+ ============
+ MAG*3.0*164 includes updates to Importer III, client/server application 
+ that utilizes desktop client software, supported by server software on 
+ the Hybrid Digital Imaging and Communications in Medicine (DICOM) Image 
+ Gateway (HDIG), to transfer DICOM objects from studies performed outside 
+ the Department of Veterans Affairs (VA) into the VistA Imaging system. 
+ The Importer III client supports sharing prior study images from: 
+   VA Polytrauma clinicians 
+   Imaging facilities outside the VA 
+   Imaging facilities contracted to perform studies outside the VA 
+  
+ Patch Components:
+ =================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P 164_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch.  
+ MAG3_0P164_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software:
+ =========
+ File Name       Description
+ MAG3_0P164.KID  Kernel Installation and Distribution System (KIDS) build 
+ for Patch
+  
+ Documentation:
+ ==============
+ This document, MAG3_0164_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Fields Associated:
+ ==========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ =================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ =======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ =====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ =========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ =====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ =======================
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ 1. Defect 391628 (Ticket I10555403FY16)  Error when Selecting Ordering
+ ======================================================================
+ Location
+ ========
+ Problem:  When selecting an ordering location at a Community-based 
+ Outpatient Clinic (CBOC), sites are receiving the error:  "The selected 
+ ordering location does not have any procedures.  Please select another 
+ imaging location or have an administrator add procedures for the 
+ location."  Sites are filtered out if they are not designated as Veterans 
+ Affairs Medical Center (VAMC), Medical and Regional Office Center 
+ (M&ROC), Regional Office Outpatient Clinic (RO-OC), or Outpatient Clinic 
+ (OC) in the Institution file.
+  
+ Resolution:  The Station Number was converted to an IEN in line with 
+ Integration Agreement (IA)# 2171.
+  
+ 2. Defect 391632  Inactive Locations Included
+ =============================================
+ Problem:  The "MAGV GET RAD IMAGING LOCATIONS" Remote Procedure Call 
+ (RPC) returns ALL imaging location entries, including inactive 
+ locations.  If the Importer user unknowingly chooses an inactive 
+ location, their exam will be rejected at the time the HDIG attempts to 
+ complete the import transaction.
+  
+ Resolution:  A filter was included in which the "MAGV GET RAD IMAGING 
+ LOCATIONS" RPC returns only active imaging locations.
+  
+ Test Sites:
+ ==========
+ The following sites are test sites for this patch:
+   Phoenix VA Healthcare System
+   Fayetteville VAMC (NC)
+   Biloxi VAMC
+   Sioux Falls VA Health Care System
+  
+ Software and Documentation Retrieval Instructions:
+ =================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from 
+ anonymous@download.vista.domain.ext from the COMMAND prompt (example:  
+ sftp anonymous@download.vista.domain.ext). This transmits the files from 
+ the first available server. 
+  
+ Sites may also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ When using Attachmate Reflection (Secure Shell):
+ Albany:         domain.ext
+ Hines:          domain.ext
+ Salt Lake City: domain.ext
+    
+ When using the COMMAND prompt (example: sftp 
+ anonymous@domain.ext): 
+ Albany:         anonymous@domain.ext
+ Hines:          anonymous@domain.ext
+ Salt Lake City: anonymous@domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/.
+  
+ Patch Installation:
+ ==================
+ Pre/Post Installation Overview:
+ ===============================
+ MAG*3.0*164 must be installed on the VistA System.  This patch must be 
+ installed by the compliance date.
+  
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch.  This patch can be loaded while the VistA Imaging System is active 
+ and users are on the system.  Installing the MAG*3.0*164 KIDS only takes 
+ 2-3 minutes.
+  
+ Pre-Installation Instructions:
+ ==============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+  
+ Note:  All released VistA Imaging patches must be installed on the VistA 
+ system before installing MAG*3.0*164.
+  
+ VistA System (KIDS) Installation Instructions
+ =============================================
+ Installation Steps 
+ ==================
+ KIDS installation will take less than one minute.
+ 1. On the VistA system, access the Kernel Installation and Distribution 
+ System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+   a.Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load 
+ the KIDS distribution.
+   b.When prompted, enter the path and file name (MAG3_0P164.KID) of the 
+ MAG*3.0*164 KIDS file.
+   c.When prompted to continue with the load, enter "YES". A Distribution 
+ OK! message will be displayed when the load is complete.
+ 4. After loading the KIDS file, use the following options to verify the 
+ contents of the patch and to back up any affected routines.
+   a.Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this 
+ option if you want to ensure the integrity of the routines in the patch. 
+   b.Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] - 
+ Run this option if you want to view all changes that will be made when 
+ the patch is installed.  All components (routines, options, and so on) in 
+ the patch will be compared.
+   c.Backup a Transport Global [XPD BACKUP] - Run this option if you want 
+ to create a backup message of any routines exported with the patch.  It 
+ will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+  a.Run the Install Package(s) [XPD INSTALL BUILD] option.
+  b.When prompted for the install name, enter "MAG*3.0*164".
+  c.Answer "NO" to the following prompts, if they appear:
+  
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6. When installation is finished, an Install Complete message will be 
+ displayed.
+  
+ KIDS Installation Example
+ =========================
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing 
+ the KIDS file in a namespace on which it has previously been installed, 
+ your output may be different.
+  
+ Select OPTION NAME: XPD INSTALLATION MENU       Installation
+  
+  * 1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 1  Load a Distribution
+ Enter a Host File: MAG3_0P164.KID
+  
+ KIDS Distribution saved on Jan 04, 2017@10:28:03
+ Comment: VistA Imaging V3 Patch 164 HDIG/IMPORTER Maintenance
+  
+ This Distribution contains Transport Globals for the following Package(s):
+  
+ Build MAG*3.0*164 
+  
+ OK to continue with Load? NO// YES
+  
+ Distribution OK!
+  
+ Want to Continue with Load? YES//
+ Loading Distribution...
+  
+    MAG*3.0*164
+ Use INSTALL NAME: MAG*3.0*164 to install this Distribution.
+  
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+  * 6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*164      1/23/17@14:04:31
+      => VistA Imaging V3 Patch 164 HDIG/IMPORTER Maintenance  ;Created on 
+ Jan
+  
+ This Distribution was loaded on Jan 23, 2017@14:04:31 with header of
+    VistA Imaging V3 Patch 164 HDIG/IMPORTER Maintenance  ;Created on Jan 
+ 04, 2017@10:28:03
+    It consisted of the following Install(s):
+     MAG*3.0*164
+ Checking Install for Package MAG*3.0*164
+  
+ Install Questions for MAG*3.0*164
+  
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  
+  Install Started for MAG*3.0*164 :
+                Jan 23, 2017@14:04:41
+  
+ Build Distribution Date: Jan 04, 2017
+  
+  Installing Routines:......
+                Jan 23, 2017@14:04:41
+  
+  Running Pre-Install Routine: PRE^MAGIP164.
+  
+  Installing PACKAGE COMPONENTS:
+  
+  Installing REMOTE PROCEDURE..
+                Jan 23, 2017@14:04:41
+  
+  Running Post-Install Routine: POS^MAGIP164..
+  
+    Attaching RPCs to the 'MAG WINDOWS' option...
+    MAGV GET RAD PROVIDER
+    RPCs have been successfully attached.
+  
+ Post Install Mail Message: Jan 23, 2017@14:04:42
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*164 Installed.
+                Jan 23, 2017@14:04:42
+  
+  
+ Install Message sent.
+  
+ Uninstalling MAG*3.0*164
+ ========================
+ If it is necessary to uninstall the MAG*3.0*164 VistA KIDS, you needed to 
+ select the "Kernel Installation & Distribution System" menu option, 
+ "Backup a Transport Global" (see installation section above, step 4c), 
+ before you installed the patch.
+  
+ Administrators will need to use the PackMan function INSTALL/CHECK 
+ MESSAGE.  Check your MailMan messages for the backup message sent by the 
+ "Backup a Transport Global" function.
+  
+ 1. Select the message shown below:
+  
+ Backup of MAG*3.0*164 install on <mmm dd, yyyy>    <user name>
+  
+ 2. Select the Xtract PackMan option.
+ 3. Select the Install/Check Message option.
+ 4. Enter "Yes" at the prompt.
+ 5. Enter "No" at the backup prompt.  There is no need to back up the 
+ backup.
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2    Message #42925     Unloading Routine   MAGT7MA (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ . . .
+  
+ Routine Information:
+ ====================
+ VistA KIDS Checksums:
+ =====================
+ This section lists modified routines for the VistA KIDS build.  For each 
+ routine, the second line will contain the following information: 
+  
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 19;Mar 27, 2015
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine Checksum Before Checksum After  Patch List
+ MAGVIM05        141244825       145735310       **118,138,164**
+ MAGVIM10        21368167        25335221        **118,138,164**
+ MAGVIMRA        24367242        26121368        **118,164**
+ MAGIP164        NA              4110414         **164** 
+ Routine MAGIP164 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+
+Routine Information:
+====================
+Routine Name: MAGIP164
+    Checksum:
+  4110414
+ Description of Changes:
+  POST Install routine only
+
+Routine Name: MAGVIM05
+    Checksum:
+  145735310
+ Description of Changes:
+  Added code to check if it is not Site IEN, try Station Number.
+  +75| . S MAGVUSRDV=$G(MAGVUSRDV,$G(DUZ(2))),MAGSITEP=$O(^MAG(2006.1,"B",MAGVUSRDV,"")) ;P164
+   76| . I MAGSITEP="" D   ;P164 - if it is not Site IEN, try Station Number
+   77| . . ;--- Get IEN of INSTITUTION file (#4) from STATION NUMBER (Supported IA# 2171)
+   78| . . N IENINST S IENINST=$$IEN^XUAF4(MAGVUSRDV)
+   79| . . S MAGSITEP=$O(^MAG(2006.1,"B",IENINST,"")) Q:+MAGSITEP  ;found the site
+   80| . . S MAGERR=1,MSG="Unable to resolve Imaging Site Parameters entry. {DUZ(2)="_MAGVUSRDV_"} "
+
+Routine Name: MAGVIM08
+    Checksum:
+  21870351
+ Description of Changes:
+  Created new RPC [MAGV GET RAPROVIDER]= "PSB GETPROVIDER"+ RA filter
+  +96| ;*****  Return RA Provider records in PERSON file (#200)
+   97| ;       by DUZ, NAME , and INITIAL
+   98| ;    
+   99| ; RPC:MAGV GET RAD PROVIDER
+  100| ; 
+  101| ; Input Parameters
+  102| ; ================
+  103| ;   MAGIN    = Input of RA provider (string)
+  104| ; Return Values
+  105| ; =============
+  106| ; if error RESULTS(0) = Error number `` Error message
+  107| ; if success MAGRY(0) = 0` Number of records
+  108| ;            MAGRY(1) = "PERSON IEN`FULL NAME`INITIAL"   
+  109| ;            MAGRY(1..n) = DUZ  ` NAME ` INIT
+  110| ;  For example: RESULTS(n)="123^IMAGPROVIDERONETHREEFOUR,ONETH^TST^^"
+  111| ;
+  112|PROVLST(RESULTS,MAGIN) ;P164 RPC [MAGV GET RAPROVIDER]= "PSB GETPROVIDER"+ RA filter
+  113| N X,Y,%
+  114| K ^TMP("MAGV",$J) D NOW^%DTC
+  115| S MAGIN=$TR(MAGIN,"abcdefghijklmnopqrstuvwxyz","ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+  116| S RESULTS(0)=1,RESULTS(1)="-1^No provider matching input."
+  117| D LIST^DIC(200,"","","P","","",MAGIN,"B","","","^TMP(""MAGV"",$J)","PSBMSG")
+  118| S X=0 F  S X=$O(^TMP("MAGV",$J,"DILIST",X)) Q:(X="")  D
+  119| .S PRVIEN=$P(^TMP("MAGV",$J,"DILIST",X,0),U,1)
+  120| .I '$D(^XUSEC("PROVIDER",PRVIEN)) Q
+  121| .S PRVIACT=$$GET1^DIQ(200,PRVIEN_",",53.4,"I")
+  122| .Q:PRVIACT'=""&(+PRVIACT'>%)  ;if Inactive date and date is less than now Q
+  123| .S PRVTERM=$$GET1^DIQ(200,PRVIEN_",",9.2,"I")
+  124| .Q:PRVTERM'=""&(+PRVTERM'>%)  ;if termination date and date is less than now Q
+  125| .S PRVAUTH=$$GET1^DIQ(200,PRVIEN_",",53.1,"I") I PRVAUTH'=1 Q  ;is AUTHORIZED TO WRITE MED ORDERS
+  126| .S Y=PRVIEN Q:'$$PROV^RABWORD()  ;is RA provider
+  127| .I RESULTS(1)["-1" S RESULTS(0)=0
+  128| .S RESULTS(0)=RESULTS(0)+1,RESULTS(RESULTS(0))=$P(^TMP("MAGV",$J,"DILIST",X,0),U,1,2)
+  129| .I RESULTS(0)>100 K RESULTS S RESULTS(0)=1,RESULTS(1)=-2
+  130| .Q
+  131| K ^TMP("MAGV",$J),MAGIN,PRVIACT,PRVIEN,PRVTERM,PRVAUTH
+
+Routine Name: MAGVIM10
+    Checksum:
+  25335221
+ Description of Changes:
+  We took out STATIONUM, IENINST according to David M (CLin3) 
+  Modified the RPC: MAGV GET RADIOLOGY PROCEDURES  , is based on the RA Imaging Location 
+  selected by the user, not the arbitrary check on Institution .vs Imaging Location Division.
+  LINE +62 : +72 took out.
+
+Routine Name: MAGVIMRA
+    Checksum:
+  26121368
+ Description of Changes:
+  Added to check if the RA Imaging location is active stage.
+  +115| . N IEN,INACTIVE
+   116| . S IEN=0 F  S IEN=$O(^RA(FILE,IEN)) Q:IEN]"A"  D
+   117| .. S INACTIVE=$$GET1^DIQ(FILE,IEN,19,"I")  ;; p164 Check the location is active
+   118| .. I (INACTIVE="")!(INACTIVE>$$DT^XLFDT) D RADLOC^MAGVIMRA(TAG1,IEN)
+   119| .. Q
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 07, 2015
+Completed By:                               Date Completed: APR 25, 2017
+Released By :                               Date Released : APR 25, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+

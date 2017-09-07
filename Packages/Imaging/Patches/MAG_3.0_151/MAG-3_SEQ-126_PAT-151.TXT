@@ -1,0 +1,638 @@
+4 routines included
+=============================================================================
+Run Date: FEB 06, 2017                     Designation: MAG*3*151
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #126                      Status: Released
+                  Compliance Date: MAR 09, 2017
+=============================================================================
+
+
+Subject: Clinical Capture TIU issues
+
+Category: 
+  - Other
+
+Description:
+============
+
+ Associated Patches:  MAG*3.0*140 is required.
+ ==================
+  
+ Subject:  CLINICAL CAPTURE TEXT INTEGRATION UTILITY (TIU)/SCANNING ISSUES
+ =======
+  
+ Category:  OTHER
+ ========
+  
+ Description:
+ ===========
+ MAG*3.0*151 has fixes for the Clinical Capture Client.  Some of the 
+ issues resolved in this patch are as follows:  The Progress Notes window 
+ has been modified to fix errors when returning a list of patient notes.  
+ Abstracts are now created for PDF files.  Specialty and Proc/Event values 
+ are now correctly saved and there is a new option to add additional 
+ images to an existing image group.  Additional details are included in 
+ the list of patient consult note titles.  TWAIN device sharing issues are 
+ fixed.  Unsigned Notes are now correctly displayed for a patient.  Prior 
+ to this patch, the user was incorrectly prompted for patient selection 
+ when the Select Lab Specimen button was clicked.
+  
+ The Date/Time dialogue correctly displays AM/PM for selected time.  There 
+ is a new Option to display configuration buttons on the top or left of 
+ the window and changes to captured PDF images (rotate) are now saved 
+ correctly. Changes to Imported images (rotate/deskew/invert) are also 
+ now correctly saved.
+  
+ Annotations are no longer created in the Clinical Capture application.  
+ Clinical Capture will open the Annotation window in Clinical Display, 
+ Version 167.  The user will also have the option to open an image from the
+ Latest Patient Images window and have that image open in the Annotation
+ window of Clinical Display.
+  
+ Patch Components:
+ ================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P151_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch.  
+ MAG3_0P151_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ MAG3_0P151.KID
+ MAG3_0P151_Clinical_Capture_Setup.exe  
+ MAG3_0P151_Clinical_Capture_Setup.msi  
+ MAG3_0151_Patch_Description.pdf        
+  
+ Files & Fields Associated:
+ =========================
+ Two new fields were added to the Imaging Site Parameters File (#2006.1).
+ These fields are populated with the web URLs of the Capture and Display 
+ User Manuals. These are used by sub-menus of the Help menu.  Users now 
+ have access to the current user guides from the Imaging Sharepoint site.  
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ Imaging Site Parameters File (#2006.1)            Modified
+      Display Help Url   (Field #75)               New
+      Capture Help Url   (Field #76)               New 
+  
+ Forms Associated:
+ ================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ ======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ==================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ ====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ ========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ ====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ ======================
+ Remote Procedure  Calls:
+ =======================
+  
+ In the Latest Patient's Latest Images window of Cliniclaal Capture, the 
+ user can now get more images added to the list of patient images. 
+ The Remote Procedure MAGG PAT EACH IMAGE has been modified to include a 
+ new parameter:  FLAGS.
+ FLAGS  = MAGDEV^START IEN  ; p151
+ MAGDEV = [CID]  C and/or I and/or D.   Null = ALL
+ List images that were captured by these devices.
+  C : Capture Application
+  I : Import API
+  D : DICOM Gateway
+ START IEN = the Image IEN to start the search on.
+  
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ 1.  Defect 194619 (Trouble Ticket INC000000386352)  VistA Imaging Deskew 
+ =========================================================================
+ Problem:
+ When an image is scanned and deskewed, the deskew is successful.  The 
+ image is deskewed when opened from VistA Imaging Clinical Display. When an
+ Image is IMPORTED and then deskewed, the deskew looks successful but the
+ image is not actually deskewed when opened from the VistA Imaging Display.
+  
+ Resolution:
+ In the VI Capture application, the functions that save the changes to 
+ images have been fixed.  These functions include:  rotate, invert, deskew 
+ and despeckle.
+  
+ 2.  Defect 194631 (Trouble Ticket INC000000919790)  Imaging - Clinical 
+ ======================================================================
+ Capture Access Violation Error
+ ==============================
+ Problem:
+ A document is scanned into DSS DocManager.  DocManager is minimized and 
+ VI Capture is opened and a document scanned.  Then another document scan 
+ is started in DocManager and the following error is displayed:  "A 
+ general fault of the MSG_OPENDS response. (Internally) There has been a 
+ sharing violation. Twain source may be in use. (Code: DSf0171)."  
+ Additionally, if another attempt is made to scan a document into VI 
+ Capture, an "Access Violation" error is displayed.
+  
+ Resolution:
+ The application design was modified so that any TWAIN device in use is 
+ closed after each scan.  This will enable multiple TWAIN devices to be 
+ active on the workstation.
+  
+ 3.  Defect 194643 (Trouble Tickets INC000000591246, INC000001037608)
+ ====================================================================  
+ Limited to Selecting Fewer than 100 Notes in Clinical Capture
+ =============================================================
+  
+ Problem:
+ In MAG*3.0*140, when selecting more than 100 notes in Clinical Capture, 
+ an error is being produced:  <PARAMETER>TGET^TIUSRVR1.  
+  
+ Resolution:
+ The code that retrieves the list of Text Integration Utility (TIU) Notes 
+ for a patient was modified.  Only 100 Notes are retrieved at one time.  
+ The user can then retrieve the next 100 notes until the desired note is 
+ listed.
+  
+ 4.  Defect 194644 (Trouble Ticket INC000000940905)  PDF not Saving
+ ================================================================== 
+ Correctly
+ =========
+ Problem:
+ In MAG*3.0*140, using settings for TWAIN/Color 24 bit/PDF/Multiple pages 
+ results in the document not saving correctly.  When using the same 
+ settings and a document is rotated left or right and then saved, the 
+ settings are not saving.  In the Clinical Display client, the document 
+ must be rotated again.
+  
+ Resolution:
+ The functions that save changes to the captured image were modified.  
+ These include:  rotate, invert, deskew and despeckle.
+  
+ 5.  Defect 194646 (Trouble Ticket INC000000985487)  Queuing Abs for PDF 
+ =======================================================================
+ Issue
+ =====
+ Problem:
+ There are daily failures in the Jukebox queue involving abstracts for 
+ scanned documents.  The full image is available to the provider.  This 
+ issue is that the abstract/thumbnail may not be available to the VI 
+ Display client.  This issue began after the Patch 140 client was 
+ installed.  Re-queueing them the same day does not work.  After the 
+ Verifier runs that night, they can be re-queued successfully.  It creates 
+ the canned "Acrobat document" abstract. 
+  
+ Resolution:
+ This is a two-part fix in two different patches:  the Background 
+ Processor Patch, MAG*3.0*158 (Released) and this patch.  In this patch, 
+ abstracts are now created for PDF files.
+  
+ 6.  Defect 194659 (Trouble Ticket INC000001219914)  Update Clinical 
+ ===================================================================
+ Capture Annotation Should be the Same as Clinical Display Annotation
+ ====================================================================
+ Problem:
+ The annotation functionality in the Clinical Capture was causing access 
+ violations and issues with changes to the Clinical Capture image (rotate, 
+ deskew, invert functions).
+  
+ Resolution:
+ The annotation functionality has been taken out of the Clinical Capture 
+ client.  Annotation of images will only be done in Clinical Display.  The 
+ next  Clinical Display patch, MAG*3.0*167, will have the functionality to 
+ automatically open images for annotation when requested by the Clinical 
+ Capture user.
+  
+ 7.  Defect 194662 (Trouble Ticket INC000001006050 Patients' 
+ ===========================================================
+ Information not Refreshing in Clinical Capture after Patch 140
+ ==============================================================
+ Problem:
+ The Unsigned Notes list for a patient is not being completely refreshed 
+ when switching from one patient to the next.
+  
+ Resolution:
+ The procedure that clears the TIU Notes window was modified and a step 
+ was added to the Clear Unsigned/Uncosigned Notes listing.
+  
+ 8. Defect 194670 (Trouble Ticket INC000001015982) Clinical Capture 
+ ==================================================================
+ AM/PM Indicator Issue
+ =====================
+ Problem:
+ The Date/Time selections for the Note Date and Document/Image Date Index 
+ fields in Clinical Capture does not display an AM/PM indicator. 
+  
+ Resolution:
+ The code was modified so that when any time option is selected on the 
+ time selection of the Date/Time dialog, "AM" or "PM" is correctly 
+ displayed.
+  
+ 9. Defect 251277 (Trouble Ticket R6629905FY16) Update and Remove Outdated
+ =========================================================================
+ or Non-functioning Menu Options in Clinical Capture
+ ===================================================
+ Problem:
+ There are several outdated or non-functioning menu options in the 
+ Clinical Capture application that need to be removed.  The Help Menu 
+ option needs to link to the current user manual on the VistA Imaging 
+ SharePoint site.
+  
+ Resolution:
+ The code was modified to remove old/unused menu items and a new menu item 
+ was added:  Help | VistA Imaging Capture User Guide.  This new item links 
+ to the current VI Capture User Guide on the VI SharePoint site.  Old menu 
+ items can be displayed, if needed, by setting the mag.ini property as:  
+ "Show Old Menu Items" = TRUE.
+  
+ 10. Defect 251283 (Trouble Ticket I6220885FY16) Spec and Event are 
+ ==================================================================
+ Hidden but Not Cleared when the Association Changes
+ ===================================================
+ Problem:
+ In Clinical Capture, the user populates the Specialty and Procedure/Event 
+ field for a clinical image and saves the image.  Switching the 
+ association to "Administrative" for the next image capture doesn't clear 
+ the Specialty and Procedure/Events fields, even though they are hidden 
+ from the user.  After the Administrative image is saved, the Specialty 
+ and Procedure/Event fields of the Administrative image have the values of 
+ the previous image.
+  
+ Resolution:
+ The code was modified to correctly clear the Specialty and 
+ Procedure/Event fields after an image is captured.
+  
+ 11.  Defect 251378 (Trouble Ticket R6630245FY16) Add Option to Move 
+ ===================================================================
+ Configuration Button Bar Location in Clinical Capture
+ =====================================================
+  
+ Problem:
+ If there are an excessive number of configuration buttons at the top of 
+ the Clinical Capture window, the viewable area becomes unusable.  There 
+ needs to be a way to move the toolbar to the left side of the screen.
+  
+ Resolution:
+ New menu options were added on the Clinical Capture window Options menu 
+ and on the popup menu of the configuration button/s toolbar.  This change 
+ gives users the ability to display configuration buttons on the left or 
+ on the top of the window.  Settings are saved to the workstation in the 
+ mag.ini configuration file.  When displayed on the left, the image 
+ remains full size so the user can see more of the content.
+  
+ 12. Defect 251398 (Trouble Ticket R6630066FY16) Modify Clinical
+ =============================================================== 
+ Capture for TIU Business Rules
+ ==============================
+ Problem:
+ The Latest Patient Images option does not recognize existing TIU Business 
+ Rules.  Anyone can view images using this option regardless of the TIU 
+ Business Rule for a given note title.
+  
+ Resolution:
+ The code was modified in the Latest Patient Images window.  TIU Business 
+ Rules are now applied when an image is displayed.  If the user cannot 
+ view the TIU Note because of the TIU Business Rule, then the image will 
+ not be displayed.
+  
+ 13. Defect 251403 (Trouble Ticket INC000001102346) Patient Lookup
+ ================================================================= 
+ Window Displays if Select Lab Specimen Button is Clicked before Selecting
+ =========================================================================
+ Patient
+ =======
+ Problem:
+ The Patient Lookup window displays if the Select Lab Specimen button is 
+ clicked before selecting the patient, which did not occur in MAG*3.0*122. 
+  
+ Resolution:
+ The section of code that was incorrectly prompting for Patient Selection 
+ when the Lab window was closed, was fixed.  The Patient Selection window 
+ is no longer displayed inappropriately. 
+  
+ 14. Defect 251409 (Trouble Ticket INC000001103554) Text displayed In 
+ ====================================================================
+ the Imaging Workstation Configuration Window Gives the User the Wrong
+ =====================================================================
+ Impression of Features
+ ======================
+ Problem:
+ In the Imaging Workstation Configuration Window, the text displayed gives 
+ the user the wrong impression of features.  Text that states:  "Combine 
+ images from multiple sources." refers to an option that is not available 
+ to the user. 
+  
+ Resolution:
+ The incorrect wording on the Imaging Workstation Configuration window has 
+ been removed.
+  
+ 15. Defect  251411 (Trouble Ticket INC000001103559) "Capture By" is Null
+ ========================================================================
+ Problem:
+ There are some DICOM Images (captured by DICOM Gateway) where the field 
+ "Capture By" is null.  If "Capture By" is null, the images are listed as  
+ <undefined> in the QA Review Report. 
+  
+ Resolution:
+ Code was changed to not list images captured by the DICOM Gateway.  If 
+ the "Captured by" value is null (this is an error in the database), " 
+ <undefined>" will be listed as the user.
+  
+ 16.  Remedy Ticket INC000000932130 (Defect:  258889):  Access Violations 
+ ========================================================================
+ in Capture on VI Client PC
+ ==========================
+ Problem:
+ When scanning an image using VI Clinical Capture, users are occasionally 
+ receiving access violations.
+  
+ Resolution:
+ The functions to annotate an image, display an image, and copy an image 
+ have been optimized to fix the issue.
+  
+ 17.  Defect 258896 (Trouble Ticket INC000000918450) Remove Un-applicable
+ ========================================================================
+ Display Option
+ ==============
+ Problem:
+ When trying to change the number of notes that return for a selection, 
+ users can choose something other than 100 but it will not return any more 
+ than 100.  Display options that no longer apply were not removed from the 
+ Progress Notes list window, causing confusion.  Only 100 notes are 
+ returned and the user needs to click the MORE button for the next 100 
+ notes to be displayed.
+  
+ Resolution:
+ The Progress Notes list window was modified.  The options were taken off 
+ that no longer apply like Month Ranges, etc. The interface is now easier 
+ to understand and more intuitive.
+  
+ 18.  Defect 251373 (Trouble Ticket I6243085FY16) Need Consult ID Number as
+ ==========================================================================
+ Viewable Column in Clinical Capture for Consult Note Titles
+ ===========================================================
+ Problem:
+ From the Computerized Patient Record System (CPRS) Consults tab, the 
+ listing of Consults includes the date, status, service, and consult 
+ number.  This listing is in reverse chronological order, with the most 
+ recent consult at the top of the list. 
+ The issue reported with VistA Imaging Clinical Capture is that the list 
+ of consults is not in reverse chronological order.  When viewed from 
+ Clinical Capture, the first item displayed in the list is the first item 
+ entered for the given date; it is not the most recent item.
+  
+ Resolution:
+ The list of consults in Clinical Capture is now sorted by the same value 
+ as the list of consults in CPRS.  Also,  the consult ID# is a new column 
+ in the listing.  The user can compare the consult ID # if needed, to 
+ select the correct consult.
+  
+ 19.  Defect 351975 (Trouble Ticket I9770783FY16)  Inactive Users
+ =================================================================
+ Selected as Author of a New Progress Note
+ =========================================
+ Problem:
+ When an image is captured and attached to a new TIU Progress Note, 
+ authors whose status in the VistA System was Inactive were able to be 
+ selected.  When this happened, the new Note was not able to be signed.  
+ In this situation the image was not viewable by users of Clinical Display.
+ Resolution: 
+ When an Inactive user is selected as the author of a new Progress Note, a 
+ Warning Dialog box is displayed to the user of Clinical Capture.  The 
+ author's Inactive status is displayed and the user is prompted to select 
+ a different user for the author of the Progress Note. 
+  
+ 20.  Defect 291848 (Trouble Ticket (NSD) I6837874FY16) Imaging Users 
+ ====================================================================
+ Undefined in Reports
+ ====================
+ Problem:
+ Imaging users are showing up as undefined in QA Review reports.  They are 
+ unable to see where the undefined images are coming from.  VistA Imaging 
+ QA Review does not allow us to select <undefined>.
+ Resolution:
+ Users that show up as <undefined> are associated with images that have 
+ been captured through the Digital Imaging and Communications in Medicine 
+ (DICOM) Gateway.  These images are not intended to be included in QA 
+ Review reports.  A change in the QA Review reporting function will no 
+ longer count these images and users of the QA Review reporting function 
+ will no longer see <undefined>.
+  
+  
+ Test Sites:
+ ==========
+ The following sites are test sites for this patch:
+         VISN15 Western - Topeka
+         Royal C. Johnson Veterans Memorial Medical Center (Sioux Falls)
+         South Texas Veterans Health Care System
+  
+ Software and Documentation Retrieval Instructions:
+ =================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from 
+ anonymous@download.vista.domain.ext from the COMMAND prompt (example:  
+ sftp anonymous@download.vista.domain.ext). This transmits the files from 
+ the first available server. 
+  
+ Sites may also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+    
+ When using Attachmate Reflection (Secure Shell):
+ Albany:         domain.ext
+ Hines:          domain.ext
+ Salt Lake City: domain.ext
+    
+ When using the COMMAND prompt (example: sftp 
+ anonymous@domain.ext): 
+ Albany:         anonymous@domain.ext
+ Hines:          anonymous@domain.ext
+ Salt Lake City: anonymous@domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Patch Installation:
+ ==================
+ MAG*3.0*151 must be installed on the VistA System and on 64-bit 
+ workstations on which the VistA Imaging Applications will be used. This 
+ patch must be installed by the compliance date.
+  
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch.  This patch can be loaded while the VistA Imaging System is active 
+ and users are on the system.  Installing the MAG*3.0*151 KIDS takes 1-5 
+ minutes.
+  
+ Pre-Installation Instructions:
+ =============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+  
+ VistA System (KIDS) Installation
+ ================================ 
+ Installation Steps 
+ ==================
+ 1.Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+ 2.Run the Installation option [XPD INSTALLATION MENU].
+ 3.Load the KIDS file by performing the following steps:
+   a.Run the Load a Distribution [XPD LOAD DISTRIBUTION] option to load 
+ the KIDS distribution.
+   b.When prompted, enter the path and file name (MAG3_0P151.KID) of the 
+ Patch 151 KIDS file that was downloaded from the Download Server.
+   c.When prompted to continue with the load, enter "YES".  A Distribution 
+ OK! Message will be displayed when the load is complete.
+ 4.After loading the KIDS file, use the following options to verify the 
+ contents of the patch.  
+   a.Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this 
+ option if you want to ensure the integrity of the routines in the patch.
+   b.Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] - 
+ Run this option if you want to view all changes that will be made when 
+ the patch is installed.  All components (routines, options, and so on) in 
+ the patch will be compared.
+   c.Back up a Transport Global [XPD BACKUP] - Run this option if you want 
+ to create a backup message of any routines exported with the patch.  The 
+ option will NOT back up any of the other changes.
+ 5.After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+   a.Run the Install Package(s) [XPD INSTALL BUILD] option.
+   b.When prompted for the install name, enter MAG*3.0*151.
+   c.Answer NO to the following prompts, if they appear:
+  
+ Want KIDS to INHIBIT LOGONs during the install? No//NO
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? No/NO
+ Want KIDS to Rebuild Menu Trees Upon completion of Install? No//NO
+  
+ 6.When the installation has finished, an Install Completed message 
+ will be displayed.
+  
+ KIDS Installation Example
+ =========================
+ This example shows the output when the KIDS file is installed for the
+ first time.  If the user has already installed the patch and is 
+ installing the KIDS file in a namespace on which it has previously been 
+ installed, the output will be different.
+  
+ Select INSTALL NAME:    MAG*3.0*151    7/17/16@14:45:07
+      => VistA Imaging V3 - Patch 151 - Capture TIU Issues  ;Created on 
+ Jul
+  
+ This Distribution was loaded on Jul 17, 2016@14:45:07 with header of
+    VistA Imaging V3 - Patch 151 - Capture TIU Issues  ;Created on Jul 
+ 14, 201
+ 6@17:03:22
+    It consisted of the following Install(s):
+     MAG*3.0*151
+ Checking Install for Package MAG*3.0*151
+  
+ Install Questions for MAG*3.0*151
+  
+ Incoming Files:
+  
+  
+    2006.1    IMAGING SITE PARAMETERS  (Partial Definition)
+ Note:  You already have the 'IMAGING SITE PARAMETERS' File.
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  
+  Installing REMOTE PROCEDURE
+                Jul 17, 2016@14:46:20
+  
+  Running Post-Install Routine: POS^MAGIP151
+  
+ Post Install Mail Message: Jul 17, 2016@14:46:20
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MAG*3.0*151 Installed.
+                Jul 17, 2016@14:46:21
+  
+  Not a production UCI
+  
+  NO Install Message sent
+  
+   100% 
+ Complete
+  
+ Install Completed
+  
+ Post-Installation Instructions:
+ ==============================
+ Uninstalling MAG*3.0*151
+ ========================
+ If it is necessary to uninstall the MAG*3.0*151 client, use the Uninstall 
+ option from Windows Control Panel to Uninstall: "VistA Imaging Clinical 
+ Capture".  Then, install the previous version of Clinical Capture which 
+ was included in MAG*3.0*140.
+  
+ Routine Information:
+ ====================
+ VistA KIDS Checksums:
+ =====================
+ This section lists modified routines for the VistA KIDS build.  For each 
+ routine, the second line will contain the following information: 
+  
+ ;;3.0;IMAGING;**[Patch List]** ;Feb 16, 2016;Build 3;FEB 16, 2016
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine         Checksum Before Checksum After  Patch List
+ MAGGA03A        24276061        26454333        *93, 151**
+ MAGGTIG         61207085        77381599        **8, 48, 93, 117, 150, 
+                                                 151**
+ MAGGTU4C        5815575         5134971         **93, 94, 106, 117, 122, 
+                                                 129, 140, 151**
+ MAGGNLKP        14546243        14768217        **8, 92, 46, 59, 151**
+ MAGGTU3         33436210        35227017        **7, 8, 48, 45, 20, 46, 
+                                                 59, 93, 117, 151**
+ MAGIP151        NA              7810500         **151**
+ Routine MAGIP151 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 24, 2014
+Completed By:                               Date Completed: DEC 28, 2016
+Released By :                               Date Released : FEB 06, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+

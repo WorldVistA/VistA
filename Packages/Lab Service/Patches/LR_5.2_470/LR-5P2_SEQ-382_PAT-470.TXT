@@ -1,0 +1,211 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 12/22/16 at 11:31
+=============================================================================
+Run Date: FEB 02, 2017                     Designation: LR*5.2*470
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #382                    Status: Released
+                  Compliance Date: MAR 05, 2017
+=============================================================================
+
+Associated patches: (v)LR*5.2*238  <<= must be installed BEFORE `LR*5.2*470'
+
+Subject: TESTS NOT GETTING TO HDR, WRONG ORDER STATUS IN FILE 100
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 2 issues:
+  
+ 1. Some patients' lab test results are not getting transmitted to the
+    Health Data Repository (HDR). 
+  
+ 2. When lab orders are "merged-from" or "merged-to" orders, the entry in
+    the ORDERS file (#100) is updated with incorrect statuses as the tests
+    are accessioned and then resulted.
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Associated Ticket(s):  
+ =====================
+ 1. I9920136FY16 - Failure of merged lab collect orders to transmit to
+                      HDR
+ 2. I7916463FY16 - Lab order merging leads to incorrect status of file
+                      100 orders
+    I9676978FY16 (d)
+    R7815906FY16 (d) 
+  
+  
+ Participating Test Sites:
+ =========================
+ St.Cloud VAMC
+ Central Plains HCS
+  
+    
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*470 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*470 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*470 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ Ticket Overview:
+ ================
+ 1. I9920136FY16 - Failure of merged lab collect orders to transmit to
+                   HDR
+  
+    Problem:
+    --------
+    Multiple lab collect orders for the same patient and the same day/time
+    are merged when the collection list is built. If the "merged-from"
+    order contains the same test that is the first test on the "merged-to"
+    order, the entries in the LA7 Message Queue file (#62.49) that are
+    meant for the HDR (Health Data Repository) are not generated.
+  
+    Solution:
+    ---------
+    Modify routine LR7OB1 to generate the HDR messages when this unusual
+    situation occurs.
+  
+    Routines: LR7OB1 
+  
+ 2. I7916463FY16 - Lab order merging leads to incorrect Status of file
+                   100 orders
+  
+    Patient Safety Issue:
+    ---------------------
+    PSPO #2621
+  
+    Problem:
+    --------
+    Patients may have old Lab orders displayed on the CPRS Orders tab with 
+    an "active" status, even though those orders may have been completed by
+    lab.  Active orders cannot be cancelled by a provider; however these 
+    orders are months and even years old and therefore the validity of the 
+    active status is questionable. The patient risk is that the presence of
+    these old "active" Lab orders can lead to confusion for users reviewing
+    the chart as they may not be able to determine the current status of
+    the order and if it is still relevant.
+  
+    It was determined that when lab orders are merged and the "merged-from"
+    order has a test that is also on the "merged-to" order, the entry in
+    the ORDERS file #100 that is associated with the "merged-from" test
+    gets updated with an incorrect status as the test is accessioned and
+    then resulted.
+  
+  
+    Solution:
+    ---------
+    Modify routine LR7OB1 to update only the status of the ORDERS file #100
+    entry of the duplicated test that is on the "merged-to" order.
+     
+    Routine: LR7OB1 
+  
+    NOTE: This patch prevents the problem from occurring. Regarding
+          correction of past orders affected by this problem, a utility to
+          determine those orders is not provided in this patch due to the
+          low patient safety risk involved. However, if specific instances
+          of problematic orders are found, facilities can submit a Help
+          Desk ticket for assistance in correcting.
+  
+   ===================== Installation Instructions ====================
+   The install time for this patch is less than 2 minutes. This patch
+   can be installed when Laboratory users are on the system.
+  
+   NOTE: Kernel patches must be current on the target system to avoid
+         problems loading and/or installing this patch.
+  
+  1. Load Transport Global
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.
+   
+  2. Startup KIDS
+     ------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+   
+     Select Kernel Installation & Distribution system Option: INStallation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+   
+  3. Select Installation Option:
+     ---------------------------
+     NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+           NAME, enter LR*5.2*470):
+   
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view
+         the components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+   
+  4. Select Installation Option: Install Package(s)
+     ----------------------------------------------
+     ** This is the step to start the installation of this KIDS patch:
+   
+      a. Choose the Install Package(s) option to start the patch
+         install and select the package LR*5.2*470.
+   
+     b. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+        NO//', answer NO.
+   
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR7OB1
+    Before: B14695153   After: B16381843  **121,187,238,470**
+ 
+Routine list of preceding patches: 238
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 15, 2016
+Completed By:                               Date Completed: FEB 02, 2017
+Released By :                               Date Released : FEB 02, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

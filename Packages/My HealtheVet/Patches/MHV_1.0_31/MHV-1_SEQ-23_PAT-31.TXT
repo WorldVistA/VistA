@@ -1,0 +1,200 @@
+
+=============================================================================
+Run Date: MAR 24, 2017                     Designation: MHV*1*31
+Package : MHV - MYHEALTHEVET                  Priority: Mandatory
+Version : 1        SEQ #23                      Status: Released
+                  Compliance Date: APR 24, 2017
+=============================================================================
+
+
+Subject: MYHEALTHEVET RELEASE 2017.2.0.0 INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The quarterly MyHealtheVet Release MHV_2017.2.0.0 will be promoted to the 
+ MHV Production environment on Saturday, March 25th, 2017 starting at 
+ 10:00PM EST.
+  
+ ================================================================
+ Veteran Facing Enhancements (VFE) Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ LEGACY SM ENHANCEMENTS 
+ Defect  458389  SM(Prod): Users unable to delete messages in Draft Folder
+ Defect  467074  SM  (Prod): Escalation file email notification has 
+ incorrect URL (permanent fix)
+ Defect  476545  Defect (Production): Check mark is removed form the check 
+ box after Provider and Patient clicks on 'Delete Selected' button inside 
+ Drafts folder.
+  
+ MHV PORTAL ENHANCEMENTS
+ Defect  446148  Defect: Password Management: Hardcoded password (17.1 MHV 
+ NP Fortify base scan)
+ Defect  446112  Defect: Unreleased Resource: Streams (17.1 MHV NP Fortify 
+ base scan)
+ Defect  446146  Defect: Null dereference (17.1 MHV NP Fortify base scan)
+ Defect  464126  Calendar (Prod): Refactor Calendar Controller to 
+ Eliminate Session-Scoped Component References
+ Defect  468337  Race Condition: Singleton Member Field (17.1 MHV NP 
+ Fortify Scan)
+ Defect  446137  Defect: Path Manipulation (17.1 MHV NP Fortify base scan)
+ Defect  420901  Delegation SQA - When we click on Switch Accounts link, 
+ user should get logged out and Account Selection Page should be displayed.
+ Story   430575  Retrieve MHV-SM landing page content from Liferay for 
+ IPA'ed user.
+ Defect  422122  SQA: Login to own account HPFA user - when user clicks on 
+ Logout button AAL entry is not made.
+ Defect  446144  Defect: Dynamic Code Evaluation: XMLDecoder Injection 
+ (17.1 MHV NP Fortify base scan)
+ Defect  446145  Defect: Insecure Randomness (17.1 MHV NP Fortify base 
+ scan)
+  
+ DATABASE ENHANCEMENTS
+ Story   425719  Story: SM keep treatment facility in sync between MHV and 
+ SM
+  
+ ================================================================
+ I&I Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ MHV PORTAL ENHANCEMENTS
+ Story   475373  Story : Implement and provide support for Rx Tracking 
+ notification Batch job in Integrated environment
+ Epic    433235  Epic: Sign In Partners New User Registration - re-enable 
+ online upgrade
+ Defect  446111  Defect: System Information Leak: External (17.1 MHV NP 
+ Fortify base scan)
+ Defect  446150  Defect: Key Management: Empty Encryption Key (17.1 MHV NP 
+ Fortify base scan)
+ Defect  452157  SQA:  Personal Information--Cancel button not working on 
+ the profiles screen properly.
+ Defect  461450  Account Activity Log entry not created when accessing 
+ Connect the Docs after logging on via DS Logon
+ Defect  467480  Defect: Weak XML Schema: Unbounded Occurrences (17.2 MHV 
+ NP scan)
+ Story   470676  Story: Migrate / Re-enable online upgrade option in SSOe 
+ upgrade form and in VAPii form signing
+ Defect  472731  Advanced user using DS Logon gets F15 error message when 
+ selecting ROI option
+ Defect  480787  SSOe ROI Online Authentication  - check to see the VAPii 
+ form signing status
+ Epic    433211  Epic: Batch Job Re-engineering
+ Defect  480014  Defect: Users are not able to access the VLER Health 
+ Consent form in VAPii
+ Defect  453159  SQA-BBMI-Black font on table headings in BBMI (SYST and 
+ PROD). Unable to read against the blue background color. 508 Issue.
+ Defect  464201  SQA: ICE The font color on the ICE table is black--was 
+ white.  Unable to read against the blue background.  (PROD)
+ Story   473748  Story: Sign In Partners - Remote ID Proofing and 
+ Delegation - Development - TLS browser
+ Defect  423204  Defect: SRE - Clicking cancel on Blue Button PDF warning 
+ message does not cancel
+ Epic    433237  Epic: CCDA Enhancements and Support of CCDA going national
+ Defect  477205  (PROD) SQA - BB - VA Blue Button - Create Report - My 
+ Download Results - Select Download PDF - Notification message displays 
+ with formatting of extra spaces
+ Defect  446115  Defect: JSON Injection (17.1 MHV NP Fortify base scan)
+ Defect  446147  Defect: XML External Entity Injection (17.1 MHV NP 
+ Fortify base scan)
+ Epic    433236  Epic: Sign In Partners SSOe Session Timeout
+  
+ MHV LEGACY ENHANCEMENTS
+ Epic    447260  Epic: Redesign Registration - Broadcast Messaging 
+ required fields changes
+  
+ DATABASE ENHANCEMENTS
+ Task    444992  Task: Work with DBA to Implement MHV_BATCH Schema in 
+ Oracle Database
+  
+ ================================================================
+ Innovations Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ MHV PORTAL ENHANCEMENTS
+  
+ Defect  394266   BBMI:  When viewing a PDF in IE, press DONE, the screen 
+ goes blank and does not return back to the results screen
+ Story   461767  US: MHV Premium Account User logged into MHV reads VA 
+ Blue Button User Guide
+ Story   461768  US: MHV Premium Account User with VA Medical Images and 
+ Report Available Notification enabled receives email notification with 
+ new content stating Medical Images and Report is Available
+ Story   461769  US: MHV Premium Account User navigates the Blue Button VA 
+ Medical Images and Reports page, and the Images "View" Page
+ Story   461772  US: MHV Premium Account User goes to the Blue Button VA 
+ Medical Images and Reports "View" page and is able to see images for 3 
+ days with a 3 day retention period
+ Story   461775  US: MHV Premium Account User goes to the Blue Button VA 
+ Medical Images and Reports, Views PDF Report (Print Report Removed)
+ Story   461777  US: MHV Premium Account User goes to the Blue Button VA 
+ Medical Images and Reports, Opens/Saves the downloaded DICOM zip file
+ Defect  462244  SQA:BBMI:  Table display shows ALL studies upon entering 
+ BBMI when the default value is only 10.
+ Defect  462312  SQA:BBMI: When clicking on VIEW to go to the view screen, 
+ the display should always show the top of the page.
+ Defect  476874  SQA BBMI:  Firefox, when clicking on the VIEW/PRINT 
+ button for the PDF from the View screen, the "save file" pop-up box 
+ appears instead of the PDF file.
+ Defect  479607  UAT:  BBMI-.zip file link to be changed to the .zip learn 
+ more help page and link should be blue
+ Defect  479657  UAT BBMI- Email content changes (4)
+ Defect  479675  UAT:  BBMI Landing page.  The "P" in profiles should not 
+ be capitalized on step 2.
+  
+ PHR-R ENHANCEMENTS 
+ Story   448092  US: VIA Develop Field test capability to switch between 
+ VIA and MDWS
+  
+ DATABASE ENHANCEMENTS
+ Task    179788  BBMI: DB Job To Remove Old Records; Cron Job to delete 
+ old encrypted files
+ Story   425801  US: Registration API Phase I 
+ Story   474540  Create DB Script to add a field test group for VIA and 
+ add a select set of field test users
+  
+ ====================================================
+ Sustainment Team (NATIONAL RELEASE):
+ ====================================================
+  
+ SM LEGACY ENHANCEMENTS 
+ Defect  357694  Secure Messaging WASA-2 - Web Application is Vulnerable 
+ to Arbitrary File Upload
+  
+ GLOBAL MHV/SM ENHANCEMENTS
+ Story   459244  Upgrade MHV Development and Production PHR-R Servers to 
+ JAVA 8
+ Story   459353  Apply Oracle JDK 6 Update 141 b31 patch to Java 6 on the 
+ legacy application servers
+  
+ PHR-R ENHANCMENTS
+ Defect  443966  Future appointments in Blue Button show status of 'Not 
+ Applicable' instead of 'Future'
+  
+ DATABASE ENHANCEMENTS
+ Defect  479147  Update the error block to log exceptions with the correct 
+ Oracle error and the line number in six stored procedures
+  
+ Installation Instructions:
+ --------------------------
+ This patch is only for information.  
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 20, 2017
+Completed By:                               Date Completed: MAR 22, 2017
+Released By :                               Date Released : MAR 24, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

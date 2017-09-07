@@ -1,0 +1,148 @@
+
+=============================================================================
+Run Date: APR 13, 2017                     Designation: JLV*2.5*2
+Package : JLV - JOINT LEGACY VIEWER           Priority: Mandatory
+Version : 2.5         SEQ #2                    Status: Released
+                  Compliance Date: MAY 14, 2017
+=============================================================================
+
+
+Subject: JLV*2*5*2
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ ***************************** PLEASE NOTE *******************************
+ *                                                                       *
+ * Version 2.5.2.0.1 of the Joint Legacy Viewer (JLV) will be            *
+ * promoted to the production server for national release on 04/13/17    *
+ *                                                                       *
+ *                                                                       *
+ * NOTE: This patch is loaded on the National JLV server. There is       *
+ * nothing that local sites can or need to do besides communicate        *
+ * changes to users.                                                     *
+ *                                                                       *
+ *                                                                       *
+ *************************************************************************
+  
+ JLV version 2.5.2.0.1 includes the following changes and enhancements:
+  
+ - New URL for logging into JLV specifically for VBA and Claims users:
+   https://jlv.domain.ext/JLV_Claims
+   (NOTE: the VBA URL will not be active until the morning of 4/14/2017,
+    but will be sent out via a message from OFO and a LISTSERV email to all
+    CAPRI users on 4/13/2017) 
+ - JLV Single Sign-on Integration
+ - Ability to apply CAPRI restricted patient list
+ - Patient Search Pop-up indicating 3rd identifier is necessary
+ - System Status Icon only present for total data service outage
+ - New Visual Cue for items already viewed in JLV
+ - Display of VA scanned documents and VA radiology images will now be
+   available by clicking on the Image Icon on available widgets.
+   *NOTE*: DoD image retrieval will be enabled in a future configuration.
+ - Report Builder enhancements including a new "status" column to verify
+   selected documents will build to report and not create any errors or
+   blank pages when building report.
+ - Ability to add Inpatient Summaries and Demographics to report builder.
+  
+ 860083, 868269, 868270, 869121,869122, 869123, 870030
+ JLV code changes to support VA VLER DAS interface updates/UAT fixes.  
+ DAS team has made changes to their interface during their SQA test event.
+ JLV code had to adjust to these changes.
+  
+ DoD Defect 42637        Documents and Inpatient Summaries: Discharge 
+ Summarization Note-Multi Discharge Summary from Essentris is missing in 
+ both Documents and Inpatient Summaries widget in JLV.
+  
+ VA Defect 388 (42612)   Consult order is missing in the Orders widget, but
+ the consult is displayed in the Consult Encounters widget.
+  
+ VA Defect 389 (42613)   Outpatient medication order is missing in the 
+ Orders widget, but is displayed in the Outpatient Medication widget.
+  
+ VA AbleVets SQA Defect 478084   Demographics - display of VLER data 
+ (Race vs. Religion)
+  
+ VA AbleVets SQA Defect 478083   Report Builder - Errors out on 
+ Demographics with Community Partner data.
+  
+ VA Defect 390   REPORT BUILDER - PDF not printing all the records that 
+ have 'Ready' status in Report Builder.
+  
+ DMIX JAZZ 42637 DOCUMENTS AND INPATIENT SUMMARIES: Discharge 
+ Summarization Note-Multi Discharge Summary from ESSENTRIS-LANDSTUHL
+ instance is missing in both Documents widget and Inpatient Summaries
+ widget in JLV.
+  
+ Participating Test Sites:
+ =========================
+ The requirements planned for the JLV 2.5.2.0.1 (listed in Section 1.3, 
+ Testing Scope) Sprints 1-4 were verified and validated during the
+ Development Independent Testing (DIT) phase of testing. All requirements
+ mapped to the test scripts. The scripts are designed to be end-to-end
+ functional tests of the system to evaluate all the technical requirements
+ including the testing of external interfaces where appropriate.
+  
+ The DIT cycle consisted of smoke testing and the formal DIT. Before 
+ starting the DIT cycle, a JLV Web application baseline is installed on the
+ system. Tests are than run against this software baseline. Any issues
+ found and potential resolutions are assessed for possible inclusion in the
+ software baseline.
+  
+ During DIT, the test team validated the requirements provided in the RTM
+ using the test scripts and the test cases. Any issues encountered is
+ recorded as a defect in JIRA (internal defect tracking repository used).
+  
+  
+ Documentation Instructions:
+ ==========================
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly 
+ using Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory at the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+  
+ File Name                       Contents               
+ ---------                       --------               
+ JLV_2_5_2_USERMANUAL.PDF        JLV User Manual: PDF format
+ JLV_2_5_2_USERMANUAL.DOCX       JLV User Manual: DOC format
+  
+ The JLV user guide, resources and training materials are also posted and
+ updated on the JLV website:
+  
+ http://vaww.oed.portal.domain.ext/pm/iehr/vista_evolution/JLV/SitePages/Home.a
+ spx
+  
+ JLV user guide is also on the VDL here:
+ https://www.domain.ext/vdl/application.asp?appid=224
+  
+ Installation Instructions:
+ ==========================
+ N/A.  This patch is loaded on the National JLV server in Austin.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 28, 2017
+Completed By:                               Date Completed: APR 13, 2017
+Released By :                               Date Released : APR 13, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,404 @@
+$TXT Created by               R at DEVVJJ.DOMAIN.EXT  (KIDS) on Monday, 03/13/17 at 16:32
+=============================================================================
+Run Date: APR 04, 2017                     Designation: IB*2*554
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #541                      Status: Released
+                  Compliance Date: MAY 04, 2017
+=============================================================================
+
+Associated patches: (v)FB*3.5*154  <<= must be installed BEFORE `IB*2*554'
+                    (v)IB*2*528    <<= must be installed BEFORE `IB*2*554'
+                    (v)IB*2*530    <<= must be installed BEFORE `IB*2*554'
+                    (v)PRCA*4.5*310<<= must be installed BEFORE `IB*2*554'
+                    (v)FB*3.5*166  <<= must be installed BEFORE `IB*2*554'
+
+Subject: NON-VA CARE THIRD-PARTY REVENUE ENHANCEMENTS
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ IMPORTANT INSTALLATION NOTE:
+ ----------------------------
+ There are three patches associated with this project - PRCA*4.5*310,
+ IB*2.0*554 and FB*3.5*163. All three patches are to be installed as 
+ Packman files.  There is no bundle.
+  
+ The three patches incorporated code from the following concurrent 
+ development and, as such, the following patches MUST be installed prior to
+ this project:
+ 1.)  IB*2.0*528
+ 2.)  IB*2.0*530 (and associated patches PRCA*4.5*303 - BUNDLED, IB*2.0*529
+      and PRCA*4.5*304 - STANDALONE)
+ 3.)  FB*3.5*154 (and associated FBCS patch DSIF*3.2*38)
+ 4.)  FB*3.5*166
+  
+ The three patches for this project MUST be installed in this order:
+ 1.)  PRCA*4.5*310
+ 2.)  IB*2.0*554
+ 3.)  FB*3.5*163
+  
+ Description
+ -----------
+ The Chief Business Office (CBO) is requesting system enhancements to
+ The Veterans Health Information Systems and Technology Architecture
+ (VistA) Integrated Billing (IB), Accounts Receivable (AR), and Fee
+ Basis (FB) software modules that would allow segregating all billing and
+ collection activities for Non-Department of Veterans Affairs (Non-VA)
+ Care Third Party Insurance carriers' reimbursement.
+  
+ Current Medical Care Collections Fund (MCCF) Third Party billing and
+ collections applications in the VistA information system do not
+ segregate the Non-VA care claims from those claims for service rendered
+ at Veterans Health Administration (VHA) healthcare facilities. This
+ makes it difficult to determine whether all monies due VA for Non-VA
+ care services are being billed and collected from Third Party
+ insurance carriers, where applicable.  The current process is a resource
+ intensive, manual process with no assurance that all applicable
+ Non-VA charges have been billed and collected.
+  
+ This project will improve the transfer of data from VistA Fee
+ to Integrated Billing. It will record Non-VA revenue in a new  
+ fund 5287-13 to allow separate tracking of these revenues.
+  
+ A new third party rate type Fee Reimbursable Insurance has been created
+ to associate the revenues to the new fund. The patch makes the following
+ changes and enhancements:
+  
+ A new Copays on Hold List Manager screen will display the copays that
+ are on hold based on the filters selected by the user.  This will
+ ease processing copays on hold.  Functionality has also been added to
+ release a copay when the patient does not have billable insurance as
+ well as a copay on hold when the buffer file entry has been processed. 
+  
+ The Third Party Follow Up and Trend reports have been modified to display
+ the new rate type.
+  
+ Concurrent Development / Dependencies:
+ --------------------------------------
+ Patch IB*2.0*554 is dependent upon enhancements in FB*3.5*154 (Separation 
+ of Duties).  FB*3.5*154 is being released with DSIF*3.2*38 (Separation of
+ Duties), DSIF*3.2*50 (AMC Defect Repair) and FB*3.5*172 (Security Keys
+ for Separation of Duties).
+  
+ There was coordination with the following patches, whereby code from the
+ following patches was incorporated into IB*2.0*554.  The following 
+ patches must be installed prior to IB*2.0*554:
+  
+ IB*2.0*528 (^IBCNBAR, ^IBCNSM)
+  
+ IB*2.0*530 (^IBJDF11)
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+ (Note:  This file will not be populated with data for National Release.)
+  
+ File Name (Number)    Field Name (Number)     New/Modified/Deleted
+ ------------------    -------------------     --------------------
+ IB-FB INTERFACE TRACKING file (#360)          New
+                       ENTRY NUMBER (#.01)
+                       PATIENT (#.02)
+                       FB AUTHORIZATION (#.03)
+                       AUTH DELETION DATE/TIME (#.04)
+                       INITIAL TREATMENT DATE (#.05)
+                       CLAIMS TRACKING ENTRY NUMBER (#1.01)
+                       BILL/CLAIMS (#1.02)
+                       INVOICE NUMBER (#1.03)                      
+                       INTEGRATED BILLING ACTION (#1.04)
+                       IV QUEUE (#2.01)
+                       UR QUEUE (#2.02)
+                       FR QUEUE (#2.03)
+                       SC QUEUE (#2.04)
+                       BI QUEUE (#2.05)
+                       NEXT REVIEW DT (#3.01)                      
+                       1ST OR 3RD PTY (#3.02)
+                       LOG (#4)                         
+                          DATE/TIME (#.01)
+                          EVENT (#.02)
+                          USER (#.03)
+  
+ Options Associated:
+  
+ Option Name                     Type          New/Modified/Deleted
+ -----------                     ----          --------------------
+ IB MT ON HOLD MENU              MENU          MODIFIED
+ IB OUTPUT HELD CHARGES LM       ROUTINE       NEW
+  
+  
+ Protocols Associated:
+ (Note:  Not all Protocols will be enabled with National Release.)
+  
+ Protocol Name                                  New/Modified/Deleted
+ -------------                                  --------------------
+ IB BILLING WORKLIST ACTION MENU                NEW
+ IB BILLING WORKLIST ACTIONS                    NEW
+ IB BILLING WORKLIST CLAIMS TRACKING LINK       NEW
+ IB BILLING WORKLIST COMPLETE                   NEW
+ IB BILLING WORKLIST EXPAND                     NEW
+ IB BILLING WORKLIST EXPAND MENU PROTOCOL       NEW
+ IB BILLING WORKLIST EXPAND REFRESH             NEW
+ IB BILLING WORKLIST HISTORY                    NEW
+ IB BILLING WORKLIST INSURANCE LINK             NEW
+ IB BILLING WORKLIST MENU                       NEW
+ IB BILLING WORKLIST REFRESH                    NEW
+ IB BILLING WORKLIST REMOVE                     NEW
+ IB NVC PRECERT WORKLIST IVACTION MENU          NEW
+ IB NVC PRECERT WORKLIST IVPRECERT              NEW
+ IB NVC PRECERT WORKLIST IVREMOVE               NEW
+ IB NVC PRECERT WORKLIST RURACTION MENU         NEW
+ IB NVC PRECERT WORKLIST RURCOMP                NEW
+ IB NVC PRECERT WORKLIST RURNRD                 NEW
+ IB NVC PRECERT WORKLIST RURREMOVE              NEW
+ IBOH EXPAND HELD CHARGES                       NEW
+ IBOH EXPORT TO FILE                            NEW
+ IBOH HELD CHARGES ACCOUNT PROFILE              NEW
+ IBOH HELD CHARGES CLAIM TRACKING               NEW
+ IBOH HELD CHARGES PATIENT INSURANCE            NEW
+ IBOH HELD CHARGES TPJI                         NEW
+ IBOH HELD CHARGES WORKLIST MENU                NEW
+ IBOH PRINT HELD CHARGES RPT                    NEW
+ IBOH RELEASE HELD CHARGES                      NEW
+  
+  
+ Templates Associated:
+ (Note:  Not all Templates will be enabled with National Release.)
+  
+ Template Name                Type   File Name (Number)      New/Mod/Del
+ -------------                ----   ------------------      -----------
+ IB SCREEN102                 INPUT  BILL/CLAIMS (#399)                M
+ IB BILLING WORKLIST          LIST   IB-FB INTERFACE TRACKING (#360)   N
+ IB BILLING WORKLIST ACTIONS  LIST   IB-FB INTERFACE TRACKING (#360)   N
+ IB BILLING WORKLIST EXPAND   LIST   IB-FB INTERFACE TRACKING (#360)   N
+ IB BILLING WORKLIST HISTORY  LIST   IB-FB INTERFACE TRACKING (#360)   NIB 
+ NVC PRECERT WORKLIST         LIST   IB-FB INTERFACE TRACKING (#360)   NIB 
+ NVC PRECERT WORKLIST IV      LIST   IB-FB INTERFACE TRACKING (#360)   N
+ IB NVC PRECERT WORKLIST RUR  LIST   IB-FB INTERFACE TRACKING (#360)   N
+ IBOH HELD CHARGES EXPAND     LIST   INTEGRATED BILLING ACTION (#350)  N
+ IBOH HELD CHARGES LIST       LIST   INTEGRATED BILLING ACTION (#350)  N
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ 20080918 - Third Party Billing Improvements for Fee Care
+ 20081010 - 3rd Party Billing (IB) Precertification Enhancements
+ 20110303 - Fee-Revenue Enhancements
+ 20110304 - Fee-Revenue SC Decision Change
+ 20120204 - Copays on Hold - Medicare/No Insurance
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A 
+  
+ Test Sites:
+ ----------
+ Omaha - Central Plains
+ St. Cloud 
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ Software being released as a host file and/or documentation describing
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from:
+  
+ download.vista.domain.ext.
+  
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server.
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory at the following OI Field Offices:
+  
+ Albany:          domain.ext
+ Hines:           domain.ext
+ Salt Lake City:  domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                     File Name                  Transfer Mode
+ ------------------------------------------------------------------
+ Installation Guide        ib_2_0_554_ig.pdf          Binary
+ Release Notes             ib_2_0_554_rn.pdf          Binary
+ User Manual               ib_2_0_554_um.pdf          Binary
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The post installation routine, IB20P554 is not automatically deleted
+ as part of the installation process. You may delete it after
+ installation if you desire.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5
+ minutes to install.
+  
+ To ensure consistency in revenue reporting, all locally added Fee rate types
+ should be deactivated.  Deactivation is not a pre-requisite for installation.
+ Deactivation is executed via the Enter Edit Charge Master / Edit Rate Type 
+ option in VistA.  Validation of rate type deactivation should be completed
+ by local CPAC Billing Manager / ADPAC.
+  
+ // ED   Edit Rate Type  
+  
+ Enter/Edit a Rate Type:Local Fee Rate Type <ENTER> Who's Responsible: 
+ INSURER
+ NAME: Locally Added Rate Type// <ENTER>
+ BILL NAME: Locally added bill name// <ENTER>
+ ABBREVIATION: Locally added abbrev.// <ENTER>
+ IS THIS A THIRD PARTY BILL?: YES// <ENTER>
+ REIMBURSABLE INSURANCE?: YES// <ENTER>
+ NSC STATEMENT ON UB BILLS: YES// <ENTER>
+ INACTIVE: NO// 1  YES
+ <ENTER>
+  
+  
+ Installation Instructions:
+ --------------------------
+ This process will install new and updated routines and other 
+ components listed above. There is a post-install routine that will add 
+ entries to a number of files.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the    
+     patch number: IB*2.0*554
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option
+     and choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' enter NO and press enter.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' enter NO and press enter.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+     and Protocols? YES//' enter YES and press enter.
+  
+     When prompted 'Enter options you wish to mark as 'Out Of Order' answer
+     IB MT NIGHT COMP and press enter.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ There are no special tasks to perform after this patch installation.
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 81
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P554
+    Before:       n/a   After: B39765133  **554**
+Routine Name: IBBFAPI
+    Before: B43892084   After: B44458581  **267,297,249,317,361,384,404,
+                                           516,554**
+Routine Name: IBCBB1
+    Before:B116504133   After:B124097608  **27,52,80,93,106,51,151,148,
+                                           153,137,232,280,155,320,343,
+                                           349,363,371,395,384,432,447,
+                                           488,554**
+Routine Name: IBCD
+    Before:  B9728970   After:  B9905224  **312,554**
+Routine Name: IBCNBAR
+    Before: B51423558   After: B66457219  **82,240,345,413,416,497,528,554**
+Routine Name: IBFBNP1
+    Before:       n/a   After: B66983846  **554**
+Routine Name: IBFBUTIL
+    Before:       n/a   After: B25082093  **554**
+Routine Name: IBFBWL
+    Before:       n/a   After:B135814614  **554**
+Routine Name: IBFBWL1
+    Before:       n/a   After: B16922380  **554**
+Routine Name: IBFBWL2
+    Before:       n/a   After: B89700099  **554**
+Routine Name: IBFBWL3
+    Before:       n/a   After: B91726389  **554**
+Routine Name: IBFBWL4
+    Before:       n/a   After:  B9096436  **554**
+Routine Name: IBFBWL5
+    Before:       n/a   After: B27189321  **554**
+Routine Name: IBFBWL6
+    Before:       n/a   After: B47401358  **554**
+Routine Name: IBFBWLR
+    Before:       n/a   After: B39026410  **554**
+Routine Name: IBJDF1
+    Before: B35266004   After: B36261585  **69,118,128,205,554**
+Routine Name: IBJDF11
+    Before: B29071797   After: B29605847  **69,80,118,128,204,205,227,
+                                           451,530,554**
+Routine Name: IBJDF12
+    Before: B22409832   After: B23000114  **69,118,128,123,204,205,554**
+Routine Name: IBJDF2
+    Before: B64982439   After: B67800970  **69,91,100,118,133,205,554**
+Routine Name: IBOHLS
+    Before:       n/a   After:B128703133  **554**
+Routine Name: IBOHLS1
+    Before:       n/a   After: B97465496  **554**
+Routine Name: IBOHLS2
+    Before:       n/a   After:B137439403  **554**
+Routine Name: IBOHLSE
+    Before:       n/a   After: B11055294  **554**
+Routine Name: IBRUTL
+    Before: B10256030   After: B19501789  **70,82,132,142,176,179,202,
+                                           223,363,554**
+Routine Name: IBTRE
+    Before: B25778020   After: B27154451  **122,51,276,458,554**
+ 
+Routine list of preceding patches: 312, 458, 488, 516, 528, 530
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 29, 2015
+Completed By:                               Date Completed: APR 04, 2017
+Released By :                               Date Released : APR 04, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

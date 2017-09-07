@@ -1,0 +1,175 @@
+
+=============================================================================
+Run Date: APR 18, 2017                     Designation: SD*5.3*656
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #547                    Status: Released
+                  Compliance Date: MAY 05, 2017
+=============================================================================
+
+
+Subject: VISTA SCHEDULING (VS) GRAPHICAL USER INTERFACE (GUI) v2.0.0.8
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  
+ Informational Patch for VS GUI
+  
+ The VistA Scheduling Enhancements (VSE) project provides critical, near-term
+ enhancements to the existing scheduling system in the absence of a new,
+ Commercial-Off-The-Shelf (COTS) enterprise solution.   The purpose of VSE is
+ to provide immediate relief to the scheduling clerks by improving how
+ information is presented.  The selected solution will deliver a Graphical
+ User Interface (GUI) developed in C# which will be installed on the user's
+ desktop (thick client) and interface with Legacy VistA.  Additionally, the VSE
+ project will deliver a series of enhancements to legacy VistA Scheduling v5.3.
+  
+ Patches SD*5.3*627, SD*5.3*628, SD*5.3*642, SD*5.3*643, SD*5.3*645 and
+ GMRC*3*83 were approved for National Release on 4/29/16 and released on
+ 5/3/2016 with the constraint that patches would not be installed in the
+ Production environment until patches GMRC*3.0*86, SD*5.3*651 and SD*5.3*658
+ were approved for National Release.  At this time, GMRC*3.0*86, SD*5.3*651 and
+ SD*5.3*658 have been approved for National Release. 
+  
+ Patches SD*5.3*627, SD*5.3*628, SD*5.3*642, SD*5.3*643, SD*5.3*645, and
+ GMRC*3*83 each have a statement in the patch description instructing sites
+ not to install in production.  With the release of patches GMRC*3*83, 
+ SD*5.3*651, SD*5.3*658 and MBAA*1*4 sites can disregard that message and
+ are now approved to install patches SD*5.3*627, SD*5.3*628, SD*5.3*642,
+ SD*5.3*643, SD*5.3*645, and GMRC*3*83.
+  
+ Patches must be installed in the following order:
+  GMRC*3.0*83 
+  SD*5.3*627 
+  SD*5.3*628 
+  SD*5.3*643 
+  SD*5.3*642 
+  SD*5.3*645
+  GMRC*3.0*86
+  SD*5.3*651
+  SD*5.3*658
+  MBAA*1*4
+   
+ Sites may experience extended install times for patches GMRC*3.0*83 and
+ GMRC*3.0*86.  The duration depends on several factors including the Operating
+ System (VMS/Linux), Hardware Configuration and the number of records stored
+ in Outpatient Encounter File #409.68.  The team collected data from 24 sites
+ and the median install time was 88 minutes.  Two sites reported install times
+ over 50 hours however those sites have over 40 million records in File #409.68
+ and run on VMS.  If your site has a high number of records in File #409.68,
+ runs on VMS and/or has a hardware configuration that shares resources with
+ other instances it is recommended that these patches be installed during
+ off-peak hours or over a weekend.  During installation it is recommended that
+ consults be disabled; however, it is not required.
+  
+ If your site plans to disable consults during the installation of the GMRC
+ patch, the following checklist and procedures are intended to assist
+ facilities in implementing their contingency plan.  Commonly, facility
+ contingency plans are to "use paper".
+  
+ Plan and prepare for the installation.
+   1. Engage the Clinic Application Coordinator (CAC).
+   2. Review your facility's contingency plan.
+   3. Install at night or on a weekend to minimize clinical impact.
+   4. For large sites, weekend installation is recommended in case of longer
+      than expected installation times.
+   5. It is important to have your site's CAC on call and/or accessible during
+      the installation.  If your CAC doesn't have access to unlock patients'
+      records that have been erroneously locked, you may need a local/regional
+      Office of Information and Technology (OI&T) VistA programmer on call, as
+      well.
+  
+ Communicate, communicate, and communicate.
+   1. Ensure that entire staff is aware of the installation and what it will
+      entail.
+   2. Broadcast information about the installation, well in advance of the
+      event.
+   3. Send an informational email to all staff.
+      a. It should outline what can and cannot be done in Computerized
+         Patient Record System (CPRS) during installation of the patch.
+      b. The email should also provide phone numbers for application support.
+   4. Send targeted communications to specific groups such as Clinic Staff.
+   5. Plan to have face-to-face discussions with specific staff such as the
+      Medical Officer of the Day, Emergency Department, and Intensive Care
+      Unit staff.
+   6. Announce the consult down-time using the overhead speaker system.
+   7. Notify the Help Desk of the upcoming installation.
+  
+ What happens with clinical care?
+   1. Disable the CPRS icon for 5-10 minutes in order to alert users that they
+      need to finish what they are working on/doing. This will give your CAC
+      time to temporarily disable consults and avoid having a user in the
+      middle of creating a consult.
+   2. If a STAT consult is needed, use the telephone.
+   3. For routine consults, consider entering them after the install.  Perhaps
+      the staff member who enters consults can "keep track" of the consults
+      they write so they can be entered electronically after completion of the
+      installation.
+   4. Consider using paper consults during the installation.
+  
+ Documentation Updates:
+ The VS GUI Install Guide has been updated to reflect the new patch order
+ install as well as removing the comments not to install in Production.  As
+ previously stated, the patch descriptions in FORUM for patches SD*5.3*627,
+ SD*5.3*628,SD*5.3*642, SD*5.3*643, SD*5.3*645, and GMRC*3*83 will not be
+ updated and will continue to state "DO NOT INSTALL IN PRODUCTION"  That
+ statement should be disregarded as the patches are now approved for
+ installation into the production accounts.
+  
+  
+ Please note that the release includes several patches and the VS GUI 
+ client.  Instructions for installation are included in the VS GUI Install
+ Guide Version 2.0 and should be reviewed prior to attempting
+ installation.  Failure to follow these instructions could result in data
+ corruption. 
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Albany:                 domain.ext
+ Hines:                  domain.ext
+ Salt Lake City:         domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ File Description             File Name                           FTP Mode
+ --------------------------------------------------------------------------
+ SCHEDULING User Manual       VSE_UG.PDF                           (binary)
+ SCHEDULING User Manual       VSE_UG.DOCX                          (binary)
+ SCHEDULING Technical Manual  VSE_TM.PDF                           (binary)
+ SCHEDULING Technical Manual  VSE_TM.DOCX                          (binary)
+ SCHEDULING Security Guide    VSE_SG.PDF                           (binary)
+ SCHEDULING Security Guide    VSE_SG.DOCX                          (binary)
+ SCHEDULING Install Guide     VSE_Install_Guide.DOCX               (binary)
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 09, 2016
+Completed By:                               Date Completed: APR 18, 2017
+Released By :                               Date Released : APR 18, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

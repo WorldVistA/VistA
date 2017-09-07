@@ -1,0 +1,283 @@
+$TXT Created by                at CHEY59.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Wednesday, 03/08/17 at 12:03
+=============================================================================
+Run Date: APR 28, 2017                     Designation: TIU*1*309
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #275                      Status: Released
+                  Compliance Date: MAY 29, 2017
+=============================================================================
+
+Associated patches: (v)XU*8*675    <<= must be installed BEFORE `TIU*1*309'
+
+Subject: TIU NATIVE DOMAIN STANDARDIZATION
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ **************************** ATTENTION *********************************
+  
+ MFS Parameters for TIU consists of two patches: Kernel patch XU*8.0*675
+ and application patch TIU*1.0*309. Application patch TIU*1.0*309 should
+ be installed immediately after installing XU*8.0*675.
+  
+ ************************************************************************
+  
+ NOTE: Sites should refer to the Deployment, Installation, Back-Out, and 
+ Rollback Guide (tiu_1_0_309_ig.pdf) for complete installation
+ instructions.
+  
+ This patch adds a new CODING SYSTEM (#2) multiple to the TIU VHA
+ ENTERPRISE STANDARD TITLE (#8926.1) file for the purpose of
+ interoperability.
+  
+ The TIU VHA ENTERPRISE STANDARD TITLE (#8926.1) file shall be updated to
+ include a new field to store LOINC code field from the respective 
+ Standards Development Organizations.
+  
+ This patch addresses the <UNDEFINED>BULL+9^TIUDD61 error reported in 
+ Remedy Ticket #241480. The error occurs when a New Term Rapid Turnaround
+ (NTRT) deployment which doesn't modify the STATUS (#.02) field in the
+ EFFECTIVE DATE/TIME (#99.991) multiple of any VHA ENTERPRISE STANDARD
+ TITLE (# 8926.1) file entries in the target VistA system. Examples of 
+ NTRT deployments that cause this error are deployments sent to the
+ same VistA domain more than once, and deployments that change properties
+ without activating or inactivating any titles.
+  
+  
+ Associated Remedy Tickets:
+ ========================== 
+ INC000000241480 - Error <UNDEFINED>BULL+9^TIUDD61.
+  
+  
+ Patch Components:
+ -----------------
+      
+ Files & Fields Associated:
+  
+ File Name (Number)                Field Name (Number)   New/Mod/Deleted
+ ----------------------------      -------------------   ---------------
+ TIU VHA ENTERPRISE STANDARD       CODING SYSTEM (#2)         New
+ TITLE (#8926.1) 
+  
+ TIU VHA ENTERPRISE STANDARD
+ TITLE (#8926.1)
+   CODING SYSTEM (#8926.12)        CODING SYSTEM (#.01)       New
+   CODING SYSTEM (#8926.12)        CODE (#.02)                New
+  
+ TIU VHA ENTERPRISE STANDARD
+ TITLE (#8926.1)
+   CODING SYSTEM (#8926.12)      
+     CODE (#8926.121)              CODE (#.01)                New
+  
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number)  New/Modified/Deleted
+ -------------  ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ INC000000241480 - <UNDEFINED>BULL+9^TIUDD61 error
+  
+ Problem:
+ --------
+   An undefined error <UNDEFINED>BULL+9^TIUDD61 occurs during an NTRT 
+   deployment which doesn't modify the STATUS (#.02) field in the 
+   EFFECTIVE DATE/TIME (#99.991)) multiple of the VHA ENTERPRISE STANDARD
+   TITLES (#8926.1) file in the target VistA system. Examples of NTRT
+   deployments that would cause this error are deployments sent to the 
+   same VistA domain more than once, and deployments that change properties
+   without activating or inactivating any titles.
+  
+ Resolution:
+ -----------
+   Routine TIUDD61 was modified to prevent the error from occurring, by 
+   gracefully handling deployments sent to the same VistA domain more 
+   than once, and deployments that change properties without activating or 
+   inactivating any titles.
+   
+  
+ Test Sites:
+ ----------
+ NY HARBOR HCS
+ PALO ALTO HCS
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------ 
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Albany: domain.ext
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                         File Name                     FTP Mode
+ ----------------------------------------------------------------------
+ TIU Technical Manual                   tiutm.pdf            Binary
+                                        tiutm.doc            Binary
+  
+ Deployment, Installation,     tiu_1_0_309_ig.pdf            Binary
+ Back-Out, and Rollback Guide                                
+                               tiu_1_0_309_ig.doc            Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is recommended that a Local Patch Backup is created that can be 
+ re-installed in the event patch TIU*1.0*309 must be backed out. 
+  
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (tiu_1_0_309_ig.pdf) for complete installation instructions.
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 
+ minutes to install.
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From Kernel Installation and Distribution System Menu, select the 
+    Installation Menu. From this menu, you may elect to use the following 
+    options.  When prompted for the INSTALL NAME, enter the patch
+    TIU*1.0*309:
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup other changes such as DDs or templates.
+  
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch's
+          routines, DDs, templates, etc.).
+  
+       c. Verify Checksums in Transport Global - This option will allow you
+          to ensure the integrity of the routines that are in the transport
+          global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option 
+    and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+    Install? NO//', respond NO.
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+    NO//', respond NO.
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//' , respond NO.
+  
+ 8. If prompted 'Delay Install (Minutes): (0 - 60): 0//' respond 0.
+    
+  
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (tiu_1_0_309_ig.pdf) for complete installation instructions.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ In the event  a site determines that this patch should be backed out, the 
+ site should submit a CA SDM ticket with the NSD for assistance with the 
+ procedure.
+  
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (tiu_1_0_309_ig.pdf) for complete installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUDD61
+    Before:  B9982481   After: B11064226  **225,309**
+Routine Name: TIUZRT
+    Before:       n/a   After:  B8873406  **309**
+ 
+Routine list of preceding patches: 225
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 29, 2016
+Completed By:                               Date Completed: APR 27, 2017
+Released By :                               Date Released : APR 28, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

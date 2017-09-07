@@ -1,0 +1,168 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 01/24/17 at 07:00
+=============================================================================
+Run Date: MAR 31, 2017                     Designation: IB*2*586
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #540                      Status: Released
+                  Compliance Date: MAY 01, 2017
+=============================================================================
+
+
+Subject: FY17 MID YEAR IB STOP CODE UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch updates Integrated Billing Clinic Stop Codes to reflect 
+ Fiscal Mid-Year 2017 changes.
+  
+ Associated Ticket(s):
+ =====================
+ 1. R12401101FY17 FY17 MID YEAR IB STOP CODE UPDATE
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Muskogee VAMC
+ Chillicothe VAMC 
+  
+ Ticket Overview:
+ ================
+ 1. R12401101FY17 FY17 MID YEAR IB STOP CODE UPDATE
+   
+    Problem: 
+    -------
+    As requested by the Chief Business Office (CBO), the IB CLINIC
+    STOP CODE BILLABLE TYPES (#352.5) file needs to be updated to
+    reflect changes for Fiscal Mid-Year 2017.
+   
+    Resolution:
+    ----------
+    Add and update requested Stop Codes as described below:
+  
+ STOP CODE ADDED
+ ---------------
+  
+ STOP   EFFECTIVE                                                OVERRIDE
+ CODE   DATE         BILLABLE TYPE  DESCRIPTION                     FLAG
+ --------------------------------------------------------------------------
+ 139   APR 1,2017   NON-BILLABLE   HEALTH AND WELL-BEING SER       
+ 679   APR 1,2017   BASIC CARE     REAL TIME CVT TO HME PROV SITE  
+  
+ STOP CODE MODIFIED
+ ------------------
+  
+ OLD: 
+   
+ STOP    EFFECTIVE                                                OVERRIDE
+ CODE    DATE         BILLABLE TYPE  DESCRIPTION                     FLAG
+ ---------------------------------------------------------------------------
+ 159   OCT 1,2013   BASIC CARE      COMP AND ALTERNATIVE MED        
+ 188   APR 1,2013   BASIC CARE      FELLOW/RESIDENT                 
+ 351   OCT 10,2008  NON-BILLABLE    HOSPICE AND PALLITIVE CARE     OVERRIDE
+  
+  
+ NEW:
+  
+ STOP    EFFECTIVE                                                OVERRIDE
+ CODE    DATE       BILLABLE TYPE   DESCRIPTION                     FLAG
+ ---------------------------------------------------------------------------
+ 159  APR 1,2017   BASIC CARE     COMP AND INTEGRATIVE HEALTH       
+ 188  APR 1,2017   BASIC CARE     RESIDENT/FELLOW     
+ 351  APR 1,2017   NON-BILLABLE   HOSPICE CARE                    OVERRIDE
+  
+  
+ Installation Instructions:
+ ==========================
+ It is not necessary to disable any options. You may install this patch at
+ any time without interruption to users. It should take less than 2 minutes
+ to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter IB*2.0*586)
+    
+        a.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+        b.  Print Transport Global - This option will allow you to view
+            the components of the KIDS build.
+        c.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this 
+            patch is installed.  It compares all components of this patch
+            (routines, DD's, templates, etc.).
+        d.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        IB*2.0*586.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//", respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//", respond NO.
+  
+     7. You may delete routine IB20P586 after the installation.
+  
+ *** After the install please review the installation to verify the
+     Stop Codes were added. See below:
+     NOTE: If any type of error message is displayed during installation
+     create a ticket to resolve the issue.
+  
+  DSS Clinic Stop Codes, Post-Install Starting
+   
+   Adding new codes to file 352.5
+   
+     139  HEALTH AND WELL-BEING SER
+   
+     679  REAL TIME CVT TO HME PROV SITE
+   
+       2 entries added to 352.5
+   
+   Updating Stop Code entries in file 352.5
+   
+     188  RESIDENT/FELLOW
+   
+     351  HOSPICE CARE
+   
+     159  COMP AND INTEGRATIVE HEALTH
+   
+       3 updates added to file 352.5
+   
+  DSS Clinic Stop Codes, Post-Install Complete
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P586
+    Before:       n/a   After: B11180541  **586**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 23, 2017
+Completed By:                               Date Completed: MAR 21, 2017
+Released By :                               Date Released : MAR 31, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

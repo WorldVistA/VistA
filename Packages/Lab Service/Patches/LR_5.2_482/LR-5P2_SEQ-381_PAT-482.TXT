@@ -1,0 +1,274 @@
+$TXT Created by                  CPRS32.DOMAIN.EXT  (KIDS) on Wednesday, 01/25/17 at 15:32
+=============================================================================
+Run Date: FEB 01, 2017                     Designation: LR*5.2*482
+Package : LR - LAB SERVICE                    Priority: EMERGENCY
+Version : 5.2       SEQ #381                    Status: Released
+                  Compliance Date: FEB 05, 2017
+=============================================================================
+
+Associated patches: (v)LR*5.2*462  <<= must be installed BEFORE `LR*5.2*482'
+
+Subject: FIX FOR AUTOPSY RELEASE ERROR
+
+Category: 
+  - PATCH FOR A PATCH
+  - Routine
+
+Description:
+============
+
+ Subject:  ANATOMIC PATHOLOGY ORDER DIALOG ENHANCEMENT - FIX FOR AUTOPSY 
+ ERROR
+  
+ Category:  PATCH FOR A PATCH
+            EMERGENCY PATCH
+  
+ Description:
+ ===========
+  
+ The build for this patch is distributed in support of the VistA Lab 
+ Enhancement (VLE) Anatomic 
+  
+ Pathology order dialog enhancements. This patch is to fix an error to 
+ released patch LR*5.2*462
+  
+  It resolves the error generated when using the option "Verify/release
+ reports, anat path" [LRAPR] to verify/release an Autopsy (AU) accession.
+ This patch is being released as an emergency patch with a compliance date
+ of Feb 5, 2017 to coincide with the LR*5.2*462 compliance date of Feb 5,
+ 2017
+  
+ Defect Addressed - 451608
+ CA SDM ticket number is:  I12427646FY17 
+ The patch contains two routine, no option or menus.
+  
+ Blood Bank Review:
+ ==================
+ All of the above changes have been reviewed by the VISTA Blood Bank 
+ Developer and found to have no impact on the VISTA BLOOD BANK SOFTWARE 
+ control functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*482 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*482 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ POTENTIAL IMPACT ON SITES: This patch contains changes to routines and 
+ files identified in ProPath standard titled: BBM Team Review of VistA 
+ Patches, group B listing. The changes have no effect on Blood Bank 
+ functionality or medical device control functions. There is no adverse 
+ potential to sites.
+  
+  
+ Patch Components:
+ -----------------
+  
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated: 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ N/A
+  
+ Additional Information:
+  
+ N/A 
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------   
+ #20140511
+ The Anatomic Pathology (AP) laboratory service needs a mechanism for 
+ clinicians to provide required patient-specific, procedure-specific, and 
+ specimen-specific information to facilitate specimen processing by 
+ pathologists. This mechanism must be in place for use by the specimen 
+ labeling application in order to generate a primary specimen label that 
+ positively identifies the specimen and accurately associates it with the 
+ patient.
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ CA SDM Ticket(s) & Overview:
+ ----------------------------
+  
+ CA SDM ticket number is:  I12427646FY17
+  
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ AP Dialogs w/OR*3.0*405:
+   North Florida/South Georgia Veterans Health System (Gainesville, FL)
+   Edward Hines Jr. VA Hospital
+   Philadelphia VA Medical Center
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Software will be released via a PackMan message. 
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation will be distributed via a LAB_LR_5_2_482_DOCS.ZIP 
+ file, which contains both .pdf and .docx formatted file of the following 
+ documents:
+  
+ Title/File Name                       FTP Mode
+ --------------------------------------------------------------------------
+ VLE AP_LR_5_2_482 Installation_Guide  Binary
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+           
+       
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch is a fix for an Autopsy error that is triggered when users 
+ 'Verify/Release Autopsy report 
+  
+ in VistA. 
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ strongly recommended that it be installed during non-peak hours when 
+ LAB usage is at a minimum.
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it is 
+  recommended that it be installed during non-peak hours to minimize 
+  potential disruption to users.  This patch should take less than 5 
+  minutes to install.
+  
+ This installation will install the components necessary to support the 
+ CPRS AP Order Dialog functionality released with OR*3.0*405.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     LR*5.2*482:
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+    b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+     Respond: NO
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+     Respond: NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+     Respond: NO
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR482
+    Before:       n/a   After:  B4627709  **482**
+Routine Name: LRAPRES1
+    Before: B70400068   After: B71690317  **259,336,369,365,397,413,350,
+                                           462,482**
+ 
+Routine list of preceding patches: 462
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 24, 2017
+Completed By:                               Date Completed: FEB 01, 2017
+Released By :                               Date Released : FEB 01, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

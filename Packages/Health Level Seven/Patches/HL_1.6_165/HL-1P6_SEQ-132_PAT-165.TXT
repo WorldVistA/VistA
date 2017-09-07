@@ -1,0 +1,169 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 04/21/16 at 12:29
+=============================================================================
+Run Date: MAR 29, 2017                     Designation: HL*1.6*165
+Package : HL - HEALTH LEVEL SEVEN             Priority: Mandatory
+Version : 1.6       SEQ #132                    Status: Released
+                  Compliance Date: APR 29, 2017
+=============================================================================
+
+Associated patches: (v)HL*1.6*145  <<= must be installed BEFORE `HL*1.6*165'
+
+Subject: PORT SCANNING CAUSING RUNAWAY PROCESS IN HL7
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Resolve issues with the HL7 (Health Level 7) receiving process that could
+ lead to the process getting stuck in an endless loop.
+  
+  
+ Associated tickets:
+ ===================
+ 1) I8007321FY16  issue with HL7 processes for Cleveland
+    Duplicates:
+    I8258963FY16  Detroit VistA System Running Slowly
+    I8069393FY16  Created from Incident: I8065750FY16 
+                  HL7 listeners not robus...
+  
+  
+ Associated NSR:
+ ===============
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Boise VAMC
+ Caribbean HCS (San Juan)
+  
+  
+ Ticket Overview:
+ ================
+ 1) I8007321FY16  issue with HL7 processes for Cleveland
+  
+ Problem: 
+ --------
+ Port scanners revealed issues in the HL7 receiving process when
+ messages are in a specific format which can cause the receiver to 
+ result in an endless loop.
+    
+ Resolution:
+ ----------
+ Modify the HL7 receiving process to handle any message format without
+ resulting in an endless loop.
+  
+ Routine: HLCSTCP1
+  
+  
+ ================ INSTALLATION INSTRUCTIONS =================
+  
+ Installation should take less than 10 minutes.
+ Note: only experienced installers should attempt the install.
+  
+   1.  Users are allowed to be on the system during the installation - but
+       it is highly recommended to install the patch during off-hours.
+  
+   2.  Disable the HL7 TCPIP services for the multi-listeners running on 
+       all nodes in the cluster, for example, at the VMS prompt:
+  
+       ISC6A1> TCPIP
+       TCPIP> DISABLE SERVICE BAY_HLSP
+       Note: BAY is the 3 letter site designation for Bay Pines.
+  
+       ****For Linux***
+  
+       Disable the Linux xinetd HL7 service from the Linux OS prompt:
+       # rdp_ip_service bay hls disable
+       Note: BAY is the 3 letter site designation for Bay Pines.
+         
+   3.  Shutdown all Logical Links, incoming and outgoing filers using
+       the Filer and Link Management options listed below:
+  
+       Stop All Messaging Background Processes [HL STOP ALL]
+  
+   4a. Shutdown the Link Manager using the Filer and Link Management
+       option listed below:
+  
+       TCP Link Manager Start/Stop [HL START/STOP LINK MANAGER]
+  
+   4b. Wait until all Single Threaded Listeners  (Device Type = SS) are 
+       in SHUTDOWN state as seen in the Systems Link Monitor OR 10 
+       minutes have passed - whichever comes first.
+  
+   5.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+       option will load the KIDS package onto your system.
+  
+   6.  This patch is now loaded into a transport global on your system.
+       The next step is to use KIDS to install the Transport global.  On
+       the KIDS menu, under the 'Installation' menu, use the following
+       options:
+  
+          Verify Checksums in Transport Global
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Backup a Transport Global
+          Install Package(s) 
+  
+       When using the Install Package(s) menu option to install the 
+       patch build, you will be asked several questions.  The questions,
+       and the answers you should supply, are shown below.
+  
+       INSTALL NAME: <HL*1.6*165>
+   
+       Want KIDS to INHIBIT LOGONS during the install? NO// <NO>
+       Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? NO// <NO>
+  
+   7.  Start up all Logical Links and incoming and outgoing filers using
+       the Filer and Link Management Option's 'Restart/Start All Links
+       and Filers [HL TASK RESTART]' menu option.
+       (Note those links that do not have "autostart" enabled will need
+       to be restarted manually.)
+   
+   8.  Restart the Link Manager, that was shutdown in step 4, using the
+       Filer and Link Management option listed below:
+  
+       TCP Link Manager Start/Stop [HL START/STOP LINK MANAGER]
+  
+   9.  Enable the HL7 TCPIP services for the multi-listeners, for example, 
+       at the VMS prompt:
+  
+       ISC6A1> TCPIP
+       TCPIP> ENABLE SERVICE BAY_HLSP
+       Note: BAY is the 3 letter site designation for Bay Pines.
+  
+       ****For Linux***
+  
+       Enable the Linux xinetd HL7 service from the Linux OS prompt:
+       # rdp_ip_service bay hls enable
+       Note: BAY is the 3 letter site designation for Bay Pines.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.6;HEALTH LEVEL SEVEN;**[Patch List]**;OCT 13,1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HLCSTCP1
+    Before: B81193745   After: B82091479  **19,43,57,64,71,133,132,122,
+                                           140,142,145,165**
+ 
+Routine list of preceding patches: 145
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 19, 2016
+Completed By:                               Date Completed: MAR 28, 2017
+Released By :                               Date Released : MAR 29, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

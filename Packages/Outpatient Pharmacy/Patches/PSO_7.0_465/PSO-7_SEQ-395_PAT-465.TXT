@@ -1,0 +1,183 @@
+$TXT Created by                 at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 07/05/16 at 15:55
+=============================================================================
+Run Date: APR 05, 2017                     Designation: PSO*7*465
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #395                      Status: Released
+                  Compliance Date: MAY 05, 2017
+=============================================================================
+
+Associated patches: (v)PSO*7*404   <<= must be installed BEFORE `PSO*7*465'
+
+Subject: CMOP TRANSMISSION STOPPED DURING NIGHT/HL7 DOCUMENTATION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+   1. The CMOP transmission stopped due to an Undefined error
+   2. ScriptPro issue with temporary address on label
+  
+  
+ Associated CA SDM Tickets:
+ ==========================
+ 1. I8485105FY16 - CMOP transmission stopped during the night (PSI)
+ 2. I9916149FY16 - ScriptPro issue with temporary address on label
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Oklahoma City VAMC
+ Maryland HCS
+  
+  
+ CA SDM Overview:
+ ================
+  
+ 1. I8485105FY16 - CMOP transmission stopped during the night
+  
+ Patient Safety Issue:
+ --------------------
+ PSPO 2979
+  
+ Problem:
+ --------
+ The controlled substance prescription CMOP (Consolidated Mail Outpatient
+ Pharmacy) transmission went through all right but the process errored out
+ on the non-controlled substance prescription with the following message:
+  
+ Subj: CMOP Error WACO 93447 [#24160246] 04/21/16@03:17 6 lines
+ From: Users Name - IT SPECIALIST (VISTA SUPPORT) In 'IN' basket.
+ Page 1 *New*
+ --------------------------------------------------------------------------
+  
+ NON-CS CMOP Transmission encountered the following error. Please 
+ investigate
+ Division: WACO
+ Type/Batch NON-CS / 93447
+ Error: <UNDEFINED>DG1+15^PSOHLSN2 *PSOARRY(1)
+ The prescriptions have been reset and other divisions' transmissions are 
+ continuing.
+  
+ Resolution:
+ -----------
+ Modify routine PSOHLSN2 to Quit at the beginning of tag DG1 so the ICD 
+ checks are not performed.  Also add a comment above this Quit to note 
+ that if these checks are needed in the future, the code will need to be
+ re-evaluated for any necessary changes.
+  
+  
+ 2. I9916149FY16 - ScriptPro issue with temporary address on label
+  
+ Problem:
+ --------
+ The Technical Manual/Security Guide is not up to date with the way
+ the patient's addresses (Confidential and Temporary) are sent in the
+ HL7 record.
+  
+ Resolution:
+ -----------
+ Update the Technical Manual/Security Guide to correctly show where the
+ patient's Confidential and Temporary addresses will be located in the
+ HL7 record.
+  
+  
+ DOCUMENTATION RETRIEVAL INSTRUCTIONS:
+ =====================================
+ Updated documentation that goes with Issue 2 above in this patch is
+ available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ File Name           Description                        Format
+ =========           ===========                        ======
+ pso_7_tm.pdf        TECHNICAL MANUAL/SECURITY GUIDE    Binary
+ pso_7_tm_r0417.pdf  TECHNICAL MANUAL/SECURITY GUIDE    Binary 
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ Although this installation should take less than 2 minutes, it is
+ recommended that it be installed overnight to prevent disruption of
+ service to other users.
+ Users should not be transmitting prescriptions to CMOP while the patch
+ is being installed.
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*465)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSO*7.0*465.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOHLSN2
+    Before:  B9232532   After:  B9515359  **143,226,239,225,404,465**
+ 
+Routine list of preceding patches: 404
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 27, 2016
+Completed By:                               Date Completed: APR 05, 2017
+Released By :                               Date Released : APR 05, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

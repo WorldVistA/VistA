@@ -1,0 +1,1285 @@
+$TXT Created by                  DEVVVV.DOMAIN.EXT  (KIDS) on Wednesday, 03/15/17 at 13:57
+=============================================================================
+Run Date: APR 18, 2017                     Designation: SD*5.3*658
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #545                    Status: Released
+                  Compliance Date: MAY 05, 2017
+=============================================================================
+
+Associated patches: (v)SD*5.3*628  <<= must be installed BEFORE `SD*5.3*658'
+                    (v)SD*5.3*645  <<= must be installed BEFORE `SD*5.3*658'
+                    (v)SD*5.3*651  <<= must be installed BEFORE `SD*5.3*658'
+
+Subject: VISTA SCHEDULING ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ VS GUI v2.0.0.8 and this patch provide the 'Additional Enhancements' to the
+ VistA Scheduling (VS) Graphical User Interface (GUI) v2.0.0.5 application
+ which were requested by Office of Veteran Access to Care (OVAC), as well as
+ fixes to 35 CA SDM tickets.  
+  
+ These additional enhancements will provide greater flexibility in the
+ scheduling process, provide the ability to manage requests more efficiently
+ and effectively, synchronize patient information between VS GUI and VistA
+ Scheduling Legacy, improve the printing process, save time by cleaning up
+ unresolved requests, contact patients for appointments more effectively and
+ efficiently and improve performance.
+  
+ ENHANCEMENTS
+  
+ Epic #1-Grid Match and Unscheduled Appointments
+ For VSE Schedulers who schedule a series of appointments for a Veteran. The
+ solution provides the scheduler with the ability to schedule appointments at
+ times and with the variations needed to support clinic operation, as well as
+ identifying the exact appointment times for unscheduled patients/walk-ins.
+ That helps provide greater flexibility in scheduling Veterans. Unlike the
+ current system that does not offer the flexibility needed, our process
+ increases availability and provides better tracking information.
+  
+ Epic #2-Edit and View Requests
+ For VSE Schedulers who schedule appointments in VSE. The solution allows
+ schedulers to manage requests more efficiently and effectively by editing
+ requests, saving and viewing all comments, and re-opening requests as needed
+ while always preserving the original preferred date (PD). That helps the
+ scheduler make appointments for Veterans without having to create a new
+ request and ensures that Veterans receive care when needed. Unlike the current
+ system that will not allow the scheduler to edit some critical request
+ information and will not re-open requests for no show and canceled by patient
+ appointments, our process allows schedulers to more effectively view and edit
+ requests, which will improve the accuracy and efficiency of the scheduling
+ process. 
+  
+ Epic #3-Demographic Data Updates
+ For VSE Schedulers who schedule appointments within VS GUI, the solution
+ allows the scheduler to update information in VS GUI and the correct
+ information will be updated in VistA. That helps the scheduler better serve
+ the Veteran by making updates more efficiently and while making an appointment
+ for the Veteran. Unlike the current system that forces the scheduler to move
+ back and forth between VS GUI and VistA, reducing the likelihood that
+ schedulers will want to use VS GUI and increasing the time to make changes,
+ our process reduces the time the scheduler needs to update important Veteran
+ demographic information because the scheduler can update the Veteran's
+ demographic information while making appointments and without having to use
+ the VistA system.
+  
+ Epic #5-CCOW and Patient Identification
+ For VSE Schedulers who schedule appointments in VSE, the solution synchronizes
+ the patient information across functional areas within VSE to the patient in
+ focus and provides more information about a patient's identification in the
+ calendar view of appointments. That helps the scheduler search for and view
+ patient appointments more efficiently and consistently. Unlike the current
+ process where the scheduler has to search on the patient in each application,
+ independently, and doesn't have enough information for identifying
+ appointments in the calendar, our process allows schedulers to more
+ effectively manage appointments.
+  
+ Epic #7-Improved Printing
+ For VSE Schedulers, providers, and patients who need to print or read printed
+ schedules and scheduling letters (clinic cancellation, appointment
+ cancellation, no-show, and pre-appointment), the solution enables improved
+ printing of letters and printing of Veteran appointments. That provides
+ printing of letters with visually effective formatting, no loss of
+ information, and provides printing of appointments for Veterans -- unlike the
+ current VSE system that has issues printing all types of letters and
+ schedules. Our process improves the processes related to printing in VSE.
+  
+ Epic 9-Trash Queue Cleanup
+ For administrators who need to identify and purge unresolved requests, the
+ solution allows a task to be run to identify open appointment requests or
+ duplicate appointment requests and close them, producing a report for
+ administrators. Note: Excludes VAR requests which are called Veteran Request
+ or Mobile and Welcome to VA (W2VA) requests - all stored in the SDEC APPT
+ Request file. That helps the administrator by rectifying unresolved requests
+ automatically. Unlike the current process where there are duplicate requests
+ and unresolved requests that must be resolved by the administrator, our
+ process saves schedulers and administrators time but still allows them to
+ review closed duplicates and open requests.
+  
+ Epic 10- For VSE Schedulers who need to create and view Veteran, appointment,
+ and clinic information in VSE, the solution allows the user to set their
+ default view preferences and adds a view only option. That helps to improve
+ scheduler efficiency, unlike the current VSE system that does not provide
+ these features. Our process improves the processes used by schedulers and
+ improves overall service to the Veteran.
+  
+ Epic  11-Veterans Appointment Request (VAR) Queue
+ For VSE Schedulers who schedule appointments in VSE, the solution displays the
+ telephone number that was entered into the VAR screen by the Veteran in the
+ VAR queue. That helps to ensure the scheduler will be contacting the Veteran
+ at the number they have provided, unlike the current process where the phone
+ number entered into VAR does not display in VSE. Our process allows schedulers
+ to more efficiently and effectively contact patients for appointments.
+  
+ Epic 13- For all VSE users who view, schedule, or manage information in VSE,
+ the solution provides efficient and effective response time, displaying pick
+ lists, query results, and reports real time and without performance issues
+ such as white screens or a seemingly endless hourglass. That helps to ensure
+ the scheduler is able to serve Veterans efficiently and effectively,
+ maintaining good productivity. Unlike the current process that pulls up
+ limited data, takes too long to pull up data, or results in white screens, the
+ solution allows VSE to display pick lists in five (5) seconds or less. VSE
+ informs user of progress during the generation of queries. Our process allows
+ schedulers to more efficiently and effectively perform their jobs.
+  
+ CA SDM TICKETS
+  
+ I10691629FY16- User can select a different patient from the calendar
+                (PSPO 3242)
+ I11142558FY17- Comments in VS GUI do not work properly; there are differences
+                between VistA and VS GUI; includes NOTES & Comments that are in
+                different fields in the GUI  (PSPO 3306)
+ I10665102FY16- Availability does not zero out
+ I10320124FY16- Scheduling letters printed with the default font of 15 do not
+                print the information correctly on the page.
+ I9982851FY16- VSE Grid displaying incorrect slot availability
+ I10449686FY16- ASH: VS GUI displays too many slots for a 60min increment
+                clinic
+ R10131762FY16- VS GUI Not Prompting for Overbook
+ I9871873FY16- VSE Calendar is not displaying the Overbook symbol beside the
+               overbook appointment.
+ I10659119FY16- VSE is not displaying the RM GRID in the correct Priority Order
+ I9674926FY16- The Patient Address is too high on the letter to fit into a #10
+               standard one window envelope. 
+ I10043597FY16- The length of the Special Needs and Preferences REMARKS field
+                in VS GUI is causing unresponsive system.
+ I10619212FY16- All requests in the VS Request Grid should open to TODAYs Date
+                when the CID/PD Date is in the PAST.
+ I9937259FY16- Comments entered in the VS GUI APPT Request are not being
+               displayed when the Request is Viewed and they are not
+               transferring to the EWL Request.
+ I10695144FY16- New or Established field is not calculating according to
+                Business Rules set by ACAP office.  
+ I11146466FY17- Need the ability to make a scheduled appointment at a time that
+                overlaps an already scheduled appointment. (ex - Tele-Health)
+ I9883746FY16- MRTC not reflecting correct CID Date
+ I9654231FY16- Multi-Appointment booking in VSE GUI - incorrect CID being
+               passed to VistA
+ I10573215FY16- Multiple Return To Clinic (MRTC) is allowing the clinic to be
+                changed to a clinic that is not within the same stop code as
+                the requested clinic
+ I9883550FY16- If the user does not complete the steps when cancelling a MRTC
+               appointment, the appt is not completely cancelled.
+ I9642120FY16- During the process of Multi-Book appointment booking, the VS GUI
+               hangs.
+ I9829412FY16- ENH REQ Approved: MULTIPLE APPOINTMENT BOOKING-SDMULTIBOOK
+               Option- Appts MADE in VistA Legacy are not reflected in VS GUI.
+ I9956180FY16- Edits made to request comments in VS GUI do not get sent to
+               VistA legacy.
+ I9568671FY16- CONSULTS ENTERED PRIOR TO PATCH GMRC*81 VSE IS USING CURRENT
+               DATE AS CID
+ I9381748FY16- Query for Recall results with black screen and application
+               freezing.  
+ I9878547FY16- VSE keeps freezing at many points from log in to well within the
+               program.  
+ I11145711FY17- Consults are to be displayed in the RM Grid regardless of the
+                request date
+ I10612450FY16- Calendars in the Schedules Section do not sync together
+ I10645706FY16- Month View in Schedules Section is not functioning properly
+ I10659319FY16- VS GUI is not reflecting the SC Related field in the RM GRID
+                correctly.
+ I10644445FY16- Editing an Appt Request leaves Clinic/Service field blank
+ I10371353FY16- Address in the New Appointment block under the Contact Tab is
+                displaying the Next Of Kin -  city, state, zip instead of
+                patient address information
+ I10046473FY16- Large Amount of Characters in Notes Section causes an error in
+                VS GUI Appt Remarks after entering an Appt
+ I9961448FY16- Entering a "^" when creating an appointment request in VS GUI
+               causes a table error box and user cannot correct.
+ I10644588FY16- Viewing EWL Request is not displaying Clinic/Service field
+ I11611508FY17- When using the VS GUI, the user currently has no indication
+                whether he is connected to a test or production environment.
+                An indication must be provided the user when connected to a
+                test environment.
+ I12577233FY17- There are differences between VistA and VS GUI regarding NOTES
+                and Comments that do not match.
+ I2596663FY17- SDAM Appointment Management errors when a user replies 'YES' to
+               the prompt "WANT PATIENT NOTIFIED OF LAB, X-RAY, OR EKG STOPS?"
+ I2524606FY17- The DATE APPT MADE and DATA ENTRY CLERK fields of the HOSPITAL
+               LOCATION Appointment record and the PATIENT Appointment record
+               are being over-written when an appointment is Cancelled.
+  
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)               Field Name (#)           New/Modified/Deleted
+ -------------               --------------           --------------------
+ RECALL REMINDERS            COMMENT                   Modified
+ (#403.5)                    (#2.5)
+ RECALL REMINDERS            FAST/NON-FASTING          Modified
+ (#403.5)                    (#2.6)
+ RECALL REMINDERS            TEST/APP.                 Modified
+ (#403.5)                    (#3)
+ RECALL REMINDERS            PROVIDER                  Modified
+ (#403.5)                    (#4)
+ RECALL REMINDERS            CLINIC                    Modified
+ (#403.5)                    (#4.5)
+ RECALL REMINDERS            LENGTH OF APPT.           Modified
+ (#403.5)                    (#4.7)
+ SD WAIT LIST                WL APPOINTMENT TYPE       Modified
+ (#409.3)                    (#8.7)
+ SD WAIT LIST                REQUEST BY                Modified
+ (#409.3)                    (#11)
+ SD WAIT LIST                PROVIDER                  Modified
+ (#409.3)                    (#12)
+ SD WAIT LIST                COMMENTS                  Modified
+ (#409.3)                    (#25)
+ SDEC APPT REQUEST           PATIENT STATUS            Modified
+ (#409.85)                   (#.02)
+ SDEC APPT REQUEST           REQ SPECIFIC CLINIC       Modified
+ (#409.85)                   (#8)
+ SDEC APPT REQUEST           REQ SERVICE/SPECIALTY     Modified
+ (#409.85)                   (#8.5)
+ SDEC APPT REQUEST           REQ APPOINTMENT TYPE      Modified
+ (#409.85)                   (#8.7)
+ SDEC APPT REQUEST           REQUESTED BY              Modified
+ (#409.85)                   (#11)
+ SDEC APPT REQUEST           PROVIDER                  Modified
+ (#409.85)                   (#12)
+ SDEC APPT REQUEST           (DISPOSITION CLOSED BY CLEANUP New
+ (#409.85)                   (#21.1)
+ SDEC APPT REQUEST           CURRENT STATUS            Modified
+ (#409.85)                   (#23)
+ SDEC APPT REQUEST           COMMENTS                  Modified
+ (#409.85)                   (#25)
+ SDEC RESOURCE               ABBREVIATION              New
+ (#409.831)                  (#.011)
+  
+  
+ Forms Associated:
+  
+ Form Name                   File #                   New/Modified/Deleted
+ ---------                   ------                   --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                      New/Modified/Deleted
+ ---------------                                      --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                      Type                New/Modified/Deleted
+ -----------                      ----                --------------------
+ SDEC INITIAL CLEANUP UTILITY     run routine         New
+ SDEC REQ REOPENED BY SDCANCEL    run routine         New
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name                                       New/Modified/Deleted
+ --------------                                       --------------------
+ SDEC DEFAULT FONT SIZE                                New
+ SDEC REQ MGR GRID FILTER                              New
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                                        New/Modified/Deleted
+ -------------                                        --------------------
+ N/A
+  
+  
+ Remote Procedures Associated:
+ RPC Name                                             New/Modified/Deleted
+ --------                                             --------------------
+ SDEC APPADD                                           Modified
+ SDEC ARGET                                            Modified
+ SDEC GETREGA                                          Modified
+ SDEC PTLOOKRS                                         Modified
+ SDEC PTSET                                            Modified
+ SDEC RECGET                                           Modified
+ SDEC REQGET                                           Modified
+ SDEC WLGET                                            Modified
+ SDEC01 CLINICS                                        New
+ SDEC57 OBM                                            New
+ SDECAR3 AREDIT                                        New
+ SDECDEM MARITAL                                       New
+ SDECDEM RELIGION                                      New
+ SDECDEM ZIPLINK                                       New
+ SDECDEV DEV                                           New
+ SDECDEV PRINT                                         New
+ SDECRMGP GETRMGUP                                     New
+ SDECRMGP PUTRMGUP                                     New
+ SDECU4 GETFONT                                        New
+ SDECU4 PUTFONT                                        New
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ SDECVIEW
+  
+  
+ Templates Associated:
+  
+ Template Name           Type     File Name (Number)  New/Modified/Deleted
+ -------------           ----     ------------------  --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I10691629FY16- User can select a different patient from the calendar
+                   (PSPO 3242)
+  
+   Problem:
+   -------
+   When a user searches and selects a patient and clicks on an appointment in
+   the calendar for a different patient, this action changes the patient in the
+   Ribbon Bar to the new patient information but leaves the RM grid with the
+   original patient.
+  
+   Resolution:
+   ----------
+   The Client has been updated to redisplay both the Patient and Patient's
+   Requests when an appointment is selected from the calendar.
+  
+ 2. 11142558FY17- Comments in VS GUI do not work properly; there are
+                  differences between VistA and VS GUI; includes NOTES &
+                  Comments that are in different fields in the GUI  (PSPO 3306)
+   
+   Problem:
+   -------
+   Several clerks had noted that the comment system in VS GUI does not work
+   properly compared to VistA.  Comments are appearing in different
+   places or occasionally not at all. One clerk in particular was attempting to
+   show the differences between VSE/VistA and we came across a comment
+   "follow-up required within 7-10 days" that appeared in VistA but not VSE.
+   This particular clinic may have over 300 interactions with patients per day
+   so a comment like that getting lost could lead to follow-ups potentially
+   being scheduled outside the requested window.
+  
+   Resolution:
+   ----------
+   The SDEC APPADD RPC has been updated to properly store the NOTE into the
+   Patient's appointment record. The SDECADD routine has been updated to
+   properly store to the NOTE multiple of the SDEC APPOINTMENT file (#409.84)
+   when an appointment is added or updated from VistA.
+  
+ 3. I10665102FY16- Availability does not zero out
+  
+   Problem:
+   -------
+   When an appointment is booked at 815-915am in VistA for a clinic that has
+   availability from 0800-0900, in VistA the 8am slot still shows 1 and at
+   815 it shows an *. In VS GUI, the slot still shows 1 from 8-9 and there is
+   no *.
+  
+   Resolution:
+   ----------
+   The client has changed the handling of the data returned from the SDEC
+   APPSLOTS rpc to insure the corrected availability is displayed in the Clinic
+   Schedule.
+  
+ 4. I10320124FY16- Scheduling letters printed with the default font of 15 do
+                   not print the information correctly on the page.
+  
+   Problem:
+   -------
+   Users want to be able to change the font size when printing letters and be
+   able to set the default font size so they do not have to reset it every time
+   an appointment letter is printed.
+  
+   Resolution:
+   ----------
+   A new PARAMETER DEFINITION (XPAR) has been added called SDEC DEFAULT FONT
+   SIZE which will hold the default Font.
+   Two new RPCs have been added - 
+    - SDECU4 GETFONT allows the VS GUI to get the current default font size.
+    - SDECU4 PUTFONT allows the VS GUI to set a new default font size to the
+      new XPAR.
+  
+ 5. I9982851FY16- VSE Grid displaying incorrect slot availability.
+  
+   Problem:
+   -------
+   There is an issue where several clinic grids are not displaying the correct
+   slot availability.
+  
+   Resolution:
+   ----------
+   The GUI client has been updated to correctly size the Appointment Time slots
+   to display at the slot start time and over the duration of the slot.
+  
+ 6. I10449686FY16- VS GUI displays too many slots for a 60min increment clinic.
+  
+   Problem:
+   -------
+   VS GUI displays too many slots for a 60min increment clinic. In VistA, users
+   only see 1 slot per hour whereas in VS GUI users see 2 slots per hour
+   (1 per 30min slot).
+  
+   Resolution:
+   ----------
+   The GUI client has been updated to correctly size the Appointment Time slots
+   to display at the slot start time and over the duration of the slot.
+  
+ 7. R10131762FY16- VS GUI Not Prompting for Overbook
+  
+   Problem:
+   -------
+   VS GUI does not follow the same rules as VistA when determining if a prompt
+   for Overbook should occur.
+  
+   Resolution:
+   ----------
+   A new RPC has been added, SDEC57 OBM, which uses the same rules for
+   determining when an overbook status has occurred and what message should be
+   displayed to the user.
+  
+ 8. I9871873FY16- VSE Calendar is not displaying the Overbook symbol beside the
+                  overbook appointment.
+  
+   Problem:
+   -------
+   When a Scheduling User has the SDMOB security key, that user can overbook
+   appointments outside the scheduling grid hours. When the appointment is
+   booked after the normal work hour, the overbook symbol is not present in the
+   VSE GUI beside the appointment.
+   Example: if a clinic is set up for working hours from 8am - 4pm and an
+   overbook apt is made at 8pm - the VSE GUI the displays the patient name and
+   appointment at the 8 pm slot but the overbook symbol is displayed at 5pm.
+  
+   Resolution:
+   ----------
+   The GUI client has been updated to change the handling of the return from
+   the SDEC APPSLOTS rpc to insure the overbook symbol is displayed in the
+   Clinic Schedule.
+  
+ 9. I10659119FY16- VSE is not displaying the RM GRID in the correct Priority
+                   Order.
+  
+   Problem:
+   -------
+   The correct default sort is as follows:
+     1. Requests with blank Priority Group
+     2. Priority Group 1
+        OR all patients whose request for care is SC related
+        (Field #409.3,15 = YES).
+        Display records with SCVisit=Yes first followed by SCVisit=Null.
+     3. Priority Group 2 whose request for care is NOT SCVisit then Priority
+        Group 3 and if Priority Group 3 is not SCVisit .. and so on.
+     4. For ascending Priority Group order within each group, the system shall
+        sort the requests by the desired date, and within each desired date,
+        the system shall sort the requests by the date the request was made.
+  
+   Resolution:
+   ----------
+   For EWL and APPT request types, SC Related is determined by the SERVICE
+   CONNECTED PRIORITY field. This field is found in both SD WAIT LIST and SDEC
+   APPT REQUEST files.
+   
+   Note that Groups 2-8 are treated like GROUP 1 if SERVICE CONNECTED
+   PRIORITY is 'YES', so they could end up mixed with no order to the
+   GROUP. For Recall and Consults, SC Related is defined as if it were
+   'YES' for GROUP 1 and Null for all others.
+   
+   '... for Recall and Consult for all other Priority groups it should be
+   null. For Priority Group 1 it will be Yes.'
+  
+ 10. I9674926FY16- The Patient Address is too high on the letter to fit into a
+                   #10 standard one window envelope. 
+  
+   Problem:
+   -------
+   When printing patient letters from VS GUI, the Patient Address is too high
+   on the letter to fit into a #10 standard one window envelope. When you print
+   in VISTA to a network printer, it's fine.
+  
+   Resolution:
+   ----------
+   This has been found to be a Windows issue, therefore when printing letters
+   that need to go into a #10 window envelope, these letters should be printed
+   from within VistA.
+  
+ 11. I10043597FY16- The length of the Special Needs and Preferences REMARKS
+                    field in VS GUI is causing unresponsive system.
+  
+   Problem:
+   -------
+   There is a problem with the Remarks section in the special needs and
+   preferences in VS GUI. If there are too many characters (no max set) the
+   system will give the white screen and users will need to close out.
+  
+   Resolution:
+   ----------
+   Although the REMARKS field (#6) of the SDEC PREFERENCES AND SPECIAL NEEDS
+   file (#409.845) is a Word Processing field, the string coming in is being
+   stored as only 1 line no matter how long it is. This could cause the entry
+   to exceed the maximum allowed string length. This has been corrected by
+   dividing the string into multiple lines with a maximum line size of 80
+   characters.
+  
+ 12. I10619212FY16- All requests in the VS Request Grid should open to TODAYs
+                    Date when the CID/PD Date is in the PAST.
+  
+   Problem:
+   -------
+   All Request in the VS GUI Request Grid should open to TODAYs Date when the
+   CID/PD Date is in the PAST. Currently the calendar opens to the CID/PD Date
+   in the Request (APPT, EWL, RECALL, CONSULT). This is causing confusion at
+   the sites and possible incorrect scheduling. Making all requests work the
+   same way will eliminate confusion and possible incorrect scheduling.
+  
+   Resolution:
+   ----------
+   The GUI client has been updated to open the calendar to Todays Date when the
+   CID (preferred date) is in the past.
+  
+ 13. I9937259FY16- Comments entered in the VS GUI APPT Request are not being
+                   displayed when the Request is viewed and they are not
+                   transferring to the EWL Request.
+  
+   Problem:
+   -------
+   The Comments field in the Appointment Dialog for VS GUI contains important
+   information concerning the Appointment being requested. This comment is
+   added to the APPT Request but is not being displayed when the user selects
+   the VIEW REQUEST function from the request grid. Also, when the function to
+   transfer the APPT Request to the EWL Request, the comments are not
+   transferring to the EWL Request.
+  
+   Resolution:
+   ----------
+   The SDEC APPADD rpc has been updated to pass the comment all the way through
+   to the appropriated Appointment Request, Patient Appointment, and Clinic
+   Appointment.
+  
+ 14. I10695144FY16- New or Established field is not calculating according to
+                    Business Rules set by ACAP office.
+  
+   Problem:
+   -------
+   Currently the VS GUI is looking at the specific CLINIC but it should be
+   looking at the Primary Stop Code of the Clinic to determine NEW or
+   ESTABLISHED status. 
+   Per Dr. Davies comment in the Issue Report - the definition of 'established'
+   that we have in place now is simply those patients who have completed at
+   least one appointment in a given stop code in the past 24 months. I agree
+   that it is logical to use check out since I presume that is the data element
+   indicates they have completed at least one appointment in the stop code.
+  
+   Resolution:
+   ----------
+   The SDEC PCST2GET rpc has been updated to use the Clinic Stop code in place
+   of the Clinic id AND also has been updated to use the check-out time instead
+   of the appointment time to determine if the patient is 'NEW' or
+   'ESTABLISHED'.
+  
+ 15. I11146466FY17- Need the ability to make a scheduled appointment at a time
+                    that overlaps an already scheduled appointment.
+                    (ex - Tele-Health)
+  
+   Problem:
+   -------
+   In the current VistA scheduling application the user is able to enter a
+   scheduled appointment at a time that is not consistent with the allocated
+   time slots.
+   Example - A slot is allocated at the top hour with the appointment length
+   of one hour at 9, 10, and 11. The user needs to make a scheduled appointment
+   at 9:10. The VSE GUI needs to add the capability to enter the appointment
+   time when scheduling an appointment. The entered appointment time must
+   display accurately in the calendar grid.
+  
+   Resolution:
+   ----------
+   The VS GUI client has been updated to allow booking and overlap appointment.
+  
+ 16. I9883746FY16- MRTC not reflecting correct CID Date
+  
+   Problem:
+   -------
+   When cancelling an MRTC appointment, if the user selects cancel by patient
+   and enters a different CID date, the Child request reopens with the original
+   CID date. When the appointment is rescheduled the calendar opens to original
+   CID date. And after scheduling the appointment and viewing the appointment
+   details in Vista the CID date is showing the same date as the re-scheduled
+   appointment date.
+  
+   Resolution:
+   ----------
+   The GUI client has been updated to correct the MRTC process that was not
+   reflecting the correct CID Date. When cancelling an appointment by patient
+   that is part of an MRTC, and the the CID date is changed, the new CID date
+   is not reflected in the re-opened appt request.
+  
+ 17. I9654231FY16- Multi-Appointment booking in VSE GUI - incorrect CID being
+                   passed to VistA
+  
+   Problem:
+   -------
+   When Multi-Appointments (MRTC) are booked in the VSE GUI. each appointment
+   made has its own request with a calculated CID/Preferred Date. The
+   CID/Preferred Date that is being set in VSE is not the same as what is being
+   shown in VistA.
+  
+   Resolution:
+   ----------
+   The GUI client has been updated to pass the correct CID to the SDEC APPADD
+   rpc.
+  
+ 18. I10573215FY16- Multiple Return To Clinic (MRTC) is allowing the clinic to
+                    be changed to a clinic that is not within the same stop
+                    code as the requested clinic
+  
+   Problem:
+   -------
+   In VS GUI, Multiple Return To Clinic (MRTC) is allowing the clinic to be
+   changed to a clinic that is not within the same stop code as the requested
+   clinic. This could result in the patient not getting the kind of
+   care/appointment that the provider requested.
+  
+   Resolution:
+   ----------
+   A new rpc has been added called SDEC01 CLINICS which will return a list of
+   clinics for a given CLINIC STOP code or that match a given clinic.
+   The GUI client has been updated to use the new SDEC01 CLINICS rpc to fill
+   the combo box with clinics having matching stop codes.
+  
+ 19. 9883550FY16- If the user does not complete the steps when cancelling a
+                  MRTC appointment, the appt is not completely cancelled.
+  
+   Problem:
+   -------
+   If the user does not complete the steps when cancelling a MRTC appointment,
+   VSE is not cancelling all of the functions. This is allowing the user to
+   attempt to start the cancellation over in the same transaction which is
+   causing an error.
+  
+   Resolution:
+   ----------
+   The GUI client has been updated to improve the flow of cancelling an MRTC
+   appointment so that the cancellation is completed correctly.
+  
+ 20. I9642120FY16- During the process of Multi-Book appointment booking, the VS
+                   GUI hangs.
+  
+   Problem:
+   -------
+   There are times when VS GUI hangs during the process of adding a Multi-Book
+   appointment. This seems to be due to unrecognized overbook messages.
+  
+   Resolution:
+   ----------
+   The GUI Client has been updated to handle all overbook messages and removed
+   the inappropriate messages.
+  
+ 21. I9829412FY16- ENH REQ Approved: MULTIPLE APPOINTMENT BOOKING-SDMULTIBOOK
+                   Option- Appts MADE in VistA Legacy are not reflected in VS
+                   GUI.
+  
+   Problem:
+   -------
+   In MULTIPLE APPOINTMENT BOOKING - SDMULTIBOOK option - Appointments MADE in
+   VistA are not showing in the calendar for VS GUI.
+  
+   Resolution:
+   ----------
+   The SDMULTIBOOK option has been updated to store the new appointment data
+   into the SDEC APPOINTMENT file and to add an entry to the SDEC APPT REQUEST
+   file when appropriate
+  
+ 22. I9956180FY16- Edits made to request comments in VS GUI do not get sent to
+                   VistA legacy.
+  
+   Problem:
+   -------
+   If a user edits the Notes field of the Appointment Dialog in VS GUI, the
+   edit is not sent to VistA. The Notes field of the Appointment
+   Cancel dialog also is not sent to VistA. The appointment request
+   will reopen on the request grid and the comments will not reflect the
+   edit, only the original notes entered when the initial creation of the
+   appointment was performed.
+  
+   Resolution:
+   ----------
+   The SDEC EDITAPPT RPC has been updated to store the edited Note to the
+   Clinic Appointment record.
+  
+ 23. I9568671FY16- VS GUI should be updated to always show the CID Date on the
+                   RM Grid for Consults.
+  
+   Problem:
+   -------
+   GMRC*3*81 made changes to some fields that VS GUI is referencing and VS GUI
+   needs to be updated. The VS GUI should always show the CID Date found in
+   the Consult. This will need to be coded to start this process as of the
+   compliance date of the patch. Current requirements are - In OT3, there
+   is a requirement for Consult that If the 'Entered Date' and 'Earliest
+   Appropriate Date' (both from the Consult in CPRS) are equal to each other
+   then VS GUI shall use the 'Urgency' field for CID unless the Urgency field
+   is equal to 'Stat' or 'Next Available', 'Emergency' or 'Today' then use
+   'Earliest Appropriate Date' as the CID.
+  
+   Resolution:
+   ----------
+   The SDEC REQGET RPC has been updated to check that GMRC*3.0*81 has been
+   installed on or before the File Entry Date (and time). If so, we always
+   return the 'EARLIEST DATE' (CLINICALLY INDICATED DATE) as the 9th return
+   piece (PRIO). If GMRC*3.0*81 has not been installed by the FILE ENTRY DATE,
+   we execute the same logic as before, which is:
+    If the 'Entered Date' and 'Earliest Appropriate Date' (both from the
+    Consult in CPRS) are equal to each other then VS GUI will use the
+    'Urgency' field for CID unless the Urgency field is equal to 'Stat' or
+    'Next Available', 'Emergency' or 'Today' then use 'Earliest Appropriate
+    Date' as the CID.
+  
+ 24. I9381748FY16- Query for Recall results with black screen and application
+                   freezing.  
+  
+   Problem:
+   -------
+   When using the Query Tool in VS GUI to submit a data request that includes
+   a clinic filter causes the screen to go black and there is a delay of 2-3
+   minutes before the results are returned.
+  
+   Resolution:
+   ----------
+   This has been addressed in the SDEC RECGET RPC by using the existing E xref
+   in the RECALL REMINDERS file (#403.5) to look up by Clinic when a Clinic ID
+   is included in the filters.
+  
+ 25. I9878547FY16- VSE keeps freezing at many points from log in to well within
+                   the program.  
+  
+   Problem:
+   -------
+   VS GUI freezes and displays a white or black screen at various points in the
+   application.
+  
+   Resolution:
+   ----------
+   Additional cross-references have been added to some of the VS GUI related
+   files along with support from the VS GUI related APIs to speed up searches
+   from the RM Grid.
+   The GUI Client has been updated to use multi-threading for several processes
+   that tend to take more time than is acceptable.
+  
+ 26. I11145711FY17- Consults are to be displayed in the RM Grid regardless of
+                    the request date
+  
+   Problem:
+   -------
+   All Pending Consults should be displayed in the RM GRID regardless of the
+   Request Date.
+  
+   Resolution:
+   ----------
+   The 365 day restriction has been removed from the SDEC REQCHK and
+   SDECRMG RMG RPCs.
+  
+ 27. I10612450FY16- Calendars in the Schedules Section do not sync together
+  
+   Problem:
+   -------
+   In VS GUI, if the user is viewing/selecting clinics in the Clinic Schedules
+   versus selecting a request type and changes clinics, whatever date the
+   previous clinic was on will remain showing in the calendar on the left. The
+   grid and calendar located in the grid will default to today's date.
+  
+   Resolution:
+   ----------
+   The GUI Client has been updated to correct the calendar sync when the user
+   changes clinics and when the CID is in the past.
+  
+ 28. I10645706FY16- Month View in Schedules Section is not functioning properly
+  
+   Problem:
+   -------
+   Changing to a Month View and then selecting the triangle within the day
+   slot, opens the wrong date.
+  
+   Resolution:
+   ----------
+   The GUI Client has been corrected to display the correct date when selecting
+   the triangle within the day slot.
+  
+ 29. I10659319FY16- VS GUI is not reflecting the SC Related field in the RM
+                    GRID correctly.
+  
+   Problem:
+   -------
+   In the VS GUI the SC Related field on the RM Grid is not reflecting the
+   SERVICE CONNECTED PRIORITY field of the VS GUI Request.
+  
+   Resolution:
+   ----------
+   The SCVisit value was not getting updated when the record was read going
+   into the Request Management screen.  This has been corrected.
+  
+ 30. I10644445FY16- Editing an Appt Request leaves Clinic/Service field blank
+  
+   Problem:
+   -------
+   When editing an appointment request the clinic/service field is blank when
+   the Appointment Request box opens. Matching clinic names are appearing in a
+   separate window outside of the appointment request box versus under the
+   clinic/service box. The box allows the user to highlight a clinic name but
+   the name does not populate the clinic/service field. 
+  
+   Resolution:
+   ----------
+   The GUI Client has been updated to properly display the data in the
+   clinic/service field AND when selecting a clinic, the matching clinic names
+   display under the clinic/service box as expected.
+  
+ 31. I10371353FY16- Address in the New Appointment block under the Contact Tab
+                    is displaying the Next Of Kin -  city, state, zip instead
+                    of patient address information
+  
+   Problem:
+   -------
+   The Address that is in the Contact Information in the Add Appointment dialog
+   is not the same as the one that displays in the demographics area. Further
+   researched shows that the Contact Information is pulling the Address from
+   the Next Of Kin address. Team is evaluating to determine if this was a
+   requirement or a potential enhancement request.
+  
+   Resolution:
+   ----------
+   The GUI Client has been updated to pull the correct patient address data for
+   the Contact Information and the Demographics area.
+  
+ 32. I10046473FY16- Large Amount of Characters in Notes Section causes an error
+                    in VS GUI Appt Remarks after entering an Appt
+  
+   Problem:
+   -------
+   In the Notes field of New Appointment dialog the user/scheduler can enter
+   3000+ characters; however, the text is filing to Other field of the
+   Appointment Sub-file and that field is limited to only 150 characters of
+   text.
+   
+   If the scheduler does add a large amount of text then VS GUI will
+   register an unable to load dialog error when OK is selected in New
+   Appointment dialog and the application will freeze up.
+  
+   Resolution:
+   ----------
+   Modified New Appointment dialog to limit Notes to 150 characters.
+  
+ 33. I9961448FY16- Entering a "^" when creating an appointment request in VS
+                   GUI causes a table error box and user cannot correct.
+  
+   Problem:
+   -------
+   VistA does not allow the use of this symbol '^' when entering comments
+   into the other field inside of appointment management. However it will
+   notify and allow the user to re-enter the comments.
+   
+   When using this symbol in VS GUI in an appointment request, a table error
+   box is received and the user is not given the opportunity to correct.
+   The request completes and comments are not reflected.
+   
+   When using this symbol while scheduling an appointment, in the Notes the
+   user is given the table error. The user is not given the opportunity to
+   correct. The new appt box closes. Pending appointments show the
+   scheduling appt however the user is not able to select the appt to
+   display the grid or choose that clinic date using the scheduling section
+   and manually entering the clinic and selecting the day on the calendar.
+   The grid appears grayed out and the same table error is received.
+  
+   Resolution:
+   ----------
+   The SDEC WLSET, SDEC ARSET, and SDEC RECSET RPCs have been updated to check
+   for these ^ characters during input validation. If the ^ character is
+   detected, it is changed to a space.
+  
+ 34. I10644588FY16- Viewing EWL Request is not displaying Clinic/Service field
+  
+   Problem:
+   -------
+   When viewing an EWL Request the Clinic/Service field is not populated.  This
+   issue is happening because the first part of the clinic name is the same for
+   multiple clinics.  For example, CHY ORTHO PECKHAM, CHY ORTHO PECKHAM RETURN,
+   CHY ORTHO PECKHAM WALK IN. 
+  
+   Resolution:
+   ----------
+   The GUI Client has been updated to correctly search and display Clinic
+   names.
+  
+ 35. I11611508FY17- When using the VS GUI, the user currently has no indication
+                    whether he is connected to a test or production
+                    environment.  An indication must be provided the user when
+                    connected to a test environment.
+  
+   Problem:
+   -------
+   When running VS GUI, there is no indication if the application is live or
+   still in a test environment. The system must let the user know they are
+   connected to the test environment.
+  
+   Resolution:
+   ----------
+   The GUI Client has been updated to display the text 'TEST PRODUCTION' or
+   'PRODUCTION ENVIRONMENT' in the header based on the Sign-on flag [7].
+   'PRODUCTION ENVIRONMENT' displays in RED and 'TEST PRODUCTION' displays in
+   black on a white background.
+  
+ 36. I12577233FY17- There are differences between VistA and VS GUI regarding
+                    NOTES and Comments that do not match.
+  
+   Problem:
+   -------
+   The OTHER field (#3) that is in the HOSPITAL LOCATION file (#44) under the
+   APPOINTMENT multiple field (#1900) and then under the PATIENT multiple field
+   (#2) is not populated from the SDEC APPADD rpc if the text has exceeded the
+   150 character limit.
+   From VistA appointment management (SDAM), when an appointment is added or
+   cancelled and if the user enters text in the OTHER INFO prompt, the NOTE
+   field (#1) in the SDEC APPOINTMENT file (#409.84) is not being populated.
+  
+   Resolution:
+   ----------
+   The SDEC APPADD rpc has been updated to limit the note to 150 characters so
+   that the 150 character limit is not exceeded.
+   The VistA Appointment Management option has been updated to include the
+   OTHER INFO comment when calling the update for the SDEC APPOINTMENT file
+   (#409.84).
+   The post-installation routine SDEC658 will Schedule a one time Taskman job
+   that will sync the OTHER field (#3) under the PATIENT multiple field (#2)
+   for the APPOINTMENT multiple field (#1900) in the HOSPITAL LOCATION file
+   (#44) with the NOTE field (#1) in the SDEC APPOINTMENT file (#409.84).
+   A report will be provided via Mailman to the person installing the patch
+   once the Taskman job finishes. This report will show the differences between
+   the 2 fields and how they were resolved. The subject of the Mailman message
+   will be: "SD*5.3*658 NOTE UPDATE REPORT DATA for <date>".
+  
+ 37. I2596663FY17- SDAM Appointment Management errors when a user replies 'YES'
+                   to the prompt "WANT PATIENT NOTIFIED OF LAB, X-RAY, OR EKG
+                   STOPS?"
+  
+   Problem:
+   -------
+   Changes made to accommodate the MULTIPLE APPOINTMENT BOOKING [SDMULTIBOOK]
+   option are causing an error at the "WANT PATIENT NOTIFIED OF LAB, X-RAY, OR
+   EKG STOPS?" prompt due to the SL variable being killed when the date/time is
+   being collected for this prompt.
+  
+   Resolution:
+   ----------
+   The SDAM Appointment Management has been updated to re-initialize the SL
+   variable if needed.
+  
+  38. I2524606FY17- The DATE APPT MADE and DATA ENTRY CLERK fields of the
+                    HOSPITAL LOCATION Appointment record and the PATIENT
+                    Appointment record are being over-written when an
+                    appointment is Cancelled.
+  
+   Problem:
+   -------
+   The DATE APPT MADE field (#8) and the DATA ENTRY CLERK field (#7) in the
+   HOSPITAL LOCATION file (#44) under the APPOINTMENT multiple field (#1900)
+   and under the PATIENT multiple field (#2) are being overwritten with the
+   current date/time and user if a REMARK is entered.
+   Also, the DATE APPT MADE field (#20) and the DATA ENTRY CLERK field (#19) in
+   the PATIENT file (#2) under the APPOINTMENT multiple field (#1900) are being
+   overwritten with the current date/time and user if a REMARK is entered.
+  
+   Resolution:
+   ----------
+   The Set Note logic used by the SDEC APPDEL rpc has been corrected to not
+   change the DATA ENTRY CLERK fields and the DATE APPT MADE fields.
+  
+ Test Sites:
+ ----------
+ VA Hudson Valley Health Care System
+ Chillicothe VA Medical Center
+ Asheville VA Medical Center
+ Louis Stokes Cleveland VA Medical Center
+ Southern Arizona VA Health Care System
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Albany:         domain.ext
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Title                                 File Name                 SFTP Mode
+ -------------------------------------------------------------------------
+ SCHEDULING User Manual                VSE_UG.PDF                (binary)
+ SCHEDULING User Manual                VSE_UG.DOCX               (binary)
+ SCHEDULING Technical Manual           VSE_TM.PDF                (binary)
+ SCHEDULING Technical Manual           VSE_TM.DOCX               (binary)
+ SCHEDULING Security Guide             VSE_SG.PDF                (binary)
+ SCHEDULING Security Guide             VSE_SG.DOCX               (binary)
+ SCHEDULING Install Guide              VSE_Install_Guide.DOCX    (binary)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch contains no PRE Installation processing.
+ Post-Installation processing does the following:
+   1. Registers the new APIs to the SDECRPC option.
+   2. Builds new cross-references.
+   3. Populates the new ABBREVIATION field (#.011) in the SDEC RESOURCE file
+      (#409.831).
+   4. Adds the new SDEC REQ REOPENED BY SDCANCEL option to the SDOUTPUT menu.
+   5. Schedule a one time Taskman job that will sync the OTHER field (#3) under
+      the PATIENT multiple field (#2) for the APPOINTMENT multiple field
+      (#1900) in the HOSPITAL LOCATION file (#44) with the NOTE field (#1) in
+      the SDEC APPOINTMENT file (#409.84).
+      A report will be provided via Mailman to the person installing the patch
+      once the Taskman job finishes. This report will show the differences
+      between the 2 fields and how they were resolved. The subject of the
+      Mailman message will be: "SD*5.3*658 NOTE UPDATE REPORT DATA for <date>".
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch should not be installed with VistA Scheduling GUI users on the
+ system and it is recommended that it be installed during non-peak hours to
+ minimize potential disruption to other users. This patch should take less
+ than 60 minutes to install.
+  
+ The following options should be disabled to ensure that no processing takes
+ place during the install:
+   Clinical Scheduling Procedure Calls [SDECRPC]
+   Scheduling Manager's Menu           [SDMGR]
+   Supervisor Menu                     [SDSUP]
+   Scheduling Menu                     [SDUSER]
+   Set up a Clinic                     [SDBUILD]
+  
+ Installation Instructions:
+ --------------------------
+  
+ This installation will update routines that support VistA Scheduling GUI APIs.
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the
+     Installation Menu.  From this menu, you may elect to use the following
+     options. When prompted for the INSTALL NAME enter the patch #
+    SD*5.3*658:
+   a. Backup a Transport Global - This option will create a backup message
+         of any routines exported with this patch. It will not backup any other
+         changes such as DDs or templates.
+   b. Compare Transport Global to Current System - This option will allow
+         you to view all changes that will be made when this patch is
+         installed.  It compares all components of this patch (routines,
+         DDs, templates, etc.).
+   c. Verify Checksums in Transport Global - This option will allow you to
+         ensure the integrity of the routines that are in the transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of Install?
+     NO//' 
+       Respond with 'NO'
+  
+ 6. When Prompted 'Do you want to schedule the SDECIDX REFRESH option to run
+     now? YES//'
+       Respond with 'YES'
+  
+ 7. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+       Respond with 'NO'
+  
+ 8. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//' 
+       Respond with 'YES'
+       Option to mark as out of order:
+          Clinical Scheduling Procedure Calls [SDECRPC]
+          Scheduling Manager's Menu           [SDMGR]
+          Supervisor Menu                     [SDSUP]
+          Scheduling Menu                     [SDUSER]
+          Set up a Clinic                     [SDBUILD]
+  
+ 9. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 23
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDCNP0
+    Before: B40198602   After: B42360132  **132,167,478,517,572,592,627,658**
+Routine Name: SDEC
+    Before:B124015151   After:B128616683  **627,643,642,651,658**
+Routine Name: SDEC01
+    Before: B31336971   After: B52469738  **627,642,658**
+Routine Name: SDEC01A
+    Before: B82347339   After:B106852334  **627,642,658**
+Routine Name: SDEC02
+    Before: B53092916   After: B53389862  **627,642,658**
+Routine Name: SDEC03
+    Before: B12348833   After: B12782184  **627,642,658**
+Routine Name: SDEC07
+    Before:B229461706   After:B199096003  **627,642,651,658**
+Routine Name: SDEC07B
+    Before: B38090532   After: B40384018  **627,658**
+Routine Name: SDEC08
+    Before:B200693919   After:B207687482  **627,651,658**
+Routine Name: SDEC09
+    Before: B41566743   After: B89277263  **627,642,658**
+Routine Name: SDEC26
+    Before:  B6836926   After: B15946491  **627,658**
+Routine Name: SDEC28
+    Before: B70851375   After:B108627315  **627,642,658**
+Routine Name: SDEC32
+    Before: B72731252   After: B77702065  **627,643,642,658**
+Routine Name: SDEC45
+    Before:B118776780   After:B119865655  **627,642,658**
+Routine Name: SDEC46
+    Before: B13193597   After: B14528609  **627,643,658**
+Routine Name: SDEC49
+    Before: B57319976   After: B64193404  **627,658**
+Routine Name: SDEC50
+    Before: B81989355   After: B96405128  **627,658**
+Routine Name: SDEC51
+    Before:B148461955   After:B173509385  **627,642,651,658**
+Routine Name: SDEC51A
+    Before:       n/a   After: B11468960  **658**
+Routine Name: SDEC52
+    Before:B144746730   After:B179392596  **627,642,651,658**
+Routine Name: SDEC52A
+    Before: B49259718   After: B50602257  **627,658**
+Routine Name: SDEC53
+    Before: B19046849   After:B217604839  **627,658**
+Routine Name: SDEC54
+    Before:B183258536   After:B193834229  **627,642,658**
+Routine Name: SDEC54A
+    Before: B75446000   After: B83664691  **627,642,658**
+Routine Name: SDEC57
+    Before: B37410501   After:B109929639  **627,642,658**
+Routine Name: SDEC57A
+    Before:B120731427   After: B33049351  **627,643,642,651,658**
+Routine Name: SDEC658
+    Before:       n/a   After: B44376391  **658**
+Routine Name: SDEC658A
+    Before:       n/a   After: B77653888  **658**
+Routine Name: SDEC658B
+    Before:       n/a   After: B51649766  **658**
+Routine Name: SDECAR1
+    Before:B139681352   After:B154809357  **627,642,658**
+Routine Name: SDECAR1A
+    Before:       n/a   After: B18726146  **658**
+Routine Name: SDECAR2
+    Before:B157125320   After:B158474911  **627,642,658**
+Routine Name: SDECAR3
+    Before:       n/a   After: B29305952  **658**
+Routine Name: SDECCLN
+    Before:       n/a   After: B38997700  **658**
+Routine Name: SDECDEM
+    Before:       n/a   After: B17011574  **658**
+Routine Name: SDECDEV
+    Before:  B4544261   After: B76696246  **627,658**
+Routine Name: SDECGMR
+    Before:   B946861   After:  B2213466  **627,658**
+Routine Name: SDECIDX
+    Before: B43106825   After: B43422995  **627,642,658**
+Routine Name: SDECPTCX
+    Before:  B4715537   After:  B4749447  **627,658**
+Routine Name: SDECRMG
+    Before:B157648695   After:B175967533  **627,658**
+Routine Name: SDECRMG1
+    Before:B133859295   After:B155460676  **627,642,651,658**
+Routine Name: SDECRMG2
+    Before: B68379335   After: B79512222  **627,642,651,658**
+Routine Name: SDECRMGP
+    Before:       n/a   After:  B8379066  **658**
+Routine Name: SDECRPT
+    Before: B10301780   After: B11032919  **628,658**
+Routine Name: SDECRPT1
+    Before:       n/a   After:  B9366343  **658**
+Routine Name: SDECU2
+    Before: B28139017   After: B12359142  **627,658**
+Routine Name: SDECU3
+    Before:       n/a   After: B93475023  **658**
+Routine Name: SDECU4
+    Before:       n/a   After:  B2257806  **658**
+Routine Name: SDECUT1A
+    Before: B65268393   After: B69223073  **627,658**
+Routine Name: SDECUTL
+    Before: B57837892   After:B100019264  **627,658**
+Routine Name: SDECUTL1
+    Before:B116466416   After:B118800741  **627,642,658**
+Routine Name: SDECUTL2
+    Before:B137868576   After:B140702694  **627,642,658**
+Routine Name: SDECWL1
+    Before:B117400497   After:B150057230  **627,642,658**
+Routine Name: SDECWL2
+    Before:B124990360   After:B125348916  **627,642,658**
+Routine Name: SDECWL3
+    Before: B12297706   After: B33650726  **627,658**
+Routine Name: SDM1A
+    Before:B121204157   After:B126358746  **26,94,155,206,168,223,241,
+                                           263,327,478,446,544,621,622,
+                                           627,658**
+Routine Name: SDMM1
+    Before: B16255799   After: B21006684  **28,206,168,327,622,645,658**
+ 
+Routine list of preceding patches: 628, 645, 651
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 17, 2016
+Completed By:                               Date Completed: APR 18, 2017
+Released By :                               Date Released : APR 18, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

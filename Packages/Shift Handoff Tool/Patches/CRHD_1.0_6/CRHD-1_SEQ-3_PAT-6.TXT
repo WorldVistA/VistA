@@ -1,0 +1,144 @@
+
+=============================================================================
+Run Date: MAR 31, 2017                     Designation: CRHD*1*6
+Package : CRHD - SHIFT CHANGE HANDOFF TOOL    Priority: Mandatory
+Version : 1         SEQ #3                      Status: Released
+                  Compliance Date: APR 30, 2017
+=============================================================================
+
+
+Subject: SHIFT HANDOFF TOOL GUI 2FA IMPLEMENTATION
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+ This patch will update the log in procedure to the Shift Handoff Tool GUI 
+ to use Two Factor Authentication (2FA) which will require the use of a
+ Personal Identity Verification (PIV) card.
+  
+ In order to make the transition to 2FA, it was also necessary to upgrade 
+ the Shift Handoff Tool GUI to Delphi version XE8 to implement the new 
+ Remote Procedure Call (RPC) Broker allowing compliance.
+  
+ CRHD*1.0*6 does not update any VistA routines but does update the Shift 
+ Handoff Tool GUI.
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Hampton VAMC
+ South Texas VHCS  
+  
+  
+ ASSOCIATED TICKET:
+ ==================
+ N/A 
+  
+  
+ OVERVIEW:
+ =========
+  
+   Problem: 
+   --------
+   The Department of Veterans Affairs Cybersecurity Task Force has been 
+   tasked by the Chief Information Officer (CIO) and the Inspector General
+   (IG) to address identified material weaknesses. This task force has
+   mandated that all internal, user facing VA applications become Two
+   Factor Authentication (2FA) compliant by April 30, 2017.
+  
+   In order to be compliant, applications are required to authenticate
+   users via Personal Identity Verification (PIV) cards.
+  
+  
+   Note: Usernames and password will no longer be permitted for employees
+         and contractors to access VA applications.
+  
+  
+   Resolution:
+   -----------
+   The Shift Handoff Tool has been upgraded to Delphi XE8 to allow access 
+   to the latest version of the RPC Broker, implementing 2FA.
+  
+   The Shift Handoff Tool Release Notes and Shift Handoff Tool User Manual 
+   have been updated to reflect this change.
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ================================================== 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Albany: domain.ext
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+        
+ Filename                     Description
+ ========                     ===========
+ CRHD_1_6.ZIP                 Contents below
+  -CRHD.hlp                   CRHD Help file (1453 kb)
+  -shifthandofftool.exe       CRHD Executable (the file properties will
+                                               report version 1.0.6.4)
+  
+ crhdum.pdf                   Shift Handoff Tool User Manual
+  
+ NOTE: These files must be transferred using the binary (BIN) file 
+       transfer mode.  The size of the file (shifthandofftool.exe), once 
+       downloaded, will be 6,396 KB
+  
+   
+    ================== CLIENT Installation Instructions ==================
+  
+ 1. Download and open the file CRHD_1_6.ZIP. Check to make sure the size 
+    is correct.  shifthandofftool.exe will be 6396 KB.
+  
+ 2. Extract the shifthandofftool.exe file to the folder where the 
+    existing Shift Change Handoff executable is installed. At your 
+    medical center, the location of the shifthandofftool.exe may 
+    be on a network drive or installed on each workstation under a 
+    program files folder like this example:
+  
+    C:\Program Files (x86)\Vista\ShiftHandOff 
+  
+ 3. When asked to overwrite the existing file, answer Yes.  
+  
+ 4. Following successful extraction of the executable, you can delete the  
+    CRHD_1_6.ZIP file.  
+  
+ 5. When this version of shifthandofftool.exe is launched it will show
+    the version as "Shift Handoff Tool 1.0.6.4" on the window title area. 
+  
+ Note: The Class 3 to Class 1 conversion of the Shift handoff tool did not 
+       include a client/server version check so please verify the version
+       number is 1.0.6.4 after the Client installation is completed.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 03, 2016
+Completed By:                               Date Completed: MAR 30, 2017
+Released By :                               Date Released : MAR 31, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

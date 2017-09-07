@@ -1,0 +1,120 @@
+
+=============================================================================
+Run Date: FEB 27, 2017                     Designation: OHRS*1.4*15
+Package : OHRS - OCCUPAT HEALTH RECORD-KEEPIN Priority: Mandatory
+Version : 1.4        SEQ #15                    Status: Released
+                  Compliance Date: MAR 30, 2017
+=============================================================================
+
+
+Subject: OHRS 1.4.15 Maintenance Release
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch announces the National Release of Occupational Health Record-Keeping 
+ System (OHRS) version 1.4.15. No additional action is necessary for sites 
+ except to communicate the below modifications of OHRS 1.4.15 to users. 
+  
+ The new OHRS 1.4.15 version addresses a new enhancement for Single Sign On 
+ Integration (SSOi) with site minder agent/server.  This integration allows user 
+ to login with PIV/PIN instead of network ID.
+ 
+ This build provides a new enhancement of Single Sign On (SSOi) using PIV/PIN
+ within the OHRS application and replaces Occupational Health Record-Keeping 
+ System (OHRS) version 1.4.14.
+ 
+ 1) Implement Single Sign On (SSOi) using Site Minder 
+  
+ Following is the URL for Pre-PROD environment for this SSOi enhancement.
+ 
+ https://vaausohrapp60.aac.domain.ext/ciss/
+ 
+  
+ ASSOCIATED VA MANDATE:
+ ======================
+ 
+ The Department of Veterans Affairs Cybersecurity Task Force has been 
+ tasked by the Chief Information Officer (CIO) and the Inspector General (IG) 
+ to address identified material weaknesses. This task force has mandated that 
+ all internal, user facing VA applications become two factor authentication
+ (2FA) compliant by April 30, 2017. 
+  
+ In order to be compliant, applications are required to authenticate users 
+ via Personal Identity Verification (PIV) cards.  
+  
+ Note: Usernames and password will no longer be permitted 
+ for employees and contractors to access VA applications.  
+   
+   
+ ASSOCIATED NSR(s):
+ ==================
+   N/A
+ 
+ PARTICIPATING TEST SITES:
+ =========================
+ TBD
+ 
+ ENHANCEMENT OVERVIEW:
+ =====================
+   Problem:
+         OHRS - Single Sign On:
+         User login using PIV card and PIN instead of network ID
+           
+   Solution:
+       Implement CISS (and its portlet application OHRS) to rely on the SSOi
+ service provided by the IAM (Identity Access Management) team to perform user 
+ authentications. In order to login to CISS/OHRS, the user is first routed to 
+ the VA single sign on page. The user typically authenticates using their PIV 
+ card (by entering their PIN number) and by selecting CAB1 certificate, but may 
+ choose to use an alternate means of authentication (windows integrated 
+ authentication or AD username/password authentication) if approved and
+ configured 
+ for that user. Once the user is authenticated, the SSOi service redirects the 
+ user back into the CISS portal application and provides the user's identity as 
+ an HTTP request header attribute to CISS.  The CISS security code extracts this 
+ information and proceeds to authorize the user by looking up his/her roles and 
+ assigned VA facilities (managed internally by CISS). 
+             
+   
+ DOCUMENTATION:
+ ======================
+ Title                            File Name                  Access Type
+ -----------------------------------------------------------------------
+ Operations Manual                ciss1_4om.pdf                    web
+ 
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ The files listed above will be obtainable via VDL at
+ http://www.domain.ext/vdl/application.asp?appid=186
+   
+ ADDITIONAL INFORMATION:
+ =======================
+     If there are problems associated with the OHRS application they should be 
+ reported via CA Service Desk by contacting the National Service Desk 
+ (NSD) 1-855-673-4357 and log a CA Ticket.
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 17, 2017
+Completed By:                               Date Completed: FEB 22, 2017
+Released By :                               Date Released : FEB 27, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,133 @@
+$TXT Created by                 at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 03/02/16 at 13:30
+=============================================================================
+Run Date: FEB 15, 2017                     Designation: PSO*7*459
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #392                      Status: Released
+                  Compliance Date: MAR 17, 2017
+=============================================================================
+
+Associated patches: (v)PSO*7*421   <<= must be installed BEFORE `PSO*7*459'
+
+Subject: SUSPENDED RXs GOING TOO SOON TO CMOP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects an issue that sometimes occurs for Consolidated 
+ Mail Outpatient Pharmacy (CMOP) refills when a refill is created prior to
+ the release of the previous fill.
+  
+ Associated Ticket(s):
+ =====================
+ 1. I9899074FY16   Suspended rxs going too soon to CMOP
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Gulf Coast Veterans Health Care System (Biloxi)
+ Martinsburg VA Medical Center
+  
+ Ticket Overview:
+ ================
+ 1. I9899074FY16   Suspended rxs going too soon to CMOP
+   
+ Problem: 
+ --------
+ Pharmacy received an insurance reject for a refill because the date was
+ changed from 5/17 (when due) to 4/23 (before the original was even due).
+ After a prescription is released, the ePharmacy software changes the fill
+ date for the fill, to the release date if the dates are different. This
+ should only happen for the fill that was released and should not affect
+ subsequent fills, however, the fill date for the subsequent fill is the
+ one being changed. It was found that when a patient's PRESCRIPTION (#52)
+ file record whose Fill Date (#22) field was inappropriately changed, they
+ were all requested via Internet Refills and all ordered and processed
+ prior to the completion/release of the CMOP fill. 
+  
+ Resolution:
+ -----------
+ Modify routine PSOBPSU2 so the appropriate fill's dates are updated (see 
+ Technical Resolution).
+  
+ Technical Resolution:
+ ---------------------
+ The bug is in UPDFL^PSOBPSU2, which is the code that updates the Fill
+ Date (#22) field of the PRESCRIPTION (#52) file and the Refill Date (#.01)
+ field of the REFILL (#52) multiple of that same PRESCRIPTION (#52) file
+ record (RX) that is released by CMOP. This is called by the CMOP/OPAI
+ (Outpatient Automation Interface) auto-release code if the NDC is changed.
+ Until now, when this was called the fill number was being passed in and
+ then "newed" and reset. This should not happen, the value passed in should
+ be used.
+  
+  
+ Installation Instructions:
+ ==========================
+ The Pharmacy should not be transmitting prescriptions to CMOP while this
+ patch is being installed. It should take less than 2 minutes to install
+ this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*459)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSO*7.0*459.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOBPSU2
+    Before: B59152691   After: B59468645  **260,287,289,341,290,358,359,
+                                           385,421,459**
+ 
+Routine list of preceding patches: 421
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 02, 2016
+Completed By:                               Date Completed: FEB 02, 2017
+Released By :                               Date Released : FEB 15, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,280 @@
+$TXT Created by                     CPRS32.DOMAIN.EXT  (KIDS) on Thursday, 03/16/17 at 06:46
+=============================================================================
+Run Date: MAR 29, 2017                     Designation: LR*5.2*483
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #387                    Status: Released
+                  Compliance Date: APR 29, 2017
+=============================================================================
+
+Associated patches: (v)LR*5.2*479  <<= must be installed BEFORE `LR*5.2*483'
+
+Subject: VLE Anatomic Path Order Dialog (APOD) Code update
+
+Category: 
+  - PATCH FOR A PATCH
+  - Routine
+
+Description:
+============
+
+ This patch contains only a correction to the second line of the routine 
+ LRAPKOE.  The second line erroneously listed patch LR*5.2*469 when it was 
+ released with LR*5.2*479. This reference to LR*5.2*469 will be removed as
+ LRAPKOE was NOT released as part of LR*5.2*469. There are no other changes
+ to the functionality in LRAPKOE.
+  
+ Patch LR*5.2*479 should be installed on schedule.
+  
+ Blood Bank Review:
+ ==================
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*483 does not 
+  contain any changes to the VISTA BLOOD BANK Software as defined by 
+  ProPath standard titled: BBM Team Review of VistA Patches.
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*483 does not 
+  alter or modify any software design safeguards or safety critical 
+  elements functions.
+  
+  RISK ANALYSIS: Changes made by patch LR*5.2*483 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+  
+  VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+  made, no specific validation requirements exist as a result of 
+  installation of this patch.
+  
+ Patch Components:
+ --------------------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)        New/Modified/Deleted
+ ------------------      -------------------        --------------------
+ N/A
+                         
+   
+ Forms Associated:
+  
+ Form Name               File #          New/Modified/Deleted
+ ---------               ------          --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name         Type         New/Modified/Deleted
+ ----------          -----        --------------------
+ N/A
+  
+   
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      -----     ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ N/A 
+  
+  
+ New Service Requests (NSRs):
+ --------------------------------------------   
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ---------------------------------------
+ N/A
+  
+  
+ CA SDM Ticket(s) & Overview:
+ --------------------------------------------
+  
+ N/A
+  
+  
+ Test Sites:
+ ---------------
+ Edward Hines Jr, VA Hospital
+ Philadelphia VA Medical Center 
+  
+ Problem:
+ --------
+  With the release of patch LR*5.2*479 the second line of the routine
+  LRAPKOE mistakenly contained a reference to patch LR*5.2*469.
+  
+ Resolution:
+ -----------
+  This patch will correct the second line of the routine as follows:
+  Second line as released with LR*5.2*479:
+      ;;5.2;LAB SERVICE;**462,469,479**;Sep 27, 1994;Build 8
+  
+  Second line after the install of LR*5.2*483:
+      ;;5.2;LAB SERVICE;**462,479,483**;Sep 27, 1994;Build nn
+  
+         Routine: LRAPKOE
+  
+  Software Retrieval Instructions:
+  ------------------------------------- 
+  Software will be released via a PackMan message. 
+   
+  
+ Patch Installation:
+   
+   
+  Pre/Post Installation Overview:
+  -------------------------------
+  N/A 
+   
+  Pre-Installation Instructions:
+  ------------------------------
+  N/A
+   
+  Installation Instructions:
+  --------------------------
+  This patch may be installed with users on the system although it is 
+  strongly recommended that it be installed during non-peak hours when 
+  LAB usage is at a minimum. This patch should take less than 5 minutes to
+  install.
+  
+ 1.  Choose the PackMan message containing this patch.
+   
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME enter the 
+      patch LR*5.2*483:
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+   
+  5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//'     
+      Respond: NO
+   
+  6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//'
+      Respond: NO
+   
+  7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? NO//' 
+      Respond: NO
+   
+  8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+   
+   
+  Post-Installation Instructions:
+  -------------------------------
+  N/A
+  
+  
+ Example of Captured Installation:
+ ---------------------------------
+  
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME:    LR*5.2*483    3/16/17@09:28:41
+      => LR*5.2*483 v1
+  
+ This Distribution was loaded on Mar 16, 2017@09:28:41 with header of 
+    LR*5.2*483 v1
+    It consisted of the following Install(s):
+      LR*5.2*483
+ Checking Install for Package LR*5.2*483
+  
+ Install Questions for LR*5.2*483
+  
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   TELNET PORT
+  
+ -------------------------------------------------------------------------
+  
+  
+  Install Started for LR*5.2*483 : 
+                Mar 16, 2017@09:29:43
+  
+ Build Distribution Date: Mar 16, 2017
+  
+  Installing Routines:
+                Mar 16, 2017@09:29:43
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  LR*5.2*483 Installed. 
+                Mar 16, 2017@09:29:43
+  
+  Not a production UCI
+  
+                                    
+ LR*5.2*483                                   
+  
+  
+ Install Completed
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRAPKOE
+    Before:B175040482   After:B175040482  **462,479,483**
+ 
+Routine list of preceding patches: 479
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 15, 2017
+Completed By:                               Date Completed: MAR 27, 2017
+Released By :                               Date Released : MAR 29, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

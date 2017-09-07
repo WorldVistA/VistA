@@ -1,0 +1,376 @@
+$TXT Created by                  B at CTST.FO-BIRM.DOMAIN.EXT  (KIDS) on Monday, 03/06/17 at 16:09
+=============================================================================
+Run Date: APR 17, 2017                     Designation: DG*5.3*903
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #820                    Status: Released
+                  Compliance Date: MAY 18, 2017
+=============================================================================
+
+Associated patches: (v)DG*5.3*343  <<= must be installed BEFORE `DG*5.3*903'
+                    (v)DG*5.3*574  <<= must be installed BEFORE `DG*5.3*903'
+                    (v)DG*5.3*855  <<= must be installed BEFORE `DG*5.3*903'
+                    (v)DG*5.3*867  <<= must be installed BEFORE `DG*5.3*903'
+
+Subject: My HealtheVet during Pre-Registration
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses NSR # 20150314 - Increase Engagement in My 
+ HealtheVet - MHV.  The Preregister a Patient [DGPRE PRE-REGISTER OPTION] 
+ option is enhanced to increase patient engagement in the My HealtheVet 
+ initiative.  The Increase Engagement in My HealtheVet (MHV) software was 
+ born from the Veterans Administration (VA) Innovation Program. Prospective
+ projects are scrutinized for benefit, funding, and development through
+ this initiative.
+  
+ The My HealtheVet (MHV) web portal is a vastly under-utilized resource. As
+ a result, patients are left with long wait times when trying to reach VHA
+ to determine appointment date/times, refill prescriptions, or talk with a 
+ healthcare provider.  All of these problems are easily mitigated with 
+ registration into the MHV web portal. There is currently no consistent 
+ process by which veterans are engaged about their desire to register in 
+ MHV or what their MHV status is.  Pre-registration of patients is the one 
+ standardized process performed across VHA.  To streamline the education of
+ patients on MHV, VA requires a prompt in the VistA pre-registration screen
+ indicating the Veterans' desire to participate in the MHV program, as well
+ as their current MHV status.
+  
+ My HealtheVet Engagement/Registration Alert/Reminder
+ ----------------------------------------------------
+ The Preregister a Patient [DGPRE PRE-REGISTER OPTION] option is enhanced 
+ to (1) display a message alerting the clerk that the selected patient has 
+ not completed My HealtheVet registration and (2) allows the patient's 
+ desire to be excluded from My HealtheVet to be documented.
+  
+ My HealtheVet Engagement Actions
+ --------------------------------
+ The Preregister a Patient [DGPRE PRE-REGISTER OPTION] option has been
+ enhanced to allow Pre-Registration clerks to capture a patient's My
+ HealtheVet registration status and actions performed to assist with a
+ patient's My HealtheVet registration.
+  
+ Disable/Enable My HealtheVet Registration Actions
+ -----------------------------------------------
+ This functionality will automatically be turned off during the post 
+ install for this patch. When a site is ready to start using this
+ functionality it can be enabled using the MAS Parameter Entry/Edit [DG
+ PARAMETER ENTRY] option. After the functionality has been enabled, if for
+ some reason a site determines they no longer want this functionality
+ enabled, it can be disable using the same option.
+  
+ This can be done as follows:
+                     PIMS VERSION 5.3 PARAMETER ENTRY/EDIT
+    =======================================================================
+    [1] Medical Center Name : ALBANY                         Affiliated: NO
+        Multidivisional     : YES
+        Nursing Home Wards  : NO                     Domiciliary Wards: YES
+        System Timeout Sec. : 600                    Print PTF Messages: NO
+        Default PTF Printer : NONE SPECIFIED             High Intensity: ON
+        Consistency Checker : ON                   Abbreviated Inquiry: YES
+        Auto PTF Messages   : YES                    Show Status Screen: NO
+  
+    [2] Days to Update Medicaid    : 5    Maintain G&L Corrections: 90-DAYS
+        Disposition late           : 4-HOURS        Supplemental 10/10: NO
+        Ask HINQ at Registration   : YES       DRUG PROFILE with 10/10: YES
+        CHOICE OF DRUG PROFILE?    : YES       Default Drug Profile: ACTION
+        HEALTH SUMMARY with 10/10  : YES   Default Health Summary: OUTPATIE
+        Ask EMBOSS at Registration : NO             Use Nearest Printer: NO
+        Reg. Template (LOCAL)      : PLW MINI10       Use Temp Address: YES
+        Default Code Sheet Printer : A100/10/6/UP   Ask Device in Reg.: YES
+        Days to Maintain Sens. Data: 90            Print Encounter Form: NO
+        Default EF Printer         : NONE SPECIFIED
+        Restrict PATIENT access    : NO
+        Purple Heart Sort          : Descending
+  
+        [Pre-Registration]
+        Sort Method                : P          Background Job Function: PA
+        Days Between Calls         : 90   Days to Maintain Log Entries: 120
+        Days to Pull Appointments  : 14                 Run for Weekend: NO
+        Enable My HealtheVet Prompts: NO
+  
+    [3] Divisions: TROY (501), ALBANY (500), CINCINNATI (539), 
+                ALB-PRRTP (500PA), ALBANY OPC (500A4), 
+                13000 (13000), 
+    Enter 'D' to view DIVISIONS, 1-3 to EDIT, or RETURN to QUIT:  2
+  
+    DAYS TO UPDATE MEDICAID: 5// 
+    DAYS TO MAINTAIN G&L CORR: 90// 
+    TIME FOR LATE DISPOSITION: 4// 
+    SUPPLEMENTAL 10/10: DO NOT PRINT WITH 10 10// 
+    USE HINQ INQUIRY?: YES// 
+    PRINT DRUG PROFILES WITH 10-10: YES// 
+    CHOICE OF DRUG PROFILE TYPE?: YES//  
+    DEFAULT TYPE OF DRUG PROFILE: ACTION// 
+    PRINT HEALTH SUMMARY?: YES// 
+    DEFAULT HEALTH SUMMARY: OUTPATIENT// 
+    EMBOSSERS ON-LINE: NO// 
+    USE CLOSEST PRINTER: NO// 
+    REGISTRATION TEMPLATE (LOCAL): PLW MINI10// 
+    USE TEMPORARY ADDRESS: YES// 
+    DEFAULT CODE SHEET PRINTER: A100/10/6/UP// 
+    ASK DEVICE IN REGISTRATION: YES// 
+    DAYS TO MAINTAIN SENSITIVITY: 90// 
+    PRINT ENCOUNTER FORM AT REG.: 
+    RESTRICT PATIENT RECORD ACCESS: 
+    PRE-REGISTRATION SORT: PATIENT NAME// 
+    DAYS BETWEEN CALLS: 90// 
+    BACKGROUND JOB FUNCTION: DELETE CALLED PATIENTS AND ADD NEW //
+    DAYS TO MAINTAIN LOG: 120// 
+    DAYS TO PULL APPOINTMENT: 14// 
+    RUN FOR WEEKEND: NO// 
+    Select CLINIC EXCLUSION: 
+    Select ELIGIBILITY EXCLUSION: 
+    PURPLE HEART SORT: 
+    Enable My HealtheVet Prompts?: NO// YES <- -Enter "YES" Here to enable
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+                                                               New/
+                                                             Modified/
+ File Name (Number)   Field Name (Number)                    Deleted
+ ------------------   -------------------                    ---------
+ PATIENT (#2)         MHV SOCIALIZATION (#537026)               New
+                      MHV REGISTERED (#537027)                  New
+                      MHV AUTHENTICATED (#537028)               New
+                      MHV SECURE MESSAGING (#537029)            New
+                      MHVREG UPDATE DATE/TIME (#537030)         New
+                      MHVAUTH UPDATE DATE/TIME (#537031)        New
+                      MHVSM UPDATE DATE/TIME (#537032)          New
+                      MHV REGISTER DECLINED TEXT (#537033)      New
+                      MHV AUTH DECLINED TEXT (#537034)          New
+                      MHV MSG DECLINED TEXT (#537035)           New
+                      MHV REGISTER DECLINED REASON (#537036)    New
+                      MHV AUTH DECLINED REASON (#537037)        New
+                      MHV MSG DECLINED REASON (#537038)         New
+                      MHV MSG ACTIONS (#537041)                 New
+                      MHV AUTH ACTIONS (#537042)                New
+                                                      
+ PATIENT (#2) Multiple (Sub-File)
+ MHV SOCIALIZATION (#537026)                                    New
+                      SOCIALIZATION DATE (#.01)                 New
+                      SOCIALIZATION RESPONSE (#1)               New
+                      SOCIALIZATION ACTIONS (#2)                New
+  
+ MHV SOCIALIZATION (#390.01)                                    New
+                      NAME (#.01)                               New
+                      DISPLAY SEQUENCE (#1)                     New
+                      PATIENT TEXT (#2)                         New
+                      DISPLAY TEXT (#1.5)                       New
+                      FOLLOWUP ACTION (#3)                      New
+  
+ MHV SOCIALIZATION ACTIONS (#390.02)                            New
+                      ACTION (#.01)                             New
+                      SELECTABLE LOCATIONS (#1)                 New
+                      DISPLAY TEXT (#3)                         New
+  
+ MHV DECLINED REASONS (#390.03)                                 New
+                      NAME (#.01)                               New
+                      SELECTABLE AT (#1)                        New
+                                                             
+ MHV ACTION SELECTION (#390.04)                                 New   
+                      NAME (#.01)                               New
+                      DESCRIPTION (#1)                          New
+  
+ MAS PARAMETERS (#43)  
+                      Enable My HealtheVet Prompts? (#1100.07)  NEW
+  
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A
+  
+ Options Associated: N/A
+  
+ Protocols Associated: N/A
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ 20150314 - Increase Engagement in My HealtheVet (MHV)
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A 
+  
+ Test Sites:
+ ----------
+ VA Puget Sound Health Care System 
+ Cincinnati, OH 
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing the
+ new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Albany: domain.ext
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                            File Name                  FTP Mode
+ -----------------------------------------------------------------------
+ User Manual - Registration Menu  dg_5_3_p903_reg_um.pdf      binary
+ PIMS Technical Manual            pimstm.pdf                  binary
+ Release Notes                    dg_5_3_p903_rn.pdf          binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch includes a post installation routine which does the following:
+      1. Files new 315 INCONSISTENT DATA ELEMENTS (#38.6) file entry for
+         missing MHV registration status. This check ensures a patient has
+         been asked about their registration, or interest in registering,
+         in My HealtheVet.
+      2. Disables this functionality for all sites by setting the "Enable
+         My HealtheVet Prompts?" (#1100.07) field in the MAS PARAMETER
+         (#43) file to "NO".
+  
+ The DG903PST post installation routine will be automatically deleted as 
+ part of the installation process.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system; however, it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ The following option should be disabled prior to the install:
+      Preregister a Patient [DGPRE PRE-REGISTER OPTION]
+  
+ Installation Instructions:
+ --------------------------
+ Follow the below instructions to install this patch.
+  
+     1.  Choose the PackMan message containing this patch.
+  
+     2.  Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+     3.  From the Kernel Installation and Distribution System Menu, select
+         the Installation Menu.  From this menu, you may elect to use the 
+         following options. When prompted for the INSTALL NAME enter the
+         patch # DG*5.3*903:
+         
+         a. Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - This option will
+            (allow you to view all changes that will be made when this
+            patch is installed.  It compares all components of this patch
+            routines, DDs, templates, etc.).
+         c. Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+     4.  From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+  
+     5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO//' Enter "NO" or just enter return to take default
+         value
+  
+     6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         NO//' Enter "NO" or just enter return to take default value
+  
+     7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' Enter "YES" and then enter the Preregister a
+         Patient [DGPRE PRE-REGISTER OPTION] option
+  
+     8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0
+         or enter a number from 1 to 60 if you want to delay the patch
+         install.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ After the installation of the patch and when the site is ready to 
+ start to use the functionality distributed by this patch, please refer to 
+ the "Disable/Enable My HealtheVet Registration Actions" above for 
+ instruction on how to turn it on using the MAS Parameter Entry/Edit [DG
+ PARAMETER ENTRY] option. Sites should refer to their Implementation
+ document provided by the My HealtheVet program office for specific
+ guidance on clinical adoption of this functionality.
+  
+ Once turned on (enabled) users will begin seeing the new message alerts
+ and prompts for My HealtheVet Engagement enhancement as they use the
+ Preregister a Patient [DGPRE PRE-REGISTER OPTION] option.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 82
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG903PST
+    Before:       n/a   After:  B5160023  **903**
+Routine Name: DGMHV
+    Before:       n/a   After:B120677809  **903**
+Routine Name: DGMHVAC
+    Before:       n/a   After:B148795601  **903**
+Routine Name: DGMHVUTL
+    Before:       n/a   After:B136790239  **903**
+Routine Name: DGPAR
+    Before: B25171023   After: B25879398  **51,86,93,109,214,343,903**
+Routine Name: DGPAR1
+    Before: B23171183   After: B23270657  **51,62,86,93,109,214,265,277,
+                                           343,903**
+Routine Name: DGPREP1
+    Before: B35442672   After: B42976792  **109,136,574,903**
+Routine Name: DGRPC
+    Before: B32590756   After: B33766541  **108,121,314,301,470,489,505,
+                                           451,568,585,641,653,688,754,
+                                           797,867,903**
+Routine Name: DGRPC3
+    Before: B55911726   After: B57456736  **451,632,673,657,688,754,797,
+                                           867,903**
+Routine Name: DGRPCE1
+    Before: B65500857   After: B67438790  **108,226,470,454,489,505,522,
+                                           451,632,689,657,688,804,754,
+                                           797,855,903**
+ 
+Routine list of preceding patches: 343, 574, 855, 867
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 01, 2014
+Completed By:                               Date Completed: APR 06, 2017
+Released By :                               Date Released : APR 17, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

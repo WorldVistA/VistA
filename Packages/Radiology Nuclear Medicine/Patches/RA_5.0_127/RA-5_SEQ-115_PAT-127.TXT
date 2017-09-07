@@ -1,0 +1,480 @@
+$TXT Created by                at CHEY59.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Friday, 12/09/16 at 09:55
+=============================================================================
+Run Date: MAR 06, 2017                     Designation: RA*5*127
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #115                      Status: Released
+                  Compliance Date: APR 06, 2017
+=============================================================================
+
+Associated patches: (v)HDI*1*16    <<= must be installed BEFORE `RA*5*127'
+                    (v)XU*8*666    <<= must be installed BEFORE `RA*5*127'
+
+Subject: NATIVE DOMAIN STANDARDIZATION RADIOLOGY REPORTS
+
+Category: 
+  - Data Dictionary
+  - Input Template
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ The Department of Veterans Affairs (VA) Interagency Program Office (IPO)
+ and the Department of Defense (DoD) is tasked by its charter with
+ leading the Departments' efforts "to implement national health data
+ standards for interoperability and [be] responsible for establishing,
+ monitoring, and approving the clinical and technical standards profile
+ and processes to ensure a seamless [exchange] of health data." This task
+ of Native Domain standardization is aligned with achieving the goals
+ outlined in the 2014 National Defense Authorization Act (NDAA) requiring
+ that the Departments' "healthcare data [are] computable in real-time and
+ [comply] with existing national data standards" and that the "data [are]
+ standardized as national standards continue to evolve."
+  
+ VA clinicians historically used non-standardized clinical terminologies
+ which are inconsistent within the VA user community as well as within the
+ currently accepted data standards as established by Office of the
+ National Coordinator for Health Information Technology (ONC).
+ Implementation of Native Standardization will allow a streamlined method
+ for data sharing, performing clinical decision support and engaging in
+ national data reporting and analysis.  The VA has recently established a
+ process for implementing standard terminology/terminologies within
+ individual clinical domains for the exchange of data. The intent of this
+ effort is to provide the detailed groundwork necessary for industry-wide
+ interoperability. By providing a detailed analysis of the current state
+ of the applicable domains and recommendations regarding the path forward,
+ the Native Domain Standardization supports VA's efforts to remain at the
+ forefront of healthcare data exchange.
+ The local facility Automated Data Processing Application Coordinator
+ (ADPAC) will need to associate the local procedure names in file #71
+ to Gold Names in file #71.99.
+  
+ It will be necessary to develop a national standard of radiology
+ procedures and map to their respective Current Procedural Terminology
+ (CPT) code and Logical Observation Identifiers Names and Codes (LOINC)
+ will be populated under the direction of the VHA Radiology Program
+ Office prior to implementation of any of the data within these files.  The
+ objective of this process is to enable the most user friendly interface as
+ possible in the implementation of the native standardization along with
+ all of the activities required to operationalize the change within the
+ VistA environment and the associated terminology consuming applications.
+ The Radiology ADPAC will match each active entry in the RAD/NUC MED
+ PROCEDURES file (# 71) to an entry in the MASTER RADIOLOGY PROCEDURES file
+ (#71.99) (MRPF).  This is all that is required outside the normal
+ day-to-day operations.  When a new procedure is entered into the RAD/NUC
+ MED PROCEDURES file (# 71) an email is automatically sent to the NEW
+ TERMINOLOGY RAPID TURNAROUND (NTRT) team for the creation of a new entry
+ in the MRPF.  The results of the NTRT process will be one of three
+ possible results.  1) A new entry will be created in the MRPF and will
+ be in the next file release.  2) A match was found in the MRPF and the
+ facility should use that entry for a match.  3) There is no LOINC that
+ matches this procedure and a request for a new LOINC has been submitted.
+  
+ An On Demand report is available to the VHA Radiology Program Office that
+ will allow them to monitor new procedure creation activity.  A bulletin
+ will be sent to a local mail group, the VHA Radiology Program Office, and
+ NTRT when a new procedure reaches a specified number of days from
+ creation and it has not been matched to a MASTER RADIOLOGY PROCEDURES
+ file (# 71.99) entry.  While the MASTER RADIOLOGY PROCEDURES file
+ (# 71.99) is locked down and cannot be changed at the local facility, the
+ RAD/NUC MED PROCEDURES file (# 71) will remain accessible to the
+ local facility.
+  
+ When creating a new procedure the RA PROCEDURE will use the
+ NEW RAD PROCEDURE WORKUP file (#71.11) as the preliminary work area.
+ When the procedure entry is complete a newly created procedure will
+ be moved to the RAD/NUC MED PROCEDURES file (# 71) and then removed
+ from the NEW RAD PROCEDURE WORKUP file (#71.11).
+  
+ ********************************************
+  
+ After installing this patch and after the MASTER RADIOLOGY PROCEDURE
+ file (#71.99) is deployed to your facility there is an associated follow
+ on informational patch (RA*5.0*134) that should be installed. The
+ informational patch RA*5.0*134 provides instructions for turning on the
+ sending of NTRT messages to the NTRT group.
+  
+  
+ Related Patches
+ ---------------
+ XU*8*666, HDI*1.0*16, RA*5.0*127, RA*5.0*134
+  
+  
+ Until all of the patches listed in the Related Patches section are
+ installed and the MASTER RADIOLOGY PROCEDURES file (#71.99) (MRPF)
+ content has been deployed to your facility the ADPAC will not have
+ the ability to interact with the MRPF.
+  
+ The MASTER RADIOLOGY PROCEDURES file (#71.99), distributed with the
+ patch is not populated.  Therefore, the options associated to this
+ patch should not be used at this time.  In the future, the NTRT team
+ will populate and deploy the MRPF file for all facilities.
+ Prior to the MRPF file population being deployed the ADPAC should
+ ignore all NTRT mailman messages that are generated until the sending
+ of NTRT messages functionality is turned on.
+  
+ When the content of the MASTER RADIOLOGY PROCEDURES file (#71.99)
+ has been deployed the NTRT group sends a message to the
+ NTRT_NOTIFICATION-L listserv.
+  
+ The ADPAC for the facility shall subscribe to this list using the
+ following web site: http://vaww.listserv.domain.ext/scripts/wa.exe.
+ The NTRT group does not own the List Serve application.
+ The List Serve is a VA service. The ADPAC will need to create an
+ account using a username and password that does NOT synchronize with
+ the ADPAC's VA network account.
+  
+ ********************************************
+  
+ Patch Components:
+ Bulletins
+ Fields
+ Files
+ Input Templates
+ Mailman Group
+ Options
+ Routines
+  
+  
+ Bulletins
+ ---------
+ UNMATCHED RADIOLOGY PROCEDURE                          New
+ Files & Fields Associated:
+  
+ File Name (Number)        Field Name (Number)       New/Modified/Deleted
+ ------------------        -------------------       --------------------
+ RAD/NUC MED PROCEDURES (# 71)                          Modified 
+                            MRPF NAME (# 900)           New
+                            Exception Flag (# 901)      New
+                            CREATION DATE (# 902)       New
+                            LOINC CODE (#903)           New
+  
+ MASTER RADIOLOGY SITE (# 71.98)                        New
+                            FACILITY NUMBER (.01)       New
+                            FACILITY RADIOLOGY ADPAC(#1) New
+                            DAYS FOR DEACTIVATION (#2)  New
+                            MATCHING COMPLETE (#3)      New
+                            LAST PROCEDURE MAPPED (#4)  New
+                            DAYS AFTER CREATION
+                                        BULLETIN (#5)   New
+                            RADIOLOGY NTRT
+                                       MAILGROUP (#6)   New
+                            NTRT ISAAC SCHEMA
+                                         PATH    (#7)   New
+                            ISAAC ON LINE (#8)          New
+                            SEEDING COMPLETE (#9)       New
+                            NTRT AITC PORT (#10)        New
+                            NTRT IP ADDRESS (#11)       New
+                            NTRT IP ADDRESS1(#11.5)     New
+                            NTRT ISAAC SCHEMA
+                                         NAME (#11.6)   New
+  
+ MASTER RADIOLOGY PROCEDURE (# 71.99)                   New
+                            GOLD NAME (#.01)            New
+                            VUID (#.02)                 New
+                            CPT CODE (# 1)              New
+                            MRPF LONG NAME (#3;.01)     New
+                            LOINC (# 2)                 New
+                            LOINC LONG
+                                  DESCRIPTION (# 2.1)   New
+                            LOINC SHORT
+                                  DESCRIPTION (# 2.2)   New
+ NEW RAD PROCEDURE WORKUP (#71.11)
+                            NAME (#.01)                 New
+                            SUPPRESS RADIOPHARM PROMPT
+                                                (#2)    New
+                            REQUIRED FLASH CARD PRINTER New
+                                                (#3)
+                            REQUIRED FLASH CARD FORMAT  New
+                                                (#4)
+                            PROMPT FOR MEDS (#5)        New
+                            TYPE OF PROCEDURE (#6)      New
+                            STAFF REVIEW REQUIRED (#7)  New
+                            CPT CODE (#9)               New
+                            RAD/NM PHYS APPROVAL        New
+                                        REQUIRED(#11)
+                            TYPE OF IMAGING (#12)       New
+                            HEALTH SUMMARY WITH REQUEST New
+                                             (#13)
+                            SINGLE REPORT (#18)         New
+                            PROMPT FOR RADIOPHARM RX    New
+                                              (#19)
+                            CONTRAST MEDIA USED (#20)   New
+                            DEFAULT RADIOPHARMACEUTICALS New
+                                                (#50)
+                            DEFAULT MEDICATIONS (#55)   New
+                            FILMS NEEDED (#75)          New
+                            INACTIVATION DATE (#100)    New
+                            CONTRAST MEDIA (#125)       New
+                            DEFAULT CPT MODIFIERS(PROC) New
+                                               (#135)
+                            SYNONYM (#150)              New
+                            AMIS CODES (#175)           New
+                            MESSAGE (#200)              New
+                            DESCENDENTS (#300)          New
+                            EDUCATIONAL DESCRIPTION     New
+                                         (#500)
+                            MODALITY (#731)             New
+                            MRPF NAME (#900)            New
+                            Exception Flag (#901)       New
+                            ENTRY CREATION DATE (#902)  New
+                            LOINC (#903)                New
+  
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ RADNTRT                      New
+  
+  
+ Options Associated:
+  
+ Option Name                Type                   New/Modified/Deleted
+ -----------                ----                   -------------------- 
+ RA MAP TO MRPF             INPUT                      New
+ RA NEW PROCEDURE
+        TIME BULLETIN       OUTPUT                     New
+ RA SUPERVISOR              MENU                       Modified
+ RADIOLOGY INACTIVATE       SERVER                     New
+ RADIOLOGY ON DEMAND        SERVER                     New
+ RADNEWPRO                  SERVER                     New
+ RALOINC ENTER              INPUT                      New
+ RA MAP ONE                 INPUT                      New
+ RA MRPF PIN                OUTPUT                     New
+ RA SEEDING DONE            INPUT                      New
+ RA PROCEDURE               INPUT                      Modified 
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------     -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name        Type        File Name (Number)  New/Modified/Deleted 
+ -------------        ----        ------------------  --------------------
+ RA PRO TO MRPF       EDIT        RAD/NUC MED
+                                    PROCEDURES (# 71)     New
+ RA PROCEDURE EDIT    EDIT        RAD/NUC MED
+                                    PROCEDURES (# 71)     Modified
+ NEW RAD PROCEDURE    EDIT        NEW RAD PROCEDURE
+                                    WORKUP     (#71.11)   New
+  
+ Additional Information: None
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ None
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ VAMC White City, OR
+ VAMC St. Louis
+ VAMC Chicago (Westside)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory at the following OI Field Offices:
+  
+ Albany:     domain.ext
+ Hines:     domain.ext  
+ Salt Lake City:     domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+  
+ Title                       File Name                           FTP Mode
+ ------------------------------------------------------------------------
+ Radiology Technical Manual                                      Binary
+  
+ Automated Data Processing 
+ Application Coordinator 
+ (ADPAC) Addendum  Binary                                        Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+  
+ There are no pre-installation actions.  For post-installation the
+ MASTER RADIOLOGY SITE file (# 71.98) will be set with the facility number
+ and a default of 30 days for the DAYS AFTER CREATION BULLETIN field.
+ The RA NEW PROCEDURE TIME BULLETIN option will be queued to run daily
+ at 3:00 a.m.
+  
+ Pre-Installation Instructions:
+ ==============================
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than
+ 5 minutes to install.  It is not necessary to disable any options.
+ Prior to install the global ^RAMIS and the routines RAORD1, RAMAIN2
+ should be backed up in case a backout is needed.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select
+         the Installation Menu.  From this menu, you may elect to use the
+         following options. When prompted for the INSTALL NAME enter the
+         patch #(ex. RA*5.0*127):
+  
+ a.     Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DDs or templates.
+  
+ b.     Compare Transport Global to Current System - This option will
+         (allow you to view all changes that will be made when this patch
+       is installed.  It compares all components of this patch routines,
+         DDs, templates, etc.).
+  
+ c.     Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+ 4.     From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+  
+ 5.     When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? YES//' 
+         Rebuild the menu trees as one option has been modified and one
+         option added.
+  
+ 6.     When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         NO//'
+  
+ 7.     When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' 
+  
+ 8.     If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ ===============================
+ N/A
+  
+ Patch Backout Plan
+ ==================
+ Please contact the product development team for assistance if the
+  installed patch that needs to be backed out contains anything at all
+  besides routines before trying to backout the patch. If the installed
+  patch that needs to be backed out includes a pre or post install
+  routine, please contact the product development team before
+  attempting the backout. 
+  
+ From the Kernel Installation and Distribution
+ System Menu, select the Installation Menu. From
+ this menu, you may elect to use the following option.
+ When prompted for the INSTALL enter the patch #.
+   
+ a. Backup a Transport Global - This option will create
+    a backup message of any routines exported with this
+    patch. It will not backup any other changes such as
+    DD's or templates. 
+ The rollback procedure for VistA patches is complicated and may
+ require a follow-on patch to fully roll back to the pre-patch state.
+ This is due to the possibility of Data Dictionary updates, Data updates,
+ cross references, and transmissions from VistA to offsite data stores. 
+ Please contact the product development team for assistance if needed.
+  
+ ROUTINE INFORMATION
+ -------------------
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 119
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RA127PO
+    Before:       n/a   After:  B8722416  **127**
+Routine Name: RADELSVR
+    Before:       n/a   After:   B227624  **127**
+Routine Name: RAMAIN2
+    Before: B53609974   After: B63613910  **45,62,71,65,127**
+Routine Name: RAMAIN4
+    Before:       n/a   After: B30460135  **127**
+Routine Name: RAMAIN5
+    Before:       n/a   After: B38646269  **127**
+Routine Name: RAMRPIN
+    Before:       n/a   After: B14323288  **127**
+Routine Name: RANEWPRO
+    Before:       n/a   After:  B6425688  **127**
+Routine Name: RANPRO
+    Before:       n/a   After: B93138436  **127**
+Routine Name: RANPRO4
+    Before:       n/a   After: B38023574  **127**
+Routine Name: RANPRO5
+    Before:       n/a   After: B42155834  **127**
+Routine Name: RANPROU
+    Before:       n/a   After:  B5444307  **127**
+Routine Name: RANPROU2
+    Before:       n/a   After: B15193434  **127**
+Routine Name: RAONDEM
+    Before:       n/a   After: B16252030  **127**
+Routine Name: RATIMBUL
+    Before:       n/a   After:  B5729443  **127**
+Routine Name: RAUTL23
+    Before:       n/a   After: B26946304  **127**
+Routine Name: RAXMLSND
+    Before:       n/a   After: B52260194  **127**
+ 
+Routine list of preceding patches: 65
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 03, 2016
+Completed By:                               Date Completed: MAR 02, 2017
+Released By :                               Date Released : MAR 06, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

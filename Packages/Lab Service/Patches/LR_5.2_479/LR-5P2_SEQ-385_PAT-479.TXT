@@ -1,0 +1,711 @@
+$TXT Created by                     CPRS32.DOMAIN.EXT  (KIDS) on Thursday, 02/23/17 at 14:42
+=============================================================================
+Run Date: MAR 14, 2017                     Designation: LR*5.2*479
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #385                    Status: Released
+                  Compliance Date: APR 14, 2017
+=============================================================================
+
+Associated patches: (v)LR*5.2*450  <<= must be installed BEFORE `LR*5.2*479'
+                    (v)LR*5.2*462  <<= must be installed BEFORE `LR*5.2*479'
+                    (v)LR*5.2*469  <<= must be installed BEFORE `LR*5.2*479'
+                    (v)LR*5.2*482  <<= must be installed BEFORE `LR*5.2*479'
+
+Subject: VLE AP ORDER DIALOG DEFECT RESOLUTIONS FIXES
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+  This patch contains corrections that address issues related to the
+  VistA Lab Enhancements (VLE) released patches LR*5.2*462 and LR*5.2*469.
+  The description of the issues can be reviewed in the Problem and
+  Resolution sections of this patch description.
+  
+  Some of the issues corrected with this patch are a result of testing the 
+  AP order dialogs with CPRS v 32 currently under development and cannot be
+  validated by sites at this time. 
+  
+ Blood Bank Review:
+ ==================
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*479 does not 
+  contain any changes to the VISTA BLOOD BANK Software as defined by 
+  ProPath standard titled: BBM Team Review of VistA Patches.
+  
+  RISK ANALYSIS: Changes made by patch LR*5.2*479 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+  
+  VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+  made, no specific validation requirements exist as a result of 
+  installation of this patch.
+  
+ Patch Components:
+ --------------------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)        New/Modified/Deleted
+ ------------------      -------------------        --------------------
+ LR AP DIALOG CONFIG    69.73,.01 ORDERABLE ITEM    Modified
+  (#69.73)
+                        69.73,.02 ALLOW OTHER       Modified
+                          SPECIMENS
+                        69.73,.03 RESTRICT          Modified
+                          MULTIPLE SPECIMENS
+                        69.73,1 ORDER PROMPTS       Modified
+                        69.731,.02 HIDE             Modified
+                        69.731,.03 REQUIRED         Modified
+                        69.731,.04 DEFAULT          Modified
+                        69.73,2 PAGES               Modified
+                        69.732,.01 PAGE#            Modified
+                        69.732,.02 PAGENAME         Modified
+                        69.732,.03 HID              Modified
+                        69.732,.04 REUIRED          Modified
+                        69.732,.06 W TITLE          Modified
+                        69.732,1 BULDER BLOCK       Modified
+                        69.7321,.0 PG BLOCK TITLE   Modified
+                        69.7321,.2 REQUIRED         Modified
+                        69.7321,03 LIST             Modified
+                        69.7321.04 DEFAULT          Modified
+                        69.7321,1 VALUES            Modified
+                        69.73211,.01 VALUE          Modified
+                        69.73211,.02 ASSOCIATE WITH Modified
+                        69.73211,.03 SPECIAL        Modified
+                        69.73,3 SPECIMEN            Modified
+                        69.733,.01 SPECIMEN         Modified
+                        69.733,.02 HIDE FROM        Modified
+                          Description        
+                        69.733,.03 Description      Modified 
+                          POSITION
+                        69.733,1 BUILDER BLOCK      Modified
+                        69.7331,.02 INACTIVATE      Modified
+                        69.7331,.03 REQUIRED        Modified
+                        69.7331,.04 DEFAULT         Modified
+                        69.7331,.05 Description     Modified
+                          POSITION
+                        69.7331,1 VALUES            Modified
+                        69.73311,.01 VALUES         Modified
+                        69.73311,.02 SPECIAL        Modified
+                        69.733,2.1 COLLECTION       Modified
+                          SAMPLE HIDE
+                        69.733,2.2 COLLECTION       Modified 
+                          SAMPLE DEFAULT
+                         
+   
+ Forms Associated:
+  
+ Form Name               File #          New/Modified/Deleted
+ ---------               ------          --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name         Type         New/Modified/Deleted
+ ----------          -----        --------------------
+ LR7OAP CPRS DIALOG  MENU         Modified
+  MENU
+ LR7OAP CPRS DIALOG  PRINT        Modified
+  PRINT 
+  
+   
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      -----     ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ N/A 
+  
+  
+ New Service Requests (NSRs):
+ --------------------------------------------   
+ #20140511 
+  The Anatomic Pathology (AP) laboratory service needs a mechanism for 
+  clinicians to provide required patient-specific, procedure-specific, and 
+  specimen-specific information to facilitate specimen processing by 
+  pathologists. This mechanism must be in place for use by the specimen 
+  labeling application in order to generate a primary specimen label that 
+  positively identifies the specimen and accurately associates it with the 
+  patient.
+  
+ Patient Safety Issues (PSIs):
+ ---------------------------------------
+ N/A
+  
+  
+ CA SDM Ticket(s) & Overview:
+ --------------------------------------------
+  
+ N/A
+  
+  
+ Test Sites:
+ ---------------
+ AP Dialogs w/OR*3.0*405:
+   North Florida/South Georgia Veterans Health System (Gainesville, FL)
+   Edward Hines Jr. VA Hospital
+   Philadelphia VA Medical Center
+  
+ Problem:
+ -------
+  Sub files 60.0216611,.01 (AOE CPRS SCREEN) and 60.12166,.01 (AOE SCREEN) 
+  in the LABORAOTRY TEST file (#60) were erroneously released with the
+  distribution of patch LR*5.2*462.
+  
+ Resolution:
+ -----------
+  These two fields will be removed from the data dictionary with the LR479 
+  post-install routine.
+  
+ Problem:
+ --------
+ Sub file 69.321661,.01 (VFD AOE) in the LAB ORDER ENTRY file (#69) was 
+ erroneously released with the distribution of patch LR*5.2*462.
+  
+ Resoultion:
+ -----------
+  This field will be removed from the data dictionary with the LR479 
+  post-install routine.
+  
+ Problem:
+ --------
+  Specimen Login in VistA does not assign correct accession number when 
+  using the new accession process added to the AP Specimen Log In option 
+  with patch LR*5.2*462. The order number entered at this point was created
+  using the new AP Order Dialog in CPRS. The accession area assigned to the
+  Laboratory test in file 60 was not being honored and only SURGICAL 
+  PATHOLOGY (SP) and CYTOLOGY (CY) accession areas were being utilized. 
+  (Requires CPRS v32 currently under development)
+  
+ Resolution:
+ -----------
+  Routine modifications were made to honor the correct accession area as
+  defined in the Laboratory test file in association with the division
+  of the user accessioning the order.
+  
+ Problem:
+ --------
+  Practitioner field in CPRS displays '0' if Surgeon/Physician is blank in 
+  VistA - Backdoor order only.
+  
+ Resolution:
+ -----------
+  Routine modifications were made to correct the storage of a zero when no
+  Surgeon/Physician was entered during the accessioning process. 
+  
+ Problem:
+ --------
+  Lock login process of AP Orders via Accessioning menu - Post Release
+  LR479. (Requires CPRS v32 currently under development)
+  
+ Resolution:
+ -----------
+  Option Accessioning tests ordered by ward order entry [LROE] has been
+  modified to not allow Anatomic Pathology orders to be processed. The 
+  user will see the following message before exiting the option:
+  
+     This is an Anatomic Path order                         
+  
+     Must use 'Log-in, anat path' Option to accession this Order           
+  
+ Problem:
+ --------
+  AP Backdoor order from VistA displays Send Patient to Lab as default 
+  Collection Status.
+  
+ Resolution:
+ -----------
+  Routine modifications were made to change the default from SP Send 
+  Patient to WC Ward Collect.
+  
+ Problem:
+ --------
+  Backdoor AP Order from VistA does not display patient location in CPRS.
+  
+ Resolution:
+ -----------
+  Routine modifications were made to pass the correct pointer to CPRS so 
+  that the ordering location will be reflected correctly.
+  
+  
+ Problem:
+ --------
+  Error <SUBSCRIPT>AP+2^LRXREF is being triggered during AP Specimen 
+  Log-in accessioning of orders created in CPRS. There was code in the 
+  routine that was trying to continue the accessioning process even if the 
+  test being accessioned did not have an accession area defined that 
+  matched the division of the accessioning person. The default lookup was 
+  expecting to find an SP for Surgical Pathology or a CY for Cytopathology 
+  accession area abbreviations. If a site has changed these abbreviations 
+  to something other than SP and CY the <SUBSCRIPT> error would be 
+  triggered. (Requires CPRS v32 currently under development)
+  
+ Resolution:
+ -----------
+  Routine modifications were made to remove the default accession area 
+  logic and replace it with code that will exit the user with the following
+  message:
+  
+ [ TISSUE EXAM]  DOES NOT HAVE AN APPROPRIATE ACCESSION AREA DEFINED       
+                                  Log-in Aborted
+  
+ Problem:
+ --------
+  The VLE AP project is unable to acquire an ICR with $$DEFAULT^ORWLRAP1.
+  
+ Resolution:
+ -----------
+  This API was removed from the input transform of the .01 field of file 
+  69.73.
+  
+         DD: 69.73:.01
+  
+ Problem:
+ --------
+  The builder blocks had three misspellings (erosioin,technnique and SLide)
+  for selectable values.
+  
+ Resolution:
+ -----------
+  The patch has a post install sub-routine SPELL^LR479 that will search for
+  strings that equal "erosioin", "technnique" or "SLide" within the 69.73
+  file and set them to "erosion" and "technique" respectively.
+  
+         Routine: LR479
+  
+  
+ Problem:
+ --------
+  For the Urology,Prostate dialog Right Testis specimen the builder block 
+  "Submission Type" should be "Specimen Type" and "Specimen Submission" 
+  should be "Submission Type".
+  
+ Resolution:
+ -----------
+  The patch has a post install sub-routine TITLE^LR479 that will search for
+  a builder block with a value of "Orchiectomy" and if the builder block 
+  title reads "Submission Type" it will be changed to "Specimen Type" and 
+  the second builder block title will be set to "Submission Type".
+  
+         Routine: LR479
+  
+  Documentation Retrieval Instructions:
+  ------------------------------------- 
+  Software will be released via a PackMan message. 
+   
+  The preferred method is to retrieve files from download.vista.domain.ext.
+  This transmits the files from the first available server. Sites may 
+  also elect to retrieve files directly from a specific server. 
+   
+  Sites may retrieve the software and/or documentation directly using 
+  Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+  directory at the following OI Field Offices:
+     
+  Albany:                 domain.ext
+  Hines:                  domain.ext    
+  Salt Lake City:         domain.ext
+     
+  Title/File Name                       FTP Mode
+  -------------------------------------------------------------------------
+  N/A
+   
+  Documentation can also be found on the VA Software Documentation Library 
+  at:
+  http://www4.domain.ext/vdl/
+  
+  
+ Patch Installation:
+   
+   
+  Pre/Post Installation Overview:
+  -------------------------------
+  N/A 
+   
+  Pre-Installation Instructions:
+  ------------------------------
+  N/A
+   
+  Installation Instructions:
+  --------------------------
+  This patch may be installed with users on the system although it is 
+  strongly recommended that it be installed during non-peak hours when 
+  LAB usage is at a minimum. This patch should take less than 5 minutes to
+ install.
+   
+  This installation will install the components necessary to support the 
+  CPRS AP Order Dialog future functionality that is being released with
+  OR*3.0*405.
+   
+  1.  Choose the PackMan message containing this patch.
+   
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME enter the 
+      patch LR*5.2*479:
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+   
+  5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//'     
+      Respond: NO
+   
+  6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//'
+      Respond: NO
+   
+  7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? NO//' 
+      Respond: NO
+   
+  8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+   
+   
+  Post-Installation Instructions:
+  -------------------------------
+  N/A
+  
+  Back-Out Procedure:
+  -------------------
+  The build does not make any changes that would affect the operational 
+  state of the software and platform settings.
+   
+ 1. Back-Out Strategy
+      During installation, if the option to back up routines was run as 
+      directed, 'Backup a Transport Global', then routines have the ability
+      to be restored from the "backup" MailMan message that was generated.
+      However, the KIDS installation process does not perform a restore of 
+      other VistA components, such as data dictionary, cross-reference, and
+      template changes, etc. 
+      Prior to attempting a back-out of the software, please contact the VA
+      Help Desk at 1-855-673-4357 for support or assistance.
+  
+      a.  Back-Out Considerations
+          The LIM and the Chief of Pathology have the authority to order the
+          back-out.
+  
+      b.  Back-Out Criteria
+          Criteria for a back-out includes, but are not limited, to the
+          following:
+          i. Failed baseline testing.
+          ii. Non-recoverable software error.
+  
+      c.  Back-Out Risks
+      No back-out risks have been determined at this time.
+      d.  Authority for Back-Out
+          The LIM, the Lab Manager, and the Chief of Pathology have the
+          authority to request and approve the back-out and accept the
+          risks.
+  
+ 2. Rollback Procedure
+     The LR*5.2*479 build as well as any installed dependent patch changes 
+     that follow these releases need to be taken out in reverse of the
+     order in which they were installed; routines and data dictionary
+     modifications and populated data must also be rolled back in reverse
+     order.
+     Please contact the VA Help Desk at 1-855-763-4357 for support or 
+     assistance regarding roll-back procedures.
+      
+      a.  Rollback Considerations
+          No rollback considerations have been determined at this time.
+   
+      b.  Rollback Criteria
+          The only criteria for a rollback that has been determined at this
+          time is that the installation failed baseline testing.
+      
+      c.  Rollback Risks
+          The only risk determined at this time is the possibility of
+          downtime which would only effect the users of the Laboratory
+          package.
+   
+      d.  Authority for Rollback
+          The LIM, the Lab Manager, and the Chief of Pathology have the
+          authority to require the rollback and accept the risks.
+  
+      e.  Rollback Procedure
+          The need for a rollback is highly unlikely, however if it is
+          required, please contact the Product Support team for
+          assistance. The rollback procedure will require Lab downtime and
+          a reinstall of any previous KIDS versions.
+  
+  
+  Example of Captured Installation:
+  ==================================
+  
+ Enter message action (in IN basket): Ignore// Xtract KIDS
+  
+ Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Line 389  Message #412245    Unloading KIDS Distribution   LR*5.2*479
+    LR*5.2*479
+  
+ Want to Continue with Load? YES// YES
+ Loading Distribution...
+  
+    LR*5.2*479
+ Will first run the Environment Check Routine, LR479
+  
+  
+  
+                    --- Environment Check is Ok ---
+  
+  
+              Sending install loaded alert to mail group G.LMI
+  
+ Select PackMan function: 
+  
+  
+ Enter message action (in IN basket): Ignore// 
+  
+  
+ Select Installation <TEST ACCOUNT> Option: 5  Backup a Transport Global
+ Select INSTALL NAME:    LR*5.2*479    2/21/17@10:44:12
+      => LR*5.2*479
+  
+ This Distribution was loaded on Feb 21, 2017@10:44:12 with header of 
+    LR*5.2*479
+    It consisted of the following Install(s):
+      LR*5.2*479
+ Subject: Backup of LR*5.2*479 install on Feb 21, 2017
+   Replace 
+ Loading Routines for LR*5.2*479.........
+ Send mail to: BELSCHWINDER,MICHAEL//   BELSCHWINDER,MICHAEL
+ Select basket to send to: IN//   
+ And Send to: 
+  
+  
+ Select Installation <TEST ACCOUNT> Option: 4  Compare Transport Global to 
+ Current System
+ Select INSTALL NAME:    LR*5.2*479    2/21/17@10:44:12
+      => LR*5.2*479
+  
+ This Distribution was loaded on Feb 21, 2017@10:44:12 with header of 
+    LR*5.2*479
+    It consisted of the following Install(s):
+      LR*5.2*479
+  
+      Select one of the following:
+  
+           1         Full Comparison
+           2         Second line of Routines only
+           3         Routines only
+           4         Old style Routine compare
+  
+ Type of Compare: 1  Full Comparison
+ DEVICE: HOME//   TELNET PORT
+  
+ Report is displayed....
+  
+  
+ Select Installation <TEST ACCOUNT> Option: 2  Verify Checksums in 
+ Transport Global
+ Select INSTALL NAME:    LR*5.2*479    2/21/17@10:44:12
+      => LR*5.2*479
+  
+ This Distribution was loaded on Feb 21, 2017@10:44:12 with header of 
+    LR*5.2*479
+    It consisted of the following Install(s):
+      LR*5.2*479
+  
+ Want each Routine Listed with Checksums: Yes//   YES
+ DEVICE: HOME//   TELNET PORT
+  
+  
+ PACKAGE: LR*5.2*479     Feb 21, 2017 10:53 am                         
+ PAGE 1
+ --------------------------------------------------------------------------
+  
+  
+ LR479     Calculated   18225928
+ LR7OFAO   Calculated   52676862
+ LRAP      Calculated   25554526
+ LRAPKOE   Calculated  175040482
+ LRAPLG    Calculated   12446427
+ LRAPLG1   Calculated  181849693
+ LROE      Calculated   39978878
+ LRUWLF    Calculated   11960061
+ LRXREF    Calculated   76007577
+  
+    9 Routines checked, 0 failed.
+  
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME:    LR*5.2*479    2/21/17@10:44:12
+      => LR*5.2*479
+  
+ This Distribution was loaded on Feb 21, 2017@10:44:12 with header of 
+    LR*5.2*479
+    It consisted of the following Install(s):
+      LR*5.2*479
+ Checking Install for Package LR*5.2*479
+ Will first run the Environment Check Routine, LR479
+  
+  
+  
+                         --- Environment Check is Ok 
+  
+  
+           Sending install loaded alert to mail group G.LMI
+  
+ Install Questions for LR*5.2*479
+  
+ Incoming Files:
+  
+  
+    69.73     LR AP DIALOG CONFIG  (Partial Definition)
+ Note:  You already have the 'LR AP DIALOG CONFIG' File.
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME// ;;9999  TELNET PORT
+  
+  
+ --------------------------------------------------------------------------
+  
+  Install Started for LR*5.2*479 : 
+                Feb 21, 2017@10:55:15
+  
+ Build Distribution Date: Feb 17, 2017
+  
+  Installing Routines:
+                Feb 21, 2017@10:55:15
+  
+  Running Pre-Install Routine: PRE^LR479
+  
+  
+                      *** Preinstall completed ***
+  
+  Installing Data Dictionaries: 
+                Feb 21, 2017@10:55:15
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing OPTION
+                Feb 21, 2017@10:55:16
+  
+  Running Post-Install Routine: POST^LR479
+  
+  
+                     Correcting Spelling Errors
+  
+  
+                Correcting Builder Block Title Names
+  
+  
+          Sending install completion alert to mail group G.LMI
+  
+  
+          Removing Obsolete fields from LABORATORY TEST (#60) File
+  
+  
+          Remove Obsolete fields from LAB ORDER ENTRY (#69) File
+  
+  
+          Sending install completion alert to mail group G.LMI
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  LR*5.2*479 Installed. 
+                Feb 21, 2017@10:55:16
+  
+  Not a production UCI
+  
+                                    
+ LR*5.2*479                                   
+  
+  
+ Install Completed
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR479
+    Before:       n/a   After: B18459970  **479**
+Routine Name: LR7OFAO
+    Before: B54432906   After: B52676862  **121,350,450,462,479**
+Routine Name: LRAP
+    Before: B25886264   After: B25554526  **72,248,259,350,462,479**
+Routine Name: LRAPKOE
+    Before:B164456408   After:B175040482  **462,469,479**
+Routine Name: LRAPLG
+    Before: B12374267   After: B12446427  **72,201,259,462,479**
+Routine Name: LRAPLG1
+    Before:B181234041   After:B181849693  **72,121,248,308,350,427,433,
+                                           462,479**
+Routine Name: LROE
+    Before: B35804933   After: B39978878  **100,121,201,221,263,286,360,
+                                           423,432,438,450,479**
+Routine Name: LRUWLF
+    Before: B10789696   After: B11960061  **72,350,462,479**
+Routine Name: LRXREF
+    Before: B75229218   After: B76007577  **70,153,263,350,479**
+ 
+Routine list of preceding patches: 469
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 22, 2016
+Completed By:                               Date Completed: MAR 14, 2017
+Released By :                               Date Released : MAR 14, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

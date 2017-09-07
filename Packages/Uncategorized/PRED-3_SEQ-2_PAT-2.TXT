@@ -1,0 +1,171 @@
+
+=============================================================================
+Run Date: MAR 27, 2017                     Designation: PRED*3*2
+Package : PRED - PHARMACY DATA UPDATE (DATUP) Priority: Mandatory
+Version : 3         SEQ #2                      Status: Released
+                  Compliance Date: APR 27, 2017
+=============================================================================
+
+
+Subject: DATUP 3.0.01
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+ Data and Table Update Process (DATUP) supports the Medication Order Check
+ Healthcare Application (MOCHA) by performing data source updates. MOCHA 
+ conducts order checks using First Data Bank's (FDB) MedKnowledge 
+ Framework within the existing VistA pharmacy application. FDB is a 
+ data product that provides the latest identification and safety 
+ information on medications. Additionally, FDB provides the latest 
+ algorithms used to perform order checks.DATUP processes the data updates 
+ associated with FDB's MedKnowledge Framework. 
+  
+ The order checks performed by MOCHA include: 
+ 1. Drug-Drug Order Check - Check interactions between two or more drugs,
+    including interaction monographs.
+ 2. Duplicate Therapy Order Check - Check for duplicated drug 
+    classifications
+    between two or more drugs.
+ 3. Drug-Dose Order Check - Check minimum and maximum single doses, verify 
+    the dosing schedule, and provide the normal dosing range.
+  
+ The purpose of this software product release is to replace the current 
+ version, DATUP v3.0, with an enhanced version, DATUP v3.0.01, which 
+ contains fix for the Centrify/Active Directory SFTP server connection 
+ issue.
+  
+ Patch Components: 
+ ----------------- 
+ N/A
+ Files & Fields Associated:
+ -----------------
+ N/A
+  
+ Forms Associated:
+ ----------------         
+ N/A
+  
+ Mail Groups Associated: 
+ ----------------------
+ N/A
+  
+  
+ Options Associated: 
+ ------------------
+ N/A
+  
+  
+ Protocols Associated:
+ -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+ ---------------------
+ N/A
+  
+  
+ Templates Associated:
+ --------------------
+ N/A
+  
+  
+ Additional Information:
+ --------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ CA SDM Ticket(s) & Overview
+ ----------------------------
+ I12079625FY17 - DATUP shall successfully be able to connect to the SFTP 
+ server to process the weekly FDB-DIF files that are received from CMOP 
+ after the Centrify implementation on the SFTP server
+  
+ Problem:
+ -------
+ Configuration changes were made on the Production SFTP server at AITC 
+ (due to Centrify implementation) in December 2016. These changes have 
+ resulted in connection failures between the DATUP application and the 
+ Production SFTP server.
+  
+ Resolution:
+ ----------
+ DATUP code changes are made in version 3.0.01 to fix the connection 
+ failures due to Centrify Implementation on the SFTP server.
+  
+ Test Sites:
+ ----------
+ N/A
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+ DATUP Local Install Guide       PRED_3_0_01_IGL_R0317.PDF       Binary
+ DATUP National Install Guide    PRED_3_0_01_IGN_R0317.PDF       Binary
+ DATUP Release Notes             PRED_3_0_01_RN_R0317.PDF        Binary
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 22, 2017
+Completed By:                               Date Completed: MAR 27, 2017
+Released By :                               Date Released : MAR 27, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

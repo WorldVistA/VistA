@@ -1,0 +1,305 @@
+
+=============================================================================
+Run Date: APR 17, 2017                     Designation: EAS*1*147
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #120                      Status: Released
+                  Compliance Date: MAY 18, 2017
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEMS (ES) 4.6.0 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this Informational Patch is to announce the release of the
+ Enrollment System (ES) 4.6.
+  
+ The Enrollment Health Benefits Determination (EHBD) Program provides
+ enhancements to the Enrollment System.
+  
+ This ES 4.6 release, developed in Java technology, will have Enrollment
+ System Modernization (ESM) development efforts, including enhancements to
+ support Community Care (CC) and ES Sustainment.
+  
+ The following functionalities are included in the ES 4.6 release:
+  
+ Member ID:
+ 1. Changes to Person Search screen:
+  - Added Member ID as the top-most field (Member ID may be used as the only
+    search criteria)
+  - Changed the 'VPID' label to 'ICN'
+  - Moved the Birth Sex required fields from the Additional Search Criteria
+    data panel to the Person Search data panel (below the Date of Birth)
+  - Added Member ID to the banner after successful Person Search
+ 2. Changes to Demographics Identity Traits screen:
+  - Added Member ID as read-only field just below SSN
+  
+ Community Care:
+ 1. ES will send new or updated Residential and Permanent Mailing addresses
+    to the Enterprise Contact Information Service (eCIS) for address
+    validation
+ 2. Added address validation result indicator (Failed, Certified, Not
+    Checked)    to the Demographics Overview and Addresses pages in ES
+    Plans
+ 3. Community Care (CC) Viewer page:
+   - Added Community Care Outcome Panel to the Overview page
+   - Added fields to Wait-Time table: Clinic/Consult Title, Clinical Stop    
+     Code, Clinical Stop Code Name
+   - Added a Capability named 'View Time Clinic Data' to control which
+     users may see the three new clinical fields
+  
+ Stop Communication:
+ - New data panel added to the Communications tab. Stop Communication
+   criteria fields include: Stop Communications checkbox, Reason drop
+   down menu and required Explanation textbox when the Reason Type
+   selection is set to Administrative Reason
+  
+ Future Discharge Date:
+ 1. Added new Future Discharge Date panel to the Overview page
+ 2. Added Future Discharge Date, Source of Information, and 'Other'
+    Explanation fields to the Military Service page
+ 3. ES users with permissions may add, edit, or delete a Future Discharge
+    Date
+ 4. Future Discharge Date will be added to the Military Service History page
+ 5. ES will share Future Discharge Date with VistA on the ZMH segment of the
+    ORUZ11 and ORFZ11 messages
+ 6. After a Future Discharge Date has been entered into ES, ES will query the
+    Enterprise Military Information Service (eMIS) every seven (7) days for a
+    maximum of ninety (90) days
+ 7. Added detailed and summary reports
+  
+ eMIS Label Changes:
+ 1. Changed label from 'SEND QUERY TO MSDS BROKER' to 'SEND QUERY TO EMIS
+    SERVICE' on Military Service page
+ 2. Changed label from 'MSDS Query Status' to 'eMIS Query Status' on   
+    Eligibility page
+  
+ Date of Death:
+ 1. Changed the Date of Death Source of Notification label 'SPOUSE/NEXT OF
+    KIN/OTHER PERSON' to 'SPOUSE/NOK/OTHER PERSON
+ 2. ES users can manage the Date of Death information from receipt through
+    processing and verify if a Veteran's enrollment status is correct and to
+    ensure that only appropriate correspondence and communication occur.
+  
+  
+ ES Sustainment:
+ 1. ES Updates for Self-Identified Gender Identity (SIGI)
+ 2. AAP DGEN add alert bulletin going to all sites of record
+ 3. Remediate Critical and High Fortify security scan issues
+ 4. ES sometimes deletes Date of Death from MVI
+  
+ VistA:
+  - The following VistA patches will be added to VistA: 
+ 1. DG*5.3*925 - Add and/or Edit residential address in VistA - Part 1 
+ 2. DG*5.3*931 - Future Discharge Date 
+ 3. DG*5.3*939 - Manage Date of Death 
+ 4. DG*5.3*934 - HL7 Error Removal 
+ 5. DG*5.3*936 - Display the Health Benefit Plan
+  
+  
+ NOTE: Residential Address will not be shared with the medical centers in
+ this release.
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ Service Desk Manager (SDM):
+  
+ Ticket #       Overview
+ -------------  -------------------
+ N/A
+  
+ Rational Team Concert (RTC):
+  
+ RTC #          Overview
+ -------------  -------------------
+ 305033          ES Updates to support Self-Identified Gender Identity
+ 464842          AAP DGEN add alert bulletin going to all sites of record
+ 466618          Fortify : Resolve ESM Critical Priority Security
+                 Vulnerabilities
+ 466619          Fortify : Resolve ESM High Priority Security Vulnerabilities
+ 475568          ES sometimes deletes Date of Death from MVI
+  
+ Problem:
+ ----------
+ 305033 - Update ES to read new SIGI trait from MVI, and allow display and
+          edit from ES UI as with other traits.
+ 464842 - When a user changes a Veteran's Preferred Facility in ES, the DGEN
+          mail bulletin that notifies the site the person was added is being
+          sent to all sites of record.  That bulletin should go only to the
+          Preferred Facility.
+ 466618 - Fortify security scan revealed Critical severity issues.
+ 466619 - Fortify security scan revealed High severity issues.
+ 475568 - ES sometimes deletes Date of Death from MVI.
+ 496468 - ESM_2.0_ES FDD If the FDD is deleted in ES and there is no MSE or
+          other ZMH entry, the HL7 ORU-Z11 does not have a ZMH line which
+          does not allow the FDD to be deleted in VistA.
+ 496612 - Green Check Mark for Active Address is not working properly for the
+          address coming from VOA.
+ 497575 - ESM_2.0_ES FDD ES does not delete the FDD when a Record is returned
+          from eMIS with the same Branch of Service and Service Entry Date.
+  
+ Resolution:
+ ----------
+ 305033 - Added SIGI to the identity traits object, populate from display
+          when present on Primary View. Added SIGI to 1301/1302 add/update
+          messages from ES to MVI.
+ 464842 - Added sendEmailBulletinPrefSiteOnly method to
+          CommsEmailBulletinService and updated call on
+          HEC_NOTIFY_SITE_PERSON_ADDED in VOAApplicationServiceImpl.
+ 466618 - Remediated Critical issues and submitted new Fortify scan and code.
+ 466619 - Remediated High issues and submitted new Fortify scan and code.
+ 475568 - Added consistency check for ORUZ05 message to check on-file Date of
+          Death.
+ 496468 - This will be fixed in Build 3.
+ 496612 - This will be fixed in Build 2 - 4.6.1.
+ 497575 - This will be fixed in Build 3.
+  
+ Test Sites:
+ ----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation 
+ describing the new functionality introduced by this patch are
+ available.
+  
+ The preferred method is to retrieve files from 
+ download.vista.domain.ext.  This transmits the files from the
+ first available server. Sites may also elect to retrieve files
+ directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly
+ using Secure File Transfer Protocol (SFTP) from the 
+ ANONYMOUS.SOFTWARE directory at the following OI Field Offices:
+  
+ Albany:                domain.ext
+ Hines:                 domain.ext 
+ Salt Lake City:        domain.ext
+  
+  
+ Documentation can also be found on the VA Software Documentation
+ Library at:
+ http://www4.domain.ext/vdl/
+  
+ Title                  File Name                             FTP Mode
+ -----------------------------------------------------------------------
+ ES 4.6 User Guide    ES_4_6_User_Guide.pdf                   binary
+ ES 4.6 Release Notes ES_4_6_Release_Notes.pdf                binary
+ IVM Technical Manual IVM_2_TM_FDD.pdf                        binary
+  
+  
+ The documentation will be in the form of Adobe Acrobat file.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Routine Information:
+ ====================
+  
+  
+ No routines included.
+  
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 22, 2017
+Completed By:                               Date Completed: APR 14, 2017
+Released By :                               Date Released : APR 17, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,276 @@
+$TXT Created by                   at NHML19.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Wednesday, 11/23/16 at 07:58
+=============================================================================
+Run Date: FEB 09, 2017                     Designation: HMP*2*8
+Package : HMP - HEALTH MANAGEMENT PLATFORM    Priority: Mandatory
+Version : 2         SEQ #7                      Status: Released
+                  Compliance Date: MAR 11, 2017
+=============================================================================
+
+Associated patches: (v)PX*1*216    <<= must be installed BEFORE `HMP*2*8'
+                    (v)HMP*2*2     <<= must be installed BEFORE `HMP*2*8'
+
+Subject: EHMP VIMM 2.0 DEPENDENCY RELEASE
+
+Category: 
+  - Other
+
+Description:
+============
+
+ This release resolves HMP*2.0*2 Defect DE6888.  This patch adds the Remote
+ Procedure Calls (RPC) directed for use, and created by PX*1.0*215 and
+ PX*1.0*216, to the HMP UI CONTEXT [HMP UI CONTEXT version 
+ 20160108-01.US12195] option. PX*1.0*215 and PX*1.0*216 were not available 
+ at the time HMP*2.0*2 was released. 
+  
+ Remote Procedure Call (RPC)     ICR Number
+ PXVIMM ADMIN ROUTE              6656
+ PXVIMM ADMIN SITE               6657
+ PXVIMM ICR LIST                 6658
+ PXVIMM IMM DETAILED             6659
+ PXVIMM IMM FORMAT               6660
+ PXVIMM IMM LOT                  6661
+ PXVIMM IMM MAN                  6662
+ PXVIMM IMM SHORT LIST           6663
+ PXVIMM IMMDATA                  6664
+ PXVIMM VICR EVENTS              6665
+ PXVIMM VIS                      6666
+  
+ Patch Components:
+ -----------------
+  
+ Files and Fields Associated:
+ ----------------------------
+ There are no new or modified files associated with this patch.
+  
+ Forms Associated:
+ -----------------
+ There are no new or modified forms associated with this patch.
+  
+ Mail Groups Associated:
+ -----------------------
+ There are no new or modified mail groups associated with this patch.
+  
+ Options Associated:
+ -------------------
+  
+ Option Name                     Type               New/Modified/Deleted
+ -----------                     ----               --------------------
+ HMP UI CONTEXT                  Broker (Client/Server)   Modified
+   [HMP UI CONTEXT version 20160108-01.US12195]
+  
+ The HMP UI CONTEXT [HMP UI CONTEXT version 20160108-01.US12195] option 
+ was modified to include the following RPCs.
+  
+ PXVIMM ADMIN CODES
+ PXVIMM ADMIN ROUTE
+ PXVIMM ADMIN SITE
+ PXVIMM ICR LIST
+ PXVIMM IMM DETAILED
+ PXVIMM IMM FORMAT
+ PXVIMM IMM LOT
+ PXVIMM IMM MAN
+ PXVIMM IMM SHORT LIST
+ PXVIMM IMMDATA
+ PXVIMM INFO SOURCE
+ PXVIMM VICR EVENTS
+ PXVIMM VIS
+  
+ Protocols Associated:
+ ---------------------
+ There are no new or modified protocols associated with this patch.
+  
+ Security Keys Associated:
+ -------------------------
+ There are no new or modified security keys associated with this patch.
+  
+ Templates Associated:
+ ---------------------
+ There are no new or modified templates associated with this patch.
+  
+ Additional Information:
+ -----------------------
+  
+ Defect Number           Menu Option          Description
+ -------------           -----------          -----------
+ DE6888                  HMP UI CONTEXT
+                         [HMP UI CONTEXT version 20160108-01.US12195]
+                                              Enable Add Immunizations
+                                              after PX215 National Release
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR #20150408 - VistA Evolution Enterprise Health Management Platform 
+ (eHMP)
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ There are no Patient Safety Issues associated with this patch.
+  
+ Remedy Tickets(s) & Overview:
+ -----------------------------
+ There are no Remedy Tickets associated with this patch.
+  
+ Test Sites:
+ -----------
+ Hampton, VA
+ Indianapolis, IN
+ Loma Linda, CA
+ Portland, OR
+ San Diego, CA
+  
+ Documentation Retrieval:
+  
+ Sites may retrieve the documentation from the ANONYMOUS.SOFTWARE
+ directory at one of the OI Field Offices. The preferred method is to
+ retrieve the file using Secure File Transfer Protocol (SFTP) from
+ DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first
+ available server. Alternatively, sites may elect to retrieve the file from
+ a specific OI Field Office.
+  
+    OI FIELD OFFICE      SFTP ADDRESS                    DIRECTORY 
+    Albany               DOMAIN.EXT            
+    Hines                DOMAIN.EXT             
+    Salt Lake City       DOMAIN.EXT               
+  
+ The documentation will be distributed as PDF files and should be
+ downloaded in binary format.
+ Documentation will also be posted on the VA Software Documentation Library
+ at:  http://www4.domain.ext/vdl/
+ The updated documentation associated with this patch is:
+  
+ Title                           File Name                      
+ ------------------------------------------------------------------
+ Enterprise Health               eHMP_REL_NOTES_FOR_1_2_19_UI_V1_2_7.PDF
+ Management Platform (eHMP)
+ Version 1.2.19 Release Notes
+ (Release of eHMP UI 1.2.7)
+  
+ Patch Installation:
+ -------------------
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (HMP*2.0*8):
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter HMP*2.0*8.
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ Sample Installation
+ -------------------------
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME:    HMP*2.0*8    12/13/16@14:21:56
+      => HMP*2*8
+  
+ This Distribution was loaded on Dec 13, 2016@14:21:56 with header of 
+    HMP*2*8
+    It consisted of the following Install(s):
+       HMP*2.0*8
+ Checking Install for Package HMP*2.0*8
+  
+ Install Questions for HMP*2.0*8
+  
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   Linux Telnet/SSH
+ ----------------------------------
+  
+  Install Started for HMP*2.0*8 : 
+                Dec 13, 2016@14:26
+  
+ Build Distribution Date: Nov 23, 2016
+  
+  Installing Routines:
+                Dec 13, 2016@14:26
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing OPTION
+                Dec 13, 2016@14:26:01
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  HMP*2.0*8 Installed. 
+                Dec 13, 2016@14:26:01
+  
+ Install Completed
+  
+ Installation Verification
+ -------------------------
+ Successful installation can be verified by reviewing the HMP UI CONTEXT 
+ [HMP UI CONTEXT version 20160108-01.US12195] menu option to ensure that
+ the RPCs listed above were successfully added.
+  
+ Back-out Procedures
+ -------------------
+ In the event the HMP KID package requires backout, contact the National
+ Help Desk for assistance from the vendor development team.
+  
+ The HMP*2.0*8 patch adds the new PXVIMM Remote Procedure Calls (RPC) to 
+ the HMP UI CONTEXT [HMP UI CONTEXT version 20160108-01.US12195] option.
+ The option Backup a Transport Global [XPD BACKUP] will not capture these 
+ changes.  In order to back out the patch, the HMP UI CONTEXT [HMP UI
+ CONTEXT version 20160108-01.US12195] option will need to be back out
+ manually with the assistance from ASM.
+  
+ Backing out the patch will be done only with the concurrence and 
+ participation of ASM and appropriate VA site/region personnel. The
+ decision to back-out or rollback software will be a joint decision between
+ ASM, VA site/region personnel and other appropriate VA personnel.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 15, 2016
+Completed By:                               Date Completed: FEB 01, 2017
+Released By :                               Date Released : FEB 09, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

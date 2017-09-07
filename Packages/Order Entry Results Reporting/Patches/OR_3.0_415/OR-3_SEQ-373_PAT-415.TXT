@@ -1,0 +1,161 @@
+$TXT Created by                    MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 05/23/16 at 13:58
+=============================================================================
+Run Date: MAR 06, 2017                     Designation: OR*3*415
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #373                      Status: Released
+                  Compliance Date: APR 06, 2017
+=============================================================================
+
+Associated patches: (v)OR*3*280    <<= must be installed BEFORE `OR*3*415'
+                    (v)OR*3*350    <<= must be installed BEFORE `OR*3*415'
+
+Subject: FLG ORDER BULLETIN CHECKBOX,CONSULT STOP DATE INCORRECT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the ORDER ENTRY/RESULTS 
+ REPORTING package:
+  
+ 1) The Flagged Orders bulletins are not being sent when the Send Flagged
+    Orders Bulletin checkbox is checked in the CPRS GUI.
+  
+ 2) When a consult is cancelled and resubmitted, the value in the Stop 
+    date/time field of the cancelled consult is copied to the new consult 
+    instead of being cleared.
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ ASSOCIATED TICKET(S): 
+ =====================
+ 1) I9835075FY16 - The Mailman bulletins for flagged orders are not being
+                   generated
+ 2) I9836179FY16 - Stop date/time does not clear when resubmitting a 
+                   cancelled consult
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Altoona - James E. Van Zandt VAMC
+ Puget Sound HCS
+  
+  
+ TICKET OVERVIEW:
+ ================
+ 1) I9835075FY16 - The Mailman bulletins for flagged orders are not being
+                   generated
+  
+ Problem:
+ --------
+ The Mailman bulletins for flagged orders are not being generated when a 
+ user selects the checkbox labeled - Send me a Mailman bulletin for 
+ flagged orders - in the Notifications tab of Options window in the CPRS
+ GUI Tools menu.
+  
+ Resolution:
+ -----------
+ The API SAVENOTO^ORWTPR is referencing the incorrect piece of the INFO 
+ variable when assigning the FLAG variable which is used to set the value 
+ of the ORB FLAGGED ORDERS BULLETIN parameter. To resolve this issue, the 
+ following code changes were applied:
+  
+    From:  S FLAG=$P(INFO,U,3)
+      To:  S FLAG=$P(INFO,U,2)
+  
+ 2) I9836179FY16 - Stop date/time does not clear when resubmitting a 
+                   cancelled consult                   
+  
+ Problem:
+ --------
+ When a consult is cancelled and resubmitted, the value in the Stop 
+ date/time field of the cancelled consult is copied to the new consult 
+ instead of being cleared. 
+  
+ Resolution:
+ -----------
+ The routine ORMGMRC was modified for resubmitted consults to clear both 
+ the stop date field in the order file and also the associated cross 
+ reference entry "AE" that contains the stop date.
+  
+  
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+  
+   1.  Choose the PackMan message containing this patch and invoke the 
+       INSTALL/CHECK MESSAGE PackMan option.  
+  
+   2.  Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]: 
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+           Patch Monitor Main Menu ...
+  
+     Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+  
+    3.  From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter OR*3.0*415):
+  
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will
+            not backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option
+            will allow you to view all changes that will be made when
+            this patch is installed.  It compares all components of this
+            patch (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+  
+  
+    4.  Use the Install Package(s) option and select the package
+        OR*3.0*415.
+  
+        a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+            install? NO//", answer NO.
+        b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+            Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORMGMRC
+    Before: B45026486   After: B46396070  **3,26,68,92,153,174,195,255,
+                                           243,280,350,415**
+Routine Name: ORWTPR
+    Before: B16455738   After: B16808481  **85,173,215,243,280,415**
+ 
+Routine list of preceding patches: 350
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 07, 2015
+Completed By:                               Date Completed: MAR 01, 2017
+Released By :                               Date Released : MAR 06, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

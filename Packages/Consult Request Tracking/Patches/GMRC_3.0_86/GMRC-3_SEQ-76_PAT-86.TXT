@@ -1,0 +1,278 @@
+$TXT Created by                A at DEVVVV.DOMAIN.EXT  (KIDS) on Friday, 08/26/16 at 13:37
+=============================================================================
+Run Date: APR 18, 2017                     Designation: GMRC*3*86
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3        SEQ #76                      Status: Released
+                  Compliance Date: MAY 05, 2017
+=============================================================================
+
+Associated patches: (v)GMRC*3*75   <<= must be installed BEFORE `GMRC*3*86'
+                    (v)GMRC*3*83   <<= must be installed BEFORE `GMRC*3*86'
+
+Subject: VS GUI CONSULT PROCESSING UPDATES
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch addresses the following issues:
+  1. REQUEST/CONSULTATION entries that are linked to appointments in a cancelled
+     or no-show state are occasionally not displaying in VS GUI as expected.
+     In order to resemble VistA processing, this has been corrected by looking
+     in the COMMENT field (#5) of the REQUEST PROCESSING ACTIVITY multiple
+     field (#40) of the REQUEST/CONSULTATION file (#123) for the expected text
+     of 'no-show' for No-shows and 'cancel' for cancelled appointments.
+  2. REQUEST/CONSULTATION entries that have a FILE ENTRY DATE that is older than
+     365 days were displaying in VS GUI.  This has also been corrected.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                Field Name (#)          New/Modified/Deleted
+ -------------                --------------          --------------------
+ REQUEST/CONSULTATION         REQUEST PROCESSING      MODIFIED
+  (123)                       ACTIVITY (40)
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #                   New/Modified/Deleted
+ ---------                    ------                   --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                       New/Modified/Deleted
+ ---------------                                       --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                  Type                     New/Modified/Deleted
+ -----------                  ----                     --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                                         New/Modified/Deleted
+ -------------                                         --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name           Type     File Name (Number)   New/Modified/Deleted
+ -------------           ----     ------------------   --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I8720696FY16 - In the VSE GUI, consults that have been cancelled by clinic
+                   or no-showed do not return to the request grid.
+  
+   Problem:
+   -------
+   REQUEST/CONSULTATION entries that are linked to appointments in a cancelled
+   or no-show state are occasionally not displaying in VistA Scheduling GUI as
+   expected.
+  
+   Resolution:
+   ----------
+   In order to resemble VistA processing, the 'AG' cross-reference has been
+   corrected to look in the COMMENT field (#5) of the REQUEST PROCESSING
+   ACTIVITY multiple field (#40) of the REQUEST/CONSULTATION file (#123) for the
+   expected keyword of 'no-show' for No-shows and 'cancel' for cancelled
+   appointments.
+  
+ 2. I8754980FY16 - Consults greater than 365 days old should not show up in the
+                   RM Grid of the GUI
+   Problem:
+   -------
+   Entries from the REQUEST/CONSULTATION file (#123) are being displayed in
+   VistA Scheduling GUI even if the FILE ENTRY DATE field (#.01) of the
+   REQUEST/CONSULTATION file (#123) is older than 365 days.
+  
+   Resolution:
+   ----------
+   The 'AG' cross-reference of the REQUEST/CONSULTATION file (#123) has been
+   modified to NOT include Consult Requests that are greater than 365 days
+   old.
+  
+  
+ Test Sites:
+ ----------
+ Hudson Valley
+ Chillicothe
+ Asheville
+ Cleveland
+ Tucson
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  There is not a Pre-Installation routine.
+  The Post-Installation routine does the following functions:
+   1. Rebuilds the Mumps cross-reference:
+       - "AG" in the REQUEST/CONSULTATION file 123
+  
+  
+ Installation Instructions:
+ --------------------------
+ Given that this patch takes some time to install, the following 
+ instructions are provided to assist OI&T personnel with its installation 
+ and output capture without having to tie up a computer screen. Just 
+ before selecting the device for the installation output, perform the 
+ following steps to queue the installation:
+  
+ . . .
+ Enter the Device you want to print the Install messages.
+ You can queue the install by entering a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME// QUEUE TO PRINT ON
+ DEVICE: HOME// P-MESSAGE
+  
+  1 P-MESSAGE-ABC   HFS FILE => MESSAGE
+  2 P-MESSAGE-HFS   HFS FILE => MESSAGE
+  
+ Choose 1-2> 2  P-MESSAGE-HFS  HFS FILE => MESSAGE
+  
+ Subject: PATCH GMRC*3.0*86 QUEUED INSTALL <<== enter this Subject title
+  
+      Select one of the following:
+  
+           M         Me
+           P         Postmaster
+  
+ From whom: Me// 
+ Send mail to: DOEIRM,JOHN//  <<== Your name will echo here  
+ Select basket to send to: IN//   
+ And Send to: 
+  
+ Request Start Time: Jun 24, 2015@14:37:20// T@14:40  (JUN 24, 
+ 2015@14:40:00)
+ Install Queued!
+  
+  
+ Note: once the installation has completed, you should have a Mailman 
+ message in your 'IN' box.
+  
+  
+ Installation Instructions:
+ --------------------------
+ This installation will update routines that support VistA Scheduling GUI API's.
+ This patch should not be installed with VistA Scheduling GUI users on the
+ system and it is recommended that it be installed during non-peak hours to
+ minimize potential disruption to other users.  The installation time for this
+ patch will vary depending on the size of the REQUEST/CONSULTATION file (#123).
+  
+ The SDECRPC option should be disabled to ensure that no processing takes place
+ from VistA Scheduling GUI.
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the
+     Installation Menu.  From this menu, you may elect to use the following
+     options. When prompted for the INSTALL NAME enter the patch # GMRC*3.0*86:
+   a. Backup a Transport Global - This option will create a backup message
+         of any routines exported with this patch. It will not backup any other
+         changes such as DDs or templates.
+   b. Compare Transport Global to Current System - This option will (allow
+         you to view all changes that will be made when this patch is
+         installed.  It compares all components of this patch routines, DDs,
+         templates, etc.).
+   c. Verify Checksums in Transport Global - This option will allow you to
+         ensure the integrity of the routines that are in the transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of Install?
+     NO//' 
+       Respond with 'NO'
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+       Respond with 'NO'
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//' 
+       Respond with 'YES'
+       Option to mark as out of order:
+          Clinical Scheduling Procedure Calls [SDECRPC]
+  
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;DEC 27, 1997;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRCGUIB
+    Before: B51487660   After: B52185635  **4,12,18,20,17,22,29,30,35,
+                                           45,53,55,64,46,75,86**
+Routine Name: GMRCXR
+    Before: B34169214   After: B47022377  **83,86**
+ 
+Routine list of preceding patches: 75, 83
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 02, 2016
+Completed By:                               Date Completed: APR 18, 2017
+Released By :                               Date Released : APR 18, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

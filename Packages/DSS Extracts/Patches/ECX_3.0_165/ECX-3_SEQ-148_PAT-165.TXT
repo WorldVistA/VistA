@@ -1,0 +1,143 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 09/13/16 at 10:50
+=============================================================================
+Run Date: MAR 20, 2017                     Designation: ECX*3*165
+Package : ECX - DSS EXTRACTS                  Priority: Mandatory
+Version : 3       SEQ #148                      Status: Released
+                  Compliance Date: APR 01, 2017
+=============================================================================
+
+Associated patches: (v)ECX*3*163   <<= must be installed BEFORE `ECX*3*165'
+
+Subject: MID-FY17 CHANGES FOR 4 CHAR CDS NATIONAL CLINIC (#728.441) FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch ECX*3.0*165 updates the SHORT DESCRIPTION (#1) field of 10 existing 
+ entries in the NATIONAL CLINIC (#728.441) file.
+  
+ *************************************************************************
+ NOTE: This patch has a shortened compliance date because it must be 
+ installed as close to 4/1/2017 as possible. Sites will need the updates 
+ for mid - Fiscal Year (FY) 17.
+ *************************************************************************
+  
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A  
+  
+  
+ ASSOCIATED TICKET:
+ ================== 
+ I10617601FY16 - Mid-FY17 Changes for 4 Char Cds (National Clinic #728.441
+                 file)
+  
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ Providence VA Medical Center
+ Carl Vinson VA Medical Center  (Dublin)
+  
+  
+ TICKET OVERVIEW:
+ ================
+ I10617601FY16 - Mid-FY17 Changes for 4 Char Cds (National Clinic #728.441
+                 file)
+                      
+    Problem:
+    --------
+    A request was made by the Managerial Cost Accounting Office (MCAO) to
+    update the SHORT DESCRIPTION (#1) field of 10 existing entries in the 
+    NATIONAL CLINIC (#728.441) file.
+  
+    Resolution:
+    -----------
+    Routine ECX3P165 has been created to update the NATIONAL CLINIC 
+    (#728.441) file by modifying the SHORT DESCRIPTION (#1) field of 
+    10 existing entries effective 4/1/2017.
+  
+  
+    The descriptions of the following entries have changed:
+   
+     Existing Code       New Short Description
+     -------------       ---------------------
+     CDTC                Expressive Arts
+     CGQC                Qi Gong
+     DEMC                Eye Mvmnt Desensitiz&Reprocess
+     HTFC                Whole Health Partner
+     IACT                BFA Technique (not regular Acupuncture)
+     IDHC                Integrative Health Consult
+     MMMT                Mindfulness other than MBSR
+     MPAT                Movement Therapy
+     PNTC                Animal-Assisted Therapy
+     WCHC                Whole Health Coaching
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes. 
+ Suggested time to install: non-peak requirement hours.
+   
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+ 2. From the Kernel Installation & Distribution System menu, select
+    the Installation menu.
+   
+ 3. From this menu, you may select to use the following options (when
+    prompted for INSTALL NAME, enter ECX*3.0*165).      
+  
+    a. Backup a Transport Global - this option will create a backup message
+       of any routines exported with the patch. It will NOT backup any
+       other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - this option will allow
+       you to view all changes that will be made when the patch is
+       installed.
+    c. Verify Checksums in Transport Global - this option will ensure the
+       integrity of the routines that are in the transport global.
+    d. Print Transport Global - this option will allow you to view the
+       components of the KIDS build.
+      
+ 4. Use the Install Package(s) option and select the package ECX*3.0*165
+   
+ 5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//",
+    respond NO.
+   
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//", respond NO.
+   
+ ** 7. During install, verify that all entries were added successfully.
+       If an error is displayed, please create a ticket.  
+   
+ 8. You may delete the routine ECX3P165 from your production system after
+    patch has been successfully verified.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECX3P165
+    Before:       n/a   After:  B5027255  **165**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 12, 2016
+Completed By:                               Date Completed: NOV 22, 2016
+Released By :                               Date Released : MAR 20, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

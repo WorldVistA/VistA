@@ -1,0 +1,140 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 03/17/17 at 16:33
+=============================================================================
+Run Date: APR 27, 2017                     Designation: PRCA*4.5*324
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: EMERGENCY
+Version : 4.5       SEQ #282                    Status: Released
+                  Compliance Date: APR 29, 2017
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*301<<= must be installed BEFORE `PRCA*4.5*324'
+
+Subject: REJECT ERROR DISPLAY CORRECTION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ 1) Reject descriptions have been displaying incorrectly on Bill Profile 
+    screens. Modifications have been made to display correct Reject
+    descriptions on Bill Profile screens.
+  
+  
+  
+ Associated CA Tickets:
+ ======================
+ 1) I13248452FY17 - Incorrect description of reject codes are appearing 
+                    when viewing Bill Profiles.
+  
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Maryland HCS 
+ Wilmington VAMC 
+  
+  
+ Remedy Overview:
+ ================ 
+ 1) I13248452FY17 - Incorrect description of reject codes are appearing 
+                    when viewing Bill Profiles.
+  
+  
+ Problem:
+ --------
+ It has been reported that when viewing Reject Codes/reasons in Bill 
+ Profiles, that the reject reason code does not match the description. 
+  
+  
+ Resolution:
+ -----------
+ Modifications have been made to the Reject View Handler, as it was
+ defaulting to the Reject Counter instead of the Reject Code when setting
+ up the Reject Description data to be displayed on the Bill Profile 
+ screens.
+  
+  
+  
+  Routines: RCTCSJS1
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ You may install this patch at any time without interruption to users. It
+ should take less than two minutes to install this patch.
+  
+    
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRCA*4.5*324)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       PRCA*4.5*324.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//", hit ENTER.
+  
+       a) When Prompted "Enter options you wish to mark as "Out of
+          Order:" enter the following options:
+  
+       Bill Profile          [RCDP BILL PROFILE]
+       Full Account          [PRCAY FULL ACCOUNT PROFILE]
+      
+       b) When prompted "Enter protocols you wish to mark as "Out of 
+          Order:" just press <Return>
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCTCSJS1
+    Before: B57381357   After: B60511914  **301,324**
+ 
+Routine list of preceding patches: 301
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 17, 2017
+Completed By:                               Date Completed: APR 27, 2017
+Released By :                               Date Released : APR 27, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

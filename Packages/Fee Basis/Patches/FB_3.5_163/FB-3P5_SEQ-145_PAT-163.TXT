@@ -1,0 +1,249 @@
+$TXT Created by                  DEVVJJ.DOMAIN.EXT  (KIDS) on Tuesday, 09/06/16 at 12:24
+=============================================================================
+Run Date: APR 04, 2017                     Designation: FB*3.5*163
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #145                    Status: Released
+                  Compliance Date: MAY 04, 2017
+=============================================================================
+
+Associated patches: (v)FB*3.5*154  <<= must be installed BEFORE `FB*3.5*163'
+                    (v)IB*2*528    <<= must be installed BEFORE `FB*3.5*163'
+                    (v)IB*2*530    <<= must be installed BEFORE `FB*3.5*163'
+                    (v)IB*2*554    <<= must be installed BEFORE `FB*3.5*163'
+                    (v)PRCA*4.5*310<<= must be installed BEFORE `FB*3.5*163'
+                    (v)FB*3.5*166  <<= must be installed BEFORE `FB*3.5*163'
+
+Subject: NON-VA SERVICES BILLING AUTOMATION AND PRECERTIFICATION
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ IMPORTANT INSTALLATION NOTE:
+ ----------------------------
+ There are three patches associated with this project - PRCA*4.5*310,
+ IB*2.0*554 and FB*3.5*163. All three patches are to be installed as packman 
+ files.  There is no bundle.  
+  
+ The three patches incorporated code from the following concurrent development 
+ and, as such, the following patches MUST be installed prior to this project:
+ 1.)  IB*2.0*528
+ 2.)  IB*2.0*530 (and associated patches PRCA*4.5*303 - BUNDLED, IB*2.0*529
+      and PRCA*4.5*304 - STANDALONE)
+ 3.)  FB*3.5*154 (and associated patches FB*3.5*172 and DSIF*3.2*38)
+ 4.)  FB*3.5*166
+  
+ The three patches for this project MUST be installed in this order:
+ 1.)  PRCA*4.5*310
+ 2.)  IB*2.0*554
+ 3.)  FB*3.5*163
+  
+ Description
+ -----------
+ The Chief Business Office (CBO) is requesting system enhancements to
+ the Veterans Health Information Systems and Technology Architecture
+ (VistA) Integrated Billing (IB), Accounts Receivable (AR), and Fee
+ Basis (FB) software modules that would allow segregating all billing
+ and Collection activities for Non-Department of Veterans Affairs (Non-VA)
+ Care Third Party Insurance carriers' reimbursement.
+  
+ Current Medical Care Collections Fund (MCCF) Third Party billing and
+ collections applications in the VistA information system do not
+ segregate the Non-VA care claims from those claims for service rendered
+ at Veterans Health Administration (VHA) healthcare facilities. This
+ makes it difficult to determine whether all monies due VA for Non-VA
+ care services are being billed and collected from Third Party
+ insurance carriers, where applicable.  The current process is a resource
+ intensive, manual process with no assurance that all applicable
+ Non-VA Care charges have been billed and collected.
+  
+ This patch is being released as a group consisting of PRCA*4.5*310,
+ IB*2.0*554, and FB*3.5*163. All of these patches must be installed
+ together.
+  
+ This project will improve and automate the transfer of data from VistA
+ Fee Basis to Integrated Billing. It will record Non-VA revenue in a
+ different fund to allow separate tracking of these revenues. The patch
+ makes the following changes and enhancements:
+  
+ Enhancements to the Potential Cost Recovery Report removed Service 
+ Connected decision and added additional display fields.
+  
+ Added CHOICE program fields to the Fee Basis Contract File.
+  
+  
+ Concurrent Development / Dependencies:
+ --------------------------------------
+ Patch FB*3.5*163 is dependent upon enhancements in FB*3.5*154 (Separation of
+ Duties).  FB*3.5*154 is dependent upon DSIF*3.2*38 (Separation of 
+ Duties) and FB*3.5*172 (Security Keys for Separation of Duties).
+  
+ There was also concurrent code developed in the Potential Cost Recovery
+ Report via patch FB*3.5*166.  The code in FB*3.5*166's version of routine
+ ^FBPCR3 was merged into FB*3.5*163 during pre-production IOC testing. 
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)    Field Name (Number)     New/Modified/Deleted
+ ------------------    -------------------     --------------------
+ FEE BASIS PATIENT (#161.01)                                
+                       AUTHORIZATION (#1)                 Modified
+                       FROM DATE (#.01)                   Modified
+  
+ FEE BASIS CONTRACT (#161.43)                 
+                       CHOICE INDICATOR (#4)              Modified
+                       CHOICE PROVIDER AGREEMENT (#5)     Modified
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ 20110304 - Service Connected Decision
+ 20081010 - Billing Precertification Enhancements
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+   
+ Test Sites:
+ -----------
+ Omaha - Central Plains
+ St. Cloud
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ Software being released as a host file and/or documentation describing
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from:
+  
+ download.vista.domain.ext.
+  
+ This transmits the files from the first available server. Sites may
+ also elect to retrieve files directly from a specific server.
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory at the following OI Field Offices:
+  
+ Albany:          domain.ext
+ Hines:           domain.ext
+ Salt Lake City:  domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+ Title                         File Name               Transfer Mode
+ -------------------------------------------------------------------
+ Installation Guide            fb_3_5_163_ig.pdf       Binary                   
+ Release Notes                 fb_3_5_163_rn.pdf       Binary
+ User Manual                   fb_3_5_163_um.pdf       Binary 
+  
+ 
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ This process will install new and updated routines and other components
+ listed above. 
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the
+     patch number: FB*3.5*163
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option
+     and choose the patch to install.
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer NO and press enter
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     YES//' answer NO and press enter 
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+     and Protocols? YES//' answer YES and press enter
+  
+     When prompted 'Enter options you wish to mark as 'Out Of Order' answer
+     FB PCR and press enter
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ There are no special tasks to perform after this patch installation.
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 21
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBAACFE
+    Before:  B1826171   After:  B2043443  **108,163**
+Routine Name: FBPCR
+    Before: B73151731   After:B129969114  **12,48,76,98,103,135,163**
+Routine Name: FBPCR2
+    Before: B77224131   After:B114347873  **4,48,55,69,76,98,122,133,163**
+Routine Name: FBPCR3
+    Before: B26362342   After: B30358812  **48,69,98,163,166**
+Routine Name: FBPCR67
+    Before: B27989751   After: B34734633  **4,48,55,69,98,122,108,148,163**
+Routine Name: FBPCR671
+    Before: B46739204   After: B51983526  **4,48,55,69,76,98,122,108,163**
+ 
+Routine list of preceding patches: 133, 135, 148, 166
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 30, 2015
+Completed By:                               Date Completed: APR 04, 2017
+Released By :                               Date Released : APR 04, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

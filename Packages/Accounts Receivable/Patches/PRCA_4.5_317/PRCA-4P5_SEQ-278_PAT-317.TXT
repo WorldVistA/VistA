@@ -1,0 +1,473 @@
+$TXT Created by                  CARVDD.DOMAIN.EXT  (KIDS) on Wednesday, 02/01/17 at 18:11
+=============================================================================
+Run Date: MAR 22, 2017                     Designation: PRCA*4.5*317
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #278                    Status: Released
+                  Compliance Date: APR 21, 2017
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*304<<= must be installed BEFORE `PRCA*4.5*317'
+
+Subject: MCCF TAS EPAYMENTS
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ Below is a list of all the applications involved in this patch along 
+ with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    ACCOUNTS RECEIVABLE (PRCA) V. 4.5                    PRCA*4.5*317
+  
+  
+ The purpose of this patch is to meet the requirements of the Medical Care
+ Collection Fund (MCCF) Electronic Data Interchange (EDI) Transaction 
+ Application Suite (TAS) Phase 1 project as related to Accounts Receivable
+ (PRCA). This project ensures the Veterans Administrations (VA) compliance
+ with Electronic Funds Transfer (EFT) and Electronic Remittance Advice 
+ (ERA) Operating Rules, and enables VA to more effectively use ERA data,
+ resulting in better revenue and cash flow management. It will provide the
+ infrastructure foundation for electronic exchange of claim payment
+ information and promotes an interoperable system and will reduce the time
+ elapsed between receipt of the EDI 835 Electronic Remittance Advice
+ Transaction and receipt of the Cash Concentration or Disbursement (CCD+)
+ transactions. It will ensure that trace numbers between payments and
+ remittances can be used by VA, reducing the level of open accounts
+ receivable, allow claim denials to be more quickly addressed, and
+ standardizes Electronic Funds Transfer (EFT) & ERA enrollment to reduce
+ workload burden on VA staff.
+  
+ This patch contains changes to the ePayments (835 and EFT) program area 
+ to ensure compliance. Specifically, enhancements to the Veterans 
+ Health Information Systems and Technology Architecture (VistA) Third Party
+ EDI Lockbox module to increase timely and accurate processing of payments
+ for electronic claims in compliance with Health Insurance Portability
+ and Accountability Act (HIPAA) and Veterans Health Administration (VHA)
+ Fiscal Accounting policies. The ePayments system is used by Accounts
+ Receivable (AR) staff to process payments from third party payers for
+ both medical and pharmacy claims. 
+  
+ The following features of the PRCA software will be affected by this 
+ patch.
+  
+ 1. Unapplied EFT Deposits Report (UN)   [RCDPE UNAPPLIED EFT DEP REPORT]
+    The Unapplied EFT Deposits Report was removed in patch PRCA*4.5*304. It
+    is being reinstated in this patch and can be found on the existing menu
+    EDI Lockbox (ePayments) Report Menu [RCDPE EDI LOCKBOX REPORTS MENU].
+    This report will function exactly as it did prior to its removal in
+    patch PRCA*4.5*304 with one minor difference. The Receipt column of the
+    report was expanded to allow 12 character receipts instead of 10 to
+    accommodate the field length of the RECEIPT field (#344.4, .08) in the
+    data dictionary.
+  
+ 2. ERA Worklist/Scratch pad (WL)   [RCDPE EDI LOCKBOX WORKLIST]
+ *  ERA Worklist - Preferred View
+      o  If the user has a preferred view, they will be prompted to use 
+         their preferred view when entering the worklist prior to answering
+         the worklist filter and sort prompts. If they elect to use their
+         preferred view, the filter and sort prompts will be skipped and 
+         the worklist will load using their values of their preferred
+         view for these prompts. If they elect not to use their preferred
+         view or if they do not have a preferred view for the worklist
+         defined, they will be prompted to enter the new filter and sort
+         values and will be allowed to save their answers as their
+         preferred view.
+ *  ERA Worklist - Change View
+      o  Additionally, if the user selects the Change View action from the
+         worklist the system will determine if the current worklist filter
+         and sort settings completely match the settings of their preferred
+         view for the worklist. If the user has a preferred view defined
+         for the worklist and the current settings do not completely match
+         the preferred settings, they will be prompted to use their 
+         preferred view. If they elect to use their preferred view the
+         worklist will reload using the preferred view settings. If they
+         elect not to use their preferred view, or if they do not have a
+         preferred view or the current settings do not completely match 
+         the preferred view, the user will be prompted to enter the new
+         filter and sort values for the worklist and will be allowed to
+         save their answers as their preferred view.
+ *  ERA Scratch pad - Preferred View
+      o  When the user selects the Select ERA action to invoke the ERA 
+         Worklist Scratch pad, the system will determine if the user has
+         preferred view settings for the scratch pad. If the user has
+         preferred view settings, they will be prompted to use their
+         preferred view. If they elect to use their preferred view, the
+         scratch pad preferred view settings will be used and the scratch
+         pad will load. If they elect to not use their preferred view or
+         they do not have preferred view settings defined for the scratch
+         pad the user will be prompted to enter the filter and sort values 
+         for the scratch pad and will be allowed to save those values as
+         their preferred view.
+ *  ERA Scratch pad - Change View
+      o  When the user selects the Change View action from the ERA Worklist
+         scratch pad. The system will determine if the current filter and 
+         sort settings for the scratch pad completely match the settings 
+         of their preferred view for the scratch pad. If the user has a
+         preferred view defined for the scratch pad and the current
+         settings do not completely match the preferred settings, they will
+         be prompted to use their preferred view. If the elect to use
+         their preferred view the scratch pad will reload using the
+         preferred view settings. If they elect to not use their preferred
+         view, or if they do not have a preferred view or the current
+         settings do not completely match the preferred view, the user will
+         be prompted to enter new filter and sort values for the scratch
+         pad and will be allowed to save their answers as their preferred
+         view.
+   
+ 3. Auto-Post Awaiting Resolution (APAR)   [RCDPE APAR]
+ *  APAR Worklist - Preferred View
+      o  If the user has a preferred view, they will be prompted to use 
+         their preferred view when entering the worklist prior to answering
+         the worklist filter and sort prompts. If they elect to use their
+         preferred view, the filter and sort prompts will be skipped and 
+         the worklist will load using their values of their preferred
+         view for these prompts. If they elect not to use their preferred
+         view or if they do not have a preferred view for the worklist
+         defined, they will be prompted to answer the filter and sort
+         values and will be allowed to save their answers as their
+         preferred view.
+ *  APAR Worklist - Change View
+      o  Additionally, if the user selects the Change View action from the
+         worklist the system will determine if the current worklist filter
+         and sort settings completely match the settings of their preferred
+         view for the worklist. If the user has a preferred view defined
+         for the worklist and the current settings do not completey match
+         the preferred settings, they will be prompted to use their
+         preferred view. If they elect to use their preferred view the
+         worklist will reload using the preferred view settings. If they
+         elect not to use their preferred view, or if they do not have a
+         preferred view for the worklist defined or the current settings
+         do not completely match, the user will be prompted to enter new
+         filter and sort values for the worklist and will be allowed to 
+         save their answers as their preferred view.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ N/A
+  
+  
+  
+ Bulletins Associated:
+                                                           New/Modified/
+ Bulletin Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Dialogs Associated:
+                                                           New/Modified/
+ Dialog Name                                                 Deleted    
+ -----------                                               -------------
+ N/A
+  
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+  
+ Functions Associated:
+                                                           New/Modified/
+ Function Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ HL Logical Link:
+                                                           New/Modified/
+ HL Logical Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ HL7 Application Parameters:
+                                                           New/Modified/
+ HL7 Parameter Name                                          Deleted    
+ ------------------                                        -------------
+ N/A
+  
+  
+  
+ HLO Application Registry:
+                                                           New/Modified/
+ HLO Registry Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+  
+ Help Frames Associated:
+                                                           New/Modified/
+ Help Frame Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                            Type                 Deleted
+ -----------                            ----               -------------
+ RCDPE EDI LOCKBOX REPORTS MENU         menu               Modified 
+ RCDPE UNAPPLIED EFT DEP REPORT         run routine        New 
+                                                    
+  
+  
+ Parameter Definitions:
+                                                           New/Modified/
+ Parameter Name                                              Deleted    
+ --------------                                            -------------
+ N/A
+  
+  
+  
+ Parameter Template:
+                                                           New/Modified/
+ Template Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Remote Procedures Associated:
+                                                           New/Modified/
+ Remote Procedure Name                                       Deleted    
+ ---------------------                                     -------------
+ N/A
+  
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+  
+ Templates, Input Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+  
+ Templates, List Associated:
+                                                           New/Modified/
+ Template Name      Type                                     Deleted    
+ -------------      ----                                   -------------
+ N/A
+  
+  
+  
+ Templates, Print Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+  
+ Templates, Sort Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Augusta, GA
+ Charleston, SC
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve the files from 
+ download.vista.domain.ext/. This transmits the files from the first
+ available server. Sites may also elect to retrieve software directly from
+ a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+    Albany:                 domain.ext
+    Hines:                  domain.ext    
+    Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                                 File Name               SFTP Mode
+ -----------------------------------------------------------------------
+ ePayments User Manual (EDI LOCKBOX)   epayments_user_         Binary
+                                       manual_r0317.pdf
+  
+ Deployment, Installation, Back-Out,   prca_4_5_317_ig.pdf     Binary
+  and Rollback Guide (PRCA*4.5*317)
+  
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ To avoid disruptions, this patch should be installed during non-peak
+ hours when there is minimal activity on the system and there are no
+ Accounts Receivable users on the system.
+  
+ Pre-Installation Instructions
+ -----------------------------
+   ******************************************************************
+   *  You should install this patch during non-peak hours, when no  *
+   *  Accounts Receivable users are on the system.                   *
+   ******************************************************************
+  
+ This patch may be installed with users on the system although it is 
+ *strongly* recommended that it be installed during non-peak hours to 
+ minimize potential disruption to users.  This patch should take less 
+ than 5 minutes to install.
+  
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch. 
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     PRCA*4.5*317):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', enter NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', enter NO.
+    
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', enter NO. 
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ 9.  When prompted 'Device: HOME//', respond with the correct device.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+ None
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCDPE8NZ
+    Before:B102784792   After:B111235321  **173,212,208,269,276,283,293,
+                                           298,317**
+Routine Name: RCDPEAA1
+    Before: B79531337   After:B126873645  **298,304,317**
+Routine Name: RCDPESP2
+    Before:B171453792   After:B172938322  **298,304,317**
+Routine Name: RCDPEWL
+    Before: B68499983   After: B75411625  **173,208,269,298,317**
+Routine Name: RCDPEWL0
+    Before:B153865640   After:B221141588  **173,208,252,269,298,317**
+Routine Name: RCDPEWLA
+    Before: B59960871   After: B99700399  **173,208,298,317**
+Routine Name: RCDPEWLD
+    Before: B28210620   After: B86108343  **252,317**
+ 
+Routine list of preceding patches: 304
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 12, 2016
+Completed By:                               Date Completed: MAR 10, 2017
+Released By :                               Date Released : MAR 22, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

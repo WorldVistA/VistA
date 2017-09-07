@@ -1,0 +1,3087 @@
+Released LR*5.2*480 SEQ #386
+Extracted from mail message
+**KIDS**:LR*5.2*480^
+
+**INSTALL NAME**
+LR*5.2*480
+"BLD",9427,0)
+LR*5.2*480^LAB SERVICE^0^3170224^y
+"BLD",9427,1,0)
+^^172^172^3170224^
+"BLD",9427,1,1,0)
+ This patch addresses the following issue:
+"BLD",9427,1,2,0)
+ - Microbiology accession is being removed from the 'Incomplete 
+"BLD",9427,1,3,0)
+ test status report (LRWRKINC)' option when a PRELIMINARY result is
+"BLD",9427,1,4,0)
+ released when using the Universal Interface Microbiology release options.
+"BLD",9427,1,5,0)
+  
+"BLD",9427,1,6,0)
+   
+"BLD",9427,1,7,0)
+  Blood Bank Review:
+"BLD",9427,1,8,0)
+  ==================
+"BLD",9427,1,9,0)
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*480 does not 
+"BLD",9427,1,10,0)
+  alter or modify any software design safeguards or safety critical 
+"BLD",9427,1,11,0)
+  elements functions.
+"BLD",9427,1,12,0)
+   
+"BLD",9427,1,13,0)
+  RISK ANALYSIS: Changes made by patch LR*5.2*480 have no effect on Blood 
+"BLD",9427,1,14,0)
+  Bank software functionality, therefore RISK is none.
+"BLD",9427,1,15,0)
+   
+"BLD",9427,1,16,0)
+  VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+"BLD",9427,1,17,0)
+  made, no specific validation requirements exist as a result of 
+"BLD",9427,1,18,0)
+  installation of this patch.
+"BLD",9427,1,19,0)
+   
+"BLD",9427,1,20,0)
+Remedy Ticket Overview:
+"BLD",9427,1,21,0)
+  ==========================
+"BLD",9427,1,22,0)
+  N/A
+"BLD",9427,1,23,0)
+   
+"BLD",9427,1,24,0)
+New Service Requests (NSR)s):
+"BLD",9427,1,25,0)
+  ==================
+"BLD",9427,1,26,0)
+  N/A
+"BLD",9427,1,27,0)
+   
+"BLD",9427,1,28,0)
+  Participating Test Sites:
+"BLD",9427,1,29,0)
+  =========================
+"BLD",9427,1,30,0)
+ James A. Haley Veterans Hospital
+"BLD",9427,1,31,0)
+ Iowa City VA Healthcare System
+"BLD",9427,1,32,0)
+ Lexington VA Medical Center
+"BLD",9427,1,33,0)
+   
+"BLD",9427,1,34,0)
+ Problem:
+"BLD",9427,1,35,0)
+ --------
+"BLD",9427,1,36,0)
+ When releasing a microbiology preliminary report using the new 
+"BLD",9427,1,37,0)
+ Universal Interface release options the status of the accession was being
+"BLD",9427,1,38,0)
+ set to complete and was then no longer available on the Incomplete Test
+"BLD",9427,1,39,0)
+ Status list report.
+"BLD",9427,1,40,0)
+    
+"BLD",9427,1,41,0)
+ Resolution:
+"BLD",9427,1,42,0)
+ -----------
+"BLD",9427,1,43,0)
+ The patch modifies LRVR0 at ACCEPT+68 and adds the following three lines
+"BLD",9427,1,44,0)
+ of code:
+"BLD",9427,1,45,0)
+         ;
+"BLD",9427,1,46,0)
+         ; If Lab UI interface then prompt user for accession test 
+"BLD",9427,1,47,0)
+ complete date /time in EC3^LRMIEDZ2 call.
+"BLD",9427,1,48,0)
+         I LRINTYPE=1 S LRFIFO=0
+"BLD",9427,1,49,0)
+  
+"BLD",9427,1,50,0)
+        Routine: LRVR0
+"BLD",9427,1,51,0)
+ 
+"BLD",9427,1,52,0)
+ 
+"BLD",9427,1,53,0)
+ Problem: 
+"BLD",9427,1,54,0)
+ --------
+"BLD",9427,1,55,0)
+ When a retransmission of microbiology results are received the accepting 
+"BLD",9427,1,56,0)
+ of the retransmission values was causing the existing
+"BLD",9427,1,57,0)
+ organism, comments and susceptibilities to be deleted. This is expected 
+"BLD",9427,1,58,0)
+ functionality when handling verified microbiology reports
+"BLD",9427,1,59,0)
+ from external reference laboratories.  
+"BLD",9427,1,60,0)
+ 
+"BLD",9427,1,61,0)
+ However when handling result transmission from a Universal Interface 
+"BLD",9427,1,62,0)
+ microbiology instrument the user before the report is
+"BLD",9427,1,63,0)
+ verified can enter additional information that needs to be preserved.  
+"BLD",9427,1,64,0)
+ 
+"BLD",9427,1,65,0)
+ Resolution: 
+"BLD",9427,1,66,0)
+ -----------
+"BLD",9427,1,67,0)
+ The patch modifies the handling of existing results based on the type of 
+"BLD",9427,1,68,0)
+ interface. LEDI types of interfaces will continue to
+"BLD",9427,1,69,0)
+ remove previous information prior to storing new information from the 
+"BLD",9427,1,70,0)
+ reference laboratory. Universal Interfaces type interfaces
+"BLD",9427,1,71,0)
+ will maintain existing information entered by Laboratory or received via 
+"BLD",9427,1,72,0)
+ prior transmissions and merge the new transmission with
+"BLD",9427,1,73,0)
+ the existing data before presenting to lab user for review.  
+"BLD",9427,1,74,0)
+ 
+"BLD",9427,1,75,0)
+        Routine: LRVRMI2A modified labels N9A, N12A, N17 
+"BLD",9427,1,76,0)
+ 
+"BLD",9427,1,77,0)
+        Routine: LRVRMI4A modified labels N3A, N6A, N6B
+"BLD",9427,1,78,0)
+ 
+"BLD",9427,1,79,0)
+   
+"BLD",9427,1,80,0)
+ Software and Documentation Retrieval Instructions:
+"BLD",9427,1,81,0)
+ ---------------------------------------------------- 
+"BLD",9427,1,82,0)
+ Software being released as a Packman message and/or documentation
+"BLD",9427,1,83,0)
+ describing the new functionality introduced by this patch are available.
+"BLD",9427,1,84,0)
+  
+"BLD",9427,1,85,0)
+ The preferred method is to retrieve files from download.vista.domain.ext.
+"BLD",9427,1,86,0)
+ This transmits the files from the first available server. Sites may 
+"BLD",9427,1,87,0)
+ also elect to retrieve files directly from a specific server. 
+"BLD",9427,1,88,0)
+  
+"BLD",9427,1,89,0)
+ Sites may retrieve the software and/or documentation directly using 
+"BLD",9427,1,90,0)
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+"BLD",9427,1,91,0)
+ directory at the following OI Field Offices:
+"BLD",9427,1,92,0)
+    
+"BLD",9427,1,93,0)
+ Albany:                 domain.ext
+"BLD",9427,1,94,0)
+ Hines:                  domain.ext    
+"BLD",9427,1,95,0)
+ Salt Lake City:         domain.ext
+"BLD",9427,1,96,0)
+    
+"BLD",9427,1,97,0)
+ Documentation can also be found on the VA Software Documentation Library 
+"BLD",9427,1,98,0)
+ at: http://www4.domain.ext/vdl/
+"BLD",9427,1,99,0)
+  
+"BLD",9427,1,100,0)
+                                      
+"BLD",9427,1,101,0)
+ File Name                 Contents               Retrieval Format 
+"BLD",9427,1,102,0)
+ ------------------        --------------------   ----------------
+"BLD",9427,1,103,0)
+ LAB_MICRO_INTERFACE_RELEASE_1_0_DOCS.ZIP         binary
+"BLD",9427,1,104,0)
+  
+"BLD",9427,1,105,0)
+ This zip file contains the following documents in both .docx and .pdf
+"BLD",9427,1,106,0)
+    
+"BLD",9427,1,107,0)
+           VLE Micro_Lab_Micro_Interface_Release_1.0_Technical_Manual
+"BLD",9427,1,108,0)
+           VLE Micro_Lab_Micro_Interface_Release_1.0_User_Guide
+"BLD",9427,1,109,0)
+           VLE Micro_Deployment_Installation_Roll Back_Back Out_Guide
+"BLD",9427,1,110,0)
+    
+"BLD",9427,1,111,0)
+  The VistA Documentation Library (VDL) web site will also contain the 
+"BLD",9427,1,112,0)
+  above referenced documents. This website is usually updated within 1-3
+"BLD",9427,1,113,0)
+  days of the patch release date. The VDL web address for Laboratory
+"BLD",9427,1,114,0)
+  Universal Interface user documentation is:
+"BLD",9427,1,115,0)
+  http://www.domain.ext/vdl/application.asp?appid=120
+"BLD",9427,1,116,0)
+  
+"BLD",9427,1,117,0)
+  Pre/Post Installation Overview
+"BLD",9427,1,118,0)
+  ------------------------------
+"BLD",9427,1,119,0)
+  There are no Pre/Post installation routines associated with this 
+"BLD",9427,1,120,0)
+  patch.  
+"BLD",9427,1,121,0)
+  
+"BLD",9427,1,122,0)
+  Pre-Installation Instructions
+"BLD",9427,1,123,0)
+  -----------------------------
+"BLD",9427,1,124,0)
+  This patch may be installed with users on the system although it is
+"BLD",9427,1,125,0)
+  recommended that it be installed during non-peak hours to minimize 
+"BLD",9427,1,126,0)
+  potential disruption to users.  This patch should take less than one  
+"BLD",9427,1,127,0)
+  minute to install.
+"BLD",9427,1,128,0)
+  
+"BLD",9427,1,129,0)
+  NOTE: Kernel patches must be current on the target system to avoid 
+"BLD",9427,1,130,0)
+      problems loading and/or installing this patch.
+"BLD",9427,1,131,0)
+  
+"BLD",9427,1,132,0)
+    
+"BLD",9427,1,133,0)
+     ==================== Installation Instructions ====================
+"BLD",9427,1,134,0)
+   
+"BLD",9427,1,135,0)
+   
+"BLD",9427,1,136,0)
+     1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+"BLD",9427,1,137,0)
+        option will load the KIDS patch onto your system.
+"BLD",9427,1,138,0)
+   
+"BLD",9427,1,139,0)
+     2. The patch has now been loaded into a Transport global on your
+"BLD",9427,1,140,0)
+        system. You now need to use KIDS to install the transport global.
+"BLD",9427,1,141,0)
+   
+"BLD",9427,1,142,0)
+     3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+"BLD",9427,1,143,0)
+        select the 'Installation' menu.
+"BLD",9427,1,144,0)
+   
+"BLD",9427,1,145,0)
+     4. Use the 'Verify Checksum in Transport Global' option and verify
+"BLD",9427,1,146,0)
+        that all routines have the correct checksums.
+"BLD",9427,1,147,0)
+      
+"BLD",9427,1,148,0)
+     5. On the KIDS menu, under the 'Installation' menu, use the following
+"BLD",9427,1,149,0)
+        options:
+"BLD",9427,1,150,0)
+                Print Transport Global
+"BLD",9427,1,151,0)
+                Compare Transport Global to Current System
+"BLD",9427,1,152,0)
+                Backup a Transport Global
+"BLD",9427,1,153,0)
+   
+"BLD",9427,1,154,0)
+        If you wish to preserve a copy of the routines exported in this 
+"BLD",9427,1,155,0)
+        patch prior to installation, you should use the 'Backup a 
+"BLD",9427,1,156,0)
+        Transport Global' option at this time. You may also compare the
+"BLD",9427,1,157,0)
+        routines in your production account to the routines in the patch
+"BLD",9427,1,158,0)
+        by using the 'Compare a Transport Global to Current System'
+"BLD",9427,1,159,0)
+        option.
+"BLD",9427,1,160,0)
+   
+"BLD",9427,1,161,0)
+     6. Use the 'Install Package(s)' option under the 'Installation' menu 
+"BLD",9427,1,162,0)
+        and select the package 'LR*5.2*480.
+"BLD",9427,1,163,0)
+   
+"BLD",9427,1,164,0)
+        When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+"BLD",9427,1,165,0)
+        NO//", respond NO.  
+"BLD",9427,1,166,0)
+   
+"BLD",9427,1,167,0)
+        When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+"BLD",9427,1,168,0)
+        and Protocols? NO//", respond NO.
+"BLD",9427,1,169,0)
+   
+"BLD",9427,1,170,0)
+  Post-Installation Instructions
+"BLD",9427,1,171,0)
+  ------------------------------
+"BLD",9427,1,172,0)
+  There are no post-installation tasks.
+"BLD",9427,4,0)
+^9.64PA^^
+"BLD",9427,6)
+2^
+"BLD",9427,6.3)
+7
+"BLD",9427,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9427,"KRN",.4,0)
+.4
+"BLD",9427,"KRN",.401,0)
+.401
+"BLD",9427,"KRN",.402,0)
+.402
+"BLD",9427,"KRN",.403,0)
+.403
+"BLD",9427,"KRN",.5,0)
+.5
+"BLD",9427,"KRN",.84,0)
+.84
+"BLD",9427,"KRN",3.6,0)
+3.6
+"BLD",9427,"KRN",3.8,0)
+3.8
+"BLD",9427,"KRN",9.2,0)
+9.2
+"BLD",9427,"KRN",9.8,0)
+9.8
+"BLD",9427,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",9427,"KRN",9.8,"NM",1,0)
+LRVR0^^0^B159091512
+"BLD",9427,"KRN",9.8,"NM",2,0)
+LRVRMI4A^^0^B108857214
+"BLD",9427,"KRN",9.8,"NM",3,0)
+LRVRMI2A^^0^B92413748
+"BLD",9427,"KRN",9.8,"NM","B","LRVR0",1)
+ 
+"BLD",9427,"KRN",9.8,"NM","B","LRVRMI2A",3)
+ 
+"BLD",9427,"KRN",9.8,"NM","B","LRVRMI4A",2)
+ 
+"BLD",9427,"KRN",19,0)
+19
+"BLD",9427,"KRN",19.1,0)
+19.1
+"BLD",9427,"KRN",101,0)
+101
+"BLD",9427,"KRN",409.61,0)
+409.61
+"BLD",9427,"KRN",771,0)
+771
+"BLD",9427,"KRN",779.2,0)
+779.2
+"BLD",9427,"KRN",870,0)
+870
+"BLD",9427,"KRN",8989.51,0)
+8989.51
+"BLD",9427,"KRN",8989.52,0)
+8989.52
+"BLD",9427,"KRN",8994,0)
+8994
+"BLD",9427,"KRN","B",.4,.4)
+ 
+"BLD",9427,"KRN","B",.401,.401)
+ 
+"BLD",9427,"KRN","B",.402,.402)
+ 
+"BLD",9427,"KRN","B",.403,.403)
+ 
+"BLD",9427,"KRN","B",.5,.5)
+ 
+"BLD",9427,"KRN","B",.84,.84)
+ 
+"BLD",9427,"KRN","B",3.6,3.6)
+ 
+"BLD",9427,"KRN","B",3.8,3.8)
+ 
+"BLD",9427,"KRN","B",9.2,9.2)
+ 
+"BLD",9427,"KRN","B",9.8,9.8)
+ 
+"BLD",9427,"KRN","B",19,19)
+ 
+"BLD",9427,"KRN","B",19.1,19.1)
+ 
+"BLD",9427,"KRN","B",101,101)
+ 
+"BLD",9427,"KRN","B",409.61,409.61)
+ 
+"BLD",9427,"KRN","B",771,771)
+ 
+"BLD",9427,"KRN","B",779.2,779.2)
+ 
+"BLD",9427,"KRN","B",870,870)
+ 
+"BLD",9427,"KRN","B",8989.51,8989.51)
+ 
+"BLD",9427,"KRN","B",8989.52,8989.52)
+ 
+"BLD",9427,"KRN","B",8994,8994)
+ 
+"BLD",9427,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",9427,"QUES",0)
+^9.62^^
+"BLD",9427,"REQB",0)
+^9.611^1^1
+"BLD",9427,"REQB",1,0)
+LR*5.2*474^2
+"BLD",9427,"REQB","B","LR*5.2*474",1)
+ 
+"MBREQ")
+0
+"PKG",26,-1)
+1^1
+"PKG",26,0)
+LAB SERVICE^LR^CORE LAB SYSTEM
+"PKG",26,20,0)
+^9.402P^1^1
+"PKG",26,20,1,0)
+2^^LRXDRPT
+"PKG",26,20,1,1)
+ 
+"PKG",26,20,"B",2,1)
+ 
+"PKG",26,22,0)
+^9.49I^1^1
+"PKG",26,22,1,0)
+5.2^2940927^2950611
+"PKG",26,22,1,"PAH",1,0)
+480^3170224^520736434
+"PKG",26,22,1,"PAH",1,1,0)
+^^172^172^3170224
+"PKG",26,22,1,"PAH",1,1,1,0)
+ This patch addresses the following issue:
+"PKG",26,22,1,"PAH",1,1,2,0)
+ - Microbiology accession is being removed from the 'Incomplete 
+"PKG",26,22,1,"PAH",1,1,3,0)
+ test status report (LRWRKINC)' option when a PRELIMINARY result is
+"PKG",26,22,1,"PAH",1,1,4,0)
+ released when using the Universal Interface Microbiology release options.
+"PKG",26,22,1,"PAH",1,1,5,0)
+  
+"PKG",26,22,1,"PAH",1,1,6,0)
+   
+"PKG",26,22,1,"PAH",1,1,7,0)
+  Blood Bank Review:
+"PKG",26,22,1,"PAH",1,1,8,0)
+  ==================
+"PKG",26,22,1,"PAH",1,1,9,0)
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*480 does not 
+"PKG",26,22,1,"PAH",1,1,10,0)
+  alter or modify any software design safeguards or safety critical 
+"PKG",26,22,1,"PAH",1,1,11,0)
+  elements functions.
+"PKG",26,22,1,"PAH",1,1,12,0)
+   
+"PKG",26,22,1,"PAH",1,1,13,0)
+  RISK ANALYSIS: Changes made by patch LR*5.2*480 have no effect on Blood 
+"PKG",26,22,1,"PAH",1,1,14,0)
+  Bank software functionality, therefore RISK is none.
+"PKG",26,22,1,"PAH",1,1,15,0)
+   
+"PKG",26,22,1,"PAH",1,1,16,0)
+  VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+"PKG",26,22,1,"PAH",1,1,17,0)
+  made, no specific validation requirements exist as a result of 
+"PKG",26,22,1,"PAH",1,1,18,0)
+  installation of this patch.
+"PKG",26,22,1,"PAH",1,1,19,0)
+   
+"PKG",26,22,1,"PAH",1,1,20,0)
+Remedy Ticket Overview:
+"PKG",26,22,1,"PAH",1,1,21,0)
+  ==========================
+"PKG",26,22,1,"PAH",1,1,22,0)
+  N/A
+"PKG",26,22,1,"PAH",1,1,23,0)
+   
+"PKG",26,22,1,"PAH",1,1,24,0)
+New Service Requests (NSR)s):
+"PKG",26,22,1,"PAH",1,1,25,0)
+  ==================
+"PKG",26,22,1,"PAH",1,1,26,0)
+  N/A
+"PKG",26,22,1,"PAH",1,1,27,0)
+   
+"PKG",26,22,1,"PAH",1,1,28,0)
+  Participating Test Sites:
+"PKG",26,22,1,"PAH",1,1,29,0)
+  =========================
+"PKG",26,22,1,"PAH",1,1,30,0)
+ James A. Haley Veterans Hospital
+"PKG",26,22,1,"PAH",1,1,31,0)
+ Iowa City VA Healthcare System
+"PKG",26,22,1,"PAH",1,1,32,0)
+ Lexington VA Medical Center
+"PKG",26,22,1,"PAH",1,1,33,0)
+   
+"PKG",26,22,1,"PAH",1,1,34,0)
+ Problem:
+"PKG",26,22,1,"PAH",1,1,35,0)
+ --------
+"PKG",26,22,1,"PAH",1,1,36,0)
+ When releasing a microbiology preliminary report using the new 
+"PKG",26,22,1,"PAH",1,1,37,0)
+ Universal Interface release options the status of the accession was being
+"PKG",26,22,1,"PAH",1,1,38,0)
+ set to complete and was then no longer available on the Incomplete Test
+"PKG",26,22,1,"PAH",1,1,39,0)
+ Status list report.
+"PKG",26,22,1,"PAH",1,1,40,0)
+    
+"PKG",26,22,1,"PAH",1,1,41,0)
+ Resolution:
+"PKG",26,22,1,"PAH",1,1,42,0)
+ -----------
+"PKG",26,22,1,"PAH",1,1,43,0)
+ The patch modifies LRVR0 at ACCEPT+68 and adds the following three lines
+"PKG",26,22,1,"PAH",1,1,44,0)
+ of code:
+"PKG",26,22,1,"PAH",1,1,45,0)
+         ;
+"PKG",26,22,1,"PAH",1,1,46,0)
+         ; If Lab UI interface then prompt user for accession test 
+"PKG",26,22,1,"PAH",1,1,47,0)
+ complete date /time in EC3^LRMIEDZ2 call.
+"PKG",26,22,1,"PAH",1,1,48,0)
+         I LRINTYPE=1 S LRFIFO=0
+"PKG",26,22,1,"PAH",1,1,49,0)
+  
+"PKG",26,22,1,"PAH",1,1,50,0)
+        Routine: LRVR0
+"PKG",26,22,1,"PAH",1,1,51,0)
+ 
+"PKG",26,22,1,"PAH",1,1,52,0)
+ 
+"PKG",26,22,1,"PAH",1,1,53,0)
+ Problem: 
+"PKG",26,22,1,"PAH",1,1,54,0)
+ --------
+"PKG",26,22,1,"PAH",1,1,55,0)
+ When a retransmission of microbiology results are received the accepting 
+"PKG",26,22,1,"PAH",1,1,56,0)
+ of the retransmission values was causing the existing
+"PKG",26,22,1,"PAH",1,1,57,0)
+ organism, comments and susceptibilities to be deleted. This is expected 
+"PKG",26,22,1,"PAH",1,1,58,0)
+ functionality when handling verified microbiology reports
+"PKG",26,22,1,"PAH",1,1,59,0)
+ from external reference laboratories.  
+"PKG",26,22,1,"PAH",1,1,60,0)
+ 
+"PKG",26,22,1,"PAH",1,1,61,0)
+ However when handling result transmission from a Universal Interface 
+"PKG",26,22,1,"PAH",1,1,62,0)
+ microbiology instrument the user before the report is
+"PKG",26,22,1,"PAH",1,1,63,0)
+ verified can enter additional information that needs to be preserved.  
+"PKG",26,22,1,"PAH",1,1,64,0)
+ 
+"PKG",26,22,1,"PAH",1,1,65,0)
+ Resolution: 
+"PKG",26,22,1,"PAH",1,1,66,0)
+ -----------
+"PKG",26,22,1,"PAH",1,1,67,0)
+ The patch modifies the handling of existing results based on the type of 
+"PKG",26,22,1,"PAH",1,1,68,0)
+ interface. LEDI types of interfaces will continue to
+"PKG",26,22,1,"PAH",1,1,69,0)
+ remove previous information prior to storing new information from the 
+"PKG",26,22,1,"PAH",1,1,70,0)
+ reference laboratory. Universal Interfaces type interfaces
+"PKG",26,22,1,"PAH",1,1,71,0)
+ will maintain existing information entered by Laboratory or received via 
+"PKG",26,22,1,"PAH",1,1,72,0)
+ prior transmissions and merge the new transmission with
+"PKG",26,22,1,"PAH",1,1,73,0)
+ the existing data before presenting to lab user for review.  
+"PKG",26,22,1,"PAH",1,1,74,0)
+ 
+"PKG",26,22,1,"PAH",1,1,75,0)
+        Routine: LRVRMI2A modified labels N9A, N12A, N17 
+"PKG",26,22,1,"PAH",1,1,76,0)
+ 
+"PKG",26,22,1,"PAH",1,1,77,0)
+        Routine: LRVRMI4A modified labels N3A, N6A, N6B
+"PKG",26,22,1,"PAH",1,1,78,0)
+ 
+"PKG",26,22,1,"PAH",1,1,79,0)
+   
+"PKG",26,22,1,"PAH",1,1,80,0)
+ Software and Documentation Retrieval Instructions:
+"PKG",26,22,1,"PAH",1,1,81,0)
+ ---------------------------------------------------- 
+"PKG",26,22,1,"PAH",1,1,82,0)
+ Software being released as a Packman message and/or documentation
+"PKG",26,22,1,"PAH",1,1,83,0)
+ describing the new functionality introduced by this patch are available.
+"PKG",26,22,1,"PAH",1,1,84,0)
+  
+"PKG",26,22,1,"PAH",1,1,85,0)
+ The preferred method is to retrieve files from download.vista.domain.ext.
+"PKG",26,22,1,"PAH",1,1,86,0)
+ This transmits the files from the first available server. Sites may 
+"PKG",26,22,1,"PAH",1,1,87,0)
+ also elect to retrieve files directly from a specific server. 
+"PKG",26,22,1,"PAH",1,1,88,0)
+  
+"PKG",26,22,1,"PAH",1,1,89,0)
+ Sites may retrieve the software and/or documentation directly using 
+"PKG",26,22,1,"PAH",1,1,90,0)
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+"PKG",26,22,1,"PAH",1,1,91,0)
+ directory at the following OI Field Offices:
+"PKG",26,22,1,"PAH",1,1,92,0)
+    
+"PKG",26,22,1,"PAH",1,1,93,0)
+ Albany:                 domain.ext
+"PKG",26,22,1,"PAH",1,1,94,0)
+ Hines:                  domain.ext    
+"PKG",26,22,1,"PAH",1,1,95,0)
+ Salt Lake City:         domain.ext
+"PKG",26,22,1,"PAH",1,1,96,0)
+    
+"PKG",26,22,1,"PAH",1,1,97,0)
+ Documentation can also be found on the VA Software Documentation Library 
+"PKG",26,22,1,"PAH",1,1,98,0)
+ at: http://www4.domain.ext/vdl/
+"PKG",26,22,1,"PAH",1,1,99,0)
+  
+"PKG",26,22,1,"PAH",1,1,100,0)
+                                      
+"PKG",26,22,1,"PAH",1,1,101,0)
+ File Name                 Contents               Retrieval Format 
+"PKG",26,22,1,"PAH",1,1,102,0)
+ ------------------        --------------------   ----------------
+"PKG",26,22,1,"PAH",1,1,103,0)
+ LAB_MICRO_INTERFACE_RELEASE_1_0_DOCS.ZIP         binary
+"PKG",26,22,1,"PAH",1,1,104,0)
+  
+"PKG",26,22,1,"PAH",1,1,105,0)
+ This zip file contains the following documents in both .docx and .pdf
+"PKG",26,22,1,"PAH",1,1,106,0)
+    
+"PKG",26,22,1,"PAH",1,1,107,0)
+           VLE Micro_Lab_Micro_Interface_Release_1.0_Technical_Manual
+"PKG",26,22,1,"PAH",1,1,108,0)
+           VLE Micro_Lab_Micro_Interface_Release_1.0_User_Guide
+"PKG",26,22,1,"PAH",1,1,109,0)
+           VLE Micro_Deployment_Installation_Roll Back_Back Out_Guide
+"PKG",26,22,1,"PAH",1,1,110,0)
+    
+"PKG",26,22,1,"PAH",1,1,111,0)
+  The VistA Documentation Library (VDL) web site will also contain the 
+"PKG",26,22,1,"PAH",1,1,112,0)
+  above referenced documents. This website is usually updated within 1-3
+"PKG",26,22,1,"PAH",1,1,113,0)
+  days of the patch release date. The VDL web address for Laboratory
+"PKG",26,22,1,"PAH",1,1,114,0)
+  Universal Interface user documentation is:
+"PKG",26,22,1,"PAH",1,1,115,0)
+  http://www.domain.ext/vdl/application.asp?appid=120
+"PKG",26,22,1,"PAH",1,1,116,0)
+  
+"PKG",26,22,1,"PAH",1,1,117,0)
+  Pre/Post Installation Overview
+"PKG",26,22,1,"PAH",1,1,118,0)
+  ------------------------------
+"PKG",26,22,1,"PAH",1,1,119,0)
+  There are no Pre/Post installation routines associated with this 
+"PKG",26,22,1,"PAH",1,1,120,0)
+  patch.  
+"PKG",26,22,1,"PAH",1,1,121,0)
+  
+"PKG",26,22,1,"PAH",1,1,122,0)
+  Pre-Installation Instructions
+"PKG",26,22,1,"PAH",1,1,123,0)
+  -----------------------------
+"PKG",26,22,1,"PAH",1,1,124,0)
+  This patch may be installed with users on the system although it is
+"PKG",26,22,1,"PAH",1,1,125,0)
+  recommended that it be installed during non-peak hours to minimize 
+"PKG",26,22,1,"PAH",1,1,126,0)
+  potential disruption to users.  This patch should take less than one  
+"PKG",26,22,1,"PAH",1,1,127,0)
+  minute to install.
+"PKG",26,22,1,"PAH",1,1,128,0)
+  
+"PKG",26,22,1,"PAH",1,1,129,0)
+  NOTE: Kernel patches must be current on the target system to avoid 
+"PKG",26,22,1,"PAH",1,1,130,0)
+      problems loading and/or installing this patch.
+"PKG",26,22,1,"PAH",1,1,131,0)
+  
+"PKG",26,22,1,"PAH",1,1,132,0)
+    
+"PKG",26,22,1,"PAH",1,1,133,0)
+     ==================== Installation Instructions ====================
+"PKG",26,22,1,"PAH",1,1,134,0)
+   
+"PKG",26,22,1,"PAH",1,1,135,0)
+   
+"PKG",26,22,1,"PAH",1,1,136,0)
+     1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+"PKG",26,22,1,"PAH",1,1,137,0)
+        option will load the KIDS patch onto your system.
+"PKG",26,22,1,"PAH",1,1,138,0)
+   
+"PKG",26,22,1,"PAH",1,1,139,0)
+     2. The patch has now been loaded into a Transport global on your
+"PKG",26,22,1,"PAH",1,1,140,0)
+        system. You now need to use KIDS to install the transport global.
+"PKG",26,22,1,"PAH",1,1,141,0)
+   
+"PKG",26,22,1,"PAH",1,1,142,0)
+     3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+"PKG",26,22,1,"PAH",1,1,143,0)
+        select the 'Installation' menu.
+"PKG",26,22,1,"PAH",1,1,144,0)
+   
+"PKG",26,22,1,"PAH",1,1,145,0)
+     4. Use the 'Verify Checksum in Transport Global' option and verify
+"PKG",26,22,1,"PAH",1,1,146,0)
+        that all routines have the correct checksums.
+"PKG",26,22,1,"PAH",1,1,147,0)
+      
+"PKG",26,22,1,"PAH",1,1,148,0)
+     5. On the KIDS menu, under the 'Installation' menu, use the following
+"PKG",26,22,1,"PAH",1,1,149,0)
+        options:
+"PKG",26,22,1,"PAH",1,1,150,0)
+                Print Transport Global
+"PKG",26,22,1,"PAH",1,1,151,0)
+                Compare Transport Global to Current System
+"PKG",26,22,1,"PAH",1,1,152,0)
+                Backup a Transport Global
+"PKG",26,22,1,"PAH",1,1,153,0)
+   
+"PKG",26,22,1,"PAH",1,1,154,0)
+        If you wish to preserve a copy of the routines exported in this 
+"PKG",26,22,1,"PAH",1,1,155,0)
+        patch prior to installation, you should use the 'Backup a 
+"PKG",26,22,1,"PAH",1,1,156,0)
+        Transport Global' option at this time. You may also compare the
+"PKG",26,22,1,"PAH",1,1,157,0)
+        routines in your production account to the routines in the patch
+"PKG",26,22,1,"PAH",1,1,158,0)
+        by using the 'Compare a Transport Global to Current System'
+"PKG",26,22,1,"PAH",1,1,159,0)
+        option.
+"PKG",26,22,1,"PAH",1,1,160,0)
+   
+"PKG",26,22,1,"PAH",1,1,161,0)
+     6. Use the 'Install Package(s)' option under the 'Installation' menu 
+"PKG",26,22,1,"PAH",1,1,162,0)
+        and select the package 'LR*5.2*480.
+"PKG",26,22,1,"PAH",1,1,163,0)
+   
+"PKG",26,22,1,"PAH",1,1,164,0)
+        When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+"PKG",26,22,1,"PAH",1,1,165,0)
+        NO//", respond NO.  
+"PKG",26,22,1,"PAH",1,1,166,0)
+   
+"PKG",26,22,1,"PAH",1,1,167,0)
+        When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+"PKG",26,22,1,"PAH",1,1,168,0)
+        and Protocols? NO//", respond NO.
+"PKG",26,22,1,"PAH",1,1,169,0)
+   
+"PKG",26,22,1,"PAH",1,1,170,0)
+  Post-Installation Instructions
+"PKG",26,22,1,"PAH",1,1,171,0)
+  ------------------------------
+"PKG",26,22,1,"PAH",1,1,172,0)
+  There are no post-installation tasks.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+ 
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","LRVR0")
+0^1^B159091512^B154172378
+"RTN","LRVR0",1,0)
+LRVR0 ;DALOI/STAFF - LEDI MI/AP Data Verification ;01/18/17  09:31
+"RTN","LRVR0",2,0)
+ ;;5.2;LAB SERVICE;**350,427,474,480**;Sep 27, 1994;Build 7
+"RTN","LRVR0",3,0)
+ ;
+"RTN","LRVR0",4,0)
+ ; LEDI MI/AP Auto-instrument verification
+"RTN","LRVR0",5,0)
+ ; Called from LRVR
+"RTN","LRVR0",6,0)
+ Q
+"RTN","LRVR0",7,0)
+ ;
+"RTN","LRVR0",8,0)
+ ;
+"RTN","LRVR0",9,0)
+EN ;
+"RTN","LRVR0",10,0)
+ N EAMODE,LA7X,LRANYAA,LRAO,LRBG0,LRCFL,LRCMNT,LRDINST,LREND,LRFIFO,LRFLAG,LRINTYPE,LRLEDI,LRLLT,LRMIDEF,LRMIOTH
+"RTN","LRVR0",11,0)
+ N LRNOP,LRONESPC,LRONETST,LRPG,LRPTP,LRSAME,LRSB,LRSS,LRTM60,LRTX,LRUID,LRVT,LRWRDVEW,LRX,X,Y
+"RTN","LRVR0",12,0)
+ ;
+"RTN","LRVR0",13,0)
+ S LRSS=$P($G(^LRO(68,+$G(LRAA),0)),U,2) Q:LRSS=""
+"RTN","LRVR0",14,0)
+ I LRSS'?1(1"MI",1"SP",1"CY",1"EM") Q
+"RTN","LRVR0",15,0)
+ ;
+"RTN","LRVR0",16,0)
+ ; If micro accession then set flag to indicate "result entry (RE)".
+"RTN","LRVR0",17,0)
+ I LRSS="MI" S LRVT="RE"
+"RTN","LRVR0",18,0)
+ ;
+"RTN","LRVR0",19,0)
+ S LRDINST=+$$KSP^XUPARAM("INST")
+"RTN","LRVR0",20,0)
+ S LRLEDI=1,LRCFL="",EAMODE=1,LRWRDVEW=1
+"RTN","LRVR0",21,0)
+ S LRX=$S(+$P($G(^LAB(69.9,1,0)),U,7):+$P(^(0),U,7),1:1)
+"RTN","LRVR0",22,0)
+ S LRANYAA=+$P($G(^LRO(68.2,LRLL,10,LRPROF,0)),"^",3)
+"RTN","LRVR0",23,0)
+ I $G(LRVBY)=1 D ACC
+"RTN","LRVR0",24,0)
+ I $G(LRVBY)=2 S LRUID="" D UID
+"RTN","LRVR0",25,0)
+ D CLEAN
+"RTN","LRVR0",26,0)
+ Q
+"RTN","LRVR0",27,0)
+ ;
+"RTN","LRVR0",28,0)
+ ;
+"RTN","LRVR0",29,0)
+UID ;UID driven look-up
+"RTN","LRVR0",30,0)
+ N DIR,DIRUT,DTOUT,DUOUT,X,Y
+"RTN","LRVR0",31,0)
+ ;
+"RTN","LRVR0",32,0)
+ F  D  Q:$G(LREND)
+"RTN","LRVR0",33,0)
+ . N LRMULTSQ
+"RTN","LRVR0",34,0)
+ . I $G(IOF)'="" W @IOF
+"RTN","LRVR0",35,0)
+ . K C5,DIC,DIR,DIRUT,DTOUT,DUOUT,LRAB,LRDEL,LRDL,LRFP,LRLDT,LRNG,LRNM,LRNOP,LRSET,LRTEST,LRVER,T,X,Y,Z
+"RTN","LRVR0",36,0)
+ . S X=DUZ D DUZ^LRX S LRTEC=LRUSI
+"RTN","LRVR0",37,0)
+ . D WLN^LRVRA I $G(LRNOP) D NEXT^LRVRA Q
+"RTN","LRVR0",38,0)
+ . ;
+"RTN","LRVR0",39,0)
+ . F  Q:$G(LRNOP)  D
+"RTN","LRVR0",40,0)
+ . . N LRSEQCNT
+"RTN","LRVR0",41,0)
+ . . D ISQN
+"RTN","LRVR0",42,0)
+ . . I $G(LRSEQCNT)>1 S LRMULTSQ=1
+"RTN","LRVR0",43,0)
+ . . I $G(LRNOP) Q
+"RTN","LRVR0",44,0)
+ . . D ACCSET
+"RTN","LRVR0",45,0)
+ . . I $G(LRNOP) Q
+"RTN","LRVR0",46,0)
+ . . I "SPCYEM"[LRSS D ^LRVRAP4
+"RTN","LRVR0",47,0)
+ . . I LRSS="MI" D PROC,ACCEPT
+"RTN","LRVR0",48,0)
+ . . I $G(LRNOP) Q
+"RTN","LRVR0",49,0)
+ . . I $G(LRSEQCNT)<2 S LRNOP=1 Q
+"RTN","LRVR0",50,0)
+ . . I $G(IOF)'="" W @IOF
+"RTN","LRVR0",51,0)
+ . . W !,PNM,?30,SSN,"  Age: ",AGE(2)
+"RTN","LRVR0",52,0)
+ . . W !,"ORDER #: ",LRCEN,"    ",LRACC,"    ["_LRUID,"]"
+"RTN","LRVR0",53,0)
+ . . W !
+"RTN","LRVR0",54,0)
+ . . S (ISQN,LRISQN)=0
+"RTN","LRVR0",55,0)
+ . ;
+"RTN","LRVR0",56,0)
+ . D UNLOCK,NEXT^LRVRA
+"RTN","LRVR0",57,0)
+ D CLEAN
+"RTN","LRVR0",58,0)
+ Q
+"RTN","LRVR0",59,0)
+ ;
+"RTN","LRVR0",60,0)
+ ;
+"RTN","LRVR0",61,0)
+ERR1 ;Look-up Error
+"RTN","LRVR0",62,0)
+ W !,"No data for "_LRUID_" in file"
+"RTN","LRVR0",63,0)
+ Q
+"RTN","LRVR0",64,0)
+ ;
+"RTN","LRVR0",65,0)
+ ;
+"RTN","LRVR0",66,0)
+CLEAN ;
+"RTN","LRVR0",67,0)
+ ;
+"RTN","LRVR0",68,0)
+ ; Task of background jobs for workload and HL7 message processing
+"RTN","LRVR0",69,0)
+ D ^LRCAPV2
+"RTN","LRVR0",70,0)
+ ;
+"RTN","LRVR0",71,0)
+ K ^TMP("LRMI",$J)
+"RTN","LRVR0",72,0)
+ K AGE,DFN,I,LRACC,LRCDT,DIRUT
+"RTN","LRVR0",73,0)
+ K LRCEN,LRDFN,LRDPF,LRNOP,LRLOCK,LRPUID,LRISQN,LRODT,LROU3,LRPROF
+"RTN","LRVR0",74,0)
+ K LRSN,LRSTATUS,LRTEC,LRUSI,LRVBY,PNM,SSN,X,Y
+"RTN","LRVR0",75,0)
+ K ZTRTN,ZTIO,ZTDTH,ZTDESC
+"RTN","LRVR0",76,0)
+ D ^LRVRKIL
+"RTN","LRVR0",77,0)
+ Q
+"RTN","LRVR0",78,0)
+ ;
+"RTN","LRVR0",79,0)
+ ;
+"RTN","LRVR0",80,0)
+ACC ; Accession number look-up
+"RTN","LRVR0",81,0)
+ D ADATE^LRWU
+"RTN","LRVR0",82,0)
+ I LRAD<1 S LRNOP=1 Q
+"RTN","LRVR0",83,0)
+ S LRAN=0
+"RTN","LRVR0",84,0)
+ F  D  Q:$G(LRDBUG,$G(LREND))
+"RTN","LRVR0",85,0)
+ . N LRMULTSQ
+"RTN","LRVR0",86,0)
+ . I $G(IOF)'="" W @IOF
+"RTN","LRVR0",87,0)
+ . K DIR,DIC,Y,LRNOP
+"RTN","LRVR0",88,0)
+ . S LRAN=$O(^LAH(LRLL,1,"C",LRAN)) I 'LRAN D ACCMSG Q
+"RTN","LRVR0",89,0)
+ . S Y=LRAN
+"RTN","LRVR0",90,0)
+ . S LRISQN=$O(^LAH(LRLL,1,"C",LRAN,0)) I 'LRISQN D ACCMSG Q
+"RTN","LRVR0",91,0)
+ . I '$O(^LAH(LRLL,1,LRISQN,0)) D ACCMSG Q
+"RTN","LRVR0",92,0)
+ . S DIR(0)="FO^1:10",DIR("A")="Enter Accession number part",DIR("?")="^D LW^LRVR"
+"RTN","LRVR0",93,0)
+ . S DIR("S")="I $O(^LAH(LRLL,1,""C"","_Y_",0)"
+"RTN","LRVR0",94,0)
+ . I $G(LRAN) S DIR("B")=LRAN
+"RTN","LRVR0",95,0)
+ . D ^DIR
+"RTN","LRVR0",96,0)
+ . I $D(DIRUT) D STOP^LRVR S LRNOP=1 Q
+"RTN","LRVR0",97,0)
+ . S LRAN=+Y I Y<1 D ACCMSG Q
+"RTN","LRVR0",98,0)
+ . ;
+"RTN","LRVR0",99,0)
+ . F  Q:$G(LRNOP)  D
+"RTN","LRVR0",100,0)
+ . . N LRSEQCNT
+"RTN","LRVR0",101,0)
+ . . D ISQN
+"RTN","LRVR0",102,0)
+ . . I $G(LRSEQCNT)>1 S LRMULTSQ=1
+"RTN","LRVR0",103,0)
+ . . I $G(LRNOP) Q
+"RTN","LRVR0",104,0)
+ . . D ACCSET
+"RTN","LRVR0",105,0)
+ . . S LRTM60=$$LRTM60^LRVR(LRCDT)
+"RTN","LRVR0",106,0)
+ . . I $G(LRNOP) Q
+"RTN","LRVR0",107,0)
+ . . I "SPCYEM"[LRSS D ^LRVRAP4
+"RTN","LRVR0",108,0)
+ . . I LRSS="MI" D PROC,ACCEPT
+"RTN","LRVR0",109,0)
+ . . I $G(LRNOP) Q
+"RTN","LRVR0",110,0)
+ . . I $G(LRSEQCNT)<2 S LRNOP=1 Q
+"RTN","LRVR0",111,0)
+ . . I $G(IOF)'="" W @IOF
+"RTN","LRVR0",112,0)
+ . . S (ISQN,LRISQN)=0
+"RTN","LRVR0",113,0)
+ . D UNLOCK
+"RTN","LRVR0",114,0)
+ ;
+"RTN","LRVR0",115,0)
+ D CLEAN
+"RTN","LRVR0",116,0)
+ Q
+"RTN","LRVR0",117,0)
+ ;
+"RTN","LRVR0",118,0)
+ ;
+"RTN","LRVR0",119,0)
+ACCMSG ;
+"RTN","LRVR0",120,0)
+ W !,"  No accession available for this Load/Worklist",!
+"RTN","LRVR0",121,0)
+ D STOP^LRVR S LRNOP=1
+"RTN","LRVR0",122,0)
+ Q
+"RTN","LRVR0",123,0)
+ ;
+"RTN","LRVR0",124,0)
+ ;
+"RTN","LRVR0",125,0)
+PROC ;Process the entry from LAH(LRLL
+"RTN","LRVR0",126,0)
+ Q:$$LEDIERR^LRVRMI0(LRLL,LRISQN,0,1)
+"RTN","LRVR0",127,0)
+ ;
+"RTN","LRVR0",128,0)
+ ; Set MI specific variables
+"RTN","LRVR0",129,0)
+ S LRBG0=^LR(LRDFN,"MI",LRIDT,0),LRSSC=$P(LRBG0,U,5)_U_$P(LRBG0,U,11),LRFIFO=1
+"RTN","LRVR0",130,0)
+ ;
+"RTN","LRVR0",131,0)
+ D EN^LRVRMI1
+"RTN","LRVR0",132,0)
+ Q
+"RTN","LRVR0",133,0)
+ ;
+"RTN","LRVR0",134,0)
+ ;
+"RTN","LRVR0",135,0)
+ACCSET ;Set up accession variables
+"RTN","LRVR0",136,0)
+ N DA,DIC,DIR,DIRUT,DTOUT,DUOUT,LRCNT,LRLAHD,LRI,LRNODE
+"RTN","LRVR0",137,0)
+ K LRERR
+"RTN","LRVR0",138,0)
+ S (LRLOCK,LRNOP)=0,LRLAHD=$G(^LAH(LRLL,1,LRISQN,0))
+"RTN","LRVR0",139,0)
+ I LRLAHD="" D  Q
+"RTN","LRVR0",140,0)
+ . W !,"^LAH("_LRLL_",1,"_LRISQN_",0)  Global is corrupt"
+"RTN","LRVR0",141,0)
+ . D ZAP S LRNOP=1
+"RTN","LRVR0",142,0)
+ ;
+"RTN","LRVR0",143,0)
+ S LRAA=$P(LRLAHD,U,3)
+"RTN","LRVR0",144,0)
+ I $P(^LRO(68,LRAA,0),U,2)'=LRSS  W !,"Not a "_LRSS_" Area - Abort",! S LRNOP=1 Q
+"RTN","LRVR0",145,0)
+ S LRAN=$P(LRLAHD,U,5),LRAD=$P(LRLAHD,U,4)
+"RTN","LRVR0",146,0)
+ ;
+"RTN","LRVR0",147,0)
+ I LRAA=""!(LRAD="")!(LRAN="") D  Q
+"RTN","LRVR0",148,0)
+ . W !,"^LAH("_LRLL_",1,"_LRISQN_",0)  Global is corrupt"
+"RTN","LRVR0",149,0)
+ . D ZAP S LRNOP=1
+"RTN","LRVR0",150,0)
+ I '$D(^LRO(68,LRAA,1,LRAD,1,LRAN,0)) D  Q
+"RTN","LRVR0",151,0)
+ . W !,"Accession does not exist in ACCESSION file (#68)"
+"RTN","LRVR0",152,0)
+ . D ZAP S LRNOP=1
+"RTN","LRVR0",153,0)
+ ;
+"RTN","LRVR0",154,0)
+ S LRDFN=+^LRO(68,LRAA,1,LRAD,1,LRAN,0),LRCEN=$S($D(^(.1)):^(.1),1:0)
+"RTN","LRVR0",155,0)
+ S LRACC=$G(^LRO(68,LRAA,1,LRAD,1,LRAN,.2)),LRCDT=$P($G(^(3)),U)
+"RTN","LRVR0",156,0)
+ S LRODT=$S($P(^(0),U,4):$P(^(0),U,4),1:$P(^(0),U,3)),LRSN=$P(^(0),U,5)
+"RTN","LRVR0",157,0)
+ S LRORU3=$G(^LRO(68,LRAA,1,LRAD,1,LRAN,.3)),LRIDT=$P(^(3),U,5)
+"RTN","LRVR0",158,0)
+ S LRUID=$P(LRORU3,U),LRTS=""
+"RTN","LRVR0",159,0)
+ ;
+"RTN","LRVR0",160,0)
+ S LRI=0
+"RTN","LRVR0",161,0)
+ F  S LRI=$O(^LRO(68,LRAA,1,LRAD,1,LRAN,4,LRI)) Q:LRI<1!$G(LRTS)  S LRNODE=^(LRI,0) I $P(LRNODE,U,2)<50 S LRTS=+LRNODE
+"RTN","LRVR0",162,0)
+ S LRDPF=$P(^LR(LRDFN,0),U,2),DFN=$P(^(0),U,3)
+"RTN","LRVR0",163,0)
+ D PT^LRX
+"RTN","LRVR0",164,0)
+ ;
+"RTN","LRVR0",165,0)
+ ; Patient info displayed during UID lookup - display here when lookup by accession number
+"RTN","LRVR0",166,0)
+ I $G(LRVBY)'=2 D
+"RTN","LRVR0",167,0)
+ . W !,PNM,?30,SSN,"  Age: ",AGE(2)
+"RTN","LRVR0",168,0)
+ . W !,"ORDER #: ",LRCEN,"    ",LRACC,"    ["_LRUID,"]"
+"RTN","LRVR0",169,0)
+ ;
+"RTN","LRVR0",170,0)
+ I $$GET^XPAR("USR^DIV^PKG","LR MI VERIFY DISPLAY PROVIDER",1,"Q") D PROV^LRMIEDZ2
+"RTN","LRVR0",171,0)
+ ;
+"RTN","LRVR0",172,0)
+ S DIR(0)="E"
+"RTN","LRVR0",173,0)
+ D ^DIR
+"RTN","LRVR0",174,0)
+ I $D(DIRUT) S LRNOP=1 Q
+"RTN","LRVR0",175,0)
+ ;
+"RTN","LRVR0",176,0)
+ K LRERR
+"RTN","LRVR0",177,0)
+ S X=$$GETLOCK^LRUTIL("^LR(LRDFN,LRSS,LRIDT)",10,1)
+"RTN","LRVR0",178,0)
+ I 'X S LRERR=1 D NOLOCK Q
+"RTN","LRVR0",179,0)
+ S X=$$GETLOCK^LRUTIL("^LRO(68,LRAA,1,LRAD,1,LRAN)",10,1)
+"RTN","LRVR0",180,0)
+ I 'X S LRERR=2 D NOLOCK Q
+"RTN","LRVR0",181,0)
+ ;
+"RTN","LRVR0",182,0)
+ S LRLOCK=1
+"RTN","LRVR0",183,0)
+ I '$P($G(^LRO(68,LRAA,1,LRAD,1,LRAN,3)),"^",3) D
+"RTN","LRVR0",184,0)
+ . N LRAA,LRAD,LRAN
+"RTN","LRVR0",185,0)
+ . S LRSTATUS="C" D P15^LROE1
+"RTN","LRVR0",186,0)
+ . I LRCDT<1 S LRNOP=1
+"RTN","LRVR0",187,0)
+ ;
+"RTN","LRVR0",188,0)
+ I '$G(LRNOP),$P($G(^LRO(69,LRODT,1,LRSN,1)),U,4)'="C" D
+"RTN","LRVR0",189,0)
+ . W !,"You cannot verify an accession which has not been collected.",$C(7)
+"RTN","LRVR0",190,0)
+ . S LRNOP=1
+"RTN","LRVR0",191,0)
+ ;
+"RTN","LRVR0",192,0)
+ ; Determine if one or more tests on accession.
+"RTN","LRVR0",193,0)
+ S (LRI,LRCNT,LRPTP)=0
+"RTN","LRVR0",194,0)
+ F  S LRI=$O(^LRO(68,LRAA,1,LRAD,1,LRAN,4,LRI)) Q:'LRI  D
+"RTN","LRVR0",195,0)
+ . I $P(^LRO(68,LRAA,1,LRAD,1,LRAN,4,LRI,0),"^",2)<50 S LRCNT=LRCNT+1,LRPTP=LRI
+"RTN","LRVR0",196,0)
+ ;
+"RTN","LRVR0",197,0)
+ ; If more than one test on accession then select the test to work with (URGENCY<50 - non-workload tests).
+"RTN","LRVR0",198,0)
+ I LRCNT>1 D
+"RTN","LRVR0",199,0)
+ . K DA,DIC
+"RTN","LRVR0",200,0)
+ . S DIC="^LRO(68,LRAA,1,LRAD,1,LRAN,4,",DIC(0)="AEMOQ",DIC("A")="Select TEST/PROCEDURE: ",DIC("S")="I $P(^(0),U,2)<50"
+"RTN","LRVR0",201,0)
+ . S DA(2)=LRAA,DA(1)=LRAD,DA=LRAN,LRPTP=0
+"RTN","LRVR0",202,0)
+ . D ^DIC
+"RTN","LRVR0",203,0)
+ . I Y<1 S LRNOP=1 Q
+"RTN","LRVR0",204,0)
+ . S LRPTP=+Y
+"RTN","LRVR0",205,0)
+ ;
+"RTN","LRVR0",206,0)
+ I $G(LRNOP) Q
+"RTN","LRVR0",207,0)
+ ;
+"RTN","LRVR0",208,0)
+ S LRMIDEF=$P(^LAB(69.9,1,1),U,10),LRMIOTH=$P(^(1),U,11)
+"RTN","LRVR0",209,0)
+ ;
+"RTN","LRVR0",210,0)
+ ; Set interface type
+"RTN","LRVR0",211,0)
+ S LRINTYPE=$P(^LAH(LRLL,1,LRISQN,0),"^",12)
+"RTN","LRVR0",212,0)
+ ;
+"RTN","LRVR0",213,0)
+ Q
+"RTN","LRVR0",214,0)
+ ;
+"RTN","LRVR0",215,0)
+ ;
+"RTN","LRVR0",216,0)
+NOLOCK ; Not able to lock message
+"RTN","LRVR0",217,0)
+ W !!,$S($G(LRERR)=1:" **Accession** ",$G(LRERR)=2:"**Patient's ^LR( file**",1:"Record")_" is locked by another user. " H 5
+"RTN","LRVR0",218,0)
+ S LRNOP=1
+"RTN","LRVR0",219,0)
+ Q
+"RTN","LRVR0",220,0)
+ ;
+"RTN","LRVR0",221,0)
+ ;
+"RTN","LRVR0",222,0)
+UNLOCK ; Unlock accession and ^LR( global
+"RTN","LRVR0",223,0)
+ Q:'$G(LRLOCK)
+"RTN","LRVR0",224,0)
+ L -^LRO(68,$G(LRAA),1,$G(LRAD),1,$G(LRAN))
+"RTN","LRVR0",225,0)
+ L -^LR($G(LRDFN),$G(LRSS),$G(LRIDT))
+"RTN","LRVR0",226,0)
+ Q
+"RTN","LRVR0",227,0)
+ ;
+"RTN","LRVR0",228,0)
+ ;
+"RTN","LRVR0",229,0)
+ACCEPT ;Display results and accept data
+"RTN","LRVR0",230,0)
+ N LRBATCH,LREDITTYPE,LRMODE,LRNPTP
+"RTN","LRVR0",231,0)
+ I $G(LREND) S LREND=0 Q
+"RTN","LRVR0",232,0)
+ ;
+"RTN","LRVR0",233,0)
+ S LRMODE="LDSI",LRBATCH=1,LREDITTYPE=1
+"RTN","LRVR0",234,0)
+ D DQ^LRMIPSZ1
+"RTN","LRVR0",235,0)
+ ;
+"RTN","LRVR0",236,0)
+ ;
+"RTN","LRVR0",237,0)
+ N DIR,DIROUT,DIRUT,DUOUT
+"RTN","LRVR0",238,0)
+ I LRINTYPE=1 D
+"RTN","LRVR0",239,0)
+ . S DIR(0)="SAO^0:Quit;1:Release;2:Comments/Release;3:Edit (full)"
+"RTN","LRVR0",240,0)
+ . S DIR("A")="Select RELEASE action: "
+"RTN","LRVR0",241,0)
+ . S DIR("B")=$$GET^XPAR("USR^PKG","LR MI UI RELEASE DEFAULT","`"_+LRLL,"E")
+"RTN","LRVR0",242,0)
+ . I DIR("B")="" S DIR("B")="Edit (full)"
+"RTN","LRVR0",243,0)
+ . S DIR("?")="Selections 1-3 will allow editing of status and approved date/time."
+"RTN","LRVR0",244,0)
+ . S DIR("?",1)="Entering 0 will abort review/release."
+"RTN","LRVR0",245,0)
+ . S DIR("?",2)="Entering 1 will allow release 'as is' with no editing."
+"RTN","LRVR0",246,0)
+ . S DIR("?",3)="Entering 2 will allow you to enter/edit comments then release."
+"RTN","LRVR0",247,0)
+ . S DIR("?",4)="Entering 3 will allow you to enter full edit, similar to 'Results entry' option."
+"RTN","LRVR0",248,0)
+ ;
+"RTN","LRVR0",249,0)
+ E  D
+"RTN","LRVR0",250,0)
+ . S DIR(0)="Y"
+"RTN","LRVR0",251,0)
+ . S DIR("A")="Do you want to APPROVE these results",DIR("B")="NO"
+"RTN","LRVR0",252,0)
+ . S DIR("?")="Enter Y if you want to approve these results"
+"RTN","LRVR0",253,0)
+ . S DIR("?",1)="Entering Y will store the results in the Lab System"
+"RTN","LRVR0",254,0)
+ ;
+"RTN","LRVR0",255,0)
+ D ^DIR
+"RTN","LRVR0",256,0)
+ S LREDITTYPE=+Y
+"RTN","LRVR0",257,0)
+ I $D(DIRUT) S LRNOP=1 Q
+"RTN","LRVR0",258,0)
+ I Y=0 D PURG Q
+"RTN","LRVR0",259,0)
+ I Y<1 S LRNOP=1 Q
+"RTN","LRVR0",260,0)
+ ;
+"RTN","LRVR0",261,0)
+ ; If user just accepting or doing comments then ask for tests.
+"RTN","LRVR0",262,0)
+ I LREDITTYPE<3 D
+"RTN","LRVR0",263,0)
+ . D EC^LRMIEDZ4
+"RTN","LRVR0",264,0)
+ . S LRTS=LRTS(LRI)
+"RTN","LRVR0",265,0)
+ ;
+"RTN","LRVR0",266,0)
+ D EN^LRVRMI4
+"RTN","LRVR0",267,0)
+ ;
+"RTN","LRVR0",268,0)
+ ; If Lab UI interface then allow editing remarks (#13), status (#11.5) and approved date/time (#11)
+"RTN","LRVR0",269,0)
+ I LRINTYPE=1,LREDITTYPE<3 D
+"RTN","LRVR0",270,0)
+ . N DA,DIE,DR,LRANOK,LRLEDI,LRCAPO,LRUNDO
+"RTN","LRVR0",271,0)
+ . S (LRCAPOK,LRANOK)=1,LRUNDO=0
+"RTN","LRVR0",272,0)
+ . S DA=LRIDT,DA(1)=LRDFN,DIE="^LR(LRDFN,""MI"","
+"RTN","LRVR0",273,0)
+ . S DR=$S(LREDITTYPE=2:"13;",1:"")_"11.5;11"
+"RTN","LRVR0",274,0)
+ . D ^DIE
+"RTN","LRVR0",275,0)
+ . D VT^LRMIUT1
+"RTN","LRVR0",276,0)
+ ;
+"RTN","LRVR0",277,0)
+ ; If Lab UI interface and user wants to do full editing
+"RTN","LRVR0",278,0)
+ I LRINTYPE=1,LREDITTYPE=3 D
+"RTN","LRVR0",279,0)
+ . N LRANOK,LRLEDI,LRCAPO,LRUNDO
+"RTN","LRVR0",280,0)
+ . S (LRCAPOK,LRANOK)=1,LRUNDO=0
+"RTN","LRVR0",281,0)
+ . D AUDRTN^LRMIEDZ2
+"RTN","LRVR0",282,0)
+ ;
+"RTN","LRVR0",283,0)
+ ; Store performing lab info
+"RTN","LRVR0",284,0)
+ I $D(^TMP("LRPL",$J)) D ROLLUPPL^LRRPLUA(LRDFN,LRSS,LRIDT)
+"RTN","LRVR0",285,0)
+ ;
+"RTN","LRVR0",286,0)
+ ; Ask for performing laboratory assignment
+"RTN","LRVR0",287,0)
+ W !! D EDIT^LRRPLU(LRDFN,"MI",LRIDT)
+"RTN","LRVR0",288,0)
+ ;
+"RTN","LRVR0",289,0)
+ ; Store reporting lab
+"RTN","LRVR0",290,0)
+ D SETRL^LRVERA(LRDFN,LRSS,LRIDT,DUZ(2))
+"RTN","LRVR0",291,0)
+ ;
+"RTN","LRVR0",292,0)
+ ; Update clinical reminders
+"RTN","LRVR0",293,0)
+ D UPDATE^LRPXRM(LRDFN,"MI",LRIDT)
+"RTN","LRVR0",294,0)
+ ;
+"RTN","LRVR0",295,0)
+ ; Ask to send CPRS alert
+"RTN","LRVR0",296,0)
+ D ASKXQA^LRMIEDZ2
+"RTN","LRVR0",297,0)
+ ;
+"RTN","LRVR0",298,0)
+ ; If Lab UI interface then prompt user for accession test complete date/time in EC3^LRMIEDZ2 call.
+"RTN","LRVR0",299,0)
+ I LRINTYPE=1 S LRFIFO=0
+"RTN","LRVR0",300,0)
+ ;
+"RTN","LRVR0",301,0)
+ ; Update accession and order
+"RTN","LRVR0",302,0)
+ D EC3^LRMIEDZ2
+"RTN","LRVR0",303,0)
+ ;
+"RTN","LRVR0",304,0)
+ ; Queue results if LEDI and cleanup
+"RTN","LRVR0",305,0)
+ D LEDI,ZAP
+"RTN","LRVR0",306,0)
+ K ^TMP("LRMI",$J)
+"RTN","LRVR0",307,0)
+ ;
+"RTN","LRVR0",308,0)
+ Q
+"RTN","LRVR0",309,0)
+ ;
+"RTN","LRVR0",310,0)
+ ;
+"RTN","LRVR0",311,0)
+PURG ; Ask if the entry should be purged from ^LAH(
+"RTN","LRVR0",312,0)
+ W !
+"RTN","LRVR0",313,0)
+ N DIR,DIROUT,DIRUT,DUOUT
+"RTN","LRVR0",314,0)
+ S DIR(0)="Y",DIR("A")="Do you want to PURGE these results",DIR("B")="NO"
+"RTN","LRVR0",315,0)
+ S DIR("?",1)="Enter NO if you want to process these results at a later time"
+"RTN","LRVR0",316,0)
+ S DIR("?")="Enter YES to remove these results from the list"
+"RTN","LRVR0",317,0)
+ D ^DIR
+"RTN","LRVR0",318,0)
+ I $D(DIRUT) S LRNOP=1 Q
+"RTN","LRVR0",319,0)
+ I Y=1 D ZAP
+"RTN","LRVR0",320,0)
+ Q
+"RTN","LRVR0",321,0)
+ ;
+"RTN","LRVR0",322,0)
+ ;
+"RTN","LRVR0",323,0)
+ZAP ; Remove entry from ^LAH( global
+"RTN","LRVR0",324,0)
+ N REC
+"RTN","LRVR0",325,0)
+ S REC=$S($G(ISQN):ISQN,1:$G(LRISQN))
+"RTN","LRVR0",326,0)
+ I LRLL,REC D ZAPALL^LRVR3(LRLL,REC)
+"RTN","LRVR0",327,0)
+ Q
+"RTN","LRVR0",328,0)
+ ;
+"RTN","LRVR0",329,0)
+ ;
+"RTN","LRVR0",330,0)
+SETACC ;
+"RTN","LRVR0",331,0)
+ N LRFILE,LRIENS,LRFDA,LRERR
+"RTN","LRVR0",332,0)
+ S LRFILE=68.04,LRERR=""
+"RTN","LRVR0",333,0)
+ S LRIENS=LRTS_","_LRAN_","_LRAD_","_LRAA_","
+"RTN","LRVR0",334,0)
+ S LRFDA(1,LRFILE,LRIENS,3)=DUZ
+"RTN","LRVR0",335,0)
+ S LRFDA(1,LRFILE,LRIENS,4)=$$NOW^XLFDT
+"RTN","LRVR0",336,0)
+ S LRFDA(1,LRFILE,LRIENS,8)=$G(LRCDEF)
+"RTN","LRVR0",337,0)
+ D FILE^DIE("KS","LRFDA(1)","LRERR")
+"RTN","LRVR0",338,0)
+ Q
+"RTN","LRVR0",339,0)
+ ;
+"RTN","LRVR0",340,0)
+ ;
+"RTN","LRVR0",341,0)
+LEDI ; If LEDI put results in queue to return to collecting lab
+"RTN","LRVR0",342,0)
+ ; Called from above, LRMIEDZ2, LRMISTF1 and LRVRAP4.
+"RTN","LRVR0",343,0)
+ N IEN,LRCDEFX,LRERR,LRIDT,LRORDT,LRORU3,LRSS,LRTSDEF
+"RTN","LRVR0",344,0)
+ Q:'$D(^LRO(68,+$G(LRAA),1,+$G(LRAD),1,+$G(LRAN),0))
+"RTN","LRVR0",345,0)
+ ;
+"RTN","LRVR0",346,0)
+ S LRORU3=$G(^LRO(68,LRAA,1,LRAD,1,LRAN,.3))
+"RTN","LRVR0",347,0)
+ Q:'$P(LRORU3,U,3)
+"RTN","LRVR0",348,0)
+ ;
+"RTN","LRVR0",349,0)
+ S LRODT=$P(^LRO(68,LRAA,1,LRAD,1,LRAN,0),U,4)
+"RTN","LRVR0",350,0)
+ S LRSS=$P(^LRO(68,LRAA,0),U,2)
+"RTN","LRVR0",351,0)
+ S LRIDT=$P(^LRO(68,LRAA,1,LRAD,1,LRAN,3),U,5)
+"RTN","LRVR0",352,0)
+ I '$$OK2SEND^LA7SRR D LEDINO Q
+"RTN","LRVR0",353,0)
+ ;
+"RTN","LRVR0",354,0)
+ I '$G(LRCDEF) N LRCDEF I "SPEMCY"[LRSS S LRCDEF=3241,LRCDEFX=1
+"RTN","LRVR0",355,0)
+ I '$G(LRTS) N LRTS D
+"RTN","LRVR0",356,0)
+ . S IEN=0
+"RTN","LRVR0",357,0)
+ . F  S IEN=$O(^LRO(68,LRAA,1,LRAD,1,LRAN,4,IEN)) Q:IEN<1  D  Q:$G(LRTS)
+"RTN","LRVR0",358,0)
+ . . I $P($G(^LRO(68,LRAA,1,LRAD,1,LRAN,4,IEN,0)),U,2)<50 S LRTS=IEN,LRTSDEF=1
+"RTN","LRVR0",359,0)
+ I $G(LRTS) D SETACC
+"RTN","LRVR0",360,0)
+ ;
+"RTN","LRVR0",361,0)
+ ; Comment out the following line after testing is complete
+"RTN","LRVR0",362,0)
+ W !!,$$CJ^XLFSTR("Sending report to LEDI collecting site",IOM)
+"RTN","LRVR0",363,0)
+ D MIAP^LA7VMSG(LRAA,LRAD,LRAN,+$G(LRTS),LRDFN,LRSS,LRIDT,LRODT)
+"RTN","LRVR0",364,0)
+ Q
+"RTN","LRVR0",365,0)
+ ;
+"RTN","LRVR0",366,0)
+ ;
+"RTN","LRVR0",367,0)
+LEDINO ; LEDI HL7 message sending error message
+"RTN","LRVR0",368,0)
+ W !!,$$CJ^XLFSTR("Unable to sent report to LEDI collecting site - no date report approved",IOM)
+"RTN","LRVR0",369,0)
+ Q
+"RTN","LRVR0",370,0)
+ ;
+"RTN","LRVR0",371,0)
+ ;
+"RTN","LRVR0",372,0)
+ISQN ; Find the entry associated with this accession area and accession number
+"RTN","LRVR0",373,0)
+ N LRI,LRSQ
+"RTN","LRVR0",374,0)
+ S (LRI,LRSEQCNT)=0
+"RTN","LRVR0",375,0)
+ F  S LRI=$O(^LAH(LRLL,1,"C",LRAN,LRI)) Q:LRI<1  D
+"RTN","LRVR0",376,0)
+ . N LRX
+"RTN","LRVR0",377,0)
+ . S LRX=$G(^LAH(LRLL,1,LRI,0))
+"RTN","LRVR0",378,0)
+ . ; Quit if different accession area.
+"RTN","LRVR0",379,0)
+ . I $P(LRX,"^",3),$P(LRX,"^",3)'=LRAA Q
+"RTN","LRVR0",380,0)
+ . ; Quit if different accession date and not a rollover accession (same original accession date).
+"RTN","LRVR0",381,0)
+ . I $P(LRX,"^",4),$P(LRX,"^",4)'=LRAD,$P($G(^LRO(68,LRAA,1,LRAD,1,LRAN,0)),"^",3)'=$P($G(^LRO(68,LRAA,1,$P(LRX,"^",4),1,LRAN,0)),"^",3) Q
+"RTN","LRVR0",382,0)
+ . I LRSEQCNT W !
+"RTN","LRVR0",383,0)
+ . S LRSEQCNT=LRSEQCNT+1,LRSQ=LRI,LRSQ(LRI)=""
+"RTN","LRVR0",384,0)
+ . W !,?2,"Seq #: ",LRI,?13," Accession: ",$P($G(^LRO(68,LRAA,1,LRAD,1,LRAN,.2)),"^")
+"RTN","LRVR0",385,0)
+ . I $P(LRX,"^",10) W ?40," Results received: ",$$FMTE^XLFDT($P(LRX,"^",10),"1M")
+"RTN","LRVR0",386,0)
+ . W !,?20,"UID: ",$P($G(^LRO(68,LRAA,1,LRAD,1,LRAN,.3),"UNKNOWN"),"^")
+"RTN","LRVR0",387,0)
+ . I $P(LRX,"^",11) W ?44," Last updated: ",$$FMTE^XLFDT($P(LRX,"^",11),"1M")
+"RTN","LRVR0",388,0)
+ . I $G(^LAH(LRLL,1,LRI,.1,"OBR","ORDNLT"))'="" D
+"RTN","LRVR0",389,0)
+ . . N LR64,LRNLT,LRNLTN,LRPIECE
+"RTN","LRVR0",390,0)
+ . . W !,?13," Order NLT: "
+"RTN","LRVR0",391,0)
+ . . F LRPIECE=1:1 S LRNLT=$P($G(^LAH(LRLL,1,LRI,.1,"OBR","ORDNLT")),"^",LRPIECE) Q:LRNLT=""  D
+"RTN","LRVR0",392,0)
+ . . . S LR64=+$O(^LAM("E",LRNLT,0))
+"RTN","LRVR0",393,0)
+ . . . S LRNLTN=$$GET1^DIQ(64,LR64_",",.01)
+"RTN","LRVR0",394,0)
+ . . . W ?25,$S(LRNLTN'="":LRNLTN,1:LRNLT),!
+"RTN","LRVR0",395,0)
+ ;
+"RTN","LRVR0",396,0)
+ I LRSEQCNT=0 W !,"No data for that accession" S LRNOP=1 Q
+"RTN","LRVR0",397,0)
+ I LRSEQCNT=1,'$G(LRMULTSQ) S (ISQN,LRISQN)=LRSQ Q
+"RTN","LRVR0",398,0)
+ ;
+"RTN","LRVR0",399,0)
+ ; If multiple entries (sequence - overlay data=no) then ask user which one to use.
+"RTN","LRVR0",400,0)
+ N DIR,DIRUT,DIROUT,DTOUT,DUOUT
+"RTN","LRVR0",401,0)
+ S DIR(0)=""
+"RTN","LRVR0",402,0)
+ S I=0 F  S I=$O(LRSQ(I)) Q:'I  S DIR(0)=DIR(0)_$S(I=1:"",1:";")_I_":Seq #"_I
+"RTN","LRVR0",403,0)
+ S DIR(0)="SO^"_DIR(0),DIR("A")="Choose sequence number"
+"RTN","LRVR0",404,0)
+ I LRSEQCNT=1,$G(LRMULTSQ) S DIR("B")=LRSQ
+"RTN","LRVR0",405,0)
+ D ^DIR
+"RTN","LRVR0",406,0)
+ I $D(DIRUT)!(Y<1) S LRNOP=1 Q
+"RTN","LRVR0",407,0)
+ S (ISQN,LRISQN)=+Y Q
+"RTN","LRVR0",408,0)
+ Q
+"RTN","LRVRMI2A")
+0^3^B92413748^B78602425
+"RTN","LRVRMI2A",1,0)
+LRVRMI2A ;DALOI/STAFF - LAH/TMP TO FILE #63 ;02/22/17  08:07
+"RTN","LRVRMI2A",2,0)
+ ;;5.2;LAB SERVICE;**350,427,474,480**;Sep 27, 1994;Build 7
+"RTN","LRVRMI2A",3,0)
+ ;
+"RTN","LRVRMI2A",4,0)
+ ; Continuation of LRVRMI4 and is used for extracting results from the LAH global and storing it into LAB DATA FILE (#63).
+"RTN","LRVRMI2A",5,0)
+ ;
+"RTN","LRVRMI2A",6,0)
+ Q
+"RTN","LRVRMI2A",7,0)
+ ;
+"RTN","LRVRMI2A",8,0)
+N9 ; Process Fungus/Yeast
+"RTN","LRVRMI2A",9,0)
+ N DATA,DIERR,IEN,IEN2,IEN3,ISOID,LRCMT,LRFDA,LRIEN,LRIENS,LRMSG,LRN9,LRX,R6337,STAT
+"RTN","LRVRMI2A",10,0)
+ ;
+"RTN","LRVRMI2A",11,0)
+ ;ZEXCEPT: LRDFN,LRDUZ,LRIDT,LRINTYPE,LRLL,LRNOW,LRPROF,LRRPTAPP,LRSTATUS
+"RTN","LRVRMI2A",12,0)
+ ;
+"RTN","LRVRMI2A",13,0)
+ S (IEN,IEN2,IEN3)=0
+"RTN","LRVRMI2A",14,0)
+ F  S IEN=$O(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,9,IEN)) Q:IEN<1  D N9A
+"RTN","LRVRMI2A",15,0)
+ ;
+"RTN","LRVRMI2A",16,0)
+ K LRFDA,LRMSG,LRIENS,DIERR
+"RTN","LRVRMI2A",17,0)
+ S LRIEN=LRIDT_","_LRDFN_","
+"RTN","LRVRMI2A",18,0)
+ I LRINTYPE=10 S LRFDA(9,63.05,LRIEN,18)=LRNOW
+"RTN","LRVRMI2A",19,0)
+ S LRFDA(9,63.05,LRIEN,19.5)=$S($G(LRDUZ):LRDUZ,1:$G(DUZ))
+"RTN","LRVRMI2A",20,0)
+ D FILE^DIE("","LRFDA(9)","LRMSG")
+"RTN","LRVRMI2A",21,0)
+ S LRRPTAPP=1
+"RTN","LRVRMI2A",22,0)
+ Q
+"RTN","LRVRMI2A",23,0)
+ ;
+"RTN","LRVRMI2A",24,0)
+ ;
+"RTN","LRVRMI2A",25,0)
+N9A ; Process fungus yeast organism
+"RTN","LRVRMI2A",26,0)
+ ;
+"RTN","LRVRMI2A",27,0)
+ N DIERR,IEN2,ISOID,LRCMT,LRFDA,LRFDAIEN,LRI,LRIEN,LRIENS,LRMSG,LRN9,LRX,R6337,STAT
+"RTN","LRVRMI2A",28,0)
+ ;
+"RTN","LRVRMI2A",29,0)
+ ;ZEXCEPT: IEN,LRDFN,LRIDT,LRINTYPE,LRLL,LRPROF,LRSTATUS
+"RTN","LRVRMI2A",30,0)
+ ;
+"RTN","LRVRMI2A",31,0)
+ S LRN9=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,9,IEN,0))
+"RTN","LRVRMI2A",32,0)
+ Q:LRN9=""
+"RTN","LRVRMI2A",33,0)
+ S ISOID=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,9,IEN,.1))
+"RTN","LRVRMI2A",34,0)
+ Q:ISOID=""
+"RTN","LRVRMI2A",35,0)
+ ;
+"RTN","LRVRMI2A",36,0)
+ ; Delete ISOID entry if it exists on LEDI (LRINTYPE=10) interfaces
+"RTN","LRVRMI2A",37,0)
+ ; On UI interfaces update fungus/yeast for this isolate id.
+"RTN","LRVRMI2A",38,0)
+ S R6337=$O(^LR(LRDFN,"MI",LRIDT,9,"C",ISOID,0))
+"RTN","LRVRMI2A",39,0)
+ I R6337 D
+"RTN","LRVRMI2A",40,0)
+ . K LRFDA,LRMSG,LRIENS,DIERR
+"RTN","LRVRMI2A",41,0)
+ . S LRIEN=R6337_","_LRIDT_","_LRDFN_","
+"RTN","LRVRMI2A",42,0)
+ . I LRINTYPE=10 D
+"RTN","LRVRMI2A",43,0)
+ . . S LRFDA(9,63.37,LRIEN,.01)="@"
+"RTN","LRVRMI2A",44,0)
+ . . S R6337=""
+"RTN","LRVRMI2A",45,0)
+ . E  D
+"RTN","LRVRMI2A",46,0)
+ . . S LRFDA(9,63.37,LRIEN,.01)=$P(LRN9,U) ; fungus/yeast
+"RTN","LRVRMI2A",47,0)
+ . . I $P(LRN9,U,2)'="" S LRFDA(9,63.37,LRIEN,1)=$P(LRN9,U,2) ; quantity
+"RTN","LRVRMI2A",48,0)
+ . D FILE^DIE("","LRFDA(9)","LRMSG")
+"RTN","LRVRMI2A",49,0)
+ ;
+"RTN","LRVRMI2A",50,0)
+ ; On LEDI (LRINTYPE=10) interfaces existing ISOID was deleted above so always add record
+"RTN","LRVRMI2A",51,0)
+ I 'R6337 D
+"RTN","LRVRMI2A",52,0)
+ . K LRFDA,LRMSG,LRIENS,DIERR
+"RTN","LRVRMI2A",53,0)
+ . S LRIEN="+1,"_LRIDT_","_LRDFN_","
+"RTN","LRVRMI2A",54,0)
+ . S LRFDA(9,63.37,LRIEN,.01)=$P(LRN9,"^") ; fungus/yeast
+"RTN","LRVRMI2A",55,0)
+ . S LRFDA(9,63.37,LRIEN,.1)=ISOID
+"RTN","LRVRMI2A",56,0)
+ . S LRFDA(9,63.37,LRIEN,1)=$P(LRN9,"^",2) ; quantity
+"RTN","LRVRMI2A",57,0)
+ . D UPDATE^DIE("","LRFDA(9)","LRIENS","LRMSG")
+"RTN","LRVRMI2A",58,0)
+ . S R6337=$G(LRIENS(1))
+"RTN","LRVRMI2A",59,0)
+ ;
+"RTN","LRVRMI2A",60,0)
+ Q:'R6337
+"RTN","LRVRMI2A",61,0)
+ ;
+"RTN","LRVRMI2A",62,0)
+ ; Store code system references for fungus
+"RTN","LRVRMI2A",63,0)
+ S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,9,IEN,0,.01))
+"RTN","LRVRMI2A",64,0)
+ F LRI=1:1:3 I $P(LRX,"^",LRI) D
+"RTN","LRVRMI2A",65,0)
+ . N LRDATA
+"RTN","LRVRMI2A",66,0)
+ . S LRDATA(.01)=LRDFN_",MI,"_LRIDT_",9,"_R6337_",0;1"
+"RTN","LRVRMI2A",67,0)
+ . S LRDATA(.02)=$S(LRI<3:2,1:3),LRDATA(.03)=$P(LRX,"^",LRI),LRDATA(.04)=$P("LN^NLT^SCT","^",LRI)
+"RTN","LRVRMI2A",68,0)
+ . D SETREF^LRUCSR(LRDFN,LRDATA(.01),.LRDATA,1)
+"RTN","LRVRMI2A",69,0)
+ ;
+"RTN","LRVRMI2A",70,0)
+ ; Store code system references for yeast quantity
+"RTN","LRVRMI2A",71,0)
+ S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,9,IEN,0,.02))
+"RTN","LRVRMI2A",72,0)
+ F LRI=1,2 I $P(LRX,"^",LRI) D
+"RTN","LRVRMI2A",73,0)
+ . N LRDATA
+"RTN","LRVRMI2A",74,0)
+ . S LRDATA(.01)=LRDFN_",MI,"_LRIDT_",9,"_R6337_"0;2"
+"RTN","LRVRMI2A",75,0)
+ . S LRDATA(.02)=2,LRDATA(.03)=$P(LRX,"^",LRI),LRDATA(.04)=$P("LN^NLT","^",LRI)
+"RTN","LRVRMI2A",76,0)
+ . D SETREF^LRUCSR(LRDFN,LRDATA(.01),.LRDATA,1)
+"RTN","LRVRMI2A",77,0)
+ ;
+"RTN","LRVRMI2A",78,0)
+ ; Store performing lab
+"RTN","LRVRMI2A",79,0)
+ S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,9,IEN,0,.01,1))
+"RTN","LRVRMI2A",80,0)
+ I $P(LRX,"^") D SETPL^LRRPLUA(LRDFN_",MI,"_LRIDT_",9,"_R6337_",0",$P(LRX,"^"))
+"RTN","LRVRMI2A",81,0)
+ ;
+"RTN","LRVRMI2A",82,0)
+ S STAT=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,9,IEN,0,.01,0))
+"RTN","LRVRMI2A",83,0)
+ D BLDSTAT^LRVRMI4A(63.05,19,STAT,.LRSTATUS)
+"RTN","LRVRMI2A",84,0)
+ ;
+"RTN","LRVRMI2A",85,0)
+ ; fungus/yeast comments - comments don't have status
+"RTN","LRVRMI2A",86,0)
+ K LRFDA,LRFDAIEN,LRMSG,LRIENS,DIERR
+"RTN","LRVRMI2A",87,0)
+ M LRCMT=^LR(LRDFN,"MI",LRIDT,9,IEN,1)
+"RTN","LRVRMI2A",88,0)
+ S IEN2=0
+"RTN","LRVRMI2A",89,0)
+ F  S IEN2=$O(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,9,IEN,1,IEN2)) Q:IEN2<1  D
+"RTN","LRVRMI2A",90,0)
+ . S LRX=^TMP("LRMI",$J,LRDFN,"MI",LRIDT,9,IEN,1,IEN2,0),LRX=$S(LRX'="":LRX,1:" ")
+"RTN","LRVRMI2A",91,0)
+ . I LRX'=" ",$$DUPCHK^LRVRMI3(LRLL,LRPROF,.LRCMT,LRX) Q
+"RTN","LRVRMI2A",92,0)
+ . S LRIEN="+"_IEN2_","_R6337_","_LRIDT_","_LRDFN_","
+"RTN","LRVRMI2A",93,0)
+ . S LRFDA(9,63.372,LRIEN,.01)=LRX
+"RTN","LRVRMI2A",94,0)
+ ;
+"RTN","LRVRMI2A",95,0)
+ I $D(LRFDA) D UPDATE^DIE("","LRFDA(9)","","LRMSG")
+"RTN","LRVRMI2A",96,0)
+ ;
+"RTN","LRVRMI2A",97,0)
+ Q
+"RTN","LRVRMI2A",98,0)
+ ;
+"RTN","LRVRMI2A",99,0)
+ ;
+"RTN","LRVRMI2A",100,0)
+N11 ; Process Acid Fast
+"RTN","LRVRMI2A",101,0)
+ N AFS,DIERR,LRFDA,LRIEN,LRIENS,LRMSG,LRX,QTY
+"RTN","LRVRMI2A",102,0)
+ ;
+"RTN","LRVRMI2A",103,0)
+ ;ZEXCEPT: LRDFN,LRDUZ,LRI,LRIDT,LRINTYPE,LRNOW,LRRPTAPP
+"RTN","LRVRMI2A",104,0)
+ ;
+"RTN","LRVRMI2A",105,0)
+ S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,11))
+"RTN","LRVRMI2A",106,0)
+ D BLDSTAT^LRVRMI4A(63.05,23,$P(LRX,"^",2),.LRSTATUS)
+"RTN","LRVRMI2A",107,0)
+ ;
+"RTN","LRVRMI2A",108,0)
+ S LRIEN=LRIDT_","_LRDFN_","
+"RTN","LRVRMI2A",109,0)
+ I LRINTYPE=10 S LRFDA(11,63.05,LRIEN,22)=LRNOW
+"RTN","LRVRMI2A",110,0)
+ S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,11,0))
+"RTN","LRVRMI2A",111,0)
+ S AFS=$P(LRX,"^",3),QTY=$P(LRX,U,4)
+"RTN","LRVRMI2A",112,0)
+ S LRFDA(11,63.05,LRIEN,24)=AFS ; Acid Fast Stain
+"RTN","LRVRMI2A",113,0)
+ ;I $L(QTY)>68 S QTY=$E(QTY,1,65)_"..."
+"RTN","LRVRMI2A",114,0)
+ S LRFDA(11,63.05,LRIEN,25)=QTY ; Quantity
+"RTN","LRVRMI2A",115,0)
+ S LRFDA(11,63.05,LRIEN,25.5)=$S($G(LRDUZ):LRDUZ,1:$G(DUZ))
+"RTN","LRVRMI2A",116,0)
+ ; derive status
+"RTN","LRVRMI2A",117,0)
+ I AFS'="" D
+"RTN","LRVRMI2A",118,0)
+ . S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,11,0,.01,0))
+"RTN","LRVRMI2A",119,0)
+ . D BLDSTAT^LRVRMI4A(63.05,23,$P(LRX,"^"),.LRSTATUS)
+"RTN","LRVRMI2A",120,0)
+ I QTY'="" D
+"RTN","LRVRMI2A",121,0)
+ . S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,11,0,.02,0))
+"RTN","LRVRMI2A",122,0)
+ . D BLDSTAT^LRVRMI4A(63.05,23,$P(LRX,"^"),.LRSTATUS)
+"RTN","LRVRMI2A",123,0)
+ ;
+"RTN","LRVRMI2A",124,0)
+ D FILE^DIE("","LRFDA(11)","LRMSG")
+"RTN","LRVRMI2A",125,0)
+ S LRRPTAPP=1
+"RTN","LRVRMI2A",126,0)
+ ;
+"RTN","LRVRMI2A",127,0)
+ ; Store code system references for AFB Stain
+"RTN","LRVRMI2A",128,0)
+ S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,11,0,.01))
+"RTN","LRVRMI2A",129,0)
+ F LRI=1,2 I $P(LRX,"^",LRI) D
+"RTN","LRVRMI2A",130,0)
+ . N LRDATA
+"RTN","LRVRMI2A",131,0)
+ . S LRDATA(.01)=LRDFN_",MI,"_LRIDT_",11,0;3"
+"RTN","LRVRMI2A",132,0)
+ . S LRDATA(.02)=2,LRDATA(.03)=$P(LRX,"^",LRI),LRDATA(.04)=$P("LN^NLT","^",LRI)
+"RTN","LRVRMI2A",133,0)
+ . D SETREF^LRUCSR(LRDFN,LRDATA(.01),.LRDATA,1)
+"RTN","LRVRMI2A",134,0)
+ ;
+"RTN","LRVRMI2A",135,0)
+ ; Store code system references for AFB quantity
+"RTN","LRVRMI2A",136,0)
+ S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,11,0,.02))
+"RTN","LRVRMI2A",137,0)
+ F LRI=1,2 I $P(LRX,"^",LRI) D
+"RTN","LRVRMI2A",138,0)
+ . N LRDATA
+"RTN","LRVRMI2A",139,0)
+ . S LRDATA(.01)=LRDFN_",MI,"_LRIDT_",11,0;4"
+"RTN","LRVRMI2A",140,0)
+ . S LRDATA(.02)=2,LRDATA(.03)=$P(LRX,"^",LRI),LRDATA(.04)=$P("LN^NLT","^",LRI)
+"RTN","LRVRMI2A",141,0)
+ . D SETREF^LRUCSR(LRDFN,LRDATA(.01),.LRDATA,1)
+"RTN","LRVRMI2A",142,0)
+ ;
+"RTN","LRVRMI2A",143,0)
+ Q
+"RTN","LRVRMI2A",144,0)
+ ;
+"RTN","LRVRMI2A",145,0)
+ ;
+"RTN","LRVRMI2A",146,0)
+N12 ; Process Mycobacteria
+"RTN","LRVRMI2A",147,0)
+ ;
+"RTN","LRVRMI2A",148,0)
+ N DATA,DIERR,DNFLDS,FLD,IEN,IEN2,ISOID,LRCMT,LRFDA,LRIEN,LRIENS,LRMSG,LRN12,LRX,R6339,STAT
+"RTN","LRVRMI2A",149,0)
+ ;
+"RTN","LRVRMI2A",150,0)
+ ;ZEXCEPT: LRDFN,LRIDT,LRLL,LRPROF,LRSTATUS
+"RTN","LRVRMI2A",151,0)
+ ;
+"RTN","LRVRMI2A",152,0)
+ S IEN=0
+"RTN","LRVRMI2A",153,0)
+ F  S IEN=$O(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,12,IEN)) Q:IEN<1  D N12A
+"RTN","LRVRMI2A",154,0)
+ ;
+"RTN","LRVRMI2A",155,0)
+ Q
+"RTN","LRVRMI2A",156,0)
+ ;
+"RTN","LRVRMI2A",157,0)
+ ;
+"RTN","LRVRMI2A",158,0)
+N12A ; Process mycobacteria organism
+"RTN","LRVRMI2A",159,0)
+ ;
+"RTN","LRVRMI2A",160,0)
+ N DATA,DIERR,DNFLDS,FLD,I,IEN2,ISOID,LRCMT,LRCSR,LRFDA,LRI,LRIEN,LRIENS,LRMSG,LRN12,LRX,R6339,STAT
+"RTN","LRVRMI2A",161,0)
+ ;
+"RTN","LRVRMI2A",162,0)
+ ;ZEXCEPT: IEN,LRDFN,LRIDT,LRINTYPE,LRLL,LRPROF,LRSTATUS
+"RTN","LRVRMI2A",163,0)
+ ;
+"RTN","LRVRMI2A",164,0)
+ S LRN12=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,12,IEN,0))
+"RTN","LRVRMI2A",165,0)
+ Q:LRN12=""
+"RTN","LRVRMI2A",166,0)
+ S ISOID=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,12,IEN,.1))
+"RTN","LRVRMI2A",167,0)
+ Q:ISOID=""
+"RTN","LRVRMI2A",168,0)
+ ;
+"RTN","LRVRMI2A",169,0)
+ ; Delete ISOID entry if it exists on LEDI (LRINTYPE=10) interfaces
+"RTN","LRVRMI2A",170,0)
+ ; On UI interfaces update mycobacteria for this isolate id.
+"RTN","LRVRMI2A",171,0)
+ S R6339=$O(^LR(LRDFN,"MI",LRIDT,12,"C",ISOID,0))
+"RTN","LRVRMI2A",172,0)
+ I R6339 D
+"RTN","LRVRMI2A",173,0)
+ . K LRFDA,LRMSG,LRIENS,DIERR
+"RTN","LRVRMI2A",174,0)
+ . S LRIEN=R6339_","_LRIDT_","_LRDFN_","
+"RTN","LRVRMI2A",175,0)
+ . I LRINTYPE=10 D
+"RTN","LRVRMI2A",176,0)
+ . . S LRFDA(12,63.39,LRIEN,.01)="@"
+"RTN","LRVRMI2A",177,0)
+ . . S R6339=""
+"RTN","LRVRMI2A",178,0)
+ . E  D
+"RTN","LRVRMI2A",179,0)
+ . . S LRFDA(12,63.39,LRIEN,.01)=$P(LRN12,U) ; mycobacteria
+"RTN","LRVRMI2A",180,0)
+ . . I $P(LRN12,U,2)'="" S LRFDA(12,63.39,LRIEN,1)=$P(LRN12,U,2) ; quantity
+"RTN","LRVRMI2A",181,0)
+ . D FILE^DIE("","LRFDA(12)","LRMSG")
+"RTN","LRVRMI2A",182,0)
+ ;
+"RTN","LRVRMI2A",183,0)
+ ; On LEDI (LRINTYPE=10) interfaces existing ISOID was deleted above so always add record
+"RTN","LRVRMI2A",184,0)
+ I 'R6339 D
+"RTN","LRVRMI2A",185,0)
+ . K LRFDA,LRMSG,LRIENS,DIERR
+"RTN","LRVRMI2A",186,0)
+ . S LRIEN="+1,"_LRIDT_","_LRDFN_","
+"RTN","LRVRMI2A",187,0)
+ . S LRFDA(12,63.39,LRIEN,.01)=$P(LRN12,"^") ; fungus/yeast
+"RTN","LRVRMI2A",188,0)
+ . S LRFDA(12,63.39,LRIEN,.1)=ISOID
+"RTN","LRVRMI2A",189,0)
+ . S LRFDA(12,63.39,LRIEN,1)=$P(LRN12,"^",2) ; quantity
+"RTN","LRVRMI2A",190,0)
+ . D UPDATE^DIE("","LRFDA(12)","LRIENS","LRMSG")
+"RTN","LRVRMI2A",191,0)
+ . S R6339=$G(LRIENS(1))
+"RTN","LRVRMI2A",192,0)
+ ;
+"RTN","LRVRMI2A",193,0)
+ Q:'R6339
+"RTN","LRVRMI2A",194,0)
+ ;
+"RTN","LRVRMI2A",195,0)
+ ; Store code system references
+"RTN","LRVRMI2A",196,0)
+ S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,12,IEN,0,.01))
+"RTN","LRVRMI2A",197,0)
+ F LRI=1:1:3 I $P(LRX,"^",LRI) D
+"RTN","LRVRMI2A",198,0)
+ . N LRDATA
+"RTN","LRVRMI2A",199,0)
+ . S LRDATA(.01)=LRDFN_",MI,"_LRIDT_",12,"_R6339_",0"
+"RTN","LRVRMI2A",200,0)
+ . S LRDATA(.02)=$S(LRI<3:2,1:3),LRDATA(.03)=$P(LRX,"^",LRI),LRDATA(.04)=$P("LN^NLT^SCT","^",LRI)
+"RTN","LRVRMI2A",201,0)
+ . D SETREF^LRUCSR(LRDFN,LRDATA(.01),.LRDATA,1)
+"RTN","LRVRMI2A",202,0)
+ ;
+"RTN","LRVRMI2A",203,0)
+ ; Store performing lab
+"RTN","LRVRMI2A",204,0)
+ S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,12,IEN,0,.01,1))
+"RTN","LRVRMI2A",205,0)
+ I $P(LRX,"^") D SETPL^LRRPLUA(LRDFN_",MI,"_LRIDT_",12,"_R6339_",0",$P(LRX,"^"))
+"RTN","LRVRMI2A",206,0)
+ ;
+"RTN","LRVRMI2A",207,0)
+ S STAT=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,12,IEN,0,.01,0))
+"RTN","LRVRMI2A",208,0)
+ D BLDSTAT^LRVRMI4A(63.05,23,STAT,.LRSTATUS)
+"RTN","LRVRMI2A",209,0)
+ ;
+"RTN","LRVRMI2A",210,0)
+ ; Process comments
+"RTN","LRVRMI2A",211,0)
+ K LRFDA,LRIENS,LRMSG,DIERR
+"RTN","LRVRMI2A",212,0)
+ M LRCMT=^LR(LRDFN,"MI",LRIDT,12,IEN,1)
+"RTN","LRVRMI2A",213,0)
+ S IEN2=0
+"RTN","LRVRMI2A",214,0)
+ F  S IEN2=$O(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,12,IEN,1,IEN2)) Q:'IEN2  D
+"RTN","LRVRMI2A",215,0)
+ . S LRX=^TMP("LRMI",$J,LRDFN,"MI",LRIDT,12,IEN,1,IEN2,0),LRX=$S(LRX'="":LRX,1:" ")
+"RTN","LRVRMI2A",216,0)
+ . I LRX'=" ",$$DUPCHK^LRVRMI3(LRLL,LRPROF,.LRCMT,LRX) Q
+"RTN","LRVRMI2A",217,0)
+ . S LRIEN="+"_IEN2_","_R6339_","_LRIDT_","_LRDFN_","
+"RTN","LRVRMI2A",218,0)
+ . S LRFDA(12,63.4,LRIEN,.01)=LRX
+"RTN","LRVRMI2A",219,0)
+ I $D(LRFDA) D UPDATE^DIE("","LRFDA(12)","","LRMSG")
+"RTN","LRVRMI2A",220,0)
+ ;
+"RTN","LRVRMI2A",221,0)
+ ; Add drug susceptibilities
+"RTN","LRVRMI2A",222,0)
+ S IEN2=1.999999999,IEN2=2
+"RTN","LRVRMI2A",223,0)
+ K LRFDA,LRIENS,LRMSG,DIERR
+"RTN","LRVRMI2A",224,0)
+ F  S IEN2=$O(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,12,IEN,IEN2)) Q:'IEN2  D  ;
+"RTN","LRVRMI2A",225,0)
+ . S STAT=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,12,IEN,IEN2,.01,0))
+"RTN","LRVRMI2A",226,0)
+ . D BLDSTAT^LRVRMI4A(63.05,23,STAT,.LRSTATUS)
+"RTN","LRVRMI2A",227,0)
+ . S LRIEN=R6339_","_LRIDT_","_LRDFN_","
+"RTN","LRVRMI2A",228,0)
+ . S DATA=^TMP("LRMI",$J,LRDFN,"MI",LRIDT,12,IEN,IEN2)
+"RTN","LRVRMI2A",229,0)
+ . S DNFLDS=$$DN2FLDS^LRVRMI4A(IEN2,,12)
+"RTN","LRVRMI2A",230,0)
+ . S FLD=$P(DNFLDS,"^",1)
+"RTN","LRVRMI2A",231,0)
+ . I FLD S LRFDA(12,63.39,LRIEN,FLD)=DATA
+"RTN","LRVRMI2A",232,0)
+ . S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,12,IEN,IEN2,.01))
+"RTN","LRVRMI2A",233,0)
+ . F I=1:1:3 I $P(LRX,"^",I) S LRCSR(IEN2_";1",$S(I<3:2,1:3),$P("LN^NLT^SCT","^",I))=$P(LRX,"^",I)
+"RTN","LRVRMI2A",234,0)
+ ;
+"RTN","LRVRMI2A",235,0)
+ ; File susceptibilities
+"RTN","LRVRMI2A",236,0)
+ I $D(LRFDA) D FILE^DIE("","LRFDA(12)","LRMSG")
+"RTN","LRVRMI2A",237,0)
+ ;
+"RTN","LRVRMI2A",238,0)
+ ; Store code system references
+"RTN","LRVRMI2A",239,0)
+ I $D(LRCSR) D CSR^LRVRMI4A(.LRCSR,LRDFN_",MI,"_LRIDT_",12,"_IEN_",")
+"RTN","LRVRMI2A",240,0)
+ ;
+"RTN","LRVRMI2A",241,0)
+ Q
+"RTN","LRVRMI2A",242,0)
+ ;
+"RTN","LRVRMI2A",243,0)
+ ;
+"RTN","LRVRMI2A",244,0)
+N17 ; Process Virology
+"RTN","LRVRMI2A",245,0)
+ N DIERR,IEN,IEN2,IEN3,LRFDA,LRIEN,LRMSG
+"RTN","LRVRMI2A",246,0)
+ ;
+"RTN","LRVRMI2A",247,0)
+ ;ZEXCEPT: LRDFN,LRDUZ,LRIDT,LRINTYPE,LRNOW,LRRPTAPP
+"RTN","LRVRMI2A",248,0)
+ ;
+"RTN","LRVRMI2A",249,0)
+ S (IEN,IEN2,IEN3)=0
+"RTN","LRVRMI2A",250,0)
+ F  S IEN=$O(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,17,IEN)) Q:IEN<1  D N17A
+"RTN","LRVRMI2A",251,0)
+ ;
+"RTN","LRVRMI2A",252,0)
+ S LRIEN=LRIDT_","_LRDFN_","
+"RTN","LRVRMI2A",253,0)
+ I LRINTYPE=10 S LRFDA(17,63.05,LRIEN,33)=LRNOW
+"RTN","LRVRMI2A",254,0)
+ S LRFDA(17,63.05,LRIEN,35)=$S($G(LRDUZ):LRDUZ,1:$G(DUZ))
+"RTN","LRVRMI2A",255,0)
+ D FILE^DIE("","LRFDA(17)","LRMSG")
+"RTN","LRVRMI2A",256,0)
+ S LRRPTAPP=1
+"RTN","LRVRMI2A",257,0)
+ Q
+"RTN","LRVRMI2A",258,0)
+ ;
+"RTN","LRVRMI2A",259,0)
+ ;
+"RTN","LRVRMI2A",260,0)
+N17A ; Process virus
+"RTN","LRVRMI2A",261,0)
+ ;
+"RTN","LRVRMI2A",262,0)
+ N DIERR,ISOID,LRFDA,LRI,LRIEN,LRMSG,LRN17,LRX,R6343
+"RTN","LRVRMI2A",263,0)
+ ;
+"RTN","LRVRMI2A",264,0)
+ ;ZEXCEPT: IEN,LRDFN,LRIDT,LRIENS,LRINTYPE
+"RTN","LRVRMI2A",265,0)
+ ;
+"RTN","LRVRMI2A",266,0)
+ S LRN17=^TMP("LRMI",$J,LRDFN,"MI",LRIDT,17,IEN,0)
+"RTN","LRVRMI2A",267,0)
+ Q:LRN17=""
+"RTN","LRVRMI2A",268,0)
+ S ISOID=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,17,IEN,.1))
+"RTN","LRVRMI2A",269,0)
+ Q:ISOID=""
+"RTN","LRVRMI2A",270,0)
+ ;
+"RTN","LRVRMI2A",271,0)
+ ; Delete ISOID entry if it exists on LEDI (LRINTYPE=10) interfaces
+"RTN","LRVRMI2A",272,0)
+ ; On UI interfaces update virus for this isolate id.
+"RTN","LRVRMI2A",273,0)
+ S R6343=$O(^LR(LRDFN,"MI",LRIDT,17,"C",ISOID,0))
+"RTN","LRVRMI2A",274,0)
+ I R6343 D
+"RTN","LRVRMI2A",275,0)
+ . K LRFDA,LRMSG,LRIENS,DIERR
+"RTN","LRVRMI2A",276,0)
+ . S LRIEN=R6343_","_LRIDT_","_LRDFN_","
+"RTN","LRVRMI2A",277,0)
+ . I LRINTYPE=10 D
+"RTN","LRVRMI2A",278,0)
+ . . S LRFDA(17,63.43,LRIEN,.01)="@"
+"RTN","LRVRMI2A",279,0)
+ . . S R6343=""
+"RTN","LRVRMI2A",280,0)
+ . E  S LRFDA(17,63.43,LRIEN,.01)=LRN17 ; virus
+"RTN","LRVRMI2A",281,0)
+ . D FILE^DIE("","LRFDA(17)","LRMSG")
+"RTN","LRVRMI2A",282,0)
+ ;
+"RTN","LRVRMI2A",283,0)
+ ; On LEDI (LRINTYPE=10) interfaces existing ISOID was deleted above so always add record
+"RTN","LRVRMI2A",284,0)
+ I 'R6343 D
+"RTN","LRVRMI2A",285,0)
+ . K LRFDA,LRMSG,LRIENS,DIERR
+"RTN","LRVRMI2A",286,0)
+ . S LRIEN="+1,"_LRIDT_","_LRDFN_","
+"RTN","LRVRMI2A",287,0)
+ . S LRFDA(17,63.43,LRIEN,.01)=LRN17 ; virus
+"RTN","LRVRMI2A",288,0)
+ . S LRFDA(17,63.43,LRIEN,.1)=ISOID
+"RTN","LRVRMI2A",289,0)
+ . D UPDATE^DIE("","LRFDA(17)","LRIENS","LRMSG")
+"RTN","LRVRMI2A",290,0)
+ . S R6343=$G(LRIENS(1))
+"RTN","LRVRMI2A",291,0)
+ ;
+"RTN","LRVRMI2A",292,0)
+ ; Store code system references
+"RTN","LRVRMI2A",293,0)
+ S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,17,IEN,0,.01))
+"RTN","LRVRMI2A",294,0)
+ F LRI=1:1:3 I $P(LRX,"^",LRI) D
+"RTN","LRVRMI2A",295,0)
+ . N LRDATA
+"RTN","LRVRMI2A",296,0)
+ . S LRDATA(.01)=LRDFN_",MI,"_LRIDT_",17,"_R6343_",0"
+"RTN","LRVRMI2A",297,0)
+ . S LRDATA(.02)=$S(LRI<3:2,1:3),LRDATA(.03)=$P(LRX,"^",LRI),LRDATA(.04)=$P("LN^NLT^SCT","^",LRI)
+"RTN","LRVRMI2A",298,0)
+ . D SETREF^LRUCSR(LRDFN,LRDATA(.01),.LRDATA,1)
+"RTN","LRVRMI2A",299,0)
+ ;
+"RTN","LRVRMI2A",300,0)
+ ; Store performing lab
+"RTN","LRVRMI2A",301,0)
+ S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,17,IEN,0,.01,1))
+"RTN","LRVRMI2A",302,0)
+ I $P(LRX,"^") D SETPL^LRRPLUA(LRDFN_",MI,"_LRIDT_",17,"_R6343_",0",$P(LRX,"^"))
+"RTN","LRVRMI2A",303,0)
+ ;
+"RTN","LRVRMI2A",304,0)
+ S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,17,IEN,0,.01,0))
+"RTN","LRVRMI2A",305,0)
+ D BLDSTAT^LRVRMI4A(63.05,34,$P(LRX,"^"),.LRSTATUS)
+"RTN","LRVRMI2A",306,0)
+ ;
+"RTN","LRVRMI2A",307,0)
+ Q
+"RTN","LRVRMI4A")
+0^2^B108857214^B96471289
+"RTN","LRVRMI4A",1,0)
+LRVRMI4A ;DALOI/STAFF - LAH/TMP TO FILE 63 ;02/22/17  08:09
+"RTN","LRVRMI4A",2,0)
+ ;;5.2;LAB SERVICE;**350,427,474,480**;Sep 27, 1994;Build 7
+"RTN","LRVRMI4A",3,0)
+ ;
+"RTN","LRVRMI4A",4,0)
+ ; Reference to global ^DD(filenumber,"GL") supported by ICR 999
+"RTN","LRVRMI4A",5,0)
+ ; Extracts the information in the ^TMP("LRMI",$J) global and stores it into the Lab Data micro subfile.
+"RTN","LRVRMI4A",6,0)
+ ;
+"RTN","LRVRMI4A",7,0)
+ Q
+"RTN","LRVRMI4A",8,0)
+ ;
+"RTN","LRVRMI4A",9,0)
+N3 ;Process Organism
+"RTN","LRVRMI4A",10,0)
+ ;
+"RTN","LRVRMI4A",11,0)
+ N DIERR,IEN,LRFDA,LRIEN,LRIENS,LRMSG
+"RTN","LRVRMI4A",12,0)
+ ;
+"RTN","LRVRMI4A",13,0)
+ ;ZEXCEPT: LRDFN,LRDUZ,LRIDT,LRINTYPE,LRNOW,LRRPTAPP
+"RTN","LRVRMI4A",14,0)
+ ;
+"RTN","LRVRMI4A",15,0)
+ S IEN=0
+"RTN","LRVRMI4A",16,0)
+ F  S IEN=$O(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,3,IEN)) Q:IEN<1  D N3A
+"RTN","LRVRMI4A",17,0)
+ ;
+"RTN","LRVRMI4A",18,0)
+ K LRFDA,LRIENS,LRMSG,DIERR
+"RTN","LRVRMI4A",19,0)
+ S LRIEN=LRIDT_","_LRDFN_","
+"RTN","LRVRMI4A",20,0)
+ I LRINTYPE=10 S LRFDA(3,63.05,LRIEN,11)=LRNOW
+"RTN","LRVRMI4A",21,0)
+ S LRFDA(3,63.05,LRIEN,11.55)=$S($G(LRDUZ):LRDUZ,1:$G(DUZ))
+"RTN","LRVRMI4A",22,0)
+ D FILE^DIE("","LRFDA(3)","LRMSG")
+"RTN","LRVRMI4A",23,0)
+ S LRRPTAPP=1
+"RTN","LRVRMI4A",24,0)
+ Q
+"RTN","LRVRMI4A",25,0)
+ ;
+"RTN","LRVRMI4A",26,0)
+ ;
+"RTN","LRVRMI4A",27,0)
+N3A ; Process each organism
+"RTN","LRVRMI4A",28,0)
+ ;
+"RTN","LRVRMI4A",29,0)
+ N DATA,DIERR,DNFLDS,FLD,I,IEN2,ISOID
+"RTN","LRVRMI4A",30,0)
+ N LRCSR,LRCMT,LRDATA,LRFDA,LRI,LRIEN,LRIENS,LRMSG,LRN3,LRX,R633,STAT
+"RTN","LRVRMI4A",31,0)
+ ;
+"RTN","LRVRMI4A",32,0)
+ ; ZEXCEPT: IEN,LRDFN,LRIDT,LRINTYPE,LRLL,LRPROF,LRSTATUS
+"RTN","LRVRMI4A",33,0)
+ ;
+"RTN","LRVRMI4A",34,0)
+ S LRN3=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,3,IEN,0))
+"RTN","LRVRMI4A",35,0)
+ Q:LRN3=""
+"RTN","LRVRMI4A",36,0)
+ S ISOID=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,3,IEN,.1))
+"RTN","LRVRMI4A",37,0)
+ Q:ISOID=""
+"RTN","LRVRMI4A",38,0)
+ ;
+"RTN","LRVRMI4A",39,0)
+ ; Delete ISOID entry if it exists on LEDI (LRINTYPE=10) interfaces
+"RTN","LRVRMI4A",40,0)
+ ; On UI interfaces update organism for this isolate id.
+"RTN","LRVRMI4A",41,0)
+ S R633=$O(^LR(LRDFN,"MI",LRIDT,3,"C",ISOID,0))
+"RTN","LRVRMI4A",42,0)
+ I R633 D
+"RTN","LRVRMI4A",43,0)
+ . K LRFDA,LRMSG,LRIENS,DIERR
+"RTN","LRVRMI4A",44,0)
+ . S LRIEN=R633_","_LRIDT_","_LRDFN_","
+"RTN","LRVRMI4A",45,0)
+ . I LRINTYPE=10 D
+"RTN","LRVRMI4A",46,0)
+ . . S LRFDA(3,63.3,LRIEN,.01)="@"
+"RTN","LRVRMI4A",47,0)
+ . . S R633=""
+"RTN","LRVRMI4A",48,0)
+ . E  D
+"RTN","LRVRMI4A",49,0)
+ . . S LRFDA(3,63.3,LRIEN,.01)=$P(LRN3,U) ; organism
+"RTN","LRVRMI4A",50,0)
+ . . I $P(LRN3,U,2)'="" S LRFDA(3,63.3,LRIEN,1)=$P(LRN3,U,2) ; qty
+"RTN","LRVRMI4A",51,0)
+ . D FILE^DIE("","LRFDA(3)","LRMSG")
+"RTN","LRVRMI4A",52,0)
+ ;
+"RTN","LRVRMI4A",53,0)
+ ; On LEDI (LRINTYPE=10) interfaces existing ISOID was deleted above so always add record
+"RTN","LRVRMI4A",54,0)
+ I 'R633 D
+"RTN","LRVRMI4A",55,0)
+ . K LRFDA,LRMSG,LRIENS,DIERR
+"RTN","LRVRMI4A",56,0)
+ . S LRIEN="+1,"_LRIDT_","_LRDFN_","
+"RTN","LRVRMI4A",57,0)
+ . S LRFDA(3,63.3,LRIEN,.01)=$P(LRN3,U) ; organism
+"RTN","LRVRMI4A",58,0)
+ . S LRFDA(3,63.3,LRIEN,.1)=ISOID
+"RTN","LRVRMI4A",59,0)
+ . S LRFDA(3,63.3,LRIEN,1)=$P(LRN3,U,2) ; qty
+"RTN","LRVRMI4A",60,0)
+ . D UPDATE^DIE("","LRFDA(3)","LRIENS","LRMSG")
+"RTN","LRVRMI4A",61,0)
+ . S R633=$G(LRIENS(1))
+"RTN","LRVRMI4A",62,0)
+ ;
+"RTN","LRVRMI4A",63,0)
+ Q:'R633
+"RTN","LRVRMI4A",64,0)
+ ;
+"RTN","LRVRMI4A",65,0)
+ ; Store code system references
+"RTN","LRVRMI4A",66,0)
+ S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,3,IEN,0,.01))
+"RTN","LRVRMI4A",67,0)
+ F LRI=1:1:3 I $P(LRX,"^",LRI) D
+"RTN","LRVRMI4A",68,0)
+ . N LRDATA
+"RTN","LRVRMI4A",69,0)
+ . S LRDATA(.01)=LRDFN_",MI,"_LRIDT_",3,"_R633_",0"
+"RTN","LRVRMI4A",70,0)
+ . S LRDATA(.02)=$S(LRI<3:2,1:3),LRDATA(.03)=$P(LRX,"^",LRI),LRDATA(.04)=$P("LN^NLT^SCT","^",LRI)
+"RTN","LRVRMI4A",71,0)
+ . D SETREF^LRUCSR(LRDFN,LRDATA(.01),.LRDATA,1)
+"RTN","LRVRMI4A",72,0)
+ ;
+"RTN","LRVRMI4A",73,0)
+ ; Store performing lab
+"RTN","LRVRMI4A",74,0)
+ S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,3,IEN,0,.01,1))
+"RTN","LRVRMI4A",75,0)
+ I $P(LRX,"^") D SETPL^LRRPLUA(LRDFN_",MI,"_LRIDT_",3,"_R633_",0",$P(LRX,"^"))
+"RTN","LRVRMI4A",76,0)
+ ;
+"RTN","LRVRMI4A",77,0)
+ S STAT=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,3,IEN,0,.01,0))
+"RTN","LRVRMI4A",78,0)
+ S STAT=$P(STAT,U,1)
+"RTN","LRVRMI4A",79,0)
+ D BLDSTAT(63.05,11.5,STAT,.LRSTATUS)
+"RTN","LRVRMI4A",80,0)
+ ;
+"RTN","LRVRMI4A",81,0)
+ ; Process organism comments
+"RTN","LRVRMI4A",82,0)
+ K LRFDA,LRIENS,LRMSG,DIERR
+"RTN","LRVRMI4A",83,0)
+ M LRCMT=^LR(LRDFN,"MI",LRIDT,3,IEN,1)
+"RTN","LRVRMI4A",84,0)
+ S IEN2=0
+"RTN","LRVRMI4A",85,0)
+ F  S IEN2=$O(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,3,IEN,1,IEN2)) Q:'IEN2  D
+"RTN","LRVRMI4A",86,0)
+ . S DATA=^TMP("LRMI",$J,LRDFN,"MI",LRIDT,3,IEN,1,IEN2,0),DATA=$S(DATA'="":DATA,1:" ")
+"RTN","LRVRMI4A",87,0)
+ . I DATA'=" ",$$DUPCHK^LRVRMI3(LRLL,LRPROF,.LRCMT,DATA) Q
+"RTN","LRVRMI4A",88,0)
+ . S LRIEN="+"_IEN2_","_R633_","_LRIDT_","_LRDFN_","
+"RTN","LRVRMI4A",89,0)
+ . S LRFDA(3,63.31,LRIEN,.01)=DATA
+"RTN","LRVRMI4A",90,0)
+ I $D(LRFDA) D UPDATE^DIE("","LRFDA(3)","","LRMSG")
+"RTN","LRVRMI4A",91,0)
+ ;
+"RTN","LRVRMI4A",92,0)
+ ; Add drug susceptibilities
+"RTN","LRVRMI4A",93,0)
+ S IEN2=2
+"RTN","LRVRMI4A",94,0)
+ K LRFDA,LRIENS,LRMSG,DIERR
+"RTN","LRVRMI4A",95,0)
+ F  S IEN2=$O(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,3,IEN,IEN2)) Q:'IEN2  D
+"RTN","LRVRMI4A",96,0)
+ . S STAT=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,3,IEN,IEN2,.01,0))
+"RTN","LRVRMI4A",97,0)
+ . S STAT=$P(STAT,U,1)
+"RTN","LRVRMI4A",98,0)
+ . D BLDSTAT(63.05,11.5,STAT,.LRSTATUS)
+"RTN","LRVRMI4A",99,0)
+ . S LRIEN=R633_","_LRIDT_","_LRDFN_","
+"RTN","LRVRMI4A",100,0)
+ . S DATA=^TMP("LRMI",$J,LRDFN,"MI",LRIDT,3,IEN,IEN2)
+"RTN","LRVRMI4A",101,0)
+ . S DNFLDS=$$DN2FLDS(IEN2,,3)
+"RTN","LRVRMI4A",102,0)
+ . F I=1:1:3 D  ;
+"RTN","LRVRMI4A",103,0)
+ . . S FLD=$P(DNFLDS,"^",I)
+"RTN","LRVRMI4A",104,0)
+ . . Q:'FLD
+"RTN","LRVRMI4A",105,0)
+ . . S LRFDA(3,63.3,LRIEN,FLD)=$P(DATA,U,I)
+"RTN","LRVRMI4A",106,0)
+ . S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,3,IEN,IEN2,.01))
+"RTN","LRVRMI4A",107,0)
+ . F I=1:1:3 I $P(LRX,"^",I) S LRCSR(IEN2_";1",$S(I<3:2,1:3),$P("LN^NLT^SCT","^",I))=$P(LRX,"^",I)
+"RTN","LRVRMI4A",108,0)
+ ; File susceptibilities
+"RTN","LRVRMI4A",109,0)
+ I $D(LRFDA) D FILE^DIE("","LRFDA(3)","LRMSG")
+"RTN","LRVRMI4A",110,0)
+ ;
+"RTN","LRVRMI4A",111,0)
+ ; Store code system references
+"RTN","LRVRMI4A",112,0)
+ I $D(LRCSR) D CSR(.LRCSR,LRDFN_",MI,"_LRIDT_",3,"_IEN_",")
+"RTN","LRVRMI4A",113,0)
+ ;
+"RTN","LRVRMI4A",114,0)
+ Q
+"RTN","LRVRMI4A",115,0)
+ ;
+"RTN","LRVRMI4A",116,0)
+ ;
+"RTN","LRVRMI4A",117,0)
+N6 ; Process Parasite
+"RTN","LRVRMI4A",118,0)
+ ;
+"RTN","LRVRMI4A",119,0)
+ N DIERR,IEN,LRFDA,LRIEN,LRIENS,LRMSG
+"RTN","LRVRMI4A",120,0)
+ ;
+"RTN","LRVRMI4A",121,0)
+ ;ZEXCEPT: LRDFN,LRDUZ,LRIDT,LRINTYPE,LRLL,LRNOW,LRPROF,LRRPTAPP,LRSTATUS
+"RTN","LRVRMI4A",122,0)
+ ;
+"RTN","LRVRMI4A",123,0)
+ S IEN=0
+"RTN","LRVRMI4A",124,0)
+ F  S IEN=$O(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,6,IEN)) Q:IEN<1  D N6A
+"RTN","LRVRMI4A",125,0)
+ ;
+"RTN","LRVRMI4A",126,0)
+ S LRIEN=LRIDT_","_LRDFN_","
+"RTN","LRVRMI4A",127,0)
+ I LRINTYPE=10 S LRFDA(6,63.05,LRIEN,14)=LRNOW
+"RTN","LRVRMI4A",128,0)
+ S LRFDA(6,63.05,LRIEN,15.5)=$S($G(LRDUZ):LRDUZ,1:$G(DUZ))
+"RTN","LRVRMI4A",129,0)
+ D FILE^DIE("","LRFDA(6)","LRMSG")
+"RTN","LRVRMI4A",130,0)
+ S LRRPTAPP=1
+"RTN","LRVRMI4A",131,0)
+ Q
+"RTN","LRVRMI4A",132,0)
+ ;
+"RTN","LRVRMI4A",133,0)
+ ;
+"RTN","LRVRMI4A",134,0)
+N6A ; Process individual parasite result
+"RTN","LRVRMI4A",135,0)
+ ;
+"RTN","LRVRMI4A",136,0)
+ N DIERR,IEN2,ISOID,LRFDA,LRI,LRIEN,LRIENS,LRINTYPE,LRMSG,LRN6,LRX,R6334,STAT
+"RTN","LRVRMI4A",137,0)
+ ;
+"RTN","LRVRMI4A",138,0)
+ ;ZEXCEPT: LRDFN,LRIDT,LRSTATUS,IEN
+"RTN","LRVRMI4A",139,0)
+ ;
+"RTN","LRVRMI4A",140,0)
+ S LRN6=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,6,IEN,0))
+"RTN","LRVRMI4A",141,0)
+ Q:LRN6=""
+"RTN","LRVRMI4A",142,0)
+ S ISOID=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,6,IEN,.1))
+"RTN","LRVRMI4A",143,0)
+ Q:ISOID=""
+"RTN","LRVRMI4A",144,0)
+ ;
+"RTN","LRVRMI4A",145,0)
+ ; Delete ISOID entry if it exists on LEDI (LRINTYPE=10) interfaces
+"RTN","LRVRMI4A",146,0)
+ ; On UI interfaces update parasite for this isolate id.
+"RTN","LRVRMI4A",147,0)
+ S R6334=$O(^LR(LRDFN,"MI",LRIDT,6,"C",ISOID,0))
+"RTN","LRVRMI4A",148,0)
+ I R6334 D
+"RTN","LRVRMI4A",149,0)
+ . K LRFDA,LRMSG,LRIENS,DIERR
+"RTN","LRVRMI4A",150,0)
+ . S LRIEN=R6334_","_LRIDT_","_LRDFN_","
+"RTN","LRVRMI4A",151,0)
+ . I LRINTYPE=10 D
+"RTN","LRVRMI4A",152,0)
+ . . S LRFDA(6,63.34,LRIEN,.01)="@"
+"RTN","LRVRMI4A",153,0)
+ . . S R6334=""
+"RTN","LRVRMI4A",154,0)
+ . E  S LRFDA(6,63.34,LRIEN,.01)=LRN6 ; parasite
+"RTN","LRVRMI4A",155,0)
+ . D FILE^DIE("","LRFDA(6)","LRMSG")
+"RTN","LRVRMI4A",156,0)
+ ;
+"RTN","LRVRMI4A",157,0)
+ ; On LEDI (LRINTYPE=10) interfaces existing ISOID was deleted above so always add record
+"RTN","LRVRMI4A",158,0)
+ I 'R6334 D
+"RTN","LRVRMI4A",159,0)
+ . K LRFDA,LRMSG,LRIENS,DIERR
+"RTN","LRVRMI4A",160,0)
+ . S LRIEN="+1,"_LRIDT_","_LRDFN_","
+"RTN","LRVRMI4A",161,0)
+ . S LRFDA(6,63.34,LRIEN,.01)=LRN6 ; parasite
+"RTN","LRVRMI4A",162,0)
+ . S LRFDA(6,63.34,LRIEN,.1)=ISOID
+"RTN","LRVRMI4A",163,0)
+ . D UPDATE^DIE("","LRFDA(6)","LRIENS","LRMSG")
+"RTN","LRVRMI4A",164,0)
+ . S R6334=$G(LRIENS(1))
+"RTN","LRVRMI4A",165,0)
+ ;
+"RTN","LRVRMI4A",166,0)
+ Q:'R6334
+"RTN","LRVRMI4A",167,0)
+ ;
+"RTN","LRVRMI4A",168,0)
+ ; Store code system references
+"RTN","LRVRMI4A",169,0)
+ S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,6,IEN,0,.01))
+"RTN","LRVRMI4A",170,0)
+ F LRI=1:1:3 I $P(LRX,"^",LRI) D
+"RTN","LRVRMI4A",171,0)
+ . N LRDATA
+"RTN","LRVRMI4A",172,0)
+ . S LRDATA(.01)=LRDFN_",MI,"_LRIDT_",6,"_IEN_",0"
+"RTN","LRVRMI4A",173,0)
+ . S LRDATA(.02)=$S(LRI<3:2,1:3),LRDATA(.03)=$P(LRX,"^",LRI),LRDATA(.04)=$P("LN^NLT^SCT","^",LRI)
+"RTN","LRVRMI4A",174,0)
+ . D SETREF^LRUCSR(LRDFN,LRDATA(.01),.LRDATA,1)
+"RTN","LRVRMI4A",175,0)
+ ;
+"RTN","LRVRMI4A",176,0)
+ ; Store performing lab
+"RTN","LRVRMI4A",177,0)
+ S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,6,IEN,0,.01,1))
+"RTN","LRVRMI4A",178,0)
+ I $P(LRX,"^") D SETPL^LRRPLUA(LRDFN_",MI,"_LRIDT_",6,"_R6334_",0",$P(LRX,"^"))
+"RTN","LRVRMI4A",179,0)
+ ;
+"RTN","LRVRMI4A",180,0)
+ S STAT=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,6,IEN,0,.01,0))
+"RTN","LRVRMI4A",181,0)
+ S STAT=$P(STAT,U,1)
+"RTN","LRVRMI4A",182,0)
+ D BLDSTAT(63.05,15,STAT,.LRSTATUS)
+"RTN","LRVRMI4A",183,0)
+ ;
+"RTN","LRVRMI4A",184,0)
+ ; Stage results
+"RTN","LRVRMI4A",185,0)
+ K LRFDA,LRMSG,LRIENS,DIERR
+"RTN","LRVRMI4A",186,0)
+ S IEN2=0
+"RTN","LRVRMI4A",187,0)
+ F  S IEN2=$O(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,6,IEN,1,IEN2)) Q:'IEN2  D N6B
+"RTN","LRVRMI4A",188,0)
+ ;
+"RTN","LRVRMI4A",189,0)
+ Q
+"RTN","LRVRMI4A",190,0)
+ ;
+"RTN","LRVRMI4A",191,0)
+ ;
+"RTN","LRVRMI4A",192,0)
+N6B ; Process Parasite Stage results
+"RTN","LRVRMI4A",193,0)
+ ;
+"RTN","LRVRMI4A",194,0)
+ N DATA,DIERR,IEN3,LRCMT,LRCSR,LRFDA,LRI,LRIEN,LRIENS,LRMSG,LRPL,LRX,R6335,STAT
+"RTN","LRVRMI4A",195,0)
+ ;
+"RTN","LRVRMI4A",196,0)
+ ;ZEXCEPT: ISOID,LRDFN,LRIDT,LRINTYPE,LRLL,LRPROF,IEN,IEN2,LRSTATUS,R6334
+"RTN","LRVRMI4A",197,0)
+ ;
+"RTN","LRVRMI4A",198,0)
+ ; Delete STAGE entry if it exists on LEDI (LRINTYPE=10) interfaces
+"RTN","LRVRMI4A",199,0)
+ ; On UI interfaces update STAGE for this isolate id.
+"RTN","LRVRMI4A",200,0)
+ S DATA=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,6,IEN,1,IEN2,0))
+"RTN","LRVRMI4A",201,0)
+ S R6335=$O(^LR(LRDFN,"MI",LRIDT,6,IEN,1,"B",ISOID,0))
+"RTN","LRVRMI4A",202,0)
+ I R6335 D
+"RTN","LRVRMI4A",203,0)
+ . K LRFDA,LRMSG,LRIENS,DIERR
+"RTN","LRVRMI4A",204,0)
+ . S LRIEN=R6335_","_LRIDT_","_LRDFN_","
+"RTN","LRVRMI4A",205,0)
+ . I LRINTYPE=10 D
+"RTN","LRVRMI4A",206,0)
+ . . S LRFDA(6,63.35,LRIEN,.01)="@"
+"RTN","LRVRMI4A",207,0)
+ . . S R6335=""
+"RTN","LRVRMI4A",208,0)
+ . E  D
+"RTN","LRVRMI4A",209,0)
+ . . S LRFDA(6,63.35,LRIEN,.01)=$P(DATA,U,1) ;stage
+"RTN","LRVRMI4A",210,0)
+ . . S LRFDA(6,63.35,LRIEN,1)=$P(DATA,U,2) ;qty
+"RTN","LRVRMI4A",211,0)
+ . D FILE^DIE("","LRFDA(6)","LRMSG")
+"RTN","LRVRMI4A",212,0)
+ ;
+"RTN","LRVRMI4A",213,0)
+ ; On LEDI (LRINTYPE=10) interfaces existing STAGE was deleted above so always add record
+"RTN","LRVRMI4A",214,0)
+ I 'R6335 D
+"RTN","LRVRMI4A",215,0)
+ . K LRFDA,LRMSG,LRIENS,DIERR
+"RTN","LRVRMI4A",216,0)
+ . S LRIEN="+"_IEN2_","_R6334_","_LRIDT_","_LRDFN_","
+"RTN","LRVRMI4A",217,0)
+ . S DATA=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,6,IEN,1,IEN2,0))
+"RTN","LRVRMI4A",218,0)
+ . S LRFDA(6,63.35,LRIEN,.01)=$P(DATA,U,1) ;stage
+"RTN","LRVRMI4A",219,0)
+ . S LRFDA(6,63.35,LRIEN,1)=$P(DATA,U,2) ;qty
+"RTN","LRVRMI4A",220,0)
+ . D UPDATE^DIE("","LRFDA(6)","LRIENS","LRMSG")
+"RTN","LRVRMI4A",221,0)
+ . S R6335=$G(LRIENS(IEN2))
+"RTN","LRVRMI4A",222,0)
+ ;
+"RTN","LRVRMI4A",223,0)
+ Q:'R6335
+"RTN","LRVRMI4A",224,0)
+ ;
+"RTN","LRVRMI4A",225,0)
+ S STAT=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,6,IEN,1,IEN2,0,.01,0))
+"RTN","LRVRMI4A",226,0)
+ S STAT=$P(STAT,U,1)
+"RTN","LRVRMI4A",227,0)
+ ;
+"RTN","LRVRMI4A",228,0)
+ ; Store code system references for stage
+"RTN","LRVRMI4A",229,0)
+ S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,6,IEN,1,IEN2,.01))
+"RTN","LRVRMI4A",230,0)
+ F LRI=1:1:3 I $P(LRX,"^",LRI) D
+"RTN","LRVRMI4A",231,0)
+ . N LRDATA
+"RTN","LRVRMI4A",232,0)
+ . S LRDATA(.01)=LRDFN_",MI,"_LRIDT_",6,"_R6334_",1,"_R6335_",0;1"
+"RTN","LRVRMI4A",233,0)
+ . S LRDATA(.02)=$S(LRI<3:2,1:3),LRDATA(.03)=$P(LRX,"^",LRI),LRDATA(.04)=$P("LN^NLT^SCT","^",LRI)
+"RTN","LRVRMI4A",234,0)
+ . D SETREF^LRUCSR(LRDFN,LRDATA(.01),.LRDATA,1)
+"RTN","LRVRMI4A",235,0)
+ ;
+"RTN","LRVRMI4A",236,0)
+ ; Store code system references for quantity
+"RTN","LRVRMI4A",237,0)
+ S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,6,IEN,1,IEN2,1))
+"RTN","LRVRMI4A",238,0)
+ F LRI=1:1:3 I $P(LRX,"^",LRI) D
+"RTN","LRVRMI4A",239,0)
+ . N LRDATA
+"RTN","LRVRMI4A",240,0)
+ . S LRDATA(.01)=LRDFN_",MI,"_LRIDT_",6,"_R6334_",1,"_R6335_",0;2"
+"RTN","LRVRMI4A",241,0)
+ . S LRDATA(.02)=$S(LRI<3:2,1:3),LRDATA(.03)=$P(LRX,"^",LRI),LRDATA(.04)=$P("LN^NLT^SCT","^",LRI)
+"RTN","LRVRMI4A",242,0)
+ . D SETREF^LRUCSR(LRDFN,LRDATA(.01),.LRDATA,1)
+"RTN","LRVRMI4A",243,0)
+ ;
+"RTN","LRVRMI4A",244,0)
+ ; Store performing lab
+"RTN","LRVRMI4A",245,0)
+ S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",6,IEN,1,IEN2,0,.01,1))
+"RTN","LRVRMI4A",246,0)
+ I $P(LRX,"^") D SETPL^LRRPLUA(LRDFN_",MI,"_LRIDT_",6,"_R6334_",1,"_R6335_",0",$P(LRX,"^"))
+"RTN","LRVRMI4A",247,0)
+ ;
+"RTN","LRVRMI4A",248,0)
+ D BLDSTAT(63.05,15,STAT,.LRSTATUS)
+"RTN","LRVRMI4A",249,0)
+ ;
+"RTN","LRVRMI4A",250,0)
+ ; get stage comments
+"RTN","LRVRMI4A",251,0)
+ K LRFDA,LRMSG,LRIENS,DIERR
+"RTN","LRVRMI4A",252,0)
+ M LRCMT=^LR(LRDFN,"MI",LRIDT,6,IEN,1,IEN2,1)
+"RTN","LRVRMI4A",253,0)
+ S LRX=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,6,IEN,1,IEN2,1,0))
+"RTN","LRVRMI4A",254,0)
+ S STAT=$P(LRX,U,4)
+"RTN","LRVRMI4A",255,0)
+ D BLDSTAT(63.05,15,STAT,.LRSTATUS)
+"RTN","LRVRMI4A",256,0)
+ S IEN3=0
+"RTN","LRVRMI4A",257,0)
+ F  S IEN3=$O(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,6,IEN,1,IEN2,1,IEN3)) Q:IEN3<1  D
+"RTN","LRVRMI4A",258,0)
+ . S DATA=$G(^TMP("LRMI",$J,LRDFN,"MI",LRIDT,6,IEN,1,IEN2,1,IEN3,0)),DATA=$S(DATA'="":DATA,1:" ")
+"RTN","LRVRMI4A",259,0)
+ . I DATA'=" ",$$DUPCHK^LRVRMI3(LRLL,LRPROF,.LRCMT,DATA) Q
+"RTN","LRVRMI4A",260,0)
+ . S LRIEN="+"_IEN3_","_R6335_","_R6334_","_LRIDT_","_LRDFN_","
+"RTN","LRVRMI4A",261,0)
+ . S LRFDA(6,63.351,LRIEN,.01)=DATA
+"RTN","LRVRMI4A",262,0)
+ . I $P(LRX,"^") S LRPL(IEN3)=$P(LRX,"^")
+"RTN","LRVRMI4A",263,0)
+ . I $P(LRX,"^",3) S LRCSR(IEN3,2,"LN")=$P(LRX,"^",3)
+"RTN","LRVRMI4A",264,0)
+ ;
+"RTN","LRVRMI4A",265,0)
+ I '$D(LRFDA) Q
+"RTN","LRVRMI4A",266,0)
+ ;
+"RTN","LRVRMI4A",267,0)
+ D UPDATE^DIE("","LRFDA(6)","LRIENS","LRMSG")
+"RTN","LRVRMI4A",268,0)
+ ;
+"RTN","LRVRMI4A",269,0)
+ ; Store performing lab
+"RTN","LRVRMI4A",270,0)
+ S IEN3=0
+"RTN","LRVRMI4A",271,0)
+ F  S IEN3=$O(LRPL(IEN3)) Q:'IEN3  I $G(LRIENS(IEN3)) D SETPL^LRRPLUA(LRDFN_",MI,"_LRIDT_",6,"_LRIENS(IEN3),LRPL(IEN3))
+"RTN","LRVRMI4A",272,0)
+ ;
+"RTN","LRVRMI4A",273,0)
+ ; Store code system references
+"RTN","LRVRMI4A",274,0)
+ I $D(LRCSR) D CSR^LRVRMI4(.LRCSR,.LRIENS,LRDFN_",MI,"_LRIDT_",6,")
+"RTN","LRVRMI4A",275,0)
+ Q
+"RTN","LRVRMI4A",276,0)
+ ;
+"RTN","LRVRMI4A",277,0)
+ ;
+"RTN","LRVRMI4A",278,0)
+DN2FLDS(DN,FN,SUB) ;
+"RTN","LRVRMI4A",279,0)
+ ; Convert a drug node to a field number
+"RTN","LRVRMI4A",280,0)
+ ;File ^DD(filenumber,"GL")/999
+"RTN","LRVRMI4A",281,0)
+ ; Inputs
+"RTN","LRVRMI4A",282,0)
+ ;   DN : Drug Node (ie 2.0003)
+"RTN","LRVRMI4A",283,0)
+ ;   FN : <opt> File Number (ie 63.3)
+"RTN","LRVRMI4A",284,0)
+ ;  SUB : <opt> Subscript (ie 3)
+"RTN","LRVRMI4A",285,0)
+ ;       : Note: either FN or SUB must be supplied
+"RTN","LRVRMI4A",286,0)
+ ; Output
+"RTN","LRVRMI4A",287,0)
+ ;   The three associated field numbers for the drug node
+"RTN","LRVRMI4A",288,0)
+ ;     ie 15^15.1^15.2
+"RTN","LRVRMI4A",289,0)
+ N FLDS,I,X
+"RTN","LRVRMI4A",290,0)
+ S DN=$G(DN),FN=$G(FN),SUB=$G(SUB)
+"RTN","LRVRMI4A",291,0)
+ S FLDS=""
+"RTN","LRVRMI4A",292,0)
+ I FN="" D  ;
+"RTN","LRVRMI4A",293,0)
+ . I SUB=3 S FN=63.3
+"RTN","LRVRMI4A",294,0)
+ . I SUB=6 S FN=63.34
+"RTN","LRVRMI4A",295,0)
+ . I SUB=9 S FN=63.37
+"RTN","LRVRMI4A",296,0)
+ . I SUB=12 S FN=63.39
+"RTN","LRVRMI4A",297,0)
+ . I SUB=17 S FN=63.43
+"RTN","LRVRMI4A",298,0)
+ I $D(^DD(FN,"GL",DN)) D  ;
+"RTN","LRVRMI4A",299,0)
+ . F I=1:1:3 S X=$O(^DD(FN,"GL",DN,I,0)) I X S $P(FLDS,"^",I)=X
+"RTN","LRVRMI4A",300,0)
+ Q FLDS
+"RTN","LRVRMI4A",301,0)
+ ;
+"RTN","LRVRMI4A",302,0)
+ ;
+"RTN","LRVRMI4A",303,0)
+BLDSTAT(FN,FLD,STAT,DATA) ;
+"RTN","LRVRMI4A",304,0)
+ ; Builds the DATA array used for setting status(es)
+"RTN","LRVRMI4A",305,0)
+ ; Inputs
+"RTN","LRVRMI4A",306,0)
+ ;   FN : File Number  (ie 63.5)
+"RTN","LRVRMI4A",307,0)
+ ;  FLD : Field Number  (ie 19)
+"RTN","LRVRMI4A",308,0)
+ ; STAT : Status  (ie "F")
+"RTN","LRVRMI4A",309,0)
+ ; DATA <byref> : See Outputs
+"RTN","LRVRMI4A",310,0)
+ ;
+"RTN","LRVRMI4A",311,0)
+ ; Outputs
+"RTN","LRVRMI4A",312,0)
+ ; DATA <byref> : DATA(file#,field#)=status  DATA(63.05,19)="P"
+"RTN","LRVRMI4A",313,0)
+ ;
+"RTN","LRVRMI4A",314,0)
+ N CURR
+"RTN","LRVRMI4A",315,0)
+ I $G(STAT)="" Q
+"RTN","LRVRMI4A",316,0)
+ I STAT'?1(1"P",1"F",1"C") S STAT="P"
+"RTN","LRVRMI4A",317,0)
+ S CURR=$G(DATA(FN,FLD))
+"RTN","LRVRMI4A",318,0)
+ I CURR="" S DATA(FN,FLD)=STAT Q
+"RTN","LRVRMI4A",319,0)
+ I CURR=STAT Q
+"RTN","LRVRMI4A",320,0)
+ I CURR="P" Q
+"RTN","LRVRMI4A",321,0)
+ I CURR="F" D
+"RTN","LRVRMI4A",322,0)
+ . I STAT="P" S DATA(FN,FLD)="P" Q
+"RTN","LRVRMI4A",323,0)
+ . I STAT="C" S DATA(FN,FLD)="C" Q
+"RTN","LRVRMI4A",324,0)
+ Q
+"RTN","LRVRMI4A",325,0)
+ ;
+"RTN","LRVRMI4A",326,0)
+ ;
+"RTN","LRVRMI4A",327,0)
+SETSTAT(DATA) ;
+"RTN","LRVRMI4A",328,0)
+ ; Goes thru DATA array and files the status(es)
+"RTN","LRVRMI4A",329,0)
+ ; Inputs
+"RTN","LRVRMI4A",330,0)
+ ;   DATA <byref> : DATA(file#,field#)=status  ie DATA(63.05,19)="P"
+"RTN","LRVRMI4A",331,0)
+ ; Outputs
+"RTN","LRVRMI4A",332,0)
+ ;   DATA <byref> : Sets DATA(0)=overall status (P,F,C)
+"RTN","LRVRMI4A",333,0)
+ ;
+"RTN","LRVRMI4A",334,0)
+ N FLD,FN,LRFDA,LRIEN,LRMSG,NODE,STAT,STAT2
+"RTN","LRVRMI4A",335,0)
+ ;
+"RTN","LRVRMI4A",336,0)
+ ;ZEXCEPT: LRDFN,LRIDT
+"RTN","LRVRMI4A",337,0)
+ ;
+"RTN","LRVRMI4A",338,0)
+ S LRIEN=LRIDT_","_LRDFN_",",STAT2=""
+"RTN","LRVRMI4A",339,0)
+ S NODE="DATA(0)"
+"RTN","LRVRMI4A",340,0)
+ F  S NODE=$Q(@NODE) Q:NODE=""  D
+"RTN","LRVRMI4A",341,0)
+ . S FN=$QS(NODE,1),FLD=$QS(NODE,2)
+"RTN","LRVRMI4A",342,0)
+ . I 'FN!('FLD) Q
+"RTN","LRVRMI4A",343,0)
+ . S STAT=DATA(FN,FLD)
+"RTN","LRVRMI4A",344,0)
+ . ; derive "overall" status
+"RTN","LRVRMI4A",345,0)
+ . ; P > C > F
+"RTN","LRVRMI4A",346,0)
+ . I STAT2="" S STAT2=STAT
+"RTN","LRVRMI4A",347,0)
+ . I STAT="P" S STAT2="P"
+"RTN","LRVRMI4A",348,0)
+ . I STAT="C",STAT2'="P" S STAT2="C"
+"RTN","LRVRMI4A",349,0)
+ . I STAT="F",STAT2'="C",STAT2'="P" S STAT2="F"
+"RTN","LRVRMI4A",350,0)
+ . ;
+"RTN","LRVRMI4A",351,0)
+ . ;convert "C" to "F"
+"RTN","LRVRMI4A",352,0)
+ . I STAT="C" S STAT="F"
+"RTN","LRVRMI4A",353,0)
+ . S LRFDA(1,FN,LRIEN,FLD)=STAT
+"RTN","LRVRMI4A",354,0)
+ I $D(LRFDA) D FILE^DIE("","LRFDA(1)","LRMSG")
+"RTN","LRVRMI4A",355,0)
+ S DATA(0)=STAT2
+"RTN","LRVRMI4A",356,0)
+ Q
+"RTN","LRVRMI4A",357,0)
+ ;
+"RTN","LRVRMI4A",358,0)
+ ;
+"RTN","LRVRMI4A",359,0)
+CSR(LRCSR,LRREF) ; Store code system references
+"RTN","LRVRMI4A",360,0)
+ ; Call with LRCSR = array of ien/codes to store as references (pass by value)
+"RTN","LRVRMI4A",361,0)
+ ;           LRREF = root of reference to build full reference to data
+"RTN","LRVRMI4A",362,0)
+ ;
+"RTN","LRVRMI4A",363,0)
+ N IEN,LRDATA,LRDATAREF,LRDFN,LRROOT,ROLE,TYPE
+"RTN","LRVRMI4A",364,0)
+ ;
+"RTN","LRVRMI4A",365,0)
+ S LRROOT="LRCSR",LRDFN=$P(LRREF,",")
+"RTN","LRVRMI4A",366,0)
+ F  S LRROOT=$Q(@LRROOT) Q:LRROOT=""  D
+"RTN","LRVRMI4A",367,0)
+ . S IEN=$QS(LRROOT,1),ROLE=$QS(LRROOT,2),TYPE=$QS(LRROOT,3),LRDATAREF=LRREF_IEN
+"RTN","LRVRMI4A",368,0)
+ . S LRDATA(.01)=LRDATAREF,LRDATA(.02)=ROLE,LRDATA(.03)=LRCSR(IEN,ROLE,TYPE),LRDATA(.04)=TYPE
+"RTN","LRVRMI4A",369,0)
+ . D SETREF^LRUCSR(LRDFN,LRDATAREF,.LRDATA,1)
+"RTN","LRVRMI4A",370,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",9427,6)
+^386
+**END**
+**END**
+

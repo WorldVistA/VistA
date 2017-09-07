@@ -1,0 +1,412 @@
+$TXT Created by             KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Monday, 02/13/17 at 03:24
+=============================================================================
+Run Date: APR 26, 2017                     Designation: XU*8*676
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #528                      Status: Released
+                  Compliance Date: MAY 27, 2017
+=============================================================================
+
+
+Subject: MFS PARAMETERS FOR ALLERGIES
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+                 XU*8*676
+  
+ This patch distributes the parameters required by Master File Server (MFS)
+ to support data standardization messaging.
+  
+ 1) Updates the MASTER FILE PARAMETERS file (#4.001) with new
+    entries Reactant(#120.82), and Reactions (#120.83):
+  
+ NUMBER: 120.82                          MASTER FILE: 120.82
+   SEGMENT NAME: RDT                     MFI CODE: GMR Allergies
+   PRE-UPDATE ROUTINE: NULL              POST-UPDATE ROUTINE: NULL
+   MAIL GROUP: GMRA VERIFY ALLERGY-MA    MASTER FILE IDENTIFIER: Reactants
+ COLUMN DESCRIPTION: Term                FIELD NUMBER: .01
+   HL7 DATA TYPE: ST                     COLUMN LENGTH: 30
+   SEQUENCE: 1
+ COLUMN DESCRIPTION: Allergy_Type        FIELD NUMBER: 1
+   SEQUENCE: 2
+ COLUMN DESCRIPTION: Search_Term         FIELD NUMBER: .01
+   HL7 DATA TYPE: ST                     SUBFILE NUMBER: 120.823
+   SUBFILE LKUP COLUMN: Search_Term      LIST: YES
+   COLUMN LENGTH: 30                     CLEAN MULTIPLE: NO
+   SEQUENCE: 3
+ COLUMN DESCRIPTION: VistA_Mapping_Target
+   FIELD NUMBER: .01                     HL7 DATA TYPE: ST
+   SUBFILE NUMBER: 120.822
+   SUBFILE LKUP COLUMN: VistA_Mapping_Target
+   COLUMN LENGTH: 99                     SEQUENCE: 4
+ SUBFILE SEQUENCE: 1
+   SUBFILE COLUMN NAME: VistA_Mapping_Target
+   SUBFILE FIELD NUMBER: .01
+ COLUMN DESCRIPTION: has_drug_class      FIELD NUMBER: .01
+   HL7 DATA TYPE: ST                     SUBFILE NUMBER: 120.8205
+   SUBFILE LKUP COLUMN: has_drug_class   LIST: YES
+   COLUMN LENGTH: 80                     CLEAN MULTIPLE: NO
+   VUID PREFIX: VUID                     SEQUENCE: 5
+ COLUMN DESCRIPTION: has_drug_ingredient
+   FIELD NUMBER: .01                     HL7 DATA TYPE: ST
+   SUBFILE NUMBER: 120.824               SUBFILE LKUP COLUMN: 
+ has_drug_ingredient
+   LIST: YES                             COLUMN LENGTH: 80
+   CLEAN MULTIPLE: NO                    VUID PREFIX: VUID
+   SEQUENCE: 6
+ COLUMN DESCRIPTION: Status              FIELD NUMBER: .02
+   HL7 DATA TYPE: NM                     SUBFILE NUMBER: 120.8299
+   SUBFILE LKUP COLUMN: effectiveDate    COLUMN LENGTH: 1
+   SEQUENCE: 7
+ COLUMN DESCRIPTION: name                FIELD NUMBER: .01
+   HL7 DATA TYPE: ST                     COLUMN LENGTH: 30
+ COLUMN DESCRIPTION: allergyType         FIELD NUMBER: 1
+   HL7 DATA TYPE: ST                     COLUMN LENGTH: 20
+ COLUMN DESCRIPTION: synonym             FIELD NUMBER: .01
+   HL7 DATA TYPE: ST                     SUBFILE NUMBER: 120.823
+   SUBFILE LKUP COLUMN: synonym          COLUMN LENGTH: 30
+   CLEAN MULTIPLE: YES
+ COLUMN DESCRIPTION: nationalAllergy     FIELD NUMBER: 2
+   HL7 DATA TYPE: ST                     COLUMN LENGTH: 1
+ COLUMN DESCRIPTION: vaDrugClasses       FIELD NUMBER: .01
+   HL7 DATA TYPE: ST                     SUBFILE NUMBER: 120.8205
+   SUBFILE LKUP COLUMN: vaDrugClasses    COLUMN LENGTH: 5
+   CLEAN MULTIPLE: YES                   VUID PREFIX: VUID
+ COLUMN DESCRIPTION: drugIngredients     FIELD NUMBER: .01
+   HL7 DATA TYPE: ST                     SUBFILE NUMBER: 120.824
+   SUBFILE LKUP COLUMN: drugIngredients  COLUMN LENGTH: 64
+   CLEAN MULTIPLE: YES                   VUID PREFIX: VUID
+ COLUMN DESCRIPTION: status              FIELD NUMBER: .02
+   HL7 DATA TYPE: NM                     SUBFILE NUMBER: 120.8299
+   SUBFILE LKUP COLUMN: effectiveDate    COLUMN LENGTH: 1
+ COLUMN DESCRIPTION: effectiveDate       FIELD NUMBER: .01
+   HL7 DATA TYPE: DT                     SUBFILE NUMBER: 120.8299
+   SUBFILE LKUP COLUMN: effectiveDate    COLUMN LENGTH: 8
+   TIME ZONE FLAG: LOCAL
+   POST-PROCESSING LOGIC: D MFSUP^HDISVF09(120.82,$G(ERROR))
+   ZRT-PROCESSING LOGIC: D ZRT^GMRAVZRT
+   ZRT-DISCOVERY LOGIC: D DFORALL^GMRAVZRT(120.82,120.822,120.8221)
+   MFE ID FIELD: 99.99                   MFE TEXT FIELD: vuid
+   MFE CODSYS: ERT                       MFE ALT ID FIELD: .01
+   MFE ALT TEXT FIELD: .01               MFE ALT CODSYS: VA
+   MFE PKV TYPE: CE                      MFE PKV X-REF: B
+   ASSIGNING AUTHORITY: VA               MFE ID TYPE: NM
+   MFE TEXT TYPE: ST                     MFE ALT ID TYPE: ST
+   MFE ALT TEXT TYPE: ST                 MFE PRE-UPDATE ROUTINE: NULL
+   MFE POST-UPDATE ROUTINE: NULL
+  
+  
+ NUMBER: 120.83                          MASTER FILE: 120.83
+   SEGMENT NAME: RDT                     MFI CODE: Sign/Symptoms
+   PRE-UPDATE ROUTINE: PRE               POST-UPDATE ROUTINE: POST
+   MASTER FILE IDENTIFIER: Reactions
+ COLUMN DESCRIPTION: Term                FIELD NUMBER: .01
+   HL7 DATA TYPE: ST                     COLUMN LENGTH: 30
+   SEQUENCE: 1
+ COLUMN DESCRIPTION: Search_Term         FIELD NUMBER: .01
+   HL7 DATA TYPE: ST                     SUBFILE NUMBER: 120.832
+   SUBFILE LKUP COLUMN: Search_Term      LIST: YES
+   COLUMN LENGTH: 30                     CLEAN MULTIPLE: NO
+   SEQUENCE: 2
+ COLUMN DESCRIPTION: VistA_Mapping_Target
+   FIELD NUMBER: .01                     HL7 DATA TYPE: ST
+   SUBFILE NUMBER: 120.833
+   SUBFILE LKUP COLUMN: VistA_Mapping_Target
+   COLUMN LENGTH: 99                     SEQUENCE: 3
+ SUBFILE SEQUENCE: 1
+   SUBFILE COLUMN NAME: VistA_Mapping_Target
+   SUBFILE FIELD NUMBER: .01
+ COLUMN DESCRIPTION: Status              FIELD NUMBER: .02
+   HL7 DATA TYPE: NM                     SUBFILE NUMBER: 120.8399
+   SUBFILE LKUP COLUMN: effectiveDate    COLUMN LENGTH: 1
+   SEQUENCE: 4
+ COLUMN DESCRIPTION: name                FIELD NUMBER: .01
+   HL7 DATA TYPE: ST                     COLUMN LENGTH: 30
+ COLUMN DESCRIPTION: nationalSignSymptom
+   FIELD NUMBER: 1                       HL7 DATA TYPE: ST
+   COLUMN LENGTH: 1
+ COLUMN DESCRIPTION: synonym             FIELD NUMBER: .01
+   HL7 DATA TYPE: ST                     SUBFILE NUMBER: 120.832
+   SUBFILE LKUP COLUMN: synonym          COLUMN LENGTH: 30
+   CLEAN MULTIPLE: YES
+ COLUMN DESCRIPTION: VistA_Mapping_Target
+   FIELD NUMBER: .01                     HL7 DATA TYPE: ST
+   SUBFILE NUMBER: 120.833
+   SUBFILE LKUP COLUMN: VistA_Mapping_Target
+   COLUMN LENGTH: 99                     SEQUENCE: 3
+ COLUMN DESCRIPTION: status              FIELD NUMBER: .02
+   HL7 DATA TYPE: NM                     SUBFILE NUMBER: 120.8399
+   SUBFILE LKUP COLUMN: effectiveDate    COLUMN LENGTH: 1
+ COLUMN DESCRIPTION: effectiveDate       FIELD NUMBER: .01
+   HL7 DATA TYPE: DT                     SUBFILE NUMBER: 120.8399
+   SUBFILE LKUP COLUMN: effectiveDate    COLUMN LENGTH: 8
+   TIME ZONE FLAG: LOCAL
+   POST-PROCESSING LOGIC: D MFSUP^HDISVF09(120.83,$G(ERROR)),TOP10^GMRAUTL2
+   ZRT-PROCESSING LOGIC: D ZRT^GMRAVZRT
+   ZRT-DISCOVERY LOGIC: D DFORALL^GMRAVZRT(120.83,120.833,120.8331)
+   MFE ID FIELD: 99.99                   MFE TEXT FIELD: vuid
+   MFE CODSYS: ERT                       MFE ALT ID FIELD: .01
+   MFE ALT TEXT FIELD: .01               MFE ALT CODSYS: VA
+   MFE PKV TYPE: CE                      MFE PKV X-REF: B
+   ASSIGNING AUTHORITY: VA               MFE ID TYPE: NM
+   MFE TEXT TYPE: ST                     MFE ALT ID TYPE: ST
+   MFE ALT TEXT TYPE: ST                 MFE PRE-UPDATE ROUTINE: NULL
+   MFE POST-UPDATE ROUTINE: NULL
+  
+ 2) Updates the MD5 Signature file(#4.005) with new entries
+   Reactant(#120.82), and Reactions (#120.83):
+  
+ NUMBER: 120.82                          MD5 CODE SYSTEM: Reactants
+ FILE/SUBFILE NUMBER: 120.82
+ FIELD NUMBER: .01                       SEQUENCE: 20
+ FIELD NUMBER: 1                         SEQUENCE: 30
+   External/Internal: EXTERNAL
+ FIELD NUMBER: 99.99                     SEQUENCE: 10
+ FILE/SUBFILE NUMBER: 120.8205
+ FIELD NUMBER: .01                       SEQUENCE: 60
+   External/Internal: EXTERNAL           VUID FROM FILE: 50.605
+ FILE/SUBFILE NUMBER: 120.822
+ FIELD NUMBER: .01                       SEQUENCE: 45
+   POST-PROCESSING LOGIC: D M12082^GMRAVZRT
+ FILE/SUBFILE NUMBER: 120.823
+ FIELD NUMBER: .01                       SEQUENCE: 40
+ FILE/SUBFILE NUMBER: 120.824
+ FIELD NUMBER: .01                       SEQUENCE: 50
+   External/Internal: EXTERNAL           VUID FROM FILE: 50.416
+  
+  
+ NUMBER: 120.83                          MD5 CODE SYSTEM: Reactions
+ FILE/SUBFILE NUMBER: 120.83 
+ FIELD NUMBER: .01                       SEQUENCE: 20
+ FIELD NUMBER: 99.99                     SEQUENCE: 10
+ FILE/SUBFILE NUMBER: 120.832
+ FIELD NUMBER: .01                       SEQUENCE: 30
+ FILE/SUBFILE NUMBER: 120.833
+ FIELD NUMBER: .01                       SEQUENCE: 40
+   POST-PROCESSING LOGIC: D M12083^GMRAVZRT
+  
+ 3) Adds a new field ZRT-DISCOVERY LOGIC (#6) to the file MASTER FILE 
+ PARAMETERS (#4.001) :
+  
+ 4.001,6       ZRT-DISCOVERY LOGIC    6;E1,245 MUMPS
+  
+               INPUT TRANSFORM:  K:$L(X)>245 X D:$D(X) ^DIM
+               LAST EDITED:      JAN 19, 2017 
+               HELP-PROMPT:      Enter Standard MUMPS code. 
+               DESCRIPTION:      This is standard MUMPS code that gets 
+ execute
+                                 in DISCOVERY for each ZRT segment.  
+  
+               WRITE AUTHORITY:  @
+  
+ 4) Modifies the routine XMUFQR to execute application codes in the
+ ZRT-DISCOVERY LOGIC#6 field.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)             Field Name (Number)    New/Modified/Deleted
+ ------------------             -------------------    --------------------
+ MASTER FILE PARAMETERS(#4.001)  ZRT-DISCOVERY LOGIC(#6)      New
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ -----------
+ CENTRAL PLAINS HCS
+ OKLAHOMA CITY, OK VAMC
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ N/A
+  
+  
+ Blood Bank Team Coordination
+ ============================
+ Blood Bank Clearance: 11/28/2016
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*676 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*676 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The routines XUMF676, and XUMF676P will be deleted at the end of this
+ patch installation. If you wish to get the checksum values, you can
+ 'Verify Checksums in Transport Global' prior to patch install:
+  
+ Select Kernel Installation & Distribution System Option: INstallation
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 2  Verify Checksums in Transport Global
+ Select INSTALL NAME:    XU*8.0*676     Loaded from Distribution    
+ 11/1/16@06:52: 51
+      => XU*8.0*676 11/1/16
+  
+ This Distribution was loaded on Nov 01, 2016@06:52:51 with header of 
+    XU*8.0*676 11/1/16
+    It consisted of the following Install(s):
+      XU*8.0*676
+  
+ Want each Routine Listed with Checksums: Yes//   YES
+ DEVICE: HOME//   Network
+  
+ PACKAGE: XU*8.0*676     Nov 1 2016 6:52 pm                          
+ PAGE 1                                   
+ --------------------------------------------------------------------------
+  
+ XUMF676   value = 21292860
+ XUMF676P  value = 16760370
+ XUMFQR    value = 56159331
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+    3. From the Kernel Installation and Distribution System Menu, select 
+       the Installation Menu. From this menu, you may elect to use the
+       following options. When prompted for the INSTALL NAME enter the
+       patch #XU*8*676:
+           a. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DDs or templates.
+           b. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this
+              patch is installed. It compares all components of this patch
+              routines, DDs, templates, etc.).
+           c. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+  
+     4. From the Installation Menu, select the Install Package(s) option 
+        and choose the patch to install.
+  
+     5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+        Install? NO//N
+     6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//N
+  
+     7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//N/A
+     8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUMF676
+    Before:       n/a   After: B21292860  **676**
+Routine Name: XUMF676P
+    Before:       n/a   After: B16760370  **676**
+Routine Name: XUMFQR
+    Before: B53643395   After: B56159331  **407,502,676**
+ 
+Routine list of preceding patches: 502
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 20, 2016
+Completed By:                               Date Completed: APR 25, 2017
+Released By :                               Date Released : APR 26, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

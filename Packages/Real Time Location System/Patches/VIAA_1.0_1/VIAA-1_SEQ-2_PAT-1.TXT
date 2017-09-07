@@ -1,0 +1,242 @@
+$TXT Created by                    DEVVFF.DOMAIN.EXT  (KIDS) on Wednesday, 09/07/16 at 11:34
+=============================================================================
+Run Date: MAR 13, 2017                     Designation: VIAA*1*1
+Package : VIAA - REAL TIME LOCATION SYSTEM    Priority: Mandatory
+Version : 1         SEQ #2                      Status: Released
+                  Compliance Date: APR 13, 2017
+=============================================================================
+
+
+Subject: REAL TIME LOCATION SYSTEM IMPLEMENTATION
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The Department of Veterans Affairs (VA) is implementing an integrated, 
+ enterprise-wide solution for a Real Time Location System (RTLS) for VA. 
+ The RTLS will be used for the purpose of tracking equipment, supplies, 
+ and instruments.
+  
+ This patch supports the implementation of the project across the VHA
+ network of medical centers in the country.
+  
+  
+ New Functionality Exported by This Patch: 
+ -----------------------------------------
+ During installation of the patch, the following menu option will
+ be created in VistA:
+  
+ RTLS Interface Menu    [VIAA01 RTLS RPC MENU]
+ This is the RTLS interface menu which will include Remote Procedure
+ Calls (RPC) in future patches.
+  
+ This patch will create the proxy user 'VIAASERVICE,RTLS APPLICATION
+ PROXY' with the secondary menu option RTLS Interface Menu [VIAA01 RTLS RPC
+ MENU].
+  
+  
+ Patch Components:
+ ---------------- 
+ Files Fields Associated:
+  
+ File Name (Number)           Field Number       New/Modified/Deleted
+ --------------------------   ------------       --------------------
+ None
+  
+ Forms Associated:
+  
+ Form Name                    File #             New/Modified/Deleted
+ ---------                    ------             --------------------
+ None
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                 New/Modified/Deleted
+ ---------------                                 --------------------
+ None
+  
+ Options Associated:
+  
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               -------------------- 
+ VIAA01 RTLS RPC MENU         Menu               New
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                                   New/Modified/Deleted
+ -------------                                   -------------------- 
+ None
+  
+  
+ Remote Procedure Calls Associated:
+  
+ Remote Procedure Calls (RPC) Name               New/Modified/Deleted
+ ---------------------------------               --------------------
+ None 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ None
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ None
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ None
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ None
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ None
+  
+  
+ Test Sites:
+ ----------
+ Denver
+ Oklahoma City
+ Salt Lake City
+ Houston
+ Jackson
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+   
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+   
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+   
+ Albany:          domain.ext
+ Hines:           domain.ext 
+ Salt Lake City:  domain.ext
+   
+ The documentation will be in the form of Adobe Acrobat files.
+   
+ Documentation can also be found on the VA Software Documentation Library.
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Pre-installation Step:
+  
+ FOR RTLS Cath Lab Installations only:
+ A procedure for the creation of a connector proxy user will be provided
+ to each medical center and is to be completed before the first time
+ installation of this patch. This is a one-time task and no other proxy
+ user is to be created by the site for use by RTLS.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ FOR RTLS Cath Lab Installations only:
+ The sites need to create the user 'VIAASERVICE,RTLS CONNECTOR PROXY'.
+ Instructions are provided in the RTLS Cardiac Catheterization Lab
+ Interfaces VistA Patch Installation Guide.
+  
+ The connector proxy user set up is checked for correctness. For RTLS 
+ Asset Tracking only deployments, the resulting messages can be ignored.
+  
+ During the post-installation of the patch, the application proxy user 
+ 'VIAASERVICE,RTLS APPLICATION PROXY' will be created automatically. Also
+ the application proxy user will be assigned a secondary menu option
+ exported with this patch. No other menu, either primary or secondary, may
+ be assigned to this user.
+  
+ Future installations of this patch will check for the presence of the 
+ proxy users but will not make any changes. A site re-installing this
+ patch does not need to complete any additional set ups for pre-init or
+ post-init operations.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(VIAA*1.0*1):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' Press 'Enter'    
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' Press 'Enter'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' Press 'Enter'
+  
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Upon completion of the patch installation, the routine VIAA01P1 will
+ be deleted automatically.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;RTLS;**[Patch List]**;April 22, 2013;Build 44
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VIAA01P1
+    Before:       n/a   After: B15325647  **1**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 16, 2013
+Completed By:                               Date Completed: MAR 07, 2017
+Released By :                               Date Released : MAR 13, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

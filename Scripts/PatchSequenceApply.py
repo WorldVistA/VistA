@@ -272,6 +272,7 @@ class PatchSequenceApply(object):
   """ update package patch history """
   def __reloadPackagePatchHistory__(self, patchInfo):
     patchHistInfo = self._vistaPatchInfo
+    patchHistInfo.createAllPackageMapping()
     installNameList = []
     if patchInfo.isMultiBuilds:
       installNameList = patchInfo.multiBuildsList

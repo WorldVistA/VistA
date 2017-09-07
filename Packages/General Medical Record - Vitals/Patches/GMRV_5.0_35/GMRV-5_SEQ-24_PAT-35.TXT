@@ -1,0 +1,406 @@
+$TXT Created by                   at NHML19.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Friday, 01/27/17 at 10:30
+=============================================================================
+Run Date: MAR 08, 2017                     Designation: GMRV*5*35
+Package : GMRV - GEN. MED. REC. - VITALS      Priority: Mandatory
+Version : 5        SEQ #24                      Status: Released
+                  Compliance Date: APR 07, 2017
+=============================================================================
+
+Associated patches: (v)GMRV*5*32   <<= must be installed BEFORE `GMRV*5*35'
+
+Subject: EHMP CHANGES TO HELP TEXT FOR NEW FIELD
+
+Category: 
+  - Data Dictionary
+
+Description:
+============
+
+ GMRV*5.0*32 added DATE REASON ENTERED IN ERROR (#.02) field to the REASON
+ ENTERED IN ERROR (#4) field in the GMRV VITAL MEASUREMENT (#120.5) file.
+  
+ This patch updates the description and Help Prompt for the DATE REASON 
+ ENTERED IN ERROR (#.02) field.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files and Fields Associated:
+ ----------------------------
+ File (#)            Field (#)                        New/Modified/Deleted
+ ---------           ---------                        --------------------
+ GMRV VITAL MEASUREMENT (#120.5)
+                     REASON ENTERED IN ERROR (#4) (Multiple)
+                        DATE REASON ENTERED IN ERROR (#.02)    Modified
+  
+ Defects:
+ --------
+ Defect #        Description
+ --------        -----------
+ DE7560          Data Dictionary Update for GMRV VITAL
+                 MEASUREMENT (#120.5) file
+  
+ Forms Associated:
+ -----------------
+ There are no new or modified forms in this patch.
+  
+ Mail Groups Associated:
+ -----------------------
+ There are no new or modified mail groups in this patch.
+  
+ Options Associated:
+ -------------------
+ There are no new or modified options in this patch.
+  
+ Protocols Associated:
+ ---------------------
+ There are no new or modified protocols in the patch.
+  
+ Security Keys Associated:
+ -------------------------
+ There are no new or modified security keys in this patch.
+  
+ Templates Associated:
+ ---------------------
+ There are no new or modified templates in this patch.
+  
+ Additional Information:
+ -----------------------
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR #20150408 - VistA Evolution Enterprise Health Management Platform 
+ (eHMP)
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ There are no Patient Safety Issues associated with this patch.
+  
+ Remedy Tickets(s) & Overview:
+ -----------------------------
+ There are no Remedy tickets associated with this patch.
+  
+ Test Sites:
+ -----------
+ Indianapolis, IL
+ Loma Linda, CA
+ San Diego, CA
+ Portland, OR
+ Hampton, VA
+  
+  
+ Patch Installation:
+ -------------------
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.          
+ 3.  From the Kernel Installation and Distribution System [XPD MAIN]
+     menu, select the Installation [XPD INSTALLATION MENU] menu.  From this
+     menu, you may elect to use the following option. When prompted for the
+     INSTALL enter the patch # (GMRV*5.0*35):
+     a. Backup a Transport Global [XPD BACKUP] - This option will create a
+        backup message of any routines exported with this patch. It will
+        not backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM]
+        This option will allow you to view all changes that will be made
+        when this patch is installed.  It compares all components of this
+        patch (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - 
+        This option will allow you to ensure the integrity of the routines
+        that are in the transport global.
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter GMRV*5.0*35.
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+ Sample Installation:
+ --------------------
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME:    GMRV*5.0*35    1/27/17@10:20:05
+      => Updates field descriptions  ;Created on Jan 27, 2017@10:11:36
+  
+ This Distribution was loaded on Jan 27, 2017@10:20:05 with header of 
+    Updates field descriptions  ;Created on Jan 27, 2017@10:11:36
+    It consisted of the following Install(s):
+     GMRV*5.0*35
+ Checking Install for Package GMRV*5.0*35
+  
+ Install Questions for GMRV*5.0*35
+  
+ Incoming Files:
+  
+  
+    120.5     GMRV VITAL MEASUREMENT
+ Note:  You already have the 'GMRV VITAL MEASUREMENT' File.
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   Linux Telnet/SSH
+ --------------------------------------------------------------------------
+  
+  Install Started for GMRV*5.0*35 : 
+                Jan 27, 2017@10:22:49
+  
+ Build Distribution Date: Jan 27, 2017
+  
+  Installing Routines:
+                Jan 27, 2017@10:22:49
+  
+  Installing Data Dictionaries: 
+                Jan 27, 2017@10:22:49
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  GMRV*5.0*35 Installed. 
+                Jan 27, 2017@10:22:49
+  
+ Install Completed
+  
+ Installation Verification
+ =========================
+ Successful installation can be verified by reviewing the data dictionary 
+ for the GMRV VITAL MEASUREMENT (#125.5) file.  Below is a sample before 
+ and after installing the patch 
+  
+ Pre-Installation
+  
+ Select VA FileMan <TEST ACCOUNT> Option: Data Dictionary Utilities
+  
+  
+           List File Attributes
+           Map Pointer Relations
+           Check/Fix DD Structure
+  
+  
+ Select Data Dictionary Utilities <TEST ACCOUNT> Option:  List File 
+ Attributes
+  START WITH WHAT FILE: GMRV VITAL MEASUREMENT// 
+       GO TO WHAT FILE: GMRV VITAL MEASUREMENT// 
+       Select SUB-FILE: 4  REASON ENTERED IN ERROR
+ Select LISTING FORMAT: STANDARD//   
+ Start with field: FIRST// .02  DATE REASON ENTERED IN ERROR
+ Go to field: .02  DATE REASON ENTERED IN ERROR
+  
+ DEVICE: ;;999  Linux Telnet/SSH
+  
+ STANDARD DATA DICTIONARY #120.506 -- REASON ENTERED IN ERROR SUB-FILE   
+                                                    JAN 23,2017@14:56:13  
+ PAGE 1
+ STORED IN ^GMR(120.5,D0,2.1,   SITE: TEST.NORTHAMPTON.DOMAIN.EXT   UCI: 
+ NHML19,ROU
+     
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+  
+ 120.506,.02   DATE REASON ENTERED IN ERROR 0;2 DATE
+  
+               INPUT TRANSFORM:  S %DT="ESTX" D ^%DT S X=Y K:X<1 X
+               LAST EDITED:      SEP 03, 2015 
+               HELP-PROMPT:      (No range limit on date) 
+  
+  
+  
+ Post-Installation
+  
+ Select VA FileMan <TEST ACCOUNT> Option: Data Dictionary Utilities
+  
+  
+           List File Attributes
+           Map Pointer Relations
+           Check/Fix DD Structure
+  
+  
+ Select Data Dictionary Utilities <TEST ACCOUNT> Option: List File 
+ Attributes
+  START WITH WHAT FILE: GMRV VITAL MEASUREMENT// 
+       GO TO WHAT FILE: GMRV VITAL MEASUREMENT// 
+       Select SUB-FILE: 4  REASON ENTERED IN ERROR
+ Select LISTING FORMAT: STANDARD//   
+ Start with field: FIRST// .02  DATE REASON ENTERED IN ERROR
+ Go to field: .02  DATE REASON ENTERED IN ERROR
+  
+ DEVICE: ;;999  Linux Telnet/SSH
+  
+ STANDARD DATA DICTIONARY #120.506 -- REASON ENTERED IN ERROR SUB-FILE   
+                                                    JAN 23,2017@15:59:11  
+ PAGE 1
+ STORED IN ^GMR(120.5,D0,2.1,   SITE: TEST.NORTHAMPTON.DOMAIN.EXT   UCI: 
+ NHML19,ROU
+     
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+  
+ 120.506,.02   DATE REASON ENTERED IN ERROR 0;2 DATE
+  
+               INPUT TRANSFORM:  S %DT="ESTX" D ^%DT S X=Y K:Y<1 X
+               LAST EDITED:      JAN 19, 2017 
+               HELP-PROMPT:      Enter the date and time the reason 
+ entered in 
+                                 error is entered. 
+               DESCRIPTION:      This is the date and time the reason 
+ entered in
+                                 error was entered.  
+  
+  
+ Back-out Procedures
+ ===================
+ Back-out will be done only with the concurrence and participation of eHMP
+ and appropriate VA site/region personnel. The decision to back-out or
+ rollback software will be a joint decision between eHMP, VA site/region
+ personnel and other appropriate VA personnel.
+  
+ The KIDs package does not back up any changes made to data dictionaries.  
+ In order to roll this back, the descriptions would need to be manually 
+ deleted.  Follow the example in order to manually delete the description 
+ and help text.
+  
+ Select Systems Manager Menu <TEST ACCOUNT> Option: FM  VA FileMan
+  
+           VA FileMan Version 22.2
+  
+  
+           Enter or Edit File Entries
+           Print File Entries
+           Search File Entries
+           Modify File Attributes
+           Inquire to File Entries
+           Utility Functions ...
+           Data Dictionary Utilities ...
+           Transfer Entries
+           Other Options ...
+  
+  
+ Select VA FileMan <TEST ACCOUNT> Option: MODify File Attributes
+ Do you want to use the screen-mode version? YES// NO
+  
+ MODIFY WHAT FILE: GMRV VITAL MEASUREMENT// 
+  
+ Select FIELD: ?
+  Answer with FIELD NUMBER, or LABEL
+  Do you want the entire 12-Entry FIELD List? Y  (Yes)
+    Choose from:
+    .01          DATE/TIME VITALS TAKEN
+    .02          PATIENT
+    .03          VITAL TYPE
+    .04          DATE/TIME VITALS ENTERED
+    .05          HOSPITAL LOCATION
+    .06          ENTERED BY
+    1.2          RATE
+    1.4          SUPPLEMENTAL O2
+    2            ENTERED IN ERROR
+    3            ERROR ENTERED BY
+    4            REASON ENTERED IN ERROR  (multiple)
+    5            QUALIFIER  (multiple)
+           
+         You may enter a new FIELD, if you wish
+    
+ Select FIELD: 4  REASON ENTERED IN ERROR  (multiple)
+ LABEL: REASON ENTERED IN ERROR  Replace 
+ READ ACCESS (OPTIONAL): 
+ WRITE ACCESS (OPTIONAL): 
+ SOURCE: 
+ Select DESTINATION: 
+ Select GROUP: 
+ DESCRIPTION:
+   1>This multiple contains a list of reasons for entering a vital 
+ measurement 
+   2>in error.
+ EDIT Option: 
+ TECHNICAL DESCRIPTION:
+   1>
+  
+ Select REASON ENTERED IN ERROR SUB-FIELD: ?
+     Answer with REASON ENTERED IN ERROR SUB-FIELD NUMBER, or LABEL
+    Choose from:
+    .01          REASON ENTERED IN ERROR
+    .02          DATE REASON ENTERED IN ERROR
+           
+         You may enter a new REASON ENTERED IN ERROR SUB-FIELD, if you wish
+    
+ Select REASON ENTERED IN ERROR SUB-FIELD: .02  DATE REASON ENTERED IN 
+ ERROR
+ LABEL: DATE REASON ENTERED IN ERROR  Replace 
+ TITLE: 
+ AUDIT CONDITION: 
+ READ ACCESS (OPTIONAL): 
+ DELETE ACCESS (OPTIONAL): 
+ WRITE ACCESS (OPTIONAL): 
+ SOURCE: 
+ Select DESTINATION: 
+ Select GROUP: 
+ DESCRIPTION:
+   1>This is the date and time the reason entered in error was entered.
+ EDIT Option: Delete from line: 1  thru: 1// 
+ OK TO REMOVE 1 LINE? No// Y  (Yes)
+ ARE YOU SURE YOU WANT TO DELETE THIS ENTIRE TEXT? No// Y  (Yes).
+ EDIT Option: 
+ TECHNICAL DESCRIPTION:
+   1>
+  
+ DATA TYPE OF DATE REASON ENTERED IN ERROR: DATE/TIME// 
+ EARLIEST DATE (OPTIONAL): 
+ CAN DATE BE IMPRECISE (Y/N): NO// 
+ CAN TIME OF DAY BE ENTERED (Y/N): YES// 
+ CAN SECONDS BE ENTERED (Y/N): YES// 
+ IS TIME REQUIRED (Y/N): NO// 
+ IS DATE REASON ENTERED IN ERROR ENTRY MANDATORY (Y/N): NO
+          //   NO
+ ....
+ 'HELP'-PROMPT: Enter the date and time the reason entered in error is 
+ entered.
+            Replace ... With   Replace 
+    
+    SURE YOU WANT TO DELETE? Y  (Yes)
+ XECUTABLE 'HELP': 
+  
+ Select REASON ENTERED IN ERROR SUB-FIELD: 
+  
+ Select FIELD: 
+  
+ Validation of Roll Back Procedure
+ =================================
+ The Roll Back Procedure can be verified by reviewing the Data Dictionary 
+ listing to ensure that the descriptions have been deleted.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 19, 2017
+Completed By:                               Date Completed: MAR 08, 2017
+Released By :                               Date Released : MAR 08, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

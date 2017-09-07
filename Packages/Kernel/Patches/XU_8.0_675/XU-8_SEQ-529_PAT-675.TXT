@@ -1,0 +1,282 @@
+$TXT Created by             KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Monday, 01/23/17 at 10:31
+=============================================================================
+Run Date: APR 27, 2017                     Designation: XU*8*675
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #529                      Status: Released
+                  Compliance Date: MAY 28, 2017
+=============================================================================
+
+
+Subject: MFS PARAMETERS FOR TIU TITLES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Associated patches: 
+ N/A 
+                       XU*8*675
+  
+ **************************** ATTENTION *********************************
+  
+ MFS Parameters for TIU consists of two patches: Kernel patch XU*8.0*675
+ and application patch TIU*1.0*309. Application patch TIU*1.0*309 should
+ be installed immediately after installing XU*8.0*675.
+  
+ ************************************************************************
+  
+  
+ This patch distributes the parameters required by Master File Server (MFS)
+ to support data standardization messaging.
+  
+ 1) Updates the entry TIU Titles (#8926.1) on the MASTER FILE PARAMETERS
+ file (#4.001):
+  
+ NUMBER: 8926.1                          MASTER FILE: 8926.1
+   MFI CODE: TIU Titles                  MASTER FILE IDENTIFIER: TIU Titles
+ COLUMN DESCRIPTION: Term                FIELD NUMBER: .01
+   COLUMN LENGTH: 90                     SEQUENCE: 1
+ COLUMN DESCRIPTION: VistA_Mapping_Target
+   FIELD NUMBER: .01                     SUBFILE NUMBER: 8926.12
+   SUBFILE LKUP COLUMN: VistA_Mapping_Target
+   SEQUENCE: 2
+ COLUMN DESCRIPTION: has_SMD             FIELD NUMBER: .04
+   VUID PREFIX: VUID                     SEQUENCE: 3
+ COLUMN DESCRIPTION: has_role            FIELD NUMBER: .05
+   VUID PREFIX: VUID                     SEQUENCE: 4
+ COLUMN DESCRIPTION: has_setting         FIELD NUMBER: .06
+   VUID PREFIX: VUID                     SEQUENCE: 5
+ COLUMN DESCRIPTION: has_service         FIELD NUMBER: .07
+   VUID PREFIX: VUID                     SEQUENCE: 6
+ COLUMN DESCRIPTION: has_doctype         FIELD NUMBER: .08
+   VUID PREFIX: VUID                     SEQUENCE: 7
+ COLUMN DESCRIPTION: Status              FIELD NUMBER: .02
+   SUBFILE NUMBER: 8926.199              SUBFILE LKUP COLUMN: Status
+   COLUMN LENGTH: 1                      SEQUENCE: 8
+   POST-PROCESSING LOGIC: D MFSUP^HDISVF09(8926.1,$G(ERROR)),BULL^TIUDD61
+   ZRT-PROCESSING LOGIC: D ZRT^TIUZRT    MFE PKV X-REF: B
+  
+  
+ 2) Updates the entry TIU Titles (#8926.1) on the MD5 Signature file
+ (#4.005):
+  
+ NUMBER: 8926.1                          MD5 CODE SYSTEM: TIU Titles
+ FILE/SUBFILE NUMBER: 8926.1
+ FIELD NUMBER: .01                       SEQUENCE: 20
+ FIELD NUMBER: .04                       SEQUENCE: 30
+   VUID FROM FILE: 8926.2
+ FIELD NUMBER: .05                       SEQUENCE: 40
+   VUID FROM FILE: 8926.3
+ FIELD NUMBER: .06                       SEQUENCE: 50
+   VUID FROM FILE: 8926.4
+ FIELD NUMBER: .07                       SEQUENCE: 60
+   VUID FROM FILE: 8926.5
+ FIELD NUMBER: .08                       SEQUENCE: 70
+   VUID FROM FILE: 8926.6
+ FIELD NUMBER: 99.99                     SEQUENCE: 10
+ FILE/SUBFILE NUMBER: 8926.12
+ FIELD NUMBER: .01                       SEQUENCE: 25
+   POST-PROCESSING LOGIC: D M89261^TIUZRT
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)  New/Modified/Deleted
+ ------------------      -------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ ------------
+  -  NEW YORK HCS
+  -  PALO ALTO HCS 
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ N/A
+  
+  
+ Blood Bank Team Coordination
+ ============================
+ Blood Bank Clearance: 11/01/16
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*675 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*675 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The routines XUMF675, and XUMF675P will be deleted at the end of this
+ patch installation. If you wish to get the checksum values, you can
+ 'Verify Checksums in Transport Global' prior to patch install:
+  
+ Select Kernel Installation & Distribution System Option: INstallation
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 2  Verify Checksums in Transport Global
+ Select INSTALL NAME:    XU*8.0*675     Loaded from Distribution    
+ 11/1/16@06:52: 51
+      => XU*8.0*675 11/1/16
+  
+ This Distribution was loaded on Nov 01, 2016@06:52:51 with header of 
+    XU*8.0*675 11/1/16
+    It consisted of the following Install(s):
+      XU*8.0*675
+  
+ Want each Routine Listed with Checksums: Yes//   YES
+ DEVICE: HOME//   Network
+  
+ PACKAGE: XU*8.0*675     Nov 1 2016 6:52 pm                          
+ PAGE 1                                   
+ --------------------------------------------------------------------------
+  
+ XUMF675   value = 21242215
+ XUMF675P  value = 4067556
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+    3. From the Kernel Installation and Distribution System Menu, select 
+       the Installation Menu. From this menu, you may elect to use the
+       following options. When prompted for the INSTALL NAME enter the
+       patch #XU*8*675:
+           a. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DDs or templates.
+           b. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this
+              patch is installed. It compares all components of this patch
+              routines, DDs, templates, etc.).
+           c. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+  
+     4. From the Installation Menu, select the Install Package(s) option 
+        and choose the patch to install.
+  
+     5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+        Install? NO//N
+     6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//N
+  
+     7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//N/A
+     8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 17
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUMF675
+    Before:       n/a   After: B21242215  **675**
+Routine Name: XUMF675P
+    Before:       n/a   After:  B4067556  **675**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 20, 2016
+Completed By:                               Date Completed: APR 26, 2017
+Released By :                               Date Released : APR 27, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

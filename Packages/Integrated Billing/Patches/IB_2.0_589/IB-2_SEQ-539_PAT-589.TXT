@@ -1,0 +1,148 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 02/06/17 at 13:51
+=============================================================================
+Run Date: MAR 29, 2017                     Designation: IB*2*589
+Package : IB - INTEGRATED BILLING             Priority: EMERGENCY
+Version : 2       SEQ #539                      Status: Released
+                  Compliance Date: MAR 31, 2017
+=============================================================================
+
+
+Subject: IB STOP CODE FY17 EMERGENCY UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch updates Integrated Billing Clinic Stop Codes in response to the
+ Comprehensive Addiction and Recovery Act (CARA) of 2016 and the 
+ Veterans Affairs opioid safety initiative.
+  
+ Associated Ticket(s):
+ ======================
+ 1. R12631500FY17 Stop Code Changes for FY17 - Emergency
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Muskogee VAMC
+ Chillicothe VAMC 
+  
+ Ticket Overview:
+ ================
+ 1. R12631500FY17 Stop Code Changes for FY17 - Emergency
+   
+    Problem: 
+    -------
+    The Comprehensive Addiction and Recovery Act (CARA) of 2016 directs the
+    Department of Veterans Affairs to expand its opioid safety initiative 
+    to include all VA medical facilities.  CARA exempts Veterans from 
+    paying a copayment to the VA for education on opioid safety to include 
+    overdose prevention and treatment for overdose.  In order to schedule, 
+    track and exempt from copayments these opioid education visits, 
+    designated clinics must be established.  An emergency Stop Code patch 
+    is required to implement these clinics by April 1, 2017.
+   
+    Resolution:
+    ----------
+    Add requested Stop Codes as described below:
+  
+ STOP CODE ADDED
+ ---------------
+  
+ STOP   EFFECTIVE                                                OVERRIDE
+ CODE   DATE       BILLABLE TYPE  DESCRIPTION                     FLAG
+ --------------------------------------------------------------------------
+ 721  MAR  15,2017  NON-BILLABLE    OEND ED IND                   OVERRIDE
+ 722  MAR  15,2017  NON-BILLABLE    OEND ED GRP                   OVERRIDE
+ 723  MAR  15,2017  NON-BILLABLE    OEND ED CVT PT SITE           OVERRIDE
+ 724  MAR  15,2017  NON-BILLABLE    OEND ED CVT PRV SITE          OVERRIDE 
+  
+  
+ Installation Instructions:
+ ==========================
+ It is not necessary to disable any options. You may install this patch at
+ any time without interruption to users. It should take less than 2 minutes
+ to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter IB*2.0*589)
+    
+        a.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+        b.  Print Transport Global - This option will allow you to view
+            the components of the KIDS build.
+        c.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this 
+            patch is installed.  It compares all components of this patch
+            (routines, DD's, templates, etc.).
+        d.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        IB*2.0*589.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//", respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//, respond NO.
+  
+     7. You may delete routine IB20P589 after the installation.
+  
+ *** After the install please review the installation to verify the
+     Stop Codes were added. See below:
+     NOTE: If any type of error message is displayed during installation
+     create a ticket to resolve the issue.
+  
+ DSS Clinic Stop Codes, Post-Install Starting
+  
+  Adding new codes to file 352.5
+  
+    721  OEND ED IND
+  
+    722  OEND ED GRP
+  
+    723  OEND ED CVT PT SITE
+  
+    724  OEND ED CVT PRV SITE
+  
+      4 entries added to 352.5
+  
+ DSS Clinic Stop Codes, Post-Install Complete
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P589
+    Before:       n/a   After:  B5197796  **589**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 06, 2017
+Completed By:                               Date Completed: MAR 29, 2017
+Released By :                               Date Released : MAR 29, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,234 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 06/21/16 at 11:42
+=============================================================================
+Run Date: FEB 14, 2017                     Designation: SR*3*187
+Package : SR - SURGERY                        Priority: Mandatory
+Version : 3       SEQ #179                      Status: Released
+                  Compliance Date: MAR 16, 2017
+=============================================================================
+
+Associated patches: (v)SR*3*165    <<= must be installed BEFORE `SR*3*187'
+                    (v)SR*3*171    <<= must be installed BEFORE `SR*3*187'
+                    (v)SR*3*177    <<= must be installed BEFORE `SR*3*187'
+                    (v)SR*3*182    <<= must be installed BEFORE `SR*3*187'
+
+Subject: HL7 SEGMENT, WOUND CLASSIFICATION REPORT, CPT MODIFIER, SROSCH NAME
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch addresses the 4 following issues:
+  
+ 1.  When Surgery sends HL7 (Health Level-7) DG1 (Diagnosis) Segments to
+     Ancillary systems, messages with other preoperative diagnoses have
+     an incorrect value for the ICD diagnosis code.
+ 2.  When a Wound Classification Report is generated at an institution 
+     that has only one (1) Active surgery site and the Active site isn't
+     the installation's default institution, the report displays no data 
+     regardless of the date range selected.
+ 3.  Surgery Post Operation and CPT/ICD Update/Verify options incorrectly
+     allow CPT Modifier 51 to be entered on the Principle Procedure.
+ 4.  The Surgery Schedule of Operations report truncates the patient name
+     inappropriately when its length is great than 23 characters.
+  
+ Associated Ticket(s):
+ =====================
+ 1.     I9838915FY16 - HL7 Segment Defect
+ 2.     I9898345FY16 - Wound Classification Report
+ 3.     I9899652FY16 - CPT Modifier Defect
+ 4.     I9898928FY16 - SROSCH Name Truncation
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Fayetteville VAMC
+ Lebanon VAMC
+  
+ Ticket Overview:
+ ================
+ 1. I9838915FY16 - HL7 Segment Defect
+  
+ Problem:
+ --------
+ HL7 (Health Level-7) DG1 (Diagnosis) Segments are created in order to
+ send Surgery diagnosis data to an Ancillary System or Automated 
+ Anesthesia Information System (AAIS).  When creating DG1 segments for
+ other preoperative diagnoses, the Surgery code supplies an incorrect
+ value for the ICD diagnosis code.
+  
+ The Surgery VistA code that creates the other preoperative diagnosis
+ message segments accesses the wrong data record and consequently 
+ retrieves the wrong value for the ICD diagnosis code.
+  
+ Resolution:
+ -----------
+ The routine ^SRHLUO is modified to access the OTHER PREOP DIAGNOSIS 
+ data (#130.17) in the SURGERY FILE (#130) correctly.
+  
+ Routines: SRHLUO
+  
+ 2. I9898345FY16 - Wound Classification Report
+  
+ Problem:
+ --------
+ When a Wound Classification Report [SROWC] is generated at an 
+ institution that has only one (1) Active surgery site and the
+ Active site isn't the installation's default institution, the
+ report displays no data regardless of the date range selected.
+ The report routine calls a surgery utility program to determine
+ the surgery site for the report. When there is only one (1) Active
+ surgery site, the utility program returns the value that is in the
+ DEFAULT INSTITUTION field (#217) in the KERNEL SYSTEM PARAMETERS 
+ FILE (#8989.3). The report uses that value when searching for data
+ for the report. This technique is fine when the single Active site
+ is the default institution.  When the Active site is not the 
+ default institution, the program is unable to find any data for the
+ report.
+  
+ Resolution:
+ -----------
+ The routine ^SROVAR is modified to return the Active site for the 
+ report rather than the default institution for the installation when 
+ there is a single Active Surgery site.
+  
+ Routines: SROVAR
+  
+ 3. I9899652FY16 - CPT Modifier Defect
+  
+ Problem:
+ --------
+ The CPT Modifier 51 carries with it the stipulation that it cannot be 
+ used in conjunction with the principal procedure code. Surgery Post 
+ Operation [SROMEN-POST] and CPT/ICD Update/Verify menu [SRCODING 
+ UPDATE/VERIFY MENU] options incorrectly allow CPT Modifier 51 to be
+ entered on the Principal Procedure.
+  
+ Resolution:
+ -----------
+ Modified routines SROMOD and SROMOD0 to prevent the CPT Modifier 51
+ (MULTIPLE PROCEDURES) from being selectable for the PRIN. PROCEDURE 
+ CPT MODIFIER (#.01) field of the PRIN. PROCEDURE CPT MODIFIER 
+ (#130.028) sub-file of the SURGERY (#130) file, and the PRIN 
+ PROCEDURE CPT MODIFIER (#.01) field of the PRIN PROCEDURE CPT 
+ MODIFIER (#136.01) sub-file of the SURGERY PROCEDURE/DIAGNOSIS CODE 
+ (#136) file.
+  
+ Routines: SROMOD, SROMOD0
+  
+ 4. I9898928FY16 - SROSCH Name Truncation
+  
+ Problem:
+ --------
+ The Surgery Schedule of Operations report [SROSCH] truncates
+ the patient name inappropriately when its length is great than 23
+ characters.  Rather than printing the first 23 characters, the 
+ routine prints the last name followed by a comma and a space 
+ followed by the first character of the first name.
+  
+ Resolution:
+ -----------
+ The routine SROSCH is modified to print the first 23 characters of 
+ the patient name (last, first, middle).
+  
+ Routines: SROSCH
+  
+    ==================== Installation Instructions ====================
+    The install time for this patch is less than 2 minutes. This patch 
+    Can be installed when Surgery users are on the system.
+  
+    NOTE: Kernel patches must be current on the target system to avoid
+          problems loading and/or installing this patch.
+  
+  1. Load Transport Global
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.
+   
+  2. Startup KIDS
+     ------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+   
+     Select Kernel Installation & Distribution system Option: INStallation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+   
+  3. Select Installation Option:
+     ---------------------------
+     NOTE: When prompted for the INSTALL NAME, enter SR*3.0*187:
+   
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view
+         the components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+   
+  4. Select Installation Option: Install Package(s)
+     ----------------------------------------------
+     ** This is the step to start the installation of this KIDS patch:
+   
+      a. Choose the Install Package(s) option to start the patch
+         install and select the package SR*3.0*187.
+   
+     b. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+        NO//', answer NO.
+   
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;Surgery;**[Patch List]**;24 Jun 93;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SRHLUO
+    Before: B28555904   After: B28574288  **41,127,177,187**
+Routine Name: SROMOD
+    Before: B38394892   After: B38901306  **88,100,127,165,187**
+Routine Name: SROMOD0
+    Before: B42153492   After: B42799615  **142,165,187**
+Routine Name: SROSCH
+    Before: B16320304   After: B16419281  **19,48,63,50,182,187**
+Routine Name: SROVAR
+    Before: B34682815   After: B36366627  **17,38,48,67,77,50,87,88,102,
+                                           107,100,134,144,157,171,187**
+ 
+Routine list of preceding patches: 165, 171, 177, 182
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 03, 2015
+Completed By:                               Date Completed: FEB 14, 2017
+Released By :                               Date Released : FEB 14, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,585 @@
+Released SR*3*189 SEQ #180
+Extracted from mail message
+**KIDS**:SR*3.0*189^
+
+**INSTALL NAME**
+SR*3.0*189
+"BLD",10326,0)
+SR*3.0*189^SURGERY^0^3160922^y
+"BLD",10326,1,0)
+^^4^4^3160921^^
+"BLD",10326,1,1,0)
+Patch SR*3.0*189 addresses the following Surgery issue:
+"BLD",10326,1,2,0)
+ 
+"BLD",10326,1,3,0)
+  1. The SURGERY file (#130) ADT and ARS cross references do not merge 
+"BLD",10326,1,4,0)
+during a patient merge.
+"BLD",10326,4,0)
+^9.64PA^130^1
+"BLD",10326,4,130,0)
+130
+"BLD",10326,4,130,2,0)
+^9.641^130^1
+"BLD",10326,4,130,2,130,0)
+SURGERY  (File-top level)
+"BLD",10326,4,130,2,130,1,0)
+^9.6411^235^3
+"BLD",10326,4,130,2,130,1,.01,0)
+PATIENT
+"BLD",10326,4,130,2,130,1,.09,0)
+DATE OF OPERATION
+"BLD",10326,4,130,2,130,1,235,0)
+ASSESSMENT STATUS
+"BLD",10326,4,130,222)
+y^y^p^^^^n^^n
+"BLD",10326,4,130,224)
+
+"BLD",10326,4,"APDD",130,130)
+
+"BLD",10326,4,"APDD",130,130,.01)
+
+"BLD",10326,4,"APDD",130,130,.09)
+
+"BLD",10326,4,"APDD",130,130,235)
+
+"BLD",10326,4,"B",130,130)
+
+"BLD",10326,6.3)
+3
+"BLD",10326,"INID")
+^n
+"BLD",10326,"INIT")
+EN^SR3189P
+"BLD",10326,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10326,"KRN",.4,0)
+.4
+"BLD",10326,"KRN",.401,0)
+.401
+"BLD",10326,"KRN",.402,0)
+.402
+"BLD",10326,"KRN",.403,0)
+.403
+"BLD",10326,"KRN",.5,0)
+.5
+"BLD",10326,"KRN",.84,0)
+.84
+"BLD",10326,"KRN",3.6,0)
+3.6
+"BLD",10326,"KRN",3.8,0)
+3.8
+"BLD",10326,"KRN",9.2,0)
+9.2
+"BLD",10326,"KRN",9.8,0)
+9.8
+"BLD",10326,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",10326,"KRN",9.8,"NM",1,0)
+SR3189P^^0^B2632089
+"BLD",10326,"KRN",9.8,"NM","B","SR3189P",1)
+
+"BLD",10326,"KRN",19,0)
+19
+"BLD",10326,"KRN",19.1,0)
+19.1
+"BLD",10326,"KRN",101,0)
+101
+"BLD",10326,"KRN",409.61,0)
+409.61
+"BLD",10326,"KRN",771,0)
+771
+"BLD",10326,"KRN",779.2,0)
+779.2
+"BLD",10326,"KRN",870,0)
+870
+"BLD",10326,"KRN",8989.51,0)
+8989.51
+"BLD",10326,"KRN",8989.52,0)
+8989.52
+"BLD",10326,"KRN",8994,0)
+8994
+"BLD",10326,"KRN","B",.4,.4)
+
+"BLD",10326,"KRN","B",.401,.401)
+
+"BLD",10326,"KRN","B",.402,.402)
+
+"BLD",10326,"KRN","B",.403,.403)
+
+"BLD",10326,"KRN","B",.5,.5)
+
+"BLD",10326,"KRN","B",.84,.84)
+
+"BLD",10326,"KRN","B",3.6,3.6)
+
+"BLD",10326,"KRN","B",3.8,3.8)
+
+"BLD",10326,"KRN","B",9.2,9.2)
+
+"BLD",10326,"KRN","B",9.8,9.8)
+
+"BLD",10326,"KRN","B",19,19)
+
+"BLD",10326,"KRN","B",19.1,19.1)
+
+"BLD",10326,"KRN","B",101,101)
+
+"BLD",10326,"KRN","B",409.61,409.61)
+
+"BLD",10326,"KRN","B",771,771)
+
+"BLD",10326,"KRN","B",779.2,779.2)
+
+"BLD",10326,"KRN","B",870,870)
+
+"BLD",10326,"KRN","B",8989.51,8989.51)
+
+"BLD",10326,"KRN","B",8989.52,8989.52)
+
+"BLD",10326,"KRN","B",8994,8994)
+
+"BLD",10326,"QUES",0)
+^9.62^^
+"FIA",130)
+SURGERY
+"FIA",130,0)
+^SRF(
+"FIA",130,0,0)
+130IP
+"FIA",130,0,1)
+y^y^p^^^^n^^n
+"FIA",130,0,10)
+
+"FIA",130,0,11)
+
+"FIA",130,0,"RLRO")
+
+"FIA",130,0,"VR")
+3.0^SR
+"FIA",130,130)
+1
+"FIA",130,130,.01)
+
+"FIA",130,130,.09)
+
+"FIA",130,130,235)
+
+"INIT")
+EN^SR3189P
+"IX",130,130,"AD",0)
+130^AD^CoreFLS fields monitor flag.^MU^^R^IR^I^130^^^^^A
+"IX",130,130,"AD",.1,0)
+^^2^2^3020822^
+"IX",130,130,"AD",.1,1,0)
+This cross-reference will be checked before sending a notification to
+"IX",130,130,"AD",.1,2,0)
+the CoreFLS software after editing any of these fields.
+"IX",130,130,"AD",1)
+S ^TMP("CSLSUR1",$J)="" Q
+"IX",130,130,"AD",1.4)
+N I S (X,I)=0 F  S I=$O(X1(I)) Q:'I  I X1(I)'=X2(I) S X=1 Q
+"IX",130,130,"AD",2)
+S ^TMP("CSLSUR1",$J)="" Q
+"IX",130,130,"AD",2.4)
+N I S (X,I)=0 F  S I=$O(X1(I)) Q:'I  I X1(I)'=X2(I) S X=1 Q
+"IX",130,130,"AD",2.5)
+Q
+"IX",130,130,"AD",11.1,0)
+^.114IA^11^11
+"IX",130,130,"AD",11.1,1,0)
+1^F^130^.14^^^F
+"IX",130,130,"AD",11.1,2,0)
+2^F^130^27^^^F
+"IX",130,130,"AD",11.1,3,0)
+3^F^130^.02^^^F
+"IX",130,130,"AD",11.1,4,0)
+4^F^130^.04^^^F
+"IX",130,130,"AD",11.1,5,0)
+5^F^130^10^^^F
+"IX",130,130,"AD",11.1,6,0)
+6^F^130^11^^^F
+"IX",130,130,"AD",11.1,7,0)
+7^F^130^26^^^F
+"IX",130,130,"AD",11.1,8,0)
+8^F^130^.011^^^F
+"IX",130,130,"AD",11.1,9,0)
+9^F^130^.09^^^F
+"IX",130,130,"AD",11.1,10,0)
+10^F^130^35^^^F
+"IX",130,130,"AD",11.1,11,0)
+11^F^130^.164^^^F
+"IX",130,130,"ADT",0)
+130^ADT^Inverse date of operation index^MU^^R^IR^I^130^^^^^S
+"IX",130,130,"ADT",.1,0)
+^^3^3^3160823^
+"IX",130,130,"ADT",.1,1,0)
+The "ADT" index on the DATE OF OPERATION (#.09) field uses the inverse
+"IX",130,130,"ADT",.1,2,0)
+date/time format to sort and to display cases by inverse chronological 
+"IX",130,130,"ADT",.1,3,0)
+order.
+"IX",130,130,"ADT",1)
+S ^SRF("ADT",$E(X(1),1,30),$E(X(2),1,14),DA)=9999999.999999-X(2)
+"IX",130,130,"ADT",2)
+K ^SRF("ADT",$E(X(1),1,30),$E(X(2),1,14),DA)
+"IX",130,130,"ADT",2.5)
+K ^SRF("ADT")
+"IX",130,130,"ADT",11.1,0)
+^.114IA^2^2
+"IX",130,130,"ADT",11.1,1,0)
+1^F^130^.01^30^1^F
+"IX",130,130,"ADT",11.1,1,2)
+
+"IX",130,130,"ADT",11.1,1,3)
+
+"IX",130,130,"ADT",11.1,2,0)
+2^F^130^.09^14^2^F
+"IX",130,130,"ADT",11.1,2,2)
+S X=9999999.999999-X
+"IX",130,130,"ADT",11.1,2,3)
+
+"IX",130,130,"AES8",0)
+130^AES8^Update TIU when Date of Operation is changed.^MU^^F^IR^I^130^^^^^A
+"IX",130,130,"AES8",.1,0)
+^^3^3^3020729^^
+"IX",130,130,"AES8",.1,1,0)
+This cross-reference is responsible for updating the REFERENCE DATE field 
+"IX",130,130,"AES8",.1,2,0)
+(#1301) in the TIU DOCUMENT file (#8925) for all Reports when the 
+"IX",130,130,"AES8",.1,3,0)
+DATE OF OPERATION field (#9) in the SURGERY file (#130) is edited.
+"IX",130,130,"AES8",1)
+D AES8^SROESX0 Q
+"IX",130,130,"AES8",1.4)
+S X=((X1(1)'=X2(1))&(X2(1)'=""))
+"IX",130,130,"AES8",2)
+Q
+"IX",130,130,"AES8",11.1,0)
+^.114IA^1^1
+"IX",130,130,"AES8",11.1,1,0)
+1^F^130^.09^^^F
+"IX",130,130,"AK",0)
+130^AK^PFSS field monitor flag.^MU^^F^IR^I^130^^^^^A
+"IX",130,130,"AK",.1,0)
+^^2^2^3051020^
+"IX",130,130,"AK",.1,1,0)
+This cross-reference will be checked before sending a notification to the
+"IX",130,130,"AK",.1,2,0)
+PFSS after editing the Date Of Operation field.
+"IX",130,130,"AK",1)
+I ($P(X1(1),".")'=$P(X2(1),"."))&(X2(1)'="") S ^TMP("SRPFSS",$J)="" Q
+"IX",130,130,"AK",1.4)
+Q
+"IX",130,130,"AK",2)
+I ($P(X1(1),".")'=$P(X2(1),"."))&(X1(1)'="") S ^TMP("SRPFSS",$J)="" Q
+"IX",130,130,"AK",2.4)
+Q
+"IX",130,130,"AK",11.1,0)
+^.114IA^1^1
+"IX",130,130,"AK",11.1,1,0)
+1^F^130^.09^^^F
+"IX",130,130,"ARS",0)
+130^ARS^This is the current status of the surgery risk assessment.^R^^R^IR^I^130^^^^^S
+"IX",130,130,"ARS",.1,0)
+^^5^5^3160823^
+"IX",130,130,"ARS",.1,1,0)
+This is the current status of the surgery risk assessment.  When creating 
+"IX",130,130,"ARS",.1,2,0)
+a new assessment, the status will automatically be entered as  
+"IX",130,130,"ARS",.1,3,0)
+'INCOMPLETE'.  Upon completion of the assessment, this field will be 
+"IX",130,130,"ARS",.1,4,0)
+updated to 'COMPLETED'.  After the assessment is transmitted, this field 
+"IX",130,130,"ARS",.1,5,0)
+will be automatically updated to 'TRANSMITTED'.
+"IX",130,130,"ARS",1)
+S ^SRF("ARS",$E(X(1),1,2),$E(X(2),1,2),$E(X(3),1,30),DA)=""
+"IX",130,130,"ARS",2)
+K ^SRF("ARS",$E(X(1),1,2),$E(X(2),1,2),$E(X(3),1,30),DA)
+"IX",130,130,"ARS",2.5)
+K ^SRF("ARS")
+"IX",130,130,"ARS",11.1,0)
+^.114IA^3^3
+"IX",130,130,"ARS",11.1,1,0)
+1^F^130^284^2^1^F
+"IX",130,130,"ARS",11.1,1,3)
+
+"IX",130,130,"ARS",11.1,2,0)
+2^F^130^235^2^2^F
+"IX",130,130,"ARS",11.1,2,3)
+
+"IX",130,130,"ARS",11.1,3,0)
+3^F^130^.01^30^3^F
+"IX",130,130,"ARS",11.1,3,3)
+
+"MBREQ")
+0
+"PKG",308,-1)
+1^1
+"PKG",308,0)
+SURGERY^SR^SURGICAL DATA COLLECTION AND OPERATIONS SCHEDULING
+"PKG",308,20,0)
+^9.402P^^
+"PKG",308,22,0)
+^9.49I^1^1
+"PKG",308,22,1,0)
+3.0^2930624^2940818
+"PKG",308,22,1,"PAH",1,0)
+189^3160922
+"PKG",308,22,1,"PAH",1,1,0)
+^^4^4^3160922
+"PKG",308,22,1,"PAH",1,1,1,0)
+Patch SR*3.0*189 addresses the following Surgery issue:
+"PKG",308,22,1,"PAH",1,1,2,0)
+ 
+"PKG",308,22,1,"PAH",1,1,3,0)
+  1. The SURGERY file (#130) ADT and ARS cross references do not merge 
+"PKG",308,22,1,"PAH",1,1,4,0)
+during a patient merge.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","SR3189P")
+0^1^B2632089^n/a
+"RTN","SR3189P",1,0)
+SR3189P ;ALB/BJR - DELETE OLD ADT AND ARS X-REF ; 8/15/16 3:36pm
+"RTN","SR3189P",2,0)
+ ;;3.0;Surgery;**189**;24 Jun 93;Build 3
+"RTN","SR3189P",3,0)
+ ;
+"RTN","SR3189P",4,0)
+ Q
+"RTN","SR3189P",5,0)
+EN ; Entry point
+"RTN","SR3189P",6,0)
+ ; Delete old ARS and ADT x-ref
+"RTN","SR3189P",7,0)
+ Q:$$PATCH^XPDUTL("SR*3.0*189")  ;Patch has already been installed
+"RTN","SR3189P",8,0)
+ N SRERR,SRERR1,SRMSG
+"RTN","SR3189P",9,0)
+ D DELIX^DDMOD(130,.09,2,,,"SRERR") I $D(SRERR) D
+"RTN","SR3189P",10,0)
+ .D BMES^XPDUTL("An error has occured when attempting to delete the 'ADT' x-ref.")
+"RTN","SR3189P",11,0)
+ .I $D(SRERR("DIERR",1,"TEXT")) S SRMSG=0 F  S SRMSG=$O(SRERR("DIERR",1,"TEXT",SRMSG)) Q:'SRMSG  D
+"RTN","SR3189P",12,0)
+ ..D BMES^XPDUTL(SRERR("DIERR",1,"TEXT",SRMSG))
+"RTN","SR3189P",13,0)
+ .D BMES^XPDUTL("Please contact local site support.")
+"RTN","SR3189P",14,0)
+ D DELIX^DDMOD(130,235,1,,,"SRERR1") I $D(SRERR1) D
+"RTN","SR3189P",15,0)
+ .D BMES^XPDUTL("An error has occured when attempting to delete the 'ARS' x-ref.")
+"RTN","SR3189P",16,0)
+ .I $D(SRERR1("DIERR",1,"TEXT")) S SRMSG=0 F  S SRMSG=$O(SRERR1("DIERR",1,"TEXT",SRMSG)) Q:'SRMSG  D
+"RTN","SR3189P",17,0)
+ ..D BMES^XPDUTL(SRERR1("DIERR",1,"TEXT",SRMSG))
+"RTN","SR3189P",18,0)
+ .D BMES^XPDUTL("Please contact local site support.")
+"RTN","SR3189P",19,0)
+ Q
+"VER")
+8.0^22.0
+"^DD",130,130,.01,0)
+PATIENT^RP2'^DPT(^0;1^Q
+"^DD",130,130,.01,.1)
+Patient's Name
+"^DD",130,130,.01,1,0)
+^.1
+"^DD",130,130,.01,1,1,0)
+130^B
+"^DD",130,130,.01,1,1,1)
+S ^SRF("B",$E(X,1,30),DA)=""
+"^DD",130,130,.01,1,1,2)
+K ^SRF("B",$E(X,1,30),DA)
+"^DD",130,130,.01,1,2,0)
+130^ARET^MUMPS
+"^DD",130,130,.01,1,2,1)
+Q
+"^DD",130,130,.01,1,2,2)
+D ^SROKRET
+"^DD",130,130,.01,1,2,"%D",0)
+3^^5^5^2930128^^
+"^DD",130,130,.01,1,2,"%D",1,0)
+The ARET cross reference on the PATIENT field removes returns to surgery
+"^DD",130,130,.01,1,2,"%D",2,0)
+that are defined for other cases when a case is deleted.  In addition, the
+"^DD",130,130,.01,1,2,"%D",3,0)
+ARET cross reference includes logic to remove AL and AUD nodes (on case
+"^DD",130,130,.01,1,2,"%D",4,0)
+deletion) that may exist because of the reverse set and kill logic on the
+"^DD",130,130,.01,1,2,"%D",5,0)
+AL and AUD cross references.
+"^DD",130,130,.01,3)
+
+"^DD",130,130,.01,21,0)
+^^2^2^2900104^
+"^DD",130,130,.01,21,1,0)
+This is the name of the patient.
+"^DD",130,130,.01,21,2,0)
+ 
+"^DD",130,130,.01,"DEL",1,0)
+I 1 D EN^DDIOL("Deletion from this file is not allowed !!",,"!!,?2")
+"^DD",130,130,.01,"DT")
+3160823
+"^DD",130,130,.09,0)
+DATE OF OPERATION^RDX^^0;9^S %DT="ETX" D ^%DT S X=Y K:Y<1 X I $D(X) D SCH^SRODATE
+"^DD",130,130,.09,.1)
+Date of Operation
+"^DD",130,130,.09,1,0)
+^.1^^-1
+"^DD",130,130,.09,1,1,0)
+130^AC^MUMPS
+"^DD",130,130,.09,1,1,1)
+S ^SRF("AC",X,DA)=$P(^SRF(DA,0),"^")
+"^DD",130,130,.09,1,1,2)
+K ^SRF("AC",X,DA)
+"^DD",130,130,.09,1,1,"%D",0)
+^^2^2^2930128^
+"^DD",130,130,.09,1,1,"%D",1,0)
+The AC cross reference on the DATE OF OPERATION field is used to sort
+"^DD",130,130,.09,1,1,"%D",2,0)
+entries by date of operation for reports.
+"^DD",130,130,.09,1,3,0)
+130^ASP1^MUMPS
+"^DD",130,130,.09,1,3,1)
+D SP^SROXR1
+"^DD",130,130,.09,1,3,2)
+D KSP^SROXR1
+"^DD",130,130,.09,1,3,"%D",0)
+^^2^2^2930128^^
+"^DD",130,130,.09,1,3,"%D",1,0)
+The ASP1 cross reference on the DATE OF OPERATION field updates the
+"^DD",130,130,.09,1,3,"%D",2,0)
+ASP and the AOR cross references when the date of operation is changed.
+"^DD",130,130,.09,1,4,0)
+130^AR^MUMPS
+"^DD",130,130,.09,1,4,1)
+D AR^SROXR1
+"^DD",130,130,.09,1,4,2)
+D KAR^SROXR1
+"^DD",130,130,.09,1,4,"%D",0)
+^^4^4^2930128^^^
+"^DD",130,130,.09,1,4,"%D",1,0)
+The AR cross reference on the DATE OF OPERATION field is used to sort
+"^DD",130,130,.09,1,4,"%D",2,0)
+and display requested cases.  This cross reference is created when a
+"^DD",130,130,.09,1,4,"%D",3,0)
+case is requested or when the request date is changed.  Upon scheduling
+"^DD",130,130,.09,1,4,"%D",4,0)
+the request, the AR cross reference for the case is deleted.
+"^DD",130,130,.09,1,4,"DT")
+2911002
+"^DD",130,130,.09,3)
+Enter the date that the principal operation was performed.  The patient may have more than principal operation (and operative record) on the same day.
+"^DD",130,130,.09,5,1,0)
+130^.205^1
+"^DD",130,130,.09,5,2,0)
+130^120^1
+"^DD",130,130,.09,21,0)
+^^2^2^2900104^
+"^DD",130,130,.09,21,1,0)
+This is the date that the case was performed.  The date of operation
+"^DD",130,130,.09,21,2,0)
+must be entered for all cases.
+"^DD",130,130,.09,"DT")
+3160823
+"^DD",130,130,235,0)
+ASSESSMENT STATUS^S^I:INCOMPLETE;C:COMPLETE;T:TRANSMITTED;N:NO ASSESSMENT;^RA;1^Q
+"^DD",130,130,235,.1)
+Assessment Status
+"^DD",130,130,235,1,0)
+^.1^^0
+"^DD",130,130,235,3)
+Enter the current status of this surgery risk assessment.
+"^DD",130,130,235,21,0)
+^^5^5^2950310^
+"^DD",130,130,235,21,1,0)
+This is the current status of the surgery risk assessment.  When creating
+"^DD",130,130,235,21,2,0)
+a new assessment, the status will automatically be entered as
+"^DD",130,130,235,21,3,0)
+'INCOMPLETE'.  Upon completion of the assessment, this field will be
+"^DD",130,130,235,21,4,0)
+updated to 'COMPLETED'.  After the assessment is transmitted, this field
+"^DD",130,130,235,21,5,0)
+will be automatically updated to 'TRANSMITTED'.
+"^DD",130,130,235,"DT")
+3160823
+"BLD",10326,6)
+^180
+**END**
+**END**
+
