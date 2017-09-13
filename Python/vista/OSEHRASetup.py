@@ -19,9 +19,8 @@ import time
 import TestHelper
 from OSEHRAHelper import PROMPT
 
-introText = """
-  **************************************************
-  *  Welcome to an OSEHRA VistA instance
+introText = """**************************************************
+  *  Welcome to VistA
   **************************************************
   *
   * Use the following credentials for Robert Alexander
