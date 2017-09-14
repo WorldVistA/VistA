@@ -281,7 +281,6 @@ if __name__ == '__main__':
                 description='VistA Cross-Reference information Console',
                 parents=[crossRefArgParse])
     result = parser.parse_args();
-    print result
     initConsoleLogging()
     crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(result)
     # read the user input from the terminal

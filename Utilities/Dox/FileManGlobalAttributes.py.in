@@ -21,6 +21,7 @@ sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + sys.path
 from OSEHRAHelper import ConnectToMUMPS,PROMPT
 
 def listFileManFileAttributes(FileManNo, outputFile, logFile):
+  print "Processing file", FileManNo, "..."
   VistA=ConnectToMUMPS(sys.argv[3],'${VISTA_CACHE_INSTANCE}','${VISTA_CACHE_NAMESPACE}')
   if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
     VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
@@ -124,7 +125,6 @@ def listFileManFileAttributes(FileManNo, outputFile, logFile):
     print 'Error'
 
 if __name__ == '__main__':
-  print ('sys.argv is %s' % sys.argv)
   if len(sys.argv) <= 1:
     print ('Need at least two arguments')
     sys.exit()

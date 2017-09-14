@@ -21,7 +21,7 @@ import sys
 import tempfile as tf
 import unittest
 
-sys.path = ['${CMAKE_SOURCE_DIR}/Testing/Python'] + sys.path
+sys.path = ['${VISTA_TESTING_DIR}/Python'] + sys.path
 import ParseGTMRoutines
 
 class TestParseGTMRoutines(unittest.TestCase):

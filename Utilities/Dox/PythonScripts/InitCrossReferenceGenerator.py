@@ -8,7 +8,6 @@ import argparse
 
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
-print SCRIPTS_DIR
 if SCRIPTS_DIR not in sys.path:
   sys.path.append(SCRIPTS_DIR)
 

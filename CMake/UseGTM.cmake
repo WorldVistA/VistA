@@ -63,10 +63,10 @@ endif()
 ##### SECTION TO RUN GTMROUTINES VARIABLE PARSING TEST #####
 #-----------------------------------------------------------------------------#
 if(GTM_DIST)
-  configure_file("${VISTA_SOURCE_DIR}/Testing/Python/ParseGTMRoutinesTest.py.in"
-                 "${VISTA_BINARY_DIR}/Testing/Python/ParseGTMRoutinesTest.py")
+  configure_file("${VISTA_TESTING_DIR}/ParseGTMRoutinesTest.py.in"
+                 "${CMAKE_BINARY_DIR}/Python/ParseGTMRoutinesTest.py")
   add_test(PYTHON_GTMRoutinesParser ${PYTHON_EXECUTABLE}
-           ${VISTA_BINARY_DIR}/Testing/Python/ParseGTMRoutinesTest.py)
+           ${CMAKE_BINARY_DIR}/Python/ParseGTMRoutinesTest.py)
   set_tests_properties(PYTHON_GTMRoutinesParser
                        PROPERTIES FAIL_REGULAR_EXPRESSION "FAILED")
 endif()

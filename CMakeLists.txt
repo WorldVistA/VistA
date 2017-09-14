@@ -47,20 +47,47 @@ if(BUILD_DELPHI)
   add_subdirectory("Packages/Order Entry Results Reporting/CPRS" CPRS)
 endif()
 
+set(BUILD_TESTING "ON" CACHE INTERNAL "Always build testing")
+
+if(TEST_VISTA OR DOCUMENT_VISTA)
+  set(VISTA_CMAKE_DIR "${VISTA_SOURCE_DIR}/CMake")
+  set(VISTA_TESTING_DIR "${VISTA_SOURCE_DIR}/Testing")
+
+  if("${CMAKE_VERSION}" VERSION_LESS 2.8.2)
+    find_program(GIT_EXECUTABLE NAMES git)
+    if(NOT GIT_EXECUTABLE)
+      mark_as_advanced(CLEAR GIT_EXECUTABLE)
+    endif()
+  else()
+    find_package(Git REQUIRED)
+  endif()
+
+  find_package(PythonInterp)
+  if(NOT PYTHONINTERP_FOUND)
+     mark_as_advanced(CLEAR PYTHON_EXECUTABLE)
+  endif()
+
+  set(VISTA_TCP_HOST "127.0.0.1" CACHE STRING "Server address of the machine that will have the VistA TCP listener")
+  set(VISTA_TCP_PORT "9210" CACHE STRING "Port number of the opened TCP listener." )
+
+
+  include(FindCacheOrGTM)
+endif()
+
 #-----------------------------------------------------------------------------#
 ##### SECTION TO CONFIGURE OSEHRA AUTOMATED TESTING HARNESS #####
 #-----------------------------------------------------------------------------#
 option(TEST_VISTA "Use this option to create and use the OSEHRA Automated Testing harness" OFF)
 if(TEST_VISTA)
   add_subdirectory(Testing)
+endif()
 
-  #-----------------------------------------------------------------------------#
-  ##### SECTION TO GENERATE VISUAL CROSS REFERENCE DOCUMENTATION #####
-  #-----------------------------------------------------------------------------#
-  OPTION(TEST_VISTA_DOX_CALLERGRAPH "Enables callergraph tests to create output to generate Dox pages." OFF)
-  if(TEST_VISTA_DOX_CALLERGRAPH)
-    add_subdirectory(Utilities/Dox)
-  endif()
+#-----------------------------------------------------------------------------#
+##### SECTION TO GENERATE VISUAL CROSS REFERENCE DOCUMENTATION #####
+#-----------------------------------------------------------------------------#
+OPTION(DOCUMENT_VISTA "Use this option to generate VistA documentation (ViViaN and DOX)" OFF)
+if(DOCUMENT_VISTA)
+  add_subdirectory(Utilities/Dox)
 endif()
 
 #-----------------------------------------------------------------------------

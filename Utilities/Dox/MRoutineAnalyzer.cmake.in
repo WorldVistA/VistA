@@ -1,0 +1,81 @@
+#---------------------------------------------------------------------------
+# Copyright 2011 The Open Source Electronic Health Record Agent
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
+
+#------------------------------------------------------------------------------
+# M Rouine Analyzer
+#------------------------------------------------------------------------------
+message(STATUS "Filema database information...")
+
+set(ENV{VISTA-FOIA} @DOCUMENT_VISTA_M_DIR@)
+
+# Download the 'fileman_json' branch of the 'rgivistatools' repo
+set(git_repository https://github.com/jasonli2000/rgivistatools)
+set(git_tag "fileman_json")
+set(src_name "@CMAKE_BINARY_DIR@/rgivistatools")
+
+if(NOT EXISTS ${src_name})
+  execute_process(
+      COMMAND "@GIT_EXECUTABLE@" clone ${git_repository} ${src_name}
+      WORKING_DIRECTORY @CMAKE_BINARY_DIR@
+      RESULT_VARIABLE error_code
+      )
+
+  if(error_code)
+    message(FATAL_ERROR "Failed to clone repository: '${git_repository}' (${error_code})")
+  endif()
+endif()
+
+execute_process(
+  COMMAND "@GIT_EXECUTABLE@" checkout ${git_tag}
+  WORKING_DIRECTORY ${src_name}
+  RESULT_VARIABLE error_code
+  )
+if(error_code)
+  message(FATAL_ERROR "Failed to checkout tag: '${git_tag}' (${error_code})")
+endif()
+
+execute_process(
+  COMMAND "@GIT_EXECUTABLE@" pull
+  WORKING_DIRECTORY ${src_name}
+  RESULT_VARIABLE error_code
+  )
+if(error_code)
+  message(FATAL_ERROR "Failed to update repository: '${git_tag}' (${error_code})")
+endif()
+
+set(src_dir "${src_name}/MParseAnalyze/src")
+
+# Compile the RepositoryInfo class using the ``javac`` tool
+execute_process(
+  COMMAND "@Java_JAVAC_EXECUTABLE@" "com/pwc/us/rgi/vista/tools/MRoutineAnalyzer.java"
+  WORKING_DIRECTORY ${src_dir}
+  RESULT_VARIABLE error_code
+  )
+if(error_code)
+  message(FATAL_ERROR "Failed to compile the M Routine Analyzer: ${error_code}")
+endif()
+
+# Generate the Fileman Database JSON file
+set(mroutineanalyzer_class "com/pwc/us/rgi/vista/tools/MRoutineAnalyzer")
+set(filename @FILEMANDBCALL_JSON@)
+execute_process(
+  COMMAND "@Java_JAVA_EXECUTABLE@" "${mroutineanalyzer_class}" repo filemancall -o "${filename}"
+  WORKING_DIRECTORY ${src_dir}
+  RESULT_VARIABLE error_code
+  )
+if(error_code)
+  message(FATAL_ERROR "M Routine Analyzer failed: ${error_code}")
+endif()

@@ -239,7 +239,6 @@ class FileManSchemaParser(object):
   def _topologicSort(self):
     from PatchOrderGenerator import topologicSort
     result = topologicSort(self._fileDep, '2')
-    print result
 
   def parseSchemaDDFile(self, inputDDZWRFile):
     self._ddRoot = createGlobalNodeByZWRFile(inputDDZWRFile)
@@ -277,24 +276,14 @@ class FileManSchemaParser(object):
   def parseSchemaDDFileV2(self, inputDDZWRFile):
     for ddRoot in readGlobalNodeFromZWRFileV2(inputDDZWRFile, '^DD'):
       self._ddRoot = ddRoot
-      #logging.info("Printing Global Node:")
-      #printGlobal(ddRoot)
       self._generateSchema()
     self._updateMultiple()
     self._generateNoPointerToFileList()
     outSCCLst = self._generateSCCSet()
-    if '101' in self._fileDep:
-      print self._fileDep['101']
     totalFiles = 0
     for idx, scc in enumerate(outSCCLst):
       scc = scc - self._isolatedFile
-      print "%s: %s" % (idx, scc)
       totalFiles += len(scc)
-      if '101' in scc:
-        print "Total # files need to read at the same time is %s" % len(scc)
-        print "Total Files before 101 is %s" % totalFiles
-    #self._updateFileDepByFile('200', set())
-    #print len(self._fileDep['200']), self._fileDep['200']
     return self._allSchema
 
   def _generateFileZeroSchema(self):
@@ -642,11 +631,13 @@ def test_strongly_connected_components():
     print scc, expRet
     #assert scc == expRet
 
+def unit_test():
+  #test_parseFieldTypeSpecifier()
+  test_strongly_connected_components()
+
 def main():
   from LogManager import initConsoleLogging
   initConsoleLogging(formatStr='%(asctime)s %(message)s')
-  #test_parseFieldTypeSpecifier()
-  test_strongly_connected_components()
   testDDZWRFile()
 
 if __name__ == '__main__':
