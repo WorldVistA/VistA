@@ -1351,7 +1351,13 @@ class WebPageGenerator:
                 routine.addEntryPoint(entry, comment, icrJson)
                 comment=[]
               inComment=True
-              (entry, commentString) = line.replace("\t"," ").split(" ",1)
+              foundLine = line.replace("\t"," ").split(" ",1)
+              if len(foundLine) > 1:
+                entry = foundLine[0]
+                commentString = foundLine[1]
+              else:
+                commentString = "@"
+                entry= line
               currentEntryPoint= entry
               entryOffset= 0
               comment.append(commentString)
