@@ -71,7 +71,6 @@ Links
 * OSEHRA Homepage: http://osehra.org
 * OSEHRA Repositories: http://code.osehra.org
 * OSEHRA Github: https://github.com/OSEHRA
-* OSEHRA Gitorious: https://gitorious.org/osehra
 * VA VistA Document Library: http://www.va.gov/vdl
 
 .. _`VA VistA FOIA Site`: https://downloads.va.gov/files/FOIA
