@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2012 The Open Source Electronic Health Record Agent
+# Copyright 2017 Sam Habiel. writectrl methods.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -26,7 +27,7 @@ and interaction methods such as write() and wait()
 '''
 
 import sys
-import os
+import os, errno
 import telnetlib
 import TestHelper
 import time
@@ -164,6 +165,10 @@ class ConnectWinCache(ConnectMUMPS):
     logging.debug('connection.write:' + command)
     self.log.flush()
 
+  def writectrl(self, command):
+    self.connection.send(command)
+    logging.debug('connection.writectrl: ' + command)
+
   def wait(self, command, tout=15):
     logging.debug('connection.expect: ' + str(command))
     if command is PROMPT:
@@ -270,6 +275,10 @@ class ConnectLinuxCache(ConnectMUMPS):
     self.connection.send(command + '\r')
     logging.debug('connection.write:' + command)
 
+  def writectrl(self, command):
+    self.connection.send(command)
+    logging.debug('connection.writectrl: ' + command)
+
   def wait(self, command, tout=15):
     logging.debug('connection.expect: ' + str(command))
     if command is PROMPT:
@@ -360,10 +369,15 @@ class ConnectLinuxGTM(ConnectMUMPS):
     self.lastconnection=""
     self.optionParentDict = []
     self.optionMenuTextDict = []
+    self.coverageRoutines = ""
 
   def write(self, command):
     self.connection.send(command + '\r')
     logging.debug('connection.write: ' + command)
+
+  def writectrl(self, command):
+    self.connection.send(command)
+    logging.debug('connection.writectrl: ' + command)
 
   def wait(self, command, tout=15):
     logging.debug('connection.expect: ' + str(command))
@@ -400,9 +414,17 @@ class ConnectLinuxGTM(ConnectMUMPS):
 
   def startCoverage(self, routines=['*']):
     self.write('K ^ZZCOVERAGE VIEW "TRACE":1:"^ZZCOVERAGE"')
+    self.coverageRoutines = routines
 
   def stopCoverage(self, path, humanreadable='OFF'):
-    path, filename = os.path.split(path)
+    mypath, myfilename = os.path.split(path)
+
+    try:
+      os.makedirs(os.path.join(mypath, 'Coverage'))
+    except OSError as exception:
+      if exception.errno != errno.EEXIST:
+        raise
+
     self.write('VIEW "TRACE":0:"^ZZCOVERAGE"')
     self.wait(PROMPT)
     self.write('D ^%GO')
@@ -415,7 +437,47 @@ class ConnectLinuxGTM(ConnectMUMPS):
     self.wait('Format')
     self.write('ZWR')
     self.wait('device')
-    self.write(path + '/Coverage/' + filename.replace('.log', '.mcov').replace('.txt', '.mcov'))
+    self.write(mypath + '/Coverage/' + myfilename.replace('.log', '.mcov').replace('.txt', '.mcov'))
+    self.write('')
+    self.wait(PROMPT)
+    if humanreadable == 'ON':
+      try:
+        self.write('W $T(GETRTNS^%ut1)')
+        self.wait(',NMSPS',.01)
+      except:
+        print('Human readable coverage requires M-Unit 1.6')
+        return
+      self.write('')
+      self.write('K NMSP')
+      self.wait(PROMPT)
+      for routine in self.coverageRoutines:
+          self.write('S NMSP("' + routine + '")=""')
+      self.write('K RTNS D GETRTNS^%ut1(.RTNS,.NMSP)')
+      self.wait(PROMPT)
+      self.write('K ^ZZCOHORT D RTNANAL^%ut1(.RTNS,"^ZZCOHORT")')
+      self.wait(PROMPT)
+      self.write('K ^ZZSURVIVORS M ^ZZSURVIVORS=^ZZCOHORT')
+      self.wait(PROMPT)
+      self.write('D COVCOV^%ut1("^ZZSURVIVORS","^ZZCOVERAGE")')
+      self.wait(PROMPT)
+      self.write('D COVRPT^%ut1("^ZZCOHORT","^ZZSURVIVORS","^ZZRESULT",-1)')
+      self.wait(PROMPT)
+      self.write('D ^%GO')
+      self.wait('Global')
+      self.write('ZZRESULT')
+      self.wait('Global')
+      self.write('')
+      self.wait('Label:')
+      self.write('')
+      self.wait('Format')
+      self.write('ZWR')
+      self.wait('device')
+      self.write(mypath + '/Coverage/coverageCalc.mcov')
+      self.wait(PROMPT)
+      self.write('WRITE ^ZZRESULT," ",@^ZZRESULT')
+      self.wait(PROMPT)
+      self.write('K ^ZZCOHORT,^ZZSURVIVORS,^ZZCOVERAGE,^ZZRESULT')
+      self.wait(PROMPT)
 
 class ConnectRemoteSSH(ConnectMUMPS):
   """
@@ -455,6 +517,11 @@ class ConnectRemoteSSH(ConnectMUMPS):
     time.sleep(.01)
     self.connection.send(command + '\r')
     logging.debug('connection.send:' + command)
+
+  def writectrl(self, command):
+    time.sleep(.01)
+    self.connection.send(command)
+    logging.debug('connection.writectrl: ' + command)
 
   def wait(self, command, tout=15):
     time.sleep(.01)
