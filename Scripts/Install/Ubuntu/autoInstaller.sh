@@ -140,8 +140,7 @@ export DEBIAN_FRONTEND="noninteractive"
 echo "Updating operating system"
 apt-get update -qq > /dev/null
 apt-get update -qq > /dev/null
-apt-get install -qq -y build-essential cmake-curses-gui git dos2unix daemon > /dev/null
-
+apt-get install -qq -y build-essential cmake-curses-gui git dos2unix daemon xinetd > /dev/null
 # Clone repos
 cd /usr/local/src
 git clone -q https://github.com/OSEHRA/VistA -b dashboard VistA-Dashboard
