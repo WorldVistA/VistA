@@ -266,8 +266,12 @@ find the routine/global via
 accordionOpenFun = """
     <script type='text/javascript'>
         function openAccordionVal(event) {
-            ret = [].indexOf.call(event.path[1].children, event.target);
-            $('#accordion' ).accordion( 'option', 'active', ret );
+            $('.accordion').accordion( {active:false, collapsible:true });
+            classVal = ".accordion"
+            if (event.target.classList[1] != "Allaccord") {
+              classVal= classVal+"."+event.target.classList[1]
+            }
+            $(classVal).accordion( 'option', 'active',0 );
         }
     </script>
 
@@ -276,12 +280,13 @@ def getAccordionHTML():
   return """
     <script type='text/javascript'>
        $( document ).ready(function() {
-           $( '#accordion' ).accordion({
-               heightStyle: "content"
+           $( '.accordion' ).accordion({
+               heightStyle: "content",
+               collapsible: true,
+               active: false
            })
        })
     </script>
-    <div id='accordion'>
   """
 def getGlobalHtmlFileNameByName(globalName):
     return ("Global_%s.html" %
@@ -398,14 +403,15 @@ def generateIndexBar(outputFile, inputList, archList=None):
             archName = archList[i]
         else:
             archName = inputList[i]
-        outputFile.write("<a onclick=\"openAccordionVal(event)\" class=\"qindex\" href=\"#%s\">%s</a>&nbsp;|&nbsp;\n" % (archName,
+        outputFile.write("<a onclick=\"openAccordionVal(event)\" class=\"qindex %s\" href=\"#%s\">%s</a>&nbsp;|&nbsp;\n" % (archName.split(" ")[0],archName,
                                                                                      inputList[i]))
     if hasArchList:
         archName = archList[-1]
     else:
         archName = inputList[-1]
-    outputFile.write("<a onclick=\"openAccordionVal(event)\" class=\"qindex\" href=\"#%s\">%s</a></div>\n" % (archName,
-                                                                          inputList[-1]))
+    outputFile.write("<a onclick=\"openAccordionVal(event)\" class=\"qindex %s\" href=\"#%s\">%s</a>&nbsp;|&nbsp;\n" % (archName.split(" ")[0],archName,
+        inputList[-1]))
+    outputFile.write("<a onclick=\"openAccordionVal(event)\" class=\"qindex Allaccord\" href=\"#%s\">%s</a></div>\n" % ("All","All"))
 # generate Indexed Page Table Row
 def generateIndexedTableRow(outputFile, inputList, httpLinkFunction,
                             nameFunc=None, indexSet=set(char for char in string.uppercase)):
@@ -484,7 +490,7 @@ def writeGenericTablizedData(headerList, itemList, outputFile):
     if itemList and len(itemList) > 0:
         for itemRow in itemList:
             writeTableData(itemRow, outputFile)
-    outputFile.write("</table></div>\n")
+    outputFile.write("</table></div></div>\n")
 def writeListData(listData, outputFile):
     outputFile.write(generateHtmlListData(listData))
 def generateHtmlListData(listData):
@@ -506,10 +512,12 @@ def listDataToCommaSeperatorString(listData):
         index += 1
     return result
 def writeSectionHeader(headerName, archName, outputFile):
-    outputFile.write("<h2 align=\"left\"><a name=\"%s\">%s</a></h2>\n" % (archName,
+    outputFile.write("<div class='accordion %s'><h2 align=\"left\"><a name=\"%s\">%s</a></h2>\n" % (archName.split(" ")[0], archName,
                                                                        headerName))
     if headerName == "Local Variables":
       outputFile.write(XINDEXLegend)
+def writeSectionEnd(outputFile):
+    outputFile.write("</div>")
 def writeSubSectionHeader(headerName, outputFile):
     outputFile.write("<h3 align=\"left\">%s</h3>\n" % (headerName))
 # class to generate the web page based on input
@@ -817,12 +825,13 @@ class WebPageGenerator:
                     writeGenericTablizedData(infoHeader, itemList, outputFile)
                     writeSectionHeader("Description", "Desc", outputFile)
                     writeListData(globalVar.getDescription(), outputFile)
-
+                    writeSectionEnd(outputFile)
                 writeSectionHeader("Directly Accessed By Routines, Total: %d" %
                                     globalVar.getTotalNumberOfReferencedRoutines(),
                                     "Directly Accessed By Routines", outputFile)
                 self.generateGlobalRoutineDependentsSection(
                                   globalVar.getAllReferencedRoutines(), outputFile)
+                writeSectionEnd(outputFile)
                 fileManDbCallRtns = globalVar.getFileManDbCallRoutines()
                 totalNumDbCallRtns = 0
                 if fileManDbCallRtns:
@@ -837,21 +846,25 @@ class WebPageGenerator:
                         outputFile)
                 else:
                   outputFile.write("<div></div>")
+                writeSectionEnd(outputFile)
                 if isFileManFile:
                     writeSectionHeader("Pointed To By FileMan Files, Total: %d" % globalVar.getTotalNumberOfReferredGlobals(), "Pointed To By FileMan Files", outputFile)
                     self.generateGlobalPointedToSection(globalVar, outputFile, True)
+                    writeSectionEnd(outputFile)
                     writeSectionHeader("Pointer To FileMan Files, Total: %d" % globalVar.getTotalNumberOfReferencedGlobals(), "Pointer To FileMan Files", outputFile)
                     self.generateGlobalPointedToSection(globalVar, outputFile, False)
+                    writeSectionEnd(outputFile)
                     totalNoFields = 0
                     allFields = globalVar.getAllFileManFields()
                     if allFields: totalNoFields = len(allFields)
                     writeSectionHeader("Fields, Total: %d" % totalNoFields, "Fields", outputFile)
                     self.__generateFileManFileDetails__(globalVar, outputFile)
+                    writeSectionEnd(outputFile)
                 if icrList:
                    writeSectionHeader("DBIA/ICR Connections","DBIA/ICR Connections",outputFile)
                    self.generateGlobalICRSection(icrList,outputFile)
+                   writeSectionEnd(outputFile)
                 # generated the index bar at the bottom
-                outputFile.write("</div>")
                 if isFileManFile:
                     generateIndexBar(outputFile, indexListFileMan)
                 else:
@@ -916,9 +929,10 @@ class WebPageGenerator:
         itemList = [[parentFileLink, subFile.getFileManName(), subFile.getFileNo(),
                   getPackageHyperLinkByName(package.getName())]]
         writeGenericTablizedData(infoHeader, itemList, outputFile)
+        writeSectionEnd(outputFile)
         writeSectionHeader("Details", "Details", outputFile)
         self.__generateFileManFileDetails__(subFile, outputFile)
-        outputFile.write("</div>")
+        writeSectionEnd(outputFile)
         # generated the index bar at the bottom
         generateIndexBar(outputFile, indexList)
         self.__includeFooter__(outputFile)
@@ -1864,8 +1878,7 @@ class WebPageGenerator:
         totalPackages = 0
         if depPackages:
             totalPackages = len(depPackages)
-        writeSectionHeader("%s Total: %d " % (sectionListHeader, totalPackages),
-                           sectionListHeader,
+        writeSubSectionHeader("%s Total: %d " % (sectionListHeader, totalPackages),
                            outputFile)
         outputFile.write("""<h4>Format:&nbsp;&nbsp;
                             package[# of caller routines(R):
@@ -1904,6 +1917,7 @@ class WebPageGenerator:
                                    % (getPackageHtmlFileName(depPackageName), depPackageName, depHyperLink))
                 outputFile.write("</tr>\n")
             outputFile.write("</table></div>\n")
+        writeSectionEnd(outputFile)
         outputFile.write("</div>\n")
 #===============================================================================
 # method to generate a tablized representation of data
@@ -1927,7 +1941,7 @@ class WebPageGenerator:
                                    % (htmlMappingFunc(sortedItemList[position]),
                                       displayName))
                 outputFile.write("</tr>\n")
-            outputFile.write("</table>\n</div>\n")
+            outputFile.write("</table>\n</div></div>\n")
         else:
             outputFile.write("<div>\n</div>\n")
 #===============================================================================
@@ -1957,6 +1971,7 @@ class WebPageGenerator:
                 outputFile.write("&nbsp;&nbsp;Additional Global Namespace: %s</h4></div>" % listDataToCommaSeperatorString(globalNamespaces))
             else:
                 outputFile.write("</h4></div>")
+            writeSectionEnd(outputFile)
             # link to VA documentation
             writeSectionHeader("Documentation", "Doc", outputFile)
             if len(package.getDocLink()) > 0:
@@ -1965,6 +1980,7 @@ class WebPageGenerator:
                     outputFile.write("&nbsp;or&nbsp;<a href=\"%s\">OSEHRA Mirror site</a></h4></div>\n" % package.getDocMirrorLink())
             else:
                 outputFile.write("<div><p><h4><a href=\"http://www.va.gov/vdl/\">VA documentation in the VistA Documentation Library</a></h4></p></div>\n")
+            writeSectionEnd(outputFile)
             self.generatePackageDependencySection(packageName, outputFile, True)
             self.generatePackageDependencySection(packageName, outputFile, False)
 
@@ -1977,6 +1993,7 @@ class WebPageGenerator:
             self.generateTablizedItemList(sortedICRList, outputFile,
                                           getICRHtmlFileName,
                                           getICRDisplayName)
+            writeSectionEnd(outputFile)
             # separate fileman files and non-fileman globals
             fileManList, globalList = [], []
             allGlobals = package.getAllGlobals()
@@ -1993,6 +2010,7 @@ class WebPageGenerator:
             self.generateTablizedItemList(sortedFileManList, outputFile,
                                           getGlobalHtmlFileName,
                                           getGlobalDisplayName)
+            writeSectionEnd(outputFile)
             # section of All Non-FileMan Globals
             writeSectionHeader("Non FileMan Globals Total: %d" % len(globalList),
                                "Non-FileMan Globals",
@@ -2001,6 +2019,7 @@ class WebPageGenerator:
             self.generateTablizedItemList(sortedGlobalList, outputFile,
                                           getGlobalHtmlFileName,
                                           getGlobalDisplayName)
+            writeSectionEnd(outputFile)
             # section of all routines
             sortedRoutines = sorted(package.getAllRoutines().keys())
             totalNumRoutine = len(sortedRoutines)
@@ -2011,7 +2030,7 @@ class WebPageGenerator:
                                           getRoutineHtmlFileName,
                                           self.getRoutineDisplayNameByName,
                                           8)
-            outputFile.write("</div>\n")
+            writeSectionEnd(outputFile)
             generateIndexBar(outputFile, indexList)
             self.__includeFooter__(outputFile)
             outputFile.close()
@@ -2249,18 +2268,16 @@ class WebPageGenerator:
         fileNamePrefix = routineName + routineSuffix
         fileName = os.path.join(self._outDir,
                                 packageName + "/" + fileNamePrefix + ".cmapx")
-        if not os.path.exists(fileName):
-          logging.warn("Can not find file %s" % fileName)
-          return
-        outputFile.write("<div class=\"contents\">\n")
-        outputFile.write("<img src=\"%s\" border=\"0\" alt=\"%s\" usemap=\"#%s\"/>\n"
-                   % (urllib.quote(packageName + "/" + fileNamePrefix + ".gif"),
-                      header,
-                      fileNamePrefix))
-        #append the content of map outputFile
-        with open(fileName, 'r') as cmapFile:
-          for line in cmapFile:
-              outputFile.write(line)
+        if os.path.exists(fileName):
+          outputFile.write("<div class=\"contents\">\n")
+          outputFile.write("<img src=\"%s\" border=\"0\" alt=\"%s\" usemap=\"#%s\"/>\n"
+                     % (urllib.quote(packageName + "/" + fileNamePrefix + ".gif"),
+                        header,
+                        fileNamePrefix))
+          #append the content of map outputFile
+          with open(fileName, 'r') as cmapFile:
+            for line in cmapFile:
+                outputFile.write(line)
         self.__writeRoutineDepListSection__(routine, data, header, link,
                                         outputFile, isDependency)
     def __writeRoutineDepListSection__(self, routine, data, header, link,
@@ -2269,8 +2286,7 @@ class WebPageGenerator:
           totalNum = routine.getTotalCalled()
       else:
           totalNum = routine.getTotalCaller()
-      writeSectionHeader("%s Total: %d" % (header, totalNum),
-                         header,
+      writeSubSectionHeader("%s Total: %d" % (header, totalNum),
                          outputFile)
       outputFile.write("<table>\n")
       outputFile.write("<tr><th class=\"indexkey\">Package</th>")
@@ -2461,9 +2477,9 @@ class WebPageGenerator:
           header = sectionGen.get('header', link)
           geneargs = sectionGen.get('geneargs',[])
           sectionGen['generator'](routine, data, header, link, outputFile, *geneargs)
+          writeSectionEnd(outputFile)
           if header == "Local Variables":
            outputFile.write("</div>\n")
-        outputFile.write("</div><br/>\n")
         # generated the index bar at the bottom
         generateIndexBar(outputFile, indexList)
         self.__includeFooter__(outputFile)
