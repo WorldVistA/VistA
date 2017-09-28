@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #---------------------------------------------------------------------------
-# Copyright 2011-2013 The Open Source Electronic Health Record Agent
+# Copyright 2011-2017 The Open Source Electronic Health Record Agent
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,6 +21,14 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
+# Are we running on a local repo? If so, don't the "VistA" repo again!
+currentDir=$(dirname "$(readlink -f "$0")")
+parentDir=$(dirname $currentDir)
+parentdirname=$(basename $parentDir)
+if [ "$parentdirname" = "Install" ]; then
+    localVistARepo="true"
+fi
+
 # Options
 # instance = name of instance
 # used http://rsalveti.wordpress.com/2007/04/03/bash-parsing-arguments-with-getopts/
@@ -31,7 +39,8 @@ usage()
     cat << EOF
     usage: $0 options
 
-    This script will automatically create a VistA instance for GT.M on Ubuntu
+    This script will automatically create a VistA instance for GT.M on
+    Ubuntu
 
     DEFAULTS:
       Alternate VistA-M repo = https://github.com/OSEHRA/VistA-M.git
@@ -43,17 +52,20 @@ usage()
 
     OPTIONS:
       -h    Show this message
-      -a    Alternate VistA-M repo (Must be in OSEHRA format)
-      -e    Install EWD.js (assumes development directories)
+      -a    Alternate VistA-M repo (zip or git format) (Must be in OSEHRA format)
+      -r    Alternate VistA-M repo branch (git format only)
+      -b    Skip bootstrapping system (used for docker)
       -d    Create development directories (s & p)
+      -e    Install EWD.js (assumes development directories)
       -i    Instance name
       -p    Post install hook (path to script)
       -s    Skip testing
+      -y    Install YottaDB
 
 EOF
 }
 
-while getopts ":ha:edi:p:s" option
+while getopts ":ha:bedi:p:sr:y" option
 do
     case $option in
         h)
@@ -62,6 +74,9 @@ do
             ;;
         a)
             repoPath=$OPTARG
+            ;;
+        b)
+            bootstrap=false
             ;;
         d)
             developmentDirectories=true
@@ -77,8 +92,14 @@ do
             postInstall=true
             postInstallScript=$OPTARG
             ;;
+        r)
+            branch=$OPTARG
+            ;;
         s)
             skipTests=true
+            ;;
+        y)
+            installYottaDB=true
             ;;
     esac
 done
@@ -86,6 +107,10 @@ done
 # Set defaults for options
 if [[ -z $repoPath ]]; then
     repoPath="https://github.com/OSEHRA/VistA-M.git"
+fi
+
+if [[ -z $bootstrap ]]; then
+    bootstrap=true
 fi
 
 if [[ -z $developmentDirectories ]]; then
@@ -108,6 +133,10 @@ if [ -z $skipTests ]; then
     skipTests=false
 fi
 
+if [ -z $installYottaDB ]; then
+    installYottaDB=false
+fi
+
 # Summarize options
 echo "Using $repoPath for routines and globals"
 echo "Create development directories: $developmentDirectories"
@@ -115,15 +144,22 @@ echo "Installing an instance named: $instance"
 echo "Installing EWD.js: $installEWD"
 echo "Post install hook: $postInstall"
 echo "Skip Testing: $skipTests"
+echo "Skip bootstrap: $bootstrap"
+echo "Install YottaDB: $installYottaDB"
+echo "Running on local repo: $localVistARepo"
 
 # Get primary username if using sudo, default to $username if not sudo'd
-if [[ -n "$SUDO_USER" ]]; then
-    primaryuser=$SUDO_USER
-elif [[ -n "$USERNAME" ]]; then
-    primaryuser=$USERNAME
+if $bootstrap; then
+    if [[ -n "$SUDO_USER" ]]; then
+        primaryuser=$SUDO_USER
+    elif [[ -n "$USERNAME" ]]; then
+        primaryuser=$USERNAME
+    else
+        echo Cannot find a suitable username to add to VistA group
+        exit 1
+    fi
 else
-    echo Cannot find a suitable username to add to VistA group
-    exit 1
+    primaryuser="root"
 fi
 
 echo This script will add $primaryuser to the VistA group
@@ -137,14 +173,19 @@ export DEBIAN_FRONTEND="noninteractive"
 
 # extra utils - used for cmake and dashboards and initial clones
 # Note: Amazon EC2 requires two apt-get update commands to get everything
-echo "Updating operating system"
-apt-get update -qq > /dev/null
-apt-get update -qq > /dev/null
-apt-get install -qq -y build-essential cmake-curses-gui git dos2unix daemon > /dev/null
+if $bootstrap; then
+    echo "Updating operating system"
+    apt-get update -qq > /dev/null
+    apt-get update -qq > /dev/null
+    apt-get install -qq -y build-essential cmake-curses-gui git dos2unix daemon unzip > /dev/null
+fi
 
-# Clone repos
-cd /usr/local/src
-git clone -q https://github.com/OSEHRA/VistA -b dashboard VistA-Dashboard
+# Clone repos - Dashboard
+if ! $skipTests; then
+    cd /usr/local/src
+    rm -rf VistA-Dashboard
+    git clone -q https://github.com/OSEHRA/VistA -b dashboard VistA-Dashboard
+fi
 
 # See if vagrant folder exists if it does use it. if it doesn't clone the repo
 if [ -d /vagrant ]; then
@@ -157,25 +198,64 @@ if [ -d /vagrant ]; then
     dos2unix /vagrant/GTM/etc/xinetd.d/vista-rpcbroker > /dev/null 2>&1
     dos2unix /vagrant/GTM/etc/xinetd.d/vista-vistalink > /dev/null 2>&1
     dos2unix /vagrant/GTM/gtminstall_SHA1 > /dev/null 2>&1
-
 else
-    git clone -q https://github.com/OSEHRA/VistA
-    scriptdir=/usr/local/src/VistA/Scripts/Install
+    if $bootstrap; then
+        if $localVistARepo; then
+           scriptdir=$parentDir
+        else
+	   git clone -q https://github.com/OSEHRA/VistA
+           scriptdir=/usr/local/src/VistA/Scripts/Install
+        fi
+    else
+        scriptdir=/opt/vista
+    fi
 fi
 
+
 # bootstrap the system
-cd $scriptdir
-./Ubuntu/bootstrapUbuntuServer.sh
+if $bootstrap; then
+    cd $scriptdir
+    ./Ubuntu/bootstrapUbuntuServer.sh
+else
+    # move back to the /opt/vista directory
+    cd /opt/vista
+fi
+
 
 # Ensure scripts know if we are RHEL like or Ubuntu like
 export ubuntu=true;
 
-# Install GTM
+# Install GT.M or YottaDB (only option for Ubuntu)
 cd GTM
-./install.sh -v V6.2-000
+if $bootstrap; then
+    if $installYottaDB; then
+        ./install.sh -y
+    else
+        ./install.sh
+    fi
+else
+    if $installYottaDB; then
+        ./install.sh -s -y
+    else
+        ./install.sh -s
+    fi
+fi
 
 # Create the VistA instance
-./createVistaInstance.sh -i $instance
+if $bootstrap; then
+    if $installYottaDB; then
+        ./createVistaInstance.sh -i $instance -y
+    else
+        ./createVistaInstance.sh -i $instance
+    fi
+else
+    if $installYottaDB; then
+        ./createVistaInstance.sh -i $instance -f -y
+    else
+        ./createVistaInstance.sh -i $instance -f
+    fi
+fi
+
 
 # Modify the primary user to be able to use the VistA instance
 usermod -a -G $instance $primaryuser
@@ -188,7 +268,11 @@ source /home/$instance/etc/env
 
 # Get running user's home directory
 # http://stackoverflow.com/questions/7358611/bash-get-users-home-directory-when-they-run-a-script-as-root
-USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
+if $bootstrap; then
+    USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
+else
+    USER_HOME=/root
+fi
 
 # source env script during running user's login
 echo "source $basedir/etc/env" >> $USER_HOME/.bashrc
@@ -200,14 +284,50 @@ echo "source $basedir/etc/env" >> $USER_HOME/.bashrc
 if $skipTests; then
     # Clone VistA-M repo
     cd /usr/local/src
-    git clone --depth 1 $repoPath VistA-Source
+    if [[ $repoPath == *.git ]]; then
+        if ! [ -z $branch ]; then
+            git clone --depth 1 $repoPath -b $branch VistA-Source
+        else
+            git clone --depth 1 $repoPath VistA-Source
+        fi
+    else
+        curl -fsSL --progress-bar $repoPath -o VistA-M-master.zip
+        unzip -q VistA-M-master.zip
+        rm VistA-M-master.zip
+        dir=$(ls -1)
+        mv $dir VistA-Source
+    fi
 
     # Go back to the $basedir
     cd $basedir
 
     # Perform the import
     su $instance -c "source $basedir/etc/env && $scriptdir/GTM/importVistA.sh"
+
+    # Run ZTMGRSET accepting the defaults
+    su $instance -c "mumps -run %XCMD 'D ^ZTMGRSET' << EOF
+8
+
+
+
+
+Y
+EOF"
 else
+    # Attempt to bypass huge git clone by getting the zip files and unzipping them where they go
+    su $instance -c "source $basedir/etc/env && mkdir -p $basedir/Dashboard"
+    cd $basedir/Dashboard
+    echo "Downloading OSEHRA VistA"
+    curl -fsSL --progress-bar https://github.com/OSEHRA/VistA/archive/master.zip -o VistA-master.zip
+    unzip -q VistA-master.zip
+    rm VistA-master.zip
+    mv VistA-master VistA
+    echo "Downloading OSEHRA VistA-M"
+    curl -fsSL --progress-bar https://github.com/OSEHRA/VistA-M/archive/master.zip -o VistA-M-master.zip
+    unzip -q VistA-M-master.zip
+    rm VistA-M-master.zip
+    mv VistA-M-master VistA-M
+
     # create random string for build identification
     # source: http://ubuntuforums.org/showthread.php?t=1775099&p=10901169#post10901169
     export buildid=`tr -dc "[:alpha:]" < /dev/urandom | head -c 8`
@@ -216,30 +336,39 @@ else
     su $instance -c "source $basedir/etc/env && ctest -S $scriptdir/Ubuntu/test.cmake -V"
     # Tell users of their build id
     echo "Your build id is: $buildid you will need this to identify your build on the VistA dashboard"
+
+    # Compile routines
+    echo "Compiling routines"
+    cd $basedir/r/$gtmver
+    for routine in $basedir/r/*.m; do
+        mumps ${routine} >> $basedir/log/compile.log 2>&1
+    done
+    echo "Done compiling routines"
 fi
 
 # Enable journaling
 su $instance -c "source $basedir/etc/env && $basedir/bin/enableJournal.sh"
 
-# Restart xinetd
-service xinetd restart
+# if we are running on docker we must shutdown gracefully or else corruption will occur
+# there is also no need to restart xinetd if we are running in docker as we are going to
+# shut it down
+if $bootstrap; then
+    # Restart xinetd
+    service xinetd restart
+else
+    service ${instance}vista stop
+fi
 
 # Add p and s directories to gtmroutines environment variable
 if $developmentDirectories; then
     su $instance -c "mkdir $basedir/{p,p/$gtmver,s,s/$gtmver}"
-    if [[ $gtmver == *"6.2"* ]]; then
-        echo "Adding Development directories for GT.M 6.2"
-        perl -pi -e 's#export gtmroutines=\"#export gtmroutines=\"\$basedir/p/\$gtmver\*(\$basedir/p\) \$basedir/s/\$gtmver\*(\$basedir/s\) #' $basedir/etc/env
-    else
-        echo "Adding Development directories for GT.M <6.2"
-        perl -pi -e 's#export gtmroutines=\"#export gtmroutines=\"\$basedir/p/\$gtmver\(\$basedir/p\) \$basedir/s/\$gtmver\(\$basedir/s\) #' $basedir/etc/env
-    fi
+    perl -pi -e 's#export gtmroutines=\"#export gtmroutines=\"\$basedir/p/\$gtmver\(\$basedir/p\) \$basedir/s/\$gtmver\(\$basedir/s\) #' $basedir/etc/env
 fi
 
 # Install EWD.js
 if $installEWD; then
     cd $scriptdir/EWD
-    ./ewdjs.sh -v 0.12
+    ./ewdjs.sh
     cd $basedir
 fi
 

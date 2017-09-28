@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #---------------------------------------------------------------------------
-# Copyright 2011-2013 The Open Source Electronic Health Record Agent
+# Copyright 2011-2017 The Open Source Electronic Health Record Agent
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -44,11 +44,13 @@ usage()
 
     OPTIONS:
       -h    Show this message
-      -a    Alternate VistA-M repo (Must be in OSEHRA format)
+      -a    Alternate VistA-M repo (zip or git format) (Must be in OSEHRA format)
+      -r    Alternate VistA-M repo branch (git format only)
+      -b    Skip bootstrapping system (used for docker)
       -c    Path to Caché installer
+      -d    Create development directories (s & p) (GT.M only)
       -e    Install EWD.js (assumes development directories)
       -g    Use GT.M
-      -d    Create development directories (s & p) (GT.M only)
       -i    Instance name
       -p    Post install hook (path to script)
       -s    Skip testing
@@ -56,7 +58,7 @@ usage()
 EOF
 }
 
-while getopts ":ha:c:edgi:p:s" option
+while getopts ":ha:c:bedgi:p:sr:" option
 do
     case $option in
         h)
@@ -65,6 +67,9 @@ do
             ;;
         a)
             repoPath=$OPTARG
+            ;;
+        b)
+            bootstrap=false
             ;;
         c)
             cacheinstallerpath=$OPTARG
@@ -86,6 +91,9 @@ do
             postInstall=true
             postInstallScript=$OPTARG
             ;;
+        r)
+            branch=$OPTARG
+            ;;
         s)
             skipTests=true
             ;;
@@ -95,6 +103,10 @@ done
 # Set defaults for options
 if [[ -z $repoPath ]]; then
     repoPath="https://github.com/OSEHRA/VistA-M.git"
+fi
+
+if [[ -z $bootstrap ]]; then
+    bootstrap=true
 fi
 
 if [[ -z $developmentDirectories ]]; then
@@ -138,15 +150,20 @@ echo "Installing an instance named: $instance"
 echo "Installing EWD.js: $installEWD"
 echo "Post install hook: $postInstall"
 echo "Skip Testing: $skipTests"
+echo "Skip bootstrap: $bootstrap"
 
 # Get primary username if using sudo, default to $username if not sudo'd
-if [[ -n "$SUDO_USER" ]]; then
-    primaryuser=$SUDO_USER
-elif [[ -n "$USERNAME" ]]; then
-    primaryuser=$USERNAME
+if $bootstrap; then
+    if [[ -n "$SUDO_USER" ]]; then
+        primaryuser=$SUDO_USER
+    elif [[ -n "$USERNAME" ]]; then
+        primaryuser=$USERNAME
+    else
+        echo Cannot find a suitable username to add to VistA group
+        exit 1
+    fi
 else
-    echo Cannot find a suitable username to add to VistA group
-    exit 1
+    primaryuser="root"
 fi
 
 echo This script will add $primaryuser to the VistA group
@@ -156,29 +173,36 @@ test -d /home/$instance/g &&
 { echo "VistA already Installed. Aborting."; exit 0; }
 
 # Install the epel repo (needed for cmake28)
-cat > /etc/yum.repos.d/epel.repo << EOF
-[epel]
-name=epel
-baseurl=http://download.fedoraproject.org/pub/epel/6/\$basearch
-enabled=1
-gpgcheck=0
+if $bootstrap; then
+    cat > /etc/yum.repos.d/epel.repo << EOF
+    [epel]
+    name=epel
+    baseurl=http://download.fedoraproject.org/pub/epel/6/\$basearch
+    enabled=1
+    gpgcheck=0
 EOF
+fi
 
 # extra utils - used for cmake and dashboards and initial clones
-echo "Updating operating system"
-yum update -y > /dev/null
-yum install -y cmake28 git dos2unix > /dev/null
-yum install -y http://libslack.org/daemon/download/daemon-0.6.4-1.i686.rpm > /dev/null
+if $bootstrap; then
+    echo "Updating operating system"
+    yum update -y > /dev/null
+    yum install -y cmake28 git dos2unix > /dev/null
+    yum install -y http://libslack.org/daemon/download/daemon-0.6.4-1.i686.rpm > /dev/null
 
-# Fix cmake28 links
-ln -s /usr/bin/cmake28 /usr/bin/cmake
-ln -s /usr/bin/ctest28 /usr/bin/ctest
-ln -s /usr/bin/ccmake28 /usr/bin/ccmake
-ln -s /usr/bin/cpack28 /usr/bin/cpack
+    # Fix cmake28 links
+    ln -s /usr/bin/cmake28 /usr/bin/cmake
+    ln -s /usr/bin/ctest28 /usr/bin/ctest
+    ln -s /usr/bin/ccmake28 /usr/bin/ccmake
+    ln -s /usr/bin/cpack28 /usr/bin/cpack
+fi
 
-# Clone repos
-cd /usr/local/src
-git clone -q https://github.com/OSEHRA/VistA -b dashboard VistA-Dashboard
+# Clone repos - Dashboard
+if ! $skipTests; then
+    cd /usr/local/src
+    rm -rf VistA-Dashboard
+    git clone -q https://github.com/OSEHRA/VistA -b dashboard VistA-Dashboard
+fi
 
 # See if vagrant folder exists if it does use it. if it doesn't clone the repo
 if [ -d /vagrant ]; then
@@ -191,15 +215,23 @@ if [ -d /vagrant ]; then
     dos2unix /vagrant/GTM/etc/xinetd.d/vista-rpcbroker > /dev/null 2>&1
     dos2unix /vagrant/GTM/etc/xinetd.d/vista-vistalink > /dev/null 2>&1
     dos2unix /vagrant/GTM/gtminstall_SHA1 > /dev/null 2>&1
-
 else
-    git clone -q https://github.com/OSEHRA/VistA
-    scriptdir=/usr/local/src/VistA/Scripts/Install
+    if $bootstrap; then
+        git clone -q https://github.com/OSEHRA/VistA
+        scriptdir=/usr/local/src/VistA/Scripts/Install
+    else
+        scriptdir=/opt/vista
+    fi
 fi
 
 # bootstrap the system
-cd $scriptdir
-./RHEL/bootstrapRHELserver.sh
+if $bootstrap; then
+    cd $scriptdir
+    ./RHEL/bootstrapRHELserver.sh
+else
+    # move back to the /opt/vista directory
+    cd /opt/vista
+fi
 
 # Ensure scripts know if we are RHEL like or Ubuntu like
 export RHEL=true;
@@ -207,9 +239,17 @@ export RHEL=true;
 # Install GT.M if requested
 if $installgtm; then
     cd GTM
-    ./install.sh
+    if $bootstrap; then
+        ./install.sh
+    else
+        ./install.sh -s
+    fi
     # Create the VistA instance
-    ./createVistaInstance.sh -i $instance
+    if $bootstrap; then
+        ./createVistaInstance.sh -i $instance
+    else
+        ./createVistaInstance.sh -i $instance -f
+    fi
 fi
 
 # Install Caché if requested
@@ -228,7 +268,11 @@ source /home/$instance/etc/env
 
 # Get running user's home directory
 # http://stackoverflow.com/questions/7358611/bash-get-users-home-directory-when-they-run-a-script-as-root
-USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
+if $bootstrap; then
+    USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
+else
+    USER_HOME=/root
+fi
 
 # source env script during running user's login
 echo "source $basedir/etc/env" >> $USER_HOME/.bashrc
@@ -240,29 +284,80 @@ echo "source $basedir/etc/env" >> $USER_HOME/.bashrc
 if $skipTests; then
     # Clone VistA-M repo
     cd /usr/local/src
-    git clone --depth 1 $repoPath VistA-Source
+    if [[ $repoPath == *.git ]]; then
+        if ! [ -z $branch ]; then
+            git clone --depth 1 $repoPath -b $branch VistA-Source
+        else
+            git clone --depth 1 $repoPath VistA-Source
+        fi
+    else
+        curl -fsSL --progress-bar $repoPath -o VistA-M-master.zip
+        unzip -q VistA-M-master.zip
+        rm VistA-M-master.zip
+        dir=$(ls -1)
+        mv $dir VistA-Source
+    fi
 
     # Go back to the $basedir
     cd $basedir
 
     # Perform the import
     su $instance -c "source $basedir/etc/env && $scriptdir/GTM/importVistA.sh"
+
+    # Run ZTMGRSET accepting the defaults
+    su $instance -c "mumps -run %XCMD 'D ^ZTMGRSET' << EOF
+8
+
+
+
+
+Y
+EOF"
 else
+    # Attempt to bypass huge git clone by getting the zip files and unzipping them where they go
+    su $instance -c "source $basedir/etc/env && mkdir -p $basedir/Dashboard"
+    cd $basedir/Dashboard
+    echo "Downloading OSEHRA VistA"
+    curl -fsSL --progress-bar https://github.com/OSEHRA/VistA/archive/master.zip -o VistA-master.zip
+    unzip -q VistA-master.zip
+    rm VistA-master.zip
+    mv VistA-master VistA
+    echo "Downloading OSEHRA VistA-M"
+    curl -fsSL --progress-bar https://github.com/OSEHRA/VistA-M/archive/master.zip -o VistA-M-master.zip
+    unzip -q VistA-M-master.zip
+    rm VistA-M-master.zip
+    mv VistA-M-master VistA-M
+
     # create random string for build identification
     # source: http://ubuntuforums.org/showthread.php?t=1775099&p=10901169#post10901169
     export buildid=`tr -dc "[:alpha:]" < /dev/urandom | head -c 8`
 
     # Import VistA and run tests using OSEHRA automated testing framework
-    su $instance -c "source $basedir/etc/env && ctest -S $scriptdir/RHEL/test.cmake -V"
+    su $instance -c "source $basedir/etc/env && ctest -S $scriptdir/test.cmake -V"
     # Tell users of their build id
     echo "Your build id is: $buildid you will need this to identify your build on the VistA dashboard"
+
+    # Compile routines
+    echo "Compiling routines"
+    cd $basedir/r/$gtmver
+    for routine in $basedir/r/*.m; do
+        mumps ${routine} >> $basedir/log/compile.log 2>&1
+    done
+    echo "Done compiling routines"
 fi
 
 # Enable journaling
 su $instance -c "source $basedir/etc/env && $basedir/bin/enableJournal.sh"
 
-# Restart xinetd
-service xinetd restart
+# if we are running on docker we must shutdown gracefully or else corruption will occur
+# there is also no need to restart xinetd if we are running in docker as we are going to
+# shut it down
+if $bootstrap; then
+    # Restart xinetd
+    service xinetd restart
+else
+    service ${instance}vista stop
+fi
 
 # Add p and s directories to gtmroutines environment variable
 if $developmentDirectories; then

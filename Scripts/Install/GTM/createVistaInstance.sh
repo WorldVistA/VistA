@@ -38,27 +38,42 @@ usage()
 
     OPTIONS:
       -h    Show this message
+      -f    Skip setting firewall rules
       -i    Instance name
+      -y    Use YottaDB
 EOF
 }
 
-while getopts ":hi:" option
+while getopts ":hfi:y" option
 do
     case $option in
         h)
             usage
             exit 1
             ;;
+        f)
+            firewall=false
+            ;;
         i)
             instance=$(echo $OPTARG |tr '[:upper:]' '[:lower:]')
+            ;;
+        y)
+            installYottaDB=true
             ;;
     esac
 done
 
-if [[ -z $instance ]]
-then
+if [[ -z $instance ]]; then
     usage
     exit 1
+fi
+
+if [[ -z $firewall ]]; then
+    firewall=true
+fi
+
+if [ -z $installYottaDB ]; then
+    installYottaDB=false
 fi
 
 echo "Creating $instance..."
@@ -83,7 +98,13 @@ fi
 # list directory contents (1 per line) | count lines | strip leading and
 #                                                      trailing whitespace
 
-gtm_dirs=$(ls -1 /opt/lsb-gtm/ | wc -l | sed 's/^[ \t]*//;s/[ \t]*$//')
+if $installYottaDB; then
+    checkDir="/opt/yottadb/"
+else
+    checkDir="/opt/lsb-gtm/"
+fi
+
+gtm_dirs=$(ls -1 $checkDir | wc -l | sed 's/^[ \t]*//;s/[ \t]*$//')
 if [ $gtm_dirs -gt 1 ]; then
     echo "More than one version of GT.M installed!"
     echo "Can't determine what version of GT.M to use"
@@ -91,8 +112,9 @@ if [ $gtm_dirs -gt 1 ]; then
 fi
 
 # Only one GT.M version found
-gtm_dist=/opt/lsb-gtm/$(ls -1 /opt/lsb-gtm/)
-gtmver=$(ls -1 /opt/lsb-gtm/)
+gtm_dist=$checkDir$(ls -1 $checkDir)
+gtmver=$(ls -1 $checkDir)
+
 
 # TODO: implement argument for basedir
 # $basedir is the base directory for the instance
@@ -167,13 +189,7 @@ chown $instance:$instance $basedir/etc/env
 echo "source $basedir/etc/env" >> $basedir/.bashrc
 
 # Setup base gtmroutines
-if [[ $gtmver == *"6.2"* ]]; then
-    echo "Adding gtmroutines for GT.M >= 6.2"
-    gtmroutines="\$basedir/r/\$gtmver*($basedir/r)"
-else
-    echo "Adding gtmroutines for GT.M < 6.2"
-    gtmroutines="\$basedir/r/\$gtmver(\$basedir/r)"
-fi
+gtmroutines="\$basedir/r/\$gtmver(\$basedir/r)"
 
 # 64bit GT.M can use a shared library instead of $gtm_dist
 if [ $gtm_arch == "x86_64" ]; then
@@ -242,10 +258,12 @@ chown -R $instance:$instance $basedir
 chmod -R g+rw $basedir
 
 # Add firewall rules
-if [[ $RHEL || -z $ubuntu ]]; then
-    sudo iptables -I INPUT 1 -p tcp --dport 9430 -j ACCEPT # RPC Broker
-    sudo iptables -I INPUT 1 -p tcp --dport 8001 -j ACCEPT # VistALink
-    sudo service iptables save
+if $firewall; then
+    if [[ $RHEL || -z $ubuntu ]]; then
+        sudo iptables -I INPUT 1 -p tcp --dport 9430 -j ACCEPT # RPC Broker
+        sudo iptables -I INPUT 1 -p tcp --dport 8001 -j ACCEPT # VistALink
+        sudo service iptables save
+    fi
 fi
 
 echo "VistA instance $instance created!"
