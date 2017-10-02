@@ -166,7 +166,7 @@ class ConnectWinCache(ConnectMUMPS):
     self.log.flush()
 
   def writectrl(self, command):
-    self.connection.send(command)
+    self.connection.write(command)
     logging.debug('connection.writectrl: ' + command)
 
   def wait(self, command, tout=15):
