@@ -25,7 +25,6 @@ import json
 
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
-print SCRIPTS_DIR
 if SCRIPTS_DIR not in sys.path:
   sys.path.append(SCRIPTS_DIR)
 
@@ -133,7 +132,7 @@ def getFreeTextLink(dataEntry, value, **kargs):
       if file not in glbData.outFileManData.keys():
         glbData._glbData[file] = FileManFileData(file,
                                   glbData.getFileManFileNameByFileNo(file))
-        pathName = glbData._allFiles[file]["path"]
+        pathName = glbData.allFiles[file]["path"]
         # Taken from the FileManGlobalDataParser
         glbData._createDataRootByZWRFile(pathName)
         glbLoc = glbData._glbLocMap.get(file)
@@ -436,6 +435,7 @@ class FileManDataToHtml(object):
                          "93": "Automated Med Information Exchange",
                          "99": "EEO Complaint Tracking",
                          "114": "Fee Basis",
+                         "115": "Radiology/Nuclear Medicine",
                          "124": "Medicine",
                          "127": "Surgery",
                          "128": "Oncology",
@@ -720,7 +720,7 @@ class FileManDataToHtml(object):
       output.write("</div>\n")
       output.write ("</body></html>\n")
     if isLargeFile:
-      logging.info("Ajex source file: %s" % ajexSrc)
+      logging.info("Ajax source file: %s" % ajexSrc)
       """ Write out the data file in JSON format """
       outJson = {"aaData": []}
       with open(os.path.join(outDir, ajexSrc), 'w') as output:
@@ -733,8 +733,9 @@ class FileManDataToHtml(object):
           name = dataEntry.name
           if isFilePointerType(dataEntry):
             link, name = convertFilePointerToHtml(dataEntry.name)
-          dataHtmlLink = "<a href=\"../%s/%s\">%s</a>" % (fileNo.replace(".","_"),getDataEntryHtmlFile(dataEntry, ien, fileNo),
-                                                    name)
+          dataHtmlLink = "<a href=\"../%s/%s\">%s</a>" % (fileNo.replace(".","_"),
+                                                          getDataEntryHtmlFile(dataEntry, ien, fileNo),
+                                                          str(name).replace("\xa0", ""))
           outArray.append([dataHtmlLink, ien])
         json.dump(outJson, output)
 

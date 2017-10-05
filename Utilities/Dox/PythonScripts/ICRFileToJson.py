@@ -257,12 +257,12 @@ class ICRFileToJson(object):
 
 def run(args):
     icrFileToJson = ICRFileToJson()
-    icrFileToJson.parse(args.icrfile, args.outJson)
+    icrFileToJson.parse(args.icrfile, args.icrJsonFile)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='VistA ICR File to JSON Parser')
     parser.add_argument('icrfile', help='path to the VistA ICR file')
-    parser.add_argument('outJson', help='path to the output JSON file')
+    parser.add_argument('icrJsonFile', help='path to the output JSON file')
     result = parser.parse_args()
     initConsoleLogging()
     run(result)

@@ -2,8 +2,8 @@
 
 # A python script to generate the VistA cross reference web page
 # To run the script, please do
-# python WebPageGenerator.py -l <logFileDir> -r <VistA-Repository-Dir> -o <outputDir>
-# Make sure that all the css/html files under web directory are copied to outputDIr
+# python WebPageGenerator.py -l <logFileDir> -r <VistA-Repository-Dir> -o <outdir>
+# Make sure that all the css/html files under web directory are copied to outdir
 #---------------------------------------------------------------------------
 # Copyright 2011 The Open Source Electronic Health Record Agent
 #
@@ -522,7 +522,7 @@ def writeSubSectionHeader(headerName, outputFile):
     outputFile.write("<h3 align=\"left\">%s</h3>\n" % (headerName))
 # class to generate the web page based on input
 class WebPageGenerator:
-    def __init__(self, crossReference, outDir, repDir, docRepDir, gitPath,
+    def __init__(self, crossReference, outDir, repDir, docRepDir, git,
                  includeSource=False, rtnJson=None):
         self._crossRef = crossReference
         self._allPackages = crossReference.getAllPackages()
@@ -531,12 +531,12 @@ class WebPageGenerator:
         self._outDir = outDir
         self._repDir = repDir
         self._docRepDir = docRepDir
-        self._gitPath = gitPath
+        self._git = git
         self._header = []
         self._footer = []
         self._source_header = []
         self._hasDot = False
-        self._dotPath = ""
+        self._dot = ""
         self._includeSource = includeSource
         self.__initWebTemplateFile__()
         with open(rtnJson, 'r') as jsonFile:
@@ -552,9 +552,9 @@ class WebPageGenerator:
         for line in footer:
             self._footer.append(line)
         footer.close()
-    def setDotPath(self, dotPath):
+    def setDot(self, dot):
         self._hasDot = True
-        self._dotPath = dotPath
+        self._dot = dot
     def __includeHeader__(self, outputFile):
         for line in self._header:
             outputFile.write(line)
@@ -591,7 +591,7 @@ class WebPageGenerator:
     def generateWebPage(self):
         self.generateIndexHtmlPage()
         self.generatePackageNamespaceGlobalMappingPage()
-        if self._hasDot and self._dotPath:
+        if self._hasDot and self._dot:
             self.generatePackageDependenciesGraph()
             self.generatePackageDependentsGraph()
         self.generateGlobalNameIndexPage()
@@ -623,7 +623,7 @@ class WebPageGenerator:
         sha1Key = self.__getGitRepositLatestSha1Key__()
         outputFile.write("""<h6><a class ="anchor" id="howto"></a>Note:Repository SHA1 key:%s</h6>\n""" % sha1Key)
     def __getGitRepositLatestSha1Key__(self):
-        gitCommand = "\"" + os.path.join(self._gitPath, "git") + "\"" + " rev-parse --verify HEAD"
+        gitCommand = "\"" + self._git + "\"" + " rev-parse --verify HEAD"
         os.chdir(self._repDir)
         logger.debug("git Command is %s" % gitCommand)
         result = subprocess.check_output(gitCommand, shell=True)
@@ -1364,7 +1364,7 @@ class WebPageGenerator:
               if entry:
                 routine.addEntryPoint(entry, comment, icrJson)
                 comment=[]
-              inComment=True
+              inComment = True
               foundLine = line.replace("\t"," ").split(" ",1)
               if len(foundLine) > 1:
                 entry = foundLine[0]
@@ -1607,7 +1607,7 @@ class WebPageGenerator:
         inputName = os.path.join(dirName, normalizedName + packageSuffix + ".dot")
         # this is to generated the image in gif format and also cmapx (client side map) to make sure link
         # embeded in the graph is clickable
-        command = "\"%s\" -Tgif -o\"%s\" -Tcmapx -o\"%s\" \"%s\"" % (os.path.join(self._dotPath, "dot"),
+        command = "\"%s\" -Tgif -o\"%s\" -Tcmapx -o\"%s\" \"%s\"" % (self._dot,
                                                                outputName,
                                                                outputmap,
                                                                inputName)
@@ -1678,7 +1678,7 @@ class WebPageGenerator:
 #===============================================================================
     def generateRoutineRelatedPages(self):
         self.generateRoutineIndexPage()
-        if self._hasDot and self._dotPath:
+        if self._hasDot and self._dot:
             self.generateRoutineCallGraph()
             self.generateRoutineCallerGraph()
         self.generateAllSourceCodePage(not self._includeSource)
@@ -1783,7 +1783,7 @@ class WebPageGenerator:
         # this is to generated the image in gif format and also cmapx (client side map) to make sure link
         # embeded in the graph is clickable
         # @TODO this should be able to run in parallel
-        command = "\"%s\" -Tgif -o\"%s\" -Tcmapx -o\"%s\" \"%s\"" % (os.path.join(self._dotPath, "dot"),
+        command = "\"%s\" -Tgif -o\"%s\" -Tcmapx -o\"%s\" \"%s\"" % (self._dot,
                                                                outputName,
                                                                outputmap,
                                                                inputName)
@@ -2558,8 +2558,8 @@ def testDotCall(outputDir):
     logger.info ("calling dot returns %d" % retCode)
 
 # Get the lastest git SHA1 Key from git repository
-def testGetGitLastRev(GitRepoDir, gitPath):
-    gitCommand = "\"" + os.path.join(gitPath + "git") + "\"" + " rev-parse --verify HEAD"
+def testGetGitLastRev(GitRepoDir, git):
+    gitCommand = "\"" + git + "\"" + " rev-parse --verify HEAD"
     os.chdir(GitRepoDir)
     result = subprocess.check_output(gitCommand, shell=True)
     print result.strip()
@@ -2588,7 +2588,7 @@ def initLogging(outputFileName):
     logger.setLevel(logging.DEBUG)
     fileHandle = logging.FileHandler(outputFileName, 'w')
     fileHandle.setLevel(logging.DEBUG)
-    formatStr = '%(asctime)s %(levelname)s %(message)s'
+    formatStr = '%(asctime)s %(message)s'
     formatter = logging.Formatter(formatStr)
     fileHandle.setFormatter(formatter)
     #set up the stream handle (console)
@@ -2601,38 +2601,11 @@ def initLogging(outputFileName):
 #===============================================================================
 # main
 #===============================================================================
-if __name__ == '__main__':
-    crossRefArgParse = createCrossReferenceLogArgumentParser()
-    parser = argparse.ArgumentParser(
-        description='VistA Visual Cross-Reference Documentation Generator',
-        parents=[crossRefArgParse])
-    parser.add_argument('-o', '--outputDir', required=True,
-                        help='Output Web Page directory')
-    parser.add_argument('-gp', '--gitPath', required=True,
-                        help='Path to the folder containing git excecutable')
-    parser.add_argument('-hd', '--hasDot', required=False, default="False",
-                        action='store_true', help='is Dot installed')
-    parser.add_argument('-dp', '--dotPath', required=False,
-                        help='path to the folder containing dot excecutable')
-    parser.add_argument('-is', '--includeSource', required=False,
-                        default=False, action='store_true',
-                        help='generate routine source code page?')
-    parser.add_argument('-lf', '--outputLogFileName', required=False,
-                        help='the output Logging file')
-    parser.add_argument('-rj','--rtnJson', required=True,help='routine reference in VistA '
-        'Data file in JSON format')
-    parser.add_argument('-icr','--icrJson', required=True,help='JSON formatted information of DBIA/ICR')
-    parser.add_argument('-dj','--depJson', required=False, help='JSON file to store Package dependency information')
-    result = parser.parse_args();
-    if not result.outputLogFileName:
-        outputLogFile = getTempLogFile()
-    else:
-        outputLogFile = result.outputLogFileName
-    initLogging(outputLogFile)
-    logger.debug (result)
+
+def run(args):
     pkgDepJson = None
-    if result.depJson:
-      pkgDepJson = os.path.abspath(result.depJson)
+    if args.depJson:
+      pkgDepJson = os.path.abspath(args.depJson)
     """
     Reads in the ICR JSON file and generates
     a dictionary that consists of only the routine information
@@ -2640,8 +2613,8 @@ if __name__ == '__main__':
     Each key is a routine and it points to a list of all of the entries
     that have that routine marked as a "ROUTINE" field.
     """
-    if result.icrJson:
-      icrJson = os.path.abspath(result.icrJson)
+    if args.icrJsonFile:
+      icrJson = os.path.abspath(args.icrJsonFile)
     parsedICRJSON= {}
     with open(icrJson, 'r') as icrFile:
       icrEntries =  json.load(icrFile)
@@ -2669,17 +2642,49 @@ if __name__ == '__main__':
           else:
             # Take all other entries into "OTHER", so that they can be shown on the package page
             parsedICRJSON[entry['CUSTODIAL PACKAGE']]["OTHER"]["ENTRIES"].append(entry)
-    crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(result,pkgDepJson,parsedICRJSON)
+    crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(args,pkgDepJson,parsedICRJSON)
     logger.info ("Starting generating web pages....")
-    doxDir = os.path.join(result.patchRepositDir, 'Utilities/Dox')
+    doxDir = os.path.join(args.patchRepositDir, 'Utilities/Dox')
     webPageGen = WebPageGenerator(crossRef,
-                                  result.outputDir,
-                                  result.MRepositDir,
+                                  args.outdir,
+                                  args.MRepositDir,
                                   doxDir,
-                                  result.gitPath,
-                                  result.includeSource,
-                                  result.rtnJson)
-    if result.hasDot and result.dotPath:
-        webPageGen.setDotPath(result.dotPath)
+                                  args.git,
+                                  args.includeSource,
+                                  args.rtnJson)
+    if args.hasDot and args.dot:
+        webPageGen.setDot(args.dot)
     webPageGen.generateWebPage()
     logger.info ("End of generating web pages....")
+
+if __name__ == '__main__':
+    crossRefArgParse = createCrossReferenceLogArgumentParser()
+    parser = argparse.ArgumentParser(
+        description='VistA Visual Cross-Reference Documentation Generator',
+        parents=[crossRefArgParse])
+    parser.add_argument('-o', '--outdir', required=True,
+                        help='Output Web Page directory')
+    parser.add_argument('-git', required=True, help='git executable')
+    parser.add_argument('-hd', '--hasDot', required=False, default="False",
+                        action='store_true', help='is Dot installed')
+    parser.add_argument('-dot', required=False,
+                        help='path to the folder containing dot excecutable')
+    parser.add_argument('-is', '--includeSource', required=False,
+                        default=False, action='store_true',
+                        help='generate routine source code page?')
+    parser.add_argument('-lf', '--outputLogFileName', required=False,
+                        help='the output Logging file')
+    parser.add_argument('-rj','--rtnJson', required=True,help='routine reference in VistA '
+        'Data file in JSON format')
+    parser.add_argument('-icr','--icrJsonFile', required=True,help='JSON formatted information of DBIA/ICR')
+    parser.add_argument('-dj','--depJson', required=False, help='JSON file to store Package dependency information')
+    result = parser.parse_args();
+
+    if not result.outputLogFileName:
+      outputLogFile = getTempLogFile()
+    else:
+      outputLogFile = result.outputLogFileName
+    initLogging(outputLogFile)
+    logger.debug (result)
+
+    run(result)

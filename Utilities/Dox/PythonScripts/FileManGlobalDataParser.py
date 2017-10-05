@@ -307,28 +307,29 @@ initGlobalLocationMap = {
 initGlobalLocationMap['0'] = '^DD('
 
 class FileManGlobalDataParser(object):
-  def __init__(self, crossRef=None):
+  def __init__(self, MRepositDir, crossRef):
     self.patchDir = None
+    self.MRepositDir = MRepositDir
     self._dataRoot = None
-    self._allSchemaDict = None
     self._crossRef = crossRef
     self._curFileNo =  None
     self._glbData = {} # fileNo => FileManData
     self._pointerRef = {}
     self._fileKeyIndex = {} # File: => ien => Value
     self._glbLocMap = initGlobalLocationMap # File: => Global Location
-    self._fileParsed = set() # set of files that has been parsed
     self._rtnRefDict = {} # dict of rtn => fileNo => Details
-    self._allFiles = {}  # Dict of fileNum => Global file
+    self.allFiles = self._getAllFileManZWRFiles()  # Dict of fileNum => Global file
+    self.schemaParser = FileManSchemaParser()
+    self._allSchemaDict = self.schemaParser.parseSchemaDDFileV2(self.allFiles['0']['path'])
+
   @property
   def outFileManData(self):
     return self._glbData
-  @property
-  def crossRef(self):
-    return self._crossRef
+
   @property
   def globalLocationMap(self):
     return self._glbLocMap
+
   def getFileNoByGlobalLocation(self, glbLoc):
     """
       get the file no by global location
@@ -339,16 +340,19 @@ class FileManGlobalDataParser(object):
       if value == outLoc:
         return key
     return None
+
   def getFileManFileNameByFileNo(self, fileNo):
-    if self._crossRef:
-      fileManFile = self._crossRef.getGlobalByFileNo(fileNo)
-      if fileManFile:
-        return fileManFile.getFileManName()
+    fileManFile = self._crossRef.getGlobalByFileNo(fileNo)
+    if fileManFile:
+      return fileManFile.getFileManName()
     return ""
+
   def _createDataRootByZWRFile(self, inputFileName):
     self._dataRoot = createGlobalNodeByZWRFile(inputFileName)
 
-  def getAllFileManZWRFiles(self, dirName, pattern):
+  def _getAllFileManZWRFiles(self):
+    dirName = os.path.join(self.MRepositDir,'Packages')
+    pattern = "*/Globals/*.zwr"
     searchFiles = glob.glob(os.path.join(dirName, pattern))
     outFiles = {}
     for file in searchFiles:
@@ -359,7 +363,6 @@ class FileManGlobalDataParser(object):
         continue
       result = re.search("(?P<fileNo>^[0-9.]+)(-[1-9])?\+(?P<des>.*)\.zwr$", fileName)
       if result:
-        "ignore split file for now"
         if result.groups()[1]:
           logging.info("Ignore file %s" % fileName)
           continue
@@ -370,50 +373,8 @@ class FileManGlobalDataParser(object):
                             'path': os.path.normpath(os.path.abspath(file))}
     return outFiles
 
-  def parseAllZWRGlobaFilesBySchema(self, mRepositDir, allSchemaDict):
-    """ Parsing all ZWR Global Files via Schema
-    """
-    allFiles = self.getAllFileManZWRFiles(os.path.join(mRepositDir,
-                                                       'Packages'),
-                                                     "*/Globals/*.zwr")
-    allFileManGlobal = self._crossRef.getAllFileManGlobals()
-    sizeLimit = 59*1024*1024 # 1 MiB
-    for key in sorted(allFileManGlobal.keys()):
-      fileManFile = allFileManGlobal[key]
-      fileNo = fileManFile.getFileNo()
-      if fileNo not in allFiles:
-        continue
-      ddFile = allFiles[fileNo]['path']
-      glbDes = allFiles[fileNo]['name']
-      self._createDataRootByZWRFile(ddFile)
-      if not self._dataRoot:
-        logging.warn("not data for file %s" % ddFile)
-        continue
-      globalName = fileManFile.getName()
-      parts = globalName.split('(')
-      rootName, subscript = (None, None)
-      if len(parts) > 1:
-        rootName = parts[0]
-        subscript = parts[1].strip('"')
-      else:
-        rootName = parts[0]
-        subscript = rootName
-      assert rootName == self._dataRoot.subscript
-      logging.info("File: %s, root: %s, sub: %s" % (ddFile, rootName, subscript))
-      self.parseZWRGlobalDataBySchema(self._dataRoot, allSchemaDict,
-                                      fileNo, subscript)
-      self._glbData = {}
-
-  def parseZWRGlobalFileBySchema(self, inputFileName, allSchemaDict,
-                                 fileNumber, subscript):
-    self._createDataRootByZWRFile(inputFileName)
-    self.parseZWRGlobalDataBySchema(dataRoot, allSchemaDict,
-                                    fileNumber, subscript)
-
-  def generateFileIndex(self, inputFileName, allSchemaDict,
-                        fileNumber):
-    self._allSchemaDict = allSchemaDict
-    schemaFile = allSchemaDict[fileNumber]
+  def generateFileIndex(self, inputFileName, fileNumber):
+    schemaFile = self._allSchemaDict[fileNumber]
     if not schemaFile.hasField('.01'):
       logging.error("File does not have a .01 field, ignore")
       return
@@ -439,9 +400,8 @@ class FileManGlobalDataParser(object):
   """
   Generate a map Field Value => IEN
   """
-  def generateFileFieldMap(self, inputFileName, allSchemaDict,
-                           fileNumber, fieldNo):
-    schemaFile = allSchemaDict[fileNumber]
+  def generateFileFieldMap(self, inputFileName, fileNumber, fieldNo):
+    schemaFile = self._allSchemaDict[fileNumber]
     if not schemaFile.hasField(fieldNo):
       logging.error("File does not have a [%s] field, ignore", fieldNo)
       return
@@ -489,12 +449,11 @@ class FileManGlobalDataParser(object):
         return (ien, self._parseIndividualFieldDetail(dataValue, keyField, None))
     return (None, None)
 
-  def parseZWRGlobalFileBySchemaV2(self, inputFileName, allSchemaDict,
+  def parseZWRGlobalFileBySchemaV2(self, inputFileName,
                                    fileNumber, glbLoc=None):
-    self._allSchemaDict = allSchemaDict
-    schemaFile = allSchemaDict[fileNumber]
+    schemaFile = self._allSchemaDict[fileNumber]
     self._glbData[fileNumber] = FileManFileData(fileNumber,
-                                  self.getFileManFileNameByFileNo(fileNumber))
+                                                self.getFileManFileNameByFileNo(fileNumber))
     self._curFileNo = fileNumber
     if not glbLoc:
       glbLoc = self._glbLocMap.get(fileNumber)
@@ -512,29 +471,6 @@ class FileManGlobalDataParser(object):
     if self._crossRef:
       self._updateCrossReference()
 
-  def parseZWRGlobalDataBySchema(self, dataRoot, allSchemaDict,
-                                 fileNumber, subscript):
-    self._allSchemaDict = allSchemaDict
-    schemaFile = allSchemaDict[fileNumber]
-    fileDataRoot = dataRoot
-    if subscript:
-      if subscript in dataRoot:
-        logging.info("using subscript %s" % subscript)
-        fileDataRoot = dataRoot[subscript]
-      self._glbData[fileNumber] = FileManFileData(fileNumber,
-                                   self.getFileManFileNameByFileNo(fileNumber))
-      self._parseDataBySchema(fileDataRoot, schemaFile,
-                              self._glbData[fileNumber])
-    else: # assume this is for all files in the entry
-      for fileNo in getKeys(self._dataRoot, float):
-        fileDataRoot = self._dataRoot[fileNo]
-        self._glbData[fileNo] = FileManFileData(fileNo,
-                                                schemaFile.getFileManName())
-        self._parseDataBySchema(fileDataRoot, schemaFile, self._glbData[fileNo])
-    self._resolveSelfPointer()
-    if self._crossRef:
-      self._updateCrossReference()
-
   def _updateCrossReference(self):
     if '8994' in self._glbData:
       self._updateRPCRefence()
@@ -548,7 +484,7 @@ class FileManGlobalDataParser(object):
   def outRtnReferenceDict(self):
     if len(self._rtnRefDict):
       """ generate the dependency in json file """
-      with open(os.path.join(self.outDir, "Routine-Ref.json"), 'w') as output:
+      with open(os.path.join(self.outdir, "Routine-Ref.json"), 'w') as output:
         logging.info("Generate File: %s" % output.name)
         json.dump(self._rtnRefDict, output)
 
@@ -591,7 +527,7 @@ class FileManGlobalDataParser(object):
           elif '12' in protocolEntry.fields: # check the packge it belongs
             pass
           else:
-            logging.warn("Can not find a package for HL7: %s" % entryName)
+            logging.warn("Cannot find a package for HL7: %s" % entryName)
           for field in ('771', '772'):
             if field not in protocolEntry.fields:
               continue
@@ -630,7 +566,7 @@ class FileManGlobalDataParser(object):
               logging.info("Adding RPC: %s to Package: %s based on routine calls" %
                           (rpcEntry.name, package.getName()))
           else:
-            logging.error("Can not find package for RPC: %s" %
+            logging.error("Cannot find package for RPC: %s" %
                           (rpcEntry.name))
         """ Generate the routine referenced based on RPC Call """
         if rpcRoutine:
@@ -645,8 +581,10 @@ class FileManGlobalDataParser(object):
   def _findInstallPackage(self,packageList, installEntryName,checkNamespace=True):
     package=None
     """
-      checkNamespace is used by the "version change" check to match the package name in the install name but
-        not the namespace in the install name, which should help eliminate multibuilds from being found as package changes
+      checkNamespace is used by the "version change" check to match the
+      package name in the install name but not the namespace in the install
+      name, which should help eliminate multibuilds from being found as
+      package changes
     """
     if checkNamespace:
       namespace, package = self._crossRef.__categorizeVariableNameByNamespace__(installEntryName)
@@ -672,10 +610,10 @@ class FileManGlobalDataParser(object):
     return package
 
   def _updateInstallReference(self):
-    if not os.path.exists(self.outDir+"/9_7"):
-      os.mkdir(self.outDir+"/9_7")
+    if not os.path.exists(self.outdir+"/9_7"):
+      os.mkdir(self.outdir+"/9_7")
     installData = self._glbData['9.7']
-    output = os.path.join(self.outDir, "install_information.json")
+    output = os.path.join(self.outdir, "install_information.json")
     installJSONData = {}
     packageList = self._crossRef.getAllPackages()
     patchOrderGen = PatchOrderGenerator()
@@ -747,7 +685,6 @@ class FileManGlobalDataParser(object):
     del self._pointerRef
     self._pointerRef = {}
 
-
   def _parseFileDetail(self, dataEntry, ien):
     if 'GL' in dataEntry:
       loc = dataEntry['GL'].value
@@ -762,7 +699,6 @@ class FileManGlobalDataParser(object):
     for ien in floatKey:
       if float(ien) <=0:
         continue
-      #if level == 0 and int(ien) != 160: continue
       dataEntry = dataRoot[ien]
       outDataEntry = FileManDataEntry(fileSchema.getFileNo(), ien)
       dataKeys = [x for x in dataEntry]
@@ -859,7 +795,7 @@ class FileManGlobalDataParser(object):
         elif fileNo == self._curFileNo:
           pointerFileNo = fileNo
         else:
-          logging.warn("Can not find value for %s, %s" % (ien, fileNo))
+          logging.warn("Cannot find value for %s, %s" % (ien, fileNo))
     elif fieldAttr.getType() == FileManField.FIELD_TYPE_DATE_TIME: # datetime
       if value.find(',') >=0:
         fieldDetail = horologToDateTime(value)
@@ -899,19 +835,10 @@ class FileManGlobalDataParser(object):
         return self._fileKeyIndex[fileNo][ien]
     return None
 
-  def _addDataFieldToPointerRef(self, fileNo, ien, dataField):
-    self._pointerRef.setdefault(fileNo, {}).setdefault(ien, set()).add(dataField)
-
   def _addFileFieldMap(self, fileNo, ien, value):
     fldDict = self._fileKeyIndex.setdefault(fileNo, {})
     if ien not in ienDict:
       ienDict[ien] = value
-
-  def _getFileKeyIndex(self, fileNo, ien):
-    if fileNo in self._fileKeyIndex:
-      if ien in self._fileKeyIndex[fileNo]:
-        return self._fileKeyIndex[fileNo][ien]
-    return None
 
   def _parseSubFileField(self, dataRoot, fieldAttr, outDataEntry):
     logging.debug ("%s" % (fieldAttr.getName() + ':'))
@@ -941,108 +868,78 @@ class FileManGlobalDataParser(object):
         outLst.append("%s" % dataRoot[key]['0'].value)
     return outLst
 
-def generateSingleFileFieldToIenMappingBySchema(mRepositDir, crossRef, fileNo, fieldNo):
-  glbDataParser = FileManGlobalDataParser(crossRef)
-  allFiles = glbDataParser.getAllFileManZWRFiles(os.path.join(mRepositDir,
-                                                     'Packages'),
-                                                      "*/Globals/*.zwr")
-  allSchemaDict = getAllSchema(allFiles)
-  glbDataParser.parseZWRGlobalFileBySchemaV2(allFiles['1']['path'],
-                                           allSchemaDict, '1', '^DIC(')
-  return glbDataParser.generateFileFieldMap(allFiles[fileNo]['path'], allSchemaDict, fileNo, fieldNo)
+def generateSingleFileFieldToIenMappingBySchema(MRepositDir, crossRef, fileNo, fieldNo):
+  glbDataParser = FileManGlobalDataParser(MRepositDir, crossRef)
+  glbDataParser.parseZWRGlobalFileBySchemaV2(glbDataParser.allFiles['1']['path'], '1', '^DIC(')
+  return glbDataParser.generateFileFieldMap(glbDataParser.allFiles[fileNo]['path'], fileNo, fieldNo)
 
-def getAllSchema(allFiles):
-  schemaParser = FileManSchemaParser()
-  allSchemaDict = schemaParser.parseSchemaDDFileV2(allFiles['0']['path'])
-  return allSchemaDict;
-
-def __generateGitRepositoryKey__(gitPath, mDir, outputFile):
-    sha1Key = __getGitRepositLatestSha1Key__(gitPath,mDir)
+def __generateGitRepositoryKey__(git, mDir, outputFile):
+    sha1Key = __getGitRepositLatestSha1Key__(git,mDir)
     outputFile.write("""{
   "date": "%s",
   "sha1": "%s"
 }""" % (datetime.today().date(), sha1Key))
-def __getGitRepositLatestSha1Key__(gitPath,mDir):
-    gitCommand = "\"" + os.path.join(gitPath, "git") + "\"" + " rev-parse --verify HEAD"
+def __getGitRepositLatestSha1Key__(git,mDir):
+    gitCommand = "\"" + git + "\"" + " rev-parse --verify HEAD"
+    print gitCommand
     os.chdir(mDir)
     result = subprocess.check_output(gitCommand, shell=True)
     return result.strip()
 
-def testGlobalParser(crosRef=None):
-  parser = createArgParser()
-  result = parser.parse_args()
-  print result
+def testGlobalParser(args):
   from InitCrossReferenceGenerator import parseCrossRefGeneratorWithArgs
   from FileManDataToHtml import FileManDataToHtml
-  outputFile = open(os.path.join(result.outdir, "filesInfo.json"), 'wb')
-  __generateGitRepositoryKey__(result.gitPath, result.MRepositDir, outputFile)
-  crossRef = parseCrossRefGeneratorWithArgs(result)
-  glbDataParser = FileManGlobalDataParser(crossRef)
-  #glbDataParser.parseAllZWRGlobaFilesBySchema(result.MRepositDir, allSchemaDict)
+  outputFile = open(os.path.join(args.outdir, "filesInfo.json"), 'wb')
+  __generateGitRepositoryKey__(args.git, args.MRepositDir, outputFile)
+  crossRef = parseCrossRefGeneratorWithArgs(args)
+  glbDataParser = FileManGlobalDataParser(args.MRepositDir, crossRef)
+  assert '0' in glbDataParser.allFiles and '1' in glbDataParser.allFiles and set(args.fileNos).issubset(glbDataParser.allFiles)
 
-  allFiles = glbDataParser.getAllFileManZWRFiles(os.path.join(result.MRepositDir,
-                                                     'Packages'),
-                                                   "*/Globals/*.zwr")
-  assert '0' in allFiles and '1' in allFiles and set(result.fileNos).issubset(allFiles)
-  schemaParser = FileManSchemaParser()
-  allSchemaDict = schemaParser.parseSchemaDDFileV2(allFiles['0']['path'])
-  isolatedFiles = schemaParser.isolatedFiles
-  glbDataParser.parseZWRGlobalFileBySchemaV2(allFiles['1']['path'],
-                                             allSchemaDict, '1', '^DIC(')
-  glbDataParser._allFiles = allFiles
-  glbDataParser._allSchemaDict = allSchemaDict
-  for fileNo in result.fileNos:
+  # Populate glbDataParser.globalLocationMap
+  glbDataParser.parseZWRGlobalFileBySchemaV2(glbDataParser.allFiles['1']['path'], '1', '^DIC(')
+  for fileNo in args.fileNos:
     assert fileNo in glbDataParser.globalLocationMap
-  if result.outdir:
-    glbDataParser.outDir = result.outdir
-  if result.patchRepositDir:
-    glbDataParser.patchDir = result.patchRepositDir
-  htmlGen = FileManDataToHtml(crossRef, result.outdir)
-  if not result.all or set(result.fileNos).issubset(isolatedFiles):
-    for fileNo in result.fileNos:
-      gdFile = allFiles[fileNo]['path']
-      logging.info("Parsing file: %s at %s" % (fileNo, gdFile))
-      glbDataParser.parseZWRGlobalFileBySchemaV2(gdFile,
-                                                 allSchemaDict,
-                                                 fileNo)
-      if result.outdir:
-        htmlGen.outputFileManDataAsHtml(glbDataParser)
-      else:
-        fileManDataMap = glbDataParser.outFileManData
-        for file in getKeys(fileManDataMap.iterkeys(), float):
-          printFileManFileData(fileManDataMap[file])
-      del glbDataParser.outFileManData[fileNo]
-    glbDataParser.outRtnReferenceDict()
-    return
-  """ Also generate all required files as well """
-  sccSet = schemaParser.sccSet
-  fileSet = set(result.fileNos)
-  for idx, value in enumerate(sccSet):
-    fileSet.difference_update(value)
-    if not fileSet:
-      break
-  for i in xrange(0,idx+1):
-    fileSet = sccSet[i]
-    fileSet &= set(allFiles.keys())
-    fileSet -= isolatedFiles
-    fileSet.discard('757')
-    if len(fileSet) > 1:
-      for file in fileSet:
-        zwrFile = allFiles[file]['path']
-        globalSub = allFiles[file]['name']
-        logging.info("Generate file key index for: %s at %s" % (file, zwrFile))
-        glbDataParser.generateFileIndex(zwrFile, allSchemaDict, file)
-    for file in fileSet:
-      zwrFile = allFiles[file]['path']
-      globalSub = allFiles[file]['name']
-      logging.info("Parsing file: %s at %s" % (file, zwrFile))
-      glbDataParser.parseZWRGlobalFileBySchemaV2(zwrFile,
-                                                 allSchemaDict,
-                                                 file)
-      if result.outdir:
-        htmlGen.outputFileManDataAsHtml(glbDataParser)
-      del glbDataParser.outFileManData[file]
+  del glbDataParser.outFileManData['1']
 
+  glbDataParser.outdir = args.outdir
+  glbDataParser.patchDir = args.patchRepositDir
+  htmlGen = FileManDataToHtml(crossRef, args.outdir)
+  isolatedFiles = glbDataParser.schemaParser.isolatedFiles
+  if set(args.fileNos).issubset(isolatedFiles):
+    for fileNo in args.fileNos:
+      gdFile = glbDataParser.allFiles[fileNo]['path']
+      logging.info("Parsing file: %s at %s" % (fileNo, gdFile))
+      glbDataParser.parseZWRGlobalFileBySchemaV2(gdFile, fileNo)
+      htmlGen.outputFileManDataAsHtml(glbDataParser)
+      del glbDataParser.outFileManData[fileNo]
+  else:
+    # Generate all required files
+    sccSet = glbDataParser.schemaParser.sccSet
+    fileSet = set(args.fileNos)
+    for idx, value in enumerate(sccSet):
+      fileSet.difference_update(value)
+      if not fileSet:
+        break
+    for i in xrange(0,idx+1):
+      fileSet = sccSet[i]
+      fileSet &= set(glbDataParser.allFiles.keys())
+      fileSet -= isolatedFiles
+      fileSet.discard('757')
+      if len(fileSet) > 1:
+        for file in fileSet:
+          zwrFile = glbDataParser.allFiles[file]['path']
+          globalSub = glbDataParser.allFiles[file]['name']
+          logging.info("Generate file key index for: %s at %s" % (file, zwrFile))
+          glbDataParser.generateFileIndex(zwrFile, file)
+      for file in fileSet:
+        zwrFile = glbDataParser.allFiles[file]['path']
+        globalSub = glbDataParser.allFiles[file]['name']
+        logging.info("Parsing file: %s at %s" % (file, zwrFile))
+        glbDataParser.parseZWRGlobalFileBySchemaV2(zwrFile, file)
+        htmlGen.outputFileManDataAsHtml(glbDataParser)
+        del glbDataParser.outFileManData[file]
+
+  glbDataParser.outRtnReferenceDict()
 
 def horologToDateTime(input):
   """
@@ -1087,28 +984,28 @@ def createArgParser():
   initParser = createInitialCrossRefGenArgParser()
   parser = argparse.ArgumentParser(description='FileMan Global Data Parser',
                                    parents=[initParser])
-  #parser.add_argument('ddFile', help='path to ZWR file contains DD global')
-  #parser.add_argument('gdFile', help='path to ZWR file contains Globals data')
   parser.add_argument('fileNos', help='FileMan File Numbers', nargs='+')
-  #parser.add_argument('glbRoot', help='Global root location for FileMan file')
-  parser.add_argument('-outdir', help='top directory to generate output in html')
-  parser.add_argument('-gp', '--gitPath', required=True,
-                      help='Path to the folder containing git excecutable')
-  parser.add_argument('-all', action='store_true',
-                      help='generate all dependency files as well')
+  parser.add_argument('-outdir', required=True,
+                      help='top directory to generate output in html')
+  parser.add_argument('-git', required=True, help='Git excecutable')
   return parser
 
 def unit_test():
   test_normalizeGlobalLocation()
   test_horologToDateTime()
   test_getMumpsRoutine()
+  #test_FileManDataEntry()
+
+def run(result):
+    testGlobalParser(result)
 
 def main():
   from LogManager import initConsoleLogging
   initConsoleLogging(formatStr='%(asctime)s %(message)s')
-  unit_test()
-  #test_FileManDataEntry()
-  testGlobalParser()
+  #unit_test()
+  parser = createArgParser()
+  result = parser.parse_args()
+  run(result)
 
 if __name__ == '__main__':
   main()

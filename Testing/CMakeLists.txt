@@ -20,72 +20,9 @@ if(NOT GREP_EXECUTABLE)
   mark_as_advanced(CLEAR GREP_EXECUTABLE)
 endif()
 
-if("${CMAKE_VERSION}" VERSION_LESS 2.8.2)
-  find_program(GIT_EXECUTABLE NAMES git)
-  if(NOT GIT_EXECUTABLE)
-    mark_as_advanced(CLEAR GIT_EXECUTABLE)
-  endif()
-else()
-  find_package(Git)
-endif()
-
-find_package(PythonInterp)
-if(NOT PYTHONINTERP_FOUND)
-   mark_as_advanced(CLEAR PYTHON_EXECUTABLE)
-endif()
-
-set(BUILD_TESTING "ON" CACHE INTERNAL "Always build testing")
-
 #options that will show up on the CMake Gui that allows customization of the project
 option(TEST_VISTA_XINDEX_WARNINGS_AS_FAILURES "Use warnings as a failure condition for XINDEX tests?" OFF)
 option(TEST_VISTA_FRESH "Overwrite the database file during build phase of testing? To remove this option, delete the CMake Cache" OFF)
-
-
-set(VISTA_TCP_HOST "127.0.0.1" CACHE STRING "Server address of the machine that will have the VistA TCP listener")
-set(VISTA_TCP_PORT "9210" CACHE STRING "Port number of the opened TCP listener." )
-set(TEST_VISTA_OUTPUT_DIR "${VISTA_BINARY_DIR}/Testing/Temporary/" CACHE PATH "Path to results directory Defaults to /Testing/Temporary/ within the Binary Dir.")
-
-#-----------------------------------------------------------------------------
-# Find InterSystems Cache
-#-----------------------------------------------------------------------------
-if(WIN32)
-  # The InterSystems Cache installation directory appears only under instance
-  # names which we do not know yet.  Try all of them.
-  foreach(query "HKLM\\SOFTWARE\\InterSystems\\Cache\\Configurations"
-      "HKLM\\SOFTWARE\\Wow6432Node\\InterSystems\\Cache\\Configurations")
-    execute_process(COMMAND reg query "${query}" OUTPUT_VARIABLE out ERROR_VARIABLE err)
-    string(REGEX REPLACE "\r?\n" ";" configs "${out}")
-    foreach(config ${configs})
-      list(APPEND _Cache_PATHS "[${config}\\Directory]/bin")
-    endforeach()
-  endforeach()
-  # Hard-coded guesses.
-  list(APPEND _Cache_PATHS
-    "C:/InterSystems/Cache/bin"
-    "C:/InterSystems/TryCache/bin"
-    )
-else()
-# append hard-coded guesses for linux
-  list(APPEND _Cache_PATHS
-    "/usr/bin"
-    "/usr/local/bin"
-  )
-endif()
-foreach(tool ccontrol CTerm)
-  string(TOUPPER ${tool} toolupper)
-  find_program(${toolupper}_EXECUTABLE NAMES ${tool} DOC "Path to Cache ${tool}" PATHS ${_Cache_PATHS})
-  mark_as_advanced(${toolupper}_EXECUTABLE)
-endforeach()
-
-#-----------------------------------------------------------------------------
-# Find FIS-GT.M
-#-----------------------------------------------------------------------------
-if(UNIX)
-  set(GTM_DIST "$ENV{gtm_dist}" CACHE PATH "GT.M Distribution Directory")
-  if( NOT GTM_DIST AND "$ENV{gtm_dist}")
-    set_property(CACHE GTM_DIST PROPERTY VALUE "$ENV{gtm_dist}")
-  endif()
-endif()
 
 #-----------------------------------------------------------------------------
 #------ SET UP UNIT TEST ENV -----#
@@ -95,18 +32,14 @@ SET(UNITTEST_LOG_DIR "${SCRIPT_OUTPUT_DIR}/Log")
 file(MAKE_DIRECTORY "${UNITTEST_LOG_DIR}")
 include(CommonFunctions)
 
-if(GTM_DIST)
-  include(UseGTM)
-elseif(CCONTROL_EXECUTABLE)
-  include(UseCache)
-endif()
+set(TEST_VISTA_OUTPUT_DIR "${CMAKE_BINARY_DIR}/Testing/Temporary/" CACHE PATH
+      "Path to results directory Defaults to /Testing/Temporary/ within the Binary Dir.")
 
 #---------------------------------------------------------------------------------#
 ##### SECTION TO GENERATE FILES FOR COVERAGE (Using CMake V 2.8.9 and Higher) #####
 #---------------------------------------------------------------------------------#
 
 if(${CMAKE_VERSION} VERSION_GREATER 2.8.8)
-
   if(EXISTS "${TEST_VISTA_OUTPUT_DIR}/Coverage/routines.ro")
     file(REMOVE "${TEST_VISTA_OUTPUT_DIR}/Coverage/routines.ro")
   endif()
@@ -157,7 +90,7 @@ if(${CMAKE_VERSION} VERSION_GREATER 2.8.8)
       file(WRITE ${VISTA_BINARY_DIR}/gtm_coverage.mcov "packages:${TEST_VISTA_OUTPUT_DIR}/Coverage/CoverageSource\r\ncoverage_dir:${TEST_VISTA_OUTPUT_DIR}/Coverage")
     endif()
 
-    add_test(COV_PrepareSource ${PYTHON_EXECUTABLE} "${CMAKE_SOURCE_DIR}/Scripts/VistACoveragePrep.py" ${ARGUMENTS})
+    add_test(COV_PrepareSource ${PYTHON_EXECUTABLE} "${VISTA_SOURCE_DIR}/Scripts/VistACoveragePrep.py" ${ARGUMENTS})
   endif()
 endif()
 

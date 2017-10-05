@@ -42,7 +42,6 @@ class CrossReferenceBuilder(object):
     def __init__(self):
         pass
     def buildCrossReferenceWithArgs(self, arguments, pkgDepJson=None, icrJson=None):
-        print pkgDepJson
         return self.buildCrossReference(arguments.xindexLogDir,
                                         arguments.MRepositDir,
                                         arguments.patchRepositDir,
@@ -79,7 +78,6 @@ def main():
     parser.add_argument('-pj', '--pkgDepJson',
                         help='Output JSON file for package dependencies')
     result = parser.parse_args()
-    print result
     from LogManager import initConsoleLogging
     initConsoleLogging()
     crossRefBlder = CrossReferenceBuilder()

@@ -47,7 +47,6 @@ class ItemValue(object):
 class GlobalNode(object):
   def __init__(self, value=None, subscript=None, parent=None):
     self.child = {}
-    #self.value = ItemValue(value)
     self.value = value
     self.subscript = subscript
     self.parent=parent
@@ -220,7 +219,6 @@ class DefaultZWRRootGenerator(object):
       self.commonSubscript = None
     else:
       self.commonSubscript, value, self.rootSub = findSubscriptValue(glbLoc)
-      print self.commonSubscript, value, self.rootSub
       if self.commonSubscript:
         self.index = len(self.commonSubscript)
       else:
@@ -228,12 +226,14 @@ class DefaultZWRRootGenerator(object):
     self.curRoot = None
     self.inputFile = open(inputFileName, "r")
     self.lineNo = 0
+
   def __iter__(self):
     return self
   def __del__(self):
     self.inputFile.close()
   def __next__(self):
     return self.next()
+
   def next(self):
     if self.inputFile.closed:
       raise StopIteration
@@ -263,6 +263,7 @@ class DefaultZWRRootGenerator(object):
         continue
       if result:
         return result
+
   def filterResult(self, line):
     """
       return None to stop reading more information
@@ -307,7 +308,7 @@ class DefaultZWRRootGenerator(object):
       else:
         return True
     curCommonScript = getCommonSubscript(subscripts, self.curCommonSub)
-    logging.debug(curCommonScript, self.curCommonSub)
+    #logging.debug(curCommonScript, self.curCommonSub)
     if self.curCommonSub is None or self.curCommonSub == curCommonScript:
       if self.curCommonSub is None:
         self.curCommonSub = subscripts[0:self.index+1]
@@ -322,6 +323,7 @@ class DefaultZWRRootGenerator(object):
       self.curRoot = createGlobalNode(line)
       self.curCommonSub = curCommonScript + subscripts[len(curCommonScript):self.index+1]
       return retNode
+
 def readGlobalNodeFromZWRFileV2(inputFileName, glbLoc=None):
   return DefaultZWRRootGenerator(inputFileName, glbLoc)
 

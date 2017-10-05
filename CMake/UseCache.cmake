@@ -25,7 +25,7 @@ if(NOT VISTA_CACHE_INSTANCE)
   if(WIN32)
     execute_process(
       COMMAND ${CCONTROL_EXECUTABLE} qlist nodisplay
-      OUTPUT_FILE ${VISTA_BINARY_DIR}/cache_qlist.txt
+      OUTPUT_FILE ${CMAKE_BINARY_DIR}/cache_qlist.txt
       ERROR_VARIABLE err
       RESULT_VARIABLE failed
       TIMEOUT 30 # should never happen, listing is fast
@@ -33,7 +33,7 @@ if(NOT VISTA_CACHE_INSTANCE)
   else()
     execute_process(
       COMMAND ${CCONTROL_EXECUTABLE} qlist
-      OUTPUT_FILE ${VISTA_BINARY_DIR}/cache_qlist.txt
+      OUTPUT_FILE ${CMAKE_BINARY_DIR}/cache_qlist.txt
       ERROR_VARIABLE err
       RESULT_VARIABLE failed
       TIMEOUT 30
@@ -43,7 +43,7 @@ if(NOT VISTA_CACHE_INSTANCE)
     string(REPLACE "\n" "\n  " err "  ${err}")
     message(FATAL_ERROR "Failed to run \"${CCONTROL_EXECUTABLE} qlist \": ${failed}\n${err}")
   endif()
-  file(STRINGS ${VISTA_BINARY_DIR}/cache_qlist.txt qlist)
+  file(STRINGS ${CMAKE_BINARY_DIR}/cache_qlist.txt qlist)
   set(VISTA_CACHE_INSTANCES "")
   foreach(VISTA_CACHE_INSTANCE ${qlist})
     string(REPLACE "^" ";" VISTA_CACHE_INSTANCE "${VISTA_CACHE_INSTANCE}")
@@ -76,9 +76,9 @@ message(STATUS "Using Cache instance ${VISTA_CACHE_INSTANCE}")
 set(VISTA_CACHE_NAMESPACE "VISTA" CACHE STRING "Cache namespace to store VistA")
 
 if(WIN32)
-  configure_file(${VISTA_SOURCE_DIR}/Testing/CacheVerifyTelnet.scp.in ${VISTA_BINARY_DIR}/CacheVerifyTelnet.scp)
+  configure_file(${VISTA_CMAKE_DIR}/CacheVerifyTelnet.scp.in ${CMAKE_BINARY_DIR}/CacheVerifyTelnet.scp)
   message(STATUS "Is Cache Telnet service enabled:")
-  execute_process(COMMAND "@CTERM_EXECUTABLE@" "/console=cn_iptcp:127.0.0.1[23]" "${VISTA_BINARY_DIR}/CacheVerifyTelnet.scp" "${VISTA_BINARY_DIR}/CacheVerifyTelnet.log" TIMEOUT 5 RESULT_VARIABLE rcode)
+  execute_process(COMMAND "@CTERM_EXECUTABLE@" "/console=cn_iptcp:127.0.0.1[23]" "${CMAKE_BINARY_DIR}/CacheVerifyTelnet.scp" "${CMAKE_BINARY_DIR}/CacheVerifyTelnet.log" TIMEOUT 5 RESULT_VARIABLE rcode)
   if(rcode EQUAL 1)
     message(STATUS "Is Cache Telnet service enabled: Connection established")
   else ( (rcode EQUAL 0) OR "${rcode}" MATCHES "timeout" )

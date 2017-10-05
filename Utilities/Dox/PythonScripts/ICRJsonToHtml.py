@@ -207,9 +207,6 @@ class ICRJsonToHtml(object):
             self._generateICRSummaryPageImpl(outJson, 'ICR List', pkgName, date)
         logger.warn('Total # entry in pkgMap is [%s]', len(pkgMap))
         logger.warn('Total # entry in pkgJson is [%s]', len(pkgJson))
-        pprint.pprint(set(pkgJson.keys()) - set(pkgMap.keys()))
-        pprint.pprint(set(pgkUpperCaseNameDict.values()) - set(pkgMap.values()))
-        # pprint.pprint(pkgMap)
         self._generatePkgDepSummaryPage(inputJson, date)
 
     def _generatePkgDepSummaryPage(self, inputJson, date):
@@ -445,7 +442,7 @@ def createArgParser():
     parser = argparse.ArgumentParser(description='VistA ICR JSON to Html',
                                      parents=[initParser])
     parser.add_argument('icrJsonFile', help='path to the VistA ICR JSON file')
-    parser.add_argument('outDir', help='path to the output web page directory')
+    parser.add_argument('outdir', help='path to the output web page directory')
     return parser
 
 def createRemoteProcedureMapping(MRepositDir, crossRef):
@@ -458,7 +455,7 @@ def run(args):
     crossRef = parseCrossReferenceGeneratorArgs(args.MRepositDir,
                                                 args.patchRepositDir)
     rpcNameToIenMapping = createRemoteProcedureMapping(args.MRepositDir, crossRef)
-    icrJsonToHtml = ICRJsonToHtml(crossRef, args.outDir)
+    icrJsonToHtml = ICRJsonToHtml(crossRef, args.outdir)
     if hasattr(args, 'date'):
         date = args.date
     else:

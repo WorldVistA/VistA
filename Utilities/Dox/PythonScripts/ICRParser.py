@@ -7,9 +7,9 @@ import os
 from LogManager import initConsoleLogging
 
 def run(args):
-    tmpJson = os.path.join(args.outDir, ".tmp.JSON")
+    filename = os.path.basename(args.icrfile)[:-4] # Remove '.txt'
+    args.icrJsonFile = os.path.join(args.outdir, filename + ".JSON")
 
-    args.outJson = tmpJson
     ICRFileToJson.run(args)
 
     args.date = ICRFileToJson.date
@@ -24,10 +24,7 @@ def run(args):
             if len(vals) == 3:
                 args.date = vals[0] + " " + vals[1] + "," + vals[2]
 
-    args.icrJsonFile = tmpJson
     ICRJsonToHtml.run(args)
-
-    os.remove(tmpJson)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='VistA ICR Parser')
@@ -36,7 +33,7 @@ if __name__ == '__main__':
     parser.add_argument('-pr', '--patchRepositDir', required=True,
                           help="VistA Git Repository Directory")
     parser.add_argument('icrfile', help='path to the VistA ICR file')
-    parser.add_argument('outDir', help='path to the output web page directory')
+    parser.add_argument('outdir', help='path to the output web page directory')
     result = parser.parse_args()
     initConsoleLogging()
     run(result)
