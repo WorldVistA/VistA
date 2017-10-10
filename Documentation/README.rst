@@ -126,7 +126,8 @@ Generating the OSEHRA VistA-M Dox Pages
 
 The OSEHRA VistA source tree is also used in the generation of the Dox pages
 which can be found at `code.osehra.org/dox`_. For instructions on how to set up
-and execute the steps necessary to generate the HTML files, see setupDox_.
+and execute the steps necessary to generate the HTML files, see
+`Generate ViViaN and DOX`_.
 
 Routine changes to the VistA Environment
 -----------------------------------------
@@ -176,8 +177,8 @@ directory and includes:
 
   * `M Standards and Conventions`_
 
-.. _'Gerrit Review instance': http://review.code.osehra.org
-.. _'Contributor Git Instructions': ContributorInstructions.rst
+.. _`Gerrit Review instance`: http://review.code.osehra.org
+.. _`Contributor Git Instructions`: ContributorInstructions.rst
 .. _testingChanges: testingChanges.rst
 .. _`Troubleshooting Page`: Troubleshooting.rst
 .. _ObtainingandInstallAuxPrograms: ObtainingandInstallAuxPrograms.rst
@@ -205,7 +206,7 @@ directory and includes:
 .. _`PatchSequenceApply`: ../Scripts/PatchSequenceApply.rst
 .. _`BUILD-Delphi`: ../BUILD-Delphi.rst
 .. _`code.osehra.org/dox`: http://code.osehra.org/dox/index.html
-.. _setupDox: setupDox.rst
+.. _`Generate ViViaN and DOX`: generateViViaNAndDox.rst
 .. _`OSEHRA Certification Standards`: Standards/OSEHRACertificationStandards.rst
 .. _`Submitting to the OTJ`: submittingToOTJ.rst
 .. _`Reviewing Submissions in the OSEHRA Technical Journal`: reviewOTJSubmission.rst
