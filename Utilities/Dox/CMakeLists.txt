@@ -95,7 +95,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/ICRParser.cmake.in ${SCRIPT_OUTPUT_DI
 add_test(ICRParser ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/ICRParser.cmake)
 
 # 6. Run the Web Page Generator script to create DOX pages
-set(DOCUMENT_VISTA_DOX_OUTPUT_DIR "${VIVIAN_OUTPUT_DIR}/dox")
+set(DOCUMENT_VISTA_DOX_OUTPUT_DIR "${DOCUMENT_VISTA_OUTPUT_DIR}/dox")
 file(MAKE_DIRECTORY "${DOCUMENT_VISTA_DOX_OUTPUT_DIR}")
 if(NOT "${ICR_FILE}" STREQUAL "")
   # Get file name without directory or longest extension
