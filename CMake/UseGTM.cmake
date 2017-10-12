@@ -63,7 +63,7 @@ endif()
 ##### SECTION TO RUN GTMROUTINES VARIABLE PARSING TEST #####
 #-----------------------------------------------------------------------------#
 if(GTM_DIST)
-  configure_file("${VISTA_TESTING_DIR}/ParseGTMRoutinesTest.py.in"
+  configure_file("${VISTA_TESTING_DIR}/Python/ParseGTMRoutinesTest.py.in"
                  "${CMAKE_BINARY_DIR}/Python/ParseGTMRoutinesTest.py")
   add_test(PYTHON_GTMRoutinesParser ${PYTHON_EXECUTABLE}
            ${CMAKE_BINARY_DIR}/Python/ParseGTMRoutinesTest.py)
