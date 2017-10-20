@@ -32,15 +32,22 @@ def runXindexForRoutine(connection, routineName):
       break
   connection.wait("Routine")
   connection.write("")
-  selectionList = ['Select BUILD NAME:',
+  selectionList = [VistA.prompt,
+                   'Select BUILD NAME:',
                    'Select INSTALL NAME:',
-                   'Select PACKAGE NAME:']
+                   'Select PACKAGE NAME:',
+                   "NAMESPACE:",
+                   "FILE:",
+                   "Print more than compiled errors and warnings?",
+                   ]
   while True:
     index = VistA.multiwait(selectionList)
-    VistA.write('')
-    if index == len(selectionList) - 1:
+    if index == 0:
+      VistA.write("")
+      return
+    elif index == len(selectionList) - 1:
       break
-  connection.wait("Print more than compiled errors and warnings?")
+    VistA.write('')
   connection.write("YES")
   connection.wait("Print summary only?")
   connection.write("NO")
@@ -67,6 +74,73 @@ def runXindexForRoutine(connection, routineName):
       print ("Caught IndexError %s" % error)
       continue
 
+def runXindexForPackage(connection, packageName,namespace_list,fileNo_list):
+  VistA.write('K ^XUTL("XQ",$J)')
+  connection.write("D ^XINDEX")
+  connection.wait("Routine")
+  connection.write("")
+  selectionList = ['Select BUILD NAME:',
+                   'Select INSTALL NAME:',
+                   'Select PACKAGE NAME:']
+  while True:
+    index = VistA.multiwait(selectionList)
+    if index == len(selectionList) - 1:
+      connection.write(packageName)
+      break
+    VistA.write('')
+  while True:
+    index = connection.multiwait([connection.prompt,"Select PACKAGE NAME","NAMESPACE:","FILE:","CHOOSE","Include the compiled template routines"])
+    if index == 0:
+      return
+    elif index == 2:
+      for value in namespace_list.split(';'):
+        if not value == "":
+          connection.write(value)
+          connection.wait("NAMESPACE:")
+    elif index == 3:
+      for value in fileNo_list.split(';'):
+        if not value == "":
+          connection.write(value)
+          connection.wait("FILE:")
+    elif index == 4:
+      connection.write("1")
+      continue
+    elif index == 5:
+      break
+    connection.write("")
+  connection.write("Y")
+  connection.wait("Print more than compiled errors and warnings?")
+  connection.write("YES")
+  connection.wait("Print summary only?")
+  connection.write("NO")
+  connection.wait("Print routines?")
+  connection.write("Yes")
+  connection.wait("Print")
+  connection.write("R")
+  connection.wait("Print the DDs, Functions")
+  connection.write("YES")
+  connection.wait("Print errors and warnings with each routine?")
+  connection.write("NO")
+  index = connection.multiwait(["Save parameters in ROUTINE file","Index all called routines?"])
+  if index == 0:
+    connection.write("NO")
+    connection.wait("Index all called routines?")
+  connection.write("NO")
+  connection.wait("DEVICE")
+  connection.write(";99999;99999")
+  while True:
+    try:
+      index = connection.multiwait(["Press return to continue:","[;,.]+","INDEX OF",
+                                    "--- END ---",],15)
+      if index == 0:
+        connection.write("")
+        continue
+      elif index == 3:
+        break
+    except IndexError, error:
+      print ("Caught IndexError %s" % error)
+      continue
+
 VistA=ConnectToMUMPS("${logfile}","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
 if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
   VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
@@ -81,4 +155,5 @@ VistA.wait(PROMPT)
 for routineName in AllRoutines:
   runXindexForRoutine(VistA, routineName)
   VistA.wait(PROMPT)
+runXindexForPackage(VistA,"${PACKAGE_INTERNAL_NAME}","${PACKAGE_NAMESPACE}","${PACKAGE_FILE_NOS}")
 VistA.write("halt")

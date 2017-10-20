@@ -62,14 +62,22 @@ if (NOT GENERATE_DOX AND NOT GENERATE_VIVIAN)
 endif()
 
 set(SCRIPT_OUTPUT_DIR "${CMAKE_BINARY_DIR}/Docs/CallerGraph")
+# 0. Install the Enhanced XINDEX patch
+
+if (GENERATE_DOX OR GENERATE_VIVIAN)
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XINDEXInstall.cmake.in ${SCRIPT_OUTPUT_DIR}/XINDEXInstall.cmake @ONLY)
+  add_test(XINDEX_Install ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/XINDEXInstall.cmake)
+endif()
 
 # 1. Generate XINDEX based cross reference output used by WebPageGenerator (DOX)
 if (GENERATE_DOX)
-  file(GLOB PACKAGES ${DOCUMENT_VISTA_M_DIR}/Packages/*)
+  FindPackages(${VISTA_SOURCE_DIR})
   set(CALLER_GRAPH_LOG_DIR "${SCRIPT_OUTPUT_DIR}/Log")
   file(MAKE_DIRECTORY "${CALLER_GRAPH_LOG_DIR}")
-  foreach(package ${PACKAGES})
-    get_filename_component(package_name ${package} NAME)
+  foreach(package_file_name ${PACKAGES})
+    string(REPLACE  "_" " " packageDirName "${package_file_name}")
+    FindPackageInfo(${VISTA_SOURCE_DIR} ${packageDirName})
+    set(package "${DOCUMENT_VISTA_M_DIR}/Packages/${packageDirName}")
     if(IS_DIRECTORY ${package})
       file(GLOB routines "${package}/Routines/*.m")
       set(AllRoutines "")
@@ -77,7 +85,8 @@ if (GENERATE_DOX)
         get_filename_component(routine_name ${routine} NAME_WE)
         set(AllRoutines "${AllRoutines}AllRoutines.append(\"${routine_name}\")\n")
       endforeach()
-      string(REPLACE  " " "_" package_file_name "${package_name}")
+      list(FIND PACKAGES ${package_file_name} PACKAGE_INDEX)
+      list(GET PACKAGES_INTERNAL ${PACKAGE_INDEX} PACKAGE_INTERNAL_NAME)
       set(logfile "${CALLER_GRAPH_LOG_DIR}/${package_file_name}.log")
       #Configures the python script with the name of the routine
       configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XindexCallerGraph.py.in
@@ -88,6 +97,7 @@ if (GENERATE_DOX)
 
       # Creates the command that will be called for the Test
       add_test(CALLERGRAPH_${package_file_name} ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/${package_file_name}.cmake)
+      set_tests_properties(CALLERGRAPH_${package_file_name} PROPERTIES TIMEOUT 2500)
     endif()
   endforeach()
 endif()
@@ -140,7 +150,7 @@ if (GENERATE_DOX)
   set(PACKAGEDEP_JSON "${DOCUMENT_VISTA_OUTPUT_DIR}/PackageDep.json") # TODO: Where is this file used?
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/WebPageGenerator.cmake.in ${SCRIPT_OUTPUT_DIR}/WebPageGenerator.cmake @ONLY)
   add_test(WebPageGenerator ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/WebPageGenerator.cmake)
-  set_tests_properties(WebPageGenerator PROPERTIES TIMEOUT 21600)
+  set_tests_properties(WebPageGenerator PROPERTIES TIMEOUT 28000)
 endif()
 
 if(GENERATE_VIVIAN)

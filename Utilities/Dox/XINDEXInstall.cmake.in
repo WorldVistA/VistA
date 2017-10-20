@@ -1,0 +1,31 @@
+#---------------------------------------------------------------------------
+# Copyright 2018 The Open Source Electronic Health Record Agent
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
+include("@VISTA_SOURCE_DIR@/CMake/CommonFunctions.cmake")
+message(STATUS "Checking XINDEX Patches...")
+set(vendor_args "")
+SetVendorArgsConfig(vendor_args "@VENDOR_NAME@" "@VISTA_CACHE_NAMESPACE@"
+                     "@VISTA_CACHE_INSTANCE@" "@VISTA_CACHE_USERNAME@"
+                     "@VISTA_CACHE_PASSWORD@")
+set(XINDEX_PATCH_DIR "@CMAKE_CURRENT_SOURCE_DIR@/Patches")
+set(PATCH_INSTALL_SCRIPT "@VISTA_SOURCE_DIR@/Scripts/PatchSequenceApply.py")
+set(LOG_DIR "@DOCUMENT_VISTA_OUTPUT_DIR@")
+list(APPEND vendor_args -p "${XINDEX_PATCH_DIR}" -l "${LOG_DIR}" -i -n "all")
+execute_process(COMMAND "@PYTHON_EXECUTABLE@" "@VISTA_SOURCE_DIR@/Scripts/PatchSequenceApply.py" ${vendor_args}
+                RESULT_VARIABLE retCode
+                OUTPUT_VARIABLE output)
+if(retCode)
+  message(ERROR "Installing Patches Errors: ${output}")
+endif()

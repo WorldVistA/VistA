@@ -182,6 +182,23 @@ var titleDic  =  {
   "FileMan Files":{"tag": "fmFiles","sep": /\s{4}/,"generator":getTableList,"numCols":8},
   "Non-FileMan Globals":{"tag": "nonfmFiles","sep": /\s{4}/,"generator":getTableList,"numCols":8},
   "All Routines":{"tag": "rtns","sep": /\s{4}/,"generator":getTableList,"numCols":8},
+  
+  //Package Components
+  "Component Source":{"tag": "source","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":2},
+  "Remote Procedure":{"tag": "Option_data","sep": /\s{4}/,"generator":getTableList,"numCols":8},
+  "Sort Template":{"tag": "Function_data","sep": /\s{4}/,"generator":getTableList,"numCols":8},
+  "List Manager Templates":{"tag": "List_Manager_Templates_data","sep": /\s{4}/,"generator":getTableList,"numCols":8},
+  "Function":{"tag": "Function_data","sep": /\s{4}/,"generator":getTableList,"numCols":8},
+  "Input Template":{"tag": "Input_Template_data","sep": /\s{4}/,"generator":getTableList,"numCols":8},
+  "Protocol":{"tag": "Protocol_data","sep": /\s{4}/,"generator":getTableList,"numCols":8},
+  "Option":{"tag": "Option_data","sep": /\s{4}/,"generator":getTableList,"numCols":8},
+  "Print Template":{"tag": "Print_Template_data","sep": /\s{4}/,"generator":getTableList,"numCols":8},
+  "Key":{"tag": "Key_data","sep": /\s{4}/,"generator":getTableList,"numCols":8},
+  "Remote Procedure":{"tag": "Remote_Procedure_data","sep": /\s{4}/,"generator":getTableList,"numCols":8},
+  "Help Frame":{"tag": "Help_Frame_data","sep": /\s{4}/,"generator":getTableList,"numCols":8},
+  "Form":{"tag": "Form_data","sep": /\s{4}/,"generator":getTableList,"numCols":8},
+  "Sort Template":{"tag": "Sort_Template_data","sep": /\s{4}/,"generator":getTableList,"numCols":8},
+  "HL7 APPLICATION PARAMETER":{"tag": "HL7_APPLICATION_PARAMETER_data","sep": /\s{4}/,"generator":getTableList,"numCols":8},
 
   // Subfield
   "SubfieldInfo":{"tag": "information","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":4, "header": "Information"},
@@ -228,6 +245,8 @@ var titleDic  =  {
   "Referenced FileMan Files":{"tag": "referencedFileManFiles","sep": /\s{4}/,"generator":getTableList,"numCols":8,"needsSplit":true},
   "FileMan Db Call Routines":{"tag": "dbCallRoutines","sep": /\s{4}/,"generator":getTableList,"numCols":8,"needsSplit":true},
   "FileMan Db Call Accessed FileMan Files":{"tag": "dbCallFileManFiles","sep": /\s{4}/,"generator":getTableList,"numCols":8,"needsSplit":true},
+  //multiple pages
+  "Legend Graph":{"tag": "colorLegend","sep": /\s{2}/,"numCols":2,"stretchColumn":2}
   }
 function startWritePDF(event){
   $("#pdfSelection").dialog({
@@ -250,104 +269,108 @@ function writePDF(event) {
     toDataUrl($("#img_caller").attr("src"), function(callerGraph, callerGraphWidth, callerGraphHeight) {
       toDataUrl($("#package_dependencyGraph").attr("src"), function(dependencyVal, dependencyValWidth, dependencyValHeight) {
         toDataUrl($("#package_dependentGraph").attr("src"), function(dependentVal, dependentValWidth, dependentValHeight) {
-          var title = $("#pageTitle").html();
-          var today = new Date();
-          var footerText = "Generated from " + window.location.href;
-          footerText +=  " on " + today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate();
+          toDataUrl($("#colorLegendImg").attr("src"), function (colorLegendImg, colorLegendWidth, colorLegendHeight) {
+            var title = $("#pageTitle").html();
+            var today = new Date();
+            var footerText = "Generated from " + window.location.href;
+            footerText +=  " on " + today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate();
 
-          // And then text and tables
-          var docDefinition = {
-            pageOrientation: 'landscape',
-            // Note: [left, top, right, bottom] or [horizontal, vertical]
-            //       or just a number for equal margins
-            pageMargins: margin,
-            images : {},
-            styles: {
-              header: {
-                fontSize: 18,
-                bold: true
+            // And then text and tables
+            var docDefinition = {
+              pageOrientation: 'landscape',
+              // Note: [left, top, right, bottom] or [horizontal, vertical]
+              //       or just a number for equal margins
+              pageMargins: margin,
+              images : {},
+              styles: {
+                header: {
+                  fontSize: 18,
+                  bold: true
+                },
+                subheader: {
+                  fontSize: 15,
+                  bold: true
+                },
+                tableheader: {
+                  fontSize: 13,
+                  bold: true
+                },
+                quote: {
+                  italics: true
+                },
+                small: {
+                  fontSize: 8
+                }
               },
-              subheader: {
-                fontSize: 15,
-                bold: true
-              },
-              tableheader: {
-                fontSize: 13,
-                bold: true
-              },
-              quote: {
-                italics: true
-              },
-              small: {
-                fontSize: 8
+              content:[{text:title, style: "header"}, "\n\n"],
+              footer: { text: footerText, alignment: "center"},
+            };
+
+            titleList.forEach(function(test) {
+              if(test.indexOf("_")) {
+                arrayVal = test.split("_");
+                test = arrayVal[0]
+                index = arrayVal[1]
               }
-            },
-            content:[{text:title, style: "header"}, "\n\n"],
-            footer: { text: footerText, alignment: "center"},
-          };
+              if (test === "Info" ) {
+                // Figure out which Info we are parsing
+                if (title.indexOf("Sub-Field") !== -1) { test = "SubfieldInfo"; }
+                else if (title.indexOf("Global") !== -1) { test = "GlobalInfo"; }
+                else if (title.indexOf("Routine") !== -1) { test = "RoutineInfo"; }
+              }
 
-          titleList.forEach(function(test) {
-            if(test.indexOf("_")) {
-              arrayVal = test.split("_");
-              test = arrayVal[0]
-              index = arrayVal[1]
-            }
-            if (test === "Info" ) {
-              // Figure out which Info we are parsing
-              if (title.indexOf("Sub-Field") !== -1) { test = "SubfieldInfo"; }
-              else if (title.indexOf("Global") !== -1) { test = "GlobalInfo"; }
-              else if (title.indexOf("Routine") !== -1) { test = "RoutineInfo"; }
-            }
+              if (test === "Doc") {
+                // pass
+              } else if (test.indexOf("Graph") !== -1) {
+                // Get the data that contains an image (CallerGraphs and accompanying tables)
+                var pdfObj = titleDic[test];
 
-            if (test === "Doc") {
-              // pass
-            } else if (test.indexOf("Graph") !== -1) {
-              // Get the data that contains an image (CallerGraphs and accompanying tables)
-              var pdfObj = titleDic[test];
+                var header = {text: test, style: "subheader"};
+                docDefinition.content.push(header);
+                var imageWidth;
+                if (test === "Caller Graph ") { imageWidth = callerGraphWidth; }
+                else if (test === "Call Graph") { imageWidth = callGraphWidth; }
+                else if (test === "Dependency Graph") { imageWidth = dependencyValWidth; }
+                else if (test === "Dependent Graph") { imageWidth = dependentValWidth; }
+                else if (test === "Legend Graph") { imageWidth = colorLegendWidth; }
+                // else { ERROR! }
 
-              var header = {text: test, style: "subheader"};
-              docDefinition.content.push(header);
-              var imageWidth;
-              if (test === "Caller Graph ") { imageWidth = callerGraphWidth; }
-              else if (test === "Call Graph") { imageWidth = callGraphWidth; }
-              else if (test === "Dependency Graph") { imageWidth = dependencyValWidth; }
-              else if (test === "Dependent Graph") { imageWidth = dependentValWidth; }
-              // else { ERROR! }
+                if (imageWidth > pageWidth) {
+                 docDefinition.content.push({image: pdfObj.tag, width: pageWidth});
+                } else {
+                 docDefinition.content.push({image: pdfObj.tag});
+                }
+                docDefinition.content.push("\n\n");
 
-              if (imageWidth > pageWidth) {
-               docDefinition.content.push({image: pdfObj.tag, width: pageWidth});
+                if (test.indexOf("Call") !== -1) {
+                  tableVal = getTableListWithHeader(pdfObj);
+                } else {
+                  tableVal = getTableList(pdfObj);
+                }
+                docDefinition.content = docDefinition.content.concat(tableVal);
+                docDefinition.content.push("\n\n");
               } else {
-               docDefinition.content.push({image: pdfObj.tag});
+                var header = {};
+                header.style = "subheader";
+                if ("header" in titleDic[test]) {
+                  header.text = titleDic[test]["header"];
+                } else {
+                  header.text = test;
+                }
+                docDefinition.content.push(header);
+                docDefinition.content.push(titleDic[test]["generator"](titleDic[test],index));
+                docDefinition.content.push("\n\n");
               }
-              docDefinition.content.push("\n\n");
+            });
+            docDefinition.images._dependent = dependentVal;
+            docDefinition.images._dependency = dependencyVal;
+            docDefinition.images.callG = callGraph;
+            docDefinition.images.callerG = callerGraph;
+            docDefinition.images.colorLegend = colorLegendImg;
 
-              if (test.indexOf("Call") !== -1) {
-                tableVal = getTableListWithHeader(pdfObj);
-              } else {
-                tableVal = getTableList(pdfObj);
-              }
-              docDefinition.content = docDefinition.content.concat(tableVal);
-              docDefinition.content.push("\n\n");
-            } else {
-              var header = {};
-              header.style = "subheader";
-              if ("header" in titleDic[test]) {
-                header.text = titleDic[test]["header"];
-              } else {
-                header.text = test;
-              }
-              docDefinition.content.push(header);
-              docDefinition.content.push(titleDic[test]["generator"](titleDic[test],index));
-              docDefinition.content.push("\n\n");
-            }
-          });
-          docDefinition.images._dependent = dependentVal;
-          docDefinition.images._dependency = dependencyVal;
-          docDefinition.images.callG = callGraph;
-          docDefinition.images.callerG = callerGraph;
-
-          // Create PDF
-          pdfMake.createPdf(docDefinition).download(title + ".pdf")
+            // Create PDF
+            pdfMake.createPdf(docDefinition).download(title + ".pdf")
+          })
         })
       })
     })

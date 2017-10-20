@@ -1,0 +1,23 @@
+digraph "caller_colors" {
+  node [shape=box fontsize=7];
+  nodesep=0.2;
+  ranssep=0.2;
+  subgraph "cluster_legend"{
+    "Routine" [tooltip="Routine"; penwidth=2; color=black;];
+    "Global" [tooltip="Global"; penwidth=2; color=magenta];
+    "Option" [tooltip="Option"; penwidth=2; color=orangered];
+    "Function"  [tooltip="Function"; penwidth=2; color=royalblue];
+    "List_Manager_Templates"  [tooltip="List_Manager_Templates"; penwidth=2; color=saddlebrown];
+    "Dialog" [tooltip="Dialog"; penwidth=2; color=turquoise];
+    "Key"  [tooltip="Key"; penwidth=2; color=limegreen];
+    "Remote_Procedure" [tooltip="Remote_Procedure"; penwidth=2; color=firebrick];
+    "Protocol" [tooltip="Protocol"; penwidth=2; color=indigo];
+    "Help_Frame" [tooltip="Help_Frame"; penwidth=2; color=moccasin];
+    "Form" [tooltip="Form"; penwidth=2; color=cadetblue];
+    "Sort_Template"  [tooltip="Sort_Template" ; penwidth=2; color=salmon];
+    "Input_Template"  [tooltip="Input_Template"; penwidth=2; color=skyblue];
+    "Print_Template"  [tooltip="Print_Template" ; penwidth=2; color=yellowgreen];
+    "HL7_APPLICATION_PARAMETER" [tooltip="HL7_APPLICATION_PARAMETER"; penwidth=2; color=violetred];
+    label="Legend of Colors"
+  }
+}

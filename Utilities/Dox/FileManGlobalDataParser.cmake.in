@@ -25,10 +25,18 @@ message(STATUS "Gathering FileMan information...")
 # '19'     Option
 # '779.2'  HLO Application
 # '9.7'    Install
+# '.5'     Function
+# '409.61' List Template
+# '19.1'   Security Key
+# '9.2'    Help Frame
+# '.403'   Form
+# '.401'   Sort Template
+# '771'    HL7 APPLICATION PARAMETER
+
 
 if(@GENERATE_VIVIAN@)
   set(GENERATE_ALL "-all")
-  list(APPEND fileNos "101" "8994" "19" "779.2" "9.7")
+  list(APPEND fileNos "101" "8994" "19" "779.2" "9.7"  ".5" "409.61" "19.1" "9.2" ".403" ".401" "771")
 else()
   set(GENERATE_ALL "")
   list(APPEND fileNos "101" "8994")

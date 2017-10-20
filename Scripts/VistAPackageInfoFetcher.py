@@ -43,7 +43,7 @@ class VistAPackageInfoFetcher(object):
     self._packageMapping.clear()
     connection = self._testClient.getConnection()
     result = None
-    menuUtil = VistAMenuUtil(duz=.5) # set duz as .5
+    menuUtil = VistAMenuUtil(duz=1) # set duz as .5
     menuUtil.gotoFileManPrintFileEntryMenu(self._testClient)
     # print file entry
     connection.send("9.4\r") # Package file with fileman #9.4
@@ -86,7 +86,7 @@ class VistAPackageInfoFetcher(object):
       self.createAllPackageMapping()
     connection = self._testClient.getConnection()
     result = None
-    menuUtil = VistAMenuUtil(duz=.5) # set duz as .5
+    menuUtil = VistAMenuUtil(duz=1) # set duz as .5
     menuUtil.gotoKidsUtilMenu(self._testClient)
     connection.send("Display\r")
     connection.expect("Select PACKAGE NAME:")
@@ -183,7 +183,7 @@ class VistAPackageInfoFetcher(object):
         after specific time
     """
     connection = self._testClient.getConnection()
-    menuUtil = VistAMenuUtil(duz=.5)
+    menuUtil = VistAMenuUtil(duz=1)
     menuUtil.gotoFileManSearchFileEntryMenu(self._testClient)
     connection.send("9.7\r") # INSTALL file #
     connection.expect("-A- SEARCH FOR INSTALL FIELD: ")
@@ -368,7 +368,7 @@ class VistAPackageInfoFetcher(object):
   def getInstallationStatus(self, installName):
     connection = self._testClient.getConnection()
     result = -1 # default is not installed
-    menuUtil = VistAMenuUtil(duz=.5)
+    menuUtil = VistAMenuUtil(duz=1)
     menuUtil.gotoFileManInquireFileEntryMenu(self._testClient)
     connection.send("9.7\r") # Package file with fileman #9.7
     connection.expect("Select INSTALL NAME:")

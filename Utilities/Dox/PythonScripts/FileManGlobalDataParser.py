@@ -133,7 +133,7 @@ def test_getMumpsRoutine():
     for idx, (routine,tag,pos) in enumerate(getMumpsRoutine(input[0])):
       assert (routine, tag, pos) == input[1][idx], "%s: %s" % ((routine, tag, pos), input[1][idx])
 
-class FileManFileData(object):
+class FileManFileData(json.JSONEncoder):
   """
     Class to represent FileMan File data WRT
     either a FileMan file or a subFile
@@ -156,7 +156,8 @@ class FileManFileData(object):
   def __repr__(self):
     return "%s, %s, %s" % (self._fileNo, self._name, self._data)
 
-class FileManDataEntry(object):
+
+class FileManDataEntry(json.JSONEncoder):
   """
   One FileMan File DataEntry
   """
@@ -192,7 +193,8 @@ class FileManDataEntry(object):
   def __repr__(self):
     return "%s: %s: %s" % (self._fileNo, self._ien, self._data)
 
-class FileManDataField(object):
+
+class FileManDataField(json.JSONEncoder):
   """
     Represent an individual field in a FileMan DataEntry
   """
@@ -384,18 +386,19 @@ class FileManGlobalDataParser(object):
       logging.error(".01 field does not have a location")
       return
     self._curFileNo = fileNumber
-    glbLoc = self._glbLocMap[fileNumber]
-    for dataRoot in readGlobalNodeFromZWRFileV2(inputFileName, glbLoc):
-      if not dataRoot: continue
-      self._dataRoot = dataRoot
-      fileDataRoot = dataRoot
-      (ien, detail) = self._getKeyNameBySchema(fileDataRoot, keyLoc, keyField)
-      if detail:
-        self._addFileKeyIndex(fileNumber, ien, detail)
-      elif ien:
-        logging.info("No name associated with ien: %s, file: %s" % (ien, fileNumber))
-      else:
-        logging.info("No index for data with ien: %s, file: %s" % (ien, fileNumber))
+    if fileNumber in self._glbLocMap:
+      glbLoc = self._glbLocMap[fileNumber]
+      for dataRoot in readGlobalNodeFromZWRFileV2(inputFileName, glbLoc):
+        if not dataRoot: continue
+        self._dataRoot = dataRoot
+        fileDataRoot = dataRoot
+        (ien, detail) = self._getKeyNameBySchema(fileDataRoot, keyLoc, keyField)
+        if detail:
+          self._addFileKeyIndex(fileNumber, ien, detail)
+        elif ien:
+          logging.info("No name associated with ien: %s, file: %s" % (ien, fileNumber))
+        else:
+          logging.info("No index for data with ien: %s, file: %s" % (ien, fileNumber))
 
   """
   Generate a map Field Value => IEN
@@ -904,29 +907,29 @@ def testGlobalParser(args):
   else:
     # Generate all required files
     sccSet = glbDataParser.schemaParser.sccSet
+    print sccSet
     fileSet = set(args.fileNos)
     for idx, value in enumerate(sccSet):
       fileSet.difference_update(value)
       if not fileSet:
         break
     for i in xrange(0,idx+1):
-      fileSet = sccSet[i]
+      fileSet = fileSet.union(sccSet[i])
       fileSet &= set(glbDataParser.allFiles.keys())
-      fileSet -= isolatedFiles
       fileSet.discard('757')
-      if len(fileSet) > 1:
-        for file in fileSet:
-          zwrFile = glbDataParser.allFiles[file]['path']
-          globalSub = glbDataParser.allFiles[file]['name']
-          logging.info("Generate file key index for: %s at %s" % (file, zwrFile))
-          glbDataParser.generateFileIndex(zwrFile, file)
+    if len(fileSet) > 1:
       for file in fileSet:
         zwrFile = glbDataParser.allFiles[file]['path']
         globalSub = glbDataParser.allFiles[file]['name']
-        logging.info("Parsing file: %s at %s" % (file, zwrFile))
-        glbDataParser.parseZWRGlobalFileBySchemaV2(zwrFile, file)
-        htmlGen.outputFileManDataAsHtml(glbDataParser)
-        del glbDataParser.outFileManData[file]
+        logging.info("Generate file key index for: %s at %s" % (file, zwrFile))
+        glbDataParser.generateFileIndex(zwrFile, file)
+    for file in fileSet:
+      zwrFile = glbDataParser.allFiles[file]['path']
+      globalSub = glbDataParser.allFiles[file]['name']
+      logging.info("Parsing file: %s at %s" % (file, zwrFile))
+      glbDataParser.parseZWRGlobalFileBySchemaV2(zwrFile, file)
+      htmlGen.outputFileManDataAsHtml(glbDataParser)
+      del glbDataParser.outFileManData[file]
 
   glbDataParser.outRtnReferenceDict()
 

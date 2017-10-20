@@ -30,6 +30,7 @@ if SCRIPTS_DIR not in sys.path:
   sys.path.append(SCRIPTS_DIR)
 
 from ZWRGlobalParser import getKeys
+from json import JSONEncoder
 from CrossReference import FileManField
 from ZWRGlobalParser import readGlobalNodeFromZWRFileV2
 from WebPageGenerator import getRoutineHtmlFileName, normalizePackageName
@@ -42,6 +43,24 @@ from DataTableHtml import writeTableListInfo, outputDataListTableHeader
 from DataTableHtml import outputLargeDataListTableHeader, outputDataRecordTableHeader
 from DataTableHtml import outputFileEntryTableList, safeElementId
 
+class OSEHRAEncoder(JSONEncoder):
+  def default(self, o):
+    if "FileManFileData" in str(type(o)):
+      return "%s, %s, %s" % (o._fileNo, o._name, o._data)
+    elif "FileManDataEntry" in str(type(o)):
+      return "%s: %s: %s" % (o._fileNo, o._ien, o._data)
+    elif "FileManDataField" in str(type(o)):
+      return "%s: %s" % (o._name, o._value)
+    elif "FileManField" in str(type(o)):
+      return ("%s, %s, %s, %s, %s, %s, %s" % (o.getFieldNo(),
+                            o.getName(),
+                            o.getLocation(),
+                            o.getTypeName(),
+                            o.getType(),
+                            o.getSubType(),
+                            o.getSpecifier()))
+    else:
+      JSONEncoder.default(self,o)
 
 def test_sub():
   print data_table_large_list_init_setup.substitute(ajexSrc="Test", tableName="Test")
@@ -384,6 +403,7 @@ class FileManDataToHtml(object):
         allOptionList = []
         allMenuList = []
         serverMenuList = []
+        outJSON = {}
         for ien in getKeys(fileManData.dataEntries.keys(), float):
           dataEntry = fileManData.dataEntries[ien]
           allOptionList.append(dataEntry)
@@ -405,10 +425,27 @@ class FileManDataToHtml(object):
                                         [x[0] for x in menu_list_fields],
                                         ["Name", "Menu Text", "Lock"],fileNo)
 
+
         self._generateServerMenu(allMenuList, allOptionList, serverMenuList)
         self._generateMenuDependency(allMenuList, allOptionList)
-      self._generateDataTableHtml(fileManData, fileNo)
 
+      if not os.path.exists(self.outDir+"/%s" % fileNo.replace('.','_')):
+        os.mkdir(self.outDir+"/%s" % fileNo.replace('.','_'))
+      allObjectsList=[]
+      outJSON = {}
+      for ien in getKeys(fileManData.dataEntries.keys(), float):
+        dataEntry = fileManData.dataEntries[ien]
+        outJSON[ien]= dataEntry.fields
+        allObjectsList.append(dataEntry)
+
+      self._generateDataListByPackage(allObjectsList, "All", option_list_fields,
+                                      "Function",
+                                      [x[0] for x in option_list_fields],
+                                      ["Name", "Lock"],fileNo)
+      with open(os.path.join(self.outDir,"dox","%s.json" % fileNo.replace('.','_')), 'w') as output:
+                logging.info("Generate File: %s" % output.name)
+                json.dump(outJSON, output,ensure_ascii=False,cls=OSEHRAEncoder)
+      self._generateDataTableHtml(fileManData, fileNo)
       self._convertFileManDataToHtml(fileManData)
 
   def _generateServerMenu(self, allMenuList,allOptionList, serverMenuList):
