@@ -873,24 +873,9 @@ def generateSingleFileFieldToIenMappingBySchema(MRepositDir, crossRef, fileNo, f
   glbDataParser.parseZWRGlobalFileBySchemaV2(glbDataParser.allFiles['1']['path'], '1', '^DIC(')
   return glbDataParser.generateFileFieldMap(glbDataParser.allFiles[fileNo]['path'], fileNo, fieldNo)
 
-def __generateGitRepositoryKey__(git, mDir, outputFile):
-    sha1Key = __getGitRepositLatestSha1Key__(git,mDir)
-    outputFile.write("""{
-  "date": "%s",
-  "sha1": "%s"
-}""" % (datetime.today().date(), sha1Key))
-def __getGitRepositLatestSha1Key__(git,mDir):
-    gitCommand = "\"" + git + "\"" + " rev-parse --verify HEAD"
-    print gitCommand
-    os.chdir(mDir)
-    result = subprocess.check_output(gitCommand, shell=True)
-    return result.strip()
-
 def testGlobalParser(args):
   from InitCrossReferenceGenerator import parseCrossRefGeneratorWithArgs
   from FileManDataToHtml import FileManDataToHtml
-  outputFile = open(os.path.join(args.outdir, "filesInfo.json"), 'wb')
-  __generateGitRepositoryKey__(args.git, args.MRepositDir, outputFile)
   crossRef = parseCrossRefGeneratorWithArgs(args)
   glbDataParser = FileManGlobalDataParser(args.MRepositDir, crossRef)
   assert '0' in glbDataParser.allFiles and '1' in glbDataParser.allFiles and set(args.fileNos).issubset(glbDataParser.allFiles)
@@ -905,7 +890,7 @@ def testGlobalParser(args):
   glbDataParser.patchDir = args.patchRepositDir
   htmlGen = FileManDataToHtml(crossRef, args.outdir)
   isolatedFiles = glbDataParser.schemaParser.isolatedFiles
-  if set(args.fileNos).issubset(isolatedFiles):
+  if not args.all or set(args.fileNos).issubset(isolatedFiles):
     for fileNo in args.fileNos:
       gdFile = glbDataParser.allFiles[fileNo]['path']
       logging.info("Parsing file: %s at %s" % (fileNo, gdFile))
@@ -987,7 +972,8 @@ def createArgParser():
   parser.add_argument('fileNos', help='FileMan File Numbers', nargs='+')
   parser.add_argument('-outdir', required=True,
                       help='top directory to generate output in html')
-  parser.add_argument('-git', required=True, help='Git excecutable')
+  parser.add_argument('-all', action='store_true',
+                      help='generate all dependency files ')
   return parser
 
 def unit_test():
@@ -997,7 +983,7 @@ def unit_test():
   #test_FileManDataEntry()
 
 def run(result):
-    testGlobalParser(result)
+  testGlobalParser(result)
 
 def main():
   from LogManager import initConsoleLogging

@@ -133,7 +133,7 @@ at the top of the window so that the source code points to the VistA
 repository. The binaries path can be set to any directory, preferably one
 outside of the VistA repository tree.
 
-.. figure:: http://code.osehra.org/content/named/SHA1/5EA69B-launchCmakeGUI.png
+.. figure:: http://code.osehra.org/content/named/SHA1/82B12B-launchCmakeGUI.png
    :align: center
    :alt:  Initial CMake-GUI page
 
@@ -256,7 +256,8 @@ from the command line and enter the following command:
   Test #134: MRoutineAnalyzer
   Test #135: FileManGlobalDataParser
   Test #136: ICRParser
-  Test #137: WebPageGenerator
+  Test #137: GenerateRepoInfo
+  Test #138: WebPageGenerator
 
 Generate ViViaN Data and DOX
 ----------------------------
@@ -273,28 +274,30 @@ running is the same as above, without the -N notation:
   ...
 
         Start   1: CALLERGRAPH_Accounts_Receivable
-  1/137 Test   #1: CALLERGRAPH_Accounts_Receivable ......................................   Passed   21.83 sec
+  1/138 Test   #1: CALLERGRAPH_Accounts_Receivable ......................................   Passed   21.83 sec
         Start   2: CALLERGRAPH_Adverse_Reaction_Tracking
-  2/137 Test   #2: CALLERGRAPH_Adverse_Reaction_Tracking ................................   Passed    4.04 sec
+  2/138 Test   #2: CALLERGRAPH_Adverse_Reaction_Tracking ................................   Passed    4.04 sec
         Start   3: CALLERGRAPH_Asists
-  3/137 Test   #3: CALLERGRAPH_Asists ...................................................   Passed    3.35 sec
+  3/138 Test   #3: CALLERGRAPH_Asists ...................................................   Passed    3.35 sec
         Start   4: CALLERGRAPH_Authorization_Subscription
-  4/137 Test   #4: CALLERGRAPH_Authorization_Subscription ...............................   Passed    0.98 sec
+  4/138 Test   #4: CALLERGRAPH_Authorization_Subscription ...............................   Passed    0.98 sec
         Start   5: CALLERGRAPH_Auto_Replenishment_Ward_Stock
-  5/137 Test   #5: CALLERGRAPH_Auto_Replenishment_Ward_Stock ............................   Passed    2.38 sec
+  5/138 Test   #5: CALLERGRAPH_Auto_Replenishment_Ward_Stock ............................   Passed    2.38 sec
 
   ...
 
         Start 133: GetFilemanSchema
-  133/137 Test #133: GetFilemanSchema ...................................................   Passed  736.81 sec
+  133/138 Test #133: GetFilemanSchema ...................................................   Passed  736.81 sec
         Start 134: MRoutineAnalyzer
-  134/137 Test #134: MRoutineAnalyzer ...................................................   Passed   59.94 sec
+  134/138 Test #134: MRoutineAnalyzer ...................................................   Passed   59.94 sec
         Start 135: FileManGlobalDataParser
-  135/137 Test #135: FileManGlobalDataParser ............................................   Passed  2962.67 sec
+  135/138 Test #135: FileManGlobalDataParser ............................................   Passed  2962.67 sec
         Start 136: ICRParser
-  136/137 Test #136: ICRParser ..........................................................   Passed   40.28 sec
-        Start 137: WebPageGenerator
-  137/137 Test #137: WebPageGenerator ...................................................   Passed  3219.08 sec
+  136/138 Test #136: ICRParser ..........................................................   Passed   40.28 sec
+      Start 137: GenerateRepoInfo
+  137/138 Test #137: GenerateRepoInfo ...................................................   Passed   0.25 sec
+        Start 138: WebPageGenerator
+  138/138 Test #138: WebPageGenerator ...................................................   Passed  3219.08 sec
 
 
 To run tests with more output printed to the console, use the verbose option:
@@ -347,6 +350,18 @@ Each test and corresponding Python script is described below.
 two files: ``LastTest.log`` (test output) and ``LastTestsFailed.log`` (list of
 failed tests).
 
+Generate DOX or ViViaN Separately
+---------------------------------
+
+It is possible to configure the scripts to only generate the DOX pages or the
+ViViaN backend data. After following the instructions in `Configure Scripts`_,
+uncheck either the `GENERATE_DOX` or `GENERATE_VIVIAN` variable under the
+\"Advanced\" section in the CMake-GUI. Select \"Configure\" again and then
+\"Generate\".
+
+.. figure:: http://code.osehra.org/content/named/SHA1/138DF2-buildViViaNOnly.png
+   :align: center
+   :alt:  Set CMake variables in the CMake-GUI to only generate ViViaN
 
 
 Format Data

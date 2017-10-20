@@ -13,6 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+
+if(POLICY CMP0012)
+  cmake_policy(SET CMP0012 NEW)
+endif()
+
 message(STATUS "Gathering FileMan information...")
 
 # '101'    Protocol
@@ -20,7 +25,14 @@ message(STATUS "Gathering FileMan information...")
 # '19'     Option
 # '779.2'  HLO Application
 # '9.7'    Install
-list(APPEND fileNos "101" "8994" "19" "779.2" "9.7")
+
+if(@GENERATE_VIVIAN@)
+  set(GENERATE_ALL "-all")
+  list(APPEND fileNos "101" "8994" "19" "779.2" "9.7")
+else()
+  set(GENERATE_ALL "")
+  list(APPEND fileNos "101" "8994")
+endif()
 
 # Run FileMan Global Data Parser script
 # Creates 'Routine-Ref.json', which is used by WebPageGenerator
@@ -30,7 +42,7 @@ execute_process(COMMAND
   -mr @DOCUMENT_VISTA_M_DIR@
   -pr @VISTA_SOURCE_DIR@
   -outdir @DOCUMENT_VISTA_OUTPUT_DIR@
-  -git "@GIT_EXECUTABLE@"
+  ${GENERATE_ALL}
   ${fileNos}
   OUTPUT_VARIABLE output ERROR_VARIABLE output RESULT_VARIABLE retValue)
 if(NOT retValue EQUAL 0)

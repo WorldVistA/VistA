@@ -24,7 +24,8 @@ def run(args):
             if len(vals) == 3:
                 args.date = vals[0] + " " + vals[1] + "," + vals[2]
 
-    ICRJsonToHtml.run(args)
+    if args.html:
+      ICRJsonToHtml.run(args)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='VistA ICR Parser')
@@ -34,6 +35,8 @@ if __name__ == '__main__':
                           help="VistA Git Repository Directory")
     parser.add_argument('icrfile', help='path to the VistA ICR file')
     parser.add_argument('outdir', help='path to the output web page directory')
+    parser.add_argument('-html', action='store_true',
+                          help='generate html')
     result = parser.parse_args()
     initConsoleLogging()
     run(result)
