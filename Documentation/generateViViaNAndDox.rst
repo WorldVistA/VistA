@@ -369,7 +369,7 @@ Source Code Highlighting
 
 To enable the color highlighting of the M routine source page copy the
 ``code_pretty_scripts`` directory from the ``VistA/Utilities/Dox/Web`` folder
-into the `files\dox` directory.  The folder contains code taken from the
+into the `files/dox` directory.  The folder contains code taken from the
 `google_code_prettify`_ repository which is released under the Apache 2.0
 license.
 
