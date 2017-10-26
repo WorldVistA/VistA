@@ -15,18 +15,23 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+# Turn this flag on for debugging.
+# set -x;
+
 # Make sure we are root
 if [[ $EUID -ne 0 ]]; then
     echo "This script must be run as root" 1>&2
     exit 1
 fi
 
-# Are we running on a local repo? If so, don't the "VistA" repo again!
+# Are we running on a local repo? If so, don't clone the "VistA" repo again!
 currentDir=$(dirname "$(readlink -f "$0")")
 parentDir=$(dirname $currentDir)
 parentdirname=$(basename $parentDir)
 if [ "$parentdirname" = "Install" ]; then
     localVistARepo="true"
+else
+    localVistARepo="false"
 fi
 
 # Options
@@ -174,7 +179,7 @@ export DEBIAN_FRONTEND="noninteractive"
 # extra utils - used for cmake and dashboards and initial clones
 # Note: Amazon EC2 requires two apt-get update commands to get everything
 if $bootstrap; then
-    echo "Updating operating system"
+    echo "Updating Operating System! This will take a while."
     apt-get update -qq > /dev/null
     apt-get update -qq > /dev/null
     apt-get install -qq -y build-essential cmake-curses-gui git dos2unix daemon unzip > /dev/null
@@ -304,15 +309,23 @@ if $skipTests; then
     # Perform the import
     su $instance -c "source $basedir/etc/env && $scriptdir/GTM/importVistA.sh"
 
-    # Run ZTMGRSET accepting the defaults
-    su $instance -c "mumps -run %XCMD 'D ^ZTMGRSET' << EOF
-8
+    # Get GT.M Optimized Routines from Kernel-GTM project and unzip
+    curl -fsSLO --progress-bar https://github.com/shabiel/Kernel-GTM/releases/download/XU-8.0-10001/virgin_install.zip
 
+    # Unzip file, put routines, delete old objects
+    su $instance -c "unzip -qo virgin_install.zip -d $basedir/r/"
+    su $instance -c "unzip -l virgin_install.zip | awk '{print \$4}' | grep '\.m' | sed 's/.m/.o/' | xargs -i rm -fv r/$gtmver/{}"
+    su $instance -c "rm -fv r/$gtmver/_*.o"
 
+    # Get the Auto-configurer for VistA/RPMS and run
+    curl -fsSLO https://raw.githubusercontent.com/shabiel/random-vista-utilities/master/KBANTCLN.m
+    su $instance -c "mv KBANTCLN.m $basedir/r/"
 
+    # Run the auto-configurer accepting the defaults
+    su $instance -c "source $basedir/etc/env && mumps -run START^KBANTCLN"
 
-Y
-EOF"
+    # Start Taskman
+    su $instance -c "source $basedir/etc/env && mumps -run ^ZTMB"
 else
     # Attempt to bypass huge git clone by getting the zip files and unzipping them where they go
     su $instance -c "source $basedir/etc/env && mkdir -p $basedir/Dashboard"
