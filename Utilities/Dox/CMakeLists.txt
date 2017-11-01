@@ -80,6 +80,9 @@ set(FILEMANDBCALL_JSON "${DOCUMENT_VISTA_OUTPUT_DIR}/filemanDBCall.json")
 # Creates 'filemanDBCall.json', which is used by WebPageGenerator (DOX)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/MRoutineAnalyzer.cmake.in ${SCRIPT_OUTPUT_DIR}/MRoutineAnalyzer.cmake @ONLY)
 add_test(MRoutineAnalyzer ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/MRoutineAnalyzer.cmake)
+set_tests_properties(MRoutineAnalyzer
+                     PROPERTIES FAIL_REGULAR_EXPRESSION "SEVERE")
+
 
 # 4. Run FileMan Global Data Parser script
 # Generates ViViaN data and 'Routine-Ref.json' for the WebPageGenerator (DOX)
