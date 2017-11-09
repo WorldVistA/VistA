@@ -73,7 +73,7 @@ class ICRFileToJson(object):
                     if fieldName == 'DBA Comments':
                         self._DBAComments = True
                     if self._DBAComments:
-                        if fieldName == "DATE/TIME EDITED":
+                        if fieldName in ICR_FILE_KEYWORDS:
                             self._DBAComments = False
                     if self._DBAComments:
                         fieldName = 'DBA Comments'
