@@ -13,7 +13,7 @@ from ICRSchema import isSubFile, isSubFileField, isWordProcessingField
 
 # regular  expression for fields
 START_OF_RECORD = re.compile('^(?P<name>NUMBER): ')
-GENERIC_START_OF_RECORD = re.compile('^( *)?(?P<name>[A-Z^/]+( [A-Z/#^]+)*): ') # max of 2 spaces
+GENERIC_START_OF_RECORD = re.compile('^( *)?(?P<name>[A-Z^/]+( [A-Z/#^]+)*): ') # TODO? max of 2 spaces
 DBA_COMMENTS = re.compile('^( +)?(?P<name>DBA Comments): ')
 GENERIC_FIELD_RECORD = re.compile('( )(?P<name>[A-Z^/]+( [A-Z/^#]+)*): ')
 INTEGRATION_REFERENCES_LIST = re.compile('^[\r\f]?INTEGRATION REFERENCES LIST *(.*)(([01]\d|2[0-3]):([0-5]\d)|24:00) *PAGE')
@@ -45,6 +45,7 @@ class ICRFileToJson(object):
         self._curField = None
         self._curStack = []
         self._DBAComments = False
+        self._generalDescription = False
 
     def parse(self, inputFilename, outputFilename):
         global date
@@ -60,7 +61,7 @@ class ICRFileToJson(object):
                     date = match.group(1).strip()
                     continue
                 match = START_OF_RECORD.match(line)
-                if match and not self._DBAComments:
+                if match and not self._DBAComments and not self._generalDescription:
                     self._startOfNewItem(match, line)
                     continue
                 match = GENERIC_START_OF_RECORD.search(line)
@@ -72,11 +73,25 @@ class ICRFileToJson(object):
                     fieldName = match.group('name')
                     if fieldName == 'DBA Comments':
                         self._DBAComments = True
+                    elif fieldName == 'GENERAL DESCRIPTION':
+                        self._generalDescription = True
                     if self._DBAComments:
                         if fieldName in ICR_FILE_KEYWORDS:
                             self._DBAComments = False
+                    elif self._generalDescription:
+                        if line.startswith("  STATUS:"):  # Starts with exactly 2 spaces
+                            self._generalDescription = False
                     if self._DBAComments:
                         fieldName = 'DBA Comments'
+                        if self._curField == fieldName:
+                            self._appendWordsFieldLine(line)
+                        else:
+                            self._curField = fieldName
+                            name = match.group('name') # this is the name part
+                            restOfLine = line[match.end():]
+                            self._curRecord[name] = restOfLine.strip()
+                    elif self._generalDescription:
+                        fieldName = 'GENERAL DESCRIPTION'
                         if self._curField == fieldName:
                             self._appendWordsFieldLine(line)
                         else:
