@@ -1544,15 +1544,30 @@ class CrossReference:
         if fileformat == 'json':
           outJson = []
           for pkg in self._allPackages.itervalues():
-            pkgjson = {'name': pkg.getName()}
+            pkgjson = {'name': pkg.getName(),"dependents": []}
+            for packageObj in outJson:
+              if packageObj['name'] == pkg.getName():
+                pkgjson= packageObj
+                break
             dependency = set();
             for depPkgs in [pkg.getPackageRoutineDependencies(),
                             pkg.getPackageGlobalDependencies(),
                             pkg.getPackageFileManFileDependencies(),
                             pkg.getPackageFileManDbCallDependencies()]:
               for depPkg in depPkgs:
+                if depPkg.getName() == pkg.getName():
+                  continue
                 if depPkg.getName() not in dependency:
                   dependency.add(depPkg.getName())
+                for packageObj in outJson:
+                  if packageObj['name'] == depPkg.getName():
+                    if pkg.getName() not in packageObj['dependents']:
+                      packageObj['dependents'].append(pkg.getName())
+                    break
+                else:
+                  newPkgJson = {'name': depPkg.getName(),"dependents": []}
+                  newPkgJson['dependents'].append(pkg.getName())
+                  outJson.append(newPkgJson)
             if dependency:
               pkgjson['depends'] = list(dependency)
             outJson.append(pkgjson)

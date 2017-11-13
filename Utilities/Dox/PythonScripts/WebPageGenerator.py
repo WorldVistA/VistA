@@ -2603,9 +2603,6 @@ def initLogging(outputFileName):
 #===============================================================================
 
 def run(args):
-    pkgDepJson = None
-    if args.depJson:
-      pkgDepJson = os.path.abspath(args.depJson)
     """
     Reads in the ICR JSON file and generates
     a dictionary that consists of only the routine information
@@ -2642,7 +2639,7 @@ def run(args):
           else:
             # Take all other entries into "OTHER", so that they can be shown on the package page
             parsedICRJSON[entry['CUSTODIAL PACKAGE']]["OTHER"]["ENTRIES"].append(entry)
-    crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(args,pkgDepJson,parsedICRJSON)
+    crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(args,pkgDepJson=None, icrJson=parsedICRJSON)
     logger.info ("Starting generating web pages....")
     doxDir = os.path.join(args.patchRepositDir, 'Utilities/Dox')
     webPageGen = WebPageGenerator(crossRef,
@@ -2677,7 +2674,6 @@ if __name__ == '__main__':
     parser.add_argument('-rj','--rtnJson', required=True,help='routine reference in VistA '
         'Data file in JSON format')
     parser.add_argument('-icr','--icrJsonFile', required=True,help='JSON formatted information of DBIA/ICR')
-    parser.add_argument('-dj','--depJson', required=False, help='JSON file to store Package dependency information')
     result = parser.parse_args();
 
     if not result.outputLogFileName:

@@ -141,3 +141,12 @@ if (GENERATE_DOX)
   add_test(WebPageGenerator ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/WebPageGenerator.cmake)
   set_tests_properties(WebPageGenerator PROPERTIES TIMEOUT 7200)
 endif()
+
+if(GENERATE_VIVIAN)
+  # 7. Run Cross Reference Builder
+  # Generates PackageDependency file used in ViViaN
+  set(PACKAGEDEP_JSON "${DOCUMENT_VISTA_OUTPUT_DIR}/pkgdep.json")
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/GeneratePackageDep.cmake.in ${SCRIPT_OUTPUT_DIR}/GeneratePackageDep.cmake @ONLY)
+  add_test(GeneratePackageDep ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/GeneratePackageDep.cmake)
+  set_tests_properties(GeneratePackageDep PROPERTIES TIMEOUT 7200)
+endif()

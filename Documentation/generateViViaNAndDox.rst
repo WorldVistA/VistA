@@ -258,6 +258,7 @@ from the command line and enter the following command:
   Test #136: ICRParser
   Test #137: GenerateRepoInfo
   Test #138: WebPageGenerator
+  Test #139: GeneratePackageDep
 
 Generate ViViaN Data and DOX
 ----------------------------
@@ -274,30 +275,33 @@ running is the same as above, without the -N notation:
   ...
 
         Start   1: CALLERGRAPH_Accounts_Receivable
-  1/138 Test   #1: CALLERGRAPH_Accounts_Receivable ......................................   Passed   21.83 sec
+  1/139 Test   #1: CALLERGRAPH_Accounts_Receivable ......................................   Passed   21.83 sec
         Start   2: CALLERGRAPH_Adverse_Reaction_Tracking
-  2/138 Test   #2: CALLERGRAPH_Adverse_Reaction_Tracking ................................   Passed    4.04 sec
+  2/139 Test   #2: CALLERGRAPH_Adverse_Reaction_Tracking ................................   Passed    4.04 sec
         Start   3: CALLERGRAPH_Asists
-  3/138 Test   #3: CALLERGRAPH_Asists ...................................................   Passed    3.35 sec
+  3/139 Test   #3: CALLERGRAPH_Asists ...................................................   Passed    3.35 sec
         Start   4: CALLERGRAPH_Authorization_Subscription
-  4/138 Test   #4: CALLERGRAPH_Authorization_Subscription ...............................   Passed    0.98 sec
+  4/139 Test   #4: CALLERGRAPH_Authorization_Subscription ...............................   Passed    0.98 sec
         Start   5: CALLERGRAPH_Auto_Replenishment_Ward_Stock
-  5/138 Test   #5: CALLERGRAPH_Auto_Replenishment_Ward_Stock ............................   Passed    2.38 sec
+  5/139 Test   #5: CALLERGRAPH_Auto_Replenishment_Ward_Stock ............................   Passed    2.38 sec
 
   ...
 
         Start 133: GetFilemanSchema
-  133/138 Test #133: GetFilemanSchema ...................................................   Passed  736.81 sec
+  133/139 Test #133: GetFilemanSchema ...................................................   Passed  736.81 sec
         Start 134: MRoutineAnalyzer
-  134/138 Test #134: MRoutineAnalyzer ...................................................   Passed   59.94 sec
+  134/139 Test #134: MRoutineAnalyzer ...................................................   Passed   59.94 sec
         Start 135: FileManGlobalDataParser
-  135/138 Test #135: FileManGlobalDataParser ............................................   Passed  2962.67 sec
+  135/139 Test #135: FileManGlobalDataParser ............................................   Passed  2962.67 sec
         Start 136: ICRParser
-  136/138 Test #136: ICRParser ..........................................................   Passed   40.28 sec
+  136/139 Test #136: ICRParser ..........................................................   Passed   40.28 sec
       Start 137: GenerateRepoInfo
-  137/138 Test #137: GenerateRepoInfo ...................................................   Passed   0.25 sec
+  137/139 Test #137: GenerateRepoInfo ...................................................   Passed   0.25 sec
         Start 138: WebPageGenerator
-  138/138 Test #138: WebPageGenerator ...................................................   Passed  3219.08 sec
+  138/139 Test #138: WebPageGenerator ...................................................   Passed  3219.08 sec
+        Start 139: GeneratePackageDep
+  139/139 Test #139: GeneratePackageDep .................................................   Passed  651.08 sec
+
 
 
 To run tests with more output printed to the console, use the verbose option:
@@ -318,18 +322,21 @@ Each test and corresponding Python script is described below.
 
 1. The **CALLERGRAPH_** scripts are found in the ``Docs\CallerGraph``
    subdirectory of the build directory. These scripts generate XINDEX based
-   cross reference output that is used by **WebPageGenerator**.
+   cross reference output that is used by **WebPageGenerator** and
+   **GeneratePackageDep**.
 
 2. The **GetFilemanSchema** test executes the ``FilemanGlobalAttributes.py``
    script from the ``Docs\CallerGraph`` subdirectory of the build directory.
-   This script generates Fileman Schema used by `WebPageGenerator`.
+   This script generates Fileman Schema used by `WebPageGenerator` and
+   **GeneratePackageDep**.
 
 3. The **MRoutineAnalyzer** test is unique in that it does not execute a Python
    script. Instead, it downloads and executes a version of the RGI/PwC tool
    called the `M Routine Analyzer`_ which has been modified by Jason Li. This
    tool creates a JSON file containing information about the database calls
    that routines make to query FileMan for data. The output file,
-   ``filemanDBCall.json``, is used by **WebPageGenerator**.
+   ``filemanDBCall.json``, is used by **WebPageGenerator** and
+   **GeneratePackageDep**.
 
 4. The **FileManGlobalDataParser** test runs the FileManGlobalDataParser script
    from VistA's ``Utilities/Dox/PythonScripts`` directory. The script generates
@@ -341,7 +348,11 @@ Each test and corresponding Python script is described below.
    the FOIA released ICR_ text file to JSON (used by DOX) and HTML (used by
    ViViaN).
 
-6. The **WebPageGenerator** test runs a Python script of the same name from the
+6. The **GeneratePackageDep** test runs the CrossReferenceBuilder file which
+   reads the Schema and Callergraph log files and generates the ``pkgdep.json``
+   file which is used by ViViaN
+
+7. The **WebPageGenerator** test runs a Python script of the same name from the
    ``Utilities/Dox/PythonScripts`` directory in the VistA repository. This
    script uses output from the previous test to generate the html DOX pages.
 
@@ -374,9 +385,9 @@ Product-Management (ViViaN) repository.
 
 1. If needed, generate a symbolic link ``files`` pointing to the
    DOCUMENT_VISTA_OUTPUT_DIR specified during configuration.
-2. Update ``PackageCategories.json``, ``Packages.csv``, ``pkgdep.json``
+2. Update ``PackageCategories.json``, ``Packages.csv``,
    ``scripts/PackageDes.json`` if needed.
-3. [Optional] Run ``check_him_data.py`` to update ``himData.json``.
+4. [Optional] Run ``check_him_data.py`` to update ``himData.json``.
 
 
 Source Code Highlighting
