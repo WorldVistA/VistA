@@ -8,8 +8,8 @@ from string import Template
 """
 
 table_sorter_header="""
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="http://tablesorter.com/__jquery.tablesorter.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://tablesorter.com/__jquery.tablesorter.js"></script>
 <script type="text/javascript" id="js">
   $(document).ready(function() {
   // call the tablesorter plugin
@@ -29,7 +29,7 @@ data_table_reference = """
 <link rel="stylesheet" type="text/css" href="../../datatable/css/jquery.dataTables.css"/>
 <link rel="stylesheet" type="text/css" href="../../datatable/css/buttons.dataTables.css"/>
 <link rel="stylesheet" type="text/css" href="../../datatable/css/dataTables.searchHighlight.css"/>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="../../datatable/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="../../datatable/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="../../datatable/js/buttons.colVis.min.js"></script>

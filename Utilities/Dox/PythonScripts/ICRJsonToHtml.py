@@ -268,7 +268,7 @@ class ICRJsonToHtml(object):
             output.write("</tbody>\n")
             output.write("</table>\n")
             if date is not None:
-                link = "http://foia-vista.osehra.org/VistA_Integration_Agreement/"
+                link = "https://foia-vista.osehra.org/VistA_Integration_Agreement/"
                 output.write("<a href=\"%s\">Generated from %s IA Listing Descriptions</a>" % (link, date))
             output.write("</div>\n")
             output.write("</div>\n")
@@ -336,7 +336,7 @@ class ICRJsonToHtml(object):
             output.write("</tbody>\n")
             output.write("</table>\n")
             if date is not None:
-                link = "http://foia-vista.osehra.org/VistA_Integration_Agreement/"
+                link = "https://foia-vista.osehra.org/VistA_Integration_Agreement/"
                 output.write("<a href=\"%s\">Generated from %s IA Listing Descriptions</a>" % (link, date))
             output.write("</div>\n")
             output.write("</div>\n")
@@ -361,7 +361,7 @@ class ICRJsonToHtml(object):
             output.write("</tbody>\n")
             output.write("</table>\n")
             if date is not None:
-                link = "http://foia-vista.osehra.org/VistA_Integration_Agreement/"
+                link = "https://foia-vista.osehra.org/VistA_Integration_Agreement/"
                 output.write("<a href=\"%s\">Generated from %s IA Listing Descriptions</a>" % (link, date))
             output.write("</div>\n")
             output.write("</div>\n")

@@ -26,7 +26,7 @@ fileNoPackageMappingDict = {"18.02":"Web Services Client",
 
 
 def getVDLHttpLinkByID(vdlId):
-  return "http://www.va.gov/vdl/application.asp?appid=%s" % vdlId
+  return "https://www.va.gov/vdl/application.asp?appid=%s" % vdlId
 
 class InitCrossReferenceGenerator(object):
   def __init__(self):

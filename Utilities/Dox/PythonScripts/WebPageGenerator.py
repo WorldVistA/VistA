@@ -123,7 +123,7 @@ GOOGLE_ANALYTICS_JS_CODE = """
 
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'https://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 </script>
@@ -145,10 +145,10 @@ COMMON_HEADER_PART = """
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css">
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
 <link href="DoxygenStyle.css" rel="stylesheet" type="text/css">
 """
 
@@ -185,7 +185,7 @@ CODE_PRETTY_JS_CODE = """
 <link href="code_pretty_scripts/prettify.css" type="text/css" rel="stylesheet"/>
 <script type="text/javascript" src="code_pretty_scripts/prettify.js"></script>
 <script type="text/javascript" src="code_pretty_scripts/lang-mumps.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 """
 INDEX_HTML_PAGE_HEADER = """
 <div class="header">
@@ -221,8 +221,8 @@ INDEX_HTML_PAGE_OSEHRA_IMAGE_PART = """
 <br/>
 <left>
 <div class="content">
-<a href="http://www.osehra.org">
-<img src="http://www.osehra.org/profiles/drupal_commons/themes/commons_osehra_earth/logo.png"
+<a href="https://www.osehra.org">
+<img src="https://www.osehra.org/profiles/drupal_commons/themes/commons_osehra_earth/logo.png"
 style="border-width:0" alt="OSEHRA" /></a>
 </div>
 </left>
@@ -234,7 +234,7 @@ INDEX_HTML_PAGE_INTRODUCTION_PART = """
 Welcome to VistA Cross Reference Documentation Page.
 This documentation is generated with the results of XINDEX and
  FileMan Data Dictionary utility running against the VistA code base pulled
- from the <a href="http://code.osehra.org/gitweb?p=VistA-M.git;a=summary"/>
+ from the <a href="https://code.osehra.org/gitweb?p=VistA-M.git;a=summary"/>
 repository</a>.
 This documentation provides direct dependency information among packages,
  among FileMan files,  between globals and routines,
@@ -292,7 +292,7 @@ def getGlobalHtmlFileNameByName(globalName):
     return ("Global_%s.html" %
                         normalizeGlobalName(globalName))
 def getICRHtmlFileName(icrEntry):
-    return ("http://code.osehra.org/vivian/files/ICR/ICR-%s.html" % icrEntry["NUMBER"])
+    return ("https://code.osehra.org/vivian/files/ICR/ICR-%s.html" % icrEntry["NUMBER"])
 def getGlobalHtmlFileName(globalVar):
     if globalVar.isSubFile():
         return getFileManSubFileHtmlFileNameByName(globalVar.getFileNo())
@@ -1979,7 +1979,7 @@ class WebPageGenerator:
                 if len(package.getDocMirrorLink()) > 0:
                     outputFile.write("&nbsp;or&nbsp;<a href=\"%s\">OSEHRA Mirror site</a></h4></div>\n" % package.getDocMirrorLink())
             else:
-                outputFile.write("<div><p><h4><a href=\"http://www.va.gov/vdl/\">VA documentation in the VistA Documentation Library</a></h4></p></div>\n")
+                outputFile.write("<div><p><h4><a href=\"https://www.va.gov/vdl/\">VA documentation in the VistA Documentation Library</a></h4></p></div>\n")
             writeSectionEnd(outputFile)
             self.generatePackageDependencySection(packageName, outputFile, True)
             self.generatePackageDependencySection(packageName, outputFile, False)
@@ -2070,7 +2070,7 @@ class WebPageGenerator:
         outputList = converFunc(variables)
         writeGenericTablizedData(headerList, outputList, outputFile)
     def __getDataEntryDetailHtmlLink__(self, fileNo, ien):
-      return ("http://code.osehra.org/vivian/files/%s/%s-%s.html" % (fileNo.replace('.','_'),fileNo,
+      return ("https://code.osehra.org/vivian/files/%s/%s-%s.html" % (fileNo.replace('.','_'),fileNo,
             ien))
     def __convertRPCDataReference__(self, variables):
         return self.__convertRtnDataReference__(variables, '8994')
