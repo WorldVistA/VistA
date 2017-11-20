@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #---------------------------------------------------------------------------
-# Copyright 2011-2014 The Open Source Electronic Health Record Agent
+# Copyright 2011-2017 The Open Source Electronic Health Record Agent
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -216,11 +216,10 @@ fi
 
 # Add firewall rules
 if [[ $RHEL || -z $ubuntu ]]; then
-    sudo iptables -I INPUT 1 -p tcp --dport 8080 -j ACCEPT # EWD.js
-    sudo iptables -I INPUT 1 -p tcp --dport 8000 -j ACCEPT # EWD.js Webservices
-    sudo iptables -I INPUT 1 -p tcp --dport 8081 -j ACCEPT # EWD VistA Term
-
-    sudo service iptables save
+    firewall-cmd --zone=public --add-port=8080/tcp --permanent # EWD.js
+    firewall-cmd --zone=public --add-port=8000/tcp --permanent # EWD.js Webservices
+    firewall-cmd --zone=public --add-port=8081/tcp --permanent # EWD VistA Term
+    firewall-cmd --reload
 fi
 
 echo "Done installing EWD.js"

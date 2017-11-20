@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #---------------------------------------------------------------------------
-# Copyright 2011-2012 The Open Source Electronic Health Record Agent
+# Copyright 2011-2017 The Open Source Electronic Health Record Agent
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,5 +16,11 @@
 #---------------------------------------------------------------------------
 
 # Modify the system firewall to allow needed ports
-iptables -I INPUT 1 -p tcp --dport 57772 -j ACCEPT # System Management Portal
-iptables -I INPUT 1 -p tcp --dport 1972  -j ACCEPT # SuperServer
+# System Management Portal
+firewall-cmd --zone=public --add-port=57772/tcp --permanent
+
+# SuperServer
+firewall-cmd --zone=public --add-port=1972/tcp --permanent
+
+# reload config
+firewall-cmd --reload

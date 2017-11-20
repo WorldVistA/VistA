@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #---------------------------------------------------------------------------
-# Copyright 2011-2012 The Open Source Electronic Health Record Agent
+# Copyright 2011-2017 The Open Source Electronic Health Record Agent
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,8 +21,9 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-# Update the server from repositories
-yum update -y > /dev/null
-
 # Install baseline packages
-yum install -y git xinetd perl wget curl python openssh-server expect man mysql mysql-server python-argparse sshpass > /dev/null
+yum install -y unzip wget cmake git xinetd perl curl python openssh-server expect man mysql mysql-server python-argparse sshpass lsof > /dev/null
+
+# Enable & Start the firewall
+systemctl enable firewalld
+systemctl start firewalld

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #---------------------------------------------------------------------------
-# Copyright 2011-2012 The Open Source Electronic Health Record Agent
+# Copyright 2011-2017 The Open Source Electronic Health Record Agent
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 # Create directories for instance Routines, Objects, Globals, Journals,
 # Temp Files
 # This utility requires root privliges
+#set -x
 
 # Make sure we are root
 if [[ $EUID -ne 0 ]]; then
@@ -106,8 +107,8 @@ fi
 
 gtm_dirs=$(ls -1 $checkDir | wc -l | sed 's/^[ \t]*//;s/[ \t]*$//')
 if [ $gtm_dirs -gt 1 ]; then
-    echo "More than one version of GT.M installed!"
-    echo "Can't determine what version of GT.M to use"
+    echo "More than one version of GT.M/YottaDB installed!"
+    echo "Can't determine what version of GT.M/YottaDB to use"
     exit 1
 fi
 
@@ -125,6 +126,7 @@ basedir=/home/$instance
 # $instance user is a programmer user
 # $instance group is for permissions to other users
 # $instance group is auto created by adduser script
+echo "Running useradd"
 useradd -c "$instance instance owner" -m -U $instance -s /bin/bash
 useradd -c "Tied user account for $instance" -M -N -g $instance -s /home/$instance/bin/tied.sh -d /home/$instance ${instance}tied
 useradd -c "Programmer user account for $instance" -M -N -g $instance -s /home/$instance/bin/prog.sh -d /home/$instance ${instance}prog
@@ -192,7 +194,7 @@ echo "source $basedir/etc/env" >> $basedir/.bashrc
 gtmroutines="\$basedir/r/\$gtmver(\$basedir/r)"
 
 # 64bit GT.M can use a shared library instead of $gtm_dist
-if [ $gtm_arch == "x86_64" ]; then
+if [[ $gtm_arch == "x86_64" && -e $basedir/lib/gtm/libgtmutil.so ]]; then
     echo "export gtmroutines=\"$gtmroutines $basedir/lib/gtm/libgtmutil.so $basedir/lib/gtm\"" >> $basedir/etc/env
 else
     echo "export gtmroutines=\"$gtmroutines $basedir/lib/gtm\"" >> $basedir/etc/env
@@ -260,9 +262,9 @@ chmod -R g+rw $basedir
 # Add firewall rules
 if $firewall; then
     if [[ $RHEL || -z $ubuntu ]]; then
-        sudo iptables -I INPUT 1 -p tcp --dport 9430 -j ACCEPT # RPC Broker
-        sudo iptables -I INPUT 1 -p tcp --dport 8001 -j ACCEPT # VistALink
-        sudo service iptables save
+        firewall-cmd --zone=public --add-port=9430/tcp --permanent # RPC Broker
+        firewall-cmd --zone=public --add-port=8001/tcp --permanent # VistALink
+        firewall-cmd --reload
     fi
 fi
 
