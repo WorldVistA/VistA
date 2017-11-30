@@ -34,6 +34,12 @@ else()
   list(APPEND fileNos "101" "8994")
 endif()
 
+if(@LOCAL_DOX_LINKS@)
+  set(GENERATE_LOCAL_LINKS "-local")
+else()
+  set(GENERATE_LOCAL_LINKS "")
+endif()
+
 # Run FileMan Global Data Parser script
 # Creates 'Routine-Ref.json', which is used by WebPageGenerator
 execute_process(COMMAND
@@ -42,6 +48,7 @@ execute_process(COMMAND
   -mr @DOCUMENT_VISTA_M_DIR@
   -pr @VISTA_SOURCE_DIR@
   -outdir @DOCUMENT_VISTA_OUTPUT_DIR@
+  ${GENERATE_LOCAL_LINKS}
   ${GENERATE_ALL}
   ${fileNos}
   OUTPUT_VARIABLE output ERROR_VARIABLE output RESULT_VARIABLE retValue)

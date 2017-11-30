@@ -21,16 +21,13 @@ from InitCrossReferenceGenerator import createInitialCrossRefGenArgParser
 from InitCrossReferenceGenerator import parseCrossReferenceGeneratorArgs
 from FileManGlobalDataParser import generateSingleFileFieldToIenMappingBySchema
 
-dox_url = "http://code.osehra.org/dox/"
-
-
-
 def normalizeName(name):
     return name.replace('/', ' ').replace('\'','').replace(',','').replace('.','').replace('&', 'and')
 
 def useAjaxDataTable(len):
     return len > 4000 # if has more than 4000 entries, use ajax approach
 
+dox_url = "http://code.osehra.org/dox/"
 pgkUpperCaseNameDict = dict()
 rpcNameToIenMapping = dict()
 RPC_FILE_NO = '8994'
@@ -442,6 +439,8 @@ def createArgParser():
     parser = argparse.ArgumentParser(description='VistA ICR JSON to Html',
                                      parents=[initParser])
     parser.add_argument('icrJsonFile', help='path to the VistA ICR JSON file')
+    parser.add_argument('-local', action='store_true',
+                      help='Use links to local DOX pages')
     parser.add_argument('outdir', help='path to the output web page directory')
     return parser
 
@@ -452,10 +451,13 @@ def createRemoteProcedureMapping(MRepositDir, crossRef):
                                                        RPC_NAME_FIELD_NO)
 
 def run(args):
+    global dox_url
     crossRef = parseCrossReferenceGeneratorArgs(args.MRepositDir,
                                                 args.patchRepositDir)
     rpcNameToIenMapping = createRemoteProcedureMapping(args.MRepositDir, crossRef)
     icrJsonToHtml = ICRJsonToHtml(crossRef, args.outdir)
+    if args.local:
+      dox_url = "../dox/"
     if hasattr(args, 'date'):
         date = args.date
     else:

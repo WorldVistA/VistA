@@ -37,6 +37,8 @@ if __name__ == '__main__':
     parser.add_argument('outdir', help='path to the output web page directory')
     parser.add_argument('-html', action='store_true',
                           help='generate html')
+    parser.add_argument('-local', action='store_true',
+                      help='Use links to local DOX pages')
     result = parser.parse_args()
     initConsoleLogging()
     run(result)

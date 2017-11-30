@@ -877,6 +877,9 @@ def testGlobalParser(args):
   from InitCrossReferenceGenerator import parseCrossRefGeneratorWithArgs
   from FileManDataToHtml import FileManDataToHtml
   crossRef = parseCrossRefGeneratorWithArgs(args)
+  _doxURL = "http://code.osehra.org/dox/"
+  if args.local:
+    _doxURL = "../dox/"
   glbDataParser = FileManGlobalDataParser(args.MRepositDir, crossRef)
   assert '0' in glbDataParser.allFiles and '1' in glbDataParser.allFiles and set(args.fileNos).issubset(glbDataParser.allFiles)
 
@@ -887,8 +890,9 @@ def testGlobalParser(args):
   del glbDataParser.outFileManData['1']
 
   glbDataParser.outdir = args.outdir
+
   glbDataParser.patchDir = args.patchRepositDir
-  htmlGen = FileManDataToHtml(crossRef, args.outdir)
+  htmlGen = FileManDataToHtml(crossRef, args.outdir,doxURL=_doxURL)
   isolatedFiles = glbDataParser.schemaParser.isolatedFiles
   if not args.all or set(args.fileNos).issubset(isolatedFiles):
     for fileNo in args.fileNos:
@@ -974,6 +978,8 @@ def createArgParser():
                       help='top directory to generate output in html')
   parser.add_argument('-all', action='store_true',
                       help='generate all dependency files ')
+  parser.add_argument('-local', action='store_true',
+                      help='Use links to local DOX pages')
   return parser
 
 def unit_test():

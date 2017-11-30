@@ -42,7 +42,7 @@ if(NOT EXISTS ${ICR_FILE})
 endif()
 
 set(PYTHONSCRIPTS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/PythonScripts")
-
+set(LOCAL_DOX_LINKS "FALSE" CACHE BOOL "Use a local links for DOX page connections")
 set(GENERATE_DOX "TRUE" CACHE BOOL "Generate the DOX pages")
 mark_as_advanced(GENERATE_DOX)
 
