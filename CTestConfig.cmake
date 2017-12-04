@@ -22,7 +22,12 @@
 set(CTEST_PROJECT_NAME "Open Source EHR")
 set(CTEST_NIGHTLY_START_TIME "00:00:00 EST")
 
-set(CTEST_DROP_METHOD "http")
+set(CTEST_DROP_METHOD "https")
 set(CTEST_DROP_SITE "code.osehra.org")
 set(CTEST_DROP_LOCATION "/CDash/submit.php?project=Open+Source+EHR")
 set(CTEST_DROP_SITE_CDASH TRUE)
+
+## Eliminate the Certificate verification for CDash/submit
+set(CTEST_CURL_OPTIONS
+  "CURLOPT_SSL_VERIFYPEER_OFF"
+  "CURLOPT_SSL_VERIFYHOST_OFF")
