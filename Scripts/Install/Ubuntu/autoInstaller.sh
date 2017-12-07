@@ -60,17 +60,19 @@ usage()
       -a    Alternate VistA-M repo (zip or git format) (Must be in OSEHRA format)
       -r    Alternate VistA-M repo branch (git format only)
       -b    Skip bootstrapping system (used for docker)
-      -d    Create development directories (s & p)
+      -c    Path to Caché installer
+      -d    Create development directories (s & p) (GT.M and YottaDB only)
       -e    Install EWD.js (assumes development directories)
+      -g    Use GT.M
       -i    Instance name
       -p    Post install hook (path to script)
       -s    Skip testing
-      -y    Install YottaDB
+      -y    Use YottaDB
 
 EOF
 }
 
-while getopts ":ha:bedi:p:sr:y" option
+while getopts ":ha:c:bedgi:p:sr:y" option
 do
     case $option in
         h)
@@ -83,12 +85,18 @@ do
         b)
             bootstrap=false
             ;;
+        c)
+            cacheinstallerpath=$OPTARG
+            ;;
         d)
             developmentDirectories=true
             ;;
         e)
             installEWD=true
             developmentDirectories=true
+            ;;
+        g)
+            installgtm=true
             ;;
         i)
             instance=$(echo $OPTARG |tr '[:upper:]' '[:lower:]')
@@ -126,6 +134,10 @@ if [[ -z $installEWD ]]; then
     installEWD=false
 fi
 
+if [[ -z $installgtm ]]; then
+    installgtm=false
+fi
+
 if [[ -z $instance ]]; then
     instance=osehra
 fi
@@ -142,6 +154,16 @@ if [ -z $installYottaDB ]; then
     installYottaDB=false
 fi
 
+if [ -z $cacheinstallerpath ]; then
+    cacheinstallerpath=false;
+fi
+
+# Quit if no M environment viable
+if [[ ! $installgtm || ! $cacheinstallerpath || ! $installYottaDB ]]; then
+    echo "You need to either provide a path to the Caché installer or install GT.M or YottaDB!"
+    exit 1
+fi
+
 # Summarize options
 echo "Using $repoPath for routines and globals"
 echo "Create development directories: $developmentDirectories"
@@ -150,7 +172,9 @@ echo "Installing EWD.js: $installEWD"
 echo "Post install hook: $postInstall"
 echo "Skip Testing: $skipTests"
 echo "Skip bootstrap: $bootstrap"
-echo "Install YottaDB: $installYottaDB"
+echo "Use Cache: $cacheinstallerpath"
+echo "Use GT.M: $installgtm"
+echo "Use YottaDB: $installYottaDB"
 echo "Running on local repo: $localVistARepo"
 
 # Get primary username if using sudo, default to $username if not sudo'd
@@ -208,7 +232,7 @@ else
         if $localVistARepo; then
            scriptdir=$parentDir
         else
-	   git clone -q https://github.com/OSEHRA/VistA
+	         git clone -q https://github.com/OSEHRA/VistA
            scriptdir=/usr/local/src/VistA/Scripts/Install
         fi
     else
@@ -230,37 +254,41 @@ fi
 # Ensure scripts know if we are RHEL like or Ubuntu like
 export ubuntu=true;
 
-# Install GT.M or YottaDB (only option for Ubuntu)
-cd GTM
-if $bootstrap; then
-    if $installYottaDB; then
-        ./install.sh -y
-    else
+# Install GT.M or YottaDB
+if $installgtm; then
+    cd GTM
+    if $bootstrap; then
         ./install.sh
-    fi
-else
-    if $installYottaDB; then
-        ./install.sh -s -y
     else
         ./install.sh -s
     fi
-fi
-
-# Create the VistA instance
-if $bootstrap; then
-    if $installYottaDB; then
-        ./createVistaInstance.sh -i $instance -y
-    else
+    # Create the VistA instance
+    if $bootstrap; then
         ./createVistaInstance.sh -i $instance
-    fi
-else
-    if $installYottaDB; then
-        ./createVistaInstance.sh -i $instance -f -y
     else
         ./createVistaInstance.sh -i $instance -f
     fi
 fi
 
+if $installYottaDB; then
+    cd GTM
+    if $bootstrap; then
+        ./install.sh -y
+    else
+        ./install.sh -s -y
+    fi
+    # Create the VistA instance
+    if $bootstrap; then
+        ./createVistaInstance.sh -i $instance -y
+    else
+        ./createVistaInstance.sh -i $instance -f -y
+    fi
+fi
+
+# Install Caché if requested
+if $cacheinstallerpath; then
+    echo "Cache installer path:" $cacheinstallerpath
+fi
 
 # Modify the primary user to be able to use the VistA instance
 usermod -a -G $instance $primaryuser

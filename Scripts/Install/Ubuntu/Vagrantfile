@@ -144,6 +144,8 @@ Vagrant.configure("2") do |config|
   #
   config.vm.provision :shell do |s|
     s.path = "autoInstaller.sh"
-    s.args = "-i " + "#{ENV['instance']}"
+    s.args = "-g -i " + "#{ENV['instance']}"  # GTM with OSEHRA VistA with testing (default)
+    # s.args = "-y -s -i " + "#{ENV['instance']}"  # YottaDB with OSEHRA with no testing
+    # s.args = "-y -s -i vxvista -a https://github.com/OSEHRA/vxVistA-M/archive/master.zip" # vxVistA with YottaDB with no testing
   end
 end

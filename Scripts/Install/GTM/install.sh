@@ -15,7 +15,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
-# Install GT.M using gtminstall script
+# Install GT.M/YottaDB using ydbinstall script
 # This utility requires root privliges
 
 # Make sure we are root
@@ -34,11 +34,11 @@ usage()
     cat << EOF
     usage: $0 options
 
-    This script will automatically install GT.M
+    This script will automatically install GT.M/YottaDB
 
     DEFAULTS:
-      GT.M Version = V6.2-000
-      YottaDB Version = r1.0
+      GT.M Version = V6.3-002
+      YottaDB Version = r1.10
 
     OPTIONS:
       -h    Show this message
@@ -68,26 +68,28 @@ do
 done
 
 # Set defaults for options
+# GT.M
 if [ -z $gtm_ver ] && [ -z $installYottaDB ]; then
-    gtm_ver="V6.2-000"
+    gtm_ver="V6.3-002"
 fi
 
-if [ "$installYottaDB" = true ]; then
-    gtm_ver="r1.00"
+# YottaDB
+if [ $installYottaDB ] && [ -z $gtm_ver ]; then
+    gtm_ver="r1.10"
 fi
 
 if [ -z $sharedmem ]; then
     sharedmem=true
 fi
 
-# Download gtminstall script from SourceForge
-echo "Downloading gtminstall"
-curl -s -L https://raw.githubusercontent.com/YottaDB/YottaDB/d79a03daa49fdaf9b69200efdc95be98c8560133/sr_unix/gtminstall.sh -o gtminstall
+# Download ydbinstall
+echo "Downloading ydbinstall"
+curl -s -L https://raw.githubusercontent.com/YottaDB/YottaDB/master/sr_unix/ydbinstall.sh -o ydbinstall
 
 # Verify hash as we are going to make it executable
-sha1sum -c --status gtminstall_SHA1
+sha1sum -c --status ydbinstall_SHA1
 if [ $? -gt 0 ]; then
-    echo "Something went wrong downloading gtminstall"
+    echo "Something went wrong downloading ydbinstall"
     exit $?
 fi
 
@@ -112,28 +114,28 @@ if $sharedmem; then
 fi
 
 # Make it executable
-chmod +x gtminstall
+chmod +x ydbinstall
 
 # Determine processor architecture - used to determine if we can use GT.M
 #                                    Shared Libraries
-# Default to x86 (32bit) - algorithm similar to gtminstall script
+# Changed to support ARM chips as well as x64/x86.
 arch=$(uname -m | tr -d _)
 if [ $arch == "x8664" ]; then
     gtm_arch="x86_64"
 else
-    gtm_arch="x86"
+    gtm_arch=$arch
 fi
 
-# Accept most defaults for gtminstall
+# Accept most defaults for ydbinstall
 # --ucaseonly-utils - override default to install only uppercase utilities
 #                     this follows VistA convention of uppercase only routines
 if [ "$installYottaDB" = "true" ] ; then
-    ./gtminstall --ucaseonly-utils --installdir /opt/yottadb/"$gtm_ver"_"$gtm_arch" $gtm_ver
+    ./ydbinstall --ucaseonly-utils --installdir /opt/yottadb/"$gtm_ver"_"$gtm_arch" $gtm_ver
 else
-    ./gtminstall --gtm --ucaseonly-utils --installdir /opt/lsb-gtm/"$gtm_ver"_"$gtm_arch" $gtm_ver
+    ./ydbinstall --gtm --ucaseonly-utils --installdir /opt/lsb-gtm/"$gtm_ver"_"$gtm_arch" $gtm_ver
 fi
-# Remove installgtm script as it is unnecessary
-rm ./gtminstall
+# Remove ydbinstall script as it is unnecessary
+rm ./ydbinstall
 
 
 # Link GT.M shared library where the linker can find it and refresh the cache
