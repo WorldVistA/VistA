@@ -239,8 +239,7 @@ class SCActions (Actions):
                 self.VistA.wait('Press RETURN to continue:')
                 self.VistA.write('')
             if prevCO is not None:
-                self.VistA.wait('A check out date has been entered for this appointment!')
-                self.VistA.wait('DATE/TIME:')
+                index = self.VistA.multiwait(['A check out date has been entered for this appointment!','PATIENT ALREADY HAS APPOINTMENT'])
                 self.VistA.write('')
             else:
                 self.VistA.wait('CORRECT')
