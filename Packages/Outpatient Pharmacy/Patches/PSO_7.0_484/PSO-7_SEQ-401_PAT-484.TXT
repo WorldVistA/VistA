@@ -1,0 +1,207 @@
+
+=============================================================================
+Run Date: JUN 16, 2017                     Designation: PSO*7*484
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #401                      Status: Released
+                  Compliance Date: JUL 17, 2017
+=============================================================================
+
+Associated patches: (v)PSO*7*411   <<= must be installed BEFORE `PSO*7*484'
+
+Subject: Drug Interaction Order Checks
+
+Category: 
+  - Routine
+  - Informational
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ Drug Interaction Order Checks were wrong because an array used to store 
+ data was overwriting the data from the local fill with data for the 
+ remote fill.
+  
+  
+ Associated CA SDM Tickets:
+ ==========================
+ 1. R13223578FY17 - Drug Interaction Order Checks
+    I13530034FY17   (Duplicate)
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Danville - Illiana HCS
+ Oklahoma City - VA Medical Center 
+  
+  
+  
+ CA SDM Overview:
+ ================
+ 1. R13223578FY17 - Drug Interaction Order Checks
+  
+ Problem:
+ --------
+ The site tested the interaction with a VistA entered order and got the
+ remote check and the local fill showed at the end as a local fill.  
+ Shouldn't the local fill show up as the primary interaction?
+  
+ ***Critical*** Drug Interaction with Prospective Drug:                    
+ KETOROLAC 30MG/ML INJ 1ML and  
+ LOCATION: MARION VA MEDICAL CENTER  Remote Rx: xx36919
+ Drug: IBUPROFEN 600MG TAB (HOLD)  SIG: TAKE ONE TABLET BY
+ MOUTH EVERY 6 HOURS AS NEEDED FOR PAIN OR INFLAMMATION    
+ Last Filled On: 10/06/16  
+  
+ *** THERAPEUTIC DUPLICATION(S) *** KETOROLAC 30MG/ML INJ 
+ 1ML with  
+ Local Rx #xx43843 (ACTIVE) for IBUPROFEN 600MG TAB  
+ Remote Rx #xx36919 (HOLD) for IBUPROFEN 600MG TAB
+  
+  
+ Resolution:
+ -----------
+ The code was overwriting an array entry that was used to display the Drug
+ Interaction checks.  The local medications were checked first and entered
+ into the array by severity, then a code to signify clinic/local
+ (outpatient)/remote/pending/other, then the VA generic drug name, then
+ drug name.
+  
+ Ex: ZDGDG("C",2,"IBUPROFEN","IBUPROFEN 600MG TAB")="O;1399950;PROFILE;2^1"
+         the 2 above is from this check:
+         ON="O;1399950;PROFILE;2
+      If first ; piece of ON
+                 =C then use 1
+                 =O then use 2
+                 =R then use 3
+                 =P then use 4
+                 otherwise use 5
+  
+ When setting the remote meds into this array, it was hardsetting a 2
+ instead of using the conditional checks the same as local meds.
+ Ex: ZDGDG("C",2,"IBUPROFEN","IBUPROFEN 600MG TAB")="R;1;PROFILE;1^2"
+  
+ This caused the remote entry to overwrite the local entry previously set.
+  
+ The fix is to use the same conditional setting as the local check.  This
+ will create two separate entries in the order check array and display
+ both order checks to the user.
+  
+ ZDGDG("C",2,"IBUPROFEN","IBUPROFEN 600MG TAB")="O;1399950;PROFILE;2^1"
+ ZDGDG("C",3,"IBUPROFEN","IBUPROFEN 600MG TAB")="R;1;PROFILE;1^2"
+  
+ Important Installation Note:
+ ============================
+ This patch is part of a multi-package build. There are two patches 
+ associated with the fix - PSO*7.0*484 and OR*3.0*457. These patches are a 
+ combined build utilizing 1 Host file.  Installing PSO*7.0*484 will also 
+ install OR*3.0*457.
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ Installation of the host file should be coordinated among the packages 
+ affected since only one installation is necessary.
+  
+ The patches are:
+  
+      PSO*7.0*484
+      OR*3.0*457
+      
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Albany: domain.ext
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+   
+  
+ File name                          Description             Format
+ ---------                          -----------             ------
+ PSO_7_484_OR_3_457_BUNDLE.KID.     Host file               Binary
+  
+  
+  
+ ================INSTALLATION INSTRUCTIONS =================
+ PSO*7.0*484 is being released in conjunction with OR*3.0*457.
+ Installing PSO*7.0*484 will also install OR*3.0*457.
+  
+ Providers or Pharmacists should not be processing prescriptions or
+ Outpatient med orders in CPRS while patches are being installed.
+ It should take less than 5 minutes to install these patches.
+  
+    1. Obtain the file PSO_7_484_OR_3_457_BUNDLE.KID.
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. Use Load Distribution using PSO_7_484_OR_3_457_BUNDLE.KID when
+       prompted to Enter a Host File name.  You may append a directory
+       name.
+  
+    4. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*484)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSO*7.0*484.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSODDPR4
+    Before:B126073847   After:B136589184  **251,375,387,379,390,372,416,484**
+Routine Name: PSODDPR5
+    Before:B163007377   After:B154570731  **251,375,379,390,372,416,438,
+                                           411,484**
+ 
+Routine list of preceding patches: 411
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 12, 2017
+Completed By:                               Date Completed: JUN 08, 2017
+Released By :                               Date Released : JUN 16, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

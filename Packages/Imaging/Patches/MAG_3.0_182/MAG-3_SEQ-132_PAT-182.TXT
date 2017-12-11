@@ -1,0 +1,360 @@
+
+=============================================================================
+Run Date: JUN 20, 2017                     Designation: MAG*3*182
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #132                      Status: Released
+                  Compliance Date: AUG 20, 2017
+=============================================================================
+
+
+Subject: Telereader 2 factor authentication
+
+Category: 
+  - Other
+
+Description:
+============
+
+ Associated Patches:  
+ ==================
+ This patch must be installed after MAG*3.0*127 and MAG*3.0*110.
+  
+ Subject:  TWO-FACTOR AUTHENTICATION FOR TELEREADER AND TELEREADER 
+ =======
+ CONFIGURATOR
+  
+ Category:  OTHER
+ ========
+  
+ Description:
+ ===========
+ MAG*3.0*182 provides two-factor authentication (2FA) for the TeleReader 
+ and TeleReader Configurator applications.  When the user starts either 
+ application, they will be prompted for their Personal Identity 
+ Verification (PIV)/Personal Identification Number (PIN) to log into 
+ Veterans Health Information Systems and Technology Architecture (VistA).  
+ In order to implement 2FA for these applications, the development 
+ environment was upgraded to Delphi XE8.  There are no other changes to 
+ functionality of either application.
+  
+ Patch Components:
+ ================
+ This patch includes software and documentation files.  This document
+ provides an overview, explains the changes, and outlines the installation
+ for this patch.  MAG3_0P182_README.txt, if present, is an informative file
+ associated with the patch.
+  
+ Software:
+ =========
+ File Name                                       Description
+ =========                                       ===========
+ MAG3_0P182.KID                                  Kernel Installation and
+                                                 Distribution System (KIDS)
+                                                 build for Patch 182
+ MAG3_0P182_TeleReader_Setup.exe                 Installation file for the
+                                                 TeleReader
+ MAG3_0P182_TeleReader_Install.msi               Installation file for the
+                                                 TeleReader
+ MAG3_0P182_TeleReaderConfigurator_Setup.exe     Installation file for the 
+                                                 TeleReader Configurator
+ MAG3_0P182_TeleReaderConfigurator_Install.msi   Installation file for the 
+                                                 TeleReader Configurator
+  
+ Documentation:
+ =============
+ This document provides an overview, explains the changes, and outlines the
+ installation for this patch.
+  
+ Files & Fields Associated:
+ =========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ ================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ ======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ==================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ ====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ ========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ ====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ ======================
+ New Service Requests (NSRs):
+ ===========================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+ 1.Update TeleReader with 2FA
+ ============================
+ Problem:  Per the U.S. Department of Veterans Affairs (VA) mandate to 
+ meet PIV requirements (VAIQ #7712300), all existing systems must be 
+ upgraded to use PIV credentials for authentication.
+  
+ Resolution:  The Remote Procedure Call (RPC) Broker establishes a common 
+ and consistent connection for VistA client/server applications.  The 
+ kernel development team has updated the RPC Broker to accept a PIV for 
+ authentication in XWB*1.1*64 and RPC Broker Development Tool Kit 
+ XWB*1.1*65.  The RPC Broker client component uses the Identity and Access 
+ Management (IAM) SSOi Secure Token Service (STS) for Authentication.  The 
+ client authenticates to IAM with PIV/PIN and obtains a Security Assertion 
+ Markup Language (SAML) token; this token is associated with a VistA 
+ access/verify code and is used to authenticate to VistA.
+  
+ Test Sites:
+ ==========
+ The following site is a test site for this patch:
+   VA Salt Lake City Health Care System
+  
+ *A test waiver has been approved to allow for testing to proceed with one 
+ site.
+  
+ Software and Documentation Retrieval Instructions:
+ =================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from 
+ anonymous@download.vista.domain.ext from the COMMAND prompt (example:  
+ sftp anonymous@download.vista.domain.ext). This transmits the files from 
+ the first available server. 
+  
+ Sites may also elect to retrieve software and/or documentation files 
+ directly from a specific server or by using Secure File Transfer Protocol 
+ (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI Field 
+ Offices:
+  
+ When using Attachmate Reflection (Secure Shell):
+ Albany:         domain.ext
+ Hines:          domain.ext
+ Salt Lake City: domain.ext
+  
+ When using the COMMAND prompt (example: sftp 
+ anonymous@domain.ext): 
+ Albany:         anonymous@domain.ext
+ Hines:          anonymous@domain.ext
+ Salt Lake City: anonymous@domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/.
+  
+ Patch Installation:
+ ==================
+ Supported Client Versions
+ =========================
+ When MAG*3.0*182 is released, the list of supported versions of 
+ TeleReader and TeleReader Configurator will change:
+  
+ TeleReader
+ =========
+ Supported Versions      No Longer Supported 
+ 3.0.182                 3.0.122
+ 3.0.127                 3.0.117
+                         3.0.106
+                         3.0.94
+  
+ TeleReader Configurator
+ ======================
+ Supported Versions      No Longer Supported 
+ 3.0.182                 3.0.114
+ 3.0.110                 3.0.46
+ 3.0.127
+  
+ Pre/Post Installation Overview:
+ ==============================
+ The TeleReaderConfiguratorSetup.exe portion of this patch is to be 
+ installed only on the administrator's workstation.  The 
+ TeleReaderSetup.exe portion is to be installed on the clinical 
+ workstations. All sites running VistA Imaging 3.0 must install the KIDS 
+ portion of this patch.  This patch can be loaded while the VistA Imaging 
+ System is active and users are on the system.  Installing the MAG*3.0*182 
+ KIDS only takes 2-3 minutes.
+  
+ MAG*3.0*182 must be installed on the VistA System.  This patch must be 
+ installed by the compliance date.
+  
+ Pre-Installation Instructions:
+ =============================
+ Before installing this patch, you will need to download the MAG*3.0*182 
+ files from the VistA Imaging SFTP site to a local storage location.Verify 
+ that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+  
+ Note:  
+ ====
+ All released VistA Imaging patches must be installed on the VistA system 
+ before installing MAG*3.0*182.
+  
+ VistA System (KIDS) Installation Instructions
+ =============================================
+ Installation Steps 
+ ==================
+ KIDS installation will take two to three minutes.
+ 1 On the VistA system, access the Kernel Installation and Distribution 
+ System Menu [XPD MAIN].
+ 2 Run the Installation option [XPD INSTALLATION MENU].
+ 3 Load the KIDS file by performing the following steps:
+   a.Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load 
+ the KIDS distribution.
+   b. When prompted, enter the path and file name (MAG3_0P182.KID) of the 
+ MAG*3.0*182 KIDS file.
+   c. When prompted to continue with the load, enter "YES". A Distribution 
+ OK! message will be displayed when the load is complete.
+ 4 After loading the KIDS file, use the following options to verify the 
+ contents of the patch and to back up any affected routines.
+   a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this 
+ option if you want to ensure the integrity of the routines in the patch. 
+   b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] - 
+ Run this option if you want to view all changes that will be made when 
+ the patch is installed.  All components (routines, options, and so on) in 
+ the patch will be compared.
+   c. Backup a Transport Global [XPD BACKUP] - Run this option if you want 
+ to create a backup message of any routines exported with the patch.  It 
+ will NOT back up any of the other changes.
+ 5 After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+   a.Run the Install Package(s) [XPD INSTALL BUILD] option.
+   b.When prompted for the install name, enter "MAG*3.0*182".
+   c.Answer "NO" to the following prompts, if they appear:
+  
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6 When installation is finished, an Install Complete message will be 
+ displayed.
+  
+ KIDS Installation Example
+ =========================
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing 
+ the KIDS file in a namespace on which it has previously been installed, 
+ your output may be different.
+  
+ Select Installation <TEST ACCOUNT> Option: INstall Package(s)
+ Select INSTALL NAME:    MAG*3.0*182    3/1/17@17:07:59
+      => VistA Imaging V3 - Patch 182 - 2 Factor Authentication  ;Created 
+ on
+  
+ This Distribution was loaded on Mar 01, 2017@17:07:59 with header of
+    VistA Imaging V3 - Patch 182 - 2 Factor Authentication  ;Created on 
+ Feb 24
+ , 2017@17:57:34
+    It consisted of the following Install(s):
+     MAG*3.0*182
+ Checking Install for Package MAG*3.0*182
+  
+ Install Questions for MAG*3.0*182
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  Running Pre-Install Routine: PRE^MAGIP182
+  
+  Running Post-Install Routine: POS^MAGIP182
+  
+ Post Install Mail Message: Mar 01, 2017@17:08:13
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MAG*3.0*182 Installed.
+                Mar 01, 2017@17:08:13
+  
+  Not a production UCI
+  
+  NO Install Message sent
+  
+   100%
+ Complete
+  
+  
+ Install Completed
+  
+ Installation of TeleReader and TeleReader Configurator Applications
+ ===================================================================
+ For instructions on how to install the TeleReader and TeleReader 
+ Configurator applications please refer to the VistA Imaging Installation 
+ Guide. 
+  
+ Uninstalling the TeleReader Application MAG*3.0*182
+ ===================================================
+ If it is necessary to uninstall the MAG*3.0*182 TeleReader application, 
+ uninstall "VistA Imaging Telereader" from the Windows control panel.
+  
+ Reinstall the TeleReader application from MAG*3.0*127 (to return to the 
+ Patch 127 TeleReader application).
+  
+ Uninstalling the TeleReader Configurator Application MAG*3.0*182
+ ================================================================
+ If it is necessary to uninstall the MAG*3.0*182 TeleReader Configurator 
+ application, uninstall "VistA Imaging Telereader Configurator" from the 
+ Windows control panel.
+  
+ Reinstall the TeleReader Configurator application from MAG*3.0*110 (to 
+ return to the Patch 110 TeleReader Configurator application).
+  
+ Routine Information:
+ ===================
+ VistA KIDS Checksums:
+ ====================
+ This section lists modified routines for the VistA KIDS build.  For each 
+ routine, the second line will contain the following information: 
+  
+ ;;3.0;IMAGING;**[Patch List]**; Mar 19, 2002;Build 1;Feb 15, 2017
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine         Checksum        Checksum        Patch List
+                 Before          After
+ MAGGTU4T        5296933         4714251         **93, 94, 106, 117,
+                                                 122, 127, 182**
+ MAGIP182        NA              4214994         **182**
+  
+ Routine MAGIP182 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 17, 2017
+Completed By:                               Date Completed: JUN 19, 2017
+Released By :                               Date Released : JUN 20, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

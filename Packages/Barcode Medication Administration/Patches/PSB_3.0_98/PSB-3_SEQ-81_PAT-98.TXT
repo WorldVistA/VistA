@@ -1,0 +1,188 @@
+$TXT Created by            at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 02/16/17 at 15:21
+=============================================================================
+Run Date: JUL 18, 2017                     Designation: PSB*3*98
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #81                      Status: Released
+                  Compliance Date: AUG 18, 2017
+=============================================================================
+
+Associated patches: (v)PSB*3*97    <<= must be installed BEFORE `PSB*3*98'
+
+Subject: BCMA ON CALL DISPLAY, DO RPT, AND MT RPT ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+  
+ 1. The Bar Code Medication Administration (BCMA) IVP/IVPB tab continues
+    to display orders with a Schedule Type of On Call after the order is 
+    administered.
+  
+ 2. The BCMA Display Order report displays both BCMA EXPIRED and BCMA
+    EXPIRE DENIED in the data field of the Pharmacy Activity section when a
+    one time dose medication is administered.
+  
+ 3. The BCMA Display Order report displays dates in the data field in internal
+    Fileman format.
+  
+ 4. An Undefined error occurs when the Medication Therapy report is run with
+    no schedule types selected.
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+   
+  
+ ASSOCIATED CA TICKET(S):
+ ========================
+ 1. I9891926FY16  - On Call Order not DC after BCMA Administration 
+ 2. I6974506FY16  - BCMA EXPIRED notation automatically applies to data
+    field when a medication is delivered on a one time dose, but a BCMA EXPIRE
+    DENIED is also appearing. 
+ 3. I8904758FY16 - BCMA ORDER DETAILS DISPLAY ACTIVITY LOG "OLD DATA"
+    IN INTERNAL FILEMAN FORMAT
+ 4. I9891557FY16 - <UNDEFINED>NONSTS+2^PSBOMT *PSBOCRIT
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Minneapolis - VA Medical Center 
+ Salem - VA Medical Center 
+  
+  
+ CA OVERVIEW:
+ ============
+ 1. I9891926FY16  - On Call Order not DC after BCMA Administration 
+  
+    Problem:
+    --------
+    The Bar Code Medication Administration (BCMA) IVP/IVPB tab continues
+    to display orders on the Virtual Due List (VDL) with a Schedule Type of
+    On Call after the order is administered, regardless of the setting of the
+    Allow Multiple Admins for On-Call parameter.
+  
+    Resolution:
+    -----------
+    Routine PSBVDLPB was modified to no longer display orders with a
+    Schedule Type of On Call on the IVP/IVPB for On Call orders when the 
+    Allow Multiple Admins for On-Call parameter is set to no.
+  
+ 2. I6974506FY16  - BCMA EXPIRED notation automatically applies to data
+    field when a medication is delivered on a one time dose, but a BCMA EXPIRE
+    DENIED is also appearing.
+  
+    Problem:
+    --------
+    The Bar code Medication Administration (BCMA) Display Order report
+    displays both BCMA EXPIRED and BCMA EXPIRE DENIED in the data field
+    of the Pharmacy Activity section when a one-time dose medication is
+    administered. Only BCMA EXPIRED should display.
+  
+    Resolution:
+    -----------
+    Routine PSBML1 was modified to only call the expire routine once, correcting
+    the issue of the BCMA EXPIRE DENIED displaying.
+  
+ 3. I8904758FY16 - BCMA ORDER DETAILS DISPLAY ACTIVITY LOG "OLD DATA"
+    IN INTERNAL FILEMAN FORMAT 
+  
+    Problem:
+    --------
+    The BCMA Display Order report displays dates in the data field in internal
+    Fileman format.
+  
+    Resolution:
+    -----------
+    Routine PSBODO was modified to display the date in external format.
+  
+ 4.I9891557FY16 - <UNDEFINED>NONSTS+2^PSBOMT *PSBOCRIT
+  
+    Problem:
+    --------
+    An Undefined error occurs when the Medication Therapy report is run with no
+    Schedule types selected.
+  
+    Resolution:
+    -----------
+    Routine PSBOMT was modified to not to protect against the undefined error
+    when no schedule type is passed in.
+  
+     
+ Installation Instructions:
+ ==========================
+    
+     *************************** NOTE *************************
+     *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS   *
+     *  AN EDITED ERROR WILL OCCUR.                           *                 
+     *                                                        *
+     *  The patch should be installed when NO BCMA Client     *
+     *  users are on the system. Users should remain off the  *
+     *  system for a period of 10 minutes during installation.*
+     *                                                        *
+     *                                                        *
+     *  Suggested time to install: Queued for Non-peak        *
+     *  requirement hours.                                    *
+     **********************************************************
+      
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+    
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSB*3.0*98):
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this 
+               patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+    
+    4. Use the Install Package(s) option and select the package PSB*3.0*98.
+    
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+       respond NO.
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBML
+    Before:B154439138   After:B156317565  **6,3,4,9,11,13,25,45,33,52,
+                                           70,72,79,94,83,98**
+Routine Name: PSBODO
+    Before: B42287720   After: B44147738  **5,21,24,38,58,68,70,83,98**
+Routine Name: PSBOMT
+    Before:B105395791   After:B106758634  **32,50,70,72,83,97,98**
+Routine Name: PSBVDLPB
+    Before:B108251396   After:B108871729  **11,13,38,32,58,68,70,83,98**
+ 
+Routine list of preceding patches: 97
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 16, 2017
+Completed By:                               Date Completed: JUL 14, 2017
+Released By :                               Date Released : JUL 18, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,292 @@
+
+=============================================================================
+Run Date: JUN 19, 2017                     Designation: EAS*1*149
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #122                      Status: Released
+                  Compliance Date: JUL 20, 2017
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 4.6.2 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this Informational Patch is to announce the release of the
+ Enrollment System (ES) 4.6.2. This release, developed in Java technology,
+ contains Enrollment System Modernization (ESM) sustainment efforts to
+ support Community Care (CC).
+  
+ The following defect fixes are included in the ES 4.6.2 release:
+  
+ Community Care:
+   - CC Viewer fixed to show Country, Province, and Postal Code for
+     foreign addresses.
+   - Nearest Veterans Access, Choice, and Accountability Act (VACAA)
+     Facility section - Result field fixed to display proper status.
+   - CC Viewer page fixed to display correct Special Authority indicator.
+   - CC Viewer page displays Veterans Integrated Services Network (VISN)
+     information provided from Planning Systems Support Group (PSSG).
+   - Third Party Administrator (TPA) code fixed to update Successful
+     Records.
+   - Site Granting Hardship information made available.
+   - A check has been placed on the user interface (UI) to make sure any
+     confusing PSSG records are not shown to the user.
+   - Nearest VACAA Facility Section fixed to show "N/A" if no data is
+     available.
+   - TPA formats have been verified.
+   - Check added to allow ES to open the Community Care Determination 
+     page if there is a null value in Camp Lejeune data entry.
+   - Community Care Determination page updated to display city, state, 
+     and zip code on same line.
+   - Community Care Determination page Nearest VACAA Facility section 
+     updated with correct spelling of VACAA.
+   - Removed variable from reused militaryServiceSiteRecord permission
+     check that was allowing read-only users to edit military service
+     information.
+   - Fixed ES graphical user interface (GUI) to show correct station VISN
+     rather than person VISN.
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ Service Desk Manager (SDM):
+  
+ Ticket #         Overview
+ -------------    -------------------
+ N/A
+  
+ Rational Team Concert (RTC):
+  
+ RTC #       Overview
+ ----------  -------------------
+ 514252      In CC Viewer for foreign address, it does not display
+             Country, Province, and Postal Code
+ 515430      Nearest VACAA Facility section - Result field is not
+             displaying status properly
+ 515537      Special Authority indicator not correct on CC Viewer 
+             page.
+ 515545      CC Viewer - VISN does not always display
+ 515681      TPA batch process email statistics for
+             numberOfSuccessfulRecords appears to be inaccurate
+ 516086      Site Granting Hardship: Information is not available
+ 521869      Nearest VACAA Facility Section - The Station Name of 
+             Waco, TX is mapping to the Philippines
+ 521870      Nearest VACAA Facility Section - The distance is reflecting
+             0 if no data is available
+ 524367      TPA file format is incorrect
+ 527067      If Camp Lejeune data entry has null value, ES is not able to
+             open Community Care Determination page.
+ 532842      On Community Care Determination page the residential address
+             is displaying the state and zip code on a separate line.
+ 532851      The results in the Nearest VACAA Facility section on the
+             Community Care Determination page display with the acronym
+             VACAA misspelled.
+ 533518      Read-only user allowed to edit military service information
+ 533678      ES GUI is displaying the VISN of the Person and not the
+             STATION_VISN
+  
+ Problem:
+ ----------
+ 514252 - In CC Viewer for foreign address, it does not display Country,
+ Province, and Postal Code. It displays street name and city only.
+ 515430 - Nearest VACAA Facility section - Result field is not displaying
+ status properly when addresses have not been sent to geocoding.
+ 515537 - On the CC Viewer page, the Special Authority indicator is not
+ correct - for example, a Veteran with Agent Orange - Vietnam shows a
+ Special Authority indicator of "No" on the CC Viewer page.
+ 515545 - There are instances where the VISN is not displayed on the CC
+ Viewer page for the "Nearest VACAA Facility".
+ 515681 - TPA batch process email statistics for numberOfSuccessfulRecords
+ appears to be inaccurate. numberOfSuccessfulRecords should be the same as
+ the numberOfPositiveRecords or numberOfNegativeRecords, depending on which
+ file is being produced.
+ 516086 - Site Granting Hardship: Information is not available.
+ 521869 - Nearest VACAA Facility Section - The Station Name of Waco, TX is
+ mapping to the Philippines.
+ 521870 - Nearest VACAA Facility Section - The distance is reflecting "0"
+ if no data is available.
+ 524367 - TPA file format is incorrect.
+ 527067 - If Camp Lejeune data entry has null value, ES is not able to open
+ Community Care Determination page.
+ 532842 - On Community Care Determination page the residential address is
+ displaying the state and zip code on a separate line.
+ 532851 - The results in the Nearest VACAA Facility section on the
+ Community Care Determination page display with the acronym VACAA 
+ misspelled.
+ 533518 - ES is allowing users in role of Observer to edit and save
+ updates to Veteran records on the military service screen.
+ Update and reset buttons should not be visible or active on the
+ screen when user is not granted add/edit military service
+ information permission.
+ 533678 - ES GUI is displaying the VISN of the Person and not the
+ STATION_VISN.
+  
+ Resolution:
+ ----------
+ 514252 - CC Viewer updated to show Country, Province, and Postal Code for
+ foreign addresses.
+ 515430 - The Nearest VACAA Facility section - Result field now displays the
+ correct status.
+ 515537 - All of the Special Authority indicators have been checked to
+ determine whether or not a person should have the Special Authority
+ indicator set to "Yes" on the CC Viewer page; the verification data has
+ been fixed.
+ 515545 - Fixed the CC Viewer page to display the VISN correctly.
+ 515681 - Number of Total Records and Number of Positive Records (or 
+ Number of Negative Records) is correct for this job which does not 
+ process any records, merely places records into a file. Fixed the 
+ code to also update Successful Records.
+ 516086 - Fixed to display the Site Granting Hardship information.
+ 521869 - PSSG returned the Waco site as the nearest VACAA facility
+ for the Philippines address. Not an ES defect. A check has been placed
+ on the UI to make sure any such records are not shown so as not to
+ confuse the end users.
+ 521870 - Nearest VACAA Facility Section fixed so that if no data is 
+ available it reflects "N/A".
+ 524367 - TPA formats have been verified.
+ 527067 - Check added to allow ES to open the Community Care
+ Determination page if there is a null value in Camp Lejeune data entry.
+ 532842 - Community Care Determination page updated so city, state,
+ and zip code display on same line.
+ 532851 - Spelling of VACAA has been corrected on the Community Care
+ Determination page Nearest VACAA Facility section.
+ 533518 - Removed the variable from the reused permission check in
+ militaryServiceSiteRecord. The permission value was defaulted to as
+ always allowed, without any check for it.
+ 533678 - Fixed the CC Determination page to display the VISN correctly.
+  
+ Test Sites:
+ ----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory at the following OI Field Offices:
+  
+  
+ Albany:                domain.ext
+ Hines:                 domain.ext 
+ Salt Lake City:        domain.ext
+  
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+ Title                     File Name                          FTP Mode
+ ---------------------------------------------------------------------
+ ES 4.6.2 Release Notes    ES_4_6_2_Release_Notes.pdf         binary
+  
+  
+ The documentation will be in the form of an Adobe Acrobat file.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 06, 2017
+Completed By:                               Date Completed: JUN 19, 2017
+Released By :                               Date Released : JUN 19, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

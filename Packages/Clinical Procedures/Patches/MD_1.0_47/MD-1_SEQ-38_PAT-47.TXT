@@ -1,0 +1,152 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 02/22/17 at 09:07
+=============================================================================
+Run Date: JUN 12, 2017                     Designation: MD*1*47
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #38                      Status: Released
+                  Compliance Date: JUL 12, 2017
+=============================================================================
+
+Associated patches: (v)MD*1*6     <<= must be installed BEFORE `MD*1*47'
+                    (v)PX*1*201    <<= must be installed BEFORE `MD*1*47'
+                    (v)PX*1*210    <<= must be installed BEFORE `MD*1*47'
+
+Subject: MODIFICATIONS TO UTILIZE IMMUN FILE GROUP DATA
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issue:
+ The Clinical Procedures package subscribes to ICR #1239 to access the
+ IMMUN^PXRHS03 API.  
+      
+ The IMMUN^PXRHS03 API returns a list of immunizations administered to a
+ patient, sorted by the Immunization Short Name. However, the VistA
+ Immunizations Enhancements project (VIMM) has standardized the
+ IMMUNIZATION file (#9999999.14) and locked it down. It is now updated by
+ the Standards and Technology Services (STS) via the Master File Server
+ (MFS), and the Short Name will no longer be used; i.e., it is not
+ standardized nationally, and will be null for newer immunizations added in
+ patch PX*1*201 and later.
+      
+ This affects the Clinical Procedures Hemodialysis Application, as it is 
+ searching for specific immunization short names; e.g., "HEPA", "HEPB",
+ "INFLUENZA", "PNEUMO-VAC", and these won't be populated for newer
+ immunizations.
+      
+ Associated CA/SDM ticket:
+ ========================
+ 1) I9088043FY16 Immunization Search
+      
+ Associated NSR(s):
+ =================
+ N/A
+       
+ Participating Test Sites:
+ ========================
+ Bay Pines VA HCS, FL  
+ Wilkes-Barre VAMC, PA
+  
+ Ticket Overview:
+ ================
+ 1) I9088043FY16 Immunization Search
+  
+ Problem 1:
+ ---------
+ With the SHORT NAME field (#.02) no longer being populated by the VistA 
+ Immunizations Enhancements project, modifications are needed to modify how
+ the Clinical Procedures Hemodialysis application searches for patient
+ Immunization Data.
+       
+ Resolution 1:
+ ------------  
+ Modify routine MDKRPC1 to search and include patient immunization records
+ using the IMMUNIZATION file (#9999999.14) VACCINE GROUP NAME field (#7) as
+ well as the SHORT NAME field (#.02). The routine changes are needed to
+ accommodate data changes made by the VistA Immunizations Enhancement
+ Project.  
+  
+  
+ Installation Instructions:
+ =========================
+ If installed during the normal workday, it is recommended that the
+ Clinical Procedures users be off the system. Other VistA users will not be
+ affected.
+  
+ Install Time - less than 2 minutes.
+      
+ 1.  Load Transport Global 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ 3.  Select Installation Option: 
+     --------------------------
+     When prompted for the INSTALL NAME, enter MD*1.0*47:
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch, routines,
+         DD's, templates, etc.
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO 
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//', answer NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Apr 01, 2004;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDKRPC1
+    Before: B71764954   After: B98792793  **6,47**
+ 
+Routine list of preceding patches: 6
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 12, 2016
+Completed By:                               Date Completed: JUN 07, 2017
+Released By :                               Date Released : JUN 12, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

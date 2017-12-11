@@ -1,0 +1,221 @@
+
+=============================================================================
+Run Date: MAY 22, 2017                     Designation: EAS*1*148
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #121                      Status: Released
+                  Compliance Date: JUN 22, 2017
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 4.6.1 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this Informational Patch is to announce the release of the
+ Enrollment System (ES) 4.6.1. This release, developed in Java technology,
+ contains Enrollment System Modernization (ESM) development efforts, including
+ enhancements to support Community Care (CC) and ES Sustainment.
+  
+ The following functionalities are included in the ES 4.6.1 release:
+  
+ Community Care:
+ 
+ Community Care Determination Page:
+   - Added CC Outcome Panel to the Overview page
+   - Added fields to Wait-Time table: Clinic/Consult Title, Clinic Stop
+     Code, Clinic Stop Code Name
+   - Added a capability named "View Time Clinic Data" to control which users
+     may see the three new clinic fields
+  
+ NOTE: Residential Address will not be shared with the medical centers in this
+ release.
+ 
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ Service Desk Manager (SDM):
+  
+ Ticket #         Overview
+ -------------    -------------------
+ N/A
+ 
+ Rational Team Concert (RTC):
+  
+ RTC #          Overview
+ -------------  -------------------
+ 464842         Add a Person (AAP) Data Generation (DGEN) add alert bulletin
+                going to all sites of record
+ 492249         Time Eligibility table displaying Veterans Integrated Services
+                Network (VISN) database identification (ID)
+ 503810         Fortify: Resolve ESM Critical Priority Lightweight Directory
+                Access Protocol (LDAP) Injection Security Vulnerability
+ 509010         Fortify: Resolve ESM Critical Priority Cross-Site Scripting:
+                Reflected and Log Forging Vulnerabilities
+ 
+ 
+ Problem:
+ ----------
+ 464842 - SDM ticket I12029434FY17: When a user changes a Veteran's Preferred
+ Facility in ES, the DGEN mail bulletin that notifies the site the person was
+ added is being sent to all sites of record. That bulletin should go only to
+ the Preferred Facility.
+ 492249 - The VISN column in the Time Eligibility table on the CC Viewer is
+ displaying the database identifier rather than the VISN number (e.g.,
+ "1501391" rather than "11").
+ 503810 - Remediate Fortify Critical and High findings by resolving ESM
+ Critical Priority LDAP Injection Security Vulnerability.
+ 509010 - Remediate Fortify Critical and High findings by resolving ESM
+ Critical Priority Cross-Site Scripting Reflected and Log Forging
+ Vulnerabilities.
+ 
+ Resolution:
+ ----------
+ 464842 - Added sendEmailBulletinPrefSiteOnly method to
+ CommsEmailBulletinService and updated call on HEC_NOTIFY_SITE_PERSON_ADDED in
+ VOAApplicationServiceImpl.
+ 492249 - Changed the VAFacility to get the VISN ID.
+ 503810 - Updated Enrollment System Redesign (ESR) code to extend the
+ filtering logic to include additional metacharacters from LDAP query as per
+ Open Web Application Security Project (OWASP) recent additions.
+ 509010 - Updated ESR code to extend the removal of XSS attack patterns from
+ getParameterNames(), getHeaderNames(), and getInputStream().
+ 
+ Test Sites:
+ ----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing the
+ new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+ 
+  
+ Albany:                domain.ext
+ Hines:                 domain.ext 
+ Salt Lake City:        domain.ext
+  
+ 
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+ Title                  File Name                             FTP Mode
+ -----------------------------------------------------------------------
+ ES 4.6.1 Release Notes ES_4_6_1_Release_Notes.pdf            binary
+ 
+ 
+ The documentation will be in the form of Adobe Acrobat file.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 14, 2017
+Completed By:                               Date Completed: MAY 22, 2017
+Released By :                               Date Released : MAY 22, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

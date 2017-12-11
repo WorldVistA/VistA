@@ -1,0 +1,142 @@
+
+=============================================================================
+Run Date: JUN 26, 2017                     Designation: PSO*7*489
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #402                      Status: Released
+                  Compliance Date: JUL 26, 2017
+=============================================================================
+
+
+Subject: FDA MED GUIDES AUTO PRINTING JAVA COMPONENT - NEW SSL CERTIFICATE
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+  
+ This patch will upgrade the FDA Medication Guides Automatic Printing Java 
+ component to include the new VA issued SSL Certificate and the modified 
+ script to install the certificate on the Windows servers running the FDA 
+ Medication Guide Auto Print Java software at the sites. 
+  
+ If your site is currently utilizing the FDA Med Guide Auto Printing 
+ software, this release provides the necessary SSL certificate to allow 
+ the software to download and print updated medication guide .pdf files 
+ from the CMOP SharePoint portal. Please refer to the "FDA Medication 
+ Guides Project Java Component (Automatic Printing) Installation Guide" 
+ for detailed instructions on retrieving and installing the necessary 
+ software.
+  
+ ******If your site does not utilize the FDA Med Guide Auto Printing 
+ software, no further action on PSO*7*489 is necessary.****** 
+  
+  
+ Associated NSR(S):
+ =================
+ N/A
+  
+ Participating Test Sites:
+ ========================
+ Clarksburg - VA Medical Center
+ Battle Creek - VA Medical Center
+  
+  
+ CA SDM Ticket(s):
+ ========================
+  
+ I14747259FY17 - FDA Med Guides in Outpatient Pharmacy is unable to 
+                 download new Med Guides.
+  
+ R14773164FY17 (duplicate) 
+  
+ Patient Safety Issue:
+ ---------------------
+ N/A
+  
+  
+ Problem:
+ --------
+ The VA has issued a new SSL certificate, and as a result, the FDA Med 
+ Guides Automatic Printing Java component is unable to download new Med
+ guides with the old SSL certificate from CMOP server.
+  
+ This patch will upgrade the FDA Medication Guides Automatic Printing Java 
+ component to include the new VA issued SSL Certificate and the modified 
+ script to install the certificate on the Windows servers running the FDA 
+ Medication Guide Auto Print Java software at the sites.
+  
+  
+ Resolution:
+ -----------
+ No code changes were made for this upgrade. The script was changed to 
+ add new certificate in the Java Key store.
+  
+ Software & Documentation Retrieval:
+ ===================================
+ The FDA Medication Guide Automatic Printing (Increment 3) project 
+ contains a Java Application component, which is distributed in the 
+ PSO_7_P489.ZIP file. This file contains a folder called 
+ FDAMedGuidesPrinter that should be installed on the Windows Server that 
+ is going to be used to run the application. 
+  
+ For detailed installation instructions please refer to the "FDA 
+ Medication Guides Project Java Component (Automatic Printing) 
+ Installation Guide" document.
+  
+ The documentation can be obtained from the ANONYMOUS.SOFTWARE directory 
+ at one of the OI Field Offices. The preferred method is to SFTP the files 
+ from:
+       
+        download.vista.domain.ext
+       
+ This transmits the files from the first available FTP server.  
+       
+ Sites may also elect to retrieve the files directly from the 
+ ANONYMOUS.SOFTWARE directory from a specific server as follows:
+       
+ Albany:             ftp.domain.ext
+ Hines:              ftp.domain.ext
+ Salt Lake City:     ftp.domain.ext  
+  
+ The documentation distribution includes:
+  
+ FILE NAME                                DESCRIPTION                FORMAT
+ --------------------------------------------------------------------------
+ PHAR_FDA_MED_GUIDE_AUTO_PSO_7_489_IG.PDF FDA Medication Guides      BINARY
+                                          Project Install Guide
+ PSO_7_P489.ZIP                           Java Application component BINARY
+  
+  
+ Java Application Component Installation Instructions:
+ =====================================================
+ In order to install the Java Application component follow these steps:
+  
+   1. Uninstall the old version of FDA Medication Guides Automatic Printing
+      Java component. Follow the instructions given in the 
+      Installation Guide
+  
+   2. Unzip the PSO_7_P489.ZIP file 
+  
+   3. Follow the installation instructions given in the Installation Guide.
+      Note: you must have administrator rights on the machine when you 
+            run it.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 25, 2017
+Completed By:                               Date Completed: JUN 22, 2017
+Released By :                               Date Released : JUN 26, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

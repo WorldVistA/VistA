@@ -1,0 +1,230 @@
+$TXT Created by                  at CHEY19.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Monday, 07/10/17 at 17:44
+=============================================================================
+Run Date: JUL 20, 2017                     Designation: OR*3*461
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: EMERGENCY
+Version : 3       SEQ #379                      Status: Released
+                  Compliance Date: JUL 22, 2017
+=============================================================================
+
+Associated patches: (v)OR*3*421    <<= must be installed BEFORE `OR*3*461'
+
+Subject: INPATIENT MEDICATIONS DISPLAY GROUP ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue in the OERR (Order 
+ Entry/Results Reporting) / CPRS (Computerized Patient Record System) 
+ package:
+ -It is possible to create an inpatient order that will not transfer to an 
+ outpatient medication properly when delayed to discharge.
+  
+ Associated CA SDM ticket(s):
+ ----------------------------
+ I14795124FY17 (Rational Team Concert(RTC) defect 537153)- The Electronic
+ Unified Action Profile (eUAP) is not working.  It is firing incorrectly
+ and causing a patient safety issue, incorrectly entering medication
+ orders.
+  
+ Associated NSR(s):
+ ------------------
+ N/A
+   
+ Participating Test Sites:
+ =========================
+ Portland HCS
+ Tennessee Valley HCS
+ Overton Brooks VAMC
+  
+  
+ PATIENT SAFETY ISSUES:
+ ======================
+ PSPO 3561 (RTC 537153)
+  
+ CA SDM OVERVIEW:
+ ================
+ I14795124FY17 (RTC 537153)-The eUAP is not working. It is firing
+ incorrectly and causing a patient safety issue, incorrectly entering 
+ medication orders.
+  
+ Problem:
+ --------
+ It is possible to create an inpatient order with the (Display Group) "TO:"
+ field set to "INPATIENT MEDICATIONS". "INPATIENT MEDICATIONS" is an older
+ Legacy display group that should no longer be used on new orders; instead 
+ "UNIT DOSE MEDICATIONS" should be used. Orders created with the 
+ "INPATIENT MEDICATIONS" display group will not create outpatient 
+ medications when using the "Transfer to Outpatient" action on CPRS but 
+ will instead create a new inpatient medication order that gets cancelled 
+ upon the discharge event occurring.
+  
+ Resolution:
+ -----------
+ This patch will run a post-install cleanup routine that generates a 
+ MailMan message upon installation and the patch will add functionality to 
+ monitor for future instances of the incorrect display group being used.
+  
+ First, the post-install routine ORY461 has been created to clean up 
+ existing orders on currently admitted patients that have the display group
+ set to INPATIENT MEDICATIONS.
+  
+ This routine will send a local MailMan message to the user that runs the
+ install stating which orders (if any) were updated.
+  
+ The format of the message is as follows:
+  
+ Subj: OR*3.0*461 install Post routine has completed  [#254176] 
+ 06/20/17@12:44
+ 6 lines
+ From: ORDER ENTRY/RESULTS REPORTING PACKAGE  In 'IN' basket.   Page 1  
+ *New*
+ -------------------------------------------------------------------------
+ OR*3.0*461 Post install routine has completed
+ The following order(s) have had their display group changed
+ from INPATIENT MEDICATIONS to UNIT DOSE MEDICATIONS
+ **INFORMATIONAL ONLY - No action required** :
+ (1st order# here)
+ (2nd order# here)
+ (And so on...)
+  
+ <OR if no out of order instances are found>
+ "None Found"
+  
+ -------------------------------------------
+  
+ Additionally, ORWDX and ORWDX1 have been modified to check if the system 
+ attempts to save an order using the "INPATIENT MEDICATIONS" display group.
+ If so the display group will be switched to "UNIT DOSE MEDICATIONS" and a 
+ MailMan message will be generated to FORUM for notification of this 
+ attempt. This message is independent of the message generated from the
+ post-install routine at installation.  New routine ORUTL5 will send this
+ MailMan message to the following mail groups in FORUM:
+  
+ G.HPS CLIN2@FORUM.DOMAIN.EXT 
+  
+ G.CLINICAL REMINDERS SUPPORT@FORUM.DOMAIN.EXT
+  
+ Notes: Your site may be contacted by the Health Product Support (HPS) 
+             CLIN 2 team to review any local orders identified by this
+             FORUM mail message.
+        If your site is using Generic Orders it is possible that an older 
+             Generic Order may be identified with the INPATIENT 
+             MEDICATIONS display group which is incorrect. These generic
+             orders will require updating. CLIN 2 will create an SDM
+             Incident to review these generic orders and provide guidance
+             on the correction of the display group. 
+  
+  
+ The format of the FORUM message is as follows:
+  
+ Subj: NEW PROBLEM ORDER SUBMITTED FROM <SITE>
+ From: <SITE>  In 'IN' basket.
+ Page 1
+ ------------------------------------------------------------------------
+ Attempt to save order with INPATIENT MEDICATIONS Display Group
+  
+ <ORDER DETAILS> 
+  
+  
+   
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  This patch can be loaded with users in the system but it is recommended 
+  that it be installed when user activity is low.  Installation time will 
+  be less than 10 minutes.
+  
+  
+  Note: - The post-install routine ORY461 will be deleted from your system
+          upon completion of the patch installation.  If you want to 
+          verify the Checksum for this routine, use option 2, Verify
+          Checksums in Transport Global.  
+  
+    
+    1.  Choose the PackMan message containing this patch and invoke the 
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+    2.  Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+    3.  From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter OR*3.0*461):
+    
+    
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will
+            not backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option
+            will allow you to view all changes that will be made when
+            this patch is installed.  It compares all components of this
+            patch (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+    
+    4.  Use the Install Package(s) option and select the package
+        OR*3.0*461.
+    
+        a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+            install? NO//", answer NO.
+        b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+            Options and Protocols? NO//", answer NO.
+        c.  If prompted "Enter the Device you want to print the Install  
+            messages. You can queue the install by enter a 'Q' at the
+            device prompt.
+            Enter a '^' to abort the install.
+  
+            DEVICE: HOME//", press Enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORUTL5
+    Before:       n/a   After:  B1343402  **461**
+Routine Name: ORWDX
+    Before: B76124297   After: B84918116  **10,85,125,131,132,141,164,
+                                           178,187,190,195,215,246,243,
+                                           283,296,280,306,350,424,421,
+                                           461**
+Routine Name: ORWDX1
+    Before: B53489734   After: B58032777  **85,187,195,215,243,296,341,
+                                           350,461**
+Routine Name: ORY461
+    Before:       n/a   After:  B4728625  **461**
+ 
+Routine list of preceding patches: 421
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 08, 2017
+Completed By:                               Date Completed: JUL 19, 2017
+Released By :                               Date Released : JUL 20, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

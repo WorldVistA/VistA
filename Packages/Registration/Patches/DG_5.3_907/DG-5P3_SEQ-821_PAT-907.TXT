@@ -1,0 +1,326 @@
+$TXT Created by                       DEVVDD.DOMAIN.EXT  (KIDS) on Monday, 03/20/17 at 13:30
+=============================================================================
+Run Date: MAY 08, 2017                     Designation: DG*5.3*907
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #821                    Status: Released
+                  Compliance Date: JUN 08, 2017
+=============================================================================
+
+Associated patches: (v)DG*5.3*831  <<= must be installed BEFORE `DG*5.3*907'
+                    (v)DG*5.3*851  <<= must be installed BEFORE `DG*5.3*907'
+                    (v)DG*5.3*876  <<= must be installed BEFORE `DG*5.3*907'
+                    (v)DG*5.3*887  <<= must be installed BEFORE `DG*5.3*907'
+
+Subject: ENHANCEMENTS - BIRTH SEX AND SELF-IDENTIFIED GENDER FIELDS
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ Patch DG*5.3*907 provides the enhancements to allow Veterans Health
+ Information Systems and Technology Architecture (VistA) to capture and
+ maintain a patient's biological sex and allow for selection, saving,
+ and displaying of a self-identified gender identity value.
+ 
+ This patch modifies the VistA REE as described below: 
+  
+ 1. The "Sex" field label was modified to "Birth Sex" in the PATIENT 
+    DEMOGRAPHICS DATA, SCREEN <1>. The screen appears in the following 
+    menu options:
+  
+   . Preregister a Patient            [DGPRE PRE-REGISTER OPTION]
+   . Register a Patient               [DG REGISTER PATIENT]
+   . Load/Edit Patient Data           [DG LOAD PATIENT DATA]
+   . View Registration Data           [DG REGISTRATION VIEW]
+   . Eligibility Verification         [DG ELIGIBILITY VERIFICATION]
+   
+ 2. The prompt for patient "Sex" was modified to "Birth Sex" in
+    the data enter/edit of the PATIENT DEMOGRAPHICS DATA, SCREEN <1>.
+              
+ 3. The "Sex" field label shall be changed to "Birth Sex" in Patient 
+    Inquiry. The field label appears in the following menu options:
+  
+   . Patient Inquiry                  [DG PATIENT INQUIRY]
+   . Patient Inquiry                  [DGPRE PRE-REGISTER PATIENT INQ]
+   . Regional Office Patient Inquiry  [DVBA REG OFF PATIENT INQ]
+  
+ 4. PATIENT DEMOGRAPHICS DATA, SCREEN <1> was modified to display the   
+    Self-Identified Gender Identity (SIGI) field and to allow updates. 
+  
+ 5. The SIGI value entered in the PATIENT DEMOGRAPHIC DATA, SCREEN <1>
+    will be stored in the SELF IDENTIFIED GENDER (#.024) field of the
+    PATIENT (#2) file. This field was added with the release of
+    DG*5.3*876 on November 13, 2014.
+  
+ 6. The SIGI value will now display on the PATIENT DEMOGRAPHICS DATA,
+    SCREEN <1>. The screen appears in the following menu options:
+  
+   . Preregister a Patient       [DGPRE PRE-REGISTER OPTION]
+   . Register a Patient          [DG REGISTER PATIENT]
+   . Load/Edit Patient Data      [DG LOAD PATIENT DATA]
+   . View Registration Data      [DG REGISTRATION VIEW]
+   . Eligibility Verification    [DG ELIGIBILITY VERIFICATION]
+   
+ 7. The SIGI value response options are owned by Identity Management (IdM).
+    The following list of acceptable response options has been provided:
+  
+   . Male
+   . Female
+   . Transmale/Transman/Female-to-Male
+   . Transfemale/Transwoman/Male-to-Female
+   . Other
+   . Individual chooses not to answer
+   
+ The user has the ability to select from the IdM-supplied list only.
+ Free Form or other values are not allowed.
+                                                          
+ KNOWN ISSUE
+ ===========
+ Identity Management released VistA patch DG*5.3*876 on November 13, 2014
+ that created the SELF IDENTIFIED GENDER (#.024) field in the Patient File (#2)
+ to store SIGI data in VistA and share the SIGI data between VistA and Master
+ Veteran Index (MVI).  The field is not a required field and the only
+ mechanism in Identity Management to enter the SIGI data is via FileMan.  
+ MVI accepts the last value sent (including Null) from VistA.  If MVI receives
+ a null as the last value sent, this causes the SIGI field value to be deleted.
+ In addition, there is a current synchrony issue in the Master Veteran Index
+ (MVI) that prevents sharing of the SIGI value to VistA sites.
+ 
+ 
+ RESOLUTION
+ ==========
+ MVI will deploy a change in April 2017 to prevent the deletion of the SIGI
+ value.
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)                Field Name (#)          New/Modified/Deleted
+ -------------                --------------          --------------------
+ PATIENT File (#2)            SELF IDENTIFIED GENDER  Modified
+                              (#.024)
+ 
+ Removed reference to "sexual orientation" in the DESCRIPTION field of the
+ SELF IDENTIFIED GENDER field (#.024) in the PATIENT file (#2) and replace
+ with "gender identity".
+  
+ 
+ Forms Associated:
+  
+ Form Name                  File #                    New/Modified/Deleted
+ ---------                  ------                    --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                      New/Modified/Deleted
+ ---------------                                      --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type                  New/Modified/Deleted
+ -----------                    ----                  --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                                        New/Modified/Deleted
+ -------------                                        --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name             Type      File Name (#)    New/Modified/Deleted
+ -------------             ----      -------------    --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A
+                             
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ CA Service Desk Ticket(s) & Overviews:
+ ------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ North Chicago
+ West Palm Beach
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                                  File Name               FTP Mode
+ --------------------------------------------------------------------------
+ Release Notes                         DG_5_3_907_RN.PDF       (binary)
+ User Manual - Registration Menu       DG_5_3_907_REG_UM.PDF   (binary)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+ Pre-Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+ 
+ The following options should be disabled during installation: 
+     Preregister a Patient            [DGPRE PRE-REGISTER OPTION]
+     Register a Patient               [DG REGISTER PATIENT]
+     Load/Edit Patient Data           [DG LOAD PATIENT DATA]
+     View Registration Data           [DG REGISTRATION VIEW]
+     Eligibility Verification         [DG ELIGIBILITY VERIFICATION]
+     Patient Inquiry                  [DG PATIENT INQUIRY]
+     Patient Inquiry                  [DGPRE PRE-REGISTER PATIENT INQ]
+     Regional Office Patient Inquiry  [DVBA REG OFF PATIENT INQ]
+ 
+  
+ Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (DG*5.3*907):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch (routines,
+        DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter DG*5.3*907.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     press Enter and accept the default response NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? YES//', press Enter and accept the default response YES.
+ 
+ 7.  When prompted 'Enter options you wish to mark as 'Out Of Order':',
+     disable the following Menu Options:
+  
+     Preregister a Patient            [DGPRE PRE-REGISTER OPTION]
+     Register a Patient               [DG REGISTER PATIENT]
+     Load/Edit Patient Data           [DG LOAD PATIENT DATA]
+     View Registration Data           [DG REGISTRATION VIEW]
+     Eligibility Verification         [DG ELIGIBILITY VERIFICATION]
+     Patient Inquiry                  [DG PATIENT INQUIRY]
+     Patient Inquiry                  [DGPRE PRE-REGISTER PATIENT INQ]
+     Regional Office Patient Inquiry  [DVBA REG OFF PATIENT INQ]
+  
+ 8.  When prompted 'Enter protocols you wish to mark as Out Of Order:', press
+     Enter.
+ 
+ 9.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', press Enter
+     and accept default 0.
+  
+ 10. If prompted with the following:
+ 
+    'Enter the Device you want to print the Install messages.
+     You can queue the install by enter a 'Q' at the device prompt.
+     Enter a '^' to abort the install.
+ 
+     DEVICE: HOME//'
+ 
+     Press Enter or enter a device to print the installation.
+                                              
+ 
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 28
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGRP1
+    Before: B35716153   After: B40184484  **109,161,506,244,546,570,629,
+                                           638,649,700,653,688,750,851,
+                                           907**
+Routine Name: DGRPD
+    Before: B69529511   After: B69759113  **109,124,121,57,161,149,286,
+                                           358,436,445,489,498,506,513,
+                                           518,550,545,568,585,677,703,
+                                           688,887,907**
+Routine Name: DGRPECE
+    Before: B72565384   After: B89386957  **638,682,700,720,653,688,750,
+                                           831,907**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 29, 2014
+Completed By:                               Date Completed: MAY 08, 2017
+Released By :                               Date Released : MAY 08, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,134 @@
+
+=============================================================================
+Run Date: JUN 16, 2017                     Designation: OR*3*457
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #377                      Status: Released
+                  Compliance Date: JUL 17, 2017
+=============================================================================
+
+Associated patches: (v)OR*3*402    <<= must be installed BEFORE `OR*3*457'
+
+Subject: Drug Interaction Order Checks
+
+Category: 
+  - Routine
+  - Informational
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ Drug Interaction Order Checks were wrong because an array used to store 
+ data was overwriting the data from the local fill with data for the 
+ remote fill.
+  
+  
+ Associated CA SDM Tickets:
+ ==========================
+ 1. R13223578FY17 - Drug Interaction Order Checks
+    I13530034FY17   (Duplicate)
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Danville - Illiana HCS
+ Oklahoma City - VA Medical Center 
+  
+  
+ CA SDM Overview:
+ ================
+ 1. R13223578FY17 - Drug Interaction Order Checks
+  
+ Problem:
+ --------
+ The site tested the interaction with a VistA entered order and got the
+ remote check and the local fill showed at the end as a local fill.  
+ Shouldn't the local fill show up as the primary interaction?
+  
+ ***Critical*** Drug Interaction with Prospective Drug:                    
+ KETOROLAC 30MG/ML INJ 1ML and  
+ LOCATION: MARION VA MEDICAL CENTER  Remote Rx: xx36919
+ Drug: IBUPROFEN 600MG TAB (HOLD)  SIG: TAKE ONE TABLET BY
+ MOUTH EVERY 6 HOURS AS NEEDED FOR PAIN OR INFLAMMATION    
+ Last Filled On: 10/06/16  
+  
+ *** THERAPEUTIC DUPLICATION(S) *** KETOROLAC 30MG/ML INJ 
+ 1ML with  
+ Local Rx #xx43843 (ACTIVE) for IBUPROFEN 600MG TAB  
+ Remote Rx #xx36919 (HOLD) for IBUPROFEN 600MG TAB
+  
+  
+ Resolution:
+ -----------
+ The code was overwriting an array entry that was used to display the Drug
+ Interaction checks.  The local medications were checked first and entered
+ into the array by severity, then a code to signify clinic/local
+ (outpatient)/remote/pending/other, then the VA generic drug name, then
+ drug name.
+  
+ Ex: ZDGDG("C",2,"IBUPROFEN","IBUPROFEN 600MG TAB")="O;1399950;PROFILE;2^1"
+         the 2 above is from this check:
+         ON="O;1399950;PROFILE;2
+      If first ; piece of ON
+                 =C then use 1
+                 =O then use 2
+                 =R then use 3
+                 =P then use 4
+                 otherwise use 5
+  
+ When setting the remote meds into this array, it was hardsetting a 2
+ instead of using the conditional checks the same as local meds.
+ Ex: ZDGDG("C",2,"IBUPROFEN","IBUPROFEN 600MG TAB")="R;1;PROFILE;1^2"
+  
+ This caused the remote entry to overwrite the local entry previously set.
+  
+ The fix is to use the same conditional setting as the local check.  This
+ will create two separate entries in the order check array and display
+ both order checks to the user.
+  
+ ZDGDG("C",2,"IBUPROFEN","IBUPROFEN 600MG TAB")="O;1399950;PROFILE;2^1"
+ ZDGDG("C",3,"IBUPROFEN","IBUPROFEN 600MG TAB")="R;1;PROFILE;1^2"
+  
+  
+ Important Installation Note:
+ ============================
+ This patch is part of a multi-package build. There are two patches 
+ associated with the fix - PSO*7.0*484 and OR*3.0*457. These patches are 
+ in a combined build utilizing 1 Host file PSO_7_484_OR_3_457_BUNDLE.KID.
+ Installing the PSO_7_484_OR_3_457_BUNDLE.KID installs both PSO*7.0*484 
+ and OR*3.0*457.
+  
+ Please see the Patch Description of PSO*7.0*484 for instructions on how 
+ to install this combined build patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORKPS1
+    Before: B85828947   After: B86882851  **232,272,346,352,345,311,402,457**
+ 
+Routine list of preceding patches: 402
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 24, 2017
+Completed By:                               Date Completed: JUN 15, 2017
+Released By :                               Date Released : JUN 16, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

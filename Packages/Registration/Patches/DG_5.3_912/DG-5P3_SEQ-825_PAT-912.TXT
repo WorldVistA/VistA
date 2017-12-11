@@ -1,0 +1,166 @@
+$TXT Created by                 K at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 04/21/16 at 10:32
+=============================================================================
+Run Date: JUN 28, 2017                     Designation: DG*5.3*912
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #825                    Status: Released
+                  Compliance Date: JUL 28, 2017
+=============================================================================
+
+Associated patches: (v)DG*5.3*603  <<= must be installed BEFORE `DG*5.3*912'
+                    (v)DG*5.3*884  <<= must be installed BEFORE `DG*5.3*912'
+
+Subject: 801 SCREEN INPT CPT CODE FIELD
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DG*5.3*912 addresses three (3) issues:
+       
+ 1.  References to SHORT NAME field (#2) of the CPT file (#81) should
+     be removed in routine DGPTFJC.
+ 2.  Military Service Data Inconsistencies Detail Report has data 
+     listed when nothing is wrong in the patient record.
+ 3.  There is an issue when deleting multiple CPT code entries in the
+     Patient Treatment File (PTF).
+  
+                          
+ ASSOCIATED TICKETS: 
+ ===================
+ 1.  I9899956FY16    - EN6^DGPTFJC fail 
+ 2.  I9903984FY16    - Enrollment-VistA - Military Inconsistency:
+ 3.  I5800705FY15    - Cannot delete the admission PTF, incorrect dates 
+     I6456858FY16(d) - Request New Access Permissions
+  
+   
+ PARTICIPATING TEST SITES: 
+ =========================
+ VISN 2 - Upstate New York HCS
+ Altoona - James E. Van Zandt VAMC
+   
+  
+ Ticket Overview:
+ ================
+ 1.  I9899956FY16    - EN6^DGPTFJC fail
+  
+  Problem:
+  --------
+  Routine DGPTFJC does a direct read to Current Procedural Terminology 
+  (CPT) codes, CPT file (#81), SHORT NAME field (#2). This field is no
+  longer a valid field and could fail.
+    
+  Resolution:
+  -----------
+  Modify routine DGPTFJC to use API ($$CPT^ICPTCOD) instead of using
+  direct reads to the SHORT NAME field (#2) of the CPT file (#81).
+  
+  
+ 2. I9903984FY16     - Enrollment-VistA - Military Inconsistency:
+  
+  Problem:
+  --------
+  Military Service Data Inconsistencies Detail Report has data listed 
+  when nothing is wrong in the patient record.
+    
+  Resolution:
+  -----------
+  Modify routine DGMSRPT1 to retrieve report data from the correct field, 
+  MILITARY SERVICE EPISODE field (#.3216) of the PATIENT file (#2).
+  
+  
+ 3. I5800705FY15     - Cannot delete the admission PTF, incorrect dates  
+    I6456858FY16 (d) - Request New Access Permissions
+  
+  Problem:
+  --------
+  If a Patient Treatment File (PTF) record has multiple Current
+  Procedural Terminology (CPT) code entries and user tries to delete
+  the entries from the 801 screen, the first entry has the correct
+  deletion date but the second entry has an incorrect deletion date.
+  
+    
+  Resolution:
+  -----------
+  Modify routine DGPTFM2 to enter the correct deletion date on both
+  entries.
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes. Suggested time to install:
+ non-peak business hours.
+   
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter DG*5.3*912).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch 
+            is installed.
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package 
+         DG*5.3*912.
+      
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//",
+         respond No.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", respond Yes.
+  
+         When prompted, 'Enter options you wish to mark as 'Out Of 
+         Order':', enter:
+              
+         Load/Edit PTF Data [DG PTF SCREEN]
+         Military Service Data Inconsistencies Report [DG MS
+         INCONSISTENCIES RPT]
+                         
+  
+         When prompted, 'Enter protocols you wish to mark as 'Out Of
+         Order':', press enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**; Aug 13,1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGMSRPT1
+    Before: B62478894   After: B62881703  **562,603,912**
+Routine Name: DGPTFJC
+    Before: B64477474   After: B64587430  **158,510,517,590,636,635,701,
+                                           729,785,850,884,912**
+Routine Name: DGPTFM2
+    Before: B50700609   After: B50916378  **517,590,606,635,850,912**
+ 
+Routine list of preceding patches: 603, 884
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 14, 2015
+Completed By:                               Date Completed: JUN 23, 2017
+Released By :                               Date Released : JUN 28, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

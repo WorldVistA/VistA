@@ -1,0 +1,328 @@
+$TXT Created by              VLELAB1.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 04/12/17 at 12:18
+=============================================================================
+Run Date: MAY 03, 2017                     Designation: MMRS*1*5
+Package : MMRS - MRSA INITIATIVE REPORTS      Priority: Mandatory
+Version : 1         SEQ #5                      Status: Released
+                  Compliance Date: JUN 03, 2017
+=============================================================================
+
+Associated patches: (v)MMRS*1*4    <<= must be installed BEFORE `MMRS*1*5'
+
+Subject: OBSERVATION PATIENTS AND OTHER UPDATES
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ NOTE: The Multi-Drug Resistant Organisms (MDRO) Prevention Coordinators 
+ (MPC) will need to verify the site's local configurations for accuracy 
+ and possibly re-configure in certain areas as the MMRS*1.0*4 patch will 
+ have overwritten some of the site's original configurations. Do not run 
+ any MDRO reports until the configurations have been verified and 
+ remedied. The remediation steps must be completed prior to installing 
+ MMRS*1*5.  The Remediation Guide contains sequential instructions for the 
+ examination, verification, and possible re-configuration of MDRO 
+ parameters. Read the entire guide prior to performing the steps outlined. 
+ Appendix A contains a checklist which will aid in the steps required. 
+ Print out the checklist prior to performing the instructions provided in 
+ this guide. 
+ Patch MMRS*1.0*5 will not overwrite a site's local configurations so you 
+ may proceed with the instructions to install the MMRS*1.0*5 patch as 
+ outlined in this Patch Description.
+  
+ The scope of this warranty patch includes the following:
+  
+  - Update to 'Facility CDI Cases Report' to include the 'Report 
+    Period' in the report header.
+  
+  - Removal of the Print CRE Report from the MDRO Tools Reports Menu 
+    and removal of the CRE Tools Site Parameter Setup from the MDRO 
+    Tools Setup Menu.
+  
+  - The MDRO Prevention Initiative is expanding to include      
+    observation patients that are housed together with acute care patients 
+    (e.g. medicine and surgery). Facilities will now be required to
+    report MDRO swabbing rates and Bed Days of Care (BDOC) for these
+    observation patients to the Inpatient Evaluation Center (IPEC).
+    In order to facilitate this, the MDRO Program Tools will be 
+    updated to recode or ignore certain patient movements as follows:
+  
+    o A discharge from a mixed observation ward and admission to acute
+      care ward will be considered as an interward transfer if the 
+      admission to acute care was within two hours of discharge from
+      observation. Note: The observation and admission wards are mapped
+      to different geographical locations.
+  
+    o A discharge from a mixed observation ward and admission to acute 
+      care ward will be ignored if the admission to acute care was within
+      two hours of discharge from observation. Note: The observation
+      and admission wards are mapped to the same geographical location.
+   
+  - Defect resolution for 469973: VLE Microbiology - CDI Report Wrong 
+    Admission Date/Time for Transferred patients reported by Westhaven
+    VAMC.
+  
+ Blood Bank Review
+  ==================
+  N/A
+  
+ Remedy Ticket Overview:
+ ----------------------
+  N/A
+  
+  
+   
+  Patch Components
+  ================ 
+   
+  Files & Fields Associated:
+   
+  File Name (Number)      Field Name (Number)   New/Modified/Deleted
+  ------------------      -------------------   --------------------
+  N/A
+  
+   
+   
+  Forms Associated:
+   
+  Form Name                File #       New/Modified/Deleted
+  ---------                ------       --------------------
+  N/A
+   
+   
+  
+ Mail Groups Associated:
+   
+  Mail Group Name          New/Modified/Deleted
+  ---------------          --------------------
+  N/A
+   
+   
+  Options Associated:
+   
+  Option Name                    Type         New/Modified/Deleted
+  -----------------------------  -----------  --------------------
+  MMRS CRE REPORT                edit         DELETE AT SITE
+  MMRS CRE SITE PARAMETER SETUP  edit         DELETE AT SITE
+  MMRS ISLT ORD EDIT             edit         SEND TO SITE
+  MMRS MDRO HIST DAYS EDIT       edit         SEND TO SITE
+  MMRS MDRO LAB PARAMETER SETUP  edit         SEND TO SITE
+  MMRS MDRO TOOLS SETUP MENU     edit         SEND TO SITE
+  MMRS MRSA SITE PARAMETER SETUP edit         SEND TO SITE
+  MMRS MRSA WARD MAPPING SETUP   edit         SEND TO SITE
+   
+  Protocols Associated:
+   
+  Protocol Name       New/Modified/Deleted
+  -------------       --------------------
+  N/A
+   
+   
+  Security Keys Associated:
+   
+  Security Key Name
+  -----------------
+  N/A
+   
+  
+   
+  Templates Associated:
+  
+  Template Name      Type      File Name (Number)  New/Modified/Deleted 
+  -------------      ----      ------------------  --------------------
+  N/A
+   
+   
+  Additional Information:
+  N/A
+   
+   
+  New Service Requests (NSRs):
+  ----------------------------
+  N/A
+   
+   
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+   
+   
+  Defect Tracking System Ticket(s) & Overview:
+  --------------------------------------------
+  - Defect 469973: VLE Microbiology - CDI Report Wrong Admission 
+    Date/Time for Transferred patients reported by Westhaven VAMC.
+  
+   
+  Problem:
+  --------
+  N/A
+   
+   
+  Resolution:
+  -----------
+  N/A
+   
+   
+  Test Sites:
+  -----------
+  James A. Haley Veterans Hospital
+  Iowa City VA Healthcare System
+  Lexington VA Medical Center
+   
+   
+  Software and Documentation Retrieval Instructions: 
+  -------------------------------------------------- 
+  Software will be released via a PackMan message. 
+   
+  Sites may retrieve the documentation directly using Secure File Transfer 
+  Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following 
+  OI Field Offices:
+      
+  Albany:                 domain.ext
+  Hines:                  domain.ext    
+  Salt Lake City:         domain.ext
+     
+  Documentation will be distributed via a VLE MMRS MDRO Enhancement.ZIP 
+  file, which contains both .pdf and .docx formatted file of the following 
+  documents. Retrieval format is BINARY.
+   
+  Documentation can also be found on the VA Software Documentation Library 
+  at: http://www4.domain.ext/vdl/
+   
+  Title
+  =====
+  N/A
+   
+   
+  Patch Installation:
+  -------------------
+   
+   
+  Pre/Post Installation Overview:
+  -------------------------------
+  This patch may be installed with users on the system although it is
+  recommended that it be installed during non-peak hours to minimize 
+  potential disruption to users. This patch should take less than 5 
+  minutes to install.
+  
+  Pre-Installation Instructions:
+  ------------------------------
+  N/A
+   
+   
+  Installation Instructions:
+  --------------------------
+  1. Choose the PackMan message containing this patch.
+   
+  2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+  3. From the Kernel Installation and Distribution System Menu, select 
+     the Installation Menu. From this menu, you may elect to use the 
+     following options. When prompted for the INSTALL NAME enter
+     MMRS*1.0*5.
+   
+     a. Backup a Transport Global - This option will create a backup 
+        message of any routines exported with this patch. It will not 
+        backup any other changes such as DD's or templates.
+   
+     b. Compare Transport Global to Current System - This option will 
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch
+        (routines, DD's, templates, etc.).
+   
+     c.  Verify Checksums in Transport Global - This option will allow 
+         you to ensure the integrity of the routines that are in the 
+         transport global.
+   
+  4. From the Installation Menu, select the Install Package(s) option 
+     and choose the patch to install.
+   
+  5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? No// Press <Enter>.
+   
+  6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+     NO// Press <Enter>.
+   
+  7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO// Press <Enter>.
+   
+  8. If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+   
+   
+  Post-Installation Instructions:
+  -------------------------------
+  After this patch is installed, the MDRO Prevention Coordinator (MPC) 
+  will need to update the geographical units to include observation wards
+  that are located together with an inpatient wards. For example, If a
+  facility has a geographical unit 5 North made up of the ward locations
+  5 North Med and 5 North Surg, and there is also a ward location 5 North
+  Obs for observation patients, the 5 North Obs should be added to the 5
+  North geographical unit. This can be accomplished using the option MRSA
+  Tools Ward Mapping Setup [MMRS MRSA WARD MAPPING SETUP] located on the 
+  MDRO Tools Setup Menu [MMRS MDRO TOOLS SETUP MENU).  Please see section
+  4.4 of the MMRS User Guide for more information on how to edit a
+  geographical unit.
+  
+  Back-Out Strategy:
+  
+  During the installation, if the option to back up routines was run as 
+  directed, 'Backup a Transport Global', then routines have the ability to 
+  be restored from the "backup" Mailman message that was generated.  
+  However, the KIDS installation process does not perform a restore of 
+  other VistA components such as Data Dictionary, cross-reference and
+  template changes, etc.
+  
+  Rollback Procedure:
+  
+  The MMRS*1.0*5 build as well as any installed dependent patch changes 
+  that follow these releases need to be taken out in reverse order in 
+  which they were installed; routines and data dictionary modifications 
+  and populated data must also be rolled back in reverse order.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;MRSA TOOLS REPORTS MENU;**[Patch List]**;Mar 22, 2009;Build 146
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MMRSCDI
+    Before:B219284495   After:B224996705  **4,5**
+Routine Name: MMRSCDI1
+    Before: B47343212   After: B42768912  **4,5**
+Routine Name: MMRSCDI2
+    Before:B162714137   After:B164313738  **4,5**
+Routine Name: MMRSCRE
+    Before: B90369826   After: B98037887  **4,5**
+Routine Name: MMRSCRE2
+    Before: B12793206   After: B15423408  **4,5**
+Routine Name: MMRSCRE3
+    Before:B160454267   After:B174713935  **4,5**
+Routine Name: MMRSCRE4
+    Before: B34859922   After: B37634944  **4,5**
+Routine Name: MMRSIPC
+    Before: B96291150   After:B103279928  **3,5**
+Routine Name: MMRSIPC2
+    Before: B35335432   After:B111101050  **1,5**
+Routine Name: MMRSORD
+    Before: B42758961   After: B47235280  **1,5**
+ 
+Routine list of preceding patches: 1, 3, 4
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 07, 2017
+Completed By:                               Date Completed: MAY 01, 2017
+Released By :                               Date Released : MAY 03, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

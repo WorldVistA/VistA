@@ -1,0 +1,447 @@
+
+=============================================================================
+Run Date: JUN 30, 2017                     Designation: MAG*3*184
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #135                      Status: Released
+                  Compliance Date: AUG 20, 2017
+=============================================================================
+
+
+Subject: VistARad 2 factor authentication
+
+Category: 
+  - Other
+
+Description:
+============
+
+ Associated Patches:  
+ ==================
+ This patch must be installed after MAG*3.0*153.
+  
+ Subject:  TWO-FACTOR AUTHENTICATION FOR VISTARAD
+ =======
+  
+ Category:  OTHER
+ ========
+  
+ Description:
+ ===========
+ MAG*3.0*184 provides two-factor authentication (2FA) for VistARad. When 
+ the user starts VistARad, they will be prompted for their Personal 
+ Identity Verification (PIV)/Personal Identification Number (PIN) to log 
+ into Veterans Health Information Systems and Technology Architecture 
+ (VistA).  If the user cancels, they will be prompted for the 
+ access/verify code.  A splash screen will be displayed during startup and 
+ initialization of the VistARad application.  The splash screen will close 
+ when the application is ready to be used.  There are no other changes to 
+ functionality of VistARad.
+  
+ Patch Components:
+ ================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P 184_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch.  
+ MAG3_0P184_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software:
+ ========
+ File Name                       Description
+ =========                       ===========
+ MAG3_0P184.KID                  Kernel Installation and Distribution 
+                                 System (KIDS) build for Patch 184
+ MAG3_0P184_VRAD_setup.exe       VistARad Installation File.
+  
+ Documentation:
+ =============
+ This document, MAG3_0184_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ MAG_VistARad_User_Guide.pdf and MAG_VistARad_Quick_Start_Guide.pdf have 
+ been updated with the new 2FA sign-on procedure.
+  
+  
+ Files & Fields Associated:
+ =========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ ================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ ======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ==================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ ====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ ========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ ====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ ======================
+ New Service Requests (NSRs):
+ ===========================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+ 1. Update VistARad for 2FA
+ ===============================
+ Problem:  Per the U.S. Department of Veterans Affairs (VA) mandate to 
+ meet PIV requirements (VAIQ #7712300), all existing systems must be 
+ upgraded to use PIV credentials for authentication.
+  
+ Resolution:  The Remote Procedure Call (RPC) Broker establishes a common 
+ and consistent connection for VistA client/server applications.  The 
+ kernel development team has updated the RPC Broker to accept a PIV for 
+ authentication in XWB*1.1*64 and RPC Broker Development Tool Kit 
+ XWB*1.1*65.  The RPC Broker client component uses the Identity and Access 
+ Management (IAM) SSOi Secure Token Service (STS) for Authentication.  The 
+ client authenticates to IAM with PIV/PIN and obtains a Security Assertion 
+ Markup Language (SAML) token; this token is associated with a VistA 
+ access/verify code and is used to authenticate to VistA.
+  
+ Test Sites:
+ ==========
+ The following site is a test site for this patch:
+   Fayetteville VAMC (NC)
+  
+ *A test waiver has been approved to allow for testing to proceed with one 
+ site.
+  
+ Software and Documentation Retrieval Instructions:
+ =================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from 
+ anonymous@download.vista.domain.ext from the COMMAND prompt (example:  
+ sftp anonymous@download.vista.domain.ext). This transmits the files from 
+ the first available server. 
+  
+ Sites may also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ When using Attachmate Reflection (Secure Shell):
+ Albany:         domain.ext
+ Hines:          domain.ext
+ Salt Lake City: domain.ext
+  
+ When using the COMMAND prompt (example: sftp 
+ anonymous@domain.ext): 
+ Albany:         anonymous@domain.ext
+ Hines:          anonymous@domain.ext
+ Salt Lake City: anonymous@domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at  http://www4.domain.ext/vdl/ (or at 
+ https://www.domain.ext/vdl/application.asp?appid=105 for Imaging).
+  
+ Patch Installation:
+ ==================
+ Supported Client Versions
+ =========================
+ When MAG*3.0*184 is released, the list of supported versions of VistARad 
+ will change:
+  
+ Supported Versions      No Longer Supported 
+ 3.0.184                 
+ 3.0.153                 
+ 3.0.152
+ 3.0.133
+ 3.0.120
+  
+ Pre/Post Installation Overview:
+ ==============================
+ MAG*3.0*184 must be installed on the VistA System and on 64-bit 
+ workstations on which the VistA Imaging Applications will be used.  
+ Internet Explorer 11 must be installed to process the 2FA sign on. For 
+ more details, see the VistARad Client Installation Instructions later in 
+ this document. This patch must be installed by the compliance date.
+  
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch.  This patch may be installed with users on the system although it 
+ is recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Pre-Installation Instructions:
+ =============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+  
+ Note:  
+ ====
+ All released VistA Imaging patches must be installed on the VistA system 
+ before installing MAG*3.0*184.
+  
+ VistA System (KIDS) Installation Instructions
+ ============================================= 
+ Installation Steps
+ ==================
+ KIDS installation will take less than five minutes.
+ 1. On the VistA system, access the Kernel Installation and Distribution 
+ System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+    a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load 
+ the KIDS distribution.
+    b. When prompted, enter the path and file name (MAG3_0P184.KID) of the 
+ Patch 184 KIDS file.
+    c. When
+ prompted to continue with the load, enter "YES". A Distribution
+ OK! message will be displayed when the load is complete.
+ 4. After loading the KIDS file, use the following options to verify the 
+ contents of the patch and to back up any affected routines.
+    a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run 
+ this option if you want to ensure the integrity of the routines in the 
+ patch. 
+    b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] 
+ - Run this option if you want to view all changes that will be made when 
+ the patch is installed.  All components (routines, options, and so on) in 
+ the patch will be compared.
+    c. Backup a Transport Global [XPD BACKUP] - Run this option if you 
+ want to create a backup message of any routines exported with the patch.  
+ It will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter "MAG*3.0*184".
+    c. Answer "NO" to the following prompts:
+  
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6. When installation is finished, an Install Complete message will be 
+ displayed.
+  
+ KIDS Installation Example
+ =========================
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing 
+ the KIDS file in a namespace on which it has previously been installed, 
+ your output may be different.
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*184      3/15/17@12:03:02
+      => VistA Imaging V3 - P184 VistARAD 2FA SSOi  ;Created on Mar 15, 
+ 2017@11
+ This Distribution was loaded on Mar 15, 2017@12:03:02 with header of
+    VistA Imaging V3 - P184 VistARAD 2FA SSOi  ;Created on Mar 15, 
+ 2017@11:06:36
+    It consisted of the following Install(s):
+     MAG*3.0*184
+ Checking Install for Package MAG*3.0*184
+ Will first run the Environment Check Routine, MAGJMN1
+ Wait for Background Compile program to stop;
+      this might take up to a few minutes.
+ Background Compile Stopped; proceeding with install.
+ Install Questions for MAG*3.0*184
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+ DEVICE: HOME//   HERE
+  Install Started for MAG*3.0*184 :
+                Mar 15, 2017@12:03:44
+ Build Distribution Date: Mar 15, 2017
+  Installing Routines:....
+                Mar 15, 2017@12:03:44
+  Running Post-Install Routine: POSTINST^MAGJMN1. ... Enabling background 
+ compile
+ Background Compile Enabled.
+  Updating Routine file......
+  Updating KIDS files.......
+  MAG*3.0*184 Installed.
+                Mar 15, 2017@12:03:47
+  Not a production UCI
+  NO Install Message sent
+   100%
+ Complete
+  
+ Install Completed
+  
+ VistARad Client Installation Instructions
+ =========================================
+ The following steps can be used to install an existing VistARad 
+ workstation.  Installation should take two to three minutes.
+  
+ Note:  
+ ====
+ If a version of VistARad older than MAG*3.0*120 is installed, use 
+ Add/Remove Programs in the Windows Control Panel to remove VistARad 
+ before using the steps below.
+  
+ Note:  
+ ====
+ New 2FA updates require that Internet Explorer (IE) 11 be installed and 
+ that PIV authentication be used  to log in. Since, in some cases, the 
+ VRAD diagnostic workstation could be on a VLAN (isolated private 
+ network), the IE 11 version is now required.  There are six pre-req KBs 
+ of Microsoft IE11 that will need to be installed. The following Microsoft 
+ link provides information to acquire both 32 and 64 bit versions of IE 
+ 11.  
+ https://support.microsoft.com/en-us/help/2847882/prerequisite-updates-for-
+ internet-explorer-11
+ Once installed, it will enable installation of IE 11 with the offline 
+ installer.
+  
+ 1. Log in to the workstation as an administrator, and ensure that no 
+ other programs are running. 
+ 2. Initiate the installation:
+ Windows 7:  Right-click on the MAG3_0P184_VistARad_Setup.exe, and select 
+ the Run as Administrator option to start the installation wizard.
+ 3. After the setup launches
+   a. You may be prompted to install the Microsoft Visual C++ 2005 
+ Redistributable Package.  Click "Install" to complete this step.
+   b. There will be a brief delay as the VistARad installation files are 
+ extracted.
+  
+ Note:  
+ ====
+ There are no configurable installation options.  VistARad will be 
+ installed in:  Windows 7: C:\Program Files (x86) 
+ \VistA\Imaging\MAG_VistARad.
+  
+ 4. When the Welcome page appears, click "Next".
+ 5. When the Ready to Install page displays, click "Install".
+ 6. Installation of MAG*3.0*184 starts automatically.  After installation 
+ is complete, click "Finish" to exit the wizard.
+ 7. You may be prompted to re-start your workstation in order for the 
+ configuration changes to take effect.  Click "Yes" to complete this step.
+ 8. Use the VistARad shortcut on the desktop or in the Windows Start 
+ menu (Start | Programs | VistA Imaging Programs | MAG_VistARad_Patch184) 
+ to start VistARad.
+ 9. From the Help | About menu, verify that the software client 
+ version is 3.0.184.1.
+  
+ Post-Installation Instructions:
+ ==============================
+ Uninstalling MAG*3.0*184 KIDS
+ =============================
+ Note:  
+ ====
+ To uninstall MAG*3.0*184, the "Backup a Transport Global" menu option 
+ must have been selected during the Kernel Installation & Distribution 
+ System (KIDS)install process (see KIDS Installation section above, step 
+ 4C).
+  
+ If it is necessary to uninstall MAG*3.0*184, administrators will need to 
+ use the PackMan function INSTALL/CHECK MESSAGE.  Check your MailMan 
+ messages for the backup message sent by the Backup a Transport Global 
+ function.
+  
+ 1. Select the message shown below:
+ Backup of MAG*3.0*184 install on <mmm dd, yyyy>  <user name>
+  
+ 2. Select the Xtract Packman option
+ 3. Select the Install/Check Message option
+ 4. Enter "Yes" at the prompt
+ 5. Enter "No" at the backup prompt.  There is no need to backup the 
+ backup.
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+  
+ Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Warning:  Installing this message will cause a permanent update of 
+ globals and routines.
+ Do you really want to do this? NO// YES
+  
+ Routines are the only parts that are backed up.  NO other parts are 
+ backed up, not even globals. You may use the 'Summarize Message'option of 
+ PackMan to see what parts the message contains. Those parts that are not 
+ routines should be backed up separately if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2    Message #43517     Unloading Routine   MAGJMN1
+ (PACKMAN_BACKUP)
+ Line 380  Message #43517     Unloading Routine   MAGJTU4V
+ (PACKMAN_BACKUP)
+ Line 680  Message #43517     Unloading Routine   MAGJUTL5
+ (PACKMAN_BACKUP)
+  
+ Select PackMan function:<return>
+  
+ Enter message action (in IN basket): Ignore//
+  
+ The MAG*3.0*184 KIDS Uninstall is now complete.
+  
+ Uninstalling VistARad Client MAG*3.0*184
+ ========================================
+ If it is necessary to uninstall the MAG*3.0*184 client, use the Uninstall 
+ option from the Windows Control Panel to uninstall:  "VistARad MAG 3.0 
+ Patch 184". Then install one of the previous versions of VistARad which
+ was included in MAG*3.0*153.
+  
+ Routine Information:
+ ===================
+ This section lists modified routines for the VistA KIDS build.  For each 
+ routine, the second line will contain the following information: 
+ ;;3.0;IMAGING;**[Patch List]**; Mar 19, 2002;Build 1;Feb 15, 2017
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine         Checksum        Checksum        Patch List
+                 Before          After
+ MAGJMN1         98640707        98640707        **16, 9, 22, 18, 65, 76, 
+                                                 101, 90, 115, 120, 133,
+                                                 152, 153, 184**
+ MAGJTU4V        5207279         5409615         **90, 115, 120, 133, 152, 
+                                                 153, 184**
+ MAGJUTL5        38198826        38266296        **65, 76, 101, 90, 115, 
+                                                 104, 120, 133, 152, 153,
+                                                 184**
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 22, 2017
+Completed By:                               Date Completed: JUN 29, 2017
+Released By :                               Date Released : JUN 30, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

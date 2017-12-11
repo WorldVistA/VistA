@@ -1,0 +1,1206 @@
+$TXT Created by              at DEVCUR.DOMAIN.EXT  (KIDS) on Tuesday, 05/23/17 at 13:51
+=============================================================================
+Run Date: JUL 26, 2017                     Designation: LEX*2*103
+Package : LEX - LEXICON UTILITY               Priority: Mandatory
+Version : 2       SEQ #102                      Status: Released
+                  Compliance Date: AUG 26, 2017
+=============================================================================
+
+Associated patches: (v)LEX*2*86    <<= must be installed BEFORE `LEX*2*103'
+                    (v)DI*22.2*3   <<= must be installed BEFORE `LEX*2*103'
+                    (v)LEX*2*111   <<= must be installed BEFORE `LEX*2*103'
+
+Subject: LEXICON API/DD UPDATES
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  This patch makes modifications to 5 Lexicon APIs, adds 12 new APIs,
+  modifies 4 files, adds 2 new files, modifies 3 options, adds 1 new
+  option, modifies 97 routines, adds 27 new routines, deletes 2 routines
+  and introduces three new Integration Control Registrations (ICRs) 
+  agreements. 
+   
+  
+  APIs/Coding Changes:
+  ===================
+  
+    $$MIX^LEXXMC(text)                       ICR 6266 Supported       New
+    ------------------
+  
+      This is a new API to convert a clinical terms from uppercase 
+      to mixed case.  It replaces an older API $$MIX^LEXXM, ICR 5781,
+      released in patch LEX*2.0*80, Jun 17, 2014.
+  
+        Old API                    New API
+        $$MIX^LEXXM(X)             $$MIX^LEXXMC(X)
+        Hard Coded Rules           Database of Rules file 757.07
+        Extremely hard to update   Export in a Quarterly patch
+        Rules in LEXXM*            Rules in ^LEX(757.07)
+  
+      While there are some minor differences in the old API 
+      $$MIX^LEXXM and new API $$MIX^LEXXMC, the primary difference
+      is the storage of case rules in a global that can be easily
+      updated in a data only patch.
+  
+      Call:    $$MIX^LEXXMC("CARCINOMA OF SKIN OF EYELID")
+      Returns: "Carcinoma of Skin of Eyelid"
+  
+    $$MIX^LEXXM(text)                        ICR 5781 Supported       Modified
+    -----------------
+  
+      The old API $$MIX^LEXXM will be re-directed to call 
+      $$MIX^LEXXMC
+  
+    $$EXP^LEXU(IEN)                          ICR 6265 Supported       New
+    ---------------
+  
+      This API returns the DISPLAYABLE TEXT field #.01 of the
+      EXPRESSIONS file #757.01.
+  
+        Call:     $$EXP^LEXU(5006124)
+        Returns:  "Foster-Kennedy Syndrome, Bilateral"
+  
+    EXPS^LEXU(IEN,date,.ary)                 ICR 6265 Supported       New
+    ------------------------
+  
+      This API returns the DISPLAYABLE TEXT field #.01 from file
+      757.01 and the associated codes from the CODES file 757.02
+      for an entry in the EXPRESSION file 757.01. 
+  
+      Call:    EXPS^LEXU(5006124,3151212,.ARY)
+      Returns: ARY(5006124)="Foster-Kennedy Syndrome, Bilateral"
+               ARY(5006124,30)="H47.143^ICD-10-CM"
+  
+    $$SOS^LEXU(IEN,.ary,date)                ICR 6265 Supported       New
+    -------------------------
+  
+      This API returns the all codes associated with an Expression
+      in file 757.01, both active and inactive and the date range 
+      that the expression was appropriate for each code.
+  
+      Call:     $$SOS^LEXU(5006124,.ARY)        
+      Returns:  ARY(5006124,0)=1
+                ARY(5006124,1)="H47.143^ICD-10-CM^10D^1^3151001
+                    ^^1^3151001^^5006124;LEX(757.01,^5006978;
+                    LEX(757.02,^30;LEX(757.03,^506979;ICD9("
+                ARY(5006124,"B","H47.143 ",1)="H47.143^ICD-10-CM"
+                ARY(5006124,"C",30,1)="H47.143^ICD-10-CM"
+  
+    $$PREF^LEXU(code,SAB,date)               ICR 6265 Supported       New
+    --------------------------
+  
+      This API returns the Preferred Term for a code.
+  
+      Call:     $$EXPP^LEXU("H47.143","10D",3151212) 
+      Returns:  5006124^Foster-Kennedy Syndrome, Bilateral
+  
+    $$PRF^LEXU(code,date,SAB)                ICR 6265 Supported       New
+    -------------------------
+  
+      This API returns one active code for a preferred term of a
+      designated coding system.  It is used to conduct searches 
+      of a coding system filtering out synonyms, lexical 
+      variants, fully specified terms and orphan text.
+  
+         DIC("S")="I $L($$PRF^LEXU(+Y,3160101,""10D""))"
+  
+         The above filter will return a positive value if the
+         term is linked to an ICD-10-CM code and the term is
+         the preferred term for that code.
+  
+    IENS^LEXU(code,.array,date)              ICR 6265 Supported       New
+    ---------------------------
+  
+      This API returns the Lexicon IENS for a code and an IEN 
+      from a National file (80, 80.1 or 81) if one exist, in an
+      array passed by reference.  It is used primarily for 
+      maintenance.
+  
+      ARY(0)=#
+      ARY(#,757)=IEN MAJOR CONCEPT MAP file #757
+      ARY(#,757.001)=IEN CONCEPT USAGE file #757.001
+      ARY(#,757.01)=IEN EXPRESSIONS file #757.01
+      ARY(#,757.01,7,CD)=IEN DESIGNATION CODE sub-file #757.118
+      ARY(#,757.02)=IEN CODES file #757.02
+      ARY(#,757.02,4,EFF)=IEN ACTIVATION STATUS sub-file #757.28
+      ARY(#,757.03)=IEN CODING SYSTEM file #757.03
+      ARY(#,757.1,#)=IEN SEMANTIC MAP file #757.1
+      ARY(#,"VA",SR)=IEN of VA National files 80, 80.1 or 81
+  
+    $$SUBSETS^LEXU(code,src,.array)          ICR 6265 Supported       New
+    -------------------------------
+  
+      This API returns the subset for which a code belongs.  
+      If the array is passed, then it will also return the 
+      names and IENS of the subsets.
+  
+      $$SUBSET        "4^CLF^DIS^PLS^SCT^"
+  
+      Array if passed:
+  
+        ARY("CLF")="Clinical Findings^7000039^70071537^7301845"
+        ARY("DIS")="Disorder^7000002^7150923^7301845"
+        ARY("PLS")="PL Standard^7000038^70175664^7301845"
+        ARY("SCT")="SNOMED CT^7000037^7457760^7301845"
+  
+    CODE^LEXU(code,source,date,.ary,dsp)     ICR 6265 Supported       New
+    TERM^LEXU(expression IEN,date,.ary,dsp)
+    ---------------------------------------
+  
+      These two APIs returns information about a code or a term
+      respectively and return the information in a local array.
+  
+      Array Components:
+  
+        ARY("CO")           Code
+        ARY("MC")           Major Concept
+        ARY("PF")           Preferred Term
+        ARY("FS")           Fully Specified Term
+        ARY("SY")           Synonym
+        ARY("LV")           Lexical Variant
+        ARY("DC")           Diagnostic Categories
+        ARY("CP")           Procedure Characters
+        ARY("MP")           Mapping
+        ARY("SB")           Subsets
+        ARY("SR")           Source
+        ARY("OR")           Orphan Text
+        ARY(SUB)            Where SUB is MC, PF, FS or SY
+        ARY(SUB,n,"ID")     Designation ID
+        ARY(SUB,n,"SK")     Supplemental Keywords
+        ARY(SUB,N,"NG")     Negations
+  
+        (SDM Ticket R9312094FY16)
+  
+  
+    LOOK^LEXA(x,app,len,sub,dt,src,cat,FMT)  ICR 6267 Supported       Modified
+    ---------------------------------------
+  
+      An additional parameter FMT has been added that will 
+      alter the output of the output LEX() array.
+  
+      If FMT is missing or set to 0 (zero) then the LEX() 
+      output array will not change and the array will return 
+      the "roll and scroll" display text:
+  
+      Call:    D LOOK^LEXA("Mouth Breathing","10D",20,"10D",3151212)
+  
+      Format:  LEX("LIST",1)="5019187^Mouth Breathing (ICD-10-CM R06.5)"
+  
+      However, if FMT is set to 1 then the LEX() output array
+      parsed the codes will be added to the array for each 
+      expression using the Coding System (pointer to file
+      757.03) as a subscript to the array.  The Coding System
+      node of the array will contain the Code, the nomenclature
+      of the Coding System and a variable pointer to a national
+      file if one exist:
+  
+      Call:    D LOOK^LEXA("Mouth Breathing","10D",20,"10D",3151212,,,1)
+  
+      Format:  LEX("LIST",1)="5019187^Mouth Breathing"
+               LEX("LIST",1,30)="R06.5^ICD-10-CM^521361;ICD9("
+  
+    $$GETSYN^LEXTRAN1(src,cd,dt,ary,iens,id,in) ICR 5006 Supported    Modified
+    -------------------------------------------
+  
+      This API has been fixed to return the synonyms for a code
+      for a coding system using either a pointer to the Coding
+      Systems file #757.03 or the Source Abbreviation (SAB) from
+      the .01 field of the Coding Systems file #757.03. 
+  
+    $$GETDID^LEXTRAN1(src,ien)               ICR 6472 Supported       New
+    --------------------------
+  
+      This API returns the Designation ID based on a coding
+      system (source) and an Internal Entry Number (IEN) 
+      in the Expressions file #757.01.
+  
+      Call:     $$GETDID^LEXTRAN1("SCT",7150492)
+      Returns:  826028019
+  
+    EN^LEXABC(code,date)                     N/A, internal            Modified
+    --------------------
+  
+      Lookup by code is one of five lookups called by LOOK^LEXA
+      (see ICR 6267 Supported).  Code was found in LEXABC that 
+      was ICD-9 specific.  It has been modified to include 
+      ICD-10.  Additionally, the extended search fails when a
+      ICD-10 code is linked to multiple terms.  The extended
+      ICD-10 search has been modified to include the preferred
+      term and all other terms (synonyms, orphans, etc.) linked
+      to the code.
+  
+    LEXU^LEXXGU                              N/A, internal            New
+    -----------
+  
+      This entry point is used by developers and test sites to
+      uninstall a quarterly data patch with users on the system.
+      It requires the ^LEXU uninstall global.
+  
+    LEX CSV ICD/CPT Change List Option       N/A, internal            Modified
+    ----------------------------------
+  
+      This option has been modified to suppress revisions and 
+      re-used codes when the only difference between the 
+      descriptions is based on parsing logic.  It was also
+      modified to display a brief listing (totals only) of 
+      the codes that were added, inactivated, re-activated,
+      revised or re-used.
+  
+    LEX CSV Query Options                    N/A, internal            Modified
+    ---------------------
+  
+      Added LEXIIEN flag to included IENs in the display for:
+  
+      [LEX CSV ICD QUERY] ICD Diagnosis Code Set Query        LEXQID*
+      [LEX CSV ICP QUERY] ICD Procedure Code Set Query        LEXQIP*
+      [LEX CSV MOD QUERY] CPT Modifier Code Set Query         LEXQCM*
+      [LEX CSV CPT QUERY] CPT/HCPCS Procedure Code Set Query  LEXQCP*
+  
+      Miscellaneous support for Lexicon Queries:
+  
+        LEXQO      Removed HANG command during display
+        LEXQWA     Lexicon Abbreviation Query
+        LEXQWS     Supplemental Keyword Query
+  
+  
+    SNOMED CT Query Option                   N/A, internal            New
+    ----------------------
+  
+      Added new CSV Query for SNOMED CT
+  
+      [LEX CSV SCT QUERY]   SNOMED CT Code Query           LEXQSC*
+  
+      Display based on date:  09/01/2015
+   
+        Code:  708809007      Adverse drug reaction resulting from 
+                                     treatment of disorder
+          
+           Status:             Active         Effective:  09/01/2015
+   
+           Major Concept:      Adverse drug reaction resulting from 
+                               treatment of disorder
+                                 Preferred Term
+                                 Designation Codes
+                                   3036876010
+  
+           Fully Specified:    Adverse drug reaction resulting from 
+                               treatment of disorder (disorder)
+                                 Designation Codes
+                                   3036660016
+   
+           Subsets:            Clinical Findings
+                               PL Standard
+  
+  
+  
+    Lexicon Lookup Option                    N/A, internal            Modified
+    ---------------------
+  
+      [LEX LOOK-UP]  Look-up Term 
+  
+         This option has been modified to indicate when a synonym,
+         lexical variant or fully specified term is retired.  
+  
+         Example:
+  
+           Synonym:    Toxic effect of selenium compound, NOS
+                       Retired Synonym
+  
+    Cross-Reference/Indexing                 N/A, internal            Modified
+    ------------------------
+  
+      Added logic to suppress the indexing of deactivated terms.
+      If the deactive term is a major concept and it has synonyms,
+      then the indexing of the synonyms will also be suppressed.
+      Also added logic to suppress the indexing of SNOMED CT 
+      Fully Specified terms.  This will result in a 90MB 
+      reduction of the size of the index used for lookup and 
+      reduce search times. (routines LEXNDX*, LEXRX* and LEXXGP)
+      
+      Added indexing logic for the new TOKENS file #757.07 
+      (routine LEXNDX9)
+  
+      Replaced all FileMan calls to IX1^DIK with IXALL^DIK during
+      full file indexing to speed up re-indexing.
+  
+      Added a indexing report to report the size and number of
+      entries in an index.  This is used to identify problems 
+      at a site remotely.  (routine LEXRXR)
+  
+  
+  FILES:
+  =====
+  
+    EXPRESSIONS file #757.01                                          Modified
+    ------------------------                     
+  
+        DISPLAYABLE TEXT field .01
+  
+          Updated the maximum length of this free text field to 
+          4000 characters.
+  
+          757.01,.01  DISPLAYABLE TEXT    0;1 FREE TEXT (Required)
+  
+            INPUT TRANSFORM:  I $D(X) K:$L(X)>4000!($L(X)<1) X
+  
+            HELP-PROMPT:      Displayable Text must be 1-4000 
+                              characters in length. 
+  
+            DESCRIPTION:      This is the text which will be used
+                              to represent the expression (Major 
+                              Concept, Synonym or Lexical Variant).
+  
+          This requires FileMan 22.2, released Aug 04, 2016, with a
+          compliance date of Nov 13, 2016.
+  
+          The following routines were modified to accommodate a 4000
+          character string length:
+  
+             LEX10CS2    LEX10CX     LEX10CX3    LEX10CX4    LEX10DLS
+             LEX10PL     LEX10PLA    LEX10PLS    LEX10PR     LEX10TAX
+             LEXABC      LEXALK      LEXAR2      LEXAR3      LEXDCCC
+             LEXHLP2     LEXINF4     LEXINF5     LEXLK2      LEXQC5
+             LEXQCM      LEXQCM2     LEXQCP      LEXQCP2     LEXQDRG4
+             LEXQHL1     LEXQHL2     LEXQHL3     LEXQHL4     LEXQHL5
+             LEXQHLM     LEXQID      LEXQID2     LEXQID3     LEXQID4
+             LEXQID4     LEXQIP      LEXQIP2     LEXQIP3     LEXQL
+             LEXQL2      LEXQM       LEXQSC      LEXQSC2     LEXQWA
+             LEXRXR      LEXRXXP     LEXRXXT     LEXTRAN1    LEXU
+             LEXU5       LEXXFI7     LEXXGI2     LEXXII      LEXXII2
+             LEXXM       LEXXMM      
+  
+  
+  
+    CODES file #757.02                                                Modified
+    ------------------                     
+  
+        CLASSIFICATION SOURCE field #2
+  
+          Updated description for the "AVA" Cross-Reference:
+  
+            ^LEX(757.02,"AVA",CODE,MCIEN,SAB,IEN) - where CODE 
+            is the Classification Code from field 1, MCIEN is 
+            a pointer to Major Concept Map file (#757), SAB is
+            the three character mnemonic for the source 
+            abbreviation in the Coding Systems file #757.03 
+            (i.e., ICD, CPT, etc.) and IEN is the Internal 
+            Entry Number in the Codes file #757.02 where the
+            code is located.  This is an index of only those
+            codes frequently used by the VA.  
+  
+          Modified the kill logic of the "AVA" index to NEW the
+          variable SAB instead of KILLing the variable SAB.
+  
+        DEACTIVATION FLAG field #5
+  
+          This unsupported field is being deleted because it is 
+          not versioned.  It was replaced by the supported API 
+          $$STATCHK^LEXSRC2 (ICR 4083, dated Apr 14,2003) which 
+          returns the versioned status (active/inactive) based 
+          on a date.
+  
+        "ACODE," "ADC" and "ADCODE" Indexes
+  
+          These unsupported indexes were deleted because they are
+          not versioned and haven't been used since 2004.  They 
+          were replaced by the versioned index "ACT."
+  
+  
+    TOKENS file #757.07            includes data                      New
+    -------------------                        
+  
+      ^LEX(757.07,
+  
+      File Security
+         DD Security    : @     Delete Security: @
+         Read Security  : @     LAYGO Security : @
+         Write Security : @
+  
+      Cross Referenced by:
+        EXAMPLE & ABBREVIATION & COMMENT/MEANING      "ABBR"
+        EXAMPLE & COMMENT/MEANING & ABBREVIATION      "AED"
+        TOKEN                                         "B"
+        COMMENT/MEANING                               "D"
+  
+      FILE STRUCTURE
+  
+        Field   Field
+        Number  Name                       Range      Location
+        .01     TOKEN (RF)                 1-30       [0;1]
+        1       ORDER (Multiple-757.0701)             [1;0]
+                .01  ORDER (NJ3,0)         1-100      [0;1]
+                .02  CASE (S)              U/L/M/S    [0;2]
+                .03  EXAMPLE (F)           1-30       [0;3]
+                .04  COMMENT/MEANING (F)   2-200      [0;4]
+                .05  ABBREVIATION (S)      1/0        [0;5]
+                1    TERM RULE (K)         1-245      [1;E1,245]
+                2    PREVIOUS RULE (K)     1-245      [2;E1,245]
+                3    NEXT WORD RULE (K)    1-245      [3;E1,245]
+  
+  
+    SUPPLEMENTAL WORDS file #757.071    includes data                 New
+    --------------------------------
+  
+      ^LEX(757.071,
+  
+      File Security
+        DD Security    : @     Delete Security: @
+        Read Security  : @     LAYGO Security : @
+        Write Security : @
+  
+      Cross Referenced by:
+        WORD                           (AD1)          "AD"
+        INCLUDES                       (AD2)          "AD"
+        WORD                                          "B"
+  
+        File Structure:
+  
+  
+        Field   Field
+        Number  Name                       Range      Location
+        .01     WORD (RF)                  3-40       [0;1]
+        .02     EFFECTIVE DATE (RD)        09/22/1966 [0;2]
+        .03     INACTIVE DATE (D)          09/23/1966 [0;3]
+        .04     INCLUDES (F)               2-85       [0;4]
+        .05     EXCLUDES (F)               2-85       [0;5]
+          
+  
+    MAPPINGS file #757.33                                             Modified
+    ---------------------                
+  
+      SOURCE CODE field #1
+  
+        Expanded the input transformation from 2-15 to 1-40
+        characters
+  
+        Before:  K:$L(X)>15!($L(X)<2) X
+        After:   K:$L(X)>40!($L(X)<1) X
+  
+      TARGET CODE field #2
+  
+        Expanded the input transformation from 2-15 to 1-40
+        characters
+  
+        Before:  K:$L(X)>15!($L(X)<2) X
+        After:   K:$L(X)>40!($L(X)<1) X
+  
+      Modify the following indexes as follows:
+  
+        SRC is now a 40 character source code
+        TGT is now a 40 character target code
+  
+        ACT Index    ^LEX(757.33,"ACT",SRC,TGT,EF,STA,IEN,HIS)
+        AMAP Index   ^LEX(757.33,"AMAP",DEF,SRC,TAR,IEN)
+        AREV Index   ^LEX(757.33,"AREV",DEF,TAR,SRC,IEN)
+        ASRC Index   ^LEX(757.33,"ASRC",DEF,SRC,TAR,IEN)
+        ATAR Index   ^LEX(757.33,"ATAR",DEF,TAR,SRC,IEN)
+        C Index      ^LEX(757.33,"C",DEF,SRC,ORD,TAR,IEN)
+  
+  
+  ROUTINES:
+  ========
+  
+    Special Lookup
+    --------------
+  
+      LEX10CS2  Allow for a 4000 character string                     Modified
+      LEX10CX   Allow for a 4000 character string                     Modified
+      LEX10CX3  Allow for a 4000 character string                     Modified
+      LEX10CX4  Allow for a 4000 character string                     Modified
+      LEX10DLS  Allow for a 4000 character string                     Modified
+      LEX10PL   Allow for a 4000 character string                     Modified
+      LEX10PLA  Allow for a 4000 character string                     Modified
+      LEX10PLS  Allow for a 4000 character string                     Modified
+      LEX10PR   Allow for a 4000 character string                     Modified
+      LEX10TAX  Allow for a 4000 character string                     Modified
+      LEXA      Add parameter to LOOK^LEXA for output format          Modified
+      LEXA1     Added CPT and HCPCS Codes to Y output variable        Modified
+      LEXAB     Added new output format to Exact Match lookup         Modified
+      LEXABC    Output format lookup by Code, expand to 4000 chars    Modified
+      LEXABC2   Added new output format to lookup by Code (cont)      Modified
+      LEXAI     New, lookup by IEN                                    New
+      LEXAL     Added new parsed output to list builder               Modified
+      LEXALK    Allow for a 4000 character string                     Modified
+      LEXAR2    Allow for a 4000 character string                     Modified
+      LEXAR3    Allow for a 4000 character string                     Modified
+      LEXAR4    Remove Modifier functionality (no longer used)        Modified
+      LEXAR5    Additional Variables NEWed (clean up)                 Modified
+      LEXAR8    New, CONCEPT USAGE file #757.001 Updater              New
+      LEXASC    Disabled lookup by shortcuts                          Modified
+      LEXASO    Added code array for new parsed output format         Modified
+      LEXLK     Lexicon Lookup                                        Modified
+      LEXLK2    Lexicon Lookup Output                                 Modified
+  
+    Code Set Queries
+    ----------------
+  
+      LEXQC     Add prompts for detailed/brief report                 Modified
+      LEXQC3    Added counters for total and new text compare         Modified
+      LEXQC4    Added counters for total and new text compare         Modified
+      LEXQC5    New, compare text using FM 22.2 wrapping logic        New
+      LEXQC6    New, brief display of changes (totals only)           New
+      LEXQCM    Added flag to display IENs in CPT Modifier Query      Modified
+      LEXQCM2   Added flag to display IENs in CPT Modifier Query      Modified
+      LEXQCP    Added flag to display IENs in CPT/HCPCS Query         Modified
+      LEXQCP2   Added flag to display IENs in CPT/HCPCS Query         Modified
+      LEXQDRG4  Allow for a 4000 character string                     Modified
+      LEXQHL1   Allow for a 4000 character string                     Modified
+      LEXQHL2   Allow for a 4000 character string                     Modified
+      LEXQHL3   Allow for a 4000 character string                     Modified
+      LEXQHL4   Allow for a 4000 character string                     Modified
+      LEXQHL5   Allow for a 4000 character string                     Modified
+      LEXQHLM   Allow for a 4000 character string                     Modified
+      LEXQID    Added flag to display IENs in ICD Diagnosis Query     Modified
+      LEXQID2   Added flag to display IENs in ICD Diagnosis Query     Modified
+      LEXQID3   Added flag to display IENs in ICD Diagnosis Query     Modified
+      LEXQID4   Added flag to display IENs in ICD Diagnosis Query     Modified
+      LEXQIDA   Additional Variables NEWed (clean up)                 Modified
+      LEXQIP    Added flag to display IENs in ICD Procedure Query     Modified
+      LEXQIP2   Added flag to display IENs in ICD Procedure Query     Modified
+      LEXQIP3   Added flag to display IENs in ICD Procedure Query     Modified
+      LEXQIPA   Additional Variables NEWed (clean up)                 Modified
+      LEXQL     Allow for a 4000 character string                     Modified
+      LEXQL2    Allow for a 4000 character string                     Modified
+      LEXQM     Allow for a 4000 character string                     Modified
+      LEXQO     Remove HANG command in output/display                 Modified
+      LEXQSC    SNOMED CT Query                                       New
+      LEXQSC2   SNOMED CT Query                                       New
+      LEXQSCA   SNOMED CT Query                                       New
+      LEXQWA    Lexicon Abbreviation Query                            New
+      LEXQWS    Supplemental Keyword Query                            New
+  
+    Indexing
+    --------
+  
+      LEXNDX1   Suppress indexing deactivated terms                   Modified
+      LEXNDX2   Suppress indexing deactivated terms                   Modified
+      LEXNDX6   Suppress indexing deactivated terms                   Modified
+      LEXNDX8   Remove Leading Space " " Character                    Modified
+      LEXNDX9   Added indexing logic for TOKENS file #757.07          Modified
+      LEXRXA    Replaced calls to IX1^DIK with IXALL^DIK              Modified
+      LEXRXB    Added a sub-routine to recalculate frequencies        Modified
+      LEXRXC    Replaced calls to IX1^DIK with IXALL^DIK              Modified
+      LEXRXC2   Remove the APAR index - Parent field deleted          Modified
+      LEXRXC3   Suppress indexing deactivated terms                   Modified
+      LEXRXD    Remove ACOD Index                                     Modified
+      LEXRXD2   Remove ADC Index                                      Modified
+      LEXRXD3   Remove ADCODE Index                                   Modified
+      LEXRXE    Replaced calls to IX1^DIK with IXALL^DIK              Modified
+      LEXRXF    Replaced calls to IX1^DIK with IXALL^DIK              Modified
+      LEXRXG    Replaced calls to IX1^DIK with IXALL^DIK              Modified
+      LEXRXR    New, reports the content of major Lexicon files       New
+      LEXRXS    Add indexing for new files #757.07 and #757.071       Modified
+      LEXRXXM   Fix SACC Violation 2.3.1.4                            Modified
+      LEXRXXP   Allow for a 4000 character string                     Modified
+      LEXRXXS   Fix Error counting logic to exclude index "A***"      Modified
+      LEXRXXT   Added TaskMan parameter ZTPRI to the task             Modified
+      LEXRXXT2  Add indexing for new files #757.07 and #757.071       Modified
+      LEXXGP1   Suppress indexing deactivated terms                   Modified
+      LEXXGP3   Suppress indexing deactivated terms                   Modified
+  
+    Supplemental Keyword Utility 
+    ----------------------------
+  
+      LEXWUD    Deletes duplicate supplemental keywords               New
+      LEXWUI    Adds supplemental keywords to files 80 and 80.1       New
+      LEXWUL    Adds supplemental keywords to the Lexicon             New
+      LEXWUM    Miscellaneous support for supplemental keywords       New
+      LEXWUP    Purge supplemental keywords                           New
+      LEXWUS    Adds supplemental keywords                            New
+  
+    General Utilities
+    -----------------
+  
+      LEXDCCC   Allow for a 4000 character string                     Modified
+      LEXHLP2   Allow for a 4000 character string                     Modified
+      LEXU      Added four new data extraction APIs                   Modified
+      LEXU3     Support for new Expression APIs                       Modified
+      LEXU6     Support for new data extraction APIs                  Modified
+      LEXU7     New, Extract IENs for a code                          Modified
+      LEXUH     Update Help for new APIs                              Modified
+      LEXINF    Information about a code/term                         New
+      LEXINF2   Information about a code/term - Code                  New
+      LEXINF3   Information about a code/term - Term                  New
+      LEXINF4   Information about a code/term - Lookup                New
+      LEXINF5   Information about a code/term - Display               New
+      LEXSRC2   Update API Documentation only, no MUMPS code changed  Modified
+      LEXTRAN1  Fix API $$GETSYS; add new API $$GETDID                Modified
+      LEXXFI    File Information update MailMan Message               Modified
+      LEXXFI7   Allow for a 4000 character string                     Modified
+      LEXXFQ    Do not close devices (remove ^%ZISC)                  Modified
+      LEXXGI    Install Quarterly Patch update MailMan Message        Modified
+      LEXXGI2   Allow for a 4000 character string                     Modified
+      LEXXGI3   Add CSV SDO totals counters                           Modified
+      LEXXGI4   Install Quarterly Patch New TaskMan variables         Modified
+      LEXXGU    Uninstall Quarterly Patch                             New
+      LEXXGU2   Uninstall Quarterly Patch                             New
+      LEXXII    Installation Information update MailMan Message       Modified
+      LEXXII2   Allow for a 4000 character string                     Modified
+  
+    Mixed Case Utility
+    ------------------
+  
+      LEXXM     Modified to call routine LEXXMC                       Modified
+      LEXXMC    Case conversion based on rules                        New
+      LEXXMM    Allow for a 4000 character string                     Modified
+  
+  
+  ICRs New/Modified
+  =================
+  
+    ICR 6267   Lexicon Silent Lookup                                  New
+  
+               LOOK^LEXA(X,AP,LL,SUB,CDT,SRC,CAT,FMT)
+  
+                  A new input parameter FMT has been added to the
+                  call LOOK^LEXA to alter the format of output 
+                  array.  (this ICR expands upon LOOK^LEXA 
+                  ICR 2950)
+  
+    ICR 6266   Convert to Mixed Case                                  New
+  
+               $$MIX^LEXXMC(TEXT)
+  
+                  This API converts text from any form to a 
+                  modified mix text format.  This API replaces 
+                  an older API $$MIX^LEXXM (ICR 5781) which 
+                  converted text to mix text using hard coded
+                  rules found in a series of Lexicon namespace 
+                  routines.  This API still uses rules to 
+                  convert text to mixed case but the rules are
+                  stored in the TOKENS file #757.07.
+                 
+    ICR 6265   Lexicon Expression Extracts                            New
+  
+               $$EXP^LEXU(IEN)
+  
+                  This API returns Display Text (.01 field) of
+                  the EXPRESSIONS file #757.01.  
+                 
+               EXPS^LEXU(IEN,CDT,.ARY)
+  
+                  This API returns the display text of an 
+                  expression from the EXPRESSIONS file #757.01
+                  and active codes associated with the
+                  expression.  
+                 
+               $$PREF^LEXU(COD,SAB,CDT)
+  
+                  This API returns the preferred term for a code
+                  and coding system based on date.  
+                 
+               $$IENS^LEXU(CODE,.ARY,CDT)
+  
+                  This API returns IENs from the Lexicon and
+                  National files for a code.  
+                 
+               $$SOS(IEN,.ARY)
+  
+                  This API returns a local array (passed by
+                  reference) of codes for an Expression. These
+                  codes may be active or inactive.  
+                 
+               $$EXM(TEXT,.ARY,DF,MC)
+  
+                  This API returns IENs in a local array of 
+                  the Expressions in the EXPRESSIONS file #757.01
+                  that match the input text exactly.  
+  
+               $$PRF^LEXU(LEX,LEXVDT,LEXSAB)
+  
+                  This API one code for a preferred term of a
+                  designated coding system.  It is used to 
+                  conduct search of a coding system filtering 
+                  out synonyms, lexical variants, fully 
+                  specified terms and orphan text.
+  
+               $$SUBSETS^LEXU(CODE,SRC,.ARY)
+  
+                  This API returns the subsets that a code is
+                  assigned to.
+  
+                 
+    ICR 1611   Problem File Update by Lexicon                         Modified
+  
+               File 9000011, root ^AUPNPROB(
+  
+               Added two new global references:
+  
+                 ^AUPNPROB('B')  
+                       Needed to traverse the "B" index
+  
+                 ^AUPNPROB(D0,800)
+                       Field      80001
+                       Name       SNOMED CT CONCEPT CO
+                       Location   800;1
+                       Access     Read w/FileMan
+  
+    ICR 6472   Get Designation ID for an Expression                   New
+  
+               $$GETDID^LEXTRAN1(SRC,IEN)
+  
+                  This API returns the designation ID code for
+                  a source and an expression.  The source maybe
+                  either a pointer to the CODING SYSTEMS file
+                  #757.02 or the source abbreviation found in
+                  the .01 field of the CODING SYSTEMS file
+                  #757.03.  The expression is identified by an
+                  internal entry number (IEN) of the EXPRESSIONS
+                  file #757.01.
+  
+  
+  TEST SITES:
+  ==========
+  
+    VISN 2 (Buffalo, NY)
+    Montana HCS (Fort Harrison, MT)
+    Northern Florida HCS (Gainesville, FL)
+  
+  
+  DEFECT TICKETS:
+  ==============
+  
+    R9312094FY16  - Need a non-interactive (silent) version of ^LEXQSC
+    R12094505FY17 - <FRAMESTACK> error received when queueing install
+    R12136523FY17 - <FRAMESTACK> error received when queueing install
+  
+  
+  SFTP DOCUMENTATION RETRIEVAL:
+  ============================
+  
+    Host Files:
+  
+        File Name                 SFTP Protocol
+        LEX_2_103_LEXTM.PDF       Binary
+         
+    The preferred method is to retrieve the file from:
+        
+        download.vista.domain.ext.
+        
+    This transmits the file from the first available server. Sites may
+    also elect to retrieve the file directly from a specific server.
+        
+    Sites may retrieve the documentation directly using Secure File Transfer
+    Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following 
+    OI Field Offices:
+        
+        Albany            domain.ext
+        Hines             domain.ext
+        Salt Lake City    domain.ext
+        
+    Documentation can also be found on the VA Software Documentation 
+    Library at:
+        
+        http://www4.domain.ext/vdl/
+  
+  
+  INSTALLATION:
+  ============
+  
+    1)  Users may be on the system during the install of LEX*2.0*103.
+        It is recommended that this patch be installed during non-peak
+        hours.  This patch should take from 1 minute and 45 seconds to 3
+        minutes and 45 seconds to install, depending on the system and
+        system activity.
+  
+            Create a backup      1   to    2 minutes
+            Kids Install        .75  to 1.75 minutes
+  
+    2)  Create a backup of the following global files before continuing:
+   
+           Lexical Files       #757.07, 757.071,757.2 and 757.3
+   
+        These backup files may get as large as 2.5 megabytes.  Make sure
+        space is available before proceeding.  It should take from 1 to
+        2 minutes to create the backup files.
+  
+        When you are creating a backup of a subscripted global, you are
+        saving a partial global (a file within a global).  You should use
+        the utility ^%GOGEN, and when prompted for a global, enter the open
+        global reference (as shown below).  Examples:
+  
+           Enter           To create a Backup copy of       Comment
+           ------          --------------------------       -------
+           ^LEX(757.07,    TOKENS (#757.07)                 May not exist
+           ^LEX(757.071,   SUPPLEMENTAL WORDS (#757.071)    May not exist
+           ^LEX(757.3,     LOOK-UP SCREENS (#757.3)
+           ^LEXT(757.2,    SUBSET DEFINITIONS (#757.2)
+  
+    3)  Set up user and IO variables (D ^XUP) for programmer access.
+       
+    4)  Distribution Load:
+       
+        Load the KIDS Distribution from the Packman Message using the
+        Packman function "Install/Check Message."
+  
+    5)  KIDS Installation:
+              
+        Use the KIDS Installation Menu.
+                 
+        a)  Pre-Install Options:
+  
+            From the KIDS Installation Menu, you may choose the following 
+            options prior to installing this patch:
+                 
+                 2    Verify Checksums in Transport Global
+                 3    Print Transport Global
+                 4    Compare Transport Global to Current System
+                 5    Backup a Transport Global
+                 
+              For each of the above options, respond "LEX*2.0*103" at the
+              "Select INSTALL NAME:   prompt.
+                 
+        b)  Install Option:
+  
+            From the KIDS Installation Menu, use the following option to
+            install the contents of the host file:
+                 
+                6   Install Package(s)
+                 
+                Respond "LEX*2.0*103" at the "Select INSTALL NAME:" prompt.
+                  
+                At the "Rebuild Menu Trees Upon Completion of Install" prompt
+                accept the default "YES"
+  
+                At the "INHIBIT LOGONs during the install" prompt accept the
+                default "NO"
+  
+                At the "DISABLE Scheduled Options, Menu Options, and Protocols"
+                prompt accept the default "NO             
+  
+            The KIDS installation should take from 45 seconds to 1 minute 
+            and 45 seconds.
+  
+    6)  Post-Install:
+  
+        The installation of this patch start a TaskMan task that will repair
+        the indexes of the following Lexicon files:
+  
+           EXPRESSIONS file #757.01
+           SUBSETS file #757.21
+  
+        It should take from 26 to 90 minutes to complete the index repair 
+        depending on your system (VMS/LINUX) and the number of users on 
+        the system.
+  
+    7)  Cleanup:
+  
+        Make sure all task started by this patch have completed before 
+        continuing.  To determine if there is a Lexicon task is still
+        running:
+  
+           Use option [XUTM MGR}
+           Select "List Task"
+           Select "Running tasks"
+  
+           Look for a running task called by a LEX* namespaced routine.
+           Routines LEXRXC, LEX2103P and LEXXGP1 should have task running.
+  
+        Once there are no Lexicon task running, then you may proceed with
+        the post-install cleanup.
+  
+        The Environment Check routine LEX2103 and the Post-Install routine 
+        LEX2103P should be deleted using the KERNEL option 'Delete Routines'
+        [XTRDEL] upon completion of the installation.
+  
+    8)  Back-out Plan:
+        
+        The back-out of Data Dictionaries, options and an other infrastructure
+        components in LEX*2.0*103 could cause broken pointers, FileMan errors,
+        failed input transformations, orphaned data, <UNDEFINED> errors and
+        hard MUMPS crashes.  This patch can only be backed out if no other
+        patch has been installed that requires LEX*2.0*103.  If that is the
+        case, Contact the Enterprise Service Desk to log an Incident to the
+        NTL.APP.VistA.Clinical Lexicon 2_0 category which assigns the ticket
+        to the appropriate National Support team.
+  
+    9)  Patch Verification:
+  
+        Kernel Installation & Distribution System-> Utilities-> Install File
+        Print option can be used to check for any errors plus the status of 
+        the install being Completed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;LEXICON UTILITY;**[Patch List]**;Sep 23, 1996;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LEX10CS2
+    Before: B50802408   After: B50807913  **80,103**
+Routine Name: LEX10CX
+    Before: B90915734   After: B90737311  **80,103**
+Routine Name: LEX10CX3
+    Before: B97828924   After: B97762806  **80,103**
+Routine Name: LEX10CX4
+    Before: B37820297   After: B32855979  **80,103**
+Routine Name: LEX10DLS
+    Before: B50742305   After: B43045900  **80,103**
+Routine Name: LEX10PL
+    Before:B120517089   After:B120454458  **80,86,103**
+Routine Name: LEX10PLA
+    Before: B39916196   After: B39922018  **80,103**
+Routine Name: LEX10PLS
+    Before: B85504731   After: B75256464  **80,103**
+Routine Name: LEX10PR
+    Before: B47282338   After: B40827156  **80,103**
+Routine Name: LEX10TAX
+    Before: B83718162   After: B74944252  **80,86,103**
+Routine Name: LEX2103
+    Before:       n/a   After: B41910779  **103**
+Routine Name: LEX2103P
+    Before:       n/a   After: B40005925  **103**
+Routine Name: LEXA
+    Before: B60933739   After: B60164922  **3,4,6,19,25,36,38,43,55,73,
+                                           80,86,103**
+Routine Name: LEXA1
+    Before: B70223052   After: B78183288  **3,4,6,11,15,38,55,73,80,86,103**
+Routine Name: LEXAB
+    Before: B11071959   After: B13409057  **25,80,86,103**
+Routine Name: LEXABC
+    Before: B68137439   After: B85331586  **4,25,26,29,38,73,51,80,103**
+Routine Name: LEXABC2
+    Before: B25634318   After: B37588272  **4,80,103**
+Routine Name: LEXAI
+    Before:       n/a   After:  B5279051  **103**
+Routine Name: LEXAL
+    Before: B72078379   After:B101749721  **6,55,80,103**
+Routine Name: LEXALK
+    Before: B35871965   After: B34943415  **2,3,6,25,51,80,103**
+Routine Name: LEXAMD
+    Before: B28007514   After:    Delete  
+Routine Name: LEXAMD2
+    Before:  B2872185   After:    Delete  
+Routine Name: LEXAR2
+    Before:  B1200564   After:  B1202098  **80,103**
+Routine Name: LEXAR3
+    Before: B79678965   After: B72128572  **73,80,103**
+Routine Name: LEXAR4
+    Before: B10464362   After:  B9292133  **4,5,6,25,55,80,103**
+Routine Name: LEXAR5
+    Before: B56192093   After: B56262313  **14,25,26,38,55,73,80,103**
+Routine Name: LEXAR8
+    Before:       n/a   After:B107990203  **103**
+Routine Name: LEXASC
+    Before:  B7966749   After:  B8989576  **25,80,103**
+Routine Name: LEXASO
+    Before: B18758787   After: B37505670  **25,32,73,80,103**
+Routine Name: LEXDCCC
+    Before:  B8993729   After:  B8997343  **80,103**
+Routine Name: LEXHLP2
+    Before: B43406586   After: B37996853  **80,103**
+Routine Name: LEXINF
+    Before:       n/a   After: B50918852  **103**
+Routine Name: LEXINF2
+    Before:       n/a   After:B257419437  **103**
+Routine Name: LEXINF3
+    Before:       n/a   After:B235670168  **103**
+Routine Name: LEXINF4
+    Before:       n/a   After:B103309661  **103**
+Routine Name: LEXINF5
+    Before:       n/a   After:B109263323  **103**
+Routine Name: LEXLK
+    Before:  B4772038   After:  B4767540  **80,103**
+Routine Name: LEXLK2
+    Before: B35967054   After: B88745010  **6,19,80,103**
+Routine Name: LEXNDX1
+    Before: B15300301   After: B19251661  **80,103**
+Routine Name: LEXNDX2
+    Before: B24352657   After: B29054421  **51,80,103**
+Routine Name: LEXNDX6
+    Before: B19709895   After: B22119412  **80,86,103**
+Routine Name: LEXNDX8
+    Before: B57045957   After: B56954000  **25,73,80,103**
+Routine Name: LEXNDX9
+    Before: B18434731   After: B30008620  **73,103**
+Routine Name: LEXQC
+    Before:  B5018665   After: B33216067  **62,80,103**
+Routine Name: LEXQC3
+    Before: B22152952   After: B31649607  **80,103**
+Routine Name: LEXQC4
+    Before: B47380274   After: B98086942  **80,103**
+Routine Name: LEXQC5
+    Before:       n/a   After: B54269273  **103**
+Routine Name: LEXQC6
+    Before:       n/a   After: B68516082  **103**
+Routine Name: LEXQCM
+    Before: B69421811   After: B77372562  **62,68,80,103**
+Routine Name: LEXQCM2
+    Before: B59164466   After: B65915112  **62,80,103**
+Routine Name: LEXQCP
+    Before: B79602950   After:B103936752  **62,80,103**
+Routine Name: LEXQCP2
+    Before: B57182153   After: B97578183  **62,80,103**
+Routine Name: LEXQDRG4
+    Before: B80769306   After: B72627149  **86,103**
+Routine Name: LEXQHL1
+    Before: B95304509   After:B100090333  **62,80,103**
+Routine Name: LEXQHL2
+    Before: B90501099   After: B95667253  **62,80,86,103**
+Routine Name: LEXQHL3
+    Before: B40434251   After: B43878600  **62,80,103**
+Routine Name: LEXQHL4
+    Before:B100552373   After:B111264243  **62,80,103**
+Routine Name: LEXQHL5
+    Before: B21983988   After: B21918229  **62,80,103**
+Routine Name: LEXQHLM
+    Before:  B7914203   After:  B5107528  **62,80,103**
+Routine Name: LEXQID
+    Before: B59190420   After: B62789436  **62,73,80,103**
+Routine Name: LEXQID2
+    Before: B35819355   After: B48669046  **62,73,80,86,103**
+Routine Name: LEXQID3
+    Before: B74079700   After: B78447924  **62,80,103**
+Routine Name: LEXQID4
+    Before: B67283614   After: B95395017  **62,80,103**
+Routine Name: LEXQIDA
+    Before: B51204614   After: B52951726  **62,80,103**
+Routine Name: LEXQIP
+    Before: B89007415   After: B96505280  **62,73,80,86,103**
+Routine Name: LEXQIP2
+    Before: B27132313   After: B36485403  **62,80,86,103**
+Routine Name: LEXQIP3
+    Before: B32494278   After: B43811627  **62,73,80,86,103**
+Routine Name: LEXQIPA
+    Before:  B3640982   After:  B4552153  **62,80,103**
+Routine Name: LEXQL
+    Before: B69912200   After: B69141273  **62,80,86,103**
+Routine Name: LEXQL2
+    Before: B49164602   After: B42716575  **62,80,103**
+Routine Name: LEXQL4
+    Before: B39546926   After: B39882507  **80,103**
+Routine Name: LEXQM
+    Before: B27832926   After: B24807704  **62,80,103**
+Routine Name: LEXQO
+    Before: B10990063   After: B13192974  **62,103**
+Routine Name: LEXQSC
+    Before:       n/a   After: B48698465  **103**
+Routine Name: LEXQSC2
+    Before:       n/a   After: B79382625  **103**
+Routine Name: LEXQSCA
+    Before:       n/a   After: B12524352  **103**
+Routine Name: LEXQWA
+    Before:       n/a   After: B21684253  **103**
+Routine Name: LEXQWS
+    Before:       n/a   After: B24836702  **103**
+Routine Name: LEXRXA
+    Before: B14298023   After: B14814151  **81,103**
+Routine Name: LEXRXB
+    Before: B53080223   After: B55620420  **81,80,103**
+Routine Name: LEXRXC
+    Before:B113217997   After:B151315773  **81,80,86,103**
+Routine Name: LEXRXC2
+    Before: B84713093   After: B85649514  **81,86,103**
+Routine Name: LEXRXC3
+    Before:B124793632   After:B136812826  **81,86,103**
+Routine Name: LEXRXD
+    Before: B77578337   After: B58924729  **81,80,86,103**
+Routine Name: LEXRXD2
+    Before: B31445330   After: B18665689  **81,103**
+Routine Name: LEXRXD3
+    Before: B23248019   After:  B9505422  **81,103**
+Routine Name: LEXRXE
+    Before: B60291807   After: B61896133  **81,80,103**
+Routine Name: LEXRXF
+    Before: B90798435   After:B105419802  **81,80,103**
+Routine Name: LEXRXG
+    Before: B76130411   After: B76976054  **81,80,103**
+Routine Name: LEXRXR
+    Before:       n/a   After:B153321010  **103**
+Routine Name: LEXRXS
+    Before: B47423657   After: B62306257  **81,103**
+Routine Name: LEXRXXM
+    Before: B57887286   After: B60512373  **81,103**
+Routine Name: LEXRXXP
+    Before: B22155217   After: B18222065  **81,80,103**
+Routine Name: LEXRXXS
+    Before:B125584554   After:B130326116  **81,80,103**
+Routine Name: LEXRXXT
+    Before: B66601968   After: B67385073  **81,103**
+Routine Name: LEXRXXT2
+    Before: B40427433   After: B41216920  **81,103**
+Routine Name: LEXSRC2
+    Before: B52722809   After: B50738855  **25,28,73,80,110,103**
+Routine Name: LEXTRAN1
+    Before:B129742637   After:B158895985  **59,73,51,80,86,103**
+Routine Name: LEXU
+    Before:B104256430   After:B121839158  **2,6,9,15,25,36,73,51,80,86,103**
+Routine Name: LEXU3
+    Before: B42123384   After: B63266169  **80,86,103**
+Routine Name: LEXU5
+    Before:  B7267831   After: B56553505  **80,86,103**
+Routine Name: LEXU6
+    Before:  B9815713   After: B93123991  **80,86,103**
+Routine Name: LEXU7
+    Before:       n/a   After: B79121985  **103**
+Routine Name: LEXUH
+    Before:B105459715   After:B130305323  **80,86,103**
+Routine Name: LEXWUD
+    Before:       n/a   After: B26172346  **103**
+Routine Name: LEXWUI
+    Before:       n/a   After: B28511762  **103**
+Routine Name: LEXWUL
+    Before:       n/a   After: B29221774  **103**
+Routine Name: LEXWUM
+    Before:       n/a   After:B111105408  **103**
+Routine Name: LEXWUP
+    Before:       n/a   After:B153408197  **103**
+Routine Name: LEXWUS
+    Before:       n/a   After: B64395390  **103**
+Routine Name: LEXXFI
+    Before: B61706578   After: B61847831  **32,46,49,41,59,73,80,103**
+Routine Name: LEXXFI7
+    Before: B40222921   After: B40228391  **32,49,80,103**
+Routine Name: LEXXFQ
+    Before: B17747138   After: B17748706  **4,25,73,80,103**
+Routine Name: LEXXGI
+    Before: B55219661   After: B70509728  **4,25,26,27,28,29,46,49,50,
+                                           41,59,73,80,103**
+Routine Name: LEXXGI2
+    Before: B66453808   After: B59745942  **25,26,28,29,46,49,50,73,80,103**
+Routine Name: LEXXGI3
+    Before: B20329956   After: B68967314  **59,80,103**
+Routine Name: LEXXGI4
+    Before:B168770794   After:B162551381  **51,80,103**
+Routine Name: LEXXGP1
+    Before:B178355594   After:B186763898  **80,86,103**
+Routine Name: LEXXGP3
+    Before:B141569395   After:B149965814  **86,103**
+Routine Name: LEXXGU
+    Before:       n/a   After: B76652507  **103**
+Routine Name: LEXXGU2
+    Before:       n/a   After:B108123734  **103**
+Routine Name: LEXXII
+    Before: B41394926   After: B41514812  **32,46,49,50,41,59,73,80,103**
+Routine Name: LEXXII2
+    Before: B32320657   After: B32333931  **59,80,103**
+Routine Name: LEXXM
+    Before: B70674913   After: B69629123  **80,103**
+Routine Name: LEXXMC
+    Before:       n/a   After:B200466634  **103**
+Routine Name: LEXXMM
+    Before: B41682628   After: B36873946  **80,86,103**
+ 
+Routine list of preceding patches: 86, 110
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 29, 2015
+Completed By:                               Date Completed: JUL 26, 2017
+Released By :                               Date Released : JUL 26, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

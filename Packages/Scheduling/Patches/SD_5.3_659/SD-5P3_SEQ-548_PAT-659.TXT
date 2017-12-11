@@ -1,0 +1,337 @@
+$TXT Created by                   at MNTVUU.DOMAIN.EXT  (KIDS) on Wednesday, 03/15/17 at 14:31
+=============================================================================
+Run Date: MAY 03, 2017                     Designation: SD*5.3*659
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #548                    Status: Released
+                  Compliance Date: MAY 09, 2017
+=============================================================================
+
+Associated patches: (v)SD*5.3*272  <<= must be installed BEFORE `SD*5.3*659'
+                    (v)SD*5.3*603  <<= must be installed BEFORE `SD*5.3*659'
+                    (v)SD*5.3*624  <<= must be installed BEFORE `SD*5.3*659'
+
+Subject: DELETE HL7 TRIGGERS IN PCMM FILES
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will delete left over, obsolete cross-references and indexes
+ from Patient-Centered Management Module (PCMM) VistA files. PCMM no longer
+ performs any Health Level Seven (HL7) messaging. It will also delete any
+ data in the PCMM HL7 EVENT (#404.48) file.
+  
+ Although the data dictionaries for the listed files will be modified, no 
+ files are included in the patch. The post-install routine will delete the 
+ cross-references and indexes.
+  
+ The entry points in routine SCMCHLX called by the cross-references and
+ indexes were also modified to exit immediately.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ PATIENT TEAM POSITION      PATIENT TEAM 
+ ASSIGNMENT FILE            ASSIGNMENT (#.01)       delete Xref-AEVENT1
+ (#404.43)                  TEAM POSITION (#.02)    delete Xref-AEVENT3
+                            POSITION ASSIGNED
+                            DATE (#.03)             delete Xref-AEVENT4
+                            POSITION UNASSIGNED 
+                            DATE (#.04)             delete Xref-AEVENT5
+                            PC ROLE (#.05)          delete Xref-AEVENT2
+     
+ POSITION ASSIGNMENT        TEAM POSITION (#.01)    delete Xref-AEVENT1
+ HISTORY FILE (#404.52)     EFFECTIVE DATE (#.02)   delete Xref-AEVENT2
+                            PRACTITIONER (#.03)     delete Xref-AEVENT3
+                            STATUS (#.04)           delete Xref-ASTATUS
+                            FTEE EQUIVALENT (#.09)  delete Xref-AFTEE
+  
+ PRECEPTOR ASSIGNMENT       TEAM POSITION (#.01)    delete Xref-AEVENT1
+ HISTORY FILE (#404.53)     EFFECTIVE DATE (#.02)   delete Xref-AEVENT2
+                            STATUS (#.04)           delete Xref-AEVENT3
+                            PRECEPTOR TEAM 
+                            POSITION (#.06)         delete Xref-AEVENT4
+  
+ TEAM POSITION FILE (#404.57) POSSIBLE PRIMARY 
+                              PRACTITIONER? (#.04)  delete FIELD INDEX:
+                                                    AE (#nnn) actual index
+                                                    number will vary per
+                                                    system
+                              MAX NUMBER OF 
+                              PATIENTS (#.08)       delete FIELD INDEX: AD
+                                                    (#nnn) actual index
+                                                    number will vary per
+                                                    system
+  
+ TEAM POSITION HISTORY       STATUS (#.03)           delete FIELD INDEX: AC
+ FILE (#404.59)                                      (#nnn) actual index
+                                                     number will vary per
+                                                     system
+  
+  
+ Forms Associated:
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A 
+  
+ Mail Groups Associated:
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+ CA-SDM Ticket(s):
+ ----------------------------
+ 1. I10677244FY16 - Multiple <SUBSCRIPT>TPACHK+21^SCMCHLB errors in the
+       Error Trap
+    I10737486FY16 - <SUBSCRIPT>TPACHK+21^SCMCHLB ^SD(403.46,"") (646 
+       Pittsburg)
+    I10861654FY16 - Received an error in the error trap concerning the 
+       scheduling package
+    I10906857FY16 - Multiple Region 2 sites are receiving following vista 
+       error in error trap: VISTA ERROR >>>>>> <SUBSCRIPT>TPACHK+21^SCMCHLB
+       ^SD(403.46  
+    I10970145FY17 - TPACHK+21^SCMCHLB ^SD(403.46,"") Errors in the Error
+       Trap for VAMC/BC since 9/23/16 (PCMMWeb Deployment) (515 Battle
+       Creek)   
+    I11199634FY17 - ASH (Station 637) Production account receiving error 
+       <SUBSCRIPT>TPACHK+21^SCMCHLB ^SD(403.46,"")
+    I11617356FY17 - TPACHK+21^SCMCHLB  
+    I11727306FY17 - Milwaukee - recurring error looks like maybe PCMM Web 
+       issue
+    R10814167FY16 - R02 / IRO Duplicate errors appearing in Error Trap
+       (Iron Mountain 585)
+  
+ Problem:
+ -------
+ These NSD Tickets all pertain to VistA Error Trap messages caused by an 
+ error similar to: <SUBSCRIPT>TPACHK+21^SCMCHLB
+  
+ Resolution:
+ ----------
+ This patch will delete the obsolete HL7 related cross-references that
+ cause this error.
+  
+ 2.  R12222345FY17 - <NAKED>EZBLD+2^DIALOG error for Columbus and Salisbury
+     I12120060FY17 - <NAKED>EZBLD+2^DIALOG error
+     I12046061FY17 - <NAKED>EZBLD+2^DIALOG error in error trap
+     I11347433FY17 - <NAKED>EZBLD+2^DIALOG error in the Error Trap    
+     I11353508FY17 - Atlanta is getting the following error: 
+        <NAKED>EZBLD+2^DIALOG
+     R12820553FY17 - BHH has numerous errors <NAKED>EZBLD+2^DIALOG
+     I12778384FY17 - SCMC, Application Proxy Causing <NAKED>EZBLD+2^DIALOG 
+        Several Errors
+     I12731413FY17 - hour2psvr errors in XTER for the last week
+     I12695028FY17 - Loma Linda Errors 605
+     I12690532FY17 - Lots of PCMM web related errors in the Houston error
+        trap
+     R12651592FY17 - BIR - Error Trap - not sure, checking
+     I12414971FY17 - Error <NAKED>EZBLD+2^DIALOG
+     R12408415FY17 - These sites(Iron Mountain, Minneapolis, and Milwaukee)
+        have ...
+     R12757518FY17 - THis needs to be sent to Ticket category: 
+        NTL.APP>HealtheVet...
+  
+ Problem:
+ -------
+ These NSD Tickets all pertain to VistA Error Trap messages caused by an 
+ error similar to: <NAKED>EZBLD+2^DIALOG
+  
+ Resolution:
+ ----------
+ This patch will delete the obsolete HL7 related cross-references that
+ cause this error.
+  
+  
+ Test Sites:
+ ----------
+ 1.  Battle Creek VAMC (515)
+ 2.  Lake City VAMC (573A4) 
+ 3.  Beckley VAMC (517)
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to SFTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available SFTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Patient-Centered Management   PCMM WEB VDD SD*5.3*659.DOCX    Binary
+ Module(PCMM) Web Version 
+ Description Document
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no pre-installation steps for this patch.
+ The post-install routine will:
+  - delete the "trigger" cross-references and indexes noted above
+  - delete data in the PCMM HL7 EVENT (#404.48) file.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ There are no pre-installation steps for this patch.
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ There are no Menu Options to disable.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     # SD*5.3*659:
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will list the contents of
+         of the transport global (what was loaded from the KIDS file).
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates. This step is 
+         required for patch back-out processing.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'  respond NO
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  respond NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//'   respond NO
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ The post-install routine will:
+  - delete the "trigger" cross-references and indexes noted above
+  - delete data in the PCMM HL7 EVENT (#404.48) file.
+ Processing messages will be written to the INSTALL (#9.7) file for this 
+ patch installation.
+  
+ The post-install routine may be deleted after the patch is successfully 
+ installed - SD659PST
+  
+  
+ Backout and Rollback Procedure:
+ ===============================
+ This patch consists of routines. During the VistA Installation Procedure 
+ of the KIDS build, the installer should back up the modified routines by 
+ the use of the 'Backup a Transport Global' action (step 3d in the 
+ Installation Instructions above).
+   
+ If rollback/backout is required, the installer can restore the routines 
+ using the MailMan message that was saved prior to installing the patch.
+  
+ This patch will delete cross references and indexes detailed above. If 
+ for some reason, they need to be restored, a follow-on patch will be 
+ required.
+  
+ This patch also deletes records in the PCMM HL7 EVENT (#404.48) file. 
+ There should be no need to restore these records. HL7 is no longer used 
+ by PCMM.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;May 01, 1999;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCMCHLX
+    Before:  B3910159   After:  B5611206  **177,264,272,659**
+Routine Name: SD659PST
+    Before:       n/a   After: B24793542  **659**
+ 
+Routine list of preceding patches: 272
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 02, 2016
+Completed By:                               Date Completed: MAY 02, 2017
+Released By :                               Date Released : MAY 03, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,73 @@
+
+=============================================================================
+Run Date: JUN 29, 2017                     Designation: WEBA*2.7*5
+Package : WEBA - VETERANS AUTHORIZATION AND P Priority: Mandatory
+Version : 2.7         SEQ #2                    Status: Released
+                  Compliance Date: JUL 30, 2017
+=============================================================================
+
+
+Subject: VLER eHXE Build2 (v2.7.1) 
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Note: Technical support staff at Austin Information Technology Center 
+ (AITC) will install this enhancement release on the VAP servers located 
+ there using a pre-approved Request for Change Order and Implementation 
+ Plan.  This 
+ Deployment is scheduled to take place on June 16, 2017 from 8:00 PM EST
+ - 11:00 PM EST.
+  
+ No effort is required by local sites.  User Acceptance Test is by the 
+ direction of the eHealth Exchange Business Owner and no MOUs are required.
+ **************************************************************************
+ VAP Release 2.7.1 contains code changes (enhancements) to the VAP 
+ application and service.  These changes are Work Items that were recorded 
+ and tracked in the eHealth Exchange Enhancements area (eHX-E team also 
+ makes changes to VAP as required) of Rational Team Concert, the 
+ VA-prescribed tool used for tracking requirements and associated test 
+ plans.  This release contains the Work Items completed during production 
+ deployment.
+  This enhancement release consists of the following enhancements to the 
+ VAP system:
+         New Data Quality Report that allows analysts to access to raw XML 
+ for offline quality data analysis.
+         SLS Integration Preparation: VAP's policy evaluation service 
+ (XACML Context Handler) can now do the following:
+ 1.      Retrieve a patient health summary from Adapter when required for 
+ SLS labeling.
+ 2.      Submit said health summary to the SLS via web service call when 
+ required.
+ 3.      Enhance the policy evaluation request sent to SAC with a new 
+ Patient Confidentiality attribute holding the SLS result.
+ 4.      Improved logging of policy evaluation and errors.
+ Note that as the real SLS is not yet available, and final policies have 
+ not been defined, other than logging improvements, the new SLS 
+ functionality described above is disabled by default, and will only be 
+ enabled in non-production test environments (via configurable setting).
+ Test sites: N/A
+ The upgraded software will be deployed to a centralized system at AITC.
+ Downstream Dependent System Testing: Testing efforts with VAP downstream 
+ systems were successful.
+ Remedy tickets: None
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:                          Hold Date     : JUN 16, 2017
+Entered By  :                               Date Entered  : APR 26, 2017
+Completed By:                               Date Completed: JUN 01, 2017
+Released By :                               Date Released : JUN 29, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

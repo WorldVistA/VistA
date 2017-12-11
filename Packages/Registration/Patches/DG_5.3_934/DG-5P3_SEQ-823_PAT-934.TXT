@@ -1,0 +1,267 @@
+$TXT Created by                    L at DEVVOO.DOMAIN.EXT  (KIDS) on Monday, 02/13/17 at 13:10
+=============================================================================
+Run Date: JUN 05, 2017                     Designation: DG*5.3*934
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #823                    Status: Released
+                  Compliance Date: JUL 06, 2017
+=============================================================================
+
+Associated patches: (v)DG*5.3*894  <<= must be installed BEFORE `DG*5.3*934'
+
+Subject: ENROLLMENT SYSTEM MODERNIZATION (ESM) HL7 ERROR REMOVAL
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch supports the Enrollment Health Benefit Determination (EHBD)
+ Enrollment System Modernization (ESM) requirements. 
+  
+ * Enrollment System Modernization (ESM) defines health benefit plan(s) for
+   which a client (Veteran, Service member, or beneficiary) is eligible and
+   ties them to the authority for care. Key enhancements include Pending  
+   Eligibility Determination; fixes to the Enrollment System; Date of Death;   
+   Internal Controls; Workflow; Veterans Financial Assessment; converting of 
+   Military Service Data Sharing (MSDS) to Enterprise Military Information
+   Service (eMIS); Manage Relationships; and Veteran Contact Service.
+  
+ DG*5.3*934 provides enhancements in support of the ESM project and
+ the Enrollment System (ES) 4.6.0 release. Refer to Informational Patch
+ EAS*1.0*147.
+  
+ The HL7 Error Removal build components will include removing the validation
+ check which eliminates the error that is triggered if the VistA record has an
+ Eligibility Status of Verified and the ES ORU or ORF Z11 message has an
+ Eligibility Status of Pending Verification or Pending Re-Verification from 
+ being sent back to ES.  This error is only reflected in ES and does not show
+ as an error on VistA.
+  
+ Listing of Updates
+ ==================
+  
+ When changing Eligibility status from VERIFIED to PENDING VERIFICATION, the
+ ORUZ11 is transmitted to VistA. UFT reports that sometimes the Z11 processes
+ without error, and other times it errors. When the Z11 errors, this is the
+ message: Enrollment Status Pending-Eligibility is Verified
+  
+ Routine DGENUPL2 was updated to allow the ES ORU/ORF Z11 messages to upload
+ and NOT trigger an error if the VistA record has an Eligibility Status of
+ Verified and the ES ORU or ORF Z11 message has an Eligibility Status of
+ Pending Verification or Pending Re-Verification. 
+ 
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)  New/Modified/Deleted
+ ------------------      -------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type     New/Modified/Deleted
+ -----------     ----      -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------      -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)  New/Modified/Deleted
+ -------------     ----     ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ 
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ -----------
+ Fargo VA HCS (Fargo ND)
+ James E Van Zandt VAMC (Altoona, PA)
+ Upstate New York Healthcare System (Buffalo, NY)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ This software is being released as a patch (PackMan) message.
+  
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory at the following OI Field Offices:
+  
+ Albany:             domain.ext
+ Hines:              domain.ext 
+ Salt Lake City:     domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+ Title                                 File Name               SFTP Mode
+ --------------------------------------------------------------------------
+ Release Notes                         DG_5_3_934_RN.PDF       (binary)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch should NOT be installed while the IVM BACKGROUND JOB [IVM 
+ BACKGROUND JOB] is running.
+  
+ 1.  The HL7 incoming/outgoing filers should be stopped. Stop All
+     Messaging Background Processes by using the [HL STOP ALL] option
+     on the Filer and Link Management Options [HL MENU FILER LINK MGT] menu
+     on the HL7 Main Menu [HL MAIN MENU].
+  
+ 2.  The following options should be disabled during installation:
+  
+          IVM BACKGROUND JOB          [IVM BACKGROUND JOB]
+  
+ 3.  This patch may be installed with users on the system, however, because 
+     the Registration options need to be placed out of order, we suggest it
+     be installed after business hours. This patch should take less than 5 
+     minutes to install.
+   
+ Installation Instructions:
+ --------------------------
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu,
+         select the Installation Menu. From this menu, you may elect
+         to use the following options. When prompted for the INSTALL
+         NAME enter the patch #(ex. DG*5.3*934):
+ a.     Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+ b.     Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this
+         patch is installed. It compares all components of this patch
+         routines, DDs, templates, etc.).
+ c.     Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.     From the Installation Menu, select the Install Package(s)
+         option and choose the patch to install.
+  
+ 5.     When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion
+         of Install? NO//' respond NO
+  
+ 6.     When prompted 'Want KIDS to INHIBIT LOGONs during the
+         install? NO//' respond NO
+  
+ 7.     When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' respond YES
+  
+          IVM BACKGROUND JOB          [IVM BACKGROUND JOB]
+ 
+ 8.     If prompted 'Delay Install (Minutes):  (0 - 60): 0//'
+         respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ The HL7 incoming/outgoing filers should be restarted. Use the  
+ Restart/Start All Links and Filers [HL TASK RESTART] option on the
+ Filer and Link Management Options [HL MENU FILER LINK MGT] menu on the
+ HL7 Main Menu [HL MAIN MENU].  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;REGISTRATION;**[Patch List]**;Aug 13,1993;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGENUPL2
+    Before: B82241171   After: B81902835  **147,222,232,310,314,367,397,
+                                           677,631,675,672,673,716,653,
+                                           688,838,842,894,934**
+ Description of Changes:
+  The call to the subroutine PEND^DGENUPL2 has been bypassed in order to
+  eliminate the error that was being added to the ACK message for the 
+  ORU~Z11 message.
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 28, 2016
+Completed By:                               Date Completed: JUN 02, 2017
+Released By :                               Date Released : JUN 05, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

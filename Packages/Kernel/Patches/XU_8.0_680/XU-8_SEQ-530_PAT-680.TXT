@@ -1,0 +1,239 @@
+$TXT Created by                   FM10S2.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 12/14/16 at 15:06
+=============================================================================
+Run Date: MAY 08, 2017                     Designation: XU*8*680
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #530                      Status: Released
+                  Compliance Date: JUN 08, 2017
+=============================================================================
+
+
+Subject: JSON UTILITY
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Patch XU*8.0*680 is designed copy JSON processing from the Virtual Patient
+ Record (VPR) namespace to the Kernel namespace to make the functionality
+ available to all applications.
+   
+ This functionality includes four functions to encode a MUMPS array into an
+ array of JSON strings and to decode JSON formatted strings into a MUMPS array.
+  
+   
+      1. DECODE^XLFJSON(XUJSON,XUROOT,XUERR) - Set JSON object into closed 
+                                               array ref XUROOT
+                                                 
+      2. ENCODE^XLFJSON(XUROOT,XUJSON,XUERR) - XUROOT (M structure) --> XUJSON
+                                               (array of strings)
+                                               
+      3. $$ESC^XLFJSON(X) - Escape string for JSON
+      
+      4. $$UES^XLFJSON(X) - Unescape JSON string
+    
+    
+ Patch Components:
+ -----------------
+   
+ Files & Fields Associated:
+   
+                                                              New/Modified/
+ File Name (#)              Field Name (#)                       Deleted
+ -------------              --------------                    -------------
+ N/A
+   
+    
+ Forms Associated:
+   
+ Form Name                     File #               New/Modified/Deleted
+ ---------                     ------               --------------------
+ N/A 
+    
+    
+ Mail Groups Associated:
+   
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+    
+ Options Associated:
+   
+ Option Name                    Type               New/Modified/Deleted
+ -----------                    ----               -------------------- 
+ N/A
+   
+    
+ Protocols Associated:
+   
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+   
+    
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+    
+ Templates Associated:
+   
+ Template Name   Type      File Name        (Number)  New/Modified/Deleted
+ -------------   ----      -------------------------  --------------------
+ N/A
+   
+    
+ Additional Information:
+ -----------------------
+ N/A
+   
+    
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+   
+    
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+    
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+   
+    
+ Blood Bank Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*680 contains 
+ changes to a package referenced in ProPath standard titled: BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA 
+ Blood Bank software design safeguards or safety critical elements 
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8*680 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+     
+ Test Sites:
+ -----------
+ TDB
+   
+   
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Documentation describing the new functionality introduced by this patch
+ is available.
+    
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+ Sites may retrieve the software and/or documentation directly using 
+ Secure Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory 
+ at the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/ 
+    
+ Title                                File Name          SFTP Mode
+ -----------------------------------------------------------------
+ Kernel 8.0 & Kernel Toolkit 7.3      krn8_0dg.pdf       Binary
+    
+   
+    
+ Patch Installation:
+    
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no pre or post install routines in this patch.
+    
+    
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 
+ minutes to install.
+   
+ No options or protocols need to be disabled to install this patch.
+   
+ The installation of this patch can be queued.
+    
+   
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter 
+     XU*8.0*680.
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as Data Dictionaries (DDs) or
+         templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+   
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     When prompted for the INSTALL NAME, enter XU*8.0*680.
+   
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' respond NO.
+   
+ 6.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+     NO//" respond NO.
+   
+ 7.  If prompted "Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//" respond NO. 
+    
+ 8.  If prompted "Delay Install (Minutes): (0 - 60): 0//" respond 0.
+   
+    
+ Post-Installation Instructions:
+ -------------------------------
+ N/A  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XLFJSON
+    Before:       n/a   After: B12212651  **680**
+Routine Name: XLFJSOND
+    Before:       n/a   After: B72001822  **680**
+Routine Name: XLFJSONE
+    Before:       n/a   After: B24814820  **680**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 24, 2016
+Completed By:                               Date Completed: MAY 05, 2017
+Released By :                               Date Released : MAY 08, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

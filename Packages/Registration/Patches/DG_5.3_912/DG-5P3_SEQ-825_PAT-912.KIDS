@@ -1,0 +1,1467 @@
+Released DG*5.3*912 SEQ #825
+Extracted from mail message
+**KIDS**:DG*5.3*912^
+
+**INSTALL NAME**
+DG*5.3*912
+"BLD",10160,0)
+DG*5.3*912^REGISTRATION^0^3160421^y
+"BLD",10160,1,0)
+^^10^10^3160414^
+"BLD",10160,1,1,0)
+Patch DG*5.3*912 addresses 3 issues:
+"BLD",10160,1,2,0)
+      
+"BLD",10160,1,3,0)
+1.)  Issue with Patient Treatment File (PTF) 801 screen, Current 
+"BLD",10160,1,4,0)
+     Procedural Terminilogy (CPT) codes File (#81) SHORT NAME field (#2)
+"BLD",10160,1,5,0)
+     has been deleted.
+"BLD",10160,1,6,0)
+2.)  Military Service Data Inconsistencies Detail Report has data 
+"BLD",10160,1,7,0)
+     listed when nothing is wrong in the patient record.
+"BLD",10160,1,8,0)
+3.)  Patient Treatment File with multiple Current Procedural
+"BLD",10160,1,9,0)
+     Terminilogy (CPT) codes, enter the wrong deletion date if there are
+"BLD",10160,1,10,0)
+     multiple records
+"BLD",10160,4,0)
+^9.64PA^^
+"BLD",10160,6.3)
+3
+"BLD",10160,"ABPKG")
+n
+"BLD",10160,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10160,"KRN",.4,0)
+.4
+"BLD",10160,"KRN",.401,0)
+.401
+"BLD",10160,"KRN",.402,0)
+.402
+"BLD",10160,"KRN",.403,0)
+.403
+"BLD",10160,"KRN",.5,0)
+.5
+"BLD",10160,"KRN",.84,0)
+.84
+"BLD",10160,"KRN",3.6,0)
+3.6
+"BLD",10160,"KRN",3.8,0)
+3.8
+"BLD",10160,"KRN",9.2,0)
+9.2
+"BLD",10160,"KRN",9.8,0)
+9.8
+"BLD",10160,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",10160,"KRN",9.8,"NM",1,0)
+DGPTFJC^^0^B64587430
+"BLD",10160,"KRN",9.8,"NM",2,0)
+DGMSRPT1^^0^B62881703
+"BLD",10160,"KRN",9.8,"NM",3,0)
+DGPTFM2^^0^B50916378
+"BLD",10160,"KRN",9.8,"NM","B","DGMSRPT1",2)
+
+"BLD",10160,"KRN",9.8,"NM","B","DGPTFJC",1)
+
+"BLD",10160,"KRN",9.8,"NM","B","DGPTFM2",3)
+
+"BLD",10160,"KRN",19,0)
+19
+"BLD",10160,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",10160,"KRN",19.1,0)
+19.1
+"BLD",10160,"KRN",101,0)
+101
+"BLD",10160,"KRN",409.61,0)
+409.61
+"BLD",10160,"KRN",771,0)
+771
+"BLD",10160,"KRN",779.2,0)
+779.2
+"BLD",10160,"KRN",870,0)
+870
+"BLD",10160,"KRN",8989.51,0)
+8989.51
+"BLD",10160,"KRN",8989.52,0)
+8989.52
+"BLD",10160,"KRN",8994,0)
+8994
+"BLD",10160,"KRN","B",.4,.4)
+
+"BLD",10160,"KRN","B",.401,.401)
+
+"BLD",10160,"KRN","B",.402,.402)
+
+"BLD",10160,"KRN","B",.403,.403)
+
+"BLD",10160,"KRN","B",.5,.5)
+
+"BLD",10160,"KRN","B",.84,.84)
+
+"BLD",10160,"KRN","B",3.6,3.6)
+
+"BLD",10160,"KRN","B",3.8,3.8)
+
+"BLD",10160,"KRN","B",9.2,9.2)
+
+"BLD",10160,"KRN","B",9.8,9.8)
+
+"BLD",10160,"KRN","B",19,19)
+
+"BLD",10160,"KRN","B",19.1,19.1)
+
+"BLD",10160,"KRN","B",101,101)
+
+"BLD",10160,"KRN","B",409.61,409.61)
+
+"BLD",10160,"KRN","B",771,771)
+
+"BLD",10160,"KRN","B",779.2,779.2)
+
+"BLD",10160,"KRN","B",870,870)
+
+"BLD",10160,"KRN","B",8989.51,8989.51)
+
+"BLD",10160,"KRN","B",8989.52,8989.52)
+
+"BLD",10160,"KRN","B",8994,8994)
+
+"BLD",10160,"QUES",0)
+^9.62^^
+"BLD",10160,"REQB",0)
+^9.611^2^2
+"BLD",10160,"REQB",1,0)
+DG*5.3*884^2
+"BLD",10160,"REQB",2,0)
+DG*5.3*603^2
+"BLD",10160,"REQB","B","DG*5.3*603",2)
+
+"BLD",10160,"REQB","B","DG*5.3*884",1)
+
+"MBREQ")
+0
+"PKG",5,-1)
+1^1
+"PKG",5,0)
+REGISTRATION^DG^PATIENT REGISTRATION, ADMISSION, DISCHARGE, EMBOSSER 
+"PKG",5,20,0)
+^9.402P^^
+"PKG",5,22,0)
+^9.49I^1^1
+"PKG",5,22,1,0)
+5.3^2930813
+"PKG",5,22,1,"PAH",1,0)
+912^3160421
+"PKG",5,22,1,"PAH",1,1,0)
+^^10^10^3160421
+"PKG",5,22,1,"PAH",1,1,1,0)
+Patch DG*5.3*912 addresses 3 issues:
+"PKG",5,22,1,"PAH",1,1,2,0)
+      
+"PKG",5,22,1,"PAH",1,1,3,0)
+1.)  Issue with Patient Treatment File (PTF) 801 screen, Current 
+"PKG",5,22,1,"PAH",1,1,4,0)
+     Procedural Terminilogy (CPT) codes File (#81) SHORT NAME field (#2)
+"PKG",5,22,1,"PAH",1,1,5,0)
+     has been deleted.
+"PKG",5,22,1,"PAH",1,1,6,0)
+2.)  Military Service Data Inconsistencies Detail Report has data 
+"PKG",5,22,1,"PAH",1,1,7,0)
+     listed when nothing is wrong in the patient record.
+"PKG",5,22,1,"PAH",1,1,8,0)
+3.)  Patient Treatment File with multiple Current Procedural
+"PKG",5,22,1,"PAH",1,1,9,0)
+     Terminilogy (CPT) codes, enter the wrong deletion date if there are
+"PKG",5,22,1,"PAH",1,1,10,0)
+     multiple records
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","DGMSRPT1")
+0^2^B62881703^B62478894
+"RTN","DGMSRPT1",1,0)
+DGMSRPT1 ;ALB/LBD,BRM - Military Service Inconsistency Report; 01/05/04 ; 5/18/04 9:53am
+"RTN","DGMSRPT1",2,0)
+ ;;5.3;Registration;**562,603,912**; Aug 13,1993;Build 3
+"RTN","DGMSRPT1",3,0)
+ ;
+"RTN","DGMSRPT1",4,0)
+ ; This routine scans the Patient file #2 and checks military service
+"RTN","DGMSRPT1",5,0)
+ ; data for inconsistencies.  The inconsistencies are stored in 
+"RTN","DGMSRPT1",6,0)
+ ; ^XTMP("DSMSRPT"). 
+"RTN","DGMSRPT1",7,0)
+ Q
+"RTN","DGMSRPT1",8,0)
+EN ; Entry point called from ^DGMSRPT
+"RTN","DGMSRPT1",9,0)
+ ; Initialize ^XTMP global and set start date
+"RTN","DGMSRPT1",10,0)
+ S ^XTMP("DGMSRPT",0)=$$FMADD^XLFDT(DT,60)_U_DT_U_"DG MILITARY SERVICE INCONSISTENCY REPORT"
+"RTN","DGMSRPT1",11,0)
+ S $P(^XTMP("DGMSRPT","DATE"),U,1)=$$FMTE^XLFDT($$NOW^XLFDT(),"5P")
+"RTN","DGMSRPT1",12,0)
+ S:$G(ZTSK) ZTREQ="@"
+"RTN","DGMSRPT1",13,0)
+ D INIT^DGMSRPT
+"RTN","DGMSRPT1",14,0)
+ ; Loop through Patient file #2.  If patient meets report criteria, check
+"RTN","DGMSRPT1",15,0)
+ ; military service data for inconsistencies.
+"RTN","DGMSRPT1",16,0)
+ N DFN
+"RTN","DGMSRPT1",17,0)
+ S DFN=0 F  S DFN=$O(^DPT(DFN)) Q:'DFN  I $$CHK(DFN)  D MSINC(DFN)
+"RTN","DGMSRPT1",18,0)
+ ; Send message containing inconsistency counts, update stop date/time
+"RTN","DGMSRPT1",19,0)
+ S $P(^XTMP("DGMSRPT","DATE"),U,2)=$$FMTE^XLFDT($$NOW^XLFDT(),"5P")
+"RTN","DGMSRPT1",20,0)
+ D MSG^DGMSRPT(DGXTMP)
+"RTN","DGMSRPT1",21,0)
+ K ^XTMP("DGMSRPT","RUNNING"),DGXTMP
+"RTN","DGMSRPT1",22,0)
+ Q
+"RTN","DGMSRPT1",23,0)
+CHK(DFN) ; Check if patient meets criteria to include in report
+"RTN","DGMSRPT1",24,0)
+ ; OUTPUT: 1=Meets report criteria; 0=Doesn't meet report criteria
+"RTN","DGMSRPT1",25,0)
+ N CHK,ENR,ENRDT,UE,UESITE,SITE
+"RTN","DGMSRPT1",26,0)
+ S CHK=0 I '$G(DFN) Q CHK
+"RTN","DGMSRPT1",27,0)
+ ; Patient is a veteran
+"RTN","DGMSRPT1",28,0)
+ I $P($G(^DPT(DFN,"VET")),U)'="Y" Q CHK
+"RTN","DGMSRPT1",29,0)
+ ; Patient not deceased
+"RTN","DGMSRPT1",30,0)
+ I +$G(^DPT(DFN,.35)) Q CHK
+"RTN","DGMSRPT1",31,0)
+ ; Primary eligibility not 'Humanitarian Emergency', 'Sharing Agreement',
+"RTN","DGMSRPT1",32,0)
+ ; or 'Employee'
+"RTN","DGMSRPT1",33,0)
+ I "^8^9^14^"[(U_+$G(^DPT(DFN,.36))_U) Q CHK
+"RTN","DGMSRPT1",34,0)
+ ; User Enrollee of this facility
+"RTN","DGMSRPT1",35,0)
+ S UE=$P($G(^DPT(DFN,.361)),U,7) I UE="" Q CHK
+"RTN","DGMSRPT1",36,0)
+ S UESITE=$P($G(^DPT(DFN,.361)),U,8) I +UESITE=0 Q CHK
+"RTN","DGMSRPT1",37,0)
+ S SITE=$P($$SITE^VASITE,U,3),SITE=$$PSITE^EASUER(SITE)
+"RTN","DGMSRPT1",38,0)
+ I $P($G(^DIC(4,UESITE,99)),U)'=$P($G(^DIC(4,SITE,99)),U) Q CHK
+"RTN","DGMSRPT1",39,0)
+ ; Has a current enrollment record
+"RTN","DGMSRPT1",40,0)
+ I '$G(^DPT(DFN,"ENR")) Q CHK
+"RTN","DGMSRPT1",41,0)
+ ; Meets report criteria
+"RTN","DGMSRPT1",42,0)
+ S CHK=1
+"RTN","DGMSRPT1",43,0)
+ Q CHK
+"RTN","DGMSRPT1",44,0)
+MSINC(DFN) ; Check military service data for inconsistencies.
+"RTN","DGMSRPT1",45,0)
+ N DGMS,NAM,SSN
+"RTN","DGMSRPT1",46,0)
+ Q:'$G(DFN)
+"RTN","DGMSRPT1",47,0)
+ ; Get veteran's military service data
+"RTN","DGMSRPT1",48,0)
+ D GETMS(DFN,.DGMS)
+"RTN","DGMSRPT1",49,0)
+ ; Check Military Service Episodes
+"RTN","DGMSRPT1",50,0)
+ D MSECHK(DFN,.DGMS)
+"RTN","DGMSRPT1",51,0)
+ ; Check Combat and POW data
+"RTN","DGMSRPT1",52,0)
+ D CMPWCHK(DFN,.DGMS)
+"RTN","DGMSRPT1",53,0)
+ ; Check Conflict data
+"RTN","DGMSRPT1",54,0)
+ D CONFCHK(DFN,.DGMS)
+"RTN","DGMSRPT1",55,0)
+ ; If inconsistencies were found, add 0 node and x-refs
+"RTN","DGMSRPT1",56,0)
+ I $D(@DGXTMP@(DFN)) D
+"RTN","DGMSRPT1",57,0)
+ .S NAM=$P($G(^DPT(DFN,0)),U,1),SSN=$P($G(^DPT(DFN,0)),U,9)
+"RTN","DGMSRPT1",58,0)
+ .S @DGXTMP@(DFN,0)=NAM_U_SSN
+"RTN","DGMSRPT1",59,0)
+ .I NAM'="" S @DGXTMP@("NAM",NAM,DFN)=""
+"RTN","DGMSRPT1",60,0)
+ .I SSN'="" S @DGXTMP@("SSN",+$E(SSN,8,9),+$E(SSN,6,9),+SSN,DFN)=""
+"RTN","DGMSRPT1",61,0)
+ .D SETCNT("VET")
+"RTN","DGMSRPT1",62,0)
+ Q
+"RTN","DGMSRPT1",63,0)
+GETMS(DFN,DGMS) ; Build DGMS array of military service data
+"RTN","DGMSRPT1",64,0)
+ ; OUTPUT: DGMS(CATEGORY,FIELD) - array of Military Service data
+"RTN","DGMSRPT1",65,0)
+ N MS,I,CAT,FLD
+"RTN","DGMSRPT1",66,0)
+ Q:'$G(DFN)
+"RTN","DGMSRPT1",67,0)
+ ;patch DG*5.3*912 changes military service field .32 to .3216,field was introduced in patch DG*5.3*797
+"RTN","DGMSRPT1",68,0)
+ F I=.3216,.321,.322,.52 S MS(I)=$G(^DPT(DFN,I))
+"RTN","DGMSRPT1",69,0)
+ S CAT="MSE1^MSE2^MSE3",FLD="DIS^BOS^FDT^TDT^NUM"
+"RTN","DGMSRPT1",70,0)
+ D ARRY(CAT,FLD,.3216,4,18,.MS,.DGMS)
+"RTN","DGMSRPT1",71,0)
+ I $P(MS(.3216),U,19)'="Y" K DGMS("MSE2")  ;Delete data for inactive MSE
+"RTN","DGMSRPT1",72,0)
+ I $P(MS(.3216),U,20)'="Y" K DGMS("MSE3")  ;Delete data for inactive MSE
+"RTN","DGMSRPT1",73,0)
+ S CAT="LEB^GREN^PAN^GULF",FLD="IND^FDT^TDT"
+"RTN","DGMSRPT1",74,0)
+ D ARRY(CAT,FLD,.322,1,12,.MS,.DGMS)
+"RTN","DGMSRPT1",75,0)
+ S CAT="SOM^YUG"
+"RTN","DGMSRPT1",76,0)
+ D ARRY(CAT,FLD,.322,16,21,.MS,.DGMS)
+"RTN","DGMSRPT1",77,0)
+ S CAT="VIET",FLD="IND"
+"RTN","DGMSRPT1",78,0)
+ D ARRY(CAT,FLD,.321,1,1,.MS,.DGMS)
+"RTN","DGMSRPT1",79,0)
+ S FLD="FDT^TDT"
+"RTN","DGMSRPT1",80,0)
+ D ARRY(CAT,FLD,.321,4,5,.MS,.DGMS)
+"RTN","DGMSRPT1",81,0)
+ S CAT="POW",FLD="IND^LOC^FDT^TDT"
+"RTN","DGMSRPT1",82,0)
+ D ARRY(CAT,FLD,.52,5,8,.MS,.DGMS)
+"RTN","DGMSRPT1",83,0)
+ S CAT="COM"
+"RTN","DGMSRPT1",84,0)
+ D ARRY(CAT,FLD,.52,11,14,.MS,.DGMS)
+"RTN","DGMSRPT1",85,0)
+ Q
+"RTN","DGMSRPT1",86,0)
+ARRY(CAT,FLD,SB,P1,P2,MS,DGMS) ; Set array
+"RTN","DGMSRPT1",87,0)
+ ; INPUT: CAT - MS categories (e.g. MSE1 = 1st Military Service Episode)
+"RTN","DGMSRPT1",88,0)
+ ;        FLD - MS fields (e.g. FDT = From Date, TDT = To Date)
+"RTN","DGMSRPT1",89,0)
+ ;        SB - MS array subscript
+"RTN","DGMSRPT1",90,0)
+ ;        P1 - Starting piece in MS string
+"RTN","DGMSRPT1",91,0)
+ ;        P2 - Ending piece in MS string
+"RTN","DGMSRPT1",92,0)
+ ;        MS( - Array with MS data from the Patient file
+"RTN","DGMSRPT1",93,0)
+ ; OUTPUT: DGMS( - Array returned with MS data grouped by category
+"RTN","DGMSRPT1",94,0)
+ N I,J,K
+"RTN","DGMSRPT1",95,0)
+ S J=1,K=0
+"RTN","DGMSRPT1",96,0)
+ F I=P1:1:P2 D
+"RTN","DGMSRPT1",97,0)
+ .I K=$L(FLD,U) S J=J+1,K=0
+"RTN","DGMSRPT1",98,0)
+ .S K=K+1
+"RTN","DGMSRPT1",99,0)
+ .I $P(MS(SB),U,I)'="" S DGMS($P(CAT,U,J),$P(FLD,U,K))=$P(MS(SB),U,I)
+"RTN","DGMSRPT1",100,0)
+ Q
+"RTN","DGMSRPT1",101,0)
+MSECHK(DFN,DGMS) ; Check military service episodes for inconsistencies
+"RTN","DGMSRPT1",102,0)
+ N DGTXT,CAT,DG,OVR,BOS,WWIIDT,WWIIS,WWIIE
+"RTN","DGMSRPT1",103,0)
+ ; Is there MSE data for this veteran?
+"RTN","DGMSRPT1",104,0)
+ I '$D(DGMS("MSE1")),'$D(DGMS("MSE2")),'$D(DGMS("MSE3")) Q
+"RTN","DGMSRPT1",105,0)
+ F CAT="MSE1","MSE2","MSE3" K DGTXT S DG=1 I $D(DGMS(CAT)) D
+"RTN","DGMSRPT1",106,0)
+ .; Check Branch of Service (B.E.C. and Merchant Seaman)
+"RTN","DGMSRPT1",107,0)
+ .S BOS=+$G(DGMS(CAT,"BOS")),BOS=$P($G(^DIC(23,BOS,0)),U,1)
+"RTN","DGMSRPT1",108,0)
+ .I BOS="B.E.C." S DGTXT="BEC" D SETTXT(.DG,.DGTXT),SETCNT(2)
+"RTN","DGMSRPT1",109,0)
+ .I BOS="MERCHANT SEAMAN" D
+"RTN","DGMSRPT1",110,0)
+ ..S WWIIDT=$$GETCNFDT^DGRPDT("WWIIP"),WWIIS=$P(WWIIDT,U),WWIIE=$P(WWIIDT,U,2)
+"RTN","DGMSRPT1",111,0)
+ ..Q:$$WITHIN^DGRPDT(WWIIS,WWIIE,$G(DGMS(CAT,"FDT")))
+"RTN","DGMSRPT1",112,0)
+ ..Q:$$WITHIN^DGRPDT(WWIIS,WWIIE,$G(DGMS(CAT,"TDT")))
+"RTN","DGMSRPT1",113,0)
+ ..Q:$$RWITHIN^DGRPDT($G(DGMS(CAT,"FDT")),$G(DGMS(CAT,"TDT")),WWIIS,WWIIE)
+"RTN","DGMSRPT1",114,0)
+ ..S DGTXT="MERC SEA NO WWII SVC" D SETTXT(.DG,.DGTXT),SETCNT(3)
+"RTN","DGMSRPT1",115,0)
+ .; Check for missing data
+"RTN","DGMSRPT1",116,0)
+ .I $$MISS(CAT,"BOS^DIS^FDT^TDT") S DGTXT="DATA MISS" D SETTXT(.DG,.DGTXT),SETCNT(4)
+"RTN","DGMSRPT1",117,0)
+ .; Check for imprecise dates (year only)
+"RTN","DGMSRPT1",118,0)
+ .I $$IMPR(CAT,"FDT^TDT") S DGTXT="DT IMPR" D SETTXT(.DG,.DGTXT),SETCNT(5)
+"RTN","DGMSRPT1",119,0)
+ .; Check if To Date is before From Date
+"RTN","DGMSRPT1",120,0)
+ .I $G(DGMS(CAT,"FDT")),$G(DGMS(CAT,"TDT")),$$B4^DGRPDT(DGMS(CAT,"TDT"),DGMS(CAT,"FDT")) D
+"RTN","DGMSRPT1",121,0)
+ ..S DGTXT="END DT BEFORE START DT" D SETTXT(.DG,.DGTXT),SETCNT(6)
+"RTN","DGMSRPT1",122,0)
+ .; Check if dates overlap with another MSE
+"RTN","DGMSRPT1",123,0)
+ .S OVR=$$OVRLP(CAT) I OVR S DGTXT="DT OVRLP W/ "_$P(OVR,U,2) D SETTXT(.DG,.DGTXT),SETCNT(7)
+"RTN","DGMSRPT1",124,0)
+ .;If inconsistencies found, update ^XTMP("DGMSRPT","MSINC",DFN,
+"RTN","DGMSRPT1",125,0)
+ .I $D(DGTXT) D SETVET(DFN,CAT,.DGTXT)
+"RTN","DGMSRPT1",126,0)
+ Q
+"RTN","DGMSRPT1",127,0)
+CMPWCHK(DFN,DGMS) ; Check Combat and POW data for inconsistencies
+"RTN","DGMSRPT1",128,0)
+ ; INPUT: DFN - Patient file IEN
+"RTN","DGMSRPT1",129,0)
+ ;        DGMS( - MS data array
+"RTN","DGMSRPT1",130,0)
+ N DGTXT,CAT,DG,LOC
+"RTN","DGMSRPT1",131,0)
+ F CAT="COM","POW" K DGTXT S DG=1 I $G(DGMS(CAT,"IND"))="Y" D
+"RTN","DGMSRPT1",132,0)
+ .; Check for missing data
+"RTN","DGMSRPT1",133,0)
+ .I $$MISS(CAT,"FDT^TDT^LOC") S DGTXT="DATA MISS" D SETTXT(.DG,.DGTXT),SETCNT($S(CAT="COM":8,1:16))
+"RTN","DGMSRPT1",134,0)
+ .; Check for imprecise dates (year only)
+"RTN","DGMSRPT1",135,0)
+ .I $$IMPR(CAT,"FDT^TDT") S DGTXT="DT IMPR" D SETTXT(.DG,.DGTXT),SETCNT($S(CAT="COM":9,1:17))
+"RTN","DGMSRPT1",136,0)
+ .; Check if dates are valid for the location
+"RTN","DGMSRPT1",137,0)
+ .I $G(DGMS(CAT,"LOC")) S LOC=$$LOC(DGMS(CAT,"LOC")) I LOC'="" D
+"RTN","DGMSRPT1",138,0)
+ ..Q:$$CNFLCTDT^DGRPDT($G(DGMS(CAT,"FDT")),$G(DGMS(CAT,"TDT")),LOC)
+"RTN","DGMSRPT1",139,0)
+ ..S DGTXT="DT INVALID FOR LOC" D SETTXT(.DG,.DGTXT),SETCNT($S(CAT="COM":10,1:18))
+"RTN","DGMSRPT1",140,0)
+ .; Check if dates are within a Military Service Episode
+"RTN","DGMSRPT1",141,0)
+ .I $G(DGMS(CAT,"FDT"))!($G(DGMS(CAT,"TDT"))) D
+"RTN","DGMSRPT1",142,0)
+ ..Q:$$OVRLPCHK^DGRPDT(DFN,$G(DGMS(CAT,"FDT")),$G(DGMS(CAT,"TDT")),-1)
+"RTN","DGMSRPT1",143,0)
+ ..S DGTXT="DT NOT W/IN MSE" D SETTXT(.DG,.DGTXT),SETCNT($S(CAT="COM":11,1:19))
+"RTN","DGMSRPT1",144,0)
+ .;If inconsistencies found, update ^XTMP("DGMSRPT","MSINC",DFN,
+"RTN","DGMSRPT1",145,0)
+ .I $D(DGTXT) D SETVET(DFN,CAT,.DGTXT)
+"RTN","DGMSRPT1",146,0)
+ Q
+"RTN","DGMSRPT1",147,0)
+CONFCHK(DFN,DGMS) ; Check Conflict data for inconsistencies
+"RTN","DGMSRPT1",148,0)
+ N DGTXT,CAT,DG
+"RTN","DGMSRPT1",149,0)
+ F CAT="VIET","LEB","GREN","PAN","GULF","SOM","YUG" K DGTXT S DG=1 I $G(DGMS(CAT,"IND"))="Y" D
+"RTN","DGMSRPT1",150,0)
+ .; Check for missing data
+"RTN","DGMSRPT1",151,0)
+ .I $$MISS(CAT,"FDT^TDT") S DGTXT="DATA MISS" D SETTXT(.DG,.DGTXT),SETCNT(12)
+"RTN","DGMSRPT1",152,0)
+ .; Check for imprecise dates (year only)
+"RTN","DGMSRPT1",153,0)
+ .I $$IMPR(CAT,"FDT^TDT") S DGTXT="DT IMPR" D SETTXT(.DG,.DGTXT),SETCNT(13)
+"RTN","DGMSRPT1",154,0)
+ .; Check if dates are valid for the location
+"RTN","DGMSRPT1",155,0)
+ .I $G(DGMS(CAT,"FDT"))!($G(DGMS(CAT,"TDT"))) D
+"RTN","DGMSRPT1",156,0)
+ ..Q:$$CNFLCTDT^DGRPDT($G(DGMS(CAT,"FDT")),$G(DGMS(CAT,"TDT")),CAT)
+"RTN","DGMSRPT1",157,0)
+ ..S DGTXT="DT INVALID FOR LOC" D SETTXT(.DG,.DGTXT),SETCNT(14)
+"RTN","DGMSRPT1",158,0)
+ .; Check if dates are within a Military Service Episode
+"RTN","DGMSRPT1",159,0)
+ .I $G(DGMS(CAT,"FDT"))!($G(DGMS(CAT,"TDT"))) D
+"RTN","DGMSRPT1",160,0)
+ ..Q:$$OVRLPCHK^DGRPDT(DFN,$G(DGMS(CAT,"FDT")),$G(DGMS(CAT,"TDT")),-1)
+"RTN","DGMSRPT1",161,0)
+ ..S DGTXT="DT NOT W/IN MSE" D SETTXT(.DG,.DGTXT),SETCNT(15)
+"RTN","DGMSRPT1",162,0)
+ .;If inconsistencies found, update ^XTMP("DGMSRPT","MSINC",DFN,
+"RTN","DGMSRPT1",163,0)
+ .I $D(DGTXT) D SETVET(DFN,CAT,.DGTXT)
+"RTN","DGMSRPT1",164,0)
+ Q
+"RTN","DGMSRPT1",165,0)
+SETTXT(DG,DGTXT) ; Set array of MS inconsistency text DGTXT(
+"RTN","DGMSRPT1",166,0)
+ ; INPUT: DG - Subscript for DGTXT array
+"RTN","DGMSRPT1",167,0)
+ Q:'$G(DG)
+"RTN","DGMSRPT1",168,0)
+ I $G(DGTXT(DG))="" S DGTXT(DG)=DGTXT Q
+"RTN","DGMSRPT1",169,0)
+ I $L(DGTXT(DG)_"; "_DGTXT)>36 S DG=DG+1,DGTXT(DG)=DGTXT Q
+"RTN","DGMSRPT1",170,0)
+ S DGTXT(DG)=DGTXT(DG)_"; "_DGTXT
+"RTN","DGMSRPT1",171,0)
+ Q
+"RTN","DGMSRPT1",172,0)
+SETVET(DFN,CAT,DGTXT) ; Update ^XTMP("DGMSRPT","MSINC",DFN, with MS inconsistencies for veteran
+"RTN","DGMSRPT1",173,0)
+ ;
+"RTN","DGMSRPT1",174,0)
+ Q:'$G(DFN)  Q:'$D(CAT)  Q:'$D(DGTXT)
+"RTN","DGMSRPT1",175,0)
+ N DG S DG=0
+"RTN","DGMSRPT1",176,0)
+ F  S DG=$O(DGTXT(DG)) Q:'DG  S @DGXTMP@(DFN,CAT,DG)=DGTXT(DG)
+"RTN","DGMSRPT1",177,0)
+ Q
+"RTN","DGMSRPT1",178,0)
+SETCNT(SUB) ; Update ^XTMP("DGMSRPT","MSINC","CNT",
+"RTN","DGMSRPT1",179,0)
+ ; INPUT: SUB - Subscript in ^("CNT") array to increment
+"RTN","DGMSRPT1",180,0)
+ Q:$G(SUB)=""
+"RTN","DGMSRPT1",181,0)
+ S $P(@DGXTMP@("CNT",SUB),U,1)=+(@DGXTMP@("CNT",SUB))+1
+"RTN","DGMSRPT1",182,0)
+ Q
+"RTN","DGMSRPT1",183,0)
+MISS(CAT,FLD) ; Check for missing data elements
+"RTN","DGMSRPT1",184,0)
+ ; INPUT: CAT - MS category, 1st subscript in DGMS array
+"RTN","DGMSRPT1",185,0)
+ ;        FLD - List of fields to check for missing data
+"RTN","DGMSRPT1",186,0)
+ ; OUTPUT: 1=Missing data; 0=No missing data
+"RTN","DGMSRPT1",187,0)
+ N MISS,I,X
+"RTN","DGMSRPT1",188,0)
+ S MISS=0
+"RTN","DGMSRPT1",189,0)
+ I $G(CAT)=""!($G(FLD)="") Q MISS
+"RTN","DGMSRPT1",190,0)
+ F I=1:1 S X=$P(FLD,U,I) Q:X=""  I '$D(DGMS(CAT,X)) S MISS=1 Q
+"RTN","DGMSRPT1",191,0)
+ Q MISS
+"RTN","DGMSRPT1",192,0)
+IMPR(CAT,FLD) ; Check for imprecise dates (year only)
+"RTN","DGMSRPT1",193,0)
+ ; INPUT: CAT - MS category, 1st subscript in DGMS array
+"RTN","DGMSRPT1",194,0)
+ ;        FLD - List of fields to check for imprecise dates
+"RTN","DGMSRPT1",195,0)
+ ; OUTPUT: 1=Imprecise date; 0=No imprecise date
+"RTN","DGMSRPT1",196,0)
+ N IMPR,I,X
+"RTN","DGMSRPT1",197,0)
+ S IMPR=0
+"RTN","DGMSRPT1",198,0)
+ I $G(CAT)=""!($G(FLD)="") Q IMPR
+"RTN","DGMSRPT1",199,0)
+ F I=1:1 S X=$P(FLD,U,I) Q:X=""  I $D(DGMS(CAT,X)),'$$MNTHYR^DGRPDT(DGMS(CAT,X)) S IMPR=1 Q
+"RTN","DGMSRPT1",200,0)
+ Q IMPR
+"RTN","DGMSRPT1",201,0)
+OVRLP(CAT) ; Check if MSE dates overlap with another MSE
+"RTN","DGMSRPT1",202,0)
+ ; INPUT: CAT - MS category, 1st subscript in DGMS array
+"RTN","DGMSRPT1",203,0)
+ ; OUTPUT: 0=No overlap; 1^X=Overlap^MSE that overlaps
+"RTN","DGMSRPT1",204,0)
+ N OVR,MSE,DGI,DGX
+"RTN","DGMSRPT1",205,0)
+ S OVR=0
+"RTN","DGMSRPT1",206,0)
+ I $G(CAT)="" Q OVR
+"RTN","DGMSRPT1",207,0)
+ S DGX=$E(CAT,4)
+"RTN","DGMSRPT1",208,0)
+ ; If MSE1, no check; if MSE2, check overlap with MSE1; if MSE3, check
+"RTN","DGMSRPT1",209,0)
+ ; overlap with MSE2 or MSE1
+"RTN","DGMSRPT1",210,0)
+ F DGI=(DGX-1):-1:1 S MSE="MSE"_DGI I $D(DGMS(MSE)) D  Q:OVR
+"RTN","DGMSRPT1",211,0)
+ .S OVR=$$WITHIN^DGRPDT($G(DGMS(CAT,"FDT")),$G(DGMS(CAT,"TDT")),$G(DGMS(MSE,"FDT"))) I OVR S OVR=+OVR_U_MSE Q
+"RTN","DGMSRPT1",212,0)
+ .S OVR=$$WITHIN^DGRPDT($G(DGMS(CAT,"FDT")),$G(DGMS(CAT,"TDT")),$G(DGMS(MSE,"TDT"))) I OVR S OVR=+OVR_U_MSE Q
+"RTN","DGMSRPT1",213,0)
+ Q OVR
+"RTN","DGMSRPT1",214,0)
+LOC(LN) ; Return conflict location abbreviation to pass to $$CNFLCTDT^DGRPDT
+"RTN","DGMSRPT1",215,0)
+ ; INPUT: LN - POW Location file #22 IEN
+"RTN","DGMSRPT1",216,0)
+ ; OUTPUT: Conflict location abbreviation
+"RTN","DGMSRPT1",217,0)
+ Q:'$G(LN) ""
+"RTN","DGMSRPT1",218,0)
+ S LN=$P($G(^DIC(22,LN,0)),U,1) I LN="" Q ""
+"RTN","DGMSRPT1",219,0)
+ Q:LN="WORLD WAR I" "WWI"
+"RTN","DGMSRPT1",220,0)
+ Q:LN["EUROPE" "WWIIE"
+"RTN","DGMSRPT1",221,0)
+ Q:LN["PACIFIC" "WWIIP"
+"RTN","DGMSRPT1",222,0)
+ Q:LN["KOREA" "KOR"
+"RTN","DGMSRPT1",223,0)
+ Q:LN["VIETNAM" "VIET"
+"RTN","DGMSRPT1",224,0)
+ Q:LN="OTHER" ""
+"RTN","DGMSRPT1",225,0)
+ Q:LN["GULF" "GULF"
+"RTN","DGMSRPT1",226,0)
+ Q:LN["YUGOSLAVIA" "YUG"
+"RTN","DGMSRPT1",227,0)
+ Q ""
+"RTN","DGPTFJC")
+0^1^B64587430^B64477474
+"RTN","DGPTFJC",1,0)
+DGPTFJC ;ALB/ADL,HIOFT/FT - CLOSED PTF ;12/12/14 2:15pm
+"RTN","DGPTFJC",2,0)
+ ;;5.3;Registration;**158,510,517,590,636,635,701,729,785,850,884,912**;Aug 13, 1993;Build 3
+"RTN","DGPTFJC",3,0)
+ ;;ADL;;Update for CSV Project;;Mar 25, 2003
+"RTN","DGPTFJC",4,0)
+101 W !,"Enter '^N' for Screen N, RETURN for <MAS>,'^' to Abort: <MAS>//"
+"RTN","DGPTFJC",5,0)
+ D READ G Q^DGPTF:X=U,^DGPTFM:X="",^DGPTFJ:X?1"^".E D H G 101
+"RTN","DGPTFJC",6,0)
+ ;
+"RTN","DGPTFJC",7,0)
+H D HELP^DGPTFJ W ! Q
+"RTN","DGPTFJC",8,0)
+ ;
+"RTN","DGPTFJC",9,0)
+MAS W !!,"Enter '^N' for Screen N, RETURN for <",DGNUM,">,'^' to Abort: <",DGNUM,">//"
+"RTN","DGPTFJC",10,0)
+ D READ G Q^DGPTF:X=U,^DGPTFJ:X?1"^".E
+"RTN","DGPTFJC",11,0)
+ I X="" S (ST,ST1)=J+1 G @($S($D(DGZDIAG):"NDG",$D(DGZSER):"NSR",$D(DGZPRO):"NPR",$D(DGZSUR):"EN",+DGZPRF-1'=$P(DGZPRF,U,3):"NPS",1:"DONE")_"^DGPTFM")
+"RTN","DGPTFJC",12,0)
+ D H G MAS
+"RTN","DGPTFJC",13,0)
+ ;
+"RTN","DGPTFJC",14,0)
+401 S DGNUM=$S($D(S(DGZS0+1)):401_"-"_(DGZS0+1),1:"MAS")
+"RTN","DGPTFJC",15,0)
+ W !,"Enter '^N' for Screen N, RETURN for <",DGNUM,">,'^' to Abort: <",DGNUM,">//"
+"RTN","DGPTFJC",16,0)
+ D READ G Q^DGPTF:X=U,NEXM^DGPTFM5:X="",^DGPTFJ:X?1"^".E D H G 401
+"RTN","DGPTFJC",17,0)
+ ;
+"RTN","DGPTFJC",18,0)
+501 W !,"Enter '^N' for Screen N, RETURN for <",DGNUM,">,'^' to Abort: <",DGNUM,">//"
+"RTN","DGPTFJC",19,0)
+ D READ G Q^DGPTF:X=U,NEXM^DGPTFM4:X="",^DGPTFJ:X?1"^".E D H G 501
+"RTN","DGPTFJC",20,0)
+ ;
+"RTN","DGPTFJC",21,0)
+601 W !,"Enter '^N' for Screen N, RETURN for <",DGNUM,">,'^' to Abort: <",DGNUM,">//"
+"RTN","DGPTFJC",22,0)
+ D READ G Q^DGPTF:X=U,NEXP^DGPTFM6:X="",^DGPTFJ:X?1"^".E D H G 601
+"RTN","DGPTFJC",23,0)
+ ;
+"RTN","DGPTFJC",24,0)
+701 ;
+"RTN","DGPTFJC",25,0)
+ G ACT1^DGPTF41 ; new code
+"RTN","DGPTFJC",26,0)
+ ;
+"RTN","DGPTFJC",27,0)
+ ;Display screen prompt and process user response for 801 screen
+"RTN","DGPTFJC",28,0)
+801 W !,"Enter '^N' for Screen N, RETURN for <",DGNUM,">,'^' to Abort: <",DGNUM,">//"
+"RTN","DGPTFJC",29,0)
+ D READ G Q^DGPTF:X=U,NEXP^DGPTFM2:X="",^DGPTFJ:X?1"^".E D H G 801
+"RTN","DGPTFJC",30,0)
+READ ; -- read X
+"RTN","DGPTFJC",31,0)
+ R X:DTIME S:'$T X="^",DGPTOUT=""
+"RTN","DGPTFJC",32,0)
+ Q
+"RTN","DGPTFJC",33,0)
+ ;
+"RTN","DGPTFJC",34,0)
+EN ; DG*636 ; DG*5.3*850
+"RTN","DGPTFJC",35,0)
+ ; Called from Diagnosis fields in 501 movements
+"RTN","DGPTFJC",36,0)
+ ; Variable DGN is passed globally as a node identifier
+"RTN","DGPTFJC",37,0)
+ ;
+"RTN","DGPTFJC",38,0)
+ N EFFDATE,DGTEMP,IMPDATE,DGINAC
+"RTN","DGPTFJC",39,0)
+ D EFFDATE^DGPTIC10(DA(1))
+"RTN","DGPTFJC",40,0)
+ S K=$S($D(K):K,1:1),DGER=0 ;S DGPTDAT=$$GETDATE^ICDGTDRG(DA(1))
+"RTN","DGPTFJC",41,0)
+ ;
+"RTN","DGPTFJC",42,0)
+ ;if there is a disch and a previous movement, if disch
+"RTN","DGPTFJC",43,0)
+ ;is >Oct 1 (next FY) and movement <Oct 1, then use the movement date
+"RTN","DGPTFJC",44,0)
+ I $G(DGZM0)="" S DGZM0=1,M(DGZM0)="0^"  ; to prevent sys err from TD5^DGPTTS2 and ptf quick load (DG*701/729)
+"RTN","DGPTFJC",45,0)
+ N DGPTMVDT I DGPTDAT=$P($G(^DGPT(DA(1),70)),U,1)&(DGPTDAT=$P($G(^DGPT(DA(1),"M",1,0)),U,10))&($D(M(DGZM0)))&($P($G(M(DGZM0)),U)'=1) S DGPTMVDT=$P($G(^DGPT(DA(1),"M",2,0)),U,10)
+"RTN","DGPTFJC",46,0)
+ ;next line is if using "Add a code" in MAS screen
+"RTN","DGPTFJC",47,0)
+ I '$G(DGPTMVDT)&($D(DGADD))&($G(DGMOV)'=1) S DGPTMVDT=$P($G(^DGPT(DA(1),"M",2,0)),U,10)
+"RTN","DGPTFJC",48,0)
+ I $G(DGPTMVDT) D
+"RTN","DGPTFJC",49,0)
+ .;if same calendar year
+"RTN","DGPTFJC",50,0)
+ .I $E(DGPTDAT,1,3)=$E(DGPTMVDT,1,3),$E(DGPTDAT,4,7)>0930,$E(DGPTMVDT,4,7)<1001 S DGPTDAT=DGPTMVDT Q
+"RTN","DGPTFJC",51,0)
+ .;if different calendar year
+"RTN","DGPTFJC",52,0)
+ .I ($E(DGPTDAT,1,3)-$E(DGPTMVDT,1,3))>1 S DGPTDAT=DGPTMVDT Q
+"RTN","DGPTFJC",53,0)
+ .I $E(DGPTMVDT,4,7)<1001 S DGPTDAT=DGPTMVDT Q
+"RTN","DGPTFJC",54,0)
+ .I $E(DGPTDAT,4,7)>0930 S DGPTDAT=DGPTMVDT Q
+"RTN","DGPTFJC",55,0)
+ I $G(DGPMT)!$G(DGQWK) K M(DGZM0),DGZM0  ; DG*701/729
+"RTN","DGPTFJC",56,0)
+ S DGPTTMP=$$ICDDATA^ICDXCODE("DIAG",+Y,EFFDATE)
+"RTN","DGPTFJC",57,0)
+ I +DGPTTMP<0 D MSG("Can not use inactive codes.") S DGER=1 Q
+"RTN","DGPTFJC",58,0)
+ I '$P(DGPTTMP,U,10) S DGINAC=$P(DGPTTMP,U,12) I DGINAC<EFFDATE D MSG("Can not use inactive codes.") S DGER=1 Q
+"RTN","DGPTFJC",59,0)
+ ;end DG*636
+"RTN","DGPTFJC",60,0)
+ ;===================================================================
+"RTN","DGPTFJC",61,0)
+ ;
+"RTN","DGPTFJC",62,0)
+ ;Allow sex-unique ICD codes to be assigned to the opposite sex
+"RTN","DGPTFJC",63,0)
+ ;for 501 movements, output warning only (Ref: DG*5.3*884)
+"RTN","DGPTFJC",64,0)
+ I $P(DGPTTMP,U,11)]""&($P(DGPTTMP,U,11)'=$S($D(^DPT(+^DGPT(DA(1),0),0)):$P(^(0),U,2),1:"M")) D
+"RTN","DGPTFJC",65,0)
+ . D:K<24 MSG($P(DGPTTMP,U,2)_" should only be used with "_$S($P(DGPTTMP,U,11)="F":"FEMALES",1:"MALES")) S K=K+1 Q
+"RTN","DGPTFJC",66,0)
+ ;
+"RTN","DGPTFJC",67,0)
+ ; -- can't enter a code already in the movement
+"RTN","DGPTFJC",68,0)
+ I $D(^DGPT(DA(1),"M","AC",+Y,DA)) W !,"Cannot enter the same code twice." S DGER=1 Q
+"RTN","DGPTFJC",69,0)
+ ;
+"RTN","DGPTFJC",70,0)
+ S %=U_$P(^DGPT(DA(1),"M",DA,0),U,5,15),$P(%,U,7)=U ;take movement date out of %
+"RTN","DGPTFJC",71,0)
+ D NOT(+Y,%)
+"RTN","DGPTFJC",72,0)
+ Q:DGER
+"RTN","DGPTFJC",73,0)
+ D REQ(+Y,%)
+"RTN","DGPTFJC",74,0)
+ Q
+"RTN","DGPTFJC",75,0)
+ ;
+"RTN","DGPTFJC",76,0)
+EN1 ; called from 601 movement procedure codes and 401 Surgical operations
+"RTN","DGPTFJC",77,0)
+ S K=$S($D(K):K,1:1),DGER=0
+"RTN","DGPTFJC",78,0)
+ ;
+"RTN","DGPTFJC",79,0)
+ N EFFDATE,DGTEMP,IMPDATE,DGPTDAT
+"RTN","DGPTFJC",80,0)
+ ;
+"RTN","DGPTFJC",81,0)
+ ;Next 2 lines commented out since they were used to prevent duplicate operation/procedure codes (401 & 601)
+"RTN","DGPTFJC",82,0)
+ ;from being entered. If duplicate checking is ever implemented for operation/procedure data, a replacement
+"RTN","DGPTFJC",83,0)
+ ;multi-field xref will need to be created. (Ref: DG*5.3*884)
+"RTN","DGPTFJC",84,0)
+ ;S:$G(DGIT)=5 DGCR="AP6",DGSB="P"
+"RTN","DGPTFJC",85,0)
+ ;S:$G(DGIT)=8 DGCR="AO",DGSB="S"
+"RTN","DGPTFJC",86,0)
+ ;
+"RTN","DGPTFJC",87,0)
+ D EFFDATE^DGPTIC10(DA(1))
+"RTN","DGPTFJC",88,0)
+ ;S DGICD0=$$ICDDATA^ICDXCODE("PROC",+Y,EFFDATE)
+"RTN","DGPTFJC",89,0)
+ N DGPRDT S DGPRDT=$S(+$G(DGPROCD):+DGPROCD,1:+$G(DGPROCI))
+"RTN","DGPTFJC",90,0)
+ S:'+$G(DGPRDT) DGICD0=$$ICDDATA^ICDXCODE("PROC",+Y,EFFDATE)
+"RTN","DGPTFJC",91,0)
+ I +$G(DGPRDT) D
+"RTN","DGPTFJC",92,0)
+ . ;if procedure before ICD-10 era but the effective date (discharge date) is after then use the eff date and quit
+"RTN","DGPTFJC",93,0)
+ . I DGPRDT<IMPDATE,EFFDATE'<IMPDATE S DGICD0=$$ICDDATA^ICDXCODE("PROC",+Y,EFFDATE) Q
+"RTN","DGPTFJC",94,0)
+ . ;otherwise use the procedure date
+"RTN","DGPTFJC",95,0)
+ . S DGICD0=$$ICDDATA^ICDXCODE("PROC",+Y,DGPRDT)
+"RTN","DGPTFJC",96,0)
+ ;
+"RTN","DGPTFJC",97,0)
+ I +DGICD0,0!('$P(DGICD0,U,10)) S DGER=1 Q
+"RTN","DGPTFJC",98,0)
+ ;
+"RTN","DGPTFJC",99,0)
+ ;Allow sex-unique ICD codes to be assigned to the opposite sex for
+"RTN","DGPTFJC",100,0)
+ ;401 Surgeries and 601 Procedures, output warning only (Ref: DG*5.3*884)
+"RTN","DGPTFJC",101,0)
+ I $P(DGICD0,U,11)]""&($P(DGICD0,U,11)'=$S($D(^DPT(+^DGPT(DA(1),0),0)):$P(^(0),U,2),1:"M")) D
+"RTN","DGPTFJC",102,0)
+ . D:K<24 MSG($P(DGICD0,U,2)_" should only be used with "_$S($P(DGICD0,U,11)="F":"FEMALES",1:"MALES")) S K=K+1 Q
+"RTN","DGPTFJC",103,0)
+ ;
+"RTN","DGPTFJC",104,0)
+ ;Next 2 lines commented out since user may enter duplicate operation/procedure codes (401 & 601) as sometimes
+"RTN","DGPTFJC",105,0)
+ ;they must code left and right when there aren't specific codes, they enter the code twice. (Ref: DG*5.3*884)
+"RTN","DGPTFJC",106,0)
+ ;S %=$P(^DGPT(DA(1),$G(DGSB),DA,0),U,DGI)
+"RTN","DGPTFJC",107,0)
+ ;I $D(^DGPT(DA(1),$G(DGSB),$G(DGCR),Y,DA)),%'=Y S DGER=1 D MSG("Cannot enter the same code more than once within a "_$S(DGSB="S":"401",1:"601")_" transaction") Q
+"RTN","DGPTFJC",108,0)
+ ;
+"RTN","DGPTFJC",109,0)
+ Q
+"RTN","DGPTFJC",110,0)
+EN2 ; Called from 701 movement procedure codes
+"RTN","DGPTFJC",111,0)
+ S K=$S($D(K):K,1:1),DGER=0
+"RTN","DGPTFJC",112,0)
+ N EFFDATE,DGTEMP,IMPDATE,DGPTDAT
+"RTN","DGPTFJC",113,0)
+ D EFFDATE^DGPTIC10(DA)
+"RTN","DGPTFJC",114,0)
+ S DGPTTMP=$$ICDDATA^ICDXCODE("PROC",+Y,EFFDATE)
+"RTN","DGPTFJC",115,0)
+ ; 
+"RTN","DGPTFJC",116,0)
+ I +DGPTTMP<0!('$P(DGPTTMP,U,10)) S DGER=1 Q
+"RTN","DGPTFJC",117,0)
+ ;
+"RTN","DGPTFJC",118,0)
+ ;Allow sex-unique ICD codes to be assigned to the opposite sex for
+"RTN","DGPTFJC",119,0)
+ ;401P Procedures, output warning only (Ref: DG*5.3*884)
+"RTN","DGPTFJC",120,0)
+ I $P(DGPTTMP,U,11)]""&($P(DGPTTMP,U,11)'=$S($D(^DPT(+^DGPT(DA,0),0)):$P(^(0),U,2),1:"M")) D
+"RTN","DGPTFJC",121,0)
+ . D:K<24 MSG($P(DGPTTMP,U,2)_" should only be used with "_$S($P(DGPTTMP,U,11)="F":"FEMALES",1:"MALES")) S K=K+1 Q
+"RTN","DGPTFJC",122,0)
+ ;
+"RTN","DGPTFJC",123,0)
+ S L=$P($S($D(^DGPT((DA),"401P")):^("401P"),1:0),U,1,5)
+"RTN","DGPTFJC",124,0)
+ S %=$P(L,U,DGI)
+"RTN","DGPTFJC",125,0)
+ S L=$P(L,U,1,DGI-1)_U_$P(L,U,DGI+1,5)
+"RTN","DGPTFJC",126,0)
+ I L[+Y D MSG("Cannot enter the same code twice.") S DGER=1 Q
+"RTN","DGPTFJC",127,0)
+ Q
+"RTN","DGPTFJC",128,0)
+EN3 ;Called from 701 movement diagnosis fields (top level)
+"RTN","DGPTFJC",129,0)
+ ; - EFFDATE := date of interest e.g. patient discharge date
+"RTN","DGPTFJC",130,0)
+ ; - IMPDATE := ICD-10 implementation date
+"RTN","DGPTFJC",131,0)
+ ; - DGTEMP  := temp variable to hold data from $$IMPDATE^DGPTIC10
+"RTN","DGPTFJC",132,0)
+ ;
+"RTN","DGPTFJC",133,0)
+ N EFFDATE,DGTEMP,IMPDATE,DGINAC
+"RTN","DGPTFJC",134,0)
+ ;
+"RTN","DGPTFJC",135,0)
+ D EFFDATE^DGPTIC10(DA)
+"RTN","DGPTFJC",136,0)
+ ;
+"RTN","DGPTFJC",137,0)
+ S K=$S($D(K):K,1:1),DGER=0,DGPTTMP=$$ICDDATA^ICDXCODE("DIAG",+Y,EFFDATE)
+"RTN","DGPTFJC",138,0)
+ I +DGPTTMP<0 D MSG("Can not use inactive codes.") S DGER=1 Q
+"RTN","DGPTFJC",139,0)
+ I '$P(DGPTTMP,U,10) S DGINAC=$P(DGPTTMP,U,12) I DGINAC<EFFDATE D MSG("Can not use inactive codes.") S DGER=1 Q
+"RTN","DGPTFJC",140,0)
+ ; 
+"RTN","DGPTFJC",141,0)
+ ; - unacceptable as primary DX
+"RTN","DGPTFJC",142,0)
+ I DGI=1,$P(DGPTTMP,U,5) D MSG("Not acceptable as a primary Diagnosis.") S DGER=1 Q
+"RTN","DGPTFJC",143,0)
+ ;
+"RTN","DGPTFJC",144,0)
+ ;Allow sex-unique ICD codes to be assigned to the opposite sex for
+"RTN","DGPTFJC",145,0)
+ ;Primary and Secondary Dx's, output warning only (Ref: DG*5.3*884)
+"RTN","DGPTFJC",146,0)
+ I $P(DGPTTMP,U,11)]""&($P(DGPTTMP,U,11)'=$S($D(^DPT(+^DGPT(DA,0),0)):$P(^(0),U,2),1:"M")) D
+"RTN","DGPTFJC",147,0)
+ . D:K<24 MSG($P(DGPTTMP,U,2)_" should only be used with "_$S($P(DGPTTMP,U,11)="F":"FEMALES",1:"MALES")) S K=K+1 Q
+"RTN","DGPTFJC",148,0)
+ ;
+"RTN","DGPTFJC",149,0)
+ ; -- build string of 701 dx codes
+"RTN","DGPTFJC",150,0)
+ S %=$S($D(^DGPT(DA,70)):^(70),1:""),%=U_$P(%,U,10)_U_$P(%,U,16,24)_U
+"RTN","DGPTFJC",151,0)
+ S:$G(^DGPT(DA,71))'="" %=%_^(71)_U
+"RTN","DGPTFJC",152,0)
+ ;
+"RTN","DGPTFJC",153,0)
+ ; -- can't enter the same entry twice
+"RTN","DGPTFJC",154,0)
+ S $P(%,U,DGI+1)=U I %[(U_+Y_U) S DGER=1 D MSG("Cannot enter the same code twice.") Q
+"RTN","DGPTFJC",155,0)
+ ;
+"RTN","DGPTFJC",156,0)
+ D NOT(+Y,%)
+"RTN","DGPTFJC",157,0)
+ Q:DGER
+"RTN","DGPTFJC",158,0)
+ ;
+"RTN","DGPTFJC",159,0)
+ D REQ(+Y,%)
+"RTN","DGPTFJC",160,0)
+ Q
+"RTN","DGPTFJC",161,0)
+EN4 ; called from ??
+"RTN","DGPTFJC",162,0)
+ S K=$S($D(K):K,1:1),DGER=0,N=$$ICDDATA^ICDXCODE("DIAG",+Y,$$GETDATE^ICDGTDRG(DA)) I N<0!'$P(N,U,10) S DGER=1 Q
+"RTN","DGPTFJC",163,0)
+ I DGI=1,$P(N,U,5) S DGER=1 Q
+"RTN","DGPTFJC",164,0)
+ I $P(N,U,11)]""&($P(N,U,11)'=$S($D(^DPT(+^DGPT(DA(2),0),0)):$P(^(0),U,2),1:"M")) D:K<24 MSG($P(N,U,2)_" can only be used with "_$S($P(N,U,11)="F":"FEMALES",1:"MALES")) S K=K+1,DGER=1 Q
+"RTN","DGPTFJC",165,0)
+ S %=$S($D(^DGPT(DA(2),"C",DA(1),"CPT",DA,0)):^(0),1:""),%=U_$P(%,U,4,7)_U,$P(%,U,DGI+1)=U I %[(U_+Y_U) S DGER=1 Q
+"RTN","DGPTFJC",166,0)
+ D NOT(+Y,%)
+"RTN","DGPTFJC",167,0)
+ Q:DGER
+"RTN","DGPTFJC",168,0)
+ D REQ(DA(2),+Y,%)
+"RTN","DGPTFJC",169,0)
+ Q
+"RTN","DGPTFJC",170,0)
+EN5 ; DG*5.3*850
+"RTN","DGPTFJC",171,0)
+ ; called from the diagnosis input transforms in file 46
+"RTN","DGPTFJC",172,0)
+ N EFFDATE,DGTEMP,IMPDATE
+"RTN","DGPTFJC",173,0)
+ I $G(PTF) D EFFDATE^DGPTIC10($G(PTF))
+"RTN","DGPTFJC",174,0)
+ S K=$S($D(K):K,1:1),DGER=0,DGPTTMP=$$ICDDATA^ICDXCODE("DIAG",+Y,EFFDATE)
+"RTN","DGPTFJC",175,0)
+ I +DGPTTMP<0!('$P(DGPTTMP,U,10)) D MSG("Must be an active code.") S DGER=1 Q
+"RTN","DGPTFJC",176,0)
+ ;
+"RTN","DGPTFJC",177,0)
+ I $P(DGPTTMP,U,11)]""&($P(DGPTTMP,U,11)'=$S($D(^DPT(+^DGPT(PTF,0),0)):$P(^(0),U,2),1:"M")) D
+"RTN","DGPTFJC",178,0)
+ . D:K<24 MSG($P(DGPTTMP,U,2)_" can only be used with "_$S($P(DGPTTMP,U,11)="F":"FEMALES",1:"MALES")) S K=K+1,DGER=1 Q
+"RTN","DGPTFJC",179,0)
+ ;
+"RTN","DGPTFJC",180,0)
+ S K=^DGCPT(46,DA,0) I $P(K,U,4,7)_U_$P(K,U,15,18)[Y D MSG("Cannot enter the same code twice.") S DGER=1 Q
+"RTN","DGPTFJC",181,0)
+ Q
+"RTN","DGPTFJC",182,0)
+EN6 ; -- called from file 46; .01 field
+"RTN","DGPTFJC",183,0)
+ ;DG*5.3*912 code being changed to accomodate patch ICPT*46 code enforcement
+"RTN","DGPTFJC",184,0)
+ ;I $P($G(^(0)),U,2)?.N S DGER=1 Q
+"RTN","DGPTFJC",185,0)
+ ;using a naked reference as this line of code calls an input transform, which requires a naked reference
+"RTN","DGPTFJC",186,0)
+ I '$D(^(61,"B")) S DGER=1 Q
+"RTN","DGPTFJC",187,0)
+ S DGER=0,N=$$CPT^ICPTCOD(+Y,$$GETDATE^ICDGTDRG($G(DA))) I N<0!'$P(N,"^",7) S DGER=1 Q
+"RTN","DGPTFJC",188,0)
+ S L=0 F  S L=$O(^DGCPT(46,L)) Q:L'>0  I +$G(^(L,1))=$G(DGPRD),$P(^(1),U,3)=$G(PTF),+^(0)=Y,'$G(^(9)) S DGER=1 Q
+"RTN","DGPTFJC",189,0)
+ K L Q
+"RTN","DGPTFJC",190,0)
+ Q
+"RTN","DGPTFJC",191,0)
+ ;
+"RTN","DGPTFJC",192,0)
+REQ(DX,STRING) ; - is another ICD code required with this code
+"RTN","DGPTFJC",193,0)
+ ; -- input     DX - code being entered
+"RTN","DGPTFJC",194,0)
+ ;          STRING - string of code iens already entered for movement ("^123^456^789^")
+"RTN","DGPTFJC",195,0)
+ ; -- output - writes message if another code is required
+"RTN","DGPTFJC",196,0)
+ ;
+"RTN","DGPTFJC",197,0)
+ N I,IEN,DGI,DZ
+"RTN","DGPTFJC",198,0)
+ K ^TMP("DGPTF-R",$J)
+"RTN","DGPTFJC",199,0)
+ Q:$G(DX)<1
+"RTN","DGPTFJC",200,0)
+ Q:'$$REQ^ICDEX(DX,"DGPTF-R",1)
+"RTN","DGPTFJC",201,0)
+ ;
+"RTN","DGPTFJC",202,0)
+ S DGI=1 S DZ="" F I=0:0 S DZ=$O(^TMP("DGPTF-R",$J,"B",DZ)) Q:DZ=""  D  Q:DG1=1
+"RTN","DGPTFJC",203,0)
+ . S IEN=$O(^TMP("DGPTF-R",$J,"B",DZ,0)) Q:IEN<1  S DG1=0 I STRING[(U_IEN_U) S DG1=1 Q
+"RTN","DGPTFJC",204,0)
+ I DG1=0 D MSG($S(+DGPTTMP>0:$P(DGPTTMP,U,2),1:"")_" requires additional code.")
+"RTN","DGPTFJC",205,0)
+ K ^TMP("DGPTF-R",$J)
+"RTN","DGPTFJC",206,0)
+ Q
+"RTN","DGPTFJC",207,0)
+ ;
+"RTN","DGPTFJC",208,0)
+NOT(DX,STRING) ; - is icd code not to use with existing codes
+"RTN","DGPTFJC",209,0)
+ ; -- input     DX - code being entered
+"RTN","DGPTFJC",210,0)
+ ;          STRING - string of code iens already entered for movement ("^123^456^789^")
+"RTN","DGPTFJC",211,0)
+ ; -- output  DGER :=1 if error
+"RTN","DGPTFJC",212,0)
+ ;            writes message if not allowed
+"RTN","DGPTFJC",213,0)
+ ;
+"RTN","DGPTFJC",214,0)
+ N I,IEN,DGI,DZ
+"RTN","DGPTFJC",215,0)
+ K ^TMP("DGPTF-N",$J)
+"RTN","DGPTFJC",216,0)
+ S DGER=0
+"RTN","DGPTFJC",217,0)
+ Q:$G(DX)<1
+"RTN","DGPTFJC",218,0)
+ ;
+"RTN","DGPTFJC",219,0)
+ Q:'$$NOT^ICDEX(DX,"DGPTF-N",1)
+"RTN","DGPTFJC",220,0)
+ ;
+"RTN","DGPTFJC",221,0)
+ S DGI=1 S DZ="" F I=0:0 S DZ=$O(^TMP("DGPTF-N",$J,"B",DZ)) Q:DZ=""  D  Q:DGER
+"RTN","DGPTFJC",222,0)
+ . S IEN=$O(^TMP("DGPTF-N",$J,"B",DZ,0)) Q:IEN<1  I STRING[(U_IEN_U) S DGER=1 D  Q:DGER
+"RTN","DGPTFJC",223,0)
+ .. D MSG("Cannot use "_$$CODEC^ICDEX(80,DX)_"  with "_$$CODEC^ICDEX(80,IEN)) Q
+"RTN","DGPTFJC",224,0)
+ K ^TMP("DGPTF-N",$J)
+"RTN","DGPTFJC",225,0)
+ Q
+"RTN","DGPTFJC",226,0)
+MSG(TEXT) ;
+"RTN","DGPTFJC",227,0)
+ D EN^DDIOL(TEXT)
+"RTN","DGPTFJC",228,0)
+ Q
+"RTN","DGPTFM2")
+0^3^B50916378^B50700609
+"RTN","DGPTFM2",1,0)
+DGPTFM2 ;ALB/DWS - MASTER PROFESSIONAL SERVICE ENTER/EDIT ;6/16/05 8:33am
+"RTN","DGPTFM2",2,0)
+ ;;5.3;Registration;**517,590,606,635,850,912**;Aug 13, 1993;Build 3
+"RTN","DGPTFM2",3,0)
+ADD ;ADD CPT RECORD
+"RTN","DGPTFM2",4,0)
+ N DGZP S DGZP=0 S:'$D(^DGPT(PTF,"C",0)) ^(0)="^45.06D^^"
+"RTN","DGPTFM2",5,0)
+ S DIC="^DGPT("_PTF_",""C"",",DIC(0)="AELQMXZ",DA(1)=PTF,DLAYGO=45
+"RTN","DGPTFM2",6,0)
+ D ^DIC K DIC,DLAYGO G ^DGPTFM:Y'>0,^DGPTFM:'$D(^DGPT(PTF,"C",+Y))
+"RTN","DGPTFM2",7,0)
+ S DGPSM=+Y
+"RTN","DGPTFM2",8,0)
+ I '$P(Y,U,3) S DIR("A")="Do you want to edit this CPT RECORD DATE/TIME?",DIR(0)="Y",DIR("B")="YES" D ^DIR G ^DGPTFM:'Y!$D(DIRUT)
+"RTN","DGPTFM2",9,0)
+ D MOB
+"RTN","DGPTFM2",10,0)
+ I $P(DGZPRF,U,3) F I=1:1:$P(DGZPRF,U,3) S:DGZPRF(I,0)=DGPSM DGZP=I
+"RTN","DGPTFM2",11,0)
+ K I G:'DGZP ^DGPTFM S X="A,B",DGPSM=0
+"RTN","DGPTFM2",12,0)
+ED G HELP^DGPTUTL1:X'["A"&(X'["B")&(X'["a")&(X'["b") K DA
+"RTN","DGPTFM2",13,0)
+ S DGJUMP=X,DGPRD=+DGZPRF(DGZP),X1="^801"
+"RTN","DGPTFM2",14,0)
+ I X["A"!(X["a") D  L -^DGPT(PTF) I FLAG D MOB,REQ^DGPTFM3 G EXIT
+"RTN","DGPTFM2",15,0)
+ .S DA(1)=PTF,DIE="^DGPT("_PTF_",""C"",",(DA,REC)=DGZPRF(DGZP,0)
+"RTN","DGPTFM2",16,0)
+ .S DR=".01;.02;.03;.05;.09////0",DIC(0)="AELQZ" Q:'$$LOCK
+"RTN","DGPTFM2",17,0)
+ .D FMDIE S FLAG=$D(Y)>9!$D(DOUT)!'$D(DA) Q:$D(Y)>9!'$D(DA)
+"RTN","DGPTFM2",18,0)
+ .S DGPRD=+^DGPT(PTF,"C",DGZPRF(DGZP,0),0) Q:+DGZPRF(DGZP)=DGPRD
+"RTN","DGPTFM2",19,0)
+ .S DGI=0 F  S DGI=$O(^DGCPT(46,"C",PTF,DGI)) Q:DGI'>0  D  Q:$D(Y)>9!'$D(DA)
+"RTN","DGPTFM2",20,0)
+ ..Q:+^DGCPT(46,DGI,1)'=+DGZPRF(DGZP)  Q:$D(^(9))
+"RTN","DGPTFM2",21,0)
+ ..S DR=".14////"_DGPRD,(DA,REC)=DGI,DIE="^DGCPT(46," D FMDIE
+"RTN","DGPTFM2",22,0)
+ ..I $D(Y)>9!'$D(DA) S FLAG=1
+"RTN","DGPTFM2",23,0)
+ ..;ADD IMPDATE check to see if Edit on date changed coding system
+"RTN","DGPTFM2",24,0)
+ . I $P(DGZPRF(DGZP),U)<IMPDATE,DGPRD'<IMPDATE D EN^DDIOL("Primary Diagnosis changing from ICD-9 to ICD-10. You must edit the Diagnosis.") S DGJUMP="B"
+"RTN","DGPTFM2",25,0)
+ . I $P(DGZPRF(DGZP),U)'<IMPDATE,DGPRD<IMPDATE D EN^DDIOL("Primary Diagnosis changing from ICD-10 to ICD-9. You must edit the Diagnosis.") S DGJUMP="B"
+"RTN","DGPTFM2",26,0)
+ .S $P(DGZPRF(DGZP),U)=DGPRD
+"RTN","DGPTFM2",27,0)
+JUMP I DGJUMP["B"!(DGJUMP["b") S DGI=0 D CL^SDCO21(DFN,DGPRD,"",.SDCLY) D
+"RTN","DGPTFM2",28,0)
+ .F  S DGI=$O(^DGCPT(46,"C",PTF,DGI)) Q:DGI'>0  I +^DGCPT(46,DGI,1)=+DGZPRF(DGZP),'$G(^(9)) D  I $D(DUOUT) Q:'DGDIAG  K DUOUT S DGI=0
+"RTN","DGPTFM2",29,0)
+ ..S (DA,REC)=DGI,DR=".01;",DIE="^DGCPT(46," D GETINFO^DGPTFM21
+"RTN","DGPTFM2",30,0)
+ .Q:$D(DUOUT)
+"RTN","DGPTFM2",31,0)
+ .F  D  D ^DIC S A=0 Q:Y'>0  D SED Q:$D(DUOUT)
+"RTN","DGPTFM2",32,0)
+ ..S DA=PTF,DIC="^DGCPT(46,",DIC(0)="AELMQZ",DLAYGO=46
+"RTN","DGPTFM2",33,0)
+ ..S DIC("S")="D EN6^DGPTFJC I 'DGER"
+"RTN","DGPTFM2",34,0)
+ I $D(DUOUT),$G(DGDIAG) K DUOUT G JUMP
+"RTN","DGPTFM2",35,0)
+ I $D(DUOUT),$G(DGJUMP)["A"!($G(DGJUMP)["a") S X=DGJUMP K DUOUT G ED
+"RTN","DGPTFM2",36,0)
+ K DR,DIE,DIC,DA,DGI,DGJUMP,DGPRD,DLAYGO,XREF
+"RTN","DGPTFM2",37,0)
+ D REQ^DGPTFM3,MOB H:RFL 2 K RFL
+"RTN","DGPTFM2",38,0)
+ G ^DGPTFM:'$D(DGZPRF(DGZP,0)),^DGPTFM:'$D(^DGPT(PTF,"C",DGZPRF(DGZP,0)))
+"RTN","DGPTFM2",39,0)
+SET D MOB:'$D(DGZPRF) S:'$D(DGZP) DGZP=1 I $G(DGZPRF(DGZP,0))="" K DGZPRF(DGZP) G NEXP
+"RTN","DGPTFM2",40,0)
+WRT G ^DGPTFM:'$D(^DGPT(PTF,"C",DGZPRF(DGZP,0),0)) S J=DGZP W @IOF,HEAD,?68
+"RTN","DGPTFM2",41,0)
+ N DGNUM S Z="<"_DGZP_">" W @DGVI,Z,@DGVO,!! S Y=+DGZPRF(J),Z="A"
+"RTN","DGPTFM2",42,0)
+ D D^DGPTUTL,Z^DGPTFM5 W ?5,"CPT Record Date/Time: ",Y
+"RTN","DGPTFM2",43,0)
+ I $P(DGZPRF(J),U,8)'="" W ?55,"Visit Service Category: ",$P(DGZPRF(J),U,8)
+"RTN","DGPTFM2",44,0)
+ I $P(DGZPRF(J),U,2) W !,?5,"Referring or Ordering Provider: " D
+"RTN","DGPTFM2",45,0)
+ .S L=$P(DGZPRF(J),U,2) D PRV^DGPTFM
+"RTN","DGPTFM2",46,0)
+ W !,?5,"Rendering Provider: " S L=$P(DGZPRF(J),U,3) D PRV^DGPTFM
+"RTN","DGPTFM2",47,0)
+ I $P(DGZPRF(J),U,5) W !,?5,"Rendering Location: ",$P($G(^SC($P(DGZPRF(J),U,5),0)),U)
+"RTN","DGPTFM2",48,0)
+ W !! S Z="B" D Z^DGPTFM5 W "  Procedures:   "
+"RTN","DGPTFM2",49,0)
+ F K=$P(DGZPRF,U,2):1 Q:'$D(DGZPRF(J,K))  I '$D(DGZPRF(J,K,9)) D
+"RTN","DGPTFM2",50,0)
+ .W ?5 D CPT^DGPTUTL1 W ! Q:$Y>16
+"RTN","DGPTFM2",51,0)
+ F I=1:1:(IOSL-$Y-5) W !
+"RTN","DGPTFM2",52,0)
+ K I,J,K,L,Z S DGNUM=$S($D(DGZPRF(DGZP+1)):DGZP+1,1:"MAS")
+"RTN","DGPTFM2",53,0)
+ G 801^DGPTFJC:DGST
+"RTN","DGPTFM2",54,0)
+ S DIR("A")="Enter <RET> to continue, A-B to edit, 'I' to add an 801,"
+"RTN","DGPTFM2",55,0)
+ S DIR("A")=DIR("A")_$C(10,13)_"the number of an 801 screen, ?? to list 801 screens,"
+"RTN","DGPTFM2",56,0)
+ S DIR("A")=DIR("A")_$C(10,13)_"'S' for Send to PCE,"
+"RTN","DGPTFM2",57,0)
+ S DIR("A")=DIR("A")_" '^N' for screen N, or '^' to abort:"
+"RTN","DGPTFM2",58,0)
+ S DIR("?")="^D HELP^DGPTUTL1"
+"RTN","DGPTFM2",59,0)
+ S DIR(0)="F^OU",DIR("B")=DGNUM,DIR("??")="^D DISP^DGPTUTL1" D ^DIR
+"RTN","DGPTFM2",60,0)
+ K DIR G:$D(DIRUT) Q^DGPTF:X="^"
+"RTN","DGPTFM2",61,0)
+ I X?1"^".E S DGPTSCRN=801 G ^DGPTFJ
+"RTN","DGPTFM2",62,0)
+ I X="MAS" S DGZP=1 G ^DGPTFM
+"RTN","DGPTFM2",63,0)
+ G ADD:X="I"!(X="i"),HELP^DGPTUTL1:X["?"
+"RTN","DGPTFM2",64,0)
+ I X?1N.N,$D(DGZPRF(X)) S DGZP=X G SET
+"RTN","DGPTFM2",65,0)
+ I X["A"!(X["B")!(X["a")!(X["b") G ED
+"RTN","DGPTFM2",66,0)
+ I X="S"!(X="s") D PCE G WRT
+"RTN","DGPTFM2",67,0)
+ D HELP^DGPTUTL1 R !!,"Enter <RET>: ",X:DTIME G WRT
+"RTN","DGPTFM2",68,0)
+PCE L +^DGPT(PTF):2
+"RTN","DGPTFM2",69,0)
+ I '$T W !,"CPT Record is being edited by another user" H 2 Q
+"RTN","DGPTFM2",70,0)
+ D ICDINFO^DGAPI(DFN,PTF),XREF^DGPTFM21
+"RTN","DGPTFM2",71,0)
+ S RES=$$DATA2PCE^DGAPI1(DFN,PTF,DGZP)
+"RTN","DGPTFM2",72,0)
+ I RES=1 L -^DGPT(PTF) W !,"PTF Record sent to PCE" H 2 Q
+"RTN","DGPTFM2",73,0)
+ W @IOF
+"RTN","DGPTFM2",74,0)
+ ;F I=1:1 Q:'$D(^TMP("DGPAPI",$J,"DIERR",$J,1,"TEXT",I))  W !,^(I)
+"RTN","DGPTFM2",75,0)
+ W !,"The PTF Record may not have been filed in PCE due to errors."
+"RTN","DGPTFM2",76,0)
+ W !,"Press return to continue." R X:DTIME
+"RTN","DGPTFM2",77,0)
+ L -^DGPT(PTF) Q
+"RTN","DGPTFM2",78,0)
+NEXP S DGZP=DGZP+1
+"RTN","DGPTFM2",79,0)
+ I '$D(DGZPRF(DGZP)) W:DGZP=2 !,"NO PROF. SERVICES TO EDIT." G EXIT
+"RTN","DGPTFM2",80,0)
+ G SET
+"RTN","DGPTFM2",81,0)
+EXIT K DGPSM H 2 S DGZP=1 G ^DGPTFM
+"RTN","DGPTFM2",82,0)
+DEL ;DELETE A CPT RECORD
+"RTN","DGPTFM2",83,0)
+ I '$P(DGZPRF,U,3) G NOPROC
+"RTN","DGPTFM2",84,0)
+ASK S DIR("A")="Select 801 record to Delete"
+"RTN","DGPTFM2",85,0)
+ S DIR(0)="NO^1:"_$P(DGZPRF,U,3),DIR("??")="^D DISP^DGPTUTL1"
+"RTN","DGPTFM2",86,0)
+ D ^DIR K DIR G ^DGPTFM:$D(DIRUT),^DGPTFM:'Y,^DGPTFM:'$D(^DGPT(PTF,"C",DGZPRF(Y,0),0)) S DGZP=Y,Y=+^(0) D D^DGPTUTL
+"RTN","DGPTFM2",87,0)
+ S DIR("A")="Are you sure you want to delete the entire 801 for "_Y
+"RTN","DGPTFM2",88,0)
+ S DIR(0)="Y",DIR("B")="No" D ^DIR K DIR G ^DGPTFM:'Y,^DGPTFM:'$$LOCK
+"RTN","DGPTFM2",89,0)
+ ;patch DG*5.3*912 modifies where the date is being set for deletion. This allows multiple cpt codes to be deleted from 801 in the ptf
+"RTN","DGPTFM2",90,0)
+ S DGI=0
+"RTN","DGPTFM2",91,0)
+ F  S DGI=$O(^DGCPT(46,"C",PTF,DGI)) Q:DGI'>0  D:+^DGCPT(46,DGI,1)=+DGZPRF(DGZP)&'$G(^(9))
+"RTN","DGPTFM2",92,0)
+ .D NOW^%DTC S (DA,REC)=DGI,DIE="^DGCPT(46,",DR="1////^S X=%" D FMDIE
+"RTN","DGPTFM2",93,0)
+ S DR=".09////1",DIE="^DGPT("_PTF_",""C"",",DA=DGZPRF(DGZP,0)
+"RTN","DGPTFM2",94,0)
+ S DA(1)=PTF D ^DIE L -^DGPT(PTF)
+"RTN","DGPTFM2",95,0)
+ W !!,"CPT Records....Deleted" H 2
+"RTN","DGPTFM2",96,0)
+ K DIK,DA,DGI,DGPROC,DGPSM,DGPNUM,Y D MOB G ^DGPTFM
+"RTN","DGPTFM2",97,0)
+NOPROC  W !!,*7,"No procedures to delete",! H 3 G ^DGPTFM
+"RTN","DGPTFM2",98,0)
+N ;ADD CPT CODES TO CPT RECORD
+"RTN","DGPTFM2",99,0)
+ I '$P(DGZPRF,U,3) W !!,"There are no 801 records that can be added to.",*7 H 2 G ^DGPTFM
+"RTN","DGPTFM2",100,0)
+P1 S DIR("A")="Add to 801 record ",DIR(0)="NO^1:"_$P(DGZPRF,U,3)
+"RTN","DGPTFM2",101,0)
+ S DIR("??")="^D DISP^DGPTUTL1"
+"RTN","DGPTFM2",102,0)
+ D ^DIR K DIR G ^DGPTFM:'Y
+"RTN","DGPTFM2",103,0)
+ S DGZP=Y,DGI=0,DGPRD=+DGZPRF(DGZP) D CL^SDCO21(DFN,DGPRD,"",.SDCLY)
+"RTN","DGPTFM2",104,0)
+ S DA=PTF,DIC="^DGCPT(46,",DIC(0)="AELQMZ",DLAYGO=46,DIC("S")="D EN6^DGPTFJC I 'DGER"
+"RTN","DGPTFM2",105,0)
+ D ^DIC K DIC,DLAYGO D:Y>0 SED,MOB,REQ^DGPTFM3 K DGPRD,Y
+"RTN","DGPTFM2",106,0)
+ D PCE^DGPTFQWK G ^DGPTFM
+"RTN","DGPTFM2",107,0)
+DC ;DELETE A CPT PROCEDURE
+"RTN","DGPTFM2",108,0)
+ I $E($G(ANS),2,99)>0 S DGPZ=+$E(ANS,2,99) G QQ
+"RTN","DGPTFM2",109,0)
+ S DIR("A")="Select 801 record to Delete a CPT code in"
+"RTN","DGPTFM2",110,0)
+ S DIR(0)="NO^1:"_$P(DGZPRF,U,3),DIR("??")="^D DISP^DGPTUTL1"
+"RTN","DGPTFM2",111,0)
+ D ^DIR K DIR G ^DGPTFM:$D(DIRUT),^DGPTFM:'Y,^DGPTFM:'$D(^DGPT(PTF,"C",DGZPRF(Y,0),0)) S DGZP=Y,Y=+^(0) D D^DGPTUTL
+"RTN","DGPTFM2",112,0)
+ F PS2=1:1 Q:'$D(DGZPRF(DGZP,PS2))  S PS2(PS2)=DGZP_"^"_PS2
+"RTN","DGPTFM2",113,0)
+ S PS2=PS2-1
+"RTN","DGPTFM2",114,0)
+QQ S DIR("A")="Select CPT code to Delete <1 - "_PS2_">",DIR(0)="NO^^K:X<1!(X>"_PS2_") X" D ^DIR K DIR G ^DGPTFM:$D(DIRUT),^DGPTFM:'Y
+"RTN","DGPTFM2",115,0)
+QQA S A1=Y,DGZP=+PS2(A1),CPT=+DGZPRF(DGZP,$P(PS2(A1),U,2))
+"RTN","DGPTFM2",116,0)
+ S DIR("A")="Are you sure you want to delete CPT code '"
+"RTN","DGPTFM2",117,0)
+ I $D(^ICPT(CPT)) D
+"RTN","DGPTFM2",118,0)
+ .S N=$$CPT^ICPTCOD(CPT,$$GETDATE^ICDGTDRG(PTF))
+"RTN","DGPTFM2",119,0)
+ .S N=$S(N>0:$P(N,U,2,99),1:"")
+"RTN","DGPTFM2",120,0)
+ .S DIR("A")=DIR("A")_$P(N,U)_" "_$P(N,U,2)_"'"
+"RTN","DGPTFM2",121,0)
+ E  S DIR("A")=DIR("A")_CPT_"  UNKNOWN"
+"RTN","DGPTFM2",122,0)
+ S DIR(0)="Y",DIR("B")="No" D ^DIR K DIR G ^DGPTFM:'Y
+"RTN","DGPTFM2",123,0)
+ G ^DGPTFM:'$$LOCK
+"RTN","DGPTFM2",124,0)
+QEL D NOW^%DTC S DA=DGZPRF(DGZP,$P(PS2(A1),U,2),0),DR="1////^S X=%"
+"RTN","DGPTFM2",125,0)
+ S REC=DGZPRF(DGZP,0)
+"RTN","DGPTFM2",126,0)
+ S DIE="^DGCPT(46," D FMDIE K A1,DR W !!,"CPT Code....Deleted"
+"RTN","DGPTFM2",127,0)
+ I '$D(DGZPRF(DGZP,2)) S DR=".09////1",DIE="^DGPT("_PTF_",""C"",",DA=DGZPRF(DGZP,0),DA(1)=PTF D ^DIE
+"RTN","DGPTFM2",128,0)
+ I $D(DGZPRF(DGZP,2)) D PCE^DGPTFQWK
+"RTN","DGPTFM2",129,0)
+ L -^DGPT(PTF) W:$X>70 ! D MOB H 2 G ^DGPTFM
+"RTN","DGPTFM2",130,0)
+F D MOB S DGZP=$S($E($G(ANS),2,99):+$E($G(ANS),2,99),1:1) G SET
+"RTN","DGPTFM2",131,0)
+MOB S (H,I,N)=0 K DGZPRF F M=1:1:6 S:$D(SDCLY(M)) N=N+1
+"RTN","DGPTFM2",132,0)
+ F I2=1:1 S H=$O(^DGPT(PTF,"C","B",H)) Q:H'>0  D
+"RTN","DGPTFM2",133,0)
+ .F  S I=$O(^DGPT(PTF,"C","B",H,I)) Q:I'>0  D
+"RTN","DGPTFM2",134,0)
+ ..S DGZPRF(I2)=^DGPT(PTF,"C",I,0),DGZPRF(I2,0)=I,(K,K1)=0,F=1 D
+"RTN","DGPTFM2",135,0)
+ ...F  S K=$O(^DGCPT(46,"C",PTF,K)),L=N+1\2+3 Q:K'>0  I +DGZPRF(I2)=+$G(^DGCPT(46,K,1)),'$G(^DGCPT(46,K,9)) D
+"RTN","DGPTFM2",136,0)
+ ....S K1=K1+1,DGZPRF(I2,K1)=^(0),DGZPRF(I2,K1,0)=K,F=0
+"RTN","DGPTFM2",137,0)
+ ....F M=2,3,5,6,7,15,16,17,18 S:$P(DGZPRF(I2,K1),U,M) L=L+1
+"RTN","DGPTFM2",138,0)
+ ....S DGZPRF(I2,K1,1)=L
+"RTN","DGPTFM2",139,0)
+ ...I F,$G(DGPSM)'=DGZPRF(I2,0) K DGZPRF(I2) S I2=I2-1
+"RTN","DGPTFM2",140,0)
+ S DGZPRF="1^1^"_(I2-1) K F,I,K,K1,N Q
+"RTN","DGPTFM2",141,0)
+SED S DR=".14////"_DGPRD_";.16////"_PTF_";",(DA,REC)=+Y,DIE="^DGCPT(46," D GETINFO^DGPTFM21 Q
+"RTN","DGPTFM2",142,0)
+FMDIE ;Prompt user for questions and file answers (using DIE)
+"RTN","DGPTFM2",143,0)
+ D ^DIE Q:$D(Y)>9  S RES=$$DELVFILE^DGAPI1(DFN,PTF,DGZP) K DIE,REC Q
+"RTN","DGPTFM2",144,0)
+LOCK() L +^DGPT(PTF):2 I  Q 1
+"RTN","DGPTFM2",145,0)
+ERR W !,"CPT Record is being edited by another user" K DIE,REC H 2 Q 0
+"VER")
+8.0^22.0
+"BLD",10160,6)
+^825
+**END**
+**END**
+

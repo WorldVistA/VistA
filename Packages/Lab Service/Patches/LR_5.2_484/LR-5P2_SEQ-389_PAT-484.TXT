@@ -1,0 +1,229 @@
+$TXT Created by                 JR at CHEY59.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 06/01/17 at 13:55
+=============================================================================
+Run Date: JUN 27, 2017                     Designation: LR*5.2*484
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #389                    Status: Released
+                  Compliance Date: JUL 28, 2017
+=============================================================================
+
+Associated patches: (v)LR*5.2*458  <<= must be installed BEFORE `LR*5.2*484'
+                    (v)LR*5.2*468  <<= must be installed BEFORE `LR*5.2*484'
+                    (v)LR*5.2*475  <<= must be installed BEFORE `LR*5.2*484'
+
+Subject: NDS FOLLOWUP TO LR*5.2*468
+
+Category: 
+  - Routine
+
+Description:
+============
+
+     
+   **************************** NOTE ****************************************
+   ** Since this defect patch address a routine that was intoduced in patch *
+   ** LR*5.2*458 and updated in patch LR*5.2*475 this patch will have both  *
+   ** patches as required builds so that the changes to routine LRVRAR are  *
+   ** consistent.                                                           *
+   **************************************************************************
+     
+  --------------------------------------------------------------------------
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*468 does
+  not contain any changes to the VISTA BLOOD BANK Software as defined
+  by ProPath standard titled: BBM Team Review of VistA Patches.
+   
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*468 does
+  not alter or modify any software design safeguards or safety critical
+  elements functions.
+    
+  RISK ANALYSIS: Changes made by patch LR*5.2*468 have no effect on Blood
+  Bank software functionality, therefore RISK is none.
+    
+  VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes
+  made, no specific validation requirements exist as a result of installation
+  of this patch.
+  --------------------------------------------------------------------------
+    
+  Patch LR*5.2*484 corrects defects introduced by patch LR*5.2*468.
+    
+  Issues that are addressed by this patch:
+    
+   *Defect #504291 - A new routine 'LRVRAR' was released by patch LR*5.2*458 
+    needs to be modified similar to LRVRPOC.
+    
+   *Defect #504295 - An undefined error,"(<UNDEFINED>LOINC+7^LRLNCV *LRMSGM)"
+    when the option Validate LOINC Mapping [LR LOINC VALIDATE] is used.
+     
+    
+  Test Sites:
+  ----------
+  VAMC - Tampa
+    
+  Overview:
+  =========
+    
+  Issue 1
+  ===========================================================================
+  Defect #504291 - Original patch (LR*5.2*468/LA*5.2*92) modified code in
+  routine LRVRPOC to define the variable LRTS before calling $$TMPSB^LRVER1.
+  The lab auto verification project included a similar routine, LRVRAR, but
+  that routine was not modified by this patch. The same mod applied to the
+  LRVRPOC routine needs to be applied to LRVRAR.
+    
+  Resolution:
+  --------------
+  Modified routine LRVRAR to define variable LRTS prior to calling
+  $$TMPSB^LRVER1.
+    
+    
+  Issue 2
+  ===========================================================================
+  Defect #504295 - A defect in routine LRVER1 was discovered.  The defect is
+  due to a modification added by patch LR*5.2*468, which causes an undefined
+  error (<UNDEFINED>LOINC+7^LRLNCV *LRMSGM) when the option Validate LOINC
+  Mapping [LR LOINC VALIDATE] is used.
+  The problem is with the 'newing' of certain varibles at tag LNC in routine
+  LRVER1 in support of patch LR*5.2*468.
+    
+  Resolution:
+  --------------
+  Modified routine LRVER1 at tag LNC to change when the varibles are 'newed'.
+  Created a new tag LNCM in routine LRVER1 to support the call from routine
+  LRLNCV.
+  Modified routine LRLNCV at tag LOINC from:
+  S LRLOINC=$$LNC^LRVER1(LRNLTN,LRCDEF,LRSPEC,$G(LRIEN))
+  to:
+  S LRLOINC=$$LNCM^LRVER1(LRNLTN,LRCDEF,LRSPEC,$G(LRIEN))
+  so that routine LRLNCV calls routine LRVER1 at the new line tag LNCM.
+  This was done so that the mapping routine LRLNCV would 'pick' up mapping
+  data and not data associated to patch LR*5.2*468.
+  
+   
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+  
+ Pre Installation Actions:
+ =========================
+ The following patches must be installed in the following order before this
+ patch may be installed.
+ LR*5.2*458
+ LR*5.2*468
+ LR*5.2*475
+  
+  
+ Pre-Installation Instructions:
+ ==============================
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than
+ 5 minutes to install.  It is not necessary to disable any options.
+ This patch is a Routines only patch.
+ To support the Backout Plan below, step (a) of the installation
+ instructions must be done.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select
+         the Installation Menu.  From this menu, you may elect to use the
+         following options. When prompted for the INSTALL NAME enter the
+         patch #(ex. LR*5.2*484):
+  
+ a.      Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DDs or templates.
+  
+ b.      Compare Transport Global to Current System - This option will
+         (allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch routines,
+         DDs, templates, etc.).
+  
+ c.      Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO//' 
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         NO//'
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' 
+  
+ 8.      If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ ===============================
+  
+ Backout Plan:
+ =============
+  
+ Pre-Implementation work that will be required for the Backout Plan
+ ------------------------------------------------------------------
+ Step (a) of the Installation instructions must be done. Record the
+ Subject line of the backup message and the basket that it was sent
+ to.
+  
+ Backout:
+ --------
+ Log in and go to MAILMAN.
+ Enter 'RML'
+ Enter 'Classic'
+ Enter the basket that the backup message was saved to.
+ Enter '?' to display the messages in the basket.
+ Select the message whose subject line is the same as the backup
+ subject line.
+ Enter '^' at the (Type <Enter> to continue or '^' to exit:) prompt.
+ Enter 'X' at the (Enter message action (in LAB basket): Ignore)
+ prompt.
+ Enter '6' at the (Select PackMan function:) prompt.
+ Enter 'YES' at the (Do you really want to do this? NO) prompt
+ Enter 'NO' at the (Shall I preserve the routines on disk in a separate
+ back-up message? YES) prompt.
+ The system will display an unloading message for each routine that is
+ in the PACKMAN Backup.
+ Once the routines are restored:
+ Enter '^' at the (Enter message action (in LAB basket): Ignore) prompt.
+ Exit Mailman.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27,1994;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRLNCV
+    Before:  B8729767   After:  B8979547  **232,278,468,484**
+Routine Name: LRVER1
+    Before: B40561385   After: B49802550  **42,153,201,215,239,240,263,
+                                           232,286,291,350,468,484**
+Routine Name: LRVRAR
+    Before: B71328911   After: B72283699  **458,475,484**
+ 
+Routine list of preceding patches: 468, 475
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 18, 2017
+Completed By:                               Date Completed: JUN 22, 2017
+Released By :                               Date Released : JUN 27, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

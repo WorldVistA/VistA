@@ -1,0 +1,239 @@
+$TXT Created by               at CPRS30.DOMAIN.EXT  (KIDS) on Wednesday, 04/19/17 at 18:21
+=============================================================================
+Run Date: JUL 12, 2017                     Designation: OR*3*436
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #378                      Status: Released
+                  Compliance Date: AUG 12, 2017
+=============================================================================
+
+Associated patches: (v)OR*3*421    <<= must be installed BEFORE `OR*3*436'
+                    (v)HMP*2*2     <<= must be installed BEFORE `OR*3*436'
+
+Subject: ISSUE WITH CHANGE ON INPATIENT MED ORDER
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is a follow up to the Computerized Patient Record System 
+ (CPRS) Graphical User Interface (GUI) v30.B release.
+  
+ After the national release of CPRS v30.B an issue was identified when an 
+ Inpatient Medication or Inpatient Infusion order is edited while the 
+ encounter location is set to a Clinic location identified in scheduling 
+ as an "IMO" clinic, the order will disappear from the BCMA Virtual Due 
+ list.
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A 
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                Type               New/Modified/Deleted
+ -----------                ----               -------------------- 
+ N/A
+  
+ Parameters Associated:
+  
+ Parameter Name                New/Modified/Deleted
+ --------------                --------------------
+ N/A
+  
+ Protocols Associated:         
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Remote Procedure Calls Associated:
+  
+ Remote Procedure Call Name           New/Modified/Deleted
+ --------------------------           --------------------
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ 3278 - Inpatient medication order disappeared from the BCMA Virtual Due
+ List
+  
+ Defect Tracking System Ticket(s) & Overview
+ --------------------------------------------
+ 1. I9134388FY16: Med Error - No Warning to Provider when CHANGING 
+                  Inpatient Med Error
+    R9908620FY16: Patient Safety Issue
+  
+ Problem:
+ --------
+ The provider changed the encounter location while working on the chart 
+ for an admitted patient.
+  
+ The location selected was set up in Scheduling to allow the 
+ administration of inpatient medications (IMO).
+  
+ The provider then selected an Inpatient Medication order and chose the 
+ 'Change' action. When the edit of the order was completed, the order was 
+ left in the Unit Dose Medications display group, but sent to Pharmacy as 
+ a Clinic Medications order. This meant the order disappeared from the 
+ Inpatient view of the BCMA Virtual Due List.
+  
+ Resolution:
+ ----------
+ The interim solution will be to add a hard stop on the change action so 
+ that if the location is set to a clinic "IMO" location, the provider will
+ not be allowed to edit an Inpatient Medication or Infusion order.
+  
+ The long-term solution will be determined by a workgroup.
+  
+ Test Sites:
+ ===========
+ Charleston, SC 
+ Fresno, CA 
+ St Cloud, MN
+  
+ Documentation and Software Retrieval:
+ =====================================
+ There is no documentation and no host file associated with this patch.
+  
+  
+ Patch Installation:
+ ===================
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select 
+     the Installation Menu.  From this menu, you may elect to use the 
+     following options. When prompted for the INSTALL NAME enter the patch 
+     OR*3.0*436:
+     a.  Backup a Transport Global - This option will create a backup 
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+  
+     b.  Compare Transport Global to Current System - This option will 
+         (allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch routines,
+         DDs, templates, etc.).
+  
+     c. Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+     NO//'
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+  
+ 7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ There are no specific post installation instructions.
+  
+ To verify proper installation of the patch:
+ 1. Verify the Install File shows the patch install completed with no
+    errors.
+ 2. Check the error trap and ensure no errors were reported.
+ 3. Verify the checksum of the ORWDXA routine matches the expected 
+    checksum in the patch description.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ It is imperative that the patch installer performed a backup of the
+ routine included in this patch prior to installation.
+  
+ In the event of a major issue with the patch, the Facility CIO may make 
+ the decision to back-out the patch. However, this decision should 
+ include both Health Product Support and the CPRS development team.
+  
+ The back-out plan is to restore the routine from the backup created. If 
+ this is required, the site can verify the back-out was successful by 
+ verifying that the checksum matches the pre-patch checksum from the patch 
+ description.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORWDXA
+    Before:B118705146   After:B116618620  **10,85,116,132,148,141,149,
+                                           187,213,195,215,243,280,306,
+                                           390,421,436**
+ 
+Routine list of preceding patches: 421
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 05, 2016
+Completed By:                               Date Completed: JUL 10, 2017
+Released By :                               Date Released : JUL 12, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

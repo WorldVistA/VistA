@@ -1,0 +1,232 @@
+
+=============================================================================
+Run Date: JUL 20, 2017                     Designation: PREN*1.3*1
+Package : PREN - PHARMACY PRODUCT SYS-NATL    Priority: Mandatory
+Version : 1.3         SEQ #1                    Status: Released
+                  Compliance Date: AUG 19, 2017
+=============================================================================
+
+
+Subject: PPS-N 1.3 IAM/2FA Implementation INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+ The Pharmacy Product System-National (PPS-N) is a Web-based application
+ that provides the ability to manage pharmacy-specific data across the VA
+ enterprise, ensuring that all facilities are using the same base data
+ for their operations. It allows approved national VA personnel to easily,
+ quickly, and safely manage the VA National Formulary which directs which
+ products (such as medications and supplies) are to be purchased and used
+ by the VA hospital system.
+  
+ The PPS-N application performs the following major business functions:
+  
+ * Add/edit/approve medication and supply information
+ * Synchronize the PPS-N data with the legacy National Drug File (NDF)
+   Management System (NDFMS) data
+ * Output various reports
+ * Process additions and updates from First DataBank (FDB)
+ * Search for and add drug information from First DataBank
+  
+  
+ In addition to synchronizing PPS-N with the NDFMS system, the PPS-N
+ application also interfaces with the VA Enterprise Terminology Services
+ (VETS) system (for Standard Medication Route information) and with the VA
+ Federal Supply Schedule (FSS) system (for pricing data).
+  
+ In order to comply with the VA mandate on two factor authentication 
+ (2FA), the PPS-N application has been integrated with IAM SSOi. The PPS-N 
+ application code and configuration have been updated to work with the IAM 
+ SSOi service for user authentication. The user roles management code in 
+ PPS-N has also been modified to remove dependency on the VistA Security 
+ keys for user authorization and use the PPS-N database tables to store 
+ and manage user roles within the PECS application.
+  
+  
+ PPS-N v1.3 also contains fixes for ten CA Service Desk Manager
+ tickets.
+  
+  
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+  
+ Options Associated:
+ --------------------
+ N/A
+  
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ CA SDM Ticket(s) & Overview
+ ----------------------------
+ I8779147FY16 - System shall update the Product's missing GCNSEQNO from an 
+ NDC that is added to the Product from FDB.
+  
+ I8778991FY16 - System shall update the Product's missing GCNSEQNO from an 
+ NDC that is added to the Product from FDB even when a new synonym is not 
+ added to the Product's synonym table.   
+  
+ I8610927FY16 - System shall send the GCNSEQNO update of a Product to 
+ NDFMS when the GCNSEQNO is updated from an NDC.
+  
+ I8496534FY16 - System shall ensure to successful load of PPS-N help pages 
+ on the add and edit Data Elements screens.
+  
+ I6071103FY16 - System shall ensure that the correct Label Name25 and the 
+ Brand Name are displayed in the header of the page when adding NDCs to a 
+ new Product via the Use Existing option.
+  
+ I9115344FY16 - System shall ensure that the Modified Date and Modified By 
+ fields of a Product are updated in the database when the Product is 
+ Inactivated.
+  
+ I8956474FY16 - System shall ensure that the tab characters entered in 
+ Print Name of a Product are stripped before the Product is sent to NDFMS.
+  
+ I10472800FY16 - System shall return search results appropriate to the 
+ Status selections made on the Advanced Search 
+ page.                                                                     
+                             
+ I10935568FY17 - System shall export all the search results in Advanced 
+ Search when the user clicks the Export to CSV or Excel links.
+  
+ I10950154FY17 - System shall sort the results on the Advanced Search page 
+ when the user clicks the sort icons in the table 
+ header.                                                                   
+                                                                                                                                                  
+  
+  
+ Problem:
+ -----------
+ The Department of Veterans Affairs Cybersecurity Task Force has been 
+ tasked by the Chief Information Officer (CIO) and the Inspector General 
+ (IG) to address identified material weaknesses. This task force has 
+ mandated that all internal, user facing VA applications become two factor 
+ authentication (2FA) compliant by April 30, 2017. 
+ In order to be compliant, applications are required to authenticate users 
+ via Personal Id entry Verification (PIV) cards.  
+ Note: Usernames and password will no longer be permitted for employees 
+ and contractors to access VA applications.  
+   
+ Resolution:
+ -----------
+ As part of the transition to two factor authentication (2FA), the PPS-N 
+ application code and configuration have been updated to work with the IAM 
+ SSOi service for user authentication. The PPS-N application has also been 
+ modified to remove dependency on the VistA Security keys for user 
+ authorization and use the PPS-N database tables to store and manage user 
+ roles within the PPS-N application.
+  
+  
+ Associated Change Requests: 
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ N/A
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------
+  
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+  
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library
+ at:  http://www.domain.ext/vdl/ 
+  
+  
+  
+ FILE NAME                         DESCRIPTION
+ =========                         ===========
+  
+ PREN_1.3_1_IG_r0717.PDF          PPS-N v1.3 Installation Guide
+ PREN_1.3_1_TG_r0717.PDF          PPS-N v1.3 Troubleshooting Guide
+ PREN_1.3_1_UM_r0717.PDF          PPS-N v1.3 User Guide
+                
+  
+ Installation Instructions:
+ --------------------------
+ This is a Web Application JAVA Build. This is a Centralized Server
+ promotion. NO installation is required at Local sites.
+  
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 14, 2017
+Completed By:                               Date Completed: JUL 19, 2017
+Released By :                               Date Released : JUL 20, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

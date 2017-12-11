@@ -1,0 +1,336 @@
+$TXT Created by                    MDEVA.FO-BIRM.DOMAIN.EXT  (KIDS) on Friday, 03/10/17 at 09:33
+=============================================================================
+Run Date: MAY 15, 2017                     Designation: PSS*1*201
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #180                      Status: Released
+                  Compliance Date: JUN 14, 2017
+=============================================================================
+
+Associated patches: (v)PSS*1*119   <<= must be installed BEFORE `PSS*1*201'
+                    (v)PSS*1*173   <<= must be installed BEFORE `PSS*1*201'
+                    (v)PSS*1*175   <<= must be installed BEFORE `PSS*1*201'
+                    (v)PSS*1*184   <<= must be installed BEFORE `PSS*1*201'
+                    (v)PSS*1*189   <<= must be installed BEFORE `PSS*1*201'
+
+Subject: MOCHA 2.1 DOSING INFRASTRUCTURE
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Input Template
+
+Description:
+============
+
+ Pharmacy Data Management infrastructure to prepare for Daily Dose Check 
+ implementation.
+  
+ MOCHA v2.1a will provide the following enhancements:
+ ===================================================
+  
+ Add new fields to both the ADMINISTRATION SCHEDULE file (#51.1) and the 
+ MEDICATION INSTRUCTION file (#51) to define a frequency for a schedule or 
+ medication instruction used within a medication order for specific 
+ dispense drug(s) or for all drugs in order to perform a Max Daily Dose 
+ Order Check.
+  
+ Add new fields to both the ADMINISTRATION SCHEDULE file (#51.1) and the 
+ MEDICATION INSTRUCTION file (#51) to be able to derive a frequency value 
+ to perform a Max Daily Dose Order Check when the name of a schedule or 
+ medication instruction has been changed.
+  
+ Modify the Input Transforms and Executable Help of the NAME field (#.01) 
+ and SYNONYM field (.5) of the MEDICATION INSTRUCTION file (#51) to 
+ provide more informative information to the user when entering/editing 
+ data.
+  
+ Modify Standard Schedule Edit [PSS SCHEDULE EDIT] option to allow editing 
+ of the new frequency fields.
+  
+ Modify Administration Schedule File Report [PSS SCHEDULE REPORT] option 
+ to display data entered in the frequency fields.
+  
+ Modify Medication Instruction File Add/Edit [PSSJU MI] option to allow 
+ editing of the new frequency fields.
+  
+ Modify Medication Instruction File Report [PSS MED INSTRUCTION REPORT] 
+ option to display data entered in the new frequency fields.
+  
+ Modify entries to the DOSE UNITS file (#51.24).
+  
+ Create a new file called DOSE UNIT CONVERSION (#51.25).
+  
+ Add new entries to the APSP INTERVENTION TYPE file (#9009032.3).
+  
+ Enhance the interpretation of free text dosages when deriving a numeric 
+ dose and dose unit for the Dosing Check when the free text dosage contains
+ a dosing range.
+  
+ Enhance the interpretation of free text dosages when deriving a numeric 
+ dose and dose unit for the Dosing Check when the free text dosage contains
+ data within parenthesis.
+   
+ An enhancement has been made when a medication order is placed in
+ Computerized Patient Record System (CPRS), when a free text dosage is
+ entered, and there is a many to one match from Drug to Pharmacy Orderable
+ Item. If the DRUG File (#50) entry selected to be used for the Dosing
+ check is a multi-ingredient, and every ingredient has a Drug Unit, and
+ that Drug Unit resolves to a non Dose-Form type of Unit in the DOSE UNITS
+ File (#51.24), and a numeric dose and dose unit was derived from the free
+ text dosage, and that derived dose unit resolves to the same unit as the
+ ingredient drug units, then the Dosing check will be performed using that
+ numeric dose and dose unit.
+  
+ Changes have been made to the VistA XML parsing code for the DOSING_INFO 
+ and DRUG_INFO Web Services to properly interpret all attributes returned 
+ with Mocha Server 3.0 and future server versions. These changes are 
+ transparent to the end user.
+  
+  
+ The following options have been changed:
+ =======================================
+  
+ The Standard Schedule Edit [PSS SCHEDULE EDIT] option has been modified 
+ to allow editing of the DOSING CHECK FREQUENCY field (#11), DRUG(S) FOR 
+ DOSING CHK FREQ (#11.1), and OLD SCHEDULE NAME(S) field (#13) for a 
+ schedule.
+  
+ The Administration Schedule File Report [PSS SCHEDULE REPORT] option has 
+ been modified to allow display of the DOSING CHECK FREQUENCY field (#11), 
+ DRUG(S) FOR DOSING CHK FREQ (#11.1), and OLD SCHEDULE NAME(S) field (#13) 
+ from the ADMINISTRATION SCHEDULE file (#51.1) for a schedule.
+  
+ The Medication Instruction File Add/Edit [PSSJU MI] option has been 
+ modified to allow editing of the DOSING CHECK FREQUENCY field (#32), 
+ DRUG(S) FOR DOSING CHK FREQ field (#32.1), and OLD MED INSTRUCTION 
+ NAME(S) field (#33) for a medication instruction. 
+  
+ The Medication Instruction File Report [PSS MED INSTRUCTION REPORT] 
+ option has been modified to allow display of the DOSING CHECK FREQUENCY 
+ field (#32), DRUG(S) FOR DOSING CHK FREQ (#32.1), and OLD MED INSTRUCTION 
+ NAME(S) field (#33) from the MEDICATION INSTRUCTION file (#51) for a 
+ medication instruction.
+  
+  
+ The following file has been added:
+ =================================
+  
+ A new DOSE UNIT CONVERSION file (#51.25) was created. Although this file 
+ has not yet been standardized by STS, no local editing will be allowed. 
+ The Read Access of the DOSE UNIT CONVERSION file (#51.25) has been set to 
+ "Pp." The DOSE UNIT CONVERSION file will be used to convert one dose unit 
+ to another using a conversion factor so that a comparison can be made 
+ between two dose units when they are not equivalent.  The dose unit used 
+ for the Dosing Order Check may not be the same dose unit First Data Bank 
+ (FDB) returns with the Dosing Order Check results. The initial list of 
+ Dose Unit Conversion entries is provided in Appendix D of the Dosing 
+ Order Check User Manual.
+    
+  
+ The following fields have been modified:
+ =======================================
+ The NAME field (.01) of the MEDICATION INSTRUCTION file (#51) is being
+ modified, specifically the Input Transform and Executable Help.
+  
+ The SYNONYM field (.5) of the MEDICATION INSTRUCTION file (#51) is being 
+ modified, specifically the Input Transform and Executable Help.
+  
+  
+ The following fields have been added to existing files:
+ ======================================================
+  
+ The DOSING CHECK FREQUENCY field (#11) has been created in the 
+ ADMINISTRATION SCHEDULE file (#51.1). This field allows a user to enter a 
+ specific format pattern to represent the frequency such as 'X#D', where 
+ '#' represents a 1-2 character numeric value.  The DOSING CHECK FREQUENCY 
+ field takes priority over all other fields/values when determining 
+ frequency for the Max Daily Dose Order Check.
+  
+ The DRUG(S) FOR DOSING CHK FREQ field (#11.1) has been created in 
+ the ADMNISTRATION SCHEDULE file (#51.1). This multiple field allows for 
+ dispense drugs from the DRUG file (#50) to be associated with the DOSING 
+ CHECK FREQUENCY field (#11) value within the ADMINISTRATION SCHEDULE file 
+ (#51.1).  
+  
+ The OLD SCHEDULE NAME(S) field (#13) has been created in the 
+ ADMINISTRATION SCHEDULE file (#51.1). This multiple field stores the old 
+ values of the schedule when the NAME field (#.01) is edited. Values can 
+ also be added to this field directly.
+  
+ The DOSING CHECK FREQUENCY field (#32) has been created in the MEDICATION 
+ INSTRUCTION file (#51). This field allows a user to enter a specific 
+ format pattern to represent the frequency such as 'X#D', where '#' 
+ represents a 1-2 character numeric value.  The DOSING CHECK FREQUENCY 
+ field takes priority over all other fields/values in this file when
+ determining frequency for the Max Daily Dose Order Check.
+  
+ The DRUG(S) FOR DOSING CHK FREQ field (#32.1) has been created in 
+ the MEDICATION INSTRUCTION file (#51). This multiple field allows for 
+ dispense drugs from the DRUG file (#50) to be associated with the DOSING 
+ CHECK FREQUENCY field (#32) value within the MEDICATION INSTRUCTION file 
+ (#51).  
+  
+ The OLD MED INSTRUCTION NAME(S) field (#33) has been created in the 
+ MEDICATION INSTRUCTION file (#51). This multiple field stores the old 
+ values of the medication instruction when the NAME field (#.01) is 
+ edited. Values can also be added to this field directly.
+  
+  
+ The following input templates have been modified:
+ ================================================
+  
+ The PSSJ SCHEDULE EDIT Input template has been modified to allow editing 
+ of DOSING CHECK FREQUENCY field (#11), DRUG(S) FOR DOSING CHK FREQ 
+ (#11.1), and OLD SCHEDULE NAME(S) field (#13) in the ADMINISTRATION 
+ SCHEDULE file (#51.1).
+  
+ Patch Components:
+ ================
+  
+ Files & Fields Associated:
+ -------------------------
+ See descriptions above.
+  
+ Forms Associated:
+ ----------------
+ N/A
+  
+ Mail Groups Associated:
+ ----------------------
+ N/A
+  
+ Options Associated:
+ ------------------
+ See descriptions above.
+  
+ Protocols Associated:
+ --------------------
+ N/A
+  
+ Security Keys Associated:
+ ------------------------
+ N/A
+  
+  
+ Associated New Service Request(s):
+ =================================
+ N/A
+  
+  
+ Patient Safety Issues (PSI)s:
+ ============================
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ===========================
+ N/A
+  
+  
+ Blood Bank Clearance:
+ ====================
+ N/A
+  
+ Test Sites:
+ =========================
+ Heartland West VAMC
+ West Palm VAMC
+ Louisville VAMC
+  
+   
+  
+ Documentation Retrieval Instructions
+ ====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                                        File Name        SFTP Mode
+ -----------------------------------------------------------------------
+  MOCHA Enhancements 2.1a                PSS_1_RN_R0517.PDF     binary
+       Release Notes
+  
+  Pharmacy Data Management               PSS_1_UM_R0517.PDF     binary
+      User Manual v1.0
+  
+  Pharmacy Data Management               PSS_1_TM_R0517.PDF     binary
+   Technical Manual v 1.0
+  
+  Installation Guide - MOCHA             PSS_1_P201_IG.PDF      binary
+        Phase 2 v2.1a                            
+  
+  Pharmacy Data Management Dosing        PSS_1_DOSING_ORD_CK_   binary
+      Order Check User Manual            USER_MANUAL_R0517.PDF
+  
+ Installation Instructions
+ =========================
+ Please refer to the MOCHA 2.1 Dosing Infrastructure Installation Guide 
+ (Rollback/Backup Plan) for installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSS1P201
+    Before:       n/a   After:  B9678651  **201**
+Routine Name: PSSDDUT
+    Before: B42845395   After:B106731878  **13,18,19,38,56,119,201**
+Routine Name: PSSDSAPD
+    Before:B181014294   After:B176555473  **117,160,173,201**
+Routine Name: PSSDSAPL
+    Before:B108677776   After:B108974964  **117,160,201**
+Routine Name: PSSDSAPM
+    Before:B245057882   After:B233971912  **117,168,160,173,201**
+Routine Name: PSSDSUTL
+    Before:       n/a   After:B100218791  **201**
+Routine Name: PSSFDBDI
+    Before:B130530909   After:B154007468  **160,175,201**
+Routine Name: PSSFDBRT
+    Before: B57759107   After: B38856842  **136,160,201**
+Routine Name: PSSFILED
+    Before: B18901288   After:B128286258  **38,47,172,201**
+Routine Name: PSSJEEU
+    Before: B13827744   After: B14040872  **24,47,160,184,201**
+Routine Name: PSSJSV
+    Before: B76380719   After:B148569138  **20,38,56,59,110,121,143,149,
+                                           146,189,201**
+Routine Name: PSSMIRPT
+    Before: B30532574   After: B35619952  **129,201**
+Routine Name: PSSOAS
+    Before:       n/a   After: B14995833  **201**
+Routine Name: PSSSCHRP
+    Before:B109340534   After:B121758049  **129,160,189,201**
+ 
+Routine list of preceding patches: 119, 172, 173, 175, 184, 189
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 31, 2016
+Completed By:                               Date Completed: MAY 12, 2017
+Released By :                               Date Released : MAY 15, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,351 @@
+
+=============================================================================
+Run Date: JUN 28, 2017                     Designation: MAG*3*178
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #134                      Status: Released
+                  Compliance Date: AUG 20, 2017
+=============================================================================
+
+
+Subject: Clinical Capture 2 factor authentication
+
+Category: 
+  - Other
+
+Description:
+============
+
+ Associated Patches:  
+ ==================
+ This patch must be installed after MAG*3.0*151.
+  
+ Subject:  TWO-FACTOR AUTHENTICATION FOR CLINICAL CAPTURE
+ =======
+  
+ Category:  OTHER
+ ========
+  
+ Description:
+ ===========
+ MAG*3.0*178 provides two-factor authentication (2FA) for the Clinical 
+ Capture client. When the user starts Clinical Capture, they will be 
+ prompted for their Personal Identity Verification (PIV)/Personal 
+ Identification Number (PIN) to log into Veterans Health Information 
+ Systems and Technology Architecture (VistA).  In order to implement 2FA 
+ for Clinical Capture, the development environment was upgraded to Delphi 
+ XE8.  A splash screen will be displayed during startup and initialization 
+ of  Clinical Capture.  The splash screen will close when the application 
+ is ready to be used.  There are no other changes to functionality of the 
+ Clinical Capture client. 
+  
+ Patch Components:
+ ================
+ This patch includes software and documentation files.  This document
+ provides an overview, explains the changes, and outlines the installation
+ for this patch.  MAG3_0P178_README.txt, if present, is an informative file
+ associated with the patch.
+  
+ Software:
+ ========
+ File Name                                       Description
+ =========                                       ===========
+ MAG3_0P178.KID                                  Kernel Installation 
+                                                 and Distribution System 
+                                                 (KIDS) build for Patch 178
+ MAG3_0P178_Clinical_Capture_ Setup.exe          Clinical Capture client
+                                                 installation file
+ MAG3_0P178_Clinical_Capture_Install.msi         Clinical Capture push
+                                                 installation file
+  
+ Documentation:
+ =============
+ This document provides an overview, explains the changes, and outlines the
+ installation for this patch.
+  
+ Files & Fields Associated:
+ =========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ ================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ ======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ==================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ ====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ ========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ ====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ ======================
+ New Service Requests (NSRs):
+ ===========================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+ 1. Update Capture with 2FA
+ Problem:  Per the U.S. Department of Veterans Affairs (VA) mandate to 
+ meet PIV requirements (VAIQ #7712300), all existing systems must be 
+ upgraded to use PIV credentials for authentication.
+  
+ Resolution:  The Remote Procedure Call (RPC) Broker establishes a common 
+ and consistent connection for VistA client/server applications.  The 
+ kernel development team has updated the RPC Broker to accept a PIV for 
+ authentication in XWB*1.1*64 and RPC Broker Development Tool Kit 
+ XWB*1.1*65.  The RPC Broker client component uses the Identity and Access 
+ Management (IAM) SSOi Secure Token Service (STS) for Authentication.  The 
+ client authenticates to IAM with PIV/PIN and obtains a Security Assertion 
+ Markup Language (SAML) token; this token is associated with a VistA 
+ access/verify code and is used to authenticate to VistA.
+  
+ Test Sites:
+ ==========
+ The following sites are test sites for this patch:
+   VA Salt Lake City Health Care System
+   Fayetteville VAMC (NC) 
+  
+  
+ Software and Documentation Retrieval Instructions:
+ =================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from 
+ anonymous@download.vista.domain.ext from the COMMAND prompt (example:  
+ sftp anonymous@download.vista.domain.ext). This transmits the files from 
+ the first available server. 
+  
+ Sites may also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ When using Attachmate Reflection (Secure Shell):
+ Albany:         domain.ext
+ Hines:          domain.ext
+ Salt Lake City: domain.ext
+  
+ When using the COMMAND prompt (example: sftp 
+ anonymous@domain.ext): 
+ Albany:         anonymous@domain.ext
+ Hines:          anonymous@domain.ext
+ Salt Lake City: anonymous@domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/.
+  
+ Patch Installation:
+ ==================
+ Supported Client Versions
+ =========================
+ When MAG*3.0*178 is released, the list of supported versions of Clinical 
+ Capture will change:
+  
+ Supported Versions      No Longer Supported 
+ 3.0.178                 3.0.122
+ 3.0.151                 3.0.117
+ 3.0.140                 3.0.106
+ 3.0.129                 3.0.94
+  
+ Pre/Post Installation Overview:
+ ==============================
+ MAG*3.0*178 must be installed on the VistA System and on 64-bit 
+ workstations on which the VistA Imaging Applications will be used. This 
+ patch must be installed by the compliance date.
+  
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch.  This patch can be loaded while the VistA Imaging System is active 
+ and users are on the system.  Installing the MAG*3.0*178 KIDS takes 1-5 
+ minutes.
+  
+ Pre-Installation Instructions:
+ =============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+  
+ Note:  
+ ====
+ All released VistA Imaging patches must be installed on the VistA system 
+ before installing MAG*3.0*178.
+  
+ VistA System (KIDS) Installation Instructions
+ =============================================
+ Installation Steps 
+ ==================
+ 1. Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+   a. Run the Load a Distribution [XPD LOAD DISTRIBUTION] option to load 
+ the KIDS distribution.
+   b. When prompted, enter the path and file name (MAG3_0P178.KID) of the 
+ Patch 178 KIDS file that was downloaded from the Download Server.
+   c. When prompted to continue with the load, enter "YES".  A 
+ Distribution OK! Message will be displayed when the load is complete.
+ 4. After loading the KIDS file, use the following options to verify the 
+ contents of the patch.  
+   a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this 
+ option if you want to ensure the integrity of the routines in the patch.
+   b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] - 
+ Run this option if you want to view all changes that will be made when 
+ the patch is installed.  All components (routines, options, and so on) in 
+ the patch will be compared.
+   c. Back up a Transport Global [XPD BACKUP] - Run this option if you 
+ want to create a backup message of any routines exported with the patch.  
+ The option will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+   a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+   b. When prompted for the install name, enter MAG*3.0*178.
+   c. Answer NO to the following prompts, if they appear:
+  
+ Want KIDS to INHIBIT LOGONs during the install? No//NO
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? No/NO
+ Want KIDS to Rebuild Menu Trees Upon completion of Install? No//NO
+  
+ 6. When the installation has finished, an Install Completed message will 
+ be displayed.
+  
+ KIDS Installation Example
+ =========================
+ This example shows the output when the KIDS file is installed for the
+ first time.  If the user has already installed the patch and is installing
+ the KIDS file in a namespace on which it has previously been installed,
+ the output will be different.
+  
+ Select INSTALL NAME:    MAG*3.0*178    
+ 3/1/17@14:51:08 => VistA Imaging V3 - Patch 178 - Capture 2FA XE8  
+ ;Created on Feb 23,
+  
+ This Distribution was loaded on Mar 01, 2017@14:51:08 with header of
+    VistA Imaging V3 - Patch 178 - Capture 2FA XE8  ;Created on Feb 23, 
+ 2017@1
+ 5:18:42
+    It consisted of the following Install(s):
+     MAG*3.0*178
+ Checking Install for Package MAG*3.0*178
+  
+ Install Questions for MAG*3.0*178
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  
+  Running Pre-Install Routine: PRE^MAGIP178
+  
+  Running Post-Install Routine: POS^MAGIP178
+  
+ Post Install Mail Message: Mar 01, 2017@14:52:09
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MAG*3.0*178 Installed.
+                Mar 01, 2017@14:52:09
+  
+  Not a production UCI
+  
+  NO Install Message sent
+  
+   100%
+ Complete
+  
+ Install Completed
+  
+  
+ Post-Installation Instructions:
+ ==============================
+ VistA Imaging Clinical Capture Client Installation Instructions
+ The Clinical Imaging Capture client software can be updated using one of 
+ the methods outlined below:
+   Manual installation
+   Automatic installation using other methods (SMS, PSexec, etc.)
+ Note: The Clinical Capture Application is only supported on a Windows 7 
+ operating system; other operating systems are not officially 
+ supported.Clinical Capture is distributed as an MSI and EXE 
+ installation.  The MSI is intended for sites that want to do a push 
+ installation (using SCCM or another tool).  The EXE is intended for use 
+ to install on a single workstation. After client installation is 
+ complete, log into an updated workstation and use the Help | About menu 
+ option to verify that the version number is 3.0.178.1.
+  
+ Manual Installation
+ ==================
+ The MAG3_0P178_Clinical_Capture_Setup.exe file can be installed manually 
+ on workstations as described in Section "Single Workstation Installation" 
+ in the VistA Imaging System Installation Guide.
+  
+ Auto-update Installation
+ ========================
+ VistA Imaging Auto-update functionality is no longer supported.
+  
+ Uninstalling Clinical Capture Client MAG*3.0*178
+ ===============================================
+ If it is necessary to uninstall the MAG*3.0*178 client, use the Uninstall 
+ option from Windows Control Panel to uninstall: "VistA Imaging Clinical 
+ Capture".  Then install the previous version of Clinical Capture which 
+ was included in MAG*3.0*151.
+  
+ Routine Information:
+ ===================
+ VistA KIDS Checksums:
+ ====================
+ This section lists modified routines for the VistA KIDS build.  For each
+ routine, the second line will contain the following information: 
+  
+ ;;3.0;IMAGING;**[Patch List]** ; Mar 19, 2002;Build 1;Feb 15, 2017
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine         Checksum        Checksum        Patch List
+                 Before          After
+ MAGGTU4C        5134971         5140530         **93, 94, 106, 117, 122, 
+                                                 129, 140, 151,178**
+ MAGIP178        NA              4256676         **178**
+  
+ Routine MAGIP178 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 10, 2017
+Completed By:                               Date Completed: JUN 27, 2017
+Released By :                               Date Released : JUN 28, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

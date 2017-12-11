@@ -1,0 +1,352 @@
+$TXT Created by                  at TAS-EINS-DEV.AAC.DOMAIN.EXT  (KIDS) on Monday, 03/20/17 at 10:14
+=============================================================================
+Run Date: JUL 05, 2017                     Designation: IB*2*582
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #544                      Status: Released
+                  Compliance Date: AUG 04, 2017
+=============================================================================
+
+Associated patches: (v)IB*2*497    <<= must be installed BEFORE `IB*2*582'
+                    (v)IB*2*549    <<= must be installed BEFORE `IB*2*582'
+                    (v)IB*2*579    <<= must be installed BEFORE `IB*2*582'
+
+Subject: MCCF EDI TAS EINSURANCE BUILD 1
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This Integrated Billing (IB) patch introduces changes to VistA's 
+ Electronic Claims processing in order to meet the Committee on Operating 
+ Rules for Information Exchange (CORE) Operating Rules.
+  
+ Complete List of patch items:
+ 1.      Stop automatically triggering an eIV inquiry (270) message when a 
+ payer response (271) is filed in the insurance verification processor
+ (buffer) so that duplicate 270/271 transactions are not generated and 
+ associated fees are not incurred.
+  
+ 2.      Treat a MUP message as a MAD message when the unique record does 
+ not exist in VistA so that VistA eIV tables are always in synch with FSC's
+ master data source.
+  
+ 3.      Allow users to see patient policy comments in TPJI no matter 
+ which entry option is used, so that workflow is more efficient.
+  
+ 4.      Show the default service code on the Request Electronic Insurance 
+ Inquiry screen.
+  
+ 5.      Remove Insurance Contact Information prompts from the Patient 
+ Policy Information Screen.
+  
+ 6.      Allow self-enrollment or disenrollment in the IBCNE EIV MESSAGE
+ mail group.
+  
+ 7.      Insure that user INTERFACE,IB EIV is set up at all sites.
+  
+  
+ Patch Components
+ ================
+  
+ The following is a list of field modifications included in this patch:
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ N/A
+  
+  
+ Bulletins Associated:
+                                                           New/Modified/
+ Bulletin Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Dialogs Associated:
+                                                           New/Modified/
+ Dialog Name                                                 Deleted    
+ -----------                                               -------------
+ N/A
+  
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+  
+ Functions Associated:
+                                                           New/Modified/
+ Function Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Help Frames Associated:
+                                                           New/Modified/
+ Help Frame Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ IBCNE EIV MESSAGE                                         Modified
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ N/A
+  
+  
+ Parameter Definitions:
+                                                           New/Modified/
+ Parameter Name                                              Deleted    
+ --------------                                            -------------
+ N/A
+  
+  
+  
+ Parameter Template:
+                                                           New/Modified/
+ Template Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ IBJT NS VIEW EXP POL MENU                                 Modified
+ IBJ EXIT
+ IBJT ACTIVE LIST SCREEN
+ IBJT AR ACCOUNT PROFILE SCREEN
+ IBJT AR COMMENT HISTORY SCREEN
+ IBJT BILL CHARGES SCREEN
+ IBJT BILL DX SCREEN 
+ IBJT BILL PROCEDURES SCREEN 
+ IBJT CLAIM SCREEN SKIP 
+ IBJT CT/IR COMMUNICATIONS LIST SCREEN 
+ IBJT HS HEALTH SUMMARY 
+ IBJT NS VIEW AN BEN SCREEN 
+ IBJT NS VIEW EXP POL REDISPLAY 
+ IBJT NS VIEW INS CO SCREEN
+ IBJT PATIENT POLICY COMMENTS VIEW
+ IBJT PT ELIGIBILITY SCREEN 
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+ Templates, Input Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ Templates, List Associated:
+                                                           New/Modified/
+ Template Name      Type                                     Deleted    
+ -------------      ----                                   -------------
+ N/A
+  
+  
+ Templates, Print Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+  
+ Templates, Sort Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A 
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ Marion, IN
+ St. Cloud, MN
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve the files from 
+ download.vista.domain.ext/. This transmits the files from the first
+ available server. Sites may also elect to retrieve software directly from
+ a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+  Albany                   domain.ext
+  Hines                    domain.ext
+  Salt Lake City           domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Electronic Insurance          ib_2_0_eiv_ug_r0717.pdf         Binary
+ Verification (eIV) User Guide
+ Deployment, Installation,     ib_2_0_582_ig.pdf               Binary
+ Back-out, and Rollback Guide 
+ (IB*2.0*582)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There is no Pre/Post Installation activity associated with this 
+ install.
+  
+  
+ Installation Instructions
+ -------------------------
+  
+   ******************************************************************
+   *  You should install this patch during non-peak hours, when no  *
+   *  Integrated Billing or Accounts Receivable users are on the    *
+   *  system.                                                       *
+   ******************************************************************
+  
+  
+         ****There are no options to disable.
+  
+ Install Time: Less than 10 minutes.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. When prompted for the INSTALL enter the 
+     patch # IB*2.0*582.From this menu select Backup a Transport Global.  
+     This option will create a backup message of any routines exported 
+     with this patch. It will not backup any other changes such as DD's 
+     or templates.  It will be used in case of Back-out of this patch.
+  
+ 4.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     IB*2.0*582.
+  
+     a.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     b.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     c.  Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+      
+ 5.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 6.  When prompted 'Enter the Coordinator for Mail Group 'IBCNE EIV 
+     MESSAGE': POSTMASTER//' Enter the name of the Mail Group Coordinator
+     for the IBCNE EIV MESSSAGE group.
+    
+ 7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  Answer NO
+  
+ 8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// Answer NO
+  
+ 9.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+ Routine IBY582PR can be manually deleted by IT/IRM upon completion of the 
+ installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 77
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCNCH
+    Before: B89930576   After: B89930546  **549,582**
+Routine Name: IBCNEHLT
+    Before:B100567838   After: B93743672  **184,251,271,300,416,438,506,
+                                           549,582**
+Routine Name: IBCNEQU
+    Before:B126099513   After:B126768253  **184,271,416,438,497,582**
+Routine Name: IBCNERTQ
+    Before: B44950178   After: B46541707  **438,467,497,549,582**
+Routine Name: IBCNEUT7
+    Before: B79064178   After: B82015033  **184,549,579,582**
+Routine Name: IBCNSP02
+    Before: B15872106   After: B16379800  **582**
+Routine Name: IBY582PR
+    Before:       n/a   After:   B638375  **582**
+ 
+Routine list of preceding patches: 579
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 07, 2016
+Completed By:                               Date Completed: JUL 05, 2017
+Released By :                               Date Released : JUL 05, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

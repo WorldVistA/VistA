@@ -1,0 +1,267 @@
+
+=============================================================================
+Run Date: JUN 21, 2017                     Designation: WEBP*1*13
+Package : WEBP - PATIENT CENTERED MANAGEMENT  Priority: Mandatory
+Version : 1        SEQ #13                      Status: Released
+                  Compliance Date: JUL 22, 2017
+=============================================================================
+
+
+Subject: PCMM WEB V1.13 CONFIGURATION UPDATES
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Patient-Centered Management Module (PCMM) Web application version 
+ WEBP*1*13 will implement the following configuration changes to current 
+ functionality that will reduce errors received by users and allow the 
+ system to function more efficiently.
+  
+  
+ Configuration and Software Changes:
+ ===================================
+  
+ 1. RTC 508111 - Designated Women's Health Provider (DWHP) and 
+ Physician Attending team roles are not included in the MPACT Request 
+ "Clinical Approver" list so they can approve these requests. Added DWHP 
+ and Physician Attending team roles to the "Clinical Approver" list so 
+ they can now approve MPACT Requests. 
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 2. RTC 428602 - Some teams in PCMM Web display a "Last VistA Sync 
+ Date" of "NEVER." Changed the JAVA code to increase the call timeout by a 
+ factor of 10 when invoking FINDER which should return the largest dataset 
+ found in VistA without hitting the call timeout limit.
+ CA-SDM Ticket: R12336516FY17
+  
+ 3. RTC 386177 - Need to optimize a DB query execution to reduce 
+ number of calls to function "patientDAO.findByICN()" during the MVI 
+ Registration process. Added "caching" to the DB query for found patients 
+ to reduce number of patient searches by ICN. 
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.  
+  
+ 4. RTC 464403 - CPRS Header Sync job is not triggered to 
+ re-sync/re-calculate the CPRS header when a patient has a Date of Death 
+ (DOD) OR an approved Multi-PACT (MPACT) where the PACT assignment flipped 
+ to ACTIVE. Added JAVA code triggers the re-sync of the CPRS header when a 
+ MPACT request is approved and the PACT assignment dispositions to ACTIVE. 
+ When the patient is DOD, the unassignment from the PACT team will trigger 
+ the CPRS header re-sync. 
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 5. RTC 284047 - Preceptee/Preceptor relationship is failing in 
+ production. All preceptor/preceptee relationships were reviewed/corrected 
+ in the DB to ensure functionality works as expected for all 
+ preceptor/preceptee relationships in production.
+ CA-SDM Ticket:  No associated helpdesk tickets for this issue.
+  
+ 6. RTC 453491 - The Team roles of Designated Women's Health 
+ Providers (DWHP) and Physician-Attending (Phy-Attd) need to auto precept 
+ the Nurse Practitioner Associate Provider (NPAP) and Physician Assistant 
+ Associate Provider (PAAP) team roles. The DB was updated with the 
+ preceptor/preceptee relationships for Designated Womens Health Providers 
+ (DWHP) and Physician-Attending (Phy-Attd) to allow these team roles to 
+ precept the Nurse Practitioner Associate Provider (NPAP) and Physician 
+ Assistant Associate Provider (PAAP) team roles.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 7. RTC 464377 - Need to display PACT Clinical Pharmacist, Surrogate 
+ Primary Care Provider (PCP) and Surrogate Care Manager (CM) team roles, 
+ only when staffed, in the CPRS window below the core teamlet roles. This 
+ will apply to REMOTE PACT assignments also. Added data to the JAVA 
+ template object and the template in DB so these team roles will display 
+ in the CPRS window when staffed.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 8. RTC 464393 - Need to display a Non-VA Care care type team 
+ assignment in the CPRS window regardless of an association to a Non-VA 
+ Provider. Removed filter from code that builds specialty teams data to 
+ include Non-VA team assignments so this team assignment will display in 
+ the CPRS window even if the patient is not assigned to a Non-VA Provider. 
+ This team assignment will display in the specialty team (SP:) section of 
+ the window.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 9. RTC 319916 - PCMM Web would not allow the user to assign a 
+ patient to another team when the patient had an approved MPACT and a PACT 
+ assignment in another 3-digit station. Since MPACT Request are good for 2 
+ years, a new PACT team assignment within the same 3-digit station will be 
+ appended the existing APPROVED MPACT Request when the patient is assigned 
+ to a different PACT team.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 10. RTC 501875 - Team IENs changing is breaking VSSC reports. Changed 
+ the JAVA code to save a team's IEN right after saving a team's 
+ information in VistA to minimize the chance that setting IEN fails.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 11. RTC 504366 - "FOCUS 2" in the Primary Care (PC) care type should 
+ not be considered in the Modeled Team Capacity calculations. Removed 
+ "FOCUS 2" from the logic that determines if the capacity should be 
+ modeled or not so it will not be considered.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue. 
+  
+ 12. RTC 508830 - Do not allow the user to extend a PACT assignment 
+ scheduled for auto-inactivation when the PACT assignment is outside the 
+ users logged in station. Removed "Extend" action link on the assignments 
+ to PACT team(s) in stations other than the one the user is logged in to.
+ CA-SDM Ticket: I14270127FY17
+  
+  
+ Implementation:
+ ===============
+ The PCMM Web WEBP*1*13 is a centrally managed web-based application and 
+ will be implemented and deployed to a central web server.  No installation
+ is required by sites.
+  
+  
+ Implementation Files:
+ =====================
+ None
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated: N/A
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A
+  
+ Options Associated: N/A
+  
+ Protocols Associated: N/A
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20070415 - Rehost/Reengineer PCMM
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ CA-SDM Ticket(s):
+ -----------------
+  
+ 1. I14270127FY17 - PCMM WEB - 20170426 - GREEN PLUS EXTENSION OPTION 
+ FOR OTHER STATION AVAILABLE IN MY WEB
+ Problem:
+ User is able to extend a PACT assignment scheduled for auto-inactivation 
+ when the PACT assignment is outside the users logged in station.
+  
+ Resolution:
+ Removed "Extend" action link on the assignments to PACT team(s) in 
+ stations other than the one the user is logged in to.
+  
+ 2. R12336516FY17 - CPRS patient banner lists the same Primary Care 
+ PACT team 70...
+ Problem:
+ Some teams in PCMM Web display a "Last VistA Sync Date" of "NEVER."
+  
+ Resolution:
+ Changed the JAVA code to increase the call timeout by a factor of 10 when 
+ invoking FINDER which should return the largest dataset found in VistA 
+ without hitting the call timeout limit.
+  
+  
+ Test Sites:
+ -----------
+ 691 - West LA VAMC
+ 618 - Minneapolis VA HCS
+ 626 - Nashville VAMC 
+  
+ Documentation:
+ ==============
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be retrieved from the VA Software Documentation
+ Library (VDL) on the Internet at the following address:
+ http://www4.domain.ext/vdl.
+  
+ File Description              File Name                      SFTP Mode
+ --------------------------------------------------------------------------
+ Patient-Centered Management   PCMM WEB VDD WEBP_1_13.DOCX     BINARY
+ Module(PCMM) Web
+  
+ Patient-Centered Management   PCMM_WEB_USER_GUIDE.DOCX        BINARY
+ Module (PCMM) Web User Guide             
+  
+ Patient-Centered Management   PCMMR_POM.DOCX                  BINARY
+ Module (PCMM) Web Project
+ Operations Manual
+  
+  
+ Patch Installation:
+ ===================
+  
+ There is no local VistA installation for PCMM Web. All installations will 
+ be done on the national web server.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ If you have any questions concerning the implementation of this 
+ application, please contact the VA Service Desk at 1-888-596-4357 or 
+ directly log a CA SDM ticket using the category: 
+ NTL.APP.HealtheVet VistA.PCMM Web.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 08, 2017
+Completed By:                               Date Completed: JUN 20, 2017
+Released By :                               Date Released : JUN 21, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,951 @@
+$TXT Created by                at CHEY59.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 05/09/17 at 10:52
+=============================================================================
+Run Date: JUN 01, 2017                     Designation: RA*5*138
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #121                      Status: Released
+                  Compliance Date: JUL 02, 2017
+=============================================================================
+
+Associated patches: (v)RA*5*127    <<= must be installed BEFORE `RA*5*138'
+
+Subject: NDS FOLLOWUP TO RA*5.0*127
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Input Template
+
+Description:
+============
+
+ *****************************  NOTE  ******************************* 
+ **     Please install/re-install released patch RA*5.0*127        ** 
+ **     immediately prior to installing this patch to ensure       **
+ **     all routine and data dictionary dependencies exist, and    **
+ **     have not been backed out or modified.                      **
+ ******************************************************************** 
+  
+ Patch RA*5.0*138 corrects defects introduced by patch RA*5.0*127 that
+ adversely affect the Procedure Enter/Edit [RA PROCEDURE] option. 
+  
+ Issues with the Procedure Enter/Edit [RA PROCEDURE] option that are 
+ addressed by this patch:
+  
+   * An undefined error, "<UNDEFINED>DIRB+3^DIR *X", may occur if a 
+     user attempts to add a duplicate procedure name surrounded by
+     double quotes at the 'RAD/NUC MED PROCEDURE NAME:' prompt.
+  
+   * Missing question mark ("?" and "??") lookup/help functionality
+     at the 'RAD/NUC MED PROCEDURE NAME:' prompt.
+  
+   * Procedures can no longer be looked up by CPT code at the 'RAD/NUC
+     MED PROCEDURE:' prompt.
+  
+   * An undefined error, "<UNDEFINED>BR+1^DIE0 *RANEW", may occur
+     when editing a procedure with a forward slash ("/") in its name. 
+  
+   * When performing a procedure lookup at the 'RAD/NUC MED PROCEDURE 
+     NAME:' prompt, the TYPE OF IMAGING value no longer displays next to
+     each entry.
+  
+   * An undefined error, "<UNDEFINED>21+12^RAMAIN2 ^RAMIS(71,-1,0)" 
+     may occur when a procedure lookup is done at the 'RAD/NUC MED
+     PROCEDURE NAME:' prompt and two or more matching entries with the same
+     name exist in the RAD/NUC MED PROCEDURE (#71) file.
+  
+   * Incorrect entries are returned at the 'DESCENDENTS:' prompt when 
+     a user performs a lookup by entering a partial procedure name or
+     question mark.
+  
+   * An undefined error, "<UNDEFINED>HLPWR+5^RAPSAPI2 
+     *TEXT("DESCRIPTION")", occurs when a double question mark ("??") 
+     lookup is done at the DEFAULT MEDICATIONS prompt.
+  
+   * The CPT modifier IEN is added as an erroneous Synonym to a newly
+     created procedure in the RAD/NUC MED PROCEDURE (#71) file.
+  
+  
+ Related Patches
+ ---------------
+ RA*5.0*127
+  
+ Bulletins
+ ---------
+ N/A
+  
+ Files & Fields Associated:
+ --------------------------
+                                                          New/Modified
+ File Name (#)                       Field Name (#)        /Deleted
+ ---------------------------------   ------------------   -------------
+ NEW RAD PROCEDURE WORKUP (#71.11)   DESCENDENTS (#300)   Modified
+                  
+ Forms Associated:
+ ----------------- 
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+ Options Associated:
+ -------------------
+ N/A
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+  
+ Template Name        Type     File Name (Number)    New/Modified/Deleted 
+ -------------        -----    ------------------    --------------------
+ NEW RAD PROCEDURE    INPUT    NEW RAD PROCEDURE        Modified
+                               WORKUP (#71.11)  
+ RA PROCEDURE EDIT    INPUT    RAD/NUC MED              Modified     
+                               PROCEDURES (#71)
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ None
+  
+ Defect Tracking & Overview:
+ =============================
+  
+ Associated Defect(s):
+ ----------------------
+ Defect #492278 - When trying to enter an additional duplicate procedure 
+ name to the RAD/NUC MED PROCEDURES (#71) file using quotes, an M error 
+ occurs.
+  
+ Defect #492546 - An M error occurs during procedure lookup when procedure 
+ has two or more exact matches in the RAD/NUC MED PROCEDURES (#71) file.
+  
+ Defects #492274, #492272, #492270 - When doing a partial name lookup at
+ the DESCENDENTS prompt, entries matching the wrong Imaging Type are
+ returned, resulting in an inability to add the correct Descendent to
+ Parent procedure, and an Inactivation Date to incorrectly default into new
+ Parent procedures.
+  
+ Defect #486891 - As a result of Patch RA*5.0*127 Native Domain
+ Standardization Radiology Reporting imaging locations no longer show next 
+ to procedures in procedure entry/edit. 
+  
+ Defect #493698 - An M error occurs when running the Invalid Procedure 
+ List.
+  
+ Defect #492268 - When using the Procedures Enter/Edit [RA PROCEDURE] 
+ option, procedures lookup by CPT code is no longer available.
+  
+ Defect #487927 - At the RAD/NUC MED PROCEDURES NAME prompt, entering 
+ question marks returns "?? Anwer must be 1-60 characters in length." In 
+ the past, entering question marks returned an alphabetical list of 
+ procedures.
+  
+ Defect #503923 - Double question mark "??" search causes M error at the 
+ DEFAULT MEDICATIONS prompt in the Procedures Enter/Edit [RA PROCEDURE] 
+ option.
+  
+ Defect #512916 - When a new procedure is created with a CPT modifier 
+ and a Synonym in the Procedures Enter/Edit [RA PROCEDURES] option, the 
+ IEN of the CPT modifier is added as an erroneous Synonym to the 
+ procedures in the RAD/NUC MED PROCEDURES (#71) file.
+  
+  
+ Test Sites:
+ ----------
+ VAMC St. Louis,  MO
+ VAMC White City, OR
+  
+  
+  Overview:
+ ===============
+  
+ Issue 1
+ ==========================================================================
+ Defect #492278 - When trying to enter an additional duplicate procedure 
+ name to the RAD/NUC MED PROCEDURES (#71) file using quotes, an M error 
+ occurs.
+  
+  Problem:
+  --------------
+  At the "RAD/NUC MED PROCEDURE NAME:" prompt in the Procedure Enter/Edit 
+  [RA PROCEDURE] option, entry of a procedure name that exactly or
+  partially matches an existing entry in the RAD/NUC MED PROCEDURES
+  (#71) file may no longer be added by surrounding the procedure name with
+  double quotes. Instead of a prompt to add the new entry, the following M
+  error occurs: "<UNDEFINED>DIRB+3^DIR *X".
+  
+  Example: 
+     Select Procedure Edit Menu Option: Procedure Enter/Edit
+  
+     RAD/NUC MED PROCEDURES NAME: "MANDIBLE"
+  
+     K:X[""""!($A(X)=45) X S:$D(X) X=$$UP^XLFSTR(X) Q:(X="^")!$D(DTOUT)  
+     K:$L(X)>60!( $L(X)<3) X I $D(X) K:'+$$UNI30^RAUTL14(+$G(DA),X) X
+     <UNDEFINED>DIRB+3^DIR *X
+  
+  Resolution:
+  --------------
+  When entering a procedure name surrounded by quotes at the Procedure
+  Enter/Edit [RA PROCEDURE] option, display a prompt asking the user if
+  they wish the procedure name (inside the quotes) to be added as a new
+  procedure.
+  
+  Example: 
+     Select Procedure Edit Menu Option: Procedure Enter/Edit
+  
+     RAD/NUC MED PROCEDURE NAME: "MANDIBLE"
+     Are you adding MANDIBLE as a new Radiology Procedure? YES// 
+  
+  
+ Issue 2
+ ==========================================================================
+ Defect #492546 - An M error occurs during procedure lookup when procedure 
+ has two or more exact matches in the RAD/NUC MED PROCEDURES (#71) file.
+  
+  Problem:
+  --------------
+  At the "RAD/NUC MED PROCEDURE NAME:" prompt in the Procedure Enter/Edit 
+  [RA PROCEDURE] option, entry of a procedure name that exactly matches two
+  or more existing entries  in the RAD/NUC MED PROCEDURES (#71) file 
+  results in the following M error: "<UNDEFINED>21+12^RAMAIN2 
+  ^RAMIS(71,-1,0)".
+  
+  Example: 
+     Select Procedure Edit Menu Option: Procedure Enter/Edit
+  
+     RAD/NUC MED PROCEDURES NAME: MRI
+     . S RACPT=$P(^RAMIS(71,RADA,0),U,9)
+       ^
+     <UNDEFINED>21+12^RAMAIN2 ^RAMIS(71,-1,0)
+  
+   Resolution:  
+   --------------
+   At the "RAD/NUC MED PROCEDURE NAME:" prompt in the Procedure Enter/Edit 
+   [RA PROCEDURE] option, entry of a procedure name that exactly matches
+   two or more existing entries  in the RAD/NUC MED PROCEDURES (#71) file
+   results in the display of a numbered, selectable list containing all 
+   exact and partial matches to the user input.
+  
+     Example:
+     RAD/NUC MED PROCEDURE NAME: MRI
+  
+      1   MRI                                 (RAD  Detailed) CPT:76499
+      2   MRI                                 (MRI  Inactive) CPT:76499
+      3   MRI                                  (MRI  Inactive) CPT:76499
+      4   MRI                                  (VAS  Detailed) CPT:10121
+      5   MRI                                  (US   Broad   )
+     CHOOSE 1-5: 
+  
+  
+ Issue 3
+ ==========================================================================
+ Defects #492274, #492272, #492270 - The "DESCENDENTS:" prompt does not
+ allow eligible procedures to be entered, resulting in a Parent procedure
+ with no Descendent.
+  
+   Problem:
+   --------------
+   During the process of adding a new Parent procedure in the Procedure 
+   Enter/Edit [RA PROCEDURE] option, the "DESCENDENTS:" prompt searches for
+   and returns descendents with an Imaging Type different than the Parent  
+   procedure, resulting in an inability to add the correct Descendent to
+   the Parent procedure. An incorrect Inactivation Date is then
+   automatically stored into the new Parent procedure, because the 
+   Parent has no descendent.
+  
+   Example: 
+     Select Procedure Edit Menu Option: Procedure Enter/Edit
+  
+     RAD/NUC MED PROCEDURES NAME: NEWPAR1
+  
+      Select one of the following:
+  
+           1         New Procedure
+           2         None of the above
+  
+     Enter a number from the list above: 1  New Procedure
+     TYPE OF PROCEDURE: P  PARENT
+     NAME: NEWPARENT1// 
+     TYPE OF IMAGING: MRI   MAGNETIC RESONANCE IMAGING 
+     TYPE OF PROCEDURE: PARENT// 
+     SINGLE REPORT: ^DESCENDENTS
+     Select DESCENDENTS: MA
+        1   MANDIBLE 4 /OR/MORE VIEWS             (RAD  Detailed) CPT:70110
+        2   MANDIBLE LESS THAN 4 VIEWS            (RAD  Detailed) CPT:70100
+        3   MASTOIDS 3 OR MORE VIEWS/SIDE         (RAD  Detailed) CPT:70130
+        4   MASTOIDS LESS THAN 3 VIEWS/SIDE       (RAD  Detailed) CPT:70120
+     CHOOSE 1-4: 
+  
+   Resolution:
+   --------------
+   During the process of adding a new Parent procedure in the Procedure 
+   Enter/Edit [RA PROCEDURE] option , the "DESCENDENTS:" prompt searches 
+   for and returns descendents with the same Imaging Type as the Parent
+   procedure, resulting in the ability to add the correct Descendent to the
+   Parent procedure, and no Inactivation Date automatically stored into the
+   new Parent procedure, because the Parent has an appropriate descendent.
+  
+   Example:
+     Select Procedure Edit Menu Option: Procedure Enter/Edit
+  
+     RAD/NUC MED PROCEDURE NAME: NEWPAR1
+  
+     Are you adding NEWPAR1 as a new Radiology Procedure? YES// YES
+     TYPE OF PROCEDURE: P  PARENT
+     NAME: NEWPAR1// 
+     TYPE OF IMAGING: MRI  MAGNETIC RESONANCE IMAGING
+     TYPE OF PROCEDURE: PARENT// 
+     SINGLE REPORT: ^DESCENDENTS  
+     Select DESCENDENTS: MAG
+        1   MAGNETIC IMAGE, LUMBAR SPINE          (MRI  Detailed) CPT:72148
+        2   MAGNETIC IMAGE,ABDOMEN                (MRI  Detailed) CPT:74181
+        3   MAGNETIC IMAGE,BRAIN                  (MRI  Detailed) CPT:70551
+        4   MAGNETIC IMAGE,BRAIN STEM             (MRI  Detailed) CPT:70551
+        5   MAGNETIC IMAGE,LOWER EXTREMITY        (MRI  Detailed) CPT:73720
+     Press <Enter> to see more, '^' to exit this list,  OR  
+     CHOOSE 1-5: 
+  
+  
+ Issue 4
+ ==========================================================================
+ Defect #486891 - As a result of Patch RA*5.0*127 Native Domain 
+ Standardization Radiology Reporting imaging locations no longer show next 
+ to procedures in procedure entry/edit. 
+  
+   Problem:
+   --------------
+   At the "RAD/NUC MED PROCEDURE NAME:" prompt in the Procedure Enter/Edit 
+   [RA PROCEDURE] option, entry of a procedure name partially matching more
+   than one entry results in a numbered, selectable list that is missing
+   the TYPE OF IMAGING value next to the procedure name.
+  
+   Example: 
+     Select Procedure Edit Menu Option: Procedure Enter/Edit
+  
+     RAD/NUC MED PROCEDURES NAME: VENOGRAM REN
+  
+        Select one of the following:
+  
+            1         VENOGRAM RENAL BILAT SELECT /369
+            2         VENOGRAM RENAL BILAT SELECT CP/370
+            3         VENOGRAM RENAL BILAT SELECT S&I/1244
+            4         VENOGRAM RENAL UNILAT SELECT CP/368
+            5         VENOGRAM RENAL UNILAT SELECT S&I/1243
+            6         New Procedure
+            7         None of the above
+  
+     Enter a number from the list above: 
+  
+   Resolution:
+   --------------
+   At the "RAD/NUC MED PROCEDURE NAME:" prompt in the Procedure Enter/Edit 
+   [RA PROCEDURE] option, entry of a procedure name partially matching more
+   than one entry results in a numbered, selectable list that displays the 
+   TYPE OF IMAGING value next to the procedure name.
+  
+   Example:
+     Select Procedure Edit Menu Option: Procedure Enter/Edit
+  
+     RAD/NUC MED PROCEDURE NAME: VENOGRAM REN
+  
+       1  VENOGRAM RENAL BILAT SELECT CP        (RAD  Inactive) CPT:75834
+       2  VENOGRAM RENAL BILAT SELECT S&I       (RAD  Inactive) CPT:75833
+       3  VENOGRAM RENAL UNILAT SELECT CP       (RAD  Inactive) CPT:75832
+       4  VENOGRAM RENAL UNILAT SELECT S&I      (RAD  Inactive) CPT:75831
+ CHOOSE 1-4: 
+  
+  
+ Issue 5
+ ==========================================================================
+ Defect #493698 -  An M error occurs when running the Invalid Procedure 
+ List.
+  
+   Problem:
+   --------------
+   Selection of a procedure name containing a forward slash ("/") at the 
+   "RAD/NUC MED PROCEDURE NAME:" prompt in the Procedure Enter/Edit [RA 
+   PROCEDURE] option later results in the undefined M error 
+   "<UNDEFINED>BR+1^DIE0 *RANEW" after the "AMIS CODE:" prompt, before the 
+   "CPT:" prompt.
+  
+   Example: 
+     Select Procedure Edit Menu Option: Procedure Enter/Edit
+  
+     RAD/NUC MED PROCEDURES NAME: NEW W
+  
+        Select one of the following:
+  
+             1         NEW W/2+/VIEWS/2132
+             2         New Procedure
+             3         None of the above
+  
+     Enter a number from the list above: 1  NEW W/2+/VIEWS/2132
+     TYPE OF PROCEDURE: D  DETAILED
+     NAME: NEW W// 
+     TYPE OF IMAGING: VASCULAR LAB  
+     TYPE OF PROCEDURE: DETAILED// 
+     CONTRAST MEDIA USED: NO//   NO
+     Select MODALITY: 
+     HEALTH SUMMARY WITH REQUEST: 
+     Select SYNONYM: 
+     PROMPT FOR MEDS: 
+     Select DEFAULT MEDICATION: 
+     Select AMIS CODE: 
+     S:'RANEW Y="@15"
+     ^
+     <UNDEFINED>BR+1^DIE0 *RANEW
+     ISRA09:STLVETSDEV 7x2>
+  
+  
+   Resolution:
+   --------------
+   Selection of a procedure name containing a forward slash ("/") at the 
+   "RAD/NUC MED PROCEDURE NAME:" prompt in the Procedure Enter/Edit [RA 
+   PROCEDURE] option later does not result in any M errors after the
+   "AMIS:" prompt.
+  
+   Example:
+     Select Procedure Edit Menu Option: Procedure Enter/Edit
+  
+     RAD/NUC MED PROCEDURE NAME: NEW
+  
+        1   NEW W/2+/VIEWS                      (VAS  Broad   )
+        2   NEW W/3+/VIEWS                      (MRI  Detailed) CPT:72159
+        3   NEWNATETEST4-14 1                   (UNKN Unknown )
+        4   NEWNATETEST5-11 1                   (RAD  Detailed) CPT:74022
+        5   NEWPAR TEST1                        (VAS  Parent  )
+     Press <Enter> to see more, '^' to exit this list,  OR
+     CHOOSE 1-5: 2  NEW W/3+/VIEWS                (MRI  Detailed) CPT:72159
+     NAME: NEW W/3+/VIEWS// 
+     TYPE OF IMAGING: MAGNETIC RESONANCE IMAGING// 
+     TYPE OF PROCEDURE: DETAILED// 
+     CONTRAST MEDIA USED: No// 
+     Select MODALITY: AS// 
+     HEALTH SUMMARY WITH REQUEST: 
+     Select SYNONYM: 
+     PROMPT FOR MEDS: 
+     Select DEFAULT MEDICATION: 
+     Select AMIS CODE: 
+     CPT CODE// 72159 (no editing)
+     Select DEFAULT CPT MODIFIERS(PROC): 
+     STAFF REVIEW REQUIRED: NO// 
+     RAD/NM PHYS APPROVAL REQUIRED: NO// 
+     REQUIRED FLASH CARD PRINTER: 
+     REQUIRED FLASH CARD FORMAT: 
+     Select FILM TYPE: 
+     Select MESSAGE: 
+     EDUCATIONAL DESCRIPTION:
+       THERE ARE NO LINES!
+       Edit? NO// 
+     INACTIVATION DATE: 
+  
+    RAD/NUC MED PROCEDURE NAME: 
+  
+  
+ Issue 6
+ ==========================================================================
+ Defect #492268 - Procedure lookup by CPT code is no longer available.
+  
+   Problem:
+   --------------
+   At the "RAD/NUC MED PROCEDURE NAME:" prompt in the Procedure Enter/Edit 
+   [RA PROCEDURE] option, entry of a CPT code no longer returns any
+   results, even if there are procedures with matching CPT codes in the
+   RAD/NUC MED PROCEDURES (#71) file.
+  
+   Example, lookup CPT 72159 in the Procedure Enter/Edit [RA PROCEDURE] 
+   option: 
+  
+     Select Procedure Edit Menu Option: Procedure Enter/Edit
+  
+     RAD/NUC MED PROCEDURES NAME: 72159
+  
+        Select one of the following:
+      
+              1         New Procedure
+              2         None of the above
+  
+     Enter a number from the list above: ^
+  
+     Want to run a validity check on CPT and stop codes? NO// ^
+  
+  
+   Example, FileMan lookup of CPT code 72159:
+     VA FileMan 22.2
+  
+     Select OPTION: INQUIRE TO FILE ENTRIES  
+  
+     Output from what File: RAD/NUC MED PROCEDURES//   (2010 entries)
+     Select RAD/NUC MED PROCEDURES NAME: 72159      MR ANGIO SPINE 
+     W/O&W/DYE     
+      
+      1 72159  MAGNETIC ANGIOGRAPHY, SPINAL CANAL (MRI Inactive) CPT:72159
+      2 72159  CERVICAL CANAL, W & W/O CONTRAST   (MRI Inactive) CPT:72159
+      3 72159  THORACIC CANAL, W & W/O CONTRAST   (MRI Inactive) CPT:72159
+      4 72159  LUMBAR CANAL, W & W/O CONTRAST     (MRI Inactive) CPT:72159
+      5 72159  MRA CERVICAL CANAL W/CONTENTS      (MRI Inactive) CPT:72159
+     Press <Enter> to see more, '^' to exit this list,  OR
+     CHOOSE 1-5: 
+  
+   Resolution:
+   --------------
+   At the "RAD/NUC MED PROCEDURE NAME:" prompt in the Procedure Enter/Edit 
+   [RA PROCEDURE] option, entry of a CPT code returns all eligible 
+   procedures with matching CPT codes in the RAD/NUC MED PROCEDURES (#71) 
+   file. 
+  
+   Example, lookup CPT 71015 in the Procedure Enter/Edit [RA PROCEDURE] 
+   option:
+     Select Procedure Edit Menu Option: Procedure Enter/Edit
+     RAD/NUC MED PROCEDURE NAME: 71015      CHEST X-RAY STEREO FRONTAL     
+        1  71015  CHEST STEREO PA              (RAD  Detailed) CPT:71015
+        2  71015  CHEST TUBE PLACEMENT         (RAD  Detailed) CPT:71015
+     CHOOSE 1-2: 
+  
+   Example, FileMan lookup of CPT 71015:
+     Select RAD/NUC MED PROCEDURES NAME: 71015 CHEST X-RAY STEREO FRONTAL
+        1  71015  CHEST STEREO PA              (RAD  Detailed) CPT:71015
+        2  71015  CHEST TUBE PLACEMENT         (RAD  Detailed) CPT:71015
+     CHOOSE 1-2: 
+  
+  
+ Issue 7
+ ==========================================================================
+ Defect #487927 - Question mark lookup of procedures no longer works at 
+ Procedure Enter/Edit.
+  
+   Problem:
+   --------------
+   At the "RAD/NUC MED PROCEDURE NAME:" prompt in the Procedure Enter/Edit 
+   [RA PROCEDURE] option, the entry of question marks returns the error 
+   message "?? Anwer must be 1-60 characters in length." In the past, 
+   entering question marks returned an alphabetical list of procedures.
+  
+   Example:
+     Select Procedure Edit Menu Option: Procedure Enter/Edit
+  
+     RAD/NUC MED PROCEDURES NAME: ?
+  
+     Answer must be 1-60 characters in length. First 30 must be unique.
+  
+     RAD/NUC MED PROCEDURES NAME: ??
+  
+     Answer must be 1-60 characters in length. First 30 must be unique.
+  
+   Resolution:
+   --------------
+   At the "RAD/NUC MED PROCEDURE NAME:" prompt in the Procedure Enter/Edit 
+   [RA PROCEDURE] option, the entry of question marks returns an 
+   alphabetical list of procedures in the RAD/NUC MED PROCEDURES (#71)
+   file.
+  
+   Example:
+     Select Procedure Edit Menu Option: Procedure Enter/Edit
+  
+     RAD/NUC MED PROCEDURE NAME: ?
+  
+      Answer with RAD/NUC MED PROCEDURES NAME, or CPT CODE, or
+          CONTRAST MEDIA USED, or MRPF NAME, or ENTRY CREATION DATE, or
+          SYNONYM
+     Do you want the entire 901-Entry RAD/NUC MED PROCEDURES List? Y (Yes)
+      Choose from:
+       A9150                                      (NM   Parent  )
+       ABDOMEN 1 VIEW                             (RAD  Detailed) CPT:74022
+       ABDOMEN 2 + PA & LAT CHEST                 (RAD  Detailed) CPT:74022
+       Type <Enter> to continue or '^' to exit: 
+                                            ^
+     RAD/NUC MED PROCEDURE NAME: ??
+  
+      Answer with RAD/NUC MED PROCEDURES NAME, or CPT CODE, or
+          CONTRAST MEDIA USED, or MRPF NAME, or ENTRY CREATION DATE, or
+          SYNONYM
+    Do you want the entire 901-Entry RAD/NUC MED PROCEDURES List? Y (Yes)
+     Choose from:
+    A9150                              (NM   Parent  )
+    ABDOMEN 1 VIEW                     (RAD  Detailed) CPT:74022
+    ABDOMEN 2 + PA & LAT CHEST         (RAD  Detailed) CPT:74022
+    Type <Enter> to continue or '^' to exit: 
+  
+  
+ Issue 8
+ ==========================================================================
+ Defect 503923 - Double question mark "??" search causes M error at the
+ DEFAULT MEDICATIONS prompt.
+  
+   Problem
+   ----------
+   When trying to perform a medication lookup at the DEFAULT MEDICATIONS   
+   prompt in the Procedure Enter/Edit [RA PROCEDURE] option using double   
+   question marks ("??"), an M error occurs:
+   "<UNDEFINED>HLPWR+5^RAPSAPI2 *TEXT("DESCRIPTION")".
+  
+   Example: 
+     PROMPT FOR MEDS: 
+     Select DEFAULT MEDICATION: ??
+         You may enter a new DEFAULT MEDICATIONS, if you wish
+  
+     RECORDING THAT AN ERROR OCCURRED ---
+  
+     Error Trap:
+       $ZE= <UNDEFINED>HLPWR+5^RAPSAPI2 *TEXT("DESCRIPTION")
+       Last Global Ref: ^UTILITY(546089960,"W")
+       . F  S RAI=$O(TEXT(RAI))  Q:RAI=""  S X=TEXT(RAI)  D ^DIWP
+  
+   
+   Solution
+   ----------
+   When performing a medication lookup at the DEFAULT MEDICATIONS
+   prompt in the Procedure Enter/Edit [RA PROCEDURE] option using double  
+   question marks ("??"), help text should display, followed by a list 
+   of medications.
+  
+   Example: 
+     PROMPT FOR MEDS: 
+     Select DEFAULT MEDICATION: ??
+        You may enter a new DEFAULT MEDICATIONS, if you wish
+        Default medication(s) may be entered by the ADPAC for a procedure.
+        If they are entered, the system will automatically enter them on
+        the patient's exam record whenever the procedure is registered.
+        NOTE: Default Radiopharmaceuticals may NOT be entered here; they
+        should be entered on a separate field.
+     
+    Choose from:
+    51   POUCH,DRAINABLE,SUR-FIT C#4015-13   XA402  NATL FORM; 10 UNITS/BX
+    53   SUMATRIPTAN 20MG/SPRAY NASAL SOLN 0.1ML    CN105   SULFACROSS
+ DRUG CLASSES MAY NOT TRIGGER AN ORDER CHECK     
+    54   BENZTROPINE MESYLATE 0.5MG TAB      AU350  NATL FORM (IEN)
+    55   BENZTROPINE MESYLATE 1MG TAB        AU350  NATL FORM ***AUTOMED***
+    56   BENZTROPINE MESYLATE 2MG TAB        AU350  NATL FORM    
+    57   BENZTROPINE MESYLATE 1MG/ML INJ     AU350  NATL FORM (IEN)
+    58   FLUCONAZOLE 200MG TAB U.D.          AM700  VISN RESTR(10-01)(IEN)
+    65   DICYCLOMINE HCL 10MG CAP            AU350  NATL FORM (IEN)  
+    67   DICYCLOMINE HCL 10MG/ML 2ML INJ     AU350  NATL FORM (IEN)
+  
+  
+ Issue 9
+ ==========================================================================
+ Defect #512916 - RA*5*127 - CPT modifier IEN to Synonym field.
+  
+   Problem:
+   --------------
+   When a new procedure is created with a CPT modifier and a 
+   Synonym in the Procedures Enter/Edit [RA PROCEDURES] option,
+   the IEN of the CPT modifier is added as an erroneous Synonym 
+   to the procedures in the RAD/NUC MED PROCEDURES (#71) file.
+  
+   Example - Synonym "15" incorrectly added to new procedure:
+  
+    Select Procedure Edit Menu Option: Procedure Enter/Edit
+    RAD/NUC MED PROCEDURE NAME: NEWSTL PROC
+     Are you adding NEWSTL PROC as a new Radiology Procedure? YES//
+      YES
+    TYPE OF PROCEDURE: DET  DETAILED
+    NAME: NEWSTL PROC// 
+    TYPE OF IMAGING: CT SCAN  
+    TYPE OF PROCEDURE: DETAILED// 
+    CONTRAST MEDIA USED: NO//   NO
+    Select MODALITY: CT       Computed Tomography  
+      Are you adding 'CT' as a new MODALITY? No// Y  (Yes)
+    Select MODALITY: 
+    HEALTH SUMMARY WITH REQUEST: 
+    Select SYNONYM: NEWSTUFF2
+      Are you adding 'NEWSTUFF2' as a new SYNONYM? No// Y  (Yes)
+    Select SYNONYM: 
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  
+    Select OPTION: INQUIRE TO FILE ENTRIES  
+  
+    Output from what File: NEW PERSON// 71  RAD/NUC MED PROCEDURES
+                                           (2010 entries)
+    Select RAD/NUC MED PROCEDURES NAME: NEWSTL PROC (UNKN Detailed)
+    Another one: 
+    NAME: NEWSTL PROC                       TYPE OF PROCEDURE: DETAILED
+      STAFF REVIEW REQUIRED: NO
+    SYNONYM: NEWSTUFF2
+    SYNONYM: 15
+    AMIS CODE: COMPUTED TOMOGRAPHY
+    DEFAULT CPT MODIFIERS(PROC): 56
+    MODALITY: CT
+      ENTRY CREATION DATE: MAY 02, 2017
+  
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory at the following OI Field Offices:
+  
+ Albany:     domain.ext
+ Hines:     domain.ext  
+ Salt Lake City:     domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+  
+ Title                       File Name                           FTP Mode
+ ------------------------------------------------------------------------
+ Automated Data Processing
+ Application Coordinator
+ (ADPAC) Addendum           ra_5_aa_1.docx                       Binary
+ Automated Data Processing
+ Application Coordinator
+ (ADPAC) Addendum           ra_5_aa_1.pdf                        Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+  
+ There are no pre-installation actions.  
+  
+ Pre-Installation Instructions:
+ ==============================
+ *****************************  NOTE  ******************************* 
+ **     Please install/re-install released patch RA*5.0*127        ** 
+ **     immediately prior to installing this patch to ensure       **
+ **     all routine and data dictionary dependencies exist, and    **
+ **     have not been backed out or modified.                      **
+ ******************************************************************** 
+  
+ Prior to installing this patch, create a backup of both the routines
+ and the updated Data Definition by creating a 'backup' patch containing 
+ all the routines and data definitions exported with this patch.
+  
+ From the Kernel Installation and Distribution System Menu, select the
+ Edit a Build option. When prompted for the BUILD NAME, enter backup patch
+ name ZRA*5.0*138.
+  
+ a. Add the following Data Definitions to the patch:
+     1. At the File List page, enter the NEW RAD PROCEDURE WORKUP (#71.11)
+        file, with the following settings:
+             A. Send Full or Partial DD: PARTIAL
+                a. At the Data Dictionary Number page, enter the following:
+                     i. The DESCENDENTS sub-file (#71.11).
+                    ii. The DESCENDENTS sub-file (#71.1105).
+             B. Update the Data Dictionary: YES
+             C. Send Security Code: YES
+             D. Data Comes With File: NO
+  
+ b. Add the following 7 routines to the patch:
+      RAMAIN2
+      RAMAIN4
+      RAMAIN5
+      RANPRO
+      RANPRO4
+      RANPRO5
+      RAPSAPI2
+      RAXMLSND
+  
+ b. Add the following Input Templates to the Build Components section 
+    of the patch:
+       1. NEW RAD PROCEDURE (#71.11)
+       2. RA PROCEDURE EDIT (#71)
+  
+ After creating the backup patch, verify the contents of the backup patch 
+ build by printing the build using the Build File Print [XPD PRINT BUILD] 
+ in the Utilities [XPD UTILITY] menu. The output should include all 
+ components entered. 
+  
+ Example:
+  
+ PACKAGE: ZRA*5.0*138     Apr 11, 2017 12:22 pm                PAGE 1
+ ---------------------------------------------------------------------
+ TYPE: SINGLE PACKAGE                          TRACK NATIONALLY: YES
+ NATIONAL PACKAGE:                           ALPHA/BETA TESTING: NO
+  
+ DESCRIPTION:
+  
+ ENVIRONMENT CHECK:                          DELETE ENV ROUTINE: 
+  PRE-INIT ROUTINE:                     DELETE PRE-INIT ROUTINE: 
+ POST-INIT ROUTINE:                    DELETE POST-INIT ROUTINE: 
+ PRE-TRANSPORT RTN: 
+  
+                                 UP    SEND  DATA                USER
+                                 DATE  SEC.  COMES   SITE  RSLV  OVER
+ FILE #      FILE NAME           DD    CODE  W/FILE  DATA  PTRS  RIDE
+ --------------------------------------------------------------------------
+ 71.11       NEW RAD PROCEDURE                       
+             WORKUP              YES   YES   NO                  NO
+ Partial DD: subDD: 71.11
+             subDD: 71.1105
+  
+ INPUT TEMPLATE:                                ACTION:
+    NEW RAD PROCEDURE    FILE #71.11               SEND TO SITE
+    RA PROCEDURE EDIT    FILE #71                  SEND TO SITE
+  
+ ROUTINE:                                       ACTION:
+    RAMAIN2                                        SEND TO SITE
+    RAMAIN4                                        SEND TO SITE
+    RAMAIN5                                        SEND TO SITE
+    RANPRO                                         SEND TO SITE
+    RANPRO1                                        SEND TO SITE
+    RANPRO4                                        SEND TO SITE
+    RANPRO5                                        SEND TO SITE
+    RAPSAPI2                                       SEND TO SITE
+  
+ After creating the backup patch build, transport the backup to all 
+ appropriate recipients using the Transport a Distribution [XPD 
+ TRANSPORT PACKAGE] option in the Edits and Distribution [XPD DISTRIBUTION 
+ MENU] menu in the Kernel Installation & Distribution System [XPD MAIN]
+ menu.
+  
+ Example, Transport a Distribution: 
+  
+   Select Edits and Distribution <TEST ACCOUNT> Option: TRANsport a 
+   Distribution
+  
+   Enter the Package Names to be transported. The order in which
+   they are entered will be the order in which they are installed.
+  
+   First Package Name:    ZRA*5.0*138  
+   Another Package Name: 
+  
+   ORDER   PACKAGE
+     1    ZRA*5.0*138
+  
+   OK to continue? YES// 
+   Transport through (HF)Host File or (PM)PackMan: PM  PackMan
+  
+        ZRA*5.0*138...
+   No Package File Link
+   Subject: PATCH RA 5 138 BACKUP
+   Please enter description of Packman Message
+  
+   ==[ WRAP ]==[INSERT ]=========<  >=========[Press <PF1>H for help]====
+  
+   <======T=======T=======T=======T=======T=======T=======T=======T======T>
+  
+   Created by LAST,FIRST NAME at VAHARC.DOMAIN.EXT  (KIDS) on 
+   Thursday, 04/20/17 at 09:36
+   Do you wish to secure this message? NO// 
+   Send mail to: LAST,FIRST NAME//   LAST,FIRST NAME
+   Select basket to send to: IN//
+  
+                    -----------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than
+ 5 minutes to install.  It is not necessary to disable any options.
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select
+         the Installation Menu.  From this menu, you may elect to use the
+         following options. When prompted for the INSTALL NAME enter the
+         patch RA*5.0*138.
+  
+ a.     Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will
+        not backup any other changes such as DDs or templates.
+  
+ b.     Compare Transport Global to Current System - This option will
+        (allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch routines,
+        DDs, templates, etc.).
+  
+ c.     Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global.
+  
+ 4.     From the Installation Menu, select the Install Package(s) option
+        and choose the patch to install.
+  
+ 5.     When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+        Install? YES//', respond NO.
+  
+ 6.     When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+        NO//', respond NO.
+  
+ 7.     When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//', respond NO. 
+  
+ 8.     If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ ===============================
+ N/A
+  
+ Patch Backout Plan
+ ==================
+ If patch RA*5.0*138 needs to backed out, please contact Health Product 
+ Support to back the patch out by re-installing the patch backup created 
+ prior to installation. 
+  
+ The rollback/back-out procedure for this patch requires installation of 
+ the backup patch ZRA*5.0*138 created during the pre-installation process.
+  
+ Please contact Health Product Support for assistance if a determination 
+ is made that the patch should be backed out.
+  
+ ROUTINE INFORMATION
+ -------------------
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 22
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RAMAIN2
+    Before: B63613910   After: B63318644  **45,62,71,65,127,138**
+Routine Name: RAMAIN4
+    Before: B30460135   After: B31310933  **127,138**
+Routine Name: RAMAIN5
+    Before: B38646269   After: B36683496  **127,138**
+Routine Name: RANPRO
+    Before: B93138436   After:B121872781  **127,138**
+Routine Name: RANPRO1
+    Before:       n/a   After:  B1214199  **138**
+Routine Name: RANPRO4
+    Before: B38023574   After: B38438908  **127,138**
+Routine Name: RANPRO5
+    Before: B42155834   After: B39057526  **127,138**
+Routine Name: RAPSAPI2
+    Before: B40591298   After: B44028189  **65,138**
+Routine Name: RAXMLSND
+    Before: B52260194   After: B53343651  **127,138**
+ 
+Routine list of preceding patches: 127
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 30, 2017
+Completed By:                               Date Completed: MAY 30, 2017
+Released By :                               Date Released : JUN 01, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

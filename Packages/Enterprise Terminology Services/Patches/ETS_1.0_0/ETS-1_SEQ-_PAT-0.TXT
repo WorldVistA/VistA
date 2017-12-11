@@ -1,0 +1,372 @@
+
+=============================================================================
+Run Date: JUL 05, 2017                     Designation: ETS*1*0
+Package : ETS - ENTERPRISE TERMINOLOGY SERVIC Priority: Mandatory
+Version : 1.0                                   Status: Released
+                  Compliance Date: SEP 04, 2017
+=============================================================================
+
+
+Subject: LOINC DATABASE DEFS AND APIS
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ The Veterans Information Systems and Technology Architecture (VistA)
+ Evolution program to modernize VistA includes modernizing Veterans Affairs
+ (VA's) enterprise data management capabilities.  Modernizing FileMan will
+ functionally standardize VistA's database.  This will enable structured 
+ data query and exchange across all VistA instances, creating an enterprise
+ view of VistA data in standardized, computable form.  This modernized
+ FileMan is called FileMan Enterprise for its enterprise data management
+ capabilities.
+   
+ This patch, ETS*1.0*0, introduces new routines and data dictionaries
+ to implement Enterprise Terminology Service (ETS) package. The
+ Enterprise Terminology Service package exists to provide enterprise-wide
+ access to common code sets that are needed in a health care system. It
+ will contain FileMan files with the data and Application Program 
+ Interfaces (APIs) that can be used to provide access and process the
+ data. The Integration Control Registrations will be supported and thus
+ open to all VistA applications.
+  
+ Specifically, patch ETS*1.0*0 contains the following:
+ ---------------------------------------------------------
+ 1. By installing this patch, the Kernel Installation & Distribution 
+    System (KIDS) will create the new Enterprise Terminology Service (ETS)
+    package namespace automatically.
+  
+ 2. The following new files have been created in ETS to support the move 
+    of the LOINC file to ETS.
+  
+    a) The LOINC file (#129.1)
+    b) The LOINC COMPONENT file (#129.11)
+    c) The LOINC AXIS CODES file (#129.12)
+    d) The LOINC METHOD CODES file (#129.13)
+    e) The LOINC EXCLUDED WORDS file (#129.14)
+  
+ 3. The data for the above files will be populated. This will require
+    approximately 47 megabytes of disk space and 296 megabytes of journal
+    space.
+  
+ 4. The ETS package includes new APIs that will perform the tasks below.
+  
+    a) Check the overall Activation History of a LOINC Code
+    b) Check a LOINC code's Activation History and Status for a
+       specified date
+    c) Query and retrieve the information for a specific LOINC CODE
+    d) Look for all entries within the LOINC database that contain 
+       one or more specific terms
+    e) Confirm that a LOINC Code exists
+    f) Retrieve the LOINC code by using its Internal Entry Number
+    g) Retrieve display names for a specific LOINC code
+    h) Retrieve a specific LOINC codes current status
+    i) Retrieve the current version of the installed LOINC database
+    j) Retrieve the list of LOINC Codes currently Deprecated (Deleted)
+    k) Retrieve a list of LOINC codes that contain a specified component 
+       stored in the LOINC COMPONENT file (#129.11)
+  
+    Detailed information on the APIs and the tasks they perform is included
+    in the ETS 1.0 Technical Manual/Security Guide. 
+   
+  
+ Patch Components:
+ -----------------
+    
+ Files & Fields Associated:
+   
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ LOINC (#129.1)                                            New
+ LOINC COMPONENT (#129.11)                                 New
+ LOINC AXIS CODES (#129.12)                                New
+ LOINC METHOD CODES (#129.13)                              New
+ LOINC EXCLUDED WORDS (#129.14)                            New
+   
+    
+ Forms Associated:
+    
+ Form Name                     File #               New/Modified/Deleted
+ ---------                     ------               --------------------
+ N/A 
+    
+    
+ Mail Groups Associated:
+    
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A                       
+    
+    
+ Options Associated:
+    
+ Option Name                    Type               New/Modified/Deleted
+ -----------                    ----               -------------------- 
+ N/A
+    
+    
+ Protocols Associated:
+    
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+    
+ Security Keys Associated:
+    
+ Security Key Name
+ -----------------
+ N/A
+    
+    
+ Templates Associated:
+    
+ Template Name   Type      File Name        (Number)  New/Modified/Deleted
+ -------------   ----      -------------------------  --------------------
+ N/A
+    
+    
+ Additional Information:
+ -----------------------
+ N/A
+    
+    
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+    
+    
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+    
+    
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+    
+    
+ Blood Bank Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch ETS*1.0*0 contains 
+ changes to a package referenced in ProPath standard titled: BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA 
+ Blood Bank software design safeguards or safety critical elements 
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch ETS*1.0*0 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+    
+  
+ Test Sites:
+ -----------
+ TBD
+    
+    
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Documentation describing the new functionality introduced by this patch
+ is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+ Sites may retrieve the software and/or documentation directly using 
+ Secure Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory 
+ at the following OI Field Offices:
+   
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/ 
+  
+ Title                              File Name          SFTP Mode
+ --------------------------------------------------------------------
+ ETS 1.0 Technical/Security Guide   ETS_1_TM.PDF       Binary
+ Software Installation Host file    Enterprise_Terminology_Service_1_0.KID
+                                                       ASCII
+    
+  
+ Backout and Rollback Procedure:
+ -------------------------------
+ The rollback plan for VistA applications is complex and not able to be
+ a 'one size fits all' solution. The general strategy for VistA rollback
+ is to repair the components with a follow-on patch. The development team
+ recommends that sites log a CA Service Desk Manager (SDM) ticket for 
+ the Health Systems Platform group if a patch needs to be backed-out. The 
+ support team will determine the best approach to restore the system to its
+ previous state.
+   
+    
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There is a post-install routine ETS10P0 that will update the Package
+ Revision Data field for the LOINC File (#129.1).
+  
+   
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 20
+ minutes to install.
+    
+ No options or protocols need to be disabled to install this patch.
+    
+ The installation of this patch can be queued.
+    
+    
+ Installation Instructions:
+ --------------------------
+  
+ 1.  OBTAIN PATCH
+     --------------
+     Obtain the host file Enterprise_Terminology_Service_1_0.KID, which
+     contains the following patch:
+  
+         ETS*1.0*0
+  
+     Sites can retrieve VistA software directly using Secure File Transfer
+     Protocol (sFTP) from the ANONYMOUS.SOFTWARE directory at the following
+     sFTP address:
+  
+                     download.vista.domain.ext
+  
+     This will transmit the files from the first available sFTP server.
+     Sites may also elect to retrieve software directly from a specific
+     server as follows:
+  
+        Albany                  ftp.domain.ext
+        Hines                   ftp.domain.ext
+        Salt Lake City          ftp.domain.ext
+  
+     The Enterprise_Terminology_Service_1_0.KID host file is located
+     in the  directory. Use ASCII Mode when downloading
+     the file.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+     Select Installation Option:
+  
+ 3.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory
+     path where the host file Enterprise_Terminology_Service_1_0.KID
+     was saved. For example:  
+     
+     SYS$SYSDEVICE:[ANONYMOUS] Enterprise_Terminology_Service_1_0.KID
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       Loading Distribution...
+    
+         ENTERPRISE TERMINOLOGY SERVICE 1.0
+      Use INSTALL NAME: ENTERPRISE TERMINOLOGY SERVICE 1.0 to install this
+      Distribution.
+  
+  
+ 4.  RUN OPTIONAL INSTALLATION OPTIONS
+     ---------------------------------
+     From the Installation menu, you may select to use the following
+     optional options (when prompted for the INSTALL NAME, enter ENTERPRISE
+     TERMINOLOGY SERVICE 1.0):
+  
+     a.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, data dictionaries, templates, etc.).
+  
+     b.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 5.  INSTALL THE BUILD
+     -----------------
+     This is the step to start the installation of this KIDS patch. 
+     This will need to be run for the ENTERPRISE TERMINOLOGY SERVICE 1.0 
+     patch.
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted for the "Select INSTALL NAME:", enter ENTERPRISE 
+         TERMINOLOGY SERVICE 1.0.
+  
+     c.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+         YES//", enter NO.
+  
+     d.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", enter NO.
+  
+     e.  When prompted "Device: HOME//", respond with the correct device.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ The ETS10P0 Post Install routine may be deleted after install.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;Enterprise Terminology Services;;Mar 20, 2017;Build 26**[Patch List]**
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ETS10P0
+    Before:       n/a   After:  B1054269  
+Routine Name: ETSLNC
+    Before:       n/a   After: B84730591  
+Routine Name: ETSLNC1
+    Before:       n/a   After: B11070106  
+Routine Name: ETSLNC2
+    Before:       n/a   After:  B6148545  
+Routine Name: ETSLNC3
+    Before:       n/a   After: B49858538  
+Routine Name: ETSLNCIX
+    Before:       n/a   After:  B9991707  
+Routine Name: ETSLNCTX
+    Before:       n/a   After: B27568889  
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 17, 2017
+Completed By:                               Date Completed: JUN 12, 2017
+Released By :                               Date Released : JUL 05, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

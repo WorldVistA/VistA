@@ -1,0 +1,1152 @@
+KIDS Distribution saved on Nov 18, 2015@08:24:30
+SHA HASH UTILITY
+**KIDS**:XU*8.0*657^
+
+**INSTALL NAME**
+XU*8.0*657
+"BLD",9230,0)
+XU*8.0*657^KERNEL^0^3151118^y
+"BLD",9230,1,0)
+^^66^66^3150721^^
+"BLD",9230,1,1,0)
+Federal Information Processing Standards Publication 180-4 (FIPS PUB 
+"BLD",9230,1,2,0)
+180-4) specifies secure hash algorithms for computing a condensed 
+"BLD",9230,1,3,0)
+representation of electronic data (message). The hash algorithms 
+"BLD",9230,1,4,0)
+specified in this Standard are called secure because, for a given 
+"BLD",9230,1,5,0)
+algorithm, it is computationally infeasible 1) to find a message that 
+"BLD",9230,1,6,0)
+corresponds to a given message digest, or 2) to find two different 
+"BLD",9230,1,7,0)
+messages that produce the same message digest. Any change to a message 
+"BLD",9230,1,8,0)
+will, with a very high probability, result in a different message
+"BLD",9230,1,9,0)
+digest.
+"BLD",9230,1,10,0)
+ 
+"BLD",9230,1,11,0)
+The SHA-256-384-512 algorithm is described in the NIST document:
+"BLD",9230,1,12,0)
+ http://csrc.nist.gov/groups/STM/cavp/documents/shs/sha256-384-512.pdf
+"BLD",9230,1,13,0)
+ 
+"BLD",9230,1,14,0)
+This routine provides new Kernel APIs for computing the SHA hash for
+"BLD",9230,1,15,0)
+input of various formats. The first parameter, HASHLEN, is the hash
+"BLD",9230,1,16,0)
+length in bits. It can have one of the following values:
+"BLD",9230,1,17,0)
+ 160 (SHA-1)
+"BLD",9230,1,18,0)
+ 224 (SHA-224)
+"BLD",9230,1,19,0)
+ 256 (SHA-256)
+"BLD",9230,1,20,0)
+ 384 (SHA-384)
+"BLD",9230,1,21,0)
+ 512 (SHA-512)
+"BLD",9230,1,22,0)
+
+"BLD",9230,1,23,0)
+$$FILE^XLFSHAN(HASHLEN,FILENUM,IEN,FIELD) - Return the SHA hash for the 
+"BLD",9230,1,24,0)
+                                     specified file entry
+"BLD",9230,1,25,0)
+
+"BLD",9230,1,26,0)
+$$GLOBAL^XLFSHAN(HASHLEN,FILENUM,DATAONLY)- Return the SHA hash for an
+"BLD",9230,1,27,0)
+entire
+"BLD",9230,1,28,0)
+                                     global. If DATAONLY=1 the hash is
+"BLD",9230,1,29,0)
+computed
+"BLD",9230,1,30,0)
+                                     only for the data. If DATAONLY=0
+"BLD",9230,1,31,0)
+the data
+"BLD",9230,1,32,0)
+                                     global location is included in the
+"BLD",9230,1,33,0)
+hash
+"BLD",9230,1,34,0)
+                                     computation.
+"BLD",9230,1,35,0)
+
+"BLD",9230,1,36,0)
+$$HOSTFILE^XLFSHAN(HASHLEN,PATH,FILENAME) - Return the SHA hash for a
+"BLD",9230,1,37,0)
+host file
+"BLD",9230,1,38,0)
+
+"BLD",9230,1,39,0)
+$$ROUTINE^XLFSHAN(HASHLEN,ROUTINE) - Return the SHA hash for a routine
+"BLD",9230,1,40,0)
+
+"BLD",9230,1,41,0)
+$$SHAN^XLFSHAN(HASHLEN,MESSAGE)- SHA hash for a message that can be
+"BLD",9230,1,42,0)
+                              passed as a single string
+"BLD",9230,1,43,0)
+
+"BLD",9230,1,44,0)
+$$LSHAN^XLFSHAN(HASHLEN,MSUB,NBLOCKS)- SHA hash for a message too long
+"BLD",9230,1,45,0)
+                                     to be passed as a single string
+"BLD",9230,1,46,0)
+ 
+"BLD",9230,1,47,0)
+$$CPUTIME^XLFSHAN() - Returns two comma-delimited pieces, "system" CPU
+"BLD",9230,1,48,0)
+time and "user" CPU time (except on VMS where no separate times are
+"BLD",9230,1,49,0)
+available). 
+"BLD",9230,1,50,0)
+Time is returned as milliseconds of CPU time.
+"BLD",9230,1,51,0)
+
+"BLD",9230,1,52,0)
+$$ETIMEMS^XLFSHAN(START,END) - Calculates and returns the elapsed time
+"BLD",9230,1,53,0)
+in milliseconds.
+"BLD",9230,1,54,0)
+
+"BLD",9230,1,55,0)
+
+"BLD",9230,1,56,0)
+In addition, this routine provides several Math Library Functions 
+"BLD",9230,1,57,0)
+that are bitwise logical operators.
+"BLD",9230,1,58,0)
+
+"BLD",9230,1,59,0)
+$$AND^XLFSHAN(X,Y)                - Bitwise logical AND 32 bits
+"BLD",9230,1,60,0)
+$$OR^XLFSHAN(X,Y)                 - Bitwise logical OR 32 bits
+"BLD",9230,1,61,0)
+$$XOR^XLFSHAN(X,Y)                - Bitwise logical XOR 32 bits
+"BLD",9230,1,62,0)
+
+"BLD",9230,1,63,0)
+A new supported Integration Control Registration (ICR) #6157 was created 
+"BLD",9230,1,64,0)
+for these library functions.
+"BLD",9230,1,65,0)
+
+"BLD",9230,1,66,0)
+
+"BLD",9230,4,0)
+^9.64PA^^
+"BLD",9230,6)
+4^
+"BLD",9230,6.3)
+8
+"BLD",9230,"KRN",0)
+^9.67PA^9002226^22
+"BLD",9230,"KRN",.4,0)
+.4
+"BLD",9230,"KRN",.401,0)
+.401
+"BLD",9230,"KRN",.402,0)
+.402
+"BLD",9230,"KRN",.403,0)
+.403
+"BLD",9230,"KRN",.5,0)
+.5
+"BLD",9230,"KRN",.84,0)
+.84
+"BLD",9230,"KRN",3.6,0)
+3.6
+"BLD",9230,"KRN",3.8,0)
+3.8
+"BLD",9230,"KRN",9.2,0)
+9.2
+"BLD",9230,"KRN",9.8,0)
+9.8
+"BLD",9230,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",9230,"KRN",9.8,"NM",1,0)
+XLFSH256^^1^
+"BLD",9230,"KRN",9.8,"NM",2,0)
+XLFSHAN^^0^B130497173
+"BLD",9230,"KRN",9.8,"NM","B","XLFSH256",1)
+
+"BLD",9230,"KRN",9.8,"NM","B","XLFSHAN",2)
+
+"BLD",9230,"KRN",19,0)
+19
+"BLD",9230,"KRN",19.1,0)
+19.1
+"BLD",9230,"KRN",101,0)
+101
+"BLD",9230,"KRN",409.61,0)
+409.61
+"BLD",9230,"KRN",771,0)
+771
+"BLD",9230,"KRN",779.2,0)
+779.2
+"BLD",9230,"KRN",870,0)
+870
+"BLD",9230,"KRN",8989.51,0)
+8989.51
+"BLD",9230,"KRN",8989.52,0)
+8989.52
+"BLD",9230,"KRN",8993,0)
+8993
+"BLD",9230,"KRN",8993,"NM",0)
+^9.68A^^
+"BLD",9230,"KRN",8994,0)
+8994
+"BLD",9230,"KRN",9002226,0)
+9002226
+"BLD",9230,"KRN","B",.4,.4)
+
+"BLD",9230,"KRN","B",.401,.401)
+
+"BLD",9230,"KRN","B",.402,.402)
+
+"BLD",9230,"KRN","B",.403,.403)
+
+"BLD",9230,"KRN","B",.5,.5)
+
+"BLD",9230,"KRN","B",.84,.84)
+
+"BLD",9230,"KRN","B",3.6,3.6)
+
+"BLD",9230,"KRN","B",3.8,3.8)
+
+"BLD",9230,"KRN","B",9.2,9.2)
+
+"BLD",9230,"KRN","B",9.8,9.8)
+
+"BLD",9230,"KRN","B",19,19)
+
+"BLD",9230,"KRN","B",19.1,19.1)
+
+"BLD",9230,"KRN","B",101,101)
+
+"BLD",9230,"KRN","B",409.61,409.61)
+
+"BLD",9230,"KRN","B",771,771)
+
+"BLD",9230,"KRN","B",779.2,779.2)
+
+"BLD",9230,"KRN","B",870,870)
+
+"BLD",9230,"KRN","B",8989.51,8989.51)
+
+"BLD",9230,"KRN","B",8989.52,8989.52)
+
+"BLD",9230,"KRN","B",8993,8993)
+
+"BLD",9230,"KRN","B",8994,8994)
+
+"BLD",9230,"KRN","B",9002226,9002226)
+
+"BLD",9230,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",9230,"QUES",0)
+^9.62^^
+"BLD",9230,"REQB",0)
+^9.611^^
+"MBREQ")
+0
+"ORD",0,9.8)
+9.8;;1;RTNF^XPDTA;RTNE^XPDTA
+"ORD",0,9.8,0)
+ROUTINE
+"PKG",163,-1)
+1^1
+"PKG",163,0)
+KERNEL^XU^SIGN-ON, SECURITY, MENU DRIVER, DEVICES, TASKMAN^
+"PKG",163,20,0)
+^9.402P^2^2
+"PKG",163,20,1,0)
+200^^XDRM200N
+"PKG",163,20,1,1)
+
+"PKG",163,20,2,0)
+2^^RGDRM03
+"PKG",163,20,2,1)
+
+"PKG",163,20,"B",2,2)
+
+"PKG",163,20,"B",200,1)
+
+"PKG",163,22,0)
+^9.49I^1^1
+"PKG",163,22,1,0)
+8.0^2950703^2951019^1039
+"PKG",163,22,1,"PAH",1,0)
+657^3151118^53
+"PKG",163,22,1,"PAH",1,1,0)
+^^66^66^3151118
+"PKG",163,22,1,"PAH",1,1,1,0)
+Federal Information Processing Standards Publication 180-4 (FIPS PUB 
+"PKG",163,22,1,"PAH",1,1,2,0)
+180-4) specifies secure hash algorithms for computing a condensed 
+"PKG",163,22,1,"PAH",1,1,3,0)
+representation of electronic data (message). The hash algorithms 
+"PKG",163,22,1,"PAH",1,1,4,0)
+specified in this Standard are called secure because, for a given 
+"PKG",163,22,1,"PAH",1,1,5,0)
+algorithm, it is computationally infeasible 1) to find a message that 
+"PKG",163,22,1,"PAH",1,1,6,0)
+corresponds to a given message digest, or 2) to find two different 
+"PKG",163,22,1,"PAH",1,1,7,0)
+messages that produce the same message digest. Any change to a message 
+"PKG",163,22,1,"PAH",1,1,8,0)
+will, with a very high probability, result in a different message
+"PKG",163,22,1,"PAH",1,1,9,0)
+digest.
+"PKG",163,22,1,"PAH",1,1,10,0)
+ 
+"PKG",163,22,1,"PAH",1,1,11,0)
+The SHA-256-384-512 algorithm is described in the NIST document:
+"PKG",163,22,1,"PAH",1,1,12,0)
+ http://csrc.nist.gov/groups/STM/cavp/documents/shs/sha256-384-512.pdf
+"PKG",163,22,1,"PAH",1,1,13,0)
+ 
+"PKG",163,22,1,"PAH",1,1,14,0)
+This routine provides new Kernel APIs for computing the SHA hash for
+"PKG",163,22,1,"PAH",1,1,15,0)
+input of various formats. The first parameter, HASHLEN, is the hash
+"PKG",163,22,1,"PAH",1,1,16,0)
+length in bits. It can have one of the following values:
+"PKG",163,22,1,"PAH",1,1,17,0)
+ 160 (SHA-1)
+"PKG",163,22,1,"PAH",1,1,18,0)
+ 224 (SHA-224)
+"PKG",163,22,1,"PAH",1,1,19,0)
+ 256 (SHA-256)
+"PKG",163,22,1,"PAH",1,1,20,0)
+ 384 (SHA-384)
+"PKG",163,22,1,"PAH",1,1,21,0)
+ 512 (SHA-512)
+"PKG",163,22,1,"PAH",1,1,22,0)
+
+"PKG",163,22,1,"PAH",1,1,23,0)
+$$FILE^XLFSHAN(HASHLEN,FILENUM,IEN,FIELD) - Return the SHA hash for the 
+"PKG",163,22,1,"PAH",1,1,24,0)
+                                     specified file entry
+"PKG",163,22,1,"PAH",1,1,25,0)
+
+"PKG",163,22,1,"PAH",1,1,26,0)
+$$GLOBAL^XLFSHAN(HASHLEN,FILENUM,DATAONLY)- Return the SHA hash for an
+"PKG",163,22,1,"PAH",1,1,27,0)
+entire
+"PKG",163,22,1,"PAH",1,1,28,0)
+                                     global. If DATAONLY=1 the hash is
+"PKG",163,22,1,"PAH",1,1,29,0)
+computed
+"PKG",163,22,1,"PAH",1,1,30,0)
+                                     only for the data. If DATAONLY=0
+"PKG",163,22,1,"PAH",1,1,31,0)
+the data
+"PKG",163,22,1,"PAH",1,1,32,0)
+                                     global location is included in the
+"PKG",163,22,1,"PAH",1,1,33,0)
+hash
+"PKG",163,22,1,"PAH",1,1,34,0)
+                                     computation.
+"PKG",163,22,1,"PAH",1,1,35,0)
+
+"PKG",163,22,1,"PAH",1,1,36,0)
+$$HOSTFILE^XLFSHAN(HASHLEN,PATH,FILENAME) - Return the SHA hash for a
+"PKG",163,22,1,"PAH",1,1,37,0)
+host file
+"PKG",163,22,1,"PAH",1,1,38,0)
+
+"PKG",163,22,1,"PAH",1,1,39,0)
+$$ROUTINE^XLFSHAN(HASHLEN,ROUTINE) - Return the SHA hash for a routine
+"PKG",163,22,1,"PAH",1,1,40,0)
+
+"PKG",163,22,1,"PAH",1,1,41,0)
+$$SHAN^XLFSHAN(HASHLEN,MESSAGE)- SHA hash for a message that can be
+"PKG",163,22,1,"PAH",1,1,42,0)
+                              passed as a single string
+"PKG",163,22,1,"PAH",1,1,43,0)
+
+"PKG",163,22,1,"PAH",1,1,44,0)
+$$LSHAN^XLFSHAN(HASHLEN,MSUB,NBLOCKS)- SHA hash for a message too long
+"PKG",163,22,1,"PAH",1,1,45,0)
+                                     to be passed as a single string
+"PKG",163,22,1,"PAH",1,1,46,0)
+ 
+"PKG",163,22,1,"PAH",1,1,47,0)
+$$CPUTIME^XLFSHAN() - Returns two comma-delimited pieces, "system" CPU
+"PKG",163,22,1,"PAH",1,1,48,0)
+time and "user" CPU time (except on VMS where no separate times are
+"PKG",163,22,1,"PAH",1,1,49,0)
+available). 
+"PKG",163,22,1,"PAH",1,1,50,0)
+Time is returned as milliseconds of CPU time.
+"PKG",163,22,1,"PAH",1,1,51,0)
+
+"PKG",163,22,1,"PAH",1,1,52,0)
+$$ETIMEMS^XLFSHAN(START,END) - Calculates and returns the elapsed time
+"PKG",163,22,1,"PAH",1,1,53,0)
+in milliseconds.
+"PKG",163,22,1,"PAH",1,1,54,0)
+
+"PKG",163,22,1,"PAH",1,1,55,0)
+
+"PKG",163,22,1,"PAH",1,1,56,0)
+In addition, this routine provides several Math Library Functions 
+"PKG",163,22,1,"PAH",1,1,57,0)
+that are bitwise logical operators.
+"PKG",163,22,1,"PAH",1,1,58,0)
+
+"PKG",163,22,1,"PAH",1,1,59,0)
+$$AND^XLFSHAN(X,Y)                - Bitwise logical AND 32 bits
+"PKG",163,22,1,"PAH",1,1,60,0)
+$$OR^XLFSHAN(X,Y)                 - Bitwise logical OR 32 bits
+"PKG",163,22,1,"PAH",1,1,61,0)
+$$XOR^XLFSHAN(X,Y)                - Bitwise logical XOR 32 bits
+"PKG",163,22,1,"PAH",1,1,62,0)
+
+"PKG",163,22,1,"PAH",1,1,63,0)
+A new supported Integration Control Registration (ICR) #6157 was created 
+"PKG",163,22,1,"PAH",1,1,64,0)
+for these library functions.
+"PKG",163,22,1,"PAH",1,1,65,0)
+
+"PKG",163,22,1,"PAH",1,1,66,0)
+
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","XLFSH256")
+1^1
+"RTN","XLFSHAN")
+0^2^B130497173
+"RTN","XLFSHAN",1,0)
+XLFSHAN ;ISL/PKR SHA secure hash routines. ;08/28/2015
+"RTN","XLFSHAN",2,0)
+ ;;8.0;KERNEL;**657**;Jul 10, 1995;Build 8
+"RTN","XLFSHAN",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","XLFSHAN",4,0)
+ Q
+"RTN","XLFSHAN",5,0)
+ ;=============================
+"RTN","XLFSHAN",6,0)
+AND(X,Y) ;Bitwise logical AND, 32 bits. IA #6157
+"RTN","XLFSHAN",7,0)
+ Q $ZBOOLEAN(X,Y,1) ;Cache
+"RTN","XLFSHAN",8,0)
+ ;N IND,XA
+"RTN","XLFSHAN",9,0)
+ ;S XA=0
+"RTN","XLFSHAN",10,0)
+ ;F IND=1:1:32 S XA=(XA\2)+((((X#2)+(Y#2))\2)*2147483648),X=X\2,Y=Y\2
+"RTN","XLFSHAN",11,0)
+ ;Q XA
+"RTN","XLFSHAN",12,0)
+ ;
+"RTN","XLFSHAN",13,0)
+ ;=============================
+"RTN","XLFSHAN",14,0)
+CHASHLEN(HASHLEN) ;Make sure the hash length is one of the acceptable
+"RTN","XLFSHAN",15,0)
+ ;values.
+"RTN","XLFSHAN",16,0)
+ I HASHLEN=160 Q 1
+"RTN","XLFSHAN",17,0)
+ I HASHLEN=224 Q 1
+"RTN","XLFSHAN",18,0)
+ I HASHLEN=256 Q 1
+"RTN","XLFSHAN",19,0)
+ I HASHLEN=384 Q 1
+"RTN","XLFSHAN",20,0)
+ I HASHLEN=512 Q 1
+"RTN","XLFSHAN",21,0)
+ Q 0
+"RTN","XLFSHAN",22,0)
+ ;
+"RTN","XLFSHAN",23,0)
+ ;=============================
+"RTN","XLFSHAN",24,0)
+CPUTIME() ;Returns two comma-delimited pieces, "system" CPU time and "user"
+"RTN","XLFSHAN",25,0)
+ ;CPU time (except on VMS where no separate times are available).
+"RTN","XLFSHAN",26,0)
+ ;Time is returned as milliseconds of CPU time.
+"RTN","XLFSHAN",27,0)
+ Q $SYSTEM.Process.GetCPUTime()
+"RTN","XLFSHAN",28,0)
+ ;GT.M
+"RTN","XLFSHAN",29,0)
+ ;Q $ZGETJPI("","CPUTIM")*10
+"RTN","XLFSHAN",30,0)
+ ;
+"RTN","XLFSHAN",31,0)
+ ;=============================
+"RTN","XLFSHAN",32,0)
+ETIMEMS(START,END) ;Calculate and return the elapsed time in milliseconds.
+"RTN","XLFSHAN",33,0)
+ ;START and STOP times are set by calling $$CPUTIME.
+"RTN","XLFSHAN",34,0)
+ N ETIME,TEXT
+"RTN","XLFSHAN",35,0)
+ S END=$P(END,",",2)
+"RTN","XLFSHAN",36,0)
+ S START=$P(START,",",2)
+"RTN","XLFSHAN",37,0)
+ S ETIME=END-START
+"RTN","XLFSHAN",38,0)
+ S TEXT=ETIME_" milliseconds"
+"RTN","XLFSHAN",39,0)
+ Q TEXT
+"RTN","XLFSHAN",40,0)
+ ;
+"RTN","XLFSHAN",41,0)
+ ;=============================
+"RTN","XLFSHAN",42,0)
+FILE(HASHLEN,FILENUM,IEN,FIELD,FLAGS) ;Return a SHA hash for the specified
+"RTN","XLFSHAN",43,0)
+ ;file entry. IA #6157
+"RTN","XLFSHAN",44,0)
+ I '$$CHASHLEN(HASHLEN) Q -1
+"RTN","XLFSHAN",45,0)
+ N IENS,IND,FIELDNUM,FNUM,HASH,MSG,NBLOCKS,NL,TARGET,TEMP,TEXT,WPI
+"RTN","XLFSHAN",46,0)
+ K ^TMP($J,"DIQ"),^TMP($J,"MSG")
+"RTN","XLFSHAN",47,0)
+ S TARGET=$NA(^TMP($J,"DIQ"))
+"RTN","XLFSHAN",48,0)
+ S WPI=$P(TARGET,")",1)
+"RTN","XLFSHAN",49,0)
+ I $G(FIELD)="" S FIELD="**"
+"RTN","XLFSHAN",50,0)
+ D GETS^DIQ(FILENUM,IEN,FIELD,$G(FLAGS),TARGET,"MSG")
+"RTN","XLFSHAN",51,0)
+ I $D(MSG) Q 0
+"RTN","XLFSHAN",52,0)
+ ;Build the message array
+"RTN","XLFSHAN",53,0)
+ S NBLOCKS=0,(FNUM,TEMP)=""
+"RTN","XLFSHAN",54,0)
+ F  S FNUM=$O(^TMP($J,"DIQ",FNUM)) Q:FNUM=""  D
+"RTN","XLFSHAN",55,0)
+ . S IENS=""
+"RTN","XLFSHAN",56,0)
+ . F  S IENS=$O(^TMP($J,"DIQ",FNUM,IENS)) Q:IENS=""  D
+"RTN","XLFSHAN",57,0)
+ .. S FIELDNUM=""
+"RTN","XLFSHAN",58,0)
+ .. F  S FIELDNUM=$O(^TMP($J,"DIQ",FNUM,IENS,FIELDNUM)) Q:FIELDNUM=""  D
+"RTN","XLFSHAN",59,0)
+ ... S TEXT=^TMP($J,"DIQ",FNUM,IENS,FIELDNUM)
+"RTN","XLFSHAN",60,0)
+ ...;Do not include the word-processing field indicator.
+"RTN","XLFSHAN",61,0)
+ ... I TEXT'[WPI D
+"RTN","XLFSHAN",62,0)
+ .... F IND=1:1:$L(TEXT) D
+"RTN","XLFSHAN",63,0)
+ ..... S TEMP=TEMP_$E(TEXT,IND)
+"RTN","XLFSHAN",64,0)
+ ..... I $L(TEMP)=1024 S NBLOCKS=NBLOCKS+1,^TMP($J,"MSG",NBLOCKS)=TEMP,TEMP=""
+"RTN","XLFSHAN",65,0)
+ ... I TEXT[WPI D
+"RTN","XLFSHAN",66,0)
+ .... S NL=""
+"RTN","XLFSHAN",67,0)
+ .... F  S NL=$O(^TMP($J,"DIQ",FNUM,IENS,FIELDNUM,NL)) Q:NL=""  D
+"RTN","XLFSHAN",68,0)
+ ..... S TEXT=^TMP($J,"DIQ",FNUM,IENS,FIELDNUM,NL)
+"RTN","XLFSHAN",69,0)
+ ..... F IND=1:1:$L(TEXT) D
+"RTN","XLFSHAN",70,0)
+ ...... S TEMP=TEMP_$E(TEXT,IND)
+"RTN","XLFSHAN",71,0)
+ ...... I $L(TEMP)=1024 S NBLOCKS=NBLOCKS+1,^TMP($J,"MSG",NBLOCKS)=TEMP,TEMP=""
+"RTN","XLFSHAN",72,0)
+ I $L(TEMP)>0 S NBLOCKS=NBLOCKS+1,^TMP($J,"MSG",NBLOCKS)=TEMP
+"RTN","XLFSHAN",73,0)
+ K ^TMP($J,"DIQ")
+"RTN","XLFSHAN",74,0)
+ S HASH=$$LSHAN(HASHLEN,"MSG",NBLOCKS)
+"RTN","XLFSHAN",75,0)
+ K ^TMP($J,"MSG")
+"RTN","XLFSHAN",76,0)
+ Q HASH
+"RTN","XLFSHAN",77,0)
+ ;
+"RTN","XLFSHAN",78,0)
+ ;=============================
+"RTN","XLFSHAN",79,0)
+GLOBAL(HASHLEN,FILENUM,DATAONLY) ;Return a SHA hash for a global. IA #6157
+"RTN","XLFSHAN",80,0)
+ I '$$CHASHLEN(HASHLEN) Q -1
+"RTN","XLFSHAN",81,0)
+ N DONE,HASH,IND,NBLOCKS,ROOT,ROOTN,TEMP,TEXT
+"RTN","XLFSHAN",82,0)
+ S ROOT=$$ROOT^DILFD(FILENUM)
+"RTN","XLFSHAN",83,0)
+ I ROOT="" Q 0
+"RTN","XLFSHAN",84,0)
+ S ROOTN=$TR(ROOT,",",")")
+"RTN","XLFSHAN",85,0)
+ S TEMP=$L(ROOTN)
+"RTN","XLFSHAN",86,0)
+ I $E(ROOTN,TEMP)="(" S ROOTN=$E(ROOTN,1,(TEMP-1))
+"RTN","XLFSHAN",87,0)
+ K ^TMP($J,"MSG")
+"RTN","XLFSHAN",88,0)
+ S NBLOCKS=0,TEMP=""
+"RTN","XLFSHAN",89,0)
+ S DONE=0
+"RTN","XLFSHAN",90,0)
+ F  Q:DONE  D
+"RTN","XLFSHAN",91,0)
+ . S ROOTN=$Q(@ROOTN)
+"RTN","XLFSHAN",92,0)
+ . I (ROOTN="")!(ROOTN'[ROOT) S DONE=1 Q
+"RTN","XLFSHAN",93,0)
+ . I DATAONLY S TEXT=@ROOTN
+"RTN","XLFSHAN",94,0)
+ . E  S TEXT=ROOTN_"="_@ROOTN
+"RTN","XLFSHAN",95,0)
+ . F IND=1:1:$L(TEXT) D
+"RTN","XLFSHAN",96,0)
+ .. S TEMP=TEMP_$E(TEXT,IND)
+"RTN","XLFSHAN",97,0)
+ .. I $L(TEMP)=1024 S NBLOCKS=NBLOCKS+1,^TMP($J,"MSG",NBLOCKS)=TEMP,TEMP=""
+"RTN","XLFSHAN",98,0)
+ I $L(TEMP)>0 S NBLOCKS=NBLOCKS+1,^TMP($J,"MSG",NBLOCKS)=TEMP
+"RTN","XLFSHAN",99,0)
+ S HASH=$$LSHAN(HASHLEN,"MSG",NBLOCKS)
+"RTN","XLFSHAN",100,0)
+ K ^TMP($J,"MSG")
+"RTN","XLFSHAN",101,0)
+ Q HASH
+"RTN","XLFSHAN",102,0)
+ ;
+"RTN","XLFSHAN",103,0)
+ ;=============================
+"RTN","XLFSHAN",104,0)
+HOSTFILE(HASHLEN,PATH,FILENAME) ;Return a SHA hash for a host file. IA #6157
+"RTN","XLFSHAN",105,0)
+ I '$$CHASHLEN(HASHLEN) Q -1
+"RTN","XLFSHAN",106,0)
+ N GBLZISH,HASH,IND,LN,OVFLN,NBLOCKS,SUCCESS,TEMP,TEXT
+"RTN","XLFSHAN",107,0)
+ K ^TMP($J,"HF")
+"RTN","XLFSHAN",108,0)
+ S GBLZISH="^TMP($J,""HF"",1)"
+"RTN","XLFSHAN",109,0)
+ S GBLZISH=$NA(@GBLZISH)
+"RTN","XLFSHAN",110,0)
+ S SUCCESS=$$FTG^%ZISH(PATH,FILENAME,GBLZISH,3)
+"RTN","XLFSHAN",111,0)
+ I 'SUCCESS Q 0
+"RTN","XLFSHAN",112,0)
+ S (NBLOCKS,LN)=0,TEMP=""
+"RTN","XLFSHAN",113,0)
+ F  S LN=+$O(^TMP($J,"HF",LN)) Q:LN=0  D
+"RTN","XLFSHAN",114,0)
+ . S TEXT=^TMP($J,"HF",LN)
+"RTN","XLFSHAN",115,0)
+ . F IND=1:1:$L(TEXT) D
+"RTN","XLFSHAN",116,0)
+ .. S TEMP=TEMP_$E(TEXT,IND)
+"RTN","XLFSHAN",117,0)
+ .. I $L(TEMP)=1024 S NBLOCKS=NBLOCKS+1,^TMP($J,"MSG",NBLOCKS)=TEMP,TEMP=""
+"RTN","XLFSHAN",118,0)
+ .;Check for overflow lines
+"RTN","XLFSHAN",119,0)
+ . I '$D(^TMP($J,"HF",LN,"OVF")) Q
+"RTN","XLFSHAN",120,0)
+ . S OVFLN=0
+"RTN","XLFSHAN",121,0)
+ . F  S OVFLN=+$O(^TMP($J,"HF",LN,"OVF",OVFLN)) Q:OVFLN=0  D
+"RTN","XLFSHAN",122,0)
+ .. S TEXT=^TMP($J,"HF",LN,"OVF",OVFLN)
+"RTN","XLFSHAN",123,0)
+ .. F IND=1:1:$L(TEXT) D
+"RTN","XLFSHAN",124,0)
+ ... S TEMP=TEMP_$E(TEXT,IND)
+"RTN","XLFSHAN",125,0)
+ ... I $L(TEMP)=1024 S NBLOCKS=NBLOCKS+1,^TMP($J,"MSG",NBLOCKS)=TEMP,TEMP=""
+"RTN","XLFSHAN",126,0)
+ I $L(TEMP)>0 S NBLOCKS=NBLOCKS+1,^TMP($J,"MSG",NBLOCKS)=TEMP
+"RTN","XLFSHAN",127,0)
+ K ^TMP($J,"HF")
+"RTN","XLFSHAN",128,0)
+ S HASH=$$LSHAN(HASHLEN,"MSG",NBLOCKS)
+"RTN","XLFSHAN",129,0)
+ K ^TMP($J,"MSG")
+"RTN","XLFSHAN",130,0)
+ Q HASH
+"RTN","XLFSHAN",131,0)
+ ;
+"RTN","XLFSHAN",132,0)
+ ;=============================
+"RTN","XLFSHAN",133,0)
+LSHAN(HASHLEN,MSUB,NBLOCKS) ;SHA hash for a message too long for a single
+"RTN","XLFSHAN",134,0)
+ ;string. Cache objects version. IA #6157
+"RTN","XLFSHAN",135,0)
+ ;The message is in ^TMP($J,MSUB,N) where N goes from 1 to NBLOCKS.
+"RTN","XLFSHAN",136,0)
+ ;
+"RTN","XLFSHAN",137,0)
+ N CHAR,COHASH,HASH,IND,LOCATION,STATUS,STREAM
+"RTN","XLFSHAN",138,0)
+ K ^TMP($J,"STREAM")
+"RTN","XLFSHAN",139,0)
+ ;Put the message into a stream global.
+"RTN","XLFSHAN",140,0)
+ S LOCATION=$NA(^TMP($J,"STREAM"))
+"RTN","XLFSHAN",141,0)
+ S STREAM=##class(%Stream.GlobalCharacter).%New(LOCATION)
+"RTN","XLFSHAN",142,0)
+ S STREAM.LineTerminator=""
+"RTN","XLFSHAN",143,0)
+ F IND=1:1:NBLOCKS S STATUS=STREAM.WriteLine(^TMP($J,"MSG",IND))
+"RTN","XLFSHAN",144,0)
+ S STATUS= STREAM.%Save()
+"RTN","XLFSHAN",145,0)
+ S COHASH=$SYSTEM.Encryption.SHAHashStream(HASHLEN,STREAM)
+"RTN","XLFSHAN",146,0)
+ ;Convert the string to hex.
+"RTN","XLFSHAN",147,0)
+ S HASH=""
+"RTN","XLFSHAN",148,0)
+ F IND=1:1:$L(COHASH) D
+"RTN","XLFSHAN",149,0)
+ . S CHAR=$A(COHASH,IND)
+"RTN","XLFSHAN",150,0)
+ . S HASH=HASH_$$RJ^XLFSTR($$CNV^XLFUTL(CHAR,16),2,"0")
+"RTN","XLFSHAN",151,0)
+ K ^TMP($J,"STREAM")
+"RTN","XLFSHAN",152,0)
+ Q HASH
+"RTN","XLFSHAN",153,0)
+ ;
+"RTN","XLFSHAN",154,0)
+ ;=============================
+"RTN","XLFSHAN",155,0)
+ ;LSHAN(HASHLEN,MSUB,NBLOCKS) ;SHA hash for a message too long for a single
+"RTN","XLFSHAN",156,0)
+ ;;string. GT.M version contributed K.S. Bashkar. IA #6157
+"RTN","XLFSHAN",157,0)
+ ;;
+"RTN","XLFSHAN",158,0)
+ ;;The message is in ^TMP($J,MSUB,N) where N goes from 1 to NBLOCKS.
+"RTN","XLFSHAN",159,0)
+ ;N IO,IND,SHA
+"RTN","XLFSHAN",160,0)
+ ;S IO=$IO
+"RTN","XLFSHAN",161,0)
+ ;;name of program for 160 bit hash is sha1sum; other names use actual
+"RTN","XLFSHAN",162,0)
+ ;;hash size
+"RTN","XLFSHAN",163,0)
+ ;S:HASHLEN=160 HASHLEN=1
+"RTN","XLFSHAN",164,0)
+ ;O "SHA":(SHELL="/bin/sh":COMMAND="sha"_HASHLEN_"sum":STREAM:NOWRAP)::"PIPE" U "SHA"
+"RTN","XLFSHAN",165,0)
+ ;F IND=1:1:NBLOCKS W ^TMP($J,MSUB,IND) S $X=0
+"RTN","XLFSHAN",166,0)
+ ;W /EOF R SHA
+"RTN","XLFSHAN",167,0)
+ ;U IO C "SHA"
+"RTN","XLFSHAN",168,0)
+ ;Q $ZCO($P(SHA," ",1),"U")
+"RTN","XLFSHAN",169,0)
+ ;
+"RTN","XLFSHAN",170,0)
+ ;=============================
+"RTN","XLFSHAN",171,0)
+OR(X,Y) ;Bitwise logical OR, 32 bits. IA #6157
+"RTN","XLFSHAN",172,0)
+ Q $ZBOOLEAN(X,Y,7) ;Cache
+"RTN","XLFSHAN",173,0)
+ ;N BOR,IND,XO
+"RTN","XLFSHAN",174,0)
+ ;S XO=0
+"RTN","XLFSHAN",175,0)
+ ;F IND=1:1:32 S BOR=$S(((X#2)+(Y#2))>0:1,1:0),XO=(XO\2)+(BOR*2147483648),X=X\2,Y=Y\2
+"RTN","XLFSHAN",176,0)
+ ;Q XO
+"RTN","XLFSHAN",177,0)
+ ;
+"RTN","XLFSHAN",178,0)
+ ;=============================
+"RTN","XLFSHAN",179,0)
+ROUTINE(HASHLEN,ROUTINE) ;Return a SHA hash for a routine. IA #6157
+"RTN","XLFSHAN",180,0)
+ I '$$CHASHLEN(HASHLEN) Q -1
+"RTN","XLFSHAN",181,0)
+ N DIF,HASH,IND,LN,NBLOCKS,RA,TEMP,X,XCNP
+"RTN","XLFSHAN",182,0)
+ K ^TMP($J,"MSG")
+"RTN","XLFSHAN",183,0)
+ S XCNP=0
+"RTN","XLFSHAN",184,0)
+ S DIF="RA("
+"RTN","XLFSHAN",185,0)
+ S X=ROUTINE
+"RTN","XLFSHAN",186,0)
+ ;Make sure the routine exists.
+"RTN","XLFSHAN",187,0)
+ X ^%ZOSF("TEST")
+"RTN","XLFSHAN",188,0)
+ I '$T Q 0
+"RTN","XLFSHAN",189,0)
+ X ^%ZOSF("LOAD")
+"RTN","XLFSHAN",190,0)
+ S NBLOCKS=0,TEMP=""
+"RTN","XLFSHAN",191,0)
+ F LN=1:1:(XCNP-1) D
+"RTN","XLFSHAN",192,0)
+ . F IND=1:1:$L(RA(LN,0)) D
+"RTN","XLFSHAN",193,0)
+ .. S TEMP=TEMP_$E(RA(LN,0),IND)
+"RTN","XLFSHAN",194,0)
+ .. I $L(TEMP)=1024 S NBLOCKS=NBLOCKS+1,^TMP($J,"MSG",NBLOCKS)=TEMP,TEMP=""
+"RTN","XLFSHAN",195,0)
+ I $L(TEMP)>0 S NBLOCKS=NBLOCKS+1,^TMP($J,"MSG",NBLOCKS)=TEMP
+"RTN","XLFSHAN",196,0)
+ S HASH=$$LSHAN(HASHLEN,"MSG",NBLOCKS)
+"RTN","XLFSHAN",197,0)
+ K ^TMP($J,"MSG")
+"RTN","XLFSHAN",198,0)
+ Q HASH
+"RTN","XLFSHAN",199,0)
+ ;
+"RTN","XLFSHAN",200,0)
+ ;=============================
+"RTN","XLFSHAN",201,0)
+SHAN(HASHLEN,MESSAGE) ;SHA hash for a message that can be passed as a single
+"RTN","XLFSHAN",202,0)
+ ;string. IA #6157
+"RTN","XLFSHAN",203,0)
+ I '$$CHASHLEN(HASHLEN) Q -1
+"RTN","XLFSHAN",204,0)
+ ;
+"RTN","XLFSHAN",205,0)
+ N CHAR,COHASH,HASH,IND
+"RTN","XLFSHAN",206,0)
+ S COHASH=$SYSTEM.Encryption.SHAHash(HASHLEN,MESSAGE)
+"RTN","XLFSHAN",207,0)
+ ;Convert the string to hex.
+"RTN","XLFSHAN",208,0)
+ S HASH=""
+"RTN","XLFSHAN",209,0)
+ F IND=1:1:$L(COHASH) D
+"RTN","XLFSHAN",210,0)
+ . S CHAR=$A(COHASH,IND)
+"RTN","XLFSHAN",211,0)
+ . S HASH=HASH_$$RJ^XLFSTR($$CNV^XLFUTL(CHAR,16),2,"0")
+"RTN","XLFSHAN",212,0)
+ Q HASH
+"RTN","XLFSHAN",213,0)
+ ;
+"RTN","XLFSHAN",214,0)
+ ;=============================
+"RTN","XLFSHAN",215,0)
+ ;SHAN(HASHLEN,MESSAGE) ;SHA hash for a message that can be passed as a single
+"RTN","XLFSHAN",216,0)
+ ;;string. GT.M version contributed K.S. Bashkar. IA #6157
+"RTN","XLFSHAN",217,0)
+ ;I '$$CHASHLEN(HASHLEN) Q -1
+"RTN","XLFSHAN",218,0)
+ ;S IO=$IO
+"RTN","XLFSHAN",219,0)
+ ;S:HASHLEN=160 HASHLEN=1 ; name of program for 160 bit hash is sha1sum
+"RTN","XLFSHAN",220,0)
+ ;;other names use actual hash size
+"RTN","XLFSHAN",221,0)
+ ;O "SHA":(SHELL="/bin/sh":COMMAND="sha"_HASHLEN_"sum":STREAM:NOWRAP)::"PIPE" U "SHA"
+"RTN","XLFSHAN",222,0)
+ ;W MESSAGE S $X=0 W /EOF R SHA
+"RTN","XLFSHAN",223,0)
+ ;U IO C "SHA"
+"RTN","XLFSHAN",224,0)
+ ;Q $ZCO($P(SHA," ",1),"U")
+"RTN","XLFSHAN",225,0)
+ ;;
+"RTN","XLFSHAN",226,0)
+ ;=============================
+"RTN","XLFSHAN",227,0)
+XOR(X,Y) ;Bitwise logical XOR, 32 bits. IA #6157
+"RTN","XLFSHAN",228,0)
+ Q $ZBOOLEAN(X,Y,6) ;Cache
+"RTN","XLFSHAN",229,0)
+ ;N IND,XO
+"RTN","XLFSHAN",230,0)
+ ;S XO=0
+"RTN","XLFSHAN",231,0)
+ ;F IND=1:1:32 S XO=(XO\2)+(((X+Y)#2)*2147483648),X=X\2,Y=Y\2
+"RTN","XLFSHAN",232,0)
+ ;Q XO
+"RTN","XLFSHAN",233,0)
+ ;
+"RTN","XLFSHAN",234,0)
+ ;=============================
+"RTN","XLFSHAN",235,0)
+ ;Tests
+"RTN","XLFSHAN",236,0)
+ ;=============================
+"RTN","XLFSHAN",237,0)
+TESTS ;
+"RTN","XLFSHAN",238,0)
+ N END,HASH,HASHLEN,IND,JND,LEN,LINE,MSG,NBLOCKS,REFHASH,REPS,START,STR
+"RTN","XLFSHAN",239,0)
+ W !,"Starting the tests."
+"RTN","XLFSHAN",240,0)
+ F IND=1:1 S LINE=$P($T(TESTVEC+IND),";;",2) Q:LINE=-1  D
+"RTN","XLFSHAN",241,0)
+ . I LINE["msg" D
+"RTN","XLFSHAN",242,0)
+ .. S STR=$P(LINE,":",2),REPS=$P(LINE,":",3)
+"RTN","XLFSHAN",243,0)
+ .. S MSG=$S(STR="": "the null string",1:STR)
+"RTN","XLFSHAN",244,0)
+ .. W !!!,"The message is: ",MSG
+"RTN","XLFSHAN",245,0)
+ .. I REPS>1 W !,"Repeated ",REPS," times."
+"RTN","XLFSHAN",246,0)
+ .. S LEN=$L(STR)*REPS
+"RTN","XLFSHAN",247,0)
+ .. W !,"Its length is: ",LEN
+"RTN","XLFSHAN",248,0)
+ .. D TMPLOAD("MSG",1024,STR,REPS,.NBLOCKS)
+"RTN","XLFSHAN",249,0)
+ . I LINE["hash" D
+"RTN","XLFSHAN",250,0)
+ .. S HASHLEN=$P(LINE,":",2),REFHASH=$P(LINE,":",3)
+"RTN","XLFSHAN",251,0)
+ .. W !!,"Hash length = ",HASHLEN
+"RTN","XLFSHAN",252,0)
+ .. W !,"Hash is: ",REFHASH
+"RTN","XLFSHAN",253,0)
+ .. S REFHASH=$TR(REFHASH," ","")
+"RTN","XLFSHAN",254,0)
+ .. I LEN<32767 D
+"RTN","XLFSHAN",255,0)
+ ... S START=$$CPUTIME^XLFSHAN
+"RTN","XLFSHAN",256,0)
+ ... S HASH=$$SHAN^XLFSHAN(HASHLEN,STR)
+"RTN","XLFSHAN",257,0)
+ ... S END=$$CPUTIME^XLFSHAN
+"RTN","XLFSHAN",258,0)
+ ... I HASH=REFHASH W !,"SHAN test passed."
+"RTN","XLFSHAN",259,0)
+ ... E  D
+"RTN","XLFSHAN",260,0)
+ .... W !,"SHAN test failed.",!,"    Got: "
+"RTN","XLFSHAN",261,0)
+ .... F JND=1:1:$L(HASH) W $E(HASH,JND) I (JND#8)=0 W " "
+"RTN","XLFSHAN",262,0)
+ ... W !," Elapsed time: ",$$ETIMEMS^XLFSHAN(START,END)
+"RTN","XLFSHAN",263,0)
+ .. S START=$$CPUTIME^XLFSHAN
+"RTN","XLFSHAN",264,0)
+ .. S HASH=$$LSHAN^XLFSHAN(HASHLEN,"MSG",NBLOCKS)
+"RTN","XLFSHAN",265,0)
+ .. S END=$$CPUTIME^XLFSHAN
+"RTN","XLFSHAN",266,0)
+ .. I HASH=REFHASH W !,"LSHAN test passed."
+"RTN","XLFSHAN",267,0)
+ .. E  D
+"RTN","XLFSHAN",268,0)
+ ... W !,"LSHAN test failed.",!,"    Got: "
+"RTN","XLFSHAN",269,0)
+ ... F JND=1:1:$L(HASH) W $E(HASH,JND) I (JND#8)=0 W " "
+"RTN","XLFSHAN",270,0)
+ .. W !," Elapsed time: ",$$ETIMEMS^XLFSHAN(START,END)
+"RTN","XLFSHAN",271,0)
+ K ^TMP($J,"MSG")
+"RTN","XLFSHAN",272,0)
+ Q
+"RTN","XLFSHAN",273,0)
+ ;
+"RTN","XLFSHAN",274,0)
+ ;=============================
+"RTN","XLFSHAN",275,0)
+TMPLOAD(SUB,BLKSIZE,STR,REPS,NBLOCKS) ;Load the ^TMP global.
+"RTN","XLFSHAN",276,0)
+ N STRLEN
+"RTN","XLFSHAN",277,0)
+ K ^TMP($J,SUB)
+"RTN","XLFSHAN",278,0)
+ S STRLEN=$L(STR)
+"RTN","XLFSHAN",279,0)
+ S LEN=STRLEN*REPS
+"RTN","XLFSHAN",280,0)
+ I LEN'>BLKSIZE S ^TMP($J,SUB,1)=STR,NBLOCKS=1 Q
+"RTN","XLFSHAN",281,0)
+ N IND,JND,TEMP
+"RTN","XLFSHAN",282,0)
+ S NBLOCKS=0,TEMP=""
+"RTN","XLFSHAN",283,0)
+ F IND=1:1:REPS D
+"RTN","XLFSHAN",284,0)
+ . F JND=1:1:STRLEN D
+"RTN","XLFSHAN",285,0)
+ .. S TEMP=TEMP_$E(STR,JND)
+"RTN","XLFSHAN",286,0)
+ .. I $L(TEMP)=BLKSIZE S NBLOCKS=NBLOCKS+1,^TMP($J,SUB,NBLOCKS)=TEMP,TEMP=""
+"RTN","XLFSHAN",287,0)
+ I $L(TEMP)>0 S NBLOCKS=NBLOCKS+1,^TMP($J,SUB,NBLOCKS)=TEMP
+"RTN","XLFSHAN",288,0)
+ Q
+"RTN","XLFSHAN",289,0)
+ ;
+"RTN","XLFSHAN",290,0)
+ ;=============================
+"RTN","XLFSHAN",291,0)
+ ;Test vectors from http://www.di-mgt.com.au/sha_testvectors.html
+"RTN","XLFSHAN",292,0)
+ ;Format is msg:message:reps
+"RTN","XLFSHAN",293,0)
+ ;Followed by hash:hash length:HASH
+"RTN","XLFSHAN",294,0)
+ ;-1 terminates the test vectors.
+"RTN","XLFSHAN",295,0)
+TESTVEC ;
+"RTN","XLFSHAN",296,0)
+ ;;msg::1
+"RTN","XLFSHAN",297,0)
+ ;;hash:160:DA39A3EE 5E6B4B0D 3255BFEF 95601890 AFD80709
+"RTN","XLFSHAN",298,0)
+ ;;hash:224:D14A028C 2A3A2BC9 476102BB 288234C4 15A2B01F 828EA62A C5B3E42F
+"RTN","XLFSHAN",299,0)
+ ;;hash:256:E3B0C442 98FC1C14 9AFBF4C8 996FB924 27AE41E4 649B934C A495991B 7852B855
+"RTN","XLFSHAN",300,0)
+ ;;hash:384:38B060A7 51AC9638 4CD9327E B1B1E36A 21FDB711 14BE0743 4C0CC7BF 63F6E1DA 274EDEBF E76F65FB D51AD2F1 4898B95B
+"RTN","XLFSHAN",301,0)
+ ;;hash:512:CF83E135 7EEFB8BD F1542850 D66D8007 D620E405 0B5715DC 83F4A921 D36CE9CE 47D0D13C 5D85F2B0 FF8318D2 877EEC2F 63B931BD 47417A81 A538327A F927DA3E
+"RTN","XLFSHAN",302,0)
+ ;;msg:abc:1
+"RTN","XLFSHAN",303,0)
+ ;;hash:160:A9993E36 4706816A BA3E2571 7850C26C 9CD0D89D
+"RTN","XLFSHAN",304,0)
+ ;;hash:224:23097D22 3405D822 8642A477 BDA255B3 2AADBCE4 BDA0B3F7 E36C9DA7
+"RTN","XLFSHAN",305,0)
+ ;;hash:256:BA7816BF 8F01CFEA 414140DE 5DAE2223 B00361A3 96177A9C B410FF61 F20015AD
+"RTN","XLFSHAN",306,0)
+ ;;hash:384:CB00753F 45A35E8B B5A03D69 9AC65007 272C32AB 0EDED163 1A8B605A 43FF5BED 8086072B A1E7CC23 58BAECA1 34C825A7
+"RTN","XLFSHAN",307,0)
+ ;;hash:512:DDAF35A1 93617ABA CC417349 AE204131 12E6FA4E 89A97EA2 0A9EEEE6 4B55D39A 2192992A 274FC1A8 36BA3C23 A3FEEBBD 454D4423 643CE80E 2A9AC94F A54CA49F
+"RTN","XLFSHAN",308,0)
+ ;;msg:abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq:1
+"RTN","XLFSHAN",309,0)
+ ;;hash:160:84983E44 1C3BD26E BAAE4AA1 F95129E5 E54670F1
+"RTN","XLFSHAN",310,0)
+ ;;hash:224:75388B16 512776CC 5DBA5DA1 FD890150 B0C6455C B4F58B19 52522525
+"RTN","XLFSHAN",311,0)
+ ;;hash:256:248D6A61 D20638B8 E5C02693 0C3E6039 A33CE459 64FF2167 F6ECEDD4 19DB06C1
+"RTN","XLFSHAN",312,0)
+ ;;hash:384:3391FDDD FC8DC739 3707A65B 1B470939 7CF8B1D1 62AF05AB FE8F450D E5F36BC6 B0455A85 20BC4E6F 5FE95B1F E3C8452B
+"RTN","XLFSHAN",313,0)
+ ;;hash:512:204A8FC6 DDA82F0A 0CED7BEB 8E08A416 57C16EF4 68B228A8 279BE331 A703C335 96FD15C1 3B1B07F9 AA1D3BEA 57789CA0 31AD85C7 A71DD703 54EC6312 38CA3445
+"RTN","XLFSHAN",314,0)
+ ;;msg:abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu:1
+"RTN","XLFSHAN",315,0)
+ ;;hash:160:A49B2446 A02C645B F419F995 B6709125 3A04A259
+"RTN","XLFSHAN",316,0)
+ ;;hash:224:C97CA9A5 59850CE9 7A04A96D EF6D99A9 E0E0E2AB 14E6B8DF 265FC0B3
+"RTN","XLFSHAN",317,0)
+ ;;hash:256:CF5B16A7 78AF8380 036CE59E 7B049237 0B249B11 E8F07A51 AFAC4503 7AFEE9D1
+"RTN","XLFSHAN",318,0)
+ ;;hash:384:09330C33 F71147E8 3D192FC7 82CD1B47 53111B17 3B3B05D2 2FA08086 E3B0F712 FCC7C71A 557E2DB9 66C3E9FA 91746039
+"RTN","XLFSHAN",319,0)
+ ;;hash:512:8E959B75 DAE313DA 8CF4F728 14FC143F 8F7779C6 EB9F7FA1 7299AEAD B6889018 501D289E 4900F7E4 331B99DE C4B5433A C7D329EE B6DD2654 5E96E55B 874BE909
+"RTN","XLFSHAN",320,0)
+ ;;msg:a:1000000
+"RTN","XLFSHAN",321,0)
+ ;;hash:160:34AA973C D4C4DAA4 F61EEB2B DBAD2731 6534016F
+"RTN","XLFSHAN",322,0)
+ ;;hash:224:20794655 980C91D8 BBB4C1EA 97618A4B F03F4258 1948B2EE 4EE7AD67
+"RTN","XLFSHAN",323,0)
+ ;;hash:256:CDC76E5C 9914FB92 81A1C7E2 84D73E67 F1809A48 A497200E 046D39CC C7112CD0
+"RTN","XLFSHAN",324,0)
+ ;;hash:384:9D0E1809 716474CB 086E834E 310A4A1C ED149E9C 00F24852 7972CEC5 704C2A5B 07B8B3DC 38ECC4EB AE97DDD8 7F3D8985
+"RTN","XLFSHAN",325,0)
+ ;;hash:512:E718483D 0CE76964 4E2E42C7 BC15B463 8E1F98B1 3B204428 5632A803 AFA973EB DE0FF244 877EA60A 4CB0432C E577C31B EB009C5C 2C49AA2E 4EADB217 AD8CC09B
+"RTN","XLFSHAN",326,0)
+ ;;-1
+"VER")
+8.0^22.0
+**END**
+**END**

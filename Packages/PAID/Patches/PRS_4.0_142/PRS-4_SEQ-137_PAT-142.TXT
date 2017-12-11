@@ -1,0 +1,196 @@
+$TXT Created by                 MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 04/18/16 at 08:21
+=============================================================================
+Run Date: JUL 10, 2017                     Designation: PRS*4*142
+Package : PRS - PAID                          Priority: Mandatory
+Version : 4       SEQ #137                      Status: Released
+                  Compliance Date: AUG 10, 2017
+=============================================================================
+
+Associated patches: (v)PRS*4*126   <<= must be installed BEFORE `PRS*4*142'
+
+Subject: PRS API FIX,REPORT OPTION UNDEF AND SUBSCR ERROR FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch PRS*4.0*142 addresses four issues:
+  
+ 1. PAID (Personnel and Accounting Integrated Data System) options that use
+    PRIMLOC^PRSNUT03 to return a nurses primary assignment will return an
+    incorrect location if that location has a similar string to another.
+  
+ 2. The Mismatch Report by T&L Unit [PRSNR MISMATCHES BY T&L] option will not
+    display the first entry in a report. 
+  
+ 3. The Mismatch Report by T&L Unit [PRSNR MISMATCHES BY T&L] option will
+    produce an undefined error when an employee has work hours associated with a
+    non-regular tour of duty.
+  
+ 4. The All Non Direct Activity at a Nurse Location [PRSNR NURLOC NONDIR -
+    COORD] option will produce a subscript error if an employee who worked as a
+    nurse during the date range of the report is not currently a nurse.
+  
+  
+ ASSOCIATED TICKETS: 
+ ===================
+ 1) I9871940FY16  - nursing locations that are not being tracked
+                    appropriately
+    Duplicates:
+    I9872839FY16(d) - Problem with VANOD
+    I9873361FY16(d) - Default Location needs to be corrected for nurse
+  
+ 2) I7526963FY16  - When using the VistA option: MISMATCH REPORT BY T&L
+                    UNIT the first entry is skipped     
+ 3) I9878297FY16 - One particular T&L halts VISTA during reports, NM
+                      unable to approve POC in that T&L.
+    Duplicates:
+    I9878002FY16(d) - error during PEV signoff
+    I9875709FY16(d) - PEV Issue
+    I9874632FY16(d) - PAID - Other:
+  
+ 4) I9880162FY16  - PRSN COORDINATOR REPORTS MENU Errors out          
+    Duplicates:
+    I9879873FY16(d) - <SUBSCRIPT>DATA+41^PRSNRLND
+  
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+   
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+ Bay Pines
+   
+  
+ OVERVIEW:
+ =========
+ 1) I9871940FY16    - nursing locations that are not being tracked
+                      appropriately 
+                                                
+ Problem:
+ --------
+ PAID options [NURSING LOCATION FILE, EDIT] and [STATUS AND POSITION] that
+ use PRIMLOC^PRSNUT03 to return a nurses primary assignment will return an
+ incorrect location if that location has a similar string to another.
+  
+ Resolution:
+ -----------
+ Adding the "O" flag to the FIND^DIC call in PRIMLOC^PRSNUT03 will return only
+ one exact match for the primary assignment.
+  
+ 2) I7526963FY16 - When using the VistA option: MISMATCH REPORT BY T&L UNIT
+                   the first entry is skipped
+ Problem:
+ --------
+ The Mismatch Report by T&L Unit [PRSNR MISMATCHES BY T&L] option does not
+ display the first entry (ETA TIMECARD vs. POINT OF CARE RECORD) in a
+ report.
+  
+ Resolution:
+ -----------
+ Using NULL instead of variable PRSIEN in the PRSNRMM1 routine prevents the
+ first record from being skipped. 
+  
+ 3) I9878297FY16    - One particular T&L halts VISTA during reports, NM
+                      unable to approve POC in that T&L. 
+                   
+ Problem:
+ --------
+ The Mismatch Report by T&L Unit [PRSNR MISMATCHES BY T&L] option will produce
+ an undefined error when an employee has work hours associated with a 
+ non-regular tour of duty.
+      
+ Resolution:
+ -----------
+ In the PRSNRMM routine, adding a QUIT condition that will be executed if
+ variable LONGSEG equals NULL will resolve the undefined error.
+  
+ 4) I9880162FY16 - PRSN COORDINATOR REPORTS MENU Errors out 
+   
+ Problem:
+ --------
+ The All Non Direct Activity at a Nurse Location [PRSNR NURLOC NONDIR -
+ COORD] option will produce a subscript error if an employee who worked as a
+ nurse during the date range of the report is not currently a nurse.
+       
+ Resolution:
+ -----------
+ In the PRSNRLND routine, variables NUROLE and PRSNTWD will be set to contain
+ a space if they have a NULL value which will resolve the subscript error.
+   
+  
+ INSTALLATION INSTRUCTIONS:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes.
+ Suggested time to install: non-peak requirement hours.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options (when
+        prompted for INSTALL NAME, enter PRS*4.0*142).      
+  
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch is
+           installed.
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+        d. Print Transport Global - this option will allow you to view
+           the components of the KIDS build.
+      
+     4. Use the Install Package(s) option and select the package PRS*4.0*142
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//",
+        respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+        and Protocols? YES//", respond YES. When prompted to select the
+        options you would like to place out of order, enter the following:
+  
+        Mismatch Report by T&L Unit            [PRSNR MISMATCHES BY T&L]
+        All Non Direct Activity at a Nurse     [PRSNR NURLOC NONDIR - COORD]
+        Location
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRSNRLND
+    Before: B35575903   After: B36253049  **126,142**
+Routine Name: PRSNRMM
+    Before:B135301607   After:B138017471  **126,142**
+Routine Name: PRSNRMM1
+    Before: B24342033   After: B27798686  **126,142**
+Routine Name: PRSNUT03
+    Before: B67835037   After: B68166025  **126,142**
+ 
+Routine list of preceding patches: 126
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 20, 2014
+Completed By:                               Date Completed: JUL 07, 2017
+Released By :                               Date Released : JUL 10, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

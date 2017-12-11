@@ -1,0 +1,191 @@
+
+=============================================================================
+Run Date: JUL 14, 2017                     Designation: PREC*6.1*1
+Package : PREC - PHARMACY ENTERPRISE CUSTOM S Priority: Mandatory
+Version : 6.1         SEQ #1                    Status: Released
+                  Compliance Date: AUG 14, 2017
+=============================================================================
+
+
+Subject: PECS 6.1 2FA Implementation INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Pharmacy Enterprise Customization System (PECS) is a Java 2 Enterprise
+ Edition (J2EE) application used to research, review, report, and manage
+ customized drug information from First Data Bank's (FDB) MedKnowledge 
+ Framework (formerly Drug Information Framework (DIF)), which is a
+ Commercial-off-the-Shelf (COTS) product, used in the enhanced order
+ checking process.
+  
+ The PECS application, through a web-based Graphical User Interface (GUI),
+ allows VHA pharmacists and clinicians to research and request custom 
+ changes to Drug-Drug Interaction, Drug Pairs, Dose Range, Duplicate
+ Therapy, and Professional Monograph records, controlling access through a
+ role based authorization. VHA Pharmacy Benefits Management (PBM)
+ periodically (as needed in support of VA procedures and priorities)
+ prepare, review and approve the customizations, which result in VA Custom
+ drug data, which will supersede or enhance the industry standard FDB-drug
+ data.
+  
+ In order to comply with the VA mandate on two factor authentication 
+ (2FA), the PECS application has been integrated with IAM SSOi. The PECS 
+ application code and configuration have been updated to work with the IAM 
+ SSOi service for user authentication. The user roles management code in 
+ PECS has also been modified to remove dependency on the VistA Security 
+ keys for user authorization and use the PECS database tables to store and 
+ manage user roles within the PECS application.
+  
+ The PECS application code was also fixed to address the SFTP connection 
+ error which occurs when Centrify is implemented on the SFTP server and 
+ the server is joined to Active Directory.
+  
+ PECS v6.1 also contains a fix for one CA Service Desk Manager ticket
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+  
+ Options Associated:
+ --------------------
+ N/A
+  
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ CA SDM Ticket(s) & Overview
+ ----------------------------
+ I12795328FY17- System shall successfully connect and create VA Custom 
+ Update files on the SFTP server after Centrify Implementation
+  
+  
+ TICKET OVERVIEW:
+ ================
+  
+   
+ Problem:
+ -----------
+ The Department of Veterans Affairs Cybersecurity Task Force has been 
+ tasked by the Chief Information Officer (CIO) and the Inspector General 
+ (IG) to address identified material weaknesses. This task force has 
+ mandated that all internal, user facing VA applications become two factor 
+ authentication (2FA) compliant by April 30, 2017. 
+ In order to be compliant, applications are required to authenticate users 
+ via Personal Id entry Verification (PIV) cards.  
+ Note: Usernames and password will no longer be permitted for employees 
+ and contractors to access VA applications.  
+   
+ Resolution:
+ -----------
+ As part of the transition to two factor authentication (2FA), the PECS 
+ application code and configuration have been updated to work with the IAM 
+ SSOi service for user authentication. The PECS application has also been 
+ modified to remove dependency on the VistA Security keys for user 
+ authorization and use the PECS database tables to store and manage user 
+ roles within the PECS application.
+  
+ Test Sites:
+ -----------
+ TBD
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------
+  
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/ 
+  
+  
+  
+ Title                           File Name                   FTP Mode
+ ---------------------------------------------------------------------
+ PECS v6.1 Release Notes         PREC_6.1_1_RN_r0717.PDF     Binary
+ PECS v6.1 Troubleshooting Guide PREC_6.1_1_TG_r0717.PDF     Binary
+ PECS v6.1 User Guide            PREC_6.1_1_UG_r0717.PDF     Binary
+ PECS v6.1 Installation Guide    PREC_6.1_1_IG_r0717.PDF     Binary
+  
+                
+  
+ Installation Instructions:
+ --------------------------
+ This is a Web Application JAVA Build. This is a Centralized Server
+ promotion. NO installation is required at Local sites.
+  
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 14, 2017
+Completed By:                               Date Completed: JUL 14, 2017
+Released By :                               Date Released : JUL 14, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

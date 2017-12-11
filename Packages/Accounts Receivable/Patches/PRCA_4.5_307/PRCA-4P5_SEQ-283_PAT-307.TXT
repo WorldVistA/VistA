@@ -1,0 +1,323 @@
+$TXT Created by              DEVEST.DOMAIN.EXT  (KIDS) on Friday, 05/12/17 at 12:46
+=============================================================================
+Run Date: JUN 12, 2017                     Designation: PRCA*4.5*307
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #283                    Status: Released
+                  Compliance Date: JUN 17, 2017
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*301<<= must be installed BEFORE `PRCA*4.5*307'
+
+Subject: Patient Statement Enhancement Phase One
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ *****************************************************************
+ ***   W   W    AAA    RRRR    N   N   IIIII   N   N   GGGGG   ***
+ ***   W   W   A   A   R   R   NN  N     I     NN  N   G       ***
+ ***   W   W   AAAAA   RRRRR   N N N     I     N N N   G  GG   ***
+ ***   W W W   A   A   R   R   N  NN     I     N  NN   G   G   ***
+ ***   WW WW   A   A   R   R   N   N   IIIII   N   N   GGGGG   ***
+ *****************************************************************
+ ***                                                           ***
+ ***      See Pre/Post Installation Overview section for       ***
+ ***      details on when this patch CAN NOT be installed      ***
+ ***                                                           ***
+ *****************************************************************
+  
+ **************************************************************************
+     This patch supports changes to the Veterans Health Information
+     System and Technology Architecture (VistA) for the Patient Statement
+     Enhancements Project (PSE).
+  
+     * PLEASE NOTE THIS PATCH HAS A SHORTENED COMPLIANCE DATE *
+  
+     It is imperative that these patches be installed no later than the
+     compliance date. Your understanding and support is appreciated.
+ **************************************************************************
+   
+ The Chief Business Office (CBO) requested modifications to the VistA
+ Accounts Receivable (AR) package to remedy deficiencies identified with
+ patient statements. The main goal of this project includes the
+ remediation and enhancement of the AR application software to correct
+ these discrepancies. Additionally this project will perform the initial
+ development of the VistA AR enhancements to create a single, consolidated
+ patient statement, self-service options for payment, and other 
+ modifications.
+  
+ This patch modifies the Accounts Receivable (AR) v4.5 application as
+ described below:
+  
+ Root Cause of Statement Discrepancies
+  
+  1) Changes prevent Null Transactions when Comment field is left blank by
+     user and a timeout occurs.
+     
+  2) Changes processing of Tier Rate transactions in VistA to stop
+     duplicates being filed.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ The following is a list of files included in this patch:
+   
+ File Name (Number)    Field Name (Number)             New/Modified/Deleted
+ ------------------    -------------------             --------------------
+ N/A
+  
+ Forms Associated:
+   
+ Form Name             File #                          New/Modified/Deleted
+ ---------             ------                          --------------------
+ N/A
+   
+ Mail Groups Associated:
+   
+ Mail Group Name                                       New/Modified/Deleted
+ ---------------                                       --------------------
+ N/A
+   
+ Options Associated:
+      
+ Option Name                    Type                   New/Modified/Deleted
+ -----------                    -----------            --------------------
+ N/A
+   
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   --------------------
+ N/A  
+  
+ Security Keys Associated:
+  
+ Security Key Name                                     New/Modified/Deleted
+ -----------------                                     --------------------
+ N/A
+   
+ Templates Associated:
+   
+ Template Name         Type      File Name (Number)    New/Modified/Deleted
+ -------------         -----     -------------------   --------------------
+ PRCA RE-ESTABLISH     INPUT     AR TRANSACTION FILE         MODIFIED
+ WRITE-OFF
+  
+ Remote Procedure:                                     New/Modified/Deleted
+ -----------------                                     --------------------
+ N/A
+   
+ Additional Information:
+ N/A
+   
+ New Service Request (NSRs):
+ ---------------------------
+ N/A
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Test Sites:
+ -----------
+ - Bay Pines VAMC (516)
+ - James A. Haley VAMC (Tampa, FL) (673)
+ - Connecticut HCS - West Haven Division (689)
+   
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Software is being released via PackMan. Please obtain the patch via FORUM.
+ Documentation describing the new functionality introduced by this patch is
+ available. Sites may retrieve documentation directly using Secure File
+ Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Albany:              domain.ext
+ Hines:               domain.ext  
+ Salt Lake City:      domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+   
+ Title                                       File Name            SFTP Mode
+ --------------------------------------------------------------------------
+ Installation, Back-out, Rollback        PRCA_4_5_P307_IG.PDF     (binary)
+ Plan Guide PRCA*4.5*307.  PSE           
+ Phase 1 (Discrepancies).                
+  
+ Release Notes (RN). PRCA*4.5*307.       PRCA_4_5_P307_RN.PDF     (binary)
+ Accounts Receivable (AR). 
+ PSE Phase 1-Discrepancies  
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The post-install routine for patch PRCA*4.5*307 will, for 17 specific
+ Station ID's listed at the bottom of this document, update the 
+ SITE STATEMENT DAY field (#.11) in AR SITE PARAMETER file (#342).
+  
+ IMPORTANT:  DO NOT to install the patch during the "black-out" 
+ days/dates as indicated below for the 17 identified sites.
+  
+ STATION #   STATION NAME       BLACK OUT DAYS
+                                OF THE MONTH
+                                (DO NOT INSTALL)
+ ---------------------------------------------
+   438       SIOUX FALLS,SD     19 thru 27
+   501       ALBUQUERQUE,NM     19 thru 27
+   504       AMARILLO,TX        19 thru 27
+   542       COATESVILLE,PA     19 thru 27
+   562       ERIE,PA            19 thru 27
+   568       FORT MEADE,SD      19 thru 27
+   649       PRESCOTT,AZ        19 thru 27
+   656       ST. CLOUD,MN       19 thru 27
+   688       WASHINGTON,DC      19 thru 27
+   756       EL PASO,TX         19 thru 27
+   565       FAYETTEVILLE,NC    20 thru 29
+   621       MOUNTAIN HOME,TN   20 thru 29
+   658       SALEM,VA           20 thru 29
+   664       SAN DIEGO,CA       20 thru 29
+   671       SAN ANTONIO,TX     20 thru 29
+   689       WEST HAVEN,CT      20 thru 29
+   740       TX VALLEY CSTL,TX  20 thru 29
+  
+ The post install routine PRCA307P may be deleted from the system if the
+ post-install process has completed.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5
+ minutes to install.
+   
+ Installation Instructions:
+ --------------------------
+ This patch modifies the Accounts Receivable (AR) v4.5 application
+ to prepare for a single, consolidated patient statement.
+   
+    1. Choose the PackMan message containing this patch.  
+   
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+    3. From the Kernel Installation and Distribution System Menu, select
+       the Installation Menu. From this menu, you may elect to use the
+       following options. When prompted for the INSTALL NAME enter the
+       patch PRCA*4.5*307.
+   
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+  
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this
+          patch is installed. It compares all components of this patch
+          routines, DDs, templates, etc.
+  
+       c. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+   
+    4. From the Installation Menu, select the Install Package(s)
+       option and choose the patch to install.
+  
+    5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion
+       of Install? NO//", respond NO.
+   
+    6. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//", respond NO.  
+   
+    7. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+        Protocols? NO//", respond NO.
+  
+    8. When prompted "Delay Install (Minutes):  (0-60): 0//"  enter an
+       appropriate number of minutes to delay the installation in 
+       order to give users enough time to exit the disabled options
+       before the installation starts.
+  
+    9. When prompted "Device: Home//" respond with the correct device.
+   
+ Post-Installation Instructions
+ ------------------------------
+ In this patch during the post install process, for only 17
+ specific Station ID's listed below, will be an update to the SITE
+ STATEMENT DAY field (#.11) in AR SITE PARAMETER file (#342). and the
+ STATEMENT DAY field (.03) in the AR DEBTOR file (#340). Only Patient
+ Debtors for the following Station ID's will have their STATEMENT DAY
+ changed to a new date in the month. This change for these 17 Station ID's
+ will allow a window of time at the end of the month to install the
+ follow-on patch PRCA*4.5*313 nationally.
+  
+ STATION #   STATION NAME      DATE
+ ----------------------------------
+    438      SIOUX FALLS,SD     21
+    501      ALBUQUERQUE,NM     21
+    504      AMARILLO,TX        21
+    542      COATESVILLE,PA     21
+    562      ERIE,PA            21
+    568      FORT MEADE,SD      21
+    649      PRESCOTT,AZ        21
+    656      ST. CLOUD,MN       21
+    688      WASHINGTON,DC      21
+    756      EL PASO,TX         21
+    565      FAYETTEVILLE,NC    22
+    621      MOUNTAIN HOME,TN   22
+    658      SALEM,VA           22
+    664      SAN DIEGO,CA       22
+    671      SAN ANTONIO,TX     22
+    689      WEST HAVEN,CT      22
+    740      TX VALLEY CSTL,TX  22
+  
+ During the post-install process you may see listed in the log one of the
+ following messages:
+  
+ >>> STATION ID XXX MATCH FOUND! 
+ >>> THE PATIENT STATEMENT TRANSMISSION DATE WILL BE UPDATED
+ *Note: XXX will equal your STATION NUMBER* 
+ *Note: This message is normal if you are 1 of the 17 above*
+  
+ >>> WARNING! STATION ID NOT FOUND!
+ >>> THE PATIENT STATEMENT TRANSMISSION DATE WILL NOT BE UPDATED
+ *Note: If you see this warning: Please log a ticket with NSD*
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 80
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCA307P
+    Before:       n/a   After:  B3929224  **307**
+Routine Name: PRCASER1
+    Before: B16741481   After: B18562527  **48,104,165,233,301,307**
+Routine Name: RCWROFF
+    Before: B38468960   After: B40151788  **168,204,309,301,307**
+ 
+Routine list of preceding patches: 301
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 15, 2014
+Completed By:                               Date Completed: JUN 12, 2017
+Released By :                               Date Released : JUN 12, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

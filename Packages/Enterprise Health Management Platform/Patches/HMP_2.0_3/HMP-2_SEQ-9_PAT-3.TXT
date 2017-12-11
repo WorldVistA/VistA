@@ -1,0 +1,682 @@
+$TXT Created by                   at NHML19.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Wednesday, 04/12/17 at 15:40
+=============================================================================
+Run Date: JUN 16, 2017                     Designation: HMP*2*3
+Package : HMP - HEALTH MANAGEMENT PLATFORM    Priority: Mandatory
+Version : 2         SEQ #9                      Status: Released
+                  Compliance Date: JUL 17, 2017
+=============================================================================
+
+Associated patches: (v)HMP*2*2     <<= must be installed BEFORE `HMP*2*3'
+                    (v)HMP*2*8     <<= must be installed BEFORE `HMP*2*3'
+
+Subject: HMP DEFECT REMEDIATION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ HMP*2.0*3 is a defect remediation release which address defects found in 
+ testing, defects reported by the National Service Desk (NSD), and defects 
+ related to ICR compliance. 
+  
+ Patch Components:
+ -----------------
+  
+ Files and Fields Associated:
+ ----------------------------
+ There are no new or modified fields or fields.
+  
+ Forms Associated:
+ -----------------
+ There are no new or modified forms.
+  
+ Mail Groups Associated:
+ -----------------------
+ There are no new or modified mail groups.
+  
+ Options Associated:
+ -------------------
+  
+ Option Name                     Type                New/Modified/Deleted
+ -----------                     ----                ---------------------
+ HMP UI CONTEXT                  Broker (Client/Server)     Modified 
+   [HMP UI CONTEXT version 20160108-01.US12195]
+ HMP SYNCHRONIZATION CONTEXT     Broker (Client/Server)     Modified 
+   [Synchronize the HMP]       
+  
+ Protocols Associated:
+ ---------------------
+ There are no new or modified protocols.
+  
+ Remote Procedure Calls (RPC)
+ ----------------------------
+  
+ RPC Name                        New/Modified/Deleted
+ --------                        --------------------
+ HMP CHKXTMP                     Modified
+ HMP DELETE ROSTER               Deleted
+ HMP DELETE TIU NOTE             Deleted
+ HMP GET ROSTER LIST             Deleted
+ HMP GET SOURCE                  Deleted
+ HMP PREVIEW ROSTER              Deleted
+ HMP RESOURCE SLOT CLEAR         New
+ HMP RESOURCE VALUES             New
+ HMP ROSTER PATIENTS             Deleted
+ HMP ROSTERS                     Deleted
+ HMP SAVE NOTE STUB              Deleted
+ HMP SUBSCRIBE ROSTERS           Deleted
+ HMP UPDATE ROSTER               Deleted
+ HMPCORD RPC                     Deleted
+ HMPCPAT RPC                     Deleted
+  
+ Security Keys Associated:
+ -------------------------
+ There are no new or modified security keys.
+  
+ Templates Associated:
+ ---------------------
+ There are no new or modified templates.
+  
+ Additional Information:
+ -----------------------
+ Defects Addressed in HMP*2.0*3
+  
+ Defect Number   Routine         Description
+ -------------   -------         -----------
+ DE3409          HMPD            MAXSTRING ERROR IN HMPD
+ DE3944          HMPEVNT         Procedures (Surgery/SR) and their
+                                 result documents do not trigger a
+                                 freshness update
+ DE4198          HMPDJ04         Modified visit extract code to 
+                                 remove use of ^AUPNVCPT
+ DE4264          HMPP31          Post Processor was removed
+ DE4474          HMPCRPC1        GETKEYS^HMPCRPC1 does not handle broken
+                                 key pointers or delegated keys
+ DE4496          HMPD            fixes to prevent errors if DFN is 
+                 HMPDCRC         is less than one
+                 HMPDGMPL
+                 HMPDGMRA
+                 HMPDGMV
+                 HMPDJ
+                 HMPDJ0
+                 HMPDJ00
+                 HMPDJ08A
+                 HMPDJX
+                 HMPDLRA
+                 HMPDMC
+                 HMPDRA
+                 HMPDSR
+                 HMPDVSIT
+                 HMPEF
+                 HMPEVNT
+                 HMPHTTP
+                 HMPLOG
+                 HMPPATS
+ DE4611          HMPDJFSM        checkHealth does not include commas
+                                 between list elements in JSON objects
+ DE5080          HMPCORD4        undefined error during ODS in
+                                 orderable items domain
+                                 VALIDOI+3^HMPCORD3
+ DE5111          HMPDJ01         Undefined error retrieving child orders
+                 HMPDOR          GET+8^ORQ12
+                 HMPLOG
+ DE5411          HMPEVNT         Rebooked appointments have
+                                 incorrect status
+ DE5645          HMPDJ00         Order Detail: Missing Treating
+                                 Specialty ID in JDS
+ DE6047          HMPDJFSG        freshness stream error when
+                                 deleting "tidy" nodes
+                                 TIDYX+3^HMPDJFSG
+ DE6285          HMPDJ02         Refused temperature is incorrect
+ DE6332          HMPDJ08A        Narrative Lab Results: Missing Electron
+                 HMPDLRA         Microscopy Report Content and 
+                                 Status=Completed in eHMP versus
+                                 Incomplete in VistA (Test Data issue?)
+ DE6363          HMPCRPC1        Add ICR documentation to routines
+                 HMPDJ04         
+                 HMPEVNT
+                 HMPTFU2
+                 HMPWB5A
+ DE6591          HMPSTMP         HL7 date-time format
+ DE6629          HMPWB1          Modifications for stripping out
+                                 extra characters in the file
+                                 parameter for the writeback call
+                                 to update for allergy
+ DE6644          HMPDJFSQ        update HMP CHKXTMP remote
+                 HMPMETA         procedure to provide data that can
+                 HMPMON          be parsed and fix monitor
+                 HMPMONA
+                 HMPMONC
+                 HMPMOND
+                 HMPMONDH
+                 HMPMONE
+                 HMPMONEH
+                 HMPMONH
+                 HMPMONHH
+                 HMPMONJ
+                 HMPMONL
+                 HMPMONM
+                 HMPMONR
+                 HMPMONS
+                 HMPMONSH
+                 HMPMONV
+                 HMPMONX
+                 HMPUTILS
+ DE6856          HMPDJFS         Undefined variable HMPFRSP in a
+                                 production site in routine HMPDJFS
+ DE6877          HMPDJ02         Problems in CPRS not displaying in eHMP
+                 HMPDJ02A        
+ DE7331                          HMP UI CONTEXT cleanup
+ DE7337                          add the RPC DGWPT BYWARD
+                                 to the menu option HMP UI CONTEXT
+ DE7372          HMPRPCRC        I12161569FY17 - Loss of Resource
+                                 Slots creates a stuck queue for
+                                 Patient Sync but not freshness updates
+ DE7401          HMPDJFS         I1232316FY17 - VistA Production queues
+                                 stuck, with no error, and full resources
+                                 available
+ DE7799          HMPDJ0          Fixed issue with the sync process getting
+                 HMPDJFS         into an infinite loop after installing
+                                 test build of HMP*2.0*3 in production at
+                                 the IOC sites.
+ DE7806          HMPDJ01         Undefined error in routine HMPUTIL1 with 
+                                 the variables HMPDAT* when called by
+                                 HMPDJ01
+ DE7809          HMPDJFSG        Vista Poller loses batches in recovery 
+                                 situation
+  
+ Defects associated with Integration Control Requests (ICRs)
+  
+ Defect Number   ICR     Routine         Description
+ -------------   ---     -------         -----------
+ DE4198          2048    HMPDJ04         Modify visit extract code to use
+                                         VPR*1.0*5
+ DE4214          2784    HMPUPD          HMPUPD and HMP PUT
+                                         DEMOGRAPHICS are unused
+                                         and need to be removed
+ DE4264          2686    HMPP31          OE/RR direct reference to 
+                                         XTV(8989.5
+ DE4382          6395    HMPEVNT         HMP READ ACCESS TO PS(55
+ DE4469          6359    HMPDJ04         Using STATUS^SDAMA308
+                         HMPDJ0          API to retrieve the 
+                                         Patient Appointment Status
+ DE4488          6369    HMPCORD4        Accessing the MEDICATION 
+                                         ROUTES File (#51.2)
+                                         using direct global reads
+ DE4685          2727    HMPDJ02         Direct Global Read ^AUPNPROB
+                                         global reads
+ DE5033          5747    HMPDJ02         Change calls to APIs that are in
+                         HMPDVSIT        the ICDCODE routine to use
+                                         the ICDEX routine. The
+                                         ICDCODE APIs are being
+                                         replaced with the ICDEX APIs
+                                         in the VA
+ DE6100          5679    HMPWB5A         Change GETFREQ^ORWLEX
+                                         to call FREQ^LEXU
+ DE6147                  HMPTFU2         Routine HMPTFU2 needs to use
+                                         Fileman to read DIC(4
+ DE6652          6357    HMPCORD5        Remove sign-symptom domain
+                         HMPDJFSD        from operational data
+                         HMPEF           (re-opened for DE4007)
+  
+ Defects associated with Remote Procedure Calls (RPCs)
+  
+ Defect Number   RPCs                     Description
+ -------------   ----                     -----------
+ DE6480          TIU SET DOCUMENT TEXT    These two RPCs are included in
+                 TIU UPDATE RECORD        HMP UI CONTEXT in HMP*2.0*2,
+                 TIU UPDATE RECORD        but are not used in eHMP
+                 YTQ ALLKEYS              and should be removed
+ DE6589          HMP DELETE ROSTER        Remove unused HMP RPCs
+                 HMP DELETE TIU NOTE           
+                 HMP GET ROSTER LIST
+                 HMP GET SOURCE
+                 HMP PREVIEW ROSTER
+                 HMP ROSTER PATIENTS
+                 HMP ROSTERS
+                 HMP SAVE NOTE STUB
+                 HMP SUBSCRIBE ROSTERS
+                 HMP UPDATE ROSTER
+                 HMPCORD RPC
+                 HMPCPAT RPC
+ DE7517          HMP PATIENT SCHED SYNC    HMP PATIENT SCHED SYNC
+                                           should be in Synchronize the HMP
+                                           [HMP SYNCHRONIZATION CONTEXT]
+  
+  
+ User Story      Routine         Description
+ -----------     -------         -----------
+ US14699         HMP14699        This is a post processor routine that
+                                 must be added to subscribe our
+                                 protocol to two existing menu options
+ US16913                         Annotate VistA Routines with Approved
+                                 ICR information
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR #20150408 - VistA Evolution Enterprise Health Management Platform 
+ (eHMP)
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ There are no Patient Safety Issues.
+  
+  
+ Remedy Tickets(s) & Overview:
+ -----------------------------
+ 1.  I12161569FY17 - DE7372 - Loss of Resource slots creates a stuck Queue 
+ for Patient Sync but not freshness updates
+  
+ Problem:
+ --------
+ When attempting to sync a new patient, the process errored out twice.  
+ This occurred in the San Antonio production environment.
+  
+ Resolution:
+ -----------
+ Utilities were added to allow eHMP to monitor resource usage and in the 
+ situation where resources have been used up and the jobs connected to 
+ those resources are no longer active, the ability to reset resource 
+ status to what it actually is, has been added.
+  
+ 2.  I1232316FY17 DE7401 - VistA Production queues stuck, with no VistA 
+ error, and full resources available
+  
+ Problem:
+ --------
+ This incident is tracking the work being done on DE7401.  VistA 
+ Production queues were getting stuck with no errors and full resources 
+ available
+  
+ Resolution:
+ -----------
+ It was determined that the throttling code, which prevents the eHMP 
+ system from using too many resources on a VistA system, would activate 
+ properly, however the restart code when resources became available was 
+ not always restarting. This code was modified to ensure the eHMP system 
+ would begin sync processes when resources were available.
+  
+ 3.  I13581054FY17 - DE5111 ERROR MESSAGE: <UNDEFINED>GET+8^ORQ12 - MIN 
+     I13580684FY17      prod 4/5 and 4/6
+     I12324386FY17
+     I12230643FY17
+  
+ Problem:
+ --------
+ An error was generated when trying to retrieve child orders that had been 
+ deleted.
+  
+ Resolution:
+ -----------
+ The eHMP code was modified to check for the existence of orders before 
+ calling the API in the routine ORQ12.
+  
+ 4.  I13438824FY17 DE7799 - Fix issue with the sync process getting into 
+ an infinite loop
+  
+ Problem:
+ --------
+ The infinite loop process was caused by a composite variable (HMPID) used 
+ to look up a record in BCMA when a single variable was needed. 
+  
+ Resolution:
+ -----------
+ The code in the HMPDJ0 needed to be modified to make the variable used in 
+ GET1^DIQ Call to use the variable +HMPID.  HMPID is the IEN of the record 
+ for the look up.  If the variable is not all numeric (has alpha 
+ characters at the end), it is not a valid IEN.  Changing the code to use 
+ the + at the front of the variable strips any trailing alpha characters.
+  
+ Also, there was a need to change from using the TMP global to using the 
+ XTMP global when setting the lock to prevent more than one process from 
+ running at a time in API^HMPDJFS.
+  
+ 5.  I12323167FY17 DE7401 - VistA Production queues stuck, with no VistA 
+ error, and full resources available
+  
+ Problem:
+ --------
+ The existing throttling code is designed to prevent the eHMP freshness 
+ and sync processes from overwhelming the XTMP size restraints and from 
+ using too many resources on the VistA system. When a system slow down 
+ occurs and the throttling kicks in, under certain circumstances the 
+ throttling would not turn off when system resources and size constraints 
+ returned to operating levels. 
+  
+ Resolution:
+ -----------
+ The problem was the software scanning to detect system resources could 
+ also become stuck when throttling kicked in. Several locations were added 
+ in the code to ensure the resource scanning would not stop when 
+ throttling turned on. 
+  
+ Test Sites:
+ -----------
+ Hampton, VA
+ Indianapolis, IL
+ Loma Linda, CA
+ San Diego, CA
+  
+ Documentation Retrieval:
+ ------------------------ 
+ Sites may retrieve the documentation from the ANONYMOUS.SOFTWARE
+ directory at one of the OI Field Offices. The preferred method is to
+ retrieve the file using Secure File Transfer Protocol (SFTP) from
+ DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first
+ available server. Alternatively, sites may elect to retrieve the file from
+ a specific OI Field Office.
+  
+    OI FIELD OFFICE      SFTP ADDRESS                    DIRECTORY 
+    Albany               DOMAIN.EXT            
+    Hines                DOMAIN.EXT             
+    Salt Lake City       DOMAIN.EXT               
+  
+ The documentation will be distributed as PDF files and should be
+ downloaded in binary format.
+ Documentation will also be posted on the VA Software Documentation Library
+ at:  http://www4.domain.ext/vdl/
+ The updated documentation associated with this patch is:
+  
+ Title                           File Name                      
+ -----------------------------------------------------------------------
+ Enterprise Health               eHMP_REL_NOTES_FOR_1_2_21_UI_V1_2_7.PDF
+ Management Platform (eHMP)
+ Version 1.2.21 Release Notes
+ (Release of eHMP UI 1.2.7)
+  
+ Patch Installation:
+ -------------------
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+  
+ 1.  Choose the PackMan message containing this patch.
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.          
+ 3.  From the Kernel Installation and Distribution System [XPD MAIN]
+     menu, select the Installation [XPD INSTALLATION MENU] menu.  From this
+     menu, you may elect to use the following option. When prompted for the
+     INSTALL enter the patch # (HMP*2.0*3):
+     a. Backup a Transport Global [XPD BACKUP] - This option will create a
+        backup message of any routines exported with this patch. It will
+        not backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM]
+        This option will allow you to view all changes that will be made
+        when this patch is installed.  It compares all components of this
+        patch (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - 
+        This option will allow you to ensure the integrity of the routines
+        that are in the transport global.
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter HMP*2.0*3.
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+  
+ Sample Installation
+ -------------------
+  
+ Select Installation <TEST ACCOUNT> Option: INstall Package(s)
+ Select INSTALL NAME:    HMP*2.0*3    4/12/17@14:33:54
+      => EHMP PATCH 3 VERSION 9  ;Created on Apr 12, 2017@14:09:41
+  
+ This Distribution was loaded on Apr 12, 2017@14:33:54 with header of 
+    EHMP PATCH 3 VERSION 9  ;Created on Apr 12, 2017@14:09:41
+    It consisted of the following Install(s):
+       HMP*2.0*3
+ Checking Install for Package HMP*2.0*3
+  
+ Install Questions for HMP*2.0*3
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   Linux Telnet/SSH
+ --------------------------------------------------------------------------
+  
+ Install Started for HMP*2.0*3 : 
+                Apr 12, 2017@14:37:11
+  
+ Build Distribution Date: Apr 12, 2017
+  
+  Installing Routines:
+                Apr 12, 2017@14:37:13
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing REMOTE PROCEDURE
+  
+  Installing OPTION
+                Apr 12, 2017@14:37:13
+  
+  Running Post-Install Routine: POST^HMP14699
+ HMP14699 post-init routine started Apr 12, 2017@14:37:13
+  
+ Old data saved in ^XTMP("HMP INSTALL LOG",3170412.143713)
+  
+ HMP XU EVENTS was subscribed to 14353^XU USER CHANGE, protocol update Apr 
+ 12, 2017@14:37:13
+  
+ HMP XU EVENTS was subscribed to 10435^XU USER TERMINATE, protocol update 
+ finished Apr 12, 2017@14:37:13
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  HMP*2.0*3 Installed. 
+                Apr 12, 2017@14:37:13
+  
+  Install Message sent 
+  
+ Installation Verification
+ =========================
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+ ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**[Patch List]**;Sep 01, 
+ 2011;Build 26
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+ Back-out Procedures
+ ===================
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel. 
+ Rollback of Data or Data Dictionary changes should be coordinated with 
+ the development team eHMPSystemOperations@domain.ext.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System. VA FileMan will also be utilized to remove
+ the HMP protocols from other package protocols that were added during
+ installation.
+  
+ Validation of Roll Back Procedure
+ =================================
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the HMP Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the
+ HMP*2.0*3 patch have been rolled back the first two lines of the routines
+ will no longer contain the designation of patch 3 in the patch list 
+ section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**[Patch List]**;Sep 01, 2011;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HMP14699
+    Before:       n/a   After: B21021121  **3**
+Routine Name: HMPCORD
+    Before:       n/a   After:    Delete  
+Routine Name: HMPCORD4
+    Before:B141593321   After:B152907266  **3**
+Routine Name: HMPCORD5
+    Before: B89350961   After: B83583685  **3**
+Routine Name: HMPCPAT
+    Before:       n/a   After:    Delete  
+Routine Name: HMPCRPC1
+    Before:B104887301   After:B113427224  **1,3**
+Routine Name: HMPD
+    Before: B29605922   After: B31068389  **3**
+Routine Name: HMPDCRC
+    Before: B46900881   After: B47259185  **1,3**
+Routine Name: HMPDGMPL
+    Before: B28172327   After: B28421072  **3**
+Routine Name: HMPDGMRA
+    Before: B23357348   After: B23583756  **1,3**
+Routine Name: HMPDGMV
+    Before: B43285050   After: B43285050  **3**
+Routine Name: HMPDJ
+    Before: B36566294   After: B36747380  **1,2,3**
+Routine Name: HMPDJ0
+    Before:B123520924   After:B123532458  **2,3**
+Routine Name: HMPDJ00
+    Before:B165368982   After:B168303708  **2,3**
+Routine Name: HMPDJ01
+    Before: B96911634   After:B111786832  **2,3**
+Routine Name: HMPDJ02
+    Before:B212781835   After:B216534469  **1,2,3**
+Routine Name: HMPDJ02A
+    Before:       n/a   After:  B2049795  **3**
+Routine Name: HMPDJ04
+    Before: B91911154   After: B91523266  **2,3**
+Routine Name: HMPDJ08A
+    Before: B50353978   After: B51646478  **3**
+Routine Name: HMPDJFS
+    Before: B75039687   After: B76740470  **1,2,3**
+Routine Name: HMPDJFSD
+    Before:  B6635230   After:  B7195569  **2,3**
+Routine Name: HMPDJFSG
+    Before:B239094228   After:B245124031  **1,2,3**
+Routine Name: HMPDJFSM
+    Before: B83803111   After: B64763470  **1,2,3**
+Routine Name: HMPDJFSP
+    Before:B224332595   After:B194334507  **1,2,3**
+Routine Name: HMPDJFSQ
+    Before:B141457837   After: B94782818  **2,3**
+Routine Name: HMPDJX
+    Before: B36089287   After: B36261442  **3**
+Routine Name: HMPDLRA
+    Before: B79686061   After: B85382423  **3**
+Routine Name: HMPDMC
+    Before: B58301952   After: B58830678  **2,3**
+Routine Name: HMPDOR
+    Before: B13574723   After: B28492902  **2,3**
+Routine Name: HMPDRA
+    Before: B42792632   After: B43358349  **3**
+Routine Name: HMPDSDAM
+    Before: B21275067   After: B21275067  **3**
+Routine Name: HMPDSR
+    Before: B30022036   After: B30234447  **3**
+Routine Name: HMPDVSIT
+    Before: B93496568   After: B97239947  **3**
+Routine Name: HMPEF
+    Before: B86301720   After: B88029306  **1,2,3**
+Routine Name: HMPEVNT
+    Before:B181881949   After:B193956269  **2,3**
+Routine Name: HMPHTTP
+    Before: B14150503   After: B14396779  **1,3**
+Routine Name: HMPLOG
+    Before: B18006538   After: B23425435  **2,3**
+Routine Name: HMPMETA
+    Before:B192449640   After: B82380143  **1,2,3**
+Routine Name: HMPMON
+    Before: B33479508   After:  B6205473  **2,3**
+Routine Name: HMPMONA
+    Before: B32852666   After:  B5798924  **2,3**
+Routine Name: HMPMONC
+    Before: B19385564   After:  B3063955  **2,3**
+Routine Name: HMPMOND
+    Before: B73551310   After: B23595720  **2,3**
+Routine Name: HMPMONDH
+    Before:  B9552546   After:  B4295339  **2,3**
+Routine Name: HMPMONE
+    Before: B15446586   After: B20016683  **2,3**
+Routine Name: HMPMONEH
+    Before:  B7976382   After:  B2338588  **2,3**
+Routine Name: HMPMONH
+    Before:  B3366095   After:   B708781  **2,3**
+Routine Name: HMPMONHH
+    Before:  B6882140   After:   B574268  **2,3**
+Routine Name: HMPMONJ
+    Before: B21225316   After: B14612706  **2,3**
+Routine Name: HMPMONL
+    Before: B48690614   After:  B7166896  **2,3**
+Routine Name: HMPMONM
+    Before: B24792706   After:  B4370662  **2,3**
+Routine Name: HMPMONR
+    Before:     B2756   After: B15294791  **2,3**
+Routine Name: HMPMONS
+    Before:  B5634204   After:  B4547830  **2,3**
+Routine Name: HMPMONSH
+    Before:  B8092582   After:  B3342775  **2,3**
+Routine Name: HMPMONV
+    Before: B42629686   After:  B5132473  **2,3**
+Routine Name: HMPMONX
+    Before: B51029601   After:  B5337676  **2,3**
+Routine Name: HMPP3I
+    Before:B129333471   After:    Delete  
+Routine Name: HMPPATS
+    Before:  B3116859   After:  B3274326  **3**
+Routine Name: HMPRPCRC
+    Before:       n/a   After:  B6442213  **3**
+Routine Name: HMPSTMP
+    Before:B101713428   After:B100529789  **1,2,3**
+Routine Name: HMPTFU2
+    Before: B40570794   After: B41602003  **1,2,3**
+Routine Name: HMPUPD
+    Before: B25103187   After:    Delete  
+Routine Name: HMPUTILS
+    Before: B55237151   After: B58919254  **1,2,3**
+Routine Name: HMPWB1
+    Before: B43200310   After: B44273066  **2,3**
+Routine Name: HMPWB5A
+    Before: B30522775   After:    Delete  
+ 
+Routine list of preceding patches: 2
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 01, 2016
+Completed By:                               Date Completed: JUN 15, 2017
+Released By :                               Date Released : JUN 16, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

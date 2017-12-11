@@ -1,0 +1,129 @@
+$TXT Created by               at CMAI.FO-BIRM.DOMAIN.EXT  (KIDS) on Monday, 04/03/17 at 11:37
+=============================================================================
+Run Date: JUL 31, 2017                     Designation: PSGW*2.3*18
+Package : PSGW - AUTO REPLENISHMENT/WARD STOC Priority: Mandatory
+Version : 2.3        SEQ #18                    Status: Released
+                  Compliance Date: AUG 31, 2017
+=============================================================================
+
+
+Subject: ON-DEMAND REPORT DATE RANGE FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue:
+  
+ The report option Print an On-Demand Report by Date/AOU (80 column) [PSGW
+ ON-DEMAND PRINT] was incorrectly filtering entries to be printed on the
+ report according to the date range selected by the user.
+   
+ Associated CA SDM Ticket(s):
+ ============================
+ 1. I10479329FY16  PSGW ON-DEMAND PRINT calculates wrong time
+  
+ Associated NSRs:
+ ================
+ N/A
+  
+    
+ Participating Test Sites:
+ =========================
+ IRON MOUNTAIN, MI
+ SAN FRANCISCO, CA
+  
+   
+ Ticket Overview:
+ ================
+ 1. I10479329FY16  PSGW ON-DEMAND PRINT calculates wrong time
+   
+  
+ Problem: 
+ --------
+ When the user ran the report option Print an On-Demand Report by Date/AOU
+ (80 column) [PSGW ON-DEMAND PRINT] and selected a date range that contained 
+ a specific time (MMDDYY@HHMM) for either the BEGINNING or ENDING date
+ prompts, the report filter did not work correctly causing the report to
+ include entries outside the date/time range specified.
+  
+ Resolution:
+ -----------
+ Modified the routine, PSGWODP, to not allow a time to be included when 
+ responding to the BEGINNING or ENDING date prompts.
+  
+ Technical Resolution:
+ ---------------------
+ a. At the line BDT^PSGWODP the variable BDT, which holds the BEGINNING date
+    range value, was being set with BDT=BDT-.1. This was wrong because the
+    the time (HHMM) is accepted. This was corrected to BDT=BDT-.00001
+ a. At the line EDT^PSGWODP the variable EDT, which holds the ENDING date
+    range value, was being set with EDT=EDT+.3. This was also wrong because
+    the time (HHMM) is accepted. Furthermore, this variable only needs to be
+    reset if a specific time was not entered. The setting of this variable 
+    was changed to S:EDT'["." EDT=EDT+.24.
+  
+ Installation Instructions:
+ ==========================
+ Although this patch may be loaded with users on the system, it is advisable
+ to install it during non-peak hours.
+   
+ The install will take less than 2 minutes.
+   
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSGW*2.3*18)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSGW*2.3*18.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.3;Automatic Replenishment/Ward Stock;**[Patch List]**;4 JAN 94;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGWODP
+    Before: B12807261   After: B13201999  **18**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 28, 2017
+Completed By:                               Date Completed: JUL 24, 2017
+Released By :                               Date Released : JUL 31, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
