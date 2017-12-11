@@ -177,6 +177,9 @@ The following variables are required for both Cache and GT.M environments.
 +---------------------------+---------------------------------------------------------------+
 | PYTHON_EXECUTABLE         | Python executable                                             |
 +---------------------------+---------------------------------------------------------------+
+| LOCAL_DOX_LINKS           | Enable to create links to the local DOX pages instead of the  |
+|                           | pages found at http://code.osehra.org/dox                     |
++---------------------------+---------------------------------------------------------------+
 | ICR_FILE                  | Path to downloaded ICR_ File                                  |
 +---------------------------+---------------------------------------------------------------+
 | DOCUMENT_VISTA_M_DIR      | Path to VistA-M directory                                     |

@@ -23,6 +23,7 @@ import cgi
 import re
 import json
 
+dox_url="http://code.osehra.org/dox/"
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
 if SCRIPTS_DIR not in sys.path:
@@ -47,7 +48,6 @@ def test_sub():
   print data_table_list_init_setup.substitute(tableName="Test")
   print data_table_record_init_setup.substitute(tableName="Test")
 
-dox_url = "http://code.osehra.org/dox/"
 def getDataEntryHtmlFile(dataEntry, ien, fileNo):
   entryName = str(dataEntry.name)
   return getDataEntryHtmlFileByName(entryName, ien, fileNo)
@@ -300,10 +300,13 @@ class FileManDataToHtml(object):
   """
     class to Genetate HTML pages based on FileManData
   """
-  def __init__(self, crossRef, outDir,glbData = None):
+  def __init__(self, crossRef, outDir,glbData = None, doxURL=None):
+    global dox_url
     self.crossRef = crossRef
     self.outDir = outDir
     self.glbData = glbData
+    if doxURL:
+      dox_url = doxURL
     # a map of a tuple of menu options (parent, child) which point to the synonym for the child option
     #
     #  Example: ('DGBT BENE TRAVEL MENU', 'DGBT TRAVEL REPORTS MENU') : [RPTS]
